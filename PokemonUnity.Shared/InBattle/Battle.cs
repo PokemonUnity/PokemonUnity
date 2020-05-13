@@ -814,71 +814,71 @@ namespace PokemonUnity.Battle
 		#region Info about battle.
 		public bool pbDoubleBattleAllowed()
 		{
-    if !@fullparty1 && @party1.Length>Core.MAXPARTYSIZE
-      return false
-    end
-    if !@fullparty2 && @party2.Length>Core.MAXPARTYSIZE
-      return false
-    end
+    if (!@fullparty1 && @party1.Length>Core.MAXPARTYSIZE) {
+      return false;
+    }
+    if (!@fullparty2 && @party2.Length>Core.MAXPARTYSIZE) {
+      return false;
+    }
     _opponent=@opponent
     _player=@player
     // Wild battle
-    if !_opponent
-      if @party2.Length==1
-        return false
-      elsif @party2.Length==2
-        return true
+    if (!_opponent) {
+      if (@party2.Length==1) {
+        return false;
+      else if (@party2.Length==2) {
+        return true;
       else
-        return false
-      end
+        return false;
+      }
     // Trainer battle
     else
-      if _opponent.Length > 0
-        if _opponent.Length==1
+      if (_opponent.Length > 0) {
+        if (_opponent.Length==1) {
           _opponent=_opponent[0]
-        elsif _opponent.Length!=2 //greater than 2?
-          return false
-        end
-      end
+        else if (_opponent.Length!=2) { //greater than 2?
+          return false;
+        }
+      }
       _player=_player
-      if _player.Length > 0
-        if _player.Length==1
+      if (_player.Length > 0) {
+        if (_player.Length==1) {
           _player=_player[0]
-        elsif _player.Length!=2
-          return false
-        end
-      end
-      if _opponent.Length > 0
+        else if (_player.Length!=2) {
+          return false;
+        }
+      }
+      if (_opponent.Length > 0) {
         sendout1=pbFindNextUnfainted(@party2,0,pbSecondPartyBegin(1))
         sendout2=pbFindNextUnfainted(@party2,pbSecondPartyBegin(1))
-        return false if sendout1<0 || sendout2<0
+        if (sendout1<0 || sendout2<0) return false;
       else
         sendout1=pbFindNextUnfainted(@party2,0)
         sendout2=pbFindNextUnfainted(@party2,sendout1+1)
-        return false if sendout1<0 || sendout2<0
-      end
-    end
-    if _player.Length > 0
+        if (sendout1<0 || sendout2<0) return false;
+      }
+    }
+    if (_player.Length > 0) {
       sendout1=pbFindNextUnfainted(@party1,0,pbSecondPartyBegin(0))
       sendout2=pbFindNextUnfainted(@party1,pbSecondPartyBegin(0))
-      return false if sendout1<0 || sendout2<0
+      if (sendout1<0 || sendout2<0) return false;
     else
       sendout1=pbFindNextUnfainted(@party1,0)
       sendout2=pbFindNextUnfainted(@party1,sendout1+1)
-      return false if sendout1<0 || sendout2<0
-    end
-    return true
+      if (sendout1<0 || sendout2<0) return false;
+    }
+    return true;
 		}
 
-  def pbWeather
+  public void pbWeather() {
     for (int i = 0; i < 4; i++) {
-      if @battlers[i].hasWorkingAbility(Abilities.CLOUDNINE) ||
-         @battlers[i].hasWorkingAbility(Abilities.AIRLOCK)
-        return 0
-      end
-    end
-    return @weather
-  end
+      if (@battlers[i].hasWorkingAbility(Abilities.CLOUDNINE) ||
+         @battlers[i].hasWorkingAbility(Abilities.AIRLOCK)) {
+        return 0;
+      }
+    }
+    return @weather;
+  }
 		#endregion
 
 		#region Get Battler Info.
@@ -888,38 +888,38 @@ namespace PokemonUnity.Battle
 		}
 		public bool pbOwnedByPlayer(int index)
 		{
-    return false if pbIsOpposing?(index)
-    return false if @player.Length > 0 && index==2
-    return true
+    if (pbIsOpposing?(index)) return false;
+    if (@player.Length > 0 && index==2) return false;
+    return true;
 		}
   /// Only used for Wish
-  def pbThisEx(battlerindex, pokemonindex)
+  public void pbThisEx(battlerindex, pokemonindex) {
 
 	party=pbParty(battlerindex)
-    if pbIsOpposing? (battlerindex)
-      if @opponent
-        return _INTL("The foe {1}", party[pokemonindex].Name)
+    if (pbIsOpposing? (battlerindex)) {
+      if (@opponent) {
+        return _INTL("The foe {1}", party[pokemonindex].Name);
       else
-        return _INTL("The wild {1}", party[pokemonindex].Name)
-	  end
+        return _INTL("The wild {1}", party[pokemonindex].Name);
+	  }
     else
-      return _INTL("{1}", party[pokemonindex].Name)
-	end
-  end
+      return _INTL("{1}", party[pokemonindex].Name);
+	}
+  }
 			
   /// Checks whether an item can be removed from a Pokémon.
-  def pbIsUnlosableItem(pkmn,item)
-    return true if pbIsMail?(item)
-    return false if pkmn.effects.Transform
-    if pkmn.ability == Abilities.MULTITYPE
+  public void pbIsUnlosableItem(pkmn,item) {
+    if (pbIsMail?(item)) return true;
+    if (pkmn.effects.Transform) return false;
+    if (pkmn.ability == Abilities.MULTITYPE) {
       Items[] plates= new Items[] { Items.FISTPLATE, Items.SKYPLATE, Items.TOXICPLATE, Items.EARTHPLATE, Items.STONEPLATE,
                Items.INSECTPLATE, Items.SPOOKYPLATE, Items.IRONPLATE, Items.FLAMEPLATE, Items.SPLASHPLATE,
                Items.MEADOWPLATE, Items.ZAPPLATE, Items.MINDPLATE, Items.ICICLEPLATE, Items.DRACOPLATE,
                Items.DREADPLATE, Items.PIXIEPLATE };
       foreach (var i in plates) {
-        return true if item == i
-      end
-    end
+        if (item == i) return true;
+      }
+    }
     combos= new KeyValuePair<Pokemons, Items>[] {
             new KeyValuePair<Pokemons, Items> (Pokemons.GIRATINA,		Items.GRISEOUSORB),
             new KeyValuePair<Pokemons, Items> (Pokemons.GENESECT,		Items.BURNDRIVE),
@@ -979,84 +979,84 @@ namespace PokemonUnity.Battle
             new KeyValuePair<Pokemons, Items> (Pokemons.GROUDON,		Items.REDORB)
            };
     foreach (KeyValuePair<Pokemons, Items> i in combos) {
-      if (pkmn.Species == (Pokemons)i[0] && item == (Items)i[1])
-        return true
-      end
-    end
-    return false
-  end
+      if ((pkmn.Species == (Pokemons)i[0] && item == (Items)i[1])) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-  def pbCheckGlobalAbility(a)
+  public void pbCheckGlobalAbility(a) {
     for (int i = 0; i < 4; i++) { // in order from own first, opposing first, own second, opposing second
-      if @battlers[i].hasWorkingAbility(a)
-        return @battlers[i]
-      end
-    end
-    return null
-  end
+      if (@battlers[i].hasWorkingAbility(a)) {
+        return @battlers[i];
+      }
+    }
+    return null;
+  }
 
-  def nextPickupUse
+  public void nextPickupUse() {
     @nextPickupUse+=1
-    return @nextPickupUse
-  end
+    return @nextPickupUse;
+  }
 
 		#endregion
 
 		#region Player-related Info.
-  def pbPlayer
-    if @player.Length > 0
-      return @player[0]
+  public void pbPlayer() {
+    if (@player.Length > 0) {
+      return @player[0];
     else
-      return @player
-    end
-  end
+      return @player;
+    }
+  }
 
-  def pbGetOwnerItems(battlerIndex)
-    return [] if !@items
-    if pbIsOpposing?(battlerIndex)
-      if @opponent.Length > 0
-        return (battlerIndex==1) ? @items[0] : @items[1]
+  public void pbGetOwnerItems(battlerIndex) {
+    if (!@items) return [];
+    if (pbIsOpposing?(battlerIndex)) {
+      if (@opponent.Length > 0) {
+        return (battlerIndex==1) ? @items[0] : @items[1];
       else
-        return @items
-      end
+        return @items;
+      }
     else
-      return []
-    end
-  end
+      return [];
+    }
+  }
 
-  def pbSetSeen(pokemon)
-    if pokemon && @internalbattle
+  public void pbSetSeen(pokemon) {
+    if (pokemon && @internalbattle) {
       self.pbPlayer.seen[pokemon.Species]=true
       pbSeenForm(pokemon)
-    end
-  end
+    }
+  }
 
-  def pbGetMegaRingName(battlerIndex)
-    if pbBelongsToPlayer?(battlerIndex)
+  public void pbGetMegaRingName(battlerIndex) {
+    if (pbBelongsToPlayer?(battlerIndex)) {
       foreach (Items i in Core.MEGARINGS) {
-        next if !hasConst?(PBItems,i)
-        return i.ToString(TextScripts.Name) if $PokemonBag.pbQuantity(i)>0
-      end
-    end
+        if (!hasConst?(PBItems,i)) next;
+        if ($PokemonBag.pbQuantity(i)>0) return i.ToString(TextScripts.Name);
+      }
+    }
     // Add your own Mega objects for particular trainer types here
     //if pbGetOwner(battlerIndex).trainertype == TrainerTypes.BUGCATCHER
     //  return _INTL("Mega Net")
-    //end
-    return _INTL("Mega Ring")
-  end
+    //}
+    return _INTL("Mega Ring");
+  }
 
-  def pbHasMegaRing(battlerIndex)
-    return true if !pbBelongsToPlayer?(battlerIndex)
+  public void pbHasMegaRing(battlerIndex) {
+    if (!pbBelongsToPlayer?(battlerIndex)) return true;
     foreach (Items i in Core.MEGARINGS) {
-      next if !hasConst?(PBItems,i)
-      return true if $PokemonBag.pbQuantity(i)>0
-    end
-    return false
-  end
+      if (!hasConst?(PBItems,i)) next;
+      if ($PokemonBag.pbQuantity(i)>0) return true;
+    }
+    return false;
+  }
 		#endregion
 
 		#region Get party info, manipulate parties.
-		int PokemonCount(PokemonUnity.Monster.Pokemon[] party)
+		public int PokemonCount(PokemonUnity.Monster.Pokemon[] party)
 		{
 			int count = 0;
 			for (int i = 0; i < party.Length; i++)
@@ -1066,11 +1066,11 @@ namespace PokemonUnity.Battle
 			}
 			return count;
 		}
-		bool AllFainted(PokemonUnity.Monster.Pokemon[] party)
+		public bool AllFainted(PokemonUnity.Monster.Pokemon[] party)
 		{
 			return PokemonCount(party) == 0;
 		}
-		int MaxLevel(PokemonUnity.Monster.Pokemon[] party)
+		public int MaxLevel(PokemonUnity.Monster.Pokemon[] party)
 		{
 			int lv = 0;
 			for (int i = 0; i < party.Length; i++)
@@ -1080,83 +1080,83 @@ namespace PokemonUnity.Battle
 			}
 			return lv;
 		}
-  def pbPokemonCount(party)
+  public void pbPokemonCount(party) {
     count=0
     foreach (var i in party) {
-      next if !i
-      count+=1 if i.HP>0 && !i.isEgg?
-    end
-    return count
-  end
+      if (!i) next;
+      if (i.HP>0 && !i.isEgg?) count+=1;
+    }
+    return count;
+  }
 
   public bool pbAllFainted (party) {
     pbPokemonCount(party)==0
-  end
+  }
 
-  def pbMaxLevel(party)
+  public void pbMaxLevel(party) {
     lv=0
     foreach (var i in party) {
-      next if !i
-      lv=i.level if lv<i.level
-    end
-    return lv
-  end
+      if (!i) next;
+      if (lv<i.level) lv=i.level;
+    }
+    return lv;
+  }
 
-  def pbMaxLevelFromIndex(index)
+  public void pbMaxLevelFromIndex(index) {
     party=pbParty(index)
     owner=(pbIsOpposing?(index)) ? @opponent : @player
     maxlevel=0
-    if owner.Length > 0
+    if (owner.Length > 0) {
       start=0
       limit=pbSecondPartyBegin(index)
-      start=limit if pbIsDoubleBattler?(index)
+      if (pbIsDoubleBattler?(index)) start=limit;
       for (int i = start; i < start+limit; i++) {
-        next if !party[i]
-        maxlevel=party[i].level if maxlevel<party[i].level
-      end
+        if (!party[i]) next;
+        if (maxlevel<party[i].level) maxlevel=party[i].level;
+      }
     else
       foreach (var i in party) {
-        next if !i
-        maxlevel=i.level if maxlevel<i.level
-      end
-    end
-    return maxlevel
-  end
+        if (!i) next;
+        if (maxlevel<i.level) maxlevel=i.level;
+      }
+    }
+    return maxlevel;
+  }
 
-  def pbParty(index)
-    return pbIsOpposing?(index) ? party2 : party1
-  end
+  public void pbParty(index) {
+    return pbIsOpposing?(index) ? party2 : party1;
+  }
 
-  def pbOpposingParty(index)
-    return pbIsOpposing?(index) ? party1 : party2
-  end
+  public void pbOpposingParty(index) {
+    return pbIsOpposing?(index) ? party1 : party2;
+  }
 
-  def pbSecondPartyBegin(battlerIndex)
-    if pbIsOpposing?(battlerIndex)
-      return @fullparty2 ? 6 : 3
+  public int pbSecondPartyBegin(battlerIndex) {
+    if (pbIsOpposing?(battlerIndex)) {
+      return @fullparty2 ? 6 : 3;
     else
-      return @fullparty1 ? 6 : 3
-    end
-  end
+      return @fullparty1 ? 6 : 3;
+    }
+  }
 
-  def pbPartyLength(battlerIndex)
-    if pbIsOpposing?(battlerIndex)
-      return (@opponent.Length > 0) ? pbSecondPartyBegin(battlerIndex) : MAXPARTYSIZE
+  public void pbPartyLength(battlerIndex) {
+    if (pbIsOpposing?(battlerIndex)) {
+      return (@opponent.Length > 0) ? pbSecondPartyBegin(battlerIndex) : MAXPARTYSIZE;
     else
-      return @player.Length > 0 ? pbSecondPartyBegin(battlerIndex) : MAXPARTYSIZE
-    end
-  end
+      return @player.Length > 0 ? pbSecondPartyBegin(battlerIndex) : MAXPARTYSIZE;
+    }
+  }
 
-  def pbFindNextUnfainted(party,start,finish=-1)
-    finish=party.Length if finish<0
+  public void pbFindNextUnfainted(party,start,finish=-1) {
+    if (finish<0) finish=party.Length;
     for (int i = start; i < finish; i++) {
-      next if !party[i]
-      return i if party[i].HP>0 && !party[i].isEgg?
-    end
-    return -1
-  end
+      if (!party[i]) next;
+      if (party[i].HP>0 && !party[i].isEgg?) return i;
+    }
+    return -1;
+  }
 
-  def pbGetLastPokeInTeam(index)
+  public void pbGetLastPokeInTeam(index) {
     party=pbParty(index)
     partyorder=(!pbIsOpposing?(index)) ? @party1order : @party2order
     plength=pbPartyLength(index)
@@ -1164,149 +1164,149 @@ namespace PokemonUnity.Battle
     lastpoke=-1
     for (int i = pstart; i < pstart+plength; i++) {
       p=party[partyorder[i]]
-      next if !p || p.isEgg? || p.HP<=0
+      if (!p || p.isEgg? || p.HP<=0) next;
       lastpoke=partyorder[i]
-    end
-    return lastpoke
-  end
+    }
+    return lastpoke;
+  }
 
-  def pbFindPlayerBattler(pkmnIndex)
+  public void pbFindPlayerBattler(pkmnIndex) {
     battler=null
     for (int k = 0; k < 4; k++) {
-      if !pbIsOpposing?(k) && @battlers[k].pokemonIndex==pkmnIndex
+      if (!pbIsOpposing?(k) && @battlers[k].pokemonIndex==pkmnIndex) {
         battler=@battlers[k]
-        break
-      end
-    end
-    return battler
-  end
+        break;
+      }
+    }
+    return battler;
+  }
 
   public bool pbIsOwner (battlerIndex,partyIndex) {
     secondParty=pbSecondPartyBegin(battlerIndex)
-    if !pbIsOpposing?(battlerIndex)
-      return true if !@player || !@player.Length > 0
-      return (battlerIndex==0) ? partyIndex<secondParty : partyIndex>=secondParty
+    if (!pbIsOpposing?(battlerIndex)) {
+      if (!@player || !@player.Length > 0) return true;
+      return (battlerIndex==0) ? partyIndex<secondParty : partyIndex>=secondParty;
     else
-      return true if !@opponent || !@opponent.Length > 0
-      return (battlerIndex==1) ? partyIndex<secondParty : partyIndex>=secondParty
-    end
-  end
+      if (!@opponent || !@opponent.Length > 0) return true;
+      return (battlerIndex==1) ? partyIndex<secondParty : partyIndex>=secondParty;
+    }
+  }
 
-  def pbGetOwner(battlerIndex)
-    if pbIsOpposing?(battlerIndex)
-      if @opponent.Length > 0
-        return (battlerIndex==1) ? @opponent[0] : @opponent[1]
+  public void pbGetOwner(battlerIndex) {
+    if (pbIsOpposing?(battlerIndex)) {
+      if (@opponent.Length > 0) {
+        return (battlerIndex==1) ? @opponent[0] : @opponent[1];
       else
-        return @opponent
-      end
+        return @opponent;
+      }
     else
-      if @player.Length > 0
-        return (battlerIndex==0) ? @player[0] : @player[1]
+      if (@player.Length > 0) {
+        return (battlerIndex==0) ? @player[0] : @player[1];
       else
-        return @player
-      end
-    end
-  end
+        return @player;
+      }
+    }
+  }
 
-  def pbGetOwnerPartner(battlerIndex)
-    if pbIsOpposing?(battlerIndex)
-      if @opponent.Length > 0
-        return (battlerIndex==1) ? @opponent[1] : @opponent[0]
+  public void pbGetOwnerPartner(battlerIndex) {
+    if (pbIsOpposing?(battlerIndex)) {
+      if (@opponent.Length > 0) {
+        return (battlerIndex==1) ? @opponent[1] : @opponent[0];
       else
-        return @opponent
-      end
+        return @opponent;
+      }
     else
-      if @player.Length > 0
-        return (battlerIndex==0) ? @player[1] : @player[0]
+      if (@player.Length > 0) {
+        return (battlerIndex==0) ? @player[1] : @player[0];
       else
-        return @player
-      end
-    end
-  end
+        return @player;
+      }
+    }
+  }
 
-  def pbGetOwnerIndex(battlerIndex)
-    if pbIsOpposing?(battlerIndex)
-      return (@opponent.Length > 0) ? ((battlerIndex==1) ? 0 : 1) : 0
+  public void pbGetOwnerIndex(battlerIndex) {
+    if (pbIsOpposing?(battlerIndex)) {
+      return (@opponent.Length > 0) ? ((battlerIndex==1) ? 0 : 1) : 0;
     else
-      return (@player.Length > 0) ? ((battlerIndex==0) ? 0 : 1) : 0
-    end
-  end
+      return (@player.Length > 0) ? ((battlerIndex==0) ? 0 : 1) : 0;
+    }
+  }
 
   public bool pbBelongsToPlayer (battlerIndex) {
-    if @player.Length > 0 && @player.Length>1
-      return battlerIndex==0
+    if (@player.Length > 0 && @player.Length>1) {
+      return battlerIndex==0;
     else
-      return (battlerIndex%2)==0
-    end
-    return false
-  end
+      return (battlerIndex%2)==0;
+    }
+    return false;
+  }
 
-  def pbPartyGetOwner(battlerIndex,partyIndex)
+  public void pbPartyGetOwner(battlerIndex,partyIndex) {
     secondParty=pbSecondPartyBegin(battlerIndex)
-    if !pbIsOpposing?(battlerIndex)
-      return @player if !@player || !@player.Length > 0
-      return (partyIndex<secondParty) ? @player[0] : @player[1]
+    if (!pbIsOpposing?(battlerIndex)) {
+      if (!@player || !@player.Length > 0) return @player;
+      return (partyIndex<secondParty) ? @player[0] : @player[1];
     else
-      return @opponent if !@opponent || !@opponent.Length > 0
-      return (partyIndex<secondParty) ? @opponent[0] : @opponent[1]
-    end
-  end
+      if (!@opponent || !@opponent.Length > 0) return @opponent;
+      return (partyIndex<secondParty) ? @opponent[0] : @opponent[1];
+    }
+  }
 
-  def pbAddToPlayerParty(pokemon)
+  public void pbAddToPlayerParty(pokemon) {
     party=pbParty(0)
     for (int i = 0; i < party.Length; i++) {
-      party[i]=pokemon if pbIsOwner?(0,i) && !party[i]
-    end
-  end
+      if (pbIsOwner?(0,i) && !party[i]) party[i]=pokemon;
+    }
+  }
 
-  def pbRemoveFromParty(battlerIndex,partyIndex)
+  public void pbRemoveFromParty(battlerIndex,partyIndex) {
     party=pbParty(battlerIndex)
     side=(pbIsOpposing?(battlerIndex)) ? @opponent : @player
     order=(pbIsOpposing?(battlerIndex)) ? @party2order : @party1order
     secondpartybegin=pbSecondPartyBegin(battlerIndex)
     party[partyIndex]=null
-    if !side || !side.Length > 0 // Wild or single opponent
+    if (!side || !side.Length > 0) { // Wild or single opponent
       party.compact!
       for (int i = partyIndex; i < party.Length+1; i++) {
         for (int j = 0; j < 4; j++) {
-          next if !@battlers[j]
-          if pbGetOwner(j)==side && @battlers[j].pokemonIndex==i
+          if (!@battlers[j]) next;
+          if (pbGetOwner(j)==side && @battlers[j].pokemonIndex==i) {
             @battlers[j].pokemonIndex-=1
-            break
-          end
-        end
-      end
+            break;
+          }
+        }
+      }
       for (int i = 0; i < order.Length; i++) {
         order[i]=(i==partyIndex) ? order.Length-1 : order[i]-1
-      end
+      }
     else
-      if partyIndex<secondpartybegin-1
+      if (partyIndex<secondpartybegin-1) {
         for (int i = partyIndex; i < secondpartybegin; i++) {
-          if i>=secondpartybegin-1
+          if (i>=secondpartybegin-1) {
             party[i]=null
           else
             party[i]=party[i+1]
-          end
-        end
+          }
+        }
         for (int i = 0; i < order.Length; i++) {
-          next if order[i]>=secondpartybegin
+          if (order[i]>=secondpartybegin) next;
           order[i]=(i==partyIndex) ? secondpartybegin-1 : order[i]-1
-        end
+        }
       else
         for (int i = partyIndex; i < secondpartybegin+pbPartyLength; i++) {(battlerIndex)
-          if i>=party.Length-1
+          if (i>=party.Length-1) {
             party[i]=null
           else
             party[i]=party[i+1]
-          end
-        end
+          }
+        }
         for (int i = 0; i < order.Length; i++) {
-          next if order[i]<secondpartybegin
+          if (order[i]<secondpartybegin) next;
           order[i]=(i==partyIndex) ? secondpartybegin+pbPartyLength(battlerIndex)-1 : order[i]-1
-        end
-      end
-    end
-  end
+        }
+      }
+    }
+  }
 		#endregion
 		
 		/// <summary>
@@ -1358,7 +1358,7 @@ namespace PokemonUnity.Battle
 				if (showMessages) pbDisplayPaused(_INTL("There's no PP left for this move!"));
 				return false;
 			}
-			if (thispkmn.hasWorkingItem(Items.ASSAULT_VEST) {// && thismove.IsStatus?
+			if (thispkmn.hasWorkingItem(Items.ASSAULT_VEST)) {// && thismove.IsStatus?
 				if (showMessages) pbDisplayPaused(_INTL("The effects of the {1} prevent status moves from being used!", thispkmn.Item.ToString(TextScripts.Name)));
 				return false;
 			}
@@ -1429,79 +1429,79 @@ namespace PokemonUnity.Battle
 			return true;
 		}
 
-  def pbAutoChooseMove(idxPokemon,showMessages=true)
+  public void pbAutoChooseMove(idxPokemon,showMessages=true) {
     thispkmn=@battlers[idxPokemon]
-    if thispkmn.isFainted?
+    if (thispkmn.isFainted?) {
       @choices[idxPokemon][0]=0
       @choices[idxPokemon][1]=0
       @choices[idxPokemon][2]=null
-      return
-    end
-    if thispkmn.effects.Encore>0 && 
-       pbCanChooseMove?(idxPokemon,thispkmn.effects.EncoreIndex,false)
+      return;
+    }
+    if (thispkmn.effects.Encore>0 && 
+       pbCanChooseMove?(idxPokemon,thispkmn.effects.EncoreIndex,false)) {
       GameDebug.Log($"[Auto choosing Encore move] #{thispkmn.moves[thispkmn.effects.EncoreIndex].Name}")
       @choices[idxPokemon][0]=1    // "Use move"
       @choices[idxPokemon][1]=thispkmn.effects.EncoreIndex // Index of move
       @choices[idxPokemon][2]=thispkmn.moves[thispkmn.effects.EncoreIndex]
       @choices[idxPokemon][3]=-1   // No target chosen yet
-      if @doublebattle
+      if (@doublebattle) {
         thismove=thispkmn.moves[thispkmn.effects.EncoreIndex]
         target=thispkmn.pbTarget(thismove)
-        if target==Targets.SingleNonUser
+        if (target==Targets.SingleNonUser) {
           target=@scene.pbChooseTarget(idxPokemon,target)
-          pbRegisterTarget(idxPokemon,target) if target>=0
-        elsif target==Targets.UserOrPartner
+          if (target>=0) pbRegisterTarget(idxPokemon,target);
+        else if (target==Targets.UserOrPartner) {
           target=@scene.pbChooseTarget(idxPokemon,target)
-          pbRegisterTarget(idxPokemon,target) if target>=0 && (target&1)==(idxPokemon&1)
-        end
-      end
+          if (target>=0 && (target&1)==(idxPokemon&1)) pbRegisterTarget(idxPokemon,target);
+        }
+      }
     else
-      if !pbIsOpposing?(idxPokemon)
-        pbDisplayPaused(_INTL("{1} has no moves left!",thispkmn.Name)) if showMessages
-      end
+      if (!pbIsOpposing?(idxPokemon)) {
+        if (showMessages) pbDisplayPaused(_INTL("{1} has no moves left!",thispkmn.Name));
+      }
       @choices[idxPokemon][0]=1           // "Use move"
       @choices[idxPokemon][1]=-1          // Index of move to be used
       @choices[idxPokemon][2]=@struggle   // Use Struggle
       @choices[idxPokemon][3]=-1          // No target chosen yet
-    end
-  end
+    }
+  }
 
-  def pbRegisterMove(idxPokemon,idxMove,showMessages=true)
+  public void pbRegisterMove(idxPokemon,idxMove,showMessages=true) {
     thispkmn=@battlers[idxPokemon]
     thismove=thispkmn.moves[idxMove]
-    return false if !pbCanChooseMove?(idxPokemon,idxMove,showMessages)
+    if (!pbCanChooseMove?(idxPokemon,idxMove,showMessages)) return false;
     @choices[idxPokemon][0]=1         // "Use move"
     @choices[idxPokemon][1]=idxMove   // Index of move to be used
     @choices[idxPokemon][2]=thismove  // PokeBattle_Move object of the move
     @choices[idxPokemon][3]=-1        // No target chosen yet
-    return true
-  end
+    return true;
+  }
 
   public bool pbChoseMove (int i, Moves move) {
-    return false if @battlers[i].isFainted?
-    if @choices[i][0]==1 && @choices[i][1]>=0
+    if (@battlers[i].isFainted?) return false;
+    if (@choices[i][0]==1 && @choices[i][1]>=0) {
       choice=@choices[i][1]
-      return @battlers[i].moves[choice].id == move
-    end
-    return false
-  end
+      return @battlers[i].moves[choice].id == move;
+    }
+    return false;
+  }
 
   public bool pbChoseMoveFunctionCode (i,code) {
-    return false if @battlers[i].isFainted?
-    if @choices[i][0]==1 && @choices[i][1]>=0
+    if (@battlers[i].isFainted?) return false;
+    if (@choices[i][0]==1 && @choices[i][1]>=0) {
       choice=@choices[i][1]
-      return @battlers[i].moves[choice].function==code
-    end
-    return false
-  end
+      return @battlers[i].moves[choice].function==code;
+    }
+    return false;
+  }
 
-  def pbRegisterTarget(idxPokemon,idxTarget)
+  public void pbRegisterTarget(idxPokemon,idxTarget) {
     @choices[idxPokemon][3]=idxTarget   // Set target of move
-    return true
-  end
+    return true;
+  }
 
-  def pbPriority(ignorequickclaw=false,log=false)
-    return @priority if @usepriority // use stored priority if round isn't over yet
+  public void pbPriority(ignorequickclaw=false,log=false) {
+    if (round isn't over yet) if (@usepriority) return @priority;	// use stored priority;
     @priority.clear
     speeds=[]
     priorities=[]
@@ -1513,333 +1513,333 @@ namespace PokemonUnity.Battle
       speeds[i]=@battlers[i].pbSpeed
       quickclaw[i]=false
       lagging[i]=false
-      if !ignorequickclaw && @choices[i][0]==1 // Chose to use a move
-        if !quickclaw[i] && @battlers[i].hasWorkingItem(Items.CUSTAPBERRY) &&
+      if (!ignorequickclaw && @choices[i][0]==1) { // Chose to use a move
+        if (!quickclaw[i] && @battlers[i].hasWorkingItem(Items.CUSTAPBERRY) &&
            !@battlers[i].pbOpposing1.hasWorkingAbility(Abilities.UNNERVE) &&
-           !@battlers[i].pbOpposing2.hasWorkingAbility(Abilities.UNNERVE)
-          if (@battlers[i].hasWorkingAbility(Abilities.GLUTTONY) && @battlers[i].HP<=(int)Math.Floor(@battlers[i].TotalHP/2)) ||
-             @battlers[i].HP<=(int)Math.Floor(@battlers[i].TotalHP/4)
+           !@battlers[i].pbOpposing2.hasWorkingAbility(Abilities.UNNERVE)) {
+          if ((@battlers[i].hasWorkingAbility(Abilities.GLUTTONY) && @battlers[i].HP<=(int)Math.Floor(@battlers[i].TotalHP/2)) ||
+             @battlers[i].HP<=(int)Math.Floor(@battlers[i].TotalHP/4)) {
             pbCommonAnimation("UseItem",@battlers[i],null)
             quickclaw[i]=true
             pbDisplayBrief(_INTL("{1}'s {2} let it move first!",
                @battlers[i].ToString(),@battlers[i].item.ToString(TextScripts.Name))
             @battlers[i].pbConsumeItem
-          end
-        end
-        if !quickclaw[i] && @battlers[i].hasWorkingItem(Items.QUICKCLAW)
-          if pbRandom(10)<2
+          }
+        }
+        if (!quickclaw[i] && @battlers[i].hasWorkingItem(Items.QUICKCLAW)) {
+          if (pbRandom(10)<2) {
             pbCommonAnimation("UseItem",@battlers[i],null)
             quickclaw[i]=true
             pbDisplayBrief(_INTL("{1}'s {2} let it move first!",
                @battlers[i].ToString(),@battlers[i].item.ToString(TextScripts.Name))
-          end
-        end
-        if !quickclaw[i] &&
+          }
+        }
+        if (!quickclaw[i] &&
            (@battlers[i].hasWorkingAbility(Abilities.STALL) ||
            @battlers[i].hasWorkingItem(Items.LAGGINGTAIL) ||
-           @battlers[i].hasWorkingItem(Items.FULLINCENSE))
+           @battlers[i].hasWorkingItem(Items.FULLINCENSE))) {
           lagging[i]=true
-        end
-      end
-    end
+        }
+      }
+    }
 	#endregion
     #region Calculate each Pokémon's priority bracket, and get the min/max priorities
     for (int i = 0; i < 4; i++) {
       // Assume that doing something other than using a move is priority 0
       pri=0
-      if @choices[i][0]==1 // Chose to use a move
+      if (@choices[i][0]==1) { // Chose to use a move
         pri=@choices[i][2].priority
-        pri+=1 if @battlers[i].hasWorkingAbility(Abilities.PRANKSTER) &&
+        if (@battlers[i].hasWorkingAbility(Abilities.PRANKSTER) &&) pri+=1;
                   @choices[i][2].pbIsStatus?
-        pri+=1 if @battlers[i].hasWorkingAbility(Abilities.GALEWINGS) &&
+        if (@battlers[i].hasWorkingAbility(Abilities.GALEWINGS) &&) pri+=1;
                   @choices[i][2].type == Types.FLYING
-      end
+      }
       priorities[i]=pri
-      if i==0
+      if (i==0) {
         minpri=pri
         maxpri=pri
       else
-        minpri=pri if minpri>pri
-        maxpri=pri if maxpri<pri
-      end
-    end
+        if (minpri>pri) minpri=pri;
+        if (maxpri<pri) maxpri=pri;
+      }
+    }
 	#endregion
     // Find and order all moves with the same priority
     curpri=maxpri
     loop do
       temp.clear
       for (int j = 0; j < 4; j++) {
-        temp.Add(j) if priorities[j]==curpri
-      end
+        if (priorities[j]==curpri) temp.Add(j);
+      }
       // Sort by speed
-      if temp.Length==1
+      if (temp.Length==1) {
         @priority[@priority.Length]=@battlers[temp[0]]
-      elsif temp.Length>1
+      else if (temp.Length>1) {
         n=temp.Length
         for (int m = 0; m < temp.Length-1; m++) {
           for (int i = 1; i < temp.Length; i++) {
             // For each pair of battlers, rank the second compared to the first
             // -1 means rank higher, 0 means rank equal, 1 means rank lower
             cmp=0
-            if quickclaw[temp[i]]
+            if (quickclaw[temp[i]]) {
               cmp=-1
-              if quickclaw[temp[i-1]]
-                if speeds[temp[i]]==speeds[temp[i-1]]
+              if (quickclaw[temp[i-1]]) {
+                if (speeds[temp[i]]==speeds[temp[i-1]]) {
                   cmp=0
                 else
                   cmp=(speeds[temp[i]]>speeds[temp[i-1]]) ? -1 : 1
-                end
-              end
-            elsif quickclaw[temp[i-1]]
+                }
+              }
+            else if (quickclaw[temp[i-1]]) {
               cmp=1
-            elsif lagging[temp[i]]
+            else if (lagging[temp[i]]) {
               cmp=1
-              if lagging[temp[i-1]]
-                if speeds[temp[i]]==speeds[temp[i-1]]
+              if (lagging[temp[i-1]]) {
+                if (speeds[temp[i]]==speeds[temp[i-1]]) {
                   cmp=0
                 else
                   cmp=(speeds[temp[i]]>speeds[temp[i-1]]) ? 1 : -1
-                end
-              end
-            elsif lagging[temp[i-1]]
+                }
+              }
+            else if (lagging[temp[i-1]]) {
               cmp=-1
-            elsif speeds[temp[i]]!=speeds[temp[i-1]]
-              if @field.effects.TrickRoom>0
+            else if (speeds[temp[i]]!=speeds[temp[i-1]]) {
+              if (@field.effects.TrickRoom>0) {
                 cmp=(speeds[temp[i]]>speeds[temp[i-1]]) ? 1 : -1
               else
                 cmp=(speeds[temp[i]]>speeds[temp[i-1]]) ? -1 : 1
-              end
-            end
-            if cmp<0 || // Swap the pair according to the second battler's rank
-               (cmp==0 && pbRandom(2)==0)
+              }
+            }
+            if (cmp<0 || // Swap the pair according to the second battler's rank
+               (cmp==0 && pbRandom(2)==0)) {
               swaptmp=temp[i]
               temp[i]=temp[i-1]
               temp[i-1]=swaptmp
-            end
-          end
-        end
+            }
+          }
+        }
         // Battlers in this bracket are properly sorted, so add them to @priority
         foreach (var i in temp) {
           @priority[@priority.Length]=@battlers[i]
-        end
-      end
+        }
+      }
       curpri-=1
-      break if curpri<minpri
-    end
+      if (curpri<minpri) break;
+    }
     // Write the priority order to the debug log
-    if log
+    if (log) {
       d="[Priority] "; comma=false
       for (int i = 0; i < 4; i++) {
-        if @priority[i] && !@priority[i].isFainted?
-          d+=", " if comma
+        if (@priority[i] && !@priority[i].isFainted?) {
+          if (comma) d+=", ";
           d+=$"#{@priority[i].ToString(comma)} (#{@priority[i].index})"; comma=true
-        end
-      end
+        }
+      }
       GameDebug.Log($d)
-    end
+    }
     @usepriority=true
-    return @priority
-  end
+    return @priority;
+  }
 		#endregion
 
 		#region Switching Pokemon
   public bool pbCanSwitchLax (idxPokemon,pkmnidxTo,showMessages) {
-    if pkmnidxTo>=0
+    if (pkmnidxTo>=0) {
       party=pbParty(idxPokemon)
-      if pkmnidxTo>=party.Length
-        return false
-      end
-      if !party[pkmnidxTo]
-        return false
-      end
-      if party[pkmnidxTo].isEgg?
-        pbDisplayPaused(_INTL("An Egg can't battle!")) if showMessages 
-        return false
-      end
-      if !pbIsOwner?(idxPokemon,pkmnidxTo)
+      if (pkmnidxTo>=party.Length) {
+        return false;
+      }
+      if (!party[pkmnidxTo]) {
+        return false;
+      }
+      if (party[pkmnidxTo].isEgg?) {
+        if (showMessages ) pbDisplayPaused(_INTL("An Egg can't battle!"));
+        return false;
+      }
+      if (!pbIsOwner?(idxPokemon,pkmnidxTo)) {
         owner=pbPartyGetOwner(idxPokemon,pkmnidxTo)
-        pbDisplayPaused(_INTL("You can't switch {1}'s Pokémon with one of yours!",owner.Name)) if showMessages 
-        return false
-      end
-      if party[pkmnidxTo].HP<=0
-        pbDisplayPaused(_INTL("{1} has no energy left to battle!",party[pkmnidxTo].Name)) if showMessages 
-        return false
-      end
-      if @battlers[idxPokemon].pokemonIndex==pkmnidxTo ||
-         @battlers[idxPokemon].pbPartner.pokemonIndex==pkmnidxTo
-        pbDisplayPaused(_INTL("{1} is already in battle!",party[pkmnidxTo].Name)) if showMessages 
-        return false
-      end
-    end
-    return true
-  end
+        if (showMessages ) pbDisplayPaused(_INTL("You can't switch {1}'s Pokémon with one of yours!",owner.Name));
+        return false;
+      }
+      if (party[pkmnidxTo].HP<=0) {
+        if (showMessages ) pbDisplayPaused(_INTL("{1} has no energy left to battle!",party[pkmnidxTo].Name));
+        return false;
+      }
+      if (@battlers[idxPokemon].pokemonIndex==pkmnidxTo ||
+         @battlers[idxPokemon].pbPartner.pokemonIndex==pkmnidxTo) {
+        if (showMessages ) pbDisplayPaused(_INTL("{1} is already in battle!",party[pkmnidxTo].Name));
+        return false;
+      }
+    }
+    return true;
+  }
 
   public bool pbCanSwitch (idxPokemon,pkmnidxTo,showMessages,ignoremeanlook=false) {
     thispkmn=@battlers[idxPokemon]
     // Multi-Turn Attacks/Mean Look
-    if !pbCanSwitchLax?(idxPokemon,pkmnidxTo,showMessages)
-      return false
-    end
+    if (!pbCanSwitchLax?(idxPokemon,pkmnidxTo,showMessages)) {
+      return false;
+    }
     isOpposing=pbIsOpposing?(idxPokemon)
     party=pbParty(idxPokemon)
     for (int i = 0; i < 4; i++) {
-      next if isOpposing!=pbIsOpposing?(i)
-      if choices[i][0]==2 && choices[i][1]==pkmnidxTo
-        pbDisplayPaused(_INTL("{1} has already been selected.",party[pkmnidxTo].Name)) if showMessages 
-        return false
-      end
-    end
-    if thispkmn.hasWorkingItem(Items.SHEDSHELL)
-      return true
-    end
-    if Core.USENEWBATTLEMECHANICS && thispkmn.hasType(Types.GHOST)
-      return true
-    end
-    if thispkmn.effects.MultiTurn>0 ||
-       (!ignoremeanlook && thispkmn.effects.MeanLook>=0)
-      pbDisplayPaused(_INTL("{1} can't be switched out!",thispkmn.ToString())) if showMessages
-      return false
-    end
-    if @field.effects.FairyLock>0
-      pbDisplayPaused(_INTL("{1} can't be switched out!",thispkmn.ToString())) if showMessages
-      return false
-    end
-    if thispkmn.effects.Ingrain
-      pbDisplayPaused(_INTL("{1} can't be switched out!",thispkmn.ToString())) if showMessages
-      return false
-    end
+      if (isOpposing!=pbIsOpposing?(i)) next;
+      if (choices[i][0]==2 && choices[i][1]==pkmnidxTo) {
+        if (showMessages ) pbDisplayPaused(_INTL("{1} has already been selected.",party[pkmnidxTo].Name));
+        return false;
+      }
+    }
+    if (thispkmn.hasWorkingItem(Items.SHEDSHELL)) {
+      return true;
+    }
+    if (Core.USENEWBATTLEMECHANICS && thispkmn.hasType(Types.GHOST)) {
+      return true;
+    }
+    if (thispkmn.effects.MultiTurn>0 ||
+       (!ignoremeanlook && thispkmn.effects.MeanLook>=0)) {
+      if (showMessages) pbDisplayPaused(_INTL("{1} can't be switched out!",thispkmn.ToString()));
+      return false;
+    }
+    if (@field.effects.FairyLock>0) {
+      if (showMessages) pbDisplayPaused(_INTL("{1} can't be switched out!",thispkmn.ToString()));
+      return false;
+    }
+    if (thispkmn.effects.Ingrain) {
+      if (showMessages) pbDisplayPaused(_INTL("{1} can't be switched out!",thispkmn.ToString()));
+      return false;
+    }
     opp1=thispkmn.pbOpposing1
     opp2=thispkmn.pbOpposing2
     opp=null
-    if thispkmn.hasType(Types.STEEL)
-      opp=opp1 if opp1.hasWorkingAbility(Abilities.MAGNETPULL)
-      opp=opp2 if opp2.hasWorkingAbility(Abilities.MAGNETPULL)
-    end
-    if !thispkmn.isAirborne?
-      opp=opp1 if opp1.hasWorkingAbility(Abilities.ARENATRAP)
-      opp=opp2 if opp2.hasWorkingAbility(Abilities.ARENATRAP)
-    end
-    if !thispkmn.hasWorkingAbility(Abilities.SHADOWTAG)
-      opp=opp1 if opp1.hasWorkingAbility(Abilities.SHADOWTAG)
-      opp=opp2 if opp2.hasWorkingAbility(Abilities.SHADOWTAG)
-    end
-    if opp
+    if (thispkmn.hasType(Types.STEEL)) {
+      if (opp1.hasWorkingAbility(Abilities.MAGNETPULL)) opp=opp1;
+      if (opp2.hasWorkingAbility(Abilities.MAGNETPULL)) opp=opp2;
+    }
+    if (!thispkmn.isAirborne?) {
+      if (opp1.hasWorkingAbility(Abilities.ARENATRAP)) opp=opp1;
+      if (opp2.hasWorkingAbility(Abilities.ARENATRAP)) opp=opp2;
+    }
+    if (!thispkmn.hasWorkingAbility(Abilities.SHADOWTAG)) {
+      if (opp1.hasWorkingAbility(Abilities.SHADOWTAG)) opp=opp1;
+      if (opp2.hasWorkingAbility(Abilities.SHADOWTAG)) opp=opp2;
+    }
+    if (opp) {
       abilityname=opp.ability.ToString(TextScripts.Name)
-      pbDisplayPaused(_INTL("{1}'s {2} prevents switching!",opp.ToString(),abilityname)) if showMessages
-      return false
-    end
-    return true
-  end
+      if (showMessages) pbDisplayPaused(_INTL("{1}'s {2} prevents switching!",opp.ToString(),abilityname));
+      return false;
+    }
+    return true;
+  }
 
-  def pbRegisterSwitch(idxPokemon,idxOther)
-    return false if !pbCanSwitch?(idxPokemon,idxOther,false)
+  public void pbRegisterSwitch(idxPokemon,idxOther) {
+    if (!pbCanSwitch?(idxPokemon,idxOther,false)) return false;
     @choices[idxPokemon][0]=2          // "Switch Pokémon"
     @choices[idxPokemon][1]=idxOther   // Index of other Pokémon to switch with
     @choices[idxPokemon][2]=null
     side=(pbIsOpposing?(idxPokemon)) ? 1 : 0
     owner=pbGetOwnerIndex(idxPokemon)
-    if @megaEvolution[side][owner]==idxPokemon
+    if (@megaEvolution[side][owner]==idxPokemon) {
       @megaEvolution[side][owner]=-1
-    end
-    return true
-  end
+    }
+    return true;
+  }
 
   public bool pbCanChooseNonActive (index) {
     party=pbParty(index)
     for (int i = 0; i < party.Length; i++) {
-      return true if pbCanSwitchLax?(index,i,false)
-    end
-    return false
-  end
+      if (pbCanSwitchLax?(index,i,false)) return true;
+    }
+    return false;
+  }
 
-  def pbSwitch(favorDraws=false)
-    if !favorDraws
-      return if @decision>0
+  public void pbSwitch(favorDraws=false) {
+    if (!favorDraws) {
+      if (@decision>0) return;
     else
-      return if @decision==5
-    end
+      if (@decision==5) return;
+    }
     pbJudge()
-    return if @decision>0
+    if (@decision>0) return;
     firstbattlerhp=@battlers[0].HP
     switched=[]
     for (int index = 0; index < 4; index++) {
-      next if !@doublebattle && pbIsDoubleBattler?(index)
-      next if @battlers[index] && !@battlers[index].isFainted?
-      next if !pbCanChooseNonActive?(index)
-      if !pbOwnedByPlayer?(index)
-        if !pbIsOpposing?(index) || (@opponent && pbIsOpposing?(index))
+      if (!@doublebattle && pbIsDoubleBattler?(index)) next;
+      if (@battlers[index] && !@battlers[index].isFainted?) next;
+      if (!pbCanChooseNonActive?(index)) next;
+      if (!pbOwnedByPlayer?(index)) {
+        if (!pbIsOpposing?(index) || (@opponent && pbIsOpposing?(index))) {
           newenemy=pbSwitchInBetween(index,false,false)
           newenemyname=newenemy
-          if newenemy>=0 && pbParty(index)[newenemy].ability == Abilities.ILLUSION
+          if (newenemy>=0 && pbParty(index)[newenemy].ability == Abilities.ILLUSION) {
             newenemyname=pbGetLastPokeInTeam(index)
-          end
+          }
           opponent=pbGetOwner(index)
-          if !@doublebattle && firstbattlerhp>0 && @shiftStyle && @opponent &&
+          if (!@doublebattle && firstbattlerhp>0 && @shiftStyle && @opponent &&
               @internalbattle && pbCanChooseNonActive?(0) && pbIsOpposing?(index) &&
-              @battlers[0].effects.Outrage==0
+              @battlers[0].effects.Outrage==0) {
             pbDisplayPaused(_INTL("{1} is about to send in {2}.",opponent.fullname,pbParty(index)[newenemyname].Name))
-            if pbDisplayConfirm(_INTL("Will {1} change Pokémon?",self.pbPlayer.Name))
+            if (pbDisplayConfirm(_INTL("Will {1} change Pokémon?",self.pbPlayer.Name))) {
               newpoke=pbSwitchPlayer(0,true,true)
-              if newpoke>=0
+              if (newpoke>=0) {
                 newpokename=newpoke
-                if @party1[newpoke].ability == Abilities.ILLUSION
+                if (@party1[newpoke].ability == Abilities.ILLUSION) {
                   newpokename=pbGetLastPokeInTeam(0)
-                end
+                }
                 pbDisplayBrief(_INTL("{1}, that's enough! Come back!",@battlers[0].Name))
                 pbRecallAndReplace(0,newpoke,newpokename)
                 switched.Add(0)
-              end
-            end
-          end
+              }
+            }
+          }
           pbRecallAndReplace(index,newenemy,newenemyname,false,false)
           switched.Add(index)
-        end
-      elsif @opponent
+        }
+      else if (@opponent) {
         newpoke=pbSwitchInBetween(index,true,false)
         newpokename=newpoke
-        if @party1[newpoke].ability == Abilities.ILLUSION
+        if (@party1[newpoke].ability == Abilities.ILLUSION) {
           newpokename=pbGetLastPokeInTeam(index)
-        end
+        }
         pbRecallAndReplace(index,newpoke,newpokename)
         switched.Add(index)
       else
         switch=false
-        if !pbDisplayConfirm(_INTL("Use next Pokémon?")) 
+        if (!pbDisplayConfirm(_INTL("Use next Pokémon?")) ) {
           switch=(pbRun(index,true)<=0)
         else
           switch=true
-        end
-        if switch
+        }
+        if (switch) {
           newpoke=pbSwitchInBetween(index,true,false)
           newpokename=newpoke
-          if @party1[newpoke].ability == Abilities.ILLUSION
+          if (@party1[newpoke].ability == Abilities.ILLUSION) {
             newpokename=pbGetLastPokeInTeam(index)
-          end
+          }
           pbRecallAndReplace(index,newpoke,newpokename)
           switched.Add(index)
-        end
-      end
-    end
-    if switched.Length>0
+        }
+      }
+    }
+    if (switched.Length>0) {
       priority=pbPriority
       foreach (var i in priority) {
-        i.pbAbilitiesOnSwitchIn(true) if switched.Contains(i.index)
-      end
-    end
-  end
+        if (switched.Contains(i.index)) i.pbAbilitiesOnSwitchIn(true);
+      }
+    }
+  }
 
-  def pbSendOut(index,pokemon)
+  public void pbSendOut(index,pokemon) {
     pbSetSeen(pokemon)
     @peer.pbOnEnteringBattle(self,pokemon)
-    if pbIsOpposing?(index)
+    if (pbIsOpposing?(index)) {
       @scene.pbTrainerSendOut(index,pokemon)
     else
       @scene.pbSendOut(index,pokemon)
-    end
+    }
     @scene.pbResetMoveIndex(index)
-  end
+  }
 
-  def pbReplace(index,newpoke,batonpass=false)
+  public void pbReplace(index,newpoke,batonpass=false) {
     party=pbParty(index)
     oldpoke=@battlers[index].pokemonIndex
     // Initialise the new Pokémon
@@ -1848,47 +1848,47 @@ namespace PokemonUnity.Battle
     partyorder=(!pbIsOpposing?(index)) ? @party1order : @party2order
     bpo=-1; bpn=-1
     for (int i = 0; i < partyorder.Length; i++) {
-      bpo=i if partyorder[i]==oldpoke
-      bpn=i if partyorder[i]==newpoke
-    end
+      if (partyorder[i]==oldpoke) bpo=i;
+      if (partyorder[i]==newpoke) bpn=i;
+    }
     p=partyorder[bpo]; partyorder[bpo]=partyorder[bpn]; partyorder[bpn]=p
     // Send out the new Pokémon
     pbSendOut(index,party[newpoke])
     pbSetSeen(party[newpoke])
-  end
+  }
 
-  def pbRecallAndReplace(index,newpoke,newpokename=-1,batonpass=false,moldbreaker=false)
+  public void pbRecallAndReplace(index,newpoke,newpokename=-1,batonpass=false,moldbreaker=false) {
     @battlers[index].pbResetForm
-    if !@battlers[index].isFainted?
+    if (!@battlers[index].isFainted?) {
       @scene.pbRecall(index)
-    end
+    }
     pbMessagesOnReplace(index,newpoke,newpokename)
     pbReplace(index,newpoke,batonpass)
-    return pbOnActiveOne(@battlers[index],false,moldbreaker)
-  end
+    return pbOnActiveOne(@battlers[index],false,moldbreaker);
+  }
 
-  def pbMessagesOnReplace(index,newpoke,newpokename=-1)
-    newpokename=newpoke if newpokename<0
+  public void pbMessagesOnReplace(index,newpoke,newpokename=-1) {
+    if (newpokename<0) newpokename=newpoke;
     party=pbParty(index)
-    if pbOwnedByPlayer?(index)
+    if (pbOwnedByPlayer?(index)) {
       //if !party[newpoke]
       //  p [index,newpoke,party[newpoke],pbAllFainted?(party)]
       //  GameDebug.Log($[index,newpoke,party[newpoke],"pbMOR"].inspect)
       //  for (int i = 0; i < party.Length; i++) {
       //    GameDebug.Log($[i,party[i].HP].inspect)
-      //  end
+      //  }
       //  raise new BattleAbortedException
-      //end
+      //}
       opposing=@battlers[index].pbOppositeOpposing
-      if opposing.isFainted? || opposing.HP==opposing.TotalHP
+      if (opposing.isFainted? || opposing.HP==opposing.TotalHP) {
         pbDisplayBrief(_INTL("Go! {1}!",party[newpokename].Name))
-      elsif opposing.HP>=(opposing.TotalHP/2)
+      else if (opposing.HP>=(opposing.TotalHP/2)) {
         pbDisplayBrief(_INTL("Do it! {1}!",party[newpokename].Name))
-      elsif opposing.HP>=(opposing.TotalHP/4)
+      else if (opposing.HP>=(opposing.TotalHP/4)) {
         pbDisplayBrief(_INTL("Go for it, {1}!",party[newpokename].Name))
       else
         pbDisplayBrief(_INTL("Your opponent's weak!\nGet 'em, {1}!",party[newpokename].Name))
-      end
+      }
       GameDebug.Log($"[Send out Pokémon] Player sent out #{party[newpokename].Name} in position #{index}")
     else
       //if !party[newpoke]
@@ -1896,327 +1896,327 @@ namespace PokemonUnity.Battle
       //  GameDebug.Log($[index,newpoke,party[newpoke],"pbMOR"].inspect)
       //  for (int i = 0; i < party.Length; i++) {
       //    GameDebug.Log($[i,party[i].HP].inspect)
-      //  end
+      //  }
       //  raise new BattleAbortedException
-      //end
+      //}
       owner=pbGetOwner(index)
       pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",owner.fullname,party[newpokename].Name))
       GameDebug.Log($"[Send out Pokémon] Opponent sent out #{party[newpokename].Name} in position #{index}")
-    end
-  end
+    }
+  }
 
-  def pbSwitchInBetween(index,lax,cancancel)
-    if !pbOwnedByPlayer?(index)
-      return @scene.pbChooseNewEnemy(index,pbParty(index))
+  public void pbSwitchInBetween(index,lax,cancancel) {
+    if (!pbOwnedByPlayer?(index)) {
+      return @scene.pbChooseNewEnemy(index,pbParty(index));
     else
-      return pbSwitchPlayer(index,lax,cancancel)
-    end
-  end
+      return pbSwitchPlayer(index,lax,cancancel);
+    }
+  }
 
-  def pbSwitchPlayer(index,lax,cancancel)
-    if @debug
-      return @scene.pbChooseNewEnemy(index,pbParty(index))
+  public void pbSwitchPlayer(index,lax,cancancel) {
+    if (@debug) {
+      return @scene.pbChooseNewEnemy(index,pbParty(index));
     else
-      return @scene.pbSwitch(index,lax,cancancel)
-    end
-  end
+      return @scene.pbSwitch(index,lax,cancancel);
+    }
+  }
 		#endregion
 
 		#region Using an Item
   /// Uses an item on a Pokémon in the player's party.
-  def pbUseItemOnPokemon(item,pkmnIndex,userPkmn,scene)
+  public void pbUseItemOnPokemon(item,pkmnIndex,userPkmn,scene) {
     pokemon=@party1[pkmnIndex]
     battler=null
     name=pbGetOwner(userPkmn.index).fullname
-    name=pbGetOwner(userPkmn.index).Name if pbBelongsToPlayer?(userPkmn.index)
+    if (pbBelongsToPlayer?(userPkmn.index)) name=pbGetOwner(userPkmn.index).Name;
     pbDisplayBrief(_INTL("{1} used the\r\n{2}.",name,item.ToString(TextScripts.Name)))
     GameDebug.Log($"[Use item] Player used #{item.ToString(TextScripts.Name)} on #{pokemon.Name}")
     ret=false
-    if pokemon.isEgg?
+    if (pokemon.isEgg?) {
       pbDisplay(_INTL("But it had no effect!"))
     else
       for (int i = 0; i < 4; i++) {
-        if !pbIsOpposing?(i) && @battlers[i].pokemonIndex==pkmnIndex
+        if (!pbIsOpposing?(i) && @battlers[i].pokemonIndex==pkmnIndex) {
           battler=@battlers[i]
-        end
-      end
+        }
+      }
       ret=ItemHandlers.triggerBattleUseOnPokemon(item,pokemon,battler,scene)
-    end
-    if !ret && pbBelongsToPlayer?(userPkmn.index)
-      if $PokemonBag.pbCanStore?(item)
+    }
+    if (!ret && pbBelongsToPlayer?(userPkmn.index)) {
+      if ($PokemonBag.pbCanStore?(item)) {
         $PokemonBag.pbStoreItem(item)
       else
         raise _INTL("Couldn't return unused item to Bag somehow.")
-      end
-    end
-    return ret
-  end
+      }
+    }
+    return ret;
+  }
 
   /// Uses an item on an active Pokémon.
-  def pbUseItemOnBattler(item,index,userPkmn,scene)
+  public void pbUseItemOnBattler(item,index,userPkmn,scene) {
     GameDebug.Log($"[Use item] Player used #{item.ToString(TextScripts.Name)} on #{@battlers[index].ToString(true)}")
     ret=ItemHandlers.triggerBattleUseOnBattler(item,@battlers[index],scene)
-    if !ret && pbBelongsToPlayer?(userPkmn.index)
-      if $PokemonBag.pbCanStore?(item)
+    if (!ret && pbBelongsToPlayer?(userPkmn.index)) {
+      if ($PokemonBag.pbCanStore?(item)) {
         $PokemonBag.pbStoreItem(item)
       else
         raise _INTL("Couldn't return unused item to Bag somehow.")
-      end
-    end
-    return ret
-  end
+      }
+    }
+    return ret;
+  }
 
-  def pbRegisterItem(idxPokemon,idxItem,idxTarget=null)
-    if idxTarget!=null && idxTarget>=0
+  public void pbRegisterItem(idxPokemon,idxItem,idxTarget=null) {
+    if (idxTarget!=null && idxTarget>=0) {
       for (int i = 0; i < 4; i++) {
-        if !@battlers[i].pbIsOpposing?(idxPokemon) &&
+        if (!@battlers[i].pbIsOpposing?(idxPokemon) &&
            @battlers[i].pokemonIndex==idxTarget &&
-           @battlers[i].effects.Embargo>0
+           @battlers[i].effects.Embargo>0) {
           pbDisplay(_INTL("Embargo's effect prevents the item's use on {1}!",@battlers[i].ToString(true)))
-          if pbBelongsToPlayer?(@battlers[i].index)
-            if $PokemonBag.pbCanStore?(idxItem)
+          if (pbBelongsToPlayer?(@battlers[i].index)) {
+            if ($PokemonBag.pbCanStore?(idxItem)) {
               $PokemonBag.pbStoreItem(idxItem)
             else
               raise _INTL("Couldn't return unused item to Bag somehow.")
-            end
-          end
-          return false
-        end
-      end
-    end
-    if ItemHandlers.hasUseInBattle(idxItem)
-      if idxPokemon==0 // Player's first Pokémon
-        if ItemHandlers.triggerBattleUseOnBattler(idxItem,@battlers[idxPokemon],self)
+            }
+          }
+          return false;
+        }
+      }
+    }
+    if (ItemHandlers.hasUseInBattle(idxItem)) {
+      if (idxPokemon==0) { // Player's first Pokémon
+        if (ItemHandlers.triggerBattleUseOnBattler(idxItem,@battlers[idxPokemon],self)) {
           // Using Poké Balls or Poké Doll only
           ItemHandlers.triggerUseInBattle(idxItem,@battlers[idxPokemon],self)
-          if @doublebattle
+          if (@doublebattle) {
             @battlers[idxPokemon+2].effects.SkipTurn=true
-          end
+          }
         else
-          if $PokemonBag.pbCanStore?(idxItem)
+          if ($PokemonBag.pbCanStore?(idxItem)) {
             $PokemonBag.pbStoreItem(idxItem)
           else
             raise _INTL("Couldn't return unusable item to Bag somehow.")
-          end
-          return false
-        end
+          }
+          return false;
+        }
       else
-        if ItemHandlers.triggerBattleUseOnBattler(idxItem,@battlers[idxPokemon],self)
+        if (ItemHandlers.triggerBattleUseOnBattler(idxItem,@battlers[idxPokemon],self)) {
           pbDisplay(_INTL("It's impossible to aim without being focused!"))
-        end
-        return false
-      end
-    end
+        }
+        return false;
+      }
+    }
     @choices[idxPokemon][0]=3         // "Use an item"
     @choices[idxPokemon][1]=idxItem   // ID of item to be used
     @choices[idxPokemon][2]=idxTarget // Index of Pokémon to use item on
     side=(pbIsOpposing?(idxPokemon)) ? 1 : 0
     owner=pbGetOwnerIndex(idxPokemon)
-    if @megaEvolution[side][owner]==idxPokemon
+    if (@megaEvolution[side][owner]==idxPokemon) {
       @megaEvolution[side][owner]=-1
-    end
-    return true
-  end
+    }
+    return true;
+  }
 
-  def pbEnemyUseItem(item,battler)
-    return 0 if !@internalbattle
+  public void pbEnemyUseItem(item,battler) {
+    if (!@internalbattle) return 0;
     items=pbGetOwnerItems(battler.index)
-    return if !items
+    if (!items) return;
     opponent=pbGetOwner(battler.index)
     for (int i = 0; i < items.Length; i++) {
-      if items[i]==item
+      if (items[i]==item) {
         items.delete_at(i)
-        break
-      end
-    end
+        break;
+      }
+    }
     itemname=item.ToString(TextScripts.Name)
     pbDisplayBrief(_INTL("{1} used the\r\n{2}!",opponent.fullname,itemname))
     GameDebug.Log($"[Use item] Opponent used #{itemname} on #{battler.ToString(true)}")
-    if item == Items.POTION
+    if (item == Items.POTION) {
       battler.pbRecoverHP(20,true)
       pbDisplay(_INTL("{1}'s HP was restored.",battler.ToString()))
-    elsif item == Items.SUPERPOTION
+    else if (item == Items.SUPERPOTION) {
       battler.pbRecoverHP(50,true)
       pbDisplay(_INTL("{1}'s HP was restored.",battler.ToString()))
-    elsif item == Items.HYPERPOTION
+    else if (item == Items.HYPERPOTION) {
       battler.pbRecoverHP(200,true)
       pbDisplay(_INTL("{1}'s HP was restored.",battler.ToString()))
-    elsif item == Items.MAXPOTION
+    else if (item == Items.MAXPOTION) {
       battler.pbRecoverHP(battler.TotalHP-battler.HP,true)
       pbDisplay(_INTL("{1}'s HP was restored.",battler.ToString()))
-    elsif item == Items.FULLRESTORE
+    else if (item == Items.FULLRESTORE) {
       fullhp=(battler.HP==battler.TotalHP)
       battler.pbRecoverHP(battler.TotalHP-battler.HP,true)
       battler.status=0; battler.statusCount=0
       battler.effects.Confusion=0
-      if fullhp
+      if (fullhp) {
         pbDisplay(_INTL("{1} became healthy!",battler.ToString()))
       else
         pbDisplay(_INTL("{1}'s HP was restored.",battler.ToString()))
-      end
-    elsif item == Items.FULLHEAL
+      }
+    else if (item == Items.FULLHEAL) {
       battler.status=0; battler.statusCount=0
       battler.effects.Confusion=0
       pbDisplay(_INTL("{1} became healthy!",battler.ToString()))
-    elsif item == Items.XATTACK
-      if battler.pbCanIncreaseStatStage?(Stats.ATTACK,battler)
+    else if (item == Items.XATTACK) {
+      if (battler.pbCanIncreaseStatStage?(Stats.ATTACK,battler)) {
         battler.pbIncreaseStat(Stats.ATTACK,1,battler,true)
-      end
-    elsif item == Items.XDEFEND
-      if battler.pbCanIncreaseStatStage?(Stats.DEFENSE,battler)
+      }
+    else if (item == Items.XDEFEND) {
+      if (battler.pbCanIncreaseStatStage?(Stats.DEFENSE,battler)) {
         battler.pbIncreaseStat(Stats.DEFENSE,1,battler,true)
-      end
-    elsif item == Items.XSPEED
-      if battler.pbCanIncreaseStatStage?(Stats.SPEED,battler)
+      }
+    else if (item == Items.XSPEED) {
+      if (battler.pbCanIncreaseStatStage?(Stats.SPEED,battler)) {
         battler.pbIncreaseStat(Stats.SPEED,1,battler,true)
-      end
-    elsif item == Items.XSPECIAL
-      if battler.pbCanIncreaseStatStage?(Stats.SPATK,battler)
+      }
+    else if (item == Items.XSPECIAL) {
+      if (battler.pbCanIncreaseStatStage?(Stats.SPATK,battler)) {
         battler.pbIncreaseStat(Stats.SPATK,1,battler,true)
-      end
-    elsif item == Items.XSPDEF
-      if battler.pbCanIncreaseStatStage?(Stats.SPDEF,battler)
+      }
+    else if (item == Items.XSPDEF) {
+      if (battler.pbCanIncreaseStatStage?(Stats.SPDEF,battler)) {
         battler.pbIncreaseStat(Stats.SPDEF,1,battler,true)
-      end
-    elsif item == Items.XACCURACY
-      if battler.pbCanIncreaseStatStage?(Stats.ACCURACY,battler)
+      }
+    else if (item == Items.XACCURACY) {
+      if (battler.pbCanIncreaseStatStage?(Stats.ACCURACY,battler)) {
         battler.pbIncreaseStat(Stats.ACCURACY,1,battler,true)
-      end
-    end
-  end
+      }
+    }
+  }
 		#endregion
 
 		#region Fleeing from Battle
 		public bool pbCanRun(int idxPokemon)
 		{
-    return false if @opponent
-    return false if @cantescape && !pbIsOpposing?(idsPokemon)
+    if (@opponent) return false;
+    if (@cantescape && !pbIsOpposing?(idsPokemon)) return false;
     thispkmn=@battlers[idxPokemon]
-    return true if thispkmn.hasType(Types.GHOST) && Core.USENEWBATTLEMECHANICS
-    return true if thispkmn.hasWorkingItem(Items.SMOKEBALL)
-    return true if thispkmn.hasWorkingAbility(Abilities.RUNAWAY)
-    return pbCanSwitch?(idxPokemon,-1,false)
+    if (thispkmn.hasType(Types.GHOST) && Core.USENEWBATTLEMECHANICS) return true;
+    if (thispkmn.hasWorkingItem(Items.SMOKEBALL)) return true;
+    if (thispkmn.hasWorkingAbility(Abilities.RUNAWAY)) return true;
+    return pbCanSwitch?(idxPokemon,-1,false);
 		}
 
-  def pbRun(idxPokemon,duringBattle=false)
+  public void pbRun(idxPokemon,duringBattle=false) {
     thispkmn=@battlers[idxPokemon]
-    if pbIsOpposing?(idxPokemon)
-      return 0 if @opponent
+    if (pbIsOpposing?(idxPokemon)) {
+      if (@opponent) return 0;
       @choices[i][0]=5 // run
       @choices[i][1]=0 
       @choices[i][2]=null
-      return -1
-    end
-    if @opponent
-      if $DEBUG && Input.press?(Input::CTRL)
-        if pbDisplayConfirm(_INTL("Treat this battle as a win?"))
+      return -1;
+    }
+    if (@opponent) {
+      if ($DEBUG && Input.press?(Input::CTRL)) {
+        if (pbDisplayConfirm(_INTL("Treat this battle as a win?"))) {
           @decision=1
-          return 1
-        elsif pbDisplayConfirm(_INTL("Treat this battle as a loss?"))
+          return 1;
+        else if (pbDisplayConfirm(_INTL("Treat this battle as a loss?"))) {
           @decision=2
-          return 1
-        end
-      elsif @internalbattle
+          return 1;
+        }
+      else if (@internalbattle) {
         pbDisplayPaused(_INTL("No! There's no running from a Trainer battle!"))
-      elsif pbDisplayConfirm(_INTL("Would you like to forfeit the match and quit now?"))
+      else if (pbDisplayConfirm(_INTL("Would you like to forfeit the match and quit now?"))) {
         pbDisplay(_INTL("{1} forfeited the match!",self.pbPlayer.Name))
         @decision=3
-        return 1
-      end
-      return 0
-    end
-    if $DEBUG && Input.press?(Input::CTRL)
+        return 1;
+      }
+      return 0;
+    }
+    if ($DEBUG && Input.press?(Input::CTRL)) {
       pbDisplayPaused(_INTL("Got away safely!"))
       @decision=3
-      return 1
-    end
-    if @cantescape
+      return 1;
+    }
+    if (@cantescape) {
       pbDisplayPaused(_INTL("Can't escape!"))
-      return 0
-    end
-    if thispkmn.hasType(Types.GHOST) && Core.USENEWBATTLEMECHANICS
+      return 0;
+    }
+    if (thispkmn.hasType(Types.GHOST) && Core.USENEWBATTLEMECHANICS) {
       pbDisplayPaused(_INTL("Got away safely!"))
       @decision=3
-      return 1
-    end
-    if thispkmn.hasWorkingAbility(Abilities.RUNAWAY)
-      if duringBattle
+      return 1;
+    }
+    if (thispkmn.hasWorkingAbility(Abilities.RUNAWAY)) {
+      if (duringBattle) {
         pbDisplayPaused(_INTL("Got away safely!"))
       else
         pbDisplayPaused(_INTL("{1} escaped using Run Away!",thispkmn.ToString()))
-      end
+      }
       @decision=3
-      return 1
-    end
-    if thispkmn.hasWorkingItem(Items.SMOKEBALL)
-      if duringBattle
+      return 1;
+    }
+    if (thispkmn.hasWorkingItem(Items.SMOKEBALL)) {
+      if (duringBattle) {
         pbDisplayPaused(_INTL("Got away safely!"))
       else
         pbDisplayPaused(_INTL("{1} escaped using its {2}!",thispkmn.ToString(),thispkmn.item.ToString(TextScripts.Name)))
-      end
+      }
       @decision=3
-      return 1
-    end
-    if !duringBattle && !pbCanSwitch?(idxPokemon,-1,false)
+      return 1;
+    }
+    if (!duringBattle && !pbCanSwitch?(idxPokemon,-1,false)) {
       pbDisplayPaused(_INTL("Can't escape!"))
-      return 0
-    end
+      return 0;
+    }
     // Note: not pbSpeed, because using unmodified Speed
     speedPlayer=@battlers[idxPokemon].speed
     opposing=@battlers[idxPokemon].pbOppositeOpposing
-    opposing=opposing.pbPartner if opposing.isFainted?
-    if !opposing.isFainted?
+    if (opposing.isFainted?) opposing=opposing.pbPartner;
+    if (!opposing.isFainted?) {
       speedEnemy=opposing.speed
-      if speedPlayer>speedEnemy
+      if (speedPlayer>speedEnemy) {
         rate=256
       else
-        speedEnemy=1 if speedEnemy<=0
+        if (speedEnemy<=0) speedEnemy=1;
         rate=speedPlayer*128/speedEnemy
         rate+=@runCommand*30
         rate&=0xFF
-      end
+      }
     else
       rate=256
-    end
+    }
     ret=1
-    if pbAIRandom(256)<rate
+    if (pbAIRandom(256)<rate) {
       pbDisplayPaused(_INTL("Got away safely!"))
       @decision=3
     else
       pbDisplayPaused(_INTL("Can't escape!"))
       ret=-1
-    end
-    @runCommand+=1 if !duringBattle
-    return ret
-  end
+    }
+    if (!duringBattle) @runCommand+=1;
+    return ret;
+  }
 		#endregion
 
 		#region Mega Evolve Battler
   public bool pbCanMegaEvolve (index) {
-    return false if $game_switches[NO_MEGA_EVOLUTION]
-    return false if !@battlers[index].hasMega?
-    return false if pbIsOpposing?(index) && !@opponent
-    return true if $DEBUG && Input.press?(Input::CTRL)
-    return false if !pbHasMegaRing(index)
+    if ($game_switches[NO_MEGA_EVOLUTION]) return false;
+    if (!@battlers[index].hasMega?) return false;
+    if (pbIsOpposing?(index) && !@opponent) return false;
+    if ($DEBUG && Input.press?(Input::CTRL)) return true;
+    if (!pbHasMegaRing(index)) return false;
     side=(pbIsOpposing?(index)) ? 1 : 0
     owner=pbGetOwnerIndex(index)
-    return false if @megaEvolution[side][owner]!=-1
-    return false if @battlers[index].effects.SkyDrop
-    return true
-  end
+    if (@megaEvolution[side][owner]!=-1) return false;
+    if (@battlers[index].effects.SkyDrop) return false;
+    return true;
+  }
 
-  def pbRegisterMegaEvolution(index)
+  public void pbRegisterMegaEvolution(index) {
     side=(pbIsOpposing?(index)) ? 1 : 0
     owner=pbGetOwnerIndex(index)
     @megaEvolution[side][owner]=index
-  end
+  }
 
-  def pbMegaEvolve(index)
-    return if !@battlers[index] || !@battlers[index].pokemon
-    return if !(@battlers[index].hasMega? rescue false)
-    return if (@battlers[index].isMega? rescue true)
+  public void pbMegaEvolve(index) {
+    if (!@battlers[index] || !@battlers[index].pokemon) return;
+    if (!(@battlers[index].hasMega? rescue false)) return;
+    if ((@battlers[index].isMega? rescue true)) return;
     ownername=pbGetOwner(index).fullname
-    ownername=pbGetOwner(index).Name if pbBelongsToPlayer?(index)
+    if (pbBelongsToPlayer?(index)) ownername=pbGetOwner(index).Name;
     switch (@battlers[index].pokemon.megaMessage) { //rescue 0
     case 1: // Rayquaza
       pbDisplay(_INTL("{1}'s fervent wish has reached {2}!",ownername,@battlers[index].ToString()))
@@ -2225,8 +2225,8 @@ namespace PokemonUnity.Battle
       pbDisplay(_INTL("{1}'s {2} is reacting to {3}'s {4}!",
          @battlers[index].ToString(),@battlers[index].item.ToString(TextScripts.Name),
          ownername,pbGetMegaRingName(index)))
-      break
-    end
+      break;
+    }
     pbCommonAnimation("MegaEvolution",@battlers[index],null)
     @battlers[index].pokemon.makeMega
     @battlers[index].form=@battlers[index].pokemon.form
@@ -2234,127 +2234,127 @@ namespace PokemonUnity.Battle
     @scene.pbChangePokemon(@battlers[index],@battlers[index].pokemon)
     pbCommonAnimation("MegaEvolution2",@battlers[index],null)
     meganame=(@battlers[index].pokemon.megaName rescue null)
-    if !meganame || meganame==""
+    if (!meganame || meganame=="") {
       meganame=_INTL("Mega {1}",@battlers[index].pokemon.Species.ToString(TextScripts.Name))
-    end
+    }
     pbDisplay(_INTL("{1} has Mega Evolved into {2}!",@battlers[index].ToString(),meganame))
     GameDebug.Log($"[Mega Evolution] #{@battlers[index].ToString()} Mega Evolved")
     side=(pbIsOpposing?(index)) ? 1 : 0
     owner=pbGetOwnerIndex(index)
     @megaEvolution[side][owner]=-2
-  end
+  }
 		#endregion
 
 		#region Primal Revert Battler
-  def pbPrimalReversion(index)
-    return if !@battlers[index] || !@battlers[index].pokemon
-    return if !(@battlers[index].hasPrimal? rescue false)
-    return if (@battlers[index].isPrimal? rescue true)
-    if @battlers[index].pokemon.Species == Pokemons.KYOGRE
+  public void pbPrimalReversion(index) {
+    if (!@battlers[index] || !@battlers[index].pokemon) return;
+    if (!(@battlers[index].hasPrimal? rescue false)) return;
+    if ((@battlers[index].isPrimal? rescue true)) return;
+    if (@battlers[index].pokemon.Species == Pokemons.KYOGRE) {
       pbCommonAnimation("PrimalKyogre",@battlers[index],null)
-    elsif @battlers[index].pokemon.Species == Pokemons.GROUDON
+    else if (@battlers[index].pokemon.Species == Pokemons.GROUDON) {
       pbCommonAnimation("PrimalGroudon",@battlers[index],null)
-    end
+    }
     @battlers[index].pokemon.makePrimal
     @battlers[index].form=@battlers[index].pokemon.form
     @battlers[index].pbUpdate(true)
     @scene.pbChangePokemon(@battlers[index],@battlers[index].pokemon)
-    if @battlers[index].pokemon.Species == Pokemons.KYOGRE
+    if (@battlers[index].pokemon.Species == Pokemons.KYOGRE) {
       pbCommonAnimation("PrimalKyogre2",@battlers[index],null)
-    elsif @battlers[index].pokemon.Species == Pokemons.GROUDON
+    else if (@battlers[index].pokemon.Species == Pokemons.GROUDON) {
       pbCommonAnimation("PrimalGroudon2",@battlers[index],null)
-    end
+    }
     pbDisplay(_INTL("{1}'s Primal Reversion!\nIt reverted to its primal form!",@battlers[index].ToString()))
     GameDebug.Log($"[Primal Reversion] #{@battlers[index].ToString()} Primal Reverted")
-  end
+  }
 		#endregion
 
 		#region Call Battler
-  def pbCall(index)
+  public void pbCall(index) {
     owner=pbGetOwner(index)
     pbDisplay(_INTL("{1} called {2}!",owner.Name,@battlers[index].Name))
     pbDisplay(_INTL("{1}!",@battlers[index].Name))
     GameDebug.Log($"[Call to Pokémon] #{owner.Name} called to #{@battlers[index].ToString(true)}")
-    if @battlers[index].isShadow?
-      if @battlers[index].inHyperMode?
+    if (@battlers[index].isShadow?) {
+      if (@battlers[index].inHyperMode?) {
         @battlers[index].pokemon.hypermode=false
         @battlers[index].pokemon.adjustHeart(-300)
         pbDisplay(_INTL("{1} came to its senses from the Trainer's call!",@battlers[index].ToString()))
       else
         pbDisplay(_INTL("But nothing happened!"))
-      end
-    elsif @battlers[index].status!=Statuses.SLEEP &&
-          @battlers[index].pbCanIncreaseStatStage?(Stats.ACCURACY,@battlers[index])
+      }
+    else if (@battlers[index].status!=Statuses.SLEEP &&
+          @battlers[index].pbCanIncreaseStatStage?(Stats.ACCURACY,@battlers[index])) {
       @battlers[index].pbIncreaseStat(Stats.ACCURACY,1,@battlers[index],true)
     else
       pbDisplay(_INTL("But nothing happened!"))
-    end
-  end
+    }
+  }
 		#endregion
 
 		#region Gaining Experience
-  def pbGainEXP
-    return if !@internalbattle
+  public void pbGainEXP() {
+    if (!@internalbattle) return;
     successbegin=true
     for (int i = 0; i < 4; i++) { // Not ordered by priority
-      if !@doublebattle && pbIsDoubleBattler?(i)
+      if (!@doublebattle && pbIsDoubleBattler?(i)) {
         @battlers[i].participants=[]
         next
-      end
-      if pbIsOpposing?(i) && @battlers[i].participants.Length>0 &&
-         (@battlers[i].isFainted? || @battlers[i].captured)
+      }
+      if (pbIsOpposing?(i) && @battlers[i].participants.Length>0 &&
+         (@battlers[i].isFainted? || @battlers[i].captured)) {
         haveexpall=(hasConst?(PBItems,:EXPALL) && $PokemonBag.pbQuantity(:EXPALL)>0)
         // First count the number of participants
         partic=0
         expshare=0
         foreach (var j in @battlers[i].participants) {
-          next if !@party1[j] || !pbIsOwner?(0,j)
-          partic+=1 if @party1[j].HP>0 && !@party1[j].isEgg?
-        end
-        if !haveexpall
+          if (!@party1[j] || !pbIsOwner?(0,j)) next;
+          if (@party1[j].HP>0 && !@party1[j].isEgg?) partic+=1;
+        }
+        if (!haveexpall) {
           for (int j = 0; j < @party1.Length; j++) {
-            next if !@party1[j] || !pbIsOwner?(0,j)
-            expshare+=1 if @party1[j].HP>0 && !@party1[j].isEgg? && 
+            if (!@party1[j] || !pbIsOwner?(0,j)) next;
+            if (@party1[j].HP>0 && !@party1[j].isEgg? && ) expshare+=1;
                            (@party1[j].item == Items.EXPSHARE ||
                            @party1[j].itemInitial == Items.EXPSHARE)
-          end
-        end
+          }
+        }
         // Now calculate EXP for the participants
-        if partic>0 || expshare>0 || haveexpall
-          if !@opponent && successbegin && pbAllFainted?(@party2)
+        if (partic>0 || expshare>0 || haveexpall) {
+          if (!@opponent && successbegin && pbAllFainted?(@party2)) {
             @scene.pbWildBattleSuccess
             successbegin=false
-          end
+          }
           for (int j = 0; j < @party1.Length; j++) {
-            next if !@party1[j] || !pbIsOwner?(0,j)
-            next if @party1[j].HP<=0 || @party1[j].isEgg?
+            if (!@party1[j] || !pbIsOwner?(0,j)) next;
+            if (@party1[j].HP<=0 || @party1[j].isEgg?) next;
             haveexpshare=(@party1[j].item == Items.EXPSHARE ||
                           @party1[j].itemInitial == Items.EXPSHARE)
-            next if !haveexpshare && !@battlers[i].participants.Contains(j)
+            if (!haveexpshare && !@battlers[i].participants.Contains(j)) next;
             pbGainExpOne(j,@battlers[i],partic,expshare,haveexpall)
-          end
-          if haveexpall
+          }
+          if (haveexpall) {
             showmessage=true
             for (int j = 0; j < @party1.Length; j++) {
-              next if !@party1[j] || !pbIsOwner?(0,j)
-              next if @party1[j].HP<=0 || @party1[j].isEgg?
-              next if @party1[j].item == Items.EXPSHARE ||
+              if (!@party1[j] || !pbIsOwner?(0,j)) next;
+              if (@party1[j].HP<=0 || @party1[j].isEgg?) next;
+              if (@party1[j].item == Items.EXPSHARE ||) next;
                       @party1[j].itemInitial == Items.EXPSHARE
-              next if @battlers[i].participants.Contains(j)
+              if (@battlers[i].participants.Contains(j)) next;
               pbDisplayPaused(_INTL("The rest of your team gained Exp. Points thanks to the {1}!",
-                 Items.EXPALL.ToString(TextScripts.Name))) if showmessage
+                 if (showmessage) Items.EXPALL.ToString(TextScripts.Name)));
               showmessage=false
               pbGainExpOne(j,@battlers[i],partic,expshare,haveexpall,false)
-            end
-          end
-        end
+            }
+          }
+        }
         // Now clear the participants array
         @battlers[i].participants=[]
-      end
-    end
-  end
+      }
+    }
+  }
 
-  def pbGainExpOne(index,defeated,partic,expshare,haveexpall,showmessages=true)
+  public void pbGainExpOne(index,defeated,partic,expshare,haveexpall,showmessages=true) {
     thispoke=@party1[index]
     // Original species, not current species
     level=defeated.level
@@ -2364,123 +2364,123 @@ namespace PokemonUnity.Battle
     totalev=0
     for (int k = 0; k < 6; k++) {
       totalev+=thispoke.ev[k]
-    end
+    }
     for (int k = 0; k < 6; k++) {
       evgain=evyield[k]
-      evgain*=2 if thispoke.item == Items.MACHOBRACE ||
+      if (thispoke.item == Items.MACHOBRACE ||) evgain*=2;
                    thispoke.itemInitial == Items.MACHOBRACE
       switch (k) {
       case Stats.HP:
-        evgain+=4 if thispoke.item == Items.POWERWEIGHT ||
+        if (thispoke.item == Items.POWERWEIGHT ||) evgain+=4;
                      thispoke.itemInitial == Items.POWERWEIGHT
         break
       case Stats.ATTACK:
-        evgain+=4 if thispoke.item == Items.POWERBRACER ||
+        if (thispoke.item == Items.POWERBRACER ||) evgain+=4;
                      thispoke.itemInitial == Items.POWERBRACER
         break
       case Stats.DEFENSE:
-        evgain+=4 if thispoke.item == Items.POWERBELT ||
+        if (thispoke.item == Items.POWERBELT ||) evgain+=4;
                      thispoke.itemInitial == Items.POWERBELT
         break
       case Stats.SPATK:
-        evgain+=4 if thispoke.item == Items.POWERLENS ||
+        if (thispoke.item == Items.POWERLENS ||) evgain+=4;
                      thispoke.itemInitial == Items.POWERLENS
         break
       case Stats.SPDEF:
-        evgain+=4 if thispoke.item == Items.POWERBAND ||
+        if (thispoke.item == Items.POWERBAND ||) evgain+=4;
                      thispoke.itemInitial == Items.POWERBAND
         break
       case Stats.SPEED:
-        evgain+=4 if thispoke.item == Items.POWERANKLET ||
+        if (thispoke.item == Items.POWERANKLET ||) evgain+=4;
                      thispoke.itemInitial == Items.POWERANKLET
         break;
-      end
-      evgain*=2 if thispoke.pokerusStage>=1 // Infected or cured
-      if evgain>0
+      }
+      if (thispoke.pokerusStage>=1) evgain*=2;	// Infected or cured
+      if (evgain>0) {
         // Can't exceed overall limit
-        evgain-=totalev+evgain-PokeBattle_Pokemon::EVLIMIT if totalev+evgain>PokeBattle_Pokemon::EVLIMIT
+        if (totalev+evgain>PokeBattle_Pokemon::EVLIMIT) evgain-=totalev+evgain-PokeBattle_Pokemon::EVLIMIT;
         // Can't exceed stat limit
-        evgain-=thispoke.ev[k]+evgain-PokeBattle_Pokemon::EVSTATLIMIT if thispoke.ev[k]+evgain>PokeBattle_Pokemon::EVSTATLIMIT
+        if (thispoke.ev[k]+evgain>PokeBattle_Pokemon::EVSTATLIMIT) evgain-=thispoke.ev[k]+evgain-PokeBattle_Pokemon::EVSTATLIMIT;
         // Add EV gain
         thispoke.ev[k]+=evgain
-        if thispoke.ev[k]>PokeBattle_Pokemon::EVSTATLIMIT
+        if (thispoke.ev[k]>PokeBattle_Pokemon::EVSTATLIMIT) {
           print "Single-stat EV limit #{PokeBattle_Pokemon::EVSTATLIMIT} exceeded.\r\nStat: #{k}  EV gain: #{evgain}  EVs: #{thispoke.ev.inspect}"
           thispoke.ev[k]=PokeBattle_Pokemon::EVSTATLIMIT
-        end
+        }
         totalev+=evgain
-        if totalev>PokeBattle_Pokemon::EVLIMIT
+        if (totalev>PokeBattle_Pokemon::EVLIMIT) {
           print "EV limit #{PokeBattle_Pokemon::EVLIMIT} exceeded.\r\nTotal EVs: #{totalev} EV gain: #{evgain}  EVs: #{thispoke.ev.inspect}"
-        end
-      end
-    end
+        }
+      }
+    }
     // Gain experience
     ispartic=0
-    ispartic=1 if defeated.participants.Contains(index)
+    if (defeated.participants.Contains(index)) ispartic=1;
     haveexpshare=(thispoke.item == Items.EXPSHARE ||
                   thispoke.itemInitial == Items.EXPSHARE) ? 1 : 0
     exp=0
-    if expshare>0
-      if partic==0 // No participants, all Exp goes to Exp Share holders
+    if (expshare>0) {
+      if (partic==0) { // No participants, all Exp goes to Exp Share holders
         exp=(int)Math.Floor(level*baseexp)
         exp=(int)Math.Floor(exp/(NOSPLITEXP ? 1 : expshare))*haveexpshare
       else
-        if NOSPLITEXP
+        if (NOSPLITEXP) {
           exp=(int)Math.Floor(level*baseexp)*ispartic
-          exp=(int)Math.Floor(level*baseexp/2)*haveexpshare if ispartic==0
+          if (ispartic==0) exp=(int)Math.Floor(level*baseexp/2)*haveexpshare;
         else
           exp=(int)Math.Floor(level*baseexp/2)
           exp=(int)Math.Floor(exp/partic)*ispartic + (int)Math.Floor(exp/expshare)*haveexpshare
-        end
-      end
-    elsif ispartic==1
+        }
+      }
+    else if (ispartic==1) {
       exp=(int)Math.Floor(level*baseexp/(NOSPLITEXP ? 1 : partic))
-    elsif haveexpall
+    else if (haveexpall) {
       exp=(int)Math.Floor(level*baseexp/2)
-    end
-    return if exp<=0
-    exp=(int)Math.Floor(exp*3/2) if @opponent
-    if Core.USESCALEDEXPFORMULA
+    }
+    if (exp<=0) return;
+    if (@opponent) exp=(int)Math.Floor(exp*3/2);
+    if (Core.USESCALEDEXPFORMULA) {
       exp=(int)Math.Floor(exp/5)
       leveladjust=(2*level+10.0)/(level+thispoke.level+10.0)
       leveladjust=leveladjust**5
       leveladjust=Math.sqrt(leveladjust)
       exp=(int)Math.Floor(exp*leveladjust)
-      exp+=1 if ispartic>0 || haveexpshare>0
+      if (ispartic>0 || haveexpshare>0) exp+=1;
     else
       exp=(int)Math.Floor(exp/7)
-    end
+    }
     isOutsider=(thispoke.trainerID!=self.pbPlayer.id ||
                (thispoke.language!=0 && thispoke.language!=self.pbPlayer.language))
-    if isOutsider
-      if thispoke.language!=0 && thispoke.language!=self.pbPlayer.language
+    if (isOutsider) {
+      if (thispoke.language!=0 && thispoke.language!=self.pbPlayer.language) {
         exp=(int)Math.Floor(exp*1.7)
       else
         exp=(int)Math.Floor(exp*3/2)
-      end
-    end
-    exp=(int)Math.Floor(exp*3/2) if thispoke.item == Items.LUCKYEGG ||
+      }
+    }
+    if (thispoke.item == Items.LUCKYEGG ||) exp=(int)Math.Floor(exp*3/2);
                            thispoke.itemInitial == Items.LUCKYEGG
     growthrate=thispoke.growthrate
     newexp=PBExperience.pbAddExperience(thispoke.exp,exp,growthrate)
     exp=newexp-thispoke.exp
-    if exp>0
-      if showmessages
-        if isOutsider
+    if (exp>0) {
+      if (showmessages) {
+        if (isOutsider) {
           pbDisplayPaused(_INTL("{1} gained a boosted {2} Exp. Points!",thispoke.Name,exp))
         else
           pbDisplayPaused(_INTL("{1} gained {2} Exp. Points!",thispoke.Name,exp))
-        end
-      end
+        }
+      }
       newlevel=PBExperience.pbGetLevelFromExperience(newexp,growthrate)
       tempexp=0
       curlevel=thispoke.level
-      if newlevel<curlevel
+      if (newlevel<curlevel) {
         debuginfo=$"#{thispoke.Name}: #{thispoke.level}/#{newlevel} | #{thispoke.exp}/#{newexp} | gain: #{exp}"
         raise new RuntimeError(_INTL("The new level ({1}) is less than the Pokémon's\r\ncurrent level ({2}), which shouldn't happen.\r\n[Debug: {3}]",
                                newlevel,curlevel,debuginfo))
-        return
-      end
-      if thispoke.respond_to?("isShadow?") && thispoke.isShadow?
+        return;
+      }
+      if (thispoke.respond_to?("isShadow?") && thispoke.isShadow?) {
         thispoke.exp+=exp
       else
         tempexp1=thispoke.exp
@@ -2496,23 +2496,23 @@ namespace PokemonUnity.Battle
           @scene.pbEXPBar(thispoke,battler,startexp,endexp,tempexp1,tempexp2)
           tempexp1=tempexp2
           curlevel+=1
-          if curlevel>newlevel
+          if (curlevel>newlevel) {
             thispoke.calcStats 
-            battler.pbUpdate(false) if battler
+            if (battler) battler.pbUpdate(false);
             @scene.pbRefresh
-            break
-          end
+            break;
+          }
           oldtotalhp=thispoke.TotalHP
           oldattack=thispoke.attack
           olddefense=thispoke.defense
           oldspeed=thispoke.speed
           oldspatk=thispoke.spatk
           oldspdef=thispoke.spdef
-          if battler && battler.pokemon && @internalbattle
+          if (battler && battler.pokemon && @internalbattle) {
             battler.pokemon.changeHappiness("level up")
-          end
+          }
           thispoke.calcStats
-          battler.pbUpdate(false) if battler
+          if (battler) battler.pbUpdate(false);
           @scene.pbRefresh
           pbDisplayPaused(_INTL("{1} grew to Level {2}!",thispoke.Name,curlevel))
           @scene.pbLevelUp(thispoke,battler,oldtotalhp,oldattack,
@@ -2520,115 +2520,115 @@ namespace PokemonUnity.Battle
           // Finding all moves learned at this level
           movelist=thispoke.getMoveList
           foreach (var k in movelist) {
-            if k[0]==thispoke.level   // Learned a new move
+            if (k[0]==thispoke.level  ) { // Learned a new move
               pbLearnMove(index,k[1])
-            end
-          end
-        end
-      end
-    end
-  end
+            }
+          }
+        }
+      }
+    }
+  }
 		#endregion
 
 		#region Learning a move.
-  def pbLearnMove(pkmnIndex,move)
+  public void pbLearnMove(pkmnIndex,move) {
     pokemon=@party1[pkmnIndex]
-    return if !pokemon
+    if (!pokemon) return;
     pkmnname=pokemon.Name
     battler=pbFindPlayerBattler(pkmnIndex)
     movename=move.ToString(TextScripts.Name)
     for (int i = 0; i < 4; i++) {
-      return if pokemon.moves[i].id==move
-      if pokemon.moves[i].id==0
+      if (pokemon.moves[i].id==move) return;
+      if (pokemon.moves[i].id==0) {
         pokemon.moves[i]=new PBMove(move)
-        battler.moves[i]=PokeBattle_Move.pbFromPBMove(self,pokemon.moves[i]) if battler
+        if (battler) battler.moves[i]=PokeBattle_Move.pbFromPBMove(self,pokemon.moves[i]);
         pbDisplayPaused(_INTL("{1} learned {2}!",pkmnname,movename))
         GameDebug.Log($"[Learn move] #{pkmnname} learned #{movename}")
-        return
-      end
-    end
+        return;
+      }
+    }
     loop do
       pbDisplayPaused(_INTL("{1} is trying to learn {2}.",pkmnname,movename))
       pbDisplayPaused(_INTL("But {1} can't learn more than four moves.",pkmnname))
-      if pbDisplayConfirm(_INTL("Delete a move to make room for {1}?",movename))
+      if (pbDisplayConfirm(_INTL("Delete a move to make room for {1}?",movename))) {
         pbDisplayPaused(_INTL("Which move should be forgotten?"))
         forgetmove=@scene.pbForgetMove(pokemon,move)
-        if forgetmove>=0
+        if (forgetmove>=0) {
           oldmovename=pokemon.moves[forgetmove].id.ToString(TextScripts.Name)
           pokemon.moves[forgetmove]=new PBMove(move) // Replaces current/total PP
-          battler.moves[forgetmove]=PokeBattle_Move.pbFromPBMove(self,pokemon.moves[forgetmove]) if battler
+          if (battler) battler.moves[forgetmove]=PokeBattle_Move.pbFromPBMove(self,pokemon.moves[forgetmove]);
           pbDisplayPaused(_INTL("1,  2, and... ... ..."))
           pbDisplayPaused(_INTL("Poof!"))
           pbDisplayPaused(_INTL("{1} forgot {2}.",pkmnname,oldmovename))
           pbDisplayPaused(_INTL("And..."))
           pbDisplayPaused(_INTL("{1} learned {2}!",pkmnname,movename))
           GameDebug.Log($"[Learn move] #{pkmnname} forgot #{oldmovename} and learned #{movename}")
-          return
-        elsif pbDisplayConfirm(_INTL("Should {1} stop learning {2}?",pkmnname,movename))
+          return;
+        else if (pbDisplayConfirm(_INTL("Should {1} stop learning {2}?",pkmnname,movename))) {
           pbDisplayPaused(_INTL("{1} did not learn {2}.",pkmnname,movename))
-          return
-        end
-      elsif pbDisplayConfirm(_INTL("Should {1} stop learning {2}?",pkmnname,movename))
+          return;
+        }
+      else if (pbDisplayConfirm(_INTL("Should {1} stop learning {2}?",pkmnname,movename))) {
         pbDisplayPaused(_INTL("{1} did not learn {2}.",pkmnname,movename))
-        return
-      end
-    end
-  end
+        return;
+      }
+    }
+  }
 		#endregion
 
 		#region Abilities.
-  def pbOnActiveAll
-    for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards
-      @battlers[i].pbUpdateParticipants if pbIsOpposing?(i)
-      @amuletcoin=true if !pbIsOpposing?(i) &&
+  public void pbOnActiveAll() {
+    if (they faint afterwards) for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even;
+      if (pbIsOpposing?(i)) @battlers[i].pbUpdateParticipants;
+      if (!pbIsOpposing?(i) &&) @amuletcoin=true;
                           (@battlers[i].item == Items.AMULETCOIN ||
                            @battlers[i].item == Items.LUCKINCENSE)
-    end
+    }
     for (int i = 0; i < 4; i++) {
-      if !@battlers[i].isFainted?
-        if @battlers[i].isShadow? && pbIsOpposing?(i)
+      if (!@battlers[i].isFainted?) {
+        if (@battlers[i].isShadow? && pbIsOpposing?(i)) {
           pbCommonAnimation("Shadow",@battlers[i],null)
           pbDisplay(_INTL("Oh!\nA Shadow Pokémon!"))
-        end
-      end
-    end
+        }
+      }
+    }
     // Weather-inducing abilities, Trace, Imposter, etc.
     @usepriority=false
     priority=pbPriority
     foreach (var i in priority) {
       i.pbAbilitiesOnSwitchIn(true)
-    end
+    }
     // Check forms are correct
     for (int i = 0; i < 4; i++) {
-      next if @battlers[i].isFainted?
+      if (@battlers[i].isFainted?) next;
       @battlers[i].pbCheckForm
-    end
-  end
+    }
+  }
 
-  def pbOnActiveOne(pkmn,onlyabilities=false,moldbreaker=false)
-    return false if pkmn.isFainted?
-    if !onlyabilities
-      for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards
-        @battlers[i].pbUpdateParticipants if pbIsOpposing?(i)
-        @amuletcoin=true if !pbIsOpposing?(i) &&
+  public void pbOnActiveOne(pkmn,onlyabilities=false,moldbreaker=false) {
+    if (pkmn.isFainted?) return false;
+    if (!onlyabilities) {
+      if (they faint afterwards) for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even;
+        if (pbIsOpposing?(i)) @battlers[i].pbUpdateParticipants;
+        if (!pbIsOpposing?(i) &&) @amuletcoin=true;
                             (@battlers[i].item == Items.AMULETCOIN ||
                              @battlers[i].item == Items.LUCKINCENSE)
-      end
-      if pkmn.isShadow? && pbIsOpposing?(pkmn.index)
+      }
+      if (pkmn.isShadow? && pbIsOpposing?(pkmn.index)) {
         pbCommonAnimation("Shadow",pkmn,null)
         pbDisplay(_INTL("Oh!\nA Shadow Pokémon!"))
-      end
+      }
       // Healing Wish
-      if pkmn.effects.HealingWish
+      if (pkmn.effects.HealingWish) {
         GameDebug.Log($"[Lingering effect triggered] #{pkmn.ToString()}'s Healing Wish")
         pbCommonAnimation("HealingWish",pkmn,null)
         pbDisplayPaused(_INTL("The healing wish came true for {1}!",pkmn.ToString(true)))
         pkmn.pbRecoverHP(pkmn.TotalHP,true)
         pkmn.pbCureStatus(false)
         pkmn.effects.HealingWish=false
-      end
+      }
       // Lunar Dance
-      if pkmn.effects.LunarDance
+      if (pkmn.effects.LunarDance) {
         GameDebug.Log($"[Lingering effect triggered] #{pkmn.ToString()}'s Lunar Dance")
         pbCommonAnimation("LunarDance",pkmn,null)
         pbDisplayPaused(_INTL("{1} became cloaked in mystical moonlight!",pkmn.ToString()))
@@ -2636,234 +2636,234 @@ namespace PokemonUnity.Battle
         pkmn.pbCureStatus(false)
         for (int i = 0; i < 4; i++) {
           pkmn.moves[i].pp=pkmn.moves[i].totalpp
-        end
+        }
         pkmn.effects.LunarDance=false
-      end
+      }
       // Spikes
-      if pkmn.pbOwnSide.effects.Spikes>0 && !pkmn.isAirborne?(moldbreaker)
-        if !pkmn.hasWorkingAbility(Abilities.MAGICGUARD)
+      if (pkmn.pbOwnSide.effects.Spikes>0 && !pkmn.isAirborne?(moldbreaker)) {
+        if (!pkmn.hasWorkingAbility(Abilities.MAGICGUARD)) {
           GameDebug.Log($"[Entry hazard] #{pkmn.ToString()} triggered Spikes")
           spikesdiv=[8,6,4][pkmn.pbOwnSide.effects.Spikes-1]
           @scene.pbDamageAnimation(pkmn,0)
           pkmn.pbReduceHP((int)Math.Floor(pkmn.TotalHP/spikesdiv))
           pbDisplayPaused(_INTL("{1} is hurt by the spikes!",pkmn.ToString()))
-        end
-      end
-      pkmn.pbFaint if pkmn.isFainted?
+        }
+      }
+      if (pkmn.isFainted?) pkmn.pbFaint;
       // Stealth Rock
-      if pkmn.pbOwnSide.effects.StealthRock && !pkmn.isFainted?
-        if !pkmn.hasWorkingAbility(Abilities.MAGICGUARD)
+      if (pkmn.pbOwnSide.effects.StealthRock && !pkmn.isFainted?) {
+        if (!pkmn.hasWorkingAbility(Abilities.MAGICGUARD)) {
           atype=Types.ROCK || 0
           eff=PBTypes.getCombinedEffectiveness(atype,pkmn.type1,pkmn.type2,pkmn.effects.Type3)
-          if eff>0
+          if (eff>0) {
             GameDebug.Log($"[Entry hazard] #{pkmn.ToString()} triggered Stealth Rock")
             @scene.pbDamageAnimation(pkmn,0)
             pkmn.pbReduceHP((int)Math.Floor((pkmn.TotalHP*eff)/64))
             pbDisplayPaused(_INTL("Pointed stones dug into {1}!",pkmn.ToString()))
-          end
-        end
-      end
-      pkmn.pbFaint if pkmn.isFainted?
+          }
+        }
+      }
+      if (pkmn.isFainted?) pkmn.pbFaint;
       // Toxic Spikes
-      if pkmn.pbOwnSide.effects.ToxicSpikes>0 && !pkmn.isFainted?
-        if !pkmn.isAirborne?(moldbreaker)
-          if pkmn.hasType(Types.POISON)
+      if (pkmn.pbOwnSide.effects.ToxicSpikes>0 && !pkmn.isFainted?) {
+        if (!pkmn.isAirborne?(moldbreaker)) {
+          if (pkmn.hasType(Types.POISON)) {
             GameDebug.Log($"[Entry hazard] #{pkmn.ToString()} absorbed Toxic Spikes")
             pkmn.pbOwnSide.effects.ToxicSpikes=0
             pbDisplayPaused(_INTL("{1} absorbed the poison spikes!",pkmn.ToString()))
-          elsif pkmn.pbCanPoisonSpikes?(moldbreaker)
+          else if (pkmn.pbCanPoisonSpikes?(moldbreaker)) {
             GameDebug.Log($"[Entry hazard] #{pkmn.ToString()} triggered Toxic Spikes")
-            if pkmn.pbOwnSide.effects.ToxicSpikes==2
+            if (pkmn.pbOwnSide.effects.ToxicSpikes==2) {
               pkmn.pbPoison(null,_INTL("{1} was badly poisoned by the poison spikes!",pkmn.ToString(),true))
             else
               pkmn.pbPoison(null,_INTL("{1} was poisoned by the poison spikes!",pkmn.ToString()))
-            end
-          end
-        end
-      end
+            }
+          }
+        }
+      }
       // Sticky Web
-      if pkmn.pbOwnSide.effects.StickyWeb && !pkmn.isFainted? &&
-         !pkmn.isAirborne?(moldbreaker)
-        if pkmn.pbCanReduceStatStage?(Stats.SPEED,null,false,null,moldbreaker)
+      if (pkmn.pbOwnSide.effects.StickyWeb && !pkmn.isFainted? &&
+         !pkmn.isAirborne?(moldbreaker)) {
+        if (pkmn.pbCanReduceStatStage?(Stats.SPEED,null,false,null,moldbreaker)) {
           GameDebug.Log($"[Entry hazard] #{pkmn.ToString()} triggered Sticky Web")
           pbDisplayPaused(_INTL("{1} was caught in a sticky web!",pkmn.ToString()))
           pkmn.pbReduceStat(Stats.SPEED,1,null,false,null,true,moldbreaker)
-        end
-      end
-    end
+        }
+      }
+    }
     pkmn.pbAbilityCureCheck
-    if pkmn.isFainted?
+    if (pkmn.isFainted?) {
       pbGainEXP
       pbJudge //      pbSwitch
-      return false
-    end
+      return false;
+    }
     //pkmn.pbAbilitiesOnSwitchIn(true)
-    if !onlyabilities
+    if (!onlyabilities) {
       pkmn.pbCheckForm
       pkmn.pbBerryCureCheck
-    end
-    return true
-  end
+    }
+    return true;
+  }
 
-  def pbPrimordialWeather
+  public void pbPrimordialWeather() {
     // End Primordial Sea, Desolate Land, Delta Stream
     hasabil=false
     switch (@weather) {
     case Weather.HEAVYRAIN:
       for (int i = 0; i < 4; i++) {
-        if @battlers[i].ability == Abilities.PRIMORDIALSEA &&
-           !@battlers[i].isFainted?
-          hasabil=true; break
-        end
-        if !hasabil
+        if (@battlers[i].ability == Abilities.PRIMORDIALSEA &&
+           !@battlers[i].isFainted?) {
+          hasabil=true; break;
+        }
+        if (!hasabil) {
           @weather=0
           pbDisplayBrief("The heavy rain has lifted!")
-        end
-      end
+        }
+      }
       break
     case Weather.HARSHSUN:
       for (int i = 0; i < 4; i++) {
-        if @battlers[i].ability == Abilities.DESOLATELAND &&
-           !@battlers[i].isFainted?
-          hasabil=true; break
-        end
-        if !hasabil
+        if (@battlers[i].ability == Abilities.DESOLATELAND &&
+           !@battlers[i].isFainted?) {
+          hasabil=true; break;
+        }
+        if (!hasabil) {
           @weather=0
           pbDisplayBrief("The harsh sunlight faded!")
-        end
-      end
+        }
+      }
       break
     case Weather.STRONGWINDS:
       for (int i = 0; i < 4; i++) {
-        if @battlers[i].ability == Abilities.DELTASTREAM &&
-           !@battlers[i].isFainted?
-          hasabil=true; break
-        end
-        if !hasabil
+        if (@battlers[i].ability == Abilities.DELTASTREAM &&
+           !@battlers[i].isFainted?) {
+          hasabil=true; break;
+        }
+        if (!hasabil) {
           @weather=0
           pbDisplayBrief("The mysterious air current has dissipated!")
-        end
-      end
+        }
+      }
       break;
-    end
-  end
+    }
+  }
 		#endregion
 
 		#region Judging
-  def pbJudgeCheckpoint(attacker,move=0)
-  end
+  public void pbJudgeCheckpoint(attacker,move=0) {
+  }
 
-  def pbDecisionOnTime
+  public void pbDecisionOnTime() {
     count1=0
     count2=0
     hptotal1=0
     hptotal2=0
     foreach (var i in @party1) {
-      next if !i
-      if i.HP>0 && !i.isEgg?
+      if (!i) next;
+      if (i.HP>0 && !i.isEgg?) {
         count1+=1
         hptotal1+=i.HP
-      end
-    end
+      }
+    }
     foreach (var i in @party2) {
-      next if !i
-      if i.HP>0 && !i.isEgg?
+      if (!i) next;
+      if (i.HP>0 && !i.isEgg?) {
         count2+=1
         hptotal2+=i.HP
-      end
-    end
-    return 1 if count1>count2     // win
-    return 2 if count1<count2     // loss
-    return 1 if hptotal1>hptotal2 // win
-    return 2 if hptotal1<hptotal2 // loss
-    return 5                      // draw
-  end
+      }
+    }
+    if (count1>count2    ) return 1;	// win
+    if (count1<count2    ) return 2;	// loss
+    if (hptotal1>hptotal2) return 1;	// win
+    if (hptotal1<hptotal2) return 2;	// loss
+    return 5                      // draw;
+  }
 
-  def pbDecisionOnTime2
+  public void pbDecisionOnTime2() {
     count1=0
     count2=0
     hptotal1=0
     hptotal2=0
     foreach (var i in @party1) {
-      next if !i
-      if i.HP>0 && !i.isEgg?
+      if (!i) next;
+      if (i.HP>0 && !i.isEgg?) {
         count1+=1
         hptotal1+=(i.HP*100/i.TotalHP)
-      end
-    end
-    hptotal1/=count1 if count1>0
+      }
+    }
+    if (count1>0) hptotal1/=count1;
     foreach (var i in @party2) {
-      next if !i
-      if i.HP>0 && !i.isEgg?
+      if (!i) next;
+      if (i.HP>0 && !i.isEgg?) {
         count2+=1
         hptotal2+=(i.HP*100/i.TotalHP)
-      end
-    end
-    hptotal2/=count2 if count2>0
-    return 1 if count1>count2     // win
-    return 2 if count1<count2     // loss
-    return 1 if hptotal1>hptotal2 // win
-    return 2 if hptotal1<hptotal2 // loss
-    return 5                      // draw
-  end
+      }
+    }
+    if (count2>0) hptotal2/=count2;
+    if (count1>count2    ) return 1;	// win
+    if (count1<count2    ) return 2;	// loss
+    if (hptotal1>hptotal2) return 1;	// win
+    if (hptotal1<hptotal2) return 2;	// loss
+    return 5                      // draw;
+  }
 
-  def pbDecisionOnDraw
-    return 5 // draw
-  end
+  public void pbDecisionOnDraw() {
+    return 5 // draw;
+  }
 
-  def pbJudge
+  public void pbJudge() {
    GameDebug.Log($"[Counts: #{pbPokemonCount(@party1)}/#{pbPokemonCount(@party2)}]")
-    if pbAllFainted?(@party1) && pbAllFainted?(@party2)
+    if (pbAllFainted?(@party1) && pbAllFainted?(@party2)) {
       @decision=pbDecisionOnDraw() // Draw
-      return
-    end
-    if pbAllFainted?(@party1)
+      return;
+    }
+    if (pbAllFainted?(@party1)) {
       @decision=2 // Loss
-      return
-    end
-    if pbAllFainted?(@party2)
+      return;
+    }
+    if (pbAllFainted?(@party2)) {
       @decision=1 // Win
-      return
-    end
-  end
+      return;
+    }
+  }
 		#endregion
 
 		#region Messages and animations.
-  def pbDisplay(msg)
+  public void pbDisplay(msg) {
     @scene.pbDisplayMessage(msg)
-  end
+  }
 
-  def pbDisplayPaused(msg)
+  public void pbDisplayPaused(msg) {
     @scene.pbDisplayPausedMessage(msg)
-  end
+  }
 
-  def pbDisplayBrief(msg)
+  public void pbDisplayBrief(msg) {
     @scene.pbDisplayMessage(msg,true)
-  end
+  }
 
-  def pbDisplayConfirm(msg)
+  public void pbDisplayConfirm(msg) {
     @scene.pbDisplayConfirmMessage(msg)
-  end
+  }
 
-  def pbShowCommands(msg,commands,cancancel=true)
+  public void pbShowCommands(msg,commands,cancancel=true) {
     @scene.pbShowCommands(msg,commands,cancancel)
-  end
+  }
 
-  def pbAnimation(move,attacker,opponent,hitnum=0)
-    if @battlescene
+  public void pbAnimation(move,attacker,opponent,hitnum=0) {
+    if (@battlescene) {
       @scene.pbAnimation(move,attacker,opponent,hitnum)
-    end
-  end
+    }
+  }
 
-  def pbCommonAnimation(name,attacker,opponent,hitnum=0)
-    if @battlescene
+  public void pbCommonAnimation(name,attacker,opponent,hitnum=0) {
+    if (@battlescene) {
       @scene.pbCommonAnimation(name,attacker,opponent,hitnum)
-    end
-  end
+    }
+  }
 		#endregion
 
 		#region Battle Core.
-  def pbStartBattle(canlose=false)
+  public void pbStartBattle(canlose=false) {
     GameDebug.Log($"")
     GameDebug.Log($"******************************************")
     begin
@@ -2871,33 +2871,33 @@ namespace PokemonUnity.Battle
     rescue BattleAbortedException
       @decision=0
       @scene.pbEndBattle(@decision)
-    end
-    return @decision
-  end
+    }
+    return @decision;
+  }
 
-  def pbStartBattleCore(canlose)
-    if !@fullparty1 && @party1.Length>MAXPARTYSIZE
+  public void pbStartBattleCore(canlose) {
+    if (!@fullparty1 && @party1.Length>MAXPARTYSIZE) {
       raise new ArgumentError(_INTL("Party 1 has more than {1} Pokémon.",MAXPARTYSIZE))
-    end
-    if !@fullparty2 && @party2.Length>MAXPARTYSIZE
+    }
+    if (!@fullparty2 && @party2.Length>MAXPARTYSIZE) {
       raise new ArgumentError(_INTL("Party 2 has more than {1} Pokémon.",MAXPARTYSIZE))
-    end
+    }
 #region Initialize wild Pokémon
-    if !@opponent
-      if @party2.Length==1
-        if @doublebattle
+    if (!@opponent) {
+      if (@party2.Length==1) {
+        if (@doublebattle) {
           raise _INTL("Only two wild Pokémon are allowed in double battles")
-        end
+        }
         wildpoke=@party2[0]
         @battlers[1].pbInitialize(wildpoke,0,false)
         @peer.pbOnEnteringBattle(self,wildpoke)
         pbSetSeen(wildpoke)
         @scene.pbStartBattle(self)
         pbDisplayPaused(_INTL("Wild {1} appeared!",wildpoke.Name))
-      elsif @party2.Length==2
-        if !@doublebattle
+      else if (@party2.Length==2) {
+        if (!@doublebattle) {
           raise _INTL("Only one wild Pokémon is allowed in single battles")
-        end
+        }
         @battlers[1].pbInitialize(@party2[0],0,false)
         @battlers[3].pbInitialize(@party2[1],0,false)
         @peer.pbOnEnteringBattle(self,@party2[0])
@@ -2909,31 +2909,31 @@ namespace PokemonUnity.Battle
            @party2[0].Name,@party2[1].Name))
       else
         raise _INTL("Only one or two wild Pokémon are allowed")
-      end
+      }
 #endregion
 #region Initialize opponents in double battles
-    elsif @doublebattle
-      if @opponent.Length > 0
-        if @opponent.Length==1
+    else if (@doublebattle) {
+      if (@opponent.Length > 0) {
+        if (@opponent.Length==1) {
           @opponent=@opponent[0]
-        elsif @opponent.Length!=2
+        else if (@opponent.Length!=2) {
           raise _INTL("Opponents with zero or more than two people are not allowed")
-        end
-      end
-      if @player.Length > 0
-        if @player.Length==1
+        }
+      }
+      if (@player.Length > 0) {
+        if (@player.Length==1) {
           @player=@player[0]
-        elsif @player.Length!=2
+        else if (@player.Length!=2) {
           raise _INTL("Player trainers with zero or more than two people are not allowed")
-        end
-      end
+        }
+      }
       @scene.pbStartBattle(self)
-      if @opponent.Length > 0
+      if (@opponent.Length > 0) {
         pbDisplayPaused(_INTL("{1} and {2} want to battle!",@opponent[0].fullname,@opponent[1].fullname))
         sendout1=pbFindNextUnfainted(@party2,0,pbSecondPartyBegin(1))
-        raise _INTL("Opponent 1 has no unfainted Pokémon") if sendout1<0
+        if (sendout1<0) raise _INTL("Opponent 1 has no unfainted Pokémon");
         sendout2=pbFindNextUnfainted(@party2,pbSecondPartyBegin(1))
-        raise _INTL("Opponent 2 has no unfainted Pokémon") if sendout2<0
+        if (sendout2<0) raise _INTL("Opponent 2 has no unfainted Pokémon");
         @battlers[1].pbInitialize(@party2[sendout1],sendout1,false)
         pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",@opponent[0].fullname,@battlers[1].Name))
         pbSendOut(1,@party2[sendout1])
@@ -2944,44 +2944,44 @@ namespace PokemonUnity.Battle
         pbDisplayPaused(_INTL("{1}\r\nwould like to battle!",@opponent.fullname))
         sendout1=pbFindNextUnfainted(@party2,0)
         sendout2=pbFindNextUnfainted(@party2,sendout1+1)
-        if sendout1<0 || sendout2<0
+        if (sendout1<0 || sendout2<0) {
           raise _INTL("Opponent doesn't have two unfainted Pokémon")
-        end
+        }
         @battlers[1].pbInitialize(@party2[sendout1],sendout1,false)
         @battlers[3].pbInitialize(@party2[sendout2],sendout2,false)
         pbDisplayBrief(_INTL("{1} sent\r\nout {2} and {3}!",
            @opponent.fullname,@battlers[1].Name,@battlers[3].Name))
         pbSendOut(1,@party2[sendout1])
         pbSendOut(3,@party2[sendout2])
-      end
+      }
 #endregion
 #region Initialize opponent in single battles
     else
       sendout=pbFindNextUnfainted(@party2,0)
-      raise _INTL("Trainer has no unfainted Pokémon") if sendout<0
-      if @opponent.Length > 0
-        raise _INTL("Opponent trainer must be only one person in single battles") if @opponent.Length!=1
+      if (sendout<0) raise _INTL("Trainer has no unfainted Pokémon");
+      if (@opponent.Length > 0) {
+        if (@opponent.Length!=1) raise _INTL("Opponent trainer must be only one person in single battles");
         @opponent=@opponent[0]
-      end
-      if @player.Length > 0
-        raise _INTL("Player trainer must be only one person in single battles") if @player.Length!=1
+      }
+      if (@player.Length > 0) {
+        if (@player.Length!=1) raise _INTL("Player trainer must be only one person in single battles");
         @player=@player[0]
-      end
+      }
       trainerpoke=@party2[sendout]
       @scene.pbStartBattle(self)
       pbDisplayPaused(_INTL("{1}\r\nwould like to battle!",@opponent.fullname))
       @battlers[1].pbInitialize(trainerpoke,sendout,false)
       pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",@opponent.fullname,@battlers[1].Name))
       pbSendOut(1,trainerpoke)
-    end
+    }
 #endregion
 #region Initialize players in double battles
-    if @doublebattle
-      if @player.Length > 0
+    if (@doublebattle) {
+      if (@player.Length > 0) {
         sendout1=pbFindNextUnfainted(@party1,0,pbSecondPartyBegin(0))
-        raise _INTL("Player 1 has no unfainted Pokémon") if sendout1<0
+        if (sendout1<0) raise _INTL("Player 1 has no unfainted Pokémon");
         sendout2=pbFindNextUnfainted(@party1,pbSecondPartyBegin(0))
-        raise _INTL("Player 2 has no unfainted Pokémon") if sendout2<0
+        if (sendout2<0) raise _INTL("Player 2 has no unfainted Pokémon");
         @battlers[0].pbInitialize(@party1[sendout1],sendout1,false)
         @battlers[2].pbInitialize(@party1[sendout2],sendout2,false)
         pbDisplayBrief(_INTL("{1} sent\r\nout {2}! Go! {3}!",
@@ -2991,100 +2991,100 @@ namespace PokemonUnity.Battle
       else
         sendout1=pbFindNextUnfainted(@party1,0)
         sendout2=pbFindNextUnfainted(@party1,sendout1+1)
-        if sendout1<0 || sendout2<0
+        if (sendout1<0 || sendout2<0) {
           raise _INTL("Player doesn't have two unfainted Pokémon")
-        end
+        }
         @battlers[0].pbInitialize(@party1[sendout1],sendout1,false)
         @battlers[2].pbInitialize(@party1[sendout2],sendout2,false)
         pbDisplayBrief(_INTL("Go! {1} and {2}!",@battlers[0].Name,@battlers[2].Name))
-      end
+      }
       pbSendOut(0,@party1[sendout1])
       pbSendOut(2,@party1[sendout2])
 #endregion
 #region Initialize player in single battles
     else
       sendout=pbFindNextUnfainted(@party1,0)
-      if sendout<0
+      if (sendout<0) {
         raise _INTL("Player has no unfainted Pokémon")
-      end
+      }
       @battlers[0].pbInitialize(@party1[sendout],sendout,false)
       pbDisplayBrief(_INTL("Go! {1}!",@battlers[0].Name))
       pbSendOut(0,@party1[sendout])
-    end
+    }
 #endregion
 #region Initialize battle
-    if @weather==Weather.SUNNYDAY
+    if (@weather==Weather.SUNNYDAY) {
       pbCommonAnimation("Sunny",null,null)
       pbDisplay(_INTL("The sunlight is strong."))
-    elsif @weather==Weather.RAINDANCE
+    else if (@weather==Weather.RAINDANCE) {
       pbCommonAnimation("Rain",null,null)
       pbDisplay(_INTL("It is raining."))
-    elsif @weather==Weather.SANDSTORM
+    else if (@weather==Weather.SANDSTORM) {
       pbCommonAnimation("Sandstorm",null,null)
       pbDisplay(_INTL("A sandstorm is raging."))
-    elsif @weather==Weather.HAIL
+    else if (@weather==Weather.HAIL) {
       pbCommonAnimation("Hail",null,null)
       pbDisplay(_INTL("Hail is falling."))
-    elsif @weather==Weather.HEAVYRAIN
+    else if (@weather==Weather.HEAVYRAIN) {
       pbCommonAnimation("HeavyRain",null,null)
       pbDisplay(_INTL("It is raining heavily."))
-    elsif @weather==Weather.HARSHSUN
+    else if (@weather==Weather.HARSHSUN) {
       pbCommonAnimation("HarshSun",null,null)
       pbDisplay(_INTL("The sunlight is extremely harsh."))
-    elsif @weather==Weather.STRONGWINDS
+    else if (@weather==Weather.STRONGWINDS) {
       pbCommonAnimation("StrongWinds",null,null)
       pbDisplay(_INTL("The wind is strong."))
-    end
+    }
     pbOnActiveAll   // Abilities
     @turncount=0
     loop do   // Now begin the battle loop
       GameDebug.Log($"")
       GameDebug.Log($"***Round #{@turncount+1}***")
-      if @debug && @turncount>=100
+      if (@debug && @turncount>=100) {
         @decision=pbDecisionOnTime()
         GameDebug.Log($"")
         GameDebug.Log($"***Undecided after 100 rounds, aborting***")
         pbAbort
-        break
-      end
+        break;
+      }
       PBDebug.logonerr{
          pbCommandPhase
       }
-      break if @decision>0
+      if (@decision>0) break;
       PBDebug.logonerr{
          pbAttackPhase
       }
-      break if @decision>0
+      if (@decision>0) break;
       PBDebug.logonerr{
          pbEndOfRoundPhase
       }
-      break if @decision>0
+      if (@decision>0) break;
       @turncount+=1
-    end
-    return pbEndOfBattle(canlose)
-  end
+    }
+    return pbEndOfBattle(canlose);
+  }
 #endregion
 		#endregion
 
 		#region Command phase.
-  def pbCommandMenu(i)
-    return @scene.pbCommandMenu(i)
-  end
+  public void pbCommandMenu(i) {
+    return @scene.pbCommandMenu(i);
+  }
 
-  def pbItemMenu(i)
-    return @scene.pbItemMenu(i)
-  end
+  public void pbItemMenu(i) {
+    return @scene.pbItemMenu(i);
+  }
 
-  def pbAutoFightMenu(i)
-    return false
-  end
+  public void pbAutoFightMenu(i) {
+    return false;
+  }
 
-  def pbCommandPhase
+  public void pbCommandPhase() {
     @scene.pbBeginCommandPhase
     @scene.pbResetCommandIndices
-    for (int i = 0; i < 4; i++) {   // Reset choices if commands can be shown
+    if (commands can be shown) for (int i = 0; i < 4; i++) {   // Reset choices;
       @battlers[i].effects.SkipTurn=false
-      if pbCanShowCommands?(i) || @battlers[i].isFainted?
+      if (pbCanShowCommands?(i) || @battlers[i].isFainted?) {
         @choices[i][0]=0
         @choices[i][1]=0
         @choices[i][2]=null
@@ -3092,297 +3092,297 @@ namespace PokemonUnity.Battle
       else
         unless !@doublebattle && pbIsDoubleBattler?(i)
           GameDebug.Log($"[Reusing commands] #{@battlers[i].ToString(true)}")
-        end
-      end
-    end
+        }
+      }
+    }
     // Reset choices to perform Mega Evolution if it wasn't done somehow
     for (int i = 0; i < 2; i++) {
       for (int j = 0; j < @megaEvolution[i].Length; j++) {
-        @megaEvolution[i][j]=-1 if @megaEvolution[i][j]>=0
-      end
-    end
+        if (@megaEvolution[i][j]>=0) @megaEvolution[i][j]=-1;
+      }
+    }
     for (int i = 0; i < 4; i++) {
-      break if @decision!=0
-      next if @choices[i][0]!=0
-      if !pbOwnedByPlayer?(i) || @controlPlayer
-        if !@battlers[i].isFainted? && pbCanShowCommands?(i)
+      if (@decision!=0) break;
+      if (@choices[i][0]!=0) next;
+      if (!pbOwnedByPlayer?(i) || @controlPlayer) {
+        if (!@battlers[i].isFainted? && pbCanShowCommands?(i)) {
           @scene.pbChooseEnemyCommand(i)
-        end
+        }
       else
         commandDone=false
         commandEnd=false
-        if pbCanShowCommands?(i)
+        if (pbCanShowCommands?(i)) {
           loop do
             cmd=pbCommandMenu(i)
-            if cmd==0 // Fight
-              if pbCanShowFightMenu?(i)
-                commandDone=true if pbAutoFightMenu(i)
+            if (cmd==0) { // Fight
+              if (pbCanShowFightMenu?(i)) {
+                if (pbAutoFightMenu(i)) commandDone=true;
                 until commandDone
                   index=@scene.pbFightMenu(i)
-                  if index<0
+                  if (index<0) {
                     side=(pbIsOpposing?(i)) ? 1 : 0
                     owner=pbGetOwnerIndex(i)
-                    if @megaEvolution[side][owner]==i
+                    if (@megaEvolution[side][owner]==i) {
                       @megaEvolution[side][owner]=-1
-                    end
-                    break
-                  end
-                  next if !pbRegisterMove(i,index)
-                  if @doublebattle
+                    }
+                    break;
+                  }
+                  if (!pbRegisterMove(i,index)) next;
+                  if (@doublebattle) {
                     thismove=@battlers[i].moves[index]
                     target=@battlers[i].pbTarget(thismove)
-                    if target==Targets.SingleNonUser // single non-user
+                    if (target==Targets.SingleNonUser) { // single non-user
                       target=@scene.pbChooseTarget(i,target)
-                      next if target<0
+                      if (target<0) next;
                       pbRegisterTarget(i,target)
-                    elsif target==Targets.UserOrPartner // Acupressure
+                    else if (target==Targets.UserOrPartner) { // Acupressure
                       target=@scene.pbChooseTarget(i,target)
-                      next if target<0 || (target&1)==1
+                      if (target<0 || (target&1)==1) next;
                       pbRegisterTarget(i,target)
-                    end
-                  end
+                    }
+                  }
                   commandDone=true
-                end
+                }
               else
                 pbAutoChooseMove(i)
                 commandDone=true
-              end
-            elsif cmd!=0 && @battlers[i].effects.SkyDrop
+              }
+            else if (cmd!=0 && @battlers[i].effects.SkyDrop) {
               pbDisplay(_INTL("Sky Drop won't let {1} go!",@battlers[i].ToString(true)))
-            elsif cmd==1 // Bag
-              if !@internalbattle
-                if pbOwnedByPlayer?(i)
+            else if (cmd==1) { // Bag
+              if (!@internalbattle) {
+                if (pbOwnedByPlayer?(i)) {
                   pbDisplay(_INTL("Items can't be used here."))
-                end
+                }
               else
                 item=pbItemMenu(i)
-                if item[0]>0
-                  if pbRegisterItem(i,item[0],item[1])
+                if (item[0]>0) {
+                  if (pbRegisterItem(i,item[0],item[1])) {
                     commandDone=true
-                  end
-                end
-              end
-            elsif cmd==2 // Pokémon
+                  }
+                }
+              }
+            else if (cmd==2) { // Pokémon
               pkmn=pbSwitchPlayer(i,false,true)
-              if pkmn>=0
-                commandDone=true if pbRegisterSwitch(i,pkmn)
-              end
-            elsif cmd==3   // Run
+              if (pkmn>=0) {
+                if (pbRegisterSwitch(i,pkmn)) commandDone=true;
+              }
+            else if (cmd==3) {   // Run
               run=pbRun(i) 
-              if run>0
+              if (run>0) {
                 commandDone=true
-                return
-              elsif run<0
+                return;
+              else if (run<0) {
                 commandDone=true
                 side=(pbIsOpposing?(i)) ? 1 : 0
                 owner=pbGetOwnerIndex(i)
-                if @megaEvolution[side][owner]==i
+                if (@megaEvolution[side][owner]==i) {
                   @megaEvolution[side][owner]=-1
-                end
-              end
-            elsif cmd==4   // Call
+                }
+              }
+            else if (cmd==4) {   // Call
               thispkmn=@battlers[i]
               @choices[i][0]=4   // "Call Pokémon"
               @choices[i][1]=0
               @choices[i][2]=null
               side=(pbIsOpposing?(i)) ? 1 : 0
               owner=pbGetOwnerIndex(i)
-              if @megaEvolution[side][owner]==i
+              if (@megaEvolution[side][owner]==i) {
                 @megaEvolution[side][owner]=-1
-              end
+              }
               commandDone=true
-            elsif cmd==-1   // Go back to first battler's choice
-              @megaEvolution[0][0]=-1 if @megaEvolution[0][0]>=0
-              @megaEvolution[1][0]=-1 if @megaEvolution[1][0]>=0
+            else if (cmd==-1) {   // Go back to first battler's choice
+              if (@megaEvolution[0][0]>=0) @megaEvolution[0][0]=-1;
+              if (@megaEvolution[1][0]>=0) @megaEvolution[1][0]=-1;
               // Restore the item the player's first Pokémon was due to use
-              if @choices[0][0]==3 && $PokemonBag && $PokemonBag.pbCanStore?(@choices[0][1])
+              if (@choices[0][0]==3 && $PokemonBag && $PokemonBag.pbCanStore?(@choices[0][1])) {
                 $PokemonBag.pbStoreItem(@choices[0][1])
-              end
+              }
               pbCommandPhase
-              return
-            end
-            break if commandDone
-          end
-        end
-      end
-    end
-  end
+              return;
+            }
+            if (commandDone) break;
+          }
+        }
+      }
+    }
+  }
 		#endregion
 
 		#region Attack phase.
-  def pbAttackPhase
+  public void pbAttackPhase() {
     @scene.pbBeginAttackPhase
     for (int i = 0; i < 4; i++) {
       @successStates[i].clear
-      if @choices[i][0]!=1 && @choices[i][0]!=2
+      if (@choices[i][0]!=1 && @choices[i][0]!=2) {
         @battlers[i].effects.DestinyBond=false
         @battlers[i].effects.Grudge=false
-      end
-      @battlers[i].turncount+=1 if !@battlers[i].isFainted?
-      @battlers[i].effects.Rage=false if !pbChoseMove?(i,:RAGE)
-    end
+      }
+      if (!@battlers[i].isFainted?) @battlers[i].turncount+=1;
+      if (!pbChoseMove?(i,:RAGE)) @battlers[i].effects.Rage=false;
+    }
     // Calculate priority at this time
     @usepriority=false
     priority=pbPriority(false,true)
     // Mega Evolution
     megaevolved=[]
     foreach (var i in priority) {
-      if @choices[i.index][0]==1 && !i.effects.SkipTurn
+      if (@choices[i.index][0]==1 && !i.effects.SkipTurn) {
         side=(pbIsOpposing?(i.index)) ? 1 : 0
         owner=pbGetOwnerIndex(i.index)
-        if @megaEvolution[side][owner]==i.index
+        if (@megaEvolution[side][owner]==i.index) {
           pbMegaEvolve(i.index)
           megaevolved.Add(i.index)
-        end
-      end
-    end
-    if megaevolved.Length>0
+        }
+      }
+    }
+    if (megaevolved.Length>0) {
       foreach (var i in priority) {
-        i.pbAbilitiesOnSwitchIn(true) if megaevolved.Contains(i.index)
-      end
-    end
+        if (megaevolved.Contains(i.index)) i.pbAbilitiesOnSwitchIn(true);
+      }
+    }
     // Call at Pokémon
     foreach (var i in priority) {
-      if @choices[i.index][0]==4 && !i.effects.SkipTurn
+      if (@choices[i.index][0]==4 && !i.effects.SkipTurn) {
         pbCall(i.index)
-      end
-    end
+      }
+    }
     // Switch out Pokémon
     @switching=true
     switched=[]
     foreach (var i in priority) {
-      if @choices[i.index][0]==2 && !i.effects.SkipTurn
+      if (@choices[i.index][0]==2 && !i.effects.SkipTurn) {
         index=@choices[i.index][1] // party position of Pokémon to switch to
         newpokename=index
-        if pbParty(i.index)[index].ability == Abilities.ILLUSION
+        if (pbParty(i.index)[index].ability == Abilities.ILLUSION) {
           newpokename=pbGetLastPokeInTeam(i.index)
-        end
+        }
         self.lastMoveUser=i.index
-        if !pbOwnedByPlayer?(i.index)
+        if (!pbOwnedByPlayer?(i.index)) {
           owner=pbGetOwner(i.index)
           pbDisplayBrief(_INTL("{1} withdrew {2}!",owner.fullname,i.Name))
           GameDebug.Log($"[Withdrew Pokémon] Opponent withdrew #{i.ToString(true)}")
         else
           pbDisplayBrief(_INTL("{1}, that's enough!\r\nCome back!",i.Name))
           GameDebug.Log($"[Withdrew Pokémon] Player withdrew #{i.ToString(true)}")
-        end
+        }
         foreach (var j in priority) {
-          next if !i.pbIsOpposing?(j.index)
+          if (!i.pbIsOpposing?(j.index)) next;
           // if Pursuit and this target ("i") was chosen
-          if pbChoseMoveFunctionCode?(j.index,0x88) && // Pursuit
-             !j.hasMovedThisRound?
-            if j.status!=Statuses.SLEEP && j.status!=Statuses.FROZEN &&
+          if (pbChoseMoveFunctionCode?(j.index,0x88) && // Pursuit
+             !j.hasMovedThisRound?) {
+            if (j.status!=Statuses.SLEEP && j.status!=Statuses.FROZEN &&
                !j.effects.SkyDrop &&
-               (!j.hasWorkingAbility(Abilities.TRUANT) || !j.effects.Truant)
+               (!j.hasWorkingAbility(Abilities.TRUANT) || !j.effects.Truant)) {
               @choices[j.index][3]=i.index // Make sure to target the switching Pokémon
               j.pbUseMove(@choices[j.index]) // This calls pbGainEXP as appropriate
               j.effects.Pursuit=true
               @switching=false
-              return if @decision>0
-            end
-          end
-          break if i.isFainted?
-        end
-        if !pbRecallAndReplace(i.index,index,newpokename)
+              if (@decision>0) return;
+            }
+          }
+          if (i.isFainted?) break;
+        }
+        if (!pbRecallAndReplace(i.index,index,newpokename)) {
           // If a forced switch somehow occurs here in single battles
           // the attack phase now ends
-          if !@doublebattle
+          if (!@doublebattle) {
             @switching=false
-            return
-          end
+            return;
+          }
         else
           switched.Add(i.index)
-        end
-      end
-    end
-    if switched.Length>0
+        }
+      }
+    }
+    if (switched.Length>0) {
       foreach (var i in priority) {
-        i.pbAbilitiesOnSwitchIn(true) if switched.Contains(i.index)
-      end
-    end
+        if (switched.Contains(i.index)) i.pbAbilitiesOnSwitchIn(true);
+      }
+    }
     @switching=false
     // Use items
     foreach (var i in priority) {
-      if @choices[i.index][0]==3 && !i.effects.SkipTurn
-        if pbIsOpposing?(i.index)
+      if (@choices[i.index][0]==3 && !i.effects.SkipTurn) {
+        if (pbIsOpposing?(i.index)) {
           // Opponent use item
           pbEnemyUseItem(@choices[i.index][1],i)
         else
           // Player use item
           item=@choices[i.index][1]
-          if item>0
+          if (item>0) {
             usetype=$ItemData[item][ITEMBATTLEUSE]
-            if usetype==1 || usetype==3
-              if @choices[i.index][2]>=0
+            if (usetype==1 || usetype==3) {
+              if (@choices[i.index][2]>=0) {
                 pbUseItemOnPokemon(item,@choices[i.index][2],i,@scene)
-              end
-            elsif usetype==2 || usetype==4
-              if !ItemHandlers.hasUseInBattle(item) // Poké Ball/Poké Doll used already
+              }
+            else if (usetype==2 || usetype==4) {
+              if (!ItemHandlers.hasUseInBattle(item)) { // Poké Ball/Poké Doll used already
                 pbUseItemOnBattler(item,@choices[i.index][2],i,@scene)
-              end
-            end
-          end
-        end
-      end
-    end
+              }
+            }
+          }
+        }
+      }
+    }
     // Use attacks
     foreach (var i in priority) {
-      next if i.effects.SkipTurn
-      if pbChoseMoveFunctionCode?(i.index,0x115) // Focus Punch
+      if (i.effects.SkipTurn) next;
+      if (pbChoseMoveFunctionCode?(i.index,0x115)) { // Focus Punch
         pbCommonAnimation("FocusPunch",i,null)
         pbDisplay(_INTL("{1} is tightening its focus!",i.ToString()))
-      end
-    end
+      }
+    }
     10.times do
       // Forced to go next
       advance=false
       foreach (var i in priority) {
-        next if !i.effects.MoveNext
-        next if i.hasMovedThisRound? || i.effects.SkipTurn
+        if (!i.effects.MoveNext) next;
+        if (i.hasMovedThisRound? || i.effects.SkipTurn) next;
         advance=i.pbProcessTurn(@choices[i.index])
-        break if advance
-      end
-      return if @decision>0
-      next if advance
+        if (advance) break;
+      }
+      if (@decision>0) return;
+      if (advance) next;
       // Regular priority order
       foreach (var i in priority) {
-        next if i.effects.Quash
-        next if i.hasMovedThisRound? || i.effects.SkipTurn
+        if (i.effects.Quash) next;
+        if (i.hasMovedThisRound? || i.effects.SkipTurn) next;
         advance=i.pbProcessTurn(@choices[i.index])
-        break if advance
-      end
-      return if @decision>0
-      next if advance
+        if (advance) break;
+      }
+      if (@decision>0) return;
+      if (advance) next;
       // Quashed
       foreach (var i in priority) {
-        next if !i.effects.Quash
-        next if i.hasMovedThisRound? || i.effects.SkipTurn
+        if (!i.effects.Quash) next;
+        if (i.hasMovedThisRound? || i.effects.SkipTurn) next;
         advance=i.pbProcessTurn(@choices[i.index])
-        break if advance
-      end
-      return if @decision>0
-      next if advance
+        if (advance) break;
+      }
+      if (@decision>0) return;
+      if (advance) next;
       // Check for all done
       foreach (var i in priority) {
-        advance=true if @choices[i.index][0]==1 && !i.hasMovedThisRound? &&
+        if (@choices[i.index][0]==1 && !i.hasMovedThisRound? &&) advance=true;
                         !i.effects.SkipTurn
-        break if advance
-      end
-      next if advance
-      break
-    end
+        if (advance) break;
+      }
+      if (advance) next;
+      break;
+    }
     pbWait(20)
-  end
+  }
 		#endregion
 
 		#region End of round.
-  def pbEndOfRoundPhase
+  public void pbEndOfRoundPhase() {
     GameDebug.Log($"[End of round]")
     for (int i = 0; i < 4; i++) {
       @battlers[i].effects.Electrify=false
       @battlers[i].effects.Endure=false
       @battlers[i].effects.FirstPledge=0
-      @battlers[i].effects.HyperBeam-=1 if @battlers[i].effects.HyperBeam>0
+      if (@battlers[i].effects.HyperBeam>0) @battlers[i].effects.HyperBeam-=1;
       @battlers[i].effects.KingsShield=false
       @battlers[i].effects.LifeOrb=false
       @battlers[i].effects.MoveNext=false
@@ -3392,324 +3392,322 @@ namespace PokemonUnity.Battle
       @battlers[i].effects.Quash=false
       @battlers[i].effects.Roost=false
       @battlers[i].effects.SpikyShield=false
-    end
+    }
     @usepriority=false  // recalculate priority
     priority=pbPriority(true) // Ignoring Quick Claw here
     // Weather
     switch (@weather) {
     case Weather.SUNNYDAY:
-      @weatherduration=@weatherduration-1 if @weatherduration>0
-      if @weatherduration==0
+      if (@weatherduration>0) @weatherduration=@weatherduration-1;
+      if (@weatherduration==0) {
         pbDisplay(_INTL("The sunlight faded."))
         @weather=0
         GameDebug.Log($"[End of effect] Sunlight weather ended")
       else
         pbCommonAnimation("Sunny",null,null)
         pbDisplay(_INTL("The sunlight is strong."))
-        if pbWeather==Weather.SUNNYDAY
+        if (pbWeather==Weather.SUNNYDAY) {
           foreach (var i in priority) {
-            if i.hasWorkingAbility(Abilities.SOLARPOWER)
+            if (i.hasWorkingAbility(Abilities.SOLARPOWER)) {
               GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Solar Power")
               @scene.pbDamageAnimation(i,0)
               i.pbReduceHP((int)Math.Floor(i.TotalHP/8))
               pbDisplay(_INTL("{1} was hurt by the sunlight!",i.ToString()))
-              if i.isFainted?
-                return if !i.pbFaint
-              end
-            end
-          end
-        end
-      end
+              if (i.isFainted?) {
+                if (!i.pbFaint) return;
+              }
+            }
+          }
+        }
+      }
       break
     case Weather.RAINDANCE:
-      @weatherduration=@weatherduration-1 if @weatherduration>0
-      if @weatherduration==0
+      if (@weatherduration>0) @weatherduration=@weatherduration-1;
+      if (@weatherduration==0) {
         pbDisplay(_INTL("The rain stopped."))
         @weather=0
         GameDebug.Log($"[End of effect] Rain weather ended")
       else
         pbCommonAnimation("Rain",null,null)
         pbDisplay(_INTL("Rain continues to fall."))
-      end
+      }
       break
     case Weather.SANDSTORM:
-      @weatherduration=@weatherduration-1 if @weatherduration>0
-      if @weatherduration==0
+      if (@weatherduration>0) @weatherduration=@weatherduration-1;
+      if (@weatherduration==0) {
         pbDisplay(_INTL("The sandstorm subsided."))
         @weather=0
         GameDebug.Log($"[End of effect] Sandstorm weather ended")
       else
         pbCommonAnimation("Sandstorm",null,null)
         pbDisplay(_INTL("The sandstorm rages."))
-        if pbWeather==Weather.SANDSTORM
+        if (pbWeather==Weather.SANDSTORM) {
           GameDebug.Log($"[Lingering effect triggered] Sandstorm weather damage")
           foreach (var i in priority) {
-            next if i.isFainted?
-            if !i.hasType(Types.GROUND) && !i.hasType(Types.ROCK) && !i.hasType(Types.STEEL) &&
+            if (i.isFainted?) next;
+            if (!i.hasType(Types.GROUND) && !i.hasType(Types.ROCK) && !i.hasType(Types.STEEL) &&
                !i.hasWorkingAbility(Abilities.SANDVEIL) &&
                !i.hasWorkingAbility(Abilities.SANDRUSH) &&
                !i.hasWorkingAbility(Abilities.SANDFORCE) &&
                !i.hasWorkingAbility(Abilities.MAGICGUARD) &&
                !i.hasWorkingAbility(Abilities.OVERCOAT) &&
                !i.hasWorkingItem(Items.SAFETYGOGGLES) &&
-               ![0xCA,0xCB].Contains(new PBMoveData(i.effects.TwoTurnAttack).function) // Dig, Dive
+               ![0xCA,0xCB].Contains(new PBMoveData(i.effects.TwoTurnAttack).function)) { // Dig, Dive
               @scene.pbDamageAnimation(i,0)
               i.pbReduceHP((int)Math.Floor(i.TotalHP/16))
               pbDisplay(_INTL("{1} is buffeted by the sandstorm!",i.ToString()))
-              if i.isFainted?
-                return if !i.pbFaint
-              end
-            end
-          end
-        end
-      end
+              if (i.isFainted?) {
+                if (!i.pbFaint) return;
+              }
+            }
+          }
+        }
+      }
       break
     case Weather.HAIL:
-      @weatherduration=@weatherduration-1 if @weatherduration>0
-      if @weatherduration==0
+      if (@weatherduration>0) @weatherduration=@weatherduration-1;
+      if (@weatherduration==0) {
         pbDisplay(_INTL("The hail stopped."))
         @weather=0
         GameDebug.Log($"[End of effect] Hail weather ended")
       else
         pbCommonAnimation("Hail",null,null)
         pbDisplay(_INTL("Hail continues to fall."))
-        if pbWeather==Weather.HAIL
+        if (pbWeather==Weather.HAIL) {
           GameDebug.Log($"[Lingering effect triggered] Hail weather damage")
           foreach (var i in priority) {
-            next if i.isFainted?
-            if !i.hasType(Types.ICE) &&
+            if (i.isFainted?) next;
+            if (!i.hasType(Types.ICE) &&
                !i.hasWorkingAbility(Abilities.ICEBODY) &&
                !i.hasWorkingAbility(Abilities.SNOWCLOAK) &&
                !i.hasWorkingAbility(Abilities.MAGICGUARD) &&
                !i.hasWorkingAbility(Abilities.OVERCOAT) &&
                !i.hasWorkingItem(Items.SAFETYGOGGLES) &&
-               ![0xCA,0xCB].Contains(new PBMoveData(i.effects.TwoTurnAttack).function) // Dig, Dive
+               ![0xCA,0xCB].Contains(new PBMoveData(i.effects.TwoTurnAttack).function)) { // Dig, Dive
               @scene.pbDamageAnimation(i,0)
               i.pbReduceHP((int)Math.Floor(i.TotalHP/16))
               pbDisplay(_INTL("{1} is buffeted by the hail!",i.ToString()))
-              if i.isFainted?
-                return if !i.pbFaint
-              end
-            end
-          end
-        end
-      end
+              if (i.isFainted?) {
+                if (!i.pbFaint) return;
+              }
+            }
+          }
+        }
+      }
       break
     case Weather.HEAVYRAIN:
       hasabil=false
       for (int i = 0; i < 4; i++) {
-        if @battlers[i].ability == Abilities.PRIMORDIALSEA && !@battlers[i].isFainted?
+        if (@battlers[i].ability == Abilities.PRIMORDIALSEA && !@battlers[i].isFainted?) {
           hasabil=true; break
-        end
-      end
-      @weatherduration=0 if !hasabil
-      if @weatherduration==0
+        }
+      }
+      if (!hasabil) @weatherduration=0;
+      if (@weatherduration==0) {
         pbDisplay(_INTL("The heavy rain stopped."))
         @weather=0
         GameDebug.Log($"[End of effect] Primordial Sea's rain weather ended")
       else
         pbCommonAnimation("HeavyRain",null,null)
         pbDisplay(_INTL("It is raining heavily."))
-      end
+      }
       break
     case Weather.HARSHSUN:
       hasabil=false
       for (int i = 0; i < 4; i++) {
-        if @battlers[i].ability == Abilities.DESOLATELAND && !@battlers[i].isFainted?
+        if (@battlers[i].ability == Abilities.DESOLATELAND && !@battlers[i].isFainted?) {
           hasabil=true; break
-        end
-      end
-      @weatherduration=0 if !hasabil
-      if @weatherduration==0
+        }
+      }
+      if (!hasabil) @weatherduration=0;
+      if (@weatherduration==0) {
         pbDisplay(_INTL("The harsh sunlight faded."))
         @weather=0
         GameDebug.Log($"[End of effect] Desolate Land's sunlight weather ended")
       else
         pbCommonAnimation("HarshSun",null,null)
         pbDisplay(_INTL("The sunlight is extremely harsh."))
-        if pbWeather==Weather.HARSHSUN
+        if (pbWeather==Weather.HARSHSUN) {
           foreach (var i in priority) {
-            if i.hasWorkingAbility(Abilities.SOLARPOWER)
+            if (i.hasWorkingAbility(Abilities.SOLARPOWER)) {
               GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Solar Power")
               @scene.pbDamageAnimation(i,0)
               i.pbReduceHP((int)Math.Floor(i.TotalHP/8))
               pbDisplay(_INTL("{1} was hurt by the sunlight!",i.ToString()))
-              if i.isFainted?
-                return if !i.pbFaint
-              end
-            end
-          end
-        end
-      end
+              if (i.isFainted?) {
+                if (!i.pbFaint) return;
+              }
+            }
+          }
+        }
+      }
       break
     case Weather.STRONGWINDS:
       hasabil=false
       for (int i = 0; i < 4; i++) {
-        if @battlers[i].ability == Abilities.DELTASTREAM && !@battlers[i].isFainted?
+        if (@battlers[i].ability == Abilities.DELTASTREAM && !@battlers[i].isFainted?) {
           hasabil=true; break
-        end
-      end
-      @weatherduration=0 if !hasabil
-      if @weatherduration==0
+        }
+      }
+      if (!hasabil) @weatherduration=0;
+      if (@weatherduration==0) {
         pbDisplay(_INTL("The air current subsided."))
         @weather=0
         GameDebug.Log($"[End of effect] Delta Stream's wind weather ended")
       else
         pbCommonAnimation("StrongWinds",null,null)
         pbDisplay(_INTL("The wind is strong."))
-      end
-      break
-    end
+      }
+      break;
+    }
     // Shadow Sky weather
-    if @weather == Weather.SHADOWSKY
-      @weatherduration=@weatherduration-1 if @weatherduration>0
-      if @weatherduration==0
+    if (@weather == Weather.SHADOWSKY) {
+      if (@weatherduration>0) @weatherduration=@weatherduration-1;
+      if (@weatherduration==0) {
         pbDisplay(_INTL("The shadow sky faded."))
         @weather=0
         GameDebug.Log($"[End of effect] Shadow Sky weather ended")
       else
         pbCommonAnimation("ShadowSky",null,null)
         pbDisplay(_INTL("The shadow sky continues."));
-        if pbWeather == Weather.SHADOWSKY
+        if (pbWeather == Weather.SHADOWSKY) {
           GameDebug.Log($"[Lingering effect triggered] Shadow Sky weather damage")
           foreach (var i in priority) {
-            next if i.isFainted?
-            if !i.isShadow?
+            if (i.isFainted?) next;
+            if (!i.isShadow?) {
               @scene.pbDamageAnimation(i,0)
               i.pbReduceHP((int)Math.Floor(i.TotalHP/16))
               pbDisplay(_INTL("{1} was hurt by the shadow sky!",i.ToString()))
-              if i.isFainted?
-                return if !i.pbFaint
-              end
-            end
-          end
-        end
-      end
-    end
+              if (i.isFainted?) {
+                if (!i.pbFaint) return;
+              }
+            }
+          }
+        }
+      }
+    }
     // Future Sight/Doom Desire
     foreach (var i in battlers) {   // not priority
-      next if i.isFainted?
-      if i.effects.FutureSight>0
+      if (i.isFainted?) next;
+      if (i.effects.FutureSight>0) {
         i.effects.FutureSight-=1
-        if i.effects.FutureSight==0
+        if (i.effects.FutureSight==0) {
           move=i.effects.FutureSightMove
           GameDebug.Log($"[Lingering effect triggered] #{move.ToString(TextScripts.Name)} struck #{i.ToString(true)}")
           pbDisplay(_INTL("{1} took the {2} attack!",i.ToString(),move.ToString(TextScripts.Name)))
           moveuser=null
           foreach (var j in battlers) {
-            next if j.pbIsOpposing?(i.effects.FutureSightUserPos)
-            if j.pokemonIndex==i.effects.FutureSightUser && !j.isFainted?
+            if (j.pbIsOpposing?(i.effects.FutureSightUserPos)) next;
+            if (j.pokemonIndex==i.effects.FutureSightUser && !j.isFainted?) {
               moveuser=j; break
-            end
-          end
-          if !moveuser
+            }
+          }
+          if (!moveuser) {
             party=pbParty(i.effects.FutureSightUserPos)
-            if party[i.effects.FutureSightUser].HP>0
+            if (party[i.effects.FutureSightUser].HP>0) {
               moveuser=new PokeBattle_Battler(self,i.effects.FutureSightUserPos)
               moveuser.pbInitDummyPokemon(party[i.effects.FutureSightUser],
                                           i.effects.FutureSightUser)
-            end
-          end
-          if !moveuser
+            }
+          }
+          if (!moveuser) {
             pbDisplay(_INTL("But it failed!"))
           else
             @futuresight=true
             moveuser.pbUseMoveSimple(move,-1,i.index)
             @futuresight=false
-          end
+          }
           i.effects.FutureSight=0
           i.effects.FutureSightMove=0
           i.effects.FutureSightUser=-1
           i.effects.FutureSightUserPos=-1
-          if i.isFainted?
-            return if !i.pbFaint
+          if (i.isFainted?) {
+            if (!i.pbFaint) return;
             next
-          end
-        end
-      end
-    end
+          }
+        }
+      }
+    }
     foreach (var i in priority) {
-      next if i.isFainted?
+      if (i.isFainted?) next;
       // Rain Dish
-      if i.hasWorkingAbility(Abilities.RAINDISH) &&
+      if (i.hasWorkingAbility(Abilities.RAINDISH) &&
          (pbWeather==Weather.RAINDANCE ||
-         pbWeather==Weather.HEAVYRAIN)
+         pbWeather==Weather.HEAVYRAIN)) {
         GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Rain Dish")
         hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/16),true)
-        pbDisplay(_INTL("{1}'s {2} restored its HP a little!",i.ToString(),i.ability.ToString(TextScripts.Name))) if hpgain>0
-      end
+        if (hpgain>0) pbDisplay(_INTL("{1}'s {2} restored its HP a little!",i.ToString(),i.ability.ToString(TextScripts.Name)));
+      }
       // Dry Skin
-      if i.hasWorkingAbility(Abilities.DRYSKIN)
-        if pbWeather==Weather.RAINDANCE ||
-           pbWeather==Weather.HEAVYRAIN
+      if (i.hasWorkingAbility(Abilities.DRYSKIN)) {
+        if (pbWeather==Weather.RAINDANCE ||
+           pbWeather==Weather.HEAVYRAIN) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Dry Skin (in rain)")
           hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/8),true)
-          pbDisplay(_INTL("{1}'s {2} was healed by the rain!",i.ToString(),i.ability.ToString(TextScripts.Name))) if hpgain>0
-        elsif pbWeather==Weather.SUNNYDAY ||
-              pbWeather==Weather.HARSHSUN
+          if (hpgain>0) pbDisplay(_INTL("{1}'s {2} was healed by the rain!",i.ToString(),i.ability.ToString(TextScripts.Name)));
+        else if (pbWeather==Weather.SUNNYDAY ||
+              pbWeather==Weather.HARSHSUN) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Dry Skin (in sun)")
           @scene.pbDamageAnimation(i,0)
           hploss=i.pbReduceHP((int)Math.Floor(i.TotalHP/8))
-          pbDisplay(_INTL("{1}'s {2} was hurt by the sunlight!",i.ToString(),i.ability.ToString(TextScripts.Name))) if hploss>0
-        end
-      end
+          if (hploss>0) pbDisplay(_INTL("{1}'s {2} was hurt by the sunlight!",i.ToString(),i.ability.ToString(TextScripts.Name)));
+        }
+      }
       // Ice Body
-      if i.hasWorkingAbility(Abilities.ICEBODY) && pbWeather==Weather.HAIL
+      if (i.hasWorkingAbility(Abilities.ICEBODY) && pbWeather==Weather.HAIL) {
         GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Ice Body")
         hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/16),true)
-        pbDisplay(_INTL("{1}'s {2} restored its HP a little!",i.ToString(),i.ability.ToString(TextScripts.Name))) if hpgain>0
-      end
-      if i.isFainted?
-        return if !i.pbFaint
-      end
-    end
+        if (hpgain>0) pbDisplay(_INTL("{1}'s {2} restored its HP a little!",i.ToString(),i.ability.ToString(TextScripts.Name)));
+      }
+      if (i.isFainted?) {
+        if (!i.pbFaint) return;
+      }
+    }
     // Wish
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Wish>0
+      if (i.isFainted?) next;
+      if (i.effects.Wish>0) {
         i.effects.Wish-=1
-        if i.effects.Wish==0
+        if (i.effects.Wish==0) {
           GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Wish")
           hpgain=i.pbRecoverHP(i.effects.WishAmount,true)
-          if hpgain>0
+          if (hpgain>0) {
             wishmaker=pbThisEx(i.index,i.effects.WishMaker)
             pbDisplay(_INTL("{1}'s wish came true!",wishmaker))
-          end
-        end
-      end
-    end
+          }
+        }
+      }
+    }
     // Fire Pledge + Grass Pledge combination damage
     for (int i = 0; i < 2; i++) {
-      if sides[i].effects.SeaOfFire>0 &&
+      if (sides[i].effects.SeaOfFire>0 &&
          pbWeather!=Weather.RAINDANCE &&
-         pbWeather!=Weather.HEAVYRAIN
-        @battle.pbCommonAnimation("SeaOfFire",null,null) if i==0
-        @battle.pbCommonAnimation("SeaOfFireOpp",null,null) if i==1
+         pbWeather!=Weather.HEAVYRAIN) {
+        if (i==0) @battle.pbCommonAnimation("SeaOfFire",null,null);
+        if (i==1) @battle.pbCommonAnimation("SeaOfFireOpp",null,null);
         foreach (var j in priority) {
-          next if (j.index&1)!=i
-          next if j.hasType(Types.FIRE) || j.hasWorkingAbility(Abilities.MAGICGUARD)
+          if ((j.index&1)!=i) next;
+          if (j.hasType(Types.FIRE) || j.hasWorkingAbility(Abilities.MAGICGUARD)) next;
           @scene.pbDamageAnimation(j,0)
           hploss=j.pbReduceHP((int)Math.Floor(j.TotalHP/8))
-          pbDisplay(_INTL("{1} is hurt by the sea of fire!",j.ToString())) if hploss>0
-          if j.isFainted?
-            return if !j.pbFaint
-          end
-        end
-      end
-    end
+          if (hploss>0) pbDisplay(_INTL("{1} is hurt by the sea of fire!",j.ToString()));
+          if (j.isFainted?) {
+            if (!j.pbFaint) return;
+          }
+        }
+      }
+    }
     foreach (var i in priority) {
-      next if i.isFainted?
+      if (i.isFainted?) next;
       // Shed Skin, Hydration
-      if (i.hasWorkingAbility(Abilities.SHEDSKIN) && pbRandom(10)<3) ||
+      if ((i.hasWorkingAbility(Abilities.SHEDSKIN) && pbRandom(10)<3) ||
          (i.hasWorkingAbility(Abilities.HYDRATION) && (pbWeather==Weather.RAINDANCE ||
-                                              pbWeather==Weather.HEAVYRAIN))
-        if i.status>0
+                                              pbWeather==Weather.HEAVYRAIN))) {
+        if (i.status>0) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{i.ability.ToString(TextScripts.Name)}")
           s=i.status
           i.pbCureStatus(false)
           switch (s) {
-            break;
-            break
           case Statuses.SLEEP:
             pbDisplay(_INTL("{1}'s {2} cured its sleep problem!",i.ToString(),i.ability.ToString(TextScripts.Name)))
             break
@@ -3724,19 +3722,18 @@ namespace PokemonUnity.Battle
             break
           case Statuses.FROZEN:
             pbDisplay(_INTL("{1}'s {2} thawed it out!",i.ToString(),i.ability.ToString(TextScripts.Name)))
-          end
-        end
-      end
+            break;
+          }
+        }
+      }
       // Healer
-      if i.hasWorkingAbility(Abilities.HEALER) && pbRandom(10)<3
+      if (i.hasWorkingAbility(Abilities.HEALER) && pbRandom(10)<3) {
         partner=i.pbPartner
-        if partner && partner.status>0
+        if (partner && partner.status>0) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{i.ability.ToString(TextScripts.Name)}")
           s=partner.status
           partner.pbCureStatus(false)
           switch (s) {
-            break;
-            break
           case Statuses.SLEEP:
             pbDisplay(_INTL("{1}'s {2} cured its partner's sleep problem!",i.ToString(),i.ability.ToString(TextScripts.Name)))
             break
@@ -3751,643 +3748,644 @@ namespace PokemonUnity.Battle
             break
           case Statuses.FROZEN:
             pbDisplay(_INTL("{1}'s {2} thawed its partner out!",i.ToString(),i.ability.ToString(TextScripts.Name)))
-          end
-        end
-      end
-    end
+            break;
+          }
+        }
+      }
+    }
     foreach (var i in priority) {
-      next if i.isFainted?
+      if (i.isFainted?) next;
       // Grassy Terrain (healing)
-      if @field.effects.GrassyTerrain>0 && !i.isAirborne?
+      if (@field.effects.GrassyTerrain>0 && !i.isAirborne?) {
         hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/16),true)
-        pbDisplay(_INTL("{1}'s HP was restored.",i.ToString())) if hpgain>0
-      end
+        if (hpgain>0) pbDisplay(_INTL("{1}'s HP was restored.",i.ToString()));
+      }
       // Held berries/Leftovers/Black Sludge
       i.pbBerryCureCheck(true)
-      if i.isFainted?
-        return if !i.pbFaint
-      end
-    end
+      if (i.isFainted?) {
+        if (!i.pbFaint) return;
+      }
+    }
     // Aqua Ring
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.AquaRing
+      if (i.isFainted?) next;
+      if (i.effects.AquaRing) {
         GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Aqua Ring")
         hpgain=(int)Math.Floor(i.TotalHP/16)
-        hpgain=(int)Math.Floor(hpgain*1.3) if i.hasWorkingItem(Items.BIGROOT)
+        if (i.hasWorkingItem(Items.BIGROOT)) hpgain=(int)Math.Floor(hpgain*1.3);
         hpgain=i.pbRecoverHP(hpgain,true)
-        pbDisplay(_INTL("Aqua Ring restored {1}'s HP!",i.ToString())) if hpgain>0
-      end
-    end
+        if (hpgain>0) pbDisplay(_INTL("Aqua Ring restored {1}'s HP!",i.ToString()));
+      }
+    }
     // Ingrain
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Ingrain
+      if (i.isFainted?) next;
+      if (i.effects.Ingrain) {
         GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Ingrain")
         hpgain=(int)Math.Floor(i.TotalHP/16)
-        hpgain=(int)Math.Floor(hpgain*1.3) if i.hasWorkingItem(Items.BIGROOT)
+        if (i.hasWorkingItem(Items.BIGROOT)) hpgain=(int)Math.Floor(hpgain*1.3);
         hpgain=i.pbRecoverHP(hpgain,true)
-        pbDisplay(_INTL("{1} absorbed nutrients with its roots!",i.ToString())) if hpgain>0
-      end
-    end
+        if (hpgain>0) pbDisplay(_INTL("{1} absorbed nutrients with its roots!",i.ToString()));
+      }
+    }
     // Leech Seed
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.LeechSeed>=0 && !i.hasWorkingAbility(Abilities.MAGICGUARD)
+      if (i.isFainted?) next;
+      if (i.effects.LeechSeed>=0 && !i.hasWorkingAbility(Abilities.MAGICGUARD)) {
         recipient=@battlers[i.effects.LeechSeed]
-        if recipient && !recipient.isFainted?
+        if (recipient && !recipient.isFainted?) {
           GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Leech Seed")
           pbCommonAnimation("LeechSeed",recipient,i)
           hploss=i.pbReduceHP((int)Math.Floor(i.TotalHP/8),true)
-          if i.hasWorkingAbility(Abilities.LIQUIDOOZE)
+          if (i.hasWorkingAbility(Abilities.LIQUIDOOZE)) {
             recipient.pbReduceHP(hploss,true)
             pbDisplay(_INTL("{1} sucked up the liquid ooze!",recipient.ToString()))
           else
-            if recipient.effects.HealBlock==0
-              hploss=(int)Math.Floor(hploss*1.3) if recipient.hasWorkingItem(Items.BIGROOT)
+            if (recipient.effects.HealBlock==0) {
+              if (recipient.hasWorkingItem(Items.BIGROOT)) hploss=(int)Math.Floor(hploss*1.3);
               recipient.pbRecoverHP(hploss,true)
-            end
+            }
             pbDisplay(_INTL("{1}'s health was sapped by Leech Seed!",i.ToString()))
-          end
-          if i.isFainted?
-            return if !i.pbFaint
-          end
-          if recipient.isFainted?
-            return if !recipient.pbFaint
-          end
-        end
-      end
-    end
+          }
+          if (i.isFainted?) {
+            if (!i.pbFaint) return;
+          }
+          if (recipient.isFainted?) {
+            if (!recipient.pbFaint) return;
+          }
+        }
+      }
+    }
     foreach (var i in priority) {
-      next if i.isFainted?
+      if (i.isFainted?) next;
       // Poison/Bad poison
-      if i.status==Statuses.POISON
-        if i.statusCount>0
+      if (i.status==Statuses.POISON) {
+        if (i.statusCount>0) {
           i.effects.Toxic+=1
           i.effects.Toxic=[15,i.effects.Toxic].min
-        end
-        if i.hasWorkingAbility(Abilities.POISONHEAL)
+        }
+        if (i.hasWorkingAbility(Abilities.POISONHEAL)) {
           pbCommonAnimation("Poison",i,null)
-          if i.effects.HealBlock==0 && i.HP<i.TotalHP
+          if (i.effects.HealBlock==0 && i.HP<i.TotalHP) {
             GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Poison Heal")
             i.pbRecoverHP((int)Math.Floor(i.TotalHP/8),true)
             pbDisplay(_INTL("{1} is healed by poison!",i.ToString()))
-          end
+          }
         else
-          if !i.hasWorkingAbility(Abilities.MAGICGUARD)
+          if (!i.hasWorkingAbility(Abilities.MAGICGUARD)) {
             GameDebug.Log($"[Status damage] #{i.ToString()} took damage from poison/toxic")
-            if i.statusCount==0
+            if (i.statusCount==0) {
               i.pbReduceHP((int)Math.Floor(i.TotalHP/8))
             else
               i.pbReduceHP((int)Math.Floor((i.TotalHP*i.effects.Toxic)/16))
-            end
+            }
             i.pbContinueStatus
-          end
-        end
-      end
+          }
+        }
+      }
       // Burn
-      if i.status==Statuses.BURN
-        if !i.hasWorkingAbility(Abilities.MAGICGUARD)
+      if (i.status==Statuses.BURN) {
+        if (!i.hasWorkingAbility(Abilities.MAGICGUARD)) {
           GameDebug.Log($"[Status damage] #{i.ToString()} took damage from burn")
-          if i.hasWorkingAbility(Abilities.HEATPROOF)
+          if (i.hasWorkingAbility(Abilities.HEATPROOF)) {
             GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Heatproof")
             i.pbReduceHP((int)Math.Floor(i.TotalHP/16))
           else
             i.pbReduceHP((int)Math.Floor(i.TotalHP/8))
-          end
-        end
+          }
+        }
         i.pbContinueStatus
-      end
+      }
       // Nightmare
-      if i.effects.Nightmare
-        if i.status==Statuses.SLEEP
-          if !i.hasWorkingAbility(Abilities.MAGICGUARD)
+      if (i.effects.Nightmare) {
+        if (i.status==Statuses.SLEEP) {
+          if (!i.hasWorkingAbility(Abilities.MAGICGUARD)) {
             GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s nightmare")
             i.pbReduceHP((int)Math.Floor(i.TotalHP/4),true)
             pbDisplay(_INTL("{1} is locked in a nightmare!",i.ToString()))
-          end
+          }
         else
           i.effects.Nightmare=false
-        end
-      end
-      if i.isFainted?
-        return if !i.pbFaint
+        }
+      }
+      if (i.isFainted?) {
+        if (!i.pbFaint) return;
         next
-      end
-    end
+      }
+    }
     // Curse
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Curse && !i.hasWorkingAbility(Abilities.MAGICGUARD)
+      if (i.isFainted?) next;
+      if (i.effects.Curse && !i.hasWorkingAbility(Abilities.MAGICGUARD)) {
         GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s curse")
         i.pbReduceHP((int)Math.Floor(i.TotalHP/4),true)
         pbDisplay(_INTL("{1} is afflicted by the curse!",i.ToString()))
-      end
-      if i.isFainted?
-        return if !i.pbFaint
+      }
+      if (i.isFainted?) {
+        if (!i.pbFaint) return;
         next
-      end
-    end
+      }
+    }
     // Multi-turn attacks (Bind/Clamp/Fire Spin/Magma Storm/Sand Tomb/Whirlpool/Wrap)
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.MultiTurn>0
+      if (i.isFainted?) next;
+      if (i.effects.MultiTurn>0) {
         i.effects.MultiTurn-=1
         movename=i.effects.MultiTurnAttack.ToString(TextScripts.Name)
-        if i.effects.MultiTurn==0
+        if (i.effects.MultiTurn==0) {
           GameDebug.Log($"[End of effect] Trapping move #{movename} affecting #{i.ToString()} ended")
           pbDisplay(_INTL("{1} was freed from {2}!",i.ToString(),movename))
         else
-          if i.effects.MultiTurnAttack == Moves.BIND
+          if (i.effects.MultiTurnAttack == Moves.BIND) {
             pbCommonAnimation("Bind",i,null)
-          elsif i.effects.MultiTurnAttack == Moves.CLAMP
+          else if (i.effects.MultiTurnAttack == Moves.CLAMP) {
             pbCommonAnimation("Clamp",i,null)
-          elsif i.effects.MultiTurnAttack == Moves.FIRESPIN
+          else if (i.effects.MultiTurnAttack == Moves.FIRESPIN) {
             pbCommonAnimation("FireSpin",i,null)
-          elsif i.effects.MultiTurnAttack == Moves.MAGMASTORM
+          else if (i.effects.MultiTurnAttack == Moves.MAGMASTORM) {
             pbCommonAnimation("MagmaStorm",i,null)
-          elsif i.effects.MultiTurnAttack == Moves.SANDTOMB
+          else if (i.effects.MultiTurnAttack == Moves.SANDTOMB) {
             pbCommonAnimation("SandTomb",i,null)
-          elsif i.effects.MultiTurnAttack == Moves.WRAP
+          else if (i.effects.MultiTurnAttack == Moves.WRAP) {
             pbCommonAnimation("Wrap",i,null)
-          elsif i.effects.MultiTurnAttack == Moves.INFESTATION
+          else if (i.effects.MultiTurnAttack == Moves.INFESTATION) {
             pbCommonAnimation("Infestation",i,null)
           else
             pbCommonAnimation("Wrap",i,null)
-          end
-          if !i.hasWorkingAbility(Abilities.MAGICGUARD)
+          }
+          if (!i.hasWorkingAbility(Abilities.MAGICGUARD)) {
             GameDebug.Log($"[Lingering effect triggered] #{i.ToString()} took damage from trapping move #{movename}")
             @scene.pbDamageAnimation(i,0)
             amt=(Core.USENEWBATTLEMECHANICS) ? (int)Math.Floor(i.TotalHP/8) : (int)Math.Floor(i.TotalHP/16)
-            if @battlers[i.effects.MultiTurnUser].hasWorkingItem(Items.BINDINGBAND)
+            if (@battlers[i.effects.MultiTurnUser].hasWorkingItem(Items.BINDINGBAND)) {
               amt=(Core.USENEWBATTLEMECHANICS) ? (int)Math.Floor(i.TotalHP/6) : (int)Math.Floor(i.TotalHP/8)
-            end
+            }
             i.pbReduceHP(amt)
             pbDisplay(_INTL("{1} is hurt by {2}!",i.ToString(),movename))
-          end
-        end
+          }
+        }
       end  
-      if i.isFainted?
-        return if !i.pbFaint
-      end
-    end
+      if (i.isFainted?) {
+        if (!i.pbFaint) return;
+      }
+    }
     // Taunt
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Taunt>0
+      if (i.isFainted?) next;
+      if (i.effects.Taunt>0) {
         i.effects.Taunt-=1
-        if i.effects.Taunt==0
+        if (i.effects.Taunt==0) {
           pbDisplay(_INTL("{1}'s taunt wore off!",i.ToString()))
           GameDebug.Log($"[End of effect] #{i.ToString()} is no longer taunted")
         end 
-      end
-    end
+      }
+    }
     // Encore
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Encore>0
-        if i.moves[i.effects.EncoreIndex].id!=i.effects.EncoreMove
+      if (i.isFainted?) next;
+      if (i.effects.Encore>0) {
+        if (i.moves[i.effects.EncoreIndex].id!=i.effects.EncoreMove) {
           i.effects.Encore=0
           i.effects.EncoreIndex=0
           i.effects.EncoreMove=0
           GameDebug.Log($"[End of effect] #{i.ToString()} is no longer encored (encored move was lost)")
         else
           i.effects.Encore-=1
-          if i.effects.Encore==0 || i.moves[i.effects.EncoreIndex].pp==0
+          if (i.effects.Encore==0 || i.moves[i.effects.EncoreIndex].pp==0) {
             i.effects.Encore=0
             pbDisplay(_INTL("{1}'s encore ended!",i.ToString()))
             GameDebug.Log($"[End of effect] #{i.ToString()} is no longer encored")
           end 
-        end
-      end
-    end
+        }
+      }
+    }
     // Disable/Cursed Body
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Disable>0
+      if (i.isFainted?) next;
+      if (i.effects.Disable>0) {
         i.effects.Disable-=1
-        if i.effects.Disable==0
+        if (i.effects.Disable==0) {
           i.effects.DisableMove=0
           pbDisplay(_INTL("{1} is no longer disabled!",i.ToString()))
           GameDebug.Log($"[End of effect] #{i.ToString()} is no longer disabled")
-        end
-      end
-    end
+        }
+      }
+    }
     // Magnet Rise
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.MagnetRise>0
+      if (i.isFainted?) next;
+      if (i.effects.MagnetRise>0) {
         i.effects.MagnetRise-=1
-        if i.effects.MagnetRise==0
+        if (i.effects.MagnetRise==0) {
           pbDisplay(_INTL("{1} stopped levitating.",i.ToString()))
           GameDebug.Log($"[End of effect] #{i.ToString()} is no longer levitating by Magnet Rise")
-        end
-      end
-    end
+        }
+      }
+    }
     // Telekinesis
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Telekinesis>0
+      if (i.isFainted?) next;
+      if (i.effects.Telekinesis>0) {
         i.effects.Telekinesis-=1
-        if i.effects.Telekinesis==0
+        if (i.effects.Telekinesis==0) {
           pbDisplay(_INTL("{1} stopped levitating.",i.ToString()))
           GameDebug.Log($"[End of effect] #{i.ToString()} is no longer levitating by Telekinesis")
-        end
-      end
-    end
+        }
+      }
+    }
     // Heal Block
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.HealBlock>0
+      if (i.isFainted?) next;
+      if (i.effects.HealBlock>0) {
         i.effects.HealBlock-=1
-        if i.effects.HealBlock==0
+        if (i.effects.HealBlock==0) {
           pbDisplay(_INTL("{1}'s Heal Block wore off!",i.ToString()))
           GameDebug.Log($"[End of effect] #{i.ToString()} is no longer Heal Blocked")
-        end
-      end
-    end
+        }
+      }
+    }
     // Embargo
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Embargo>0
+      if (i.isFainted?) next;
+      if (i.effects.Embargo>0) {
         i.effects.Embargo-=1
-        if i.effects.Embargo==0
+        if (i.effects.Embargo==0) {
           pbDisplay(_INTL("{1} can use items again!",i.ToString(true)))
           GameDebug.Log($"[End of effect] #{i.ToString()} is no longer affected by an embargo")
-        end
-      end
-    end
+        }
+      }
+    }
     // Yawn
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Yawn>0
+      if (i.isFainted?) next;
+      if (i.effects.Yawn>0) {
         i.effects.Yawn-=1
-        if i.effects.Yawn==0 && i.pbCanSleepYawn?
+        if (i.effects.Yawn==0 && i.pbCanSleepYawn?) {
           GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Yawn")
           i.pbSleep
-        end
-      end
-    end
+        }
+      }
+    }
     // Perish Song
     perishSongUsers=[]
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.PerishSong>0
+      if (i.isFainted?) next;
+      if (i.effects.PerishSong>0) {
         i.effects.PerishSong-=1
         pbDisplay(_INTL("{1}'s perish count fell to {2}!",i.ToString(),i.effects.PerishSong))
         GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Perish Song count dropped to #{i.effects.PerishSong}")
-        if i.effects.PerishSong==0
+        if (i.effects.PerishSong==0) {
           perishSongUsers.Add(i.effects.PerishSongUser)
           i.pbReduceHP(i.HP,true)
-        end
-      end
-      if i.isFainted?
-        return if !i.pbFaint
-      end
-    end
-    if perishSongUsers.Length>0
+        }
+      }
+      if (i.isFainted?) {
+        if (!i.pbFaint) return;
+      }
+    }
+    if (perishSongUsers.Length>0) {
       // If all remaining Pokemon fainted by a Perish Song triggered by a single side
-      if (perishSongUsers.find_all{|item| pbIsOpposing?(item) }.Length==perishSongUsers.Length) ||
-         (perishSongUsers.find_all{|item| !pbIsOpposing?(item) }.Length==perishSongUsers.Length)
+      if ((perishSongUsers.find_all{|item| pbIsOpposing?(item) }.Length==perishSongUsers.Length) ||
+         (perishSongUsers.find_all{|item| !pbIsOpposing?(item) }.Length==perishSongUsers.Length)) {
         pbJudgeCheckpoint(@battlers[perishSongUsers[0]])
-      end
-    end
-    if @decision>0
+      }
+    }
+    if (@decision>0) {
       pbGainEXP
-      return
-    end
+      return;
+    }
     // Reflect
     for (int i = 0; i < 2; i++) {
-      if sides[i].effects.Reflect>0
+      if (sides[i].effects.Reflect>0) {
         sides[i].effects.Reflect-=1
-        if sides[i].effects.Reflect==0
-          pbDisplay(_INTL("Your team's Reflect faded!")) if i==0
-          pbDisplay(_INTL("The opposing team's Reflect faded!")) if i==1
-          GameDebug.Log($"[End of effect] Reflect ended on the player's side") if i==0
-          GameDebug.Log($"[End of effect] Reflect ended on the opponent's side") if i==1
-        end
-      end
-    end
+        if (sides[i].effects.Reflect==0) {
+          if (i==0) pbDisplay(_INTL("Your team's Reflect faded!"));
+          if (i==1) pbDisplay(_INTL("The opposing team's Reflect faded!"));
+          if (i==0) GameDebug.Log($"[End of effect] Reflect ended on the player's side");
+          if (i==1) GameDebug.Log($"[End of effect] Reflect ended on the opponent's side");
+        }
+      }
+    }
     // Light Screen
     for (int i = 0; i < 2; i++) {
-      if sides[i].effects.LightScreen>0
+      if (sides[i].effects.LightScreen>0) {
         sides[i].effects.LightScreen-=1
-        if sides[i].effects.LightScreen==0
-          pbDisplay(_INTL("Your team's Light Screen faded!")) if i==0
-          pbDisplay(_INTL("The opposing team's Light Screen faded!")) if i==1
-          GameDebug.Log($"[End of effect] Light Screen ended on the player's side") if i==0
-          GameDebug.Log($"[End of effect] Light Screen ended on the opponent's side") if i==1
-        end
-      end
-    end
+        if (sides[i].effects.LightScreen==0) {
+          if (i==0) pbDisplay(_INTL("Your team's Light Screen faded!"));
+          if (i==1) pbDisplay(_INTL("The opposing team's Light Screen faded!"));
+          if (i==0) GameDebug.Log($"[End of effect] Light Screen ended on the player's side");
+          if (i==1) GameDebug.Log($"[End of effect] Light Screen ended on the opponent's side");
+        }
+      }
+    }
     // Safeguard
     for (int i = 0; i < 2; i++) {
-      if sides[i].effects.Safeguard>0
+      if (sides[i].effects.Safeguard>0) {
         sides[i].effects.Safeguard-=1
-        if sides[i].effects.Safeguard==0
-          pbDisplay(_INTL("Your team is no longer protected by Safeguard!")) if i==0
-          pbDisplay(_INTL("The opposing team is no longer protected by Safeguard!")) if i==1
-          GameDebug.Log($"[End of effect] Safeguard ended on the player's side") if i==0
-          GameDebug.Log($"[End of effect] Safeguard ended on the opponent's side") if i==1
-        end
-      end
-    end
+        if (sides[i].effects.Safeguard==0) {
+          if (i==0) pbDisplay(_INTL("Your team is no longer protected by Safeguard!"));
+          if (i==1) pbDisplay(_INTL("The opposing team is no longer protected by Safeguard!"));
+          if (i==0) GameDebug.Log($"[End of effect] Safeguard ended on the player's side");
+          if (i==1) GameDebug.Log($"[End of effect] Safeguard ended on the opponent's side");
+        }
+      }
+    }
     // Mist
     for (int i = 0; i < 2; i++) {
-      if sides[i].effects.Mist>0
+      if (sides[i].effects.Mist>0) {
         sides[i].effects.Mist-=1
-        if sides[i].effects.Mist==0
-          pbDisplay(_INTL("Your team's Mist faded!")) if i==0
-          pbDisplay(_INTL("The opposing team's Mist faded!")) if i==1
-          GameDebug.Log($"[End of effect] Mist ended on the player's side") if i==0
-          GameDebug.Log($"[End of effect] Mist ended on the opponent's side") if i==1
-        end
-      end
-    end
+        if (sides[i].effects.Mist==0) {
+          if (i==0) pbDisplay(_INTL("Your team's Mist faded!"));
+          if (i==1) pbDisplay(_INTL("The opposing team's Mist faded!"));
+          if (i==0) GameDebug.Log($"[End of effect] Mist ended on the player's side");
+          if (i==1) GameDebug.Log($"[End of effect] Mist ended on the opponent's side");
+        }
+      }
+    }
     // Tailwind
     for (int i = 0; i < 2; i++) {
-      if sides[i].effects.Tailwind>0
+      if (sides[i].effects.Tailwind>0) {
         sides[i].effects.Tailwind-=1
-        if sides[i].effects.Tailwind==0
-          pbDisplay(_INTL("Your team's Tailwind petered out!")) if i==0
-          pbDisplay(_INTL("The opposing team's Tailwind petered out!")) if i==1
-          GameDebug.Log($"[End of effect] Tailwind ended on the player's side") if i==0
-          GameDebug.Log($"[End of effect] Tailwind ended on the opponent's side") if i==1
-        end
-      end
-    end
+        if (sides[i].effects.Tailwind==0) {
+          if (i==0) pbDisplay(_INTL("Your team's Tailwind petered out!"));
+          if (i==1) pbDisplay(_INTL("The opposing team's Tailwind petered out!"));
+          if (i==0) GameDebug.Log($"[End of effect] Tailwind ended on the player's side");
+          if (i==1) GameDebug.Log($"[End of effect] Tailwind ended on the opponent's side");
+        }
+      }
+    }
     // Lucky Chant
     for (int i = 0; i < 2; i++) {
-      if sides[i].effects.LuckyChant>0
+      if (sides[i].effects.LuckyChant>0) {
         sides[i].effects.LuckyChant-=1
-        if sides[i].effects.LuckyChant==0
-          pbDisplay(_INTL("Your team's Lucky Chant faded!")) if i==0
-          pbDisplay(_INTL("The opposing team's Lucky Chant faded!")) if i==1
-          GameDebug.Log($"[End of effect] Lucky Chant ended on the player's side") if i==0
-          GameDebug.Log($"[End of effect] Lucky Chant ended on the opponent's side") if i==1
-        end
-      end
-    end
+        if (sides[i].effects.LuckyChant==0) {
+          if (i==0) pbDisplay(_INTL("Your team's Lucky Chant faded!"));
+          if (i==1) pbDisplay(_INTL("The opposing team's Lucky Chant faded!"));
+          if (i==0) GameDebug.Log($"[End of effect] Lucky Chant ended on the player's side");
+          if (i==1) GameDebug.Log($"[End of effect] Lucky Chant ended on the opponent's side");
+        }
+      }
+    }
     // End of Pledge move combinations
     for (int i = 0; i < 2; i++) {
-      if sides[i].effects.Swamp>0
+      if (sides[i].effects.Swamp>0) {
         sides[i].effects.Swamp-=1
-        if sides[i].effects.Swamp==0
-          pbDisplay(_INTL("The swamp around your team disappeared!")) if i==0
-          pbDisplay(_INTL("The swamp around the opposing team disappeared!")) if i==1
-          GameDebug.Log($"[End of effect] Grass Pledge's swamp ended on the player's side") if i==0
-          GameDebug.Log($"[End of effect] Grass Pledge's swamp ended on the opponent's side") if i==1
-        end
-      end
-      if sides[i].effects.SeaOfFire>0
+        if (sides[i].effects.Swamp==0) {
+          if (i==0) pbDisplay(_INTL("The swamp around your team disappeared!"));
+          if (i==1) pbDisplay(_INTL("The swamp around the opposing team disappeared!"));
+          if (i==0) GameDebug.Log($"[End of effect] Grass Pledge's swamp ended on the player's side");
+          if (i==1) GameDebug.Log($"[End of effect] Grass Pledge's swamp ended on the opponent's side");
+        }
+      }
+      if (sides[i].effects.SeaOfFire>0) {
         sides[i].effects.SeaOfFire-=1
-        if sides[i].effects.SeaOfFire==0
-          pbDisplay(_INTL("The sea of fire around your team disappeared!")) if i==0
-          pbDisplay(_INTL("The sea of fire around the opposing team disappeared!")) if i==1
-          GameDebug.Log($"[End of effect] Fire Pledge's sea of fire ended on the player's side") if i==0
-          GameDebug.Log($"[End of effect] Fire Pledge's sea of fire ended on the opponent's side") if i==1
-        end
-      end
-      if sides[i].effects.Rainbow>0
+        if (sides[i].effects.SeaOfFire==0) {
+          if (i==0) pbDisplay(_INTL("The sea of fire around your team disappeared!"));
+          if (i==1) pbDisplay(_INTL("The sea of fire around the opposing team disappeared!"));
+          if (i==0) GameDebug.Log($"[End of effect] Fire Pledge's sea of fire ended on the player's side");
+          if (i==1) GameDebug.Log($"[End of effect] Fire Pledge's sea of fire ended on the opponent's side");
+        }
+      }
+      if (sides[i].effects.Rainbow>0) {
         sides[i].effects.Rainbow-=1
-        if sides[i].effects.Rainbow==0
-          pbDisplay(_INTL("The rainbow around your team disappeared!")) if i==0
-          pbDisplay(_INTL("The rainbow around the opposing team disappeared!")) if i==1
-          GameDebug.Log($"[End of effect] Water Pledge's rainbow ended on the player's side") if i==0
-          GameDebug.Log($"[End of effect] Water Pledge's rainbow ended on the opponent's side") if i==1
-        end
-      end
-    end
+        if (sides[i].effects.Rainbow==0) {
+          if (i==0) pbDisplay(_INTL("The rainbow around your team disappeared!"));
+          if (i==1) pbDisplay(_INTL("The rainbow around the opposing team disappeared!"));
+          if (i==0) GameDebug.Log($"[End of effect] Water Pledge's rainbow ended on the player's side");
+          if (i==1) GameDebug.Log($"[End of effect] Water Pledge's rainbow ended on the opponent's side");
+        }
+      }
+    }
     // Gravity
-    if @field.effects.Gravity>0
+    if (@field.effects.Gravity>0) {
       @field.effects.Gravity-=1
-      if @field.effects.Gravity==0
+      if (@field.effects.Gravity==0) {
         pbDisplay(_INTL("Gravity returned to normal."))
         GameDebug.Log($"[End of effect] Strong gravity ended")
-      end
-    end
+      }
+    }
     // Trick Room
-    if @field.effects.TrickRoom>0
+    if (@field.effects.TrickRoom>0) {
       @field.effects.TrickRoom-=1
-      if @field.effects.TrickRoom==0
+      if (@field.effects.TrickRoom==0) {
         pbDisplay(_INTL("The twisted dimensions returned to normal."))
         GameDebug.Log($"[End of effect] Trick Room ended")
-      end
-    end
+      }
+    }
     // Wonder Room
-    if @field.effects.WonderRoom>0
+    if (@field.effects.WonderRoom>0) {
       @field.effects.WonderRoom-=1
-      if @field.effects.WonderRoom==0
-        pbDisplay(_INTL("Wonder Room wore off, and the Defense and Sp. Def stats returned to normal!"))
+      if (@field.effects.WonderRoom==0) {
+        pbDisplay(_INTL("Wonder Room wore off, and the Defense and Sp. public void stats returned to normal!")) {
         GameDebug.Log($"[End of effect] Wonder Room ended")
-      end
-    end
+      }
+    }
     // Magic Room
-    if @field.effects.MagicRoom>0
+    if (@field.effects.MagicRoom>0) {
       @field.effects.MagicRoom-=1
-      if @field.effects.MagicRoom==0
+      if (@field.effects.MagicRoom==0) {
         pbDisplay(_INTL("The area returned to normal."))
         GameDebug.Log($"[End of effect] Magic Room ended")
-      end
-    end
+      }
+    }
     // Mud Sport
-    if @field.effects.MudSportField>0
+    if (@field.effects.MudSportField>0) {
       @field.effects.MudSportField-=1
-      if @field.effects.MudSportField==0
+      if (@field.effects.MudSportField==0) {
         pbDisplay(_INTL("The effects of Mud Sport have faded."))
         GameDebug.Log($"[End of effect] Mud Sport ended")
-      end
-    end
+      }
+    }
     // Water Sport
-    if @field.effects.WaterSportField>0
+    if (@field.effects.WaterSportField>0) {
       @field.effects.WaterSportField-=1
-      if @field.effects.WaterSportField==0
+      if (@field.effects.WaterSportField==0) {
         pbDisplay(_INTL("The effects of Water Sport have faded."))
         GameDebug.Log($"[End of effect] Water Sport ended")
-      end
-    end
+      }
+    }
     // Electric Terrain
-    if @field.effects.ElectricTerrain>0
+    if (@field.effects.ElectricTerrain>0) {
       @field.effects.ElectricTerrain-=1
-      if @field.effects.ElectricTerrain==0
+      if (@field.effects.ElectricTerrain==0) {
         pbDisplay(_INTL("The electric current disappeared from the battlefield."))
         GameDebug.Log($"[End of effect] Electric Terrain ended")
-      end
-    end
+      }
+    }
     // Grassy Terrain (counting down)
-    if @field.effects.GrassyTerrain>0
+    if (@field.effects.GrassyTerrain>0) {
       @field.effects.GrassyTerrain-=1
-      if @field.effects.GrassyTerrain==0
+      if (@field.effects.GrassyTerrain==0) {
         pbDisplay(_INTL("The grass disappeared from the battlefield."))
         GameDebug.Log($"[End of effect] Grassy Terrain ended")
-      end
-    end
+      }
+    }
     // Misty Terrain
-    if @field.effects.MistyTerrain>0
+    if (@field.effects.MistyTerrain>0) {
       @field.effects.MistyTerrain-=1
-      if @field.effects.MistyTerrain==0
+      if (@field.effects.MistyTerrain==0) {
         pbDisplay(_INTL("The mist disappeared from the battlefield."))
         GameDebug.Log($"[End of effect] Misty Terrain ended")
-      end
-    end
+      }
+    }
     // Uproar
     foreach (var i in priority) {
-      next if i.isFainted?
-      if i.effects.Uproar>0
+      if (i.isFainted?) next;
+      if (i.effects.Uproar>0) {
         foreach (var j in priority) {
-          if !j.isFainted? && j.status==Statuses.SLEEP && !j.hasWorkingAbility(Abilities.SOUNDPROOF)
+          if (!j.isFainted? && j.status==Statuses.SLEEP && !j.hasWorkingAbility(Abilities.SOUNDPROOF)) {
             GameDebug.Log($"[Lingering effect triggered] Uproar woke up #{j.ToString(true)}")
             j.pbCureStatus(false)
             pbDisplay(_INTL("{1} woke up in the uproar!",j.ToString()))
-          end
-        end
+          }
+        }
         i.effects.Uproar-=1
-        if i.effects.Uproar==0
+        if (i.effects.Uproar==0) {
           pbDisplay(_INTL("{1} calmed down.",i.ToString()))
           GameDebug.Log($"[End of effect] #{i.ToString()} is no longer uproaring")
         else
           pbDisplay(_INTL("{1} is making an uproar!",i.ToString())) 
-        end
-      end
-    end
+        }
+      }
+    }
     foreach (var i in priority) {
-      next if i.isFainted?
+      if (i.isFainted?) next;
       // Speed Boost
       // A Pokémon's turncount is 0 if it became active after the beginning of a round
-      if i.turncount>0 && i.hasWorkingAbility(Abilities.SPEEDBOOST)
-        if i.pbIncreaseStatWithCause(Stats.SPEED,1,i,i.ability.ToString(TextScripts.Name))
+      if (i.turncount>0 && i.hasWorkingAbility(Abilities.SPEEDBOOST)) {
+        if (i.pbIncreaseStatWithCause(Stats.SPEED,1,i,i.ability.ToString(TextScripts.Name))) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{i.ability.ToString(TextScripts.Name)}")
-        end
-      end
+        }
+      }
       // Bad Dreams
-      if i.status==Statuses.SLEEP && !i.hasWorkingAbility(Abilities.MAGICGUARD)
-        if i.pbOpposing1.hasWorkingAbility(Abilities.BADDREAMS) ||
-           i.pbOpposing2.hasWorkingAbility(Abilities.BADDREAMS)
+      if (i.status==Statuses.SLEEP && !i.hasWorkingAbility(Abilities.MAGICGUARD)) {
+        if (i.pbOpposing1.hasWorkingAbility(Abilities.BADDREAMS) ||
+           i.pbOpposing2.hasWorkingAbility(Abilities.BADDREAMS)) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s opponent's Bad Dreams")
           hploss=i.pbReduceHP((int)Math.Floor(i.TotalHP/8),true)
-          pbDisplay(_INTL("{1} is having a bad dream!",i.ToString())) if hploss>0
-        end
-      end
-      if i.isFainted?
-        return if !i.pbFaint
+          if (hploss>0) pbDisplay(_INTL("{1} is having a bad dream!",i.ToString()));
+        }
+      }
+      if (i.isFainted?) {
+        if (!i.pbFaint) return;
         next
-      end
+      }
       // Pickup
-      if i.hasWorkingAbility(Abilities.PICKUP) && i.item<=0
+      if (i.hasWorkingAbility(Abilities.PICKUP) && i.item<=0) {
         item=0; index=-1; use=0
         for (int j = 0; j < 4; j++) {
-          next if j==i.index
-          if @battlers[j].effects.PickupUse>use
+          if (j==i.index) next;
+          if (@battlers[j].effects.PickupUse>use) {
             item=@battlers[j].effects.PickupItem
             index=j
             use=@battlers[j].effects.PickupUse
-          end
-        end
-        if item>0
+          }
+        }
+        if (item>0) {
           i.item=item
           @battlers[index].effects.PickupItem=0
           @battlers[index].effects.PickupUse=0
-          @battlers[index].pokemon.itemRecycle=0 if @battlers[index].pokemon.itemRecycle==item
-          if !@opponent && // In a wild battle
+          if (@battlers[index].pokemon.itemRecycle==item) @battlers[index].pokemon.itemRecycle=0;
+          if (!@opponent && // In a wild battle
              i.pokemon.itemInitial==0 &&
-             @battlers[index].pokemon.itemInitial==item
+             @battlers[index].pokemon.itemInitial==item) {
             i.pokemon.itemInitial=item
             @battlers[index].pokemon.itemInitial=0
-          end
+          }
           pbDisplay(_INTL("{1} found one {2}!",i.ToString(),item.ToString(TextScripts.Name)))
           i.pbBerryCureCheck(true)
-        end
-      end
+        }
+      }
       // Harvest
-      if i.hasWorkingAbility(Abilities.HARVEST) && i.item<=0 && i.pokemon.itemRecycle>0
-        if pbIsBerry?(i.pokemon.itemRecycle) &&
+      if (i.hasWorkingAbility(Abilities.HARVEST) && i.item<=0 && i.pokemon.itemRecycle>0) {
+        if (pbIsBerry?(i.pokemon.itemRecycle) &&
            (pbWeather==Weather.SUNNYDAY || 
-           pbWeather==Weather.HARSHSUN || pbRandom(10)<5)
+           pbWeather==Weather.HARSHSUN || pbRandom(10)<5)) {
           i.item=i.pokemon.itemRecycle
           i.pokemon.itemRecycle=0
-          i.pokemon.itemInitial=item if i.pokemon.itemInitial==0
+          if (i.pokemon.itemInitial==0) i.pokemon.itemInitial=item;
           pbDisplay(_INTL("{1} harvested one {2}!",i.ToString(),i.item.ToString(TextScripts.Name)))
           i.pbBerryCureCheck(true)
-        end
-      end
+        }
+      }
       // Moody
-      if i.hasWorkingAbility(Abilities.MOODY)
+      if (i.hasWorkingAbility(Abilities.MOODY)) {
         randomup=[]; randomdown=[]
         foreeach (varj in new [] { Stats.ATTACK,Stats.DEFENSE,Stats.SPEED,Stats.SPATK,
                   Stats.SPDEF,Stats.ACCURACY,Stats.EVASION }) {
-          randomup.Add(j) if i.pbCanIncreaseStatStage?(j,i)
-          randomdown.Add(j) if i.pbCanReduceStatStage?(j,i)
-        end
-        if randomup.Length>0
+          if (i.pbCanIncreaseStatStage?(j,i)) randomup.Add(j);
+          if (i.pbCanReduceStatStage?(j,i)) randomdown.Add(j);
+        }
+        if (randomup.Length>0) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Moody (raise stat)")
           r=pbRandom(randomup.Length)
           i.pbIncreaseStatWithCause(randomup[r],2,i,i.ability.ToString(TextScripts.Name))
           for (int j = 0; j < randomdown.Length; j++) {
-            if randomdown[j]==randomup[r]
+            if (randomdown[j]==randomup[r]) {
               randomdown[j]=null; randomdown.compact!
-              break
-            end
-          end
-        end
-        if randomdown.Length>0
+              break;
+            }
+          }
+        }
+        if (randomdown.Length>0) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Moody (lower stat)")
           r=pbRandom(randomdown.Length)
           i.pbReduceStatWithCause(randomdown[r],1,i,i.ability.ToString(TextScripts.Name))
-        end
-      end
-    end
+        }
+      }
+    }
     foreach (var i in priority) {
-      next if i.isFainted?
+      if (i.isFainted?) next;
       // Toxic Orb
-      if i.hasWorkingItem(Items.TOXICORB) && i.status==0 && i.pbCanPoison?(null,false)
+      if (i.hasWorkingItem(Items.TOXICORB) && i.status==0 && i.pbCanPoison?(null,false)) {
         GameDebug.Log($"[Item triggered] #{i.ToString()}'s Toxic Orb")
         i.pbPoison(null,_INTL("{1} was badly poisoned by its {2}!",i.ToString(),
            i.item.ToString(TextScripts.Name)),true)
-      end
+      }
       // Flame Orb
-      if i.hasWorkingItem(Items.FLAMEORB) && i.status==0 && i.pbCanBurn?(null,false)
+      if (i.hasWorkingItem(Items.FLAMEORB) && i.status==0 && i.pbCanBurn?(null,false)) {
         GameDebug.Log($"[Item triggered] #{i.ToString()}'s Flame Orb")
         i.pbBurn(null,_INTL("{1} was burned by its {2}!",i.ToString(),i.item.ToString(TextScripts.Name)))
-      end
+      }
       // Sticky Barb
-      if i.hasWorkingItem(Items.STICKYBARB) && !i.hasWorkingAbility(Abilities.MAGICGUARD)
+      if (i.hasWorkingItem(Items.STICKYBARB) && !i.hasWorkingAbility(Abilities.MAGICGUARD)) {
         GameDebug.Log($"[Item triggered] #{i.ToString()}'s Sticky Barb")
         @scene.pbDamageAnimation(i,0)
         i.pbReduceHP((int)Math.Floor(i.TotalHP/8))
         pbDisplay(_INTL("{1} is hurt by its {2}!",i.ToString(),i.item.ToString(TextScripts.Name)))
-      end
-      if i.isFainted?
-        return if !i.pbFaint
-      end
-    end
+      }
+      if (i.isFainted?) {
+        if (!i.pbFaint) return;
+      }
+    }
     // Form checks
     for (int i = 0; i < 4; i++) {
-      next if @battlers[i].isFainted?
+      if (@battlers[i].isFainted?) next;
       @battlers[i].pbCheckForm
-    end
+    }
     pbGainEXP
     pbSwitch
-    return if @decision>0
+    if (@decision>0) return;
     foreach (var i in priority) {
-      next if i.isFainted?
+      if (i.isFainted?) next;
       i.pbAbilitiesOnSwitchIn(false)
-    end
+    }
     // Healing Wish/Lunar Dance - should go here
     // Spikes/Toxic Spikes/Stealth Rock - should go here (in order of their 1st use)
     for (int i = 0; i < 4; i++) {
-      if @battlers[i].turncount>0 && @battlers[i]hasWorkingAbility(Abilities.TRUANT)
+      if (@battlers[i].turncount>0 && @battlers[i]hasWorkingAbility(Abilities.TRUANT)) {
         @battlers[i].effects.Truant=!@battlers[i].effects.Truant
-      end
-      if @battlers[i].effects.LockOn>0   // Also Mind Reader
+      }
+      if (@battlers[i].effects.LockOn>0  ) { // Also Mind Reader
         @battlers[i].effects.LockOn-=1
-        @battlers[i].effects.LockOnPos=-1 if @battlers[i].effects.LockOn==0
-      end
+        if (@battlers[i].effects.LockOn==0) @battlers[i].effects.LockOnPos=-1;
+      }
       @battlers[i].effects.Flinch=false
       @battlers[i].effects.FollowMe=0
       @battlers[i].effects.HelpingHand=false
       @battlers[i].effects.MagicCoat=false
       @battlers[i].effects.Snatch=false
-      @battlers[i].effects.Charge-=1 if @battlers[i].effects.Charge>0
+      if (@battlers[i].effects.Charge>0) @battlers[i].effects.Charge-=1;
       @battlers[i].lastHPLost=0
       @battlers[i].tookDamage=false
       @battlers[i].lastAttacker.clear
@@ -4395,174 +4393,174 @@ namespace PokemonUnity.Battle
       @battlers[i].effects.CounterTarget=-1
       @battlers[i].effects.MirrorCoat=-1
       @battlers[i].effects.MirrorCoatTarget=-1
-    end
+    }
     for (int i = 0; i < 2; i++) {
-      if !@sides[i].effects.EchoedVoiceUsed
+      if (!@sides[i].effects.EchoedVoiceUsed) {
         @sides[i].effects.EchoedVoiceCounter=0
-      end
+      }
       @sides[i].effects.EchoedVoiceUsed=false
       @sides[i].effects.QuickGuard=false
       @sides[i].effects.WideGuard=false
       @sides[i].effects.CraftyShield=false
       @sides[i].effects.Round=0
-    end
+    }
     @field.effects.FusionBolt=false
     @field.effects.FusionFlare=false
     @field.effects.IonDeluge=false
-    @field.effects.FairyLock-=1 if @field.effects.FairyLock>0
+    if (@field.effects.FairyLock>0) @field.effects.FairyLock-=1;
     // invalidate stored priority
     @usepriority=false
-  end
+  }
 		#endregion
 
 		#region End of battle.
-  def pbEndOfBattle(canlose=false)
+  public void pbEndOfBattle(canlose=false) {
     switch (@decision) {
     //#### WIN ####//
     case 1:
       GameDebug.Log($"")
       GameDebug.Log($"***Player won***")
-      if @opponent
+      if (@opponent) {
         @scene.pbTrainerBattleSuccess
-        if @opponent.Length > 0
+        if (@opponent.Length > 0) {
           pbDisplayPaused(_INTL("{1} defeated {2} and {3}!",self.pbPlayer.Name,@opponent[0].fullname,@opponent[1].fullname))
         else
           pbDisplayPaused(_INTL("{1} defeated\r\n{2}!",self.pbPlayer.Name,@opponent.fullname))
-        end
+        }
         @scene.pbShowOpponent(0)
         pbDisplayPaused(@endspeech.gsub(/\\[Pp][Nn]/,self.pbPlayer.Name))
-        if @opponent.Length > 0
+        if (@opponent.Length > 0) {
           @scene.pbHideOpponent
           @scene.pbShowOpponent(1)
           pbDisplayPaused(@endspeech2.gsub(/\\[Pp][Nn]/,self.pbPlayer.Name))
-        end
+        }
         // Calculate money gained for winning
-        if @internalbattle
+        if (@internalbattle) {
           tmoney=0
-          if @opponent.Length > 0   // Double battles
+          if (@opponent.Length > 0) {   // Double battles
             maxlevel1=0; maxlevel2=0; limit=pbSecondPartyBegin(1)
             for (int i = 0; i < limit; i++) {
-              if @party2[i]
-                maxlevel1=@party2[i].level if maxlevel1<@party2[i].level
-              end
-              if @party2[i+limit]
-                maxlevel2=@party2[i+limit].level if maxlevel1<@party2[i+limit].level
-              end
-            end
+              if (@party2[i]) {
+                if (maxlevel1<@party2[i].level) maxlevel1=@party2[i].level;
+              }
+              if (@party2[i+limit]) {
+                if (maxlevel1<@party2[i+limit].level) maxlevel2=@party2[i+limit].level;
+              }
+            }
             tmoney+=maxlevel1*@opponent[0].moneyEarned
             tmoney+=maxlevel2*@opponent[1].moneyEarned
           else
             maxlevel=0
             foreach (var i in @party2) {
-              next if !i
-              maxlevel=i.level if maxlevel<i.level
-            end
+              if (!i) next;
+              if (maxlevel<i.level) maxlevel=i.level;
+            }
             tmoney+=maxlevel*@opponent.moneyEarned
-          end
+          }
           // If Amulet Coin/Luck Incense's effect applies, double money earned
-          tmoney*=2 if @amuletcoin
+          if (@amuletcoin) tmoney*=2;
           // If Happy Hour's effect applies, double money earned
-          tmoney*=2 if @doublemoney
+          if (@doublemoney) tmoney*=2;
           oldmoney=self.pbPlayer.money
           self.pbPlayer.money+=tmoney
           moneygained=self.pbPlayer.money-oldmoney
-          if moneygained>0
+          if (moneygained>0) {
             pbDisplayPaused(_INTL("{1} got ${2}\r\nfor winning!",self.pbPlayer.Name,tmoney))
-          end
-        end
-      end
-      if @internalbattle && @extramoney>0
-        @extramoney*=2 if @amuletcoin
-        @extramoney*=2 if @doublemoney
+          }
+        }
+      }
+      if (@internalbattle && @extramoney>0) {
+        if (@amuletcoin) @extramoney*=2;
+        if (@doublemoney) @extramoney*=2;
         oldmoney=self.pbPlayer.money
         self.pbPlayer.money+=@extramoney
         moneygained=self.pbPlayer.money-oldmoney
-        if moneygained>0
+        if (moneygained>0) {
           pbDisplayPaused(_INTL("{1} picked up ${2}!",self.pbPlayer.Name,@extramoney))
-        end
-      end
+        }
+      }
       foreach (var pkmn in @snaggedpokemon) {
         pbStorePokemon(pkmn)
-        self.pbPlayer.shadowcaught=[] if !self.pbPlayer.shadowcaught
+        if (!self.pbPlayer.shadowcaught) self.pbPlayer.shadowcaught=[];
         self.pbPlayer.shadowcaught[pkmn.Species]=true
-      end
+      }
       @snaggedpokemon.clear
-    //#### LOSE, DRAW ####// 
       break
+    //#### LOSE, DRAW ####// 
     case 2: case 5:
       GameDebug.Log($"")
-      GameDebug.Log($"***Player lost***") if @decision==2
-      GameDebug.Log($"***Player drew with opponent***") if @decision==5
-      if @internalbattle
+      if (@decision==2) GameDebug.Log($"***Player lost***");
+      if (@decision==5) GameDebug.Log($"***Player drew with opponent***");
+      if (@internalbattle) {
         pbDisplayPaused(_INTL("{1} is out of usable Pokémon!",self.pbPlayer.Name))
         moneylost=pbMaxLevelFromIndex(0)   // Player's Pokémon only, not partner's
         multiplier=[8,16,24,36,48,60,80,100,120]
         moneylost*=multiplier[[multiplier.Length-1,self.pbPlayer.numbadges].min]
-        moneylost=self.pbPlayer.money if moneylost>self.pbPlayer.money
-        moneylost=0 if $game_switches[NO_MONEY_LOSS]
+        if (moneylost>self.pbPlayer.money) moneylost=self.pbPlayer.money;
+        if ($game_switches[NO_MONEY_LOSS]) moneylost=0;
         oldmoney=self.pbPlayer.money
         self.pbPlayer.money-=moneylost
         lostmoney=oldmoney-self.pbPlayer.money
-        if @opponent
-          if @opponent.Length > 0
+        if (@opponent) {
+          if (@opponent.Length > 0) {
             pbDisplayPaused(_INTL("{1} lost against {2} and {3}!",self.pbPlayer.Name,@opponent[0].fullname,@opponent[1].fullname))
           else
             pbDisplayPaused(_INTL("{1} lost against\r\n{2}!",self.pbPlayer.Name,@opponent.fullname))
-          end
-          if moneylost>0
+          }
+          if (moneylost>0) {
             pbDisplayPaused(_INTL("{1} paid ${2}\r\nas the prize money...",self.pbPlayer.Name,lostmoney))  
-            pbDisplayPaused(_INTL("...")) if !canlose
-          end
+            if (!canlose) pbDisplayPaused(_INTL("..."));
+          }
         else
-          if moneylost>0
+          if (moneylost>0) {
             pbDisplayPaused(_INTL("{1} panicked and lost\r\n${2}...",self.pbPlayer.Name,lostmoney))
-            pbDisplayPaused(_INTL("...")) if !canlose
-          end
-        end
-        pbDisplayPaused(_INTL("{1} blacked out!",self.pbPlayer.Name)) if !canlose
-      elsif @decision==2
+            if (!canlose) pbDisplayPaused(_INTL("..."));
+          }
+        }
+        if (!canlose) pbDisplayPaused(_INTL("{1} blacked out!",self.pbPlayer.Name));
+      else if (@decision==2) {
         @scene.pbShowOpponent(0)
         pbDisplayPaused(@endspeechwin.gsub(/\\[Pp][Nn]/,self.pbPlayer.Name))
-        if @opponent.Length > 0
+        if (@opponent.Length > 0) {
           @scene.pbHideOpponent
           @scene.pbShowOpponent(1)
           pbDisplayPaused(@endspeechwin2.gsub(/\\[Pp][Nn]/,self.pbPlayer.Name))
-        end
-      end
-      break
-    end
+        }
+      }
+      break;
+    }
     // Pass on Pokérus within the party
     infected=[]
     for (int i = 0; i < $Trainer.party.Length; i++) {
-      if $Trainer.party[i].pokerusStage==1
+      if ($Trainer.party[i].pokerusStage==1) {
         infected.Add(i)
-      end
-    end
-    if infected.Length>=1
+      }
+    }
+    if (infected.Length>=1) {
       foreach (var i in infected) {
         strain=$Trainer.party[i].pokerus/16
-        if i>0 && $Trainer.party[i-1].pokerusStage==0
-          $Trainer.party[i-1].givePokerus(strain) if rand(3)==0
-        end
-        if i<$Trainer.party.Length-1 && $Trainer.party[i+1].pokerusStage==0
-          $Trainer.party[i+1].givePokerus(strain) if rand(3)==0
-        end
-      end
-    end
+        if (i>0 && $Trainer.party[i-1].pokerusStage==0) {
+          if (rand(3)==0) $Trainer.party[i-1].givePokerus(strain);
+        }
+        if (i<$Trainer.party.Length-1 && $Trainer.party[i+1].pokerusStage==0) {
+          if (rand(3)==0) $Trainer.party[i+1].givePokerus(strain);
+        }
+      }
+    }
     @scene.pbEndBattle(@decision)
     foreach (var i in @battlers) {
       i.pbResetForm
-      if i.hasWorkingAbility(Abilities.NATURALCURE)
+      if (i.hasWorkingAbility(Abilities.NATURALCURE)) {
         i.status=0
-      end
-    end
+      }
+    }
     foreach (var i in $Trainer.party) {
       i.setItem(i.itemInitial)
       i.itemInitial=i.itemRecycle=0
       i.belch=false
-    end
-    return @decision
-  end
+    }
+    return @decision;
+  }
 		#endregion
 	}
 }
