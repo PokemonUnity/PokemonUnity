@@ -82,6 +82,7 @@
     <Compile Include="Extensions\Utility\MathHelper.cs" />
     <Compile Include="Extensions\Utility\ScriptConversion.cs" />
     <Compile Include="Extensions\Utility\StringHelper.cs" />
+    <Compile Include="Framework\IScene.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Application\Game.Conditions.cs" />
     <Compile Include="Application\Game.Database.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="InBattle\Move.cs" />
     <Compile Include="InBattle\Pokemon.Effect.cs" />
     <Compile Include="InBattle\Pokemon.cs" />
+    <Compile Include="InBattle\Shadow\Pokemon.cs" />
     <Compile Include="Inventory\Data\Base.cs" />
     <Compile Include="Inventory\Data\Berry.cs" />
     <Compile Include="Inventory\Data\ItemFlags.cs" />
@@ -131,7 +133,7 @@
     <Compile Include="Saving\SerializableClasses\SeriPokemon.cs" />
     <Compile Include="Saving\SerializableClasses\SeriV2.cs" />
     <Compile Include="Saving\SerializableClasses\SeriV3.cs" />
-    <Compile Include="Shadow\Attack.cs" />
+    <Compile Include="InBattle\Shadow\Attack.cs" />
     <Compile Include="Translations\Translations.cs" />
     <Compile Include="Translations\Translator.cs" />
   </ItemGroup>

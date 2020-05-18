@@ -32,7 +32,7 @@ namespace PokemonUnity.Battle
 		/// Index list of all pokemons who attacked this battler on this/previous turn
 		/// </summary>
 		public List<sbyte> lastAttacker			{ get; private set; }
-		public int turncount					{ get; private set; }
+		public int turncount					{ get; set; } //ToDo: Private set?
 		public Effects.Battler effects			{ get; private set; }
 		/// <summary>
 		/// Int Buffs and debuffs (gains and loss) affecting this pkmn.
@@ -44,7 +44,7 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// Participants will earn Exp. Points if this battler is defeated
 		/// </summary>
-		public List<byte> participants			{ get; private set; }
+		public List<byte> participants			{ get; set; }
 		public bool tookDamage					{ get; set; }
 		public int lastHPLost					{ get; set; }
 		public Moves lastMoveUsed				{ get; private set; }
@@ -55,7 +55,7 @@ namespace PokemonUnity.Battle
 		public List<Moves> movesUsed			{ get; set; }
 		public Moves currentMove				{ get; set; }
 		public Battle.DamageState damagestate	{ get; set; }
-		public bool captured					{ get; private set; }
+		public bool captured					{ get; set; }
 		#endregion
 		#region Inherit Base Pokemon Data
 		public int HP							{ get; set; }
@@ -76,7 +76,68 @@ namespace PokemonUnity.Battle
 		public int SPE							{ get; private set; }
 		public int spatk						{ get; set; }
 		public int speed						{ get; set; }
-		public int pbSpeed						{ get; set; }
+		public int pbSpeed						{ get
+            {
+                int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
+                int[] stagediv = new int[] { 40, 35, 30, 25, 20, 15, 10, 10, 10, 10, 10, 10, 10 };
+                //int speed = 0;
+                int stage = stages[2] + 6;
+                speed = (int)Math.Floor(speed * (decimal)stagemul[stage] / stagediv[stage]);
+                int speedmult = 0x1000;
+                switch (battle.weather)
+                {
+                    case Weather.RAINDANCE:
+                    case Weather.HEAVYRAIN:
+                        speedmult = hasWorkingAbility(Abilities.SWIFT_SWIM) ? speedmult * 2 : speedmult;
+                        break;
+                    case Weather.SUNNYDAY:
+                    case Weather.HARSHSUN:
+                        speedmult = hasWorkingAbility(Abilities.CHLOROPHYLL) ? speedmult * 2 : speedmult;
+                        break;
+                    case Weather.SANDSTORM:
+                        speedmult = hasWorkingAbility(Abilities.SAND_RUSH) ? speedmult * 2 : speedmult;
+                        break;
+                    default:
+                        break;
+                }
+                if (hasWorkingAbility(Abilities.QUICK_FEET) && Status > 0)
+                    speedmult = (int)Math.Round(speedmult * 1.5f);
+                if (hasWorkingAbility(Abilities.UNBURDEN) && effects.Unburden && Item == Items.NONE)
+                    speedmult = speedmult * 2;
+                if (hasWorkingAbility(Abilities.SLOW_START) && battle.turncount > 0)
+                    speedmult = (int)Math.Round(speedmult * 1.5f);
+                if (hasWorkingItem(Items.MACHO_BRACE) ||
+                    hasWorkingItem(Items.POWER_WEIGHT) ||
+                    hasWorkingItem(Items.POWER_BRACER) ||
+                    hasWorkingItem(Items.POWER_BELT) ||
+                    hasWorkingItem(Items.POWER_ANKLET) ||
+                    hasWorkingItem(Items.POWER_LENS) ||
+                    hasWorkingItem(Items.POWER_BAND) ||
+                    hasWorkingItem(Items.IRON_BALL))
+                    speedmult = (int)Math.Round((decimal)speedmult / 2);
+                if (hasWorkingItem(Items.CHOICE_SCARF))
+                    speedmult = (int)Math.Round(speedmult * 2f);
+                if (Item == Items.IRON_BALL)
+                    speedmult = (int)Math.Round((decimal)speedmult / 2);
+                if (hasWorkingItem(Items.QUICK_POWDER) &&
+                    Species == Pokemons.DITTO &&
+                    !effects.Transform)
+                    speedmult = (int)Math.Round(speedmult * 2f);
+                if (OwnSide.Tailwind > 0)
+                    speedmult = (int)Math.Round(speedmult * 2f);
+                if (OwnSide.Swamp > 0)
+                    speedmult = (int)Math.Round(speedmult / 2f);
+                if (!hasWorkingAbility(Abilities.QUICK_FEET) &&
+                    Status == Status.PARALYSIS)
+                    speedmult = (int)Math.Round(speedmult / 4f);
+                if (battle.internalbattle &&
+                    battle.pbOwnedByPlayer(Index) &&
+                    Game.GameData.Player.BadgesCount >= Core.BADGESBOOSTSPEED)
+                    speedmult = (int)Math.Round(speedmult * 1.1f);
+                speed = (int)Math.Round(speed * speedmult * 1f / 0x1000);
+                return Math.Max(speed, 1);
+            }
+        }
 		public byte[] baseStats					{ get; private set; }
 		public int Level						{ get { return pokemon.Level; } }
 		public int level						{ get; set; }
@@ -92,11 +153,6 @@ namespace PokemonUnity.Battle
 					return effects.Illusion.Gender;
 				return this.gender; } }
 		private bool? gender { get; set; }
-		public bool isHyperMode { get {
-				if (effects.Illusion != null)
-					return false; //effects.Illusion.IsShiny;
-				return pokemon.isHyperMode; }
-		}
 		public bool IsShiny { get {
 				if (effects.Illusion != null)
 					return effects.Illusion.IsShiny;
@@ -135,6 +191,14 @@ namespace PokemonUnity.Battle
 		public PokemonUnity.Attack.Move[] moves { get; set; }
 		#endregion
 		#region Move to PokemonBattle Class
+        /// <summary>
+        /// Shadow Pokémon in the first game sometimes enter Hyper Mode, but in XD they enter Reverse Mode instead. (Battle Only).
+        /// </summary>
+        /// <remarks>
+        /// In Hyper Mode, a Pokémon may attack its Trainer, but in Reverse Mode, they will not.
+        /// While in Reverse Mode, a Pokémon hurts itself after every turn, whereas a Pokémon in Hyper Mode incurs no self-damage
+        /// </remarks>
+        public bool isHyperMode { get; private set; }
 		/// <summary>
 		/// Consumed held item (used in battle only)
 		/// </summary>
@@ -151,15 +215,15 @@ namespace PokemonUnity.Battle
 		public bool belch { get; set; }
 		#endregion
 		public bool Fainted { get; private set; }
-		public bool isFainted() { return true; } //HP == 0 || Status.FAINT || Fainted?
+		public bool isFainted() { return true; } //HP == 0 || Status.FAINT || Fainted; }
 		public bool isEgg { get { return pokemon.isEgg; } }
 		/// <summary>
 		/// Returns the position of this pkmn in party lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
-		public sbyte pokemonIndex { get; private set; }
+		public sbyte pokemonIndex { get; set; }
 		public bool IsOwned { get { return Game.GameData.Player.Pokedex[(byte)Species, 1] == 1; } }
-		private PokemonUnity.Monster.Pokemon pokemon { get; set; }
+		public PokemonUnity.Monster.Pokemon pokemon { get; private set; }
 
 		public int GetWeight(Pokemon attacker = null)
 		{
@@ -176,7 +240,12 @@ namespace PokemonUnity.Battle
 			return (int)w;
 		}
 
-		public bool IsMega { get { return Game.PokemonFormsData[Species][form].IsMega; } }
+		public bool IsHyperMode { get {
+				if (effects.Illusion != null)
+					return false; //effects.Illusion.IsShiny;
+				return isHyperMode; }
+		}
+        public bool IsMega { get { return Game.PokemonFormsData[Species][form].IsMega; } }
 		//public override bool hasMegaForm { get { if (effects.Transform) return false; return base.hasMegaForm; } }
 		public bool IsPrimal { get; private set; }
 		//public override bool hasPrimalForm { get { if (effects.Transform) return false; return base.hasPrimalForm; } }
@@ -302,7 +371,7 @@ namespace PokemonUnity.Battle
 			effects.BideDamage			= 0;
 			effects.BideTarget			= -1;
 			effects.Charge				= 0;
-			effects.ChoiceBand			= null;
+			effects.ChoiceBand			= Moves.NONE;
 			effects.Counter				= -1;
 			effects.CounterTarget		= -1;
 			effects.DefenseCurl			= false;
@@ -531,14 +600,14 @@ namespace PokemonUnity.Battle
 		{
 			if (battle.isOpposing(Index))
 			{
-				if (battle.opponent.ID == TrainerTypes.WildPokemon)
+				if (battle.opponent.Length == 0)//.ID == TrainerTypes.WildPokemon
 					//return string.Format("The wild {0}", Name);
 					return LanguageExtension.Translate(Text.ScriptTexts, lowercase ? "WildPokemonL" : "WildPokemon", Name).Value;
 				else
 					//return string.Format("The opposing {0}", Name);
 					return LanguageExtension.Translate(Text.ScriptTexts, lowercase ? "OpponentPokemonL" : "OpponentPokemon", Name).Value;
 			}
-			else if (battle.OwnedByPlayer(Index))
+			else if (battle.pbOwnedByPlayer(Index))
 				return Name;
 			else
 				//return string.Format("The ally {0}", Name);
@@ -645,68 +714,6 @@ namespace PokemonUnity.Battle
 			if (effects.Telekinesis > 0) return true;
 			return false;
 		}
-
-		public int Speed()
-		{
-			int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
-			int[] stagediv = new int[] { 40, 35, 30, 25, 20, 15, 10, 10, 10, 10, 10, 10, 10 };
-			int speed = 0;
-			int stage = stages[2] + 6;
-			speed = (int)Math.Floor(speed * (decimal)stagemul[stage] / stagediv[stage]);
-			int speedmult = 0x1000;
-			switch (battle.weather)
-			{
-				case Weather.RAINDANCE:
-				case Weather.HEAVYRAIN:
-					speedmult = hasWorkingAbility(Abilities.SWIFT_SWIM) ? speedmult * 2 : speedmult;
-					break;
-				case Weather.SUNNYDAY:
-				case Weather.HARSHSUN:
-					speedmult = hasWorkingAbility(Abilities.CHLOROPHYLL) ? speedmult * 2 : speedmult;
-					break;
-				case Weather.SANDSTORM:
-					speedmult = hasWorkingAbility(Abilities.SAND_RUSH) ? speedmult * 2 : speedmult;
-					break;
-				default:
-					break;
-			}
-			if (hasWorkingAbility(Abilities.QUICK_FEET) && Status > 0)
-				speedmult = (int)Math.Round(speedmult * 1.5f);
-			if (hasWorkingAbility(Abilities.UNBURDEN) && effects.Unburden && Item == Items.NONE)
-				speedmult = speedmult * 2;
-			if (hasWorkingAbility(Abilities.SLOW_START) && battle.turncount > 0)
-				speedmult = (int)Math.Round(speedmult * 1.5f);
-			if (hasWorkingItem(Items.MACHO_BRACE) || 
-				hasWorkingItem(Items.POWER_WEIGHT) ||
-				hasWorkingItem(Items.POWER_BRACER) ||
-				hasWorkingItem(Items.POWER_BELT) ||
-				hasWorkingItem(Items.POWER_ANKLET) ||
-				hasWorkingItem(Items.POWER_LENS) ||
-				hasWorkingItem(Items.POWER_BAND) ||
-				hasWorkingItem(Items.IRON_BALL))
-				speedmult = (int)Math.Round((decimal)speedmult / 2);
-			if (hasWorkingItem(Items.CHOICE_SCARF))
-				speedmult = (int)Math.Round(speedmult * 2f);
-			if (Item == Items.IRON_BALL)
-				speedmult = (int)Math.Round((decimal)speedmult / 2);
-			if (hasWorkingItem(Items.QUICK_POWDER) &&
-				Species == Pokemons.DITTO &&
-				!effects.Transform)
-				speedmult = (int)Math.Round(speedmult * 2f);
-			if (OwnSide.Tailwind > 0)
-				speedmult = (int)Math.Round(speedmult * 2f);
-			if (OwnSide.Swamp > 0)
-				speedmult = (int)Math.Round(speedmult / 2f);
-			if (!hasWorkingAbility(Abilities.QUICK_FEET) &&
-				Status == Status.PARALYSIS)
-				speedmult = (int)Math.Round(speedmult / 4f);
-			if (battle.internalbattle && 
-				battle.OwnedByPlayer(Index) &&
-				Game.GameData.Player.BadgesCount >= Core.BADGESBOOSTSPEED)
-				speedmult = (int)Math.Round(speedmult * 1.1f);
-			speed = (int)Math.Round(speed * speedmult * 1f/0x1000);
-			return Math.Max(speed, 1);
-		}
 		#endregion
 
 		#region Change HP
@@ -726,9 +733,8 @@ namespace PokemonUnity.Battle
 				//"HP greater than total HP"
 				battle.pbDisplay//Game.Dialog
 					(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
-			//ToDo: Pass to UnityEngine
 			if (amt > 0)
-				battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
+				battle.scene.HPChanged(Index, oldhp, animate);
 			if (amt > 0 && registerDamage)
 				tookDamage = true;
 			return amt;
@@ -758,17 +764,17 @@ namespace PokemonUnity.Battle
 			return amount;
 		}
 
-		public void Faint(bool showMessage = true)
+		public bool Faint(bool showMessage = true)
 		{
 			if(!isFainted() && HP > 0)
 			{
 				GameDebug.LogWarning("Can't faint with HP greater than 0");
-				return; //true;
+				return true;
 			}
 			if(isFainted())
 			{
 				GameDebug.LogWarning("Can't faint if already fainted");
-				return; //true;
+				return true;
 			}
 			battle.scene.Fainted(Index);
 			InitEffects(false);
@@ -793,7 +799,7 @@ namespace PokemonUnity.Battle
 			if (showMessage)
 				battle.pbDisplay//Game.Dialog
 					(LanguageExtension.Translate(Text.Errors, "Fainted", new string[] { ToString() }).Value);
-			//return true;
+			return true;
 		}
 		#endregion
 
@@ -1322,10 +1328,10 @@ namespace PokemonUnity.Battle
           user.Item=target.Item;
           target.Item=0;
           target.effects.Unburden=true;
-          if (!@battle.opponent.IsNotNullOrNone() && !@battle.IsOpposing(user.Index))
-            if (user.pokemon.itemInitial==0 && target.pokemon.itemInitial==user.Item) {
-              user.pokemon.itemInitial=user.Item;
-              target.pokemon.itemInitial=0;
+          if (@battle.opponent.Length == 0 && !@battle.isOpposing(user.Index))
+            if (user.itemInitial==Items.NONE && target.itemInitial==user.Item) {
+              user.itemInitial=user.Item;
+              target.itemInitial=Items.NONE;
             }
           @battle.pbDisplay(_INTL("{1}'s {2} was transferred to {3}!",
              target.ToString(),user.Item.ToString(TextScripts.Name),user.ToString(true)));
@@ -1573,15 +1579,15 @@ namespace PokemonUnity.Battle
          !target.hasWorkingAbility(Abilities.STICKY_HOLD) &&
          !@battle.pbIsUnlosableItem(target,target.Item) &&
          !@battle.pbIsUnlosableItem(user,target.Item) &&
-         (@battle.opponent.IsNotNullOrNone() || !@battle.IsOpposing(user.Index))) {
+         (@battle.opponent.Length > 0 || !@battle.isOpposing(user.Index))) {
         user.Item=target.Item;
         target.Item=0;
         target.effects.Unburden=true;
-        if (!@battle.opponent.IsNotNullOrNone() &&   // In a wild battle
-           user.pokemon.itemInitial==0 &&
-           target.pokemon.itemInitial==user.Item) {
-          user.pokemon.itemInitial=user.Item;
-          target.pokemon.itemInitial=0;
+        if (@battle.opponent.Length != 0 &&   // In a wild battle
+           user.itemInitial==Items.NONE &&
+           target.itemInitial==user.Item) {
+          user.itemInitial=user.Item;
+          target.itemInitial=Items.NONE;
         }
         @battle.pbDisplay(_INTL("{1} stole {2}'s {3} with {4}!",user.ToString(),
            target.ToString(true),user.Item.ToString(TextScripts.Name),user.ability.ToString(TextScripts.Name)));
@@ -1595,15 +1601,15 @@ namespace PokemonUnity.Battle
          !user.hasWorkingAbility(Abilities.STICKY_HOLD) &&
          !@battle.pbIsUnlosableItem(user,user.Item) &&
          !@battle.pbIsUnlosableItem(target,user.Item) &&
-         (@battle.opponent.IsNotNullOrNone() || !@battle.IsOpposing(target.Index))) {
+         (@battle.opponent.Length > 0 || !@battle.isOpposing(target.Index))) {
         target.Item=user.Item;
         user.Item=0;
         user.effects.Unburden=true;
-        if (!@battle.opponent.IsNotNullOrNone() &&   // In a wild battle
-           target.pokemon.itemInitial==0 &&
-           user.pokemon.itemInitial==target.Item) {
-          target.pokemon.itemInitial=target.Item;
-          user.pokemon.itemInitial=0;
+        if (@battle.opponent.Length != 0 &&   // In a wild battle
+           target.itemInitial==Items.NONE &&
+           user.itemInitial==target.Item) {
+          target.itemInitial=target.Item;
+          user.itemInitial=Items.NONE;
         }
         @battle.pbDisplay(_INTL("{1} pickpocketed {2}'s {3}!",target.ToString(),
            user.ToString(true),target.Item.ToString(TextScripts.Name)));
@@ -1670,8 +1676,8 @@ namespace PokemonUnity.Battle
 #region Held Item effects
   public void pbConsumeItem(bool recycle=true,bool pickup=true) {
     string itemname=this.Item.ToString(TextScripts.Name);
-    if (recycle) @pokemon.itemRecycle=this.Item;
-    if (@pokemon.itemInitial==this.Item) @pokemon.itemInitial=0;
+    if (recycle) itemRecycle=this.Item;
+    if (itemInitial==this.Item) itemInitial=0;
     if (pickup) {
       @effects.PickupItem=this.Item;
       @effects.PickupUse=@battle.nextPickupUse;
@@ -2266,14 +2272,14 @@ namespace PokemonUnity.Battle
     if (choice.Action!=ChoiceAction.UseMove) return true;
     if (@battle.pbOwnedByPlayer(@Index) && @battle.internalbattle) {
       int badgelevel=10;
-      if (@battle.player.BadgesCount>=1) badgelevel=20 ;
-      if (@battle.player.BadgesCount>=2) badgelevel=30 ;
-      if (@battle.player.BadgesCount>=3) badgelevel=40 ;
-      if (@battle.player.BadgesCount>=4) badgelevel=50 ;
-      if (@battle.player.BadgesCount>=5) badgelevel=60 ;
-      if (@battle.player.BadgesCount>=6) badgelevel=70 ;
-      if (@battle.player.BadgesCount>=7) badgelevel=80 ;
-      if (@battle.player.BadgesCount>=8) badgelevel=100;
+      if (@battle.pbPlayer().BadgesCount>=1) badgelevel=20 ;
+      if (@battle.pbPlayer().BadgesCount>=2) badgelevel=30 ;
+      if (@battle.pbPlayer().BadgesCount>=3) badgelevel=40 ;
+      if (@battle.pbPlayer().BadgesCount>=4) badgelevel=50 ;
+      if (@battle.pbPlayer().BadgesCount>=5) badgelevel=60 ;
+      if (@battle.pbPlayer().BadgesCount>=6) badgelevel=70 ;
+      if (@battle.pbPlayer().BadgesCount>=7) badgelevel=80 ;
+      if (@battle.pbPlayer().BadgesCount>=8) badgelevel=100;
       Move move=choice.Move;
       bool disobedient=false;
       //ToDo: isForeign => pokemon.OT == player.TrainerId
@@ -2632,11 +2638,11 @@ namespace PokemonUnity.Battle
         GameDebug.Log($"[Move effect triggered] #{ToString()} was defrosted by using #{thismove.MoveId.ToString(TextScripts.Name)}");
         this.pbCureStatus(false);
         @battle.pbDisplay(_INTL("{1} melted the ice!",ToString()));
-        pbCheckForm();
+        CheckForm();
       }
       else if (@battle.pbRandom(10)<2 && !turneffects.SkipAccuracyCheck) {
         this.pbCureStatus();
-        pbCheckForm();
+        CheckForm();
       }
       else if (!thismove.Flags.Defrost) {
         this.pbContinueStatus();
@@ -2764,7 +2770,7 @@ namespace PokemonUnity.Battle
       if (user.isFainted())
         user.pbFaint(); // no return
       if (numhits>1 && target.damagestate.CalcDamage<=0) return;
-      @battle.pbJudgeCheckpoint(user,thismove);
+      @battle.pbJudgeCheckpoint(user,thismove.MoveId);
       // Additional effect
       if (target.damagestate.CalcDamage>0 &&
          !user.hasWorkingAbility(Abilities.SHEER_FORCE) &&
@@ -3182,12 +3188,13 @@ namespace PokemonUnity.Battle
             int newpoke=choices[@battle.pbRandom(choices.Count)];
             int newpokename=newpoke;
             if (party[newpoke].ability == Abilities.ILLUSION)
-              newpokename=pbGetLastPokeInTeam(i);
+              newpokename=@battle.pbGetLastPokeInTeam(i);
             switched.Add(i);
-            @battle.battlers[i].pbResetForm();
+            @battle.battlers[i].ResetForm();
             @battle.pbRecallAndReplace(i,newpoke,newpokename,false,user.hasMoldBreaker());
             @battle.pbDisplay(_INTL("{1} was dragged out!",@battle.battlers[i].ToString()));
-            @battle.choices[i]=[0,0,null,-1];   // Replacement Pokémon does nothing this round
+            //@battle.choices[i]=[0,0,null,-1];   // Replacement Pokémon does nothing this round
+            @battle.choices[i]=new Battle.Choice();   // Replacement Pokémon does nothing this round
           }
         }
       foreach(Pokemon i in @battle.priority) {
@@ -3209,7 +3216,7 @@ namespace PokemonUnity.Battle
           newpoke=@battle.pbSwitchInBetween(i,true,false);
           int newpokename=newpoke;
           if (@battle.pbParty(i)[newpoke].ability == Abilities.ILLUSION)
-            newpokename=pbGetLastPokeInTeam(i);
+            newpokename=@battle.pbGetLastPokeInTeam(i);
           switched.Add(i);
           @battle.battlers[i].ResetForm();
           @battle.pbRecallAndReplace(i,newpoke,newpokename,@battle.battlers[i].effects.BatonPass);
@@ -3227,10 +3234,11 @@ namespace PokemonUnity.Battle
         newpoke=@battle.pbSwitchInBetween(user.Index,true,false);
         int newpokename=newpoke;
         if (@battle.pbParty(user.Index)[newpoke].ability == Abilities.ILLUSION)
-          newpokename=pbGetLastPokeInTeam(user.Index);
+          newpokename=@battle.pbGetLastPokeInTeam(user.Index);
         user.ResetForm();
         @battle.pbRecallAndReplace(user.Index,newpoke,newpokename,true);
-        @battle.choices[user.Index]=[0,0,null,-1];   // Replacement Pokémon does nothing this round
+        //@battle.choices[user.Index]=new Battle.Choice(0,0,null,-1);   // Replacement Pokémon does nothing this round
+        @battle.choices[user.Index]=new Battle.Choice(ChoiceAction.NoAction);   // Replacement Pokémon does nothing this round
         user.pbAbilitiesOnSwitchIn(true);
       }
     }
@@ -3312,7 +3320,7 @@ namespace PokemonUnity.Battle
     // Can't use a move if fainted
     if (this.isFainted()) return false;
     // Wild roaming Pokémon always flee if possible
-    if (!@battle.opponent.IsNotNullOrNone() && @battle.pbIsOpposing(this.Index) &&
+    if (@battle.opponent.Length != 0 && @battle.pbIsOpposing(this.Index) &&
        @battle.rules.Contains("alwaysflee") && @battle.pbCanRun(this.Index)) {
       pbBeginTurn(choice);
       @battle.pbDisplay(_INTL("{1} fled!",this.ToString()));
@@ -3343,13 +3351,13 @@ namespace PokemonUnity.Battle
   }
 		#endregion
 
-		#region ToDo: Everything here needs to be implemented
-		public void pbHyperMode() { }
-		public void pbFaint() { }
-		public int ReduceHP(int amount) { return amount; }
-		public void pbBerryCureCheck() { }
+		#region ToDo: Everything here needs to be GLOBALLY RENAMED
+		public bool pbFaint() { return Faint(); } //rename all to Faint
+		public int pbReduceHP(int amt, bool animate = false, bool registerDamage = true) { return amt; }
+		public int pbRecoverHP(int amount, bool animate = false) { return amount; }
 		public void pbAbilitiesOnSwitchIn(bool animate = false) { }
 		public void pbUseMoveSimple(Moves move) { }
+		public void pbResetForm() { }
 		public float Weight(Pokemon pkmn)
 		{
 			return pkmn.weight;

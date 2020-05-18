@@ -20,7 +20,7 @@ namespace PokemonUnity.Battle
 			public int BideDamage			{ get; set; }
 			public int BideTarget			{ get; set; }
 			public int Charge				{ get; set; }
-			public Moves? ChoiceBand		{ get; set; }
+			public Moves ChoiceBand			{ get; set; }
 			public int Confusion			{ get; set; }
 			public int Counter				{ get; set; }
 			public sbyte CounterTarget		{ get; set; } //ToDo: maybe `byte?` and do `.HasValue`?
@@ -87,7 +87,7 @@ namespace PokemonUnity.Battle
 			public int ParentalBond			{ get; set; }
 			public int PerishSong			{ get; set; }
 			public int PerishSongUser		{ get; set; }
-			public int PickupItem			{ get; set; }
+			public Inventory.Items PickupItem			{ get; set; }
 			public int PickupUse			{ get; set; }
 			/// <summary>
 			/// Battle Palace only
@@ -138,6 +138,7 @@ namespace PokemonUnity.Battle
 			public Battler() : this (false) { }
 			public Battler(bool batonpass)
 			{
+				#region ToDo: Move To Separate Method => void Batonpass(bool)
 				if (!batonpass)
 				{
 				//  # These effects are retained if Baton Pass is used
@@ -187,6 +188,7 @@ namespace PokemonUnity.Battle
 					//	defense = attack;
 					//}
 				}
+				#endregion
 				//@damagestate.reset
 				//@fainted          = false
 				//@lastAttacker     = []
@@ -209,7 +211,7 @@ namespace PokemonUnity.Battle
 				this.BideDamage       = 0;
 				this.BideTarget       = -1;
 				this.Charge           = 0;
-				this.ChoiceBand       = null;
+				this.ChoiceBand       = Moves.NONE;
 				this.Counter          = -1;
 				this.CounterTarget    = -1;
 				this.DefenseCurl      = false;

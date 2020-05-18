@@ -632,9 +632,9 @@ public virtual int TotalPP { get {
 
   public virtual int pbNumHits(Pokemon attacker){
 	// Parental Bond goes here (for single target moves only)
-	if (attacker.hasWorkingAbility(Abilities.PARENTAL_BOND)){
+	if (attacker.hasWorkingAbility(Abilities.PARENTAL_BOND))
 	  if (pbIsDamaging() && !pbTargetsMultiple(attacker) &&
-		 !pbIsMultiHit() && !pbTwoTurnAttack(attacker)){
+		!pbIsMultiHit() && !pbTwoTurnAttack(attacker)){
 		List<Attack.Effect> exceptions= new List<Attack.Effect>(){
 			(Attack.Effect)0x6E,	// Endeavor
 			(Attack.Effect)0xE0,	// Selfdestruct/Explosion
@@ -645,8 +645,9 @@ public virtual int TotalPP { get {
 		   attacker.effects.ParentalBond= 3;
 		   return 2;
 		}
-	   } 
-	 }
+	   }
+	if (pbIsMultiHit()) 
+		Core.Rand.Next(Game.MoveMetaData[MoveId].MinHits.Value, Game.MoveMetaData[MoveId].MaxHits.Value);
 	 //ToDo: Need to record that Parental Bond applies, to weaken the second attack
 	 //ParentalBond = true;
 	return 1;
@@ -656,7 +657,8 @@ public virtual int TotalPP { get {
 		/// not the same as pbNumHits>1
 		/// </summary>
    public virtual bool pbIsMultiHit() { //get {   
-	return false;//}
+	return (!Game.MoveMetaData[MoveId].MinHits.HasValue || 
+		 !Game.MoveMetaData[MoveId].MaxHits.HasValue);//}
    }
 
    public virtual bool pbTwoTurnAttack(Pokemon attacker){
@@ -680,118 +682,14 @@ public virtual int TotalPP { get {
    public virtual bool UnusableInGravity() { //get; set;// {
 	 return false;
    }
-
-		/// <summary>
-		/// flag a: Makes contact
-		/// </summary>
-   public virtual bool isContactMove { get {
-	 //return (Flag&0x01)!=0;} //# flag a: Makes contact
-	 return Flags.Contact;}
-  }
-		
-		/// <summary>
-		///# flag b: Protect/Detect
-		/// </summary>
-  public virtual bool canProtectAgainst { get{
-	//return (@flags&0x02)!=0;} //# flag b: Protect/Detect
-	return Flags.Protectable;} 
-  }
-		
-		/// <summary>
-		///# flag c: Magic Coat
-		/// </summary>
-  public virtual bool canMagicCoat { get{
-	//return (@flags&0x04)!=0;} //# flag c: Magic Coat
-	return Flags.Reflectable;} 
-		}
-		
-		/// <summary>
-		///# flag d: Snatch
-		/// </summary>
-  public virtual bool canSnatch { get{
-	//return (@flags&0x08)!=0;} //# flag d: Snatch
-	return Flags.Snatch;} 
-  }
-		
-		/// <summary>
-		///# flag e: Copyable by Mirror Move
-		/// </summary>
-  public virtual bool canMirrorMove { get{ //# This method isn't used
-	//return (@flags&0x10)!=0;} //# flag e: Copyable by Mirror Move
-	return Flags.Mirror;} 
-  }
-		
-		/// <summary>
-		///# flag f: King's Rock
-		/// </summary>
-  public virtual bool canKingsRock { get{
-	//return (@flags&0x20)!=0;} //# flag f: King's Rock
-	return false;} 
-  }
-		
-		/// <summary>
-		///# flag g: Thaws user before moving
-		/// </summary>
-  public virtual bool canThawUser { get{
-	//return (@flags&0x40)!=0;} //# flag g: Thaws user before moving
-	return Flags.Defrost;} 
-  }
-		
+				
 		/// <summary>
 		///# flag h: Has high critical hit rate
 		/// </summary>
   public virtual bool hasHighCriticalRate { get{
 	//return (@flags&0x80)!=0;} //# flag h: Has high critical hit rate
 	return false;} 
-  }
-		
-		/// <summary>
-		///# flag i: Is biting move
-		/// </summary>
-  public virtual bool isBitingMove { get{
-	//return (@flags&0x100)!=0;} //# flag i: Is biting move
-	return Flags.Bite;} 
-  }
-		
-		/// <summary>
-		///# flag j: Is punching move
-		/// </summary>
-  public virtual bool isPunchingMove { get{
-	//return (@flags&0x200)!=0;} //# flag j: Is punching move
-	return Flags.Punching;} 
-  }
-		
-		/// <summary>
-		///# flag k: Is sound-based move
-		/// </summary>
-  public virtual bool isSoundBased { get{
-	//return (@flags&0x400)!=0;} //# flag k: Is sound-based move
-	return Flags.SoundBased;} 
-  }
-		
-		/// <summary>
-		///# flag l: Is powder move
-		/// </summary>
-  public virtual bool isPowderMove { get{
-	//return (@flags&0x800)!=0;} //# flag l: Is powder move
-	return Flags.PowderBased;} 
-  }
-		
-		/// <summary>
-		///# flag m: Is pulse move
-		/// </summary>
-  public virtual bool isPulseMove { get{
-	//return (@flags&0x1000)!=0;} //# flag m: Is pulse move
-	return Flags.PulseBased;} 
-  }
-		
-		/// <summary>
-		///# flag n: Is bomb move
-		/// </summary>
-  public virtual bool isBombMove { get{
-	//return (@flags&0x2000)!=0;} //# flag n: Is bomb move
-	return Flags.Ballistics;} 
-  }
+  }		
 
 		/// <summary>
 		/// Causes perfect accuracy and double damage
@@ -810,7 +708,7 @@ public virtual int TotalPP { get {
 
   public virtual bool ignoresSubstitute (Pokemon attacker){
 	if (Core.USENEWBATTLEMECHANICS){
-	  if (isSoundBased) return true; 
+	  if (Flags.SoundBased) return true; 
 	  if (attacker != null && attacker.hasWorkingAbility(Abilities.INFILTRATOR)) return true; 
 	}
 	return false;
@@ -880,7 +778,7 @@ public virtual int TotalPP { get {
 	  Battle.pbDisplay(_INTL("{1} avoids attacks by its ally Pokémon!",opponent.ToString()));
 	  return true;
 	}
-	if (opponent.hasWorkingAbility(Abilities.BULLETPROOF) && isBombMove){
+	if (opponent.hasWorkingAbility(Abilities.BULLETPROOF) && Flags.Ballistics){
 	  GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s Bulletproof (made #{@name} ineffective)");
 	  Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
 		 opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
@@ -1102,11 +1000,11 @@ public virtual int TotalPP { get {
 	double damagemult=0x1000;
 	if (attacker.hasWorkingAbility(Abilities.TECHNICIAN) && basedmg<=60 && MoveId>0)
 	  damagemult=Math.Round(damagemult*1.5);
-	if (attacker.hasWorkingAbility(Abilities.IRON_FIST) && isPunchingMove)
+	if (attacker.hasWorkingAbility(Abilities.IRON_FIST) && Flags.Punching)
 	  damagemult = Math.Round(damagemult * 1.2);
-	if (attacker.hasWorkingAbility(Abilities.STRONG_JAW) && isBitingMove)
+	if (attacker.hasWorkingAbility(Abilities.STRONG_JAW) && Flags.Bite)
 	  damagemult = Math.Round(damagemult * 1.5);
-	if (attacker.hasWorkingAbility(Abilities.MEGA_LAUNCHER) && isPulseMove)
+	if (attacker.hasWorkingAbility(Abilities.MEGA_LAUNCHER) && Flags.PulseBased)
 	  damagemult = Math.Round(damagemult * 1.5);
 	if (attacker.hasWorkingAbility(Abilities.RECKLESS) && isRecoilMove())
 	  damagemult = Math.Round(damagemult * 1.2);
@@ -1135,7 +1033,7 @@ public virtual int TotalPP { get {
 	  damagemult=Math.Round(damagemult*1.3);
 	if (attacker.hasWorkingAbility(Abilities.SHEER_FORCE) && AddlEffect>0)
 	  damagemult=Math.Round(damagemult*1.3);
-	if (attacker.hasWorkingAbility(Abilities.TOUGH_CLAWS) && isContactMove)
+	if (attacker.hasWorkingAbility(Abilities.TOUGH_CLAWS) && Flags.Contact)
 	  damagemult = Math.Round(damagemult * 4 / 3);
 	if (attacker.hasWorkingAbility(Abilities.AERILATE) ||
 	   attacker.hasWorkingAbility(Abilities.REFRIGERATE) ||
@@ -1312,10 +1210,10 @@ public virtual int TotalPP { get {
 	double atkmult = 0x1000;
 	if (Battle.internalbattle){
 	  if (Battle.pbOwnedByPlayer(attacker.Index) && pbIsPhysical (type) &&
-		 Battle.player.BadgesCount>=Core.BADGESBOOSTATTACK)
+		 Battle.pbPlayer().BadgesCount>=Core.BADGESBOOSTATTACK)
 		atkmult = Math.Round(atkmult * 1.1);
 	  if (Battle.pbOwnedByPlayer(attacker.Index) && pbIsSpecial (type) &&
-		 Battle.player.BadgesCount >= Core.BADGESBOOSTSPATK)
+		 Battle.pbPlayer().BadgesCount >= Core.BADGESBOOSTSPATK)
 		atkmult = Math.Round(atkmult * 1.1);
 	}
 	if (attacker.HP<=Math.Floor(attacker.TotalHP/3d))
@@ -1399,10 +1297,10 @@ public virtual int TotalPP { get {
 	double defmult = 0x1000;
 	if (Battle.internalbattle){
 	  if (Battle.pbOwnedByPlayer(opponent.Index) && pbIsPhysical(type) &&
-		 Battle.player.BadgesCount >= Core.BADGESBOOSTDEFENSE)
+		 Battle.pbPlayer().BadgesCount >= Core.BADGESBOOSTDEFENSE)
 		defmult = Math.Round(defmult * 1.1);
 	  if (Battle.pbOwnedByPlayer(opponent.Index) && pbIsSpecial(type) &&
-		 Battle.player.BadgesCount >= Core.BADGESBOOSTSPDEF)
+		 Battle.pbPlayer().BadgesCount >= Core.BADGESBOOSTSPDEF)
 		defmult = Math.Round(defmult * 1.1);
 	}
 	if (Battle.field.GrassyTerrain>0)
@@ -1575,14 +1473,14 @@ finaldamagemult = Math.Round(finaldamagemult * met);
   }
 
   public virtual int pbReduceHPDamage(int damage, Pokemon attacker, Pokemon opponent){
-	bool endure=false;
+	//bool endure=false;
 	if (opponent.effects.Substitute>0 && !ignoresSubstitute(attacker) &&
 	   (attacker.Species == Pokemons.NONE || attacker.Index!=opponent.Index)){
 	  GameDebug.Log("[Lingering effect triggered] #{opponent.ToString()}'s Substitute took the damage");
 	  if (damage>opponent.effects.Substitute)damage=opponent.effects.Substitute;
 	  opponent.effects.Substitute-=damage;
 	  opponent.damagestate.Substitute= true;
-	  Battle.scene.pDamageAnimation(opponent,0);
+	  Battle.scene.pbDamageAnimation(opponent,0);
 	  Battle.pbDisplayPaused(_INTL("The substitute took damage for {1}!",opponent.Name));
 	  if (opponent.effects.Substitute<=0){
 		opponent.effects.Substitute=0;

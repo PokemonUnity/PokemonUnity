@@ -305,7 +305,7 @@ namespace PokemonUnity.Battle
 		//public override bool IsPhysical() { return true; }
 		//public override bool IsSpecial() { return false; }
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
@@ -387,7 +387,7 @@ namespace PokemonUnity.Battle
 			}
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (id == Moves.RELIC_SONG)
 			{
@@ -547,7 +547,7 @@ namespace PokemonUnity.Battle
 			}
 		}
 
-		public object pbModifyBaseAccuracy(byte baseaccuracy, Pokemon attacker, Pokemon opponent)
+		public int pbModifyBaseAccuracy(byte baseaccuracy, Pokemon attacker, Pokemon opponent)
 		{
 			switch (this.battle.Weather)
 			{
@@ -702,7 +702,7 @@ namespace PokemonUnity.Battle
 			}
 		}
 
-		public object pbModifyBaseAccuracy(byte baseaccuracy, Pokemon attacker, Pokemon opponent)
+		public int pbModifyBaseAccuracy(byte baseaccuracy, Pokemon attacker, Pokemon opponent)
 		{
 			if (this.battle.Weather == Weather.HAIL)
 			{
@@ -762,7 +762,7 @@ namespace PokemonUnity.Battle
 			opponent.pbFlinch(attacker);
 		}
 
-		public object tramplesMinimize(byte param = 1)
+		public bool tramplesMinimize(byte param = 1)
 		{
 			if (id == Moves.DRAGON_RUSH && !Core.USENEWBATTLEMECHANICS) return false;
 			if (param == 1 && Core.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
@@ -906,7 +906,7 @@ namespace PokemonUnity.Battle
 			}
 		}
 
-		public object pbModifyBaseAccuracy(byte baseaccuracy, Pokemon attacker, Pokemon opponent)
+		public int pbModifyBaseAccuracy(byte baseaccuracy, Pokemon attacker, Pokemon opponent)
 		{
 			switch (this.battle.Weather)
 			{
@@ -2400,7 +2400,7 @@ namespace PokemonUnity.Battle
 			}
 		}
 
-		public object pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (id == Moves.BULLDOZE &&
 			   this.battle.field.GrassyTerrain > 0)
@@ -2563,13 +2563,8 @@ namespace PokemonUnity.Battle
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (!opponent.damagestate.Substitute)
-			{
 				if (opponent.pbCanReduceStatStage(Stats.EVASION, attacker, false, this))
-				{
-
 					opponent.pbReduceStat(Stats.EVASION, 1, attacker, false, this);
-				}
-			}
 
 			opponent.OwnSide.Reflect = 0;
 			opponent.OwnSide.LightScreen = 0;
@@ -2582,21 +2577,13 @@ namespace PokemonUnity.Battle
 			if (Core.USENEWBATTLEMECHANICS)
 			{
 				opponent.OpposingSide.Reflect = 0;
-
 				opponent.OpposingSide.LightScreen = 0;
-
 				opponent.OpposingSide.Mist = 0;
-
 				opponent.OpposingSide.Safeguard = 0;
-
 				opponent.OpposingSide.Spikes = 0;
-
 				opponent.OpposingSide.StealthRock = false;
-
 				opponent.OpposingSide.StickyWeb = false;
-
 				opponent.OpposingSide.ToxicSpikes = 0;
-
 			}
 		}
 	}
@@ -3802,11 +3789,10 @@ namespace PokemonUnity.Battle
 				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
 				attacker.stages[(byte)i] = opponent.stages[(byte)i];
-
 			}
+
 			for (int i = 0; i < 4; i++)
 			{
-
 				attacker.moves[i] = new Attack.Move(//this.battle,
 				   opponent.moves[i].MoveId);
 
@@ -3950,7 +3936,6 @@ namespace PokemonUnity.Battle
 				if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.CounterTarget]))
 				{
 					attacker.pbRandomTarget(targets);
-
 				}
 			}
 		}
@@ -3981,7 +3966,6 @@ namespace PokemonUnity.Battle
 				if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.MirrorCoatTarget]))
 				{
 					attacker.pbRandomTarget(targets);
-
 				}
 			}
 		}
@@ -4015,7 +3999,6 @@ namespace PokemonUnity.Battle
 					if (!attacker.pbAddTarget(targets, this.battle.battlers[lastattacker]))
 					{
 						attacker.pbRandomTarget(targets);
-
 					}
 				}
 
@@ -4064,7 +4047,7 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_075 : PokeBattle_Move
 	{
 		public PokeBattle_Move_075(Battle battle, Attack.Move move) : base(battle, move) { }
-		public object pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCB)	// Dive
 			{
@@ -4082,10 +4065,9 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_076 : PokeBattle_Move
 	{
 		public PokeBattle_Move_076(Battle battle, Attack.Move move) : base(battle, move) { }
-		public object pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
-
-			object ret = damagemult;
+			int ret = damagemult;
 			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCA)   // Dig
 			{
 				ret = (int)Math.Round(damagemult * 2.0f);
@@ -4151,7 +4133,7 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_079 : PokeBattle_Move
 	{
 		public PokeBattle_Move_079(Battle battle, Attack.Move move) : base(battle, move) { }
-		public object pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (this.battle.field.FusionBolt)
 			{
@@ -4190,7 +4172,7 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_07A : PokeBattle_Move
 	{
 		public PokeBattle_Move_07A(Battle battle, Attack.Move move) : base(battle, move) { }
-		public object pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (battle.field.FusionFlare)
 			{
@@ -4255,7 +4237,7 @@ namespace PokemonUnity.Battle
 			return basedmg;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!opponent.isFainted() && opponent.damagestate.CalcDamage > 0 &&
 			   !opponent.damagestate.Substitute && opponent.Status == Status.PARALYSIS)
@@ -4282,7 +4264,7 @@ namespace PokemonUnity.Battle
 			return basedmg;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!opponent.isFainted() && opponent.damagestate.CalcDamage > 0 &&
 			   !opponent.damagestate.Substitute && opponent.Status == Status.SLEEP)
@@ -4464,7 +4446,7 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_086 : PokeBattle_Move
 	{
 		public PokeBattle_Move_086(Battle battle, Attack.Move move) : base(battle, move) { }
-		public object pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (attacker.Item == 0)
 			{
@@ -4949,7 +4931,7 @@ namespace PokemonUnity.Battle
 			return type;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (turneffects.TotalDamage > 0)
 			{
@@ -6009,7 +5991,7 @@ namespace PokemonUnity.Battle
 				if (attacker.moves[i].MoveId == 0) continue; //next
 				if (blacklist.Contains((Attack.Effect)attacker.moves[i].Effect)) found = true;
 				if (found) continue; //next
-				if (this.battle.pbCanChooseMove(attacker.Index, i, false, true)) choices.Add(i);
+				if (this.battle.CanChooseMove(attacker.Index, i, false, true)) choices.Add(i);
 			}
 			if (choices.Count == 0)
 			{
@@ -6687,7 +6669,7 @@ namespace PokemonUnity.Battle
 			return attacker.effects.TwoTurnAttack == 0;
 		}
 
-		public object pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (this.battle.Weather != 0 &&
 			   this.battle.Weather != Weather.SUNNYDAY &&
@@ -7256,7 +7238,7 @@ namespace PokemonUnity.Battle
 			return ret;
 		}
 
-		public object pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCB)	// Dive
 			{
@@ -7306,21 +7288,19 @@ namespace PokemonUnity.Battle
 				attacker.effects.Outrage = 2 + this.battle.pbRandom(2);
 
 				attacker.currentMove = this.id;
-
 			}
 			else if (pbTypeModifier(this.type, attacker, opponent) == 0)
 			{
 				// Cancel effect if attack is ineffective
 				attacker.effects.Outrage = 0;
-
 			}
+
 			if (attacker.effects.Outrage > 0)
 			{
 
 				attacker.effects.Outrage -= 1;
 				if (attacker.effects.Outrage == 0 && attacker.pbCanConfuseSelf(false))
 				{
-
 					attacker.pbConfuse();
 					battle.pbDisplay(_INTL("{1} became confused due to fatigue!", attacker.ToString()));
 				}
@@ -7357,7 +7337,6 @@ namespace PokemonUnity.Battle
 			{
 				// Cancel effect if attack is ineffective
 				attacker.effects.Rollout = 0;
-
 			}
 			return ret;
 		}
@@ -7405,7 +7384,6 @@ namespace PokemonUnity.Battle
 				if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.BideTarget]))
 				{
 					attacker.pbRandomTarget(targets);
-
 				}
 			}
 			else
@@ -7542,7 +7520,6 @@ namespace PokemonUnity.Battle
 			   this.battle.Weather == Weather.HARSHSUN)
 			{
 				hpgain = (int)Math.Floor(attacker.TotalHP * 2 / 3f);
-
 			}
 			else if (this.battle.Weather != 0)
 			{
@@ -7550,9 +7527,7 @@ namespace PokemonUnity.Battle
 			}
 			else
 			{
-
 				hpgain = (int)Math.Floor(attacker.TotalHP / 2f);
-
 			}
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 			attacker.RecoverHP(hpgain, true);
@@ -7983,7 +7958,6 @@ namespace PokemonUnity.Battle
 						this.battle.battlers[i].effects.PerishSong = 4;
 						this.battle.battlers[i].effects.PerishSongUser = attacker.Index;
 					}
-
 				}
 			}
 			return 0;
@@ -8088,7 +8062,7 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_0EA(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			if (this.battle.opponent.ID != TrainerTypes.WildPokemon ||
+			if (this.battle.opponent.Length == 0 ||
 			   !this.battle.pbCanRun(attacker.Index))
 			{
 				battle.pbDisplay(_INTL("But it failed!"));
@@ -8123,7 +8097,7 @@ namespace PokemonUnity.Battle
 				battle.pbDisplay(_INTL("{1} anchored itself with its roots!", opponent.ToString()));
 				return -1;
 			}
-			if (this.battle.opponent.ID == TrainerTypes.WildPokemon)
+			if (this.battle.opponent.Length == 0)
 			{
 				if (opponent.level > attacker.level)
 				{
@@ -8169,14 +8143,14 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_0EC : PokeBattle_Move
 	{
 		public PokeBattle_Move_0EC(Battle battle, Attack.Move move) : base(battle, move) { }
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() &&
 			   opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
 			   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SUCTION_CUPS)) &&
 			   !opponent.effects.Ingrain)
 			{
-				if (this.battle.opponent.ID == TrainerTypes.WildPokemon)//Wild Pokemon Battle
+				if (this.battle.opponent.Length == 0)//Wild Pokemon Battle
 				{
 					if (opponent.level <= attacker.level)
 					{
@@ -8191,7 +8165,6 @@ namespace PokemonUnity.Battle
 					{
 						if (this.battle.pbCanSwitch(opponent.Index, i, false))
 						{
-
 							opponent.effects.Roar = true;
 							break;
 						}
@@ -8294,7 +8267,7 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_0F0 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F0(Battle battle, Attack.Move move) : base(battle, move) { }
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item != 0 &&
 			   opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute)
@@ -8316,7 +8289,7 @@ namespace PokemonUnity.Battle
 			}
 		}
 
-		public object pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (Core.USENEWBATTLEMECHANICS &&
 			   !this.battle.pbIsUnlosableItem(opponent, opponent.Item))
@@ -8335,7 +8308,7 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_0F1 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F1(Battle battle, Attack.Move move) : base(battle, move) { }
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item != 0 &&
 			   opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute)
@@ -8348,7 +8321,7 @@ namespace PokemonUnity.Battle
 				else if (!this.battle.pbIsUnlosableItem(opponent, opponent.Item) &&
 					!this.battle.pbIsUnlosableItem(attacker, opponent.Item) &&
 					attacker.Item == 0 &&
-					(this.battle.opponent.ID == TrainerTypes.WildPokemon || !this.battle.isOpposing(attacker.Index)))
+					(this.battle.opponent.Length == 0 || !this.battle.isOpposing(attacker.Index)))
 				{
 					string itemname = Game.ItemData[opponent.Item].Name;
 					attacker.Item = opponent.Item;
@@ -8357,7 +8330,7 @@ namespace PokemonUnity.Battle
 					opponent.effects.ChoiceBand = Moves.NONE;//-1;
 
 					opponent.effects.Unburden = true;
-					if (this.battle.opponent.ID == TrainerTypes.WildPokemon && // In a wild battle
+					if (this.battle.opponent.Length == 0 && // In a wild battle
 					   attacker.itemInitial == 0 &&
 
 					   opponent.itemInitial == attacker.Item)
@@ -8384,7 +8357,7 @@ namespace PokemonUnity.Battle
 		{
 			if ((opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
 			   (attacker.Item == 0 && opponent.Item == 0) ||
-			   (this.battle.opponent.ID == TrainerTypes.WildPokemon && this.battle.isOpposing(attacker.Index)))
+			   (this.battle.opponent.Length == 0 && this.battle.isOpposing(attacker.Index)))
 			{
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
@@ -8414,7 +8387,7 @@ namespace PokemonUnity.Battle
 			Items tmpitem = attacker.Item;
 			attacker.Item = opponent.Item;
 			opponent.Item = tmpitem;
-			if (this.battle.opponent.ID == TrainerTypes.WildPokemon && // In a wild battle
+			if (this.battle.opponent.Length == 0 && // In a wild battle
 			   attacker.itemInitial == oldattitem &&
 
 			   opponent.itemInitial == oldoppitem)
@@ -8472,7 +8445,7 @@ namespace PokemonUnity.Battle
 			attacker.effects.ChoiceBand = Moves.NONE;//-1;
 
 			attacker.effects.Unburden = true;
-			if (this.battle.opponent.ID == TrainerTypes.WildPokemon && // In a wild battle
+			if (this.battle.opponent.Length == 0 && // In a wild battle
 			   opponent.itemInitial == 0 &&
 
 			   attacker.itemInitial == opponent.Item)
@@ -8493,7 +8466,7 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_0F4 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F4(Battle battle, Attack.Move move) : base(battle, move) { }
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() && pbIsBerry(opponent.Item) &&
 			   opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute)
@@ -8577,7 +8550,7 @@ namespace PokemonUnity.Battle
 			string itemname = Game.ItemData[item].Name;
 
 			attacker.Item = item;
-			if (this.battle.opponent.ID == TrainerTypes.WildPokemon)	// In a wild battle
+			if (this.battle.opponent.Length == 0)	// In a wild battle
 			{
 				if (attacker.itemInitial == 0) attacker.itemInitial = item;
 
@@ -8895,7 +8868,7 @@ namespace PokemonUnity.Battle
 			return true;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
@@ -8920,7 +8893,7 @@ namespace PokemonUnity.Battle
 			return true;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
@@ -8946,7 +8919,7 @@ namespace PokemonUnity.Battle
 			return true;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
@@ -8972,7 +8945,7 @@ namespace PokemonUnity.Battle
 			return true;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
@@ -9007,7 +8980,7 @@ namespace PokemonUnity.Battle
 			return true;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
@@ -9917,7 +9890,7 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_110 : PokeBattle_Move
 	{
 		public PokeBattle_Move_110(Battle battle, Attack.Move move) : base(battle, move) { }
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
@@ -10070,7 +10043,7 @@ namespace PokemonUnity.Battle
 			return 100 * attacker.effects.Stockpile;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
@@ -11110,7 +11083,7 @@ namespace PokemonUnity.Battle
 	public class PokeBattle_Move_144 : PokeBattle_Move
 	{
 		public PokeBattle_Move_144(Battle battle, Attack.Move move) : base(battle, move) { }
-		public object pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
+		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			type = Types.FLYING;// || -1
 			if (type >= 0)
@@ -11240,7 +11213,6 @@ namespace PokemonUnity.Battle
 
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-
 			attacker.OwnSide.MatBlock = true;
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
@@ -11583,7 +11555,7 @@ namespace PokemonUnity.Battle
 		{
 			object ret = -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
-			if (!this.isSoundBased ||
+			if (!this.Flags.SoundBased ||
 			   attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SOUNDPROOF))
 			{
 				bool showanim = true;

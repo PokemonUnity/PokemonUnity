@@ -74,10 +74,10 @@ namespace PokemonUnity.Battle
 			/// <param name="action"></param>
 			/// <param name="itemIndex"></param>
 			/// <param name="pkmnTarget"></param>
-			public Choice (ChoiceAction action, int itemIndex, int pkmnTarget)
+			public Choice (ChoiceAction action, Items itemIndex, int pkmnTarget)
 			{
 				Action = action;
-				Index = itemIndex;
+				Index = (int)itemIndex;
 				Target = pkmnTarget;
 			}
 

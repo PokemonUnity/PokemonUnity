@@ -53,9 +53,10 @@ namespace PokemonUnity.Saving.SerializableClasses
 		public int[] Pokerus { get; private set; }
 		//public int PokerusStrain { get; private set; }
 
-		public bool IsHyperMode { get; private set; }
+		//public bool IsHyperMode { get; private set; }
 		//public bool IsShadow { get; private set; }
 		public int? ShadowLevel { get; private set; }
+		public int HeartGuageSize { get; private set; }
 
 		public int CurrentHP { get; private set; }
 		public int Item { get; private set; }
@@ -121,7 +122,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 					tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
 					pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
 					(Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
-					pokemon.Pokerus, pokemon.IsHyperMode, pokemon.ShadowLevel,
+					pokemon.Pokerus, pokemon.HeartGuageSize, /*pokemon.IsHyperMode,*/ pokemon.ShadowLevel,
 					pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
 					pokemon.ObtainedLevel, /*pokemon.CurrentLevel,*/ pokemon.CurrentExp,
 					pokemon.Happines, (Status)pokemon.Status, pokemon.StatusCount,
@@ -168,8 +169,9 @@ namespace PokemonUnity.Saving.SerializableClasses
 				seriPokemon.Pokerus				= pokemon.Pokerus;
 				//seriPokemon.PokerusStrain		= pokemon.PokerusStrain;
 
-				seriPokemon.IsHyperMode			= pokemon.isHyperMode;
+				//seriPokemon.IsHyperMode		= pokemon.isHyperMode;
 				//seriPokemon.IsShadow			= pokemon.isShadow;
+				seriPokemon.HeartGuageSize		= pokemon.HeartGuageSize;
 				seriPokemon.ShadowLevel			= pokemon.ShadowLevel;
 
 				seriPokemon.CurrentHP			= pokemon.HP;

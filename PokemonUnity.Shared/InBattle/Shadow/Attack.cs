@@ -153,7 +153,7 @@ namespace PokemonUnity.Battle
 			pbShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
 			for (int i = 0; i < affected.Count; i++)
 			{
-				this.Battle.battlers[i].pbReduceHP((int)Math.Floor(this.Battle.battlers[i].HP / 2d));
+				this.Battle.battlers[i].ReduceHP((int)Math.Floor(this.Battle.battlers[i].HP / 2d));
 			}
 			this.Battle.pbDisplay(_INTL("Each Pokemon's HP was halved!"));
 			attacker.effects.HyperBeam = 2;
@@ -190,11 +190,11 @@ namespace PokemonUnity.Battle
 			return ret;
 		}
 
-		public void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
-				attacker.pbReduceHP((int)Math.Round(attacker.HP / 2.0));
+				attacker.ReduceHP((int)Math.Round(attacker.HP / 2.0));
 				this.Battle.pbDisplay(_INTL("{1} is damaged by recoil!", attacker.ToString()));
 			}
 		}

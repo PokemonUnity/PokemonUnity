@@ -26,6 +26,7 @@ namespace PokemonUnity.Character
 		/// although they cannot share ID numbers or internal names.
 		/// </summary>
 		public string Name { get; private set; }
+		public string fullname { get { return Name; } }
 		/// <summary>
 		/// The amount of money earned from defeating a trainer of this type. 
 		/// The base money value is multiplied by the highest Level among all the trainer's 

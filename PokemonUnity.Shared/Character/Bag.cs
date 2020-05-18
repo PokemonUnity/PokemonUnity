@@ -445,14 +445,6 @@ namespace PokemonUnity.Character
 			//Next
 			//
 			//Me.Add(New ItemContainer(ID, Amount))
-			//ToDo: If pocket is full, cannot hold any more items.
-			//ToDo: if individual item capicity is reached, reject add
-			if(Game.ItemData[item].Pocket == ItemPockets.MISC)
-			{
-				//get item slots used / out of / item slots available
-				//If item is already in bag, and slots are full...
-				//If pocket does not have anymore space...
-			}
 			for (int i = 0; i < quantity; i++)
 			{
 				//Game.GameData.Bag_Items.Add(item);
@@ -528,6 +520,26 @@ namespace PokemonUnity.Character
 				total += (int)Math.Ceiling(total / 99d);
 			}
 			return total;
+		}
+		//ToDo: return int amount that can be stored?
+		public bool CanStore(Items item)
+		{
+			//Sort items into groups
+			//Check if item has storage limit
+			//Check if storage limit is met
+			//ToDo: If pocket is full, cannot hold any more items.
+			//ToDo: if individual item capicity is reached, reject add
+			if(Game.ItemData[item].Pocket == ItemPockets.MISC)
+			{
+				//get item slots used / out of / item slots available
+				int slotsUsed = GetMiscItems();
+				//If item is already in bag, and slots are full...
+				int count = GetItemAmount(item);
+				//If pocket does not have anymore space...
+				int spaceLeft = count % 99;
+				return spaceLeft > 0;
+			}
+			return false;
 		}
 
 		/// <summary>

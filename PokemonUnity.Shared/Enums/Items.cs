@@ -19,8 +19,10 @@ namespace PokemonUnity.Inventory
 	/// Replace "[HP]{mechanic:hp}" in summary-tags with
 	/// "<see cref="Pokemon.HP"/>" or "<see cref="Pokemon.TotalHP"/>"
 	/// </remarks>
+	/// Custom Values are in negative?
 	public enum Items
 	{
+		EXP_ALL = -1,
 		NONE = 0,
 		/// <summary>Used in battle :   [Catches]{mechanic:catch} a wild Pokémon without fail.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		MASTER_BALL = 1,

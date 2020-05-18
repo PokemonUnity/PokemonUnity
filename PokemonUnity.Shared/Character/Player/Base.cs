@@ -112,16 +112,35 @@ namespace PokemonUnity.Character
 		/// <para></para>
 		/// <code>playerPokedex[1,2] == 3; means the 3rd form of pokemonId was first to be scanned into pokedex</code>
 		/// </summary>
-		/// <remarks>Or can be int?[pokedex.count,1]. if null, not seen or captured</remarks>
-		//ToDo: Add variable for "Shiny"?...
-		//ToDo: switch from byte to Pokemons.Enum:short, value [1,2] = Pokemon.Form, other array values remain same.
+		/// <remarks>
+		/// value [1,2] = Pokemon.Form, other array values remain same.
+		/// Or can be int?[pokedex.count,1]. if null, not seen or captured
+		/// </remarks>
+		//ToDo: Add variable for "Shiny"?... sbyte and `playerPokedex[1,2] == -1;` equals shiny?
 		public byte[,] Pokedex { get; private set; }
-		//ToDo: Fix Player Pokdex Below... 
 		//public int PokedexCaught { get { return (from int index in Enumerable.Range(0, Pokedex.GetUpperBound(0)) where Pokedex[index, 1] == 1 select Pokedex[index, 1]).Count(); } }
 		//public int PokedexSeen { get { return (from int index in Enumerable.Range(0, Pokedex.GetUpperBound(0)) where Pokedex[index, 0] == 1 select Pokedex[index, 0]).Count(); } }
-		public int PokedexCaught { get { return 0; } }//Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 1] == 1).ToArray().Length; } }//.Select( y => Pokedex[y, 1])
-		public int PokedexSeen { get { return 0; } }//Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 0] == 1).ToArray().Length; } }//.Where(x => Pokedex[x, 0] == 1)
-		//ToDo: Adventure Start Date; Use date of save file (game saves after player is made)
+		public int PokedexCaught
+		{
+			get
+			{
+				int x = 0;
+				for (int i = 0; i < Pokedex.GetUpperBound(0); i++)
+					if (Pokedex[i, 1] == 1) x += 1; 
+				return x; //Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 1] == 1).ToArray().Length; } }//.Select( y => Pokedex[y, 1])
+			} 
+		}
+		public int PokedexSeen
+		{
+			get
+			{
+				int x = 0;
+				for (int i = 0; i < Pokedex.GetUpperBound(0); i++)
+					if (Pokedex[i, 0] == 1) x += 1;
+				return x; //Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 0] == 1).ToArray().Length; } }//.Where(x => Pokedex[x, 0] == 1)
+			}
+		}
+		 //ToDo: Adventure Start Date; Use date of save file (game saves after player is made)
 		public System.TimeSpan PlayTime { get; private set; }
 
 		/// <summary>

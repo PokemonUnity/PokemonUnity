@@ -1,7 +1,5 @@
 ﻿using PokemonUnity;
-//using PokemonUnity.Pokemon;
 using PokemonUnity.Inventory;
-//using PokemonUnity.Attack;
 using PokemonUnity.Localization;
 using PokemonUnity.Battle;
 using System;
@@ -701,8 +699,8 @@ namespace PokemonUnity.Battle
     if (pbCanIncreaseStatStage(stat,attacker,false,null,moldbreaker,ignoreContrary))
       increment=pbIncreaseStatBasic(stat,increment,attacker,moldbreaker,ignoreContrary);
       if (increment > 0) { 
-        if (ignoreContrary)
-          if (upanim) @battle.pbDisplay(_INTL("{1}'s {2} activated!",ToString(),this.ability.ToString(TextScripts.Name)));
+        //if (ignoreContrary) //ToDo: UpAnimation?
+        //  if (upanim) @battle.pbDisplay(_INTL("{1}'s {2} activated!",ToString(),this.ability.ToString(TextScripts.Name)));
         if (showanim) @battle.pbCommonAnimation("StatUp", this, null); 
         string [] arrStatTexts = null;
         if (attacker.Index==this.Index)
@@ -851,8 +849,8 @@ namespace PokemonUnity.Battle
     if (pbCanReduceStatStage(stat, attacker, false, null, moldbreaker, ignoreContrary)) {
       increment=pbReduceStatBasic(stat,increment,attacker,moldbreaker,ignoreContrary);
       if (increment > 0) {
-        if (ignoreContrary)
-          if (downanim) @battle.pbDisplay(_INTL("{1}'s {2} activated!",ToString(),this.ability.ToString(TextScripts.Name))); 
+        //if (ignoreContrary) //ToDo: DownAnimation?
+        //  if (downanim) @battle.pbDisplay(_INTL("{1}'s {2} activated!",ToString(),this.ability.ToString(TextScripts.Name))); 
         if (showanim) @battle.pbCommonAnimation("StatDown",this,null);
         string[] arrStatTexts = null;
         if (attacker.Index==this.Index)

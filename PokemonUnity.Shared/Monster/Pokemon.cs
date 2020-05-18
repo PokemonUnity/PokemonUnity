@@ -433,7 +433,7 @@ namespace PokemonUnity.Monster
             string nickName, int form,
             Abilities ability, Natures nature,
             bool isShiny, bool? gender,
-            int[] pokerus, bool ishyper,
+            int[] pokerus, int heartSize, //bool ishyper,
             int? shadowLevel,
             int currentHp, Items item,
             int[] iv, byte[] ev,
@@ -467,7 +467,8 @@ namespace PokemonUnity.Monster
 
             this.pokerus = pokerus;
 
-            isHyperMode = ishyper;
+            //isHyperMode = ishyper;
+            HeartGuageSize = heartSize;
             ShadowLevel = shadowLevel;
 
             HP = currentHp;
@@ -520,7 +521,7 @@ namespace PokemonUnity.Monster
             nickName: nickname, form: pkmn.Form,
             ability: pkmn.Ability, nature: pkmn.Nature,
             isShiny: pkmn.IsShiny, gender: pkmn.Gender,
-            pokerus: pkmn.Pokerus, ishyper: pkmn.isHyperMode,
+            pokerus: pkmn.Pokerus, heartSize: pkmn.HeartGuageSize, //ishyper: pkmn.isHyperMode,
             shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP,
             item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV,
             obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
@@ -2012,12 +2013,6 @@ namespace PokemonUnity.Monster
 
         #region Shadow
         /// <summary>
-        /// Shadow Pokémon in the first game sometimes enter Hyper Mode, but in XD they enter Reverse Mode instead.
-        /// </summary>
-        /// In Hyper Mode, a Pokémon may attack its Trainer, but in Reverse Mode, they will not.
-        /// While in Reverse Mode, a Pokémon hurts itself after every turn, whereas a Pokémon in Hyper Mode incurs no self-damage
-        public bool isHyperMode { get; private set; }
-        /// <summary>
         /// Shadow Pokémon don't have a set Nature or a set gender, but once encountered, the personality value, 
         /// Nature and IVs are saved to the memory for the Shadow Monitor to be able to keep track of their exact status and location. 
         /// This means that once a Shadow Pokémon is encountered for the first time, its Nature, IVs and gender will remain the same for the rest of the game, 
@@ -2040,9 +2035,9 @@ namespace PokemonUnity.Monster
         /// If pokemon has never been shadowed, then value should be null
         /// HeartGuage max size should be determined by _base.database
         public int? ShadowLevel { get; private set; }
-        //public int? HeartGuage { get { return ShadowLevel; } }
+        public int HeartGuageSize { get; private set; }
 
-        void decreaseShadowLevel(pokemonActions Action)
+        public void decreaseShadowLevel(PokemonActions Action)
         {
             int points = 0;
 
@@ -2077,7 +2072,7 @@ namespace PokemonUnity.Monster
             */
             switch (Action)
             {
-                case pokemonActions.Battle:
+                case PokemonActions.Battle:
                     if (this.Nature == Natures.ADAMANT) points = 150;
                     if (this.Nature == Natures.BASHFUL) points = 50;
                     if (this.Nature == Natures.BOLD) points = 150;
@@ -2104,7 +2099,7 @@ namespace PokemonUnity.Monster
                     if (this.Nature == Natures.SERIOUS) points = 100;
                     if (this.Nature == Natures.TIMID) points = 50;
                     break;
-                case pokemonActions.CallTo:
+                case PokemonActions.CallTo:
                     if (this.Nature == Natures.ADAMANT) points = 225;
                     if (this.Nature == Natures.BASHFUL) points = 300;
                     if (this.Nature == Natures.BOLD) points = 225;
@@ -2131,7 +2126,7 @@ namespace PokemonUnity.Monster
                     if (this.Nature == Natures.SERIOUS) points = 450;
                     if (this.Nature == Natures.TIMID) points = 450;
                     break;
-                case pokemonActions.Party:
+                case PokemonActions.Party:
                     if (this.Nature == Natures.ADAMANT) points = 150;
                     if (this.Nature == Natures.BASHFUL) points = 75;
                     if (this.Nature == Natures.BOLD) points = 200;
@@ -2158,8 +2153,8 @@ namespace PokemonUnity.Monster
                     if (this.Nature == Natures.SERIOUS) points = 100;
                     if (this.Nature == Natures.TIMID) points = 50;
                     break;
-                case pokemonActions.DayCare:
-                case pokemonActions.MysteryAction:
+                case PokemonActions.DayCare:
+                case PokemonActions.MysteryAction:
                     if (this.Nature == Natures.ADAMANT) points = 300;
                     if (this.Nature == Natures.BASHFUL) points = 450;
                     if (this.Nature == Natures.BOLD) points = 300;
@@ -2186,7 +2181,7 @@ namespace PokemonUnity.Monster
                     if (this.Nature == Natures.SERIOUS) points = 300;
                     if (this.Nature == Natures.TIMID) points = 600;
                     break;
-                case pokemonActions.Scent:
+                case PokemonActions.Scent:
                     if (this.Nature == Natures.ADAMANT) points = 75;
                     if (this.Nature == Natures.BASHFUL) points = 200;
                     if (this.Nature == Natures.BOLD) points = 50;
@@ -2268,7 +2263,7 @@ namespace PokemonUnity.Monster
                 ShadowLevel = (ShadowLevel.Value - points) < 0 ? 0 : ShadowLevel.Value - points;
         }
 
-        enum pokemonActions
+        public enum PokemonActions
         {
             Battle, CallTo, Party, DayCare, MysteryAction, Scent
         }
@@ -2534,10 +2529,6 @@ namespace PokemonUnity.Monster
             if (SoS) //If the SoS-Ally Pokemon is defeated, double EV gain
                 EVfactor *= 2;
 
-            //var itemNumber = 0;
-            //if (Item != Items.NONE)
-            //	itemNumber = (int)Item;
-
             switch (Item)
             {
                 case Items.MACHO_BRACE:
@@ -2588,6 +2579,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.HP] += (byte)gainEVHP;
                 totalEVgain += gainEVHP;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.HP.ToString()}  EV gain: #{gainEVHP}  EVs: #{EV.ToString()}");
 
             // Attack gain
             if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2600,6 +2592,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
                 totalEVgain += gainEVAttack;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.ATTACK.ToString()}  EV gain: #{gainEVAttack}  EVs: #{EV.ToString()}");
 
             // Defense gain
             if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2612,6 +2605,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
                 totalEVgain += gainEVDefense;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.DEFENSE.ToString()}  EV gain: #{gainEVDefense}  EVs: #{EV.ToString()}");
 
             // SpAttack gain
             if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2624,6 +2618,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
                 totalEVgain += gainEVSpAttack;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPATK.ToString()}  EV gain: #{gainEVSpAttack}  EVs: #{EV.ToString()}");
 
             // SpDefense gain
             if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2636,6 +2631,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
                 totalEVgain += gainEVSpDefense;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPDEF.ToString()}  EV gain: #{gainEVSpDefense}  EVs: #{EV.ToString()}");
 
             // Speed gain
             if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2648,6 +2644,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
                 totalEVgain += gainEVSpeed;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPEED.ToString()}  EV gain: #{gainEVSpeed}  EVs: #{EV.ToString()}");
         }
 
         /// <summary>
@@ -2659,7 +2656,10 @@ namespace PokemonUnity.Monster
         {
             int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
             if (allEV >= EVLIMIT)
+            {
+                GameDebug.LogWarning($"EV limit #{Monster.Pokemon.EVLIMIT} exceeded.\r\nTotal EVs: #{allEV} EV gain: 0  EVs: #{EV.ToString()}");
                 return;
+            }
 
             int maxEVgain = EVLIMIT - allEV;
             int totalEVgain = 0;
@@ -2793,6 +2793,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.HP] += (byte)gainEVHP;
                 totalEVgain += gainEVHP;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.HP.ToString()}  EV gain: #{gainEVHP}  EVs: #{EV.ToString()}");
 
             // Attack gain
             if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2807,6 +2808,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
                 totalEVgain += gainEVAttack;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.ATTACK.ToString()}  EV gain: #{gainEVAttack}  EVs: #{EV.ToString()}");
 
             // Defense gain
             if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2821,6 +2823,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
                 totalEVgain += gainEVDefense;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.DEFENSE.ToString()}  EV gain: #{gainEVDefense}  EVs: #{EV.ToString()}");
 
             // SpAttack gain
             if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2835,6 +2838,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
                 totalEVgain += gainEVSpAttack;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPATK.ToString()}  EV gain: #{gainEVSpAttack}  EVs: #{EV.ToString()}");
 
             // SpDefense gain
             if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2849,6 +2853,7 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
                 totalEVgain += gainEVSpDefense;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPDEF.ToString()}  EV gain: #{gainEVSpDefense}  EVs: #{EV.ToString()}");
 
             // Speed gain
             if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2863,30 +2868,8 @@ namespace PokemonUnity.Monster
                 EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
                 totalEVgain += gainEVSpeed;
             }
+            else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPEED.ToString()}  EV gain: #{gainEVSpeed}  EVs: #{EV.ToString()}");
         }
-        #endregion
-
-        #region Unity Engine Stuff...
-        /*ToDo: Move to unity...
-		/// <summary>
-		/// Plays the cry of this Pokémon.
-		/// </summary>
-		public void PlayCry()
-		{
-			float Pitch = 0.0f;
-			int percent = 100;
-			if (this.HP > 0 & this.TotalHP > 0)
-				percent = System.Convert.ToInt32(Math.Ceiling(this.HP / (double)this.TotalHP) * 100);
-
-			if (percent <= 50)
-				Pitch = -0.4f;
-			if (percent <= 15)
-				Pitch = -0.8f;
-			if (percent == 0)
-				Pitch = -1.0f;
-
-			//SoundManager.PlayPokemonCry(this.Species, Pitch, 0F);
-		}*/
         #endregion
     }
 }

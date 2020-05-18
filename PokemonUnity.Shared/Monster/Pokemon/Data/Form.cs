@@ -56,6 +56,7 @@ namespace PokemonUnity.Monster.Data
 		}
 
 		/// <summary>
+		/// Returns the base species this pokemon form belongs to.
 		/// </summary>
 		/// <param name="form"></param>
 		/// <returns>Outputs values for <seealso cref="Pokemon"/></returns>
@@ -84,8 +85,7 @@ namespace PokemonUnity.Monster.Data
 		///	<see cref="Pokemons.PIKACHU"/>, 
 		/// and MegaEvolutions?
 		/// </remarks>
-		/// This isnt needed... 
-		private static Pokemons GetSpecies(Forms form)
+		[System.Obsolete("Use Game.PokemonFormsData[Pokemons][int].Base")] public static Pokemons GetSpecies(Forms form)
 		{
 			switch (form)
 			{

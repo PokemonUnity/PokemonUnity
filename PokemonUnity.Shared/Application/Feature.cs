@@ -16,6 +16,12 @@ namespace PokemonUnity.Application
 {
 	public struct Feature
 	{
+		/// <summary>
+		/// Shift: after you kill the enemy's pokemon, 
+		/// the game will tell you what pokemon will be switched in and then allow you to freely switch your pokemon with another. <para></para>
+		/// Set: you can't do the above (link battles can only be set btw)
+		/// </summary>
+		public bool BattleShiftStyle { get; private set; }
 		#region Custom Game Features
 		public bool SandBoxMode { get; private set; }
 		//Nuzlocke Challenge => Pokemon Centers cost money, every pokemon must be named, when defeated/fainted pokemon is gone, only allowed to capture first pokemon encountered when entering new map
