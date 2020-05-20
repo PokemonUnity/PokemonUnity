@@ -4391,15 +4391,12 @@ namespace PokemonUnity.Battle
 					if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Will use a move
 					{
 						Move partnermove = this.battle.choices[attacker.Partner.Index].Move;
-						if (partnermove.function == this.function)
+						if (partnermove.Effect == this.Effect)
 						{
 							attacker.Partner.effects.MoveNext = true;
-
 							attacker.Partner.effects.Quash = false;
-
 						}
 					}
-
 				}
 			}
 			return ret;
