@@ -281,6 +281,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region Unity Canvas UI
+		public static bool DebugButtonPressed { get; private set; }
 		//public static Translator.Languages UserLanguage = Translator.Languages.English;
 		public static Languages UserLanguage { get; private set; }// = Languages.English;
 		//public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;

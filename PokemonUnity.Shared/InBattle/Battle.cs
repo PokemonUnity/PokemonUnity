@@ -369,7 +369,7 @@ namespace PokemonUnity.Battle
 			cantescape = false;
 			shiftStyle = true;
 			battlescene = true;
-			debug = false; //ToDo: Core.DEBUG
+			debug = Core.DEBUG;
 			//debugupdate = 0;
 
             //if opponent is not null but player array is empty, then player is null
@@ -2143,7 +2143,7 @@ namespace PokemonUnity.Battle
       return -1;
     }
     if (@opponent.Length > 0) {
-      if (debug) { //&& Input.press(Input::CTRL)
+      if (debug && Game.DebugButtonPressed) { //&& Input.press(Input::CTRL)
         if (pbDisplayConfirm(_INTL("Treat this battle as a win?"))) {
           @decision=BattleResults.WON;
           return 1;
@@ -2163,7 +2163,7 @@ namespace PokemonUnity.Battle
       }
       return 0;
     }
-    if (debug) { //&& Input.press(Input::CTRL)
+    if (debug && Game.DebugButtonPressed) { //&& Input.press(Input::CTRL)
       pbDisplayPaused(_INTL("Got away safely!"));
       @decision=BattleResults.FORFEIT;
       return 1;
@@ -2241,7 +2241,7 @@ namespace PokemonUnity.Battle
     if (Core.NO_MEGA_EVOLUTION) return false;
     if (!@battlers[index].hasMega) return false;
     if (isOpposing(index) && @opponent.Length == 0) return false;
-    if (debug) return true; //&& Input.press(Input::CTRL)
+    if (debug && Game.DebugButtonPressed) return true; //&& Input.press(Input::CTRL)
     if (!pbHasMegaRing(index)) return false;
     int side=(isOpposing(index)) ? 1 : 0;
     int owner=pbGetOwnerIndex(index);
