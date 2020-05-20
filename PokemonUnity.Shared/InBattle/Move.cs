@@ -635,13 +635,13 @@ public virtual int TotalPP { get {
 	if (attacker.hasWorkingAbility(Abilities.PARENTAL_BOND))
 	  if (pbIsDamaging() && !pbTargetsMultiple(attacker) &&
 		!pbIsMultiHit() && !pbTwoTurnAttack(attacker)){
-		List<Attack.Effect> exceptions= new List<Attack.Effect>(){
-			(Attack.Effect)0x6E,	// Endeavor
-			(Attack.Effect)0xE0,	// Selfdestruct/Explosion
-			(Attack.Effect)0xE1,	// Final Gambit
-			(Attack.Effect)0xF7		// Fling
+		List<Attack.Data.Effects> exceptions= new List<Attack.Data.Effects>(){
+			Attack.Data.Effects.x0BE,	// Endeavor
+			Attack.Data.Effects.x008,	// Selfdestruct/Explosion
+			Attack.Data.Effects.x141,	// Final Gambit
+			Attack.Data.Effects.x0EA	// Fling
 		};
-		if (!exceptions.Contains ((Attack.Effect)function)){
+		if (!exceptions.Contains(Effect)){
 		   attacker.effects.ParentalBond= 3;
 		   return 2;
 		}
@@ -833,13 +833,13 @@ public virtual int TotalPP { get {
 				if (otype3 == Types.FLYING && atype.GetCombinedEffectiveness(otype3) == TypeEffective.SuperEffective)mod3 = 2; //
 			}
 	// Smack Down makes Ground moves work against fliers
-	if (!opponent.isAirborne(attacker.hasMoldBreaker()) || function==(Attack.Effect)0x11C // Smack Down
+	if (!opponent.isAirborne(attacker.hasMoldBreaker()) || Effect==Attack.Data.Effects.x120 // Smack Down
 	   && atype == Types.GROUND){
 	  if (otype1 == Types.FLYING)mod1=2; 
 	  if (otype2 == Types.FLYING)mod2=2; 
 	  if (otype3 == Types.FLYING)mod3=2;
 	}
-	if (function==(Attack.Effect)0x135 && !attacker.effects.Electrify){ // Freeze-Dry
+	if (Effect==Attack.Data.Effects.x17C && !attacker.effects.Electrify){ // Freeze-Dry
 	  if (otype1 == Types.WATER)
 		mod1 = 4;
 	  if (otype2 == Types.WATER)
@@ -891,7 +891,7 @@ public virtual int TotalPP { get {
 	  attacker.hasWorkingAbility(Abilities.KEEN_EYE)) evastage=0;            
 	if (opponent.effects.Foresight || 
 	  opponent.effects.MiracleEye ||            
-	  function==(Attack.Effect)0xA9 || // Chip Away            
+	  Effect==Attack.Data.Effects.x130 || // Chip Away            
 	  attacker.hasWorkingAbility(Abilities.UNAWARE)) evastage=0;          
 	double evasion=(evastage>=0) ? (evastage+3)*100.0/3 : 300.0/(3-evastage);
 	if (attacker.hasWorkingAbility(Abilities.COMPOUND_EYES))
@@ -1053,14 +1053,14 @@ public virtual int TotalPP { get {
 		 && (type == Types.ICE || type == Types.FIRE))
 		damagemult=Math.Round(damagemult*0.5);
 	  if (opponent.hasWorkingAbility(Abilities.FUR_COAT) &&
-		 (pbIsPhysical(type) || function==(Attack.Effect)0x122)) // Psyshock
+		 (pbIsPhysical(type) || Effect==Attack.Data.Effects.x11B)) // Psyshock
 		damagemult=Math.Round(damagemult*0.5);
 	  if (opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.FIRE)
 		damagemult=Math.Round(damagemult*1.25);
 	}
 	// Gems are the first items to be considered, as Symbiosis can replace a
 	// consumed Gem and the replacement item should work immediately.
-	if (function!=(Attack.Effect)0x106 && function!=(Attack.Effect)0x107 && function!=(Attack.Effect)0x108){ // Pledge moves
+	if (Effect!=Attack.Data.Effects.x145 && Effect!=Attack.Data.Effects.x146 && Effect!=Attack.Data.Effects.x147) { // Pledge moves
 	  if ((attacker.hasWorkingItem(Items.NORMAL_GEM)   && type == Types.NORMAL) ||
 		 (attacker.hasWorkingItem(Items.FIGHTING_GEM) && type == Types.FIGHTING) ||
 		 (attacker.hasWorkingItem(Items.FLYING_GEM)   && type == Types.FLYING) ||
@@ -1189,14 +1189,14 @@ public virtual int TotalPP { get {
 	#region ##### Calculate attacker's attack stat #####
 	int atk = attacker.attack;
 	int atkstage=attacker.stages[(int)Stats.ATTACK]+6;
-	if (function==(Attack.Effect)0x121){ // Foul Play
+	if (Effect==Attack.Data.Effects.x12A){ // Foul Play
 	  atk=opponent.attack;
 	  atkstage = opponent.stages[(int)Stats.ATTACK] + 6;
 	}
 	if (type>=0 && pbIsSpecial (type)){
 	   atk = attacker.spatk;
 	  atkstage=attacker.stages[(int)Stats.SPATK]+6;
-	  if (function==(Attack.Effect)0x121){ // Foul Play
+	  if (Effect==Attack.Data.Effects.x12A){ // Foul Play
 		atk=opponent.spatk;
 		atkstage = opponent.stages[(int)Stats.SPATK] + 6;
 	  }
@@ -1281,13 +1281,13 @@ public virtual int TotalPP { get {
 	int defstage = opponent.stages[(int)Stats.DEFENSE] + 6;
 	// TODO: Wonder Room should apply around here
 	bool applysandstorm=false;
-	if (type>=0 && pbIsSpecial(type) && function!=(Attack.Effect)0x122){ // Psyshock
+	if (type>=0 && pbIsSpecial(type) && Effect!=Attack.Data.Effects.x11B){ // Psyshock
 	  defense=opponent.spdef;
 	  defstage = opponent.stages[(int)Stats.SPDEF] + 6;
 	  applysandstorm=true;
 	}
 	if (!attacker.hasWorkingAbility(Abilities.UNAWARE)){
-	  if (function==(Attack.Effect)0xA9)defstage=6;  // Chip Away (ignore stat stages)
+	  if (Effect==Attack.Data.Effects.x130) defstage=6;  // Chip Away (ignore stat stages)
 	  if (opponent.damagestate.Critical && defstage>6)defstage=6; 
 	  defense=(int)Math.Floor(defense*1.0*stagemul[defstage]/stagediv[defstage]);
 	}
@@ -1388,7 +1388,7 @@ public virtual int TotalPP { get {
 	 // Burn
 	if (attacker.Status==Status.BURN && pbIsPhysical(type) &&
 	   !attacker.hasWorkingAbility(Abilities.GUTS) &&
-	   !(Core.USENEWBATTLEMECHANICS && function==(Attack.Effect)0x7E)) // Facade
+	   !(Core.USENEWBATTLEMECHANICS && Effect==Attack.Data.Effects.x0AA)) // Facade
 	  damage=(int)Math.Round(damage*0.5);
 	// Make sure damage is at least 1
 	if (damage<1)damage=1;
@@ -1493,7 +1493,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 	  opponent.damagestate.Substitute= false;
 	  if (damage>=opponent.HP){
 		damage = opponent.HP;
-		if (function==(Attack.Effect)0xE9) // False Swipe
+		if (Effect==Attack.Data.Effects.x066) // False Swipe
 		  damage= damage - 1;
 		else if (opponent.effects.Endure){
 		  damage = damage - 1;
@@ -1637,7 +1637,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 	  opponent.effects.BideDamage+=damage;
 	  opponent.effects.BideTarget= attacker.Index;
 	}
-	if (function==(Attack.Effect)0x90) // Hidden Power
+	if (Effect==Attack.Data.Effects.x088) // Hidden Power
 	  type=Types.NORMAL; //getConst(Types.NORMAL) || 0;
 	if (pbIsPhysical(type)){
 	  opponent.effects.Counter= damage;

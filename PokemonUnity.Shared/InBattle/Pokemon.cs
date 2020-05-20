@@ -1200,7 +1200,7 @@ namespace PokemonUnity.Battle
           Attack.Data.MoveData movedata=Game.MoveData[j.MoveId];
           TypeEffective eff=movedata.Type.GetCombinedEffectiveness(Type1,Type2,@effects.Type3);
           if ((movedata.Power>0 && eff == TypeEffective.SuperEffective) ||
-             ((int)movedata.Effect==0x70 && eff != TypeEffective.Ineffective)) { // OHKO
+             (movedata.Effect== Attack.Data.Effects.x027 && eff != TypeEffective.Ineffective)) { // OHKO
             found=true;
             break;
           }
@@ -1219,25 +1219,25 @@ namespace PokemonUnity.Battle
         foreach (var j in foe.moves) {
           Attack.Data.MoveData movedata=Game.MoveData[j.MoveId];
           int power=movedata.Power??0;
-          if ((int)movedata.Effect==0x70) power=160;    // OHKO
-          if ((int)movedata.Effect==0x8B) power=150;    // Eruption
-          if ((int)movedata.Effect==0x71 || // Counter
-                       (int)movedata.Effect==0x72 || // Mirror Coat
-                       (int)movedata.Effect==0x73) power=120;// || // Metal Burst
-          if ((int)movedata.Effect==0x6A ||  // SonicBoom
-                      (int)movedata.Effect==0x6B ||  // Dragon Rage
-                      (int)movedata.Effect==0x6D ||  // Night Shade
-                      (int)movedata.Effect==0x6E ||  // Endeavor
-                      (int)movedata.Effect==0x6F ||  // Psywave
-                      (int)movedata.Effect==0x89 ||  // Return
-                      (int)movedata.Effect==0x8A ||  // Frustration
-                      (int)movedata.Effect==0x8C ||  // Crush Grip
-                      (int)movedata.Effect==0x8D ||  // Gyro Ball
-                      (int)movedata.Effect==0x90 ||  // Hidden Power
-                      (int)movedata.Effect==0x96 ||  // Natural Gift
-                      (int)movedata.Effect==0x97 ||  // Trump Card
-                      (int)movedata.Effect==0x98 ||  // Flail
-                      (int)movedata.Effect==0x9A) power=80;     // Grass Knot
+          if (movedata.Effect == Attack.Data.Effects.x027) power=160;    // OHKO
+          if (movedata.Effect == Attack.Data.Effects.x0BF) power=150;    // Eruption
+          if (movedata.Effect == Attack.Data.Effects.x05A || // Counter
+                       movedata.Effect == Attack.Data.Effects.x091 || // Mirror Coat
+                       movedata.Effect == Attack.Data.Effects.x0E4) power=120;// || // Metal Burst
+          if (movedata.Effect == Attack.Data.Effects.x083 ||  // SonicBoom
+                      movedata.Effect == Attack.Data.Effects.x02A ||  // Dragon Rage
+                      movedata.Effect == Attack.Data.Effects.x058 ||  // Night Shade
+                      movedata.Effect == Attack.Data.Effects.x0BE ||  // Endeavor
+                      movedata.Effect == Attack.Data.Effects.x059 ||  // Psywave
+                      movedata.Effect == Attack.Data.Effects.x07A ||  // Return
+                      movedata.Effect == Attack.Data.Effects.x07C ||  // Frustration
+                      movedata.Effect == Attack.Data.Effects.x0EE ||  // Crush Grip
+                      movedata.Effect == Attack.Data.Effects.x0DC ||  // Gyro Ball
+                      movedata.Effect == Attack.Data.Effects.x088 ||  // Hidden Power
+                      movedata.Effect == Attack.Data.Effects.x0DF ||  // Natural Gift
+                      movedata.Effect == Attack.Data.Effects.x0EC ||  // Trump Card
+                      movedata.Effect == Attack.Data.Effects.x064 ||  // Flail
+                      movedata.Effect == Attack.Data.Effects.x0C5) power=80;     // Grass Knot
           if (power > highpower) { 
             fwmoves=new List<Moves>() { j.MoveId }; highpower=power;
           }else if (power==highpower) 
@@ -1274,20 +1274,20 @@ namespace PokemonUnity.Battle
     // Imposter
     if (this.hasWorkingAbility(Abilities.IMPOSTER) && !@effects.Transform && onactive) {
       Pokemon choice=pbOppositeOpposing;
-      List<int> blacklist=  new List<int>() {
-         0xC9,    // Fly
-         0xCA,    // Dig
-         0xCB,    // Dive
-         0xCC,    // Bounce
-         0xCD,    // Shadow Force
-         0xCE,    // Sky Drop
-         0x14D    // Phantom Force
+      List<Attack.Data.Effects> blacklist=new List<Attack.Data.Effects>() {
+         Attack.Data.Effects.x09C,    // Fly
+         Attack.Data.Effects.x101,    // Dig
+         Attack.Data.Effects.x100,    // Dive
+         Attack.Data.Effects.x108,    // Bounce
+         Attack.Data.Effects.x138,    // Sky Drop
+         //Attack.Data.Effects.x111,    // Shadow Force
+         Attack.Data.Effects.x111    // Phantom Force
       };
       if (choice.effects.Transform ||
          choice.effects.Illusion.IsNotNullOrNone() ||
          choice.effects.Substitute>0 ||
          choice.effects.SkyDrop ||
-         blacklist.Contains((int)Game.MoveData[choice.effects.TwoTurnAttack].Effect))
+         blacklist.Contains(Game.MoveData[choice.effects.TwoTurnAttack].Effect))
         GameDebug.Log($"[Ability triggered] #{ToString()}'s Imposter couldn't transform");
       else {
         GameDebug.Log($"[Ability triggered] #{ToString()}'s Imposter");
@@ -2098,7 +2098,7 @@ namespace PokemonUnity.Battle
   }
   public Attack.Target pbTarget(Move move) {
     Attack.Target target=move.Targets;
-    if ((int)move.Effect==0x10D && hasType(Types.GHOST)) // Curse
+    if (move.Effect == Attack.Data.Effects.x06E && hasType(Types.GHOST)) // Curse
       target=Attack.Target.OppositeOpposing;
     return target;
   }
@@ -2220,8 +2220,8 @@ namespace PokemonUnity.Battle
     userandtarget[1]=target;
     if (!user.hasMoldBreaker() && target.hasWorkingAbility(Abilities.SOUNDPROOF) &&
        thismove.Flags.SoundBased && //isSoundBased()
-       (int)thismove.Effect!=0xE5 &&   // Perish Song handled elsewhere
-       (int)thismove.Effect!=0x151) {     // Parting Shot handled elsewhere
+       thismove.Effect != Attack.Data.Effects.x073 &&   // Perish Song handled elsewhere
+       thismove.Effect != Attack.Data.Effects.x15B) {     // Parting Shot handled elsewhere
       GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Soundproof blocked #{user.ToString(true)}'s #{thismove.MoveId.ToString(TextScripts.Name)}");
       @battle.pbDisplay(_INTL("{1}'s {2} blocks {3}!",target.ToString(),
          target.ability.ToString(TextScripts.Name),thismove.MoveId.ToString(TextScripts.Name)));
@@ -2293,7 +2293,7 @@ namespace PokemonUnity.Battle
         GameDebug.Log($"[Disobedience] #{ToString()} disobeyed");
         @effects.Rage=false;
         if (this.status==Status.SLEEP && 
-           ((int)move.Effect==0x11 || (int)move.Effect==0xB4)) { // Snore, Sleep Talk
+           (move.Effect == Attack.Data.Effects.x05D || move.Effect == Attack.Data.Effects.x062)) { // Snore, Sleep Talk
           @battle.pbDisplay(_INTL("{1} ignored orders while asleep!",ToString()));
           return false;
         }
@@ -2347,12 +2347,12 @@ namespace PokemonUnity.Battle
     if (user.effects.TwoTurnAttack>0)
       return true;
     // TODO: "Before Protect" applies to Counter/Mirror Coat
-    if ((int)thismove.Effect==0xDE && target.status!=Status.SLEEP) { // Dream Eater
+    if (thismove.Effect == Attack.Data.Effects.x009 && target.status!=Status.SLEEP) { // Dream Eater
       @battle.pbDisplay(_INTL("{1} wasn't affected!",target.ToString()));
       GameDebug.Log($"[Move failed] #{user.ToString()}'s Dream Eater's target isn't asleep");
       return false;
     }
-    if ((int)thismove.Effect==0x113 && user.effects.Stockpile==0) { // Spit Up
+    if (thismove.Effect == Attack.Data.Effects.x0A2 && user.effects.Stockpile==0) { // Spit Up
       @battle.pbDisplay(_INTL("But it failed to spit up a thing!"));
       GameDebug.Log($"[Move failed] #{user.ToString()}'s Spit Up did nothing as Stockpile's count is 0");
       return false;
@@ -2383,7 +2383,7 @@ namespace PokemonUnity.Battle
       return false;
     }
     if (target.OwnSide.CraftyShield && thismove.Category == Attack.Category.STATUS &&
-       (int)thismove.Effect!=0xE5) { // Perish Song
+       thismove.Effect != Attack.Data.Effects.x073) { // Perish Song
       @battle.pbDisplay(_INTL("Crafty Shield protected {1}!",target.ToString(true)));
       GameDebug.Log($"[Move failed] The opposing side's Crafty Shield stopped the attack");
       return false;
@@ -2433,13 +2433,13 @@ namespace PokemonUnity.Battle
       GameDebug.Log($"[Move failed] #{target.ToString()} is immune to powder-based moves somehow");
       return false;
     }
-    if (thismove.BaseDamage>0 && (int)thismove.Effect!=0x02 && // Struggle
-       (int)thismove.Effect!=0x111) { // Future Sight
+    if (thismove.BaseDamage>0 && thismove.Effect != Attack.Data.Effects.x0FF && // Struggle
+       thismove.Effect != Attack.Data.Effects.x095) { // Future Sight
       Types type=thismove.pbType(thismove.Type,user,target);
       float typemod=thismove.pbTypeModifier(type,user,target);
       // Airborne-based immunity to Ground moves
       if (type == Types.GROUND && target.isAirborne(user.hasMoldBreaker()) &&
-         !target.hasWorkingItem(Items.RING_TARGET) && (int)thismove.Effect!=0x11C) { // Smack Down
+         !target.hasWorkingItem(Items.RING_TARGET) && thismove.Effect != Attack.Data.Effects.x120) { // Smack Down
         if (!user.hasMoldBreaker() && target.hasWorkingAbility(Abilities.LEVITATE)) {
           @battle.pbDisplay(_INTL("{1} makes Ground moves miss with Levitate!",target.ToString()));
           GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Levitate made the Ground-type move miss");
@@ -2479,60 +2479,58 @@ namespace PokemonUnity.Battle
         return true;
       }
       bool miss=false; bool _override=false;
-      int invulmove=(int)Game.MoveData[target.effects.TwoTurnAttack].Effect;
+      Attack.Data.Effects invulmove=Game.MoveData[target.effects.TwoTurnAttack].Effect;
       switch (invulmove) {
-      case 0xC9: case 0xCC: // Fly, Bounce
-        if ((int)thismove.Effect!=0x08 ||  // Thunder
-                         (int)thismove.Effect!=0x15 ||  // Hurricane
-                         (int)thismove.Effect!=0x77 ||  // Gust
-                         (int)thismove.Effect!=0x78 ||  // Twister
-                         (int)thismove.Effect!=0x11B || // Sky Uppercut
-                         (int)thismove.Effect!=0x11C || // Smack Down
+      case Attack.Data.Effects.x09C: case Attack.Data.Effects.x108: // Fly, Bounce
+        if (thismove.Effect != Attack.Data.Effects.x099 ||  // Thunder
+                         thismove.Effect != Attack.Data.Effects.x14E ||  // Hurricane
+                         thismove.Effect != Attack.Data.Effects.x096 ||  // Gust
+                         thismove.Effect != Attack.Data.Effects.x093 ||  // Twister
+                         thismove.Effect != Attack.Data.Effects.x0D0 ||  // Sky Uppercut
+                         thismove.Effect != Attack.Data.Effects.x120 ||  // Smack Down
                          thismove.MoveId != Moves.WHIRLWIND)miss=true ;
         break;
-      case 0xCA: // Dig
-        if ((int)thismove.Effect!=0x76 || // Earthquake
-                         (int)thismove.Effect!=0x95)    // Magnitude
-            miss=true ;
+      case Attack.Data.Effects.x101: // Dig
+        if (thismove.Effect != Attack.Data.Effects.x094 || // Earthquake
+                         thismove.Effect != Attack.Data.Effects.x07F)    // Magnitude
+            miss=true;
         break;
-      case 0xCB: // Dive
-        if ((int)thismove.Effect!=0x75 || // Surf
-                         (int)thismove.Effect!=0xD0)    // Whirlpool
-            miss=true ;
+      case Attack.Data.Effects.x100: // Dive
+        if (thismove.Effect != Attack.Data.Effects.x102 || // Surf
+                         thismove.Effect != Attack.Data.Effects.x106)    // Whirlpool
+            miss=true;
         break;
-      case 0xCD: // Shadow Force
+      //case Attack.Data.Effects.x111: // Shadow Force
+      case Attack.Data.Effects.x111: // Phantom Force
         miss=true;
         break;
-      case 0xCE: // Sky Drop
-        if ((int)thismove.Effect!=0x08 ||  // Thunder
-                         (int)thismove.Effect!=0x15 ||  // Hurricane
-                         (int)thismove.Effect!=0x77 ||  // Gust
-                         (int)thismove.Effect!=0x78 ||  // Twister
-                         (int)thismove.Effect!=0x11B || // Sky Uppercut
-                         (int)thismove.Effect!=0x11C)    // Smack Down
-           miss=true ;   
-        break;
-      case 0x14D: // Phantom Force
-        miss=true;
+      case Attack.Data.Effects.x138: // Sky Drop
+        if (thismove.Effect != Attack.Data.Effects.x099 ||  // Thunder
+                         thismove.Effect != Attack.Data.Effects.x14E ||  // Hurricane
+                         thismove.Effect != Attack.Data.Effects.x096 ||  // Gust
+                         thismove.Effect != Attack.Data.Effects.x093 ||  // Twister
+                         thismove.Effect != Attack.Data.Effects.x0D0 ||  // Sky Uppercut
+                         thismove.Effect != Attack.Data.Effects.x120)    // Smack Down
+           miss=true;   
         break;
       }
       if (target.effects.SkyDrop)
-        if ((int)thismove.Effect!=0x08 ||  // Thunder
-                         (int)thismove.Effect!=0x15 ||  // Hurricane
-                         (int)thismove.Effect!=0x77 ||  // Gust
-                         (int)thismove.Effect!=0x78 ||  // Twister
-                         (int)thismove.Effect!=0xCE ||  // Sky Drop
-                         (int)thismove.Effect!=0x11B || // Sky Uppercut
-                         (int)thismove.Effect!=0x11C)    // Smack Down
+        if (thismove.Effect != Attack.Data.Effects.x099 ||  // Thunder
+                         thismove.Effect != Attack.Data.Effects.x14E ||  // Hurricane
+                         thismove.Effect != Attack.Data.Effects.x096 ||  // Gust
+                         thismove.Effect != Attack.Data.Effects.x093 ||  // Twister
+                         thismove.Effect != Attack.Data.Effects.x138 ||  // Sky Drop
+                         thismove.Effect != Attack.Data.Effects.x0D0 ||  // Sky Uppercut
+                         thismove.Effect != Attack.Data.Effects.x120)    // Smack Down
             miss=true;
       if (user.hasWorkingAbility(Abilities.NO_GUARD) ||
                     target.hasWorkingAbility(Abilities.NO_GUARD) ||
                     @battle.futuresight) miss=false;
-      if (Core.USENEWBATTLEMECHANICS && (int)thismove.Effect==0x06 && // Toxic
+      if (Core.USENEWBATTLEMECHANICS && thismove.Effect == Attack.Data.Effects.x022 && // Toxic
                     thismove.BaseDamage==0 && user.hasType(Types.POISON)) _override=true;
       if (!miss && turneffects.SkipAccuracyCheck) _override=true; // Called by another move
       if (!_override && (miss || !thismove.pbAccuracyCheck(user,target))) { // Includes Counter/Mirror Coat
-        GameDebug.Log(string.Format("[Move failed] Failed pbAccuracyCheck (function code %02X) or target is semi-invulnerable",thismove.Effect));
+        GameDebug.Log(string.Format("[Move failed] Failed pbAccuracyCheck (Effect Id: {0}) or target is semi-invulnerable",thismove.Effect));
         if (thismove.Targets==Attack.Target.AllOpposing && 
            (!user.pbOpposing1.isFainted() ? 1 : 0) + (!user.pbOpposing2.isFainted() ? 1 : 0) > 1)
           @battle.pbDisplay(_INTL("{1} avoided the attack!",target.ToString()));
@@ -2541,7 +2539,7 @@ namespace PokemonUnity.Battle
           @battle.pbDisplay(_INTL("{1} avoided the attack!",target.ToString()));
         else if (target.effects.TwoTurnAttack>0) 
           @battle.pbDisplay(_INTL("{1} avoided the attack!",target.ToString()));
-        else if ((int)thismove.Effect==0xDC) // Leech Seed
+        else if (thismove.Effect == Attack.Data.Effects.x055) // Leech Seed
           @battle.pbDisplay(_INTL("{1} evaded the attack!",target.ToString()));
         else
           @battle.pbDisplay(_INTL("{1}'s attack missed!",user.ToString()));
@@ -2714,9 +2712,9 @@ namespace PokemonUnity.Battle
       // Check success (accuracy/evasion calculation)
       if (!nocheck &&
          !pbSuccessCheck(thismove,user,target,turneffects,i==0 || thismove.successCheckPerHit())) {
-        if ((int)thismove.Effect==0xBF && realnumhits>0)   // Triple Kick
+        if (thismove.Effect == Attack.Data.Effects.x069 && realnumhits>0)   // Triple Kick
           break;   // Considered a success if Triple Kick hits at least once
-        else if ((int)thismove.Effect==0x10B)  // Hi Jump Kick, Jump Kick
+        else if (thismove.Effect == Attack.Data.Effects.x02E)  // Hi Jump Kick, Jump Kick
           if (!user.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
             GameDebug.Log($"[Move effect triggered] #{user.ToString()} took crash damage");
             //TODO: Not shown if message is "It doesn't affect XXX..."
@@ -2728,18 +2726,18 @@ namespace PokemonUnity.Battle
             }
             if (user.isFainted()) user.pbFaint();
           }
-        if ((int)thismove.Effect==0xD2) user.effects.Outrage=0; // Outrage
-        if ((int)thismove.Effect==0xD3) user.effects.Rollout=0; // Rollout
-        if ((int)thismove.Effect==0x91) user.effects.FuryCutter=0; // Fury Cutter
-        if ((int)thismove.Effect==0x113) user.effects.Stockpile=0; // Spit Up
+        if (thismove.Effect == Attack.Data.Effects.x01C) user.effects.Outrage=0;    // Outrage
+        if (thismove.Effect == Attack.Data.Effects.x076) user.effects.Rollout=0;    // Rollout
+        if (thismove.Effect == Attack.Data.Effects.x078) user.effects.FuryCutter=0; // Fury Cutter
+        if (thismove.Effect == Attack.Data.Effects.x0A2) user.effects.Stockpile=0;  // Spit Up
         return;
       }
       // Add to counters for moves which increase them when used in succession
-      if ((int)thismove.Effect==0x91) // Fury Cutter
+      if (thismove.Effect == Attack.Data.Effects.x078) // Fury Cutter
         if (user.effects.FuryCutter<4) user.effects.FuryCutter+=1;
       else
         user.effects.FuryCutter=0;
-      if ((int)thismove.Effect==0x92) { // Echoed Voice
+      if (thismove.Effect == Attack.Data.Effects.x12F) { // Echoed Voice
         if (!user.OwnSide.EchoedVoiceUsed &&
            user.OwnSide.EchoedVoiceCounter<5)
           user.OwnSide.EchoedVoiceCounter+=1;
@@ -2778,7 +2776,7 @@ namespace PokemonUnity.Battle
         int addleffect=thismove.AddlEffect;
         if ((user.hasWorkingAbility(Abilities.SERENE_GRACE) ||
                          user.OwnSide.Rainbow>0) &&
-                         (int)thismove.Effect!=0xA4) addleffect*=2; // Secret Power
+                         thismove.Effect != Attack.Data.Effects.x0C6) addleffect*=2; // Secret Power
         //if ($DEBUG && Input.press(Input::CTRL)) addleffect=100;
         if (@battle.pbRandom(100)<addleffect) {
           GameDebug.Log($"[Move effect triggered] #{thismove.MoveId.ToString(TextScripts.Name)}'s added effect");
@@ -2808,15 +2806,16 @@ namespace PokemonUnity.Battle
              //&& thismove.canKingsRock()) //ToDo: Uncommont; Check if in Veekun's Database
             canflinch=true;
           if (user.hasWorkingAbility(Abilities.STENCH) &&
-             (int)thismove.Effect!=0x09 && // Thunder Fang
-             (int)thismove.Effect!=0x0B && // Fire Fang
-             (int)thismove.Effect!=0x0E && // Ice Fang
-             (int)thismove.Effect!=0x0F && // flinch-inducing moves
-             (int)thismove.Effect!=0x10 && // Stomp
-             (int)thismove.Effect!=0x11 && // Snore
-             (int)thismove.Effect!=0x12 && // Fake Out
-             (int)thismove.Effect!=0x78 && // Twister
-             (int)thismove.Effect!=0xC7)   // Sky Attack
+             thismove.Effect != Attack.Data.Effects.x114 && // Thunder Fang
+             thismove.Effect != Attack.Data.Effects.x112 && // Fire Fang
+             thismove.Effect != Attack.Data.Effects.x113 && // Ice Fang
+             thismove.Effect != Attack.Data.Effects.x097 && // Stomp
+             thismove.Effect != Attack.Data.Effects.x05D && // Snore
+             thismove.Effect != Attack.Data.Effects.x09F && // Fake Out
+             thismove.Effect != Attack.Data.Effects.x093 && // Twister
+             thismove.Effect != Attack.Data.Effects.x04C && // Sky Attack
+             //thismove.Effect != Attack.Data.Effects.   && // flinch-inducing moves
+             Game.MoveMetaData[thismove.MoveId].FlinchChance == 0) // flinch-inducing moves
             canflinch=true;
           if (canflinch && @battle.pbRandom(10)==0) {
             GameDebug.Log($"[Item/ability triggered] #{user.ToString()}'s King's Rock/Razor Fang or Stench");
@@ -3105,13 +3104,13 @@ namespace PokemonUnity.Battle
     }
     // Protean
     if (user.hasWorkingAbility(Abilities.PROTEAN) &&
-       (int)thismove.Effect!=0xAE &&   // Mirror Move
-       (int)thismove.Effect!=0xAF &&   // Copycat
-       (int)thismove.Effect!=0xB0 &&   // Me First
-       (int)thismove.Effect!=0xB3 &&   // Nature Power
-       (int)thismove.Effect!=0xB4 &&   // Sleep Talk
-       (int)thismove.Effect!=0xB5 &&   // Assist
-       (int)thismove.Effect!=0xB6) {    // Metronome
+       thismove.Effect != Attack.Data.Effects.x00A &&   // Mirror Move
+       thismove.Effect != Attack.Data.Effects.x0F3 &&   // Copycat
+       thismove.Effect != Attack.Data.Effects.x073 &&   // Me First
+       thismove.Effect != Attack.Data.Effects.x0AE &&   // Nature Power
+       thismove.Effect != Attack.Data.Effects.x062 &&   // Sleep Talk
+       thismove.Effect != Attack.Data.Effects.x0B5 &&   // Assist
+       thismove.Effect != Attack.Data.Effects.x054) {    // Metronome
       Types movetype=thismove.pbType(thismove.Type,user,null);
       if (!user.hasType(movetype)) {
         string typename=movetype.ToString(TextScripts.Name);

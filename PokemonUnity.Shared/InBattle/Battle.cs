@@ -1379,7 +1379,7 @@ namespace PokemonUnity.Battle
 				if (showMessages) pbDisplayPaused(_INTL("{1}'s {2} is disabled!", thispkmn.ToString(), thismove.MoveId.ToString(TextScripts.Name)));
 				return false;
 			}
-			if (thismove.Effect==(Attack.Data.Effects)0x158 && // ToDo: Belch; Confirm value is correct
+			if (thismove.Effect==Attack.Data.Effects.x153 && // ToDo: Belch
 			   (thispkmn.Species != Pokemons.NONE || !thispkmn.belch)) {
 				if (showMessages) pbDisplayPaused(_INTL("{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn.ToString()));
 				return false;
@@ -1456,12 +1456,12 @@ namespace PokemonUnity.Battle
     return false;
   }
 
-  public bool pbChoseMoveFunctionCode (int i,int code) {
+  public bool pbChoseMoveFunctionCode (int i,Attack.Data.Effects code) {
     if (@battlers[i].isFainted()) return false;
     //if (@choices[i][0]==1 && @choices[i][1]>=0) {
     if (@choices[i].Action==ChoiceAction.UseMove && @choices[i].Index>=0) {
       int choice=@choices[i].Index; //@choices[i][1];
-      return @battlers[i].moves[choice].Effect==(Attack.Data.Effects)code;
+      return @battlers[i].moves[choice].Effect==code;
     }
     return false;
   }
@@ -2729,8 +2729,8 @@ namespace PokemonUnity.Battle
       // Stealth Rock
       if (pkmn.OwnSide.StealthRock && !pkmn.isFainted()) {
         if (!pkmn.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
-          Types atype=Types.ROCK; //|| 0;
-          /*ToDo: Deal with Type Advantage...
+          /*Types atype=Types.ROCK; //|| 0;
+          ToDo: Deal with Type Advantage...
           eff=atype.GetCombinedEffectiveness(pkmn.Type1,pkmn.Type2,pkmn.effects.Type3);
           if (eff>0) {
             GameDebug.Log($"[Entry hazard] #{pkmn.ToString()} triggered Stealth Rock");
@@ -3426,7 +3426,7 @@ namespace PokemonUnity.Battle
         foreach (var j in priority) {
           if (!i.IsOpposing(j.Index)) continue;
           // if Pursuit and this target ("i") was chosen
-          if (pbChoseMoveFunctionCode(j.Index,0x88) && // Pursuit
+          if (pbChoseMoveFunctionCode(j.Index,Attack.Data.Effects.x081) && // Pursuit
              !j.hasMovedThisRound()) {
             if (j.Status!=Status.SLEEP && j.Status!=Status.FROZEN &&
                !j.effects.SkyDrop &&
@@ -3490,7 +3490,7 @@ namespace PokemonUnity.Battle
     // Use attacks
     foreach (var i in priority) {
       if (i.effects.SkipTurn) continue;
-      if (pbChoseMoveFunctionCode(i.Index,0x115)) { // Focus Punch
+      if (pbChoseMoveFunctionCode(i.Index,Attack.Data.Effects.x0AB)) { // Focus Punch
         pbCommonAnimation("FocusPunch",i,null);
         pbDisplay(_INTL("{1} is tightening its focus!",i.ToString()));
       }
@@ -3617,7 +3617,10 @@ namespace PokemonUnity.Battle
                !i.hasWorkingAbility(Abilities.MAGIC_GUARD) &&
                !i.hasWorkingAbility(Abilities.OVERCOAT) &&
                !i.hasWorkingItem(Items.SAFETY_GOGGLES) &&
-               !new int[] { 0xCA,0xCB }.Contains((int)Game.MoveData[i.effects.TwoTurnAttack].Effect)) { // Dig, Dive
+               !new Attack.Data.Effects[] { 
+                   Attack.Data.Effects.x101, // Dig
+                   Attack.Data.Effects.x100  // Dive
+               }.Contains(Game.MoveData[i.effects.TwoTurnAttack].Effect)) { 
               @scene.pbDamageAnimation(i,0);
               i.pbReduceHP((int)Math.Floor(i.TotalHP/16f));
               pbDisplay(_INTL("{1} is buffeted by the sandstorm!",i.ToString()));

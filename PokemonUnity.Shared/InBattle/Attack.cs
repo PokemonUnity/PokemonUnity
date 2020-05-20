@@ -3120,17 +3120,17 @@ namespace PokemonUnity.Battle
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
-			List<Attack.Effect> blacklist = new List<Attack.Effect> {
-				(Attack.Effect)0x02,   // Struggle
-				(Attack.Effect)0x14,   // Chatter
-				(Attack.Effect)0x5C,   // Mimic
-				(Attack.Effect)0x5D,   // Sketch
-				(Attack.Effect)0xB6    // Metronome
+			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
+				Attack.Data.Effects.x0FF,   // Struggle
+				Attack.Data.Effects.x10C,   // Chatter
+				Attack.Data.Effects.x053,   // Mimic
+				Attack.Data.Effects.x060,   // Sketch
+				Attack.Data.Effects.x054    // Metronome
 			};
 			if (attacker.effects.Transform ||
 			   opponent.lastMoveUsed <= 0 ||
 			   Game.MoveData[(Moves)opponent.lastMoveUsed].Type == Types.SHADOW || 
-			   blacklist.Contains((Attack.Effect)Game.MoveData[(Moves)opponent.lastMoveUsed].Effect))
+			   blacklist.Contains(Game.MoveData[(Moves)opponent.lastMoveUsed].Effect))
 			{
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
@@ -3175,15 +3175,15 @@ namespace PokemonUnity.Battle
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
-			List<Attack.Effect> blacklist = new List<Attack.Effect> {
-				(Attack.Effect)0x02,   // Struggle
-				(Attack.Effect)0x14,   // Chatter
-				(Attack.Effect)0x5D    // Sketch
+			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
+				Attack.Data.Effects.x0FF,   // Struggle
+				Attack.Data.Effects.x10C,   // Chatter
+				Attack.Data.Effects.x060    // Sketch
 			};
 			if (attacker.effects.Transform ||
 			   opponent.lastMoveUsedSketch <= 0 ||
 			   Game.MoveData[(Moves)opponent.lastMoveUsedSketch].Type == Types.SHADOW ||
-			   blacklist.Contains((Attack.Effect)Game.MoveData[(Moves)opponent.lastMoveUsedSketch].Effect))
+			   blacklist.Contains(Game.MoveData[(Moves)opponent.lastMoveUsedSketch].Effect))
 			{
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
@@ -3744,13 +3744,13 @@ namespace PokemonUnity.Battle
 		{
 
 			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects>{
-			   (Attack.Data.Effects)0xC9,   // Fly
-			   (Attack.Data.Effects)0xCA,   // Dig
-			   (Attack.Data.Effects)0xCB,   // Dive
-			   (Attack.Data.Effects)0xCC,   // Bounce
-			   (Attack.Data.Effects)0xCD,   // Shadow Force
-			   (Attack.Data.Effects)0xCE,   // Sky Drop
-			   (Attack.Data.Effects)0x14D   // Phantom Force
+			   Attack.Data.Effects.x09C,   // Fly
+			   Attack.Data.Effects.x101,   // Dig
+			   Attack.Data.Effects.x100,   // Dive
+			   Attack.Data.Effects.x108,   // Bounce
+			   //Attack.Data.Effects.x111, // Shadow Force
+			   Attack.Data.Effects.x138,   // Sky Drop
+			   Attack.Data.Effects.x111    // Phantom Force
 			};
 			if (attacker.effects.Transform ||
 			   opponent.effects.Transform ||
@@ -4049,7 +4049,7 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_075(Battle battle, Attack.Move move) : base(battle, move) { }
 		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
-			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCB)	// Dive
+			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x100)	// Dive
 			{
 				return (int)Math.Round(damagemult * 2.0f);
 			}
@@ -4068,7 +4068,7 @@ namespace PokemonUnity.Battle
 		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			int ret = damagemult;
-			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCA)   // Dig
+			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x101)   // Dig
 			{
 				ret = (int)Math.Round(damagemult * 2.0f);
 			}
@@ -4089,9 +4089,9 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_077(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
-			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xC9 || // Fly
-			   (int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCC || // Bounce
-			   (int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCE || // Sky Drop
+			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C || // Fly
+			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 || // Bounce
+			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138 || // Sky Drop
 			   opponent.effects.SkyDrop)
 			{
 				return basedmg * 2;
@@ -4110,9 +4110,9 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_078(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
-			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xC9 || // Fly
-			   (int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCC || // Bounce
-			   (int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCE || // Sky Drop
+			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C || // Fly
+			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 || // Bounce
+			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138 || // Sky Drop
 			   opponent.effects.SkyDrop)
 			{
 				return basedmg * 2;
@@ -4799,7 +4799,7 @@ namespace PokemonUnity.Battle
 		{
 
 			int ret = this.calcbasedmg;
-			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCA)	// Dig
+			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x101)	// Dig
 			{
 				ret *= 2;
 			}
@@ -5540,15 +5540,15 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_0AA(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			List<int> ratesharers = new List<int> {
-			   0xAA,   // Detect, Protect
-			   0xAB,   // Quick Guard
-			   0xAC,   // Wide Guard
-			   0xE8,   // Endure
-			   0x14B,  // King's Shield
-			   0x14C   // Spiky Shield
+			List<Attack.Data.Effects> ratesharers = new List<Attack.Data.Effects> {
+			   Attack.Data.Effects.x070,   // Detect, Protect
+			   Attack.Data.Effects.x133,   // Quick Guard
+			   Attack.Data.Effects.x117,   // Wide Guard
+			   Attack.Data.Effects.x075,   // Endure
+			   Attack.Data.Effects.x164,   // King's Shield
+			   Attack.Data.Effects.x16A    // Spiky Shield
 			 };
-			if (!ratesharers.Contains((int)Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			if (!ratesharers.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				attacker.effects.ProtectRate = 1;
 			}
@@ -5593,15 +5593,15 @@ namespace PokemonUnity.Battle
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
 			}
-			List<int> ratesharers = new List<int> {
-			   0xAA,   // Detect, Protect
-			   0xAB,   // Quick Guard
-			   0xAC,   // Wide Guard
-			   0xE8,   // Endure
-			   0x14B,  // King's Shield
-			   0x14C   // Spiky Shield
+			List<Attack.Data.Effects> ratesharers = new List<Attack.Data.Effects> {
+			   Attack.Data.Effects.x070,   // Detect, Protect
+			   Attack.Data.Effects.x133,   // Quick Guard
+			   Attack.Data.Effects.x117,   // Wide Guard
+			   Attack.Data.Effects.x075,   // Endure
+			   Attack.Data.Effects.x164,   // King's Shield
+			   Attack.Data.Effects.x16A    // Spiky Shield
 			 };
-			if (!ratesharers.Contains((int)Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			if (!ratesharers.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				attacker.effects.ProtectRate = 1;
 			}
@@ -5653,15 +5653,15 @@ namespace PokemonUnity.Battle
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
 			}
-			List<int> ratesharers = new List<int> {
-		   0xAA,   // Detect, Protect
-		   0xAB,   // Quick Guard
-		   0xAC,   // Wide Guard
-		   0xE8,   // Endure
-		   0x14B,  // King's Shield
-		   0x14C   // Spiky Shield
-		 };
-			if (!ratesharers.Contains((int)Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			List<Attack.Data.Effects> ratesharers = new List<Attack.Data.Effects> {
+			   Attack.Data.Effects.x070,   // Detect, Protect
+			   Attack.Data.Effects.x133,   // Quick Guard
+			   Attack.Data.Effects.x117,   // Wide Guard
+			   Attack.Data.Effects.x075,   // Endure
+			   Attack.Data.Effects.x164,   // King's Shield
+			   Attack.Data.Effects.x16A    // Spiky Shield
+			};
+			if (!ratesharers.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				attacker.effects.ProtectRate = 1;
 			}
@@ -5746,51 +5746,51 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_0AF(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			List<Attack.Effect> blacklist = new List<Attack.Effect> {
-			   (Attack.Effect)0x02,    // Struggle
-			   (Attack.Effect)0x69,    // Transform
-			   (Attack.Effect)0x71,    // Counter
-			   (Attack.Effect)0x72,    // Mirror Coat
-			   (Attack.Effect)0x73,    // Metal Burst
-			   (Attack.Effect)0x9C,    // Helping Hand
-			   (Attack.Effect)0xAA,    // Detect, Protect
-			   (Attack.Effect)0xAD,    // Feint
-			   (Attack.Effect)0xAE,    // Mirror Move
-			   (Attack.Effect)0xAF,    // Copycat
-			   (Attack.Effect)0xB2,    // Snatch
-			   (Attack.Effect)0xE7,    // Destiny Bond
-			   (Attack.Effect)0xE8,    // Endure
-			   (Attack.Effect)0xEC,    // Circle Throw, Dragon Tail
-			   (Attack.Effect)0xF1,    // Covet, Thief
-			   (Attack.Effect)0xF2,    // Switcheroo, Trick
-			   (Attack.Effect)0xF3,    // Bestow
-			   (Attack.Effect)0x115,   // Focus Punch
-			   (Attack.Effect)0x117,   // Follow Me, Rage Powder
-			   (Attack.Effect)0x158    // Belch
+			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
+			   Attack.Data.Effects.x0FF,    // Struggle
+			   Attack.Data.Effects.x03A,    // Transform
+			   Attack.Data.Effects.x05A,    // Counter
+			   Attack.Data.Effects.x091,    // Mirror Coat
+			   Attack.Data.Effects.x0E4,    // Metal Burst
+			   Attack.Data.Effects.x0B1,    // Helping Hand
+			   Attack.Data.Effects.x070,    // Detect, Protect
+			   Attack.Data.Effects.x0E0,    // Feint
+			   Attack.Data.Effects.x00A,    // Mirror Move
+			   Attack.Data.Effects.x0F3,    // Copycat
+			   Attack.Data.Effects.x0C4,    // Snatch
+			   Attack.Data.Effects.x063,    // Destiny Bond
+			   Attack.Data.Effects.x075,    // Endure
+			   Attack.Data.Effects.x13A,    // Circle Throw, Dragon Tail
+			   Attack.Data.Effects.x06A,    // Covet, Thief
+			   Attack.Data.Effects.x0B2,    // Switcheroo, Trick
+			   Attack.Data.Effects.x144,    // Bestow
+			   Attack.Data.Effects.x0AB,    // Focus Punch
+			   Attack.Data.Effects.x0AD,    // Follow Me, Rage Powder
+			   Attack.Data.Effects.x153     // Belch
 			 };
 			if (Core.USENEWBATTLEMECHANICS)
 			{
-				blacklist.AddRange(new List<Attack.Effect> {
-				 (Attack.Effect)0xEB,		// Roar, Whirlwind
-											// Two-turn attacks
-				 (Attack.Effect)0xC3,		// Razor Wind
-				 (Attack.Effect)0xC4,		// SolarBeam
-				 (Attack.Effect)0xC5,		// Freeze Shock
-				 (Attack.Effect)0xC6,		// Ice Burn
-				 (Attack.Effect)0xC7,		// Sky Attack
-				 (Attack.Effect)0xC8,		// Skull Bash
-				 (Attack.Effect)0xC9,		// Fly
-				 (Attack.Effect)0xCA,		// Dig
-				 (Attack.Effect)0xCB,		// Dive
-				 (Attack.Effect)0xCC,		// Bounce
-				 (Attack.Effect)0xCD,		// Shadow Force
-				 (Attack.Effect)0xCE,		// Sky Drop
-				 (Attack.Effect)0x14D,		// Phantom Force
-				 (Attack.Effect)0x14E		// Geomancy
+				blacklist.AddRange(new List<Attack.Data.Effects> {
+				 Attack.Data.Effects.x01D,		// Roar, Whirlwind
+												// Two-turn attacks
+				 Attack.Data.Effects.x028,		// Razor Wind
+				 Attack.Data.Effects.x098,		// SolarBeam
+				 Attack.Data.Effects.x14C,		// Freeze Shock
+				 Attack.Data.Effects.x14D,		// Ice Burn
+				 Attack.Data.Effects.x04C,		// Sky Attack
+				 Attack.Data.Effects.x092,		// Skull Bash
+				 Attack.Data.Effects.x09C,		// Fly
+				 Attack.Data.Effects.x101,		// Dig
+				 Attack.Data.Effects.x100,		// Dive
+				 Attack.Data.Effects.x108,		// Bounce
+				 //Attack.Data.Effects.x111,	// Shadow Force
+				 Attack.Data.Effects.x138,		// Sky Drop
+				 Attack.Data.Effects.x111,		// Phantom Force
+				 Attack.Data.Effects.x16E		// Geomancy
 			   });
 			}
 			if (this.battle.lastMoveUsed <= 0 ||
-			   blacklist.Contains((Attack.Effect)Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			   blacklist.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
@@ -5808,23 +5808,23 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_0B0(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			List<Attack.Effect> blacklist = new List<Attack.Effect> {
-			   (Attack.Effect)0x02,    // Struggle
-			   (Attack.Effect)0x14,    // Chatter
-			   (Attack.Effect)0x71,    // Counter
-			   (Attack.Effect)0x72,    // Mirror Coat
-			   (Attack.Effect)0x73,    // Metal Burst
-			   (Attack.Effect)0xB0,    // Me First
-			   (Attack.Effect)0xF1,    // Covet, Thief
-			   (Attack.Effect)0x115,   // Focus Punch
-			   (Attack.Effect)0x158    // Belch
+			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
+			   Attack.Data.Effects.x0FF,    // Struggle
+			   Attack.Data.Effects.x10C,    // Chatter
+			   Attack.Data.Effects.x05A,    // Counter
+			   Attack.Data.Effects.x091,    // Mirror Coat
+			   Attack.Data.Effects.x0E4,    // Metal Burst
+			   Attack.Data.Effects.x0F2,    // Me First
+			   Attack.Data.Effects.x06A,    // Covet, Thief
+			   Attack.Data.Effects.x0AB,    // Focus Punch
+			   Attack.Data.Effects.x153     // Belch
 			 };
 			Move oppmove = this.battle.choices[opponent.Index].Move;
 			if ((int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move
 			   opponent.hasMovedThisRound() ||
 			   oppmove.MoveId == Moves.NONE || oppmove.MoveId <= 0 ||
 			   oppmove.pbIsStatus ||
-			   blacklist.Contains(oppmove.function))
+			   blacklist.Contains(oppmove.Effect))
 			{
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
@@ -5952,36 +5952,36 @@ namespace PokemonUnity.Battle
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
 			}
-			List<Attack.Effect> blacklist = new List<Attack.Effect> {
-				(Attack.Effect)0x02,		// Struggle
-				(Attack.Effect)0x14,		// Chatter
-				(Attack.Effect)0x5C,		// Mimic
-				(Attack.Effect)0x5D,		// Sketch
-				(Attack.Effect)0xAE,		// Mirror Move
-				(Attack.Effect)0xAF,		// Copycat
-				(Attack.Effect)0xB0,		// Me First
-				(Attack.Effect)0xB3,		// Nature Power
-				(Attack.Effect)0xB4,		// Sleep Talk
-				(Attack.Effect)0xB5,		// Assist
-				(Attack.Effect)0xB6,		// Metronome
-				(Attack.Effect)0xD1,		// Uproar
-				(Attack.Effect)0xD4,		// Bide
-				(Attack.Effect)0x115,		// Focus Punch
-											// Two-turn attacks
-				(Attack.Effect)0xC3,		// Razor Wind
-				(Attack.Effect)0xC4,		// SolarBeam
-				(Attack.Effect)0xC5,		// Freeze Shock
-				(Attack.Effect)0xC6,		// Ice Burn
-				(Attack.Effect)0xC7,		// Sky Attack
-				(Attack.Effect)0xC8,		// Skull Bash
-				(Attack.Effect)0xC9,		// Fly
-				(Attack.Effect)0xCA,		// Dig
-				(Attack.Effect)0xCB,		// Dive
-				(Attack.Effect)0xCC,		// Bounce
-				(Attack.Effect)0xCD,		// Shadow Force
-				(Attack.Effect)0xCE,		// Sky Drop
-				(Attack.Effect)0x14D,		// Phantom Force
-				(Attack.Effect)0x14E		// Geomancy
+			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
+				Attack.Data.Effects.x0FF,		// Struggle
+				Attack.Data.Effects.x10C,		// Chatter
+				Attack.Data.Effects.x053,		// Mimic
+				Attack.Data.Effects.x060,		// Sketch
+				Attack.Data.Effects.x00A,		// Mirror Move
+				Attack.Data.Effects.x0F3,		// Copycat
+				Attack.Data.Effects.x0F2,		// Me First
+				Attack.Data.Effects.x0AE,		// Nature Power
+				Attack.Data.Effects.x062,		// Sleep Talk
+				Attack.Data.Effects.x0B5,		// Assist
+				Attack.Data.Effects.x054,		// Metronome
+				Attack.Data.Effects.x0A0,		// Uproar
+				Attack.Data.Effects.x01B,		// Bide
+				Attack.Data.Effects.x0AB,		// Focus Punch
+												// Two-turn attacks
+				Attack.Data.Effects.x028,		// Razor Wind
+				Attack.Data.Effects.x098,		// SolarBeam
+				Attack.Data.Effects.x14C,		// Freeze Shock
+				Attack.Data.Effects.x14D,		// Ice Burn
+				Attack.Data.Effects.x04C,		// Sky Attack
+				Attack.Data.Effects.x092,		// Skull Bash
+				Attack.Data.Effects.x09C,		// Fly
+				Attack.Data.Effects.x101,		// Dig
+				Attack.Data.Effects.x100,		// Dive
+				Attack.Data.Effects.x108,		// Bounce
+				//Attack.Data.Effects.x111,		// Shadow Force
+				Attack.Data.Effects.x138,		// Sky Drop
+				Attack.Data.Effects.x111,		// Phantom Force
+				Attack.Data.Effects.x16E		// Geomancy
 			 };
 
 			List<int> choices = new List<int>(); //[];
@@ -5989,7 +5989,7 @@ namespace PokemonUnity.Battle
 			{
 				bool found = false;
 				if (attacker.moves[i].MoveId == 0) continue; //next
-				if (blacklist.Contains((Attack.Effect)attacker.moves[i].Effect)) found = true;
+				if (blacklist.Contains(attacker.moves[i].Effect)) found = true;
 				if (found) continue; //next
 				if (this.battle.CanChooseMove(attacker.Index, i, false, true)) choices.Add(i);
 			}
@@ -6014,60 +6014,60 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_0B5(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			List<Attack.Effect> blacklist = new List<Attack.Effect> {
-				(Attack.Effect)0x02,		// Struggle
-				(Attack.Effect)0x14,		// Chatter
-				(Attack.Effect)0x5C,		// Mimic
-				(Attack.Effect)0x5D,		// Sketch
-				(Attack.Effect)0x69,		// Transform
-				(Attack.Effect)0x71,		// Counter
-				(Attack.Effect)0x72,		// Mirror Coat
-				(Attack.Effect)0x73,		// Metal Burst
-				(Attack.Effect)0x9C,		// Helping Hand
-				(Attack.Effect)0xAA,		// Detect, Protect
-				(Attack.Effect)0xAD,		// Feint
-				(Attack.Effect)0xAE,		// Mirror Move
-				(Attack.Effect)0xAF,		// Copycat
-				(Attack.Effect)0xB0,		// Me First
-				(Attack.Effect)0xB2,		// Snatch
-				(Attack.Effect)0xB3,		// Nature Power
-				(Attack.Effect)0xB4,		// Sleep Talk
-				(Attack.Effect)0xB5,		// Assist
-				(Attack.Effect)0xB6,		// Metronome
-				(Attack.Effect)0xCD,		// Shadow Force
-				(Attack.Effect)0xE7,		// Destiny Bond
-				(Attack.Effect)0xE8,		// Endure
-				(Attack.Effect)0xEB,		// Roar, Whirlwind
-				(Attack.Effect)0xEC,		// Circle Throw, Dragon Tail
-				(Attack.Effect)0xF1,		// Covet, Thief
-				(Attack.Effect)0xF2,		// Switcheroo, Trick
-				(Attack.Effect)0xF3,		// Bestow
-				(Attack.Effect)0x115,		// Focus Punch
-				(Attack.Effect)0x117,		// Follow Me, Rage Powder
-				(Attack.Effect)0x149,		// Mat Block
-				(Attack.Effect)0x14B,		// King's Shield
-				(Attack.Effect)0x14C,		// Spiky Shield
-				(Attack.Effect)0x14D,		// Phantom Force
-				(Attack.Effect)0x158		// Belch
+			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
+				Attack.Data.Effects.x0FF,		// Struggle
+				Attack.Data.Effects.x10C,		// Chatter
+				Attack.Data.Effects.x053,		// Mimic
+				Attack.Data.Effects.x060,		// Sketch
+				Attack.Data.Effects.x03A,		// Transform
+				Attack.Data.Effects.x05A,		// Counter
+				Attack.Data.Effects.x091,		// Mirror Coat
+				Attack.Data.Effects.x0E4,		// Metal Burst
+				Attack.Data.Effects.x0B1,		// Helping Hand
+				Attack.Data.Effects.x070,		// Detect, Protect
+				Attack.Data.Effects.x0E0,		// Feint
+				Attack.Data.Effects.x00A,		// Mirror Move
+				Attack.Data.Effects.x0F3,		// Copycat
+				Attack.Data.Effects.x0F2,		// Me First
+				Attack.Data.Effects.x0C4,		// Snatch
+				Attack.Data.Effects.x0AE,		// Nature Power
+				Attack.Data.Effects.x062,		// Sleep Talk
+				Attack.Data.Effects.x0B5,		// Assist
+				Attack.Data.Effects.x054,		// Metronome
+				//Attack.Data.Effects.x111,		// Shadow Force
+				Attack.Data.Effects.x063,		// Destiny Bond
+				Attack.Data.Effects.x075,		// Endure
+				Attack.Data.Effects.x01D,		// Roar, Whirlwind
+				Attack.Data.Effects.x13A,		// Circle Throw, Dragon Tail
+				Attack.Data.Effects.x06A,		// Covet, Thief
+				Attack.Data.Effects.x0B2,		// Switcheroo, Trick
+				Attack.Data.Effects.x144,		// Bestow
+				Attack.Data.Effects.x0AB,		// Focus Punch
+				Attack.Data.Effects.x0AD,		// Follow Me, Rage Powder
+				Attack.Data.Effects.x179,		// Mat Block
+				Attack.Data.Effects.x164,		// King's Shield
+				Attack.Data.Effects.x16A,		// Spiky Shield
+				Attack.Data.Effects.x111,		// Phantom Force
+				Attack.Data.Effects.x153		// Belch
 			};
 			if (Core.USENEWBATTLEMECHANICS)
 			{
-				blacklist.AddRange(new List<Attack.Effect>{
+				blacklist.AddRange(new List<Attack.Data.Effects>{
 											// Two-turn attacks
-					(Attack.Effect)0xC3,	// Razor Wind
-					(Attack.Effect)0xC4,	// SolarBeam
-					(Attack.Effect)0xC5,	// Freeze Shock
-					(Attack.Effect)0xC6,	// Ice Burn
-					(Attack.Effect)0xC7,	// Sky Attack
-					(Attack.Effect)0xC8,	// Skull Bash
-					(Attack.Effect)0xC9,	// Fly
-					(Attack.Effect)0xCA,	// Dig
-					(Attack.Effect)0xCB,	// Dive
-					(Attack.Effect)0xCC,	// Bounce
-					(Attack.Effect)0xCD,	// Shadow Force
-					(Attack.Effect)0xCE,	// Sky Drop
-					(Attack.Effect)0x14D,	// Phantom Force
-					(Attack.Effect)0x14E	// Geomancy
+					Attack.Data.Effects.x028,	// Razor Wind
+					Attack.Data.Effects.x098,	// SolarBeam
+					Attack.Data.Effects.x14C,	// Freeze Shock
+					Attack.Data.Effects.x14D,	// Ice Burn
+					Attack.Data.Effects.x04C,	// Sky Attack
+					Attack.Data.Effects.x092,	// Skull Bash
+					Attack.Data.Effects.x09C,	// Fly
+					Attack.Data.Effects.x101,	// Dig
+					Attack.Data.Effects.x100,	// Dive
+					Attack.Data.Effects.x108,	// Bounce
+					//Attack.Data.Effects.x111,	// Shadow Force
+					Attack.Data.Effects.x138,	// Sky Drop
+					Attack.Data.Effects.x111,	// Phantom Force
+					Attack.Data.Effects.x16E	// Geomancy
 			  });
 			}
 			List<Moves> moves = new List<Moves>();
@@ -6082,7 +6082,7 @@ namespace PokemonUnity.Battle
 						if (j.Type == Types.SHADOW) continue; //next
 						if (j.MoveId == 0) continue; //next
 						//bool found=false;
-						if (!blacklist.Contains((Attack.Effect)Game.MoveData[(Moves)MoveId].Effect)) moves.Add(j.MoveId);
+						if (!blacklist.Contains(Game.MoveData[(Moves)MoveId].Effect)) moves.Add(j.MoveId);
 					}
 				}
 
@@ -6108,38 +6108,38 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_0B6(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			List<Attack.Effect> blacklist = new List<Attack.Effect> {
-				(Attack.Effect)0x02,    // Struggle
-				(Attack.Effect)0x11,    // Snore
-				(Attack.Effect)0x14,    // Chatter
-				(Attack.Effect)0x5C,    // Mimic
-				(Attack.Effect)0x5D,    // Sketch
-				(Attack.Effect)0x69,    // Transform
-				(Attack.Effect)0x71,    // Counter
-				(Attack.Effect)0x72,    // Mirror Coat
-				(Attack.Effect)0x73,    // Metal Burst
-				(Attack.Effect)0x9C,    // Helping Hand
-				(Attack.Effect)0xAA,    // Detect, Protect
-				(Attack.Effect)0xAB,    // Quick Guard
-				(Attack.Effect)0xAC,    // Wide Guard
-				(Attack.Effect)0xAD,    // Feint
-				(Attack.Effect)0xAE,    // Mirror Move
-				(Attack.Effect)0xAF,    // Copycat
-				(Attack.Effect)0xB0,    // Me First
-				(Attack.Effect)0xB2,    // Snatch
-				(Attack.Effect)0xB3,    // Nature Power
-				(Attack.Effect)0xB4,    // Sleep Talk
-				(Attack.Effect)0xB5,    // Assist
-				(Attack.Effect)0xB6,    // Metronome
-				(Attack.Effect)0xE7,    // Destiny Bond
-				(Attack.Effect)0xE8,    // Endure
-				(Attack.Effect)0xF1,    // Covet, Thief
-				(Attack.Effect)0xF2,    // Switcheroo, Trick
-				(Attack.Effect)0xF3,    // Bestow
-				(Attack.Effect)0x115,   // Focus Punch
-				(Attack.Effect)0x117,   // Follow Me, Rage Powder
-				(Attack.Effect)0x11D,   // After You
-				(Attack.Effect)0x11E    // Quash
+			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
+				Attack.Data.Effects.x0FF,    // Struggle
+				Attack.Data.Effects.x05D,    // Snore
+				Attack.Data.Effects.x10C,    // Chatter
+				Attack.Data.Effects.x053,    // Mimic
+				Attack.Data.Effects.x060,    // Sketch
+				Attack.Data.Effects.x03A,    // Transform
+				Attack.Data.Effects.x05A,    // Counter
+				Attack.Data.Effects.x091,    // Mirror Coat
+				Attack.Data.Effects.x0E4,    // Metal Burst
+				Attack.Data.Effects.x0B1,    // Helping Hand
+				Attack.Data.Effects.x070,    // Detect, Protect
+				Attack.Data.Effects.x133,    // Quick Guard
+				Attack.Data.Effects.x117,    // Wide Guard
+				Attack.Data.Effects.x0E0,    // Feint
+				Attack.Data.Effects.x00A,    // Mirror Move
+				Attack.Data.Effects.x0F3,    // Copycat
+				Attack.Data.Effects.x0F2,    // Me First
+				Attack.Data.Effects.x0C4,    // Snatch
+				Attack.Data.Effects.x0AE,    // Nature Power
+				Attack.Data.Effects.x062,    // Sleep Talk
+				Attack.Data.Effects.x0B5,    // Assist
+				Attack.Data.Effects.x054,    // Metronome
+				Attack.Data.Effects.x063,    // Destiny Bond
+				Attack.Data.Effects.x075,    // Endure
+				Attack.Data.Effects.x06A,    // Covet, Thief
+				Attack.Data.Effects.x0B2,    // Switcheroo, Trick
+				Attack.Data.Effects.x144,    // Bestow
+				Attack.Data.Effects.x0AB,   // Focus Punch
+				Attack.Data.Effects.x0AD,   // Follow Me, Rage Powder
+				Attack.Data.Effects.x12D,   // After You
+				Attack.Data.Effects.x13C    // Quash
 			};
 			List<Moves> blacklistmoves = new List<Moves> {
 			   Moves.FREEZE_SHOCK,
@@ -6156,7 +6156,7 @@ namespace PokemonUnity.Battle
 				Moves move = (Moves)(this.battle.pbRandom(Game.MoveData.Keys.Count) + 1);
 				if (Game.MoveData[(Moves)move].Type == Types.SHADOW) continue; //next
 				bool found = false;
-				if (blacklist.Contains((Attack.Effect)Game.MoveData[(Moves)move].Effect))
+				if (blacklist.Contains(Game.MoveData[(Moves)move].Effect))
 					found = true;
 				else
 				{
@@ -6376,13 +6376,13 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_0BC(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			List<Attack.Effect> blacklist = new List<Attack.Effect> {
-				(Attack.Effect)0x02,    // Struggle
-				(Attack.Effect)0x5C,    // Mimic
-				(Attack.Effect)0x5D,    // Sketch
-				(Attack.Effect)0x69,    // Transform
-				(Attack.Effect)0xAE,    // Mirror Move
-				(Attack.Effect)0xBC     // Encore
+			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
+				Attack.Data.Effects.x0FF,    // Struggle
+				Attack.Data.Effects.x053,    // Mimic
+				Attack.Data.Effects.x060,    // Sketch
+				Attack.Data.Effects.x03A,    // Transform
+				Attack.Data.Effects.x00A,    // Mirror Move
+				Attack.Data.Effects.x05B     // Encore
 			};
 			if (opponent.effects.Encore > 0)
 			{
@@ -6390,7 +6390,7 @@ namespace PokemonUnity.Battle
 				return -1;
 			}
 			if (opponent.lastMoveUsed <= 0 ||
-			   blacklist.Contains((Attack.Effect)Game.MoveData[(Moves)opponent.lastMoveUsed].Effect))
+			   blacklist.Contains(Game.MoveData[(Moves)opponent.lastMoveUsed].Effect))
 			{
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
@@ -7240,7 +7240,7 @@ namespace PokemonUnity.Battle
 
 		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
-			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCB)	// Dive
+			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x100)	// Dive
 			{
 				return (int)Math.Round(damagemult * 2.0f);
 			}
@@ -8006,15 +8006,15 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_0E8(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			List<Attack.Effect> ratesharers = new List<Attack.Effect> {
-				(Attack.Effect)0xAA,   // Detect, Protect
-				(Attack.Effect)0xAB,   // Quick Guard
-				(Attack.Effect)0xAC,   // Wide Guard
-				(Attack.Effect)0xE8,   // Endure
-				(Attack.Effect)0x14B,  // King's Shield
-				(Attack.Effect)0x14C   // Spiky Shield
+			List<Attack.Data.Effects> ratesharers = new List<Attack.Data.Effects> {
+				Attack.Data.Effects.x070,   // Detect, Protect
+				Attack.Data.Effects.x133,   // Quick Guard
+				Attack.Data.Effects.x117,   // Wide Guard
+				Attack.Data.Effects.x075,   // Endure
+				Attack.Data.Effects.x164,  // King's Shield
+				Attack.Data.Effects.x16A   // Spiky Shield
 			};
-			if (!ratesharers.Contains((Attack.Effect)Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			if (!ratesharers.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				attacker.effects.ProtectRate = 1;
 			}
@@ -9254,12 +9254,12 @@ namespace PokemonUnity.Battle
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 			this.doubledamage = false; this.overridetype = false;
-			if ((int)attacker.effects.FirstPledge == 0x107 ||   // Fire Pledge
-			   (int)attacker.effects.FirstPledge == 0x108)		// Water Pledge
+			if (attacker.effects.FirstPledge == Attack.Data.Effects.x146 ||   // Fire Pledge
+			    attacker.effects.FirstPledge == Attack.Data.Effects.x145)		// Water Pledge
 			{
 				battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"));
 				this.doubledamage = true;
-				if ((int)attacker.effects.FirstPledge == 0x107)	// Fire Pledge
+				if (attacker.effects.FirstPledge == Attack.Data.Effects.x146)	// Fire Pledge
 				{
 					this.overridetype = true;
 				}
@@ -9294,7 +9294,7 @@ namespace PokemonUnity.Battle
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			}
 			// Combined move's effect
-			if ((int)attacker.effects.FirstPledge == 0x107)	// Fire Pledge
+			if (attacker.effects.FirstPledge == Attack.Data.Effects.x146)	// Fire Pledge
 			{
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
@@ -9316,7 +9316,7 @@ namespace PokemonUnity.Battle
 				attacker.effects.FirstPledge = 0;
 				return ret;
 			}
-			else if ((int)attacker.effects.FirstPledge == 0x108)// Water Pledge
+			else if (attacker.effects.FirstPledge == Attack.Data.Effects.x145)// Water Pledge
 			{
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
@@ -9339,7 +9339,7 @@ namespace PokemonUnity.Battle
 			}
 			// Set up partner for a combined move
 			attacker.effects.FirstPledge = 0;
-			Attack.Effect partnermove = Attack.Effect.UnimplementedMove; //-1;
+			Attack.Data.Effects partnermove = Attack.Data.Effects.NONE; //-1;
 			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Chose a move
 			{
 				if (!attacker.Partner.hasMovedThisRound())
@@ -9347,13 +9347,13 @@ namespace PokemonUnity.Battle
 					Moves move = this.battle.choices[attacker.Partner.Index].Move.MoveId;
 					if (move > 0)
 					{
-						partnermove = (Attack.Effect)this.battle.choices[attacker.Partner.Index].Move.Effect;
+						partnermove = this.battle.choices[attacker.Partner.Index].Move.Effect;
 					}
 
 				}
 			}
-			if ((int)partnermove == 0x107 ||	// Fire Pledge
-			   (int)partnermove == 0x108)		// Water Pledge
+			if (partnermove == Attack.Data.Effects.x146 ||	// Fire Pledge
+			    partnermove == Attack.Data.Effects.x145)		// Water Pledge
 			{
 				battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.Partner.ToString(true)));
 				attacker.Partner.effects.FirstPledge = this.Effect;//(Attack.Effect)
@@ -9386,12 +9386,12 @@ namespace PokemonUnity.Battle
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 			this.doubledamage = false; this.overridetype = false;
-			if ((int)attacker.effects.FirstPledge == 0x106 ||   // Grass Pledge
-			   (int)attacker.effects.FirstPledge == 0x108)		// Water Pledge
+			if (attacker.effects.FirstPledge == Attack.Data.Effects.x147 ||   // Grass Pledge
+			    attacker.effects.FirstPledge == Attack.Data.Effects.x145)		// Water Pledge
 			{
 				battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"));
 				this.doubledamage = true;
-				if ((int)attacker.effects.FirstPledge == 0x108)	// Water Pledge
+				if (attacker.effects.FirstPledge == Attack.Data.Effects.x145)	// Water Pledge
 				{
 					this.overridetype = true;
 				}
@@ -9426,7 +9426,7 @@ namespace PokemonUnity.Battle
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			}
 			// Combined move's effect
-			if ((int)attacker.effects.FirstPledge == 0x106)	// Grass Pledge
+			if (attacker.effects.FirstPledge == Attack.Data.Effects.x147)	// Grass Pledge
 			{
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
@@ -9448,7 +9448,7 @@ namespace PokemonUnity.Battle
 				attacker.effects.FirstPledge = 0;
 				return ret;
 			}
-			else if ((int)attacker.effects.FirstPledge == 0x108)	// Water Pledge
+			else if (attacker.effects.FirstPledge == Attack.Data.Effects.x145)	// Water Pledge
 			{
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
@@ -9471,7 +9471,7 @@ namespace PokemonUnity.Battle
 			}
 			// Set up partner for a combined move
 			attacker.effects.FirstPledge = 0;
-			Attack.Effect partnermove = Attack.Effect.UnimplementedMove; //-1;
+			Attack.Data.Effects partnermove = Attack.Data.Effects.NONE; //-1;
 			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Chose a move
 			{
 				if (!attacker.Partner.hasMovedThisRound())
@@ -9479,13 +9479,13 @@ namespace PokemonUnity.Battle
 					Moves move = this.battle.choices[attacker.Partner.Index].Move.MoveId;
 					if (move > 0)	//move && 
 					{
-						partnermove = (Attack.Effect)this.battle.choices[attacker.Partner.Index].Move.Effect;
+						partnermove = this.battle.choices[attacker.Partner.Index].Move.Effect;
 					}
 
 				}
 			}
-			if ((int)partnermove == 0x106 ||	// Grass Pledge
-			   (int)partnermove == 0x108)		// Water Pledge
+			if (partnermove == Attack.Data.Effects.x147 ||	// Grass Pledge
+			    partnermove == Attack.Data.Effects.x145)		// Water Pledge
 			{
 				battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.Partner.ToString(true)));
 				attacker.Partner.effects.FirstPledge = this.Effect;//(Attack.Effect)
@@ -9518,12 +9518,12 @@ namespace PokemonUnity.Battle
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 			this.doubledamage = false; this.overridetype = false;
-			if ((int)attacker.effects.FirstPledge == 0x106 ||   // Grass Pledge
-			   (int)attacker.effects.FirstPledge == 0x107)		// Fire Pledge
+			if (attacker.effects.FirstPledge == Attack.Data.Effects.x147 ||   // Grass Pledge
+			    attacker.effects.FirstPledge == Attack.Data.Effects.x146)		// Fire Pledge
 			{
 				battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"));
 				this.doubledamage = true;
-				if ((int)attacker.effects.FirstPledge == 0x106)	// Grass Pledge
+				if (attacker.effects.FirstPledge == Attack.Data.Effects.x147)	// Grass Pledge
 				{
 					this.overridetype = true;
 				}
@@ -9558,7 +9558,7 @@ namespace PokemonUnity.Battle
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			}
 			// Combined move's effect
-			if ((int)attacker.effects.FirstPledge == 0x106)	// Grass Pledge
+			if (attacker.effects.FirstPledge == Attack.Data.Effects.x147)	// Grass Pledge
 			{
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
@@ -9580,7 +9580,7 @@ namespace PokemonUnity.Battle
 				attacker.effects.FirstPledge = 0;
 				return ret;
 			}
-			else if ((int)attacker.effects.FirstPledge == 0x107)	// Fire Pledge
+			else if (attacker.effects.FirstPledge == Attack.Data.Effects.x146)	// Fire Pledge
 			{
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
@@ -9603,7 +9603,7 @@ namespace PokemonUnity.Battle
 			}
 			// Set up partner for a combined move
 			attacker.effects.FirstPledge = 0;
-			Attack.Effect partnermove = Attack.Effect.UnimplementedMove; //-1;
+			Attack.Data.Effects partnermove = Attack.Data.Effects.NONE; //-1;
 			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Chose a move
 			{
 				if (!attacker.Partner.hasMovedThisRound())
@@ -9611,13 +9611,13 @@ namespace PokemonUnity.Battle
 					Moves move = this.battle.choices[attacker.Partner.Index].Move.MoveId;
 					if (move > 0)	//move && 
 					{
-						partnermove = (Attack.Effect)this.battle.choices[attacker.Partner.Index].Move.Effect;
+						partnermove = this.battle.choices[attacker.Partner.Index].Move.Effect;
 					}
 
 				}
 			}
-			if ((int)partnermove == 0x106 ||	// Grass Pledge
-			   (int)partnermove == 0x107)		// Fire Pledge
+			if (partnermove == Attack.Data.Effects.x147 ||	// Grass Pledge
+			    partnermove == Attack.Data.Effects.x146)		// Fire Pledge
 			{
 				battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.Partner.ToString(true)));
 				attacker.Partner.effects.FirstPledge = this.Effect;//(Attack.Effect)
@@ -10174,7 +10174,7 @@ namespace PokemonUnity.Battle
 			if ((int)this.battle.choices[opponent.Index].Action != 1) return true; // Didn't choose a move
 			Move oppmove = this.battle.choices[opponent.Index].Move;
 			if (oppmove.MoveId <= 0 || oppmove.pbIsStatus) return true;
-			if (opponent.hasMovedThisRound() && (int)oppmove.Effect != 0xB0) return true; // Me First
+			if (opponent.hasMovedThisRound() && oppmove.Effect != Attack.Data.Effects.x073) return true; // Me First
 			return false;
 		}
 	}
@@ -10226,9 +10226,9 @@ namespace PokemonUnity.Battle
 			{
 				Pokemon poke = this.battle.battlers[i];
 				if (poke.Species == Pokemons.NONE) continue; //next
-				if ((int)Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == 0xC9 || // Fly
-				   (int)Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == 0xCC ||	// Bounce
-				   (int)Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == 0xCE)	// Sky Drop
+				if (Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C || // Fly
+				    Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 ||	// Bounce
+				    Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138)	// Sky Drop
 				{
 					poke.effects.TwoTurnAttack = 0;
 				}
@@ -10325,9 +10325,9 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_11C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
-			if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xC9 ||// Fly
-			   (int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCC || // Bounce
-			   (int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCE || // Sky Drop
+			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C ||// Fly
+			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 || // Bounce
+			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138 || // Sky Drop
 			   opponent.effects.SkyDrop)
 			{
 				return basedmg * 2;
@@ -10347,8 +10347,8 @@ namespace PokemonUnity.Battle
 
 				bool showmsg = (opponent.hasType(Types.FLYING) ||
 						 opponent.hasWorkingAbility(Abilities.LEVITATE));
-				if ((int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xC9 ||// Fly
-				   (int)Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == 0xCC)	// Bounce
+				if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C ||// Fly
+				    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108)	// Bounce
 				{
 					opponent.effects.TwoTurnAttack = 0; showmsg = true;
 				}
@@ -11278,13 +11278,13 @@ namespace PokemonUnity.Battle
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
 			}
-			List<Attack.Effect> ratesharers = new List<Attack.Effect> {
-				(Attack.Effect)0xAA,   // Detect, Protect
-				(Attack.Effect)0xAB,   // Quick Guard
-				(Attack.Effect)0xAC,   // Wide Guard
-				(Attack.Effect)0xE8,   // Endure
-				(Attack.Effect)0x14B,  // King's Shield
-				(Attack.Effect)0x14C   // Spiky Shield
+			List<Attack.Data.Effects> ratesharers = new List<Attack.Data.Effects> {
+				Attack.Data.Effects.x070,   // Detect, Protect
+				Attack.Data.Effects.x133,   // Quick Guard
+				Attack.Data.Effects.x117,   // Wide Guard
+				Attack.Data.Effects.x075,   // Endure
+				Attack.Data.Effects.x164,   // King's Shield
+				Attack.Data.Effects.x16A    // Spiky Shield
 			};
 			//ToDo: Uncomment below
 			//if (!ratesharers.Contains(new Attack.Move((Moves)attacker.lastMoveUsed).Function))
@@ -11332,13 +11332,13 @@ namespace PokemonUnity.Battle
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
 			}
-			List<Attack.Effect> ratesharers = new List<Attack.Effect> {
-			   (Attack.Effect)0xAA,   // Detect, Protect
-			   (Attack.Effect)0xAB,   // Quick Guard
-			   (Attack.Effect)0xAC,   // Wide Guard
-			   (Attack.Effect)0xE8,   // Endure
-			   (Attack.Effect)0x14B,  // King's Shield
-			   (Attack.Effect)0x14C   // Spiky Shield
+			List<Attack.Data.Effects> ratesharers = new List<Attack.Data.Effects> {
+			   Attack.Data.Effects.x070,   // Detect, Protect
+			   Attack.Data.Effects.x133,   // Quick Guard
+			   Attack.Data.Effects.x117,   // Wide Guard
+			   Attack.Data.Effects.x075,   // Endure
+			   Attack.Data.Effects.x164,   // King's Shield
+			   Attack.Data.Effects.x16A    // Spiky Shield
 			};
 			//ToDo: Uncomment below
 			//if (!ratesharers.Contains(new Attack.Move((Moves)attacker.lastMoveUsed).Function))
