@@ -1482,7 +1482,7 @@ namespace PokemonUnity.Battle
     List<int> temp=new List<int>();
     #region Calculate each Pokémon's speed
     for (int i = 0; i < 4; i++) {
-      speeds[i]=@battlers[i].SPE;
+      speeds[i]=@battlers[i].pbSpeed;
       quickclaw[i]=false;
       lagging[i]=false;
       //if (!ignorequickclaw && @choices[i][0]==1) { // Chose to use a move
