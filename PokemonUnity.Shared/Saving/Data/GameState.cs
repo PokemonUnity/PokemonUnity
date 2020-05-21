@@ -250,19 +250,29 @@ namespace PokemonUnity.Saving
 			);
 			return state;
 		}
+		/// <summary>
+		/// Two games are the same, 
+		/// if the same player character exist both games 
+		/// (regardless of when files were created, or progress made)
+		/// with identical settings and configurations. 
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns>if both characters and game objectices are equal</returns>
 		public static bool operator ==(GameState x, GameState y)
 		{
 			//return ((x.IsMale == y.IsMale) && (x.TrainerID == y.TrainerID) && (x.SecretID == y.SecretID)) & (x.Player.Name == y.Player.Name);
 			//Same person, same game? (Different from same game, same Character)
-			//return ((x.TrainerID == y.TrainerID) && (x.SecretID == y.SecretID)); 
-			return ((x.TrainerID == y.TrainerID) && (x.SecretID == y.SecretID)); 
-			//What about date created?... to check if the saved profiles are the same
+			//return ((x.TrainerID == y.TrainerID) && (x.SecretID == y.SecretID));
+			return (x.GetPlayer().Trainer == y.GetPlayer().Trainer) &&
+				(x.Features == y.Features);
 		}
 		public static bool operator !=(GameState x, GameState y)
 		{
 			//return ((x.IsMale != y.IsMale) || (x.TrainerID != y.TrainerID) || (x.SecretID != y.SecretID)) | (x.Player.Name == y.Player.Name);
 			//return ((x.TrainerID != y.TrainerID) || (x.SecretID != y.SecretID));
-			return ((x.TrainerID != y.TrainerID) || (x.SecretID != y.SecretID));
+			return x.GetPlayer().Trainer != y.GetPlayer().Trainer ||
+				(x.Features != y.Features);
 		}
 		//public bool Equals(Game obj)
 		//{

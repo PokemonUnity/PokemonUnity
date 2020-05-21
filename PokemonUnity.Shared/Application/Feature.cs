@@ -14,7 +14,7 @@ using PokemonUnity.Overworld;
 
 namespace PokemonUnity.Application
 {
-	public struct Feature
+	public struct Feature : IEquatable<Feature>, IEqualityComparer<Feature>
 	{
 		/// <summary>
 		/// Shift: after you kill the enemy's pokemon, 
@@ -107,6 +107,142 @@ namespace PokemonUnity.Application
 		/// </summary>
 		public bool GameOverOnWhiteOut { get; private set; }
 		public bool RandomizePartyAfterBattle { get; private set; }
+		#endregion
+
+		#region Explicit Operators
+		public static bool operator ==(Feature x, Feature y)
+		{
+			return
+				x.BattleShiftStyle == y.BattleShiftStyle &&
+				x.CanOnlyCaptureFirstWildEncounter == y.CanOnlyCaptureFirstWildEncounter &&
+				x.CanOnlySaveAtPokemonCenter == y.CanOnlySaveAtPokemonCenter &&
+				x.CatchPokemonsWithEggMoves == y.CatchPokemonsWithEggMoves &&
+				x.ChallengeEndsAfter == y.ChallengeEndsAfter &&
+				x.EnableCloudStorage == y.EnableCloudStorage &&
+				x.FailChallengeWipesData == y.FailChallengeWipesData &&
+				x.ForcePokemonNaming == y.ForcePokemonNaming &&
+				x.GameOverOnWhiteOut == y.GameOverOnWhiteOut &&
+				x.LimitPokemonPartySize == y.LimitPokemonPartySize &&
+				x.NoCapturesAllowed == y.NoCapturesAllowed &&
+				x.NoHealingItemsInsideBattle == y.NoHealingItemsInsideBattle &&
+				x.NoHealingItemsOutsideBattle == y.NoHealingItemsOutsideBattle &&
+				x.NoHealingNPCs == y.NoHealingNPCs &&
+				x.NoPC == y.NoPokemonCenterHeals &&
+				x.NoPokemonCenterHeals == y.NoPokemonCenterHeals &&
+				x.NoStoreBoughtMedicine == y.NoStoreBoughtMedicine &&
+				x.NuzlockeSkipDuplicates == y.NuzlockeSkipDuplicates &&
+				x.OnlinePlayEnabled == y.OnlinePlayEnabled &&
+				x.OverflowPokemonsIntoNextBox == y.OverflowPokemonsIntoNextBox &&
+				x.PcDoesNotHealPokemons == y.PcDoesNotHealPokemons &&
+				x.PokemonCenterHealsResetTrainers == y.PokemonCenterHealsResetTrainers &&
+				x.PokemonCentersCostMoney == y.PokemonCentersCostMoney &&
+				x.PokemonDeathOnFaint == y.PokemonDeathOnFaint &&
+				x.PokemonSentToPcOnDeath == y.PokemonSentToPcOnDeath &&
+				x.RandomBossEncounters == y.RandomBossEncounters &&
+				x.RandomizePartyAfterBattle == y.RandomizePartyAfterBattle &&
+				x.RandomStarters == y.RandomStarters &&
+				x.RandomWildEncounters == y.RandomWildEncounters &&
+				x.ReleasedPokemonsReturnToEncounterArea == y.ReleasedPokemonsReturnToEncounterArea &&
+				x.ReleasedPokemonsRoamNearbyAreas == y.ReleasedPokemonsRoamNearbyAreas &&
+				x.SandBoxMode == y.SandBoxMode;
+		}
+		public static bool operator !=(Feature x, Feature y)
+		{
+			return
+				x.BattleShiftStyle != y.BattleShiftStyle ||
+				x.CanOnlyCaptureFirstWildEncounter != y.CanOnlyCaptureFirstWildEncounter ||
+				x.CanOnlySaveAtPokemonCenter != y.CanOnlySaveAtPokemonCenter ||
+				x.CatchPokemonsWithEggMoves != y.CatchPokemonsWithEggMoves ||
+				x.ChallengeEndsAfter != y.ChallengeEndsAfter ||
+				x.EnableCloudStorage != y.EnableCloudStorage ||
+				x.FailChallengeWipesData != y.FailChallengeWipesData ||
+				x.ForcePokemonNaming != y.ForcePokemonNaming ||
+				x.GameOverOnWhiteOut != y.GameOverOnWhiteOut ||
+				x.LimitPokemonPartySize != y.LimitPokemonPartySize ||
+				x.NoCapturesAllowed != y.NoCapturesAllowed ||
+				x.NoHealingItemsInsideBattle != y.NoHealingItemsInsideBattle ||
+				x.NoHealingItemsOutsideBattle != y.NoHealingItemsOutsideBattle ||
+				x.NoHealingNPCs != y.NoHealingNPCs ||
+				x.NoPC != y.NoPokemonCenterHeals ||
+				x.NoPokemonCenterHeals != y.NoPokemonCenterHeals ||
+				x.NoStoreBoughtMedicine != y.NoStoreBoughtMedicine ||
+				x.NuzlockeSkipDuplicates != y.NuzlockeSkipDuplicates ||
+				x.OnlinePlayEnabled != y.OnlinePlayEnabled ||
+				x.OverflowPokemonsIntoNextBox != y.OverflowPokemonsIntoNextBox ||
+				x.PcDoesNotHealPokemons != y.PcDoesNotHealPokemons ||
+				x.PokemonCenterHealsResetTrainers != y.PokemonCenterHealsResetTrainers ||
+				x.PokemonCentersCostMoney != y.PokemonCentersCostMoney ||
+				x.PokemonDeathOnFaint != y.PokemonDeathOnFaint ||
+				x.PokemonSentToPcOnDeath != y.PokemonSentToPcOnDeath ||
+				x.RandomBossEncounters != y.RandomBossEncounters ||
+				x.RandomizePartyAfterBattle != y.RandomizePartyAfterBattle ||
+				x.RandomStarters != y.RandomStarters ||
+				x.RandomWildEncounters != y.RandomWildEncounters ||
+				x.ReleasedPokemonsReturnToEncounterArea != y.ReleasedPokemonsReturnToEncounterArea ||
+				x.ReleasedPokemonsRoamNearbyAreas != y.ReleasedPokemonsRoamNearbyAreas ||
+				x.SandBoxMode != y.SandBoxMode;
+		}
+		public bool Equals(Feature obj)
+		{
+			return this == obj;
+		}
+		public override bool Equals(object obj)
+		{
+			if (typeof(Feature) == obj.GetType())
+				return Equals((Feature)obj);
+			return base.Equals(obj);
+		}
+		bool IEquatable<Feature>.Equals(Feature other)
+		{
+			return Equals(obj: (object)other);
+		}
+		public override int GetHashCode()
+		{
+			return string.Format(""
+					+ (BattleShiftStyle ? "1" : "0"							)
+					+ (CanOnlyCaptureFirstWildEncounter ? "1" : "0"			)
+					+ (CanOnlySaveAtPokemonCenter ? "1" : "0"				)
+					+ (CatchPokemonsWithEggMoves ? "1" : "0"				)
+					+ (ChallengeEndsAfter ? "1" : "0"						)
+					+ (EnableCloudStorage ? "1" : "0"						)
+					+ (FailChallengeWipesData ? "1" : "0"					)
+					+ (ForcePokemonNaming ? "1" : "0"						)
+					+ (GameOverOnWhiteOut ? "1" : "0"						)
+					+ ("|"+((int)LimitPokemonPartySize).ToString()+"|"		)
+					+ (NoCapturesAllowed ? "1" : "0"						)
+					+ (NoHealingItemsInsideBattle ? "1" : "0"				)
+					+ (NoHealingItemsOutsideBattle ? "1" : "0"				)
+					+ (NoHealingNPCs ? "1" : "0"							)
+					+ (NoPC ? "1" : "0"										)
+					+ (NoPokemonCenterHeals ? "1" : "0"						)
+					+ (NoStoreBoughtMedicine ? "1" : "0"					)
+					+ (NuzlockeSkipDuplicates ? "1" : "0"					)
+					+ (OnlinePlayEnabled ? "1" : "0"						)
+					+ (OverflowPokemonsIntoNextBox ? "1" : "0"				)
+					+ (PcDoesNotHealPokemons ? "1" : "0"					)
+					+ (PokemonCenterHealsResetTrainers ? "1" : "0"			)
+					+ (PokemonCentersCostMoney ? "1" : "0"					)
+					+ (PokemonDeathOnFaint ? "1" : "0"						)
+					+ (PokemonSentToPcOnDeath ? "1" : "0"					)
+					+ (RandomBossEncounters ? "1" : "0"						)
+					+ (RandomizePartyAfterBattle ? "1" : "0"				)
+					+ (RandomStarters ? "1" : "0"							)
+					+ (RandomWildEncounters ? "1" : "0"						)
+					+ (ReleasedPokemonsReturnToEncounterArea ? "1" : "0"	)
+					+ (ReleasedPokemonsRoamNearbyAreas ? "1" : "0"			)
+					+ (SandBoxMode ? "1" : "0"								)
+				).GetHashCode();
+		}
+
+		bool IEqualityComparer<Feature>.Equals(Feature x, Feature y)
+		{
+			return x == y;
+		}
+
+		int IEqualityComparer<Feature>.GetHashCode(Feature obj)
+		{
+			return obj.GetHashCode();
+		}
 		#endregion
 	}
 
