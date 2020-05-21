@@ -62,8 +62,7 @@ namespace PokemonUnity.Battle
 		public int TotalHP						{ get; private set; }
 		public int ATK							{ get { return effects.PowerTrick ? defense : attack; } }
 		public int attack						{ get; set; }
-		public int DEF {
-			get
+		public int DEF                          { get
 			{
 				if (effects.PowerTrick) return attack;
 				return battle.field.WonderRoom > 0 ? spdef : defense;
@@ -73,14 +72,13 @@ namespace PokemonUnity.Battle
 		public int SPD							{ get { return battle.field.WonderRoom > 0 ? defense : spdef; } }
 		public int spdef						{ get; set; }
 		public int SPA							{ get; private set; }
-		public int SPE							{ get; private set; }
 		public int spatk						{ get; set; }
 		public int speed						{ get; set; }
-		public int pbSpeed						{ get
+		public int SPE						    { get
             {
                 int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
                 int[] stagediv = new int[] { 40, 35, 30, 25, 20, 15, 10, 10, 10, 10, 10, 10, 10 };
-                //int speed = 0;
+                int speed = this.speed;
                 int stage = stages[2] + 6;
                 speed = (int)Math.Floor(speed * (decimal)stagemul[stage] / stagediv[stage]);
                 int speedmult = 0x1000;

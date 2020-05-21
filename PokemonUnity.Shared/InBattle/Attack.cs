@@ -4381,7 +4381,6 @@ namespace PokemonUnity.Battle
 
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
@@ -4573,7 +4572,7 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_08D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
-			return (int)Math.Max(Math.Min(Math.Floor(25f * opponent.pbSpeed / attacker.pbSpeed), 150), 1);
+			return (int)Math.Max(Math.Min(Math.Floor(25f * opponent.SPE / attacker.SPE), 150), 1);
 		}
 	}
 
@@ -4981,7 +4980,7 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_099(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
-			int n = (int)Math.Floor(Math.Max(attacker.pbSpeed, 1f) / Math.Max(opponent.pbSpeed, 1f));
+			int n = (int)Math.Floor(Math.Max(attacker.SPE, 1f) / Math.Max(opponent.SPE, 1f));
 
 			int ret = 60;
 			if (n >= 2) ret = 80;
