@@ -2526,49 +2526,52 @@ namespace PokemonUnity.Battle
     }
     if (thispoke.Item == Items.LUCKY_EGG ||
                            thispoke.itemInitial == Items.LUCKY_EGG) exp=(int)Math.Floor(exp*3/2f);
-    /* ToDo: Uncomment and sort...
-    growthrate=thispoke.growthrate;
-    int newexp=PBExperience.pbAddExperience(thispoke.exp,exp,growthrate);
-    exp=newexp-thispoke.exp;
+    Monster.LevelingRate growthrate=thispoke.pokemon.GrowthRate;
+    //int newexp=new Experience(thispoke.pokemon.Exp,exp,growthrate).AddExperience(exp).Current;
+    Monster.Data.Experience ex=new Monster.Data.Experience(growthrate,thispoke.pokemon.Exp);
+    ex.AddExperience(exp);
+    int newexp=ex.Current;
+    exp=newexp-thispoke.pokemon.Exp;
     if (exp>0) {
       if (showmessages) {
         if (isOutsider) {
-          pbDisplayPaused(_INTL("{1} gained a boosted {2} Exp. Points!",thispoke.Name,exp));
+          pbDisplayPaused(_INTL("{1} gained a boosted {2} Exp. Points!",thispoke.Name,exp.ToString()));
         }
         else {
-          pbDisplayPaused(_INTL("{1} gained {2} Exp. Points!",thispoke.Name,exp));
+          pbDisplayPaused(_INTL("{1} gained {2} Exp. Points!",thispoke.Name,exp.ToString()));
         }
       }
-      int newlevel=PBExperience.pbGetLevelFromExperience(newexp,growthrate);
-      int tempexp=0;
+      //int newlevel=Experience.GetLevelFromExperience(newexp,growthrate);
+      int newlevel=ex.NextLevel-1;
+      //int tempexp=0;
       int curlevel=thispoke.level;
       if (newlevel<curlevel) {
-        string debuginfo=$"#{thispoke.Name}: #{thispoke.level}/#{newlevel} | #{thispoke.exp}/#{newexp} | gain: #{exp}";
+        string debuginfo=$"#{thispoke.Name}: #{thispoke.level}/#{newlevel} | #{thispoke.pokemon.Exp}/#{newexp} | gain: #{exp}";
         //throw new RuntimeError(_INTL("The new level ({1}) is less than the Pokémon's\r\ncurrent level ({2}), which shouldn't happen.\r\n[Debug: {3}]",
         GameDebug.LogError(_INTL("The new level {1) is less than the Pokémon's\r\ncurrent level (2), which shouldn't happen.\r\n[Debug: {3}]",
                                newlevel.ToString(),curlevel.ToString(),debuginfo));
         return;
       }
-      if (thispoke.isShadow()) { //thispoke.respond_to("isShadow?") &&
-        thispoke.exp+=exp;
+      if (thispoke.isShadow()) {
+        thispoke.pokemon.Exp+=exp;
       }
       else {
-        int tempexp1=thispoke.exp;
+        int tempexp1=thispoke.pokemon.Exp;
         int tempexp2=0;
         // Find battler
         Pokemon battler=pbFindPlayerBattler(index);
         do { //loop
           // EXP Bar animation
-          int startexp=PBExperience.pbGetStartExperience(curlevel,growthrate);
-          int endexp=PBExperience.pbGetStartExperience(curlevel+1,growthrate);
+          int startexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel);
+          int endexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel+1);
           tempexp2=(endexp<newexp) ? endexp : newexp;
-          thispoke.exp=tempexp2;
+          thispoke.pokemon.Exp=tempexp2;
           @scene.pbEXPBar(thispoke,battler,startexp,endexp,tempexp1,tempexp2);
           tempexp1=tempexp2;
           curlevel+=1;
           if (curlevel>newlevel) {
-            thispoke.calcStats();
-            if (battler.IsNotNullOrNone()) battler.pbUpdate(false);
+            //thispoke.calcStats(); //Automated
+            if (battler.IsNotNullOrNone()) battler.Update(false);
             @scene.pbRefresh();
             break;
           }
@@ -2579,26 +2582,24 @@ namespace PokemonUnity.Battle
           int oldspatk=thispoke.spatk;
           int oldspdef=thispoke.spdef;
           if (battler.IsNotNullOrNone() && @internalbattle) { //&& battler.pokemon.IsNotNullOrNone()
-            battler.pokemon.changeHappiness("level up");
+            battler.pokemon.ChangeHappiness(HappinessMethods.LEVELUP);//"level up"
           }
-          thispoke.calcStats();
-          if (battler.IsNotNullOrNone()) battler.pbUpdate(false);
+          //thispoke.calcStats(); //Automated
+          if (battler.IsNotNullOrNone()) battler.Update(false);
           @scene.pbRefresh();
           pbDisplayPaused(_INTL("{1} grew to Level {2}!",thispoke.Name,curlevel.ToString()));
           @scene.pbLevelUp(thispoke,battler,oldtotalhp,oldattack,
                            olddefense,oldspeed,oldspatk,oldspdef);
           // Finding all moves learned at this level
-          Moves[] movelist=thispoke.getMoveList();
-          foreach (KeyValuePair<int,Moves> k in movelist) {
-            //if (k[0]==thispoke.level) {   // Learned a new move
-            if (k.Key==thispoke.level) {
+          Moves[] movelist=thispoke.pokemon.getMoveList();
+          foreach (Moves k in movelist) {
+            //if (k[0]==thispoke.level)     // Learned a new move
               //pbLearnMove(index,k[1]);
-              pbLearnMove(index,k.Value);
-            }
+              pbLearnMove(index,k);
           }
         } while (true);
       }
-    }*/
+    }
   }
 		#endregion
 
@@ -2614,7 +2615,7 @@ namespace PokemonUnity.Battle
       if (pokemon.moves[i].MoveId==0) {
         pokemon.moves[i]=new PokemonUnity.Attack.Move(move);
         //if (battler.IsNotNullOrNone()) 
-        //  battler.moves[i]=PokeBattle_Move.pbFromPBMove(this,pokemon.moves[i].MoveId); //ToDo: Use LearnMove Method in Pokemon Class
+        //  battler.moves[i]=Move.pbFromPBMove(this,pokemon.moves[i].MoveId); //ToDo: Use LearnMove Method in Pokemon Class
         pbDisplayPaused(_INTL("{1} learned {2}!",pkmnname,movename));
         GameDebug.Log($"[Learn move] #{pkmnname} learned #{movename}");
         return;
@@ -2630,7 +2631,7 @@ namespace PokemonUnity.Battle
           string oldmovename=pokemon.moves[forgetmove].MoveId.ToString(TextScripts.Name);
           pokemon.moves[forgetmove]=new PokemonUnity.Attack.Move(move); // Replaces current/total PP
           //if (battler.IsNotNullOrNone()) 
-          //  battler.moves[forgetmove]=PokeBattle_Move.pbFromPBMove(this,pokemon.moves[forgetmove]); //ToDo: Use ForgetMove Method in Pokemon Class
+          //  battler.moves[forgetmove]=Move.pbFromPBMove(this,pokemon.moves[forgetmove]); //ToDo: Use ForgetMove Method in Pokemon Class
           pbDisplayPaused(_INTL("1,  2, and... ... ..."));
           pbDisplayPaused(_INTL("Poof!"));
           pbDisplayPaused(_INTL("{1} forgot {2}.",pkmnname,oldmovename));

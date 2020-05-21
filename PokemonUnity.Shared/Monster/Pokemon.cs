@@ -731,7 +731,7 @@ namespace PokemonUnity.Monster
             {
                 return this.Experience.Current;
             }
-            private set
+            set //ToDo: private set?
             {
                 if (value < 0) //|| value > this.Experience.GetMaxExperience(this.GrowthRate)
                     GameDebug.LogError(string.Format("The experience number {0} is invalid", value));
