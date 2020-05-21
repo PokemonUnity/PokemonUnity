@@ -24,34 +24,46 @@ namespace PokemonUnity
 		{
 			set
 			{
-	#if !DEBUG
-					UnityEngine.Debug.Log(value);
-	#endif
+//#if !DEBUG
+//				UnityEngine.Debug.Log(value);
+//#endif
+				if (OnDebug != null) OnDebug.Invoke(Game.GameData, new OnDebugEventArgs { Message = value, Error = null });
 			}
 		}
 		private static string DebugWarning
 		{
 			set
 			{
-#if !DEBUG
-					UnityEngine.Debug.LogWarning(value);
-#endif
+//#if !DEBUG
+//				UnityEngine.Debug.LogWarning(value);
+//#endif
+				if (OnDebug != null) OnDebug.Invoke(Game.GameData, new OnDebugEventArgs { Message = value, Error = false });
 			}
 		}
 		private static string DebugError
 		{
 			set
 			{
-#if !DEBUG
-					UnityEngine.Debug.LogError(value);
-#endif
+//#if !DEBUG
+//				UnityEngine.Debug.LogError(value);
+//#endif
+				if (OnDebug != null) OnDebug.Invoke(Game.GameData, new OnDebugEventArgs { Message = value, Error = true });
 			}
 		}
 		static System.IO.StreamWriter logFile = null;
 		/// <summary>
 		/// Determines whether or not to store Debug Log to a file, or display only
 		/// </summary>
-		static bool forwardToDebug { get; set; }
+		static bool DebugToFile { get { return logFile != null; } }
+		public static event EventHandler<OnDebugEventArgs> OnDebug;
+		public class OnDebugEventArgs : EventArgs
+		{
+			/// <summary>
+			/// If true, pause/stop game to display error message on screen.
+			/// </summary>
+			public bool? Error;
+			public string Message;
+		}
 		public static void Init(string logfilePath, string logBaseName)
 		{
 #if !DEBUG
@@ -83,7 +95,7 @@ namespace PokemonUnity
 #if !DEBUG
 				UnityEngine.Application.logMessageReceived -= LogCallback;
 #endif
-			if (logFile != null)
+			if (DebugToFile)
 				logFile.Close();
 			logFile = null;
 		}
@@ -107,49 +119,43 @@ namespace PokemonUnity
 
 		public static void Log(string message)
 		{
-			if (forwardToDebug)
-				//Debug.Log(message);
-				Debug = message;
-			else
+			Debug = message;
+			if (DebugToFile)
 				_Log(message);
 		}
 
 		static void _Log(string message)
 		{
-			//Console.Write(UnityEngine.Time.frameCount + ": " + message);
+			//Console.Write(message); //UnityEngine.Time.frameCount + ": " + 
 			//if (logFile != null)
-			//	logFile.WriteLine(UnityEngine.Time.frameCount + ": " + message + "\n");
+				logFile.WriteLine(message + "\n"); //UnityEngine.Time.frameCount + ": " + 
 		}
 
 		public static void LogError(string message)
 		{
-			if (forwardToDebug)
-				//Debug.LogError(message);
-				DebugError = message;
-			else
+			DebugError = message;
+			if (DebugToFile)
 				_LogError(message);
 		}
 
 		static void _LogError(string message)
 		{
-			//Console.Write(UnityEngine.Time.frameCount + ": [ERR] " + message);
-			if (logFile != null)
+			//Console.Write("[ERR] " + message); //UnityEngine.Time.frameCount + 
+			//if (logFile != null)
 				logFile.WriteLine("[ERR] " + message + "\n");
 		}
 
 		public static void LogWarning(string message)
 		{
-			if (forwardToDebug)
-				//Debug.LogWarning(message);
-				DebugWarning = message;
-			else
+			DebugWarning = message;
+			if (DebugToFile)
 				_LogWarning(message);
 		}
 
 		static void _LogWarning(string message)
 		{
-			//Console.Write(UnityEngine.Time.frameCount + ": [WARN] " + message);
-			if (logFile != null)
+			//Console.Write("[WARN] " + message); //UnityEngine.Time.frameCount + 
+			//if (logFile != null)
 				logFile.WriteLine("[WARN] " + message + "\n");
 		}
 	}
