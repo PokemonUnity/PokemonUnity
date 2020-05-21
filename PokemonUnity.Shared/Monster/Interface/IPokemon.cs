@@ -66,14 +66,14 @@ namespace PokemonUnity.Monster
 		int DEF { get; }
 		//int EggSteps { get; }
 		//byte[] EV { get; }
-		Monster.Data.Experience Exp { get; }
+		Monster.Data.Experience Experience { get; }
 		int Form { get; set; }
 		bool? Gender { get; }
 		LevelingRate GrowthRate { get; }
 		int Happiness { get; }
 		int HP { get; set; }
 		bool isEgg { get; }
-		bool isHyperMode { get; }
+		//bool isHyperMode { get; }
 		//bool IsNicknamed { get; }
 		bool isShadow { get; }
 		bool IsShiny { get; }
