@@ -247,7 +247,7 @@ namespace PokemonUnity
 		void pbSafariStart();
 		void pbResetCommandIndices();
 		void pbResetMoveIndex(int index);
-		void pbSafariCommandMenu(int index);
+		int pbSafariCommandMenu(int index);
 		/// <summary>
 		/// Use this method to display the list of commands.
 		/// </summary>
@@ -260,7 +260,7 @@ namespace PokemonUnity
 		/// <param name="index"></param>
 		/// <param name="texts"></param>
 		/// <param name="mode">0 - regular battle, 1 - Shadow Pokémon battle, 2 - Safari Zone, 3 - Bug Catching Contest</param>
-		void pbCommandMenuEx(int index, string texts, int mode = 0);
+		int pbCommandMenuEx(int index, string texts, int mode = 0);
 		/// <summary>
 		/// Update selected command
 		/// Use this method to display the list of moves for a Pokémon

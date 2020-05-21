@@ -83,6 +83,7 @@
     <Compile Include="Extensions\Utility\ScriptConversion.cs" />
     <Compile Include="Extensions\Utility\StringHelper.cs" />
     <Compile Include="Framework\IScene.cs" />
+    <Compile Include="Framework\Scene.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Application\Game.Conditions.cs" />
     <Compile Include="Application\Game.Database.cs" />
@@ -91,7 +92,6 @@
     <Compile Include="InBattle\Battle.cs" />
     <Compile Include="InBattle\Battle\Choice.cs" />
     <Compile Include="InBattle\Battle\DamageState.cs" />
-    <Compile Include="InBattle\Battle\Scene.cs" />
     <Compile Include="InBattle\Battle\SuccessState.cs" />
     <Compile Include="InBattle\Effects\Battler.cs" />
     <Compile Include="InBattle\Effects\Field.cs" />

@@ -3177,6 +3177,7 @@ namespace PokemonUnity.Battle
     }
     pbOnActiveAll();   // Abilities
     @turncount=0;
+#endregion
     #region Battle-Sequence Loop
     do {   // Now begin the battle loop
       GameDebug.Log($"");
@@ -3205,7 +3206,6 @@ namespace PokemonUnity.Battle
     #endregion
     return pbEndOfBattle(canlose);
   }
-#endregion
 		#endregion
 
 		#region Command phase.
