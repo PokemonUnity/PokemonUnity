@@ -123,7 +123,7 @@ namespace Tests
 			byte lv = 7;
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			//pokemon.Level = lv;
-			Assert.AreEqual(lv,Pokemon.Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp.Current));
+			Assert.AreEqual(lv,Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp));
 		}
 
 		[TestMethod]
@@ -132,9 +132,9 @@ namespace Tests
 		{
 			byte lv = 7;
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: 3);
-			pokemon.Exp.AddExperience(Pokemon.Experience.GetStartExperience(pokemon.GrowthRate, 300));
-			pokemon.Exp.AddExperience(Pokemon.Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Exp.Current);
-			Assert.AreEqual(lv, Pokemon.Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp.Current));
+			pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, 300));
+			pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Exp);
+			Assert.AreEqual(lv, Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp));
 		}
 
 		[TestMethod]
@@ -142,7 +142,7 @@ namespace Tests
 		{
 			byte lv = 5;
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: lv);
-			Assert.AreEqual(lv, Pokemon.Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp.Current));
+			Assert.AreEqual(lv, Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp));
 		}
 
 		//[TestMethod]
@@ -582,7 +582,7 @@ namespace Tests
 			if (!pokemon.hasEvolveMethod(EvolutionMethod.Level))
 				Assert.Fail("Unable to test if pokemon can evolve, as it does not have an evolution through leveling-up");
 			//Add exp
-			pokemon.Exp.AddExperience(105000);
+			pokemon.Experience.AddExperience(105000);
 			//Assert is true
 			Assert.AreEqual(Pokemons.IVYSAUR, pokemon.CanEvolveAfter(EvolutionMethod.Level, pokemon.Level)[0]);
 		}

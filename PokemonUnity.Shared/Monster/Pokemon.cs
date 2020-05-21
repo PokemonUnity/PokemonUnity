@@ -113,7 +113,7 @@ namespace PokemonUnity.Monster
         /// experience should accumulate accross past levels.
         /// Should also rename to "currentExp"?
         /// </remarks>
-        public Experience Exp { get; private set; }
+        public Experience Experience { get; private set; }
         /// <summary>
         /// Current happiness
         /// </summary>
@@ -219,7 +219,7 @@ namespace PokemonUnity.Monster
             IV = new int[] { (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1) };
             EV = new byte[6];
             Contest = new byte[6];
-            Exp = new Experience(GrowthRate);
+            Experience = new Experience(GrowthRate);
             TempLevel = Level;
             moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
             pokerus = new int[2];
@@ -240,7 +240,7 @@ namespace PokemonUnity.Monster
         {
             //_base = PokemonData.GetPokemon(pokemon);
             pokemons = pokemon;
-            Exp = new Experience(GrowthRate);
+            Experience = new Experience(GrowthRate);
             TempLevel = Level;
             eggSteps = _base.HatchTime;
             Ability = abilityFlag;
@@ -479,8 +479,8 @@ namespace PokemonUnity.Monster
 
             ObtainLevel = obtainedLevel;
             //Level = currentLevel;
-            //ToDo: Load exp without triggering a level-up scene
-            Exp.AddExperience(currentExp - Exp.Current);
+            //Experience.AddExperience(currentExp - Experience.Current);
+            Exp = currentExp;
             TempLevel = Level;
 
             Happiness = happiness;
@@ -524,7 +524,7 @@ namespace PokemonUnity.Monster
             pokerus: pkmn.Pokerus, heartSize: pkmn.HeartGuageSize, //ishyper: pkmn.isHyperMode,
             shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP,
             item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV,
-            obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
+            obtainedLevel: pkmn.Level, currentExp: pkmn.Exp,
             happiness: pkmn.Happiness, status: pkmn.Status,
             statusCount: pkmn.StatusCount, eggSteps: pkmn.EggSteps,
             ballUsed: pokeball, mail: pkmn.Mail, moves: pkmn.moves,
@@ -725,25 +725,38 @@ namespace PokemonUnity.Monster
         #endregion
 
         #region Level
+        public int Exp
+        {
+            get
+            {
+                return this.Experience.Current;
+            }
+            private set
+            {
+                if (value < 0) //|| value > this.Experience.GetMaxExperience(this.GrowthRate)
+                    GameDebug.LogError(string.Format("The experience number {0} is invalid", value));
+                else //(value < this.Experience.GetMaxExperience(this.GrowthRate))
+                    //this.Experience.AddExperience(value - this.Experience.Current);
+                    Experience = new Experience(this.GrowthRate, value);
+            }
+        }
         public int Level
         {
             get
             {
                 //return 1;
-                return Experience.GetLevelFromExperience(this.GrowthRate, this.Exp.Current);
+                return Experience.GetLevelFromExperience(this.GrowthRate, this.Experience.Current);
             }
             private set
             {
-                if (value < 1 || value > 100)
-                {//Experience.MAXLEVEL
-                    //Game.DebugLog(string.Format("The level number {0} is invalid", value), true);
-                }
+                if (value < 1 || value > 100) //Experience.MAXLEVEL
+                    GameDebug.LogError(string.Format("The level number {0} is invalid", value));
                 if (value > this.Level)
-                    this.Exp.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Exp.Current);
+                    this.Experience.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Experience.Current);
                 else
                 {
-                    //ToDo: Not Designed to go backwards yet...
-                    //Game.DebugLog(string.Format("The level number {0} is invalid", value), true);
+                    GameDebug.Log(string.Format("The level number has gone backwards and experience points is reset"));
+                    Exp = Experience.GetStartExperience(this.GrowthRate, value);
                 }
             }
         }
@@ -764,7 +777,7 @@ namespace PokemonUnity.Monster
         public void AddExperience(int exp, bool LearnRandomAttack)
         {
             //this.Experience += exp;
-            this.Exp.AddExperience(exp);
+            this.Experience.AddExperience(exp);
             //while (this.Exp.Current >= this.Exp.NeedExperience(this.Level + 1))
             //while (this.Exp.Current >= this.Exp.NextLevel)
             while (Level > TempLevel)
@@ -1614,7 +1627,7 @@ namespace PokemonUnity.Monster
             if ((int)move <= 0) return;
             if (!getMoveList().Contains(move))
             {
-                //Game.DebugLog("Move is not compatible");
+                GameDebug.Log("Move is not compatible");
                 return;
             }
             //for (int i = 0; i < 4; i++) {
@@ -1632,7 +1645,7 @@ namespace PokemonUnity.Monster
             //}
             if (hasMove(move))
             {
-                //Game.DebugLog("Already knows move...");
+                GameDebug.Log("Already knows move...");
                 return;
             }
             for (int i = 0; i < 4; i++)
@@ -1646,7 +1659,7 @@ namespace PokemonUnity.Monster
             }
             if (!silently)
             {
-                //Game.DebugLog("Cannot learn move, pokmeon moveset is full", false);
+                GameDebug.LogWarning("Cannot learn move, pokmeon moveset is full");
             }
             else
             {

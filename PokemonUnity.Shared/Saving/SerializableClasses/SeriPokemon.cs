@@ -182,7 +182,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 				seriPokemon.ObtainedLevel		= pokemon.ObtainLevel;
 				//seriPokemon.CurrentLevel		= pokemon.Level;
-				seriPokemon.CurrentExp			= pokemon.Exp.Current;
+				seriPokemon.CurrentExp			= pokemon.Exp;
 
 				seriPokemon.Happines			= pokemon.Happiness;
 

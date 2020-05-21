@@ -307,5 +307,10 @@ namespace PokemonUnity.Monster.Data
         {
             Growth = rate;
         }
+
+        public Experience(LevelingRate rate, int initialValue) : this(rate)
+        {
+            Current = initialValue;
+        }
     }
 }
