@@ -123,6 +123,16 @@ namespace Tests
 			Assert.IsTrue(Game.RegionData.Count > 1, string.Format("RegionData: {0}",Game.RegionData.Count.ToString()));
 		}
 		[TestMethod]
+		public void Initialize_Types_Test()
+		{
+			Assert.IsTrue(Game.InitTypes(), string.Format("TypeData: {0}",Game.TypeData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Types_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.TypeData.Count > 1, string.Format("TypeData: {0}",Game.TypeData.Count.ToString()));
+		}
+		[TestMethod]
 		public void Initialize_Locations_Test()
 		{
 			Assert.IsTrue(Game.InitLocations(), string.Format("LocationData: {0} | AreaData: {1}",Game.LocationData.Count.ToString(), Game.AreaData.Count.ToString()));

@@ -976,6 +976,7 @@ namespace PokemonUnity
 				#region DataReader
 				stmt.CommandText = @"select a.id, a.damage_class_id, t.damage_type_id, t.target_type_id, t.damage_factor from types as a
 					left join type_efficacy as t on a.id = t.damage_type_id 
+					where damage_type_id is not null
 					order by a.id ASC";
 				//	@"";
 				SQLiteDataReader reader = stmt.ExecuteReader();
@@ -985,7 +986,6 @@ namespace PokemonUnity
 				{
 					Dictionary<Types, Category?> t = new Dictionary<Types, Category?>();
 					Dictionary<Types, List<KeyValuePair<Types, int>>> a = new Dictionary<Types, List<KeyValuePair<Types, int>>>();
-					//NatureData.Add(Natures.UNSET, new Nature());
 					while (reader.Read()) //if(reader.Read())
 					{
 						if (!t.ContainsKey((Types)int.Parse((string)reader["id"].ToString())))
@@ -1026,6 +1026,8 @@ namespace PokemonUnity
 							)
 						); 
 					}
+					TypeData.Add(Types.UNKNOWN, new Monster.Data.Type());
+					TypeData.Add(Types.SHADOW, new Monster.Data.Type());
 				}
 				return true;
 			} catch (SQLiteException e) {
@@ -1262,6 +1264,7 @@ namespace PokemonUnity
 				//Step 4: Read the results
 				using(reader)
 				{
+					ItemData.Add(Items.EXP_ALL, new ItemData());
 					ItemData.Add(Items.NONE, new ItemData());
 					while(reader.Read()) //if(reader.Read())
 					{
