@@ -12,14 +12,6 @@ namespace Tests
 	{
 		//Test if Core.Rand Seed returns new value on each use
 		//Test if Core.Rand keeps the same seed value when bool is true
-		[TestMethod]
-		public void Database_Load_Pokemon_Test()
-		{
-			System.Collections.Generic.List<string[]> s = new System.Collections.Generic.List<string[]>();
-			s = PokemonUnity.Game.GetArrayFromSQL("select * from pokemon_views limit 3 --order by id ASC");
-			//CollectionAssert.AllItemsAreNotNull(s);
-			Assert.AreEqual(3, s.Count);
-		}
 
 		#region Data Loading and Tests
 		[TestMethod]

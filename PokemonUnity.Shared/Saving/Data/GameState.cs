@@ -280,10 +280,14 @@ namespace PokemonUnity.Saving
 		//}
 		public bool Equals(GameState obj)
 		{
+			if (obj == null) return false;
 			return this == obj; //Equals(obj.Trainer);
 		}
 		public override bool Equals(object obj)
 		{
+			if (obj == null) return false;
+			if (typeof(Game) == obj.GetType())
+				return Equals((GameState)obj);
 			if (typeof(GameState) == obj.GetType())
 				return Equals((GameState)obj);
 			return base.Equals(obj);

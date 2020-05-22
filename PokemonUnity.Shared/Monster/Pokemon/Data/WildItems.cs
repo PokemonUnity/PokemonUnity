@@ -69,6 +69,7 @@ namespace PokemonUnity.Monster.Data
 		}
 		public override bool Equals(object obj)
 		{
+			if (obj == null) return false;
 			return base.Equals(obj);
 		}
 		public override int GetHashCode()

@@ -284,12 +284,13 @@ namespace PokemonUnity.Monster.Data
             else return GenderRatio.Genderless;
         }
 		public bool Equals(PokemonData obj)
-		{
-			return this.ID == obj.ID; 
+        {
+            return this.ID == obj.ID; 
 		}
 		public override bool Equals(object obj)
-		{
-			return base.Equals(obj);
+        {
+            if (obj == null) return false;
+            return base.Equals(obj);
 		}
 		public override int GetHashCode()
 		{

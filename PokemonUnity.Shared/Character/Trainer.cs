@@ -194,6 +194,8 @@ namespace PokemonUnity.Character
 		//}
 		public override bool Equals(object obj)
 		{
+			//ToDo: If null, TrainerType => WildPokemon
+			if (obj == null) return false; 
 			return base.Equals(obj);
 		}
 		public override int GetHashCode()

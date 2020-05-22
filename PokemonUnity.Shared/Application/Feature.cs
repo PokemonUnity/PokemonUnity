@@ -184,54 +184,24 @@ namespace PokemonUnity.Application
 		}
 		public bool Equals(Feature obj)
 		{
+			if (obj == null) return false;
 			return this == obj;
 		}
 		public override bool Equals(object obj)
 		{
+			if (obj == null) return false;
 			if (typeof(Feature) == obj.GetType())
 				return Equals((Feature)obj);
 			return base.Equals(obj);
 		}
 		bool IEquatable<Feature>.Equals(Feature other)
 		{
+			if (other == null) return false;
 			return Equals(obj: (object)other);
 		}
 		public override int GetHashCode()
 		{
-			return string.Format(""
-					+ (BattleShiftStyle ? "1" : "0"							)
-					+ (CanOnlyCaptureFirstWildEncounter ? "1" : "0"			)
-					+ (CanOnlySaveAtPokemonCenter ? "1" : "0"				)
-					+ (CatchPokemonsWithEggMoves ? "1" : "0"				)
-					+ (ChallengeEndsAfter ? "1" : "0"						)
-					+ (EnableCloudStorage ? "1" : "0"						)
-					+ (FailChallengeWipesData ? "1" : "0"					)
-					+ (ForcePokemonNaming ? "1" : "0"						)
-					+ (GameOverOnWhiteOut ? "1" : "0"						)
-					+ ("|"+((int)LimitPokemonPartySize).ToString()+"|"		)
-					+ (NoCapturesAllowed ? "1" : "0"						)
-					+ (NoHealingItemsInsideBattle ? "1" : "0"				)
-					+ (NoHealingItemsOutsideBattle ? "1" : "0"				)
-					+ (NoHealingNPCs ? "1" : "0"							)
-					+ (NoPC ? "1" : "0"										)
-					+ (NoPokemonCenterHeals ? "1" : "0"						)
-					+ (NoStoreBoughtMedicine ? "1" : "0"					)
-					+ (NuzlockeSkipDuplicates ? "1" : "0"					)
-					+ (OnlinePlayEnabled ? "1" : "0"						)
-					+ (OverflowPokemonsIntoNextBox ? "1" : "0"				)
-					+ (PcDoesNotHealPokemons ? "1" : "0"					)
-					+ (PokemonCenterHealsResetTrainers ? "1" : "0"			)
-					+ (PokemonCentersCostMoney ? "1" : "0"					)
-					+ (PokemonDeathOnFaint ? "1" : "0"						)
-					+ (PokemonSentToPcOnDeath ? "1" : "0"					)
-					+ (RandomBossEncounters ? "1" : "0"						)
-					+ (RandomizePartyAfterBattle ? "1" : "0"				)
-					+ (RandomStarters ? "1" : "0"							)
-					+ (RandomWildEncounters ? "1" : "0"						)
-					+ (ReleasedPokemonsReturnToEncounterArea ? "1" : "0"	)
-					+ (ReleasedPokemonsRoamNearbyAreas ? "1" : "0"			)
-					+ (SandBoxMode ? "1" : "0"								)
-				).GetHashCode();
+			return GetGuid().GetHashCode();
 		}
 
 		bool IEqualityComparer<Feature>.Equals(Feature x, Feature y)
@@ -244,6 +214,44 @@ namespace PokemonUnity.Application
 			return obj.GetHashCode();
 		}
 		#endregion
+
+		public string GetGuid()
+		{
+			return string.Format(""
+				+ (BattleShiftStyle ? "1" : "0"							)
+				+ (CanOnlyCaptureFirstWildEncounter ? "1" : "0"			)
+				+ (CanOnlySaveAtPokemonCenter ? "1" : "0"				)
+				+ (CatchPokemonsWithEggMoves ? "1" : "0"				)
+				+ (ChallengeEndsAfter ? "1" : "0"						)
+				+ (EnableCloudStorage ? "1" : "0"						)
+				+ (FailChallengeWipesData ? "1" : "0"					)
+				+ (ForcePokemonNaming ? "1" : "0"						)
+				+ (GameOverOnWhiteOut ? "1" : "0"						)
+				+ ("|"+((int)LimitPokemonPartySize).ToString()+"|"		)
+				+ (NoCapturesAllowed ? "1" : "0"						)
+				+ (NoHealingItemsInsideBattle ? "1" : "0"				)
+				+ (NoHealingItemsOutsideBattle ? "1" : "0"				)
+				+ (NoHealingNPCs ? "1" : "0"							)
+				+ (NoPC ? "1" : "0"										)
+				+ (NoPokemonCenterHeals ? "1" : "0"						)
+				+ (NoStoreBoughtMedicine ? "1" : "0"					)
+				+ (NuzlockeSkipDuplicates ? "1" : "0"					)
+				+ (OnlinePlayEnabled ? "1" : "0"						)
+				+ (OverflowPokemonsIntoNextBox ? "1" : "0"				)
+				+ (PcDoesNotHealPokemons ? "1" : "0"					)
+				+ (PokemonCenterHealsResetTrainers ? "1" : "0"			)
+				+ (PokemonCentersCostMoney ? "1" : "0"					)
+				+ (PokemonDeathOnFaint ? "1" : "0"						)
+				+ (PokemonSentToPcOnDeath ? "1" : "0"					)
+				+ (RandomBossEncounters ? "1" : "0"						)
+				+ (RandomizePartyAfterBattle ? "1" : "0"				)
+				+ (RandomStarters ? "1" : "0"							)
+				+ (RandomWildEncounters ? "1" : "0"						)
+				+ (ReleasedPokemonsReturnToEncounterArea ? "1" : "0"	)
+				+ (ReleasedPokemonsRoamNearbyAreas ? "1" : "0"			)
+				+ (SandBoxMode ? "1" : "0"								)
+			);
+		}
 	}
 
 	#region Custom Game Mode

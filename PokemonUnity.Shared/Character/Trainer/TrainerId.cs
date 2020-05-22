@@ -72,14 +72,17 @@ namespace PokemonUnity.Character
 		}
 		public bool Equals(TrainerId obj)
 		{
+			if (obj == null) return false;
 			return this == obj; 
 		}
 		public bool Equals(Character.Player obj)
 		{
+			if (obj == null) return false;
 			return this == obj.Trainer; //Equals(obj.Trainer);
 		}
 		public override bool Equals(object obj)
 		{
+			if (obj == null) return false;
 			if (obj.GetType() == typeof(Player))
 				return Equals((Player)obj);
 			if (obj.GetType() == typeof(TrainerId))
