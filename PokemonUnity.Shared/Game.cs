@@ -319,7 +319,6 @@ namespace PokemonUnity
 			}
 			get { return (svol / 20f) * (svol / 20f); }
 		}
-		public static bool battleScene = true;
 		public static bool fullscreen;
 		public static byte textSpeed = 2;
 

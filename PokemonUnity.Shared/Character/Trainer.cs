@@ -9,7 +9,7 @@ namespace PokemonUnity.Character
 	{
 		#region Variables
 		public Inventory.Items[] Items { get; private set; }
-		public Pokemon[] Party { get; private set; }
+		public Pokemon[] Party { get; private set; } //ToDo: Remove Party from Trainer 
 		public bool Double { get; private set; }
 		public int AI { get; private set; }
 		//public int IVs { get; private set; }
@@ -174,6 +174,9 @@ namespace PokemonUnity.Character
 			//Load player's gender as well
 			//Gender = trainer.IsMale; //gender;
 		}
+
+		//Sample from Pokemon Crystal
+		//public Trainer(string name, TrainerTypes trainer, Pokemon[] party) { }
 		#endregion
 
 		#region Explicit Operators
@@ -647,33 +650,50 @@ namespace PokemonUnity
 
 	public static class PokemonPartyExtension
 	{
-		public static void PackParty(this Pokemon[] Party)
+		public static void PackParty(this Battle.Pokemon[] Party)
 		{
-			Pokemon[] packedArray = new Pokemon[Party.Length];
+			Battle.Pokemon[] packedArray = new Battle.Pokemon[Party.Length];
 			int i2 = 0; //counter for packed array
 			for (int i = 0; i < Party.Length; i++)
 			{
-				if (Party[i] != null || Party[i].Species != Pokemons.NONE)
+				if (Party[i].IsNotNullOrNone())// != null || Party[i].Species != Pokemons.NONE)
 				{
 					//if next object in box has a value
 					packedArray[i2] = Party[i]; //add to packed array
 					i2 += 1; //ready packed array's next position
 				}
 			}
-			Party = packedArray;
+			for (int i = 0; i < Party.Length; i++)
+				Party[i] = packedArray[i];
+		}
+		public static void PackParty(this Pokemon[] Party)
+		{
+			Pokemon[] packedArray = new Pokemon[Party.Length];
+			int i2 = 0; //counter for packed array
+			for (int i = 0; i < Party.Length; i++)
+			{
+				if (Party[i].IsNotNullOrNone())// != null || Party[i].Species != Pokemons.NONE)
+				{
+					//if next object in box has a value
+					packedArray[i2] = Party[i]; //add to packed array
+					i2 += 1; //ready packed array's next position
+				}
+			}
+			for (int i = 0; i < Party.Length; i++)
+				Party[i] = packedArray[i];
 		}
 		public static bool HasSpace(this Pokemon[] partyOrPC, int limit)
 		{
-			if (partyOrPC.GetCount().HasValue && partyOrPC.GetCount().Value < limit) return true;
+			if (partyOrPC.GetCount() < limit) return true; //partyOrPC.GetCount().HasValue &&
 			else return false;
 		}
 
-		public static int? GetCount(this Pokemon[] partyOrPC)
+		public static int GetCount(this Pokemon[] partyOrPC)
 		{
 			int result = 0;
 			for (int i = 0; i < partyOrPC.Length; i++)
 			{
-				if (partyOrPC[i] != null || partyOrPC[i].Species != Pokemons.NONE)
+				if (partyOrPC[i].IsNotNullOrNone())// != null || partyOrPC[i].Species != Pokemons.NONE)
 				{
 					result += 1;
 				}

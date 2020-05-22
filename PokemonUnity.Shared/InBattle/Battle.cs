@@ -539,15 +539,15 @@ namespace PokemonUnity.Battle
         public bool pbIsSnagBall(Items ball) { return false; } //ToDo: Can this player capture current pokemon from trainer?
         public void pbStorePokemon(Monster.Pokemon pokemon)
 		{
-			//if(!pokemon.isShadow)
-			//	//"Would you like to give a nickname to {1}?"
-			//	if (DisplayConfirm(LanguageExtension.Translate(Text.ScriptTexts, "GiveNickname").Value))
-			//	{
-			//		string nick = string.Empty; //(string)scene.NameEntry(LanguageExtension.Translate(Text.ScriptTexts, "SetNick", pokemon.Species.ToString(TextScripts.Name)).Value, pokemon)
-			//		//"{1}'s nickname?"
-			//		if(!string.IsNullOrEmpty(nick)) pokemon.SetNickname(nick);
-			//	}
-			int oldcurbox = Game.GameData.Player.PC.ActiveBox;
+			if(!pokemon.isShadow)
+				if (pbDisplayConfirm(_INTL("Would you like to give a nickname to {1}?", pokemon.Species.ToString(TextScripts.Name))))
+				{
+                    string nick = @scene.pbNameEntry(_INTL("{1}'s nickname?", pokemon.Species.ToString(TextScripts.Name)), pokemon);
+					if(!string.IsNullOrEmpty(nick)) pokemon.SetNickname(nick);
+                }
+            //ToDo: Add to party before attempting to store in PC
+            //Game.GameData.Player.addPokemon(pokemon)); return;
+            int oldcurbox = Game.GameData.Player.PC.ActiveBox;
 			/*/bool success = false;
 			//int i = 0; do { 
 			//	//success = Game.GameData.Player.PC.addPokemon(pokemon); 
@@ -585,23 +585,20 @@ namespace PokemonUnity.Battle
 				battler = battlers[idxPokemon].OppositeOpposing;
 			if (battler.isFainted())
 				battler = battler.Partner;
-			//"{1} threw one {2}!"
-			//pbDisplayBrief(L(Text.ScriptTexts,"ThrowBall", Game.GameData.Player.Name, itemname));
+			pbDisplayBrief(_INTL("{1} threw one {2}!", Game.GameData.Player.Name, itemname));
 			if (battler.isFainted())
 			{
-				//"But there was no target..."
-				//Display(L(Text.ScriptTexts, "NoTarget"));
-				return;
+                pbDisplay(_INTL("But there was no target..."));
+                return;
 			}
 			int shakes = 0; bool critical = false;
-			if (opponent.Length > 0)//.ID != TrainerTypes.WildPokemon)
-				//&& (!IsSnagBall(ball) || !battler.isShadow))
+			if (opponent.Length > 0//.ID != TrainerTypes.WildPokemon)
+				&& (!pbIsSnagBall(ball) || !battler.isShadow()))
 			{
-				//scene.ThrowAndDeflect(ball, 1);
-				//"The Trainer blocked the Ball!\nDon't be a thief!"
-				//Display(L(Text.ScriptTexts, "SnagRejected"));
-			}
-			else
+                @scene.pbThrowAndDeflect(ball, 1);
+                pbDisplay(_INTL("The Trainer blocked the Ball!\nDon't be a thief!"));
+            }
+            else
 			{
 				Monster.Pokemon pokemon = battler.pokemon;
                 Pokemons species = pokemon.Species;
@@ -693,7 +690,8 @@ namespace PokemonUnity.Battle
 					    pokemon.makeUnmega();   //rescue null
 					    pokemon.makeUnprimal(); //rescue null
 					    pokemon.pbRecordFirstMoves();*/
-					    if (Core.GAINEXPFORCAPTURE)
+                        pokemon = new Monster.Pokemon(pokemon, ball, pbIsSnagBall(ball) ? Monster.Pokemon.ObtainedMethod.SNAGGED : Monster.Pokemon.ObtainedMethod.MET);
+                        if (Core.GAINEXPFORCAPTURE)
 					    {
 						    battler.captured = true;
 						    pbGainEXP();
@@ -1223,7 +1221,7 @@ namespace PokemonUnity.Battle
     int secondpartybegin=pbSecondPartyBegin(battlerIndex);
     party[partyIndex]=null;
     if (side == null || side.Length == 1) { // Wild or single opponent
-      //party.compact!;
+      party.PackParty();//compact!
       for (int i = partyIndex; i < party.Length+1; i++) {
         for (int j = 0; j < @battlers.Length; j++) {
           if (!@battlers[j].IsNotNullOrNone()) continue;

@@ -177,16 +177,16 @@ namespace PokemonUnity.Character
 		#region Methods
 		public bool hasSpace()
 		{
-			if (getBoxCount().HasValue && getBoxCount().Value < 30) return true;
+			if (getBoxCount() < 30) return true;
 			else return false;
 		}
 
-		public int? getBoxCount()
+		public int getBoxCount()
 		{
 			int result = 0;
 			for (int i = 0; i < Pokemons.Length; i++)
 			{
-				if (Pokemons[i] != null || Pokemons[i].Species != PokemonUnity.Pokemons.NONE)
+				if (Pokemons[i].IsNotNullOrNone())// != null || Pokemons[i].Species != PokemonUnity.Pokemons.NONE)
 				{
 					result += 1;
 				}
@@ -207,18 +207,18 @@ namespace PokemonUnity.Character
 			return null;
 		}
 
-		/*public int getBoxCount(int box)
+		public int getBoxCount(int box)
 		{
 			int result = 0;
-			for (int i = 0; i < Pokemons[box].Length; i++)
+			for (int i = 0; i < Core.STORAGEBOXES; i++) //pokemons.GetLength(1)
 			{
-				if (Pokemons[box,i] != null || Party[i].Species != Pokemons.NONE)
+				if (pokemons[box,i].IsNotNullOrNone())// != null || Party[i].Species != Pokemons.NONE)
 				{
 					result += 1;
 				}
 			}
 			return result;
-		}*/
+		}
 
 		/// <summary>
 		/// Add a new pokemon directly to active box. 

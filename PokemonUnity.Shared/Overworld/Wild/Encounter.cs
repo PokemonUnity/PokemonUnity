@@ -7,7 +7,6 @@ using PokemonUnity.Monster;
 
 namespace PokemonUnity.Overworld
 {
-	//ToDo { get { return Game.EncounterData[Location][SlotId]; } }
 	public struct Encounter
 	{
 		/// <summary>
@@ -57,6 +56,100 @@ namespace PokemonUnity.Overworld
 			Versions = versions;
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="method"></param>
+		/// <returns></returns>
+		/// ToDo: Consider increasing chance on rarity as encounter increases 
+		public static Pokemon GetWildPokemon(Method method)
+		{
+			int x = Game.MethodData[method].Length;
+			if(x > 0)
+			{
+				List<Pokemon> p = new List<Pokemon>();
+				//KeyValuePair<int, List<Pokemons>> slot = new KeyValuePair<int, List<Pokemons>>(); 
+				Dictionary<int, List<Pokemons>> slot = new Dictionary<int, List<Pokemons>>(); 
+				Dictionary<int, int> min = new Dictionary<int, int>(); 
+				Dictionary<int, int> max = new Dictionary<int, int>(); 
+				Dictionary<int, int> rarity = new Dictionary<int, int>(); 
+				foreach (int n in Game.MethodData[method])
+				{
+					Encounter item = Game.EncounterData[n];
+					//for (int i = 0; i < x; i++)
+					//{
+					//	if(item.SlotId == i) // && Conditions.Contains()
+					//		slot = new KeyValuePair<int, List<Pokemons>>(i, new List<Pokemons>());
+					//		slot.Value.Add();
+						if(!slot.ContainsKey(item.SlotId)){ // && Conditions.Contains() {
+							slot.Add(item.SlotId, new List<Pokemons>());
+							min.Add(item.SlotId, item.MinLevel);
+							max.Add(item.SlotId, item.MaxLevel);
+							max.Add(item.SlotId, item.Rarity);
+						}
+						else
+						{
+							if (item.Conditions == null || item.Conditions.Length == 0 || EncounterConditionsMet(item.Conditions))
+							{ 
+								if(item.Pokemon.Length > 1)
+								{
+									slot[item.SlotId].Add(item.Pokemon[Core.Rand.Next(item.Pokemon.Length)]);
+								}
+								else slot[item.SlotId].Add(item.Pokemon[0]);
+							} 
+							min[item.SlotId] = Math.Min(min[item.SlotId], item.MinLevel);
+							max[item.SlotId] = Math.Max(max[item.SlotId], item.MaxLevel);
+							//Pokemons poke = Pokemons.NONE;
+							//if(item.Pokemon.Length > 1)
+							//{
+							//	poke = item.Pokemon[Core.Rand.Next(item.Pokemon.Length)];
+							//}
+							//else //if (item.Pokemon.Length == 1)
+							//{
+							//	poke = item.Pokemon[0];
+							//}
+							//for (int n = 0; n < item.Rarity; n++)
+							//{
+							//	//p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(item.MinLevel, item.MaxLevel),isEgg: false));
+							//	p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(min[item.SlotId], max[item.SlotId]),isEgg: false));
+							//}
+						}
+					//}
+				}
+				for (int y = 0; y < slot.Count; y++)
+				{
+					Pokemons poke = Pokemons.NONE;
+					if(slot[y].Count > 1)
+					{
+						poke = slot[y][Core.Rand.Next(slot.Count)];
+					}
+					else if (slot[y].Count == 1)
+					{
+						poke = slot[y][0];
+					}
+					for (int n = 0; n < rarity[y]; n++)
+					{
+						//p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(item.MinLevel, item.MaxLevel),isEgg: false));
+						p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(min[y], max[y]),isEgg: false));
+					}
+				}
+				if (p.Count > 0)
+				{
+					for (int z = p.Count; z < 100; z++)
+					{
+						p.Add(new Pokemon(Pokemons.NONE));
+					}
+					Pokemon pkmn = p[Core.Rand.Next(p.Count)];
+					pkmn.SwapItem(Monster.Data.PokemonWildItems.GetWildHoldItem(pkmn.Species));
+					return pkmn;
+				}
+			}
+			return new Pokemon(Pokemons.NONE);
+		}
+		//public static Pokemon WildPokemonRNG(Method method) //conditions
+		//{
+		//	//if(rand < area.rate)
+		//	return GetWildPokemon(method);
+		//}
 		public static bool EncounterConditionsMet(ConditionValue[] encounter)
 		{
 			Game g = new Game();

@@ -25,8 +25,8 @@ namespace PokemonUnity.Overworld
 		public int MatrixId;
 		/// <summary>
 		/// </summary>
-		/// Town, Route, Dungeon, Underground, Safari
-		/// ToDo: C? P? W? Union? Direct?
+		/// Town, Route, Cave, Dungeon, Underground, Indoor, Safari
+		/// ToDo: P? W? Union? Direct?
 		public int Type;
 	}
 }

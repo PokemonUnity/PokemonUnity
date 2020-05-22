@@ -50,6 +50,9 @@ namespace PokemonUnity.UI
 		public class OnDisplayEventArgs : EventArgs
 		{
 			public bool Pause;
+			/// <summary>
+			/// Will continue after a short wait, regardless of player interaction
+			/// </summary>
 			public bool Brief;
 			public string Message;
 		}
@@ -302,7 +305,7 @@ namespace PokemonUnity.UI
 			throw new NotImplementedException();
 		}
 
-		public void pbNameEntry(string helptext, Battle.Pokemon pokemon)
+		public string pbNameEntry(string helptext, Monster.Pokemon pokemon)
 		{
 			throw new NotImplementedException();
 		}

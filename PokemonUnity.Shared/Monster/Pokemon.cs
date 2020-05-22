@@ -545,6 +545,10 @@ namespace PokemonUnity.Monster
         //ToDo: Change to EncounterType
         public enum ObtainedMethod
         {
+            /// <summary>
+            /// Stole from another trainer, during battle
+            /// </summary>
+            SNAGGED,
             MET = 0,
             EGG = 1,
             //If EncounterType == Gift, then it's Traded
@@ -2305,7 +2309,8 @@ namespace PokemonUnity.Monster
         /// Nickname; 
         /// Returns Pokemon species name if not nicknamed.
         /// </summary>
-        public virtual string Name { get { if (this.EggSteps > 0) return "Egg"; return IsNicknamed ? name : _base.Name; } } 
+        public virtual string Name { get { if (isEgg) return "Egg"; return IsNicknamed ? name : Species.ToString(TextScripts.Name); } }
+        public void SetNickname(string nick) { name = nick; }
 
         /// <summary>
         ///	Used only for a few pokemon to specify what form it's in. 
@@ -2345,11 +2350,6 @@ namespace PokemonUnity.Monster
         //public bool SetForm (int value) { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) { form = value; return true; } else return false; } }
         public int Form { get { return form; } set { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) form = value; } }
         private int form { get; set; }
-
-        /*// <summary>
-        /// Returns the species name of this Pokemon
-        /// </summary>
-        public string SpeciesName { get { return this._base.Species; } }*/
 
         /// <summary>
         /// Returns the markings this Pokemon has checked

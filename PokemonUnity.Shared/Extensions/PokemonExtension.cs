@@ -6,11 +6,11 @@ namespace PokemonUnity
 	{
 		public static bool IsNotNullOrNone(this PokemonUnity.Monster.Pokemon pokemon)
 		{
-			return pokemon != null || pokemon.Species != Pokemons.NONE; 
+			return pokemon != null && pokemon.Species != Pokemons.NONE; 
 		}
 		public static bool IsNotNullOrNone(this PokemonUnity.Battle.Pokemon pokemon)
 		{
-			return pokemon != null || pokemon.Species != Pokemons.NONE; 
+			return pokemon != null && pokemon.Species != Pokemons.NONE; 
 		}
 		public static string ToString(this PokemonUnity.Monster.Stats stat, TextScripts text)
 		{

@@ -139,7 +139,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 			SeriPokemon seriPokemon = new SeriPokemon();
 			if (pokemon == null) return seriPokemon;
 
-			if(pokemon != null && pokemon.Species != Pokemons.NONE)
+			if(pokemon.IsNotNullOrNone())// != null && pokemon.Species != Pokemons.NONE)
 			{
 				seriPokemon.PersonalId			= pokemon.PersonalId;
 				//PublicId in pokemon is null, so Pokemon returns null

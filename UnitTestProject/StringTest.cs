@@ -11,21 +11,21 @@ namespace Tests
     [TestClass]
     public class StringTest
 	{
-		//[TestMethod]
-		public void Pokemon_Name_Test()
+		[TestMethod]
+		public void Pokemon_DefaultName_Test()
 		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			//Assert.AreEqual("Bulbasaur", pokemon.Name);
-			Assert.Inconclusive("Not implemented yet");
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, false);
+			Assert.AreEqual("BULBASAUR", pokemon.Name); 
 		}
         #region Nicknames
-		//[TestMethod]
+		[TestMethod]
 		public void Pokemon_Nickname_Test()
 		{
 			//Name pokemon and confirm if name persist
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			//Assert.AreEqual("Bulbasaur", pokemon.Name);
-			Assert.Inconclusive("Not implemented yet");
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, false);
+			string nick = "testname";
+			pokemon.SetNickname(nick);
+			Assert.AreEqual(nick, pokemon.Name);
 		}
         [TestMethod]
 		public void Trainer_SetPokemon_Nickname()
@@ -36,32 +36,43 @@ namespace Tests
 			//make sure pokemon is not egg, as eggs cannot be named
 			Pokemon pokemon = new Pokemon(Pokemons.ABRA, false);
 			if (pokemon.IsNicknamed) Assert.Fail("Already named");
+			string nick = "testname";
 			//Name pokemon and add to trainer party...
+			pokemon.SetNickname(nick);
 			trainer.addPokemon(pokemon);
 			//trainer.Party[0].Name
-			Assert.AreEqual("testname", trainer.Party[0].Name);
+			Assert.AreEqual(nick, trainer.Party[0].Name);
 		}
         #endregion
 		//[TestMethod]
+		public void Pokemon_Name_Test()
+		{
+			Assert.AreEqual("Bulbasaur", Pokemons.BULBASAUR.ToString(TextScripts.Name)); 
+		}
+		//[TestMethod]
 		public void Pokemon_FlavorText_Test()
 		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			//Assert.AreEqual("Bulbasaur", pokemon.Name);
-			Assert.Inconclusive("Not implemented yet");
+			Assert.AreEqual("Bulbasaur", Pokemons.BULBASAUR.ToString(TextScripts.Description));
 		}
 		//[TestMethod]
 		public void Move_Name_Test()
 		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			//Assert.AreEqual("Bulbasaur", pokemon.Name);
-			Assert.Inconclusive("Not implemented yet");
+			Assert.AreEqual("Absorb", Moves.ABSORB.ToString(TextScripts.Name));
+		}
+		//[TestMethod]
+		public void Move_FlavorText_Test()
+		{
+			Assert.AreEqual("Absorb", Moves.ABSORB.ToString(TextScripts.Description));
 		}
 		//[TestMethod]
 		public void Item_Name_Test()
 		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			//Assert.AreEqual("Bulbasaur", pokemon.Name);
-			Assert.Inconclusive("Not implemented yet");
+			Assert.AreEqual("Masterball", Items.MASTER_BALL.ToString(TextScripts.Name));
+		}
+		//[TestMethod]
+		public void Item_FlavorText_Test()
+		{
+			Assert.AreEqual("Masterball", Items.MASTER_BALL.ToString(TextScripts.Description));
 		}
 		//[TestMethod]
 		public void NPC_Name_Test()

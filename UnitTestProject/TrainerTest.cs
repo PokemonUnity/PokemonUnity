@@ -34,6 +34,17 @@ namespace Tests
 
         #region TrainerPokemon
         [TestMethod]
+        public void Trainer_Party_GetPokemonCount()
+		{
+			Trainer trainer = new Trainer(TrainerTypes.PLAYER);
+			//Player trainer = new Player();
+			int count = trainer.Party.GetCount();
+			//if (!count.HasValue) Assert.Fail("Party ");
+			//Assert.AreEqual(PokemonUnity.Core.MAXPARTYSIZE, count); //Should return a full party
+			Assert.AreEqual(0, count); //Should return an empty party
+		}
+
+        [TestMethod]
         public void Trainer_Party_AddPokemon()
 		{
 			//Assert.Inconclusive();

@@ -161,8 +161,8 @@ namespace PokemonUnity.Monster.Data
         /// Not all baby species need this line.
         /// </summary>
         public Items Incense { get; private set; }
-        public string Name { get { return ToString(TextScripts.Name); } }
-        public string Description { get { return ToString(TextScripts.Description); } }
+        //public string Name { get { return ToString(TextScripts.Name); } }
+        //public string Description { get { return ToString(TextScripts.Description); } }
         #endregion
 
         #region Constructors

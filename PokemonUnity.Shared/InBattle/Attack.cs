@@ -857,7 +857,7 @@ namespace PokemonUnity.Battle
 			get
 			{
 				if (Core.USENEWBATTLEMECHANICS) return 100;
-				//if (attacker.Species != Pokemons.NONE && attacker.chatter != null) {
+				//if (attacker.IsNotNullOrNone() && attacker.chatter != null) {
 				//	return attacker.pokemon.chatter.intensity * 10 / 127;
 				//}
 				return 0;
@@ -2194,7 +2194,7 @@ namespace PokemonUnity.Battle
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
-				if (attacker.Partner.Species != Pokemons.NONE && !attacker.Partner.isFainted())
+				if (attacker.Partner.IsNotNullOrNone() && !attacker.Partner.isFainted())
 				{
 					attacker.Partner.ReduceHP((int)Math.Floor(attacker.Partner.TotalHP / 16f), true);
 				}
@@ -4029,7 +4029,7 @@ namespace PokemonUnity.Battle
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
-				if (opponent.Partner.Species != Pokemons.NONE && !opponent.Partner.isFainted() &&
+				if (opponent.Partner.IsNotNullOrNone() && !opponent.Partner.isFainted() &&
 				   !opponent.Partner.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
 					opponent.Partner.ReduceHP((int)Math.Floor(opponent.Partner.TotalHP / 16f));
@@ -4385,7 +4385,7 @@ namespace PokemonUnity.Battle
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				attacker.OwnSide.Round += 1;
-				if (attacker.Partner.Species != Pokemons.NONE && !attacker.Partner.hasMovedThisRound())
+				if (attacker.Partner.IsNotNullOrNone() && !attacker.Partner.hasMovedThisRound())
 				{
 					if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Will use a move
 					{
@@ -5924,7 +5924,7 @@ namespace PokemonUnity.Battle
 
 			string movename = move.ToString(TextScripts.Name);
 			battle.pbDisplay(_INTL("{1} turned into {2}!", thismovename, movename));
-			int target = (Core.USENEWBATTLEMECHANICS && opponent.Species != Pokemons.NONE) ? opponent.Index : -1;
+			int target = (Core.USENEWBATTLEMECHANICS && opponent.IsNotNullOrNone()) ? opponent.Index : -1;
 			attacker.pbUseMoveSimple(move, -1, target);
 			return 0;
 		}
@@ -6071,7 +6071,7 @@ namespace PokemonUnity.Battle
 			Pokemon[] party = this.battle.pbParty(attacker.Index); // NOTE: pbParty is common to both allies in multi battles
 			for (int i = 0; i < party.Length; i++)
 			{
-				if (i != attacker.pokemonIndex && party[i].Species != Pokemons.NONE && !(Core.USENEWBATTLEMECHANICS && party[i].isEgg))
+				if (i != attacker.pokemonIndex && party[i].IsNotNullOrNone() && !(Core.USENEWBATTLEMECHANICS && party[i].isEgg))
 				{
 					foreach (var j in party[i].moves)
 					{
@@ -6560,7 +6560,7 @@ namespace PokemonUnity.Battle
 					this.participants.Add(i);
 
 				}
-				else if (party[i].Species != Pokemons.NONE && !party[i].isEgg && party[i].HP > 0 && party[i].Status == 0)
+				else if (party[i].IsNotNullOrNone() && !party[i].isEgg && party[i].HP > 0 && party[i].Status == 0)
 				{
 					this.participants.Add(i);
 				}
@@ -8481,7 +8481,7 @@ namespace PokemonUnity.Battle
 					}
 					// Symbiosis
 					if (attacker.Item == 0 &&
-					   attacker.Partner.Species != Pokemons.NONE && attacker.Partner.hasWorkingAbility(Abilities.SYMBIOSIS))
+					   attacker.Partner.IsNotNullOrNone() && attacker.Partner.hasWorkingAbility(Abilities.SYMBIOSIS))
 					{
 						Pokemon partner = attacker.Partner;
 						if (partner.Item > 0 &&
@@ -8500,7 +8500,6 @@ namespace PokemonUnity.Battle
 
 					}
 				}
-
 			}
 		}
 	}

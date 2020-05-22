@@ -545,12 +545,12 @@ public void WaitFor () { }
 public void TextScriptMulti () { }
 ///<summary>Number of Parameter Inputs: 0</summary>
 public void TextMessageScriptMulti () { }
-///<summary>
+/// <summary>
 /// Number of Parameter Inputs: 1
 /// The little sound that plays when you speak to an NPC.
 /// </summary>
 public void PlayFanfare () { }
-///<summary>
+/// <summary>
 /// Number of Parameter Inputs: 1
 /// The little sound that plays when you speak to an NPC.
 /// </summary>
@@ -567,13 +567,13 @@ public void RestartMusic () { }
 public void ApplyMovement () { }
 ///<summary>Number of Parameter Inputs: 0</summary>
 public void WaitMovement () { }
-///<summary>
+/// <summary>
 /// Number of Parameter Inputs: 0
 /// Locks all overworld npcs in place in the room. A standard when a script is active.
 /// </summary>
 public void LockAll () { }
-///<summary>
-///Number of Parameter Inputs: 0
+/// <summary>
+/// Number of Parameter Inputs: 0
 /// Allows all overworld npcs to walk again.
 /// </summary>
 public void ReleaseAll () { }

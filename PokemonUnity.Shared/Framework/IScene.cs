@@ -287,7 +287,7 @@ namespace PokemonUnity
 		/// <param name=""></param>
 		/// <param name="message"></param>
 		void pbChooseMove(Pokemon pokemon, string message);
-		void pbNameEntry(string helptext,Pokemon pokemon);
+		string pbNameEntry(string helptext,Monster.Pokemon pokemon);
 		void pbSelectBattler(int index, int selectmode = 1);
 		void pbFirstTarget(int index, int targettype);
 		void pbUpdateSelected(int index);

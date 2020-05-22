@@ -64,7 +64,7 @@ namespace PokemonUnity.Battle
 		/// </summary>
 		public virtual int AddlEffect		{ get; set; }
 		public Attack.Data.Effects Effect	{ get; set; }
-		internal Attack.Effect function		{ get; set; }
+		//internal Attack.Effect function		{ get; set; }
 		/// <summary>
 		/// The move's accuracy, as a percentage. 
 		/// An accuracy of 0 means the move doesn't perform an accuracy check 
@@ -168,7 +168,7 @@ namespace PokemonUnity.Battle
 		public void CalcMoveFunc()//(ref Battle.Move move)
 		{
 			//Effect function;
-			switch ((Attack.Effect)function)
+			switch ((Attack.Effect)Effect)
 			{
 				case Attack.Effect.Confusion:
 					//battle		= battle
@@ -902,7 +902,7 @@ public virtual int TotalPP { get {
 	if (attacker.hasWorkingAbility(Abilities.VICTORY_STAR))
 	  accuracy*=1.1;
 	Pokemon partner = attacker.Partner;
-	if (partner.Species != Pokemons.NONE && partner.hasWorkingAbility(Abilities.VICTORY_STAR))
+	if (partner.IsNotNullOrNone() && partner.hasWorkingAbility(Abilities.VICTORY_STAR))
 	  accuracy*=1.1;
 	if (attacker.effects.MicleBerry){
 	  attacker.effects.MicleBerry= false;
@@ -1039,9 +1039,9 @@ public virtual int TotalPP { get {
 	   attacker.hasWorkingAbility(Abilities.REFRIGERATE) ||
 	   attacker.hasWorkingAbility(Abilities.PIXILATE) && PowerBoost)
 	  damagemult = Math.Round(damagemult * 1.3);
-	if ((Battle.pbCheckGlobalAbility(Abilities.DARK_AURA).Species != Pokemons.NONE && type == Types.DARK) 
-	   || (Battle.pbCheckGlobalAbility(Abilities.FAIRY_AURA).Species != Pokemons.NONE && type == Types.FAIRY)){
-	  if (Battle.pbCheckGlobalAbility(Abilities.AURA_BREAK).Species != Pokemons.NONE)
+	if ((Battle.pbCheckGlobalAbility(Abilities.DARK_AURA).IsNotNullOrNone() && type == Types.DARK) 
+	   || (Battle.pbCheckGlobalAbility(Abilities.FAIRY_AURA).IsNotNullOrNone() && type == Types.FAIRY)){
+	  if (Battle.pbCheckGlobalAbility(Abilities.AURA_BREAK).IsNotNullOrNone())
 		damagemult=Math.Round(damagemult*2/3);
 	  else
 		damagemult=Math.Round(damagemult*4/3);
