@@ -70,7 +70,6 @@ namespace GameFramework.Entity
 		/// </summary>
         /// <param name="isShutdown">是否是关闭实体管理器时触发。</param>
 		/// <param name="userData"> User-defined data. </param>
-        /// <param name="userData">用户自定义数据。</param>
         void OnHide(bool isShutdown, object userData);
 
 		/// <summary>

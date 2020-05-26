@@ -152,22 +152,22 @@ namespace PokemonUnity
                 return;
             }
 
-            Bullet bullet = other as Bullet;
-            if (bullet != null)
-            {
-                ImpactData entityImpactData = entity.GetImpactData();
-                ImpactData bulletImpactData = bullet.GetImpactData();
-                if (GetRelation(entityImpactData.Camp, bulletImpactData.Camp) == RelationType.Friendly)
-                {
-                    return;
-                }
-
-                int entityDamageHP = CalcDamageHP(bulletImpactData.Attack, entityImpactData.Defense);
-
-                entity.ApplyDamage(bullet, entityDamageHP);
-                GameEntry.Entity.HideEntity(bullet);
-                return;
-            }
+            //Bullet bullet = other as Bullet;
+            //if (bullet != null)
+            //{
+            //    ImpactData entityImpactData = entity.GetImpactData();
+            //    ImpactData bulletImpactData = bullet.GetImpactData();
+            //    if (GetRelation(entityImpactData.Camp, bulletImpactData.Camp) == RelationType.Friendly)
+            //    {
+            //        return;
+            //    }
+            //
+            //    int entityDamageHP = CalcDamageHP(bulletImpactData.Attack, entityImpactData.Defense);
+            //
+            //    entity.ApplyDamage(bullet, entityDamageHP);
+            //    GameEntry.Entity.HideEntity(bullet);
+            //    return;
+            //}
         }
 
         private static int CalcDamageHP(int attack, int defense)

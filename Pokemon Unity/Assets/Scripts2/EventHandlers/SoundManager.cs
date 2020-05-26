@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using PokemonUnity;
 using UnityEngine;
 
 public class SoundManager
@@ -97,7 +98,7 @@ public class SoundManager
 						}
 						catch (Exception ex)
 						{
-							Game.DebugLog("Failed to load sound at \"" + soundFile + "\": " + ex.Message, true);
+							GameDebug.LogError("Failed to load sound at \"" + soundFile + "\": " + ex.Message);
 						}
 					}
 				}
@@ -107,7 +108,7 @@ public class SoundManager
 			{
 				if (HasOutputDeviceAvailable())
 				{
-					Game.DebugLog("SoundEffect [" + soundFile + "]");
+					GameDebug.Log("SoundEffect [" + soundFile + "]");
 
 					//sound.Play(volume, pitch, pan)
 					PlaySound(sound, volume, stopMusic);
@@ -116,7 +117,7 @@ public class SoundManager
 					//	MusicManager.PauseForSound(sound);
 				}
 				else
-					Game.DebugLog("Failed to play sound: no audio device available.", true);
+					GameDebug.LogError("Failed to play sound: no audio device available.");
 			}
 		}
 	}
