@@ -138,10 +138,13 @@
     <Compile Include="Translations\Translator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Translations\PokemonUnity.xml" />
+    <None Include=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
+    <ProjectReference Include="..\GameFramework\GameFramework.csproj">
+      <Project>{109d7f39-79ab-4862-9f73-0b8c638930c6}</Project>
+      <Name>GameFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
