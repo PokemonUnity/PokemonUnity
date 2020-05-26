@@ -43,22 +43,13 @@ namespace PokemonUnity
                 OnDead(attacker);
             }
         }
-
-#if UNITY_2017_3_OR_NEWER
         protected override void OnInit(object userData)
-#else
-        protected internal override void OnInit(object userData)
-#endif
         {
             base.OnInit(userData);
             gameObject.SetLayerRecursively(Constant.Layer.TargetableObjectLayerId);
         }
 
-#if UNITY_2017_3_OR_NEWER
         protected override void OnShow(object userData)
-#else
-        protected internal override void OnShow(object userData)
-#endif
         {
             base.OnShow(userData);
 

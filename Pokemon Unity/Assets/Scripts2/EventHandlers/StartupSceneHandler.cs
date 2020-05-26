@@ -31,7 +31,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
     {
 		//PersistantPlayerData = new Game();
 		//ToDo: On Start-up, Load & Process Game, to begin and instantiate game
-		Game.SetStartScene(this);
+		//Game.SetStartScene(this);
         MainMenu = UnityEngine.GameObject.Find("MainMenu");
         FileDataPanel = MainMenu.transform.GetChild(0).gameObject;
         MenuOptions = MainMenu.transform.GetChild(1).gameObject;
@@ -139,16 +139,15 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	#endregion
 		
 	#region Methods
-	//Your map class should be the one talking to unity and triggering if battles should occur
-
+	/*Your map class should be the one talking to unity and triggering if battles should occur
 	/// <summary>
 	/// Start a single wild battle
 	/// </summary>
 	public bool WildBattle(PokemonUnity.Monster.Pokemon pkmn, bool cantescape = true, bool canlose = false)
 	{
-		if (Game.Player.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Game.IS_DEBUG_ACTIVE))
+		if (Game.GameData.Player.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Core.DEBUG))
 		{
-			if (Game.Player.Trainer.Party.Length > 0)
+			if (Game.GameData.Player.Trainer.Party.Length > 0)
 				Game.DebugLog("SKIPPING BATTLE...");
 			Game.nextBattleBGM = null;
 			Game.nextBattleME = null;
@@ -182,7 +181,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// </summary>
 	public bool DoubleWildBattle(PokemonUnity.Monster.Pokemon pkmn1, PokemonUnity.Monster.Pokemon pkmn2, bool cantescape = true, bool canlose = false)
 	{
-		if (Game.Player.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Game.IS_DEBUG_ACTIVE))
+		if (Game.Player.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Core.DEBUG))
 		{
 			if (Game.Player.Trainer.Party.Length > 0)
 				Game.DebugLog("SKIPPING BATTLE...");
@@ -275,35 +274,12 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		return null;
 	}
 
-	public void EvolutionCheck(PokemonUnity.Monster.Pokemon[] currentlevels)
-	{
-		for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
-		{
-			PokemonUnity.Monster.Pokemon pokemon = Game.Player.Trainer.Party[i];
-			if (pokemon.HP == 0 && !Core.USENEWBATTLEMECHANICS) continue;
-			if(pokemon.Species != Pokemons.NONE &&
-				(currentlevels[i].Species == Pokemons.NONE
-			//|| pokemon.Level != currentlevels[i]
-			))
-			{
-				//newSpecies = CheckEvolution(pokemon);
-				//if (newSpecies > 0)
-				//{
-				//	//evo = new PokemonEvolutionScene();
-				//	//evo.StartScreen(pokemon, newSpecies)
-				//	//evo.Evolution();
-				//	//evo.EndScreen();
-				//}
-			}
-		}
-	}
-
 	/// <summary>
 	/// Runs the Pickup event after a battle if a Pokemon has the ability Pickup.
 	/// </summary>
 	public void Pickup(PokemonUnity.Monster.Pokemon pokemon)
 	{
-		if (pokemon.Ability == Abilities.PICKUP || pokemon.isEgg) return;
+		if (pokemon.Ability == Abilities.PICKUP && !pokemon.isEgg) return;
 		if (pokemon.Item != Items.NONE) return;
 		if (Core.Rand.Next(10) != 0) return;
 		Items[] pickupList = new Items[]
@@ -368,6 +344,6 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 				break;
 			}
 		}
-	}
+	}*/
 	#endregion
 }

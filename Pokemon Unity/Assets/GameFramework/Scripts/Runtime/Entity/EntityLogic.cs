@@ -182,7 +182,7 @@ namespace UnityGameFramework.Runtime
         /// 设置实体的可见性。
         /// </summary>
         /// <param name="visible">实体的可见性。</param>
-        protected virtual void InternalSetVisible(bool visible)
+        protected internal virtual void InternalSetVisible(bool visible)
         {
             gameObject.SetActive(visible);
         }
