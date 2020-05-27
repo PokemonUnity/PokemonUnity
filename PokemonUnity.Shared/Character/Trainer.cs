@@ -652,9 +652,9 @@ namespace PokemonUnity
 
 	public static class PokemonPartyExtension
 	{
-		public static void PackParty(this Battle.Pokemon[] Party)
+		public static void PackParty(this Combat.Pokemon[] Party)
 		{
-			Battle.Pokemon[] packedArray = new Battle.Pokemon[Party.Length];
+			Combat.Pokemon[] packedArray = new Combat.Pokemon[Party.Length];
 			int i2 = 0; //counter for packed array
 			for (int i = 0; i < Party.Length; i++)
 			{

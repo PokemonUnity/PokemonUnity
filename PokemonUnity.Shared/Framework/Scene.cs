@@ -1,6 +1,6 @@
 ﻿using PokemonUnity;
 using PokemonUnity.Inventory;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +24,8 @@ namespace PokemonUnity.UI
 		#region EventArgs
 		public class OnLevelUpEventArgs : EventArgs
 		{
-			public Battle.Pokemon Pokemon;
-			public Battle.Pokemon Battler;
+			public Combat.Pokemon Pokemon;
+			public Combat.Pokemon Battler;
 			public int HP;
 			public int Atk;
 			public int Def;
@@ -108,12 +108,12 @@ namespace PokemonUnity.UI
 			throw new NotImplementedException();
 		}
 
-		public void pbAnimation(Moves moveid, Battle.Pokemon user, Battle.Pokemon target, int hitnum = 0)
+		public void pbAnimation(Moves moveid, Combat.Pokemon user, Combat.Pokemon target, int hitnum = 0)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void pbAnimationCore(string animation, Battle.Pokemon user, Battle.Pokemon target, bool oppmove = false)
+		public void pbAnimationCore(string animation, Combat.Pokemon user, Combat.Pokemon target, bool oppmove = false)
 		{
 			throw new NotImplementedException();
 		}
@@ -133,12 +133,12 @@ namespace PokemonUnity.UI
 			if (OnBattlePhase != null) OnBattlePhase.Invoke(this, new OnBattlePhaseEventArgs { Phase = 0 });
 		}
 
-		public void pbChangePokemon(Battle.Pokemon attacker, Forms pokemon)
+		public void pbChangePokemon(Combat.Pokemon attacker, Forms pokemon)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void pbChangeSpecies(Battle.Pokemon attacker, Pokemons species)
+		public void pbChangeSpecies(Combat.Pokemon attacker, Pokemons species)
 		{
 			throw new NotImplementedException();
 		}
@@ -148,12 +148,12 @@ namespace PokemonUnity.UI
 			throw new NotImplementedException();
 		}
 
-		public void pbChooseMove(Battle.Pokemon pokemon, string message)
+		public void pbChooseMove(Combat.Pokemon pokemon, string message)
 		{
 			throw new NotImplementedException();
 		}
 
-		public int pbChooseNewEnemy(int index, Battle.Pokemon[] party)
+		public int pbChooseNewEnemy(int index, Combat.Pokemon[] party)
 		{
 			throw new NotImplementedException();
 		}
@@ -177,12 +177,12 @@ namespace PokemonUnity.UI
 			return e.Option;
 		}
 
-		public void pbCommonAnimation(string animname, Battle.Pokemon user, Battle.Pokemon target, int hitnum = 0)
+		public void pbCommonAnimation(string animname, Combat.Pokemon user, Combat.Pokemon target, int hitnum = 0)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void pbDamageAnimation(Battle.Pokemon pkmn, float effectiveness)
+		public void pbDamageAnimation(Combat.Pokemon pkmn, float effectiveness)
 		{
 			throw new NotImplementedException();
 		}
@@ -218,7 +218,7 @@ namespace PokemonUnity.UI
 			if (OnBattlePhase != null) OnBattlePhase.Invoke(this, new OnBattlePhaseEventArgs { Phase = 0 });
 		}
 
-		public void pbEXPBar(Battle.Pokemon pokemon, Battle.Pokemon battler, int startexp, int endexp, int tempexp1, int tempexp2)
+		public void pbEXPBar(Combat.Pokemon pokemon, Combat.Pokemon battler, int startexp, int endexp, int tempexp1, int tempexp2)
 		{
 			throw new NotImplementedException();
 		}
@@ -245,7 +245,7 @@ namespace PokemonUnity.UI
 			throw new NotImplementedException();
 		}
 
-		public int pbForgetMove(Battle.Pokemon pokemon, Moves moveToLearn)
+		public int pbForgetMove(Combat.Pokemon pokemon, Moves moveToLearn)
 		{
 			throw new NotImplementedException();
 		}
@@ -280,7 +280,7 @@ namespace PokemonUnity.UI
 			if (OnHPChanged != null) OnHPChanged.Invoke(this, new OnHPChangedEventArgs { Index = pkmn, Oldhp = oldhp, Animate = anim });
 		}
 
-		public void pbHPChanged(Battle.Pokemon pkmn, int oldhp, bool animate = false)
+		public void pbHPChanged(Combat.Pokemon pkmn, int oldhp, bool animate = false)
 		{
 			if (OnHPChanged != null) OnHPChanged.Invoke(this, new OnHPChangedEventArgs { Index = pkmn.Index, Oldhp = oldhp, Animate = animate });
 		}
@@ -295,7 +295,7 @@ namespace PokemonUnity.UI
 			throw new NotImplementedException();
 		}
 
-		public void pbLevelUp(Battle.Pokemon pokemon, Battle.Pokemon battler, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef)
+		public void pbLevelUp(Combat.Pokemon pokemon, Combat.Pokemon battler, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef)
 		{
 			if (OnLevelUp != null) OnLevelUp.Invoke(this, new OnLevelUpEventArgs { Pokemon = pokemon, Battler = battler, HP = oldtotalhp, Atk = oldattack, Def = olddefense, Spe = oldspatk, Spa = oldspatk, Spd = oldspdef });
 		}
@@ -352,7 +352,7 @@ namespace PokemonUnity.UI
 			throw new NotImplementedException();
 		}
 
-		public void pbSendOut(int battlerindex, Battle.Pokemon pkmn)
+		public void pbSendOut(int battlerindex, Combat.Pokemon pkmn)
 		{
 			throw new NotImplementedException();
 		}
@@ -387,7 +387,7 @@ namespace PokemonUnity.UI
 			throw new NotImplementedException();
 		}
 
-		public void pbStartBattle(Battle.Battle battle)
+		public void pbStartBattle(Combat.Battle battle)
 		{
 			throw new NotImplementedException();
 		}
@@ -427,12 +427,12 @@ namespace PokemonUnity.UI
 			throw new NotImplementedException();
 		}
 
-		public void pbTrainerSendOut(int battlerindex, Battle.Pokemon pkmn)
+		public void pbTrainerSendOut(int battlerindex, Combat.Pokemon pkmn)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void pbTrainerWithdraw(Battle.Battle battle, Battle.Pokemon pkmn)
+		public void pbTrainerWithdraw(Combat.Battle battle, Combat.Pokemon pkmn)
 		{
 			throw new NotImplementedException();
 		}
@@ -457,12 +457,12 @@ namespace PokemonUnity.UI
 			throw new NotImplementedException();
 		}
 
-		public void pbWithdraw(Battle.Battle battle, Battle.Pokemon pkmn)
+		public void pbWithdraw(Combat.Battle battle, Combat.Pokemon pkmn)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void pokeballThrow(Items ball, int shakes, bool critical, Battle.Pokemon targetBattler, IScene scene, Battle.Pokemon battler, int burst = -1, bool showplayer = false)
+		public void pokeballThrow(Items ball, int shakes, bool critical, Combat.Pokemon targetBattler, IScene scene, Combat.Pokemon battler, int burst = -1, bool showplayer = false)
 		{
 			throw new NotImplementedException();
 		}

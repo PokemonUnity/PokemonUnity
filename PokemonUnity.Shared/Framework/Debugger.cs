@@ -27,7 +27,7 @@ namespace PokemonUnity
 //#if !DEBUG
 //				UnityEngine.Debug.Log(value);
 //#endif
-				if (OnDebug != null) OnDebug.Invoke(Game.GameData, new OnDebugEventArgs { Message = value, Error = null });
+				if (Core.DEBUG && OnDebug != null) OnDebug.Invoke(Game.GameData, new OnDebugEventArgs { Message = value, Error = null });
 			}
 		}
 		private static string DebugWarning
@@ -37,9 +37,10 @@ namespace PokemonUnity
 //#if !DEBUG
 //				UnityEngine.Debug.LogWarning(value);
 //#endif
-				if (OnDebug != null) OnDebug.Invoke(Game.GameData, new OnDebugEventArgs { Message = value, Error = false });
+				if (Core.DEBUG && OnDebug != null) OnDebug.Invoke(Game.GameData, new OnDebugEventArgs { Message = value, Error = false });
 			}
 		}
+		//ToDo: Errors should be known whether in debug or production?
 		private static string DebugError
 		{
 			set

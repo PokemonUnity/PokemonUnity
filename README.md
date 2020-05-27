@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">Pokémon Framework by Herbert Milhomme using</h1>
+  <h1 align="center">Pokémon Framework with Unity (not __FOR__ Unity -- Important Distinction) by Herbert Milhomme</h1>
   <p align="center">
     <a href="https://opensource.org/licenses/BSD-3-Clause"><img alt="License" src="https://img.shields.io/badge/license-New%20BSD-blue.svg"/></a>
     <a href="https://herbertmilhomme.github.io/PokemonUnity/"><img alt="GitBook" src="https://img.shields.io/badge/view%20docs%20on-gitbook-blue.svg"/></a>
@@ -7,7 +7,9 @@
   </p>
 </p>
 
-Pokémon Framework is a framework written in csharp and designed to be built on top of, as a foundation and key component in any Pokémon remake or emulator. Because the project is so loosely coupled from any frontend component, it allows for the project to easily migrate between any engine or platform that's C# compatible (i.e. Unity3d, Websites/ASP.Net, or even commandline console, as a text based Pokémon battle simulator).
+## Summary 
+ 
+Pokémon Framework is a framework written in C-Sharp and designed to be built on top of, as a foundation and key component in any Pokémon remake or emulator. Because the project is so loosely coupled from any frontend component, it allows for the project to easily migrate between any engine or platform that's C# compatible (i.e. Unity3d, Websites/ASP.Net, or even commandline console, as a text based Pokémon battle simulator).
 
 This contains a C# port of [Pokémon Essentials](https://github.com/griest024/essentials-sample-project) (extension package for RPG Maker MV, which is written in Ruby), that I authored myself. Since Ruby follows similar object-oriented coding structures, it's easy to mirror the code to function the same (with very few and minor differences). 
 
@@ -20,6 +22,18 @@ Please be aware that some features in this branch are incomplete (the features i
 Please report any bugs if found.
 
 This project is **NOT** affiliated with Pokemon Essentials, Project Veekun, GameFramework, nor Pokemon Unity (I _was_ one of the core devs, and branched out into my own unique project).
+
+## Project Design 
+
+Kind of going to repeat myself here, but this is important to note. This project that utilizes Unity3d Game Developer Engine, as its' visual and front-end interface for end user, has been written designed in a way that the backend logic and mechanic is **SEPARATE** from everything a user SEES and HEARS (General User Experience; the visuals, audio, and how they interact with the code, to make it do things). I would like to advice developers and users of project source code to reference this [youtube video](https://www.youtube.com/watch?v=OuZrhykVytg) for context.
+
+Because the backend and frontend are decoupled, that means that there is _no_ unity libraries mixed in with _any_ of the pokemon logic or mechanics. Because unity is a frontend component, it is set aside to keep separation of responsibilities intact. Since the two bubbles are defined by their own constraints, developers can easily Unit Test the backend code using standard unit testing practices; and unit test unity design, using Unity's built-in unit test function.
+
+## Coding Standards
+### Enumeration
+
+All of the global enums are stored in a single directory, so that they're easily accessible across the project.
+Anything that ends in an "S" is most likely an `Enum`. `PokemonUnity.Pokemons` is an enum of Pokemon. (It will list all the individual pokemons in pokedex with their given IDs).
 
 ## Credits
 ### Links

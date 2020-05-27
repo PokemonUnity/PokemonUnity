@@ -14,6 +14,9 @@ namespace PokemonUnity.Saving
 	{
 		#region ImportantInfo
 		//public string BuildVersion { get; private set; } //SaveManager.GetBuildVersion();
+		/// <summary>
+		/// Creation date of this save file; The UTC DateTime this save file was created 
+		/// </summary>
 		public DateTime TimeCreated { get; private set; }
 		public Feature Features { get; private set; }
 		public Challenges Challenge { get; private set; }
@@ -66,12 +69,16 @@ namespace PokemonUnity.Saving
 		public int PokeCenterId { get; private set; }
 		public int ActiveMapId { get; private set; }
 		public Vector PlayerPosition { get; private set; }
+		//Rotation is a Quaternion, which is a float[4] variable
+		public Quaternion PlayerDirection { get; private set; }
 		/// <summary>
 		/// Which pokemon from player party is out in overworld with player;
 		/// 0 => None, 1-6 => Trainer's Party
 		/// </summary>
 		public byte FollowerPokemon { get; private set; }
 		public int RepelSteps { get; private set; }
+		//public Outfit PlayerOutfit { get; private set; }
+		//public DayCare PlayerDayCare { get; private set; }
 		//public string OverworldItemData { get; private set; }
 		//public string DayCareData { get; private set; } //KeyValuePair<Pokemon,steps>[]
 		//public string BerryData { get; private set; }
@@ -162,7 +169,7 @@ namespace PokemonUnity.Saving
 			)
 		{
 			//BuildVersion		= SaveManager.BuildVersion;//.GetBuildVersion();
-			TimeCreated			= DateTime.UtcNow;
+			TimeCreated			= player.StartDate;// != null	?  DateTimeOffset.Parse(date).UtcDateTime : DateTime.UtcNow;
 			Challenge			= challenge		?? Challenges.Classic;
 			Features			= features		?? new Feature();
 
@@ -179,12 +186,15 @@ namespace PokemonUnity.Saving
 			IsCreator			= player.IsCreator;//		?? false										;//Game.Player.IsCreator;
 			PlayTime			= player.PlayTime;//			?? new TimeSpan()								;//Game.Player.PlayTime;
 			PlayerPosition		= player.Position;//		?? new Vector()									;//Game.PlayerPosition; //Game.Player.playerPosition;
+			PlayerDirection		= player.Direction;//		?? Game.GameData.PlayerDirection;//Game.GameData.Player.playerDirection;
 			FollowerPokemon		= player.FollowPokemon;//		?? 0											;//Game.Player.followerPokemon;
 			ActiveMapId			= player.Area;//			?? 0											;//Game.Area;//Game.Player.mapName;.activeScene;
 			//ActivePcBox		= player.box			?? 0											;//Game.Player.ActivePcBox;
 			//PlayerPcNames		= player.boxnames		?? new string[Core.STORAGEBOXES]				;//Game.Player.PC.BoxNAmes;
 			//PlayerPcTextures	= player.boxtextures	?? new int[Core.STORAGEBOXES]					;//Game.Player.PC.BoxNAmes;
 			PokeCenterId		= (int)player.Checkpoint;//	?? 0											;//(int)Game.Checkpoint;//Game.Player.Checkpoint;pkmnCenter;
+			//PlayerOutfit		= player.Outfit;//	?? new Character.PlayerOutfit(0, 0, 0, 0, 0)
+			//PlayerDayCare		= player.DayCare	?? new Character.DayCare(0);//
 			PlayerParty			= //player.Party			?? 												//Game.Player.Trainer.Party.Serialize();
 				new SeriPokemon[player.Party.Length];
 			for (int i = 0; i < PlayerParty.Length; i++)
@@ -229,13 +239,17 @@ namespace PokemonUnity.Saving
 				, coin: PlayerCoins
 				, bank: PlayerSavings
 				, repel: RepelSteps
+				//, created: TimeCreated
 				, time: PlayTime
 				, position: PlayerPosition
+				//, direction: PlayerDirection
 				, follower: FollowerPokemon
 				, creator: IsCreator
 				//, map: 
 				, pokecenter: PokeCenterId
 				, gym: GymsChallenged
+				//, daycare: PlayerDayCare
+				//, outfit: PlayerOutfit
 			);
 		}
 		#endregion

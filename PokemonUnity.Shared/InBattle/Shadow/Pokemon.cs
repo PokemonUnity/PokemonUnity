@@ -1,13 +1,13 @@
 ﻿using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Localization;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
     //ToDo: Separate into new class and inherit?
     //public class ShadowPokemon : Pokemon 

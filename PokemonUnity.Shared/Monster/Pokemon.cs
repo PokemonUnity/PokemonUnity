@@ -548,7 +548,7 @@ namespace PokemonUnity.Monster
             /// <summary>
             /// Stole from another trainer, during battle
             /// </summary>
-            SNAGGED,
+            SNAGGED = -1,
             MET = 0,
             EGG = 1,
             //If EncounterType == Gift, then it's Traded
@@ -565,7 +565,6 @@ namespace PokemonUnity.Monster
         /// </summary>
         /// <remarks>
         /// Doubles as "HatchedMap"
-        /// ToDo: Make this an enum
         /// </remarks>
         public Locations ObtainMap { get; private set; }
         /// <summary>
@@ -2340,15 +2339,15 @@ namespace PokemonUnity.Monster
         ///	<see cref="Pokemons.PIKACHU"/>, 
         /// and MegaEvolutions?
         /// </remarks>
-        /// ToDo: Fix Forms and uncomment
-        /// Maybe a method, where when a form is changed
-        /// checks pokemon value and overwrites name and stats
-        /// Some forms have a SpeciesId and others are battle only
-        /// Note: All of the forms appear to be registered as Enums already...
-        /// Why not just change from `INT` to `(enum)Pokemons`?
+        [System.Obsolete("Deprecated until can swap out int values for `Forms` id")]
         //public Form Form { get { return Game.PokemonFormsData[pokemons][form]; } }
         //public bool SetForm (int value) { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) { form = value; return true; } else return false; } }
         public int Form { get { return form; } set { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) form = value; } }
+        //ToDo: Uncomment below and use instead of above
+        // Maybe a method, where when a form is changed
+        // checks pokemon value and overwrites name and stats
+        // Some forms have a SpeciesId and others are battle only
+        //public Forms Form { get { return Game.PokemonFormsData[pokemons][form].Id; } set { foreach(Form f in Game.PokemonFormsData[pokemons]) if (value == f.Id) form = f.Order; } }
         private int form { get; set; }
 
         /// <summary>

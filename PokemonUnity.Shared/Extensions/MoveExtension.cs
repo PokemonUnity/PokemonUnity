@@ -27,7 +27,7 @@ namespace PokemonUnity
 		{
 			return move != null || move.MoveId != Moves.NONE;
 		}
-		public static bool IsNotNullOrNone(this PokemonUnity.Battle.Move move)
+		public static bool IsNotNullOrNone(this PokemonUnity.Combat.Move move)
 		{
 			return move != null || move.MoveId != Moves.NONE;
 		}

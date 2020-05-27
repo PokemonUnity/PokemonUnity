@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using PokemonUnity;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
 	public enum Stats
 	{

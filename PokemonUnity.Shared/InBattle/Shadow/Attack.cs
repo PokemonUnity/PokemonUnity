@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
 //using PokemonUnity.Move;
 using System.Collections;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
 #pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
 	#region Shadow Moves

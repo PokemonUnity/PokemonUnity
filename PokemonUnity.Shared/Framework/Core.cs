@@ -599,12 +599,14 @@ namespace PokemonUnity
 		/// <summary>
 		/// The Global Switch that is set to ON when the player whites out.
 		/// </summary>
-		public const bool STARTING_OVER_SWITCH = true;
+		// ToDo: Move to Game class, as this is not a core const...
+		public static bool STARTING_OVER_SWITCH = true;
 		/// <summary>
 		/// The Global Switch that is set to ON when the player has seen Pokérus in the
 		///    Poké Center, and doesn't need to be told about it again.
 		/// </summary>
-		public const bool SEEN_POKERUS_SWITCH = false;
+		// ToDo: Move to Game class, as this is not a core const...
+		public static bool SEEN_POKERUS_SWITCH = false;
 		/// <summary>
 		/// The Global Switch which, while ON, makes all wild Pokémon created be
 		///    shiny.
@@ -627,11 +629,33 @@ namespace PokemonUnity
 		public const bool NO_MEGA_EVOLUTION = true;
 		#endregion
 
-		#region Audio
-		public class Audio
-		{
-
-		}
+		#region Move Settings
+		/// <summary>
+		/// If moves deal type damage (or if damage is affected by move type)
+		/// </summary>
+		public const bool NOTYPE						= false;	//= 0x01
+		/// <summary>
+		/// If pokemon type change damage (or if move damage is affected by pokemon type)
+		/// </summary>
+		/// Double negatives (ignore), so in code the bool is reversed
+		public const bool IGNOREPKMNTYPES			= false;    //= 0x02
+		/// <summary
+		/// If RNG affects damage
+		/// </summary>
+		public const bool NOWEIGHTING				= false;	//= 0x04
+		/// <summary>
+		/// If Moves can do Crit (extra) Damage
+		/// </summary>
+		public const bool NOCRITICAL				= false;	//= 0x08
+		/// <summary>
+		/// If Reflect-like Moves ignore Damage Modifiers
+		/// </summary>
+		public const bool NOREFLECT					= false;	//= 0x10
+		/// <summary>
+		/// I actually dont know what this is about...
+		/// </summary>
+		/// Use Ctrl+F to locate, i commented this out in code
+		public const bool SELFCONFUSE				= false;	//= 0x20
 		#endregion
 	}
 }

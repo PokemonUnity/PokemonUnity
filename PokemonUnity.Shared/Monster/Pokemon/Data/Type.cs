@@ -5,7 +5,7 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Attack;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
 
 namespace PokemonUnity.Monster.Data
@@ -42,17 +42,17 @@ namespace PokemonUnity.Monster.Data
 				mod3 = GetEffectiveness(atk, target2);
 			return mod1 * mod2 * mod3;
 		}
-		public static Battle.TypeEffective GetCombinedEffectiveness(PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
+		public static Combat.TypeEffective GetCombinedEffectiveness(PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
 		{
 			float e = GetCombinedEffectivenessModifier(atk, target1, target2, target3);
 			if (e == 0)
-				return Battle.TypeEffective.Ineffective;
+				return Combat.TypeEffective.Ineffective;
 			else if (e > 0 && e < 8)
-				return Battle.TypeEffective.NotVeryEffective;
+				return Combat.TypeEffective.NotVeryEffective;
 			else if (e == 8)
-				return Battle.TypeEffective.NormalEffective;
+				return Combat.TypeEffective.NormalEffective;
 			else //if (e > 8)
-				return Battle.TypeEffective.SuperEffective;
+				return Combat.TypeEffective.SuperEffective;
 			//return TypeEffective.Broken;
 		}
 		public string ToString(TextScripts text)

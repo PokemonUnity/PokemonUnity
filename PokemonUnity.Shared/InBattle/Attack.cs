@@ -3,41 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
 //using PokemonUnity.Move;
 using System.Collections;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
 	/// <summary>
 	/// Uses current battle and manipulates the data then return the current battle with updated values.
 	/// </summary>
-	/// Pokemon variable should use the pokemon trainerid as hashvalue, or an int of where pokemon is on battle lineup
-	//public Func<Battle, Pokemon, Move, Battle> Func { get; set; }
-	//public Action<Battle, Pokemon, Move> Action { get; set; }
-	//public //async Task<Battle> 
-	//	void GenerateBattleTurn(System.Linq.Expressions.Expression<Func<Battle, Pokemon, Move, Battle>> predicate)
-	//{
-	//	//return await _subscriptionPaymentRepository.GetAll().LastOrDefaultAsync(predicate);
-	//}
-
+	// ToDo: Move content to base class; Rename to Battle.Move, and remove
 	public class PokeBattle_Move : Move, IPokeBattle_Move
 	{
-		public bool overridetype { get; set; }
-		public bool sunny { get; set; }
-		public bool checks { get; set; }
-		public bool doubled { get; set; }
-		public bool forcedamage { get; set; }
-		public bool immediate { get; set; }
+		public bool overridetype { get; protected set; }
+		//public bool sunny { get; set; }
+		//public bool checks { get; set; }
+		public bool doubled { get; protected set; }
+		//public bool forcedamage { get; set; }
+		public bool immediate { get; protected set; }
 		public bool doubledamage { get; set; }
 		public int calcbasedmg { get; set; }
 		//public int BaseDamage { get; set; }
 		//public byte PP { get; set; }
 		public byte accuracy { get; set; }
-		public List<byte> participants { get; set; }
+		//public List<byte> participants { get; set; }
 		//public PokemonUnity.Attack.Effect function { get; set; }
-		public Items berry { get; set; }
+		//public Items berry { get; set; }
 		public Moves id { get; set; }
 		public Types type { get; set; }
 		public Battle battle { get; set; }
@@ -196,6 +188,8 @@ namespace PokemonUnity.Battle
 	//public class Function
 	//{
 #pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
+	// ToDo: Rename from PokemonEssential's Function to Veekun's Attack.Data.Effects
+	// https://essentialsdocs.fandom.com/wiki/Function_codes
 	#region Battle Class Functions
 	/// <summary>
 	/// Superclass that handles moves using a non-existent function code.
@@ -3718,7 +3712,6 @@ namespace PokemonUnity.Battle
 
 			Abilities oldabil = opponent.Ability;
 			opponent.effects.GastroAcid = true;
-
 			opponent.effects.Truant = false;
 
 			battle.pbDisplay(_INTL("{1}'s Ability was suppressed!", opponent.ToString()));
@@ -4138,7 +4131,6 @@ namespace PokemonUnity.Battle
 			if (this.battle.field.FusionBolt)
 			{
 				this.battle.field.FusionBolt = false;
-
 				this.doubled = true;
 				return (int)Math.Round(damagemult * 2.0f);
 			}
@@ -4718,6 +4710,7 @@ namespace PokemonUnity.Battle
 	/// <summary>
 	public class PokeBattle_Move_094 : PokeBattle_Move
 	{
+		public bool forcedamage { get; set; }
 		public PokeBattle_Move_094(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
@@ -4812,6 +4805,7 @@ namespace PokemonUnity.Battle
 	/// <summary>
 	public class PokeBattle_Move_096 : PokeBattle_Move
 	{
+		public Items berry { get; set; }
 		public PokeBattle_Move_096(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
@@ -6477,6 +6471,7 @@ namespace PokemonUnity.Battle
 	/// <summary>
 	public class PokeBattle_Move_0BF : PokeBattle_Move
 	{
+		public bool checks { get; set; }
 		public PokeBattle_Move_0BF(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbIsMultiHit()
 		{
@@ -6537,6 +6532,7 @@ namespace PokemonUnity.Battle
 	/// <summary>
 	public class PokeBattle_Move_0C1 : PokeBattle_Move
 	{
+		public List<byte> participants { get; set; }
 		public PokeBattle_Move_0C1(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbIsMultiHit()
 		{
@@ -6645,6 +6641,7 @@ namespace PokemonUnity.Battle
 	/// <summary>
 	public class PokeBattle_Move_0C4 : PokeBattle_Move
 	{
+		public bool sunny { get; set; }
 		public PokeBattle_Move_0C4(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{

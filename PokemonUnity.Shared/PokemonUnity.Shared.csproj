@@ -39,12 +39,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\New folder\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Libraries\SQLite\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,8 +62,10 @@
     <Compile Include="Character\Gear\Phone.cs" />
     <Compile Include="Character\Gear\Pokedex.cs" />
     <Compile Include="Character\Gear\PokeRadar.cs" />
+    <Compile Include="Character\DayCare.cs" />
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player\Base.cs" />
+    <Compile Include="Character\Player\Outfit.cs" />
     <Compile Include="Character\Trainer\TrainerId.cs" />
     <Compile Include="Character\Trainer.cs" />
     <Compile Include="Extensions\ItemExtension.cs" />
@@ -119,9 +121,6 @@
     <Compile Include="Monster\Pokemon\Data\Form.cs" />
     <Compile Include="Monster\Pokemon\Data\Moveset.cs" />
     <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
-    <Compile Include="Monster\Pokemon\PokemonData\Evolution.cs" />
-    <Compile Include="Monster\Pokemon\PokemonData\Moveset.cs" />
-    <Compile Include="Monster\Pokemon\PokemonData\MoveTree.cs" />
     <Compile Include="Overworld\Wild\Encounter.cs" />
     <Compile Include="Overworld\Area.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -137,17 +136,12 @@
     <Compile Include="Saving\SerializableClasses\SeriV2.cs" />
     <Compile Include="Saving\SerializableClasses\SeriV3.cs" />
     <Compile Include="InBattle\Shadow\Attack.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriV4.cs" />
     <Compile Include="Translations\Translations.cs" />
     <Compile Include="Translations\Translator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GameFramework\GameFramework.csproj">
-      <Project>{109d7f39-79ab-4862-9f73-0b8c638930c6}</Project>
-      <Name>GameFramework</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

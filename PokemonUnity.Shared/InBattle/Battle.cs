@@ -2,7 +2,7 @@
 //using PokemonUnity.Pokemon;
 using PokemonUnity.Inventory;
 //using PokemonUnity.Attack;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using PokemonUnity.Character;
 using System;
 using System.Collections.Generic;
@@ -10,11 +10,11 @@ using System.Linq;
 using System.Text;
 using PokemonUnity.Localization;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
 	/// <summary>
 	/// </summary>
-	public partial class Battle //: UnityUtilityIntegration
+	public partial class Battle
 	{
 		#region Variables
 		/// <summary>
@@ -1275,7 +1275,7 @@ namespace PokemonUnity.Battle
 		/// <returns></returns>
 		public bool CanShowCommands(int idxPokemon)
 		{
-			PokemonUnity.Battle.Pokemon thispkmn = @battlers[idxPokemon];
+			PokemonUnity.Combat.Pokemon thispkmn = @battlers[idxPokemon];
 			if (thispkmn.isFainted()) return false;
 			if (thispkmn.effects.TwoTurnAttack > 0) return false; 
 			if (thispkmn.effects.HyperBeam > 0) return false; 
@@ -1289,7 +1289,7 @@ namespace PokemonUnity.Battle
 	#region Attacking
 		public bool CanShowFightMenu(int idxPokemon)
 		{
-			PokemonUnity.Battle.Pokemon thispkmn = @battlers[idxPokemon];
+			PokemonUnity.Combat.Pokemon thispkmn = @battlers[idxPokemon];
 			if (!CanShowCommands(idxPokemon)) return false;
 
 			// No moves that can be chosen
@@ -2539,8 +2539,7 @@ namespace PokemonUnity.Battle
           pbDisplayPaused(_INTL("{1} gained {2} Exp. Points!",thispoke.Name,exp.ToString()));
         }
       }
-      //int newlevel=Experience.GetLevelFromExperience(newexp,growthrate);
-      int newlevel=ex.NextLevel-1;
+      int newlevel=Monster.Data.Experience.GetLevelFromExperience(growthrate,newexp);
       //int tempexp=0;
       int curlevel=thispoke.level;
       if (newlevel<curlevel) {

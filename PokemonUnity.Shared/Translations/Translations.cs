@@ -227,7 +227,6 @@ public static class LanguageExtension //: GameText
 {
     static LocalizationDictionaryProviderBase _dictionary { get { return GameText.Instance; } } //new GameText().Instance
 	/// <summary>
-	/// 
 	/// </summary>
 	/// <param name="text"></param>
 	/// <param name="textId"></param>

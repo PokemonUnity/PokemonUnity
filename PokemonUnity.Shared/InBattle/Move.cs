@@ -2,19 +2,20 @@
 //using PokemonUnity.Pokemon;
 using PokemonUnity.Inventory;
 //using PokemonUnity.Attack;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity.Overworld;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
 	/// <summary>
 	/// A Move placeholder class to be used while in-Battle, 
 	/// to prevent temp changes from being permanent to original pokemon profile
 	/// </summary>
+	// ToDo: Rename to `MoveFactory`
 	public abstract class Move : IPokeBattle_Move//PokemonUnity.Attack.Move
 	{
 		#region Variables
@@ -82,7 +83,7 @@ namespace PokemonUnity.Battle
 		public string Name					{ get { return Game.MoveData[MoveId].Name; } }
 		public string EffectString			{ get; set; }
 		public string Nothing = "But nothing happened!";
-		//protected Battle Battle				{ get { return Game.battle; } }
+		//public Battle Battle				{ get { return this.battle ?? Game.battle; } }
 		internal Battle Battle				{ get; set; }
 		#endregion
 
@@ -979,6 +980,7 @@ public virtual int TotalPP { get {
 	return damagemult;
   }
 
+//ToDo: Do single round at end of calculation and not during...
   public virtual int pbCalcDamage(Pokemon attacker,Pokemon opponent, int options= 0){
 	opponent.damagestate.Critical=false;
 	opponent.damagestate.TypeMod=0;

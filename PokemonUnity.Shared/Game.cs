@@ -517,11 +517,6 @@ namespace PokemonUnity
 				}
 			}
 
-			//public static SaveDataOld[] savedGames = new SaveDataOld[]
-			//{
-			//	null, null, null
-			//};
-
 			public static void Save()
 			{
 				//if (SaveDataOld.currentSave != null)

@@ -34,7 +34,6 @@ namespace PokemonUnity
 	{
 		#region Variables
 		const string FilePokemonXML = "";
-		//ToDo: ReadOnly Immutable Dictionaries...
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonEvolution[]> PokemonEvolutionsData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]> PokemonItemsData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.Form[]> PokemonFormsData { get; private set; }
@@ -44,9 +43,11 @@ namespace PokemonUnity
 		public static Dictionary<Types,PokemonUnity.Monster.Data.Type> TypeData { get; private set; }
 		public static Dictionary<Moves,Attack.Data.MoveData> MoveData { get; private set; }
 		public static Dictionary<Moves,Attack.Data.MetaData> MoveMetaData { get; private set; }
+		public static Dictionary<Attack.Data.Effects,Combat.Move> MoveEffectData { get; private set; }
 		public static Dictionary<Items,ItemData> ItemData { get; private set; }
 		public static Dictionary<Items,Berry> BerryData { get; private set; }
 		public static Dictionary<Regions,Locations[]> RegionData { get; private set; }
+		public static Dictionary<Regions,Pokedex> PokedexData { get; private set; }
 		/// <summary>
 		/// Key: <seealso cref="Locations"/> | Value: <seealso cref="Area.Id"/>
 		/// </summary>
@@ -92,71 +93,73 @@ namespace PokemonUnity
 			PokemonMovesData = new Dictionary<Pokemons, Monster.Data.PokemonMoveTree>();
 			if (sql) //using (con)
 				return GetPokemonMovesFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitPokemonEvolutions(bool sql = true)
 		{
 			PokemonEvolutionsData = new Dictionary<Pokemons, Monster.Data.PokemonEvolution[]>();
 			if (sql) //using (con)
 				return GetPokemonEvolutionsFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitPokemonItems(bool sql = true)
 		{
 			PokemonItemsData = new Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]>();
 			if (sql) //using (con)
 				return GetPokemonItemsFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitPokemonForms(bool sql = true)
 		{
 			PokemonFormsData = new Dictionary<Pokemons, Monster.Data.Form[]>();
 			if (sql) //using (con)
 				return GetPokemonFormsFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitNatures(bool sql = true)
 		{
 			NatureData = new Dictionary<Natures, Nature>();
 			if (sql) //using (con)
 				return GetNaturesFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitTypes(bool sql = true)
 		{
 			TypeData = new Dictionary<Types, PokemonUnity.Monster.Data.Type>();
 			if (sql) //using (con)
 				return GetTypesFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitMoves(bool sql = true)
 		{
 			MoveData = new Dictionary<Moves, Attack.Data.MoveData>();
 			MoveMetaData = new Dictionary<Moves, Attack.Data.MetaData>();
+			MoveEffectData = new Dictionary<Attack.Data.Effects, Combat.Move>();
 			if (sql) //using (con)
 				return GetMovesFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitItems(bool sql = true)
 		{
 			ItemData = new Dictionary<Items, ItemData>();
 			if (sql) //using (con)
 				return GetItemsFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitBerries(bool sql = true)
 		{
 			BerryData = new Dictionary<Items, Berry>();
 			if (sql) //using (con)
 				return GetBerriesFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitRegions(bool sql = true)
 		{
 			RegionData = new Dictionary<Regions, Locations[]>();
+			//PokedexData = new Dictionary<Regions, Pokedex>();
 			if (sql) //using (con)
 				return  GetRegionsFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitLocations(bool sql = true)
 		{
@@ -164,7 +167,7 @@ namespace PokemonUnity
 			AreaData = new Dictionary<int, Area>();
 			if (sql) //using (con)
 				return  GetLocationsFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitEncounters(bool sql = true)
 		{
@@ -172,7 +175,7 @@ namespace PokemonUnity
 			EncounterData = new Dictionary<int, Encounter>();
 			if (sql) //using (con)
 				return GetEncountersFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitMachines(bool sql = true)
 		{
@@ -180,7 +183,7 @@ namespace PokemonUnity
 			//EncounterData = new Dictionary<int, Encounter>();
 			if (sql) //using (con)
 				return GetMachinesFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
 		}
 		public static bool InitTrainers(bool sql = true)
 		{
@@ -188,7 +191,15 @@ namespace PokemonUnity
 			//TrainerData = new Dictionary<int, Encounter>();
 			if (sql) //using (con)
 				return GetTrainersFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false;
+		}
+		public static bool InitPokedex(bool sql = true)
+		{
+			//Init in Region Method
+			PokedexData = new Dictionary<Regions, Pokedex>();
+			if (sql) //using (con)
+				return GetPokedexFromSQL(con);
+			else return false;
 		}
 		//public static bool InitLoadFile(bool sql = true)
 		//{
@@ -196,7 +207,7 @@ namespace PokemonUnity
 		//	//TrainerData = new Dictionary<int, Encounter>();
 		//	if (sql) //using (con)
 		//		return GetTrainersFromSQL(con);
-		//	else return GetPokemonsFromXML();
+		//	else return false;
 		//}
 		#endregion
 
@@ -338,8 +349,8 @@ namespace PokemonUnity
 							PokemonData.Add((Pokemons)int.Parse((string)reader["id"].ToString()),
 								new PokemonUnity.Monster.Data.PokemonData(
 									Id: (Pokemons)int.Parse((string)reader["id"].ToString())
-									,baseForm: (Pokemons)int.Parse((string)reader["species_id"].ToString())
-									//,regionalDex: new int[].ToString() { int.Parse((string)reader["ReDex"].ToString()) }
+									,baseForm: (Forms)int.Parse((string)reader["species_id"].ToString())
+									//,regionalDex: new int[] { int.Parse((string)reader["ReDex"].ToString()) }
 									,type1: (Types)int.Parse(string.IsNullOrEmpty((string)reader["type1"].ToString()) ? "0" : (string)reader["type1"].ToString())
 									,type2: (Types)int.Parse(string.IsNullOrEmpty((string)reader["type2"].ToString()) ? "0" : (string)reader["type2"].ToString())
 									,ability1: (Abilities)int.Parse(string.IsNullOrEmpty((string)reader["ability1"].ToString()) ? "0" : (string)reader["ability1"].ToString())
@@ -1984,6 +1995,67 @@ namespace PokemonUnity
 				//}
 				return true;
 			} catch (SQLiteException e) {
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetPokedexFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = //"select distinct move_id, pokemon_id, [level], pokemon_move_method_id from pokemon_moves --where version_group_id=18 order by pokemon_id ASC";
+					@"select p.id, p.identifier, ifnull(p.region_id,0) as region_id,
+				group_concat(DISTINCT d.species_id --ORDER BY d.pokedex_number ASC
+				) as species_group,
+				n.name, n.description,
+				group_concat(DISTINCT v.version_group_id) as version_group
+				from pokedexes as p
+				left join pokemon_dex_numbers as d on p.id=d.pokedex_id 
+				left join pokedex_prose as n on p.id = n.pokedex_id AND n.local_language_id = 9
+				left join pokedex_version_groups as v on p.id = v.pokedex_id
+				where p.is_main_series=1 --and v.version_group_id=18
+				group by p.id
+				order by p.id ASC, d.pokedex_number ASC";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using (reader)
+				{
+					//Dictionary<Pokemons, List<Monster.Data.PokemonMoveset>> p = new Dictionary<Pokemons, List<Monster.Data.PokemonMoveset>>();
+					//while (reader.Read()) //if(reader.Read())
+					//{
+					//	if (!p.ContainsKey((Pokemons)int.Parse((string)reader["pokemon_id"].ToString())))
+					//		p.Add((Pokemons)int.Parse((string)reader["pokemon_id"].ToString()),
+					//			new List<Monster.Data.PokemonMoveset>());
+					//	p[(Pokemons)int.Parse((string)reader["id"].ToString())].Add(
+					//		new PokemonUnity.Monster.Data.PokemonMoveset(
+					//			dexId: (Pokedexes)int.Parse((string)reader["id"].ToString())
+					//			//,regionId: (Regions)int.Parse((string)reader["region_id"].ToString())
+					//			//,dexArray: int.Parse((string)reader["species_group"].ToString())
+					//			//,generation: int.Parse((string)reader["version_group_id"].ToString())
+					//		)
+					//	);
+					//}
+					////Step 5: Closing up
+					//reader.Close();
+					//reader.Dispose();
+					  #endregion
+					//PokemonMovesData.Add(Pokemons.NONE, new Monster.Data.PokemonMoveTree(new Monster.Data.PokemonMoveset[] { }));
+					//foreach (var pkmn in p)
+					//{
+					//	PokemonMovesData.Add(pkmn.Key, new Monster.Data.PokemonMoveTree(pkmn.Value.ToArray()));
+					//}
+				}
+				return true;
+			}
+			catch (SQLiteException e)
+			{
 				GameDebug.LogError("SQL Exception Message:" + e.Message);
 				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
 				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);

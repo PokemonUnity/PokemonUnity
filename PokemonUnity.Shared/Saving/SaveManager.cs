@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System;
+using PokemonUnity.Monster;
+using PokemonUnity.Inventory;
+using Newtonsoft.Json;
 
 namespace PokemonUnity.Saving
 {
-	using PokemonUnity.Monster;
-	using PokemonUnity.Inventory;
-	using Newtonsoft.Json;
-
 	public static class SaveManager
 	{
 		#region Variables
@@ -28,6 +27,7 @@ namespace PokemonUnity.Saving
 		/// </remarks>
 		private const bool UseAppdate = false;
 #if DEBUG
+		//Gets saved to a folder in `C:` drive, called `Saves`
 		public static readonly string gameConfig = @"\Saves\ConfigFile.pku"; //TestProject\bin\Debug
 		public static readonly string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
 		//private static string playerSave = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/SaveFile.pku"; //TestProject\bin\Debug

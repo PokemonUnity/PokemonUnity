@@ -290,7 +290,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x01F = 31,
 		/// <summary>
-		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target <seealso cref="Battle.BattlerEffects.Flinch"/>.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target <seealso cref="Combat.BattlerEffects.Flinch"/>.
 		/// </summary>
 		/// <remarks>
 		/// ROLLING-KICK,HEADBUTT,BITE,BONE-CLUB,WATERFALL,ROCK-SLIDE,HYPER-FANG,NEEDLE-ARM,ASTONISH,EXTRASENSORY,DARK-PULSE,AIR-SLASH,DRAGON-RUSH,ZEN-HEADBUTT,IRON-HEAD,HEART-STAMP,ICICLE-CRASH,ZING-ZAP

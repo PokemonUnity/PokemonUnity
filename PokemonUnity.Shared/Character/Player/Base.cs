@@ -51,11 +51,9 @@ namespace PokemonUnity.Character
 		/// <summary>
 		/// Rotation of player model in overworld scene
 		/// </summary>
-		/// Might be useful if the game is in 2d, but if in 3d... will need to use x,y... dont need 3rd axis
-		/// scratch that... only need rotation on single quantization axis...
 		/// not sure direction is even needed in save/load profile...
 		/// Game should load player facing camera by default.
-		public float Direction { get; set; }
+		public Quaternion Direction { get; set; }
 		/// <summary>
 		/// Last town or Pokemon Center visited, that's used as Respawn Point upon a Player's Defeat
 		/// </summary>
@@ -75,19 +73,10 @@ namespace PokemonUnity.Character
 		//ToDo: Berry Field Data (0x18 per tree, 36 trees)
 		//ToDo: Honey Tree, smearing honey on tree will spawn pokemon in 6hrs, for 24hrs (21 trees)
 		//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
-		//ToDo: Missing Variable for DayCare, maybe `Pokemon[,]` for multipe locations?
-		//Daycare Data
-		//(Slot 1) Occupied Flag 
-		//(Slot 1) Steps Taken Since Depositing 
-		//(Slot 1) Box EK6 1 
-		//(Slot 2) Occupied Flag 
-		//(Slot 2) Steps Taken Since Depositing2 
-		//(Slot 2) Box EK6 2 
-		//Flag (egg available) 
-		//RNG Seed
 		//ToDo: a bool variable for PC background (if texture is unlocked) `bool[]`
+		//public static string PlayerDayCareData { get; set; } 
+		public DayCare DayCare { get; private set; } 
 		public static string PlayerItemData { get; set; }
-		public static string PlayerDayCareData { get; set; } //KeyValuePair<Pokemon,steps>[]
 		public static string PlayerBerryData { get; set; }
 		public static string PlayerNPCData { get; set; }
 		public static string PlayerApricornData { get; set; }
@@ -140,7 +129,7 @@ namespace PokemonUnity.Character
 				return x; //Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 0] == 1).ToArray().Length; } }//.Where(x => Pokedex[x, 0] == 1)
 			}
 		}
-		 //ToDo: Adventure Start Date; Use date of save file (game saves after player is made)
+		public System.DateTime StartDate { get; private set; }
 		public System.TimeSpan PlayTime { get; private set; }
 
 		/// <summary>
@@ -155,17 +144,17 @@ namespace PokemonUnity.Character
 		#endregion
 
 		#region Player Customization
-		///// <summary>
-		///// Active player design
-		///// </summary>
-		///// ToDo: Player outfits should be stored and loaded from the player PC?
-		///// Rather than adding another variable for `Item` data...
-		///// Not sure if player custom designs are an `Item` type or a custom enum...
+		/// <summary>
+		/// Active player design
+		/// </summary>
+		/// Rather than adding another variable for `Item` data...
+		/// Not sure if player custom designs are an `Item` type or a custom enum...
 		//public int playerOutfit	{ get; set; }
-		//public int playerScore	{ get; set; }
 		//public int playerShirt	{ get; set; }
-		//public int playerMisc	{ get; set; }
-		//public int playerHat	{ get; set; }
+		//public int playerPant		{ get; set; }
+		//public int playerMisc		{ get; set; }
+		//public int playerHat		{ get; set; }
+		public PlayerOutfit Outfit	{ get; set; }
 		#endregion
 		#endregion
 
@@ -174,6 +163,7 @@ namespace PokemonUnity.Character
 		{
 			//playerPokedex = new bool?[Pokemon.PokemonData.Database.Length];
 			Pokedex = new byte[Game.PokemonData.Where(x => x.Value.IsDefault).Count(), 3];
+			StartDate = DateTime.UtcNow; //new DateTime();
 			PlayTime = new TimeSpan();
 			Position = new Vector();
 			Bag = new Bag();
@@ -262,46 +252,6 @@ namespace PokemonUnity.Character
 		#endregion
 
 		#region Methods
-		//public void LoadTrainer(Player trainerSaveData) { }
-		//public void LoadTrainer(PokemonUnity.Saving.GameState trainerSaveData)
-		//{
-		//	trainerId = trainerSaveData.TrainerID;
-		//	secretId = trainerSaveData.SecretID;
-		//	Name = trainerSaveData.PlayerName;
-		//	IsMale = trainerSaveData.IsMale;
-		//	//mapName = trainerSaveData.ActiveScene;
-		//	//ActivePcBox = trainerSaveData.ActivePcBox;
-		//	//playerPosition = trainerSaveData.PlayerPosition;
-		//	//playerDirection = trainerSaveData.PlayerDirection;
-		//	//Checkpoint = (Locations)trainerSaveData.PokeCenterId;
-		//	//Money = trainerSaveData.PlayerMoney;// > Core.MAXMONEY ? Core.MAXMONEY : trainerSaveData.PlayerMoney;
-		//	//Coins = trainerSaveData.PlayerCoins;// > Core.MAXCOINS ? Core.MAXCOINS : trainerSaveData.PlayerCoins;
-		//	//Pokedex = trainerSaveData.Pokedex2; 
-		//	//PlayTime = trainerSaveData.PlayTime;
-		//	//GymsBeatTime = trainerSaveData.GymsChallenged;
-		//	//Pokedex2 = new byte[dex2.GetLength(0)][];
-		//	//for (int i = 0; i < Pokedex2.GetLength(0); i++)
-		//	//{
-		//	//	Pokedex2[i] = new byte[dex2.GetLength(1)];
-		//	//	for (int j = 0; j < Pokedex2.GetLength(1); j++)
-		//	//	{
-		//	//		Pokedex2[i][j] = (byte)dex2[i, j];
-		//	//	}
-		//	//}
-		//	//int FirstDim = trainerSaveData.Pokedex2.Length;
-		//	//int SecondDim = trainerSaveData.Pokedex2.GroupBy(row => row.Length).Single().Key;
-		//	//Pokedex = new byte[trainerSaveData.Pokedex2.GetLength(0),trainerSaveData.Pokedex2.GetLength(1)];
-		//	//Pokedex = new byte[FirstDim, SecondDim];
-		//	//for (int i = 0; i < FirstDim; ++i)
-		//	//	for (int j = 0; j < SecondDim; ++j)
-		//	//		Pokedex[i, j] = trainerSaveData.Pokedex2[i][j];
-		//	//for (int i = 0; i < /*Game.Player.Trainer.*/Party.Length; i++)
-		//	//{
-		//	//	Party[i] = trainerSaveData.PlayerParty[i];
-		//	//}
-		//	Party = trainerSaveData.PlayerParty.Deserialize();
-		//}
-
 		/// <summary>
 		/// Skims every available box player has, and attempts to add pokemon.
 		/// </summary>

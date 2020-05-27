@@ -18,7 +18,7 @@ namespace PokemonUnity
 		{
 			return PokemonUnity.Monster.Data.Type.GetCombinedEffectivenessModifier(atk, target1, target2, target3);
 		}
-		public static PokemonUnity.Battle.TypeEffective GetCombinedEffectiveness(this PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
+		public static PokemonUnity.Combat.TypeEffective GetCombinedEffectiveness(this PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
 		{
 			return PokemonUnity.Monster.Data.Type.GetCombinedEffectiveness(atk, target1, target2, target3);
 		}

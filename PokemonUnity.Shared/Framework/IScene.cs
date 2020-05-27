@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
 
 namespace PokemonUnity
@@ -50,7 +50,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Shows the player's Poké Ball being thrown to capture a Pokémon.
 		/// </summary>
-		void pokeballThrow(Items ball, int shakes,bool critical,Battle.Pokemon targetBattler,IScene scene,Battle.Pokemon battler, int burst = -1, bool showplayer = false);
+		void pokeballThrow(Items ball, int shakes,bool critical,Combat.Pokemon targetBattler,IScene scene,Combat.Pokemon battler, int burst = -1, bool showplayer = false);
 	}
 	/*
 	/// <summary>
@@ -230,18 +230,18 @@ namespace PokemonUnity
 		/// Shows the party line-ups appearing on-screen
 		/// </summary>
 		void partyAnimationUpdate();
-		void pbStartBattle(PokemonUnity.Battle.Battle battle);
+		void pbStartBattle(PokemonUnity.Combat.Battle battle);
 		void pbEndBattle(BattleResults result);
 		void pbRecall(int battlerindex);
-		void pbTrainerSendOut(int battlerindex,Battle.Pokemon pkmn);
+		void pbTrainerSendOut(int battlerindex,Combat.Pokemon pkmn);
 		/// <summary>
 		/// Player sending out Pokémon
 		/// </summary>
 		/// <param name="battlerindex"></param>
 		/// <param name="pkmn"></param>
-		void pbSendOut(int battlerindex,Battle.Pokemon pkmn);
-		void pbTrainerWithdraw(Battle.Battle battle,Battle.Pokemon pkmn);
-		void pbWithdraw(Battle.Battle battle,Battle.Pokemon pkmn);
+		void pbSendOut(int battlerindex,Combat.Pokemon pkmn);
+		void pbTrainerWithdraw(Combat.Battle battle,Combat.Pokemon pkmn);
+		void pbWithdraw(Combat.Battle battle,Combat.Pokemon pkmn);
 		void pbMoveString(string move);
 		void pbBeginAttackPhase();
 		void pbSafariStart();
@@ -299,7 +299,7 @@ namespace PokemonUnity
 		/// <param name="targettype"></param>
 		void pbChooseTarget(int index, int targettype);
 		int pbSwitch(int index, bool lax, bool cancancel);
-		void pbDamageAnimation(Battle.Pokemon pkmn,float effectiveness);
+		void pbDamageAnimation(Combat.Pokemon pkmn,float effectiveness);
 		/// <summary>
 		/// This method is called whenever a Pokémon's HP changes.
 		/// Used to animate the HP bar.
@@ -343,9 +343,9 @@ namespace PokemonUnity
 		void pbChangePokemon(Pokemon attacker, Monster.Forms pokemon);
 		void pbSaveShadows();
 		void pbFindAnimation(Moves moveid, int userIndex,int hitnum);
-		void pbCommonAnimation(string animname,Battle.Pokemon user,Battle.Pokemon target, int hitnum = 0);
-		void pbAnimation(Moves moveid,Battle.Pokemon user,Battle.Pokemon target, int hitnum = 0);
-		void pbAnimationCore(string animation,Battle.Pokemon user,Battle.Pokemon target, bool oppmove = false);
+		void pbCommonAnimation(string animname,Combat.Pokemon user,Combat.Pokemon target, int hitnum = 0);
+		void pbAnimation(Moves moveid,Combat.Pokemon user,Combat.Pokemon target, int hitnum = 0);
+		void pbAnimationCore(string animation,Combat.Pokemon user,Combat.Pokemon target, bool oppmove = false);
 		void pbLevelUp(Pokemon pokemon,Pokemon battler,int oldtotalhp,int oldattack,int olddefense,int oldspeed,int oldspatk,int oldspdef);
 		void pbThrowAndDeflect(Items ball,int targetBattler);
 		void pbThrow(Items ball,int shakes,bool critical,int targetBattler, bool showplayer = false);
@@ -359,10 +359,10 @@ namespace PokemonUnity
 
 	public class ItemHandlers 
 	{ 
-		public static bool triggerBattleUseOnPokemon(Items item,Battle.Pokemon pokemon,Battle.Pokemon battler,IPokeBattle_Scene scene) { return false; } 
-		public static bool triggerBattleUseOnBattler(Items item,Battle.Pokemon pokemon, IPokeBattle_Scene scene) { return false; } 
-		public static bool triggerBattleUseOnBattler(Items item,Battle.Pokemon pokemon,Battle.Battle battle) { return false; } 
-		public static bool triggerUseInBattle(Items item,Battle.Pokemon pokemon,Battle.Battle battle) { return false; } 
+		public static bool triggerBattleUseOnPokemon(Items item,Combat.Pokemon pokemon,Combat.Pokemon battler,IPokeBattle_Scene scene) { return false; } 
+		public static bool triggerBattleUseOnBattler(Items item,Combat.Pokemon pokemon, IPokeBattle_Scene scene) { return false; } 
+		public static bool triggerBattleUseOnBattler(Items item,Combat.Pokemon pokemon,Combat.Battle battle) { return false; } 
+		public static bool triggerUseInBattle(Items item,Combat.Pokemon pokemon,Combat.Battle battle) { return false; } 
 		public static bool hasUseInBattle(Items item) { return false; }
 	}
 }

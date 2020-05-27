@@ -2,13 +2,13 @@
 //using PokemonUnity.Pokemon;
 using PokemonUnity.Inventory;
 //using PokemonUnity.Attack;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
 	public partial class Battle 
 	{

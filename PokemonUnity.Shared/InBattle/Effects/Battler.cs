@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
 	public partial class Effects
 	{
@@ -55,7 +55,7 @@ namespace PokemonUnity.Battle
 			/// <summary>
 			/// Takes image of last person on team
 			/// </summary>
-			public PokemonUnity.Battle.Pokemon Illusion		{ get; set; }
+			public PokemonUnity.Combat.Pokemon Illusion		{ get; set; }
 			public bool Imprison			{ get; set; }
 			public bool Ingrain				{ get; set; }
 			public bool KingsShield			{ get; set; }

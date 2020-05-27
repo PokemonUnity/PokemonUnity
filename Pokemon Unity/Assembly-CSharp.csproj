@@ -376,6 +376,9 @@
     <Reference Include="PokemonUnity.Shared">
       <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Shared.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\Pokemon Unity\Assets\Libraries\SQLite\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\Pokemon Unity\Assets\Libraries\SQLite\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>

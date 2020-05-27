@@ -72,8 +72,8 @@ namespace PokemonUnity.Monster.Data
     /// For each possible evolution of this species, 
     /// there are three parts
     /// </summary>
-    public struct PokemonEvolution //: Data.IPokemonEvolution<object> 
-    {
+    public struct PokemonEvolution //: IPokemonEvolution
+	{
         /// <summary>
         /// The PokemonId of the evolved species.
         /// The PokemonId of the species this pokemon evolves into.
@@ -262,10 +262,16 @@ namespace PokemonUnity.Monster.Data
 			return this;
 		}*/
 	}
-	public interface IPokemonEvolution<out T>
+	public interface IPokemonEvolution<out T> : IPokemonEvolution
+	{
+		//Pokemons Species { get; }
+		//EvolutionMethod EvolveMethod { get; }
+		T EvolveValue { get; }
+	}
+	public interface IPokemonEvolution
 	{
 		Pokemons Species { get; }
+
 		EvolutionMethod EvolveMethod { get; }
-		T EvolveValue { get; }
 	}
 }

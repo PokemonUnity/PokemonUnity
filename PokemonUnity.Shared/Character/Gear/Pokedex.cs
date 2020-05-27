@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace PokemonUnity
+namespace PokemonUnity.Character
 {
 	/// <summary>
 	/// The names of each Dex list in the game, in order and with National Dex at
@@ -15,30 +15,38 @@ namespace PokemonUnity
 	///    an array with a region number, therefore its area map is whichever region
 	///    the player is currently in.
 	/// </summary>
-	public class Pokedex
+	public struct Pokedex
 	{
 		//[_INTL("Kanto Pokédex"),0],
 		//[_INTL("Johto Pokédex"),1],
 		//_INTL("National Pokédex")
 
+		//public string this[int id].Name { get { return null; } }
+
 		/// <summary>
+		/// Name of the Pokedex
+		/// </summary>
 		/// Translated from DB
-		/// </summary>
-		string Name;
+		public string Name { get { return null; } }
 		/// <summary>
-		/// Generation
+		/// Map Region this Pokedex covers
 		/// </summary>
+		/// Generation
 		/// Equal to or greater than 0 assigns to region id
-		int Region = -1;
-		int PokedexId;
+		public PokemonUnity.Regions Region { get; private set; }
+		//int PokedexId;
 		/// <summary>
 		/// An array of numbers, where each number is that of a Dex list (National Dex
 		///    is -1). All Dex lists included here have the species numbers in them
 		///    reduced by 1, thus making the first listed species have a species number
 		///    of 0 (e.g. Victini in Unova's Dex).
 		/// </summary>
-		/// ToDo: Pokedex should be assigned pokemonId start and end numbers
-		/// Example: Johto is pokemons 1-151, while national is all... 
-		int DEXINDEXOFFSETS;//    = []
+		/// <remarks>
+		/// The pokedex created using individual pokemon entries.
+		/// The order of pokemons loaded, determines the Id of the pokemon, in the pokedex.
+		/// </remarks>
+		/// Easier to program what you want it to do, when it's just a list of pokemoon Ids
+		public PokemonUnity.Pokemons[] PokemonIndex { get; private set; }
+		//int DEXINDEXOFFSETS;//    = []
 	}
 }

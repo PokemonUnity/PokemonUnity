@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.gitmodules = ..\.gitmodules
 		..\README.md = ..\README.md
 	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework", "..\GameFramework\GameFramework.csproj", "{109D7F39-79AB-4862-9F73-0B8C638930C6}"
 EndProject
 Global
@@ -59,10 +60,6 @@ Global
 		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{109D7F39-79AB-4862-9F73-0B8C638930C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{109D7F39-79AB-4862-9F73-0B8C638930C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{109D7F39-79AB-4862-9F73-0B8C638930C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,6 +67,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {138B4F68-AFD1-4373-8062-A24726EE2C3E}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj

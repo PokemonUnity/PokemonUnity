@@ -3,13 +3,13 @@
 using PokemonUnity.Inventory;
 //using PokemonUnity.Attack;
 using PokemonUnity.Localization;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
 #pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
 
@@ -263,7 +263,7 @@ namespace PokemonUnity.Battle
 			TotalHP			= 0;
 			Fainted			= true;
 			captured		= false;
-			stages			= new int[Enum.GetValues(typeof(PokemonUnity.Battle.Stats)).Length];
+			stages			= new int[Enum.GetValues(typeof(PokemonUnity.Combat.Stats)).Length];
 			effects			= new Effects.Battler(false);
 			damagestate		= new Battle.DamageState();
 			InitBlank();
@@ -3430,7 +3430,7 @@ namespace PokemonUnity.Battle
 			playerHUD.Item 				= nonplayerHUD.Item 			= Item != Items.NONE;
 		}*/
 
-		public static implicit operator Monster.Pokemon(PokemonUnity.Battle.Pokemon pkmn)
+		public static implicit operator Monster.Pokemon(PokemonUnity.Combat.Pokemon pkmn)
 		{
 			Monster.Pokemon pokemon = pkmn.pokemon;
 			//if (pokemon == null) return null;

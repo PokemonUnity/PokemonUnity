@@ -14,7 +14,7 @@ namespace PokemonUnity.Monster.Data
     public class Experience
     {
         #region Variables
-        private byte level { get { return GetLevelFromExperience(Growth, Current); } }
+        private byte level { get { return GetLevelFromExperience(Growth, Total); } }
         /// <summary>
         /// Current accumalitive experience points gained (and collected) by this Pokemon.
         /// </summary>
@@ -22,8 +22,13 @@ namespace PokemonUnity.Monster.Data
         /// ToDo: Make shadow pokemons exp points negative?... 
         /// no, cause they still need to level up after purified
         /// ToDo: Make exp points less than 0 equal to 0
-        public int Current { get; private set; }
+        public int Total { get; private set; }
+        /// <summary>
+        /// Experience points gained after leveled-up (or the amount at current level).
+        /// </summary>
+        public int Current { get { return Total - GetExperience(Growth, level); } }
         public int NextLevel { get { return GetExperience(Growth, level + 1); } }
+        public int PointsNeeded { get { return Total - NextLevel; } }
         private LevelingRate Growth { get; set; }
         #endregion
 
@@ -112,9 +117,9 @@ namespace PokemonUnity.Monster.Data
         /// <param name="experienceGain">Exp. Points to add</param>
         public void AddExperience(int experienceGain)
         {
-            Current += experienceGain;
+            Total += experienceGain;
             int maxexp = GetExperience(Growth, Core.MAXIMUMLEVEL);
-            if (Current > maxexp) Current = maxexp;
+            if (Total > maxexp) Total = maxexp;
         }
 		// <summary>
 		// Adds experience points ensuring that the new total doesn't
@@ -310,7 +315,7 @@ namespace PokemonUnity.Monster.Data
 
         public Experience(LevelingRate rate, int initialValue) : this(rate)
         {
-            Current = initialValue;
+            Total = initialValue;
         }
     }
 }

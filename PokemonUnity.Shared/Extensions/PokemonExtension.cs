@@ -8,7 +8,7 @@ namespace PokemonUnity
 		{
 			return pokemon != null && pokemon.Species != Pokemons.NONE; 
 		}
-		public static bool IsNotNullOrNone(this PokemonUnity.Battle.Pokemon pokemon)
+		public static bool IsNotNullOrNone(this PokemonUnity.Combat.Pokemon pokemon)
 		{
 			return pokemon != null && pokemon.Species != Pokemons.NONE; 
 		}
@@ -17,7 +17,7 @@ namespace PokemonUnity
 			//create a switch, and return Locale Name or Description
 			return stat.ToString();
 		}
-		public static string ToString(this PokemonUnity.Battle.Stats stat, TextScripts text)
+		public static string ToString(this PokemonUnity.Combat.Stats stat, TextScripts text)
 		{
 			//create a switch, and return Locale Name or Description
 			return stat.ToString();

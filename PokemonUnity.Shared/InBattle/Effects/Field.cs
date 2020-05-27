@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PokemonUnity.Battle
+namespace PokemonUnity.Combat
 {
 	public partial class Effects
 	{		   

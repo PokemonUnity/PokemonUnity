@@ -10,7 +10,24 @@ using System.Runtime.Serialization;
 
 namespace PokemonUnity
 {
-	/// <summary>
+	[System.Serializable]
+	public class Quaternion
+	{
+		public float x { get; set; }
+		public float y { get; set; }
+		public float z { get; set; }
+		public float w { get; set; }
+
+		public Quaternion(float rX, float rY, float rZ, float rW)
+		{
+			x = rX;
+			y = rY;
+			z = rZ;
+			w = rW;
+		}
+	}
+
+	/*// <summary>
 	/// Since unity doesn't flag the Vector4 as serializable, we
 	/// need to create our own version. This one will automatically convert
 	/// between Vector4 and SerializableVector4
@@ -131,5 +148,5 @@ namespace PokemonUnity
 		{
 			return new UnityEngine.Vector4(v.x, v.y, v.z, w);
 		}
-	}
+	}*/
 }

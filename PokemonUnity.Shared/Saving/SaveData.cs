@@ -90,7 +90,7 @@ namespace PokemonUnity.Saving
 		//public int ActivePcBox { get; private set; }
 
 		//Player
-		public float PlayerDirection { get; private set; }
+		public float[] PlayerDirection { get; private set; }
 		public Vector PlayerPosition { get; private set; }
 		////Follower
 		///// <summary>
@@ -161,7 +161,7 @@ namespace PokemonUnity.Saving
 		{
 			//SaveName			= saveName;
 			BuildVersion		= build			?? SaveManager.BuildVersion;//.GetBuildVersion();
-			TimeCreated			= date != null	?  DateTime.Parse(date) : DateTime.UtcNow;
+			TimeCreated			= date != null	?  DateTimeOffset.Parse(date).UtcDateTime : DateTime.UtcNow;
 			Language			= (int?)language?? (int)Game.UserLanguage;
 			WindowBorder		= windowBorder	?? Game.WindowSkin;
 			DialogBorder		= dialogBorder	?? Game.DialogSkin;
