@@ -87,25 +87,6 @@ namespace PokemonUnity.Combat
 		internal Battle Battle				{ get; set; }
 		#endregion
 
-		/*/NOTYPE			= 0x01,
-		//IGNOREPKMNTYPES	= 0x02,
-		//NOWEIGHTING		= 0x04,
-		//NOCRITICAL		= 0x08,
-		//NOREFLECT			= 0x10,
-		//SELFCONFUSE		= 0x20
-		///// <summary>
-		///// </summary>
-		///// Needed another place to put this, might remove from code later
-		//public enum SpecialCondition
-		//{
-		//	NOTYPE			= 0x01,
-		//	IGNOREPKMNTYPES	= 0x02,
-		//	NOWEIGHTING		= 0x04,
-		//	NOCRITICAL		= 0x08,
-		//	NOREFLECT		= 0x10,
-		//	SELFCONFUSE		= 0x20
-		//}*/
-
 		//public Move(Moves move) : base(move)
 		//{
 		//    //Battle		= Battle

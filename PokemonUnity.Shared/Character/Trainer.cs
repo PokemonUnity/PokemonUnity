@@ -4,7 +4,6 @@ using PokemonUnity.Monster;
 
 namespace PokemonUnity.Character
 {
-	//ToDo: MetaData struct for Secret,Trainer,Gender (use for pokemons)
 	public struct Trainer
 	{
 		#region Variables

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace PokemonUnity.Inventory
+namespace PokemonUnity
 {
 	public static class ItemExtension
 	{		

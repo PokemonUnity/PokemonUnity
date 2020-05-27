@@ -11,7 +11,7 @@ namespace PokemonUnity
 	/// but a series of const variables that will be used as rules 
 	/// for the game mechanics or structure.
 	/// </summary>
-	public static class Core //: Core<Translations.Languages>
+	public static class Core
 	{
 		#region Constant Values and Game Rules
 		public static Translator.Languages UserLanguage { get; set; } //= Translator.Languages.English;
@@ -34,7 +34,6 @@ namespace PokemonUnity
 		public const string FILENAME_POKEMON_DATABASE = "";
 
 		/// <summary>
-		/// 
 		/// </summary>
 		public const float framesPerSecond = 30f;
 
@@ -490,9 +489,7 @@ namespace PokemonUnity
 		/// e.g. To require the second badge, put false and 1.
 		/// To require at least 2 badges, put true and 2.
 		/// </summary>
-		/// ToDo: Consider a mechanic that allows each region to have their own TM/HM #s Region[Generation,Badges] <see cref="PokemonUnity.Item.Items"/>
-		/// <summary>
-		/// </summary>
+		//ToDo: Consider a mechanic that allows each region to have their own TM/HM #s Region[Generation,Badges] <see cref="PokemonUnity.Item.Items"/>
 		public const int BADGEFORCUT = 1;
 		/// <summary>
 		/// </summary>
@@ -516,7 +513,7 @@ namespace PokemonUnity
 		/// </summary>
 		public const int BADGEFORWATERFALL = 8;
 		#endregion
-		
+
 		#region Player Storage
 		/// <summary>
 		/// The maximum number of slots per pocket (-1 means infinite number). Ignore

@@ -67,6 +67,8 @@ namespace PokemonUnity
 		/// </summary>
 		public static Dictionary<int,Encounter> EncounterData { get; private set; }
 		public static Dictionary<TrainerTypes,TrainerData> TrainerMetaData { get; private set; }
+		public static Dictionary<GymBadges,Character.BadgeData> BadgeData { get; private set; }
+		public static Dictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; private set; }
 		//public static Dictionary<Items,KeyValuePair<Moves,int[]>[]> MachineMetaData { get; private set; }
 		//public static Dictionary<int,Machine> MachineData { get; private set; }
 		//public static Dictionary<int,Machine> MapData { get; private set; }
@@ -185,13 +187,21 @@ namespace PokemonUnity
 				return GetMachinesFromSQL(con);
 			else return false;
 		}
-		public static bool InitTrainers(bool sql = true)
+		public static bool InitTrainers(bool sql = false)
 		{
 			TrainerMetaData = new Dictionary<TrainerTypes, TrainerData>();
 			//TrainerData = new Dictionary<int, Encounter>();
 			if (sql) //using (con)
-				return GetTrainersFromSQL(con);
-			else return false;
+				return false; //GetTrainersFromSQL(con);
+			else return GetTrainersFromXML();
+		}
+		public static bool InitGymBadges(bool sql = false)
+		{
+			BadgeData = new Dictionary<GymBadges, Character.BadgeData>();
+			HiddenMoveData = new Dictionary<HiddenMoves, HiddenMoveData>();
+			if (sql) //using (con)
+				return false; //GetGymBadgesFromSQL(con);
+			else return GetGymBadgesFromXML();
 		}
 		public static bool InitPokedex(bool sql = true)
 		{
@@ -214,8 +224,6 @@ namespace PokemonUnity
 		#region From XML
 		static bool GetPokemonsFromXML()
 		{
-			PokemonData = new Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData>();
-
 			var xmlDocument = new XmlDocument();
 			xmlDocument.LoadXml(LockFileStream(FilePokemonXML));
 
@@ -223,10 +231,11 @@ namespace PokemonUnity
 			if (pokemons == null || pokemons.Count <= 0)
 			{
 				//throw new Exception("Xml must include "Pokemons" as root node.");
+				GameDebug.LogError("Xml must include \"Pokemons\" as root node.");
 				return false;
 			}
 
-			var dublicateNames = new List<string>();
+			//var dublicateNames = new List<string>();
 
 			var pokemonNodes = xmlDocument.SelectSingleNode("/Pokemons").ChildNodes;// /text
 			if (pokemonNodes != null)
@@ -299,14 +308,516 @@ namespace PokemonUnity
 			//if (dublicateNames.Count > 0)
 			//{
 			//	//throw new Exception("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
+			//	GameDebug.LogError("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
 			//}
 
 			return true; //dictionary;
+		}
+		static bool GetTrainersFromXML()
+		{
+			try
+			{
+				foreach (TrainerTypes type in Enum.GetValues(typeof(TrainerTypes)))
+				{
+					int BaseMoney = 30;
+					int SkillLevel = 1;
+					bool? gender = null;
+					bool doubel = false;
+					#region Gender & IsDouble
+					switch (type)
+					{
+						case TrainerTypes.POKEMONTRAINER_Red:
+						case TrainerTypes.POKEMONTRAINER_Leaf:
+						case TrainerTypes.POKEMONTRAINER_Brendan:
+						case TrainerTypes.RIVAL1:
+						case TrainerTypes.RIVAL2:
+						case TrainerTypes.BIKER:
+						case TrainerTypes.BIRDKEEPER:
+						case TrainerTypes.BUGCATCHER:
+						case TrainerTypes.BURGLAR:
+						case TrainerTypes.CHANELLER:
+						case TrainerTypes.CUEBALL:
+						case TrainerTypes.ENGINEER:
+						case TrainerTypes.FISHERMAN:
+						case TrainerTypes.GAMBLER:
+						case TrainerTypes.GENTLEMAN:
+						case TrainerTypes.HIKER:
+						case TrainerTypes.JUGGLER:
+						case TrainerTypes.PAINTER:
+						case TrainerTypes.POKEMANIAC:
+						case TrainerTypes.POKEMONBREEDER:
+						case TrainerTypes.PROFESSOR:
+						case TrainerTypes.ROCKER:
+						case TrainerTypes.RUINMANIAC:
+						case TrainerTypes.SAILOR:
+						case TrainerTypes.SCIENTIST:
+						case TrainerTypes.SUPERNERD:
+						case TrainerTypes.TAMER:
+						case TrainerTypes.BLACKBELT:
+						case TrainerTypes.CAMPER:
+						case TrainerTypes.PICNICKER:
+						case TrainerTypes.COOLTRAINER_M:
+						case TrainerTypes.YOUNGSTER:
+						case TrainerTypes.POKEMONRANGER_M:
+						case TrainerTypes.PSYCHIC_M:
+						case TrainerTypes.SWIMMER_M:
+						case TrainerTypes.SWIMMER2_M:
+						case TrainerTypes.TUBER_M:
+						case TrainerTypes.TUBER2_M:
+						case TrainerTypes.CRUSHKIN:
+						case TrainerTypes.TEAMROCKET_M:
+						case TrainerTypes.ROCKETBOSS:
+						case TrainerTypes.LEADER_Brock:
+						case TrainerTypes.LEADER_Surge:
+						case TrainerTypes.LEADER_Koga:
+						case TrainerTypes.LEADER_Blaine:
+						case TrainerTypes.LEADER_Giovanni:
+						case TrainerTypes.ELITEFOUR_Bruno:
+						case TrainerTypes.ELITEFOUR_Lance:
+						case TrainerTypes.CHAMPION:
+							gender = true;
+							break;
+						case TrainerTypes.POKEMONTRAINER_May:
+						case TrainerTypes.AROMALADY:
+						case TrainerTypes.BEAUTY:
+						case TrainerTypes.LADY:
+						case TrainerTypes.CRUSHGIRL:
+						case TrainerTypes.COOLTRAINER_F:
+						case TrainerTypes.LASS:
+						case TrainerTypes.POKEMONRANGER_F:
+						case TrainerTypes.PSYCHIC_F:
+						case TrainerTypes.SWIMMER_F:
+						case TrainerTypes.SWIMMER2_F:
+						case TrainerTypes.TUBER_F:
+						case TrainerTypes.TUBER2_F:
+						case TrainerTypes.TEAMROCKET_F:
+						case TrainerTypes.LEADER_Misty:
+						case TrainerTypes.LEADER_Erika:
+						case TrainerTypes.LEADER_Sabrina:
+						case TrainerTypes.ELITEFOUR_Lorelei:
+						case TrainerTypes.ELITEFOUR_Agatha:
+							gender = false;
+							break;
+						case TrainerTypes.COOLCOUPLE:
+						case TrainerTypes.SISANDBRO:
+						case TrainerTypes.TWINS:
+						case TrainerTypes.YOUNGCOUPLE:
+							doubel = true;
+							break;
+						case TrainerTypes.WildPokemon:
+						case TrainerTypes.PLAYER:
+						default:
+							break;
+					}
+					switch (type)
+					{
+						case TrainerTypes.BURGLAR:
+						case TrainerTypes.GAMBLER:
+							SkillLevel = 32;
+							break;
+						case TrainerTypes.LADY:
+							SkillLevel = 72;
+							break;
+						case TrainerTypes.TUBER_M:
+						case TrainerTypes.TUBER2_M:
+						case TrainerTypes.SWIMMER_M:
+						case TrainerTypes.SWIMMER2_M:
+							SkillLevel = 32;
+							break;
+						case TrainerTypes.TUBER_F:
+						case TrainerTypes.TUBER2_F:
+						case TrainerTypes.SWIMMER_F:
+						case TrainerTypes.SWIMMER2_F:
+							break;
+						case TrainerTypes.COOLCOUPLE:
+						case TrainerTypes.SISANDBRO:
+						case TrainerTypes.YOUNGCOUPLE:
+							break;
+						default:
+							break;
+					}
+					#endregion
+					#region Base Money
+					switch (type)
+					{
+						case TrainerTypes.TUBER_M:
+						case TrainerTypes.TUBER2_M:
+						case TrainerTypes.TUBER_F:
+						case TrainerTypes.TUBER2_F:
+							BaseMoney = 4;
+							break;
+						case TrainerTypes.RIVAL1:
+						case TrainerTypes.BUGCATCHER:
+						case TrainerTypes.PAINTER:
+						case TrainerTypes.CAMPER:
+						case TrainerTypes.LASS:
+						case TrainerTypes.PICNICKER:
+						case TrainerTypes.SISANDBRO:
+						case TrainerTypes.SWIMMER_M:
+						case TrainerTypes.SWIMMER_F:
+						case TrainerTypes.SWIMMER2_M:
+						case TrainerTypes.SWIMMER2_F:
+						case TrainerTypes.YOUNGSTER:
+							BaseMoney = 16;
+							break;
+						case TrainerTypes.CUEBALL:
+						case TrainerTypes.CRUSHGIRL:
+						case TrainerTypes.ROCKER:
+						case TrainerTypes.TWINS:
+							BaseMoney = 24;
+							break;
+						case TrainerTypes.AROMALADY:
+						case TrainerTypes.BIKER:
+						case TrainerTypes.BIRDKEEPER:
+						case TrainerTypes.BLACKBELT:
+						case TrainerTypes.CHANELLER:
+						case TrainerTypes.FISHERMAN:
+						case TrainerTypes.HIKER:
+						case TrainerTypes.JUGGLER:
+						case TrainerTypes.PSYCHIC_M:
+						case TrainerTypes.PSYCHIC_F:
+						case TrainerTypes.SAILOR:
+						case TrainerTypes.TEAMROCKET_M:
+						case TrainerTypes.TEAMROCKET_F:
+							BaseMoney = 32;
+							break;
+						case TrainerTypes.RIVAL2:
+							BaseMoney = 36;
+							break;
+						case TrainerTypes.CRUSHKIN:
+						case TrainerTypes.TAMER:
+							BaseMoney = 48;
+							break;
+						case TrainerTypes.ENGINEER:
+						case TrainerTypes.POKEMONBREEDER:
+						case TrainerTypes.RUINMANIAC:
+						case TrainerTypes.SCIENTIST:
+						case TrainerTypes.SUPERNERD:
+							BaseMoney = 48;
+							break;
+						case TrainerTypes.BEAUTY:
+							BaseMoney = 56;
+							break;
+						case TrainerTypes.PLAYER:
+						case TrainerTypes.POKEMONTRAINER_Red:
+						case TrainerTypes.POKEMONTRAINER_Brendan:
+						case TrainerTypes.POKEMONTRAINER_Leaf:
+						case TrainerTypes.POKEMONTRAINER_May:
+						case TrainerTypes.COOLTRAINER_M:
+						case TrainerTypes.COOLTRAINER_F:
+						case TrainerTypes.POKEMONRANGER_M:
+						case TrainerTypes.POKEMONRANGER_F:
+						case TrainerTypes.YOUNGCOUPLE:
+							BaseMoney = 60;
+							break;
+						case TrainerTypes.POKEMANIAC:
+							BaseMoney = 64;
+							break;
+						case TrainerTypes.COOLCOUPLE:
+						case TrainerTypes.GAMBLER:
+						case TrainerTypes.GENTLEMAN:
+							BaseMoney = 72;
+							break;
+						case TrainerTypes.BURGLAR:
+							BaseMoney = 88;
+							break;
+						case TrainerTypes.CHAMPION:
+						case TrainerTypes.LEADER_Brock:
+						case TrainerTypes.LEADER_Surge:
+						case TrainerTypes.LEADER_Koga:
+						case TrainerTypes.LEADER_Blaine:
+						case TrainerTypes.LEADER_Giovanni:
+						case TrainerTypes.LEADER_Misty:
+						case TrainerTypes.LEADER_Erika:
+						case TrainerTypes.LEADER_Sabrina:
+						case TrainerTypes.ELITEFOUR_Lorelei:
+						case TrainerTypes.ELITEFOUR_Agatha:
+						case TrainerTypes.ELITEFOUR_Bruno:
+						case TrainerTypes.ELITEFOUR_Lance:
+						case TrainerTypes.ROCKETBOSS:
+						case TrainerTypes.PROFESSOR:
+							BaseMoney = 100;
+							break;
+						case TrainerTypes.LADY:
+							BaseMoney = 160;
+							break;
+						default:
+							BaseMoney = 30;
+							break;
+					}
+					#endregion
+					#region Skill Level
+					switch (type)
+					{
+						case TrainerTypes.BURGLAR:
+						case TrainerTypes.GAMBLER:
+							SkillLevel = 32;
+							break;
+						case TrainerTypes.LADY:
+							SkillLevel = 72;
+							break;
+						case TrainerTypes.SWIMMER_M:
+						case TrainerTypes.SWIMMER_F:
+						case TrainerTypes.SWIMMER2_M:
+						case TrainerTypes.SWIMMER2_F:
+							SkillLevel = 32;
+							break;
+						case TrainerTypes.TUBER_M:
+						case TrainerTypes.TUBER_F:
+						case TrainerTypes.TUBER2_M:
+						case TrainerTypes.TUBER2_F:
+							SkillLevel = 16;
+							break;
+						case TrainerTypes.COOLCOUPLE:
+						case TrainerTypes.SISANDBRO:
+							SkillLevel = 48;
+							break;
+						case TrainerTypes.YOUNGCOUPLE:
+							SkillLevel = 32;
+							break;
+						default:
+							SkillLevel = BaseMoney;
+							break;
+					}
+					#endregion
+					TrainerMetaData.Add(type, new TrainerData());
+				}
+				return true;
+			} catch (Exception) {
+				return false;
+			}
+		}
+		static bool GetGymBadgesFromXML()
+		{
+			try
+			{
+				var xmlDocument = new XmlDocument();
+				xmlDocument.LoadXml(LockFileStream(FilePokemonXML));
+
+				var pokemons = xmlDocument.SelectNodes("/Pokemons");
+				if (pokemons == null || pokemons.Count <= 0)
+				{
+					//throw new Exception("Xml must include "Pokemons" as root node.");
+					GameDebug.LogError("Xml must include \"Pokemons\" as root node.");
+					return false;
+				}
+
+				//var dublicateNames = new List<string>();
+
+				var pokemonNodes = xmlDocument.SelectSingleNode("/Pokemons").ChildNodes;// /text
+				if (pokemonNodes != null)
+				{
+					//foreach value in xml
+					foreach (XmlNode node in pokemonNodes)
+					{
+						List<HiddenMoves> HMs = new List<HiddenMoves>();
+						List<Moves> moves = new List<Moves>();
+
+						GymBadges id = (GymBadges)int.Parse(node.GetAttributeValueOrNull("Id"));
+						Regions region = (Regions)int.Parse(node.GetAttributeValueOrNull("region")); //Regions.NOT_IN_OVERWORLD;
+						int level = int.Parse(node.GetAttributeValueOrNull("level"));
+
+						string[] hms = node.GetAttributeValueOrNull("hm")?.Split(',');
+
+						if (hms != null)
+							foreach (string hm in hms)
+							{
+								switch (hm.ToLower())
+								{
+									case "surf":
+									{
+										HMs.Add(HiddenMoves.Surf);
+										moves.Add(Moves.SURF);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Surf))
+											HiddenMoveData.Add(HiddenMoves.Surf,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Surf,
+													move: Moves.SURF,
+													badge: (GymBadges)Core.BADGEFORSURF,
+													badges: (byte)Core.BADGEFORSURF
+												)
+											);
+										break;
+									}
+									case "cut":
+									{
+										HMs.Add(HiddenMoves.Cut);
+										moves.Add(Moves.CUT);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Cut))
+											HiddenMoveData.Add(HiddenMoves.Surf,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Cut,
+													move: Moves.CUT,
+													badge: (GymBadges)Core.BADGEFORCUT,
+													badges: (byte)Core.BADGEFORCUT
+												)
+											);
+										break;
+									}
+									case "strength":
+									{
+										HMs.Add(HiddenMoves.Strength);
+										moves.Add(Moves.STRENGTH);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Strength))
+											HiddenMoveData.Add(HiddenMoves.Strength,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Strength,
+													move: Moves.STRENGTH,
+													badge: (GymBadges)Core.BADGEFORSTRENGTH,
+													badges: (byte)Core.BADGEFORSTRENGTH
+												)
+											);
+										break;
+									}
+									case "flash":
+									{
+										HMs.Add(HiddenMoves.Flash);
+										moves.Add(Moves.FLASH);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Flash))
+											HiddenMoveData.Add(HiddenMoves.Flash,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Flash,
+													move: Moves.FLASH,
+													badge: (GymBadges)Core.BADGEFORFLASH,
+													badges: (byte)Core.BADGEFORFLASH
+												)
+											);
+										break;
+									}
+									case "fly":
+									{
+										HMs.Add(HiddenMoves.Fly);
+										moves.Add(Moves.FLY);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Fly))
+											HiddenMoveData.Add(HiddenMoves.Fly,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Fly,
+													move: Moves.FLY,
+													badge: (GymBadges)Core.BADGEFORFLY,
+													badges: (byte)Core.BADGEFORFLY
+												)
+											);
+										break;
+									}
+									case "whirlpool":
+									{
+										HMs.Add(HiddenMoves.Whirlpool);
+										moves.Add(Moves.WHIRLPOOL);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Whirlpool))
+											HiddenMoveData.Add(HiddenMoves.Whirlpool,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Whirlpool,
+													move: Moves.WHIRLPOOL,
+													badge: 0,
+													badges: 0
+												)
+											);
+										break;
+									}
+									case "waterfall":
+									{
+										HMs.Add(HiddenMoves.Waterfall);
+										moves.Add(Moves.WATERFALL);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Waterfall))
+											HiddenMoveData.Add(HiddenMoves.Waterfall,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Waterfall,
+													move: Moves.WATERFALL,
+													badge: (GymBadges)Core.BADGEFORWATERFALL,
+													badges: (byte)Core.BADGEFORWATERFALL
+												)
+											);
+										break;
+									}
+									case "ride":
+									{
+										HMs.Add(HiddenMoves.Ride);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Ride))
+											HiddenMoveData.Add(HiddenMoves.Ride,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Ride,
+													move: Moves.NONE,
+													badge: 0,
+													badges: 0
+												)
+											);
+										break;
+									}
+									case "dive":
+									{
+										HMs.Add(HiddenMoves.Dive);
+										moves.Add(Moves.DIVE);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Dive))
+											HiddenMoveData.Add(HiddenMoves.Dive,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Dive,
+													move: Moves.DIVE,
+													badge: (GymBadges)Core.BADGEFORDIVE,
+													badges: (byte)Core.BADGEFORDIVE
+												)
+											);
+										break;
+									}
+									case "rockclimb":
+									{
+										HMs.Add(HiddenMoves.RockClimb);
+										moves.Add(Moves.ROCK_CLIMB);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.RockClimb))
+											HiddenMoveData.Add(HiddenMoves.RockClimb,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.RockClimb,
+													move: Moves.ROCK_CLIMB,
+													badge: 0,
+													badges: 0
+												)
+											);
+										break;
+									}
+									case "rocksmash":
+									{
+										HMs.Add(HiddenMoves.RockSmash);
+										moves.Add(Moves.ROCK_SMASH);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.RockSmash))
+											HiddenMoveData.Add(HiddenMoves.RockSmash,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.RockSmash,
+													move: Moves.ROCK_SMASH,
+													badge: (GymBadges)Core.BADGEFORROCKSMASH,
+													badges: (byte)Core.BADGEFORROCKSMASH
+												)
+											);
+										break;
+									}
+									case "headbutt":
+									{
+										HMs.Add(HiddenMoves.Headbutt);
+										moves.Add(Moves.HEADBUTT);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Headbutt))
+											HiddenMoveData.Add(HiddenMoves.Headbutt,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Headbutt,
+													move: Moves.HEADBUTT,
+													badge: 0,
+													badges: 0
+												)
+											);
+										break;
+									}
+								}
+							}
+						BadgeData.Add(id, new Character.BadgeData(id, region, (byte)level)); 
+					}
+				}
+				return true;
+			} catch (Exception) {
+				return false;
+			}
 		}
 		#endregion
 		#region From SQL
 		static bool GetPokemonsFromSQL(SQLiteConnection con)
 		{
+			OnLoadEventArgs onLoad = new OnLoadEventArgs { Check = 0 };
 			try
 			{
 				//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
@@ -315,7 +826,7 @@ namespace PokemonUnity
 					SQLiteCommand stmt = con.CreateCommand();
 
 					#region DataReader
-					stmt.CommandText = "select * from pokemon_views --order by id ASC";
+					stmt.CommandText = "select COUNT(*) from pokemon_views;select * from pokemon_views --order by id ASC";
 					//	@"select pokemon.id, pokemon.species_id, pokemon.identifier, pokemon.height, pokemon.weight, pokemon.base_experience, --pokemon.""order""
 					//pokemon_abilities_view.ability1, pokemon_abilities_view.ability2, pokemon_abilities_view.ability3, 
 					//pokemon_egg_groups_view.egg_group1, pokemon_egg_groups_view.egg_group2,
@@ -343,9 +854,11 @@ namespace PokemonUnity
 					//Step 4: Read the results
 					using(reader)
 					{
+						if (OnLoad != null) { onLoad.TotalPieces = (int)reader[0]; OnLoad.Invoke(Game.GameData, onLoad); } reader.NextResult();
 						PokemonData.Add(Pokemons.NONE, new Monster.Data.PokemonData(Id:Pokemons.NONE, hatchTime: 1000));
 						while(reader.Read()) //if(reader.Read())
 						{
+							if (OnLoad != null) { onLoad.Piece = reader.StepCount; OnLoad.Invoke(Game.GameData, onLoad); }
 							PokemonData.Add((Pokemons)int.Parse((string)reader["id"].ToString()),
 								new PokemonUnity.Monster.Data.PokemonData(
 									Id: (Pokemons)int.Parse((string)reader["id"].ToString())
@@ -404,7 +917,8 @@ namespace PokemonUnity
 									//,heldItem: Data.heldItem
 								)
 							);
-						}
+							//foreach(var gen in new int[] { int.Parse((string)reader["ReDex"].ToString()) }) { PokedexData.Add(); }
+					}
 					//}
 					//Step 5: Closing up
 					reader.Close();
@@ -413,9 +927,10 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				//GameDebug.LogError("SQL Exception Message:" + e.Message);
+				//GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				//GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError($"Failed to Load ID #{onLoad.Piece} from DB\nSQL Exception Message:" + e.Message);
 				return false;
 			}
 		}
@@ -1668,331 +2183,6 @@ namespace PokemonUnity
 						MethodData.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), en.Value.ToArray());
 					}
 				}
-				return true;
-			} catch (SQLiteException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
-				return false;
-			}
-		}
-		static bool GetTrainersFromSQL(SQLiteConnection con)
-		{
-			try
-			{
-				//Step 3: Running a Command
-				//SQLiteCommand stmt = con.CreateCommand();
-				//
-				//#region DataReader
-				//stmt.CommandText = //"select * from natures order by game_index ASC";
-				//	@"select row_number() over (order by m.machine_number) as id, m.machine_number as tm_num, m.item_id, group_concat(DISTINCT m.move_id) as move_group, group_concat(DISTINCT m.version_group_id) as version_group,
-				//g.identifier, g.type_id
-				//--n.name, n.subtitle
-				//from machines as m
-				//left join moves as g on g.id = m.move_id
-				//--left join location_names as n on l.id = n.location_id AND n.local_language_id = 9; 
-				//group by m.item_id, m.move_id;";
-				//SQLiteDataReader reader = stmt.ExecuteReader();
-
-				//EncounterData.Add(Method.NONE, new List<Encounter>() { }.ToArray());
-				foreach (TrainerTypes type in Enum.GetValues(typeof(TrainerTypes)))
-				{
-					int BaseMoney = 30;
-					int SkillLevel = 1;
-					bool? gender = null;
-					bool doubel = false;
-					#region Gender & IsDouble
-					switch (type)
-					{
-						case TrainerTypes.POKEMONTRAINER_Red:
-						case TrainerTypes.POKEMONTRAINER_Leaf:
-						case TrainerTypes.POKEMONTRAINER_Brendan:
-						case TrainerTypes.RIVAL1:
-						case TrainerTypes.RIVAL2:
-						case TrainerTypes.BIKER:
-						case TrainerTypes.BIRDKEEPER:
-						case TrainerTypes.BUGCATCHER:
-						case TrainerTypes.BURGLAR:
-						case TrainerTypes.CHANELLER:
-						case TrainerTypes.CUEBALL:
-						case TrainerTypes.ENGINEER:
-						case TrainerTypes.FISHERMAN:
-						case TrainerTypes.GAMBLER:
-						case TrainerTypes.GENTLEMAN:
-						case TrainerTypes.HIKER:
-						case TrainerTypes.JUGGLER:
-						case TrainerTypes.PAINTER:
-						case TrainerTypes.POKEMANIAC:
-						case TrainerTypes.POKEMONBREEDER:
-						case TrainerTypes.PROFESSOR:
-						case TrainerTypes.ROCKER:
-						case TrainerTypes.RUINMANIAC:
-						case TrainerTypes.SAILOR:
-						case TrainerTypes.SCIENTIST:
-						case TrainerTypes.SUPERNERD:
-						case TrainerTypes.TAMER:
-						case TrainerTypes.BLACKBELT:
-						case TrainerTypes.CAMPER:
-						case TrainerTypes.PICNICKER:
-						case TrainerTypes.COOLTRAINER_M:
-						case TrainerTypes.YOUNGSTER:
-						case TrainerTypes.POKEMONRANGER_M:
-						case TrainerTypes.PSYCHIC_M:
-						case TrainerTypes.SWIMMER_M:
-						case TrainerTypes.SWIMMER2_M:
-						case TrainerTypes.TUBER_M:
-						case TrainerTypes.TUBER2_M:
-						case TrainerTypes.CRUSHKIN:
-						case TrainerTypes.TEAMROCKET_M:
-						case TrainerTypes.ROCKETBOSS:
-						case TrainerTypes.LEADER_Brock:
-						case TrainerTypes.LEADER_Surge:
-						case TrainerTypes.LEADER_Koga:
-						case TrainerTypes.LEADER_Blaine:
-						case TrainerTypes.LEADER_Giovanni:
-						case TrainerTypes.ELITEFOUR_Bruno:
-						case TrainerTypes.ELITEFOUR_Lance:
-						case TrainerTypes.CHAMPION:
-							gender = true;
-							break;
-						case TrainerTypes.POKEMONTRAINER_May:
-						case TrainerTypes.AROMALADY:
-						case TrainerTypes.BEAUTY:
-						case TrainerTypes.LADY:
-						case TrainerTypes.CRUSHGIRL:
-						case TrainerTypes.COOLTRAINER_F:
-						case TrainerTypes.LASS:
-						case TrainerTypes.POKEMONRANGER_F:
-						case TrainerTypes.PSYCHIC_F:
-						case TrainerTypes.SWIMMER_F:
-						case TrainerTypes.SWIMMER2_F:
-						case TrainerTypes.TUBER_F:
-						case TrainerTypes.TUBER2_F:
-						case TrainerTypes.TEAMROCKET_F:
-						case TrainerTypes.LEADER_Misty:
-						case TrainerTypes.LEADER_Erika:
-						case TrainerTypes.LEADER_Sabrina:
-						case TrainerTypes.ELITEFOUR_Lorelei:
-						case TrainerTypes.ELITEFOUR_Agatha:
-							gender = false;
-							break;
-						case TrainerTypes.COOLCOUPLE:
-						case TrainerTypes.SISANDBRO:
-						case TrainerTypes.TWINS:
-						case TrainerTypes.YOUNGCOUPLE:
-							doubel = true;
-							break;
-						case TrainerTypes.WildPokemon:
-						case TrainerTypes.PLAYER:
-						default:
-							break;
-					}
-					switch (type)
-					{
-						case TrainerTypes.BURGLAR:
-						case TrainerTypes.GAMBLER:
-							SkillLevel = 32;
-							break;
-						case TrainerTypes.LADY:
-							SkillLevel = 72;
-							break;
-						case TrainerTypes.TUBER_M:
-						case TrainerTypes.TUBER2_M:
-						case TrainerTypes.SWIMMER_M:
-						case TrainerTypes.SWIMMER2_M:
-							SkillLevel = 32;
-							break;
-						case TrainerTypes.TUBER_F:
-						case TrainerTypes.TUBER2_F:
-						case TrainerTypes.SWIMMER_F:
-						case TrainerTypes.SWIMMER2_F:
-							break;
-						case TrainerTypes.COOLCOUPLE:
-						case TrainerTypes.SISANDBRO:
-						case TrainerTypes.YOUNGCOUPLE:
-							break;
-						default:
-							break;
-					}
-					#endregion
-					#region Base Money
-					switch (type)
-					{
-						case TrainerTypes.TUBER_M:
-						case TrainerTypes.TUBER2_M:
-						case TrainerTypes.TUBER_F:
-						case TrainerTypes.TUBER2_F:
-							BaseMoney = 4;
-							break;
-						case TrainerTypes.RIVAL1:
-						case TrainerTypes.BUGCATCHER:
-						case TrainerTypes.PAINTER:
-						case TrainerTypes.CAMPER:
-						case TrainerTypes.LASS:
-						case TrainerTypes.PICNICKER:
-						case TrainerTypes.SISANDBRO:
-						case TrainerTypes.SWIMMER_M:
-						case TrainerTypes.SWIMMER_F:
-						case TrainerTypes.SWIMMER2_M:
-						case TrainerTypes.SWIMMER2_F:
-						case TrainerTypes.YOUNGSTER:
-							BaseMoney = 16;
-							break;
-						case TrainerTypes.CUEBALL:
-						case TrainerTypes.CRUSHGIRL:
-						case TrainerTypes.ROCKER:
-						case TrainerTypes.TWINS:
-							BaseMoney = 24;
-							break;
-						case TrainerTypes.AROMALADY:
-						case TrainerTypes.BIKER:
-						case TrainerTypes.BIRDKEEPER:
-						case TrainerTypes.BLACKBELT:
-						case TrainerTypes.CHANELLER:
-						case TrainerTypes.FISHERMAN:
-						case TrainerTypes.HIKER:
-						case TrainerTypes.JUGGLER:
-						case TrainerTypes.PSYCHIC_M:
-						case TrainerTypes.PSYCHIC_F:
-						case TrainerTypes.SAILOR:
-						case TrainerTypes.TEAMROCKET_M:
-						case TrainerTypes.TEAMROCKET_F:
-							BaseMoney = 32;
-							break;
-						case TrainerTypes.RIVAL2:
-							BaseMoney = 36;
-							break;
-						case TrainerTypes.CRUSHKIN:
-						case TrainerTypes.TAMER:
-							BaseMoney = 48;
-							break;
-						case TrainerTypes.ENGINEER:
-						case TrainerTypes.POKEMONBREEDER:
-						case TrainerTypes.RUINMANIAC:
-						case TrainerTypes.SCIENTIST:
-						case TrainerTypes.SUPERNERD:
-							BaseMoney = 48;
-							break;
-						case TrainerTypes.BEAUTY:
-							BaseMoney = 56;
-							break;
-						case TrainerTypes.PLAYER:
-						case TrainerTypes.POKEMONTRAINER_Red:
-						case TrainerTypes.POKEMONTRAINER_Brendan:
-						case TrainerTypes.POKEMONTRAINER_Leaf:
-						case TrainerTypes.POKEMONTRAINER_May:
-						case TrainerTypes.COOLTRAINER_M:
-						case TrainerTypes.COOLTRAINER_F:
-						case TrainerTypes.POKEMONRANGER_M:
-						case TrainerTypes.POKEMONRANGER_F:
-						case TrainerTypes.YOUNGCOUPLE:
-							BaseMoney = 60;
-							break;
-						case TrainerTypes.POKEMANIAC:
-							BaseMoney = 64;
-							break;
-						case TrainerTypes.COOLCOUPLE:
-						case TrainerTypes.GAMBLER:
-						case TrainerTypes.GENTLEMAN:
-							BaseMoney = 72;
-							break;
-						case TrainerTypes.BURGLAR:
-							BaseMoney = 88;
-							break;
-						case TrainerTypes.CHAMPION:
-						case TrainerTypes.LEADER_Brock:
-						case TrainerTypes.LEADER_Surge:
-						case TrainerTypes.LEADER_Koga:
-						case TrainerTypes.LEADER_Blaine:
-						case TrainerTypes.LEADER_Giovanni:
-						case TrainerTypes.LEADER_Misty:
-						case TrainerTypes.LEADER_Erika:
-						case TrainerTypes.LEADER_Sabrina:
-						case TrainerTypes.ELITEFOUR_Lorelei:
-						case TrainerTypes.ELITEFOUR_Agatha:
-						case TrainerTypes.ELITEFOUR_Bruno:
-						case TrainerTypes.ELITEFOUR_Lance:
-						case TrainerTypes.ROCKETBOSS:
-						case TrainerTypes.PROFESSOR:
-							BaseMoney = 100;
-							break;
-						case TrainerTypes.LADY:
-							BaseMoney = 160;
-							break;
-						default:
-							BaseMoney = 30;
-							break;
-					}
-					#endregion
-					#region Skill Level
-					switch (type)
-					{
-						case TrainerTypes.BURGLAR:
-						case TrainerTypes.GAMBLER:
-							SkillLevel = 32;
-							break;
-						case TrainerTypes.LADY:
-							SkillLevel = 72;
-							break;
-						case TrainerTypes.SWIMMER_M:
-						case TrainerTypes.SWIMMER_F:
-						case TrainerTypes.SWIMMER2_M:
-						case TrainerTypes.SWIMMER2_F:
-							SkillLevel = 32;
-							break;
-						case TrainerTypes.TUBER_M:
-						case TrainerTypes.TUBER_F:
-						case TrainerTypes.TUBER2_M:
-						case TrainerTypes.TUBER2_F:
-							SkillLevel = 16;
-							break;
-						case TrainerTypes.COOLCOUPLE:
-						case TrainerTypes.SISANDBRO:
-							SkillLevel = 48;
-							break;
-						case TrainerTypes.YOUNGCOUPLE:
-							SkillLevel = 32;
-							break;
-						default:
-							SkillLevel = BaseMoney;
-							break;
-					}
-					#endregion
-					TrainerMetaData.Add(type, new TrainerData());
-				}
-				//Step 4: Read the results
-				//using(reader)
-				//{
-				//	Dictionary<Method, List<int>> e = new Dictionary<Method, List<int>>();
-				//	while (reader.Read()) //if(reader.Read())
-				//	{
-				//		if (!e.ContainsKey((Method)int.Parse((string)reader["encounter_method_id"].ToString())))
-				//			e.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), new List<int>());
-				//		e[(Method)int.Parse((string)reader["encounter_method_id"].ToString())]
-				//			.Add(int.Parse((string)reader["id"].ToString())					
-				//		);
-				//		EncounterData.Add(int.Parse((string)reader["id"].ToString()),
-				//			new Encounter(
-				//				id: int.Parse((string)reader["id"].ToString())
-				//				,area: int.Parse((string)reader["location_area_id"].ToString())
-				//				,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
-				//				,slotId: int.Parse((string)reader["slot"].ToString())
-				//				//,pokemon: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
-				//				,pokemon: reader["pokemon_group"].ToString().Split(',').Select(x => (Pokemons)int.Parse(x)).ToArray()
-				//				, conditions: reader["encounter_condition_value_group"].ToString().Split(',').Select(x => (ConditionValue)int.Parse(x)).ToArray()
-				//				,generation: int.Parse((string)reader["generation_id"].ToString())
-				//				,minLevel: int.Parse((string)reader["min_level"].ToString())
-				//				,maxLevel: int.Parse((string)reader["max_level"].ToString())
-				//				,rarity: int.Parse((string)reader["rarity"].ToString())
-				//				,versions: reader["encounter_slot_version_group"].ToString().Split(',').Select(x => (Versions)int.Parse(x)).ToArray()
-				//			)						
-				//		);
-				//	}
-				//	//Step 5: Closing up
-				//	reader.Close();
-				//	reader.Dispose();
-				//	#endregion
-				//}
 				return true;
 			} catch (SQLiteException e) {
 				GameDebug.LogError("SQL Exception Message:" + e.Message);

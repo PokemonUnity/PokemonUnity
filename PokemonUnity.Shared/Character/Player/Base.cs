@@ -280,6 +280,23 @@ namespace PokemonUnity.Character
 			//Could not be stored in PC because all boxes full
 			return null;
 		}
+
+		/// <summary>
+		/// Checks if the player is able to perform a certain Hidden Machine move.
+		/// </summary>
+		/// <param name="HM">The Hidden Machine move the player tries to use.</param>
+		//ToDO: Redo this whole thing... hidden move checklist changes based on the HM and usage
+		public bool CanUseHMMove(HiddenMoves HM)
+		{
+			//int[] trainerBadges = Game.GameData.Player.Badges;
+			foreach (GymBadges b in Badges)
+			{
+				//if (b.HMs.Contains(HM) & Badges.Contains(b.ID) | b.ID == 0)
+				if (Game.HiddenMoveData[HM].Badge == b)
+					return true;
+			}
+			return false;
+		}
 		#endregion
 	}
 }

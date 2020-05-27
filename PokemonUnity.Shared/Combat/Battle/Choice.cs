@@ -17,9 +17,7 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Options made on a given turn, per pokemon.
 		/// </summary>
-		/// ToDo: Make a logger of this as a List<> to document a match history.
-		/// ToDo: If making logger, consider documenting math/results as well...
-		public class Choice
+		public struct Choice
 		{
 			public ChoiceAction Action { get; private set; }
 			/// <summary>
@@ -53,7 +51,7 @@ namespace PokemonUnity.Combat
 			{
 				Action = action;
 				Index = moveIndex;
-				//Move = move;
+				Move = null; //(Move)move;
 				Target = target;
 			}
 
@@ -66,6 +64,8 @@ namespace PokemonUnity.Combat
 			{
 				Action = action;
 				Index = pkmnIndex;
+				Target = -1;
+				Move = null;
 			}
 
 			/// <summary>
@@ -79,6 +79,7 @@ namespace PokemonUnity.Combat
 				Action = action;
 				Index = (int)itemIndex;
 				Target = pkmnTarget;
+				Move = null;
 			}
 
 			/// <summary>
@@ -87,6 +88,9 @@ namespace PokemonUnity.Combat
 			public Choice (ChoiceAction action = 0)
 			{
 				Action = action;
+				Move = null;
+				Target = -1;
+				Index = 0;
 			}
 		}
 	}

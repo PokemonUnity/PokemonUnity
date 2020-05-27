@@ -8,10 +8,10 @@ using System.Runtime.Serialization;
 //using UnityEditor;
 //#endif
 
-namespace PokemonUnity
+namespace PokemonUnity.Utility
 {
 	[System.Serializable]
-	public class Quaternion
+	public struct Quaternion
 	{
 		public float x { get; set; }
 		public float y { get; set; }

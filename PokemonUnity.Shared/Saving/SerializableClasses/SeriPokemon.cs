@@ -1,15 +1,14 @@
-﻿using System;
+﻿using PokemonUnity.Monster;
+using PokemonUnity.Attack;
+using PokemonUnity.Character;
+using PokemonUnity.Inventory;
+using PokemonUnity;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace PokemonUnity.Saving.SerializableClasses
 {
-	using PokemonUnity.Monster;
-	using PokemonUnity.Attack;
-	using PokemonUnity.Character;
-	using PokemonUnity.Inventory;
-	using PokemonUnity;
-	using System.Collections.Generic;
-	using System.Linq;
-
 	/// <summary>
 	/// Serializable version of Pokemon Unity's Pokemon class
 	/// </summary>
@@ -229,7 +228,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 			return seriPokemon;
 		}
-    }
+	}
 
 	public static class SeriArray
 	{
