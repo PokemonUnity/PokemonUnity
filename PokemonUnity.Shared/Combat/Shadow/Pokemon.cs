@@ -1,11 +1,4 @@
-﻿using PokemonUnity;
-using PokemonUnity.Inventory;
-using PokemonUnity.Localization;
-using PokemonUnity.Combat;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using PokemonUnity.Combat.Data;
 
 namespace PokemonUnity.Combat
 {
@@ -18,7 +11,7 @@ namespace PokemonUnity.Combat
       // Called out of hypermode
       pkmn.isHyperMode=false;
       //pkmn.adjustHeart(-50);
-      pkmn.pokemon.decreaseShadowLevel(Monster.Pokemon.PokemonActions.Battle);
+      pkmn.pokemon.decreaseShadowLevel(Monster.Pokemon.PokemonActions.CallTo);
     }
     this.InitPokemon(pkmn, pkmnIndex);
     // Called into battle
@@ -28,11 +21,12 @@ namespace PokemonUnity.Combat
         Type2=Types.SHADOW;
       //}
       //if (@battle.pbOwnedByPlayer(@Index)) this.pokemon.adjustHeart(-30);
+      if (@battle.pbOwnedByPlayer(@Index)) this.pokemon.decreaseShadowLevel(Monster.Pokemon.PokemonActions.Battle);
     }
   }
 
 
-  public void pbEndTurn(Battle.Choice choice, string placeholder) { 
+  public void pbEndTurn(Choice choice, string placeholder) { 
     this.pbEndTurn(choice);
     if (inHyperMode() && !this.battle.pbAllFainted(this.battle.party1) &&
        !this.battle.pbAllFainted(this.battle.party2)) { 

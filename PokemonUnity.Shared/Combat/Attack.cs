@@ -3921,7 +3921,7 @@ namespace PokemonUnity.Combat
 	public class PokeBattle_Move_071 : PokeBattle_Move
 	{
 		public PokeBattle_Move_071(Battle battle, Attack.Move move) : base(battle, move) { }
-		public void pbAddTarget(byte targets, Pokemon attacker)
+		public override void pbAddTarget(Pokemon[] targets, Pokemon attacker)
 		{
 			if (attacker.effects.CounterTarget >= 0 &&
 			   attacker.IsOpposing(attacker.effects.CounterTarget))
@@ -3951,7 +3951,7 @@ namespace PokemonUnity.Combat
 	public class PokeBattle_Move_072 : PokeBattle_Move
 	{
 		public PokeBattle_Move_072(Battle battle, Attack.Move move) : base(battle, move) { }
-		public void pbAddTarget(byte targets, Pokemon attacker)
+		public override void pbAddTarget(Pokemon[] targets, Pokemon attacker)
 		{
 			if (attacker.effects.MirrorCoatTarget >= 0 &&
 			   attacker.IsOpposing(attacker.effects.MirrorCoatTarget))
@@ -3982,7 +3982,7 @@ namespace PokemonUnity.Combat
 	public class PokeBattle_Move_073 : PokeBattle_Move
 	{
 		public PokeBattle_Move_073(Battle battle, Attack.Move move) : base(battle, move) { }
-		public void pbAddTarget(byte targets, Pokemon attacker)
+		public override void pbAddTarget(Pokemon[] targets, Pokemon attacker)
 		{
 			if (attacker.lastAttacker.Count > 0)
 			{
@@ -3994,7 +3994,6 @@ namespace PokemonUnity.Combat
 						attacker.pbRandomTarget(targets);
 					}
 				}
-
 			}
 		}
 
@@ -4018,7 +4017,6 @@ namespace PokemonUnity.Combat
 		public PokeBattle_Move_074(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
@@ -5012,7 +5010,7 @@ namespace PokemonUnity.Combat
 		public PokeBattle_Move_09B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
-			int n = (int)Math.Floor((float)attacker.weight / (float)opponent.Weight(attacker));
+			int n = (int)Math.Floor((float)attacker.Weight(attacker) / (float)opponent.Weight(attacker));
 
 			int ret = 40;
 			if (n >= 2) ret = 60;
@@ -7370,7 +7368,7 @@ namespace PokemonUnity.Combat
 			}
 		}
 
-		public void pbAddTarget(byte targets, Pokemon attacker)
+		public override void pbAddTarget(Pokemon[] targets, Pokemon attacker)
 		{
 			if (attacker.effects.BideTarget >= 0)
 			{
@@ -9841,7 +9839,7 @@ namespace PokemonUnity.Combat
 					pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 					byte reduction = Math.Min((byte)4, i.PP);
-					opponent.pbSetPP(i.MoveId, i.PP - reduction);
+					opponent.pbSetPP(i, (byte)(i.PP - reduction));
 
 					battle.pbDisplay(_INTL("It reduced the PP of {1}'s {2} by {3}!", opponent.ToString(true), Game.MoveData[i.MoveId].Name, ((int)reduction).ToString()));
 					return 0;

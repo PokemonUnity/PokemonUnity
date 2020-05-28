@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using PokemonUnity.Monster;
-using PokemonUnity.Inventory.Plants;
+﻿using PokemonUnity.Inventory.Plants;
 
 namespace PokemonUnity.Monster
 {
@@ -81,9 +79,5 @@ namespace PokemonUnity.Monster
 			this.Stat_mod[(int)increase]		+= .1f;
 			this.Stat_mod[(int)decrease]		-= .1f;
 		}
-		//private static Natures getRandomNature()
-		//{
-		//	return Game.NatureData[(Natures)new System.Random(Core.Seed()).Next(1, Game.NatureData.Count)].Natures;
-		//}
 	}
 }

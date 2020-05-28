@@ -68,7 +68,7 @@
     <Compile Include="Character\Player\Outfit.cs" />
     <Compile Include="Character\Trainer\TrainerId.cs" />
     <Compile Include="Character\Trainer.cs" />
-    <Compile Include="Combat\Battle\TurnResults.cs" />
+    <Compile Include="Combat\Data\TurnResults.cs" />
     <Compile Include="Enums\Battles.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Enums\Items.cs" />
@@ -96,9 +96,9 @@
     <Compile Include="Application\Game.Utility.cs" />
     <Compile Include="Combat\Attack.cs" />
     <Compile Include="Combat\Battle.cs" />
-    <Compile Include="Combat\Battle\Choice.cs" />
-    <Compile Include="Combat\Battle\DamageState.cs" />
-    <Compile Include="Combat\Battle\SuccessState.cs" />
+    <Compile Include="Combat\Data\Choice.cs" />
+    <Compile Include="Combat\Data\DamageState.cs" />
+    <Compile Include="Combat\Data\SuccessState.cs" />
     <Compile Include="Combat\Effects\Battler.cs" />
     <Compile Include="Combat\Effects\Field.cs" />
     <Compile Include="Combat\Effects\Move.cs" />

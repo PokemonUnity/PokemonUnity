@@ -1517,7 +1517,6 @@ namespace PokemonUnity.Inventory
 		TM99 = 748,
 		/// <summary>The user tells the target a secret, and the target loses its ability to concentrate. This lowers the target’s Sp. Atk stat.</summary>
 		TM100 = 749,
-		//Everything beyond here is new, about 208 new values added
 		/// <summary>Held: Allows Latias to Mega Evolve into Mega Latias. : 	Held: Allows Latias to Mega Evolve into Mega Latias.</summary>
 		LATIASITE = 760,
 		/// <summary>Held: Allows Latios to Mega Evolve into Mega Latios. : 	Held: Allows Latios to Mega Evolve into Mega Latios.</summary>

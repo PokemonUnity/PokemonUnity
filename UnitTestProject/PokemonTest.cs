@@ -749,12 +749,13 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		public void Pokemon_Form_SetForm_To_FormB()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.UNOWN);
-			pokemon.Form = 1;
+			//pokemon.FormId = 1;
+			pokemon.SetForm(Forms.UNOWN_B);
 			CollectionAssert //Assert
 				.AreEquivalent( //.AreEqual(
 					new object[] { Pokemons.UNOWN, Forms.UNOWN_B }, 
-					new object[] { pokemon.Species, Game.PokemonFormsData[pokemon.Species][pokemon.Form].Id },
-					string.Format("Form: {0}, Id: {1}", pokemon.Form, Game.PokemonFormsData[pokemon.Species][pokemon.Form].Id)
+					new object[] { pokemon.Species, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id },
+					string.Format("Form: {0}, Id: {1}", pokemon.FormId, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id)
 				);
 			//Assert.Inconclusive("Not implemented yet");
 		}
@@ -762,9 +763,11 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		public void Pokemon_Form_SetForm_Fails_On_NoForms()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.DEOXYS); //Normal
-			pokemon.Form = 2; //Defense
-			pokemon.Form = 5; //Not Indexed
-			Assert.AreEqual(Forms.DEOXYS_DEFENSE, Game.PokemonFormsData[pokemon.Species][pokemon.Form].Id);
+			//pokemon.FormId = 2; //Defense
+			pokemon.SetForm(Forms.DEOXYS_DEFENSE); //Defense
+			//pokemon.FormId = 5; //Not Indexed
+			pokemon.SetForm(5); //Not Indexed
+			Assert.AreEqual(Forms.DEOXYS_DEFENSE, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id);
 			//Assert.AreEqual(2, Game.PokemonFormsData[pokemon.Species][pokemon.Form].GetArrayId());
 			//Assert.Inconclusive("Not implemented yet");
 		}
@@ -777,8 +780,9 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			//if (Game.PokemonData[pokemon.Species].BaseStatsATK != pokemon.ATK) Assert.Fail("Bad Test; Attack not equal to Base Stats");
 			int[] stat = new int[] { pokemon.HP, pokemon.ATK, pokemon.DEF, pokemon.SPA, pokemon.SPD, pokemon.SPE };
 			//int[] stat = new int[] { pokemon.BaseStatsHP, pokemon.BaseStatsATK, pokemon.BaseStatsDEF, pokemon.BaseStatsSPA, pokemon.BaseStatsSPD, pokemon.BaseStatsSPE };
-			pokemon.Form = 1; //Rotom_Heat
-			if(Game.PokemonFormsData[pokemon.Species][pokemon.Form].Id != Forms.ROTOM_HEAT) Assert.Fail("Bad Test; Wrong Stats being modified.");
+			//pokemon.FormId = 1; //Rotom_Heat
+			pokemon.SetForm(Forms.ROTOM_HEAT);
+			if(Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id != Forms.ROTOM_HEAT) Assert.Fail("Bad Test; Wrong Stats being modified.");
 			//Assert.AreNotEqual(Game.PokemonData[pokemon.Species].BaseStatsATK, pokemon.ATK);
 			//Assert.AreNotEqual(pokemon.ATK, stat, "No changes in Pokemon stats.");
 			CollectionAssert.AreNotEquivalent(stat, new int[] { pokemon.HP, pokemon.ATK, pokemon.DEF, pokemon.SPA, pokemon.SPD, pokemon.SPE }, "No changes in Pokemon stats.");

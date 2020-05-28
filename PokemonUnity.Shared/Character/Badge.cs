@@ -72,6 +72,7 @@ namespace PokemonUnity.Character
 		Dive,
 		RockClimb,
 		RockSmash,
-		Headbutt
+		Headbutt,
+		Defog
 	}
 }

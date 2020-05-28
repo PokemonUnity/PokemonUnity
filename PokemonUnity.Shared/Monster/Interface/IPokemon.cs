@@ -67,7 +67,7 @@ namespace PokemonUnity.Monster
 		//int EggSteps { get; }
 		//byte[] EV { get; }
 		Monster.Data.Experience Experience { get; }
-		int Form { get; set; }
+		int FormId { get; }
 		bool? Gender { get; }
 		LevelingRate GrowthRate { get; }
 		int Happiness { get; }

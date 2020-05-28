@@ -67,7 +67,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		//public int CurrentLevel { get; private set; }
 		public int CurrentExp { get; private set; }
 
-		public int Happines { get; private set; }
+		public int Happiness { get; private set; }
 
 		public int Status { get; private set; }
 		public int StatusCount { get; private set; }
@@ -79,6 +79,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		public SeriMail Mail { get; private set; }
 
 		public SeriMove[] Moves { get; private set; }
+		public int[] Archive { get; private set; }
 
 		public int[] Ribbons { get; private set; }
 		public bool[] Markings { get; private set; }
@@ -114,6 +115,12 @@ namespace PokemonUnity.Saving.SerializableClasses
 				moves[i] = pokemon.Moves[i];
 			}
 
+			Moves[] history = new Moves[pokemon.Archive.Length];
+			for (int i = 0; i < moves.Length; i++)
+			{
+				history[i] = (Moves)pokemon.Archive[i];
+			}
+
 			Pokemon normalPokemon =
 				new Pokemon
 				(
@@ -124,9 +131,9 @@ namespace PokemonUnity.Saving.SerializableClasses
 					pokemon.Pokerus, pokemon.HeartGuageSize, /*pokemon.IsHyperMode,*/ pokemon.ShadowLevel,
 					pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
 					pokemon.ObtainedLevel, /*pokemon.CurrentLevel,*/ pokemon.CurrentExp,
-					pokemon.Happines, (Status)pokemon.Status, pokemon.StatusCount,
+					pokemon.Happiness, (Status)pokemon.Status, pokemon.StatusCount,
 					pokemon.EggSteps, (Items)pokemon.BallUsed, pokemon.Mail.Message,
-					moves, ribbons, pokemon.Markings, pokemon.PersonalId,
+					moves, history, ribbons, pokemon.Markings, pokemon.PersonalId,
 					(Pokemon.ObtainedMethod)pokemon.ObtainedMethod,
 					pokemon.TimeReceived, pokemon.TimeEggHatched
 				);
@@ -153,7 +160,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				}
 
 				seriPokemon.Species				= (int)pokemon.Species;
-				seriPokemon.Form				= pokemon.Form;
+				seriPokemon.Form				= pokemon.FormId;
 				//Creates an error System OutOfBounds inside Pokemon
 				seriPokemon.NickName			= pokemon.Name;
 
@@ -183,7 +190,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				//seriPokemon.CurrentLevel		= pokemon.Level;
 				seriPokemon.CurrentExp			= pokemon.Exp;
 
-				seriPokemon.Happines			= pokemon.Happiness;
+				seriPokemon.Happiness			= pokemon.Happiness;
 
 				seriPokemon.Status				= (int)pokemon.Status;
 				seriPokemon.StatusCount			= pokemon.StatusCount;
@@ -200,6 +207,15 @@ namespace PokemonUnity.Saving.SerializableClasses
 				for (int i = 0; i < 4; i++)
 				{
 					seriPokemon.Moves[i]		= pokemon.moves[i];
+				}
+
+				if (pokemon.MoveArchive != null)
+				{
+					seriPokemon.Archive			= new int[pokemon.MoveArchive.Length];
+					for (int i = 0; i < seriPokemon.Archive.Length; i++)
+					{
+						seriPokemon.Archive[i]	= (int)pokemon.MoveArchive[i];
+					}
 				}
 
 				//Ribbons is also null, we add a null check

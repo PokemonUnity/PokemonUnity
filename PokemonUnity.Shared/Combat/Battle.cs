@@ -1,14 +1,9 @@
-﻿using PokemonUnity;
-//using PokemonUnity.Pokemon;
-using PokemonUnity.Inventory;
-//using PokemonUnity.Attack;
-using PokemonUnity.Combat;
+﻿using PokemonUnity.Inventory;
+using PokemonUnity.Combat.Data;
 using PokemonUnity.Character;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using PokemonUnity.Localization;
 
 namespace PokemonUnity.Combat
 {
@@ -690,7 +685,8 @@ namespace PokemonUnity.Combat
 					    pokemon.makeUnmega();   //rescue null
 					    pokemon.makeUnprimal(); //rescue null
 					    pokemon.pbRecordFirstMoves();*/
-                        pokemon = new Monster.Pokemon(pokemon, ball, pbIsSnagBall(ball) ? Monster.Pokemon.ObtainedMethod.SNAGGED : Monster.Pokemon.ObtainedMethod.MET);
+                        //pokemon = new Monster.Pokemon(pokemon, ball, pbIsSnagBall(ball) ? Monster.Pokemon.ObtainedMethod.SNAGGED : Monster.Pokemon.ObtainedMethod.MET);
+                        pokemon.SetCatchInfos(this.pbPlayer().Trainer, ball, pbIsSnagBall(ball) ? Monster.Pokemon.ObtainedMethod.SNAGGED : Monster.Pokemon.ObtainedMethod.MET);
                         if (Core.GAINEXPFORCAPTURE)
 					    {
 						    battler.captured = true;
@@ -819,21 +815,21 @@ namespace PokemonUnity.Combat
   /// <param name="battlerindex"></param>
   /// <param name="pokemonindex"></param>
   /// <returns></returns>
-  public string pbThisEx(int battlerindex, int pokemonindex) {
-	//party=pbParty(battlerindex);
+  public string ToString(int battlerindex, int pokemonindex) {
+	Pokemon[] party=pbParty(battlerindex);
     if (isOpposing(battlerindex)) {
       if (@opponent != null) {
-        //return _INTL("The foe {1}", party[pokemonindex].Name);
-        return _INTL("The foe {1}", party[battlerindex,pokemonindex].Name);
+        return _INTL("The foe {1}", party[pokemonindex].Name);
+        //return _INTL("The foe {1}", party[battlerindex,pokemonindex].Name);
       }
       else {
-        //return _INTL("The wild {1}", party[pokemonindex].Name);
-        return _INTL("The wild {1}", party[battlerindex,pokemonindex].Name);
+        return _INTL("The wild {1}", party[pokemonindex].Name);
+        //return _INTL("The wild {1}", party[battlerindex,pokemonindex].Name);
 	  }
     }
     else {
-      //return _INTL("{1}", party[pokemonindex].Name);
-      return _INTL("{1}", party[battlerindex,pokemonindex].Name);
+      return _INTL("{1}", party[pokemonindex].Name);
+      //return _INTL("{1}", party[battlerindex,pokemonindex].Name);
 	}
   }
 			
@@ -844,7 +840,7 @@ namespace PokemonUnity.Combat
   /// <param name="item"></param>
   /// <returns></returns>
   public bool pbIsUnlosableItem(Pokemon pkmn, Items item) {
-    //if (pbIsMail(item)) return true; //ToDo: Uncomment
+    if (Game.ItemData[item].IsLetter) return true; //pbIsMail(item)
     if (pkmn.effects.Transform) return false;
     if (pkmn.Ability == Abilities.MULTITYPE) {
       Items[] plates= new Items[] { Items.FIST_PLATE, Items.SKY_PLATE, Items.TOXIC_PLATE, Items.EARTH_PLATE, Items.STONE_PLATE,
@@ -1845,7 +1841,7 @@ namespace PokemonUnity.Combat
   }
 
   public bool pbRecallAndReplace(int index,int newpoke,int newpokename=-1,bool batonpass=false,bool moldbreaker=false) {
-    @battlers[index].pbResetForm();
+    @battlers[index].ResetForm();
     if (!@battlers[index].isFainted()) {
       @scene.pbRecall(index);
     }
@@ -2719,7 +2715,7 @@ namespace PokemonUnity.Combat
           GameDebug.Log($"[Entry hazard] #{pkmn.ToString()} triggered Spikes");
           float spikesdiv=new int[] { 8, 6, 4 }[pkmn.OwnSide.Spikes-1];
           @scene.pbDamageAnimation(pkmn,0);
-          pkmn.pbReduceHP((int)Math.Floor(pkmn.TotalHP/spikesdiv));
+          pkmn.ReduceHP((int)Math.Floor(pkmn.TotalHP/spikesdiv));
           pbDisplayPaused(_INTL("{1} is hurt by the spikes!",pkmn.ToString()));
         }
       }
@@ -2733,7 +2729,7 @@ namespace PokemonUnity.Combat
           if (eff>0) {
             GameDebug.Log($"[Entry hazard] #{pkmn.ToString()} triggered Stealth Rock");
             @scene.pbDamageAnimation(pkmn,0);
-            pkmn.pbReduceHP((int)Math.Floor((pkmn.TotalHP*eff)/64f));
+            pkmn.ReduceHP((int)Math.Floor((pkmn.TotalHP*eff)/64f));
             pbDisplayPaused(_INTL("Pointed stones dug into {1}!",pkmn.ToString()));
           }*/
         }
@@ -3572,7 +3568,7 @@ namespace PokemonUnity.Combat
             if (i.hasWorkingAbility(Abilities.SOLAR_POWER)) {
               GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Solar Power");
               @scene.pbDamageAnimation(i,0);
-              i.pbReduceHP((int)Math.Floor(i.TotalHP/8f));
+              i.ReduceHP((int)Math.Floor(i.TotalHP/8f));
               pbDisplay(_INTL("{1} was hurt by the sunlight!",i.ToString()));
               if (i.isFainted()) {
                 if (!i.pbFaint()) return;
@@ -3620,7 +3616,7 @@ namespace PokemonUnity.Combat
                    Attack.Data.Effects.x100  // Dive
                }.Contains(Game.MoveData[i.effects.TwoTurnAttack].Effect)) { 
               @scene.pbDamageAnimation(i,0);
-              i.pbReduceHP((int)Math.Floor(i.TotalHP/16f));
+              i.ReduceHP((int)Math.Floor(i.TotalHP/16f));
               pbDisplay(_INTL("{1} is buffeted by the sandstorm!",i.ToString()));
               if (i.isFainted()) {
                 if (!i.pbFaint()) return;
@@ -3652,7 +3648,7 @@ namespace PokemonUnity.Combat
                !i.hasWorkingItem(Items.SAFETY_GOGGLES) &&
                !new int[] { 0xCA,0xCB }.Contains((int)Game.MoveData[i.effects.TwoTurnAttack].Effect)) { // Dig, Dive
               @scene.pbDamageAnimation(i,0);
-              i.pbReduceHP((int)Math.Floor(i.TotalHP/16f));
+              i.ReduceHP((int)Math.Floor(i.TotalHP/16f));
               pbDisplay(_INTL("{1} is buffeted by the hail!",i.ToString()));
               if (i.isFainted()) {
                 if (!i.pbFaint()) return;
@@ -3701,7 +3697,7 @@ namespace PokemonUnity.Combat
             if (i.hasWorkingAbility(Abilities.SOLAR_POWER)) {
               GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Solar Power");
               @scene.pbDamageAnimation(i,0);
-              i.pbReduceHP((int)Math.Floor(i.TotalHP/8f));
+              i.ReduceHP((int)Math.Floor(i.TotalHP/8f));
               pbDisplay(_INTL("{1} was hurt by the sunlight!",i.ToString()));
               if (i.isFainted()) {
                 if (!i.pbFaint()) return;
@@ -3747,7 +3743,7 @@ namespace PokemonUnity.Combat
             if (i.isFainted()) continue;
             if (!i.isShadow()) {
               @scene.pbDamageAnimation(i,0);
-              i.pbReduceHP((int)Math.Floor(i.TotalHP/16f));
+              i.ReduceHP((int)Math.Floor(i.TotalHP/16f));
               pbDisplay(_INTL("{1} was hurt by the shadow sky!",i.ToString()));
               if (i.isFainted()) {
                 if (!i.pbFaint()) return;
@@ -3822,7 +3818,7 @@ namespace PokemonUnity.Combat
               pbWeather()==Weather.HARSHSUN) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Dry Skin (in sun)");
           @scene.pbDamageAnimation(i,0);
-          int hploss=i.pbReduceHP((int)Math.Floor(i.TotalHP/8f));
+          int hploss=i.ReduceHP((int)Math.Floor(i.TotalHP/8f));
           if (hploss>0) pbDisplay(_INTL("{1}'s {2} was hurt by the sunlight!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
         }
       }
@@ -3845,7 +3841,7 @@ namespace PokemonUnity.Combat
           GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Wish");
           int hpgain=i.pbRecoverHP(i.effects.WishAmount,true);
           if (hpgain>0) {
-            string wishmaker=pbThisEx(i.Index,i.effects.WishMaker);
+            string wishmaker=ToString(i.Index,i.effects.WishMaker);
             pbDisplay(_INTL("{1}'s wish came true!",wishmaker));
           }
         }
@@ -3862,7 +3858,7 @@ namespace PokemonUnity.Combat
           if ((j.Index&1)!=i) continue;
           if (j.hasType(Types.FIRE) || j.hasWorkingAbility(Abilities.MAGIC_GUARD)) continue;
           @scene.pbDamageAnimation(j,0);
-          int hploss=j.pbReduceHP((int)Math.Floor(j.TotalHP/8f));
+          int hploss=j.ReduceHP((int)Math.Floor(j.TotalHP/8f));
           if (hploss>0) pbDisplay(_INTL("{1} is hurt by the sea of fire!",j.ToString()));
           if (j.isFainted()) {
             if (!j.pbFaint()) return;
@@ -3969,9 +3965,9 @@ namespace PokemonUnity.Combat
         if (recipient.IsNotNullOrNone() && !recipient.isFainted()) {
           GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Leech Seed");
           pbCommonAnimation("LeechSeed",recipient,i);
-          int hploss=i.pbReduceHP((int)Math.Floor(i.TotalHP/8f),true);
+          int hploss=i.ReduceHP((int)Math.Floor(i.TotalHP/8f),true);
           if (i.hasWorkingAbility(Abilities.LIQUID_OOZE)) {
-            recipient.pbReduceHP(hploss,true);
+            recipient.ReduceHP(hploss,true);
             pbDisplay(_INTL("{1} sucked up the liquid ooze!",recipient.ToString()));
           }
           else {
@@ -4010,10 +4006,10 @@ namespace PokemonUnity.Combat
           if (!i.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
             GameDebug.Log($"[Status damage] #{i.ToString()} took damage from poison/toxic");
             if (i.StatusCount==0) {
-              i.pbReduceHP((int)Math.Floor(i.TotalHP/8f));
+              i.ReduceHP((int)Math.Floor(i.TotalHP/8f));
             }
             else {
-              i.pbReduceHP((int)Math.Floor((i.TotalHP*i.effects.Toxic)/16f));
+              i.ReduceHP((int)Math.Floor((i.TotalHP*i.effects.Toxic)/16f));
             }
             i.pbContinueStatus();
           }
@@ -4025,10 +4021,10 @@ namespace PokemonUnity.Combat
           GameDebug.Log($"[Status damage] #{i.ToString()} took damage from burn");
           if (i.hasWorkingAbility(Abilities.HEATPROOF)) {
             GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Heatproof");
-            i.pbReduceHP((int)Math.Floor(i.TotalHP/16f));
+            i.ReduceHP((int)Math.Floor(i.TotalHP/16f));
           }
           else {
-            i.pbReduceHP((int)Math.Floor(i.TotalHP/8f));
+            i.ReduceHP((int)Math.Floor(i.TotalHP/8f));
           }
         }
         i.pbContinueStatus();
@@ -4038,7 +4034,7 @@ namespace PokemonUnity.Combat
         if (i.Status==Status.SLEEP) {
           if (!i.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
             GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s nightmare");
-            i.pbReduceHP((int)Math.Floor(i.TotalHP/4f),true);
+            i.ReduceHP((int)Math.Floor(i.TotalHP/4f),true);
             pbDisplay(_INTL("{1} is locked in a nightmare!",i.ToString()));
           }
         }
@@ -4056,7 +4052,7 @@ namespace PokemonUnity.Combat
       if (i.isFainted()) continue;
       if (i.effects.Curse && !i.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
         GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s curse");
-        i.pbReduceHP((int)Math.Floor(i.TotalHP/4f),true);
+        i.ReduceHP((int)Math.Floor(i.TotalHP/4f),true);
         pbDisplay(_INTL("{1} is afflicted by the curse!",i.ToString()));
       }
       if (i.isFainted()) {
@@ -4106,7 +4102,7 @@ namespace PokemonUnity.Combat
             if (@battlers[i.effects.MultiTurnUser].hasWorkingItem(Items.BINDING_BAND)) {
               amt=Core.USENEWBATTLEMECHANICS ? (int)Math.Floor(i.TotalHP/6f) : (int)Math.Floor(i.TotalHP/8f);
             }
-            i.pbReduceHP(amt);
+            i.ReduceHP(amt);
             pbDisplay(_INTL("{1} is hurt by {2}!",i.ToString(),movename));
           }
         }
@@ -4223,7 +4219,7 @@ namespace PokemonUnity.Combat
         GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Perish Song count dropped to #{i.effects.PerishSong}");
         if (i.effects.PerishSong==0) {
           perishSongUsers.Add(i.effects.PerishSongUser);
-          i.pbReduceHP(i.HP,true);
+          i.ReduceHP(i.HP,true);
         }
       }
       if (i.isFainted()) {
@@ -4450,7 +4446,7 @@ namespace PokemonUnity.Combat
         if (i.pbOpposing1.hasWorkingAbility(Abilities.BAD_DREAMS) ||
            i.pbOpposing2.hasWorkingAbility(Abilities.BAD_DREAMS)) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s opponent's Bad Dreams");
-          int hploss=i.pbReduceHP((int)Math.Floor(i.TotalHP/8f),true);
+          int hploss=i.ReduceHP((int)Math.Floor(i.TotalHP/8f),true);
           if (hploss>0) pbDisplay(_INTL("{1} is having a bad dream!",i.ToString()));
         }
       }
@@ -4541,7 +4537,7 @@ namespace PokemonUnity.Combat
       if (i.hasWorkingItem(Items.STICKY_BARB) && !i.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
         GameDebug.Log($"[Item triggered] #{i.ToString()}'s Sticky Barb");
         @scene.pbDamageAnimation(i,0);
-        i.pbReduceHP((int)Math.Floor(i.TotalHP/8f));
+        i.ReduceHP((int)Math.Floor(i.TotalHP/8f));
         pbDisplay(_INTL("{1} is hurt by its {2}!",i.ToString(),i.Item.ToString(TextScripts.Name)));
       }
       if (i.isFainted()) {
@@ -4746,7 +4742,7 @@ namespace PokemonUnity.Combat
     }
     @scene.pbEndBattle(@decision);
     foreach (Pokemon i in @battlers) {
-      i.pbResetForm();
+      i.ResetForm();
       if (i.hasWorkingAbility(Abilities.NATURAL_CURE)) {
         i.Status=0;
       }

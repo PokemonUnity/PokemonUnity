@@ -9,7 +9,6 @@ using System.Globalization;
 using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
-//using PokemonUnity.Inventory.ItemData;
 using PokemonUnity.Attack;
 using PokemonUnity.Saving;
 using PokemonUnity.Overworld;
@@ -69,8 +68,8 @@ namespace PokemonUnity
 		public static Dictionary<TrainerTypes,TrainerData> TrainerMetaData { get; private set; }
 		public static Dictionary<GymBadges,Character.BadgeData> BadgeData { get; private set; }
 		public static Dictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; private set; }
+		public static Dictionary<int,MachineData> MachineData { get; private set; }
 		//public static Dictionary<Items,KeyValuePair<Moves,int[]>[]> MachineMetaData { get; private set; }
-		//public static Dictionary<int,Machine> MachineData { get; private set; }
 		//public static Dictionary<int,Machine> MapData { get; private set; }
 		//public static Dictionary<int,int> TextureData1 { get; private set; }
 		//public static Dictionary<int,int> TextureData2 { get; private set; }
@@ -797,6 +796,21 @@ namespace PokemonUnity
 												new Character.HiddenMoveData(
 													id: HiddenMoves.Headbutt,
 													move: Moves.HEADBUTT,
+													badge: 0,
+													badges: 0
+												)
+											);
+										break;
+									}
+									case "defog":
+									{
+										HMs.Add(HiddenMoves.Defog);
+										moves.Add(Moves.DEFOG);
+										if(!HiddenMoveData.ContainsKey(HiddenMoves.Defog))
+											HiddenMoveData.Add(HiddenMoves.Defog,
+												new Character.HiddenMoveData(
+													id: HiddenMoves.Defog,
+													move: Moves.DEFOG,
 													badge: 0,
 													badges: 0
 												)

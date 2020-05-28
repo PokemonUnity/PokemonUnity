@@ -1,12 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PokemonUnity;
-using PokemonUnity.Combat;
-using PokemonUnity.Inventory;
-//using PokemonUnity.Move;
-using System.Collections;
 
 namespace PokemonUnity.Combat
 {
