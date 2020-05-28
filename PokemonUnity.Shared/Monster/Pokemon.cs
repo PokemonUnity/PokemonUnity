@@ -501,7 +501,7 @@ namespace PokemonUnity.Monster
 			}
 
 			this.moves = moves;
-			//firstMoves = new List<Moves>(history);
+			firstMoves = new List<Moves>(history);
 
 			this.ribbons = ribbons.ToList();
 			Markings = markings;
