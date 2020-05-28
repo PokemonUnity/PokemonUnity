@@ -22,7 +22,8 @@ namespace PokemonUnity.Inventory
 	/// Custom Values are in negative?
 	public enum Items
 	{
-		EXP_ALL = -1,
+		EXP_ALL = -2,
+		RUNNING_SHOES = -1,
 		NONE = 0,
 		/// <summary>Used in battle :   [Catches]{mechanic:catch} a wild Pokémon without fail.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		MASTER_BALL = 1,
