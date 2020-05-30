@@ -107,6 +107,7 @@
     <Compile Include="Combat\Pokemon.Effect.cs" />
     <Compile Include="Combat\Pokemon.cs" />
     <Compile Include="Combat\Shadow\Pokemon.cs" />
+    <Compile Include="Inventory\Data\Machine.cs" />
     <Compile Include="Inventory\Data\Base.cs" />
     <Compile Include="Inventory\Data\Berry.cs" />
     <Compile Include="Inventory\Data\ItemFlags.cs" />

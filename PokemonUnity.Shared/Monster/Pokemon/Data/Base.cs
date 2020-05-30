@@ -129,6 +129,7 @@ namespace PokemonUnity.Monster.Data
 		public int evYieldSPA { get; private set; }
 		public int evYieldSPD { get; private set; }
 		public int evYieldSPE { get; private set; }
+		public int[] EVYield { get { return new int[] { evYieldHP, evYieldATK, evYieldDEF, evYieldSPA, evYieldSPD, evYieldSPE }; } }
 		/// <summary>
 		/// Returns the items this species can be found holding in the wild.
 		/// [item id,% chance]

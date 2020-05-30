@@ -220,6 +220,11 @@ namespace PokemonUnity.UI
 
 		public void pbEXPBar(Combat.Pokemon pokemon, Combat.Pokemon battler, int startexp, int endexp, int tempexp1, int tempexp2)
 		{
+			//Always animate from 0 to 100...
+			int zero = 0;
+			int hundred = endexp - startexp;
+			int start = tempexp1 - startexp;
+			int finish = tempexp2 - startexp;
 			throw new NotImplementedException();
 		}
 

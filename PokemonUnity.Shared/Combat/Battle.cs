@@ -523,11 +523,14 @@ namespace PokemonUnity.Combat
 
         public void pbAbort() {
             //throw new BattleAbortedException("Battle aborted");
+            GameDebug.LogError("Battle aborted");
         }
 
-        public string _INTL(string message, params string[] param)
+        public string _INTL(string message, params object[] param)
         {
-            return message;
+            for (int i = 5; i > 1; i--)
+                message.Replace($"{{{i}}}", $"{{{i - 1}}}");
+            return string.Format(message, param);
         }
 
         #region Catching and storing Pokémon.
@@ -1282,7 +1285,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-	#region Attacking
+	    #region Attacking
 		public bool CanShowFightMenu(int idxPokemon)
 		{
 			PokemonUnity.Combat.Pokemon thispkmn = @battlers[idxPokemon];
@@ -2407,11 +2410,11 @@ namespace PokemonUnity.Combat
     // Original species, not current species
     int level=defeated.level;
     float baseexp=Game.PokemonData[defeated.Species].BaseExpYield;
-    /*int[] evyield=Game.PokemonData[defeated.Species].evYield;
+    int[] evyield=Game.PokemonData[defeated.Species].EVYield;
     // Gain effort value points, using RS effort values
     int totalev=0;
     for (int k = 0; k < 6; k++) {
-      totalev+=thispoke.EV[k];
+      totalev+=thispoke.pokemon.EV[k];
     }
     for (int k = 0; k < 6; k++) {
       int evgain=evyield[k];
@@ -2443,24 +2446,26 @@ namespace PokemonUnity.Combat
                      thispoke.itemInitial == Items.POWER_ANKLET) evgain+=4;
         break;
       }
-      if (thispoke.pokerusStage>=1) evgain*=2;	// Infected or cured
+      //if (thispoke.pokemon.PokerusStage>=1) evgain*=2;	// Infected or cured
+      if (thispoke.pokemon.PokerusStage == true) evgain*=2;	// Infected
       if (evgain>0) {
         // Can't exceed overall limit
         if (totalev+evgain>Monster.Pokemon.EVLIMIT) evgain-=totalev+evgain-Monster.Pokemon.EVLIMIT;
         // Can't exceed stat limit
-        if (thispoke.EV[k]+evgain>Monster.Pokemon.EVSTATLIMIT) evgain-=thispoke.EV[k]+evgain-Monster.Pokemon.EVSTATLIMIT;
+        if (thispoke.pokemon.EV[k]+evgain>Monster.Pokemon.EVSTATLIMIT) evgain-=thispoke.pokemon.EV[k]+evgain-Monster.Pokemon.EVSTATLIMIT;
         // Add EV gain
-        thispoke.EV[k]+=evgain;
-        if (thispoke.EV[k]>Monster.Pokemon.EVSTATLIMIT) {
-          GameDebug.LogWarning($"Single-stat EV limit #{Monster.Pokemon.EVSTATLIMIT} exceeded.\r\nStat: #{k}  EV gain: #{evgain}  EVs: #{thispoke.EV.ToString()}");
-          thispoke.EV[k]=Monster.Pokemon.EVSTATLIMIT;
+        //thispoke.pokemon.EV[k]+=evgain;
+        thispoke.pokemon.EV[k]=(byte)(thispoke.pokemon.EV[k]+evgain);
+        if (thispoke.pokemon.EV[k]>Monster.Pokemon.EVSTATLIMIT) {
+          GameDebug.LogWarning($"Single-stat EV limit #{Monster.Pokemon.EVSTATLIMIT} exceeded.\r\nStat: #{k}  EV gain: #{evgain}  EVs: #{thispoke.pokemon.EV.ToString()}");
+          thispoke.pokemon.EV[k]=Monster.Pokemon.EVSTATLIMIT;
         }
         totalev+=evgain;
         if (totalev>Monster.Pokemon.EVLIMIT) {
-          GameDebug.LogWarning($"EV limit #{Monster.Pokemon.EVLIMIT} exceeded.\r\nTotal EVs: #{totalev} EV gain: #{evgain}  EVs: #{thispoke.EV.ToString()}");
+          GameDebug.LogWarning($"EV limit #{Monster.Pokemon.EVLIMIT} exceeded.\r\nTotal EVs: #{totalev} EV gain: #{evgain}  EVs: #{thispoke.pokemon.EV.ToString()}");
         }
       }
-    }*/
+    }
     thispoke.pokemon.GainEffort(defeated.Species);
     // Gain experience
     bool ispartic=false;
@@ -2508,7 +2513,7 @@ namespace PokemonUnity.Combat
     else {
       exp=(int)Math.Floor(exp/7f);
     }
-    bool isOutsider = false;// ToDo: thispoke.OT != this.pbPlayer().Trainer;
+    bool isOutsider = thispoke.pokemon.isOutsider(pbPlayer());// ToDo: thispoke.OT != this.pbPlayer().Trainer;
     //          || (thispoke.language!=0 && thispoke.language!=this.pbPlayer().language);
     if (isOutsider) {
       //if (thispoke.language!=0 && thispoke.language!=this.pbPlayer().language) {
@@ -2522,9 +2527,9 @@ namespace PokemonUnity.Combat
                            thispoke.itemInitial == Items.LUCKY_EGG) exp=(int)Math.Floor(exp*3/2f);
     Monster.LevelingRate growthrate=thispoke.pokemon.GrowthRate;
     //int newexp=new Experience(thispoke.pokemon.Exp,exp,growthrate).AddExperience(exp).Current;
-    Monster.Data.Experience ex=new Monster.Data.Experience(growthrate,thispoke.pokemon.Exp);
-    ex.AddExperience(exp);
-    int newexp=ex.Current;
+    Monster.Data.Experience gainedexp=new Monster.Data.Experience(growthrate,thispoke.pokemon.Exp);
+    gainedexp.AddExperience(exp);
+    int newexp=gainedexp.Total;
     exp=newexp-thispoke.pokemon.Exp;
     if (exp>0) {
       if (showmessages) {
@@ -2546,7 +2551,8 @@ namespace PokemonUnity.Combat
         return;
       }
       if (thispoke.isShadow()) {
-        thispoke.pokemon.Exp+=exp;
+        //thispoke.pokemon.Exp+=exp;
+        thispoke.pokemon.Experience.AddExperience(exp);
       }
       else {
         int tempexp1=thispoke.pokemon.Exp;
@@ -2555,10 +2561,11 @@ namespace PokemonUnity.Combat
         Pokemon battler=pbFindPlayerBattler(index);
         do { //loop
           // EXP Bar animation
-          int startexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel);
-          int endexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel+1);
-          tempexp2=(endexp<newexp) ? endexp : newexp;
-          thispoke.pokemon.Exp=tempexp2;
+          int startexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel); //0
+          int endexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel+1); //100
+          tempexp2=(endexp<newexp) ? endexp : newexp; //final < 100?
+          //thispoke.pokemon.Exp=tempexp2;
+          thispoke.pokemon.Experience.AddExperience(tempexp2 - thispoke.pokemon.Exp);
           @scene.pbEXPBar(thispoke,battler,startexp,endexp,tempexp1,tempexp2);
           tempexp1=tempexp2;
           curlevel+=1;
@@ -2581,6 +2588,7 @@ namespace PokemonUnity.Combat
           if (battler.IsNotNullOrNone()) battler.Update(false);
           @scene.pbRefresh();
           pbDisplayPaused(_INTL("{1} grew to Level {2}!",thispoke.Name,curlevel.ToString()));
+            //ToDo: Can Evolve during battle?
           @scene.pbLevelUp(thispoke,battler,oldtotalhp,oldattack,
                            olddefense,oldspeed,oldspatk,oldspdef);
           // Finding all moves learned at this level
@@ -2624,8 +2632,9 @@ namespace PokemonUnity.Combat
           string oldmovename=pokemon.moves[forgetmove].MoveId.ToString(TextScripts.Name);
           pokemon.moves[forgetmove]=new PokemonUnity.Attack.Move(move); // Replaces current/total PP
           //if (battler.IsNotNullOrNone()) 
-          //  battler.moves[forgetmove]=Move.pbFromPBMove(this,pokemon.moves[forgetmove]); //ToDo: Use ForgetMove Method in Pokemon Class
-          pbDisplayPaused(_INTL("1,  2, and... ... ..."));
+          //  //battler.moves[forgetmove]=Move.pbFromPBMove(this,pokemon.moves[forgetmove]); //ToDo: Use ForgetMove Method in Pokemon Class
+          //  battler.pokemon.DeleteMoveAtIndex(forgetmove);
+          pbDisplayPaused(_INTL("1,  2, and... ... ...")); //ToDo: 2sec delay between text
           pbDisplayPaused(_INTL("Poof!"));
           pbDisplayPaused(_INTL("{1} forgot {2}.",pkmnname,oldmovename));
           pbDisplayPaused(_INTL("And..."));

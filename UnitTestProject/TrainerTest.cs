@@ -54,7 +54,10 @@ namespace Tests
 			bool isMale = false;
 			TrainerId trainer = new TrainerId(playerName, isMale, tID: trainerID, sID: secretID);
 			Player player = new Player(trainer);
-			player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
+			//player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
+			PokemonUnity.Monster.Pokemon pkmn = new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER);
+			pkmn.SetCatchInfos(trainer);
+			player.addPokemon(pkmn);
 
 			/*SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
 				name,

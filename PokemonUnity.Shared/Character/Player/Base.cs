@@ -269,13 +269,13 @@ namespace PokemonUnity.Character
 			}
 			else
 				//attempt to add to the earliest available PC box. 
-				for (int i = 0, b = PC.ActiveBox; i < PC.AllBoxes.Length; i++, b++)
+				for (int numOfBoxes = 0, curBox = PC.ActiveBox; numOfBoxes < PC.AllBoxes.Length; numOfBoxes++, curBox++)
 				{
-					bool added = PC[(byte)(b % Core.STORAGEBOXES)].addPokemon(pokemon);
+					bool added = PC[(byte)(curBox % Core.STORAGEBOXES)].addPokemon(pokemon);
 					if (added)
 						//Returns the box pokemon was stored to
-						return b; //true
-					//if (!OverflowPokemonsIntoNextBox) break; else change active box too?
+						return curBox; //true
+					if (!Game.GameData.Features.OverflowPokemonsIntoNextBox) break; //else PC.ActiveBox = curBox; //change active box too?
 				}
 			//Could not be stored in PC because all boxes full
 			return null;
@@ -291,7 +291,7 @@ namespace PokemonUnity.Character
 			//int[] trainerBadges = Game.GameData.Player.Badges;
 			foreach (GymBadges b in Badges)
 			{
-				//if (b.HMs.Contains(HM) & Badges.Contains(b.ID) | b.ID == 0)
+				//if (curBox.HMs.Contains(HM) & Badges.Contains(curBox.ID) | curBox.ID == 0)
 				if (Game.HiddenMoveData[HM].Badge == b)
 					return true;
 			}

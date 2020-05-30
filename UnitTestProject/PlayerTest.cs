@@ -41,20 +41,20 @@ namespace Tests
 			string playerName = "Red";
 			int trainerID = 55323;
 			int secretID = 64123;
-			bool isMale = false;
+			bool isMale = true;
 			TrainerId red = new TrainerId(playerName, isMale, tID: trainerID, sID: secretID);
 
 			Pokemon[] playerParty = new Pokemon[]
 			{
-				new Pokemon(Pokemons.CRANIDOS, red),
-				new Pokemon(Pokemons.UMBREON, red),
-				new Pokemon(Pokemons.TURTWIG, red),
+				new Pokemon(Pokemons.CRANIDOS).SetCatchInfos(red),
+				new Pokemon(Pokemons.UMBREON).SetCatchInfos(red),
+				new Pokemon(Pokemons.TURTWIG).SetCatchInfos(red),
 				new Pokemon(Pokemons.NONE),
 				new Pokemon(Pokemons.NONE),
 				new Pokemon(Pokemons.NONE)
 			};
 			Game.GameData.Player = new Player(red, playerParty);
-			red = Game.GameData.Player.Trainer;
+			//red = Game.GameData.Player.Trainer;
 
 			//bool?[] pokedex = new bool?[] { null, false, true, false, null };
 			byte[,] pokedex = new byte[,] { { 0, 0 } };
@@ -62,6 +62,7 @@ namespace Tests
 			//SeriV3 playerPosition = new SeriV3(0, 1, 0);
 			Vector playerPosition = new Vector(0, 1, 0);
 			//int playerDirection = 2;
+			Quaternion playerDirection = new Quaternion(0, 1, 0, 0);
 			//SeriV3 followerPosition = new SeriV3(1, 0, 0);
 			//int followerDirection = 1;
 			//Pokemon[,] playerPC = new Pokemon[Core.STORAGEBOXES, 30];
@@ -79,9 +80,9 @@ namespace Tests
 					playerPC[i][j] = new Pokemon(Pokemons.NONE);
 				}
 			}
-			playerPC[0][3] = new Pokemon(Pokemons.CRANIDOS, red);
-			playerPC[1][2] = new Pokemon(Pokemons.EMPOLEON, red);
-			playerPC[3][3] = new Pokemon(Pokemons.GARCHOMP, red);
+			playerPC[0][3] = new Pokemon(Pokemons.CRANIDOS).SetCatchInfos(red);
+			playerPC[1][2] = new Pokemon(Pokemons.EMPOLEON).SetCatchInfos(red);
+			playerPC[3][3] = new Pokemon(Pokemons.GARCHOMP).SetCatchInfos(red);
 			
 			//Game.Bag_Items = new List<Items>()
 			List<Items> playerBag = new List<Items>()//Game.Bag_Items;
@@ -110,7 +111,29 @@ namespace Tests
 				new KeyValuePair<Items, int>( Items.GREAT_BALL,     4 )
 			};
 
-			PokemonUnity.Character.PC pc = new PokemonUnity.Character.PC(pkmns: playerPC, items: playerPcItem.ToArray(), names: new string[] { "Box 1", "Box 2" }, textures: new int[] { 0, 1 });
+			PokemonUnity.Character.PC pc = new PokemonUnity.Character.PC(pkmns: playerPC, items: playerPcItem.ToArray(), names: new string[] { "Box 1", "Box 2", "Grassy Box" }, textures: new int[] { 0, 1, 2 });
+			
+			//debug code to test badge box
+			/*SaveDataOld.currentSave.gymsEncountered = new bool[]
+			{
+				true, true, false, true, true, true,
+				false, false, false, false, false, false
+			};
+			SaveDataOld.currentSave.gymsBeaten = new bool[]
+			{
+				true, true, false, false, false, true,
+				false, false, false, false, false, false
+			};*/
+			//System.DateTime?[] gymsBeatTime = new System.DateTime?[]
+			//{
+			//	new System.DateTime(System.DateTime.Now.Year, 4, 27) /*"Apr. 27th, 2015"*/, new System.DateTime(System.DateTime.Now.Year, 4, 30) /*"Apr. 30th, 2015"*/, null, null, null, new System.DateTime(System.DateTime.Now.Year, 5,1) /*"May. 1st, 2015"*/,
+			//	null, null, null, null, null, null
+			//};
+
+			KeyValuePair<GymBadges, DateTime?>[] gymBadge = new KeyValuePair<GymBadges, DateTime?>[]
+			{
+				new KeyValuePair<GymBadges, DateTime?>(GymBadges.Rock, new System.DateTime(System.DateTime.Now.Year, 4, 27) ) //"Apr. 27th, 2015"
+			};
 
 			//List<SaveEvent> eventList = new List<SaveEvent>();
 			//eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
@@ -159,10 +182,18 @@ namespace Tests
 					,pc_box: pc.ActiveBox
 					,pc_names: pc.BoxNames
 					,pc_textures: pc.BoxTextures
+					,money: 2481
+					,repel: 439
+					,rival: "blue"
 					//,dex: pokedex
 					,time: playerTime
 					,position: playerPosition
+					//,rotation: playerDirection
+					,follower: 2
+					//,creator:
 					,map: activeScene
+					//,pokecenter:
+					,gym: gymBadge
 				)
 
 				//,name: playerName
