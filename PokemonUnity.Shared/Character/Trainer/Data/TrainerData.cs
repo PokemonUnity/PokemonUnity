@@ -2,6 +2,9 @@
 
 namespace PokemonUnity.Character
 {
+	/// <summary>
+	/// </summary>
+	/// Maybe separate double, music, script to npc from trainer data?
 	public struct TrainerData
 	{
 		#region Variables
@@ -12,7 +15,6 @@ namespace PokemonUnity.Character
 		/// The internal name is never seen by the player.
 		/// </summary>
 		public TrainerTypes ID { get; private set; }
-		public bool Double { get; private set; }
 		/// <summary>
 		/// The amount of money earned from defeating a trainer of this type. 
 		/// The base money value is multiplied by the highest Level among all the trainer's 
@@ -49,6 +51,7 @@ namespace PokemonUnity.Character
 		#endregion
 
 		#region NPC Details
+		public bool Double { get; private set; }
 		/// <summary>
 		/// The skill level of all trainers of this type, used for battle AI. 
 		/// Higher numbers represent higher skill levels. 
