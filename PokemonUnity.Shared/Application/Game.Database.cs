@@ -318,8 +318,8 @@ namespace PokemonUnity
 			{
 				foreach (TrainerTypes type in Enum.GetValues(typeof(TrainerTypes)))
 				{
-					int BaseMoney = 30;
-					int SkillLevel = 1;
+					byte BaseMoney = 30;
+					byte SkillLevel = 1;
 					bool? gender = null;
 					bool doubel = false;
 					#region Gender & IsDouble
@@ -579,7 +579,15 @@ namespace PokemonUnity
 							break;
 					}
 					#endregion
-					TrainerMetaData.Add(type, new TrainerData());
+					TrainerMetaData.Add(type, new TrainerData(
+							id: type
+							, @double: doubel
+							, baseMoney: BaseMoney
+							, gender: gender
+							, skillLevel: SkillLevel
+							//, skillCodes: SkillLevel
+						)
+					);
 				}
 				return true;
 			} catch (Exception) {

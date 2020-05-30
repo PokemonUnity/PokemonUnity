@@ -37,7 +37,7 @@ namespace PokemonUnity.Monster
 		Pokemon.ObtainedMethod ObtainedMode { get; }
 		int ObtainLevel { get; }
 		Locations ObtainMap { get; }
-		TrainerId OT { get; }
+		Trainer OT { get; }
 		int PersonalId { get; }
 		//int[] Pokerus { get; }
 		//bool? PokerusStage { get; }

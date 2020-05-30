@@ -1759,7 +1759,7 @@ namespace PokemonUnity.Combat
           if (!@doublebattle && firstbattlerhp>0 && @shiftStyle && this.opponent.Length > 0 &&
               @internalbattle && pbCanChooseNonActive(0) && isOpposing(index) &&
               @battlers[0].effects.Outrage==0) {
-            pbDisplayPaused(_INTL("{1} is about to send in {2}.",opponent.fullname,pbParty(index)[newenemyname].Name));
+            pbDisplayPaused(_INTL("{1} is about to send in {2}.",opponent.Name,pbParty(index)[newenemyname].Name));
             if (pbDisplayConfirm(_INTL("Will {1} change Pokémon?",this.pbPlayer().Name))) {
               newpoke=pbSwitchPlayer(0,true,true);
               if (newpoke>=0) {
@@ -1890,7 +1890,7 @@ namespace PokemonUnity.Combat
       //  //throw new BattleAbortedException();
       //}
       Trainer owner=pbGetOwner(index);
-      pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",owner.fullname,party[newpokename].Name));
+      pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",owner.Name,party[newpokename].Name));
       GameDebug.Log($"[Send out Pokémon] Opponent sent out #{party[newpokename].Name} in position #{index}");
     }
   }
@@ -1926,7 +1926,7 @@ namespace PokemonUnity.Combat
   public bool pbUseItemOnPokemon(Items item,int pkmnIndex,Pokemon userPkmn, IPokeBattle_Scene scene) {
     Pokemon pokemon=@party1[pkmnIndex];
     Pokemon battler=null;
-    string name=pbGetOwner(userPkmn.Index).fullname;
+    string name=pbGetOwner(userPkmn.Index).Name;
     if (pbBelongsToPlayer(userPkmn.Index)) name=pbGetOwner(userPkmn.Index).Name;
     pbDisplayBrief(_INTL("{1} used the\r\n{2}.",name,item.ToString(TextScripts.Name)));
     GameDebug.Log($"[Use item] Player used #{item.ToString(TextScripts.Name)} on #{pokemon.Name}");
@@ -2049,7 +2049,7 @@ namespace PokemonUnity.Combat
       }
     }
     string itemname=item.ToString(TextScripts.Name);
-    pbDisplayBrief(_INTL("{1} used the\r\n{2}!",opponent.fullname,itemname));
+    pbDisplayBrief(_INTL("{1} used the\r\n{2}!",opponent.Name,itemname));
     GameDebug.Log($"[Use item] Opponent used #{itemname} on #{battler.ToString(true)}");
     if (item == Items.POTION) {
       battler.pbRecoverHP(20,true);
@@ -2257,7 +2257,7 @@ namespace PokemonUnity.Combat
     if (!@battlers[index].IsNotNullOrNone() || !@battlers[index].pokemon) return;
     if (!@battlers[index].hasMega) return; //rescue false
     if (@battlers[index].IsMega) return; //rescue true
-    string ownername=pbGetOwner(index).fullname;
+    string ownername=pbGetOwner(index).Name;
     if (pbBelongsToPlayer(index)) ownername=pbGetOwner(index).Name;
     switch (@battlers[index].pokemon.megaMessage) { //rescue 0
     case 1: // Rayquaza
@@ -3057,20 +3057,20 @@ namespace PokemonUnity.Combat
       }
       @scene.pbStartBattle(this);
       if (@opponent.Length > 0) {
-        pbDisplayPaused(_INTL("{1} and {2} want to battle!",@opponent[0].fullname,@opponent[1].fullname));
+        pbDisplayPaused(_INTL("{1} and {2} want to battle!",@opponent[0].Name,@opponent[1].Name));
         int sendout1=pbFindNextUnfainted(@party2,0,pbSecondPartyBegin(1));
         if (sendout1<0) GameDebug.LogError(_INTL("Opponent 1 has no unfainted Pokémon")); //throw new Exception(_INTL("Opponent 1 has no unfainted Pokémon"));
         int sendout2=pbFindNextUnfainted(@party2,pbSecondPartyBegin(1));
         if (sendout2<0) GameDebug.LogError(_INTL("Opponent 2 has no unfainted Pokémon")); //throw new Exception(_INTL("Opponent 2 has no unfainted Pokémon"));
         @battlers[1].Initialize(@party2[sendout1],(sbyte)sendout1,false);
-        pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",@opponent[0].fullname,@battlers[1].Name));
+        pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",@opponent[0].Name,@battlers[1].Name));
         pbSendOut(1,@party2[sendout1]);
         @battlers[3].Initialize(@party2[sendout2],(sbyte)sendout2,false);
-        pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",@opponent[1].fullname,@battlers[3].Name));
+        pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",@opponent[1].Name,@battlers[3].Name));
         pbSendOut(3,@party2[sendout2]);
       }
       else {
-        pbDisplayPaused(_INTL("{1}\r\nwould like to battle!",@opponent[0].fullname));
+        pbDisplayPaused(_INTL("{1}\r\nwould like to battle!",@opponent[0].Name));
         int sendout1=pbFindNextUnfainted(@party2,0);
         int sendout2=pbFindNextUnfainted(@party2,sendout1+1);
         if (sendout1<0 || sendout2<0) {
@@ -3080,7 +3080,7 @@ namespace PokemonUnity.Combat
         @battlers[1].Initialize(@party2[sendout1],(sbyte)sendout1,false);
         @battlers[3].Initialize(@party2[sendout2],(sbyte)sendout2,false);
         pbDisplayBrief(_INTL("{1} sent\r\nout {2} and {3}!",
-           @opponent[0].fullname,@battlers[1].Name,@battlers[3].Name));
+           @opponent[0].Name,@battlers[1].Name,@battlers[3].Name));
         pbSendOut(1,@party2[sendout1]);
         pbSendOut(3,@party2[sendout2]);
       }
@@ -3100,9 +3100,9 @@ namespace PokemonUnity.Combat
       }
       Pokemon trainerpoke=@party2[sendout];
       @scene.pbStartBattle(this);
-      pbDisplayPaused(_INTL("{1}\r\nwould like to battle!",@opponent[0].fullname));
+      pbDisplayPaused(_INTL("{1}\r\nwould like to battle!",@opponent[0].Name));
       @battlers[1].Initialize(trainerpoke,(sbyte)sendout,false);
-      pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",@opponent[0].fullname,@battlers[1].Name));
+      pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",@opponent[0].Name,@battlers[1].Name));
       pbSendOut(1,trainerpoke);
     }
 #endregion
@@ -3117,7 +3117,7 @@ namespace PokemonUnity.Combat
         @battlers[0].Initialize(@party1[sendout1],(sbyte)sendout1,false);
         @battlers[2].Initialize(@party1[sendout2],(sbyte)sendout2,false);
         pbDisplayBrief(_INTL("{1} sent\r\nout {2}! Go! {3}!",
-           @player[1].fullname,@battlers[2].Name,@battlers[0].Name));
+           @player[1].Name,@battlers[2].Name,@battlers[0].Name));
         pbSetSeen(@party1[sendout1]);
         pbSetSeen(@party1[sendout2]);
       }
@@ -3419,7 +3419,7 @@ namespace PokemonUnity.Combat
         this.lastMoveUser=i.Index;
         if (!pbOwnedByPlayer(i.Index)) {
           Trainer owner=pbGetOwner(i.Index);
-          pbDisplayBrief(_INTL("{1} withdrew {2}!",owner.fullname,i.Name));
+          pbDisplayBrief(_INTL("{1} withdrew {2}!",owner.Name,i.Name));
           GameDebug.Log($"[Withdrew Pokémon] Opponent withdrew #{i.ToString(true)}");
         }
         else {
@@ -4618,10 +4618,10 @@ namespace PokemonUnity.Combat
       if (@opponent.Length > 0) {
         @scene.pbTrainerBattleSuccess();
         if (@opponent.Length > 0) {
-          pbDisplayPaused(_INTL("{1} defeated {2} and {3}!",this.pbPlayer().Name,@opponent[0].fullname,@opponent[1].fullname));
+          pbDisplayPaused(_INTL("{1} defeated {2} and {3}!",this.pbPlayer().Name,@opponent[0].Name,@opponent[1].Name));
         }
         else {
-          pbDisplayPaused(_INTL("{1} defeated\r\n{2}!",this.pbPlayer().Name,@opponent[0].fullname));
+          pbDisplayPaused(_INTL("{1} defeated\r\n{2}!",this.pbPlayer().Name,@opponent[0].Name));
         }
         @scene.pbShowOpponent(0);
         pbDisplayPaused(@endspeech.Replace("/\\[Pp][Nn]/",this.pbPlayer().Name));
@@ -4702,10 +4702,10 @@ namespace PokemonUnity.Combat
         int lostmoney=oldmoney-this.pbPlayer().Money;
         if (@opponent.Length > 0) {
           if (@opponent.Length > 0) {
-            pbDisplayPaused(_INTL("{1} lost against {2} and {3}!",this.pbPlayer().Name,@opponent[0].fullname,@opponent[1].fullname));
+            pbDisplayPaused(_INTL("{1} lost against {2} and {3}!",this.pbPlayer().Name,@opponent[0].Name,@opponent[1].Name));
           }
           else {
-            pbDisplayPaused(_INTL("{1} lost against\r\n{2}!",this.pbPlayer().Name,@opponent[0].fullname));
+            pbDisplayPaused(_INTL("{1} lost against\r\n{2}!",this.pbPlayer().Name,@opponent[0].Name));
           }
           if (moneylost>0) {
             pbDisplayPaused(_INTL("{1} paid ${2}\r\nas the prize money...",this.pbPlayer().Name,lostmoney.ToString()));

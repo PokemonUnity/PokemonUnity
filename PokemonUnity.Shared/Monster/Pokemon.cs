@@ -326,14 +326,14 @@ namespace PokemonUnity.Monster
 		/// with all stats randomly generated/assigned (new roll).
 		/// </summary>
 		/// <param name="pkmn">Pokemon being generated</param>
-		/// <param name="original">Assigns original <see cref="TrainerId"/> 
+		/// <param name="original">Assigns original <see cref="Trainer"/> 
 		/// of this pokemon. 
 		/// Affects ability to command pokemon, if player is not OT</param>
 		/// <param name="level">Level this pokemon start ats</param>
 		/// <remarks>
 		/// I think this is only need for tested, not sure of purpose inside framework
 		/// </remarks>
-		public Pokemon(Pokemons pkmn, TrainerId original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
+		public Pokemon(Pokemons pkmn, Trainer original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
 
 		[System.Obsolete("Sample code for inspiration")]
 		public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
@@ -434,7 +434,7 @@ namespace PokemonUnity.Monster
 		/// <param name="timeEggHatched"></param>
 		/// ToDo: Maybe make this private? Move implicit convert to Pokemon class
 		public Pokemon(Pokemons species,
-			TrainerId original,
+			Trainer original,
 			string nickName, int form,
 			Abilities ability, Natures nature,
 			bool isShiny, bool? gender,
@@ -591,7 +591,7 @@ namespace PokemonUnity.Monster
 		/// <remarks>
 		/// ToDo: PlayerTrainer's hash value instead of class; maybe GUID?
 		/// </remarks>
-		public TrainerId OT { get; private set; }
+		public Trainer OT { get; private set; }
 		/// <summary>
 		/// Personal/Pokemon ID
 		/// </summary>
@@ -691,7 +691,7 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="Ball">The Pokéball this Pokémon got captured in.</param>
 		/// <param name="Method">The capture method.</param>
-		public Pokemon SetCatchInfos(TrainerId Trainer, Items Ball = Items.POKE_BALL, ObtainedMethod Method = ObtainedMethod.MET)
+		public Pokemon SetCatchInfos(Trainer Trainer, Items Ball = Items.POKE_BALL, ObtainedMethod Method = ObtainedMethod.MET)
 		{
 			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
 			//this.obtainMap = Game.GameData.Level.MapName;

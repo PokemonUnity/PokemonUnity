@@ -37,8 +37,8 @@ namespace Tests
         public void Trainer_Party_GetPokemonCount()
 		{
 			Trainer trainer = new Trainer(TrainerTypes.PLAYER);
-			//Player trainer = new Player();
-			int count = trainer.Party.GetCount();
+			Player player = new Player(trainer);
+			int count = player.Party.GetCount();
 			//if (!count.HasValue) Assert.Fail("Party ");
 			//Assert.AreEqual(PokemonUnity.Core.MAXPARTYSIZE, count); //Should return a full party
 			Assert.AreEqual(0, count); //Should return an empty party
@@ -52,7 +52,7 @@ namespace Tests
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = false;
-			TrainerId trainer = new TrainerId(playerName, isMale, tID: trainerID, sID: secretID);
+			Trainer trainer = new Trainer(playerName, isMale, tID: trainerID, sID: secretID);
 			Player player = new Player(trainer);
 			//player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
 			PokemonUnity.Monster.Pokemon pkmn = new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER);

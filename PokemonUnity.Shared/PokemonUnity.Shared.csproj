@@ -66,8 +66,8 @@
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
-    <Compile Include="Character\Trainer\TrainerId.cs" />
-    <Compile Include="Character\Trainer.cs" />
+    <Compile Include="Character\Trainer\Data\TrainerData.cs" />
+    <Compile Include="Character\Trainer\Base.cs" />
     <Compile Include="Combat\Data\TurnResults.cs" />
     <Compile Include="Enums\Battles.cs" />
     <Compile Include="Enums\Enums.cs" />
