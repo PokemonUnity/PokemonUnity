@@ -36,7 +36,9 @@ namespace PokemonUnity.Combat
 		//public virtual int AddlEffect { get { return thismove.AddlEffect; } }
 		public Attack.Move thismove { get; set; }
 
-		public PokeBattle_Move(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move() : base() { }
+
+		//public PokeBattle_Move(Battle battle, Attack.Move move) : base(battle, move) { }
 		//public bool isSoundBased()
 		//{
 		//	return true;
@@ -198,7 +200,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_UnimplementedMove : PokeBattle_Move
 	{
-		public PokeBattle_UnimplementedMove(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_UnimplementedMove() : base() { }
+		//public PokeBattle_UnimplementedMove(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (IsDamaging())
@@ -217,7 +220,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_FailedMove : PokeBattle_Move
 	{
-		public PokeBattle_FailedMove(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_FailedMove() : base() { }
+		//public PokeBattle_FailedMove(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			//battle.pbDisplay("But it failed!");
@@ -230,12 +234,12 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Confusion : PokeBattle_Move
 	{
-		public PokeBattle_Confusion(Battle battle, Attack.Move move) : base(battle, move)
-		//public object initialize(battle, move)
+		public PokeBattle_Confusion() : base() { }
+		//public PokeBattle_Confusion(Battle battle, Attack.Move move) : base(battle, move)
+		public override Move Initialize(Battle battle, Attack.Move move)
 		{
-
 			//battle	= battle;
-			BaseDamage	= 40;		
+			BaseDamage	= 40;
 			type		= Types.NONE;
 			accuracy	= 100;
 			PP			= 0;//null
@@ -247,6 +251,7 @@ namespace PokemonUnity.Combat
 			//name		= "";
 			MoveId		= Moves.NONE;
 
+			return this;
 		}
 
 		//public override bool IsPhysical() { return true; }
@@ -255,7 +260,7 @@ namespace PokemonUnity.Combat
 		public override int pbCalcDamage(Pokemon attacker, Pokemon opponent)
 		{
 			return base.pbCalcDamage(attacker, opponent,
-				NOCRITICAL | SELFCONFUSE | NOTYPE | NOWEIGHTING);
+				Core.NOCRITICAL | Core.SELFCONFUSE | Core.NOTYPE | Core.NOWEIGHTING);
 		}
 
 		public override object pbEffectMessages(Pokemon attacker, Pokemon opponent, bool ignoretype = false)
@@ -270,7 +275,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Struggle : PokeBattle_Move
 	{
-		public PokeBattle_Struggle(Battle battle, Attack.Move move) : base(battle, move) //{ }
+		public PokeBattle_Struggle() : base() //{ }
+		//public PokeBattle_Struggle(Battle battle, Attack.Move move) : base(battle, move) //{ }
 		//public object initialize(battle, move)
 		{
 			MoveId		= Moves.NONE;    // doesn't work if 0
@@ -288,12 +294,11 @@ namespace PokemonUnity.Combat
 			PP			= 0;//null
 			totalpp		= 0;
 
-			if (move.MoveId != Moves.NONE)
-			{
-				MoveId = move.MoveId;
-
-				//name	= id.ToString(TextScripts.Name);
-			}
+			//if (move.MoveId != Moves.NONE)
+			//{
+			//	MoveId = move.MoveId;
+			//	//name	= id.ToString(TextScripts.Name);
+			//}
 		}
 
 		//public override bool IsPhysical() { return true; }
@@ -310,7 +315,7 @@ namespace PokemonUnity.Combat
 
 		public override int pbCalcDamage(Pokemon attacker, Pokemon opponent)
 		{
-			return base.pbCalcDamage(attacker, opponent, IGNOREPKMNTYPES);
+			return base.pbCalcDamage(attacker, opponent, Core.IGNOREPKMNTYPES);
 		}
 	}
 
@@ -319,7 +324,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_000 : PokeBattle_Move
 	{
-		public PokeBattle_Move_000(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_000() : base() { }
+		//public PokeBattle_Move_000(Battle battle, Attack.Move move) : base(battle, move) { }
 	}
 
 	/// <summary>
@@ -327,7 +333,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_001 : PokeBattle_Move
 	{
-		public PokeBattle_Move_001(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_001() : base() { }
+		//public PokeBattle_Move_001(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool UnusableInGravity()
 		{
 			//get
@@ -349,7 +356,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_002 : PokeBattle_Struggle
 	{
-		public PokeBattle_Move_002(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_002() : base() { }
+		//public PokeBattle_Move_002(Battle battle, Attack.Move move) : base(battle, move) { }
 	}
 
 	/// <summary>
@@ -357,7 +365,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_003 : PokeBattle_Move
 	{
-		public PokeBattle_Move_003(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_003() : base() { }
+		//public PokeBattle_Move_003(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -405,7 +414,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_004 : PokeBattle_Move
 	{
-		public PokeBattle_Move_004(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_004() : base() { }
+		//public PokeBattle_Move_004(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!opponent.pbCanSleep(attacker, true, this)) return -1;
@@ -427,7 +437,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_005 : PokeBattle_Move
 	{
-		public PokeBattle_Move_005(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_005() : base() { }
+		//public PokeBattle_Move_005(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -455,7 +466,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_006 : PokeBattle_Move
 	{
-		public PokeBattle_Move_006(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_006() : base() { }
+		//public PokeBattle_Move_006(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -483,7 +495,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_007 : PokeBattle_Move
 	{
-		public PokeBattle_Move_007(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_007() : base() { }
+		//public PokeBattle_Move_007(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging())
@@ -531,7 +544,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_008 : PokeBattle_Move
 	{
-		public PokeBattle_Move_008(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_008() : base() { }
+		//public PokeBattle_Move_008(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
@@ -562,7 +576,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_009 : PokeBattle_Move
 	{
-		public PokeBattle_Move_009(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_009() : base() { }
+		//public PokeBattle_Move_009(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
@@ -587,7 +602,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_00A : PokeBattle_Move
 	{
-		public PokeBattle_Move_00A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_00A() : base() { }
+		//public PokeBattle_Move_00A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging())
@@ -626,7 +642,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_00B : PokeBattle_Move
 	{
-		public PokeBattle_Move_00B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_00B() : base() { }
+		//public PokeBattle_Move_00B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
@@ -650,7 +667,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_00C : PokeBattle_Move
 	{
-		public PokeBattle_Move_00C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_00C() : base() { }
+		//public PokeBattle_Move_00C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -676,7 +694,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_00D : PokeBattle_Move
 	{
-		public PokeBattle_Move_00D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_00D() : base() { }
+		//public PokeBattle_Move_00D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -711,7 +730,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_00E : PokeBattle_Move
 	{
-		public PokeBattle_Move_00E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_00E() : base() { }
+		//public PokeBattle_Move_00E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
@@ -735,7 +755,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_00F : PokeBattle_Move
 	{
-		public PokeBattle_Move_00F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_00F() : base() { }
+		//public PokeBattle_Move_00F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
@@ -749,7 +770,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_010 : PokeBattle_Move
 	{
-		public PokeBattle_Move_010(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_010() : base() { }
+		//public PokeBattle_Move_010(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
@@ -770,7 +792,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_011 : PokeBattle_Move
 	{
-		public PokeBattle_Move_011(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_011() : base() { }
+		//public PokeBattle_Move_011(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbCanUseWhileAsleep()
 		{
 			return true;
@@ -793,7 +816,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_012 : PokeBattle_Move
 	{
-		public PokeBattle_Move_012(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_012() : base() { }
+		//public PokeBattle_Move_012(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			return (attacker.turncount > 1);
@@ -811,7 +835,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_013 : PokeBattle_Move
 	{
-		public PokeBattle_Move_013(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_013() : base() { }
+		//public PokeBattle_Move_013(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -845,7 +870,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_014 : PokeBattle_Move
 	{
-		public PokeBattle_Move_014(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_014() : base() { }
+		//public PokeBattle_Move_014(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int AddlEffect
 		{
 			get
@@ -875,7 +901,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_015 : PokeBattle_Move
 	{
-		public PokeBattle_Move_015(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_015() : base() { }
+		//public PokeBattle_Move_015(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -921,7 +948,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_016 : PokeBattle_Move
 	{
-		public PokeBattle_Move_016(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_016() : base() { }
+		//public PokeBattle_Move_016(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!opponent.pbCanAttract(attacker))
@@ -957,7 +985,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_017 : PokeBattle_Move
 	{
-		public PokeBattle_Move_017(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_017() : base() { }
+		//public PokeBattle_Move_017(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
@@ -992,7 +1021,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_018 : PokeBattle_Move
 	{
-		public PokeBattle_Move_018(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_018() : base() { }
+		//public PokeBattle_Move_018(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.Status != Status.BURN &&
@@ -1030,7 +1060,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_019 : PokeBattle_Move
 	{
-		public PokeBattle_Move_019(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_019() : base() { }
+		//public PokeBattle_Move_019(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -1118,7 +1149,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_01A : PokeBattle_Move
 	{
-		public PokeBattle_Move_01A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_01A() : base() { }
+		//public PokeBattle_Move_01A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OwnSide.Safeguard > 0)
@@ -1146,7 +1178,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_01B : PokeBattle_Move
 	{
-		public PokeBattle_Move_01B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_01B() : base() { }
+		//public PokeBattle_Move_01B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.Status == 0 ||
@@ -1213,7 +1246,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_01C : PokeBattle_Move
 	{
-		public PokeBattle_Move_01C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_01C() : base() { }
+		//public PokeBattle_Move_01C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1238,7 +1272,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_01D : PokeBattle_Move
 	{
-		public PokeBattle_Move_01D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_01D() : base() { }
+		//public PokeBattle_Move_01D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1263,7 +1298,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_01E : PokeBattle_Move
 	{
-		public PokeBattle_Move_01E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_01E() : base() { }
+		//public PokeBattle_Move_01E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -1281,7 +1317,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_01F : PokeBattle_Move
 	{
-		public PokeBattle_Move_01F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_01F() : base() { }
+		//public PokeBattle_Move_01F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1306,7 +1343,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_020 : PokeBattle_Move
 	{
-		public PokeBattle_Move_020(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_020() : base() { }
+		//public PokeBattle_Move_020(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1332,7 +1370,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_021 : PokeBattle_Move
 	{
-		public PokeBattle_Move_021(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_021() : base() { }
+		//public PokeBattle_Move_021(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -1353,7 +1392,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_022 : PokeBattle_Move
 	{
-		public PokeBattle_Move_022(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_022() : base() { }
+		//public PokeBattle_Move_022(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1378,7 +1418,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_023 : PokeBattle_Move
 	{
-		public PokeBattle_Move_023(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_023() : base() { }
+		//public PokeBattle_Move_023(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1409,7 +1450,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_024 : PokeBattle_Move
 	{
-		public PokeBattle_Move_024(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_024() : base() { }
+		//public PokeBattle_Move_024(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
@@ -1440,7 +1482,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_025 : PokeBattle_Move
 	{
-		public PokeBattle_Move_025(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_025() : base() { }
+		//public PokeBattle_Move_025(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
@@ -1477,7 +1520,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_026 : PokeBattle_Move
 	{
-		public PokeBattle_Move_026(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_026() : base() { }
+		//public PokeBattle_Move_026(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
@@ -1508,7 +1552,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_027 : PokeBattle_Move
 	{
-		public PokeBattle_Move_027(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_027() : base() { }
+		//public PokeBattle_Move_027(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
@@ -1540,7 +1585,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_028 : PokeBattle_Move
 	{
-		public PokeBattle_Move_028(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_028() : base() { }
+		//public PokeBattle_Move_028(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
@@ -1578,7 +1624,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_029 : PokeBattle_Move
 	{
-		public PokeBattle_Move_029(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_029() : base() { }
+		//public PokeBattle_Move_029(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
@@ -1609,7 +1656,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_02A : PokeBattle_Move
 	{
-		public PokeBattle_Move_02A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_02A() : base() { }
+		//public PokeBattle_Move_02A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
@@ -1640,7 +1688,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_02B : PokeBattle_Move
 	{
-		public PokeBattle_Move_02B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_02B() : base() { }
+		//public PokeBattle_Move_02B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
@@ -1677,7 +1726,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_02C : PokeBattle_Move
 	{
-		public PokeBattle_Move_02C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_02C() : base() { }
+		//public PokeBattle_Move_02C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
@@ -1709,7 +1759,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_02D : PokeBattle_Move
 	{
-		public PokeBattle_Move_02D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_02D() : base() { }
+		//public PokeBattle_Move_02D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 
@@ -1747,7 +1798,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_02E : PokeBattle_Move
 	{
-		public PokeBattle_Move_02E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_02E() : base() { }
+		//public PokeBattle_Move_02E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1772,7 +1824,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_02F : PokeBattle_Move
 	{
-		public PokeBattle_Move_02F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_02F() : base() { }
+		//public PokeBattle_Move_02F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1797,7 +1850,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_030 : PokeBattle_Move
 	{
-		public PokeBattle_Move_030(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_030() : base() { }
+		//public PokeBattle_Move_030(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1822,7 +1876,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_031 : PokeBattle_Move
 	{
-		public PokeBattle_Move_031(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_031() : base() { }
+		//public PokeBattle_Move_031(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, true, this)) return -1;
@@ -1844,7 +1899,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_032 : PokeBattle_Move
 	{
-		public PokeBattle_Move_032(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_032() : base() { }
+		//public PokeBattle_Move_032(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1869,7 +1925,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_033 : PokeBattle_Move
 	{
-		public PokeBattle_Move_033(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_033() : base() { }
+		//public PokeBattle_Move_033(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1894,7 +1951,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_034 : PokeBattle_Move
 	{
-		public PokeBattle_Move_034(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_034() : base() { }
+		//public PokeBattle_Move_034(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -1924,7 +1982,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_035 : PokeBattle_Move
 	{
-		public PokeBattle_Move_035(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_035() : base() { }
+		//public PokeBattle_Move_035(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
@@ -1972,7 +2031,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_036 : PokeBattle_Move
 	{
-		public PokeBattle_Move_036(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_036() : base() { }
+		//public PokeBattle_Move_036(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
@@ -2003,7 +2063,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_037 : PokeBattle_Move
 	{
-		public PokeBattle_Move_037(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_037() : base() { }
+		//public PokeBattle_Move_037(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.Index != opponent.Index)
@@ -2041,7 +2102,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_038 : PokeBattle_Move
 	{
-		public PokeBattle_Move_038(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_038() : base() { }
+		//public PokeBattle_Move_038(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2066,7 +2128,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_039 : PokeBattle_Move
 	{
-		public PokeBattle_Move_039(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_039() : base() { }
+		//public PokeBattle_Move_039(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2091,7 +2154,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_03A : PokeBattle_Move
 	{
-		public PokeBattle_Move_03A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_03A() : base() { }
+		//public PokeBattle_Move_03A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.HP <= Math.Floor(attacker.TotalHP / 2f) ||
@@ -2124,7 +2188,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_03B : PokeBattle_Move
 	{
-		public PokeBattle_Move_03B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_03B() : base() { }
+		//public PokeBattle_Move_03B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2152,7 +2217,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_03C : PokeBattle_Move
 	{
-		public PokeBattle_Move_03C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_03C() : base() { }
+		//public PokeBattle_Move_03C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2181,7 +2247,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_03D : PokeBattle_Move
 	{
-		public PokeBattle_Move_03D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_03D() : base() { }
+		//public PokeBattle_Move_03D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2218,7 +2285,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_03E : PokeBattle_Move
 	{
-		public PokeBattle_Move_03E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_03E() : base() { }
+		//public PokeBattle_Move_03E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2239,7 +2307,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_03F : PokeBattle_Move
 	{
-		public PokeBattle_Move_03F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_03F() : base() { }
+		//public PokeBattle_Move_03F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2260,7 +2329,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_040 : PokeBattle_Move
 	{
-		public PokeBattle_Move_040(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_040() : base() { }
+		//public PokeBattle_Move_040(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -2291,7 +2361,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_041 : PokeBattle_Move
 	{
-		public PokeBattle_Move_041(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_041() : base() { }
+		//public PokeBattle_Move_041(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -2322,7 +2393,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_042 : PokeBattle_Move
 	{
-		public PokeBattle_Move_042(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_042() : base() { }
+		//public PokeBattle_Move_042(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2348,7 +2420,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_043 : PokeBattle_Move
 	{
-		public PokeBattle_Move_043(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_043() : base() { }
+		//public PokeBattle_Move_043(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2374,7 +2447,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_044 : PokeBattle_Move
 	{
-		public PokeBattle_Move_044(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_044() : base() { }
+		//public PokeBattle_Move_044(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2410,7 +2484,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_045 : PokeBattle_Move
 	{
-		public PokeBattle_Move_045(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_045() : base() { }
+		//public PokeBattle_Move_045(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2436,7 +2511,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_046 : PokeBattle_Move
 	{
-		public PokeBattle_Move_046(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_046() : base() { }
+		//public PokeBattle_Move_046(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2462,7 +2538,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_047 : PokeBattle_Move
 	{
-		public PokeBattle_Move_047(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_047() : base() { }
+		//public PokeBattle_Move_047(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2488,7 +2565,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_048 : PokeBattle_Move
 	{
-		public PokeBattle_Move_048(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_048() : base() { }
+		//public PokeBattle_Move_048(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2517,7 +2595,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_049 : PokeBattle_Move
 	{
-		public PokeBattle_Move_049(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_049() : base() { }
+		//public PokeBattle_Move_049(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2587,7 +2666,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_04A : PokeBattle_Move
 	{
-		public PokeBattle_Move_04A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_04A() : base() { }
+		//public PokeBattle_Move_04A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			// Replicates pbCanReduceStatStage? so that certain messages aren't shown
@@ -2655,7 +2735,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_04B : PokeBattle_Move
 	{
-		public PokeBattle_Move_04B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_04B() : base() { }
+		//public PokeBattle_Move_04B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2681,7 +2762,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_04C : PokeBattle_Move
 	{
-		public PokeBattle_Move_04C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_04C() : base() { }
+		//public PokeBattle_Move_04C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2707,7 +2789,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_04D : PokeBattle_Move
 	{
-		public PokeBattle_Move_04D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_04D() : base() { }
+		//public PokeBattle_Move_04D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2737,7 +2820,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_04E : PokeBattle_Move
 	{
-		public PokeBattle_Move_04E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_04E() : base() { }
+		//public PokeBattle_Move_04E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2781,7 +2865,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_04F : PokeBattle_Move
 	{
-		public PokeBattle_Move_04F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_04F() : base() { }
+		//public PokeBattle_Move_04F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -2807,7 +2892,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_050 : PokeBattle_Move
 	{
-		public PokeBattle_Move_050(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_050() : base() { }
+		//public PokeBattle_Move_050(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2833,7 +2919,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_051 : PokeBattle_Move
 	{
-		public PokeBattle_Move_051(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_051() : base() { }
+		//public PokeBattle_Move_051(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			for (int i = 0; i < 4; i++)
@@ -2858,7 +2945,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_052 : PokeBattle_Move
 	{
-		public PokeBattle_Move_052(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_052() : base() { }
+		//public PokeBattle_Move_052(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2880,7 +2968,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_053 : PokeBattle_Move
 	{
-		public PokeBattle_Move_053(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_053() : base() { }
+		//public PokeBattle_Move_053(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2903,7 +2992,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_054 : PokeBattle_Move
 	{
-		public PokeBattle_Move_054(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_054() : base() { }
+		//public PokeBattle_Move_054(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2925,7 +3015,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_055 : PokeBattle_Move
 	{
-		public PokeBattle_Move_055(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_055() : base() { }
+		//public PokeBattle_Move_055(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.OwnSide.CraftyShield)
@@ -2950,7 +3041,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_056 : PokeBattle_Move
 	{
-		public PokeBattle_Move_056(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_056() : base() { }
+		//public PokeBattle_Move_056(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OwnSide.Mist > 0)
@@ -2978,7 +3070,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_057 : PokeBattle_Move
 	{
-		public PokeBattle_Move_057(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_057() : base() { }
+		//public PokeBattle_Move_057(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -2999,7 +3092,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_058 : PokeBattle_Move
 	{
-		public PokeBattle_Move_058(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_058() : base() { }
+		//public PokeBattle_Move_058(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -3026,7 +3120,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_059 : PokeBattle_Move
 	{
-		public PokeBattle_Move_059(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_059() : base() { }
+		//public PokeBattle_Move_059(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -3052,7 +3147,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_05A : PokeBattle_Move
 	{
-		public PokeBattle_Move_05A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_05A() : base() { }
+		//public PokeBattle_Move_05A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -3081,7 +3177,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_05B : PokeBattle_Move
 	{
-		public PokeBattle_Move_05B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_05B() : base() { }
+		//public PokeBattle_Move_05B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OwnSide.Tailwind > 0)
@@ -3110,7 +3207,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_05C : PokeBattle_Move
 	{
-		public PokeBattle_Move_05C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_05C() : base() { }
+		//public PokeBattle_Move_05C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -3165,7 +3263,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_05D : PokeBattle_Move
 	{
-		public PokeBattle_Move_05D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_05D() : base() { }
+		//public PokeBattle_Move_05D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -3228,7 +3327,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_05E : PokeBattle_Move
 	{
-		public PokeBattle_Move_05E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_05E() : base() { }
+		//public PokeBattle_Move_05E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.Ability == Abilities.MULTITYPE)
@@ -3275,7 +3375,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_05F : PokeBattle_Move
 	{
-		public PokeBattle_Move_05F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_05F() : base() { }
+		//public PokeBattle_Move_05F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.Ability == Abilities.MULTITYPE)
@@ -3335,7 +3436,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_060 : PokeBattle_Move
 	{
-		public PokeBattle_Move_060(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_060() : base() { }
+		//public PokeBattle_Move_060(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.Ability == Abilities.MULTITYPE)
@@ -3398,7 +3500,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_061 : PokeBattle_Move
 	{
-		public PokeBattle_Move_061(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_061() : base() { }
+		//public PokeBattle_Move_061(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -3437,7 +3540,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_062 : PokeBattle_Move
 	{
-		public PokeBattle_Move_062(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_062() : base() { }
+		//public PokeBattle_Move_062(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.Ability == Abilities.MULTITYPE)
@@ -3471,7 +3575,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_063 : PokeBattle_Move
 	{
-		public PokeBattle_Move_063(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_063() : base() { }
+		//public PokeBattle_Move_063(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -3510,7 +3615,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_064 : PokeBattle_Move
 	{
-		public PokeBattle_Move_064(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_064() : base() { }
+		//public PokeBattle_Move_064(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -3550,7 +3656,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_065 : PokeBattle_Move
 	{
-		public PokeBattle_Move_065(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_065() : base() { }
+		//public PokeBattle_Move_065(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.OwnSide.CraftyShield)
@@ -3599,7 +3706,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_066 : PokeBattle_Move
 	{
-		public PokeBattle_Move_066(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_066() : base() { }
+		//public PokeBattle_Move_066(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -3657,7 +3765,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_067 : PokeBattle_Move
 	{
-		public PokeBattle_Move_067(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_067() : base() { }
+		//public PokeBattle_Move_067(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if ((attacker.Ability == 0 && opponent.Ability == 0) ||
@@ -3694,7 +3803,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_068 : PokeBattle_Move
 	{
-		public PokeBattle_Move_068(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_068() : base() { }
+		//public PokeBattle_Move_068(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -3732,7 +3842,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_069 : PokeBattle_Move
 	{
-		public PokeBattle_Move_069(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_069() : base() { }
+		//public PokeBattle_Move_069(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -3807,7 +3918,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_06A : PokeBattle_Move
 	{
-		public PokeBattle_Move_06A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_06A() : base() { }
+		//public PokeBattle_Move_06A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			return pbEffectFixedDamage(20, attacker, opponent, hitnum, alltargets, showanimation);
@@ -3819,7 +3931,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_06B : PokeBattle_Move
 	{
-		public PokeBattle_Move_06B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_06B() : base() { }
+		//public PokeBattle_Move_06B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			return pbEffectFixedDamage(40, attacker, opponent, hitnum, alltargets, showanimation);
@@ -3831,7 +3944,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_06C : PokeBattle_Move
 	{
-		public PokeBattle_Move_06C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_06C() : base() { }
+		//public PokeBattle_Move_06C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			return pbEffectFixedDamage((int)Math.Max(Math.Floor(opponent.HP / 2f), 1), attacker, opponent, hitnum, alltargets, showanimation);
@@ -3843,7 +3957,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_06D : PokeBattle_Move
 	{
-		public PokeBattle_Move_06D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_06D() : base() { }
+		//public PokeBattle_Move_06D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			return pbEffectFixedDamage(attacker.level, attacker, opponent, hitnum, alltargets, showanimation);
@@ -3855,7 +3970,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_06E : PokeBattle_Move
 	{
-		public PokeBattle_Move_06E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_06E() : base() { }
+		//public PokeBattle_Move_06E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.HP >= opponent.HP)
@@ -3872,7 +3988,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_06F : PokeBattle_Move
 	{
-		public PokeBattle_Move_06F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_06F() : base() { }
+		//public PokeBattle_Move_06F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -3886,7 +4003,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_070 : PokeBattle_Move
 	{
-		public PokeBattle_Move_070(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_070() : base() { }
+		//public PokeBattle_Move_070(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbAccuracyCheck(Pokemon attacker, Pokemon opponent)
 		{
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STURDY))
@@ -3920,7 +4038,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_071 : PokeBattle_Move
 	{
-		public PokeBattle_Move_071(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_071() : base() { }
+		//public PokeBattle_Move_071(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAddTarget(Pokemon[] targets, Pokemon attacker)
 		{
 			if (attacker.effects.CounterTarget >= 0 &&
@@ -3950,7 +4069,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_072 : PokeBattle_Move
 	{
-		public PokeBattle_Move_072(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_072() : base() { }
+		//public PokeBattle_Move_072(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAddTarget(Pokemon[] targets, Pokemon attacker)
 		{
 			if (attacker.effects.MirrorCoatTarget >= 0 &&
@@ -3981,7 +4101,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_073 : PokeBattle_Move
 	{
-		public PokeBattle_Move_073(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_073() : base() { }
+		//public PokeBattle_Move_073(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAddTarget(Pokemon[] targets, Pokemon attacker)
 		{
 			if (attacker.lastAttacker.Count > 0)
@@ -4014,7 +4135,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_074 : PokeBattle_Move
 	{
-		public PokeBattle_Move_074(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_074() : base() { }
+		//public PokeBattle_Move_074(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -4037,7 +4159,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_075 : PokeBattle_Move
 	{
-		public PokeBattle_Move_075(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_075() : base() { }
+		//public PokeBattle_Move_075(Battle battle, Attack.Move move) : base(battle, move) { }
 		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x100)	// Dive
@@ -4055,7 +4178,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_076 : PokeBattle_Move
 	{
-		public PokeBattle_Move_076(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_076() : base() { }
+		//public PokeBattle_Move_076(Battle battle, Attack.Move move) : base(battle, move) { }
 		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			int ret = damagemult;
@@ -4077,7 +4201,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_077 : PokeBattle_Move
 	{
-		public PokeBattle_Move_077(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_077() : base() { }
+		//public PokeBattle_Move_077(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C || // Fly
@@ -4098,7 +4223,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_078 : PokeBattle_Move
 	{
-		public PokeBattle_Move_078(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_078() : base() { }
+		//public PokeBattle_Move_078(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C || // Fly
@@ -4123,7 +4249,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_079 : PokeBattle_Move
 	{
-		public PokeBattle_Move_079(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_079() : base() { }
+		//public PokeBattle_Move_079(Battle battle, Attack.Move move) : base(battle, move) { }
 		public int pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (this.battle.field.FusionBolt)
@@ -4161,7 +4288,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_07A : PokeBattle_Move
 	{
-		public PokeBattle_Move_07A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_07A() : base() { }
+		//public PokeBattle_Move_07A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public int pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (battle.field.FusionFlare)
@@ -4198,7 +4326,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_07B : PokeBattle_Move
 	{
-		public PokeBattle_Move_07B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_07B() : base() { }
+		//public PokeBattle_Move_07B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.Status == Status.POISON &&
@@ -4216,7 +4345,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_07C : PokeBattle_Move
 	{
-		public PokeBattle_Move_07C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_07C() : base() { }
+		//public PokeBattle_Move_07C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.Status == Status.PARALYSIS &&
@@ -4243,7 +4373,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_07D : PokeBattle_Move
 	{
-		public PokeBattle_Move_07D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_07D() : base() { }
+		//public PokeBattle_Move_07D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.Status == Status.SLEEP &&
@@ -4270,7 +4401,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_07E : PokeBattle_Move
 	{
-		public PokeBattle_Move_07E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_07E() : base() { }
+		//public PokeBattle_Move_07E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (attacker.Status == Status.POISON ||
@@ -4288,7 +4420,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_07F : PokeBattle_Move
 	{
-		public PokeBattle_Move_07F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_07F() : base() { }
+		//public PokeBattle_Move_07F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.Status > 0 &&
@@ -4305,7 +4438,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_080 : PokeBattle_Move
 	{
-		public PokeBattle_Move_080(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_080() : base() { }
+		//public PokeBattle_Move_080(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.HP <= opponent.TotalHP / 2)
@@ -4322,7 +4456,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_081 : PokeBattle_Move
 	{
-		public PokeBattle_Move_081(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_081() : base() { }
+		//public PokeBattle_Move_081(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (attacker.lastHPLost > 0 && attacker.lastAttacker.Contains((sbyte)opponent.Index))
@@ -4338,7 +4473,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_082 : PokeBattle_Move
 	{
-		public PokeBattle_Move_082(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_082() : base() { }
+		//public PokeBattle_Move_082(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.tookDamage)
@@ -4355,7 +4491,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_083 : PokeBattle_Move
 	{
-		public PokeBattle_Move_083(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_083() : base() { }
+		//public PokeBattle_Move_083(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 
@@ -4397,7 +4534,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_084 : PokeBattle_Move
 	{
-		public PokeBattle_Move_084(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_084() : base() { }
+		//public PokeBattle_Move_084(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if ((int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move
@@ -4414,7 +4552,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_085 : PokeBattle_Move
 	{
-		public PokeBattle_Move_085(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_085() : base() { }
+		//public PokeBattle_Move_085(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (attacker.OwnSide.LastRoundFainted >= 0 &&
@@ -4431,7 +4570,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_086 : PokeBattle_Move
 	{
-		public PokeBattle_Move_086(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_086() : base() { }
+		//public PokeBattle_Move_086(Battle battle, Attack.Move move) : base(battle, move) { }
 		public int pbBaseDamageMultiplier(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			if (attacker.Item == 0)
@@ -4447,7 +4587,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_087 : PokeBattle_Move
 	{
-		public PokeBattle_Move_087(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_087() : base() { }
+		//public PokeBattle_Move_087(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (this.battle.Weather != 0)
@@ -4489,7 +4630,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_088 : PokeBattle_Move
 	{
-		public PokeBattle_Move_088(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_088() : base() { }
+		//public PokeBattle_Move_088(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (this.battle.switching)
@@ -4511,7 +4653,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_089 : PokeBattle_Move
 	{
-		public PokeBattle_Move_089(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_089() : base() { }
+		//public PokeBattle_Move_089(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			return (int)Math.Max(Math.Floor(attacker.happiness * 2 / 5f), 1);
@@ -4523,7 +4666,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_08A : PokeBattle_Move
 	{
-		public PokeBattle_Move_08A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_08A() : base() { }
+		//public PokeBattle_Move_08A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			return (int)Math.Max(Math.Floor((255 - attacker.happiness) * 2f / 5f), 1);
@@ -4535,7 +4679,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_08B : PokeBattle_Move
 	{
-		public PokeBattle_Move_08B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_08B() : base() { }
+		//public PokeBattle_Move_08B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			return (int)Math.Max(Math.Floor(150f * attacker.HP / attacker.TotalHP), 1);
@@ -4547,7 +4692,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_08C : PokeBattle_Move
 	{
-		public PokeBattle_Move_08C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_08C() : base() { }
+		//public PokeBattle_Move_08C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			return (int)Math.Max(Math.Floor(120f * opponent.HP / opponent.TotalHP), 1);
@@ -4559,7 +4705,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_08D : PokeBattle_Move
 	{
-		public PokeBattle_Move_08D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_08D() : base() { }
+		//public PokeBattle_Move_08D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			return (int)Math.Max(Math.Min(Math.Floor(25f * opponent.SPE / attacker.SPE), 150), 1);
@@ -4572,7 +4719,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_08E : PokeBattle_Move
 	{
-		public PokeBattle_Move_08E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_08E() : base() { }
+		//public PokeBattle_Move_08E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 
@@ -4592,7 +4740,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_08F : PokeBattle_Move
 	{
-		public PokeBattle_Move_08F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_08F() : base() { }
+		//public PokeBattle_Move_08F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			int mult = 3;
@@ -4610,7 +4759,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_090 : PokeBattle_Move
 	{
-		public PokeBattle_Move_090(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_090() : base() { }
+		//public PokeBattle_Move_090(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override Types pbModifyType(Types type, Pokemon attacker, Pokemon opponent)
 		{
 			int[] hp = pbHiddenPower(attacker.IV);
@@ -4661,7 +4811,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_091 : PokeBattle_Move
 	{
-		public PokeBattle_Move_091(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_091() : base() { }
+		//public PokeBattle_Move_091(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 
@@ -4676,7 +4827,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_092 : PokeBattle_Move
 	{
-		public PokeBattle_Move_092(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_092() : base() { }
+		//public PokeBattle_Move_092(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 
@@ -4692,7 +4844,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_093 : PokeBattle_Move
 	{
-		public PokeBattle_Move_093(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_093() : base() { }
+		//public PokeBattle_Move_093(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
@@ -4709,7 +4862,8 @@ namespace PokemonUnity.Combat
 	public class PokeBattle_Move_094 : PokeBattle_Move
 	{
 		public bool forcedamage { get; set; }
-		public PokeBattle_Move_094(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_094() : base() { }
+		//public PokeBattle_Move_094(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 			// Just to ensure that Parental Bond's second hit damages if the first hit does
@@ -4761,7 +4915,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_095 : PokeBattle_Move
 	{
-		public PokeBattle_Move_095(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_095() : base() { }
+		//public PokeBattle_Move_095(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 
@@ -4804,7 +4959,8 @@ namespace PokemonUnity.Combat
 	public class PokeBattle_Move_096 : PokeBattle_Move
 	{
 		public Items berry { get; set; }
-		public PokeBattle_Move_096(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_096() : base() { }
+		//public PokeBattle_Move_096(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 			if (!pbIsBerry(attacker.Item) ||
@@ -4933,7 +5089,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_097 : PokeBattle_Move
 	{
-		public PokeBattle_Move_097(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_097() : base() { }
+		//public PokeBattle_Move_097(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			int[] dmgs = new int[] { 200, 80, 60, 50, 40 };
@@ -4949,7 +5106,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_098 : PokeBattle_Move
 	{
-		public PokeBattle_Move_098(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_098() : base() { }
+		//public PokeBattle_Move_098(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			byte n = (byte)Math.Floor(48f * attacker.HP / attacker.TotalHP);
@@ -4969,7 +5127,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_099 : PokeBattle_Move
 	{
-		public PokeBattle_Move_099(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_099() : base() { }
+		//public PokeBattle_Move_099(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			int n = (int)Math.Floor(Math.Max(attacker.SPE, 1f) / Math.Max(opponent.SPE, 1f));
@@ -4987,7 +5146,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_09A : PokeBattle_Move
 	{
-		public PokeBattle_Move_09A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_09A() : base() { }
+		//public PokeBattle_Move_09A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			float weight = opponent.Weight(attacker);
@@ -5007,7 +5167,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_09B : PokeBattle_Move
 	{
-		public PokeBattle_Move_09B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_09B() : base() { }
+		//public PokeBattle_Move_09B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			int n = (int)Math.Floor((float)attacker.Weight(attacker) / (float)opponent.Weight(attacker));
@@ -5026,7 +5187,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_09C : PokeBattle_Move
 	{
-		public PokeBattle_Move_09C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_09C() : base() { }
+		//public PokeBattle_Move_09C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!this.battle.doublebattle || opponent.isFainted() ||
@@ -5050,7 +5212,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_09D : PokeBattle_Move
 	{
-		public PokeBattle_Move_09D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_09D() : base() { }
+		//public PokeBattle_Move_09D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (Core.USENEWBATTLEMECHANICS)
@@ -5092,7 +5255,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_09E : PokeBattle_Move
 	{
-		public PokeBattle_Move_09E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_09E() : base() { }
+		//public PokeBattle_Move_09E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (Core.USENEWBATTLEMECHANICS)
@@ -5133,7 +5297,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_09F : PokeBattle_Move
 	{
-		public PokeBattle_Move_09F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_09F() : base() { }
+		//public PokeBattle_Move_09F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override Types pbModifyType(Types type, Pokemon attacker, Pokemon opponent)
 		{
 			if (this.id == Moves.JUDGMENT)
@@ -5186,7 +5351,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A0 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A0(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A0() : base() { }
+		//public PokeBattle_Move_0A0(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbCritialOverride(Pokemon attacker, Pokemon opponent)
 		{
 			return true;
@@ -5198,7 +5364,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A1 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A1(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A1() : base() { }
+		//public PokeBattle_Move_0A1(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OwnSide.LuckyChant > 0)
@@ -5226,7 +5393,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A2 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A2(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A2() : base() { }
+		//public PokeBattle_Move_0A2(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OwnSide.Reflect > 0)
@@ -5255,7 +5423,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A3 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A3(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A3() : base() { }
+		//public PokeBattle_Move_0A3(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OwnSide.LightScreen > 0)
@@ -5284,7 +5453,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A4 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A4(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A4() : base() { }
+		//public PokeBattle_Move_0A4(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
@@ -5437,7 +5607,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A5 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A5(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A5() : base() { }
+		//public PokeBattle_Move_0A5(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbAccuracyCheck(Pokemon attacker, Pokemon opponent)
 		{
 			return true;
@@ -5449,7 +5620,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A6 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A6(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A6() : base() { }
+		//public PokeBattle_Move_0A6(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -5472,7 +5644,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A7 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A7(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A7() : base() { }
+		//public PokeBattle_Move_0A7(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.OwnSide.CraftyShield)
@@ -5494,7 +5667,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A8 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A8(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A8() : base() { }
+		//public PokeBattle_Move_0A8(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.OwnSide.CraftyShield)
@@ -5516,7 +5690,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0A9 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0A9(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0A9() : base() { }
+		//public PokeBattle_Move_0A9(Battle battle, Attack.Move move) : base(battle, move) { }
 		// Handled in superclass public bool pbAccuracyCheck and public object pbCalcDamage, do not edit!
 	}
 
@@ -5525,7 +5700,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0AA : PokeBattle_Move
 	{
-		public PokeBattle_Move_0AA(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0AA() : base() { }
+		//public PokeBattle_Move_0AA(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			List<Attack.Data.Effects> ratesharers = new List<Attack.Data.Effects> {
@@ -5573,7 +5749,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0AB : PokeBattle_Move
 	{
-		public PokeBattle_Move_0AB(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0AB() : base() { }
+		//public PokeBattle_Move_0AB(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OwnSide.QuickGuard)
@@ -5633,7 +5810,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0AC : PokeBattle_Move
 	{
-		public PokeBattle_Move_0AC(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0AC() : base() { }
+		//public PokeBattle_Move_0AC(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OwnSide.WideGuard)
@@ -5693,7 +5871,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0AD : PokeBattle_Move
 	{
-		public PokeBattle_Move_0AD(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0AD() : base() { }
+		//public PokeBattle_Move_0AD(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			int ret = (int)base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -5711,7 +5890,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0AE : PokeBattle_Move
 	{
-		public PokeBattle_Move_0AE(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0AE() : base() { }
+		//public PokeBattle_Move_0AE(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.lastMoveUsed <= 0 || //(
@@ -5731,7 +5911,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0AF : PokeBattle_Move
 	{
-		public PokeBattle_Move_0AF(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0AF() : base() { }
+		//public PokeBattle_Move_0AF(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
@@ -5793,7 +5974,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B0 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B0(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B0() : base() { }
+		//public PokeBattle_Move_0B0(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
@@ -5831,7 +6013,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B1 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B1(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B1() : base() { }
+		//public PokeBattle_Move_0B1(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
@@ -5847,7 +6030,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B2 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B2(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B2() : base() { }
+		//public PokeBattle_Move_0B2(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
@@ -5863,7 +6047,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B3 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B3(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B3() : base() { }
+		//public PokeBattle_Move_0B3(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			Moves move = Moves.TRI_ATTACK;
@@ -5927,7 +6112,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B4 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B4(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B4() : base() { }
+		//public PokeBattle_Move_0B4(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbCanUseWhileAsleep()
 		{
 			return true;
@@ -5999,7 +6185,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B5 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B5(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B5() : base() { }
+		//public PokeBattle_Move_0B5(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
@@ -6093,7 +6280,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B6 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B6(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B6() : base() { }
+		//public PokeBattle_Move_0B6(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
@@ -6177,7 +6365,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B7 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B7(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B7() : base() { }
+		//public PokeBattle_Move_0B7(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Torment)
@@ -6215,7 +6404,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B8 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B8(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B8() : base() { }
+		//public PokeBattle_Move_0B8(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.effects.Imprison)
@@ -6236,7 +6426,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0B9 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0B9(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0B9() : base() { }
+		//public PokeBattle_Move_0B9(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Disable > 0)
@@ -6283,7 +6474,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0BA : PokeBattle_Move
 	{
-		public PokeBattle_Move_0BA(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0BA() : base() { }
+		//public PokeBattle_Move_0BA(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Taunt > 0 ||
@@ -6323,7 +6515,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0BB : PokeBattle_Move
 	{
-		public PokeBattle_Move_0BB(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0BB() : base() { }
+		//public PokeBattle_Move_0BB(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.HealBlock > 0)
@@ -6361,7 +6554,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0BC : PokeBattle_Move
 	{
-		public PokeBattle_Move_0BC(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0BC() : base() { }
+		//public PokeBattle_Move_0BC(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
@@ -6425,7 +6619,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0BD : PokeBattle_Move
 	{
-		public PokeBattle_Move_0BD(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0BD() : base() { }
+		//public PokeBattle_Move_0BD(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbIsMultiHit()
 		{
 			return true;
@@ -6442,7 +6637,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0BE : PokeBattle_Move
 	{
-		public PokeBattle_Move_0BE(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0BE() : base() { }
+		//public PokeBattle_Move_0BE(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbIsMultiHit()
 		{
 			return true;
@@ -6470,7 +6666,8 @@ namespace PokemonUnity.Combat
 	public class PokeBattle_Move_0BF : PokeBattle_Move
 	{
 		public bool checks { get; set; }
-		public PokeBattle_Move_0BF(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0BF() : base() { }
+		//public PokeBattle_Move_0BF(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbIsMultiHit()
 		{
 			return true;
@@ -6506,7 +6703,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0C0 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0C0(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C0() : base() { }
+		//public PokeBattle_Move_0C0(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbIsMultiHit()
 		{
 			return true;
@@ -6531,7 +6729,8 @@ namespace PokemonUnity.Combat
 	public class PokeBattle_Move_0C1 : PokeBattle_Move
 	{
 		public List<byte> participants { get; set; }
-		public PokeBattle_Move_0C1(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C1() : base() { }
+		//public PokeBattle_Move_0C1(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbIsMultiHit()
 		{
 			return true;
@@ -6584,7 +6783,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0C2 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0C2(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C2() : base() { }
+		//public PokeBattle_Move_0C2(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -6602,7 +6802,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0C3 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0C3(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C3() : base() { }
+		//public PokeBattle_Move_0C3(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -6640,7 +6841,8 @@ namespace PokemonUnity.Combat
 	public class PokeBattle_Move_0C4 : PokeBattle_Move
 	{
 		public bool sunny { get; set; }
-		public PokeBattle_Move_0C4(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C4() : base() { }
+		//public PokeBattle_Move_0C4(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false; this.sunny = false;
@@ -6696,7 +6898,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0C5 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0C5(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C5() : base() { }
+		//public PokeBattle_Move_0C5(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -6742,7 +6945,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0C6 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0C6(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C6() : base() { }
+		//public PokeBattle_Move_0C6(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -6788,7 +6992,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0C7 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0C7(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C7() : base() { }
+		//public PokeBattle_Move_0C7(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -6831,7 +7036,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0C8 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0C8(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C8() : base() { }
+		//public PokeBattle_Move_0C8(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -6872,7 +7078,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0C9 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0C9(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0C9() : base() { }
+		//public PokeBattle_Move_0C9(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool UnusableInGravity()
 		{
 			return true;
@@ -6914,7 +7121,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0CA : PokeBattle_Move
 	{
-		public PokeBattle_Move_0CA(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0CA() : base() { }
+		//public PokeBattle_Move_0CA(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -6951,7 +7159,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0CB : PokeBattle_Move
 	{
-		public PokeBattle_Move_0CB(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0CB() : base() { }
+		//public PokeBattle_Move_0CB(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -6989,7 +7198,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0CC : PokeBattle_Move
 	{
-		public PokeBattle_Move_0CC(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0CC() : base() { }
+		//public PokeBattle_Move_0CC(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool UnusableInGravity()
 		{
 			return true;
@@ -7042,7 +7252,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0CD : PokeBattle_Move
 	{
-		public PokeBattle_Move_0CD(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0CD() : base() { }
+		//public PokeBattle_Move_0CD(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -7087,7 +7298,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0CE : PokeBattle_Move
 	{
-		public PokeBattle_Move_0CE(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0CE() : base() { }
+		//public PokeBattle_Move_0CE(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool UnusableInGravity()
 		{
 			return true;
@@ -7141,7 +7353,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0CF : PokeBattle_Move
 	{
-		public PokeBattle_Move_0CF(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0CF() : base() { }
+		//public PokeBattle_Move_0CF(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -7205,7 +7418,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D0 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D0(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D0() : base() { }
+		//public PokeBattle_Move_0D0(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -7244,7 +7458,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D1 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D1(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D1() : base() { }
+		//public PokeBattle_Move_0D1(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -7268,7 +7483,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D2 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D2(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D2() : base() { }
+		//public PokeBattle_Move_0D2(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -7306,7 +7522,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D3 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D3(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D3() : base() { }
+		//public PokeBattle_Move_0D3(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			byte shift = (byte)(4 - attacker.effects.Rollout); // from 0 through 4, 0 is most powerful
@@ -7339,7 +7556,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D4 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D4(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D4() : base() { }
+		//public PokeBattle_Move_0D4(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbDisplayUseMessage(Pokemon attacker)
 		{
 			if (attacker.effects.Bide == 0)
@@ -7410,7 +7628,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D5 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D5(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D5() : base() { }
+		//public PokeBattle_Move_0D5(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7437,7 +7656,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D6 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D6(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D6() : base() { }
+		//public PokeBattle_Move_0D6(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7465,7 +7685,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D7 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D7(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D7() : base() { }
+		//public PokeBattle_Move_0D7(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7493,7 +7714,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D8 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D8(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D8() : base() { }
+		//public PokeBattle_Move_0D8(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7533,7 +7755,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0D9 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0D9(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0D9() : base() { }
+		//public PokeBattle_Move_0D9(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7571,7 +7794,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0DA : PokeBattle_Move
 	{
-		public PokeBattle_Move_0DA(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0DA() : base() { }
+		//public PokeBattle_Move_0DA(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7598,7 +7822,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0DB : PokeBattle_Move
 	{
-		public PokeBattle_Move_0DB(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0DB() : base() { }
+		//public PokeBattle_Move_0DB(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7625,7 +7850,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0DC : PokeBattle_Move
 	{
-		public PokeBattle_Move_0DC(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0DC() : base() { }
+		//public PokeBattle_Move_0DC(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -7657,7 +7883,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0DD : PokeBattle_Move
 	{
-		public PokeBattle_Move_0DD(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0DD() : base() { }
+		//public PokeBattle_Move_0DD(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return Core.USENEWBATTLEMECHANICS;
@@ -7693,7 +7920,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0DE : PokeBattle_Move
 	{
-		public PokeBattle_Move_0DE(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0DE() : base() { }
+		//public PokeBattle_Move_0DE(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return Core.USENEWBATTLEMECHANICS;
@@ -7728,7 +7956,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0DF : PokeBattle_Move
 	{
-		public PokeBattle_Move_0DF(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0DF() : base() { }
+		//public PokeBattle_Move_0DF(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7761,7 +7990,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E0 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E0(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E0() : base() { }
+		//public PokeBattle_Move_0E0(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 			if (!attacker.hasMoldBreaker())
@@ -7797,7 +8027,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E1 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E1(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E1() : base() { }
+		//public PokeBattle_Move_0E1(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			float typemod = pbTypeModifier(pbType(this.type, attacker, opponent), attacker, opponent);
@@ -7830,7 +8061,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E2 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E2(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E2() : base() { }
+		//public PokeBattle_Move_0E2(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -7860,7 +8092,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E3 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E3(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E3() : base() { }
+		//public PokeBattle_Move_0E3(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7887,7 +8120,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E4 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E4(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E4() : base() { }
+		//public PokeBattle_Move_0E4(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -7913,7 +8147,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E5 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E5(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E5() : base() { }
+		//public PokeBattle_Move_0E5(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			bool failed = true;
@@ -7961,7 +8196,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E6 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E6(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E6() : base() { }
+		//public PokeBattle_Move_0E6(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
@@ -7978,7 +8214,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E7 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E7(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E7() : base() { }
+		//public PokeBattle_Move_0E7(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
@@ -7994,7 +8231,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E8 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E8(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E8() : base() { }
+		//public PokeBattle_Move_0E8(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			List<Attack.Data.Effects> ratesharers = new List<Attack.Data.Effects> {
@@ -8041,7 +8279,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0E9 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0E9(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0E9() : base() { }
+		//public PokeBattle_Move_0E9(Battle battle, Attack.Move move) : base(battle, move) { }
 		// Handled in superclass public object ReduceHPDamage, do not edit!
 	}
 
@@ -8050,7 +8289,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0EA : PokeBattle_Move
 	{
-		public PokeBattle_Move_0EA(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0EA() : base() { }
+		//public PokeBattle_Move_0EA(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.opponent.Length == 0 ||
@@ -8075,7 +8315,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0EB : PokeBattle_Move
 	{
-		public PokeBattle_Move_0EB(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0EB() : base() { }
+		//public PokeBattle_Move_0EB(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.SUCTION_CUPS))
@@ -8133,7 +8374,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0EC : PokeBattle_Move
 	{
-		public PokeBattle_Move_0EC(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0EC() : base() { }
+		//public PokeBattle_Move_0EC(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() &&
@@ -8172,7 +8414,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0ED : PokeBattle_Move
 	{
-		public PokeBattle_Move_0ED(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0ED() : base() { }
+		//public PokeBattle_Move_0ED(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!this.battle.pbCanChooseNonActive(attacker.Index))
@@ -8194,7 +8437,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0EE : PokeBattle_Move
 	{
-		public PokeBattle_Move_0EE(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0EE() : base() { }
+		//public PokeBattle_Move_0EE(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -8214,7 +8458,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0EF : PokeBattle_Move
 	{
-		public PokeBattle_Move_0EF(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0EF() : base() { }
+		//public PokeBattle_Move_0EF(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging())
@@ -8257,7 +8502,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F0 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F0(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F0() : base() { }
+		//public PokeBattle_Move_0F0(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item != 0 &&
@@ -8298,7 +8544,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F1 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F1(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F1() : base() { }
+		//public PokeBattle_Move_0F1(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item != 0 &&
@@ -8343,7 +8590,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F2 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F2(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F2() : base() { }
+		//public PokeBattle_Move_0F2(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if ((opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
@@ -8412,7 +8660,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F3 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F3(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F3() : base() { }
+		//public PokeBattle_Move_0F3(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if ((opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
@@ -8456,7 +8705,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F4 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F4(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F4() : base() { }
+		//public PokeBattle_Move_0F4(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() && pbIsBerry(opponent.Item) &&
@@ -8504,7 +8754,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F5 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F5(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F5() : base() { }
+		//public PokeBattle_Move_0F5(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -8526,7 +8777,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F6 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F6(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F6() : base() { }
+		//public PokeBattle_Move_0F6(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.Species == Pokemons.NONE || attacker.itemRecycle == 0)
@@ -8561,7 +8813,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F7 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F7(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F7() : base() { }
+		//public PokeBattle_Move_0F7(Battle battle, Attack.Move move) : base(battle, move) { }
 		public Dictionary<Items, byte> flingarray
 		{
 			get
@@ -8806,7 +9059,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F8 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F8(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F8() : base() { }
+		//public PokeBattle_Move_0F8(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Embargo > 0)
@@ -8828,7 +9082,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0F9 : PokeBattle_Move
 	{
-		public PokeBattle_Move_0F9(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0F9() : base() { }
+		//public PokeBattle_Move_0F9(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.field.MagicRoom > 0)
@@ -8852,7 +9107,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0FA : PokeBattle_Move
 	{
-		public PokeBattle_Move_0FA(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0FA() : base() { }
+		//public PokeBattle_Move_0FA(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isRecoilMove()
 		{
 			return true;
@@ -8877,7 +9133,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0FB : PokeBattle_Move
 	{
-		public PokeBattle_Move_0FB(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0FB() : base() { }
+		//public PokeBattle_Move_0FB(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isRecoilMove()
 		{
 			return true;
@@ -8903,7 +9160,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0FC : PokeBattle_Move
 	{
-		public PokeBattle_Move_0FC(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0FC() : base() { }
+		//public PokeBattle_Move_0FC(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isRecoilMove()
 		{
 			return true;
@@ -8929,7 +9187,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0FD : PokeBattle_Move
 	{
-		public PokeBattle_Move_0FD(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0FD() : base() { }
+		//public PokeBattle_Move_0FD(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isRecoilMove()
 		{
 			return true;
@@ -8964,7 +9223,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0FE : PokeBattle_Move
 	{
-		public PokeBattle_Move_0FE(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0FE() : base() { }
+		//public PokeBattle_Move_0FE(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isRecoilMove()
 		{
 			return true;
@@ -8998,7 +9258,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_0FF : PokeBattle_Move
 	{
-		public PokeBattle_Move_0FF(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_0FF() : base() { }
+		//public PokeBattle_Move_0FF(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			switch (this.battle.Weather)
@@ -9036,7 +9297,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_100 : PokeBattle_Move
 	{
-		public PokeBattle_Move_100(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_100() : base() { }
+		//public PokeBattle_Move_100(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			switch (this.battle.weather)
@@ -9075,7 +9337,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_101 : PokeBattle_Move
 	{
-		public PokeBattle_Move_101(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_101() : base() { }
+		//public PokeBattle_Move_101(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			switch (this.battle.Weather)
@@ -9114,7 +9377,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_102 : PokeBattle_Move
 	{
-		public PokeBattle_Move_102(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_102() : base() { }
+		//public PokeBattle_Move_102(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			switch (this.battle.weather)
@@ -9153,7 +9417,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_103 : PokeBattle_Move
 	{
-		public PokeBattle_Move_103(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_103() : base() { }
+		//public PokeBattle_Move_103(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OpposingSide.Spikes >= 3)
@@ -9182,7 +9447,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_104 : PokeBattle_Move
 	{
-		public PokeBattle_Move_104(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_104() : base() { }
+		//public PokeBattle_Move_104(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OpposingSide.ToxicSpikes >= 2)
@@ -9210,7 +9476,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_105 : PokeBattle_Move
 	{
-		public PokeBattle_Move_105(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_105() : base() { }
+		//public PokeBattle_Move_105(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OpposingSide.StealthRock)
@@ -9240,7 +9507,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_106 : PokeBattle_Move
 	{
-		public PokeBattle_Move_106(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_106() : base() { }
+		//public PokeBattle_Move_106(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 			this.doubledamage = false; this.overridetype = false;
@@ -9372,7 +9640,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_107 : PokeBattle_Move
 	{
-		public PokeBattle_Move_107(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_107() : base() { }
+		//public PokeBattle_Move_107(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 			this.doubledamage = false; this.overridetype = false;
@@ -9504,7 +9773,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_108 : PokeBattle_Move
 	{
-		public PokeBattle_Move_108(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_108() : base() { }
+		//public PokeBattle_Move_108(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 			this.doubledamage = false; this.overridetype = false;
@@ -9634,7 +9904,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_109 : PokeBattle_Move
 	{
-		public PokeBattle_Move_109(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_109() : base() { }
+		//public PokeBattle_Move_109(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -9657,10 +9928,11 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_10A : PokeBattle_Move
 	{
-		public PokeBattle_Move_10A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_10A() : base() { }
+		//public PokeBattle_Move_10A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbCalcDamage(Pokemon attacker, Pokemon opponent)
 		{
-			return base.pbCalcDamage(attacker, opponent, NOREFLECT);
+			return base.pbCalcDamage(attacker, opponent, Core.NOREFLECT);
 		}
 
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
@@ -9711,7 +9983,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_10B : PokeBattle_Move
 	{
-		public PokeBattle_Move_10B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_10B() : base() { }
+		//public PokeBattle_Move_10B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isRecoilMove()
 		{
 			return true;
@@ -9728,7 +10001,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_10C : PokeBattle_Move
 	{
-		public PokeBattle_Move_10C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_10C() : base() { }
+		//public PokeBattle_Move_10C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.effects.Substitute > 0)
@@ -9763,7 +10037,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_10D : PokeBattle_Move
 	{
-		public PokeBattle_Move_10D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_10D() : base() { }
+		//public PokeBattle_Move_10D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			bool failed = false;
@@ -9829,7 +10104,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_10E : PokeBattle_Move
 	{
-		public PokeBattle_Move_10E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_10E() : base() { }
+		//public PokeBattle_Move_10E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			foreach (var i in opponent.moves)
@@ -9856,7 +10132,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_10F : PokeBattle_Move
 	{
-		public PokeBattle_Move_10F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_10F() : base() { }
+		//public PokeBattle_Move_10F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.Status != Status.SLEEP || opponent.effects.Nightmare ||
@@ -9879,7 +10156,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_110 : PokeBattle_Move
 	{
-		public PokeBattle_Move_110(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_110() : base() { }
+		//public PokeBattle_Move_110(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
@@ -9930,7 +10208,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_111 : PokeBattle_Move
 	{
-		public PokeBattle_Move_111(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_111() : base() { }
+		//public PokeBattle_Move_111(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbDisplayUseMessage(Pokemon attacker)
 		{
 			if (this.battle.futuresight) return 0;
@@ -9986,7 +10265,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_112 : PokeBattle_Move
 	{
-		public PokeBattle_Move_112(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_112() : base() { }
+		//public PokeBattle_Move_112(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.effects.Stockpile >= 3)
@@ -10022,7 +10302,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_113 : PokeBattle_Move
 	{
-		public PokeBattle_Move_113(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_113() : base() { }
+		//public PokeBattle_Move_113(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			return (attacker.effects.Stockpile == 0);
@@ -10073,7 +10354,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_114 : PokeBattle_Move
 	{
-		public PokeBattle_Move_114(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_114() : base() { }
+		//public PokeBattle_Move_114(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return true;
@@ -10140,7 +10422,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_115 : PokeBattle_Move
 	{
-		public PokeBattle_Move_115(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_115() : base() { }
+		//public PokeBattle_Move_115(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbDisplayUseMessage(Pokemon attacker)
 		{
 			if (attacker.lastHPLost > 0)
@@ -10158,7 +10441,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_116 : PokeBattle_Move
 	{
-		public PokeBattle_Move_116(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_116() : base() { }
+		//public PokeBattle_Move_116(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			if ((int)this.battle.choices[opponent.Index].Action != 1) return true; // Didn't choose a move
@@ -10175,7 +10459,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_117 : PokeBattle_Move
 	{
-		public PokeBattle_Move_117(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_117() : base() { }
+		//public PokeBattle_Move_117(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!this.battle.doublebattle)
@@ -10201,7 +10486,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_118 : PokeBattle_Move
 	{
-		public PokeBattle_Move_118(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_118() : base() { }
+		//public PokeBattle_Move_118(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.field.Gravity > 0)
@@ -10246,7 +10532,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_119 : PokeBattle_Move
 	{
-		public PokeBattle_Move_119(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_119() : base() { }
+		//public PokeBattle_Move_119(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool UnusableInGravity()
 		{
 			return true;
@@ -10274,7 +10561,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_11A : PokeBattle_Move
 	{
-		public PokeBattle_Move_11A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_11A() : base() { }
+		//public PokeBattle_Move_11A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool UnusableInGravity()
 		{
 			return true;
@@ -10302,7 +10590,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_11B : PokeBattle_Move
 	{
-		public PokeBattle_Move_11B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_11B() : base() { }
+		//public PokeBattle_Move_11B(Battle battle, Attack.Move move) : base(battle, move) { }
 		// Handled in Pokemon's pbSuccessCheck, do not edit!
 	}
 
@@ -10312,7 +10601,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_11C : PokeBattle_Move
 	{
-		public PokeBattle_Move_11C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_11C() : base() { }
+		//public PokeBattle_Move_11C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C ||// Fly
@@ -10361,7 +10651,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_11D : PokeBattle_Move
 	{
-		public PokeBattle_Move_11D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_11D() : base() { }
+		//public PokeBattle_Move_11D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.effects.MoveNext) return true;
@@ -10389,7 +10680,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_11E : PokeBattle_Move
 	{
-		public PokeBattle_Move_11E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_11E() : base() { }
+		//public PokeBattle_Move_11E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.effects.Quash) return true;
@@ -10418,7 +10710,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_11F : PokeBattle_Move
 	{
-		public PokeBattle_Move_11F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_11F() : base() { }
+		//public PokeBattle_Move_11F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.field.TrickRoom > 0)
@@ -10446,7 +10739,8 @@ namespace PokemonUnity.Combat
 	/// </remarks>
 	public class PokeBattle_Move_120 : PokeBattle_Move
 	{
-		public PokeBattle_Move_120(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_120() : base() { }
+		//public PokeBattle_Move_120(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!this.battle.doublebattle ||
@@ -10494,7 +10788,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_121 : PokeBattle_Move
 	{
-		public PokeBattle_Move_121(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_121() : base() { }
+		//public PokeBattle_Move_121(Battle battle, Attack.Move move) : base(battle, move) { }
 		// Handled in superclass public object pbCalcDamage, do not edit!
 	}
 
@@ -10504,7 +10799,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_122 : PokeBattle_Move
 	{
-		public PokeBattle_Move_122(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_122() : base() { }
+		//public PokeBattle_Move_122(Battle battle, Attack.Move move) : base(battle, move) { }
 		// Handled in superclass public object pbCalcDamage, do not edit!
 	}
 
@@ -10513,7 +10809,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_123 : PokeBattle_Move
 	{
-		public PokeBattle_Move_123(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_123() : base() { }
+		//public PokeBattle_Move_123(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!opponent.hasType(attacker.Type1) &&
@@ -10533,7 +10830,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_124 : PokeBattle_Move
 	{
-		public PokeBattle_Move_124(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_124() : base() { }
+		//public PokeBattle_Move_124(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.field.WonderRoom > 0)
@@ -10557,7 +10855,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_125 : PokeBattle_Move
 	{
-		public PokeBattle_Move_125(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_125() : base() { }
+		//public PokeBattle_Move_125(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			byte counter = 0; byte nummoves = 0;
@@ -10582,7 +10881,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_133 : PokeBattle_Move
 	{
-		public PokeBattle_Move_133(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_133() : base() { }
+		//public PokeBattle_Move_133(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!this.battle.doublebattle ||
@@ -10601,7 +10901,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_134 : PokeBattle_Move
 	{
-		public PokeBattle_Move_134(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_134() : base() { }
+		//public PokeBattle_Move_134(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
@@ -10617,7 +10918,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_135 : PokeBattle_Move
 	{
-		public PokeBattle_Move_135(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_135() : base() { }
+		//public PokeBattle_Move_135(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbAdditionalEffect(Pokemon attacker, Pokemon opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
@@ -10633,7 +10935,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_136 : PokeBattle_Move_01D
 	{
-		public PokeBattle_Move_136(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_136() : base() { }
+		//public PokeBattle_Move_136(Battle battle, Attack.Move move) : base(battle, move) { }
 		// No difference to function code 01D. It may need to be separate in future.
 	}
 
@@ -10643,7 +10946,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_137 : PokeBattle_Move
 	{
-		public PokeBattle_Move_137(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_137() : base() { }
+		//public PokeBattle_Move_137(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			bool didsomething = false;
@@ -10682,7 +10986,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_138 : PokeBattle_Move
 	{
-		public PokeBattle_Move_138(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_138() : base() { }
+		//public PokeBattle_Move_138(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (!this.battle.doublebattle || opponent.Species == Pokemons.NONE ||
@@ -10703,7 +11008,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_139 : PokeBattle_Move
 	{
-		public PokeBattle_Move_139(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_139() : base() { }
+		//public PokeBattle_Move_139(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbAccuracyCheck(Pokemon attacker, Pokemon opponent)
 		{
 			return true;
@@ -10724,7 +11030,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_13A : PokeBattle_Move
 	{
-		public PokeBattle_Move_13A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_13A() : base() { }
+		//public PokeBattle_Move_13A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			// Replicates pbCanReduceStatStage? so that certain messages aren't shown
@@ -10781,7 +11088,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_13B : PokeBattle_Move
 	{
-		public PokeBattle_Move_13B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_13B() : base() { }
+		//public PokeBattle_Move_13B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			if (attacker.Species == Pokemons.HOOPA) return true;
@@ -10809,7 +11117,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_13C : PokeBattle_Move
 	{
-		public PokeBattle_Move_13C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_13C() : base() { }
+		//public PokeBattle_Move_13C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbAccuracyCheck(Pokemon attacker, Pokemon opponent)
 		{
 			return true;
@@ -10830,7 +11139,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_13D : PokeBattle_Move
 	{
-		public PokeBattle_Move_13D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_13D() : base() { }
+		//public PokeBattle_Move_13D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -10858,7 +11168,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_13E : PokeBattle_Move
 	{
-		public PokeBattle_Move_13E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_13E() : base() { }
+		//public PokeBattle_Move_13E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			bool didsomething = false;
@@ -10899,7 +11210,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_13F : PokeBattle_Move
 	{
-		public PokeBattle_Move_13F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_13F() : base() { }
+		//public PokeBattle_Move_13F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			bool didsomething = false;
@@ -10933,7 +11245,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_140 : PokeBattle_Move
 	{
-		public PokeBattle_Move_140(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_140() : base() { }
+		//public PokeBattle_Move_140(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			bool didsomething = false;
@@ -10978,7 +11291,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_141 : PokeBattle_Move
 	{
-		public PokeBattle_Move_141(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_141() : base() { }
+		//public PokeBattle_Move_141(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			bool nonzero = false;
@@ -11011,7 +11325,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_142 : PokeBattle_Move
 	{
-		public PokeBattle_Move_142(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_142() : base() { }
+		//public PokeBattle_Move_142(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if ((opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
@@ -11036,7 +11351,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_143 : PokeBattle_Move
 	{
-		public PokeBattle_Move_143(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_143() : base() { }
+		//public PokeBattle_Move_143(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
@@ -11072,7 +11388,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_144 : PokeBattle_Move
 	{
-		public PokeBattle_Move_144(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_144() : base() { }
+		//public PokeBattle_Move_144(Battle battle, Attack.Move move) : base(battle, move) { }
 		public int pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
 			type = Types.FLYING;// || -1
@@ -11098,7 +11415,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_145 : PokeBattle_Move
 	{
-		public PokeBattle_Move_145(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_145() : base() { }
+		//public PokeBattle_Move_145(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (pbTypeImmunityByAbility(pbType(this.type, attacker, opponent), attacker, opponent)) return -1;
@@ -11129,7 +11447,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_146 : PokeBattle_Move
 	{
-		public PokeBattle_Move_146(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_146() : base() { }
+		//public PokeBattle_Move_146(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			bool unmoved = false;
@@ -11161,7 +11480,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_147 : PokeBattle_Move
 	{
-		public PokeBattle_Move_147(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_147() : base() { }
+		//public PokeBattle_Move_147(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbAccuracyCheck(Pokemon attacker, Pokemon opponent)
 		{
 			return true;
@@ -11174,7 +11494,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_148 : PokeBattle_Move
 	{
-		public PokeBattle_Move_148(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_148() : base() { }
+		//public PokeBattle_Move_148(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Powder)
@@ -11195,7 +11516,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_149 : PokeBattle_Move
 	{
-		public PokeBattle_Move_149(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_149() : base() { }
+		//public PokeBattle_Move_149(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			return (attacker.turncount > 1);
@@ -11216,7 +11538,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_14A : PokeBattle_Move
 	{
-		public PokeBattle_Move_14A(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_14A() : base() { }
+		//public PokeBattle_Move_14A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OwnSide.CraftyShield)
@@ -11260,7 +11583,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_14B : PokeBattle_Move
 	{
-		public PokeBattle_Move_14B(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_14B() : base() { }
+		//public PokeBattle_Move_14B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.effects.KingsShield)
@@ -11314,7 +11638,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_14C : PokeBattle_Move
 	{
-		public PokeBattle_Move_14C(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_14C() : base() { }
+		//public PokeBattle_Move_14C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.effects.SpikyShield)
@@ -11371,7 +11696,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_14D : PokeBattle_Move
 	{
-		public PokeBattle_Move_14D(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_14D() : base() { }
+		//public PokeBattle_Move_14D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -11421,7 +11747,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_14E : PokeBattle_Move
 	{
-		public PokeBattle_Move_14E(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_14E() : base() { }
+		//public PokeBattle_Move_14E(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbTwoTurnAttack(Pokemon attacker)
 		{
 			this.immediate = false;
@@ -11482,7 +11809,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_14F : PokeBattle_Move
 	{
-		public PokeBattle_Move_14F(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_14F() : base() { }
+		//public PokeBattle_Move_14F(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool isHealingMove()
 		{
 			return Core.USENEWBATTLEMECHANICS;
@@ -11518,7 +11846,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_150 : PokeBattle_Move
 	{
-		public PokeBattle_Move_150(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_150() : base() { }
+		//public PokeBattle_Move_150(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -11540,7 +11869,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_151 : PokeBattle_Move
 	{
-		public PokeBattle_Move_151(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_151() : base() { }
+		//public PokeBattle_Move_151(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			object ret = -1;
@@ -11574,7 +11904,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_152 : PokeBattle_Move
 	{
-		public PokeBattle_Move_152(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_152() : base() { }
+		//public PokeBattle_Move_152(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.field.FairyLock > 0)
@@ -11595,7 +11926,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_153 : PokeBattle_Move
 	{
-		public PokeBattle_Move_153(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_153() : base() { }
+		//public PokeBattle_Move_153(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OpposingSide.StickyWeb)
@@ -11625,7 +11957,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_154 : PokeBattle_Move
 	{
-		public PokeBattle_Move_154(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_154() : base() { }
+		//public PokeBattle_Move_154(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.field.ElectricTerrain > 0)
@@ -11650,7 +11983,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_155 : PokeBattle_Move
 	{
-		public PokeBattle_Move_155(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_155() : base() { }
+		//public PokeBattle_Move_155(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.field.GrassyTerrain > 0)
@@ -11675,7 +12009,8 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	public class PokeBattle_Move_156 : PokeBattle_Move
 	{
-		public PokeBattle_Move_156(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_156() : base() { }
+		//public PokeBattle_Move_156(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.field.MistyTerrain > 0)
@@ -11698,7 +12033,8 @@ namespace PokemonUnity.Combat
 	/// </summary>
 	public class PokeBattle_Move_157 : PokeBattle_Move
 	{
-		public PokeBattle_Move_157(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_157() : base() { }
+		//public PokeBattle_Move_157(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.isOpposing(attacker.Index) || this.battle.doublemoney)
@@ -11719,7 +12055,8 @@ namespace PokemonUnity.Combat
 	/// </summary>
 	public class PokeBattle_Move_158 : PokeBattle_Move
 	{
-		public PokeBattle_Move_158(Battle battle, Attack.Move move) : base(battle, move) { }
+		public PokeBattle_Move_158() : base() { }
+		//public PokeBattle_Move_158(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			return attacker.Species == Pokemons.NONE || !attacker.belch;

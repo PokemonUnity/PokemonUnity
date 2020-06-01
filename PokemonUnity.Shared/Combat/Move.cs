@@ -19,34 +19,6 @@ namespace PokemonUnity.Combat
 	public abstract class Move : IPokeBattle_Move//PokemonUnity.Attack.Move
 	{
 		#region Variables
-		//ToDo: Move to Game's Core and make variales Const?
-		/// <summary>
-		/// If moves deal type damage (or if damage is affected by move type)
-		/// </summary>
-		internal static bool NOTYPE						= false;	//= 0x01
-		/// <summary>
-		/// If pokemon type change damage (or if move damage is affected by pokemon type)
-		/// </summary>
-		/// Double negatives (ignore), so in code the bool is reversed
-		internal static bool IGNOREPKMNTYPES			= false;    //= 0x02
-		/// <summary
-		/// If RNG affects damage
-		/// </summary>
-		internal static bool NOWEIGHTING				= false;	//= 0x04
-		/// <summary>
-		/// If Moves can do Crit (extra) Damage
-		/// </summary>
-		internal static bool NOCRITICAL					= false;	//= 0x08
-		/// <summary>
-		/// If Reflect-like Moves ignore Damage Modifiers
-		/// </summary>
-		internal static bool NOREFLECT					= false;	//= 0x10
-		/// <summary>
-		/// I actually dont know what this is about...
-		/// </summary>
-		/// Use Ctrl+F to locate, i commented this out in code
-		internal static bool SELFCONFUSE				= false;	//= 0x20
-
 		public Attack.Category Category		{ get; set; }
 		public Moves MoveId					{ get; set; }
 		public Attack.Target Targets		{ get; set; }
@@ -65,7 +37,6 @@ namespace PokemonUnity.Combat
 		/// </summary>
 		public virtual int AddlEffect		{ get; set; }
 		public Attack.Data.Effects Effect	{ get; set; }
-		//internal Attack.Effect function		{ get; set; }
 		/// <summary>
 		/// The move's accuracy, as a percentage. 
 		/// An accuracy of 0 means the move doesn't perform an accuracy check 
@@ -86,6 +57,8 @@ namespace PokemonUnity.Combat
 		//public Battle Battle				{ get { return this.battle ?? Game.battle; } }
 		internal Battle Battle				{ get; set; }
 		#endregion
+
+		public Move() { }
 
 		//public Move(Moves move) : base(move)
 		//{
@@ -111,7 +84,46 @@ namespace PokemonUnity.Combat
 		//    CalcMoveFunc();
 		//}
 
-		public Move(Battle battle, PokemonUnity.Attack.Move move) 
+		//public Move(Battle battle, PokemonUnity.Attack.Move move) 
+		//{
+		//	Attack.Data.MoveData movedata    = Game.MoveData[move.MoveId];
+		//	Battle			= battle;
+		//	BaseDamage		= movedata.Power ?? 0;//.BaseDamage;
+		//	Type			= movedata.Type;
+		//	Accuracy		= movedata.Accuracy ?? 0;
+		//	Effect			= movedata.Effect;
+		//	Target			= movedata.Target;
+		//	Priority		= movedata.Priority;
+		//	Flags			= movedata.Flags;
+		//	Category		= movedata.Category;
+		//	//thismove		= move
+		//	//name			= ""
+		//	MoveId			= move.MoveId;
+		//	//PP			= base.PP;
+		//	//TotalPP		= base.TotalPP;
+		//	PP				= move.PP;
+		//	totalpp			= move.TotalPP;
+		//	PowerBoost		= false;
+		//}
+
+		public IPokeBattle_Move pbFromPBMove(Battle battle, Move move)
+		{
+			//if (move == null) return null;
+			//if (move == null) //move = (Move)new Attack.Move();
+			//	Attack.Data.MoveData movedata = Game.MoveData[Moves.NONE];
+			//else 
+				Attack.Data.MoveData movedata = Game.MoveData[move.MoveId];
+			//Type className = Type.GetType(string.Format("PokeBattle_Move_{0}X", movedata.Effect));
+			////if Object.const_defined(className)
+			//	//return (className).new (battle, move);
+			//	return Activitor.CreateInstance(className, battle, move);
+			//else
+			//	return new PokeBattle_UnimplementedMove(battle, move);
+
+			return this;
+		}
+
+		public virtual Move Initialize(Battle battle, PokemonUnity.Attack.Move move) 
 		{
 			Attack.Data.MoveData movedata    = Game.MoveData[move.MoveId];
 			Battle			= battle;
@@ -131,391 +143,8 @@ namespace PokemonUnity.Combat
 			PP				= move.PP;
 			totalpp			= move.TotalPP;
 			PowerBoost		= false;
-		}
 
-		public IPokeBattle_Move pbFromPBMove(Battle battle, Move move)
-		{
-			//ToDo: Finish here...
-			//if (move == null) move = (Move)new Attack.Move(); 
-			Attack.Data.MoveData movedata = Game.MoveData[move.MoveId];
-			//Type className = Type.GetType(string.Format("PokeBattle_Move_{0}X", movedata.Effect));
-			////if Object.const_defined(className)
-			//	//return (className).new (battle, move);
-			//	return Activitor.CreateInstance(className, battle, move);
-			//else
-			//	return new PokeBattle_UnimplementedMove(battle, move);
-			//switch(movedata.Effect)
 			return this;
-		}
-		public void CalcMoveFunc()//(ref Battle.Move move)
-		{
-			//Effect function;
-			switch ((Attack.Effect)Effect)
-			{
-				case Attack.Effect.Confusion:
-					//battle		= battle
-					BaseDamage		= 40;
-					Type			= Types.NONE;
-					Accuracy		= 100;
-					PP				= 0; //-1;
-					//TotalPP		= ;
-					AddlEffect		= 0;
-					Targets			= Attack.Target.NoTarget;
-					Priority		= 0;
-					Flags			= new Attack.Data.Flag();//Flags();
-					//thismove		= move
-					//name			= ""
-					MoveId			= Moves.NONE;
-					Category		= Attack.Category.PHYSICAL;
-					break;
-				case Attack.Effect.Struggle:
-				case Attack.Effect.x000:
-					break;
-				case Attack.Effect.x001:
-					unuseableInGravity = true;
-					break;
-				#region Not Done Yet
-				case Attack.Effect.x002:
-				case Attack.Effect.x003:
-				case Attack.Effect.x004:
-				case Attack.Effect.x005:
-				case Attack.Effect.x006:
-				case Attack.Effect.x007:
-				case Attack.Effect.x008:
-				case Attack.Effect.x009:
-				case Attack.Effect.x00A:
-				case Attack.Effect.x00B:
-				case Attack.Effect.x00C:
-				case Attack.Effect.x00D:
-				case Attack.Effect.x00E:
-				case Attack.Effect.x00F:
-				case Attack.Effect.x010:
-				case Attack.Effect.x011:
-				case Attack.Effect.x012:
-				case Attack.Effect.x013:
-				case Attack.Effect.x014:
-				case Attack.Effect.x015:
-				case Attack.Effect.x016:
-				case Attack.Effect.x017:
-				case Attack.Effect.x018:
-				case Attack.Effect.x019:
-				case Attack.Effect.x01A:
-				case Attack.Effect.x01B:
-				case Attack.Effect.x01C:
-				case Attack.Effect.x01D:
-				case Attack.Effect.x01E:
-				case Attack.Effect.x01F:
-				case Attack.Effect.x020:
-				case Attack.Effect.x021:
-				case Attack.Effect.x022:
-				case Attack.Effect.x023:
-				case Attack.Effect.x024:
-				case Attack.Effect.x025:
-				case Attack.Effect.x026:
-				case Attack.Effect.x027:
-				case Attack.Effect.x028:
-				case Attack.Effect.x029:
-				case Attack.Effect.x02A:
-				case Attack.Effect.x02B:
-				case Attack.Effect.x02C:
-				case Attack.Effect.x02D:
-				case Attack.Effect.x02E:
-				case Attack.Effect.x02F:
-				case Attack.Effect.x030:
-				case Attack.Effect.x031:
-				case Attack.Effect.x032:
-				case Attack.Effect.x033:
-				case Attack.Effect.x034:
-				case Attack.Effect.x035:
-				case Attack.Effect.x036:
-				case Attack.Effect.x037:
-				case Attack.Effect.x038:
-				case Attack.Effect.x039:
-				case Attack.Effect.x03A:
-				case Attack.Effect.x03B:
-				case Attack.Effect.x03C:
-				case Attack.Effect.x03D:
-				case Attack.Effect.x03E:
-				case Attack.Effect.x03F:
-				case Attack.Effect.x040:
-				case Attack.Effect.x041:
-				case Attack.Effect.x042:
-				case Attack.Effect.x043:
-				case Attack.Effect.x044:
-				case Attack.Effect.x045:
-				case Attack.Effect.x046:
-				case Attack.Effect.x047:
-				case Attack.Effect.x048:
-				case Attack.Effect.x049:
-				case Attack.Effect.x04A:
-				case Attack.Effect.x04B:
-				case Attack.Effect.x04C:
-				case Attack.Effect.x04D:
-				case Attack.Effect.x04E:
-				case Attack.Effect.x04F:
-				case Attack.Effect.x050:
-				case Attack.Effect.x051:
-				case Attack.Effect.x052:
-				case Attack.Effect.x053:
-				case Attack.Effect.x054:
-				case Attack.Effect.x055:
-				case Attack.Effect.x056:
-				case Attack.Effect.x057:
-				case Attack.Effect.x058:
-				case Attack.Effect.x059:
-				case Attack.Effect.x05A:
-				case Attack.Effect.x05B:
-				case Attack.Effect.x05C:
-				case Attack.Effect.x05D:
-				case Attack.Effect.x05E:
-				case Attack.Effect.x05F:
-				case Attack.Effect.x060:
-				case Attack.Effect.x061:
-				case Attack.Effect.x062:
-				case Attack.Effect.x063:
-				case Attack.Effect.x064:
-				case Attack.Effect.x065:
-				case Attack.Effect.x066:
-				case Attack.Effect.x067:
-				case Attack.Effect.x068:
-				case Attack.Effect.x069:
-				case Attack.Effect.x06A:
-				case Attack.Effect.x06B:
-				case Attack.Effect.x06C:
-				case Attack.Effect.x06D:
-				case Attack.Effect.x06E:
-				case Attack.Effect.x06F:
-				case Attack.Effect.x070:
-				case Attack.Effect.x071:
-				case Attack.Effect.x072:
-				case Attack.Effect.x073:
-				case Attack.Effect.x074:
-				case Attack.Effect.x075:
-				case Attack.Effect.x076:
-				case Attack.Effect.x077:
-				case Attack.Effect.x078:
-				case Attack.Effect.x079:
-				case Attack.Effect.x07A:
-				case Attack.Effect.x07B:
-				case Attack.Effect.x07C:
-				case Attack.Effect.x07D:
-				case Attack.Effect.x07E:
-				case Attack.Effect.x07F:
-				case Attack.Effect.x080:
-				case Attack.Effect.x081:
-				case Attack.Effect.x082:
-				case Attack.Effect.x083:
-				case Attack.Effect.x084:
-				case Attack.Effect.x085:
-				case Attack.Effect.x086:
-				case Attack.Effect.x087:
-				case Attack.Effect.x088:
-				case Attack.Effect.x089:
-				case Attack.Effect.x08A:
-				case Attack.Effect.x08B:
-				case Attack.Effect.x08C:
-				case Attack.Effect.x08D:
-				case Attack.Effect.x08E:
-				case Attack.Effect.x08F:
-				case Attack.Effect.x090:
-				case Attack.Effect.x091:
-				case Attack.Effect.x092:
-				case Attack.Effect.x093:
-				case Attack.Effect.x094:
-				case Attack.Effect.x095:
-				case Attack.Effect.x096:
-				case Attack.Effect.x097:
-				case Attack.Effect.x098:
-				case Attack.Effect.x099:
-				case Attack.Effect.x09A:
-				case Attack.Effect.x09B:
-				case Attack.Effect.x09C:
-				case Attack.Effect.x09D:
-				case Attack.Effect.x09E:
-				case Attack.Effect.x09F:
-				case Attack.Effect.x0A0:
-				case Attack.Effect.x0A1:
-				case Attack.Effect.x0A2:
-				case Attack.Effect.x0A3:
-				case Attack.Effect.x0A4:
-				case Attack.Effect.x0A5:
-				case Attack.Effect.x0A6:
-				case Attack.Effect.x0A7:
-				case Attack.Effect.x0A8:
-				case Attack.Effect.x0A9:
-				case Attack.Effect.x0AA:
-				case Attack.Effect.x0AB:
-				case Attack.Effect.x0AC:
-				case Attack.Effect.x0AD:
-				case Attack.Effect.x0AE:
-				case Attack.Effect.x0AF:
-				case Attack.Effect.x0B0:
-				case Attack.Effect.x0B1:
-				case Attack.Effect.x0B2:
-				case Attack.Effect.x0B3:
-				case Attack.Effect.x0B4:
-				case Attack.Effect.x0B5:
-				case Attack.Effect.x0B6:
-				case Attack.Effect.x0B7:
-				case Attack.Effect.x0B8:
-				case Attack.Effect.x0B9:
-				case Attack.Effect.x0BA:
-				case Attack.Effect.x0BB:
-				case Attack.Effect.x0BC:
-				case Attack.Effect.x0BD:
-				case Attack.Effect.x0BE:
-				case Attack.Effect.x0BF:
-				case Attack.Effect.x0C0:
-				case Attack.Effect.x0C1:
-				case Attack.Effect.x0C2:
-				case Attack.Effect.x0C3:
-				case Attack.Effect.x0C4:
-				case Attack.Effect.x0C5:
-				case Attack.Effect.x0C6:
-				case Attack.Effect.x0C7:
-				case Attack.Effect.x0C8:
-				case Attack.Effect.x0C9:
-				case Attack.Effect.x0CA:
-				case Attack.Effect.x0CB:
-				case Attack.Effect.x0CC:
-				case Attack.Effect.x0CD:
-				case Attack.Effect.x0CE:
-				case Attack.Effect.x0CF:
-				case Attack.Effect.x0D0:
-				case Attack.Effect.x0D1:
-				case Attack.Effect.x0D2:
-				case Attack.Effect.x0D3:
-				case Attack.Effect.x0D4:
-				case Attack.Effect.x0D5:
-				case Attack.Effect.x0D6:
-				case Attack.Effect.x0D7:
-				case Attack.Effect.x0D8:
-				case Attack.Effect.x0D9:
-				case Attack.Effect.x0DA:
-				case Attack.Effect.x0DB:
-				case Attack.Effect.x0DC:
-				case Attack.Effect.x0DD:
-				case Attack.Effect.x0DE:
-				case Attack.Effect.x0DF:
-				case Attack.Effect.x0E0:
-				case Attack.Effect.x0E1:
-				case Attack.Effect.x0E2:
-				case Attack.Effect.x0E3:
-				case Attack.Effect.x0E4:
-				case Attack.Effect.x0E5:
-				case Attack.Effect.x0E6:
-				case Attack.Effect.x0E7:
-				case Attack.Effect.x0E8:
-				case Attack.Effect.x0E9:
-				case Attack.Effect.x0EA:
-				case Attack.Effect.x0EB:
-				case Attack.Effect.x0EC:
-				case Attack.Effect.x0ED:
-				case Attack.Effect.x0EE:
-				case Attack.Effect.x0EF:
-				case Attack.Effect.x0F0:
-				case Attack.Effect.x0F1:
-				case Attack.Effect.x0F2:
-				case Attack.Effect.x0F3:
-				case Attack.Effect.x0F4:
-				case Attack.Effect.x0F5:
-				case Attack.Effect.x0F6:
-				case Attack.Effect.x0F7:
-				case Attack.Effect.x0F8:
-				case Attack.Effect.x0F9:
-				case Attack.Effect.x0FA:
-				case Attack.Effect.x0FB:
-				case Attack.Effect.x0FC:
-				case Attack.Effect.x0FD:
-				case Attack.Effect.x0FE:
-				case Attack.Effect.x0FF:
-				case Attack.Effect.x100:
-				case Attack.Effect.x101:
-				case Attack.Effect.x102:
-				case Attack.Effect.x103:
-				case Attack.Effect.x104:
-				case Attack.Effect.x105:
-				case Attack.Effect.x106:
-				case Attack.Effect.x107:
-				case Attack.Effect.x108:
-				case Attack.Effect.x109:
-				case Attack.Effect.x10A:
-				case Attack.Effect.x10B:
-				case Attack.Effect.x10C:
-				case Attack.Effect.x10D:
-				case Attack.Effect.x10E:
-				case Attack.Effect.x10F:
-				case Attack.Effect.x110:
-				case Attack.Effect.x111:
-				case Attack.Effect.x112:
-				case Attack.Effect.x113:
-				case Attack.Effect.x114:
-				case Attack.Effect.x115:
-				case Attack.Effect.x116:
-				case Attack.Effect.x117:
-				case Attack.Effect.x118:
-				case Attack.Effect.x119:
-				case Attack.Effect.x11A:
-				case Attack.Effect.x11B:
-				case Attack.Effect.x11C:
-				case Attack.Effect.x11D:
-				case Attack.Effect.x11E:
-				case Attack.Effect.x11F:
-				case Attack.Effect.x120:
-				case Attack.Effect.x121:
-				case Attack.Effect.x122:
-				case Attack.Effect.x123:
-				case Attack.Effect.x124:
-				case Attack.Effect.x125:
-				case Attack.Effect.x133:
-				case Attack.Effect.x134:
-				case Attack.Effect.x135:
-				case Attack.Effect.x136:
-				case Attack.Effect.x137:
-				case Attack.Effect.x138:
-				case Attack.Effect.x139:
-				case Attack.Effect.x13A:
-				case Attack.Effect.x13B:
-				case Attack.Effect.x13C:
-				case Attack.Effect.x13D:
-				case Attack.Effect.x13E:
-				case Attack.Effect.x13F:
-				case Attack.Effect.x140:
-				case Attack.Effect.x141:
-				case Attack.Effect.x142:
-				case Attack.Effect.x143:
-				case Attack.Effect.x144:
-				case Attack.Effect.x145:
-				case Attack.Effect.x146:
-				case Attack.Effect.x147:
-				case Attack.Effect.x148:
-				case Attack.Effect.x149:
-				case Attack.Effect.x14A:
-				case Attack.Effect.x14B:
-				case Attack.Effect.x14C:
-				case Attack.Effect.x14D:
-				case Attack.Effect.x14E:
-				case Attack.Effect.x14F:
-				case Attack.Effect.x150:
-				case Attack.Effect.x151:
-				case Attack.Effect.x152:
-				case Attack.Effect.x153:
-				case Attack.Effect.x154:
-				case Attack.Effect.x155:
-				case Attack.Effect.x156:
-				case Attack.Effect.x157:
-				case Attack.Effect.x158:
-					break;
-				#endregion
-				case Attack.Effect.FailedMove:
-					//by default, both should result in failure
-					Battle.pbDisplay("But it failed!");
-					break;
-				case Attack.Effect.UnimplementedMove:
-				default:
-					break;
-			}
-			//return move;
 		}
 
 #region About the move
@@ -971,11 +600,11 @@ public virtual int TotalPP { get {
 	List<int> stagemul= new List<int>() { 10,10,10,10,10,10,10,15,20,25,30,35,40 };
 	List<int> stagediv= new List<int>() { 40,35,30,25,20,15,10,10,10,10,10,10,10 };
 	Types type = Types.NONE;
-	if (!NOTYPE) 
+	if (!Core.NOTYPE) 
 	  type=pbType(Type, attacker, opponent);
 	else
 	  type=Types.NONE; // Will be treated as physical
-	if (NOCRITICAL)
+	if (Core.NOCRITICAL)
 	  opponent.damagestate.Critical=pbIsCritical (attacker, opponent);
 	#region ##### Calcuate base power of move #####
 	int basedmg = BaseDamage; // From PBS file
@@ -1351,13 +980,13 @@ public virtual int TotalPP { get {
 	  damage=(int)Math.Floor(damage* random/100.0);
 	 //}
 	// STAB
-	if (attacker.hasType(type) && !IGNOREPKMNTYPES)
+	if (attacker.hasType(type) && !Core.IGNOREPKMNTYPES)
 	  if (attacker.hasWorkingAbility(Abilities.ADAPTABILITY))
 		damage= (int)Math.Round(damage*2d);
 	  else
 		damage= (int)Math.Round(damage*1.5);
 	// Type effectiveness
-	if (!IGNOREPKMNTYPES){
+	if (!Core.IGNOREPKMNTYPES){
 	  double typemod=pbTypeModMessages(type, attacker, opponent);
 	  damage= (int)Math.Round(damage* typemod/8.0);
 	   opponent.damagestate.TypeMod=typemod;
@@ -1377,7 +1006,7 @@ public virtual int TotalPP { get {
 	if (damage<1)damage=1;
 	// Final damage modifiers
 	double finaldamagemult=0x1000;
-	if (!opponent.damagestate.Critical && NOREFLECT &&
+	if (!opponent.damagestate.Critical && Core.NOREFLECT &&
 	   !attacker.hasWorkingAbility(Abilities.INFILTRATOR)){
 	  // Reflect
 	  if (opponent.OwnSide.Reflect>0 && pbIsPhysical(type))
@@ -1419,7 +1048,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 	  attacker.effects.LifeOrb=true;
 	  finaldamagemult=Math.Round(finaldamagemult*1.3);
 	}
-	if (opponent.damagestate.TypeMod>8 && IGNOREPKMNTYPES)
+	if (opponent.damagestate.TypeMod>8 && Core.IGNOREPKMNTYPES)
 	  if ((opponent.hasWorkingItem(Items.CHOPLE_BERRY) && type == Types.FIGHTING) ||
 		 (opponent.hasWorkingItem(Items.COBA_BERRY)    && type == Types.FLYING) ||
 		 (opponent.hasWorkingItem(Items.KEBIA_BERRY)   && type == Types.POISON) ||
@@ -1442,7 +1071,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 		Battle.pbCommonAnimation("UseItem", opponent, null);
 	  }
 	if (opponent.hasWorkingItem(Items.CHILAN_BERRY) && type == Types.NORMAL &&
-	   IGNOREPKMNTYPES){
+	   Core.IGNOREPKMNTYPES){
 	  finaldamagemult=Math.Round(finaldamagemult*0.5);
 	  opponent.damagestate.BerryWeakened=true;
 	  Battle.pbCommonAnimation("UseItem", opponent, null);
@@ -1640,7 +1269,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
   }
 	   #endregion
 
-		public string _INTL(string message, params string[] param)
+		public string _INTL(string message, params object[] param)
 		{
 			return message;
 		}

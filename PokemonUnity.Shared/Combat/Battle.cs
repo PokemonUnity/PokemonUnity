@@ -458,8 +458,10 @@ namespace PokemonUnity.Combat
 
 			//if (Moves.STRUGGLE.GetType() == typeof(Moves))
 			//	struggle = new Move(Moves.STRUGGLE);//new PokeBattle_Move(this, new Attack.Move(Moves.STRUGGLE)).pbFromPBMove(Moves.STRUGGLE);
+			//  struggle = Game.MoveEffectData[].Initialize(this, new Attack.Move(Moves.STRUGGLE));
 			//else
-				struggle = new PokeBattle_Struggle(this, new Attack.Move(Moves.NONE));
+			//	struggle = new PokeBattle_Struggle(this, new Attack.Move(Moves.NONE));
+			struggle = new PokeBattle_Struggle().Initialize(this, new Attack.Move(Moves.STRUGGLE));
 
 			//struggle.PP = -1;
 

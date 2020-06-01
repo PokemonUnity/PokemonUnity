@@ -908,7 +908,7 @@ namespace PokemonUnity.Combat
   }
 #endregion
 
-        public string _INTL(string message, params string[] param)
+        public string _INTL(string message, params object[] param)
         {
             return message;
         }
