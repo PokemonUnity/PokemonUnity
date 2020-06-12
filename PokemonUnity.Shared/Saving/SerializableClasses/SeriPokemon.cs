@@ -248,6 +248,17 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 	public static class SeriArray
 	{
+		public static SeriPokemon[] Serialize (this Combat.Pokemon[] pkmn)
+		{
+			if (pkmn != null)
+			{
+				SeriPokemon[] p = new SeriPokemon[pkmn.Length];
+				for (int i = 0; i < p.Length; i++)
+					p[i] = pkmn[i].pokemon;
+				return p;
+			}
+			else return new SeriPokemon[0];
+		}
 		public static Pokemon[] Deserialize (this SeriPokemon[] pkmn)
 		{
 			if (pkmn != null)

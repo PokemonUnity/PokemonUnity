@@ -14,7 +14,7 @@ namespace PokemonUnity.Character
 	//ToDo: Add Function to add more boxes to player pc
 	// OR! A function to disable boxes until they're "unlocked"
 	// Max # of boxes would be hard-capped if option 2
-	//ToDo: Add Game.GameData.Feature where player unlocks more boxes
+	//Add Game.GameData.Feature where player unlocks more boxes
 	public class PC
 	{
 		#region Variables		
@@ -140,8 +140,8 @@ namespace PokemonUnity.Character
 				}
 				//ToDo: Using string from translator here
 				BoxNames[i] = string.Format("Box {0}", (i + 1).ToString());
-				//ToDo: Make sure there's enough texture in library for array size
-				//PC_boxTexture[i] = i; 
+				//PC_boxTexture[i] = i;
+				BoxTextures[i] = i; 
 			}
 			//PC_Items = new List<Items>();
 			items = new Dictionary<Items, int>() { { Inventory.Items.POTION, 1 } };

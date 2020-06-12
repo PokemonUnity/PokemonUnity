@@ -15,7 +15,6 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Scene object for this battle
 		/// </summary>
-		public void SetScene(int scene) { }//this.scene = scene; }
 		public IPokeBattle_Scene scene { get; private set; }
 		/// <summary>
 		/// Decision: 0=undecided; 1=win; 2=loss; 3=escaped; 4=caught; 5=draw
@@ -24,7 +23,7 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Internal battle flag
 		/// </summary>
-		public Battle InternalBattle (bool internalBattle) { internalbattle = internalBattle; return this; }
+		/// battle occured without any frontend or ui output (most likely on backend for ai vs ai training)
 		public bool internalbattle { get; set; }
 		/// <summary>
 		/// Double battle flag
@@ -86,7 +85,7 @@ namespace PokemonUnity.Combat
 				}
 				#endregion Trainer
 
-				if (_player != null) 
+				if (_player != null)
 				{
 					int sendout1 = pbFindNextUnfainted(party1, 0, pbSecondPartyBegin(0));
 					int sendout2 = pbFindNextUnfainted(party1, pbSecondPartyBegin(0));
@@ -103,14 +102,12 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// True if player can't escape
 		/// </summary>
-		public Battle CantEscape (bool cantEscape = true) { cantescape = cantEscape; return this; }
-		private bool cantescape { get; set; }
+		public bool cantescape { get; private set; }
 		/// <summary>
 		/// If game cannot progress UNLESS the player is victor of match.
 		/// False if there are no consequences to player's defeat.
 		/// </summary>
 		/// (Ground Hogs day anyone?)
-		public Battle CanLose (bool canlose = true) { canLose = canlose; return this; }
 		public bool canLose { get; private set; }
 		/// <summary>
 		/// Shift/Set "battle style" option
@@ -129,12 +126,8 @@ namespace PokemonUnity.Combat
 		/// </summary>
 		public Trainer[] player { get; private set; }
 		/// <summary>
-		/// Opponent trainer
+		/// Opponent trainer; if null => wild encounter
 		/// </summary>
-		/// ToDo: Make Array, if null => wild encounter
-		/// If wild encounter...
-		/// Dont show pokeballs,
-		/// Dont show trainer sprite
 		public Trainer[] opponent { get; private set; }
 		/// <summary>
 		/// Player's Pokémon party
@@ -146,9 +139,9 @@ namespace PokemonUnity.Combat
 		public Pokemon[] party2 { get; private set; }
 		/// <summary>
 		/// Pokémon party for All Trainers in Battle.
-		/// Array[4,6] = 0: Player, 1: Foe, 2: Ally, 3: Foe's Ally 
+		/// Array[4,6] = 0: Player, 1: Foe, 2: Ally, 3: Foe's Ally
 		/// </summary>
-		public Pokemon[,] party { get; private set; }
+		public Monster.Pokemon[,] party { get; private set; }
 		/// <summary>
 		/// Order of Pokémon in the player's party
 		/// </summary>
@@ -186,10 +179,9 @@ namespace PokemonUnity.Combat
 		public Effects.Field field { get; private set; }
 		/// <summary>
 		/// Battle surroundings;
-		/// Environment node is used for background animation, 
+		/// Environment node is used for background animation,
 		/// that's displayed behind the floor tile
 		/// </summary>
-		/// ToDo: Might be a static get value from global/map variables.
 		public Environment environment { get; set; }
 		public Weather weather { get; set; }
 		/// <summary>
@@ -201,7 +193,7 @@ namespace PokemonUnity.Combat
 				{
 					if (battlers[i].Ability == Abilities.CLOUD_NINE ||
 						battlers[i].Ability == Abilities.AIR_LOCK)
-						return Weather.NONE;
+						return weather = Weather.NONE;
 				}
 				return weather;
 			}
@@ -226,11 +218,11 @@ namespace PokemonUnity.Combat
 		/// Execute whaatever move/function is stored in this variable
 		/// </remarks>
 		/// Func<PokeBattle>
-		public Move struggle { get; private set; } 
+		public Move struggle { get; private set; }
 		/// <summary>
 		/// Choices made by each Pokémon this round
 		/// </summary>
-		public Choice[] choices { get; private set; }
+		public Choice[] choices { get; protected set; }
 		/// <summary>
 		/// Success states
 		/// </summary>
@@ -263,7 +255,6 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Speech by opponent when player wins
 		/// </summary>
-		//ToDo: opponent.ScriptBattleEnd
 		public string endspeech { get { return string.Empty; } }
 		/// <summary>
 		/// Speech by opponent when player wins
@@ -279,7 +270,7 @@ namespace PokemonUnity.Combat
 		public string endspeechwin2 { get; private set; }
 		/// <summary>
 		/// </summary>
-		//ToDo: Dictionary<string,bool> 
+		//ToDo: Dictionary<string,bool>
 		public List<string> rules { get; private set; }
 		/// <summary>
 		/// Counter to track number of turns for battle
@@ -296,45 +287,13 @@ namespace PokemonUnity.Combat
 		/// </summary>
 		public byte nextPickupUse { get { pickupUse+=1; return pickupUse; } }
 		private byte pickupUse { get; set; }
-        //public int nextPickupUse() {
-        //  @nextPickupUse+=1;
-        //  return @nextPickupUse;
-        //}
 		public bool controlPlayer { get; set; }
 		public bool usepriority { get; set; }
-
-		public string Display
-		{
-			/* Don't need a get, since value is not being stored/logged
-			 * there's no method or caller that's going to fetch value
-			private get
-			{
-				return display;
-			}*/
-			set
-			{
-				//on set
-				//display = value;
-				//call unity engine (public static) dialog window
-				//DialogEventHandler.Display(value);
-			}
-		}
-		//private string display { get; set; }
-		/// <summary>
-		/// Match history for each pokemon action stored as a log 
-		/// </summary>
-		/// In order to create Replay; Need to store:
-		/// Action Pokemon/Player took
-		/// Result of Action (sucessful?/amount+-)
-		/// State of Pokemons (status)
-		public IList<Choice[]> Log { get; private set; }
 		#endregion
 
 		#region Constructor
 		/// <summary>
 		/// </summary>
-		/// ToDo: Make a constructor to pass P1/P2 variables
-		/// Cant have a battle without first establishing who you're battling
 		public Battle(IPokeBattle_Scene scene, PokemonUnity.Monster.Pokemon[] p1, PokemonUnity.Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent)
 		{
 			//PokemonUnity.Monster.Pokemon[] p1 = player.Party;
@@ -344,13 +303,13 @@ namespace PokemonUnity.Combat
 				GameDebug.LogError("Party 1 has no Pokémon.");
 				return;
 			}
-		
-			if (p2.Length == 0) { 
+
+			if (p2.Length == 0) {
 				//raise new ArgumentError(_INTL("Party 2 has no Pokémon."))
 				GameDebug.LogError("Party 2 has no Pokémon.");
 				return;
 			}
-		
+
 			if (p2.Length > 2 && opponent.Length == 0) { //ID == TrainerTypes.WildPokemon
 				//raise new ArgumentError(_INTL("Wild battles with more than two Pokémon are not allowed."))
 				GameDebug.LogError("Wild battles with more than two Pokémon are not allowed.");
@@ -368,8 +327,8 @@ namespace PokemonUnity.Combat
 			//debugupdate = 0;
 
             //if opponent is not null but player array is empty, then player is null
-			//if (opponent != null && player.Length == 0) 
-			//	this.player = null; //player[0]; 
+			//if (opponent != null && player.Length == 0)
+			//	this.player = null; //player[0];
 
             //if opponent is not null but opponent array is empty, then opponent is null
 			//if (opponent != null && opponent.Length == 0)
@@ -387,20 +346,20 @@ namespace PokemonUnity.Combat
 
 			party2order = new List<int>();
 			//for i in 0...12;party2order.push(i); }
-			for (int i = 0; i < 12; i++) 
+			for (int i = 0; i < 12; i++)
 				party2order.Add(i);
 
 			fullparty1 = false;
 			fullparty2 = false;
-			battlers = new Pokemon[4]; 
+			battlers = new Pokemon[4];
 			//items = new List<Items>(); //null;
 			items = new Items[opponent.Length][];
             for (int t = 0; t < opponent.Length; t++) //List of Trainers
-                items[t] = new Items[0]; //ToDo: List of items at their disposal
+                items[t] = new Items[0]; //ToDo: List of items at they can use
 
             sides = new Effects.Side[] {new Effects.Side(),		// Player's side
 										new Effects.Side()};	// Foe's side
-			//sides = new Effects.Side[2];						
+			//sides = new Effects.Side[2];
 			field = new Effects.Field();                        // Whole field (gravity/rooms)
 			environment = Environment.None;						// e.g. Tall grass, cave, still water
 			weather = 0;
@@ -446,7 +405,7 @@ namespace PokemonUnity.Combat
 
 			turncount = 0;
 
-			//peer = PokeBattle_BattlePeer.create()
+			//peer = new PokeBattle_BattlePeer();
 
 			priority = new Pokemon[4];
 
@@ -486,27 +445,6 @@ namespace PokemonUnity.Combat
 				i.belch = false;
 			}
 		}
-		//public Battle(Player player, Trainer opponent) : this(player.Trainer, opponent)
-		//{
-		//	player = player;
-		//}
-		//public Battle(UnityEngine.GameObject battleScene) //: this(player.Trainer, opponent)
-		//{
-		//	//ToDo: Register Unity UI instance to variables
-		//	//BattlePokemonHandler
-		//	//Player = player;
-		//}
-		///// <summary>
-		///// </summary>
-		///// <param name="p1"></param>
-		///// <param name="p2"></param>
-		///// <param name="pvpMultiPlayer"></param>
-		///// ToDo: Wacky idea for double battles, 1 v 2 or 2 v 2.
-		///// Should be able to support both player v ai, and player v player
-		//public Battle(Trainer[] p1, Trainer[] p2, bool pvpMultiPlayer = false)
-		//{
-		//
-		//}
 		#endregion
 
 		#region Method
@@ -518,7 +456,7 @@ namespace PokemonUnity.Combat
 			}
 			//return this;
 		}
-		public int pbRandom(int index)
+		public virtual int pbRandom(int index)
 		{
 			return Core.Rand.Next(index);
         }
@@ -549,8 +487,8 @@ namespace PokemonUnity.Combat
             //Game.GameData.Player.addPokemon(pokemon)); return;
             int oldcurbox = Game.GameData.Player.PC.ActiveBox;
 			/*/bool success = false;
-			//int i = 0; do { 
-			//	//success = Game.GameData.Player.PC.addPokemon(pokemon); 
+			//int i = 0; do {
+			//	//success = Game.GameData.Player.PC.addPokemon(pokemon);
 			//	success = Game.GameData.Player.PC.hasSpace();
 			//	if(!success) Game.GameData.Player.PC.getIndexOfFirstEmpty
 			//} while (!success); //Cycle through all boxes unless they're all full
@@ -573,7 +511,7 @@ namespace PokemonUnity.Combat
 				else
                     pbDisplayPaused(_INTL("{1} was transferred to someone's PC.", pokemon.Name));
                 pbDisplayPaused(_INTL("It was stored in box \"{1}\".", boxname));
-			}		
+			}
 		}
 		public void pbThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false)
 		{
@@ -608,8 +546,8 @@ namespace PokemonUnity.Combat
 				}
 				int a = battler.TotalHP;
 				int b = battler.HP;
-				//ToDo: Ball Throwing Class?
 				//rareness = BallHandlers.ModifyCatchRate(ball, rareness, battler);
+				rareness = BallHandlers.ModifyCatchRate(ball, rareness.Value, this, battler);
 				int x = (int)Math.Floor(((a * 3 - b * 2) * rareness.Value) / (a * 3f));
 				if (battler.Status == Status.SLEEP || battler.Status == Status.FROZEN)
 					x = (int)Math.Floor(x * 2.5f);
@@ -628,7 +566,7 @@ namespace PokemonUnity.Combat
 					else if (Game.GameData.Player.PokedexCaught > 30)
 						c = (int)Math.Floor(x * .5 / 6);
 				//int shakes = 0; bool critical = false;
-				if (x > 255)//|| BallHandlers.isUnconditional(ball,this,battler)
+				if (x > 255 || BallHandlers.IsUnconditional(ball,this,battler))
 					shakes = 4;
 				else
 				{
@@ -644,7 +582,7 @@ namespace PokemonUnity.Combat
 						if (pbRandom(65536)<y				) shakes+=1;
 						if (pbRandom(65536)<y && shakes==1	) shakes+=1;
 						if (pbRandom(65536)<y && shakes==2	) shakes+=1;
-						if (pbRandom(65536)<y && shakes==3	) shakes+=1;						
+						if (pbRandom(65536)<y && shakes==3	) shakes+=1;
 					}
 				}
 			    GameDebug.Log($"[Threw Poké Ball] #{itemname}, #{shakes} shakes (4=capture)");
@@ -653,19 +591,19 @@ namespace PokemonUnity.Combat
 			    {
 				    case 0:
 					    pbDisplay(_INTL("Oh no! The Pokémon broke free!"));
-					    //BallHandlers.onFailCatch(ball,this,battler);
+					    BallHandlers.OnFailCatch(ball,this,battler);
 					    break;
 				    case 1:
 					    pbDisplay(_INTL("Aww... It appeared to be caught!"));
-					    //BallHandlers.onFailCatch(ball,this,battler);
+					    BallHandlers.OnFailCatch(ball,this,battler);
 					    break;
 				    case 2:
 					    pbDisplay(_INTL("Aargh! Almost had it!"));
-					    //BallHandlers.onFailCatch(ball,this,battler);
+					    BallHandlers.OnFailCatch(ball,this,battler);
 					    break;
 				    case 3:
 					    pbDisplay(_INTL("Gah! It was so close, too!"));
-					    //BallHandlers.onFailCatch(ball,this,battler);
+					    BallHandlers.OnFailCatch(ball,this,battler);
 					    break;
 				    case 4:
 					    pbDisplayBrief(_INTL("Gotcha! {1} was caught!", pokemon.Name));
@@ -678,18 +616,19 @@ namespace PokemonUnity.Combat
 					    }
 					    else
 						    @decision = BattleResults.CAPTURED;
-                        /* ToDo: `new Pokemon(params)` and write capture data there?
+                        /* `new Pokemon(params)` and write capture data there?
 					    if (pbIsSnagBall(ball))
 					    {
 						    //pokemon.ot = this.player.Name;
 						    //pokemon.trainerID = this.player.Trainer;
 						    pokemon.OT = this.player.Trainer;
 					    }
-					    //BallHandlers.onCatch(ball,this,pokemon);
+					    BallHandlers.OnCatch(ball,this,pokemon);
 					    pokemon.ballUsed = ball; //pbGetBallType(ball);
 					    pokemon.makeUnmega();   //rescue null
 					    pokemon.makeUnprimal(); //rescue null
 					    pokemon.pbRecordFirstMoves();*/
+					    BallHandlers.OnCatch(ball,this,pokemon);
                         //pokemon = new Monster.Pokemon(pokemon, ball, pbIsSnagBall(ball) ? Monster.Pokemon.ObtainedMethod.SNAGGED : Monster.Pokemon.ObtainedMethod.MET);
                         pokemon.SetCatchInfos(this.pbPlayer().Trainer, ball, pbIsSnagBall(ball) ? Monster.Pokemon.ObtainedMethod.SNAGGED : Monster.Pokemon.ObtainedMethod.MET);
                         if (Core.GAINEXPFORCAPTURE)
@@ -723,7 +662,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Info about battle.
-		public bool pbDoubleBattleAllowed()
+		public virtual bool pbDoubleBattleAllowed()
 		{
     if (!@fullparty1 && @party1.Length>Core.MAXPARTYSIZE) {
       return false;
@@ -735,9 +674,9 @@ namespace PokemonUnity.Combat
     Trainer[] _player=@player;
     // Wild battle
     if (_opponent.Length == 0) {
-      if (@party2.Length==1) 
+      if (@party2.Length==1)
         return false;
-      else if (@party2.Length==2) 
+      else if (@party2.Length==2)
         return true;
       else
         return false;
@@ -837,7 +776,7 @@ namespace PokemonUnity.Combat
       //return _INTL("{1}", party[battlerindex,pokemonindex].Name);
 	}
   }
-			
+
   /// <summary>
   /// Checks whether an item can be removed from a Pokémon.
   /// </summary>
@@ -977,9 +916,9 @@ namespace PokemonUnity.Combat
       }
     }
     // Add your own Mega objects for particular trainer types here
-    //if pbGetOwner(battlerIndex).trainertype == TrainerTypes.BUGCATCHER
-    //  return _INTL("Mega Net")
-    //}
+    if (pbGetOwner(battlerIndex).ID == TrainerTypes.BUGCATCHER) {
+      return _INTL("Mega Net");
+    }
     return _INTL("Mega Ring");
   }
 
@@ -1061,7 +1000,7 @@ namespace PokemonUnity.Combat
     }
     return maxlevel;
   }
-        
+
 		/// <summary>
 		/// Returns the trainer party of pokemon at this index?
 		/// </summary>
@@ -1164,7 +1103,7 @@ namespace PokemonUnity.Combat
         return (battlerIndex==1) ? @opponent[1] : @opponent[0];
       }
       else {
-        return new Trainer(); //@opponent;
+        return @opponent[0];
       }
     }
     else {
@@ -1172,7 +1111,7 @@ namespace PokemonUnity.Combat
         return (battlerIndex==0) ? @player[1] : @player[0];
       }
       else {
-        return new Trainer(); //@player;
+        return @player[0];
       }
     }
   }
@@ -1268,7 +1207,7 @@ namespace PokemonUnity.Combat
     }
   }
 		#endregion
-		
+
 		/// <summary>
 		/// Check whether actions can be taken.
 		/// </summary>
@@ -1278,10 +1217,10 @@ namespace PokemonUnity.Combat
 		{
 			PokemonUnity.Combat.Pokemon thispkmn = @battlers[idxPokemon];
 			if (thispkmn.isFainted()) return false;
-			if (thispkmn.effects.TwoTurnAttack > 0) return false; 
-			if (thispkmn.effects.HyperBeam > 0) return false; 
-			if (thispkmn.effects.Rollout > 0) return false; 
-			if (thispkmn.effects.Outrage > 0) return false; 
+			if (thispkmn.effects.TwoTurnAttack > 0) return false;
+			if (thispkmn.effects.HyperBeam > 0) return false;
+			if (thispkmn.effects.Rollout > 0) return false;
+			if (thispkmn.effects.Outrage > 0) return false;
 			if (thispkmn.effects.Uproar > 0) return false;
 			if (thispkmn.effects.Bide > 0) return false;
 			return true;
@@ -1304,7 +1243,7 @@ namespace PokemonUnity.Combat
 			if (thispkmn.effects.Encore > 0) return false;
 			return true;
 		}
-    
+
 		public bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
 		{
 			Pokemon thispkmn = @battlers[idxPokemon];
@@ -1329,7 +1268,7 @@ namespace PokemonUnity.Combat
 			{
 				bool hasmove = false;
 				for (int i = 0; i < thispkmn.moves.Length; i++)
-					if (thispkmn.moves[i].MoveId==thispkmn.effects.ChoiceBand) { 
+					if (thispkmn.moves[i].MoveId==thispkmn.effects.ChoiceBand) {
 						hasmove = true; break;
 					}
 				if (hasmove && thismove.MoveId != thispkmn.effects.ChoiceBand) {
@@ -1389,7 +1328,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-  public void pbAutoChooseMove(int idxPokemon, bool showMessages=true) {
+  public virtual void pbAutoChooseMove(int idxPokemon, bool showMessages=true) {
     Pokemon thispkmn=@battlers[idxPokemon];
     if (thispkmn.isFainted()) {
       //@choices[idxPokemon][0]=0;
@@ -1398,14 +1337,14 @@ namespace PokemonUnity.Combat
       @choices[idxPokemon]=new Choice(ChoiceAction.NoAction);
       return;
     }
-    if (thispkmn.effects.Encore>0 && 
+    if (thispkmn.effects.Encore>0 &&
        CanChooseMove(idxPokemon,thispkmn.effects.EncoreIndex,false)) {
       GameDebug.Log($"[Auto choosing Encore move] #{thispkmn.moves[thispkmn.effects.EncoreIndex].MoveId.ToString(TextScripts.Name)}");
       //@choices[idxPokemon][0]=1;    // "Use move"
       //@choices[idxPokemon][1]=thispkmn.effects.EncoreIndex; // Index of move
       //@choices[idxPokemon][2]=thispkmn.moves[thispkmn.effects.EncoreIndex];
       //@choices[idxPokemon][3]=-1;   // No target chosen yet
-      @choices[idxPokemon]=new Choice(ChoiceAction.UseMove, thispkmn.effects.EncoreIndex, thispkmn.moves[thispkmn.effects.EncoreIndex]);   
+      @choices[idxPokemon]=new Choice(ChoiceAction.UseMove, thispkmn.effects.EncoreIndex, thispkmn.moves[thispkmn.effects.EncoreIndex]);
       if (@doublebattle) {
         Attack.Move thismove=thispkmn.moves[thispkmn.effects.EncoreIndex];
         /* ToDo: Uncomment and sort
@@ -1428,12 +1367,11 @@ namespace PokemonUnity.Combat
       //@choices[idxPokemon][1]=-1;          // Index of move to be used
       //@choices[idxPokemon][2]=@struggle;   // Use Struggle
       //@choices[idxPokemon][3]=-1;          // No target chosen yet
-      //ToDo: Fix Below...
-      //@choices[idxPokemon]=new Choice(ChoiceAction.UseMove, -1, Moves.STRUGGLE);
+      @choices[idxPokemon]=new Choice(ChoiceAction.UseMove, -1, @struggle);
     }
   }
 
-  public bool pbRegisterMove(int idxPokemon, int idxMove, bool showMessages=true) {
+  public virtual bool pbRegisterMove(int idxPokemon, int idxMove, bool showMessages=true) {
     Pokemon thispkmn=@battlers[idxPokemon];
     Attack.Move thismove=thispkmn.moves[idxMove];
     if (!CanChooseMove(idxPokemon,idxMove,showMessages)) return false;
@@ -1465,7 +1403,7 @@ namespace PokemonUnity.Combat
     return false;
   }
 
-  public bool pbRegisterTarget(int idxPokemon, int idxTarget) {
+  public virtual bool pbRegisterTarget(int idxPokemon, int idxTarget) {
     //@choices[idxPokemon][3]=idxTarget;   // Set target of move
     @choices[idxPokemon]=new Choice(ChoiceAction.UseMove, @choices[idxPokemon].Index, @choices[idxPokemon].Move, idxTarget);   // Set target of move
     return true;
@@ -1485,7 +1423,7 @@ namespace PokemonUnity.Combat
       quickclaw[i]=false;
       lagging[i]=false;
       //if (!ignorequickclaw && @choices[i][0]==1) { // Chose to use a move
-      if (!ignorequickclaw && @choices[i].Action==ChoiceAction.UseMove) { // Chose to use a move
+      if (!ignorequickclaw && @choices[i].Action==ChoiceAction.UseMove) {
         if (!quickclaw[i] && @battlers[i].hasWorkingItem(Items.CUSTAP_BERRY) &&
            !@battlers[i].pbOpposing1.hasWorkingAbility(Abilities.UNNERVE) &&
            !@battlers[i].pbOpposing2.hasWorkingAbility(Abilities.UNNERVE)) {
@@ -1624,7 +1562,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Switching Pokemon
-  public bool pbCanSwitchLax (int idxPokemon,int pkmnidxTo,bool showMessages) {
+  public virtual bool pbCanSwitchLax (int idxPokemon,int pkmnidxTo,bool showMessages) {
     if (pkmnidxTo>=0) {
       Pokemon[] party=pbParty(idxPokemon);
       if (pkmnidxTo>=party.Length) {
@@ -1712,7 +1650,7 @@ namespace PokemonUnity.Combat
     return true;
   }
 
-  public bool pbRegisterSwitch(int idxPokemon,int idxOther) {
+  public virtual bool pbRegisterSwitch(int idxPokemon,int idxOther) {
     if (!pbCanSwitch(idxPokemon,idxOther,false)) return false;
     //@choices[idxPokemon][0]=2;          // "Switch Pokémon"
     //@choices[idxPokemon][1]=idxOther;   // Index of other Pokémon to switch with
@@ -1734,7 +1672,7 @@ namespace PokemonUnity.Combat
     return false;
   }
 
-  public void pbSwitch(bool favorDraws=false) {
+  public virtual void pbSwitch(bool favorDraws=false) {
     if (!favorDraws) {
       if (@decision>0) return;
     }
@@ -1859,14 +1797,15 @@ namespace PokemonUnity.Combat
     if (newpokename<0) newpokename=newpoke;
     Pokemon[] party=pbParty(index);
     if (pbOwnedByPlayer(index)) {
-      //if (!party[newpoke]) {
-      //  p [index,newpoke,party[newpoke],pbAllFainted(party)]
-      //  GameDebug.Log($"[{index},{newpoke},{party[newpoke]},"pbMOR"]");
-      //  for (int i = 0; i < party.Length; i++) {
-      //    GameDebug.Log($"[{i},{party[i].HP}]");
-      //  }
-      //  //throw new BattleAbortedException();
-      //}
+      if (!party[newpoke].IsNotNullOrNone()) {
+        //p [index,newpoke,party[newpoke],pbAllFainted(party)];
+        GameDebug.Log($"[{index},{newpoke},{party[newpoke]},pbMOR]");
+        for (int i = 0; i < party.Length; i++) {
+          GameDebug.Log($"[{i},{party[i].HP}]");
+        }
+        //throw new BattleAbortedException();
+        GameDebug.LogError("BattleAbortedException"); pbAbort();
+      }
       Pokemon opposing=@battlers[index].pbOppositeOpposing;
       if (opposing.isFainted() || opposing.HP==opposing.TotalHP) {
         pbDisplayBrief(_INTL("Go! {1}!",party[newpokename].Name));
@@ -1883,21 +1822,22 @@ namespace PokemonUnity.Combat
       GameDebug.Log($"[Send out Pokémon] Player sent out #{party[newpokename].Name} in position #{index}");
     }
     else {
-      //if (!party[newpoke]) {
-      //  p [index,newpoke,party[newpoke],pbAllFainted(party)]
-      //  GameDebug.Log($[index,newpoke,party[newpoke],"pbMOR"].inspect);
-      //  for (int i = 0; i < party.Length; i++) {
-      //    GameDebug.Log($[i,party[i].HP].inspect);
-      //  }
-      //  //throw new BattleAbortedException();
-      //}
+      if (!party[newpoke].IsNotNullOrNone()) {
+        //p [index,newpoke,party[newpoke],pbAllFainted(party)]
+        GameDebug.Log($"[{index},{newpoke},{party[newpoke]},pbMOR]");
+        for (int i = 0; i < party.Length; i++) {
+          GameDebug.Log($"[{i},{party[i].HP}]");
+        }
+        //throw new BattleAbortedException();
+        GameDebug.LogError("BattleAbortedException"); pbAbort();
+      }
       Trainer owner=pbGetOwner(index);
       pbDisplayBrief(_INTL("{1} sent\r\nout {2}!",owner.Name,party[newpokename].Name));
       GameDebug.Log($"[Send out Pokémon] Opponent sent out #{party[newpokename].Name} in position #{index}");
     }
   }
 
-  public int pbSwitchInBetween(int index, bool lax, bool cancancel) {
+  public virtual int pbSwitchInBetween(int index, bool lax, bool cancancel) {
     if (!pbOwnedByPlayer(index)) {
       return @scene.pbChooseNewEnemy(index,pbParty(index));
     }
@@ -2131,7 +2071,7 @@ namespace PokemonUnity.Combat
     return pbCanSwitch(idxPokemon,-1,false);
 		}
 
-  public int pbRun(int idxPokemon,bool duringBattle=false) {
+  public virtual int pbRun(int idxPokemon,bool duringBattle=false) {
     Pokemon thispkmn=@battlers[idxPokemon];
     if (isOpposing(idxPokemon)) {
       if (@opponent.Length > 0) return 0;
@@ -2252,32 +2192,32 @@ namespace PokemonUnity.Combat
   public void pbRegisterMegaEvolution(int index) {
     int side=(isOpposing(index)) ? 1 : 0;
     int owner=pbGetOwnerIndex(index);
-    @megaEvolution[side][owner]=index;
+    @megaEvolution[side][owner]=(sbyte)index;
   }
 
   public void pbMegaEvolve(int index) {
-    if (!@battlers[index].IsNotNullOrNone() || !@battlers[index].pokemon) return;
+    if (!@battlers[index].IsNotNullOrNone() || !@battlers[index].pokemon.IsNotNullOrNone()) return;
     if (!@battlers[index].hasMega) return; //rescue false
     if (@battlers[index].IsMega) return; //rescue true
     string ownername=pbGetOwner(index).Name;
     if (pbBelongsToPlayer(index)) ownername=pbGetOwner(index).Name;
-    switch (@battlers[index].pokemon.megaMessage) { //rescue 0
-    case 1: // Rayquaza
+    if (false) { //switch @battlers[index].pokemon.megaMessage rescue 0
+    //case 1: // Rayquaza
       pbDisplay(_INTL("{1}'s fervent wish has reached {2}!",ownername,@battlers[index].ToString()));
-      break;
-    default:
+    //  break;
+    } else { //default:
       pbDisplay(_INTL("{1}'s {2} is reacting to {3}'s {4}!",
          @battlers[index].ToString(),@battlers[index].Item.ToString(TextScripts.Name),
          ownername,pbGetMegaRingName(index)));
-      break;
+    //  break;
     }
     pbCommonAnimation("MegaEvolution",@battlers[index],null);
     @battlers[index].pokemon.makeMega();
-    @battlers[index].form=@battlers[index].pokemon.form;
-    @battlers[index].pbUpdate(true);
-    @scene.pbChangePokemon(@battlers[index],@battlers[index].pokemon);
+    @battlers[index].form=@battlers[index].form;
+    @battlers[index].Update(true);
+    @scene.pbChangePokemon(@battlers[index],@battlers[index].Form.Id);
     pbCommonAnimation("MegaEvolution2",@battlers[index],null);
-    string meganame=@battlers[index].pokemon.megaName; //rescue null
+    string meganame=@battlers[index].pokemon.Name; //megaName rescue null
     if (string.IsNullOrEmpty(meganame)) {
       meganame=_INTL("Mega {1}",@battlers[index].pokemon.Species.ToString(TextScripts.Name));
     }
@@ -2290,10 +2230,11 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Primal Revert Battler
-/* ToDo: Uncomment and finish...
   public void pbPrimalReversion(int index) {
-    if (!@battlers[index].IsNotNullOrNone() || !@battlers[index].pokemon) return;
-    if (!@battlers[index].hasPrimal) return; //rescue false
+    if (!@battlers[index].IsNotNullOrNone() || !@battlers[index].pokemon.IsNotNullOrNone()) return;
+    //if (!@battlers[index].hasPrimal) return; //rescue false
+    if (@battlers[index].pokemon.Species != Pokemons.KYOGRE || 
+        @battlers[index].pokemon.Species != Pokemons.GROUDON) return;
     if (@battlers[index].IsPrimal) return; //rescue true
     if (@battlers[index].pokemon.Species == Pokemons.KYOGRE) {
       pbCommonAnimation("PrimalKyogre",@battlers[index],null);
@@ -2301,10 +2242,10 @@ namespace PokemonUnity.Combat
     else if (@battlers[index].pokemon.Species == Pokemons.GROUDON) {
       pbCommonAnimation("PrimalGroudon",@battlers[index],null);
     }
-    @battlers[index].pokemon.makePrimal();
-    @battlers[index].form=@battlers[index].pokemon.form;
-    @battlers[index].pbUpdate(true);
-    @scene.pbChangePokemon(@battlers[index],@battlers[index].pokemon);
+    //@battlers[index].pokemon.makePrimal();
+    @battlers[index].form=1;//@battlers[index].pokemon.form;
+    @battlers[index].Update(true);
+    @scene.pbChangePokemon(@battlers[index],@battlers[index].Form.Id);
     if (@battlers[index].pokemon.Species == Pokemons.KYOGRE) {
       pbCommonAnimation("PrimalKyogre2",@battlers[index],null);
     }
@@ -2313,7 +2254,7 @@ namespace PokemonUnity.Combat
     }
     pbDisplay(_INTL("{1}'s Primal Reversion!\nIt reverted to its primal form!",@battlers[index].ToString()));
     GameDebug.Log($"[Primal Reversion] #{@battlers[index].ToString()} Primal Reverted");
-  }*/
+  }
 		#endregion
 
 		#region Call Battler
@@ -2328,7 +2269,7 @@ namespace PokemonUnity.Combat
         //@battlers[index].pokemon.adjustHeart(-300);
         //ToDo: There should be a method for this in pokemon class?...
         //@battlers[index].isHyperMode=false;
-        //@battlers[index].ChangeHappiness(Call);
+        //@battlers[index].pokemon.ChangeHappiness(HappinessMethods.CALL);
         pbDisplay(_INTL("{1} came to its senses from the Trainer's call!",@battlers[index].ToString()));
       }
       else {
@@ -2367,7 +2308,7 @@ namespace PokemonUnity.Combat
         if (!haveexpall) {
           for (int j = 0; j < @party1.Length; j++) {
             if (!@party1[j].IsNotNullOrNone() || !pbIsOwner(0,j)) continue;
-            if (@party1[j].HP>0 && !@party1[j].isEgg && 
+            if (@party1[j].HP>0 && !@party1[j].isEgg &&
                            (@party1[j].Item == Items.EXP_SHARE ||
                            @party1[j].itemInitial == Items.EXP_SHARE)) expshare+=1;
           }
@@ -2617,7 +2558,7 @@ namespace PokemonUnity.Combat
       if (pokemon.moves[i].MoveId==move) return;
       if (pokemon.moves[i].MoveId==0) {
         pokemon.moves[i]=new PokemonUnity.Attack.Move(move);
-        //if (battler.IsNotNullOrNone()) 
+        //if (battler.IsNotNullOrNone())
         //  battler.moves[i]=Move.pbFromPBMove(this,pokemon.moves[i].MoveId); //ToDo: Use LearnMove Method in Pokemon Class
         pbDisplayPaused(_INTL("{1} learned {2}!",pkmnname,movename));
         GameDebug.Log($"[Learn move] #{pkmnname} learned #{movename}");
@@ -2633,7 +2574,7 @@ namespace PokemonUnity.Combat
         if (forgetmove>=0) {
           string oldmovename=pokemon.moves[forgetmove].MoveId.ToString(TextScripts.Name);
           pokemon.moves[forgetmove]=new PokemonUnity.Attack.Move(move); // Replaces current/total PP
-          //if (battler.IsNotNullOrNone()) 
+          //if (battler.IsNotNullOrNone())
           //  //battler.moves[forgetmove]=Move.pbFromPBMove(this,pokemon.moves[forgetmove]); //ToDo: Use ForgetMove Method in Pokemon Class
           //  battler.pokemon.DeleteMoveAtIndex(forgetmove);
           pbDisplayPaused(_INTL("1,  2, and... ... ...")); //ToDo: 2sec delay between text
@@ -2658,7 +2599,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Abilities.
-  public void pbOnActiveAll() {
+  public virtual void pbOnActiveAll() {
     for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards
       if (isOpposing(i)) @battlers[i].UpdateParticipants();
       if (!isOpposing(i) &&
@@ -2735,8 +2676,8 @@ namespace PokemonUnity.Combat
       if (pkmn.OwnSide.StealthRock && !pkmn.isFainted()) {
         if (!pkmn.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
           /*Types atype=Types.ROCK; //|| 0;
-          ToDo: Deal with Type Advantage...
-          eff=atype.GetCombinedEffectiveness(pkmn.Type1,pkmn.Type2,pkmn.effects.Type3);
+          //ToDo: Deal with Type Advantage...
+          float eff=atype.GetCombinedEffectiveness(pkmn.Type1,pkmn.Type2,pkmn.effects.Type3);
           if (eff>0) {
             GameDebug.Log($"[Entry hazard] #{pkmn.ToString()} triggered Stealth Rock");
             @scene.pbDamageAnimation(pkmn,0);
@@ -2781,7 +2722,7 @@ namespace PokemonUnity.Combat
       pbJudge(); //      pbSwitch
       return false;
     }
-    //pkmn.pbAbilitiesOnSwitchIn(true)
+    pkmn.pbAbilitiesOnSwitchIn(true);
     if (!onlyabilities) {
       pkmn.CheckForm();
       pkmn.pbBerryCureCheck();
@@ -2921,12 +2862,12 @@ namespace PokemonUnity.Combat
     @scene.pbDisplayMessage(msg);
   }
 
-  public void pbDisplayPaused(string msg) {
+  public virtual void pbDisplayPaused(string msg) {
     @scene.pbDisplayPausedMessage(msg);
   }
-        
+
   /// <summary>
-  /// Displays a message on screen, 
+  /// Displays a message on screen,
   /// but will continue without player input after short delay
   /// </summary>
   /// <param name="text"></param>
@@ -2971,7 +2912,7 @@ namespace PokemonUnity.Combat
 		//		yield return choices;
 		//	}
 		//}
-  public BattleResults pbStartBattle(bool canlose=false) {
+  public virtual void pbStartBattle(bool canlose=false) {
     GameDebug.Log($"");
     GameDebug.Log($"******************************************");
     try { //begin; //ToDo: Try/Finally, if (false) abort?
@@ -2980,10 +2921,10 @@ namespace PokemonUnity.Combat
       @decision=BattleResults.ABORTED;
       @scene.pbEndBattle(@decision);
     }
-    return @decision;
+    //return @decision;
   }
 
-  public BattleResults pbStartBattleCore(bool canlose) {
+  public void pbStartBattleCore(bool canlose) {
     if (!@fullparty1 && @party1.Length>Core.MAXPARTYSIZE) {
       //throw new Exception(new ArgumentError(_INTL("Party 1 has more than {1} Pokémon.",Core.MAXPARTYSIZE)));
       GameDebug.LogError(_INTL("Party 1 has more than {1} Pokémon.",Core.MAXPARTYSIZE.ToString()));
@@ -3004,7 +2945,7 @@ namespace PokemonUnity.Combat
         if (@doublebattle) {
           //throw new Exception(_INTL("Only two wild Pokémon are allowed in double battles"));
           GameDebug.LogError(_INTL("Only two wild Pokémon are allowed in double battles"));
-          //@party2 = new Pokemon[] { @party2[0], new Pokemon() }; //ToDo: Fixed error?
+          //@party2 = new Pokemon[] { @party2[0], new Pokemon(this,2) }; //ToDo: Fixed error?
         }
         Pokemon wildpoke=@party2[0];
         @battlers[1].Initialize(wildpoke,0,false);
@@ -3109,7 +3050,7 @@ namespace PokemonUnity.Combat
     }
 #endregion
 #region Initialize players in double battles
-    if (@doublebattle) { 
+    if (@doublebattle) {
       int sendout1 = 0; int sendout2 = 0;
       if (@player.Length > 0) {
         sendout1=pbFindNextUnfainted(@party1,0,pbSecondPartyBegin(0));
@@ -3208,7 +3149,7 @@ namespace PokemonUnity.Combat
       @turncount+=1;
     } while (this.decision == BattleResults.InProgress);
     #endregion
-    return pbEndOfBattle(canlose);
+    pbEndOfBattle(canlose);
   }
 		#endregion
 
@@ -3221,11 +3162,11 @@ namespace PokemonUnity.Combat
     return @scene.pbItemMenu(i);
   }
 
-  public bool pbAutoFightMenu(int i) {
+  public virtual bool pbAutoFightMenu(int i) {
     return false;
   }
 
-  public void pbCommandPhase() {
+  public virtual void pbCommandPhase() {
     @scene.pbBeginCommandPhase();
     @scene.pbResetCommandIndices();
     for (int i = 0; i < 4; i++) {   // Reset choices if commands can be shown
@@ -3238,7 +3179,7 @@ namespace PokemonUnity.Combat
         @choices[i]=new Choice(ChoiceAction.NoAction);
       }
       else {
-        if (@doublebattle && !pbIsDoubleBattler(i)) { 
+        if (@doublebattle && !pbIsDoubleBattler(i)) {
           GameDebug.Log($"[Reusing commands] #{@battlers[i].ToString(true)}");
         }
       }
@@ -3278,8 +3219,8 @@ namespace PokemonUnity.Combat
                   }
                   if (!pbRegisterMove(i,index)) continue;
                   if (@doublebattle) {/* ToDo: Uncomment and sort
-                    Move thismove=@battlers[i].moves[index];
-                    target=@battlers[i].pbTarget(thismove);
+                    Attack.Move thismove=@battlers[i].moves[index];
+                    Attack.Data.Targets target=@battlers[i].pbTarget(thismove);
                     if (target==Targets.SingleNonUser) { // single non-user
                       target=@scene.pbChooseTarget(i,target);
                       if (target<0) continue;
@@ -3287,7 +3228,7 @@ namespace PokemonUnity.Combat
                     }
                     else if (target==Targets.UserOrPartner) { // Acupressure
                       target=@scene.pbChooseTarget(i,target);
-                      if (target<0 || (target&1)==1) continue;
+                      if (target<0 || (target&1)==1) continue; //or ally?
                       pbRegisterTarget(i,target);
                     }*/
                   }
@@ -3476,18 +3417,18 @@ namespace PokemonUnity.Combat
           // Player use item
           Items item=(Items)@choices[i.Index].Index;
           if (item>0) {
-            //usetype=ItemData[item][Core.ITEMBATTLEUSE];
-            //int usetype=ItemData[item][Core.ITEMBATTLEUSE]; //AIs can use items?
-            //if (usetype==1 || usetype==3) {
-            //  if (@choices[i.Index][2]>=0) { //@choices[i.Index][2]
-            //    pbUseItemOnPokemon(item,@choices[i.Index][2],i,@scene);
-            //  }
-            //}
-            //else if (usetype==2 || usetype==4) {
-            //  if (!ItemHandlers.hasUseInBattle(item)) { // Poké Ball/Poké Doll used already
-            //    pbUseItemOnBattler(item,@choices[i.Index][2],i,@scene);
-            //  }
-            //}
+            //usetype=ItemData[item][Core.ITEMBATTLEUSE]; ToDo
+            int usetype=0;//Game.ItemData[item].Flags.[Core.ITEMBATTLEUSE]; //AIs can use items?
+            if (usetype==1 || usetype==3) {
+              if (@choices[i.Index].Target>=0) { //@choices[i.Index][2]
+                pbUseItemOnPokemon(item,@choices[i.Index].Target,i,@scene);
+              }
+            }
+            else if (usetype==2 || usetype==4) {
+              if (!ItemHandlers.hasUseInBattle(item)) { // Poké Ball/Poké Doll used already
+                pbUseItemOnBattler(item,@choices[i.Index].Target,i,@scene);
+              }
+            }
           }
         }
       }
@@ -3543,7 +3484,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region End of round.
-  public void pbEndOfRoundPhase() {
+  public virtual void pbEndOfRoundPhase() {
     GameDebug.Log($"[End of round]");
     for (int i = 0; i < 4; i++) {
       @battlers[i].effects.Electrify=false;
@@ -3622,10 +3563,10 @@ namespace PokemonUnity.Combat
                !i.hasWorkingAbility(Abilities.MAGIC_GUARD) &&
                !i.hasWorkingAbility(Abilities.OVERCOAT) &&
                !i.hasWorkingItem(Items.SAFETY_GOGGLES) &&
-               !new Attack.Data.Effects[] { 
+               !new Attack.Data.Effects[] {
                    Attack.Data.Effects.x101, // Dig
                    Attack.Data.Effects.x100  // Dive
-               }.Contains(Game.MoveData[i.effects.TwoTurnAttack].Effect)) { 
+               }.Contains(Game.MoveData[i.effects.TwoTurnAttack].Effect)) {
               @scene.pbDamageAnimation(i,0);
               i.ReduceHP((int)Math.Floor(i.TotalHP/16f));
               pbDisplay(_INTL("{1} is buffeted by the sandstorm!",i.ToString()));
@@ -3874,7 +3815,7 @@ namespace PokemonUnity.Combat
           if (j.isFainted()) {
             if (!j.pbFaint()) return;
           }
-        }                        
+        }
       }
     }
     foreach (Pokemon i in priority) {
@@ -4465,7 +4406,6 @@ namespace PokemonUnity.Combat
         if (!i.pbFaint()) return;
         continue;
       }
-      /* ToDo: Uncomment and fix
       // Pickup
       if (i.hasWorkingAbility(Abilities.PICKUP) && i.Item<=0) {
         Items item=0; int index=-1; int use=0;
@@ -4481,29 +4421,29 @@ namespace PokemonUnity.Combat
           i.Item=item;
           @battlers[index].effects.PickupItem=0;
           @battlers[index].effects.PickupUse=0;
-          if (@battlers[index].pokemon.itemRecycle==item) @battlers[index].pokemon.itemRecycle=0;
+          if (@battlers[index].itemRecycle==item) @battlers[index].itemRecycle=0;
           if (@opponent.Length == 0 && // In a wild battle
-             i.pokemon.itemInitial==0 &&
-             @battlers[index].pokemon.itemInitial==item) {
-            i.pokemon.itemInitial=item;
-            @battlers[index].pokemon.itemInitial=0;
+             i.itemInitial==0 &&
+             @battlers[index].itemInitial==item) {
+            i.itemInitial=item;
+            @battlers[index].itemInitial=0;
           }
           pbDisplay(_INTL("{1} found one {2}!",i.ToString(),item.ToString(TextScripts.Name)));
           i.pbBerryCureCheck(true);
         }
       }
       // Harvest
-      if (i.hasWorkingAbility(Abilities.HARVEST) && i.Item<=0 && i.pokemon.itemRecycle>0) {
-        if (pbIsBerry(i.pokemon.itemRecycle) &&
-           (pbWeather()==Weather.SUNNYDAY || 
+      if (i.hasWorkingAbility(Abilities.HARVEST) && i.Item<=0 && i.itemRecycle>0) {
+        if (Game.ItemData[i.itemRecycle].IsBerry && //pbIsBerry(i.itemRecycle)
+           (pbWeather()==Weather.SUNNYDAY ||
            pbWeather()==Weather.HARSHSUN || pbRandom(10)<5)) {
-          i.Item=i.pokemon.itemRecycle;
-          i.pokemon.itemRecycle=0;
-          if (i.pokemon.itemInitial==0) i.pokemon.itemInitial=i.Item;
+          i.Item=i.itemRecycle;
+          i.itemRecycle=0;
+          if (i.itemInitial==0) i.itemInitial=i.Item;
           pbDisplay(_INTL("{1} harvested one {2}!",i.ToString(),i.Item.ToString(TextScripts.Name)));
           i.pbBerryCureCheck(true);
         }
-      }*/
+      }
       // Moody
       if (i.hasWorkingAbility(Abilities.MOODY)) {
         List<Stats> randomup=new List<Stats>(); List<Stats> randomdown=new List<Stats>();
@@ -4611,7 +4551,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region End of battle.
-  public BattleResults pbEndOfBattle(bool canlose=false) {
+  public void pbEndOfBattle(bool canlose=false) {
     switch (@decision) {
     //#### WIN ####//
     case BattleResults.WON:
@@ -4687,7 +4627,7 @@ namespace PokemonUnity.Combat
       }
       @snaggedpokemon.Clear();
       break;
-    //#### LOSE, DRAW ####// 
+    //#### LOSE, DRAW ####//
     case BattleResults.LOST: case BattleResults.DRAW:
       GameDebug.Log($"");
       if (@decision==BattleResults.LOST) GameDebug.Log($"***Player lost***");
@@ -4763,7 +4703,7 @@ namespace PokemonUnity.Combat
       //i.itemInitial=i.itemRecycle=0;
       //i.belch=false;
     }
-    return @decision;
+    //return @decision;
   }
 		#endregion
 		#endregion

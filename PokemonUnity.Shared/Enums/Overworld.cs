@@ -7,7 +7,27 @@ using PokemonUnity;
 namespace PokemonUnity.Overworld
 {
 	#region Maps & Overworld
-	public enum Weather
+	public enum DayTime : int
+	{
+		Night	= 0,
+		Morning = 1,
+		Day		= 2,
+		Evening = 3
+	}
+	public enum FieldWeathers : int
+	{
+		Clear = 0,
+		Rain = 1,
+		Snow = 2,
+		Underwater = 3,
+		Sunny = 4,
+		Fog = 5,
+		Thunderstorm = 6,
+		Sandstorm = 7,
+		Ash = 8,
+		Blizzard = 9
+	}
+	public enum Weathers
 	{
 		NONE,
 		RAINDANCE,
@@ -65,7 +85,7 @@ Sunset
 Waterfall      
 */
 	}
-	public enum Environment
+	public enum Environments
 	{
 		None,
 		/// <summary>
@@ -164,15 +184,15 @@ Waterfall
 		/// </summary>
 		ROUGH_TERRAIN = 17,
 		/// <summary>
-		/// Fishing with an <see cref="eItems.Item.OLD_ROD"/>
+		/// Fishing with an <see cref="Items.OLD_ROD"/>
 		/// </summary>
 		OLD_ROD = 2,
 		/// <summary>
-		/// Fishing with a <see cref="eItems.Item.GOOD_ROD"/> 
+		/// Fishing with a <see cref="Items.GOOD_ROD"/> 
 		/// </summary>
 		GOOD_ROD = 3,
 		/// <summary>
-		/// Fishing with a <see cref="eItems.Item.SUPER_ROD"/> 
+		/// Fishing with a <see cref="Items.SUPER_ROD"/> 
 		/// </summary>
 		SUPER_ROD = 4,
 		/// <summary>

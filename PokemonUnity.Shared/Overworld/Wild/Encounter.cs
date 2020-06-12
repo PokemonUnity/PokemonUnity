@@ -9,6 +9,7 @@ namespace PokemonUnity.Overworld
 {
 	public struct Encounter
 	{
+		#region Variables
 		/// <summary>
 		/// </summary>
 		public int Id { get; private set; }
@@ -40,6 +41,7 @@ namespace PokemonUnity.Overworld
 		/// <summary>
 		/// </summary>
 		public int Rarity { get; private set; }
+		#endregion
 
 		public Encounter(int id, int area, Method method, int slotId, Pokemons[] pokemon = null, ConditionValue[] conditions = null, int generation = 0, int minLevel = 1, int maxLevel = 1, int rarity = 0, Versions[] versions = null)
 		{
@@ -52,7 +54,7 @@ namespace PokemonUnity.Overworld
 			MaxLevel = maxLevel;
 			Method = method;
 			Rarity = rarity;
-			SlotId = slotId;
+			SlotId = slotId;//versions.Contains(x => (int)x == 15) ? slotId : slotId - 1; //if 15, first slot is 0
 			Versions = versions;
 		}
 
@@ -152,22 +154,22 @@ namespace PokemonUnity.Overworld
 		//}
 		public static bool EncounterConditionsMet(ConditionValue[] encounter)
 		{
-			Game g = new Game();
+			//Game g = new Game();
 			//If conditions are SWARMING we do not want encounter to contain NO_SWARM
-			if (encounter.Contains(g.Swarm?ConditionValue.SWARM_YES:ConditionValue.SWARM_NO))
+			if (encounter.Contains(Game.Swarm?ConditionValue.SWARM_YES:ConditionValue.SWARM_NO))
 				return true;
-			if (encounter.Contains(g.Radar?ConditionValue.RADAR_ON:ConditionValue.RADAR_OFF))
+			if (encounter.Contains(Game.Radar?ConditionValue.RADAR_ON:ConditionValue.RADAR_OFF))
 				return true;
 			if (//g.Radio == (byte)ConditionValue.RADIO_OFF && (
 				//	encounter.Contains(ConditionValue.RADIO_HOENN) ||
 				//	encounter.Contains(ConditionValue.RADIO_SINNOH) 
-					encounter.Contains((ConditionValue)g.Radio) 
+					encounter.Contains((ConditionValue)Game.Radio) 
 				//)
 			)
 				return true;
-			if (encounter.Contains((ConditionValue)g.Slot))
+			if (encounter.Contains((ConditionValue)Game.Slot))
 				return true;
-			if (g.Season == Season.Spring && (
+			if (Game.Season == Season.Spring && (
 					//encounter.Contains(ConditionValue.SEASON_SUMMER) ||
 					//encounter.Contains(ConditionValue.SEASON_AUTUMN) ||
 					//encounter.Contains(ConditionValue.SEASON_WINTER)
@@ -175,7 +177,7 @@ namespace PokemonUnity.Overworld
 				)
 			)
 				return true;
-			if (g.Season == Season.Summer && (
+			if (Game.Season == Season.Summer && (
 					//encounter.Contains(ConditionValue.SEASON_SPRING) ||
 					//encounter.Contains(ConditionValue.SEASON_AUTUMN) ||
 					//encounter.Contains(ConditionValue.SEASON_WINTER)
@@ -183,7 +185,7 @@ namespace PokemonUnity.Overworld
 				)
 			)
 				return true;
-			if (g.Season == Season.Fall && (
+			if (Game.Season == Season.Fall && (
 					//encounter.Contains(ConditionValue.SEASON_SUMMER) ||
 					//encounter.Contains(ConditionValue.SEASON_SPRING) ||
 					//encounter.Contains(ConditionValue.SEASON_WINTER)
@@ -191,7 +193,7 @@ namespace PokemonUnity.Overworld
 				)
 			)
 				return true;
-			if (g.Season == Season.Winter && (
+			if (Game.Season == Season.Winter && (
 					//encounter.Contains(ConditionValue.SEASON_SUMMER) ||
 					//encounter.Contains(ConditionValue.SEASON_AUTUMN) ||
 					//encounter.Contains(ConditionValue.SEASON_SPRING)
@@ -219,4 +221,25 @@ namespace PokemonUnity.Overworld
 		//	return other.first.Equals(Area) && other.second.Equals(Method) && other.third.Equals(SlotId);
 		//}
 	}
+	/*public struct EncounterSlotData
+	{
+		/// <summary>
+		/// </summary>
+		public Method Method { get; private set; }
+		/// <summary>
+		/// </summary>
+		public int[] Slots { get; private set; }
+		/// <summary>
+		/// </summary>
+		public int[] Generation { get; private set; }
+		/// <summary>
+		/// </summary>
+		public int[] Rate { get; private set; }
+		public int[] IdGroup { get; private set; }
+
+		//foreach (EncounterSlotData encounter in Game.EncounterData[Method])
+		public int this[int version, int slot] //if 15, first slot is 0; fixed in sql
+		//{ get { return encounter.Generation.Contains(15) ? Rate[i] : Rate[i-1]; } }
+		{ get { return Rate[slot-1]; } }
+	}*/
 }

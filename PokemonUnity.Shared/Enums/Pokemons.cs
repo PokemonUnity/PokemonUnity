@@ -226,6 +226,13 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <example>Burmy, Combee</example>
 		LevelFemale,
+		/// <summary>
+		///	The Pokémon will evolve if certain level, and weather is  
+		///	<seealso cref="Overworld.FieldWeathers.Rain"/> or
+		///	<seealso cref="Overworld.FieldWeathers.Thunderstorm"/>
+		///	</summary>
+		LevelRain,
+		LevelDay, LevelNight, 
 		///	<summary>
 		///	The Pokémon will evolve if a particular item is used on it 
 		///	(named by the parameter - typically an evolution stone).<para></para>

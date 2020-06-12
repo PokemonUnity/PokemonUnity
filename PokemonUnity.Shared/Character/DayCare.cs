@@ -26,6 +26,12 @@ namespace PokemonUnity.Character
 		// KeyValuePair<Pokemon,steps>[]
 		public KeyValuePair<Pokemon, int>[] Slot	{ get; private set; }
 		public bool HasEgg	{ get; }
+		public int Egg	{ get; }
+		public Pokemon this[int index]
+		{ 
+			get { return Slot[index].Key; }
+			set { Slot[index] = new KeyValuePair<Pokemon, int>(value, 0); } //ToDo: Add if/else null?
+		}
 		#endregion
 
 		#region Constructor

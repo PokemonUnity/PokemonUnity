@@ -32,6 +32,9 @@ namespace PokemonUnity
 	//ToDo: Rename Application?...
 	public partial class Game
 	{
+		/// <summary>
+		/// Singleton Instance of Game class to store current/active play state.
+		/// </summary>
 		public static Game GameData { get; private set; }
 		public Feature Features { get; private set; }
 		public Challenges Challenge { get; private set; }
@@ -43,36 +46,16 @@ namespace PokemonUnity
 		/// <summary>
 		/// Last town or Pokemon Center visited, that's used as Respawn Point upon a Player's Defeat
 		/// </summary>
+		///public SeriV3 respawnScenePosition;
+		///public Locations respawnCenterId { get; set; }
 		public Locations Checkpoint { get; set; }
-		//public Locations respawnCenterId { get; set; }
-		//public SeriV3 respawnScenePosition;
 		/// <summary>
 		/// </summary>
 		// <see cref="Character.Player.mapName"/>
 		public int Area { get; private set; }
-		//ToDo: Unity implentation through funnel
-		//public static PokemonUnity.Overworld.Level Level { get; set; }
-		//public static PokemonUnity.Overworld.Camera Camera { get; set; }
-		//public Game.TrainerPC PC { get { return new Game.TrainerPC(Player); } }
-		//public int mapName { get; set; }
-		//public int levelName;
-		//ToDo: Move player position to platform engine or Game class..
-		//public Vector PlayerPosition { get; set; }
-		///// <summary>
-		///// Rotation of player model in overworld scene
-		///// </summary>
-		///// Might be useful if the game is in 2d, but if in 3d... will need to use x,y... dont need 3rd axis
-		///// scratch that... only need rotation on single quantization axis...
-		///// not sure direction is even needed in save/load profile...
-		///// Game should load player facing camera by default.
-		//public float PlayerDirection { get; set; }
-		//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
-		//ToDo: Missing (Trainer)Player.Rival variable
+		//ToDo: Missing Variables for RepelType, Swarm
 		public int RepelSteps { get; set; } // Should not stack (encourage users to deplete excessive money); reset count based on repel used.
 		//public static int RepelType { get; set; } // Maybe instead of this, use Encounter.Rate or... Different repel only changes number of steps, not potency
-		//public int SurfPokemon { get { int i = 0; foreach (Pokemon p in Party) if (p.knowsMove(Moves.SURF)) i++; return i; } }
-		//public Pokemon GetWalkPokemon() { return null; }
-		//public Forms GetWalkPokemon() { return Forms.NONE; } //ToDo: IsShiny?
 		public string[] Rival { get; set; }
 		#endregion
 
@@ -322,12 +305,8 @@ namespace PokemonUnity
 		public static bool fullscreen;
 		public static byte textSpeed = 2;
 
-		#region Audio 
-		//public UnityEngine.Audio.AudioMixer audioMixer;
-		public static int? nextBattleBGM { get; set; }
-		public static int? nextBattleME { get; set; }
-		public static int? nextBattleBack { get; set; }
-		#endregion
+		public static Languages pbGetLanguage() { return UserLanguage; }
+		public static void pbMessage(string msg) {  }
 		#endregion
 
 		#region Save/Load Data
@@ -596,25 +575,8 @@ namespace PokemonUnity
 		/// Active Pokemon Battle the Player is currently involved in.
 		/// Matches being spectated would be pass thru a non-static method
 		/// </summary>
-		/// ToDo: On Set, trigger UnityEngine EventHandler,
-		/// Switch scenes, load rules, and animate pokemons
-		/// Move to platform engine
 		//public static Battle Battle { get; set; }
-		public static PokemonUnity.Battle.Battle battle
-		{
-			get
-			{
-				return _battle;
-			} 
-			set
-			{
-	#if !DEBUG
-				UnityEngine.Debug.Log(value);
-	#endif
-				_battle = value;
-			}
-		}
-		private static PokemonUnity.Battle.Battle _battle { get; set; }*/
+		public static PokemonUnity.Battle.Battle battle { get; set; }*/
 		#endregion
 
 		public static implicit operator Game(GameState state)

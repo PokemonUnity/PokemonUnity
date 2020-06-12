@@ -29,7 +29,9 @@ namespace PokemonUnity
 	/// During boot-up, game will check directory for save files and load data.
 	/// Game class will overwrite all the other class default values when player triggers a load state.
 	/// </summary>
-	public partial class Game 
+	//ToDo: Missing (Trainer)Player.Rival variable (KeyValuePair <Type,Name>)
+	//ToDo: Add Write_DB_To_File Function
+	public partial class Game
 	{
 		#region Variables
 		const string FilePokemonXML = "";
@@ -292,7 +294,7 @@ namespace PokemonUnity
 							//,evolution: Data.evolution
 							//,evolutionID: Data.EvolutionTO
 							//,evolutionLevel: Data.evolutionLevel
-							//,evolutionMethod: Data.evolutionMethod						
+							//,evolutionMethod: Data.evolutionMethod
 							//,evolutionFROM: Data.EvolutionFROM
 							//,evolutionTO: Data.EvolutionTO
 							,evoChainId: int.Parse(node.GetAttributeValueOrNull("EvoChainId"))
@@ -2033,7 +2035,7 @@ namespace PokemonUnity
 									}
 								}
 							}
-						BadgeData.Add(id, new Character.BadgeData(id, region, (byte)level)); 
+						BadgeData.Add(id, new Character.BadgeData(id, region, (byte)level));
 					}
 				}
 				return true;
@@ -2049,14 +2051,14 @@ namespace PokemonUnity
 			try
 			{
 				//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
-				//{ 
+				//{
 					//Step 3: Running a Command
 					SQLiteCommand stmt = con.CreateCommand();
 
 					#region DataReader
 					stmt.CommandText = "select COUNT(*) from pokemon_views;select * from pokemon_views --order by id ASC";
 					//	@"select pokemon.id, pokemon.species_id, pokemon.identifier, pokemon.height, pokemon.weight, pokemon.base_experience, --pokemon.""order""
-					//pokemon_abilities_view.ability1, pokemon_abilities_view.ability2, pokemon_abilities_view.ability3, 
+					//pokemon_abilities_view.ability1, pokemon_abilities_view.ability2, pokemon_abilities_view.ability3,
 					//pokemon_egg_groups_view.egg_group1, pokemon_egg_groups_view.egg_group2,
 					//pokemon_stats_view.bhp, pokemon_stats_view.batk, pokemon_stats_view.bdef, pokemon_stats_view.bspa, pokemon_stats_view.bspd, pokemon_stats_view.bspe, pokemon_stats_view.ehp, pokemon_stats_view.eatk, pokemon_stats_view.edef, pokemon_stats_view.espa, pokemon_stats_view.espd, pokemon_stats_view.espe,
 					//pokemon_types_view.type1, pokemon_types_view.type2,
@@ -2130,7 +2132,7 @@ namespace PokemonUnity
 									//,evolution: Data.evolution
 									//,evolutionID: Data.EvolutionTO
 									//,evolutionLevel: Data.evolutionLevel
-									//,evolutionMethod: Data.evolutionMethod						
+									//,evolutionMethod: Data.evolutionMethod
 									//,evolutionFROM: Data.EvolutionFROM
 									//,evolutionTO: Data.EvolutionTO
 									,incense: (Items)int.Parse(string.IsNullOrEmpty((string)reader["incense"].ToString()) ? "0" : (string)reader["incense"].ToString())
@@ -2167,17 +2169,17 @@ namespace PokemonUnity
 			try
 			{
 				//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
-				//{ 
+				//{
 					//Step 3: Running a Command
 					SQLiteCommand stmt = con.CreateCommand();
 
 					#region DataReader
 					stmt.CommandText = "select distinct move_id, pokemon_id, [level], pokemon_move_method_id from pokemon_moves --where version_group_id=18 order by pokemon_id ASC";
 					//	@"select pokemon_moves.pokemon_id, pokemon_moves.move_id, pokemon_moves.level, pokemon_moves.pokemon_move_method_id, pokemon_moves."order", pokemon_moves.version_group_id,
-					//pokemon_move_methods.identifier 
-					//from pokemon_moves 
-					//left join pokemon_move_methods on pokemon_move_methods.id=pokemon_moves.pokemon_move_method_id 
-					//where version_group_id=18 
+					//pokemon_move_methods.identifier
+					//from pokemon_moves
+					//left join pokemon_move_methods on pokemon_move_methods.id=pokemon_moves.pokemon_move_method_id
+					//where version_group_id=18
 					//--order by pokemon_id ASC";
 					SQLiteDataReader reader = stmt.ExecuteReader();
 
@@ -2239,7 +2241,7 @@ namespace PokemonUnity
 				--pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species.color_id, pokemon_species.shape_id, pokemon_species.habitat_id, pokemon_species.gender_rate, pokemon_species.capture_rate, pokemon_species.base_happiness, pokemon_species.is_baby, pokemon_species.hatch_counter, pokemon_species.has_gender_differences, pokemon_species.growth_rate_id, pokemon_species.forms_switchable, pokemon_species.""order""
 				from pokemon
 				left join pokemon_forms on pokemon_forms.pokemon_id = pokemon.id
-				left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id 
+				left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id
 				left join pokemon_species on pokemon_species.id = pokemon.species_id
 				--where --pokemon_species.id != pokemon.id AND
 				--pokemon_forms.identifier != pokemon.identifier OR
@@ -2252,7 +2254,7 @@ namespace PokemonUnity
 				//pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species.color_id, pokemon_species.shape_id, pokemon_species.habitat_id, pokemon_species.gender_rate, pokemon_species.capture_rate, pokemon_species.base_happiness, pokemon_species.is_baby, pokemon_species.hatch_counter, pokemon_species.has_gender_differences, pokemon_species.growth_rate_id, pokemon_species.forms_switchable, pokemon_species."order"
 				//from pokemon
 				//left join pokemon_forms on pokemon_forms.pokemon_id = pokemon.id
-				//left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id 
+				//left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id
 				//left join pokemon_species on pokemon_species.id = pokemon.species_id
 				//left join pokemon_species_names on pokemon_species_names.pokemon_species_id = pokemon.species_id AND pokemon_species_names.local_language_id=9
 				//where --pokemon_species.id != pokemon.id AND
@@ -2331,7 +2333,7 @@ namespace PokemonUnity
 				{
 					//p.Add(x, new List<Monster.Data.EvolutionTrigger>());
 					PokemonEvolutionsData[x] = new Monster.Data.PokemonEvolution[0];
-				} 
+				}
 				//Step 3: Running a Command
 				SQLiteCommand stmt = con.CreateCommand();
 
@@ -2404,13 +2406,13 @@ namespace PokemonUnity
 						//if (!pkmn.Value[i].Location.HasValue && (pkmn.Key == Pokemons.MAGNETON || pkmn.Key == Pokemons.NOSEPASS || pkmn.Value[i].Species == Pokemons.LEAFEON || pkmn.Value[i].Species == Pokemons.GLACEON))// || pkmn.Key == Pokemons.ESPURR
 						//	continue;
 						#region Happiness Evolution
-						if (pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 0 //"night" 
+						if (pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 0 //"night"
 							&& pkmn.Value[i].Happiness.HasValue)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessNight, pkmn.Value[i].Happiness.Value);
 							continue;
 						}
-						else if (pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 1 //"day" 
+						else if (pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 1 //"day"
 								&& pkmn.Value[i].Happiness.HasValue)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessDay, pkmn.Value[i].Happiness.Value);
@@ -2424,13 +2426,13 @@ namespace PokemonUnity
 						#endregion
 
 						#region Item Evolution
-						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == true //"1" 
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == true //"1"
 							&& pkmn.Value[i].Trigger != Items.NONE)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemFemale, pkmn.Value[i].Trigger);
 							continue;
 						}
-						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == false //"2" 
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == false //"2"
 							&& pkmn.Value[i].Trigger != Items.NONE)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemMale, pkmn.Value[i].Trigger);
@@ -2470,13 +2472,13 @@ namespace PokemonUnity
 						#endregion
 
 						#region Hold Item
-						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 1 //"day" 
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 1 //"day"
 								&& pkmn.Value[i].Held != Items.NONE)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemDay, pkmn.Value[i].Held);
 							continue;
 						}
-						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 0 //"night" 
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 0 //"night"
 							&& pkmn.Value[i].Held != Items.NONE)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemNight, pkmn.Value[i].Held);
@@ -2589,7 +2591,7 @@ namespace PokemonUnity
 						#region Level
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Trigger == Items.NONE && pkmn.Value[i].MinLevel.HasValue && !pkmn.Value[i].Happiness.HasValue && !pkmn.Value[i].TurnUpsideDown)
 						{
-							if (pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == true) //"1" 
+							if (pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == true) //"1"
 							{
 								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.LevelFemale, {csv.Context.Record[4]}),";
 								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.LevelFemale, pkmn.Value[i].MinLevel);
@@ -2634,13 +2636,13 @@ namespace PokemonUnity
 				foreach (Pokemons x in PokemonData.Keys)//for(int n = 1; n <= PokemonData.Keys.Length; n++)
 				{
 					p.Add(x, new List<Monster.Data.PokemonWildItems>());
-				} 
+				}
 				//Step 3: Running a Command
 				SQLiteCommand stmt = con.CreateCommand();
 
 				#region DataReader
 				stmt.CommandText = "select * from pokemon_items group by pokemon_id, item_id";
-				//	@"select * 
+				//	@"select *
 				//from pokemon_items
 				//group by pokemon_id, item_id";
 				SQLiteDataReader reader = stmt.ExecuteReader();
@@ -2729,7 +2731,7 @@ namespace PokemonUnity
 
 				#region DataReader
 				stmt.CommandText = @"select a.id, a.damage_class_id, t.damage_type_id, t.target_type_id, t.damage_factor from types as a
-					left join type_efficacy as t on a.id = t.damage_type_id 
+					left join type_efficacy as t on a.id = t.damage_type_id
 					where damage_type_id is not null
 					order by a.id ASC";
 				//	@"";
@@ -2743,14 +2745,14 @@ namespace PokemonUnity
 					while (reader.Read()) //if(reader.Read())
 					{
 						if (!t.ContainsKey((Types)int.Parse((string)reader["id"].ToString())))
-							t.Add((Types)int.Parse((string)reader["id"].ToString()), 
-								string.IsNullOrEmpty(reader["damage_factor"].ToString()) ? 
+							t.Add((Types)int.Parse((string)reader["id"].ToString()),
+								string.IsNullOrEmpty(reader["damage_factor"].ToString()) ?
 								(Category?)null : (Category?)int.Parse((string)reader["damage_factor"].ToString()));
 						//if (!a[(Types)int.Parse((string)reader["id"].ToString())]
 						//	.Contains(int.Parse((string)reader["damage_type_id"].ToString())))
 						//	t[(Locations)int.Parse((string)reader["id"].ToString())]
 						//		.Add(int.Parse((string)reader["damage_type_id"].ToString()));
-						
+
 						if (!string.IsNullOrEmpty(reader["id"].ToString()))
 						{
 							if (!a.ContainsKey((Types)int.Parse((string)reader["id"].ToString())))
@@ -2778,7 +2780,7 @@ namespace PokemonUnity
 								, table: x//.Single(x => x.Key == area.Key).Value.ToDictionary<Types, byte>(x => x.Key == area.Key)
 								, category: t[area.Key]
 							)
-						); 
+						);
 					}
 					TypeData.Add(Types.UNKNOWN, new Monster.Data.Type());
 					TypeData.Add(Types.SHADOW, new Monster.Data.Type());
@@ -2814,11 +2816,11 @@ namespace PokemonUnity
 				from moves
 				left join (
 					select move_id, group_concat(DISTINCT move_flag_id) as move_flag_group
-					from move_flag_map 
+					from move_flag_map
 					group by move_id
-				) as move_flag_map_view on move_flag_map_view.move_id = moves.id 
-				--left join move_flags on move_flags.id = moves.id 
-				left join move_meta on move_meta.move_id = moves.id 
+				) as move_flag_map_view on move_flag_map_view.move_id = moves.id
+				--left join move_flags on move_flags.id = moves.id
+				left join move_meta on move_meta.move_id = moves.id
 				left join contest_effects on moves.contest_effect_id = contest_effects.id
 				left join super_contest_effects on moves.super_contest_effect_id = super_contest_effects.id
 				left join move_targets on move_targets.id = moves.target_id
@@ -2991,7 +2993,7 @@ namespace PokemonUnity
 				item_flag_map_view.item_flag_group,
 				item_game_indices_view.generation_group, item_game_indices_view.game_index_group,
 				item_prose.short_effect, item_prose.effect,
-				item_categories.pocket_id, 
+				item_categories.pocket_id,
 				item_pockets.identifier as item_pocket_identifier,
 				item_names.name,
 				item_flavor_text.flavor_text
@@ -3069,7 +3071,7 @@ namespace PokemonUnity
 					@"select b.id, b.item_id, b.firmness_id, b.natural_gift_power, b.natural_gift_type_id, b.size, b.max_harvest, b.growth_time, b.soil_dryness, b.smoothness
 				,i.cool, i.beauty, i.cute, i.smart, i.tough
 				from berries as b
-				left join (select 
+				left join (select
 					b.id as berry_id
 					,CAST(AVG(CASE WHEN i.contest_type_id = 1 THEN i.flavor
 					END) as int) as cool
@@ -3135,7 +3137,7 @@ namespace PokemonUnity
 				#region DataReader
 				stmt.CommandText = //"select * from natures order by game_index ASC";
 					@"select l.id, l.region_id, l.identifier,
-				group_concat(DISTINCT g.generation_id) as generation_group, --g.generation_id, 
+				group_concat(DISTINCT g.generation_id) as generation_group, --g.generation_id,
 				n.name, n.subtitle,
 				group_concat(DISTINCT v.version_group_id) as version_group
 				from locations as l
@@ -3255,7 +3257,7 @@ namespace PokemonUnity
 								//,rate: a.Where(x => x.Key == area.Key).Select<KeyValuePair<Method, int>>(n => n.Value).ToArray()
 								,rate: a.Single(x => x.Key == area.Key).Value.ToArray()
 							)
-						); 
+						);
 					}
 				}
 				return true;
@@ -3286,17 +3288,23 @@ namespace PokemonUnity
 				--group_concat(DISTINCT g.generation_id) as generation_group
 				--,n.name, n.subtitle
 				from encounters as e
-				left join encounter_slots as s on s.id = e.encounter_slot_id
+				--left join encounter_slots
+				left join (
+					select id, version_group_id, rarity, encounter_method_id,
+					case when (slot is not null) AND version_group_id = 15 then slot + 1 else slot end as slot
+					from encounter_slots
+				) 
+				as s on s.id = e.encounter_slot_id
 				--left join encounter_condition_value_map_view as i on e.id = i.encounter_id;
 				--left join (
 				--	select encounter_id, group_concat(DISTINCT encounter_condition_value_id) as encounter_condition_value_group
-				--	from encounter_condition_value_map 
+				--	from encounter_condition_value_map
 				--	group by encounter_id
 				--) as i on e.id = i.encounter_id
 				left join encounter_condition_value_map as i on e.id = i.encounter_id
 				--left join (
 				--	select location_area_id, group_concat(DISTINCT version_id) as version_group, encounter_method_id, rate
-				--	from location_area_encounter_rates 
+				--	from location_area_encounter_rates
 				--	group by location_area_id, encounter_method_id, rate
 				--) as r on e.location_area_id = r.location_area_id
 				left join location_areas as a on a.id=e.location_area_id
@@ -3318,7 +3326,7 @@ namespace PokemonUnity
 						if (!e.ContainsKey((Method)int.Parse((string)reader["encounter_method_id"].ToString())))
 							e.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), new List<int>());
 						e[(Method)int.Parse((string)reader["encounter_method_id"].ToString())]
-							.Add(int.Parse((string)reader["id"].ToString())					
+							.Add(int.Parse((string)reader["id"].ToString())
 						);
 						EncounterData.Add(int.Parse((string)reader["id"].ToString()),
 							new Encounter(
@@ -3334,7 +3342,7 @@ namespace PokemonUnity
 								,maxLevel: int.Parse((string)reader["max_level"].ToString())
 								,rarity: int.Parse((string)reader["rarity"].ToString())
 								,versions: reader["encounter_slot_version_group"].ToString().Split(',').Select(x => (Versions)int.Parse(x)).ToArray()
-							)						
+							)
 						);
 					}
 					//Step 5: Closing up
@@ -3369,7 +3377,7 @@ namespace PokemonUnity
 				--n.name, n.subtitle
 				from machines as m
 				left join moves as g on g.id = m.move_id
-				--left join location_names as n on l.id = n.location_id AND n.local_language_id = 9; 
+				--left join location_names as n on l.id = n.location_id AND n.local_language_id = 9;
 				group by m.item_id, m.move_id;";
 				SQLiteDataReader reader = stmt.ExecuteReader();
 
@@ -3382,7 +3390,7 @@ namespace PokemonUnity
 						if (!e.ContainsKey((Method)int.Parse((string)reader["encounter_method_id"].ToString())))
 							e.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), new List<int>());
 						e[(Method)int.Parse((string)reader["encounter_method_id"].ToString())]
-							.Add(int.Parse((string)reader["id"].ToString())					
+							.Add(int.Parse((string)reader["id"].ToString())
 						);
 						EncounterData.Add(int.Parse((string)reader["id"].ToString()),
 							new Encounter(
@@ -3398,7 +3406,7 @@ namespace PokemonUnity
 								,maxLevel: int.Parse((string)reader["max_level"].ToString())
 								,rarity: int.Parse((string)reader["rarity"].ToString())
 								,versions: reader["encounter_slot_version_group"].ToString().Split(',').Select(x => (Versions)int.Parse(x)).ToArray()
-							)						
+							)
 						);
 					}
 					//Step 5: Closing up
@@ -3434,7 +3442,7 @@ namespace PokemonUnity
 				n.name, n.description,
 				group_concat(DISTINCT v.version_group_id) as version_group
 				from pokedexes as p
-				left join pokemon_dex_numbers as d on p.id=d.pokedex_id 
+				left join pokemon_dex_numbers as d on p.id=d.pokedex_id
 				left join pokedex_prose as n on p.id = n.pokedex_id AND n.local_language_id = 9
 				left join pokedex_version_groups as v on p.id = v.pokedex_id
 				where p.is_main_series=1 --and v.version_group_id=18

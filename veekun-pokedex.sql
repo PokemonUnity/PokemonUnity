@@ -1704,4 +1704,16 @@ select
 	--where i.encounter_condition_value_group IS NOT NULL
 	--where i.encounter_condition_value_id IS NOT NULL
 	group by e.location_area_id, s.encounter_method_id, s.slot, s.rarity;--e.pokemon_id;*/
+--CREATE VIEW encounter_slot_views as 
+select encounter_method_group, slot_group, rarity_group, group_concat(DISTINCT encounter_slot_version_group) as version_group, group_concat(id_group) as id_group FROM (SELECT
+	--s.id, s.encounter_method_id, s.slot, s.rarity, group_concat(DISTINCT s.version_group_id) as encounter_slot_version_group
+	group_concat(s.id) as id_group, s.encounter_method_id as encounter_method_group, group_concat(DISTINCT s.slot) as slot_group, group_concat(s.rarity) as rarity_group, group_concat(DISTINCT s.version_group_id) as encounter_slot_version_group
+	from ( --encounter_slots as s --on s.id = e.encounter_slot_id
+		select id, version_group_id, rarity, encounter_method_id,
+		case when (slot is not null) AND version_group_id = 15 then slot + 1 else slot end as slot
+		from encounter_slots
+	) as s group by s.version_group_id, s.encounter_method_id--s.slot, rarity
+	--order by s.encounter_method_id, s.id
+) group by encounter_method_group, slot_group, rarity_group 
+order by encounter_method_group
 COMMIT;

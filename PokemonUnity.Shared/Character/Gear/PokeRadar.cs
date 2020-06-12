@@ -3,6 +3,35 @@
 namespace PokemonUnity
 {
 	#region PokeRadar
+	public struct PokeRadarMetaData
+	{
+		//public Tile Grass; x,y,ring,rarity
+		//public int[] Grass; //x,y,ring,rarity
+		public PokeRadarGrassData[] Grass;
+		public int ChainCount;
+		public Pokemons Species;
+		public int Level;
+	}
+	public struct PokeRadarGrassData
+	{
+		public int X; 
+		public int Y;
+		/// <summary>
+		/// (0-3 inner to outer)
+		/// </summary>
+		public int Ring;
+		public int Rarity;
+		public PokeRadars(int mapx, int mapy, int ring, int rarity)
+		{
+			X = mapx;
+			Y = mapy;
+			Ring = ring;
+			Rarity = rarity;
+		}
+	}
+	#endregion
+
+	#region PokeRadarEncounter DB
 	/// <summary>
 	/// A set of arrays each containing details of a wild encounter that can only
 	///    occur via using the Poké Radar. The information within is as follows:<para></para>

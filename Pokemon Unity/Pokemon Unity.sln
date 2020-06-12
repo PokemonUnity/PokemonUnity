@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.gitignore = ..\.gitignore
 		..\.gitmodules = ..\.gitmodules
 		..\README.md = ..\README.md
+		..\veekun-pokedex.sql = ..\veekun-pokedex.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework", "..\GameFramework\GameFramework.csproj", "{109D7F39-79AB-4862-9F73-0B8C638930C6}"
