@@ -151,20 +151,20 @@ public partial class Pokemon{ //PokeBattle_Pokemon
   }
 
   public void initialize(*args) {
-    __mf_initialize(*args);
-    f=MultipleForms.call("getFormOnCreation",self);
-    if (f) {
-      this.form=f;
-      this.resetMoves;
-    }
+    //__mf_initialize(*args);
+    //int? f=MultipleForms.call("getFormOnCreation",self);
+    //if (f.Hasvalue) {
+      this.form=f.Value;
+      this.resetMoves();
+    //}
   }*/
 }
 
-/*public class PokeBattle_RealBattlePeer{
+/*public class BattlePeer{ //PokeBattle_RealBattlePeer
   public void pbOnEnteringBattle(Combat.Battle battle,Pokemon pokemon) {
-    //f=MultipleForms.call("getFormOnEnteringBattle",pokemon);
+    //int? f=MultipleForms.call("getFormOnEnteringBattle",pokemon);
     int f=MultipleForms.getFormOnEnteringBattle(pokemon);
-    //if (f) {
+    //if (f.HasValue) {
     //  pokemon.form=f;
     //}
     pokemon.SetForm(f);

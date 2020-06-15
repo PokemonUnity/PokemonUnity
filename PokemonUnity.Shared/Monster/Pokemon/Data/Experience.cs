@@ -11,7 +11,7 @@ namespace PokemonUnity.Monster.Data
 {
     /// <summary>
     /// </summary>
-    public class Experience
+    public struct Experience
     {
         #region Variables
         private byte level { get { return GetLevelFromExperience(Growth, Total); } }
@@ -33,7 +33,7 @@ namespace PokemonUnity.Monster.Data
         #endregion
 
         #region expTable
-        private static int[] expTableErratic = new int[]{
+        private static readonly int[] expTableErratic = new int[]{
         0,15,52,122,237,406,637,942,1326,1800,
         2369,3041,3822,4719,5737,6881,8155,9564,11111,12800,
         14632,16610,18737,21012,23437,26012,28737,31610,34632,37800,
@@ -47,7 +47,7 @@ namespace PokemonUnity.Monster.Data
         /// <summary>
         /// Medium (Medium Fast)
         /// </summary>
-        private static int[] expTableFast = new int[]{
+        private static readonly int[] expTableFast = new int[]{
         0,6,21,51,100,172,274,409,583,800,
         1064,1382,1757,2195,2700,3276,3930,4665,5487,6400,
         7408,8518,9733,11059,12500,14060,15746,17561,19511,21600,
@@ -59,7 +59,7 @@ namespace PokemonUnity.Monster.Data
         425152,441094,457429,474163,491300,508844,526802,545177,563975,583200,
         602856,622950,643485,664467,685900,707788,730138,752953,776239,800000};
 
-        private static int[] expTableMediumFast = new int[]{
+        private static readonly int[] expTableMediumFast = new int[]{
         0,8,27,64,125,216,343,512,729,1000,
         1331,1728,2197,2744,3375,4096,4913,5832,6859,8000,
         9261,10648,12167,13824,15625,17576,19683,21952,24389,27000,
@@ -73,7 +73,7 @@ namespace PokemonUnity.Monster.Data
         /// <summary>
         /// Parabolic (Medium Slow)
         /// </summary>
-        private static int[] expTableMediumSlow = new int[]{
+        private static readonly int[] expTableMediumSlow = new int[]{
         0,9,57,96,135,179,236,314,419,560,
         742,973,1261,1612,2035,2535,3120,3798,4575,5460,
         6458,7577,8825,10208,11735,13411,15244,17242,19411,21760,
@@ -85,7 +85,7 @@ namespace PokemonUnity.Monster.Data
         547274,568841,590969,613664,636935,660787,685228,710266,735907,762160,
         789030,816525,844653,873420,902835,932903,963632,995030,1027103,1059860};
 
-        private static int[] expTableSlow = new int[]{
+        private static readonly int[] expTableSlow = new int[]{
         0,10,33,80,156,270,428,640,911,1250,
         1663,2160,2746,3430,4218,5120,6141,7290,8573,10000,
         11576,13310,15208,17280,19531,21970,24603,27440,30486,33750,
@@ -97,7 +97,7 @@ namespace PokemonUnity.Monster.Data
         664301,689210,714733,740880,767656,795070,823128,851840,881211,911250,
         941963,973360,1005446,1038230,1071718,1105920,1140841,1176490,1212873,1250000};
 
-        private static int[] expTableFluctuating = new int[]{
+        private static readonly int[] expTableFluctuating = new int[]{
         0,4,13,32,65,112,178,276,393,540,
         745,967,1230,1591,1957,2457,3046,3732,4526,5440,
         6482,7666,9003,10506,12187,14060,16140,18439,20974,23760,
@@ -311,6 +311,7 @@ namespace PokemonUnity.Monster.Data
         public Experience(LevelingRate rate)
         {
             Growth = rate;
+            Total = 0;
         }
 
         public Experience(LevelingRate rate, int initialValue) : this(rate)

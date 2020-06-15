@@ -2,8 +2,6 @@
 
 namespace PokemonUnity.Combat
 {
-    //ToDo: Separate into new class and inherit?
-    //public class ShadowPokemon : Pokemon 
     public partial class Pokemon 
     {
   public void InitPokemon(Pokemon pkmn, sbyte pkmnIndex, string placeholder) { 

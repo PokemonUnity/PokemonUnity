@@ -1,6 +1,6 @@
 ﻿using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
-using PokemonUnity.Battle;
+using PokemonUnity.Combat;
 using PokemonUnity;
 using System;
 using System.Collections.Generic;

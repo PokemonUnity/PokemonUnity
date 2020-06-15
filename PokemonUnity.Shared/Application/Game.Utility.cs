@@ -10,7 +10,6 @@ using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving;
 using System.IO;
-//using System.Security.Cryptography;
 
 namespace PokemonUnity
 {
@@ -22,39 +21,6 @@ namespace PokemonUnity
 	/// </summary>
 	public partial class Game 
 	{
-		//public static string GetFileGuid(string filepath)
-		//{
-		//	using (var md5 = MD5.Create())
-		//	{
-		//		using (var stream = File.OpenRead(filepath))
-		//		{
-		//			return md5.ComputeHash(stream);
-		//		}
-		//	}
-		//}
-		//public static string GetFileGuid(FileStream stream)
-		//{
-		//	using (var md5 = MD5.Create())
-		//	{
-		//		using (stream)
-		//		{
-		//			return md5.ComputeHash(stream);
-		//		}
-		//	}
-		//}
-		//public static string CalculateMD5(string filename)
-		//{
-		//	using (var md5 = MD5.Create())
-		//	{
-		//		using (var stream = File.OpenRead(filename))
-		//		{
-		//			var hash = md5.ComputeHash(stream);
-		//			return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-		//		}
-		//	}
-		//}
-
-		/**/
 		//On Project start...
 		//all XML files are opened, and locked
 		//one by one, they're scanned and checked to see if they're up to date (match latest with compile time info)

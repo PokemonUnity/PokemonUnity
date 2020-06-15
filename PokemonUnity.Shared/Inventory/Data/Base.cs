@@ -352,6 +352,84 @@ namespace PokemonUnity.Inventory
 		}
 		#endregion
 
+		#region Methods
+		public static bool pbIsPokeBall(Items item)
+		{
+			return true;
+		}
+		public static bool pbIsBerry(Items item)
+		{
+			return true;
+		}
+		public static bool pbIsGem(Items item)
+		{
+			return item == Items.FIRE_GEM
+				|| item == Items.WATER_GEM
+				|| item == Items.ELECTRIC_GEM
+				|| item == Items.GRASS_GEM
+				|| item == Items.ICE_GEM
+				|| item == Items.FIGHTING_GEM
+				|| item == Items.POISON_GEM
+				|| item == Items.GROUND_GEM
+				|| item == Items.FLYING_GEM
+				|| item == Items.PSYCHIC_GEM
+				|| item == Items.BUG_GEM
+				|| item == Items.ROCK_GEM
+				|| item == Items.GHOST_GEM
+				|| item == Items.DRAGON_GEM
+				|| item == Items.DARK_GEM
+				|| item == Items.STEEL_GEM
+				|| item == Items.NORMAL_GEM
+				|| item == Items.FAIRY_GEM;
+		}
+		public static bool pbIsMegaStone(Items item)
+		{
+			return item == Items.ABOMASITE
+				|| item == Items.ABSOLITE
+				|| item == Items.AERODACTYLITE
+				|| item == Items.AGGRONITE
+				|| item == Items.ALAKAZITE
+				|| item == Items.ALTARIANITE
+				|| item == Items.AMPHAROSITE
+				|| item == Items.AUDINITE
+				|| item == Items.BANETTITE
+				|| item == Items.BEEDRILLITE
+				|| item == Items.BLASTOISINITE
+				|| item == Items.BLAZIKENITE
+				|| item == Items.CAMERUPTITE
+				|| item == Items.CHARIZARDITE_X
+				|| item == Items.CHARIZARDITE_Y
+				|| item == Items.DIANCITE
+				|| item == Items.GLALITITE
+				|| item == Items.GYARADOSITE
+				|| item == Items.HERACRONITE
+				|| item == Items.HOUNDOOMINITE
+				|| item == Items.KANGASKHANITE
+				|| item == Items.LATIASITE
+				|| item == Items.LATIOSITE
+				|| item == Items.LOPUNNITE
+				|| item == Items.LUCARIONITE
+				|| item == Items.MANECTITE
+				|| item == Items.MAWILITE
+				|| item == Items.MEDICHAMITE
+				|| item == Items.METAGROSSITE
+				|| item == Items.MEWTWONITE_X
+				|| item == Items.MEWTWONITE_Y
+				|| item == Items.PIDGEOTITE
+				|| item == Items.PINSIRITE
+				|| item == Items.SABLENITE
+				|| item == Items.SALAMENCITE
+				|| item == Items.SCEPTILITE
+				|| item == Items.SCIZORITE
+				|| item == Items.SHARPEDONITE
+				|| item == Items.SLOWBRONITE
+				|| item == Items.STEELIXITE
+				|| item == Items.SWAMPERTITE
+				|| item == Items.TYRANITARITE
+				|| item == Items.VENUSAURITE;
+		}
+		#endregion
+
 		public string ToString(TextScripts text)
 		{
 			return Id.ToString(text);

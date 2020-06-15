@@ -1107,7 +1107,8 @@ namespace PokemonUnity.Monster
 		#endregion
 
 		#region Gender
-		//private bool? gender;
+		public virtual bool IsMale { get { return Gender == true; } }
+		public virtual bool IsFemale { get { return Gender == false; } }
 		/// <summary>
 		/// Returns this Pokemons gender.
 		/// Sets this Pokemon's gender to a particular gender (if possible)

@@ -47,7 +47,7 @@ namespace PokemonUnity.Attack
 		/// <summary>
 		/// The number of PP Ups used for this move
 		/// </summary>
-		public int PPups { get; private set; }
+		public int PPups { get; protected set; }
 		#region Values to be Overridden while in Battle?
 		/// <summary>
 		/// Base Damage
@@ -66,12 +66,6 @@ namespace PokemonUnity.Attack
 		public Category Category	{ get; private set; } //{ get { return _base.Category; } }  
 		#endregion
 		public Moves MoveId			{ get { return _base.ID; } }
-		//public Effect Function { get { return (Effect)_base.Function; } }
-		//public Effect Function { get { return (Effect)_base.Function; } }
-		//public string FunctionAsString { get { return _base.FunctionAsString; } }
-		//public string Name { get { return _base.Name; } }
-		//public string Description { get { return _base.Description; } }
-		//public static int MaxValue { get { return Game.MoveData.Count; } }
 		/// <summary>
 		/// For Aerilate, Pixilate, Refrigerate
 		/// </summary>
@@ -115,7 +109,6 @@ namespace PokemonUnity.Attack
 		}
 
 		#region Methods
-		//public Move Clone() { }
 		public bool hasMultipleTargets()
 		{
 			return this.Targets == Targets.OPPONENTS_FIELD//.AllOpposing 

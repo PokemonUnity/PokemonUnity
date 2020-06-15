@@ -12,7 +12,7 @@ namespace PokemonUnity.Monster.Data
     /// <summary>
     /// All the moves this pokemon species can learn, and the methods by which they learn them
     /// </summary>
-    public class PokemonMoveTree
+    public struct PokemonMoveTree
     {
         #region Properties
         /// <summary>
@@ -24,12 +24,12 @@ namespace PokemonUnity.Monster.Data
         public Moves[] Machine { get; private set; }
         //Teach pikachu surf?... do we really need it to know surf?... Maybe if "specal form" (surfboard pickachu) is added to game
         //public Move.MoveData.Move[] stadium_surfing_pikachu { get; private set; }
-        /// <summary>
+        /*// <summary>
         /// If <see cref="Items.LIGHT_BALL"/> is held by either parent of a <see cref="Pokemons.Pichu"/> when the Egg is produced,
         /// the Pichu that hatches will know the move <see cref="Move.MoveData.Move.Volt_Tackle"/>.
         /// </summary>
         /// Not sure about this one
-        public Moves[] light_ball_egg { get; private set; }
+        public Moves[] light_ball_egg { get; private set; }*/
         //public Move.MoveData.Move[] colosseum_purification { get; private set; }
         //public Move.MoveData.Move[] xd_shadow { get; private set; }
         //public Move.MoveData.Move[] xd_purification { get; private set; }
