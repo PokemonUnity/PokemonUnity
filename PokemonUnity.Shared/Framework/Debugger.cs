@@ -59,11 +59,14 @@ namespace PokemonUnity
 		public static event EventHandler<OnDebugEventArgs> OnDebug;
 		public class OnDebugEventArgs : EventArgs
 		{
+			public static readonly int EventId = typeof(OnDebugEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
 			/// <summary>
 			/// If true, pause/stop game to display error message on screen.
 			/// </summary>
-			public bool? Error;
-			public string Message;
+			public bool? Error { get; set; }
+			public string Message { get; set; }
 		}
 		public static void Init(string logfilePath, string logBaseName)
 		{

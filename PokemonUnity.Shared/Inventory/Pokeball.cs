@@ -87,7 +87,8 @@ else if (ball == Items.TIMER_BALL) {
    return catchRate;
 }
 else if (ball == Items.DUSK_BALL) {
-   if (PBDayNight.isNight()) catchRate*=7/2;
+   //if (PBDayNight.isNight()) catchRate*=7/2;
+   if (Game.GetTime == Overworld.DayTime.Night) catchRate*=7/2;
    return catchRate;
 }
 else if (ball == Items.QUICK_BALL) {

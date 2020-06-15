@@ -194,7 +194,8 @@ public class PokeBattle_BattlePlayerModule<TBattle> : PokeBattle_RecordedBattleM
         //where TBattle : Battle {
   public int randomindex { get; protected set; }
   public int switchindex { get; protected set; }
-  public PokeBattle_BattlePlayerModule(IPokeBattle_Scene scene, TBattle battle) : base (scene, battle.party1, battle.party2, battle.player, battle.opponent)
+  //public PokeBattle_BattlePlayerModule(IPokeBattle_Scene scene, TBattle battle) : base (scene, battle.party1, battle.party2, battle.player, battle.opponent)
+  public PokeBattle_BattlePlayerModule(IPokeBattle_Scene scene, TBattle battle) : base (scene, new Monster.Pokemon[0], new Monster.Pokemon[0], battle.player, battle.opponent)
   //public void initialize(scene,Battle battle)
   {
     @battletype=battle.battletype;

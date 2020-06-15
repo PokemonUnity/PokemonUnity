@@ -24,43 +24,61 @@ namespace PokemonUnity.UI
 		#region EventArgs
 		public class OnLevelUpEventArgs : EventArgs
 		{
-			public Combat.Pokemon Pokemon;
-			public Combat.Pokemon Battler;
-			public int HP;
-			public int Atk;
-			public int Def;
-			public int Spe;
-			public int Spa;
-			public int Spd;
+			public static readonly int EventId = typeof(OnLevelUpEventArgs).GetHashCode();
+
+			public int Id { get { return Pokemon.GetHashCode(); } } //EventId;
+			public Combat.Pokemon Pokemon { get; set; }
+			public Combat.Pokemon Battler { get; set; }
+			public int HP { get; set; }
+			public int Atk { get; set; }
+			public int Def { get; set; }
+			public int Spe { get; set; }
+			public int Spa { get; set; }
+			public int Spd { get; set; }
 		}
 		public class OnBattlePhaseEventArgs : EventArgs
 		{
-			public int Phase;
+			public static readonly int EventId = typeof(OnBattlePhaseEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public int Phase { get; set; }
 		}
 		public class OnHPChangedEventArgs : EventArgs
 		{
-			public int Index;
-			public int Oldhp;
-			public bool Animate;
+			public static readonly int EventId = typeof(OnHPChangedEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public int Index { get; set; }
+			public int Oldhp { get; set; }
+			public bool Animate { get; set; }
 		}
 		public class OnFaintedEventArgs : EventArgs
 		{
-			public int Index;
+			public static readonly int EventId = typeof(OnFaintedEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public int Index { get; set; }
 		}
 		public class OnDisplayEventArgs : EventArgs
 		{
-			public bool Pause;
+			public static readonly int EventId = typeof(OnDisplayEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public bool Pause { get; set; }
 			/// <summary>
 			/// Will continue after a short wait, regardless of player interaction
 			/// </summary>
-			public bool Brief;
-			public string Message;
+			public bool Brief { get; set; }
+			public string Message { get; set; }
 		}
 		public class OnBattleMenuEventArgs : EventArgs
 		{
-			public int Index;
-			public int Option;
-			public int Mode;
+			public static readonly int EventId = typeof(OnBattleMenuEventArgs).GetHashCode();
+
+			public int Id { get; }
+			public int Index { get; set; }
+			public int Option { get; set; }
+			public int Mode { get; set; }
 		}
 		#endregion
 

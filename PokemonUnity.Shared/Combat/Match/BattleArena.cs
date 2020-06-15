@@ -100,7 +100,7 @@ public class PokeBattle_BattleArena : Battle{
   }
 
   public int pbMindScore(Move move) {
-    if (move.Effect==0xAA ||		// Detect/Protect
+    /*if (move.Effect==0xAA ||		// Detect/Protect
        move.Effect==0xE8 || // Endure
        move.Effect==0x12) {    // Fake Out
       return -1;
@@ -109,7 +109,7 @@ public class PokeBattle_BattleArena : Battle{
        move.Effect==0x72 || // Mirror Coat
        move.Effect==0xD4) {    // Bide
       return 0;
-    }
+    }*/
     if (move.BaseDamage==0) {
       return 0;
     }

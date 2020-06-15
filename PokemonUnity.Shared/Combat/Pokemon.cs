@@ -2702,7 +2702,8 @@ namespace PokemonUnity.Combat
   }
   public void pbConfusionDamage() {
     this.damagestate.Reset();
-    PokeBattle_Confusion confmove=new PokeBattle_Confusion(@battle,null);
+    //PokeBattle_Confusion confmove=new PokeBattle_Confusion(@battle,null);
+    Move confmove=new PokeBattle_Confusion().Initialize(@battle,null);
     confmove.pbEffect(this,this);
     if (this.isFainted()) pbFaint();
   }

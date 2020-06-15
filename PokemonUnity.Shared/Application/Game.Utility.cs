@@ -63,10 +63,13 @@ namespace PokemonUnity
 		public static event EventHandler<OnLoadEventArgs> OnLoad;
 		public class OnLoadEventArgs : EventArgs
 		{
-			public int Check;
-			public int Total;
-			public int Piece;
-			public int TotalPieces;
+			public static readonly int EventId = typeof(OnLoadEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public int Check { get; set; }
+			public int Total { get; set; }
+			public int Piece { get; set; }
+			public int TotalPieces { get; set; }
 		}
 		static System.Data.SQLite.SQLiteConnection con  = new System.Data.SQLite.SQLiteConnection(@"Data Source=..\..\..\\veekun-pokedex.sqlite");
 

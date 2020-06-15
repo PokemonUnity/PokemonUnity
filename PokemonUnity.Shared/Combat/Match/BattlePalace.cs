@@ -11,7 +11,7 @@ namespace PokemonUnity.Combat
 {
 public class PokeBattle_BattlePalace : Battle {
   public bool[] justswitched { get; private set; }
-  public int[] BattlePalaceUsualTable=new int[] {
+  public static readonly int[] BattlePalaceUsualTable=new int[] {
     61, 7,32,
     20,25,55,
     70,15,15,
@@ -38,7 +38,7 @@ public class PokeBattle_BattlePalace : Battle {
     42,50, 8,
     56,22,22
   };
-  public int[] BattlePalacePinchTable=new int[] {
+  public static readonly int[] BattlePalacePinchTable=new int[] {
     61, 7,32,
     84, 8, 8,
     32,60, 8,
@@ -72,7 +72,7 @@ public class PokeBattle_BattlePalace : Battle {
   }
 
   public int pbMoveCategory(Attack.Move move) {
-    if (Game.MoveData[move.MoveId].Target==0x10 || move.Effect==0xD4) {		// Bide
+    /*if (Game.MoveData[move.MoveId].Target==0x10 || move.Effect==0xD4) {		// Bide
       return 1;
     } else if (move.Power==0 || move.Effect==0x71 ||		// Counter
        move.Effect==0x72) { // Mirror Coat
@@ -80,10 +80,16 @@ public class PokeBattle_BattlePalace : Battle {
     }
     else {
       return 0;
-    }
+    }*/
+    return 0;
   }
 
-// Different implementation of pbCanChooseMove, ignores Imprison/Torment/Taunt/Disable/Encore
+/// <summary>
+/// Different implementation of pbCanChooseMove, ignores Imprison/Torment/Taunt/Disable/Encore
+/// </summary>
+/// <param name="idxPokemon"></param>
+/// <param name="idxMove"></param>
+/// <returns></returns>
   public bool pbCanChooseMovePartial (int idxPokemon,int idxMove) {
     Pokemon thispkmn=@battlers[idxPokemon];
     Attack.Move thismove=thispkmn.moves[idxMove];
@@ -157,7 +163,7 @@ public class PokeBattle_BattlePalace : Battle {
           !CanChooseMove(index,1,false) &&
           !CanChooseMove(index,2,false) &&
           !CanChooseMove(index,3,false) &&
-          //@battlers[index].turncount>=0 &&
+          @battlers[index].turncount>=0 &&
           @battlers[index].turncount>5) {
       shouldswitch=true;
     }

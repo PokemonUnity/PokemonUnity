@@ -42,7 +42,7 @@ public partial class Battle{
     int aspeed = 0; int ospeed = 0;
     #endregion
 // #### Alter score depending on the move's function code #######################
-    switch (move.Effect) {
+    /*switch (move.Effect) {
     case 0x00: // No extra effect
       break;
     case 0x01:
@@ -2479,7 +2479,7 @@ public partial class Battle{
       if (pbCheckGlobalAbility(Abilities.AIR_LOCK).IsNotNullOrNone() ||
          pbCheckGlobalAbility(Abilities.CLOUD_NINE).IsNotNullOrNone()) {
         score-=90;
-      } else if (pbWeather==Weather.RAINDANCE) {
+      } else if (pbWeather()==Weather.RAINDANCE) {
         score-=90;
       }
       else {
@@ -3349,7 +3349,7 @@ public partial class Battle{
       int accuracy=pbRoughAccuracy(move,attacker,opponent,skill);
       score*=accuracy/100.0f;
       if (score<=10 && skill>=PBTrainerAI.highSkill) score=0;
-    }
+    }*/
     //score=score.ToInteger();
     if (score<0) score=0;
     return (int)score.ToInteger();
@@ -3379,10 +3379,10 @@ public partial class Battle{
       otype2=otype1;
     }
     // Get effectivenesses
-    int mod1=PBTypes.getEffectiveness(atype,otype1);
-    int mod2=(otype1==otype2) ? 2 : PBTypes.getEffectiveness(atype,otype2);
-    int mod3=(otype3<0 || otype1==otype3 || otype2==otype3) ? 2 : PBTypes.getEffectiveness(atype,otype3);
-    if (opponent.hasWorkingItem(Items.RINGTARGET)) {
+    int mod1=0;//PBTypes.getEffectiveness(atype,otype1);
+    int mod2=0;//(otype1==otype2) ? 2 : PBTypes.getEffectiveness(atype,otype2);
+    int mod3=0;//(otype3<0 || otype1==otype3 || otype2==otype3) ? 2 : PBTypes.getEffectiveness(atype,otype3);
+    /*if (opponent.hasWorkingItem(Items.RING_TARGET)) {
       if (mod1==0) mod1=2;
       if (mod2==0) mod2=2;
       if (mod3==0) mod3=2;
@@ -3400,17 +3400,17 @@ public partial class Battle{
       if (otype3 == Types.DARK && PBTypes.isIneffective(atype,otype3)) mod3=2;
     }
     // Delta Stream's weather
-    if (pbWeather==Weather.STRONGWINDS) {
+    if (pbWeather()==Weather.STRONGWINDS) {
       if (otype1 == Types.FLYING && PBTypes.isSuperEffective(atype,otype1)) mod1=2;
       if (otype2 == Types.FLYING && PBTypes.isSuperEffective(atype,otype2)) mod2=2;
       if (otype3 == Types.FLYING && PBTypes.isSuperEffective(atype,otype3)) mod3=2;
     }
     // Smack Down makes Ground moves work against fliers
-    if (!opponent.isAirborne((attacker.hasMoldBreaker)) && atype == Types.GROUND) { //rescue false
+    if (!opponent.isAirborne(attacker.hasMoldBreaker()) && atype == Types.GROUND) { //rescue false
       if (otype1 == Types.FLYING) mod1=2;
       if (otype2 == Types.FLYING) mod2=2;
       if (otype3 == Types.FLYING) mod3=2;
-    }
+    }*/
     return mod1*mod2*mod3;
   }
 
@@ -3425,11 +3425,11 @@ public partial class Battle{
   }
 
   public int pbRoughStat(Pokemon battler,Stats stat,int skill) {
-    if (skill>=PBTrainerAI.highSkill && stat==Stats.SPEED) return battler.pbSpeed;
-    stagemul=[2,2,2,2,2,2,2,3,4,5,6,7,8];
-    stagediv=[8,7,6,5,4,3,2,2,2,2,2,2,2];
-    stage=battler.stages[stat]+6;
-    value=0;
+    if (skill>=PBTrainerAI.highSkill && stat==Stats.SPEED) return battler.speed;//pbSpeed;
+    int[] stagemul=new int[] {2,2,2,2,2,2,2,3,4,5,6,7,8};
+    int[] stagediv=new int[] {8,7,6,5,4,3,2,2,2,2,2,2,2};
+    int stage=battler.stages[(int)stat]+6;
+    int value=0;
     switch (stat) {
     case Stats.ATTACK: value=battler.attack;
       break;
@@ -3439,15 +3439,15 @@ public partial class Battle{
       break;
     case Stats.SPATK: value=battler.spatk;
       break;
-    case Stats.SPDEF: value=battler.spdef
+    case Stats.SPDEF: value=battler.spdef;
       break;
     }
-    return (int)Math.Floor(value*1.0*stagemul[stage]/stagediv[stage]);
+    return (int)Math.Floor(value*1.0f*stagemul[stage]/stagediv[stage]);
   }
 
   public int pbBetterBaseDamage(Move move,Pokemon attacker,Pokemon opponent,int skill,int basedamage) {
     // Covers all function codes which have their own def pbBaseDamage
-    switch (move.Effect) {
+    /*switch (move.Effect) {
     case 0x6A: // SonicBoom
       basedamage=20;
       break;
@@ -3697,13 +3697,13 @@ public partial class Battle{
            opponent.Type1,opponent.Type2,opponent.effects.Type3);
         basedamage= (int)Math.Round((basedamage*mult)/8);
       }
-    }
+    }*/
     return basedamage;
   }
 
   public int pbRoughDamage(Move move, Pokemon attacker, Pokemon opponent, int skill, int basedamage) {
     // Fixed damage moves
-    if (move.Effect==0x6A ||  	// SonicBoom
+    /*if (move.Effect==0x6A ||  	// SonicBoom
                          move.Effect==0x6B ||   // Dragon Rage
                          move.Effect==0x6C ||   // Super Fang
                          move.Effect==0x6D ||   // Night Shade
@@ -3727,20 +3727,20 @@ public partial class Battle{
     }
     // Iron Fist
     if (skill>=PBTrainerAI.mediumSkill) {
-      if (attacker.hasWorkingAbility(Abilities.IRONFIST) && move.isPunchingMove?) {
+      if (attacker.hasWorkingAbility(Abilities.IRON_FIST) && move.Flags.Punching) {
         basedamage=(int)Math.Round(basedamage*1.2);
       }
     }
     // Reckless
     if (skill>=PBTrainerAI.mediumSkill) {
       if (attacker.hasWorkingAbility(Abilities.RECKLESS)) {
-        if (@function==0xFA || 		// Take Down, etc.
-           @function==0xFB ||  // Double-Edge, etc.
-           @function==0xFC ||  // Head Smash
-           @function==0xFD ||  // Volt Tackle
-           @function==0xFE ||  // Flare Blitz
-           @function==0x10B || // Jump Kick, Hi Jump Kick
-           @function==0x130) {    // Shadow End
+        if(move.Effect==0xFA || 		// Take Down, etc.
+           move.Effect==0xFB ||  // Double-Edge, etc.
+           move.Effect==0xFC ||  // Head Smash
+           move.Effect==0xFD ||  // Volt Tackle
+           move.Effect==0xFE ||  // Flare Blitz
+           move.Effect==0x10B || // Jump Kick, Hi Jump Kick
+           move.Effect==0x130) {    // Shadow End
           basedamage=(int)Math.Round(basedamage*1.2);
         }
       }
@@ -3774,8 +3774,8 @@ public partial class Battle{
     }
     // Sand Force
     if (skill>=PBTrainerAI.mediumSkill) {
-      if (attacker.hasWorkingAbility(Abilities.SANDFORCE) &&
-         pbWeather==Weather.SANDSTORM &&
+      if (attacker.hasWorkingAbility(Abilities.SAND_FORCE) &&
+         pbWeather()==Weather.SANDSTORM &&
          (type == Types.ROCK ||
          type == Types.GROUND ||
          type == Types.STEEL)) {
@@ -3791,14 +3791,14 @@ public partial class Battle{
     }
     // Dry Skin
     if (skill>=PBTrainerAI.bestSkill) {
-      if (opponent.hasWorkingAbility(Abilities.DRYSKIN) &&
+      if (opponent.hasWorkingAbility(Abilities.DRY_SKIN) &&
          type == Types.FIRE) {
         basedamage=(int)Math.Round(basedamage*1.25);
       }
     }
     // Sheer Force
     if (skill>=PBTrainerAI.highSkill) {
-      if (attacker.hasWorkingAbility(Abilities.SHEERFORCE) && move.AddlEffect>0) {
+      if (attacker.hasWorkingAbility(Abilities.SHEER_FORCE) && move.AddlEffect>0) {
         basedamage=(int)Math.Round(basedamage*1.3);
       }
     }
@@ -3817,7 +3817,7 @@ public partial class Battle{
        (attacker.hasWorkingItem(Items.MIRACLE_SEED) && type == Types.GRASS) ||
        (attacker.hasWorkingItem(Items.MAGNET) && type == Types.ELECTRIC) ||
        (attacker.hasWorkingItem(Items.TWISTED_SPOON) && type == Types.PSYCHIC) ||
-       (attacker.hasWorkingItem(Items.NEVERMELTICE) && type == Types.ICE) ||
+       (attacker.hasWorkingItem(Items.NEVER_MELT_ICE) && type == Types.ICE) ||
        (attacker.hasWorkingItem(Items.DRAGON_FANG) && type == Types.DRAGON) ||
        (attacker.hasWorkingItem(Items.BLACK_GLASSES) && type == Types.DARK)) {
       basedamage=(int)Math.Round(basedamage*1.2);
@@ -3859,7 +3859,7 @@ public partial class Battle{
        (attacker.hasWorkingItem(Items.DARK_GEM) && type == Types.DARK)) {
       basedamage=(int)Math.Round(basedamage*1.5);
     }
-    if (attacker.hasWorkingItem(Items.ROC_KINCENSE) && type == Types.ROCK) {
+    if (attacker.hasWorkingItem(Items.ROCK_INCENSE) && type == Types.ROCK) {
       basedamage=(int)Math.Round(basedamage*1.2);
     }
     if (attacker.hasWorkingItem(Items.ROSE_INCENSE) && type == Types.GRASS) {
@@ -3973,7 +3973,7 @@ public partial class Battle{
     if (skill>=PBTrainerAI.mediumSkill) {
       if ((attacker.hasWorkingAbility(Abilities.PLUS) ||
          attacker.hasWorkingAbility(Abilities.MINUS)) && move.pbIsSpecial(type)) {
-        partner=attacker.Partner;
+        Pokemon partner=attacker.Partner;
         if (partner.hasWorkingAbility(Abilities.PLUS) || partner.hasWorkingAbility(Abilities.MINUS)) {
           atk=(int)Math.Round(atk*1.5);
         }
@@ -3996,7 +3996,7 @@ public partial class Battle{
     // Solar Power
     if (skill>=PBTrainerAI.highSkill) {
       if (attacker.hasWorkingAbility(Abilities.SOLAR_POWER) &&
-         pbWeather==Weather.SUNNYDAY && move.pbIsSpecial(type)) {
+         pbWeather()==Weather.SUNNYDAY && move.pbIsSpecial(type)) {
         atk=(int)Math.Round(atk*1.5);
       }
     }
@@ -4016,24 +4016,24 @@ public partial class Battle{
     }
     // Flower Gift
     if (skill>=PBTrainerAI.highSkill) {
-      if (pbWeather==Weather.SUNNYDAY && move.pbIsPhysical(type)) {
-        if (attacker.hasWorkingAbility(Abilities.FLOWERGIFT) &&
+      if (pbWeather()==Weather.SUNNYDAY && move.pbIsPhysical(type)) {
+        if (attacker.hasWorkingAbility(Abilities.FLOWER_GIFT) &&
            attacker.Species == Pokemons.CHERRIM) {
           atk=(int)Math.Round(atk*1.5);
         }
-        if (attacker.Partner.hasWorkingAbility(Abilities.FLOWERGIFT) &&
+        if (attacker.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT) &&
            attacker.Partner.Species == Pokemons.CHERRIM) {
           atk=(int)Math.Round(atk*1.5);
         }
       }
     }
     // Attack-boosting items
-    if (attacker.hasWorkingItem(Items.THICKCLUB) &&
+    if (attacker.hasWorkingItem(Items.THICK_CLUB) &&
        (attacker.Species == Pokemons.CUBONE ||
        attacker.Species == Pokemons.MAROWAK) && move.pbIsPhysical(type)) {
       atk=(int)Math.Round(atk*2.0);
     }
-    if (attacker.hasWorkingItem(Items.DEEPSEATOOTH) &&
+    if (attacker.hasWorkingItem(Items.DEEP_SEA_TOOTH) &&
        attacker.Species == Pokemons.CLAMPERL && move.pbIsSpecial(type)) {
       atk=(int)Math.Round(atk*2.0);
     }
@@ -4041,15 +4041,15 @@ public partial class Battle{
        attacker.Species == Pokemons.PIKACHU) {
       atk=(int)Math.Round(atk*2.0);
     }
-    if (attacker.hasWorkingItem(Items.SOULDEW) &&
+    if (attacker.hasWorkingItem(Items.SOUL_DEW) &&
        (attacker.Species == Pokemons.LATIAS ||
        attacker.Species == Pokemons.LATIOS) && move.pbIsSpecial(type)) {
       atk=(int)Math.Round(atk*1.5);
     }
-    if (attacker.hasWorkingItem(Items.CHOICEBAND) && move.pbIsPhysical(type)) {
+    if (attacker.hasWorkingItem(Items.CHOICE_BAND) && move.pbIsPhysical(type)) {
       atk=(int)Math.Round(atk*1.5);
     }
-    if (attacker.hasWorkingItem(Items.CHOICESPECS) && move.pbIsSpecial(type)) {
+    if (attacker.hasWorkingItem(Items.CHOICE_SPECS) && move.pbIsSpecial(type)) {
       atk=(int)Math.Round(atk*1.5);
     }
     // Get base defense stat
@@ -4063,7 +4063,7 @@ public partial class Battle{
     }
     // Sandstorm weather
     if (skill>=PBTrainerAI.highSkill) {
-      if (pbWeather==Weather.SANDSTORM &&
+      if (pbWeather()==Weather.SANDSTORM &&
          opponent.hasType(Types.ROCK) && applysandstorm) {
         defense=(int)Math.Round(defense*1.5);
       }
@@ -4077,12 +4077,12 @@ public partial class Battle{
     }
     // Flower Gift
     if (skill>=PBTrainerAI.bestSkill) {
-      if (pbWeather==Weather.SUNNYDAY && move.pbIsSpecial(type)) {
-        if (opponent.hasWorkingAbility(Abilities.FLOWERGIFT) &&
+      if (pbWeather()==Weather.SUNNYDAY && move.pbIsSpecial(type)) {
+        if (opponent.hasWorkingAbility(Abilities.FLOWER_GIFT) &&
            opponent.Species == Pokemons.CHERRIM) {
           defense=(int)Math.Round(defense*1.5);
         }
-        if (opponent.Partner.hasWorkingAbility(Abilities.FLOWERGIFT) &&
+        if (opponent.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT) &&
            opponent.Partner.Species == Pokemons.CHERRIM) {
           defense=(int)Math.Round(defense*1.5);
         }
@@ -4091,28 +4091,30 @@ public partial class Battle{
     // Defense-boosting items
     if (skill>=PBTrainerAI.highSkill) {
       if (opponent.hasWorkingItem(Items.EVIOLITE)) {
-        evos=pbGetEvolvedFormData(opponent.Species);
-        if (evos && evos.Length>0) {
+        //Pokemon[] evos=pbGetEvolvedFormData(opponent.Species);
+        int evos=Game.PokemonEvolutionsData[opponent.Species].Length;
+        //if (evos && evos.Length>0) {
+        if (evos>0) {
           defense=(int)Math.Round(defense*1.5);
         }
       }
-      if (opponent.hasWorkingItem(Items.DEEPSEASCALE) &&
+      if (opponent.hasWorkingItem(Items.DEEP_SEA_SCALE) &&
          opponent.Species == Pokemons.CLAMPERL && move.pbIsSpecial(type)) {
         defense=(int)Math.Round(defense*2.0);
       }
-      if (opponent.hasWorkingItem(Items.METALPOWDER) &&
+      if (opponent.hasWorkingItem(Items.METAL_POWDER) &&
          opponent.Species == Pokemons.DITTO &&
          !opponent.effects.Transform && move.pbIsPhysical(type)) {
         defense=(int)Math.Round(defense*2.0);
       }
-      if (opponent.hasWorkingItem(Items.SOULDEW) &&
+      if (opponent.hasWorkingItem(Items.SOUL_DEW) &&
          (opponent.Species == Pokemons.LATIAS ||
          opponent.Species == Pokemons.LATIOS) && move.pbIsSpecial(type)) {
         defense=(int)Math.Round(defense*1.5);
       }
     }
     // Main damage calculation
-    int damage=(int)Math.Floor((int)Math.Floor((int)Math.Floor(2.0f*attacker.Level/5+2)*basedamage*atk/defense)/50f)+2;
+    int damage=(int)Math.Floor(Math.Floor(Math.Floor(2.0f*attacker.Level/5f+2f)*basedamage*atk/defense)/50f)+2;
     // Multi-targeting attacks
     if (skill>=PBTrainerAI.highSkill) {
       if (move.pbTargetsMultiple(attacker)) {
@@ -4121,7 +4123,7 @@ public partial class Battle{
     }
     // Weather
     if (skill>=PBTrainerAI.mediumSkill) {
-      switch (pbWeather) {
+      switch (pbWeather()) {
       case Weather.SUNNYDAY:
         if (type == Types.FIRE) {
           damage=(int)Math.Round(damage*1.5);
@@ -4197,20 +4199,20 @@ public partial class Battle{
     }
     // Tinted Lens
     if (skill>=PBTrainerAI.bestSkill) {
-      if (attacker.hasWorkingAbility(Abilities.TINTEDLENS) && typemod<8) {
+      if (attacker.hasWorkingAbility(Abilities.TINTED_LENS) && typemod<8) {
         damage=(int)Math.Round(damage*2.0);
       }
     }
     // Friend Guard
     if (skill>=PBTrainerAI.bestSkill) {
-      if (opponent.Partner.hasWorkingAbility(Abilities.FRIENDGUARD)) {
+      if (opponent.Partner.hasWorkingAbility(Abilities.FRIEND_GUARD)) {
         damage=(int)Math.Round(damage*0.75);
       }
     }
     // Sniper - n/a
     // Solid Rock, Filter
     if (skill>=PBTrainerAI.bestSkill) {
-      if ((opponent.hasWorkingAbility(Abilities.SOLIDROCK) || opponent.hasWorkingAbility(Abilities.FILTER)) &&
+      if ((opponent.hasWorkingAbility(Abilities.SOLID_ROCK) || opponent.hasWorkingAbility(Abilities.FILTER)) &&
          typemod>8) {
         damage=(int)Math.Round(damage*0.75);
       }
@@ -4221,14 +4223,14 @@ public partial class Battle{
         damage=(int)Math.Round(damage*2.0);
       }
       else {
-        float met=1.0+attacker.effects.Metronome*0.2;
+        float met=1.0f+attacker.effects.Metronome*0.2f;
         damage=(int)Math.Round(damage*met);
       }
     }
-    if (attacker.hasWorkingItem(Items.EXPERTBELT) && typemod>8) {
+    if (attacker.hasWorkingItem(Items.EXPERT_BELT) && typemod>8) {
       damage=(int)Math.Round(damage*1.2);
     }
-    if (attacker.hasWorkingItem(Items.LIFEORB)) {
+    if (attacker.hasWorkingItem(Items.LIFE_ORB)) {
       damage=(int)Math.Round(damage*1.3);
     }
     if (typemod>8 && skill>=PBTrainerAI.highSkill) {
@@ -4262,26 +4264,28 @@ public partial class Battle{
     if (skill>=PBTrainerAI.mediumSkill) {
       int c=0;
       c+=attacker.effects.FocusEnergy;
-      if (move.hasHighCriticalRate?) c+=1;
+      if (move.hasHighCriticalRate) c+=1;
       if ((attacker.inHyperMode()) && this.Type == Types.SHADOW) c+=1; //rescue false
       if (attacker.Species == Pokemons.CHANSEY && 
-              attacker.hasWorkingItem(Items.LUCKYPUNCH)) c+=2;
+              attacker.hasWorkingItem(Items.LUCKY_PUNCH)) c+=2;
       if (attacker.Species == Pokemons.FARFETCHD && 
               attacker.hasWorkingItem(Items.STICK)) c+=2;
-      if (attacker.hasWorkingAbility(Abilities.SUPERLUCK)) c+=1;
-      if (attacker.hasWorkingItem(Items.SCOPELENS)) c+=1;
-      if (attacker.hasWorkingItem(Items.RAZORCLAW)) c+=1;
+      if (attacker.hasWorkingAbility(Abilities.SUPER_LUCK)) c+=1;
+      if (attacker.hasWorkingItem(Items.SCOPE_LENS)) c+=1;
+      if (attacker.hasWorkingItem(Items.RAZOR_CLAW)) c+=1;
       if (c>4) c=4;
-      basedamage+=(basedamage*0.1*c);
+      basedamage+=(basedamage*0.1f*c);
     }
-    return damage;
+    return damage;*/
+    return 0;
   }
 
   public int pbRoughAccuracy(Move move, Pokemon attacker, Pokemon opponent, int skill) {
+    float accuracy=0;
     // Get base accuracy
-    int baseaccuracy=move.Accuracy;
+    /*int baseaccuracy=move.Accuracy;
     if (skill>=PBTrainerAI.mediumSkill) {
-      if (pbWeather==Weather.SUNNYDAY &&
+      if (pbWeather()==Weather.SUNNYDAY &&
          (move.Effect==0x08 || move.Effect==0x15)) { // Thunder, Hurricane
         accuracy=50;
       }
@@ -4289,7 +4293,7 @@ public partial class Battle{
     // Accuracy stages
     int accstage=attacker.stages[(int)Stats.ACCURACY];
     if (opponent.hasWorkingAbility(Abilities.UNAWARE)) accstage=0;
-    float accuracy=(accstage>=0) ? (accstage+3)*100.0f/3f : 300.0f/(3-accstage);
+    accuracy=(accstage>=0) ? (accstage+3)*100.0f/3f : 300.0f/(3-accstage);
     int evastage=opponent.stages[(int)Stats.EVASION];
     if (@field.Gravity>0) evastage-=2;
     if (evastage<-6) evastage=-6;
@@ -4297,52 +4301,52 @@ public partial class Battle{
                   opponent.effects.MiracleEye ||
                   move.Effect==0xA9 || // Chip Away
                   attacker.hasWorkingAbility(Abilities.UNAWARE)) evastage=0;
-    int evasion=(evastage>=0) (evastage+3)*100.0/3 : 300.0/(3-evastage);
+    float evasion=(evastage>=0) ? (evastage+3)*100.0f/3f : 300.0f/(3f-evastage);
     accuracy*=baseaccuracy/evasion;
     // Accuracy modifiers
     if (skill>=PBTrainerAI.mediumSkill) {
-      if (attacker.hasWorkingAbility(Abilities.COMPOUNDEYES)) accuracy*=1.3;
-      if (attacker.hasWorkingAbility(Abilities.VICTORYSTAR)) accuracy*=1.1;
+      if (attacker.hasWorkingAbility(Abilities.COMPOUND_EYES)) accuracy*=1.3f;
+      if (attacker.hasWorkingAbility(Abilities.VICTORY_STAR)) accuracy*=1.1f;
       if (skill>=PBTrainerAI.highSkill) {
-        partner=attacker.Partner;
-        if (partner && partner.hasWorkingAbility(Abilities.VICTORYSTAR)) accuracy*=1.1;
+        Pokemon partner=attacker.Partner;
+        if (partner.IsNotNullOrNone() && partner.hasWorkingAbility(Abilities.VICTORY_STAR)) accuracy*=1.1f;
       }
-      if (attacker.effects.MicleBerry) accuracy*=1.2;
-      if (attacker.hasWorkingItem(Items.WIDELENS)) accuracy*=1.1;
+      if (attacker.effects.MicleBerry) accuracy*=1.2f;
+      if (attacker.hasWorkingItem(Items.WIDE_LENS)) accuracy*=1.1f;
       if (skill>=PBTrainerAI.highSkill) {
         if (attacker.hasWorkingAbility(Abilities.HUSTLE) &&
                          move.BaseDamage>0 &&
-                         move.pbIsPhysical(move.pbType(move.Type,attacker,opponent))) accuracy*=0.8;
+                         move.pbIsPhysical(move.pbType(move.Type,attacker,opponent))) accuracy*=0.8f;
       }
       if (skill>=PBTrainerAI.bestSkill) {
-        if (opponent.hasWorkingAbility(Abilities.WONDERSKIN) &&
+        if (opponent.hasWorkingAbility(Abilities.WONDER_SKIN) &&
                        move.BaseDamage==0 &&
                        attacker.IsOpposing(opponent.Index)) accuracy/=2;
-        if (opponent.hasWorkingAbility(Abilities.TANGLEDFEET) &&
-                         opponent.effects.Confusion>0) accuracy/=1.2;
-        if (pbWeather==Weather.SANDSTORM &&
-                         opponent.hasWorkingAbility(Abilities.SANDVEIL)) accuracy/=1.2;
-        if (pbWeather==Weather.HAIL &&
-                         opponent.hasWorkingAbility(Abilities.SNOWCLOAK)) accuracy/=1.2;
+        if (opponent.hasWorkingAbility(Abilities.TANGLED_FEET) &&
+                         opponent.effects.Confusion>0) accuracy/=1.2f;
+        if (pbWeather()==Weather.SANDSTORM &&
+                         opponent.hasWorkingAbility(Abilities.SAND_VEIL)) accuracy/=1.2f;
+        if (pbWeather()==Weather.HAIL &&
+                         opponent.hasWorkingAbility(Abilities.SNOW_CLOAK)) accuracy/=1.2f;
       }
       if (skill>=PBTrainerAI.highSkill) {
-        if (opponent.hasWorkingItem(Items.BRIGHTPOWDER)) accuracy/=1.1;
-        if (opponent.hasWorkingItem(Items.LAXINCENSE)) accuracy/=1.1;
+        if (opponent.hasWorkingItem(Items.BRIGHT_POWDER)) accuracy/=1.1f;
+        if (opponent.hasWorkingItem(Items.LAX_INCENSE)) accuracy/=1.1f;
       }
     }
     if (accuracy>100) accuracy=100;
     // Override accuracy
-    if (move.accuracy==0  ) accuracy=125;	// Doesn't do accuracy check (always hits)
+    if (move.Accuracy==0  ) accuracy=125;	// Doesn't do accuracy check (always hits)
     if (move.Effect==0xA5) accuracy=125;	// Swift
     if (skill>=PBTrainerAI.mediumSkill) {
       if (opponent.effects.LockOn>0 &&
                       opponent.effects.LockOnPos==attacker.Index) accuracy=125;
       if (skill>=PBTrainerAI.highSkill) {
-        if (attacker.hasWorkingAbility(Abilities.NOGUARD) ||
-                        opponent.hasWorkingAbility(Abilities.NOGUARD)) accuracy=125;
+        if (attacker.hasWorkingAbility(Abilities.NO_GUARD) ||
+                        opponent.hasWorkingAbility(Abilities.NO_GUARD)) accuracy=125;
       }
       if (opponent.effects.Telekinesis>0) accuracy=125;
-      switch (pbWeather) {
+      switch (pbWeather()) {
       case Weather.HAIL:
         if (move.Effect==0x0D) accuracy=125;	// Blizzard
         break;
@@ -4351,29 +4355,29 @@ public partial class Battle{
         break;
       }
       if (move.Effect==0x70) {		// OHKO moves
-        accuracy=move.accuracy+attacker.Level-opponent.Level;
+        accuracy=move.Accuracy+attacker.Level-opponent.Level;
         if (opponent.hasWorkingAbility(Abilities.STURDY)) accuracy=0;
         if (opponent.Level>attacker.Level) accuracy=0;
       }
-    }
-    return accuracy;
+    }*/
+    return (int)accuracy;
   }
 
 // ###############################################################################
 // Choose a move to use.
 // ###############################################################################
   public void pbChooseMoves(int index) {
-    Pokemon attacker=@battlers[index];
+    /*Pokemon attacker=@battlers[index];
     int[] scores=new int[] { 0, 0, 0, 0 };
     int[] targets=null;
-    myChoices=[];
+    List<int> myChoices=new List<int>();
     int totalscore=0;
     int target=-1;
     int skill=0;
-    bool wildbattle=!@opponent && pbIsOpposing(index);
+    bool wildbattle=@opponent==null && pbIsOpposing(index);
     if (wildbattle) {		// If wild battle
       for (int i = 0; i < 4; i++) {
-        if (pbCanChooseMove(index,i,false)) {
+        if (CanChooseMove(index,i,false)) {
           scores[i]=100;
           myChoices.Add(i);
           totalscore+=100;
@@ -4385,7 +4389,7 @@ public partial class Battle{
       Pokemon opponent=attacker.pbOppositeOpposing;
       if (@doublebattle && !opponent.isFainted() && !opponent.Partner.isFainted()) {
         // Choose a target and move.  Also care about partner.
-        otheropp=opponent.Partner;
+        Pokemon otheropp=opponent.Partner;
         List<> scoresAndTargets=new List<>();
         targets=[-1,-1,-1,-1];
         for (int i = 0; i < 4; i++) {
@@ -4431,8 +4435,8 @@ public partial class Battle{
            }
         );
         for (int i = 0; i < scoresAndTargets.Count; i++) {
-          idx=scoresAndTargets[i][1];
-          thisScore=scoresAndTargets[i][2];
+          int idx=scoresAndTargets[i][1];
+          int thisScore=scoresAndTargets[i][2];
           if (thisScore>0) {
             if (scores[idx]==0 || ((scores[idx]==thisScore && Core.Rand.Next(10)<5) ||
                (scores[idx]!=thisScore && Core.Rand.Next(10)<3))) {
@@ -4452,7 +4456,7 @@ public partial class Battle{
           opponent=opponent.Partner;
         }
         for (int i = 0; i < 4; i++) {
-          if (pbCanChooseMove(index,i,false)) {
+          if (CanChooseMove(index,i,false)) {
             scores[i]=pbGetMoveScore(attacker.moves[i],attacker,opponent,skill);
             myChoices.Add(i);
           }
@@ -4477,7 +4481,7 @@ public partial class Battle{
       }
       maxscore=0;
       for (int i = 0; i < 4; i++) {
-        if (scores[i] && scores[i]>maxscore) maxscore=scores[i];
+        if (scores[i] != null && scores[i]>maxscore) maxscore=scores[i];
       }
     }
     if (Core.INTERNAL) {
@@ -4508,7 +4512,7 @@ public partial class Battle{
           int i=preferredMoves[Core.Rand.Next(preferredMoves.Count)];
           GameDebug.Log($"[AI] Prefer #{attacker.moves[i].MoveId.ToString(TextScripts.Name)}");
           pbRegisterMove(index,i,false);
-          if (targets) target=targets[i];
+          if (targets != null) target=targets[i];
           if (@doublebattle && target>=0) {
             pbRegisterTarget(index,target);
           }
@@ -4540,7 +4544,8 @@ public partial class Battle{
         if (pbEnemyShouldWithdrawEx(index,true)) {
           if (Core.INTERNAL) {
             GameDebug.Log($"[AI] Switching due to terrible moves");
-            GameDebug.Log($@"{index},{@choices[index][0]},{@choices[index][1]},
+            //GameDebug.Log($@"{index},{@choices[index][0]},{@choices[index][1]},
+            GameDebug.Log($@"{index},{@choices[index].Action},{@choices[index].Index},
                {pbCanChooseNonActive(index)},
                {@battlers[index].pbNonActivePokemonCount()}");
           }
@@ -4550,8 +4555,8 @@ public partial class Battle{
     }
     if (maxscore<=0) {
       // If all scores are 0 or less, choose a move at random
-      if (myChoices.Length>0) {
-        pbRegisterMove(index,myChoices[Core.Rand.Next(myChoices.Length)],false);
+      if (myChoices.Count>0) {
+        pbRegisterMove(index,myChoices[Core.Rand.Next(myChoices.Count)],false);
       }
       else {
         pbAutoChooseMove(index);
@@ -4571,10 +4576,11 @@ public partial class Battle{
         }
       }
     }
-    if (@choices[index][2]) GameDebug.Log($"[AI] Will use #{@choices[index][2].Name}");
+    //if (@choices[index][2]) GameDebug.Log($"[AI] Will use #{@choices[index][2].Name}");
+    if (@choices[index].Move.IsNotNullOrNone()) GameDebug.Log($"[AI] Will use #{@choices[index].Move.Name}");
     if (@doublebattle && target>=0) {
       pbRegisterTarget(index,target);
-    }
+    }*/
   }
 
 // ###############################################################################
@@ -4582,7 +4588,8 @@ public partial class Battle{
 // ###############################################################################
   public bool pbEnemyShouldMegaEvolve (int ndex) {
     // Simple "always should if possible"
-    return pbCanMegaEvolve(index);
+    //return pbCanMegaEvolve(index);
+    return false;
   }
 
 // ###############################################################################
@@ -4599,7 +4606,7 @@ public partial class Battle{
 
   public bool pbEnemyItemAlreadyUsed (int index,Items item,Items[] items) {
     //if (@choices[1][0]==3 && @choices[1][1]==item) {
-    if (@choices[1].Action==3 && @choices[1].Index==item) {
+    if (@choices[1].Action==(ChoiceAction)3 && @choices[1].Index==(int)item) {
       int qty=0;
       foreach (var i in items) {
         if (i==item) qty+=1;
@@ -4647,18 +4654,18 @@ public partial class Battle{
       } else if (i == Items.X_ATTACK ||
             i == Items.X_DEFENSE ||
             i == Items.X_SPEED ||
-            i == Items.X_SPECIAL ||
-            i == Items.X_SPDEF ||
+            i == Items.X_SP_ATK ||
+            i == Items.X_SP_DEF ||
             i == Items.X_ACCURACY) {
         Stats? stat=null;//0;
         if (i == Items.X_ATTACK) stat=Stats.ATTACK;
         if (i == Items.X_DEFENSE) stat=Stats.DEFENSE;
         if (i == Items.X_SPEED) stat=Stats.SPEED;
-        if (i == Items.X_SPECIAL) stat=Stats.SPATK;
-        if (i == Items.X_SPDEF) stat=Stats.SPDEF;
+        if (i == Items.X_SP_ATK) stat=Stats.SPATK;
+        if (i == Items.X_SP_DEF) stat=Stats.SPDEF;
         if (i == Items.X_ACCURACY) stat=Stats.ACCURACY;
-        if (stat>0 && !battler.pbTooHigh(stat)) {
-          if (Core.Rand.Next(10)<3-battler.stages[stat]) return i;
+        if (stat>0 && !battler.pbTooHigh(stat.Value)) {
+          if (Core.Rand.Next(10)<3-battler.stages[(int)stat]) return i;
         }
       }
     }
@@ -4676,7 +4683,7 @@ public partial class Battle{
   }
 
   public bool pbEnemyShouldWithdrawEx (int index,bool alwaysSwitch) {
-    if (!@opponent) return false;
+    /*if (!@opponent) return false;
     bool shouldswitch=alwaysSwitch;
     bool typecheck=false;
     int batonpass=-1;
@@ -4699,11 +4706,11 @@ public partial class Battle{
         }
       }
     }
-    if (!pbCanChooseMove(index,0,false) &&
-       !pbCanChooseMove(index,1,false) &&
-       !pbCanChooseMove(index,2,false) &&
-       !pbCanChooseMove(index,3,false) &&
-       @battlers[index].turncount &&
+    if (!CanChooseMove(index,0,false) &&
+       !CanChooseMove(index,1,false) &&
+       !CanChooseMove(index,2,false) &&
+       !CanChooseMove(index,3,false) &&
+       //@battlers[index].turncount &&
        @battlers[index].turncount>5) {
       shouldswitch=true;
     }
@@ -4826,7 +4833,7 @@ public partial class Battle{
           return pbRegisterSwitch(index,list[0]);
         }
       }
-    }
+    }*/
     return false;
   }
 
@@ -4844,7 +4851,7 @@ public partial class Battle{
   }
 
   public int pbChooseBestNewEnemy(int index,Pokemon[] party,int[] enemies) {
-    if (!enemies || enemies.Length==0) return -1;
+    if (enemies == null || enemies.Length==0) return -1;
     //if (!$PokemonTemp) $PokemonTemp=new PokemonTemp;
     Pokemon o1=@battlers[index].pbOpposing1;
     Pokemon o2=@battlers[index].pbOpposing2;
@@ -4858,12 +4865,13 @@ public partial class Battle{
       foreach (var move in pkmn.moves) {
         if (move.MoveId==0) continue;
         Attack.Data.MoveData md=Game.MoveData[move.MoveId];
-        if (md.BaseDamage==0) continue;
+        if (md.Power==0) continue;
         if (o1.IsNotNullOrNone()) {
-          sum+=PBTypes.getCombinedEffectiveness(md.Type,o1.Type1,o1.Type2,o1.effects.Type3);
+          //ToDo: uncomment below
+          //sum+=md.Type.GetCombinedEffectiveness(o1.Type1,o1.Type2,o1.effects.Type3);
         }
         if (o2.IsNotNullOrNone()) {
-          sum+=PBTypes.getCombinedEffectiveness(md.Type,o2.Type1,o2.Type2,o2.effects.Type3);
+          //sum+=md.Type.GetCombinedEffectiveness(o2.Type1,o2.Type2,o2.effects.Type3);
         }
       }
       if (best==-1 || sum>bestSum) {
@@ -4878,7 +4886,7 @@ public partial class Battle{
 // Choose an action.
 // ###############################################################################
   public void pbDefaultChooseEnemyCommand(int index) {
-    if (!pbCanShowFightMenu(index)) {
+    if (!CanShowFightMenu(index)) {
       if (pbEnemyShouldUseItem(index)) return;
       if (pbEnemyShouldWithdraw(index)) return;
       pbAutoChooseMove(index);
@@ -4888,7 +4896,8 @@ public partial class Battle{
       if (pbEnemyShouldUseItem(index)) return;
       if (pbEnemyShouldWithdraw(index)) return;
       if (pbAutoFightMenu(index)) return;
-      if (pbEnemyShouldMegaEvolve(index)) pbRegisterMegaEvolution(index);
+      //ToDo: Uncomment
+      //if (pbEnemyShouldMegaEvolve(index)) pbRegisterMegaEvolution(index);
       pbChooseMoves(index);
     }
   }
@@ -4897,7 +4906,8 @@ public partial class Battle{
 // Other functions.
 // ###############################################################################
   public bool pbDbgPlayerOnly (int idx) {
-    if (!Core.INTERNAL) return true;
+    //ToDo:Uncomment below
+    //if (!Core.INTERNAL) return true;
     //if (idx.respond_to("index"))
     //  return pbOwnedByPlayer(idx.Index);
     return pbOwnedByPlayer(idx);
@@ -4907,7 +4917,7 @@ public partial class Battle{
     int n=0;
     int sum=0;
     //scores.ForEach{ s => sum+=s; n+=1 );
-    foreach(int s in scores) { sum += s; n += 1 };
+    foreach(int s in scores) { sum += s; n += 1; }
     if (n==0) return 0;
     float mean=(float)sum/(float)n;
     float varianceTimesN=0;

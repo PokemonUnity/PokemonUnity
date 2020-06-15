@@ -2627,7 +2627,7 @@ namespace PokemonUnity.Combat
     }
   }
 
-  public bool pbOnActiveOne(Pokemon pkmn,bool onlyabilities=false,bool moldbreaker=false) {
+  public virtual bool pbOnActiveOne(Pokemon pkmn,bool onlyabilities=false,bool moldbreaker=false) {
     if (pkmn.isFainted()) return false;
     if (!onlyabilities) {
       for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards

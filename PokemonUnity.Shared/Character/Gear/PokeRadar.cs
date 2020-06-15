@@ -21,7 +21,7 @@ namespace PokemonUnity
 		/// </summary>
 		public int Ring;
 		public int Rarity;
-		public PokeRadars(int mapx, int mapy, int ring, int rarity)
+		public PokeRadarGrassData(int mapx, int mapy, int ring, int rarity)
 		{
 			X = mapx;
 			Y = mapy;
