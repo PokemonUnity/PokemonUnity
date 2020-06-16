@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{F955B8A7-3B15-FCAA-76F3-928611529034}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -66,7 +67,6 @@
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Base\BaseComponent.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Base\GameEntry.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Base\GameFrameworkComponent.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Runtime\Base\ReferencePoolComponent.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Base\ShutdownType.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Config\ConfigComponent.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Config\ConfigHelperBase.cs" />
@@ -99,6 +99,7 @@
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Debugger\DebuggerComponent.InputSummaryInformationWindow.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Debugger\DebuggerComponent.InputTouchInformationWindow.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Debugger\DebuggerComponent.LogNode.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Debugger\DebuggerComponent.NetworkInformationWindow.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Debugger\DebuggerComponent.ObjectPoolInformationWindow.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Debugger\DebuggerComponent.OperationsWindow.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Debugger\DebuggerComponent.PathInformationWindow.cs" />
@@ -158,11 +159,25 @@
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Network\NetworkMissHeartBeatEventArgs.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\ObjectPool\ObjectPoolComponent.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Procedure\ProcedureComponent.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\ReferencePool\ReferencePoolComponent.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\ReferencePool\ReferenceStrictCheckType.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.LocalVersionListDeserializeCallback.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.LocalVersionListSerializeCallback.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.PackageVersionListDeserializeCallback.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.PackageVersionListSerializeCallback.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.ResourcePackVersionListDeserializeCallback.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.ResourcePackVersionListSerializeCallback.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.UpdatableVersionListDeserializeCallback.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.UpdatableVersionListSerializeCallback.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\BuiltinVersionListSerializer.UpdatableVersionListTryGetValueCallback.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\DefaultLoadResourceAgentHelper.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\DefaultResourceHelper.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\EditorResourceComponent.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\LoadResourceAgentHelperBase.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\ReadWritePathType.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\ResourceApplyFailureEventArgs.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\ResourceApplySuccessEventArgs.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\ResourceComponent.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\ResourceHelperBase.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\ResourceUpdateChangedEventArgs.cs" />
@@ -170,6 +185,7 @@
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\ResourceUpdateStartEventArgs.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\ResourceUpdateSuccessEventArgs.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Resource\SceneAsset.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Scene\ActiveSceneChangedEventArgs.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Scene\LoadSceneDependencyAssetEventArgs.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Scene\LoadSceneFailureEventArgs.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Scene\LoadSceneSuccessEventArgs.cs" />
@@ -177,7 +193,10 @@
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Scene\SceneComponent.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Scene\UnloadSceneFailureEventArgs.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Scene\UnloadSceneSuccessEventArgs.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Setting\DefaultSetting.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Setting\DefaultSettingHelper.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Setting\DefaultSettingSerializer.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Setting\PlayerPrefsSettingHelper.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Setting\SettingComponent.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Setting\SettingHelperBase.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Sound\DefaultSoundAgentHelper.cs" />
@@ -208,9 +227,9 @@
     <Compile Include="Assets\GameFramework\Scripts\Runtime\UI\UIGroupHelperBase.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\UI\UIIntKey.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\UI\UIStringKey.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Runtime\Utility\BinaryExtension.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Utility\DefaultJsonHelper.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Utility\DefaultLogHelper.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Runtime\Utility\DefaultProfilerHelper.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Utility\DefaultVersionHelper.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Utility\DefaultZipHelper.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Runtime\Utility\Helper.cs" />
@@ -485,26 +504,29 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="GameFramework">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\GameFramework.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\LitJson.dll</HintPath>
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/LitJson.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\protobuf-net.dll</HintPath>
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="PokemonUnity.Shared">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.Linq">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\SQLite\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="GameFramework">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/PKUE/GameFramework.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Pokemon Unity\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/PKUE/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PokemonUnity.Offline">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/PKUE/PokemonUnity.Offline.dll</HintPath>
+    </Reference>
+    <Reference Include="PokemonUnity.Shared">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/PKUE/PokemonUnity.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

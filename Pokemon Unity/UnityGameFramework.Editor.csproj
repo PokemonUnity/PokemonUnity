@@ -63,39 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleAnalyzer\AssetBundleAnalyzer.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleAnalyzer\AssetBundleAnalyzerController.CircularDependencyChecker.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleAnalyzer\AssetBundleAnalyzerController.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleAnalyzer\AssetBundleAnalyzerController.Stamp.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleAnalyzer\AssetsOrder.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleAnalyzer\DependencyData.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleAnalyzer\ScatteredAssetsOrder.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\AssetBundleBuilder.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\AssetBundleBuilderConfigPathAttribute.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\AssetBundleBuilderController.AssetBundleCode.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\AssetBundleBuilderController.AssetBundleData.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\AssetBundleBuilderController.AssetData.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\AssetBundleBuilderController.BuildReport.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\AssetBundleBuilderController.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\AssetBundleBuilderController.VersionListData.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\BuildAssetBundle.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\IBuildEventHandler.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleBuilder\Platform.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleCollection\Asset.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleCollection\AssetBundle.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleCollection\AssetBundleCollection.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleCollection\AssetBundleCollectionConfigPathAttribute.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleCollection\AssetBundleLoadType.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleCollection\AssetBundleType.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleEditor\AssetBundleEditor.AssetBundleFolder.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleEditor\AssetBundleEditor.AssetBundleItem.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleEditor\AssetBundleEditor.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleEditor\AssetBundleEditor.MenuState.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleEditor\AssetBundleEditorConfigPathAttribute.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleEditor\AssetBundleEditorController.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleEditor\AssetSorterType.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleEditor\SourceAsset.cs" />
-    <Compile Include="Assets\GameFramework\Scripts\Editor\AssetBundleEditor\SourceFolder.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Editor\DataTableProcessor\DataTableCodeGenerator.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Editor\DataTableProcessor\DataTableProcessor.BoolProcessor.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Editor\DataTableProcessor\DataTableProcessor.ByteProcessor.cs" />
@@ -158,6 +125,44 @@
     <Compile Include="Assets\GameFramework\Scripts\Editor\Misc\OpenFolder.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Editor\Misc\ScriptingDefineSymbols.cs" />
     <Compile Include="Assets\GameFramework\Scripts\Editor\Misc\Type.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceAnalyzer\AssetsOrder.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceAnalyzer\DependencyData.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceAnalyzer\ResourceAnalyzer.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceAnalyzer\ResourceAnalyzerController.CircularDependencyChecker.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceAnalyzer\ResourceAnalyzerController.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceAnalyzer\ResourceAnalyzerController.Stamp.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceAnalyzer\ScatteredAssetsOrder.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\BuildResources.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\IBuildEventHandler.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\Platform.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\ResourceBuilder.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\ResourceBuilderConfigPathAttribute.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\ResourceBuilderController.AssetData.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\ResourceBuilderController.BinaryBuild.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\ResourceBuilderController.BuildReport.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\ResourceBuilderController.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\ResourceBuilderController.ResourceCode.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\ResourceBuilderController.ResourceData.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceBuilder\ResourceBuilderController.VersionListData.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceCollection\Asset.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceCollection\AssetType.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceCollection\LoadType.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceCollection\Resource.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceCollection\ResourceCollection.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceCollection\ResourceCollectionConfigPathAttribute.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceEditor\AssetSorterType.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceEditor\ResourceEditor.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceEditor\ResourceEditor.MenuState.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceEditor\ResourceEditor.ResourceFolder.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceEditor\ResourceEditor.ResourceItem.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceEditor\ResourceEditorConfigPathAttribute.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceEditor\ResourceEditorController.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceEditor\SourceAsset.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceEditor\SourceFolder.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourcePackBuilder\ResourcePackBuilder.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourcePackBuilder\ResourcePackBuilderController.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceSyncTools\ResourceSyncTools.cs" />
+    <Compile Include="Assets\GameFramework\Scripts\Editor\ResourceSyncTools\ResourceSyncToolsController.cs" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -392,26 +397,29 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="GameFramework">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\GameFramework.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\LitJson.dll</HintPath>
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/LitJson.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\protobuf-net.dll</HintPath>
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="PokemonUnity.Shared">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.Linq">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\SQLite\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="GameFramework">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/PKUE/GameFramework.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Pokemon Unity\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/PKUE/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PokemonUnity.Offline">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/PKUE/PokemonUnity.Offline.dll</HintPath>
+    </Reference>
+    <Reference Include="PokemonUnity.Shared">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/PKUE/PokemonUnity.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

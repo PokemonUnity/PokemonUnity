@@ -28,11 +28,12 @@ namespace GameFramework
             /// <returns>计算后的 CRC32。</returns>
             public static int GetCrc32(byte[] bytes)
             {
+                //return s_Algorithm.ComputeHash(bytes);
                 if (bytes == null)
                 {
                     throw new GameFrameworkException("Bytes is invalid.");
                 }
-
+                
                 return GetCrc32(bytes, 0, bytes.Length);
             }
 
