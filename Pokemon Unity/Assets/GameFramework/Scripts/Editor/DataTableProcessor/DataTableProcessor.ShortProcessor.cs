@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using System.IO;
@@ -44,9 +44,9 @@ namespace UnityGameFramework.Editor.DataTableTools
                 return short.Parse(value);
             }
 
-            public override void WriteToStream(BinaryWriter stream, string value)
+            public override void WriteToStream(DataTableProcessor dataTableProcessor, BinaryWriter binaryWriter, string value)
             {
-                stream.Write(Parse(value));
+                binaryWriter.Write(Parse(value));
             }
         }
     }

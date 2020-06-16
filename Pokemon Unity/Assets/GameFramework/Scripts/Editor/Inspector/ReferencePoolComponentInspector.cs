@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -21,25 +21,29 @@ namespace UnityGameFramework.Editor
     {
         private readonly Dictionary<string, List<ReferencePoolInfo>> m_ReferencePoolInfos = new Dictionary<string, List<ReferencePoolInfo>>();
         private readonly HashSet<string> m_OpenedItems = new HashSet<string>();
+
+        private SerializedProperty m_EnableStrictCheck = null;
+
         private bool m_ShowFullClassName = false;
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
-            if (!EditorApplication.isPlaying)
-            {
-                EditorGUILayout.HelpBox("Available during runtime only.", MessageType.Info);
-                return;
-            }
+            serializedObject.Update();
 
             ReferencePoolComponent t = (ReferencePoolComponent)target;
 
-            if (IsPrefabInHierarchy(t.gameObject))
+            if (EditorApplication.isPlaying && IsPrefabInHierarchy(t.gameObject))
             {
+                bool enableStrictCheck = EditorGUILayout.Toggle("Enable Strict Check", t.EnableStrictCheck);
+                if (enableStrictCheck != t.EnableStrictCheck)
+                {
+                    t.EnableStrictCheck = enableStrictCheck;
+                }
+
                 EditorGUILayout.LabelField("Reference Pool Count", ReferencePool.Count.ToString());
                 m_ShowFullClassName = EditorGUILayout.Toggle("Show Full Class Name", m_ShowFullClassName);
-
                 m_ReferencePoolInfos.Clear();
                 ReferencePoolInfo[] referencePoolInfos = ReferencePool.GetAllReferencePoolInfos();
                 foreach (ReferencePoolInfo referencePoolInfo in referencePoolInfos)
@@ -75,6 +79,7 @@ namespace UnityGameFramework.Editor
                     {
                         EditorGUILayout.BeginVertical("box");
                         {
+                            EditorGUILayout.LabelField(m_ShowFullClassName ? "Full Class Name" : "Class Name", "Unused\tUsing\tAcquire\tRelease\tAdd\tRemove");
                             assemblyReferencePoolInfo.Value.Sort(Comparison);
                             foreach (ReferencePoolInfo referencePoolInfo in assemblyReferencePoolInfo.Value)
                             {
@@ -101,7 +106,7 @@ namespace UnityGameFramework.Editor
                                     }
                                     catch (Exception exception)
                                     {
-                                        Debug.LogError(Utility.Text.Format("Export reference pool CSV data to '{0}' failure, exception is '{1}'.", exportFileName, exception.Message));
+                                        Debug.LogError(Utility.Text.Format("Export reference pool CSV data to '{0}' failure, exception is '{1}'.", exportFileName, exception.ToString()));
                                     }
                                 }
                             }
@@ -112,17 +117,24 @@ namespace UnityGameFramework.Editor
                     }
                 }
             }
+            else
+            {
+                EditorGUILayout.PropertyField(m_EnableStrictCheck);
+            }
+
+            serializedObject.ApplyModifiedProperties();
 
             Repaint();
         }
 
         private void OnEnable()
         {
+            m_EnableStrictCheck = serializedObject.FindProperty("m_EnableStrictCheck");
         }
 
         private void DrawReferencePoolInfo(ReferencePoolInfo referencePoolInfo)
         {
-            EditorGUILayout.LabelField(m_ShowFullClassName ? referencePoolInfo.Type.FullName : referencePoolInfo.Type.Name, Utility.Text.Format("[Unused]{0} [Using]{1} [Acquire]{2} [Release]{3} [Add]{4} [Remove]{5}", referencePoolInfo.UnusedReferenceCount.ToString(), referencePoolInfo.UsingReferenceCount.ToString(), referencePoolInfo.AcquireReferenceCount.ToString(), referencePoolInfo.ReleaseReferenceCount.ToString(), referencePoolInfo.AddReferenceCount.ToString(), referencePoolInfo.RemoveReferenceCount.ToString()));
+            EditorGUILayout.LabelField(m_ShowFullClassName ? referencePoolInfo.Type.FullName : referencePoolInfo.Type.Name, Utility.Text.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", referencePoolInfo.UnusedReferenceCount.ToString(), referencePoolInfo.UsingReferenceCount.ToString(), referencePoolInfo.AcquireReferenceCount.ToString(), referencePoolInfo.ReleaseReferenceCount.ToString(), referencePoolInfo.AddReferenceCount.ToString(), referencePoolInfo.RemoveReferenceCount.ToString()));
         }
 
         private int Comparison(ReferencePoolInfo a, ReferencePoolInfo b)

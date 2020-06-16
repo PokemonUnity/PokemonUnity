@@ -1,14 +1,15 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -18,69 +19,120 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     public class DefaultDataTableHelper : DataTableHelperBase
     {
+        private static readonly string[] EmptyStringArray = new string[] { };
+        private static readonly string BytesAssetExtension = ".bytes";
+
         private DataTableComponent m_DataTableComponent = null;
         private ResourceComponent m_ResourceComponent = null;
 
         /// <summary>
         /// 获取数据表行片段。
         /// </summary>
-        /// <param name="text">要解析的数据表文本。</param>
+        /// <param name="dataTableData">要解析的数据表数据。</param>
         /// <returns>数据表行片段。</returns>
-        public override IEnumerable<GameFrameworkSegment<string>> GetDataRowSegments(string text)
+        public override GameFrameworkDataSegment[] GetDataRowSegments(object dataTableData)
         {
-            List<GameFrameworkSegment<string>> dataRowSegments = new List<GameFrameworkSegment<string>>();
-            GameFrameworkSegment<string> dataRowSegment;
-            int position = 0;
-            while ((dataRowSegment = ReadLine(text, ref position)) != default(GameFrameworkSegment<string>))
+            try
             {
-                if (text[dataRowSegment.Offset] == '#')
+                string dataTableText = dataTableData as string;
+                if (dataTableText != null)
                 {
-                    continue;
+                    List<GameFrameworkDataSegment> dataRowSegments = new List<GameFrameworkDataSegment>();
+                    GameFrameworkDataSegment dataRowSegment;
+                    int position = 0;
+                    while ((dataRowSegment = ReadDataRowSegment(dataTableText, ref position)) != default(GameFrameworkDataSegment))
+                    {
+                        if (dataTableText[dataRowSegment.Offset] == '#')
+                        {
+                            continue;
+                        }
+
+                        dataRowSegments.Add(dataRowSegment);
+                    }
+
+                    return dataRowSegments.ToArray();
                 }
 
-                dataRowSegments.Add(dataRowSegment);
-            }
+                byte[] dataTableBytes = dataTableData as byte[];
+                if (dataTableBytes != null)
+                {
+                    using (MemoryStream memoryStream = new MemoryStream(dataTableBytes, false))
+                    {
+                        using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
+                        {
+                            int stringsOffset = binaryReader.ReadInt32();
+                            int dataRowSegmentCount = binaryReader.Read7BitEncodedInt32();
+                            GameFrameworkDataSegment[] dataRowSegments = new GameFrameworkDataSegment[dataRowSegmentCount];
+                            for (int i = 0; i < dataRowSegmentCount; i++)
+                            {
+                                int length = binaryReader.Read7BitEncodedInt32();
+                                dataRowSegments[i] = new GameFrameworkDataSegment(dataTableBytes, (int)binaryReader.BaseStream.Position, length);
+                                binaryReader.BaseStream.Position += length;
+                            }
 
-            return dataRowSegments;
+                            if (binaryReader.BaseStream.Position != stringsOffset)
+                            {
+                                throw new GameFrameworkException("Verification failure.");
+                            }
+
+                            return dataRowSegments;
+                        }
+                    }
+                }
+
+                Log.Warning("Can not get data row segments which type '{0}' is invalid.", dataTableData.GetType().FullName);
+                return null;
+            }
+            catch (Exception exception)
+            {
+                Log.Warning("Can not get data row segments with exception '{0}'.", exception.ToString());
+                return null;
+            }
         }
 
         /// <summary>
-        /// 获取数据表行片段。
+        /// 获取数据表用户自定义数据。
         /// </summary>
-        /// <param name="bytes">要解析的数据表二进制流。</param>
-        /// <returns>数据表行片段。</returns>
-        public override IEnumerable<GameFrameworkSegment<byte[]>> GetDataRowSegments(byte[] bytes)
+        /// <param name="dataTableData">要解析的数据表数据。</param>
+        /// <returns>数据表用户自定义数据。</returns>
+        public override object GetDataTableUserData(object dataTableData)
         {
-            List<GameFrameworkSegment<byte[]>> dataRowSegments = new List<GameFrameworkSegment<byte[]>>();
-            using (MemoryStream stream = new MemoryStream(bytes, false))
+            try
             {
-                while (stream.Position < stream.Length)
+                string dataTableText = dataTableData as string;
+                if (dataTableText != null)
                 {
-                    int length = ReadInt32(stream);
-                    dataRowSegments.Add(new GameFrameworkSegment<byte[]>(bytes, (int)stream.Position, length));
-                    stream.Position += length;
+                    return null;
                 }
+
+                byte[] dataTableBytes = dataTableData as byte[];
+                if (dataTableBytes != null)
+                {
+                    using (MemoryStream memoryStream = new MemoryStream(dataTableBytes, false))
+                    {
+                        using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
+                        {
+                            binaryReader.BaseStream.Position = binaryReader.ReadInt32();
+                            int stringCount = binaryReader.Read7BitEncodedInt32();
+                            string[] strings = stringCount > 0 ? new string[stringCount] : EmptyStringArray;
+                            for (int i = 0; i < stringCount; i++)
+                            {
+                                strings[i] = binaryReader.ReadString();
+                            }
+
+                            return strings;
+                        }
+                    }
+                }
+
+                Log.Warning("Can not get data table user data which type '{0}' is invalid.", dataTableData.GetType().FullName);
+                return null;
             }
-
-            return dataRowSegments;
-        }
-
-        /// <summary>
-        /// 获取数据表行片段。
-        /// </summary>
-        /// <param name="stream">要解析的数据表二进制流。</param>
-        /// <returns>数据表行片段。</returns>
-        public override IEnumerable<GameFrameworkSegment<Stream>> GetDataRowSegments(Stream stream)
-        {
-            List<GameFrameworkSegment<Stream>> dataRowSegments = new List<GameFrameworkSegment<Stream>>();
-            while (stream.Position < stream.Length)
+            catch (Exception exception)
             {
-                int length = ReadInt32(stream);
-                dataRowSegments.Add(new GameFrameworkSegment<Stream>(stream, (int)stream.Position, length));
-                stream.Position += length;
+                Log.Warning("Can not get data table user data with exception '{0}'.", exception.ToString());
+                return null;
             }
-
-            return dataRowSegments;
         }
 
         /// <summary>
@@ -98,76 +150,73 @@ namespace UnityGameFramework.Runtime
         /// <param name="dataRowType">数据表行的类型。</param>
         /// <param name="dataTableName">数据表名称。</param>
         /// <param name="dataTableNameInType">数据表类型下的名称。</param>
-        /// <param name="dataTableAsset">数据表资源。</param>
-        /// <param name="loadType">数据表加载方式。</param>
+        /// <param name="dataTableAssetName">数据表资源名称。</param>
+        /// <param name="dataTableObject">数据表对象。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>是否加载成功。</returns>
-        protected override bool LoadDataTable(Type dataRowType, string dataTableName, string dataTableNameInType, object dataTableAsset, LoadType loadType, object userData)
+        protected override bool LoadDataTable(Type dataRowType, string dataTableName, string dataTableNameInType, string dataTableAssetName, object dataTableObject, object userData)
         {
-            TextAsset textAsset = dataTableAsset as TextAsset;
-            if (textAsset == null)
-            {
-                Log.Warning("Data table asset '{0}' is invalid.", dataTableName);
-                return false;
-            }
-
             if (dataRowType == null)
             {
                 Log.Warning("Data row type is invalid.");
                 return false;
             }
 
-            switch (loadType)
+            TextAsset dataTableTextAsset = dataTableObject as TextAsset;
+            if (dataTableTextAsset != null)
             {
-                case LoadType.Text:
-                    m_DataTableComponent.CreateDataTable(dataRowType, dataTableNameInType, textAsset.text);
-                    break;
+                if (dataTableAssetName.EndsWith(BytesAssetExtension))
+                {
+                    m_DataTableComponent.CreateDataTable(dataRowType, dataTableNameInType, dataTableTextAsset.bytes);
+                }
+                else
+                {
+                    m_DataTableComponent.CreateDataTable(dataRowType, dataTableNameInType, dataTableTextAsset.text);
+                }
 
-                case LoadType.Bytes:
-                    m_DataTableComponent.CreateDataTable(dataRowType, dataTableNameInType, textAsset.bytes);
-                    break;
-
-                case LoadType.Stream:
-                    using (MemoryStream stream = new MemoryStream(textAsset.bytes, false))
-                    {
-                        m_DataTableComponent.CreateDataTable(dataRowType, dataTableNameInType, stream);
-                    }
-                    break;
-
-                default:
-                    Log.Warning("Unknown load type.");
-                    return false;
+                return true;
             }
 
-            return true;
+            byte[] dataTableBytes = dataTableObject as byte[];
+            if (dataTableBytes != null)
+            {
+                if (dataTableAssetName.EndsWith(BytesAssetExtension))
+                {
+                    m_DataTableComponent.CreateDataTable(dataRowType, dataTableNameInType, dataTableBytes);
+                }
+                else
+                {
+                    m_DataTableComponent.CreateDataTable(dataRowType, dataTableNameInType, Utility.Converter.GetString(dataTableBytes));
+                }
+
+                return true;
+            }
+
+            Log.Warning("Data table object '{0}' is invalid.", dataTableName);
+            return false;
         }
 
-        private int ReadInt32(Stream stream)
+        private GameFrameworkDataSegment ReadDataRowSegment(string dataTableText, ref int position)
         {
-            return stream.ReadByte() | (stream.ReadByte() << 8) | (stream.ReadByte() << 16) | (stream.ReadByte() << 24);
-        }
-
-        private GameFrameworkSegment<string> ReadLine(string text, ref int position)
-        {
-            int length = text.Length;
+            int length = dataTableText.Length;
             int offset = position;
             while (offset < length)
             {
-                char ch = text[offset];
+                char ch = dataTableText[offset];
                 switch (ch)
                 {
                     case '\r':
                     case '\n':
                         if (offset - position > 0)
                         {
-                            GameFrameworkSegment<string> segment = new GameFrameworkSegment<string>(text, position, offset - position);
+                            GameFrameworkDataSegment dataRowSegment = new GameFrameworkDataSegment(dataTableText, position, offset - position);
                             position = offset + 1;
-                            if (((ch == '\r') && (position < length)) && (text[position] == '\n'))
+                            if ((ch == '\r') && (position < length) && (dataTableText[position] == '\n'))
                             {
                                 position++;
                             }
 
-                            return segment;
+                            return dataRowSegment;
                         }
 
                         offset++;
@@ -182,12 +231,12 @@ namespace UnityGameFramework.Runtime
 
             if (offset > position)
             {
-                GameFrameworkSegment<string> segment = new GameFrameworkSegment<string>(text, position, offset - position);
+                GameFrameworkDataSegment dataRowSegment = new GameFrameworkDataSegment(dataTableText, position, offset - position);
                 position = offset;
-                return segment;
+                return dataRowSegment;
             }
 
-            return default(GameFrameworkSegment<string>);
+            return default(GameFrameworkDataSegment);
         }
 
         private void Start()

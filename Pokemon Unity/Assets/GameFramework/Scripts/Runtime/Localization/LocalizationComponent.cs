@@ -1,14 +1,13 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
 using GameFramework.Localization;
 using GameFramework.Resource;
-using System.IO;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -140,7 +139,7 @@ namespace UnityGameFramework.Runtime
             transform.localScale = Vector3.one;
 
             m_LocalizationManager.SetLocalizationHelper(localizationHelper);
-            m_LocalizationManager.Language = (baseComponent.EditorResourceMode && baseComponent.EditorLanguage != Language.Unspecified ? baseComponent.EditorLanguage : m_LocalizationManager.SystemLanguage);
+            m_LocalizationManager.Language = baseComponent.EditorResourceMode && baseComponent.EditorLanguage != Language.Unspecified ? baseComponent.EditorLanguage : m_LocalizationManager.SystemLanguage;
         }
 
         /// <summary>
@@ -148,10 +147,9 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="dictionaryName">字典名称。</param>
         /// <param name="dictionaryAssetName">字典资源名称。</param>
-        /// <param name="loadType">字典加载方式。</param>
-        public void LoadDictionary(string dictionaryName, string dictionaryAssetName, LoadType loadType)
+        public void LoadDictionary(string dictionaryName, string dictionaryAssetName)
         {
-            LoadDictionary(dictionaryName, dictionaryAssetName, loadType, DefaultPriority, null);
+            LoadDictionary(dictionaryName, dictionaryAssetName, DefaultPriority, null);
         }
 
         /// <summary>
@@ -159,11 +157,10 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="dictionaryName">字典名称。</param>
         /// <param name="dictionaryAssetName">字典资源名称。</param>
-        /// <param name="loadType">字典加载方式。</param>
         /// <param name="priority">加载字典资源的优先级。</param>
-        public void LoadDictionary(string dictionaryName, string dictionaryAssetName, LoadType loadType, int priority)
+        public void LoadDictionary(string dictionaryName, string dictionaryAssetName, int priority)
         {
-            LoadDictionary(dictionaryName, dictionaryAssetName, loadType, priority, null);
+            LoadDictionary(dictionaryName, dictionaryAssetName, priority, null);
         }
 
         /// <summary>
@@ -171,11 +168,10 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="dictionaryName">字典名称。</param>
         /// <param name="dictionaryAssetName">字典资源名称。</param>
-        /// <param name="loadType">字典加载方式。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void LoadDictionary(string dictionaryName, string dictionaryAssetName, LoadType loadType, object userData)
+        public void LoadDictionary(string dictionaryName, string dictionaryAssetName, object userData)
         {
-            LoadDictionary(dictionaryName, dictionaryAssetName, loadType, DefaultPriority, userData);
+            LoadDictionary(dictionaryName, dictionaryAssetName, DefaultPriority, userData);
         }
 
         /// <summary>
@@ -183,10 +179,9 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="dictionaryName">字典名称。</param>
         /// <param name="dictionaryAssetName">字典资源名称。</param>
-        /// <param name="loadType">字典加载方式。</param>
         /// <param name="priority">加载字典资源的优先级。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void LoadDictionary(string dictionaryName, string dictionaryAssetName, LoadType loadType, int priority, object userData)
+        public void LoadDictionary(string dictionaryName, string dictionaryAssetName, int priority, object userData)
         {
             if (string.IsNullOrEmpty(dictionaryName))
             {
@@ -194,70 +189,28 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            m_LocalizationManager.LoadDictionary(dictionaryAssetName, loadType, priority, LoadDictionaryInfo.Create(dictionaryName, userData));
+            m_LocalizationManager.LoadDictionary(dictionaryAssetName, priority, LoadDictionaryInfo.Create(dictionaryName, userData));
         }
 
         /// <summary>
         /// 解析字典。
         /// </summary>
-        /// <param name="text">要解析的字典文本。</param>
+        /// <param name="dictionaryData">要解析的字典数据。</param>
         /// <returns>是否解析字典成功。</returns>
-        public bool ParseDictionary(string text)
+        public bool ParseDictionary(object dictionaryData)
         {
-            return m_LocalizationManager.ParseDictionary(text);
+            return m_LocalizationManager.ParseDictionary(dictionaryData);
         }
 
         /// <summary>
         /// 解析字典。
         /// </summary>
-        /// <param name="text">要解析的字典文本。</param>
+        /// <param name="dictionaryData">要解析的字典数据。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>是否解析字典成功。</returns>
-        public bool ParseDictionary(string text, object userData)
+        public bool ParseDictionary(object dictionaryData, object userData)
         {
-            return m_LocalizationManager.ParseDictionary(text, userData);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="bytes">要解析的字典二进制流。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseDictionary(byte[] bytes)
-        {
-            return m_LocalizationManager.ParseDictionary(bytes);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="bytes">要解析的字典二进制流。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseDictionary(byte[] bytes, object userData)
-        {
-            return m_LocalizationManager.ParseDictionary(bytes, userData);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="stream">要解析的字典二进制流。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseDictionary(Stream stream)
-        {
-            return m_LocalizationManager.ParseDictionary(stream);
-        }
-
-        /// <summary>
-        /// 解析字典。
-        /// </summary>
-        /// <param name="stream">要解析的字典二进制流。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        /// <returns>是否解析字典成功。</returns>
-        public bool ParseDictionary(Stream stream, object userData)
-        {
-            return m_LocalizationManager.ParseDictionary(stream, userData);
+            return m_LocalizationManager.ParseDictionary(dictionaryData, userData);
         }
 
         /// <summary>
@@ -345,6 +298,14 @@ namespace UnityGameFramework.Runtime
         public bool RemoveRawString(string key)
         {
             return m_LocalizationManager.RemoveRawString(key);
+        }
+
+        /// <summary>
+        /// 清空所有字典。
+        /// </summary>
+        public void RemoveAllRawStrings()
+        {
+            m_LocalizationManager.RemoveAllRawStrings();
         }
 
         private void OnLoadDictionarySuccess(object sender, GameFramework.Localization.LoadDictionarySuccessEventArgs e)

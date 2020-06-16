@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 #if !UNITY_2018_3_OR_NEWER
@@ -177,7 +177,7 @@ namespace UnityGameFramework.Runtime
         /// 释放资源。
         /// </summary>
         /// <param name="disposing">释放资源标记。</param>
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (m_Disposed)
             {
@@ -212,6 +212,11 @@ namespace UnityGameFramework.Runtime
                 ReferencePool.Release(downloadAgentHelperUpdateLengthEventArgs);
             }
 
+            if (m_WWW == null)
+            {
+                return;
+            }
+
             if (!m_WWW.isDone)
             {
                 return;
@@ -219,7 +224,7 @@ namespace UnityGameFramework.Runtime
 
             if (!string.IsNullOrEmpty(m_WWW.error))
             {
-                DownloadAgentHelperErrorEventArgs dodwnloadAgentHelperErrorEventArgs = DownloadAgentHelperErrorEventArgs.Create(m_WWW.error);
+                DownloadAgentHelperErrorEventArgs dodwnloadAgentHelperErrorEventArgs = DownloadAgentHelperErrorEventArgs.Create(m_WWW.error.StartsWith(RangeNotSatisfiableErrorCode.ToString()), m_WWW.error);
                 m_DownloadAgentHelperErrorEventHandler(this, dodwnloadAgentHelperErrorEventArgs);
                 ReferencePool.Release(dodwnloadAgentHelperErrorEventArgs);
             }

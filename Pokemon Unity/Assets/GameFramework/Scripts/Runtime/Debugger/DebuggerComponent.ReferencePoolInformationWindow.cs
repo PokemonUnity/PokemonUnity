@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -27,6 +27,7 @@ namespace UnityGameFramework.Runtime
                 GUILayout.Label("<b>Reference Pool Information</b>");
                 GUILayout.BeginVertical("box");
                 {
+                    DrawItem("Enable Strict Check", ReferencePool.EnableStrictCheck.ToString());
                     DrawItem("Reference Pool Count", ReferencePool.Count.ToString());
                 }
                 GUILayout.EndVertical();

@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -71,10 +71,7 @@ namespace UnityGameFramework.Runtime
         private string m_UpdatePrefixUri = null;
 
         [SerializeField]
-        private int m_UpdateFileCacheLength = OneMegaBytes;
-
-        [SerializeField]
-        private int m_GenerateReadWriteListLength = OneMegaBytes;
+        private int m_GenerateReadWriteVersionListLength = OneMegaBytes;
 
         [SerializeField]
         private int m_UpdateRetryCount = 3;
@@ -149,6 +146,61 @@ namespace UnityGameFramework.Runtime
             get
             {
                 return m_ResourceManager.CurrentVariant;
+            }
+        }
+
+        /// <summary>
+        /// 获取单机模式版本资源列表序列化器。
+        /// </summary>
+        public PackageVersionListSerializer PackageVersionListSerializer
+        {
+            get
+            {
+                return m_ResourceManager.PackageVersionListSerializer;
+            }
+        }
+
+        /// <summary>
+        /// 获取可更新模式版本资源列表序列化器。
+        /// </summary>
+        public UpdatableVersionListSerializer UpdatableVersionListSerializer
+        {
+            get
+            {
+                return m_ResourceManager.UpdatableVersionListSerializer;
+            }
+        }
+
+        /// <summary>
+        /// 获取本地只读区版本资源列表序列化器。
+        /// </summary>
+        public ReadOnlyVersionListSerializer ReadOnlyVersionListSerializer
+        {
+            get
+            {
+                return m_ResourceManager.ReadOnlyVersionListSerializer;
+            }
+        }
+
+        /// <summary>
+        /// 获取本地读写区版本资源列表序列化器。
+        /// </summary>
+        public ReadWriteVersionListSerializer ReadWriteVersionListSerializer
+        {
+            get
+            {
+                return m_ResourceManager.ReadWriteVersionListSerializer;
+            }
+        }
+
+        /// <summary>
+        /// 获取资源包版本资源列表序列化器。
+        /// </summary>
+        public ResourcePackVersionListSerializer ResourcePackVersionListSerializer
+        {
+            get
+            {
+                return m_ResourceManager.ResourcePackVersionListSerializer;
             }
         }
 
@@ -238,32 +290,39 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 获取或设置更新文件缓存大小。
+        /// 获取或设置每更新多少字节的资源，重新生成一次版本资源列表。
         /// </summary>
-        public int UpdateFileCacheLength
+        public int GenerateReadWriteVersionListLength
         {
             get
             {
-                return m_ResourceManager.UpdateFileCacheLength;
+                return m_ResourceManager.GenerateReadWriteVersionListLength;
             }
             set
             {
-                m_ResourceManager.UpdateFileCacheLength = m_UpdateFileCacheLength = value;
+                m_ResourceManager.GenerateReadWriteVersionListLength = m_GenerateReadWriteVersionListLength = value;
             }
         }
 
         /// <summary>
-        /// 获取或设置每下载多少字节的资源，刷新一次资源列表。
+        /// 获取正在应用的资源包路径。
         /// </summary>
-        public int GenerateReadWriteListLength
+        public string ApplyingResourcePackPath
         {
             get
             {
-                return m_ResourceManager.GenerateReadWriteListLength;
+                return m_ResourceManager.ApplyingResourcePackPath;
             }
-            set
+        }
+
+        /// <summary>
+        /// 获取等待应用资源数量。
+        /// </summary>
+        public int ApplyWaitingCount
+        {
+            get
             {
-                m_ResourceManager.GenerateReadWriteListLength = m_GenerateReadWriteListLength = value;
+                return m_ResourceManager.ApplyWaitingCount;
             }
         }
 
@@ -522,6 +581,8 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
+            m_ResourceManager.ResourceApplySuccess += OnResourceApplySuccess;
+            m_ResourceManager.ResourceApplyFailure += OnResourceApplyFailure;
             m_ResourceManager.ResourceUpdateStart += OnResourceUpdateStart;
             m_ResourceManager.ResourceUpdateChanged += OnResourceUpdateChanged;
             m_ResourceManager.ResourceUpdateSuccess += OnResourceUpdateSuccess;
@@ -558,11 +619,10 @@ namespace UnityGameFramework.Runtime
             m_ResourceManager.ResourceCapacity = m_ResourceCapacity;
             m_ResourceManager.ResourceExpireTime = m_ResourceExpireTime;
             m_ResourceManager.ResourcePriority = m_ResourcePriority;
-            if (m_ResourceMode == ResourceMode.Updatable)
+            if (m_ResourceMode == ResourceMode.Updatable || m_ResourceMode == ResourceMode.UpdatableWhilePlaying)
             {
                 m_ResourceManager.UpdatePrefixUri = m_UpdatePrefixUri;
-                m_ResourceManager.UpdateFileCacheLength = m_UpdateFileCacheLength;
-                m_ResourceManager.GenerateReadWriteListLength = m_GenerateReadWriteListLength;
+                m_ResourceManager.GenerateReadWriteVersionListLength = m_GenerateReadWriteVersionListLength;
                 m_ResourceManager.UpdateRetryCount = m_UpdateRetryCount;
             }
 
@@ -582,7 +642,7 @@ namespace UnityGameFramework.Runtime
 
             if (m_InstanceRoot == null)
             {
-                m_InstanceRoot = (new GameObject("Load Resource Agent Instances")).transform;
+                m_InstanceRoot = new GameObject("Load Resource Agent Instances").transform;
                 m_InstanceRoot.SetParent(gameObject.transform);
                 m_InstanceRoot.localScale = Vector3.one;
             }
@@ -624,6 +684,28 @@ namespace UnityGameFramework.Runtime
         public void SetResourceMode(ResourceMode resourceMode)
         {
             m_ResourceManager.SetResourceMode(resourceMode);
+            switch (resourceMode)
+            {
+                case ResourceMode.Package:
+                    m_ResourceManager.PackageVersionListSerializer.RegisterDeserializeCallback(0, BuiltinVersionListSerializer.PackageVersionListDeserializeCallback_V0);
+                    m_ResourceManager.PackageVersionListSerializer.RegisterDeserializeCallback(1, BuiltinVersionListSerializer.PackageVersionListDeserializeCallback_V1);
+                    break;
+
+                case ResourceMode.Updatable:
+                case ResourceMode.UpdatableWhilePlaying:
+                    m_ResourceManager.UpdatableVersionListSerializer.RegisterDeserializeCallback(0, BuiltinVersionListSerializer.UpdatableVersionListDeserializeCallback_V0);
+                    m_ResourceManager.UpdatableVersionListSerializer.RegisterDeserializeCallback(1, BuiltinVersionListSerializer.UpdatableVersionListDeserializeCallback_V1);
+                    m_ResourceManager.UpdatableVersionListSerializer.RegisterTryGetValueCallback(0, BuiltinVersionListSerializer.UpdatableVersionListTryGetValueCallback_V0);
+                    m_ResourceManager.UpdatableVersionListSerializer.RegisterTryGetValueCallback(1, BuiltinVersionListSerializer.UpdatableVersionListTryGetValueCallback_V1);
+                    m_ResourceManager.ReadOnlyVersionListSerializer.RegisterDeserializeCallback(0, BuiltinVersionListSerializer.LocalVersionListDeserializeCallback_V0);
+                    m_ResourceManager.ReadOnlyVersionListSerializer.RegisterDeserializeCallback(1, BuiltinVersionListSerializer.LocalVersionListDeserializeCallback_V1);
+                    m_ResourceManager.ReadWriteVersionListSerializer.RegisterSerializeCallback(0, BuiltinVersionListSerializer.LocalVersionListSerializeCallback_V0);
+                    m_ResourceManager.ReadWriteVersionListSerializer.RegisterSerializeCallback(1, BuiltinVersionListSerializer.LocalVersionListSerializeCallback_V1);
+                    m_ResourceManager.ReadWriteVersionListSerializer.RegisterDeserializeCallback(0, BuiltinVersionListSerializer.LocalVersionListDeserializeCallback_V0);
+                    m_ResourceManager.ReadWriteVersionListSerializer.RegisterDeserializeCallback(1, BuiltinVersionListSerializer.LocalVersionListDeserializeCallback_V1);
+                    m_ResourceManager.ResourcePackVersionListSerializer.RegisterDeserializeCallback(0, BuiltinVersionListSerializer.ResourcePackVersionListDeserializeCallback_V0);
+                    break;
+            }
         }
 
         /// <summary>
@@ -713,6 +795,16 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
+        /// 使用可更新模式并应用资源包资源。
+        /// </summary>
+        /// <param name="resourcePackPath">要应用的资源包路径。</param>
+        /// <param name="applyResourcesCompleteCallback">使用可更新模式并应用资源包资源完成时的回调函数。</param>
+        public void ApplyResources(string resourcePackPath, ApplyResourcesCompleteCallback applyResourcesCompleteCallback)
+        {
+            m_ResourceManager.ApplyResources(resourcePackPath, applyResourcesCompleteCallback);
+        }
+
+        /// <summary>
         /// 使用可更新模式并更新全部资源。
         /// </summary>
         /// <param name="updateResourcesCompleteCallback">使用可更新模式并更新默认资源组完成时的回调函数。</param>
@@ -732,11 +824,21 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
+        /// 校验资源包。
+        /// </summary>
+        /// <param name="resourcePackPath">要校验的资源包路径。</param>
+        /// <returns>是否校验资源包成功。</returns>
+        public bool VerifyResourcePack(string resourcePackPath)
+        {
+            return m_ResourceManager.VerifyResourcePack(resourcePackPath);
+        }
+
+        /// <summary>
         /// 检查资源是否存在。
         /// </summary>
         /// <param name="assetName">要检查资源的名称。</param>
-        /// <returns>资源是否存在。</returns>
-        public bool HasAsset(string assetName)
+        /// <returns>检查资源是否存在的结果。</returns>
+        public HasAssetResult HasAsset(string assetName)
         {
             return m_ResourceManager.HasAsset(assetName);
         }
@@ -855,6 +957,61 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
+        /// 获取二进制资源的实际路径。
+        /// </summary>
+        /// <param name="binaryAssetName">要获取实际路径的二进制资源的名称。</param>
+        /// <returns>二进制资源的实际路径。</returns>
+        public string GetBinaryPath(string binaryAssetName)
+        {
+            return m_ResourceManager.GetBinaryPath(binaryAssetName);
+        }
+
+        /// <summary>
+        /// 获取二进制资源的实际路径。
+        /// </summary>
+        /// <param name="binaryAssetName">要获取实际路径的二进制资源的名称。</param>
+        /// <param name="storageInReadOnly">资源是否在只读区。</param>
+        /// <param name="relativePath">二进制资源相对于只读区或者读写区的相对路径。</param>
+        /// <returns>获取二进制资源的实际路径是否成功。</returns>
+        public bool GetBinaryPath(string binaryAssetName, out bool storageInReadOnly, out string relativePath)
+        {
+            return m_ResourceManager.GetBinaryPath(binaryAssetName, out storageInReadOnly, out relativePath);
+        }
+
+        /// <summary>
+        /// 异步加载二进制资源。
+        /// </summary>
+        /// <param name="binaryAssetName">要加载二进制资源的名称。</param>
+        /// <param name="loadBinaryCallbacks">加载二进制资源回调函数集。</param>
+        public void LoadBinary(string binaryAssetName, LoadBinaryCallbacks loadBinaryCallbacks)
+        {
+            LoadBinary(binaryAssetName, loadBinaryCallbacks, null);
+        }
+
+        /// <summary>
+        /// 异步加载二进制资源。
+        /// </summary>
+        /// <param name="binaryAssetName">要加载二进制资源的名称。</param>
+        /// <param name="loadBinaryCallbacks">加载二进制资源回调函数集。</param>
+        /// <param name="userData">用户自定义数据。</param>
+        public void LoadBinary(string binaryAssetName, LoadBinaryCallbacks loadBinaryCallbacks, object userData)
+        {
+            if (string.IsNullOrEmpty(binaryAssetName))
+            {
+                Log.Error("Binary asset name is invalid.");
+                return;
+            }
+
+            if (!binaryAssetName.StartsWith("Assets/"))
+            {
+                Log.Error("Binary asset name '{0}' is invalid.", binaryAssetName);
+                return;
+            }
+
+            m_ResourceManager.LoadBinary(binaryAssetName, loadBinaryCallbacks, userData);
+        }
+
+        /// <summary>
         /// 检查资源组是否存在。
         /// </summary>
         /// <param name="resourceGroupName">要检查资源组的名称。</param>
@@ -884,6 +1041,15 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
+        /// 获取所有加载资源任务的信息。
+        /// </summary>
+        /// <returns>所有加载资源任务的信息。</returns>
+        public TaskInfo[] GetAllLoadAssetInfos()
+        {
+            return m_ResourceManager.GetAllLoadAssetInfos();
+        }
+
+        /// <summary>
         /// 增加加载资源代理辅助器。
         /// </summary>
         /// <param name="index">加载资源代理辅助器索引。</param>
@@ -902,6 +1068,16 @@ namespace UnityGameFramework.Runtime
             transform.localScale = Vector3.one;
 
             m_ResourceManager.AddLoadResourceAgentHelper(loadResourceAgentHelper);
+        }
+
+        private void OnResourceApplySuccess(object sender, GameFramework.Resource.ResourceApplySuccessEventArgs e)
+        {
+            m_EventComponent.Fire(this, ResourceApplySuccessEventArgs.Create(e));
+        }
+
+        private void OnResourceApplyFailure(object sender, GameFramework.Resource.ResourceApplyFailureEventArgs e)
+        {
+            m_EventComponent.Fire(this, ResourceApplyFailureEventArgs.Create(e));
         }
 
         private void OnResourceUpdateStart(object sender, GameFramework.Resource.ResourceUpdateStartEventArgs e)

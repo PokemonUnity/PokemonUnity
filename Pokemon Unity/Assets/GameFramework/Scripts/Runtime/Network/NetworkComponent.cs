@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -106,11 +106,12 @@ namespace UnityGameFramework.Runtime
         /// 创建网络频道。
         /// </summary>
         /// <param name="name">网络频道名称。</param>
+        /// <param name="serviceType">网络服务类型。</param>
         /// <param name="networkChannelHelper">网络频道辅助器。</param>
         /// <returns>要创建的网络频道。</returns>
-        public INetworkChannel CreateNetworkChannel(string name, INetworkChannelHelper networkChannelHelper)
+        public INetworkChannel CreateNetworkChannel(string name, ServiceType serviceType, INetworkChannelHelper networkChannelHelper)
         {
-            return m_NetworkManager.CreateNetworkChannel(name, networkChannelHelper);
+            return m_NetworkManager.CreateNetworkChannel(name, serviceType, networkChannelHelper);
         }
 
         /// <summary>

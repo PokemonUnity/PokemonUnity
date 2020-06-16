@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -26,7 +26,7 @@ namespace UnityGameFramework.Runtime
         private IUIManager m_UIManager = null;
         private EventComponent m_EventComponent = null;
 
-        private readonly List<IUIForm> m_InternalUIFormResultsCache = new List<IUIForm>();
+        private readonly List<IUIForm> m_InternalUIFormResults = new List<IUIForm>();
 
         [SerializeField]
         private bool m_EnableOpenUIFormSuccessEvent = true;
@@ -228,7 +228,7 @@ namespace UnityGameFramework.Runtime
 
             if (m_InstanceRoot == null)
             {
-                m_InstanceRoot = (new GameObject("UI Form Instances")).transform;
+                m_InstanceRoot = new GameObject("UI Form Instances").transform;
                 m_InstanceRoot.SetParent(gameObject.transform);
                 m_InstanceRoot.localScale = Vector3.one;
             }
@@ -393,8 +393,8 @@ namespace UnityGameFramework.Runtime
             }
 
             results.Clear();
-            m_UIManager.GetUIForms(uiFormAssetName, m_InternalUIFormResultsCache);
-            foreach (IUIForm uiForm in m_InternalUIFormResultsCache)
+            m_UIManager.GetUIForms(uiFormAssetName, m_InternalUIFormResults);
+            foreach (IUIForm uiForm in m_InternalUIFormResults)
             {
                 results.Add((UIForm)uiForm);
             }
@@ -429,8 +429,8 @@ namespace UnityGameFramework.Runtime
             }
 
             results.Clear();
-            m_UIManager.GetAllLoadedUIForms(m_InternalUIFormResultsCache);
-            foreach (IUIForm uiForm in m_InternalUIFormResultsCache)
+            m_UIManager.GetAllLoadedUIForms(m_InternalUIFormResults);
+            foreach (IUIForm uiForm in m_InternalUIFormResults)
             {
                 results.Add((UIForm)uiForm);
             }

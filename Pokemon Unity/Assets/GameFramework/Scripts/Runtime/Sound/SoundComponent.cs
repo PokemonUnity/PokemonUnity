@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -174,7 +174,7 @@ namespace UnityGameFramework.Runtime
 
             if (m_InstanceRoot == null)
             {
-                m_InstanceRoot = (new GameObject("Sound Instances")).transform;
+                m_InstanceRoot = new GameObject("Sound Instances").transform;
                 m_InstanceRoot.SetParent(gameObject.transform);
                 m_InstanceRoot.localScale = Vector3.one;
             }
@@ -189,7 +189,7 @@ namespace UnityGameFramework.Runtime
             }
         }
 
-        private void OnDestroy()
+        private void OnApplicationQuit()
         {
 #if UNITY_5_4_OR_NEWER
             SceneManager.sceneLoaded -= OnSceneLoaded;

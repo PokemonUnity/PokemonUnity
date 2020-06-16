@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -135,7 +135,7 @@ namespace UnityGameFramework.Runtime
         /// 释放资源。
         /// </summary>
         /// <param name="disposing">释放资源标记。</param>
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (m_Disposed)
             {
@@ -163,7 +163,7 @@ namespace UnityGameFramework.Runtime
 
             bool isError = false;
 #if UNITY_2017_1_OR_NEWER
-            isError = m_UnityWebRequest.isNetworkError;
+            isError = m_UnityWebRequest.isNetworkError || m_UnityWebRequest.isHttpError;
 #else
             isError = m_UnityWebRequest.isError;
 #endif

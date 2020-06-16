@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -22,8 +22,8 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     public partial class UnityWebRequestDownloadAgentHelper : DownloadAgentHelperBase, IDisposable
     {
-        private const int OneMegaBytes = 1024 * 1024;
-        private readonly byte[] m_DownloadCache = new byte[OneMegaBytes];
+        private const int CachedBytesLength = 0x1000;
+        private readonly byte[] m_CachedBytes = new byte[CachedBytesLength];
 
         private UnityWebRequest m_UnityWebRequest = null;
         private bool m_Disposed = false;
@@ -175,6 +175,8 @@ namespace UnityGameFramework.Runtime
                 m_UnityWebRequest.Dispose();
                 m_UnityWebRequest = null;
             }
+
+            Array.Clear(m_CachedBytes, 0, CachedBytesLength);
         }
 
         /// <summary>
@@ -190,7 +192,7 @@ namespace UnityGameFramework.Runtime
         /// 释放资源。
         /// </summary>
         /// <param name="disposing">释放资源标记。</param>
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (m_Disposed)
             {
@@ -223,13 +225,13 @@ namespace UnityGameFramework.Runtime
 
             bool isError = false;
 #if UNITY_2017_1_OR_NEWER
-            isError = m_UnityWebRequest.isNetworkError;
+            isError = m_UnityWebRequest.isNetworkError || m_UnityWebRequest.isHttpError;
 #else
             isError = m_UnityWebRequest.isError;
 #endif
             if (isError)
             {
-                DownloadAgentHelperErrorEventArgs downloadAgentHelperErrorEventArgs = DownloadAgentHelperErrorEventArgs.Create(m_UnityWebRequest.error);
+                DownloadAgentHelperErrorEventArgs downloadAgentHelperErrorEventArgs = DownloadAgentHelperErrorEventArgs.Create(m_UnityWebRequest.responseCode == RangeNotSatisfiableErrorCode, m_UnityWebRequest.error);
                 m_DownloadAgentHelperErrorEventHandler(this, downloadAgentHelperErrorEventArgs);
                 ReferencePool.Release(downloadAgentHelperErrorEventArgs);
             }

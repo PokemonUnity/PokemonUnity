@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using System.IO;
@@ -45,11 +45,11 @@ namespace UnityGameFramework.Editor.DataTableTools
                 return new Vector2(float.Parse(splitValue[0]), float.Parse(splitValue[1]));
             }
 
-            public override void WriteToStream(BinaryWriter stream, string value)
+            public override void WriteToStream(DataTableProcessor dataTableProcessor, BinaryWriter binaryWriter, string value)
             {
                 Vector2 vector2 = Parse(value);
-                stream.Write(vector2.x);
-                stream.Write(vector2.y);
+                binaryWriter.Write(vector2.x);
+                binaryWriter.Write(vector2.y);
             }
         }
     }

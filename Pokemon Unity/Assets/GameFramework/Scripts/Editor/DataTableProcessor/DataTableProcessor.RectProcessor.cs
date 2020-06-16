@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using System.IO;
@@ -45,13 +45,13 @@ namespace UnityGameFramework.Editor.DataTableTools
                 return new Rect(float.Parse(splitValue[0]), float.Parse(splitValue[1]), float.Parse(splitValue[2]), float.Parse(splitValue[3]));
             }
 
-            public override void WriteToStream(BinaryWriter stream, string value)
+            public override void WriteToStream(DataTableProcessor dataTableProcessor, BinaryWriter binaryWriter, string value)
             {
                 Rect rect = Parse(value);
-                stream.Write(rect.x);
-                stream.Write(rect.y);
-                stream.Write(rect.width);
-                stream.Write(rect.height);
+                binaryWriter.Write(rect.x);
+                binaryWriter.Write(rect.y);
+                binaryWriter.Write(rect.width);
+                binaryWriter.Write(rect.height);
             }
         }
     }

@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -128,7 +128,7 @@ namespace UnityGameFramework.Runtime
 
             if (m_InstanceRoot == null)
             {
-                m_InstanceRoot = (new GameObject("Web Request Agent Instances")).transform;
+                m_InstanceRoot = new GameObject("Web Request Agent Instances").transform;
                 m_InstanceRoot.SetParent(gameObject.transform);
                 m_InstanceRoot.localScale = Vector3.one;
             }
@@ -295,6 +295,15 @@ namespace UnityGameFramework.Runtime
         public void RemoveAllWebRequests()
         {
             m_WebRequestManager.RemoveAllWebRequests();
+        }
+
+        /// <summary>
+        /// 获取所有 Web 请求任务的信息。
+        /// </summary>
+        /// <returns>所有 Web 请求任务的信息。</returns>
+        public TaskInfo[] GetAllWebRequestInfos()
+        {
+            return m_WebRequestManager.GetAllWebRequestInfos();
         }
 
         /// <summary>

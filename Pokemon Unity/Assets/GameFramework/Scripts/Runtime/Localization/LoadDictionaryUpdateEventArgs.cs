@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using GameFramework;
@@ -27,7 +27,6 @@ namespace UnityGameFramework.Runtime
         {
             DictionaryName = null;
             DictionaryAssetName = null;
-            LoadType = LoadType.Text;
             Progress = 0f;
             UserData = null;
         }
@@ -62,15 +61,6 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 获取字典加载方式。
-        /// </summary>
-        public LoadType LoadType
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// 获取加载字典进度。
         /// </summary>
         public float Progress
@@ -99,7 +89,6 @@ namespace UnityGameFramework.Runtime
             LoadDictionaryUpdateEventArgs loadDictionaryUpdateEventArgs = ReferencePool.Acquire<LoadDictionaryUpdateEventArgs>();
             loadDictionaryUpdateEventArgs.DictionaryName = loadDictionaryInfo.DictionaryName;
             loadDictionaryUpdateEventArgs.DictionaryAssetName = e.DictionaryAssetName;
-            loadDictionaryUpdateEventArgs.LoadType = e.LoadType;
             loadDictionaryUpdateEventArgs.Progress = e.Progress;
             loadDictionaryUpdateEventArgs.UserData = loadDictionaryInfo.UserData;
             return loadDictionaryUpdateEventArgs;
@@ -112,7 +101,6 @@ namespace UnityGameFramework.Runtime
         {
             DictionaryName = null;
             DictionaryAssetName = null;
-            LoadType = LoadType.Text;
             Progress = 0f;
             UserData = null;
         }

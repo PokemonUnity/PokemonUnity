@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------
 // Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
+// Copyright © 2013-2020 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
 using UnityEditor;
@@ -36,7 +36,7 @@ namespace UnityGameFramework.Editor
 
             if (EditorApplication.isPlaying && IsPrefabInHierarchy(t.gameObject))
             {
-                EditorGUILayout.LabelField("Config Count", t.ConfigCount.ToString());
+                EditorGUILayout.LabelField("Config Count", t.Count.ToString());
             }
 
             serializedObject.ApplyModifiedProperties();
