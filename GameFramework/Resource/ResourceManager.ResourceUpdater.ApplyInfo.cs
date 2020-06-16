@@ -12,39 +12,40 @@ namespace GameFramework.Resource
         private sealed partial class ResourceUpdater
         {
             /// <summary>
-            /// 更新信息。
+            /// 应用信息。
             /// </summary>
-            private sealed class UpdateInfo
+            private sealed class ApplyInfo
             {
                 private readonly ResourceName m_ResourceName;
                 private readonly LoadType m_LoadType;
+                private readonly long m_Offset;
                 private readonly int m_Length;
                 private readonly int m_HashCode;
                 private readonly int m_ZipLength;
                 private readonly int m_ZipHashCode;
                 private readonly string m_ResourcePath;
-                private int m_RetryCount;
 
                 /// <summary>
-                /// 初始化更新信息的新实例。
+                /// 初始化应用信息的新实例。
                 /// </summary>
                 /// <param name="resourceName">资源名称。</param>
                 /// <param name="loadType">资源加载方式。</param>
+                /// <param name="offset">资源偏移。</param>
                 /// <param name="length">资源大小。</param>
                 /// <param name="hashCode">资源哈希值。</param>
                 /// <param name="zipLength">压缩后大小。</param>
                 /// <param name="zipHashCode">压缩后哈希值。</param>
                 /// <param name="resourcePath">资源路径。</param>
-                public UpdateInfo(ResourceName resourceName, LoadType loadType, int length, int hashCode, int zipLength, int zipHashCode, string resourcePath)
+                public ApplyInfo(ResourceName resourceName, LoadType loadType, long offset, int length, int hashCode, int zipLength, int zipHashCode, string resourcePath)
                 {
                     m_ResourceName = resourceName;
                     m_LoadType = loadType;
+                    m_Offset = offset;
                     m_Length = length;
                     m_HashCode = hashCode;
                     m_ZipLength = zipLength;
                     m_ZipHashCode = zipHashCode;
                     m_ResourcePath = resourcePath;
-                    m_RetryCount = 0;
                 }
 
                 /// <summary>
@@ -66,6 +67,17 @@ namespace GameFramework.Resource
                     get
                     {
                         return m_LoadType;
+                    }
+                }
+
+                /// <summary>
+                /// 获取资源偏移。
+                /// </summary>
+                public long Offset
+                {
+                    get
+                    {
+                        return m_Offset;
                     }
                 }
 
@@ -121,21 +133,6 @@ namespace GameFramework.Resource
                     get
                     {
                         return m_ResourcePath;
-                    }
-                }
-
-                /// <summary>
-                /// 获取或设置已重试次数。
-                /// </summary>
-                public int RetryCount
-                {
-                    get
-                    {
-                        return m_RetryCount;
-                    }
-                    set
-                    {
-                        m_RetryCount = value;
                     }
                 }
             }

@@ -8,18 +8,18 @@
 namespace GameFramework.Resource
 {
     /// <summary>
-    /// 资源更新成功事件。
+    /// 资源应用成功事件。
     /// </summary>
-    public sealed class ResourceUpdateSuccessEventArgs : GameFrameworkEventArgs
+    public sealed class ResourceApplySuccessEventArgs : GameFrameworkEventArgs
     {
         /// <summary>
-        /// 初始化资源更新成功事件的新实例。
+        /// 初始化资源应用成功事件的新实例。
         /// </summary>
-        public ResourceUpdateSuccessEventArgs()
+        public ResourceApplySuccessEventArgs()
         {
             Name = null;
-            DownloadPath = null;
-            DownloadUri = null;
+            ApplyPath = null;
+            ResourcePackPath = null;
             Length = 0;
             ZipLength = 0;
         }
@@ -34,18 +34,18 @@ namespace GameFramework.Resource
         }
 
         /// <summary>
-        /// 获取资源下载后存放路径。
+        /// 获取资源应用后存放路径。
         /// </summary>
-        public string DownloadPath
+        public string ApplyPath
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取下载地址。
+        /// 获取资源包路径。
         /// </summary>
-        public string DownloadUri
+        public string ResourcePackPath
         {
             get;
             private set;
@@ -70,33 +70,33 @@ namespace GameFramework.Resource
         }
 
         /// <summary>
-        /// 创建资源更新成功事件。
+        /// 创建资源应用成功事件。
         /// </summary>
         /// <param name="name">资源名称。</param>
-        /// <param name="downloadPath">资源下载后存放路径。</param>
-        /// <param name="downloadUri">资源下载地址。</param>
+        /// <param name="applyPath">资源应用后存放路径。</param>
+        /// <param name="resourcePackPath">资源包路径。</param>
         /// <param name="length">资源大小。</param>
         /// <param name="zipLength">压缩后大小。</param>
-        /// <returns>创建的资源更新成功事件。</returns>
-        public static ResourceUpdateSuccessEventArgs Create(string name, string downloadPath, string downloadUri, int length, int zipLength)
+        /// <returns>创建的资源应用成功事件。</returns>
+        public static ResourceApplySuccessEventArgs Create(string name, string applyPath, string resourcePackPath, int length, int zipLength)
         {
-            ResourceUpdateSuccessEventArgs resourceUpdateSuccessEventArgs = ReferencePool.Acquire<ResourceUpdateSuccessEventArgs>();
-            resourceUpdateSuccessEventArgs.Name = name;
-            resourceUpdateSuccessEventArgs.DownloadPath = downloadPath;
-            resourceUpdateSuccessEventArgs.DownloadUri = downloadUri;
-            resourceUpdateSuccessEventArgs.Length = length;
-            resourceUpdateSuccessEventArgs.ZipLength = zipLength;
-            return resourceUpdateSuccessEventArgs;
+            ResourceApplySuccessEventArgs resourceApplySuccessEventArgs = ReferencePool.Acquire<ResourceApplySuccessEventArgs>();
+            resourceApplySuccessEventArgs.Name = name;
+            resourceApplySuccessEventArgs.ApplyPath = applyPath;
+            resourceApplySuccessEventArgs.ResourcePackPath = resourcePackPath;
+            resourceApplySuccessEventArgs.Length = length;
+            resourceApplySuccessEventArgs.ZipLength = zipLength;
+            return resourceApplySuccessEventArgs;
         }
 
         /// <summary>
-        /// 清理资源更新成功事件。
+        /// 清理资源应用成功事件。
         /// </summary>
         public override void Clear()
         {
             Name = null;
-            DownloadPath = null;
-            DownloadUri = null;
+            ApplyPath = null;
+            ResourcePackPath = null;
             Length = 0;
             ZipLength = 0;
         }
