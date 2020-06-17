@@ -3,8 +3,17 @@
     "references": [
         "UnityGameFramework.Runtime"
     ],
+    "optionalUnityReferences": [],
     "includePlatforms": [
         "Editor"
     ],
-    "excludePlatforms": []
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "GameFramework.dll",
+        "ICSharpCode.SharpZipLib.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": []
 }

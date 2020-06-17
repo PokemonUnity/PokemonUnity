@@ -64,6 +64,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\TMP_AnimatedEditor.cs" />
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.PackageManagerUI.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -298,9 +307,6 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="GameFramework">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\GameFramework.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\Pokemon Unity\Assets\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -310,14 +316,17 @@
     <Reference Include="protobuf-net">
       <HintPath>..\Pokemon Unity\Assets\Libraries\protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="PokemonUnity.Shared">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.Linq">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\SQLite\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="GameFramework">
+      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\GameFramework.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Pokemon Unity\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PokemonUnity.Offline">
+      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Offline.dll</HintPath>
+    </Reference>
+    <Reference Include="PokemonUnity.Shared">
+      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Shared.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
