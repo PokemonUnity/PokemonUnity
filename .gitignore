@@ -74,6 +74,8 @@ git-journal.fish
 [Uu]nit[Tt]est[Pp]roject/*.dll
 [Uu]nit[Tt]est[Pp]roject/*.xml
 */bin/*
+/Pokemon Unity/Assets/Libraries/*
+!/Pokemon Unity/Assets/Libraries/*.dll*
 
 # NuGet Packages
 *.nupkg
