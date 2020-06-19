@@ -1,0 +1,220 @@
+fileFormatVersion: 2
+guid: 189599225ef1ce146bcf3425de37690f
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 393_0
+    21300002: 393_1
+    21300004: 393_2
+    21300006: 393_3
+    21300008: 393_4
+    21300010: 393_5
+    21300012: 393_6
+    21300014: 393_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 128
+  textureSettings:
+    filterMode: 0
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 16
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: 393_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 3, y: 20}
+        - {x: -4, y: 20}
+        - {x: -9, y: 16}
+        - {x: -9, y: 5}
+        - {x: -6, y: 1}
+        - {x: 0, y: 0}
+        - {x: 3, y: 0}
+        - {x: 8, y: 6}
+        - {x: 8, y: 16}
+    - name: 393_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3, y: 20}
+        - {x: -9, y: 18}
+        - {x: -9, y: 3}
+        - {x: -5, y: 0}
+        - {x: 6, y: 0}
+        - {x: 8, y: 6}
+        - {x: 8, y: 17}
+        - {x: 4, y: 20}
+    - name: 393_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -7, y: 20}
+        - {x: -8, y: 19}
+        - {x: -8, y: 3}
+        - {x: -3, y: 0}
+        - {x: 8, y: 0}
+        - {x: 9, y: 6}
+        - {x: 9, y: 20}
+    - name: 393_3
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 3, y: 20}
+        - {x: -4, y: 20}
+        - {x: -8, y: 18}
+        - {x: -8, y: 7}
+        - {x: -4, y: 0}
+        - {x: 3, y: 0}
+        - {x: 9, y: 8}
+        - {x: 9, y: 12}
+        - {x: 7, y: 17}
+    - name: 393_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 3, y: 20}
+        - {x: -4, y: 20}
+        - {x: -9, y: 16}
+        - {x: -9, y: 5}
+        - {x: -6, y: 1}
+        - {x: 0, y: 0}
+        - {x: 3, y: 0}
+        - {x: 8, y: 6}
+        - {x: 8, y: 16}
+    - name: 393_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4, y: 20}
+        - {x: -9, y: 18}
+        - {x: -9, y: 4}
+        - {x: -6, y: 0}
+        - {x: 2, y: 0}
+        - {x: 8, y: 3}
+        - {x: 8, y: 16}
+        - {x: 6, y: 20}
+    - name: 393_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4, y: 20}
+        - {x: -2, y: 20}
+        - {x: -8, y: 18}
+        - {x: -9, y: 15}
+        - {x: -9, y: 8}
+        - {x: -3, y: 0}
+        - {x: -1, y: 0}
+        - {x: 2, y: 1}
+        - {x: 7, y: 4}
+        - {x: 8, y: 10}
+        - {x: 8, y: 16}
+    - name: 393_7
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5, y: 20}
+        - {x: -9, y: 15}
+        - {x: -9, y: 5}
+        - {x: -3, y: 0}
+        - {x: 4, y: 0}
+        - {x: 8, y: 6}
+        - {x: 8, y: 16}
+        - {x: 3, y: 20}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
