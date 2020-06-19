@@ -116,5 +116,28 @@ namespace PokemonUnity
             yield return new WaitForSeconds(keepDuration);
             yield return m_CachedCanvasGroup.FadeToAlpha(0f, fadeOutDuration);
         }
+
+        /*// <summary>
+        /// Invoked when the value of the slider changes.
+        /// </summary>
+        public void ValueChangeCheck()
+        {
+            //Debug.Log(hpSlider.value);
+
+            //if (hpSlider.value <= (hpSlider.maxValue / 4)) { Fill.color = hpzone2; }
+            if (.3f > (m_HPBar.normalizedValue)) { Fill.color = hpzone2; }
+            //else if (hpSlider.value < (hpSlider.normalizedValue.CompareTo(0.5f))) //  / 2)) 
+            else if (.75f > (m_HPBar.normalizedValue)) //  / 2)) 
+            {
+                //Change color of hp bar
+                Fill.color = hpzone1;
+                //Change background image for health slider
+            }
+            else
+                Fill.color = hpzone0;
+
+            //each time the silder's value is changed, write to text displaying the hp
+            //currentHP.text = m_HPBar.value.ToString(); //Set text under hp to match slider currentHealth
+        }*/
     }
 }

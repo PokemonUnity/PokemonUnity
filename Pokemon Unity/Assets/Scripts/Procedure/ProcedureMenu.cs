@@ -62,6 +62,13 @@ namespace PokemonUnity
                 procedureOwner.SetData<VarInt>(Constant.ProcedureData.GameMode, (int)GameMode.Survival);
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }
+            /* Using System.Timer()
+             * Ping GameNetwork server every 15-45secs
+             * If game server is offline or unable to
+             * ping connection:
+             * Netplay toggle-icon bool equals false
+             * otherwise toggle bool to true
+             */
         }
 
         private void OnOpenUIFormSuccess(object sender, GameEventArgs e)

@@ -12,7 +12,7 @@ namespace PokemonUnity
 	/// <summary>
 	/// 对话框显示数据。
 	/// </summary>
-	public class DialogParams2
+	public class DialogParams
 	{
 		/// <summary>
 		/// 模式，即按钮数量。取值 1、2、3。
@@ -23,14 +23,23 @@ namespace PokemonUnity
 			set;
 		}
 
-		/*// <summary>
+		/// <summary>
+		/// 标题。
+		/// </summary>
+		public string Title
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// 消息内容。
 		/// </summary>
 		public string Message
 		{
 			get;
 			set;
-		}*/
+		}
 
 		/// <summary>
 		/// 弹出窗口时是否暂停游戏。
@@ -60,9 +69,36 @@ namespace PokemonUnity
 		}
 
 		/// <summary>
+		/// 取消按钮文本。
+		/// </summary>
+		public string CancelText
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// 取消按钮回调。
 		/// </summary>
 		public GameFrameworkAction<object> OnClickCancel
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// 中立按钮文本。
+		/// </summary>
+		public string OtherText
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// 其它按钮回调。
+		/// </summary>
+		public GameFrameworkAction<object> OnClickOther
 		{
 			get;
 			set;

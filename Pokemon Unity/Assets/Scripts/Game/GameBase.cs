@@ -11,78 +11,90 @@ using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
-    public abstract class GameBase
-    {
-        public abstract GameMode GameMode
-        {
-            get;
-        }
+	public abstract class GameBase
+	{
+		public abstract GameMode GameMode
+		{
+			get;
+		}
 
-        protected ScrollableBackground SceneBackground
-        {
-            get;
-            private set;
-        }
+		//public abstract PokemonUnity.Game Game
+		//{
+		//    get;
+		//}
 
-        public bool GameOver
-        {
-            get;
-            protected set;
-        }
+		//protected ScrollableBackground SceneBackground
+		//{
+		//    get;
+		//    private set;
+		//}
 
-        //private MyAircraft m_MyAircraft = null;
+		protected TMP_Animated DialogTextTMP
+		{
+		    get;
+		    private set;
+		}
 
-        public virtual void Initialize()
-        {
-            GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
-            GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
+		public bool GameOver
+		{
+			get;
+			protected set;
+		}
 
-            SceneBackground = Object.FindObjectOfType<ScrollableBackground>();
-            if (SceneBackground == null)
-            {
-                Log.Warning("Can not find scene background.");
-                return;
-            }
+		//private MyAircraft m_MyAircraft = null;
 
-            SceneBackground.VisibleBoundary.gameObject.GetOrAddComponent<HideByBoundary>();
-            //GameEntry.Entity.ShowMyAircraft(new MyAircraftData(GameEntry.Entity.GenerateSerialId(), 10000)
-            //{
-            //    Name = "My Aircraft",
-            //    Position = Vector3.zero,
-            //});
+		public virtual void Initialize()
+		{
+			GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
+			GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
 
-            GameOver = false;
-            //m_MyAircraft = null;
-        }
+			DialogTextTMP = UnityEngine.GameObject.Find("DialogTextTMP").GetComponent<TMP_Animated>();//GetComponent<TMP_Animated>();
+			//SceneBackground = Object.FindObjectOfType<ScrollableBackground>();
+			//if (SceneBackground == null)
+			//{
+			//    Log.Warning("Can not find scene background.");
+			//    return;
+			//}
+			//
+			//SceneBackground.VisibleBoundary.gameObject.GetOrAddComponent<HideByBoundary>();
+			//GameEntry.Entity.ShowMyAircraft(new MyAircraftData(GameEntry.Entity.GenerateSerialId(), 10000)
+			//{
+			//    Name = "My Aircraft",
+			//    Position = Vector3.zero,
+			//});
 
-        public virtual void Shutdown()
-        {
-            GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
-            GameEntry.Event.Unsubscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
-        }
+			GameOver = false;
+			//m_MyAircraft = null;
+		}
 
-        public virtual void Update(float elapseSeconds, float realElapseSeconds)
-        {
-            //if (m_MyAircraft != null && m_MyAircraft.IsDead)
-            //{
-            //    GameOver = true;
-            //    return;
-            //}
-        }
+		public virtual void Shutdown()
+		{
+			GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
+			GameEntry.Event.Unsubscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
+		}
 
-        protected virtual void OnShowEntitySuccess(object sender, GameEventArgs e)
-        {
-            ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
-            //if (ne.EntityLogicType == typeof(MyAircraft))
-            //{
-            //    m_MyAircraft = (MyAircraft)ne.Entity.Logic;
-            //}
-        }
+		public virtual void Update(float elapseSeconds, float realElapseSeconds)
+		{
+			//if (m_MyAircraft != null && m_MyAircraft.IsDead)
+			//{
+			//    GameOver = true;
+			//    return;
+			//}
+		}
 
-        protected virtual void OnShowEntityFailure(object sender, GameEventArgs e)
-        {
-            ShowEntityFailureEventArgs ne = (ShowEntityFailureEventArgs)e;
-            Log.Warning("Show entity failure with error message '{0}'.", ne.ErrorMessage);
-        }
-    }
+		protected virtual void OnShowEntitySuccess(object sender, GameEventArgs e)
+		{
+			ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
+			//if (ne.EntityLogicType == typeof(MyAircraft))
+			//{
+			//    m_MyAircraft = (MyAircraft)ne.Entity.Logic;
+			//}
+		}
+
+		protected virtual void OnShowEntityFailure(object sender, GameEventArgs e)
+		{
+			ShowEntityFailureEventArgs ne = (ShowEntityFailureEventArgs)e;
+			Log.Warning("Show entity failure with error message '{0}'.", ne.ErrorMessage);
+		}
+	}
 }

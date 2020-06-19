@@ -62,13 +62,14 @@ namespace PokemonUnity
                 return;
             }
 
-            Language language = GameEntry.Localization.Language;
+            //Language language = GameEntry.Localization.Language;
+            Languages language = Game.UserLanguage;
             string languageString = GameEntry.Setting.GetString(Constant.Setting.Language);
             if (!string.IsNullOrEmpty(languageString))
             {
                 try
                 {
-                    language = (Language)Enum.Parse(typeof(Language), languageString);
+                    language = (Languages)Enum.Parse(typeof(Languages), languageString);
                 }
                 catch
                 {
@@ -76,19 +77,20 @@ namespace PokemonUnity
                 }
             }
 
-            if (language != Language.English
-                && language != Language.ChineseSimplified
-                && language != Language.ChineseTraditional
-                && language != Language.Korean)
+            if (language != Languages.English)
+                //&& language != Language.ChineseSimplified
+                //&& language != Language.ChineseTraditional
+                //&& language != Language.Korean)
             {
                 // 若是暂不支持的语言，则使用英语
-                language = Language.English;
+                language = Languages.English;
 
                 GameEntry.Setting.SetString(Constant.Setting.Language, language.ToString());
                 GameEntry.Setting.Save();
             }
 
-            GameEntry.Localization.Language = language;
+            //GameEntry.Localization.Language = language;
+            Game.UserLanguage = language;
 
             Log.Info("Init language settings complete, current language is '{0}'.", language.ToString());
         }
@@ -102,22 +104,23 @@ namespace PokemonUnity
             }
 
             string currentVariant = null;
-            switch (GameEntry.Localization.Language)
+            //switch (GameEntry.Localization.Language)
+            switch (Game.UserLanguage)
             {
-                case Language.English:
+                case Languages.English:
                     currentVariant = "en-us";
                     break;
-                case Language.ChineseSimplified:
-                    currentVariant = "zh-cn";
-                    break;
-                case Language.ChineseTraditional:
-                    currentVariant = "zh-tw";
-                    break;
-                case Language.Korean:
-                    currentVariant = "ko-kr";
-                    break;
+                //case Language.ChineseSimplified:
+                //    currentVariant = "zh-cn";
+                //    break;
+                //case Language.ChineseTraditional:
+                //    currentVariant = "zh-tw";
+                //    break;
+                //case Language.Korean:
+                //    currentVariant = "ko-kr";
+                //    break;
                 default:
-                    currentVariant = "zh-cn";
+                    currentVariant = "en-us";
                     break;
             }
 

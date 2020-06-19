@@ -47,7 +47,8 @@ namespace PokemonUnity
         [SerializeField]
         private Toggle m_KoreanToggle = null;
 
-        private Language m_SelectedLanguage = Language.Unspecified;
+        //private Language m_SelectedLanguage = Language.Unspecified;
+        private Languages m_SelectedLanguage = Languages.English;
 
         public void OnMusicMuteChanged(bool isOn)
         {
@@ -89,7 +90,7 @@ namespace PokemonUnity
                 return;
             }
 
-            m_SelectedLanguage = Language.English;
+            m_SelectedLanguage = Languages.English;
             RefreshLanguageTips();
         }
 
@@ -100,7 +101,7 @@ namespace PokemonUnity
                 return;
             }
 
-            m_SelectedLanguage = Language.ChineseSimplified;
+            //m_SelectedLanguage = Languages.ChineseSimplified;
             RefreshLanguageTips();
         }
 
@@ -111,7 +112,7 @@ namespace PokemonUnity
                 return;
             }
 
-            m_SelectedLanguage = Language.ChineseTraditional;
+            //m_SelectedLanguage = Language.ChineseTraditional;
             RefreshLanguageTips();
         }
 
@@ -122,13 +123,14 @@ namespace PokemonUnity
                 return;
             }
 
-            m_SelectedLanguage = Language.Korean;
+            //m_SelectedLanguage = Language.Korean;
             RefreshLanguageTips();
         }
 
         public void OnSubmitButtonClick()
         {
-            if (m_SelectedLanguage == GameEntry.Localization.Language)
+            //if (m_SelectedLanguage == GameEntry.Localization.Language)
+            if (m_SelectedLanguage == Game.UserLanguage)
             {
                 Close();
                 return;
@@ -154,21 +156,22 @@ namespace PokemonUnity
             m_UISoundMuteToggle.isOn = !GameEntry.Sound.IsMuted("UISound");
             m_UISoundVolumeSlider.value = GameEntry.Sound.GetVolume("UISound");
 
-            m_SelectedLanguage = GameEntry.Localization.Language;
+            //m_SelectedLanguage = GameEntry.Localization.Language;
+            m_SelectedLanguage = Game.UserLanguage;
             switch (m_SelectedLanguage)
             {
-                case Language.English:
+                case Languages.English:
                     m_EnglishToggle.isOn = true;
                     break;
-                case Language.ChineseSimplified:
-                    m_ChineseSimplifiedToggle.isOn = true;
-                    break;
-                case Language.ChineseTraditional:
-                    m_ChineseTraditionalToggle.isOn = true;
-                    break;
-                case Language.Korean:
-                    m_KoreanToggle.isOn = true;
-                    break;
+                //case Language.ChineseSimplified:
+                //    m_ChineseSimplifiedToggle.isOn = true;
+                //    break;
+                //case Language.ChineseTraditional:
+                //    m_ChineseTraditionalToggle.isOn = true;
+                //    break;
+                //case Language.Korean:
+                //    m_KoreanToggle.isOn = true;
+                //    break;
                 default:
                     break;
             }
@@ -186,7 +189,8 @@ namespace PokemonUnity
 
         private void RefreshLanguageTips()
         {
-            m_LanguageTipsCanvasGroup.gameObject.SetActive(m_SelectedLanguage != GameEntry.Localization.Language);
+            //m_LanguageTipsCanvasGroup.gameObject.SetActive(m_SelectedLanguage != GameEntry.Localization.Language);
+            m_LanguageTipsCanvasGroup.gameObject.SetActive(m_SelectedLanguage != Game.UserLanguage);
         }
     }
 }

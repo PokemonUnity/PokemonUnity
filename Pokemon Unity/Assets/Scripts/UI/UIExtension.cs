@@ -73,10 +73,10 @@ namespace PokemonUnity
             return uiGroup.HasUIForm(assetName);
         }
 
-        public static UGuiForm GetUIForm(this UIComponent uiComponent, UIFormId uiFormId, string uiGroupName = null)
+        /*public static UGuiForm GetUIForm(this UIComponent uiComponent, UIFormId uiFormId, string uiGroupName = null)
         {
             return uiComponent.GetUIForm((int)uiFormId, uiGroupName);
-        }
+        }*/
 
         public static UGuiForm GetUIForm(this UIComponent uiComponent, int uiFormId, string uiGroupName = null)
         {

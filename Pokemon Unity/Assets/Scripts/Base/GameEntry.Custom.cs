@@ -9,22 +9,37 @@ using UnityEngine;
 
 namespace PokemonUnity
 {
-    /// <summary>
-    /// 游戏入口。
-    /// </summary>
-    public partial class GameEntry : MonoBehaviour
-    {
-        public static BuiltinDataComponent BuiltinData
-        {
-            get;
-            private set;
-        }
-
-        public static HPBarComponent HPBar
-        {
-            get;
-            private set;
+	/// <summary>
+	/// 游戏入口。
+	/// </summary>
+	public partial class GameEntry : MonoBehaviour
+	{
+		public static BuiltinDataComponent BuiltinData
+		{
+			get;
+			private set;
 		}
+
+		public static HPBarComponent HPBar
+		{
+			get;
+			private set;
+		}
+
+		public static CharKeyComponent CharKey
+		{
+			get;
+			private set;
+		}
+
+		public static bool IsCapLockOn	{ get; set;	}
+		public static bool UseKeyboard	{ get; set;	}
+
+		[System.Runtime.InteropServices.DllImport("user32")]
+		public static extern short GetKeyState(int keyCode);
+
+		public static UnityEngine.UI.Image DialogSkin { get; set; }
+		public static UnityEngine.UI.Image WindowSkin { get; set; }
 
 		#region Unity Scene Manager
 		//ToDo: This whole region to be redone... maybe as abstract/virtual?
@@ -42,9 +57,11 @@ namespace PokemonUnity
 		#endregion
 
 		private static void InitCustomComponents()
-        {
-            BuiltinData = UnityGameFramework.Runtime.GameEntry.GetComponent<BuiltinDataComponent>();
-            HPBar = UnityGameFramework.Runtime.GameEntry.GetComponent<HPBarComponent>();
-        }
-    }
+		{
+			BuiltinData = UnityGameFramework.Runtime.GameEntry.GetComponent<BuiltinDataComponent>();
+			HPBar = UnityGameFramework.Runtime.GameEntry.GetComponent<HPBarComponent>();
+			CharKey = UnityGameFramework.Runtime.GameEntry.GetComponent<CharKeyComponent>();
+			IsCapLockOn = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
+		}
+	}
 }

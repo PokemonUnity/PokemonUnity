@@ -76,7 +76,8 @@ namespace PokemonUnity
 #endif
             string gameVersion = GameFramework.Version.GameVersion;
             string platform = UnityEngine.Application.platform.ToString();
-            string language = GameEntry.Localization.Language.ToString();
+            //string language = GameEntry.Localization.Language.ToString();
+            string language = Game.UserLanguage.ToString();
             string unityVersion = UnityEngine.Application.unityVersion;
             string installMode = UnityEngine.Application.installMode.ToString();
             string sandboxType = UnityEngine.Application.sandboxType.ToString();
