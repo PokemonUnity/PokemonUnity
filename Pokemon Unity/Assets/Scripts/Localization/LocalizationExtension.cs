@@ -10,7 +10,7 @@ using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
-    public static class LocalizationExtension
+    /*public static class LocalizationExtension
     {
         public static void LoadDictionary(this LocalizationComponent localizationComponent, string dictionaryName, LoadType loadType, object userData = null)
         {
@@ -22,5 +22,5 @@ namespace PokemonUnity
 
             localizationComponent.LoadDictionary(dictionaryName, AssetUtility.GetDictionaryAsset(dictionaryName, loadType), loadType, Constant.AssetPriority.DictionaryAsset, userData);
         }
-    }
+    }*/
 }

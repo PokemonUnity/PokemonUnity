@@ -12,7 +12,7 @@ using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
-    /// <summary>
+    /*// <summary>
     /// XML 格式的本地化辅助器。
     /// </summary>
     public class XmlLocalizationHelper : DefaultLocalizationHelper
@@ -74,5 +74,5 @@ namespace PokemonUnity
                 return false;
             }
         }
-    }
+    }*/
 }

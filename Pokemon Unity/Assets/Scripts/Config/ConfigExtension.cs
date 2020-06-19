@@ -12,7 +12,7 @@ namespace PokemonUnity
 {
     public static class ConfigExtension
     {
-        public static void LoadConfig(this ConfigComponent configComponent, string configName, LoadType loadType, object userData = null)
+        /*public static void LoadConfig(this ConfigComponent configComponent, string configName, LoadType loadType, object userData = null)
         {
             if (string.IsNullOrEmpty(configName))
             {
@@ -21,6 +21,6 @@ namespace PokemonUnity
             }
 
             configComponent.LoadConfig(configName, AssetUtility.GetConfigAsset(configName, loadType), loadType, Constant.AssetPriority.ConfigAsset, userData);
-        }
+        }*/
     }
 }

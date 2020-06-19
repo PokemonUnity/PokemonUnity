@@ -12,7 +12,7 @@ using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
-    public static class DataTableExtension
+    /*public static class DataTableExtension
     {
         private const string DataRowClassPrefixName = "PokemonUnity.DR";
         internal static readonly char[] DataSplitSeparators = new char[] { '\t' };
@@ -87,5 +87,5 @@ namespace PokemonUnity
             string[] splitValue = value.Split(',');
             return new Vector4(float.Parse(splitValue[0]), float.Parse(splitValue[1]), float.Parse(splitValue[2]), float.Parse(splitValue[3]));
         }
-    }
+    }*/
 }
