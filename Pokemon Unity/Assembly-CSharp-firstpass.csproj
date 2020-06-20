@@ -275,25 +275,25 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="LitJson">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\LitJson.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\protobuf-net.dll</HintPath>
-    </Reference>
-    <Reference Include="GameFramework">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\GameFramework.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Offline">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Offline.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Offline.dll</HintPath>
+    </Reference>
+    <Reference Include="GameFramework">
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\GameFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson">
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\LitJson.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Shared">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Shared.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

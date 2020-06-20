@@ -396,10 +396,10 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="GameFramework">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\GameFramework.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\GameFramework.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

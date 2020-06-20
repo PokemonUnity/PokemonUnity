@@ -60,115 +60,115 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Base\GameEntry.Builtin.cs" />
-    <Compile Include="Assets\Scripts\Base\GameEntry.cs" />
-    <Compile Include="Assets\Scripts\Base\GameEntry.Custom.cs" />
-    <Compile Include="Assets\Scripts\BuiltinData\BuiltinDataComponent.cs" />
-    <Compile Include="Assets\Scripts\Config\ConfigExtension.cs" />
-    <Compile Include="Assets\Scripts\DataTable\BinaryReaderExtension.cs" />
-    <Compile Include="Assets\Scripts\DataTable\DataTableExtension.cs" />
-    <Compile Include="Assets\Scripts\DataTable\DREntity.cs" />
-    <Compile Include="Assets\Scripts\DataTable\DRMusic.cs" />
-    <Compile Include="Assets\Scripts\DataTable\DRScene.cs" />
-    <Compile Include="Assets\Scripts\DataTable\DRSound.cs" />
-    <Compile Include="Assets\Scripts\DataTable\DRTest.cs" />
-    <Compile Include="Assets\Scripts\DataTable\DRUIForm.cs" />
-    <Compile Include="Assets\Scripts\DataTable\DRUISound.cs" />
-    <Compile Include="Assets\Scripts\Debugger\ChangeLanguageDebuggerWindow.cs" />
-    <Compile Include="Assets\Scripts\Debugger\DebuggerWindow.cs" />
-    <Compile Include="Assets\Scripts\Definition\Constant\Constant.AssetPriority.cs" />
-    <Compile Include="Assets\Scripts\Definition\Constant\Constant.Layer.cs" />
-    <Compile Include="Assets\Scripts\Definition\Constant\Constant.ProcedureData.cs" />
-    <Compile Include="Assets\Scripts\Definition\Constant\Constant.Setting.cs" />
-    <Compile Include="Assets\Scripts\Definition\DataStruct\BuildInfo.cs" />
-    <Compile Include="Assets\Scripts\Definition\DataStruct\ImpactData.cs" />
-    <Compile Include="Assets\Scripts\Definition\DataStruct\VersionInfo.cs" />
-    <Compile Include="Assets\Scripts\Definition\Enum\CampType.cs" />
-    <Compile Include="Assets\Scripts\Definition\Enum\QualityLevelType.cs" />
-    <Compile Include="Assets\Scripts\Definition\Enum\RelationType.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityData\BulletData.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityData\EffectData.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityData\EntityData.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityData\TargetableObjectData.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityExtension.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityLogic\Effect.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityLogic\Entity.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityLogic\TargetableObject.cs" />
-    <Compile Include="Assets\Scripts\Game\GameBase.cs" />
-    <Compile Include="Assets\Scripts\Game\GameMode.cs" />
-    <Compile Include="Assets\Scripts\Game\SurvivalGame.cs" />
-    <Compile Include="Assets\Scripts\Localization\LocalizationExtension.cs" />
-    <Compile Include="Assets\Scripts\Localization\XmlLocalizationHelper.cs" />
-    <Compile Include="Assets\Scripts\Network\CSPacketBase.cs" />
-    <Compile Include="Assets\Scripts\Network\CSPacketHeader.cs" />
-    <Compile Include="Assets\Scripts\Network\NetworkChannelHelper.cs" />
-    <Compile Include="Assets\Scripts\Network\Packet\CSHeartBeat.cs" />
-    <Compile Include="Assets\Scripts\Network\Packet\SCHeartBeat.cs" />
-    <Compile Include="Assets\Scripts\Network\PacketBase.cs" />
-    <Compile Include="Assets\Scripts\Network\PacketHandler\SCHeartBeatHandler.cs" />
-    <Compile Include="Assets\Scripts\Network\PacketHandlerBase.cs" />
-    <Compile Include="Assets\Scripts\Network\PacketHeaderBase.cs" />
-    <Compile Include="Assets\Scripts\Network\PacketType.cs" />
-    <Compile Include="Assets\Scripts\Network\SCPacketBase.cs" />
-    <Compile Include="Assets\Scripts\Network\SCPacketHeader.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedureBase.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedureBattle.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedureChangeScene.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedureCheckVersion.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedureLaunch.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedureMain.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedureMenu.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedurePreload.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedureSplash.cs" />
-    <Compile Include="Assets\Scripts\Procedure\ProcedureTyping.cs" />
-    <Compile Include="Assets\Scripts\Scene\ClickSelect.cs" />
-    <Compile Include="Assets\Scripts\Scene\HideByBoundary.cs" />
-    <Compile Include="Assets\Scripts\Scene\ScrollableBackground.cs" />
-    <Compile Include="Assets\Scripts\Scene\TextMeshProAnimated.cs" />
-    <Compile Include="Assets\Scripts\Scene\TypingHandler.cs" />
-    <Compile Include="Assets\Scripts\Sound\SoundExtension.cs" />
-    <Compile Include="Assets\Scripts\UI\AboutForm.cs" />
-    <Compile Include="Assets\Scripts\UI\CommonButton.cs" />
-    <Compile Include="Assets\Scripts\UI\DialogForm.cs" />
-    <Compile Include="Assets\Scripts\UI\DialogParams.cs" />
-    <Compile Include="Assets\Scripts\UI\DialogPopups.cs" />
-    <Compile Include="Assets\Scripts\UI\MenuForm.cs" />
-    <Compile Include="Assets\Scripts\UI\SettingForm.cs" />
-    <Compile Include="Assets\Scripts\UI\TypingForm.cs" />
-    <Compile Include="Assets\Scripts\UI\UGuiForm.cs" />
-    <Compile Include="Assets\Scripts\UI\UGuiGroupHelper.cs" />
-    <Compile Include="Assets\Scripts\UI\UIExtension.cs" />
-    <Compile Include="Assets\Scripts\UI\UIFormId.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\BattlePokemonHandler.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\Display\DisplayComponent.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\Display\DisplayItem.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\Display\DisplayItemObject.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarComponent.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarItem.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarItemObject.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarComponent.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarItem.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarItemObject.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryComponent.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItem.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItemObject.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyItem.cs" />
-    <Compile Include="Assets\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyItemObject.cs" />
-    <Compile Include="Assets\Scripts\Utility\AIUtility.cs" />
-    <Compile Include="Assets\Scripts\Utility\AssetUtility.cs" />
-    <Compile Include="Assets\Scripts\Utility\LitJsonHelper.cs" />
-    <Compile Include="Assets\Scripts\Utility\WebUtility.cs" />
-    <None Include="Assets\Materials\Shaders\RenderBehind.shader" />
+    <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.Builtin.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.Custom.cs" />
+    <Compile Include="Assets\GameMain\Scripts\BuiltinData\BuiltinDataComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Config\ConfigExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\BinaryReaderExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DataTableExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DREntity.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DRMusic.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DRScene.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DRSound.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DRTest.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DRUIForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DRUISound.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Debugger\ChangeLanguageDebuggerWindow.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Debugger\DebuggerWindow.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.AssetPriority.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.Layer.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.ProcedureData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.Setting.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\DataStruct\BuildInfo.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\DataStruct\ImpactData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\DataStruct\VersionInfo.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Enum\CampType.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Enum\QualityLevelType.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Enum\RelationType.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\BulletData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EffectData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\TargetableObjectData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Effect.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Entity.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\TargetableObject.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Game\GameBase.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Game\GameMode.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Game\SurvivalGame.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Localization\LocalizationExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Localization\XmlLocalizationHelper.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\CSPacketBase.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\CSPacketHeader.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\NetworkChannelHelper.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\Packet\CSHeartBeat.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\Packet\SCHeartBeat.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\PacketBase.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\PacketHandler\SCHeartBeatHandler.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\PacketHandlerBase.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\PacketHeaderBase.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\PacketType.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\SCPacketBase.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Network\SCPacketHeader.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureBase.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureBattle.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureChangeScene.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureCheckVersion.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureLaunch.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureMain.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureMenu.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedurePreload.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureSplash.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureTyping.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Scene\ClickSelect.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Scene\HideByBoundary.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Scene\ScrollableBackground.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Scene\TextMeshProAnimated.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Scene\TypingHandler.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Sound\SoundExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\AboutForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\CommonButton.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\DialogForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\DialogParams.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\DialogPopups.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\MenuForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\SettingForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\TypingForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\UGuiForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\UGuiGroupHelper.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\UIExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\UIFormId.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\BattlePokemonHandler.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\Display\DisplayComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\Display\DisplayItem.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\Display\DisplayItemObject.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarItem.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarItemObject.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarItem.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarItemObject.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItem.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItemObject.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyItem.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyItemObject.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Utility\AIUtility.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Utility\LitJsonHelper.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Utility\WebUtility.cs" />
+    <None Include="Assets\GameMain\Materials\Shaders\RenderBehind.shader" />
     <None Include="Assets\GameFramework\Libraries\link.xml" />
     <None Include="Assets\GameFramework\Libraries\GameFramework.xml" />
-    <None Include="Assets\Libraries\PKUE\System.Data.SQLite.xml" />
-    <None Include="Assets\Libraries\link.xml" />
-    <None Include="Assets\Materials\Shaders\Sprites-GUI.shader" />
-    <None Include="Assets\Materials\Shaders\Sprites-DiffuseMod.shader" />
-    <None Include="Assets\Materials\Shaders\Sprites-Tinted.shader" />
-    <None Include="Assets\Libraries\PKUE\GameFramework.xml" />
-    <None Include="Assets\Resources\Sprites\Animations\Animation.shader" />
+    <None Include="Assets\GameMain\Libraries\PKUE\System.Data.SQLite.xml" />
+    <None Include="Assets\GameMain\Libraries\link.xml" />
+    <None Include="Assets\GameMain\Materials\Shaders\Sprites-GUI.shader" />
+    <None Include="Assets\GameMain\Materials\Shaders\Sprites-DiffuseMod.shader" />
+    <None Include="Assets\GameMain\Materials\Shaders\Sprites-Tinted.shader" />
+    <None Include="Assets\GameMain\Libraries\PKUE\GameFramework.xml" />
+    <None Include="Assets\GameMain\Sprites\Animations\Animation.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -380,25 +380,25 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="LitJson">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\LitJson.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\protobuf-net.dll</HintPath>
-    </Reference>
-    <Reference Include="GameFramework">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\GameFramework.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Offline">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Offline.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Offline.dll</HintPath>
+    </Reference>
+    <Reference Include="GameFramework">
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\GameFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson">
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\LitJson.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Shared">
-      <HintPath>..\Pokemon Unity\Assets\Libraries\PKUE\PokemonUnity.Shared.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
