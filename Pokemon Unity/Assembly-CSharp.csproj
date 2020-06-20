@@ -162,13 +162,13 @@
     <None Include="Assets\GameMain\Materials\Shaders\RenderBehind.shader" />
     <None Include="Assets\GameFramework\Libraries\link.xml" />
     <None Include="Assets\GameFramework\Libraries\GameFramework.xml" />
-    <None Include="Assets\GameMain\Libraries\PKUE\System.Data.SQLite.xml" />
     <None Include="Assets\GameMain\Libraries\link.xml" />
     <None Include="Assets\GameMain\Materials\Shaders\Sprites-GUI.shader" />
     <None Include="Assets\GameMain\Materials\Shaders\Sprites-DiffuseMod.shader" />
+    <None Include="Assets\GameMain\Libraries\GameFramework.xml" />
     <None Include="Assets\GameMain\Materials\Shaders\Sprites-Tinted.shader" />
-    <None Include="Assets\GameMain\Libraries\PKUE\GameFramework.xml" />
     <None Include="Assets\GameMain\Sprites\Animations\Animation.shader" />
+    <None Include="Assets\GameMain\Libraries\System.Data.SQLite.xml" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
