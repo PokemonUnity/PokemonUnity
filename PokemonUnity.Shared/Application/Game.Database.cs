@@ -54,19 +54,20 @@ namespace PokemonUnity
 		/// </summary>
 		public static Dictionary<Locations,int[]> LocationData { get; private set; }
 		/// <summary>
-		/// List of <see cref="Player.Area"/> that triggers <seealso cref="Encounter"/>
+		/// List of <see cref="Player.Area"/> that triggers <seealso cref="Overworld.EncounterData"/>
 		/// <para></para>
 		/// Key: <seealso cref="Overworld.Area.Id"/> | Value: <seealso cref="Player.Area"/>
 		/// </summary>
 		public static Dictionary<int,Area> AreaData { get; private set; }
 		/// <summary>
-		/// Key: <seealso cref="Method"/> | Value: <seealso cref="Encounter.Id"/>
+		/// Key: <seealso cref="Method"/> | Value: <seealso cref="EncounterData.Id"/>
 		/// </summary>
 		public static Dictionary<Method,int[]> MethodData { get; private set; }
 		/// <summary>
-		/// Key: <seealso cref="Encounter.Id"/> | Value: <seealso cref="Encounter"/>
+		/// Key: <seealso cref="EncounterData.Id"/> | Value: <seealso cref="Overworld.EncounterData"/>
 		/// </summary>
-		public static Dictionary<int,Encounter> EncounterData { get; private set; }
+		public static Dictionary<int,EncounterData> EncounterData { get; private set; }
+		//public static Dictionary<Method,EncounterData> EncounterMethodData { get; private set; }
 		public static Dictionary<TrainerTypes,TrainerData> TrainerMetaData { get; private set; }
 		public static Dictionary<GymBadges,Character.BadgeData> BadgeData { get; private set; }
 		public static Dictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; private set; }
@@ -182,7 +183,7 @@ namespace PokemonUnity
 		public static bool InitEncounters(bool sql = true)
 		{
 			MethodData = new Dictionary<Method, int[]>();
-			EncounterData = new Dictionary<int, Encounter>();
+			EncounterData = new Dictionary<int, EncounterData>();
 			if (sql) //using (con)
 				return GetEncountersFromSQL(con);
 			else return false;
@@ -3329,7 +3330,7 @@ namespace PokemonUnity
 							.Add(int.Parse((string)reader["id"].ToString())
 						);
 						EncounterData.Add(int.Parse((string)reader["id"].ToString()),
-							new Encounter(
+							new EncounterData(
 								id: int.Parse((string)reader["id"].ToString())
 								,area: int.Parse((string)reader["location_area_id"].ToString())
 								,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
@@ -3393,7 +3394,7 @@ namespace PokemonUnity
 							.Add(int.Parse((string)reader["id"].ToString())
 						);
 						EncounterData.Add(int.Parse((string)reader["id"].ToString()),
-							new Encounter(
+							new EncounterData(
 								id: int.Parse((string)reader["id"].ToString())
 								,area: int.Parse((string)reader["location_area_id"].ToString())
 								,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())

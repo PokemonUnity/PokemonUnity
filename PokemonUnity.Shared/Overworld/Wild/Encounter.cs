@@ -3,100 +3,96 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity.Monster;
-//using PokemonUnity.Overworld.EncounterData;
 
 namespace PokemonUnity.Overworld
 {
-	public struct Encounter
+	public class Encounter
 	{
 		#region Variables
+		protected List<Pokemon> PokemonPool { get; private set; }
+		public EncounterData[] Encounters { get; protected set; }
+		//public ConditionValue[] Conditions { get; private set; }
 		/// <summary>
+		/// Key: SlotId | Value: Pokemon Array
 		/// </summary>
-		public int Id { get; private set; }
+		public Dictionary<int, List<Pokemons>> Slot { get; protected set; }
+
 		/// <summary>
+		/// This array of numbers total up to 100%, 
+		/// and represents a pool of pokemon that has chance to appear
 		/// </summary>
-		public int Area { get; private set; }
-		public Method Method { get; private set; }
-		//public Slots Slot { get; } //ToDo { get { return Game.EncounterSlotData[Generation][SlotId]; } }
-		public int SlotId { get; private set; }
+		public virtual int[] Chances { get; }
 		/// <summary>
+		/// How often or likely to engage and encounter a pokemon
 		/// </summary>
-		//public Pokemons Pokemon { get; private set; }
-		public Pokemons[] Pokemon { get; private set; }
-		/// <summary>
-		/// </summary>
-		public ConditionValue[] Conditions { get; private set; }
-		/// <summary>
-		/// </summary>
-		public Versions[] Versions { get; private set; }
-		/// <summary>
-		/// </summary>
-		public int Generation { get; private set; }
-		/// <summary>
-		/// </summary>
-		public int MinLevel { get; private set; }
-		/// <summary>
-		/// </summary>
-		public int MaxLevel { get; private set; }
-		/// <summary>
-		/// </summary>
-		public int Rarity { get; private set; }
+		//public static int Rate { get; set; }
 		#endregion
 
-		public Encounter(int id, int area, Method method, int slotId, Pokemons[] pokemon = null, ConditionValue[] conditions = null, int generation = 0, int minLevel = 1, int maxLevel = 1, int rarity = 0, Versions[] versions = null)
+		/// <summary>
+		/// </summary>
+		public Encounter()
 		{
-			Id = id;
-			Area = area;
-			Pokemon = pokemon ?? new Pokemons[] { Pokemons.NONE };
-			Conditions = conditions;// ?? throw new ArgumentNullException(nameof(conditions));
-			Generation = generation;
-			MinLevel = minLevel;
-			MaxLevel = maxLevel;
-			Method = method;
-			Rarity = rarity;
-			SlotId = slotId;//versions.Contains(x => (int)x == 15) ? slotId : slotId - 1; //if 15, first slot is 0
-			Versions = versions;
+			PokemonPool = new List<Pokemon>();
+			Encounters = new EncounterData[0];
+			//Conditions = new ConditionValue[0];
+			Slot = new Dictionary<int, List<Pokemons>>();
+		}
+
+		public Encounter(int[] slots, EncounterData[] data) : this()
+		{
+			Chances = slots;
+			int i = 0;
+			foreach (int slot in Chances)
+			{
+				Slot.Add(i, new List<Pokemons>()); i++;
+			}
+			Encounters = data;
 		}
 
 		/// <summary>
 		/// </summary>
-		/// <param name="method"></param>
-		/// <returns></returns>
+		/// <returns>returns pokemon for battle scene</returns>
 		/// ToDo: Consider increasing chance on rarity as encounter increases 
-		public static Pokemon GetWildPokemon(Method method)
+		public Pokemon GetWildPokemon()//Method method
 		{
-			int x = Game.MethodData[method].Length;
-			if(x > 0)
-			{
-				List<Pokemon> p = new List<Pokemon>();
-				//KeyValuePair<int, List<Pokemons>> slot = new KeyValuePair<int, List<Pokemons>>(); 
-				Dictionary<int, List<Pokemons>> slot = new Dictionary<int, List<Pokemons>>(); 
-				Dictionary<int, int> min = new Dictionary<int, int>(); 
-				Dictionary<int, int> max = new Dictionary<int, int>(); 
-				Dictionary<int, int> rarity = new Dictionary<int, int>(); 
-				foreach (int n in Game.MethodData[method])
+			//int x = Game.MethodData[method].Length;
+			//if(x > 0)
+			//{
+				//Reset list of pokemons each time encounter is triggered
+				//List<Pokemon> PokemonPool = new List<Pokemon>();
+				PokemonPool = new List<Pokemon>();
+				//KeyValuePair<int, List<Pokemons>> slot = new KeyValuePair<int, List<Pokemons>>();
+				//Dictionary<int, List<Pokemons>> slot = new Dictionary<int, List<Pokemons>>();
+				Dictionary<int, int> min = new Dictionary<int, int>();
+				Dictionary<int, int> max = new Dictionary<int, int>();
+				Dictionary<int, int> rarity = new Dictionary<int, int>();
+				
+				//Sort through pokemons and group them by chance of encountering
+				//foreach (int n in Game.MethodData[method])
+				foreach (EncounterData item in Encounters)
 				{
-					Encounter item = Game.EncounterData[n];
+					//EncounterData item = Game.EncounterData[n];
 					//for (int i = 0; i < x; i++)
 					//{
 					//	if(item.SlotId == i) // && Conditions.Contains()
 					//		slot = new KeyValuePair<int, List<Pokemons>>(i, new List<Pokemons>());
 					//		slot.Value.Add();
-						if(!slot.ContainsKey(item.SlotId)){ // && Conditions.Contains() {
-							slot.Add(item.SlotId, new List<Pokemons>());
-							min.Add(item.SlotId, item.MinLevel);
-							max.Add(item.SlotId, item.MaxLevel);
-							max.Add(item.SlotId, item.Rarity);
-						}
-						else
+						//if(!slot.ContainsKey(item.SlotId)){ // && Conditions.Contains() {
+						//	slot.Add(item.SlotId, new List<Pokemons>());
+						//	min.Add(item.SlotId, item.MinLevel);
+						//	max.Add(item.SlotId, item.MaxLevel);
+						//	max.Add(item.SlotId, item.Rarity);
+						//}
+						//else
+						if(Slot.ContainsKey(item.SlotId)) //item.Method == method &&
 						{
 							if (item.Conditions == null || item.Conditions.Length == 0 || EncounterConditionsMet(item.Conditions))
 							{ 
 								if(item.Pokemon.Length > 1)
 								{
-									slot[item.SlotId].Add(item.Pokemon[Core.Rand.Next(item.Pokemon.Length)]);
+									Slot[item.SlotId].Add(item.Pokemon[Core.Rand.Next(item.Pokemon.Length)]);
 								}
-								else slot[item.SlotId].Add(item.Pokemon[0]);
+								else Slot[item.SlotId].Add(item.Pokemon[0]);
 							} 
 							min[item.SlotId] = Math.Min(min[item.SlotId], item.MinLevel);
 							max[item.SlotId] = Math.Max(max[item.SlotId], item.MaxLevel);
@@ -117,97 +113,99 @@ namespace PokemonUnity.Overworld
 						}
 					//}
 				}
-				for (int y = 0; y < slot.Count; y++)
+
+				//Run through each group of pokemon by slots they're in
+				for (int y = 0; y < Slot.Count; y++)
 				{
 					Pokemons poke = Pokemons.NONE;
-					if(slot[y].Count > 1)
+					if(Slot[y].Count > 1)
 					{
-						poke = slot[y][Core.Rand.Next(slot.Count)];
+						poke = Slot[y][Core.Rand.Next(Slot.Count)];
 					}
-					else if (slot[y].Count == 1)
+					else if (Slot[y].Count == 1)
 					{
-						poke = slot[y][0];
+						poke = Slot[y][0];
 					}
 					for (int n = 0; n < rarity[y]; n++)
 					{
-						//p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(item.MinLevel, item.MaxLevel),isEgg: false));
-						p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(min[y], max[y]),isEgg: false));
+						//p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(item.MinLevel, item.MaxLevel), isEgg: false));
+						PokemonPool.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(min[y], max[y]), isEgg: false));
 					}
 				}
-				if (p.Count > 0)
+
+				//If encounter pool is not empty
+				if (PokemonPool.Count > 0)
 				{
-					for (int z = p.Count; z < 100; z++)
+					for (int z = PokemonPool.Count; z < 100; z++)
 					{
-						p.Add(new Pokemon(Pokemons.NONE));
+						PokemonPool.Add(new Pokemon(Pokemons.NONE));
 					}
-					Pokemon pkmn = p[Core.Rand.Next(p.Count)];
+					Pokemon pkmn = PokemonPool[Core.Rand.Next(PokemonPool.Count)];
 					pkmn.SwapItem(Monster.Data.PokemonWildItems.GetWildHoldItem(pkmn.Species));
 					return pkmn;
 				}
-			}
+			//}
 			return new Pokemon(Pokemons.NONE);
 		}
-		//public static Pokemon WildPokemonRNG(Method method) //conditions
-		//{
-		//	//if(rand < area.rate)
-		//	return GetWildPokemon(method);
-		//}
+
 		public static bool EncounterConditionsMet(ConditionValue[] encounter)
 		{
 			//Game g = new Game();
 			//If conditions are SWARMING we do not want encounter to contain NO_SWARM
-			if (encounter.Contains(Game.Swarm?ConditionValue.SWARM_YES:ConditionValue.SWARM_NO))
-				return true;
-			if (encounter.Contains(Game.Radar?ConditionValue.RADAR_ON:ConditionValue.RADAR_OFF))
-				return true;
+			if (encounter.Contains(!Game.Swarm?ConditionValue.SWARM_YES:ConditionValue.SWARM_NO))
+				return false;
+			if (encounter.Contains(!Game.Radar?ConditionValue.RADAR_ON:ConditionValue.RADAR_OFF))
+				return false;
 			if (//g.Radio == (byte)ConditionValue.RADIO_OFF && (
-				//	encounter.Contains(ConditionValue.RADIO_HOENN) ||
-				//	encounter.Contains(ConditionValue.RADIO_SINNOH) 
-					encounter.Contains((ConditionValue)Game.Radio) 
-				//)
+				(encounter.Contains(ConditionValue.RADIO_HOENN) ||
+				encounter.Contains(ConditionValue.RADIO_SINNOH))
+				//encounter.Contains((ConditionValue)Game.Radio) 
+				&& Game.Radio == (byte)ConditionValue.RADIO_OFF 
 			)
-				return true;
+				return false;
 			if (encounter.Contains((ConditionValue)Game.Slot))
-				return true;
-			if (Game.Season == Season.Spring && (
-					//encounter.Contains(ConditionValue.SEASON_SUMMER) ||
-					//encounter.Contains(ConditionValue.SEASON_AUTUMN) ||
-					//encounter.Contains(ConditionValue.SEASON_WINTER)
-					encounter.Contains(ConditionValue.SEASON_SPRING)
-				)
+				return false; //Not sure how slot encounter is supposed to work yet...
+			if (Game.Season == Season.Spring && (( //if has a season
+				encounter.Contains(ConditionValue.SEASON_SUMMER) ||
+				encounter.Contains(ConditionValue.SEASON_AUTUMN) ||
+				encounter.Contains(ConditionValue.SEASON_WINTER))
+				//but does not have....
+				&& !encounter.Contains(ConditionValue.SEASON_SPRING))
 			)
-				return true;
-			if (Game.Season == Season.Summer && (
-					//encounter.Contains(ConditionValue.SEASON_SPRING) ||
-					//encounter.Contains(ConditionValue.SEASON_AUTUMN) ||
-					//encounter.Contains(ConditionValue.SEASON_WINTER)
-					encounter.Contains(ConditionValue.SEASON_SUMMER)
-				)
+				return false;
+			if (Game.Season == Season.Summer && (( //if has a season
+				encounter.Contains(ConditionValue.SEASON_SPRING) ||
+				encounter.Contains(ConditionValue.SEASON_AUTUMN) ||
+				encounter.Contains(ConditionValue.SEASON_WINTER))
+				//but does not have....
+				&& !encounter.Contains(ConditionValue.SEASON_SUMMER))
 			)
-				return true;
-			if (Game.Season == Season.Fall && (
-					//encounter.Contains(ConditionValue.SEASON_SUMMER) ||
-					//encounter.Contains(ConditionValue.SEASON_SPRING) ||
-					//encounter.Contains(ConditionValue.SEASON_WINTER)
-					encounter.Contains(ConditionValue.SEASON_AUTUMN)
-				)
+				return false;
+			if (Game.Season == Season.Fall && (( //if has a season
+				encounter.Contains(ConditionValue.SEASON_SUMMER) ||
+				encounter.Contains(ConditionValue.SEASON_SPRING) ||
+				encounter.Contains(ConditionValue.SEASON_WINTER))
+				//but does not have....
+				&& !encounter.Contains(ConditionValue.SEASON_AUTUMN))
 			)
-				return true;
-			if (Game.Season == Season.Winter && (
-					//encounter.Contains(ConditionValue.SEASON_SUMMER) ||
-					//encounter.Contains(ConditionValue.SEASON_AUTUMN) ||
-					//encounter.Contains(ConditionValue.SEASON_SPRING)
-					encounter.Contains(ConditionValue.SEASON_WINTER)
-				)
+				return false;
+			if (Game.Season == Season.Winter && (( //if has a season
+				encounter.Contains(ConditionValue.SEASON_SUMMER) ||
+				encounter.Contains(ConditionValue.SEASON_AUTUMN) ||
+				encounter.Contains(ConditionValue.SEASON_SPRING))
+				//but does not have....
+				&& !encounter.Contains(ConditionValue.SEASON_WINTER))
 			)
-				return true;
-			return false;
+				return false;
+			//Otherwise, there's no special condition and will always appear
+			return true;
 		}
-		public override int GetHashCode()
-		{
-			//return Id.GetHashCode();
-			return Area.GetHashCode() ^ Method.GetHashCode() ^ SlotId.GetHashCode();
-		}
+
+		//public override int GetHashCode()
+		//{
+		//	//return Id.GetHashCode();
+		//	return Area.GetHashCode() ^ Method.GetHashCode() ^ SlotId.GetHashCode();
+		//}
 		//public override bool Equals(object obj)
 		//{
 		//	if (obj == null || GetType() != obj.GetType())
@@ -221,25 +219,4 @@ namespace PokemonUnity.Overworld
 		//	return other.first.Equals(Area) && other.second.Equals(Method) && other.third.Equals(SlotId);
 		//}
 	}
-	/*public struct EncounterSlotData
-	{
-		/// <summary>
-		/// </summary>
-		public Method Method { get; private set; }
-		/// <summary>
-		/// </summary>
-		public int[] Slots { get; private set; }
-		/// <summary>
-		/// </summary>
-		public int[] Generation { get; private set; }
-		/// <summary>
-		/// </summary>
-		public int[] Rate { get; private set; }
-		public int[] IdGroup { get; private set; }
-
-		//foreach (EncounterSlotData encounter in Game.EncounterData[Method])
-		public int this[int version, int slot] //if 15, first slot is 0; fixed in sql
-		//{ get { return encounter.Generation.Contains(15) ? Rate[i] : Rate[i-1]; } }
-		{ get { return Rate[slot-1]; } }
-	}*/
 }
