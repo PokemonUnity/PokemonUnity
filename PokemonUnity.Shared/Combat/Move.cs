@@ -16,9 +16,10 @@ namespace PokemonUnity.Combat
 	/// to prevent temp changes from being permanent to original pokemon profile
 	/// </summary>
 	// ToDo: Rename to `MoveFactory`
-	public abstract class Move : IPokeBattle_Move//PokemonUnity.Attack.Move
+	public abstract class Move : IPokeBattle_Move
 	{
 		#region Variables
+		public Attack.Move thismove			{ get; protected set; }
 		public Attack.Category Category		{ get; set; }
 		public Moves MoveId					{ get; set; }
 		public Attack.Target Targets		{ get; set; }
@@ -48,7 +49,7 @@ namespace PokemonUnity.Combat
 		public int Priority					{ get; set; }
 		public bool IsPhysical				{ get; set; }// { return Category == Attack.Category.PHYSICAL; } }
 		public bool IsSpecial				{ get; set; }// { return Category == Attack.Category.SPECIAL; } }
-		public virtual bool unuseableInGravity	{ get;set; }
+		public virtual bool unuseableInGravity	{ get; set; }
 		public bool PowerBoost				{ get; set; }
 		//public bool pbIsStatus()			{ return false; }
 		public string Name					{ get { return Game.MoveData[MoveId].Name; } }
@@ -60,74 +61,12 @@ namespace PokemonUnity.Combat
 
 		public Move() { }
 
-		//public Move(Moves move) : base(move)
-		//{
-		//    //Battle		= Battle
-		//    BaseDamage	= _base.BaseDamage;
-		//    Type			= _base.Type;
-		//    Accuracy		= _base.Accuracy;
-		//    PP			= base.PP;
-		//    TotalPP		= base.TotalPP;
-		//    AddlEffect	= _base.Effects;
-		//    Targets		= base.Targets;
-		//    Priority		= _base.Priority;
-		//    Flag			= base.Flag;
-		//    //thismove	= move
-		//    //name		= ""
-		//    MoveId		= base.MoveId;
-		//}
-		//
-		//public Move(Move move) : this(move.MoveId)
-		//{
-		//    PP = move.PP;
-		//    TotalPP = move.TotalPP;
-		//    CalcMoveFunc();
-		//}
-
-		//public Move(Battle battle, PokemonUnity.Attack.Move move) 
-		//{
-		//	Attack.Data.MoveData movedata    = Game.MoveData[move.MoveId];
-		//	Battle			= battle;
-		//	BaseDamage		= movedata.Power ?? 0;//.BaseDamage;
-		//	Type			= movedata.Type;
-		//	Accuracy		= movedata.Accuracy ?? 0;
-		//	Effect			= movedata.Effect;
-		//	Target			= movedata.Target;
-		//	Priority		= movedata.Priority;
-		//	Flags			= movedata.Flags;
-		//	Category		= movedata.Category;
-		//	//thismove		= move
-		//	//name			= ""
-		//	MoveId			= move.MoveId;
-		//	//PP			= base.PP;
-		//	//TotalPP		= base.TotalPP;
-		//	PP				= move.PP;
-		//	totalpp			= move.TotalPP;
-		//	PowerBoost		= false;
-		//}
-
-		public IPokeBattle_Move pbFromPBMove(Battle battle, Move move)
-		{
-			//if (move == null) return null;
-			//if (move == null) //move = (Move)new Attack.Move();
-			//	Attack.Data.MoveData movedata = Game.MoveData[Moves.NONE];
-			//else 
-				Attack.Data.MoveData movedata = Game.MoveData[move.MoveId];
-			//Type className = Type.GetType(string.Format("PokeBattle_Move_{0}X", movedata.Effect));
-			////if Object.const_defined(className)
-			//	//return (className).new (battle, move);
-			//	return Activitor.CreateInstance(className, battle, move);
-			//else
-			//	return new PokeBattle_UnimplementedMove(battle, move);
-
-			return this;
-		}
-
 		public virtual Move Initialize(Battle battle, PokemonUnity.Attack.Move move) 
 		{
+			if (move == null) move = new Attack.Move(Moves.NONE);
 			Attack.Data.MoveData movedata    = Game.MoveData[move.MoveId];
 			Battle			= battle;
-			BaseDamage		= movedata.Power ?? 0;//.BaseDamage;
+			BaseDamage		= movedata.Power ?? 0; //.BaseDamage;
 			Type			= movedata.Type;
 			Accuracy		= movedata.Accuracy ?? 0;
 			Effect			= movedata.Effect;
@@ -135,7 +74,7 @@ namespace PokemonUnity.Combat
 			Priority		= movedata.Priority;
 			Flags			= movedata.Flags;
 			Category		= movedata.Category;
-			//thismove		= move
+			thismove		= move;
 			//name			= ""
 			MoveId			= move.MoveId;
 			//PP			= base.PP;
@@ -145,6 +84,28 @@ namespace PokemonUnity.Combat
 			PowerBoost		= false;
 
 			return this;
+		}
+
+		/// <summary>
+		/// This is the code actually used to generate a PokeBattle_Move object.  The
+		/// object generated is a subclass of this one which depends on the move's
+		/// function code (found in the script section PokeBattle_MoveEffect).
+		/// </summary>
+		/// <param name="battle"></param>
+		/// <param name="move"></param>
+		/// <returns></returns>
+		public IPokeBattle_Move pbFromPBMove(Battle battle, Attack.Move move)
+		{
+			if (move == null) move = new Attack.Move(Moves.NONE);
+			//Attack.Data.MoveData movedata = Game.MoveData[move.MoveId];
+			//Type className = Type.GetType(string.Format("PokeBattle_Move_{0}X", movedata.Effect));
+			////if Object.const_defined(className)
+			//	//return (className).new (battle, move);
+			//	return Activitor.CreateInstance(className, battle, move);
+			if (Game.MoveEffectData.ContainsKey(move.Effect))
+				return Game.MoveEffectData[move.Effect].Initialize(battle, move);
+			else
+				return new PokeBattle_UnimplementedMove().Initialize(battle, move);
 		}
 
 #region About the move
@@ -283,7 +244,8 @@ public virtual int TotalPP { get {
    }
 
    public virtual bool isHealingMove() { //get {
-	 return false;//}
+	 //return Flags.Heal;//}
+	 return Game.MoveMetaData[MoveId].Healing > 0;//}
    }
 
    public virtual bool isRecoilMove() { //get {
@@ -299,7 +261,7 @@ public virtual int TotalPP { get {
 		/// </summary>
   public virtual bool hasHighCriticalRate { get{
 	//return (@flags&0x80)!=0;} //# flag h: Has high critical hit rate
-	return false;} 
+	return Game.MoveMetaData[MoveId].CritRate > 0;} 
   }		
 
 		/// <summary>
@@ -335,7 +297,7 @@ public virtual int TotalPP { get {
 	  if (opponent.pbCanIncreaseStatStage(Stats.ATTACK, opponent))
 		 opponent.pbIncreaseStatWithCause(Stats.ATTACK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 	  else
-		Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
+		Battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
 		   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
@@ -345,7 +307,7 @@ public virtual int TotalPP { get {
 	  if (opponent.pbCanIncreaseStatStage(Stats.SPATK, opponent))
 		 opponent.pbIncreaseStatWithCause(Stats.SPATK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 	  else
-		Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
+		Battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
 		   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
@@ -354,44 +316,44 @@ public virtual int TotalPP { get {
 	  if (opponent.pbCanIncreaseStatStage (Stats.SPEED, opponent))
 		 opponent.pbIncreaseStatWithCause(Stats.SPEED,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 	  else
-		Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
+		Battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
 		   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
 	if ((opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.WATER) ||
 	   (opponent.hasWorkingAbility(Abilities.VOLT_ABSORB) && type == Types.ELECTRIC) ||
 	   (opponent.hasWorkingAbility(Abilities.WATER_ABSORB) && type == Types.WATER)){
-	  GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{@name} ineffective)");
+	  GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{@Name} ineffective)");
 	  if (opponent.effects.HealBlock==0){
 		if (opponent.RecoverHP((int)Math.Floor(opponent.TotalHP/4d),true)>0)
-		  Battle.pbDisplay(_INTL("{1}'s {2} restored its HP!",
+		  Battle.pbDisplay(Game._INTL("{1}'s {2} restored its HP!",
 			 opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
 		else
-		  Battle.pbDisplay(_INTL("{1}'s {2} made {3} useless!",
+		  Battle.pbDisplay(Game._INTL("{1}'s {2} made {3} useless!",
 			 opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 		return true;
 	  }
 	}
 	if (opponent.hasWorkingAbility(Abilities.FLASH_FIRE) && type == Types.FIRE){
-	  GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s Flash Fire (made #{@name} ineffective)");
+	  GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Flash Fire (made #{@Name} ineffective)");
 	  if (!opponent.effects.FlashFire){
 		opponent.effects.FlashFire= true;
-		Battle.pbDisplay(_INTL("{1}'s {2} raised its Fire power!",
+		Battle.pbDisplay(Game._INTL("{1}'s {2} raised its Fire power!",
 		   opponent.ToString(), opponent.Ability.ToString(TextScripts.Name)));}
 	  else
-		Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
+		Battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
 		   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
 	if (opponent.hasWorkingAbility(Abilities.TELEPATHY) && pbIsDamaging() &&
 	   !opponent.IsOpposing(attacker.Index)){
-	   GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s Telepathy (made #{@name} ineffective)");
-	  Battle.pbDisplay(_INTL("{1} avoids attacks by its ally Pokémon!",opponent.ToString()));
+	   GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Telepathy (made #{@Name} ineffective)");
+	  Battle.pbDisplay(Game._INTL("{1} avoids attacks by its ally Pokémon!",opponent.ToString()));
 	  return true;
 	}
 	if (opponent.hasWorkingAbility(Abilities.BULLETPROOF) && Flags.Ballistics){
-	  GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s Bulletproof (made #{@name} ineffective)");
-	  Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
+	  GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Bulletproof (made #{@Name} ineffective)");
+	  Battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
 		 opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
@@ -465,7 +427,7 @@ public virtual int TotalPP { get {
 	if (type<0) return 8;
 	double typemod=pbTypeModifier(type, attacker, opponent);
 	if (typemod==0)
-	  Battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.ToString(true)));
+	  Battle.pbDisplay(Game._INTL("It doesn't affect {1}...",opponent.ToString(true)));
 	else
 	  if (pbTypeImmunityByAbility(type, attacker, opponent)) return 0; 
 	return typemod;
@@ -693,7 +655,7 @@ public virtual int TotalPP { get {
 		 (attacker.hasWorkingItem(Items.FAIRY_GEM)    && type == Types.FAIRY)){
 		damagemult=(Core.USENEWBATTLEMECHANICS)? Math.Round(damagemult*1.3) : Math.Round(damagemult * 1.5);
 	   Battle.pbCommonAnimation("UseItem", attacker, null);
-		Battle.pbDisplayBrief(_INTL("The {1} strengthened {2}'s power!",
+		Battle.pbDisplayBrief(Game._INTL("The {1} strengthened {2}'s power!",
 		   Game.ItemData[attacker.Item].ToString(), Game.MoveData[MoveId].Name));
 		attacker.pbConsumeItem();
 	  }
@@ -931,7 +893,7 @@ public virtual int TotalPP { get {
 	   defmult = Math.Round(defmult * 1.5);
 	if (opponent.hasWorkingItem(Items.EVIOLITE)){
 	  //evos=pbGetEvolvedFormData(opponent.Species);
-	  //if (evos && evos.length>0)      
+	  //if (evos && evos.Length>0)      
 	  if (Game.PokemonEvolutionsData[opponent.Species].Length>0)
 		defmult=Math.Round(defmult*1.5);
 	}
@@ -1080,7 +1042,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 	finaldamagemult = pbModifyDamage(finaldamagemult, attacker, opponent);
 	damage= (int)Math.Round(damage* finaldamagemult*1.0/0x1000);
 	 opponent.damagestate.CalcDamage=damage;
-	 GameDebug.Log("Move's damage calculated to be #{damage}");
+	 GameDebug.Log($"Move's damage calculated to be #{damage}");
 	return damage;
   }
 
@@ -1088,16 +1050,16 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 	//bool endure=false;
 	if (opponent.effects.Substitute>0 && !ignoresSubstitute(attacker) &&
 	   (attacker.Species == Pokemons.NONE || attacker.Index!=opponent.Index)){
-	  GameDebug.Log("[Lingering effect triggered] #{opponent.ToString()}'s Substitute took the damage");
+	  GameDebug.Log($"[Lingering effect triggered] #{opponent.ToString()}'s Substitute took the damage");
 	  if (damage>opponent.effects.Substitute)damage=opponent.effects.Substitute;
 	  opponent.effects.Substitute-=damage;
 	  opponent.damagestate.Substitute= true;
 	  Battle.scene.pbDamageAnimation(opponent,0);
-	  Battle.pbDisplayPaused(_INTL("The substitute took damage for {1}!",opponent.Name));
+	  Battle.pbDisplayPaused(Game._INTL("The substitute took damage for {1}!",opponent.Name));
 	  if (opponent.effects.Substitute<=0){
 		opponent.effects.Substitute=0;
-		Battle.pbDisplayPaused(_INTL("{1}'s substitute faded!",opponent.Name));
-		GameDebug.Log("[End of effect] #{opponent.ToString()}'s Substitute faded");
+		Battle.pbDisplayPaused(Game._INTL("{1}'s substitute faded!",opponent.Name));
+		GameDebug.Log($"[End of effect] #{opponent.ToString()}'s Substitute faded");
 	  }
 	  opponent.damagestate.HPLost=damage;
 	  damage = 0;
@@ -1110,20 +1072,20 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 		else if (opponent.effects.Endure){
 		  damage = damage - 1;
 		  opponent.damagestate.Endured= true;
-		  GameDebug.Log("[Lingering effect triggered] #{opponent.ToString()}'s Endure");}
+		  GameDebug.Log($"[Lingering effect triggered] #{opponent.ToString()}'s Endure");}
 		else if (damage==opponent.TotalHP){
 		  if (opponent.hasWorkingAbility(Abilities.STURDY) && !attacker.hasMoldBreaker()){
 			opponent.damagestate.Sturdy=true;
 			damage= damage - 1;
-			GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s Sturdy");}
+			GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sturdy");}
 		  else if (opponent.hasWorkingItem(Items.FOCUS_SASH) && opponent.HP==opponent.TotalHP){
 			opponent.damagestate.FocusSash=true;
 			damage= damage - 1;
-			GameDebug.Log("[Item triggered] #{opponent.ToString()}'s Focus Sash");}
+			GameDebug.Log($"[Item triggered] #{opponent.ToString()}'s Focus Sash");}
 		  else if (opponent.hasWorkingItem(Items.FOCUS_BAND) && Battle.pbRandom(10)==0){
 			opponent.damagestate.FocusBand=true;
 			damage=damage-1;
-			GameDebug.Log("[Item triggered] #{opponent.ToString()}'s Focus Band");
+			GameDebug.Log($"[Item triggered] #{opponent.ToString()}'s Focus Band");
 		  }
 		}
 		if (damage<0)damage=0;
@@ -1148,30 +1110,30 @@ finaldamagemult = Math.Round(finaldamagemult * met);
   public virtual void pbEffectMessages(Pokemon attacker, Pokemon opponent, bool ignoretype= false, int[] alltargets= null){
 	if (opponent.damagestate.Critical)
 	  if (alltargets != null && alltargets.Length>1)
-		Battle.pbDisplay(_INTL("A critical hit on {1}!",opponent.ToString(true)));
+		Battle.pbDisplay(Game._INTL("A critical hit on {1}!",opponent.ToString(true)));
 	  else
-		Battle.pbDisplay(_INTL("A critical hit!"));
+		Battle.pbDisplay(Game._INTL("A critical hit!"));
 	if (!pbIsMultiHit() && attacker.effects.ParentalBond==0){
 	  if (opponent.damagestate.TypeMod>8)
 		if (alltargets != null && alltargets.Length>1)
-		  Battle.pbDisplay(_INTL("It's super effective on {1}!",opponent.ToString(true)));
+		  Battle.pbDisplay(Game._INTL("It's super effective on {1}!",opponent.ToString(true)));
 		else
-		  Battle.pbDisplay(_INTL("It's super effective!"));
+		  Battle.pbDisplay(Game._INTL("It's super effective!"));
 	  else if (opponent.damagestate.TypeMod>=1 && opponent.damagestate.TypeMod<8)
 		if (alltargets != null && alltargets.Length>1)
-		  Battle.pbDisplay(_INTL("It's not very effective on {1}...",opponent.ToString(true)));
+		  Battle.pbDisplay(Game._INTL("It's not very effective on {1}...",opponent.ToString(true)));
 		else
-		  Battle.pbDisplay(_INTL("It's not very effective..."));
+		  Battle.pbDisplay(Game._INTL("It's not very effective..."));
 	}
 	if (opponent.damagestate.Endured)
-	  Battle.pbDisplay(_INTL("{1} endured the hit!", opponent.ToString()));
+	  Battle.pbDisplay(Game._INTL("{1} endured the hit!", opponent.ToString()));
 	else if (opponent.damagestate.Sturdy)
-	  Battle.pbDisplay(_INTL("{1} hung on with Sturdy!", opponent.ToString()));
+	  Battle.pbDisplay(Game._INTL("{1} hung on with Sturdy!", opponent.ToString()));
 	else if (opponent.damagestate.FocusSash){
-	  Battle.pbDisplay(_INTL("{1} hung on using its Focus Sash!", opponent.ToString()));
+	  Battle.pbDisplay(Game._INTL("{1} hung on using its Focus Sash!", opponent.ToString()));
 	  opponent.pbConsumeItem();}
 	else if (opponent.damagestate.FocusBand)
-	  Battle.pbDisplay(_INTL("{1} hung on using its Focus Band!", opponent.ToString()));
+	  Battle.pbDisplay(Game._INTL("{1} hung on using its Focus Band!", opponent.ToString()));
   }
 
   public virtual int pbEffectFixedDamage(int damage, Pokemon attacker, Pokemon opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
@@ -1228,7 +1190,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 /// 2 if Bide is storing energy
 /// </returns>
   public virtual int pbDisplayUseMessage(Pokemon attacker){
-	Battle.pbDisplayBrief(_INTL("{1} used\r\n{2}!",attacker.ToString(), Game.MoveData[MoveId].Name));
+	Battle.pbDisplayBrief(Game._INTL("{1} used\r\n{2}!",attacker.ToString(), Game.MoveData[MoveId].Name));
 	return 0;
   }
 
@@ -1268,25 +1230,5 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 	return false;
   }
 	   #endregion
-
-		public string _INTL(string message, params object[] param)
-		{
-			return message;
-		}
 	}
-
-	#region Move Interfaces
-	public interface IMoveEffect
-	{
-		int Effect(Pokemon attacker, Pokemon opponent, int hitnum, Attack.Target alltargets, bool showanimation);
-	}
-	public interface IMoveAdditionalEffect
-	{
-		void AdditionalEffect(Pokemon attacker, Pokemon opponent);
-	}
-	public interface IMoveModifyAccuracy
-	{
-		void ModifyAccuracy(int moveAccuracy, Pokemon attacker, Pokemon opponent);
-	}
-	#endregion
 }
