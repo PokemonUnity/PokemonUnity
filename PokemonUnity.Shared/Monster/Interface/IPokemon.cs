@@ -108,4 +108,24 @@ namespace PokemonUnity.Monster
 		Types Type1 { get; }
 		Types Type2 { get; }
 	}
+	public interface IShadowPokemon
+	{
+		//int exp { set; }
+		int Exp { set; }
+		int? heartgauge { get; }
+		int heartStage { get; }
+		//int hp { set; }
+		int HP { set; }
+		bool hypermode { get; }
+		bool isShadow { get; }
+		int[] savedev { get; }
+		int savedexp { get; }
+		bool shadow { get; }
+		int shadowmovenum { get; }
+		Moves[] shadowmoves { get; }
+
+		void adjustHeart(int value);
+		void makeShadow();
+		void pbUpdateShadowMoves(bool allmoves = false);
+	}
 }

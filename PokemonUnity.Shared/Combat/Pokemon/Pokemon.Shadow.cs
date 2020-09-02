@@ -1,17 +1,20 @@
 ﻿using PokemonUnity.Combat.Data;
+using PokemonUnity.Inventory;
+
 
 namespace PokemonUnity.Combat
 {
-    public partial class Pokemon 
+    public partial class Pokemon : Combat.IShadowPokemon
     {
-  public void InitPokemon(Pokemon pkmn, sbyte pkmnIndex, string placeholder) { 
+  public void InitPokemon(Monster.Pokemon pkmn, sbyte pkmnIndex) { //, params object[] placeholder
     if (pokemonIndex>0 && inHyperMode() && !isFainted()) { 
       // Called out of hypermode
-      pkmn.isHyperMode=false;
+      pkmn.hypermode=false;
+      //pkmn.isHyperMode=false;
       //pkmn.adjustHeart(-50);
-      pkmn.pokemon.decreaseShadowLevel(Monster.Pokemon.PokemonActions.CallTo);
+      pkmn.decreaseShadowLevel(Monster.Pokemon.PokemonActions.CallTo);
     }
-    this.InitPokemon(pkmn, pkmnIndex);
+    this._InitPokemon(pkmn, pkmnIndex);
     // Called into battle
     if (isShadow()) { 
       //if (hasConst(Types.SHADOW))
@@ -24,28 +27,26 @@ namespace PokemonUnity.Combat
   }
 
 
-  public void pbEndTurn(Choice choice, string placeholder) { 
-    this.pbEndTurn(choice);
+  public virtual void pbEndTurn(Choice choice) { //, params object[] placeholder
+    this._pbEndTurn(choice);
     if (inHyperMode() && !this.battle.pbAllFainted(this.battle.party1) &&
        !this.battle.pbAllFainted(this.battle.party2)) { 
-      this.battle.pbDisplay(_INTL("Its hyper mode attack hurt {1}!",this.ToString(true)));
+      this.battle.pbDisplay(Game._INTL("Its hyper mode attack hurt {1}!",this.ToString(true)));
       pbConfusionDamage();
     }
   }
 
   public bool isShadow() {
     Monster.Pokemon p=this.pokemon;
-    if (p.IsNotNullOrNone()) //&& p.respond_to("heartgauge") && 
-        //p.ShadowLevel.HasValue && p.ShadowLevel.Value>0)
-      return p.isShadow;//true;
+    if (p.IsNotNullOrNone() && p is Monster.IShadowPokemon && ((Monster.IShadowPokemon)p).heartgauge>0) //ToDo: p.ShadowLevel.HasValue && p.ShadowLevel.Value>0)
+      return true;//p.isShadow;
     return false;
   }
 
   public bool inHyperMode() { 
     if (isFainted()) return false;
     Monster.Pokemon p=this.pokemon;
-    if (p.IsNotNullOrNone() && //p.respond_to?("hypermode") && 
-        IsHyperMode)//p.hypermode)
+    if (p.IsNotNullOrNone() && p is Monster.IShadowPokemon && ((Monster.IShadowPokemon)p).hypermode) //&& IsHyperMode)
       return true;
     return false;
   }
@@ -53,9 +54,9 @@ namespace PokemonUnity.Combat
   public void pbHyperMode() { 
     Monster.Pokemon p=this.pokemon;
     if (isShadow() && !IsHyperMode)
-      if (@battle.pbRandom(p.ShadowLevel.Value)<=p.HeartGuageSize/4) { //PokeBattle_Pokemon.HEARTGAUGESIZE
+      if (@battle.pbRandom(p.ShadowLevel.Value)<=p.HeartGuageSize/4) { //Pokemon.HEARTGAUGESIZE
         isHyperMode=true;
-        @battle.pbDisplay(_INTL("{1}'s emotions rose to a fever pitch!\nIt entered Hyper Mode!",this.ToString()));
+        @battle.pbDisplay(Game._INTL("{1}'s emotions rose to a fever pitch!\nIt entered Hyper Mode!",this.ToString()));
       }
   }
 
