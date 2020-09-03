@@ -279,8 +279,15 @@ namespace PokemonUnity.Monster
 			Ability = abilityFlag;
 			Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
 			if (Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
-			if (pokemon == Pokemons.UNOWN)
-				formId = Core.Rand.Next(Game.PokemonFormsData[pokemon].Length);
+			#region Initialize Forms
+			int? f = MultipleForms.getFormOnCreation(pokemons);
+			if (f != null)
+			{
+				//this.form = f;
+				Setform(f);
+				this.resetMoves();
+			}
+			#endregion
 			//ToDo: Move to Trainer.Wild Pokemon
 			//Item = (Items)_base.HeldItem[0,Core.pokemonGeneration];
 			GenerateMoveset();
@@ -1147,7 +1154,7 @@ namespace PokemonUnity.Monster
 		public virtual bool IsMale { get { return Gender == true; } }
 		public virtual bool IsFemale { get { return Gender == false; } }
 		public virtual bool IsGenderless { get { return Gender == null; } }
-		public virtual bool IsSingleGendered { get { return _base.GenderEnum == GenderRatio.AlwaysFemale || _base.GenderEnum == GenderRatio.AlwaysMale || _base.GenderEnum == GenderRatio.Genderless; } }
+		public virtual bool IsSingleGendered { get { return _base.IsSingleGendered; } }
 		/// <summary>
 		/// Returns this Pokemons gender.
 		/// Sets this Pokemon's gender to a particular gender (if possible)
@@ -2255,7 +2262,7 @@ namespace PokemonUnity.Monster
 		/// When reverting back, return to original data, and split exp gained between fusion
 		/// ExpGained = (FusedExp - MiddleExpOfPokemons) / #ofPokemons
 		/// should remain null until needed
-		public Pokemon[] fused { get; private set; }
+		public Pokemon[] fused { get; set; }
 		/// <summary>
 		/// Nickname
 		/// </summary>
@@ -2270,44 +2277,6 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		public virtual string Name { get { if (isEgg) return "Egg"; return IsNicknamed ? name : Species.ToString(TextScripts.Name); } }
 		public void SetNickname(string nick) { name = nick; }
-
-		/// <summary>
-		///	Used only for a few pokemon to specify what form it's in. 
-		/// </summary>
-		/// <remarks>
-		///	<see cref="Pokemons.UNOWN"/> = letter of the alphabet.
-		///	<see cref="Pokemons.DEOXYS"/> = which of the four forms.
-		///	<see cref="Pokemons.BURMY"/>/<see cref="Pokemons.WORMADAM"/> = cloak type. Does not change for Wormadam.
-		///	<see cref="Pokemons.SHELLOS"/>/<see cref="Pokemons.GASTRODON"/> = west/east alt colours.
-		///	<see cref="Pokemons.ROTOM"/> = different possesed appliance forms.
-		///	<see cref="Pokemons.GIRATINA"/> = Origin/Altered form.
-		///	<see cref="Pokemons.SHAYMIN"/> = Land/Sky form.
-		///	<see cref="Pokemons.ARCEUS"/> = Type.
-		///	<see cref="Pokemons.BASCULIN"/> = appearance.
-		///	<see cref="Pokemons.DEERLING"/>/<see cref="Pokemons.SAWSBUCK"/> = appearance.
-		///	<see cref="Pokemons.TORNADUS"/>/<see cref="Pokemons.THUNDURUS"/>/<see cref="Pokemons.LANDORUS"/> = Incarnate/Therian forms.
-		///	<see cref="Pokemons.KYUREM"/> = Normal/White/Black forms.
-		///	<see cref="Pokemons.KELDEO"/> = Ordinary/Resolute forms.
-		///	<see cref="Pokemons.MELOETTA"/> = Aria/Pirouette forms.
-		///	<see cref="Pokemons.GENESECT"/> = different Drives.
-		///	<see cref="Pokemons.VIVILLON"/> = different Patterns.
-		///	<see cref="Pokemons.FLABEBE"/>/<see cref="Pokemons.FLOETTE"/>/<see cref="Pokemons.FLORGES"/> = Flower colour.
-		///	<see cref="Pokemons.FURFROU"/> = haircut.
-		///	<see cref="Pokemons.PUMPKABOO"/>/<see cref="Pokemons.GOURGEIST"/> = small/average/large/super sizes. 
-		///	<see cref="Pokemons.HOOPA"/> = Confined/Unbound forms.
-		///	<see cref="Pokemons.CASTFORM"/>? = different weather forms
-		///	<see cref="Pokemons.PIKACHU"/>, 
-		/// and MegaEvolutions?
-		/// </remarks>
-		public Forms Form { get { return form.Id; } } //set { foreach(Form f in Game.PokemonFormsData[pokemons]) if (value == f.Id) formId = f.Order; } }
-		public int FormId { get { return formId; } } //set { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) formId = value; } }
-		public Form form { get { return Game.PokemonFormsData[pokemons][formId]; } }
-		private int formId { get; set; }
-		// Maybe a method, where when a form is changed
-		// checks pokemon value and overwrites name and stats
-		// Some forms have a SpeciesId and others are battle only
-		public bool SetForm (int value) { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) { formId = value; return true; } else return false; } 
-		public bool SetForm (Forms value) { int i = 0; foreach (Form f in Game.PokemonFormsData[pokemons]) { if (value == f.Id) return SetForm(i); i++; } return false; }
 
 		/// <summary>
 		/// Returns the markings this Pokemon has checked
