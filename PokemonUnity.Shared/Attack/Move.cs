@@ -47,7 +47,7 @@ namespace PokemonUnity.Attack
 		/// <summary>
 		/// The number of PP Ups used for this move
 		/// </summary>
-		public int PPups { get; protected set; }
+		public int PPups { get; set; }
 		#region Values to be Overridden while in Battle?
 		/// <summary>
 		/// Base Damage
