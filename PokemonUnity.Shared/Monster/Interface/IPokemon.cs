@@ -6,107 +6,94 @@ using PokemonUnity.Inventory;
 
 namespace PokemonUnity.Monster
 {
-	public interface IPokemon : IPokemonBattle
+	public interface IPokemon
 	{
-		//Abilities Ability { get; set; }
-		//int ATK { get; }
-		//Items ballUsed { get; }
-		byte[] Contest { get; }
-		//int DEF { get; }
-		int EggSteps { get; }
+		int TotalHP { get; }
+		int HP { get; }
+		int ATK { get; }
+		int DEF { get; }
+		int SPA { get; }
+		int SPD { get; }
+		int SPE { get; }
+		int[] IV { get; }
 		byte[] EV { get; }
-		//Pokemon.Experience Exp { get; }
+		Pokemons Species { get; }
+		Trainer OT { get; }
+		string TrainerId { get; }
+		int PersonalId { get; }
+		int[] Pokerus { get; }
+		Items Item { get; }
+		Items itemRecycle { get; }
+		Items itemInitial { get; }
+		bool belch { get; }
+		string Name { get; }
+		int Exp { get; }
+		int Happiness { get; }
+		Status Status { get; }
+		int StatusCount { get; }
+		int EggSteps { get; }
+		Move[] moves { get; }
+		Items ballUsed { get; }
+		bool[] Markings { get; set; }
+		Pokemon.ObtainedMethod ObtainedMode { get; }
+		Locations ObtainMap { get; }
+		int ObtainLevel { get; }
+		Abilities Ability { get; }
+		bool? Gender { get; }
+		Natures Nature { get; }
+		//bool IsShiny { get; }
+		Ribbon[] Ribbons { get; }
+		byte[] Contest { get; }
+
 		//int Form { get; set; }
-		//bool? Gender { get; }
 		//LevelingRate GrowthRate { get; }
-		//int Happiness { get; }
-		//int HP { get; set; }
 		//bool isEgg { get; }
 		//bool isHyperMode { get; }
 		bool IsNicknamed { get; }
 		//bool isShadow { get; }
-		//bool IsShiny { get; }
-		//Items Item { get; }
-		//int[] IV { get; }
 		//int Level { get; }
-		string Mail { get; }
-		bool[] Markings { get; set; }
-		//Move[] moves { get; }
-		//string Name { get; }
-		//Natures Nature { get; }
-		Pokemon.ObtainedMethod ObtainedMode { get; }
-		int ObtainLevel { get; }
-		Locations ObtainMap { get; }
-		Trainer OT { get; }
-		int PersonalId { get; }
-		//int[] Pokerus { get; }
+		//string Mail { get; }
 		//bool? PokerusStage { get; }
 		//int PokerusStrain { get; }
-		string PublicId { get; }
-		List<Ribbon> Ribbons { get; }
 		//int? ShadowLevel { get; }
-		//int SPA { get; }
-		//int SPD { get; }
-		//int SPE { get; }
-		//Pokemons Species { get; }
-		//Status Status { get; set; }
-		//int StatusCount { get; }
 		DateTimeOffset? TimeEggHatched { get; }
 		DateTimeOffset TimeReceived { get; }
-		//int TotalHP { get; }
-		//Types Type1 { get; }
-		//Types Type2 { get; }
-	}
-	public interface IPokemonBattle
-	{
-		Abilities Ability { get; set; }
-		int ATK { get; }
-		Items ballUsed { get; }
-		//byte[] Contest { get; }
-		int DEF { get; }
-		//int EggSteps { get; }
-		//byte[] EV { get; }
-		Monster.Data.Experience Experience { get; }
-		int FormId { get; }
-		bool? Gender { get; }
-		LevelingRate GrowthRate { get; }
-		int Happiness { get; }
-		int HP { get; set; }
-		bool isEgg { get; }
-		//bool isHyperMode { get; }
-		//bool IsNicknamed { get; }
-		bool isShadow { get; }
-		bool IsShiny { get; }
-		Items Item { get; }
-		int[] IV { get; }
-		int Level { get; }
-		//string Mail { get; }
-		//bool[] Markings { get; set; }
-		Move[] moves { get; }
-		string Name { get; }
-		Natures Nature { get; }
-		//Pokemon.ObtainedMethod ObtainedMode { get; }
-		//int ObtainLevel { get; }
-		//Locations ObtainMap { get; }
-		//TrainerId OT { get; }
-		//int PersonalId { get; }
-		int[] Pokerus { get; }
-		bool? PokerusStage { get; }
-		int PokerusStrain { get; }
-		//string PublicId { get; }
-		//List<Ribbon> Ribbons { get; }
-		int? ShadowLevel { get; }
-		int SPA { get; }
-		int SPD { get; }
-		int SPE { get; }
-		Pokemons Species { get; }
-		Status Status { get; set; }
-		int StatusCount { get; }
-		//DateTimeOffset? TimeEggHatched { get; }
-		//DateTimeOffset TimeReceived { get; }
-		int TotalHP { get; }
 		Types Type1 { get; }
 		Types Type2 { get; }
+	}
+
+	public interface IPokemonMultipleForms
+	{
+		int? forcedform { get; set; }
+		int form { get; set; }
+		//Data.Form Form { get; }
+		int formNoCall { set; }
+		DateTime? formTime { get; set; }
+
+		void forceForm(int value);
+	}
+
+	/// <summary>
+	/// Mega Evolutions and Primal Reversions are treated as form changes in
+	/// Essentials. The code below is just more of what's in the Pokemon_MultipleForms
+	/// script section, but specifically and only for the Mega Evolution and Primal
+	/// Reversion forms.
+	/// </summary>
+	public interface IPokemonMegaEvolution
+	{
+		//bool IsMega { get; }
+		//bool IsPrimal { get; }
+
+		bool hasMegaForm();
+		bool hasPrimalForm();
+		bool isMega();
+		bool isPrimal();
+		void makeMega();
+		void makePrimal();
+		void makeUnmega();
+		void makeUnprimal();
+		int megaMessage();
+		string megaName();
 	}
 	public interface IShadowPokemon
 	{
