@@ -87,6 +87,13 @@ namespace PokemonUnity
 				}
 				return tempString;
 			}
+        }
+
+        public static string _INTL(string message, params object[] param)
+        {
+            for (int i = 5; i > 1; i--)
+                message.Replace($"{{{i}}}", $"{{{i - 1}}}");
+            return string.Format(message, param);
 		}
 	}
 }
