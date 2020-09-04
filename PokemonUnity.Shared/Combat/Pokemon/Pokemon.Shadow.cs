@@ -66,5 +66,24 @@ namespace PokemonUnity.Combat
       return @battle.pbRandom(10)<8 ? false : true;
     return true;
   }
+        
+/*Events.onStartBattle+=delegate(object sender, EventArgs e) {
+   Game.GameData.PokemonTemp.heartgauges=[];
+   for (int i = 0; i < Game.GameData.Trainer.party.Length; i++) {
+     Game.GameData.PokemonTemp.heartgauges[i]=Game.GameData.Trainer.party[i].heartgauge;
+   }
+}
+
+Events.onEndBattle+=delegate(object sender, EventArgs e) {
+   decision=e[0];
+   canlose=e[1];
+   for (int i = 0; i < Game.GameData.PokemonTemp.heartgauges.Length; i++) {
+     pokemon=Game.GameData.Trainer.party[i];
+     if (pokemon && (Game.GameData.PokemonTemp.heartgauges[i] &&
+        Game.GameData.PokemonTemp.heartgauges[i]!=0 && pokemon.heartgauge==0)) {
+       pbReadyToPurify(pokemon);
+     }
+   }
+}*/
     }
 }

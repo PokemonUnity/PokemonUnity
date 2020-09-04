@@ -13,7 +13,236 @@ namespace PokemonUnity
 {
 	public partial class TempData
 	{
-		public int heartgauges { get; protected set; }
+		public int[] heartgauges { get; protected set; }
+	}
+
+	public partial class Game
+	{
+		public static void pbPurify(Pokemon pokemon, IScene scene)
+		{
+			if (pokemon.heartgauge == 0 && pokemon.shadow)
+			{
+				if (pokemon.savedev == null && pokemon.savedexp == 0) return;
+				pokemon.shadow = false;
+				pokemon.giveRibbon(Ribbon.NATIONAL);
+				scene.pbDisplay(Game._INTL("{1} opened the door to its heart!", pokemon.Name));
+				Moves[] oldmoves = new Moves[4];
+				//for (int i = 0; i < 4; i++) { oldmoves.Add(pokemon.moves[i].MoveId); }
+				for (int i = 0; i < 4; i++) { oldmoves[i] = pokemon.moves[i].MoveId; }
+				pokemon.pbUpdateShadowMoves();
+				for (int i = 0; i < 4; i++)
+				{
+					if (pokemon.moves[i].MoveId != 0 && pokemon.moves[i].MoveId != oldmoves[i])
+					{
+						scene.pbDisplay(Game._INTL("{1} regained the move \n{2}!",
+						   pokemon.Name, pokemon.moves[i].MoveId.ToString(TextScripts.Name)));
+					}
+				}
+				pokemon.RecordFirstMoves();
+				if (pokemon.savedev != null)
+				{
+					for (int i = 0; i < 6; i++)
+					{
+						Game.pbApplyEVGain(pokemon, (Stats)i, pokemon.savedev[i]);
+					}
+					pokemon.savedev = null;
+				}
+				int newexp = Experience.pbAddExperience(pokemon.Exp, pokemon.savedexp, pokemon.GrowthRate);
+				pokemon.savedexp = 0;
+				int newlevel = Experience.GetLevelFromExperience(pokemon.GrowthRate, newexp);
+				int curlevel = pokemon.Level;
+				if (newexp != pokemon.Exp)
+				{
+					scene.pbDisplay(Game._INTL("{1} regained {2} Exp. Points!", pokemon.Name, newexp - pokemon.Exp));
+				}
+				if (newlevel == curlevel)
+				{
+					pokemon.Exp = newexp;
+					pokemon.calcStats();
+				}
+				else
+				{
+					Game.pbChangeLevel(pokemon, newlevel, scene); // for convenience
+					pokemon.Exp = newexp;
+				}
+				string speciesname = pokemon.Species.ToString(TextScripts.Name);
+				if (scene.pbConfirm(_INTL("Would you like to give a nickname to {1}?", speciesname)))
+				{
+					string helptext = Game._INTL("{1}'s nickname?", speciesname);
+					string newname = Game.pbEnterPokemonName(helptext, 0, 10, "", pokemon);
+					//if (newname != "") pokemon.Name = newname;
+				}
+			}
+		}
+
+		#region Use with Relic Stone (Move to separate class?)
+		public static bool pbRelicStoneScreen(Pokemon pkmn)
+		{
+			bool retval = true;
+			//Game.pbFadeOutIn(99999); {
+			//	IScene scene = new RelicStoneScene();
+			//	IScreen screen = new RelicStoneScreen(scene);
+			//	retval = screen.pbStartScreen(pkmn);
+			//}
+			return retval;
+		}
+
+		public static bool pbIsPurifiable(Pokemon pkmn)
+		{
+			if (!pkmn.IsNotNullOrNone()) return false;
+			if (pkmn.isShadow && pkmn.heartgauge == 0)
+			//   && pkmn.Species != Pokemons.LUGIA)
+			{
+				return true;
+			}
+			return false;
+		}
+
+		public static bool pbHasPurifiableInParty()
+		{
+			return Game.GameData.Trainer.party.Any(item => pbIsPurifiable(item));
+		}
+
+		public static void pbRelicStone()
+		{
+			if (pbHasPurifiableInParty())
+			{
+				Game.pbMessage(Game._INTL("There's a Pokemon that may open the door to its heart!"));
+				//  Choose a purifiable Pokemon
+				//pbChoosePokemon(1, 2, proc {| poke |
+				pbChoosePokemon(1, 2, Game.GameData.Trainer.party.Select(poke => 
+					 !poke.isEgg && poke.HP > 0 && poke.isShadow && poke.heartgauge == 0
+				).ToArray());
+				if ((int)Game.GameData.GameVariables[1] >= 0)
+				{
+					pbRelicStoneScreen(Game.GameData.Trainer.party[(int)Game.GameData.GameVariables[1]]);
+				}
+			}
+			else
+			{
+				Game.pbMessage(_INTL("You have no Pokemon that can be purified."));
+			}
+		}
+
+		public static bool pbRaiseHappinessAndReduceHeart(Pokemon pokemon,IScene scene,int amount)
+		{
+			if (!pokemon.isShadow)
+			{
+				scene.pbDisplay(_INTL("It won't have any effect."));
+				return false;
+			}
+			if (pokemon.Happiness == 255 && pokemon.heartgauge == 0)
+			{
+				scene.pbDisplay(_INTL("It won't have any effect."));
+				return false;
+			}
+			else if (pokemon.Happiness == 255)
+			{
+				pokemon.adjustHeart(-amount);
+				scene.pbDisplay(_INTL("{1} adores you!\nThe door to its heart opened a little.", pokemon.Name));
+				pbReadyToPurify(pokemon);
+				return true;
+			}
+			else if (pokemon.heartgauge == 0)
+			{
+				pokemon.ChangeHappiness(HappinessMethods.VITAMIN);
+				scene.pbDisplay(_INTL("{1} turned friendly.", pokemon.Name));
+				return true;
+			}
+			else
+			{
+				pokemon.ChangeHappiness(HappinessMethods.VITAMIN);
+				pokemon.adjustHeart(-amount);
+				scene.pbDisplay(_INTL("{1} turned friendly.\nThe door to its heart opened a little.", pokemon.Name));
+				pbReadyToPurify(pokemon);
+				return true;
+			}
+		}
+
+		public static void pbApplyEVGain(Pokemon pokemon,Stats ev,int evgain)
+		{
+			int totalev = 0;
+			for (int i = 0; i < 6; i++)
+			{
+				totalev += pokemon.EV[i];
+			}
+			if (totalev + evgain > Pokemon.EVLIMIT)      // Can't exceed overall limit
+			{
+				evgain -= totalev + evgain - Pokemon.EVLIMIT;
+			}
+			if (pokemon.EV[(int)ev] + evgain > Pokemon.EVSTATLIMIT)
+			{
+				evgain -= totalev + evgain - Pokemon.EVSTATLIMIT;
+			}
+			if (evgain > 0)
+			{
+				//pokemon.EV[(int)ev] += evgain;
+				pokemon.EV[(int)ev] = (byte)(pokemon.EV[(int)ev] + evgain);
+			}
+		}
+
+		public static void pbReplaceMoves(Pokemon pokemon,Moves move1,Moves move2= 0,Moves move3= 0,Moves move4= 0)
+		{
+			if (!pokemon.IsNotNullOrNone()) return;
+			//new Moves[] { move1, move2, move3, move4 }.each{|move|
+			foreach (Moves move in new Moves[] { move1, move2, move3, move4 })
+			{
+				int moveIndex = -1;
+				if (move != 0)
+				{
+					//  Look for given move
+					for (int i = 0; i < 4; i++)
+					{
+						if (pokemon.moves[i].MoveId == move) moveIndex = i;
+					}
+				}
+				if (moveIndex == -1)
+				{
+					//  Look for slot to replace move
+					for (int i = 0; i < 4; i++)
+					{
+						if ((pokemon.moves[i].MoveId == 0 && move != 0) || (
+							pokemon.moves[i].MoveId != move1 &&
+							pokemon.moves[i].MoveId != move2 &&
+							pokemon.moves[i].MoveId != move3 &&
+							pokemon.moves[i].MoveId != move4)) {
+							//  Replace move
+							pokemon.moves[i] = new Move(move);
+							break;
+						}
+					}
+				}
+			}
+		}
+		#endregion
+
+		public static void pbReadyToPurify(Pokemon pokemon)
+		{
+			if (!pokemon.IsNotNullOrNone() || !pokemon.isShadow) return;
+			pokemon.pbUpdateShadowMoves();
+			if (pokemon.heartgauge == 0)
+			{
+				Game.pbMessage(Game._INTL("{1} can now be purified!", pokemon.Name));
+			}
+		}
+
+		/*Events.onStepTaken+=proc{
+			foreach (Pokemon pkmn in Game.GameData.Trainer.party) {
+				if (pkmn.HP>0 && !pkmn.isEgg && pkmn.heartgauge>0) {
+					pkmn.adjustHeart(-1);
+					if (pkmn.heartgauge==0) pbReadyToPurify(pkmn);
+				}
+			}
+			if ((Game.GameData.Global.purifyChamber!- null)) { //rescue null
+				Game.GameData.Global.purifyChamber.update();
+			}
+			for (int i = 0; i< 2; i++) {
+				Pokemon pkmn=Game.GameData.Global.daycare[i][0];
+				if (!pkmn) continue;
+				pkmn.adjustHeart(-1);
+				pkmn.pbUpdateShadowMoves();
+			}
+		}*/
 	}
 
 	namespace Monster
@@ -22,10 +251,10 @@ namespace PokemonUnity
 		{
 			#region Variables
 			public int? heartgauge { get; protected set; }
-			public bool shadow { get; protected set; }
+			public bool shadow { get; set; }
 			public bool hypermode { get; set; }
-			public int[] savedev { get; protected set; }
-			public int savedexp { get; protected set; }
+			public int[] savedev { get; set; }
+			public int savedexp { get; set; }
 			public Moves[] shadowmoves { get; protected set; }
 			public int shadowmovenum { get; protected set; }
 			public int heartStage
@@ -67,8 +296,8 @@ namespace PokemonUnity
 			/// </summary>
 			public int HP
 			{
-				get { return this.hp; } //ToDo: If greater than totalHP throw error?
-				set
+				get { return this.hp; }
+				private set
 				{
 					this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
 					//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
