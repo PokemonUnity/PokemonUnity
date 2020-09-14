@@ -14,7 +14,84 @@ namespace PokemonUnity
 	/// </summary>
 	public enum GymBadges
 	{
-		Rock
+		Boulder, //Rock
+		Cascade, // Water
+		Thunder,
+		Rainbow,
+		Soul,
+		Marsh,
+		Volcano,
+		Earth,
+		
+		Zephyr,
+		Hive,
+		Plain,
+		Fog,
+		Storm,
+		Mineral,
+		Glacier,
+		Rising,
+
+		Stone,
+		Knuckle,
+		Dynamo,
+		Heat,
+		Balance,
+		Feather,
+		Mind,
+		Rain,
+
+		Coal,
+		Forest,
+		Cobble,
+		Fen,
+		Relic,
+		Mine,
+		Icicle,
+		Beacon,
+
+		Trio,
+		Basic,
+		Insect,
+		Bolt,
+		Quake,
+		Jet,
+		Freeze,
+		Legend,
+
+		Toxic,
+		Wave,
+
+		Bug,
+		Cliff,
+		Rumble,
+		Plant,
+		Voltage,
+		Fairy,
+		Psychic,
+		Iceberg,
+
+		Grass,
+		Water,
+		Fire,
+		Fighting,
+		Ghost,
+		Fairy_2,
+		Rock,
+		Ice,
+		Dark,
+		Dragon,
+
+		Coral_Eye,
+		Sea_Ruby,
+		Spike_Shell,
+		Jade_Star,
+
+		Tranquility,
+		Freedom,
+		Patience,
+		Harmony,
+		Pride
 	}
 	#endregion
 	#region Type
@@ -1575,16 +1652,16 @@ namespace PokemonUnity
 		NONE = 0
 	};
 	public enum HappinessMethods
-    {
-        WALKING,
-        LEVELUP,
-        GROOM,
-        FAINT,
-        VITAMIN,
-        EVBERRY,
-        POWDER,
-        ENERGYROOT,
-        REVIVALHERB
+	{
+		WALKING,
+		LEVELUP,
+		GROOM,
+		FAINT,
+		VITAMIN,
+		EVBERRY,
+		POWDER,
+		ENERGYROOT,
+		REVIVALHERB
 	}
 	#endregion
 	#region Game Variables
@@ -1599,9 +1676,9 @@ namespace PokemonUnity
 		English = 9
 	}
 	/*public class Languagess : ILanguage<Translations.Languages>
-    {
-        public enum Translations.Languages { get; set; } 
-    }*/
+	{
+		public enum Translations.Languages { get; set; } 
+	}*/
 	/// <summary>
 	/// Scripted Text stored and available for Locale translations
 	/// </summary>
