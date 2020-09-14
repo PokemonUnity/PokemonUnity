@@ -126,7 +126,7 @@ public class PokeBattle_BattlePalace : Battle {
          nature==Natures.HARDY||
          nature==Natures.DOCILE||
          nature==Natures.SERIOUS) {
-        pbDisplay(_INTL("{1} is eager for more!",thispkmn.ToString()));
+        pbDisplay(Game._INTL("{1} is eager for more!",thispkmn.ToString()));
       }
       if (nature==Natures.CAREFUL||
          nature==Natures.RASH||
@@ -134,7 +134,7 @@ public class PokeBattle_BattlePalace : Battle {
          nature==Natures.SASSY||
          nature==Natures.MILD||
          nature==Natures.TIMID) {
-        pbDisplay(_INTL("{1} began growling deeply!",thispkmn.ToString()));
+        pbDisplay(Game._INTL("{1} began growling deeply!",thispkmn.ToString()));
       }
       if (nature==Natures.GENTLE||
          nature==Natures.ADAMANT||
@@ -142,7 +142,7 @@ public class PokeBattle_BattlePalace : Battle {
          nature==Natures.LONELY||
          nature==Natures.RELAXED||
          nature==Natures.NAUGHTY) {
-        pbDisplay(_INTL("A glint appears in {1}'s eyes!",thispkmn.ToString(true)));
+        pbDisplay(Game._INTL("A glint appears in {1}'s eyes!",thispkmn.ToString(true)));
       }
       if (nature==Natures.JOLLY||
          nature==Natures.BOLD||
@@ -150,7 +150,7 @@ public class PokeBattle_BattlePalace : Battle {
          nature==Natures.CALM||
          nature==Natures.IMPISH||
          nature==Natures.MODEST) {
-        pbDisplay(_INTL("{1} is getting into position!",thispkmn.ToString()));
+        pbDisplay(Game._INTL("{1} is getting into position!",thispkmn.ToString()));
       }
     }
   }
@@ -190,7 +190,7 @@ public class PokeBattle_BattlePalace : Battle {
         factor=(maxpercent<hppercent) ? 20 : 40;
       }
       if (hppercent<25) {
-        factor=(maxpercent<hppercent) ? 30 : 50   ;
+        factor=(maxpercent<hppercent) ? 30 : 50;
       }
       if (@battlers[index].Status==Status.BURN ||
          @battlers[index].Status==Status.POISON) {
