@@ -22,6 +22,7 @@ namespace PokemonUnity.Inventory
 	/// Custom Values are in negative?
 	public enum Items
 	{
+		EXP_ALL_OFF = -3,
 		EXP_ALL = -2,
 		RUNNING_SHOES = -1,
 		NONE = 0,
