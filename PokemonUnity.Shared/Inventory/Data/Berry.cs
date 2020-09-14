@@ -2,7 +2,7 @@
 using PokemonUnity.Inventory;
 using PokemonUnity.Inventory.Plants;
 
-namespace PokemonUnity.Inventory//.ItemData
+namespace PokemonUnity.Inventory
 {
 	public struct Berry 
 	{

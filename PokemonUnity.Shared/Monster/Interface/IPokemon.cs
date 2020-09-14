@@ -102,7 +102,7 @@ namespace PokemonUnity.Monster
 		int? heartgauge { get; }
 		int heartStage { get; }
 		//int hp { set; }
-		int HP { set; }
+		//int HP { set; }
 		bool hypermode { get; }
 		bool isShadow { get; }
 		int[] savedev { get; }
