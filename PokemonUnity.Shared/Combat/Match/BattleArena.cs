@@ -14,7 +14,7 @@ public class PokeBattle_BattleArena : Battle{
   public int[] starthp { get; private set; }
   public int[] partyindexes { get; private set; }
   public int count { get; private set; }
-  public PokeBattle_BattleArena(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent) : base (scene, p1, p2, player, opponent) { 
+  public PokeBattle_BattleArena(IPokeBattleArena_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent) : base (scene, p1, p2, player, opponent) { 
   //public void initialize(*arg) {
     //base.this();
     @battlerschanged=true;
@@ -36,7 +36,7 @@ public class PokeBattle_BattleArena : Battle{
   public override bool pbCanSwitchLax (int idxPokemon,int pkmnidxTo,bool showMessages) {
     if (showMessages) {
       Pokemon thispkmn=@battlers[idxPokemon];
-      pbDisplayPaused(_INTL("{1} can't be switched out!",thispkmn.ToString()));
+      pbDisplayPaused(Game._INTL("{1} can't be switched out!",thispkmn.ToString()));
     }
     return false;
   }
@@ -120,7 +120,7 @@ public class PokeBattle_BattleArena : Battle{
 
   public override void pbCommandPhase() {
     if (@battlerschanged) {
-      //@scene.pbBattleArenaBattlers(@battlers[0],@battlers[1]);
+      ((IPokeBattleArena_Scene)@scene).pbBattleArenaBattlers(@battlers[0],@battlers[1]);
       @battlerschanged=false;
       @count=0;
     }
@@ -180,27 +180,27 @@ public class PokeBattle_BattleArena : Battle{
       else {
         ratings2[2]=2;
       }
-      //@scene.pbBattleArenaJudgment(@battlers[0],@battlers[1],ratings1,ratings2);
+      ((IPokeBattleArena_Scene)@scene).pbBattleArenaJudgment(@battlers[0],@battlers[1],ratings1,ratings2);
       points=new int[] { 0, 0 };
       for (int i = 0; i < 3; i++) {
         points[0]+=ratings1[i];
         points[1]+=ratings2[i];
       }
       if (points[0]==points[1]) {
-        pbDisplay(_INTL("{1} tied the opponent\n{2} in a referee's decision!",
+        pbDisplay(Game._INTL("{1} tied the opponent\n{2} in a referee's decision!",
            @battlers[0].Name,@battlers[1].Name)) ;
         @battlers[0].HP=0; // Note: Pokemon doesn't really lose HP, but the effect is mostly the same
         @battlers[0].pbFaint(false);
         @battlers[1].HP=0  ;
         @battlers[1].pbFaint(false);
       } else if (points[0]>points[1]) {
-        pbDisplay(_INTL("{1} defeated the opponent\n{2} in a referee's decision!",
+        pbDisplay(Game._INTL("{1} defeated the opponent\n{2} in a referee's decision!",
            @battlers[0].Name,@battlers[1].Name));
         @battlers[1].HP=0  ;
         @battlers[1].pbFaint(false);
       }
       else {
-        pbDisplay(_INTL("{1} lost to the opponent\n{2} in a referee's decision!",
+        pbDisplay(Game._INTL("{1} lost to the opponent\n{2} in a referee's decision!",
            @battlers[0].Name,@battlers[1].Name));
         @battlers[0].HP=0  ;
         @battlers[0].pbFaint(false);
@@ -211,127 +211,134 @@ public class PokeBattle_BattleArena : Battle{
   }
 }
 
-/*public class PokeBattle_Scene{
-  public void updateJudgment(window,phase,battler1,battler2,ratings1,ratings2) {
-    total1=0;
-    total2=0;
+/*public partial class PokeBattle_Scene : IPokeBattleArena_Scene {
+  public void updateJudgment(window,int phase,Combat.Pokemon battler1,Combat.Pokemon battler2,int[] ratings1,int[] ratings2) {
+    int total1=0;
+    int total2=0;
     for (int i = 0; i < phase; i++) {
       total1+=ratings1[i];
       total2+=ratings2[i];
     }
-    window.contents.clear;
+    window.contents.clear();
     pbSetSystemFont(window.contents);
-    textpos=[
-       [battler1.Name,64,0,2,new Color(248,0,0),new Color(208,208,200)],
-       [_INTL("VS"),144,0,2,new Color(72,72,72),new Color(208,208,200)],
-       [battler2.Name,224,0,2,new Color(72,72,72),new Color(208,208,200)],
-       [_INTL("Mind"),144,48,2,new Color(72,72,72),new Color(208,208,200)],
-       [_INTL("Skill"),144,80,2,new Color(72,72,72),new Color(208,208,200)],
-       [_INTL("Body"),144,112,2,new Color(72,72,72),new Color(208,208,200)],
-       [string.Format("{0}",total1),64,160,2,new Color(72,72,72),new Color(208,208,200)],
-       [_INTL("Judgment"),144,160,2,new Color(72,72,72),new Color(208,208,200)],
-       [string.Format("{0}",total2),224,160,2,new Color(72,72,72),new Color(208,208,200)]
-    ];
+    textpos=new {
+       //[battler1.Name,64,0,2,new Color(248,0,0),new Color(208,208,200)],
+       //[Game._INTL("VS"),144,0,2,new Color(72,72,72),new Color(208,208,200)],
+       //[battler2.Name,224,0,2,new Color(72,72,72),new Color(208,208,200)],
+       //[Game._INTL("Mind"),144,48,2,new Color(72,72,72),new Color(208,208,200)],
+       //[Game._INTL("Skill"),144,80,2,new Color(72,72,72),new Color(208,208,200)],
+       //[Game._INTL("Body"),144,112,2,new Color(72,72,72),new Color(208,208,200)],
+       //[string.Format("{0}",total1),64,160,2,new Color(72,72,72),new Color(208,208,200)],
+       //[Game._INTL("Judgment"),144,160,2,new Color(72,72,72),new Color(208,208,200)],
+       //[string.Format("{0}",total2),224,160,2,new Color(72,72,72),new Color(208,208,200)]
+    };
     pbDrawTextPositions(window.contents,textpos);
-    images=[];
+    List<> images=new List<>();
     for (int i = 0; i < phase; i++) {
-      y=[48,80,112][i];
-      x=(ratings1[i]==ratings2[i]) ? 64 : ((ratings1[i]>ratings2[i]) ? 0 : 32);
-      images.Add(["Graphics/Pictures/judgment",64-16,y,x,0,32,32]);
+      float y=[48,80,112][i];
+      float x=(ratings1[i]==ratings2[i]) ? 64 : ((ratings1[i]>ratings2[i]) ? 0 : 32);
+      images.Add(new { "Graphics/Pictures/judgment", 64 - 16, y, x, 0, 32, 32 });
       x=(ratings1[i]==ratings2[i]) ? 64 : ((ratings1[i]<ratings2[i]) ? 0 : 32);
-      images.Add(["Graphics/Pictures/judgment",224-16,y,x,0,32,32]);
+      images.Add(new { "Graphics/Pictures/judgment", 224 - 16, y, x, 0, 32, 32 });
     }
     pbDrawImagePositions(window.contents,images);
     window.contents.fill_rect(16,150,256,4,new Color(80,80,80));
   }
 
-  public void pbBattleArenaBattlers(battler1,battler2) {
-    Game.pbMessage(_INTL("REFEREE: {1} VS {2}!\nCommence battling!\\wtnp[20]",
-       battler1.Name,battler2.Name)) { pbUpdate }
+  public void pbBattleArenaBattlers(Combat.Pokemon battler1,Combat.Pokemon battler2) {
+    Game.pbMessage(Game._INTL("REFEREE: {1} VS {2}!\nCommence battling!\\wtnp[20]",
+       battler1.Name,battler2.Name)); { pbUpdate(); }
   }
 
-  public void pbBattleArenaJudgment(battler1,battler2,ratings1,ratings2) {
+  public void pbBattleArenaJudgment(Combat.Pokemon battler1,Combat.Pokemon battler2,int[] ratings1,int[] ratings2) {
     msgwindow=null;
     dimmingvp=null;
     infowindow=null;
     try { //begin;
-      msgwindow=Game.pbCreateMessageWindow;
+      msgwindow=Game.pbCreateMessageWindow();
       dimmingvp=new Viewport(0,0,Graphics.width,Graphics.height-msgwindow.height);
       Game.pbMessageDisplay(msgwindow,
-         _INTL("REFEREE: That's it! We will now go to judging to determine the winner!\\wtnp[20]")) {
-         pbUpdate; dimmingvp.update }
+         Game._INTL("REFEREE: That's it! We will now go to judging to determine the winner!\\wtnp[20]")); {
+         pbUpdate(); dimmingvp.update(); }
       dimmingvp.z=99999;
       infowindow=new SpriteWindow_Base(80,0,320,224);
-      infowindow.contents=new Bitmap(;
+      infowindow.contents=new Bitmap(
          infowindow.width-infowindow.borderX,
          infowindow.height-infowindow.borderY);
       infowindow.z=99999;
       infowindow.visible=false;
       for (int i = 0; i < 10; i++) {
-        pbGraphicsUpdate;
-        pbInputUpdate;
-        msgwindow.update;
-        dimmingvp.update;
+        pbGraphicsUpdate();
+        pbInputUpdate();  
+        msgwindow.update();
+        dimmingvp.update();
         dimmingvp.color=new Color(0,0,0,i*128/10);
       }
       updateJudgment(infowindow,0,battler1,battler2,ratings1,ratings2);
       infowindow.visible=true;
       for (int i = 0; i < 10; i++) {
-        pbGraphicsUpdate;
-        pbInputUpdate;
-        msgwindow.update;
-        dimmingvp.update;
-        infowindow.update;
+        pbGraphicsUpdate();
+        pbInputUpdate();  
+        msgwindow.update();
+        dimmingvp.update();
+        infowindow.update();
       }
       updateJudgment(infowindow,1,battler1,battler2,ratings1,ratings2);
       Game.pbMessageDisplay(msgwindow,
-         _INTL("REFEREE: Judging category 1, Mind!\nThe Pokemon showing the most guts!\\wtnp[40]")) { 
-         pbUpdate; dimmingvp.update; infowindow.update } 
+         Game._INTL("REFEREE: Judging category 1, Mind!\nThe Pokemon showing the most guts!\\wtnp[40]")); { 
+         pbUpdate(); dimmingvp.update(); infowindow.update(); } 
       updateJudgment(infowindow,2,battler1,battler2,ratings1,ratings2);
       Game.pbMessageDisplay(msgwindow,
-         _INTL("REFEREE: Judging category 2, Skill!\nThe Pokemon using moves the best!\\wtnp[40]")) { 
-         pbUpdate; dimmingvp.update; infowindow.update } 
+         Game._INTL("REFEREE: Judging category 2, Skill!\nThe Pokemon using moves the best!\\wtnp[40]")); { 
+         pbUpdate(); dimmingvp.update(); infowindow.update(); } 
       updateJudgment(infowindow,3,battler1,battler2,ratings1,ratings2);
       Game.pbMessageDisplay(msgwindow,
-         _INTL("REFEREE: Judging category 3, Body!\nThe Pokemon with the most vitality!\\wtnp[40]")) { 
-         pbUpdate; dimmingvp.update; infowindow.update }
-      total1=0;
-      total2=0;
+         Game._INTL("REFEREE: Judging category 3, Body!\nThe Pokemon with the most vitality!\\wtnp[40]")); { 
+         pbUpdate(); dimmingvp.update(); infowindow.update(); }
+      int total1=0;
+      int total2=0;
       for (int i = 0; i < 3; i++) {
         total1+=ratings1[i];
         total2+=ratings2[i];
       }
       if (total1==total2) {
         Game.pbMessageDisplay(msgwindow,
-           _INTL("REFEREE: Judgment: {1} to {2}!\nWe have a draw!\\wtnp[40]",total1,total2)) { 
-          pbUpdate; dimmingvp.update; infowindow.update }
+           Game._INTL("REFEREE: Judgment: {1} to {2}!\nWe have a draw!\\wtnp[40]",total1,total2)); { 
+          pbUpdate(); dimmingvp.update(); infowindow.update(); }
       } else if (total1>total2) {
         Game.pbMessageDisplay(msgwindow,
-           _INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}'s {4}!\\wtnp[40]",
-           total1,total2,@battle.pbGetOwner(battler1.index).Name,battler1.Name)) { 
-           pbUpdate; dimmingvp.update; infowindow.update }
+           Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}'s {4}!\\wtnp[40]",
+           total1,total2,@battle.pbGetOwner(battler1.index).Name,battler1.Name)); { 
+           pbUpdate(); dimmingvp.update(); infowindow.update(); }
       }
       else {
         Game.pbMessageDisplay(msgwindow,
-           _INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}!\\wtnp[40]",
-           total1,total2,battler2.Name)) { 
-           pbUpdate; dimmingvp.update; infowindow.update }
+           Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}!\\wtnp[40]",
+           total1,total2,battler2.Name)); { 
+           pbUpdate(); dimmingvp.update(); infowindow.update(); }
       }
       infowindow.visible=false;
       msgwindow.visible=false;
       for (int i = 0; i < 10; i++) {
-        pbGraphicsUpdate;
-        pbInputUpdate;
-        msgwindow.update;
-        dimmingvp.update;
+        pbGraphicsUpdate();
+        pbInputUpdate();
+        msgwindow.update();
+        dimmingvp.update();
         dimmingvp.color=new Color(0,0,0,(10-i)*128/10);
       }
     } finally { //ensure;
       Game.pbDisposeMessageWindow(msgwindow);
-      dimmingvp.dispose;
-      infowindow.contents.dispose;
-      infowindow.dispose;
+      dimmingvp.dispose();
+      infowindow.contents.dispose();
+      infowindow.dispose();
     }
   }
 }*/
+
+    public interface IPokeBattleArena_Scene : PokemonUnity.IPokeBattle_Scene
+    {
+        void pbBattleArenaBattlers(Pokemon battler1, Pokemon battler2);
+        void pbBattleArenaJudgment(Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
+        void updateJudgment(window, int phase, Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
+    }
 }
