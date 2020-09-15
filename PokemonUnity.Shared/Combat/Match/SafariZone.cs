@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PokemonUnity.Combat
 {
-public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
+public class PokeBattle_SafariZone : Battle {
   //public Environment environment { get; private set; }
   //public Pokemon[] party1 { get; private set; }
   //public Pokemon[] party2 { get; private set; }
@@ -33,13 +33,13 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
     @ballcount=0;
   }
 
-  //public bool pbIsOpposing (int index) {
+  //public override bool pbIsOpposing (int index) {
   //  return (index%2)==1;
   //}
-  //public bool pbIsDoubleBattler (int index) {
+  //public override bool pbIsDoubleBattler (int index) {
   //  return (index>=2);
   //}
-  //public Combat.Pokemon[] battlers { get; private set; }
+  //public override Combat.Pokemon[] battlers { get; private set; }
   //  return @battlers; }
   //public override Trainer[] opponent { get {
   //  return null; } }
@@ -78,10 +78,10 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
       Pokemon wildpoke=@party2[0];
       //this.pbPlayer.seen[wildpoke.Species]=true;
       Game.GameData.Player.Pokedex[(int)wildpoke.Species,0]=(byte)1;
-      //pbSeenForm(wildpoke);
+      //Game.pbSeenForm(wildpoke);
       base.pbSetSeen(wildpoke);
       @scene.pbStartBattle(this);
-      pbDisplayPaused(_INTL("Wild {1} appeared!",wildpoke.Name));
+      pbDisplayPaused(Game._INTL("Wild {1} appeared!",wildpoke.Name));
       @scene.pbSafariStart();
       //dexdata=pbOpenDexData;
       //pbDexDataOffset(dexdata,wildpoke.Species,16);
@@ -99,7 +99,7 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
         case 0: // Ball
           //if (Game.GameData.Player.PC.pbBoxesFull()) {
           if (Game.GameData.Player.PC.hasSpace()) {
-            pbDisplay(_INTL("The boxes are full! You can't catch any more Pokémon!"));
+            pbDisplay(Game._INTL("The boxes are full! You can't catch any more Pokémon!"));
             continue;
           }
           @ballCount-=1;
@@ -110,7 +110,7 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
           }
           break;
         case 1: // Bait
-          pbDisplayBrief(_INTL("{1} threw some bait at the {2}!",this.pbPlayer().Name,wildpoke.Name));
+          pbDisplayBrief(Game._INTL("{1} threw some bait at the {2}!",this.pbPlayer().Name,wildpoke.Name));
           @scene.pbThrowBait();
           g/=2; // Harder to catch
           e/=2; // Less likely to escape
@@ -119,7 +119,7 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
           lastCommand=1;
           break;
         case 2: // Rock
-          pbDisplayBrief(_INTL("{1} threw a rock at the {2}!",this.pbPlayer().Name,wildpoke.Name));
+          pbDisplayBrief(Game._INTL("{1} threw a rock at the {2}!",this.pbPlayer().Name,wildpoke.Name));
           @scene.pbThrowRock();
           g*=2; // Easier to catch
           e*=2; // More likely to escape
@@ -128,24 +128,24 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
           lastCommand=2;
           break;
         case 3: // Run
-          pbDisplayPaused(_INTL("Got away safely!"));
+          pbDisplayPaused(Game._INTL("Got away safely!"));
           @decision=BattleResults.FORFEIT;
           break;
         }
         if (@decision==0) {
           if (@ballCount<=0) {
-            pbDisplay(_INTL("PA:  You have no Safari Balls left! Game over!")) ;
+            pbDisplay(Game._INTL("PA:  You have no Safari Balls left! Game over!")) ;
             @decision=BattleResults.LOST;
           } else if (pbRandom(100)<5*e) {
-             pbDisplay(_INTL("{1} fled!",wildpoke.Name));
+             pbDisplay(Game._INTL("{1} fled!",wildpoke.Name));
              @decision=BattleResults.FORFEIT;
           } else if (lastCommand==1) {
-             pbDisplay(_INTL("{1} is eating!",wildpoke.Name)) ;
+             pbDisplay(Game._INTL("{1} is eating!",wildpoke.Name)) ;
           } else if (lastCommand==2) {
-             pbDisplay(_INTL("{1} is angry!",wildpoke.Name)) ;
+             pbDisplay(Game._INTL("{1} is angry!",wildpoke.Name)) ;
           }
           else {
-             pbDisplay(_INTL("{1} is watching carefully!",wildpoke.Name)) ;
+             pbDisplay(Game._INTL("{1} is watching carefully!",wildpoke.Name)) ;
           }
         }
       } while (@decision==0);
@@ -158,15 +158,15 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
   }
 
   // ############
-  /*public void pbDebugUpdate() {
-    @debugupdate+=1;
-    if (@debugupdate==30) {
-//     Graphics.update();
-      @debugupdate=0;
-    }
+  public void pbDebugUpdate() {
+    //@debugupdate+=1;
+    //if (@debugupdate==30) {
+    //  //Graphics.update();
+    //  @debugupdate=0;
+    //}
   }
 
-  public void pbDisplayPaused(string msg) {
+  public override void pbDisplayPaused(string msg) {
     if (@debug) {
       pbDebugUpdate();
       GameDebug.Log(msg);
@@ -176,7 +176,7 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
     }
   }
 
-  public void pbDisplay(string msg) {
+  public override void pbDisplay(string msg) {
     if (@debug) {
       pbDebugUpdate();
       GameDebug.Log(msg);
@@ -186,7 +186,7 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
     }
   }
 
-  public void pbDisplayBrief(string msg) {
+  public override void pbDisplayBrief(string msg) {
     if (@debug) {
       pbDebugUpdate();
       GameDebug.Log(msg);
@@ -196,7 +196,7 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
     }
   }
 
-  public bool pbDisplayConfirm(string msg) {
+  public override bool pbDisplayConfirm(string msg) {
     if (@debug) {
       pbDebugUpdate();
       GameDebug.Log(msg);
@@ -207,7 +207,7 @@ public class PokeBattle_SafariZone : Battle {//ToDo: remove inherit?
     }
   }
 
-  public void pbGainEXP() {
-  }*/
+  public override void pbGainEXP() {
+  }
 }
 }
