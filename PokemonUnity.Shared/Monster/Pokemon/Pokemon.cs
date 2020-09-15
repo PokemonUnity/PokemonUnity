@@ -111,22 +111,8 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// Where Pokemon can use Belch (used in battle only)
 		/// </summary>
-		/// ToDo: Move to pkemonBattle class
 		public bool belch { get; set; }
-		/// <summary>
-		/// Current experience points
-		/// </summary>
-		/// <example>
-		/// lv1->lv2=5xp
-		/// lv2->lv3=10xp
-		/// if pokemon is lvl 3 and 0xp, it should have a total of 15xp
-		/// but display counter should still say 0
-		/// </example>
-		/// <remarks>
-		/// experience should accumulate accross past levels.
-		/// Should also rename to "currentExp"?
-		/// </remarks>
-		public Experience Experience { get; private set; }
+		public Experience Experience { get; set; }
 		/// <summary>
 		/// Current happiness
 		/// </summary>
@@ -187,7 +173,7 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// The moves known when this Pokemon was obtained
 		/// </summary>
-		private List<Moves> firstMoves { get; set; }//= new List<Moves>();
+		private List<Moves> firstMoves { get; set; }
 		/// <summary>
 		/// List of moves that this pokemon has learned, and is capable of relearning
 		/// </summary>
@@ -195,7 +181,7 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// Ball used
 		/// </summary>
-		public Items ballUsed { get; private set; }
+		public Items ballUsed { get; set; }
 		//public int[] EvolveLevels { get { return _base.Evolutions.} }
 		//public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
 		//protected PokemonData _base { get; private set; }
@@ -236,7 +222,6 @@ namespace PokemonUnity.Monster
 			EV = new byte[6];
 			Contest = new byte[6];
 			Experience = new Experience(GrowthRate);
-			TempLevel = Level;
 			firstMoves = new List<Moves>();
 			moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
 			pokerus = new int[2];
@@ -273,12 +258,11 @@ namespace PokemonUnity.Monster
 		{
 			//_base = PokemonData.GetPokemon(pokemon);
 			pokemons = pokemon;
-			Experience = new Experience(GrowthRate);
-			TempLevel = Level;
 			eggSteps = _base.HatchTime;
 			Ability = abilityFlag;
 			Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
 			if (Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
+			Heal();
 			#region Initialize Forms
 			int? f = MultipleForms.getFormOnCreation(pokemons);
 			if (f != null)
@@ -315,7 +299,7 @@ namespace PokemonUnity.Monster
 		/// <param name="isEgg">Whether or not this pokemon is hatched; 
 		/// if pokemon <see cref="isEgg"/> is false, it loses benefits 
 		/// of learning egg moves</param>
-		public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; GenerateMoveset(); }
+		public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; GenerateMoveset(); Heal(); }
 
 		/// <summary>
 		/// Use this constructor when creating battle pokemon, for NPC Trainers
@@ -521,7 +505,6 @@ namespace PokemonUnity.Monster
 			//Level = currentLevel;
 			//Experience.AddExperience(currentExp - Experience.Current);
 			Exp = currentExp;
-			TempLevel = Level;
 
 			Happiness = happiness;
 
@@ -747,6 +730,15 @@ namespace PokemonUnity.Monster
 		#endregion
 
 		#region Level
+		/// <summary>
+		/// Current experience points
+		/// </summary>
+		/// <example>
+		/// lv1->lv2=5xp
+		/// lv2->lv3=10xp
+		/// if pokemon is lvl 3 and 0xp, it should have a total of 15xp
+		/// but display counter should still say 0
+		/// </example>
 		public int Exp
 		{
 			get
@@ -773,23 +765,20 @@ namespace PokemonUnity.Monster
 			{
 				if (value < 1 || value > Core.MAXIMUMLEVEL)
 					GameDebug.LogError(string.Format("The level number {0} is invalid", value));
-				if (value > this.Level)
-					this.Experience.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Experience.Current);
+				if (value > this.Level) { 
+					GameDebug.Log(string.Format("Pokemon level manually changed to {0}", value));
+					//this.Experience.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Experience.Total);
+					Exp = Experience.GetStartExperience(this.GrowthRate, value);
+				}
 				else
 				{
-					GameDebug.Log(string.Format("The level number has gone backwards and experience points is reset"));
+					GameDebug.LogWarning(string.Format("The level number has gone backwards and experience points is reset"));
 					Exp = Experience.GetStartExperience(this.GrowthRate, value);
 				}
 			}
 		}
-		/// <summary>
-		/// Actual pokemon level is calaculated with <see cref="this.Level"/>.
-		/// This is just a temp placeholder for Leveling-Up mechanic.
-		/// </summary>
-		/// For each level between temp and <see cref="Experience.GetLevelFromExperience(LevelingRate, int)"/>
-		/// perform stat increase difference (how much it went up, and total) and check to see if evolve is possible
-		/// ToDo: Move to platform engine or yield return ienumerable[int]
-		public int TempLevel { get; private set; }
+
+		public void SetLevel (byte level) { Level = level; }
 
 		/// <summary>
 		/// Gives the Pokémon experience points and levels it up.
@@ -1603,15 +1592,13 @@ namespace PokemonUnity.Monster
 		{
 			if (level.HasValue && level.Value < 0)
 				return;
-			//if (!level.HasValue)
-			//	level = -1;
 			ClearFirstMoves();
 			resetMoves();
 			int numMove = Core.Rand.Next(4) + 1; //number of moves pokemon will have, between 0 and 3
 			List<Moves> movelist = new List<Moves>();
 			if (isEgg || egg || Game.GameData.Features.CatchPokemonsWithEggMoves)
 				movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
-			int?[] rejected = new int?[movelist.Count];
+			int?[] rejected = new int?[movelist.Count]; //default null, to exclude `0`
 			switch (level)
 			{
 				#region sample from alpha version
@@ -1662,8 +1649,7 @@ namespace PokemonUnity.Monster
 					//return moveset;
 					break;
 				#endregion
-				case null:
-					//case -1:
+				case null: //case -1:
 					movelist.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
 					rejected = new int?[movelist.Count];
 					for (int n = 0; n < movelist.Count; n++)
@@ -1672,11 +1658,12 @@ namespace PokemonUnity.Monster
 						if (this.countMoves() < numMove)
 						{
 							//For a truly random approach, instead of just adding moves in the order they're listed
-							int x = Core.Rand.Next(movelist.Count);
-							while (rejected.Contains(x))
+							int x;
+							do { 
 								x = Core.Rand.Next(movelist.Count);
+							} while (rejected.Contains(x));
 							rejected[n] = x;
-							if (Convert.ToBoolean(Core.Rand.Next(2)))
+							if (Core.Rand.Next(2) == 1) //0 false, 1 true
 							{
 								LearnMove((Moves)movelist[x], out err);
 							}
@@ -1698,11 +1685,12 @@ namespace PokemonUnity.Monster
 						if (this.countMoves() < numMove) //j
 						{
 							//For a truly random approach, instead of just adding moves in the order they're listed
-							int x = Core.Rand.Next(movelist.Count);
-							while (rejected.Contains(x))
+							int x;
+							do { 
 								x = Core.Rand.Next(movelist.Count);
+							} while (rejected.Contains(x));
 							rejected[n] = x;
-							if (Convert.ToBoolean(Core.Rand.Next(2)))
+							if (Core.Rand.Next(2) == 1) //0 false, 1 true
 							{
 								//this.moves[j] = new Move(movelist[n]);
 								//j += 1;
