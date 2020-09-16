@@ -68,9 +68,9 @@
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
-    <Compile Include="Character\Trainer\Trainer.cs" />
-    <Compile Include="Character\Trainer\Data\TrainerData.cs" />
-    <Compile Include="Character\Trainer\Base.cs" />
+    <Compile Include="Combat\Trainer\Trainer.cs" />
+    <Compile Include="Combat\Trainer\Data\TrainerData.cs" />
+    <Compile Include="Combat\Trainer\Base.cs" />
     <Compile Include="Combat\Match\BattleArena.cs" />
     <Compile Include="Combat\Match\BattlePalace.cs" />
     <Compile Include="Combat\Match\SafariZone.cs" />
