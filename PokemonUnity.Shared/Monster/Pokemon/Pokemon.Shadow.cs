@@ -47,13 +47,13 @@ namespace PokemonUnity
 					}
 					pokemon.savedev = null;
 				}
-				int newexp = Experience.pbAddExperience(pokemon.Exp, pokemon.savedexp, pokemon.GrowthRate);
+				int newexp = Experience.pbAddExperience(pokemon.Experience.Total, pokemon.savedexp, pokemon.GrowthRate);
 				pokemon.savedexp = 0;
 				int newlevel = Experience.GetLevelFromExperience(pokemon.GrowthRate, newexp);
 				int curlevel = pokemon.Level;
-				if (newexp != pokemon.Exp)
+				if (newexp != pokemon.Experience.Total)
 				{
-					scene.pbDisplay(Game._INTL("{1} regained {2} Exp. Points!", pokemon.Name, newexp - pokemon.Exp));
+					scene.pbDisplay(Game._INTL("{1} regained {2} Exp. Points!", pokemon.Name, newexp - pokemon.Experience.Total));
 				}
 				if (newlevel == curlevel)
 				{
@@ -76,15 +76,16 @@ namespace PokemonUnity
 		}
 
 		#region Use with Relic Stone (Move to separate class?)
-		public static bool pbRelicStoneScreen(Pokemon pkmn)
+		public static void pbRelicStoneScreen(Pokemon pkmn)
 		{
-			bool retval = true;
+			//bool retval = true;
 			//Game.pbFadeOutIn(99999); {
-			//	IScene scene = new RelicStoneScene();
-			//	IScreen screen = new RelicStoneScreen(scene);
-			//	retval = screen.pbStartScreen(pkmn);
+			//	IRelicStoneScene scene = new RelicStoneScene();
+			//	IRelicStoneScreen screen = new RelicStoneScreen(scene);
+			//	//retval = screen.pbStartScreen(pkmn);
+			//	screen.pbStartScreen(pkmn);
 			//}
-			return retval;
+			//return retval;
 		}
 
 		public static bool pbIsPurifiable(Pokemon pkmn)
