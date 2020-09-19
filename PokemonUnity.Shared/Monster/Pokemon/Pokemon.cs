@@ -979,7 +979,7 @@ namespace PokemonUnity.Monster
 		public Pokemons[] CanEvolveAfter(EvolutionMethod method)
 		{
 			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
+				return new Pokemons[0];
 			List<Pokemons> methods = new List<Pokemons>();
 			switch (method)
 			{
@@ -991,13 +991,13 @@ namespace PokemonUnity.Monster
 					}
 					return methods.ToArray();
 				default:
-					return new Pokemons[] { };
+					return new Pokemons[0];
 			}
 		}
 		public Pokemons[] CanEvolveAfter(EvolutionMethod method, int level)
 		{
 			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
+				return new Pokemons[0];
 			List<Pokemons> methods = new List<Pokemons>();
 			switch (method)
 			{
@@ -1030,13 +1030,13 @@ namespace PokemonUnity.Monster
 					}
 					return methods.ToArray();
 				default:
-					return new Pokemons[] { };
+					return new Pokemons[0];
 			}
 		}
 		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Items itemUsed)
 		{
 			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
+				return new Pokemons[0];
 			switch (method)
 			{
 				case EvolutionMethod.Item:
@@ -1054,13 +1054,13 @@ namespace PokemonUnity.Monster
 					}
 					return methods.ToArray();
 				default:
-					return new Pokemons[] { };
+					return new Pokemons[0];
 			}
 		}
 		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Pokemons pkmn)
 		{
 			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
+				return new Pokemons[0];
 			switch (method)
 			{
 				case EvolutionMethod.Party:
@@ -1074,13 +1074,13 @@ namespace PokemonUnity.Monster
 					}
 					return methods.ToArray();
 				default:
-					return new Pokemons[] { };
+					return new Pokemons[0];
 			}
 		}
 		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Moves move)
 		{
 			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
+				return new Pokemons[0];
 			switch (method)
 			{
 				case EvolutionMethod.Move:
@@ -1092,13 +1092,13 @@ namespace PokemonUnity.Monster
 					}
 					return methods.ToArray();
 				default:
-					return new Pokemons[] { };
+					return new Pokemons[0];
 			}
 		}
 		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Types type)
 		{
 			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
+				return new Pokemons[0];
 			switch (method)
 			{
 				case EvolutionMethod.Type:
@@ -1111,7 +1111,7 @@ namespace PokemonUnity.Monster
 					}
 					return methods.ToArray();
 				default:
-					return new Pokemons[] { };
+					return new Pokemons[0];
 			}
 		}
 		public void EvolvePokemon(Pokemons evolveTo, IPokeBattle_Scene scene = null)
@@ -1130,11 +1130,11 @@ namespace PokemonUnity.Monster
 			
 			if(scene != null)
 			{
-				//calcStats(); //Automated
-				//scene.pbRefresh();
-				//pbDisplayPaused(Game._INTL("{1} evolved to {2}!", Name, Species.ToString(TextScripts.Name)));
-				//scene.pbLevelUp(this, //battler, 
-				//	oldtotalhp, oldattack, olddefense, oldspeed, oldspatk, oldspdef);
+				calcStats(); //Refresh HP
+				scene.pbRefresh();
+				Game.pbDisplayPaused(Game._INTL("{1} evolved to {2}!", Name, Species.ToString(TextScripts.Name)));
+				scene.pbLevelUp(this, //battler, 
+					oldtotalhp, oldattack, olddefense, oldspeed, oldspatk, oldspdef);
 			}
 		}
 		#endregion
@@ -1928,7 +1928,12 @@ namespace PokemonUnity.Monster
 		/// Contest stats; Max value is 255
 		/// </summary>
 		public byte[] Contest { get; private set; }
-		//public int Cool, Beauty, Cute, Smart, Tough, Sheen;
+		public int Cool		{ get { return Contest[(int)Contests.Cool]; } }
+		public int Beauty	{ get { return Contest[(int)Contests.Beauty]; } }
+		public int Cute		{ get { return Contest[(int)Contests.Cute]; } }
+		public int Smart	{ get { return Contest[(int)Contests.Smart]; } }
+		public int Tough	{ get { return Contest[(int)Contests.Tough]; } }
+		public int Sheen	{ get { return Contest[(int)Contests.Sheen]; } }
 		/// <summary>
 		/// Returns the number of ribbons this Pokemon has.
 		/// </summary>
