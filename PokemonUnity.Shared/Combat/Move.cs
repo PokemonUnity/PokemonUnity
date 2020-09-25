@@ -16,7 +16,7 @@ namespace PokemonUnity.Combat
 	/// to prevent temp changes from being permanent to original pokemon profile
 	/// </summary>
 	// ToDo: Rename to `MoveFactory`
-	public abstract class Move : IPokeBattle_Move
+	public abstract class Move : Combat.IMove
 	{
 		#region Variables
 		public Attack.Move thismove			{ get; protected set; }
@@ -94,7 +94,7 @@ namespace PokemonUnity.Combat
 		/// <param name="battle"></param>
 		/// <param name="move"></param>
 		/// <returns></returns>
-		public IPokeBattle_Move pbFromPBMove(Battle battle, Attack.Move move)
+		public Combat.IMove pbFromPBMove(Battle battle, Attack.Move move)
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
 			//Attack.Data.MoveData movedata = Game.MoveData[move.MoveId];

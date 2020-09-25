@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Feature.cs" />
+    <Compile Include="Application\Game.Variable.cs" />
     <Compile Include="Attack\Move.cs" />
     <Compile Include="Attack\Data\Base.cs" />
     <Compile Include="Attack\Data\Meta.cs" />
@@ -64,10 +65,10 @@
     <Compile Include="Character\Gear\Phone.cs" />
     <Compile Include="Character\Gear\Pokedex.cs" />
     <Compile Include="Character\Gear\PokeRadar.cs" />
-    <Compile Include="Character\DayCare.cs" />
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
+    <Compile Include="Combat\Interface\IBattler.cs" />
     <Compile Include="Combat\Trainer\Trainer.cs" />
     <Compile Include="Combat\Trainer\Data\TrainerData.cs" />
     <Compile Include="Combat\Trainer\Base.cs" />
@@ -97,8 +98,9 @@
     <Compile Include="Extensions\Utility\MathHelper.cs" />
     <Compile Include="Extensions\Utility\ScriptConversion.cs" />
     <Compile Include="Extensions\Utility\StringHelper.cs" />
+    <Compile Include="Framework\IFrontend.cs" />
     <Compile Include="Framework\IScene.cs" />
-    <Compile Include="Framework\Scene.cs" />
+    <Compile Include="Framework\ISpriteWrapper.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Application\Game.Conditions.cs" />
     <Compile Include="Application\Game.Database.cs" />
@@ -125,6 +127,8 @@
     <Compile Include="Monster\Interface\IPokemon.cs" />
     <Compile Include="Monster\Nature.cs" />
     <Compile Include="Monster\Pokemon\Pokemon.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.Form.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.MegaEvolution.cs" />
     <Compile Include="Monster\Pokemon\Pokemon.Shadow.cs" />
     <Compile Include="Monster\Pokemon\Data\Base.cs" />
     <Compile Include="Monster\Pokemon\Data\Evolution.cs" />

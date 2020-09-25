@@ -358,14 +358,14 @@ namespace PokemonUnity.Character
 		/// <param name="item">The Item to store in the inventory.</param>
 		/// <param name="quantity">The amount.</param>
 		/// <returns></returns>
-		public void GetMessageReceive(Items item, IPokeBattle_Scene scene, int quantity = 1)
+		public void GetMessageReceive(Items item, IScene scene, int quantity = 1)
 		{
 			string Message = "";
 			if (quantity == 1)
 				Message = Game.GameData.Player.Name + " stored it in the~" + Game.ItemData[item].Pocket.ToString() + " pocket.";
 			else
 				Message = Game.GameData.Player.Name + " stored them~in the " + Game.ItemData[item].Pocket.ToString() + " pocket.";
-			scene.pbDisplayMessage(Message);
+			//scene.pbDisplayMessage(Message);
 		}
 
 		public enum Order

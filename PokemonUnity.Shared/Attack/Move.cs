@@ -52,20 +52,20 @@ namespace PokemonUnity.Attack
 		/// <summary>
 		/// Base Damage
 		/// </summary>
-		public int? Power			{ get; private set; } //{ get { return _base.Power; } }    
-		public int? Accuracy		{ get; private set; } //{ get { return _base.Accuracy; } }  
-		public Types Type			{ get; private set; } //{ get { return _base.Type; } }
-		public Targets Targets		{ get; private set; } //{ get { return _base.Target; } }
-		public Flag Flag			{ get; private set; } //{ get { return _base.Flags; } }      
-		public int Priority			{ get; private set; } //{ get { return _base.Priority; } }      
-		public int? Appeal			{ get; private set; } //{ get { return _base.Appeal; } } 
-		public int? SuperAppeal		{ get; private set; } //{ get { return _base.SuperAppeal; } } 
-		public int? Jamming			{ get; private set; } //{ get { return _base.Jamming; } } 
-		public Effects Effect		{ get; private set; } //{ get { return _base.Effect; } }   
-		public int? EffectChance	{ get; private set; } //{ get { return _base.EffectChance; } }        
-		public Category Category	{ get; private set; } //{ get { return _base.Category; } }  
+		public int? Power { get; private set; } //{ get { return _base.Power; } }    
+		public int? Accuracy { get; private set; } //{ get { return _base.Accuracy; } }  
+		public Types Type { get; private set; } //{ get { return _base.Type; } }
+		public Targets Targets { get; private set; } //{ get { return _base.Target; } }
+		public Flag Flag { get; private set; } //{ get { return _base.Flags; } }      
+		public int Priority { get; private set; } //{ get { return _base.Priority; } }      
+		public int? Appeal { get; private set; } //{ get { return _base.Appeal; } } 
+		public int? SuperAppeal { get; private set; } //{ get { return _base.SuperAppeal; } } 
+		public int? Jamming { get; private set; } //{ get { return _base.Jamming; } } 
+		public Effects Effect { get; private set; } //{ get { return _base.Effect; } }   
+		public int? EffectChance { get; private set; } //{ get { return _base.EffectChance; } }        
+		public Category Category { get; private set; } //{ get { return _base.Category; } }  
 		#endregion
-		public Moves MoveId			{ get { return _base.ID; } }
+		public Moves MoveId { get { return _base.ID; } }
 		/// <summary>
 		/// For Aerilate, Pixilate, Refrigerate
 		/// </summary>
@@ -83,25 +83,25 @@ namespace PokemonUnity.Attack
 			PP = _base.PP;
 
 			//ToDo: "ResetMoves()" Method?... For end of every battle or pokemon switch...
-			Type		= _base.Type;
-			Targets		= _base.Target;
-			Flag		= _base.Flags;
-			Power		= _base.Power;
-			Accuracy	= _base.Accuracy;
-			Priority	= _base.Priority;
-			Category	= _base.Category;
-			Appeal		= _base.Appeal;
-			SuperAppeal	= _base.SuperAppeal;
-			Jamming		= _base.Jamming;
-			Effect		= _base.Effect;
-			EffectChance= _base.EffectChance;
+			Type = _base.Type;
+			Targets = _base.Target;
+			Flag = _base.Flags;
+			Power = _base.Power;
+			Accuracy = _base.Accuracy;
+			Priority = _base.Priority;
+			Category = _base.Category;
+			Appeal = _base.Appeal;
+			SuperAppeal = _base.SuperAppeal;
+			Jamming = _base.Jamming;
+			Effect = _base.Effect;
+			EffectChance = _base.EffectChance;
 		}
 
 		/// <summary>
 		/// Initializes this object to the specified move ID, PP and added PPup
 		/// </summary>
 		/// Either this or {public get, public set}
-		public Move(Moves move, int ppUp, byte pp) : this (move: move)
+		public Move(Moves move, int ppUp, byte pp) : this(move: move)
 		{
 			//_base = Game.MoveData[move];
 			PPups = ppUp;
@@ -119,7 +119,39 @@ namespace PokemonUnity.Attack
 			return this.Targets == Targets.SELECTED_POKEMON_ME_FIRST//.SingleNonUser 
 				|| this.Targets == Targets.RANDOM_OPPONENT//.RandomOpposing
 				|| this.Targets == Targets.SELECTED_POKEMON;//.SingleOpposing 
-				//|| this.Targets == Targets//.OppositeOpposing;
+															//|| this.Targets == Targets//.OppositeOpposing;
+		}
+
+		public virtual bool pbIsPhysical(Types type)
+		{
+			if (Core.USEMOVECATEGORY)
+				return Category == Attack.Category.PHYSICAL;
+			else
+				return Game.TypeData[type].Category == Attack.Category.PHYSICAL;
+		}
+
+		public virtual bool pbIsSpecial(Types type)
+		{
+			if (Core.USEMOVECATEGORY)
+				return Category == Attack.Category.SPECIAL;
+			else
+				return Game.TypeData[type].Category == Attack.Category.SPECIAL;
+		}
+
+		public virtual bool pbIsStatus
+		{
+			get
+			{
+				return Category == Attack.Category.STATUS;
+			}
+		}
+
+		public virtual bool pbIsDamaging
+		{
+			get 
+			{
+				return !pbIsStatus;
+			}
 		}
 		#endregion
 	}

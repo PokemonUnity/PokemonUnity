@@ -221,7 +221,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				//Ribbons is also null, we add a null check
 				if (pokemon.Ribbons != null)
 				{
-					seriPokemon.Ribbons			= new int[pokemon.Ribbons.Count];
+					seriPokemon.Ribbons			= new int[pokemon.Ribbons.Length];
 					for (int i = 0; i < seriPokemon.Ribbons.Length; i++)
 					{
 						seriPokemon.Ribbons[i]	= (int)pokemon.Ribbons[i];

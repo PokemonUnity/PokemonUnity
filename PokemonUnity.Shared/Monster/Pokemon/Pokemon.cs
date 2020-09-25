@@ -185,7 +185,7 @@ namespace PokemonUnity.Monster
 		//public int[] EvolveLevels { get { return _base.Evolutions.} }
 		//public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
 		//protected PokemonData _base { get; private set; }
-		protected Data.PokemonData _base { get { return Game.PokemonData[form.Pokemon]; } }
+		protected Data.PokemonData _base { get { return Game.PokemonData[Form.Pokemon]; } }
 		/// <summary>
 		/// Max total EVs
 		/// </summary>
@@ -232,18 +232,18 @@ namespace PokemonUnity.Monster
 			Item = Items.NONE;
 			ribbons = new List<Ribbon>();
 			//calcStats();
-			if (Game.GameData.GameMap != null)
-			{
-				@ObtainMap = (Locations)Game.GameData.GameMap.map_id;
-				//@ObtainText = null;
-				@ObtainLevel = Level;
-			}
-			else
-			{
-				@ObtainMap = 0;
-				//@ObtainText = null;
-				@ObtainLevel = Level;
-			}
+			//if (Game.GameData.GameMap != null)
+			//{
+			//	@ObtainMap = (Locations)Game.GameData.GameMap.map_id;
+			//	//@ObtainText = null;
+			//	@ObtainLevel = Level;
+			//}
+			//else
+			//{
+			//	@ObtainMap = 0;
+			//	//@ObtainText = null;
+			//	@ObtainLevel = Level;
+			//}
 			@ObtainedMode = ObtainedMethod.MET;   // Met
 			//if (Game.GameData.GameSwitches != null && Game.GameData.GameSwitches[Core.FATEFUL_ENCOUNTER_SWITCH])
 			if (Core.FATEFUL_ENCOUNTER_SWITCH) 
@@ -263,12 +263,14 @@ namespace PokemonUnity.Monster
 			Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
 			if (Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
 			Heal();
+			//if (pokemons == Pokemons.UNOWN)
+			//	formId = Core.Rand.Next(Game.PokemonFormsData[pokemons].Length);
 			#region Initialize Forms
 			int? f = MultipleForms.getFormOnCreation(pokemons);
 			if (f != null)
 			{
 				//this.form = f;
-				Setform(f);
+				SetForm(f.Value);
 				this.resetMoves();
 			}
 			#endregion
@@ -622,6 +624,10 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="trainer"></param>
 		/// <returns></returns>
+		public bool isForeign(PokemonUnity.Character.Trainer trainer)
+		{
+			return trainer != this.OT;
+		}
 		public bool isForeign(Player trainer)
 		{
 			return trainer.Trainer != this.OT;
@@ -1132,9 +1138,10 @@ namespace PokemonUnity.Monster
 			{
 				calcStats(); //Refresh HP
 				scene.pbRefresh();
-				Game.pbDisplayPaused(Game._INTL("{1} evolved to {2}!", Name, Species.ToString(TextScripts.Name)));
-				scene.pbLevelUp(this, //battler, 
-					oldtotalhp, oldattack, olddefense, oldspeed, oldspatk, oldspdef);
+				//ToDo: sort out issues here
+				//Game.UI.pbDisplayPaused(Game._INTL("{1} evolved to {2}!", Name, Species.ToString(TextScripts.Name)));
+				//scene.pbLevelUp(this, //battler, 
+				//	oldtotalhp, oldattack, olddefense, oldspeed, oldspatk, oldspdef);
 			}
 		}
 		#endregion
@@ -2295,7 +2302,7 @@ namespace PokemonUnity.Monster
 		public int HP
 		{
 			get { if (hp > TotalHP) hp = TotalHP;  return this.hp; }
-			protected set
+			set
 			{
 				this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
 				//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
@@ -2379,7 +2386,7 @@ namespace PokemonUnity.Monster
 					gain += Happiness < 200 ? 1 : 0;
 					//ToDo: if trainer is on map pkmn was captured on, add more happiness on walk
 					//gain += this.metMap.Id == currentMap.Id ? 1 : 0; //change to "obtainMap"?
-					if ((int)this.ObtainMap == Game.GameData.GameMap.map_id) gain += 1;
+					//if ((int)this.ObtainMap == Game.GameData.GameMap.map_id) gain += 1;
 					break;
 				case HappinessMethods.LEVELUP:
 					gain = 2;

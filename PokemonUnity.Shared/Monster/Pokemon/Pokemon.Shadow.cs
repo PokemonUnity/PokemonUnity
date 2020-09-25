@@ -62,14 +62,14 @@ namespace PokemonUnity
 				}
 				else
 				{
-					Game.pbChangeLevel(pokemon, newlevel, scene); // for convenience
+					//Game.pbChangeLevel(pokemon, newlevel, scene); // for convenience
 					pokemon.Exp = newexp;
 				}
 				string speciesname = pokemon.Species.ToString(TextScripts.Name);
 				if (scene.pbConfirm(_INTL("Would you like to give a nickname to {1}?", speciesname)))
 				{
 					string helptext = Game._INTL("{1}'s nickname?", speciesname);
-					string newname = Game.pbEnterPokemonName(helptext, 0, 10, "", pokemon);
+					//string newname = Game.UI.pbEnterPokemonName(helptext, 0, 10, "", pokemon);
 					//if (newname != "") pokemon.Name = newname;
 				}
 			}
@@ -111,9 +111,9 @@ namespace PokemonUnity
 				Game.pbMessage(Game._INTL("There's a Pokemon that may open the door to its heart!"));
 				//  Choose a purifiable Pokemon
 				//pbChoosePokemon(1, 2, proc {| poke |
-				pbChoosePokemon(1, 2, Game.GameData.Trainer.party.Select(poke => 
-					 !poke.isEgg && poke.HP > 0 && poke.isShadow && poke.heartgauge == 0
-				).ToArray());
+				//Game.pbChoosePokemon(1, 2, Game.GameData.Trainer.party.Select(poke => 
+				//	 !poke.isEgg && poke.HP > 0 && poke.isShadow && poke.heartgauge == 0
+				//).ToArray());
 				if ((int)Game.GameData.GameVariables[1] >= 0)
 				{
 					pbRelicStoneScreen(Game.GameData.Trainer.party[(int)Game.GameData.GameVariables[1]]);

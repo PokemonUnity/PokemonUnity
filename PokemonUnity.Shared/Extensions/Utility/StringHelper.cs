@@ -59,4 +59,10 @@ public static class StringHelper
 		chars[index] = newChar;
 		return new string(chars);
 	}
+
+	public static string ReplaceRegex(this string text, string replace, string input)
+	{
+		if (text == null) return text;
+		return System.Text.RegularExpressions.Regex.Replace(text, replace, input, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+	}
 }

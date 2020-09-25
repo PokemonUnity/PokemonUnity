@@ -339,6 +339,6 @@ public class PokeBattle_BattleArena : Battle{
     {
         void pbBattleArenaBattlers(Pokemon battler1, Pokemon battler2);
         void pbBattleArenaJudgment(Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
-        void updateJudgment(window, int phase, Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
+        void updateJudgment(IWindow window, int phase, Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
     }
 }

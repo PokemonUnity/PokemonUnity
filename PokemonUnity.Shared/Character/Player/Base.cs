@@ -75,7 +75,6 @@ namespace PokemonUnity.Character
 		//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
 		//ToDo: a bool variable for PC background (if texture is unlocked) `bool[]`
 		//public static string PlayerDayCareData { get; set; } 
-		public DayCare DayCare { get; private set; } 
 		public static string PlayerItemData { get; set; }
 		public static string PlayerBerryData { get; set; }
 		public static string PlayerNPCData { get; set; }

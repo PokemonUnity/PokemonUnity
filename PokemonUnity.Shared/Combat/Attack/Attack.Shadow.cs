@@ -149,7 +149,7 @@ namespace PokemonUnity.Combat
 			}
 			if (affected.Count == 0)
 			{
-				this.Battle.pbDisplay(_INTL("But it failed!"));
+				this.Battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
 			pbShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
@@ -157,7 +157,7 @@ namespace PokemonUnity.Combat
 			{
 				this.Battle.battlers[i].ReduceHP((int)Math.Floor(this.Battle.battlers[i].HP / 2d));
 			}
-			this.Battle.pbDisplay(_INTL("Each Pokemon's HP was halved!"));
+			this.Battle.pbDisplay(Game._INTL("Each Pokemon's HP was halved!"));
 			attacker.effects.HyperBeam = 2;
 			attacker.currentMove = MoveId;
 			return 0;
@@ -199,7 +199,7 @@ namespace PokemonUnity.Combat
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
 				attacker.ReduceHP((int)Math.Round(attacker.HP / 2.0));
-				this.Battle.pbDisplay(_INTL("{1} is damaged by recoil!", attacker.ToString()));
+				this.Battle.pbDisplay(Game._INTL("{1} is damaged by recoil!", attacker.ToString()));
 			}
 		}
 	}
@@ -216,20 +216,20 @@ namespace PokemonUnity.Combat
 			switch (this.Battle.weather)
 			{
 				case Weather.HEAVYRAIN:
-					this.Battle.pbDisplay(_INTL("There is no relief from this heavy rain!"));
+					this.Battle.pbDisplay(Game._INTL("There is no relief from this heavy rain!"));
 					return -1;
 				case Weather.HARSHSUN:
-					this.Battle.pbDisplay(_INTL("The extremely harsh sunlight was not lessened at all!"));
+					this.Battle.pbDisplay(Game._INTL("The extremely harsh sunlight was not lessened at all!"));
 					return -1;
 				case Weather.SHADOWSKY:
-					this.Battle.pbDisplay(_INTL("But it failed!"));
+					this.Battle.pbDisplay(Game._INTL("But it failed!"));
 					return -1;
 			}
 			pbShowAnimation(MoveId, attacker, null, hitnum, alltargets, showanimation);
 			this.Battle.weather = Weather.SHADOWSKY;
 			this.Battle.weatherduration = 5;
 			this.Battle.pbCommonAnimation("ShadowSky", null, null);
-			this.Battle.pbDisplay(_INTL("A shadow sky appeared!"));
+			this.Battle.pbDisplay(Game._INTL("A shadow sky appeared!"));
 			return 0;
 		}
 	}
@@ -258,13 +258,13 @@ namespace PokemonUnity.Combat
 				this.Battle.sides[1].LightScreen = 0;
 				this.Battle.sides[0].Safeguard = 0;
 				this.Battle.sides[1].Safeguard = 0;
-				this.Battle.pbDisplay(_INTL("It broke all barriers!"));
+				this.Battle.pbDisplay(Game._INTL("It broke all barriers!"));
 				attacker.pbHyperMode();
 				return 0;
 			}
 			else
 			{
-				this.Battle.pbDisplay(_INTL("But it failed!"));
+				this.Battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
 		}

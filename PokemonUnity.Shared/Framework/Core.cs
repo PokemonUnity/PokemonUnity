@@ -20,6 +20,7 @@ namespace PokemonUnity
 		//public const string PKU_Server_Address = "";
 #if DEBUG
 		public const bool DEBUG = true;
+		public const bool INTERNAL = true;
 		public const string FILEPATH = @"..\..\..\\Pokemon Unity\Assets\Scripts2\XML\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug

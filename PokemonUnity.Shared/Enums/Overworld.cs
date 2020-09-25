@@ -44,7 +44,23 @@ namespace PokemonUnity.Overworld
 	/// </summary>
 	public enum Terrains
 	{
-		Plain,
+		Ledge           = 1,
+		Grass           = 2,
+		Sand            = 3,
+		Rock            = 4,
+		DeepWater       = 5,
+		StillWater      = 6,
+		Water           = 7,
+		Waterfall       = 8,
+		WaterfallCrest  = 9,
+		TallGrass       = 10,
+		UnderwaterGrass = 11,
+		Ice             = 12,
+		Neutral         = 13,
+		SootGrass       = 14,
+		Bridge          = 15,
+		Puddle          = 16
+		/*Plain,
 		Grass,
 		Sand,
 		Rock,
@@ -111,15 +127,27 @@ Waterfall
 	}
 	public enum EncounterTypes
 	{
-		Pal_Park, Egg, Hatched, Special_Event,      //= 0x0
-		Tall_Grass,                                 //= 0x2
-		Plot_Event, //Dialga/Palkia In-Game Event,	//= 0x4
-		Cave, Hall_of_Origin,                       //= 0x5
-		Surfing, Fishing,                           //= 0x7	
-		Building,                                   //= 0x9	
-		Great_Marsh, //(Safari Zone)				//= 0xA	
-		Starter, Fossil, Gift, //(Eevee)				//= 0xC	
-		Land
+		Land         = 0 ,
+		Cave         = 1 ,
+		Water        = 2 ,
+		RockSmash    = 3 ,
+		OldRod       = 4 ,
+		GoodRod      = 5 ,
+		SuperRod     = 6 ,
+		HeadbuttLow  = 7 ,
+		HeadbuttHigh = 8 ,
+		LandMorning  = 9 ,
+		LandDay      = 10,
+		LandNight    = 11,
+		BugContest   = 12
+		//Pal_Park, Egg, Hatched, Special_Event,      //= 0x0
+		//Tall_Grass,                                 //= 0x2
+		//Plot_Event, //Dialga/Palkia In-Game Event,	//= 0x4
+		//Cave, Hall_of_Origin,                       //= 0x5
+		//Surfing, Fishing,                           //= 0x7	
+		//Building,                                   //= 0x9	
+		//Great_Marsh, //(Safari Zone)				//= 0xA	
+		//Starter, Fossil, Gift, //(Eevee)			//= 0xC	
 	}
 	/*enum EncounterActions
 	{
@@ -390,6 +418,37 @@ Waterfall
 	public enum MovePermissions
 	{
 
+	}
+	public enum MapTiles
+	{
+		/// <summary>
+		/// Spawns random encounter
+		/// </summary>
+		GRASS,
+		/// <summary>
+		/// Animated water
+		/// </summary>
+		SEA,
+		/// <summary>
+		/// 3-dimensional airborne encounter
+		/// </summary>
+		SKY,
+		/// <summary>
+		/// Regular walk-able path
+		/// </summary>
+		TILE,
+		/// <summary>
+		/// Impassable (invisible) collision object
+		/// </summary>
+		WALL,
+		/// <summary>
+		/// Can only cross with surfing action
+		/// </summary>
+		WATER,
+		/// <summary>
+		/// Triggers map change or used for map events
+		/// </summary>
+		ZONE
 	}
 	#endregion
 	//ToDo: Rename TileShapes
