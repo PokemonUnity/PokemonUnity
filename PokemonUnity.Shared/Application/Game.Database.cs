@@ -68,7 +68,7 @@ namespace PokemonUnity
 		/// </summary>
 		public static Dictionary<int,EncounterData> EncounterData { get; private set; }
 		//public static Dictionary<Method,EncounterData> EncounterMethodData { get; private set; }
-		public static Dictionary<TrainerTypes,TrainerData> TrainerMetaData { get; private set; }
+		public static Dictionary<TrainerTypes,TrainerMetaData> TrainerMetaData { get; private set; }
 		public static Dictionary<GymBadges,Character.BadgeData> BadgeData { get; private set; }
 		public static Dictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; private set; }
 		public static Dictionary<int,MachineData> MachineData { get; private set; }
@@ -222,8 +222,7 @@ namespace PokemonUnity
 		}
 		//public static bool InitLoadFile(bool sql = true)
 		//{
-		//	TrainerMetaData = new Dictionary<TrainerTypes, TrainerData>();
-		//	//TrainerData = new Dictionary<int, Encounter>();
+		//	TrainerMetaData = new Dictionary<TrainerTypes, TrainerMetaData>();
 		//	if (sql) //using (con)
 		//		return GetTrainersFromSQL(con);
 		//	else return false;
@@ -1793,7 +1792,7 @@ namespace PokemonUnity
 							break;
 					}
 					#endregion
-					TrainerMetaData.Add(type, new TrainerData(
+					TrainerMetaData.Add(type, new TrainerMetaData(
 							id: type
 							, @double: doubel
 							, baseMoney: BaseMoney

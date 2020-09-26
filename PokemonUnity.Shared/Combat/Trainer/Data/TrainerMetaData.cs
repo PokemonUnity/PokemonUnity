@@ -5,7 +5,7 @@ namespace PokemonUnity.Character
 	/// <summary>
 	/// </summary>
 	/// Maybe separate double, music, script to npc from trainer data?
-	public struct TrainerData
+	public struct TrainerMetaData
 	{
 		#region Variables
 		/// <summary>
@@ -80,7 +80,7 @@ namespace PokemonUnity.Character
 		public string ScriptBattleEnd { get; private set; }
 		#endregion
 
-		public TrainerData(TrainerTypes id, bool @double, byte baseMoney = 0, bool? gender = null, byte skillLevel = 0, int? skillCodes = null, int introME = 0, int battleBGM = 0, int victoryBGM = 0, string scriptIdle = null, string scriptBattleIntro = null, string scriptBattleEnd = null)
+		public TrainerMetaData(TrainerTypes id, bool @double, byte baseMoney = 0, bool? gender = null, byte skillLevel = 0, int? skillCodes = null, int introME = 0, int battleBGM = 0, int victoryBGM = 0, string scriptIdle = null, string scriptBattleIntro = null, string scriptBattleEnd = null)
 		{
 			ID = id;
 			Double = @double;

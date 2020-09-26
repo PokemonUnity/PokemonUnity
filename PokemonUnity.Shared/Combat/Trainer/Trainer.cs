@@ -87,7 +87,7 @@ public class Trainer{
     int ret=0;
     //pbRgssOpen("Data/trainertypes.dat","rb"){|f|
     //   trainertypes=Marshal.load(f);
-    //   if (!Game.TrainerData[@trainertype]) return 30;
+    //   if (!Game.TrainerMetaData[@trainertype]) return 30;
        ret=Game.TrainerMetaData[@trainertype].BaseMoney;
     //}
     return ret;
