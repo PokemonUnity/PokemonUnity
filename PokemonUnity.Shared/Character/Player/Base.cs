@@ -17,11 +17,11 @@ namespace PokemonUnity.Character
 	{
 		#region Variables
 		/// <summary>
-		/// Please use the values stored in <see cref="Trainer.TrainerID"/>
+		/// Please use the values stored in <see cref="TrainerData.TrainerID"/>
 		/// </summary>
 		private int? trainerId { get; set; }
 		/// <summary>
-		/// Please use the values stored in <see cref="Trainer.SecretID"/>
+		/// Please use the values stored in <see cref="TrainerData.SecretID"/>
 		/// </summary>
 		private int? secretId { get; set; }
 		public string Name { get; private set; }
@@ -34,7 +34,7 @@ namespace PokemonUnity.Character
 		/// hold the `Trainer` data, and instantiate a new Trainer
 		/// whenever it's needed...
 		public Pokemon[] Party { get; private set; }
-		public Trainer Trainer { get { return new Trainer(name: Name, gender: IsMale, tID: trainerId, sID: secretId); } }
+		public TrainerData Trainer { get { return new TrainerData(name: Name, gender: IsMale, tID: trainerId, sID: secretId); } }
 		/// <summary>
 		/// When displaying items in bag, do a foreach loop and filter by item category
 		/// </summary>
@@ -244,7 +244,7 @@ namespace PokemonUnity.Character
 		{
 		}
 
-		public Player(Trainer trainer, Pokemon[] party = null) 
+		public Player(TrainerData trainer, Pokemon[] party = null) 
 			: this (name: trainer.Name, gender: trainer.Gender == true, party: party, pc: null, trainerid: trainer.TrainerID, secretid: trainer.SecretID)
 		{
 		}

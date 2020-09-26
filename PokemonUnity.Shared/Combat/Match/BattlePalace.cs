@@ -65,7 +65,7 @@ public class PokeBattle_BattlePalace : Battle {
     42, 5,53,
     56,22,22
   };
-  public PokeBattle_BattlePalace(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent) : base (scene, p1, p2, player, opponent) { 
+  public PokeBattle_BattlePalace(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, TrainerData[] player, TrainerData[] opponent) : base (scene, p1, p2, player, opponent) { 
   //public void initialize() {
     //base.this();
     @justswitched=new bool[] { false, false, false, false };

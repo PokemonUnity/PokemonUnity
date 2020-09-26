@@ -14,7 +14,7 @@ public class PokeBattle_SafariZone : Battle {
   //public Trainer player { get; private set; }
   //public int battlescene { get; private set; }
   //include PokeBattle_BattleCommon;
-  public PokeBattle_SafariZone(IPokeBattle_Scene scene,Trainer player,Monster.Pokemon[] p1,Monster.Pokemon[] p2) : base(scene, p1, p2, new Trainer[] { player }, null)
+  public PokeBattle_SafariZone(IPokeBattle_Scene scene,TrainerData player,Monster.Pokemon[] p1,Monster.Pokemon[] p2) : base(scene, p1, p2, new TrainerData[] { player }, null)
   //public void initialize(IPokeBattle_Scene scene,Trainer player,Pokemon[] party) 
   {
     //base.scene=scene;

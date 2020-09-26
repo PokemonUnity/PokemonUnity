@@ -124,7 +124,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 			Pokemon normalPokemon =
 				new Pokemon
 				(
-					(Pokemons)pokemon.Species, new Trainer(pokemon.TrainerName, pokemon.TrainerIsMale, 
+					(Pokemons)pokemon.Species, new TrainerData(pokemon.TrainerName, pokemon.TrainerIsMale, 
 					tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
 					pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
 					(Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,

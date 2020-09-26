@@ -9,7 +9,7 @@ namespace PokemonUnity.Character
 	/// <summary>
 	/// MetaData struct for Trainer, Secret, Gender (use for pokemons, and players)
 	/// </summary>
-	public struct Trainer : IEquatable<Trainer>, IEqualityComparer<Trainer>
+	public struct TrainerData : IEquatable<TrainerData>, IEqualityComparer<TrainerData>
 	{
 		#region Variables
 		//public Inventory.Items[] Items { get; private set; }
@@ -95,7 +95,7 @@ namespace PokemonUnity.Character
 		#endregion
 
 		#region Constructor
-		public Trainer(string name, bool gender, int? tID = null, int? sID = null) : this(trainer: TrainerTypes.PLAYER, name)
+		public TrainerData(string name, bool gender, int? tID = null, int? sID = null) : this(trainer: TrainerTypes.PLAYER, name)
 		{
 			//ID = TrainerTypes.PLAYER;
 			//TrainerID = (uint)Core.Rand.Next(1000000); //random number between 0 and 999999, including 0
@@ -107,7 +107,7 @@ namespace PokemonUnity.Character
 			Gender = gender;
 		}
 
-		public Trainer(TrainerTypes trainer, string name = null)//, Inventory.Items[] items = null)
+		public TrainerData(TrainerTypes trainer, string name = null)//, Inventory.Items[] items = null)
 		{
 			ID = trainer;
 			TrainerID = Core.Rand.Next(1000000); //random number between 0 and 999999, including 0
@@ -137,15 +137,15 @@ namespace PokemonUnity.Character
 		#endregion
 
 		#region Explicit Operators
-		public static bool operator ==(Trainer x, Trainer y)
+		public static bool operator ==(TrainerData x, TrainerData y)
 		{
 			return ((x.Gender == y.Gender) && (x.TrainerID == y.TrainerID) && (x.SecretID == y.SecretID)) & (x.Name == y.Name);
 		}
-		public static bool operator !=(Trainer x, Trainer y)
+		public static bool operator !=(TrainerData x, TrainerData y)
 		{
 			return ((x.Gender != y.Gender) || (x.TrainerID != y.TrainerID) || (x.SecretID != y.SecretID)) | (x.Name == y.Name);
 		}
-		public bool Equals(Trainer obj)
+		public bool Equals(TrainerData obj)
 		{
 			if (obj == null) return false;
 			return this == obj;
@@ -160,23 +160,23 @@ namespace PokemonUnity.Character
 			if (obj == null) return false;
 			if (obj.GetType() == typeof(Player))
 				return Equals((Player)obj);
-			if (obj.GetType() == typeof(Trainer))
-				return Equals((Trainer)obj);
+			if (obj.GetType() == typeof(TrainerData))
+				return Equals((TrainerData)obj);
 			return base.Equals(obj);
 		}
 		public override int GetHashCode()
 		{
 			return ((ulong)(TrainerID + SecretID * 65536)).GetHashCode();
 		}
-		bool IEquatable<Trainer>.Equals(Trainer other)
+		bool IEquatable<TrainerData>.Equals(TrainerData other)
 		{
 			return Equals(obj: (object)other);
 		}
-		bool IEqualityComparer<Trainer>.Equals(Trainer x, Trainer y)
+		bool IEqualityComparer<TrainerData>.Equals(TrainerData x, TrainerData y)
 		{
 			return x == y;
 		}
-		int IEqualityComparer<Trainer>.GetHashCode(Trainer obj)
+		int IEqualityComparer<TrainerData>.GetHashCode(TrainerData obj)
 		{
 			return obj.GetHashCode();
 		}

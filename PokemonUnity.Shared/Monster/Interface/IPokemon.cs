@@ -18,7 +18,7 @@ namespace PokemonUnity.Monster
 		int[] IV { get; }
 		byte[] EV { get; }
 		Pokemons Species { get; }
-		Trainer OT { get; }
+		TrainerData OT { get; }
 		string TrainerId { get; }
 		int PersonalId { get; }
 		int[] Pokerus { get; }

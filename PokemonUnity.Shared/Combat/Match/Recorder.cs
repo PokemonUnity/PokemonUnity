@@ -25,7 +25,7 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle
   public int roundindex { get; protected set; }
   public object properties { get; protected set; }
   public int battletype { get; protected set; }
-  public PokeBattle_RecordedBattleModule(IPokeBattle_Scene scene,Monster.Pokemon[] p1,Monster.Pokemon[] p2,Trainer[] player,Trainer[] opponent) : base (scene, p1, p2, player, opponent)
+  public PokeBattle_RecordedBattleModule(IPokeBattle_Scene scene,Monster.Pokemon[] p1,Monster.Pokemon[] p2,TrainerData[] player,TrainerData[] opponent) : base (scene, p1, p2, player, opponent)
   //public void initialize(IPokeBattle_Scene scene,Monster.Pokemon[] p1,Monster.Pokemon[] p2,Trainer[] player,Trainer[] opponent) 
   {
     //@randomnumbers=new List<int>();
@@ -41,7 +41,7 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle
     return 0; // Battle Tower
   }
 
-  public Trainer[] pbGetTrainerInfo(Trainer[] trainer) {
+  public TrainerData[] pbGetTrainerInfo(TrainerData[] trainer) {
     if (trainer == null) return null;
     if (trainer.Length > 0) {
       return trainer;
@@ -284,7 +284,7 @@ public class PokeBattle_BattlePlayerModule<TBattle> : PokeBattle_RecordedBattleM
 
 public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle> { 
   //include PokeBattle_RecordedBattleModule;
-  public PokeBattle_RecordedBattle(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent) : base(scene, p1, p2, player, opponent)
+  public PokeBattle_RecordedBattle(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, TrainerData[] player, TrainerData[] opponent) : base(scene, p1, p2, player, opponent)
   {
   }
   public override int pbGetBattleType() {
@@ -294,7 +294,7 @@ public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle>
 
 public class PokeBattle_RecordedBattlePalace : PokeBattle_RecordedBattleModule<PokeBattle_BattlePalace>{
   //include PokeBattle_RecordedBattleModule;
-  public PokeBattle_RecordedBattlePalace(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent) : base(scene, p1, p2, player, opponent)
+  public PokeBattle_RecordedBattlePalace(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, TrainerData[] player, TrainerData[] opponent) : base(scene, p1, p2, player, opponent)
   {
   }
   public override int pbGetBattleType() {
@@ -304,7 +304,7 @@ public class PokeBattle_RecordedBattlePalace : PokeBattle_RecordedBattleModule<P
 
 public class PokeBattle_RecordedBattleArena : PokeBattle_RecordedBattleModule<PokeBattle_BattleArena>{
   //include PokeBattle_RecordedBattleModule;
-  public PokeBattle_RecordedBattleArena(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent) : base(scene, p1, p2, player, opponent)
+  public PokeBattle_RecordedBattleArena(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, TrainerData[] player, TrainerData[] opponent) : base(scene, p1, p2, player, opponent)
   {
   }
   public override int pbGetBattleType() {

@@ -42,7 +42,7 @@ namespace Tests
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = true;
-			Trainer red = new Trainer(playerName, isMale, tID: trainerID, sID: secretID);
+			TrainerData red = new TrainerData(playerName, isMale, tID: trainerID, sID: secretID);
 
 			Pokemon[] playerParty = new Pokemon[]
 			{

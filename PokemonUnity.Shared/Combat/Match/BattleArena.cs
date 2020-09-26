@@ -14,7 +14,7 @@ public class PokeBattle_BattleArena : Battle{
   public int[] starthp { get; private set; }
   public int[] partyindexes { get; private set; }
   public int count { get; private set; }
-  public PokeBattle_BattleArena(IPokeBattleArena_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent) : base (scene, p1, p2, player, opponent) { 
+  public PokeBattle_BattleArena(IPokeBattleArena_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, TrainerData[] player, TrainerData[] opponent) : base (scene, p1, p2, player, opponent) { 
   //public void initialize(*arg) {
     //base.this();
     @battlerschanged=true;

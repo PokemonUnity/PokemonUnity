@@ -36,7 +36,7 @@ namespace Tests
         [TestMethod]
         public void Trainer_Party_GetPokemonCount()
 		{
-			Trainer trainer = new Trainer(TrainerTypes.PLAYER);
+			TrainerData trainer = new TrainerData(TrainerTypes.PLAYER);
 			Player player = new Player(trainer);
 			int count = player.Party.GetCount();
 			//if (!count.HasValue) Assert.Fail("Party ");
@@ -52,7 +52,7 @@ namespace Tests
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = false;
-			Trainer trainer = new Trainer(playerName, isMale, tID: trainerID, sID: secretID);
+			TrainerData trainer = new TrainerData(playerName, isMale, tID: trainerID, sID: secretID);
 			Player player = new Player(trainer);
 			//player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
 			PokemonUnity.Monster.Pokemon pkmn = new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER);
