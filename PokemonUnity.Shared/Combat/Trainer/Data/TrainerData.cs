@@ -7,7 +7,7 @@ using PokemonUnity.Monster;
 namespace PokemonUnity.Character
 {
 	/// <summary>
-	/// MetaData struct for Trainer, Secret, Gender (use for pokemons, and players)
+	/// Data struct for Trainer, Secret, Gender (use for pokemons, players, and battles)
 	/// </summary>
 	public struct TrainerData : IEquatable<TrainerData>, IEqualityComparer<TrainerData>
 	{
