@@ -17,7 +17,7 @@ namespace PokemonUnity
 	public partial class Game
 	{
 		public ISceneState Scene { get; set; }
-		public Avatar.Trainer Trainer { get; set; }
+		public Combat.Trainer Trainer { get; set; }
 		public Dictionary<int, bool> GameSwitches { get; set; }
 		public Dictionary<int, bool> GameSelfSwitches { get; set; }
 		public Dictionary<int, object> GameVariables { get; set; }
