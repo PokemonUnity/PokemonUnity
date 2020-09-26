@@ -70,8 +70,8 @@
     <Compile Include="Character\Player\Outfit.cs" />
     <Compile Include="Combat\Interface\IBattler.cs" />
     <Compile Include="Combat\Trainer\Trainer.cs" />
+    <Compile Include="Combat\Trainer\Data\TrainerMetaData.cs" />
     <Compile Include="Combat\Trainer\Data\TrainerData.cs" />
-    <Compile Include="Combat\Trainer\Base.cs" />
     <Compile Include="Combat\Match\BattleArena.cs" />
     <Compile Include="Combat\Match\BattlePalace.cs" />
     <Compile Include="Combat\Match\SafariZone.cs" />

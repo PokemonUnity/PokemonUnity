@@ -198,7 +198,7 @@ namespace PokemonUnity
 		}
 		public static bool InitTrainers(bool sql = false)
 		{
-			TrainerMetaData = new Dictionary<TrainerTypes, TrainerData>();
+			TrainerMetaData = new Dictionary<TrainerTypes, TrainerMetaData>();
 			//TrainerData = new Dictionary<int, Encounter>();
 			if (sql) //using (con)
 				return false; //GetTrainersFromSQL(con);
@@ -223,6 +223,7 @@ namespace PokemonUnity
 		//public static bool InitLoadFile(bool sql = true)
 		//{
 		//	TrainerMetaData = new Dictionary<TrainerTypes, TrainerMetaData>();
+		//	//TrainerData = new Dictionary<int, Encounter>();
 		//	if (sql) //using (con)
 		//		return GetTrainersFromSQL(con);
 		//	else return false;
