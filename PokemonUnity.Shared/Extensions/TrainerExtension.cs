@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Linq;
 
 namespace PokemonUnity
 {
@@ -7,6 +8,11 @@ namespace PokemonUnity
 		public static bool IsNotNullOrNone(this PokemonUnity.Character.TrainerData trainer)
 		{
 			return trainer != null || trainer.ID != TrainerTypes.WildPokemon;
+		}
+
+		public static bool IsNotNullOrNone(this PokemonUnity.Combat.Trainer[] trainer)
+		{
+			return trainer != null || trainer.All(x => x.trainertype != TrainerTypes.WildPokemon); //|| trainer.ID != TrainerTypes.WildPokemon);
 		}
 	}
 }

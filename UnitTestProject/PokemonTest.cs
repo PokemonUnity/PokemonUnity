@@ -120,10 +120,11 @@ namespace Tests
 		//Setting the pokemon levels controls the experience points
 		public void Pokemon_Set_ExperiencePoints_To_Match_Level()
 		{
-			Assert.Inconclusive("Missing pokemon method to assign level by integer value"); //Is it even needed?
+			//Assert.Inconclusive("Missing pokemon method to assign level by integer value");
 			byte lv = 7;
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			//pokemon.Level = lv;
+			pokemon.SetLevel(lv);
 			Assert.AreEqual(lv,Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp));
 		}
 
@@ -133,9 +134,19 @@ namespace Tests
 		{
 			byte lv = 7;
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: 3);
+			pokemon.Exp = Experience.GetStartExperience(pokemon.GrowthRate, lv);
+			Assert.AreEqual(lv, pokemon.Level);
+		}
+
+		[TestMethod]
+		// Modifying pokemon experience points changes the level
+		public void Pokemon_Level_Changes_To_Match_ExperiencePoints()
+		{
+			byte lv = 7;
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: 3);
 			pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, 300));
 			pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Experience.Total);
-			Assert.AreEqual(lv, Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Experience.Total));
+			Assert.AreEqual(lv, pokemon.Level); //Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Experience.Total)
 		}
 
 		[TestMethod]
@@ -800,7 +811,7 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			if(Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id != Forms.ROTOM_HEAT) Assert.Fail("Bad Test; Wrong Stats being modified.");
 			//Assert.AreNotEqual(Game.PokemonData[pokemon.Species].BaseStatsATK, pokemon.ATK);
 			//Assert.AreNotEqual(pokemon.ATK, stat, "No changes in Pokemon stats.");
-			CollectionAssert.AreNotEquivalent(stat, new int[] { pokemon.HP, pokemon.ATK, pokemon.DEF, pokemon.SPA, pokemon.SPD, pokemon.SPE }, "No changes in Pokemon stats.");
+			CollectionAssert.AreNotEqual(stat, new int[] { pokemon.HP, pokemon.ATK, pokemon.DEF, pokemon.SPA, pokemon.SPD, pokemon.SPE }, "No changes in Pokemon stats.");
 			//CollectionAssert.AreNotEquivalent(stat, new int[] { pokemon.BaseStatsHP, pokemon.BaseStatsATK, pokemon.BaseStatsDEF, pokemon.BaseStatsSPA, pokemon.BaseStatsSPD, pokemon.BaseStatsSPE }, "No changes in Pokemon stats.");
 			//Assert.Fail("Need to find way to compare Pokemon.baseStats to Form.baseStats");
 			//Assert.Inconclusive("Not implemented yet");
@@ -809,7 +820,7 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		public void Pokemon_TestPokemon_GetPokemon_From_Form()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.DEOXYS_DEFENSE); //Normal
-			pokemon.SetForm(2); //Pokemons don't start out in alternate forms, must call manually.
+			//pokemon.SetForm(2); //Pokemons don't start out in alternate forms, must call manually.
 			//Assert.AreEqual(Pokemons.DEOXYS, Form.GetSpecies(Forms.DEOXYS_DEFENSE));//Game.PokemonFormsData[pokemon.Species][pokemon.FormId]
 			//if (Pokemons.DEOXYS_DEFENSE != Form.GetSpecies(pokemon.Form.Id))//Forms.DEOXYS_DEFENSE
 			if (Pokemons.DEOXYS_DEFENSE != pokemon.Form.Base)//Forms.DEOXYS_DEFENSE

@@ -184,8 +184,8 @@ namespace PokemonUnity.Monster
 		public Items ballUsed { get; set; }
 		//public int[] EvolveLevels { get { return _base.Evolutions.} }
 		//public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
-		//protected PokemonData _base { get; private set; }
-		protected Data.PokemonData _base { get { return Game.PokemonData[Form.Pokemon]; } }
+		//protected PokemonData _base { get; private set; } //Game.PokemonData[Form.Pokemon];
+		protected Data.PokemonData _base { get { return Game.PokemonData[pokemons]; } }
 		/// <summary>
 		/// Max total EVs
 		/// </summary>
@@ -765,7 +765,7 @@ namespace PokemonUnity.Monster
 			get
 			{
 				//return 1;
-				return Experience.GetLevelFromExperience(this.GrowthRate, this.Experience.Current);
+				return Experience.GetLevelFromExperience(this.GrowthRate, this.Experience.Total);
 			}
 			private set
 			{

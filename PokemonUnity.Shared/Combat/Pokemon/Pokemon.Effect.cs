@@ -1,6 +1,5 @@
 ﻿using PokemonUnity;
 using PokemonUnity.Inventory;
-using PokemonUnity.Localization;
 using PokemonUnity.Combat;
 using System;
 using System.Collections.Generic;

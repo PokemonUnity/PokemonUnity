@@ -2154,7 +2154,7 @@ namespace PokemonUnity
 								)
 							);
 							//foreach(var gen in new int[] { int.Parse((string)reader["ReDex"].ToString()) }) { PokedexData.Add(); }
-					}
+						}
 					//}
 					//Step 5: Closing up
 					reader.Close();
