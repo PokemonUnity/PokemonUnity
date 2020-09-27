@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
 using PokemonUnity.Monster;
@@ -789,7 +790,8 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		public void Pokemon_Form_SetForm_ChangesStats()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.ROTOM);
-			pokemon.AddExperience(100000, false);
+			//pokemon.AddExperience(100000, false);
+			pokemon.Exp = 100000;
 			//if (Game.PokemonData[pokemon.Species].BaseStatsATK != pokemon.ATK) Assert.Fail("Bad Test; Attack not equal to Base Stats");
 			int[] stat = new int[] { pokemon.HP, pokemon.ATK, pokemon.DEF, pokemon.SPA, pokemon.SPD, pokemon.SPE };
 			//int[] stat = new int[] { pokemon.BaseStatsHP, pokemon.BaseStatsATK, pokemon.BaseStatsDEF, pokemon.BaseStatsSPA, pokemon.BaseStatsSPD, pokemon.BaseStatsSPE };
@@ -809,12 +811,13 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			Pokemon pokemon = new Pokemon(Pokemons.DEOXYS_DEFENSE); //Normal
 			pokemon.SetForm(2); //Pokemons don't start out in alternate forms, must call manually.
 			//Assert.AreEqual(Pokemons.DEOXYS, Form.GetSpecies(Forms.DEOXYS_DEFENSE));//Game.PokemonFormsData[pokemon.Species][pokemon.FormId]
-			if (Pokemons.DEOXYS_DEFENSE != Form.GetSpecies(pokemon.Form))//Forms.DEOXYS_DEFENSE
-				Assert.Fail("Pokemon Id and FormId are not the same. Expected: <{0}> | Actual: <{1}>", Pokemons.DEOXYS_DEFENSE, Form.GetSpecies(pokemon.Form));
+			//if (Pokemons.DEOXYS_DEFENSE != Form.GetSpecies(pokemon.Form.Id))//Forms.DEOXYS_DEFENSE
+			if (Pokemons.DEOXYS_DEFENSE != pokemon.Form.Base)//Forms.DEOXYS_DEFENSE
+				Assert.Fail("Pokemon Id and FormId are not the same. Expected: <{0}> | Actual: <{1}>", Pokemons.DEOXYS_DEFENSE, pokemon.Form.Base); //Form.GetSpecies(pokemon.Form)
 			//This test fails...
 			//Assert.AreEqual(Pokemons.DEOXYS, pokemon.Species, "Pokemon Form and Breed are not the same.");
 			//But this test passes... should the results be flipped?
-			Assert.AreEqual(Pokemons.DEOXYS, pokemon.form.Base, "Pokemon Form and Breed are not the same.");
+			Assert.AreEqual(Pokemons.DEOXYS, pokemon.Form.Base, "Pokemon Form and Breed are not the same.");
 		}
 		#endregion
 
