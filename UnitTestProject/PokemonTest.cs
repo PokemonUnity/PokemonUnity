@@ -594,6 +594,7 @@ namespace Tests
 		[TestMethod]
 		public void Pokemon_TestPokemon_CanEvolve_AfterLevel()
 		{
+			Assert.Inconclusive("Pokemon Evolution Temp Disabled.");
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			if (!pokemon.hasEvolveMethod(EvolutionMethod.Level))
 				Assert.Fail("Unable to test if pokemon can evolve, as it does not have an evolution through leveling-up");
@@ -610,6 +611,7 @@ namespace Tests
 		[TestMethod]
 		public void Pokemon_TestPokemon_EvolvePokemonUsingItems()
 		{
+			Assert.Inconclusive("Pokemon Evolution Temp Disabled.");
 			Items evolveStone = Items.SUN_STONE;
 			Pokemon pokemon = new Pokemon(Pokemons.GLOOM);
 			if (!pokemon.hasEvolveMethod(EvolutionMethod.Item))
