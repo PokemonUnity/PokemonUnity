@@ -43,13 +43,13 @@ public partial class Pokemon
     /// and MegaEvolutions?
     /// </remarks>
     //public Forms Form { get { return form.Id; } } //set { foreach(Form f in Game.PokemonFormsData[pokemons]) if (value == f.Id) formId = f.Order; } }
-    public Monster.Data.Form Form { get { return Game.PokemonFormsData[Species][formId]; } }// set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
+    public Monster.Data.Form Form { get { return Game.PokemonFormsData[pokemons][formId]; } }// set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
     public int FormId { get { return formId; } } //set { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) formId = value; } }
     //public Form form { get { return Game.PokemonFormsData[pokemons][formId]; } }
     // Maybe a method, where when a form is changed
     // checks pokemon value and overwrites name and stats
     // Some forms have a SpeciesId and others are battle only
-    public bool SetForm(int value) { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) { formId = value; return true; } else return false; }
+    public bool SetForm(int value) { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) { formId = value; return true; } else return false; } //Overwrite pokemons with when form changes? `pokemons = Form.Pokemon;`
     public bool SetForm(Forms value) { int i = 0; foreach (Form f in Game.PokemonFormsData[pokemons]) { if (value == f.Id) return SetForm(i); i++; } return false; }
 
 
@@ -326,7 +326,7 @@ public static int getForm(Monster.Pokemon pokemon)
     {
    int[] maps=new int[] { 49, 50, 51, 72, 73 };   // Map IDs for Origin Forme
    if (pokemon.Item == Items.GRISEOUS_ORB ||
-      //(Game.GameData.GameMap && maps.Contains(Game.GameData.GameMap.map_id))) {
+      //(Game.GameData.GameMap != null && maps.Contains(Game.GameData.GameMap.map_id))) {
       Game.GameData != null && maps.Contains(Game.GameData.Player.Area)) {
      return 1;
    }
@@ -541,6 +541,247 @@ public static int getFormOnCreation(Pokemons pokemon)
    return (int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4));
     }
     else return (int)pokemon;//.pokemon.FormId; //0;
+}
+public static Forms? getFormOnCreation(Pokemons pokemon, bool nullable)
+{
+    if (pokemon == Pokemons.UNOWN)
+    {
+   //return Core.Rand.Next(28);
+   //return Core.Rand.Next(Game.PokemonFormsData[pokemon].Length);
+   return new Forms[] { Forms.UNOWN_A	
+		,Forms.UNOWN_B		
+		,Forms.UNOWN_C		
+		,Forms.UNOWN_D		
+		,Forms.UNOWN_E		
+		,Forms.UNOWN_F		
+		,Forms.UNOWN_G		
+		,Forms.UNOWN_H		
+		,Forms.UNOWN_I		
+		,Forms.UNOWN_J		
+		,Forms.UNOWN_K		
+		,Forms.UNOWN_L		
+		,Forms.UNOWN_M		
+		,Forms.UNOWN_N		
+		,Forms.UNOWN_O		
+		,Forms.UNOWN_P		
+		,Forms.UNOWN_Q		
+		,Forms.UNOWN_R		
+		,Forms.UNOWN_S		
+		,Forms.UNOWN_T		
+		,Forms.UNOWN_U		
+		,Forms.UNOWN_V		
+		,Forms.UNOWN_W		
+		,Forms.UNOWN_X		
+		,Forms.UNOWN_Y		
+		,Forms.UNOWN_Z		
+		,Forms.UNOWN_EXCLAMATION
+		,Forms.UNOWN_QUESTION	}[Core.Rand.Next(Game.PokemonFormsData[pokemon].Length)];
+    }
+   // else if (pokemon == Pokemons.BURMY)
+   // {
+   //Environments env=Game.pbGetEnvironment();
+   //if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+   ////if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
+   //  return 2; // Trash Cloak
+   //} else if (env==Environments.Sand ||
+   //      env==Environments.Rock ||
+   //      env==Environments.Cave) {
+   //  return 1; // Sandy Cloak
+   //}
+   //else {
+   //  return 0; // Plant Cloak
+   //}
+   // }
+   // else if (pokemon == Pokemons.WORMADAM)
+   // {
+   //Environments env=Game.pbGetEnvironment();
+   //if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+   ////if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
+   //  return 2; // Trash Cloak
+   //} else if (env==Environments.Sand || env==Environments.Rock ||
+   //   env==Environments.Cave) {
+   //  return 1; // Sandy Cloak
+   //}
+   //else {
+   //  return 0; // Plant Cloak
+   //}
+   // }
+   // else if (pokemon == Pokemons.SHELLOS || pokemon == Pokemons.GASTRODON)
+   // {
+   //int[] maps=new int[] { 2, 5, 39, 41, 44, 69 };   // Map IDs for second form
+   //if (Game.GameData.GameMap != null && maps.Contains(Game.GameData.GameMap.map_id)) {
+   ////if (Game.GameData != null && maps.Contains(Game.GameData.Player.Area)) {
+   //  return 1;
+   //}
+   //else {
+   //  return 0;
+   //}
+   // }
+    else if (pokemon == Pokemons.BASCULIN)
+    {
+   //return Core.Rand.Next(2);
+   return new Forms[] { Forms.BASCULIN_RED_STRIPED, Forms.BASCULIN_BLUE_STRIPED }[Core.Rand.Next(2)];
+    }
+    else if (pokemon == Pokemons.SCATTERBUG)
+    {
+   //return Game.GameData.Player.Trainer.SecretID%18;
+   return new Forms[] { Forms.SCATTERBUG_ICY_SNOW
+		,Forms.SCATTERBUG_POLAR			
+		,Forms.SCATTERBUG_TUNDRA			
+		,Forms.SCATTERBUG_CONTINENTAL		
+		,Forms.SCATTERBUG_GARDEN			
+		,Forms.SCATTERBUG_ELEGANT			
+		,Forms.SCATTERBUG_MEADOW			
+		,Forms.SCATTERBUG_MODERN			
+		,Forms.SCATTERBUG_MARINE			
+		,Forms.SCATTERBUG_ARCHIPELAGO		
+		,Forms.SCATTERBUG_HIGH_PLAINS		
+		,Forms.SCATTERBUG_SANDSTORM		
+		,Forms.SCATTERBUG_RIVER			
+		,Forms.SCATTERBUG_MONSOON			
+		,Forms.SCATTERBUG_SAVANNA			
+		,Forms.SCATTERBUG_SUN			
+		,Forms.SCATTERBUG_OCEAN			
+		,Forms.SCATTERBUG_JUNGLE			
+		,Forms.SCATTERBUG_FANCY			
+		,Forms.SCATTERBUG_POKE_BALL		}[(int)Game.GameData.Player.Trainer.SecretID%18];
+    }
+    else if (pokemon == Pokemons.SPEWPA)
+    {
+   //return Game.GameData.Player.Trainer.SecretID%18;
+   return new Forms[] { Forms.SPEWPA_ICY_SNOW
+		,Forms.SPEWPA_POLAR			
+		,Forms.SPEWPA_TUNDRA			
+		,Forms.SPEWPA_CONTINENTAL		
+		,Forms.SPEWPA_GARDEN			
+		,Forms.SPEWPA_ELEGANT			
+		,Forms.SPEWPA_MEADOW			
+		,Forms.SPEWPA_MODERN			
+		,Forms.SPEWPA_MARINE			
+		,Forms.SPEWPA_ARCHIPELAGO		
+		,Forms.SPEWPA_HIGH_PLAINS		
+		,Forms.SPEWPA_SANDSTORM		
+		,Forms.SPEWPA_RIVER			
+		,Forms.SPEWPA_MONSOON			
+		,Forms.SPEWPA_SAVANNA			
+		,Forms.SPEWPA_SUN			
+		,Forms.SPEWPA_OCEAN			
+		,Forms.SPEWPA_JUNGLE			
+		,Forms.SPEWPA_FANCY			
+		,Forms.SPEWPA_POKE_BALL		}[(int)Game.GameData.Player.Trainer.SecretID%18];
+    }
+    else if (pokemon == Pokemons.VIVILLON)
+    {
+   //return Game.GameData.Player.Trainer.SecretID%18;
+   return new Forms[] { Forms.VIVILLON_MEADOW
+		,Forms.VIVILLON_ICY_SNOW		
+		,Forms.VIVILLON_POLAR			
+		,Forms.VIVILLON_TUNDRA		
+		,Forms.VIVILLON_CONTINENTAL	
+		,Forms.VIVILLON_GARDEN		
+		,Forms.VIVILLON_ELEGANT		
+		,Forms.VIVILLON_MODERN		
+		,Forms.VIVILLON_MARINE		
+		,Forms.VIVILLON_ARCHIPELAGO	
+		,Forms.VIVILLON_HIGH_PLAINS	
+		,Forms.VIVILLON_SANDSTORM		
+		,Forms.VIVILLON_RIVER			
+		,Forms.VIVILLON_MONSOON		
+		,Forms.VIVILLON_SAVANNA		
+		,Forms.VIVILLON_SUN			
+		,Forms.VIVILLON_OCEAN			
+		,Forms.VIVILLON_JUNGLE		}[(int)Game.GameData.Player.Trainer.SecretID%18];
+    }
+    else if (pokemon == Pokemons.FLABEBE)
+    {
+   //return Core.Rand.Next(5);
+   return new Forms[] { Forms.FLABEBE_RED
+        ,Forms.FLABEBE_YELLOW
+        ,Forms.FLABEBE_ORANGE
+        ,Forms.FLABEBE_BLUE  
+        ,Forms.FLABEBE_WHITE }[Core.Rand.Next(5)];
+    }
+    else if (pokemon == Pokemons.FLOETTE)
+    {
+   //return Core.Rand.Next(5);
+   return new Forms[] { Forms.FLOETTE_RED
+        ,Forms.FLOETTE_YELLOW
+        ,Forms.FLOETTE_ORANGE
+        ,Forms.FLOETTE_BLUE  
+        ,Forms.FLOETTE_WHITE }[Core.Rand.Next(5)];
+    }
+    else if (pokemon == Pokemons.FLORGES)
+    {
+   //return Core.Rand.Next(5);
+   return new Forms[] { Forms.FLORGES_RED
+        ,Forms.FLORGES_YELLOW
+        ,Forms.FLORGES_ORANGE
+        ,Forms.FLORGES_BLUE  
+        ,Forms.FLORGES_WHITE }[Core.Rand.Next(5)];
+    }
+    else if (pokemon == Pokemons.PUMPKABOO)
+    {
+   //return (int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4));
+   return new Forms[] { Forms.PUMPKABOO_AVERAGE
+        ,Forms.PUMPKABOO_SMALL 
+        ,Forms.PUMPKABOO_LARGE 
+        ,Forms.PUMPKABOO_SUPER }[(int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4))];
+    }
+    else if (pokemon == Pokemons.GOURGEIST)
+    {
+   //return (int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4));
+   return new Forms[] { Forms.GOURGEIST_AVERAGE
+        ,Forms.GOURGEIST_SMALL 
+        ,Forms.GOURGEIST_LARGE 
+        ,Forms.GOURGEIST_SUPER }[(int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4))];
+    }
+    else if (pokemon == Pokemons.SHELLOS)
+    {
+   return Forms.SHELLOS_WEST;
+    }
+    //ToDo:Shellos East...
+    else if (pokemon == Pokemons.DEOXYS_ATTACK)
+    {
+   return Forms.DEOXYS_ATTACK;
+    }
+    else if (pokemon == Pokemons.DEOXYS_DEFENSE)
+    {
+   return Forms.DEOXYS_DEFENSE;
+    }
+    else if (pokemon == Pokemons.DEOXYS_SPEED)
+    {
+   return Forms.DEOXYS_SPEED;
+    }
+    else if (pokemon == Pokemons.KYUREM_BLACK)
+    {
+   return Forms.KYUREM_BLACK;
+    }
+    else if (pokemon == Pokemons.KYUREM_WHITE)
+    {
+   return Forms.KYUREM_WHITE;
+    }
+    else if (pokemon == Pokemons.ROTOM_FAN)
+    {
+   return Forms.ROTOM_FAN;
+    }
+    else if (pokemon == Pokemons.ROTOM_HEAT)
+    {
+   return Forms.ROTOM_HEAT;
+    }
+    else if (pokemon == Pokemons.ROTOM_FROST)
+    {
+   return Forms.ROTOM_FROST;
+    }
+    else if (pokemon == Pokemons.ROTOM_MOW)
+    {
+   return Forms.ROTOM_MOW;
+    }
+    else if (pokemon == Pokemons.ROTOM_WASH)
+    {
+   return Forms.ROTOM_WASH;
+    }
+    //ToDo: Pikachu
+    else return nullable? (Forms?)null : (Forms)pokemon;//.pokemon.FormId;
 }
 }
 }

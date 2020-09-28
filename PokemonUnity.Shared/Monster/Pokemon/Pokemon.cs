@@ -185,7 +185,7 @@ namespace PokemonUnity.Monster
 		//public int[] EvolveLevels { get { return _base.Evolutions.} }
 		//public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
 		//protected PokemonData _base { get; private set; } //Game.PokemonData[Form.Pokemon];
-		protected Data.PokemonData _base { get { return Game.PokemonData[pokemons]; } }
+		protected Data.PokemonData _base { get { return Game.PokemonData[Form.Pokemon]; } }
 		/// <summary>
 		/// Max total EVs
 		/// </summary>
@@ -266,12 +266,16 @@ namespace PokemonUnity.Monster
 			//if (pokemons == Pokemons.UNOWN)
 			//	formId = Core.Rand.Next(Game.PokemonFormsData[pokemons].Length);
 			#region Initialize Forms
-			int? f = MultipleForms.getFormOnCreation(pokemons);
+			Forms? f = MultipleForms.getFormOnCreation(pokemons, false);
 			if (f != null)
 			{
 				//this.form = f;
 				SetForm(f.Value);
 				this.resetMoves();
+			//} else
+			//{
+			//	SetForm((Forms)pokemons);
+			//	this.resetMoves();
 			}
 			#endregion
 			//ToDo: Move to Trainer.Wild Pokemon
