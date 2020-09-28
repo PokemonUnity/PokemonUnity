@@ -122,8 +122,8 @@
     <Compile Include="Inventory\Data\Berry.cs" />
     <Compile Include="Inventory\Data\ItemFlags.cs" />
     <Compile Include="Inventory\Data\Mail.cs" />
-    <Compile Include="Inventory\Item.Helper.cs" />
-    <Compile Include="Inventory\Pokeball.cs" />
+    <Compile Include="Inventory\Item\Item.Helper.cs" />
+    <Compile Include="Inventory\Item\Item.Pokeball.cs" />
     <Compile Include="Monster\Interface\IPokemon.cs" />
     <Compile Include="Monster\Nature.cs" />
     <Compile Include="Monster\Pokemon\Pokemon.cs" />

@@ -4,6 +4,7 @@ using PokemonUnity.Character;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PokemonUnity.Overworld;
 
 namespace PokemonUnity.Combat
 {
@@ -12,6 +13,18 @@ public static class BallHandlers{
   //ModifyCatchRate = new ItemHandlerHash;
   //OnCatch         = new ItemHandlerHash;
   //OnFailCatch     = new ItemHandlerHash;
+        public class OnCatchEventArg : EventArgs
+        {
+            public Items Ball { get; set; }
+            public Battle Battle { get; set; }
+            public Monster.Pokemon Pokemon { get; set; }
+        }
+        public class OnFailCatchEventArg : EventArgs
+        {
+            public Items Ball { get; set; }
+            public Battle Battle { get; set; }
+            public Pokemon Battler { get; set; }
+        }
 
 public static Items[] BallTypes= new Items[] {
    Items.POKE_BALL,         //0=>  
@@ -67,7 +80,7 @@ else if (ball == Items.NET_BALL) {
    return catchRate;
 }
 else if (ball == Items.DIVE_BALL) {
-   if (battle.environment==Overworld.Environments.Underwater) catchRate=(int)Math.Floor(catchRate*7/2f);
+   if (battle.environment==Environments.Underwater) catchRate=(int)Math.Floor(catchRate*7/2f);
    return catchRate;
 }
 else if (ball == Items.NEST_BALL) {
@@ -77,8 +90,8 @@ else if (ball == Items.NEST_BALL) {
    return catchRate;
 }
 else if (ball == Items.REPEAT_BALL) {
-   //if (battle.pbPlayer().Owned[battler.Species]) catchRate*=3;
-   if (battle.pbPlayer().Pokedex[(int)battler.Species,1] == 1) catchRate*=3;
+   if (battle.pbPlayer().owned[battler.Species]) catchRate*=3;
+   //if (battle.pbPlayer().Pokedex[(int)battler.Species,1] == 1) catchRate*=3;
    return catchRate;
 }
 else if (ball == Items.TIMER_BALL) {
@@ -121,6 +134,9 @@ else if (ball == Items.LURE_BALL) {
    //if (encounterType==Overworld.Method.OLD_ROD || //EncounterTypes.OldRod
    //                encounterType==Overworld.Method.GOOD_ROD || //EncounterTypes.GoodRod
    //                encounterType==Overworld.Method.SUPER_ROD) catchRate*=3; //EncounterTypes.SuperRod
+   //if (Game.GameData.encounterType==EncounterTypes.OldRod ||
+   // encounterType==EncounterTypes.GoodRod ||
+   // encounterType==EncounterTypes.SuperRod) catchRate*=3;
    return (int)Math.Min(catchRate,255);
 }
 else if (ball == Items.HEAVY_BALL) {
@@ -193,8 +209,26 @@ else if (ball == Items.SPORT_BALL) {
     }
     else return;
   }
+  private static void OnCatch(object sender, OnCatchEventArg e) {
+    //if (!OnCatch[ball]) return;
+    //OnCatch.trigger(ball,battle,pokemon);
+    if (e.Ball == Items.HEAL_BALL) {
+       e.Pokemon.Heal();
+    }
+    else if (e.Ball == Items.FRIEND_BALL) {
+       //pokemon.Happiness=200;
+       //pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
+    }
+    else return;
+  }
 
   public static void OnFailCatch(Items ball,Battle battle,Pokemon battler) {
+    //if (!OnFailCatch[ball]) return;
+    //OnFailCatch.trigger(ball,battle,battler);
+    return;
+  }
+
+  public static void OnFailCatch(object sender, OnFailCatchEventArg e) {
     //if (!OnFailCatch[ball]) return;
     //OnFailCatch.trigger(ball,battle,battler);
     return;
