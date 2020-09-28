@@ -22,7 +22,7 @@ namespace PokemonUnity
 		Marsh,
 		Volcano,
 		Earth,
-		
+
 		Zephyr,
 		Hive,
 		Plain,
@@ -1704,63 +1704,74 @@ namespace PokemonUnity
 		//UltraSunUltraMoon
 		Custom = -1
 	}
-	/// <summary>
-	/// Version Grouping
-	/// </summary>
-	/// <remarks>
-	/// I dont really use the versions for anywhere in code specifically...
-	/// </remarks>
-	/// (id, version_group_id, identifier) VALUES 
-	public enum Versions
+	//ToDo: Remove or Merge Version/Versions
+	public enum Version
 	{
-		/// <summary>
-		/// (0, 0, poke-unity'),
-		/// </summary>
-		PKUE = 0
+		//(id, version_group_id, identifier) VALUES 
+		//(0, 0, poke-unity'),
+		PokeUnity = 0,
 		//(1, 1, red'),
 		//(2, 1, blue'),
-		,RED_BLUE = 1
+		RedBlue = 1,
 		//(3, 2, yellow'),
-		,YELLOW
+		Yellow = 2,
 		//(4, 3, gold'),
 		//(5, 3, silver'),
-		,GOLD_SILVER
+		GoldSilver = 3,
 		//(6, 4, crystal'),
-		,CRYSTAL
+		Crystal = 4,
 		//(7, 5, ruby'),
 		//(8, 5, sapphire'),
-		,RUBY_SAPPHIRE
+		RubySapphire = 5,
 		//(9, 6, emerald'),
-		,EMERALD
+		Emerald = 6,
 		//(10,7, firered'),
 		//(11,7, leafgreen'),
-		,FIRERED_LEAFGREEN
+		LGFR = 7,
 		//(12,8, diamond'),
 		//(13,8, pearl'),
-		,DIAMOND_PEARL
+		DiamondPearl = 8,
 		//(14,9, platinum'),
-		,PLATINUM
+		Platinum = 9,
 		//(15,10,heartgold'),
 		//(16,10,soulsilver'),
-		,HEARTGOLD_SOULSILVER
+		HGSS = 10,
 		//(17,11,black'),
 		//(18,11,white'),
-		,BLACK_WHITE
+		BW = 11,
 		//(19,12,colosseum'),
-		,COLOSSEUM
 		//(20,13,xd'),
-		,XD
 		//(21,14,black-2'),
 		//(22,14,white-2'),
-		,BLACK_2_WHITE_2
+		BW2 = 14,
 		//(23,15,x'),
 		//(24,15,y'),
-		,X_Y
+		XY = 15,
 		//(25,16,omega-ruby'),
 		//(26,16,alpha-sapphire')
-		,OMEGA_RUBY_ALPHA_SAPPHIRE
-		,SUN_MOON
-		,ULTRA_SUN_ULTRA_MOON
+		ORAS = 16
+	}
+	public enum Versions
+	{
+		PKUE = 0
+		, RED_BLUE
+		, YELLOW
+		, GOLD_SILVER
+		, CRYSTAL
+		, RUBY_SAPPHIRE
+		, EMERALD
+		, FIRERED_LEAFGREEN
+		, DIAMOND_PEARL
+		, PLATINUM
+		, HEARTGOLD_SOULSILVER
+		, BLACK_WHITE
+		, COLOSSEUM
+		, XD
+		, BLACK_2_WHITE_2
+		, X_Y
+		, OMEGA_RUBY_ALPHA_SAPPHIRE
+		, SUN_MOON
+		, ULTRA_SUN_ULTRA_MOON
 	}
 	#endregion
 	#region Move

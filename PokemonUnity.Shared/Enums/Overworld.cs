@@ -14,29 +14,32 @@ namespace PokemonUnity.Overworld
 		Day		= 2,
 		Evening = 3
 	}
+	/// <summary>
+	/// Weather option for overworld.
+	/// For battle use weather, use <see cref="Combat.Weather"/>
+	/// </summary>
 	public enum FieldWeathers : int
 	{
 		Clear = 0,
+		/// <summary>
+		/// light drizzle?
+		/// </summary>
 		Rain = 1,
 		Snow = 2,
 		Underwater = 3,
+		/// <summary>
+		/// Sun
+		/// </summary>
 		Sunny = 4,
 		Fog = 5,
+		/// <summary>
+		/// Storm
+		/// </summary>
 		Thunderstorm = 6,
 		Sandstorm = 7,
 		Ash = 8,
-		Blizzard = 9
-	}
-	public enum Weathers
-	{
-		NONE,
-		RAINDANCE,
-		HEAVYRAIN,
-		SUNNYDAY,
-		HARSHSUN,
-		SANDSTORM,
-		STRONGWINDS,
-		HAIL
+		Blizzard = 9,
+		HeavyRain
 	}
 	/// <summary>
 	/// Terrain Tags or Tiles a player can be stepping on;
@@ -101,29 +104,33 @@ Sunset
 Waterfall      
 */
 	}
+	/// <summary>
+	/// Used in battle system to reflect background theme and design
+	/// </summary>
+	/// ToDo: Change namespace to `PokemonUnity.Combat`
 	public enum Environments
 	{
-		None,
+		None		= 0,
 		/// <summary>
 		/// Normal Grass, and Sooty Tall Grass, are both grass but different colors
 		/// </summary>
-		Grass,
-		Cave,
-		Sand,
-		Rock,
-		MovingWater,
-		StillWater,
-		Underwater,
+		Grass		= 1,
+		Cave		= 6,
+		Sand		= 8,
+		Rock		= 7,
+		MovingWater	= 3,
+		StillWater	= 4,
+		Underwater	= 5,
 		/// <summary>
 		/// Tall Grass
 		/// </summary>
-		TallGrass,
-		Forest,
-		Snow,
-		Volcano,
-		Graveyard,
-		Sky,
-		Space
+		TallGrass	= 2,
+		Forest		= 9,
+		Snow		= 10,
+		Volcano		= 11,
+		Graveyard	= 12,
+		Sky			= 13,
+		Space		= 14
 	}
 	public enum EncounterTypes
 	{
