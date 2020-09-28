@@ -145,8 +145,11 @@ namespace Tests
 		{
 			byte lv = 7;
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: 3);
-			pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, 300));
-			pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Experience.Total);
+			//pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, 300));
+			pokemon.Experience.AddExperience(300);
+			//pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Experience.Total);
+			int exp = Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Experience.Total;
+			pokemon.Experience.AddExperience(exp);
 			Assert.AreEqual(lv, pokemon.Level); //Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Experience.Total)
 		}
 

@@ -11,7 +11,7 @@ namespace PokemonUnity.Monster.Data
 {
 	/// <summary>
 	/// </summary>
-	public struct Experience
+	public class Experience
 	{
 		#region Variables
 		private byte level { get { return GetLevelFromExperience(Growth, Total); } }
