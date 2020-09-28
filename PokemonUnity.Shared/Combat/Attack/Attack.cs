@@ -5,7 +5,7 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
-//using PokemonUnity.Move;
+using PokemonUnity.Overworld;
 using System.Collections;
 
 namespace PokemonUnity.Combat
@@ -3448,21 +3448,21 @@ namespace PokemonUnity.Combat
 			Types type = Types.NORMAL;
 			switch (this.battle.environment)
 			{
-				case Environment.None: type = Types.NORMAL; break;
-				case Environment.Grass: type = Types.GRASS; break;
-				case Environment.TallGrass: type = Types.GRASS; break;
-				case Environment.MovingWater: type = Types.WATER; break;
-				case Environment.StillWater: type = Types.WATER; break;
-				case Environment.Underwater: type = Types.WATER; break;
-				case Environment.Cave: type = Types.ROCK; break;
-				case Environment.Rock: type = Types.GROUND; break;
-				case Environment.Sand: type = Types.GROUND; break;
-				case Environment.Forest: type = Types.BUG; break;
-				case Environment.Snow: type = Types.ICE; break;
-				case Environment.Volcano: type = Types.FIRE; break;
-				case Environment.Graveyard: type = Types.GHOST; break;
-				case Environment.Sky: type = Types.FLYING; break;
-				case Environment.Space: type = Types.DRAGON; break;
+				case Environments.None: type = Types.NORMAL; break;
+				case Environments.Grass: type = Types.GRASS; break;
+				case Environments.TallGrass: type = Types.GRASS; break;
+				case Environments.MovingWater: type = Types.WATER; break;
+				case Environments.StillWater: type = Types.WATER; break;
+				case Environments.Underwater: type = Types.WATER; break;
+				case Environments.Cave: type = Types.ROCK; break;
+				case Environments.Rock: type = Types.GROUND; break;
+				case Environments.Sand: type = Types.GROUND; break;
+				case Environments.Forest: type = Types.BUG; break;
+				case Environments.Snow: type = Types.ICE; break;
+				case Environments.Volcano: type = Types.FIRE; break;
+				case Environments.Graveyard: type = Types.GHOST; break;
+				case Environments.Sky: type = Types.FLYING; break;
+				case Environments.Space: type = Types.DRAGON; break;
 				default: break;
 			}
 			if (this.battle.field.ElectricTerrain > 0)
@@ -5486,36 +5486,36 @@ namespace PokemonUnity.Combat
 			}
 			switch (this.battle.environment)
 			{
-				case Environment.Grass:
-				case Environment.TallGrass:
-				case Environment.Forest:
+				case Environments.Grass:
+				case Environments.TallGrass:
+				case Environments.Forest:
 					if (opponent.pbCanSleep(attacker, false, this))
 					{
 						opponent.pbSleep();
 					}
 					break;
-				case Environment.MovingWater:
-				case Environment.Underwater:
+				case Environments.MovingWater:
+				case Environments.Underwater:
 					if (opponent.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this))
 					{
 
 						opponent.pbReduceStat(Stats.ATTACK, 1, attacker, false, this);
 					}
 					break;
-				case Environment.StillWater:
-				case Environment.Sky:
+				case Environments.StillWater:
+				case Environments.Sky:
 					if (opponent.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
 					{
 						opponent.pbReduceStat(Stats.SPEED, 1, attacker, false, this);
 					}
 					break;
-				case Environment.Sand:
+				case Environments.Sand:
 					if (opponent.pbCanReduceStatStage(Stats.ACCURACY, attacker, false, this))
 					{
 						opponent.pbReduceStat(Stats.ACCURACY, 1, attacker, false, this);
 					}
 					break;
-				case Environment.Rock:
+				case Environments.Rock:
 					if (Core.USENEWBATTLEMECHANICS)
 					{
 						if (opponent.pbCanReduceStatStage(Stats.ACCURACY, attacker, false, this))
@@ -5531,16 +5531,16 @@ namespace PokemonUnity.Combat
 					}
 					break;
 
-				case Environment.Cave:
-				case Environment.Graveyard:
-				case Environment.Space:
+				case Environments.Cave:
+				case Environments.Graveyard:
+				case Environments.Space:
 					if (opponent.effects.Substitute == 0 || ignoresSubstitute(attacker))
 					{
 						opponent.pbFlinch(attacker);
 					}
 					break;
 
-				case Environment.Snow:
+				case Environments.Snow:
 					if (opponent.pbCanFreeze(attacker, false, this))
 					{
 
@@ -5548,7 +5548,7 @@ namespace PokemonUnity.Combat
 					}
 					break;
 
-				case Environment.Volcano:
+				case Environments.Volcano:
 					if (opponent.pbCanBurn(attacker, false, this))
 					{
 
@@ -5578,23 +5578,23 @@ namespace PokemonUnity.Combat
 			else
 				switch (this.battle.environment)
 				{
-					case Environment.Grass:
-					case Environment.TallGrass:
+					case Environments.Grass:
+					case Environments.TallGrass:
 						id = (Core.USENEWBATTLEMECHANICS) ? Moves.VINE_WHIP : Moves.NEEDLE_ARM; break;
 
-					case Environment.MovingWater: id = Moves.WATER_PULSE; break;
-					case Environment.StillWater: id = Moves.MUD_SHOT; break;
-					case Environment.Underwater: id = Moves.WATER_PULSE; break;
-					case Environment.Cave: id = Moves.ROCK_THROW; break;
-					case Environment.Rock: id = Moves.MUD_SLAP; break;
-					case Environment.Sand: id = Moves.MUD_SLAP; break;
-					case Environment.Forest: id = Moves.RAZOR_LEAF; break;
+					case Environments.MovingWater: id = Moves.WATER_PULSE; break;
+					case Environments.StillWater: id = Moves.MUD_SHOT; break;
+					case Environments.Underwater: id = Moves.WATER_PULSE; break;
+					case Environments.Cave: id = Moves.ROCK_THROW; break;
+					case Environments.Rock: id = Moves.MUD_SLAP; break;
+					case Environments.Sand: id = Moves.MUD_SLAP; break;
+					case Environments.Forest: id = Moves.RAZOR_LEAF; break;
 					// Ice tiles in Gen 6 should be Ice Shard
-					case Environment.Snow: id = Moves.AVALANCHE; break;
-					case Environment.Volcano: id = Moves.INCINERATE; break;
-					case Environment.Graveyard: id = Moves.SHADOW_SNEAK; break;
-					case Environment.Sky: id = Moves.GUST; break;
-					case Environment.Space: id = Moves.SWIFT; break;
+					case Environments.Snow: id = Moves.AVALANCHE; break;
+					case Environments.Volcano: id = Moves.INCINERATE; break;
+					case Environments.Graveyard: id = Moves.SHADOW_SNEAK; break;
+					case Environments.Sky: id = Moves.GUST; break;
+					case Environments.Space: id = Moves.SWIFT; break;
 					default: break;
 				}
 
@@ -6054,31 +6054,31 @@ namespace PokemonUnity.Combat
 			Moves move = Moves.TRI_ATTACK;
 			switch (this.battle.environment)
 			{
-				case Environment.Grass:
-				case Environment.TallGrass:
-				case Environment.Forest:
+				case Environments.Grass:
+				case Environments.TallGrass:
+				case Environments.Forest:
 					move = (Core.USENEWBATTLEMECHANICS) ? Moves.ENERGY_BALL : Moves.SEED_BOMB; break;
 
-				case Environment.MovingWater: move = Moves.HYDRO_PUMP; break;
-				case Environment.StillWater: move = Moves.MUD_BOMB; break;
-				case Environment.Underwater: move = Moves.HYDRO_PUMP; break;
-				case Environment.Cave:
+				case Environments.MovingWater: move = Moves.HYDRO_PUMP; break;
+				case Environments.StillWater: move = Moves.MUD_BOMB; break;
+				case Environments.Underwater: move = Moves.HYDRO_PUMP; break;
+				case Environments.Cave:
 					move = (Core.USENEWBATTLEMECHANICS) ? Moves.POWER_GEM : Moves.ROCK_SLIDE; break;
 
-				case Environment.Rock:
+				case Environments.Rock:
 
 					move = (Core.USENEWBATTLEMECHANICS) ? Moves.EARTH_POWER : Moves.ROCK_SLIDE; break;
 
-				case Environment.Sand:
+				case Environments.Sand:
 					move = (Core.USENEWBATTLEMECHANICS) ? Moves.EARTH_POWER : Moves.EARTHQUAKE; break;
 				// Ice tiles in Gen 6 should be Ice Beam
-				case Environment.Snow:
+				case Environments.Snow:
 					move = (Core.USENEWBATTLEMECHANICS) ? Moves.FROST_BREATH : Moves.ICE_BEAM; break;
 
-				case Environment.Volcano: move = Moves.LAVA_PLUME; break;
-				case Environment.Graveyard: move = Moves.SHADOW_BALL; break;
-				case Environment.Sky: move = Moves.AIR_SLASH; break;
-				case Environment.Space: move = Moves.DRACO_METEOR; break;
+				case Environments.Volcano: move = Moves.LAVA_PLUME; break;
+				case Environments.Graveyard: move = Moves.SHADOW_BALL; break;
+				case Environments.Sky: move = Moves.AIR_SLASH; break;
+				case Environments.Space: move = Moves.DRACO_METEOR; break;
 			}
 			if (this.battle.field.ElectricTerrain > 0)
 			{
@@ -10907,7 +10907,7 @@ namespace PokemonUnity.Combat
 		{
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
-			battle.pbDisplay(Game._INTL("Congratulations, {1}!", this.battle.pbGetOwner(attacker.Index).Name));
+			battle.pbDisplay(Game._INTL("Congratulations, {1}!", this.battle.pbGetOwner(attacker.Index).name));
 			return 0;
 		}
 	}

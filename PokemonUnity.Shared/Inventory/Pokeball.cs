@@ -67,7 +67,7 @@ else if (ball == Items.NET_BALL) {
    return catchRate;
 }
 else if (ball == Items.DIVE_BALL) {
-   if (battle.environment==Environment.Underwater) catchRate=(int)Math.Floor(catchRate*7/2f);
+   if (battle.environment==Overworld.Environments.Underwater) catchRate=(int)Math.Floor(catchRate*7/2f);
    return catchRate;
 }
 else if (ball == Items.NEST_BALL) {

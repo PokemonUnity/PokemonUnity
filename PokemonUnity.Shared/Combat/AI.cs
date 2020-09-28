@@ -4418,7 +4418,7 @@ public partial class Battle{
       }
     }
     else {
-      skill=Game.TrainerMetaData[pbGetOwner(attacker.Index).ID].SkillLevel; //|| 0;
+      skill=Game.TrainerMetaData[pbGetOwner(attacker.Index).trainertype].SkillLevel; //|| 0;
       Pokemon opponent=attacker.pbOppositeOpposing;
       if (@doublebattle && !opponent.isFainted() && !opponent.Partner.isFainted()) {
         // Choose a target and move.  Also care about partner.
@@ -4620,10 +4620,9 @@ public partial class Battle{
 /// </summary>
 /// <param name="ndex"></param>
 /// <returns></returns>
-  public bool pbEnemyShouldMegaEvolve (int ndex) {
+  public bool pbEnemyShouldMegaEvolve (int index) {
     // Simple "always should if possible"
-    //return pbCanMegaEvolve(index);
-    return false;
+    return pbCanMegaEvolve(index);
   }
 
 #region Decide whether the opponent should use an item on the Pokémon.
@@ -4719,7 +4718,7 @@ public partial class Battle{
     bool typecheck=false;
     int batonpass=-1;
     Types movetype=Types.NONE;
-    int skill=Game.TrainerMetaData[pbGetOwner(index).ID].SkillLevel;// || 0;
+    int skill=Game.TrainerMetaData[pbGetOwner(index).trainertype].SkillLevel;// || 0;
     if (@opponent!= null && !shouldswitch && @battlers[index].turncount>0) {
       if (skill>=PBTrainerAI.highSkill) {
         Pokemon opponent=@battlers[index].pbOppositeOpposing;

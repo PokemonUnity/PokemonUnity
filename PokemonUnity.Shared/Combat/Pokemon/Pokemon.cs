@@ -3274,7 +3274,7 @@ namespace PokemonUnity.Combat
 		if (!@battle.battlers[i].isFainted() && @battle.pbCanChooseNonActive(i) &&
 		   !@battle.pbAllFainted(@battle.pbOpposingParty(i))) {
 		  // TODO: Pursuit should go here, and negate this effect if it KO's attacker
-		  @battle.pbDisplay(Game._INTL("{1} went back to {2}!",@battle.battlers[i].ToString(),@battle.pbGetOwner(i).Name));
+		  @battle.pbDisplay(Game._INTL("{1} went back to {2}!",@battle.battlers[i].ToString(),@battle.pbGetOwner(i).name));
 		  int newpoke=0;
 		  newpoke=@battle.pbSwitchInBetween(i,true,false);
 		  int newpokename=newpoke;

@@ -367,5 +367,10 @@ public partial class Trainer {
     //}
   }
         #endregion
+
+        public static implicit operator TrainerData(Trainer trainer)
+        {
+            return new TrainerData(trainer.name, trainer.gender.Value, trainer.publicID(), trainer.secretID());
+        }
 }
 }
