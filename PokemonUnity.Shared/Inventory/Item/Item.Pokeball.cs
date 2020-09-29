@@ -134,9 +134,9 @@ else if (ball == Items.LURE_BALL) {
    //if (encounterType==Overworld.Method.OLD_ROD || //EncounterTypes.OldRod
    //                encounterType==Overworld.Method.GOOD_ROD || //EncounterTypes.GoodRod
    //                encounterType==Overworld.Method.SUPER_ROD) catchRate*=3; //EncounterTypes.SuperRod
-   //if (Game.GameData.encounterType==EncounterTypes.OldRod ||
-   // encounterType==EncounterTypes.GoodRod ||
-   // encounterType==EncounterTypes.SuperRod) catchRate*=3;
+   if (Game.GameData.encounterType==EncounterTypes.OldRod ||
+    encounterType==EncounterTypes.GoodRod ||
+    encounterType==EncounterTypes.SuperRod) catchRate*=3;
    return (int)Math.Min(catchRate,255);
 }
 else if (ball == Items.HEAVY_BALL) {
@@ -204,8 +204,8 @@ else if (ball == Items.SPORT_BALL) {
        pokemon.Heal();
     }
     else if (ball == Items.FRIEND_BALL) {
-       //pokemon.Happiness=200;
-       //pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
+       //e.pokemon.Happiness=200;
+       //e.pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
     }
     else return;
   }
@@ -216,8 +216,8 @@ else if (ball == Items.SPORT_BALL) {
        e.Pokemon.Heal();
     }
     else if (e.Ball == Items.FRIEND_BALL) {
-       //pokemon.Happiness=200;
-       //pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
+       //e.Pokemon.Happiness=200;
+       //e.Pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
     }
     else return;
   }
@@ -225,6 +225,7 @@ else if (ball == Items.SPORT_BALL) {
   public static void OnFailCatch(Items ball,Battle battle,Pokemon battler) {
     //if (!OnFailCatch[ball]) return;
     //OnFailCatch.trigger(ball,battle,battler);
+    //if (OnFailCatch != null) OnFailCatch.Invoke(ball,battle,battler);
     return;
   }
 
@@ -241,7 +242,7 @@ public static Items pbBallTypeToBall(int balltype) {
     ret=BallTypes[balltype];
     //if (ret!=0) return ret;
   }
-  //if (BallTypes[0]) {
+  //if (BallTypes[0] != null) {
   //  ret=BallTypes[0];
   //  if (ret!=0) return ret;
   //}
