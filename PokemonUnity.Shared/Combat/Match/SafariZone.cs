@@ -110,7 +110,7 @@ public class PokeBattle_SafariZone : Battle {
           }
           break;
         case 1: // Bait
-          pbDisplayBrief(Game._INTL("{1} threw some bait at the {2}!",this.pbPlayer().Name,wildpoke.Name));
+          pbDisplayBrief(Game._INTL("{1} threw some bait at the {2}!",this.pbPlayer().name,wildpoke.Name));
           @scene.pbThrowBait();
           g/=2; // Harder to catch
           e/=2; // Less likely to escape
@@ -119,7 +119,7 @@ public class PokeBattle_SafariZone : Battle {
           lastCommand=1;
           break;
         case 2: // Rock
-          pbDisplayBrief(Game._INTL("{1} threw a rock at the {2}!",this.pbPlayer().Name,wildpoke.Name));
+          pbDisplayBrief(Game._INTL("{1} threw a rock at the {2}!",this.pbPlayer().name,wildpoke.Name));
           @scene.pbThrowRock();
           g*=2; // Easier to catch
           e*=2; // More likely to escape

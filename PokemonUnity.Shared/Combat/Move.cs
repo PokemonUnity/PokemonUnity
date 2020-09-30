@@ -784,10 +784,10 @@ public virtual int TotalPP { get {
 	double atkmult = 0x1000;
 	if (Battle.internalbattle){
 	  if (Battle.pbOwnedByPlayer(attacker.Index) && pbIsPhysical (type) &&
-		 Battle.pbPlayer().BadgesCount>=Core.BADGESBOOSTATTACK)
+		 Battle.pbPlayer().badges.Count(b => b == true) >=Core.BADGESBOOSTATTACK)
 		atkmult = Math.Round(atkmult * 1.1);
 	  if (Battle.pbOwnedByPlayer(attacker.Index) && pbIsSpecial (type) &&
-		 Battle.pbPlayer().BadgesCount >= Core.BADGESBOOSTSPATK)
+		 Battle.pbPlayer().badges.Count(b => b == true) >= Core.BADGESBOOSTSPATK)
 		atkmult = Math.Round(atkmult * 1.1);
 	}
 	if (attacker.HP<=Math.Floor(attacker.TotalHP/3d))
@@ -871,10 +871,10 @@ public virtual int TotalPP { get {
 	double defmult = 0x1000;
 	if (Battle.internalbattle){
 	  if (Battle.pbOwnedByPlayer(opponent.Index) && pbIsPhysical(type) &&
-		 Battle.pbPlayer().BadgesCount >= Core.BADGESBOOSTDEFENSE)
+		 Battle.pbPlayer().badges.Count(b => b == true) >= Core.BADGESBOOSTDEFENSE)
 		defmult = Math.Round(defmult * 1.1);
 	  if (Battle.pbOwnedByPlayer(opponent.Index) && pbIsSpecial(type) &&
-		 Battle.pbPlayer().BadgesCount >= Core.BADGESBOOSTSPDEF)
+		 Battle.pbPlayer().badges.Count(b => b == true) >= Core.BADGESBOOSTSPDEF)
 		defmult = Math.Round(defmult * 1.1);
 	}
 	if (Battle.field.GrassyTerrain>0)
@@ -892,8 +892,8 @@ public virtual int TotalPP { get {
 	if (opponent.hasWorkingItem(Items.ASSAULT_VEST) && pbIsSpecial(type))
 	   defmult = Math.Round(defmult * 1.5);
 	if (opponent.hasWorkingItem(Items.EVIOLITE)){
-	  //evos=pbGetEvolvedFormData(opponent.Species);
-	  //if (evos && evos.Length>0)      
+	  //Pokemons[] evos=pbGetEvolvedFormData(opponent.Species);
+	  //if (evos != null && evos.Length>0)      
 	  if (Game.PokemonEvolutionsData[opponent.Species].Length>0)
 		defmult=Math.Round(defmult*1.5);
 	}

@@ -7,13 +7,13 @@ using PokemonUnity.Character;
 
 namespace PokemonUnity.Monster
 {
-	public partial class PokeBattle_NullBattlePeer : IPokeBattle_BattlePeer { 
+public partial class PokeBattle_NullBattlePeer : IPokeBattle_BattlePeer { 
   public void pbOnEnteringBattle(Combat.Battle battle,Monster.Pokemon pokemon) {
   }
 
-  public int pbStorePokemon(Player player,Monster.Pokemon pokemon) {
-    if (player.Party.GetCount()<6) {
-      player.Party[player.Party.GetCount()]=pokemon;
+  public int pbStorePokemon(Combat.Trainer player,Monster.Pokemon pokemon) {
+    if (player.party.GetCount()<6) {
+      player.party[player.party.GetCount()]=pokemon;
     }
     return -1;
   }
@@ -30,13 +30,11 @@ namespace PokemonUnity.Monster
     return "";
   }
 }
-
-
-
+       
 public partial class PokeBattle_RealBattlePeer {
-  public int pbStorePokemon(Player player,Monster.Pokemon pokemon) {
-    if (player.Party.GetCount()<6) {
-      player.Party[player.Party.GetCount()]=pokemon;
+  public int pbStorePokemon(Combat.Trainer player,Monster.Pokemon pokemon) {
+    if (player.party.GetCount()<6) {
+      player.party[player.party.GetCount()]=pokemon;
       return -1;
     } else {
       pokemon.Heal();
@@ -70,24 +68,23 @@ public partial class PokeBattle_RealBattlePeer {
   }
 
   public string pbBoxName(int box) {
-   //return box<0 ? "" : $PokemonStorage[box].name;
+   //return box<0 ? "" : Game.GameData.PokemonStorage[box].name;
    return box<0 ? "" : Game.GameData.Player.PC.BoxNames[box];
   }
 }
-
-
-
+    
 public partial class PokeBattle_BattlePeer {
   public static PokeBattle_RealBattlePeer create() {
     return new PokeBattle_RealBattlePeer();
   }
 }
+
     public interface IPokeBattle_BattlePeer
     {
         string pbBoxName(int box);
         int pbCurrentBox();
         string pbGetStorageCreator();
         void pbOnEnteringBattle(Combat.Battle battle, Monster.Pokemon pokemon);
-        int pbStorePokemon(Player player, Monster.Pokemon pokemon);
+        int pbStorePokemon(Combat.Trainer player, Monster.Pokemon pokemon);
     }
 }
