@@ -2095,6 +2095,29 @@ namespace PokemonUnity.Inventory
 		/// </summary>
 		FLINCH = 7
 	}
+	public enum ItemUseResults
+	{
+		/// <summary>
+		/// not used
+		/// </summary>
+		NotUsed = 0,
+		/// <summary>
+		/// used, item not consumed
+		/// </summary>
+		UsedNotConsumed = 1,
+		/// <summary>
+		/// close the Bag to use, item not consumed
+		/// </summary>
+		CloseBagNotConsumed = 2,
+		/// <summary>
+		/// used, item consumed
+		/// </summary>
+		UsedItemConsumed = 3,
+		/// <summary>
+		/// close the Bag to use, item consumed
+		/// </summary>
+		CloseBagItemConsumed = 4
+	}
 
 	namespace Plants
 	{
