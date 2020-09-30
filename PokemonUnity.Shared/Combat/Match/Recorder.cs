@@ -196,8 +196,8 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle,
 /// <typeparam name="TBattle"></typeparam>
 public class PokeBattle_BattlePlayerModule<TBattle> : PokeBattle_RecordedBattleModule<TBattle>,
         IPokeBattle_BattlePlayerModule<TBattle>
-        where TBattle : IPokeBattle_RecordedBattleModule<Battle> {
-        //where TBattle : PokeBattle_RecordedBattleModule<Battle> {
+        //where TBattle : IPokeBattle_RecordedBattleModule<Battle> {
+        where TBattle : PokeBattle_RecordedBattleModule<Battle> {
         //where TBattle : Battle {
         #region Variables
   public int randomindex { get; protected set; }
@@ -343,7 +343,6 @@ public class PokeBattle_BattleArenaPlayer : PokeBattle_BattlePlayerModule<PokeBa
   {
   }
 }*/
-    }
 
     /// <summary>
     /// Recording of a Pokemon Battle
