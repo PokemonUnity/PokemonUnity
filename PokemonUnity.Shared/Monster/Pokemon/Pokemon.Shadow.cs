@@ -66,12 +66,13 @@ namespace PokemonUnity
 					pokemon.Exp = newexp;
 				}
 				string speciesname = pokemon.Species.ToString(TextScripts.Name);
-				if (scene.pbConfirm(_INTL("Would you like to give a nickname to {1}?", speciesname)))
-				{
-					string helptext = Game._INTL("{1}'s nickname?", speciesname);
-					//string newname = Game.UI.pbEnterPokemonName(helptext, 0, 10, "", pokemon);
-					//if (newname != "") pokemon.Name = newname;
-				}
+				//ToDo: Uncomment and replace `IScene` with something less generic...
+				//if (scene.pbConfirm(_INTL("Would you like to give a nickname to {1}?", speciesname)))
+				//{
+				//	string helptext = Game._INTL("{1}'s nickname?", speciesname);
+				//	//string newname = Game.UI.pbEnterPokemonName(helptext, 0, 10, "", pokemon);
+				//	//if (newname != "") pokemon.Name = newname;
+				//}
 			}
 		}
 

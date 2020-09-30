@@ -134,9 +134,9 @@ else if (ball == Items.LURE_BALL) {
    //if (encounterType==Overworld.Method.OLD_ROD || //EncounterTypes.OldRod
    //                encounterType==Overworld.Method.GOOD_ROD || //EncounterTypes.GoodRod
    //                encounterType==Overworld.Method.SUPER_ROD) catchRate*=3; //EncounterTypes.SuperRod
-   if (Game.GameData.encounterType==EncounterTypes.OldRod ||
-    encounterType==EncounterTypes.GoodRod ||
-    encounterType==EncounterTypes.SuperRod) catchRate*=3;
+   //if (Game.GameData.encounterType==EncounterTypes.OldRod ||
+   // encounterType==EncounterTypes.GoodRod ||
+   // encounterType==EncounterTypes.SuperRod) catchRate*=3;
    return (int)Math.Min(catchRate,255);
 }
 else if (ball == Items.HEAVY_BALL) {

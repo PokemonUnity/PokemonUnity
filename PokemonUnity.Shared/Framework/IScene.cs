@@ -21,9 +21,9 @@ namespace PokemonUnity
 		/// <summary>
 		/// Shows the player's Poké Ball being thrown to capture a Pokémon.
 		/// </summary>
-		void pokeballThrow(Items ball, int shakes,bool critical,Combat.Pokemon targetBattler,IScene scene,Combat.Pokemon battler, int burst = -1, bool showplayer = false);
+		//void pokeballThrow(Items ball, int shakes,bool critical,Combat.Pokemon targetBattler,IScene scene,Combat.Pokemon battler, int burst = -1, bool showplayer = false);
 		void pbDisplay(string v);
-		bool pbConfirm(string v);
+		//bool pbConfirm(string v);
 	}
 	/*
 	/// <summary>

@@ -59,7 +59,7 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle
     }
   }
 
-  public override void pbStartBattle(bool canlose=false) {
+  public override BattleResults pbStartBattle(bool canlose=false) {
     @properties=new object();
     /*@properties["internalbattle"]=@internalbattle;
     @properties["player"]=pbGetTrainerInfo(@player);
@@ -79,7 +79,7 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle
     @properties["items"]=Marshal.dump(@items);
     @properties["environment"]=@environment;
     @properties["rules"]=Marshal.dump(@rules);*/
-    base.pbStartBattle(canlose);
+    return base.pbStartBattle(canlose);
   }
 
   public string pbDumpRecord() {
@@ -214,7 +214,7 @@ public class PokeBattle_BattlePlayerModule<TBattle> : PokeBattle_RecordedBattleM
     //);
   }
 
-  public override void pbStartBattle(bool canlose=false) {
+  public override BattleResults pbStartBattle(bool canlose=false) {
     /*@internalbattle=@properties["internalbattle"];
     @endspeech=@properties["endspeech"].ToString();
     @endspeech2=@properties["endspeech2"].ToString();
@@ -229,7 +229,7 @@ public class PokeBattle_BattlePlayerModule<TBattle> : PokeBattle_RecordedBattleM
     @items=Marshal.restore(new StringInput(@properties["items"]));
     @rules=Marshal.restore(new StringInput(@properties["rules"]));
     @environment=@properties["environment"];*/
-    base.pbStartBattle(canlose);
+    return base.pbStartBattle(canlose);
   }
 
   public int pbSwitchInBetween(int i1,int i2,bool i3) {

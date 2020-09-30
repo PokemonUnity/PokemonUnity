@@ -68,6 +68,7 @@
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
+    <Compile Include="Monster\BattlePeer.cs" />
     <Compile Include="Combat\Interface\IBattler.cs" />
     <Compile Include="Combat\Trainer\Trainer.cs" />
     <Compile Include="Combat\Trainer\Data\TrainerMetaData.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Inventory\Data\Berry.cs" />
     <Compile Include="Inventory\Data\ItemFlags.cs" />
     <Compile Include="Inventory\Data\Mail.cs" />
+    <Compile Include="Inventory\Item\Item.cs" />
     <Compile Include="Inventory\Item\Item.Helper.cs" />
     <Compile Include="Inventory\Item\Item.Pokeball.cs" />
     <Compile Include="Monster\Interface\IPokemon.cs" />
