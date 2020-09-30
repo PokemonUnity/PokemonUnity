@@ -12,7 +12,7 @@ using PokemonUnity.Utility;
 
 namespace PokemonUnity.Character
 {	
-	[Serializable] 
+	[Serializable, Obsolete("Use `Combat.Trainer` for Trainer class, everything else is being moved to `Game` class")] 
 	public class Player
 	{
 		#region Variables

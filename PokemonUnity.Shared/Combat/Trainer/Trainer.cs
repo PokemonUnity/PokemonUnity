@@ -24,7 +24,8 @@ public partial class Trainer {
   public Dictionary<Pokemons,bool> owned { get; private set; }
   public int?[][] formseen { get; private set; }
   public int[][] formlastseen { get; private set; }
-  public bool[] shadowcaught { get; private set; }
+  //public bool[] shadowcaught { get; private set; }
+  public List<Pokemons> shadowcaught { get; set; }
   public Monster.Pokemon[] party { get; set; }
     /// <summary>
     /// Whether the Pokédex was obtained
@@ -57,10 +58,11 @@ public partial class Trainer {
     @pokegear=false;
     @pokedex=false;
     clearPokedex();
-    @shadowcaught=new bool[0];
-    for (int i = 1; i < Game.PokemonData.Count; i++) {
-      @shadowcaught[i]=false;
-    }
+    //@shadowcaught=new bool[0];
+    //for (int i = 1; i < Game.PokemonData.Count; i++) {
+    //  @shadowcaught[i]=false;
+    //}
+    @shadowcaught=new List<Pokemons>();
     @badges=new bool[0];
     for (int i = 0; i < 8; i++) {
       @badges[i]=false;
@@ -128,7 +130,7 @@ public partial class Trainer {
     return @language.Value;
   } }
 
-  public int Money{ get { return money; } private set {
+  public int Money{ get { return money; } set {
     @money=(int)Math.Max((int)Math.Min(value,Core.MAXMONEY),0);
   } }
 

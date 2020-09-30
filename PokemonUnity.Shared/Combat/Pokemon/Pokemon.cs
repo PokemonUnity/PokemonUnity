@@ -2334,14 +2334,14 @@ namespace PokemonUnity.Combat
 	if (choice.Action!=ChoiceAction.UseMove) return true;
 	if (@battle.pbOwnedByPlayer(@Index) && @battle.internalbattle) {
 	  int badgelevel=10;
-	  if (@battle.pbPlayer().BadgesCount>=1) badgelevel=20 ;
-	  if (@battle.pbPlayer().BadgesCount>=2) badgelevel=30 ;
-	  if (@battle.pbPlayer().BadgesCount>=3) badgelevel=40 ;
-	  if (@battle.pbPlayer().BadgesCount>=4) badgelevel=50 ;
-	  if (@battle.pbPlayer().BadgesCount>=5) badgelevel=60 ;
-	  if (@battle.pbPlayer().BadgesCount>=6) badgelevel=70 ;
-	  if (@battle.pbPlayer().BadgesCount>=7) badgelevel=80 ;
-	  if (@battle.pbPlayer().BadgesCount>=8) badgelevel=100;
+	  if (@battle.pbPlayer().badges.Length>=1) badgelevel=20 ;
+	  if (@battle.pbPlayer().badges.Length>=2) badgelevel=30 ;
+	  if (@battle.pbPlayer().badges.Length>=3) badgelevel=40 ;
+	  if (@battle.pbPlayer().badges.Length>=4) badgelevel=50 ;
+	  if (@battle.pbPlayer().badges.Length>=5) badgelevel=60 ;
+	  if (@battle.pbPlayer().badges.Length>=6) badgelevel=70 ;
+	  if (@battle.pbPlayer().badges.Length>=7) badgelevel=80 ;
+	  if (@battle.pbPlayer().badges.Length>=8) badgelevel=100;
 	  Move move=choice.Move;
 	  bool disobedient=false;
 	  if (@pokemon.isForeign(@battle.player[0]) && @level>badgelevel) {
