@@ -1,9 +1,7 @@
-﻿using PokemonUnity;
-using PokemonUnity.Inventory;
-using System;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Collections.Generic;
+using PokemonUnity;
+using PokemonUnity.Inventory;
 using PokemonUnity.Overworld;
 using PokemonUnity.Character;
 
@@ -14,8 +12,8 @@ namespace PokemonUnity.Monster
   }
 
   public int pbStorePokemon(Player player,Monster.Pokemon pokemon) {
-    if (player.Party.Length<6) {
-      player.Party[player.Party.Length]=pokemon;
+    if (player.Party.GetCount()<6) {
+      player.Party[player.Party.GetCount()]=pokemon;
     }
     return -1;
   }
@@ -37,30 +35,31 @@ namespace PokemonUnity.Monster
 
 public partial class PokeBattle_RealBattlePeer {
   public int pbStorePokemon(Player player,Monster.Pokemon pokemon) {
-    if (player.Party.Length<6) {
-      player.Party[player.Party.Length]=pokemon;
+    if (player.Party.GetCount()<6) {
+      player.Party[player.Party.GetCount()]=pokemon;
       return -1;
     } else {
       pokemon.Heal();
-      int oldcurbox=Game.GameData.PokemonStorage.currentBox;
-      //int oldcurbox=Game.GameData.Player.PC.ActiveBox;
-      int storedbox=Game.GameData.PokemonStorage.pbStoreCaught(pokemon);
-      //int storedbox=Game.GameData.Player.PC.addPokemon(pokemon);
-      if (storedbox<0) {
-        Game.UI.pbDisplayPaused(Game._INTL("Can't catch any more..."));
+      //int oldcurbox=Game.GameData.PokemonStorage.currentBox;
+      //int storedbox=Game.GameData.PokemonStorage.pbStoreCaught(pokemon);
+      int oldcurbox=Game.GameData.Player.PC.ActiveBox;
+      int? storedbox = Game.GameData.Player.PC.getIndexOfFirstEmpty();
+      //if (storedbox<0) {
+      if (!storedbox.HasValue) {
+        //Game.UI.pbDisplayPaused(Game._INTL("Can't catch any more..."));
         return oldcurbox;
       } else {
-        return storedbox;
+        return storedbox.Value;
       }
     }
   }
 
   public string pbGetStorageCreator() {
     string creator=null;
-    if (Game.GameData != null && Game.GameData.Global.seenStorageCreator) {
-    //if (Game.GameData != null && Game.GameData.seenStorageCreator) {
+    //if (Game.GameData != null && Game.GameData.Global.seenStorageCreator) {
+    if (Game.GameData != null && Game.GameData.Player.IsCreator) {
       //creator=Game.GameData.PokemonStorage.pbGetStorageCreator();
-      creator=Game.GameData.Player.PC.pbGetStorageCreator();
+      creator="someone"; //ToDo...
     }
     return creator;
   }
