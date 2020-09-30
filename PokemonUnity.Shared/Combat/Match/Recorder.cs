@@ -17,14 +17,17 @@ public static class Commands{
     public const int Run     = 3;
   }
 
-public class PokeBattle_RecordedBattleModule<TBattle> : Battle 
+public class PokeBattle_RecordedBattleModule<TBattle> : Battle,
+        IPokeBattle_RecordedBattleModule<TBattle>
         where TBattle : Battle {
+        #region Variables
   public List<int> randomnums { get; protected set; }
   public List<int[][]> rounds { get; protected set; }
   public List<int> switches { get; protected set; }
   public int roundindex { get; protected set; }
   public object properties { get; protected set; }
   public int battletype { get; protected set; }
+        #endregion
   public PokeBattle_RecordedBattleModule(IPokeBattle_Scene scene,Monster.Pokemon[] p1,Monster.Pokemon[] p2,Combat.Trainer[] player,Combat.Trainer[] opponent) : base (scene, p1, p2, player, opponent)
   //public void initialize(IPokeBattle_Scene scene,Monster.Pokemon[] p1,Monster.Pokemon[] p2,Trainer[] player,Trainer[] opponent) 
   {
@@ -37,6 +40,7 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle
     //base.initialize(scene, p1, p2, player, opponent);
   }
 
+        #region Methods
   public virtual int pbGetBattleType() {
     return 0; // Battle Tower
   }
@@ -152,23 +156,24 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle
     @randomnums.Add(ret);
     return ret;
   }
+        #endregion
 }
 
 /*public static class BattlePlayerHelper{
-  public static Trainer[] pbGetOpponent(Battle battle) {
+  public static Combat.Trainer[] pbGetOpponent(Combat.Battle battle) {
     //return this.pbCreateTrainerInfo(battle[1]["opponent"]);
     return pbCreateTrainerInfo(battle.opponent);
   }
 
-  public void pbGetBattleBGM(Battle battle) {
+  public static IAudioObject pbGetBattleBGM(Battle battle) {
     return pbGetTrainerBattleBGM(this.pbGetOpponent(battle));
   }
 
-  public void pbCreateTrainerInfo(trainer) {
-    if (!trainer) return null;
+  public static Combat.Trainer[] pbCreateTrainerInfo(Combat.Trainer[] trainer) {
+    if (trainer == null) return null;
     if (trainer.Length>1) {
-      ret=[];
-      ret[0]=new PokeBattle_Trainer(trainer[0][1],trainer[0][0]);
+      Combat.Trainer[] ret=new Combat.Trainer[2];
+      ret[0]=new Combat.Trainer(trainer[0][1],trainer[0][0]);
       ret[0].id=trainer[0][2];
       ret[0].badges=trainer[0][3];
       ret[1]=new PokeBattle_Trainer(trainer[1][1],trainer[1][0]);
@@ -177,9 +182,9 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle
       return ret;
     }
     else {
-      ret=new PokeBattle_Trainer(trainer[0][1],trainer[0][0]);
-      ret.id=trainer[0][2];
-      ret.badges=trainer[0][3];
+      Combat.Trainer[] ret=new Combat.Trainer[] { new Combat.Trainer(trainer[0][1], trainer[0][0]) };
+      ret[0].id=trainer[0][2];
+      ret[0].badges=trainer[0][3];
       return ret;
     }
   }
@@ -189,11 +194,15 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle
 /// Playback?
 /// </summary>
 /// <typeparam name="TBattle"></typeparam>
-public class PokeBattle_BattlePlayerModule<TBattle> : PokeBattle_RecordedBattleModule<TBattle> 
-        where TBattle : PokeBattle_RecordedBattleModule<Battle> {
+public class PokeBattle_BattlePlayerModule<TBattle> : PokeBattle_RecordedBattleModule<TBattle>,
+        IPokeBattle_BattlePlayerModule<TBattle>
+        where TBattle : IPokeBattle_RecordedBattleModule<Battle> {
+        //where TBattle : PokeBattle_RecordedBattleModule<Battle> {
         //where TBattle : Battle {
+        #region Variables
   public int randomindex { get; protected set; }
   public int switchindex { get; protected set; }
+        #endregion
   //public PokeBattle_BattlePlayerModule(IPokeBattle_Scene scene, TBattle battle) : base (scene, battle.party1, battle.party2, battle.player, battle.opponent)
   public PokeBattle_BattlePlayerModule(IPokeBattle_Scene scene, TBattle battle) : base (scene, new Monster.Pokemon[0], new Monster.Pokemon[0], battle.player, battle.opponent)
   //public void initialize(scene,Battle battle)
@@ -214,6 +223,7 @@ public class PokeBattle_BattlePlayerModule<TBattle> : PokeBattle_RecordedBattleM
     //);
   }
 
+        #region Methods
   public override BattleResults pbStartBattle(bool canlose=false) {
     /*@internalbattle=@properties["internalbattle"];
     @endspeech=@properties["endspeech"].ToString();
@@ -280,6 +290,7 @@ public class PokeBattle_BattlePlayerModule<TBattle> : PokeBattle_RecordedBattleM
       }
     }
   }
+        #endregion
 }
 
 public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle> { 
@@ -332,4 +343,49 @@ public class PokeBattle_BattleArenaPlayer : PokeBattle_BattlePlayerModule<PokeBa
   {
   }
 }*/
+    }
+
+    /// <summary>
+    /// Recording of a Pokemon Battle
+    /// </summary>
+    public interface IPokeBattle_RecordedBattleModule<out TBattle>
+    {
+        int battletype { get; }
+        object properties { get; }
+        List<int> randomnums { get; }
+        int roundindex { get; }
+        List<int[][]> rounds { get; }
+        List<int> switches { get; }
+
+        void pbAutoChooseMove(int i1, bool showMessages = true);
+        void pbCommandPhase();
+        string pbDumpRecord();
+        int pbGetBattleType();
+        Trainer[] pbGetTrainerInfo(Trainer[] trainer);
+        int pbRandom(int num);
+        bool pbRegisterItem(int i1, Items i2);
+        bool pbRegisterMove(int i1, int i2, bool showMessages = true);
+        bool pbRegisterSwitch(int i1, int i2);
+        bool pbRegisterTarget(int i1, int i2);
+        int pbRun(int i1, bool duringBattle = false);
+        BattleResults pbStartBattle(bool canlose = false);
+        void pbStorePokemon(Pokemon pkmn);
+        int pbSwitchInBetween(int i1, bool i2, bool i3);
+    }
+
+    /// <summary>
+    /// Playback Recorded Pokemon Battle
+    /// </summary>
+    /// <typeparam name="IRecord"></typeparam>
+    public interface IPokeBattle_BattlePlayerModule<out IRecord> 
+    {
+        int randomindex { get; }
+        int switchindex { get; }
+
+        void pbCommandPhaseCore();
+        void pbDisplayPaused(string str);
+        int pbRandom(int num);
+        BattleResults pbStartBattle(bool canlose = false);
+        int pbSwitchInBetween(int i1, int i2, bool i3);
+    }
 }
