@@ -123,7 +123,11 @@ namespace PokemonUnity
 	#endregion
 
 	#region Pokemon Battle
-	public interface IPokeBattle_Scene : IScene
+	public interface IHasChatter
+	{
+		void pbChatter(Combat.Pokemon attacker,Combat.Trainer opponent);
+	}
+	public interface IPokeBattle_Scene : IScene, IHasChatter
 	{
 		/*
 		-  def pbChooseNewEnemy(int index,party)
@@ -216,7 +220,7 @@ namespace PokemonUnity
 		/// <param name="index"></param>
 		/// <param name="texts"></param>
 		/// <param name="mode">0 - regular battle, 1 - Shadow Pokémon battle, 2 - Safari Zone, 3 - Bug Catching Contest</param>
-		int pbCommandMenuEx(int index, string texts, int mode = 0);
+		int pbCommandMenuEx(int index, string[] texts, int mode = 0);
 		/// <summary>
 		/// Update selected command
 		/// Use this method to display the list of moves for a Pokémon
@@ -263,7 +267,9 @@ namespace PokemonUnity
 		/// <param name="pkmn"></param>
 		/// <param name="oldhp"></param>
 		/// <param name="anim"></param>
-		void pbHPChanged(int pkmn, int oldhp, bool anim = false);
+		//void pbHPChanged(int pkmn, int oldhp, bool anim = false);
+		void HPChanged(int index, int oldhp, bool animate = false);
+		void pbHPChanged(Pokemon pkmn, int oldhp, bool animate = false);
 		/// <summary>
 		/// This method is called whenever a Pokémon faints.
 		/// </summary>
@@ -309,9 +315,22 @@ namespace PokemonUnity
 		void pbHideCaptureBall();
 		void pbThrowBait();
 		void pbThrowRock();
-		void HPChanged(int index, int oldhp, bool animate = false);
-		void pbHPChanged(Pokemon pkmn, int oldhp, bool animate = false);
 	}
+
+    public interface IPokeBattleArena_Scene : PokemonUnity.IPokeBattle_Scene
+    {
+        void pbBattleArenaBattlers(Pokemon battler1, Pokemon battler2);
+        void pbBattleArenaJudgment(Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
+		/// <summary>
+		/// </summary>
+		/// <param name="window">infowindow as `SpriteWindow_Base` to display the results</param>
+		/// <param name="phase"></param>
+		/// <param name="battler1"></param>
+		/// <param name="battler2"></param>
+		/// <param name="ratings1"></param>
+		/// <param name="ratings2"></param>
+        void updateJudgment(IWindow window, int phase, Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
+    }
 	#endregion
 
 	#region Evolution
@@ -357,6 +376,44 @@ namespace PokemonUnity
 		void pbMiddleDexEntryScene();
 		void setIconBitmap(Pokemons species);
 	}
+	/// <summary>
+	/// Shows the "Nest" page of the Pokédex entry screen.
+	/// </summary>
+	public interface IPokemonNestMapScene : IScene
+	{
+		void pbUpdate();
+		void pbEndScene();
+		void pbStartScene(Pokemons species,int regionmap= -1);
+		/// <summary>
+		/// </summary>
+		/// <param name="listlimits">an enum that represents end of list</param>
+		/// <returns></returns>
+		int pbMapScene(int listlimits);
+	}
+	public interface IPokemonNestMap : IScreen
+	{
+		void initialize(IPokemonNestMapScene scene);
+		void pbStartScreen(Pokemons species,int region,int listlimits);
+	}
+	/// <summary>
+	/// Shows the "Form" page of the Pokédex entry screen.
+	/// </summary>
+	public interface IPokemonFormScene : IScene
+	{
+		void pbUpdate();
+		void pbRefresh();
+		List<PokemonUnity.Monster.Forms> pbGetAvailable(); //returns [Name, Gender, Form] 
+		List<string> pbGetCommands();
+		void pbChooseForm();
+		void pbEndScene();
+		void pbStartScene(Pokemons species);
+		int pbControls(int listlimits);
+	}
+	public interface IPokemonForm : IScreen
+	{
+		void initialize(IPokemonFormScene scene);
+		void pbStartScreen(Pokemons species,int listlimits);
+	}
 	#endregion
 
 	#region Pause Menu
@@ -378,6 +435,9 @@ namespace PokemonUnity
 		void pbShowMenu();
 		void pbStartPokemonMenu();
 	}
+	#endregion
+
+	#region 
 	#endregion
 
 	#region 
