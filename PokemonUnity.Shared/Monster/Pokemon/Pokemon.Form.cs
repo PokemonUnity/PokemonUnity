@@ -206,8 +206,8 @@ public partial class Pokemon
   }*/
 }
 
-public partial class RealBattlePeer{ //PokeBattle_RealBattlePeer
-  public void pbOnEnteringBattle(Combat.Battle battle,Pokemon pokemon) {
+public partial class PokeBattle_RealBattlePeer : IPokeBattle_BattlePeer { 
+  public void pbOnEnteringBattle(Combat.Battle battle,Monster.Pokemon pokemon) {
     //int? f=MultipleForms.call("getFormOnEnteringBattle",pokemon);
     int? f=MultipleForms.getFormOnEnteringBattle(pokemon);
     if (f.HasValue) {
