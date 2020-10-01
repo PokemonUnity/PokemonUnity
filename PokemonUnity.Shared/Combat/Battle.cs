@@ -11,7 +11,7 @@ namespace PokemonUnity.Combat
 {
 	/// <summary>
 	/// </summary>
-	public partial class Battle : IScene
+	public partial class Battle : IHasDisplayMessage
 	{
 		#region Variables
 		/// <summary>
@@ -1794,7 +1794,7 @@ namespace PokemonUnity.Combat
   /// <param name="userPkmn"></param>
   /// <param name="scene"></param>
   /// <returns></returns>
-  protected bool _pbUseItemOnPokemon(Items item,int pkmnIndex,Pokemon userPkmn, IPokeBattle_Scene scene) {
+  protected bool _pbUseItemOnPokemon(Items item,int pkmnIndex,Pokemon userPkmn,IHasDisplayMessage scene) {
     Pokemon pokemon=@party1[pkmnIndex];
     Pokemon battler=null;
     string name=pbGetOwner(userPkmn.Index).name;
@@ -1834,7 +1834,7 @@ namespace PokemonUnity.Combat
   /// <param name="scene"></param>
   /// <returns></returns>
   /// <remarks>Specifically for Shadow Pokemon Usage</remarks>
-  public bool pbUseItemOnPokemon(Items item,int pkmnIndex,Pokemon userPkmn, IPokeBattle_Scene scene) {
+  public bool pbUseItemOnPokemon(Items item,int pkmnIndex,Pokemon userPkmn,IHasDisplayMessage scene) {
     Monster.Pokemon pokemon=this.party1[pkmnIndex];
     if (pokemon.hypermode) { //&&
        //item != Items.JOY_SCENT &&
@@ -1855,7 +1855,7 @@ namespace PokemonUnity.Combat
   /// <param name="userPkmn"></param>
   /// <param name="scene"></param>
   /// <returns></returns>
-  public bool pbUseItemOnBattler(Items item,int index,Pokemon userPkmn, IPokeBattle_Scene scene) {
+  public bool pbUseItemOnBattler(Items item,int index,Pokemon userPkmn,IHasDisplayMessage scene) {
     GameDebug.Log($"[Use item] Player used #{item.ToString(TextScripts.Name)} on #{@battlers[index].ToString(true)}");
     bool ret=ItemHandlers.triggerBattleUseOnBattler(item,@battlers[index],scene);
     if (!ret && pbBelongsToPlayer(userPkmn.Index)) {

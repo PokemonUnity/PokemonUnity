@@ -7,6 +7,10 @@ using PokemonUnity.Inventory;
 
 namespace PokemonUnity
 {
+	public interface IHasDisplayMessage
+	{
+		void pbDisplay(string v);
+	}
 	/// <summary>
 	/// A scene basically represents unity (or any frontend) where code pauses 
 	/// for user interaction (animation, and user key inputs).
@@ -16,13 +20,13 @@ namespace PokemonUnity
 	/// everything essentially comes to a hault as the frontend takes over 
 	/// and the code awaits a result or response to begin again.
 	/// </remarks>
-	public interface IScene
+	public interface IScene : IHasDisplayMessage
 	{
 		/// <summary>
 		/// Shows the player's Poké Ball being thrown to capture a Pokémon.
 		/// </summary>
 		//void pokeballThrow(Items ball, int shakes,bool critical,Combat.Pokemon targetBattler,IScene scene,Combat.Pokemon battler, int burst = -1, bool showplayer = false);
-		void pbDisplay(string v);
+		//void pbDisplay(string v);
 		//bool pbConfirm(string v);
 	}
 	/*
