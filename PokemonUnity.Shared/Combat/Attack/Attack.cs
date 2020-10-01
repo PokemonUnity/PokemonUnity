@@ -1108,7 +1108,7 @@ namespace PokemonUnity.Combat
 				i.pbCureStatus(false);
 
 			}
-			Pokemon[] party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
+			Monster.Pokemon[] party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
 			for (sbyte i = 0; i < party.Length; i++)
 			{
 				if (activepkmn.Contains(i)) continue; //next
@@ -3103,11 +3103,11 @@ namespace PokemonUnity.Combat
 			}
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			int avatk = (int)Math.Floor((attacker.attack + opponent.attack) / 2f);
-			int avspatk = (int)Math.Floor((attacker.spatk + opponent.spatk) / 2f);
+			int avatk = (int)Math.Floor((attacker.ATK + opponent.ATK) / 2f);
+			int avspatk = (int)Math.Floor((attacker.SPA + opponent.SPA) / 2f);
 
-			attacker.attack = opponent.attack = avatk;
-			attacker.spatk = opponent.spatk = avspatk;
+			attacker.ATK = opponent.ATK = avatk;
+			attacker.SPA = opponent.SPA = avspatk;
 
 			battle.pbDisplay(Game._INTL("{1} shared its power with the target!", attacker.ToString()));
 			return 0;
@@ -3131,11 +3131,11 @@ namespace PokemonUnity.Combat
 			}
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			int avdef = (int)Math.Floor((attacker.defense + opponent.defense) / 2f);
-			int avspdef = (int)Math.Floor((attacker.spdef + opponent.spdef) / 2f);
+			int avdef = (int)Math.Floor((attacker.DEF + opponent.DEF) / 2f);
+			int avspdef = (int)Math.Floor((attacker.SPD + opponent.SPD) / 2f);
 
-			attacker.defense = opponent.defense = avdef;
-			attacker.spdef = opponent.spdef = avspdef;
+			attacker.DEF = opponent.DEF = avdef;
+			attacker.SPD = opponent.SPD = avspdef;
 
 			battle.pbDisplay(Game._INTL("{1} shared its guard with the target!", attacker.ToString()));
 			return 0;
@@ -3303,7 +3303,7 @@ namespace PokemonUnity.Combat
 					attacker.moves[i] = new Attack.Move(//this.battle, 
 						newmove);
 
-					Pokemon[] party = this.battle.pbParty(attacker.Index);
+					Monster.Pokemon[] party = this.battle.pbParty(attacker.Index);
 
 
 					party[attacker.pokemonIndex].moves[i] = new Attack.Move(newmove);
@@ -3880,15 +3880,15 @@ namespace PokemonUnity.Combat
 
 			attacker.ability = opponent.Ability;
 
-			attacker.attack = opponent.attack;
+			attacker.ATK = opponent.ATK;
 
-			attacker.defense = opponent.defense;
+			attacker.DEF = opponent.DEF;
 
-			attacker.speed = opponent.speed;
+			attacker.SPE = opponent.SPE;
 
-			attacker.spatk = opponent.spatk;
+			attacker.SPA = opponent.SPA;
 
-			attacker.spdef = opponent.spdef;
+			attacker.SPD = opponent.SPD;
 			foreach (var i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
 				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
@@ -3961,7 +3961,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_06D(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			return pbEffectFixedDamage(attacker.level, attacker, opponent, hitnum, alltargets, showanimation);
+			return pbEffectFixedDamage(attacker.Level, attacker, opponent, hitnum, alltargets, showanimation);
 		}
 	}
 
@@ -3993,7 +3993,7 @@ namespace PokemonUnity.Combat
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
-			int dmg = (int)Math.Max((attacker.level * (int)Math.Floor(this.battle.pbRandom(101) + 50f) / 100f), 1);
+			int dmg = (int)Math.Max((attacker.Level * (int)Math.Floor(this.battle.pbRandom(101) + 50f) / 100f), 1);
 			return pbEffectFixedDamage(dmg, attacker, opponent, hitnum, alltargets, showanimation);
 		}
 	}
@@ -4012,12 +4012,12 @@ namespace PokemonUnity.Combat
 				battle.pbDisplay(Game._INTL("{1} was protected by {2}!", opponent.ToString(), opponent.Ability.ToString(TextScripts.Name)));
 				return false;
 			}
-			if (opponent.level > attacker.level)
+			if (opponent.Level > attacker.Level)
 			{
 				battle.pbDisplay(Game._INTL("{1} is unaffected!", opponent.ToString()));
 				return false;
 			}
-			int acc = this.accuracy + attacker.level - opponent.level;
+			int acc = this.accuracy + attacker.Level - opponent.Level;
 			return this.battle.pbRandom(100) < acc;
 		}
 
@@ -4776,7 +4776,7 @@ namespace PokemonUnity.Combat
 			return hp[1];
 		}
 
-		public static int[] pbHiddenPower(byte[] iv)
+		public static int[] pbHiddenPower(int[] iv)
 		{
 			byte powermin = 30;
 			byte powermax = 70;
@@ -4787,20 +4787,20 @@ namespace PokemonUnity.Combat
 				if (//!PBTypes.isPseudoType((Types)i) && //ToDo: Can Remove...
 					(Types)i == Types.NORMAL && (Types)i == Types.SHADOW) types.Add((Types)i); //ToDo: HUH?!
 			}
-			type |= (iv[(byte)Stats.HP] & 1);
-			type |= (iv[(byte)Stats.ATTACK] & 1) << 1;
-			type |= (iv[(byte)Stats.DEFENSE] & 1) << 2;
-			type |= (iv[(byte)Stats.SPEED] & 1) << 3;
-			type |= (iv[(byte)Stats.SPATK] & 1) << 4;
-			type |= (iv[(byte)Stats.SPDEF] & 1) << 5;
+			type |= (iv[(int)Stats.HP] & 1);
+			type |= (iv[(int)Stats.ATTACK] & 1) << 1;
+			type |= (iv[(int)Stats.DEFENSE] & 1) << 2;
+			type |= (iv[(int)Stats.SPEED] & 1) << 3;
+			type |= (iv[(int)Stats.SPATK] & 1) << 4;
+			type |= (iv[(int)Stats.SPDEF] & 1) << 5;
 			type = (int)Math.Floor(type * (types.Count - 1f) / 63f);
 			Types hptype = types[type];
-			baseY |= (iv[(byte)Stats.HP] & 2) >> 1;
-			baseY |= (iv[(byte)Stats.ATTACK] & 2);
-			baseY |= (iv[(byte)Stats.DEFENSE] & 2) << 1;
-			baseY |= (iv[(byte)Stats.SPEED] & 2) << 2;
-			baseY |= (iv[(byte)Stats.SPATK] & 2) << 3;
-			baseY |= (iv[(byte)Stats.SPDEF] & 2) << 4;
+			baseY |= (iv[(int)Stats.HP] & 2) >> 1;
+			baseY |= (iv[(int)Stats.ATTACK] & 2);
+			baseY |= (iv[(int)Stats.DEFENSE] & 2) << 1;
+			baseY |= (iv[(int)Stats.SPEED] & 2) << 2;
+			baseY |= (iv[(int)Stats.SPATK] & 2) << 3;
+			baseY |= (iv[(int)Stats.SPDEF] & 2) << 4;
 			baseY = (int)Math.Floor(baseY * (powermax - powermin) / 63f) + powermin;
 			return new int[] { (int)hptype, baseY }; //return type, and power
 		}
@@ -6247,7 +6247,7 @@ namespace PokemonUnity.Combat
 			}
 			List<Moves> moves = new List<Moves>();
 
-			Pokemon[] party = this.battle.pbParty(attacker.Index); // NOTE: pbParty is common to both allies in multi battles
+			Monster.Pokemon[] party = this.battle.pbParty(attacker.Index); // NOTE: pbParty is common to both allies in multi battles
 			for (int i = 0; i < party.Length; i++)
 			{
 				if (i != attacker.pokemonIndex && party[i].IsNotNullOrNone() && !(Core.USENEWBATTLEMECHANICS && party[i].isEgg))
@@ -6744,7 +6744,7 @@ namespace PokemonUnity.Combat
 		public override bool pbOnStartUse(Pokemon attacker)
 		{
 
-			Pokemon[] party = this.battle.pbParty(attacker.Index);
+			Monster.Pokemon[] party = this.battle.pbParty(attacker.Index);
 			this.participants = new List<byte>();
 			for (byte i = 0; i < party.Length; i++)
 			{
@@ -6770,8 +6770,8 @@ namespace PokemonUnity.Combat
 		public override int pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
 
-			Pokemon[] party = this.battle.pbParty(attacker.Index);
-			byte atk = party[this.participants[0]].baseStats[1];
+			Monster.Pokemon[] party = this.battle.pbParty(attacker.Index);
+			int atk = party[this.participants[0]].baseStats[1];
 
 			this.participants.RemoveAt(0);//[0]=null; //this.participants.compact!;
 			return 5 + (atk / 10);
@@ -8331,7 +8331,7 @@ namespace PokemonUnity.Combat
 			}
 			if (this.battle.opponent.Length == 0)
 			{
-				if (opponent.level > attacker.level)
+				if (opponent.Level > attacker.Level)
 				{
 					battle.pbDisplay(Game._INTL("But it failed!"));
 					return -1;
@@ -8344,7 +8344,7 @@ namespace PokemonUnity.Combat
 			else
 			{
 				bool choices = false;
-				Pokemon[] party = this.battle.pbParty(opponent.Index);
+				Monster.Pokemon[] party = this.battle.pbParty(opponent.Index);
 				for (int i = 0; i < party.Length; i++)
 				{
 					if (this.battle.pbCanSwitch(opponent.Index, i, false, true))
@@ -8385,7 +8385,7 @@ namespace PokemonUnity.Combat
 			{
 				if (this.battle.opponent.Length == 0)//Wild Pokemon Battle
 				{
-					if (opponent.level <= attacker.level)
+					if (opponent.Level <= attacker.Level)
 					{
 						this.battle.decision = (BattleResults)3; // Set decision to escaped;
 					}
@@ -8393,7 +8393,7 @@ namespace PokemonUnity.Combat
 				else
 				{
 
-					Pokemon[] party = this.battle.pbParty(opponent.Index);
+					Monster.Pokemon[] party = this.battle.pbParty(opponent.Index);
 					for (int i = 0; i < party.Length - 1; i++)	//ToDo: Double check this
 					{
 						if (this.battle.pbCanSwitch(opponent.Index, i, false))
@@ -9913,7 +9913,7 @@ namespace PokemonUnity.Combat
 			{
 				if (this.battle.pbOwnedByPlayer(attacker.Index))
 				{
-					this.battle.extramoney += 5 * attacker.level;
+					this.battle.extramoney += 5 * attacker.Level;
 					if (this.battle.extramoney > Core.MAXMONEY) this.battle.extramoney = Core.MAXMONEY;
 				}
 

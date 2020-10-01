@@ -191,13 +191,13 @@ namespace PokemonUnity
 		void pbStartBattle(PokemonUnity.Combat.Battle battle);
 		void pbEndBattle(BattleResults result);
 		void pbRecall(int battlerindex);
-		void pbTrainerSendOut(int battlerindex, Combat.Pokemon pkmn);
+		void pbTrainerSendOut(int battlerindex, Monster.Pokemon pkmn);
 		/// <summary>
 		/// Player sending out Pokémon
 		/// </summary>
 		/// <param name="battlerindex"></param>
 		/// <param name="pkmn"></param>
-		void pbSendOut(int battlerindex, Combat.Pokemon pkmn);
+		void pbSendOut(int battlerindex, Monster.Pokemon pkmn);
 		void pbTrainerWithdraw(Combat.Battle battle, Combat.Pokemon pkmn);
 		void pbWithdraw(Combat.Battle battle, Combat.Pokemon pkmn);
 		void pbMoveString(string move);
@@ -240,7 +240,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <param name="moveToLearn"></param>
-		int pbForgetMove(Pokemon pokemon, Moves moveToLearn);
+		int pbForgetMove(Monster.Pokemon pokemon, Moves moveToLearn);
 		/// <summary>
 		/// Called whenever a Pokémon needs one of its moves chosen. Used for Ether.
 		/// </summary>
@@ -287,7 +287,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name=""></param>
-		int pbChooseNewEnemy(int index, Pokemon[] party);
+		int pbChooseNewEnemy(int index, Monster.Pokemon[] party);
 		/// <summary>
 		/// This method is called when the player wins a wild Pokémon battle.
 		/// This method can change the battle's music for example.
@@ -298,7 +298,7 @@ namespace PokemonUnity
 		/// This method can change the battle's music for example.
 		/// </summary>
 		void pbTrainerBattleSuccess();
-		void pbEXPBar(Pokemon pokemon, Pokemon battler, int startexp, int endexp, int tempexp1, int tempexp2);
+		void pbEXPBar(Monster.Pokemon pokemon, Combat.Pokemon battler, int startexp, int endexp, int tempexp1, int tempexp2);
 		void pbShowPokedex(Pokemons species, int form = 0);
 		void pbChangeSpecies(Pokemon attacker, Pokemons species);
 		void ChangePokemon();
@@ -308,7 +308,7 @@ namespace PokemonUnity
 		void pbCommonAnimation(string animname, Combat.Pokemon user, Combat.Pokemon target, int hitnum = 0);
 		void pbAnimation(Moves moveid, Combat.Pokemon user, Combat.Pokemon target, int hitnum = 0);
 		void pbAnimationCore(string animation, Combat.Pokemon user, Combat.Pokemon target, bool oppmove = false);
-		void pbLevelUp(Pokemon pokemon, Pokemon battler, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef);
+		void pbLevelUp(Monster.Pokemon pokemon, Combat.Pokemon battler, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef);
 		void pbThrowAndDeflect(Items ball, int targetBattler);
 		void pbThrow(Items ball, int shakes, bool critical, int targetBattler, bool showplayer = false);
 		void pbThrowSuccess();

@@ -173,7 +173,7 @@ public class PokeBattle_BattlePalace : Battle {
       int maxindex=-1;
       int maxpercent=0;
       int factor=0;
-      Pokemon[] party=pbParty(index);
+      Monster.Pokemon[] party=pbParty(index);
       for (int i = 0; i < party.Length; i++) {
         if (pbCanSwitch(index,i,false)) {
           percents[i]=party[i].HP*100/party[i].TotalHP;
@@ -215,7 +215,7 @@ public class PokeBattle_BattlePalace : Battle {
     }
     @justswitched[index]=shouldswitch;
     if (shouldswitch) {
-      Pokemon[] party=pbParty(index);
+      Monster.Pokemon[] party=pbParty(index);
       for (int i = 0; i < party.Length; i++) {
         if (pbCanSwitch(index,i,false)) {
           pbRegisterSwitch(index,i);

@@ -123,13 +123,12 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// Status problem (PBStatuses)
 		/// </summary>
-		/// ToDo: Status Class
 		public Status Status { get; set; }
 		/// <summary>
 		/// Sleep count/Toxic flag
 		/// </summary>
 		/// ToDo: Add to Status Class or StatusTurn() method
-		public int StatusCount { get; protected set; }
+		public int StatusCount { get; set; }
 		/// <summary>
 		/// Steps to hatch egg, 0 if Pokemon is not an egg.
 		/// Pokemon moves auto reset when egg counter reaches 0.
@@ -182,9 +181,6 @@ namespace PokemonUnity.Monster
 		/// Ball used
 		/// </summary>
 		public Items ballUsed { get; set; }
-		//public int[] EvolveLevels { get { return _base.Evolutions.} }
-		//public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
-		//protected PokemonData _base { get; private set; } //Game.PokemonData[Form.Pokemon];
 		protected Data.PokemonData _base { get { return Game.PokemonData[Form.Pokemon]; } }
 		/// <summary>
 		/// Max total EVs
@@ -2460,20 +2456,23 @@ namespace PokemonUnity.Monster
 		/// Returns this Pokémon's base stats.  
 		/// </summary>
 		/// <returns>An array of six values.</returns>
-		public int[] baseStats()
+		public int[] baseStats
 		{
-			//dexdata = pbOpenDexData;
-			//pbDexDataOffset(dexdata, @species, 10);
-			int[] ret =new int[] {
-			   _base.BaseStatsHP,	//dexdata.fgetb, // HP
-			   _base.BaseStatsATK,	//dexdata.fgetb, // Attack
-			   _base.BaseStatsDEF,	//dexdata.fgetb, // Defense
-			   _base.BaseStatsSPE,	//dexdata.fgetb, // Speed
-			   _base.BaseStatsSPA,	//dexdata.fgetb, // Special Attack
-			   _base.BaseStatsSPD	//dexdata.fgetb  // Special Defense
-			};
-			//dexdata.close();
-			return ret;
+			get
+			{
+				//dexdata = pbOpenDexData;
+				//pbDexDataOffset(dexdata, @species, 10);
+				int[] ret = new int[] {
+				   _base.BaseStatsHP,	//dexdata.fgetb, // HP
+				   _base.BaseStatsATK,	//dexdata.fgetb, // Attack
+				   _base.BaseStatsDEF,	//dexdata.fgetb, // Defense
+				   _base.BaseStatsSPE,	//dexdata.fgetb, // Speed
+				   _base.BaseStatsSPA,	//dexdata.fgetb, // Special Attack
+				   _base.BaseStatsSPD	//dexdata.fgetb  // Special Defense
+				};
+				//dexdata.close();
+				return ret;
+			}
 		}
 		/// <summary>
 		/// Returns the maximum HP of this Pokémon.
@@ -2521,7 +2520,7 @@ namespace PokemonUnity.Monster
 				pvalues[nm5] = 90;
 			}
 			int level = this.Level;
-			int[] bs = this.baseStats();
+			int[] bs = this.baseStats;
 			for (int i = 0; i < 5; i++)
 			{
 				int orig = bs[i];

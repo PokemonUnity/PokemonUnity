@@ -525,7 +525,7 @@ public virtual int TotalPP { get {
 	int[] ratios=(Core.USENEWBATTLEMECHANICS)?new int[] { 16, 8, 2, 1, 1 } : new int[] { 16, 8, 4, 3, 2 };
 		c+=attacker.effects.FocusEnergy;
 		if (hasHighCriticalRate) c+=1;
-	if (attacker.isHyperMode && Type == Types.SHADOW)
+	if (attacker.IsHyperMode && Type == Types.SHADOW)
 	  c+=1;
 	if (attacker.hasWorkingAbility(Abilities.SUPER_LUCK)) c+=1;
 	if (attacker.hasWorkingItem(Items.STICK) 
@@ -761,17 +761,17 @@ public virtual int TotalPP { get {
 	basedmg=(int)Math.Round(basedmg* damagemult*1.0/0x1000);
 	#endregion
 	#region ##### Calculate attacker's attack stat #####
-	int atk = attacker.attack;
+	int atk = attacker.ATK;
 	int atkstage=attacker.stages[(int)Stats.ATTACK]+6;
 	if (Effect==Attack.Data.Effects.x12A){ // Foul Play
-	  atk=opponent.attack;
+	  atk=opponent.ATK;
 	  atkstage = opponent.stages[(int)Stats.ATTACK] + 6;
 	}
 	if (type>=0 && pbIsSpecial (type)){
-	   atk = attacker.spatk;
+	   atk = attacker.SPA;
 	  atkstage=attacker.stages[(int)Stats.SPATK]+6;
 	  if (Effect==Attack.Data.Effects.x12A){ // Foul Play
-		atk=opponent.spatk;
+		atk=opponent.SPA;
 		atkstage = opponent.stages[(int)Stats.SPATK] + 6;
 	  }
 	}
@@ -851,12 +851,12 @@ public virtual int TotalPP { get {
 	atk = (int)Math.Round(atk * atkmult * 1.0 / 0x1000);
 	#endregion
 	#region ##### Calculate opponent's defense stat #####
-	int defense=opponent.defense;
+	int defense=opponent.DEF;
 	int defstage = opponent.stages[(int)Stats.DEFENSE] + 6;
 	// TODO: Wonder Room should apply around here
 	bool applysandstorm=false;
 	if (type>=0 && pbIsSpecial(type) && Effect!=Attack.Data.Effects.x11B){ // Psyshock
-	  defense=opponent.spdef;
+	  defense=opponent.SPD;
 	  defstage = opponent.stages[(int)Stats.SPDEF] + 6;
 	  applysandstorm=true;
 	}
@@ -914,7 +914,7 @@ public virtual int TotalPP { get {
 	defense = (int)Math.Round(defense * defmult * 1.0 / 0x1000);
 	#endregion
 	#region ##### Main damage calculation #####
-	int damage=(int)Math.Floor(Math.Floor(Math.Floor(2.0*attacker.level/5+2)* basedmg*atk/defense)/50)+2;
+	int damage=(int)Math.Floor(Math.Floor(Math.Floor(2.0*attacker.Level/5+2)* basedmg*atk/defense)/50)+2;
 	// Multi-targeting attacks
 	if (pbTargetsMultiple(attacker))
 	   damage = (int)Math.Round(damage * 0.75);

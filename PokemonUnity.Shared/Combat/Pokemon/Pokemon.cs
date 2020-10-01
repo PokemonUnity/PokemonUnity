@@ -60,22 +60,23 @@ namespace PokemonUnity.Combat
 		#endregion
 		#region Inherit Base Pokemon Data
 		public int HP							{ get { return hp; } set { hp = value; if (pokemon.IsNotNullOrNone()) pokemon.HP = value; } }
-		public int hp							{ get; set; }
+		private int hp							{ get; set; }
 		public int TotalHP						{ get; private set; }
-		public int ATK							{ get { return effects.PowerTrick ? defense : attack; } }
-		public int attack						{ get; set; }
+		public int ATK							{ get { return effects.PowerTrick ? DEF : attack; } set { attack = value; } }
+		private int attack						{ get; set; }
 		public int DEF                          { get
 			{
 				if (effects.PowerTrick) return attack;
 				return battle.field.WonderRoom > 0 ? spdef : defense;
 			}
+			set { defense = value; }
 		}
-		public int defense						{ get; set; }
-		public int SPD							{ get { return battle.field.WonderRoom > 0 ? defense : spdef; } }
-		public int spdef						{ get; set; }
-		public int SPA							{ get; private set; }
-		public int spatk						{ get; set; }
-		public int speed						{ get; set; }
+		private int defense						{ get; set; }
+		public int SPD							{ get { return battle.field.WonderRoom > 0 ? DEF : spdef; } set { spdef = value; } }
+		private int spdef						{ get; set; }
+		public int SPA							{ get { return spatk; } set { spatk = value; } }
+		private int spatk						{ get; set; }
+		private int speed						{ get; set; }
 		public int SPE						    { get
 			{
 				int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
@@ -132,15 +133,18 @@ namespace PokemonUnity.Combat
 					speedmult = (int)Math.Round(speedmult / 4f);
 				if (battle.internalbattle &&
 					battle.pbOwnedByPlayer(Index) &&
-					Game.GameData.Player.BadgesCount >= Core.BADGESBOOSTSPEED)
+					Game.GameData.Trainer.badges.Count(b => b == true) >= Core.BADGESBOOSTSPEED)
 					speedmult = (int)Math.Round(speedmult * 1.1f);
 				speed = (int)Math.Round(speed * speedmult * 1f / 0x1000);
 				return Math.Max(speed, 1);
 			}
+			set { speed = value; }
 		}
-		public byte[] baseStats					{ get; private set; }
-		public int Level						{ get { return pokemon.IsNotNullOrNone() ? pokemon.Level : 0; } }
-		public int level						{ get; private set; }
+		public int Level						{ 
+			get { return pokemon.IsNotNullOrNone() ? pokemon.Level : 0; } 
+			set { level = value; if (pokemon.IsNotNullOrNone()) pokemon.SetLevel((byte)value); } 
+		}
+		private int level						{ get; set; }
 		public int happiness					{ get { return pokemon.IsNotNullOrNone() ? pokemon.Happiness : 0; } }
 		public string Name { get {
 				//if name is not nickname return illusion.Name?
@@ -159,32 +163,51 @@ namespace PokemonUnity.Combat
 				if (pokemon.IsNotNullOrNone()) return pokemon.IsShiny;
 				return false; }
 		}
-		//private bool isShiny { get; set; }
 		public Pokemons Species { get { return Game.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
-		public int StatusCount { get; internal set; }
+		public int StatusCount
+		{
+			get { return statusCount; }
+			set
+			{
+				statusCount = value;
+				if (pokemon.IsNotNullOrNone()) pokemon.StatusCount = 0;
+			}
+		}
+		private int statusCount { get; set; }
 		public Status Status
 		{
 			get
 			{
 				return status; //ToDo: pokemon.Status
 			}
-			internal set
+			set
 			{
-				//ToDo: pokemon.Status = value
 				if (status == Status.SLEEP && value == 0)
 					effects.Truant = false;
 				status = value;
+				if (pokemon.IsNotNullOrNone()) pokemon.Status = value;
 				if (value != Status.POISON)
 					effects.Toxic = 0;
 				if (value != Status.POISON && value != Status.SLEEP)
 					StatusCount = 0;
+					//if (pokemon.IsNotNullOrNone()) pokemon.StatusCount = 0;
 			}
 		}
 		private Status status { get; set; }
-		public Items Item { get; set; } //ToDo: Fix this
+		public Items Item 
+		{
+			get { return item; }
+			set
+			{
+				item = value;
+				if (pokemon.IsNotNullOrNone()) pokemon.setItem(value);
+			}
+		}
+		public Items item { get; set; } 
 		public Types Type1 { get; set; }
 		public Types Type2 { get; set; }
-		public byte[] IV { get; set; } //{ get { return pokemon.IV; } } //ToDo: Evasion?
+		//public int[] IV { get; set; } 
+		public int[] IV { get { return pokemon.IV; } }
 		public Abilities Ability { get { return ability; } }
 		internal Abilities ability { private get; set; }
 		public PokemonUnity.Attack.Move[] moves { get; set; }
@@ -197,7 +220,7 @@ namespace PokemonUnity.Combat
 		/// In Hyper Mode, a Pokémon may attack its Trainer, but in Reverse Mode, they will not.
 		/// While in Reverse Mode, a Pokémon hurts itself after every turn, whereas a Pokémon in Hyper Mode incurs no self-damage
 		/// </remarks>
-		public bool isHyperMode { get; private set; }
+		private bool isHyperMode { get; set; }
 		/// <summary>
 		/// Consumed held item (used in battle only)
 		/// </summary>
@@ -214,17 +237,23 @@ namespace PokemonUnity.Combat
 		public bool belch { get; set; }
 		#endregion
 		public bool Fainted { get; private set; }
-		public bool isFainted() { return true; } //HP == 0 || Status.FAINT || Fainted; }
+		public bool isFainted() { return HP == 0 || Status == Status.FAINT || Fainted; }
 		public bool isEgg { get { return pokemon.isEgg; } }
 		/// <summary>
 		/// Returns the position of this pkmn in party lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
 		public sbyte pokemonIndex { get; set; }
-		public bool IsOwned { get { return Game.GameData.Player.Pokedex[(byte)Species, 1] == 1; } }
+		public bool IsOwned 
+		{ 
+			get 
+			{ 
+				return (pokemon.IsNotNullOrNone()) ? Game.GameData.Trainer.owned[@pokemon.Species] && !@battle.opponent.IsNotNullOrNone() : false;
+				//return Game.GameData.Player.Pokedex[(byte)Species, 1] == 1; 
+			} 
+		}
 		public PokemonUnity.Monster.Pokemon pokemon { get; private set; }
 
-		//public float weight { get { //return  }
 		public float Weight(Pokemon attacker = null)
 		{
 			float w = Game.PokemonData[Form.Pokemon].Weight;
@@ -243,7 +272,7 @@ namespace PokemonUnity.Combat
 
 		public bool IsHyperMode { get {
 				if (effects.Illusion != null)
-					return false; //effects.Illusion.IsShiny;
+					return false;
 				return isHyperMode; }
 		}
 		public int form { get; set; }
@@ -518,8 +547,7 @@ namespace PokemonUnity.Combat
 			}
 			if (this.hasWorkingAbility(Abilities.ILLUSION))
 			{
-				//ToDo: Uncomment below
-				int lastpoke = 0; //battle.GetLastPokeInTeam(Index);
+				int lastpoke = battle.pbGetLastPokeInTeam(Index);
 				if (lastpoke != pokemonIndex){
 					effects.Illusion = battle.pbParty(Index)[lastpoke];
 				}
@@ -549,12 +577,12 @@ namespace PokemonUnity.Combat
 			{
 				//name			= pkmn.Name;
 				//Species		= pkmn.Species;
-				//Level			= pkmn.Level;
-				HP				= pkmn.HP;
+				level			= pkmn.Level;
+				hp				= pkmn.HP;
 				TotalHP			= pkmn.TotalHP;
 				gender			= pkmn.Gender;
 				ability			= pkmn.Ability;
-				Item			= pkmn.Item;
+				item			= pkmn.Item;
 				Type1			= pkmn.Type1;
 				Type2			= pkmn.Type2;
 				form			= pkmn.FormId;
@@ -563,8 +591,8 @@ namespace PokemonUnity.Combat
 				speed			= pkmn.SPE;
 				spatk			= pkmn.SPA;
 				spdef			= pkmn.SPD;
-				Status			= pkmn.Status;
-				StatusCount		= pkmn.StatusCount;
+				status			= pkmn.Status;
+				statusCount		= pkmn.StatusCount;
 				pokemon			= pkmn;
 				Index			= pkmnIndex;
 				participants	= new List<byte>();
@@ -574,16 +602,16 @@ namespace PokemonUnity.Combat
 					(PokemonUnity.Attack.Move)pkmn.moves[2],
 					(PokemonUnity.Attack.Move)pkmn.moves[3]
 				};
+				//IV			= pkmn.IV;
 			}
 		}
 		public void Update(bool fullchange = false)
 		{
 			if(Species != Pokemons.NONE)
 			{
-				//calcStats(); //Not needed since fetching stats from base ( Pokemon => Battler )
-				//ToDo: Uncomment and fetch data from baseClass
-				//Level		= pokemon.Level;
-				HP			= pokemon.HP;
+				pokemon.calcStats(); //Not needed since fetching stats from base ( Pokemon => Battler )
+				level		= pokemon.Level;
+				hp			= pokemon.HP;
 				TotalHP		= pokemon.TotalHP;
 				//Pokemon	= Pokemon; //so not all stats need to be handpicked
 				if (!effects.Transform) //Changed forms but did not transform?
@@ -896,14 +924,12 @@ namespace PokemonUnity.Combat
 			get
 			{
 				int count = 0;
-				//Pokemon[] party;// = battle.Party.([(Index & 1) | ((Index & 2) ^ 2)]
-				for (int i = 0; i < 6; i++)
+				Monster.Pokemon[] party = battle.pbParty(Index);
+				for (int i = 0; i < party.Length; i++)
 				{
-					if ((isFainted() || i != Index) &&
-						(Partner.isFainted() || i != Partner.Index) &&
-						battle.party[(Index & 1) | ((Index & 2) ^ 2), i].Species != Pokemons.NONE &&
-						!battle.party[(Index & 1) | ((Index & 2) ^ 2), i].isEgg &&
-						battle.party[(Index & 1) | ((Index & 2) ^ 2), i].HP > 0)
+					if ((isFainted() || i != pokemonIndex) &&
+						(Partner.isFainted() || i != Partner.pokemonIndex) &&
+						party[i].IsNotNullOrNone() && !party[i].isEgg && party[i].HP > 0)
 							count += 1;
 				}
 				return count;
@@ -3242,13 +3268,13 @@ namespace PokemonUnity.Combat
 		  if (@battle.battlers[i].isFainted()) continue;
 		  if (!@battle.pbCanSwitch(i,-1,false)) continue;
 		  List<int> choices= new List<int>();
-		  Pokemon[] party=@battle.pbParty(i);
+		  Monster.Pokemon[] party=@battle.pbParty(i);
 		  for (int j = 0; j< party.Length; j++)
 			if (@battle.pbCanSwitchLax(i,j,false)) choices.Add(j);
 		  if (choices.Count>0) {
 			int newpoke=choices[@battle.pbRandom(choices.Count)];
 			int newpokename=newpoke;
-			if (party[newpoke].ability == Abilities.ILLUSION)
+			if (party[newpoke].Ability == Abilities.ILLUSION)
 			  newpokename=@battle.pbGetLastPokeInTeam(i);
 			switched.Add(i);
 			@battle.battlers[i].ResetForm();
@@ -3276,7 +3302,7 @@ namespace PokemonUnity.Combat
 		  int newpoke=0;
 		  newpoke=@battle.pbSwitchInBetween(i,true,false);
 		  int newpokename=newpoke;
-		  if (@battle.pbParty(i)[newpoke].ability == Abilities.ILLUSION)
+		  if (@battle.pbParty(i)[newpoke].Ability == Abilities.ILLUSION)
 			newpokename=@battle.pbGetLastPokeInTeam(i);
 		  switched.Add(i);
 		  @battle.battlers[i].ResetForm();
@@ -3294,7 +3320,7 @@ namespace PokemonUnity.Combat
 		int newpoke=0;
 		newpoke=@battle.pbSwitchInBetween(user.Index,true,false);
 		int newpokename=newpoke;
-		if (@battle.pbParty(user.Index)[newpoke].ability == Abilities.ILLUSION)
+		if (@battle.pbParty(user.Index)[newpoke].Ability == Abilities.ILLUSION)
 		  newpokename=@battle.pbGetLastPokeInTeam(user.Index);
 		user.ResetForm();
 		@battle.pbRecallAndReplace(user.Index,newpoke,newpokename,true);
@@ -3320,7 +3346,7 @@ namespace PokemonUnity.Combat
 	  @battle.successStates[i].UpdateSkill();
 	// End of move usage
 	pbEndTurn(choice);
-	@battle.pbJudge(); //    @battle.pbSwitch
+	@battle.pbJudge(); //    @battle.pbSwitch();
 	return;
   }
   public void pbCancelMoves() {
@@ -3382,7 +3408,7 @@ namespace PokemonUnity.Combat
 	// Can't use a move if fainted
 	if (this.isFainted()) return false;
 	// Wild roaming Pokémon always flee if possible
-	if (@battle.opponent.Length != 0 && @battle.pbIsOpposing(this.Index) &&
+	if (@battle.opponent.Length != 0 && @battle.isOpposing(this.Index) &&
 	   @battle.rules.Contains("alwaysflee") && @battle.pbCanRun(this.Index)) {
 	  pbBeginTurn(choice);
 	  @battle.pbDisplay(Game._INTL("{1} fled!",this.ToString()));

@@ -294,7 +294,7 @@ public partial class Battle{
       }
       break;
     case Attack.Data.Effects.x067:
-      Pokemon[] party=pbParty(attacker.Index);
+      Monster.Pokemon[] party=pbParty(attacker.Index);
       int statuses=0;
       for (int i = 0; i < party.Length; i++) {
         if (party[i].IsNotNullOrNone() && party[i].Status!=0) statuses+=1;
@@ -3449,21 +3449,21 @@ public partial class Battle{
   }
 
   public int pbRoughStat(Pokemon battler,Stats stat,int skill) {
-    if (skill>=PBTrainerAI.highSkill && stat==Stats.SPEED) return battler.speed;//pbSpeed;
+    if (skill>=PBTrainerAI.highSkill && stat==Stats.SPEED) return battler.SPE;//pbSpeed;
     int[] stagemul=new int[] {2,2,2,2,2,2,2,3,4,5,6,7,8};
     int[] stagediv=new int[] {8,7,6,5,4,3,2,2,2,2,2,2,2};
     int stage=battler.stages[(int)stat]+6;
     int value=0;
     switch (stat) {
-    case Stats.ATTACK: value=battler.attack;
+    case Stats.ATTACK: value=battler.pokemon.ATK;
       break;
-    case Stats.DEFENSE: value=battler.defense;
+    case Stats.DEFENSE: value=battler.pokemon.DEF;
       break;
-    case Stats.SPEED: value=battler.speed;
+    case Stats.SPEED: value=battler.pokemon.SPE;
       break;
-    case Stats.SPATK: value=battler.spatk;
+    case Stats.SPATK: value=battler.pokemon.SPA;
       break;
-    case Stats.SPDEF: value=battler.spdef;
+    case Stats.SPDEF: value=battler.pokemon.SPD;
       break;
     }
     return (int)Math.Floor(value*1.0f*stagemul[stage]/stagediv[stage]);
@@ -3684,7 +3684,7 @@ public partial class Battle{
       }
       break;
     case Attack.Data.Effects.x09B: // Beat Up
-      Pokemon[] party=pbParty(attacker.Index);
+      Monster.Pokemon[] party=pbParty(attacker.Index);
       mult=0;
       for (int i = 0; i < party.Length; i++) {
         if (party[i].IsNotNullOrNone() && !party[i].isEgg &&
@@ -4407,7 +4407,7 @@ public partial class Battle{
     int totalscore=0;
     int target=-1;
     int skill=0;
-    bool wildbattle=@opponent==null && pbIsOpposing(index);
+    bool wildbattle=@opponent==null && isOpposing(index);
     if (wildbattle) {		// If wild battle
       for (int i = 0; i < 4; i++) {
         if (CanChooseMove(index,i,false)) {
@@ -4810,7 +4810,8 @@ public partial class Battle{
     }
     if (shouldswitch) {
       List<int> list=new List<int>();
-      Pokemon[] party=pbParty(index);
+      //Combat.Pokemon[] party=pbParty(index);
+      Combat.Pokemon[] party=battlers.Where(b => (b.Index % 2) == (index % 2)).ToArray();
       for (int i = 0; i < party.Length; i++) {
         if (pbCanSwitch(index,i,false)) {
           // If perish count is 1, it may be worth it to switch
@@ -4930,8 +4931,7 @@ public partial class Battle{
       if (pbEnemyShouldUseItem(index)) return;
       if (pbEnemyShouldWithdraw(index)) return;
       if (pbAutoFightMenu(index)) return;
-      //ToDo: Uncomment
-      //if (pbEnemyShouldMegaEvolve(index)) pbRegisterMegaEvolution(index);
+      if (pbEnemyShouldMegaEvolve(index)) pbRegisterMegaEvolution(index);
       pbChooseMoves(index);
     }
   }

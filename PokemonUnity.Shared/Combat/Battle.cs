@@ -64,16 +64,16 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Player's Pokémon party
 		/// </summary>
-		public Pokemon[] party1 { get; private set; }
+		public Monster.Pokemon[] party1 { get; private set; }
 		/// <summary>
 		/// Foe's Pokémon party
 		/// </summary>
-		public Pokemon[] party2 { get; private set; }
+		public Monster.Pokemon[] party2 { get; private set; }
 		/// <summary>
 		/// Pokémon party for All Trainers in Battle.
 		/// Array[4,6] = 0: Player, 1: Foe, 2: Ally, 3: Foe's Ally
 		/// </summary>
-		public Monster.Pokemon[,] party { get; private set; }
+		//public Monster.Pokemon[,] party { get; private set; }
 		/// <summary>
 		/// Order of Pokémon in the player's party
 		/// </summary>
@@ -93,7 +93,7 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Currently active Pokémon
 		/// </summary>
-		public Pokemon[] battlers { get; private set; }
+		public Combat.Pokemon[] battlers { get; private set; }
 		/// <summary>
 		/// Items held by opponents
 		/// </summary>
@@ -268,8 +268,8 @@ namespace PokemonUnity.Combat
 			debug = Core.DEBUG;
 			//debugupdate = 0;
 
-			party1 = Pokemon.GetBattlers(p1, this);
-			party2 = Pokemon.GetBattlers(p2, this);
+			party1 = p1;
+			party2 = p2;
 
 			party1order = new List<int>();
 			//the #12 represents a double battle with 2 trainers using 6 pokemons each on 1 side
@@ -381,14 +381,6 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Method
-		public IEnumerator<Battle> AfterBattle()
-		{
-			while (this.decision == BattleResults.InProgress)
-			{
-				yield return null;
-			}
-			//return this;
-		}
 		public virtual int pbRandom(int index)
 		{
 			return Core.Rand.Next(index);
@@ -664,10 +656,6 @@ namespace PokemonUnity.Combat
 		{
 			return (index % 2) == 1;
 		}
-		public bool pbIsOpposing(int index) //ToDo: Rename to above, and remove
-		{
-			return isOpposing(index);
-		}
 		public bool pbOwnedByPlayer(int index)
 		{
     if (isOpposing(index)) return false;
@@ -685,7 +673,7 @@ namespace PokemonUnity.Combat
   /// <param name="pokemonindex"></param>
   /// <returns></returns>
   public string ToString(int battlerindex, int pokemonindex) {
-	Pokemon[] party=pbParty(battlerindex);
+	Monster.Pokemon[] party=pbParty(battlerindex);
     if (isOpposing(battlerindex)) {
       if (@opponent != null) {
         return Game._INTL("The foe {1}", party[pokemonindex].Name);
@@ -802,7 +790,7 @@ namespace PokemonUnity.Combat
       return @player[0];
     }
     else {
-      return null; //@player;
+      return new Combat.Trainer(battlers[0].Name, TrainerTypes.WildPokemon); //null;
     }
     //Active player is always going to be in First slot...
     //return Game.GameData.Player; //@player[0];
@@ -823,7 +811,7 @@ namespace PokemonUnity.Combat
     }
   }
 
-  public void pbSetSeen(Pokemon pokemon) {
+  public void pbSetSeen(Monster.Pokemon pokemon) {
     if (Game.GameData.Player.Pokedex != null &&
                  (pokemon.IsNotNullOrNone() && @internalbattle)) { //Trainer has a Pokedex
       //this.pbPlayer().seen[pokemon.Species]=true;
@@ -882,20 +870,20 @@ namespace PokemonUnity.Combat
 			}
 			return lv;
 		}
-  public int pbPokemonCount(Pokemon[] party) {
+  public int pbPokemonCount(Monster.Pokemon[] party) {
     int count=0;
-    foreach (Pokemon i in party) {
+    foreach (Monster.Pokemon i in party) {
       if (!i.IsNotNullOrNone()) continue;
       if (i.HP>0 && !i.isEgg) count+=1;
     }
     return count;
   }
 
-  public bool pbAllFainted (Pokemon[] party) {
+  public bool pbAllFainted (Monster.Pokemon[] party) {
     return pbPokemonCount(party)==0;
   }
 
-  public int pbMaxLevel(Pokemon[] party) {
+  public int pbMaxLevel(Monster.Pokemon[] party) {
     int lv=0;
     foreach (var i in party) {
       if (!i.IsNotNullOrNone()) continue;
@@ -905,7 +893,7 @@ namespace PokemonUnity.Combat
   }
 
   public int pbMaxLevelFromIndex(int index) {
-    Pokemon[] party=pbParty(index);
+    Monster.Pokemon[] party=pbParty(index);
     Combat.Trainer[] owner=isOpposing(index) ? @opponent : @player;
     int maxlevel=0;
     if (owner.Length > 0) {
@@ -931,33 +919,35 @@ namespace PokemonUnity.Combat
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns></returns>
-  public Pokemon[] pbParty(int index) {
+  public Monster.Pokemon[] pbParty(int index) {
     return isOpposing(index) ? party2 : party1;
   }
 
-  public Pokemon[] pbOpposingParty(int index) {
+  public Monster.Pokemon[] pbOpposingParty(int index) {
     return isOpposing(index) ? party1 : party2;
   }
 
   public int pbSecondPartyBegin(int battlerIndex) {
     if (isOpposing(battlerIndex)) {
-      return @fullparty2 ? 6 : 3;
+      //return @fullparty2 ? 6 : 3; //split in half for doubles
+      return @fullparty2 ? Game.GameData.Features.LimitPokemonPartySize : (int)(Core.MAXPARTYSIZE * .5);
     }
     else {
-      return @fullparty1 ? 6 : 3;
+      //return @fullparty1 ? 6 : 3; //split in half for doubles
+      return @fullparty1 ? Game.GameData.Features.LimitPokemonPartySize : (int)(Core.MAXPARTYSIZE * .5);
     }
   }
 
   public int pbPartyLength(int battlerIndex) {
     if (isOpposing(battlerIndex)) {
-      return (@opponent.Length > 0) ? pbSecondPartyBegin(battlerIndex) : Core.MAXPARTYSIZE;
+      return (@opponent.Length > 0) ? pbSecondPartyBegin(battlerIndex) : Game.GameData.Features.LimitPokemonPartySize;
     }
     else {
-      return @player.Length > 0 ? pbSecondPartyBegin(battlerIndex) : Core.MAXPARTYSIZE;
+      return @player.Length > 0 ? pbSecondPartyBegin(battlerIndex) : Game.GameData.Features.LimitPokemonPartySize;
     }
   }
 
-  public int pbFindNextUnfainted(Pokemon[] party,int start,int finish=-1) {
+  public int pbFindNextUnfainted(Monster.Pokemon[] party,int start,int finish=-1) {
     if (finish<0) finish=party.Length;
     for (int i = start; i < finish; i++) {
       if (!party[i].IsNotNullOrNone()) continue;
@@ -967,13 +957,13 @@ namespace PokemonUnity.Combat
   }
 
   public int pbGetLastPokeInTeam(int index) {
-    Pokemon[] party=pbParty(index);
+    Monster.Pokemon[] party=pbParty(index);
     int[] partyorder=(!isOpposing(index) ? @party1order : @party2order).ToArray();
     int plength=pbPartyLength(index);
     int pstart=pbGetOwnerIndex(index)*plength;
     int lastpoke=-1;
     for (int i = pstart; i < pstart+plength; i++) {
-      Pokemon p=party[partyorder[i]];
+      Monster.Pokemon p=party[partyorder[i]];
       if (!p.IsNotNullOrNone() || p.isEgg || p.HP<=0) continue;
       lastpoke=partyorder[i];
     }
@@ -1077,14 +1067,14 @@ namespace PokemonUnity.Combat
   }
 
   public void pbAddToPlayerParty(Pokemon pokemon) {
-    Pokemon[] party=pbParty(0);
+    Monster.Pokemon[] party=pbParty(0);
     for (int i = 0; i < party.Length; i++) {
       if (pbIsOwner(0,i) && !party[i].IsNotNullOrNone()) party[i]=pokemon;
     }
   }
 
   public void pbRemoveFromParty(int battlerIndex, int partyIndex) {
-    Pokemon[] party=pbParty(battlerIndex);
+    Monster.Pokemon[] party=pbParty(battlerIndex);
     Trainer[] side=(isOpposing(battlerIndex)) ? @opponent : @player;
     int[] order=(isOpposing(battlerIndex) ? @party2order : @party1order).ToArray();
     int secondpartybegin=pbSecondPartyBegin(battlerIndex);
@@ -1493,7 +1483,7 @@ namespace PokemonUnity.Combat
 		#region Switching Pokemon
   public virtual bool pbCanSwitchLax (int idxPokemon,int pkmnidxTo,bool showMessages) {
     if (pkmnidxTo>=0) {
-      Pokemon[] party=pbParty(idxPokemon);
+      Monster.Pokemon[] party=pbParty(idxPokemon);
       if (pkmnidxTo>=party.Length) {
         return false;
       }
@@ -1529,7 +1519,7 @@ namespace PokemonUnity.Combat
       return false;
     }
     bool isOppose=isOpposing(idxPokemon);
-    Pokemon[] party=pbParty(idxPokemon);
+    Monster.Pokemon[] party=pbParty(idxPokemon);
     for (int i = 0; i < 4; i++) {
       if (isOppose!=isOpposing(i)) continue;
       if (choices[i].Action==ChoiceAction.SwitchPokemon && choices[i].Index==pkmnidxTo) {
@@ -1594,7 +1584,7 @@ namespace PokemonUnity.Combat
   }
 
   public bool pbCanChooseNonActive (int index) {
-    Pokemon[] party=pbParty(index);
+    Monster.Pokemon[] party=pbParty(index);
     for (int i = 0; i < party.Length; i++) {
       if (pbCanSwitchLax(index,i,false)) return true;
     }
@@ -1682,7 +1672,7 @@ namespace PokemonUnity.Combat
     }
   }
 
-  public void pbSendOut(int index,Pokemon pokemon) {
+  public void pbSendOut(int index,Monster.Pokemon pokemon) {
     pbSetSeen(pokemon);
     @peer.pbOnEnteringBattle(this,pokemon);
     if (isOpposing(index)) {
@@ -1695,7 +1685,7 @@ namespace PokemonUnity.Combat
   }
 
   public void pbReplace(int index,int newpoke,bool batonpass=false) {
-    Pokemon[] party=pbParty(index);
+    Monster.Pokemon[] party=pbParty(index);
     int oldpoke=@battlers[index].pokemonIndex;
     // Initialise the new Pokémon
     @battlers[index].Initialize(party[newpoke],(sbyte)newpoke,batonpass);
@@ -1724,7 +1714,7 @@ namespace PokemonUnity.Combat
 
   public void pbMessagesOnReplace(int index,int newpoke,int newpokename=-1) {
     if (newpokename<0) newpokename=newpoke;
-    Pokemon[] party=pbParty(index);
+    Monster.Pokemon[] party=pbParty(index);
     if (pbOwnedByPlayer(index)) {
       if (!party[newpoke].IsNotNullOrNone()) {
         //p [index,newpoke,party[newpoke],pbAllFainted(party)];
@@ -1795,7 +1785,7 @@ namespace PokemonUnity.Combat
   /// <param name="scene"></param>
   /// <returns></returns>
   protected bool _pbUseItemOnPokemon(Items item,int pkmnIndex,Pokemon userPkmn,IHasDisplayMessage scene) {
-    Pokemon pokemon=@party1[pkmnIndex];
+    Monster.Pokemon pokemon=@party1[pkmnIndex];
     Pokemon battler=null;
     string name=pbGetOwner(userPkmn.Index).name;
     if (pbBelongsToPlayer(userPkmn.Index)) name=pbGetOwner(userPkmn.Index).name;
@@ -1963,7 +1953,7 @@ namespace PokemonUnity.Combat
     else if (item == Items.FULL_RESTORE) {
       bool fullhp=(battler.HP==battler.TotalHP);
       battler.pbRecoverHP(battler.TotalHP-battler.HP,true);
-      battler.Status=0; //battler.statusCount=0;
+      battler.Status=0; battler.StatusCount=0;
       battler.effects.Confusion=0;
       if (fullhp) {
         pbDisplay(Game._INTL("{1} became healthy!",battler.ToString()));
@@ -1973,7 +1963,7 @@ namespace PokemonUnity.Combat
       }
     }
     else if (item == Items.FULL_HEAL) {
-      battler.Status=0; //battler.statusCount=0;
+      battler.Status=0; battler.StatusCount=0;
       battler.effects.Confusion=0;
       pbDisplay(Game._INTL("{1} became healthy!",battler.ToString()));
     }
@@ -2093,11 +2083,11 @@ namespace PokemonUnity.Combat
     }
     int rate;
     // Note: not pbSpeed, because using unmodified Speed
-    int speedPlayer=@battlers[idxPokemon].speed;
+    int speedPlayer=@battlers[idxPokemon].pokemon.SPE;
     Pokemon opposing=@battlers[idxPokemon].pbOppositeOpposing;
     if (opposing.isFainted()) opposing=opposing.Partner;
     if (!opposing.isFainted()) {
-      int speedEnemy=opposing.speed;
+      int speedEnemy=opposing.pokemon.SPE;
       if (speedPlayer>speedEnemy) {
         rate=256;
       }
@@ -2299,7 +2289,7 @@ namespace PokemonUnity.Combat
   }
 
   public void pbGainExpOne(int index,Pokemon defeated,int partic,int expshare,bool haveexpall,bool showmessages=true) {
-    Pokemon thispoke=@party1[index];
+    Monster.Pokemon thispoke=@party1[index];
     // Original species, not current species
     int level=defeated.Level;
     float baseexp=Game.PokemonData[defeated.Species].BaseExpYield;
@@ -2307,7 +2297,7 @@ namespace PokemonUnity.Combat
     // Gain effort value points, using RS effort values
     int totalev=0;
     for (int k = 0; k < 6; k++) {
-      totalev+=thispoke.pokemon.EV[k];
+      totalev+=thispoke.EV[k];
     }
     for (int k = 0; k < 6; k++) {
       int evgain=evyield[k];
@@ -2339,27 +2329,27 @@ namespace PokemonUnity.Combat
                      thispoke.itemInitial == Items.POWER_ANKLET) evgain+=4;
         break;
       }
-      //if (thispoke.pokemon.PokerusStage>=1) evgain*=2;	// Infected or cured
-      if (thispoke.pokemon.PokerusStage == true) evgain*=2;	// Infected only
+      //if (thispoke.PokerusStage>=1) evgain*=2;	// Infected or cured
+      if (thispoke.PokerusStage == true) evgain*=2;	// Infected only
       if (evgain>0) {
         // Can't exceed overall limit
         if (totalev+evgain>Monster.Pokemon.EVLIMIT) evgain-=totalev+evgain-Monster.Pokemon.EVLIMIT;
         // Can't exceed stat limit
-        if (thispoke.pokemon.EV[k]+evgain>Monster.Pokemon.EVSTATLIMIT) evgain-=thispoke.pokemon.EV[k]+evgain-Monster.Pokemon.EVSTATLIMIT;
+        if (thispoke.EV[k]+evgain>Monster.Pokemon.EVSTATLIMIT) evgain-=thispoke.EV[k]+evgain-Monster.Pokemon.EVSTATLIMIT;
         // Add EV gain
-        //thispoke.pokemon.EV[k]+=evgain;
-        thispoke.pokemon.EV[k]=(byte)(thispoke.pokemon.EV[k]+evgain);
-        if (thispoke.pokemon.EV[k]>Monster.Pokemon.EVSTATLIMIT) {
-          GameDebug.LogWarning($"Single-stat EV limit #{Monster.Pokemon.EVSTATLIMIT} exceeded.\r\nStat: #{k}  EV gain: #{evgain}  EVs: #{thispoke.pokemon.EV.ToString()}");
-          thispoke.pokemon.EV[k]=Monster.Pokemon.EVSTATLIMIT;
+        //thispoke.EV[k]+=evgain;
+        thispoke.EV[k]=(byte)(thispoke.EV[k]+evgain);
+        if (thispoke.EV[k]>Monster.Pokemon.EVSTATLIMIT) {
+          GameDebug.LogWarning($"Single-stat EV limit #{Monster.Pokemon.EVSTATLIMIT} exceeded.\r\nStat: #{k}  EV gain: #{evgain}  EVs: #{thispoke.EV.ToString()}");
+          thispoke.EV[k]=Monster.Pokemon.EVSTATLIMIT;
         }
         totalev+=evgain;
         if (totalev>Monster.Pokemon.EVLIMIT) {
-          GameDebug.LogWarning($"EV limit #{Monster.Pokemon.EVLIMIT} exceeded.\r\nTotal EVs: #{totalev} EV gain: #{evgain}  EVs: #{thispoke.pokemon.EV.ToString()}");
+          GameDebug.LogWarning($"EV limit #{Monster.Pokemon.EVLIMIT} exceeded.\r\nTotal EVs: #{totalev} EV gain: #{evgain}  EVs: #{thispoke.EV.ToString()}");
         }
       }
     }
-    thispoke.pokemon.GainEffort(defeated.Species);
+    thispoke.GainEffort(defeated.Species);
     // Gain experience
     bool ispartic=false;
     //if (defeated.participants.Contains(index)) ispartic=true;
@@ -2406,7 +2396,7 @@ namespace PokemonUnity.Combat
     else {
       exp=(int)Math.Floor(exp/7f);
     }
-    bool isOutsider = thispoke.pokemon.isForeign(pbPlayer());
+    bool isOutsider = thispoke.isForeign(pbPlayer());
     //          || (thispoke.language!=0 && thispoke.language!=this.pbPlayer().language);
     if (isOutsider) {
       //if (thispoke.language!=0 && thispoke.language!=this.pbPlayer().language) {
@@ -2418,12 +2408,12 @@ namespace PokemonUnity.Combat
     }
     if (thispoke.Item == Items.LUCKY_EGG ||
                            thispoke.itemInitial == Items.LUCKY_EGG) exp=(int)Math.Floor(exp*3/2f);
-    Monster.LevelingRate growthrate=thispoke.pokemon.GrowthRate;
-    //int newexp=new Experience(thispoke.pokemon.Experience.Total,exp,growthrate).AddExperience(exp).Current;
-    Monster.Data.Experience gainedexp=new Monster.Data.Experience(growthrate,thispoke.pokemon.Experience.Total);
+    Monster.LevelingRate growthrate=thispoke.GrowthRate;
+    //int newexp=new Experience(thispoke.Experience.Total,exp,growthrate).AddExperience(exp).Current;
+    Monster.Data.Experience gainedexp=new Monster.Data.Experience(growthrate,thispoke.Experience.Total);
     gainedexp.AddExperience(exp);
     int newexp=gainedexp.Total;
-    exp=newexp-thispoke.pokemon.Experience.Total;
+    exp=newexp-thispoke.Experience.Total;
     if (exp>0) {
       if (showmessages) {
         if (isOutsider) {
@@ -2437,19 +2427,19 @@ namespace PokemonUnity.Combat
       //int tempexp=0;
       int curlevel=thispoke.Level;
       if (newlevel<curlevel) {
-        string debuginfo=$"#{thispoke.Name}: #{thispoke.Level}/#{newlevel} | #{thispoke.pokemon.Experience.Total}/#{newexp} | gain: #{exp}";
+        string debuginfo=$"#{thispoke.Name}: #{thispoke.Level}/#{newlevel} | #{thispoke.Experience.Total}/#{newexp} | gain: #{exp}";
         //throw new RuntimeError(Game._INTL("The new level ({1}) is less than the Pokémon's\r\ncurrent level ({2}), which shouldn't happen.\r\n[Debug: {3}]",
         GameDebug.LogError(Game._INTL("The new level {1) is less than the Pokémon's\r\ncurrent level (2), which shouldn't happen.\r\n[Debug: {3}]",
         newlevel.ToString(),curlevel.ToString(),debuginfo));
         return;
       }
-      if (thispoke.isShadow()) {
-        //thispoke.pokemon.Experience.Total+=exp;
-        //thispoke.pokemon.Experience.AddExperience(exp);
-        thispoke.pokemon.savedexp+=exp;
+      if (thispoke.isShadow) {
+        //thispoke.Experience.Total+=exp;
+        //thispoke.Experience.AddExperience(exp);
+        thispoke.savedexp+=exp;
       }
       else {
-        int tempexp1=thispoke.pokemon.Experience.Total;
+        int tempexp1=thispoke.Experience.Total;
         int tempexp2=0;
         // Find battler
         Pokemon battler=pbFindPlayerBattler(index);
@@ -2458,27 +2448,27 @@ namespace PokemonUnity.Combat
           int startexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel); //0
           int endexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel+1); //100
           tempexp2=(endexp<newexp) ? endexp : newexp; //final < 100?
-          //thispoke.pokemon.Experience.Total=tempexp2;
-          thispoke.pokemon.Experience.AddExperience(tempexp2 - thispoke.pokemon.Experience.Total);
+          //thispoke.Experience.Total=tempexp2;
+          thispoke.Experience.AddExperience(tempexp2 - thispoke.Experience.Total);
           @scene.pbEXPBar(thispoke,battler,startexp,endexp,tempexp1,tempexp2);
           tempexp1=tempexp2;
           curlevel+=1;
           if (curlevel>newlevel) {
-            //thispoke.calcStats(); //Automated
+            thispoke.calcStats(); 
             if (battler.IsNotNullOrNone()) battler.Update(false);
             @scene.pbRefresh();
             break;
           }
           int oldtotalhp=thispoke.TotalHP;
-          int oldattack=thispoke.attack;
-          int olddefense=thispoke.defense;
-          int oldspeed=thispoke.speed;
-          int oldspatk=thispoke.spatk;
-          int oldspdef=thispoke.spdef;
+          int oldattack=thispoke.ATK;
+          int olddefense=thispoke.DEF;
+          int oldspeed=thispoke.SPE;
+          int oldspatk=thispoke.SPA;
+          int oldspdef=thispoke.SPD;
           if (battler.IsNotNullOrNone() && @internalbattle) { //&& battler.pokemon.IsNotNullOrNone()
             battler.pokemon.ChangeHappiness(HappinessMethods.LEVELUP);//"level up"
           }
-          //thispoke.calcStats(); //Automated
+          thispoke.calcStats(); 
           if (battler.IsNotNullOrNone()) battler.Update(false);
           @scene.pbRefresh();
           pbDisplayPaused(Game._INTL("{1} grew to Level {2}!",thispoke.Name,curlevel.ToString()));
@@ -2486,7 +2476,7 @@ namespace PokemonUnity.Combat
           @scene.pbLevelUp(thispoke,battler,oldtotalhp,oldattack,
                            olddefense,oldspeed,oldspatk,oldspdef);
           // Finding all moves learned at this level
-          Moves[] movelist=thispoke.pokemon.getMoveList(Monster.LearnMethod.levelup);
+          Moves[] movelist=thispoke.getMoveList(Monster.LearnMethod.levelup);
           foreach (Moves k in movelist) {
             //if (k[0]==thispoke.Level)     // Learned a new move
               //pbLearnMove(index,k[1]);
@@ -2500,7 +2490,7 @@ namespace PokemonUnity.Combat
 
 		#region Learning a move.
   public void pbLearnMove(int pkmnIndex,Moves move) {
-    Pokemon pokemon=@party1[pkmnIndex];
+    Monster.Pokemon pokemon=@party1[pkmnIndex];
     if (!pokemon.IsNotNullOrNone()) return;
     string pkmnname=pokemon.Name;
     Pokemon battler=pbFindPlayerBattler(pkmnIndex);
@@ -2861,17 +2851,17 @@ namespace PokemonUnity.Combat
   }
 
   public void pbStartBattleCore(bool canlose) {
-    if (!@fullparty1 && @party1.Length>Core.MAXPARTYSIZE) {
+    if (!@fullparty1 && @party1.Length>Game.GameData.Features.LimitPokemonPartySize) {
       //throw new Exception(new ArgumentError(Game._INTL("Party 1 has more than {1} Pokémon.",Core.MAXPARTYSIZE)));
-      GameDebug.LogError(Game._INTL("Party 1 has more than {1} Pokémon.",Core.MAXPARTYSIZE.ToString()));
-      @party1= new Pokemon[Core.MAXPARTYSIZE]; //Fixed error.
+      GameDebug.LogError(Game._INTL("Party 1 has more than {1} Pokémon.",Game.GameData.Features.LimitPokemonPartySize));
+      @party1= new Monster.Pokemon[Core.MAXPARTYSIZE]; //Fixed error.
       for(int i = 0; i < Core.MAXPARTYSIZE; i++)
         @party1[i] = @party1[i];
     }
-    if (!@fullparty2 && @party2.Length>Core.MAXPARTYSIZE) {
+    if (!@fullparty2 && @party2.Length>Game.GameData.Features.LimitPokemonPartySize) {
       //throw new Exception(new ArgumentError(Game._INTL("Party 2 has more than {1} Pokémon.",Core.MAXPARTYSIZE)));
-      GameDebug.LogError(Game._INTL("Party 2 has more than {1} Pokémon.",Core.MAXPARTYSIZE.ToString()));
-      @party2= new Pokemon[Core.MAXPARTYSIZE]; //Fixed error.
+      GameDebug.LogError(Game._INTL("Party 2 has more than {1} Pokémon.",Game.GameData.Features.LimitPokemonPartySize));
+      @party2= new Monster.Pokemon[Core.MAXPARTYSIZE]; //Fixed error.
       for(int i = 0; i < Core.MAXPARTYSIZE; i++)
         @party2[i] = @party2[i];
     }
@@ -2883,7 +2873,7 @@ namespace PokemonUnity.Combat
           GameDebug.LogError(Game._INTL("Only two wild Pokémon are allowed in double battles"));
           //@party2 = new Pokemon[] { @party2[0], new Pokemon(this,2) }; //ToDo: Fixed error?
         }
-        Pokemon wildpoke=@party2[0];
+        Monster.Pokemon wildpoke=@party2[0];
         @battlers[1].Initialize(wildpoke,0,false);
         @peer.pbOnEnteringBattle(this,wildpoke); 
         pbSetSeen(wildpoke);
@@ -2894,7 +2884,7 @@ namespace PokemonUnity.Combat
         if (!@doublebattle) {
           //throw new Exception(Game._INTL("Only one wild Pokémon is allowed in single battles"));
           GameDebug.LogError(Game._INTL("Only one wild Pokémon is allowed in single battles"));
-          @party2 = new Pokemon[] { @party2[0] }; //Fixed error.
+          @party2 = new Monster.Pokemon[] { @party2[0] }; //Fixed error.
         }
         @battlers[1].Initialize(@party2[0],0,false);
         @battlers[3].Initialize(@party2[1],0,false);
@@ -2977,7 +2967,7 @@ namespace PokemonUnity.Combat
         if (@player.Length!=1) GameDebug.LogError(Game._INTL("Player trainer must be only one person in single battles")); //throw new Exception(Game._INTL("Player trainer must be only one person in single battles"));
         @player=new Combat.Trainer[] { @player[0] };
       }
-      Pokemon trainerpoke=@party2[sendout];
+      Monster.Pokemon trainerpoke=@party2[sendout];
       @scene.pbStartBattle(this);
       pbDisplayPaused(Game._INTL("{1}\r\nwould like to battle!",@opponent[0].name));
       @battlers[1].Initialize(trainerpoke,(sbyte)sendout,false);
@@ -3658,7 +3648,7 @@ namespace PokemonUnity.Combat
             }
           }
           if (!moveuser.IsNotNullOrNone()) {
-            Pokemon[] party=pbParty(i.effects.FutureSightUserPos);
+            Monster.Pokemon[] party=pbParty(i.effects.FutureSightUserPos);
             if (party[i.effects.FutureSightUser].HP>0) {
               moveuser=new Pokemon(this,(sbyte)i.effects.FutureSightUserPos);
               //moveuser.InitPokemon(party[i.effects.FutureSightUser],
@@ -4555,7 +4545,7 @@ namespace PokemonUnity.Combat
         }
       }
       foreach (var p in @snaggedpokemon) {
-        Pokemon pkmn = this.party2[p];
+        Monster.Pokemon pkmn = this.party2[p];
         pbStorePokemon(pkmn);
         //if (this.pbPlayer().shadowcaught == null) this.pbPlayer().shadowcaught=new Dictionary<Pokemons,bool>();
         if (this.pbPlayer().shadowcaught == null) this.pbPlayer().shadowcaught=new List<Pokemons>();

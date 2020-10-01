@@ -75,7 +75,7 @@ public class PokeBattle_SafariZone : Battle {
 
   public BattleResults pbStartBattle() {
     try { //begin
-      Pokemon wildpoke=@party2[0];
+      Monster.Pokemon wildpoke=@party2[0];
       //this.pbPlayer.seen[wildpoke.Species]=true;
       Game.GameData.Player.Pokedex[(int)wildpoke.Species,0]=(byte)1;
       //Game.pbSeenForm(wildpoke);
