@@ -274,7 +274,7 @@ namespace PokemonUnity
 				{
 					return this.Experience.Current;
 				}
-				set //ToDo: private set?
+				set 
 				{
 					if (this.isShadow)
 					{
@@ -295,7 +295,7 @@ namespace PokemonUnity
 			public int HP
 			{
 				get { return this.hp; }
-				private set
+				set //ToDo: private set?
 				{
 					this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
 					//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
