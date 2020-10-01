@@ -169,4 +169,205 @@ namespace PokemonUnity
 		bool animdone();
 		void update();
 	}*/
+
+	public interface IEventScene {
+		/// <summary>
+		/// Action Button Pressed...
+		/// </summary>
+		bool onATrigger { get; set; }
+		/// <summary>
+		/// Back/Cancel Button Pressed...
+		/// </summary>
+		bool onBTrigger { get; set; }
+		bool onUpdate { get; set; }
+		void main();
+		bool disposed { get; }
+		void dispose();
+		//void addBitmap(float x, float y, Bitmap bitmap);
+		void addLabel(float x, float y, float width, string text);
+		void addImage(float x, float y, string name);
+		void getPicture(int num);
+		void wait(int frames);
+		void pictureWait(int extraframes = 0);
+		//void addUserSprite(Sprite sprite);
+		void update();
+	}
+	/// <summary>
+	/// First scene to load when game boots up.
+	/// Displays logos and intro credits/sponsers
+	/// </summary>
+	public interface IIntroEventScene : IEventScene {
+		void openPic(IScene scene, params object[] args);
+		void timer();
+		void closePic();
+		void openSplash();
+		/// <summary>
+		/// </summary>
+		/// If you press and hold special keys, go to delete screen
+		void splashUpdate();
+		/// <summary>
+		/// Ends intro scene and transition to load/new game screen
+		/// </summary>
+		void closeSplash();
+		/// <summary>
+		/// Ends intro scene and transition to delete save data screen
+		/// </summary>
+		void closeSplashDelete();
+	}
+	/// <summary>
+	/// Shows a help screen listing the keyboard controls.
+	/// </summary>
+	public interface IButtonEventScene : IEventScene {
+		void pbOnScreen1();
+	}
+	/*public interface IPokeBattle_DebugScene {
+		void pbDisplayMessage(string msg,bool brief= false);
+		void pbDisplayPausedMessage(string msg);
+		void pbDisplayConfirmMessage(string msg);
+		void pbFrameUpdate(cw);
+		void pbRefresh();
+		/// <summary>
+		/// Called whenever a new round begins.
+		/// </summary>
+		void pbBeginCommandPhase();
+		void pbStartBattle(Combat.Battle battle);
+		void pbEndBattle(Combat.BattleResults result);
+		void pbTrainerSendOut(Combat.Battle battle,Monster.Pokemon pkmn);
+		void pbSendOut(Combat.Battle battle,Monster.Pokemon pkmn);
+		void pbTrainerWithdraw(Combat.Battle battle,Monster.Pokemon pkmn);
+		void pbWithdraw(Combat.Battle battle,Monster.Pokemon pkmn);
+		/// <summary>
+		/// Called whenever a Pokémon should forget a move. It should return -1 if the
+		/// selection is canceled, or 0 to 3 to indicate the move to forget.
+		/// The function should not allow HM moves to be forgotten.
+		/// </summary>
+		/// <param name="pkmn"></param>
+		/// <param name="move"></param>
+		void pbForgetMove(Monster.Pokemon pkmn,Moves move);
+		void pbBeginAttackPhase();
+		void pbCommandMenu(int index);
+		void pbPokemonString(Monster.Pokemon pkmn);
+		void pbMoveString(move);
+		/// <summary>
+		/// Use this method to display the list of moves for a Pokémon
+		/// </summary>
+		/// <param name="index"></param>
+		void pbFightMenu(int index);
+		/// <summary>
+		/// Use this method to display the inventory
+		/// The return value is the item chosen, or 0 if the choice was canceled.
+		/// </summary>
+		/// <param name="index"></param>
+		void pbItemMenu(int index);
+		void pbFirstTarget(int index, targettype);
+		void pbNextTarget(cur,int index);
+		void pbPrevTarget(cur,int index);
+		/// <summary>
+		/// Use this method to make the player choose a target 
+		/// for certain moves in double battles.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <param name=""></param>
+		void pbChooseTarget(int index, targettype);
+		void pbSwitch(int index, lax,bool cancancel);
+		/// <summary>
+		/// This method is called whenever a Pokémon's HP changes.
+		/// Used to animate the HP bar.
+		/// </summary>
+		/// <param name="pkmn"></param>
+		/// <param name="oldhp"></param>
+		/// <param name="anim"></param>
+		void pbHPChanged(Monster.Pokemon pkmn,int oldhp,bool anim= false);
+		/// <summary>
+		/// This method is called whenever a Pokémon faints
+		/// </summary>
+		/// <param name="pkmn"></param>
+		void pbFainted(Monster.Pokemon pkmn);
+		void pbChooseEnemyCommand(int index);
+		/// <summary>
+		/// Use this method to choose a new Pokémon for the enemy
+		/// The enemy's party is guaranteed to have at least one choosable member.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <param name="party"></param>
+		void pbChooseNewEnemy(int index,Monster.Pokemon[] party);
+		/// <summary>
+		/// This method is called when the player wins a wild Pokémon battle.
+		/// This method can change the battle's music for example.
+		/// </summary>
+		void pbWildBattleSuccess();
+		/// <summary>
+		/// This method is called when the player wins a Trainer battle.
+		/// This method can change the battle's music for example.
+		/// </summary>
+		void pbTrainerBattleSuccess();
+		void pbEXPBar(Combat.Pokemon battler,Monster.Pokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
+		void pbLevelUp(Combat.Pokemon battler,Monster.Pokemon thispoke,int oldtotalhp,int oldattack,
+				int olddefense,int oldspeed,int oldspatk,int oldspdef);
+		void pbShowOpponent(Combat.Trainer opp);
+		void pbHideOpponent();
+		void pbRecall(int battlerindex);
+		void pbDamageAnimation(Monster.Pokemon pkmn,TypeEffective effectiveness);
+		void pbAnimation(int moveid, attacker, opponent,int hitnum= 0);
+	}
+	public interface IPokeBattle_SceneNonInteractive : IPokeBattle_Scene {
+		void pbCommandMenu(int index);
+		void pbFightMenu(int index);
+		void pbItemMenu(int index);
+		void pbChooseTarget(int index, targettype);
+		void pbSwitch(int index, lax,bool cancancel);
+		void pbChooseEnemyCommand(int index);
+		/// <summary>
+		/// Use this method to choose a new Pokémon for the enemy
+		/// The enemy's party is guaranteed to have at least one choosable member.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <param name="party"></param>
+		void pbChooseNewEnemy(int index,Monster.Pokemon[] party);
+	}
+	public interface IPokeBattle_DebugSceneNoLogging {
+		void pbDisplayMessage(string msg,bool brief= false);
+		void pbDisplayPausedMessage(string msg);
+		bool pbDisplayConfirmMessage(string msg);
+		int pbShowCommands(string msg,string[] commands,int defaultValue);
+		void pbBeginCommandPhase();
+		void pbStartBattle(Combat.Battle battle);
+		void pbEndBattle(Combat.BattleResults result);
+		void pbTrainerSendOut(Combat.Battle battle,Monster.Pokemon pkmn);
+		void pbSendOut(Combat.Battle battle,Monster.Pokemon pkmn);
+		void pbTrainerWithdraw(Combat.Battle battle,Monster.Pokemon pkmn);
+		void pbWithdraw(Combat.Battle battle,Monster.Pokemon pkmn);
+		int pbForgetMove(Monster.Pokemon pkmn, move);
+		void pbBeginAttackPhase();
+		int pbCommandMenu(int index);
+		int pbFightMenu(int index);
+		int pbItemMenu(int index);
+		int pbChooseTarget(int index, targettype);
+		void pbRefresh();
+		int pbSwitch(int index, lax,bool cancancel);
+		void pbHPChanged(Monster.Pokemon pkmn,int oldhp,bool anim= false);
+		void pbFainted(Monster.Pokemon pkmn);
+		void pbChooseEnemyCommand(int index);
+		void pbChooseNewEnemy(int index,Monster.Pokemon[] party);
+		void pbWildBattleSuccess();
+		void pbTrainerBattleSuccess();
+		void pbEXPBar(Combat.Pokemon battler,Monster.Pokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
+		void pbLevelUp(Combat.Pokemon battler,Monster.Pokemon thispoke,int oldtotalhp,int oldattack,
+				int olddefense,int oldspeed,int oldspatk,int oldspdef);
+		int pbBlitz(keys);
+		void pbChatter(attacker, opponent);
+		void pbShowOpponent(opp);
+		void pbHideOpponent();
+		void pbRecall(battlerindex);
+		void pbDamageAnimation(Monster.Pokemon pkmn,TypeEffective effectiveness);
+		void pbBattleArenaJudgment(b1, b2, r1, r2);
+		void pbBattleArenaBattlers(b1, b2);
+		void pbCommonAnimation(int moveid, attacker, opponent,int hitnum= 0);
+		void pbAnimation(int moveid, attacker, opponent,int hitnum= 0);
+	}
+	public interface IPokeBattle_DebugSceneNoGraphics { }
+	public interface I { }
+	public interface I { }
+	public interface I { }
+	public interface I { }*/
 }
