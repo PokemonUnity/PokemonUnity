@@ -79,13 +79,13 @@ namespace PokemonUnity
 		#region Use with Relic Stone (Move to separate class?)
 		public static void pbRelicStoneScreen(Pokemon pkmn)
 		{
-			//bool retval = true;
-			//Game.pbFadeOutIn(99999); {
+			//bool retval = false;
+			//Game.pbFadeOutIn(99999, () => {
 			//	IRelicStoneScene scene = new RelicStoneScene();
 			//	IRelicStoneScreen screen = new RelicStoneScreen(scene);
-			//	//retval = screen.pbStartScreen(pkmn);
-			//	screen.pbStartScreen(pkmn);
-			//}
+			//	retval = screen.pbStartScreen(pkmn);
+			//	//screen.pbStartScreen(pkmn);
+			//});
 			//return retval;
 		}
 
@@ -268,7 +268,7 @@ namespace PokemonUnity
 					return (int)Math.Ceiling(Math.Min(this.heartgauge.Value, HEARTGAUGESIZE) / hg);
 				}
 			}
-			/*public int Exp
+			public int Exp
 			{
 				get
 				{
@@ -276,18 +276,14 @@ namespace PokemonUnity
 				}
 				set //ToDo: private set?
 				{
-					if (this.isShadow())
+					if (this.isShadow)
 					{
 						@savedexp += value - this.Experience.Current;
 					}
 					else
 					{
 						//__shadow_expeq(value);
-						if (value < 0) //|| value > this.Experience.GetMaxExperience(this.GrowthRate)
-							GameDebug.LogError(string.Format("The experience number {0} is invalid", value));
-						else //(value < this.Experience.GetMaxExperience(this.GrowthRate))
-							//this.Experience.AddExperience(value - this.Experience.Current);
-							Experience = new Experience(this.GrowthRate, value);
+						_Exp = value;
 					}
 				}
 			}
@@ -311,7 +307,7 @@ namespace PokemonUnity
 						@hypermode = false; 
 					}
 				}
-			}*/
+			}
 			public const int HEARTGAUGESIZE = 3840;
 			#endregion
 
@@ -362,8 +358,8 @@ namespace PokemonUnity
 				//else
 				//{
 				//  No special shadow moves
-				this.shadowmoves[0] = Moves.SHADOW_RUSH;// || 0;
-				this.shadowmovenum = 1;
+					this.shadowmoves[0] = Moves.SHADOW_RUSH;// || 0;
+					this.shadowmovenum = 1;
 				//}
 				for (int i = 0; i < 4; i++)
 				{   // Save old moves

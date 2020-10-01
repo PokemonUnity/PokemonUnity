@@ -8,9 +8,7 @@ using System.Text;
 
 namespace PokemonUnity.Combat
 {
-    /// <summary>
-    /// </summary>
-    public partial class Pokemon //: PokemonUnity.Battle.Pokemon
+    public partial class Pokemon 
     {
 #region Sleep
   public bool pbCanSleep(Pokemon attacker, bool showMessages, Move move=null, bool ignorestatus=false) {
@@ -727,12 +725,12 @@ namespace PokemonUnity.Combat
   /// (Reason is they lowers more than 1 stat independently, and therefore could
   /// show certain messages twice which is undesirable.)
   /// </summary>
-  /// <param name=""></param>
-  /// <param name=""></param>
-  /// <param name=""></param>
-  /// <param name=""></param>
-  /// <param name=""></param>
-  /// <param name=""></param>
+  /// <param name="stat"></param>
+  /// <param name="attacker"></param>
+  /// <param name="showMessages"></param>
+  /// <param name="move"></param>
+  /// <param name="moldbreaker"></param>
+  /// <param name="ignoreContrary"></param>
   /// <returns></returns>
   public bool pbCanReduceStatStage(Stats stat,Pokemon attacker=null,bool showMessages=false,Move move=null,bool moldbreaker=false,bool ignoreContrary=false) {
     if (!moldbreaker)

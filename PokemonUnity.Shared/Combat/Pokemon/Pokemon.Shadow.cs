@@ -38,8 +38,8 @@ namespace PokemonUnity.Combat
 
   public bool isShadow() {
     Monster.Pokemon p=this.pokemon;
-    if (p.IsNotNullOrNone() && p is Monster.IShadowPokemon && ((Monster.IShadowPokemon)p).heartgauge>0) //ToDo: p.ShadowLevel.HasValue && p.ShadowLevel.Value>0)
-      return true;//p.isShadow;
+    if (p.IsNotNullOrNone() && p is Monster.IShadowPokemon && ((Monster.IShadowPokemon)p).heartgauge>0) //p.ShadowLevel.HasValue && p.ShadowLevel.Value>0)
+      return p.isShadow;
     return false;
   }
 
@@ -54,7 +54,7 @@ namespace PokemonUnity.Combat
   public void pbHyperMode() { 
     Monster.Pokemon p=this.pokemon;
     if (isShadow() && !IsHyperMode)
-      if (@battle.pbRandom(p.ShadowLevel.Value)<=p.HeartGuageSize/4) { //Pokemon.HEARTGAUGESIZE
+      if (@battle.pbRandom(p.ShadowLevel.Value)<=Monster.Pokemon.HEARTGAUGESIZE/4) { //p.HeartGuageSize
         isHyperMode=true;
         @battle.pbDisplay(Game._INTL("{1}'s emotions rose to a fever pitch!\nIt entered Hyper Mode!",this.ToString()));
       }

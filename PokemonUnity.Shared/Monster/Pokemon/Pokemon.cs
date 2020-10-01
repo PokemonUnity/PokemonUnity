@@ -749,13 +749,13 @@ namespace PokemonUnity.Monster
 		/// if pokemon is lvl 3 and 0xp, it should have a total of 15xp
 		/// but display counter should still say 0
 		/// </example>
-		public int Exp
+		private int _Exp
 		{
-			get
-			{
-				return this.Experience.Current;
-			}
-			set //ToDo: private set?
+			//get
+			//{
+			//	return this.Experience.Current;
+			//}
+			set 
 			{
 				if (value < 0) //|| value > this.Experience.GetMaxExperience(this.GrowthRate)
 					GameDebug.LogError(string.Format("The experience number {0} is invalid", value));
@@ -764,6 +764,9 @@ namespace PokemonUnity.Monster
 					Experience = new Experience(this.GrowthRate, value);
 			}
 		}
+
+		/// <summary>
+		/// </summary>
 		public int Level
 		{
 			get
@@ -2303,17 +2306,20 @@ namespace PokemonUnity.Monster
 		/// Sets this Pokemon's HP;
 		/// Changes status on fainted
 		/// </summary>
-		public int HP
-		{
-			get { if (hp > TotalHP) hp = TotalHP;  return this.hp; }
-			set
-			{
-				this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
-				//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
-				if (isFainted()) { this.Status = Status.FAINT; StatusCount = 0; ChangeHappiness(HappinessMethods.FAINT); }
-			}
-		}
+		//public int HP
+		//{
+		//	get { if (hp > TotalHP) hp = TotalHP;  return this.hp; }
+		//	set
+		//	{
+		//		this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
+		//		//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
+		//		if (isFainted()) { this.Status = Status.FAINT; StatusCount = 0; ChangeHappiness(HappinessMethods.FAINT); }
+		//	}
+		//}
 
+		///<summary>
+		///</summary>
+		///ToDo: Change from Method to Get-Only Property
 		public bool isFainted()
 		{
 			return !this.isEgg //eggSteps == 0 //not an egg
