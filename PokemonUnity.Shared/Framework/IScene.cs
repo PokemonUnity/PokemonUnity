@@ -197,7 +197,7 @@ namespace PokemonUnity
 	/// Displays logos and intro credits/sponsers
 	/// </summary>
 	public interface IIntroEventScene : IEventScene {
-		void openPic(IScene scene, params object[] args);
+		void openPic();
 		void timer();
 		void closePic();
 		void openSplash();
