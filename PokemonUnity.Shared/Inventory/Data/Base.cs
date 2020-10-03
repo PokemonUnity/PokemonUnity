@@ -80,7 +80,7 @@ namespace PokemonUnity.Inventory
 					case ItemCategory.DATA_CARDS:       //itemPocket = (ItemPockets)8; break;
 					case ItemCategory.XY_UNKNOWN: itemPocket = (ItemPockets)8; break;
 					default:
-						itemPocket = null;
+						itemPocket = null; //ToDo: MISC?
 						break;
 				}
 				return itemPocket;
@@ -94,219 +94,35 @@ namespace PokemonUnity.Inventory
 		{ 
 			get 
 			{
-				switch (Id)
-				{
-					case Items.AIR_MAIL:
-					case Items.BEAD_MAIL:
-					case Items.BLOOM_MAIL:
-					case Items.BRICK_MAIL:
-					case Items.BRIDGE_MAIL_D:
-					case Items.BRIDGE_MAIL_M:
-					case Items.BRIDGE_MAIL_S:
-					case Items.BRIDGE_MAIL_T:
-					case Items.BRIDGE_MAIL_V:
-					case Items.BUBBLE_MAIL:
-					case Items.DREAM_MAIL:
-					case Items.FAB_MAIL:
-					case Items.FAVORED_MAIL:
-					case Items.FLAME_MAIL:
-					case Items.GLITTER_MAIL:
-					case Items.GRASS_MAIL:
-					case Items.GREET_MAIL:
-					case Items.HARBOR_MAIL:
-					case Items.HEART_MAIL:
-					case Items.INQUIRY_MAIL:
-					case Items.LIKE_MAIL:
-					case Items.MECH_MAIL:
-					case Items.MOSAIC_MAIL:
-					case Items.ORANGE_MAIL:
-					case Items.REPLY_MAIL:
-					case Items.RETRO_MAIL:
-					case Items.RSVP_MAIL:
-					case Items.SHADOW_MAIL:
-					case Items.SNOW_MAIL:
-					case Items.SPACE_MAIL:
-					case Items.STEEL_MAIL:
-					case Items.THANKS_MAIL:
-					case Items.TROPIC_MAIL:
-					case Items.TUNNEL_MAIL:
-					case Items.WAVE_MAIL:
-					case Items.WOOD_MAIL:
-						return true;
-					default:
-						return false;
-				}
+				return pbIsLetter(Id);
 			} 
 		}
 		public bool IsBerry 
 		{ 
 			get 
 			{
-				switch (Id)
-				{
-					case Items.AGUAV_BERRY:
-					case Items.APICOT_BERRY:
-					case Items.ASPEAR_BERRY:
-					case Items.BABIRI_BERRY:
-					case Items.BELUE_BERRY:
-					case Items.BLUK_BERRY:
-					case Items.CHARTI_BERRY:
-					case Items.CHERI_BERRY:
-					case Items.CHESTO_BERRY:
-					case Items.CHILAN_BERRY:
-					case Items.CHOPLE_BERRY:
-					case Items.COBA_BERRY:
-					case Items.COLBUR_BERRY:
-					case Items.CORNN_BERRY:
-					case Items.CUSTAP_BERRY:
-					case Items.DURIN_BERRY:
-					case Items.ENIGMA_BERRY:
-					case Items.FIGY_BERRY:
-					case Items.GANLON_BERRY:
-					case Items.GREPA_BERRY:
-					case Items.HABAN_BERRY:
-					case Items.HONDEW_BERRY:
-					case Items.IAPAPA_BERRY:
-					case Items.JABOCA_BERRY:
-					case Items.KASIB_BERRY:
-					case Items.KEBIA_BERRY:
-					case Items.KEE_BERRY:
-					case Items.KELPSY_BERRY:
-					case Items.LANSAT_BERRY:
-					case Items.LEPPA_BERRY:
-					case Items.LIECHI_BERRY:
-					case Items.LUM_BERRY:
-					case Items.MAGOST_BERRY:
-					case Items.MAGO_BERRY:
-					case Items.MARANGA_BERRY:
-					case Items.MICLE_BERRY:
-					case Items.NANAB_BERRY:
-					case Items.NOMEL_BERRY:
-					case Items.OCCA_BERRY:
-					case Items.ORAN_BERRY:
-					case Items.PAMTRE_BERRY:
-					case Items.PASSHO_BERRY:
-					case Items.PAYAPA_BERRY:
-					case Items.PECHA_BERRY:
-					case Items.PERSIM_BERRY:
-					case Items.PETAYA_BERRY:
-					case Items.PINAP_BERRY:
-					case Items.POMEG_BERRY:
-					case Items.QUALOT_BERRY:
-					case Items.RABUTA_BERRY:
-					case Items.RAWST_BERRY:
-					case Items.RAZZ_BERRY:
-					case Items.RINDO_BERRY:
-					case Items.ROSELI_BERRY:
-					case Items.ROWAP_BERRY:
-					case Items.SALAC_BERRY:
-					case Items.SHUCA_BERRY:
-					case Items.SITRUS_BERRY:
-					case Items.SPELON_BERRY:
-					case Items.STARF_BERRY:
-					case Items.TAMATO_BERRY:
-					case Items.TANGA_BERRY:
-					case Items.WACAN_BERRY:
-					case Items.WATMEL_BERRY:
-					case Items.WEPEAR_BERRY:
-					case Items.WIKI_BERRY:
-					case Items.YACHE_BERRY:
-						return true;
-					default:
-						return false;
-				}
+				return pbIsBerry(Id);
 			} 
 		}
 		public bool IsApricon 
 		{ 
 			get 
 			{
-				switch (Id)
-				{
-					case Items.BLACK_APRICORN:
-					case Items.BLUE_APRICORN:
-					case Items.GREEN_APRICORN:
-					case Items.PINK_APRICORN:
-					case Items.RED_APRICORN:
-					case Items.WHITE_APRICORN:
-					case Items.YELLOW_APRICORN:
-						return true;
-					default:
-						return false;
-				}
+				return pbIsApricon(Id);
 			}
 		}
 		public bool IsMegaStone
 		{
 			get
 			{
-				return Id == Items.ABOMASITE
-					|| Id == Items.ABSOLITE
-					|| Id == Items.AERODACTYLITE
-					|| Id == Items.AGGRONITE
-					|| Id == Items.ALAKAZITE
-					|| Id == Items.ALTARIANITE
-					|| Id == Items.AMPHAROSITE
-					|| Id == Items.AUDINITE
-					|| Id == Items.BANETTITE
-					|| Id == Items.BEEDRILLITE
-					|| Id == Items.BLASTOISINITE
-					|| Id == Items.BLAZIKENITE
-					|| Id == Items.CAMERUPTITE
-					|| Id == Items.CHARIZARDITE_X
-					|| Id == Items.CHARIZARDITE_Y
-					|| Id == Items.DIANCITE
-					|| Id == Items.GLALITITE
-					|| Id == Items.GYARADOSITE
-					|| Id == Items.HERACRONITE
-					|| Id == Items.HOUNDOOMINITE
-					|| Id == Items.KANGASKHANITE
-					|| Id == Items.LATIASITE
-					|| Id == Items.LATIOSITE
-					|| Id == Items.LOPUNNITE
-					|| Id == Items.LUCARIONITE
-					|| Id == Items.MANECTITE
-					|| Id == Items.MAWILITE
-					|| Id == Items.MEDICHAMITE
-					|| Id == Items.METAGROSSITE
-					|| Id == Items.MEWTWONITE_X
-					|| Id == Items.MEWTWONITE_Y
-					|| Id == Items.PIDGEOTITE
-					|| Id == Items.PINSIRITE
-					|| Id == Items.SABLENITE
-					|| Id == Items.SALAMENCITE
-					|| Id == Items.SCEPTILITE
-					|| Id == Items.SCIZORITE
-					|| Id == Items.SHARPEDONITE
-					|| Id == Items.SLOWBRONITE
-					|| Id == Items.STEELIXITE
-					|| Id == Items.SWAMPERTITE
-					|| Id == Items.TYRANITARITE
-					|| Id == Items.VENUSAURITE;
+				return pbIsMegaStone(Id);
 			}
 		}
 		public bool IsGem
 		{
 			get
 			{
-				return Id == Items.FIRE_GEM
-					|| Id == Items.WATER_GEM
-					|| Id == Items.ELECTRIC_GEM
-					|| Id == Items.GRASS_GEM
-					|| Id == Items.ICE_GEM
-					|| Id == Items.FIGHTING_GEM
-					|| Id == Items.POISON_GEM
-					|| Id == Items.GROUND_GEM
-					|| Id == Items.FLYING_GEM
-					|| Id == Items.PSYCHIC_GEM
-					|| Id == Items.BUG_GEM
-					|| Id == Items.ROCK_GEM
-					|| Id == Items.GHOST_GEM
-					|| Id == Items.DRAGON_GEM
-					|| Id == Items.DARK_GEM
-					|| Id == Items.STEEL_GEM
-					|| Id == Items.NORMAL_GEM
-					|| Id == Items.FAIRY_GEM;
+				return pbIsGem(Id);
 			}
 		}
 
@@ -357,9 +173,124 @@ namespace PokemonUnity.Inventory
 		{
 			return true;
 		}
+		public static bool pbIsLetter(Items item)
+		{
+			return item == Items.AIR_MAIL
+				|| item == Items.BEAD_MAIL
+				|| item == Items.BLOOM_MAIL
+				|| item == Items.BRICK_MAIL
+				|| item == Items.BRIDGE_MAIL_D
+				|| item == Items.BRIDGE_MAIL_M
+				|| item == Items.BRIDGE_MAIL_S
+				|| item == Items.BRIDGE_MAIL_T
+				|| item == Items.BRIDGE_MAIL_V
+				|| item == Items.BUBBLE_MAIL
+				|| item == Items.DREAM_MAIL
+				|| item == Items.FAB_MAIL
+				|| item == Items.FAVORED_MAIL
+				|| item == Items.FLAME_MAIL
+				|| item == Items.GLITTER_MAIL
+				|| item == Items.GRASS_MAIL
+				|| item == Items.GREET_MAIL
+				|| item == Items.HARBOR_MAIL
+				|| item == Items.HEART_MAIL
+				|| item == Items.INQUIRY_MAIL
+				|| item == Items.LIKE_MAIL
+				|| item == Items.MECH_MAIL
+				|| item == Items.MOSAIC_MAIL
+				|| item == Items.ORANGE_MAIL
+				|| item == Items.REPLY_MAIL
+				|| item == Items.RETRO_MAIL
+				|| item == Items.RSVP_MAIL
+				|| item == Items.SHADOW_MAIL
+				|| item == Items.SNOW_MAIL
+				|| item == Items.SPACE_MAIL
+				|| item == Items.STEEL_MAIL
+				|| item == Items.THANKS_MAIL
+				|| item == Items.TROPIC_MAIL
+				|| item == Items.TUNNEL_MAIL
+				|| item == Items.WAVE_MAIL
+				|| item == Items.WOOD_MAIL;
+		}
+		public static bool pbIsApricon(Items item)
+		{
+			return item == Items.BLACK_APRICORN
+				|| item == Items.BLUE_APRICORN
+				|| item == Items.GREEN_APRICORN
+				|| item == Items.PINK_APRICORN
+				|| item == Items.RED_APRICORN
+				|| item == Items.WHITE_APRICORN
+				|| item == Items.YELLOW_APRICORN;
+		}
 		public static bool pbIsBerry(Items item)
 		{
-			return true;
+			return item == Items.AGUAV_BERRY
+				|| item == Items.APICOT_BERRY
+				|| item == Items.ASPEAR_BERRY
+				|| item == Items.BABIRI_BERRY
+				|| item == Items.BELUE_BERRY
+				|| item == Items.BLUK_BERRY
+				|| item == Items.CHARTI_BERRY
+				|| item == Items.CHERI_BERRY
+				|| item == Items.CHESTO_BERRY
+				|| item == Items.CHILAN_BERRY
+				|| item == Items.CHOPLE_BERRY
+				|| item == Items.COBA_BERRY
+				|| item == Items.COLBUR_BERRY
+				|| item == Items.CORNN_BERRY
+				|| item == Items.CUSTAP_BERRY
+				|| item == Items.DURIN_BERRY
+				|| item == Items.ENIGMA_BERRY
+				|| item == Items.FIGY_BERRY
+				|| item == Items.GANLON_BERRY
+				|| item == Items.GREPA_BERRY
+				|| item == Items.HABAN_BERRY
+				|| item == Items.HONDEW_BERRY
+				|| item == Items.IAPAPA_BERRY
+				|| item == Items.JABOCA_BERRY
+				|| item == Items.KASIB_BERRY
+				|| item == Items.KEBIA_BERRY
+				|| item == Items.KEE_BERRY
+				|| item == Items.KELPSY_BERRY
+				|| item == Items.LANSAT_BERRY
+				|| item == Items.LEPPA_BERRY
+				|| item == Items.LIECHI_BERRY
+				|| item == Items.LUM_BERRY
+				|| item == Items.MAGOST_BERRY
+				|| item == Items.MAGO_BERRY
+				|| item == Items.MARANGA_BERRY
+				|| item == Items.MICLE_BERRY
+				|| item == Items.NANAB_BERRY
+				|| item == Items.NOMEL_BERRY
+				|| item == Items.OCCA_BERRY
+				|| item == Items.ORAN_BERRY
+				|| item == Items.PAMTRE_BERRY
+				|| item == Items.PASSHO_BERRY
+				|| item == Items.PAYAPA_BERRY
+				|| item == Items.PECHA_BERRY
+				|| item == Items.PERSIM_BERRY
+				|| item == Items.PETAYA_BERRY
+				|| item == Items.PINAP_BERRY
+				|| item == Items.POMEG_BERRY
+				|| item == Items.QUALOT_BERRY
+				|| item == Items.RABUTA_BERRY
+				|| item == Items.RAWST_BERRY
+				|| item == Items.RAZZ_BERRY
+				|| item == Items.RINDO_BERRY
+				|| item == Items.ROSELI_BERRY
+				|| item == Items.ROWAP_BERRY
+				|| item == Items.SALAC_BERRY
+				|| item == Items.SHUCA_BERRY
+				|| item == Items.SITRUS_BERRY
+				|| item == Items.SPELON_BERRY
+				|| item == Items.STARF_BERRY
+				|| item == Items.TAMATO_BERRY
+				|| item == Items.TANGA_BERRY
+				|| item == Items.WACAN_BERRY
+				|| item == Items.WATMEL_BERRY
+				|| item == Items.WEPEAR_BERRY
+				|| item == Items.WIKI_BERRY
+				|| item == Items.YACHE_BERRY;
 		}
 		public static bool pbIsGem(Items item)
 		{
