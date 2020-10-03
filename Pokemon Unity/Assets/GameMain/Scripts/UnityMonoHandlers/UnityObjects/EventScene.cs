@@ -30,12 +30,12 @@ namespace PokemonUnity.UX
 			@disposed = false;
 		}
 
-		public void main()
+		public IEnumerator main()
 		{
 			//while (!disposed)
 			if (!disposed)
 			{
-				update();
+				yield return update();
 			}
 		}
 
@@ -102,9 +102,9 @@ namespace PokemonUnity.UX
 			for(int i = 0; i < extraframes; i++) { update(); };
 		}
 
-		public void update()
+		public IEnumerator update()
 		{
-			if (disposed) return;
+			if (disposed) yield break;
 			//Graphics.update();
 			//Input.update();
 			//foreach (var picture in @pictures)
@@ -137,19 +137,14 @@ namespace PokemonUnity.UX
 			//	@onBTrigger = true;
 			//}
 			// each update one tick... but it wont be reflected in unity, unless you create an artificial pause
-			StartCoroutine(Tick()); 
+			//Use a global const float, to represent how quickly your frames tick
+			yield return new WaitForSeconds(.1f);
 		}
 
 		public void wait(int frames)
 		{
 			//frames.times { update };
 			for(int i = 0; i < frames; i++) { update(); };
-		}
-
-		IEnumerator Tick()
-		{
-			//Use a global const float, to represent how quickly your frames tick
-			yield return new WaitForSeconds(.1f);
 		}
 	}
 }

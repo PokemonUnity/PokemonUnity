@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -180,7 +181,8 @@ namespace PokemonUnity
 		/// </summary>
 		bool onBTrigger { get; set; }
 		bool onUpdate { get; set; }
-		void main();
+		IEnumerator main();
+		void initialize();
 		bool disposed { get; }
 		void dispose();
 		//void addBitmap(float x, float y, Bitmap bitmap);
@@ -190,7 +192,7 @@ namespace PokemonUnity
 		void wait(int frames);
 		void pictureWait(int extraframes = 0);
 		//void addUserSprite(Sprite sprite);
-		void update();
+		IEnumerator update();
 	}
 	/// <summary>
 	/// First scene to load when game boots up.

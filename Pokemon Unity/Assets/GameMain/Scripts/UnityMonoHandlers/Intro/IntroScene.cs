@@ -43,7 +43,8 @@ namespace PokemonUnity.UX
 		// Update is called once per frame
 		void Update()
 		{
-			main();
+			//Every action will be executed once, and the script ends with `update()` which will pause and wait for brief moment.
+			StartCoroutine(main());
 		}
 
 		//public void initialize(pics, splash, viewport= null)
