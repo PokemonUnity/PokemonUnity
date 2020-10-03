@@ -18,7 +18,9 @@ namespace PokemonUnity.Combat
 public static class PBTrainerAI {
   // Minimum skill level to be in each AI category
   public const int minimumSkill  = 1;
+  // dont want to lose
   public const int mediumSkill   = 32;
+  // dont want to draw
   public const int highSkill     = 48;
   public const int bestSkill     = 100;   // Gym Leaders, E4, Champion
 }
@@ -2407,7 +2409,7 @@ public partial class Battle{
       break;
     case Attack.Data.Effects.x0E1: case Attack.Data.Effects.x13B:
       if (opponent.effects.Substitute==0) {
-        if (skill>=PBTrainerAI.highSkill && ItemData.pbIsBerry(opponent.Item)) { //PokemonUnity.Inventory.Item.pbIsBerry(opponent.Item)
+        if (skill>=PBTrainerAI.highSkill && Item.pbIsBerry(opponent.Item)) { 
           score+=30;
         }
       }
@@ -2422,8 +2424,8 @@ public partial class Battle{
     case Attack.Data.Effects.x0EA:
       if (attacker.Item==0 ||
          pbIsUnlosableItem(attacker,attacker.Item) ||
-         //Inventory.Item.pbIsPokeBall(attacker.Item) ||
-         ItemData.pbIsPokeBall(attacker.Item) ||
+         Item.pbIsPokeBall(attacker.Item) ||
+         //ItemData.pbIsPokeBall(attacker.Item) ||
          attacker.hasWorkingAbility(Abilities.KLUTZ) ||
          attacker.effects.Embargo>0) {
         score-=90;

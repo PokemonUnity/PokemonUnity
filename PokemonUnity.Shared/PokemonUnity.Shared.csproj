@@ -68,6 +68,7 @@
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
+    <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Monster\BattlePeer.cs" />
     <Compile Include="Combat\Interface\IBattler.cs" />
     <Compile Include="Combat\Trainer\Trainer.cs" />

@@ -87,11 +87,11 @@ public static bool pbIsHiddenMachine (Items item) {
 }
 
 public static bool pbIsMail (Items item) {
-  return Game.ItemData.ContainsKey(item) && (Game.ItemData[item].IsLetter); //[ITEMTYPE]==1 || Game.ItemData[item][ITEMTYPE]==2
+  return Game.ItemData.ContainsKey(item) && (ItemData.pbIsLetter(item)); //[ITEMTYPE]==1 || Game.ItemData[item][ITEMTYPE]==2
 }
 
 public static bool pbIsSnagBall (Items item) {
-  return Game.ItemData.ContainsKey(item) && (Game.ItemData[item].Pocket == ItemPockets.POKEBALL);// || //[ITEMTYPE]==3
+  return Game.ItemData.ContainsKey(item) && (ItemData.pbIsPokeBall(item) || Game.ItemData[item].Pocket == ItemPockets.POKEBALL);// || //[ITEMTYPE]==3
          //(Game.GameData.Global.snagMachine)); //Game.ItemData[item][ITEMTYPE]==4 && 4: SnagBall Item
 }
 
@@ -100,7 +100,7 @@ public static bool pbIsPokeBall (Items item) {
 }
 
 public static bool pbIsBerry (Items item) {
-  return Game.ItemData.ContainsKey(item) && (ItemData.pbIsBerry(item)); //[ITEMTYPE]==5
+  return Game.ItemData.ContainsKey(item) && ItemData.pbIsBerry(item); //[ITEMTYPE]==5 
 }
 
 public static bool pbIsKeyItem (Items item) {
@@ -707,36 +707,65 @@ public static partial class ItemHandlers {
   //private static ItemHandlerHash UseInBattle=new ItemHandlerHash();
   private static Dictionary<Items,Func<ItemUseResults>> UseFromBag=new Dictionary<Items, Func<ItemUseResults>>();
   private static Dictionary<Items,Action> UseInField=new Dictionary<Items, Action>();
-  private static Dictionary<Items,Delegate> UseOnPokemon=new Dictionary<Items, Delegate>();
-  private static Dictionary<Items,Func<Combat.Pokemon,IHasDisplayMessage,bool>> BattleUseOnBattler=new Dictionary<Items, Func<Combat.Pokemon, IHasDisplayMessage, bool>>();
-  private static Dictionary<Items,Func<Monster.Pokemon,Combat.Pokemon,IHasDisplayMessage,bool>> BattleUseOnPokemon=new Dictionary<Items, Func<Monster.Pokemon, Combat.Pokemon, IHasDisplayMessage, bool>>();
-  private static Dictionary<Items,Action<Combat.Pokemon,Combat.Battle>> UseInBattle=new Dictionary<Items, Action<Combat.Pokemon,Combat.Battle>>();
+  private static Dictionary<Items,UseOnPokemonDelegate> UseOnPokemon=new Dictionary<Items, UseOnPokemonDelegate>();
+  private static Dictionary<Items,BattleUseOnBattlerDelegate> BattleUseOnBattler=new Dictionary<Items, BattleUseOnBattlerDelegate>();
+  private static Dictionary<Items,BattleUseOnPokemonDelegate> BattleUseOnPokemon=new Dictionary<Items, BattleUseOnPokemonDelegate>();
+  private static Dictionary<Items,UseInBattleDelegate> UseInBattle=new Dictionary<Items, UseInBattleDelegate>();
+  public delegate bool UseOnPokemonDelegate(Items item, Monster.Pokemon pokemon, IHasDisplayMessage scene);
+  public delegate bool BattleUseOnPokemonDelegate(Monster.Pokemon pokemon, Combat.Pokemon battler, IPokeBattle_Scene scene); //or Pokemon Party Scene
+  public delegate bool BattleUseOnBattlerDelegate(Items item, Combat.Pokemon battler, IPokeBattle_Scene scene); //or Pokemon Party Scene
+  public delegate void UseInBattleDelegate(Items item, PokemonUnity.Combat.Pokemon battler, PokemonUnity.Combat.Battle battle);
 
   public static void addUseFromBag(Items item,Func<ItemUseResults> proc) {
-    UseFromBag.Add(item,proc);
+    if (!UseFromBag.ContainsKey(item))
+      UseFromBag.Add(item,proc);
+    else
+      UseFromBag[item] = proc;
   }
 
   public static void addUseInField(Items item,Action proc) {
-    UseInField.Add(item,proc);
+    if (!UseInField.ContainsKey(item))
+      UseInField.Add(item,proc);
+    else
+      UseInField[item] = proc;
   }
 
-  public static void addUseOnPokemon(Items item,Func<Pokemon,IHasDisplayMessage,bool> proc) {
-    UseOnPokemon.Add(item,proc);
+  public static void addUseOnPokemon(Items item, UseOnPokemonDelegate proc) {
+    if (!UseOnPokemon.ContainsKey(item))
+      UseOnPokemon.Add(item,proc);
+    else
+      UseOnPokemon[item] = proc;
   }
 
-  public static void addBattleUseOnBattler(Items item,Func<Combat.Pokemon,IHasDisplayMessage,bool> proc) {
-    BattleUseOnBattler.Add(item,proc);
+  public static void addBattleUseOnBattler(Items item, BattleUseOnBattlerDelegate proc) {
+    if (!BattleUseOnBattler.ContainsKey(item))
+      BattleUseOnBattler.Add(item,proc);
+    else
+      BattleUseOnBattler[item] = proc;
   }
 
-  public static void addBattleUseOnPokemon(Items item,Func<Monster.Pokemon,Combat.Pokemon,IHasDisplayMessage,bool> proc) {
-    BattleUseOnPokemon.Add(item,proc);
+  public static void addBattleUseOnPokemon(Items item, BattleUseOnPokemonDelegate proc) {
+    if (!BattleUseOnPokemon.ContainsKey(item))
+      BattleUseOnPokemon.Add(item,proc);
+    else
+      BattleUseOnPokemon[item] = proc;
   }
 
-  public static bool hasOutHandler(Items item) {                       // Shows "Use" option in Bag
+        /// <summary>
+        /// Shows "Use" option in Bag
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+  public static bool hasOutHandler(Items item) {                       
     return (!UseFromBag.ContainsKey(item) && UseFromBag[item]!=null) || (!UseOnPokemon.ContainsKey(item) && UseOnPokemon[item]!=null);
   }
 
-  public static bool hasKeyItemHandler(Items item) {              // Shows "Register" option in Bag
+        /// <summary>
+        /// Shows "Register" option in Bag
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+  public static bool hasKeyItemHandler(Items item) {              
     return !UseInField.ContainsKey(item) && UseInField[item]!=null;
   }
 
@@ -757,6 +786,14 @@ public static partial class ItemHandlers {
     //return Game.ItemData[item].Flags.Useable_In_Battle;
   }
 
+  /// <summary>
+  /// </summary>
+  /// <param name="item"></param>
+  /// <returns>Return values: 0 = not used
+  ///                         1 = used, item not consumed
+  ///                         2 = close the Bag to use, item not consumed
+  ///                         3 = used, item consumed
+  ///                         4 = close the Bag to use, item consumed</returns>
   public static ItemUseResults triggerUseFromBag(Items item) {
 //  Return value:
 //  0 - Item not used
@@ -764,7 +801,7 @@ public static partial class ItemHandlers {
 //  2 - Item used, end screen
 //  3 - Item used, consume item
 //  4 - Item used, end screen, consume item
-    if (!UseFromBag.ContainsKey(item) && UseFromBag[item] == null) { //Search List
+    if (!UseFromBag.ContainsKey(item) || UseFromBag[item] == null) { //Search List
       // Check the UseInField handler if present
       if (UseInField[item] != null) {
       //if (!Game.ItemData[item].Flags.Useable_Overworld) {
@@ -781,7 +818,7 @@ public static partial class ItemHandlers {
 
   public static bool triggerUseInField(Items item) {
     // No return value
-    if (!UseInField.ContainsKey(item) && UseInField[item] == null) {
+    if (!UseInField.ContainsKey(item) || UseInField[item] == null) {
     //if (!Game.ItemData[item].Flags.Useable_Overworld) {
       return false;
     } else {
@@ -793,29 +830,33 @@ public static partial class ItemHandlers {
 
   public static bool triggerUseOnPokemon(Items item,Pokemon pokemon,IHasDisplayMessage scene) {
     // Returns whether item was used
-    if (!UseOnPokemon.ContainsKey(item) && UseOnPokemon[item] == null) { //Search List
+    if (!UseOnPokemon.ContainsKey(item) || UseOnPokemon[item] == null) { //Search List
       return false;
     } else {
       //return UseOnPokemon[item].Invoke(pokemon,scene);
-      return (bool)UseOnPokemon[item].DynamicInvoke(item,pokemon,scene);
+      return (bool)UseOnPokemon[item].Invoke(item,pokemon,scene);
       //return ItemHandlers.UseOnPokemon(item,pokemon,scene);
     }
   }
 
-  public static bool triggerBattleUseOnBattler(Items item,PokemonUnity.Combat.Pokemon battler,IHasDisplayMessage scene) {
+  //ToDo: scene parameter is throwing errors in battle class, resolve in itemhandler method
+  public static bool triggerBattleUseOnBattler(Items item,PokemonUnity.Combat.Pokemon battler,IHasDisplayMessage scene) { return false; }
+  public static bool triggerBattleUseOnPokemon(Items item,Pokemon pokemon,PokemonUnity.Combat.Pokemon battler, IHasDisplayMessage scene) { return false; }
+
+  public static bool triggerBattleUseOnBattler(Items item,PokemonUnity.Combat.Pokemon battler,IPokeBattle_Scene scene) {
     // Returns whether item was used
-    if (!BattleUseOnBattler.ContainsKey(item) && BattleUseOnBattler[item] == null) {
+    if (!BattleUseOnBattler.ContainsKey(item) || BattleUseOnBattler[item] == null) {
     //if (!Game.ItemData[item].Flags.Useable_In_Battle) {
       return false;
     } else {
-      return BattleUseOnBattler[item].Invoke(battler,scene);
+      return BattleUseOnBattler[item].Invoke(item,battler,scene);
       //return ItemHandlers.BattleUseOnBattler(item,battler,scene);
     }
   }
 
-  public static bool triggerBattleUseOnPokemon(Items item,Pokemon pokemon,PokemonUnity.Combat.Pokemon battler,IHasDisplayMessage scene) {
+  public static bool triggerBattleUseOnPokemon(Items item,Pokemon pokemon,PokemonUnity.Combat.Pokemon battler,IPokeBattle_Scene scene) {
     // Returns whether item was used
-    if (!BattleUseOnPokemon.ContainsKey(item) && BattleUseOnPokemon[item] == null) {
+    if (!BattleUseOnPokemon.ContainsKey(item) || BattleUseOnPokemon[item] == null) {
     //if (!Game.ItemData[item].Flags.Useable_In_Battle) {
       return false;
     } else {
@@ -826,11 +867,11 @@ public static partial class ItemHandlers {
 
   public static void triggerUseInBattle(Items item,PokemonUnity.Combat.Pokemon battler,PokemonUnity.Combat.Battle battle) {
     // Returns whether item was used
-    if (!UseInBattle.ContainsKey(item) && UseInBattle[item] == null) {
+    if (!UseInBattle.ContainsKey(item) || UseInBattle[item] == null) {
     //if (!Game.ItemData[item].Flags.Useable_In_Battle) {
       return;
     } else {
-      UseInBattle[item].Invoke(battler,battle);
+      UseInBattle[item].Invoke(item,battler,battle);
       //ItemHandlers.UseInBattle(item,battler,battle);
     }
   }

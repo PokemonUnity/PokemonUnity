@@ -97,6 +97,13 @@ namespace PokemonUnity.Inventory
 				return pbIsLetter(Id);
 			} 
 		}
+		public bool IsPokeBall
+		{ 
+			get 
+			{
+				return pbIsPokeBall(Id);
+			} 
+		}
 		public bool IsBerry 
 		{ 
 			get 
@@ -171,7 +178,36 @@ namespace PokemonUnity.Inventory
 		#region Methods
 		public static bool pbIsPokeBall(Items item)
 		{
-			return true;
+			return item == Items.BEAST_BALL
+				|| item == Items.CHERISH_BALL
+				|| item == Items.DIVE_BALL
+				|| item == Items.DREAM_BALL
+				|| item == Items.DUSK_BALL
+				|| item == Items.FAST_BALL
+				|| item == Items.FRIEND_BALL
+				|| item == Items.GREAT_BALL
+				|| item == Items.HEAL_BALL
+				|| item == Items.HEAVY_BALL
+				|| item == Items.IRON_BALL
+				|| item == Items.LEVEL_BALL
+				|| item == Items.LIGHT_BALL
+				|| item == Items.LOVE_BALL
+				|| item == Items.LURE_BALL
+				|| item == Items.LUXURY_BALL
+				|| item == Items.MASTER_BALL
+				|| item == Items.MOON_BALL
+				|| item == Items.NEST_BALL
+				|| item == Items.NET_BALL
+				|| item == Items.PARK_BALL
+				|| item == Items.POKE_BALL
+				|| item == Items.PREMIER_BALL
+				|| item == Items.QUICK_BALL
+				|| item == Items.REPEAT_BALL
+				|| item == Items.SAFARI_BALL
+				|| item == Items.SMOKE_BALL
+				|| item == Items.SPORT_BALL
+				|| item == Items.TIMER_BALL
+				|| item == Items.ULTRA_BALL;
 		}
 		public static bool pbIsLetter(Items item)
 		{
