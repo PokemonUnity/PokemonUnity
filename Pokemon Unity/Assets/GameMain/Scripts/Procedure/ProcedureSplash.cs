@@ -9,6 +9,13 @@ using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedure
 
 namespace PokemonUnity
 {
+    /// <summary>
+    /// Splash scene is when a game boots up and they display the title card (where you `Press Start` before start menu)
+    /// </summary>
+    /// <remarks>
+    /// In the case of this template, the preload scene and splash scene roles are reversed;
+    /// instead of loading logo in preload, the template loads logo in splash and start game in menu
+    /// </remarks>
     public class ProcedureSplash : ProcedureBase
     {
         public override bool UseNativeDialog
@@ -23,8 +30,9 @@ namespace PokemonUnity
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            // TODO: 增加一个 Splash 动画，这里先跳过
-            // 编辑器模式下，直接进入预加载流程；否则，检查一下版本
+            // TODO: Add a Splash animation, skip it here
+            // In the editor mode, directly enter the preloading process; otherwise, check the version
+            //ToDo: Should check version IF online (or server available) otherwise continue to preloading
             ChangeState(procedureOwner, GameEntry.Base.EditorResourceMode ? typeof(ProcedurePreload) : typeof(ProcedureCheckVersion));
         }
     }

@@ -1935,24 +1935,24 @@ namespace PokemonUnity.Combat
     pbDisplayBrief(Game._INTL("{1} used the\r\n{2}!",opponent.name,itemname));
     GameDebug.Log($"[Use item] Opponent used #{itemname} on #{battler.ToString(true)}");
     if (item == Items.POTION) {
-      battler.pbRecoverHP(20,true);
+      battler.RecoverHP(20,true);
       pbDisplay(Game._INTL("{1}'s HP was restored.",battler.ToString()));
     }
     else if (item == Items.SUPER_POTION) {
-      battler.pbRecoverHP(50,true);
+      battler.RecoverHP(50,true);
       pbDisplay(Game._INTL("{1}'s HP was restored.",battler.ToString()));
     }
     else if (item == Items.HYPER_POTION) {
-      battler.pbRecoverHP(200,true);
+      battler.RecoverHP(200,true);
       pbDisplay(Game._INTL("{1}'s HP was restored.",battler.ToString()));
     }
     else if (item == Items.MAX_POTION) {
-      battler.pbRecoverHP(battler.TotalHP-battler.HP,true);
+      battler.RecoverHP(battler.TotalHP-battler.HP,true);
       pbDisplay(Game._INTL("{1}'s HP was restored.",battler.ToString()));
     }
     else if (item == Items.FULL_RESTORE) {
       bool fullhp=(battler.HP==battler.TotalHP);
-      battler.pbRecoverHP(battler.TotalHP-battler.HP,true);
+      battler.RecoverHP(battler.TotalHP-battler.HP,true);
       battler.Status=0; battler.StatusCount=0;
       battler.effects.Confusion=0;
       if (fullhp) {
@@ -2586,7 +2586,7 @@ namespace PokemonUnity.Combat
         GameDebug.Log($"[Lingering effect triggered] #{pkmn.ToString()}'s Healing Wish");
         pbCommonAnimation("HealingWish",pkmn,null);
         pbDisplayPaused(Game._INTL("The healing wish came true for {1}!",pkmn.ToString(true)));
-        pkmn.pbRecoverHP(pkmn.TotalHP,true);
+        pkmn.RecoverHP(pkmn.TotalHP,true);
         pkmn.pbCureStatus(false);
         pkmn.effects.HealingWish=false;
       }
@@ -2595,7 +2595,7 @@ namespace PokemonUnity.Combat
         GameDebug.Log($"[Lingering effect triggered] #{pkmn.ToString()}'s Lunar Dance");
         pbCommonAnimation("LunarDance",pkmn,null);
         pbDisplayPaused(Game._INTL("{1} became cloaked in mystical moonlight!",pkmn.ToString()));
-        pkmn.pbRecoverHP(pkmn.TotalHP,true);
+        pkmn.RecoverHP(pkmn.TotalHP,true);
         pkmn.pbCureStatus(false);
         for (int i = 0; i < 4; i++) {
           pkmn.moves[i].PP=pkmn.moves[i].TotalPP;
@@ -2820,7 +2820,7 @@ namespace PokemonUnity.Combat
     return @scene.pbDisplayConfirmMessage(msg);
   }
 
-  public void pbShowCommands(string msg,string commands,bool cancancel=true) {
+  public void pbShowCommands(string msg,string[] commands,bool cancancel=true) {
     @scene.pbShowCommands(msg,commands,cancancel);
   }
 
@@ -3681,7 +3681,7 @@ namespace PokemonUnity.Combat
          (pbWeather()==Weather.RAINDANCE ||
          pbWeather()==Weather.HEAVYRAIN)) {
         GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Rain Dish");
-        int hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/16f),true);
+        int hpgain=i.RecoverHP((int)Math.Floor(i.TotalHP/16f),true);
         if (hpgain>0) pbDisplay(Game._INTL("{1}'s {2} restored its HP a little!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
       }
       // Dry Skin
@@ -3689,7 +3689,7 @@ namespace PokemonUnity.Combat
         if (pbWeather()==Weather.RAINDANCE ||
            pbWeather()==Weather.HEAVYRAIN) {
           GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Dry Skin (in rain)");
-          int hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/8f),true);
+          int hpgain=i.RecoverHP((int)Math.Floor(i.TotalHP/8f),true);
           if (hpgain>0) pbDisplay(Game._INTL("{1}'s {2} was healed by the rain!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
         }
         else if (pbWeather()==Weather.SUNNYDAY ||
@@ -3703,7 +3703,7 @@ namespace PokemonUnity.Combat
       // Ice Body
       if (i.hasWorkingAbility(Abilities.ICE_BODY) && pbWeather()==Weather.HAIL) {
         GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Ice Body");
-        int hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/16f),true);
+        int hpgain=i.RecoverHP((int)Math.Floor(i.TotalHP/16f),true);
         if (hpgain>0) pbDisplay(Game._INTL("{1}'s {2} restored its HP a little!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
       }
       if (i.isFainted()) {
@@ -3717,7 +3717,7 @@ namespace PokemonUnity.Combat
         i.effects.Wish-=1;
         if (i.effects.Wish==0) {
           GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Wish");
-          int hpgain=i.pbRecoverHP(i.effects.WishAmount,true);
+          int hpgain=i.RecoverHP(i.effects.WishAmount,true);
           if (hpgain>0) {
             string wishmaker=ToString(i.Index,i.effects.WishMaker);
             pbDisplay(Game._INTL("{1}'s wish came true!",wishmaker));
@@ -3804,7 +3804,7 @@ namespace PokemonUnity.Combat
       if (i.isFainted()) continue;
       // Grassy Terrain (healing)
       if (@field.GrassyTerrain>0 && !i.isAirborne()) {
-        int hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/16f),true);
+        int hpgain=i.RecoverHP((int)Math.Floor(i.TotalHP/16f),true);
         if (hpgain>0) pbDisplay(Game._INTL("{1}'s HP was restored.",i.ToString()));
       }
       // Held berries/Leftovers/Black Sludge
@@ -3820,7 +3820,7 @@ namespace PokemonUnity.Combat
         GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Aqua Ring");
         int hpgain=(int)Math.Floor(i.TotalHP/16f);
         if (i.hasWorkingItem(Items.BIG_ROOT)) hpgain=(int)Math.Floor(hpgain*1.3);
-        hpgain=i.pbRecoverHP(hpgain,true);
+        hpgain=i.RecoverHP(hpgain,true);
         if (hpgain>0) pbDisplay(Game._INTL("Aqua Ring restored {1}'s HP!",i.ToString()));
       }
     }
@@ -3831,7 +3831,7 @@ namespace PokemonUnity.Combat
         GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Ingrain");
         int hpgain=(int)Math.Floor(i.TotalHP/16f);
         if (i.hasWorkingItem(Items.BIG_ROOT)) hpgain=(int)Math.Floor(hpgain*1.3);
-        hpgain=i.pbRecoverHP(hpgain,true);
+        hpgain=i.RecoverHP(hpgain,true);
         if (hpgain>0) pbDisplay(Game._INTL("{1} absorbed nutrients with its roots!",i.ToString()));
       }
     }
@@ -3851,7 +3851,7 @@ namespace PokemonUnity.Combat
           else {
             if (recipient.effects.HealBlock==0) {
               if (recipient.hasWorkingItem(Items.BIG_ROOT)) hploss=(int)Math.Floor(hploss*1.3);
-              recipient.pbRecoverHP(hploss,true);
+              recipient.RecoverHP(hploss,true);
             }
             pbDisplay(Game._INTL("{1}'s health was sapped by Leech Seed!",i.ToString()));
           }
@@ -3876,7 +3876,7 @@ namespace PokemonUnity.Combat
           pbCommonAnimation("Poison",i,null);
           if (i.effects.HealBlock==0 && i.HP<i.TotalHP) {
             GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Poison Heal");
-            i.pbRecoverHP((int)Math.Floor(i.TotalHP/8f),true);
+            i.RecoverHP((int)Math.Floor(i.TotalHP/8f),true);
             pbDisplay(Game._INTL("{1} is healed by poison!",i.ToString()));
           }
         }

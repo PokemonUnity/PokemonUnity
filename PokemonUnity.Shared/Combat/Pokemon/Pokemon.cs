@@ -18,7 +18,6 @@ namespace PokemonUnity.Combat
 	/// This class is called once during battle and persist unitl end.
 	/// Values and variables are overrwritten using <see cref="InitPokemon(Monster.Pokemon, sbyte)"/>
 	/// </remarks>
-	/// ToDo: Create a SaveResults() after battle has ended, to make changes permanent.
 	public partial class Pokemon
 	{
 		#region Variables
@@ -797,7 +796,6 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Change HP
-		public int pbRecoverHP(int amount, bool animate = false) { return amount; }
 		public int ReduceHP(int amt, bool animate = false, bool registerDamage = true)
 		{
 			if (amt >= HP)
@@ -807,11 +805,13 @@ namespace PokemonUnity.Combat
 			int oldhp = HP;
 			HP -= amt;
 			if (HP < 0)
-				battle.pbDisplay(Game._INTL("HP less than 0"));
+				//battle.pbDisplay(Game._INTL("HP less than 0"));
 				//battle.pbDisplay(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
+				GameDebug.LogWarning("HP less than 0");
 			if (HP > TotalHP)
-				battle.pbDisplay(Game._INTL("HP greater than total HP"));
+				//battle.pbDisplay(Game._INTL("HP greater than total HP"));
 				//battle.pbDisplay(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
+				GameDebug.LogWarning("HP greater than total HP");
 			if (amt > 0)
 				battle.scene.HPChanged(Index, oldhp, animate);
 			if (amt > 0 && registerDamage)
@@ -829,15 +829,13 @@ namespace PokemonUnity.Combat
 			int oldhp = HP;
 			HP += amount;
 			if (HP < 0)
-				//"HP less than 0"
-				//battle.pbDisplay//Game.Dialog
-				//	(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
-				GameDebug.LogError("HP less than 0");
+				//battle.pbDisplay(Game._INTL("HP less than 0"));
+				//battle.pbDisplay(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
+				GameDebug.LogWarning("HP less than 0");
 			if (HP > TotalHP)
-				//"HP greater than total HP"
-				//battle.pbDisplay//Game.Dialog
-				//	(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
-				GameDebug.LogError("HP greater than total HP");
+				//battle.pbDisplay(Game._INTL("HP greater than total HP"));
+				//battle.pbDisplay(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
+				GameDebug.LogWarning("HP greater than total HP");
 			if(amount > 0)
 				battle.scene.HPChanged(Index, oldhp, animate);
 			//ToDo: Fix return
@@ -856,7 +854,7 @@ namespace PokemonUnity.Combat
 				GameDebug.LogWarning("Can't faint if already fainted");
 				return true;
 			}
-			battle.scene.Fainted(Index);
+			battle.scene.pbFainted(Index);
 			InitEffects(false);
 			// Reset status
 			//Status = 0;

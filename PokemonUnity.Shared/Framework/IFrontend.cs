@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity;
+using PokemonUnity.UX;
 using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
 
@@ -13,11 +15,14 @@ namespace PokemonUnity
 	{
 		void updatemini();
 	}
+	/// <summary>
+	/// </summary>
+	/// Screen should be renamed to `State`, as it's more in line with FSM
 	public interface IScreen
 	{
-		void update();
+		//IEnumerator update();
 	}
-	public interface IGame_Screen
+	public interface IGame_Screen : IScreen
 	{
 		int brightness { get; }
 		int flash_color { get; }
@@ -30,7 +35,7 @@ namespace PokemonUnity
 		void start_flash(Color color, int duration);
 		void start_shake(float power, float speed, int duration);
 		//void start_tone_change(Tone tone, int duration);
-		void update();
+		IEnumerator update();
 		void weather(int type, int power, int duration);
 	}
 	public interface IWindow
@@ -87,8 +92,8 @@ namespace PokemonUnity
 	#region Text Entry
 	public interface IPokemonEntry : IScreen
 	{
-		void initialize(IScene scene);
-		string pbStartScreen(string helptext, int minlength, int maxlength, string initialText, int mode = -1, Monster.Pokemon pokemon = null);
+		void initialize(IPokemonEntryScene scene);
+		string pbStartScreen(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes mode = 0, Monster.Pokemon pokemon = null);
 	}
 
 	/// <summary>
@@ -96,7 +101,7 @@ namespace PokemonUnity
 	/// </summary>
 	public interface IPokemonEntryScene : IScene
 	{
-		void pbStartScene(string helptext, int minlength, int maxlength, string initialText, int subject = 0, Monster.Pokemon pokemon = null);
+		void pbStartScene(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes subject = 0, Monster.Pokemon pokemon = null);
 		void pbEndScene();
 		string pbEntry();
 		//string pbEntry1();
@@ -118,7 +123,7 @@ namespace PokemonUnity
 		void pbDoUpdateOverlay();
 		void pbDoUpdateOverlay2();
 		bool pbMoveCursor();
-		float wrapmod(float x, float y);
+		int wrapmod(int x, int y);
 	}
 	#endregion
 
@@ -167,7 +172,7 @@ namespace PokemonUnity
 		void pbDisplayMessage(string msg, bool brief = false);
 		void pbDisplayPausedMessage(string msg);
 		bool pbDisplayConfirmMessage(string msg);
-		void pbShowCommands(string msg, string commands, bool defaultValue);
+		void pbShowCommands(string msg, string[] commands, bool defaultValue);
 		void pbFrameUpdate(object cw = null);
 		void pbRefresh();
 		void pbAddSprite(int id, double x, double y, string filename, int viewport);
@@ -274,7 +279,6 @@ namespace PokemonUnity
 		/// This method is called whenever a Pokémon faints.
 		/// </summary>
 		/// <param name=""></param>
-		void Fainted(int pkmn);
 		void pbFainted(int pkmn);
 		/// <summary>
 		/// Use this method to choose a command for the enemy.
@@ -317,10 +321,10 @@ namespace PokemonUnity
 		void pbThrowRock();
 	}
 
-    public interface IPokeBattleArena_Scene : PokemonUnity.IPokeBattle_Scene
-    {
-        void pbBattleArenaBattlers(Pokemon battler1, Pokemon battler2);
-        void pbBattleArenaJudgment(Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
+	public interface IPokeBattleArena_Scene : PokemonUnity.IPokeBattle_Scene
+	{
+		void pbBattleArenaBattlers(Pokemon battler1, Pokemon battler2);
+		void pbBattleArenaJudgment(Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
 		/// <summary>
 		/// </summary>
 		/// <param name="window">infowindow as `SpriteWindow_Base` to display the results</param>
@@ -329,16 +333,16 @@ namespace PokemonUnity
 		/// <param name="battler2"></param>
 		/// <param name="ratings1"></param>
 		/// <param name="ratings2"></param>
-        void updateJudgment(IWindow window, int phase, Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
-    }
+		void updateJudgment(IWindow window, int phase, Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
+	}
 	#endregion
 
 	#region Evolution
-	public interface IPokemonEvolutionScene
+	public interface IPokemonEvolutionScene : IScene
 	{
 		void pbEndScreen();
 		void pbEvolution(bool cancancel = true);
-		//void pbFlashInOut(bool canceled, oldstate, oldstate2);
+		void pbFlashInOut(bool canceled,string oldstate,string oldstate2);
 		void pbStartScreen(Monster.Pokemon pokemon, Pokemons newspecies);
 		void pbUpdate(bool animating = false);
 		void pbUpdateExpandScreen();
@@ -417,7 +421,7 @@ namespace PokemonUnity
 	#endregion
 
 	#region Pause Menu
-	public interface IPokemonMenu_Scene
+	public interface IPokemonMenu_Scene : IScene
 	{
 		void pbEndScene();
 		void pbHideMenu();
@@ -429,7 +433,7 @@ namespace PokemonUnity
 		void pbStartScene();
 	}
 
-	public interface IPokemonMenu
+	public interface IPokemonMenu : IScreen
 	{
 		void initialize(IPokemonMenu_Scene scene);
 		void pbShowMenu();

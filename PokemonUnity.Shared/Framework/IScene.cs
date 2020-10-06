@@ -216,17 +216,22 @@ namespace PokemonUnity
 		/// </summary>
 		void closeSplashDelete();
 	}
+	public interface IScene_Intro : IScreen
+	{
+		void initialize();
+		void main();
+	}
 	/// <summary>
 	/// Shows a help screen listing the keyboard controls.
 	/// </summary>
 	public interface IButtonEventScene : IEventScene {
 		void pbOnScreen1();
 	}
-	/*public interface IPokeBattle_DebugScene {
+	public interface IPokeBattle_DebugScene {
 		void pbDisplayMessage(string msg,bool brief= false);
 		void pbDisplayPausedMessage(string msg);
 		void pbDisplayConfirmMessage(string msg);
-		void pbFrameUpdate(cw);
+		void pbFrameUpdate(object cw);
 		void pbRefresh();
 		/// <summary>
 		/// Called whenever a new round begins.
@@ -249,7 +254,7 @@ namespace PokemonUnity
 		void pbBeginAttackPhase();
 		void pbCommandMenu(int index);
 		void pbPokemonString(Monster.Pokemon pkmn);
-		void pbMoveString(move);
+		void pbMoveString(string move);
 		/// <summary>
 		/// Use this method to display the list of moves for a Pokémon
 		/// </summary>
@@ -261,17 +266,17 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="index"></param>
 		void pbItemMenu(int index);
-		void pbFirstTarget(int index, targettype);
-		void pbNextTarget(cur,int index);
-		void pbPrevTarget(cur,int index);
+		void pbFirstTarget(int index,int targettype);
+		void pbNextTarget(int cur,int index);
+		void pbPrevTarget(int cur,int index);
 		/// <summary>
 		/// Use this method to make the player choose a target 
 		/// for certain moves in double battles.
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name=""></param>
-		void pbChooseTarget(int index, targettype);
-		void pbSwitch(int index, lax,bool cancancel);
+		void pbChooseTarget(int index,int targettype);
+		void pbSwitch(int index,bool lax,bool cancancel);
 		/// <summary>
 		/// This method is called whenever a Pokémon's HP changes.
 		/// Used to animate the HP bar.
@@ -310,14 +315,15 @@ namespace PokemonUnity
 		void pbHideOpponent();
 		void pbRecall(int battlerindex);
 		void pbDamageAnimation(Monster.Pokemon pkmn,TypeEffective effectiveness);
-		void pbAnimation(int moveid, attacker, opponent,int hitnum= 0);
+		void pbAnimation(int moveid,Combat.Pokemon attacker,Combat.Pokemon opponent,int hitnum= 0);
 	}
-	public interface IPokeBattle_SceneNonInteractive : IPokeBattle_Scene {
+	public interface IPokeBattle_SceneNonInteractive //: IPokeBattle_Scene
+	{
 		void pbCommandMenu(int index);
 		void pbFightMenu(int index);
 		void pbItemMenu(int index);
-		void pbChooseTarget(int index, targettype);
-		void pbSwitch(int index, lax,bool cancancel);
+		void pbChooseTarget(int index,int targettype);
+		void pbSwitch(int index,bool lax,bool cancancel);
 		void pbChooseEnemyCommand(int index);
 		/// <summary>
 		/// Use this method to choose a new Pokémon for the enemy
@@ -327,11 +333,12 @@ namespace PokemonUnity
 		/// <param name="party"></param>
 		void pbChooseNewEnemy(int index,Monster.Pokemon[] party);
 	}
-	public interface IPokeBattle_DebugSceneNoLogging {
+	/*public interface IPokeBattle_DebugSceneNoLogging : IPokeBattle_Scene
+	{
 		void pbDisplayMessage(string msg,bool brief= false);
 		void pbDisplayPausedMessage(string msg);
 		bool pbDisplayConfirmMessage(string msg);
-		int pbShowCommands(string msg,string[] commands,int defaultValue);
+		int pbShowCommands(string msg,string[] commands,bool defaultValue);
 		void pbBeginCommandPhase();
 		void pbStartBattle(Combat.Battle battle);
 		void pbEndBattle(Combat.BattleResults result);
@@ -339,14 +346,14 @@ namespace PokemonUnity
 		void pbSendOut(Combat.Battle battle,Monster.Pokemon pkmn);
 		void pbTrainerWithdraw(Combat.Battle battle,Monster.Pokemon pkmn);
 		void pbWithdraw(Combat.Battle battle,Monster.Pokemon pkmn);
-		int pbForgetMove(Monster.Pokemon pkmn, move);
+		int pbForgetMove(Monster.Pokemon pkmn,Moves move);
 		void pbBeginAttackPhase();
 		int pbCommandMenu(int index);
 		int pbFightMenu(int index);
 		int pbItemMenu(int index);
-		int pbChooseTarget(int index, targettype);
+		int pbChooseTarget(int index,int targettype);
 		void pbRefresh();
-		int pbSwitch(int index, lax,bool cancancel);
+		int pbSwitch(int index,bool lax,bool cancancel);
 		void pbHPChanged(Monster.Pokemon pkmn,int oldhp,bool anim= false);
 		void pbFainted(Monster.Pokemon pkmn);
 		void pbChooseEnemyCommand(int index);
@@ -357,15 +364,15 @@ namespace PokemonUnity
 		void pbLevelUp(Combat.Pokemon battler,Monster.Pokemon thispoke,int oldtotalhp,int oldattack,
 				int olddefense,int oldspeed,int oldspatk,int oldspdef);
 		int pbBlitz(keys);
-		void pbChatter(attacker, opponent);
+		void pbChatter(Combat.Battle attacker,Combat.Battle opponent);
 		void pbShowOpponent(opp);
 		void pbHideOpponent();
-		void pbRecall(battlerindex);
+		void pbRecall(int battlerindex);
 		void pbDamageAnimation(Monster.Pokemon pkmn,TypeEffective effectiveness);
-		void pbBattleArenaJudgment(b1, b2, r1, r2);
-		void pbBattleArenaBattlers(b1, b2);
-		void pbCommonAnimation(int moveid, attacker, opponent,int hitnum= 0);
-		void pbAnimation(int moveid, attacker, opponent,int hitnum= 0);
+		void pbBattleArenaJudgment(Combat.Battle b1,Combat.Battle b2, r1, r2);
+		void pbBattleArenaBattlers(Combat.Battle b1,Combat.Battle b2);
+		void pbCommonAnimation(int moveid,Combat.Battle attacker,Combat.Battle opponent,int hitnum= 0);
+		void pbAnimation(int moveid,Combat.Battle attacker,Combat.Battle opponent,int hitnum= 0);
 	}
 	public interface IPokeBattle_DebugSceneNoGraphics { }
 	public interface I { }

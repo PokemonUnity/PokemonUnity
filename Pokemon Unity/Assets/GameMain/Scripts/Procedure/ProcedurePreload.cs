@@ -15,6 +15,11 @@ using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedure
 
 namespace PokemonUnity
 {
+	/// <summary>
+	/// Preload scene is when a game boots up, display the logos of developers, and load assets.
+	/// Usually this is displayed first as a way to credit everyones' contributions/copyright/sponsors,
+	/// handles the asset loading process, then play intro animations, before the game begins
+	/// </summary>
 	public class ProcedurePreload : ProcedureBase
 	{
 		public static readonly string[] DataTableNames = new string[]
@@ -48,6 +53,7 @@ namespace PokemonUnity
 		{
 			base.OnEnter(procedureOwner);
 
+			// Register event listeners to update as scene begins regular procedure
 			GameEntry.Event.Subscribe(LoadConfigSuccessEventArgs.EventId, OnLoadConfigSuccess);
 			GameEntry.Event.Subscribe(LoadConfigFailureEventArgs.EventId, OnLoadConfigFailure);
 			GameEntry.Event.Subscribe(LoadDataTableSuccessEventArgs.EventId, OnLoadDataTableSuccess);
@@ -62,6 +68,7 @@ namespace PokemonUnity
 
 		protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
 		{
+			// Since scene is no longer active, get rid of all of the event listeners registered
 			GameEntry.Event.Unsubscribe(LoadConfigSuccessEventArgs.EventId, OnLoadConfigSuccess);
 			GameEntry.Event.Unsubscribe(LoadConfigFailureEventArgs.EventId, OnLoadConfigFailure);
 			GameEntry.Event.Unsubscribe(LoadDataTableSuccessEventArgs.EventId, OnLoadDataTableSuccess);
@@ -76,21 +83,29 @@ namespace PokemonUnity
 		{
 			base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
+			// Store loading procedure into a `Dictionary<string name, bool loaded>`
 			IEnumerator<bool> iter = m_LoadedFlag.Values.GetEnumerator();
+			// Loop through each bool, if true move to next..
 			while (iter.MoveNext())
 			{
+				// If bool is false
 				if (!iter.Current)
 				{
+					// End update here and repeat process on next update
 					return;
 				}
 			}
 
+			// If all the stored procedures are loaded, move to next scene.
 			procedureOwner.SetData<VarInt>(Constant.ProcedureData.NextSceneId, GameEntry.Config.GetInt("Scene.Menu"));
 			ChangeState<ProcedureChangeScene>(procedureOwner);
 		}
 
 		private void PreloadResources()
 		{
+			// Preload fonts
+			//LoadFont("MainFont");
+
 			// Preload configs
 			//LoadConfig("DefaultConfig");
 
@@ -102,9 +117,6 @@ namespace PokemonUnity
 
 			// Preload dictionaries
 			//LoadDictionary("Default");
-
-			// Preload fonts
-			LoadFont("MainFont");
 		}
 
 		/*private void LoadConfig(string configName)
