@@ -46,7 +46,7 @@ namespace PokemonUnity
 		public static Dictionary<Moves,Attack.Data.MetaData> MoveMetaData { get; private set; }
 		public static Dictionary<Attack.Data.Effects,Combat.Move> MoveEffectData { get; private set; }
 		public static Dictionary<Items,ItemData> ItemData { get; private set; }
-		public static Dictionary<Items,Berry> BerryData { get; private set; }
+		public static Dictionary<Items,BerryData> BerryData { get; private set; }
 		public static Dictionary<Regions,Locations[]> RegionData { get; private set; }
 		public static Dictionary<Regions,Pokedex> PokedexData { get; private set; }
 		/// <summary>
@@ -159,7 +159,7 @@ namespace PokemonUnity
 		}
 		public static bool InitBerries(bool sql = true)
 		{
-			BerryData = new Dictionary<Items, Berry>();
+			BerryData = new Dictionary<Items, BerryData>();
 			if (sql) //using (con)
 				return GetBerriesFromSQL(con);
 			else return false;
@@ -3102,7 +3102,7 @@ namespace PokemonUnity
 					while(reader.Read()) //if(reader.Read())
 					{
 						BerryData.Add((Items)(int.Parse((string)reader["item_id"].ToString())-1),
-							new Berry(
+							new BerryData(
 								berry: (Items)int.Parse((string)reader["item_id"].ToString())
 								,firmness: (FirmnessLevel)int.Parse((string)reader["firmness_id"].ToString())
 								,power: int.Parse((string)reader["natural_gift_power"].ToString())
