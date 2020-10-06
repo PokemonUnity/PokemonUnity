@@ -40,6 +40,7 @@ namespace PokemonUnity
 		public Challenges Challenge { get; private set; }
 		//public GameModes Mode { get; private set; }
 		#region Player and Overworld Data
+		[System.Obsolete("Use `GameData.Trainer` because Player class is being phased out")]
 		public Character.Player Player { get; set; }
 		public Regions Region { get; private set; }
 		public Locations Location { get; private set; }

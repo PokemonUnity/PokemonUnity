@@ -1563,7 +1563,9 @@ namespace PokemonUnity
 		/// <summary>
 		/// Custom designs or just generic character played by another user
 		/// </summary>
-		PLAYER,
+		PLAYER = 0,
+		//PLAYER_M,
+		//PLAYER_F,
 		POKEMONTRAINER_Red,
 		POKEMONTRAINER_Leaf,
 		POKEMONTRAINER_Brendan,

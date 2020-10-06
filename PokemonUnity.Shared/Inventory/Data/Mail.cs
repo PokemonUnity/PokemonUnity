@@ -3,7 +3,7 @@ using PokemonUnity;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
 
-namespace PokemonUnity.Inventory//.ItemData
+namespace PokemonUnity.Inventory
 {
 	/// <summary>
 	/// Data structure representing mail that the Pokémon can hold
