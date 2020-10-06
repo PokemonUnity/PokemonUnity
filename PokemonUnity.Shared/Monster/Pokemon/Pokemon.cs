@@ -254,7 +254,7 @@ namespace PokemonUnity.Monster
 		{
 			//_base = PokemonData.GetPokemon(pokemon);
 			pokemons = pokemon;
-			eggSteps = _base.HatchTime;
+			eggSteps = 0;
 			Ability = abilityFlag;
 			Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
 			if (Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
@@ -289,7 +289,7 @@ namespace PokemonUnity.Monster
 		/// <param name="pkmn">Pokemon being generated</param>
 		/// <param name="isEgg">Whether or not this level 
 		/// <see cref="Settings.EGGINITIALLEVEL"/> pokemon is hatched.</param>
-		public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
+		public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (isEgg) eggSteps = _base.HatchTime; }
 
 		/// <summary>
 		/// Instializes a new Pokemon, with values at default. 
@@ -737,7 +737,8 @@ namespace PokemonUnity.Monster
 
 		#region Level
 		/// <summary>
-		/// Current experience points
+		/// Current experience points. 
+		/// Total accumulated - Level minimum
 		/// </summary>
 		/// <example>
 		/// lv1->lv2=5xp
