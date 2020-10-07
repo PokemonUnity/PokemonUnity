@@ -17,7 +17,7 @@ public static ItemUseResults pbRepel(Items item,int steps) {
     //return 0;
     return ItemUseResults.NotUsed;
   } else {
-    Game.pbMessage(Game._INTL("{1} used the {2}.",Game.GameData.Player.Name,item.ToString(TextScripts.Name)));
+    Game.pbMessage(Game._INTL("{1} used the {2}.",Game.GameData.Trainer.name,item.ToString(TextScripts.Name)));
     Game.GameData.RepelSteps=steps;
     //return 3;
     return ItemUseResults.UsedItemConsumed;
