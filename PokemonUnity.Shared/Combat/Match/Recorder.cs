@@ -141,9 +141,9 @@ public class PokeBattle_RecordedBattleModule<TBattle> : Battle,
   }
 
   public override void pbCommandPhase() {
-    //@roundindex+=1;
+    @roundindex+=1;
     //@rounds[@roundindex]=new int[4][]; //[[],[],[],[]];
-    @rounds.Add(new int[4][]); //[[],[],[],[]];
+    @rounds.Add(new int[battlers.Length][]); //[[],[],[],[]];
     base.pbCommandPhase();
   }
 
