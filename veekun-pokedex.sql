@@ -1409,6 +1409,162 @@ CREATE UNIQUE INDEX IF NOT EXISTS "ix_move_meta_ailments_identifier" ON "move_me
 	"identifier"
 );
 COMMIT;
+--
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "game_player" (
+	"id"	INTEGER NOT NULL, --Game Slot
+	"ChallengeId"	INTEGER NOT NULL, 
+	"PlayerMoney"	INTEGER NOT NULL,
+	"PlayerCoins"	INTEGER NOT NULL,
+	"PlayerSavings"	INTEGER NOT NULL,
+	"IsCreator"	BIT NOT NULL,
+	"StorageOwnerName"	NVARCHAR(18) NOT NULL,
+	"ActiveStorageBox"	INTEGER NOT NULL,
+	"TrainerName"	NVARCHAR(18) NOT NULL,
+	"TrainerIsMale"	BIT NOT NULL,
+	"TrainerPublicId"	INTEGER NOT NULL,
+	"TrainerSecretId"	INTEGER NOT NULL,
+	"TimeCreated"	DATETIME NOT NULL,
+	"PlayTime"	INTEGER NOT NULL, --TimeSpan to Int
+	"RandomSeed"	INTEGER NOT NULL, --Seed for RNG... even if players reset, rolling dice yields same results
+	--PRIMARY KEY("id"),
+	PRIMARY KEY("TrainerPublicId","TrainerSecretId")
+);
+CREATE TABLE IF NOT EXISTS "game_player_pokedex" (
+	"game_id"	INTEGER NOT NULL,
+	--"TrainerPublicId"	INTEGER NOT NULL,
+	--"TrainerSecretId"	INTEGER NOT NULL,
+	"pokemon_species_id"	INTEGER NOT NULL, --"Species"
+	"pokemon_form_id"	INTEGER NOT NULL, --"Form"
+	"HasCaptured"	BIT NOT NULL, 
+	--PRIMARY KEY("TrainerSecretId","TrainerPublicId","pokemon_species_id","pokemon_form_id"),
+	PRIMARY KEY("game_id","pokemon_species_id","pokemon_form_id"),
+	FOREIGN KEY("pokemon_species_id") REFERENCES "pokemon_species"("id"),
+	FOREIGN KEY("pokemon_form_id") REFERENCES "pokemon_forms"("id"),
+	--FOREIGN KEY("TrainerPublicId") REFERENCES "game_player"("TrainerPublicId"),
+	--FOREIGN KEY("TrainerSecretId") REFERENCES "game_player"("TrainerSecretId")
+	FOREIGN KEY("game_id") REFERENCES "game_player"("id")
+);
+CREATE TABLE IF NOT EXISTS "game_player_pokemon_storage" (
+	"game_id"	INTEGER NOT NULL,
+	"slot_id"	INTEGER NOT NULL, --box
+	"slot_background_id"	INTEGER NOT NULL, --theme/texture
+	"slot_name"	NVARCHAR(18) NOT NULL, --label
+	"unlocked"	BIT NOT NULL, 
+	PRIMARY KEY("game_id","slot_id"),
+	FOREIGN KEY("game_id") REFERENCES "game_player"("id")
+);
+CREATE TABLE IF NOT EXISTS "game_player_item_storage" (
+	"game_id"	INTEGER NOT NULL,
+	"item_location_id"	BIT NOT NULL, --bag / pc?
+	--"slot_id"	INTEGER NOT NULL, --box / order?
+	"item_id"	INTEGER NOT NULL, --item
+	"quantity"	INTEGER NOT NULL, --amount
+	"limit"		INTEGER NULL, --is this needed?
+	PRIMARY KEY("game_id","item_location_id","slot_id"),
+	FOREIGN KEY("game_id") REFERENCES "game_player"("id")
+	FOREIGN KEY("item_id") REFERENCES "items"("id")
+);
+/*CREATE TABLE IF NOT EXISTS "game_player_bag" ( --merge with item_storage?
+	"game_id"	INTEGER NOT NULL,
+	--"slot_id"	INTEGER NOT NULL, --pocket
+	"item_id"	INTEGER NOT NULL, --item
+	"quantity"	INTEGER NOT NULL, --amount
+	--"limit"		INTEGER NULL, --is this needed?
+	PRIMARY KEY("game_id","item_id"),
+	FOREIGN KEY("game_id") REFERENCES "game_player"("id")
+);*/
+CREATE TABLE IF NOT EXISTS "game_player_pokemon" (
+	"id"	INTEGER NOT NULL, --"PersonalID" no duplicates
+	"NickName"	nvarchar(14) NULL, 
+	"pokemon_form_id"	INTEGER NOT NULL, --"Form"
+	"pokemon_species_id"	INTEGER NOT NULL, --"Species"
+	"ability_id"	INTEGER NOT NULL, --"Ability"
+	"nature_id"	INTEGER NOT NULL, --"Nature"
+	"IsShiny"	BIT NOT NULL,
+	"Gender"	BIT NULL,
+	"PokerusStatus"	INTEGER NOT NULL,
+	"PokerusDuration"	INTEGER NOT NULL,
+	"ShadowLevel"	INTEGER NULL,
+	"HeartGuageSize"	INTEGER NOT NULL,
+	"CurrentHP"	INTEGER NOT NULL,
+	"held_item_id"	INTEGER NOT NULL, --"Item"
+	"IV_hp"		INTEGER NOT NULL,
+	"IV_atk"	INTEGER NOT NULL,
+	"IV_def"	INTEGER NOT NULL,
+	"IV_spa"	INTEGER NOT NULL,
+	"IV_spd"	INTEGER NOT NULL,
+	"IV_spe"	INTEGER NOT NULL,
+	"EV"	NVARCHAR(8) NOT NULL, --Array[6]
+	"ObtainedLevel"	INTEGER NOT NULL,
+	"TotalExp"	INTEGER NOT NULL,
+	"Happiness"	INTEGER NOT NULL,
+	"Status"	INTEGER NOT NULL,
+	"StatusCount"	INTEGER NOT NULL,
+	"EggSteps"	INTEGER NOT NULL,
+	"BallUsed_item_id"	INTEGER NOT NULL, --"BallUsed"
+	"Mail"	NVARCHAR(100) NULL, --"Message"
+	"TrainerName"	NVARCHAR(18) NOT NULL,
+	"TrainerIsMale"	BIT NOT NULL,
+	"TrainerPublicId"	INTEGER NOT NULL,
+	"TrainerSecretId"	INTEGER NOT NULL,
+	"ObtainedMethod"	INTEGER NOT NULL,
+	"TimeReceived"	DATETIME NOT NULL,
+	"TimeEggHatched"	DATETIME NOT NULL,
+	"Markings1"	BIT NOT NULL,
+	"Markings2"	BIT NOT NULL,
+	"Markings3"	BIT NOT NULL,
+	"Markings4"	BIT NOT NULL,
+	"Markings5"	BIT NOT NULL,
+	"Markings6"	BIT NOT NULL,
+	PRIMARY KEY("id"), 
+	--FOREIGN KEY("pokemon_id") REFERENCES "pokemon"("id"),
+	--FOREIGN KEY("pokemon_species_id") REFERENCES "pokemon_species"("id"),
+	--should FK pokedex, to keep hack tampering low
+	FOREIGN KEY("pokemon_species_id") REFERENCES "game_player_pokedex"("pokemon_species_id"), --dont register pokemons to save if pokedex hasnt documented it
+	FOREIGN KEY("pokemon_form_id") REFERENCES "pokemon_forms"("id"),
+	FOREIGN KEY("ability_id") REFERENCES "abilities"("id"),
+	FOREIGN KEY("nature_id") REFERENCES "natures"("id"),
+	FOREIGN KEY("held_item_id") REFERENCES "items"("id"),
+	FOREIGN KEY("BallUsed_item_id") REFERENCES "items"("id")
+);
+CREATE TABLE IF NOT EXISTS "game_player_pokemon_location" (
+	"pokemon_personal_id"	INTEGER NOT NULL UNIQUE ON CONFLICT REPLACE, --no duplicates
+	"pokemon_game_id"	INTEGER NOT NULL, --game state
+	"pokemon_location_id"	BIT NULL, --party / pc, or wild... make int and add `game modes` (stadium saved party)?
+	"pokemon_slot_position"	INTEGER NOT NULL, --where
+	PRIMARY KEY("pokemon_game_id", "pokemon_location_id","pokemon_slot_position"), --one slot per pokemon
+	FOREIGN KEY("pokemon_personal_id") REFERENCES "game_player_pokemon"("id")
+);
+CREATE TABLE IF NOT EXISTS "game_player_pokemon_move_archive" (
+	"pokemon_game_id"	INTEGER NOT NULL, --just in case pokemon is duplicate across games?
+	"pokemon_personal_id"	INTEGER NOT NULL,
+	"move_id"	INTEGER NOT NULL,
+	PRIMARY KEY("pokemon_game_id","pokemon_personal_id","move_id"), 
+	FOREIGN KEY("pokemon_personal_id") REFERENCES "game_player_pokemon"("id"),
+	FOREIGN KEY("move_id") REFERENCES "moves"("id")
+);
+CREATE TABLE IF NOT EXISTS "game_player_pokemon_moves" (
+	"pokemon_game_id"	INTEGER NOT NULL, --just in case pokemon is duplicate across games?
+	"pokemon_personal_id"	INTEGER NOT NULL, 
+	"move_slot_position"	INTEGER NOT NULL,
+	"move_id"	INTEGER NOT NULL,
+	"PP"	INTEGER NOT NULL,
+	"PPups"	INTEGER NOT NULL,
+	PRIMARY KEY("pokemon_game_id","pokemon_personal_id","move_id"), 
+	FOREIGN KEY("pokemon_personal_id") REFERENCES "game_player_pokemon"("id"),
+	FOREIGN KEY("move_id") REFERENCES "game_player_pokemon_move_archive"("move_id") --Adds more security to ensure no cheating
+);
+CREATE TABLE IF NOT EXISTS "game_player_pokemon_ribbon" (
+	"pokemon_game_id"	INTEGER NOT NULL, --just in case pokemon is duplicate across games?
+	"pokemon_personal_id"	INTEGER NOT NULL,
+	"ribbon_id"	INTEGER NOT NULL,
+	PRIMARY KEY("pokemon_game_id","pokemon_personal_id","ribbon_id"),
+	FOREIGN KEY("pokemon_personal_id") REFERENCES "game_player_pokemon"("id")
+	--,FOREIGN KEY("ribbon_id") REFERENCES "ribbons"("id")
+);
+COMMIT;
+--
 BEGIN TRANSACTION;
 CREATE VIEW pokemon_abilities_view as
 select 
