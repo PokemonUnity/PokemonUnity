@@ -261,8 +261,8 @@ namespace PokemonUnity
 		/// for certain moves in double battles.
 		/// </summary>
 		/// <param name="index"></param>
-		/// <param name="targettype"></param>
-		void pbChooseTarget(int index, int targettype);
+		/// <param name="targettype">Which targets are selectable as option</param>
+		int pbChooseTarget(int index, Attack.Data.Targets targettype);
 		int pbSwitch(int index, bool lax, bool cancancel);
 		void pbDamageAnimation(Combat.Pokemon pkmn, float effectiveness);
 		/// <summary>

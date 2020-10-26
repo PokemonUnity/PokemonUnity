@@ -2097,7 +2097,7 @@ namespace PokemonUnity.Combat
 
 #region Move user and targets
   public Pokemon pbFindUser(Choice choice,Pokemon[] targets) {//ToDo: ref List<Pokemon> targets) {
-	Move move=choice.Move;
+	Move move=choice.Move; //ToDo: Attack.Move, and switch call below should be Attack.Data.Targets
 	int target=choice.Target;
 	Pokemon user = this;   // Normally, the user is this
 	// Targets in normal cases
@@ -2177,6 +2177,12 @@ namespace PokemonUnity.Combat
 		  if (Core.USENEWBATTLEMECHANICS) break;
 		}
 	return user;
+  }
+  public Attack.Data.Targets pbTarget(Attack.Move move) {
+	Attack.Data.Targets target=move.Targets;
+	if (move.Effect == Attack.Data.Effects.x06E && hasType(Types.GHOST)) // Curse
+	  target=Attack.Data.Targets.SELECTED_POKEMON;
+	return target;
   }
   public Attack.Target pbTarget(Move move) {
 	Attack.Target target=move.Targets;

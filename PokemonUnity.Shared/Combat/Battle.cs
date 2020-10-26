@@ -3145,19 +3145,22 @@ namespace PokemonUnity.Combat
                     break;
                   }
                   if (!pbRegisterMove(i,index)) continue;
-                  if (@doublebattle) {/* ToDo: Uncomment and sort
+                  if (@doublebattle) {
                     Attack.Move thismove=@battlers[i].moves[index];
-                    Attack.Data.Targets target=@battlers[i].pbTarget(thismove);
-                    if (target==Targets.SingleNonUser) { // single non-user
-                      target=@scene.pbChooseTarget(i,target);
+                    Attack.Data.Targets targets=@battlers[i].pbTarget(thismove);
+                    //Attack.Target target=@battlers[i].pbTarget(thismove);
+                    if (targets==Attack.Data.Targets.SELECTED_POKEMON) { // single non-user
+                    //if (target==Attack.Target.SingleNonUser) { // single non-user
+                      int target=@scene.pbChooseTarget(i,targets);
                       if (target<0) continue;
                       pbRegisterTarget(i,target);
                     }
-                    else if (target==Targets.UserOrPartner) { // Acupressure
-                      target=@scene.pbChooseTarget(i,target);
-                      if (target<0 || (target&1)==1) continue; //or ally?
+                    else if (targets==Attack.Data.Targets.USER_OR_ALLY) { // Acupressure
+                    //else if (target==Attack.Target.UserOrPartner) { // Acupressure
+                      int target=@scene.pbChooseTarget(i,targets);
+                      if (target<0 || (target%2)==1) continue; //no choice or enemy
                       pbRegisterTarget(i,target);
-                    }*/
+                    }
                   }
                   commandDone=true;
                 }
