@@ -6,6 +6,7 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Combat.Data;
 using PokemonUnity.Character;
 using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
 
 namespace PokemonUnity.Combat
 {
@@ -227,7 +228,7 @@ namespace PokemonUnity.Combat
         #region Constructor
         /// <summary>
         /// </summary>
-        public Battle(IPokeBattle_Scene scene, PokemonUnity.Monster.Pokemon[] p1, PokemonUnity.Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent)
+        public Battle(IPokeBattle_Scene scene, PokemonUnity.Monster.Pokemon[] p1, PokemonUnity.Monster.Pokemon[] p2, Trainer[] player, Trainer[] opponent, int maxBattlers = 4)
 		{
             //if opponent is not null but player array is empty, then player is null
             //if (opponent != null && player.Length == 0)
@@ -273,17 +274,17 @@ namespace PokemonUnity.Combat
 
 			party1order = new List<int>();
 			//the #12 represents a double battle with 2 trainers using 6 pokemons each on 1 side
-			for (int i = 0; i < 12; i++)
+			for (int i = 0; i < Core.MAXPARTYSIZE * 2; i++)
 				party1order.Add(i);
 
 			party2order = new List<int>();
 			//for i in 0...12;party2order.push(i); }
-			for (int i = 0; i < 12; i++)
+			for (int i = 0; i < Core.MAXPARTYSIZE * 2; i++)
 				party2order.Add(i);
 
 			fullparty1 = false;
 			fullparty2 = false;
-			battlers = new Pokemon[4];
+			battlers = new Pokemon[maxBattlers];
 			//items = new List<Items>(); //null;
 			items = new Items[opponent.Length][];
             for (int t = 0; t < opponent.Length; t++) //List of Trainers
@@ -300,8 +301,8 @@ namespace PokemonUnity.Combat
 			futuresight = false;
 			choices = new Choice[4];
 
-			successStates = new SuccessState[4];
-			for (int i = 0; i < 4; i++)
+			successStates = new SuccessState[battlers.Length];
+			for (int i = 0; i < battlers.Length; i++)
 			{
 				successStates[i] = new SuccessState();
 			}
@@ -320,7 +321,7 @@ namespace PokemonUnity.Combat
             //	megaEvolution[1] = new bool?[this.opponent.Party.Length]; 	//[-1] * opponent.Length;
             //else
             //	megaEvolution[1] = new bool?[]{ null }; 					//[-1];
-            for (int side = 0; side < 2; side++) //2 sides (yours / theirs)
+            for (int side = 0; side < sides.Length; side++) //2 sides (yours / theirs)
                 for (int i = 0; i < megaEvolution[side].Length; i++)
                     megaEvolution[side][i] = -1; //Everyone starts match in default -1 value
 
@@ -340,7 +341,7 @@ namespace PokemonUnity.Combat
 			peer = PokemonUnity.Monster.PokeBattle_BattlePeer.create();
 			//peer = new PokeBattle_BattlePeer();
 
-			priority = new Pokemon[4];
+			priority = new Pokemon[battlers.Length];
 
 			//usepriority = false; //False is already default value; redundant.
 
@@ -357,7 +358,7 @@ namespace PokemonUnity.Combat
 
 			//struggle.PP = -1;
 
-			for (byte i = 0; i < 4; i++)
+			for (byte i = 0; i < battlers.Length; i++)
 			{
 				this.battlers[i] = new Pokemon(this, (sbyte)i).Initialize(new PokemonUnity.Monster.Pokemon(), (sbyte)i);
 			}
@@ -641,7 +642,7 @@ namespace PokemonUnity.Combat
 		}
 
   public Weather pbWeather() {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       if (@battlers[i].hasWorkingAbility(Abilities.CLOUD_NINE) ||
          @battlers[i].hasWorkingAbility(Abilities.AIR_LOCK)) {
         return Weather.NONE;
@@ -775,7 +776,7 @@ namespace PokemonUnity.Combat
   }
 
   public Pokemon pbCheckGlobalAbility(Abilities a) {
-    for (int i = 0; i < 4; i++) { // in order from own first, opposing first, own second, opposing second
+    for (int i = 0; i < battlers.Length; i++) { // in order from own first, opposing first, own second, opposing second
       if (@battlers[i].hasWorkingAbility(a)) {
         return @battlers[i];
       }
@@ -972,7 +973,7 @@ namespace PokemonUnity.Combat
 
   public Pokemon pbFindPlayerBattler(int pkmnIndex) {
     Pokemon battler=null;
-    for (int k = 0; k < 4; k++) {
+    for (int k = 0; k < battlers.Length; k++) {
       if (!isOpposing(k) && @battlers[k].pokemonIndex==pkmnIndex) {
         battler=@battlers[k];
         break;
@@ -1337,7 +1338,7 @@ namespace PokemonUnity.Combat
     int minpri=0; int maxpri=0;
     List<int> temp=new List<int>();
     #region Calculate each Pokémon's speed
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       speeds[i]=@battlers[i].SPE;
       quickclaw[i]=false;
       lagging[i]=false;
@@ -1373,7 +1374,7 @@ namespace PokemonUnity.Combat
     }
 	#endregion
     #region Calculate each Pokémon's priority bracket, and get the min/max priorities
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       // Assume that doing something other than using a move is priority 0
       int pri=0;
       if (@choices[i].Action==ChoiceAction.UseMove) { // Chose to use a move
@@ -1398,7 +1399,7 @@ namespace PokemonUnity.Combat
     int curpri=maxpri;
     do { //loop
       temp.Clear();
-      for (int j = 0; j < 4; j++) {
+      for (int j = 0; j < battlers.Length; j++) {
         if (priorities[j]==curpri) temp.Add(j);
       }
       // Sort by speed
@@ -1467,7 +1468,7 @@ namespace PokemonUnity.Combat
     // Write the priority order to the debug log
     if (log) {
       string d="[Priority] "; bool comma=false;
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < battlers.Length; i++) {
         if (@priority[i].IsNotNullOrNone() && !@priority[i].isFainted()) {
           if (comma) d+=", ";
           d+=$"#{@priority[i].ToString(comma)} (#{@priority[i].Index})"; comma=true;
@@ -1520,7 +1521,7 @@ namespace PokemonUnity.Combat
     }
     bool isOppose=isOpposing(idxPokemon);
     Monster.Pokemon[] party=pbParty(idxPokemon);
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       if (isOppose!=isOpposing(i)) continue;
       if (choices[i].Action==ChoiceAction.SwitchPokemon && choices[i].Index==pkmnidxTo) {
         if (showMessages) pbDisplayPaused(Game._INTL("{1} has already been selected.",party[pkmnidxTo].Name));
@@ -1602,7 +1603,7 @@ namespace PokemonUnity.Combat
     if (@decision>0) return;
     int firstbattlerhp=@battlers[0].HP;
     List<int> switched=new List<int>();
-    for (int index = 0; index < 4; index++) {
+    for (int index = 0; index < battlers.Length; index++) {
       int newenemy; int newenemyname; int newpokename; int newpoke;
       if (!@doublebattle && pbIsDoubleBattler(index)) continue;
       if (@battlers[index].IsNotNullOrNone() && !@battlers[index].isFainted()) continue;
@@ -1796,7 +1797,7 @@ namespace PokemonUnity.Combat
       pbDisplay(Game._INTL("But it had no effect!"));
     }
     else {
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < battlers.Length; i++) {
         if (!isOpposing(i) && @battlers[i].pokemonIndex==pkmnIndex) {
           battler=@battlers[i];
         }
@@ -1862,7 +1863,7 @@ namespace PokemonUnity.Combat
 
   public bool pbRegisterItem(int idxPokemon,Items idxItem,int? idxTarget=null) {
     if (idxTarget!=null && idxTarget.Value>=0) {
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < battlers.Length; i++) {
         if (!@battlers[i].IsOpposing(idxPokemon) &&
            @battlers[i].pokemonIndex==idxTarget.Value &&
            @battlers[i].effects.Embargo>0) {
@@ -2230,7 +2231,7 @@ namespace PokemonUnity.Combat
   public virtual void pbGainEXP() {
     if (!@internalbattle) return;
     bool successbegin=true;
-    for (int i = 0; i < 4; i++) { // Not ordered by priority
+    for (int i = 0; i < battlers.Length; i++) { // Not ordered by priority
       if (!@doublebattle && pbIsDoubleBattler(i)) {
         @battlers[i].participants.Clear();//=[];
         continue;
@@ -2296,10 +2297,10 @@ namespace PokemonUnity.Combat
     int[] evyield=Game.PokemonData[defeated.Species].EVYield;
     // Gain effort value points, using RS effort values
     int totalev=0;
-    for (int k = 0; k < 6; k++) {
+    for (int k = 0; k < Core.MAXPARTYSIZE; k++) {
       totalev+=thispoke.EV[k];
     }
-    for (int k = 0; k < 6; k++) {
+    for (int k = 0; k < Core.MAXPARTYSIZE; k++) {
       int evgain=evyield[k];
       if (thispoke.Item == Items.MACHO_BRACE ||
                    thispoke.itemInitial == Items.MACHO_BRACE) evgain*=2;
@@ -2495,7 +2496,7 @@ namespace PokemonUnity.Combat
     string pkmnname=pokemon.Name;
     Pokemon battler=pbFindPlayerBattler(pkmnIndex);
     string movename=move.ToString(TextScripts.Name);
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < pokemon.moves.Length; i++) {
       if (pokemon.moves[i].MoveId==move) return;
       if (pokemon.moves[i].MoveId==0) {
         pokemon.moves[i]=new PokemonUnity.Attack.Move(move);
@@ -2541,13 +2542,13 @@ namespace PokemonUnity.Combat
 
 		#region Abilities.
   public virtual void pbOnActiveAll() {
-    for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards
+    for (int i = 0; i < battlers.Length; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards
       if (isOpposing(i)) @battlers[i].UpdateParticipants();
       if (!isOpposing(i) &&
                           (@battlers[i].Item == Items.AMULET_COIN ||
                            @battlers[i].Item == Items.LUCK_INCENSE)) @amuletcoin=true;
     }
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       if (!@battlers[i].isFainted()) {
         if (@battlers[i].isShadow() && isOpposing(i)) {
           pbCommonAnimation("Shadow",@battlers[i],null);
@@ -2562,7 +2563,7 @@ namespace PokemonUnity.Combat
       i.pbAbilitiesOnSwitchIn(true);
     }
     // Check forms are correct
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       if (@battlers[i].isFainted()) continue;
       @battlers[i].CheckForm();
     }
@@ -2571,7 +2572,7 @@ namespace PokemonUnity.Combat
   public virtual bool pbOnActiveOne(Pokemon pkmn,bool onlyabilities=false,bool moldbreaker=false) {
     if (pkmn.isFainted()) return false;
     if (!onlyabilities) {
-      for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards
+      for (int i = 0; i < battlers.Length; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards
         if (isOpposing(i)) @battlers[i].UpdateParticipants();
         if (!isOpposing(i) &&
                             (@battlers[i].Item == Items.AMULET_COIN ||
@@ -2597,7 +2598,7 @@ namespace PokemonUnity.Combat
         pbDisplayPaused(Game._INTL("{1} became cloaked in mystical moonlight!",pkmn.ToString()));
         pkmn.RecoverHP(pkmn.TotalHP,true);
         pkmn.pbCureStatus(false);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < pkmn.moves.Length; i++) {
           pkmn.moves[i].PP=pkmn.moves[i].TotalPP;
         }
         pkmn.effects.LunarDance=false;
@@ -2676,7 +2677,7 @@ namespace PokemonUnity.Combat
     bool hasabil=false;
     switch (@weather) {
     case Weather.HEAVYRAIN:
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < battlers.Length; i++) {
         if (@battlers[i].Ability == Abilities.PRIMORDIAL_SEA &&
            !@battlers[i].isFainted()) {
           hasabil=true; break;
@@ -2688,7 +2689,7 @@ namespace PokemonUnity.Combat
       }
       break;
     case Weather.HARSHSUN:
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < battlers.Length; i++) {
         if (@battlers[i].Ability == Abilities.DESOLATE_LAND &&
            !@battlers[i].isFainted()) {
           hasabil=true; break;
@@ -2700,7 +2701,7 @@ namespace PokemonUnity.Combat
       }
       break;
     case Weather.STRONGWINDS:
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < battlers.Length; i++) {
         if (@battlers[i].Ability == Abilities.DELTA_STREAM &&
            !@battlers[i].isFainted()) {
           hasabil=true; break;
@@ -2851,16 +2852,16 @@ namespace PokemonUnity.Combat
   }
 
   public void pbStartBattleCore(bool canlose) {
-    if (!@fullparty1 && @party1.Length>Game.GameData.Features.LimitPokemonPartySize) {
+    if (!@fullparty1 && @party1.Length>Core.MAXPARTYSIZE) {
       //throw new Exception(new ArgumentError(Game._INTL("Party 1 has more than {1} Pokémon.",Core.MAXPARTYSIZE)));
-      GameDebug.LogError(Game._INTL("Party 1 has more than {1} Pokémon.",Game.GameData.Features.LimitPokemonPartySize));
+      GameDebug.LogError(Game._INTL("Party 1 has more than {1} Pokémon.",Core.MAXPARTYSIZE));
       @party1= new Monster.Pokemon[Core.MAXPARTYSIZE]; //Fixed error.
       for(int i = 0; i < Core.MAXPARTYSIZE; i++)
         @party1[i] = @party1[i];
     }
-    if (!@fullparty2 && @party2.Length>Game.GameData.Features.LimitPokemonPartySize) {
+    if (!@fullparty2 && @party2.Length>Core.MAXPARTYSIZE) {
       //throw new Exception(new ArgumentError(Game._INTL("Party 2 has more than {1} Pokémon.",Core.MAXPARTYSIZE)));
-      GameDebug.LogError(Game._INTL("Party 2 has more than {1} Pokémon.",Game.GameData.Features.LimitPokemonPartySize));
+      GameDebug.LogError(Game._INTL("Party 2 has more than {1} Pokémon.",Core.MAXPARTYSIZE));
       @party2= new Monster.Pokemon[Core.MAXPARTYSIZE]; //Fixed error.
       for(int i = 0; i < Core.MAXPARTYSIZE; i++)
         @party2[i] = @party2[i];
@@ -3095,7 +3096,7 @@ namespace PokemonUnity.Combat
   public virtual void pbCommandPhase() {
     @scene.pbBeginCommandPhase();
     @scene.pbResetCommandIndices();
-    for (int i = 0; i < 4; i++) {   // Reset choices if commands can be shown
+    for (int i = 0; i < battlers.Length; i++) {   // Reset choices if commands can be shown
       @battlers[i].effects.SkipTurn=false;
       if (CanShowCommands(i) || @battlers[i].isFainted()) {
         //@choices[i][0]=0;
@@ -3111,12 +3112,12 @@ namespace PokemonUnity.Combat
       }
     }
     // Reset choices to perform Mega Evolution if it wasn't done somehow
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       for (int j = 0; j < @megaEvolution[i].Length; j++) {
         if (@megaEvolution[i][j]>=0) @megaEvolution[i][j]=-1;
       }
     }
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       if (@decision!=0) break;
       if (@choices[i].Action!=0) continue; //@choices[i][0]!=0
       if (!pbOwnedByPlayer(i) || @controlPlayer) {
@@ -3240,7 +3241,7 @@ namespace PokemonUnity.Combat
 		#region Attack phase.
   public void pbAttackPhase() {
     @scene.pbBeginAttackPhase();
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       @successStates[i].Clear();
       if (@choices[i].Action!= ChoiceAction.UseMove && @choices[i].Action!=ChoiceAction.SwitchPokemon) {
         @battlers[i].effects.DestinyBond=false;
@@ -3412,7 +3413,7 @@ namespace PokemonUnity.Combat
 		#region End of round.
   public virtual void pbEndOfRoundPhase() {
     GameDebug.Log($"[End of round]");
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       @battlers[i].effects.Electrify=false;
       @battlers[i].effects.Endure=false;
       @battlers[i].effects.FirstPledge=0;
@@ -3538,7 +3539,7 @@ namespace PokemonUnity.Combat
       break;
     case Weather.HEAVYRAIN:
       bool hasabil=false;
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < battlers.Length; i++) {
         if (@battlers[i].Ability == Abilities.PRIMORDIAL_SEA && !@battlers[i].isFainted()) {
           hasabil=true; break;
         }
@@ -3556,7 +3557,7 @@ namespace PokemonUnity.Combat
       break;
     case Weather.HARSHSUN:
       hasabil=false;
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < battlers.Length; i++) {
         if (@battlers[i].Ability == Abilities.DESOLATE_LAND && !@battlers[i].isFainted()) {
           hasabil=true; break;
         }
@@ -3587,7 +3588,7 @@ namespace PokemonUnity.Combat
       break;
     case Weather.STRONGWINDS:
       hasabil=false;
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < battlers.Length; i++) {
         if (@battlers[i].Ability == Abilities.DELTA_STREAM && !@battlers[i].isFainted()) {
           hasabil=true; break;
         }
@@ -3726,7 +3727,7 @@ namespace PokemonUnity.Combat
       }
     }
     // Fire Pledge + Grass Pledge combination damage
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       if (sides[i].SeaOfFire>0 &&
          pbWeather()!=Weather.RAINDANCE &&
          pbWeather()!=Weather.HEAVYRAIN) {
@@ -4116,7 +4117,7 @@ namespace PokemonUnity.Combat
       return;
     }
     // Reflect
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       if (sides[i].Reflect>0) {
         sides[i].Reflect-=1;
         if (sides[i].Reflect==0) {
@@ -4128,7 +4129,7 @@ namespace PokemonUnity.Combat
       }
     }
     // Light Screen
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       if (sides[i].LightScreen>0) {
         sides[i].LightScreen-=1;
         if (sides[i].LightScreen==0) {
@@ -4140,7 +4141,7 @@ namespace PokemonUnity.Combat
       }
     }
     // Safeguard
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       if (sides[i].Safeguard>0) {
         sides[i].Safeguard-=1;
         if (sides[i].Safeguard==0) {
@@ -4152,7 +4153,7 @@ namespace PokemonUnity.Combat
       }
     }
     // Mist
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       if (sides[i].Mist>0) {
         sides[i].Mist-=1;
         if (sides[i].Mist==0) {
@@ -4164,7 +4165,7 @@ namespace PokemonUnity.Combat
       }
     }
     // Tailwind
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       if (sides[i].Tailwind>0) {
         sides[i].Tailwind-=1;
         if (sides[i].Tailwind==0) {
@@ -4176,7 +4177,7 @@ namespace PokemonUnity.Combat
       }
     }
     // Lucky Chant
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       if (sides[i].LuckyChant>0) {
         sides[i].LuckyChant-=1;
         if (sides[i].LuckyChant==0) {
@@ -4188,7 +4189,7 @@ namespace PokemonUnity.Combat
       }
     }
     // End of Pledge move combinations
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       if (sides[i].Swamp>0) {
         sides[i].Swamp-=1;
         if (sides[i].Swamp==0) {
@@ -4335,7 +4336,7 @@ namespace PokemonUnity.Combat
       // Pickup
       if (i.hasWorkingAbility(Abilities.PICKUP) && i.Item<=0) {
         Items item=0; int index=-1; int use=0;
-        for (int j = 0; j < 4; j++) {
+        for (int j = 0; j < battlers.Length; j++) {
           if (j==i.Index) continue;
           if (@battlers[j].effects.PickupUse>use) {
             item=@battlers[j].effects.PickupItem;
@@ -4422,7 +4423,7 @@ namespace PokemonUnity.Combat
       }
     }
     // Form checks
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       if (@battlers[i].isFainted()) continue;
       @battlers[i].CheckForm();
     }
@@ -4435,7 +4436,7 @@ namespace PokemonUnity.Combat
     }
     // Healing Wish/Lunar Dance - should go here
     // Spikes/Toxic Spikes/Stealth Rock - should go here (in order of their 1st use)
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < battlers.Length; i++) {
       if (@battlers[i].turncount>0 && @battlers[i].hasWorkingAbility(Abilities.TRUANT)) {
         @battlers[i].effects.Truant=!@battlers[i].effects.Truant;
       }
@@ -4457,7 +4458,7 @@ namespace PokemonUnity.Combat
       @battlers[i].effects.MirrorCoat=-1;
       @battlers[i].effects.MirrorCoatTarget=-1;
     }
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < sides.Length; i++) {
       if (!@sides[i].EchoedVoiceUsed) {
         @sides[i].EchoedVoiceCounter=0;
       }
