@@ -37,7 +37,9 @@ namespace PokemonUnity
 			public int Piece { get; set; }
 			public int TotalPieces { get; set; }
 		}
-		static System.Data.SQLite.SQLiteConnection con  = new System.Data.SQLite.SQLiteConnection(@"Data Source=..\..\..\\veekun-pokedex.sqlite");
+		public static string DatabasePath  = @"Data Source=..\..\..\\veekun-pokedex.sqlite";
+		public static System.Data.SQLite.SQLiteConnection con { get; private set; }
+        public static void ResetSqlConnection() { con = new System.Data.SQLite.SQLiteConnection(DatabasePath); }
 
 		public static string LockFileStream (string filepath)
 		{
