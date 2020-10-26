@@ -54,8 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Events.cs" />
     <Compile Include="Application\Feature.cs" />
-    <Compile Include="Application\Game.Variable.cs" />
+    <Compile Include="Application\Game\Game.Controls.cs" />
+    <Compile Include="Application\Game\Game.Variable.cs" />
+    <Compile Include="Application\Options.cs" />
     <Compile Include="Attack\Move.cs" />
     <Compile Include="Attack\Data\Base.cs" />
     <Compile Include="Attack\Data\Meta.cs" />
@@ -104,10 +107,10 @@
     <Compile Include="Framework\IFrontend.cs" />
     <Compile Include="Framework\IScene.cs" />
     <Compile Include="Framework\ISpriteWrapper.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="Application\Game.Conditions.cs" />
-    <Compile Include="Application\Game.Database.cs" />
-    <Compile Include="Application\Game.Utility.cs" />
+    <Compile Include="Application\Game\Game.cs" />
+    <Compile Include="Application\Game\Game.Conditions.cs" />
+    <Compile Include="Application\Game\Game.Database.cs" />
+    <Compile Include="Application\Game\Game.Utility.cs" />
     <Compile Include="Combat\Attack\Attack.cs" />
     <Compile Include="Combat\Battle.cs" />
     <Compile Include="Combat\Data\Choice.cs" />
