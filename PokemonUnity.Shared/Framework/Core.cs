@@ -96,7 +96,7 @@ namespace PokemonUnity
 		/// Constantly revolving random, that uses the same seed number that was previously used
 		/// </summary>
 		public static Random RandWithSetSeed { get { return new Random(Seed(true)); } }
-		private static System.UInt16? seed;// = 0x0000; //{ get; set; }
+		public static System.UInt16? seed { get; private set; }// = 0x0000;
 		public static UInt16 Seed(bool useFixedSeed = false)
 		{
 			//lock (Rand)
