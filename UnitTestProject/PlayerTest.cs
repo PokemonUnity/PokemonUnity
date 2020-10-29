@@ -234,7 +234,7 @@ namespace Tests
 		[TestMethod]
 		public void Create_New_Save_File()
 		{
-			//Assert.Inconclusive("Code is temporarily stripped from project");
+			Assert.Inconclusive("Code is temporarily stripped from project");
 			//SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
