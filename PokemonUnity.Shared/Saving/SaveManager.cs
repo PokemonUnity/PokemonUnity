@@ -498,7 +498,7 @@ namespace PokemonUnity.Saving
 		}
 		#endregion
 
-		#region 0.3.0 SQL Save Mechanic
+		#region 0.2.1 SQL Save Mechanic
 		public static void WriteSaveToDatabase(SaveData saveData)
 		{
 			BinaryFormatter bf = new BinaryFormatter();

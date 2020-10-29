@@ -251,7 +251,7 @@ namespace Tests
 		[TestMethod]
 		public void Save_Into_File()
 		{
-			//Assert.Inconclusive("Code is temporarily stripped from project");
+			Assert.Inconclusive("Code is temporarily stripped from project");
 			//SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
@@ -265,7 +265,7 @@ namespace Tests
 		[TestMethod]
 		public void Load_Save_File()
 		{
-			//Assert.Inconclusive("Code is temporarily stripped from project");
+			Assert.Inconclusive("Code is temporarily stripped from project");
 			#region Save File Setup
 			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
 
@@ -430,7 +430,7 @@ namespace Tests
 		[TestMethod]
 		public void Player_Load_Name()
 		{
-			//Assert.Inconclusive("Code is temporarily stripped from project");
+			Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			GameState newSave = SaveManager.GetSave()[0];
@@ -521,8 +521,8 @@ namespace Tests
 		[TestMethod]
 		public void Player_Load_Pokedex()
 		{
-			Assert.Inconclusive("Need better test...");
-			//Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Need better test...");
+			Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			GameState newSave = SaveManager.GetSave()[0];
@@ -543,7 +543,7 @@ namespace Tests
 		[TestMethod]
 		public void Player_Load_HoursPlayed()
 		{
-			//Assert.Inconclusive("Code is temporarily stripped from project");
+			Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			GameState newSave = SaveManager.GetSave()[0];
@@ -559,7 +559,7 @@ namespace Tests
 		[TestMethod]
 		public void Player_Load_Settings_Language()
 		{
-			//Assert.Inconclusive("Code is temporarily stripped from project");
+			Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			SaveData newSave = SaveManager.GetSave();
