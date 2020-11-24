@@ -20,7 +20,13 @@ namespace PokemonUnity
 		//public const string PKU_Server_Address = "";
 #if DEBUG
 		public const bool DEBUG = true;
+		/// <summary>
+		/// If pokemon battles are being done in an console for ai training, or visually for player experience
+		/// </summary>
 		public const bool INTERNAL = true;
+		/// <summary>
+		/// Location of text file for game translation file import
+		/// </summary>
 		public const string FILEPATH = @"..\..\..\\Pokemon Unity\Assets\Scripts2\XML\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
@@ -31,7 +37,6 @@ namespace PokemonUnity
 		//string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
 #endif
 		//public XmlFileLocalizationDictionaryProvider TranslationText;// = new XmlFileLocalizationDictionaryProvider(Server.MapPath("~/App_Data/"));
-		//information.Initialize("PokemonUnity");
 		public const string FILENAME_POKEMON_DATABASE = "";
 
 		/// <summary>

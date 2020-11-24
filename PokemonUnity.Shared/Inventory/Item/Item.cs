@@ -698,6 +698,7 @@ private static void pbTopRightWindow(string text) {
 //  }
 //}
 
+        //Use `EventHandlerList` and replace dictionary/delegate with events? 
 public static partial class ItemHandlers {
   //private static ItemHandlerHash UseFromBag=new ItemHandlerHash();
   //private static ItemHandlerHash UseInField=new ItemHandlerHash();

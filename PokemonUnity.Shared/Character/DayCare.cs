@@ -453,6 +453,7 @@ public static void pbDayCareGenerateEgg() {
 }
 
 /*Events.onStepTaken+=delegate(object sender, EventArgs e) {
+public void OnStepTakenEventHandler(object sender, EventArgs e) {
    if (Game.GameData.Player == null) return;
    int deposited=DayCare.pbDayCareDeposited();
    if (deposited==2 && Game.GameData.Global.daycareEgg==0) {

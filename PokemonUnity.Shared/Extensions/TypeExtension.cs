@@ -30,7 +30,7 @@ namespace PokemonUnity
 		/// <example>StringToColor(Electric)</example>
 		/// <example>StringToColor(Yellow)</example>
 		/// ToDo: Convert to Unity's Color? 
-		public static string TypeToColorHEX(this PokemonUnity.Types type, int pallete = 0)
+		public static string ToColorHEX(this PokemonUnity.Types type, int pallete = 0)
 		{
 			//private System.Collections.Generic.Dictionary<string, Color> StringToColorDic = new System.Collections.Generic.Dictionary<string, Color>() {//Dictionary<PokemonData.Type, Color>
 			if(pallete == 1)
