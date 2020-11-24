@@ -73,6 +73,7 @@
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
+    <Compile Include="Combat\Match\Recorder.cs" />
     <Compile Include="Enums\UI.cs" />
     <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Monster\BattlePeer.cs" />
@@ -86,7 +87,6 @@
     <Compile Include="Combat\AI.cs" />
     <Compile Include="Combat\Data\TurnResults.cs" />
     <Compile Include="Combat\Pokemon\Pokemon.Shadow.cs" />
-    <Compile Include="Combat\Match\Recorder.cs" />
     <Compile Include="Enums\Battles.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Enums\Items.cs" />
