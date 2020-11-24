@@ -1792,7 +1792,6 @@ namespace PokemonUnity
 	/// </summary>
 	/// <remarks>Can now code with strings or int and
 	/// access the same value.</remarks>
-	/// ToDo: Needs to be redone. Alphabetical and no Id tags -- Done
 	public enum Moves
 	{
 		/// <summary>
@@ -2444,8 +2443,8 @@ namespace PokemonUnity
 		PRECIPICE_BLADES = 619,
 		DRAGON_ASCENT = 620,
 		HYPERSPACE_FURY = 621,
-		//Everythng beyond here is new
-		BREAKNECK_BLITZ__PHYSICAL = 622,
+		//Everythng beyond here is new; used by non-canonical pokemon game
+		/*BREAKNECK_BLITZ__PHYSICAL = 622,
 		BREAKNECK_BLITZ__SPECIAL = 623,
 		ALL_OUT_PUMMELING__PHYSICAL = 624,
 		ALL_OUT_PUMMELING__SPECIAL = 625,
@@ -2551,7 +2550,7 @@ namespace PokemonUnity
 		MENACING_MOONRAZE_MAELSTROM = 725,
 		LETS_SNUGGLE_FOREVER = 726,
 		SPLINTERED_STORMSHARDS = 727,
-		CLANGOROUS_SOULBLAZE = 728,
+		CLANGOROUS_SOULBLAZE = 728,*/
 		SHADOW_RUSH = 10001,
 		SHADOW_BLAST = 10002,
 		SHADOW_BLITZ = 10003,
