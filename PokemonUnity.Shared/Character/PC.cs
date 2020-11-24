@@ -222,21 +222,24 @@ namespace PokemonUnity.Character
 
 		/// <summary>
 		/// Add a new pokemon directly to active box. 
-		/// If pokemon could not be added return false.
 		/// </summary>
 		/// <param name="acquiredPokemon"></param>
-		/// <returns></returns>
-		public bool addPokemon(Pokemon acquiredPokemon)
+		/// <returns>
+		/// Returns position of stored pokemon.
+		/// If pokemon could not be added return null.
+		/// </returns>
+		public KeyValuePair<int,int>? addPokemon(Pokemon acquiredPokemon)
 		{
 			//attempt to add to the earliest available opening in active box. no array packing needed.
 			if (hasSpace())
 			{
+				KeyValuePair<int, int> kv = new KeyValuePair<int, int>(ActiveBox, getIndexOfFirstEmpty().Value);
 				//Pokemons[getIndexOfFirstEmpty().Value] = acquiredPokemon;
-				pokemons[ActiveBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
-				return true;
+				pokemons[kv.Key, kv.Value] = acquiredPokemon;
+				return kv;
 			}
 			//if could not add a pokemon, return false. Party and PC are both full.
-			return false;
+			return null;
 		}
 
 		public void swapPokemon(int box1, int pos1, int box2, int pos2)
