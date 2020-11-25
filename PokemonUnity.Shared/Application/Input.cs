@@ -24,8 +24,6 @@ namespace PokemonUnity
 //  return (wndthreadid==threadid);
 //}
 
-
-
 public static partial class Input {
         #region Variables
   public const int DOWN  = 2;
