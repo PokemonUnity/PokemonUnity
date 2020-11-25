@@ -24,6 +24,12 @@ namespace PokemonUnity
 	public interface IScene : IHasDisplayMessage
 	{
 		/// <summary>
+		/// Represents the unique id for given scene.
+		/// Used for loading scenes in unity.
+		/// </summary>
+		int Id { get; }
+
+		/// <summary>
 		/// Shows the player's Poké Ball being thrown to capture a Pokémon.
 		/// </summary>
 		//void pokeballThrow(Items ball, int shakes,bool critical,Combat.Pokemon targetBattler,IScene scene,Combat.Pokemon battler, int burst = -1, bool showplayer = false);

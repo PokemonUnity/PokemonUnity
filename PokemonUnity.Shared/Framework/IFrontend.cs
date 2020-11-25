@@ -6,6 +6,7 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.UX;
 using PokemonUnity.Combat;
+using PokemonUnity.Character;
 using PokemonUnity.Inventory;
 
 
@@ -441,7 +442,121 @@ namespace PokemonUnity
 	}
 	#endregion
 
+	#region Bag
+	public interface IPokemonBag_Scene : IScene
+	{
+		void update();
+		void pbStartScene(Bag bag);
+		void pbEndScene();
+		int pbChooseNumber(string helptext, int maximum);
+		void pbDisplay(string msg, bool brief = false);
+		void pbConfirm(string msg);
+		void pbShowCommands(string helptext, int commands);
+		void pbRefresh();
+
+		// Called when the item screen wants an item to be chosen from the screen
+		Items pbChooseItem(bool lockpocket = false);
+	}
+
+	public interface IPokemonBagScreen : IScreen
+	{
+		void initialize(IPokemonBag_Scene scene, Bag bag);
+		void pbDisplay(string text);
+		void pbConfirm(string text);
+
+		// UI logic for the item screen when an item is to be held by a Pokémon.
+		Items pbGiveItemScreen();
+
+		// UI logic for the item screen when an item is used on a Pokémon from the party screen.
+		Items pbUseItemScreen(Pokemons pokemon);
+
+		// UI logic for the item screen for choosing an item
+		Items pbChooseItemScreen();
+
+		// UI logic for the item screen for choosing a Berry
+		Items pbChooseBerryScreen();
+
+		// UI logic for tossing an item in the item screen.
+		void pbTossItemScreen();
+
+		// UI logic for withdrawing an item in the item screen.
+		void pbWithdrawItemScreen();
+
+		// UI logic for depositing an item in the item screen.
+		void pbDepositItemScreen();
+		Items pbStartScreen();
+	}
+	#endregion
+
 	#region 
+	public interface IPokemonStorageScene : IScene
+	{
+		//void drawMarkings(bitmap , float x, float y, float width, float height, bool[] markings);
+		void drawMarkings(bool[] markings);
+		string[] getMarkingCommands(bool[] markings);
+		void initialize();
+		void pbBoxName(string helptext, int minchars, int maxchars);
+		void pbChangeBackground(int wp);
+		int pbChangeSelection(int key, int selection);
+		void pbChooseBox(string msg);
+		Items pbChooseItem(Pokemon bag);
+		void pbCloseBox();
+		//void pbDisplay(string message);
+		void pbDropDownPartyTab();
+		void pbHardRefresh();
+		void pbHidePartyTab();
+		void pbHold(KeyValuePair<int, int> selected);
+		void pbJumpToBox(int newbox);
+		void pbMark(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		int pbPartyChangeSelection(int key, int selection);
+		void pbPartySetArrow(int selection);//arrow , 
+		void pbPlace(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		void pbRefresh();
+		void pbRelease(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		int[] pbSelectBox(Pokemon[] party);
+		int[] pbSelectBoxInternal(Pokemon[] party);
+		int pbSelectParty(Pokemon[] party);
+		int pbSelectPartyInternal(Pokemon[] party, bool depositing);
+		void pbSetArrow(int selection);//arrow , 
+		void pbSetMosaic(int selection);
+		int pbShowCommands(string message, string[] commands, int index = 0);
+		void pbStartBox(IPokemonStorageScreen screen, int command);
+		void pbStore(KeyValuePair<int, int> selected, Pokemon heldpoke, int destbox, int firstfree);
+		void pbSummary(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		void pbSwap(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		void pbSwitchBoxToLeft(int newbox);
+		void pbSwitchBoxToRight(int newbox);
+		void pbUpdateOverlay(int selection, Pokemon[] party = null);
+		void pbWithdraw(KeyValuePair<int, int> selected, Pokemon heldpoke, int partyindex);
+	}
+
+	public interface IPokemonStorageScreen : IScreen
+	{
+		int pbAbleCount { get; }
+		Pokemon pbHeldPokemon { get; }
+		IPokemonStorageScene scene { get; }
+		Character.PokemonStorage storage { get; }
+
+		void debugMenu(KeyValuePair<int, int> selected, Pokemon pkmn, Pokemon heldpoke);
+		void initialize(IPokemonStorageScene scene, Character.PokemonStorage storage);
+		bool pbAble(Pokemon pokemon);
+		void pbBoxCommands();
+		int? pbChoosePokemon(Pokemon[] party = null);
+		bool pbConfirm(string str);
+		void pbDisplay(string message);
+		void pbHold(KeyValuePair<int, int> selected);
+		void pbItem(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		void pbMark(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		void pbPlace(KeyValuePair<int, int> selected);
+		void pbRelease(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		int pbShowCommands(string msg, string[] commands);
+		void pbStartScreen(int command);
+		void pbStore(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		void pbSummary(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		bool pbSwap(KeyValuePair<int, int> selected);
+		bool pbWithdraw(KeyValuePair<int, int> selected, Pokemon heldpoke);
+		void selectPokemon(int index);
+	}
 	#endregion
 
 	#region 
