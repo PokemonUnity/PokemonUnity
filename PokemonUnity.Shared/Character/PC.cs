@@ -220,6 +220,46 @@ namespace PokemonUnity.Character
 			return result;
 		}
 
+
+		public bool removePokemon(int boxID, int pkmnID)
+		{
+			if (this[Convert.ToByte(boxID)].Pokemons[pkmnID].IsNotNullOrNone())
+			{
+				Pokemons[pkmnID] = new Pokemon();
+				pokemons[boxID, pkmnID] = new Pokemon();
+				return true;
+			}
+			return false;
+		}
+		public bool Switch_PC_And_Party_Pokemon(Player player, int PartyID, int PCBoxID)
+		{
+			try
+			{
+				Pokemon PartyHolder = player.Party[PartyID];
+				player.Party[PartyID] = player.PC.Pokemons[PCBoxID];
+				Pokemons[PCBoxID] = PartyHolder;
+				pokemons[ActiveBox, PCBoxID] = PartyHolder;
+				return true;
+			}
+			catch
+			{
+				//If could not switch pokemons
+				return false;
+			}
+		}
+		public bool addPokemon(int box, int position, Pokemon pokemon)
+		{
+			try
+			{
+				pokemons[box, position] = pokemon;
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
 		/// <summary>
 		/// Add a new pokemon directly to active box. 
 		/// </summary>
