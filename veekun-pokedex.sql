@@ -1563,6 +1563,27 @@ CREATE TABLE IF NOT EXISTS "game_player_pokemon_ribbon" (
 	FOREIGN KEY("pokemon_personal_id") REFERENCES "game_player_pokemon"("id")
 	--,FOREIGN KEY("ribbon_id") REFERENCES "ribbons"("id")
 );
+CREATE TABLE IF NOT EXISTS "pokemon_ui_sprite" (
+	"id"	NVARCHAR(15) NOT NULL, --name of the sprite image
+	"pokemon_species_id"	INTEGER NOT NULL, --"Species"
+	"pokemon_form_id"	INTEGER NOT NULL, --"Form"
+	"IsShiny"	BIT NOT NULL,
+	"Gender"	BIT NULL, --gender this sprite is specific to, null if both use same sprite
+	PRIMARY KEY("id"), 
+	--FOREIGN KEY("pokemon_id") REFERENCES "pokemon"("id"),
+	FOREIGN KEY("pokemon_species_id") REFERENCES "pokemon_species"("id"),
+	FOREIGN KEY("pokemon_form_id") REFERENCES "pokemon_forms"("id")
+);
+CREATE TABLE IF NOT EXISTS "item_ui_sprite" (
+	"id"	NVARCHAR(15) NOT NULL, --name of the sprite image
+	"item_id"	INTEGER NULL, --"item"
+	"filepath"	NVARCHAR(75) NOT NULL, --name with folder structure
+	"IsCopy"	BIT NOT NULL, --duplicate of same item used somewhere else
+	"notes"	NVARCHAR(75) NOT NULL, --name with folder structure
+	"reuse_item_id"	NVARCHAR(75) NOT NULL, --the id of item that uses this exact sprite, to prevent duplicates
+	PRIMARY KEY("id"), 
+	FOREIGN KEY("item_id") REFERENCES "items"("id")
+);
 COMMIT;
 --
 BEGIN TRANSACTION;
