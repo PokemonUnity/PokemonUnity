@@ -154,6 +154,7 @@
     <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
     <Compile Include="Overworld\Terrain.cs" />
     <Compile Include="Overworld\Wild\Encounter.cs" />
+    <Compile Include="Overworld\Wild\EncounterSlotData.cs" />
     <Compile Include="Overworld\Wild\EncounterData.cs" />
     <Compile Include="Overworld\Area.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
