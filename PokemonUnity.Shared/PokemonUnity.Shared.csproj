@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Events.cs" />
+    <Compile Include="Application\Scene.cs" />
+    <Compile Include="Application\MoveRoutes.cs" />
     <Compile Include="Application\Feature.cs" />
     <Compile Include="Application\Game\Game.Controls.cs" />
     <Compile Include="Application\Game\Game.Variable.cs" />
@@ -75,6 +77,8 @@
     <Compile Include="Character\Player\Outfit.cs" />
     <Compile Include="Combat\Match\Recorder.cs" />
     <Compile Include="Enums\UI.cs" />
+    <Compile Include="Framework\IGame_System.cs" />
+    <Compile Include="Framework\IInterpreterFieldMixin.cs" />
     <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Monster\BattlePeer.cs" />
     <Compile Include="Combat\Interface\IBattler.cs" />

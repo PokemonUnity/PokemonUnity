@@ -27,6 +27,7 @@ namespace PokemonUnity
 
 
 public static partial class Input {
+        #region Variables
   public const int DOWN  = 2;
   public const int LEFT  = 4;
   public const int RIGHT = 6;
@@ -49,15 +50,47 @@ public static partial class Input {
   public const int F9    = 29;
   public const int LeftMouseKey  = 0;
   public const int RightMouseKey = 1;
-        private static Dictionary<int, int> keystate;
-        private static Dictionary<int, bool> stateUpdated;
-        private static Dictionary<int, bool> triggerstate;
-        private static Dictionary<int, bool> releasestate;
+        //Buttons are set to true only for a single frame at a time...
+        private static readonly Dictionary<int, int> keystate       = new Dictionary<int, int>();
+        private static readonly Dictionary<int, bool> stateUpdated  = new Dictionary<int, bool>();
+        private static readonly Dictionary<int, bool> triggerstate  = new Dictionary<int, bool>();
+        private static readonly Dictionary<int, bool> releasestate  = new Dictionary<int, bool>();
+        #endregion
 
-  //  GetAsyncKeyState or GetKeyState will work here
-  //@GetKeyState=new Win32API("user32", "GetAsyncKeyState", "i", "i");
-  //@GetForegroundWindow=new Win32API("user32", "GetForegroundWindow", "", "i");
+        public delegate void ButtonEventHandler(object sender, ButtonEventArgs e);
 
+        // Define the delegate collection.
+        private static System.ComponentModel.EventHandlerList listEventDelegates = new System.ComponentModel.EventHandlerList();
+
+        // Define the ButtonDown event property.
+        public static event ButtonEventHandler ButtonDown;
+
+        // Define the ButtonUp event property.
+        public static event ButtonEventHandler ButtonUp;
+
+        // Raise the event with the delegate specified by mouseDownEventKey
+        private static void OnButtonDown(ButtonEventArgs e)
+        {
+            //ButtonEventHandler buttonEventDelegate =
+            //    (ButtonEventHandler)listEventDelegates[buttonDownEventKey];
+            //buttonEventDelegate(null, e);
+            ButtonEventHandler buttonEventDelegate = ButtonDown;
+            if (buttonEventDelegate != null) buttonEventDelegate.Invoke(null, e);
+        }
+
+        // Raise the event with the delegate specified by mouseUpEventKey
+        private static void OnButtonUp(ButtonEventArgs e)
+        {
+            //ButtonEventHandler buttonEventDelegate =
+            //    (ButtonEventHandler)listEventDelegates[mouseUpEventKey];
+            //buttonEventDelegate(null, e);
+        }
+
+        //  GetAsyncKeyState or GetKeyState will work here
+        //@GetKeyState=new Win32API("user32", "GetAsyncKeyState", "i", "i");
+        //@GetForegroundWindow=new Win32API("user32", "GetForegroundWindow", "", "i");
+
+        #region Methods
   /// <summary>
   /// Returns whether a key is being pressed
   /// </summary>
@@ -80,7 +113,7 @@ public static partial class Input {
   }
 
   public static void update() {
-    if (@keystate != null) {
+    if (@keystate.Count > 0) { //!= null
       for (int i = 0; i < 256; i++) {
         //  just noting that the state should be updated
         //  instead of thunking to Win32 256 times
@@ -92,15 +125,19 @@ public static partial class Input {
         }
       }
     } else {
-      @stateUpdated=new Dictionary<int, bool>();
-      @keystate=new Dictionary<int, int>();
-      @triggerstate=new Dictionary<int, bool>();
-      @releasestate=new Dictionary<int, bool>();
+      @stateUpdated .Clear(); //=new Dictionary<int, bool>();
+      @keystate     .Clear(); //=new Dictionary<int, int>();
+      @triggerstate .Clear(); //=new Dictionary<int, bool>();
+      @releasestate .Clear(); //=new Dictionary<int, bool>();
       for (int i = 0; i < 256; i++) {
-        @stateUpdated[i]=true;
-        @keystate[i]=Input.getstate(i) ? 1 : 0;
-        @triggerstate[i]=false;
-        @releasestate[i]=false;
+        //@stateUpdated[i]=true;
+        //@keystate[i]=Input.getstate(i) ? 1 : 0;
+        //@triggerstate[i]=false;
+        //@releasestate[i]=false;
+        @stateUpdated.Add(i,true);
+        @keystate.Add(i,Input.getstate(i) ? 1 : 0);
+        @triggerstate.Add(i,false);
+        @releasestate.Add(i,false);
       }
     }
   }
@@ -298,64 +335,15 @@ public static partial class Input {
   public static bool pressex(int key) {
     return Input.repeatcount(key)>0;
   }
-}
+        #endregion
 
+        #region 
+        #endregion
 
-
-// Requires Win32API
-/*public static partial class Mouse {
-  gsm = new Win32API('user32', 'GetSystemMetrics', 'i', 'i');
-  @GetCursorPos = new Win32API('user32', 'GetCursorPos', 'p', 'i');
-  @SetCapture = new Win32API('user32', 'SetCapture', 'p', 'i');
-  @ReleaseCapture = new Win32API('user32', 'ReleaseCapture', '', 'i');
-  module_function
-  public void getMouseGlobalPos() {
-    pos = new []{ 0, 0 }.pack('ll');
-    if (@GetCursorPos.call(pos) != 0) {
-      return pos.unpack('ll');
-    } else {
-      return null;
+        public class ButtonEventArgs
+        {
+            public ButtonEventArgs(int button) { Button = button; }
+            public int Button { get; } // readonly
+        }
     }
-  }
-
-  public void screen_to_client(x, y) {
-    unless (x and y) return null;
-    screenToClient = new Win32API('user32', 'ScreenToClient', %w(l p), 'i');
-    pos = new []{ x, y }.pack('ll');
-    if (screenToClient.call(Win32API.pbFindRgssWindow, pos) != 0) {
-      return pos.unpack('ll');
-    } else {
-      return null;
-    }
-  }
-
-  public void setCapture() {
-    @SetCapture.call(Win32API.pbFindRgssWindow);
-  }
-
-  public void releaseCapture() {
-    @ReleaseCapture.call;
-  }
-
-//  Returns the position of the mouse relative to the game window.
-  public void getMousePos(catch_anywhere = false) {
-    resizeFactor=($ResizeFactor) ? $ResizeFactor : 1;
-    x, y = screen_to_client(*getMouseGlobalPos);
-    width, height = Win32API.client_size;
-    if (catch_anywhere || (x >= 0 and y >= 0 and x < width and y < height)) {
-      return (x/resizeFactor).to_i, (y/resizeFactor).to_i;
-    } else {
-      return null;
-    }
-  }
-
-  public void del() {
-    if (@oldcursor == null) {
-      return;
-    } else {
-      @SetClassLong.call(Win32API.pbFindRgssWindow,-12, @oldcursor);
-      @oldcursor = null;
-    }
-  }
-}*/
 }
