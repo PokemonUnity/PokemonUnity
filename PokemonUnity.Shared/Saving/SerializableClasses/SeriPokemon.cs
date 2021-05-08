@@ -116,7 +116,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 			}
 
 			Moves[] history = new Moves[pokemon.Archive.Length];
-			for (int i = 0; i < moves.Length; i++)
+			for (int i = 0; i < pokemon.Archive.Length; i++)
 			{
 				history[i] = (Moves)pokemon.Archive[i];
 			}
