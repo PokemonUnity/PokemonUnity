@@ -224,6 +224,14 @@ namespace Tests
 		#endregion
 
 		#region Misc
+		[TestMethod]
+		public void Test_SeriPokemon_To_Pokemon()
+		{
+			PokemonUnity.Monster.Pokemon pkmn = new PokemonUnity.Monster.Pokemon(PokemonUnity.Pokemons.Abra);
+			PokemonUnity.Saving.SerializableClasses.SeriPokemon seri = pkmn;
+			PokemonUnity.Monster.Pokemon p = seri;
+			Assert.AreEqual<PokemonUnity.Monster.Pokemon>(pkmn, p);
+		}
 		#endregion
 	}
 }
