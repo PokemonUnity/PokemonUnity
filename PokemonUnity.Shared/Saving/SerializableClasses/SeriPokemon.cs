@@ -116,7 +116,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 			}
 
 			Moves[] history = new Moves[pokemon.Archive.Length];
-			for (int i = 0; i < moves.Length; i++)
+			for (int i = 0; i < pokemon.Archive.Length; i++)
 			{
 				history[i] = (Moves)pokemon.Archive[i];
 			}
@@ -124,7 +124,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 			Pokemon normalPokemon =
 				new Pokemon
 				(
-					(Pokemons)pokemon.Species, new Trainer(pokemon.TrainerName, pokemon.TrainerIsMale, 
+					(Pokemons)pokemon.Species, new TrainerData(pokemon.TrainerName, pokemon.TrainerIsMale, 
 					tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
 					pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
 					(Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
@@ -221,7 +221,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				//Ribbons is also null, we add a null check
 				if (pokemon.Ribbons != null)
 				{
-					seriPokemon.Ribbons			= new int[pokemon.Ribbons.Count];
+					seriPokemon.Ribbons			= new int[pokemon.Ribbons.Length];
 					for (int i = 0; i < seriPokemon.Ribbons.Length; i++)
 					{
 						seriPokemon.Ribbons[i]	= (int)pokemon.Ribbons[i];
