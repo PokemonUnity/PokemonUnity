@@ -124,7 +124,9 @@ namespace PokemonUnity.Saving.SerializableClasses
 			Pokemon normalPokemon =
 				new Pokemon
 				(
-					(Pokemons)pokemon.Species, new TrainerData(pokemon.TrainerName, pokemon.TrainerIsMale, 
+					(Pokemons)pokemon.Species, (pokemon.TrainerName == null && 
+					pokemon.TrainerTrainerId == 0 && pokemon.TrainerSecretId == 0) ? (TrainerData?)null :
+					new TrainerData(pokemon.TrainerName, pokemon.TrainerIsMale, 
 					tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
 					pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
 					(Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
@@ -153,10 +155,10 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 				if (!pokemon.OT.Equals((object)null))
 				{
-					seriPokemon.TrainerName			= pokemon.OT.Name;
-					seriPokemon.TrainerIsMale		= pokemon.OT.Gender == true;
-					seriPokemon.TrainerTrainerId	= pokemon.OT.TrainerID;
-					seriPokemon.TrainerSecretId		= pokemon.OT.SecretID;
+					seriPokemon.TrainerName			= pokemon.OT.Value.Name;
+					seriPokemon.TrainerIsMale		= pokemon.OT.Value.Gender == true;
+					seriPokemon.TrainerTrainerId	= pokemon.OT.Value.TrainerID;
+					seriPokemon.TrainerSecretId		= pokemon.OT.Value.SecretID;
 				}
 
 				seriPokemon.Species				= (int)pokemon.Species;
@@ -180,15 +182,15 @@ namespace PokemonUnity.Saving.SerializableClasses
 				seriPokemon.HeartGuageSize		= pokemon.HeartGuageSize;
 				seriPokemon.ShadowLevel			= pokemon.ShadowLevel;
 
-				seriPokemon.CurrentHP			= pokemon.HP;
-				seriPokemon.Item				= (int)pokemon.Item;
-
 				seriPokemon.IV					= pokemon.IV;
 				seriPokemon.EV					= pokemon.EV;
 
 				seriPokemon.ObtainedLevel		= pokemon.ObtainLevel;
 				//seriPokemon.CurrentLevel		= pokemon.Level;
-				seriPokemon.CurrentExp			= pokemon.Exp;
+				seriPokemon.CurrentExp			= pokemon.Experience.Total;
+
+				seriPokemon.CurrentHP			= pokemon.HP;
+				seriPokemon.Item				= (int)pokemon.Item;
 
 				seriPokemon.Happiness			= pokemon.Happiness;
 

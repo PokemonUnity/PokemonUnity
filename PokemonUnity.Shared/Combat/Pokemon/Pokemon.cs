@@ -813,7 +813,8 @@ namespace PokemonUnity.Combat
 				//battle.pbDisplay(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
 				GameDebug.LogWarning("HP greater than total HP");
 			if (amt > 0)
-				battle.scene.HPChanged(Index, oldhp, animate);
+				//battle.scene.HPChanged(Index, oldhp, animate);
+				battle.scene.pbHPChanged(this, oldhp, animate);
 			if (amt > 0 && registerDamage)
 				tookDamage = true;
 			return amt;
@@ -837,7 +838,8 @@ namespace PokemonUnity.Combat
 				//battle.pbDisplay(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
 				GameDebug.LogWarning("HP greater than total HP");
 			if(amount > 0)
-				battle.scene.HPChanged(Index, oldhp, animate);
+				//battle.scene.HPChanged(Index, oldhp, animate);
+				battle.scene.pbHPChanged(this, oldhp, animate);
 			//ToDo: Fix return
 			return amount;
 		}
