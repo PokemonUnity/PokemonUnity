@@ -3085,7 +3085,7 @@ namespace PokemonUnity.Combat
     return (MenuCommands)@scene.pbCommandMenu(i);
   }
 
-  public int[] pbItemMenu(int i) {
+  public KeyValuePair<Items,int> pbItemMenu(int i) {
     return @scene.pbItemMenu(i);
   }
 
@@ -3180,9 +3180,9 @@ namespace PokemonUnity.Combat
                 }
               }
               else {
-                int[] item=pbItemMenu(i);
-                if (item[0]>0) {
-                  if (pbRegisterItem(i,(Items)item[0],item[1])) {
+                KeyValuePair<Items,int> item=pbItemMenu(i);
+                if (item.Key>0) {
+                  if (pbRegisterItem(i,(Items)item.Key,item.Value)) {
                     commandDone=true;
                   }
                 }
@@ -4636,8 +4636,8 @@ namespace PokemonUnity.Combat
     }
     return @decision;
   }
-		#endregion
-		#endregion
+        #endregion
+        #endregion
 	}
 
     public enum MenuCommands : int

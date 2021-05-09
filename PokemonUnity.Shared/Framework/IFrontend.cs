@@ -135,6 +135,7 @@ namespace PokemonUnity
 	}
 	public interface IPokeBattle_Scene : IScene, IHasChatter
 	{
+		//event EventHandler<PokeballThrowTargetArgs> OnPokeballThrown;
 		/*
 		-  def pbChooseNewEnemy(int index,party)
 		Use this method to choose a new Pokémon for the enemy
@@ -167,29 +168,30 @@ namespace PokemonUnity
 		void pbGraphicsUpdate();
 		void pbInputUpdate();
 		void pbShowWindow(int windowtype);
-		void pbSetMessageMode(int mode);
+		void pbSetMessageMode(bool mode);
 		void pbWaitMessage();
 		void pbDisplay(string msg, bool brief = false);
 		void pbDisplayMessage(string msg, bool brief = false);
 		void pbDisplayPausedMessage(string msg);
 		bool pbDisplayConfirmMessage(string msg);
-		void pbShowCommands(string msg, string[] commands, bool defaultValue);
+		//void pbShowCommands(string msg, string[] commands, int defaultValue);
+		void pbShowCommands(string msg, string[] commands, bool canCancel);
 		void pbFrameUpdate(object cw = null);
 		void pbRefresh();
-		void pbAddSprite(int id, double x, double y, string filename, int viewport);
+		void pbAddSprite(string id, double x, double y, string filename, int viewport);
 		void pbAddPlane(int id, string filename, int viewport);
 		void pbDisposeSprites();
 		void pbBeginCommandPhase();
-		void pbShowOpponent(int index);
-		void pbHideOpponent();
-		void pbShowHelp(int text);
+		IEnumerator pbShowOpponent(int index);
+		IEnumerator pbHideOpponent();
+		void pbShowHelp(string text);
 		void pbHideHelp();
 		void pbBackdrop();
 		/// <summary>
 		/// Returns whether the party line-ups are currently appearing on-screen
 		/// </summary>
 		/// <returns></returns>
-		bool inPartyAnimation();
+		bool inPartyAnimation { get; }
 		/// <summary>
 		/// Shows the party line-ups appearing on-screen
 		/// </summary>
@@ -206,7 +208,7 @@ namespace PokemonUnity
 		void pbSendOut(int battlerindex, Monster.Pokemon pkmn);
 		void pbTrainerWithdraw(Combat.Battle battle, Combat.Pokemon pkmn);
 		void pbWithdraw(Combat.Battle battle, Combat.Pokemon pkmn);
-		void pbMoveString(string move);
+		string pbMoveString(string move);
 		void pbBeginAttackPhase();
 		void pbSafariStart();
 		void pbResetCommandIndices();
@@ -238,7 +240,7 @@ namespace PokemonUnity
 		/// The return value is the item chosen, or 0 if the choice was canceled.
 		/// </summary>
 		/// <param name="index"></param>
-		int[] pbItemMenu(int index);
+		KeyValuePair<Items, int> pbItemMenu(int index);
 		/// <summary>
 		/// Called whenever a Pokémon should forget a move.  It should return -1 if the
 		/// selection is canceled, or 0 to 3 to indicate the move to forget.  The function
@@ -255,7 +257,8 @@ namespace PokemonUnity
 		int pbChooseMove(Monster.Pokemon pokemon, string message);
 		string pbNameEntry(string helptext, Monster.Pokemon pokemon);
 		void pbSelectBattler(int index, int selectmode = 1);
-		void pbFirstTarget(int index, int targettype);
+		//int pbFirstTarget(int index, int targettype);
+		int pbFirstTarget(int index, Attack.Data.Targets targettype);
 		void pbUpdateSelected(int index);
 		/// <summary>
 		/// Use this method to make the player choose a target 
@@ -274,13 +277,13 @@ namespace PokemonUnity
 		/// <param name="oldhp"></param>
 		/// <param name="anim"></param>
 		//void pbHPChanged(int pkmn, int oldhp, bool anim = false);
-		void HPChanged(int index, int oldhp, bool animate = false);
-		void pbHPChanged(Pokemon pkmn, int oldhp, bool animate = false);
+		//void HPChanged(int index, int oldhp, bool animate = false);
+		IEnumerator pbHPChanged(Pokemon pkmn, int oldhp, bool animate = false);
 		/// <summary>
 		/// This method is called whenever a Pokémon faints.
 		/// </summary>
 		/// <param name=""></param>
-		void pbFainted(int pkmn);
+		IEnumerator pbFainted(int pkmn);
 		/// <summary>
 		/// Use this method to choose a command for the enemy.
 		/// </summary>
@@ -557,9 +560,6 @@ namespace PokemonUnity
 		bool pbWithdraw(KeyValuePair<int, int> selected, Pokemon heldpoke);
 		void selectPokemon(int index);
 	}
-	#endregion
-
-	#region 
 	#endregion
 
 	namespace UX
