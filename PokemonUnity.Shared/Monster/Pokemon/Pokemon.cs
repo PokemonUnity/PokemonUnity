@@ -1409,6 +1409,14 @@ namespace PokemonUnity.Monster
 		private bool? shinyFlag { get; set; }
 
 		/// <summary>
+		/// Randomize Personal Id of pokemon, which will affect shiny flag
+		/// </summary>
+		public void shuffleShiny()
+		{
+			PersonalId = Core.Rand.Next(65536) | (Core.Rand.Next(65536) << 16);
+		}
+
+		/// <summary>
 		/// Makes this Pokemon shiny.
 		/// </summary>
 		public void makeShiny()
