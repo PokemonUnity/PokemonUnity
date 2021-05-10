@@ -1718,5 +1718,136 @@ public  bool pbRecordTrainer() {
     public partial class GlobalMetadata
     {
         public IAudioObject trainerRecording { get; set; }
+  public bool bicycle				{ get; set; }
+  public bool surfing				{ get; set; }
+  public bool diving				{ get; set; }
+  public bool sliding				{ get; set; }
+  public bool fishing				{ get; set; }
+  public bool runtoggle				{ get; set; }
+        /// <summary>
+        /// </summary>
+        /// Should not stack (encourage users to deplete excessive money); 
+        /// reset count based on repel used.
+		///ToDo: Missing Variables for RepelType, Swarm
+  public int repel				    { get; set; }
+  public bool flashUsed				{ get; set; }
+  public float bridge				{ get; set; }
+  public bool runningShoes			{ get; set; }
+  public bool snagMachine			{ get; set; }
+  public bool seenStorageCreator	{ get; set; }
+  public DateTime startTime			{ get; set; }
+        /// <summary>
+        /// Has player beaten the game already and viewed credits from start to end
+        /// </summary>
+        /// New Game Plus
+  public bool creditsPlayed			                { get; set; }
+  public int playerID				                { get; set; }
+  public int coins				                    { get; set; }
+  public int sootsack				                { get; set; }
+  public int? mailbox				                { get; set; }
+  //public Character.PCItemStorage pcItemStorage	{ get; set; }
+  public int stepcount				                { get; set; }
+  public int happinessSteps				            { get; set; }
+  public int? pokerusTime				            { get; set; }
+  public Character.DayCare daycare		            { get; set; }
+  public bool daycareEgg				            { get; set; } //ToDo: int?...
+  public int daycareEggSteps			            { get; set; }
+  public bool[] pokedexUnlocked			            { get; set; } // Array storing which Dexes are unlocked
+  public List<int> pokedexViable		            { get; set; } // All Dexes of non-zero length and unlocked
+  public int pokedexDex				                { get; set; } // Dex currently looking at (-1 is National Dex)
+  public int[] pokedexIndex				            { get; set; } // Last species viewed per Dex
+  public int pokedexMode				            { get; set; } // Search mode
+  public int? healingSpot				            { get; set; }
+  public float[] escapePoint			            { get; set; }
+  public int pokecenterMapId			            { get; set; }
+  public float pokecenterX				            { get; set; }
+  public float pokecenterY				            { get; set; }
+  public int pokecenterDirection		            { get; set; }
+  //public Overworld.TilePosition pokecenter			{ get; set; }
+  public List<int> visitedMaps				        { get; set; }
+  public List<int> mapTrail				            { get; set; }
+  public int? nextBattleBGM				            { get; set; }
+  public int? nextBattleME				            { get; set; }
+  public int? nextBattleBack			            { get; set; }
+  public int? safariState				            { get; set; }
+  //public BugContestState bugContestState			{ get; set; }
+  public Combat.Trainer partner			            { get; set; }
+  public int? challenge				                { get; set; }
+  public int? lastbattle				            { get; set; }
+  public List<int> phoneNumbers			            { get; set; }
+  public int phoneTime				                { get; set; }
+  public bool safesave				                { get; set; }
+  public Dictionary<KeyValuePair<int,int>,int> eventvars				{ get; set; }
+
+  public GlobalMetadata() {
+    @bicycle              = false;
+    @surfing              = false;
+    @diving               = false;
+    @sliding              = false;
+    @fishing              = false;
+    @runtoggle            = false;
+    @repel                = 0;
+    @flashUsed            = false;
+    @bridge               = 0;
+    @runningShoes         = false;
+    @snagMachine          = false;
+    @seenStorageCreator   = false;
+    @startTime            = Game.GetTimeNow;
+    @creditsPlayed        = false;
+    @playerID             = -1;
+    @coins                = 0;
+    @sootsack             = 0;
+    @mailbox              = null;
+    //@pcItemStorage        = null;
+    @stepcount            = 0;
+    @happinessSteps       = 0;
+    @pokerusTime          = null;
+    @daycare              = new Character.DayCare(2); //{ { null, 0 }, { null, 0 } };
+    @daycareEgg           = false;//0;
+    @daycareEggSteps      = 0;
+    int numRegions        = 0;
+    //pbRgssOpen("Data/regionals.dat","rb"){|f| numRegions = f.fgetw }
+    @pokedexUnlocked      = new bool[numRegions];
+    @pokedexViable        = new List<int>();
+    @pokedexDex           = (numRegions==0) ? -1 : 0;
+    @pokedexIndex         = new int[numRegions];
+    @pokedexMode          = 0;
+    for (int i = 0; i < numRegions+1; i++) {	// National Dex isn't a region, but is included
+      @pokedexIndex[i]    = 0;
+      @pokedexUnlocked[i] = (i==0);
+    }
+    @healingSpot          = null;
+    @escapePoint          = new float[0];
+    @pokecenterMapId      = -1;
+    @pokecenterX          = -1;
+    @pokecenterY          = -1;
+    @pokecenterDirection  = -1;
+    @visitedMaps          = new List<int>();
+    @mapTrail             = new List<int>();
+    @nextBattleBGM        = null;
+    @nextBattleME         = null;
+    @nextBattleBack       = null;
+    @safariState          = null;
+    //@bugContestState      = null;
+    @partner              = null;
+    @challenge            = null;
+    @lastbattle           = null;
+    @phoneNumbers         = new List<int>();
+    @phoneTime            = 0;
+    @eventvars            = new Dictionary<KeyValuePair<int, int>, int>();
+    @safesave             = false;
+  }
+
+  //public void bridge() {
+  //  if (!@bridge) @bridge=0;
+  //  return @bridge;
+  //}
+
+  //public void roamPokemonCaught() {
+  //  if (!@roamPokemonCaught) {
+  //    @roamPokemonCaught=[];
+  //  }
+  //  return @roamPokemonCaught;
+  //}
     }
 }
