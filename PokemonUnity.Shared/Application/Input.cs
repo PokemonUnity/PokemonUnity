@@ -53,12 +53,20 @@ public static partial class Input {
         private static readonly Dictionary<int, bool> stateUpdated  = new Dictionary<int, bool>();
         private static readonly Dictionary<int, bool> triggerstate  = new Dictionary<int, bool>();
         private static readonly Dictionary<int, bool> releasestate  = new Dictionary<int, bool>();
+        private static readonly Dictionary<int, bool> keyIsDown     = new Dictionary<int, bool>();
+
+        //  GetAsyncKeyState or GetKeyState will work here
+        //private static bool @GetKeyState=new Win32API("user32", "GetAsyncKeyState", "i", "i");
+        //private static @GetForegroundWindow=new Win32API("user32", "GetForegroundWindow", "", "i");
         #endregion
 
-        public delegate void ButtonEventHandler(object sender, ButtonEventArgs e);
+        /*public delegate void ButtonEventHandler(object sender, ButtonEventArgs e);
 
         // Define the delegate collection.
-        private static System.ComponentModel.EventHandlerList listEventDelegates = new System.ComponentModel.EventHandlerList();
+        //private static System.ComponentModel.EventHandlerList listEventDelegates = new System.ComponentModel.EventHandlerList();
+
+        // Define the ButtonStateChange event property.
+        public static event ButtonEventHandler OnButtonStateChange = delegate { };
 
         // Define the ButtonDown event property.
         public static event ButtonEventHandler ButtonDown;
@@ -66,7 +74,7 @@ public static partial class Input {
         // Define the ButtonUp event property.
         public static event ButtonEventHandler ButtonUp;
 
-        // Raise the event with the delegate specified by mouseDownEventKey
+        // Raise the event with the delegate specified by keyDownEventKey
         private static void OnButtonDown(ButtonEventArgs e)
         {
             //ButtonEventHandler buttonEventDelegate =
@@ -76,17 +84,20 @@ public static partial class Input {
             if (buttonEventDelegate != null) buttonEventDelegate.Invoke(null, e);
         }
 
-        // Raise the event with the delegate specified by mouseUpEventKey
+        // Raise the event with the delegate specified by keyUpEventKey
         private static void OnButtonUp(ButtonEventArgs e)
         {
             //ButtonEventHandler buttonEventDelegate =
             //    (ButtonEventHandler)listEventDelegates[mouseUpEventKey];
             //buttonEventDelegate(null, e);
+        }*/
+
+        public static void ButtonStateChange(ButtonEventArgs e)
+        {
+            keyIsDown[e.Button] = e.IsDown;
         }
 
-        //  GetAsyncKeyState or GetKeyState will work here
-        //@GetKeyState=new Win32API("user32", "GetAsyncKeyState", "i", "i");
-        //@GetForegroundWindow=new Win32API("user32", "GetForegroundWindow", "", "i");
+        //private static Input() { OnButtonStateChange += ButtonStateChange(); }
 
         #region Methods
   /// <summary>
@@ -96,7 +107,9 @@ public static partial class Input {
   /// <returns></returns>
   public static bool getstate(int key) {
     //return (@GetKeyState.call(key)&0x8000)>0;
-    return keystate[key]>0;
+    //return keystate[key]>0;
+    //Check if key is down, to confirm if pressed...
+    return keyIsDown[key];
   }
 
   public static void updateKeyState(int i) {
@@ -340,8 +353,9 @@ public static partial class Input {
 
         public class ButtonEventArgs
         {
-            public ButtonEventArgs(int button) { Button = button; }
-            public int Button { get; } // readonly
+            public ButtonEventArgs(int button, bool isDown) { Button = button; IsDown = isDown; }
+            public int Button   { get; } // readonly
+            public bool IsDown  { get; } // readonly
         }
     }
 }

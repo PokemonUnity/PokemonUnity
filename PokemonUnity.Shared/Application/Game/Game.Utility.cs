@@ -1838,16 +1838,16 @@ public  bool pbRecordTrainer() {
     @safesave             = false;
   }
 
-  //public void bridge() {
-  //  if (!@bridge) @bridge=0;
+  //public float bridge { get {
+  //  if (@bridge == null) @bridge=0;
   //  return @bridge;
-  //}
+  //} }
 
-  //public void roamPokemonCaught() {
-  //  if (!@roamPokemonCaught) {
-  //    @roamPokemonCaught=[];
+  //public Pokemons[] roamPokemonCaught { get {
+  //  if (@roamPokemonCaught == null) {
+  //    @roamPokemonCaught= new Pokemons[0];
   //  }
   //  return @roamPokemonCaught;
-  //}
+  //} }
     }
 }

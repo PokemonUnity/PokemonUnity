@@ -488,7 +488,7 @@ namespace Tests
 			byte saveSlot = 0;
 			//Game.Save(New_Save_File_With_Standard_Unit_Test_Values(), saveSlot);
 
-			Game.Load(saveSlot);
+			//Game.Load(saveSlot);
 			//Game.InitLoadFile()[saveSlot];
 			////Party of pokemons should still equal 6, even if other three are empty...
 			//Pokemon[] expectedPlayerParty = new Pokemon[]

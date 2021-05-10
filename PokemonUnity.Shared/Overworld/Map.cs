@@ -63,7 +63,7 @@ public partial class Game_Map {
   public int[] passages				            { get; set; }     // passage table
   public int[] priorities				        { get; set; }     // prioroty table
   public Terrains[] terrain_tags				{ get; set; }     // terrain tag table
-  public Dictionary<int,Avatar.GameEvent> events{ get; set; }     // events
+  //public Dictionary<int,Avatar.GameEvent> events{ get; set; }     // events
   public float fog_ox				            { get; set; }     // fog x-coordinate starting point
   public float fog_oy				            { get; set; }     // fog y-coordinate starting point
   public int fog_tone				            { get; set; }     // fog color tone
@@ -110,7 +110,7 @@ public partial class Game_Map {
     @need_refresh = false;
     //Events.onMapCreate.trigger(this,map_id, @map, tileset);
     //Events.OnMapCreate.Invoke(this,map_id, @map, tileset);
-    @events = new Dictionary<int, Avatar.GameEvent>();
+    //@events = new Dictionary<int, Avatar.GameEvent>();
     //foreach (int i in @map.events.Keys) {
     //  @events[i] = new Game_Event(@map_id, @map.events[i],this);
     //}

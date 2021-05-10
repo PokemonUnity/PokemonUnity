@@ -67,6 +67,7 @@
     <Compile Include="Attack\Data\Flag.cs" />
     <Compile Include="Character\Badge.cs" />
     <Compile Include="Character\Bag.cs" />
+    <Compile Include="Character\DayCare.cs" />
     <Compile Include="Character\Gear\Phone.cs" />
     <Compile Include="Character\Gear\Pokedex.cs" />
     <Compile Include="Character\Gear\PokeRadar.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Inventory\Item\Item.cs" />
     <Compile Include="Inventory\Item\Item.Helper.cs" />
     <Compile Include="Inventory\Item\Item.Pokeball.cs" />
+    <Compile Include="Monster\Evolution.cs" />
     <Compile Include="Monster\Interface\IPokemon.cs" />
     <Compile Include="Monster\Nature.cs" />
     <Compile Include="Monster\Pokemon\Pokemon.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="Monster\Pokemon\Data\Form.cs" />
     <Compile Include="Monster\Pokemon\Data\Moveset.cs" />
     <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
+    <Compile Include="Overworld\Map.cs" />
     <Compile Include="Overworld\Terrain.cs" />
     <Compile Include="Overworld\Wild\Encounter.cs" />
     <Compile Include="Overworld\Wild\EncounterSlotData.cs" />
