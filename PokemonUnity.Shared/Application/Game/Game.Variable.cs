@@ -25,9 +25,10 @@ namespace PokemonUnity
 		//public PokemonTemp PokemonTemp { get; set; }
 		//public PokemonEncounter PokemonEncounters { get; private set; }
 		public PokemonStorage PokemonStorage { get; private set; }
-		//public Character.PokemonBag Bag { get; private set; }
+		public Character.PokemonBag Bag { get; private set; }
 		public ISceneState Scene { get; set; }
 		//public GameTemp GameTemp { get; private set; }
+		//public Character.Player Player { get; set; }
 		public Combat.Trainer Trainer { get; set; }
 		//public Avatar.Trainer DataSystem { get; set; }
 		//public Avatar.Trainer[] DataTilesets { get; set; }
@@ -41,5 +42,6 @@ namespace PokemonUnity
 		//public PokemonUnity.Game_Map GameMap { get; set; }
 		//public Game_Message GameMessage { get; set; }
 		public int SpeechFrame { get; private set; }
+		public static PokemonUnity.UX.IFrontEnd UI { get; private set; }
 	}
 }
