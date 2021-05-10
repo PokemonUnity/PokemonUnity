@@ -309,6 +309,7 @@ namespace PokemonUnity
 
 		public static Languages pbGetLanguage() { return UserLanguage; }
 		public static void pbMessage(string msg) {  }
+		public static int pbMessage(string msg, string[] commands, int selectedChoice) { return selectedChoice; }
 		#endregion
 
 		public static implicit operator Game(GameState state)
