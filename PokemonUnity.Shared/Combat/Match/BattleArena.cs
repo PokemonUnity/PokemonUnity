@@ -99,18 +99,18 @@ public class PokeBattle_BattleArena : Battle{
     return base.pbOnActiveOne(pkmn, onlyabilities, moldbreaker);
   }
 
-  public int pbMindScore(Move move) {
-    /*if (move.Effect==0xAA ||		// Detect/Protect
-       move.Effect==0xE8 || // Endure
-       move.Effect==0x12) {    // Fake Out
+  public int pbMindScore(Combat.IMove move) {       
+    if (move.Effect==Attack.Data.Effects.x070 ||    // Detect/Protect
+       move.Effect==Attack.Data.Effects.x075 ||     // Endure
+       move.Effect==Attack.Data.Effects.x09F) {     // Fake Out
       return -1;
     }
-    if (move.Effect==0x71 ||		// Counter
-       move.Effect==0x72 || // Mirror Coat
-       move.Effect==0xD4) {    // Bide
+    if (move.Effect==Attack.Data.Effects.x054 ||    // Counter
+       move.Effect==Attack.Data.Effects.x091 ||     // Mirror Coat
+       move.Effect==Attack.Data.Effects.x01B) {     // Bide
       return 0;
-    }*/
-    if (move.BaseDamage==0) {
+    }
+    if (move.Power==0) {
       return 0;
     }
     else {

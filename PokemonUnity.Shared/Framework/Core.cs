@@ -471,29 +471,29 @@ namespace PokemonUnity
 		/// <summary>
 		/// If moves deal type damage (or if damage is affected by move type)
 		/// </summary>
-		public const bool NOTYPE						= false;	//= 0x01
+		public const byte NOTYPE					= 0x01;
 		/// <summary>
 		/// If pokemon type change damage (or if move damage is affected by pokemon type)
 		/// </summary>
 		/// Double negatives (ignore), so in code the bool is reversed
-		public const bool IGNOREPKMNTYPES			= false;    //= 0x02
+		public const byte IGNOREPKMNTYPES			= 0x02;
 		/// <summary
 		/// If RNG affects damage
 		/// </summary>
-		public const bool NOWEIGHTING				= false;	//= 0x04
+		public const byte NOWEIGHTING				= 0x04;
 		/// <summary>
 		/// If Moves can do Crit (extra) Damage
 		/// </summary>
-		public const bool NOCRITICAL				= false;	//= 0x08
+		public const byte NOCRITICAL				= 0x08;
 		/// <summary>
 		/// If Reflect-like Moves ignore Damage Modifiers
 		/// </summary>
-		public const bool NOREFLECT					= false;	//= 0x10
+		public const byte NOREFLECT					= 0x10;
 		/// <summary>
 		/// I actually dont know what this is about...
 		/// </summary>
 		/// Use Ctrl+F to locate, i commented this out in code
-		public const bool SELFCONFUSE				= false;	//= 0x20
+		public const byte SELFCONFUSE				= 0x20;
 		#endregion
 	}
 }

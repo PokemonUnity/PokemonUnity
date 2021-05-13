@@ -554,6 +554,7 @@ public partial class Game_Map {
   public string name { get {
     string ret=""; //Game.pbGetMessage(MessageTypes.MapNames,this.map_id); //Dictionary of Static Strings
     if (Game.GameData.Trainer != null) {
+      // Replace "\PN" with the Trainer.Name
       //ret.gsub!(/\\PN/,Game.GameData.Trainer.name);
     }
     return ret;

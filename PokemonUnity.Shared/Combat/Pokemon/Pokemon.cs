@@ -209,7 +209,7 @@ namespace PokemonUnity.Combat
 		public int[] IV { get { return pokemon.IV; } }
 		public Abilities Ability { get { return ability; } }
 		internal Abilities ability { private get; set; }
-		public PokemonUnity.Attack.Move[] moves { get; set; }
+		public PokemonUnity.Combat.IMove[] moves { get; set; }
 		#endregion
 		#region Move to PokemonBattle Class
 		/// <summary>
@@ -595,11 +595,11 @@ namespace PokemonUnity.Combat
 				pokemon			= pkmn;
 				Index			= pkmnIndex;
 				participants	= new List<byte>();
-				moves			= new PokemonUnity.Attack.Move[] {
-					(PokemonUnity.Attack.Move)pkmn.moves[0],
-					(PokemonUnity.Attack.Move)pkmn.moves[1],
-					(PokemonUnity.Attack.Move)pkmn.moves[2],
-					(PokemonUnity.Attack.Move)pkmn.moves[3]
+				moves			= new PokemonUnity.Combat.IMove[] {
+					PokemonUnity.Combat.Move.pbFromPBMove(@battle,pkmn.moves[0]),
+					PokemonUnity.Combat.Move.pbFromPBMove(@battle,pkmn.moves[1]),
+					PokemonUnity.Combat.Move.pbFromPBMove(@battle,pkmn.moves[2]),
+					PokemonUnity.Combat.Move.pbFromPBMove(@battle,pkmn.moves[3])
 				};
 				//IV			= pkmn.IV;
 			}
@@ -1390,7 +1390,7 @@ namespace PokemonUnity.Combat
 				  Stats.SPATK,Stats.SPDEF,Stats.ACCURACY,Stats.EVASION })
 		  @stages[(int)i]=choice.stages[(int)i];
 		for (int i = 0; i < 4; i++) {
-		  @moves[i]=new Attack.Move(choice.moves[i].MoveId);//PokeBattle_Move.pbFromPBMove(@battle,new Attack.Move(choice.moves[i].MoveId));
+		  @moves[i]=Move.pbFromPBMove(@battle,new Attack.Move(choice.moves[i].MoveId));
 		  @moves[i].PP=5;
 		  //@moves[i].TotalPP=5;
 		}
@@ -1404,7 +1404,7 @@ namespace PokemonUnity.Combat
 	if (this.hasWorkingItem(Items.AIR_BALLOON) && onactive)
 	  @battle.pbDisplay(Game._INTL("{1} floats in the air with its {2}!",ToString(),this.Item.ToString(TextScripts.Name)));
   }
-  public void pbEffectsOnDealingDamage(Move move, Pokemon user,Pokemon target,int damage) {
+  public void pbEffectsOnDealingDamage(Combat.IMove move, Pokemon user,Pokemon target,int damage) {
 	Types movetype=move.pbType(move.Type,user,target);
 	if (damage>0 && move.Flags.Contact)
 	  if (!target.damagestate.Substitute) {
@@ -1605,7 +1605,7 @@ namespace PokemonUnity.Combat
 	user.pbAbilityCureCheck();
 	target.pbAbilityCureCheck();
   }
-  public void pbEffectsAfterHit(Pokemon user,Pokemon target,Move thismove,Effects.Move turneffects) {
+  public void pbEffectsAfterHit(Pokemon user,Pokemon target,Combat.IMove thismove,Effects.Move turneffects) {
 	if (turneffects.TotalDamage==0) return;
 	if (!(user.hasWorkingAbility(Abilities.SHEER_FORCE) && thismove.AddlEffect>0)) {
 	  // Target's held items:
@@ -2099,12 +2099,12 @@ namespace PokemonUnity.Combat
 
 #region Move user and targets
   public Pokemon pbFindUser(Choice choice,Pokemon[] targets) {//ToDo: ref List<Pokemon> targets) {
-	Move move=choice.Move; //ToDo: Attack.Move, and switch call below should be Attack.Data.Targets
+	Combat.IMove move=choice.Move; //ToDo: Attack.Move, and switch call below should be Attack.Data.Targets
 	int target=choice.Target;
 	Pokemon user = this;   // Normally, the user is this
 	// Targets in normal cases
-	switch (pbTarget(move)) {
-	case Attack.Target.SingleNonUser:
+	switch (pbTarget(move)) { //ToDo: Select everyone (including user)
+	case Attack.Data.Targets.SELECTED_POKEMON: //Attack.Target.SingleNonUser:
 	  if (target>=0) {
 		Pokemon targetBattler=@battle.battlers[target];
 		if (!IsOpposing(targetBattler.Index))
@@ -2116,33 +2116,33 @@ namespace PokemonUnity.Combat
 	  else
 		pbRandomTarget(targets);
 	  break;
-	case Attack.Target.SingleOpposing:
-	  if (target>=0) {
-		Pokemon targetBattler=@battle.battlers[target];
-		if (!IsOpposing(targetBattler.Index))
-		  if (!pbAddTarget(targets,targetBattler))
-			if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
-		else
-		  if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.Partner);
-	  }
-	  else
-		pbRandomTarget(targets);
-	  break;
-	case Attack.Target.OppositeOpposing:
+	//case Attack.Data.Targets.SELECTED_POKEMON: //Attack.Target.SingleOpposing:
+	//  if (target>=0) {
+	//	Pokemon targetBattler=@battle.battlers[target];
+	//	if (!IsOpposing(targetBattler.Index))
+	//	  if (!pbAddTarget(targets,targetBattler))
+	//		if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
+	//	else
+	//	  if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.Partner);
+	//  }
+	//  else
+	//	pbRandomTarget(targets);
+	//  break;
+	case Attack.Data.Targets.OPPONENTS_FIELD: //Attack.Target.OppositeOpposing:
 	  if (!pbAddTarget(targets,pbOppositeOpposing2)) pbAddTarget(targets,pbOppositeOpposing);
 	  break;
-	case Attack.Target.RandomOpposing:
+	case Attack.Data.Targets.RANDOM_OPPONENT: //Attack.Target.RandomOpposing:
 	  pbRandomTarget(targets);
 	  break;
-	case Attack.Target.AllOpposing:
+	case Attack.Data.Targets.ALL_OPPONENTS: //Attack.Target.AllOpposing:
 	  // Just pbOpposing1 because partner is determined late
 	  if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
 	  break;
-	case Attack.Target.AllNonUsers:
+	case Attack.Data.Targets.ALL_OTHER_POKEMON: //Attack.Target.AllNonUsers:
 	  for (int i = 0; i < 4; i++) // not ordered by priority
 		if (i!=@Index) pbAddTarget(targets,@battle.battlers[i]);
 	  break;
-	case Attack.Target.UserOrPartner:
+	case Attack.Data.Targets.USER_OR_ALLY: //Attack.Target.UserOrPartner:
 	  if (target>=0) { // Pre-chosen target
 		Pokemon targetBattler=@battle.battlers[target];
 		if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.Partner);
@@ -2150,7 +2150,7 @@ namespace PokemonUnity.Combat
 	  else
 		pbAddTarget(targets,this);
 	  break;
-	case Attack.Target.Partner:
+	case Attack.Data.Targets.ALLY: //Attack.Target.Partner:
 	  pbAddTarget(targets,Partner);
 	  break;
 	default:
@@ -2159,7 +2159,7 @@ namespace PokemonUnity.Combat
 	}
 	return user;
   }
-  public Pokemon pbChangeUser(Move thismove,Pokemon user) {
+  public Pokemon pbChangeUser(Combat.IMove thismove,Pokemon user) {
 	Pokemon[] priority=@battle.priority;
 	// Change user to user of Snatch
 	if (thismove.Flags.Snatch)
@@ -2173,23 +2173,19 @@ namespace PokemonUnity.Combat
 		  // Snatch's PP is reduced if old user has Pressure
 		  Choice userchoice=@battle.choices[user.Index];
 		  if (target.hasWorkingAbility(Abilities.PRESSURE) && user.IsOpposing(target.Index) && userchoice.Action>=0) {
-			Attack.Move pressuremove=user.moves[(int)userchoice.Move.MoveId]; //ToDo: Change Choice.Move to int
+			Combat.IMove pressuremove=user.moves[(int)userchoice.Move.MoveId]; //ToDo: Change Choice.Move to int
 			if (pressuremove.PP>0) pbSetPP(pressuremove,(byte)(pressuremove.PP-1));
 		  }
 		  if (Core.USENEWBATTLEMECHANICS) break;
 		}
 	return user;
   }
-  public Attack.Data.Targets pbTarget(Attack.Move move) {
-	Attack.Data.Targets target=move.Targets;
+  public Attack.Data.Targets pbTarget(Combat.IMove move) {
+	//Attack.Target target=move.Targets;
+	Attack.Data.Targets target=move.Target;
 	if (move.Effect == Attack.Data.Effects.x06E && hasType(Types.GHOST)) // Curse
-	  target=Attack.Data.Targets.SELECTED_POKEMON;
-	return target;
-  }
-  public Attack.Target pbTarget(Move move) {
-	Attack.Target target=move.Targets;
-	if (move.Effect == Attack.Data.Effects.x06E && hasType(Types.GHOST)) // Curse
-	  target=Attack.Target.OppositeOpposing;
+	  //target=Attack.Target.OppositeOpposing;
+	  target=Attack.Data.Targets.OPPONENTS_FIELD;
 	return target;
   }
   public bool pbAddTarget(Pokemon[] targets,Pokemon target) {
@@ -2213,7 +2209,7 @@ namespace PokemonUnity.Combat
 	if (choices.Count>0)
 	  pbAddTarget(targets,choices[@battle.pbRandom(choices.Count)]);
   }
-  public bool pbChangeTarget(Move thismove,Pokemon[] userandtarget,Pokemon[] targets) {
+  public bool pbChangeTarget(Combat.IMove thismove,Pokemon[] userandtarget,Pokemon[] targets) {
 	Pokemon[] priority=@battle.priority;
 	int changeeffect=0;
 	Pokemon user=userandtarget[0];
@@ -2275,7 +2271,7 @@ namespace PokemonUnity.Combat
 		  int userchoice=@battle.choices[user.Index].Index;
 		  if (target.hasWorkingAbility(Abilities.PRESSURE) && user.IsOpposing(target.Index) && userchoice>=0) {
 			GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Pressure (part of Snatch)");
-			Attack.Move pressuremove=user.moves[userchoice];
+			Combat.IMove pressuremove=user.moves[userchoice];
 			if (pressuremove.PP>0) pbSetPP(pressuremove,(byte)(pressuremove.PP-1));
 		  }
 		}
@@ -2291,7 +2287,7 @@ namespace PokemonUnity.Combat
 		int userchoice=@battle.choices[user.Index].Index;
 		if (target.hasWorkingAbility(Abilities.PRESSURE) && user.IsOpposing(target.Index) && userchoice>=0) {
 		  GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Pressure (part of Magic Coat)");
-		  Attack.Move pressuremove=user.moves[userchoice];
+		  Combat.IMove pressuremove=user.moves[userchoice];
 		  if (pressuremove.PP>0) pbSetPP(pressuremove,(byte)(pressuremove.PP-1));
 		}
 	  }else if (!user.hasMoldBreaker() && target.hasWorkingAbility(Abilities.MAGIC_BOUNCE)) {
@@ -2310,8 +2306,8 @@ namespace PokemonUnity.Combat
 	userandtarget[1]=target;
 	if (!user.hasMoldBreaker() && target.hasWorkingAbility(Abilities.SOUNDPROOF) &&
 	   thismove.Flags.SoundBased && //isSoundBased()
-	   thismove.Effect != Attack.Data.Effects.x073 &&   // Perish Song handled elsewhere
-	   thismove.Effect != Attack.Data.Effects.x15B) {     // Parting Shot handled elsewhere
+	   thismove.Effect != Attack.Data.Effects.x073 &&	// Perish Song handled elsewhere
+	   thismove.Effect != Attack.Data.Effects.x15B) {	// Parting Shot handled elsewhere
 	  GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Soundproof blocked #{user.ToString(true)}'s #{thismove.MoveId.ToString(TextScripts.Name)}");
 	  @battle.pbDisplay(Game._INTL("{1}'s {2} blocks {3}!",target.ToString(),
 		 target.ability.ToString(TextScripts.Name),thismove.MoveId.ToString(TextScripts.Name)));
@@ -2322,23 +2318,23 @@ namespace PokemonUnity.Combat
 #endregion
 
 #region Move PP
-  //ToDo: Revisit SetPP, and maybe try (int move, byte pp)
-  public void pbSetPP(Move move,byte pp) {
+  //ToDo: Revisit SetPP, and maybe try (int move, byte pp) or ref move
+  public void pbSetPP(IMove move,byte pp) {
 	move.PP=pp;
 	// Not effects.Mimic, since Mimic can't copy Mimic
-	//if (move.thismove && move.MoveId==move.thismove.MoveId && !@effects.Transform)
-	//  move.thismove.PP=pp;
+	if (move.thismove.IsNotNullOrNone() && move.MoveId==move.thismove.MoveId && !@effects.Transform)
+	  move.thismove.PP=pp;
   }
-  public void pbSetPP(Attack.Move move,byte pp) {
-	move.PP=pp;
-	// Not effects.Mimic, since Mimic can't copy Mimic
-	if (move.IsNotNullOrNone() &&
-		//move.MoveId==move.MoveId && //For-loop, on Pokemon.Moves[int].MoveId == move.MoveId
-		!@effects.Transform)
-	  //move.thismove.PP=pp;
-	  pokemon.moves[0].PP=pp;
-  }
-  public bool pbReducePP(Move move) {
+//  public void pbSetPP(Attack.Move move,byte pp) {
+//	move.PP=pp;
+//	// Not effects.Mimic, since Mimic can't copy Mimic
+//	if (move.IsNotNullOrNone() &&
+//		//move.MoveId==move.MoveId && //For-loop, on Pokemon.Moves[int].MoveId == move.MoveId
+//		!@effects.Transform)
+//	  //move.thismove.PP=pp;
+//	  pokemon.moves[0].PP=pp;
+//  }
+  public bool pbReducePP(Combat.IMove move) {
 	if (@effects.TwoTurnAttack>0 ||
 	   @effects.Bide>0 ||
 	   @effects.Outrage>0 ||
@@ -2347,14 +2343,14 @@ namespace PokemonUnity.Combat
 	   @effects.Uproar>0)
 	  // No need to reduce PP if two-turn attack
 	  return true;
-	if (move.PP<0) return true;   // No need to reduce PP for special calls of moves
+	if (move.PP<0) return true;			// No need to reduce PP for special calls of moves
 	if (move.TotalPP==0) return true;   // Infinite PP, can always be used
 	if (move.PP==0) return false;
 	if (move.PP>0)
 	  pbSetPP(move,(byte)(move.PP-1));
 	return true;
   }
-  public void pbReducePPOther(Move move) {
+  public void pbReducePPOther(Combat.IMove move) {
 	if (move.PP>0) pbSetPP(move,(byte)(move.PP-1));
   }
 #endregion
@@ -2372,7 +2368,7 @@ namespace PokemonUnity.Combat
 	  if (@battle.pbPlayer().badges.Count(b => b == true)>=6) badgelevel=70 ;
 	  if (@battle.pbPlayer().badges.Count(b => b == true)>=7) badgelevel=80 ;
 	  if (@battle.pbPlayer().badges.Count(b => b == true)>=8) badgelevel=100;
-	  Move move=choice.Move;
+	  Combat.IMove move=choice.Move;
 	  bool disobedient=false;
 	  if (@pokemon.isForeign(@battle.player[0]) && @level>badgelevel) {
 		int a=(int)Math.Floor((@level+badgelevel)*@battle.pbRandom(256)/255d);
@@ -2402,7 +2398,7 @@ namespace PokemonUnity.Combat
 			//choice.Action=ChoiceAction.UseMove;
 			//choice.Move=@moves[newchoice];
 			//choice.Target=-1;
-			choice = new Choice(action: ChoiceAction.UseMove, moveIndex: newchoice, move: @moves[newchoice]);
+			choice = new Choice(action: ChoiceAction.UseMove, moveIndex: newchoice, move: (Combat.Move)@moves[newchoice]);
 		  }
 		  return true;
 		}
@@ -2434,7 +2430,7 @@ namespace PokemonUnity.Combat
 	else
 	  return true;
   }
-  public bool pbSuccessCheck(Move thismove,Pokemon user,Pokemon target,Effects.Move turneffects,bool accuracy=true) {
+  public bool pbSuccessCheck(Combat.IMove thismove,Pokemon user,Pokemon target,Effects.Move turneffects,bool accuracy=true) {
 	if (user.effects.TwoTurnAttack>0)
 	  return true;
 	// TODO: "Before Protect" applies to Counter/Mirror Coat
@@ -2524,7 +2520,7 @@ namespace PokemonUnity.Combat
 	  GameDebug.Log($"[Move failed] #{target.ToString()} is immune to powder-based moves somehow");
 	  return false;
 	}
-	if (thismove.BaseDamage>0 && thismove.Effect != Attack.Data.Effects.x0FF && // Struggle
+	if (thismove.Power>0 && thismove.Effect != Attack.Data.Effects.x0FF && // Struggle
 	   thismove.Effect != Attack.Data.Effects.x095) { // Future Sight
 	  Types type=thismove.pbType(thismove.Type,user,target);
 	  float typemod=thismove.pbTypeModifier(type,user,target);
@@ -2572,60 +2568,60 @@ namespace PokemonUnity.Combat
 	  bool miss=false; bool _override=false;
 	  Attack.Data.Effects invulmove=Game.MoveData[target.effects.TwoTurnAttack].Effect;
 	  switch (invulmove) {
-	  case Attack.Data.Effects.x09C: case Attack.Data.Effects.x108: // Fly, Bounce
-		if (thismove.Effect != Attack.Data.Effects.x099 ||  // Thunder
-						 thismove.Effect != Attack.Data.Effects.x14E ||  // Hurricane
-						 thismove.Effect != Attack.Data.Effects.x096 ||  // Gust
-						 thismove.Effect != Attack.Data.Effects.x093 ||  // Twister
-						 thismove.Effect != Attack.Data.Effects.x0D0 ||  // Sky Uppercut
-						 thismove.Effect != Attack.Data.Effects.x120 ||  // Smack Down
+	  case Attack.Data.Effects.x09C: case Attack.Data.Effects.x108:			// Fly, Bounce
+		if (thismove.Effect != Attack.Data.Effects.x099 ||					// Thunder
+						 thismove.Effect != Attack.Data.Effects.x14E ||		// Hurricane
+						 thismove.Effect != Attack.Data.Effects.x096 ||		// Gust
+						 thismove.Effect != Attack.Data.Effects.x093 ||		// Twister
+						 thismove.Effect != Attack.Data.Effects.x0D0 ||		// Sky Uppercut
+						 thismove.Effect != Attack.Data.Effects.x120 ||		// Smack Down
 						 thismove.MoveId != Moves.WHIRLWIND)miss=true ;
 		break;
-	  case Attack.Data.Effects.x101: // Dig
-		if (thismove.Effect != Attack.Data.Effects.x094 || // Earthquake
-						 thismove.Effect != Attack.Data.Effects.x07F)    // Magnitude
+	  case Attack.Data.Effects.x101:										// Dig
+		if (thismove.Effect != Attack.Data.Effects.x094 ||					// Earthquake
+						 thismove.Effect != Attack.Data.Effects.x07F)		// Magnitude
 			miss=true;
 		break;
-	  case Attack.Data.Effects.x100: // Dive
-		if (thismove.Effect != Attack.Data.Effects.x102 || // Surf
-						 thismove.Effect != Attack.Data.Effects.x106)    // Whirlpool
+	  case Attack.Data.Effects.x100:										// Dive
+		if (thismove.Effect != Attack.Data.Effects.x102 ||					// Surf
+						 thismove.Effect != Attack.Data.Effects.x106)		// Whirlpool
 			miss=true;
 		break;
-	  //case Attack.Data.Effects.x111: // Shadow Force
-	  case Attack.Data.Effects.x111: // Phantom Force
+	  //case Attack.Data.Effects.x111:										// Shadow Force
+	  case Attack.Data.Effects.x111:										// Phantom Force
 		miss=true;
 		break;
-	  case Attack.Data.Effects.x138: // Sky Drop
-		if (thismove.Effect != Attack.Data.Effects.x099 ||  // Thunder
-						 thismove.Effect != Attack.Data.Effects.x14E ||  // Hurricane
-						 thismove.Effect != Attack.Data.Effects.x096 ||  // Gust
-						 thismove.Effect != Attack.Data.Effects.x093 ||  // Twister
-						 thismove.Effect != Attack.Data.Effects.x0D0 ||  // Sky Uppercut
-						 thismove.Effect != Attack.Data.Effects.x120)    // Smack Down
+	  case Attack.Data.Effects.x138:										// Sky Drop
+		if (thismove.Effect != Attack.Data.Effects.x099 ||					// Thunder
+						 thismove.Effect != Attack.Data.Effects.x14E ||		// Hurricane
+						 thismove.Effect != Attack.Data.Effects.x096 ||		// Gust
+						 thismove.Effect != Attack.Data.Effects.x093 ||		// Twister
+						 thismove.Effect != Attack.Data.Effects.x0D0 ||		// Sky Uppercut
+						 thismove.Effect != Attack.Data.Effects.x120)		// Smack Down
 		   miss=true;
 		break;
 	  }
 	  if (target.effects.SkyDrop)
-		if (thismove.Effect != Attack.Data.Effects.x099 ||  // Thunder
-						 thismove.Effect != Attack.Data.Effects.x14E ||  // Hurricane
-						 thismove.Effect != Attack.Data.Effects.x096 ||  // Gust
-						 thismove.Effect != Attack.Data.Effects.x093 ||  // Twister
-						 thismove.Effect != Attack.Data.Effects.x138 ||  // Sky Drop
-						 thismove.Effect != Attack.Data.Effects.x0D0 ||  // Sky Uppercut
-						 thismove.Effect != Attack.Data.Effects.x120)    // Smack Down
+		if (thismove.Effect != Attack.Data.Effects.x099 ||					// Thunder
+						 thismove.Effect != Attack.Data.Effects.x14E ||		// Hurricane
+						 thismove.Effect != Attack.Data.Effects.x096 ||		// Gust
+						 thismove.Effect != Attack.Data.Effects.x093 ||		// Twister
+						 thismove.Effect != Attack.Data.Effects.x138 ||		// Sky Drop
+						 thismove.Effect != Attack.Data.Effects.x0D0 ||		// Sky Uppercut
+						 thismove.Effect != Attack.Data.Effects.x120)		// Smack Down
 			miss=true;
 	  if (user.hasWorkingAbility(Abilities.NO_GUARD) ||
 					target.hasWorkingAbility(Abilities.NO_GUARD) ||
 					@battle.futuresight) miss=false;
 	  if (Core.USENEWBATTLEMECHANICS && thismove.Effect == Attack.Data.Effects.x022 && // Toxic
-					thismove.BaseDamage==0 && user.hasType(Types.POISON)) _override=true;
+					thismove.Power==0 && user.hasType(Types.POISON)) _override=true;
 	  if (!miss && turneffects.SkipAccuracyCheck) _override=true; // Called by another move
 	  if (!_override && (miss || !thismove.pbAccuracyCheck(user,target))) { // Includes Counter/Mirror Coat
 		GameDebug.Log(string.Format("[Move failed] Failed pbAccuracyCheck (Effect Id: {0}) or target is semi-invulnerable",thismove.Effect));
-		if (thismove.Targets==Attack.Target.AllOpposing &&
+		if (thismove.Target==Attack.Data.Targets.ALL_OPPONENTS && //thismove.Targets==Attack.Target.AllOpposing
 		   (!user.pbOpposing1.isFainted() ? 1 : 0) + (!user.pbOpposing2.isFainted() ? 1 : 0) > 1)
 		  @battle.pbDisplay(Game._INTL("{1} avoided the attack!",target.ToString()));
-		else if (thismove.Targets==Attack.Target.AllNonUsers &&
+		else if (thismove.Target==Attack.Data.Targets.ALL_OTHER_POKEMON && //thismove.Targets==Attack.Target.AllNonUsers
 		   (!user.pbOpposing1.isFainted() ? 1 : 0) + (!user.pbOpposing2.isFainted() ? 1 : 0) + (!user.Partner.isFainted() ? 1 : 0) > 1)
 		  @battle.pbDisplay(Game._INTL("{1} avoided the attack!",target.ToString()));
 		else if (target.effects.TwoTurnAttack>0)
@@ -2639,7 +2635,7 @@ namespace PokemonUnity.Combat
 	}
 	return true;
   }
-  public bool pbTryUseMove(Choice choice,Move thismove,Effects.Move turneffects) {
+  public bool pbTryUseMove(Choice choice,Combat.IMove thismove,Effects.Move turneffects) {
 	if (turneffects.PassedTrying) return true;
 	// TODO: Return true if attack has been Mirror Coated once already
 	if (!turneffects.SkipAccuracyCheck)
@@ -2653,7 +2649,7 @@ namespace PokemonUnity.Combat
 	  GameDebug.Log($"[Move failed] #{ToString()} can't use #{thismove.MoveId.ToString(TextScripts.Name)} because of Gravity");
 	  return false;
 	}
-	if (@effects.Taunt>0 && thismove.BaseDamage==0) {
+	if (@effects.Taunt>0 && thismove.Power==0) {
 	  @battle.pbDisplay(Game._INTL("{1} can't use {2} after the taunt!",ToString(),thismove.MoveId.ToString(TextScripts.Name)));
 	  GameDebug.Log($"[Move failed] #{ToString()} can't use #{thismove.MoveId.ToString(TextScripts.Name)} because of Taunt");
 	  return false;
@@ -2693,14 +2689,14 @@ namespace PokemonUnity.Combat
 	  GameDebug.Log($"[Move failed] #{ToString()}'s #{thismove.MoveId.ToString(TextScripts.Name)} is disabled");
 	  return false;
 	}
-	//if (choice.Action==ChoiceAction. -2) { // Battle Palace //ToDo...
-	//  @battle.pbDisplay(Game._INTL("{1} appears incapable of using its power!",ToString()));
-	//  GameDebug.Log($"[Move failed] Battle Palace: #{ToString()} is incapable of using its power");
-	//  return false;
-	//}
+	if (choice.Index==-2) { // Battle Palace
+	  @battle.pbDisplay(Game._INTL("{1} appears incapable of using its power!",ToString()));
+	  GameDebug.Log($"[Move failed] Battle Palace: #{ToString()} is incapable of using its power");
+	  return false;
+	}
 	if (@effects.HyperBeam>0) {
 	  @battle.pbDisplay(Game._INTL("{1} must recharge!",ToString()));
-	  //GameDebug.Log($"[Move failed] #{ToString()} must recharge after using #{PokeBattle_Move.pbFromPBMove(@battle,new Move(@currentMove)).ToString()}"); //ToDo: Uncomment?...
+	  GameDebug.Log($"[Move failed] #{ToString()} must recharge after using #{Combat.Move.pbFromPBMove(@battle,new Attack.Move(@currentMove)).ToString()}"); 
 	  return false;
 	}
 	if (this.hasWorkingAbility(Abilities.TRUANT) && @effects.Truant) {
@@ -2786,16 +2782,16 @@ namespace PokemonUnity.Combat
   public void pbConfusionDamage() {
 	this.damagestate.Reset();
 	//PokeBattle_Confusion confmove=new PokeBattle_Confusion(@battle,null);
-	Move confmove=new PokeBattle_Confusion().Initialize(@battle,null);
+	Combat.IMove confmove=new PokeBattle_Confusion().Initialize(@battle,null);
 	confmove.pbEffect(this,this);
 	if (this.isFainted()) pbFaint();
   }
-  public void pbUpdateTargetedMove(Move thismove,Pokemon user) {
+  public void pbUpdateTargetedMove(Combat.IMove thismove,Pokemon user) {
 	// TODO: Snatch, moves that use other moves
 	// TODO: All targeting cases
 	// Two-turn attacks, Magic Coat, Future Sight, Counter/MirrorCoat/Bide handled
   }
-  public void pbProcessMoveAgainstTarget(Move thismove,Pokemon user,Pokemon target,int numhits,Effects.Move turneffects,bool nocheck=false,int[] alltargets=null,bool showanimation=true) {
+  public void pbProcessMoveAgainstTarget(Combat.IMove thismove,Pokemon user,Pokemon target,int numhits,Effects.Move turneffects,bool nocheck=false,int[] alltargets=null,bool showanimation=true) {
 	int realnumhits=0;
 	int totaldamage=0;
 	bool destinybond=false;
@@ -2840,7 +2836,7 @@ namespace PokemonUnity.Combat
 	  // This hit will happen; count it
 	  realnumhits+=1;
 	  // Damage calculation and/or main effect
-	  int damage=thismove.pbEffect(user,target,i,alltargets,showanimation); // Recoil/drain, etc. are applied here
+	  int damage=thismove.pbEffect(user,target,(byte)i,alltargets,showanimation); // Recoil/drain, etc. are applied here
 	  if (damage>0) totaldamage+=damage;
 	  // Message and consume for type-weakening berries
 	  if (target.damagestate.BerryWeakened) {
@@ -2928,8 +2924,8 @@ namespace PokemonUnity.Combat
 			@battle.pbDisplay(Game._INTL("{1}'s rage is building!",target.ToString()));
 		  }
 	  }
-	  if (target.isFainted()) target.pbFaint(); // no return
-	  if (user.isFainted()) user.pbFaint(); // no return
+	  if (target.isFainted()) target.pbFaint();		// no return
+	  if (user.isFainted()) user.pbFaint();			// no return
 	  if (user.isFainted() || target.isFainted()) break;
 	  // Berry check (maybe just called by ability effect, since only necessary Berries are checked)
 	  for (int j = 0; j< 4; j++)
@@ -2961,11 +2957,11 @@ namespace PokemonUnity.Combat
 	}
 	GameDebug.Log($"Move did #{numhits} hit(s), total damage=#{turneffects.TotalDamage}");
 	// Faint if 0 HP
-	if (target.isFainted()) target.pbFaint(); // no return
-	if (user.isFainted()) user.pbFaint(); // no return
+	if (target.isFainted()) target.pbFaint();	// no return
+	if (user.isFainted()) user.pbFaint();		// no return
 	thismove.pbEffectAfterHit(user,target,turneffects);
-	if (target.isFainted()) target.pbFaint(); // no return
-	if (user.isFainted()) user.pbFaint(); // no return
+	if (target.isFainted()) target.pbFaint();	// no return
+	if (user.isFainted()) user.pbFaint();		// no return
 	// Destiny Bond
 	if (!user.isFainted() && target.isFainted())
 	  if (destinybond && target.IsOpposing(user.Index)) {
@@ -2989,7 +2985,7 @@ namespace PokemonUnity.Combat
 	//choice.Move=PokeBattle_Move.pbFromPBMove(@battle,new Attack.Move(moveid)); // PokeBattle_Move object of the move
 	//choice.Move.PP=-1;
 	//choice.Target=target;  // Target (-1 means no target yet)
-	choice = new Choice(action: ChoiceAction.UseMove, moveIndex: index, move: (Combat.Move)null, target: target);
+	choice = new Choice(action: ChoiceAction.UseMove, moveIndex: index, move: Combat.Move.pbFromPBMove(@battle, new Attack.Move(moveid)), target: target);
 	if (index>=0)
 	  //@battle.choices[@Index].Index=index;
 	  @battle.choices[@Index]=new Choice(action: @battle.choices[@Index].Action, moveIndex: index, move: @battle.choices[@Index].Move, target: @battle.choices[@Index].Target);
@@ -3015,7 +3011,8 @@ namespace PokemonUnity.Combat
 	   @effects.Rollout>0 ||
 	   @effects.Uproar>0 ||
 	   @effects.Bide>0) {
-	  //choice.Move=PokeBattle_Move.pbFromPBMove(@battle,new Move(@currentMove));//ToDo: Uncomment..
+	  //choice.Move=Combat.Move.pbFromPBMove(@battle,new Attack.Move(@currentMove));
+	  choice=new Choice(action: choice.Action, moveIndex: choice.Index, move: Combat.Move.pbFromPBMove(@battle, new Attack.Move(@currentMove)));
 	  turneffects.SpecialUsage=true;
 	  GameDebug.Log($"Continuing multi-turn move #{choice.Move.MoveId.ToString(TextScripts.Name)}");
 	}
@@ -3026,12 +3023,12 @@ namespace PokemonUnity.Combat
 		  //choice.Index=@effects.EncoreIndex;
 		  //choice.Move=@moves[@effects.EncoreIndex];
 		  //choice.Target=-1; // No target chosen
-		  choice = new Choice(action: ChoiceAction.UseMove, moveIndex: @effects.EncoreIndex, move: @moves[@effects.EncoreIndex]);
+		  choice = new Choice(action: ChoiceAction.UseMove, moveIndex: @effects.EncoreIndex, move: (Combat.Move)@moves[@effects.EncoreIndex]);
 		}
 		GameDebug.Log($"Using Encored move #{choice.Move.MoveId.ToString(TextScripts.Name)}");
 	  }
 	}
-	Move thismove=choice.Move;
+	Combat.IMove thismove=choice.Move;
 	if (!thismove.IsNotNullOrNone() || thismove.MoveId==0) return; //if move was not chosen
 	if (!turneffects.SpecialUsage) {
 	  // TODO: Quick Claw message
@@ -3053,7 +3050,7 @@ namespace PokemonUnity.Combat
 		@battle.pbDisplay(Game._INTL("{1} changed to Shield Forme!",ToString()));
 		GameDebug.Log($"[Form changed] #{ToString()} changed to Shield Forme");
 	  }
-	// Record that user has used a move this round (ot at least tried to)
+	// Record that user has used a move this round (or at least tried to)
 	this.lastRoundMoved=@battle.turncount;
 	// Try to use the move
 	if (!pbTryUseMove(choice,thismove,turneffects)) {
@@ -3204,7 +3201,7 @@ namespace PokemonUnity.Combat
 	   thismove.Effect != Attack.Data.Effects.x0AE &&   // Nature Power
 	   thismove.Effect != Attack.Data.Effects.x062 &&   // Sleep Talk
 	   thismove.Effect != Attack.Data.Effects.x0B5 &&   // Assist
-	   thismove.Effect != Attack.Data.Effects.x054) {    // Metronome
+	   thismove.Effect != Attack.Data.Effects.x054) {   // Metronome
 	  Types movetype=thismove.pbType(thismove.Type,user,null);
 	  if (!user.hasType(movetype)) {
 		string typename=movetype.ToString(TextScripts.Name);
@@ -3218,14 +3215,14 @@ namespace PokemonUnity.Combat
 	// Try to use move against user if there aren't any targets
 	if (targets.Count==0) {
 	  user=pbChangeUser(thismove,user);
-	  if(thismove.Targets==Attack.Target.SingleNonUser ||
-		 thismove.Targets==Attack.Target.RandomOpposing ||
-		 thismove.Targets==Attack.Target.AllOpposing ||
-		 thismove.Targets==Attack.Target.AllNonUsers ||
-		 thismove.Targets==Attack.Target.Partner ||
-		 thismove.Targets==Attack.Target.UserOrPartner ||
-		 thismove.Targets==Attack.Target.SingleOpposing ||
-		 thismove.Targets==Attack.Target.OppositeOpposing)
+	  if(thismove.Target==Attack.Data.Targets.SELECTED_POKEMON ||	//.Targets==Attack.Target.SingleNonUser ||
+		 thismove.Target==Attack.Data.Targets.RANDOM_OPPONENT ||	//.Targets==Attack.Target.RandomOpposing ||
+		 thismove.Target==Attack.Data.Targets.ALL_OPPONENTS ||		//.Targets==Attack.Target.AllOpposing ||
+		 thismove.Target==Attack.Data.Targets.ALL_OTHER_POKEMON ||		//.Targets==Attack.Target.AllNonUsers ||
+		 thismove.Target==Attack.Data.Targets.ALLY ||			//.Targets==Attack.Target.Partner ||
+		 thismove.Target==Attack.Data.Targets.USER_OR_ALLY ||	//.Targets==Attack.Target.UserOrPartner ||
+		 //thismove.Target==Attack.Data.Targets.SingleOpposing ||	//.Targets==Attack.Target.SingleOpposing ||
+		 thismove.Target==Attack.Data.Targets.OPPONENTS_FIELD)	//.Targets==Attack.Target.OppositeOpposing)
 		@battle.pbDisplay(Game._INTL("But there was no target..."));
 	  else
 		//GameDebug.logonerr(thismove.pbEffect(user,null));
@@ -3245,7 +3242,7 @@ namespace PokemonUnity.Combat
 		bool success=pbChangeTarget(thismove,userandtarget,targets.ToArray());
 		user=userandtarget[0];
 		Pokemon target=userandtarget[1];
-		if (i==0 && thismove.Targets==Attack.Target.AllOpposing)
+		if (i==0 && thismove.Target==Attack.Data.Targets.ALL_OPPONENTS) //thismove.Targets==Attack.Target.AllOpposing
 		  // Add target's partner to list of targets
 		  pbAddTarget(ref targets,target.Partner);
 		// If couldn't get the next target
@@ -3286,8 +3283,8 @@ namespace PokemonUnity.Combat
 			@battle.battlers[i].ResetForm();
 			@battle.pbRecallAndReplace(i,newpoke,newpokename,false,user.hasMoldBreaker());
 			@battle.pbDisplay(Game._INTL("{1} was dragged out!",@battle.battlers[i].ToString()));
-			//@battle.choices[i]=[0,0,null,-1];   // Replacement Pokémon does nothing this round
-			@battle.choices[i]=new Choice();   // Replacement Pokémon does nothing this round
+			//@battle.choices[i]=[0,0,null,-1];		// Replacement Pokémon does nothing this round
+			@battle.choices[i]=new Choice();		// Replacement Pokémon does nothing this round
 		  }
 		}
 	  foreach(Pokemon i in @battle.priority) {
@@ -3313,8 +3310,8 @@ namespace PokemonUnity.Combat
 		  switched.Add(i);
 		  @battle.battlers[i].ResetForm();
 		  @battle.pbRecallAndReplace(i,newpoke,newpokename,@battle.battlers[i].effects.BatonPass);
-		  //@battle.choices[i]=[0,0,null,-1];   // Replacement Pokémon does nothing this round
-		  @battle.choices[i]= new Choice();   // Replacement Pokémon does nothing this round
+		  //@battle.choices[i]=[0,0,null,-1];	// Replacement Pokémon does nothing this round
+		  @battle.choices[i]= new Choice();		// Replacement Pokémon does nothing this round
 		}
 	  }
 	foreach(Pokemon i in @battle.priority)
@@ -3330,8 +3327,8 @@ namespace PokemonUnity.Combat
 		  newpokename=@battle.pbGetLastPokeInTeam(user.Index);
 		user.ResetForm();
 		@battle.pbRecallAndReplace(user.Index,newpoke,newpokename,true);
-		//@battle.choices[user.Index]=new Battle.Choice(0,0,null,-1);   // Replacement Pokémon does nothing this round
-		@battle.choices[user.Index]=new Choice(ChoiceAction.NoAction);   // Replacement Pokémon does nothing this round
+		//@battle.choices[user.Index]=new Battle.Choice(0,0,null,-1);	// Replacement Pokémon does nothing this round
+		@battle.choices[user.Index]=new Choice(ChoiceAction.NoAction);	// Replacement Pokémon does nothing this round
 		user.pbAbilitiesOnSwitchIn(true);
 	  }
 	}

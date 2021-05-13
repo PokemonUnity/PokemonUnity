@@ -36,31 +36,32 @@ namespace PokemonUnity.Monster
   };
 
         #region Evolution helper functions
-//public static void pbGetEvolvedFormData(Pokemons species) {
-//  List<> ret=new List<>();
-//  int _EVOTYPEMASK=0x3F;
-//  int _EVODATAMASK=0xC0;
-//  int _EVONEXTFORM=0x00;
-//  {  //pbRgssOpen("Data/evolutions.dat","rb"){|f|
-//     //f.pos=(species-1)*8;
-//     //offset=f.fgetdw();
-//     int length=f.fgetdw();
-//     if (length>0) {
-//       //f.pos=offset;
-//       int i=0; do { //unless (i<length) break; //loop
-//         //Data.PokemonEvolution evo=Game.PokemonEvolutionsData[species][i]; //f.fgetb();
-//         EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
-//         int level=(int)evo.EvolveValue; //f.fgetw();
-//         Pokemons poke=evo.Species; //f.fgetw();
-//         if ((evo&_EVODATAMASK)==_EVONEXTFORM) {
-//           ret.Add([evonib,level,poke]);
-//         }
-//         i+=5;
-//       } while (i >= length);
-//     }
-//  }
-//  return ret;
-//}
+public static Data.PokemonEvolution[] pbGetEvolvedFormData(Pokemons species) {
+  System.Collections.Generic.List<Data.PokemonEvolution> ret=new System.Collections.Generic.List<Data.PokemonEvolution>();
+  //int _EVOTYPEMASK=0x3F;
+  //int _EVODATAMASK=0xC0;
+  //int _EVONEXTFORM=0x00;
+  {  //pbRgssOpen("Data/evolutions.dat","rb"){|f|
+     //f.pos=(species-1)*8;
+     //offset=f.fgetdw();
+     int length=Game.PokemonEvolutionsData[species].Length; //f.fgetdw();
+     if (length>0) {
+       //f.pos=offset;
+       int i=0; do { //unless (i<length) break; //loop
+         Data.PokemonEvolution evo=Game.PokemonEvolutionsData[species][i]; //f.fgetb();
+         EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
+         int level=(int)evo.EvolveValue; //f.fgetw();
+         Pokemons poke=evo.Species; //f.fgetw();
+         //if ((evo&_EVODATAMASK)==_EVONEXTFORM) {
+           //ret.Add([evonib,level,poke]);
+           ret.Add(evo);
+         //}
+         i++; //+=5;
+       } while (i >= length);
+     }
+  }
+  return ret.ToArray();
+}
 
 //Loops through each pokemon in db with evolution, 
 //every 5 pokemons, log in debug output pokemon evolution

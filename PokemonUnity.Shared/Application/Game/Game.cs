@@ -40,8 +40,8 @@ namespace PokemonUnity
 		#region Player and Overworld Data
 		[System.Obsolete("Use `GameData.Trainer` because Player class is being phased out")]
 		public Character.Player Player { get; set; }
-		public Regions Region { get; private set; }
-		public Locations Location { get; private set; }
+		//public Regions Region { get; private set; }
+		//public Locations Location { get; private set; }
 		/// <summary>
 		/// Last town or Pokemon Center visited, that's used as Respawn Point upon a Player's Defeat
 		/// </summary>

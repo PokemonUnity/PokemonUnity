@@ -23,6 +23,9 @@ namespace PokemonUnity.Application
 		/// </summary>
 		public bool BattleShiftStyle { get; private set; }
 		public bool ForceBattleStyle { get; private set; }
+		#region Core Game Design
+		//ToDo: Move Const/Static Var from Core class
+		#endregion
 		#region Custom Game Features
 		public bool SandBoxMode { get; private set; }
 		//Nuzlocke Challenge => Pokemon Centers cost money, every pokemon must be named, when defeated/fainted pokemon is gone, only allowed to capture first pokemon encountered when entering new map
@@ -139,6 +142,10 @@ namespace PokemonUnity.Application
 		/// (Works best with LoseAllMoneyOnLoss)
 		/// </summary>
 		public bool LosingTwiceInRowResetsMoney { get; private set; }
+		/// <summary>
+		/// Will TMs stay in bag inventory after consumed by pokmeon
+		/// </summary>
+		public bool MachineIsInfiniteUse { get; private set; }
 		#endregion
 		#region Game Event Switches
 		/// <summary>

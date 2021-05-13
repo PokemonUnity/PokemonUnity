@@ -151,7 +151,7 @@ namespace PokemonUnity.Combat
 		/// Execute whaatever move/function is stored in this variable
 		/// </remarks>
 		/// Func<PokeBattle>
-		public Move struggle { get; private set; }
+		public IMove struggle { get; private set; }
 		/// <summary>
 		/// Choices made by each Pokémon this round
 		/// </summary>
@@ -349,12 +349,10 @@ namespace PokemonUnity.Combat
 
 			runCommand = 0;
 
-			//if (Moves.STRUGGLE.GetType() == typeof(Moves))
-			//	struggle = new Move(Moves.STRUGGLE);//new PokeBattle_Move(this, new Attack.Move(Moves.STRUGGLE)).pbFromPBMove(this, new Move(Moves.STRUGGLE));
-			//  struggle = Game.MoveEffectData[].Initialize(this, new Attack.Move(Moves.STRUGGLE));
-			//else
-			//	struggle = new PokeBattle_Struggle(this, new Attack.Move(Moves.NONE));
-			struggle = new PokeBattle_Struggle().Initialize(this, new Attack.Move(Moves.STRUGGLE));
+			if (Game.MoveData.Keys.Contains(Moves.STRUGGLE))
+				struggle = Combat.Move.pbFromPBMove(this, new Attack.Move(Moves.STRUGGLE));
+			else
+			    struggle = new PokeBattle_Struggle().Initialize(this, new Attack.Move(Moves.STRUGGLE));
 
 			//struggle.PP = -1;
 
@@ -922,6 +920,7 @@ namespace PokemonUnity.Combat
 		/// <returns></returns>
   public Monster.Pokemon[] pbParty(int index) {
     return isOpposing(index) ? party2 : party1;
+    //return battlers.Where(b => (b.Index % 2) == (index % 2)).ToArray();
   }
 
   public Monster.Pokemon[] pbOpposingParty(int index) {
@@ -1167,7 +1166,7 @@ namespace PokemonUnity.Combat
 		public bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
 		{
 			Pokemon thispkmn = @battlers[idxPokemon];
-			Attack.Move thismove = thispkmn.moves[idxMove];
+			Combat.IMove thismove = thispkmn.moves[idxMove];
 
 			//ToDo: Array for opposing pokemons, [i] changes based on if double battle
 			Pokemon opp1 = thispkmn.pbOpposing1;
@@ -1266,17 +1265,16 @@ namespace PokemonUnity.Combat
       //@choices[idxPokemon][3]=-1;   // No target chosen yet
       @choices[idxPokemon]=new Choice(ChoiceAction.UseMove, thispkmn.effects.EncoreIndex, thispkmn.moves[thispkmn.effects.EncoreIndex]);
       if (@doublebattle) {
-        Attack.Move thismove=thispkmn.moves[thispkmn.effects.EncoreIndex];
-        /* ToDo: Uncomment and sort
-        Attack.Target target=thispkmn.pbTarget(thismove);
-        if (target==Targets.SingleNonUser) {
-          target=@scene.pbChooseTarget(idxPokemon,target);
+        Combat.IMove thismove=thispkmn.moves[thispkmn.effects.EncoreIndex];
+        Attack.Data.Targets targets=thispkmn.pbTarget(thismove);
+        if (targets==Attack.Data.Targets.SELECTED_POKEMON) { //Targets.SingleNonUser
+          int target=@scene.pbChooseTarget(idxPokemon,targets);
           if (target>=0) pbRegisterTarget(idxPokemon,target);
         }
-        else if (target==Targets.UserOrPartner) {
-          target=@scene.pbChooseTarget(idxPokemon,target);
-          if (target>=0 && (target&1)==(idxPokemon&1)) pbRegisterTarget(idxPokemon,target);
-        }*/
+        else if (targets==Attack.Data.Targets.USER_OR_ALLY) { //Targets.UserOrPartner
+          int target=@scene.pbChooseTarget(idxPokemon,targets);
+          if (target>=0 && (target&1)==(idxPokemon&1)) pbRegisterTarget(idxPokemon,target); //both integers are Even (ally) and Identical (selected)
+        }
       }
     }
     else {
@@ -1293,7 +1291,7 @@ namespace PokemonUnity.Combat
 
   public virtual bool pbRegisterMove(int idxPokemon, int idxMove, bool showMessages=true) {
     Pokemon thispkmn=@battlers[idxPokemon];
-    Attack.Move thismove=thispkmn.moves[idxMove];
+    Combat.IMove thismove=thispkmn.moves[idxMove];
     if (!CanChooseMove(idxPokemon,idxMove,showMessages)) return false;
     //@choices[idxPokemon][0]=1;         // "Use move"
     //@choices[idxPokemon][1]=idxMove;   // Index of move to be used
@@ -2499,9 +2497,9 @@ namespace PokemonUnity.Combat
     for (int i = 0; i < pokemon.moves.Length; i++) {
       if (pokemon.moves[i].MoveId==move) return;
       if (pokemon.moves[i].MoveId==0) {
-        pokemon.moves[i]=new PokemonUnity.Attack.Move(move);
-        //if (battler.IsNotNullOrNone())
-        //  battler.moves[i]=Move.pbFromPBMove(this,pokemon.moves[i].MoveId); //ToDo: Use LearnMove Method in Pokemon Class?
+        pokemon.moves[i]=new PokemonUnity.Attack.Move(move); //ToDo: Use LearnMove Method in Pokemon Class?
+        if (battler.IsNotNullOrNone())
+          battler.moves[i]=Combat.Move.pbFromPBMove(this,pokemon.moves[i]);
         pbDisplayPaused(Game._INTL("{1} learned {2}!",pkmnname,movename));
         GameDebug.Log($"[Learn move] #{pkmnname} learned #{movename}");
         return;
@@ -2517,8 +2515,8 @@ namespace PokemonUnity.Combat
           string oldmovename=pokemon.moves[forgetmove].MoveId.ToString(TextScripts.Name);
           pokemon.moves[forgetmove]=new PokemonUnity.Attack.Move(move); // Replaces current/total PP
           if (battler.IsNotNullOrNone())
-            //battler.moves[forgetmove]=Move.pbFromPBMove(this,pokemon.moves[forgetmove]); //ToDo: Use ForgetMove Method in Pokemon Class?
-            battler.pokemon.DeleteMoveAtIndex(forgetmove);
+            battler.moves[forgetmove]=Combat.Move.pbFromPBMove(this,pokemon.moves[forgetmove]); //ToDo: Use ForgetMove Method in Pokemon Class?
+            //battler.pokemon.DeleteMoveAtIndex(forgetmove);
           pbDisplayPaused(Game._INTL("1,  2, and... ... ...")); //ToDo: 2sec delay between text
           pbDisplayPaused(Game._INTL("Poof!"));
           pbDisplayPaused(Game._INTL("{1} forgot {2}.",pkmnname,oldmovename));
@@ -2599,7 +2597,7 @@ namespace PokemonUnity.Combat
         pkmn.RecoverHP(pkmn.TotalHP,true);
         pkmn.pbCureStatus(false);
         for (int i = 0; i < pkmn.moves.Length; i++) {
-          pkmn.moves[i].PP=pkmn.moves[i].TotalPP;
+          pkmn.moves[i].PP=(byte)pkmn.moves[i].TotalPP;
         }
         pkmn.effects.LunarDance=false;
       }
@@ -3146,17 +3144,17 @@ namespace PokemonUnity.Combat
                   }
                   if (!pbRegisterMove(i,index)) continue;
                   if (@doublebattle) {
-                    Attack.Move thismove=@battlers[i].moves[index];
-                    Attack.Data.Targets targets=@battlers[i].pbTarget(thismove);
+                    Combat.IMove thismove=@battlers[i].moves[index];
                     //Attack.Target target=@battlers[i].pbTarget(thismove);
-                    if (targets==Attack.Data.Targets.SELECTED_POKEMON) { // single non-user
-                    //if (target==Attack.Target.SingleNonUser) { // single non-user
+                    Attack.Data.Targets targets=@battlers[i].pbTarget(thismove);
+                    //if (target==Attack.Target.SingleNonUser) {            // single non-user
+                    if (targets==Attack.Data.Targets.SELECTED_POKEMON) {    // single non-user
                       int target=@scene.pbChooseTarget(i,targets);
                       if (target<0) continue;
                       pbRegisterTarget(i,target);
                     }
-                    else if (targets==Attack.Data.Targets.USER_OR_ALLY) { // Acupressure
-                    //else if (target==Attack.Target.UserOrPartner) { // Acupressure
+                    //else if (target==Attack.Target.UserOrPartner) {       // Acupressure
+                    else if (targets==Attack.Data.Targets.USER_OR_ALLY) {   // Acupressure
                       int target=@scene.pbChooseTarget(i,targets);
                       if (target<0 || (target%2)==1) continue; //no choice or enemy
                       pbRegisterTarget(i,target);

@@ -585,7 +585,11 @@ namespace PokemonUnity
 			float Audio_bgm_get_volume();
 			void Audio_bgm_set_volume(float n);
 			void me_stop();
+			void pbSEStop();
 			void pbSEPlay(string name);
+			void pbBGMPlay(string name);
+			void pbBGSPlay(string name);
+			void pbMEPlay(string name);
 			void pbPlayTrainerIntroME(TrainerTypes trainertype);
 
 			IWindow pbCreateMessageWindow();
@@ -597,6 +601,7 @@ namespace PokemonUnity
 			//int pbMessageChooseNumber(string message, ChooseNumberParams arg);
 
 			bool pbResolveBitmap(string path);
+			bool pbIsFaded { get; }
 
 			void pbUpdateSceneMap();
 			void pbSceneStandby(Action action);
