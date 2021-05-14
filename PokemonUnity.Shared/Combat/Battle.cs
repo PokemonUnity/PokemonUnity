@@ -2152,7 +2152,7 @@ namespace PokemonUnity.Combat
     }
     pbCommonAnimation("MegaEvolution",@battlers[index],null);
     @battlers[index].pokemon.makeMega();
-    @battlers[index].form=@battlers[index].form;
+    @battlers[index].FormId=@battlers[index].pokemon.form;
     @battlers[index].Update(true);
     @scene.pbChangePokemon(@battlers[index],@battlers[index].Form.Id);
     pbCommonAnimation("MegaEvolution2",@battlers[index],null);
@@ -2182,7 +2182,7 @@ namespace PokemonUnity.Combat
       pbCommonAnimation("PrimalGroudon",@battlers[index],null);
     }
     @battlers[index].pokemon.makePrimal();
-    @battlers[index].form=1;//@battlers[index].pokemon.form;
+    @battlers[index].FormId=@battlers[index].pokemon.form;
     @battlers[index].Update(true);
     @scene.pbChangePokemon(@battlers[index],@battlers[index].Form.Id);
     if (@battlers[index].pokemon.Species == Pokemons.KYOGRE) {
@@ -3638,7 +3638,7 @@ namespace PokemonUnity.Combat
       }
     }
     // Future Sight/Doom Desire
-    foreach (var i in battlers) {   // not priority
+    foreach (Combat.Pokemon i in battlers) {   // not priority
       if (i.isFainted()) continue;
       if (i.effects.FutureSight>0) {
         i.effects.FutureSight-=1;
@@ -3646,7 +3646,7 @@ namespace PokemonUnity.Combat
           Moves move=i.effects.FutureSightMove;
           GameDebug.Log($"[Lingering effect triggered] #{move.ToString(TextScripts.Name)} struck #{i.ToString(true)}");
           pbDisplay(Game._INTL("{1} took the {2} attack!",i.ToString(),move.ToString(TextScripts.Name)));
-          Pokemon moveuser=null;
+          Combat.Pokemon moveuser=null;
           foreach (var j in battlers) {
             if (j.IsOpposing(i.effects.FutureSightUserPos)) continue;
             if (j.pokemonIndex==i.effects.FutureSightUser && !j.isFainted()) {
@@ -3657,8 +3657,8 @@ namespace PokemonUnity.Combat
             Monster.Pokemon[] party=pbParty(i.effects.FutureSightUserPos);
             if (party[i.effects.FutureSightUser].HP>0) {
               moveuser=new Pokemon(this,(sbyte)i.effects.FutureSightUserPos);
-              //moveuser.InitPokemon(party[i.effects.FutureSightUser],
-              //                            i.effects.FutureSightUser);
+              moveuser.InitPokemon(party[i.effects.FutureSightUser],
+                                    (sbyte)i.effects.FutureSightUser);
             }
           }
           if (!moveuser.IsNotNullOrNone()) {

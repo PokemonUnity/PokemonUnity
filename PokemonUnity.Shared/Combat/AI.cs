@@ -4815,7 +4815,7 @@ public partial class Battle{
     }
     if (shouldswitch) {
       List<int> list=new List<int>();
-      //Combat.Pokemon[] party=pbParty(index);
+      //Monster.Pokemon[] party=pbParty(index);
       Combat.Pokemon[] party=battlers.Where(b => (b.Index % 2) == (index % 2)).ToArray();
       for (int i = 0; i < party.Length; i++) {
         if (pbCanSwitch(index,i,false)) {

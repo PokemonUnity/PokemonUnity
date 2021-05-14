@@ -58,7 +58,12 @@ namespace PokemonUnity.Combat
 		public bool captured					{ get; set; }
 		#endregion
 		#region Inherit Base Pokemon Data
-		public int HP							{ get { return hp; } set { hp = value; if (pokemon.IsNotNullOrNone()) pokemon.HP = value; } }
+		public int HP							{ get { return hp; } set 
+			{ 
+				hp = value; 
+				//if (pokemon.IsNotNullOrNone()) pokemon.HP = value; //Monster.Pokemon is assigned after battle
+			} 
+		}
 		private int hp							{ get; set; }
 		public int TotalHP						{ get; private set; }
 		public int ATK							{ get { return effects.PowerTrick ? DEF : attack; } set { attack = value; } }
@@ -139,16 +144,16 @@ namespace PokemonUnity.Combat
 			}
 			set { speed = value; }
 		}
-		public int Level						{ 
-			get { return pokemon.IsNotNullOrNone() ? pokemon.Level : 0; } 
-			set { level = value; if (pokemon.IsNotNullOrNone()) pokemon.SetLevel((byte)value); } 
+		public int Level						{ //Monster.Pokemon is assigned after battle
+			get { return level; } //pokemon.IsNotNullOrNone() ? pokemon.Level : 0; } 
+			set { level = value; } //if (pokemon.IsNotNullOrNone()) pokemon.SetLevel((byte)value); } 
 		}
 		private int level						{ get; set; }
 		public int happiness					{ get { return pokemon.IsNotNullOrNone() ? pokemon.Happiness : 0; } }
 		public string Name { get {
 				//if name is not nickname return illusion.Name?
 				if (effects.Illusion != null)
-					return effects.Illusion.Name;
+					return effects.Illusion.Species.ToString(TextScripts.Name);
 				return name; } }
 		private string name						{ get { return pokemon.Name; } }
 		public bool? Gender { get {
@@ -177,14 +182,14 @@ namespace PokemonUnity.Combat
 		{
 			get
 			{
-				return status; //ToDo: pokemon.Status
+				return status;
 			}
 			set
 			{
 				if (status == Status.SLEEP && value == 0)
 					effects.Truant = false;
 				status = value;
-				if (pokemon.IsNotNullOrNone()) pokemon.Status = value;
+				//if (pokemon.IsNotNullOrNone()) pokemon.Status = value;
 				if (value != Status.POISON)
 					effects.Toxic = 0;
 				if (value != Status.POISON && value != Status.SLEEP)
@@ -199,14 +204,14 @@ namespace PokemonUnity.Combat
 			set
 			{
 				item = value;
-				if (pokemon.IsNotNullOrNone()) pokemon.setItem(value);
+				//if (pokemon.IsNotNullOrNone()) pokemon.setItem(value);
 			}
 		}
-		public Items item { get; set; } 
+		private Items item { get; set; } 
 		public Types Type1 { get; set; }
 		public Types Type2 { get; set; }
-		//public int[] IV { get; set; } 
-		public int[] IV { get { return pokemon.IV; } }
+		public int[] IV { get; private set; } 
+		//public int[] IV { get { return pokemon.IV; } }
 		public Abilities Ability { get { return ability; } }
 		internal Abilities ability { private get; set; }
 		public PokemonUnity.Combat.IMove[] moves { get; set; }
@@ -274,20 +279,20 @@ namespace PokemonUnity.Combat
 					return false;
 				return isHyperMode; }
 		}
-		public int form { get; set; }
+		private int form { get; set; }
 		public Monster.Data.Form Form { get { return Game.PokemonFormsData[Species][form]; } }
 		public int FormId
 		{
 			get
 			{
-				if (@pokemon.IsNotNullOrNone()) return @pokemon.FormId;
-				return 0;
+				//if (@pokemon.IsNotNullOrNone()) return @pokemon.FormId;
+				return form; //0;
 			}
 			set
 			{
 				@form = value;
 				//if (@pokemon.IsNotNullOrNone()) @pokemon.form = value;
-				if (@pokemon.IsNotNullOrNone()) @pokemon.SetForm(value);
+				//if (@pokemon.IsNotNullOrNone()) @pokemon.SetForm(value);
 			}
 		}
 		public bool hasMega()
@@ -601,7 +606,14 @@ namespace PokemonUnity.Combat
 					PokemonUnity.Combat.Move.pbFromPBMove(@battle,pkmn.moves[2]),
 					PokemonUnity.Combat.Move.pbFromPBMove(@battle,pkmn.moves[3])
 				};
-				//IV			= pkmn.IV;
+				IV				= new int[] { //pkmn.IV;
+					pkmn.IV[0],
+					pkmn.IV[1],
+					pkmn.IV[2],
+					pkmn.IV[3],
+					pkmn.IV[4],
+					pkmn.IV[5]
+				};
 			}
 		}
 		public void Update(bool fullchange = false)
@@ -3124,7 +3136,7 @@ namespace PokemonUnity.Combat
 	}
 	// Find the user and target(s)
 	List<Pokemon> targets= new List<Pokemon>();
-	Pokemon user=pbFindUser(choice,new Pokemon[0]);//ToDo: targets
+	Pokemon user=pbFindUser(choice,targets.ToArray());
 	// Battle Arena only - assume failure
 	@battle.successStates[user.Index].UseState=true;
 	@battle.successStates[user.Index].TypeMod=8;
@@ -3226,7 +3238,7 @@ namespace PokemonUnity.Combat
 		@battle.pbDisplay(Game._INTL("But there was no target..."));
 	  else
 		//GameDebug.logonerr(thismove.pbEffect(user,null));
-		try{ thismove.pbEffect(user, null); } catch { GameDebug.LogError(""); }
+		try{ thismove.pbEffect(user, null); } catch { GameDebug.Log(""); }
 	}
 	else {
 	  // We have targets
@@ -3438,7 +3450,7 @@ namespace PokemonUnity.Combat
 	// Use the move
  //   @battle.pbDisplayPaused("Before: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]"); //Log instead?
 	GameDebug.Log($"#{ToString()} used #{choice.Move.MoveId.ToString(TextScripts.Name)}");
-	try{ pbUseMove(choice, choice.Move == @battle.struggle); } catch { GameDebug.LogError(""); }
+	try{ pbUseMove(choice, choice.Move == @battle.struggle); } catch { GameDebug.Log(""); }
  //   @battle.pbDisplayPaused("After: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]");
 	return true;
   }

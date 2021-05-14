@@ -260,11 +260,11 @@ namespace PokemonUnity.Combat
 					!(attacker.hasWorkingAbility(Abilities.SHEER_FORCE) && this.AddlEffect > 0) &&
 					!attacker.isFainted())
 				{
-					attacker.form = (attacker.form + 1) % 2;
+					attacker.FormId = (attacker.FormId + 1) % 2;
 					attacker.Update(true);
 					this.battle.scene.pbChangePokemon(attacker, attacker.Form.Id);//.Species);
 					battle.pbDisplay(Game._INTL("{1} transformed!", attacker.ToString()));
-					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{attacker.Form}");
+					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{attacker.Form.Pokemon.ToString(TextScripts.Name)}");
 				}
 			}
 		}
@@ -11131,7 +11131,7 @@ namespace PokemonUnity.Combat
 		public override bool pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			if (attacker.Species == Pokemons.HOOPA) return true;
-			if (attacker.form != 1) return true;
+			if (attacker.FormId != 1) return true;
 			return false;
 		}
 
