@@ -57,7 +57,7 @@ namespace PokemonUnity.Combat
 	/// Damaging moves just do damage with no additional effect.
 	/// Non-damaging moves always fail.
 	/// <summary>
-	public class PokeBattle_UnimplementedMove : PokeBattle_Move
+	public partial class PokeBattle_UnimplementedMove : PokeBattle_Move
 	{
 		public PokeBattle_UnimplementedMove() : base() { }
 		//public PokeBattle_UnimplementedMove(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -77,7 +77,7 @@ namespace PokemonUnity.Combat
 	/// Superclass for a failed move. Always fails.
 	/// This class is unused.
 	/// <summary>
-	public class PokeBattle_FailedMove : PokeBattle_Move
+	public partial class PokeBattle_FailedMove : PokeBattle_Move
 	{
 		public PokeBattle_FailedMove() : base() { }
 		//public PokeBattle_FailedMove(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -91,7 +91,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Pseudomove for confusion damage.
 	/// <summary>
-	public class PokeBattle_Confusion : PokeBattle_Move
+	public partial class PokeBattle_Confusion : PokeBattle_Move
 	{
 		public PokeBattle_Confusion() : base() { }
 		//public PokeBattle_Confusion(Battle battle, Attack.Move move) : base(battle, move)
@@ -133,7 +133,7 @@ namespace PokemonUnity.Combat
 	/// Implements the move Struggle.
 	/// For cases where the real move named Struggle is not defined.
 	/// <summary>
-	public class PokeBattle_Struggle : PokeBattle_Move
+	public partial class PokeBattle_Struggle : PokeBattle_Move
 	{
 		public PokeBattle_Struggle() : base() { }
 		//public PokeBattle_Struggle(Battle battle, Attack.Move move) : base(battle, move) //{ }
@@ -183,7 +183,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// No additional effect.
 	/// <summary>
-	public class PokeBattle_Move_000 : PokeBattle_Move
+	public partial class PokeBattle_Move_000 : PokeBattle_Move
 	{
 		public PokeBattle_Move_000() : base() { }
 		//public PokeBattle_Move_000(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -192,7 +192,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Does absolutely nothing. (Splash)
 	/// <summary>
-	public class PokeBattle_Move_001 : PokeBattle_Move
+	public partial class PokeBattle_Move_001 : PokeBattle_Move
 	{
 		public PokeBattle_Move_001() : base() { }
 		//public PokeBattle_Move_001(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -215,7 +215,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Struggle. Overrides the default Struggle effect above.
 	/// <summary>
-	public class PokeBattle_Move_002 : PokeBattle_Struggle
+	public partial class PokeBattle_Move_002 : PokeBattle_Struggle
 	{
 		public PokeBattle_Move_002() : base() { }
 		//public PokeBattle_Move_002(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -224,7 +224,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Puts the target to sleep.
 	/// <summary>
-	public class PokeBattle_Move_003 : PokeBattle_Move
+	public partial class PokeBattle_Move_003 : PokeBattle_Move
 	{
 		public PokeBattle_Move_003() : base() { }
 		//public PokeBattle_Move_003(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -273,7 +273,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Makes the target drowsy; it will fall asleep at the end of the next turn. (Yawn)
 	/// <summary>
-	public class PokeBattle_Move_004 : PokeBattle_Move
+	public partial class PokeBattle_Move_004 : PokeBattle_Move
 	{
 		public PokeBattle_Move_004() : base() { }
 		//public PokeBattle_Move_004(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -296,7 +296,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Poisons the target.
 	/// <summary>
-	public class PokeBattle_Move_005 : PokeBattle_Move
+	public partial class PokeBattle_Move_005 : PokeBattle_Move
 	{
 		public PokeBattle_Move_005() : base() { }
 		//public PokeBattle_Move_005(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -325,7 +325,7 @@ namespace PokemonUnity.Combat
 	/// (Handled in Pokemon's pbSuccessCheck): Hits semi-invulnerable targets if user
 	/// is Poison-type and move is status move.
 	/// <summary>
-	public class PokeBattle_Move_006 : PokeBattle_Move
+	public partial class PokeBattle_Move_006 : PokeBattle_Move
 	{
 		public PokeBattle_Move_006() : base() { }
 		//public PokeBattle_Move_006(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -354,7 +354,7 @@ namespace PokemonUnity.Combat
 	/// Thunder Wave: Doesn't affect target if move's type has no effect on it.
 	/// Bolt Strike: Powers up the next Fusion Flare used this round.
 	/// <summary>
-	public class PokeBattle_Move_007 : PokeBattle_Move
+	public partial class PokeBattle_Move_007 : PokeBattle_Move
 	{
 		public PokeBattle_Move_007() : base() { }
 		//public PokeBattle_Move_007(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -403,7 +403,7 @@ namespace PokemonUnity.Combat
 	/// Paralyzes the target. Accuracy perfect in rain, 50% in sunshine. (Thunder)
 	/// (Handled in Pokemon's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
-	public class PokeBattle_Move_008 : PokeBattle_Move
+	public partial class PokeBattle_Move_008 : PokeBattle_Move
 	{
 		public PokeBattle_Move_008() : base() { }
 		//public PokeBattle_Move_008(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -435,7 +435,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Paralyzes the target. May cause the target to flinch. (Thunder Fang)
 	/// <summary>
-	public class PokeBattle_Move_009 : PokeBattle_Move
+	public partial class PokeBattle_Move_009 : PokeBattle_Move
 	{
 		public PokeBattle_Move_009() : base() { }
 		//public PokeBattle_Move_009(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -461,7 +461,7 @@ namespace PokemonUnity.Combat
 	/// Burns the target.
 	/// Blue Flare: Powers up the next Fusion Bolt used this round.
 	/// <summary>
-	public class PokeBattle_Move_00A : PokeBattle_Move
+	public partial class PokeBattle_Move_00A : PokeBattle_Move
 	{
 		public PokeBattle_Move_00A() : base() { }
 		//public PokeBattle_Move_00A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -501,7 +501,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Burns the target. May cause the target to flinch. (Fire Fang)
 	/// <summary>
-	public class PokeBattle_Move_00B : PokeBattle_Move
+	public partial class PokeBattle_Move_00B : PokeBattle_Move
 	{
 		public PokeBattle_Move_00B() : base() { }
 		//public PokeBattle_Move_00B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -526,7 +526,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Freezes the target.
 	/// <summary>
-	public class PokeBattle_Move_00C : PokeBattle_Move
+	public partial class PokeBattle_Move_00C : PokeBattle_Move
 	{
 		public PokeBattle_Move_00C() : base() { }
 		//public PokeBattle_Move_00C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -553,7 +553,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Freezes the target. Accuracy perfect in hail. (Blizzard)
 	/// <summary>
-	public class PokeBattle_Move_00D : PokeBattle_Move
+	public partial class PokeBattle_Move_00D : PokeBattle_Move
 	{
 		public PokeBattle_Move_00D() : base() { }
 		//public PokeBattle_Move_00D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -589,7 +589,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Freezes the target. May cause the target to flinch. (Ice Fang)
 	/// <summary>
-	public class PokeBattle_Move_00E : PokeBattle_Move
+	public partial class PokeBattle_Move_00E : PokeBattle_Move
 	{
 		public PokeBattle_Move_00E() : base() { }
 		//public PokeBattle_Move_00E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -614,7 +614,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Causes the target to flinch.
 	/// <summary>
-	public class PokeBattle_Move_00F : PokeBattle_Move
+	public partial class PokeBattle_Move_00F : PokeBattle_Move
 	{
 		public PokeBattle_Move_00F() : base() { }
 		//public PokeBattle_Move_00F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -629,7 +629,7 @@ namespace PokemonUnity.Combat
 	/// Causes the target to flinch. Does double damage and has perfect accuracy if
 	/// the target is Minimized.
 	/// <summary>
-	public class PokeBattle_Move_010 : PokeBattle_Move
+	public partial class PokeBattle_Move_010 : PokeBattle_Move
 	{
 		public PokeBattle_Move_010() : base() { }
 		//public PokeBattle_Move_010(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -651,7 +651,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Causes the target to flinch. Fails if the user is not asleep. (Snore)
 	/// <summary>
-	public class PokeBattle_Move_011 : PokeBattle_Move
+	public partial class PokeBattle_Move_011 : PokeBattle_Move
 	{
 		public PokeBattle_Move_011() : base() { }
 		//public PokeBattle_Move_011(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -675,7 +675,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Causes the target to flinch. Fails if this isn't the user's first turn. (Fake Out)
 	/// <summary>
-	public class PokeBattle_Move_012 : PokeBattle_Move
+	public partial class PokeBattle_Move_012 : PokeBattle_Move
 	{
 		public PokeBattle_Move_012() : base() { }
 		//public PokeBattle_Move_012(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -694,7 +694,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Confuses the target.
 	/// <summary>
-	public class PokeBattle_Move_013 : PokeBattle_Move
+	public partial class PokeBattle_Move_013 : PokeBattle_Move
 	{
 		public PokeBattle_Move_013() : base() { }
 		//public PokeBattle_Move_013(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -729,7 +729,7 @@ namespace PokemonUnity.Combat
 	/// TODO: Play the actual chatter cry as part of the move animation
 	///       this.battle.scene.pbChatter(attacker,opponent) // Just plays cry
 	/// <summary>
-	public class PokeBattle_Move_014 : PokeBattle_Move
+	public partial class PokeBattle_Move_014 : PokeBattle_Move
 	{
 		public PokeBattle_Move_014() : base() { }
 		//public PokeBattle_Move_014(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -761,7 +761,7 @@ namespace PokemonUnity.Combat
 	/// Confuses the target. Accuracy perfect in rain, 50% in sunshine. (Hurricane)
 	/// (Handled in Pokemon's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
-	public class PokeBattle_Move_015 : PokeBattle_Move
+	public partial class PokeBattle_Move_015 : PokeBattle_Move
 	{
 		public PokeBattle_Move_015() : base() { }
 		//public PokeBattle_Move_015(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -808,7 +808,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Attracts the target. (Attract)
 	/// <summary>
-	public class PokeBattle_Move_016 : PokeBattle_Move
+	public partial class PokeBattle_Move_016 : PokeBattle_Move
 	{
 		public PokeBattle_Move_016() : base() { }
 		//public PokeBattle_Move_016(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -845,7 +845,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Burns, freezes or paralyzes the target. (Tri Attack)
 	/// <summary>
-	public class PokeBattle_Move_017 : PokeBattle_Move
+	public partial class PokeBattle_Move_017 : PokeBattle_Move
 	{
 		public PokeBattle_Move_017() : base() { }
 		//public PokeBattle_Move_017(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -881,7 +881,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Cures user of burn, poison and paralysis. (Refresh)
 	/// <summary>
-	public class PokeBattle_Move_018 : PokeBattle_Move
+	public partial class PokeBattle_Move_018 : PokeBattle_Move
 	{
 		public PokeBattle_Move_018() : base() { }
 		//public PokeBattle_Move_018(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -920,7 +920,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Cures all party Pokémon of permanent status problems. (Aromatherapy, Heal Bell)
 	/// <summary>
-	public class PokeBattle_Move_019 : PokeBattle_Move
+	public partial class PokeBattle_Move_019 : PokeBattle_Move
 	{
 		public PokeBattle_Move_019() : base() { }
 		//public PokeBattle_Move_019(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1009,7 +1009,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Safeguards the user's side from being inflicted with status problems. (Safeguard)
 	/// <summary>
-	public class PokeBattle_Move_01A : PokeBattle_Move
+	public partial class PokeBattle_Move_01A : PokeBattle_Move
 	{
 		public PokeBattle_Move_01A() : base() { }
 		//public PokeBattle_Move_01A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1038,7 +1038,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User passes its status problem to the target. (Psycho Shift)
 	/// <summary>
-	public class PokeBattle_Move_01B : PokeBattle_Move
+	public partial class PokeBattle_Move_01B : PokeBattle_Move
 	{
 		public PokeBattle_Move_01B() : base() { }
 		//public PokeBattle_Move_01B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1106,7 +1106,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Attack by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_01C : PokeBattle_Move
+	public partial class PokeBattle_Move_01C : PokeBattle_Move
 	{
 		public PokeBattle_Move_01C() : base() { }
 		//public PokeBattle_Move_01C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1132,7 +1132,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Defense by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_01D : PokeBattle_Move
+	public partial class PokeBattle_Move_01D : PokeBattle_Move
 	{
 		public PokeBattle_Move_01D() : base() { }
 		//public PokeBattle_Move_01D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1158,7 +1158,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Defense by 1 stage. User curls up. (Defense Curl)
 	/// <summary>
-	public class PokeBattle_Move_01E : PokeBattle_Move
+	public partial class PokeBattle_Move_01E : PokeBattle_Move
 	{
 		public PokeBattle_Move_01E() : base() { }
 		//public PokeBattle_Move_01E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1177,7 +1177,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Speed by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_01F : PokeBattle_Move
+	public partial class PokeBattle_Move_01F : PokeBattle_Move
 	{
 		public PokeBattle_Move_01F() : base() { }
 		//public PokeBattle_Move_01F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1203,7 +1203,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Special Attack by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_020 : PokeBattle_Move
+	public partial class PokeBattle_Move_020 : PokeBattle_Move
 	{
 		public PokeBattle_Move_020() : base() { }
 		//public PokeBattle_Move_020(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1230,7 +1230,7 @@ namespace PokemonUnity.Combat
 	/// Increases the user's Special Defense by 1 stage.
 	/// Charges up user's next attack if it is Electric-type. (Charge)
 	/// <summary>
-	public class PokeBattle_Move_021 : PokeBattle_Move
+	public partial class PokeBattle_Move_021 : PokeBattle_Move
 	{
 		public PokeBattle_Move_021() : base() { }
 		//public PokeBattle_Move_021(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1252,7 +1252,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's evasion by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_022 : PokeBattle_Move
+	public partial class PokeBattle_Move_022 : PokeBattle_Move
 	{
 		public PokeBattle_Move_022() : base() { }
 		//public PokeBattle_Move_022(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1278,7 +1278,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's critical hit rate. (Focus Energy)
 	/// <summary>
-	public class PokeBattle_Move_023 : PokeBattle_Move
+	public partial class PokeBattle_Move_023 : PokeBattle_Move
 	{
 		public PokeBattle_Move_023() : base() { }
 		//public PokeBattle_Move_023(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1310,7 +1310,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Attack and Defense by 1 stage each. (Bulk Up)
 	/// <summary>
-	public class PokeBattle_Move_024 : PokeBattle_Move
+	public partial class PokeBattle_Move_024 : PokeBattle_Move
 	{
 		public PokeBattle_Move_024() : base() { }
 		//public PokeBattle_Move_024(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1342,7 +1342,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Attack, Defense and accuracy by 1 stage each. (Coil)
 	/// <summary>
-	public class PokeBattle_Move_025 : PokeBattle_Move
+	public partial class PokeBattle_Move_025 : PokeBattle_Move
 	{
 		public PokeBattle_Move_025() : base() { }
 		//public PokeBattle_Move_025(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1380,7 +1380,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Attack and Speed by 1 stage each. (Dragon Dance)
 	/// <summary>
-	public class PokeBattle_Move_026 : PokeBattle_Move
+	public partial class PokeBattle_Move_026 : PokeBattle_Move
 	{
 		public PokeBattle_Move_026() : base() { }
 		//public PokeBattle_Move_026(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1412,7 +1412,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Attack and Special Attack by 1 stage each. (Work Up)
 	/// <summary>
-	public class PokeBattle_Move_027 : PokeBattle_Move
+	public partial class PokeBattle_Move_027 : PokeBattle_Move
 	{
 		public PokeBattle_Move_027() : base() { }
 		//public PokeBattle_Move_027(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1445,7 +1445,7 @@ namespace PokemonUnity.Combat
 	/// Increases the user's Attack and Sp. Attack by 1 stage each.
 	/// In sunny weather, increase is 2 stages each instead. (Growth)
 	/// <summary>
-	public class PokeBattle_Move_028 : PokeBattle_Move
+	public partial class PokeBattle_Move_028 : PokeBattle_Move
 	{
 		public PokeBattle_Move_028() : base() { }
 		//public PokeBattle_Move_028(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1484,7 +1484,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Attack and accuracy by 1 stage each. (Hone Claws)
 	/// <summary>
-	public class PokeBattle_Move_029 : PokeBattle_Move
+	public partial class PokeBattle_Move_029 : PokeBattle_Move
 	{
 		public PokeBattle_Move_029() : base() { }
 		//public PokeBattle_Move_029(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1516,7 +1516,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Defense and Special Defense by 1 stage each. (Cosmic Power)
 	/// <summary>
-	public class PokeBattle_Move_02A : PokeBattle_Move
+	public partial class PokeBattle_Move_02A : PokeBattle_Move
 	{
 		public PokeBattle_Move_02A() : base() { }
 		//public PokeBattle_Move_02A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1548,7 +1548,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Sp. Attack, Sp. Defense and Speed by 1 stage each. (Quiver Dance)
 	/// <summary>
-	public class PokeBattle_Move_02B : PokeBattle_Move
+	public partial class PokeBattle_Move_02B : PokeBattle_Move
 	{
 		public PokeBattle_Move_02B() : base() { }
 		//public PokeBattle_Move_02B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1586,7 +1586,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Sp. Attack and Sp. Defense by 1 stage each. (Calm Mind)
 	/// <summary>
-	public class PokeBattle_Move_02C : PokeBattle_Move
+	public partial class PokeBattle_Move_02C : PokeBattle_Move
 	{
 		public PokeBattle_Move_02C() : base() { }
 		//public PokeBattle_Move_02C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1619,7 +1619,7 @@ namespace PokemonUnity.Combat
 	/// Increases the user's Attack, Defense, Speed, Special Attack and Special Defense
 	/// by 1 stage each. (AncientPower, Ominous Wind, Silver Wind)
 	/// <summary>
-	public class PokeBattle_Move_02D : PokeBattle_Move
+	public partial class PokeBattle_Move_02D : PokeBattle_Move
 	{
 		public PokeBattle_Move_02D() : base() { }
 		//public PokeBattle_Move_02D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1658,7 +1658,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Attack by 2 stages.
 	/// <summary>
-	public class PokeBattle_Move_02E : PokeBattle_Move
+	public partial class PokeBattle_Move_02E : PokeBattle_Move
 	{
 		public PokeBattle_Move_02E() : base() { }
 		//public PokeBattle_Move_02E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1684,7 +1684,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Defense by 2 stages.
 	/// <summary>
-	public class PokeBattle_Move_02F : PokeBattle_Move
+	public partial class PokeBattle_Move_02F : PokeBattle_Move
 	{
 		public PokeBattle_Move_02F() : base() { }
 		//public PokeBattle_Move_02F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1710,7 +1710,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Speed by 2 stages.
 	/// <summary>
-	public class PokeBattle_Move_030 : PokeBattle_Move
+	public partial class PokeBattle_Move_030 : PokeBattle_Move
 	{
 		public PokeBattle_Move_030() : base() { }
 		//public PokeBattle_Move_030(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1736,7 +1736,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Speed by 2 stages. Lowers user's weight by 100kg. (Autotomize)
 	/// <summary>
-	public class PokeBattle_Move_031 : PokeBattle_Move
+	public partial class PokeBattle_Move_031 : PokeBattle_Move
 	{
 		public PokeBattle_Move_031() : base() { }
 		//public PokeBattle_Move_031(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1759,7 +1759,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Special Attack by 2 stages.
 	/// <summary>
-	public class PokeBattle_Move_032 : PokeBattle_Move
+	public partial class PokeBattle_Move_032 : PokeBattle_Move
 	{
 		public PokeBattle_Move_032() : base() { }
 		//public PokeBattle_Move_032(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1785,7 +1785,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Special Defense by 2 stages.
 	/// <summary>
-	public class PokeBattle_Move_033 : PokeBattle_Move
+	public partial class PokeBattle_Move_033 : PokeBattle_Move
 	{
 		public PokeBattle_Move_033() : base() { }
 		//public PokeBattle_Move_033(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1811,7 +1811,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's evasion by 2 stages. Minimizes the user. (Minimize)
 	/// <summary>
-	public class PokeBattle_Move_034 : PokeBattle_Move
+	public partial class PokeBattle_Move_034 : PokeBattle_Move
 	{
 		public PokeBattle_Move_034() : base() { }
 		//public PokeBattle_Move_034(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1842,7 +1842,7 @@ namespace PokemonUnity.Combat
 	/// Decreases the user's Defense and Special Defense by 1 stage each. (Shell Smash)
 	/// Increases the user's Attack, Speed and Special Attack by 2 stages each.
 	/// <summary>
-	public class PokeBattle_Move_035 : PokeBattle_Move
+	public partial class PokeBattle_Move_035 : PokeBattle_Move
 	{
 		public PokeBattle_Move_035() : base() { }
 		//public PokeBattle_Move_035(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1891,7 +1891,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Speed by 2 stages, and its Attack by 1 stage. (Shift Gear)
 	/// <summary>
-	public class PokeBattle_Move_036 : PokeBattle_Move
+	public partial class PokeBattle_Move_036 : PokeBattle_Move
 	{
 		public PokeBattle_Move_036() : base() { }
 		//public PokeBattle_Move_036(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1923,7 +1923,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases one random stat of the user by 2 stages (except HP). (Acupressure)
 	/// <summary>
-	public class PokeBattle_Move_037 : PokeBattle_Move
+	public partial class PokeBattle_Move_037 : PokeBattle_Move
 	{
 		public PokeBattle_Move_037() : base() { }
 		//public PokeBattle_Move_037(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1962,7 +1962,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Defense by 3 stages.
 	/// <summary>
-	public class PokeBattle_Move_038 : PokeBattle_Move
+	public partial class PokeBattle_Move_038 : PokeBattle_Move
 	{
 		public PokeBattle_Move_038() : base() { }
 		//public PokeBattle_Move_038(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -1988,7 +1988,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Special Attack by 3 stages.
 	/// <summary>
-	public class PokeBattle_Move_039 : PokeBattle_Move
+	public partial class PokeBattle_Move_039 : PokeBattle_Move
 	{
 		public PokeBattle_Move_039() : base() { }
 		//public PokeBattle_Move_039(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2014,7 +2014,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Reduces the user's HP by half of max, and sets its Attack to maximum. (Belly Drum)
 	/// <summary>
-	public class PokeBattle_Move_03A : PokeBattle_Move
+	public partial class PokeBattle_Move_03A : PokeBattle_Move
 	{
 		public PokeBattle_Move_03A() : base() { }
 		//public PokeBattle_Move_03A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2048,7 +2048,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the user's Attack and Defense by 1 stage each. (Superpower)
 	/// <summary>
-	public class PokeBattle_Move_03B : PokeBattle_Move
+	public partial class PokeBattle_Move_03B : PokeBattle_Move
 	{
 		public PokeBattle_Move_03B() : base() { }
 		//public PokeBattle_Move_03B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2077,7 +2077,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the user's Defense and Special Defense by 1 stage each. (Close Combat)
 	/// <summary>
-	public class PokeBattle_Move_03C : PokeBattle_Move
+	public partial class PokeBattle_Move_03C : PokeBattle_Move
 	{
 		public PokeBattle_Move_03C() : base() { }
 		//public PokeBattle_Move_03C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2107,7 +2107,7 @@ namespace PokemonUnity.Combat
 	/// Decreases the user's Defense, Special Defense and Speed by 1 stage each.
 	/// User's ally loses 1/16 of its total HP. (V-create)
 	/// <summary>
-	public class PokeBattle_Move_03D : PokeBattle_Move
+	public partial class PokeBattle_Move_03D : PokeBattle_Move
 	{
 		public PokeBattle_Move_03D() : base() { }
 		//public PokeBattle_Move_03D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2145,7 +2145,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the user's Speed by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_03E : PokeBattle_Move
+	public partial class PokeBattle_Move_03E : PokeBattle_Move
 	{
 		public PokeBattle_Move_03E() : base() { }
 		//public PokeBattle_Move_03E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2167,7 +2167,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the user's Special Attack by 2 stages.
 	/// <summary>
-	public class PokeBattle_Move_03F : PokeBattle_Move
+	public partial class PokeBattle_Move_03F : PokeBattle_Move
 	{
 		public PokeBattle_Move_03F() : base() { }
 		//public PokeBattle_Move_03F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2189,7 +2189,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the target's Special Attack by 1 stage. Confuses the target. (Flatter)
 	/// <summary>
-	public class PokeBattle_Move_040 : PokeBattle_Move
+	public partial class PokeBattle_Move_040 : PokeBattle_Move
 	{
 		public PokeBattle_Move_040() : base() { }
 		//public PokeBattle_Move_040(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2221,7 +2221,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the target's Attack by 2 stages. Confuses the target. (Swagger)
 	/// <summary>
-	public class PokeBattle_Move_041 : PokeBattle_Move
+	public partial class PokeBattle_Move_041 : PokeBattle_Move
 	{
 		public PokeBattle_Move_041() : base() { }
 		//public PokeBattle_Move_041(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2253,7 +2253,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Attack by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_042 : PokeBattle_Move
+	public partial class PokeBattle_Move_042 : PokeBattle_Move
 	{
 		public PokeBattle_Move_042() : base() { }
 		//public PokeBattle_Move_042(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2280,7 +2280,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Defense by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_043 : PokeBattle_Move
+	public partial class PokeBattle_Move_043 : PokeBattle_Move
 	{
 		public PokeBattle_Move_043() : base() { }
 		//public PokeBattle_Move_043(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2307,7 +2307,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Speed by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_044 : PokeBattle_Move
+	public partial class PokeBattle_Move_044 : PokeBattle_Move
 	{
 		public PokeBattle_Move_044() : base() { }
 		//public PokeBattle_Move_044(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2344,7 +2344,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Special Attack by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_045 : PokeBattle_Move
+	public partial class PokeBattle_Move_045 : PokeBattle_Move
 	{
 		public PokeBattle_Move_045() : base() { }
 		//public PokeBattle_Move_045(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2371,7 +2371,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Special Defense by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_046 : PokeBattle_Move
+	public partial class PokeBattle_Move_046 : PokeBattle_Move
 	{
 		public PokeBattle_Move_046() : base() { }
 		//public PokeBattle_Move_046(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2398,7 +2398,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's accuracy by 1 stage.
 	/// <summary>
-	public class PokeBattle_Move_047 : PokeBattle_Move
+	public partial class PokeBattle_Move_047 : PokeBattle_Move
 	{
 		public PokeBattle_Move_047() : base() { }
 		//public PokeBattle_Move_047(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2425,7 +2425,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's evasion by 1 stage OR 2 stages. (Sweet Scent)
 	/// <summary>
-	public class PokeBattle_Move_048 : PokeBattle_Move
+	public partial class PokeBattle_Move_048 : PokeBattle_Move
 	{
 		public PokeBattle_Move_048() : base() { }
 		//public PokeBattle_Move_048(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2455,7 +2455,7 @@ namespace PokemonUnity.Combat
 	/// Decreases the target's evasion by 1 stage. Ends all barriers and entry
 	/// hazards for the target's side OR on both sides. (Defog)
 	/// <summary>
-	public class PokeBattle_Move_049 : PokeBattle_Move
+	public partial class PokeBattle_Move_049 : PokeBattle_Move
 	{
 		public PokeBattle_Move_049() : base() { }
 		//public PokeBattle_Move_049(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2526,7 +2526,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Attack and Defense by 1 stage each. (Tickle)
 	/// <summary>
-	public class PokeBattle_Move_04A : PokeBattle_Move
+	public partial class PokeBattle_Move_04A : PokeBattle_Move
 	{
 		public PokeBattle_Move_04A() : base() { }
 		//public PokeBattle_Move_04A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2595,7 +2595,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Attack by 2 stages.
 	/// <summary>
-	public class PokeBattle_Move_04B : PokeBattle_Move
+	public partial class PokeBattle_Move_04B : PokeBattle_Move
 	{
 		public PokeBattle_Move_04B() : base() { }
 		//public PokeBattle_Move_04B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2622,7 +2622,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Defense by 2 stages. (Screech)
 	/// <summary>
-	public class PokeBattle_Move_04C : PokeBattle_Move
+	public partial class PokeBattle_Move_04C : PokeBattle_Move
 	{
 		public PokeBattle_Move_04C() : base() { }
 		//public PokeBattle_Move_04C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2649,7 +2649,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Speed by 2 stages. (Cotton Spore, Scary Face, String Shot)
 	/// <summary>
-	public class PokeBattle_Move_04D : PokeBattle_Move
+	public partial class PokeBattle_Move_04D : PokeBattle_Move
 	{
 		public PokeBattle_Move_04D() : base() { }
 		//public PokeBattle_Move_04D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2680,7 +2680,7 @@ namespace PokemonUnity.Combat
 	/// Decreases the target's Special Attack by 2 stages. Only works on the opposite
 	/// gender. (Captivate)
 	/// <summary>
-	public class PokeBattle_Move_04E : PokeBattle_Move
+	public partial class PokeBattle_Move_04E : PokeBattle_Move
 	{
 		public PokeBattle_Move_04E() : base() { }
 		//public PokeBattle_Move_04E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2725,7 +2725,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Special Defense by 2 stages.
 	/// <summary>
-	public class PokeBattle_Move_04F : PokeBattle_Move
+	public partial class PokeBattle_Move_04F : PokeBattle_Move
 	{
 		public PokeBattle_Move_04F() : base() { }
 		//public PokeBattle_Move_04F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2752,7 +2752,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Resets all target's stat stages to 0. (Clear Smog)
 	/// <summary>
-	public class PokeBattle_Move_050 : PokeBattle_Move
+	public partial class PokeBattle_Move_050 : PokeBattle_Move
 	{
 		public PokeBattle_Move_050() : base() { }
 		//public PokeBattle_Move_050(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2779,7 +2779,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Resets all stat stages for all battlers to 0. (Haze)
 	/// <summary>
-	public class PokeBattle_Move_051 : PokeBattle_Move
+	public partial class PokeBattle_Move_051 : PokeBattle_Move
 	{
 		public PokeBattle_Move_051() : base() { }
 		//public PokeBattle_Move_051(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2805,7 +2805,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User and target swap their Attack and Special Attack stat stages. (Power Swap)
 	/// <summary>
-	public class PokeBattle_Move_052 : PokeBattle_Move
+	public partial class PokeBattle_Move_052 : PokeBattle_Move
 	{
 		public PokeBattle_Move_052() : base() { }
 		//public PokeBattle_Move_052(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2834,7 +2834,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User and target swap their Defense and Special Defense stat stages. (Guard Swap)
 	/// <summary>
-	public class PokeBattle_Move_053 : PokeBattle_Move
+	public partial class PokeBattle_Move_053 : PokeBattle_Move
 	{
 		public PokeBattle_Move_053() : base() { }
 		//public PokeBattle_Move_053(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2863,7 +2863,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User and target swap all their stat stages. (Heart Swap)
 	/// <summary>
-	public class PokeBattle_Move_054 : PokeBattle_Move
+	public partial class PokeBattle_Move_054 : PokeBattle_Move
 	{
 		public PokeBattle_Move_054() : base() { }
 		//public PokeBattle_Move_054(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2889,7 +2889,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User copies the target's stat stages. (Psych Up)
 	/// <summary>
-	public class PokeBattle_Move_055 : PokeBattle_Move
+	public partial class PokeBattle_Move_055 : PokeBattle_Move
 	{
 		public PokeBattle_Move_055() : base() { }
 		//public PokeBattle_Move_055(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2915,7 +2915,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 5 rounds, user's and ally's stat stages cannot be lowered by foes. (Mist)
 	/// <summary>
-	public class PokeBattle_Move_056 : PokeBattle_Move
+	public partial class PokeBattle_Move_056 : PokeBattle_Move
 	{
 		public PokeBattle_Move_056() : base() { }
 		//public PokeBattle_Move_056(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2944,7 +2944,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Swaps the user's Attack and Defense stats. (Power Trick)
 	/// <summary>
-	public class PokeBattle_Move_057 : PokeBattle_Move
+	public partial class PokeBattle_Move_057 : PokeBattle_Move
 	{
 		public PokeBattle_Move_057() : base() { }
 		//public PokeBattle_Move_057(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2968,7 +2968,7 @@ namespace PokemonUnity.Combat
 	/// Averages the user's and target's Attack.
 	/// Averages the user's and target's Special Attack. (Power Split)
 	/// <summary>
-	public class PokeBattle_Move_058 : PokeBattle_Move
+	public partial class PokeBattle_Move_058 : PokeBattle_Move
 	{
 		public PokeBattle_Move_058() : base() { }
 		//public PokeBattle_Move_058(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -2996,7 +2996,7 @@ namespace PokemonUnity.Combat
 	/// Averages the user's and target's Defense.
 	/// Averages the user's and target's Special Defense. (Guard Split)
 	/// <summary>
-	public class PokeBattle_Move_059 : PokeBattle_Move
+	public partial class PokeBattle_Move_059 : PokeBattle_Move
 	{
 		public PokeBattle_Move_059() : base() { }
 		//public PokeBattle_Move_059(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3023,7 +3023,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Averages the user's and target's current HP. (Pain Split)
 	/// <summary>
-	public class PokeBattle_Move_05A : PokeBattle_Move
+	public partial class PokeBattle_Move_05A : PokeBattle_Move
 	{
 		public PokeBattle_Move_05A() : base() { }
 		//public PokeBattle_Move_05A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3053,7 +3053,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 4 rounds, doubles the Speed of all battlers on the user's side. (Tailwind)
 	/// <summary>
-	public class PokeBattle_Move_05B : PokeBattle_Move
+	public partial class PokeBattle_Move_05B : PokeBattle_Move
 	{
 		public PokeBattle_Move_05B() : base() { }
 		//public PokeBattle_Move_05B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3083,7 +3083,7 @@ namespace PokemonUnity.Combat
 	/// This move turns into the last move used by the target, until user switches
 	/// out. (Mimic)
 	/// <summary>
-	public class PokeBattle_Move_05C : PokeBattle_Move
+	public partial class PokeBattle_Move_05C : PokeBattle_Move
 	{
 		public PokeBattle_Move_05C() : base() { }
 		//public PokeBattle_Move_05C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3137,7 +3137,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// This move permanently turns into the last move used by the target. (Sketch)
 	/// <summary>
-	public class PokeBattle_Move_05D : PokeBattle_Move
+	public partial class PokeBattle_Move_05D : PokeBattle_Move
 	{
 		public PokeBattle_Move_05D() : base() { }
 		//public PokeBattle_Move_05D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3200,7 +3200,7 @@ namespace PokemonUnity.Combat
 	/// Changes user's type to that of a random user's move, except this one, OR the
 	/// user's first move's type. (Conversion)
 	/// <summary>
-	public class PokeBattle_Move_05E : PokeBattle_Move
+	public partial class PokeBattle_Move_05E : PokeBattle_Move
 	{
 		public PokeBattle_Move_05E() : base() { }
 		//public PokeBattle_Move_05E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3248,7 +3248,7 @@ namespace PokemonUnity.Combat
 	/// Changes user's type to a random one that resists/is immune to the last move
 	/// used by the target. (Conversion 2)
 	/// <summary>
-	public class PokeBattle_Move_05F : PokeBattle_Move
+	public partial class PokeBattle_Move_05F : PokeBattle_Move
 	{
 		public PokeBattle_Move_05F() : base() { }
 		//public PokeBattle_Move_05F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3309,7 +3309,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Changes user's type depending on the environment. (Camouflage)
 	/// <summary>
-	public class PokeBattle_Move_060 : PokeBattle_Move
+	public partial class PokeBattle_Move_060 : PokeBattle_Move
 	{
 		public PokeBattle_Move_060() : base() { }
 		//public PokeBattle_Move_060(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3373,7 +3373,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target becomes Water type. (Soak)
 	/// <summary>
-	public class PokeBattle_Move_061 : PokeBattle_Move
+	public partial class PokeBattle_Move_061 : PokeBattle_Move
 	{
 		public PokeBattle_Move_061() : base() { }
 		//public PokeBattle_Move_061(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3413,7 +3413,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User copes target's types. (Reflect Type)
 	/// <summary>
-	public class PokeBattle_Move_062 : PokeBattle_Move
+	public partial class PokeBattle_Move_062 : PokeBattle_Move
 	{
 		public PokeBattle_Move_062() : base() { }
 		//public PokeBattle_Move_062(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3448,7 +3448,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target's ability becomes Simple. (Simple Beam)
 	/// <summary>
-	public class PokeBattle_Move_063 : PokeBattle_Move
+	public partial class PokeBattle_Move_063 : PokeBattle_Move
 	{
 		public PokeBattle_Move_063() : base() { }
 		//public PokeBattle_Move_063(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3488,7 +3488,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target's ability becomes Insomnia. (Worry Seed)
 	/// <summary>
-	public class PokeBattle_Move_064 : PokeBattle_Move
+	public partial class PokeBattle_Move_064 : PokeBattle_Move
 	{
 		public PokeBattle_Move_064() : base() { }
 		//public PokeBattle_Move_064(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3529,7 +3529,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User copies target's ability. (Role Play)
 	/// <summary>
-	public class PokeBattle_Move_065 : PokeBattle_Move
+	public partial class PokeBattle_Move_065 : PokeBattle_Move
 	{
 		public PokeBattle_Move_065() : base() { }
 		//public PokeBattle_Move_065(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3579,7 +3579,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target copies user's ability. (Entrainment)
 	/// <summary>
-	public class PokeBattle_Move_066 : PokeBattle_Move
+	public partial class PokeBattle_Move_066 : PokeBattle_Move
 	{
 		public PokeBattle_Move_066() : base() { }
 		//public PokeBattle_Move_066(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3638,7 +3638,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User and target swap abilities. (Skill Swap)
 	/// <summary>
-	public class PokeBattle_Move_067 : PokeBattle_Move
+	public partial class PokeBattle_Move_067 : PokeBattle_Move
 	{
 		public PokeBattle_Move_067() : base() { }
 		//public PokeBattle_Move_067(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3676,7 +3676,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target's ability is negated. (Gastro Acid)
 	/// <summary>
-	public class PokeBattle_Move_068 : PokeBattle_Move
+	public partial class PokeBattle_Move_068 : PokeBattle_Move
 	{
 		public PokeBattle_Move_068() : base() { }
 		//public PokeBattle_Move_068(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3715,7 +3715,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User transforms into the target. (Transform)
 	/// <summary>
-	public class PokeBattle_Move_069 : PokeBattle_Move
+	public partial class PokeBattle_Move_069 : PokeBattle_Move
 	{
 		public PokeBattle_Move_069() : base() { }
 		//public PokeBattle_Move_069(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3789,7 +3789,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Inflicts a fixed 20HP damage. (SonicBoom)
 	/// <summary>
-	public class PokeBattle_Move_06A : PokeBattle_Move
+	public partial class PokeBattle_Move_06A : PokeBattle_Move
 	{
 		public PokeBattle_Move_06A() : base() { }
 		//public PokeBattle_Move_06A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3802,7 +3802,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Inflicts a fixed 40HP damage. (Dragon Rage)
 	/// <summary>
-	public class PokeBattle_Move_06B : PokeBattle_Move
+	public partial class PokeBattle_Move_06B : PokeBattle_Move
 	{
 		public PokeBattle_Move_06B() : base() { }
 		//public PokeBattle_Move_06B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3815,7 +3815,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Halves the target's current HP. (Super Fang)
 	/// <summary>
-	public class PokeBattle_Move_06C : PokeBattle_Move
+	public partial class PokeBattle_Move_06C : PokeBattle_Move
 	{
 		public PokeBattle_Move_06C() : base() { }
 		//public PokeBattle_Move_06C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3828,7 +3828,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Inflicts damage equal to the user's level. (Night Shade, Seismic Toss)
 	/// <summary>
-	public class PokeBattle_Move_06D : PokeBattle_Move
+	public partial class PokeBattle_Move_06D : PokeBattle_Move
 	{
 		public PokeBattle_Move_06D() : base() { }
 		//public PokeBattle_Move_06D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3841,7 +3841,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Inflicts damage to bring the target's HP down to equal the user's HP. (Endeavor)
 	/// <summary>
-	public class PokeBattle_Move_06E : PokeBattle_Move
+	public partial class PokeBattle_Move_06E : PokeBattle_Move
 	{
 		public PokeBattle_Move_06E() : base() { }
 		//public PokeBattle_Move_06E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3859,7 +3859,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Inflicts damage between 0.5 and 1.5 times the user's level. (Psywave)
 	/// <summary>
-	public class PokeBattle_Move_06F : PokeBattle_Move
+	public partial class PokeBattle_Move_06F : PokeBattle_Move
 	{
 		public PokeBattle_Move_06F() : base() { }
 		//public PokeBattle_Move_06F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3874,7 +3874,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// OHKO. Accuracy increases by difference between levels of user and target.
 	/// <summary>
-	public class PokeBattle_Move_070 : PokeBattle_Move
+	public partial class PokeBattle_Move_070 : PokeBattle_Move
 	{
 		public PokeBattle_Move_070() : base() { }
 		//public PokeBattle_Move_070(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3909,7 +3909,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Counters a physical move used against the user this round, with 2x the power. (Counter)
 	/// <summary>
-	public class PokeBattle_Move_071 : PokeBattle_Move
+	public partial class PokeBattle_Move_071 : PokeBattle_Move
 	{
 		public PokeBattle_Move_071() : base() { }
 		//public PokeBattle_Move_071(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3940,7 +3940,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Counters a specical move used against the user this round, with 2x the power. (Mirror Coat)
 	/// <summary>
-	public class PokeBattle_Move_072 : PokeBattle_Move
+	public partial class PokeBattle_Move_072 : PokeBattle_Move
 	{
 		public PokeBattle_Move_072() : base() { }
 		//public PokeBattle_Move_072(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -3972,7 +3972,7 @@ namespace PokemonUnity.Combat
 	/// Counters the last damaging move used against the user this round, with 1.5x
 	/// the power. (Metal Burst)
 	/// <summary>
-	public class PokeBattle_Move_073 : PokeBattle_Move
+	public partial class PokeBattle_Move_073 : PokeBattle_Move
 	{
 		public PokeBattle_Move_073() : base() { }
 		//public PokeBattle_Move_073(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4006,7 +4006,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// The target's ally loses 1/16 of its max HP. (Flame Burst)
 	/// <summary>
-	public class PokeBattle_Move_074 : PokeBattle_Move
+	public partial class PokeBattle_Move_074 : PokeBattle_Move
 	{
 		public PokeBattle_Move_074() : base() { }
 		//public PokeBattle_Move_074(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4030,7 +4030,7 @@ namespace PokemonUnity.Combat
 	/// Power is doubled if the target is using Dive. (Surf)
 	/// (Handled in Pokemon's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
-	public class PokeBattle_Move_075 : PokeBattle_Move
+	public partial class PokeBattle_Move_075 : PokeBattle_Move
 	{
 		public PokeBattle_Move_075() : base() { }
 		//public PokeBattle_Move_075(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4049,7 +4049,7 @@ namespace PokemonUnity.Combat
 	/// is in effect. (Earthquake)
 	/// (Handled in Pokemon's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
-	public class PokeBattle_Move_076 : PokeBattle_Move
+	public partial class PokeBattle_Move_076 : PokeBattle_Move
 	{
 		public PokeBattle_Move_076() : base() { }
 		//public PokeBattle_Move_076(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4072,7 +4072,7 @@ namespace PokemonUnity.Combat
 	/// Power is doubled if the target is using Bounce, Fly or Sky Drop. (Gust)
 	/// (Handled in Pokemon's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
-	public class PokeBattle_Move_077 : PokeBattle_Move
+	public partial class PokeBattle_Move_077 : PokeBattle_Move
 	{
 		public PokeBattle_Move_077() : base() { }
 		//public PokeBattle_Move_077(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4094,7 +4094,7 @@ namespace PokemonUnity.Combat
 	/// May make the target flinch.
 	/// (Handled in Pokemon's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
-	public class PokeBattle_Move_078 : PokeBattle_Move
+	public partial class PokeBattle_Move_078 : PokeBattle_Move
 	{
 		public PokeBattle_Move_078() : base() { }
 		//public PokeBattle_Move_078(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4120,7 +4120,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if Fusion Flare has already been used this round. (Fusion Bolt)
 	/// <summary>
-	public class PokeBattle_Move_079 : PokeBattle_Move
+	public partial class PokeBattle_Move_079 : PokeBattle_Move
 	{
 		public PokeBattle_Move_079() : base() { }
 		//public PokeBattle_Move_079(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4159,7 +4159,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if Fusion Bolt has already been used this round. (Fusion Flare)
 	/// <summary>
-	public class PokeBattle_Move_07A : PokeBattle_Move
+	public partial class PokeBattle_Move_07A : PokeBattle_Move
 	{
 		public PokeBattle_Move_07A() : base() { }
 		//public PokeBattle_Move_07A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4197,7 +4197,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if the target is poisoned. (Venoshock)
 	/// <summary>
-	public class PokeBattle_Move_07B : PokeBattle_Move
+	public partial class PokeBattle_Move_07B : PokeBattle_Move
 	{
 		public PokeBattle_Move_07B() : base() { }
 		//public PokeBattle_Move_07B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4216,7 +4216,7 @@ namespace PokemonUnity.Combat
 	/// Power is doubled if the target is paralyzed. Cures the target of paralysis.
 	/// (SmellingSalt)
 	/// <summary>
-	public class PokeBattle_Move_07C : PokeBattle_Move
+	public partial class PokeBattle_Move_07C : PokeBattle_Move
 	{
 		public PokeBattle_Move_07C() : base() { }
 		//public PokeBattle_Move_07C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4244,7 +4244,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if the target is asleep. Wakes the target up. (Wake-Up Slap)
 	/// <summary>
-	public class PokeBattle_Move_07D : PokeBattle_Move
+	public partial class PokeBattle_Move_07D : PokeBattle_Move
 	{
 		public PokeBattle_Move_07D() : base() { }
 		//public PokeBattle_Move_07D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4272,7 +4272,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if the user is burned, poisoned or paralyzed. (Facade)
 	/// <summary>
-	public class PokeBattle_Move_07E : PokeBattle_Move
+	public partial class PokeBattle_Move_07E : PokeBattle_Move
 	{
 		public PokeBattle_Move_07E() : base() { }
 		//public PokeBattle_Move_07E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4291,7 +4291,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if the target has a status problem. (Hex)
 	/// <summary>
-	public class PokeBattle_Move_07F : PokeBattle_Move
+	public partial class PokeBattle_Move_07F : PokeBattle_Move
 	{
 		public PokeBattle_Move_07F() : base() { }
 		//public PokeBattle_Move_07F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4309,7 +4309,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if the target's HP is down to 1/2 or less. (Brine)
 	/// <summary>
-	public class PokeBattle_Move_080 : PokeBattle_Move
+	public partial class PokeBattle_Move_080 : PokeBattle_Move
 	{
 		public PokeBattle_Move_080() : base() { }
 		//public PokeBattle_Move_080(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4327,7 +4327,7 @@ namespace PokemonUnity.Combat
 	/// Power is doubled if the user has lost HP due to the target's move this round.
 	/// (Revenge, Avalanche)
 	/// <summary>
-	public class PokeBattle_Move_081 : PokeBattle_Move
+	public partial class PokeBattle_Move_081 : PokeBattle_Move
 	{
 		public PokeBattle_Move_081() : base() { }
 		//public PokeBattle_Move_081(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4344,7 +4344,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if the target has already lost HP this round. (Assurance)
 	/// <summary>
-	public class PokeBattle_Move_082 : PokeBattle_Move
+	public partial class PokeBattle_Move_082 : PokeBattle_Move
 	{
 		public PokeBattle_Move_082() : base() { }
 		//public PokeBattle_Move_082(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4362,7 +4362,7 @@ namespace PokemonUnity.Combat
 	/// Power is doubled if a user's ally has already used this move this round. (Round)
 	/// If an ally is about to use the same move, make it go next, ignoring priority.
 	/// <summary>
-	public class PokeBattle_Move_083 : PokeBattle_Move
+	public partial class PokeBattle_Move_083 : PokeBattle_Move
 	{
 		public PokeBattle_Move_083() : base() { }
 		//public PokeBattle_Move_083(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4405,7 +4405,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if the target has already moved this round. (Payback)
 	/// <summary>
-	public class PokeBattle_Move_084 : PokeBattle_Move
+	public partial class PokeBattle_Move_084 : PokeBattle_Move
 	{
 		public PokeBattle_Move_084() : base() { }
 		//public PokeBattle_Move_084(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4423,7 +4423,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if a user's teammate fainted last round. (Retaliate)
 	/// <summary>
-	public class PokeBattle_Move_085 : PokeBattle_Move
+	public partial class PokeBattle_Move_085 : PokeBattle_Move
 	{
 		public PokeBattle_Move_085() : base() { }
 		//public PokeBattle_Move_085(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4441,7 +4441,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled if the user has no held item. (Acrobatics)
 	/// <summary>
-	public class PokeBattle_Move_086 : PokeBattle_Move
+	public partial class PokeBattle_Move_086 : PokeBattle_Move
 	{
 		public PokeBattle_Move_086() : base() { }
 		//public PokeBattle_Move_086(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4458,7 +4458,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power is doubled in weather. Type changes depending on the weather. (Weather Ball)
 	/// <summary>
-	public class PokeBattle_Move_087 : PokeBattle_Move
+	public partial class PokeBattle_Move_087 : PokeBattle_Move
 	{
 		public PokeBattle_Move_087() : base() { }
 		//public PokeBattle_Move_087(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4501,7 +4501,7 @@ namespace PokemonUnity.Combat
 	/// Parting Shot. (Pursuit)
 	/// (Handled in Battle's pbAttackPhase): Makes this attack happen before switching.
 	/// <summary>
-	public class PokeBattle_Move_088 : PokeBattle_Move
+	public partial class PokeBattle_Move_088 : PokeBattle_Move
 	{
 		public PokeBattle_Move_088() : base() { }
 		//public PokeBattle_Move_088(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4524,7 +4524,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power increases with the user's happiness. (Return)
 	/// <summary>
-	public class PokeBattle_Move_089 : PokeBattle_Move
+	public partial class PokeBattle_Move_089 : PokeBattle_Move
 	{
 		public PokeBattle_Move_089() : base() { }
 		//public PokeBattle_Move_089(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4537,7 +4537,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power decreases with the user's happiness. (Frustration)
 	/// <summary>
-	public class PokeBattle_Move_08A : PokeBattle_Move
+	public partial class PokeBattle_Move_08A : PokeBattle_Move
 	{
 		public PokeBattle_Move_08A() : base() { }
 		//public PokeBattle_Move_08A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4550,7 +4550,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power increases with the user's HP. (Eruption, Water Spout)
 	/// <summary>
-	public class PokeBattle_Move_08B : PokeBattle_Move
+	public partial class PokeBattle_Move_08B : PokeBattle_Move
 	{
 		public PokeBattle_Move_08B() : base() { }
 		//public PokeBattle_Move_08B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4563,7 +4563,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power increases with the target's HP. (Crush Grip, Wring Out)
 	/// <summary>
-	public class PokeBattle_Move_08C : PokeBattle_Move
+	public partial class PokeBattle_Move_08C : PokeBattle_Move
 	{
 		public PokeBattle_Move_08C() : base() { }
 		//public PokeBattle_Move_08C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4576,7 +4576,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power increases the quicker the target is than the user. (Gyro Ball)
 	/// <summary>
-	public class PokeBattle_Move_08D : PokeBattle_Move
+	public partial class PokeBattle_Move_08D : PokeBattle_Move
 	{
 		public PokeBattle_Move_08D() : base() { }
 		//public PokeBattle_Move_08D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4590,7 +4590,7 @@ namespace PokemonUnity.Combat
 	/// Power increases with the user's positive stat changes (ignores negative ones).
 	/// (Stored Power)
 	/// <summary>
-	public class PokeBattle_Move_08E : PokeBattle_Move
+	public partial class PokeBattle_Move_08E : PokeBattle_Move
 	{
 		public PokeBattle_Move_08E() : base() { }
 		//public PokeBattle_Move_08E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4611,7 +4611,7 @@ namespace PokemonUnity.Combat
 	/// Power increases with the target's positive stat changes (ignores negative ones).
 	/// (Punishment)
 	/// <summary>
-	public class PokeBattle_Move_08F : PokeBattle_Move
+	public partial class PokeBattle_Move_08F : PokeBattle_Move
 	{
 		public PokeBattle_Move_08F() : base() { }
 		//public PokeBattle_Move_08F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4630,7 +4630,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power and type depends on the user's IVs. (Hidden Power)
 	/// <summary>
-	public class PokeBattle_Move_090 : PokeBattle_Move
+	public partial class PokeBattle_Move_090 : PokeBattle_Move
 	{
 		public PokeBattle_Move_090() : base() { }
 		//public PokeBattle_Move_090(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4683,7 +4683,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power doubles for each consecutive use. (Fury Cutter)
 	/// <summary>
-	public class PokeBattle_Move_091 : PokeBattle_Move
+	public partial class PokeBattle_Move_091 : PokeBattle_Move
 	{
 		public PokeBattle_Move_091() : base() { }
 		//public PokeBattle_Move_091(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4699,7 +4699,7 @@ namespace PokemonUnity.Combat
 	/// Power is multiplied by the number of consecutive rounds in which this move was
 	/// used by any Pokémon on the user's side. (Echoed Voice)
 	/// <summary>
-	public class PokeBattle_Move_092 : PokeBattle_Move
+	public partial class PokeBattle_Move_092 : PokeBattle_Move
 	{
 		public PokeBattle_Move_092() : base() { }
 		//public PokeBattle_Move_092(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4716,7 +4716,7 @@ namespace PokemonUnity.Combat
 	/// (Handled in Pokemon's pbProcessMoveAgainstTarget): Ups rager's Attack by 1
 	/// stage each time it loses HP due to a move.
 	/// <summary>
-	public class PokeBattle_Move_093 : PokeBattle_Move
+	public partial class PokeBattle_Move_093 : PokeBattle_Move
 	{
 		public PokeBattle_Move_093() : base() { }
 		//public PokeBattle_Move_093(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4733,7 +4733,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Randomly damages or heals the target. (Present)
 	/// <summary>
-	public class PokeBattle_Move_094 : PokeBattle_Move
+	public partial class PokeBattle_Move_094 : PokeBattle_Move
 	{
 		public bool forcedamage { get; set; }
 		public PokeBattle_Move_094() : base() { }
@@ -4787,7 +4787,7 @@ namespace PokemonUnity.Combat
 	/// Power is chosen at random. Power is doubled if the target is using Dig. (Magnitude)
 	/// (Handled in Pokemon's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
-	public class PokeBattle_Move_095 : PokeBattle_Move
+	public partial class PokeBattle_Move_095 : PokeBattle_Move
 	{
 		public PokeBattle_Move_095() : base() { }
 		//public PokeBattle_Move_095(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4830,7 +4830,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power and type depend on the user's held berry. Destroys the berry. (Natural Gift)
 	/// <summary>
-	public class PokeBattle_Move_096 : PokeBattle_Move
+	public partial class PokeBattle_Move_096 : PokeBattle_Move
 	{
 		public Items berry { get; set; }
 		public PokeBattle_Move_096() : base() { }
@@ -4961,7 +4961,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power increases the less PP this move has. (Trump Card)
 	/// <summary>
-	public class PokeBattle_Move_097 : PokeBattle_Move
+	public partial class PokeBattle_Move_097 : PokeBattle_Move
 	{
 		public PokeBattle_Move_097() : base() { }
 		//public PokeBattle_Move_097(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4978,7 +4978,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power increases the less HP the user has. (Flail, Reversal)
 	/// <summary>
-	public class PokeBattle_Move_098 : PokeBattle_Move
+	public partial class PokeBattle_Move_098 : PokeBattle_Move
 	{
 		public PokeBattle_Move_098() : base() { }
 		//public PokeBattle_Move_098(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -4999,7 +4999,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power increases the quicker the user is than the target. (Electro Ball)
 	/// <summary>
-	public class PokeBattle_Move_099 : PokeBattle_Move
+	public partial class PokeBattle_Move_099 : PokeBattle_Move
 	{
 		public PokeBattle_Move_099() : base() { }
 		//public PokeBattle_Move_099(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5018,7 +5018,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power increases the heavier the target is. (Grass Knot, Low Kick)
 	/// <summary>
-	public class PokeBattle_Move_09A : PokeBattle_Move
+	public partial class PokeBattle_Move_09A : PokeBattle_Move
 	{
 		public PokeBattle_Move_09A() : base() { }
 		//public PokeBattle_Move_09A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5039,7 +5039,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Power increases the heavier the user is than the target. (Heat Crash, Heavy Slam)
 	/// <summary>
-	public class PokeBattle_Move_09B : PokeBattle_Move
+	public partial class PokeBattle_Move_09B : PokeBattle_Move
 	{
 		public PokeBattle_Move_09B() : base() { }
 		//public PokeBattle_Move_09B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5059,7 +5059,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Powers up the ally's attack this round by 1.5. (Helping Hand)
 	/// <summary>
-	public class PokeBattle_Move_09C : PokeBattle_Move
+	public partial class PokeBattle_Move_09C : PokeBattle_Move
 	{
 		public PokeBattle_Move_09C() : base() { }
 		//public PokeBattle_Move_09C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5084,7 +5084,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Weakens Electric attacks. (Mud Sport)
 	/// <summary>
-	public class PokeBattle_Move_09D : PokeBattle_Move
+	public partial class PokeBattle_Move_09D : PokeBattle_Move
 	{
 		public PokeBattle_Move_09D() : base() { }
 		//public PokeBattle_Move_09D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5127,7 +5127,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Weakens Fire attacks. (Water Sport)
 	/// <summary>
-	public class PokeBattle_Move_09E : PokeBattle_Move
+	public partial class PokeBattle_Move_09E : PokeBattle_Move
 	{
 		public PokeBattle_Move_09E() : base() { }
 		//public PokeBattle_Move_09E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5169,7 +5169,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Type depends on the user's held item. (Judgment, Techno Blast)
 	/// <summary>
-	public class PokeBattle_Move_09F : PokeBattle_Move
+	public partial class PokeBattle_Move_09F : PokeBattle_Move
 	{
 		public PokeBattle_Move_09F() : base() { }
 		//public PokeBattle_Move_09F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5223,7 +5223,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// This attack is always a critical hit. (Frost Breath, Storm Throw)
 	/// <summary>
-	public class PokeBattle_Move_0A0 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A0 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A0() : base() { }
 		//public PokeBattle_Move_0A0(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5236,7 +5236,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 5 rounds, foes' attacks cannot become critical hits. (Lucky Chant)
 	/// <summary>
-	public class PokeBattle_Move_0A1 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A1 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A1() : base() { }
 		//public PokeBattle_Move_0A1(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5265,7 +5265,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 5 rounds, lowers power of physical attacks against the user's side. (Reflect)
 	/// <summary>
-	public class PokeBattle_Move_0A2 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A2 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A2() : base() { }
 		//public PokeBattle_Move_0A2(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5295,7 +5295,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 5 rounds, lowers power of special attacks against the user's side. (Light Screen)
 	/// <summary>
-	public class PokeBattle_Move_0A3 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A3 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A3() : base() { }
 		//public PokeBattle_Move_0A3(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5325,7 +5325,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Effect depends on the environment. (Secret Power)
 	/// <summary>
-	public class PokeBattle_Move_0A4 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A4 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A4() : base() { }
 		//public PokeBattle_Move_0A4(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5479,7 +5479,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Always hits.
 	/// <summary>
-	public class PokeBattle_Move_0A5 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A5 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A5() : base() { }
 		//public PokeBattle_Move_0A5(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5492,7 +5492,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User's attack next round against the target will definitely hit. (Lock-On, Mind Reader)
 	/// <summary>
-	public class PokeBattle_Move_0A6 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A6 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A6() : base() { }
 		//public PokeBattle_Move_0A6(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5516,7 +5516,7 @@ namespace PokemonUnity.Combat
 	/// Target's evasion stat changes are ignored from now on. (Foresight, Odor Sleuth)
 	/// Normal and Fighting moves have normal effectiveness against the Ghost-type target.
 	/// <summary>
-	public class PokeBattle_Move_0A7 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A7 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A7() : base() { }
 		//public PokeBattle_Move_0A7(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5539,7 +5539,7 @@ namespace PokemonUnity.Combat
 	/// Target's evasion stat changes are ignored from now on. (Miracle Eye)
 	/// Psychic moves have normal effectiveness against the Dark-type target.
 	/// <summary>
-	public class PokeBattle_Move_0A8 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A8 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A8() : base() { }
 		//public PokeBattle_Move_0A8(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5562,7 +5562,7 @@ namespace PokemonUnity.Combat
 	/// This move ignores target's Defense, Special Defense and evasion stat changes.
 	/// (Chip Away, Sacred Sword)
 	/// <summary>
-	public class PokeBattle_Move_0A9 : PokeBattle_Move
+	public partial class PokeBattle_Move_0A9 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0A9() : base() { }
 		//public PokeBattle_Move_0A9(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5572,7 +5572,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User is protected against moves with the "B" flag this round. (Detect, Protect)
 	/// <summary>
-	public class PokeBattle_Move_0AA : PokeBattle_Move
+	public partial class PokeBattle_Move_0AA : PokeBattle_Move
 	{
 		public PokeBattle_Move_0AA() : base() { }
 		//public PokeBattle_Move_0AA(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5621,7 +5621,7 @@ namespace PokemonUnity.Combat
 	/// User's side is protected against moves with priority greater than 0 this round.
 	/// (Quick Guard)
 	/// <summary>
-	public class PokeBattle_Move_0AB : PokeBattle_Move
+	public partial class PokeBattle_Move_0AB : PokeBattle_Move
 	{
 		public PokeBattle_Move_0AB() : base() { }
 		//public PokeBattle_Move_0AB(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5682,7 +5682,7 @@ namespace PokemonUnity.Combat
 	/// User's side is protected against moves that target multiple battlers this round.
 	/// (Wide Guard)
 	/// <summary>
-	public class PokeBattle_Move_0AC : PokeBattle_Move
+	public partial class PokeBattle_Move_0AC : PokeBattle_Move
 	{
 		public PokeBattle_Move_0AC() : base() { }
 		//public PokeBattle_Move_0AC(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5743,7 +5743,7 @@ namespace PokemonUnity.Combat
 	/// Ignores target's protections. If successful, all other moves this round
 	/// ignore them too. (Feint)
 	/// <summary>
-	public class PokeBattle_Move_0AD : PokeBattle_Move
+	public partial class PokeBattle_Move_0AD : PokeBattle_Move
 	{
 		public PokeBattle_Move_0AD() : base() { }
 		//public PokeBattle_Move_0AD(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5762,7 +5762,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses the last move that the target used. (Mirror Move)
 	/// <summary>
-	public class PokeBattle_Move_0AE : PokeBattle_Move
+	public partial class PokeBattle_Move_0AE : PokeBattle_Move
 	{
 		public PokeBattle_Move_0AE() : base() { }
 		//public PokeBattle_Move_0AE(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5783,7 +5783,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses the last move that was used. (Copycat)
 	/// <summary>
-	public class PokeBattle_Move_0AF : PokeBattle_Move
+	public partial class PokeBattle_Move_0AF : PokeBattle_Move
 	{
 		public PokeBattle_Move_0AF() : base() { }
 		//public PokeBattle_Move_0AF(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5846,7 +5846,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses the move the target was about to use this round, with 1.5x power. (Me First)
 	/// <summary>
-	public class PokeBattle_Move_0B0 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B0 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B0() : base() { }
 		//public PokeBattle_Move_0B0(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5885,7 +5885,7 @@ namespace PokemonUnity.Combat
 	/// This round, reflects all moves with the "C" flag targeting the user back at
 	/// their origin. (Magic Coat)
 	/// <summary>
-	public class PokeBattle_Move_0B1 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B1 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B1() : base() { }
 		//public PokeBattle_Move_0B1(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5902,7 +5902,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// This round, snatches all used moves with the "D" flag. (Snatch)
 	/// <summary>
-	public class PokeBattle_Move_0B2 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B2 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B2() : base() { }
 		//public PokeBattle_Move_0B2(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5919,7 +5919,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses a different move depending on the environment. (Nature Power)
 	/// <summary>
-	public class PokeBattle_Move_0B3 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B3 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B3() : base() { }
 		//public PokeBattle_Move_0B3(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -5984,7 +5984,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses a random move the user knows. Fails if user is not asleep. (Sleep Talk)
 	/// <summary>
-	public class PokeBattle_Move_0B4 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B4 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B4() : base() { }
 		//public PokeBattle_Move_0B4(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6057,7 +6057,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses a random move known by any non-user Pokémon in the user's party. (Assist)
 	/// <summary>
-	public class PokeBattle_Move_0B5 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B5 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B5() : base() { }
 		//public PokeBattle_Move_0B5(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6152,7 +6152,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses a random move that exists. (Metronome)
 	/// <summary>
-	public class PokeBattle_Move_0B6 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B6 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B6() : base() { }
 		//public PokeBattle_Move_0B6(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6237,7 +6237,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// The target can no longer use the same move twice in a row. (Torment)
 	/// <summary>
-	public class PokeBattle_Move_0B7 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B7 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B7() : base() { }
 		//public PokeBattle_Move_0B7(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6276,7 +6276,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Disables all target's moves that the user also knows. (Imprison)
 	/// <summary>
-	public class PokeBattle_Move_0B8 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B8 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B8() : base() { }
 		//public PokeBattle_Move_0B8(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6298,7 +6298,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 5 rounds, disables the last move the target used. (Disable)
 	/// <summary>
-	public class PokeBattle_Move_0B9 : PokeBattle_Move
+	public partial class PokeBattle_Move_0B9 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0B9() : base() { }
 		//public PokeBattle_Move_0B9(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6346,7 +6346,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 4 rounds, disables the target's non-damaging moves. (Taunt)
 	/// <summary>
-	public class PokeBattle_Move_0BA : PokeBattle_Move
+	public partial class PokeBattle_Move_0BA : PokeBattle_Move
 	{
 		public PokeBattle_Move_0BA() : base() { }
 		//public PokeBattle_Move_0BA(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6387,7 +6387,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 5 rounds, disables the target's healing moves. (Heal Block)
 	/// <summary>
-	public class PokeBattle_Move_0BB : PokeBattle_Move
+	public partial class PokeBattle_Move_0BB : PokeBattle_Move
 	{
 		public PokeBattle_Move_0BB() : base() { }
 		//public PokeBattle_Move_0BB(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6426,7 +6426,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 4 rounds, the target must use the same move each round. (Encore)
 	/// <summary>
-	public class PokeBattle_Move_0BC : PokeBattle_Move
+	public partial class PokeBattle_Move_0BC : PokeBattle_Move
 	{
 		public PokeBattle_Move_0BC() : base() { }
 		//public PokeBattle_Move_0BC(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6491,7 +6491,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Hits twice.
 	/// <summary>
-	public class PokeBattle_Move_0BD : PokeBattle_Move
+	public partial class PokeBattle_Move_0BD : PokeBattle_Move
 	{
 		public PokeBattle_Move_0BD() : base() { }
 		//public PokeBattle_Move_0BD(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6509,7 +6509,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Hits twice. May poison the target on each hit. (Twineedle)
 	/// <summary>
-	public class PokeBattle_Move_0BE : PokeBattle_Move
+	public partial class PokeBattle_Move_0BE : PokeBattle_Move
 	{
 		public PokeBattle_Move_0BE() : base() { }
 		//public PokeBattle_Move_0BE(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6537,7 +6537,7 @@ namespace PokemonUnity.Combat
 	/// Hits 3 times. Power is multiplied by the hit number. (Triple Kick)
 	/// An accuracy check is performed for each hit.
 	/// <summary>
-	public class PokeBattle_Move_0BF : PokeBattle_Move
+	public partial class PokeBattle_Move_0BF : PokeBattle_Move
 	{
 		public bool checks { get; set; }
 		public PokeBattle_Move_0BF() : base() { }
@@ -6575,7 +6575,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Hits 2-5 times.
 	/// <summary>
-	public class PokeBattle_Move_0C0 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C0 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0C0() : base() { }
 		//public PokeBattle_Move_0C0(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6600,7 +6600,7 @@ namespace PokemonUnity.Combat
 	/// Base power of each hit depends on the base Attack stat for the species of that
 	/// hit's participant. (Beat Up)
 	/// <summary>
-	public class PokeBattle_Move_0C1 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C1 : PokeBattle_Move
 	{
 		public List<byte> participants { get; set; }
 		public PokeBattle_Move_0C1() : base() { }
@@ -6655,7 +6655,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Two turn attack. Attacks first turn, skips second turn (if successful).
 	/// <summary>
-	public class PokeBattle_Move_0C2 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C2 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0C2() : base() { }
 		//public PokeBattle_Move_0C2(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6674,7 +6674,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Razor Wind)
 	/// <summary>
-	public class PokeBattle_Move_0C3 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C3 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0C3() : base() { }
 		//public PokeBattle_Move_0C3(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6712,7 +6712,7 @@ namespace PokemonUnity.Combat
 	/// Two turn attack. Skips first turn, attacks second turn. (SolarBeam)
 	/// Power halved in all weather except sunshine. In sunshine, takes 1 turn instead.
 	/// <summary>
-	public class PokeBattle_Move_0C4 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C4 : PokeBattle_Move
 	{
 		public bool sunny { get; set; }
 		public PokeBattle_Move_0C4() : base() { }
@@ -6770,7 +6770,7 @@ namespace PokemonUnity.Combat
 	/// Two turn attack. Skips first turn, attacks second turn. (Freeze Shock)
 	/// May paralyze the target.
 	/// <summary>
-	public class PokeBattle_Move_0C5 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C5 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0C5() : base() { }
 		//public PokeBattle_Move_0C5(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6817,7 +6817,7 @@ namespace PokemonUnity.Combat
 	/// Two turn attack. Skips first turn, attacks second turn. (Ice Burn)
 	/// May burn the target.
 	/// <summary>
-	public class PokeBattle_Move_0C6 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C6 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0C6() : base() { }
 		//public PokeBattle_Move_0C6(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6864,7 +6864,7 @@ namespace PokemonUnity.Combat
 	/// Two turn attack. Skips first turn, attacks second turn. (Sky Attack)
 	/// May make the target flinch.
 	/// <summary>
-	public class PokeBattle_Move_0C7 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C7 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0C7() : base() { }
 		//public PokeBattle_Move_0C7(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6908,7 +6908,7 @@ namespace PokemonUnity.Combat
 	/// Two turn attack. Ups user's Defense by 1 stage first turn, attacks second turn.
 	/// (Skull Bash)
 	/// <summary>
-	public class PokeBattle_Move_0C8 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C8 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0C8() : base() { }
 		//public PokeBattle_Move_0C8(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6950,7 +6950,7 @@ namespace PokemonUnity.Combat
 	/// Two turn attack. Skips first turn, attacks second turn. (Fly)
 	/// (Handled in Pokemon's pbSuccessCheck): Is semi-invulnerable during use.
 	/// <summary>
-	public class PokeBattle_Move_0C9 : PokeBattle_Move
+	public partial class PokeBattle_Move_0C9 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0C9() : base() { }
 		//public PokeBattle_Move_0C9(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -6993,7 +6993,7 @@ namespace PokemonUnity.Combat
 	/// Two turn attack. Skips first turn, attacks second turn. (Dig)
 	/// (Handled in Pokemon's pbSuccessCheck): Is semi-invulnerable during use.
 	/// <summary>
-	public class PokeBattle_Move_0CA : PokeBattle_Move
+	public partial class PokeBattle_Move_0CA : PokeBattle_Move
 	{
 		public PokeBattle_Move_0CA() : base() { }
 		//public PokeBattle_Move_0CA(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7031,7 +7031,7 @@ namespace PokemonUnity.Combat
 	/// Two turn attack. Skips first turn, attacks second turn. (Dive)
 	/// (Handled in Pokemon's pbSuccessCheck): Is semi-invulnerable during use.
 	/// <summary>
-	public class PokeBattle_Move_0CB : PokeBattle_Move
+	public partial class PokeBattle_Move_0CB : PokeBattle_Move
 	{
 		public PokeBattle_Move_0CB() : base() { }
 		//public PokeBattle_Move_0CB(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7070,7 +7070,7 @@ namespace PokemonUnity.Combat
 	/// May paralyze the target.
 	/// (Handled in Pokemon's pbSuccessCheck): Is semi-invulnerable during use.
 	/// <summary>
-	public class PokeBattle_Move_0CC : PokeBattle_Move
+	public partial class PokeBattle_Move_0CC : PokeBattle_Move
 	{
 		public PokeBattle_Move_0CC() : base() { }
 		//public PokeBattle_Move_0CC(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7124,7 +7124,7 @@ namespace PokemonUnity.Combat
 	/// Ignores target's Detect, King's Shield, Mat Block, Protect and Spiky Shield
 	/// this round. If successful, negates them this round.
 	/// <summary>
-	public class PokeBattle_Move_0CD : PokeBattle_Move
+	public partial class PokeBattle_Move_0CD : PokeBattle_Move
 	{
 		public PokeBattle_Move_0CD() : base() { }
 		//public PokeBattle_Move_0CD(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7170,7 +7170,7 @@ namespace PokemonUnity.Combat
 	/// Target is also semi-invulnerable during use, and can't take any action.
 	/// Doesn't damage airborne Pokémon (but still makes them unable to move during).
 	/// <summary>
-	public class PokeBattle_Move_0CE : PokeBattle_Move
+	public partial class PokeBattle_Move_0CE : PokeBattle_Move
 	{
 		public PokeBattle_Move_0CE() : base() { }
 		//public PokeBattle_Move_0CE(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7225,7 +7225,7 @@ namespace PokemonUnity.Combat
 	/// Trapping move. Traps for 5 or 6 rounds. Trapped Pokémon lose 1/16 of max HP
 	/// at end of each round.
 	/// <summary>
-	public class PokeBattle_Move_0CF : PokeBattle_Move
+	public partial class PokeBattle_Move_0CF : PokeBattle_Move
 	{
 		public PokeBattle_Move_0CF() : base() { }
 		//public PokeBattle_Move_0CF(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7290,7 +7290,7 @@ namespace PokemonUnity.Combat
 	/// Power is doubled if target is using Dive.
 	/// (Handled in Pokemon's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
-	public class PokeBattle_Move_0D0 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D0 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D0() : base() { }
 		//public PokeBattle_Move_0D0(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7330,7 +7330,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User must use this move for 2 more rounds. No battlers can sleep. (Uproar)
 	/// <summary>
-	public class PokeBattle_Move_0D1 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D1 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D1() : base() { }
 		//public PokeBattle_Move_0D1(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7355,7 +7355,7 @@ namespace PokemonUnity.Combat
 	/// User must use this move for 1 or 2 more rounds. At end, user becomes confused.
 	/// (Outrage, Petal Dange, Thrash)
 	/// <summary>
-	public class PokeBattle_Move_0D2 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D2 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D2() : base() { }
 		//public PokeBattle_Move_0D2(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7394,7 +7394,7 @@ namespace PokemonUnity.Combat
 	/// User must use this move for 4 more rounds. Power doubles each round.
 	/// Power is also doubled if user has curled up. (Ice Ball, Rollout)
 	/// <summary>
-	public class PokeBattle_Move_0D3 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D3 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D3() : base() { }
 		//public PokeBattle_Move_0D3(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7428,7 +7428,7 @@ namespace PokemonUnity.Combat
 	/// User bides its time this round and next round. The round after, deals 2x the
 	/// total damage it took while biding to the last battler that damaged it. (Bide)
 	/// <summary>
-	public class PokeBattle_Move_0D4 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D4 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D4() : base() { }
 		//public PokeBattle_Move_0D4(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7500,7 +7500,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Heals user by 1/2 of its max HP.
 	/// <summary>
-	public class PokeBattle_Move_0D5 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D5 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D5() : base() { }
 		//public PokeBattle_Move_0D5(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7528,7 +7528,7 @@ namespace PokemonUnity.Combat
 	/// Heals user by 1/2 of its max HP. (Roost)
 	/// User roosts, and its Flying type is ignored for attacks used against it.
 	/// <summary>
-	public class PokeBattle_Move_0D6 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D6 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D6() : base() { }
 		//public PokeBattle_Move_0D6(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7557,7 +7557,7 @@ namespace PokemonUnity.Combat
 	/// Pokemon in user's position is healed by 1/2 of its max HP, at the end of the
 	/// next round. (Wish)
 	/// <summary>
-	public class PokeBattle_Move_0D7 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D7 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D7() : base() { }
 		//public PokeBattle_Move_0D7(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7586,7 +7586,7 @@ namespace PokemonUnity.Combat
 	/// Heals user by an amount depending on the weather. (Moonlight, Morning Sun,
 	/// Synthesis)
 	/// <summary>
-	public class PokeBattle_Move_0D8 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D8 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D8() : base() { }
 		//public PokeBattle_Move_0D8(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7627,7 +7627,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Heals user to full HP. User falls asleep for 2 more rounds. (Rest)
 	/// <summary>
-	public class PokeBattle_Move_0D9 : PokeBattle_Move
+	public partial class PokeBattle_Move_0D9 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0D9() : base() { }
 		//public PokeBattle_Move_0D9(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7666,7 +7666,7 @@ namespace PokemonUnity.Combat
 	/// Rings the user. Ringed Pokémon gain 1/16 of max HP at the end of each round.
 	/// (Aqua Ring)
 	/// <summary>
-	public class PokeBattle_Move_0DA : PokeBattle_Move
+	public partial class PokeBattle_Move_0DA : PokeBattle_Move
 	{
 		public PokeBattle_Move_0DA() : base() { }
 		//public PokeBattle_Move_0DA(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7694,7 +7694,7 @@ namespace PokemonUnity.Combat
 	/// Ingrains the user. Ingrained Pokémon gain 1/16 of max HP at the end of each
 	/// round, and cannot flee or switch out. (Ingrain)
 	/// <summary>
-	public class PokeBattle_Move_0DB : PokeBattle_Move
+	public partial class PokeBattle_Move_0DB : PokeBattle_Move
 	{
 		public PokeBattle_Move_0DB() : base() { }
 		//public PokeBattle_Move_0DB(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7722,7 +7722,7 @@ namespace PokemonUnity.Combat
 	/// Seeds the target. Seeded Pokémon lose 1/8 of max HP at the end of each round,
 	/// and the Pokémon in the user's position gains the same amount. (Leech Seed)
 	/// <summary>
-	public class PokeBattle_Move_0DC : PokeBattle_Move
+	public partial class PokeBattle_Move_0DC : PokeBattle_Move
 	{
 		public PokeBattle_Move_0DC() : base() { }
 		//public PokeBattle_Move_0DC(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7755,7 +7755,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User gains half the HP it inflicts as damage.
 	/// <summary>
-	public class PokeBattle_Move_0DD : PokeBattle_Move
+	public partial class PokeBattle_Move_0DD : PokeBattle_Move
 	{
 		public PokeBattle_Move_0DD() : base() { }
 		//public PokeBattle_Move_0DD(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7792,7 +7792,7 @@ namespace PokemonUnity.Combat
 	/// User gains half the HP it inflicts as damage. (Dream Eater)
 	/// (Handled in Pokemon's pbSuccessCheck): Fails if target is not asleep.
 	/// <summary>
-	public class PokeBattle_Move_0DE : PokeBattle_Move
+	public partial class PokeBattle_Move_0DE : PokeBattle_Move
 	{
 		public PokeBattle_Move_0DE() : base() { }
 		//public PokeBattle_Move_0DE(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7828,7 +7828,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Heals target by 1/2 of its max HP. (Heal Pulse)
 	/// <summary>
-	public class PokeBattle_Move_0DF : PokeBattle_Move
+	public partial class PokeBattle_Move_0DF : PokeBattle_Move
 	{
 		public PokeBattle_Move_0DF() : base() { }
 		//public PokeBattle_Move_0DF(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7862,11 +7862,11 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User faints. (Explosion, Selfdestruct)
 	/// <summary>
-	public class PokeBattle_Move_0E0 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E0 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E0() : base() { }
 		//public PokeBattle_Move_0E0(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override bool pbOnStartUse(Pokemon attacker)
+		private bool _pbOnStartUse(Pokemon attacker)
 		{
 			if (!attacker.hasMoldBreaker())
 			{
@@ -7898,7 +7898,7 @@ namespace PokemonUnity.Combat
 	/// Inflicts fixed damage equal to user's current HP. (Final Gambit)
 	/// User faints (if successful).
 	/// <summary>
-	public class PokeBattle_Move_0E1 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E1 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E1() : base() { }
 		//public PokeBattle_Move_0E1(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7931,7 +7931,7 @@ namespace PokemonUnity.Combat
 	/// Decreases the target's Attack and Special Attack by 2 stages each. (Memento)
 	/// User faints (even if effect does nothing).
 	/// <summary>
-	public class PokeBattle_Move_0E2 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E2 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E2() : base() { }
 		//public PokeBattle_Move_0E2(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7962,7 +7962,7 @@ namespace PokemonUnity.Combat
 	/// User faints. The Pokémon that replaces the user is fully healed (HP and
 	/// status). Fails if user won't be replaced. (Healing Wish)
 	/// <summary>
-	public class PokeBattle_Move_0E3 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E3 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E3() : base() { }
 		//public PokeBattle_Move_0E3(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -7990,7 +7990,7 @@ namespace PokemonUnity.Combat
 	/// User faints. The Pokémon that replaces the user is fully healed (HP, PP and
 	/// status). Fails if user won't be replaced. (Lunar Dance)
 	/// <summary>
-	public class PokeBattle_Move_0E4 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E4 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E4() : base() { }
 		//public PokeBattle_Move_0E4(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8017,7 +8017,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// All current battlers will perish after 3 more rounds. (Perish Song)
 	/// <summary>
-	public class PokeBattle_Move_0E5 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E5 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E5() : base() { }
 		//public PokeBattle_Move_0E5(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8066,7 +8066,7 @@ namespace PokemonUnity.Combat
 	/// If user is KO'd before it next moves, the attack that caused it loses all PP.
 	/// (Grudge)
 	/// <summary>
-	public class PokeBattle_Move_0E6 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E6 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E6() : base() { }
 		//public PokeBattle_Move_0E6(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8084,7 +8084,7 @@ namespace PokemonUnity.Combat
 	/// If user is KO'd before it next moves, the battler that caused it also faints.
 	/// (Destiny Bond)
 	/// <summary>
-	public class PokeBattle_Move_0E7 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E7 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E7() : base() { }
 		//public PokeBattle_Move_0E7(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8101,7 +8101,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// If user would be KO'd this round, it survives with 1HP instead. (Endure)
 	/// <summary>
-	public class PokeBattle_Move_0E8 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E8 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E8() : base() { }
 		//public PokeBattle_Move_0E8(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8149,7 +8149,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// If target would be KO'd by this attack, it survives with 1HP instead. (False Swipe)
 	/// <summary>
-	public class PokeBattle_Move_0E9 : PokeBattle_Move
+	public partial class PokeBattle_Move_0E9 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0E9() : base() { }
 		//public PokeBattle_Move_0E9(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8159,7 +8159,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User flees from battle. Fails in trainer battles. (Teleport)
 	/// <summary>
-	public class PokeBattle_Move_0EA : PokeBattle_Move
+	public partial class PokeBattle_Move_0EA : PokeBattle_Move
 	{
 		public PokeBattle_Move_0EA() : base() { }
 		//public PokeBattle_Move_0EA(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8185,7 +8185,7 @@ namespace PokemonUnity.Combat
 	/// In trainer battles, target switches out.
 	/// For status moves. (Roar, Whirlwind)
 	/// <summary>
-	public class PokeBattle_Move_0EB : PokeBattle_Move
+	public partial class PokeBattle_Move_0EB : PokeBattle_Move
 	{
 		public PokeBattle_Move_0EB() : base() { }
 		//public PokeBattle_Move_0EB(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8244,7 +8244,7 @@ namespace PokemonUnity.Combat
 	/// In trainer battles, target switches out.
 	/// For damaging moves. (Circle Throw, Dragon Tail)
 	/// <summary>
-	public class PokeBattle_Move_0EC : PokeBattle_Move
+	public partial class PokeBattle_Move_0EC : PokeBattle_Move
 	{
 		public PokeBattle_Move_0EC() : base() { }
 		//public PokeBattle_Move_0EC(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8284,7 +8284,7 @@ namespace PokemonUnity.Combat
 	/// User switches out. Various effects affecting the user are passed to the
 	/// replacement. (Baton Pass)
 	/// <summary>
-	public class PokeBattle_Move_0ED : PokeBattle_Move
+	public partial class PokeBattle_Move_0ED : PokeBattle_Move
 	{
 		public PokeBattle_Move_0ED() : base() { }
 		//public PokeBattle_Move_0ED(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8307,7 +8307,7 @@ namespace PokemonUnity.Combat
 	/// (U-turn, Volt Switch)
 	/// TODO: Pursuit should interrupt this move.
 	/// <summary>
-	public class PokeBattle_Move_0EE : PokeBattle_Move
+	public partial class PokeBattle_Move_0EE : PokeBattle_Move
 	{
 		public PokeBattle_Move_0EE() : base() { }
 		//public PokeBattle_Move_0EE(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8328,7 +8328,7 @@ namespace PokemonUnity.Combat
 	/// Target can no longer switch out or flee, as long as the user remains active.
 	/// (Block, Mean Look, Spider Web, Thousand Waves)
 	/// <summary>
-	public class PokeBattle_Move_0EF : PokeBattle_Move
+	public partial class PokeBattle_Move_0EF : PokeBattle_Move
 	{
 		public PokeBattle_Move_0EF() : base() { }
 		//public PokeBattle_Move_0EF(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8372,7 +8372,7 @@ namespace PokemonUnity.Combat
 	/// Target drops its item. It regains the item at the end of the battle. (Knock Off)
 	/// If target has a losable item, damage is multiplied by 1.5.
 	/// <summary>
-	public class PokeBattle_Move_0F0 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F0 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F0() : base() { }
 		//public PokeBattle_Move_0F0(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8414,7 +8414,7 @@ namespace PokemonUnity.Combat
 	/// User steals the target's item, if the user has none itself. (Covet, Thief)
 	/// Items stolen from wild Pokémon are kept after the battle.
 	/// <summary>
-	public class PokeBattle_Move_0F1 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F1 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F1() : base() { }
 		//public PokeBattle_Move_0F1(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8460,7 +8460,7 @@ namespace PokemonUnity.Combat
 	/// User and target swap items. They remain swapped after wild battles.
 	/// (Switcheroo, Trick)
 	/// <summary>
-	public class PokeBattle_Move_0F2 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F2 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F2() : base() { }
 		//public PokeBattle_Move_0F2(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8530,7 +8530,7 @@ namespace PokemonUnity.Combat
 	/// User gives its item to the target. The item remains given after wild battles.
 	/// (Bestow)
 	/// <summary>
-	public class PokeBattle_Move_0F3 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F3 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F3() : base() { }
 		//public PokeBattle_Move_0F3(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8575,7 +8575,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User consumes target's berry and gains its effect. (Bug Bite, Pluck)
 	/// <summary>
-	public class PokeBattle_Move_0F4 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F4 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F4() : base() { }
 		//public PokeBattle_Move_0F4(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8624,7 +8624,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target's berry is destroyed. (Incinerate)
 	/// <summary>
-	public class PokeBattle_Move_0F5 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F5 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F5() : base() { }
 		//public PokeBattle_Move_0F5(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8647,7 +8647,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User recovers the last item it held and consumed. (Recycle)
 	/// <summary>
-	public class PokeBattle_Move_0F6 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F6 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F6() : base() { }
 		//public PokeBattle_Move_0F6(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8683,7 +8683,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User flings its item at the target. Power and effect depend on the item. (Fling)
 	/// <summary>
-	public class PokeBattle_Move_0F7 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F7 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F7() : base() { }
 		//public PokeBattle_Move_0F7(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8929,7 +8929,7 @@ namespace PokemonUnity.Combat
 	/// For 5 rounds, the target cannnot use its held item, its held item has no
 	/// effect, and no items can be used on it. (Embargo)
 	/// <summary>
-	public class PokeBattle_Move_0F8 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F8 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F8() : base() { }
 		//public PokeBattle_Move_0F8(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8952,7 +8952,7 @@ namespace PokemonUnity.Combat
 	/// For 5 rounds, all held items cannot be used in any way and have no effect.
 	/// Held items can still change hands, but can't be thrown. (Magic Room)
 	/// <summary>
-	public class PokeBattle_Move_0F9 : PokeBattle_Move
+	public partial class PokeBattle_Move_0F9 : PokeBattle_Move
 	{
 		public PokeBattle_Move_0F9() : base() { }
 		//public PokeBattle_Move_0F9(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -8977,7 +8977,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User takes recoil damage equal to 1/4 of the damage this move dealt.
 	/// <summary>
-	public class PokeBattle_Move_0FA : PokeBattle_Move
+	public partial class PokeBattle_Move_0FA : PokeBattle_Move
 	{
 		public PokeBattle_Move_0FA() : base() { }
 		//public PokeBattle_Move_0FA(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9003,7 +9003,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User takes recoil damage equal to 1/3 of the damage this move dealt.
 	/// <summary>
-	public class PokeBattle_Move_0FB : PokeBattle_Move
+	public partial class PokeBattle_Move_0FB : PokeBattle_Move
 	{
 		public PokeBattle_Move_0FB() : base() { }
 		//public PokeBattle_Move_0FB(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9030,7 +9030,7 @@ namespace PokemonUnity.Combat
 	/// User takes recoil damage equal to 1/2 of the damage this move dealt.
 	/// (Head Smash)
 	/// <summary>
-	public class PokeBattle_Move_0FC : PokeBattle_Move
+	public partial class PokeBattle_Move_0FC : PokeBattle_Move
 	{
 		public PokeBattle_Move_0FC() : base() { }
 		//public PokeBattle_Move_0FC(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9057,7 +9057,7 @@ namespace PokemonUnity.Combat
 	/// User takes recoil damage equal to 1/3 of the damage this move dealt.
 	/// May paralyze the target. (Volt Tackle)
 	/// <summary>
-	public class PokeBattle_Move_0FD : PokeBattle_Move
+	public partial class PokeBattle_Move_0FD : PokeBattle_Move
 	{
 		public PokeBattle_Move_0FD() : base() { }
 		//public PokeBattle_Move_0FD(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9093,7 +9093,7 @@ namespace PokemonUnity.Combat
 	/// User takes recoil damage equal to 1/3 of the damage this move dealt.
 	/// May burn the target. (Flare Blitz)
 	/// <summary>
-	public class PokeBattle_Move_0FE : PokeBattle_Move
+	public partial class PokeBattle_Move_0FE : PokeBattle_Move
 	{
 		public PokeBattle_Move_0FE() : base() { }
 		//public PokeBattle_Move_0FE(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9128,7 +9128,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Starts sunny weather. (Sunny Day)
 	/// <summary>
-	public class PokeBattle_Move_0FF : PokeBattle_Move
+	public partial class PokeBattle_Move_0FF : PokeBattle_Move
 	{
 		public PokeBattle_Move_0FF() : base() { }
 		//public PokeBattle_Move_0FF(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9167,7 +9167,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Starts rainy weather. (Rain Dance)
 	/// <summary>
-	public class PokeBattle_Move_100 : PokeBattle_Move
+	public partial class PokeBattle_Move_100 : PokeBattle_Move
 	{
 		public PokeBattle_Move_100() : base() { }
 		//public PokeBattle_Move_100(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9207,7 +9207,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Starts sandstorm weather. (Sandstorm)
 	/// <summary>
-	public class PokeBattle_Move_101 : PokeBattle_Move
+	public partial class PokeBattle_Move_101 : PokeBattle_Move
 	{
 		public PokeBattle_Move_101() : base() { }
 		//public PokeBattle_Move_101(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9247,7 +9247,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Starts hail weather. (Hail)
 	/// <summary>
-	public class PokeBattle_Move_102 : PokeBattle_Move
+	public partial class PokeBattle_Move_102 : PokeBattle_Move
 	{
 		public PokeBattle_Move_102() : base() { }
 		//public PokeBattle_Move_102(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9287,7 +9287,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Entry hazard. Lays spikes on the opposing side (max. 3 layers). (Spikes)
 	/// <summary>
-	public class PokeBattle_Move_103 : PokeBattle_Move
+	public partial class PokeBattle_Move_103 : PokeBattle_Move
 	{
 		public PokeBattle_Move_103() : base() { }
 		//public PokeBattle_Move_103(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9317,7 +9317,7 @@ namespace PokemonUnity.Combat
 	/// Entry hazard. Lays poison spikes on the opposing side (max. 2 layers).
 	/// (Toxic Spikes)
 	/// <summary>
-	public class PokeBattle_Move_104 : PokeBattle_Move
+	public partial class PokeBattle_Move_104 : PokeBattle_Move
 	{
 		public PokeBattle_Move_104() : base() { }
 		//public PokeBattle_Move_104(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9346,7 +9346,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Entry hazard. Lays stealth rocks on the opposing side. (Stealth Rock)
 	/// <summary>
-	public class PokeBattle_Move_105 : PokeBattle_Move
+	public partial class PokeBattle_Move_105 : PokeBattle_Move
 	{
 		public PokeBattle_Move_105() : base() { }
 		//public PokeBattle_Move_105(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9377,7 +9377,7 @@ namespace PokemonUnity.Combat
 	/// Combo's with ally's Pledge move if it was just used. Power is doubled, and
 	/// causes either a sea of fire or a swamp on the opposing side.
 	/// <summary>
-	public class PokeBattle_Move_106 : PokeBattle_Move
+	public partial class PokeBattle_Move_106 : PokeBattle_Move
 	{
 		public PokeBattle_Move_106() : base() { }
 		//public PokeBattle_Move_106(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9510,7 +9510,7 @@ namespace PokemonUnity.Combat
 	/// Combo's with ally's Pledge move if it was just used. Power is doubled, and
 	/// causes either a sea of fire on the opposing side or a rainbow on the user's side.
 	/// <summary>
-	public class PokeBattle_Move_107 : PokeBattle_Move
+	public partial class PokeBattle_Move_107 : PokeBattle_Move
 	{
 		public PokeBattle_Move_107() : base() { }
 		//public PokeBattle_Move_107(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9643,7 +9643,7 @@ namespace PokemonUnity.Combat
 	/// Combo's with ally's Pledge move if it was just used. Power is doubled, and
 	/// causes either a swamp on the opposing side or a rainbow on the user's side.
 	/// <summary>
-	public class PokeBattle_Move_108 : PokeBattle_Move
+	public partial class PokeBattle_Move_108 : PokeBattle_Move
 	{
 		public PokeBattle_Move_108() : base() { }
 		//public PokeBattle_Move_108(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9774,7 +9774,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Scatters coins that the player picks up after winning the battle. (Pay Day)
 	/// <summary>
-	public class PokeBattle_Move_109 : PokeBattle_Move
+	public partial class PokeBattle_Move_109 : PokeBattle_Move
 	{
 		public PokeBattle_Move_109() : base() { }
 		//public PokeBattle_Move_109(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9798,7 +9798,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Ends the opposing side's Light Screen and Reflect. (Brick Break)
 	/// <summary>
-	public class PokeBattle_Move_10A : PokeBattle_Move
+	public partial class PokeBattle_Move_10A : PokeBattle_Move
 	{
 		public PokeBattle_Move_10A() : base() { }
 		//public PokeBattle_Move_10A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9853,7 +9853,7 @@ namespace PokemonUnity.Combat
 	/// If attack misses, user takes crash damage of 1/2 of max HP.
 	/// (Hi Jump Kick, Jump Kick)
 	/// <summary>
-	public class PokeBattle_Move_10B : PokeBattle_Move
+	public partial class PokeBattle_Move_10B : PokeBattle_Move
 	{
 		public PokeBattle_Move_10B() : base() { }
 		//public PokeBattle_Move_10B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9871,7 +9871,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User turns 1/4 of max HP into a substitute. (Substitute)
 	/// <summary>
-	public class PokeBattle_Move_10C : PokeBattle_Move
+	public partial class PokeBattle_Move_10C : PokeBattle_Move
 	{
 		public PokeBattle_Move_10C() : base() { }
 		//public PokeBattle_Move_10C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9907,7 +9907,7 @@ namespace PokemonUnity.Combat
 	/// Cursed Pokémon lose 1/4 of their max HP at the end of each round.
 	/// (Curse)
 	/// <summary>
-	public class PokeBattle_Move_10D : PokeBattle_Move
+	public partial class PokeBattle_Move_10D : PokeBattle_Move
 	{
 		public PokeBattle_Move_10D() : base() { }
 		//public PokeBattle_Move_10D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -9974,7 +9974,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target's last move used loses 4 PP. (Spite)
 	/// <summary>
-	public class PokeBattle_Move_10E : PokeBattle_Move
+	public partial class PokeBattle_Move_10E : PokeBattle_Move
 	{
 		public PokeBattle_Move_10E() : base() { }
 		//public PokeBattle_Move_10E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10002,7 +10002,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target will lose 1/4 of max HP at end of each round, while asleep. (Nightmare)
 	/// <summary>
-	public class PokeBattle_Move_10F : PokeBattle_Move
+	public partial class PokeBattle_Move_10F : PokeBattle_Move
 	{
 		public PokeBattle_Move_10F() : base() { }
 		//public PokeBattle_Move_10F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10026,7 +10026,7 @@ namespace PokemonUnity.Combat
 	/// Removes trapping moves, entry hazards and Leech Seed on user/user's side.
 	/// (Rapid Spin)
 	/// <summary>
-	public class PokeBattle_Move_110 : PokeBattle_Move
+	public partial class PokeBattle_Move_110 : PokeBattle_Move
 	{
 		public PokeBattle_Move_110() : base() { }
 		//public PokeBattle_Move_110(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10078,7 +10078,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Attacks 2 rounds in the future. (Doom Desire, Future Sight)
 	/// <summary>
-	public class PokeBattle_Move_111 : PokeBattle_Move
+	public partial class PokeBattle_Move_111 : PokeBattle_Move
 	{
 		public PokeBattle_Move_111() : base() { }
 		//public PokeBattle_Move_111(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10135,7 +10135,7 @@ namespace PokemonUnity.Combat
 	/// Increases the user's Defense and Special Defense by 1 stage each. Ups the
 	/// user's stockpile by 1 (max. 3). (Stockpile)
 	/// <summary>
-	public class PokeBattle_Move_112 : PokeBattle_Move
+	public partial class PokeBattle_Move_112 : PokeBattle_Move
 	{
 		public PokeBattle_Move_112() : base() { }
 		//public PokeBattle_Move_112(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10172,7 +10172,7 @@ namespace PokemonUnity.Combat
 	/// Power is 100 multiplied by the user's stockpile (X). Resets the stockpile to
 	/// 0. Decreases the user's Defense and Special Defense by X stages each. (Spit Up)
 	/// <summary>
-	public class PokeBattle_Move_113 : PokeBattle_Move
+	public partial class PokeBattle_Move_113 : PokeBattle_Move
 	{
 		public PokeBattle_Move_113() : base() { }
 		//public PokeBattle_Move_113(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10224,7 +10224,7 @@ namespace PokemonUnity.Combat
 	/// Heals user depending on the user's stockpile (X). Resets the stockpile to 0.
 	/// Decreases the user's Defense and Special Defense by X stages each. (Swallow)
 	/// <summary>
-	public class PokeBattle_Move_114 : PokeBattle_Move
+	public partial class PokeBattle_Move_114 : PokeBattle_Move
 	{
 		public PokeBattle_Move_114() : base() { }
 		//public PokeBattle_Move_114(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10292,7 +10292,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Fails if user was hit by a damaging move this round. (Focus Punch)
 	/// <summary>
-	public class PokeBattle_Move_115 : PokeBattle_Move
+	public partial class PokeBattle_Move_115 : PokeBattle_Move
 	{
 		public PokeBattle_Move_115() : base() { }
 		//public PokeBattle_Move_115(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10311,7 +10311,7 @@ namespace PokemonUnity.Combat
 	/// Fails if the target didn't chose a damaging move to use this round, or has
 	/// already moved. (Sucker Punch)
 	/// <summary>
-	public class PokeBattle_Move_116 : PokeBattle_Move
+	public partial class PokeBattle_Move_116 : PokeBattle_Move
 	{
 		public PokeBattle_Move_116() : base() { }
 		//public PokeBattle_Move_116(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10329,7 +10329,7 @@ namespace PokemonUnity.Combat
 	/// This round, user becomes the target of attacks that have single targets.
 	/// (Follow Me, Rage Powder)
 	/// <summary>
-	public class PokeBattle_Move_117 : PokeBattle_Move
+	public partial class PokeBattle_Move_117 : PokeBattle_Move
 	{
 		public PokeBattle_Move_117() : base() { }
 		//public PokeBattle_Move_117(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10356,7 +10356,7 @@ namespace PokemonUnity.Combat
 	/// For 5 rounds, increases gravity on the field. Pokémon cannot become airborne.
 	/// (Gravity)
 	/// <summary>
-	public class PokeBattle_Move_118 : PokeBattle_Move
+	public partial class PokeBattle_Move_118 : PokeBattle_Move
 	{
 		public PokeBattle_Move_118() : base() { }
 		//public PokeBattle_Move_118(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10402,7 +10402,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 5 rounds, user becomes airborne. (Magnet Rise)
 	/// <summary>
-	public class PokeBattle_Move_119 : PokeBattle_Move
+	public partial class PokeBattle_Move_119 : PokeBattle_Move
 	{
 		public PokeBattle_Move_119() : base() { }
 		//public PokeBattle_Move_119(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10431,7 +10431,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// For 3 rounds, target becomes airborne and can always be hit. (Telekinesis)
 	/// <summary>
-	public class PokeBattle_Move_11A : PokeBattle_Move
+	public partial class PokeBattle_Move_11A : PokeBattle_Move
 	{
 		public PokeBattle_Move_11A() : base() { }
 		//public PokeBattle_Move_11A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10460,7 +10460,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Hits airborne semi-invulnerable targets. (Sky Uppercut)
 	/// <summary>
-	public class PokeBattle_Move_11B : PokeBattle_Move
+	public partial class PokeBattle_Move_11B : PokeBattle_Move
 	{
 		public PokeBattle_Move_11B() : base() { }
 		//public PokeBattle_Move_11B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10471,7 +10471,7 @@ namespace PokemonUnity.Combat
 	/// Grounds the target while it remains active. (Smack Down, Thousand Arrows)
 	/// (Handled in Pokemon's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
-	public class PokeBattle_Move_11C : PokeBattle_Move
+	public partial class PokeBattle_Move_11C : PokeBattle_Move
 	{
 		public PokeBattle_Move_11C() : base() { }
 		//public PokeBattle_Move_11C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10521,7 +10521,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target moves immediately after the user, ignoring priority/speed. (After You)
 	/// <summary>
-	public class PokeBattle_Move_11D : PokeBattle_Move
+	public partial class PokeBattle_Move_11D : PokeBattle_Move
 	{
 		public PokeBattle_Move_11D() : base() { }
 		//public PokeBattle_Move_11D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10550,7 +10550,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target moves last this round, ignoring priority/speed. (Quash)
 	/// <summary>
-	public class PokeBattle_Move_11E : PokeBattle_Move
+	public partial class PokeBattle_Move_11E : PokeBattle_Move
 	{
 		public PokeBattle_Move_11E() : base() { }
 		//public PokeBattle_Move_11E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10580,7 +10580,7 @@ namespace PokemonUnity.Combat
 	/// For 5 rounds, for each priority bracket, slow Pokémon move before fast ones.
 	/// (Trick Room)
 	/// <summary>
-	public class PokeBattle_Move_11F : PokeBattle_Move
+	public partial class PokeBattle_Move_11F : PokeBattle_Move
 	{
 		public PokeBattle_Move_11F() : base() { }
 		//public PokeBattle_Move_11F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10609,7 +10609,7 @@ namespace PokemonUnity.Combat
 	/// Code below might not need to be complicated since Battle.Pokemon rewrite 
 	/// stores values in Battle.Battler (position) instead of in Pokemon variable
 	/// </remarks>
-	public class PokeBattle_Move_120 : PokeBattle_Move
+	public partial class PokeBattle_Move_120 : PokeBattle_Move
 	{
 		public PokeBattle_Move_120() : base() { }
 		//public PokeBattle_Move_120(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10824,7 +10824,7 @@ namespace PokemonUnity.Combat
 	/// Target's Attack is used instead of user's Attack for this move's calculations.
 	/// (Foul Play)
 	/// <summary>
-	public class PokeBattle_Move_121 : PokeBattle_Move
+	public partial class PokeBattle_Move_121 : PokeBattle_Move
 	{
 		public PokeBattle_Move_121() : base() { }
 		//public PokeBattle_Move_121(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10835,7 +10835,7 @@ namespace PokemonUnity.Combat
 	/// Target's Defense is used instead of its Special Defense for this move's
 	/// calculations. (Psyshock, Psystrike, Secret Sword)
 	/// <summary>
-	public class PokeBattle_Move_122 : PokeBattle_Move
+	public partial class PokeBattle_Move_122 : PokeBattle_Move
 	{
 		public PokeBattle_Move_122() : base() { }
 		//public PokeBattle_Move_122(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10845,7 +10845,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Only damages Pokémon that share a type with the user. (Synchronoise)
 	/// <summary>
-	public class PokeBattle_Move_123 : PokeBattle_Move
+	public partial class PokeBattle_Move_123 : PokeBattle_Move
 	{
 		public PokeBattle_Move_123() : base() { }
 		//public PokeBattle_Move_123(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10866,7 +10866,7 @@ namespace PokemonUnity.Combat
 	/// For 5 rounds, swaps all battlers' base Defense with base Special Defense.
 	/// (Wonder Room)
 	/// <summary>
-	public class PokeBattle_Move_124 : PokeBattle_Move
+	public partial class PokeBattle_Move_124 : PokeBattle_Move
 	{
 		public PokeBattle_Move_124() : base() { }
 		//public PokeBattle_Move_124(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10891,7 +10891,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Fails unless user has already used all other moves it knows. (Last Resort)
 	/// <summary>
-	public class PokeBattle_Move_125 : PokeBattle_Move
+	public partial class PokeBattle_Move_125 : PokeBattle_Move
 	{
 		public PokeBattle_Move_125() : base() { }
 		//public PokeBattle_Move_125(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10917,7 +10917,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Does absolutely nothing. (Hold Hands)
 	/// <summary>
-	public class PokeBattle_Move_133 : PokeBattle_Move
+	public partial class PokeBattle_Move_133 : PokeBattle_Move
 	{
 		public PokeBattle_Move_133() : base() { }
 		//public PokeBattle_Move_133(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10937,7 +10937,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Does absolutely nothing. Shows a special message. (Celebrate)
 	/// <summary>
-	public class PokeBattle_Move_134 : PokeBattle_Move
+	public partial class PokeBattle_Move_134 : PokeBattle_Move
 	{
 		public PokeBattle_Move_134() : base() { }
 		//public PokeBattle_Move_134(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10954,7 +10954,7 @@ namespace PokemonUnity.Combat
 	/// Freezes the target. (Freeze-Dry)
 	/// (Superclass's pbTypeModifier): Effectiveness against Water-type is 2x.
 	/// <summary>
-	public class PokeBattle_Move_135 : PokeBattle_Move
+	public partial class PokeBattle_Move_135 : PokeBattle_Move
 	{
 		public PokeBattle_Move_135() : base() { }
 		//public PokeBattle_Move_135(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10971,7 +10971,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases the user's Defense by 1 stage for each target hit. (Diamond Storm)
 	/// <summary>
-	public class PokeBattle_Move_136 : PokeBattle_Move_01D
+	public partial class PokeBattle_Move_136 : PokeBattle_Move_01D
 	{
 		public PokeBattle_Move_136() : base() { }
 		//public PokeBattle_Move_136(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -10982,7 +10982,7 @@ namespace PokemonUnity.Combat
 	/// Increases the user's and its ally's Defense and Special Defense by 1 stage
 	/// each, if they have Plus or Minus. (Magnetic Flux)
 	/// <summary>
-	public class PokeBattle_Move_137 : PokeBattle_Move
+	public partial class PokeBattle_Move_137 : PokeBattle_Move
 	{
 		public PokeBattle_Move_137() : base() { }
 		//public PokeBattle_Move_137(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11022,7 +11022,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Increases ally's Special Defense by 1 stage. (Aromatic Mist)
 	/// <summary>
-	public class PokeBattle_Move_138 : PokeBattle_Move
+	public partial class PokeBattle_Move_138 : PokeBattle_Move
 	{
 		public PokeBattle_Move_138() : base() { }
 		//public PokeBattle_Move_138(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11044,7 +11044,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Attack by 1 stage. Always hits. (Play Nice)
 	/// <summary>
-	public class PokeBattle_Move_139 : PokeBattle_Move
+	public partial class PokeBattle_Move_139 : PokeBattle_Move
 	{
 		public PokeBattle_Move_139() : base() { }
 		//public PokeBattle_Move_139(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11066,7 +11066,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Attack and Special Attack by 1 stage each. (Noble Roar)
 	/// <summary>
-	public class PokeBattle_Move_13A : PokeBattle_Move
+	public partial class PokeBattle_Move_13A : PokeBattle_Move
 	{
 		public PokeBattle_Move_13A() : base() { }
 		//public PokeBattle_Move_13A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11124,7 +11124,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Defense by 1 stage. Always hits. (Hyperspace Fury)
 	/// <summary>
-	public class PokeBattle_Move_13B : PokeBattle_Move
+	public partial class PokeBattle_Move_13B : PokeBattle_Move
 	{
 		public PokeBattle_Move_13B() : base() { }
 		//public PokeBattle_Move_13B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11153,7 +11153,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Special Attack by 1 stage. Always hits. (Confide)
 	/// <summary>
-	public class PokeBattle_Move_13C : PokeBattle_Move
+	public partial class PokeBattle_Move_13C : PokeBattle_Move
 	{
 		public PokeBattle_Move_13C() : base() { }
 		//public PokeBattle_Move_13C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11175,7 +11175,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Decreases the target's Special Attack by 2 stages. (Eerie Impulse)
 	/// <summary>
-	public class PokeBattle_Move_13D : PokeBattle_Move
+	public partial class PokeBattle_Move_13D : PokeBattle_Move
 	{
 		public PokeBattle_Move_13D() : base() { }
 		//public PokeBattle_Move_13D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11204,7 +11204,7 @@ namespace PokemonUnity.Combat
 	/// Increases the Attack and Special Attack of all Grass-type Pokémon on the field
 	/// by 1 stage each. Doesn't affect airborne Pokémon. (Rototiller)
 	/// <summary>
-	public class PokeBattle_Move_13E : PokeBattle_Move
+	public partial class PokeBattle_Move_13E : PokeBattle_Move
 	{
 		public PokeBattle_Move_13E() : base() { }
 		//public PokeBattle_Move_13E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11246,7 +11246,7 @@ namespace PokemonUnity.Combat
 	/// Increases the Defense of all Grass-type Pokémon on the field by 1 stage each.
 	/// (Flower Shield)
 	/// <summary>
-	public class PokeBattle_Move_13F : PokeBattle_Move
+	public partial class PokeBattle_Move_13F : PokeBattle_Move
 	{
 		public PokeBattle_Move_13F() : base() { }
 		//public PokeBattle_Move_13F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11281,7 +11281,7 @@ namespace PokemonUnity.Combat
 	/// Decreases the Attack, Special Attack and Speed of all poisoned opponents by 1
 	/// stage each. (Venom Drench)
 	/// <summary>
-	public class PokeBattle_Move_140 : PokeBattle_Move
+	public partial class PokeBattle_Move_140 : PokeBattle_Move
 	{
 		public PokeBattle_Move_140() : base() { }
 		//public PokeBattle_Move_140(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11327,7 +11327,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Reverses all stat changes of the target. (Topsy-Turvy)
 	/// <summary>
-	public class PokeBattle_Move_141 : PokeBattle_Move
+	public partial class PokeBattle_Move_141 : PokeBattle_Move
 	{
 		public PokeBattle_Move_141() : base() { }
 		//public PokeBattle_Move_141(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11361,7 +11361,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Gives target the Ghost type. (Trick-or-Treat)
 	/// <summary>
-	public class PokeBattle_Move_142 : PokeBattle_Move
+	public partial class PokeBattle_Move_142 : PokeBattle_Move
 	{
 		public PokeBattle_Move_142() : base() { }
 		//public PokeBattle_Move_142(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11387,7 +11387,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Gives target the Grass type. (Forest's Curse)
 	/// <summary>
-	public class PokeBattle_Move_143 : PokeBattle_Move
+	public partial class PokeBattle_Move_143 : PokeBattle_Move
 	{
 		public PokeBattle_Move_143() : base() { }
 		//public PokeBattle_Move_143(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11424,7 +11424,7 @@ namespace PokemonUnity.Combat
 	/// Damage is multiplied by Flying's effectiveness against the target. Does double
 	/// damage and has perfect accuracy if the target is Minimized. (Flying Press)
 	/// <summary>
-	public class PokeBattle_Move_144 : PokeBattle_Move
+	public partial class PokeBattle_Move_144 : PokeBattle_Move
 	{
 		public PokeBattle_Move_144() : base() { }
 		//public PokeBattle_Move_144(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11451,7 +11451,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Target's moves become Electric-type for the rest of the round. (Electrify)
 	/// <summary>
-	public class PokeBattle_Move_145 : PokeBattle_Move
+	public partial class PokeBattle_Move_145 : PokeBattle_Move
 	{
 		public PokeBattle_Move_145() : base() { }
 		//public PokeBattle_Move_145(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11483,7 +11483,7 @@ namespace PokemonUnity.Combat
 	/// All Normal-type moves become Electric-type for the rest of the round.
 	/// (Ion Deluge)
 	/// <summary>
-	public class PokeBattle_Move_146 : PokeBattle_Move
+	public partial class PokeBattle_Move_146 : PokeBattle_Move
 	{
 		public PokeBattle_Move_146() : base() { }
 		//public PokeBattle_Move_146(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11516,7 +11516,7 @@ namespace PokemonUnity.Combat
 	/// Always hits. (Hyperspace Hole)
 	/// TODO: Hits through various shields.
 	/// <summary>
-	public class PokeBattle_Move_147 : PokeBattle_Move
+	public partial class PokeBattle_Move_147 : PokeBattle_Move
 	{
 		public PokeBattle_Move_147() : base() { }
 		//public PokeBattle_Move_147(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11530,7 +11530,7 @@ namespace PokemonUnity.Combat
 	/// Powders the foe. This round, if it uses a Fire move, it loses 1/4 of its max
 	/// HP instead. (Powder)
 	/// <summary>
-	public class PokeBattle_Move_148 : PokeBattle_Move
+	public partial class PokeBattle_Move_148 : PokeBattle_Move
 	{
 		public PokeBattle_Move_148() : base() { }
 		//public PokeBattle_Move_148(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11552,7 +11552,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// This round, the user's side is unaffected by damaging moves. (Mat Block)
 	/// <summary>
-	public class PokeBattle_Move_149 : PokeBattle_Move
+	public partial class PokeBattle_Move_149 : PokeBattle_Move
 	{
 		public PokeBattle_Move_149() : base() { }
 		//public PokeBattle_Move_149(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11574,7 +11574,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User's side is protected against status moves this round. (Crafty Shield)
 	/// <summary>
-	public class PokeBattle_Move_14A : PokeBattle_Move
+	public partial class PokeBattle_Move_14A : PokeBattle_Move
 	{
 		public PokeBattle_Move_14A() : base() { }
 		//public PokeBattle_Move_14A(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11619,7 +11619,7 @@ namespace PokemonUnity.Combat
 	/// User is protected against damaging moves this round. Decreases the Attack of
 	/// the user of a stopped contact move by 2 stages. (King's Shield)
 	/// <summary>
-	public class PokeBattle_Move_14B : PokeBattle_Move
+	public partial class PokeBattle_Move_14B : PokeBattle_Move
 	{
 		public PokeBattle_Move_14B() : base() { }
 		//public PokeBattle_Move_14B(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11673,7 +11673,7 @@ namespace PokemonUnity.Combat
 	/// User is protected against moves that target it this round. Damages the user of
 	/// a stopped contact move by 1/8 of its max HP. (Spiky Shield)
 	/// <summary>
-	public class PokeBattle_Move_14C : PokeBattle_Move
+	public partial class PokeBattle_Move_14C : PokeBattle_Move
 	{
 		public PokeBattle_Move_14C() : base() { }
 		//public PokeBattle_Move_14C(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11730,7 +11730,7 @@ namespace PokemonUnity.Combat
 	/// this round. If successful, negates them this round.
 	/// Does double damage and has perfect accuracy if the target is Minimized.
 	/// <summary>
-	public class PokeBattle_Move_14D : PokeBattle_Move
+	public partial class PokeBattle_Move_14D : PokeBattle_Move
 	{
 		public PokeBattle_Move_14D() : base() { }
 		//public PokeBattle_Move_14D(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11781,7 +11781,7 @@ namespace PokemonUnity.Combat
 	/// Two turn attack. Skips first turn, increases the user's Special Attack,
 	/// Special Defense and Speed by 2 stages each second turn. (Geomancy)
 	/// <summary>
-	public class PokeBattle_Move_14E : PokeBattle_Move
+	public partial class PokeBattle_Move_14E : PokeBattle_Move
 	{
 		public PokeBattle_Move_14E() : base() { }
 		//public PokeBattle_Move_14E(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11843,7 +11843,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// User gains 3/4 the HP it inflicts as damage. (Draining Kiss, Oblivion Wing)
 	/// <summary>
-	public class PokeBattle_Move_14F : PokeBattle_Move
+	public partial class PokeBattle_Move_14F : PokeBattle_Move
 	{
 		public PokeBattle_Move_14F() : base() { }
 		//public PokeBattle_Move_14F(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11880,7 +11880,7 @@ namespace PokemonUnity.Combat
 	/// If this move KO's the target, increases the user's Attack by 2 stages.
 	/// (Fell Stinger)
 	/// <summary>
-	public class PokeBattle_Move_150 : PokeBattle_Move
+	public partial class PokeBattle_Move_150 : PokeBattle_Move
 	{
 		public PokeBattle_Move_150() : base() { }
 		//public PokeBattle_Move_150(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11903,7 +11903,7 @@ namespace PokemonUnity.Combat
 	/// switches out. Ignores trapping moves. (Parting Shot)
 	/// TODO: Pursuit should interrupt this move.
 	/// <summary>
-	public class PokeBattle_Move_151 : PokeBattle_Move
+	public partial class PokeBattle_Move_151 : PokeBattle_Move
 	{
 		public PokeBattle_Move_151() : base() { }
 		//public PokeBattle_Move_151(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11938,7 +11938,7 @@ namespace PokemonUnity.Combat
 	/// No Pokémon can switch out or flee until the end of the next round, as long as
 	/// the user remains active. (Fairy Lock)
 	/// <summary>
-	public class PokeBattle_Move_152 : PokeBattle_Move
+	public partial class PokeBattle_Move_152 : PokeBattle_Move
 	{
 		public PokeBattle_Move_152() : base() { }
 		//public PokeBattle_Move_152(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11960,7 +11960,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Entry hazard. Lays stealth rocks on the opposing side. (Sticky Web)
 	/// <summary>
-	public class PokeBattle_Move_153 : PokeBattle_Move
+	public partial class PokeBattle_Move_153 : PokeBattle_Move
 	{
 		public PokeBattle_Move_153() : base() { }
 		//public PokeBattle_Move_153(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -11991,7 +11991,7 @@ namespace PokemonUnity.Combat
 	/// prevents Pokémon from falling asleep. Affects non-airborne Pokémon only.
 	/// (Electric Terrain)
 	/// <summary>
-	public class PokeBattle_Move_154 : PokeBattle_Move
+	public partial class PokeBattle_Move_154 : PokeBattle_Move
 	{
 		public PokeBattle_Move_154() : base() { }
 		//public PokeBattle_Move_154(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -12017,7 +12017,7 @@ namespace PokemonUnity.Combat
 	/// Pokémon at the end of each round. Affects non-airborne Pokémon only.
 	/// (Grassy Terrain)
 	/// <summary>
-	public class PokeBattle_Move_155 : PokeBattle_Move
+	public partial class PokeBattle_Move_155 : PokeBattle_Move
 	{
 		public PokeBattle_Move_155() : base() { }
 		//public PokeBattle_Move_155(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -12043,7 +12043,7 @@ namespace PokemonUnity.Combat
 	/// protects Pokémon from status problems. Affects non-airborne Pokémon only.
 	/// (Misty Terrain)
 	/// <summary>
-	public class PokeBattle_Move_156 : PokeBattle_Move
+	public partial class PokeBattle_Move_156 : PokeBattle_Move
 	{
 		public PokeBattle_Move_156() : base() { }
 		//public PokeBattle_Move_156(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -12067,7 +12067,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Doubles the prize money the player gets after winning the battle. (Happy Hour)
 	/// </summary>
-	public class PokeBattle_Move_157 : PokeBattle_Move
+	public partial class PokeBattle_Move_157 : PokeBattle_Move
 	{
 		public PokeBattle_Move_157() : base() { }
 		//public PokeBattle_Move_157(Battle battle, Attack.Move move) : base(battle, move) { }
@@ -12089,7 +12089,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Fails unless user has consumed a berry at some point. (Belch)
 	/// </summary>
-	public class PokeBattle_Move_158 : PokeBattle_Move
+	public partial class PokeBattle_Move_158 : PokeBattle_Move
 	{
 		public PokeBattle_Move_158() : base() { }
 		//public PokeBattle_Move_158(Battle battle, Attack.Move move) : base(battle, move) { }

@@ -2715,7 +2715,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Judging
-  public void pbJudgeCheckpoint(Pokemon attacker,Moves move=Moves.NONE) {
+  private void _pbJudgeCheckpoint(Pokemon attacker,Combat.IMove move=null) {
   }
 
   public BattleResults pbDecisionOnTime() {
@@ -2741,9 +2741,13 @@ namespace PokemonUnity.Combat
     if (count1<count2    ) return BattleResults.LOST;	// loss
     if (hptotal1>hptotal2) return BattleResults.WON;	// win
     if (hptotal1<hptotal2) return BattleResults.LOST;	// loss
-    return BattleResults.DRAW;                      // draw;
+    return BattleResults.DRAW;                          // draw;
   }
 
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        /// Made this and forgot to label it... idr details
   public BattleResults pbDecisionOnTime2() {
     int count1=0;
     int count2=0;
@@ -2769,10 +2773,10 @@ namespace PokemonUnity.Combat
     if (count1<count2    ) return BattleResults.LOST;	// loss
     if (hptotal1>hptotal2) return BattleResults.WON;	// win
     if (hptotal1<hptotal2) return BattleResults.LOST;	// loss
-    return BattleResults.DRAW;                      // draw;
+    return BattleResults.DRAW;                          // draw;
   }
 
-  public BattleResults pbDecisionOnDraw() {
+  private BattleResults _pbDecisionOnDraw() {
     return BattleResults.DRAW; // draw;
   }
 
@@ -3412,7 +3416,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region End of round.
-  public virtual void pbEndOfRoundPhase() {
+  private void _pbEndOfRoundPhase() {
     GameDebug.Log($"[End of round]");
     for (int i = 0; i < battlers.Length; i++) {
       @battlers[i].effects.Electrify=false;

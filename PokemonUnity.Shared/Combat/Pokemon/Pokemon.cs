@@ -2856,7 +2856,7 @@ namespace PokemonUnity.Combat
 	  if (user.isFainted())
 		user.pbFaint(); // no return
 	  if (numhits>1 && target.damagestate.CalcDamage<=0) return;
-	  @battle.pbJudgeCheckpoint(user,thismove.MoveId);
+	  @battle.pbJudgeCheckpoint(user,thismove);
 	  // Additional effect
 	  if (target.damagestate.CalcDamage>0 &&
 		 !user.hasWorkingAbility(Abilities.SHEER_FORCE) &&
