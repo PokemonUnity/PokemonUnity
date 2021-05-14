@@ -22,10 +22,10 @@ namespace PokemonUnity.Combat
 		public Attack.Move thismove			{ get; protected set; }
 		public Attack.Category Category		{ get; set; }
 		public Moves MoveId					{ get; set; }
-		public Attack.Target Targets		{ get; set; }
+		//public Attack.Target Targets		{ get; set; }
 		public Attack.Data.Targets Target	{ get; set; }
 		public Types Type					{ get; set; }
-		public Attack.MoveFlags Flag		{ get; set; }
+		//public Attack.MoveFlags Flag		{ get; set; }
 		public Attack.Data.Flag Flags		{ get; set; }
 		public byte PP						{ get; set; }
 		/// <summary>
@@ -36,7 +36,7 @@ namespace PokemonUnity.Combat
 		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
 		/// </summary>
 		public virtual int AddlEffect		{ get { return Game.MoveData[MoveId].EffectChance??0; } }
-		public Attack.Data.Effects Effect	{ get; set; }
+		public Attack.Data.Effects Effect	{ get { return Game.MoveData[MoveId].Effect; } }
 		/// <summary>
 		/// The move's accuracy, as a percentage. 
 		/// An accuracy of 0 means the move doesn't perform an accuracy check 
@@ -44,14 +44,14 @@ namespace PokemonUnity.Combat
 		/// </summary>
 		public int Accuracy					{ get; set; }
 		public int Power					{ get; set; }
-		public int CritRatio				{ get; set; }
+		//public int CritRatio				{ get; set; }
 		public int Priority					{ get; set; }
-		public bool IsPhysical				{ get; set; }// { return Category == Attack.Category.PHYSICAL; } }
-		public bool IsSpecial				{ get; set; }// { return Category == Attack.Category.SPECIAL; } }
+		//public bool IsPhysical			{ get; set; }// { return Category == Attack.Category.PHYSICAL; } }
+		//public bool IsSpecial				{ get; set; }// { return Category == Attack.Category.SPECIAL; } }
 		public bool PowerBoost				{ get; set; }
 		//public bool pbIsStatus()			{ return false; }
 		public string Name					{ get { return Game.MoveData[MoveId].Name; } }
-		public string EffectString			{ get; set; }
+		//public string EffectString		{ get; set; }
 		//public Battle Battle				{ get { return this.battle ?? Game.battle; } }
 		public Battle battle				{ get; set; }
 		internal string Nothing = "But nothing happened!";
@@ -68,7 +68,7 @@ namespace PokemonUnity.Combat
 			Power			= movedata.Power ?? 0; //.BaseDamage;
 			Type			= movedata.Type;
 			Accuracy		= movedata.Accuracy ?? 0;
-			Effect			= movedata.Effect;
+			//Effect		= movedata.Effect;
 			Target			= movedata.Target;
 			Priority		= movedata.Priority;
 			Flags			= movedata.Flags;

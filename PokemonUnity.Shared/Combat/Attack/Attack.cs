@@ -12126,7 +12126,7 @@ namespace PokemonUnity.Combat
 		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
 		/// </summary>
 		int AddlEffect						{ get; }
-		Attack.Data.Effects Effect			{ get; set; }
+		Attack.Data.Effects Effect			{ get; }
 		/// <summary>
 		/// The move's accuracy, as a percentage. 
 		/// An accuracy of 0 means the move doesn't perform an accuracy check 
@@ -12134,10 +12134,10 @@ namespace PokemonUnity.Combat
 		/// </summary>
 		int Accuracy						{ get; set; }
 		int Power							{ get; set; }
-		int CritRatio						{ get; set; }
+		//int CritRatio						{ get; set; }
 		int Priority						{ get; set; }
-		bool IsPhysical						{ get; }// { return Category == Attack.Category.PHYSICAL; } }
-		bool IsSpecial						{ get; }// { return Category == Attack.Category.SPECIAL; } }
+		//bool IsPhysical					{ get; }// { return Category == Attack.Category.PHYSICAL; } }
+		//bool IsSpecial					{ get; }// { return Category == Attack.Category.SPECIAL; } }
 		bool pbIsStatus						{ get; }
 		bool PowerBoost						{ get; set; }
 		//public bool pbIsStatus()			{ return false; }
