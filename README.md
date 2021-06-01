@@ -18,7 +18,7 @@ I have changed a lot of code that was either unused (most unused assets were rem
 
 I strongly recommend that you use the master branch as a base rather than the [test-project branch](https://github.com/herbertmilhomme/PokemonUnity/tree/TestProject). This branch is entirely experimental and the process of being completely redone all over -- possibility of breaking your fangame or other project.
 
-I'm basing the code mimic and emulate the [Pokemon Essentials](http://pokemonessentials.wikia.com/wiki/Pok%C3%A9mon_Essentials_Wiki) package for RPG Maker MV, which is written in Ruby. But since Ruby follows similar object-oriented coding structures, it's easy to mirror the code to function the same.
+I'm basing the code mimic and emulate the [Pokemon Essentials](https://pokemon-essentials.fandom.com/wiki/Pokemon_Essentials_Wiki) package for RPG Maker MV, which is written in Ruby. But since Ruby follows similar object-oriented coding structures, it's easy to mirror the code to function the same.
 
 ## Demo and Downloads
 ### _These links point back to the Origin-Repo. release_
@@ -38,6 +38,6 @@ There are also demos for Windows, Linux, and Mac zipped in [Releases](https://gi
 
 * Project: https://github.com/herbertmilhomme/PokemonUnity/projects/1
 * Discord server: https://discord.gg/SggHcXP
-* Documentation: https://herbertmilhomme.github.io/PokemonUnity/ (or http://pokemonessentials.wikia.com/wiki/Pok%C3%A9mon_Essentials_Wiki)
+* Documentation: https://herbertmilhomme.github.io/PokemonUnity/ (or https://pokemon-essentials.fandom.com/wiki/Pokemon_Essentials_Wiki)
 * Documentation-Repo: https://github.com/herbertmilhomme/PokemonUnity/tree/gh-pages
 * Web-Server:
