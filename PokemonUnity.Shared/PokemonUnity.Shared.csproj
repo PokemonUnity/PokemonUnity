@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Events.cs" />
+    <Compile Include="Application\Game\Game.Frontend.cs" />
     <Compile Include="Application\Scene.cs" />
     <Compile Include="Application\MoveRoutes.cs" />
     <Compile Include="Application\Feature.cs" />
