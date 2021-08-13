@@ -1750,7 +1750,6 @@ namespace PokemonUnity.Monster
 		/// <param name="move"></param>
 		/// <param name="silently">Forces move to be learned by pokemon by overriding fourth regardless of player's choice</param>
 		/// <returns></returns>
-		/// Silently learns the given move. Will erase the first known move if it has to.
 		//ToDo: Change void to string, return errors as in-game prompts; 
 		//remove `out bool success` or replace with `out string error`
 		public void LearnMove(Moves move, out bool success, bool silently = false)
@@ -1801,6 +1800,44 @@ namespace PokemonUnity.Monster
 				moves[3] = new Move(move);
 				success = true;
 			}
+		}
+
+		/// <summary>
+		/// Silently learns the given move. Will erase the first known move if it has to.
+		/// </summary>
+		/// <param name="move"></param>
+		/// <returns></returns>
+		public void pbLearnMove(Moves move)
+		{
+			//if (move is String || move is Symbol)
+			//{
+			//	move = getID(PBMoves, move);
+			//}
+			if (move <= 0) return;
+			for (int i = 0; i < 4; i++)
+			{
+				if (moves[i].MoveId == move)
+				{
+					int j = i + 1; while (j < 4) { 
+						if (@moves[j].MoveId == 0) break;
+						PokemonUnity.Attack.Move tmp = @moves[j];
+						@moves[j] = @moves[j - 1];
+						@moves[j - 1] = tmp;
+						j += 1;
+					}
+					return;
+				}
+			}
+			for (int i = 0; i< 4; i++) {
+				if (@moves[i].MoveId==0) {
+					@moves[i]=new PokemonUnity.Attack.Move(move);
+					return;
+				}
+			}
+			@moves[0] = @moves[1];
+			@moves[1] = @moves[2];
+			@moves[2] = @moves[3];
+			@moves[3] = new PokemonUnity.Attack.Move(move);
 		}
 
 		/// <summary>

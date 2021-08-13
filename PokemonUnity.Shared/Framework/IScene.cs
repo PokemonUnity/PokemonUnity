@@ -29,6 +29,8 @@ namespace PokemonUnity
 		/// </summary>
 		int Id { get; }
 
+		void pbRefresh();
+
 		/// <summary>
 		/// Shows the player's Poké Ball being thrown to capture a Pokémon.
 		/// </summary>
@@ -233,12 +235,12 @@ namespace PokemonUnity
 	public interface IButtonEventScene : IEventScene {
 		void pbOnScreen1();
 	}
-	public interface IPokeBattle_DebugScene {
+	public interface IPokeBattle_DebugScene : IScene {
 		void pbDisplayMessage(string msg,bool brief= false);
 		void pbDisplayPausedMessage(string msg);
 		void pbDisplayConfirmMessage(string msg);
 		void pbFrameUpdate(object cw);
-		void pbRefresh();
+		//void pbRefresh();
 		/// <summary>
 		/// Called whenever a new round begins.
 		/// </summary>

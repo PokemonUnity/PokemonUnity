@@ -459,7 +459,7 @@ namespace PokemonUnity
 		void pbDisplay(string msg, bool brief = false);
 		void pbConfirm(string msg);
 		void pbShowCommands(string helptext, int commands);
-		void pbRefresh();
+		//void pbRefresh();
 
 		// Called when the item screen wants an item to be chosen from the screen
 		Items pbChooseItem(bool lockpocket = false);
@@ -467,7 +467,7 @@ namespace PokemonUnity
 
 	public interface IPokemonBagScreen : IScreen
 	{
-		void initialize(IPokemonBag_Scene scene, Bag bag);
+		IPokemonBagScreen initialize(IPokemonBag_Scene scene, Bag bag);
 		void pbDisplay(string text);
 		void pbConfirm(string text);
 
@@ -495,13 +495,13 @@ namespace PokemonUnity
 	}
 	#endregion
 
-	#region 
+	#region PC Pokemon Storage
 	public interface IPokemonStorageScene : IScene
 	{
 		//void drawMarkings(bitmap , float x, float y, float width, float height, bool[] markings);
 		void drawMarkings(bool[] markings);
 		string[] getMarkingCommands(bool[] markings);
-		void initialize();
+		IPokemonStorageScene initialize();
 		void pbBoxName(string helptext, int minchars, int maxchars);
 		void pbChangeBackground(int wp);
 		int pbChangeSelection(int key, int selection);
@@ -545,7 +545,7 @@ namespace PokemonUnity
 		Character.PokemonStorage storage { get; }
 
 		void debugMenu(KeyValuePair<int, int> selected, Pokemon pkmn, Pokemon heldpoke);
-		void initialize(IPokemonStorageScene scene, Character.PokemonStorage storage);
+		void IPokemonStorageScreen(IPokemonStorageScene scene, Character.PokemonStorage storage);
 		bool pbAble(Pokemon pokemon);
 		void pbBoxCommands();
 		int? pbChoosePokemon(Pokemon[] party = null);
@@ -566,6 +566,32 @@ namespace PokemonUnity
 	}
 	#endregion
 
+	#region Summary
+	public interface IPokemonSummaryScene : IScene
+	{
+		IPokemonSummaryScene initialize();
+	}
+
+	public interface IPokemonSummary : IScreen
+	{
+		IPokemonSummary initialize(IPokemonSummaryScene scene);
+		void pbStartScreen(Monster.Pokemon[] party, int partyindex);
+		int pbStartForgetScreen(Monster.Pokemon[] party, int partyindex, Moves moveToLearn);
+		void pbStartChooseMoveScreen(Monster.Pokemon[] party, int partyindex, string message);
+	}
+	#endregion
+
+	#region Summary
+	public interface IPokemonScreen_Scene : IScene
+	{
+		IPokemonScreen_Scene initialize();
+	}
+
+	public interface IPokemonScreen : IScreen
+	{
+	}
+	#endregion
+
 	namespace UX
 	{
 		public interface IFrontEnd
@@ -581,11 +607,14 @@ namespace PokemonUnity
 			void pbBGMFade(float duration);
 			void pbBGSFade(float duration);
 			void pbFadeOutIn(int value, Action action);
+			void pbFadeOutInWithMusic(int value, Action action);
 			void pbCueBGM(IAudioObject bgm, float value);
 			float Audio_bgm_get_volume();
 			void Audio_bgm_set_volume(float n);
 			void me_stop();
 			void pbSEStop();
+			void pbPlayDecisionSE();
+			void pbPlayBuzzerSE();
 			void pbSEPlay(string name);
 			void pbBGMPlay(string name);
 			void pbBGSPlay(string name);

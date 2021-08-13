@@ -453,43 +453,44 @@ public static void pbDayCareGenerateEgg() {
   Game.GameData.Player.Party[Game.GameData.Player.Party.Length]=egg;
 }
 
-/*Events.onStepTaken+=delegate(object sender, EventArgs e) {
-public void OnStepTakenEventHandler(object sender, EventArgs e) {
+//Events.onStepTaken+=delegate(object sender, EventArgs e) {
+public void OnStepTakenEventHandler(object sender, Events.OnStepTakenFieldMovementEventArgs e) {
    if (Game.GameData.Player == null) return;
    int deposited=DayCare.pbDayCareDeposited();
-   if (deposited==2 && Game.GameData.Global.daycareEgg==0) {
+   if (deposited==2 && !Game.GameData.Global.daycareEgg) {//==0
      if (Game.GameData.Global.daycareEggSteps == null) Game.GameData.Global.daycareEggSteps=0;
      Game.GameData.Global.daycareEggSteps+=1;
      if (Game.GameData.Global.daycareEggSteps==256) {
        Game.GameData.Global.daycareEggSteps=0;
        int compatval=new int[] {0,20,50,70}[DayCare.pbDayCareGetCompat()];
-       if (Game.GameData.Bag.pbQuantity(Items.OVALCHARM)>0) { //hasConst?(PBItems,:OVALCHARM) &&
+       if (Game.GameData.Bag.pbQuantity(Items.OVAL_CHARM)>0) { //hasConst?(PBItems,:OVALCHARM) &&
          compatval=new int[] {0,40,80,88}[DayCare.pbDayCareGetCompat()];
        }
        int rnd=Core.Rand.Next(100);
        if (rnd<compatval) {
          //  Egg is generated
-         Game.GameData.Global.daycareEgg=1;
+         Game.GameData.Global.daycareEgg=true; //+=1; try adding one instead of setting to one?
        }
      }
    }
    for (int i = 0; i < 2; i++) {
-     Pokemon pkmn=Game.GameData.Global.daycare[i][0];
+     Pokemon pkmn=Game.GameData.Global.daycare.Slot[i].Key;
      if (!pkmn.IsNotNullOrNone()) return;
-     int maxexp=PBExperience.pbGetMaxExperience(pkmn.growthrate);
-     if (pkmn.exp<maxexp) {
+     int maxexp=Monster.Data.Experience.GetMaxExperience(pkmn.GrowthRate);
+     if (pkmn.Exp<maxexp) {
        int oldlevel=pkmn.Level;
        pkmn.Exp+=1;
        if (pkmn.Level!=oldlevel) {
-         //pkmn.calcStats();
+         pkmn.calcStats();
          //Moves[] movelist=pkmn.getMoveList();
-         foreach (var i in movelist) {
-           if (i[0]==pkmn.Level) pkmn.pbLearnMove(i[1]);	// Learned a new move
+         var movelist=Game.PokemonMovesData[pkmn.Species].LevelUp;
+         foreach (KeyValuePair<Moves,int> j in movelist) {
+           if (j.Value==pkmn.Level) pkmn.pbLearnMove(j.Key);	// Learned a new move
          }       
        }     
       }   
     }
-  }*/
+  }
 		#endregion
 
 		#region Explicit Operators
