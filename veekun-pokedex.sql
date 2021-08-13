@@ -1575,11 +1575,11 @@ CREATE TABLE IF NOT EXISTS "pokemon_ui_sprite" (
 	FOREIGN KEY("pokemon_form_id") REFERENCES "pokemon_forms"("id")
 );
 CREATE TABLE IF NOT EXISTS "item_ui_sprite" (
-	"id"	NVARCHAR(15) NOT NULL, --name of the sprite image
+	"id"		NVARCHAR(15) NOT NULL, --name of the sprite image
 	"item_id"	INTEGER NULL, --"item"
 	"filepath"	NVARCHAR(75) NOT NULL, --name with folder structure
 	"IsCopy"	BIT NOT NULL, --duplicate of same item used somewhere else
-	"notes"	NVARCHAR(75) NOT NULL, --name with folder structure
+	"notes"		NVARCHAR(75) NOT NULL, --name with folder structure
 	"reuse_item_id"	NVARCHAR(75) NOT NULL, --the id of item that uses this exact sprite, to prevent duplicates
 	PRIMARY KEY("id"), 
 	FOREIGN KEY("item_id") REFERENCES "items"("id")
@@ -1591,11 +1591,11 @@ CREATE VIEW pokemon_abilities_view as
 select 
 	p.id as pokemon_id,
 	CAST(AVG(CASE WHEN a.slot = 1 THEN a.ability_id
-    END) as int) as ability1
+	END) as int) as ability1
 	,CAST(AVG(CASE WHEN a.slot = 2 THEN a.ability_id 
-    END) as int) as ability2
+	END) as int) as ability2
 	,CAST(AVG(CASE WHEN a.slot = 3 THEN a.ability_id 
-    END) as int) as ability3
+	END) as int) as ability3
 	from "pokemon" as p
 	left join "pokemon_abilities" as a on p.id = a.pokemon_id
 	group by p.id;
@@ -1603,29 +1603,29 @@ CREATE VIEW pokemon_stats_view as
 select 
 	p.id as pokemon_id
 	,CAST(AVG(CASE WHEN i.stat_id = 1 THEN i.base_stat
-    END) as int) as bhp
+	END) as int) as bhp
 	,CAST(AVG(CASE WHEN i.stat_id = 2 THEN i.base_stat
-    END) as int) as batk
+	END) as int) as batk
 	,CAST(AVG(CASE WHEN i.stat_id = 3 THEN i.base_stat
-    END) as int) as bdef
+	END) as int) as bdef
 	,CAST(AVG(CASE WHEN i.stat_id = 4 THEN i.base_stat
-    END) as int) as bspa
+	END) as int) as bspa
 	,CAST(AVG(CASE WHEN i.stat_id = 5 THEN i.base_stat
-    END) as int) as bspd
+	END) as int) as bspd
 	,CAST(AVG(CASE WHEN i.stat_id = 6 THEN i.base_stat
-    END) as int) as bspe
+	END) as int) as bspe
 	,CAST(AVG(CASE WHEN i.stat_id = 1 THEN i.effort
-    END) as int) as ehp
+	END) as int) as ehp
 	,CAST(AVG(CASE WHEN i.stat_id = 2 THEN i.effort
-    END) as int) as eatk
+	END) as int) as eatk
 	,CAST(AVG(CASE WHEN i.stat_id = 3 THEN i.effort
-    END) as int) as edef
+	END) as int) as edef
 	,CAST(AVG(CASE WHEN i.stat_id = 4 THEN i.effort
-    END) as int) as espa
+	END) as int) as espa
 	,CAST(AVG(CASE WHEN i.stat_id = 5 THEN i.effort
-    END) as int) as espd
+	END) as int) as espd
 	,CAST(AVG(CASE WHEN i.stat_id = 6 THEN i.effort
-    END) as int) as espe
+	END) as int) as espe
 	from "pokemon" as p
 	left join "pokemon_stats" as i on p.id = i.pokemon_id
 	group by p.id;
@@ -1634,7 +1634,7 @@ select
 	p.id as pokemon_id,
 	MIN(e.egg_group_id) as egg_group1
 	,CASE WHEN COUNT(e.species_id) = 2 THEN MAX(e.egg_group_id) --ELSE 0   
-    END as egg_group2
+	END as egg_group2
 	from "pokemon" as p
 	left join "pokemon_egg_groups" as e on p.species_id = e.species_id
 	group by p.id;
@@ -1642,9 +1642,9 @@ CREATE VIEW pokemon_types_view as
 select 
 	p.id as pokemon_id,
 	CAST(AVG(CASE WHEN t.slot = 1 THEN t.type_id  
-    END) as int) as type1
+	END) as int) as type1
 	,CAST(AVG(CASE WHEN t.slot = 2 THEN t.type_id --ELSE 0
-    END) as int) as type2
+	END) as int) as type2
 	from "pokemon" as p
 	left join "pokemon_types" as t on p.id = t.pokemon_id
 	group by p.id;
@@ -1766,15 +1766,15 @@ CREATE VIEW berry_flavors_view as
 select 
 	b.id as berry_id
 	,CAST(AVG(CASE WHEN i.contest_type_id = 1 THEN i.flavor
-    END) as int) as cool
+	END) as int) as cool
 	,CAST(AVG(CASE WHEN i.contest_type_id = 2 THEN i.flavor
-    END) as int) as beauty
+	END) as int) as beauty
 	,CAST(AVG(CASE WHEN i.contest_type_id = 3 THEN i.flavor
-    END) as int) as cute
+	END) as int) as cute
 	,CAST(AVG(CASE WHEN i.contest_type_id = 4 THEN i.flavor
-    END) as int) as smart
+	END) as int) as smart
 	,CAST(AVG(CASE WHEN i.contest_type_id = 5 THEN i.flavor
-    END) as int) as tough
+	END) as int) as tough
 	from "berries" as b
 	left join "berry_flavors" as i on b.id = i.berry_id
 	group by b.id;
