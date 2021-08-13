@@ -417,8 +417,8 @@ public static bool pbSpeciesCompatible (Pokemons species,Moves move) {
 public static int pbForgetMove(Pokemon pokemon,Moves moveToLearn) {
   int ret=-1;
   Game.UI.pbFadeOutIn(99999, () => {
-     IPokemonSummaryScene scene= Game.PokemonSummaryScene.initialize(); //new PokemonSummaryScene();
-     IPokemonSummary screen=Game.PokemonSummary; //new PokemonSummary(scene);
+     IPokemonSummaryScene scene= Game.PokemonSummaryScene; //new PokemonSummaryScene();
+     IPokemonSummary screen=Game.PokemonSummary.initialize(scene); //new PokemonSummary(scene);
      ret=screen.pbStartForgetScreen(new Pokemon[] { pokemon },0,moveToLearn);
   });
   return ret;

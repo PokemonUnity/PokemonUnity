@@ -518,7 +518,7 @@ namespace PokemonUnity
 		int pbPartyChangeSelection(int key, int selection);
 		void pbPartySetArrow(int selection);//arrow , 
 		void pbPlace(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		void pbRefresh();
+		//void pbRefresh();
 		void pbRelease(KeyValuePair<int, int> selected, Pokemon heldpoke);
 		int[] pbSelectBox(Pokemon[] party);
 		int[] pbSelectBoxInternal(Pokemon[] party);
@@ -569,7 +569,26 @@ namespace PokemonUnity
 	#region Summary
 	public interface IPokemonSummaryScene : IScene
 	{
-		IPokemonSummaryScene initialize();
+		//IPokemonSummaryScene initialize();
+		//void drawMarkings(bitmap,int x,int y,int width,int height, bool[] markings);
+		void drawPageOne(Monster.Pokemon pokemon);
+		void drawPageOneEgg(Monster.Pokemon pokemon);
+		void drawPageTwo(Monster.Pokemon pokemon);
+		void drawPageThree(Monster.Pokemon pokemon);
+		void drawPageFour(Monster.Pokemon pokemon);
+		void drawPageFive(Monster.Pokemon pokemon);
+		void drawMoveSelection(Monster.Pokemon pokemon, Moves moveToLearn);
+		void drawSelectedMove(Monster.Pokemon pokemon, Moves moveToLearn, Moves moveid);
+		void pbChooseMoveToForget(Moves moveToLearn);
+		void pbEndScene();
+		void pbGoToNext();
+		void pbGoToPrevious();
+		void pbMoveSelection();
+		void pbPokerus(Monster.Pokemon pkmn);
+		void pbScene();
+		void pbStartForgetScene(Monster.Pokemon party, int partyindex, Moves moveToLearn);
+		void pbStartScene(Monster.Pokemon party, int partyindex);
+		void pbUpdate();
 	}
 
 	public interface IPokemonSummary : IScreen
@@ -581,14 +600,70 @@ namespace PokemonUnity
 	}
 	#endregion
 
-	#region Summary
+	#region Pokemon Party
 	public interface IPokemonScreen_Scene : IScene
 	{
-		IPokemonScreen_Scene initialize();
+		//IPokemonScreen_Scene initialize();
+		void pbShowCommands(string helptext, string[] commands,int index= 0);
+		void update();
+		void pbSetHelpText(string helptext);
+		void pbStartScene(Monster.Pokemon[] party,string starthelptext,string[] annotations= null,bool multiselect= false);
+		void pbEndScene();
+		/// <summary>
+		/// </summary>
+		/// <param name="key">Controller Input Key</param>
+		/// <param name="currentsel"></param>
+		void pbChangeSelection(int key,int currentsel);
+		//void pbRefresh();
+		void pbHardRefresh();
+		void pbPreSelect(Monster.Pokemon pkmn);
+		void pbChoosePokemon(bool switching= false, int initialsel= -1);
+		void pbSelect(Items item);
+		//void pbDisplay(string text);
+		void pbSwitchBegin(int oldid,int newid);
+		void pbSwitchEnd(int oldid,int newid);
+		void pbDisplayConfirm(string text);
+		void pbAnnotate(string[] annot);
+		void pbSummary(int pkmnid);
+		void pbChooseItem(Items[] bag);
+		void pbUseItem(Items[] bag,Monster.Pokemon pokemon); 
+		void pbMessageFreeText(string text,string startMsg,int maxlength);
 	}
 
 	public interface IPokemonScreen : IScreen
 	{
+		IPokemonScreen initialize(IPokemonScreen_Scene scene, Monster.Pokemon[] party);
+		void pbHardRefresh();
+		void pbRefresh();
+		void pbRefreshSingle(int i);
+		void pbDisplay(string text);
+		void pbConfirm(string text);
+		void pbSwitch(int oldid,int newid);
+		void pbMailScreen(Items item, Monster.Pokemon pkmn, int pkmnid);
+		void pbTakeMail(Monster.Pokemon pkmn);
+		void pbGiveMail(Items item,Monster.Pokemon pkmn,int pkmnid= 0);
+		void pbPokemonGiveScreen(Items item);
+		void pbPokemonGiveMailScreen(int mailIndex);
+		void pbStartScene(string helptext,bool doublebattle,string[] annotations= null);
+		void pbChoosePokemon(string helptext= null);
+		void pbChooseMove(Monster.Pokemon pokemon,string helptext);
+		void pbEndScene();
+		/// <summary>
+		/// Checks for identical species
+		/// </summary>
+		/// <param name=""></param>
+		void pbCheckSpecies(Pokemons[] array);
+		/// <summary>
+		/// Checks for identical held items
+		/// </summary>
+		/// <param name=""></param>
+		void pbCheckItems(Items[] array);
+		void pbPokemonMultipleEntryScreenEx(string[] ruleset);
+		void pbChooseAblePokemon(bool ableProc,bool allowIneligible= false);
+		void pbRefreshAnnotations(bool ableProc);
+		void pbClearAnnotations();
+		void pbPokemonDebug(Monster.Pokemon pkmn, int pkmnid);
+		void pbPokemonScreen();
 	}
 	#endregion
 
