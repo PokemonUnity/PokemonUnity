@@ -415,7 +415,7 @@ namespace PokemonUnity.UX
 		#endregion
 
 		public void pbRefresh() { }
-		{public void pbUpdate()
+		public void pbUpdate()
 		{
     //for (int i = 0; i < 3; i++) {
     //  @bitmaps[i].update();
