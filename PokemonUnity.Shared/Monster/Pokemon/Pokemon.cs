@@ -112,7 +112,7 @@ namespace PokemonUnity.Monster
 		/// Where Pokemon can use Belch (used in battle only)
 		/// </summary>
 		public bool belch { get; set; }
-		public Experience Experience { get; set; }
+		public Experience Experience { get; private set; }
 		/// <summary>
 		/// Current happiness
 		/// </summary>
