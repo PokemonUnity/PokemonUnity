@@ -6384,7 +6384,7 @@ public class iTween : MonoBehaviour
 		}
 	}		
 	
-	/* GFX47 MOD START */
+	// GFX47 MOD START
 	/// <summary>
 	/// Stop and destroy all iTweens in current scene of a particular name.
 	/// </summary>
@@ -6404,7 +6404,7 @@ public class iTween : MonoBehaviour
 			StopByName((GameObject)stopArray[i],name);
 		}
 	}
-	/* GFX47 MOD END */
+	// GFX47 MOD END
 	
 	/// <summary>
 	/// Stop and destroy all iTweens on a GameObject.
@@ -6445,7 +6445,7 @@ public class iTween : MonoBehaviour
 		}
 	}
 	
-	/* GFX47 MOD START */
+	// GFX47 MOD START
 	/// <summary>
 	/// Stop and destroy all iTweens on a GameObject of a particular name.
 	/// </summar
@@ -6455,17 +6455,17 @@ public class iTween : MonoBehaviour
 	public static void StopByName(GameObject target, string name){
 		Component[] tweens = target.GetComponents<iTween>();
 		foreach (iTween item in tweens){
-			/*string targetType = item.type+item.method;
-			targetType=targetType.Substring(0,type.Length);
-			if(targetType.ToLower() == type.ToLower()){
-				item.Dispose();
-			}*/
+			//string targetType = item.type+item.method;
+			//targetType=targetType.Substring(0,type.Length);
+			//if(targetType.ToLower() == type.ToLower()){
+			//	item.Dispose();
+			//}
 			if(item._name == name){
 				item.Dispose();
 			}
 		}
 	}
-	/* GFX47 MOD END */
+	// GFX47 MOD END
 	
 	/// <summary>
 	/// Stop and destroy all iTweens on a GameObject of a particular type including its children.
@@ -6489,7 +6489,7 @@ public class iTween : MonoBehaviour
 		}		
 	}
 	
-	/* GFX47 MOD START */
+	// GFX47 MOD START
 	/// <summary>
 	/// Stop and destroy all iTweens on a GameObject of a particular name including its children.
 	/// </summar
@@ -6499,11 +6499,11 @@ public class iTween : MonoBehaviour
 	public static void StopByName(GameObject target, string name, bool includechildren){
 		Component[] tweens = target.GetComponents<iTween>();
 		foreach (iTween item in tweens){
-			/*string targetType = item.type+item.method;
-			targetType=targetType.Substring(0,type.Length);
-			if(targetType.ToLower() == type.ToLower()){
-				item.Dispose();
-			}*/
+			//string targetType = item.type+item.method;
+			//targetType=targetType.Substring(0,type.Length);
+			//if(targetType.ToLower() == type.ToLower()){
+			//	item.Dispose();
+			//}
 			if(item._name == name){
 				item.Dispose();
 			}
@@ -6515,7 +6515,7 @@ public class iTween : MonoBehaviour
 			}			
 		}		
 	}
-	/* GFX47 MOD END */
+	// GFX47 MOD END
 
 	/// <summary>
 	/// Universal interface to help in the creation of Hashtables.  Especially useful for C# users.
@@ -6806,9 +6806,9 @@ public class iTween : MonoBehaviour
 		
 		id=(string)tweenArguments["id"];
 		type=(string)tweenArguments["type"];
-		/* GFX47 MOD START */
+		// GFX47 MOD START
 		_name=(string)tweenArguments["name"];
-		/* GFX47 MOD END */
+		// GFX47 MOD END
 		method=(string)tweenArguments["method"];
                
 		if(tweenArguments.Contains("time")){
@@ -6984,10 +6984,10 @@ public class iTween : MonoBehaviour
 		case EaseType.spring:
 			ease = new EasingFunction(spring);
 			break;
-		/* GFX47 MOD START */
-		/*case EaseType.bounce:
-			ease = new EasingFunction(bounce);
-			break;*/
+		// GFX47 MOD START
+		//case EaseType.bounce:
+		//	ease = new EasingFunction(bounce);
+		//	break;
 		case EaseType.easeInBounce:
 			ease = new EasingFunction(easeInBounce);
 			break;
@@ -6997,7 +6997,7 @@ public class iTween : MonoBehaviour
 		case EaseType.easeInOutBounce:
 			ease = new EasingFunction(easeInOutBounce);
 			break;
-		/* GFX47 MOD END */
+		// GFX47 MOD END
 		case EaseType.easeInBack:
 			ease = new EasingFunction(easeInBack);
 			break;
@@ -7007,10 +7007,10 @@ public class iTween : MonoBehaviour
 		case EaseType.easeInOutBack:
 			ease = new EasingFunction(easeInOutBack);
 			break;
-		/* GFX47 MOD START */
-		/*case EaseType.elastic:
-			ease = new EasingFunction(elastic);
-			break;*/
+		// GFX47 MOD START
+		//case EaseType.elastic:
+		//	ease = new EasingFunction(elastic);
+		//	break;
 		case EaseType.easeInElastic:
 			ease = new EasingFunction(easeInElastic);
 			break;
@@ -7020,7 +7020,7 @@ public class iTween : MonoBehaviour
 		case EaseType.easeInOutElastic:
 			ease = new EasingFunction(easeInOutElastic);
 			break;
-		/* GFX47 MOD END */
+		// GFX47 MOD END
 		}
 	}
 	
@@ -7115,23 +7115,19 @@ public class iTween : MonoBehaviour
 	}
 	
 	void EnableKinematic(){
-		/*
-		if(gameObject.GetComponent(typeof(Rigidbody))){
-			if(!rigidbody.isKinematic){
-				kinematic=true;
-				rigidbody.isKinematic=true;
-			}
-		}
-		*/
+		//if(gameObject.GetComponent(typeof(Rigidbody))){
+		//	if(!rigidbody.isKinematic){
+		//		kinematic=true;
+		//		rigidbody.isKinematic=true;
+		//	}
+		//}
 	}
 	
 	void DisableKinematic(){
-		/*
-		if(kinematic && rigidbody.isKinematic==true){
-			kinematic=false;
-			rigidbody.isKinematic=false;
-		}
-		*/
+		//if(kinematic && rigidbody.isKinematic==true){
+		//	kinematic=false;
+		//	rigidbody.isKinematic=false;
+		//}
 	}
 		
 	void ResumeDelay(){
@@ -7295,15 +7291,15 @@ public class iTween : MonoBehaviour
 		return end * 0.5f * (Mathf.Sqrt(1 - value * value) + 1) + start;
 	}
 
-	/* GFX47 MOD START */
+	// GFX47 MOD START
 	private float easeInBounce(float start, float end, float value){
 		end -= start;
 		float d = 1f;
 		return end - easeOutBounce(0, end, d-value) + start;
 	}
-	/* GFX47 MOD END */
+	// GFX47 MOD END
 
-	/* GFX47 MOD START */
+	// GFX47 MOD START
 	//private float bounce(float start, float end, float value){
 	private float easeOutBounce(float start, float end, float value){
 		value /= 1f;
@@ -7321,16 +7317,16 @@ public class iTween : MonoBehaviour
 			return end * (7.5625f * (value) * value + .984375f) + start;
 		}
 	}
-	/* GFX47 MOD END */
+	// GFX47 MOD END
 
-	/* GFX47 MOD START */
+	// GFX47 MOD START
 	private float easeInOutBounce(float start, float end, float value){
 		end -= start;
 		float d = 1f;
 		if (value < d* 0.5f) return easeInBounce(0, end, value*2) * 0.5f + start;
 		else return easeOutBounce(0, end, value*2-d) * 0.5f + end*0.5f + start;
 	}
-	/* GFX47 MOD END */
+	// GFX47 MOD END
 
 	private float easeInBack(float start, float end, float value){
 		end -= start;
@@ -7372,7 +7368,7 @@ public class iTween : MonoBehaviour
 		return (amplitude * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * 1 - s) * (2 * Mathf.PI) / period));
     }
 	
-	/* GFX47 MOD START */
+	// GFX47 MOD START
 	private float easeInElastic(float start, float end, float value){
 		end -= start;
 		
@@ -7394,12 +7390,12 @@ public class iTween : MonoBehaviour
 		
 		return -(a * Mathf.Pow(2, 10 * (value-=1)) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p)) + start;
 	}		
-	/* GFX47 MOD END */
+	// GFX47 MOD END
 
-	/* GFX47 MOD START */
+	// GFX47 MOD START
 	//private float elastic(float start, float end, float value){
 	private float easeOutElastic(float start, float end, float value){
-	/* GFX47 MOD END */
+	// GFX47 MOD END
 		//Thank you to rafael.marteleto for fixing this as a port over from Pedro's UnityTween
 		end -= start;
 		
@@ -7422,7 +7418,7 @@ public class iTween : MonoBehaviour
 		return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) + end + start);
 	}		
 	
-	/* GFX47 MOD START */
+	// GFX47 MOD START
 	private float easeInOutElastic(float start, float end, float value){
 		end -= start;
 		
@@ -7445,7 +7441,7 @@ public class iTween : MonoBehaviour
 		if (value < 1) return -0.5f * (a * Mathf.Pow(2, 10 * (value-=1)) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p)) + start;
 		return a * Mathf.Pow(2, -10 * (value-=1)) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) * 0.5f + end + start;
 	}		
-	/* GFX47 MOD END */
+	// GFX47 MOD END
 	
 	#endregion	*/
 	
