@@ -44,9 +44,10 @@ using UnityEngine;
 /// <para>Author: Bob Berkebile (http://pixelplacement.com)</para>
 /// <para>Support: http://itween.pixelplacement.com</para>
 /// </summary>
-public class iTween : MonoBehaviour{
-		
-	#region Variables
+/// It's not used in the project... will remove it later
+public class iTween : MonoBehaviour
+{
+	/*#region Variables
 	
 	//repository of all living iTweens:
 	public static List<Hashtable> tweens = new List<Hashtable>();
@@ -60,9 +61,9 @@ public class iTween : MonoBehaviour{
 	public float time, delay;
 	public LoopType loopType;
 	public bool isRunning,isPaused;
-	/* GFX47 MOD START */
+	// GFX47 MOD START 
 	public string _name;
-	/* GFX47 MOD END */
+	// GFX47 MOD END 
 		
 	//private members:
  	private float runningTime, percentage;
@@ -118,21 +119,21 @@ public class iTween : MonoBehaviour{
 		easeInOutCirc,
 		linear,
 		spring,
-		/* GFX47 MOD START */
+		// GFX47 MOD START 
 		//bounce,
 		easeInBounce,
 		easeOutBounce,
 		easeInOutBounce,
-		/* GFX47 MOD END */
+		// GFX47 MOD END 
 		easeInBack,
 		easeOutBack,
 		easeInOutBack,
-		/* GFX47 MOD START */
+		// GFX47 MOD START 
 		//elastic,
 		easeInElastic,
 		easeOutElastic,
 		easeInOutElastic,
-		/* GFX47 MOD END */
+		// GFX47 MOD END 
 		punch
 	}
 	
@@ -355,12 +356,12 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.Object"/> for arguments to be sent to the "oncomplete" method.
 	/// </param>
 	public static void CameraFadeTo(Hashtable args){
-		/*
-		CameraFadeAdd(Defaults.cameraFadeDepth);
 		
-		//rescale cameraFade just in case screen size has changed to ensure it takes up the full screen:
-		cameraFade.guiTexture.pixelInset=new Rect(0,0,Screen.width,Screen.height);
-		*/
+		//CameraFadeAdd(Defaults.cameraFadeDepth);
+		//
+		////rescale cameraFade just in case screen size has changed to ensure it takes up the full screen:
+		//cameraFade.guiTexture.pixelInset=new Rect(0,0,Screen.width,Screen.height);
+		
 	
 		if(cameraFade){
 			//establish iTween:
@@ -4094,12 +4095,12 @@ public class iTween : MonoBehaviour{
 			colors[i,2].b = ease(colors[i,0].b,colors[i,1].b,percentage);
 			colors[i,2].a = ease(colors[i,0].a,colors[i,1].a,percentage);
 		}
-		/*
-		colors[2].r = ease(colors[0].r,colors[1].r,percentage);
-		colors[2].g = ease(colors[0].g,colors[1].g,percentage);
-		colors[2].b = ease(colors[0].b,colors[1].b,percentage);
-		colors[2].a = ease(colors[0].a,colors[1].a,percentage);
-		*/
+		
+		//colors[2].r = ease(colors[0].r,colors[1].r,percentage);
+		//colors[2].g = ease(colors[0].g,colors[1].g,percentage);
+		//colors[2].b = ease(colors[0].b,colors[1].b,percentage);
+		//colors[2].a = ease(colors[0].a,colors[1].a,percentage);
+		
 		
 		//apply:
 		if(GetComponent<GUITexture>()){
@@ -4257,12 +4258,12 @@ public class iTween : MonoBehaviour{
 			thisTransform.eulerAngles = currentRotation;	
 		}
 				
-		/*
+		
 		//dial in:
-		if(percentage==1){	
-			transform.position=vector3s[5];
-		}
-		*/
+		//if(percentage==1){	
+		//	transform.position=vector3s[5];
+		//}
+		
 		
 		//need physics?
 		postUpdate=thisTransform.position;
@@ -4498,11 +4499,10 @@ public class iTween : MonoBehaviour{
 		}
 		
 		//dial in:
-		/*
-		if(percentage==1){	
-			transform.position=vector3s[0];
-		}
-		*/
+		//if(percentage==1){	
+		//	transform.position=vector3s[0];
+		//}
+		
 		
 		//need physics?
 		postUpdate=thisTransform.position;
@@ -4539,11 +4539,9 @@ public class iTween : MonoBehaviour{
 		vector3s[3]=vector3s[2];
 		
 		//dial in:
-		/*
-		if(percentage==1){	
-			transform.eulerAngles=vector3s[0];
-		}
-		*/
+		//if(percentage==1){	
+		//	transform.eulerAngles=vector3s[0];
+		//}
 		
 		//need physics?
 		postUpdate=thisTransform.eulerAngles;
@@ -4574,12 +4572,10 @@ public class iTween : MonoBehaviour{
 		//apply:
 		thisTransform.localScale=vector3s[0]+vector3s[2];
 		
-		//dial in:
-		/*
-		if(percentage==1){	
-			transform.localScale=vector3s[0];
-		}
-		*/
+		//dial in:		
+		//if(percentage==1){	
+		//	transform.localScale=vector3s[0];
+		//}
 	}		
 	
 	#endregion	
@@ -7451,7 +7447,7 @@ public class iTween : MonoBehaviour{
 	}		
 	/* GFX47 MOD END */
 	
-	#endregion	
+	#endregion	*/
 	
 	#region Deprecated and Renamed
 	/*
