@@ -74,7 +74,7 @@ namespace PokemonUnity
 	{
 		void initialize(IScene scene);
 		void pbUpdate();
-		void pbRefresh();
+		//void pbRefresh();
 		void pbPurify();
 		//void pbConfirm(string msg);
 		void pbDisplay(string msg, bool brief = false);
@@ -181,7 +181,7 @@ namespace PokemonUnity
 		//void pbShowCommands(string msg, string[] commands, int defaultValue);
 		void pbShowCommands(string msg, string[] commands, bool canCancel);
 		void pbFrameUpdate(object cw = null);
-		void pbRefresh();
+		//void pbRefresh();
 		void pbAddSprite(string id, double x, double y, string filename, int viewport);
 		void pbAddPlane(int id, string filename, int viewport);
 		void pbDisposeSprites();
@@ -413,7 +413,7 @@ namespace PokemonUnity
 	public interface IPokemonFormScene : IScene
 	{
 		void pbUpdate();
-		void pbRefresh();
+		//void pbRefresh();
 		List<PokemonUnity.Monster.Forms> pbGetAvailable(); //returns [Name, Gender, Form] 
 		List<string> pbGetCommands();
 		void pbChooseForm();
@@ -433,7 +433,7 @@ namespace PokemonUnity
 	{
 		void pbEndScene();
 		void pbHideMenu();
-		void pbRefresh();
+		//void pbRefresh();
 		void pbShowCommands(string[] commands);
 		void pbShowHelp(string text);
 		void pbShowInfo(string text);

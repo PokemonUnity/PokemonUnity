@@ -78,6 +78,7 @@
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
     <Compile Include="Combat\Match\Recorder.cs" />
+    <Compile Include="Combat\Rules.cs" />
     <Compile Include="Enums\UI.cs" />
     <Compile Include="Extensions\Utility\LinearCongRandom.cs" />
     <Compile Include="Framework\IGame_System.cs" />
