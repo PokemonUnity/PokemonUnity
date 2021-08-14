@@ -85,7 +85,7 @@
     <Compile Include="Framework\IInterpreterFieldMixin.cs" />
     <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Monster\BattlePeer.cs" />
-    <Compile Include="Combat\Interface\IBattler.cs" />
+    <Compile Include="Combat\Pokemon\IShadowPokemon.cs" />
     <Compile Include="Combat\Trainer\Trainer.cs" />
     <Compile Include="Combat\Trainer\Data\TrainerMetaData.cs" />
     <Compile Include="Combat\Trainer\Data\TrainerData.cs" />
