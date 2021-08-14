@@ -36,13 +36,13 @@ namespace PokemonUnity.Saving
 					player: new Character.Player(
 						name:			((IDictionary<string, object>)obj[i])["PlayerName"].ToString()
 						, gender:		bool.Parse(((IDictionary<string, object>)obj[i])["IsMale"].ToString())
-						//, party:		((List<SeriPokemon>)((IDictionary<string, object>)obj[i])["PlayerParty"]).ToArray().Deserialize()
-						//, bag:			((List<Items>)((IDictionary<string, object>)obj[i])["PlayerBag"]).ToArray()
-						//, pc_poke:		((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).Pokemons.Deserialize()//GetPokemonsFromSeri()
-						//, pc_items:		((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).GetItemsFromSeri().Compress()
-						//, pc_box:		((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).ActiveBox
-						//, pc_names:		((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).BoxNames
-						//, pc_textures:	((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).BoxTextures
+						, party:		((List<SeriPokemon>)((IDictionary<string, object>)obj[i])["PlayerParty"]).ToArray().Deserialize()
+						, bag:			((List<Items>)((IDictionary<string, object>)obj[i])["PlayerBag"]).ToArray()
+						, pc_poke:		((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).Pokemons.Deserialize()//.GetPokemonsFromSeri()
+						, pc_items:		((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).GetItemsFromSeri().Compress()
+						, pc_box:		((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).ActiveBox
+						, pc_names:		((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).BoxNames
+						, pc_textures:	((SeriPC)((IDictionary<string, object>)obj[i])["PlayerPC"]).BoxTextures
 						, trainerid:	int.Parse(((IDictionary<string, object>)obj[i])["TrainerID"].ToString())
 						, secretid:		int.Parse(((IDictionary<string, object>)obj[i])["SecretID"].ToString())
 						, money:		int.Parse(((IDictionary<string, object>)obj[i])["PlayerMoney"].ToString())

@@ -55,8 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Events.cs" />
+    <Compile Include="Application\Game\Game.Frontend.cs" />
+    <Compile Include="Application\Scene.cs" />
+    <Compile Include="Application\MoveRoutes.cs" />
     <Compile Include="Application\Feature.cs" />
-    <Compile Include="Application\Game\Game.Controls.cs" />
+    <Compile Include="Application\Input.cs" />
     <Compile Include="Application\Game\Game.Variable.cs" />
     <Compile Include="Application\Options.cs" />
     <Compile Include="Attack\Move.cs" />
@@ -65,13 +68,21 @@
     <Compile Include="Attack\Data\Flag.cs" />
     <Compile Include="Character\Badge.cs" />
     <Compile Include="Character\Bag.cs" />
+    <Compile Include="Character\DayCare.cs" />
     <Compile Include="Character\Gear\Phone.cs" />
     <Compile Include="Character\Gear\Pokedex.cs" />
     <Compile Include="Character\Gear\PokeRadar.cs" />
+    <Compile Include="Character\Party.cs" />
+    <Compile Include="Character\PokemonStorage.cs" />
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
+    <Compile Include="Combat\Match\Recorder.cs" />
+    <Compile Include="Combat\Rules.cs" />
     <Compile Include="Enums\UI.cs" />
+    <Compile Include="Extensions\Utility\LinearCongRandom.cs" />
+    <Compile Include="Framework\IGame_System.cs" />
+    <Compile Include="Framework\IInterpreterFieldMixin.cs" />
     <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Monster\BattlePeer.cs" />
     <Compile Include="Combat\Interface\IBattler.cs" />
@@ -84,7 +95,6 @@
     <Compile Include="Combat\AI.cs" />
     <Compile Include="Combat\Data\TurnResults.cs" />
     <Compile Include="Combat\Pokemon\Pokemon.Shadow.cs" />
-    <Compile Include="Combat\Match\Recorder.cs" />
     <Compile Include="Enums\Battles.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Enums\Items.cs" />
@@ -131,6 +141,7 @@
     <Compile Include="Inventory\Item\Item.cs" />
     <Compile Include="Inventory\Item\Item.Helper.cs" />
     <Compile Include="Inventory\Item\Item.Pokeball.cs" />
+    <Compile Include="Monster\Evolution.cs" />
     <Compile Include="Monster\Interface\IPokemon.cs" />
     <Compile Include="Monster\Nature.cs" />
     <Compile Include="Monster\Pokemon\Pokemon.cs" />
@@ -145,8 +156,10 @@
     <Compile Include="Monster\Pokemon\Data\Form.cs" />
     <Compile Include="Monster\Pokemon\Data\Moveset.cs" />
     <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
+    <Compile Include="Overworld\Map.cs" />
     <Compile Include="Overworld\Terrain.cs" />
     <Compile Include="Overworld\Wild\Encounter.cs" />
+    <Compile Include="Overworld\Wild\EncounterSlotData.cs" />
     <Compile Include="Overworld\Wild\EncounterData.cs" />
     <Compile Include="Overworld\Area.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

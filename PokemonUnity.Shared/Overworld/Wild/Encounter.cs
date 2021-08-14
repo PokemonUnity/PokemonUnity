@@ -6,33 +6,36 @@ using PokemonUnity.Monster;
 
 namespace PokemonUnity.Overworld
 {
+	[Serializable]
 	public class Encounter
 	{
 		#region Variables
-		protected List<Pokemon> PokemonPool { get; private set; }
-		public EncounterData[] Encounters { get; protected set; }
+		//protected virtual List<Pokemon> PokemonPool { get; private set; }
+		public virtual EncounterData[] Encounters { get; protected set; }
 		//public ConditionValue[] Conditions { get; private set; }
 		/// <summary>
 		/// Key: SlotId | Value: Pokemon Array
 		/// </summary>
-		public Dictionary<int, List<Pokemons>> Slot { get; protected set; }
+		public virtual Dictionary<int, List<Pokemons>> Slot { get; protected set; }
 
 		/// <summary>
 		/// This array of numbers total up to 100%, 
 		/// and represents a pool of pokemon that has chance to appear
 		/// </summary>
-		public virtual int[] Chances { get; }
+		public virtual int[] Chances { get; protected set; }
 		/// <summary>
 		/// How often or likely to engage and encounter a pokemon
 		/// </summary>
-		//public static int Rate { get; set; }
+		public virtual int Rate { get; set; }
+		//public virtual EncounterTypes Method { get; set; }
+		public virtual Method Method { get; set; }
 		#endregion
 
 		/// <summary>
 		/// </summary>
 		public Encounter()
 		{
-			PokemonPool = new List<Pokemon>();
+			//PokemonPool = new List<Pokemon>();
 			Encounters = new EncounterData[0];
 			//Conditions = new ConditionValue[0];
 			Slot = new Dictionary<int, List<Pokemons>>();
@@ -50,102 +53,53 @@ namespace PokemonUnity.Overworld
 		}
 
 		/// <summary>
+		/// 
 		/// </summary>
-		/// <returns>returns pokemon for battle scene</returns>
-		/// ToDo: Consider increasing chance on rarity as encounter increases 
-		public Pokemon GetWildPokemon()//Method method
+		/// <param name="method"></param>
+		/// <param name="density">
+		/// Dense pack of pokemons will mean more encounters.
+		/// Fewer steps, more encounters; or more steps, fewer enounters.
+		/// </param>
+		/// <param name="slots"></param>
+		public Encounter(Method method, int density, params EncounterSlotData[] slots) : this()
 		{
-			//int x = Game.MethodData[method].Length;
-			//if(x > 0)
-			//{
-				//Reset list of pokemons each time encounter is triggered
-				//List<Pokemon> PokemonPool = new List<Pokemon>();
-				PokemonPool = new List<Pokemon>();
-				//KeyValuePair<int, List<Pokemons>> slot = new KeyValuePair<int, List<Pokemons>>();
-				//Dictionary<int, List<Pokemons>> slot = new Dictionary<int, List<Pokemons>>();
-				Dictionary<int, int> min = new Dictionary<int, int>();
-				Dictionary<int, int> max = new Dictionary<int, int>();
-				Dictionary<int, int> rarity = new Dictionary<int, int>();
-				
-				//Sort through pokemons and group them by chance of encountering
-				//foreach (int n in Game.MethodData[method])
-				foreach (EncounterData item in Encounters)
+			Method = method;
+			Rate = density;
+			List<int> chance = new List<int>();
+			List<EncounterSlotData> encounters = new List<EncounterSlotData>();
+			for (int i = 100, n = 0; i >= 0; i--)
+			{
+				for (; n < slots.Length; n++)
 				{
-					//EncounterData item = Game.EncounterData[n];
-					//for (int i = 0; i < x; i++)
-					//{
-					//	if(item.SlotId == i) // && Conditions.Contains()
-					//		slot = new KeyValuePair<int, List<Pokemons>>(i, new List<Pokemons>());
-					//		slot.Value.Add();
-						//if(!slot.ContainsKey(item.SlotId)){ // && Conditions.Contains() {
-						//	slot.Add(item.SlotId, new List<Pokemons>());
-						//	min.Add(item.SlotId, item.MinLevel);
-						//	max.Add(item.SlotId, item.MaxLevel);
-						//	max.Add(item.SlotId, item.Rarity);
-						//}
-						//else
-						if(Slot.ContainsKey(item.SlotId)) //item.Method == method &&
-						{
-							if (item.Conditions == null || item.Conditions.Length == 0 || EncounterConditionsMet(item.Conditions))
-							{ 
-								if(item.Pokemon.Length > 1)
-								{
-									Slot[item.SlotId].Add(item.Pokemon[Core.Rand.Next(item.Pokemon.Length)]);
-								}
-								else Slot[item.SlotId].Add(item.Pokemon[0]);
-							} 
-							min[item.SlotId] = Math.Min(min[item.SlotId], item.MinLevel);
-							max[item.SlotId] = Math.Max(max[item.SlotId], item.MaxLevel);
-							//Pokemons poke = Pokemons.NONE;
-							//if(item.Pokemon.Length > 1)
-							//{
-							//	poke = item.Pokemon[Core.Rand.Next(item.Pokemon.Length)];
-							//}
-							//else //if (item.Pokemon.Length == 1)
-							//{
-							//	poke = item.Pokemon[0];
-							//}
-							//for (int n = 0; n < item.Rarity; n++)
-							//{
-							//	//p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(item.MinLevel, item.MaxLevel),isEgg: false));
-							//	p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(min[item.SlotId], max[item.SlotId]),isEgg: false));
-							//}
+					if(slots[n].Frequency == 0)
+						continue;
+					if(i - slots[n].Frequency >= 0)
+					{ 
+						encounters.Add(slots[n]);
+						chance.Add(slots[n].Frequency);
+						i = i - slots[n].Frequency;
+						if(i == 0){
+							i = -1;
+							break;
 						}
-					//}
-				}
-
-				//Run through each group of pokemon by slots they're in
-				for (int y = 0; y < Slot.Count; y++)
-				{
-					Pokemons poke = Pokemons.NONE;
-					if(Slot[y].Count > 1)
-					{
-						poke = Slot[y][Core.Rand.Next(Slot.Count)];
 					}
-					else if (Slot[y].Count == 1)
+					else
 					{
-						poke = Slot[y][0];
-					}
-					for (int n = 0; n < rarity[y]; n++)
-					{
-						//p.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(item.MinLevel, item.MaxLevel), isEgg: false));
-						PokemonPool.Add(new Pokemon(poke, level: (byte)Core.Rand.Next(min[y], max[y]), isEgg: false));
+						//slots[n].Frequency = i;
+						EncounterSlotData data = new EncounterSlotData(pokemon:slots[n].Pokemon, minLevel:slots[n].MinLevel, maxLevel:slots[n].MaxLevel, frequency:slots[n].Frequency);
+						encounters.Add(data);
+						chance.Add(i);
+						i = -1;
+						break;
 					}
 				}
-
-				//If encounter pool is not empty
-				if (PokemonPool.Count > 0)
-				{
-					for (int z = PokemonPool.Count; z < 100; z++)
-					{
-						PokemonPool.Add(new Pokemon(Pokemons.NONE));
-					}
-					Pokemon pkmn = PokemonPool[Core.Rand.Next(PokemonPool.Count)];
-					pkmn.SwapItem(Monster.Data.PokemonWildItems.GetWildHoldItem(pkmn.Species));
-					return pkmn;
-				}
-			//}
-			return new Pokemon(Pokemons.NONE);
+				if (i == -1)
+					break;
+				else
+					//encounters.Add(null);
+					encounters.Add(new EncounterSlotData());
+			}
+			//Encounters = encounters.ToArray();
 		}
 
 		public static bool EncounterConditionsMet(ConditionValue[] encounter)

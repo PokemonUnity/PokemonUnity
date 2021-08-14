@@ -32,6 +32,11 @@ namespace PokemonUnity
 			//create a switch, and return Locale Name or Description
 			return pokemon.ToString();
 		}
+
+		public static string ToIdString(this PokemonUnity.Pokemons pokemon, int digits = 3)
+		{
+			return System.Text.RegularExpressions.Regex.Replace(((int)pokemon).ToString(), "[0-9]+", match => match.Value.PadLeft(digits, '0'));
+		}
 	}
 
 	public static class PokemonPartyExtension

@@ -71,17 +71,17 @@ public class PokeBattle_BattlePalace : Battle {
     @justswitched=new bool[] { false, false, false, false };
   }
 
-  public int pbMoveCategory(Attack.Move move) {
-    /*if (Game.MoveData[move.MoveId].Target==0x10 || move.Effect==0xD4) {		// Bide
+  public int pbMoveCategory(Combat.IMove move) {
+    if (//Game.MoveData[move.MoveId].Target==Attack.Data.Targets. 0x10 ||   //ToDo: Finish Convert from Essentials to Veekun
+                    move.Effect==Attack.Data.Effects.x01B) {		        // Bide
       return 1;
-    } else if (move.Power==0 || move.Effect==0x71 ||		// Counter
-       move.Effect==0x72) { // Mirror Coat
+    } else if (move.Power==0 || move.Effect==Attack.Data.Effects.x054 ||	// Counter
+       move.Effect==Attack.Data.Effects.x091) {                             // Mirror Coat
       return 2;
     }
     else {
       return 0;
-    }*/
-    return 0;
+    }
   }
 
 /// <summary>
@@ -92,7 +92,7 @@ public class PokeBattle_BattlePalace : Battle {
 /// <returns></returns>
   public bool pbCanChooseMovePartial (int idxPokemon,int idxMove) {
     Pokemon thispkmn=@battlers[idxPokemon];
-    Attack.Move thismove=thispkmn.moves[idxMove];
+    Combat.IMove thismove=thispkmn.moves[idxMove];
     if (!thismove.IsNotNullOrNone()||thismove.MoveId==0) {
       return false;
     }

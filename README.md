@@ -1,11 +1,16 @@
 <p align="center">
-  <h1 align="center">Pokémon Framework with Unity (not __FOR__ Unity -- Important Distinction) by Herbert Milhomme</h1>
+  <h1 align="center">Pokémon Framework with Unity by Herbert Milhomme</h1>
+  <h2 align="center">Using <a href="https://github.com/EllanJiang/UnityGameFramework">Unity GameFramework</a></h2>
   <p align="center">
     <a href="https://opensource.org/licenses/BSD-3-Clause"><img alt="License" src="https://img.shields.io/badge/license-New%20BSD-blue.svg"/></a>
     <a href="https://herbertmilhomme.github.io/PokemonUnity/"><img alt="GitBook" src="https://img.shields.io/badge/view%20docs%20on-gitbook-blue.svg"/></a>
     <a href="https://herbertmilhomme.visualstudio.com/PokemonUnity/_build/index?definitionId=3"><img src="https://herbertmilhomme.visualstudio.com/_apis/public/build/definitions/90a2f24a-6d43-47cd-9e21-be259c022c96/3/badge"/></a>
   </p>
 </p>
+
+## Usage
+
+Drag-and-drop DLL into your Unity project, or reference `.csproj` library in your source code during development and compile phase of project.
 
 ## Summary 
  
@@ -15,9 +20,9 @@ This contains a C# port of [Pokémon Essentials](https://github.com/griest024/es
 
 I have changed so much of the original [Pokémon Unity](https://github.com/PokemonUnity/PokemonUnity) code on the backend that this project runs and functions more like pokemon essentials, but with pokemon unity assets on frontend as a wrapper. I swapped out all of the data from Pokemon Essentials to use [Veekun's Database](https://github.com/veekun/pokedex), which is more expansive (more detailed, regularyly kept up-to-date, and formatted for database queries by default.
 
-To summarize, this project rewrites Pokemon Essentials logic to implement Pokemon mechanics, using Veekun's Pokedex which rips data directly from Nintendo's Pokemon game, as foundation for Pokemon Framework. The game's text will be locally translated, through crowdsourcing that i've personally configured and setup on my own private webserver, which will return xml packages that can be downloaded and used as localized scripts by source. Then using [GameFramework for Unity](https://github.com/EllanJiang/GameFramework) as a template, i will integrate the base Pokemon Framework to overwrite the template data to run like a Pokemon game, while feeding the behavior into the Pokemon Unity assets as final render and output (game `.exe` compile). If you have any experience with Pokemon Essentials, but with a perference for Unity or C#, then this is the project for you. End users are still required to have an aptitude or interest in **hardwork**. As in, this project isnt making a game __for__ you, or shipping you with a completed game to enjoy and experience; this is a **FRAMEWORK** you still have to put in effort to make __your__ own "game" (and why the source codes are being uploaded and not a link to an `.exe` download).
+To summarize, this project rewrites Pokemon Essentials logic to implement Pokemon mechanics, using Veekun's Pokedex which rips data directly from Nintendo's Pokemon game, as foundation for Pokemon Framework. The game's text will be locally translated, through crowdsourcing that i've personally configured and setup on my own private webserver, which will return xml packages that can be downloaded and used as localized scripts by source. Then using [GameFramework for Unity](https://github.com/EllanJiang/GameFramework) as a template, i will integrate the base Pokemon Framework to overwrite the template data to run like a Pokemon game, while feeding the behavior into the Pokemon Unity assets as final render and output (game `.exe` compile). If you have any experience with Pokemon Essentials, but with a perference for Unity or C#, then this is the project for you. End users are still required to have an aptitude or interest in **hardwork**. As in, this project isnt making a game __for__ you, or shipping you with a completed game to enjoy and experience; this is a **FRAMEWORK** you still have to put in effort to make __your__ own "game" (and why the source codes and dll are being uploaded and not a link to an `.exe` download).
 
-Please be aware that some features in this branch are incomplete (the features in the [test-project branch](https://github.com/herbertmilhomme/PokemonUnity/tree/TestProject) is being tracked and monitored by the build status). I strongly recommend that you use the master branch as a base rather than the [test-project branch](https://github.com/herbertmilhomme/PokemonUnity/tree/TestProject). This branch is entirely experimental and contains wild erratic ideas, which has possibility of breaking your fangame or other project that is based on this code.
+Please be aware that some features in this branch are incomplete (the features in the [master branch](https://github.com/herbertmilhomme/PokemonUnity/tree/master) is being tracked and monitored by the build status). I strongly recommend that you use the master branch (or [UnityDemoWithNoAssets branch](https://github.com/herbertmilhomme/PokemonUnity/tree/UnityDemoWithNoAssets)) as a template or base to start from, rather than the [test-project branch](https://github.com/herbertmilhomme/PokemonUnity/tree/TestProject). That branch is entirely experimental and contains wild erratic ideas, which has possibility of breaking your fangame or other project that is based on this code.
 
 Please report any bugs if found.
 
@@ -44,4 +49,5 @@ Anything that ends in an "S" is most likely an `Enum`. `PokemonUnity.Pokemons` i
 * Database: [Veekun's Pokedex Github](https://github.com/veekun/pokedex)
 * Web-Server: TBD
 * PKUnity Author: [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
-* Unity Framework: [GameFramework](https://github.com/EllanJiang/GameFramework)
+* Unity Framework: [GameFramework UnityEngine C# Assets](https://github.com/EllanJiang/UnityGameFramework)
+* Unity Framework: [GameFramework Vanilla C# Library](https://github.com/EllanJiang/GameFramework)

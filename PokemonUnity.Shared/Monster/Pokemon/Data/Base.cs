@@ -50,6 +50,7 @@ namespace PokemonUnity.Monster.Data
 		public int[] RegionalPokedex { get; private set; }*/
 		public byte GenerationId { get; private set; }
 		public int EvoChainId { get; private set; }
+		public Pokemons EvolveFrom { get; private set; }
 		public int Order { get; private set; }
 		public bool IsDefault { get; private set; }
 		public bool FormSwitchable { get; private set; }
@@ -59,6 +60,7 @@ namespace PokemonUnity.Monster.Data
 		/// Best used in battle simulator. 
 		/// Check to see if pokemons are legendary, and exclude from battle
 		/// </summary>
+		/// Also known as Pokemon's "Rareness"...
 		public Rarity Rarity { get; set; }
 		public EggGroups[] EggGroup { get { return new EggGroups[] { this.eggGroup1, this.eggGroup2 }; } }
 		public Types[] Type { get { return new Types[] { this.type1, this.type2 }; } }
@@ -99,7 +101,6 @@ namespace PokemonUnity.Monster.Data
 		/// The higher the number, the more likely a capture 
 		/// (0 means it cannot be caught by anything except a Master Ball).
 		/// </summary> 
-		/// Also known as Pokemon's "Rareness"...
 		public int CatchRate { get; private set; }
 		public int HatchTime { get; private set; }
 
@@ -144,16 +145,10 @@ namespace PokemonUnity.Monster.Data
 		/// ToDo: Consider [itemcommon || 0,itemuncommon || 0,itemrare || 0]
 		public int[,] HeldItem { get; private set; }
 
-		/*// <summary>
+		/// <summary>
 		/// </summary>
 		/// Not quite sure what this is for...
-		public float Luminance { get; private set; }
-		/// <summary>
-		/// All the moves this pokemon species can learn, and the methods by which they learn them
-		/// </summary>
-		public PokemonMoveTree MoveTree { get; private set; }
-		/// ToDo: Evolution class type array here
-		public IPokemonEvolution[] Evolutions { get; private set; }*/
+		//public float Luminance { get; private set; }
 
 		/// <summary>
 		/// The item that needs to be held by a parent when breeding in order for the egg to be this species. 
@@ -181,7 +176,7 @@ namespace PokemonUnity.Monster.Data
 							//int[] movesetLevels = null, Moves[] movesetMoves = null, int[] tmList = null,
 							//IPokemonEvolution[] evolution = null,
 							//int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, //string[] evolutionRequirements,
-							//Pokemons evolutionFROM = Pokemons.NONE, List<int> evolutionTO = null, 
+							Pokemons evolutionFROM = Pokemons.NONE, //List<int> evolutionTO = null, 
 							Items incense = Items.NONE,
 							int evoChainId = 0, byte generationId = 0, bool isDefault = false, bool isBaby = false, bool formSwitchable = false, bool hasGenderDiff = false, 
 							Habitat habitatId = Habitat.RARE, Shape shapeId = Shape.BLOB, int order = -1,
@@ -249,7 +244,7 @@ namespace PokemonUnity.Monster.Data
 			this.IsBaby 		= isBaby 		;
 			this.FormSwitchable	= formSwitchable; 
 			this.HasGenderDiff 	= hasGenderDiff ;
-			//this.EvolutionFROM= evolutionFROM ;
+			this.EvolveFrom		= evolutionFROM ;
 			//this.EvolutionTO 	= evolutionTO 	;
 			this.Incense	 	= incense 		;
 			this.EvoChainId 	= evoChainId 	;
