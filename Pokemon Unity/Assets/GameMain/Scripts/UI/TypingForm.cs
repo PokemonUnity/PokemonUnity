@@ -6,15 +6,19 @@ using UnityEngine.EventSystems;
 using UnityGameFramework.Runtime;
 using PokemonUnity;
 using PokemonUnity.Monster;
+using System.Collections.Generic;
 
 namespace PokemonUnity.UX
 {
 	[ExecuteInEditMode]
 	public class TypingForm : UGuiForm, IPokemonEntryScene, IPokemonEntryScene2
 	{
+		public int Id;
 		public string helptext;
 		public int Minlength;
 		public int Maxlength;
+		public bool init;
+		public int[] blanks; //Array of char slots, if active 1, else 0
 		//public string InitialText;
 		public TextEntryTypes subject = 0;
 		public Monster.Pokemon pokemon = null;
@@ -60,8 +64,10 @@ namespace PokemonUnity.UX
 		//public  GameObject          PagePrefab;
 		
 		private GameFrameworkAction<object> m_OnClickConfirm = null;
+        private bool refreshOverlay;
+        private int cursorpos;
 
-		public string TypeEntryText { get { return typeSpaceText.ToString(); } }
+        public string TypeEntryText { get { return typeSpaceText.ToString(); } }
 
 		public static readonly string[] PageCharArray = new string[] {
 			string.Format("{0}", qwerty? "QWERTYUIOP ,." : "ABCDEFGHIJ ,.") +
@@ -195,7 +201,7 @@ namespace PokemonUnity.UX
 			//keyboardText.text = "Press Esc to stop typing";
 			//keyboardTextShadow.text = keyboardText.text;
 
-			if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.CapsLock))
+			/*if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.CapsLock))
 			{
 				GameEntry.IsCapLockOn = !GameEntry.IsCapLockOn;
 			}
@@ -404,32 +410,33 @@ namespace PokemonUnity.UX
 			{
 				//running = false;
 				GameEntry.UseKeyboard = false;
-			}
+			}*/
 		}
 		#endregion
 
-		public void pbUpdate()
+		public void pbRefresh() { }
+		{public void pbUpdate()
 		{
-    for (int i = 0; i < 3; i++) {
-      @bitmaps[i].update();
-    }
-    if (@init) { //|| Graphics.frame_count%5==0
-      @init=false;
-      int cursorpos=@helper.cursor;
-      if (cursorpos>=@maxlength) cursorpos=@maxlength-1;
-      if (cursorpos<0) cursorpos=0;
-      //@maxlength.times {|i|
-      for (int i = 0; i < @maxlength; i++) {
-         if (i==cursorpos) {
-           @blanks[i]=1;
-         } else {
-           @blanks[i]=0;
-         }
-         @sprites[$"blank#{i}"].y= new int[]{ 78,82 }[@blanks[i]];
-      }
-    }
-    pbDoUpdateOverlay();
-    pbUpdateSpriteHash(@sprites);
+    //for (int i = 0; i < 3; i++) {
+    //  @bitmaps[i].update();
+    //}
+    //if (@init) { //|| Graphics.frame_count%5==0
+    //  @init=false;
+    //  int cursorpos=@helper.cursor;
+    //  if (cursorpos>=Maxlength) cursorpos=Maxlength-1;
+    //  if (cursorpos<0) cursorpos=0;
+    //  //Maxlength.times {|i|
+    //  for (int i = 0; i < Maxlength; i++) {
+    //     if (i==cursorpos) {
+    //       @blanks[i]=1;
+    //     } else {
+    //       @blanks[i]=0;
+    //     }
+    //     @sprites[$"blank#{i}"].y= new int[]{ 78,82 }[@blanks[i]];
+    //  }
+    //}
+    //pbDoUpdateOverlay();
+    ////pbUpdateSpriteHash(@sprites);
 		}
 
 		public void pbChangeTab(int newtab = 0)
@@ -467,7 +474,7 @@ namespace PokemonUnity.UX
 		public bool pbColumnEmpty(int m)
 		{
     if (m>=ROWS-1) return false;
-    char[] chset=@Characters[@mode][0]; //key: char[]
+    char[] chset=@Characters[@mode];//[0]; //key: char[]
     return (
        chset[m]==' ' &&
        chset[m+((ROWS-1))]==' ' &&
@@ -485,27 +492,27 @@ namespace PokemonUnity.UX
 		{
     if (!@refreshOverlay) return;
     @refreshOverlay=false;
-    bgoverlay=@sprites["bgoverlay"].bitmap;
-    bgoverlay.clear();
-    pbSetSystemFont(bgoverlay);
-    textPositions=[
-       [@helptext,160,12,false,new Color(16,24,32),new Color(168,184,184)]
-    ];
-    char[] chars=@helper.textChars;
-    x=166;
-    foreach (char ch in chars) {
-      textPositions.Add([ch,x,48,false,new Color(16,24,32),new Color(168,184,184)]);
-      x+=24;
-    }
-    pbDrawTextPositions(bgoverlay,textPositions);
+    //bgoverlay=@sprites["bgoverlay"].bitmap;
+    //bgoverlay.clear();
+    //pbSetSystemFont(bgoverlay);
+    //List<object> textPositions=new List<object>() {
+    //    new object() { @helptext, 160, 12, false, new Color(16, 24, 32), new Color(168, 184, 184) }
+    //};
+    //char[] chars=@helper.textChars;
+    //int x=166;
+    //foreach (char ch in chars) {
+    //  textPositions.Add(new object() { ch, x, 48, false, new Color(16, 24, 32), new Color(168, 184, 184) });
+    //  x+=24;
+    //}
+    //pbDrawTextPositions(bgoverlay,textPositions);
 		}
 
 		public void pbDoUpdateOverlay2()
 		{
-    overlay=@sprites["overlay"].bitmap;
-    overlay.clear;
-    modeIcon=[["Graphics/Pictures/namingMode",48+@mode*64,120,@mode*60,0,60,44]];
-    pbDrawImagePositions(overlay,modeIcon);
+    //overlay=@sprites["overlay"].bitmap;
+    //overlay.clear();
+    //modeIcon=[["Graphics/Pictures/namingMode",48+@mode*64,120,@mode*60,0,60,44]];
+    //pbDrawImagePositions(overlay,modeIcon);
 		}
 
 		public bool pbMoveCursor()
@@ -514,7 +521,7 @@ namespace PokemonUnity.UX
     int cursordiv=@cursorpos/ROWS;
     int cursormod=@cursorpos%ROWS;
     int cursororigin=@cursorpos-cursormod;
-    if (Input.repeat(Input.LEFT)) {
+    /*if (Input.repeat(Input.LEFT)) {
       if (@cursorpos<0) {		// Controls
         @cursorpos-=1;
         if (@cursorpos<MODE1) @cursorpos=OK;
@@ -616,10 +623,10 @@ namespace PokemonUnity.UX
         cursordiv=wrapmod((cursordiv+1),COLUMNS);
         @cursorpos=(cursordiv*ROWS)+cursormod;
       }
-    }
+    }*/
     if (@cursorpos!=oldcursor) {		// Cursor position changed
-      @sprites["cursor"].setCursorPos(@cursorpos);
-      pbPlayCursorSE();
+      //@sprites["cursor"].setCursorPos(@cursorpos);
+      //pbPlayCursorSE();
       return true;
     } else {
       return false;
@@ -739,13 +746,13 @@ namespace PokemonUnity.UX
 
 		public void pbEndScene()
 		{
-    pbFadeOutAndHide(@sprites, () => { pbUpdate(); });
-    foreach (var bitmap in @bitmaps) {
-      if (bitmap) bitmap.dispose();
-    }
-    @bitmaps.clear();
-    pbDisposeSpriteHash(@sprites);
-    @viewport.dispose();
+    //pbFadeOutAndHide(@sprites, () => { pbUpdate(); });
+    //foreach (var bitmap in @bitmaps) {
+    //  if (bitmap) bitmap.dispose();
+    //}
+    //@bitmaps.clear();
+    //pbDisposeSpriteHash(@sprites);
+    //@viewport.dispose();
 		}
 
 		public string pbEntry()
@@ -756,22 +763,22 @@ namespace PokemonUnity.UX
 		public string pbEntry1()
 		{
     string ret="";
-    do { //;loop
-      Graphics.update();
-      Input.update();
-      if (Input.triggerex(0x1B) && @minlength==0) {
-        ret="";
-        break;
-      }
-      if (Input.triggerex(13) && @sprites["entry"].text.Length>=@minlength) {
-        ret=@sprites["entry"].text;
-        break;
-      }
-      @sprites["helpwindow"].update();
-      @sprites["entry"].update();
-      if (@sprites["subject"]) @sprites["subject"].update();
-    }
-    Input.update();
+    //do { //;loop
+    //  Graphics.update();
+    //  Input.update();
+    //  if (Input.triggerex(0x1B) && @minlength==0) {
+    //    ret="";
+    //    break;
+    //  }
+    //  if (Input.triggerex(13) && @sprites["entry"].text.Length>=@minlength) {
+    //    ret=@sprites["entry"].text;
+    //    break;
+    //  }
+    //  @sprites["helpwindow"].update();
+    //  @sprites["entry"].update();
+    //  if (@sprites["subject"]) @sprites["subject"].update();
+    //}
+    //Input.update();
     return ret;
 		}
 
@@ -786,34 +793,34 @@ namespace PokemonUnity.UX
     //  @sprites["entry2"].update();
     //  if (@sprites["subject"]) @sprites["subject"].update();
     //  if (Input.trigger(Input.t)) {
-        int index=@sprites["entry2"].command;
-        if (index==-3) {		// Confirm text
-          ret=@sprites["entry"].text;
-          if (ret.Length<@minlength || ret.Length>@maxlength) {
-            //pbPlayBuzzerSE();
-          } else {
-            //pbPlayDecisionSE();
-            //break;
-          }
-        } else if (index==-1) {		// Insert a space
-          if (@sprites["entry"].insert(" ")) {
-            pbPlayDecisionSE();
-          } else {
-            pbPlayBuzzerSE();
-          }
-        } else if (index==-2) {		// Change character set
-          pbPlayDecisionSE();
-          @symtype+=1;
-          if (@symtype>=@Characters.Length) @symtype=0;
-          @sprites["entry2"].setCharset(@Characters[@symtype][0]);
-          @sprites["entry2"].setOtherCharset(@Characters[@symtype][1]);
-        } else { // Insert given character
-          if (@sprites["entry"].insert(@sprites["entry2"].character)) {
-            pbPlayDecisionSE() ;
-          } else {
-            pbPlayBuzzerSE();
-          }
-        }
+        //int index=@sprites["entry2"].command;
+        //if (index==-3) {		// Confirm text
+        //  ret=@sprites["entry"].text;
+        //  if (ret.Length<@minlength || ret.Length>Maxlength) {
+        //    //pbPlayBuzzerSE();
+        //  } else {
+        //    //pbPlayDecisionSE();
+        //    //break;
+        //  }
+        //} else if (index==-1) {		// Insert a space
+        //  if (@sprites["entry"].insert(" ")) {
+        //    pbPlayDecisionSE();
+        //  } else {
+        //    pbPlayBuzzerSE();
+        //  }
+        //} else if (index==-2) {		// Change character set
+        //  pbPlayDecisionSE();
+        //  @symtype+=1;
+        //  if (@symtype>=@Characters.Length) @symtype=0;
+        //  @sprites["entry2"].setCharset(@Characters[@symtype][0]);
+        //  @sprites["entry2"].setOtherCharset(@Characters[@symtype][1]);
+        //} else { // Insert given character
+        //  if (@sprites["entry"].insert(@sprites["entry2"].character)) {
+        //    pbPlayDecisionSE() ;
+        //  } else {
+        //    pbPlayBuzzerSE();
+        //  }
+        //}
     //    continue;
     //  }
     //} while (true);
@@ -829,11 +836,11 @@ namespace PokemonUnity.UX
   public partial class NameEntryCursor {
 			public int @cursorPos;
     public void initialize(Canvas viewport) {
-      @sprite=new SpriteWrapper(viewport);
-      @cursortype=0;
-      @cursor1=new AnimatedBitmap("Graphics/Pictures/NamingCursor1");
-      @cursor2=new AnimatedBitmap("Graphics/Pictures/NamingCursor2");
-      @cursor3=new AnimatedBitmap("Graphics/Pictures/NamingCursor3");
+      //@sprite=new SpriteWrapper(viewport);
+      //@cursortype=0;
+      //@cursor1=new AnimatedBitmap("Graphics/Pictures/NamingCursor1");
+      //@cursor2=new AnimatedBitmap("Graphics/Pictures/NamingCursor2");
+      //@cursor3=new AnimatedBitmap("Graphics/Pictures/NamingCursor3");
       @cursorPos=0;
       updateInternal();
     }
@@ -844,67 +851,67 @@ namespace PokemonUnity.UX
 
     public void updateCursorPos() {
       int value=@cursorPos;
-      if (value==PokemonEntryScene.MODE1) {		// Upper case
-        @sprite.x=48;
-        @sprite.y=120;
-        @cursortype=1;
-      } else if (value==PokemonEntryScene.MODE2) {		// Lower case
-        @sprite.x=112;
-        @sprite.y=120;
-        @cursortype=1;
-      } else if (value==PokemonEntryScene.MODE3) {		// Other symbols
-        @sprite.x=176;
-        @sprite.y=120;
-        @cursortype=1;
-      } else if (value==PokemonEntryScene.BACK) {		// Back
-        @sprite.x=312;
-        @sprite.y=120;
-        @cursortype=2;
-      } else if (value==PokemonEntryScene.OK) {		// OK
-        @sprite.x=392;
-        @sprite.y=120;
-        @cursortype=2;
-      } else if (value>=0) {
-        @sprite.x=52+32*(value%PokemonEntryScene.ROWS);
-        @sprite.y=180+38*(value/PokemonEntryScene.ROWS);
-        @cursortype=0;
-      }
+      //if (value==PokemonEntryScene.MODE1) {		// Upper case
+      //  @sprite.x=48;
+      //  @sprite.y=120;
+      //  @cursortype=1;
+      //} else if (value==PokemonEntryScene.MODE2) {		// Lower case
+      //  @sprite.x=112;
+      //  @sprite.y=120;
+      //  @cursortype=1;
+      //} else if (value==PokemonEntryScene.MODE3) {		// Other symbols
+      //  @sprite.x=176;
+      //  @sprite.y=120;
+      //  @cursortype=1;
+      //} else if (value==PokemonEntryScene.BACK) {		// Back
+      //  @sprite.x=312;
+      //  @sprite.y=120;
+      //  @cursortype=2;
+      //} else if (value==PokemonEntryScene.OK) {		// OK
+      //  @sprite.x=392;
+      //  @sprite.y=120;
+      //  @cursortype=2;
+      //} else if (value>=0) {
+      //  @sprite.x=52+32*(value%PokemonEntryScene.ROWS);
+      //  @sprite.y=180+38*(value/PokemonEntryScene.ROWS);
+      //  @cursortype=0;
+      //}
     }
 
-    public bool visible { get {
-      return @sprite.visible;
-    }
-    set {
-      @sprite.visible=value;
-    } }
-
-    public UnityEngine.Color color { get {
-      return @sprite.color;
-    }
-    set {
-      @sprite.color=value;
-    } }
-			
-    public bool disposed { get {
-      return @sprite.disposed;
-    } }
+    //public bool visible { get {
+    //  return @sprite.visible;
+    //}
+    //set {
+    //  @sprite.visible=value;
+    //} }
+    //
+    //public UnityEngine.Color color { get {
+    //  return @sprite.color;
+    //}
+    //set {
+    //  @sprite.color=value;
+    //} }
+	//		
+    //public bool disposed { get {
+    //  return @sprite.disposed;
+    //} }
 
     public void updateInternal() {
-      @cursor1.update();
-      @cursor2.update();
-      @cursor3.update();
-      updateCursorPos;
-      switch (@cursortype) {
-      case 0:
-        @sprite.bitmap=@cursor1.bitmap;
-        break;
-      case 1:
-        @sprite.bitmap=@cursor2.bitmap;
-        break;
-      case 2:
-        @sprite.bitmap=@cursor3.bitmap;
-        break;
-      }
+      //@cursor1.update();
+      //@cursor2.update();
+      //@cursor3.update();
+      //updateCursorPos();
+      //switch (@cursortype) {
+      //case 0:
+      //  @sprite.bitmap=@cursor1.bitmap;
+      //  break;
+      //case 1:
+      //  @sprite.bitmap=@cursor2.bitmap;
+      //  break;
+      //case 2:
+      //  @sprite.bitmap=@cursor3.bitmap;
+      //  break;
+      //}
     }
 
     public void update() {
@@ -912,10 +919,10 @@ namespace PokemonUnity.UX
     }
 
     public void dispose() {
-      @cursor1.dispose();
-      @cursor2.dispose();
-      @cursor3.dispose();
-      @sprite.dispose();
+      //@cursor1.dispose();
+      //@cursor2.dispose();
+      //@cursor3.dispose();
+      //@sprite.dispose();
     }
   }
 	}
