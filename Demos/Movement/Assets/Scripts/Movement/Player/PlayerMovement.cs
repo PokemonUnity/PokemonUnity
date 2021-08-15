@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class PlayerMovement : MovementBase
 {
+  // PlayerMovement #UnityTODO
+  /*
+   * Build out bump events (when the player bumps into an object, send an event to the target)
+   * Build out the bike controller (two new texture loads - BikeIdle, BikeMoving, update move multiplier as needed)
+   * Ledges: jump state triggers.
+   * Water: Locations to swap to/from surfing state
+   * Spin tiles: Forced movement by terrain, should inherit from the same base class as Ledges
+   */
+
   //Bumped State
   private readonly float bumpedCooldown = 1.0f/3.0f;
   private float timeSinceLastBump = 0.0f;
