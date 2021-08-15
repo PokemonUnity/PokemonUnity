@@ -4,16 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityGameFramework.Runtime;
-using PokemonUnity;
+using PokemonUnity.UX;
 using PokemonUnity.Monster;
 using System.Collections.Generic;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity
 {
 	[ExecuteInEditMode]
 	public class TypingForm : UGuiForm, IPokemonEntryScene, IPokemonEntryScene2
 	{
 		public int Id;
+		int IScene.Id { get { return Id;} }
 		public string helptext;
 		public int Minlength;
 		public int Maxlength;

@@ -95,7 +95,7 @@ namespace PokemonUnity.Character
 		#endregion
 
 		#region Constructor
-		public TrainerData(string name, bool gender, int? tID = null, int? sID = null) : this(trainer: TrainerTypes.PLAYER, name)
+		public TrainerData(string name, bool gender, int? tID = null, int? sID = null) : this(trainer: TrainerTypes.PLAYER, name: name)
 		{
 			//ID = TrainerTypes.PLAYER;
 			//TrainerID = (uint)Core.Rand.Next(1000000); //random number between 0 and 999999, including 0

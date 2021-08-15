@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TMPro;
+//using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 
 public enum Emotion { happy, sad, suprised, angry };
+[System.Serializable] public class ColorEvent : UnityEvent<PokemonUnity.Color> { }
+
 [System.Serializable] public class EmotionEvent : UnityEvent<Emotion> { }
 
 [System.Serializable] public class ActionEvent : UnityEngine.Events.UnityEvent<string> { }
@@ -17,9 +19,9 @@ public enum Emotion { happy, sad, suprised, angry };
 
 [System.Serializable] public class DialogueEvent : UnityEngine.Events.UnityEvent { }
 
-public class TMP_Animated : TextMeshProUGUI
+public class TMP_Animated //: TextMeshProUGUI
 {
-
+	/*
 	//[SerializeField] private float speed = 10;
 	[SerializeField] private byte speed { get { return PokemonUnity.Game.textSpeed; } set { PokemonUnity.Game.textSpeed = value; } }
 	//ToDo: While button is held down, text speed is increased (fast-forward)
@@ -34,6 +36,7 @@ public class TMP_Animated : TextMeshProUGUI
 	}
 	//ToDo: if button is pressed, text dialog skips to the end
 	private bool InstantLine;
+	public ColorEvent onColorChange;
 	public EmotionEvent onEmotionChange;
 	public ActionEvent onAction;
 	public TextRevealEvent onTextReveal;
@@ -58,7 +61,7 @@ public class TMP_Animated : TextMeshProUGUI
 		// check to see if a tag is our own
 		bool isCustomTag(string tag)
 		{
-			return tag.StartsWith("speed=") || tag.StartsWith("pause=") || tag.StartsWith("emotion=") || tag.StartsWith("action");
+			return tag.StartsWith("speed=") || tag.StartsWith("pause=") || tag.StartsWith("emotion=") || tag.StartsWith("color=") || tag.StartsWith("colorend") || tag.StartsWith("action");
 		}
 
 		// send that string to textmeshpro and hide all of it, then start reading
@@ -90,10 +93,11 @@ public class TMP_Animated : TextMeshProUGUI
 						onTextReveal.Invoke(subTexts[subCounter][visibleCounter]);
 						visibleCounter++;
 						maxVisibleCharacters++;
-						//if (InstantLine) continue; else
-						yield return new WaitForSeconds(secPerChar);
+						if (!InstantLine) 
+							yield return new WaitForSeconds(secPerChar);
 					}
 					visibleCounter = 0;
+					InstantLine = false;
 				}
 				subCounter++;
 			}
@@ -119,6 +123,10 @@ public class TMP_Animated : TextMeshProUGUI
 					{
 						onAction.Invoke(tag.Split('=')[1]);
 					}
+					else if (tag.StartsWith("keyword="))
+					{
+						onColorChange.Invoke((PokemonUnity.Color)int.Parse(tag.Split('=')[1]));
+					}
 				}
 				return null;
 			}
@@ -129,7 +137,7 @@ public class TMP_Animated : TextMeshProUGUI
 	public void SkipAhead()
 	{
 		InstantLine = true;
-	}
+	}*/
 }
 
 /*// <summary>
