@@ -157,11 +157,13 @@ public class SceneTransition : MonoBehaviour
         fading = false;
     }
 
-    public float FadeIn(float speed = -1)
+    public float FadeIn()
     {
-        if (speed < 0)
-            speed = fadeSpeed;
+        return FadeIn(fadeSpeed);
+    }
 
+    public float FadeIn(float speed)
+    {
         if (!RotatableGUI)
         {
             screenFader.enabled = true;
@@ -180,11 +182,28 @@ public class SceneTransition : MonoBehaviour
         return speed;
     }
 
-    public float FadeOut(float speed = -1)
+    public float FadeOut()
     {
-        if (speed < 0)
-            speed = fadeSpeed;
+        if (!RotatableGUI)
+        {
+            screenFader.enabled = true;
+            screenFader.texture = GlobalVariables.global.fadeTex;
+        }
+        else
+        {
+            screenFaderOnGUI.enabled = true;
+            screenFaderOnGUI.texture = (Texture2D) GlobalVariables.global.fadeTex;
+        }
+        increment = 0;
+        fadingOut = true;
+        fading = true;
+        StartCoroutine("fade", fadeSpeed);
+        GlobalVariables.global.fadeIn = true;
+        return fadeSpeed;
+    }
 
+    public float FadeOut(float speed)
+    {
         if (!RotatableGUI)
         {
             screenFader.enabled = true;

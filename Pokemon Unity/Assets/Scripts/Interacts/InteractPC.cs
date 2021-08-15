@@ -66,7 +66,7 @@ public class InteractPC : MonoBehaviour
                 SfxHandler.Play(onClip);
                 yield return StartCoroutine("onAnim");
                 Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine(Dialog.drawTextSilent( SaveData.currentSave.playerName + " turned on the PC!"));
+                yield return Dialog.StartCoroutine("drawTextSilent", "Gold turned on the PC!");
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
@@ -75,7 +75,7 @@ public class InteractPC : MonoBehaviour
                 while (accessedPC != 0)
                 {
                     Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine(Dialog.drawText( "Which PC should be accessed?"));
+                    yield return Dialog.StartCoroutine("drawText", "Which PC should be accessed?");
                     Dialog.drawChoiceBox(new string[] {"Someone's", "Switch off"});
                     yield return Dialog.StartCoroutine("choiceNavigate");
                     Dialog.undrawChoiceBox();
@@ -87,7 +87,7 @@ public class InteractPC : MonoBehaviour
                         Dialog.drawDialogBox();
                         SfxHandler.Play(openClip);
                         yield return
-                            Dialog.StartCoroutine(Dialog.drawTextSilent( "The Pokémon Storage System \\was accessed."));
+                            Dialog.StartCoroutine("drawTextSilent", "The Pokémon Storage System \\was accessed.");
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
                             yield return null;

@@ -124,7 +124,12 @@ public class AudioHandler : MonoBehaviour
         }
     }
 
-    public void playBGM(AudioClip BGM, int loopStartTimeSamples = 0)
+    public void playBGM(AudioClip BGM)
+    {
+        playBGM(BGM, 0);
+    }
+
+    public void playBGM(AudioClip BGM, int loopStartTimeSamples)
     {
         nextClip = BGM; //set up the nextClip to play
         fadeSpeed = stdFadeSpeed;
@@ -149,7 +154,12 @@ public class AudioHandler : MonoBehaviour
         }
     }
 
-    public void playBGM(AudioClip BGM, float sentFadeSpeed, int loopStartTimeSamples = 0)
+    public void playBGM(AudioClip BGM, float sentFadeSpeed)
+    {
+        playBGM(BGM, sentFadeSpeed, 0);
+    }
+
+    public void playBGM(AudioClip BGM, float sentFadeSpeed, int loopStartTimeSamples)
     {
         nextClip = BGM; //set up the nextClip to play
         fadeSpeed = sentFadeSpeed;
@@ -173,14 +183,32 @@ public class AudioHandler : MonoBehaviour
         }
     }
 
-    public void pauseBGM(float sentFadeSpeed = 0.5f)
+    public void pauseBGM()
+    {
+        pausedClip = source.clip;
+        pausedTimeSamples = source.timeSamples;
+        fadeBGM(0.5f);
+    }
+
+    public void pauseBGM(float sentFadeSpeed)
     {
         pausedClip = source.clip;
         pausedTimeSamples = source.timeSamples;
         fadeBGM(sentFadeSpeed);
     }
 
-    public void unpauseFadeBGM(float sentFadeSpeed = 0.5f)
+    public void unpauseFadeBGM()
+    {
+        nextClip = pausedClip;
+        fadeSpeed = 0.5f;
+        if (!fading)
+        {
+            increment = 0;
+            fading = true;
+        }
+    }
+
+    public void unpauseFadeBGM(float sentFadeSpeed)
     {
         nextClip = pausedClip;
         fadeSpeed = sentFadeSpeed;
@@ -220,8 +248,6 @@ public class AudioHandler : MonoBehaviour
         {
             yield return null;
         }
-
-        source.Stop();
 
         source.timeSamples = originalSamples;
         source.clip = originalClip;

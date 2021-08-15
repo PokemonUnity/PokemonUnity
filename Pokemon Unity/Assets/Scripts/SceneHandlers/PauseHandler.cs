@@ -203,7 +203,7 @@ public class PauseHandler : MonoBehaviour
         else if (selectedIcon == 4)
         {
             targetIcon = iconTrainer;
-            setSelectedText(SaveData.currentSave.playerName);
+            setSelectedText(SaveData.currentSave.savefile.playerName);
         }
         else if (selectedIcon == 5)
         {
@@ -473,20 +473,20 @@ public class PauseHandler : MonoBehaviour
                         int badgeTotal = 0;
                         for (int i = 0; i < 12; i++)
                         {
-                            if (SaveData.currentSave.gymsBeaten[i])
+                            if (SaveData.currentSave.savefile.gymsBeaten[i])
                             {
                                 badgeTotal += 1;
                             }
                         }
-                        string playerTime = "" + SaveData.currentSave.playerMinutes;
+                        string playerTime = "" + SaveData.currentSave.savefile.playerMinutes;
                         if (playerTime.Length == 1)
                         {
                             playerTime = "0" + playerTime;
                         }
-                        playerTime = SaveData.currentSave.playerHours + " : " + playerTime;
+                        playerTime = SaveData.currentSave.savefile.playerHours + " : " + playerTime;
 
                         mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
-                        dataText.text = SaveData.currentSave.playerName + "\n" +
+                        dataText.text = SaveData.currentSave.savefile.playerName + "\n" +
                                         badgeTotal + "\n" +
                                         "0" + "\n" + //pokedex not yet implemented
                                         playerTime;
@@ -497,7 +497,7 @@ public class PauseHandler : MonoBehaviour
                         yield return StartCoroutine(Dialog.drawText("Would you like to save the game?"));
                         Dialog.drawChoiceBoxNo();
                         yield return new WaitForSeconds(0.2f);
-                        yield return StartCoroutine(Dialog.choiceNavigate(0));
+                        yield return StartCoroutine(Dialog.choiceNavigateNo());
                         int chosenIndex = Dialog.chosenIndex;
                         if (chosenIndex == 1)
                         {
@@ -505,17 +505,17 @@ public class PauseHandler : MonoBehaviour
                             Dialog.undrawChoiceBox();
                             Dialog.drawDialogBox();
 
-                            SaveData.currentSave.levelName = Application.loadedLevelName;
-                            SaveData.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
-                            SaveData.currentSave.playerDirection = PlayerMovement.player.direction;
-                            SaveData.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
+                            SaveData.currentSave.savefile.levelName = Application.loadedLevelName;
+                            SaveData.currentSave.savefile.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
+                            SaveData.currentSave.savefile.playerDirection = PlayerMovement.player.direction;
+                            SaveData.currentSave.savefile.mapName = PlayerMovement.player.accessedMapSettings.mapName;
 
                             NonResettingHandler.saveDataToGlobal();
 
                             SaveLoad.Save();
 
                             yield return
-                                StartCoroutine(Dialog.drawText(SaveData.currentSave.playerName + " saved the game!"));
+                                StartCoroutine(Dialog.drawText(SaveData.currentSave.savefile.playerName + " saved the game!"));
                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                             {
                                 yield return null;

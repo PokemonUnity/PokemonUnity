@@ -588,7 +588,7 @@ public class InteractTrainer : MonoBehaviour
                 for (int i = 0; i < trainerConfrontDialog.Length; i++)
                 {
                     Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine(Dialog.drawText( trainerConfrontDialog[i]));
+                    yield return Dialog.StartCoroutine("drawText", trainerConfrontDialog[i]);
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
@@ -599,47 +599,7 @@ public class InteractTrainer : MonoBehaviour
                 //custom cutouts not yet implemented
                 StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
 
-                //Automatic LoopStart usage not yet implemented
-                Scene.main.Battle.gameObject.SetActive(true);
-                if (trainer.battleBGM != null)
-                {
-                    BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
-                }
-                else
-                {
-                    BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
-                        Scene.main.Battle.defaultTrainerBGMLoopStart);
-                }
-                Scene.main.Battle.gameObject.SetActive(false);
-                yield return new WaitForSeconds(1.6f);
-
-                Scene.main.Battle.gameObject.SetActive(true);
-                StartCoroutine(Scene.main.Battle.control(trainer));
-
-                while (Scene.main.Battle.gameObject.activeSelf)
-                {
-                    yield return null;
-                }
-
-                //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-
-                if (Scene.main.Battle.victor == 0)
-                {
-                    defeated = true;
-                    recentlyDefeated = true;
-                    //Display all of the defeated Dialog. (if any)
-                    for (int i = 0; i < trainerDefeatDialog.Length; i++)
-                    {
-                        Dialog.drawDialogBox();
-                        yield return Dialog.StartCoroutine(Dialog.drawText( trainerDefeatDialog[i]));
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                        {
-                            yield return null;
-                        }
-                        Dialog.undrawDialogBox();
-                    }
-                }
+                new System.NotImplementedException();
             }
             else
             {
@@ -647,7 +607,7 @@ public class InteractTrainer : MonoBehaviour
                 for (int i = 0; i < trainerPostDefeatDialog.Length; i++)
                 {
                     Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine(Dialog.drawText( trainerPostDefeatDialog[i]));
+                    yield return Dialog.StartCoroutine("drawText", trainerPostDefeatDialog[i]);
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;

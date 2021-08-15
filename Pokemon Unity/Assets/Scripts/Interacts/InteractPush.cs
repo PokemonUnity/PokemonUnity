@@ -55,7 +55,7 @@ public class InteractPush : MonoBehaviour
                 {
                     Dialog.drawDialogBox();
                         //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine(Dialog.drawText( interactText));
+                    yield return Dialog.StartCoroutine("drawText", interactText);
                     Dialog.drawChoiceBox();
 
                     //You CAN NOT get a value from a Coroutine. As a result, the coroutine runs and resets a public int in it's own script.
@@ -65,8 +65,8 @@ public class InteractPush : MonoBehaviour
                     {
                         Dialog.drawDialogBox();
                         yield return
-                            Dialog.StartCoroutine(Dialog.drawText(
-                                targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Strength") + "!"))
+                            Dialog.StartCoroutine("drawText",
+                                targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Strength") + "!")
                             ;
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
@@ -88,7 +88,7 @@ public class InteractPush : MonoBehaviour
                 {
                     Dialog.drawDialogBox();
                         //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine(Dialog.drawText( examineText));
+                    yield return Dialog.StartCoroutine("drawText", examineText);
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
@@ -103,7 +103,7 @@ public class InteractPush : MonoBehaviour
             {
                 Dialog.drawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                yield return Dialog.StartCoroutine(Dialog.drawText( examineTextStrengthActive));
+                yield return Dialog.StartCoroutine("drawText", examineTextStrengthActive);
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;

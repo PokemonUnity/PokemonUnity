@@ -289,27 +289,28 @@ public class CustomEvent : MonoBehaviour
                 Dialog.drawDialogBox();
                 if (currentEvent.bool0)
                 {
-                    Dialog.StartCoroutine(Dialog.drawText(
-                        SaveData.currentSave.playerName + " received TM" +
-                        ItemDatabase.getItem(currentEvent.string0).getTMNo() + ": " + currentEvent.string0 + "!"));
+                    Debug.LogError("Not IMPLEMENT, YET");
+                    //Dialog.StartCoroutine("drawText",
+                    //    SaveData.currentSave.playerName + " received TM" +
+                    //    ItemDatabase.getItem(currentEvent.string0).getTMNo() + ": " + currentEvent.string0 + "!");
                 }
                 else
                 {
                     if (currentEvent.int0 > 1)
                     {
-                        Dialog.StartCoroutine(Dialog.drawText(
-                            SaveData.currentSave.playerName + " received " + currentEvent.string0 + "s!"));
+                        Dialog.StartCoroutine("drawText",
+                            SaveData.currentSave.savefile.playerName + " received " + currentEvent.string0 + "s!");
                     }
                     else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
                              firstLetter == "u")
                     {
-                        Dialog.StartCoroutine(Dialog.drawText(
-                            SaveData.currentSave.playerName + " received an " + currentEvent.string0 + "!"));
+                        Dialog.StartCoroutine("drawText",
+                            SaveData.currentSave.savefile.playerName + " received an " + currentEvent.string0 + "!");
                     }
                     else
                     {
-                        Dialog.StartCoroutine(Dialog.drawText(
-                            SaveData.currentSave.playerName + " received a " + currentEvent.string0 + "!"));
+                        Dialog.StartCoroutine("drawText",
+                            SaveData.currentSave.savefile.playerName + " received a " + currentEvent.string0 + "!");
                     }
                 }
                 yield return new WaitForSeconds(itemGetMFX.length);
@@ -321,26 +322,27 @@ public class CustomEvent : MonoBehaviour
                 {
                     if (currentEvent.bool0)
                     {
-                        yield return
-                            Dialog.StartCoroutine(Dialog.drawTextSilent(
-                                SaveData.currentSave.playerName + " put the TM" +
-                                ItemDatabase.getItem(currentEvent.string0).getTMNo() + " \\away into the bag."));
+                        //yield return
+                        //    Dialog.StartCoroutine("drawTextSilent",
+                        //        SaveData.currentSave.playerName + " put the TM" +
+                        //        ItemDatabase.getItem(currentEvent.string0).getTMNo() + " \\away into the bag.");
+                        Debug.LogError("IT WAS NOT IMPLEMENT!");
                     }
                     else
                     {
                         if (currentEvent.int0 > 1)
                         {
                             yield return
-                                Dialog.StartCoroutine(Dialog.drawTextSilent(
-                                    SaveData.currentSave.playerName + " put the " + currentEvent.string0 +
-                                    "s \\away into the bag."));
+                                Dialog.StartCoroutine("drawTextSilent",
+                                    SaveData.currentSave.savefile.playerName + " put the " + currentEvent.string0 +
+                                    "s \\away into the bag.");
                         }
                         else
                         {
                             yield return
-                                Dialog.StartCoroutine(Dialog.drawTextSilent(
-                                    SaveData.currentSave.playerName + " put the " + currentEvent.string0 +
-                                    " \\away into the bag."));
+                                Dialog.StartCoroutine("drawTextSilent",
+                                    SaveData.currentSave.savefile.playerName + " put the " + currentEvent.string0 +
+                                    " \\away into the bag.");
                         }
                     }
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
@@ -350,7 +352,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 else
                 {
-                    yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "But there was no room..."));
+                    yield return Dialog.StartCoroutine("drawTextSilent", "But there was no room...");
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
@@ -397,8 +399,8 @@ public class CustomEvent : MonoBehaviour
 
                     Dialog.drawDialogBox();
                     yield return
-                        Dialog.StartCoroutine(Dialog.drawText(
-                            SaveData.currentSave.playerName + " received the " + pkName + "!"));
+                        Dialog.StartCoroutine("drawText",
+                            SaveData.currentSave.savefile.playerName + " received the " + pkName + "!");
                     BgmHandler.main.PlayMFX(pokeGetMFX);
                     yield return new WaitForSeconds(pokeGetMFX.length);
 
@@ -467,8 +469,18 @@ public class CustomEvent : MonoBehaviour
                     string[] pkMoveset = pkd.GenerateMoveset(currentEvent.ints[1]);
                     for (int i = 0; i < 4; i++)
                     {
+                        string ConverterName;
+                        PokemonUnity.Moves[] tempo = new PokemonUnity.Moves[4];
                         if (currentEvent.strings[4 + i].Length > 0)
                         {
+                            //pkMoveset[i] = currentEvent.strings[4 + i];
+                            
+                            ConverterName = currentEvent.strings[4 + i].ToString().Replace(" ", "_");
+                            ConverterName = ConverterName.ToString().Replace("-", "_");
+                            ConverterName = ConverterName.ToUpper();
+
+                            tempo[i] = (PokemonUnity.Moves)System.Enum.Parse(typeof(PokemonUnity.Moves), ConverterName);
+
                             pkMoveset[i] = currentEvent.strings[4 + i];
                         }
                     }
@@ -476,13 +488,13 @@ public class CustomEvent : MonoBehaviour
                     Debug.Log(pkMoveset[0] + ", " + pkMoveset[1] + ", " + pkMoveset[2] + ", " + pkMoveset[3]);
 
 
-                    Pokemon pk = new Pokemon(currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
-                        currentEvent.bool0, currentEvent.strings[2], currentEvent.strings[3],
-                        currentEvent.strings[1], IVs[0], IVs[1], IVs[2], IVs[3], IVs[4], IVs[5], 0, 0, 0, 0, 0, 0,
-                        pkNature, currentEvent.ints[4],
-                        pkMoveset, new int[4]);
-
-                    SaveData.currentSave.PC.addPokemon(pk);
+                    //Pokemon pk = new Pokemon((PokemonUnity.Pokemons)currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
+                    //    currentEvent.bool0, currentEvent.strings[2], currentEvent.strings[3],
+                    //    currentEvent.strings[1], IVs[0], IVs[1], IVs[2], IVs[3], IVs[4], IVs[5], 0, 0, 0, 0, 0, 0,
+                    //    pkNature, currentEvent.ints[4],
+                    //    pkMoveset, new int[4]);
+                    //
+                    //SaveData.currentSave.PC.addPokemon(pk);
                 }
                 else
                 {
@@ -540,11 +552,11 @@ public class CustomEvent : MonoBehaviour
                         }
                         break;
                     case CustomEventDetails.Logic.GymBadgeNoOwned:
-                        if (Mathf.FloorToInt(currentEvent.float0) < SaveData.currentSave.gymsBeaten.Length &&
+                        if (Mathf.FloorToInt(currentEvent.float0) < SaveData.currentSave.savefile.gymsBeaten.Length &&
                             Mathf.FloorToInt(currentEvent.float0) >= 0)
                         {
                             //ensure input number is valid
-                            if (SaveData.currentSave.gymsBeaten[Mathf.FloorToInt(currentEvent.float0)])
+                            if (SaveData.currentSave.savefile.gymsBeaten[Mathf.FloorToInt(currentEvent.float0)])
                             {
                                 passedCheck = true;
                             }
@@ -552,9 +564,9 @@ public class CustomEvent : MonoBehaviour
                         break;
                     case CustomEventDetails.Logic.GymBadgesEarned:
                         int badgeCount = 0;
-                        for (int bi = 0; bi < SaveData.currentSave.gymsBeaten.Length; bi++)
+                        for (int bi = 0; bi < SaveData.currentSave.savefile.gymsBeaten.Length; bi++)
                         {
-                            if (SaveData.currentSave.gymsBeaten[bi])
+                            if (SaveData.currentSave.savefile.gymsBeaten[bi])
                             {
                                 badgeCount += 1;
                             }
@@ -609,51 +621,7 @@ public class CustomEvent : MonoBehaviour
 
             case CustomEventDetails.CustomEventType.TrainerBattle:
 
-                //custom cutouts not yet implemented
-                StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
-
-                //Automatic LoopStart usage not yet implemented
-                Scene.main.Battle.gameObject.SetActive(true);
-
-                Trainer trainer = currentEvent.object0.GetComponent<Trainer>();
-
-                if (trainer.battleBGM != null)
-                {
-                    Debug.Log(trainer.battleBGM.name);
-                    BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
-                }
-                else
-                {
-                    BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
-                        Scene.main.Battle.defaultTrainerBGMLoopStart);
-                }
-                Scene.main.Battle.gameObject.SetActive(false);
-                yield return new WaitForSeconds(1.6f);
-
-                Scene.main.Battle.gameObject.SetActive(true);
-                StartCoroutine(Scene.main.Battle.control(true, trainer, currentEvent.bool0));
-
-                while (Scene.main.Battle.gameObject.activeSelf)
-                {
-                    yield return null;
-                }
-
-                //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-
-                if (currentEvent.bool0)
-                {
-                    if (Scene.main.Battle.victor == 1)
-                    {
-                        int newTreeIndex = currentEvent.int0;
-                        if (newTreeIndex != eventTreeIndex && //only change tree if index is valid
-                            newTreeIndex < treesArray.Length)
-                        {
-                            JumpToTree(newTreeIndex);
-                        }
-                    }
-                }
-
+                new System.NotImplementedException();
                 break;
         }
     }

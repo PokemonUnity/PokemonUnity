@@ -187,11 +187,16 @@ public class BgmHandler : MonoBehaviour
     private void StopMainFade()
     {
         StopCoroutine(fading);
-        StopCoroutine(PlayMainIE(null, 0));
+        StopCoroutine("PlayMainIE");
         mainTrack = mainTrackNext;
     }
 
-    public void PlayOverlay(AudioClip bgm, int loopStartSamples, float fadeTime = 0.1f)
+    public void PlayOverlay(AudioClip bgm, int loopStartSamples)
+    {
+        PlayOverlay(bgm, loopStartSamples, 0.1f);
+    }
+
+    public void PlayOverlay(AudioClip bgm, int loopStartSamples, float fadeTime)
     {
         //if overlay track is already playing the bgm, do not continue
         if (overlayTrack.clip != bgm || currentTrack != Track.Overlay)
@@ -270,11 +275,24 @@ public class BgmHandler : MonoBehaviour
         Play(previousTrackType);
     }
 
-
-
-    public void ResumeMain(float time = -1f, AudioClip clip = null, int loopStartSamples = 0)
+    public void ResumeMain()
     {
-        ResumeMain(time == -1f ? defaultFadeSpeed : time, new AudioTrack(clip, loopStartSamples));
+        ResumeMain(defaultFadeSpeed, mainTrack);
+    }
+
+    public void ResumeMain(float time)
+    {
+        ResumeMain(time, mainTrack);
+    }
+
+    public void ResumeMain(AudioClip clip, int loopStartSamples)
+    {
+        ResumeMain(defaultFadeSpeed, new AudioTrack(clip, loopStartSamples));
+    }
+
+    public void ResumeMain(float time, AudioClip clip, int loopStartSamples)
+    {
+        ResumeMain(time, new AudioTrack(clip, loopStartSamples));
     }
 
     private void ResumeMain(float time, AudioTrack track)

@@ -72,7 +72,12 @@ public class MapSettings : MonoBehaviour
         return mapBGMLoopStartSamples;
     }
 
-    public Sprite getBattleBackground(int currentTag = 0)
+    public Sprite getBattleBackground()
+    {
+        return getBattleBackground(0);
+    }
+
+    public Sprite getBattleBackground(int currentTag)
     {
         float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
         string timeString = "";
@@ -137,7 +142,12 @@ public class MapSettings : MonoBehaviour
         return Resources.Load<Sprite>("BattleBackgrounds/Backgrounds/" + checkString);
     }
 
-    public Sprite getBattleBase(int currentTag = 0)
+    public Sprite getBattleBase()
+    {
+        return getBattleBase(0);
+    }
+
+    public Sprite getBattleBase(int currentTag)
     {
         float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
         string timeString = "";
@@ -305,9 +315,10 @@ public class MapSettings : MonoBehaviour
             //*/
 
 
-        return new Pokemon(chanceSplitList[encounterIndex].ID, Pokemon.Gender.CALCULATE,
-            Random.Range(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
-            null, null, null, -1);
+        //return new Pokemon((PokemonUnity.Pokemons)chanceSplitList[encounterIndex].ID, Pokemon.Gender.CALCULATE,
+        //    Random.Range(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
+        //    null, null, null, -1);
+        return new Pokemon();
     }
 }
 

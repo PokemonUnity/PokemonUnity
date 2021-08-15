@@ -1,7 +1,6 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
-using System.Collections;
 
 [System.Serializable]
 public class Bag
@@ -102,7 +101,28 @@ public class Bag
     {
         //returns false if will exceed the quantity limit (999)
         packOrder();
-        string name = ItemDatabase.getItem(itemName).getName(); //ensures that the name is correct
+        string name = ItemDatabase.getItem(itemName).Name; //ensures that the name is correct
+        int index = getIndexOf(name);
+        if (index == -1)
+        {
+            //item does not exist in bag, add it to the end
+            index = getLength();
+            order[index] = name;
+        }
+        index = ItemDatabase.getIndexOf(order[index]);
+        if (quantity[index] + amount > 999)
+        {
+            return false;
+        }
+        quantity[index] += amount;
+        return true;
+    }
+
+    public bool addItem(PokemonUnity.Inventory.Items itemName, int amount)
+    {
+        //returns false if will exceed the quantity limit (999)
+        packOrder();
+        string name = ItemDatabase.getItem(itemName).Name; //ensures that the name is correct
         int index = getIndexOf(name);
         if (index == -1)
         {
@@ -123,7 +143,32 @@ public class Bag
     {
         //returns false if trying to remove more items than exist
         packOrder();
-        string name = ItemDatabase.getItem(itemName).getName(); //ensures that the name is correct
+        string name = ItemDatabase.getItem(itemName).Name; //ensures that the name is correct
+        int index = getIndexOf(name);
+        if (index == -1)
+        {
+            //item does not exist in bag
+            return false;
+        }
+        index = ItemDatabase.getIndexOf(order[index]);
+        if (quantity[index] - amount < 0)
+        {
+            return false;
+        }
+        quantity[index] -= amount;
+        if (quantity[index] == 0)
+        {
+            order[getIndexOf(name)] = null;
+            packOrder();
+        }
+        return true;
+    }
+
+    public bool removeItem(PokemonUnity.Inventory.Items itemName, int amount)
+    {
+        //returns false if trying to remove more items than exist
+        packOrder();
+        string name = ItemDatabase.getItem(itemName).Name; //ensures that the name is correct
         int index = getIndexOf(name);
         if (index == -1)
         {
@@ -147,15 +192,48 @@ public class Bag
 
     public string[] getSellableItemArray()
     {
-        return getItemTypeArray(ItemData.ItemType.ITEM, true);
+        return getItemTypeArray(ItemType.ITEM, true);
     }
 
-    public string[] getItemTypeArray(ItemData.ItemType itemType)
+    public string[] getItemTypeArray(ItemType itemType)
     {
         return getItemTypeArray(itemType, false);
     }
 
-    private string[] getItemTypeArray(ItemData.ItemType itemType, bool allSellables)
+    public string[] getItemTypeArray(ItemType[] itemType)
+    {
+        return getItemTypeArrays(itemType);
+    }
+
+    private string[] getItemTypeArrays(ItemType[] itemType)
+    {
+        packOrder();
+        string[] result = new string[getLength()];
+        int resultPos = 0;
+        int length = getLength();
+        //cycle through order, adding all correct ItemTypes to result
+        for (int i = 0; i < length; i++)
+        {
+            for (int num = 0; num < itemType.Length; num++)
+            {
+                if (ItemDatabase.getItem(order[i]).ItemType == itemType[num])
+                {
+                    //if correct ItemType
+                    result[resultPos] = order[i];
+                    resultPos += 1;
+                }
+            }
+        }
+        string[] cleanedResult = new string[resultPos];
+        for (int i = 0; i < cleanedResult.Length; i++)
+        {
+            cleanedResult[i] = result[i];
+        }
+
+        return cleanedResult;
+    }
+
+    private string[] getItemTypeArray(ItemType itemType, bool allSellables)
     {
         packOrder();
         string[] result = new string[getLength()];
@@ -166,7 +244,7 @@ public class Bag
         {
             if (!allSellables)
             {
-                if (ItemDatabase.getItem(order[i]).getItemType() == itemType)
+                if (ItemDatabase.getItem(order[i]).ItemType == itemType)
                 {
                     //if correct ItemType
                     result[resultPos] = order[i];
@@ -175,9 +253,10 @@ public class Bag
             }
             else
             {
-                if (ItemDatabase.getItem(order[i]).getItemType() == ItemData.ItemType.ITEM ||
-                    ItemDatabase.getItem(order[i]).getItemType() == ItemData.ItemType.MEDICINE ||
-                    ItemDatabase.getItem(order[i]).getItemType() == ItemData.ItemType.BERRY)
+                if (ItemDatabase.getItem(order[i]).ItemType == ItemType.ITEM ||
+                    ItemDatabase.getItem(order[i]).ItemType == ItemType.MEDICINE ||
+                    ItemDatabase.getItem(order[i]).ItemType == ItemType.EVOLUTION || // Evolution?
+                    ItemDatabase.getItem(order[i]).ItemType == ItemType.BERRY)
                 {
                     //if correct ItemType
                     result[resultPos] = order[i];
@@ -194,28 +273,28 @@ public class Bag
         return cleanedResult;
     }
 
-    public string[] getBattleTypeArray(ItemData.BattleType battleType)
-    {
-        packOrder();
-        string[] result = new string[getLength()];
-        int resultPos = 0;
-        int length = getLength();
-        //cycle through order, adding all correct ItemTypes to result
-        for (int i = 0; i < length; i++)
-        {
-            if (ItemDatabase.getItem(order[i]).getBattleType() == battleType)
-            {
-                //if correct ItemType
-                result[resultPos] = order[i];
-                resultPos += 1;
-            }
-        }
-        string[] cleanedResult = new string[resultPos];
-        for (int i = 0; i < cleanedResult.Length; i++)
-        {
-            cleanedResult[i] = result[i];
-        }
-
-        return cleanedResult;
-    }
+    //public string[] getBattleTypeArray(ItemData.BattleType battleType)
+    //{
+    //    packOrder();
+    //    string[] result = new string[getLength()];
+    //    int resultPos = 0;
+    //    int length = getLength();
+    //    //cycle through order, adding all correct ItemTypes to result
+    //    for (int i = 0; i < length; i++)
+    //    {
+    //        if (ItemDatabase.getItem(order[i]).getBattleType() == battleType)
+    //        {
+    //            //if correct ItemType
+    //            result[resultPos] = order[i];
+    //            resultPos += 1;
+    //        }
+    //    }
+    //    string[] cleanedResult = new string[resultPos];
+    //    for (int i = 0; i < cleanedResult.Length; i++)
+    //    {
+    //        cleanedResult[i] = result[i];
+    //    }
+    //
+    //    return cleanedResult;
+    //}
 }

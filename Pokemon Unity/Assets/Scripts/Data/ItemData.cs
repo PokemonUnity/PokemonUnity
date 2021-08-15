@@ -1,9 +1,6 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
-using System.Collections;
-
-public class ItemData
+public class ItemDatass
 {
     private string name;
 
@@ -51,7 +48,7 @@ public class ItemData
     private string stringParameter;
     private float floatParameter;
 
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price)
+    public ItemDatass(string name, ItemType itemType, BattleType battleType, string description, int price)
     {
         this.name = name;
         this.itemType = itemType;
@@ -61,7 +58,7 @@ public class ItemData
         this.itemEffect = ItemEffect.NONE;
     }
 
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
+    public ItemDatass(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect)
     {
         this.name = name;
@@ -72,7 +69,7 @@ public class ItemData
         this.itemEffect = itemEffect;
     }
 
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
+    public ItemDatass(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect, string stringParameter)
     {
         this.name = name;
@@ -84,7 +81,7 @@ public class ItemData
         this.stringParameter = stringParameter;
     }
 
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
+    public ItemDatass(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect, float floatParameter)
     {
         this.name = name;
@@ -96,7 +93,7 @@ public class ItemData
         this.floatParameter = floatParameter;
     }
 
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
+    public ItemDatass(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect, string stringParameter, float floatParameter)
     {
         this.name = name;
@@ -110,7 +107,7 @@ public class ItemData
     }
 
     //TMs
-    public ItemData(int tmNo, string name, ItemType itemType, BattleType battleType, string description, int price)
+    public ItemDatass(int tmNo, string name, ItemType itemType, BattleType battleType, string description, int price)
     {
         this.tmNo = tmNo;
         this.name = name;

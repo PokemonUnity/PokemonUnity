@@ -45,33 +45,19 @@ public class DayNightCycle : MonoBehaviour
         // 6AM - 9AM = 160,190,255,255
         skyLight = new Color[24]
         {
+            new Color(0.14f, 0.20f, 0.47f, 1), new Color(0.14f, 0.20f, 0.47f, 1), new Color(0.14f, 0.20f, 0.47f, 1),
             new Color(0.14f, 0.20f, 0.47f, 1),
-            new Color(0.14f, 0.20f, 0.47f, 1),
-            new Color(0.14f, 0.20f, 0.47f, 1),
-            new Color(0.14f, 0.20f, 0.47f, 1),
-            new Color(0.47f, 0.51f, 0.86f, 1),
-            new Color(0.47f, 0.51f, 0.86f, 1),
+            new Color(0.47f, 0.51f, 0.86f, 1), new Color(0.47f, 0.51f, 0.86f, 1), new Color(0.63f, 0.75f, 1, 1),
             new Color(0.63f, 0.75f, 1, 1),
-            new Color(0.63f, 0.75f, 1, 1),
-            new Color(0.63f, 0.75f, 1, 1),
-            new Color(0.63f, 0.75f, 1, 1),
-            new Color(1, 1, 1, 1),
-            new Color(1, 1, 1, 1),
-            new Color(1, 1, 1, 1),
-            new Color(1, 1, 1, 1),
-            new Color(1, 1, 1, 1),
-            new Color(1, 1, 1, 1),
-            new Color(1, 1, 1, 1),
-            new Color(1, 1, 1, 1),
+            new Color(0.63f, 0.75f, 1, 1), new Color(0.63f, 0.75f, 1, 1), new Color(1, 1, 1, 1), new Color(1, 1, 1, 1),
+            new Color(1, 1, 1, 1), new Color(1, 1, 1, 1), new Color(1, 1, 1, 1), new Color(1, 1, 1, 1),
+            new Color(1, 1, 1, 1), new Color(1, 1, 1, 1), new Color(0.94f, 0.67f, 0.43f, 1),
             new Color(0.94f, 0.67f, 0.43f, 1),
-            new Color(0.94f, 0.67f, 0.43f, 1),
-            new Color(0.47f, 0.51f, 0.86f, 1),
-            new Color(0.24f, 0.31f, 0.67f, 1),
-            new Color(0.24f, 0.31f, 0.67f, 1),
+            new Color(0.47f, 0.51f, 0.86f, 1), new Color(0.24f, 0.31f, 0.67f, 1), new Color(0.24f, 0.31f, 0.67f, 1),
             new Color(0.14f, 0.20f, 0.47f, 1)
         };
 
-        StartCoroutine(SetTimeColor());
+        StartCoroutine("SetTimeColor");
     }
 
     void Update()

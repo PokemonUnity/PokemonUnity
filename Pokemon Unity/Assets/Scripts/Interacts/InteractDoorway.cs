@@ -91,7 +91,7 @@ public class InteractDoorway : MonoBehaviour
                 {
                     Dialog.drawDialogBox();
                         //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine(Dialog.drawText( lockedExamineText));
+                    yield return Dialog.StartCoroutine("drawText", lockedExamineText);
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         //these 3 lines stop the next bit from running until space is pressed.
@@ -111,7 +111,7 @@ public class InteractDoorway : MonoBehaviour
                 {
                     Dialog.drawDialogBox();
                         //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine(Dialog.drawText( examineText));
+                    yield return Dialog.StartCoroutine("drawText", examineText);
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         //these 3 lines stop the next bit from running until space is pressed.

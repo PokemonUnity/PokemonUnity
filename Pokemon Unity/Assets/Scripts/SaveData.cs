@@ -1,91 +1,130 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
-[System.Serializable]
+
 public class SaveData
 {
+    [System.Serializable]
+    public class SaveFile
+    {
+        public int fileIndex;
+        public int buildID;
+
+        public string levelName;
+        public SeriV3 playerPosition = new SeriV3(new Vector3());
+        public int playerDirection;
+        
+        public string playerName;
+        public bool isMale;
+        public int playerID;
+        public string fileCreationDate;
+
+        public string mapName;
+
+        public SeriPC PC;
+        public Bag Bag = new Bag();
+
+        public string[] registeredItems;
+
+        public string playerOutfit;
+
+        public int playerScore;
+        public int playerMoney;
+        
+        public int playerHours;
+        public int playerMinutes;
+        public int playerSeconds;
+        
+        public bool[] gymsEncountered;
+        public bool[] gymsBeaten;
+        public string[] gymsBeatTime;
+
+
+        //Important gameplay data
+        public string respawnSceneName;
+        public SeriV3 respawnScenePosition;
+        public int respawnSceneDirection;
+        public string respawnText;
+
+        public List<CVariable> cVariables = new List<CVariable>();
+        public List<NonResettingList> nonResettingLists = new List<NonResettingList>();
+
+        public SaveFile()
+        {
+
+        }
+
+        // Need this?
+        //public SaveData ToSaveData()
+        //{
+        //    SaveData savedata = new SaveData(fileIndex); savedata.buildID = buildID;
+        //    savedata.levelName = levelName; savedata.playerPosition = playerPosition; savedata.playerDirection = playerDirection;
+        //    savedata.playerName = playerName; savedata.isMale = isMale; savedata.playerID = playerID; savedata.fileCreationDate = fileCreationDate;
+        //    savedata.mapName = mapName; savedata.registeredItems = registeredItems; savedata.playerOutfit = playerOutfit; savedata.playerScore = playerScore;
+        //    savedata.playerMoney = playerMoney; savedata.playerHours = playerHours; savedata.playerMinutes = playerMinutes; savedata.playerSeconds = playerSeconds;
+        //    savedata.gymsEncountered = gymsEncountered; savedata.gymsBeaten = gymsBeaten; savedata.gymsBeatTime = gymsBeatTime; savedata.respawnSceneName = respawnSceneName;
+        //    savedata.respawnScenePosition = respawnScenePosition; savedata.respawnSceneDirection = respawnSceneDirection; savedata.respawnText = respawnText;
+        //    savedata.cVariables = cVariables; savedata.nonResettingLists = nonResettingLists;
+        //    //
+        //    savedata.PC = PC.GetPC();
+        //    savedata.Bag = Bag;
+        //    return savedata;
+        //}
+    }
+
     public static SaveData currentSave;
+    public SaveFile savefile;
 
-    private int fileIndex;
-    private int buildID;
+    public PC PC;
+    public Bag Bag { get { return savefile.Bag; } }
 
-
-    //file loading data
-    public string levelName;
-    public SeriV3 playerPosition;
-    public int playerDirection;
-
-
-    //Important player data
-    public string playerName;
-    public bool isMale;
-    public int playerID;
-    public string fileCreationDate;
-
-    public string mapName;
-
-    public PC PC = new PC();
-    public Bag Bag = new Bag();
-
-
-    public string[] registeredItems = new string[4];
-
-    public string playerOutfit;
-
-    public int playerScore;
-    public int playerMoney;
-
-    public int playerHours;
-    public int playerMinutes;
-    public int playerSeconds;
-
-    public bool[] gymsEncountered = new bool[12];
-    public bool[] gymsBeaten = new bool[12];
-    public string[] gymsBeatTime = new string[12];
-
-
-    //Important gameplay data
-    public string respawnSceneName;
-    public SeriV3 respawnScenePosition;
-    public int respawnSceneDirection;
-    public string respawnText;
-
-
-    private List<CVariable> cVariables = new List<CVariable>();
-    public List<NonResettingList> nonResettingLists = new List<NonResettingList>();
-
+    public bool IsNotNullFile() { return savefile != null; }
 
     public SaveData(int fileIndex)
     {
-        this.fileIndex = fileIndex;
+        savefile = new SaveFile();
+        savefile.fileIndex = fileIndex;
+        PC = new PC();
+        Save();
+    }
+
+    public SaveData(SaveFile loadData)
+    {
+        savefile = loadData;
+        savefile.fileIndex = loadData.fileIndex;
+        PC = loadData.PC.GetPC();
+    }
+
+    public void Save()
+    {
+        savefile.PC = new SeriPC(PC);
     }
 
     public int getFileIndex()
     {
-        return fileIndex;
+        return savefile.fileIndex;
     }
 
 
     ///returns "m/f_outfitString_"
     public string getPlayerSpritePrefix()
     {
-        if (isMale)
+        if (savefile.isMale)
         {
-            return "m_" + playerOutfit + "_";
+            return "m_" + savefile.playerOutfit + "_";
         }
         else
         {
-            return "f_" + playerOutfit + "_";
+            return "f_" + savefile.playerOutfit + "_";
         }
     }
 
 
     public int getNonResettingListIndex(string sceneName)
     {
-        NonResettingList[] nrlArray = nonResettingLists.ToArray();
+        NonResettingList[] nrlArray = savefile.nonResettingLists.ToArray();
 
         for (int i = 0; i < nrlArray.Length; i++)
         {
@@ -102,7 +141,7 @@ public class SaveData
 
     private int getCVariableIndex(string variableName)
     {
-        CVariable[] cVariableArray = cVariables.ToArray();
+        CVariable[] cVariableArray = savefile.cVariables.ToArray();
 
         for (int i = 0; i < cVariableArray.Length; i++)
         {
@@ -125,7 +164,7 @@ public class SaveData
         int index = getCVariableIndex(variableName);
         if (index > -1)
         {
-            return cVariables[index].value;
+            return savefile.cVariables[index].value;
         }
         return 0;
     }
@@ -135,12 +174,12 @@ public class SaveData
         int index = getCVariableIndex(variableName);
         if (index == -1)
         {
-            cVariables.Add(new CVariable(variableName, newValue));
+            savefile.cVariables.Add(new CVariable(variableName, newValue));
             Debug.Log("Added New Variable!");
         }
         else
         {
-            cVariables[index].value = newValue;
+            savefile.cVariables[index].value = newValue;
         }
     }
 }

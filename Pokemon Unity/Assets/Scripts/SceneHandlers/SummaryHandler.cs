@@ -314,7 +314,7 @@ public class SummaryHandler : MonoBehaviour
             selectedHeldItem.text = selectedPokemon.getHeldItem();
         }
         selectedHeldItemShadow.text = selectedHeldItem.text;
-        if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
+        if (selectedPokemon.getStatus() != PokemonUnity.Status.NONE)
         {
             selectedStatus.sprite = Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.getStatus().ToString());
         }
@@ -356,19 +356,21 @@ public class SummaryHandler : MonoBehaviour
         }
         OT.text = selectedPokemon.getOT();
         OTShadow.text = OT.text;
-        IDNo.text = "" + selectedPokemon.getIDno();
+        IDNo.text = selectedPokemon.getIDno().ToString();
         IDNoShadow.text = IDNo.text;
-        expPoints.text = "" + selectedPokemon.getExp();
+        expPoints.text = selectedPokemon.getExp().ToString();
         expPointsShadow.text = expPoints.text;
         float expCurrentLevel =
             PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
                 selectedPokemon.getLevel());
         float expNextlevel =
-            PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
-                selectedPokemon.getLevel() + 1);
+            selectedPokemon.getExpNext();
+        //float expNextlevel =
+        //   PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
+        //       selectedPokemon.getLevel() + 1);
         float expAlong = selectedPokemon.getExp() - expCurrentLevel;
         float expDistance = expAlong / (expNextlevel - expCurrentLevel);
-        toNextLevel.text = "" + (expNextlevel - selectedPokemon.getExp());
+        toNextLevel.text = (expNextlevel - selectedPokemon.getExp()).ToString();
         toNextLevelShadow.text = toNextLevel.text;
         expBar.rectTransform.sizeDelta = new Vector2(Mathf.Floor(expDistance * 64f), expBar.rectTransform.sizeDelta.y);
 
@@ -385,30 +387,30 @@ public class SummaryHandler : MonoBehaviour
 
         string[][] characteristics = new string[][]
         {
-            new string[]
+            new string[] // HP
             {
                 "Loves to eat", "Takes plenty of siestas", "Nods off a lot", "Scatters things often", "Likes to relax"
             },
-            new string[]
+            new string[] // ATK?
             {
                 "Proud of its power", "Likes to thrash about", "A little quick tempered", "Likes to fight",
                 "Quick tempered"
             },
-            new string[]
+            new string[] // DEF?
             {
                 "Sturdy body", "Capable of taking hits", "Highly persistent", "Good endurance", "Good perseverance"
             },
-            new string[]
+            new string[] // SPE?
+            {
+                "Likes to run", "Alert to sounds", "Impetuous and silly", "Somewhat of a clown", "Quick to flee"
+            },
+            new string[] // SPA?
             {
                 "Highly curious", "Mischievous", "Thoroughly cunning", "Often lost in thought", "Very finicky"
             },
-            new string[]
+            new string[] // SPD?
             {
                 "Strong willed", "Somewhat vain", "Strongly defiant", "Hates to lose", "Somewhat stubborn"
-            },
-            new string[]
-            {
-                "Likes to run", "Alert to sounds", "Impetuous and silly", "Somewhat of a clown", "Quick to flee"
             }
         };
         int highestIV = selectedPokemon.GetHighestIV();
@@ -482,8 +484,8 @@ public class SummaryHandler : MonoBehaviour
     private void updateSelectionMoveset(Pokemon selectedPokemon)
     {
         string[] moveset = selectedPokemon.getMoveset();
-        int[] maxPP = selectedPokemon.getMaxPP();
-        int[] PP = selectedPokemon.getPP();
+        int[] maxPP = selectedPokemon.GetMaxPP();
+        int[] PP = selectedPokemon.GetPP();
         if (!string.IsNullOrEmpty(moveset[0]))
         {
             move1Name.text = moveset[0];
@@ -607,7 +609,7 @@ public class SummaryHandler : MonoBehaviour
                 selectedPower.text = "-";
             }
             selectedPowerShadow.text = selectedPower.text;
-            selectedAccuracy.text = "" + Mathf.Round(selectedMove.getAccuracy() * 100f);
+            selectedAccuracy.text = "" + Mathf.Round(selectedMove.getAccuracy() /* 100f*/);
             if (selectedAccuracy.text == "0")
             {
                 selectedAccuracy.text = "-";
@@ -656,7 +658,18 @@ public class SummaryHandler : MonoBehaviour
         SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
     }
 
-    public IEnumerator control(Pokemon[] pokemonList, int currentPosition = 0, bool learning = false, string newMoveString = null)
+
+    public IEnumerator control(Pokemon[] pokemonList, int currentPosition)
+    {
+        yield return StartCoroutine(control(pokemonList, currentPosition, false, null));
+    }
+
+    public IEnumerator control(Pokemon pokemon, string newMoveString)
+    {
+        yield return StartCoroutine(control(new Pokemon[] {pokemon}, 0, true, newMoveString));
+    }
+
+    public IEnumerator control(Pokemon[] pokemonList, int currentPosition, bool learning, string newMoveString)
     {
         moves.localPosition = (learning) ? new Vector3(0, 32) : Vector3.zero;
         newMove.gameObject.SetActive(learning);
@@ -680,7 +693,7 @@ public class SummaryHandler : MonoBehaviour
             updateMoveToLearn(newMoveString);
         }
 
-        StartCoroutine(animatePokemon());
+        StartCoroutine("animatePokemon");
 
         bool running = true;
         int currentPage = (learning) ? 4 : 1;
@@ -1064,7 +1077,8 @@ public class SummaryHandler : MonoBehaviour
                             if (Input.GetButtonDown("Select"))
                             {
                                 replacedMove = moveset[currentMoveNumber];
-                                pokemon.replaceMove(currentMoveNumber, newMoveString);
+                                //pokemon.replaceMove(currentMoveNumber, newMoveString);
+                                pokemon.replaceMove(currentMoveNumber, ConverterNames.ChangeMoveToEnum(newMoveString));
 
                                 forgetPrompt = false;
                                 navigatingMoves = false;

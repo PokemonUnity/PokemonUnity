@@ -78,16 +78,23 @@ public class DialogBoxHandler : MonoBehaviour
 
     void Start()
     {
-        DialogBox.SetActive(!hideDialogOnStart);
-        ChoiceBox.SetActive(!hideChoiceOnStart);
+        if (hideDialogOnStart)
+        {
+            DialogBox.SetActive(false);
+        }
+        if (hideChoiceOnStart)
+        {
+            ChoiceBox.SetActive(false);
+        }
     }
 
-
-    public void drawDialogBox(int lines = -1)
+    public void drawDialogBox()
     {
-        if (lines < 0)
-            lines = defaultDialogLines;
+        drawDialogBox(defaultDialogLines);
+    }
 
+    public void drawDialogBox(int lines)
+    {
         DialogBox.transform.position = new Vector3(0, 0, DialogBox.transform.position.z);
         DialogBox.SetActive(true);
         DialogBoxBorder.texture = Resources.Load<Texture>("Frame/dialog" + PlayerPrefs.GetInt("frameStyle"));
@@ -137,7 +144,13 @@ public class DialogBoxHandler : MonoBehaviour
         yield return null;
     }
 
-    public void drawChoiceBox(int customYOffset = 0)
+    public void drawChoiceBox()
+    {
+        //No parametres means simply Yes/No
+        drawChoiceBox(0);
+    }
+
+    public void drawChoiceBox(int customYOffset)
     {
         //No other parametres means simply Yes/No
         ChoiceBox.SetActive(true);
@@ -166,11 +179,33 @@ public class DialogBoxHandler : MonoBehaviour
         ChoiceBoxTextShadow.text = "Yes \nNo";
     }
 
-    public void drawChoiceBox(string[] choices, int width = -1)
+    public void drawChoiceBox(string[] choices)
     {
-        if (width < 0)
-            width = defaultChoiceWidth;
+        ChoiceBox.SetActive(true);
+        ChoiceBoxTexture.texture = Resources.Load<Texture>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
+        ChoiceBoxTexture.pixelInset = new Rect(342 - defaultChoiceWidth - 1, defaultChoiceY, defaultChoiceWidth,
+            30f + (14f * (choices.Length - 1)));
+        ChoiceBoxSelect.pixelInset = new Rect(342 - defaultChoiceWidth + 7,
+            ChoiceBoxTexture.pixelInset.y + 9f + (14f * (choices.Length - 1)), ChoiceBoxSelect.pixelInset.width,
+            ChoiceBoxSelect.pixelInset.height);
+        ChoiceBoxText.pixelOffset = new Vector2(342 - defaultChoiceWidth + 21, ChoiceBoxTexture.pixelInset.y + 13f);
+        ChoiceBoxTextShadow.pixelOffset = new Vector2(342 - defaultChoiceWidth + 22, ChoiceBoxTexture.pixelInset.y + 12f);
+        ChoiceBoxText.text = "";
+        ChoiceBoxTextShadow.text = "";
+        for (int i = 0; i < choices.Length; i++)
+        {
+            ChoiceBoxText.text += choices[i];
+            ChoiceBoxTextShadow.text = ChoiceBoxText.text;
+            if (i != choices.Length - 1)
+            {
+                ChoiceBoxText.text += "\n";
+                ChoiceBoxTextShadow.text = ChoiceBoxText.text;
+            }
+        }
+    }
 
+    public void drawChoiceBoxWidth(string[] choices, int width)
+    {
         ChoiceBox.SetActive(true);
         ChoiceBoxTexture.texture = Resources.Load<Texture>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
         ChoiceBoxTexture.pixelInset = new Rect(342 - width - 1, defaultChoiceY, width,
@@ -255,7 +290,7 @@ public class DialogBoxHandler : MonoBehaviour
                 {
                     //player name
                     i += 1; //adjust for the extra character in the operator (e.g. "{P" )
-                    char[] pChars = SaveData.currentSave.playerName.ToCharArray();
+                    char[] pChars = SaveData.currentSave.savefile.playerName.ToCharArray();
                     for (int i2 = 0; i2 < pChars.Length; i2++)
                     {
                         yield return StartCoroutine(drawChar(pChars[i2], secPerChar));
@@ -362,10 +397,10 @@ public class DialogBoxHandler : MonoBehaviour
     }
 
 
-    public IEnumerator choiceNavigate(int defaultChosenIndex = 1)
+    public IEnumerator choiceNavigate()
     {
         //No parametres means simply Yes/No
-        chosenIndex = defaultChosenIndex; //0 is the vertically lowest choice
+        chosenIndex = 1; //0 is the vertically lowest choice
         bool selected = false;
         while (!selected)
         {
@@ -417,7 +452,61 @@ public class DialogBoxHandler : MonoBehaviour
         }
     }
 
-   
+    public IEnumerator choiceNavigateNo()
+    {
+        //For when No needs to be default;
+        chosenIndex = 0;
+        bool selected = false;
+        while (!selected)
+        {
+            if (Input.GetButtonDown("Select"))
+            {
+                selected = true;
+            }
+            else if (Input.GetButtonDown("Back"))
+            {
+                while (chosenIndex > 0)
+                {
+                    chosenIndex -= 1;
+                    ChoiceBoxSelect.pixelInset = new Rect(ChoiceBoxSelect.pixelInset.x,
+                        ChoiceBoxSelect.pixelInset.y - 14f, ChoiceBoxSelect.pixelInset.width,
+                        ChoiceBoxSelect.pixelInset.height);
+                }
+                SfxHandler.Play(selectClip);
+                yield return new WaitForSeconds(0.2f);
+                selected = true;
+            }
+            else
+            {
+                if (chosenIndex < 1)
+                {
+                    if (Input.GetAxisRaw("Vertical") > 0)
+                    {
+                        chosenIndex += 1;
+                        ChoiceBoxSelect.pixelInset = new Rect(ChoiceBoxSelect.pixelInset.x,
+                            ChoiceBoxSelect.pixelInset.y + 14f, ChoiceBoxSelect.pixelInset.width,
+                            ChoiceBoxSelect.pixelInset.height);
+                        SfxHandler.Play(selectClip);
+                        yield return new WaitForSeconds(0.2f);
+                    }
+                }
+                if (chosenIndex > 0)
+                {
+                    if (Input.GetAxisRaw("Vertical") < 0)
+                    {
+                        chosenIndex -= 1;
+                        ChoiceBoxSelect.pixelInset = new Rect(ChoiceBoxSelect.pixelInset.x,
+                            ChoiceBoxSelect.pixelInset.y - 14f, ChoiceBoxSelect.pixelInset.width,
+                            ChoiceBoxSelect.pixelInset.height);
+                        SfxHandler.Play(selectClip);
+                        yield return new WaitForSeconds(0.2f);
+                    }
+                }
+            }
+            yield return null;
+        }
+    }
+
     public IEnumerator choiceNavigate(string[] choices)
     {
         chosenIndex = choices.Length - 1; //0 is the vertically lowest choice

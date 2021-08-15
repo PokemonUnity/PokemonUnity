@@ -13,17 +13,26 @@ public static class SaveLoad
         null, null, null
     };
 
-
     public static void Save()
     {
-        if (SaveData.currentSave != null)
+        if (SaveData.currentSave.IsNotNullFile())
         {
             if (SaveData.currentSave.getFileIndex() >= 0 && SaveData.currentSave.getFileIndex() < savedGames.Length)
             {
+                SaveData.currentSave.Save();
                 savedGames[SaveData.currentSave.getFileIndex()] = SaveData.currentSave;
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream file = File.Create(Application.persistentDataPath + "/playerData.pkud");
-                bf.Serialize(file, SaveLoad.savedGames);
+                SaveData.SaveFile[] savedFiles = new SaveData.SaveFile[savedGames.Length];
+                for (int i = 0; i < savedGames.Length; i++)
+                {
+                    if (savedGames[i] != null)
+                    {
+                        savedGames[i].Save();
+                        savedFiles[i] = savedGames[i].savefile;
+                    }
+                }
+                bf.Serialize(file, savedFiles);
                 file.Close();
             }
         }
@@ -36,7 +45,12 @@ public static class SaveLoad
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerData.pkud", FileMode.Open);
-            SaveLoad.savedGames = (SaveData[]) bf.Deserialize(file);
+            SaveData.SaveFile[] savedFiles = (SaveData.SaveFile[])bf.Deserialize(file);
+            for (int i = 0; i < savedFiles.Length; i++)
+            {
+                if (savedFiles[i] != null)
+                    savedGames[i] = new SaveData(savedFiles[i]);
+            }
             file.Close();
             return true;
         }

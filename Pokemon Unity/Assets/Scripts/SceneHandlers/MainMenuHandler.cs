@@ -70,6 +70,7 @@ public class MainMenuHandler : MonoBehaviour
 
     void Start()
     {
+        
         StartCoroutine(control());
     }
 
@@ -99,31 +100,31 @@ public class MainMenuHandler : MonoBehaviour
         fileSelected.pixelOffset = highlightPositions[selectedFile];
         fileSelected.text = "" + (selectedFile + 1);
 
-        if (SaveLoad.savedGames[selectedFile] != null)
+        if (SaveLoad.savedGames[selectedFile].savefile != null)
         {
             int badgeTotal = 0;
             for (int i = 0; i < 12; i++)
             {
-                if (SaveLoad.savedGames[selectedFile].gymsBeaten[i])
+                if (SaveLoad.savedGames[selectedFile].savefile.gymsBeaten[i])
                 {
                     badgeTotal += 1;
                 }
             }
-            string playerTime = "" + SaveLoad.savedGames[selectedFile].playerMinutes;
+            string playerTime = "" + SaveLoad.savedGames[selectedFile].savefile.playerMinutes;
             if (playerTime.Length == 1)
             {
                 playerTime = "0" + playerTime;
             }
-            playerTime = SaveLoad.savedGames[selectedFile].playerHours + " : " + playerTime;
+            playerTime = SaveLoad.savedGames[selectedFile].savefile.playerHours + " : " + playerTime;
 
-            mapNameText.text = SaveLoad.savedGames[selectedFile].mapName;
+            mapNameText.text = SaveLoad.savedGames[selectedFile].savefile.mapName;
             mapNameTextShadow.text = mapNameText.text;
-            dataText.text = SaveLoad.savedGames[selectedFile].playerName
+            dataText.text = SaveLoad.savedGames[selectedFile].savefile.playerName
                             + "\n" + badgeTotal
                             + "\n" + "0" //Pokedex not yet implemented
                             + "\n" + playerTime;
             dataTextShadow.text = dataText.text;
-
+            
             for (int i = 0; i < 6; i++)
             {
                 if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null)
@@ -213,10 +214,10 @@ public class MainMenuHandler : MonoBehaviour
                     Debug.Log(SaveLoad.savedGames[0]);
                     Debug.Log(SaveLoad.savedGames[1]);
                     Debug.Log(SaveLoad.savedGames[2]);
-                    GlobalVariables.global.playerPosition = SaveData.currentSave.playerPosition.v3;
-                    GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
+                    GlobalVariables.global.playerPosition = SaveData.currentSave.savefile.playerPosition.v3;
+                    GlobalVariables.global.playerDirection = SaveData.currentSave.savefile.playerDirection;
 
-                    Application.LoadLevel(SaveData.currentSave.levelName);
+                    Application.LoadLevel(SaveData.currentSave.savefile.levelName);
                 }
                 else if (selectedButton == 1)
                 {

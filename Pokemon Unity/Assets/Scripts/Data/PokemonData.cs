@@ -1,117 +1,21 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
-using System.Collections;
 
 public class PokemonData
 {
     private int ID;
     private string name;
 
-    public enum Type
-    {
-        NONE,
-        NORMAL,
-        FIGHTING,
-        FLYING,
-        POISON,
-        GROUND,
-        ROCK,
-        BUG,
-        GHOST,
-        STEEL,
-        FIRE,
-        WATER,
-        GRASS,
-        ELECTRIC,
-        PSYCHIC,
-        ICE,
-        DRAGON,
-        DARK,
-        FAIRY
-    };
+    // Temporary
+    private PokemonUnity.Monster.Data.PokemonData m_data;
+    //
 
-    public enum EggGroup
-    {
-        NONE,
-        MONSTER,
-        WATER1,
-        BUG,
-        FLYING,
-        FIELD,
-        FAIRY,
-        GRASS,
-        HUMANLIKE,
-        WATER3,
-        MINERAL,
-        AMORPHOUS,
-        WATER2,
-        DITTO,
-        DRAGON,
-        UNDISCOVERED
-    };
-
-    public enum LevelingRate
-    {
-        ERRATIC,
-        FAST,
-        MEDIUMFAST,
-        MEDIUMSLOW,
-        SLOW,
-        FLUCTUATING
-    };
-
-    public enum PokedexColor
-    {
-        RED,
-        BLUE,
-        YELLOW,
-        GREEN,
-        BLACK,
-        BROWN,
-        PURPLE,
-        GRAY,
-        WHITE,
-        PINK
-    };
-
-    private Type type1;
-    private Type type2;
     private string ability1;
     private string ability2;
     private string hiddenAbility;
 
     private float maleRatio; //-1f is interpreted as genderless
-    private int catchRate;
-    private EggGroup eggGroup1;
-    private EggGroup eggGroup2;
-    private int hatchTime;
-
-    private float height;
-    private float weight;
-
-    private int baseExpYield;
-    private LevelingRate levelingRate;
-
-    private int evYieldHP;
-    private int evYieldATK;
-    private int evYieldDEF;
-    private int evYieldSPA;
-    private int evYieldSPD;
-    private int evYieldSPE;
-
-    private PokedexColor pokedexColor;
-    private int baseFriendship;
-
-    private string species;
-    private string pokedexEntry;
-
-    private int baseStatsHP;
-    private int baseStatsATK;
-    private int baseStatsDEF;
-    private int baseStatsSPA;
-    private int baseStatsSPD;
-    private int baseStatsSPE;
 
     private float luminance;
     private Color lightColor;
@@ -126,124 +30,20 @@ public class PokemonData
     private int[] evolutionID;
     private string[] evolutionRequirements;
 
-    //E.G.	Poliwhirl(61)
-    //		new int[]{62,186},
-    //		new string[]{"Stone,Water Stone","Trade\Item,King's Rock"}),
-    //
-    //E.G. to evolve to sylveon
-    //		new int[]{..., 700},
-    //		new string[]{..., "Amie\Move,2\Fairy"}),
-    //
-    //
-    //Level,int level
-    //	if pokemon's level is greater or equal to int level
-    //Stone,string itemName
-    //	if name of stone is equal to string itemName
-    //Trade
-    //	if currently trading pokemon
-    //Friendship
-    //	if pokemon's friendship is greater or equal to 220
-    //Item,string itemName
-    //	if pokemon's heldItem is equal to string itemName
-    //Gender,Pokemon.Gender
-    //  if pokemon's gender is equal to Pokemon.Gender
-    //Move,string moveName
-    //	if pokemon has a move thats name or typing is equal to string moveName
-    //Map,string mapName
-    //  if currentMap is equal to string mapName
-    //Time,string dayNight
-    //	if time is between 9PM and 4AM time is "Night". else time is "Day".
-    //	if time is equal to string dayNight (either Day, or Night)
-    //
-    //		Unique evolution methods:
-    //Mantine
-    //	if party contains a Remoraid
-    //Pangoro
-    //	if party contains a dark pokemon
-    //Goodra
-    //	if currentMap's weather is rain
-    //Hitmonlee
-    //	if pokemon's ATK is greater than DEF
-    //Hitmonchan
-    //	if pokemon's ATK is lower than DEF
-    //Hitmontop
-    //  if pokemon's ATK is equal to DEF
-    //Silcoon
-    //  if pokemon's shinyValue divided by 2's remainder is equal to 0
-    //Cascoon
-    //	if pokemon's shinyValue divided by 2's remainder is equal to 1
 
-
-    public PokemonData(int ID, string name, Type type1, Type type2, string ability1, string ability2,
-        string hiddenAbility,
-        float maleRatio, int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
-        float height, float weight, int baseExpYield, LevelingRate levelingRate,
-        int evYieldHP, int evYieldATK, int evYieldDEF, int evYieldSPA, int evYieldSPD, int evYieldSPE,
-        PokedexColor pokedexColor, int baseFriendship,
-        string species, string pokedexEntry,
-        int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-        float luminance, Color lightColor, //string[] heldItem,
-        int[] movesetLevels, string[] movesetMoves, string[] tmList,
-        int[] evolutionID, string[] evolutionRequirements)
+    public PokemonData(PokemonUnity.Pokemons pokemon)
     {
-        this.ID = ID;
-        this.name = name;
-        this.type1 = type1;
-        this.type2 = type2;
-        this.ability1 = ability1;
-        this.ability2 = ability2;
-        this.hiddenAbility = hiddenAbility;
+        m_data = PokemonUnity.Game.PokemonData[pokemon];
 
-        this.maleRatio = maleRatio;
-        this.catchRate = catchRate;
-        this.eggGroup1 = eggGroup1;
-        this.eggGroup2 = eggGroup2;
-        this.hatchTime = hatchTime;
-
-        this.height = height;
-        this.weight = weight;
-        this.baseExpYield = baseExpYield;
-        this.levelingRate = levelingRate;
-
-        this.evYieldHP = evYieldHP;
-        this.evYieldATK = evYieldATK;
-        this.evYieldDEF = evYieldDEF;
-        this.evYieldSPA = evYieldSPA;
-        this.evYieldSPD = evYieldSPD;
-        this.evYieldSPE = evYieldSPE;
-
-        this.pokedexColor = pokedexColor;
-        this.baseFriendship = baseFriendship;
-
-        this.species = species;
-        this.pokedexEntry = pokedexEntry;
-
-        this.baseStatsHP = baseStatsHP;
-        this.baseStatsATK = baseStatsATK;
-        this.baseStatsDEF = baseStatsDEF;
-        this.baseStatsSPA = baseStatsSPA;
-        this.baseStatsSPD = baseStatsSPD;
-        this.baseStatsSPE = baseStatsSPE;
-
-        this.luminance = luminance;
-        this.lightColor = lightColor;
-
-        //wild pokemon held items not yet implemented
-        //this.heldItem = heldItem;
-
-        this.movesetLevels = movesetLevels;
-        this.movesetMoves = movesetMoves;
-        this.tmList = tmList;
-
-        this.evolutionID = evolutionID;
-        this.evolutionRequirements = evolutionRequirements;
+        //ToDO: tempo
+        luminance = 0;
+        lightColor = Color.clear;
     }
-
 
     public override string ToString()
     {
-        string result = ID.ToString() + ", " + name + ", " + type1.ToString() + ", ";
-        result += type2.ToString() + ", ";
+        string result = ID.ToString() + ", " + name + ", " + m_data.Type[0].ToString() + ", ";
+        result += m_data.Type[1].ToString() + ", ";
         result += ability1 + ", ";
         if (ability2 != null)
         {
@@ -255,12 +55,12 @@ public class PokemonData
 
     public int getID()
     {
-        return ID;
+        return (int)m_data.ID;
     }
 
     public string getName()
     {
-        return name;
+        return ConverterNames.GetPokemonName(m_data.ID);
     }
 
     public float getMaleRatio()
@@ -268,54 +68,59 @@ public class PokemonData
         return maleRatio;
     }
 
-    public PokemonData.Type getType1()
+    public PokemonUnity.Types getType1()
     {
-        return type1;
+        return m_data.Type[0];
     }
 
-    public PokemonData.Type getType2()
+    public PokemonUnity.Types getType2()
     {
-        return type2;
+        return m_data.Type[1];
     }
 
     public string getAbility(int ability)
     {
+        // Will need to test this
+        //if (!(ability > 4) && !(ability < 0)) // 0 - 3
+        //    return m_data.Ability[ability].ToString();
+
         if (ability == 0)
         {
-            return ability1;
+            return m_data.Ability[0].ToString();
         }
         else if (ability == 1)
         {
-            if (ability2 == null)
+            if (m_data.Ability[1].ToString() == null)
             {
-                return ability1;
+                return m_data.Ability[0].ToString();
             }
-            return ability2;
+            return m_data.Ability[1].ToString();
         }
         else if (ability == 2)
         {
-            if (hiddenAbility == null)
+            if (m_data.Ability[2].ToString() == null)
             {
-                return ability1;
+                return m_data.Ability[0].ToString();
             }
-            return hiddenAbility;
+            return m_data.Ability[2].ToString();
         }
         return null;
     }
 
+    // Remove?
     public int getBaseFriendship()
     {
-        return baseFriendship;
+        return m_data.BaseFriendship;
     }
 
     public int getBaseExpYield()
     {
-        return baseExpYield;
+        return m_data.BaseExpYield;
     }
 
     public int[] getBaseStats()
     {
-        return new int[] {baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE};
+        return new int[] {m_data.BaseStatsHP, m_data.BaseStatsATK, m_data.BaseStatsDEF, m_data.BaseStatsSPA, m_data.BaseStatsSPD, m_data.BaseStatsSPE};
     }
 
     public bool hasLight()
@@ -337,6 +142,7 @@ public class PokemonData
         return lightColor;
     }
 
+    // Remove?
     public int[] getMovesetLevels()
     {
         return movesetLevels;
@@ -362,62 +168,27 @@ public class PokemonData
         return evolutionRequirements;
     }
 
-    public PokemonData.LevelingRate getLevelingRate()
+    public PokemonUnity.Monster.LevelingRate getLevelingRate()
     {
-        return levelingRate;
+        return m_data.GrowthRate;
     }
 
     public int getCatchRate()
     {
-        return catchRate;
+        return m_data.CatchRate;
     }
 
+    // Remove GenerateMoveset also
     public string[] GenerateMoveset(int level)
     {
         //Set moveset based off of the highest level moves possible.
         string[] moveset = new string[4];
-        int i = movesetLevels.Length - 1; //work backwards so that the highest level move possible is grabbed first
-        while (moveset[3] == null)
+        PokemonUnity.Monster.Pokemon temp = new PokemonUnity.Monster.Pokemon((PokemonUnity.Pokemons)ID, (byte)level, false);
+        temp.GenerateMoveset(level);
+        for (int i = 0; i < temp.moves.Length; i++)
         {
-            if (movesetLevels[i] <= level)
-            {
-                moveset[3] = movesetMoves[i];
-            }
-            i -= 1;
-        }
-        if (i >= 0)
-        {
-            //if i is at least 0 still, then you can grab the next move down.
-            moveset[2] = movesetMoves[i];
-            i -= 1;
-            if (i >= 0)
-            {
-                //if i is at least 0 still, then you can grab the next move down.
-                moveset[1] = movesetMoves[i];
-                i -= 1;
-                if (i >= 0)
-                {
-                    //if i is at least 0 still, then you can grab the last move down.
-                    moveset[0] = movesetMoves[i];
-                    i -= 1;
-                }
-            }
-        }
-        i = 0;
-        int i2 = 0; //if the first move is null, then the array will need to be packed down
-        if (moveset[0] == null)
-        {
-            //(nulls moved to the end of the array)
-            while (i < 3)
-            {
-                while (moveset[i] == null)
-                {
-                    i += 1;
-                }
-                moveset[i2] = moveset[i];
-                moveset[i] = null;
-                i2 += 1;
-            }
+            PokemonUnity.Moves move = temp.moves[i].MoveId;
+            moveset[i] = move != PokemonUnity.Moves.NONE ? ConverterNames.GetMoveName(move) : null;
         }
         return moveset;
     }

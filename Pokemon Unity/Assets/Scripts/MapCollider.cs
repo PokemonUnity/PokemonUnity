@@ -43,7 +43,7 @@ public class MapCollider : MonoBehaviour
         if (mapX < 0 || mapX >= width ||
             mapZ < 0 || mapZ >= length)
         {
-            //Debug.Log (mapX +" "+ mapZ +", "+ width +" "+ length);
+//			Debug.Log (mapX +" "+ mapZ +", "+ width +" "+ length);
             return -1;
         }
         int tag = collisionMap[Mathf.FloorToInt(mapX), Mathf.FloorToInt(mapZ)];
@@ -61,33 +61,41 @@ public class MapCollider : MonoBehaviour
         string[] contains = shorthandCollisionMap.Split(' ');
         string[] contains2;
 
-        foreach(string contain in contains)
+        for (int i = 0; i < contains.Length; i++)
         {
             //contains2 is an array of the tag and quantity in the selected segment of the shorthand
             // (breaks "0x10" into {"0", "10"} ready for processing)
-            contains2 = contain.Split('x');
-
-            calculateCollisionMap(contains2.Length == 1 ? contains2.Length : int.Parse(contains2[1]), int.Parse(contains2[0]));
-        }
-    }
-
-    public void calculateCollisionMap(int lenght, int tag)
-    {
-        int x = 0;
-        int z = 0;
-        for (int i = 0; i < lenght; i++)
-        {
-            //repeat for multiplier amount of times
-            if (x >= this.width)
+            contains2 = contains[i].Split('x');
+            if (contains2.Length == 1)
             {
-                //if x exceeds the map width,
-                x = 0;//move to the first x on the next line down
-                z += 1;
+                //if length of contains2 is 1, there is no multiplier attached
+                if (x >= this.width)
+                {
+                    //if x exceeds the map width,
+                    x = 0; //move to the first x on the next line down
+                    z += 1;
+                }
+                collisionMap[x, z] = int.Parse(contains2[0]); //add tag to current co-ordinates
+                x += 1;
             }
-            collisionMap[x, z] = tag;//add tag to current co-ordinates
-            x += 1;
+            else
+            {
+                for (int i2 = 0; i2 < int.Parse(contains2[1]); i2++)
+                {
+                    //repeat for multiplier amount of times
+                    if (x >= this.width)
+                    {
+                        //same procedure as above
+                        x = 0;
+                        z += 1;
+                    }
+                    collisionMap[x, z] = int.Parse(contains2[0]);
+                    x += 1;
+                }
+            }
         }
     }
+
 
     /// if bridge was found, returned RaycastHit will have a collider
     public static RaycastHit getBridgeHitOfPosition(Vector3 position)
@@ -97,13 +105,16 @@ public class MapCollider : MonoBehaviour
         RaycastHit[] bridgeHitColliders = Physics.RaycastAll(position, Vector3.down, 3f);
         RaycastHit bridgeHit = new RaycastHit();
         //cycle through each of the collisions
-        for (int i = 0; i < bridgeHitColliders.Length; i++)
+        if (bridgeHitColliders.Length > 0)
         {
-            //if a collision's gameObject has a bridgeHandler, it is a bridge.
-            if (bridgeHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null)
+            for (int i = 0; i < bridgeHitColliders.Length; i++)
             {
-                bridgeHit = bridgeHitColliders[i];
-                i = bridgeHitColliders.Length;
+                //if a collision's gameObject has a bridgeHandler, it is a bridge.
+                if (bridgeHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null)
+                {
+                    bridgeHit = bridgeHitColliders[i];
+                    i = bridgeHitColliders.Length;
+                }
             }
         }
 
@@ -111,7 +122,12 @@ public class MapCollider : MonoBehaviour
     }
 
     /// returns the slope of the map geometry on the tile of the given position (in the given direction) 
-    public static float getSlopeOfPosition(Vector3 position, int direction, bool checkForBridge = true)
+    public static float getSlopeOfPosition(Vector3 position, int direction)
+    {
+        return getSlopeOfPosition(position, direction, true);
+    }
+
+    public static float getSlopeOfPosition(Vector3 position, int direction, bool checkForBridge)
     {
         //set vector3 based off of direction
         Vector3 movement = new Vector3(0, 0, 0);

@@ -331,21 +331,22 @@ public class BagHandler : MonoBehaviour
                 itemSlot[i].gameObject.SetActive(true);
                 itemName[i].text = items[i];
                 itemNameShadow[i].text = itemName[i].text;
-                if (item.getItemType() == ItemData.ItemType.TM)
+                if (item.ItemType == ItemType.TM)
                 {
+                    //Debug.Log("MoveID: " + ((TMData)item).MoveID.ToString() + " Type: " + MoveDatabase.getMove(((TMData)item).MoveID).getType().ToString());
                     itemIcon[i].texture =
-                        Resources.Load<Texture>("Items/tm" + MoveDatabase.getMove(item.getName()).getType().ToString());
+                        Resources.Load<Texture>("Items/tm" + MoveDatabase.getMove(((TMData)item).MoveID).getType().ToString());
                 }
                 else
                 {
                     itemIcon[i].texture = Resources.Load<Texture>("Items/" + items[i]);
                 }
-                if (item.getItemType() == ItemData.ItemType.TM)
+                if (item.ItemType == ItemType.TM)
                 {
                     itemX[i].gameObject.SetActive(false);
-                    itemQuantity[i].text = "No. " + item.getTMNo();
+                    itemQuantity[i].text = "No. " + ((TMData)item).getTMNo;
                 }
-                else if (item.getItemType() == ItemData.ItemType.KEY)
+                else if (item.ItemType == ItemType.KEY)
                 {
                     itemX[i].gameObject.SetActive(false);
                     itemQuantity[i].text = "";
@@ -356,12 +357,12 @@ public class BagHandler : MonoBehaviour
                     if (shopMode && currentScreen == 1)
                     {
                         itemX[i].text = "$";
-                        itemQuantity[i].text = "" + item.getPrice();
+                        itemQuantity[i].text = "" + item.BasePrice;
                     }
                     else
                     {
                         itemX[i].text = "   x";
-                        itemQuantity[i].text = "" + SaveData.currentSave.Bag.getQuantity(items[i]);
+                        itemQuantity[i].text = "" + SaveData.currentSave.savefile.Bag.getQuantity(items[i]);
                     }
                     itemXShadow[i].text = itemX[i].text;
                 }
@@ -379,7 +380,7 @@ public class BagHandler : MonoBehaviour
             string selectedItem = currentItemList[index];
             if (currentScreen != 4)
             {
-                itemDescription.text = ItemDatabase.getItem(selectedItem).getDescription();
+                itemDescription.text = ItemDatabase.getItem(selectedItem).Description;
                 itemDescriptionShadow.text = itemDescription.text;
             }
             else if (!shopMode)
@@ -393,13 +394,13 @@ public class BagHandler : MonoBehaviour
                     tmPower.text = "-";
                 }
                 tmPowerShadow.text = tmPower.text;
-                tmAccuracy.text = "" + Mathf.Round(selectedTM.getAccuracy() * 100f);
+                tmAccuracy.text = "" + Mathf.Round(selectedTM.getAccuracy());
                 if (tmAccuracy.text == "0")
                 {
                     tmAccuracy.text = "-";
                 }
                 tmAccuracyShadow.text = tmAccuracy.text;
-                tmDescription.text = ItemDatabase.getItem(selectedItem).getDescription();
+                tmDescription.text = ItemDatabase.getItem(selectedItem).Description;
                 tmDescriptionShadow.text = tmDescription.text;
             }
         }
@@ -424,7 +425,7 @@ public class BagHandler : MonoBehaviour
         {
             itemDescription.gameObject.SetActive(false);
             visableSlots = 5;
-            currentItemList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.TM);
+            currentItemList = SaveData.currentSave.savefile.Bag.getItemTypeArray(ItemType.TM);
         }
         else
         {
@@ -434,22 +435,22 @@ public class BagHandler : MonoBehaviour
             {
                 if (currentScreen == 1)
                 {
-                    currentItemList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.ITEM);
+                    currentItemList = SaveData.currentSave.savefile.Bag.getItemTypeArray(new ItemType[] { ItemType.ITEM, ItemType.EVOLUTION});
                 }
                 else if (currentScreen == 2)
                 {
-                    currentItemList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.MEDICINE);
+                    currentItemList = SaveData.currentSave.savefile.Bag.getItemTypeArray(ItemType.MEDICINE);
                 }
                 else if (currentScreen == 3)
                 {
-                    currentItemList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.BERRY);
+                    currentItemList = SaveData.currentSave.savefile.Bag.getItemTypeArray(ItemType.BERRY);
                 }
                 else if (currentScreen == 5)
                 {
-                    currentItemList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.KEY);
+                    currentItemList = SaveData.currentSave.savefile.Bag.getItemTypeArray(ItemType.KEY);
                 }
             }
-            else
+            else // Shop
             {
                 if (currentScreen == 1)
                 {
@@ -457,19 +458,19 @@ public class BagHandler : MonoBehaviour
                 }
                 else if (currentScreen == 2)
                 {
-                    currentItemList = SaveData.currentSave.Bag.getSellableItemArray();
+                    currentItemList = SaveData.currentSave.savefile.Bag.getSellableItemArray();
                 }
                 else if (currentScreen == 3)
                 {
-                    currentItemList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.ITEM);
+                    currentItemList = SaveData.currentSave.savefile.Bag.getItemTypeArray(ItemType.ITEM);
                 }
                 else if (currentScreen == 4)
                 {
-                    currentItemList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.MEDICINE);
+                    currentItemList = SaveData.currentSave.savefile.Bag.getItemTypeArray(ItemType.MEDICINE);
                 }
                 else if (currentScreen == 5)
                 {
-                    currentItemList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.BERRY);
+                    currentItemList = SaveData.currentSave.savefile.Bag.getItemTypeArray(ItemType.BERRY);
                 }
             }
         }
@@ -632,7 +633,7 @@ public class BagHandler : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             currentPokemon = SaveData.currentSave.PC.boxes[0][i];
-            if (currentPokemon == null)
+            if (currentPokemon == null || currentPokemon.getID() == 0)
             {
                 partySlot[i].gameObject.SetActive(false);
             }
@@ -676,7 +677,7 @@ public class BagHandler : MonoBehaviour
                 partyGenderShadow[i].text = partyGender[i].text;
                 partyLevel[i].text = "" + currentPokemon.getLevel();
                 partyLevelShadow[i].text = partyLevel[i].text;
-                if (currentPokemon.getStatus() != Pokemon.Status.NONE)
+                if (currentPokemon.getStatus() != PokemonUnity.Status.NONE)
                 {
                     partyStatus[i].texture =
                         Resources.Load<Texture>("PCSprites/status" + currentPokemon.getStatus().ToString());
@@ -698,6 +699,7 @@ public class BagHandler : MonoBehaviour
         partyLength = SaveData.currentSave.PC.getBoxLength(0);
     }
 
+    // Maybe I need to redo my ItemData
     private void updatePartyDisplays()
     {
         if (currentItemList.Length > 0)
@@ -735,7 +737,7 @@ public class BagHandler : MonoBehaviour
             ItemData selectedItem =
                 ItemDatabase.getItem(
                     currentItemList[currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1]);
-            if (selectedItem.getItemEffect() == ItemData.ItemEffect.EVOLVE)
+            if (selectedItem.ItemType == ItemType.EVOLUTION)
             {
                 for (int i = 0; i < 6; i++)
                 {
@@ -743,7 +745,9 @@ public class BagHandler : MonoBehaviour
                     partyTextDisplay[i].gameObject.SetActive(true);
                     if (SaveData.currentSave.PC.boxes[0][i] != null)
                     {
-                        if (SaveData.currentSave.PC.boxes[0][i].canEvolve("Stone," + selectedItem.getName()))
+                        //if (SaveData.currentSave.PC.boxes[0][i].canEvolve("Stone," + selectedItem.Name))
+                        //if (SaveData.currentSave.PC.boxes[0][i].canEvolve(PokemonUnity.Monster.EvolutionMethod.Item, ConverterNames.ChangeItemToEnum(selectedItem.Name)))
+                        if (SaveData.currentSave.PC.boxes[0][i].getEvolutionID(PokemonUnity.Monster.EvolutionMethod.Item, ConverterNames.ChangeItemToEnum(selectedItem.Name)) != -1)
                         {
                             partyTextDisplay[i].text = "ABLE!";
                             partyTextDisplay[i].color = new Color(0, 0.5f, 1, 1);
@@ -757,20 +761,21 @@ public class BagHandler : MonoBehaviour
                     }
                 }
             }
-            else if (selectedItem.getItemEffect() == ItemData.ItemEffect.TM)
+            else if (selectedItem.ItemType == ItemType.TM)
             {
+                TMData SelectedTMItem = (TMData)selectedItem;
                 for (int i = 0; i < 6; i++)
                 {
                     partyStandardDisplay[i].SetActive(false);
                     partyTextDisplay[i].gameObject.SetActive(true);
                     if (SaveData.currentSave.PC.boxes[0][i] != null)
                     {
-                        if (SaveData.currentSave.PC.boxes[0][i].HasMove(selectedItem.getName()))
+                        if (SaveData.currentSave.PC.boxes[0][i].HasMove(SelectedTMItem.MoveID))
                         {
                             partyTextDisplay[i].text = "LEARNED!";
                             partyTextDisplay[i].color = new Color(1, 1, 1, 1);
                         }
-                        else if (SaveData.currentSave.PC.boxes[0][i].CanLearnMove(selectedItem.getName()))
+                        else if (SaveData.currentSave.PC.boxes[0][i].CanLearnMove(SelectedTMItem.MoveID, PokemonUnity.Monster.LearnMethod.machine))
                         {
                             partyTextDisplay[i].text = "ABLE!";
                             partyTextDisplay[i].color = new Color(0, 0.5f, 1, 1);
@@ -824,7 +829,7 @@ public class BagHandler : MonoBehaviour
         {
             moneyBox.SetActive(true);
             moneyBoxBorder.texture = Resources.Load<Texture>("Frame/dialog" + PlayerPrefs.GetInt("frameStyle"));
-            string playerMoney = "" + SaveData.currentSave.playerMoney;
+            string playerMoney = "" + SaveData.currentSave.savefile.playerMoney;
             char[] playerMoneyChars = playerMoney.ToCharArray();
             playerMoney = "";
             //format playerMoney into a currency style (e.g. $1,000,000)
@@ -857,7 +862,7 @@ public class BagHandler : MonoBehaviour
                 if (currentItemList.Length > 0)
                 {
                     dataValueText.text = "x " +
-                                         SaveData.currentSave.Bag.getQuantity(
+                                         SaveData.currentSave.savefile.Bag.getQuantity(
                                              currentItemList[
                                                  currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1]);
                 }
@@ -877,7 +882,7 @@ public class BagHandler : MonoBehaviour
                                              ItemDatabase.getItem(
                                                  currentItemList[
                                                      currentPosition[currentScreen] + currentTopPosition[currentScreen] -
-                                                     1]).getPrice() / 2f);
+                                                     1]).BasePrice / 2f);
                 }
                 else
                 {
@@ -896,32 +901,32 @@ public class BagHandler : MonoBehaviour
 
     private bool addItem(string itemName, int amount)
     {
-        bool result = SaveData.currentSave.Bag.addItem(itemName, amount);
+        bool result = SaveData.currentSave.savefile.Bag.addItem(itemName, amount);
         if (result)
         {
-            ItemData.ItemType itemType = ItemDatabase.getItem(itemName).getItemType();
+            ItemType itemType = ItemDatabase.getItem(itemName).ItemType;
             bool relevantScreen = false;
-            if (currentScreen == 1 && itemType == ItemData.ItemType.ITEM)
+            if (currentScreen == 1 && itemType == ItemType.ITEM)
             {
                 relevantScreen = true;
             }
-            else if (currentScreen == 2 && itemType == ItemData.ItemType.MEDICINE)
+            else if (currentScreen == 2 && itemType == ItemType.MEDICINE)
             {
                 relevantScreen = true;
             }
-            else if (currentScreen == 3 && itemType == ItemData.ItemType.BERRY)
+            else if (currentScreen == 3 && itemType == ItemType.BERRY)
             {
                 relevantScreen = true;
             }
-            else if (currentScreen == 4 && itemType == ItemData.ItemType.TM)
+            else if (currentScreen == 4 && itemType == ItemType.TM)
             {
                 relevantScreen = true;
             }
-            else if (currentScreen == 5 && itemType == ItemData.ItemType.KEY)
+            else if (currentScreen == 5 && itemType == ItemType.KEY)
             {
                 relevantScreen = true;
             }
-            if (SaveData.currentSave.Bag.getQuantity(itemName) == amount && relevantScreen)
+            if (SaveData.currentSave.savefile.Bag.getQuantity(itemName) == amount && relevantScreen)
             {
                 if (currentPosition[currentScreen] > Mathf.Floor(visableSlots * 0.67f))
                 {
@@ -935,10 +940,10 @@ public class BagHandler : MonoBehaviour
 
     private bool removeItem(string itemName, int amount)
     {
-        bool result = SaveData.currentSave.Bag.removeItem(itemName, amount);
+        bool result = SaveData.currentSave.savefile.Bag.removeItem(itemName, amount);
         if (result)
         {
-            if (SaveData.currentSave.Bag.getQuantity(itemName) == 0)
+            if (SaveData.currentSave.savefile.Bag.getQuantity(itemName) == 0)
             {
                 switching = false;
                 selected = -1;
@@ -969,7 +974,6 @@ public class BagHandler : MonoBehaviour
         updateScrollBar();
         return result;
     }
-
 
     private void updateNumbersBox(int price, bool hoverOnTens)
     {
@@ -1092,7 +1096,6 @@ public class BagHandler : MonoBehaviour
         }
     }
 
-
     public IEnumerator control()
     {
         yield return StartCoroutine(control(true, false, false, null));
@@ -1141,7 +1144,7 @@ public class BagHandler : MonoBehaviour
         {
             -1, 0, 0, 0, 0, 0
         };
-        currentItemList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.ITEM);
+        currentItemList = SaveData.currentSave.savefile.Bag.getItemTypeArray(ItemType.ITEM);
         partyPosition = 0;
         inParty = false;
 
@@ -1357,29 +1360,29 @@ public class BagHandler : MonoBehaviour
                             {
                                 //BUY
                                 //custom prices not yet implemented
-                                if (SaveData.currentSave.playerMoney >= selectedItem.getPrice())
+                                if (SaveData.currentSave.savefile.playerMoney >= selectedItem.BasePrice)
                                 {
                                     Dialog.drawDialogBox(2);
                                     yield return
                                         StartCoroutine(
-                                            Dialog.drawText(selectedItem.getName() +
+                                            Dialog.drawText(selectedItem.Name +
                                                             "? Certainly. \nHow many would you like to buy?"));
 
                                     //quantity selection not yet implemented
                                     int maxQuantity =
-                                        Mathf.FloorToInt((float) SaveData.currentSave.playerMoney /
-                                                         (float) selectedItem.getPrice());
+                                        Mathf.FloorToInt((float) SaveData.currentSave.savefile.playerMoney /
+                                                         (float) selectedItem.BasePrice);
                                     Debug.Log(maxQuantity);
-                                    yield return StartCoroutine(openNumbersBox(selectedItem.getPrice(), maxQuantity));
+                                    yield return StartCoroutine(openNumbersBox(selectedItem.BasePrice, maxQuantity));
 
                                     if (shopSelectedQuantity > 0)
                                     {
                                         Dialog.drawDialogBox(2);
                                         yield return
                                             StartCoroutine(
-                                                Dialog.drawText(selectedItem.getName() + ", and you want " +
+                                                Dialog.drawText(selectedItem.Name + ", and you want " +
                                                                 shopSelectedQuantity + ". \nThat will be $" +
-                                                                (shopSelectedQuantity * selectedItem.getPrice()) +
+                                                                (shopSelectedQuantity * selectedItem.BasePrice) +
                                                                 ". OK?"));
                                         Dialog.drawChoiceBox(14);
                                         yield return StartCoroutine(Dialog.choiceNavigate());
@@ -1391,9 +1394,9 @@ public class BagHandler : MonoBehaviour
                                         {
                                             SfxHandler.Play(saleClip);
 
-                                            addItem(selectedItem.getName(), shopSelectedQuantity);
-                                            SaveData.currentSave.playerMoney -= (shopSelectedQuantity *
-                                                                                 selectedItem.getPrice());
+                                            addItem(selectedItem.Name, shopSelectedQuantity);
+                                            SaveData.currentSave.savefile.playerMoney -= (shopSelectedQuantity *
+                                                                                 selectedItem.BasePrice);
 
                                             updateMoneyBox();
                                             updateDataBox();
@@ -1427,15 +1430,15 @@ public class BagHandler : MonoBehaviour
                                 Dialog.drawDialogBox(2);
                                 yield return
                                     StartCoroutine(
-                                        Dialog.drawText(selectedItem.getName() + "? \nHow many would you like to sell?"))
+                                        Dialog.drawText(selectedItem.Name + "? \nHow many would you like to sell?"))
                                     ;
 
                                 //quantity selection not yet implemented
-                                int maxQuantity = SaveData.currentSave.Bag.getQuantity(selectedItem.getName());
+                                int maxQuantity = SaveData.currentSave.savefile.Bag.getQuantity(selectedItem.Name);
                                 Debug.Log(maxQuantity);
                                 yield return
                                     StartCoroutine(openNumbersBox(
-                                        Mathf.FloorToInt((float) selectedItem.getPrice() / 2f), maxQuantity));
+                                        Mathf.FloorToInt((float) selectedItem.BasePrice / 2f), maxQuantity));
 
                                 if (shopSelectedQuantity > 0)
                                 {
@@ -1444,7 +1447,7 @@ public class BagHandler : MonoBehaviour
                                         StartCoroutine(
                                             Dialog.drawText("I can pay $" +
                                                             (shopSelectedQuantity *
-                                                             Mathf.FloorToInt((float) selectedItem.getPrice() / 2f)) +
+                                                             Mathf.FloorToInt((float) selectedItem.BasePrice / 2f)) +
                                                             ". \nWould that be OK?"));
                                     Dialog.drawChoiceBox(14);
                                     yield return StartCoroutine(Dialog.choiceNavigate());
@@ -1456,11 +1459,11 @@ public class BagHandler : MonoBehaviour
                                     {
                                         SfxHandler.Play(saleClip);
 
-                                        removeItem(selectedItem.getName(), shopSelectedQuantity);
+                                        removeItem(selectedItem.Name, shopSelectedQuantity);
                                         //custom prices not yet implemented
-                                        SaveData.currentSave.playerMoney += shopSelectedQuantity *
+                                        SaveData.currentSave.savefile.playerMoney += shopSelectedQuantity *
                                                                             Mathf.FloorToInt(
-                                                                                (float) selectedItem.getPrice() / 2f);
+                                                                                (float) selectedItem.BasePrice / 2f);
 
                                         updateMoneyBox();
                                         updateDataBox();
@@ -1470,22 +1473,22 @@ public class BagHandler : MonoBehaviour
                                         {
                                             yield return
                                                 StartCoroutine(
-                                                    Dialog.drawTextSilent("Turned over the " + selectedItem.getName() +
+                                                    Dialog.drawTextSilent("Turned over the " + selectedItem.Name +
                                                                           " \nand received $" +
                                                                           (shopSelectedQuantity *
                                                                            Mathf.FloorToInt(
-                                                                               (float) selectedItem.getPrice() / 2f)) +
+                                                                               (float) selectedItem.BasePrice / 2f)) +
                                                                           "."));
                                         }
                                         else
                                         {
                                             yield return
                                                 StartCoroutine(
-                                                    Dialog.drawTextSilent("Turned over the " + selectedItem.getName() +
+                                                    Dialog.drawTextSilent("Turned over the " + selectedItem.Name +
                                                                           "s \nand received $" +
                                                                           (shopSelectedQuantity *
                                                                            Mathf.FloorToInt(
-                                                                               (float) selectedItem.getPrice() / 2f)) +
+                                                                               (float) selectedItem.BasePrice / 2f)) +
                                                                           "."));
                                         }
                                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
@@ -1520,12 +1523,12 @@ public class BagHandler : MonoBehaviour
                             selected = currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1;
                             ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected]);
 
-                            if (selectedItem.getItemType() == ItemData.ItemType.TM ||
-                                selectedItem.getItemType() == ItemData.ItemType.KEY)
+                            if (selectedItem.ItemType == ItemType.TM ||
+                                selectedItem.ItemType == ItemType.KEY)
                             {
                                 Dialog.drawDialogBox();
                                 yield return
-                                    StartCoroutine(Dialog.drawText("The " + selectedItem.getName() + " can't be held."))
+                                    StartCoroutine(Dialog.drawText("The " + selectedItem.Name + " can't be held."))
                                     ;
                                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                 {
@@ -1563,8 +1566,8 @@ public class BagHandler : MonoBehaviour
                         {
                             Dialog.drawDialogBox();
                             yield return
-                                Dialog.StartCoroutine(Dialog.drawText(
-                                    "Take " + SaveData.currentSave.PC.boxes[0][partyPosition].getName() + "'s Item?"));
+                                Dialog.StartCoroutine("drawText",
+                                    "Take " + SaveData.currentSave.PC.boxes[0][partyPosition].getName() + "'s Item?");
                             Dialog.drawChoiceBox();
                             yield return Dialog.StartCoroutine("choiceNavigate");
                             int chosenIndex = Dialog.chosenIndex;
@@ -1584,9 +1587,9 @@ public class BagHandler : MonoBehaviour
 
                                 Dialog.drawDialogBox();
                                 yield return
-                                    Dialog.StartCoroutine(Dialog.drawText(
+                                    Dialog.StartCoroutine("drawText",
                                         "Took the " + receivedItem + " from " +
-                                        SaveData.currentSave.PC.boxes[0][partyPosition].getName() + "."));
+                                        SaveData.currentSave.PC.boxes[0][partyPosition].getName() + ".");
                                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                 {
                                     yield return null;
@@ -1609,29 +1612,31 @@ public class BagHandler : MonoBehaviour
                         {
                             Dialog.drawDialogBox();
                             yield return
-                                Dialog.StartCoroutine(Dialog.drawText( "Do what with " + currentItemList[selected] + "?"));
+                                Dialog.StartCoroutine("drawText", "Do what with " + currentItemList[selected] + "?");
                             string[] choices = new string[] {"Deselect", "Cancel"};
                             ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected]);
-                            if (selectedItem.getItemType() == ItemData.ItemType.KEY)
+                            if (selectedItem.ItemType == ItemType.KEY)
                             {
-                                if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
-                                {
-                                    choices = new string[]
-                                    {
-                                        "Use", "Register", "Deselect", "Cancel"
-                                    };
-                                }
+                                new System.NotImplementedException();
+                                //if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+                                //{
+                                //    choices = new string[]
+                                //    {
+                                //        "Use", "Register", "Deselect", "Cancel"
+                                //    };
+                                //}
                             }
-                            else if (selectedItem.getItemEffect() != ItemData.ItemEffect.NONE &&
-                                     selectedItem.getItemEffect() != ItemData.ItemEffect.FLEE &&
-                                     selectedItem.getItemEffect() != ItemData.ItemEffect.BALL &&
-                                     selectedItem.getItemEffect() != ItemData.ItemEffect.STATBOOST)
-                            {
-                                choices = new string[]
-                                {
-                                    "Use", "Deselect", "Cancel"
-                                };
-                            }
+                            //else if (selectedItem.getItemEffect() != ItemData.ItemEffect.NONE &&
+                            //         selectedItem.getItemEffect() != ItemData.ItemEffect.FLEE &&
+                            //         selectedItem.getItemEffect() != ItemData.ItemEffect.BALL &&
+                            //         selectedItem.getItemEffect() != ItemData.ItemEffect.STATBOOST)
+                            //{
+                            //    new System.NotImplementedException();
+                            //    choices = new string[]
+                            //    {
+                            //        "Use", "Deselect", "Cancel"
+                            //    };
+                            //}
 
                             Dialog.drawChoiceBox(choices);
                             yield return StartCoroutine(Dialog.choiceNavigate(choices));
@@ -1644,13 +1649,13 @@ public class BagHandler : MonoBehaviour
                             }
                             if (chosenIndex == 2)
                             {
-                                if (selectedItem.getItemType() == ItemData.ItemType.KEY)
+                                if (selectedItem.ItemType == ItemType.KEY)
                                 {
                                     //REGISTER (key item)
                                     Dialog.drawDialogBox();
                                     yield return
-                                        Dialog.StartCoroutine(Dialog.drawText(
-                                            "Register " + selectedItem.getName() + " to which slot?"));
+                                        Dialog.StartCoroutine("drawText",
+                                            "Register " + selectedItem.Name + " to which slot?");
                                     choices = new string[]
                                     {
                                         "Slot 1", "Slot 2", "Slot 3", "Slot 4", "Cancel"
@@ -1660,36 +1665,37 @@ public class BagHandler : MonoBehaviour
                                     chosenIndex = Dialog.chosenIndex;
                                     if (chosenIndex == 4)
                                     {
-                                        SaveData.currentSave.registeredItems[0] = selectedItem.getName();
+                                        SaveData.currentSave.savefile.registeredItems[0] = selectedItem.Name;
                                     }
                                     else if (chosenIndex == 3)
                                     {
-                                        SaveData.currentSave.registeredItems[1] = selectedItem.getName();
+                                        SaveData.currentSave.savefile.registeredItems[1] = selectedItem.Name;
                                     }
                                     else if (chosenIndex == 2)
                                     {
-                                        SaveData.currentSave.registeredItems[2] = selectedItem.getName();
+                                        SaveData.currentSave.savefile.registeredItems[2] = selectedItem.Name;
                                     }
                                     else if (chosenIndex == 1)
                                     {
-                                        SaveData.currentSave.registeredItems[3] = selectedItem.getName();
+                                        SaveData.currentSave.savefile.registeredItems[3] = selectedItem.Name;
                                     }
                                 }
                                 else
                                 {
                                     //USE
-                                    if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
-                                    {
-                                    }
-                                    else if (partyLength > 0)
+                                    //if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+                                    //{
+                                    //}
+                                    //else if (partyLength > 0)
+                                    if (partyLength > 0)
                                     {
                                         bool selectingPokemon = true;
                                         Dialog.drawDialogBox();
-                                        if (selectedItem.getItemType() != ItemData.ItemType.TM)
+                                        if (selectedItem.ItemType != ItemType.TM)
                                         {
                                             yield return
-                                                Dialog.StartCoroutine(Dialog.drawText(
-                                                    "Use " + selectedItem.getName() + " on which Pokémon?"));
+                                                Dialog.StartCoroutine("drawText",
+                                                    "Use " + selectedItem.Name + " on which Pokémon?");
                                         }
                                         else
                                         {
@@ -1703,8 +1709,8 @@ public class BagHandler : MonoBehaviour
                                             }
                                             Dialog.drawDialogBox(2);
                                             yield return
-                                                Dialog.StartCoroutine(Dialog.drawText(
-                                                    "It contained " + selectedItem.getName() + "."));
+                                                Dialog.StartCoroutine("drawText",
+                                                    "It contained " + selectedItem.Name + ".");
                                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
@@ -1712,8 +1718,8 @@ public class BagHandler : MonoBehaviour
 
                                             Dialog.drawDialogBox(2);
                                             yield return
-                                                Dialog.StartCoroutine(Dialog.drawText(
-                                                    "Teach " + selectedItem.getName() + " \nto a Pokémon?"));
+                                                Dialog.StartCoroutine("drawText",
+                                                    "Teach " + selectedItem.Name + " \nto a Pokémon?");
                                             Dialog.drawChoiceBox(14);
                                             yield return StartCoroutine(Dialog.choiceNavigate());
                                             chosenIndex = Dialog.chosenIndex;
@@ -1728,8 +1734,8 @@ public class BagHandler : MonoBehaviour
                                             {
                                                 Dialog.drawDialogBox(2);
                                                 yield return
-                                                    Dialog.StartCoroutine(Dialog.drawText(
-                                                        "Who should learn \n" + selectedItem.getName() + "?"));
+                                                    Dialog.StartCoroutine("drawText",
+                                                        "Who should learn \n" + selectedItem.Name + "?");
                                             }
                                         }
                                         partyPosition = 0;
@@ -1788,7 +1794,7 @@ public class BagHandler : MonoBehaviour
                                     }
                                     else
                                     {
-                                        yield return Dialog.StartCoroutine(Dialog.drawText( "There's no one to use it on!"));
+                                        yield return Dialog.StartCoroutine("drawText", "There's no one to use it on!");
                                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                         {
                                             yield return null;
@@ -1813,9 +1819,9 @@ public class BagHandler : MonoBehaviour
                             //switch item's location
                             switching = false;
 
-                            SaveData.currentSave.Bag.moveBehind(
-                                SaveData.currentSave.Bag.getIndexOf(currentItemList[selected]),
-                                SaveData.currentSave.Bag.getIndexOf(
+                            SaveData.currentSave.savefile.Bag.moveBehind(
+                                SaveData.currentSave.savefile.Bag.getIndexOf(currentItemList[selected]),
+                                SaveData.currentSave.savefile.Bag.getIndexOf(
                                     currentItemList[
                                         currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1]));
 
@@ -1836,7 +1842,7 @@ public class BagHandler : MonoBehaviour
 
                         Dialog.drawDialogBox();
                         yield return
-                            Dialog.StartCoroutine(Dialog.drawText( "Do what with " + currentItemList[selected] + "?"));
+                            Dialog.StartCoroutine("drawText", "Do what with " + currentItemList[selected] + "?");
                         string[] choices = new string[] {"Give", "Deselect", "Cancel"};
                         if (!string.IsNullOrEmpty(currentPokemon.getHeldItem()))
                         {
@@ -1847,13 +1853,11 @@ public class BagHandler : MonoBehaviour
                         }
                         ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected]);
                         //Adjust choices to suit situation
-                        if (selectedItem.getItemType() != ItemData.ItemType.KEY)
+                        if (selectedItem.ItemType != ItemType.KEY)
                         {
-                            if (selectedItem.getItemEffect() == ItemData.ItemEffect.HP ||
-                                selectedItem.getItemEffect() == ItemData.ItemEffect.PP ||
-                                selectedItem.getItemEffect() == ItemData.ItemEffect.STATUS ||
-                                selectedItem.getItemEffect() == ItemData.ItemEffect.EV ||
-                                selectedItem.getItemEffect() == ItemData.ItemEffect.EVOLVE)
+                            if (selectedItem.ItemType == ItemType.MEDICINE ||
+                                //selectedItem.ItemType == ItemType.EV ||
+                                selectedItem.ItemType == ItemType.EVOLUTION)
                             {
                                 if (string.IsNullOrEmpty(currentPokemon.getHeldItem()))
                                 {
@@ -1870,33 +1874,50 @@ public class BagHandler : MonoBehaviour
                                     };
                                 }
                             }
-                            else if (selectedItem.getItemEffect() == ItemData.ItemEffect.TM)
+                            if (selectedItem.ItemType == ItemType.TM)
                             {
                                 choices = new string[]
                                 {
                                     "Use", "Deselect", "Cancel"
                                 };
                             }
-                            else if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+                            if (selectedItem.Name == "Rare Candy")
                             {
-                                if (selectedItem.getName() == "Rare Candy")
+                                if (string.IsNullOrEmpty(currentPokemon.getHeldItem()))
                                 {
-                                    if (string.IsNullOrEmpty(currentPokemon.getHeldItem()))
+                                    choices = new string[]
                                     {
-                                        choices = new string[]
-                                        {
                                             "Use", "Give", "Deselect", "Cancel"
-                                        };
-                                    }
-                                    else
+                                    };
+                                }
+                                else
+                                {
+                                    choices = new string[]
                                     {
-                                        choices = new string[]
-                                        {
                                             "Use", "Swap", "Take", "Deselect", "Cancel"
-                                        };
-                                    }
+                                    };
                                 }
                             }
+                            //else if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+                            //{
+                            //    if (selectedItem.Name == "Rare Candy")
+                            //    {
+                            //        if (string.IsNullOrEmpty(currentPokemon.getHeldItem()))
+                            //        {
+                            //            choices = new string[]
+                            //            {
+                            //                "Use", "Give", "Deselect", "Cancel"
+                            //            };
+                            //        }
+                            //        else
+                            //        {
+                            //            choices = new string[]
+                            //            {
+                            //                "Use", "Swap", "Take", "Deselect", "Cancel"
+                            //            };
+                            //        }
+                            //    }
+                            //}
                         }
 
                         Dialog.drawChoiceBox(choices);
@@ -1909,8 +1930,8 @@ public class BagHandler : MonoBehaviour
 
                         if (chosenChoice == "Give")
                         {
-                            currentPokemon.swapHeldItem(selectedItem.getName());
-                            removeItem(selectedItem.getName(), 1);
+                            currentPokemon.swapHeldItem(selectedItem.Name);
+                            removeItem(selectedItem.Name, 1);
                             updateScreen();
                             updateItemList();
                             updateParty();
@@ -1921,8 +1942,8 @@ public class BagHandler : MonoBehaviour
 
                             Dialog.drawDialogBox();
                             yield return
-                                Dialog.StartCoroutine(Dialog.drawText(
-                                    "Gave " + selectedItem.getName() + " to " + currentPokemon.getName() + "."));
+                                Dialog.StartCoroutine("drawText",
+                                    "Gave " + selectedItem.Name + " to " + currentPokemon.getName() + ".");
                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                             {
                                 yield return null;
@@ -1947,8 +1968,8 @@ public class BagHandler : MonoBehaviour
 
                             Dialog.drawDialogBox();
                             yield return
-                                Dialog.StartCoroutine(Dialog.drawText(
-                                    "Took the " + receivedItem + " from " + currentPokemon.getName() + "."));
+                                Dialog.StartCoroutine("drawText",
+                                    "Took the " + receivedItem + " from " + currentPokemon.getName() + ".");
                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                             {
                                 yield return null;
@@ -1961,9 +1982,9 @@ public class BagHandler : MonoBehaviour
                         }
                         else if (chosenChoice == "Swap")
                         {
-                            string receivedItem = currentPokemon.swapHeldItem(selectedItem.getName());
+                            string receivedItem = currentPokemon.swapHeldItem(selectedItem.Name);
                             addItem(receivedItem, 1);
-                            removeItem(selectedItem.getName(), 1);
+                            removeItem(selectedItem.Name, 1);
                             updateScreen();
                             updateItemList();
                             updateParty();
@@ -1974,15 +1995,15 @@ public class BagHandler : MonoBehaviour
 
                             Dialog.drawDialogBox();
                             yield return
-                                Dialog.StartCoroutine(Dialog.drawText(
-                                    "Gave " + selectedItem.getName() + " to " + currentPokemon.getName() + ","));
+                                Dialog.StartCoroutine("drawText",
+                                    "Gave " + selectedItem.Name + " to " + currentPokemon.getName() + ",");
                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
                             Dialog.drawDialogBox();
                             yield return
-                                Dialog.StartCoroutine(Dialog.drawText( "and received " + receivedItem + " in return."));
+                                Dialog.StartCoroutine("drawText", "and received " + receivedItem + " in return.");
                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                             {
                                 yield return null;
@@ -2061,235 +2082,18 @@ public class BagHandler : MonoBehaviour
 
     private IEnumerator runItemEffect(ItemData selectedItem, Pokemon currentPokemon, bool booted)
     {
-        if (selectedItem.getItemEffect() == ItemData.ItemEffect.HP)
+        if (selectedItem.ItemType == ItemType.MEDICINE)
         {
-            //HP
-            if (currentPokemon.getCurrentHP() < currentPokemon.getHP() &&
-                currentPokemon.getStatus() != Pokemon.Status.FAINTED)
+            MedicineData item = (MedicineData)selectedItem;
+
+            if (item.MedicineType == MedicineType.POTION)
             {
-                //determine amount / intialise HP Bar Animation variables
-                float amount = selectedItem.getFloatParameter();
-                if (amount <= 1)
+                //HP
+                if (currentPokemon.getCurrentHP() < currentPokemon.getHP() &&
+                    currentPokemon.getStatus() != PokemonUnity.Status.FAINT)
                 {
-                    amount = currentPokemon.healHP(currentPokemon.getHP() * amount);
-                }
-                else
-                {
-                    amount = currentPokemon.healHP(amount);
-                }
-                float startLength = partyHPBar[partyPosition].pixelInset.width;
-                float difference =
-                    Mathf.Floor(48f * ((float) currentPokemon.getCurrentHP() / (float) currentPokemon.getHP())) -
-                    startLength;
-                float increment = 0;
-                float speed = 0.5f;
-
-                SfxHandler.Play(healClip);
-                removeItem(selectedItem.getName(), 1);
-
-                //animate HP bar restoring
-                while (increment < 1)
-                {
-                    increment += (1 / speed) * Time.deltaTime;
-                    if (increment > 1)
-                    {
-                        increment = 1;
-                    }
-                    partyHPBar[partyPosition].pixelInset = new Rect(partyHPBar[partyPosition].pixelInset.x,
-                        partyHPBar[partyPosition].pixelInset.y,
-                        startLength + (difference * increment), partyHPBar[partyPosition].pixelInset.height);
-                    //Color the bar
-                    if (partyHPBar[partyPosition].pixelInset.width < 12f)
-                    {
-                        partyHPBar[partyPosition].color = new Color(1, 0.125f, 0, 1);
-                    }
-                    else if (partyHPBar[partyPosition].pixelInset.width < 24f)
-                    {
-                        partyHPBar[partyPosition].color = new Color(1, 0.75f, 0, 1);
-                    }
-                    else
-                    {
-                        partyHPBar[partyPosition].color = new Color(0.125f, 1, 0.065f, 1);
-                    }
-
-                    yield return null;
-                }
-
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "It restored " + amount + " points."));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-            }
-            else
-            {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine(Dialog.drawText( "It wouldn't have any effect."));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                switching = false;
-                selected = -1;
-                updateSelectedItem();
-            }
-        }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.PP)
-        {
-            //PP
-            string[] currentPokemonMoveset = currentPokemon.getMoveset();
-            int[] currentPokemonPP = currentPokemon.getPP();
-            int[] currentPokemonMaxPP = currentPokemon.getMaxPP();
-            bool loweredPP = false;
-            for (int i = 0; i < 4; i++)
-            {
-                if (currentPokemonMoveset[i] != null)
-                {
-                    if (currentPokemonPP[i] < currentPokemonMaxPP[i])
-                    {
-                        loweredPP = true;
-                    }
-                    else
-                    {
-                        //remove any move from the array that has full PP.
-                        currentPokemonMoveset[i] = null;
-                    }
-                }
-            }
-            if (loweredPP)
-            {
-                //check that the item is not healing all PP
-                if (selectedItem.getStringParameter() == "All")
-                {
-                    //heal PP for each move.
-                    float amount = selectedItem.getFloatParameter();
-                    for (int i = 0; i < 4; i++)
-                    {
-                        if (currentPokemonMoveset[i] != null)
-                        {
-                            if (amount <= 1)
-                            {
-                                amount = currentPokemon.healPP(i,
-                                    Mathf.RoundToInt(currentPokemon.getMaxPP()[i] * amount));
-                            }
-                            else
-                            {
-                                amount = currentPokemon.healPP(i, amount);
-                            }
-                        }
-                    }
-
-                    SfxHandler.Play(healClip);
-                    removeItem(selectedItem.getName(), 1);
-
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "Restored all moves."));
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                }
-                else
-                {
-                    //Set up the choices string to only contain moves with lowered PP.
-                    string[] choices = new string[]
-                    {
-                        currentPokemonMoveset[0], currentPokemonMoveset[1],
-                        currentPokemonMoveset[2], currentPokemonMoveset[3], "Cancel"
-                    };
-                    string[] packedChoices = new string[5];
-                    int packedIndex = 0;
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (choices[i] != null)
-                        {
-                            packedChoices[packedIndex] = choices[i];
-                            packedIndex += 1;
-                        }
-                    }
-                    choices = new string[packedIndex];
-                    for (int i = 0; i < packedIndex; i++)
-                    {
-                        choices[i] = packedChoices[i];
-                    }
-
-                    //Start the dialog, now that the choices have been set up.
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine(Dialog.drawText( "Restore which move's PP?"));
-                    Dialog.drawChoiceBox(choices, 110);
-                    yield return StartCoroutine(Dialog.choiceNavigate(choices));
-                    int chosenIndex = Dialog.chosenIndex;
-                    if (chosenIndex != 0)
-                    {
-                        //resolve move number
-                        int moveNumber = 0;
-                        for (int i = 0; i < 4; i++)
-                        {
-                            if (currentPokemonMoveset[i] == choices[choices.Length - chosenIndex - 1])
-                            {
-                                moveNumber = i;
-                            }
-                        }
-
-                        //heal PP for selected move.
-                        float amount = selectedItem.getFloatParameter();
-                        if (amount <= 1)
-                        {
-                            amount = currentPokemon.healPP(moveNumber,
-                                Mathf.RoundToInt(currentPokemon.getMaxPP()[moveNumber] * amount));
-                        }
-                        else
-                        {
-                            amount = currentPokemon.healPP(moveNumber, amount);
-                        }
-
-                        SfxHandler.Play(healClip);
-                        removeItem(selectedItem.getName(), 1);
-
-                        Dialog.drawDialogBox();
-                        yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "It restored " + amount + " points."));
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                        {
-                            yield return null;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine(Dialog.drawText( "It wouldn't have any effect."));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                switching = false;
-                selected = -1;
-                updateSelectedItem();
-            }
-        }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.STATUS)
-        {
-            //STATUS
-            //Check current pokemon has the status the item cures
-            string statusCurer = selectedItem.getStringParameter().ToUpper();
-            //if an ALL is used, set it to cure anything but FAINTED or NONE.
-            if (statusCurer == "ALL" && currentPokemon.getStatus().ToString() != "FAINTED" &&
-                currentPokemon.getStatus().ToString() != "NONE")
-            {
-                statusCurer = currentPokemon.getStatus().ToString();
-            }
-
-            if (currentPokemon.getStatus().ToString() == statusCurer)
-            {
-                if (statusCurer == "FAINTED")
-                {
-                    //Revive
-                    currentPokemon.setStatus(Pokemon.Status.NONE);
-
                     //determine amount / intialise HP Bar Animation variables
-                    float amount = selectedItem.getFloatParameter();
+                    float amount = ((PotionItem)item).HealValue;
                     if (amount <= 1)
                     {
                         amount = currentPokemon.healHP(currentPokemon.getHP() * amount);
@@ -2300,13 +2104,13 @@ public class BagHandler : MonoBehaviour
                     }
                     float startLength = partyHPBar[partyPosition].pixelInset.width;
                     float difference =
-                        Mathf.Floor(48f * ((float) currentPokemon.getCurrentHP() / (float) currentPokemon.getHP())) -
+                        Mathf.Floor(48f * (currentPokemon.getCurrentHP() / currentPokemon.getHP())) -
                         startLength;
                     float increment = 0;
                     float speed = 0.5f;
 
                     SfxHandler.Play(healClip);
-                    removeItem(selectedItem.getName(), 1);
+                    removeItem(item.Name, 1);
 
                     //animate HP bar restoring
                     while (increment < 1)
@@ -2337,7 +2141,7 @@ public class BagHandler : MonoBehaviour
                     }
 
                     Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "It restored " + amount + " points."));
+                    yield return Dialog.StartCoroutine("drawTextSilent", "It restored " + amount + " points.");
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
@@ -2345,136 +2149,366 @@ public class BagHandler : MonoBehaviour
                 }
                 else
                 {
-                    currentPokemon.setStatus(Pokemon.Status.NONE);
-
-                    SfxHandler.Play(healClip);
-                    removeItem(selectedItem.getName(), 1);
-
                     Dialog.drawDialogBox();
-                    if (statusCurer == "ASLEEP")
-                    {
-                        yield return Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + " woke up!"));
-                    }
-                    else if (statusCurer == "BURNED")
-                    {
-                        yield return Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + " was healed!"));
-                    }
-                    else if (statusCurer == "FROZEN")
-                    {
-                        yield return Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + " thawed out!"));
-                    }
-                    else if (statusCurer == "PARALYZED")
-                    {
-                        yield return Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + " was cured!"));
-                    }
-                    else if (statusCurer == "POISONED")
-                    {
-                        yield return Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + " was cured!"));
-                    }
-
+                    yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
+                    switching = false;
+                    selected = -1;
+                    updateSelectedItem();
                 }
             }
-            else
+            else if (item.MedicineType == MedicineType.STATUS)
             {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine(Dialog.drawText( "It wouldn't have any effect."));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                //STATUS
+                //Check current pokemon has the status the item cures
+                ItemStatus statusCurer = ((StatusItem)item).CureStatus;
+                //if an ALL is used, set it to cure anything but FAINTED or NONE.
+                if (statusCurer == ItemStatus.ALL && currentPokemon.getStatus() != PokemonUnity.Status.FAINT &&
+                    currentPokemon.getStatus()!= PokemonUnity.Status.NONE)
                 {
-                    yield return null;
-                }
-                switching = false;
-                selected = -1;
-                updateSelectedItem();
-            }
-        }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.EV)
-        {
-            //EV
-            string statBooster = selectedItem.getStringParameter().ToUpper();
-            float amount = selectedItem.getFloatParameter();
-            bool evsAdded = currentPokemon.addEVs(statBooster, amount);
-            if (evsAdded)
-            {
-                SfxHandler.Play(healClip);
-                removeItem(selectedItem.getName(), 1);
-
-                Dialog.drawDialogBox();
-                if (statBooster == "HP")
-                {
-                    yield return Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + "'s HP rose!"));
-                }
-                else if (statBooster == "ATK")
-                {
-                    yield return Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + "'s Attack rose!"));
-                }
-                else if (statBooster == "DEF")
-                {
-                    yield return Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + "'s Defense rose!"));
-                }
-                else if (statBooster == "SPA")
-                {
-                    yield return
-                        Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + "'s Special Attack rose!"));
-                }
-                else if (statBooster == "SPD")
-                {
-                    yield return
-                        Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + "'s Special Defense rose!"));
-                }
-                else if (statBooster == "SPE")
-                {
-                    yield return Dialog.StartCoroutine(Dialog.drawTextSilent( currentPokemon.getName() + "'s Speed rose!"));
+                    statusCurer = (ItemStatus)currentPokemon.getStatus();
                 }
 
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                if ((ItemStatus)currentPokemon.getStatus() == statusCurer)
                 {
-                    yield return null;
+                    if (statusCurer == ItemStatus.FAINT)
+                    {
+                        //Revive
+                        currentPokemon.setStatus(PokemonUnity.Status.NONE);
+
+                        //determine amount / intialise HP Bar Animation variables
+                        //float amount = selectedItem.getFloatParameter();
+                        float amount = 0;
+                        if (amount <= 1)
+                        {
+                            amount = currentPokemon.healHP(currentPokemon.getHP() * amount);
+                        }
+                        else
+                        {
+                            amount = currentPokemon.healHP(amount);
+                        }
+                        float startLength = partyHPBar[partyPosition].pixelInset.width;
+                        float difference =
+                            Mathf.Floor(48f * ((float)currentPokemon.getCurrentHP() / (float)currentPokemon.getHP())) -
+                            startLength;
+                        float increment = 0;
+                        float speed = 0.5f;
+
+                        SfxHandler.Play(healClip);
+                        removeItem(selectedItem.Name, 1);
+
+                        //animate HP bar restoring
+                        while (increment < 1)
+                        {
+                            increment += (1 / speed) * Time.deltaTime;
+                            if (increment > 1)
+                            {
+                                increment = 1;
+                            }
+                            partyHPBar[partyPosition].pixelInset = new Rect(partyHPBar[partyPosition].pixelInset.x,
+                                partyHPBar[partyPosition].pixelInset.y,
+                                startLength + (difference * increment), partyHPBar[partyPosition].pixelInset.height);
+                            //Color the bar
+                            if (partyHPBar[partyPosition].pixelInset.width < 12f)
+                            {
+                                partyHPBar[partyPosition].color = new Color(1, 0.125f, 0, 1);
+                            }
+                            else if (partyHPBar[partyPosition].pixelInset.width < 24f)
+                            {
+                                partyHPBar[partyPosition].color = new Color(1, 0.75f, 0, 1);
+                            }
+                            else
+                            {
+                                partyHPBar[partyPosition].color = new Color(0.125f, 1, 0.065f, 1);
+                            }
+
+                            yield return null;
+                        }
+
+                        Dialog.drawDialogBox();
+                        yield return Dialog.StartCoroutine("drawTextSilent", "It restored " + amount + " points.");
+                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        {
+                            yield return null;
+                        }
+                    }
+                    else
+                    {
+                        currentPokemon.setStatus(PokemonUnity.Status.NONE);
+
+                        SfxHandler.Play(healClip);
+                        removeItem(selectedItem.Name, 1);
+
+                        Dialog.drawDialogBox();
+                        if (statusCurer == ItemStatus.SLEEP)
+                        {
+                            yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " woke up!");
+                        }
+                        else if (statusCurer == ItemStatus.BURN)
+                        {
+                            yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " was healed!");
+                        }
+                        else if (statusCurer == ItemStatus.FROZEN)
+                        {
+                            yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " thawed out!");
+                        }
+                        else if (statusCurer == ItemStatus.PARALYSIS)
+                        {
+                            yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " was cured!");
+                        }
+                        else if (statusCurer == ItemStatus.POISON)
+                        {
+                            yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " was cured!");
+                        }
+
+                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        {
+                            yield return null;
+                        }
+                    }
                 }
-                updateSelectedItem();
+                else
+                {
+                    Dialog.drawDialogBox();
+                    yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    {
+                        yield return null;
+                    }
+                    switching = false;
+                    selected = -1;
+                    updateSelectedItem();
+                }
             }
-            else
+            else if (item.MedicineType == MedicineType.PP)
             {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine(Dialog.drawText( "It wouldn't have any effect."));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                PPItem PPItem = (PPItem)item;
+                //PP
+                PokemonUnity.Moves[] currentPokemonMoveset = currentPokemon.getMovesets();
+                bool[] currentPokemonMovesPP = new bool[4];
+                int[] currentPokemonPP = currentPokemon.GetPP();
+                int[] currentPokemonMaxPP = currentPokemon.GetMaxPP();
+                bool loweredPP = false;
+                for (int i = 0; i < 4; i++)
                 {
-                    yield return null;
+                    if (currentPokemonMoveset[i] != PokemonUnity.Moves.NONE)
+                    {
+                        if (currentPokemonPP[i] < currentPokemonMaxPP[i])
+                        {
+                            loweredPP = true;
+                        }
+                        else
+                        {
+                            //remove any move from the array that has full PP.
+                            currentPokemonMovesPP[i] = false;
+                        }
+                    }
+                    else
+                        currentPokemonMovesPP[i] = false;
                 }
-                switching = false;
-                selected = -1;
-                updateSelectedItem();
+                if (loweredPP)
+                {
+                    //check that the item is not healing all PP
+                    if (PPItem.IsHealAllMoves)
+                    {
+                        //heal PP for each move.
+                        float amount = PPItem.AmountToHealMove;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (currentPokemonMoveset[i] != PokemonUnity.Moves.NONE)
+                            {
+                                if (amount <= 1)
+                                {
+                                    amount = currentPokemon.healPP(i,
+                                        Mathf.RoundToInt(currentPokemon.getMaxPP(i) * amount));
+                                }
+                                else
+                                {
+                                    amount = currentPokemon.healPP(i, amount);
+                                }
+                            }
+                        }
+
+                        SfxHandler.Play(healClip);
+                        removeItem(selectedItem.Name, 1);
+
+                        Dialog.drawDialogBox();
+                        yield return Dialog.StartCoroutine("drawTextSilent", "Restored all moves.");
+                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        {
+                            yield return null;
+                        }
+                    }
+                    else
+                    {
+                        //Set up the choices string to only contain moves with lowered PP.
+                        string[] choices = new string[]
+                        {
+                        ConverterNames.GetMoveName(currentPokemonMoveset[0]), ConverterNames.GetMoveName(currentPokemonMoveset[1]),
+                        ConverterNames.GetMoveName(currentPokemonMoveset[2]), ConverterNames.GetMoveName(currentPokemonMoveset[3]), "Cancel"
+                        };
+                        string[] packedChoices = new string[5];
+                        int packedIndex = 0;
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (choices[i] != null)
+                            {
+                                packedChoices[packedIndex] = choices[i];
+                                packedIndex += 1;
+                            }
+                        }
+                        choices = new string[packedIndex];
+                        for (int i = 0; i < packedIndex; i++)
+                        {
+                            choices[i] = packedChoices[i];
+                        }
+
+                        //Start the dialog, now that the choices have been set up.
+                        Dialog.drawDialogBox();
+                        yield return Dialog.StartCoroutine("drawText", "Restore which move's PP?");
+                        Dialog.drawChoiceBoxWidth(choices, 110);
+                        yield return StartCoroutine(Dialog.choiceNavigate(choices));
+                        int chosenIndex = Dialog.chosenIndex;
+                        if (chosenIndex != 0)
+                        {
+                            //resolve move number
+                            int moveNumber = 0;
+                            for (int i = 0; i < 4; i++)
+                            {
+                                if (currentPokemonMoveset[i] == ConverterNames.ChangeMoveToEnum(choices[choices.Length - chosenIndex - 1]))
+                                {
+                                    moveNumber = i;
+                                }
+                            }
+
+                            //heal PP for selected move.
+                            float amount = ((PPItem)item).AmountToHealMove;
+                            if (amount <= 1)
+                            {
+                                amount = currentPokemon.healPP(moveNumber,
+                                    Mathf.RoundToInt(currentPokemon.getMaxPP(moveNumber) * amount));
+                            }
+                            else
+                            {
+                                amount = currentPokemon.healPP(moveNumber, amount);
+                            }
+
+                            SfxHandler.Play(healClip);
+                            removeItem(selectedItem.Name, 1);
+
+                            Dialog.drawDialogBox();
+                            yield return Dialog.StartCoroutine("drawTextSilent", "It restored " + amount + " points.");
+                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            {
+                                yield return null;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Dialog.drawDialogBox();
+                    yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    {
+                        yield return null;
+                    }
+                    switching = false;
+                    selected = -1;
+                    updateSelectedItem();
+                }
             }
         }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.EVOLVE)
+        //else if (selectedItem.getItemEffect() == ItemData.ItemEffect.EV)
+        //{
+        //    //EV
+        //    string statBooster = selectedItem.getStringParameter().ToUpper();
+        //    float amount = selectedItem.getFloatParameter();
+        //    bool evsAdded = currentPokemon.addEVs(statBooster, amount);
+        //    if (evsAdded)
+        //    {
+        //        SfxHandler.Play(healClip);
+        //        removeItem(selectedItem.Name, 1);
+        //
+        //        Dialog.drawDialogBox();
+        //        if (statBooster == "HP")
+        //        {
+        //            yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.Name + "'s HP rose!");
+        //        }
+        //        else if (statBooster == "ATK")
+        //        {
+        //            yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.Name + "'s Attack rose!");
+        //        }
+        //        else if (statBooster == "DEF")
+        //        {
+        //            yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.Name + "'s Defense rose!");
+        //        }
+        //        else if (statBooster == "SPA")
+        //        {
+        //            yield return
+        //                Dialog.StartCoroutine("drawTextSilent", currentPokemon.Name + "'s Special Attack rose!");
+        //        }
+        //        else if (statBooster == "SPD")
+        //        {
+        //            yield return
+        //                Dialog.StartCoroutine("drawTextSilent", currentPokemon.Name + "'s Special Defense rose!");
+        //        }
+        //        else if (statBooster == "SPE")
+        //        {
+        //            yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.Name + "'s Speed rose!");
+        //        }
+        //
+        //        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        //        {
+        //            yield return null;
+        //        }
+        //        updateSelectedItem();
+        //    }
+        //    else
+        //    {
+        //        Dialog.drawDialogBox();
+        //        yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+        //        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        //        {
+        //            yield return null;
+        //        }
+        //        switching = false;
+        //        selected = -1;
+        //        updateSelectedItem();
+        //    }
+        //}
+        else if (selectedItem.ItemType == ItemType.EVOLUTION)
         {
             //EVOLVE
-            if (currentPokemon.canEvolve("Stone," + selectedItem.getName()))
+            //if (currentPokemon.canEvolve("Stone," + selectedItem.Name))
+            //if (currentPokemon.canEvolve(PokemonUnity.Monster.EvolutionMethod.Item, ConverterNames.ChangeItemToEnum(selectedItem.Name)))
+            int evid = currentPokemon.getEvolutionID(PokemonUnity.Monster.EvolutionMethod.Item, ConverterNames.ChangeItemToEnum(selectedItem.Name));
+            if (evid != -1)
             {
                 int oldID = currentPokemon.getID();
                 SfxHandler.Play(selectClip);
                 BgmHandler.main.PlayOverlay(null, 0, 0.5f);
                 //yield return new WaitForSeconds(sceneTransition.FadeOut());
                 yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
-
+        
                 //Set SceneEvolution to be active so that it appears
                 Scene.main.Evolution.gameObject.SetActive(true);
-                StartCoroutine(Scene.main.Evolution.control(currentPokemon, "Stone," + selectedItem.getName()));
+                StartCoroutine(Scene.main.Evolution.control(currentPokemon, evid));
                 //Start an empty loop that will only stop when SceneEvolution is no longer active (is closed)
                 while (Scene.main.Evolution.gameObject.activeSelf)
                 {
                     yield return null;
                 }
-
+        
                 if (oldID != currentPokemon.getID())
                 {
                     //if evolved
-                    removeItem(selectedItem.getName(), 1);
+                    removeItem(selectedItem.Name, 1);
                 } //remove item
-
+        
                 //yield return new WaitForSeconds(sceneTransition.FadeIn());
                 yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
                 Dialog.undrawDialogBox();
@@ -2482,7 +2516,7 @@ public class BagHandler : MonoBehaviour
             else
             {
                 Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine(Dialog.drawText( "It wouldn't have any effect."));
+                yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
@@ -2492,21 +2526,22 @@ public class BagHandler : MonoBehaviour
                 updateSelectedItem();
             }
         }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.TM)
+        else if (selectedItem.ItemType == ItemType.TM)
         {
+            TMData tm = (TMData)selectedItem;
             //TM
-            if (currentPokemon.HasMove(selectedItem.getName()))
+            if (currentPokemon.HasMove(tm.MoveID))
             {
                 Dialog.drawDialogBox(2);
                 yield return
-                    Dialog.StartCoroutine(Dialog.drawText(
-                        currentPokemon.getName() + " already knows \n" + selectedItem.getName() + "."));
+                    Dialog.StartCoroutine("drawText",
+                        currentPokemon.getName() + " already knows \n" + selectedItem.Name + ".");
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
             }
-            else if (currentPokemon.CanLearnMove(selectedItem.getName()))
+            else if (currentPokemon.CanLearnMove(tm.MoveID, PokemonUnity.Monster.LearnMethod.machine))
             {
                 //check if can learn move
                 if (!booted)
@@ -2519,33 +2554,33 @@ public class BagHandler : MonoBehaviour
                         yield return null;
                     }
                     Dialog.drawDialogBox(2);
-                    yield return Dialog.StartCoroutine(Dialog.drawText( "It contained " + selectedItem.getName() + "."));
+                    yield return Dialog.StartCoroutine("drawText", "It contained " + selectedItem.Name + ".");
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
                     Dialog.drawDialogBox(2);
                     yield return
-                        Dialog.StartCoroutine(Dialog.drawText(
-                            "Teach " + selectedItem.getName() + "\nto " + currentPokemon.getName() + "?"));
+                        Dialog.StartCoroutine("drawText",
+                            "Teach " + selectedItem.Name + "\nto " + currentPokemon.getName() + "?");
                     Dialog.drawChoiceBox(14);
                     yield return StartCoroutine(Dialog.choiceNavigate());
                     Dialog.undrawChoiceBox();
-
+        
                     if (Dialog.chosenIndex == 1)
                     {
-                        yield return StartCoroutine(LearnMove(currentPokemon, selectedItem.getName()));
+                        yield return StartCoroutine(LearnMove(currentPokemon, tm.MoveID));
                     }
                 }
                 else
                 {
-                    yield return StartCoroutine(LearnMove(currentPokemon, selectedItem.getName()));
+                    yield return StartCoroutine(LearnMove(currentPokemon, tm.MoveID));
                 }
             }
             else
             {
                 Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine(Dialog.drawText( currentPokemon.getName() + " can't learn that move."));
+                yield return Dialog.StartCoroutine("drawText", currentPokemon.getName() + " can't learn that move.");
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
@@ -2556,82 +2591,153 @@ public class BagHandler : MonoBehaviour
             selected = -1;
             updateSelectedItem();
         }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+        else if (selectedItem.Name == "Rare Candy")
         {
-            //UNIQUE
-            string selectedItemName = selectedItem.getName();
-            if (selectedItemName == "Rare Candy")
+            if (currentPokemon.getLevel() < 100)
             {
-                if (currentPokemon.getLevel() < 100)
+                int exp = currentPokemon.getExpLevel(currentPokemon.getLevel());
+                currentPokemon.addExp(currentPokemon.getExpNext() - exp - currentPokemon.getExp());
+
+                SfxHandler.Play(healClip);
+                updateParty();
+        
+                removeItem(selectedItem.Name, 1); //remove item
+                updateSelectedItem();
+        
+                Dialog.drawDialogBox();
+                yield return
+                    Dialog.StartCoroutine("drawTextSilent",
+                        currentPokemon.getName() + "'s level rose to " + currentPokemon.getLevel() + "!");
+                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
-                    currentPokemon.healHP(1);
-                    currentPokemon.addExp(currentPokemon.getExpNext() - currentPokemon.getExp());
-                    SfxHandler.Play(healClip);
-                    updateParty();
-
-                    removeItem(selectedItem.getName(), 1); //remove item
-                    updateSelectedItem();
-
-                    Dialog.drawDialogBox();
-                    yield return
-                        Dialog.StartCoroutine(Dialog.drawTextSilent(
-                            currentPokemon.getName() + "'s level rose to " + currentPokemon.getLevel() + "!"));
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-
-                    //stat displays not yet implemented
-
-                    int pkmnID = currentPokemon.getID();
-                    //check for level evolution. EVOLVE
-                    if (currentPokemon.canEvolve("Level"))
-                    {
-                        SfxHandler.Play(selectClip);
-                        BgmHandler.main.PlayOverlay(null, 0, 0.5f);
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
-
-                        //Set SceneEvolution to be active so that it appears
-                        Scene.main.Evolution.gameObject.SetActive(true);
-                        StartCoroutine(Scene.main.Evolution.control(currentPokemon, "Level"));
-                        //Start an empty loop that will only stop when SceneEvolution is no longer active (is closed)
-                        while (Scene.main.Evolution.gameObject.activeSelf)
-                        {
-                            yield return null;
-                        }
-
-                        updateParty();
-
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
-                    }
-                    //if evolution not successful / wasn't called, check for moves to learn
-                    if (pkmnID == currentPokemon.getID())
-                    {
-                        string move = currentPokemon.MoveLearnedAtLevel(currentPokemon.getLevel());
-                        Debug.Log(move);
-                        if (!string.IsNullOrEmpty(move) && !currentPokemon.HasMove(move))
-                        {
-                            yield return StartCoroutine(LearnMove(currentPokemon, move));
-                        }
-                    }
+                    yield return null;
                 }
-                else
+        
+                //stat displays not yet implemented
+        
+                int pkmnID = currentPokemon.getID();
+                //check for level evolution. EVOLVE
+                //if (currentPokemon.canEvolve(PokemonUnity.Monster.EvolutionMethod.Level, currentPokemon.getLevel()))
+                int evid = currentPokemon.getEvolutionID(PokemonUnity.Monster.EvolutionMethod.Level, currentPokemon.getLevel());
+                if (evid != -1)
                 {
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine(Dialog.drawText( "It wouldn't have any effect."));
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    SfxHandler.Play(selectClip);
+                    BgmHandler.main.PlayOverlay(null, 0, 0.5f);
+                    yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+        
+                    //Set SceneEvolution to be active so that it appears
+                    Scene.main.Evolution.gameObject.SetActive(true);
+                    StartCoroutine(Scene.main.Evolution.control(currentPokemon, evid));
+                    //Start an empty loop that will only stop when SceneEvolution is no longer active (is closed)
+                    while (Scene.main.Evolution.gameObject.activeSelf)
                     {
                         yield return null;
                     }
-                    switching = false;
-                    selected = -1;
-                    updateSelectedItem();
+        
+                    updateParty();
+        
+                    yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+                }
+                //if evolution not successful / wasn't called, check for moves to learn
+                if (pkmnID == currentPokemon.getID())
+                {
+                    string move = currentPokemon.MoveLearnedAtLevel(currentPokemon.getLevel());
+                    //Debug.Log(move);
+                    if (!string.IsNullOrEmpty(move) && !currentPokemon.HasMove(ConverterNames.ChangeMoveToEnum(move)))
+                    {
+                        yield return StartCoroutine(LearnMove(currentPokemon, ConverterNames.ChangeMoveToEnum(move)));
+                    }
                 }
             }
+            else
+            {
+                Dialog.drawDialogBox();
+                yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                {
+                    yield return null;
+                }
+                switching = false;
+                selected = -1;
+                updateSelectedItem();
+            }
         }
+        //else if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+        //{
+        //    //UNIQUE
+        //    string selectedItemName = selectedItem.Name;
+        //    if (selectedItemName == "Rare Candy")
+        //    {
+        //        if (currentPokemon.getLevel() < 100)
+        //        {
+        //            currentPokemon.healHP(1);
+        //            currentPokemon.addExp(currentPokemon.getExpNext() - currentPokemon.getExp());
+        //            SfxHandler.Play(healClip);
+        //            updateParty();
+        //
+        //            removeItem(selectedItem.Name, 1); //remove item
+        //            updateSelectedItem();
+        //
+        //            Dialog.drawDialogBox();
+        //            yield return
+        //                Dialog.StartCoroutine("drawTextSilent",
+        //                    currentPokemon.Name + "'s level rose to " + currentPokemon.getLevel() + "!");
+        //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        //            {
+        //                yield return null;
+        //            }
+        //
+        //            //stat displays not yet implemented
+        //
+        //            int pkmnID = currentPokemon.getID();
+        //            //check for level evolution. EVOLVE
+        //            if (currentPokemon.canEvolve("Level"))
+        //            {
+        //                SfxHandler.Play(selectClip);
+        //                BgmHandler.main.PlayOverlay(null, 0, 0.5f);
+        //                yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+        //
+        //                //Set SceneEvolution to be active so that it appears
+        //                Scene.main.Evolution.gameObject.SetActive(true);
+        //                StartCoroutine(Scene.main.Evolution.control(currentPokemon, "Level"));
+        //                //Start an empty loop that will only stop when SceneEvolution is no longer active (is closed)
+        //                while (Scene.main.Evolution.gameObject.activeSelf)
+        //                {
+        //                    yield return null;
+        //                }
+        //
+        //                updateParty();
+        //
+        //                yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+        //            }
+        //            //if evolution not successful / wasn't called, check for moves to learn
+        //            if (pkmnID == currentPokemon.getID())
+        //            {
+        //                string move = currentPokemon.MoveLearnedAtLevel(currentPokemon.getLevel());
+        //                Debug.Log(move);
+        //                if (!string.IsNullOrEmpty(move) && !currentPokemon.HasMove(move))
+        //                {
+        //                    yield return StartCoroutine(LearnMove(currentPokemon, move));
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Dialog.drawDialogBox();
+        //            yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+        //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        //            {
+        //                yield return null;
+        //            }
+        //            switching = false;
+        //            selected = -1;
+        //            updateSelectedItem();
+        //        }
+        //    }
+        //}
     }
 
-    private IEnumerator LearnMove(Pokemon selectedPokemon, string move)
+    private IEnumerator LearnMove(Pokemon selectedPokemon, PokemonUnity.Moves move)
     {
         int chosenIndex = 1;
         if (chosenIndex == 1)
@@ -2644,23 +2750,23 @@ public class BagHandler : MonoBehaviour
                 {
                     Dialog.drawDialogBox(2);
                     yield return
-                        Dialog.StartCoroutine(Dialog.drawText(
-                            selectedPokemon.getName() + " wants to learn the \nmove " + move + "."));
+                        Dialog.StartCoroutine("drawText",
+                            selectedPokemon.getName() + " wants to learn the \nmove " + move + ".");
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
                     Dialog.drawDialogBox(2);
                     yield return
-                        Dialog.StartCoroutine(Dialog.drawText(
-                            "However, " + selectedPokemon.getName() + " already \nknows four moves."));
+                        Dialog.StartCoroutine("drawText",
+                            "However, " + selectedPokemon.getName() + " already \nknows four moves.");
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
                     Dialog.drawDialogBox(2);
                     yield return
-                        Dialog.StartCoroutine(Dialog.drawText( "Should a move be deleted and \nreplaced with " + move + "?"));
+                        Dialog.StartCoroutine("drawText", "Should a move be deleted and \nreplaced with " + ConverterNames.GetMoveName(move) + "?");
 
                     Dialog.drawChoiceBox(14);
                     yield return StartCoroutine(Dialog.choiceNavigate());
@@ -2669,7 +2775,7 @@ public class BagHandler : MonoBehaviour
                     if (chosenIndex == 1)
                     {
                         Dialog.drawDialogBox(2);
-                        yield return Dialog.StartCoroutine(Dialog.drawText( "Which move should \nbe forgotten?"));
+                        yield return Dialog.StartCoroutine("drawText", "Which move should \nbe forgotten?");
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
                             yield return null;
@@ -2679,7 +2785,7 @@ public class BagHandler : MonoBehaviour
 
                         //Set SceneSummary to be active so that it appears
                         Scene.main.Summary.gameObject.SetActive(true);
-                        StartCoroutine(Scene.main.Summary.control(new Pokemon[] { selectedPokemon }, learning:learning, newMoveString:move));
+                        StartCoroutine(Scene.main.Summary.control(selectedPokemon, ConverterNames.GetMoveName(move)));
                         //Start an empty loop that will only stop when SceneSummary is no longer active (is closed)
                         while (Scene.main.Summary.gameObject.activeSelf)
                         {
@@ -2692,18 +2798,18 @@ public class BagHandler : MonoBehaviour
                         if (!string.IsNullOrEmpty(replacedMove))
                         {
                             Dialog.drawDialogBox(2);
-                            yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "1, "));
+                            yield return Dialog.StartCoroutine("drawTextSilent", "1, ");
                             yield return new WaitForSeconds(0.4f);
-                            yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "2, "));
+                            yield return Dialog.StartCoroutine("drawTextSilent", "2, ");
                             yield return new WaitForSeconds(0.4f);
-                            yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "and... "));
+                            yield return Dialog.StartCoroutine("drawTextSilent", "and... ");
                             yield return new WaitForSeconds(0.4f);
-                            yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "... "));
+                            yield return Dialog.StartCoroutine("drawTextSilent", "... ");
                             yield return new WaitForSeconds(0.4f);
-                            yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "... "));
+                            yield return Dialog.StartCoroutine("drawTextSilent", "... ");
                             yield return new WaitForSeconds(0.4f);
                             SfxHandler.Play(forgetMoveClip);
-                            yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "Poof!"));
+                            yield return Dialog.StartCoroutine("drawTextSilent", "Poof!");
                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                             {
                                 yield return null;
@@ -2711,14 +2817,14 @@ public class BagHandler : MonoBehaviour
 
                             Dialog.drawDialogBox(2);
                             yield return
-                                Dialog.StartCoroutine(Dialog.drawText(
-                                    selectedPokemon.getName() + " forgot how to \nuse " + replacedMove + "."));
+                                Dialog.StartCoroutine("drawText",
+                                    selectedPokemon.getName() + " forgot how to \nuse " + replacedMove + ".");
                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
                             Dialog.drawDialogBox(2);
-                            yield return Dialog.StartCoroutine(Dialog.drawText( "And..."));
+                            yield return Dialog.StartCoroutine("drawText", "And...");
                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                             {
                                 yield return null;
@@ -2746,7 +2852,7 @@ public class BagHandler : MonoBehaviour
                     {
                         //NOT ELSE because this may need to run after (chosenIndex == 1) runs
                         Dialog.drawDialogBox(2);
-                        yield return Dialog.StartCoroutine(Dialog.drawText( "Give up on learning the move \n" + move + "?"));
+                        yield return Dialog.StartCoroutine("drawText", "Give up on learning the move \n" + move + "?");
                         Dialog.drawChoiceBox(14);
                         yield return StartCoroutine(Dialog.choiceNavigate());
                         chosenIndex = Dialog.chosenIndex;
@@ -2766,7 +2872,7 @@ public class BagHandler : MonoBehaviour
                     Dialog.drawDialogBox(2);
                     AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
                     BgmHandler.main.PlayMFX(mfx);
-                    StartCoroutine(Dialog.drawTextSilent(selectedPokemon.getName() + " learned \n" + move + "!"));
+                    StartCoroutine(Dialog.drawTextSilent(selectedPokemon.getName() + " learned \n" + ConverterNames.GetMoveName(move) + "!"));
                     yield return new WaitForSeconds(mfx.length);
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
@@ -2782,7 +2888,8 @@ public class BagHandler : MonoBehaviour
             //NOT ELSE because this may need to run after (chosenIndex == 1) runs
             //cancel learning loop
             Dialog.drawDialogBox(2);
-            yield return Dialog.StartCoroutine(Dialog.drawText(selectedPokemon.getName() + " did not learn \n" + move + "."));
+            yield return Dialog.StartCoroutine("drawText", selectedPokemon.getName() + " did not learn \n" + move + ".")
+                ;
             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
                 yield return null;

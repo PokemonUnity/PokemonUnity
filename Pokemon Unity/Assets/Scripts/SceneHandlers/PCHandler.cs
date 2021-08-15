@@ -417,7 +417,7 @@ public class PCHandler : MonoBehaviour
                 }
                 selectedItemShadow.text = selectedItem.text;
                 selectedStatus.texture = null;
-                if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
+                if (selectedPokemon.getStatus() != PokemonUnity.Status.NONE)
                 {
                     selectedStatus.texture =
                         Resources.Load<Texture>("PCSprites/status" + selectedPokemon.getStatus().ToString());
@@ -1433,9 +1433,9 @@ public class PCHandler : MonoBehaviour
 
                                                     Dialog.drawDialogBox();
                                                     yield return
-                                                        Dialog.StartCoroutine(Dialog.drawText(
+                                                        Dialog.StartCoroutine("drawText",
                                                             "Gave " + chosenItem + " to " + currentPokemon.getName() +
-                                                            ","));
+                                                            ",");
                                                     while (!Input.GetButtonDown("Select") &&
                                                            !Input.GetButtonDown("Back"))
                                                     {
@@ -1443,8 +1443,8 @@ public class PCHandler : MonoBehaviour
                                                     }
                                                     Dialog.drawDialogBox();
                                                     yield return
-                                                        Dialog.StartCoroutine(Dialog.drawText(
-                                                            "and received " + receivedItem + " in return."));
+                                                        Dialog.StartCoroutine("drawText",
+                                                            "and received " + receivedItem + " in return.");
                                                     while (!Input.GetButtonDown("Select") &&
                                                            !Input.GetButtonDown("Back"))
                                                     {
@@ -1523,8 +1523,8 @@ public class PCHandler : MonoBehaviour
 
                                                 Dialog.drawDialogBox();
                                                 yield return
-                                                    Dialog.StartCoroutine(Dialog.drawText(
-                                                        "Gave " + chosenItem + " to " + currentPokemon.getName() + "."));
+                                                    Dialog.StartCoroutine("drawText",
+                                                        "Gave " + chosenItem + " to " + currentPokemon.getName() + ".");
                                                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                                 {
                                                     yield return null;
@@ -1572,7 +1572,7 @@ public class PCHandler : MonoBehaviour
                                         Dialog.drawTextInstant("Do you want to release " + pokemonName + "?");
                                         Dialog.drawChoiceBoxNo();
                                         yield return new WaitForSeconds(0.2f);
-                                        yield return StartCoroutine(Dialog.choiceNavigate(0));
+                                        yield return StartCoroutine(Dialog.choiceNavigateNo());
                                         Dialog.undrawChoiceBox();
                                         releaseIndex = Dialog.chosenIndex;
                                         if (releaseIndex == 1)
@@ -1900,9 +1900,9 @@ public class PCHandler : MonoBehaviour
 
                                                         Dialog.drawDialogBox();
                                                         yield return
-                                                            Dialog.StartCoroutine(Dialog.drawText(
+                                                            Dialog.StartCoroutine("drawText",
                                                                 "Gave " + chosenItem + " to " + currentPokemon.getName() +
-                                                                ","));
+                                                                ",");
                                                         while (!Input.GetButtonDown("Select") &&
                                                                !Input.GetButtonDown("Back"))
                                                         {
@@ -1910,8 +1910,8 @@ public class PCHandler : MonoBehaviour
                                                         }
                                                         Dialog.drawDialogBox();
                                                         yield return
-                                                            Dialog.StartCoroutine(Dialog.drawText(
-                                                                "and received " + receivedItem + " in return."));
+                                                            Dialog.StartCoroutine("drawText",
+                                                                "and received " + receivedItem + " in return.");
                                                         while (!Input.GetButtonDown("Select") &&
                                                                !Input.GetButtonDown("Back"))
                                                         {
@@ -1991,9 +1991,9 @@ public class PCHandler : MonoBehaviour
 
                                                     Dialog.drawDialogBox();
                                                     yield return
-                                                        Dialog.StartCoroutine(Dialog.drawText(
+                                                        Dialog.StartCoroutine("drawText",
                                                             "Gave " + chosenItem + " to " + currentPokemon.getName() +
-                                                            "."));
+                                                            ".");
                                                     while (!Input.GetButtonDown("Select") &&
                                                            !Input.GetButtonDown("Back"))
                                                     {
@@ -2070,7 +2070,7 @@ public class PCHandler : MonoBehaviour
                                                 Dialog.drawTextInstant("Do you want to release " + pokemonName + "?");
                                                 Dialog.drawChoiceBoxNo();
                                                 yield return new WaitForSeconds(0.2f);
-                                                yield return StartCoroutine(Dialog.choiceNavigate(0));
+                                                yield return StartCoroutine(Dialog.choiceNavigateNo());
                                                 Dialog.undrawChoiceBox();
                                                 releaseIndex = Dialog.chosenIndex;
                                                 if (releaseIndex == 1)

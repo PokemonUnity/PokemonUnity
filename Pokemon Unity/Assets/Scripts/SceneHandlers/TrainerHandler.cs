@@ -267,7 +267,7 @@ public class TrainerHandler : MonoBehaviour
                 if (currentScreen == 1)
                 {
                     destinationPosition = new Vector3(-0.806f, 0, 0);
-                    StartCoroutine(boxLid(false));
+                    StartCoroutine("boxLid", false);
                 }
                 else if (currentScreen == 0)
                 {
@@ -288,7 +288,7 @@ public class TrainerHandler : MonoBehaviour
                     destinationPosition = new Vector3(0, 0, 0);
                     currentBadge = 0;
                     badgeSel.pixelInset = badges[0].pixelInset;
-                    StartCoroutine(boxLid(true));
+                    StartCoroutine("boxLid", true);
                 }
             }
         }
@@ -298,12 +298,12 @@ public class TrainerHandler : MonoBehaviour
 
     private void updateData()
     {
-        IDnoData.text = "" + SaveData.currentSave.playerID;
+        IDnoData.text = "" + SaveData.currentSave.savefile.playerID;
         IDnoDataShadow.text = IDnoData.text;
-        nameData.text = SaveData.currentSave.playerName;
+        nameData.text = SaveData.currentSave.savefile.playerName;
         nameDataShadow.text = nameData.text;
         //picture.texture = null; //player sprites not yet implemented.
-        string playerMoney = "" + SaveData.currentSave.playerMoney;
+        string playerMoney = "" + SaveData.currentSave.savefile.playerMoney;
         char[] playerMoneyChars = playerMoney.ToCharArray();
         playerMoney = "";
         //format playerMoney into a currency style (e.g. $1,000,000)
@@ -319,22 +319,22 @@ public class TrainerHandler : MonoBehaviour
         moneyDataShadow.text = moneyData.text;
         pokedexData.text = "0"; //pokedex not yet implemented.
         pokedexDataShadow.text = pokedexData.text;
-        scoreData.text = "" + SaveData.currentSave.playerScore;
+        scoreData.text = "" + SaveData.currentSave.savefile.playerScore;
         scoreDataShadow.text = scoreData.text;
-        timeHour.text = "" + SaveData.currentSave.playerHours;
+        timeHour.text = "" + SaveData.currentSave.savefile.playerHours;
         timeHourShadow.text = timeHour.text;
-        timeMinute.text = "" + SaveData.currentSave.playerMinutes;
+        timeMinute.text = "" + SaveData.currentSave.savefile.playerMinutes;
         if (timeMinute.text.Length == 1)
         {
             timeMinute.text = "0" + timeMinute.text;
         }
         timeMinuteShadow.text = timeMinute.text;
-        adventureData.text = SaveData.currentSave.fileCreationDate;
+        adventureData.text = SaveData.currentSave.savefile.fileCreationDate;
         adventureDataShadow.text = adventureData.text;
 
         for (int i = 0; i < 12; i++)
         {
-            if (SaveData.currentSave.gymsBeaten[i])
+            if (SaveData.currentSave.savefile.gymsBeaten[i])
             {
                 badges[i].enabled = true;
             }
@@ -352,7 +352,7 @@ public class TrainerHandler : MonoBehaviour
             GLNameBox.gameObject.SetActive(true);
             GLPictureBox.gameObject.SetActive(true);
             GLTypeBox.gameObject.SetActive(true);
-            if (SaveData.currentSave.gymsEncountered[currentBadge])
+            if (SaveData.currentSave.savefile.gymsEncountered[currentBadge])
             {
                 if (currentBadge == 0)
                 {
@@ -427,10 +427,10 @@ public class TrainerHandler : MonoBehaviour
                     GLType.texture = Resources.Load<Texture>("PCSprites/typeDARK");
                 }
 
-                if (SaveData.currentSave.gymsBeaten[currentBadge])
+                if (SaveData.currentSave.savefile.gymsBeaten[currentBadge])
                 {
                     GLBeatenBox.gameObject.SetActive(true);
-                    GLBeatenData.text = SaveData.currentSave.gymsBeatTime[currentBadge];
+                    GLBeatenData.text = SaveData.currentSave.savefile.gymsBeatTime[currentBadge];
                 }
                 else
                 {
@@ -537,8 +537,8 @@ public class TrainerHandler : MonoBehaviour
         StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
 
         running = true;
-        StartCoroutine(animBG());
-        StartCoroutine(animColon());
+        StartCoroutine("animBG");
+        StartCoroutine("animColon");
 
         cancelSelected = false;
         cancel.texture = cancelTex;
@@ -707,7 +707,7 @@ public class TrainerHandler : MonoBehaviour
         }
         if (currentScreen != 1)
         {
-            StartCoroutine(boxLid(true));
+            StartCoroutine("boxLid", true);
         }
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
         yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));

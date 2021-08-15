@@ -100,11 +100,13 @@ public class EvolutionHandler : MonoBehaviour
     }
 
 
-    public IEnumerator control(Pokemon pokemonToEvolve, string methodOfEvolution)
+    public IEnumerator control(Pokemon pokemonToEvolve, int index)
     {
         selectedPokemon = pokemonToEvolve;
-        evolutionMethod = methodOfEvolution;
-        evolutionID = selectedPokemon.getEvolutionID(evolutionMethod);
+        //evolutionMethod = method;
+        //evolutionID = selectedPokemon.getEvolutionID(evolutionMethod);
+        evolutionID = selectedPokemon.getEvolutionSpecieID(index);
+
         string selectedPokemonName = selectedPokemon.getName();
 
         pokemonSpriteAnimation = selectedPokemon.GetFrontAnim_();
@@ -112,6 +114,7 @@ public class EvolutionHandler : MonoBehaviour
             selectedPokemon.getIsShiny());
         pokemonSprite.sprite = pokemonSpriteAnimation[0];
         evolutionSprite.sprite = evolutionSpriteAnimation[0];
+
         StartCoroutine(animatePokemon());
 
         pokemonSprite.rectTransform.sizeDelta = new Vector2(128, 128);
@@ -194,7 +197,8 @@ public class EvolutionHandler : MonoBehaviour
 
         if (evolved)
         {
-            selectedPokemon.evolve(evolutionMethod);
+            //selectedPokemon.evolve(evolutionMethod);
+            selectedPokemon.evolve(index);
 
             yield return new WaitForSeconds(3.2f);
 
@@ -221,7 +225,7 @@ public class EvolutionHandler : MonoBehaviour
             }
 
             string newMove = selectedPokemon.MoveLearnedAtLevel(selectedPokemon.getLevel());
-            if (!string.IsNullOrEmpty(newMove) && !selectedPokemon.HasMove(newMove))
+            if (!string.IsNullOrEmpty(newMove) && !selectedPokemon.HasMove(ConverterNames.ChangeMoveToEnum(newMove)))
             {
                 yield return StartCoroutine(LearnMove(selectedPokemon, newMove));
             }
@@ -572,9 +576,9 @@ public class EvolutionHandler : MonoBehaviour
             if (!stopAnimations)
             {
                 Image particle = particles.createParticle(smokeParticle, ScaleToScreen(positionX, positionYmodified),
-                    ScaleToScreen(positionX + Random.Range(0.01f, 0.04f), positionYmodified - 0.02f),
-                    sizeModified, 0, 0.6f, 0, sizeModified * 0.33f);
-
+                    sizeModified, 0, 0.6f,
+                    ScaleToScreen(positionX + Random.Range(0.01f, 0.04f), positionYmodified - 0.02f), 0,
+                    sizeModified * 0.33f);
                 if (particle != null)
                 {
                     particle.color = new Color((float) i / 7f * 0.7f, (float) i / 7f * 0.7f, (float) i / 7f * 0.7f,
@@ -652,7 +656,7 @@ public class EvolutionHandler : MonoBehaviour
 
                         //Set SceneSummary to be active so that it appears
                         Scene.main.Summary.gameObject.SetActive(true);
-                        StartCoroutine(Scene.main.Summary.control(new Pokemon[] { selectedPokemon }, learning:learning, newMoveString:move));
+                        StartCoroutine(Scene.main.Summary.control(selectedPokemon, move));
                         //Start an empty loop that will only stop when SceneSummary is no longer active (is closed)
                         while (Scene.main.Summary.gameObject.activeSelf)
                         {
@@ -735,7 +739,7 @@ public class EvolutionHandler : MonoBehaviour
                 //Moveset is not full, can fit the new move easily
                 else
                 {
-                    selectedPokemon.addMove(move);
+                    selectedPokemon.addMove(ConverterNames.ChangeMoveToEnum(move));
 
                     dialog.DrawDialogBox();
                     AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");

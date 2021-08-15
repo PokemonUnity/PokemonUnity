@@ -21,14 +21,18 @@ public class SfxHandler : MonoBehaviour
         }
 
         sources = this.gameObject.GetComponents<AudioSource>();
-        foreach(AudioSource source in sources)
+        for (int i = 0; i < sources.Length; i++)
         {
-            source.loop = false;
+            sources[i].loop = false;
         }
     }
 
+    public static AudioSource Play(AudioClip clip)
+    {
+        return Play(clip, 1f);
+    }
 
-    public static AudioSource Play(AudioClip clip, float pitch = 1f)
+    public static AudioSource Play(AudioClip clip, float pitch)
     {
         AudioSource source = null;
         for (int i = 0; i < sfxHandler.sources.Length; i++)

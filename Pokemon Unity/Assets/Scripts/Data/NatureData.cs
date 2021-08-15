@@ -1,10 +1,8 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
-using System.Collections;
-
 public class NatureData
 {
+    
     private string name;
     private float[] Stat_mod = new float[5];
     private string[] Stat_name = new string[] {"ATK", "DEF", "SPA", "SPD", "SPE"};

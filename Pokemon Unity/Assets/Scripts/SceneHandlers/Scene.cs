@@ -8,7 +8,6 @@ public class Scene : MonoBehaviour
     public static Scene main;
 
     public BagHandler Bag;
-    public BattleHandler Battle;
     public EvolutionHandler Evolution;
     public PartyHandler Party;
     public PauseHandler Pause;
@@ -27,7 +26,6 @@ public class Scene : MonoBehaviour
         }
 
         Bag.gameObject.SetActive(true);
-        Battle.gameObject.SetActive(true);
         Evolution.gameObject.SetActive(true);
         Party.gameObject.SetActive(true);
         Pause.gameObject.SetActive(true);

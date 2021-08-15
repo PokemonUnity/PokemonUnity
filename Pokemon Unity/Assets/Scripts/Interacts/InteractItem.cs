@@ -61,24 +61,25 @@ public class InteractItem : MonoBehaviour
             Dialog.drawDialogBox();
             if (TM)
             {
-                Dialog.StartCoroutine(Dialog.drawText(
-                    SaveData.currentSave.playerName + " found TM" + ItemDatabase.getItem(item).getTMNo() + ": " + item +
-                    "!"));
+                Debug.LogError("TM WAS NOT IMPLEMENT");
+                //Dialog.StartCoroutine("drawText",
+                //    SaveData.currentSave.playerName + " found TM" + ItemDatabase.getItem(item).getTMNo() + ": " + item +
+                //    "!");
             }
             else
             {
                 if (quantity > 1)
                 {
-                    Dialog.StartCoroutine(Dialog.drawText( SaveData.currentSave.playerName + " found " + item + "s!"));
+                    Dialog.StartCoroutine("drawText", SaveData.currentSave.savefile.playerName + " found " + item + "s!");
                 }
                 else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
                          firstLetter == "u")
                 {
-                    Dialog.StartCoroutine(Dialog.drawText( SaveData.currentSave.playerName + " found an " + item + "!"));
+                    Dialog.StartCoroutine("drawText", SaveData.currentSave.savefile.playerName + " found an " + item + "!");
                 }
                 else
                 {
-                    Dialog.StartCoroutine(Dialog.drawText( SaveData.currentSave.playerName + " found a " + item + "!"));
+                    Dialog.StartCoroutine("drawText", SaveData.currentSave.savefile.playerName + " found a " + item + "!");
                 }
             }
             yield return new WaitForSeconds(itemGetMFX.length);
@@ -95,24 +96,25 @@ public class InteractItem : MonoBehaviour
 
                 if (TM)
                 {
-                    yield return
-                        Dialog.StartCoroutine(Dialog.drawTextSilent(
-                            SaveData.currentSave.playerName + " put the TM" + ItemDatabase.getItem(item).getTMNo() +
-                            " \\away into the bag."));
+                    //yield return
+                    //    Dialog.StartCoroutine("drawTextSilent",
+                    //        SaveData.currentSave.playerName + " put the TM" + ItemDatabase.getItem(item).getTMNo() +
+                    //        " \\away into the bag.");
+                    Debug.LogError("TM WAS NOT IMPLEMENT");
                 }
                 else
                 {
                     if (quantity > 1)
                     {
                         yield return
-                            Dialog.StartCoroutine(Dialog.drawTextSilent(
-                                SaveData.currentSave.playerName + " put the " + item + "s \\away into the bag."));
+                            Dialog.StartCoroutine("drawTextSilent",
+                                SaveData.currentSave.savefile.playerName + " put the " + item + "s \\away into the bag.");
                     }
                     else
                     {
                         yield return
-                            Dialog.StartCoroutine(Dialog.drawTextSilent(
-                                SaveData.currentSave.playerName + " put the " + item + " \\away into the bag."));
+                            Dialog.StartCoroutine("drawTextSilent",
+                                SaveData.currentSave.savefile.playerName + " put the " + item + " \\away into the bag.");
                     }
                 }
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
@@ -126,7 +128,7 @@ public class InteractItem : MonoBehaviour
             }
             else
             {
-                yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "But there was no room..."));
+                yield return Dialog.StartCoroutine("drawTextSilent", "But there was no room...");
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;

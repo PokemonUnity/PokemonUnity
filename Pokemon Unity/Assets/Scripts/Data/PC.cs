@@ -28,7 +28,6 @@ public class PC
 
     public int[] boxTexture = new int[13];
 
-
     public PC()
     {
     }

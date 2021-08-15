@@ -127,12 +127,12 @@ public class DialogBoxHandlerNew : MonoBehaviour
                         if (secPerChar > 0)
                         {
                             yield return
-                                StartCoroutine(DrawWord(SaveData.currentSave.playerName, large, bold, italic, secPerChar))
+                                StartCoroutine(DrawWord(SaveData.currentSave.savefile.playerName, large, bold, italic, secPerChar))
                                 ;
                         }
                         else
                         {
-                            StartCoroutine(DrawWord(SaveData.currentSave.playerName, large, bold, italic, secPerChar));
+                            StartCoroutine(DrawWord(SaveData.currentSave.savefile.playerName, large, bold, italic, secPerChar));
                         }
                         break;
                     case ('l'): //Large

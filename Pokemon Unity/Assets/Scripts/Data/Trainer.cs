@@ -63,8 +63,8 @@ public class Trainer : MonoBehaviour
     {
         for (int i = 0; i < trainerParty.Length; i++)
         {
-            party[i] = new Pokemon(trainerParty[i].ID, trainerParty[i].gender, trainerParty[i].level, "Poké Ball",
-                trainerParty[i].heldItem, trainerName, trainerParty[i].ability);
+            //party[i] = new Pokemon((PokemonUnity.Pokemons)trainerParty[i].ID, trainerParty[i].gender, trainerParty[i].level, "Poké Ball",
+            //    trainerParty[i].heldItem, trainerName, trainerParty[i].ability);
         }
     }
 

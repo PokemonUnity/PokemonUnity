@@ -55,7 +55,7 @@ public class NonResettingHandler : MonoBehaviour
         //if entry is already in global, update everything to match
         if (sceneNonResettingListIndex >= 0)
         {
-            NonResettingList sceneNonResettingList = SaveData.currentSave.nonResettingLists[sceneNonResettingListIndex];
+            NonResettingList sceneNonResettingList = SaveData.currentSave.savefile.nonResettingLists[sceneNonResettingListIndex];
 
             for (int i = 0; i < trainers.Length; i++)
             {
@@ -131,18 +131,18 @@ public class NonResettingHandler : MonoBehaviour
             if (thisNonResettingList != null)
             {
                 bool listUpdated = false;
-                for (int i = 0; i < SaveData.currentSave.nonResettingLists.Count; i++)
+                for (int i = 0; i < SaveData.currentSave.savefile.nonResettingLists.Count; i++)
                 {
-                    if (SaveData.currentSave.nonResettingLists[i].sceneName == thisNonResettingList.sceneName)
+                    if (SaveData.currentSave.savefile.nonResettingLists[i].sceneName == thisNonResettingList.sceneName)
                     {
-                        SaveData.currentSave.nonResettingLists[i] = thisNonResettingList;
+                        SaveData.currentSave.savefile.nonResettingLists[i] = thisNonResettingList;
                         listUpdated = true;
-                        i = SaveData.currentSave.nonResettingLists.Count;
+                        i = SaveData.currentSave.savefile.nonResettingLists.Count;
                     }
                 }
                 if (!listUpdated)
                 {
-                    SaveData.currentSave.nonResettingLists.Add(thisNonResettingList);
+                    SaveData.currentSave.savefile.nonResettingLists.Add(thisNonResettingList);
                 }
             }
         }
