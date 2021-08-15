@@ -102,3 +102,6 @@ git-journal.fish
 **/_ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+
+#Demo Ignores
+/Demos/Movement/Logs/*
