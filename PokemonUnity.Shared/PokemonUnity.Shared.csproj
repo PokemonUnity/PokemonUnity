@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PokemonUnity</RootNamespace>
+    <AssemblyName>PokemonUnity.Shared</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Pokemon Unity\Assets\GameMain\Libraries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_3_7;UNITY_2018_3;UNITY_2018;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_TEXTURE_STREAMING;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_VIDEO;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_EVENT_QUEUE;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;NET_LEGACY;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169;CS0649;IDE0051;CS0162</NoWarn>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169;CS0649;IDE0051</NoWarn>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Project DLLs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Project DLLs\SQLite\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application\Events.cs" />
+    <Compile Include="Application\Game\Game.Frontend.cs" />
+    <Compile Include="Application\Scene.cs" />
+    <Compile Include="Application\MoveRoutes.cs" />
+    <Compile Include="Application\Feature.cs" />
+    <Compile Include="Application\Input.cs" />
+    <Compile Include="Application\Game\Game.Variable.cs" />
+    <Compile Include="Application\Options.cs" />
+    <Compile Include="Attack\Move.cs" />
+    <Compile Include="Attack\Data\Base.cs" />
+    <Compile Include="Attack\Data\Meta.cs" />
+    <Compile Include="Attack\Data\Flag.cs" />
+    <Compile Include="Character\Badge.cs" />
+    <Compile Include="Character\Bag.cs" />
+    <Compile Include="Character\DayCare.cs" />
+    <Compile Include="Character\Gear\Phone.cs" />
+    <Compile Include="Character\Gear\Pokedex.cs" />
+    <Compile Include="Character\Gear\PokeRadar.cs" />
+    <Compile Include="Character\Party.cs" />
+    <Compile Include="Character\PokemonStorage.cs" />
+    <Compile Include="Character\PC.cs" />
+    <Compile Include="Character\Player\Base.cs" />
+    <Compile Include="Character\Player\Outfit.cs" />
+    <Compile Include="Combat\Match\Recorder.cs" />
+    <Compile Include="Combat\Rules.cs" />
+    <Compile Include="Enums\UI.cs" />
+    <Compile Include="Extensions\Utility\LinearCongRandom.cs" />
+    <Compile Include="Framework\IGame_System.cs" />
+    <Compile Include="Framework\IInterpreterFieldMixin.cs" />
+    <Compile Include="Inventory\Item\Item.Effects.cs" />
+    <Compile Include="Monster\BattlePeer.cs" />
+    <Compile Include="Combat\Pokemon\IShadowPokemon.cs" />
+    <Compile Include="Combat\Trainer\Trainer.cs" />
+    <Compile Include="Combat\Trainer\Data\TrainerMetaData.cs" />
+    <Compile Include="Combat\Trainer\Data\TrainerData.cs" />
+    <Compile Include="Combat\Match\BattleArena.cs" />
+    <Compile Include="Combat\Match\BattlePalace.cs" />
+    <Compile Include="Combat\Match\SafariZone.cs" />
+    <Compile Include="Combat\AI.cs" />
+    <Compile Include="Combat\Data\TurnResults.cs" />
+    <Compile Include="Combat\Pokemon\Pokemon.Shadow.cs" />
+    <Compile Include="Enums\Battles.cs" />
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Enums\Items.cs" />
+    <Compile Include="Enums\Moves.cs" />
+    <Compile Include="Enums\Overworld.cs" />
+    <Compile Include="Enums\Pokemons.cs" />
+    <Compile Include="Enums\SaveEvent.cs" />
+    <Compile Include="Extensions\ItemExtension.cs" />
+    <Compile Include="Extensions\TrainerExtension.cs" />
+    <Compile Include="Extensions\PokemonExtension.cs" />
+    <Compile Include="Extensions\AbilityExtension.cs" />
+    <Compile Include="Extensions\MoveExtension.cs" />
+    <Compile Include="Extensions\TypeExtension.cs" />
+    <Compile Include="Framework\Core.cs" />
+    <Compile Include="Framework\Debugger.cs" />
+    <Compile Include="Extensions\Utility\Extensions.cs" />
+    <Compile Include="Extensions\Utility\MathHelper.cs" />
+    <Compile Include="Extensions\Utility\ScriptConversion.cs" />
+    <Compile Include="Extensions\Utility\StringHelper.cs" />
+    <Compile Include="Framework\IFrontend.cs" />
+    <Compile Include="Framework\IScene.cs" />
+    <Compile Include="Framework\ISpriteWrapper.cs" />
+    <Compile Include="Application\Game\Game.cs" />
+    <Compile Include="Application\Game\Game.Conditions.cs" />
+    <Compile Include="Application\Game\Game.Database.cs" />
+    <Compile Include="Application\Game\Game.Utility.cs" />
+    <Compile Include="Combat\Attack\Attack.cs" />
+    <Compile Include="Combat\Battle.cs" />
+    <Compile Include="Combat\Data\Choice.cs" />
+    <Compile Include="Combat\Data\DamageState.cs" />
+    <Compile Include="Combat\Data\SuccessState.cs" />
+    <Compile Include="Combat\Effects\Battler.cs" />
+    <Compile Include="Combat\Effects\Field.cs" />
+    <Compile Include="Combat\Effects\Move.cs" />
+    <Compile Include="Combat\Effects\Side.cs" />
+    <Compile Include="Combat\Move.cs" />
+    <Compile Include="Combat\Pokemon\Pokemon.Effect.cs" />
+    <Compile Include="Combat\Pokemon\Pokemon.cs" />
+    <Compile Include="Inventory\Data\Machine.cs" />
+    <Compile Include="Inventory\Data\Base.cs" />
+    <Compile Include="Inventory\Data\Berry.cs" />
+    <Compile Include="Inventory\Data\ItemFlags.cs" />
+    <Compile Include="Inventory\Data\Mail.cs" />
+    <Compile Include="Inventory\Item\Item.cs" />
+    <Compile Include="Inventory\Item\Item.Helper.cs" />
+    <Compile Include="Inventory\Item\Item.Pokeball.cs" />
+    <Compile Include="Monster\Evolution.cs" />
+    <Compile Include="Monster\Interface\IPokemon.cs" />
+    <Compile Include="Monster\Nature.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.Form.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.MegaEvolution.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.Shadow.cs" />
+    <Compile Include="Monster\Pokemon\Data\Base.cs" />
+    <Compile Include="Monster\Pokemon\Data\Evolution.cs" />
+    <Compile Include="Monster\Pokemon\Data\Type.cs" />
+    <Compile Include="Monster\Pokemon\Data\Experience.cs" />
+    <Compile Include="Monster\Pokemon\Data\WildItems.cs" />
+    <Compile Include="Monster\Pokemon\Data\Form.cs" />
+    <Compile Include="Monster\Pokemon\Data\Moveset.cs" />
+    <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
+    <Compile Include="Overworld\Map.cs" />
+    <Compile Include="Overworld\Terrain.cs" />
+    <Compile Include="Overworld\Wild\Encounter.cs" />
+    <Compile Include="Overworld\Wild\EncounterSlotData.cs" />
+    <Compile Include="Overworld\Wild\EncounterData.cs" />
+    <Compile Include="Overworld\Area.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Saving\Data\GameState.cs" />
+    <Compile Include="Saving\Data\SaveDataConverter.cs" />
+    <Compile Include="Saving\SaveData.cs" />
+    <Compile Include="Saving\SaveManager.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriMail.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriMove.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriPC.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriPokemon.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriV2.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriV3.cs" />
+    <Compile Include="Combat\Attack\Attack.Shadow.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriV4.cs" />
+    <Compile Include="Translations\Translations.cs" />
+    <Compile Include="Translations\Translator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
