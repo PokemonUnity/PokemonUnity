@@ -6,6 +6,13 @@ public enum EMovementState { Idle, Moving, Running, Bumped };
 
 public class MovementBase : MonoBehaviour
 {
+  // #UnityTODO
+  /*
+   * This class should support interrupt events.
+   * There are times where all movement in the world (and their respective animations) need to be stopped.
+   * This class should handle this: The update function should be wrapped in a static conditional function call
+   * that determines if anything inheriting from MovementBase should be doing their movement routines.
+   */
 
   protected BoxCollider baseCollider;
   readonly static float collRayLength = 1.499f; // statically calc this to go fast 

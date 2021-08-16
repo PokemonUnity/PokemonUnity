@@ -13,5 +13,6 @@ public class TrainerMovementBase : MovementBase
     }
     return OverworldMoveAnimate.EOverworldMoveState.Idle;
   }
+  // TranierMovementBase #UnityTODO
   // This demo doesn't have the code, but this is where you would put any movement events for triggering battles.
 }

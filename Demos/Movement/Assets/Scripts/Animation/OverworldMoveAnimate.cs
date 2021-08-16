@@ -44,6 +44,13 @@ public struct SpriteAnimation
 
 public class OverworldMoveAnimate : MonoBehaviour
 {
+  // OverworldMoveAnimate #UnityTODO
+  /*
+   * This class needs better support for special animations.
+   * Preferably, support for doing non-sprite property animations, too.
+   * GetSpriteIndex should be reworked to have no side effects, and similar functions should be written for
+   * reading animation curves of other properties (like position for ledge jumps)
+   */
   public enum EOverworldMoveState
   {
     Idle,
