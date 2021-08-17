@@ -845,7 +845,7 @@ public virtual int TotalPP { get {
 	   (attacker.Species == Pokemons.LATIAS ||
 	   attacker.Species == Pokemons.LATIOS) && 
 	   pbIsSpecial(type) &&
-	   !battle.rules.Contains("souldewclause"))//!Battle.rules["souldewclause"])
+	   !battle.rules["souldewclause"])
 	  atkmult = Math.Round(atkmult * 1.5);
 	if (attacker.hasWorkingItem(Items.CHOICE_BAND) && pbIsPhysical(type))
 	   atkmult = Math.Round(atkmult * 1.5);
@@ -912,7 +912,7 @@ public virtual int TotalPP { get {
 	   (opponent.Species == Pokemons.LATIAS ||
 	   opponent.Species == Pokemons.LATIOS) && 
 	   pbIsSpecial(type) &&
-	   !battle.rules.Contains("souldewclause"))//!Battle.rules["souldewclause"]
+	   !battle.rules["souldewclause"]) 
 	  defmult = Math.Round(defmult * 1.5);
 	defense = (int)Math.Round(defense * defmult * 1.0 / 0x1000);
 	#endregion

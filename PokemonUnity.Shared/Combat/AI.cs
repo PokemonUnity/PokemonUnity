@@ -4801,7 +4801,7 @@ public partial class Battle{
         }
       }
     }
-    if (@rules.Contains("suddendeath")) {
+    if (@rules["suddendeath"]) {
       if (@battlers[index].HP<=(@battlers[index].TotalHP/4) && Core.Rand.Next(10)<3 && 
          @battlers[index].turncount>0) {
         shouldswitch=true;

@@ -78,6 +78,7 @@
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
     <Compile Include="Combat\Match\Recorder.cs" />
+    <Compile Include="Combat\OrgBattleRules.cs" />
     <Compile Include="Combat\Rules.cs" />
     <Compile Include="Enums\UI.cs" />
     <Compile Include="Extensions\Utility\LinearCongRandom.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Monster\Pokemon\Data\Moveset.cs" />
     <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
     <Compile Include="Overworld\Map.cs" />
+    <Compile Include="Overworld\Safari.cs" />
     <Compile Include="Overworld\Terrain.cs" />
     <Compile Include="Overworld\Wild\Encounter.cs" />
     <Compile Include="Overworld\Wild\EncounterSlotData.cs" />

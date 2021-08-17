@@ -684,6 +684,7 @@ namespace PokemonUnity
 			void pbFadeOutIn(int value, Action action);
 			void pbFadeOutInWithMusic(int value, Action action);
 			void pbCueBGM(IAudioObject bgm, float value);
+			void pbCueBGM(string bgm, float value, float vol, float pitch);
 			float Audio_bgm_get_volume();
 			void Audio_bgm_set_volume(float n);
 			void me_stop();
@@ -691,8 +692,9 @@ namespace PokemonUnity
 			void pbPlayDecisionSE();
 			void pbPlayBuzzerSE();
 			void pbSEPlay(string name);
-			void pbBGMPlay(string name);
-			void pbBGSPlay(string name);
+			void pbBGMPlay(IAudioObject name);
+			void pbBGMPlay(string name, float vol, float pitch);
+			void pbBGSPlay(IAudioObject name);
 			void pbMEPlay(string name);
 			void pbPlayTrainerIntroME(TrainerTypes trainertype);
 

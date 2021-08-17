@@ -649,7 +649,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 #endregion
 
 #region Loads music and sound effects
-//public  void pbResolveAudioSE(string file) {
+//public IAudioObject pbResolveAudioSE(string file) {
 //  if (file == null) return null;
 //  if (RTP.exists("Audio/SE/"+file,new string[] { "", ".wav", ".mp3", ".ogg" })) {
 //    return RTP.getPath("Audio/SE/"+file,new string[] { "", ".wav", ".mp3", ".ogg" });
@@ -657,7 +657,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 //  return null;
 //}
 //
-//public  void pbCryFrameLength(Pokemon pokemon,float? pitch=null) {
+//public void pbCryFrameLength(Pokemon pokemon,float? pitch=null) {
 //  if (!pokemon.IsNotNullOrNone()) return 0;
 //  if (pitch == null) pitch=100;
 //  pitch=pitch/100;
@@ -680,7 +680,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 //  return (playtime*Graphics.frame_rate).ceil+4;
 //}
 //
-//public  void pbPlayCry(Monster.Pokemon pokemon,int volume=90,float? pitch=null) {
+//public void pbPlayCry(Monster.Pokemon pokemon,int volume=90,float? pitch=null) {
 //  if (!pokemon) return;
 //  if (pokemon is Numeric) {
 //    pkmnwav=pbCryFile(pokemon);
@@ -700,7 +700,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 //  }
 //}
 //
-//public  void pbCryFile(Monster.Pokemon pokemon) {
+//public void pbCryFile(Monster.Pokemon pokemon) {
 //  if (!pokemon) return null;
 //  if (pokemon is Numeric) {
 //    filename=string.Format("Cries/{0}Cry",getConstantName(PBSpecies,pokemon)); //rescue null
@@ -718,7 +718,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 //  return null;
 //}
 //
-//public  void pbGetWildBattleBGM(species) {
+//public IAudioObject pbGetWildBattleBGM(species) {
 //  if (Game.GameData.Global.nextBattleBGM) {
 //    return Game.GameData.Global.nextBattleBGM.clone();
 //  }
@@ -741,7 +741,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 //  return ret;
 //}
 //
-//public  void pbGetWildVictoryME() {
+//public IAudioObject pbGetWildVictoryME() {
 //  if (Game.GameData.Global.nextBattleME) {
 //    return Game.GameData.Global.nextBattleME.clone();
 //  }
@@ -765,7 +765,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 //  return ret;
 //}
 //
-//public  void pbPlayTrainerIntroME(trainertype) {
+//public IAudioObject pbPlayTrainerIntroME(trainertype) {
 //  pbRgssOpen("Data/trainertypes.dat","rb"){|f|
 //     trainertypes=Marshal.load(f);
 //     if (trainertypes[trainertype]) {
@@ -779,7 +779,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 //  }
 //}
 //
-//public  void pbGetTrainerBattleBGM(Combat.Trainer[] trainer) { // can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
+//public IAudioObject pbGetTrainerBattleBGM(Combat.Trainer[] trainer) { // can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
 //  if (Game.GameData.Global.nextBattleBGM) {
 //    return Game.GameData.Global.nextBattleBGM.clone();
 //  }
@@ -820,7 +820,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 //  return ret;
 //}
 //
-//public  void pbGetTrainerBattleBGMFromType(trainertype) {
+//public IAudioObject pbGetTrainerBattleBGMFromType(trainertype) {
 //  if (Game.GameData.Global.nextBattleBGM) {
 //    return Game.GameData.Global.nextBattleBGM.clone();
 //  }
@@ -853,7 +853,7 @@ public  void pbExclaim(Avatar.Character @event,int id=EXCLAMATION_ANIMATION_ID,b
 //  return ret;
 //}
 //
-//public  void pbGetTrainerVictoryME(trainer) { // can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
+//public IAudioObject pbGetTrainerVictoryME(trainer) { // can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
 //  if (Game.GameData.Global.nextBattleME) {
 //    return Game.GameData.Global.nextBattleME.clone();
 //  }
@@ -1713,7 +1713,6 @@ public  bool pbRecordTrainer() {
   }
   return false;
 }*/
-    }
 
     public partial class GlobalMetadata
     {
@@ -1769,7 +1768,7 @@ public  bool pbRecordTrainer() {
   public int? nextBattleBGM				            { get; set; }
   public int? nextBattleME				            { get; set; }
   public int? nextBattleBack			            { get; set; }
-  public int? safariState				            { get; set; }
+  public SafariState safariState				    { get; set; }
   //public BugContestState bugContestState			{ get; set; }
   public Combat.Trainer partner			            { get; set; }
   public int? challenge				                { get; set; }
@@ -1849,5 +1848,6 @@ public  bool pbRecordTrainer() {
   //  }
   //  return @roamPokemonCaught;
   //} }
+    }
     }
 }

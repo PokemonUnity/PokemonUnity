@@ -203,8 +203,8 @@ namespace PokemonUnity.Combat
 		public string endspeechwin2 { get; set; }
 		/// <summary>
 		/// </summary>
-		//public Dictionary<string,bool> rules { get; private set; }
-		public List<string> rules { get; private set; }
+		public Dictionary<string,bool> rules { get; private set; }
+		//public List<string> rules { get; private set; }
 		/// <summary>
 		/// Counter to track number of turns for battle
 		/// </summary>
@@ -334,7 +334,7 @@ namespace PokemonUnity.Combat
 			endspeechwin = "";
 			endspeechwin2 = "";
 
-			rules = new List<string>(); //Dictionary<string,bool>?
+			rules = new Dictionary<string,bool>();
 
 			turncount = 0;
 

@@ -3424,7 +3424,7 @@ namespace PokemonUnity.Combat
 	if (this.isFainted()) return false;
 	// Wild roaming Pokémon always flee if possible
 	if (@battle.opponent.Length != 0 && @battle.isOpposing(this.Index) &&
-	   @battle.rules.Contains("alwaysflee") && @battle.pbCanRun(this.Index)) {
+	   @battle.rules["alwaysflee"] && @battle.pbCanRun(this.Index)) {
 	  pbBeginTurn(choice);
 	  @battle.pbDisplay(Game._INTL("{1} fled!",this.ToString()));
 	  @battle.decision=BattleResults.FORFEIT;

@@ -39,7 +39,7 @@ namespace PokemonUnity
 		public Dictionary<int, object> GameVariables { get; set; }
 		public IGame_Screen GameScreen { get; set; }
 		//public Avatar.Player GamePlayer { get; set; }
-		public PokemonUnity.Game_Map GameMap { get; set; }
+		public PokemonUnity.Game.Game_Map GameMap { get; set; }
 		//public Game_Message GameMessage { get; set; }
 		public int SpeechFrame { get; private set; }
 		public static PokemonUnity.UX.IFrontEnd UI { get; private set; }
