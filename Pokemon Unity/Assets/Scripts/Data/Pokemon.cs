@@ -60,9 +60,9 @@ public class Pokemon
         m_Pokemon.GenerateMoveset();
         m_Pokemon.ballUsed = PokemonUnity.Inventory.Items.POKE_BALL;
 
-        PokemonUnity.Character.TrainerData data = new PokemonUnity.Character.TrainerData(SaveData.currentSave.savefile.playerName, SaveData.currentSave.savefile.isMale);
+        //PokemonUnity.Character.TrainerData data = new PokemonUnity.Character.TrainerData(SaveData.currentSave.Player.Name, SaveData.currentSave.Player.IsMale);
         
-        m_Pokemon.SetCatchInfos(data);
+        m_Pokemon.SetCatchInfos(SaveData.currentSave.Player.Trainer);
     }
 
     //Recalculate the pokemon's Stats.

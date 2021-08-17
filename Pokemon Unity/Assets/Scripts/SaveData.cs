@@ -11,36 +11,36 @@ public class SaveData
     {
         public int fileIndex;
         public int buildID;
+        public Player player;
 
         public string levelName;
-        public SeriV3 playerPosition = new SeriV3(new Vector3());
-        public int playerDirection;
+        //public SeriV3 playerPosition = new SeriV3(new Vector3());
+        //public int playerDirection;
         
-        public string playerName;
-        public bool isMale;
-        public int playerID;
-        public string fileCreationDate;
+        //public string playerName;
+        //public bool isMale;
+        //public int playerID;
+        //public string fileCreationDate;
 
         public string mapName;
 
-        public SeriPC PC;
-        public Bag Bag = new Bag();
+        //public SeriPC PC;
+        //public Bag Bag = new Bag();
 
-        public string[] registeredItems;
+        //public string[] registeredItems;
 
-        public string playerOutfit;
+        //public string playerOutfit;
 
-        public int playerScore;
-        public int playerMoney;
+        //public int playerScore;
+        //public int playerMoney;
         
-        public int playerHours;
-        public int playerMinutes;
-        public int playerSeconds;
+        //public int playerHours;
+        //public int playerMinutes;
+        //public int playerSeconds;
         
-        public bool[] gymsEncountered;
-        public bool[] gymsBeaten;
-        public string[] gymsBeatTime;
-
+        //public bool[] gymsEncountered;
+        //public bool[] gymsBeaten;
+        //public string[] gymsBeatTime;
 
         //Important gameplay data
         public string respawnSceneName;
@@ -55,30 +55,15 @@ public class SaveData
         {
 
         }
-
-        // Need this?
-        //public SaveData ToSaveData()
-        //{
-        //    SaveData savedata = new SaveData(fileIndex); savedata.buildID = buildID;
-        //    savedata.levelName = levelName; savedata.playerPosition = playerPosition; savedata.playerDirection = playerDirection;
-        //    savedata.playerName = playerName; savedata.isMale = isMale; savedata.playerID = playerID; savedata.fileCreationDate = fileCreationDate;
-        //    savedata.mapName = mapName; savedata.registeredItems = registeredItems; savedata.playerOutfit = playerOutfit; savedata.playerScore = playerScore;
-        //    savedata.playerMoney = playerMoney; savedata.playerHours = playerHours; savedata.playerMinutes = playerMinutes; savedata.playerSeconds = playerSeconds;
-        //    savedata.gymsEncountered = gymsEncountered; savedata.gymsBeaten = gymsBeaten; savedata.gymsBeatTime = gymsBeatTime; savedata.respawnSceneName = respawnSceneName;
-        //    savedata.respawnScenePosition = respawnScenePosition; savedata.respawnSceneDirection = respawnSceneDirection; savedata.respawnText = respawnText;
-        //    savedata.cVariables = cVariables; savedata.nonResettingLists = nonResettingLists;
-        //    //
-        //    savedata.PC = PC.GetPC();
-        //    savedata.Bag = Bag;
-        //    return savedata;
-        //}
     }
 
     public static SaveData currentSave;
     public SaveFile savefile;
 
-    public PC PC;
-    public Bag Bag { get { return savefile.Bag; } }
+    public PC PC { get { return Player.PC; } }
+    public Bag Bag { get { return Player.Bag; } }
+
+    public Player Player { get; set; }
 
     public bool IsNotNullFile() { return savefile != null; }
 
@@ -86,7 +71,8 @@ public class SaveData
     {
         savefile = new SaveFile();
         savefile.fileIndex = fileIndex;
-        PC = new PC();
+        //PC = new PC();
+        Player = new Player();
         Save();
     }
 
@@ -94,12 +80,14 @@ public class SaveData
     {
         savefile = loadData;
         savefile.fileIndex = loadData.fileIndex;
-        PC = loadData.PC.GetPC();
+        //PC = loadData.PC.GetPC();
+        Player = loadData.player;
     }
 
     public void Save()
     {
-        savefile.PC = new SeriPC(PC);
+        //savefile.PC = new SeriPC(PC);
+        savefile.player = Player;
     }
 
     public int getFileIndex()
@@ -111,13 +99,13 @@ public class SaveData
     ///returns "m/f_outfitString_"
     public string getPlayerSpritePrefix()
     {
-        if (savefile.isMale)
+        if (Player.IsMale)
         {
-            return "m_" + savefile.playerOutfit + "_";
+            return "m_" + Player.playerOutfit + "_";
         }
         else
         {
-            return "f_" + savefile.playerOutfit + "_";
+            return "f_" + Player.playerOutfit + "_";
         }
     }
 

@@ -299,18 +299,18 @@ public class CustomEvent : MonoBehaviour
                     if (currentEvent.int0 > 1)
                     {
                         Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.savefile.playerName + " received " + currentEvent.string0 + "s!");
+                            SaveData.currentSave.Player.Name + " received " + currentEvent.string0 + "s!");
                     }
                     else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
                              firstLetter == "u")
                     {
                         Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.savefile.playerName + " received an " + currentEvent.string0 + "!");
+                            SaveData.currentSave.Player.Name + " received an " + currentEvent.string0 + "!");
                     }
                     else
                     {
                         Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.savefile.playerName + " received a " + currentEvent.string0 + "!");
+                            SaveData.currentSave.Player.Name + " received a " + currentEvent.string0 + "!");
                     }
                 }
                 yield return new WaitForSeconds(itemGetMFX.length);
@@ -334,14 +334,14 @@ public class CustomEvent : MonoBehaviour
                         {
                             yield return
                                 Dialog.StartCoroutine("drawTextSilent",
-                                    SaveData.currentSave.savefile.playerName + " put the " + currentEvent.string0 +
+                                    SaveData.currentSave.Player.Name + " put the " + currentEvent.string0 +
                                     "s \\away into the bag.");
                         }
                         else
                         {
                             yield return
                                 Dialog.StartCoroutine("drawTextSilent",
-                                    SaveData.currentSave.savefile.playerName + " put the " + currentEvent.string0 +
+                                    SaveData.currentSave.Player.Name + " put the " + currentEvent.string0 +
                                     " \\away into the bag.");
                         }
                     }
@@ -362,7 +362,8 @@ public class CustomEvent : MonoBehaviour
                 break;
 
             case CustomEventDetails.CustomEventType.ReceivePokemon:
-                if (SaveData.currentSave.PC.hasSpace(0))
+                //if (SaveData.currentSave.PC.hasSpace(0))
+                if (SaveData.currentSave.Player.Party.HasSpace(SaveData.currentSave.Player.Party.Length))
                 {
                     //Play Great for Pokemon
                     AudioClip pokeGetMFX = Resources.Load<AudioClip>("Audio/mfx/GetGreat");
@@ -400,7 +401,7 @@ public class CustomEvent : MonoBehaviour
                     Dialog.drawDialogBox();
                     yield return
                         Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.savefile.playerName + " received the " + pkName + "!");
+                            SaveData.currentSave.Player.Name + " received the " + pkName + "!");
                     BgmHandler.main.PlayMFX(pokeGetMFX);
                     yield return new WaitForSeconds(pokeGetMFX.length);
 
@@ -486,6 +487,7 @@ public class CustomEvent : MonoBehaviour
                     }
 
                     Debug.Log(pkMoveset[0] + ", " + pkMoveset[1] + ", " + pkMoveset[2] + ", " + pkMoveset[3]);
+                    Debug.Log("Not Setup, yet");
 
 
                     //Pokemon pk = new Pokemon((PokemonUnity.Pokemons)currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
@@ -493,8 +495,8 @@ public class CustomEvent : MonoBehaviour
                     //    currentEvent.strings[1], IVs[0], IVs[1], IVs[2], IVs[3], IVs[4], IVs[5], 0, 0, 0, 0, 0, 0,
                     //    pkNature, currentEvent.ints[4],
                     //    pkMoveset, new int[4]);
-                    //
-                    //SaveData.currentSave.PC.addPokemon(pk);
+                    
+                    //SaveData.currentSave.Player.addPokemon(pk);
                 }
                 else
                 {
@@ -552,11 +554,11 @@ public class CustomEvent : MonoBehaviour
                         }
                         break;
                     case CustomEventDetails.Logic.GymBadgeNoOwned:
-                        if (Mathf.FloorToInt(currentEvent.float0) < SaveData.currentSave.savefile.gymsBeaten.Length &&
+                        if (Mathf.FloorToInt(currentEvent.float0) < SaveData.currentSave.Player.gymsBeaten.Length &&
                             Mathf.FloorToInt(currentEvent.float0) >= 0)
                         {
                             //ensure input number is valid
-                            if (SaveData.currentSave.savefile.gymsBeaten[Mathf.FloorToInt(currentEvent.float0)])
+                            if (SaveData.currentSave.Player.gymsBeaten[Mathf.FloorToInt(currentEvent.float0)])
                             {
                                 passedCheck = true;
                             }
@@ -564,9 +566,9 @@ public class CustomEvent : MonoBehaviour
                         break;
                     case CustomEventDetails.Logic.GymBadgesEarned:
                         int badgeCount = 0;
-                        for (int bi = 0; bi < SaveData.currentSave.savefile.gymsBeaten.Length; bi++)
+                        for (int bi = 0; bi < SaveData.currentSave.Player.gymsBeaten.Length; bi++)
                         {
-                            if (SaveData.currentSave.savefile.gymsBeaten[bi])
+                            if (SaveData.currentSave.Player.gymsBeaten[bi])
                             {
                                 badgeCount += 1;
                             }
@@ -579,9 +581,11 @@ public class CustomEvent : MonoBehaviour
                     case CustomEventDetails.Logic.PokemonIDIsInParty:
                         for (int pi = 0; pi < 6; pi++)
                         {
-                            if (SaveData.currentSave.PC.boxes[0][pi] != null)
+                            //if (SaveData.currentSave.PC.boxes[0][pi] != null)
+                            if (SaveData.currentSave.Player.Party[pi] != null)
                             {
-                                if (SaveData.currentSave.PC.boxes[0][pi].getID() ==
+                                //if (SaveData.currentSave.PC.boxes[0][pi].getID() ==
+                                if (SaveData.currentSave.Player.Party[pi].getID() ==
                                     Mathf.FloorToInt(currentEvent.float0))
                                 {
                                     passedCheck = true;
@@ -593,14 +597,15 @@ public class CustomEvent : MonoBehaviour
                     case CustomEventDetails.Logic.SpaceInParty:
                         if (currentEvent.bool0)
                         {
-                            if (!SaveData.currentSave.PC.hasSpace(0))
+                            //if (!SaveData.currentSave.PC.hasSpace(0))
+                            if (!SaveData.currentSave.Player.Party.HasSpace(SaveData.currentSave.Player.Party.Length))
                             {
                                 passedCheck = true;
                             }
                         }
                         else
                         {
-                            if (SaveData.currentSave.PC.hasSpace(0))
+                            if (SaveData.currentSave.Player.Party.HasSpace(SaveData.currentSave.Player.Party.Length))
                             {
                                 passedCheck = true;
                             }

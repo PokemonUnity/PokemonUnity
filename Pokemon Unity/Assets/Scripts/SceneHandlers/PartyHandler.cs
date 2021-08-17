@@ -102,7 +102,8 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            //Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            Pokemon selectedPokemon = SaveData.currentSave.Player.Party[i];
             if (selectedPokemon == null)
             {
                 slot[i].gameObject.SetActive(false);
@@ -183,7 +184,8 @@ public class PartyHandler : MonoBehaviour
                 //add
                 if (currentPosition < 5)
                 {
-                    if (SaveData.currentSave.PC.boxes[0][currentPosition + 1] == null)
+                    //if (SaveData.currentSave.PC.boxes[0][currentPosition + 1] == null)
+                    if (SaveData.currentSave.Player.Party[currentPosition + 1] == null)
                     {
                         currentPosition = 6;
                     }
@@ -203,7 +205,8 @@ public class PartyHandler : MonoBehaviour
                 if (currentPosition == 6)
                 {
                     currentPosition -= 1;
-                    while (SaveData.currentSave.PC.boxes[0][currentPosition] == null)
+                    //while (SaveData.currentSave.PC.boxes[0][currentPosition] == null)
+                    while (SaveData.currentSave.Player.Party[currentPosition] == null)
                     {
                         currentPosition -= 1;
                     }
@@ -221,7 +224,8 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            //Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            Pokemon selectedPokemon = SaveData.currentSave.Player.Party[i];
             if (selectedPokemon != null)
             {
                 if (i == swapPosition)
@@ -388,7 +392,8 @@ public class PartyHandler : MonoBehaviour
                 yield return null;
             }
 
-            SaveData.currentSave.PC.swapPokemon(0, position1, 0, position2);
+            //SaveData.currentSave.PC.swapPokemon(0, position1, 0, position2);
+            SaveData.currentSave.Player.swapPartyPokemon(position1, position2);
             updateParty();
 
             increment = 0;
@@ -478,7 +483,7 @@ public class PartyHandler : MonoBehaviour
         switching = false;
         swapPosition = -1;
         currentPosition = 0;
-        SaveData.currentSave.PC.packParty();
+        SaveData.currentSave.Player.Party.PackParty();
         updateParty();
         updateFrames();
         Dialog.drawDialogBox();
@@ -575,7 +580,8 @@ public class PartyHandler : MonoBehaviour
                 }
                 else
                 {
-                    Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][currentPosition];
+                    //Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][currentPosition];
+                    Pokemon selectedPokemon = SaveData.currentSave.Player.Party[currentPosition];
                     int chosenIndex = -1;
                     while (chosenIndex != 0)
                     {
@@ -602,7 +608,8 @@ public class PartyHandler : MonoBehaviour
 
                             //Set SceneSummary to be active so that it appears
                             Scene.main.Summary.gameObject.SetActive(true);
-                            StartCoroutine(Scene.main.Summary.control(SaveData.currentSave.PC.boxes[0], currentPosition));
+                            //StartCoroutine(Scene.main.Summary.control(SaveData.currentSave.PC.boxes[0], currentPosition));
+                            StartCoroutine(Scene.main.Summary.control(SaveData.currentSave.Player.Party, currentPosition));
                             //Start an empty loop that will only stop when SceneSummary is no longer active (is closed)
                             while (Scene.main.Summary.gameObject.activeSelf)
                             {

@@ -4811,6 +4811,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: mapPCDivirellaEast
       objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.z
+      value: -149
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.x
+      value: 175
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferScene
+      value: overworldNW
+      objectReference: {fileID: 0}
     - target: {fileID: 487238, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
       propertyPath: m_LocalPosition.x
       value: 148
@@ -4846,22 +4862,6 @@ PrefabInstance:
     - target: {fileID: 11490702, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
       propertyPath: mapName
       value: East Divirella City
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.z
-      value: -149
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.x
-      value: 175
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferScene
-      value: overworldNW
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
@@ -5724,6 +5724,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: mapPCDivirellaWest
       objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.x
+      value: 117
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.z
+      value: -138
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferScene
+      value: overworldNW
+      objectReference: {fileID: 0}
     - target: {fileID: 487238, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
       propertyPath: m_LocalPosition.x
       value: 102
@@ -5759,22 +5775,6 @@ PrefabInstance:
     - target: {fileID: 11490702, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
       propertyPath: mapName
       value: West Divirella City
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.x
-      value: 117
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.z
-      value: -138
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferScene
-      value: overworldNW
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
@@ -7000,6 +7000,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: mapPCErba
       objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.z
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.x
+      value: -29
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferScene
+      value: overworldNW
+      objectReference: {fileID: 0}
     - target: {fileID: 487238, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
       propertyPath: m_LocalPosition.x
       value: 31
@@ -7035,22 +7051,6 @@ PrefabInstance:
     - target: {fileID: 11490702, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
       propertyPath: mapName
       value: Erba Village
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.z
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.x
-      value: -29
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferScene
-      value: overworldNW
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
@@ -8224,11 +8224,19 @@ PrefabInstance:
       propertyPath: direction
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11460608, guid: 8fb405f25772dd442981110976c3eb17, type: 3}
+      propertyPath: trainerSurfing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 21256192, guid: 8fb405f25772dd442981110976c3eb17, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300008, guid: fe807cda1c6495c419d56f15cd88e025,
         type: 3}
+    - target: {fileID: 163520, guid: 8fb405f25772dd442981110976c3eb17, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fb405f25772dd442981110976c3eb17, type: 3}
 --- !u!1 &1519236094
@@ -9753,6 +9761,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: mapPCIniture
       objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferScene
+      value: overworldNW
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.x
+      value: -76
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
+      propertyPath: transferPosition.z
+      value: -33
+      objectReference: {fileID: 0}
     - target: {fileID: 487238, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
       propertyPath: m_LocalPosition.x
       value: -48
@@ -9788,22 +9812,6 @@ PrefabInstance:
     - target: {fileID: 11490702, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
       propertyPath: mapName
       value: Initure Town
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferScene
-      value: overworldNW
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.x
-      value: -76
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11411958, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}
-      propertyPath: transferPosition.z
-      value: -33
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eccdf81884a82b46a1ed82f6fad5495, type: 3}

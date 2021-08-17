@@ -105,21 +105,21 @@ public class MainMenuHandler : MonoBehaviour
             int badgeTotal = 0;
             for (int i = 0; i < 12; i++)
             {
-                if (SaveLoad.savedGames[selectedFile].savefile.gymsBeaten[i])
+                if (SaveLoad.savedGames[selectedFile].Player.gymsBeaten[i])
                 {
                     badgeTotal += 1;
                 }
             }
-            string playerTime = "" + SaveLoad.savedGames[selectedFile].savefile.playerMinutes;
+            string playerTime = "" + SaveLoad.savedGames[selectedFile].Player.PlayTime.Minutes;
             if (playerTime.Length == 1)
             {
                 playerTime = "0" + playerTime;
             }
-            playerTime = SaveLoad.savedGames[selectedFile].savefile.playerHours + " : " + playerTime;
+            playerTime = SaveLoad.savedGames[selectedFile].Player.PlayTime.Hours + " : " + playerTime;
 
             mapNameText.text = SaveLoad.savedGames[selectedFile].savefile.mapName;
             mapNameTextShadow.text = mapNameText.text;
-            dataText.text = SaveLoad.savedGames[selectedFile].savefile.playerName
+            dataText.text = SaveLoad.savedGames[selectedFile].Player.Name
                             + "\n" + badgeTotal
                             + "\n" + "0" //Pokedex not yet implemented
                             + "\n" + playerTime;
@@ -127,9 +127,11 @@ public class MainMenuHandler : MonoBehaviour
             
             for (int i = 0; i < 6; i++)
             {
-                if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null)
+                //if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null)
+                if (SaveLoad.savedGames[selectedFile].Player.Party[i] != null)
                 {
-                    pokemon[i].texture = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIcons();
+                    //pokemon[i].texture = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIcons();
+                    pokemon[i].texture = SaveLoad.savedGames[selectedFile].Player.Party[i].GetIcons();
                 }
                 else
                 {
@@ -214,8 +216,8 @@ public class MainMenuHandler : MonoBehaviour
                     Debug.Log(SaveLoad.savedGames[0]);
                     Debug.Log(SaveLoad.savedGames[1]);
                     Debug.Log(SaveLoad.savedGames[2]);
-                    GlobalVariables.global.playerPosition = SaveData.currentSave.savefile.playerPosition.v3;
-                    GlobalVariables.global.playerDirection = SaveData.currentSave.savefile.playerDirection;
+                    GlobalVariables.global.playerPosition = SaveData.currentSave.Player.Position;
+                    GlobalVariables.global.playerDirection = SaveData.currentSave.Player.Direction;
 
                     Application.LoadLevel(SaveData.currentSave.savefile.levelName);
                 }

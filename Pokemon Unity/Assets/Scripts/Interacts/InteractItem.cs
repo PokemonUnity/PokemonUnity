@@ -70,16 +70,16 @@ public class InteractItem : MonoBehaviour
             {
                 if (quantity > 1)
                 {
-                    Dialog.StartCoroutine("drawText", SaveData.currentSave.savefile.playerName + " found " + item + "s!");
+                    Dialog.StartCoroutine("drawText", SaveData.currentSave.Player.Name + " found " + item + "s!");
                 }
                 else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
                          firstLetter == "u")
                 {
-                    Dialog.StartCoroutine("drawText", SaveData.currentSave.savefile.playerName + " found an " + item + "!");
+                    Dialog.StartCoroutine("drawText", SaveData.currentSave.Player.Name + " found an " + item + "!");
                 }
                 else
                 {
-                    Dialog.StartCoroutine("drawText", SaveData.currentSave.savefile.playerName + " found a " + item + "!");
+                    Dialog.StartCoroutine("drawText", SaveData.currentSave.Player.Name + " found a " + item + "!");
                 }
             }
             yield return new WaitForSeconds(itemGetMFX.length);
@@ -108,13 +108,13 @@ public class InteractItem : MonoBehaviour
                     {
                         yield return
                             Dialog.StartCoroutine("drawTextSilent",
-                                SaveData.currentSave.savefile.playerName + " put the " + item + "s \\away into the bag.");
+                                SaveData.currentSave.Player.Name + " put the " + item + "s \\away into the bag.");
                     }
                     else
                     {
                         yield return
                             Dialog.StartCoroutine("drawTextSilent",
-                                SaveData.currentSave.savefile.playerName + " put the " + item + " \\away into the bag.");
+                                SaveData.currentSave.Player.Name + " put the " + item + " \\away into the bag.");
                     }
                 }
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))

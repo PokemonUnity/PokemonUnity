@@ -298,12 +298,12 @@ public class TrainerHandler : MonoBehaviour
 
     private void updateData()
     {
-        IDnoData.text = "" + SaveData.currentSave.savefile.playerID;
+        IDnoData.text = "" + SaveData.currentSave.Player.Trainer.PlayerID;
         IDnoDataShadow.text = IDnoData.text;
-        nameData.text = SaveData.currentSave.savefile.playerName;
+        nameData.text = SaveData.currentSave.Player.Name;
         nameDataShadow.text = nameData.text;
         //picture.texture = null; //player sprites not yet implemented.
-        string playerMoney = "" + SaveData.currentSave.savefile.playerMoney;
+        string playerMoney = "" + SaveData.currentSave.Player.Money;
         char[] playerMoneyChars = playerMoney.ToCharArray();
         playerMoney = "";
         //format playerMoney into a currency style (e.g. $1,000,000)
@@ -319,22 +319,22 @@ public class TrainerHandler : MonoBehaviour
         moneyDataShadow.text = moneyData.text;
         pokedexData.text = "0"; //pokedex not yet implemented.
         pokedexDataShadow.text = pokedexData.text;
-        scoreData.text = "" + SaveData.currentSave.savefile.playerScore;
+        scoreData.text = "" + SaveData.currentSave.Player.playerScore;
         scoreDataShadow.text = scoreData.text;
-        timeHour.text = "" + SaveData.currentSave.savefile.playerHours;
+        timeHour.text = "" + SaveData.currentSave.Player.PlayTime.Hours;
         timeHourShadow.text = timeHour.text;
-        timeMinute.text = "" + SaveData.currentSave.savefile.playerMinutes;
+        timeMinute.text = "" + SaveData.currentSave.Player.PlayTime.Minutes;
         if (timeMinute.text.Length == 1)
         {
             timeMinute.text = "0" + timeMinute.text;
         }
         timeMinuteShadow.text = timeMinute.text;
-        adventureData.text = SaveData.currentSave.savefile.fileCreationDate;
+        adventureData.text = SaveData.currentSave.Player.StartDate.ToString("MMM. dd, yyyy");
         adventureDataShadow.text = adventureData.text;
 
         for (int i = 0; i < 12; i++)
         {
-            if (SaveData.currentSave.savefile.gymsBeaten[i])
+            if (SaveData.currentSave.Player.gymsBeaten[i])
             {
                 badges[i].enabled = true;
             }
@@ -352,7 +352,7 @@ public class TrainerHandler : MonoBehaviour
             GLNameBox.gameObject.SetActive(true);
             GLPictureBox.gameObject.SetActive(true);
             GLTypeBox.gameObject.SetActive(true);
-            if (SaveData.currentSave.savefile.gymsEncountered[currentBadge])
+            if (SaveData.currentSave.Player.gymsEncountered[currentBadge])
             {
                 if (currentBadge == 0)
                 {
@@ -427,10 +427,10 @@ public class TrainerHandler : MonoBehaviour
                     GLType.texture = Resources.Load<Texture>("PCSprites/typeDARK");
                 }
 
-                if (SaveData.currentSave.savefile.gymsBeaten[currentBadge])
+                if (SaveData.currentSave.Player.gymsBeaten[currentBadge])
                 {
                     GLBeatenBox.gameObject.SetActive(true);
-                    GLBeatenData.text = SaveData.currentSave.savefile.gymsBeatTime[currentBadge];
+                    GLBeatenData.text = SaveData.currentSave.Player.gymsBeatTime[currentBadge];
                 }
                 else
                 {

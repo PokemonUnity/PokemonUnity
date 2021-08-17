@@ -207,13 +207,16 @@ public class FollowerMovement : MonoBehaviour
             followerLight = GetComponentInChildren<Light>();
         }
         followerIndex = index;
-        pokemonID = SaveData.currentSave.PC.boxes[0][followerIndex].getID();
-        spriteSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetSprite(false);
+        //pokemonID = SaveData.currentSave.PC.boxes[0][followerIndex].getID();
+        pokemonID = SaveData.currentSave.Player.Party[followerIndex].getID();
+        //spriteSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetSprite(false);
+        spriteSheet = SaveData.currentSave.Player.Party[followerIndex].GetSprite(false);
 
         hasLight = PokemonDatabase.getPokemon(pokemonID).hasLight();
         lightIntensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
         lightColor = PokemonDatabase.getPokemon(pokemonID).getLightColor();
-        lightSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetSprite(true);
+        //lightSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetSprite(true);
+        lightSheet = SaveData.currentSave.Player.Party[followerIndex].GetSprite(true);
 
         followerLight.color = lightColor;
         followerLight.intensity = lightIntensity;
@@ -293,7 +296,8 @@ public class FollowerMovement : MonoBehaviour
                 Dialog.drawDialogBox();
                 yield return
                     Dialog.StartCoroutine("drawText",
-                        SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                        //SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                        SaveData.currentSave.Player.Party[followerIndex].getName() +
                         " is enjoying walking around \\out of their ball.");
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {

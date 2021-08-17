@@ -88,28 +88,32 @@ public class GlobalVariables : MonoBehaviour
     public void SetDEBUGFileData()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        SaveData.currentSave.savefile.playerName = "Gold";
-        SaveData.currentSave.savefile.playerID = 29482;
-        SaveData.currentSave.savefile.isMale = true;
+        SaveData.currentSave.Player = new Player();
+        //SaveData.currentSave.savefile.playerName = "Gold";
+        //SaveData.currentSave.savefile.playerID = 29482;
+        //SaveData.currentSave.savefile.isMale = true;
 
-        SaveData.currentSave.savefile.playerOutfit = "hgss";
+        SaveData.currentSave.Player.playerOutfit = "hgss";
 
         //PC test
-        SaveData.currentSave.PC.addPokemon(new Pokemon(PokemonUnity.Pokemons.UMBREON, Pokemon.Gender.MALE, 5, "Flak"));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(PokemonUnity.Pokemons.CHARIZARD, Pokemon.Gender.MALE, 100));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(PokemonUnity.Pokemons.LUCARIO, Pokemon.Gender.MALE, 100));
-        SaveData.currentSave.PC.addPokemon(new Pokemon((PokemonUnity.Pokemons)393, Pokemon.Gender.MALE, 5));
-        SaveData.currentSave.PC.addPokemon(new Pokemon((PokemonUnity.Pokemons)10, Pokemon.Gender.MALE, 100));
-        //SaveData.currentSave.PC.addPokemon(new Pokemon(PokemonUnity.Pokemons.EEVEE, Pokemon.Gender.MALE, 15, "Test"));
-        SaveData.currentSave.PC.addPokemon(new Pokemon((PokemonUnity.Pokemons)11, Pokemon.Gender.MALE, 100));
+        SaveData.currentSave.Player.addPokemon(new Pokemon(PokemonUnity.Pokemons.UMBREON, Pokemon.Gender.MALE, 5, "Flak"));
+        SaveData.currentSave.Player.addPokemon(new Pokemon(PokemonUnity.Pokemons.CHARIZARD, Pokemon.Gender.MALE, 100));
+        SaveData.currentSave.Player.addPokemon(new Pokemon(PokemonUnity.Pokemons.LUCARIO, Pokemon.Gender.MALE, 100));
+        SaveData.currentSave.Player.addPokemon(new Pokemon((PokemonUnity.Pokemons)393, Pokemon.Gender.MALE, 5));
+        SaveData.currentSave.Player.addPokemon(new Pokemon((PokemonUnity.Pokemons)10, Pokemon.Gender.MALE, 100));
+        SaveData.currentSave.Player.addPokemon(new Pokemon((PokemonUnity.Pokemons)11, Pokemon.Gender.MALE, 100));
+        
+        SaveData.currentSave.Player.addPokemon(new Pokemon((PokemonUnity.Pokemons)197, Pokemon.Gender.MALE, 12));
+        SaveData.currentSave.Player.addPokemon(new Pokemon((PokemonUnity.Pokemons)393, Pokemon.Gender.MALE, 52));
+        SaveData.currentSave.Player.addPokemon(new Pokemon((PokemonUnity.Pokemons)68, Pokemon.Gender.MALE, 37));
 
-        SaveData.currentSave.PC.boxes[0][3].replaceMove(0, PokemonUnity.Moves.SURF);
-        SaveData.currentSave.PC.boxes[0][3].addMove(PokemonUnity.Moves.WATERFALL);
-        SaveData.currentSave.PC.boxes[0][3].addExp(100);
-        SaveData.currentSave.PC.boxes[0][3].healHP(-10);
-        SaveData.currentSave.PC.boxes[0][3].setStatus(PokemonUnity.Status.BURN);
-        SaveData.currentSave.PC.boxes[0][0].healPP(0, -10);
-        SaveData.currentSave.PC.packParty();
+        SaveData.currentSave.Player.Party[3].replaceMove(0, PokemonUnity.Moves.SURF);
+        SaveData.currentSave.Player.Party[3].addMove(PokemonUnity.Moves.WATERFALL);
+        SaveData.currentSave.Player.Party[3].addExp(100);
+        SaveData.currentSave.Player.Party[3].healHP(-10);
+        SaveData.currentSave.Player.Party[3].setStatus(PokemonUnity.Status.BURN);
+        SaveData.currentSave.Player.Party[0].healPP(0, -10);
+        //SaveData.currentSave.PC.packParty(); // Not need this
 
         //Bag test
         SaveData.currentSave.Bag.addItem(Items.POKE_BALL, 9);
@@ -119,24 +123,24 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.Bag.addItem(Items.POTION, 4);
         SaveData.currentSave.Bag.addItem(Items.POKE_DOLL, 13);
         SaveData.currentSave.Bag.addItem(Items.ESCAPE_ROPE, 4);
-        //SaveData.currentSave.Bag.addItem("Fire Stone", 2);
+        SaveData.currentSave.Bag.addItem("Fire Stone", 2);
         SaveData.currentSave.Bag.removeItem(Items.POKE_DOLL, 10);
-        //SaveData.currentSave.Bag.addItem("Stardust", 1);
+        SaveData.currentSave.Bag.addItem("Stardust", 1);
         SaveData.currentSave.Bag.addItem(Items.WATER_STONE, 1);
-        //SaveData.currentSave.Bag.addItem("Moon Stone", 1);
+        SaveData.currentSave.Bag.addItem("Moon Stone", 1);
         SaveData.currentSave.Bag.addItem(Items.SUPER_POTION, 2);
         SaveData.currentSave.Bag.addItem(Items.GREAT_BALL, 4);
         SaveData.currentSave.Bag.addItem("Psyshock", 1); // TM) TODO: USE ENUM FOR MOVE?
         SaveData.currentSave.Bag.addItem("Bulk Up", 1);  // TM) TODO: USE ENUM FOR MOVE?
         SaveData.currentSave.Bag.addItem(Items.ELIXIR, 2);
         SaveData.currentSave.Bag.addItem(Items.ETHER, 1);
-        //SaveData.currentSave.Bag.addItem("Antidote", 1);
-        //SaveData.currentSave.Bag.addItem("Full Heal", 1);
+        SaveData.currentSave.Bag.addItem("Antidote", 1);
+        SaveData.currentSave.Bag.addItem("Full Heal", 1);
         SaveData.currentSave.Bag.addItem(Items.RARE_CANDY, 100);
-        //SaveData.currentSave.Bag.addItem("Paralyze Heal", 1);
-        //SaveData.currentSave.Bag.addItem("Awakening", 1);
+        SaveData.currentSave.Bag.addItem("Paralyze Heal", 1);
+        SaveData.currentSave.Bag.addItem("Awakening", 1);
         SaveData.currentSave.Bag.addItem(Items.BURN_HEAL, 1);
-        //SaveData.currentSave.Bag.addItem("Ice Heal", 1);
+        SaveData.currentSave.Bag.addItem("Ice Heal", 1);
         SaveData.currentSave.Bag.addItem(Items.MAX_POTION, 1);
         SaveData.currentSave.Bag.addItem(Items.HYPER_POTION, 1);
 
@@ -146,28 +150,30 @@ public class GlobalVariables : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test trainer card/save
-        SaveData.currentSave.savefile.fileCreationDate = "Feb. 14th, 2015";
-        SaveData.currentSave.savefile.playerMoney = 2481;
-        SaveData.currentSave.savefile.playerScore = 481;
-                            
-        SaveData.currentSave.savefile.playerHours = 0;
-        SaveData.currentSave.savefile.playerMinutes = 7;
-        SaveData.currentSave.savefile.playerSeconds = 12;
+        SaveData.currentSave.Player.StartDate = new System.DateTime(2015, 2, 14);
+        //SaveData.currentSave.savefile.fileCreationDate = "Feb. 14th, 2015";
+        SaveData.currentSave.Player.Money = 2481;
+        SaveData.currentSave.Player.playerScore = 481;
+
+        SaveData.currentSave.Player.PlayTime = new System.TimeSpan(0, 7, 12);
+        //SaveData.currentSave.savefile.playerHours = 0;
+        //SaveData.currentSave.savefile.playerMinutes = 7;
+        //SaveData.currentSave.savefile.playerSeconds = 12;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test badge box
-        SaveData.currentSave.savefile.gymsEncountered = new bool[]
+        SaveData.currentSave.Player.gymsEncountered = new bool[]
         {
             true, true, false, true, true, true,
             false, false, false, false, false, false
         };
-        SaveData.currentSave.savefile.gymsBeaten = new bool[]
+        SaveData.currentSave.Player.gymsBeaten = new bool[]
         {
             true, true, false, false, false, true,
             false, false, false, false, false, false
         };
-        SaveData.currentSave.savefile.gymsBeatTime = new string[]
+        SaveData.currentSave.Player.gymsBeatTime = new string[]
         {
             "Apr. 27th, 2015", "Apr. 30th, 2015", null, null, null, "May. 1st, 2015",
             null, null, null, null, null, null
@@ -249,9 +255,10 @@ public class GlobalVariables : MonoBehaviour
         }
         for (int i = 0; i < 6; i++)
         {
-            if (SaveData.currentSave.PC.boxes[0][i] != null)
+            //if (SaveData.currentSave.PC.boxes[0][i] != null)
+            if (SaveData.currentSave.Player.Party[i] != null)
             {
-                if (SaveData.currentSave.PC.boxes[0][i].getStatus() != PokemonUnity.Status.FAINT)
+                if (SaveData.currentSave.Player.Party[i].getStatus() != PokemonUnity.Status.FAINT)
                 {
                     FollowerSettings.changeFollower(i);
                     i = 6;
