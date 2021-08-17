@@ -80,13 +80,11 @@ public class SaveData
     {
         savefile = loadData;
         savefile.fileIndex = loadData.fileIndex;
-        //PC = loadData.PC.GetPC();
         Player = loadData.player;
     }
 
     public void Save()
     {
-        //savefile.PC = new SeriPC(PC);
         savefile.player = Player;
     }
 

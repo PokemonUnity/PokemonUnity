@@ -88,10 +88,7 @@ public class GlobalVariables : MonoBehaviour
     public void SetDEBUGFileData()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        SaveData.currentSave.Player = new Player();
-        //SaveData.currentSave.savefile.playerName = "Gold";
-        //SaveData.currentSave.savefile.playerID = 29482;
-        //SaveData.currentSave.savefile.isMale = true;
+        SaveData.currentSave.Player = new Player("Gold", true);
 
         SaveData.currentSave.Player.playerOutfit = "hgss";
 
@@ -113,7 +110,7 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.Player.Party[3].healHP(-10);
         SaveData.currentSave.Player.Party[3].setStatus(PokemonUnity.Status.BURN);
         SaveData.currentSave.Player.Party[0].healPP(0, -10);
-        //SaveData.currentSave.PC.packParty(); // Not need this
+        SaveData.currentSave.Player.Party[0].swapHeldItem("Potion");
 
         //Bag test
         SaveData.currentSave.Bag.addItem(Items.POKE_BALL, 9);
@@ -151,14 +148,10 @@ public class GlobalVariables : MonoBehaviour
 
         //debug code to test trainer card/save
         SaveData.currentSave.Player.StartDate = new System.DateTime(2015, 2, 14);
-        //SaveData.currentSave.savefile.fileCreationDate = "Feb. 14th, 2015";
         SaveData.currentSave.Player.Money = 2481;
         SaveData.currentSave.Player.playerScore = 481;
 
         SaveData.currentSave.Player.PlayTime = new System.TimeSpan(0, 7, 12);
-        //SaveData.currentSave.savefile.playerHours = 0;
-        //SaveData.currentSave.savefile.playerMinutes = 7;
-        //SaveData.currentSave.savefile.playerSeconds = 12;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -45,6 +45,15 @@ public class Player
         Party = new Pokemon[6];
     }
 
+    public Player(string Name, bool IsMale)
+    {
+        this.Name = Name;
+        this.IsMale = IsMale;
+        Bag = new Bag();
+        PC = new PC();
+        Party = new Pokemon[6];
+    }
+
     /// <summary>
     /// Skims every available box player has, and attempts to add pokemon.
     /// </summary>
