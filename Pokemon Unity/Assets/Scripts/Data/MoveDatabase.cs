@@ -5,7 +5,7 @@ public static class MoveDatabase
 {
     public static MoveData getMove(string name)
     {
-        PokemonUnity.Moves move = ConverterNames.ChangeMoveToEnum(name);
+        PokemonUnity.Moves move = name.ToMoves();
 
         MoveData result = new MoveData(move, name);
 
@@ -14,7 +14,7 @@ public static class MoveDatabase
 
     public static MoveData getMove(PokemonUnity.Moves move)
     {
-        MoveData result = new MoveData(move, ConverterNames.GetMoveName(move));
+        MoveData result = new MoveData(move, move.toString());
 
         return result;
     }

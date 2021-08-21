@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity;
 
 public class CustomEvent : MonoBehaviour
 {
@@ -218,7 +219,7 @@ public class CustomEvent : MonoBehaviour
 
                     if (i < currentEvent.strings.Length - 1)
                     {
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -228,7 +229,7 @@ public class CustomEvent : MonoBehaviour
                 {
                     if (nextEvent.eventType != CustomEventDetails.CustomEventType.Choice)
                     {
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -240,7 +241,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 else
                 {
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -345,7 +346,7 @@ public class CustomEvent : MonoBehaviour
                                     " \\away into the bag.");
                         }
                     }
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -353,7 +354,7 @@ public class CustomEvent : MonoBehaviour
                 else
                 {
                     yield return Dialog.StartCoroutine("drawTextSilent", "But there was no room...");
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -371,32 +372,32 @@ public class CustomEvent : MonoBehaviour
                     PokemonData pkd = PokemonDatabase.getPokemon(currentEvent.ints[0]);
 
                     string pkName = pkd.getName();
-                    Pokemon.Gender pkGender = Pokemon.Gender.CALCULATE;
-
-                    if (pkd.getMaleRatio() == -1)
-                    {
-                        pkGender = Pokemon.Gender.NONE;
-                    }
-                    else if (pkd.getMaleRatio() == 0)
-                    {
-                        pkGender = Pokemon.Gender.FEMALE;
-                    }
-                    else if (pkd.getMaleRatio() == 100)
-                    {
-                        pkGender = Pokemon.Gender.MALE;
-                    }
-                    else
-                    {
-//if not a set gender
-                        if (currentEvent.ints[2] == 0)
-                        {
-                            pkGender = Pokemon.Gender.MALE;
-                        }
-                        else if (currentEvent.ints[2] == 1)
-                        {
-                            pkGender = Pokemon.Gender.FEMALE;
-                        }
-                    }
+                    //Pokemon.Gender pkGender = Pokemon.Gender.CALCULATE;
+                    //
+                    //if (pkd.getMaleRatio() == -1)
+                    //{
+                    //    pkGender = Pokemon.Gender.NONE;
+                    //}
+                    //else if (pkd.getMaleRatio() == 0)
+                    //{
+                    //    pkGender = Pokemon.Gender.FEMALE;
+                    //}
+                    //else if (pkd.getMaleRatio() == 100)
+                    //{
+                    //    pkGender = Pokemon.Gender.MALE;
+                    //}
+                    //else
+                    //{
+                    //    //if not a set gender
+                    //    if (currentEvent.ints[2] == 0)
+                    //    {
+                    //        pkGender = Pokemon.Gender.MALE;
+                    //    }
+                    //    else if (currentEvent.ints[2] == 1)
+                    //    {
+                    //        pkGender = Pokemon.Gender.FEMALE;
+                    //    }
+                    //}
 
                     Dialog.drawDialogBox();
                     yield return
@@ -428,8 +429,8 @@ public class CustomEvent : MonoBehaviour
                             yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 
                             Scene.main.Typing.gameObject.SetActive(true);
-                            StartCoroutine(Scene.main.Typing.control(10, "", pkGender,
-                                Pokemon.GetIconsFromID_(currentEvent.ints[0], currentEvent.bool0)));
+                            //StartCoroutine(Scene.main.Typing.control(10, "", pkGender,
+                            //    Pokemon.GetIconsFromID_(currentEvent.ints[0], currentEvent.bool0)));
                             while (Scene.main.Typing.gameObject.activeSelf)
                             {
                                 yield return null;
@@ -585,7 +586,7 @@ public class CustomEvent : MonoBehaviour
                             if (SaveData.currentSave.Player.Party[pi] != null)
                             {
                                 //if (SaveData.currentSave.PC.boxes[0][pi].getID() ==
-                                if (SaveData.currentSave.Player.Party[pi].getID() ==
+                                if ((int)SaveData.currentSave.Player.Party[pi].Species ==
                                     Mathf.FloorToInt(currentEvent.float0))
                                 {
                                     passedCheck = true;

@@ -119,7 +119,7 @@ public static class ItemDatabase
     {
         for (int i = 0; i < ProtoTypeItems.Length; i++)
         {
-            if (ProtoTypeItems[i].Name == ConverterNames.GetItemName(name))
+            if (ProtoTypeItems[i].Name == name.toString())
             {
                 return ProtoTypeItems[i];
             }

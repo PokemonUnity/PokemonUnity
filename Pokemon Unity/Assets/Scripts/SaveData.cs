@@ -14,33 +14,8 @@ public class SaveData
         public Player player;
 
         public string levelName;
-        //public SeriV3 playerPosition = new SeriV3(new Vector3());
-        //public int playerDirection;
-        
-        //public string playerName;
-        //public bool isMale;
-        //public int playerID;
-        //public string fileCreationDate;
 
         public string mapName;
-
-        //public SeriPC PC;
-        //public Bag Bag = new Bag();
-
-        //public string[] registeredItems;
-
-        //public string playerOutfit;
-
-        //public int playerScore;
-        //public int playerMoney;
-        
-        //public int playerHours;
-        //public int playerMinutes;
-        //public int playerSeconds;
-        
-        //public bool[] gymsEncountered;
-        //public bool[] gymsBeaten;
-        //public string[] gymsBeatTime;
 
         //Important gameplay data
         public string respawnSceneName;
@@ -60,7 +35,8 @@ public class SaveData
     public static SaveData currentSave;
     public SaveFile savefile;
 
-    public PC PC { get { return Player.PC; } }
+    public PokemonUnity.Character.PC PC { get { return Player.PC; } }
+    
     public Bag Bag { get { return Player.Bag; } }
 
     public Player Player { get; set; }

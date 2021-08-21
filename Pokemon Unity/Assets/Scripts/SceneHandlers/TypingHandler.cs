@@ -403,8 +403,7 @@ public class TypingHandler : MonoBehaviour
     }
 
 
-    public IEnumerator control(int typeSpaces, string defaultString, Pokemon.Gender genderDisplay,
-        Sprite[] iconAnimation)
+    public IEnumerator control(int typeSpaces, string defaultString, bool? genderDisplay, Sprite[] iconAnimation)
     {
         typeSpaceCount = typeSpaces;
         iconAnim = iconAnimation;
@@ -416,19 +415,19 @@ public class TypingHandler : MonoBehaviour
         selectorIndex = 0;
         pageIndex = 0;
 
-        if (genderDisplay == Pokemon.Gender.FEMALE)
+        if (genderDisplay == null)
+        {
+            genderText.text = null;
+        }
+        else if (!genderDisplay.HasValue)
         {
             genderText.text = "♀";
             genderText.color = new Color(1, 0.2f, 0.2f, 1);
         }
-        else if (genderDisplay == Pokemon.Gender.MALE)
+        else if (genderDisplay.HasValue) // Male
         {
             genderText.text = "♂";
             genderText.color = new Color(0.2f, 0.4f, 1, 1);
-        }
-        else
-        {
-            genderText.text = null;
         }
         genderTextShadow.text = genderText.text;
 

@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity.Monster;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -1075,7 +1076,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator surfCheck()
     {
         //Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Surf");
-        Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty("Surf");
+        Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty(PokemonUnity.Moves.SURF);
         if (targetPokemon != null)
         {
             if (getForwardVector(direction, false) != Vector3.zero)
@@ -1095,7 +1096,7 @@ public class PlayerMovement : MonoBehaviour
                         Dialog.drawDialogBox();
                         yield return
                             Dialog.StartCoroutine("drawText",
-                                targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Surf") + "!");
+                                targetPokemon.Name + " used " + targetPokemon.getFirstFEInstance(PokemonUnity.Moves.SURF) + "!");
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
                             yield return null;

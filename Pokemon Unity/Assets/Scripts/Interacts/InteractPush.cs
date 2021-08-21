@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity.Monster;
 
 public class InteractPush : MonoBehaviour
 {
@@ -48,8 +49,7 @@ public class InteractPush : MonoBehaviour
     {
         if (!Player.strength)
         {
-            //Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Strength");
-            Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty("Strength");
+            Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty(PokemonUnity.Moves.STRENGTH);
             if (targetPokemon != null)
             {
                 if (Player.setCheckBusyWith(this.gameObject))
@@ -67,7 +67,7 @@ public class InteractPush : MonoBehaviour
                         Dialog.drawDialogBox();
                         yield return
                             Dialog.StartCoroutine("drawText",
-                                targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Strength") + "!")
+                                targetPokemon.Name + " used " + targetPokemon.getFirstFEInstance(PokemonUnity.Moves.STRENGTH) + "!")
                             ;
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {

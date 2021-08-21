@@ -60,7 +60,7 @@ public class PokemonData
 
     public string getName()
     {
-        return ConverterNames.GetPokemonName(m_data.ID);
+        return m_data.ID.toString();
     }
 
     public float getMaleRatio()
@@ -188,7 +188,7 @@ public class PokemonData
         for (int i = 0; i < temp.moves.Length; i++)
         {
             PokemonUnity.Moves move = temp.moves[i].MoveId;
-            moveset[i] = move != PokemonUnity.Moves.NONE ? ConverterNames.GetMoveName(move) : null;
+            moveset[i] = move != PokemonUnity.Moves.NONE ? move.toString() : null;
         }
         return moveset;
     }

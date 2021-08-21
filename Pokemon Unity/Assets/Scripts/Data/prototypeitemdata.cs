@@ -61,7 +61,7 @@ public class ItemData
 
     //
     public ItemData(Items item, int price, string description, ItemType itemType)
-        : this(ConverterNames.GetItemName(item), price, description, itemType)
+        : this(item.toString(), price, description, itemType)
     {
     }
     public ItemData(string name, int price, string description, ItemType itemType)
@@ -95,7 +95,7 @@ public class TMData : ItemData
     }
 
     public TMData(PokemonUnity.Moves move, int No, int Price, string Description)
-        : base(ConverterNames.GetMoveName(move)/*string.Format("TM " + No)*/, Price, Description, ItemType.TM)
+        : base(move.toString()/*string.Format("TM " + No)*/, Price, Description, ItemType.TM)
     {
         getTMNo = No;
         MoveID = move;
@@ -109,7 +109,7 @@ public class TMData : ItemData
 public class MedicineData : ItemData
 {
     public MedicineData(Items item, int Price, string Description, MedicineType MedicineType)
-        : base(ConverterNames.GetItemName(item), Price, Description, ItemType.MEDICINE)
+        : base(item.toString(), Price, Description, ItemType.MEDICINE)
     {
         this.MedicineType = MedicineType;
     }
@@ -129,7 +129,7 @@ public class PotionItem : MedicineData
         this.HealValue = HealValue;
     }
     public PotionItem(Items potion, int Price, float HealValue, string Description)
-        : this(ConverterNames.GetItemName(potion), Price, HealValue, Description)
+        : this(potion.toString(), Price, HealValue, Description)
     {
         this.HealValue = HealValue;
     }

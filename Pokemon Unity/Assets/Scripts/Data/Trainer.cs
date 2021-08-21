@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity.Monster;
 
 public class Trainer : MonoBehaviour
 {
@@ -115,7 +116,7 @@ public class Trainer : MonoBehaviour
         int averageLevel = 0;
         for (int i = 0; i < party.Length; i++)
         {
-            averageLevel += party[i].getLevel();
+            averageLevel += party[i].Level;
         }
         averageLevel = Mathf.CeilToInt((float) averageLevel / (float) party.Length);
         return averageLevel * prizeMoney;
@@ -128,7 +129,7 @@ public class PokemonInitialiser
 {
     public int ID;
     public int level;
-    public Pokemon.Gender gender;
+    public bool? gender;
     public string heldItem;
     public int ability;
 }

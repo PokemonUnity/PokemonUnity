@@ -1,22 +1,24 @@
-﻿class ConverterNames
-{
-    public static string GetPokemonName(PokemonUnity.Pokemons pokemon)
-    {
-        char[] result = pokemon.ToString().ToLower().ToCharArray();
+﻿
 
-        switch (pokemon)
+static class PKUName
+{
+    // -- ENUM --
+    public static string toString(this PokemonUnity.Moves move)
+    {
+        char[] result = move.ToString().ToLower().ToCharArray();
+
+        switch (move)
         {
-            case PokemonUnity.Pokemons.NONE: return null;
-            case PokemonUnity.Pokemons.HO_OH: return "Ho-Oh";
+            case PokemonUnity.Moves.NONE: return null;
+            case PokemonUnity.Moves.SAFEGUARD: return "Safe Guard";
             default:
                 {
                     return new string(ChangeCharsFromEnum(result));
                 }
         }
     }
-    public static string GetItemName(PokemonUnity.Inventory.Items item)
+    public static string toString(this PokemonUnity.Inventory.Items item)
     {
-        
         char[] result = item.ToString().ToLower().ToCharArray();
 
         switch (item)
@@ -31,21 +33,22 @@
                 }
         }
     }
-    public static string GetMoveName(PokemonUnity.Moves move)
+    public static string toString(this PokemonUnity.Pokemons pokemon)
     {
-        char[] result = move.ToString().ToLower().ToCharArray();
+        char[] result = pokemon.ToString().ToLower().ToCharArray();
 
-        switch (move)
+        switch (pokemon)
         {
-            case PokemonUnity.Moves.NONE: return null;
-            case PokemonUnity.Moves.SAFEGUARD: return "Safe Guard";
+            case PokemonUnity.Pokemons.NONE: return null;
+            case PokemonUnity.Pokemons.HO_OH: return "Ho-Oh";
             default:
                 {
                     return new string(ChangeCharsFromEnum(result));
                 }
         }
     }
-    public static PokemonUnity.Moves ChangeMoveToEnum(string value)
+    // -- STRING --
+    public static PokemonUnity.Moves ToMoves(this string value)
     {
         if (string.IsNullOrEmpty(value))
             return PokemonUnity.Moves.NONE;
@@ -57,8 +60,7 @@
                 return (PokemonUnity.Moves)System.Enum.Parse(typeof(PokemonUnity.Moves), new string(ChangeCharsFromString(value.ToUpper().ToCharArray())));
         }
     }
-
-    public static PokemonUnity.Inventory.Items ChangeItemToEnum(string value)
+    public static PokemonUnity.Inventory.Items ToItems(this string value)
     {
         if (string.IsNullOrEmpty(value))
             return PokemonUnity.Inventory.Items.NONE;
@@ -71,8 +73,7 @@
                     System.Enum.Parse(typeof(PokemonUnity.Inventory.Items), new string(ChangeCharsFromString(value.ToUpper().ToCharArray())));
         }
     }
-
-    // Change to correct Upper & Lower case 
+    // -- METHOD --
 
     // Make sure set sting all upper case.
     private static char[] ChangeCharsFromString(char[] value)
@@ -87,7 +88,6 @@
         }
         return value;
     }
-
     // Make sure set sting all lower case.
     private static char[] ChangeCharsFromEnum(char[] value)
     {

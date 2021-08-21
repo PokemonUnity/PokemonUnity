@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity.Monster;
 
 public class NPCHandler : MonoBehaviour
 {
@@ -71,11 +72,14 @@ public class NPCHandler : MonoBehaviour
         }
         else
         {
-            spriteSheet = Pokemon.GetSpriteFromID(pokemonID, false, false);
+            Pokemon pokemon = new Pokemon((PokemonUnity.Pokemons)pokemonID);
+            //spriteSheet = Pokemon.GetSpriteFromID(pokemonID, false, false);
+            spriteSheet = pokemon.GetSprite(false);
 
             npcLight.intensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
             npcLight.color = PokemonDatabase.getPokemon(pokemonID).getLightColor();
-            lightSheet = Pokemon.GetSpriteFromID(pokemonID, false, true);
+            //lightSheet = Pokemon.GetSpriteFromID(pokemonID, false, true);
+            lightSheet = pokemon.GetSprite(true);
         }
 
         exclaim = transform.Find("Exclaim").gameObject;
