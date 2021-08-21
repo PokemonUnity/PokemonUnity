@@ -67,37 +67,37 @@ namespace PokemonUnity.Monster.Data
 		use_item=3,
 		shed	=4
 	}
-    /// <summary>
-    /// The evolution paths this species can take. 
-    /// For each possible evolution of this species, 
-    /// there are three parts
-    /// </summary>
-    public struct PokemonEvolution //: IPokemonEvolution
+	/// <summary>
+	/// The evolution paths this species can take. 
+	/// For each possible evolution of this species, 
+	/// there are three parts
+	/// </summary>
+	public struct PokemonEvolution //: IPokemonEvolution
 	{
-        /// <summary>
-        /// The PokemonId of the evolved species.
-        /// The PokemonId of the species this pokemon evolves into.
-        /// </summary>
-        public Pokemons Species { get; private set; }
-        /// <summary>
-        /// The evolution method.
-        /// </summary>
-        public EvolutionMethod EvolveMethod { get; private set; }
+		/// <summary>
+		/// The PokemonId of the evolved species.
+		/// The PokemonId of the species this pokemon evolves into.
+		/// </summary>
+		public Pokemons Species { get; private set; }
+		/// <summary>
+		/// The evolution method.
+		/// </summary>
+		public EvolutionMethod EvolveMethod { get; private set; }
 		/// <summary>
 		/// The value-parameter to <see cref="EvolveMethod"/> as mentioned KEY.
 		/// </summary>
 		public object EvolveValue { get; private set; }
 		//public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, Type ValueType, object ObjectValue) 
-        //{
-        //    PokemonEvolution<ValueType>(EvolveTo, EvolveHow, ObjectValue);
-        //}
+		//{
+		//    PokemonEvolution<ValueType>(EvolveTo, EvolveHow, ObjectValue);
+		//}
 		public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, object Value = null) 
 		{
-            this.Species = EvolveTo;
-            this.EvolveMethod = EvolveHow;
+			this.Species = EvolveTo;
+			this.EvolveMethod = EvolveHow;
 			this.EvolveValue = Value;
 			#region Switch
-			/*switch (EvolveHow)
+			switch (EvolveHow)
 			{
 				case EvolutionMethod.Level:
 				case EvolutionMethod.LevelFemale:
@@ -108,7 +108,8 @@ namespace PokemonUnity.Monster.Data
 				case EvolutionMethod.HappinessDay:
 				case EvolutionMethod.HappinessNight:
 				case EvolutionMethod.Hatred:
-					if (!Value.GetType().Equals(typeof(int)))
+					//if (!Value.GetType().Equals(typeof(int)))
+					if (!(Value is int))
 					{
 						this.EvolveValue = (int)0;
 					}
@@ -120,27 +121,31 @@ namespace PokemonUnity.Monster.Data
 				case EvolutionMethod.HoldItem:
 				case EvolutionMethod.HoldItemDay:
 				case EvolutionMethod.HoldItemNight:
-					if (!Value.GetType().Equals(typeof(Items)))
+					//if (!Value.GetType().Equals(typeof(Items)))
+					if (!(Value is Items))
 					{
 						this.EvolveValue = (Items)Items.NONE;
 					}
 					break;
 				case EvolutionMethod.TradeSpecies:
 				case EvolutionMethod.Party:
-					//case EvolutionMethod.Shedinja:
-					if (!Value.GetType().Equals(typeof(Pokemons)))
+				//case EvolutionMethod.Shedinja:
+					//if (!Value.GetType().Equals(typeof(Pokemons)))
+					if (!(Value is Pokemons))
 					{
 						this.EvolveValue = (Pokemons)Pokemons.NONE;
 					}
 					break;
 				case EvolutionMethod.Move:
-					if (!Value.GetType().Equals(typeof(Moves)))
+					//if (!Value.GetType().Equals(typeof(Moves)))
+					if (!(Value is Moves))
 					{
 						this.EvolveValue = (Moves)Moves.NONE;
 					}
 					break;
 				case EvolutionMethod.Type:
-					if (!Value.GetType().Equals(typeof(Types)))
+					//if (!Value.GetType().Equals(typeof(Types)))
+					if (!(Value is Types))
 					{
 						this.EvolveValue = (Types)Types.NONE;
 					}
@@ -154,7 +159,7 @@ namespace PokemonUnity.Monster.Data
 					//if there's no problem, just ignore it, and move on...
 					this.EvolveValue = Value;
 					break;
-			}*/
+			}
 			#endregion
 		}
 

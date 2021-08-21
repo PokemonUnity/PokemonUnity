@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace TMPro.EditorUtilities
+/*namespace TMPro.EditorUtilities
 {
 	[CustomEditor(typeof(TMP_Animated), true)]
 	[CanEditMultipleObjects]
@@ -33,4 +33,4 @@ namespace TMPro.EditorUtilities
 			return false;
 		}
 	}
-}
+}*/

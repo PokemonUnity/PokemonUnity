@@ -22,6 +22,7 @@ namespace PokemonUnity.Inventory
 	/// Custom Values are in negative?
 	public enum Items
 	{
+		EXP_ALL_OFF = -3,
 		EXP_ALL = -2,
 		RUNNING_SHOES = -1,
 		NONE = 0,
@@ -633,7 +634,9 @@ namespace PokemonUnity.Inventory
 		RAZOR_CLAW = 303,
 		/// <summary>Held: When the holder attacks with most damaging moves, provides an extra 11.7% (30/256) chance for the target to flinch. Held by Gligar: Evolves the holder into Gliscor when it levels up.</summary>
 		RAZOR_FANG = 304,
-		/// <summary>Teaches Focus Punch to a compatible Pokémon.</summary>
+		/// <summary>Use for any and all TMs, to remove limit on version generation...</summary>
+		TM_ALL = 305,
+		/*// <summary>Teaches Focus Punch to a compatible Pokémon.</summary>
 		TM01 = 305,
 		/// <summary>Teaches Dragon Claw to a compatible Pokémon.</summary>
 		TM02 = 306,
@@ -816,7 +819,7 @@ namespace PokemonUnity.Inventory
 		/// <summary>Teaches Flash Cannon to a compatible Pokémon.</summary>
 		TM91 = 395,
 		/// <summary>Teaches Trick Room to a compatible Pokémon.</summary>
-		TM92 = 396,
+		TM92 = 396,*/
 		/// <summary>Teaches Cut to a compatible Pokémon.</summary>
 		HM01 = 397,
 		/// <summary>Teaches Fly to a compatible Pokémon.</summary>
@@ -1341,12 +1344,12 @@ namespace PokemonUnity.Inventory
 		LIGHT_STONE = 657,
 		/// <summary>Summons []{pokemon:zekrom} for the final battle against N.</summary>
 		DARK_STONE = 658,
-		/// <summary>Teaches []{move:wild-charge} to a compatible Pokémon.</summary>
+		/*// <summary>Teaches []{move:wild-charge} to a compatible Pokémon.</summary>
 		TM93 = 659,
 		/// <summary>Teaches []{move:rock-smash} to a compatible Pokémon.</summary>
 		TM94 = 660,
 		/// <summary>Teaches []{move:snarl} to a compatible Pokémon.</summary>
-		TM95 = 661,
+		TM95 = 661,*/
 		/// <summary>Makes four-way video calls.  Used for plot advancement in-game, but also works with other players via the C-Gear.</summary>
 		XTRANSCEIVER = 662,
 		/// <summary>Unknown.  Currently unused.</summary>
@@ -1507,7 +1510,7 @@ namespace PokemonUnity.Inventory
 		SPRINKLOTAD = 743,
 		/// <summary>A commuter pass that allows the holder to ride the TMV between Lumiose City and Kiloude City at any time.</summary>
 		TMV_PASS = 744,
-		/// <summary>An attack that makes use of nature’s power. Its effects vary depending on the user’s environment.</summary>
+		/*// <summary>An attack that makes use of nature’s power. Its effects vary depending on the user’s environment.</summary>
 		TM96 = 745,
 		/// <summary>The user releases a horrible aura imbued with dark thoughts. This may also make the target flinch.</summary>
 		TM97 = 746,
@@ -1516,7 +1519,7 @@ namespace PokemonUnity.Inventory
 		/// <summary>The user damages opposing Pokémon by emitting a powerful flash.</summary>
 		TM99 = 748,
 		/// <summary>The user tells the target a secret, and the target loses its ability to concentrate. This lowers the target’s Sp. Atk stat.</summary>
-		TM100 = 749,
+		TM100 = 749,*/
 		/// <summary>Held: Allows Latias to Mega Evolve into Mega Latias. : 	Held: Allows Latias to Mega Evolve into Mega Latias.</summary>
 		LATIASITE = 760,
 		/// <summary>Held: Allows Latios to Mega Evolve into Mega Latios. : 	Held: Allows Latios to Mega Evolve into Mega Latios.</summary>
@@ -2093,6 +2096,29 @@ namespace PokemonUnity.Inventory
 		/// Target will flinch if it has not yet gone this turn.
 		/// </summary>
 		FLINCH = 7
+	}
+	public enum ItemUseResults
+	{
+		/// <summary>
+		/// not used
+		/// </summary>
+		NotUsed = 0,
+		/// <summary>
+		/// used, item not consumed
+		/// </summary>
+		UsedNotConsumed = 1,
+		/// <summary>
+		/// close the Bag to use, item not consumed
+		/// </summary>
+		CloseBagNotConsumed = 2,
+		/// <summary>
+		/// used, item consumed
+		/// </summary>
+		UsedItemConsumed = 3,
+		/// <summary>
+		/// close the Bag to use, item consumed
+		/// </summary>
+		CloseBagItemConsumed = 4
 	}
 
 	namespace Plants

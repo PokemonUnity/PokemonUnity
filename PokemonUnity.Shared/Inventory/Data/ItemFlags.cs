@@ -2,7 +2,7 @@
 using PokemonUnity;
 using PokemonUnity.Inventory;
 
-namespace PokemonUnity.Inventory//.ItemData
+namespace PokemonUnity.Inventory
 {
 	public struct ItemFlag
 	{

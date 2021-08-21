@@ -20,6 +20,13 @@ namespace PokemonUnity
 		//public const string PKU_Server_Address = "";
 #if DEBUG
 		public const bool DEBUG = true;
+		/// <summary>
+		/// If pokemon battles are being done in an console for ai training, or visually for player experience
+		/// </summary>
+		public const bool INTERNAL = true;
+		/// <summary>
+		/// Location of text file for game translation file import
+		/// </summary>
 		public const string FILEPATH = @"..\..\..\\Pokemon Unity\Assets\Scripts2\XML\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
@@ -30,7 +37,6 @@ namespace PokemonUnity
 		//string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
 #endif
 		//public XmlFileLocalizationDictionaryProvider TranslationText;// = new XmlFileLocalizationDictionaryProvider(Server.MapPath("~/App_Data/"));
-		//information.Initialize("PokemonUnity");
 		public const string FILENAME_POKEMON_DATABASE = "";
 
 		/// <summary>
@@ -95,7 +101,7 @@ namespace PokemonUnity
 		/// Constantly revolving random, that uses the same seed number that was previously used
 		/// </summary>
 		public static Random RandWithSetSeed { get { return new Random(Seed(true)); } }
-		private static System.UInt16? seed;// = 0x0000; //{ get; set; }
+		public static System.UInt16? seed { get; private set; }// = 0x0000;
 		public static UInt16 Seed(bool useFixedSeed = false)
 		{
 			//lock (Rand)
@@ -113,171 +119,6 @@ namespace PokemonUnity
 			//}
 		}
 
-		/// <summary>
-		/// Converts the string of a Pokemon Type to a color's hex value
-		/// </summary>
-		/// <param name="PokemonType">string of pokemon type or name of a color</param>
-		/// <returns>return a Unity.Color</returns>
-		/// <example>StringToColor(Electric)</example>
-		/// <example>StringToColor(Yellow)</example>
-		/// <remarks>might need to make a new enum in PokemonData, type = x.Color...</remarks>
-		/// ToDo: Convert to Unity's Color? 
-		public static string TypeToColorHEX (Types PokemonType) {
-			//private System.Collections.Generic.Dictionary<string, Color> StringToColorDic = new System.Collections.Generic.Dictionary<string, Color>() {//Dictionary<PokemonData.Type, Color>
-			//http://www.epidemicjohto.com/t882-type-colors-hex-colors
-			switch (PokemonType)
-			{
-				case Types.NORMAL:
-					//Normal Type:		
-					return "A8A77A";
-				case Types.FIGHTING:
-					//Fighting Type:	
-					return "C22E28";
-				case Types.FLYING:
-					//Flying Type:		
-					return "A98FF3";
-				case Types.POISON:
-					//Poison Type:		
-					return "A33EA1";
-				case Types.GROUND:
-					//Ground Type:		
-					return "E2BF65";
-				case Types.ROCK:
-					//Rock Type:		
-					return "B6A136";
-				case Types.BUG:
-					//Bug Type:		
-					return "A6B91A";
-				case Types.GHOST:
-					//Ghost Type:		
-					return "735797";
-				case Types.STEEL:
-					//Steel Type:		
-					return "B7B7CE";
-				case Types.FIRE:
-					//Fire Type:		
-					return "EE8130";
-				case Types.WATER:
-					//Water Type:		
-					return "6390F0";
-				case Types.GRASS:
-					//Grass Type:		
-					return "7AC74C";
-				case Types.ELECTRIC:
-					//Electric Type:	
-					return "F7D02C";
-				case Types.PSYCHIC:
-					//Psychic Type:	
-					return "F95587";
-				case Types.ICE:
-					//Ice Type:		
-					return "96D9D6";
-				case Types.DRAGON:
-					//Dragon Type:		
-					return "6F35FC";
-				case Types.DARK:
-					//Dark Type:		
-					return "705746";
-				case Types.FAIRY:
-					//Fairy Type:		
-					return "D685AD";
-				case Types.NONE:
-				case Types.UNKNOWN:
-				case Types.SHADOW:
-				default:
-					//Black?
-					return string.Empty;
-			}
-		}
-		/*// <summary>
-		/// Converts the Pokemon Type to a Color for use in Unity. 
-		/// </summary>
-		/// <param name="PokemonType">pokemon type</param>
-		/// <returns>return a Unity.Color</returns>
-		/// <example>StringToColor(Electric)</example>
-		public Color TypeToColor(Types PokemonType) {
-			//http://www.serebiiforums.com/showthread.php?289595-Pokemon-type-color-associations
-			switch (PokemonType)
-			{
-				case Types.NORMAL:
-					//Normal Type:		
-					//Normal -white
-					return "A8A77A";
-				case Types.FIGHTING:
-					//Fighting Type:	
-					//Fighting - dark red
-					return "C22E28";
-				case Types.FLYING:
-					//Flying Type:		
-					//Flying - light blue
-					return "A98FF3";
-				case Types.POISON:
-					//Poison Type:		
-					//Poison -purple
-					return "A33EA1";
-				case Types.GROUND:
-					//Ground Type:		
-					//Ground - brown
-					return "E2BF65";
-				case Types.ROCK:
-					//Rock Type:		
-					//Rock - gray
-					return "B6A136";
-				case Types.BUG:
-					//Bug Type:		
-					//Bug - yellow green
-					return "A6B91A";
-				case Types.GHOST:
-					//Ghost Type:		
-					//Ghost - light purple
-					return "735797";
-				case Types.STEEL:
-					//Steel Type:		
-					//Steel - dark gray
-					return "B7B7CE";
-				case Types.FIRE:
-					//Fire Type:		
-					//Fire - red
-					return "EE8130";
-				case Types.WATER:
-					//Water Type:		
-					//Water -blue
-					return "6390F0";
-				case Types.GRASS:
-					//Grass Type:		
-					//Grass - green
-					return "7AC74C";
-				case Types.ELECTRIC:
-					//Electric Type:	
-					//Electric -yellow
-					return "F7D02C";
-				case Types.PSYCHIC:
-					//Psychic Type:	
-					//Psychic - magenta
-					return "F95587";
-				case Types.ICE:
-					//Ice Type:		
-					//Ice - cyan
-					return "96D9D6";
-				case Types.DRAGON:
-					//Dragon Type:		
-					//Dragon - orange
-					return "6F35FC";
-				case Types.DARK:
-					//Dark Type:		
-					//Dark - black
-					return "705746";
-				case Types.FAIRY:
-					//Fairy Type:		
-					return "D685AD";
-				case Types.NONE:
-				case Types.UNKNOWN:
-				case Types.SHADOW:
-				default:
-					//return string.Empty;
-					break;
-			}
-		}*/
 		/*/// <summary>
 		/// Only an example. Do not use, will  not work.
 		/// <para>Could be combined with database values 
@@ -630,29 +471,29 @@ namespace PokemonUnity
 		/// <summary>
 		/// If moves deal type damage (or if damage is affected by move type)
 		/// </summary>
-		public const bool NOTYPE						= false;	//= 0x01
+		public const byte NOTYPE					= 0x01;
 		/// <summary>
 		/// If pokemon type change damage (or if move damage is affected by pokemon type)
 		/// </summary>
 		/// Double negatives (ignore), so in code the bool is reversed
-		public const bool IGNOREPKMNTYPES			= false;    //= 0x02
+		public const byte IGNOREPKMNTYPES			= 0x02;
 		/// <summary
 		/// If RNG affects damage
 		/// </summary>
-		public const bool NOWEIGHTING				= false;	//= 0x04
+		public const byte NOWEIGHTING				= 0x04;
 		/// <summary>
 		/// If Moves can do Crit (extra) Damage
 		/// </summary>
-		public const bool NOCRITICAL				= false;	//= 0x08
+		public const byte NOCRITICAL				= 0x08;
 		/// <summary>
 		/// If Reflect-like Moves ignore Damage Modifiers
 		/// </summary>
-		public const bool NOREFLECT					= false;	//= 0x10
+		public const byte NOREFLECT					= 0x10;
 		/// <summary>
 		/// I actually dont know what this is about...
 		/// </summary>
 		/// Use Ctrl+F to locate, i commented this out in code
-		public const bool SELFCONFUSE				= false;	//= 0x20
+		public const byte SELFCONFUSE				= 0x20;
 		#endregion
 	}
 }

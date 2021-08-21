@@ -22,6 +22,10 @@ namespace PokemonUnity.Application
 		/// Set: you can't do the above (link battles can only be set btw)
 		/// </summary>
 		public bool BattleShiftStyle { get; private set; }
+		public bool ForceBattleStyle { get; private set; }
+		#region Core Game Design
+		//ToDo: Move Const/Static Var from Core class
+		#endregion
 		#region Custom Game Features
 		public bool SandBoxMode { get; private set; }
 		//Nuzlocke Challenge => Pokemon Centers cost money, every pokemon must be named, when defeated/fainted pokemon is gone, only allowed to capture first pokemon encountered when entering new map
@@ -46,6 +50,10 @@ namespace PokemonUnity.Application
 		/// If active PC box is full, it will automatically store pokemon in next available spot
 		/// </summary>
 		public bool OverflowPokemonsIntoNextBox { get; private set; }
+		/// <summary>
+		/// Only allowed to capture the first encounter of any pokemon per map id/zone/route 
+		/// (whether it's successful or not)
+		/// </summary>
 		public bool CanOnlyCaptureFirstWildEncounter { get; private set; }
 		public bool CanOnlySaveAtPokemonCenter { get; private set; }
 		/// <summary>
@@ -99,7 +107,7 @@ namespace PokemonUnity.Application
 		//ToDo: Left Open-ended for different win-criterias
 		public bool ChallengeEndsAfter { get; private set; }
 		/// <summary>
-		/// Cannot use PC fs of any sort (cant access stored pokemons or items)
+		/// Cannot use or access PC, of any sort (cant access stored pokemons or items)
 		/// </summary>
 		public bool NoPC { get; private set; }
 		/// <summary>
@@ -107,6 +115,72 @@ namespace PokemonUnity.Application
 		/// </summary>
 		public bool GameOverOnWhiteOut { get; private set; }
 		public bool RandomizePartyAfterBattle { get; private set; }
+		public bool CanUseItemsDuringBattle { get; private set; }
+		/// <summary>
+		/// Gets average level of gym leader party and caps your party
+		/// max level at that number temporarily (will return back after battle)
+		/// </summary>
+		/// Your stats scale with your level automatically
+		public bool CanOverLevelGymLeader { get; private set; }
+		/// <summary>
+		/// When you heal your pokemons at a pokemon center, or access pc,
+		/// all trainers that challenge you to trainer battle are reset.
+		/// </summary>
+		public bool PokemonCenterAndPcResetNpcTrainers { get; private set; }
+		/// <summary>
+		/// Repeat battles with the same trainer, will increase their party level
+		/// </summary>
+		public bool NpcTrainersGetStrongerEachBattle { get; private set; }
+		/// <summary>
+		/// Repeat battles with the same trainer, will increase their AI level
+		/// </summary>
+		public bool NpcTrainersGetSmarterEachBattle { get; private set; }
+		public bool LoseAllMoneyOnLoss { get; private set; }
+		/// <summary>
+		/// Need to defeat last trainer you lost to, to reclaim money.
+		/// Only recover money from trainers, not wilds.
+		/// (Works best with LoseAllMoneyOnLoss)
+		/// </summary>
+		public bool LosingTwiceInRowResetsMoney { get; private set; }
+		/// <summary>
+		/// Will TMs stay in bag inventory after consumed by pokmeon
+		/// </summary>
+		public bool MachineIsInfiniteUse { get; private set; }
+		#endregion
+		#region Game Event Switches
+		/// <summary>
+		/// Used to track whether or not player has whited out,
+		/// and the amount of times it has occurred.
+		/// </summary>
+		/// Can use this to check if player had a perfect clear.
+		public int PlayerHasStartedOverCounter { get; set; }
+		/// <summary>
+		/// The Global Switch that is set to ON when the player whites out.
+		/// </summary>
+		public bool StartingOverSwitch { get; set; }
+		/// <summary>
+		/// The Global Switch that is set to ON when the player has seen Pokérus in the
+		/// Poké Center, and doesn't need to be told about it again.
+		/// </summary>
+		public bool SeenPokerusSwitch { get; private set; }
+		/// <summary>
+		/// While this Switch is ON, all wild Pokémon encountered will be shiny.
+		/// </summary>
+		/// Doesnt include hatching from egg?...
+		public bool ShinyWildPokémon { get; private set; }
+		/// <summary>
+		/// While this Switch is ON, all Pokémon created will be fateful encounters.
+		/// </summary>
+		public bool FatefulEncounters { get; private set; }
+		/// <summary>
+		/// While this Switch is ON, the player will not lose any money if they lose a wild battle or a trainer battle. 
+		/// They can still gain money from battles, though.
+		/// </summary>
+		public bool NoMoneyLostInBattle { get; private set; }
+		/// <summary>
+		/// While this Switch is ON, no Pokémon can Mega Evolve in battle, not even if they normally could.
+		/// </summary>
+		public bool NoMegaEvolution { get; private set; }
 		#endregion
 
 		#region Explicit Operators
@@ -215,6 +289,8 @@ namespace PokemonUnity.Application
 		}
 		#endregion
 
+
+		#region Methods
 		public string GetGuid()
 		{
 			return string.Format(""
@@ -252,6 +328,51 @@ namespace PokemonUnity.Application
 				+ (SandBoxMode ? "1" : "0"								)
 			);
 		}
+
+		public void LoadGuid(string guid)
+		{
+			string[] text = guid.Split('|');
+			if (text.Length < 2) return;
+			BattleShiftStyle						 = text[0][0] == '1';
+			CanOnlyCaptureFirstWildEncounter		 = text[0][1] == '1';
+			CanOnlySaveAtPokemonCenter				 = text[0][2] == '1';
+			CatchPokemonsWithEggMoves				 = text[0][3] == '1';
+			ChallengeEndsAfter						 = text[0][4] == '1';
+			EnableCloudStorage						 = text[0][5] == '1';
+			FailChallengeWipesData					 = text[0][6] == '1';
+			ForcePokemonNaming						 = text[0][7] == '1';
+			GameOverOnWhiteOut						 = text[0][8] == '1';
+			LimitPokemonPartySize					 = (byte)int.Parse(text[1]);
+			NoCapturesAllowed						 = text[2][0] == '1';
+			NoHealingItemsInsideBattle				 = text[2][1] == '1';
+			NoHealingItemsOutsideBattle				 = text[2][2] == '1';
+			NoHealingNPCs							 = text[2][3] == '1';
+			NoPC									 = text[2][4] == '1';
+			NoPokemonCenterHeals					 = text[2][5] == '1';
+			NoStoreBoughtMedicine					 = text[2][6] == '1';
+			NuzlockeSkipDuplicates					 = text[2][7] == '1';
+			OnlinePlayEnabled						 = text[2][8] == '1';
+			OverflowPokemonsIntoNextBox				 = text[2][9] == '1';
+			PcDoesNotHealPokemons					 = text[2][10] == '1';
+			PokemonCenterHealsResetTrainers			 = text[2][11] == '1';
+			PokemonCentersCostMoney					 = text[2][12] == '1';
+			PokemonDeathOnFaint						 = text[2][13] == '1';
+			PokemonSentToPcOnDeath					 = text[2][14] == '1';
+			RandomBossEncounters					 = text[2][15] == '1';
+			RandomizePartyAfterBattle				 = text[2][16] == '1';
+			RandomStarters							 = text[2][17] == '1';
+			RandomWildEncounters					 = text[2][18] == '1';
+			ReleasedPokemonsReturnToEncounterArea	 = text[2][19] == '1';
+			ReleasedPokemonsRoamNearbyAreas			 = text[2][20] == '1';
+			SandBoxMode                              = text[2][21] == '1';
+		}
+
+		public void StartingOver()
+		{
+			StartingOverSwitch = true;
+			PlayerHasStartedOverCounter += 1;
+		}
+		#endregion
 	}
 
 	#region Custom Game Mode
@@ -331,6 +452,8 @@ namespace PokemonUnity.Application
 		///	If you beat a GYM on the first try you may revive one buried pokemon(see cost above).
 		/// </summary>
 		,NuzlockeExtra
+		,HardcoreNuzlocke
+		,DarkSoulsNuzlocke
 	}
 	#endregion
 }

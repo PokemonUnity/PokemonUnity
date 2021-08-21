@@ -14,29 +14,32 @@ namespace PokemonUnity.Overworld
 		Day		= 2,
 		Evening = 3
 	}
+	/// <summary>
+	/// Weather option for overworld.
+	/// For battle use weather, use <see cref="Combat.Weather"/>
+	/// </summary>
 	public enum FieldWeathers : int
 	{
 		Clear = 0,
+		/// <summary>
+		/// light drizzle?
+		/// </summary>
 		Rain = 1,
 		Snow = 2,
 		Underwater = 3,
+		/// <summary>
+		/// Sun
+		/// </summary>
 		Sunny = 4,
 		Fog = 5,
+		/// <summary>
+		/// Storm
+		/// </summary>
 		Thunderstorm = 6,
 		Sandstorm = 7,
 		Ash = 8,
-		Blizzard = 9
-	}
-	public enum Weathers
-	{
-		NONE,
-		RAINDANCE,
-		HEAVYRAIN,
-		SUNNYDAY,
-		HARSHSUN,
-		SANDSTORM,
-		STRONGWINDS,
-		HAIL
+		Blizzard = 9,
+		HeavyRain
 	}
 	/// <summary>
 	/// Terrain Tags or Tiles a player can be stepping on;
@@ -44,7 +47,23 @@ namespace PokemonUnity.Overworld
 	/// </summary>
 	public enum Terrains
 	{
-		Plain,
+		Ledge           = 1,
+		Grass           = 2,
+		Sand            = 3,
+		Rock            = 4,
+		DeepWater       = 5,
+		StillWater      = 6,
+		Water           = 7,
+		Waterfall       = 8,
+		WaterfallCrest  = 9,
+		TallGrass       = 10,
+		UnderwaterGrass = 11,
+		Ice             = 12,
+		Neutral         = 13,
+		SootGrass       = 14,
+		Bridge          = 15,
+		Puddle          = 16
+		/*Plain,
 		Grass,
 		Sand,
 		Rock,
@@ -85,41 +104,57 @@ Sunset
 Waterfall      
 */
 	}
+	/// <summary>
+	/// Used in battle system to reflect background theme and design
+	/// </summary>
+	/// ToDo: Change namespace to `PokemonUnity.Combat`
 	public enum Environments
 	{
-		None,
+		None		= 0,
 		/// <summary>
 		/// Normal Grass, and Sooty Tall Grass, are both grass but different colors
 		/// </summary>
-		Grass,
-		Cave,
-		Sand,
-		Rock,
-		MovingWater,
-		StillWater,
-		Underwater,
+		Grass		= 1,
+		Cave		= 6,
+		Sand		= 8,
+		Rock		= 7,
+		MovingWater	= 3,
+		StillWater	= 4,
+		Underwater	= 5,
 		/// <summary>
 		/// Tall Grass
 		/// </summary>
-		TallGrass,
-		Forest,
-		Snow,
-		Volcano,
-		Graveyard,
-		Sky,
-		Space
+		TallGrass	= 2,
+		Forest		= 9,
+		Snow		= 10,
+		Volcano		= 11,
+		Graveyard	= 12,
+		Sky			= 13,
+		Space		= 14
 	}
 	public enum EncounterTypes
 	{
-		Pal_Park, Egg, Hatched, Special_Event,      //= 0x0
-		Tall_Grass,                                 //= 0x2
-		Plot_Event, //Dialga/Palkia In-Game Event,	//= 0x4
-		Cave, Hall_of_Origin,                       //= 0x5
-		Surfing, Fishing,                           //= 0x7	
-		Building,                                   //= 0x9	
-		Great_Marsh, //(Safari Zone)				//= 0xA	
-		Starter, Fossil, Gift, //(Eevee)				//= 0xC	
-		Land
+		Land         = 0 ,
+		Cave         = 1 ,
+		Water        = 2 ,
+		RockSmash    = 3 ,
+		OldRod       = 4 ,
+		GoodRod      = 5 ,
+		SuperRod     = 6 ,
+		HeadbuttLow  = 7 ,
+		HeadbuttHigh = 8 ,
+		LandMorning  = 9 ,
+		LandDay      = 10,
+		LandNight    = 11,
+		BugContest   = 12
+		//Pal_Park, Egg, Hatched, Special_Event,      //= 0x0
+		//Tall_Grass,                                 //= 0x2
+		//Plot_Event, //Dialga/Palkia In-Game Event,	//= 0x4
+		//Cave, Hall_of_Origin,                       //= 0x5
+		//Surfing, Fishing,                           //= 0x7	
+		//Building,                                   //= 0x9	
+		//Great_Marsh, //(Safari Zone)				//= 0xA	
+		//Starter, Fossil, Gift, //(Eevee)			//= 0xC	
 	}
 	/*enum EncounterActions
 	{
@@ -390,6 +425,37 @@ Waterfall
 	public enum MovePermissions
 	{
 
+	}
+	public enum MapTiles
+	{
+		/// <summary>
+		/// Spawns random encounter
+		/// </summary>
+		GRASS,
+		/// <summary>
+		/// Animated water
+		/// </summary>
+		SEA,
+		/// <summary>
+		/// 3-dimensional airborne encounter
+		/// </summary>
+		SKY,
+		/// <summary>
+		/// Regular walk-able path
+		/// </summary>
+		TILE,
+		/// <summary>
+		/// Impassable (invisible) collision object
+		/// </summary>
+		WALL,
+		/// <summary>
+		/// Can only cross with surfing action
+		/// </summary>
+		WATER,
+		/// <summary>
+		/// Triggers map change or used for map events
+		/// </summary>
+		ZONE
 	}
 	#endregion
 	//ToDo: Rename TileShapes

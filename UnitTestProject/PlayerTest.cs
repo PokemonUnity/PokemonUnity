@@ -42,7 +42,7 @@ namespace Tests
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = true;
-			Trainer red = new Trainer(playerName, isMale, tID: trainerID, sID: secretID);
+			TrainerData red = new TrainerData(playerName, isMale, tID: trainerID, sID: secretID);
 
 			Pokemon[] playerParty = new Pokemon[]
 			{
@@ -279,7 +279,7 @@ namespace Tests
 		[TestMethod]
 		public void Compare_Save_Files()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
 
 			//SaveManager.Overwrite(newSave, 1);
@@ -446,7 +446,7 @@ namespace Tests
 		[TestMethod]
 		public void SaveData_Load_Party()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;
@@ -482,13 +482,13 @@ namespace Tests
 		[TestMethod]
 		public void Player_Load_Party()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;
 			//Game.Save(New_Save_File_With_Standard_Unit_Test_Values(), saveSlot);
 
-			Game.Load(saveSlot);
+			//Game.Load(saveSlot);
 			//Game.InitLoadFile()[saveSlot];
 			////Party of pokemons should still equal 6, even if other three are empty...
 			//Pokemon[] expectedPlayerParty = new Pokemon[]

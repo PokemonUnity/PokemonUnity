@@ -44,12 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attack\Move.cs" />
-    <Compile Include="Avatar\DayCare.cs" />
-    <Compile Include="Avatar\PC.cs" />
-    <Compile Include="Application\Game.cs" />
-    <Compile Include="Combat\Pokemon.cs" />
-    <Compile Include="Monster\Pokemon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

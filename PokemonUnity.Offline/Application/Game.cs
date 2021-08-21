@@ -16,7 +16,7 @@ namespace PokemonUnity.Offline
 	/// <summary>
 	/// <inheritdoc/>
 	/// </summary>
-	public partial class Game : PokemonUnity.Game//Application
+	public partial class Game : PokemonUnity.Game
 	{
 		#region Constructor
 		public Game() : base()

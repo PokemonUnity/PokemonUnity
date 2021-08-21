@@ -220,23 +220,66 @@ namespace PokemonUnity.Character
 			return result;
 		}
 
+
+		public bool removePokemon(int boxID, int pkmnID)
+		{
+			if (this[Convert.ToByte(boxID)].Pokemons[pkmnID].IsNotNullOrNone())
+			{
+				Pokemons[pkmnID] = new Pokemon();
+				pokemons[boxID, pkmnID] = new Pokemon();
+				return true;
+			}
+			return false;
+		}
+		public bool Switch_PC_And_Party_Pokemon(Player player, int PartyID, int PCBoxID)
+		{
+			try
+			{
+				Pokemon PartyHolder = player.Party[PartyID];
+				player.Party[PartyID] = player.PC.Pokemons[PCBoxID];
+				Pokemons[PCBoxID] = PartyHolder;
+				pokemons[ActiveBox, PCBoxID] = PartyHolder;
+				return true;
+			}
+			catch
+			{
+				//If could not switch pokemons
+				return false;
+			}
+		}
+		public bool addPokemon(int box, int position, Pokemon pokemon)
+		{
+			try
+			{
+				pokemons[box, position] = pokemon;
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
 		/// <summary>
 		/// Add a new pokemon directly to active box. 
-		/// If pokemon could not be added return false.
 		/// </summary>
 		/// <param name="acquiredPokemon"></param>
-		/// <returns></returns>
-		public bool addPokemon(Pokemon acquiredPokemon)
+		/// <returns>
+		/// Returns position of stored pokemon.
+		/// If pokemon could not be added return null.
+		/// </returns>
+		public KeyValuePair<int,int>? addPokemon(Pokemon acquiredPokemon)
 		{
 			//attempt to add to the earliest available opening in active box. no array packing needed.
 			if (hasSpace())
 			{
+				KeyValuePair<int, int> kv = new KeyValuePair<int, int>(ActiveBox, getIndexOfFirstEmpty().Value);
 				//Pokemons[getIndexOfFirstEmpty().Value] = acquiredPokemon;
-				pokemons[ActiveBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
-				return true;
+				pokemons[kv.Key, kv.Value] = acquiredPokemon;
+				return kv;
 			}
 			//if could not add a pokemon, return false. Party and PC are both full.
-			return false;
+			return null;
 		}
 
 		public void swapPokemon(int box1, int pos1, int box2, int pos2)

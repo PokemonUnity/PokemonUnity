@@ -14,7 +14,84 @@ namespace PokemonUnity
 	/// </summary>
 	public enum GymBadges
 	{
-		Rock
+		Boulder, //Rock
+		Cascade, // Water
+		Thunder,
+		Rainbow,
+		Soul,
+		Marsh,
+		Volcano,
+		Earth,
+
+		Zephyr,
+		Hive,
+		Plain,
+		Fog,
+		Storm,
+		Mineral,
+		Glacier,
+		Rising,
+
+		Stone,
+		Knuckle,
+		Dynamo,
+		Heat,
+		Balance,
+		Feather,
+		Mind,
+		Rain,
+
+		Coal,
+		Forest,
+		Cobble,
+		Fen,
+		Relic,
+		Mine,
+		Icicle,
+		Beacon,
+
+		Trio,
+		Basic,
+		Insect,
+		Bolt,
+		Quake,
+		Jet,
+		Freeze,
+		Legend,
+
+		Toxic,
+		Wave,
+
+		Bug,
+		Cliff,
+		Rumble,
+		Plant,
+		Voltage,
+		Fairy,
+		Psychic,
+		Iceberg,
+
+		Grass,
+		Water,
+		Fire,
+		Fighting,
+		Ghost,
+		Fairy_2,
+		Rock,
+		Ice,
+		Dark,
+		Dragon,
+
+		Coral_Eye,
+		Sea_Ruby,
+		Spike_Shell,
+		Jade_Star,
+
+		Tranquility,
+		Freedom,
+		Patience,
+		Harmony,
+		Pride
 	}
 	#endregion
 	#region Type
@@ -1486,7 +1563,9 @@ namespace PokemonUnity
 		/// <summary>
 		/// Custom designs or just generic character played by another user
 		/// </summary>
-		PLAYER,
+		PLAYER = 0,
+		//PLAYER_M,
+		//PLAYER_F,
 		POKEMONTRAINER_Red,
 		POKEMONTRAINER_Leaf,
 		POKEMONTRAINER_Brendan,
@@ -1575,16 +1654,16 @@ namespace PokemonUnity
 		NONE = 0
 	};
 	public enum HappinessMethods
-    {
-        WALKING,
-        LEVELUP,
-        GROOM,
-        FAINT,
-        VITAMIN,
-        EVBERRY,
-        POWDER,
-        ENERGYROOT,
-        REVIVALHERB
+	{
+		WALKING,
+		LEVELUP,
+		GROOM,
+		FAINT,
+		VITAMIN,
+		EVBERRY,
+		POWDER,
+		ENERGYROOT,
+		REVIVALHERB
 	}
 	#endregion
 	#region Game Variables
@@ -1599,9 +1678,9 @@ namespace PokemonUnity
 		English = 9
 	}
 	/*public class Languagess : ILanguage<Translations.Languages>
-    {
-        public enum Translations.Languages { get; set; } 
-    }*/
+	{
+		public enum Translations.Languages { get; set; } 
+	}*/
 	/// <summary>
 	/// Scripted Text stored and available for Locale translations
 	/// </summary>
@@ -1677,24 +1756,24 @@ namespace PokemonUnity
 	public enum Versions
 	{
 		PKUE = 0
-		,RED_BLUE
-		,YELLOW
-		,GOLD_SILVER
-		,CRYSTAL
-		,RUBY_SAPPHIRE
-		,EMERALD
-		,FIRERED_LEAFGREEN
-		,DIAMOND_PEARL
-		,PLATINUM
-		,HEARTGOLD_SOULSILVER
-		,BLACK_WHITE
-		,COLOSSEUM
-		,XD
-		,BLACK_2_WHITE_2
-		,X_Y
-		,OMEGA_RUBY_ALPHA_SAPPHIRE
-		,SUN_MOON
-		,ULTRA_SUN_ULTRA_MOON
+		, RED_BLUE
+		, YELLOW
+		, GOLD_SILVER
+		, CRYSTAL
+		, RUBY_SAPPHIRE
+		, EMERALD
+		, FIRERED_LEAFGREEN
+		, DIAMOND_PEARL
+		, PLATINUM
+		, HEARTGOLD_SOULSILVER
+		, BLACK_WHITE
+		, COLOSSEUM
+		, XD
+		, BLACK_2_WHITE_2
+		, X_Y
+		, OMEGA_RUBY_ALPHA_SAPPHIRE
+		, SUN_MOON
+		, ULTRA_SUN_ULTRA_MOON
 	}
 	#endregion
 	#region Move
@@ -1713,7 +1792,6 @@ namespace PokemonUnity
 	/// </summary>
 	/// <remarks>Can now code with strings or int and
 	/// access the same value.</remarks>
-	/// ToDo: Needs to be redone. Alphabetical and no Id tags -- Done
 	public enum Moves
 	{
 		/// <summary>
@@ -2365,8 +2443,8 @@ namespace PokemonUnity
 		PRECIPICE_BLADES = 619,
 		DRAGON_ASCENT = 620,
 		HYPERSPACE_FURY = 621,
-		//Everythng beyond here is new
-		BREAKNECK_BLITZ__PHYSICAL = 622,
+		//Everythng beyond here is new; used by non-canonical pokemon game
+		/*BREAKNECK_BLITZ__PHYSICAL = 622,
 		BREAKNECK_BLITZ__SPECIAL = 623,
 		ALL_OUT_PUMMELING__PHYSICAL = 624,
 		ALL_OUT_PUMMELING__SPECIAL = 625,
@@ -2472,7 +2550,7 @@ namespace PokemonUnity
 		MENACING_MOONRAZE_MAELSTROM = 725,
 		LETS_SNUGGLE_FOREVER = 726,
 		SPLINTERED_STORMSHARDS = 727,
-		CLANGOROUS_SOULBLAZE = 728,
+		CLANGOROUS_SOULBLAZE = 728,*/
 		SHADOW_RUSH = 10001,
 		SHADOW_BLAST = 10002,
 		SHADOW_BLITZ = 10003,

@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
 using PokemonUnity.Character;
-
+using PokemonUnity.Monster;
 
 namespace Tests
 {
@@ -36,7 +36,7 @@ namespace Tests
         [TestMethod]
         public void Trainer_Party_GetPokemonCount()
 		{
-			Trainer trainer = new Trainer(TrainerTypes.PLAYER);
+			TrainerData trainer = new TrainerData(TrainerTypes.PLAYER);
 			Player player = new Player(trainer);
 			int count = player.Party.GetCount();
 			//if (!count.HasValue) Assert.Fail("Party ");
@@ -52,7 +52,7 @@ namespace Tests
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = false;
-			Trainer trainer = new Trainer(playerName, isMale, tID: trainerID, sID: secretID);
+			TrainerData trainer = new TrainerData(playerName, isMale, tID: trainerID, sID: secretID);
 			Player player = new Player(trainer);
 			//player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
 			PokemonUnity.Monster.Pokemon pkmn = new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER);
@@ -87,7 +87,7 @@ namespace Tests
 		}
 
         [TestMethod]
-        public void Trainer_Party_AlterPokemon_InsideBox() {
+        public void Trainer_Party_AlterPokemon_InsideParty() {
 			/*SaveDataOld.currentSave.PC.boxes[0][1].setNickname("Greg");
 
 			SaveDataOld.currentSave.PC.boxes[0][1].setStatus(PokemonOld.Status.POISONED);
@@ -191,6 +191,67 @@ namespace Tests
 			SaveDataOld.currentSave.Bag.addItem("Max Potion", 1);
 			SaveDataOld.currentSave.Bag.addItem("Hyper Potion", 1);*/
 			Assert.Inconclusive();
+		}
+
+        [TestMethod]
+        public void Trainer_PC_AlterPokemon_InsideBox() {
+			/*SaveDataOld.currentSave.PC.boxes[0][1].setNickname("Greg");
+
+			SaveDataOld.currentSave.PC.boxes[0][1].setStatus(PokemonOld.Status.POISONED);
+			SaveDataOld.currentSave.PC.boxes[0][1].addExp(420);
+
+			SaveDataOld.currentSave.PC.boxes[0][0].swapHeldItem("Ultra Ball");
+
+			SaveDataOld.currentSave.PC.boxes[0][1].removeHP(56);
+			SaveDataOld.currentSave.PC.boxes[0][4].removeHP(64);
+
+			SaveDataOld.currentSave.PC.boxes[0][4].removePP(0, 5);
+			SaveDataOld.currentSave.PC.boxes[0][4].removePP(1, 5);
+			SaveDataOld.currentSave.PC.boxes[0][3].removePP(0, 6);
+			SaveDataOld.currentSave.PC.boxes[0][0].removePP(2, 11);
+
+			//PC.boxes[0][0].setStatus(Pokemon.Status.FROZEN);
+			SaveDataOld.currentSave.PC.boxes[0][2].setStatus(PokemonOld.Status.PARALYZED);
+			SaveDataOld.currentSave.PC.boxes[0][3].setStatus(PokemonOld.Status.BURNED);
+			SaveDataOld.currentSave.PC.boxes[0][4].setStatus(PokemonOld.Status.ASLEEP);*/
+			Assert.Inconclusive();
+		}
+
+        [TestMethod]
+        public void Trainer_PC_SwapPokemon() {
+			/*SaveDataOld.currentSave.PC.swapPokemon(0, 5, 1, 5);
+			SaveDataOld.currentSave.PC.swapPokemon(0, 3, 1, 11);
+			SaveDataOld.currentSave.PC.swapPokemon(1, 1, 1, 12);
+			SaveDataOld.currentSave.PC.swapPokemon(1, 2, 1, 21);
+			SaveDataOld.currentSave.PC.swapPokemon(0, 5, 1, 3);
+
+			SaveDataOld.currentSave.PC.swapPokemon(0, 2, 1, 4);
+
+			SaveDataOld.currentSave.PC.packParty();
+
+			SaveDataOld.currentSave.PC.swapPokemon(0, 0, 0, 2);
+
+
+			SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(012, null, PokemonOld.Gender.CALCULATE, 35, false, "Great Ball", "",
+				name,
+				31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
+				new string[] {"Ominous Wind", "Sunny Day", "Gust", "Sleep Powder"}, new int[] {0, 0, 0, 0}));
+
+			//SaveData.currentSave.PC.swapPokemon(0,1,3,1);
+			SaveDataOld.currentSave.PC.swapPokemon(0, 2, 3, 2);
+			SaveDataOld.currentSave.PC.swapPokemon(0, 3, 3, 3);
+			SaveDataOld.currentSave.PC.swapPokemon(0, 4, 3, 4);
+			SaveDataOld.currentSave.PC.swapPokemon(0, 5, 3, 5);
+
+
+			SaveDataOld.currentSave.PC.packParty();*/
+			Player unkown = new Player();
+			//Pokemons p = Pokemons.ABOMASNOW;
+			unkown.PC.addPokemon(new Pokemon(Pokemons.ABOMASNOW));
+			//unkown.PC.Pokemons[0,0] = new Pokemon();
+			//unkown.PC[0].Pokemons[0] = new Pokemon();
+			unkown.PC.swapPokemon(0,0, 0,1); // 2nd pokemon in pc should be null
+			Assert.AreEqual(Pokemons.NONE, unkown.PC.Pokemons[0].Species); //last box used should be one checked
 		}
         
         //[TestMethod]

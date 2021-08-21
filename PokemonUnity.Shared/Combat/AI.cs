@@ -1,10 +1,11 @@
-﻿using PokemonUnity;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Combat.Data;
 using PokemonUnity.Character;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using PokemonUnity.Utility;
 
 namespace PokemonUnity.Combat
 {
@@ -17,7 +18,9 @@ namespace PokemonUnity.Combat
 public static class PBTrainerAI {
   // Minimum skill level to be in each AI category
   public const int minimumSkill  = 1;
+  // dont want to lose
   public const int mediumSkill   = 32;
+  // dont want to draw
   public const int highSkill     = 48;
   public const int bestSkill     = 100;   // Gym Leaders, E4, Champion
 }
@@ -32,7 +35,7 @@ public partial class Battle{
 /// <param name="opponent"></param>
 /// <param name="skill"></param>
 /// <returns></returns>
-  public int pbGetMoveScore(Attack.Move move,Pokemon attacker,Pokemon opponent,int skill=100) {
+  public int pbGetMoveScore(Combat.IMove move,Pokemon attacker,Pokemon opponent,int skill=100) {
     if (skill<PBTrainerAI.minimumSkill) skill=PBTrainerAI.minimumSkill;
     float score=100; if (move.Type == Types.SHADOW) score += 20; // Shadow moves are more preferable
     if (!opponent.IsNotNullOrNone()) opponent=attacker.pbOppositeOpposing;
@@ -82,8 +85,8 @@ public partial class Battle{
         if (skill>=PBTrainerAI.bestSkill) {
           foreach (var i in opponent.moves) {
             Attack.Data.MoveData movedata=Game.MoveData[i.MoveId];
-            if (movedata.Effect==Attack.Data.Effects.x062 ||		// Sleep Talk
-               movedata.Effect==Attack.Data.Effects.x05D) {    // Snore
+            if (movedata.Effect==Attack.Data.Effects.x062 ||	// Sleep Talk
+               movedata.Effect==Attack.Data.Effects.x05D) {     // Snore
               score-=50;
               break;
             }
@@ -110,8 +113,8 @@ public partial class Battle{
         if (skill>=PBTrainerAI.bestSkill) {
           foreach (var i in opponent.moves) {
             Attack.Data.MoveData movedata=Game.MoveData[i.MoveId];
-            if (movedata.Effect==Attack.Data.Effects.x062 ||		// Sleep Talk
-               movedata.Effect==Attack.Data.Effects.x05D) {    // Snore
+            if (movedata.Effect==Attack.Data.Effects.x062 ||	// Sleep Talk
+               movedata.Effect==Attack.Data.Effects.x05D) {     // Snore
               score-=50;
               break;
             }
@@ -293,7 +296,7 @@ public partial class Battle{
       }
       break;
     case Attack.Data.Effects.x067:
-      Pokemon[] party=pbParty(attacker.Index);
+      Monster.Pokemon[] party=pbParty(attacker.Index);
       int statuses=0;
       for (int i = 0; i < party.Length; i++) {
         if (party[i].IsNotNullOrNone() && party[i].Status!=0) statuses+=1;
@@ -1592,7 +1595,7 @@ public partial class Battle{
       else {
         List<Types> types=new List<Types>();
         foreach (var i in attacker.moves) {
-          if (i.MoveId==@id) continue;
+          if (i.MoveId==move.MoveId) continue;
           //if (Types.isPseudoType(i.Type)) continue;
           if (attacker.hasType(i.Type)) continue;
           bool found=false;
@@ -1829,8 +1832,8 @@ public partial class Battle{
            opponent.lastMoveUsed>0) {
           moveData=Game.MoveData[opponent.lastMoveUsed];
           if (moveData.Power>0 &&
-             (Core.USEMOVECATEGORY && moveData.Category==2) ||
-             (!Core.USEMOVECATEGORY && PBTypes.isSpecialType(moveData.Type))) {
+             (Core.USEMOVECATEGORY && moveData.Category==Attack.Category.STATUS) ||
+             (!Core.USEMOVECATEGORY && Game.TypeData[moveData.Type].Category == Attack.Category.SPECIAL)) {
             score-=60;
           }
         }
@@ -1849,7 +1852,7 @@ public partial class Battle{
           moveData=Game.MoveData[opponent.lastMoveUsed];
           if (moveData.Power>0 &&
              (Core.USEMOVECATEGORY && moveData.Category==Attack.Category.SPECIAL) ||
-             (!Core.USEMOVECATEGORY && !PBTypes.isSpecialType(moveData.Type))) {
+             (!Core.USEMOVECATEGORY && Game.TypeData[moveData.Type].Category != Attack.Category.SPECIAL)) {
             score-=60;
           }
         }
@@ -1903,7 +1906,8 @@ public partial class Battle{
     case Attack.Data.Effects.x12E:
       if (skill>=PBTrainerAI.mediumSkill) {
         if (@doublebattle && !attacker.Partner.isFainted() &&
-                     attacker.Partner.pbHasMove(move.MoveId)) score+=20;
+                     //attacker.Partner.pbHasMove(move.MoveId)) score+=20;
+                     attacker.Partner.moves.Any(n => n.MoveId == move.MoveId)) score+=20;
       }
       break;
     case Attack.Data.Effects.x0E7:
@@ -2405,7 +2409,7 @@ public partial class Battle{
       break;
     case Attack.Data.Effects.x0E1: case Attack.Data.Effects.x13B:
       if (opponent.effects.Substitute==0) {
-        if (skill>=PBTrainerAI.highSkill && Inventory.Item.pbIsBerry(opponent.Item)) {
+        if (skill>=PBTrainerAI.highSkill && Item.pbIsBerry(opponent.Item)) { 
           score+=30;
         }
       }
@@ -2420,7 +2424,8 @@ public partial class Battle{
     case Attack.Data.Effects.x0EA:
       if (attacker.Item==0 ||
          pbIsUnlosableItem(attacker,attacker.Item) ||
-         Inventory.Item.pbIsPokeBall(attacker.Item) ||
+         Item.pbIsPokeBall(attacker.Item) ||
+         //ItemData.pbIsPokeBall(attacker.Item) ||
          attacker.hasWorkingAbility(Abilities.KLUTZ) ||
          attacker.effects.Embargo>0) {
         score-=90;
@@ -2486,7 +2491,7 @@ public partial class Battle{
         score-=90;
       }
       else {
-        foreach (Attack.Move m in attacker.moves) {
+        foreach (Combat.IMove m in attacker.moves) {
           if (m.MoveId!=0 && m.Power>0 &&
              m.Type == Types.FIRE) {
             score+=20;
@@ -2502,7 +2507,7 @@ public partial class Battle{
         score-=90;
       }
       else {
-        foreach (Attack.Move m in attacker.moves) {
+        foreach (Combat.IMove m in attacker.moves) {
           if (m.MoveId!=0 && m.Power>0 &&
              m.Type == Types.WATER) {
             score+=20;
@@ -2649,7 +2654,7 @@ public partial class Battle{
       }
       else {
         // More preferable if user also has Spit Up/Swallow
-        foreach (Attack.Move m in attacker.moves) {
+        foreach (Combat.IMove m in attacker.moves) {
           if (m.Effect==Attack.Data.Effects.x0A2 || m.Effect==Attack.Data.Effects.x0A3) {		// Spit Up, Swallow
             score+=20; break;
           }
@@ -2869,7 +2874,8 @@ public partial class Battle{
     //    score-=110;
     //  }
     //  break;
-    case 0x133: case Attack.Data.Effects.x172:
+    //case 0x133: 
+    case Attack.Data.Effects.x172:
       score-=95;
       if (skill>=PBTrainerAI.highSkill) {
         score=0;
@@ -2940,14 +2946,14 @@ public partial class Battle{
       avg+=opponent.stages[(int)Stats.SPATK]*10;
       score+=avg/2;
       break;
-    case 0x13B:
-      if (attacker.Species != Pokemons.HOOPA || attacker.form!=1) {
-        score-=100;
-      }
-      else {
-        if (opponent.stages[(int)Stats.DEFENSE]>0) score+=20;
-      }
-      break;
+    //case 0x13B:
+    //  if (attacker.Species != Pokemons.HOOPA || attacker.form!=1) {
+    //    score-=100;
+    //  }
+    //  else {
+    //    if (opponent.stages[(int)Stats.DEFENSE]>0) score+=20;
+    //  }
+    //  break;
     case Attack.Data.Effects.x166:
       if (opponent.stages[(int)Stats.SPATK]>0) score+=20;
       break;
@@ -3055,8 +3061,8 @@ public partial class Battle{
       break;
     case Attack.Data.Effects.x159:
       break;
-    case 0x147:
-      break;
+    //case 0x147:
+    //  break;
     case Attack.Data.Effects.x17A:
       aspeed=pbRoughStat(attacker,Stats.SPEED,skill);
       ospeed=pbRoughStat(opponent,Stats.SPEED,skill);
@@ -3091,8 +3097,8 @@ public partial class Battle{
         if (opponent.effects.TwoTurnAttack!=0) score+=30;
       }
       break;
-    case 0x14D:
-      break;
+    //case 0x14D:
+    //  break;
     case Attack.Data.Effects.x16E:
       if (attacker.pbTooHigh(Stats.SPATK) &&
          attacker.pbTooHigh(Stats.SPDEF) &&
@@ -3186,45 +3192,45 @@ public partial class Battle{
         if (skill>=PBTrainerAI.bestSkill) {		// Can get past semi-invulnerability
           bool miss=false;
           switch (invulmove) {
-          case Attack.Data.Effects.x09C: case Attack.Data.Effects.x108: // Fly: Bounce
-            if (move.Effect!=Attack.Data.Effects.x099 || 	// Thunder
-                             move.Effect!=Attack.Data.Effects.x14E ||  // Hurricane
-                             move.Effect!=Attack.Data.Effects.x096 ||  // Gust
-                             move.Effect!=Attack.Data.Effects.x093 ||  // Twister
-                             move.Effect!=Attack.Data.Effects.x0D0 || // Sky Uppercut
-                             move.Effect!=Attack.Data.Effects.x120 || // Smack Down
+          case Attack.Data.Effects.x09C: case Attack.Data.Effects.x108:             // Fly: Bounce
+            if (move.Effect!=Attack.Data.Effects.x099 || 	                        // Thunder
+                             move.Effect!=Attack.Data.Effects.x14E ||               // Hurricane
+                             move.Effect!=Attack.Data.Effects.x096 ||               // Gust
+                             move.Effect!=Attack.Data.Effects.x093 ||               // Twister
+                             move.Effect!=Attack.Data.Effects.x0D0 ||               // Sky Uppercut
+                             move.Effect!=Attack.Data.Effects.x120 ||               // Smack Down
                              move.MoveId!=Moves.WHIRLWIND) miss=true;
             break;
-          case Attack.Data.Effects.x101: // Dig
-            if (move.Effect!=Attack.Data.Effects.x094 ||	// Earthquake
-                             move.Effect!=Attack.Data.Effects.x07F) miss=true;    // Magnitude
+          case Attack.Data.Effects.x101:                                            // Dig
+            if (move.Effect!=Attack.Data.Effects.x094 ||	                        // Earthquake
+                             move.Effect!=Attack.Data.Effects.x07F) miss=true;      // Magnitude
             break;
-          case Attack.Data.Effects.x100: // Dive
-            if (move.Effect!=Attack.Data.Effects.x102 ||	// Surf
-                             move.Effect!=Attack.Data.Effects.x106) miss=true;    // Whirlpool
+          case Attack.Data.Effects.x100:                                            // Dive
+            if (move.Effect!=Attack.Data.Effects.x102 ||	                        // Surf
+                             move.Effect!=Attack.Data.Effects.x106) miss=true;      // Whirlpool
             break;
-          case Attack.Data.Effects.x111: // Shadow Force
+          case Attack.Data.Effects.x111:                                            // Shadow Force
             miss=true;
             break;
-          case Attack.Data.Effects.x138: // Sky Drop
-            if (move.Effect!=Attack.Data.Effects.x099 || 	// Thunder
-                             move.Effect!=Attack.Data.Effects.x14E ||  // Hurricane
-                             move.Effect!=Attack.Data.Effects.x096 ||  // Gust
-                             move.Effect!=Attack.Data.Effects.x093 ||  // Twister
-                             move.Effect!=Attack.Data.Effects.x0D0 || // Sky Uppercut
-                             move.Effect!=Attack.Data.Effects.x120) miss=true;    // Smack Down
+          case Attack.Data.Effects.x138:                                            // Sky Drop
+            if (move.Effect!=Attack.Data.Effects.x099 || 	                        // Thunder
+                             move.Effect!=Attack.Data.Effects.x14E ||               // Hurricane
+                             move.Effect!=Attack.Data.Effects.x096 ||               // Gust
+                             move.Effect!=Attack.Data.Effects.x093 ||               // Twister
+                             move.Effect!=Attack.Data.Effects.x0D0 ||               // Sky Uppercut
+                             move.Effect!=Attack.Data.Effects.x120) miss=true;      // Smack Down
             break;
-          case 0x14D: // Phantom Force
-            miss=true;
-            break;
+          //case 0x14D: // Phantom Force
+          //  miss=true;
+          //  break;
           }
           if (opponent.effects.SkyDrop) {
-            if (move.Effect!=Attack.Data.Effects.x099 || 	// Thunder
-                             move.Effect!=Attack.Data.Effects.x14E ||  // Hurricane
-                             move.Effect!=Attack.Data.Effects.x096 ||  // Gust
-                             move.Effect!=Attack.Data.Effects.x093 ||  // Twister
-                             move.Effect!=Attack.Data.Effects.x0D0 || // Sky Uppercut
-                             move.Effect!=Attack.Data.Effects.x120) miss=true;    // Smack Down
+            if (move.Effect!=Attack.Data.Effects.x099 || 	                        // Thunder
+                             move.Effect!=Attack.Data.Effects.x14E ||               // Hurricane
+                             move.Effect!=Attack.Data.Effects.x096 ||               // Gust
+                             move.Effect!=Attack.Data.Effects.x093 ||               // Twister
+                             move.Effect!=Attack.Data.Effects.x0D0 ||               // Sky Uppercut
+                             move.Effect!=Attack.Data.Effects.x120) miss=true;      // Smack Down
           }
           if (miss) score-=80;
         }
@@ -3257,7 +3263,7 @@ public partial class Battle{
         if (move.Effect!=Attack.Data.Effects.x05D && move.Effect!=Attack.Data.Effects.x062) {		// Snore, Sleep Talk
           bool hasSleepMove=false;
           foreach (var m in attacker.moves) {
-            if (m.Effect==Attack.Data.Effects.x05D || m.Effect==Attack.Data.Effects.x062) {		// Snore, Sleep Talk
+            if (m.Effect==Attack.Data.Effects.x05D || m.Effect==Attack.Data.Effects.x062) {		    // Snore, Sleep Talk
               hasSleepMove=true; break;
             }
           }
@@ -3268,13 +3274,13 @@ public partial class Battle{
     // If user is frozen, prefer a move that can thaw the user
     if (attacker.Status==Status.FROZEN) {
       if (skill>=PBTrainerAI.mediumSkill) {
-        if (move.Flag.Defrost) { //.canThawUser()
+        if (move.Flags.Defrost) { //.canThawUser()
           score+=40;
         }
         else {
           bool hasFreezeMove=false;
           foreach (var m in attacker.moves) {
-            if (m.Flag.Defrost) { //.canThawUser
+            if (m.Flags.Defrost) { //.canThawUser
               hasFreezeMove=true; break;
             }
           }
@@ -3315,7 +3321,7 @@ public partial class Battle{
       }
       else {
         // Calculate how much damage the move will do (roughly)
-        int realDamage=move.Power??0;
+        int realDamage=move.Power;//??0;
         if (move.Power==1) realDamage=60;
         if (skill>=PBTrainerAI.mediumSkill) {
           realDamage=pbBetterBaseDamage(move,attacker,opponent,skill,realDamage);
@@ -3325,7 +3331,8 @@ public partial class Battle{
         int accuracy=pbRoughAccuracy(move,attacker,opponent,skill);
         float basedamage=realDamage*accuracy/100.0f;
         // Two-turn attacks waste 2 turns to deal one lot of damage
-        if (move.pbTwoTurnAttack(attacker) || move.Effect==Attack.Data.Effects.x051) {		// Hyper Beam
+        //if (move.pbTwoTurnAttack(attacker) || move.Effect==Attack.Data.Effects.x051) {		        // Hyper Beam
+        if (Game.MoveMetaData[move.MoveId].MaxTurns > 1 || move.Effect==Attack.Data.Effects.x051) {		// Hyper Beam
           basedamage*=2/3;   // Not halved because semi-invulnerable during use or hits first turn
         }
         // Prefer flinching effects
@@ -3335,14 +3342,14 @@ public partial class Battle{
           ) { //&& move.canKingsRock //ToDo: Check if can flinch
             basedamage*=1.05f;
           } else if (attacker.hasWorkingAbility(Abilities.STENCH) &&
-                move.Effect!=Attack.Data.Effects.x114 && // Thunder Fang
-                move.Effect!=Attack.Data.Effects.x112 && // Fire Fang
-                move.Effect!=Attack.Data.Effects.x113 && // Ice Fang
-                move.Effect!=Attack.Data.Effects.x020 && // flinch-inducing moves
-                move.Effect!=Attack.Data.Effects.x097 && // Stomp
-                move.Effect!=Attack.Data.Effects.x05D && // Snore
-                move.Effect!=Attack.Data.Effects.x09F && // Fake Out
-                move.Effect!=Attack.Data.Effects.x093 && // Twister
+                move.Effect!=Attack.Data.Effects.x114 &&    // Thunder Fang
+                move.Effect!=Attack.Data.Effects.x112 &&    // Fire Fang
+                move.Effect!=Attack.Data.Effects.x113 &&    // Ice Fang
+                move.Effect!=Attack.Data.Effects.x020 &&    // flinch-inducing moves
+                move.Effect!=Attack.Data.Effects.x097 &&    // Stomp
+                move.Effect!=Attack.Data.Effects.x05D &&    // Snore
+                move.Effect!=Attack.Data.Effects.x09F &&    // Fake Out
+                move.Effect!=Attack.Data.Effects.x093 &&    // Twister
                 move.Effect!=Attack.Data.Effects.x04C) {    // Sky Attack
             basedamage*=1.05f;
           }
@@ -3350,7 +3357,7 @@ public partial class Battle{
         // Convert damage to proportion of opponent's remaining HP
         basedamage=(basedamage*100.0f/opponent.HP);
         // Don't prefer weak attacks
-//      if (basedamage<40) basedamage/=2; 
+        if (basedamage<40) basedamage/=2; 
         // Prefer damaging attack if level difference is significantly high
         if (attacker.Level-10>opponent.Level) basedamage*=1.2f;
         // Adjust score
@@ -3407,23 +3414,23 @@ public partial class Battle{
       if (mod3==0) mod3=2;
     }
     // Foresight
-    if ((attacker.hasWorkingAbility(Abilities.SCRAPPY)) || opponent.effects.Foresight) { //rescue false
-      if (otype1 == Types.GHOST && atype.isIneffective(otype1)) mod1=2;
-      if (otype2 == Types.GHOST && atype.isIneffective(otype2)) mod2=2;
-      if (otype3 == Types.GHOST && atype.isIneffective(otype3)) mod3=2;
-    }
-    // Miracle Eye
-    if (opponent.effects.MiracleEye) {
-      if (otype1 == Types.DARK && atype.isIneffective(otype1)) mod1=2;
-      if (otype2 == Types.DARK && atype.isIneffective(otype2)) mod2=2;
-      if (otype3 == Types.DARK && atype.isIneffective(otype3)) mod3=2;
-    }
-    // Delta Stream's weather
-    if (pbWeather()==Weather.STRONGWINDS) {
-      if (otype1 == Types.FLYING && atype.isSuperEffective(otype1)) mod1=2;
-      if (otype2 == Types.FLYING && atype.isSuperEffective(otype2)) mod2=2;
-      if (otype3 == Types.FLYING && atype.isSuperEffective(otype3)) mod3=2;
-    }
+    //if ((attacker.hasWorkingAbility(Abilities.SCRAPPY)) || opponent.effects.Foresight) { //rescue false
+    //  if (otype1 == Types.GHOST && atype.isIneffective(otype1)) mod1=2;
+    //  if (otype2 == Types.GHOST && atype.isIneffective(otype2)) mod2=2;
+    //  if (otype3 == Types.GHOST && atype.isIneffective(otype3)) mod3=2;
+    //}
+    //// Miracle Eye
+    //if (opponent.effects.MiracleEye) {
+    //  if (otype1 == Types.DARK && atype.isIneffective(otype1)) mod1=2;
+    //  if (otype2 == Types.DARK && atype.isIneffective(otype2)) mod2=2;
+    //  if (otype3 == Types.DARK && atype.isIneffective(otype3)) mod3=2;
+    //}
+    //// Delta Stream's weather
+    //if (pbWeather()==Weather.STRONGWINDS) {
+    //  if (otype1 == Types.FLYING && atype.isSuperEffective(otype1)) mod1=2;
+    //  if (otype2 == Types.FLYING && atype.isSuperEffective(otype2)) mod2=2;
+    //  if (otype3 == Types.FLYING && atype.isSuperEffective(otype3)) mod3=2;
+    //}
     // Smack Down makes Ground moves work against fliers
     if (!opponent.isAirborne(attacker.hasMoldBreaker()) && atype == Types.GROUND) { //rescue false
       if (otype1 == Types.FLYING) mod1=2;
@@ -3444,27 +3451,27 @@ public partial class Battle{
   }
 
   public int pbRoughStat(Pokemon battler,Stats stat,int skill) {
-    if (skill>=PBTrainerAI.highSkill && stat==Stats.SPEED) return battler.speed;//pbSpeed;
+    if (skill>=PBTrainerAI.highSkill && stat==Stats.SPEED) return battler.SPE;//pbSpeed;
     int[] stagemul=new int[] {2,2,2,2,2,2,2,3,4,5,6,7,8};
     int[] stagediv=new int[] {8,7,6,5,4,3,2,2,2,2,2,2,2};
     int stage=battler.stages[(int)stat]+6;
     int value=0;
     switch (stat) {
-    case Stats.ATTACK: value=battler.attack;
+    case Stats.ATTACK: value=battler.pokemon.ATK;
       break;
-    case Stats.DEFENSE: value=battler.defense;
+    case Stats.DEFENSE: value=battler.pokemon.DEF;
       break;
-    case Stats.SPEED: value=battler.speed;
+    case Stats.SPEED: value=battler.pokemon.SPE;
       break;
-    case Stats.SPATK: value=battler.spatk;
+    case Stats.SPATK: value=battler.pokemon.SPA;
       break;
-    case Stats.SPDEF: value=battler.spdef;
+    case Stats.SPDEF: value=battler.pokemon.SPD;
       break;
     }
     return (int)Math.Floor(value*1.0f*stagemul[stage]/stagediv[stage]);
   }
 
-  public int pbBetterBaseDamage(Attack.Move move,Pokemon attacker,Pokemon opponent,int skill,int basedamage) { 
+  public int pbBetterBaseDamage(Combat.IMove move,Pokemon attacker,Pokemon opponent,int skill,int basedamage) { 
     int mult, n = 0; float weight = 0;
     // Covers all function codes which have their own def pbBaseDamage
     switch (move.Effect) {
@@ -3498,7 +3505,7 @@ public partial class Battle{
     case Attack.Data.Effects.x0E4: // Metal Burst
       basedamage=60;
       break;
-    case Attack.Data.Effects.x102: case 0x12D: // case Surf: Shadow Storm
+    case Attack.Data.Effects.x102: ///case 0x12D: // case Surf: Shadow Storm
       if (Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x100) basedamage*=2;	// Dive
       break;
     case Attack.Data.Effects.x094: // Earthquake
@@ -3572,8 +3579,8 @@ public partial class Battle{
       basedamage=(int)Math.Min(20*(mult+3),200);
       break;
     case Attack.Data.Effects.x088: // Hidden Power
-      int[] hp=pbHiddenPower(attacker.IV);
-      basedamage=hp[1];
+      KeyValuePair<Types,int> hp=PokeBattle_Move_090.pbHiddenPower(attacker.IV);
+      basedamage=hp.Value;
       break;
     case Attack.Data.Effects.x078: // Fury Cutter
       basedamage=basedamage<<(attacker.effects.FuryCutter-1);
@@ -3678,7 +3685,7 @@ public partial class Battle{
       }
       break;
     case Attack.Data.Effects.x09B: // Beat Up
-      Pokemon[] party=pbParty(attacker.Index);
+      Monster.Pokemon[] party=pbParty(attacker.Index);
       mult=0;
       for (int i = 0; i < party.Length; i++) {
         if (party[i].IsNotNullOrNone() && !party[i].isEgg &&
@@ -3723,24 +3730,24 @@ public partial class Battle{
     return basedamage;
   }
 
-  public int pbRoughDamage(Attack.Move move, Pokemon attacker, Pokemon opponent, int skill, double basedamage) {
+  public int pbRoughDamage(Combat.IMove move, Pokemon attacker, Pokemon opponent, int skill, double basedamage) {
     // Fixed damage moves
-    if (move.Effect==Attack.Data.Effects.x083 ||  	// SonicBoom
-                         move.Effect==Attack.Data.Effects.x02A ||   // Dragon Rage
-                         move.Effect==Attack.Data.Effects.x029 ||   // Super Fang
-                         move.Effect==Attack.Data.Effects.x058 ||   // Night Shade
-                         move.Effect==Attack.Data.Effects.x0BE ||   // Endeavor
-                         move.Effect==Attack.Data.Effects.x059 ||   // Psywave
-                         move.Effect==Attack.Data.Effects.x027 ||   // OHKO
-                         move.Effect==Attack.Data.Effects.x05A ||   // Counter
-                         move.Effect==Attack.Data.Effects.x091 ||   // Mirror Coat
-                         move.Effect==Attack.Data.Effects.x0E4 ||   // Metal Burst
-                         move.Effect==Attack.Data.Effects.x141) return (int)basedamage;      // Final Gambit
+    if (move.Effect==Attack.Data.Effects.x083 ||  	                                    // SonicBoom
+                         move.Effect==Attack.Data.Effects.x02A ||                       // Dragon Rage
+                         move.Effect==Attack.Data.Effects.x029 ||                       // Super Fang
+                         move.Effect==Attack.Data.Effects.x058 ||                       // Night Shade
+                         move.Effect==Attack.Data.Effects.x0BE ||                       // Endeavor
+                         move.Effect==Attack.Data.Effects.x059 ||                       // Psywave
+                         move.Effect==Attack.Data.Effects.x027 ||                       // OHKO
+                         move.Effect==Attack.Data.Effects.x05A ||                       // Counter
+                         move.Effect==Attack.Data.Effects.x091 ||                       // Mirror Coat
+                         move.Effect==Attack.Data.Effects.x0E4 ||                       // Metal Burst
+                         move.Effect==Attack.Data.Effects.x141) return (int)basedamage; // Final Gambit
     Types type=move.Type;
     // More accurate move type (includes Normalize, most type-changing moves, etc.)
-    //if (skill>=PBTrainerAI.highSkill) {
-    //  type=move.pbType(type,attacker,opponent);
-    //}
+    if (skill>=PBTrainerAI.highSkill) {
+      type=move.pbType(type,attacker,opponent);
+    }
     // Technician
     if (skill>=PBTrainerAI.highSkill) {
       if (attacker.hasWorkingAbility(Abilities.TECHNICIAN) && basedamage<=60) {
@@ -3749,20 +3756,20 @@ public partial class Battle{
     }
     // Iron Fist
     if (skill>=PBTrainerAI.mediumSkill) {
-      if (attacker.hasWorkingAbility(Abilities.IRON_FIST) && move.Flag.Punching) {
+      if (attacker.hasWorkingAbility(Abilities.IRON_FIST) && move.Flags.Punching) {
         basedamage=(int)Math.Round(basedamage*1.2);
       }
     }
     // Reckless
     if (skill>=PBTrainerAI.mediumSkill) {
       if (attacker.hasWorkingAbility(Abilities.RECKLESS)) {
-        if(move.Effect==Attack.Data.Effects.x031 || 		// Take Down, etc.
-           move.Effect==Attack.Data.Effects.x0C7 ||  // Double-Edge, etc.
-           move.Effect==Attack.Data.Effects.x10E ||  // Head Smash
-           move.Effect==Attack.Data.Effects.x107 ||  // Volt Tackle
-           move.Effect==Attack.Data.Effects.x0FE ||  // Flare Blitz
-           move.Effect==Attack.Data.Effects.x02E || // Jump Kick, Hi Jump Kick
-           move.Effect==Attack.Data.Effects.x712) {    // Shadow End
+        if(move.Effect==Attack.Data.Effects.x031 ||     // Take Down, etc.
+           move.Effect==Attack.Data.Effects.x0C7 ||     // Double-Edge, etc.
+           move.Effect==Attack.Data.Effects.x10E ||     // Head Smash
+           move.Effect==Attack.Data.Effects.x107 ||     // Volt Tackle
+           move.Effect==Attack.Data.Effects.x0FE ||     // Flare Blitz
+           move.Effect==Attack.Data.Effects.x02E ||     // Jump Kick, Hi Jump Kick
+           move.Effect==Attack.Data.Effects.x712) {     // Shadow End
           basedamage=(int)Math.Round(basedamage*1.2);
         }
       }
@@ -3820,7 +3827,7 @@ public partial class Battle{
     }
     // Sheer Force
     if (skill>=PBTrainerAI.highSkill) {
-      if (attacker.hasWorkingAbility(Abilities.SHEER_FORCE)) { //&& move.AddlEffect>0 //ToDo: Refector this?
+      if (attacker.hasWorkingAbility(Abilities.SHEER_FORCE) && move.AddlEffect>0) {
         basedamage=(int)Math.Round(basedamage*1.3);
       }
     }
@@ -4139,8 +4146,8 @@ public partial class Battle{
     double damage=Math.Floor(Math.Floor(Math.Floor(2.0f*attacker.Level/5f+2f)*basedamage*atk/defense)/50f)+2;
     // Multi-targeting attacks
     if (skill>=PBTrainerAI.highSkill) {
-      //if (move.pbTargetsMultiple(attacker)) {
-      if (move.hasMultipleTargets()) {
+      if (move.pbTargetsMultiple(attacker)) {
+      //if (move.hasMultipleTargets()) {
         damage=(int)Math.Round(damage*0.75);
       }
     }
@@ -4304,10 +4311,10 @@ public partial class Battle{
     //return 0;
   }
 
-  public int pbRoughAccuracy(Attack.Move move, Pokemon attacker, Pokemon opponent, int skill) {
+  public int pbRoughAccuracy(Combat.IMove move, Pokemon attacker, Pokemon opponent, int skill) {
     float accuracy=0;
     // Get base accuracy
-    int baseaccuracy=move.Accuracy??0;
+    int baseaccuracy=move.Accuracy;//??0
     if (skill>=PBTrainerAI.mediumSkill) {
       if (pbWeather()==Weather.SUNNYDAY &&
          (move.Effect==Attack.Data.Effects.x099 || move.Effect==Attack.Data.Effects.x14E)) { // Thunder, Hurricane
@@ -4339,8 +4346,9 @@ public partial class Battle{
       if (attacker.hasWorkingItem(Items.WIDE_LENS)) accuracy*=1.1f;
       if (skill>=PBTrainerAI.highSkill) {
         if (attacker.hasWorkingAbility(Abilities.HUSTLE) &&
-                         move.Power>0 &&
-                         move.pbIsPhysical(move.pbType(move.Type,attacker,opponent))) accuracy*=0.8f;
+                         move.Power>0 //&& //ToDo: here
+                         //move.pbIsPhysical(move.pbType(move.Type,attacker,opponent))) accuracy*=0.8f;
+                         ) accuracy*=0.8f;
       }
       if (skill>=PBTrainerAI.bestSkill) {
         if (opponent.hasWorkingAbility(Abilities.WONDER_SKIN) &&
@@ -4379,7 +4387,7 @@ public partial class Battle{
         break;
       }
       if (move.Effect==Attack.Data.Effects.x027) {		// OHKO moves
-        accuracy=(move.Accuracy??0)+attacker.Level-opponent.Level;
+        accuracy=(move.Accuracy)+attacker.Level-opponent.Level;
         if (opponent.hasWorkingAbility(Abilities.STURDY)) accuracy=0;
         if (opponent.Level>attacker.Level) accuracy=0;
       }
@@ -4400,7 +4408,7 @@ public partial class Battle{
     int totalscore=0;
     int target=-1;
     int skill=0;
-    bool wildbattle=@opponent==null && pbIsOpposing(index);
+    bool wildbattle=@opponent==null && isOpposing(index);
     if (wildbattle) {		// If wild battle
       for (int i = 0; i < 4; i++) {
         if (CanChooseMove(index,i,false)) {
@@ -4419,11 +4427,15 @@ public partial class Battle{
         List<int[]> scoresAndTargets=new List<int[]>();
         targets=new int[] { -1, -1, -1, -1 };
         for (int i = 0; i < 4; i++) {
-          if (pbCanChooseMove(index,i,false)) {
+          if (CanChooseMove(index,i,false)) {
             int score1=pbGetMoveScore(attacker.moves[i],attacker,opponent,skill);
             int score2=pbGetMoveScore(attacker.moves[i],attacker,otheropp,skill);
-            //if ((attacker.moves[i].Targets&(Attack.Data.Targets)0x20)!=0) {		// Target's user's side
-            if (attacker.moves[i].Targets == Attack.Data.Targets.OPPONENTS_FIELD) {		// Target's user's side
+            //if ((attacker.moves[i].Targets&(Attack.Data.Targets)0x20)!=0) {		    // Target's user's side
+            if (//attacker.moves[i].Target == Attack.Data.Targets.USER_AND_ALLIES       //ToDo: This too?
+                attacker.moves[i].Target == Attack.Data.Targets.ALL_POKEMON
+             || attacker.moves[i].Target == Attack.Data.Targets.ALL_OTHER_POKEMON
+             || attacker.moves[i].Target == Attack.Data.Targets.ENTIRE_FIELD
+             || attacker.moves[i].Target == Attack.Data.Targets.USERS_FIELD) {
               if (attacker.Partner.isFainted()) {		// No partner
                 score1*=5/3;
                 score2*=5/3;
@@ -4432,16 +4444,16 @@ public partial class Battle{
                 // If this move can also target the partner, get the partner's
                 // score too
                 int s=pbGetMoveScore(attacker.moves[i],attacker,attacker.Partner,skill);
-                if (s>=140) {		// Highly effective
+                if (s>=140) {		        // Highly effective
                   score1*=1/3;
                   score2*=1/3;
                 } else if (s>=100) {		// Very effective
                   score1*=2/3;
                   score2*=2/3;
-                } else if (s>=40) {		// Less effective
+                } else if (s>=40) {		    // Less effective
                   score1*=4/3;
                   score2*=4/3;
-                } else { // Hardly effective
+                } else {                    // Hardly effective
                   score1*=5/3;
                   score2*=5/3;
                 }
@@ -4613,10 +4625,9 @@ public partial class Battle{
 /// </summary>
 /// <param name="ndex"></param>
 /// <returns></returns>
-  public bool pbEnemyShouldMegaEvolve (int ndex) {
+  public bool pbEnemyShouldMegaEvolve (int index) {
     // Simple "always should if possible"
-    //return pbCanMegaEvolve(index);
-    return false;
+    return pbCanMegaEvolve(index);
   }
 
 #region Decide whether the opponent should use an item on the Pokémon.
@@ -4734,14 +4745,14 @@ public partial class Battle{
        !CanChooseMove(index,1,false) &&
        !CanChooseMove(index,2,false) &&
        !CanChooseMove(index,3,false) &&
-       //@battlers[index].turncount &&
+       //@battlers[index].turncount != null &&
        @battlers[index].turncount>5) {
       shouldswitch=true;
     }
     if (skill>=PBTrainerAI.highSkill && @battlers[index].effects.PerishSong!=1) {
       for (int i = 0; i < 4; i++) {
-        Attack.Move move=@battlers[index].moves[i];
-        if (move.MoveId!=0 && pbCanChooseMove(index,i,false) &&
+        Combat.IMove move=@battlers[index].moves[i];
+        if (move.MoveId!=0 && CanChooseMove(index,i,false) &&
           move.Effect==Attack.Data.Effects.x080) { // Baton Pass
           batonpass=i;
           break;
@@ -4790,7 +4801,7 @@ public partial class Battle{
         }
       }
     }
-    if (@rules["suddendeath"]) {
+    if (@rules.Contains("suddendeath")) {
       if (@battlers[index].HP<=(@battlers[index].TotalHP/4) && Core.Rand.Next(10)<3 && 
          @battlers[index].turncount>0) {
         shouldswitch=true;
@@ -4804,7 +4815,8 @@ public partial class Battle{
     }
     if (shouldswitch) {
       List<int> list=new List<int>();
-      Pokemon[] party=pbParty(index);
+      //Monster.Pokemon[] party=pbParty(index);
+      Combat.Pokemon[] party=battlers.Where(b => (b.Index % 2) == (index % 2)).ToArray();
       for (int i = 0; i < party.Length; i++) {
         if (pbCanSwitch(index,i,false)) {
           // If perish count is 1, it may be worth it to switch
@@ -4878,7 +4890,7 @@ public partial class Battle{
 
   public int pbChooseBestNewEnemy(int index,Pokemon[] party,int[] enemies) {
     if (enemies == null || enemies.Length==0) return -1;
-    if (Game.GameData.PokemonTemp == null) Game.GameData.PokemonTemp=new PokemonTemp();
+    //if (Game.GameData.PokemonTemp == null) Game.GameData.PokemonTemp=new PokemonTemp();
     Pokemon o1=@battlers[index].pbOpposing1;
     Pokemon o2=@battlers[index].pbOpposing2;
     if (o1.IsNotNullOrNone() && o1.isFainted()) o1=null;
@@ -4924,16 +4936,14 @@ public partial class Battle{
       if (pbEnemyShouldUseItem(index)) return;
       if (pbEnemyShouldWithdraw(index)) return;
       if (pbAutoFightMenu(index)) return;
-      //ToDo: Uncomment
-      //if (pbEnemyShouldMegaEvolve(index)) pbRegisterMegaEvolution(index);
+      if (pbEnemyShouldMegaEvolve(index)) pbRegisterMegaEvolution(index);
       pbChooseMoves(index);
     }
   }
 
 #region Other functions.
   public bool pbDbgPlayerOnly (int idx) {
-    //ToDo:Uncomment below
-    //if (!Core.INTERNAL) return true;
+    if (!Core.INTERNAL) return true;
     //if (idx.respond_to("index"))
     //  return pbOwnedByPlayer(idx.Index);
     return pbOwnedByPlayer(idx);

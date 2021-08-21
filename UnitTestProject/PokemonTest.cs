@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
 using PokemonUnity.Monster;
@@ -115,15 +116,17 @@ namespace Tests
 			Assert.IsFalse(pokemon.isEgg);
 		}
 
-		//[TestMethod]
+		[TestMethod]
 		//Setting the pokemon levels controls the experience points
 		public void Pokemon_Set_ExperiencePoints_To_Match_Level()
 		{
-			Assert.Inconclusive("Missing pokemon method to assign level by integer value"); //Is it even needed?
+			//Assert.Inconclusive("Missing pokemon method to assign level by integer value");
 			byte lv = 7;
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			//pokemon.Level = lv;
-			Assert.AreEqual(lv,Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp));
+			pokemon.SetLevel(lv);
+			//Assert.AreEqual(lv,Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp));
+			Assert.AreEqual(lv,pokemon.Level);
 		}
 
 		[TestMethod]
@@ -132,9 +135,22 @@ namespace Tests
 		{
 			byte lv = 7;
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: 3);
-			pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, 300));
-			pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Experience.Total);
-			Assert.AreEqual(lv, Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Experience.Total));
+			pokemon.Exp = Experience.GetStartExperience(pokemon.GrowthRate, lv);
+			Assert.AreEqual(lv, pokemon.Level);
+		}
+
+		[TestMethod]
+		// Modifying pokemon experience points changes the level
+		public void Pokemon_Level_Changes_To_Match_ExperiencePoints()
+		{
+			byte lv = 7;
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: 3);
+			//pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, 300));
+			pokemon.Experience.AddExperience(300);
+			//pokemon.Experience.AddExperience(Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Experience.Total);
+			int exp = Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Experience.Total;
+			pokemon.Experience.AddExperience(exp);
+			Assert.AreEqual(lv, pokemon.Level); //Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Experience.Total)
 		}
 
 		[TestMethod]
@@ -578,6 +594,7 @@ namespace Tests
 		[TestMethod]
 		public void Pokemon_TestPokemon_CanEvolve_AfterLevel()
 		{
+			Assert.Inconclusive("Pokemon Evolution Temp Disabled.");
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			if (!pokemon.hasEvolveMethod(EvolutionMethod.Level))
 				Assert.Fail("Unable to test if pokemon can evolve, as it does not have an evolution through leveling-up");
@@ -594,6 +611,7 @@ namespace Tests
 		[TestMethod]
 		public void Pokemon_TestPokemon_EvolvePokemonUsingItems()
 		{
+			Assert.Inconclusive("Pokemon Evolution Temp Disabled.");
 			Items evolveStone = Items.SUN_STONE;
 			Pokemon pokemon = new Pokemon(Pokemons.GLOOM);
 			if (!pokemon.hasEvolveMethod(EvolutionMethod.Item))
@@ -726,10 +744,9 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			* Form change based on gender
 			* Evolutions.. (some evolve into form based on specific criteria)
 			* Some forms are fusions...
-			* Some forms are purely cosmetic and change based on frontend/ui (connect overworld/weather mechanic to backend)
-			* Some forms are battle only forms, and battle mechanic is going to be frontend only (will need to redo/reference code)
+			* Some forms are purely cosmetic and change based on frontend/ui 
+			* Some forms are battle only forms, and battle mechanic is going to be frontend only 
 			* Pokemon Vivillion form is based on player's physical GPS location (pc IP Address)
-			* ToDo: Connect different forms to return correct UI (texture/model matches pokemon id) 
 			*/
 		///	<see cref="Pokemons.UNOWN"/> = letter of the alphabet.
 		///	<see cref="Pokemons.DEOXYS"/> = which of the four forms.
@@ -765,10 +782,12 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			//pokemon.FormId = 1;
 			pokemon.SetForm(Forms.UNOWN_B);
 			CollectionAssert //Assert
-				.AreEquivalent( //.AreEqual(
+				.AreEqual( //.AreEqual(
 					new object[] { Pokemons.UNOWN, Forms.UNOWN_B }, 
-					new object[] { pokemon.Species, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id },
-					string.Format("Form: {0}, Id: {1}", pokemon.FormId, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id)
+					//new object[] { pokemon.Species, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id },
+					//string.Format("Form: {0}, Id: {1}", pokemon.FormId, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id)
+					new object[] { pokemon.Species, pokemon.Form.Id },
+					string.Format("Form: {0}, Id: {1}", pokemon.FormId, pokemon.Form.Id)
 				);
 			//Assert.Inconclusive("Not implemented yet");
 		}
@@ -780,7 +799,8 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			pokemon.SetForm(Forms.DEOXYS_DEFENSE); //Defense
 			//pokemon.FormId = 5; //Not Indexed
 			pokemon.SetForm(5); //Not Indexed
-			Assert.AreEqual(Forms.DEOXYS_DEFENSE, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id);
+			//Assert.AreEqual(Forms.DEOXYS_DEFENSE, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id);
+			Assert.AreEqual(Forms.DEOXYS_DEFENSE, pokemon.Form.Id);
 			//Assert.AreEqual(2, Game.PokemonFormsData[pokemon.Species][pokemon.Form].GetArrayId());
 			//Assert.Inconclusive("Not implemented yet");
 		}
@@ -789,16 +809,19 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		public void Pokemon_Form_SetForm_ChangesStats()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.ROTOM);
-			pokemon.AddExperience(100000, false);
+			//pokemon.AddExperience(100000, false);
+			pokemon.Exp = 100000;
 			//if (Game.PokemonData[pokemon.Species].BaseStatsATK != pokemon.ATK) Assert.Fail("Bad Test; Attack not equal to Base Stats");
+			if(pokemon.Form.Id == Forms.ROTOM_HEAT) Assert.Fail("Bad Test; Form is already set.");
 			int[] stat = new int[] { pokemon.HP, pokemon.ATK, pokemon.DEF, pokemon.SPA, pokemon.SPD, pokemon.SPE };
 			//int[] stat = new int[] { pokemon.BaseStatsHP, pokemon.BaseStatsATK, pokemon.BaseStatsDEF, pokemon.BaseStatsSPA, pokemon.BaseStatsSPD, pokemon.BaseStatsSPE };
 			//pokemon.FormId = 1; //Rotom_Heat
 			pokemon.SetForm(Forms.ROTOM_HEAT);
-			if(Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id != Forms.ROTOM_HEAT) Assert.Fail("Bad Test; Wrong Stats being modified.");
+			//if(Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id != Forms.ROTOM_HEAT) Assert.Fail("Bad Test; Wrong Stats being modified.");
+			if(pokemon.Form.Id != Forms.ROTOM_HEAT) Assert.Fail("Bad Test; Wrong Stats being modified.");
 			//Assert.AreNotEqual(Game.PokemonData[pokemon.Species].BaseStatsATK, pokemon.ATK);
 			//Assert.AreNotEqual(pokemon.ATK, stat, "No changes in Pokemon stats.");
-			CollectionAssert.AreNotEquivalent(stat, new int[] { pokemon.HP, pokemon.ATK, pokemon.DEF, pokemon.SPA, pokemon.SPD, pokemon.SPE }, "No changes in Pokemon stats.");
+			CollectionAssert.AreNotEqual(stat, new int[] { pokemon.HP, pokemon.ATK, pokemon.DEF, pokemon.SPA, pokemon.SPD, pokemon.SPE }, "No changes in Pokemon stats.");
 			//CollectionAssert.AreNotEquivalent(stat, new int[] { pokemon.BaseStatsHP, pokemon.BaseStatsATK, pokemon.BaseStatsDEF, pokemon.BaseStatsSPA, pokemon.BaseStatsSPD, pokemon.BaseStatsSPE }, "No changes in Pokemon stats.");
 			//Assert.Fail("Need to find way to compare Pokemon.baseStats to Form.baseStats");
 			//Assert.Inconclusive("Not implemented yet");
@@ -807,14 +830,16 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		public void Pokemon_TestPokemon_GetPokemon_From_Form()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.DEOXYS_DEFENSE); //Normal
-			pokemon.SetForm(2); //Pokemons don't start out in alternate forms, must call manually.
+			//pokemon.SetForm(2); //Pokemons don't start out in alternate forms, must call manually.
 			//Assert.AreEqual(Pokemons.DEOXYS, Form.GetSpecies(Forms.DEOXYS_DEFENSE));//Game.PokemonFormsData[pokemon.Species][pokemon.FormId]
-			if (Pokemons.DEOXYS_DEFENSE != Form.GetSpecies(pokemon.Form))//Forms.DEOXYS_DEFENSE
-				Assert.Fail("Pokemon Id and FormId are not the same. Expected: <{0}> | Actual: <{1}>", Pokemons.DEOXYS_DEFENSE, Form.GetSpecies(pokemon.Form));
+			//if (Pokemons.DEOXYS_DEFENSE != Form.GetSpecies(pokemon.Form.Id))//Forms.DEOXYS_DEFENSE
+			//if (Pokemons.DEOXYS_DEFENSE != pokemon.Form.Base)//Forms.DEOXYS_DEFENSE
+			if (Forms.DEOXYS_DEFENSE != pokemon.Form.Id)
+				Assert.Fail("Pokemon Id and FormId are not the same. Expected: <{0}> | Actual: <{1}>", Pokemons.DEOXYS_DEFENSE, pokemon.Form.Base); //Form.GetSpecies(pokemon.Form)
 			//This test fails...
 			//Assert.AreEqual(Pokemons.DEOXYS, pokemon.Species, "Pokemon Form and Breed are not the same.");
 			//But this test passes... should the results be flipped?
-			Assert.AreEqual(Pokemons.DEOXYS, pokemon.form.Base, "Pokemon Form and Breed are not the same.");
+			Assert.AreEqual(Pokemons.DEOXYS, pokemon.Form.Base, "Pokemon Form and Breed are not the same.");
 		}
 		#endregion
 

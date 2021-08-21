@@ -2,9 +2,9 @@
 using PokemonUnity.Inventory;
 using PokemonUnity.Inventory.Plants;
 
-namespace PokemonUnity.Inventory//.ItemData
+namespace PokemonUnity.Inventory
 {
-	public struct Berry 
+	public struct BerryData 
 	{
 		#region Variables
 		public Items Id					{ get; private set; }
@@ -85,12 +85,6 @@ namespace PokemonUnity.Inventory//.ItemData
 		//public int SummerGrow = 2;
 		//public int FallGrow = 1;
 
-		//public override int PokeDollarPrice { get { return 100; } }
-		//public override int FlingDamage { get { return 10;} } 
-		//public override ItemTypes ItemType { get { return ItemTypes.Plants; } } 
-		//public override int SortValue { get; private set; }
-		//public override string Description { get; private set; }
-
 		public Flavours Flavour
 		{
 			get
@@ -122,41 +116,10 @@ namespace PokemonUnity.Inventory//.ItemData
 				return returnFlavour;
 			}
 		}
-		//public bool IsBerry
-		//{
-		//	get
-		//	{
-		//		if (ItemPocket.HasValue && ItemPocket.Value == ItemPockets.BERRY)
-		//		{
-		//			return true; //new Berry(this);
-		//		}
-		//		else
-		//			return false; //null;
-		//	}
-		//}
-		//public bool IsApricon
-		//{
-		//	get
-		//	{
-		//		switch (ItemId)
-		//		{
-		//			case Items.BLACK_APRICORN:
-		//			case Items.BLUE_APRICORN:
-		//			case Items.GREEN_APRICORN:
-		//			case Items.PINK_APRICORN:
-		//			case Items.RED_APRICORN:
-		//			case Items.WHITE_APRICORN:
-		//			case Items.YELLOW_APRICORN:
-		//				return true;
-		//			default:
-		//				return false;
-		//		}
-		//	}
-		//}
 		#endregion
 
 		#region Constructors
-		public Berry(Items berry, FirmnessLevel firmness, int power = 0, Types type = Types.NONE, float size = 0, int max = 0, int growth = 0, int soil = 0, int smooth = 0, int cool = 0, int beauty = 0, int cute = 0, int smart = 0, int tough = 0) 
+		public BerryData(Items berry, FirmnessLevel firmness, int power = 0, Types type = Types.NONE, float size = 0, int max = 0, int growth = 0, int soil = 0, int smooth = 0, int cool = 0, int beauty = 0, int cute = 0, int smart = 0, int tough = 0, int spicy = 0, int dry = 0, int sweet = 0, int bitter = 0, int sour = 0, bool @default = true) 
 		{
 			Id = berry;
 
@@ -172,16 +135,11 @@ namespace PokemonUnity.Inventory//.ItemData
 			moistIntake = soil;
 			Color = PokemonUnity.Color.NONE;
 
-			//Spicy = spicy;
-			//Dry = dry;
-			//Sweet = sweet;
-			//Bitter = bitter;
-			//Sour = sour;
-			Spicy = 0;
-			Dry = 0;
-			Sweet = 0;
-			Bitter = 0;
-			Sour = 0;
+			Spicy = spicy;
+			Dry = dry;
+			Sweet = sweet;
+			Bitter = bitter;
+			Sour = sour;
 
 			Cool = cool;
 			Beauty = beauty;
@@ -196,6 +154,7 @@ namespace PokemonUnity.Inventory//.ItemData
 			//_textureSource = @"Textures\Berries";
 			//_textureRectangle = new Vector4(x, y, 32, 32);
 
+			if(@default)
 			switch (berry)
 			{
 				//(\d+)\s+(\w+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)
@@ -525,19 +484,6 @@ namespace PokemonUnity.Inventory//.ItemData
 					Id == Items.MAGO_BERRY		||
 					Id == Items.WIKI_BERRY;
 		}
-
-		//public Berry ToGenIV()
-		//{
-		//	return this;
-		//}
-		//public Berry ToGenV()
-		//{
-		//	return this;
-		//}
-		//public Berry ToGenVI()
-		//{
-		//	return this;
-		//}
 		#endregion		
 	}
 }

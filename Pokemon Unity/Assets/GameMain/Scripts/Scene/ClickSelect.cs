@@ -14,10 +14,10 @@ namespace PokemonUnity
 
 		private void Update()
 		{
-			if (Input.GetMouseButtonDown(0)) //Change to "Select"
+			if (UnityEngine.Input.GetMouseButtonDown(0)) //Change to "Select"
 			{
 				float distance = 25f;
-				Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+				Ray ray = _camera.ScreenPointToRay(UnityEngine.Input.mousePosition);
 				Debug.DrawRay(ray.origin, ray.direction * distance, UnityEngine.Color.red, duration: 1f, true);
 				if(Physics.Raycast(ray, out RaycastHit hitinfo, maxDistance: distance))
 				{
@@ -26,7 +26,7 @@ namespace PokemonUnity
 					if (OnSelectedEntityChanged != null) OnSelectedEntityChanged(entity);
 				}
 			}
-			if (Input.GetKeyDown(KeyCode.Escape))
+			if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
 			{
 				SelectedEntity = null;
 				if (OnSelectedEntityChanged != null) OnSelectedEntityChanged(null);

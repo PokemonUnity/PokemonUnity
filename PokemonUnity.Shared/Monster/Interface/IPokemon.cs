@@ -18,7 +18,7 @@ namespace PokemonUnity.Monster
 		int[] IV { get; }
 		byte[] EV { get; }
 		Pokemons Species { get; }
-		Trainer OT { get; }
+		TrainerData? OT { get; }
 		string TrainerId { get; }
 		int PersonalId { get; }
 		int[] Pokerus { get; }
@@ -102,7 +102,7 @@ namespace PokemonUnity.Monster
 		int? heartgauge { get; }
 		int heartStage { get; }
 		//int hp { set; }
-		int HP { set; }
+		//int HP { set; }
 		bool hypermode { get; }
 		bool isShadow { get; }
 		int[] savedev { get; }

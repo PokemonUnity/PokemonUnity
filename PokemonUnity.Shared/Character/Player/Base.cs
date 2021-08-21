@@ -12,16 +12,16 @@ using PokemonUnity.Utility;
 
 namespace PokemonUnity.Character
 {	
-	[Serializable] 
+	[Serializable, Obsolete("Use `Combat.Trainer` for Trainer class, everything else is being moved to `Game` class")] 
 	public class Player
 	{
 		#region Variables
 		/// <summary>
-		/// Please use the values stored in <see cref="Trainer.TrainerID"/>
+		/// Please use the values stored in <see cref="TrainerData.TrainerID"/>
 		/// </summary>
 		private int? trainerId { get; set; }
 		/// <summary>
-		/// Please use the values stored in <see cref="Trainer.SecretID"/>
+		/// Please use the values stored in <see cref="TrainerData.SecretID"/>
 		/// </summary>
 		private int? secretId { get; set; }
 		public string Name { get; private set; }
@@ -34,7 +34,7 @@ namespace PokemonUnity.Character
 		/// hold the `Trainer` data, and instantiate a new Trainer
 		/// whenever it's needed...
 		public Pokemon[] Party { get; private set; }
-		public Trainer Trainer { get { return new Trainer(name: Name, gender: IsMale, tID: trainerId, sID: secretId); } }
+		public TrainerData Trainer { get { return new TrainerData(name: Name, gender: IsMale, tID: trainerId, sID: secretId); } }
 		/// <summary>
 		/// When displaying items in bag, do a foreach loop and filter by item category
 		/// </summary>
@@ -75,7 +75,6 @@ namespace PokemonUnity.Character
 		//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
 		//ToDo: a bool variable for PC background (if texture is unlocked) `bool[]`
 		//public static string PlayerDayCareData { get; set; } 
-		public DayCare DayCare { get; private set; } 
 		public static string PlayerItemData { get; set; }
 		public static string PlayerBerryData { get; set; }
 		public static string PlayerNPCData { get; set; }
@@ -245,7 +244,7 @@ namespace PokemonUnity.Character
 		{
 		}
 
-		public Player(Trainer trainer, Pokemon[] party = null) 
+		public Player(TrainerData trainer, Pokemon[] party = null) 
 			: this (name: trainer.Name, gender: trainer.Gender == true, party: party, pc: null, trainerid: trainer.TrainerID, secretid: trainer.SecretID)
 		{
 		}
@@ -268,17 +267,20 @@ namespace PokemonUnity.Character
 				return -1; //true
 			}
 			else
+			{
+				//Could not be stored in PC because all boxes full
+				KeyValuePair<int,int>? slot = null;
 				//attempt to add to the earliest available PC box. 
 				for (int numOfBoxes = 0, curBox = PC.ActiveBox; numOfBoxes < PC.AllBoxes.Length; numOfBoxes++, curBox++)
 				{
-					bool added = PC[(byte)(curBox % Core.STORAGEBOXES)].addPokemon(pokemon);
-					if (added)
+					slot = PC[(byte)(curBox % Core.STORAGEBOXES)].addPokemon(pokemon);
+					if (slot != null)
 						//Returns the box pokemon was stored to
 						return curBox; //true
 					if (!Game.GameData.Features.OverflowPokemonsIntoNextBox) break; //else PC.ActiveBox = curBox; //change active box too?
 				}
-			//Could not be stored in PC because all boxes full
-			return null;
+				return slot?.Key;
+			}
 		}
 
 		/// <summary>
