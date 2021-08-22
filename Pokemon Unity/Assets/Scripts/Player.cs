@@ -14,7 +14,7 @@ public class Player
     public Pokemon[] Party { get; private set; }
     public TrainerData Trainer { get { return new TrainerData(name: Name, gender: IsMale, tID: trainerId, sID: secretId); } }
     
-    public PokemonUnity.Character.PC PC { get; private set; }
+    public PC PC { get; private set; }
     
     public Bag Bag { get; private set; }
 
@@ -40,7 +40,7 @@ public class Player
     {
         Name = "Test";
         IsMale = true;
-        Bag = new Bag();
+        Bag = new PokemonUnity.Character.Bag();
         PC = new PokemonUnity.Character.PC();
         Party = new Pokemon[6];
     }
@@ -49,9 +49,17 @@ public class Player
     {
         this.Name = Name;
         this.IsMale = IsMale;
-        Bag = new Bag();
+        Bag = new PokemonUnity.Character.Bag();
         PC = new PokemonUnity.Character.PC();
         Party = new Pokemon[6];
+    }
+
+    public Player(int? trainerId, int? secretId, string Name, bool IsMale, Pokemon[] Party, PC Pc, PokemonUnity.Inventory.Items[] Bag, int playerMoney, int playerScore, Vector3 Position, int Direction,
+        string playerOutfit, string[] registeredItems, bool[] gymsEncountered, bool[] gymsBeaten, string[] gymsBeatTime, System.DateTime StartDate, System.TimeSpan PlayTime)
+    {
+        this.trainerId = trainerId; this.secretId = secretId; this.Name = Name; this.IsMale = IsMale; this.Party = Party; PC = Pc; this.Bag = new Bag(Bag); this.playerMoney = playerMoney; this.playerScore = playerScore;
+        this.Position = Position; this.Direction = Direction; this.playerOutfit = playerOutfit; this.registeredItems = registeredItems; this.gymsEncountered = gymsEncountered; this.gymsBeaten = gymsBeaten;
+        this.StartDate = StartDate; this.PlayTime = PlayTime;
     }
 
     /// <summary>

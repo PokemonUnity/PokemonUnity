@@ -221,6 +221,18 @@ public static class PokemonExtension
         pokemon.moves[target1] = pokemon.moves[target2];
         pokemon.moves[target2] = temp;
     }
+    public static Moves[] GenerateMoveset(this Pokemons pokemon, byte level)
+    {
+        //Set moveset based off of the highest level moves possible.
+        Moves[] moveset = new Moves[4];
+        Pokemon temp = new Pokemon(pokemon, level, false);
+        temp.GenerateMoveset(level);
+        for (int i = 0; i < temp.moves.Length; i++)
+        {
+            moveset[i] = temp.moves[i].MoveId;
+        }
+        return moveset;
+    }
 
     public static string MoveLearnedAtLevel(this Pokemon pokemon, int level)
     {
@@ -288,6 +300,22 @@ public static class PokemonExtension
         }
     }
 
+    // --------------- Light? Need this? ------------
+    public static bool hasLight(this Pokemons pokemon)
+    {
+        return false;
+    }
+    public static int getLuminance(this Pokemons pokemon)
+    {
+        return 0;
+    }
+    public static UnityEngine.Color getLightColor(this Pokemons pokemon)
+    {
+        return UnityEngine.Color.clear;
+    }
+    // ----------------------------------------------
+
+    // --------------- Sprite & Audio ---------------
     public static Sprite[] GetFrontAnim_(this Pokemon pokemon)
     {
         return GetAnimFromID_("PokemonSprites", pokemon.Species, pokemon.Gender, pokemon.IsShiny);
@@ -448,45 +476,4 @@ public static class PokemonExtension
         }
         return spriteSheet;
     }
-
-    //public static bool IsNotNullOrNone(this Pokemon pokemon)
-    //{
-    //	return pokemon != null && (Pokemons)pokemon.getID() != Pokemons.NONE;
-    //}
-    //
-    //public static void PackParty(this Pokemon[] Party)
-    //{
-    //	Pokemon[] packedArray = new Pokemon[Party.Length];
-    //	int i2 = 0; //counter for packed array
-    //	for (int i = 0; i < Party.Length; i++)
-    //	{
-    //		if (Party[i].IsNotNullOrNone())// != null || Party[i].Species != Pokemons.NONE)
-    //		{
-    //			//if next object in box has a value
-    //			packedArray[i2] = Party[i]; //add to packed array
-    //			i2 += 1; //ready packed array's next position
-    //		}
-    //	}
-    //	for (int i = 0; i < Party.Length; i++)
-    //		Party[i] = packedArray[i];
-    //}
-    //
-    //public static bool HasSpace(this Pokemon[] partyOrPC, int limit)
-    //{
-    //	if (partyOrPC.GetCount() < limit) return true; //partyOrPC.GetCount().HasValue &&
-    //	else return false;
-    //}
-    //
-    //public static int GetCount(this Pokemon[] partyOrPC)
-    //{
-    //	int result = 0;
-    //	for (int i = 0; i < partyOrPC.Length; i++)
-    //	{
-    //		if (partyOrPC[i].IsNotNullOrNone())// != null || partyOrPC[i].Species != Pokemons.NONE)
-    //		{
-    //			result += 1;
-    //		}
-    //	}
-    //	return result;
-    //}
 }

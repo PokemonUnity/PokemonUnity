@@ -1,7 +1,6 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
-using System.Collections;
 using PokemonUnity.Monster;
 
 public class Trainer : MonoBehaviour
@@ -49,8 +48,8 @@ public class Trainer : MonoBehaviour
 
     public Trainer(Pokemon[] party)
     {
-        this.trainerClass = Class.Trainer;
-        this.trainerName = "";
+        trainerClass = Class.Trainer;
+        trainerName = "";
 
         this.party = party;
     }

@@ -210,9 +210,9 @@ public class FollowerMovement : MonoBehaviour
         pokemonID = (int)SaveData.currentSave.Player.Party[followerIndex].Species;
         spriteSheet = SaveData.currentSave.Player.Party[followerIndex].GetSprite(false);
 
-        hasLight = PokemonDatabase.getPokemon(pokemonID).hasLight();
-        lightIntensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
-        lightColor = PokemonDatabase.getPokemon(pokemonID).getLightColor();
+        hasLight = SaveData.currentSave.Player.Party[followerIndex].Species.hasLight();
+        lightIntensity = SaveData.currentSave.Player.Party[followerIndex].Species.getLuminance();
+        lightColor = SaveData.currentSave.Player.Party[followerIndex].Species.getLightColor();
         lightSheet = SaveData.currentSave.Player.Party[followerIndex].GetSprite(true);
 
         followerLight.color = lightColor;

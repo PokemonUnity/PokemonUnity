@@ -1,5 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using PokemonUnity;
+
 using System.Collections.Generic;
 
 [CustomEditor(typeof(CustomEvent)), CanEditMultipleObjects]
@@ -384,13 +386,17 @@ public class CustomEventEditor : Editor
                 }
                 break;
 
-            case CustomEventDetails.CustomEventType.ReceivePokemon:
-                eventDescription = "Receive a Lv. " + ints_Prop.GetArrayElementAtIndex(1).intValue + " \"";
-                PokemonData pkd = PokemonDatabase.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
-                eventDescription += (pkd != null) ? pkd.getName() : "null";
-                eventDescription += "\" or Jump to " + int0_Prop.intValue + ".";
-                break;
-
+            //case CustomEventDetails.CustomEventType.ReceivePokemon:
+            //    eventDescription = "Receive a Lv. " + ints_Prop.GetArrayElementAtIndex(1).intValue + " \"";
+            //    PokemonUnity.Pokemons pkd = PokemonUnity.Pokemons.NONE;
+            //    if (ints_Prop.GetArrayElementAtIndex(0).intValue >= PokemonUnity.Game.PokemonData.Count)
+            //    {
+            //        pkd = (PokemonUnity.Pokemons)ints_Prop.GetArrayElementAtIndex(0).intValue;
+            //    }
+            //    eventDescription += (pkd != PokemonUnity.Pokemons.NONE) ? pkd.ToString() : "null";
+            //    eventDescription += "\" or Jump to " + int0_Prop.intValue + ".";
+            //    break;
+            //
             case CustomEventDetails.CustomEventType.LogicCheck:
                 CustomEventDetails.Logic lo = (CustomEventDetails.Logic) logic_Prop.enumValueIndex;
 
@@ -576,129 +582,135 @@ public class CustomEventEditor : Editor
                 }
                 break;
 
-            case CustomEventDetails.CustomEventType.ReceivePokemon:
-                ints_Prop.arraySize = 11;
-                strings_Prop.arraySize = 8;
-
-                int0_Prop.intValue = EditorGUILayout.IntField(new GUIContent("Jump To on Fail"), int0_Prop.intValue);
-                EditorGUILayout.Space();
-
-                ints_Prop.GetArrayElementAtIndex(0).intValue = EditorGUILayout.IntField(new GUIContent("Pokemon ID"),
-                    ints_Prop.GetArrayElementAtIndex(0).intValue);
-                PokemonData pkd = PokemonDatabase.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
-                string pokemonName = (pkd != null) ? pkd.getName() : "null";
-                EditorGUILayout.LabelField(new GUIContent(" "), new GUIContent(pokemonName));
-                EditorGUILayout.Space();
-                strings_Prop.GetArrayElementAtIndex(0).stringValue =
-                    EditorGUILayout.TextField(new GUIContent("Nickname"),
-                        strings_Prop.GetArrayElementAtIndex(0).stringValue);
-                ints_Prop.GetArrayElementAtIndex(1).intValue = EditorGUILayout.IntSlider(new GUIContent("Level"),
-                    ints_Prop.GetArrayElementAtIndex(1).intValue, 1, 100);
-                //Gender
-                if (pkd != null)
-                {
-                    if (pkd.getMaleRatio() == -1)
-                    {
-                        EditorGUILayout.LabelField(new GUIContent("Gender"), new GUIContent("Genderless"));
-                    }
-                    else if (pkd.getMaleRatio() == 0)
-                    {
-                        EditorGUILayout.LabelField(new GUIContent("Gender"), new GUIContent("Female"));
-                    }
-                    else if (pkd.getMaleRatio() == 100)
-                    {
-                        EditorGUILayout.LabelField(new GUIContent("Gender"), new GUIContent("Male"));
-                    }
-                    else
-                    {
-//if not a set gender
-                        ints_Prop.GetArrayElementAtIndex(2).intValue = EditorGUILayout.Popup(new GUIContent("Gender"),
-                            ints_Prop.GetArrayElementAtIndex(2).intValue, new GUIContent[]
-                            {
-                                new GUIContent("Male"), new GUIContent("Female"), new GUIContent("Calculate")
-                            });
-                    }
-                }
-                else
-                {
-                    EditorGUILayout.LabelField(new GUIContent("Gender"));
-                }
-                EditorGUILayout.PropertyField(bool0_Prop, new GUIContent("Is Shiny"));
-                strings_Prop.GetArrayElementAtIndex(1).stringValue =
-                    EditorGUILayout.TextField(new GUIContent("Original Trainer"),
-                        strings_Prop.GetArrayElementAtIndex(1).stringValue);
-                strings_Prop.GetArrayElementAtIndex(2).stringValue =
-                    EditorGUILayout.TextField(new GUIContent("Poké Ball"),
-                        strings_Prop.GetArrayElementAtIndex(2).stringValue);
-                strings_Prop.GetArrayElementAtIndex(3).stringValue =
-                    EditorGUILayout.TextField(new GUIContent("Held Item"),
-                        strings_Prop.GetArrayElementAtIndex(3).stringValue);
-                //Nature
-                string[] natureNames = NatureDatabase.getNatureNames();
-                GUIContent[] natures = new GUIContent[natureNames.Length + 1];
-                natures[0] = new GUIContent("Random");
-                for (int i = 1; i < natures.Length; i++)
-                {
-                    natures[i] =
-                        new GUIContent(natureNames[i - 1].Substring(0, 1) +
-                                       natureNames[i - 1].Substring(1, natureNames[i - 1].Length - 1).ToLower() +
-                                       "\t | " + NatureDatabase.getNature(i - 1).getUpStat() + "+ | " +
-                                       NatureDatabase.getNature(i - 1).getDownStat() + "-");
-                }
-                ints_Prop.GetArrayElementAtIndex(3).intValue = EditorGUILayout.Popup(new GUIContent("Nature"),
-                    ints_Prop.GetArrayElementAtIndex(3).intValue, natures);
-                //Ability
-                if (pkd != null)
-                {
-                    ints_Prop.GetArrayElementAtIndex(4).intValue = EditorGUILayout.Popup(new GUIContent("Ability"),
-                        ints_Prop.GetArrayElementAtIndex(4).intValue, new GUIContent[]
-                        {
-                            new GUIContent("1: " + pkd.getAbility(0)), new GUIContent("2: " + pkd.getAbility(1)),
-                            new GUIContent("(HA) " + pkd.getAbility(2))
-                        });
-                }
-                else
-                {
-                    EditorGUILayout.LabelField(new GUIContent("Ability"));
-                }
-
-                EditorGUILayout.Space();
-
-                EditorGUILayout.LabelField(new GUIContent("Custom Moveset"), new GUIContent("(Blanks will be default)"));
-                EditorGUILayout.BeginHorizontal();
-                strings_Prop.GetArrayElementAtIndex(4).stringValue =
-                    EditorGUILayout.TextField(strings_Prop.GetArrayElementAtIndex(4).stringValue);
-                strings_Prop.GetArrayElementAtIndex(5).stringValue =
-                    EditorGUILayout.TextField(strings_Prop.GetArrayElementAtIndex(5).stringValue);
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                strings_Prop.GetArrayElementAtIndex(6).stringValue =
-                    EditorGUILayout.TextField(strings_Prop.GetArrayElementAtIndex(6).stringValue);
-                strings_Prop.GetArrayElementAtIndex(7).stringValue =
-                    EditorGUILayout.TextField(strings_Prop.GetArrayElementAtIndex(7).stringValue);
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                string IVstring = (bool1_Prop.boolValue) ? "Using Custom IVs" : "Using Random IVs";
-                bool1_Prop.boolValue = EditorGUILayout.Foldout(bool1_Prop.boolValue, new GUIContent(IVstring));
-                if (bool1_Prop.boolValue)
-                {
-                    ints_Prop.GetArrayElementAtIndex(5).intValue = EditorGUILayout.IntSlider(new GUIContent("HP"),
-                        ints_Prop.GetArrayElementAtIndex(5).intValue, 0, 31);
-                    ints_Prop.GetArrayElementAtIndex(6).intValue = EditorGUILayout.IntSlider(new GUIContent("ATK"),
-                        ints_Prop.GetArrayElementAtIndex(6).intValue, 0, 31);
-                    ints_Prop.GetArrayElementAtIndex(7).intValue = EditorGUILayout.IntSlider(new GUIContent("DEF"),
-                        ints_Prop.GetArrayElementAtIndex(7).intValue, 0, 31);
-                    ints_Prop.GetArrayElementAtIndex(8).intValue = EditorGUILayout.IntSlider(new GUIContent("SPA"),
-                        ints_Prop.GetArrayElementAtIndex(8).intValue, 0, 31);
-                    ints_Prop.GetArrayElementAtIndex(9).intValue = EditorGUILayout.IntSlider(new GUIContent("SPD"),
-                        ints_Prop.GetArrayElementAtIndex(9).intValue, 0, 31);
-                    ints_Prop.GetArrayElementAtIndex(10).intValue = EditorGUILayout.IntSlider(new GUIContent("SPE"),
-                        ints_Prop.GetArrayElementAtIndex(10).intValue, 0, 31);
-                }
-                break;
-
+            //case CustomEventDetails.CustomEventType.ReceivePokemon:
+            //    ints_Prop.arraySize = 11;
+            //    strings_Prop.arraySize = 8;
+            //
+            //    int0_Prop.intValue = EditorGUILayout.IntField(new GUIContent("Jump To on Fail"), int0_Prop.intValue);
+            //    EditorGUILayout.Space();
+            //
+            //    ints_Prop.GetArrayElementAtIndex(0).intValue = EditorGUILayout.IntField(new GUIContent("Pokemon ID"),
+            //        ints_Prop.GetArrayElementAtIndex(0).intValue);
+            //    
+            //    PokemonUnity.Monster.Data.PokemonData pkd = new PokemonUnity.Monster.Data.PokemonData();
+            //    if (ints_Prop.GetArrayElementAtIndex(0).intValue >= PokemonUnity.Game.PokemonData.Count)
+            //    {
+            //        pkd = PokemonUnity.Game.PokemonData[(PokemonUnity.Pokemons)ints_Prop.GetArrayElementAtIndex(0).intValue];
+            //    }
+            //
+            //    string pokemonName = (pkd.ID != PokemonUnity.Pokemons.NONE) ? pkd.ID.ToString() : "null";
+            //    EditorGUILayout.LabelField(new GUIContent(" "), new GUIContent(pokemonName));
+            //    EditorGUILayout.Space();
+            //    strings_Prop.GetArrayElementAtIndex(0).stringValue =
+            //        EditorGUILayout.TextField(new GUIContent("Nickname"),
+            //            strings_Prop.GetArrayElementAtIndex(0).stringValue);
+            //    ints_Prop.GetArrayElementAtIndex(1).intValue = EditorGUILayout.IntSlider(new GUIContent("Level"),
+            //        ints_Prop.GetArrayElementAtIndex(1).intValue, 1, 100);
+            //    //Gender
+            //    if (pkd != null)
+            //    {
+            //        if (pkd.getMaleRatio() == -1)
+            //        {
+            //            EditorGUILayout.LabelField(new GUIContent("Gender"), new GUIContent("Genderless"));
+            //        }
+            //        else if (pkd.getMaleRatio() == 0)
+            //        {
+            //            EditorGUILayout.LabelField(new GUIContent("Gender"), new GUIContent("Female"));
+            //        }
+            //        else if (pkd.getMaleRatio() == 100)
+            //        {
+            //            EditorGUILayout.LabelField(new GUIContent("Gender"), new GUIContent("Male"));
+            //        }
+            //        else
+            //        {
+//if not a s//et gender
+            //            ints_Prop.GetArrayElementAtIndex(2).intValue = EditorGUILayout.Popup(new GUIContent("Gender"),
+            //                ints_Prop.GetArrayElementAtIndex(2).intValue, new GUIContent[]
+            //                {
+            //                    new GUIContent("Male"), new GUIContent("Female"), new GUIContent("Calculate")
+            //                });
+            //        }
+            //    }
+            //    else
+            //    {
+            //        EditorGUILayout.LabelField(new GUIContent("Gender"));
+            //    }
+            //    EditorGUILayout.PropertyField(bool0_Prop, new GUIContent("Is Shiny"));
+            //    strings_Prop.GetArrayElementAtIndex(1).stringValue =
+            //        EditorGUILayout.TextField(new GUIContent("Original Trainer"),
+            //            strings_Prop.GetArrayElementAtIndex(1).stringValue);
+            //    strings_Prop.GetArrayElementAtIndex(2).stringValue =
+            //        EditorGUILayout.TextField(new GUIContent("Poké Ball"),
+            //            strings_Prop.GetArrayElementAtIndex(2).stringValue);
+            //    strings_Prop.GetArrayElementAtIndex(3).stringValue =
+            //        EditorGUILayout.TextField(new GUIContent("Held Item"),
+            //            strings_Prop.GetArrayElementAtIndex(3).stringValue);
+            //    //Nature
+            //    string[] natureNames = NatureDatabase.getNatureNames();
+            //    GUIContent[] natures = new GUIContent[natureNames.Length + 1];
+            //    natures[0] = new GUIContent("Random");
+            //    for (int i = 1; i < natures.Length; i++)
+            //    {
+            //        natures[i] =
+            //            new GUIContent(natureNames[i - 1].Substring(0, 1) +
+            //                           natureNames[i - 1].Substring(1, natureNames[i - 1].Length - 1).ToLower() +
+            //                           "\t | " + NatureDatabase.getNature(i - 1).getUpStat() + "+ | " +
+            //                           NatureDatabase.getNature(i - 1).getDownStat() + "-");
+            //    }
+            //    ints_Prop.GetArrayElementAtIndex(3).intValue = EditorGUILayout.Popup(new GUIContent("Nature"),
+            //        ints_Prop.GetArrayElementAtIndex(3).intValue, natures);
+            //    //Ability
+            //    if (pkd != null)
+            //    {
+            //        ints_Prop.GetArrayElementAtIndex(4).intValue = EditorGUILayout.Popup(new GUIContent("Ability"),
+            //            ints_Prop.GetArrayElementAtIndex(4).intValue, new GUIContent[]
+            //            {
+            //                new GUIContent("1: " + pkd.getAbility(0)), new GUIContent("2: " + pkd.getAbility(1)),
+            //                new GUIContent("(HA) " + pkd.getAbility(2))
+            //            });
+            //    }
+            //    else
+            //    {
+            //        EditorGUILayout.LabelField(new GUIContent("Ability"));
+            //    }
+            //
+            //    EditorGUILayout.Space();
+            //
+            //    EditorGUILayout.LabelField(new GUIContent("Custom Moveset"), new GUIContent("(Blanks will be default)"));
+            //    EditorGUILayout.BeginHorizontal();
+            //    strings_Prop.GetArrayElementAtIndex(4).stringValue =
+            //        EditorGUILayout.TextField(strings_Prop.GetArrayElementAtIndex(4).stringValue);
+            //    strings_Prop.GetArrayElementAtIndex(5).stringValue =
+            //        EditorGUILayout.TextField(strings_Prop.GetArrayElementAtIndex(5).stringValue);
+            //    EditorGUILayout.EndHorizontal();
+            //    EditorGUILayout.BeginHorizontal();
+            //    strings_Prop.GetArrayElementAtIndex(6).stringValue =
+            //        EditorGUILayout.TextField(strings_Prop.GetArrayElementAtIndex(6).stringValue);
+            //    strings_Prop.GetArrayElementAtIndex(7).stringValue =
+            //        EditorGUILayout.TextField(strings_Prop.GetArrayElementAtIndex(7).stringValue);
+            //    EditorGUILayout.EndHorizontal();
+            //
+            //    EditorGUILayout.Space();
+            //
+            //    string IVstring = (bool1_Prop.boolValue) ? "Using Custom IVs" : "Using Random IVs";
+            //    bool1_Prop.boolValue = EditorGUILayout.Foldout(bool1_Prop.boolValue, new GUIContent(IVstring));
+            //    if (bool1_Prop.boolValue)
+            //    {
+            //        ints_Prop.GetArrayElementAtIndex(5).intValue = EditorGUILayout.IntSlider(new GUIContent("HP"),
+            //            ints_Prop.GetArrayElementAtIndex(5).intValue, 0, 31);
+            //        ints_Prop.GetArrayElementAtIndex(6).intValue = EditorGUILayout.IntSlider(new GUIContent("ATK"),
+            //            ints_Prop.GetArrayElementAtIndex(6).intValue, 0, 31);
+            //        ints_Prop.GetArrayElementAtIndex(7).intValue = EditorGUILayout.IntSlider(new GUIContent("DEF"),
+            //            ints_Prop.GetArrayElementAtIndex(7).intValue, 0, 31);
+            //        ints_Prop.GetArrayElementAtIndex(8).intValue = EditorGUILayout.IntSlider(new GUIContent("SPA"),
+            //            ints_Prop.GetArrayElementAtIndex(8).intValue, 0, 31);
+            //        ints_Prop.GetArrayElementAtIndex(9).intValue = EditorGUILayout.IntSlider(new GUIContent("SPD"),
+            //            ints_Prop.GetArrayElementAtIndex(9).intValue, 0, 31);
+            //        ints_Prop.GetArrayElementAtIndex(10).intValue = EditorGUILayout.IntSlider(new GUIContent("SPE"),
+            //            ints_Prop.GetArrayElementAtIndex(10).intValue, 0, 31);
+            //    }
+            //    break;
+            //
             case CustomEventDetails.CustomEventType.TrainerBattle:
                 EditorGUILayout.PropertyField(object0_Prop, new GUIContent("Trainer Script"));
                 EditorGUILayout.PropertyField(bool0_Prop, new GUIContent("Loss Allowed?"));

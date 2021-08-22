@@ -696,7 +696,7 @@ public class PartyHandler : MonoBehaviour
                                         {
                                             PokemonUnity.Inventory.Items receivedItem = selectedPokemon.SwapItem(chosenItem.ToItems());
                                             SaveData.currentSave.Bag.addItem(receivedItem, 1);
-                                            SaveData.currentSave.Bag.removeItem(chosenItem, 1);
+                                            SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
 
                                             Dialog.drawDialogBox();
                                             yield return
@@ -781,7 +781,7 @@ public class PartyHandler : MonoBehaviour
                                     if (!string.IsNullOrEmpty(chosenItem))
                                     {
                                         selectedPokemon.SwapItem(chosenItem.ToItems());
-                                        SaveData.currentSave.Bag.removeItem(chosenItem, 1);
+                                        SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
 
                                         updateParty();
                                         updateFrames();

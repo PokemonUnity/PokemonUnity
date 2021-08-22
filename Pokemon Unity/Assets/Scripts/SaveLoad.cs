@@ -22,6 +22,9 @@ public static class SaveLoad
                 SaveData.currentSave.Save();
                 savedGames[SaveData.currentSave.getFileIndex()] = SaveData.currentSave;
                 BinaryFormatter bf = new BinaryFormatter();
+                if (File.Exists(Application.persistentDataPath + "/playerData.pkud"))
+                    File.Delete(Application.persistentDataPath + "/playerData.pkud");
+
                 FileStream file = File.Create(Application.persistentDataPath + "/playerData.pkud");
                 SaveData.SaveFile[] savedFiles = new SaveData.SaveFile[savedGames.Length];
                 for (int i = 0; i < savedGames.Length; i++)

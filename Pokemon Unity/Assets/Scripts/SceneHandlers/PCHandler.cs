@@ -1447,8 +1447,8 @@ public class PCHandler : MonoBehaviour
                                                 {
                                                     //string receivedItem = currentPokemon.swapHeldItem(chosenItem);
                                                     string receivedItem = currentPokemon.SwapItem(chosenItem.ToItems()).toString();
-                                                    SaveData.currentSave.Bag.addItem(receivedItem, 1);
-                                                    SaveData.currentSave.Bag.removeItem(chosenItem, 1);
+                                                    SaveData.currentSave.Bag.addItem(receivedItem.ToItems(), 1);
+                                                    SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
 
                                                     Dialog.drawDialogBox();
                                                     yield return
@@ -1477,7 +1477,7 @@ public class PCHandler : MonoBehaviour
                                             //Take
                                             Dialog.undrawChoiceBox();
                                             string receivedItem = currentPokemon.SwapItem(PokemonUnity.Inventory.Items.NONE).toString();
-                                            SaveData.currentSave.Bag.addItem(receivedItem, 1);
+                                            SaveData.currentSave.Bag.addItem(receivedItem.ToItems(), 1);
 
                                             //adjust displayed data
                                             updateSelectedInfo(currentPokemon);
@@ -1534,7 +1534,7 @@ public class PCHandler : MonoBehaviour
                                             if (!string.IsNullOrEmpty(chosenItem))
                                             {
                                                 currentPokemon.SwapItem(chosenItem.ToItems()).toString();
-                                                SaveData.currentSave.Bag.removeItem(chosenItem, 1);
+                                                SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
 
                                                 //adjust displayed data
                                                 updateSelectedInfo(currentPokemon);
@@ -1914,8 +1914,8 @@ public class PCHandler : MonoBehaviour
                                                     if (itemChosenIndex == 1)
                                                     {
                                                         string receivedItem = currentPokemon.SwapItem(chosenItem.ToItems()).toString();
-                                                        SaveData.currentSave.Bag.addItem(receivedItem, 1);
-                                                        SaveData.currentSave.Bag.removeItem(chosenItem, 1);
+                                                        SaveData.currentSave.Bag.addItem(receivedItem.ToItems(), 1);
+                                                        SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
 
                                                         Dialog.drawDialogBox();
                                                         yield return
@@ -1944,7 +1944,7 @@ public class PCHandler : MonoBehaviour
                                                 //Take
                                                 Dialog.undrawChoiceBox();
                                                 string receivedItem = currentPokemon.SwapItem(PokemonUnity.Inventory.Items.NONE).toString();
-                                                SaveData.currentSave.Bag.addItem(receivedItem, 1);
+                                                SaveData.currentSave.Bag.addItem(receivedItem.ToItems(), 1);
 
                                                 //adjust displayed data
                                                 updateSelectedInfo(currentPokemon);
@@ -2002,7 +2002,7 @@ public class PCHandler : MonoBehaviour
                                                 if (!string.IsNullOrEmpty(chosenItem))
                                                 {
                                                     currentPokemon.SwapItem(chosenItem.ToItems());
-                                                    SaveData.currentSave.Bag.removeItem(chosenItem, 1);
+                                                    SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
 
                                                     //adjust displayed data
                                                     updateSelectedInfo(currentPokemon);
@@ -2094,7 +2094,7 @@ public class PCHandler : MonoBehaviour
                                                 releaseIndex = Dialog.chosenIndex;
                                                 if (releaseIndex == 1)
                                                 {
-                                                    yield return StartCoroutine(releasePokemon(0, currentPosition - 33))
+                                                    yield return StartCoroutine(releasePokemon(-1, currentPosition - 33))
                                                         ;
                                                     Dialog.drawDialogBox();
                                                     Dialog.drawTextInstant(pokemonName + " was released.");

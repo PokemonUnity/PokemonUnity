@@ -125,16 +125,17 @@ public class MainMenuHandler : MonoBehaviour
                             + "\n" + playerTime;
             dataTextShadow.text = dataText.text;
             
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < SaveLoad.savedGames[selectedFile].Player.Party.Length; i++)
             {
                 //if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null)
-                if (SaveLoad.savedGames[selectedFile].Player.Party[i] != null)
+                if (SaveLoad.savedGames[selectedFile].Player.Party[i].IsNotNullOrNone())
                 {
                     //pokemon[i].texture = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIcons();
                     pokemon[i].texture = SaveLoad.savedGames[selectedFile].Player.Party[i].GetIcons();
                 }
                 else
                 {
+                    
                     pokemon[i].texture = null;
                 }
             }

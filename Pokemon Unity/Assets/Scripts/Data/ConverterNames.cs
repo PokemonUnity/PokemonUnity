@@ -1,46 +1,47 @@
-﻿
+﻿using PokemonUnity;
+using PokemonUnity.Inventory;
 
 static class PKUName
 {
     // -- ENUM --
-    public static string toString(this PokemonUnity.Moves move)
+    public static string toString(this Moves move)
     {
         char[] result = move.ToString().ToLower().ToCharArray();
 
         switch (move)
         {
-            case PokemonUnity.Moves.NONE: return null;
-            case PokemonUnity.Moves.SAFEGUARD: return "Safe Guard";
+            case Moves.NONE: return null;
+            case Moves.SAFEGUARD: return "Safe Guard";
             default:
                 {
                     return new string(ChangeCharsFromEnum(result));
                 }
         }
     }
-    public static string toString(this PokemonUnity.Inventory.Items item)
+    public static string toString(this Items item)
     {
         char[] result = item.ToString().ToLower().ToCharArray();
 
         switch (item)
         {
             // Need to change to Poke Ball
-            case PokemonUnity.Inventory.Items.NONE: return null;
-            case PokemonUnity.Inventory.Items.POKE_BALL: return "Poké Ball";
-            case PokemonUnity.Inventory.Items.POKE_DOLL: return "Poké Doll";
+            case Items.NONE: return null;
+            case Items.POKE_BALL: return "Poké Ball";
+            case Items.POKE_DOLL: return "Poké Doll";
             default:
                 {
                     return new string(ChangeCharsFromEnum(result));
                 }
         }
     }
-    public static string toString(this PokemonUnity.Pokemons pokemon)
+    public static string toString(this Pokemons pokemon)
     {
         char[] result = pokemon.ToString().ToLower().ToCharArray();
 
         switch (pokemon)
         {
-            case PokemonUnity.Pokemons.NONE: return null;
-            case PokemonUnity.Pokemons.HO_OH: return "Ho-Oh";
+            case Pokemons.NONE: return null;
+            case Pokemons.HO_OH: return "Ho-Oh";
             default:
                 {
                     return new string(ChangeCharsFromEnum(result));
@@ -48,19 +49,19 @@ static class PKUName
         }
     }
     // -- STRING --
-    public static PokemonUnity.Moves ToMoves(this string value)
+    public static Moves ToMoves(this string value)
     {
         if (string.IsNullOrEmpty(value))
-            return PokemonUnity.Moves.NONE;
+            return Moves.NONE;
         switch (value)
         {
-            case "Safe Guard": return PokemonUnity.Moves.SAFEGUARD;
-            case "TM 1": return PokemonUnity.Moves.BULK_UP; // Tempo
+            case "Safe Guard": return Moves.SAFEGUARD;
+            case "TM 1": return Moves.BULK_UP; // Tempo
             default:
-                return (PokemonUnity.Moves)System.Enum.Parse(typeof(PokemonUnity.Moves), new string(ChangeCharsFromString(value.ToUpper().ToCharArray())));
+                return (Moves)System.Enum.Parse(typeof(Moves), new string(ChangeCharsFromString(value.ToUpper().ToCharArray())));
         }
     }
-    public static PokemonUnity.Inventory.Items ToItems(this string value)
+    public static Items ToItems(this string value)
     {
         if (string.IsNullOrEmpty(value))
             return PokemonUnity.Inventory.Items.NONE;

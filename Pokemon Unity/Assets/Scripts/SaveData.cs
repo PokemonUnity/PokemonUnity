@@ -11,7 +11,7 @@ public class SaveData
     {
         public int fileIndex;
         public int buildID;
-        public Player player;
+        public SeriPlayer player;
 
         public string levelName;
 
@@ -37,7 +37,7 @@ public class SaveData
 
     public PokemonUnity.Character.PC PC { get { return Player.PC; } }
     
-    public Bag Bag { get { return Player.Bag; } }
+    public PokemonUnity.Character.Bag Bag { get { return Player.Bag; } }
 
     public Player Player { get; set; }
 
@@ -47,7 +47,6 @@ public class SaveData
     {
         savefile = new SaveFile();
         savefile.fileIndex = fileIndex;
-        //PC = new PC();
         Player = new Player();
         Save();
     }
@@ -56,12 +55,12 @@ public class SaveData
     {
         savefile = loadData;
         savefile.fileIndex = loadData.fileIndex;
-        Player = loadData.player;
+        Player = loadData.player.GetPlayer();
     }
 
     public void Save()
     {
-        savefile.player = Player;
+        savefile.player = new SeriPlayer(Player);
     }
 
     public int getFileIndex()

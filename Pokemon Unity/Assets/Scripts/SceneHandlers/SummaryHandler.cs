@@ -337,7 +337,7 @@ public class SummaryHandler : MonoBehaviour
 
         dexNo.text = ((int)selectedPokemon.Species).ToString();
         dexNoShadow.text = dexNo.text;
-        species.text = PokemonDatabase.getPokemon(selectedPokemon.Species).getName();
+        species.text = selectedPokemon.Species.toString();
         speciesShadow.text = species.text;
         string type1string = selectedPokemon.Type1.ToString();
         string type2string = selectedPokemon.Type2.ToString();
@@ -364,13 +364,12 @@ public class SummaryHandler : MonoBehaviour
         expPoints.text = selectedPokemon.Exp.ToString();
         expPointsShadow.text = expPoints.text;
         float expCurrentLevel =
-            PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.Species).getLevelingRate(),
+            //PokemonDatabase.getLevelExp(selectedPokemon.GrowthRate,
+            //    selectedPokemon.Level);
+            PokemonUnity.Monster.Data.Experience.GetStartExperience(selectedPokemon.GrowthRate,
                 selectedPokemon.Level);
         float expNextlevel =
             selectedPokemon.Experience.NextLevel;
-        //float expNextlevel =
-        //   PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
-        //       selectedPokemon.getLevel() + 1);
         float expAlong = selectedPokemon.Exp - expCurrentLevel;
         float expDistance = expAlong / (expNextlevel - expCurrentLevel);
         toNextLevel.text = (expNextlevel - selectedPokemon.Exp).ToString();
@@ -442,11 +441,11 @@ public class SummaryHandler : MonoBehaviour
 
         float[] natureMod = new float[]
         {
-            NatureDatabase.getNature(selectedPokemon.Nature.ToString()).getATK(),
-            NatureDatabase.getNature(selectedPokemon.Nature.ToString()).getDEF(),
-            NatureDatabase.getNature(selectedPokemon.Nature.ToString()).getSPA(),
-            NatureDatabase.getNature(selectedPokemon.Nature.ToString()).getSPD(),
-            NatureDatabase.getNature(selectedPokemon.Nature.ToString()).getSPE()
+            PokemonUnity.Game.NatureData[selectedPokemon.Nature].ATK,
+            PokemonUnity.Game.NatureData[selectedPokemon.Nature].DEF,
+            PokemonUnity.Game.NatureData[selectedPokemon.Nature].SPA,
+            PokemonUnity.Game.NatureData[selectedPokemon.Nature].SPD,
+            PokemonUnity.Game.NatureData[selectedPokemon.Nature].SPE,
         };
         Stats.text =
             selectedPokemon.ATK + "\n" +
@@ -475,7 +474,7 @@ public class SummaryHandler : MonoBehaviour
         }
 
 
-        abilityName.text = PokemonDatabase.getPokemon(selectedPokemon.Species).getAbility(selectedPokemon.abilityIndex);
+        abilityName.text = selectedPokemon.Ability.ToString();
         abilityNameShadow.text = abilityName.text;
         //abilities not yet implemented
         abilityDescription.text = "";
@@ -579,13 +578,16 @@ public class SummaryHandler : MonoBehaviour
 
     private void updateMoveToLearn(string moveName)
     {
-        MoveData move = MoveDatabase.getMove(moveName);
+        //MoveData move = MoveDatabase.getMove(moveName);
+        PokemonUnity.Attack.Move move = new PokemonUnity.Attack.Move(moveName.ToMoves());
         moveNewName.text = moveName;
         moveNewNameShadow.text = moveNewName.text;
-        moveNewType.sprite = Resources.Load<Sprite>("PCSprites/type" + move.getType().ToString());
+        //moveNewType.sprite = Resources.Load<Sprite>("PCSprites/type" + move.getType().ToString());
+        moveNewType.sprite = Resources.Load<Sprite>("PCSprites/type" + move.Type.ToString());
         moveNewPPText.text = "PP";
         moveNewPPTextShadow.text = moveNewPPText.text;
-        moveNewPP.text = move.getPP() + "/" + move.getPP();
+        //moveNewPP.text = move.getPP() + "/" + move.getPP();
+        moveNewPP.text = move.TotalPP + "/" + move.TotalPP;
         moveNewPPShadow.text = moveNewPP.text;
     }
 
@@ -603,22 +605,22 @@ public class SummaryHandler : MonoBehaviour
         }
         else
         {
-            MoveData selectedMove = MoveDatabase.getMove(moveName);
+            PokemonUnity.Attack.Move selectedMove = new PokemonUnity.Attack.Move(moveName.ToMoves());
             selectedCategory.sprite =
-                Resources.Load<Sprite>("PCSprites/category" + selectedMove.getCategory().ToString());
-            selectedPower.text = "" + selectedMove.getPower();
+                Resources.Load<Sprite>("PCSprites/category" + selectedMove.Category.ToString());
+            selectedPower.text = "" + selectedMove.Power;
             if (selectedPower.text == "0")
             {
                 selectedPower.text = "-";
             }
             selectedPowerShadow.text = selectedPower.text;
-            selectedAccuracy.text = "" + Mathf.Round(selectedMove.getAccuracy() /* 100f*/);
+            selectedAccuracy.text = "" + Mathf.Round(selectedMove.Accuracy.GetValueOrDefault() /* 100f*/);
             if (selectedAccuracy.text == "0")
             {
                 selectedAccuracy.text = "-";
             }
             selectedAccuracyShadow.text = selectedAccuracy.text;
-            selectedDescription.text = selectedMove.getDescription();
+            selectedDescription.text = PokemonUnity.Game.MoveData[selectedMove.MoveId].Description;
             selectedDescriptionShadow.text = selectedDescription.text;
         }
     }

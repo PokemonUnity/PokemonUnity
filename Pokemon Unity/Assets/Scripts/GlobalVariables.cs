@@ -108,15 +108,14 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.Player.Party[4].ballUsed = Items.POKE_BALL;
         SaveData.currentSave.Player.addPokemon(new Pokemon((Pokemons)11, SaveData.currentSave.Player.Trainer, 100));
         SaveData.currentSave.Player.Party[5].ballUsed = Items.POKE_BALL;
-
+        
         SaveData.currentSave.Player.addPokemon(new Pokemon((Pokemons)197, SaveData.currentSave.Player.Trainer, 12));
         SaveData.currentSave.Player.PC.AllBoxes[0][0].ballUsed = Items.POKE_BALL;
-        Debug.Log("Pokemon: " + SaveData.currentSave.Player.PC.AllBoxes[0][0].OT.Value.Name);
         SaveData.currentSave.Player.addPokemon(new Pokemon((Pokemons)393, SaveData.currentSave.Player.Trainer, 52));
         SaveData.currentSave.Player.PC.AllBoxes[0][1].ballUsed = Items.POKE_BALL;
         SaveData.currentSave.Player.addPokemon(new Pokemon((Pokemons)68, SaveData.currentSave.Player.Trainer, 37));
         SaveData.currentSave.Player.PC.AllBoxes[0][2].ballUsed = Items.POKE_BALL;
-
+        
         SaveData.currentSave.Player.Party[3].replaceMove(0, Moves.SURF);
         SaveData.currentSave.Player.Party[3].addMove(Moves.WATERFALL);
         SaveData.currentSave.Player.Party[3].Experience.AddExperience(100);
@@ -133,24 +132,24 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.Bag.addItem(Items.POTION, 4);
         SaveData.currentSave.Bag.addItem(Items.POKE_DOLL, 13);
         SaveData.currentSave.Bag.addItem(Items.ESCAPE_ROPE, 4);
-        SaveData.currentSave.Bag.addItem("Fire Stone", 2);
+        SaveData.currentSave.Bag.addItem(Items.FIRE_STONE, 2);
         SaveData.currentSave.Bag.removeItem(Items.POKE_DOLL, 10);
-        SaveData.currentSave.Bag.addItem("Stardust", 1);
+        SaveData.currentSave.Bag.addItem(Items.STARDUST, 1);
         SaveData.currentSave.Bag.addItem(Items.WATER_STONE, 1);
-        SaveData.currentSave.Bag.addItem("Moon Stone", 1);
+        SaveData.currentSave.Bag.addItem(Items.MOON_STONE, 1);
         SaveData.currentSave.Bag.addItem(Items.SUPER_POTION, 2);
         SaveData.currentSave.Bag.addItem(Items.GREAT_BALL, 4);
-        SaveData.currentSave.Bag.addItem("Psyshock", 1); // TM) TODO: USE ENUM FOR MOVE?
-        SaveData.currentSave.Bag.addItem("Bulk Up", 1);  // TM) TODO: USE ENUM FOR MOVE?
+        //SaveData.currentSave.Bag.addItem(Moves.PSYSHOCK, 1); // TM) TODO: USE ENUM FOR MOVE?
+        //SaveData.currentSave.Bag.addItem(Moves.BULK_UP, 1);  // TM) TODO: USE ENUM FOR MOVE?
         SaveData.currentSave.Bag.addItem(Items.ELIXIR, 2);
         SaveData.currentSave.Bag.addItem(Items.ETHER, 1);
-        SaveData.currentSave.Bag.addItem("Antidote", 1);
-        SaveData.currentSave.Bag.addItem("Full Heal", 1);
+        SaveData.currentSave.Bag.addItem(Items.ANTIDOTE, 1);
+        SaveData.currentSave.Bag.addItem(Items.FULL_HEAL, 1);
         SaveData.currentSave.Bag.addItem(Items.RARE_CANDY, 100);
-        SaveData.currentSave.Bag.addItem("Paralyze Heal", 1);
-        SaveData.currentSave.Bag.addItem("Awakening", 1);
+        SaveData.currentSave.Bag.addItem(Items.PARALYZE_HEAL, 1);
+        SaveData.currentSave.Bag.addItem(Items.AWAKENING, 1);
         SaveData.currentSave.Bag.addItem(Items.BURN_HEAL, 1);
-        SaveData.currentSave.Bag.addItem("Ice Heal", 1);
+        SaveData.currentSave.Bag.addItem(Items.ICE_HEAL, 1);
         SaveData.currentSave.Bag.addItem(Items.MAX_POTION, 1);
         SaveData.currentSave.Bag.addItem(Items.HYPER_POTION, 1);
 
