@@ -505,7 +505,7 @@ public class PauseHandler : MonoBehaviour
                             Dialog.undrawChoiceBox();
                             Dialog.drawDialogBox();
                         
-                            SaveData.currentSave.savefile.levelName = Application.loadedLevelName;
+                            SaveData.currentSave.savefile.levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
                             SaveData.currentSave.Player.Position = new SeriV3(PlayerMovement.player.transform.position);
                             SaveData.currentSave.Player.Direction = PlayerMovement.player.direction;
                             SaveData.currentSave.savefile.mapName = PlayerMovement.player.accessedMapSettings.mapName;

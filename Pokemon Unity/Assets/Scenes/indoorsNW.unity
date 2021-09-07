@@ -3667,6 +3667,54 @@ PrefabInstance:
       propertyPath: transferScene
       value: overworldNW
       objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: itemCatalog.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: customPrices.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: itemCatalog.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: itemCatalog.Array.data[1]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: itemCatalog.Array.data[2]
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: itemCatalog.Array.data[3]
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: itemCatalog.Array.data[4]
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: customPrices.Array.data[0]
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: customPrices.Array.data[1]
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: customPrices.Array.data[2]
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: customPrices.Array.data[3]
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448242, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
+      propertyPath: customPrices.Array.data[4]
+      value: 150
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d3840b2da5e9ba46ab77e5ef0291aba, type: 3}
 --- !u!1 &794782224
@@ -6849,7 +6897,6 @@ MonoBehaviour:
   trainerParty:
   - ID: 393
     level: 5
-    gender: 2
     heldItem: 
     ability: 0
   battleBGM: {fileID: 8300000, guid: 55ed1fa0d101d1f4a9376c5263fcaa12, type: 3}

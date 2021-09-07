@@ -95,7 +95,7 @@ public class PCHandler : MonoBehaviour
 
     private bool running = false;
     private bool carrying = false;
-    private bool switching = false;
+    //private bool switching = false;
 
     //private SceneTransition sceneTransition;
 

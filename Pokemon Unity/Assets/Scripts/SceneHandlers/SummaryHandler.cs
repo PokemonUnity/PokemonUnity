@@ -573,27 +573,24 @@ public class SummaryHandler : MonoBehaviour
             move4PPShadow.text = move4PP.text;
         }
 
-        updateSelectedMove(null);
+        updateSelectedMove(PokemonUnity.Moves.NONE);
     }
 
-    private void updateMoveToLearn(string moveName)
+    private void updateMoveToLearn(PokemonUnity.Moves moveName)
     {
-        //MoveData move = MoveDatabase.getMove(moveName);
-        PokemonUnity.Attack.Move move = new PokemonUnity.Attack.Move(moveName.ToMoves());
-        moveNewName.text = moveName;
+        PokemonUnity.Attack.Move move = new PokemonUnity.Attack.Move(moveName);
+        moveNewName.text = moveName.toString();
         moveNewNameShadow.text = moveNewName.text;
-        //moveNewType.sprite = Resources.Load<Sprite>("PCSprites/type" + move.getType().ToString());
         moveNewType.sprite = Resources.Load<Sprite>("PCSprites/type" + move.Type.ToString());
         moveNewPPText.text = "PP";
         moveNewPPTextShadow.text = moveNewPPText.text;
-        //moveNewPP.text = move.getPP() + "/" + move.getPP();
         moveNewPP.text = move.TotalPP + "/" + move.TotalPP;
         moveNewPPShadow.text = moveNewPP.text;
     }
 
-    private void updateSelectedMove(string moveName)
+    private void updateSelectedMove(PokemonUnity.Moves moveName)
     {
-        if (string.IsNullOrEmpty(moveName))
+        if (moveName == PokemonUnity.Moves.NONE)
         {
             selectedCategory.sprite = Resources.Load<Sprite>("null");
             selectedPower.text = null;
@@ -605,7 +602,7 @@ public class SummaryHandler : MonoBehaviour
         }
         else
         {
-            PokemonUnity.Attack.Move selectedMove = new PokemonUnity.Attack.Move(moveName.ToMoves());
+            PokemonUnity.Attack.Move selectedMove = new PokemonUnity.Attack.Move(moveName);
             selectedCategory.sprite =
                 Resources.Load<Sprite>("PCSprites/category" + selectedMove.Category.ToString());
             selectedPower.text = "" + selectedMove.Power;
@@ -624,7 +621,6 @@ public class SummaryHandler : MonoBehaviour
             selectedDescriptionShadow.text = selectedDescription.text;
         }
     }
-
     private IEnumerator moveMoveSelector(Vector3 destinationPosition)
     {
         Vector3 startPosition = moveSelector.rectTransform.localPosition;
@@ -663,18 +659,17 @@ public class SummaryHandler : MonoBehaviour
         SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
     }
 
-
     public IEnumerator control(Pokemon[] pokemonList, int currentPosition)
     {
-        yield return StartCoroutine(control(pokemonList, currentPosition, false, null));
+        yield return StartCoroutine(control(pokemonList, currentPosition, false, PokemonUnity.Moves.NONE));
     }
 
-    public IEnumerator control(Pokemon pokemon, string newMoveString)
+    public IEnumerator control(Pokemon pokemon, PokemonUnity.Moves newMoveString)
     {
         yield return StartCoroutine(control(new Pokemon[] {pokemon}, 0, true, newMoveString));
     }
 
-    public IEnumerator control(Pokemon[] pokemonList, int currentPosition, bool learning, string newMoveString)
+    public IEnumerator control(Pokemon[] pokemonList, int currentPosition, bool learning, PokemonUnity.Moves newMoveString)
     {
         moves.localPosition = (learning) ? new Vector3(0, 32) : Vector3.zero;
         newMove.gameObject.SetActive(learning);
@@ -710,7 +705,7 @@ public class SummaryHandler : MonoBehaviour
 
         if (learning)
         {
-            yield return StartCoroutine(NavigateMoves(pokemonList[currentPosition], true, newMoveString));
+            yield return StartCoroutine(NavigateMoves(pokemonList[currentPosition], true, newMoveString.toString()));
         }
         else
         {
@@ -816,7 +811,7 @@ public class SummaryHandler : MonoBehaviour
         moves.localPosition = positionMod;
         if (learning)
         {
-            updateMoveToLearn(newMoveString);
+            updateMoveToLearn(newMoveString.ToMoves());
         }
 
         PokemonUnity.Attack.Move[] pokeMoveset = pokemon.moves;
@@ -842,7 +837,7 @@ public class SummaryHandler : MonoBehaviour
         int selectedMoveNumber = -1;
 
         moveSelector.rectTransform.localPosition = positions[0] + positionMod;
-        updateSelectedMove(moveset[currentMoveNumber]);
+        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
         yield return null;
         while (navigatingMoves)
         {
@@ -851,7 +846,7 @@ public class SummaryHandler : MonoBehaviour
                 if (currentMoveNumber == 1)
                 {
                     currentMoveNumber = 0;
-                    updateSelectedMove(moveset[currentMoveNumber]);
+                    updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                     SfxHandler.Play(scrollClip);
                     yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                 }
@@ -860,7 +855,7 @@ public class SummaryHandler : MonoBehaviour
                     if (!string.IsNullOrEmpty(moveset[2]))
                     {
                         currentMoveNumber = 2;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
@@ -880,7 +875,7 @@ public class SummaryHandler : MonoBehaviour
                     if (!string.IsNullOrEmpty(moveset[1]))
                     {
                         currentMoveNumber = 1;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
@@ -890,7 +885,7 @@ public class SummaryHandler : MonoBehaviour
                     if (!string.IsNullOrEmpty(moveset[3]))
                     {
                         currentMoveNumber = 3;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
@@ -908,7 +903,7 @@ public class SummaryHandler : MonoBehaviour
                 if (currentMoveNumber == 2)
                 {
                     currentMoveNumber = 0;
-                    updateSelectedMove(moveset[currentMoveNumber]);
+                    updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                     SfxHandler.Play(scrollClip);
                     yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                 }
@@ -917,7 +912,7 @@ public class SummaryHandler : MonoBehaviour
                     if (!string.IsNullOrEmpty(moveset[1]))
                     {
                         currentMoveNumber = 1;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
@@ -934,7 +929,7 @@ public class SummaryHandler : MonoBehaviour
                         {
                             currentMoveNumber = 0;
                         }
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
@@ -952,7 +947,7 @@ public class SummaryHandler : MonoBehaviour
                         {
                             currentMoveNumber = 0;
                         }
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
@@ -965,14 +960,14 @@ public class SummaryHandler : MonoBehaviour
                     if (!string.IsNullOrEmpty(moveset[2]))
                     {
                         currentMoveNumber = 2;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
                     else if (learning)
                     {
                         currentMoveNumber = 4;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
@@ -982,14 +977,14 @@ public class SummaryHandler : MonoBehaviour
                     if (!string.IsNullOrEmpty(moveset[3]))
                     {
                         currentMoveNumber = 3;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
                     else if (learning)
                     {
                         currentMoveNumber = 5;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
@@ -999,14 +994,14 @@ public class SummaryHandler : MonoBehaviour
                     if (currentMoveNumber == 2)
                     {
                         currentMoveNumber = 4;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
                     else if (currentMoveNumber == 3)
                     {
                         currentMoveNumber = 5;
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));
                     }
@@ -1026,7 +1021,7 @@ public class SummaryHandler : MonoBehaviour
                     {
                         navigatingMoves = false;
                         moveSelector.enabled = false;
-                        updateSelectedMove(null);
+                        updateSelectedMove(PokemonUnity.Moves.NONE);
                         SfxHandler.Play(returnClip);
                         yield return new WaitForSeconds(0.2f);
                     }
@@ -1056,7 +1051,7 @@ public class SummaryHandler : MonoBehaviour
                         };
                         //moveset = pokemon.moves;
                         updateSelectionMoveset(pokemon);
-                        updateSelectedMove(moveset[currentMoveNumber]);
+                        updateSelectedMove(moveset[currentMoveNumber].ToMoves());
                         SfxHandler.Play(selectClip);
                         yield return new WaitForSeconds(0.2f);
                     }

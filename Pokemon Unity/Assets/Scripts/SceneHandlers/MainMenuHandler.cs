@@ -220,7 +220,7 @@ public class MainMenuHandler : MonoBehaviour
                     GlobalVariables.global.playerPosition = SaveData.currentSave.Player.Position;
                     GlobalVariables.global.playerDirection = SaveData.currentSave.Player.Direction;
 
-                    Application.LoadLevel(SaveData.currentSave.savefile.levelName);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(SaveData.currentSave.savefile.levelName);
                 }
                 else if (selectedButton == 1)
                 {
@@ -235,7 +235,7 @@ public class MainMenuHandler : MonoBehaviour
                     GlobalVariables.global.playerPosition = new Vector3(78, 0, 29);
                     GlobalVariables.global.playerDirection = 2;
                     GlobalVariables.global.fadeIn = true;
-                    Application.LoadLevel("indoorsNW");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("indoorsNW");
                 }
                 else if (selectedButton == 2)
                 {
@@ -276,7 +276,7 @@ public class MainMenuHandler : MonoBehaviour
 
                     yield return new WaitForSeconds(1f);
 
-                    Application.LoadLevel(Application.loadedLevel);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
                 }
                 else
                 {

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using PokemonUnity.Monster;
 
+// ToDo: Create two sceneHandler for Shop and Bag
 public class BagHandler : MonoBehaviour
 {
     private DialogBoxHandler Dialog;
@@ -115,10 +116,10 @@ public class BagHandler : MonoBehaviour
     public int partyPosition = 0;
     public int partyLength;
 
-    private string[] currentItemList;
+    private PokemonUnity.Inventory.Items[] currentItemList;
 
     private bool shopMode;
-    private string[] shopItemList;
+    private PokemonUnity.Inventory.Items[] shopItemList;
     private int shopSelectedQuantity;
 
     private AudioSource BagAudio;
@@ -304,7 +305,7 @@ public class BagHandler : MonoBehaviour
 
     private void updateItemList()
     {
-        string[] items = new string[8];
+        PokemonUnity.Inventory.Items[] items = new PokemonUnity.Inventory.Items[8];
 
         int index = 0;
         for (int i = 0; i < 8; i++)
@@ -312,7 +313,7 @@ public class BagHandler : MonoBehaviour
             index = i + currentTopPosition[currentScreen] - 1;
             if (index < 0 || index >= currentItemList.Length)
             {
-                items[i] = null;
+                items[i] = PokemonUnity.Inventory.Items.NONE;
             }
             else
             {
@@ -322,15 +323,15 @@ public class BagHandler : MonoBehaviour
 
         for (int i = 0; i < 8; i++)
         {
-            if (items[i] == null)
+            if (items[i] == PokemonUnity.Inventory.Items.NONE)
             {
                 itemSlot[i].gameObject.SetActive(false);
             }
             else
             {
-                PokemonUnity.Inventory.ItemData item = PokemonUnity.Game.ItemData[items[i].ToItems()];
+                PokemonUnity.Inventory.ItemData item = PokemonUnity.Game.ItemData[items[i]];
                 itemSlot[i].gameObject.SetActive(true);
-                itemName[i].text = items[i];
+                itemName[i].text = items[i].toString();
                 itemNameShadow[i].text = itemName[i].text;
                 if (item.Pocket.Value == PokemonUnity.Inventory.ItemPockets.MACHINE)
                 {
@@ -340,10 +341,11 @@ public class BagHandler : MonoBehaviour
                 }
                 else
                 {
-                    itemIcon[i].texture = Resources.Load<Texture>("Items/" + items[i]);
+                    itemIcon[i].texture = Resources.Load<Texture>("Items/" + items[i].toString());
                 }
                 if (item.Pocket.Value == PokemonUnity.Inventory.ItemPockets.MACHINE)
                 {
+                    Debug.Log("Error: No TM, YET");
                     itemX[i].gameObject.SetActive(false);
                     //itemQuantity[i].text = "No. " + ((TMData)item).getTMNo;
                 }
@@ -363,7 +365,7 @@ public class BagHandler : MonoBehaviour
                     else
                     {
                         itemX[i].text = "   x";
-                        itemQuantity[i].text = "" + SaveData.currentSave.Bag.GetItemAmount(items[i].ToItems());
+                        itemQuantity[i].text = "" + SaveData.currentSave.Bag.GetItemAmount(items[i]);
                     }
                     itemXShadow[i].text = itemX[i].text;
                 }
@@ -378,7 +380,7 @@ public class BagHandler : MonoBehaviour
         int index = currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1;
         if (index < currentItemList.Length)
         {
-            string selectedItem = currentItemList[index];
+            string selectedItem = currentItemList[index].toString();
             if (currentScreen != 4)
             {
                 itemDescription.text = ItemDatabase.getItem(selectedItem.ToItems()).Description;
@@ -740,7 +742,7 @@ public class BagHandler : MonoBehaviour
 
             PokemonUnity.Inventory.ItemData selectedItem =
                 ItemDatabase.getItem(
-                    currentItemList[currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1].ToItems());
+                    currentItemList[currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1]);
 
             if (selectedItem.Category == PokemonUnity.Inventory.ItemCategory.EVOLUTION)
             {
@@ -868,7 +870,7 @@ public class BagHandler : MonoBehaviour
                     dataValueText.text = "x " +
                                          SaveData.currentSave.Bag.GetItemAmount(
                                              currentItemList[
-                                                 currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1].ToItems());
+                                                 currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1]);
                 }
                 else
                 {
@@ -886,7 +888,7 @@ public class BagHandler : MonoBehaviour
                                              ItemDatabase.getItem(
                                                  currentItemList[
                                                      currentPosition[currentScreen] + currentTopPosition[currentScreen] -
-                                                     1].ToItems()).Price / 2f);
+                                                     1]).Price / 2f);
                 }
                 else
                 {
@@ -1149,12 +1151,12 @@ public class BagHandler : MonoBehaviour
         yield return StartCoroutine(control(partyAccessible, getItem, false, null));
     }
 
-    public IEnumerator control(string[] shopStock)
+    public IEnumerator control(PokemonUnity.Inventory.Items[] shopStock)
     {
         yield return StartCoroutine(control(false, false, true, shopStock));
     }
 
-    private IEnumerator control(bool partyAccessible, bool getItem, bool setShopMode, string[] shopStock)
+    private IEnumerator control(bool partyAccessible, bool getItem, bool setShopMode, PokemonUnity.Inventory.Items[] shopStock)
     {
         shopMode = setShopMode;
         if (shopMode)
@@ -1389,7 +1391,7 @@ public class BagHandler : MonoBehaviour
                         if (shopMode)
                         {
                             selected = currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1;
-                            PokemonUnity.Inventory.ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected].ToItems());
+                            PokemonUnity.Inventory.ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected]);
 
                             switching = true;
                             selectedPosition = currentPosition[currentScreen];
@@ -1397,7 +1399,7 @@ public class BagHandler : MonoBehaviour
                             updateSelectedItem();
                             SfxHandler.Play(selectClip);
 
-                            chosenItem = currentItemList[selected];
+                            chosenItem = currentItemList[selected].toString();
 
                             if (currentScreen == 1)
                             {
@@ -1564,7 +1566,7 @@ public class BagHandler : MonoBehaviour
                         else if (getItem)
                         {
                             selected = currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1;
-                            PokemonUnity.Inventory.ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected].ToItems());
+                            PokemonUnity.Inventory.ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected]);
 
                             if (selectedItem.Pocket.Value == PokemonUnity.Inventory.ItemPockets.MACHINE ||
                                 selectedItem.Pocket.Value == PokemonUnity.Inventory.ItemPockets.KEY)
@@ -1587,7 +1589,7 @@ public class BagHandler : MonoBehaviour
                                 updateSelectedItem();
                                 SfxHandler.Play(selectClip);
 
-                                chosenItem = currentItemList[selected];
+                                chosenItem = currentItemList[selected].toString();
                                 running = false;
                             }
                         }
@@ -1657,7 +1659,7 @@ public class BagHandler : MonoBehaviour
                             yield return
                                 Dialog.StartCoroutine("drawText", "Do what with " + currentItemList[selected] + "?");
                             string[] choices = new string[] {"Deselect", "Cancel"};
-                            PokemonUnity.Inventory.ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected].ToItems());
+                            PokemonUnity.Inventory.ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected]);
                             if (selectedItem.Pocket == PokemonUnity.Inventory.ItemPockets.KEY)
                             {
                                 new System.NotImplementedException();
@@ -1894,7 +1896,7 @@ public class BagHandler : MonoBehaviour
                                 "Swap", "Take", "Deselect", "Cancel"
                             };
                         }
-                        PokemonUnity.Inventory.ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected].ToItems());
+                        PokemonUnity.Inventory.ItemData selectedItem = ItemDatabase.getItem(currentItemList[selected]);
                         //Adjust choices to suit situation
                         if (selectedItem.Pocket != PokemonUnity.Inventory.ItemPockets.KEY)
                         {
@@ -2511,7 +2513,7 @@ public class BagHandler : MonoBehaviour
                     //if evolution not successful / wasn't called, check for moves to learn
                     if (pkmnID == (int)currentPokemon.Species)
                     {
-                        string move = currentPokemon.MoveLearnedAtLevel(currentPokemon.Level);
+                        string move = currentPokemon.MoveLearnedAtLevel(currentPokemon.Level).toString();
                         //Debug.Log(move);
                         if (!string.IsNullOrEmpty(move) && !currentPokemon.hasMove(move.ToMoves()))
                         {
@@ -2754,7 +2756,7 @@ public class BagHandler : MonoBehaviour
 
                         //Set SceneSummary to be active so that it appears
                         Scene.main.Summary.gameObject.SetActive(true);
-                        StartCoroutine(Scene.main.Summary.control(selectedPokemon, move.toString()));
+                        StartCoroutine(Scene.main.Summary.control(selectedPokemon, move));
                         //Start an empty loop that will only stop when SceneSummary is no longer active (is closed)
                         while (Scene.main.Summary.gameObject.activeSelf)
                         {

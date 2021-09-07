@@ -3,6 +3,7 @@ using PokemonUnity.Inventory;
 
 public static class BagExtension
 {
+    // ToDo: remove below
     public static bool addItem(this Bag bag, Items item, int amount)
     {
         //returns false if will exceed the quantity limit (999)
@@ -23,16 +24,16 @@ public static class BagExtension
         return true;
     }
 
-    public static string[] getItemTypeArray(this Bag bag, ItemPockets itemType, bool allSellables)
+    public static Items[] getItemTypeArray(this Bag bag, ItemPockets itemType, bool allSellables)
     {
-        string[] result = new string[bag.Contents.Length];
+        Items[] result = new Items[bag.Contents.Length];
         int resultPos = 0;
         int length = bag.Contents.Length;
         if (!allSellables)
         {
             for (int s = 0; s < bag[itemType].Count; s++)
             {
-                result[resultPos] = bag[itemType].Keys[s].toString();
+                result[resultPos] = bag[itemType].Keys[s];
                 resultPos += 1;
             }
         }
@@ -40,23 +41,23 @@ public static class BagExtension
         {
             for (int s = 0; s < bag[ItemPockets.MISC].Count; s++)
             {
-                result[resultPos] = bag[ItemPockets.MISC].Keys[s].toString();
+                result[resultPos] = bag[ItemPockets.MISC].Keys[s];
                 resultPos += 1;
             }
 
             for (int s = 0; s < bag[ItemPockets.MEDICINE].Count; s++)
             {
-                result[resultPos] = bag[ItemPockets.MEDICINE].Keys[s].toString();
+                result[resultPos] = bag[ItemPockets.MEDICINE].Keys[s];
                 resultPos += 1;
             }
 
             for (int s = 0; s < bag[ItemPockets.BERRY].Count; s++)
             {
-                result[resultPos] = bag[ItemPockets.BERRY].Keys[s].toString();
+                result[resultPos] = bag[ItemPockets.BERRY].Keys[s];
                 resultPos += 1;
             }
         }
-        string[] cleanedResult = new string[resultPos];
+        Items[] cleanedResult = new Items[resultPos];
         for (int i = 0; i < cleanedResult.Length; i++)
         {
             cleanedResult[i] = result[i];

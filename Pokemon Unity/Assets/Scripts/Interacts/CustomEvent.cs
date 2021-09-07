@@ -445,9 +445,9 @@ public class CustomEvent : MonoBehaviour
             //            }
             //        }
             //        if (!EventRequiresDialogBox(nextEvent.eventType))
-                    {
-                        Dialog.undrawDialogBox();
-                    }
+            //        {
+            //            Dialog.undrawDialogBox();
+            //        }
             //
             //        int[] IVs = new int[]
             //        {
@@ -582,7 +582,6 @@ public class CustomEvent : MonoBehaviour
                     case CustomEventDetails.Logic.SpaceInParty:
                         if (currentEvent.bool0)
                         {
-                            //if (!SaveData.currentSave.PC.hasSpace(0))
                             if (!SaveData.currentSave.Player.Party.HasSpace(SaveData.currentSave.Player.Party.Length))
                             {
                                 passedCheck = true;
@@ -704,7 +703,6 @@ public class CustomEventDetails
     public GameObject object1;
 
     public AudioClip sound;
-
 
     public bool runSimultaneously;
 }

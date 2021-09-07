@@ -9,17 +9,6 @@ public static class PokemonExtension
     {
     	return pokemon != null && pokemon.Species != Pokemons.NONE;
     }
-    public static string getFirstFEInstance(this Pokemon pokemon, Moves moveName)
-    {
-		for (int i = 0; i < pokemon.moves.Length; i++)
-		{
-			if (pokemon.moves[i].MoveId == moveName)
-			{
-				return pokemon.moves[i].MoveId.toString();
-			}
-		}
-		return null;
-	}
 	public static string convertLongID(this Pokemon pokemon)
 	{
 		string result = ((int)pokemon.Species).ToString();
@@ -221,27 +210,15 @@ public static class PokemonExtension
         pokemon.moves[target1] = pokemon.moves[target2];
         pokemon.moves[target2] = temp;
     }
-    public static Moves[] GenerateMoveset(this Pokemons pokemon, byte level)
-    {
-        //Set moveset based off of the highest level moves possible.
-        Moves[] moveset = new Moves[4];
-        Pokemon temp = new Pokemon(pokemon, level, false);
-        temp.GenerateMoveset(level);
-        for (int i = 0; i < temp.moves.Length; i++)
-        {
-            moveset[i] = temp.moves[i].MoveId;
-        }
-        return moveset;
-    }
 
-    public static string MoveLearnedAtLevel(this Pokemon pokemon, int level)
+    public static Moves MoveLearnedAtLevel(this Pokemon pokemon, int level)
     {
         PokemonUnity.Monster.Data.PokemonMoveTree movelist = Game.PokemonMovesData[pokemon.Species];
 
         int index = movelist.LevelUp.IndexOfValue(level);
 
         // Tempo
-        return index != -1 ? movelist.LevelUp.Keys[index].ToString() : null;
+        return index != -1 ? movelist.LevelUp.Keys[index] : Moves.NONE;
     }
     public static int getEvolutionID(this Pokemon pokemon, EvolutionMethod currentMethod, object value)
     {

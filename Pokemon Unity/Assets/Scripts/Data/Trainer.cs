@@ -63,8 +63,12 @@ public class Trainer : MonoBehaviour
     {
         for (int i = 0; i < trainerParty.Length; i++)
         {
-            //party[i] = new Pokemon((PokemonUnity.Pokemons)trainerParty[i].ID, trainerParty[i].gender, trainerParty[i].level, "Poké Ball",
-            //    trainerParty[i].heldItem, trainerName, trainerParty[i].ability);
+            // ToDo: Add CatchInfo by using TrainerID
+            party[i] = new Pokemon((PokemonUnity.Pokemons)trainerParty[i].ID, (byte)trainerParty[i].level, false);
+            party[i].setGender(trainerParty[i].gender);
+            party[i].setItem(trainerParty[i].heldItem.ToItems());
+            party[i].setAbility(trainerParty[i].ability);
+            party[i].ballUsed = PokemonUnity.Inventory.Items.POKE_BALL;
         }
     }
 

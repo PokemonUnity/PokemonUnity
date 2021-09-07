@@ -19,7 +19,7 @@ public class InteractBreak : MonoBehaviour
 
     public string examineText;
     public string interactText;
-    public string fieldEffect;
+    public PokemonUnity.Moves fieldEffect;
 
     // Use this for initialization
     void Start()
@@ -54,9 +54,8 @@ public class InteractBreak : MonoBehaviour
 
     public IEnumerator interact()
     {
-        //Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty(fieldEffect);
-        Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty(fieldEffect.ToMoves());
-        if (targetPokemon != null)
+        Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty(fieldEffect);
+        if (targetPokemon.IsNotNullOrNone())
         {
             if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
             {
@@ -82,7 +81,7 @@ public class InteractBreak : MonoBehaviour
                     Dialog.drawDialogBox();
                     yield return
                         Dialog.StartCoroutine("drawText",
-                            targetPokemon.Name + " used " + targetPokemon.getFirstFEInstance(fieldEffect.ToMoves()) + "!");
+                            targetPokemon.Name + " used " + fieldEffect + "!");
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;

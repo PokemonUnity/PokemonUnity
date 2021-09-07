@@ -40,8 +40,8 @@ public class Player
     {
         Name = "Test";
         IsMale = true;
-        Bag = new PokemonUnity.Character.Bag();
-        PC = new PokemonUnity.Character.PC();
+        Bag = new Bag();
+        PC = new PC();
         Party = new Pokemon[6];
     }
 
@@ -49,8 +49,8 @@ public class Player
     {
         this.Name = Name;
         this.IsMale = IsMale;
-        Bag = new PokemonUnity.Character.Bag();
-        PC = new PokemonUnity.Character.PC();
+        Bag = new Bag();
+        PC = new PC();
         Party = new Pokemon[6];
     }
 
@@ -94,6 +94,7 @@ public class Player
         }
     }
 
+    // ToDo: Merge swapPartyPokemon and swapPokemon
     public void swapPartyPokemon(int pos1, int pos2)
     {
         Pokemon temp = Party[pos1];

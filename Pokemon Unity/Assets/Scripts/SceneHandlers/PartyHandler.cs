@@ -105,7 +105,7 @@ public class PartyHandler : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             Pokemon selectedPokemon = SaveData.currentSave.Player.Party[i];
-            if (selectedPokemon == null)
+            if (!selectedPokemon.IsNotNullOrNone())
             {
                 slot[i].gameObject.SetActive(false);
             }
@@ -120,7 +120,7 @@ public class PartyHandler : MonoBehaviour
                 {
                     gender[i].text = null;
                 }
-                else if (!selectedPokemon.IsMale)
+                else if (selectedPokemon.IsFemale)
                 {
                     gender[i].text = "♀";
                     gender[i].color = new UnityEngine.Color(1, 0.2f, 0.2f, 1);

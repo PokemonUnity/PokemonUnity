@@ -225,8 +225,8 @@ public class EvolutionHandler : MonoBehaviour
                 yield return null;
             }
 
-            string newMove = selectedPokemon.MoveLearnedAtLevel(selectedPokemon.Level);
-            if (!string.IsNullOrEmpty(newMove) && !selectedPokemon.hasMove(newMove.ToMoves()))
+            PokemonUnity.Moves newMove = selectedPokemon.MoveLearnedAtLevel(selectedPokemon.Level);
+            if (newMove != PokemonUnity.Moves.NONE && !selectedPokemon.hasMove(newMove))
             {
                 yield return StartCoroutine(LearnMove(selectedPokemon, newMove));
             }
@@ -610,7 +610,7 @@ public class EvolutionHandler : MonoBehaviour
     }
 
 
-    private IEnumerator LearnMove(Pokemon selectedPokemon, string move)
+    private IEnumerator LearnMove(Pokemon selectedPokemon, PokemonUnity.Moves move)
     {
         int chosenIndex = 1;
         if (chosenIndex == 1)
@@ -641,6 +641,7 @@ public class EvolutionHandler : MonoBehaviour
                     yield return
                         StartCoroutine(dialog.DrawText("Should a move be deleted and \nreplaced with " + move + "?"));
 
+                    // This function didn't show choice box
                     yield return StartCoroutine(dialog.DrawChoiceBox());
                     chosenIndex = dialog.chosenIndex;
                     dialog.UndrawChoiceBox();
@@ -740,7 +741,7 @@ public class EvolutionHandler : MonoBehaviour
                 //Moveset is not full, can fit the new move easily
                 else
                 {
-                    selectedPokemon.addMove(move.ToMoves());
+                    selectedPokemon.addMove(move);
 
                     dialog.DrawDialogBox();
                     AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");

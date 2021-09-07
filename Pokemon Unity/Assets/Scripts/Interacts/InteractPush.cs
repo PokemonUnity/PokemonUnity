@@ -50,7 +50,7 @@ public class InteractPush : MonoBehaviour
         if (!Player.strength)
         {
             Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty(PokemonUnity.Moves.STRENGTH);
-            if (targetPokemon != null)
+            if (targetPokemon.IsNotNullOrNone())
             {
                 if (Player.setCheckBusyWith(this.gameObject))
                 {
@@ -67,7 +67,7 @@ public class InteractPush : MonoBehaviour
                         Dialog.drawDialogBox();
                         yield return
                             Dialog.StartCoroutine("drawText",
-                                targetPokemon.Name + " used " + targetPokemon.getFirstFEInstance(PokemonUnity.Moves.STRENGTH) + "!")
+                                targetPokemon.Name + " used " + PokemonUnity.Moves.STRENGTH.toString() + "!")
                             ;
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
