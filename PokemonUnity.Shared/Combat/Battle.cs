@@ -357,9 +357,9 @@ namespace PokemonUnity.Combat
 			//struggle.PP = -1;
 
 			for (byte i = 0; i < battlers.Length; i++)
-			{
-				this.battlers[i] = new Pokemon(this, (sbyte)i).Initialize(new PokemonUnity.Monster.Pokemon(), (sbyte)i);
-			}
+				this.battlers[i] = new Pokemon(this, (sbyte)i);
+			for (byte i = 0; i < battlers.Length; i++)
+				this.battlers[i].Initialize(new PokemonUnity.Monster.Pokemon(), (sbyte)i);
 
 			foreach (var i in party1)
 			{
@@ -3083,11 +3083,11 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Command phase.
-  public MenuCommands pbCommandMenu(int i) {
+  public virtual MenuCommands pbCommandMenu(int i) {
     return (MenuCommands)@scene.pbCommandMenu(i);
   }
 
-  public KeyValuePair<Items,int> pbItemMenu(int i) {
+  public virtual KeyValuePair<Items,int> pbItemMenu(int i) {
     return @scene.pbItemMenu(i);
   }
 

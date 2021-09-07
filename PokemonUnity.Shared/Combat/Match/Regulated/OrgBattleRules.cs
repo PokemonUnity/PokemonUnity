@@ -912,9 +912,9 @@ public partial class PokemonRuleSet {
 
   public bool hasRegistrableTeam (Monster.Pokemon[] list) {
     if (list == null || list.Length<this.minTeamLength) return false;
-    //pbEachCombination(list,this.maxTeamLength){//Monster.Pokemon[] |comb|
+    //Array.ForEach<Monster.Pokemon[]>(pbEachCombination(list,this.maxTeamLength), (comb) => {//Monster.Pokemon[] |comb|
     //   if (canRegisterTeam(comb)) return true;
-    //}
+    //});
     return false;
   }
 

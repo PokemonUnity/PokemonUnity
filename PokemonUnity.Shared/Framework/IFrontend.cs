@@ -595,7 +595,8 @@ namespace PokemonUnity
 	{
 		IPokemonSummary initialize(IPokemonSummaryScene scene);
 		void pbStartScreen(Monster.Pokemon[] party, int partyindex);
-		int pbStartForgetScreen(Monster.Pokemon[] party, int partyindex, Moves moveToLearn);
+		//int pbStartForgetScreen(Monster.Pokemon[] party, int partyindex, Moves moveToLearn);
+		int pbStartForgetScreen(Monster.Pokemon party, int partyindex, Moves moveToLearn);
 		void pbStartChooseMoveScreen(Monster.Pokemon[] party, int partyindex, string message);
 	}
 	#endregion
@@ -645,7 +646,7 @@ namespace PokemonUnity
 		void pbPokemonGiveScreen(Items item);
 		void pbPokemonGiveMailScreen(int mailIndex);
 		void pbStartScene(string helptext,bool doublebattle,string[] annotations= null);
-		void pbChoosePokemon(string helptext= null);
+		int pbChoosePokemon(string helptext= null);
 		void pbChooseMove(Monster.Pokemon pokemon,string helptext);
 		void pbEndScene();
 		/// <summary>
@@ -659,7 +660,7 @@ namespace PokemonUnity
 		/// <param name=""></param>
 		void pbCheckItems(Items[] array);
 		void pbPokemonMultipleEntryScreenEx(string[] ruleset);
-		void pbChooseAblePokemon(bool ableProc,bool allowIneligible= false);
+		int pbChooseAblePokemon(Func<Monster.Pokemon,bool> ableProc,bool allowIneligible= false);
 		void pbRefreshAnnotations(bool ableProc);
 		void pbClearAnnotations();
 		void pbPokemonDebug(Monster.Pokemon pkmn, int pkmnid);
@@ -714,6 +715,18 @@ namespace PokemonUnity
 			IPokeBattle_Scene pbNewBattleScene();
 			void pbBattleAnimation(IAudioObject bgm, Action action);
 			void pbBattleAnimation(IAudioObject bgm, TrainerTypes trainer, string name, Action action);
+
+			#region TextEntry
+			string pbEnterText(string helptext, int minlength, int maxlength, string initialText= "", int mode= 0, Monster.Pokemon pokemon= null, bool nofadeout= false);
+
+			string pbEnterPlayerName(string helptext, int minlength, int maxlength, string initialText= "", bool nofadeout= false);
+
+			string pbEnterPokemonName(string helptext, int minlength, int maxlength, string initialText= "", Monster.Pokemon pokemon= null, bool nofadeout= false);
+
+			string pbEnterBoxName(string helptext, int minlength, int maxlength, string initialText= "", bool nofadeout= false);
+
+			string pbEnterNPCName(string helptext, int minlength, int maxlength, string initialText= "", int id= 0, bool nofadeout= false);
+			#endregion
 
 			#region Replace Static Graphic
 			void update();

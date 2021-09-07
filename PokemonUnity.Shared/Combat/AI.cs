@@ -4623,7 +4623,7 @@ public partial class Battle{
 /// <summary>
 /// Decide whether the opponent should Mega Evolve their Pokémon.
 /// </summary>
-/// <param name="ndex"></param>
+/// <param name="index"></param>
 /// <returns></returns>
   public bool pbEnemyShouldMegaEvolve (int index) {
     // Simple "always should if possible"

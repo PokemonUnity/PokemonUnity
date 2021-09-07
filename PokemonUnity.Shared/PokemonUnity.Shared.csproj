@@ -82,6 +82,7 @@
     <Compile Include="Combat\Rules.cs" />
     <Compile Include="Enums\UI.cs" />
     <Compile Include="Extensions\Utility\LinearCongRandom.cs" />
+    <Compile Include="Framework\Chatter.cs" />
     <Compile Include="Framework\IGame_System.cs" />
     <Compile Include="Framework\IInterpreterFieldMixin.cs" />
     <Compile Include="Inventory\Item\Item.Effects.cs" />
