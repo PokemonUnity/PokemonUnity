@@ -197,6 +197,10 @@ namespace PokemonUnity
 		/// Map view mode (0=original, 1=custom, 2=perspective).
 		/// </summary>
 		public const int MAPVIEWMODE = 1;
+		/// <summary>
+		/// The default text scroll speed (from 1-6, default being 4)
+		/// </summary>
+		public const int SCROLL_SPEED_DEFAULT = 4;
 		#endregion
 
 		#region Pokemon Settings

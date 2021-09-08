@@ -1,6 +1,9 @@
-﻿using PokemonUnity.Monster;
+﻿using PokemonUnity;
+using PokemonUnity.Monster;
+using PokemonUnity.UX;
+using System;
 
-namespace PokemonUnity
+namespace PokemonEssentials.Interface
 {
 	/// <summary>
 	/// Logic that's used by Game while player is in `Overworld_Field`
