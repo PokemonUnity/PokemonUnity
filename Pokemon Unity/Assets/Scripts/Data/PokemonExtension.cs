@@ -63,6 +63,17 @@ public static class PokemonExtension
         }
         return result;
     }
+    public static void removePP(this Pokemon pokemon, Moves move, int amount)
+    {
+        for (int i = 0; i < pokemon.moves.Length; i++)
+        {
+            if (pokemon.moves[i].MoveId == move)
+            {
+                pokemon.moves[i].PP -= (byte)amount;
+                break;
+            }
+        }
+    }
     public static int getMaxPP(this Pokemon pokemon, int index)
     {
         return pokemon.moves[index].TotalPP;
@@ -126,6 +137,31 @@ public static class PokemonExtension
         }
 
     }
+    public static int getIV_HP(this Pokemon pokemon)
+    {
+        return pokemon.GetIV(0);
+    }
+    public static int getIV_ATK(this Pokemon pokemon)
+    {
+        return pokemon.GetIV(1);
+    }
+    public static int getIV_DEF(this Pokemon pokemon)
+    {
+        return pokemon.GetIV(2);
+    }
+    public static int getIV_SPA(this Pokemon pokemon)
+    {
+        return pokemon.GetIV(3);
+    }
+    public static int getIV_SPD(this Pokemon pokemon)
+    {
+        return pokemon.GetIV(4);
+    }
+    public static int getIV_SPE(this Pokemon pokemon)
+    {
+        return pokemon.GetIV(5);
+    }
+
     // Seem like this is ERROR ToDo: Fix it
     public static int GetHighestIV(this Pokemon pokemon)
     {
@@ -171,6 +207,15 @@ public static class PokemonExtension
             highestIV = pokemon.GetIV(3);
         }
         return highestIVIndex;
+    }
+    public static string[] getMoveset(this Pokemon pokemon)
+    {
+        string[] moves = new string[pokemon.moves.Length];
+        for (int i = 0; i < moves.Length; i++)
+        {
+            moves[i] = pokemon.moves[i].MoveId.toString();
+        }
+        return moves;
     }
     public static bool CanLearnMove(this Pokemon pokemon, Moves move, LearnMethod method)
 	{
@@ -293,6 +338,15 @@ public static class PokemonExtension
     // ----------------------------------------------
 
     // --------------- Sprite & Audio ---------------
+
+    public static Sprite[] GetIcons_(this Pokemon pokemon)
+    {
+        return GetIconsFromID_(pokemon.Species, pokemon.IsShiny);
+    }
+    public static Sprite[] GetBackAnim_(this Pokemon pokemon)
+    {
+        return GetAnimFromID_("PokemonBackSprites", pokemon.Species, pokemon.Gender, pokemon.IsShiny);
+    }
     public static Sprite[] GetFrontAnim_(this Pokemon pokemon)
     {
         return GetAnimFromID_("PokemonSprites", pokemon.Species, pokemon.Gender, pokemon.IsShiny);

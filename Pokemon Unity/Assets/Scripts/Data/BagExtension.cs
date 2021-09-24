@@ -1,6 +1,15 @@
 ﻿using PokemonUnity.Character;
 using PokemonUnity.Inventory;
 
+public enum BattleType
+{
+    HPPPRESTORE,
+    POKEBALLS,
+    STATUSHEALER,
+    BATTLEITEMS,
+
+}
+
 public static class BagExtension
 {
     // ToDo: remove below
@@ -64,5 +73,11 @@ public static class BagExtension
         }
 
         return cleanedResult;
+    }
+
+    public static Items[] getBattleTypeArray(this Bag bag, BattleType type)
+    {
+        Items[] items = new Items[0];
+        return items;
     }
 }
