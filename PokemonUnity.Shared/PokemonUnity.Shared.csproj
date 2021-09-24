@@ -78,7 +78,7 @@
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Player\Outfit.cs" />
     <Compile Include="Combat\Match\Recorder.cs" />
-    <Compile Include="Combat\OrgBattleRules.cs" />
+    <Compile Include="Combat\Match\Regulated\OrgBattleRules.cs" />
     <Compile Include="Combat\Rules.cs" />
     <Compile Include="Enums\UI.cs" />
     <Compile Include="Extensions\Utility\LinearCongRandom.cs" />
@@ -116,6 +116,7 @@
     <Compile Include="Framework\Essentials\ISpriteResizer.cs" />
     <Compile Include="Framework\Essentials\ISpriteTimer.cs" />
     <Compile Include="Framework\Essentials\PokeBattle\Effects\IActiveSide.cs" />
+    <Compile Include="Framework\Essentials\PokeBattle\Rules\IOrgBattle.cs" />
     <Compile Include="Framework\Essentials\PokeBattle\Effects\IEffectsBattler.cs" />
     <Compile Include="Framework\Essentials\PokeBattle\Effects\IEffectsField.cs" />
     <Compile Include="Framework\Essentials\PokeBattle\Effects\IEffectsMove.cs" />
@@ -134,7 +135,8 @@
     <Compile Include="Framework\Essentials\PokeBattle\IBattleTrainer.cs" />
     <Compile Include="Framework\Essentials\PokeBattle\IDamageState.cs" />
     <Compile Include="Framework\Essentials\PokeBattle\ISafariZone.cs" />
-    <Compile Include="Framework\IGame_System.cs" />
+    <Compile Include="Framework\Essentials\PokeBattle\Rules\IOrgBattleRules.cs" />
+    <Compile Include="Framework\IDatabase.cs" />
     <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Monster\BattlePeer.cs" />
     <Compile Include="Combat\Pokemon\IShadowPokemon.cs" />

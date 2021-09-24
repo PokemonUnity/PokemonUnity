@@ -18,8 +18,9 @@ namespace PokemonEssentials.Interface.PokeBattle
     /// Recording of a Pokemon Battle
     /// </summary>
     /// <typeparam name="TBattle">any <see cref="IBattle"/> entity</typeparam>
+    //Should be both Recorded Data and the Battle logic itself...
     public interface IRecordedBattleModule<out TBattle>
-        where TBattle : IBattle
+        where TBattle : IBattle//, IBattleRecordData
     {
         List<int> randomnums { get; }
         List<int[][]> rounds { get; }
@@ -63,7 +64,8 @@ namespace PokemonEssentials.Interface.PokeBattle
         //int randomindex { get; }
         //int switchindex { get; }
 
-        TBattle initialize(IPokeBattle_Scene scene, IBattle battle); 
+        //IBattle should be a recorded battle data...
+        TBattle initialize(IPokeBattle_Scene scene, IBattleRecordData battle); 
         BattleResults pbStartBattle(bool canlose = false);
         int pbSwitchInBetween(int i1, int i2, bool i3);
         int pbRandom(int num);
@@ -71,15 +73,15 @@ namespace PokemonEssentials.Interface.PokeBattle
         void pbCommandPhaseCore();
     }
 
-    public interface IRecordedBattle : IBattle, IRecordedBattleModule<IBattle>
+    public interface IRecordedBattle : IBattle, IRecordedBattleModule<IBattle>, IBattleRecordData
     {
         //int pbGetBattleType();
     }
-    public interface IRecordedBattlePalace : IBattlePalace, IRecordedBattleModule<IBattlePalace>
+    public interface IRecordedBattlePalace : IBattlePalace, IRecordedBattleModule<IBattlePalace>, IBattleRecordData
     {
         //int pbGetBattleType();
     }
-    public interface IRecordedBattleArena : IBattleArena, IRecordedBattleModule<IBattleArena>
+    public interface IRecordedBattleArena : IBattleArena, IRecordedBattleModule<IBattleArena>, IBattleRecordData
     {
         //int pbGetBattleType();
     }
@@ -89,4 +91,17 @@ namespace PokemonEssentials.Interface.PokeBattle
     public interface IBattlePalacePlayer : IBattlePalace, IBattlePlayerModule<IBattlePalace> { }
 
     public interface IBattleArenaPlayer : IBattleArena, IBattlePlayerModule<IBattleArena> { }
+    /// <summary>
+    /// Represents a json object that can be saved/loaded to re-play a recorded pokemon battle
+    /// </summary>
+    //ToDo: maybe add <out IBattle> to interface?
+    public interface IBattleRecordData 
+    {
+        int pbGetBattleType { get; }
+        //ToDo: this should be replaced with json object class
+        IDictionary<string,object> properties { get; }
+        List<int[][]> rounds { get; }
+        List<int> randomnumbers { get; }
+        List<int> switches { get; }
+    }
 }

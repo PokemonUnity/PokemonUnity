@@ -7,8 +7,8 @@ using PokemonUnity.Overworld;
 
 namespace PokemonUnity.Monster
 {
-	public static class Evolution
-	{
+    public static class Evolution
+    {
   public static string[] EVONAMES=new string[] {"Unknown",
      "Happiness","HappinessDay","HappinessNight","Level","Trade",
      "TradeItem","Item","AttackGreater","AtkDefEqual","DefenseGreater",
@@ -278,7 +278,7 @@ public static Pokemons pbMiniCheckEvolution(Pokemon pokemon,EvolutionMethod evon
   //  }
   //  break;
   case EvolutionMethod.Location:
-    if (Game.GameData.GameMap.map_id==level) return poke;
+    if ((Game.GameData.GameMap as PokemonEssentials.Interface.PokeBattle.Rules.IGameMap).map_id==level) return poke;
     break;
   case EvolutionMethod.LevelRain:
     if (pokemon.Level>=level) {
@@ -379,5 +379,5 @@ public static Pokemons[] pbCheckEvolution(Pokemon pokemon,Items item=0) {
   }
 }
         #endregion
-	}
+    }
 }

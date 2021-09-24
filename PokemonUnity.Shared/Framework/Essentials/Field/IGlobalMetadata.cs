@@ -41,7 +41,7 @@ namespace PokemonEssentials.Interface.Field
 		int stepcount { get; set; }
 		int happinessSteps { get; set; }
 		int? pokerusTime { get; set; }
-		//IDayCare daycare { get; set; }
+		PokemonUnity.Character.DayCare daycare { get; set; }
 		bool daycareEgg { get; set; } //ToDo: int?...
 		int daycareEggSteps { get; set; }
 		bool[] pokedexUnlocked { get; set; } // Array storing which Dexes are unlocked

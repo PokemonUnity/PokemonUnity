@@ -1,21 +1,25 @@
-﻿namespace PokemonUnity
+﻿using System;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.EventArg;
+
+namespace PokemonUnity
 {
     public partial class Game { 
 //Should this be nested under Overworld namespace, or Game class?
-public partial class SafariState {
-  public int ballcount				{ get; protected set; }
-  public int steps					{ get; protected set; }
-  public Combat.BattleResults decision				{ get; protected set; }
+public partial class SafariState : PokemonEssentials.Interface.ISafariState {
+  public int ballcount				                { get; protected set; }
+  public int steps					                { get; set; }
+  public Combat.BattleResults decision				{ get; set; }
   private int[] start; //map object
   private bool inProgress;
 
   //public void initialize() {
   public SafariState() {
-    @start=null;
-    @ballcount=0;
-    @inProgress=false;
-    @steps=0;
-    @decision=0;
+    (this as ISafariState).initialize();
+                
+    Events.OnMapChange+=Events_OnMapChange;    
+    Events.OnStepTakenTransferPossible+=Events_OnStepTakenTransferPossible;    
+    Events.OnWildBattleOverride+=Events_OnWildBattleOverride;
   }
 
   public int pbReceptionMap { get {
@@ -25,6 +29,8 @@ public partial class SafariState {
   public bool InProgress { get {
     return inProgress;
   } }
+
+	bool ISafariState.inprogress { get { return inProgress; } }
 
   public void pbGoToStart() {
     //if (Scene is Scene_Map s) {
@@ -55,15 +61,54 @@ public partial class SafariState {
     @decision=0;
     GameData.GameMap.need_refresh=true;
   }
+	~SafariState()
+	{
+        Events.OnMapChange-=Events_OnMapChange; 
+        Events.OnStepTakenTransferPossible-=Events_OnStepTakenTransferPossible;    
+        Events.OnWildBattleOverride-=Events_OnWildBattleOverride;
+	}
+
+	ISafariState ISafariState.initialize()
+	{
+        @start=null;
+        @ballcount=0;
+        @inProgress=false;
+        @steps=0;
+        @decision=0;
+                
+        return this;
+	}
+	private void Events_OnMapChange(object sender, EventArgs e)
+	{
+         if (!GameData.pbInSafari) {
+           GameData.pbSafariState.pbEnd();
+         }
+	}
+	private void Events_OnStepTakenTransferPossible(object sender, OnStepTakenTransferPossibleEventArgs e)
+	{
+        bool handled=e.Index;
+        if (!handled) return; //(handled) continue;
+        if (GameData.pbInSafari && GameData.pbSafariState.decision==0 && Core.SAFARISTEPS>0) {
+            GameData.pbSafariState.steps-=1;
+            if (GameData.pbSafariState.steps<=0) {
+                pbMessage(_INTL("PA:  Ding-dong!\\1"));
+                pbMessage(_INTL("PA:  Your safari game is over!"));
+                GameData.pbSafariState.decision=Combat.BattleResults.WON; //1;
+                GameData.pbSafariState.pbGoToStart();
+                handled=true;
+            }
+        }
+	}
+	private void Events_OnWildBattleOverride(object sender, OnWildBattleOverrideEventArgs e)
+	{
+        Pokemons species=e.Species;
+        int level=e.Level;
+        Combat.BattleResults? handled=e.Result;
+        if (handled==null) return; //(handled!=null) continue;
+        if (GameData.pbInSafari) return; //(!GameData.pbInSafari) continue;
+        handled=GameData.pbSafariBattle(species,level);
+	}
 }
-
-
-
-//Events.onMapChange+=proc{|sender,args|
-//   if (!pbInSafari) {
-//     pbSafariState.pbEnd();
-//   }
-//}
 
 public bool pbInSafari { get {
   //if (pbSafariState.InProgress) {
@@ -78,40 +123,16 @@ public bool pbInSafari { get {
   return false;
 } }
 
-public SafariState pbSafariState { get {
+public ISafariState pbSafariState { get {
   if (Global.safariState == null) {
     Global.safariState=new SafariState();
   }
   return Global.safariState;
 } }
 
-//Events.onStepTakenTransferPossible+=delegate(object sender, EventArgs e) {
-//   handled=e[0];
-//   if (handled[0]) continue;
-//   if (pbInSafari && pbSafariState.decision==0 && Core.SAFARISTEPS>0) {
-//     pbSafariState.steps-=1;
-//     if (pbSafariState.steps<=0) {
-//       pbMessage(_INTL("PA:  Ding-dong!\1")) ;
-//       pbMessage(_INTL("PA:  Your safari game is over!"));
-//       pbSafariState.decision=1;
-//       pbSafariState.pbGoToStart();
-//       handled[0]=true;
-//     }
-//   }
-//}
-
-//Events.onWildBattleOverride+= delegate(object sender, EventArgs e) {
-//   Pokemons species=e[0];
-//   int level=e[1];
-//   handled=e[2];
-//   if (handled[0]!=null) continue;
-//   if (!pbInSafari) continue;
-//   handled[0]=pbSafariBattle(species,level);
-//}
-
 public Combat.BattleResults pbSafariBattle(Pokemons species,int level) {
   //Monster.Pokemon genwildpoke=pbGenerateWildPokemon(species,level);
-  //IScene scene=pbNewBattleScene();
+  //IPokeBattle_Scene scene=pbNewBattleScene();
   //Combat.PokeBattle_SafariZone battle=new Combat.PokeBattle_SafariZone(scene,Trainer,new Monster.Pokemon[] { genwildpoke });
   //battle.ballCount=pbSafariState.ballcount;
   //battle.environment=pbGetEnvironment();
@@ -131,6 +152,7 @@ public Combat.BattleResults pbSafariBattle(Pokemons species,int level) {
   //  pbSafariState.pbGoToStart();
   //}
   //Events.onWildBattleEnd.trigger(null,species,level,decision);
+  //Events.OnWildBattleEndTrigger(null,species,level,decision);
   return decision;
 }
 }
