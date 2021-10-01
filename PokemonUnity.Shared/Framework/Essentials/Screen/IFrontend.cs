@@ -8,97 +8,21 @@ using PokemonUnity.UX;
 using PokemonUnity.Combat;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using PokemonEssentials.Interface.PokeBattle.Rules;
+using PokemonEssentials.Interface.EventArg;
 
-
-namespace PokemonUnity
+namespace PokemonEssentials.Interface.Screen
 {
-	public interface ISceneState
-	{
-		void updatemini();
-	}
-	/// <summary>
-	/// </summary>
-	/// Screen should be renamed to `State`, as it's more in line with FSM
-	public interface IScreen
-	{
-		//IEnumerator update();
-	}
-	public interface IGame_Screen : IScreen
-	{
-		int brightness { get; }
-		int flash_color { get; }
-		int pictures { get; }
-		int shake { get; }
-		int tone { get; }
-		int weather_max { get; }
-		//Overworld.FieldWeathers weather { get; }
-		Overworld.FieldWeathers weather_type { get; }
-
-		void start_flash(Color color, int duration);
-		void start_shake(float power, float speed, int duration);
-		//void start_tone_change(Tone tone, int duration);
-		IEnumerator update();
-		void weather(int type, int power, int duration);
-	}
-	public interface IWindow
-	{
-		bool visible { get; set; }
-		void update();
-		void dispose();
-	}
-	public interface ICanvas
-	{
-	}
-
-	#region Audio
-	public interface IAudioObject
-	{
-		string name { get; }
-		float volume { get; }
-		float pitch { get; }
-		int position { get; }
-		/// <summary>
-		/// length/duration
-		/// </summary>
-		int time { get; }
-		IAudioObject clone();
-		void play();
-	}
-	#endregion
-
-	#region Relic Stone
-	/// <summary>
-	/// Scene class for handling appearance of the screen
-	/// </summary>
-	public interface IRelicStoneScene : IScene
-	{
-		void initialize(IScene scene);
-		void pbUpdate();
-		//void pbRefresh();
-		void pbPurify();
-		//void pbConfirm(string msg);
-		void pbDisplay(string msg, bool brief = false);
-		void pbStartScene(Monster.Pokemon pokemon);
-		void pbEndScene();
-	}
-	/// <summary>
-	/// Screen class for handling game logic
-	/// </summary>
-	public interface IRelicStoneScreen : IScreen
-	{
-		void initialize(IRelicStoneScene scene);
-		void pbRefresh();
-		void pbConfirm(string x);
-		void pbDisplay(string x);
-		void pbStartScreen(Monster.Pokemon pokemon);
-	}
-	#endregion
-
 	#region Text Entry
 	public interface IPokemonEntry : IScreen
 	{
 		void initialize(IPokemonEntryScene scene);
-		string pbStartScreen(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes mode = 0, Monster.Pokemon pokemon = null);
+		string pbStartScreen(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes mode = 0, IPokemon pokemon = null);
 	}
 
 	/// <summary>
@@ -106,7 +30,7 @@ namespace PokemonUnity
 	/// </summary>
 	public interface IPokemonEntryScene : IScene
 	{
-		void pbStartScene(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes subject = 0, Monster.Pokemon pokemon = null);
+		void pbStartScene(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes subject = 0, IPokemon pokemon = null);
 		void pbEndScene();
 		string pbEntry();
 		//string pbEntry1();
@@ -135,7 +59,7 @@ namespace PokemonUnity
 	#region Pokemon Battle
 	public interface ISceneHasChatter
 	{
-		void pbChatter(Combat.Pokemon attacker,Combat.Trainer opponent);
+		void pbChatter(IBattler attacker,Combat.Trainer opponent);
 	}
 	public interface IPokeBattle_Scene : IScene, ISceneHasChatter
 	{
@@ -203,15 +127,15 @@ namespace PokemonUnity
 		void pbStartBattle(PokemonUnity.Combat.Battle battle);
 		void pbEndBattle(BattleResults result);
 		void pbRecall(int battlerindex);
-		void pbTrainerSendOut(int battlerindex, Monster.Pokemon pkmn);
+		void pbTrainerSendOut(int battlerindex, IPokemon pkmn);
 		/// <summary>
 		/// Player sending out Pokémon
 		/// </summary>
 		/// <param name="battlerindex"></param>
 		/// <param name="pkmn"></param>
-		void pbSendOut(int battlerindex, Monster.Pokemon pkmn);
-		void pbTrainerWithdraw(Combat.Battle battle, Combat.Pokemon pkmn);
-		void pbWithdraw(Combat.Battle battle, Combat.Pokemon pkmn);
+		void pbSendOut(int battlerindex, IPokemon pkmn);
+		void pbTrainerWithdraw(Combat.Battle battle, IBattler pkmn);
+		void pbWithdraw(Combat.Battle battle, IBattler pkmn);
 		string pbMoveString(string move);
 		void pbBeginAttackPhase();
 		void pbSafariStart();
@@ -252,14 +176,14 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <param name="moveToLearn"></param>
-		int pbForgetMove(Monster.Pokemon pokemon, Moves moveToLearn);
+		int pbForgetMove(IPokemon pokemon, Moves moveToLearn);
 		/// <summary>
 		/// Called whenever a Pokémon needs one of its moves chosen. Used for Ether.
 		/// </summary>
 		/// <param name=""></param>
 		/// <param name="message"></param>
-		int pbChooseMove(Monster.Pokemon pokemon, string message);
-		string pbNameEntry(string helptext, Monster.Pokemon pokemon);
+		int pbChooseMove(IPokemon pokemon, string message);
+		string pbNameEntry(string helptext, IPokemon pokemon);
 		void pbSelectBattler(int index, int selectmode = 1);
 		//int pbFirstTarget(int index, int targettype);
 		int pbFirstTarget(int index, Attack.Data.Targets targettype);
@@ -272,7 +196,7 @@ namespace PokemonUnity
 		/// <param name="targettype">Which targets are selectable as option</param>
 		int pbChooseTarget(int index, Attack.Data.Targets targettype);
 		int pbSwitch(int index, bool lax, bool cancancel);
-		void pbDamageAnimation(Combat.Pokemon pkmn, float effectiveness);
+		void pbDamageAnimation(IBattler pkmn, float effectiveness);
 		/// <summary>
 		/// This method is called whenever a Pokémon's HP changes.
 		/// Used to animate the HP bar.
@@ -282,7 +206,7 @@ namespace PokemonUnity
 		/// <param name="anim"></param>
 		//void pbHPChanged(int pkmn, int oldhp, bool anim = false);
 		//void HPChanged(int index, int oldhp, bool animate = false);
-		IEnumerator pbHPChanged(Pokemon pkmn, int oldhp, bool animate = false);
+		IEnumerator pbHPChanged(IBattler pkmn, int oldhp, bool animate = false);
 		/// <summary>
 		/// This method is called whenever a Pokémon faints.
 		/// </summary>
@@ -299,7 +223,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name=""></param>
-		int pbChooseNewEnemy(int index, Monster.Pokemon[] party);
+		int pbChooseNewEnemy(int index, IPokemon[] party);
 		/// <summary>
 		/// This method is called when the player wins a wild Pokémon battle.
 		/// This method can change the battle's music for example.
@@ -310,17 +234,17 @@ namespace PokemonUnity
 		/// This method can change the battle's music for example.
 		/// </summary>
 		void pbTrainerBattleSuccess();
-		void pbEXPBar(Monster.Pokemon pokemon, Combat.Pokemon battler, int startexp, int endexp, int tempexp1, int tempexp2);
+		void pbEXPBar(IPokemon pokemon, IBattler battler, int startexp, int endexp, int tempexp1, int tempexp2);
 		void pbShowPokedex(Pokemons species, int form = 0);
-		void pbChangeSpecies(Pokemon attacker, Pokemons species);
+		void pbChangeSpecies(IBattler attacker, Pokemons species);
 		void ChangePokemon();
-		void pbChangePokemon(Pokemon attacker, Monster.Forms pokemon);
+		void pbChangePokemon(IBattler attacker, Monster.Forms pokemon);
 		void pbSaveShadows();
 		void pbFindAnimation(Moves moveid, int userIndex, int hitnum);
-		void pbCommonAnimation(string animname, Combat.Pokemon user, Combat.Pokemon target, int hitnum = 0);
-		void pbAnimation(Moves moveid, Combat.Pokemon user, Combat.Pokemon target, int hitnum = 0);
-		void pbAnimationCore(string animation, Combat.Pokemon user, Combat.Pokemon target, bool oppmove = false);
-		void pbLevelUp(Monster.Pokemon pokemon, Combat.Pokemon battler, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef);
+		void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum = 0);
+		void pbAnimation(Moves moveid, IBattler user, IBattler target, int hitnum = 0);
+		void pbAnimationCore(string animation, IBattler user, IBattler target, bool oppmove = false);
+		void pbLevelUp(IPokemon pokemon, IBattler battler, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef);
 		void pbThrowAndDeflect(Items ball, int targetBattler);
 		void pbThrow(Items ball, int shakes, bool critical, int targetBattler, bool showplayer = false);
 		void pbThrowSuccess();
@@ -331,8 +255,8 @@ namespace PokemonUnity
 
 	public interface IPokeBattleArena_Scene : PokemonUnity.IPokeBattle_Scene
 	{
-		void pbBattleArenaBattlers(Pokemon battler1, Pokemon battler2);
-		void pbBattleArenaJudgment(Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
+		void pbBattleArenaBattlers(IBattler battler1, IBattler battler2);
+		void pbBattleArenaJudgment(IBattler battler1, IBattler battler2, int[] ratings1, int[] ratings2);
 		/// <summary>
 		/// </summary>
 		/// <param name="window">infowindow as `SpriteWindow_Base` to display the results</param>
@@ -341,7 +265,7 @@ namespace PokemonUnity
 		/// <param name="battler2"></param>
 		/// <param name="ratings1"></param>
 		/// <param name="ratings2"></param>
-		void updateJudgment(IWindow window, int phase, Pokemon battler1, Pokemon battler2, int[] ratings1, int[] ratings2);
+		void updateJudgment(IWindow window, int phase, IBattler battler1, IBattler battler2, int[] ratings1, int[] ratings2);
 	}
 	#endregion
 
@@ -351,7 +275,7 @@ namespace PokemonUnity
 		void pbEndScreen();
 		void pbEvolution(bool cancancel = true);
 		void pbFlashInOut(bool canceled,string oldstate,string oldstate2);
-		void pbStartScreen(Monster.Pokemon pokemon, Pokemons newspecies);
+		void pbStartScreen(IPokemon pokemon, Pokemons newspecies);
 		void pbUpdate(bool animating = false);
 		void pbUpdateExpandScreen();
 		void pbUpdateNarrowScreen();
@@ -506,7 +430,7 @@ namespace PokemonUnity
 		void pbChangeBackground(int wp);
 		int pbChangeSelection(int key, int selection);
 		void pbChooseBox(string msg);
-		Items pbChooseItem(Pokemon bag);
+		Items pbChooseItem(IBattler bag);
 		void pbCloseBox();
 		//void pbDisplay(string message);
 		void pbDropDownPartyTab();
@@ -571,44 +495,44 @@ namespace PokemonUnity
 	{
 		//IPokemonSummaryScene initialize();
 		//void drawMarkings(bitmap,int x,int y,int width,int height, bool[] markings);
-		void drawPageOne(Monster.Pokemon pokemon);
-		void drawPageOneEgg(Monster.Pokemon pokemon);
-		void drawPageTwo(Monster.Pokemon pokemon);
-		void drawPageThree(Monster.Pokemon pokemon);
-		void drawPageFour(Monster.Pokemon pokemon);
-		void drawPageFive(Monster.Pokemon pokemon);
-		void drawMoveSelection(Monster.Pokemon pokemon, Moves moveToLearn);
-		void drawSelectedMove(Monster.Pokemon pokemon, Moves moveToLearn, Moves moveid);
+		void drawPageOne(IPokemon pokemon);
+		void drawPageOneEgg(IPokemon pokemon);
+		void drawPageTwo(IPokemon pokemon);
+		void drawPageThree(IPokemon pokemon);
+		void drawPageFour(IPokemon pokemon);
+		void drawPageFive(IPokemon pokemon);
+		void drawMoveSelection(IPokemon pokemon, Moves moveToLearn);
+		void drawSelectedMove(IPokemon pokemon, Moves moveToLearn, Moves moveid);
 		void pbChooseMoveToForget(Moves moveToLearn);
 		void pbEndScene();
 		void pbGoToNext();
 		void pbGoToPrevious();
 		void pbMoveSelection();
-		void pbPokerus(Monster.Pokemon pkmn);
+		void pbPokerus(IPokemon pkmn);
 		void pbScene();
-		void pbStartForgetScene(Monster.Pokemon party, int partyindex, Moves moveToLearn);
-		void pbStartScene(Monster.Pokemon party, int partyindex);
+		void pbStartForgetScene(IPokemon party, int partyindex, Moves moveToLearn);
+		void pbStartScene(IPokemon party, int partyindex);
 		void pbUpdate();
 	}
 
 	public interface IPokemonSummary : IScreen
 	{
 		IPokemonSummary initialize(IPokemonSummaryScene scene);
-		void pbStartScreen(Monster.Pokemon[] party, int partyindex);
-		//int pbStartForgetScreen(Monster.Pokemon[] party, int partyindex, Moves moveToLearn);
-		int pbStartForgetScreen(Monster.Pokemon party, int partyindex, Moves moveToLearn);
-		void pbStartChooseMoveScreen(Monster.Pokemon[] party, int partyindex, string message);
+		void pbStartScreen(IPokemon[] party, int partyindex);
+		//int pbStartForgetScreen(IPokemon[] party, int partyindex, Moves moveToLearn);
+		int pbStartForgetScreen(IPokemon party, int partyindex, Moves moveToLearn);
+		void pbStartChooseMoveScreen(IPokemon[] party, int partyindex, string message);
 	}
 	#endregion
 
 	#region Pokemon Party
-	public interface IPokemonScreen_Scene : IScene
+	public interface IPartyDisplayScene : IScene
 	{
-		//IPokemonScreen_Scene initialize();
+		//IPartyDisplayScene initialize();
 		void pbShowCommands(string helptext, string[] commands,int index= 0);
 		void update();
 		void pbSetHelpText(string helptext);
-		void pbStartScene(Monster.Pokemon[] party,string starthelptext,string[] annotations= null,bool multiselect= false);
+		void pbStartScene(IPokemon[] party,string starthelptext,string[] annotations= null,bool multiselect= false);
 		void pbEndScene();
 		/// <summary>
 		/// </summary>
@@ -617,7 +541,7 @@ namespace PokemonUnity
 		void pbChangeSelection(int key,int currentsel);
 		//void pbRefresh();
 		void pbHardRefresh();
-		void pbPreSelect(Monster.Pokemon pkmn);
+		void pbPreSelect(IPokemon pkmn);
 		void pbChoosePokemon(bool switching= false, int initialsel= -1);
 		void pbSelect(Items item);
 		//void pbDisplay(string text);
@@ -627,27 +551,27 @@ namespace PokemonUnity
 		void pbAnnotate(string[] annot);
 		void pbSummary(int pkmnid);
 		void pbChooseItem(Items[] bag);
-		void pbUseItem(Items[] bag,Monster.Pokemon pokemon); 
+		void pbUseItem(Items[] bag,IPokemon pokemon); 
 		void pbMessageFreeText(string text,string startMsg,int maxlength);
 	}
 
-	public interface IPokemonScreen : IScreen
+	public interface IPartyDisplayScreen : IScreen
 	{
-		IPokemonScreen initialize(IPokemonScreen_Scene scene, Monster.Pokemon[] party);
+		IPartyDisplayScreen initialize(IPartyDisplayScene scene, IPokemon[] party);
 		void pbHardRefresh();
 		void pbRefresh();
 		void pbRefreshSingle(int i);
 		void pbDisplay(string text);
 		void pbConfirm(string text);
 		void pbSwitch(int oldid,int newid);
-		void pbMailScreen(Items item, Monster.Pokemon pkmn, int pkmnid);
-		void pbTakeMail(Monster.Pokemon pkmn);
-		void pbGiveMail(Items item,Monster.Pokemon pkmn,int pkmnid= 0);
+		void pbMailScreen(Items item, IPokemon pkmn, int pkmnid);
+		void pbTakeMail(IPokemon pkmn);
+		void pbGiveMail(Items item,IPokemon pkmn,int pkmnid= 0);
 		void pbPokemonGiveScreen(Items item);
 		void pbPokemonGiveMailScreen(int mailIndex);
 		void pbStartScene(string helptext,bool doublebattle,string[] annotations= null);
 		int pbChoosePokemon(string helptext= null);
-		void pbChooseMove(Monster.Pokemon pokemon,string helptext);
+		void pbChooseMove(IPokemon pokemon,string helptext);
 		void pbEndScene();
 		/// <summary>
 		/// Checks for identical species
@@ -660,78 +584,11 @@ namespace PokemonUnity
 		/// <param name=""></param>
 		void pbCheckItems(Items[] array);
 		void pbPokemonMultipleEntryScreenEx(string[] ruleset);
-		int pbChooseAblePokemon(Func<Monster.Pokemon,bool> ableProc,bool allowIneligible= false);
+		int pbChooseAblePokemon(Func<IPokemon,bool> ableProc,bool allowIneligible= false);
 		void pbRefreshAnnotations(bool ableProc);
 		void pbClearAnnotations();
-		void pbPokemonDebug(Monster.Pokemon pkmn, int pkmnid);
+		void pbPokemonDebug(IPokemon pkmn, int pkmnid);
 		void pbPokemonScreen();
 	}
 	#endregion
-
-	namespace UX
-	{
-		public interface IFrontEnd
-		{
-			void beginRecordUI();
-			void endRecord(string path);
-			IAudioObject getWaveDataUI(string path, bool n);
-			
-			IAudioObject pbGetWildBattleBGM(Pokemons species);
-			IAudioObject pbGetTrainerBattleBGM(Trainer[] trainer);
-			IAudioObject pbGetTrainerBattleBGM(TrainerData[] trainer);
-
-			void pbBGMFade(float duration);
-			void pbBGSFade(float duration);
-			void pbFadeOutIn(int value, Action action);
-			void pbFadeOutInWithMusic(int value, Action action);
-			void pbCueBGM(IAudioObject bgm, float value);
-			void pbCueBGM(string bgm, float value, float vol, float pitch);
-			float Audio_bgm_get_volume();
-			void Audio_bgm_set_volume(float n);
-			void me_stop();
-			void pbSEStop();
-			void pbPlayDecisionSE();
-			void pbPlayBuzzerSE();
-			void pbSEPlay(string name);
-			void pbBGMPlay(IAudioObject name);
-			void pbBGMPlay(string name, float vol, float pitch);
-			void pbBGSPlay(IAudioObject name);
-			void pbMEPlay(string name);
-			void pbPlayTrainerIntroME(TrainerTypes trainertype);
-
-			IWindow pbCreateMessageWindow();
-			IEnumerator pbMessageDisplay(IWindow display, string msg, bool value = true);
-			void pbDisposeMessageWindow(IWindow display);
-
-			void pbMessage(string message);
-			bool pbConfirmMessage(string message);
-			//int pbMessageChooseNumber(string message, ChooseNumberParams arg);
-
-			bool pbResolveBitmap(string path);
-			bool pbIsFaded { get; }
-
-			void pbUpdateSceneMap();
-			void pbSceneStandby(Action action);
-			IPokeBattle_Scene pbNewBattleScene();
-			void pbBattleAnimation(IAudioObject bgm, Action action);
-			void pbBattleAnimation(IAudioObject bgm, TrainerTypes trainer, string name, Action action);
-
-			#region TextEntry
-			string pbEnterText(string helptext, int minlength, int maxlength, string initialText= "", int mode= 0, Monster.Pokemon pokemon= null, bool nofadeout= false);
-
-			string pbEnterPlayerName(string helptext, int minlength, int maxlength, string initialText= "", bool nofadeout= false);
-
-			string pbEnterPokemonName(string helptext, int minlength, int maxlength, string initialText= "", Monster.Pokemon pokemon= null, bool nofadeout= false);
-
-			string pbEnterBoxName(string helptext, int minlength, int maxlength, string initialText= "", bool nofadeout= false);
-
-			string pbEnterNPCName(string helptext, int minlength, int maxlength, string initialText= "", int id= 0, bool nofadeout= false);
-			#endregion
-
-			#region Replace Static Graphic
-			void update();
-			void frame_reset();
-			#endregion
-		}
-	}
 }

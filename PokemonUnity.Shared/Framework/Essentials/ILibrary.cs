@@ -7,9 +7,48 @@ using System.Linq;
 using System.Text;
 using PokemonUnity.Monster;
 using PokemonUnity.Utility;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonEssentials.Interface
 {
+	public interface IGame : IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime
+	{
+		/*PokemonEssentials.Interface.IGlobalMetadata Global { get; }
+		IMapFactory MapFactory { get; }
+		//public IPokemonMapMetadata PokemonMap { get; }
+		IMapMetadata MapData { get; }
+		PokemonSystem PokemonSystem { get; }
+		PokemonEssentials.Interface.ITempMetadata PokemonTemp { get; set; }
+		IEncounters PokemonEncounters { get; }
+		IStorage PokemonStorage { get; }
+		IBag Bag { get; }
+		ISceneState Scene { get; set; }
+		IGameTemp GameTemp { get; }
+		IGamePlayer Player { get; set; }
+		ITrainer Trainer { get; set; }
+		//ITrainer DataSystem { get; set; }
+		//ITrainer[] DataTilesets { get; set; }
+		IGameCommonEvent[] DataCommonEvents { get; set; }
+		IGameSystem GameSystem { get; set; }
+		Dictionary<int, bool> GameSwitches { get; set; }
+		Dictionary<int, bool> GameSelfSwitches { get; set; }
+		Dictionary<int, object> GameVariables { get; set; }
+		IGameScreen GameScreen { get; set; }
+		IGamePlayer GamePlayer { get; set; }
+		IGameMap GameMap { get; set; }
+		IGameMessage GameMessage { get; set; }
+		int SpeechFrame { get; }
+		PokemonUnity.UX.IFrontEnd UI { get; }*/
+	}
+	public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }
+	public interface ITempMetadata : Field.ITempMetadata, ITempMetadataBerryPlants, ITempMetadataDependantEvents, ITempMetadataField, ITempMetadataPokeRadar, ITempMetadataRoaming { }
+
 	public interface ITileset
 	{
 		int id { get; set; }
@@ -63,7 +102,7 @@ namespace PokemonEssentials.Interface
 		}*/
 		#endregion
 
-		public interface System
+		public interface ISystem
 		{
 			int magic_number { get; set; }
 			/// <summary>
@@ -214,7 +253,7 @@ namespace PokemonEssentials.Interface
 			object events { get; set; }
 		}
 
-		public interface MapInfo
+		public interface IMapInfo
 		{
 			/// <summary>
 			/// The map name.

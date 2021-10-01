@@ -68,9 +68,9 @@ namespace PokemonUnity.Saving
 		/// </summary>
 		public int PokeCenterId { get; private set; }
 		public int ActiveMapId { get; private set; }
-		public Vector PlayerPosition { get; private set; }
+		public IVector PlayerPosition { get; private set; }
 		//Rotation is a Quaternion, which is a float[4] variable
-		public Quaternion PlayerDirection { get; private set; }
+		public IQuaternion PlayerDirection { get; private set; }
 		/// <summary>
 		/// Which pokemon from player party is out in overworld with player;
 		/// 0 => None, 1-6 => Trainer's Party

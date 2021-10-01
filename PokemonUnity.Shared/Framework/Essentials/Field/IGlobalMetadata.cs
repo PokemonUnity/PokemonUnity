@@ -8,6 +8,10 @@ using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Field
 {
+	/// <summary>
+	/// Global metadata not specific to a map.  This class holds field state data that
+	/// span multiple maps.
+	/// </summary>
 	public interface IGlobalMetadata
 	{
 		bool bicycle { get; set; }
@@ -41,6 +45,7 @@ namespace PokemonEssentials.Interface.Field
 		int stepcount { get; set; }
 		int happinessSteps { get; set; }
 		int? pokerusTime { get; set; }
+		//IDayCare daycare { get; set; }
 		PokemonUnity.Character.DayCare daycare { get; set; }
 		bool daycareEgg { get; set; } //ToDo: int?...
 		int daycareEggSteps { get; set; }
@@ -65,14 +70,14 @@ namespace PokemonEssentials.Interface.Field
 		//IBugContestState bugContestState			{ get; set; }
 		ITrainer partner { get; set; }
 		int? challenge { get; set; }
-		int? lastbattle { get; set; }
+		IBattleRecordData lastbattle { get; set; }
 		List<int> phoneNumbers { get; set; }
 		int phoneTime { get; set; }
 		bool safesave { get; set; }
 		Dictionary<KeyValuePair<int, int>, int> eventvars { get; set; }
 
 
-		//float bridge { get; }
+		//IGlobalMetadata initialize();
 		Pokemons[] roamPokemonCaught { get; }
 	}
 }

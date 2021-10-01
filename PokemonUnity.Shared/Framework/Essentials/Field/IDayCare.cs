@@ -39,5 +39,6 @@ namespace PokemonEssentials.Interface.Field
 		void pbDayCareGenerateEgg();
 
 		//void Events_OnStepTaken (object sender, EventArgs e);
+		//void Events_OnStepTaken(object sender, EventArg.OnStepTakenFieldMovementEventArgs e);
 	}
 }

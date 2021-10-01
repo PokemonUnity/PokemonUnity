@@ -47,13 +47,13 @@ namespace PokemonUnity.Character
 		/// <summary>
 		/// </summary>
 		public int Area { get; private set; }
-		public Vector Position { get; set; }
+		public IVector Position { get; set; }
 		/// <summary>
 		/// Rotation of player model in overworld scene
 		/// </summary>
 		/// not sure direction is even needed in save/load profile...
 		/// Game should load player facing camera by default.
-		public Quaternion Direction { get; set; }
+		public IQuaternion Direction { get; set; }
 		/// <summary>
 		/// Last town or Pokemon Center visited, that's used as Respawn Point upon a Player's Defeat
 		/// </summary>
@@ -164,7 +164,8 @@ namespace PokemonUnity.Character
 			Pokedex = new byte[Game.PokemonData.Where(x => x.Value.IsDefault).Count(), 3];
 			StartDate = DateTime.UtcNow; //new DateTime();
 			PlayTime = new TimeSpan();
-			Position = new Vector();
+			//Position = new Vector();
+			//Direction = new Quaternion();
 			Bag = new Bag();
 			PC = new PC();
 			Party = new Pokemon[]
@@ -194,7 +195,7 @@ namespace PokemonUnity.Character
 		public Player(string name, bool gender, Pokemon[] party = null, Items[] bag = null, Pokemon[][] pc_poke = null, KeyValuePair<Items,int>[] pc_items = null, 
 			byte? pc_box = null, string[] pc_names = null, int[] pc_textures = null, int? trainerid = null, int? secretid = null,
 			int? money = null, int? coin = null, int? bank = null, int? repel = null, string rival = null,
-			byte[][] dex = null, TimeSpan? time = null, Vector? position = null, byte? follower = null,
+			byte[][] dex = null, TimeSpan? time = null, IVector position = null, byte? follower = null,
 			bool? creator = null, int? map = null, int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null) : this()
 		{
 			Name = name;
@@ -206,7 +207,7 @@ namespace PokemonUnity.Character
 			if(secretid != null) this.secretId	= secretid;
 			if(time != null) this.PlayTime		= time.Value;
 			if(pokecenter != null) this.Checkpoint = (Locations)pokecenter;
-			if(position != null) this.Position	= position.Value;
+			if(position != null) this.Position	= position;
 			//Position			= position		?? new Vector()									;
 			Money				= money			?? 0											;
 			Coins				= coin			?? 0											;
@@ -233,7 +234,7 @@ namespace PokemonUnity.Character
 
 		public Player(string name, bool gender, Pokemon[] party, Bag bag = null, PC pc = null, int? trainerid = null, int? secretid = null,
 			int? money = null, int? coin = null, int? bank = null, int? repel = null, string rival = null,
-			byte[][] dex = null, TimeSpan? time = null, Vector? position = null, byte? follower = null,
+			byte[][] dex = null, TimeSpan? time = null, IVector position = null, byte? follower = null,
 			bool? creator = null, int? map = null, int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null)
 			: this (name: name, gender: gender, party: party, bag: bag != null ? bag.Contents : null, 
 				  pc_poke: pc != null ? pc.AllBoxes : null, pc_items: pc != null ? pc.Items : null, 

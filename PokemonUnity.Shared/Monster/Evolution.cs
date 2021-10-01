@@ -278,7 +278,7 @@ public static Pokemons pbMiniCheckEvolution(Pokemon pokemon,EvolutionMethod evon
   //  }
   //  break;
   case EvolutionMethod.Location:
-    if ((Game.GameData.GameMap as PokemonEssentials.Interface.PokeBattle.Rules.IGameMap).map_id==level) return poke;
+    if ((Game.GameData.GameMap as PokemonEssentials.Interface.Battle.IGameMap).map_id==level) return poke;
     break;
   case EvolutionMethod.LevelRain:
     if (pokemon.Level>=level) {

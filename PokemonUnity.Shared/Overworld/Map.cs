@@ -8,36 +8,6 @@ using PokemonUnity.Overworld;
 namespace PokemonUnity
 {
     public partial class Game { 
-	public struct MapData
-    {
-        public int tileset_id                   { get; private set; }
-        public int width                        { get; private set; }
-        public int height                       { get; private set; }
-        public bool autoplay_bgm                { get; private set; }
-        public IAudioObject bgm                 { get; private set; }
-        public bool autoplay_bgs                { get; private set; }
-        public IAudioObject bgs                 { get; private set; }
-        public List<Pokemons> encounter_list         { get; private set; }
-        public int encounter_step               { get; private set; }
-        public int?[,,] data                    { get; private set; }
-        public Dictionary<int,int> events       { get; private set; }
-
-        public MapData(int width, int height)
-        {
-            @tileset_id = 1;
-            this.width = width;
-            this.height = height;
-            @autoplay_bgm = false;
-            @bgm = null; //new RPG.AudioFile();
-            @autoplay_bgs = false;
-            @bgs = null; //new RPG.AudioFile("", 80);
-            @encounter_list = new List<Pokemons>();
-            @encounter_step = 30;
-            @data = new int?[width, height, 3];
-            @events = new Dictionary<int, int>();
-        }
-    }
-
 /// <summary>
 /// This class handles the map. It includes scrolling and passable determining
 /// functions. Refer to <see cref="GameData.GameMap"/> for the instance of this class.
@@ -619,4 +589,34 @@ public partial class Game_Map {
   //}
 }
 }
+
+	public struct MapData
+    {
+        public int tileset_id                   { get; private set; }
+        public int width                        { get; private set; }
+        public int height                       { get; private set; }
+        public bool autoplay_bgm                { get; private set; }
+        public IAudioObject bgm                 { get; private set; }
+        public bool autoplay_bgs                { get; private set; }
+        public IAudioObject bgs                 { get; private set; }
+        public List<Pokemons> encounter_list         { get; private set; }
+        public int encounter_step               { get; private set; }
+        public int?[,,] data                    { get; private set; }
+        public Dictionary<int,int> events       { get; private set; }
+
+        public MapData(int width, int height)
+        {
+            @tileset_id = 1;
+            this.width = width;
+            this.height = height;
+            @autoplay_bgm = false;
+            @bgm = null; //new RPG.AudioFile();
+            @autoplay_bgs = false;
+            @bgs = null; //new RPG.AudioFile("", 80);
+            @encounter_list = new List<Pokemons>();
+            @encounter_step = 30;
+            @data = new int?[width, height, 3];
+            @events = new Dictionary<int, int>();
+        }
+    }
 }

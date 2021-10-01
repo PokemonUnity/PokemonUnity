@@ -325,8 +325,8 @@ namespace PokemonUnity
 		/// e[2] - X-coordinate of the tile
 		/// e[3] - Y-coordinate of the tile
 		/// </summary>
-		public static void OnLeaveTileTrigger(object @event, int mapId, float x, float y, float z) { OnLeaveTileTrigger(@event, mapId, new Vector(x, y, z)); }
-		public static void OnLeaveTileTrigger(object @event, int mapId, Vector tile)
+		//public static void OnLeaveTileTrigger(object @event, int mapId, float x, float y, float z) { OnLeaveTileTrigger(@event, mapId, new Vector(x, y, z)); }
+		public static void OnLeaveTileTrigger(object @event, int mapId, IVector tile)
 		{
 			OnLeaveTileEventArgs e = new OnLeaveTileEventArgs();
 			//EventHandler<OnLeaveTileEventArgs> handler = OnLeaveTile;
