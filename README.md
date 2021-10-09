@@ -30,6 +30,13 @@ For Unity: (2018.3.7f1)
   - You will need to move database to ..\ ..\ ..\ \veekun-pokedex.sqlite. ( Found in /Pokemon Unity/Assets/Data )
   - Open startup.scene and play it
 
+#### How to build and run the project ####
+
+For Window:
+  - You build the project
+  - Open Build folder and copy SQLite.Interop.dll from YourAppName/YourAppName_Data/Plugins to YourAppName/YourAppame_Data/Managed
+  - Run YourAppName.exe
+
 ## IIcolour Spectrum
 
 Pokemon Unity was in development for about a year before I could not continue working on the project. Rather than let it

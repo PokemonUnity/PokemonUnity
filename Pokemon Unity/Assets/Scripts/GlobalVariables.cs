@@ -1,11 +1,11 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
-using System.Collections;
 using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 
+// Make sure this go execution first
 public class GlobalVariables : MonoBehaviour
 {
     public static GlobalVariables global;
@@ -40,6 +40,16 @@ public class GlobalVariables : MonoBehaviour
 
     void Awake()
     {
+        // https://docs.unity3d.com/Manual/StreamingAssets.html
+        // This Init Sqlite Database
+        if (System.IO.File.Exists(Application.streamingAssetsPath + "/veekun-pokedex.sqlite"))
+        {
+            // Reset and Init Sqlite
+            Game.ResetAndOpenSql(Application.streamingAssetsPath + "/veekun-pokedex.sqlite");
+        }
+        else
+            throw new System.Exception("The Database was not founded!");
+
         if (SaveData.currentSave == null)
         {
             Debug.Log("save file created");
