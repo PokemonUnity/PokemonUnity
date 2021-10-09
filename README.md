@@ -27,7 +27,8 @@ I recommend to not use this project as base to build a game, yet.
 
 For Unity: (2018.3.7f1)
   - Use Unity Hub or Editor to import this project's folder (/Pokemon Unity)
-  - You will need to move database to ..\ ..\ ..\ \veekun-pokedex.sqlite. ( Found in /Pokemon Unity/Assets/Data )
+  - <s>You will need to move database to ..\ ..\ ..\ \veekun-pokedex.sqlite. ( Found in /Pokemon Unity/Assets/Data )</s>
+Latest Commit should fix the issue. 
   - Open startup.scene and play it
 
 #### How to build and run the project ####
