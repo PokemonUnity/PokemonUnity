@@ -33,10 +33,12 @@
 
 		public void UpdateSkill()
 		{
-			if (!UseState.Value && !Protected)
+			if (UseState == null && !Protected || !UseState.Value && !Protected)
+            {
 				Skill -= 2;
+            }
 			else if (UseState.Value)
-			{
+            {
 				if (TypeMod > 4)
 					Skill += 2; // "Super effective"
 				else if (TypeMod >= 1 && TypeMod < 4)
@@ -46,6 +48,19 @@
 				else
 					Skill += 1;
 			}
+			//if (!UseState.Value && !Protected)
+			//	Skill -= 2;
+			//else if (UseState.Value)
+			//{
+			//	if (TypeMod > 4)
+			//		Skill += 2; // "Super effective"
+			//	else if (TypeMod >= 1 && TypeMod < 4)
+			//		Skill -= 1; // "Not very effective"
+			//	else if (TypeMod == 0)
+			//		Skill -= 2; // Ineffective
+			//	else
+			//		Skill += 1;
+			//}
 			TypeMod = 4;
 			UseState = false;
 			Protected = false;

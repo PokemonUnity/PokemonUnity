@@ -125,20 +125,20 @@ namespace PokemonUnity
 			//	Scan for save files and previous game progress
 			// Load Player/Character/Overworld THEN Encounter
 			ResetSqlConnection();
-			con.Open();
-			InitTypes();
-			InitNatures();
-			InitPokemons();
-			InitPokemonForms();
-			InitPokemonMoves();
-			InitPokemonEvolutions();
-			InitPokemonItems();
-			InitMoves();
-			InitItems();
-			InitBerries();
-			InitTrainers();
-			InitRegions();
-			InitLocations();
+			//con.Open();
+			//InitTypes();
+			//InitNatures();
+			//InitPokemons();
+			//InitPokemonForms();
+			//InitPokemonMoves();
+			//InitPokemonEvolutions();
+			//InitPokemonItems();
+			//InitMoves();
+			//InitItems();
+			//InitBerries();
+			//InitTrainers();
+			//InitRegions();
+			//InitLocations();
 			//InitPlayerCharacter();
 			//InitLoadFile();
 			#endregion

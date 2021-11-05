@@ -4050,9 +4050,12 @@ public partial class Battle{
            attacker.Species == Pokemons.CHERRIM) {
           atk=(int)Math.Round(atk*1.5);
         }
-        if (attacker.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT) &&
-           attacker.Partner.Species == Pokemons.CHERRIM) {
-          atk=(int)Math.Round(atk*1.5);
+        if (doublebattle)
+        {
+            if (attacker.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT) && attacker.Partner.Species == Pokemons.CHERRIM)
+            {
+                atk = (int)Math.Round(atk * 1.5);
+            }
         }
       }
     }
@@ -4325,7 +4328,7 @@ public partial class Battle{
     int accstage=attacker.stages[(int)Stats.ACCURACY];
     if (opponent.hasWorkingAbility(Abilities.UNAWARE)) accstage=0;
     accuracy=(accstage>=0) ? (accstage+3)*100.0f/3f : 300.0f/(3-accstage);
-    int evastage=opponent.stages[(int)Stats.EVASION];
+    int evastage=opponent.stages[(int)Stats.EVASION - 1];
     if (@field.Gravity>0) evastage-=2;
     if (evastage<-6) evastage=-6;
     if (opponent.effects.Foresight ||
@@ -4339,8 +4342,11 @@ public partial class Battle{
       if (attacker.hasWorkingAbility(Abilities.COMPOUND_EYES)) accuracy*=1.3f;
       if (attacker.hasWorkingAbility(Abilities.VICTORY_STAR)) accuracy*=1.1f;
       if (skill>=PBTrainerAI.highSkill) {
-        Pokemon partner=attacker.Partner;
-        if (partner.IsNotNullOrNone() && partner.hasWorkingAbility(Abilities.VICTORY_STAR)) accuracy*=1.1f;
+       if (doublebattle)
+       {
+           Pokemon partner = attacker.Partner;
+           if (partner.IsNotNullOrNone() && partner.hasWorkingAbility(Abilities.VICTORY_STAR)) accuracy *= 1.1f;
+       }
       }
       if (attacker.effects.MicleBerry) accuracy*=1.2f;
       if (attacker.hasWorkingItem(Items.WIDE_LENS)) accuracy*=1.1f;

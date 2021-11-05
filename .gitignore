@@ -102,3 +102,9 @@ git-journal.fish
 **/_ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+GameFramework
+packages
+Pokemon Unity/
+Project DLLs/
+PokemonUnity.Offline
+

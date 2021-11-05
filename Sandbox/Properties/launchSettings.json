@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Sandbox": {
+      "commandName": "Project",
+      "workingDirectory": "D:\\Dev\\C#\\PokemonUnity\\Builds"
+    }
+  }
+}

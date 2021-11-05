@@ -232,8 +232,8 @@ public virtual int TotalPP { get {
 		/// not the same as pbNumHits>1
 		/// </summary>
    public virtual bool pbIsMultiHit() { //get {   
-	return (!Game.MoveMetaData[MoveId].MinHits.HasValue || 
-		 !Game.MoveMetaData[MoveId].MaxHits.HasValue);//}
+	return (Game.MoveMetaData[MoveId].MinHits.HasValue || 
+		 Game.MoveMetaData[MoveId].MaxHits.HasValue);//}
    }
 
    public virtual bool pbTwoTurnAttack(Pokemon attacker){
@@ -460,7 +460,7 @@ public virtual int TotalPP { get {
 	int accstage=attacker.stages[(int)Stats.ACCURACY];
 	if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.UNAWARE)) accstage = 0;
 	double accuracy=(accstage>=0) ? (accstage+3)*100.0/3 : 300.0/(3-accstage);
-	int evastage=opponent.stages[(int)Stats.EVASION];
+	int evastage=opponent.stages[(int)Stats.EVASION - 1];
 	if (battle.field.Gravity>0) evastage-=2;
 	if (evastage<-6) evastage=-6;
 	if (evastage>0 && Core.USENEWBATTLEMECHANICS &&
@@ -477,9 +477,13 @@ public virtual int TotalPP { get {
 	  accuracy*=0.8;
 	if (attacker.hasWorkingAbility(Abilities.VICTORY_STAR))
 	  accuracy*=1.1;
-	Pokemon partner = attacker.Partner;
-	if (partner.IsNotNullOrNone() && partner.hasWorkingAbility(Abilities.VICTORY_STAR))
-	  accuracy*=1.1;
+	if (battle.doublebattle)
+    {
+		Pokemon partner = attacker.Partner;
+		if (partner.IsNotNullOrNone() && partner.hasWorkingAbility(Abilities.VICTORY_STAR))
+			accuracy *= 1.1;
+	}
+	
 	if (attacker.effects.MicleBerry){
 	  attacker.effects.MicleBerry= false;
 	  accuracy*=1.2;
@@ -804,9 +808,12 @@ public virtual int TotalPP { get {
 	   atkmult = Math.Round(atkmult * 1.5);
 	if ((attacker.hasWorkingAbility(Abilities.PLUS) || attacker.hasWorkingAbility(Abilities.MINUS)) &&
 	   pbIsSpecial (type)){
-	   Pokemon partner = attacker.Partner;
-	  if (partner.hasWorkingAbility(Abilities.PLUS) || partner.hasWorkingAbility(Abilities.MINUS))
-		atkmult=Math.Round(atkmult*1.5);
+		if (battle.doublebattle)
+		         {
+			Pokemon partner = attacker.Partner;
+			if (partner.hasWorkingAbility(Abilities.PLUS) || partner.hasWorkingAbility(Abilities.MINUS))
+				atkmult = Math.Round(atkmult * 1.5);
+		}
 	}
 	if (attacker.hasWorkingAbility(Abilities.DEFEATIST) &&
 	   attacker.HP<=Math.Floor(attacker.TotalHP/2d))
@@ -826,9 +833,12 @@ public virtual int TotalPP { get {
 	   atkmult = Math.Round(atkmult * 0.5);
 	if ((battle.Weather==Weather.SUNNYDAY ||
 	   battle.Weather==Weather.HARSHSUN) && pbIsPhysical(type))
-	  if (attacker.hasWorkingAbility(Abilities.FLOWER_GIFT) ||
-		 attacker.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT))
-		atkmult=Math.Round(atkmult*1.5);
+		if (battle.doublebattle)
+		         {
+			if (attacker.hasWorkingAbility(Abilities.FLOWER_GIFT) || attacker.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT))
+				atkmult = Math.Round(atkmult * 1.5);
+		}
+	  
 	if (attacker.hasWorkingItem(Items.THICK_CLUB) &&
 	   (attacker.Species == Pokemons.CUBONE ||
 	   attacker.Species == Pokemons.MAROWAK) && 
@@ -887,10 +897,13 @@ public virtual int TotalPP { get {
 		 opponent.Status>0 && pbIsPhysical(type))
 		 defmult = Math.Round(defmult * 1.5);
 	  if ((battle.Weather==Weather.SUNNYDAY ||
-		 battle.Weather==Weather.HARSHSUN) && pbIsSpecial(type))
-		if (opponent.hasWorkingAbility(Abilities.FLOWER_GIFT) ||
-		   opponent.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT))
-		  defmult=Math.Round(defmult*1.5);
+		battle.Weather==Weather.HARSHSUN) && pbIsSpecial(type))
+		if (battle.doublebattle)
+		         {
+			if (opponent.hasWorkingAbility(Abilities.FLOWER_GIFT) || opponent.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT))
+				defmult = Math.Round(defmult * 1.5);
+		}
+		
 	}
 	if (opponent.hasWorkingItem(Items.ASSAULT_VEST) && pbIsSpecial(type))
 	   defmult = Math.Round(defmult * 1.5);
@@ -999,8 +1012,12 @@ public virtual int TotalPP { get {
 		 opponent.hasWorkingAbility(Abilities.FILTER)) &&
 		 opponent.damagestate.TypeMod>8)
 		finaldamagemult=Math.Round(finaldamagemult*0.75);
-	  if (opponent.Partner.hasWorkingAbility(Abilities.FRIEND_GUARD))
-		finaldamagemult=Math.Round(finaldamagemult*0.75);
+	  if (battle.doublebattle)
+      {
+		if (opponent.Partner.hasWorkingAbility(Abilities.FRIEND_GUARD))
+			finaldamagemult = Math.Round(finaldamagemult * 0.75);
+	  }
+	  
 	}
 	if (attacker.hasWorkingItem(Items.METRONOME)){
 	  double met=1+0.2*Math.Min(attacker.effects.Metronome,5);
@@ -1193,7 +1210,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 /// 2 if Bide is storing energy
 /// </returns>
   public virtual int pbDisplayUseMessage(Pokemon attacker){
-	battle.pbDisplayBrief(Game._INTL("{1} used\r\n{2}!",attacker.ToString(), Game.MoveData[MoveId].Name));
+	battle.pbDisplayBrief(Game._INTL("{0} used\r\n{1}!",attacker.ToString(), Game.MoveData[MoveId].Name));
 	return 0;
   }
 
