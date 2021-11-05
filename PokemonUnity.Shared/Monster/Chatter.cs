@@ -36,4 +36,27 @@ public void pbChatter(Combat.Pokemon pokemon) {
   return;
 }
 }
+    
+//HiddenMoveHandlers.addCanUseMove(:CHATTER,proc {|item,pokemon|
+//   return true;
+//});
+//
+//HiddenMoveHandlers.addUseMove(:CHATTER,proc {|item,pokemon|
+//   pbChatter(pokemon);
+//   return true;
+//});
+
+//public partial class PokeBattle_Scene {
+//  public System.Collections.IEnumerator pbChatter(Combat.Pokemon attacker,Combat.Pokemon opponent) {
+//    //if (attacker.pokemon.IsNotNullOrNone()) {
+//    //  UI.pbPlayCry(attacker.pokemon,90,100);
+//    //}
+//    //int i = 0; do { //;Graphics.frame_rate.times 
+//    //  UI.Graphics.update();
+//    //  Input.update(); i++;
+//    //} while (i < Graphics.frame_rate);
+//    yield return null;
+//  }
+//}
+
 }

@@ -7,6 +7,7 @@ namespace PokemonEssentials.Interface
 	public interface IGameTemp
 	{
 		int background_bitmap { get; }
+
 		bool battle_abort { get; set; }
 		bool battle_calling { get; set; }
 		bool battle_can_escape { get; set; }
@@ -19,7 +20,7 @@ namespace PokemonEssentials.Interface
 		string battleback_name { get; set; }
 		int choice_cancel_type { get; set; }
 		int choice_max { get; set; }
-		Action choice_proc { get; set; }
+		Action<object> choice_proc { get; set; }
 		int choice_start { get; set; }
 		int common_event_id { get; set; }
 		bool debug_calling { get; set; }

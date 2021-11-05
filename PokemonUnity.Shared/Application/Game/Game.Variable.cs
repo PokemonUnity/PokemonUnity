@@ -19,13 +19,15 @@ namespace PokemonUnity
 {
 	public partial class Game
 	{
-		public IGlobalMetadata Global { get; private set; }
-		//public PokemonMapFactory MapFactory { get; private set; }
-		//public IMapMetadata MapData { get; private set; }
+		public PokemonEssentials.Interface.IGlobalMetadata Global { get; private set; }
+		//public IPokemonMapFactory MapFactory { get; private set; }
+		public IMapFactory MapFactory { get; private set; }
 		//public IPokemonMapMetadata PokemonMap { get; private set; }
+		public IMapMetadata MapData { get; private set; }
 		public PokemonSystem PokemonSystem { get; private set; }
-		//public IPokemonTemp PokemonTemp { get; set; }
+		public PokemonEssentials.Interface.ITempMetadata PokemonTemp { get; set; }
 		//public PokemonEncounter PokemonEncounters { get; private set; }
+		public IEncounters PokemonEncounters { get; private set; }
 		public PokemonStorage PokemonStorage { get; private set; }
 		public Character.PokemonBag Bag { get; private set; }
 		public ISceneState Scene { get; set; }
@@ -39,10 +41,10 @@ namespace PokemonUnity
 		public Dictionary<int, bool> GameSwitches { get; set; }
 		public Dictionary<int, bool> GameSelfSwitches { get; set; }
 		public Dictionary<int, object> GameVariables { get; set; }
-		public IGame_Screen GameScreen { get; set; }
+		public IGameScreen GameScreen { get; set; }
 		public IGamePlayer GamePlayer { get; set; }
 		public IGameMap GameMap { get; set; }
-		//public Game_Message GameMessage { get; set; }
+		//public IGameMessage GameMessage { get; set; }
 		public int SpeechFrame { get; private set; }
 		public static PokemonUnity.UX.IFrontEnd UI { get; private set; }
 	}

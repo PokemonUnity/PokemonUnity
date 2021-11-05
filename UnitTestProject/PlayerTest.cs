@@ -60,9 +60,9 @@ namespace Tests
 			byte[,] pokedex = new byte[,] { { 0, 0 } };
 			TimeSpan playerTime = new TimeSpan(4, 20, 53);
 			//SeriV3 playerPosition = new SeriV3(0, 1, 0);
-			Vector playerPosition = new Vector(0, 1, 0);
+			//IVector playerPosition = new Vector(0, 1, 0);
 			//int playerDirection = 2;
-			Quaternion playerDirection = new Quaternion(0, 1, 0, 0);
+			//IQuaternion playerDirection = new Quaternion(0, 1, 0, 0);
 			//SeriV3 followerPosition = new SeriV3(1, 0, 0);
 			//int followerDirection = 1;
 			//Pokemon[,] playerPC = new Pokemon[Core.STORAGEBOXES, 30];

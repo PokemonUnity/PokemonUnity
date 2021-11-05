@@ -10,8 +10,15 @@ using System.Runtime.Serialization;
 
 namespace PokemonUnity.Utility
 {
-	[System.Serializable]
-	public struct Vector
+	public interface IVector
+	{
+		float x { get; }
+		float y { get; }
+		float z { get; }
+	}
+
+	/*[System.Serializable]
+	public struct Vector : IVector
 	{
 		public float x { get; set; }
 		public float y { get; set; }
@@ -25,7 +32,7 @@ namespace PokemonUnity.Utility
 		}
 	}
 
-	/*// <summary>
+	/// <summary>
 	/// Since unity doesn't flag the Vector3 as serializable, we
 	/// need to create our own version. This one will automatically convert
 	/// between Vector3 and SerializableVector3

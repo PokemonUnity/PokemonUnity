@@ -230,7 +230,7 @@ namespace PokemonEssentials.Interface
 
 	namespace EventArg
 	{
-		#region EventArgs
+		#region Global Overworld EventArgs
 		public interface IEventArgs
 		{
 			int Id { get; }

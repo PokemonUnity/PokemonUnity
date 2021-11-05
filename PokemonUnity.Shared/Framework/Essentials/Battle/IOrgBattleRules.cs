@@ -8,9 +8,12 @@ using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.PokeBattle;
 
-namespace PokemonEssentials.Interface.PokeBattle.Rules
+namespace PokemonEssentials.Interface.Battle
 {
-	public interface IGame
+	/// <summary>
+	/// Extension of <seealso cref="IGame"/>
+	/// </summary>
+	public interface IGameOrgBattleRules
 	{
 		int pbBaseStatTotal(Pokemons species);
 
