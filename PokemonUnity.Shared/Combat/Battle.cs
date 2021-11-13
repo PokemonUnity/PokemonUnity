@@ -1457,9 +1457,9 @@ namespace PokemonUnity.Combat
           }
         }
         // Battlers in this bracket are properly sorted, so add them to @priority
-        int n = 0; foreach (int i in temp) {
+        int x = 0; foreach (int i in temp) {
           //@priority[@priority.Length - 1]=@battlers[i];
-          @priority[n]=@battlers[i]; n++;
+          @priority[n]=@battlers[i]; x++;
         }
       }
       curpri-=1;
