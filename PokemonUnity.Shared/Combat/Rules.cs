@@ -20,7 +20,7 @@ public partial class Battle {
   //}
 
   public BattleResults pbDecisionOnDraw() {
-    if (@rules.Contains("selfkoclause")) {
+    if (@rules["selfkoclause"]) {
       if (this.lastMoveUser<0) {
         // in extreme cases there may be no last move user
         return BattleResults.DRAW; // game is a draw
@@ -34,13 +34,13 @@ public partial class Battle {
   }
 
   public void pbJudgeCheckpoint(Combat.Pokemon attacker,Combat.IMove move=null) {
-    if (@rules.Contains("drawclause")) {		                                    // Note: Also includes Life Orb (not implemented)
+    if (@rules["drawclause"]) {		                                    // Note: Also includes Life Orb (not implemented)
       if (!(move.IsNotNullOrNone() && move.Effect==Attack.Data.Effects.x15A)) {		// Not a draw if fainting occurred due to Liquid Ooze
         if (pbAllFainted(@party1) && pbAllFainted(@party2)) {
           @decision=isOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
         }
       }
-    } else if (@rules.Contains("modifiedselfdestructclause") && move.IsNotNullOrNone() && 
+    } else if (@rules["modifiedselfdestructclause"] && move.IsNotNullOrNone() && 
        move.Effect==Attack.Data.Effects.x008) { // Selfdestruct
       if (pbAllFainted(@party1) && pbAllFainted(@party2)) {
         @decision=isOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
@@ -50,7 +50,7 @@ public partial class Battle {
 
   public virtual void pbEndOfRoundPhase() {
     _pbEndOfRoundPhase();
-    if (@rules.Contains("suddendeath") && @decision==BattleResults.ABORTED) {
+    if (@rules["suddendeath"] && @decision==BattleResults.ABORTED) {
       if (pbPokemonCount(@party1)>pbPokemonCount(@party2)) {
         @decision=BattleResults.LOST; // loss
       } else if (pbPokemonCount(@party1)<pbPokemonCount(@party2)) {
@@ -84,7 +84,7 @@ public partial class Pokemon {
   }
 
   public bool pbCanSleepYawn() {
-    if ((@battle.rules.Contains("sleepclause") || @battle.rules.Contains("modifiedsleepclause")) && 
+    if ((@battle.rules["sleepclause"] || @battle.rules["modifiedsleepclause"]) && 
        pbHasStatusPokemon(Status.SLEEP)) {
       return false;
     }
@@ -92,7 +92,7 @@ public partial class Pokemon {
   }
 
   public bool pbCanFreeze (Pokemon attacker,bool showMessages,Move move=null) {
-    if (@battle.rules.Contains("freezeclause") && pbHasStatusPokemon(Status.FROZEN)) {
+    if (@battle.rules["freezeclause"] && pbHasStatusPokemon(Status.FROZEN)) {
       return false;
     }
     return _pbCanFreeze(attacker,showMessages,move);
@@ -100,7 +100,7 @@ public partial class Pokemon {
 
   public bool pbCanSleep (Pokemon attacker,bool showMessages,Combat.IMove move=null,bool ignorestatus=false) {
     bool selfsleep=(attacker.IsNotNullOrNone() && attacker.Index==this.Index);
-    if (((@battle.rules.Contains("modifiedsleepclause")) || (!selfsleep && @battle.rules.Contains("sleepclause"))) && 
+    if (((@battle.rules["modifiedsleepclause"]) || (!selfsleep && @battle.rules["sleepclause"])) && 
        pbHasStatusPokemon(Status.SLEEP)) {
       if (showMessages) {
         @battle.pbDisplay(Game._INTL("But {1} couldn't sleep!",this.ToString(true)));
@@ -115,42 +115,42 @@ public partial class Pokemon {
 
 public partial class PokeBattle_Move_022 { // Double Team
   public override bool pbMoveFailed(Pokemon attacker,Pokemon opponent) {
-    if (@battle.rules.Contains("evasionclause")) return true;
+    if (@battle.rules["evasionclause"]) return true;
     return false;
   }
 }
 
 public partial class PokeBattle_Move_034 { // Minimize
   public override bool pbMoveFailed(Pokemon attacker,Pokemon opponent) {
-    if (@battle.rules.Contains("evasionclause")) return true;
+    if (@battle.rules["evasionclause"]) return true;
     return false;
   }
 }
 
 public partial class PokeBattle_Move_067 { // Skill Swap
   public override bool pbMoveFailed(Pokemon attacker,Pokemon opponent) {
-    if (@battle.rules.Contains("skillswapclause")) return true;
+    if (@battle.rules["skillswapclause"]) return true;
     return false;
   }
 }
 
 public partial class PokeBattle_Move_06A { // Sonicboom
   public override bool pbMoveFailed(Pokemon attacker,Pokemon opponent) {
-    if (@battle.rules.Contains("sonicboomclause")) return true;
+    if (@battle.rules["sonicboomclause"]) return true;
     return false;
   }
 }
 
 public partial class PokeBattle_Move_06B { // Dragon Rage
   public override bool pbMoveFailed(Pokemon attacker,Pokemon opponent) {
-    if (@battle.rules.Contains("sonicboomclause")) return true;
+    if (@battle.rules["sonicboomclause"]) return true;
     return false;
   }
 }
 
 public partial class PokeBattle_Move_070 { // OHKO moves
   public override bool pbMoveFailed(Pokemon attacker,Pokemon opponent) {
-    if (@battle.rules.Contains("ohkoclause")) return true;
+    if (@battle.rules["ohkoclause"]) return true;
     return false;
   }
 }
@@ -162,7 +162,7 @@ public partial class PokeBattle_Move_0E0 { // Selfdestruct
   //}
 
   public override bool pbOnStartUse(Pokemon attacker) {
-    if (@battle.rules.Contains("selfkoclause")) {
+    if (@battle.rules["selfkoclause"]) {
       // Check whether no unfainted Pokemon remain in either party
       int count=attacker.NonActivePokemonCount;
       count+=attacker.pbOppositeOpposing.NonActivePokemonCount;
@@ -171,7 +171,7 @@ public partial class PokeBattle_Move_0E0 { // Selfdestruct
         return false;
       }
     }
-    if (@battle.rules.Contains("selfdestructclause")) {
+    if (@battle.rules["selfdestructclause"]) {
       // Check whether no unfainted Pokemon remain in either party
       int count=attacker.NonActivePokemonCount;
       count+=attacker.pbOppositeOpposing.NonActivePokemonCount;
@@ -187,7 +187,7 @@ public partial class PokeBattle_Move_0E0 { // Selfdestruct
 
 public partial class PokeBattle_Move_0E5 { // Perish Song
   public override bool pbMoveFailed(Pokemon attacker,Pokemon opponent) {
-    if (@battle.rules.Contains("perishsongclause") && attacker.NonActivePokemonCount==0) {
+    if (@battle.rules["perishsongclause"] && attacker.NonActivePokemonCount==0) {
       return true;
     }
     return false;
@@ -196,7 +196,7 @@ public partial class PokeBattle_Move_0E5 { // Perish Song
 
 public partial class PokeBattle_Move_0E7 { // Destiny Bond
   public override bool pbMoveFailed(Pokemon attacker,Pokemon opponent) {
-    if (@battle.rules.Contains("perishsongclause") && attacker.NonActivePokemonCount==0) {
+    if (@battle.rules["perishsongclause"] && attacker.NonActivePokemonCount==0) {
       return true;
     }
     return false;

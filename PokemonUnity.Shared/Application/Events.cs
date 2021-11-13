@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using PokemonUnity.Monster;
 using PokemonUnity.Utility;
+using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonUnity
 {
@@ -64,7 +65,7 @@ namespace PokemonUnity
 		/// Triggers at the start of a wild battle.  Event handlers can provide their own
 		/// wild battle routines to override the default behavior.
 		/// </summary>
-		public static event EventHandler OnWildBattleOverride;
+		public static event EventHandler<OnWildBattleOverrideEventArgs> OnWildBattleOverride;
 		/// <summary>
 		/// Triggers whenever a wild Pokémon battle ends
 		/// </summary>
@@ -95,7 +96,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region EventArgs
-		public class OnMapCreateEventArgs : EventArgs
+		/*public class OnMapCreateEventArgs : EventArgs
 		{
 			public static readonly int EventId = typeof(OnMapCreateEventArgs).GetHashCode();
 
@@ -183,6 +184,24 @@ namespace PokemonUnity
 			/// Array that contains a single boolean value.
 			/// </summary>
 			public bool Index { get; set; }
+		}
+		/// <summary>
+		/// Parameters: 
+		/// e[0] - Pokémon species
+		/// e[1] - Pokémon level
+		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
+		/// </summary>
+		public class OnWildBattleOverrideEventArgs : EventArgs
+		{
+			public static readonly int EventId = typeof(OnWildBattleOverrideEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public Pokemons Species { get; set; }
+			public int Level { get; set; }
+			/// <summary>
+			/// Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
+			/// </summary>
+			public int Result { get; set; }
 		}
 		/// <summary>
 		/// Parameters: 
@@ -278,7 +297,7 @@ namespace PokemonUnity
 			/// Map associated with the spriteset (not necessarily the current map).
 			/// </summary>
 			public int MapId { get; set; }
-		}
+		}*/
 		#endregion
 
 		#region Event Sender / Raise Events
@@ -306,8 +325,8 @@ namespace PokemonUnity
 		/// e[2] - X-coordinate of the tile
 		/// e[3] - Y-coordinate of the tile
 		/// </summary>
-		public static void OnLeaveTileTrigger(object @event, int mapId, float x, float y, float z) { OnLeaveTileTrigger(@event, mapId, new Vector(x, y, z)); }
-		public static void OnLeaveTileTrigger(object @event, int mapId, Vector tile)
+		//public static void OnLeaveTileTrigger(object @event, int mapId, float x, float y, float z) { OnLeaveTileTrigger(@event, mapId, new Vector(x, y, z)); }
+		public static void OnLeaveTileTrigger(object @event, int mapId, IVector tile)
 		{
 			OnLeaveTileEventArgs e = new OnLeaveTileEventArgs();
 			//EventHandler<OnLeaveTileEventArgs> handler = OnLeaveTile;
@@ -334,7 +353,13 @@ namespace PokemonUnity
 			OnStepTakenTransferPossibleEventArgs e = new OnStepTakenTransferPossibleEventArgs(); 
 			if(OnStepTakenTransferPossible != null) OnStepTakenTransferPossible.Invoke(null, e);
 		}
-		//public static void OnWildBattleOverrideTrigger(null,Pokemons species,int level,bool handled)
+		/// <summary>
+		/// Parameters: 
+		/// e[0] - Pokémon species
+		/// e[1] - Pokémon level
+		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
+		/// </summary>
+		//public static void OnWildBattleOverrideTrigger(Pokemons species,int level,BattleResults handled)//object @event,
 		//{
 		//	OnWildBattleOverrideEventArgs e = new OnWildBattleOverrideEventArgs();
 		//	if(OnWildBattleOverride != null) OnWildBattleOverride.Invoke(null, e);
@@ -345,10 +370,15 @@ namespace PokemonUnity
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 		/// </summary>
-		public static void OnWildBattleEndTrigger()
+		public static void OnWildBattleEndTrigger(object @event, Pokemons species, int level, BattleResults decision)
 		{
-			OnWildBattleEndEventArgs e = new OnWildBattleEndEventArgs(); 
-			if(OnWildBattleEnd != null) OnWildBattleEnd.Invoke(null, e);
+			OnWildBattleEndEventArgs e = new OnWildBattleEndEventArgs()
+			{
+				Level = level,
+				Species = species,
+				Result = decision
+			};
+			if(OnWildBattleEnd != null) OnWildBattleEnd.Invoke(@event, e);
 		}
 		/// <summary>
 		/// Parameters: 

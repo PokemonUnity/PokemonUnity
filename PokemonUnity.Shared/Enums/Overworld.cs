@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using PokemonUnity;
 
-namespace PokemonUnity.Overworld
+namespace PokemonUnity
+{
+namespace Overworld
 {
 	#region Maps & Overworld
 	public enum DayTime : int
@@ -132,7 +134,7 @@ Waterfall
 		Sky			= 13,
 		Space		= 14
 	}
-	public enum EncounterTypes
+	public enum EncounterTypes //ToDo: Rename to EncounterOptions?
 	{
 		Land         = 0 ,
 		Cave         = 1 ,
@@ -147,14 +149,14 @@ Waterfall
 		LandDay      = 10,
 		LandNight    = 11,
 		BugContest   = 12
-		//Pal_Park, Egg, Hatched, Special_Event,      //= 0x0
-		//Tall_Grass,                                 //= 0x2
+		//Pal_Park, Egg, Hatched, Special_Event,		//= 0x0
+		//Tall_Grass,									//= 0x2
 		//Plot_Event, //Dialga/Palkia In-Game Event,	//= 0x4
-		//Cave, Hall_of_Origin,                       //= 0x5
-		//Surfing, Fishing,                           //= 0x7	
-		//Building,                                   //= 0x9	
-		//Great_Marsh, //(Safari Zone)				//= 0xA	
-		//Starter, Fossil, Gift, //(Eevee)			//= 0xC	
+		//Cave, Hall_of_Origin,							//= 0x5
+		//Surfing, Fishing,								//= 0x7	
+		//Building,										//= 0x9	
+		//Great_Marsh, //(Safari Zone)					//= 0xA	
+		//Starter, Fossil, Gift, //(Eevee)				//= 0xC	
 	}
 	/*enum EncounterActions
 	{
@@ -176,6 +178,30 @@ Waterfall
 		HeadbuttLow,
 		HeadbuttHigh
 	}*/
+
+		public enum EncounterRestrictions //ToDo: Rename to EncounterTypes?
+		{
+			/// <summary>
+			/// Any encounter method (except triggered ones and Bug Contest)
+			/// </summary>
+			None		= 0,
+			/// <summary>
+			/// Grass (except Bug Contest)/walking in caves only
+			/// </summary>
+			Walking		= 1,
+			/// <summary>
+			/// Surfing only
+			/// </summary>
+			Surfing		= 2,
+			/// <summary>
+			/// Fishing only
+			/// </summary>
+			Fishing		= 3,
+			/// <summary>
+			/// Water-based only
+			/// </summary>
+			AnyWater	= 4
+		}
 
 	/// <summary>
 	/// Encounter method
@@ -458,8 +484,7 @@ Waterfall
 		ZONE
 	}
 	#endregion
-	//ToDo: Rename TileShapes
-	public enum Shape
+	public enum TileShapes
 	{
 		/// <summary>
 		/// Flat surface. 
@@ -665,10 +690,17 @@ Waterfall
 		OwnPlayer,
 		Particle
 	}
-}
 
-namespace PokemonUnity
-{
+		public enum EdgeMasks
+		{
+			North	= 1,
+			West	= 2,
+			East	= 4,
+			South	= 8,
+			Visited	= 16,
+		}
+	}
+
 	#region Enums
 	public enum Worlds
 	{

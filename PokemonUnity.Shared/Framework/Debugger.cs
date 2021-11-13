@@ -2,6 +2,39 @@
 
 namespace PokemonUnity
 {
+	public interface IGameDebug
+	{
+		event EventHandler<GameDebug.OnDebugEventArgs> OnDebug;
+
+		/// <summary>
+		/// Create and open data stream to file used for storing log entries.
+		/// </summary>
+		/// <param name="logfilePath">File Directory</param>
+		/// <param name="logBaseName">Name of the File</param>
+		void Init(string logfilePath, string logBaseName);
+		/// <summary>
+		/// Silently write into our log file
+		/// </summary>
+		/// <param name="message"></param>
+		void Log(string message);
+		/// <summary>
+		/// Pauses and interrupts game to be displayed to user. 
+		/// Typically responses to user commands.
+		/// </summary>
+		/// <param name="message"></param>
+		void LogError(string message);
+		/// <summary>
+		/// Displays to user, but doesnt pause or interrupt game. 
+		/// Typically flashes on screen and goes away.
+		/// </summary>
+		/// <param name="message"></param>
+		void LogWarning(string message);
+		/// <summary>
+		/// Save and close data stream to file.
+		/// </summary>
+		void Shutdown();
+	}
+
 	/// <summary>
 	/// Logging of messages
 	/// <para>
@@ -124,8 +157,15 @@ namespace PokemonUnity
 		public static void Log(string message)
 		{
 			Debug = message;
+			//Console.WriteLine("Log: " + message);
 			if (DebugToFile)
 				_Log(message);
+		}
+
+		public static void Log(string message, params object[] param)
+		{
+			//Debug = message;
+			Log(Game._INTL(message, param));
 		}
 
 		static void _Log(string message)
@@ -138,6 +178,7 @@ namespace PokemonUnity
 		public static void LogError(string message)
 		{
 			DebugError = message;
+			//Console.WriteLine("Log Error: " + message);
 			if (DebugToFile)
 				_LogError(message);
 		}

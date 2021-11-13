@@ -408,7 +408,8 @@ namespace PokemonUnity.Combat
 				effects.LockOnPos   = -1;
 				for (int i = 0; i < battle.battlers.Length; i++)
 				{
-					if (battle.battlers[i].Species == Pokemons.NONE) continue;
+					//if (battle.battlers[i].Species == Pokemons.NONE) continue;
+					if (!battle.battlers[i].IsNotNullOrNone()) continue;
 					if (battle.battlers[i].effects.LockOnPos == Index &&
 						battle.battlers[i].effects.LockOn > 0)
 					{
@@ -534,7 +535,8 @@ namespace PokemonUnity.Combat
 			effects.Yawn				= 0;
 			for (int i = 0; i < battle.battlers.Length; i++)
 			{
-				if (battle.battlers[i].Species == Pokemons.NONE) continue;
+				//if (battle.battlers[i].Species == Pokemons.NONE) continue;
+				if (!battle.battlers[i].IsNotNullOrNone()) continue;
 				if (battle.battlers[i].effects.Attract == Index)
 				{
 					battle.battlers[i].effects.Attract = -1;
@@ -718,7 +720,7 @@ namespace PokemonUnity.Combat
 			//Pokemon pkmn = this;
 			if (this.isFainted() && !ignorefainted) return false;
 			if (effects.GastroAcid) return false;
-			return this.Ability != ability;
+			return this.Ability == ability;
 		}
 
 		public bool hasType(Types type) {
@@ -782,7 +784,7 @@ namespace PokemonUnity.Combat
 			if (effects.Embargo > 0) return false;
 			if (battle.field.MagicRoom > 0) return false;
 			if (this.hasWorkingAbility(Abilities.KLUTZ, ignorefainted)) return false;
-			return this.Item != item;
+			return this.Item == item;
 		}
 
 		public bool hasWorkingBerry(bool ignorefainted= false) {
@@ -923,10 +925,10 @@ namespace PokemonUnity.Combat
 		/// Returns the battler's first opposing Pokémon
 		/// </summary>
 		public Pokemon OppositeOpposing { get { return battle.battlers[(Index ^ 1)]; } }
-		public Pokemon pbOppositeOpposing { get; set; }
-		public Pokemon pbOppositeOpposing2 { get; set; }
-		public Pokemon pbOpposing1 { get; set; }
-		public Pokemon pbOpposing2 { get; set; }
+		public Pokemon pbOppositeOpposing { get { return battle.battlers[(Index ^ 1)]; } }
+		public Pokemon pbOppositeOpposing2 { get { return battle.battlers[(Index ^ 1) | ((Index & 2) ^ 2)]; } }
+		public Pokemon pbOpposing1 { get { return battle.battlers[((Index & 1) ^ 1)]; } }
+		public Pokemon pbOpposing2 { get { return battle.battlers[((Index & 1) ^ 1) + 2]; } }
 		/// <summary>
 		/// Returns the battler's first opposing Pokémon Index
 		/// </summary>
@@ -939,10 +941,15 @@ namespace PokemonUnity.Combat
 				Monster.Pokemon[] party = battle.pbParty(Index);
 				for (int i = 0; i < party.Length; i++)
 				{
-					if ((isFainted() || i != pokemonIndex) &&
-						(Partner.isFainted() || i != Partner.pokemonIndex) &&
-						party[i].IsNotNullOrNone() && !party[i].isEgg && party[i].HP > 0)
-							count += 1;
+					if (battle.doublebattle)
+						if ((isFainted() || i != pokemonIndex) &&
+							(Partner.isFainted() || i != Partner.pokemonIndex) &&
+							party[i].IsNotNullOrNone() && !party[i].isEgg && party[i].HP > 0)
+								count += 1;
+					else
+						if ((isFainted() || i != pokemonIndex) &&
+							party[i].IsNotNullOrNone() && !party[i].isEgg && party[i].HP > 0)
+								count += 1;
 				}
 				return count;
 			}
@@ -1975,8 +1982,11 @@ namespace PokemonUnity.Combat
   }
   public void pbBerryCureCheck(bool hpcure=false) {
 	if (this.isFainted()) return;
-	bool unnerver=(pbOpposing1.hasWorkingAbility(Abilities.UNNERVE) ||
-			  pbOpposing2.hasWorkingAbility(Abilities.UNNERVE));
+	bool unnerver = false;
+	if (battle.doublebattle)
+		unnerver = (pbOpposing1.hasWorkingAbility(Abilities.UNNERVE) || pbOpposing2.hasWorkingAbility(Abilities.UNNERVE));
+	else
+		unnerver = (pbOpposing1.hasWorkingAbility(Abilities.UNNERVE));
 	string itemname=(this.Item==0) ? "" : this.Item.ToString(TextScripts.Name);
 	if (hpcure)
 	  if (this.hasWorkingItem(Items.BERRY_JUICE) && this.HP<= (int)Math.Floor(this.TotalHP/2d)) {
@@ -2202,7 +2212,7 @@ namespace PokemonUnity.Combat
   }
   public bool pbAddTarget(Pokemon[] targets,Pokemon target) {
 	if (!target.isFainted()) {
-	  targets[targets.Length]=target;
+	  targets[targets.Length - 1]=target; // Add target to end of the list...
 	  return true;
 	}
 	return false;
@@ -2217,7 +2227,8 @@ namespace PokemonUnity.Combat
   public void pbRandomTarget(Pokemon[] targets) {
 	List<Pokemon> choices= new List<Pokemon>();
 	pbAddTarget(ref choices,pbOpposing1);
-	pbAddTarget(ref choices,pbOpposing2);
+	if (battle.doublebattle)
+		pbAddTarget(ref choices,pbOpposing2);
 	if (choices.Count>0)
 	  pbAddTarget(targets,choices[@battle.pbRandom(choices.Count)]);
   }
@@ -2650,8 +2661,8 @@ namespace PokemonUnity.Combat
   public bool pbTryUseMove(Choice choice,Combat.IMove thismove,Effects.Move turneffects) {
 	if (turneffects.PassedTrying) return true;
 	// TODO: Return true if attack has been Mirror Coated once already
-	if (!turneffects.SkipAccuracyCheck)
-	  if (!pbObedienceCheck(choice)) return false;
+	//if (!turneffects.SkipAccuracyCheck)
+	//  if (!pbObedienceCheck(choice)) return false;
 	if (@effects.SkyDrop) { // Intentionally no message here
 	  GameDebug.Log($"[Move failed] #{ToString()} can't use #{thismove.MoveId.ToString(TextScripts.Name)} because of being Sky Dropped");
 	  return false;
@@ -2686,7 +2697,7 @@ namespace PokemonUnity.Combat
 		GameDebug.Log($"[Move failed] #{thismove.MoveId.ToString(TextScripts.Name)} can't use #{thismove.MoveId.ToString(TextScripts.Name)} because of #{pbOpposing1.ToString(true)}'s Imprison");
 		return false;
 	  }
-	if (pbOpposing2.effects.Imprison && !pbOpposing2.isFainted())
+	if (battle.doublebattle && pbOpposing2.effects.Imprison && !pbOpposing2.isFainted())
 	  if(thismove.MoveId==pbOpposing2.moves[0].MoveId ||
 		 thismove.MoveId==pbOpposing2.moves[1].MoveId ||
 		 thismove.MoveId==pbOpposing2.moves[2].MoveId ||
@@ -2940,7 +2951,7 @@ namespace PokemonUnity.Combat
 	  if (user.isFainted()) user.pbFaint();			// no return
 	  if (user.isFainted() || target.isFainted()) break;
 	  // Berry check (maybe just called by ability effect, since only necessary Berries are checked)
-	  for (int j = 0; j< 4; j++)
+	  for (int j = 0; j < battle.battlers.Length; j++)
 		@battle.battlers[j].pbBerryCureCheck();
 	  if (user.isFainted() || target.isFainted()) break;
 	  target.pbUpdateTargetedMove(thismove,user);
@@ -2985,7 +2996,7 @@ namespace PokemonUnity.Combat
 	  }
 	pbEffectsAfterHit(user,target,thismove,turneffects);
 	// Berry check
-	for (int j = 0; j< 4; j++)
+	for (int j = 0; j < battle.battlers.Length; j++)
 	  @battle.battlers[j].pbBerryCureCheck();
 	target.pbUpdateTargetedMove(thismove,user);
   }
@@ -3136,7 +3147,9 @@ namespace PokemonUnity.Combat
 	}
 	// Find the user and target(s)
 	List<Pokemon> targets= new List<Pokemon>();
-	Pokemon user=pbFindUser(choice,targets.ToArray());
+	//targets.Add(null); // Empty for slot 0
+	//targets.Add(pbOpposing1);
+	Pokemon user=pbFindUser(choice,targets.ToArray()); //ToDo: ref List<> here
 	// Battle Arena only - assume failure
 	@battle.successStates[user.Index].UseState=true;
 	@battle.successStates[user.Index].TypeMod=8;
@@ -3254,7 +3267,7 @@ namespace PokemonUnity.Combat
 		bool success=pbChangeTarget(thismove,userandtarget,targets.ToArray());
 		user=userandtarget[0];
 		Pokemon target=userandtarget[1];
-		if (i==0 && thismove.Target==Attack.Data.Targets.ALL_OPPONENTS) //thismove.Targets==Attack.Target.AllOpposing
+		if (battle.doublebattle && i==0 && thismove.Target==Attack.Data.Targets.ALL_OPPONENTS) //thismove.Targets==Attack.Target.AllOpposing
 		  // Add target's partner to list of targets
 		  pbAddTarget(ref targets,target.Partner);
 		// If couldn't get the next target
@@ -3270,13 +3283,13 @@ namespace PokemonUnity.Combat
 		pbProcessMoveAgainstTarget(thismove,user,target,numhits,turneffects,false,alltargets.ToArray(),showanimation);
 		showanimation=false;
 		i+=1;
-	  } while (i>=targets.Count);
+	  } while (i<targets.Count);
 	}
 	List<int> switched= new List<int>();
 	// Pokémon switching caused by Roar, Whirlwind, Circle Throw, Dragon Tail, Red Card
 	if (!user.isFainted()) {
 	  switched= new List<int>();
-	  for (int i = 0; i < 4; i++)
+	  for (int i = 0; i < battle.battlers.Length; i++)
 		if (@battle.battlers[i].effects.Roar) {
 		  @battle.battlers[i].effects.Roar=false;
 		  @battle.battlers[i].effects.Uturn=false;
@@ -3306,7 +3319,7 @@ namespace PokemonUnity.Combat
 	}
 	// Pokémon switching caused by U-Turn, Volt Switch, Eject Button
 	switched= new List<int>();
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < battle.battlers.Length; i++)
 	  if (@battle.battlers[i].effects.Uturn) {
 		@battle.battlers[i].effects.Uturn=false;
 		@battle.battlers[i].effects.Roar=false;
@@ -3357,7 +3370,7 @@ namespace PokemonUnity.Combat
 	// Gain Exp
 	@battle.pbGainEXP();
 	// Battle Arena only - update skills
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < battle.battlers.Length; i++)
 	  @battle.successStates[i].UpdateSkill();
 	// End of move usage
 	pbEndTurn(choice);
@@ -3410,13 +3423,13 @@ namespace PokemonUnity.Combat
 	   this.hasWorkingItem(Items.CHOICE_SCARF)))
 	  @effects.ChoiceBand=@lastMoveUsed;
 	@battle.pbPrimordialWeather();
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < battle.battlers.Length; i++)
 	  @battle.battlers[i].pbBerryCureCheck();
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < battle.battlers.Length; i++)
 	  @battle.battlers[i].pbAbilityCureCheck();
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < battle.battlers.Length; i++)
 	  @battle.battlers[i].pbAbilitiesOnSwitchIn(false);
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < battle.battlers.Length; i++)
 	  @battle.battlers[i].CheckForm();
   }
   public bool pbProcessTurn(Choice choice) {
@@ -3424,7 +3437,7 @@ namespace PokemonUnity.Combat
 	if (this.isFainted()) return false;
 	// Wild roaming Pokémon always flee if possible
 	if (@battle.opponent.Length != 0 && @battle.isOpposing(this.Index) &&
-	   @battle.rules.Contains("alwaysflee") && @battle.pbCanRun(this.Index)) {
+	   @battle.rules["alwaysflee"] && @battle.pbCanRun(this.Index)) {
 	  pbBeginTurn(choice);
 	  @battle.pbDisplay(Game._INTL("{1} fled!",this.ToString()));
 	  @battle.decision=BattleResults.FORFEIT;
@@ -3450,7 +3463,7 @@ namespace PokemonUnity.Combat
 	// Use the move
  //   @battle.pbDisplayPaused("Before: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]"); //Log instead?
 	GameDebug.Log($"#{ToString()} used #{choice.Move.MoveId.ToString(TextScripts.Name)}");
-	try{ pbUseMove(choice, choice.Move == @battle.struggle); } catch { GameDebug.Log(""); }
+	try{ pbUseMove(choice, choice.Move == @battle.struggle); } catch (Exception e) { GameDebug.Log(e.Message); GameDebug.Log(e.StackTrace); }
  //   @battle.pbDisplayPaused("After: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]");
 	return true;
   }

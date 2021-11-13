@@ -8,6 +8,9 @@ using PokemonUnity.Inventory;
 
 namespace PokemonUnity
 {
+	public interface IEntity
+	{
+	}
 	public interface IHasDisplayMessage
 	{
 		void pbDisplay(string v);

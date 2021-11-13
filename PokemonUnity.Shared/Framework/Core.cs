@@ -5,7 +5,7 @@ namespace PokemonUnity
 {
 	/// <summary>
 	/// Static and unchanging rules for game to function off of.<para></para>
-	/// <see cref="Game"/> is a <see cref="UnityEngine.GameObject"/>
+	/// <see cref="Game"/> is a singleton
 	/// that persist throughout the game and inbetween scene levels.
 	/// <see cref="Core"/> is not an <see cref="object"/>
 	/// but a series of const variables that will be used as rules 
@@ -24,16 +24,13 @@ namespace PokemonUnity
 		/// If pokemon battles are being done in an console for ai training, or visually for player experience
 		/// </summary>
 		public const bool INTERNAL = true;
-		/// <summary>
-		/// Location of text file for game translation file import
-		/// </summary>
-		public const string FILEPATH = @"..\..\..\\Pokemon Unity\Assets\Scripts2\XML\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//public const string FILEPATH = @"..\..\..\\Pokemon Unity\Assets\Scripts2\XML\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
 		public const bool DEBUG = false;
-		public const string FILEPATH = UnityEngine.Application.dataPath + "/Scripts2/XML/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+		//public const string FILEPATH = UnityEngine.Application.dataPath + "/Scripts2/XML/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
 		//string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
 #endif
 		//public XmlFileLocalizationDictionaryProvider TranslationText;// = new XmlFileLocalizationDictionaryProvider(Server.MapPath("~/App_Data/"));
@@ -197,6 +194,10 @@ namespace PokemonUnity
 		/// Map view mode (0=original, 1=custom, 2=perspective).
 		/// </summary>
 		public const int MAPVIEWMODE = 1;
+		/// <summary>
+		/// The default text scroll speed (from 1-6, default being 4)
+		/// </summary>
+		public const int SCROLL_SPEED_DEFAULT = 4;
 		#endregion
 
 		#region Pokemon Settings
@@ -494,6 +495,32 @@ namespace PokemonUnity
 		/// </summary>
 		/// Use Ctrl+F to locate, i commented this out in code
 		public const byte SELFCONFUSE				= 0x20;
+		#endregion
+
+		#region Pre-determined animations
+		// ===============================================================================
+		// * The ID of the animation played when the player steps on grass (shows grass
+		//      rustling).
+		// * The ID of the animation played when the player lands on the ground after
+		//      hopping over a ledge (shows a dust impact).
+		// * The ID of the animation played when a trainer notices the player (an
+		//      exclamation bubble).
+		// * The ID of the animation played when a patch of grass rustles due to using
+		//      the Poké Radar.
+		// * The ID of the animation played when a patch of grass rustles vigorously due
+		//      to using the Poké Radar. (Rarer species)
+		// * The ID of the animation played when a patch of grass rustles and shines due
+		//      to using the Poké Radar. (Shiny encounter)
+		// * The ID of the animation played when a berry tree grows a stage while the
+		//      player is on the map (for new plant growth mechanics only).
+		// ===============================================================================
+		public const int GRASS_ANIMATION_ID = 1;
+		public const int DUST_ANIMATION_ID = 2;
+		public const int EXCLAMATION_ANIMATION_ID = 3;
+		public const int RUSTLE_NORMAL_ANIMATION_ID = 1;
+		public const int RUSTLE_VIGOROUS_ANIMATION_ID = 5;
+		public const int RUSTLE_SHINY_ANIMATION_ID = 6;
+		public const int PLANT_SPARKLE_ANIMATION_ID = 7;
 		#endregion
 	}
 }

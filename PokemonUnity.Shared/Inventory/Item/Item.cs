@@ -419,7 +419,7 @@ public static int pbForgetMove(Pokemon pokemon,Moves moveToLearn) {
   Game.UI.pbFadeOutIn(99999, () => {
      IPokemonSummaryScene scene= Game.PokemonSummaryScene; //new PokemonSummaryScene();
      IPokemonSummary screen=Game.PokemonSummary.initialize(scene); //new PokemonSummary(scene);
-     ret=screen.pbStartForgetScreen(new Pokemon[] { pokemon },0,moveToLearn);
+     ret=screen.pbStartForgetScreen(pokemon,0,moveToLearn);
   });
   return ret;
 }
