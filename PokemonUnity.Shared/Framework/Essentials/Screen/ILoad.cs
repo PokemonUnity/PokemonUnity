@@ -53,7 +53,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		ILoadPanel initialize(int index, string title, bool isContinue, ITrainer trainer, int framecount, int mapid, IViewport viewport = null);
 
-		void dispose();
+		//void dispose();
 
 		//void selected=(value) {
 		//  if (@selected!=value) {

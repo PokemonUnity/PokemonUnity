@@ -25,6 +25,7 @@
     <NoWarn>0169;CS0649;IDE0051;CS0162</NoWarn>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

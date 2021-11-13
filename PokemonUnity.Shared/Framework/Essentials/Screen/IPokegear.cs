@@ -53,7 +53,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		IPokegearButton initialize(float x, float y, string name = "", int index = 0, IViewport viewport = null);
 
-		void dispose();
+		//void dispose();
 
 		void refresh();
 
