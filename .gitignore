@@ -102,3 +102,5 @@ git-journal.fish
 **/_ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+/PokemonUnity.Console
+/PokemonUnity.Application
