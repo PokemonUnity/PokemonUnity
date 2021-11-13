@@ -157,8 +157,15 @@ namespace PokemonUnity
 		public static void Log(string message)
 		{
 			Debug = message;
+			//Console.WriteLine("Log: " + message);
 			if (DebugToFile)
 				_Log(message);
+		}
+
+		public static void Log(string message, params object[] param)
+		{
+			//Debug = message;
+			Log(Game._INTL(message, param));
 		}
 
 		static void _Log(string message)
@@ -171,6 +178,7 @@ namespace PokemonUnity
 		public static void LogError(string message)
 		{
 			DebugError = message;
+			//Console.WriteLine("Log Error: " + message);
 			if (DebugToFile)
 				_LogError(message);
 		}

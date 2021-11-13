@@ -33,9 +33,9 @@
 
 		public void UpdateSkill()
 		{
-			if (!UseState.Value && !Protected)
+			if (UseState != true && !Protected)
 				Skill -= 2;
-			else if (UseState.Value)
+			else if (UseState == true)
 			{
 				if (TypeMod > 4)
 					Skill += 2; // "Super effective"

@@ -57,13 +57,15 @@ public partial class Trainer {
     @outfit=0;
     @pokegear=false;
     @pokedex=false;
+    seen = new Dictionary<Pokemons, bool>();
+    owned = new Dictionary<Pokemons, bool>();
     clearPokedex();
     //@shadowcaught=new bool[0];
     //for (int i = 1; i < Game.PokemonData.Count; i++) {
     //  @shadowcaught[i]=false;
     //}
     @shadowcaught=new List<Pokemons>();
-    @badges=new bool[0];
+    @badges=new bool[8]; //ToDo: Dynamic Badge Count...
     for (int i = 0; i < 8; i++) {
       @badges[i]=false;
     }

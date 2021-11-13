@@ -356,10 +356,11 @@ namespace PokemonUnity.Combat
 
 			//struggle.PP = -1;
 
-			for (byte i = 0; i < battlers.Length; i++)
+			for (byte i = 0; i < battlers.Length; i++) {
 				this.battlers[i] = new Pokemon(this, (sbyte)i);
-			for (byte i = 0; i < battlers.Length; i++)
+			//} for (byte i = 0; i < battlers.Length; i++) {
 				this.battlers[i].Initialize(new PokemonUnity.Monster.Pokemon(), (sbyte)i);
+			}
 
 			foreach (var i in party1)
 			{
@@ -962,7 +963,7 @@ namespace PokemonUnity.Combat
     int plength=pbPartyLength(index);
     int pstart=pbGetOwnerIndex(index)*plength;
     int lastpoke=-1;
-    for (int i = pstart; i < pstart+plength; i++) {
+    for (int i = pstart; i < pstart+plength - 1; i++) {
       Monster.Pokemon p=party[partyorder[i]];
       if (!p.IsNotNullOrNone() || p.isEgg || p.HP<=0) continue;
       lastpoke=partyorder[i];
@@ -1170,8 +1171,8 @@ namespace PokemonUnity.Combat
 
 			//ToDo: Array for opposing pokemons, [i] changes based on if double battle
 			Pokemon opp1 = thispkmn.pbOpposing1;
-			Pokemon opp2 = thispkmn.pbOpposing2;
-			if (thismove != null || thismove.MoveId == 0) return false;
+			Pokemon opp2 = null; //ToDo: thispkmn.pbOpposing2;
+			if (thismove == null || thismove.MoveId == 0) return false;
 			if (thismove.PP <= 0 && thismove.TotalPP > 0 && !sleeptalk) {
 				if (showMessages) pbDisplayPaused(Game._INTL("There's no PP left for this move!"));
 				return false;
@@ -1198,7 +1199,7 @@ namespace PokemonUnity.Combat
 					return false;
 				}
 			}
-			if (opp1.effects.Imprison)
+			if (opp1.IsNotNullOrNone() && opp1.effects.Imprison)
 			{
 				if (thismove.MoveId == opp1.moves[0].MoveId ||
 					thismove.MoveId == opp1.moves[1].MoveId ||
@@ -1210,7 +1211,7 @@ namespace PokemonUnity.Combat
 					return false;
 				}
 			}
-			if (opp2.effects.Imprison)
+			if (opp2.IsNotNullOrNone() && opp2.effects.Imprison)
 			{
 				if (thismove.MoveId == opp2.moves[0].MoveId ||
 					 thismove.MoveId == opp2.moves[1].MoveId ||
@@ -1456,8 +1457,9 @@ namespace PokemonUnity.Combat
           }
         }
         // Battlers in this bracket are properly sorted, so add them to @priority
-        foreach (var i in temp) {
-          @priority[@priority.Length]=@battlers[i];
+        int n = 0; foreach (int i in temp) {
+          //@priority[@priority.Length - 1]=@battlers[i];
+          @priority[n]=@battlers[i]; n++;
         }
       }
       curpri-=1;
@@ -1672,7 +1674,7 @@ namespace PokemonUnity.Combat
   }
 
   public void pbSendOut(int index,Monster.Pokemon pokemon) {
-    pbSetSeen(pokemon);
+    //pbSetSeen(pokemon); //ToDo: Uncomment...
     @peer.pbOnEnteringBattle(this,pokemon);
     if (isOpposing(index)) {
       @scene.pbTrainerSendOut(index,pokemon);
@@ -2846,8 +2848,11 @@ namespace PokemonUnity.Combat
     GameDebug.Log($"******************************************");
     try { 
         pbStartBattleCore(canlose);
-    } catch { //rescue BattleAbortedException;
-      @decision=BattleResults.ABORTED;
+    } catch (Exception e){ //rescue BattleAbortedException;
+      GameDebug.LogError(e.Message);
+      GameDebug.LogError(e.StackTrace);
+      
+      @decision =BattleResults.ABORTED;
       @scene.pbEndBattle(@decision);
     }
     return @decision;

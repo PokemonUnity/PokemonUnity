@@ -41,6 +41,36 @@ namespace PokemonUnity
 		public static System.Data.SQLite.SQLiteConnection con { get; private set; }
         public static void ResetSqlConnection() { con = new System.Data.SQLite.SQLiteConnection(DatabasePath); }
 
+		// Reset and Init SQL with database path
+		// Input either @"Data Source = veekun-pokedex.sqlite" or "veekun-pokedex.sqlite"
+		public static void ResetAndOpenSql(string databasePath)
+		{
+			if (!File.Exists(databasePath))
+				throw new Exception("The Database could not found!");
+
+			if (!databasePath.StartsWith("Data Source"))
+				databasePath = "Data Source =" + databasePath;
+			DatabasePath = databasePath;
+			if (con.State == System.Data.ConnectionState.Open)
+				con.Close();
+			ResetSqlConnection();
+			con.Open();
+
+			InitTypes();
+			InitNatures();
+			InitPokemons();
+			InitPokemonForms();
+			InitPokemonMoves();
+			InitPokemonEvolutions();
+			InitPokemonItems();
+			InitMoves();
+			InitItems();
+			InitBerries();
+			InitTrainers();
+			InitRegions();
+			InitLocations();
+		}
+
 		public static string LockFileStream (string filepath)
 		{
 			UnicodeEncoding uniEncoding = new UnicodeEncoding();
@@ -93,12 +123,12 @@ namespace PokemonUnity
 
         public static string _INTL(string message, params object[] param)
         {
-            for (int i = 5; i > 1; i--)
+            for (int i = param.Length; i > 1; i--)
                 message.Replace($"{{{i}}}", $"{{{i - 1}}}");
             return string.Format(message, param);
 		}
 
-	
+
 #region General purpose utilities
 public bool _pbNextComb(int[] comb,int length) {
   int i=comb.Length-1;
