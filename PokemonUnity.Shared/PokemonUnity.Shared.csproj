@@ -101,7 +101,7 @@
     <Compile Include="Framework\Essentials\Pokemon\IPokemonChatter.cs" />
     <Compile Include="Framework\Essentials\Pokemon\IPokemonShadowPokemon.cs" />
     <Compile Include="Framework\Essentials\Pokemon\IPokemonMultipleForms.cs" />
-    <Compile Include="Framework\Essentials\Screen\BattleSwap.cs" />
+    <Compile Include="Framework\Essentials\Screen\IBattleSwap.cs" />
     <Compile Include="Framework\Essentials\Screen\IMysteryGift.cs" />
     <Compile Include="Framework\Essentials\Screen\IMart.cs" />
     <Compile Include="Framework\Essentials\Screen\ISave.cs" />
