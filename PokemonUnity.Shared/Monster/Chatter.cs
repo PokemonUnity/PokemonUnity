@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PokemonUnity.Combat;
+using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 
 namespace PokemonUnity
 {
-namespace Combat { 
+namespace Monster { 
 public partial class Pokemon {
   public IAudioObject chatter				{ get; set; }
 }
 }
 public partial class Game { 
-public void pbChatter(Combat.Pokemon pokemon) {
+public void pbChatter(Monster.Pokemon pokemon) {
   IWindow iconwindow = null;
   //PictureWindow iconwindow=new PictureWindow(UI.pbLoadPokemonBitmap(pokemon));
   //iconwindow.x=(Graphics.width/2)-(iconwindow.width/2);

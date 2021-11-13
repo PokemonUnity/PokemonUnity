@@ -14,7 +14,6 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Item;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
-using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
@@ -32,7 +31,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		int numPockets				{ get; }
 
-		//PokemonBag();
+		//IBag initialize();
 
 		//int pockets { get; }
 
@@ -71,10 +70,10 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	#region Bag Scene
-	public interface IPokemonBag_Scene : IScene
+	public interface IBagScene : IScene
 	{
 		void update();
-		void pbStartScene(Bag bag);
+		void pbStartScene(IBag bag);
 		void pbEndScene();
 		int pbChooseNumber(string helptext, int maximum);
 		void pbDisplay(string msg, bool brief = false);
@@ -86,9 +85,9 @@ namespace PokemonEssentials.Interface.Screen
 		Items pbChooseItem(bool lockpocket = false);
 	}
 
-	public interface IPokemonBagScreen : IScreen
+	public interface IBagScreen : IScreen
 	{
-		IPokemonBagScreen initialize(IPokemonBag_Scene scene, Bag bag);
+		IBagScreen initialize(IBagScene scene, IBag bag);
 		void pbDisplay(string text);
 		void pbConfirm(string text);
 
@@ -113,6 +112,47 @@ namespace PokemonEssentials.Interface.Screen
 		// UI logic for depositing an item in the item screen.
 		void pbDepositItemScreen();
 		Items pbStartScreen();
+	}
+	#endregion
+
+	#region UI Elements
+	// ===============================================================================
+	// Bag screen
+	// ===============================================================================
+	public interface IWindow_PokemonBag //: IWindow_DrawableCommand
+	{
+		int pocket { get; set; }
+		int sortIndex { get; set; }
+
+		IWindow_PokemonBag initialize(IBag bag, int pocket, float x, float y, int width, int height);
+
+		// public int pocket { set {
+		//@pocket=value;
+		//thispocket=@bag.pockets[@pocket];
+		//@item_max=thispocket.Length+1;
+		//this.index=@bag.getChoice(@pocket);
+		//refresh();
+		// } }
+
+		// public int sortIndex { set {
+		//@sortIndex=value;
+		//refresh();
+		// } }
+
+		int page_row_max();
+		int page_item_max();
+
+		IRect itemRect(int item);
+
+		IRect drawCursor(int index, IRect rect);
+
+		Items item();
+
+		int itemCount { get; }
+
+		void drawItem(int index, int count, IRect rect);
+
+		void refresh();
 	}
 	#endregion
 }

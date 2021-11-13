@@ -13,7 +13,7 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Item;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
-using PokemonEssentials.Interface.PokeBattle.Rules;
+//using PokemonEssentials.Interface.PokeBattle.Rules;
 using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
@@ -59,7 +59,7 @@ namespace PokemonEssentials.Interface.Screen
 	#region Pokemon Battle
 	public interface ISceneHasChatter
 	{
-		void pbChatter(IBattler attacker,Combat.Trainer opponent);
+		void pbChatter(IBattler attacker,ITrainer opponent);
 	}
 	public interface IPokeBattle_Scene : IScene, ISceneHasChatter
 	{
@@ -124,7 +124,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// Shows the party line-ups appearing on-screen
 		/// </summary>
 		void partyAnimationUpdate();
-		void pbStartBattle(PokemonUnity.Combat.Battle battle);
+		void pbStartBattle(IBattle battle);
 		void pbEndBattle(BattleResults result);
 		void pbRecall(int battlerindex);
 		void pbTrainerSendOut(int battlerindex, IPokemon pkmn);
@@ -134,8 +134,8 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="battlerindex"></param>
 		/// <param name="pkmn"></param>
 		void pbSendOut(int battlerindex, IPokemon pkmn);
-		void pbTrainerWithdraw(Combat.Battle battle, IBattler pkmn);
-		void pbWithdraw(Combat.Battle battle, IBattler pkmn);
+		void pbTrainerWithdraw(IBattle battle, IBattler pkmn);
+		void pbWithdraw(IBattle battle, IBattler pkmn);
 		string pbMoveString(string move);
 		void pbBeginAttackPhase();
 		void pbSafariStart();
@@ -186,7 +186,7 @@ namespace PokemonEssentials.Interface.Screen
 		string pbNameEntry(string helptext, IPokemon pokemon);
 		void pbSelectBattler(int index, int selectmode = 1);
 		//int pbFirstTarget(int index, int targettype);
-		int pbFirstTarget(int index, Attack.Data.Targets targettype);
+		int pbFirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
 		void pbUpdateSelected(int index);
 		/// <summary>
 		/// Use this method to make the player choose a target 
@@ -194,7 +194,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name="targettype">Which targets are selectable as option</param>
-		int pbChooseTarget(int index, Attack.Data.Targets targettype);
+		int pbChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
 		int pbSwitch(int index, bool lax, bool cancancel);
 		void pbDamageAnimation(IBattler pkmn, float effectiveness);
 		/// <summary>
@@ -238,7 +238,7 @@ namespace PokemonEssentials.Interface.Screen
 		void pbShowPokedex(Pokemons species, int form = 0);
 		void pbChangeSpecies(IBattler attacker, Pokemons species);
 		void ChangePokemon();
-		void pbChangePokemon(IBattler attacker, Monster.Forms pokemon);
+		void pbChangePokemon(IBattler attacker, PokemonUnity.Monster.Forms pokemon);
 		void pbSaveShadows();
 		void pbFindAnimation(Moves moveid, int userIndex, int hitnum);
 		void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum = 0);
@@ -279,97 +279,6 @@ namespace PokemonEssentials.Interface.Screen
 		void pbUpdate(bool animating = false);
 		void pbUpdateExpandScreen();
 		void pbUpdateNarrowScreen();
-	}
-	#endregion
-
-	#region Pokedex
-	public interface IPokemonPokedex : IScreen
-	{
-		void initialize(IPokemonPokedexScene scene);
-		void pbDexEntry(Pokemons species);
-		void pbStartScreen();
-	}
-	public interface IPokemonPokedexScene : IScene
-	{
-		void pbUpdate();
-		void pbEndScene();
-		void pbStartScene();
-		void pbStartDexEntryScene(Pokemons species);
-		void pbPokedex();
-		void pbDexEntry(int index);
-		int pbDexSearch();
-		void pbCloseSearch();
-		IEnumerable<Monster.Data.PokemonData> pbSearchDexList(params object[] param);
-		List<Monster.Data.PokemonData> pbGetDexList();
-		void pbRefreshDexList(int index = 0);
-		void pbRefreshDexSearch(params string[] param);
-		bool pbCanAddForModeList(int mode, Pokemons nationalSpecies);
-		bool pbCanAddForModeSearch(int mode, Pokemons nationalSpecies);
-		void pbChangeToDexEntry(Pokemons species);
-		int pbDexSearchCommands(string[] commands, int selitem, string[] helptexts = null);
-		int pbGetPokedexRegion();
-		int pbGetSavePositionIndex();
-		void pbMiddleDexEntryScene();
-		void setIconBitmap(Pokemons species);
-	}
-	/// <summary>
-	/// Shows the "Nest" page of the Pokédex entry screen.
-	/// </summary>
-	public interface IPokemonNestMapScene : IScene
-	{
-		void pbUpdate();
-		void pbEndScene();
-		void pbStartScene(Pokemons species,int regionmap= -1);
-		/// <summary>
-		/// </summary>
-		/// <param name="listlimits">an enum that represents end of list</param>
-		/// <returns></returns>
-		int pbMapScene(int listlimits);
-	}
-	public interface IPokemonNestMap : IScreen
-	{
-		void initialize(IPokemonNestMapScene scene);
-		void pbStartScreen(Pokemons species,int region,int listlimits);
-	}
-	/// <summary>
-	/// Shows the "Form" page of the Pokédex entry screen.
-	/// </summary>
-	public interface IPokemonFormScene : IScene
-	{
-		void pbUpdate();
-		//void pbRefresh();
-		List<PokemonUnity.Monster.Forms> pbGetAvailable(); //returns [Name, Gender, Form] 
-		List<string> pbGetCommands();
-		void pbChooseForm();
-		void pbEndScene();
-		void pbStartScene(Pokemons species);
-		int pbControls(int listlimits);
-	}
-	public interface IPokemonForm : IScreen
-	{
-		void initialize(IPokemonFormScene scene);
-		void pbStartScreen(Pokemons species,int listlimits);
-	}
-	#endregion
-
-	#region Pause Menu
-	public interface IPokemonMenu_Scene : IScene
-	{
-		void pbEndScene();
-		void pbHideMenu();
-		//void pbRefresh();
-		void pbShowCommands(string[] commands);
-		void pbShowHelp(string text);
-		void pbShowInfo(string text);
-		void pbShowMenu();
-		void pbStartScene();
-	}
-
-	public interface IPokemonMenu : IScreen
-	{
-		void initialize(IPokemonMenu_Scene scene);
-		void pbShowMenu();
-		void pbStartPokemonMenu();
 	}
 	#endregion
 
@@ -416,179 +325,6 @@ namespace PokemonEssentials.Interface.Screen
 		// UI logic for depositing an item in the item screen.
 		void pbDepositItemScreen();
 		Items pbStartScreen();
-	}
-	#endregion
-
-	#region PC Pokemon Storage
-	public interface IPokemonStorageScene : IScene
-	{
-		//void drawMarkings(bitmap , float x, float y, float width, float height, bool[] markings);
-		void drawMarkings(bool[] markings);
-		string[] getMarkingCommands(bool[] markings);
-		IPokemonStorageScene initialize();
-		void pbBoxName(string helptext, int minchars, int maxchars);
-		void pbChangeBackground(int wp);
-		int pbChangeSelection(int key, int selection);
-		void pbChooseBox(string msg);
-		Items pbChooseItem(IBattler bag);
-		void pbCloseBox();
-		//void pbDisplay(string message);
-		void pbDropDownPartyTab();
-		void pbHardRefresh();
-		void pbHidePartyTab();
-		void pbHold(KeyValuePair<int, int> selected);
-		void pbJumpToBox(int newbox);
-		void pbMark(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		int pbPartyChangeSelection(int key, int selection);
-		void pbPartySetArrow(int selection);//arrow , 
-		void pbPlace(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		//void pbRefresh();
-		void pbRelease(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		int[] pbSelectBox(Pokemon[] party);
-		int[] pbSelectBoxInternal(Pokemon[] party);
-		int pbSelectParty(Pokemon[] party);
-		int pbSelectPartyInternal(Pokemon[] party, bool depositing);
-		void pbSetArrow(int selection);//arrow , 
-		void pbSetMosaic(int selection);
-		int pbShowCommands(string message, string[] commands, int index = 0);
-		void pbStartBox(IPokemonStorageScreen screen, int command);
-		void pbStore(KeyValuePair<int, int> selected, Pokemon heldpoke, int destbox, int firstfree);
-		void pbSummary(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		void pbSwap(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		void pbSwitchBoxToLeft(int newbox);
-		void pbSwitchBoxToRight(int newbox);
-		void pbUpdateOverlay(int selection, Pokemon[] party = null);
-		void pbWithdraw(KeyValuePair<int, int> selected, Pokemon heldpoke, int partyindex);
-	}
-
-	public interface IPokemonStorageScreen : IScreen
-	{
-		int pbAbleCount { get; }
-		Pokemon pbHeldPokemon { get; }
-		IPokemonStorageScene scene { get; }
-		Character.PokemonStorage storage { get; }
-
-		void debugMenu(KeyValuePair<int, int> selected, Pokemon pkmn, Pokemon heldpoke);
-		void IPokemonStorageScreen(IPokemonStorageScene scene, Character.PokemonStorage storage);
-		bool pbAble(Pokemon pokemon);
-		void pbBoxCommands();
-		int? pbChoosePokemon(Pokemon[] party = null);
-		bool pbConfirm(string str);
-		void pbDisplay(string message);
-		void pbHold(KeyValuePair<int, int> selected);
-		void pbItem(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		void pbMark(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		void pbPlace(KeyValuePair<int, int> selected);
-		void pbRelease(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		int pbShowCommands(string msg, string[] commands);
-		void pbStartScreen(int command);
-		void pbStore(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		void pbSummary(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		bool pbSwap(KeyValuePair<int, int> selected);
-		bool pbWithdraw(KeyValuePair<int, int> selected, Pokemon heldpoke);
-		void selectPokemon(int index);
-	}
-	#endregion
-
-	#region Summary
-	public interface IPokemonSummaryScene : IScene
-	{
-		//IPokemonSummaryScene initialize();
-		//void drawMarkings(bitmap,int x,int y,int width,int height, bool[] markings);
-		void drawPageOne(IPokemon pokemon);
-		void drawPageOneEgg(IPokemon pokemon);
-		void drawPageTwo(IPokemon pokemon);
-		void drawPageThree(IPokemon pokemon);
-		void drawPageFour(IPokemon pokemon);
-		void drawPageFive(IPokemon pokemon);
-		void drawMoveSelection(IPokemon pokemon, Moves moveToLearn);
-		void drawSelectedMove(IPokemon pokemon, Moves moveToLearn, Moves moveid);
-		void pbChooseMoveToForget(Moves moveToLearn);
-		void pbEndScene();
-		void pbGoToNext();
-		void pbGoToPrevious();
-		void pbMoveSelection();
-		void pbPokerus(IPokemon pkmn);
-		void pbScene();
-		void pbStartForgetScene(IPokemon party, int partyindex, Moves moveToLearn);
-		void pbStartScene(IPokemon party, int partyindex);
-		void pbUpdate();
-	}
-
-	public interface IPokemonSummary : IScreen
-	{
-		IPokemonSummary initialize(IPokemonSummaryScene scene);
-		void pbStartScreen(IPokemon[] party, int partyindex);
-		//int pbStartForgetScreen(IPokemon[] party, int partyindex, Moves moveToLearn);
-		int pbStartForgetScreen(IPokemon party, int partyindex, Moves moveToLearn);
-		void pbStartChooseMoveScreen(IPokemon[] party, int partyindex, string message);
-	}
-	#endregion
-
-	#region Pokemon Party
-	public interface IPartyDisplayScene : IScene
-	{
-		//IPartyDisplayScene initialize();
-		void pbShowCommands(string helptext, string[] commands,int index= 0);
-		void update();
-		void pbSetHelpText(string helptext);
-		void pbStartScene(IPokemon[] party,string starthelptext,string[] annotations= null,bool multiselect= false);
-		void pbEndScene();
-		/// <summary>
-		/// </summary>
-		/// <param name="key">Controller Input Key</param>
-		/// <param name="currentsel"></param>
-		void pbChangeSelection(int key,int currentsel);
-		//void pbRefresh();
-		void pbHardRefresh();
-		void pbPreSelect(IPokemon pkmn);
-		void pbChoosePokemon(bool switching= false, int initialsel= -1);
-		void pbSelect(Items item);
-		//void pbDisplay(string text);
-		void pbSwitchBegin(int oldid,int newid);
-		void pbSwitchEnd(int oldid,int newid);
-		void pbDisplayConfirm(string text);
-		void pbAnnotate(string[] annot);
-		void pbSummary(int pkmnid);
-		void pbChooseItem(Items[] bag);
-		void pbUseItem(Items[] bag,IPokemon pokemon); 
-		void pbMessageFreeText(string text,string startMsg,int maxlength);
-	}
-
-	public interface IPartyDisplayScreen : IScreen
-	{
-		IPartyDisplayScreen initialize(IPartyDisplayScene scene, IPokemon[] party);
-		void pbHardRefresh();
-		void pbRefresh();
-		void pbRefreshSingle(int i);
-		void pbDisplay(string text);
-		void pbConfirm(string text);
-		void pbSwitch(int oldid,int newid);
-		void pbMailScreen(Items item, IPokemon pkmn, int pkmnid);
-		void pbTakeMail(IPokemon pkmn);
-		void pbGiveMail(Items item,IPokemon pkmn,int pkmnid= 0);
-		void pbPokemonGiveScreen(Items item);
-		void pbPokemonGiveMailScreen(int mailIndex);
-		void pbStartScene(string helptext,bool doublebattle,string[] annotations= null);
-		int pbChoosePokemon(string helptext= null);
-		void pbChooseMove(IPokemon pokemon,string helptext);
-		void pbEndScene();
-		/// <summary>
-		/// Checks for identical species
-		/// </summary>
-		/// <param name=""></param>
-		void pbCheckSpecies(Pokemons[] array);
-		/// <summary>
-		/// Checks for identical held items
-		/// </summary>
-		/// <param name=""></param>
-		void pbCheckItems(Items[] array);
-		void pbPokemonMultipleEntryScreenEx(string[] ruleset);
-		int pbChooseAblePokemon(Func<IPokemon,bool> ableProc,bool allowIneligible= false);
-		void pbRefreshAnnotations(bool ableProc);
-		void pbClearAnnotations();
-		void pbPokemonDebug(IPokemon pkmn, int pkmnid);
-		void pbPokemonScreen();
 	}
 	#endregion
 }

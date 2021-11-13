@@ -41,7 +41,7 @@ namespace PokemonEssentials.Interface
 			public int Id { get; }
 			public Items Item { get; set; }
 			public IPokemon Pokemon { get; set; }
-			public IHasDisplayMessage Scene { get; set; }
+			public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
 			public bool Response { get; set; }
 		}
 		public class BattleUseOnPokemonEventArgs : EventArgs
@@ -52,7 +52,7 @@ namespace PokemonEssentials.Interface
 			public Items Item { get; set; }
 			public IPokemon Pokemon { get; set; }
 			public IBattler Battler { get; set; }
-			public IHasDisplayMessage Scene { get; set; }
+			public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
 			public bool Response { get; set; }
 		}
 		public class BattleUseOnBattlerEventArgs : EventArgs
@@ -62,7 +62,7 @@ namespace PokemonEssentials.Interface
 			public int Id { get; }
 			public Items Item { get; set; }
 			public IBattler Battler { get; set; }
-			public IHasDisplayMessage Scene { get; set; }
+			public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
 			public bool Response { get; set; }
 		}
 		public class UseInBattleEventArgs : EventArgs
@@ -76,9 +76,9 @@ namespace PokemonEssentials.Interface
 		}
 		#endregion
 
-		public delegate bool UseOnPokemonDelegate(Items item, IPokemon pokemon, IHasDisplayMessage scene);
-		public delegate bool BattleUseOnPokemonDelegate(IPokemon pokemon, IBattler battler, IPokeBattle_Scene scene); //or Pokemon Party Scene
-		public delegate bool BattleUseOnBattlerDelegate(Items item, IBattler battler, IPokeBattle_Scene scene); //or Pokemon Party Scene
+		public delegate bool UseOnPokemonDelegate(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IHasDisplayMessage scene);
+		public delegate bool BattleUseOnPokemonDelegate(IPokemon pokemon, IBattler battler, PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene); //or Pokemon Party Scene
+		public delegate bool BattleUseOnBattlerDelegate(Items item, IBattler battler, PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene); //or Pokemon Party Scene
 		public delegate void UseInBattleDelegate(Items item, IBattler battler, IBattle battle);
 	}
 
@@ -143,13 +143,13 @@ namespace PokemonEssentials.Interface
 
 			bool triggerUseInField(Items item);
 
-			bool triggerUseOnPokemon(Items item, IPokemon pokemon, IHasDisplayMessage scene);
+			bool triggerUseOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IHasDisplayMessage scene);
 
 			//bool triggerBattleUseOnBattler(Items item,IBattler battler,IPokeBattle_Scene scene);
-			bool triggerBattleUseOnBattler(Items item, IBattler battler, IHasDisplayMessage scene);
+			bool triggerBattleUseOnBattler(Items item, IBattler battler, PokemonEssentials.Interface.Screen.IHasDisplayMessage scene);
 
 			//bool triggerBattleUseOnPokemon(Items item, IPokemon pokemon, IBattler battler, IPokeBattle_Scene scene);
-			bool triggerBattleUseOnPokemon(Items item, IPokemon pokemon, IBattler battler, IHasDisplayMessage scene);
+			bool triggerBattleUseOnPokemon(Items item, IPokemon pokemon, IBattler battler, PokemonEssentials.Interface.Screen.IHasDisplayMessage scene);
 
 			void triggerUseInBattle(Items item, IBattler battler, IBattle battle);
 		}
@@ -234,19 +234,19 @@ namespace PokemonEssentials.Interface
 		{
 			void pbTopRightWindow(string text);
 
-			void pbChangeLevel(IPokemon pokemon, int newlevel, IScene scene);
+			void pbChangeLevel(IPokemon pokemon, int newlevel, PokemonEssentials.Interface.Screen.IScene scene);
 
 			int pbItemRestoreHP(IPokemon pokemon, int restorehp);
 
-			bool pbHPItem(IPokemon pokemon, int restorehp, IScene scene);
+			bool pbHPItem(IPokemon pokemon, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
 
-			bool pbBattleHPItem(IPokemon pokemon, IBattler battler, int restorehp, IScene scene);
+			bool pbBattleHPItem(IPokemon pokemon, IBattler battler, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
 
 			int pbJustRaiseEffortValues(IPokemon pokemon, PokemonUnity.Monster.Stats ev, int evgain);
 
 			int pbRaiseEffortValues(IPokemon pokemon, PokemonUnity.Monster.Stats ev, int evgain = 10, bool evlimit = true);
 
-			bool pbRaiseHappinessAndLowerEV(IPokemon pokemon, IScene scene, PokemonUnity.Monster.Stats ev, string[] messages);
+			bool pbRaiseHappinessAndLowerEV(IPokemon pokemon, PokemonEssentials.Interface.Screen.IScene scene, PokemonUnity.Monster.Stats ev, string[] messages);
 
 			int pbRestorePP(IPokemon pokemon, int move, int pp);
 
@@ -264,15 +264,15 @@ namespace PokemonEssentials.Interface
 
 			bool pbLearnMove(IPokemon pokemon, Moves move, bool ignoreifknown = false, bool bymachine = false);
 
-			bool pbCheckUseOnPokemon(Items item, IPokemon pokemon, IScreen screen);
+			bool pbCheckUseOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IScreen screen);
 
 			bool pbConsumeItemInBattle(IBag bag, Items item);
 
 			// Only called when in the party screen and having chosen an item to be used on
 			// the selected Pokémon
-			bool pbUseItemOnPokemon(Items item, IPokemon pokemon, IScene scene);
+			bool pbUseItemOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IScene scene);
 
-			int pbUseItem(IBag bag, Items item, IScene bagscene = null);
+			int pbUseItem(IBag bag, Items item, PokemonEssentials.Interface.Screen.IScene bagscene = null);
 
 			Items pbChooseItem(int var = 0, params Items[] args);
 

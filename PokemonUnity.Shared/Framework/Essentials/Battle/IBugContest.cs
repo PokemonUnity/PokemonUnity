@@ -151,14 +151,14 @@ namespace PokemonEssentials.Interface.Battle
 
 		//IBattle_BugContestBattle initialize(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, Combat.Trainer[] player, Combat.Trainer[] opponent, int maxBattlers = 4);
 
-		Items pbItemMenu(int index);
+		new Items pbItemMenu(int index);
 		//KeyValuePair<Items, int> pbItemMenu(int index);
 
-		MenuCommands pbCommandMenu(int i);
+		new MenuCommands pbCommandMenu(int i);
 
-		void pbStorePokemon(IPokemon pokemon);
+		new void pbStorePokemon(IPokemon pokemon);
 
-		void pbEndOfRoundPhase();
+		new void pbEndOfRoundPhase();
 	}
 
 	// :nodoc:

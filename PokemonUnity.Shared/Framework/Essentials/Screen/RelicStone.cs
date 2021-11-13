@@ -13,7 +13,7 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Item;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
-using PokemonEssentials.Interface.PokeBattle.Rules;
+//using PokemonEssentials.Interface.PokeBattle.Rules;
 using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen

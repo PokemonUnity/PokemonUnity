@@ -17,12 +17,14 @@ namespace PokemonUnity
 {
 	public partial class Game
 	{
-		public static PokemonUnity.IPokemonEvolutionScene PokemonEvolutionScene { get; private set; }
-		public static PokemonUnity.IPokemonScreen_Scene PokemonScreenScene { get; private set; }
-		public static PokemonUnity.IPokemonScreen PokemonScreen { get; private set; }
-		public static PokemonUnity.IPokemonBag_Scene PokemonBagScene { get; private set; }
-		public static PokemonUnity.IPokemonBagScreen PokemonBagScreen { get; private set; }
-		public static PokemonUnity.IPokemonSummaryScene PokemonSummaryScene { get; private set; }
-		public static PokemonUnity.IPokemonSummary PokemonSummary { get; private set; }
+		#region Scenes //Set once at boot cycle, and forget about it
+		public static PokemonUnity.IPokemonEvolutionScene PokemonEvolutionScene		{ get; set; }
+		public static PokemonUnity.IPokemonScreen_Scene PokemonScreenScene			{ get; set; }
+		public static PokemonUnity.IPokemonScreen PokemonScreen						{ get; set; }
+		public static PokemonUnity.IPokemonBag_Scene PokemonBagScene				{ get; set; }
+		public static PokemonUnity.IPokemonBagScreen PokemonBagScreen				{ get; set; }
+		public static PokemonUnity.IPokemonSummaryScene PokemonSummaryScene			{ get; set; }
+		public static PokemonUnity.IPokemonSummary PokemonSummary					{ get; set; }
+		#endregion
 	}
 }
