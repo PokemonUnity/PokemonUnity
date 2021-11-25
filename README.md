@@ -31,7 +31,7 @@ I'm basing the code mimic and emulate the [Pokémon Essentials](https://pokemon-
 
 ## Links
 
-* Discord server: https://discord.gg/SggHcXP
+* Discord server: https://discord.gg/CCF2YVP
 * Project Board: [Not Frequently Used or Updated](https://github.com/herbertmilhomme/PokemonUnity/projects/1)
 * Documentation: [Pokémon Essentials Wiki](https://pokemon-essentials.fandom.com/wiki/Pokemon_Essentials_Wiki) (or [My poorly written Github wiki](https://herbertmilhomme.github.io/PokemonUnity/))
 * Documentation-Repo: https://github.com/herbertmilhomme/PokemonUnity/tree/gh-pages
@@ -42,5 +42,4 @@ I'm basing the code mimic and emulate the [Pokémon Essentials](https://pokemon-
 
 ### Demo and Downloads 
 
-There is a demo WebGL for testing available here: [Link to Unity Cloud Build](https://developer.cloud.unity3d.com/share/Wy-y2uSUhG/)  
-There are also demos for Windows, Linux, and Mac zipped in [2016 Release](https://github.com/superusercode/PokemonUnity/releases)
+There are also demos for Windows, Linux, and Mac zipped in [2016 Release](https://github.com/PokemonUnity/PokemonUnity/releases)
