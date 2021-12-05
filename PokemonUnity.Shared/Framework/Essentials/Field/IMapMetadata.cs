@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using PokemonUnity;
-using PokemonUnity.Inventory;
-using PokemonUnity.UX;
-using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Field
 {
@@ -15,11 +11,11 @@ namespace PokemonEssentials.Interface.Field
 	/// </summary>
 	public interface IMapMetadata
 	{
-		int erasedEvents	{ get; set; }
-		int movedEvents		{ get; set; }
-		int strengthUsed	{ get; set; }
-		int blackFluteUsed	{ get; set; }
-		int whiteFluteUsed	{ get; set; }
+		IList<int> erasedEvents	{ get; set; }
+		IList<int> movedEvents	{ get; set; }
+		bool strengthUsed		{ get; set; }
+		bool blackFluteUsed		{ get; set; }
+		bool whiteFluteUsed		{ get; set; }
 
 		//IMapMetadata initialize();
 

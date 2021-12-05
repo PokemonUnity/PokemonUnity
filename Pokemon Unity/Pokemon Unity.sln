@@ -1,5 +1,8 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityGameFramework.Runtime", "UnityGameFramework.Runtime.csproj", "{F955B8A7-3B15-FCAA-76F3-928611529034}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}"
@@ -27,6 +30,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFramework", "..\GameFramework\GameFramework.csproj", "{109D7F39-79AB-4862-9F73-0B8C638930C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonUnity.Offline", "..\PokemonUnity.Offline\PokemonUnity.Offline.csproj", "{5053C6D2-19B5-48BB-BF24-5D23804BB78F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonUnity.Console", "..\PokemonUnity.Console\PokemonUnity.Console.csproj", "{D6FAA477-EEE5-41CE-BE35-E5C4DA2837F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonUnity.Application", "..\PokemonUnity.Application\PokemonUnity.Application.csproj", "{37DD2ED4-81DC-4647-9652-D914F1A1607D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +77,14 @@ Global
 		{5053C6D2-19B5-48BB-BF24-5D23804BB78F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5053C6D2-19B5-48BB-BF24-5D23804BB78F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5053C6D2-19B5-48BB-BF24-5D23804BB78F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6FAA477-EEE5-41CE-BE35-E5C4DA2837F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6FAA477-EEE5-41CE-BE35-E5C4DA2837F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6FAA477-EEE5-41CE-BE35-E5C4DA2837F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6FAA477-EEE5-41CE-BE35-E5C4DA2837F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37DD2ED4-81DC-4647-9652-D914F1A1607D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37DD2ED4-81DC-4647-9652-D914F1A1607D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37DD2ED4-81DC-4647-9652-D914F1A1607D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37DD2ED4-81DC-4647-9652-D914F1A1607D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

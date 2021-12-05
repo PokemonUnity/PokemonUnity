@@ -18,17 +18,17 @@ namespace PokemonEssentials.Interface.PokeBattle
 	{
 		Moves id { get; set; }
 		IBattle battle { get; set; }
-		string name { get; set; }
+		string name { get; }
 		//int function { get; set; }
 		PokemonUnity.Attack.Data.Effects Effect { get; }
 		int basedamage { get; set; }
 		Types type { get; set; }
 		int accuracy { get; set; }
-		int addlEffect { get; set; }
+		int addlEffect { get; }
 		PokemonUnity.Attack.Data.Targets target { get; set; }
 		int priority { get; set; }
 		PokemonUnity.Attack.Data.Flag flags { get; set; }
-		IMove thismove { get; set; }
+		IMove thismove { get; }
 		int pp { get; set; }
 		int totalpp { get; set; }
 

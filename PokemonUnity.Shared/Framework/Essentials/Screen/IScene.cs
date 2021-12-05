@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PokemonUnity;
 using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
 using PokemonEssentials.Interface;
@@ -23,11 +24,11 @@ namespace PokemonEssentials.Interface.Screen
 		//IEnumerator update();
 	}
 
-	// ===============================================================================
-	// Common UI functions used in both the Bag and item storage screens.
-	// Allows the user to choose a number.  The window _helpwindow_ will
-	// display the _helptext_.
-	// ===============================================================================
+	/// <summary>
+	/// Common UI functions used in both the Bag and item storage screens.
+	/// Allows the user to choose a number. The window _helpwindow_ will
+	/// display the _helptext_.
+	/// </summary>
 	public interface UIHelper {
 		int pbChooseNumber(IWindow helpwindow, string helptext, int maximum);
 
@@ -110,9 +111,9 @@ namespace PokemonEssentials.Interface.Screen
 		void update();
 	}
 
-	public interface ICommandMenuButtons //: BitmapSprite, IDisposable
+	public interface ICommandMenuButtons //: IBitmapSprite, IDisposable
 	{
-		ICommandMenuButtons initialize(int index = 0, int mode = 0, viewport= null);
+		ICommandMenuButtons initialize(int index = 0, int mode = 0, IViewport viewport= null);
 		void dispose();
 		void update(int index = 0, int mode = 0);
 		void refresh(int index, int mode = 0);
@@ -131,7 +132,7 @@ namespace PokemonEssentials.Interface.Screen
 		bool visible	{ get; }
 		int color		{ get; }
 		IBattler battler	{ get; }
-		IFightMenuDisplay initialize(IBattler battler, viewport= null);
+		IFightMenuDisplay initialize(IBattler battler, IViewport viewport= null);
 		bool disposed();
 		void dispose();
 		void setIndex(int value);
@@ -139,7 +140,7 @@ namespace PokemonEssentials.Interface.Screen
 		void update();
 	}
 
-	public interface IFightMenuButtons //: BitmapSprite, IDisposable
+	public interface IFightMenuButtons //: IBitmapSprite, IDisposable
 	{
 		IFightMenuButtons initialize(int index = 0,Moves[] moves= null, IViewport viewport= null);
 		void dispose();
@@ -150,9 +151,9 @@ namespace PokemonEssentials.Interface.Screen
 	/// <summary>
 	/// Data box for safari battles
 	/// </summary>
-	public interface ISafariDataBox //: SpriteWrapper
+	public interface ISafariDataBox //: ISpriteWrapper
 	{
-		ISafariDataBox initialize(battle, viewport= null);
+		ISafariDataBox initialize(IBattle battle, IViewport viewport= null);
 		void appear();
 		void refresh();
 		void update();
@@ -161,7 +162,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// <summary>
 	/// Data box for regular battles (both single and double)
 	/// </summary>
-	public interface IPokemonDataBox //: SpriteWrapper, IDisposable
+	public interface IPokemonDataBox //: ISpriteWrapper, IDisposable
 	{
 		IPokemonDataBox initialize(IBattler battler, bool doublebattle, IViewport viewport= null);
 		void dispose();
@@ -183,7 +184,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPokeballSendOutAnimation : IDisposable
 	{
-		IPokeballSendOutAnimation initialize(sprite, spritehash, pkmn, illusionpoke,bool doublebattle);
+		IPokeballSendOutAnimation initialize(ISprite sprite, spritehash, IPokemon pkmn, IPokemon illusionpoke,bool doublebattle);
 		bool disposed();
 		bool animdone();
 		void dispose();
@@ -198,7 +199,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPokeballPlayerSendOutAnimation : IDisposable
 	{
-		IPokeballPlayerSendOutAnimation initialize(sprite, spritehash, pkmn, illusionpoke,bool doublebattle);
+		IPokeballPlayerSendOutAnimation initialize(ISprite sprite, spritehash, IPokemon pkmn, IPokemon illusionpoke,bool doublebattle);
 		bool disposed();
 		bool animdone();
 		void dispose();
@@ -211,7 +212,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface ITrainerFadeAnimation
 	{
-		ITrainerFadeAnimation initialize(sprites);
+		ITrainerFadeAnimation initialize(ISprite sprites);
 		bool animdone();
 		void update();
 	}
@@ -223,7 +224,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPlayerFadeAnimation
 	{
-		IPlayerFadeAnimation initialize(sprites);
+		IPlayerFadeAnimation initialize(ISprite sprites);
 		bool animdone();
 		void update();
 	}*/
@@ -273,9 +274,9 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		void closeSplashDelete();
 	}
-	public interface IScene_Intro : PokemonEssentials.Interface.Screen.IScreen
+	public interface IIntroEventScreen : PokemonEssentials.Interface.Screen.IScreen
 	{
-		IScene_Intro initialize();
+		IIntroEventScreen initialize();
 		void main();
 	}
 	/// <summary>
@@ -307,7 +308,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		/// <param name="pkmn"></param>
 		/// <param name="move"></param>
-		void pbForgetMove(IPokemon pkmn,PokemonUnity.Moves move);
+		void pbForgetMove(IPokemon pkmn,Moves move);
 		void pbBeginAttackPhase();
 		void pbCommandMenu(int index);
 		void pbPokemonString(IPokemon pkmn);
@@ -367,7 +368,7 @@ namespace PokemonEssentials.Interface.Screen
 		void pbTrainerBattleSuccess();
 		void pbEXPBar(IBattler battler,IPokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
 		void pbLevelUp(IBattler battler,IPokemon thispoke,int oldtotalhp,int oldattack,
-				int olddefense,int oldspeed,int oldspatk,int oldspdef);
+			int olddefense,int oldspeed,int oldspatk,int oldspdef);
 		void pbShowOpponent(ITrainer opp);
 		void pbHideOpponent();
 		void pbRecall(int battlerindex);
@@ -376,19 +377,19 @@ namespace PokemonEssentials.Interface.Screen
 	}
 	public interface IPokeBattle_SceneNonInteractive : IPokeBattle_Scene
 	{
-		void pbCommandMenu(int index);
-		void pbFightMenu(int index);
-		void pbItemMenu(int index);
+		new void pbCommandMenu(int index);
+		new void pbFightMenu(int index);
+		new void pbItemMenu(int index);
 		void pbChooseTarget(int index,int targettype);
-		void pbSwitch(int index,bool lax,bool cancancel);
-		void pbChooseEnemyCommand(int index);
+		new void pbSwitch(int index,bool lax,bool cancancel);
+		new void pbChooseEnemyCommand(int index);
 		/// <summary>
 		/// Use this method to choose a new Pokémon for the enemy
 		/// The enemy's party is guaranteed to have at least one choosable member.
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name="party"></param>
-		void pbChooseNewEnemy(int index,IPokemon[] party);
+		new void pbChooseNewEnemy(int index,IPokemon[] party);
 	}
 	/*public interface IPokeBattle_DebugSceneNoLogging : IPokeBattle_Scene
 	{
@@ -419,7 +420,7 @@ namespace PokemonEssentials.Interface.Screen
 		void pbTrainerBattleSuccess();
 		void pbEXPBar(IBattler battler,IPokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
 		void pbLevelUp(IBattler battler,IPokemon thispoke,int oldtotalhp,int oldattack,
-				int olddefense,int oldspeed,int oldspatk,int oldspdef);
+			int olddefense,int oldspeed,int oldspatk,int oldspdef);
 		int pbBlitz(keys);
 		void pbChatter(IBattle attacker,IBattle opponent);
 		void pbShowOpponent(opp);
@@ -431,9 +432,5 @@ namespace PokemonEssentials.Interface.Screen
 		void pbCommonAnimation(int moveid,IBattle attacker,IBattle opponent,int hitnum= 0);
 		void pbAnimation(int moveid,IBattle attacker,IBattle opponent,int hitnum= 0);
 	}
-	public interface IPokeBattle_DebugSceneNoGraphics { }
-	public interface I { }
-	public interface I { }
-	public interface I { }
-	public interface I { }*/
+	public interface IPokeBattle_DebugSceneNoGraphics { }*/
 }

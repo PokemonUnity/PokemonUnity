@@ -15,6 +15,7 @@ using PokemonUnity.Utility;
 using PokemonEssentials;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Battle

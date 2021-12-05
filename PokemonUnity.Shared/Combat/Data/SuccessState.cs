@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Success state (used for Battle Arena)
 	/// </summary>
-	public class SuccessState
+	public class SuccessState : PokemonEssentials.Interface.PokeBattle.ISuccessState
 	{
 		/// <summary>
 		/// Type effectiveness
@@ -20,7 +20,13 @@
 
 		public SuccessState()
 		{
+			initialize();
+		}
+
+		public PokemonEssentials.Interface.PokeBattle.ISuccessState initialize()
+		{
 			Clear();
+			return this;
 		}
 
 		public void Clear()

@@ -10,21 +10,21 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 		public int PPups { get; private set; }
 
-		public static implicit operator SeriMove(Move move)
-		{
-			SeriMove seriMove = new SeriMove
-			{
-				Move = (int)move.MoveId,
-				PP = move.PP,
-				PPups = move.PPups
-			};
-			return seriMove;
-		}
+		//public static implicit operator SeriMove(PokemonEssentials.Interface.IMove move)
+		//{
+		//	SeriMove seriMove = new SeriMove
+		//	{
+		//		Move = (int)move.MoveId,
+		//		PP = move.PP,
+		//		PPups = move.PPups
+		//	};
+		//	return seriMove;
+		//}
 
-		public static implicit operator Move(SeriMove move)
-		{
-			Move normalMove = new Move((Moves)move.Move, move.PPups, move.PP);
-			return normalMove;
-		}
+		//public static implicit operator PokemonEssentials.Interface.IMove(SeriMove move)
+		//{
+		//	PokemonEssentials.Interface.IMove normalMove = new Move((Moves)move.Move, move.PPups, move.PP);
+		//	return normalMove;
+		//}
 	}
 }

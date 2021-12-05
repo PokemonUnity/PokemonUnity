@@ -16,18 +16,18 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface ITrainer
 	{
-		string name { get; set; }
+		string name { get; }
 		int id { get; set; }
-		int metaID { get; set; }
-		TrainerTypes trainertype { get; set; }
-		int outfit { get; set; }
-		int badges { get; set; }
-		int money { get; set; }
-		int seen { get; set; }
-		int owned { get; set; }
-		int formseen { get; set; }
-		int formlastseen { get; set; }
-		int shadowcaught { get; set; }
+		int metaID { get; }
+		TrainerTypes trainertype { get; }
+		int? outfit { get; set; }
+		bool[] badges { get; }
+		int money { get; }
+		IDictionary<Pokemons, bool> seen { get; }
+		IDictionary<Pokemons,bool> owned { get; }
+		int?[][] formseen { get; }
+		KeyValuePair<int,int>[] formlastseen { get; }
+		IList<Pokemons> shadowcaught { get; }
 		IPokemon[] party { get; set; }
 		/// <summary>
 		/// Whether the Pokédex was obtained
@@ -37,7 +37,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Whether the Pokégear was obtained
 		/// </summary>
 		bool pokegear { get; set; }
-		int language { get; set; }
+		Languages? language { get; }
 		/// <summary>
 		/// Name of this trainer type (localized) 
 		/// </summary>

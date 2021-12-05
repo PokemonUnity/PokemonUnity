@@ -88,15 +88,15 @@ namespace PokemonEssentials.Interface
 	{
 		void setNotifyProc(Action proc);
 
-		void set(float x, float y, float width, float height);
+		//void set(float x, float y, float width, float height);
 
-		float x { set; }
+		//float x { set; }
 
-		float y { set; }
+		//float y { set; }
 
-		float width { set; }
+		//float width { set; }
 
-		float height { set; }
+		//float height { set; }
 	}
 
 	/// <summary>

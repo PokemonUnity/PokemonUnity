@@ -17,12 +17,15 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface
 {
-	/// <summary>
-	/// Extensions of <seealso cref="IPokemon"/>
-	/// </summary>
-	public interface IPokemonChatter
+	namespace PokeBattle
 	{
-		IAudioObject chatter		{ get; set; }
+		/// <summary>
+		/// Extensions of <seealso cref="IPokemon"/>
+		/// </summary>
+		public interface IPokemonChatter
+		{
+			IAudioObject chatter		{ get; set; }
+		}
 	}
 
 	/// <summary>
@@ -30,7 +33,7 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface IGameChatter
 	{
-		void pbChatter(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon);
+		void pbChatter(PokemonEssentials.Interface.PokeBattle.IPokemonChatter pokemon);
 
 		//HiddenMoveHandlers.addCanUseMove(:CHATTER,proc {|item,pokemon|
 		//   return true;

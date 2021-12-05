@@ -90,7 +90,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		void initialize(IPokemon pokemon, int index, IViewport viewport= null);
 
-		void update();
+		//void update();
 
 		bool selected { get; set; }
 
@@ -100,7 +100,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		void refresh();
 
-		void dispose();
+		//void dispose();
 	}
 
 	public interface IPokeSelectionConfirmCancelSprite : ISpriteWrapper, IDisposable {
@@ -108,15 +108,15 @@ namespace PokemonEssentials.Interface.Screen
 
 		IPokeSelectionConfirmCancelSprite initialize(string text, float x, float y, bool narrowbox = false, IViewport viewport = null);
 
-		void dispose();
+		//void dispose();
 
-		IViewport viewport { get; set; }
+		//IViewport viewport { get; set; }
 
-		IColor color { get; set; }
+		//IColor color { get; set; }
 
-		float x { get; set; }
+		//float x { get; set; }
 
-		float y { get; set; }
+		//float y { get; set; }
 
 		bool selected { get; set; }
 
@@ -124,15 +124,15 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	public interface IPokeSelectionCancelSprite : IPokeSelectionConfirmCancelSprite {
-		IPokeSelectionCancelSprite initialize(IViewport viewport= null);
+		//IPokeSelectionCancelSprite initialize(IViewport viewport= null);
 	}
 
 	public interface IPokeSelectionConfirmSprite : IPokeSelectionConfirmCancelSprite {
-		IPokeSelectionConfirmSprite initialize(IViewport viewport=null);
+		//IPokeSelectionConfirmSprite initialize(IViewport viewport=null);
 	}
 
 	public interface IPokeSelectionCancelSprite2 : IPokeSelectionConfirmCancelSprite {
-		IPokeSelectionCancelSprite2 initialize(IViewport viewport= null);
+		//IPokeSelectionCancelSprite2 initialize(IViewport viewport= null);
 	}
 
 	public interface IChangelingSprite : ISpriteWrapper {
@@ -142,9 +142,9 @@ namespace PokemonEssentials.Interface.Screen
 
 		void changeBitmap(int key);
 
-		void dispose();
+		//void dispose();
 
-		void update();
+		//void update();
 	}
 
 	public interface IPokeSelectionSprite : ISpriteWrapper {
@@ -157,7 +157,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		IPokeSelectionSprite initialize(IPokemon pokemon, int index, IViewport viewport = null);
 
-		void dispose();
+		//void dispose();
 
 		bool selected { get; set; }
 
@@ -169,17 +169,17 @@ namespace PokemonEssentials.Interface.Screen
 
 		bool switching { get; set; }
 
-		IColor color { get; set; }
+		//IColor color { get; set; }
 
-		float x { get; set; }
+		//float x { get; set; }
 
-		float y { get; set; }
+		//float y { get; set; }
 
 		int hp { get; }
 
 		void refresh();
 
-		void update();
+		//void update();
 	}
 	#endregion
 }

@@ -34,7 +34,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int speed { get; set; }
 		int[] stages { get; set; }
 		int[] iv { get; set; }
-		Moves[] moves { get; set; }
+		IBattleMove[] moves { get; set; }
 		int participants { get; set; }
 		int tookDamage { get; set; }
 		int lastHPLost { get; set; }

@@ -8,6 +8,7 @@ using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Battle
@@ -230,7 +231,7 @@ namespace PokemonEssentials.Interface.Battle
 		IPokemonChallengeRules withRestr(IPokemonChallengeRules rule, int minbs, int maxbs, int legendary);
 
 		// The Pokemon list is already roughly arranged by rank from weakest to strongest
-		IPokemonBagScreen[] pbArrangeByTier(IPokemon[] pokemonlist, IPokemonChallengeRules rule);
+		IBagScreen[] pbArrangeByTier(IPokemon[] pokemonlist, IPokemonChallengeRules rule);
 
 		bool hasMorePowerfulMove(Moves[] moves, Moves thismove);
 

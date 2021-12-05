@@ -69,7 +69,7 @@ namespace PokemonUnity.Character
 		/// Optional. If undefined, the default is 30.
 		/// </summary>
 		//public byte BaseMoney { get; private set; }
-		public byte BaseMoney { get { return Game.TrainerMetaData[ID].BaseMoney; } }
+		public byte BaseMoney { get { return Kernal.TrainerMetaData[ID].BaseMoney; } }
 		/*public bool Double { get; private set; }
 		public int AI { get; private set; }
 		//public int IVs { get; private set; }
@@ -125,7 +125,7 @@ namespace PokemonUnity.Character
 			//	new Pokemon(Pokemons.NONE),
 			//	new Pokemon(Pokemons.NONE)
 			//};
-			Gender = 				trainer == TrainerTypes.PLAYER ? (bool?)null : Game.TrainerMetaData[trainer].Gender;
+			Gender = 				trainer == TrainerTypes.PLAYER ? (bool?)null : Kernal.TrainerMetaData[trainer].Gender;
 			//Double =				false;
 			//Double = 				Game.TrainerMetaData[trainer].Double;
 			//BaseMoney = 			Game.TrainerMetaData[trainer].BaseMoney;
@@ -150,16 +150,16 @@ namespace PokemonUnity.Character
 			if (obj == null) return false;
 			return this == obj;
 		}
-		public bool Equals(Character.Player obj)
-		{
-			if (obj == null) return false;
-			return this == obj.Trainer; //Equals(obj.Trainer);
-		}
+		//public bool Equals(Character.Player obj)
+		//{
+		//	if (obj == null) return false;
+		//	return this == obj.Trainer; //Equals(obj.Trainer);
+		//}
 		public override bool Equals(object obj)
 		{
 			if (obj == null) return false;
-			if (obj.GetType() == typeof(Player))
-				return Equals((Player)obj);
+			//if (obj.GetType() == typeof(Player))
+			//	return Equals((Player)obj);
 			if (obj.GetType() == typeof(TrainerData))
 				return Equals((TrainerData)obj);
 			return base.Equals(obj);

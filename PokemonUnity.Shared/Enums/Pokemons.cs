@@ -1581,4 +1581,10 @@ namespace PokemonUnity.Monster
 		,NECROZMA_ULTRA			= 10316
 	}
 	#endregion
+	#region Shadow
+	public enum PokemonActions
+	{
+		Battle, CallTo, Party, DayCare, MysteryAction, Scent
+	}
+	#endregion
 }

@@ -11,6 +11,7 @@ using PokemonUnity.Character;
 using PokemonUnity.Saving;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Utility;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
@@ -28,7 +29,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		 
 		new void pbOnActiveAll();
 
-		bool pbOnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
+		new bool pbOnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
 
 		int pbMindScore(IBattleMove move);
 

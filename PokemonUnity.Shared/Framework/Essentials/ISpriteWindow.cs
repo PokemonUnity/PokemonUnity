@@ -86,351 +86,85 @@
 		IBitmap[] pbGetAutotile(string name, int hue = 0);
 
 
-// ########################
+		// ########################
 
 
-void pbDrawShadow(bitmap,x,y,width,height,string) {
-  if (!bitmap || !string) return;
-  pbDrawShadowText(bitmap,x,y,width,height,string,null,bitmap.font.color);
-}
+		void pbDrawShadow(IBitmap bitmap, float x, float y, int width, int height, string text);
 
-void pbDrawShadowText(bitmap,x,y,width,height,string,baseColor,shadowColor=null,align=0) {
-  if (!bitmap || !string) return;
-  width=(width<0) ? bitmap.text_size(string).width+4 : width;
-  height=(height<0) ? bitmap.text_size(string).height+4 : height;
-  if (shadowColor) {
-	bitmap.font.color=shadowColor;
-	bitmap.draw_text(x+2,y,width,height,string,align);
-	bitmap.draw_text(x,y+2,width,height,string,align);
-	bitmap.draw_text(x+2,y+2,width,height,string,align);
-  }
-  if (baseColor) {
-	bitmap.font.color=baseColor;
-	bitmap.draw_text(x,y,width,height,string,align);
-  }
-}
+		void pbDrawShadowText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0);
 
-void pbDrawOutlineText(bitmap,x,y,width,height,string,baseColor,shadowColor=null,align=0) {
-  if (!bitmap || !string) return;
-  width=(width<0) ? bitmap.text_size(string).width+4 : width;
-  height=(height<0) ? bitmap.text_size(string).height+4 : height;
-  if (shadowColor) {
-	bitmap.font.color=shadowColor;
-	bitmap.draw_text(x-2,y-2,width,height,string,align);
-	bitmap.draw_text(x,y-2,width,height,string,align);
-	bitmap.draw_text(x+2,y-2,width,height,string,align);
-	bitmap.draw_text(x-2,y,width,height,string,align);
-	bitmap.draw_text(x+2,y,width,height,string,align);
-	bitmap.draw_text(x-2,y+2,width,height,string,align);
-	bitmap.draw_text(x,y+2,width,height,string,align);
-	bitmap.draw_text(x+2,y+2,width,height,string,align);
-  }
-  if (baseColor) {
-	bitmap.font.color=baseColor;
-	bitmap.draw_text(x,y,width,height,string,align);
-  }
-}
+		void pbDrawOutlineText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0);
 
-void pbCopyBitmap(dstbm,srcbm,x,y,opacity=255) {
-  rc=new Rect(0,0,srcbm.width,srcbm.height);
-  dstbm.blt(x,y,srcbm,rc,opacity);
-}
+		//void pbCopyBitmap(dstbm,srcbm,float x,float y,int opacity=255) {
+		//	rc=new Rect(0,0,srcbm.width,srcbm.height);
+		//	dstbm.blt(x,y,srcbm,rc,opacity);
+		//}
 
-//void using(window) {
-//  begin;
-//	if (block_given?) yield;
-//  ensure;
-//	window.dispose();
-//  }
-//}
+		//void using(window)
+		//IDisposable (IWindow window, Action action)
 
-void pbBottomRight(window) {
-  window.x=Graphics.width-window.width;
-  window.y=Graphics.height-window.height;
-}
+		void pbBottomRight(IWindow window);
 
-void pbBottomLeft(window) {
-  window.x=0;
-  window.y=Graphics.height-window.height;
-}
+		void pbBottomLeft(IWindow window);
 
-void pbBottomLeftLines(window,lines,width=null) {
-  window.x=0;
-  window.width=width ? width : Graphics.width;
-  window.height=(window.borderY rescue 32)+lines*32;
-  window.y=Graphics.height-window.height;
-}
+		void pbBottomLeftLines(IWindow window, int lines, int? width = null);
 
-bool pbDisposed (x) {
-  if (!x) return true;
-  if (x is Viewport) {
-	begin;
-	  x.rect=x.rect;
-	rescue;
-	  return true;
-	}
-	return false;
-  } else {
-	return x.disposed?;
-  }
-}
+		bool pbDisposed(IViewport x);
 
-void isDarkBackground(background,IRect rect=null) {
-  if (!background || background.disposed?) {
-	return true;
-  }
-  if (!rect) rect=background.rect;
-  if (rect.width<=0 || rect.height<=0) {
-	return true;
-  }
-  xSeg=(rect.width/16);
-  xLoop=(xSeg==0) ? 1 : 16;
-  xStart=(xSeg==0) ? rect.x+(rect.width/2) : rect.x+xSeg/2;
-  ySeg=(rect.height/16);
-  yLoop=(ySeg==0) ? 1 : 16;
-  yStart=(ySeg==0) ? rect.y+(rect.height/2) : rect.y+ySeg/2;
-  count=0;
-  y=yStart;
-  r=0; g=0; b=0;
-  yLoop.times {
-	 x=xStart;
-	 xLoop.times {
-		clr=background.get_pixel(x,y);
-		if (clr.alpha!=0) {
-		  r+=clr.red; g+=clr.green; b+=clr.blue;
-		  count+=1;
-		}
-		x+=xSeg;
-	 }
-	 y+=ySeg;
-  }
-  if (count==0) return true;
-  r/=count;
-  g/=count;
-  b/=count;
-  return (r*0.299+g*0.587+b*0.114)<128;
-}
+		bool isDarkBackground(background, IRect rect = null);
 
-void isDarkWindowskin(windowskin) {
-  if (!windowskin || windowskin.disposed?) {
-	return true;
-  }
-  if (windowskin.width==192 && windowskin.height==128) {
-	return isDarkBackground(windowskin,new Rect(0,0,128,128));
-  } else if (windowskin.width==128 && windowskin.height==128) {
-	return isDarkBackground(windowskin,new Rect(0,0,64,64));
-  } else {
-	clr=windowskin.get_pixel(windowskin.width/2, windowskin.height/2);
-	return (clr.red*0.299+clr.green*0.587+clr.blue*0.114)<128;
-  }
-}
+		bool isDarkWindowskin(windowskin);
 
-void getDefaultTextColors(windowskin) {
-  if (!windowskin || windowskin.disposed? || 
-	 windowskin.width!=128 || windowskin.height!=128) {
-	if (isDarkWindowskin(windowskin)) {
-	  return [MessageConfig.LIGHTTEXTBASE,MessageConfig.gIGHTTEXTSHADOW]; // White
-	} else {
-	  return [MessageConfig.DARKTEXTBASE,MessageConfig.gARKTEXTSHADOW]; // Dark gray
-	}
-  else // VX windowskin
-	color=windowskin.get_pixel(64, 96);
-	shadow=null;
-	isdark=(color.red+color.green+color.blue)/3 < 128;
-	if (isdark) {
-	  shadow=new Color(color.red+64,color.green+64,color.blue+64);
-	} else {
-	  shadow=new Color(color.red-64,color.green-64,color.blue-64);
-	}
-	return [color,shadow];
-  }
-}
+		IColor getDefaultTextColors(windowskin);
 
-void pbDoEnsureBitmap(bitmap,dwidth,dheight) {
-  if (!bitmap || bitmap.disposed? || bitmap.width<dwidth || bitmap.height<dheight) {
-	oldfont=(bitmap && !bitmap.disposed?) ? bitmap.font : null;
-	if (bitmap) bitmap.dispose();
-	bitmap=new Bitmap([1,dwidth].max,[1,dheight].max);
-	if (!oldfont) {
-	  pbSetSystemFont(bitmap);
-	} else {
-	  bitmap.font=oldfont;
-	}
-	if (bitmap.font && bitmap.font.respond_to("shadow")) {
-	  bitmap.font.shadow=false;
-	}
-  }
-  return bitmap;
-}
+		IBitmap pbDoEnsureBitmap(IBitmap bitmap, int dwidth, int dheight);
 
-void pbUpdateSpriteHash(windows) {
-  foreach (var i in windows) {
-	window=i[1];
-	if (window ) {
-	  if (window is Sprite || window is Window) {
-		if (!pbDisposed(window)) window.update();
-	  } else if (window is Plane) {
-		begin;
-		  if (!window.disposed?) window.update();
-		rescue NoMethodError;
-		}
-	  } else if (window.respond_to("update")) {
-		begin;
-		  window.update();
-		rescue RGSSError;
-		}
-	  }
-	}
-  }
-}
+		void pbUpdateSpriteHash(IWindow[] windows);
 
-// Disposes all objects in the specified hash.
-void pbDisposeSpriteHash(sprites) {
-  if (sprites) {
-	foreach (var i in sprites.keys) {
-	  pbDisposeSprite(sprites,i);
-	}
-	sprites.clear();
-  }
-}
+		/// <summary>
+		/// Disposes all objects in the specified hash.
+		/// </summary>
+		/// <param name="sprites"></param>
+		void pbDisposeSpriteHash(ISprite[] sprites);
 
-// Disposes the specified graphics object within the specified hash. Basically like:
-//   sprites[id].dispose
-void pbDisposeSprite(sprites,id) {
-  sprite=sprites[id];
-  if (sprite && !pbDisposed(sprite)) {
-	sprite.dispose();
-  }
-  sprites[id]=null;
-}
+		/// <summary>
+		/// Disposes the specified graphics object within the specified hash. Basically like:
+		///   sprites[id].dispose
+		/// </summary>
+		/// <param name="sprites"></param>
+		/// <param name="id"></param>
+		void pbDisposeSprite(ISprite[] sprites, int id);
 
-// Draws text on a bitmap. _textpos_ is an array
-// of text commands. Each text command is an array
-// that contains the following:
-//  0 - Text to draw
-//  1 - X coordinate
-//  2 - Y coordinate
-//  3 - If true or 1, the text is right aligned. If 2, the text is centered.
-//      Otherwise, the text is left aligned.
-//  4 - Base color
-//  5 - Shadow color
-void pbDrawTextPositions(bitmap,textpos) {
-  foreach (var i in textpos) {
-	textsize=bitmap.text_size(i[0]);
-	x=i[1];
-	y=i[2];
-	if (i[3]==true || i[3]==1) {		// right align
-	  x-=textsize.width;
-	} else if (i[3]==2) {		// centered
-	  x-=(textsize.width/2);
-	}
-	if (i[6]==true || i[6]==1) {		// outline text
-	  pbDrawOutlineText(bitmap,x,y,textsize.width,textsize.height,i[0],i[4],i[5]);
-	} else {
-	  pbDrawShadowText(bitmap,x,y,textsize.width,textsize.height,i[0],i[4],i[5]);
-	}
-  }
-}
+		// Draws text on a bitmap. _textpos_ is an array
+		// of text commands. Each text command is an array
+		// that contains the following:
+		//  0 - Text to draw
+		//  1 - X coordinate
+		//  2 - Y coordinate
+		//  3 - If true or 1, the text is right aligned. If 2, the text is centered.
+		//      Otherwise, the text is left aligned.
+		//  4 - Base color
+		//  5 - Shadow color
+		void pbDrawTextPositions(IBitmap bitmap, object[] textpos);
 
-void pbDrawImagePositions(bitmap,textpos) {
-  foreach (var i in textpos) {
-	srcbitmap=new AnimatedBitmap(pbBitmapName(i[0]));
-	x=i[1];
-	y=i[2];
-	srcx=i[3];
-	srcy=i[4];
-	width=i[5]>=0 ? i[5] : srcbitmap.width;
-	height=i[6]>=0 ? i[6] : srcbitmap.height;
-	srcrect=new Rect(srcx,srcy,width,height);
-	bitmap.blt(x,y,srcbitmap.bitmap,srcrect);
-	srcbitmap.dispose();
-  }
-}
+		void pbDrawImagePositions(IBitmap bitmap, object[] textpos);
 
 
 
-void pbPushFade() {
-  if (Game.GameData.GameTemp) {
-	Game.GameData.GameTemp.fadestate=[Game.GameData.GameTemp.fadestate+1,0].max;
-  }
-}
+		void pbPushFade();
 
-void pbPopFade() {
-  if (Game.GameData.GameTemp) {
-	Game.GameData.GameTemp.fadestate=[Game.GameData.GameTemp.fadestate-1,0].max;
-  }
-}
+		void pbPopFade();
 
-bool pbIsFaded { get {
-  if (Game.GameData.GameTemp) {
-	return Game.GameData.GameTemp.fadestate>0;
-  } else {
-	return false;
-  }
-} }
+		bool pbIsFaded { get; }
 
-// pbFadeOutIn(z) { block }
-// Fades out the screen before a block is run and fades it back in after the
-// block exits.  z indicates the z-coordinate of the viewport used for this effect
-void pbFadeOutIn(z,nofadeout=false) {
-  col=new Color(0,0,0,0);
-  viewport=new Viewport(0,0,Graphics.width,Graphics.height);
-  viewport.z=z;
-  for (int j = 0; j < 17; j++) {
-	col.set(0,0,0,j*15);
-	viewport.color=col;
-	Graphics.update();
-	Input.update();
-  }
-  pbPushFade;
-  begin;
-	if (block_given?) yield;
-  ensure;
-	pbPopFade;
-	if (!nofadeout) {
-	  for (int j = 0; j < 17; j++) {
-		col.set(0,0,0,(17-j)*15);
-		viewport.color=col;
-		Graphics.update();
-		Input.update();
-	  }
-	}
-	viewport.dispose();
-  }
-}
+		// pbFadeOutIn(z) { block }
+		// Fades out the screen before a block is run and fades it back in after the
+		// block exits.  z indicates the z-coordinate of the viewport used for this effect
+		void pbFadeOutIn(int z, bool nofadeout = false, Action action = null);
 
-void pbFadeOutAndHide(sprites) {
-  visiblesprites={}
-  pbDeactivateWindows(sprites){
-	 for (int j = 0; j < 17; j++) {
-	   pbSetSpritesToColor(sprites,new Color(0,0,0,j*15));
-	   block_given? ? yield : pbUpdateSpriteHash(sprites);
-	 }
-  }
-  foreach (var i in sprites) {
-	if (!i[1]) continue;
-	if (pbDisposed(i[1])) continue;
-	if (i[1].visible) visiblesprites[i[0]]=true;
-	i[1].visible=false;
-  }
-  return visiblesprites;
-}
+		void pbFadeOutAndHide(ISprite[] sprites);
 
-void pbFadeInAndShow(sprites,visiblesprites=null) {
-  if (visiblesprites) {
-	foreach (var i in visiblesprites) {
-	  if (i[1] && sprites[i[0]] && !pbDisposed(sprites[i[0]])) {
-		sprites[i[0]].visible=true;
-	  }
-	}
-  }
-  pbDeactivateWindows(sprites){
-	 for (int j = 0; j < 17; j++) {
-	   pbSetSpritesToColor(sprites,new Color(0,0,0,((17-j)*15)));
-	   block_given? ? yield : pbUpdateSpriteHash(sprites);
-	 }
-  }
-}
+		void pbFadeInAndShow(ISprite[] sprites, IList<> visiblesprites = null, Action action = null);
 
 // Restores which windows are active for the given sprite hash.
 // _activeStatuses_ is the result of a previous call to pbActivateWindows
@@ -443,66 +177,18 @@ void pbRestoreActivations(sprites,activeStatuses) {
   }
 }
 
-// Deactivates all windows. If a code block is given, deactivates all windows,
-// runs the code in the block, and reactivates them.
-void pbDeactivateWindows(sprites) {
-  if (block_given?) {
-	pbActivateWindow(sprites,null) { yield }
-  } else {
-	pbActivateWindow(sprites,null);
-  }
-}
+		// Deactivates all windows. If a code block is given, deactivates all windows,
+		// runs the code in the block, and reactivates them.
+		void pbDeactivateWindows(IWindow[] sprites, Action action = null);
 
-// Activates a specific window of a sprite hash. _key_ is the key of the window
-// in the sprite hash. If a code block is given, deactivates all windows except
-// the specified window, runs the code in the block, and reactivates them.
-void pbActivateWindow(sprites,key) {
-  if (!sprites) return;
-  activeStatuses={}
-  foreach (var i in sprites) {
-	if (i[1] && i[1] is Window && !pbDisposed(i[1])) {
-	  activeStatuses[i[0]]=i[1].active;
-	  i[1].active=(i[0]==key);
-	}
-  }
-  if (block_given?) {
-	begin;
-	  yield;
-	ensure;
-	  pbRestoreActivations(sprites,activeStatuses);
-	}
-	return {}
-  } else {
-	return activeStatuses;
-  }
-}
+		// Activates a specific window of a sprite hash. _key_ is the key of the window
+		// in the sprite hash. If a code block is given, deactivates all windows except
+		// the specified window, runs the code in the block, and reactivates them.
+		void pbActivateWindow(IWindow[] sprites, int key, Action action = null);
 
-void pbAlphaBlend(dstColor,srcColor) {
-  r=(255*(srcColor.red-dstColor.red)/255)+dstColor.red;
-  g=(255*(srcColor.green-dstColor.green)/255)+dstColor.green;
-  b=(255*(srcColor.blue-dstColor.blue)/255)+dstColor.blue;
-  a=(255*(srcColor.alpha-dstColor.alpha)/255)+dstColor.alpha;
-  return new Color(r,g,b,a);
-}
+		IColor pbAlphaBlend(IColor dstColor, IColor srcColor);
 
-void pbSrcOver(dstColor,srcColor) {
-  er=srcColor.red*srcColor.alpha/255;
-  eg=srcColor.green*srcColor.alpha/255;
-  eb=srcColor.blue*srcColor.alpha/255;
-  iea=255-srcColor.alpha;
-  cr=dstColor.red*dstColor.alpha/255;
-  cg=dstColor.green*dstColor.alpha/255;
-  cb=dstColor.blue*dstColor.alpha/255;
-  ica=255-dstColor.alpha;
-  a=255-(iea*ica)/255;
-  r=(iea*cr)/255+er;
-  g=(iea*cg)/255+eg;
-  b=(iea*cb)/255+eb;
-  r=(a==0) ? 0 : r*255/a;
-  g=(a==0) ? 0 : g*255/a;
-  b=(a==0) ? 0 : b*255/a;
-  return new Color(r,g,b,a);
-}
+		IColor pbSrcOver(IColor dstColor, IColor srcColor);
 
 void pbSetSpritesToColor(sprites,color) {
   if (!sprites || !color) return;
@@ -610,13 +296,13 @@ void pbSetSystemFont(bitmap) {
 }
 
 // Gets the name of the system small font.
-void pbSmallFontName() {
+string pbSmallFontName() {
   return MessageConfig.pbTryFonts("Power Green Small","Pokemon Emerald Small",
 	 "Arial Narrow","Arial");
 }
 
 // Gets the name of the system narrow font.
-void pbNarrowFontName() {
+string pbNarrowFontName() {
   return MessageConfig.pbTryFonts("Power Green Narrow","Pokemon Emerald Narrow",
 	 "Arial Narrow","Arial");
 }
@@ -648,7 +334,7 @@ bool pbRgssExists (string filename) {
 
 // Opens an IO, even if the file is in an encrypted archive.
 // Doesn't check RTP for the file.
-void pbRgssOpen(string file,int? mode=null) {
+void pbRgssOpen(string file,int? mode=null, Action action = null) {
 // File.open("debug.txt","ab"){|fw| fw.write([file,mode,Time.now.to_f].inspect+"\r\n") }
   if (!safeExists("./Game.rgssad") && !safeExists("./Game.rgss2a")) {
 	if (block_given?) {

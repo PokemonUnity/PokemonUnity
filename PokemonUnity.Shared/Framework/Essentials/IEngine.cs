@@ -13,7 +13,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// The module that carries out music and sound processing.
 	/// </summary>
-	public interface IAudio
+	public interface IAudio : IAudioObject
 	{
 		/// <summary>
 		/// Starts BGM playback. Sets the file name, volume, and pitch in turn.

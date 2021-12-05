@@ -23,9 +23,10 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IBag 
 	{
-		int registeredItem			{ get; }
+		Items registeredItem			{ get; }
 		int lastpocket				{ get; }
-		int pockets				    { get; }
+		//ItemPockets pockets		{ get; }
+		Items[][] pockets			{ get; }
 
 		string[] pocketNames		{ get; }
 
@@ -37,14 +38,24 @@ namespace PokemonEssentials.Interface.Screen
 
 		void rearrange();
 
-		// Gets the index of the current selected item in the pocket
-		int getChoice(int pocket);
+		/// <summary>
+		/// Gets the index of the current selected item in the pocket
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <returns></returns>
+		int getChoice(ItemPockets pocket);
 
-		// Clears the entire bag
+		/// <summary>
+		/// Clears the entire bag
+		/// </summary>
 		void clear();
 
-		// Sets the index of the current selected item in the pocket
-		void setChoice(int pocket, int value);
+		/// <summary>
+		/// Sets the index of the current selected item in the pocket
+		/// </summary>
+		/// <param name="pocket"></param>
+		/// <param name="value"></param>
+		void setChoice(ItemPockets pocket, int value);
 
 		/// <summary>
 		/// Registers the item as a key item.  Can be retrieved with Game.GameData.Bag.registeredItem

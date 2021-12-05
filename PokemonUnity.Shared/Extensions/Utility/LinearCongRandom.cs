@@ -11,7 +11,7 @@ namespace PokemonUnity.Utility
 	public partial class LinearCongRandom
 	{
 		public static event EventHandler<OnSeedEventArgs> SeedGenerated;
-		public class OnSeedEventArgs : EventArgs
+		public class OnSeedEventArgs : EventArgs, PokemonEssentials.Interface.EventArg.IEventArgs
 		{
 			public static readonly int EventId = typeof(OnSeedEventArgs).GetHashCode();
 

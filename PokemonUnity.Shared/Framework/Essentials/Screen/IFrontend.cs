@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity;
-using PokemonUnity.UX;
 using PokemonUnity.Combat;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
@@ -19,10 +18,10 @@ using PokemonEssentials.Interface.EventArg;
 namespace PokemonEssentials.Interface.Screen
 {
 	#region Text Entry
-	public interface IPokemonEntry : IScreen
+	public interface IPokemonEntryScreen : IScreen
 	{
 		void initialize(IPokemonEntryScene scene);
-		string pbStartScreen(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes mode = 0, IPokemon pokemon = null);
+		string pbStartScreen(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.UX.TextEntryTypes mode = 0, IPokemon pokemon = null);
 	}
 
 	/// <summary>
@@ -30,7 +29,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPokemonEntryScene : IScene
 	{
-		void pbStartScene(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes subject = 0, IPokemon pokemon = null);
+		void pbStartScene(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.UX.TextEntryTypes subject = 0, IPokemon pokemon = null);
 		void pbEndScene();
 		string pbEntry();
 		//string pbEntry1();
@@ -253,7 +252,7 @@ namespace PokemonEssentials.Interface.Screen
 		void pbThrowRock();
 	}
 
-	public interface IPokeBattleArena_Scene : PokemonUnity.IPokeBattle_Scene
+	public interface IPokeBattleArena_Scene : IPokeBattle_Scene
 	{
 		void pbBattleArenaBattlers(IBattler battler1, IBattler battler2);
 		void pbBattleArenaJudgment(IBattler battler1, IBattler battler2, int[] ratings1, int[] ratings2);
@@ -279,52 +278,6 @@ namespace PokemonEssentials.Interface.Screen
 		void pbUpdate(bool animating = false);
 		void pbUpdateExpandScreen();
 		void pbUpdateNarrowScreen();
-	}
-	#endregion
-
-	#region Bag
-	public interface IPokemonBag_Scene : IScene
-	{
-		void update();
-		void pbStartScene(Bag bag);
-		void pbEndScene();
-		int pbChooseNumber(string helptext, int maximum);
-		void pbDisplay(string msg, bool brief = false);
-		void pbConfirm(string msg);
-		void pbShowCommands(string helptext, int commands);
-		//void pbRefresh();
-
-		// Called when the item screen wants an item to be chosen from the screen
-		Items pbChooseItem(bool lockpocket = false);
-	}
-
-	public interface IPokemonBagScreen : IScreen
-	{
-		IPokemonBagScreen initialize(IPokemonBag_Scene scene, Bag bag);
-		void pbDisplay(string text);
-		void pbConfirm(string text);
-
-		// UI logic for the item screen when an item is to be held by a Pokémon.
-		Items pbGiveItemScreen();
-
-		// UI logic for the item screen when an item is used on a Pokémon from the party screen.
-		Items pbUseItemScreen(Pokemons pokemon);
-
-		// UI logic for the item screen for choosing an item
-		Items pbChooseItemScreen();
-
-		// UI logic for the item screen for choosing a Berry
-		Items pbChooseBerryScreen();
-
-		// UI logic for tossing an item in the item screen.
-		void pbTossItemScreen();
-
-		// UI logic for withdrawing an item in the item screen.
-		void pbWithdrawItemScreen();
-
-		// UI logic for depositing an item in the item screen.
-		void pbDepositItemScreen();
-		Items pbStartScreen();
 	}
 	#endregion
 }

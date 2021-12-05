@@ -30,11 +30,9 @@ namespace PokemonUnity
 	/// Game class will overwrite all the other class default values when player triggers a load state.
 	/// </summary>
 	//ToDo: Missing (Trainer)Player.Rival variable (KeyValuePair <Type,Name>)
-	//ToDo: Add Write_DB_To_File Function
 	public interface IDatabase
 	{
 		#region Variables
-		string FilePokemonXML { get; set; }
 		IDictionary<Pokemons, PokemonUnity.Monster.Data.PokemonEvolution[]> PokemonEvolutionsData { get; }
 		IDictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]> PokemonItemsData { get; }
 		IDictionary<Pokemons, PokemonUnity.Monster.Data.Form[]> PokemonFormsData { get; }
@@ -44,7 +42,7 @@ namespace PokemonUnity
 		IDictionary<Types,PokemonUnity.Monster.Data.Type> TypeData { get; }
 		IDictionary<Moves,Attack.Data.MoveData> MoveData { get; }
 		IDictionary<Moves,Attack.Data.MetaData> MoveMetaData { get; }
-		IDictionary<Attack.Data.Effects,Combat.Move> MoveEffectData { get; } //ToDo: Replace with Func<Attack.Data.Effects,Combat.Move> instead?
+		IDictionary<Attack.Data.Effects,PokemonEssentials.Interface.PokeBattle.IBattleMove> MoveEffectData { get; } //ToDo: Replace with Func<Attack.Data.Effects,Combat.Move> instead?
 		IDictionary<Items,ItemData> ItemData { get; }
 		IDictionary<Items,BerryData> BerryData { get; }
 		IDictionary<Regions,Locations[]> RegionData { get; }
@@ -54,20 +52,20 @@ namespace PokemonUnity
 		/// </summary>
 		IDictionary<Locations,int[]> LocationData { get; }
 		/// <summary>
-		/// List of <see cref="Player.Area"/> that triggers <seealso cref="Overworld.EncounterData"/>
+		/// List of <see cref="Player.Area"/> that triggers <seealso cref="Overworld.IEncounterData"/>
 		/// <para></para>
-		/// Key: <seealso cref="Overworld.Area.Id"/> | Value: <seealso cref="Player.Area"/>
+		/// Key: <seealso cref="Overworld.IArea.Id"/> | Value: <seealso cref="Player.Area"/>
 		/// </summary>
-		IDictionary<int,Area> AreaData { get; }
+		IDictionary<int,IArea> AreaData { get; }
 		/// <summary>
-		/// Key: <seealso cref="Method"/> | Value: <seealso cref="EncounterData.Id"/>
+		/// Key: <seealso cref="Method"/> | Value: <seealso cref="IEncounterData.Id"/>
 		/// </summary>
 		IDictionary<Method,int[]> MethodData { get; }
 		/// <summary>
-		/// Key: <seealso cref="EncounterData.Id"/> | Value: <seealso cref="Overworld.EncounterData"/>
+		/// Key: <seealso cref="IEncounterData.Id"/> | Value: <seealso cref="Overworld.IEncounterData"/>
 		/// </summary>
-		IDictionary<int,EncounterData> EncounterData { get; }
-		//IDictionary<Method,EncounterData> EncounterMethodData { get; }
+		IDictionary<int,IEncounterData> EncounterData { get; }
+		//IDictionary<Method,IEncounterData> EncounterMethodData { get; }
 		IDictionary<TrainerTypes,TrainerMetaData> TrainerMetaData { get; }
 		IDictionary<GymBadges,Character.BadgeData> BadgeData { get; }
 		IDictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; }

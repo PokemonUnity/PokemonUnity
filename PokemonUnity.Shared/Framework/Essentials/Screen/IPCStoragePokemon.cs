@@ -40,22 +40,20 @@ namespace PokemonEssentials.Interface.Screen
 		IPokemonBox[] boxes				{ get; }
 		//int party						{ get; }
 		int currentBox					{ get; set; }
-
 		int maxBoxes					{ get; }
-
 		IPokemon[] party				{ get; }
 
 		//public void party=(value) {
 		//raise new ArgumentError("Not supported");
 		//}
 
-		string[] MARKINGCHARS { get; } //= new string[] { "●", "■", "▲", "♥" };
+		//string[] MARKINGCHARS { get; } //= new string[] { "●", "■", "▲", "♥" };
 
 		IPokemonStorage initialize(int maxBoxes = Core.STORAGEBOXES, int maxPokemon = 30);
 
 		int maxPokemon(int box);
 
-		IPokemon[] this[int x] { get; }
+		IPokemonBox this[int x] { get; }
 
 		IPokemon this[int x,int y] { get; set; }
 
@@ -69,17 +67,17 @@ namespace PokemonEssentials.Interface.Screen
 
 		void pbMoveCaughtToParty(IPokemon pkmn);
 
-		bool pbMoveCaughtToBox(Pokemon pkmn,int box);
+		bool pbMoveCaughtToBox(IPokemon pkmn,int box);
 
-		int pbStoreCaught(Pokemon pkmn);
+		int pbStoreCaught(IPokemon pkmn);
 
 		void pbDelete(int box, int index);
 	}
 
 	public interface IPokemonStorageWithParty : IPokemonStorage {
 		//IPokemon[] party { get; set; }
-		//
-		//IPokemonStorageWithParty initialize(int maxBoxes = 24, int maxPokemon = 30, Pokemon[] party = null); //: base (maxBoxes,maxPokemon)
+		
+		//IPokemonStorageWithParty initialize(int maxBoxes = 24, int maxPokemon = 30, IPokemon[] party = null); //: base (maxBoxes,maxPokemon)
 	}
 	
 	// ###############################################################################
@@ -90,7 +88,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		IPokemonStorage getCurrentStorage { get; }
 
-		int boxes { get; }
+		IPokemonBox[] boxes { get; }
 
 		IPokemon[] party { get; }
 
@@ -126,6 +124,14 @@ namespace PokemonEssentials.Interface.Screen
 		// ###############################################################################
 		// PC menus
 		// ###############################################################################
+
+		/// <summary>
+		/// Name of PC Admin, for Pokemon Storage
+		/// </summary>
+		/// <remarks>
+		/// Maybe check region accessing pc from, and associate region prof with creator
+		/// ...until maybe the player encounter's the prof and exchanges pokedex (or however it works)
+		/// </remarks>
 		string pbGetStorageCreator();
 
 		Items pbPCItemStorage();
@@ -143,15 +149,15 @@ namespace PokemonEssentials.Interface.Screen
 
 	
 	public interface IPCMenuUser {
-		bool shouldShow();
+		bool shouldShow { get; }
 
-		void name();
+		string name { get; }
 
 		void access();
 	}
 
 	public interface IPokemonPCList {
-		IList<IPCMenuUser> @pclist { get; } // = new List<IPCMenuUser>();
+		//IList<IPCMenuUser> @pclist { get; } // = new List<IPCMenuUser>();
 
 		void registerPC(IPCMenuUser pc);
 
@@ -263,25 +269,17 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	public interface IPokemonBoxArrow : ISpriteWrapper {
-		IPokemonBoxArrow initialize(IViewport viewport = null);
+		//IPokemonBoxArrow initialize(IViewport viewport = null);
 
 		IPokemon heldPokemon { get; }
-
-		bool visible { set; }
-
-		IColor color { set; }
-
-		void dispose();
-
+		//bool visible { set; }
+		//IColor color { set; }
+		//void dispose();
 		bool holding { get; }
-
 		bool grabbing { get; }
-
 		bool placing { get; }
-
-		float x { set; }
-
-		float y { set; }
+		//float x { set; }
+		//float y { set; }
 
 		void setSprite(ISprite sprite);
 
@@ -293,7 +291,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		void release();
 
-		void update();
+		//void update();
 	}
 
 	public interface IPokemonBoxPartySprite : ISpriteWrapper {
@@ -316,10 +314,10 @@ namespace PokemonEssentials.Interface.Screen
 
 		IPokemonBoxPartySprite initialize(IPokemon[] party, IViewport viewport = null);
 
-		void dispose();
+		//void dispose();
 
 		void refresh();
-		void update();
+		//void update();
 	}
 
 	public interface IMosaicPokemonSprite //: IPokemonSprite 
@@ -352,23 +350,23 @@ namespace PokemonEssentials.Interface.Screen
 		//void grabPokemon(int index, IAnimatedBitmap arrow);
 		void grabPokemon(int index, IBitmap arrow);
 
-		float x { set; }
+		//float x { set; }
 
-		float y { set; }
+		//float y { set; }
 
-		IColor color { set; }
+		//IColor color { set; }
 
-		bool visible { set; }
+		//bool visible { set; }
 
 		void getBoxBitmap();
 
 		IPokemonBoxSprite initialize(IPokemonStorage storage, int boxnumber, IViewport viewport = null);
 
-		void dispose();
+		//void dispose();
 
 		void refresh();
 
-		void update();
+		//void update();
 	}
 	#endregion
 }

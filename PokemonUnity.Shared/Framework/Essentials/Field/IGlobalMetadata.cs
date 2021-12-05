@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
+using PokemonUnity.Character;
 using PokemonUnity.Inventory;
-using PokemonUnity.UX;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Field
@@ -41,12 +43,11 @@ namespace PokemonEssentials.Interface.Field
 		int coins { get; set; }
 		int sootsack { get; set; }
 		int? mailbox { get; set; }
-		//IPCItemStorage pcItemStorage	{ get; set; }
+		IPCItemStorage pcItemStorage	{ get; set; }
 		int stepcount { get; set; }
 		int happinessSteps { get; set; }
 		int? pokerusTime { get; set; }
-		//IDayCare daycare { get; set; }
-		PokemonUnity.Character.DayCare daycare { get; set; }
+		IDayCare daycare { get; set; }
 		bool daycareEgg { get; set; } //ToDo: int?...
 		int daycareEggSteps { get; set; }
 		bool[] pokedexUnlocked { get; set; } // Array storing which Dexes are unlocked
@@ -67,11 +68,16 @@ namespace PokemonEssentials.Interface.Field
 		IAudioME nextBattleME { get; set; }
 		IAudioObject nextBattleBack { get; set; }
 		ISafariState safariState { get; set; }
-		//IBugContestState bugContestState			{ get; set; }
+		IBugContestState bugContestState			{ get; set; }
 		ITrainer partner { get; set; }
 		int? challenge { get; set; }
 		IBattleRecordData lastbattle { get; set; }
-		List<int> phoneNumbers { get; set; }
+		List<IPhoneContact> phoneNumbers { get; set; }
+		/// <summary>
+		/// The time between successive received phone calls is set to a random amount of time between 20 and 40 minutes, 
+		/// and is counted down except when messages are being displayed or the player is being forced to move by a move route. 
+		/// When this time hits 0, a call from a trainer will be generated.
+		/// </summary>
 		int phoneTime { get; set; }
 		bool safesave { get; set; }
 		Dictionary<KeyValuePair<int, int>, int> eventvars { get; set; }

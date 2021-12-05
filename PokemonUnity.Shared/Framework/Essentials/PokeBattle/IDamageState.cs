@@ -8,33 +8,33 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IDamageState
 	{
-		int hplost { get; set; }        // HP lost by opponent, inc. HP lost by a substitute
-		bool critical { get; set; }      // Critical hit flag
-		int calcdamage { get; set; }    // Calculated damage
-		double typemod { get; set; }       // Type effectiveness
-		bool substitute { get; set; }    // A substitute took the damage
-		bool focusband { get; set; }     // Focus Band used
-		bool focussash { get; set; }     // Focus Sash used
-		bool sturdy { get; set; }        // Sturdy ability used
-		bool endured { get; set; }       // Damage was endured
-		bool berryweakened { get; set; } // A type-resisting berry was used
+		int HPLost { get; set; }        // HP lost by opponent, inc. HP lost by a substitute
+		bool Critical { get; set; }      // Critical hit flag
+		int CalcDamage { get; set; }    // Calculated damage
+		double TypeMod { get; set; }       // Type effectiveness
+		bool Substitute { get; set; }    // A substitute took the damage
+		bool FocusBand { get; set; }     // Focus Band used
+		bool FocusSash { get; set; }     // Focus Sash used
+		bool Sturdy { get; set; }        // Sturdy ability used
+		bool Endured { get; set; }       // Damage was endured
+		bool BerryWeakened { get; set; } // A type-resisting berry was used
 
-		void reset();
+		void Reset();
 
 		IDamageState initialize();
 	}
 
 	public interface ISuccessState
 	{
-		double typemod { get; set; }
-		int useState { get; set; }    // 0 - not used, 1 - failed, 2 - succeeded
-		bool @protected				{ get; set; }
-		int skill { get; set; }
+		double TypeMod		{ get; set; }
+		bool? UseState		{ get; set; }    // 0 - not used, 1 - failed, 2 - succeeded
+		bool Protected		{ get; set; }
+		int Skill			{ get; }
 
 		ISuccessState initialize();
 
-		void clear();
+		void Clear();
 
-		void updateSkill();
+		void UpdateSkill();
 	}
 }

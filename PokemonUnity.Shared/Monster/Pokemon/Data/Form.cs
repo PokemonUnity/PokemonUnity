@@ -16,7 +16,7 @@ namespace PokemonUnity.Monster.Data
 		/// <summary>
 		/// Use this for stats. <see cref="Pokemons"/> 
 		/// Identifier for <seealso cref="Id"/>.
-		/// Use this with <see cref="Game.PokemonData"/> 
+		/// Use this with <see cref="Kernal.PokemonData"/> 
 		/// (for data accuracy).
 		/// Pokemon Data (Stats/Exp) is stored under <see cref="PokemonData"/> 
 		/// which is indexed by <see cref="Pokemons"/> and not <see cref="Forms"/> 
@@ -45,15 +45,15 @@ namespace PokemonUnity.Monster.Data
 			Order = order;
 		}
 
-		public int GetArrayId()
-		{
-			for (int i = 0; i < Game.PokemonFormsData[Base].Length; i++)
-			{
-				if(Game.PokemonFormsData[Base][i].Id == Id)
-					return i;
-			}
-			return -1;
-		}
+		//public int GetArrayId()
+		//{
+		//	for (int i = 0; i < Game.PokemonFormsData[Base].Length; i++)
+		//	{
+		//		if(Game.PokemonFormsData[Base][i].Id == Id)
+		//			return i;
+		//	}
+		//	return -1;
+		//}
 
 		/// <summary>
 		/// Returns the base species this pokemon form belongs to.

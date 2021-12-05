@@ -8,12 +8,12 @@ using PokemonUnity.Inventory;
 
 namespace PokemonUnity
 {
-    public interface IMovedEvent
-    {
-        float X { get; }
-        float Y { get; }
-        //float Z { get; }
-        float Direction { get; }
-        bool? Through { get; }
-    }
+	public interface IMovedEvent
+	{
+		float X { get; }
+		float Y { get; }
+		//float Z { get; }
+		float Direction { get; }
+		bool? Through { get; }
+	}
 }

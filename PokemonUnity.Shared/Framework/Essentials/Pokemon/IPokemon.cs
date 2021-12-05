@@ -358,7 +358,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns the ID of this Pokémon's nature.
 		/// </summary>
-		Natures nature { get; }
+		Natures Nature { get; }
 
 		/// <summary>
 		/// Returns whether this Pokémon has a particular nature.

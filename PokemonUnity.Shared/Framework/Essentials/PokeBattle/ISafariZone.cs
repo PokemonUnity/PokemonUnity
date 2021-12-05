@@ -6,6 +6,7 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {

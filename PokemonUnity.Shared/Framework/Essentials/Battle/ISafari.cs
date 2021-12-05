@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PokemonUnity;
+﻿using PokemonUnity;
 using PokemonUnity.Combat;
-using PokemonUnity.Inventory;
 
 namespace PokemonEssentials.Interface.Battle
 {
@@ -17,9 +11,9 @@ namespace PokemonEssentials.Interface.Battle
 
 		ISafariState initialize();
 
-		int pbReceptionMap();
+		int pbReceptionMap { get; }
 
-		bool inProgress { get; }
+		bool InProgress { get; }
 
 		void pbGoToStart();
 
@@ -33,9 +27,9 @@ namespace PokemonEssentials.Interface.Battle
 	/// </summary>
 	public interface IGameSafari
 	{
-		bool pbInSafari();
+		bool pbInSafari { get; }
 
-		ISafariState pbSafariState();
+		ISafariState pbSafariState { get; }
 
 		BattleResults pbSafariBattle(Pokemons species, int level);
 

@@ -13,7 +13,7 @@ namespace PokemonEssentials.Interface
 		object[] pbParams { get; }
 
 		object getVariable(params int[] arg);
-		Pokemon pbGetPokemon(int id);
+		PokemonEssentials.Interface.PokeBattle.IPokemon pbGetPokemon(int id);
 		bool pbHeadbutt();
 		bool pbPushThisBoulder();
 		void pbPushThisEvent();

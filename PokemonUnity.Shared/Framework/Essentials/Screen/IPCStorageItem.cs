@@ -85,7 +85,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		void pbEndScene();
 
-		void pbRefresh();
+		//void pbRefresh();
 
 		//ToDo: Might need to split into two functions, 
 		//one for returning item selected

@@ -304,7 +304,7 @@ namespace PokemonUnity.Inventory
 		/// Returns if a Pokémon likes this berry based on its flavour.
 		/// </summary>
 		/// <param name="p">The Pokémon to test this berry for.</param>
-		public bool PokemonLikes(Monster.Pokemon p)
+		public bool PokemonLikes(PokemonEssentials.Interface.PokeBattle.IPokemon p)
 		{
 			switch (p.Nature)
 			{

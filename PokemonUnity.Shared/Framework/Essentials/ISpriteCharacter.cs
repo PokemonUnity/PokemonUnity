@@ -16,15 +16,15 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// The sprite's X-coordinate.
 		/// </summary>
-		float x { get; set; }
+		//float x { get; set; }
 		/// <summary>
 		/// The sprite's Y-coordinate.
 		/// </summary>
-		float y { get; set; }
+		//float y { get; set; }
 		/// <summary>
 		/// Frees the sprite. If the sprite has already been freed, does nothing.
 		/// </summary>
-		void dispose();
+		//void dispose();
 		/// <summary>
 		/// Begins flashing the sprite. duration specifies the number of frames the flash will last.
 		/// If color is set to nil, the sprite will disappear while flashing.
@@ -44,10 +44,10 @@ namespace PokemonEssentials.Interface
 		void dispose_loop_animation();
 		void blink_on();
 		void blink_off();
-		IEnumerator update();
+		//IEnumerator update();
 		void update_animation();
 		void update_loop_animation();
-		ISprite initialize(IViewport viewport = null);
+		//ISprite initialize(IViewport viewport = null);
 	}
 
 	public interface ISpriteAnimation : IDisposable

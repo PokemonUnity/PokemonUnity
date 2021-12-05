@@ -243,7 +243,7 @@ namespace Tests
 		public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
 		{
 			Pokemons pkmn = Pokemons.BULBASAUR;
-			Abilities Hidden = Game.PokemonData[pkmn].Ability[2];
+			Abilities Hidden = Kernal.PokemonData[pkmn].Ability[2];
 			if (Hidden == Abilities.NONE)
 			{
 				Assert.Fail("This pokemon does not have a hidden ability");
@@ -299,7 +299,7 @@ namespace Tests
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			System.Collections.Generic.List<Pokemons> pkmns = 
 				//new System.Collections.Generic.List<Pokemons>((Pokemons[])Enum.GetValues(typeof(Pokemons)));
-				new System.Collections.Generic.List<Pokemons>(Game.PokemonData.Keys);
+				new System.Collections.Generic.List<Pokemons>(Kernal.PokemonData.Keys);
 			int x = 3;
 			//Add values enough to exceed limit, check to see if capped
 			for (int i = 0; i < 700; i++)
@@ -325,7 +325,7 @@ namespace Tests
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			System.Collections.Generic.List<Pokemons> pkmns = 
 				//new System.Collections.Generic.List<Pokemons>((Pokemons[])Enum.GetValues(typeof(Pokemons)));
-				new System.Collections.Generic.List<Pokemons>(Game.PokemonData.Keys);
+				new System.Collections.Generic.List<Pokemons>(Kernal.PokemonData.Keys);
 			int x = 0;
 			//Add EV till max is hit, and add together and compare total
 			for (int i = 0; i < 700; i++)
@@ -369,8 +369,8 @@ namespace Tests
 		{
 			Pokemons pkmn = Pokemons.SQUIRTLE;
 			System.Collections.Generic.List<Moves> egg = new System.Collections.Generic.List<Moves>(); //ml.AddRange(pokemon.getMoveList(LearnMethod.egg));
-			System.Collections.Generic.List<Moves> lv = new System.Collections.Generic.List<Moves>(Game.PokemonMovesData[pkmn].LevelUp.Keys);
-			foreach (Moves item in Game.PokemonMovesData[pkmn].Egg)
+			System.Collections.Generic.List<Moves> lv = new System.Collections.Generic.List<Moves>(Kernal.PokemonMovesData[pkmn].LevelUp.Keys);
+			foreach (Moves item in Kernal.PokemonMovesData[pkmn].Egg)
 			{
 				if (!lv.Contains(item)) egg.Add(item);
 			}
@@ -719,10 +719,10 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			//Convert GenderRatio to Male/Female Results
 			//for loop, count to 100, if results is equal to or greater than threshold, fail
 			Pokemons pkmn = Pokemons.BULBASAUR;
-			GenderRatio genders = Game.PokemonData[pkmn].GenderEnum;
+			GenderRatio genders = Kernal.PokemonData[pkmn].GenderEnum;
 			int females = 0;
 			//Confirm test criteria by making sure data fits
-			if (genders == GenderRatio.FemaleOneEighth || !Game.PokemonData[pkmn].IsSingleGendered)
+			if (genders == GenderRatio.FemaleOneEighth || !Kernal.PokemonData[pkmn].IsSingleGendered)
 			{
 				for (int i = 0; i < 100; i++)
 				{
@@ -848,7 +848,7 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		public void Pokemon_WildPokemon_With_Item()
 		{
 			Pokemon pkmn = new Pokemon(Pokemons.RATICATE);//Pokemons.BUTTERFREE
-			if (Game.PokemonItemsData[pkmn.Species].Length == 0)
+			if (Kernal.PokemonItemsData[pkmn.Species].Length == 0)
 				Assert.Fail("Pokemon does not contain any held items in wild");
 
 			//Instantiate wild pokemon, maybe 100 times

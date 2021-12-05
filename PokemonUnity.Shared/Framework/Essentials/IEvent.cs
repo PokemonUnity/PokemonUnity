@@ -29,7 +29,7 @@ namespace PokemonEssentials.Interface
 		void set(Action method);
 
 		// Removes an event handler procedure from the event.
-		//public void -(method) {
+		//void -(method) {
 		//  for (int i = 0; i < @callbacks.length; i++) {
 		//    if (@callbacks[i]==method) {
 		//      @callbacks.delete_at(i);
@@ -40,7 +40,7 @@ namespace PokemonEssentials.Interface
 		//}
 		//
 		//// Adds an event handler procedure from the event.
-		//public void +(method) {
+		//void +(method) {
 		//  for (int i = 0; i < @callbacks.length; i++) {
 		//    if (@callbacks[i]==method) {
 		//      return self;
@@ -79,10 +79,11 @@ namespace PokemonEssentials.Interface
 		void trigger2(object sender, EventArgs e);
 	}*/
 	/// <summary>
-	/// This module stores events that can happen during the game.  A procedure can
-	/// subscribe to an event by adding itself to the event.  It will then be called
+	/// This module stores events that can happen during the game. A procedure can
+	/// subscribe to an event by adding itself to the event. It will then be called
 	/// whenever the event occurs.
 	/// </summary>
+	/// https://stackoverflow.com/a/47323956/3681384
 	public interface IEvents
 	{
 		#region EventHandlers
@@ -95,7 +96,8 @@ namespace PokemonEssentials.Interface
 		/// Fires whenever the map scene is regenerated and soon after the player moves
 		/// to a new map.
 		/// </summary>
-		event EventHandler<OnMapSceneChangeEventArgs> OnMapSceneChange;
+		//event EventHandler<IOnMapSceneChangeEventArgs> OnMapSceneChange;
+		event Action<object, IOnMapSceneChangeEventArgs> OnMapSceneChange;
 		/// <summary>
 		/// Fires each frame during a map update.
 		/// </summary>
@@ -109,7 +111,8 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Fires whenever the player or another event leaves a tile.
 		/// </summary>
-		event EventHandler<OnLeaveTileEventArgs> OnLeaveTile;
+		//event EventHandler<IOnLeaveTileEventArgs> OnLeaveTile;
+		event Action<object, IOnLeaveTileEventArgs> OnLeaveTile;
 		/// <summary>
 		/// Fires whenever the player takes a step.
 		/// </summary>
@@ -118,32 +121,39 @@ namespace PokemonEssentials.Interface
 		/// Fires whenever the player takes a step. The event handler may possibly move
 		/// the player elsewhere.
 		/// </summary>
-		event EventHandler<OnStepTakenTransferPossibleEventArgs> OnStepTakenTransferPossible;
+		//event EventHandler<IOnStepTakenTransferPossibleEventArgs> OnStepTakenTransferPossible;
+		event Action<object, IOnStepTakenTransferPossibleEventArgs> OnStepTakenTransferPossible;
 		/// <summary>
 		/// Fires whenever the player or another event enters a tile.
 		/// </summary>
-		event EventHandler<OnStepTakenFieldMovementEventArgs> OnStepTakenFieldMovement;
+		//event EventHandler<IOnStepTakenFieldMovementEventArgs> OnStepTakenFieldMovement;
+		event Action<object, IOnStepTakenFieldMovementEventArgs> OnStepTakenFieldMovement;
 		/// <summary>
 		/// Triggers at the start of a wild battle.  Event handlers can provide their own
 		/// wild battle routines to override the default behavior.
 		/// </summary>
-		event EventHandler<OnWildBattleOverrideEventArgs> OnWildBattleOverride;
+		//event EventHandler<IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
+		event Action<object, IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
 		/// <summary>
 		/// Triggers whenever a wild Pokémon battle ends
 		/// </summary>
-		event EventHandler<OnWildBattleEndEventArgs> OnWildBattleEnd;
+		//event EventHandler<IOnWildBattleEndEventArgs> OnWildBattleEnd;
+		event Action<object, IOnWildBattleEndEventArgs> OnWildBattleEnd;
 		/// <summary>
 		/// Triggers whenever a wild Pokémon is created
 		/// </summary>
-		event EventHandler<OnWildPokemonCreateEventArgs> OnWildPokemonCreate;
+		//event EventHandler<IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
+		event Action<object, IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		/// <summary>
 		/// Triggers whenever an NPC trainer's Pokémon party is loaded
 		/// </summary>
-		event EventHandler<OnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
+		//event EventHandler<IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
+		event Action<object, IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		/// <summary>
 		/// Fires whenever a spriteset is created.
 		/// </summary>
-		event EventHandler<OnSpritesetCreateEventArgs> OnSpritesetCreate;
+		//event EventHandler<IOnSpritesetCreateEventArgs> OnSpritesetCreate;
+		event Action<object, IOnSpritesetCreateEventArgs> OnSpritesetCreate;
 		event EventHandler OnStartBattle;
 		event EventHandler OnEndBattle;
 		/// <summary>
@@ -231,35 +241,38 @@ namespace PokemonEssentials.Interface
 	namespace EventArg
 	{
 		#region Global Overworld EventArgs
+		/// <summary>
+		/// https://stackoverflow.com/a/47323956/3681384
+		/// </summary>
 		public interface IEventArgs
 		{
 			int Id { get; }
 		}
-		public class OnMapCreateEventArgs : EventArgs, IEventArgs
+		public interface IOnMapCreateEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnMapCreateEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnMapCreateEventArgs).GetHashCode();
 
-			public int Id { get { return EventId; } }
-			//public int Id { get { return Pokemon.GetHashCode(); } } //EventId;
-			public int Map { get; set; }
-			public int Tileset { get; set; }
+			//int Id { get { return EventId; } }
+			//int Id { get { return Pokemon.GetHashCode(); } } //EventId;
+			int Map { get; set; }
+			int Tileset { get; set; }
 		}
-		public class OnMapChangeEventArgs : EventArgs
+		public interface IOnMapChangeEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnMapChangeEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnMapChangeEventArgs).GetHashCode();
 
-			//public int Id { get { return EventId; } }
-			public int Id { get { return MapId.GetHashCode(); } } //EventId;
-			public int MapId { get; set; }
+			//int Id { get { return EventId; } }
+			//int Id { get { return MapId.GetHashCode(); } } //EventId;
+			int MapId { get; set; }
 		}
-		public class OnMapChangingEventArgs : EventArgs
+		public interface IOnMapChangingEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnMapChangingEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnMapChangingEventArgs).GetHashCode();
 
-			//public int Id { get { return EventId; } }
-			public int Id { get { return MapId.GetHashCode(); } } //EventId;
-			public int MapId { get; set; }
-			//public Game_Map GameMap { get; set; }
+			//int Id { get { return EventId; } }
+			//int Id { get { return MapId.GetHashCode(); } } //EventId;
+			int MapId { get; set; }
+			IGameMap GameMap { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -270,43 +283,43 @@ namespace PokemonEssentials.Interface
 		/// e[2] - X-coordinate of the tile
 		/// e[3] - Y-coordinate of the tile
 		/// </summary>
-		public class OnLeaveTileEventArgs : EventArgs
+		public interface IOnLeaveTileEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnLeaveTileEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnLeaveTileEventArgs).GetHashCode();
 
-			public int Id { get { return EventId; } }
+			//int Id { get { return EventId; } }
 			/// <summary>
 			/// Event that just left the tile.
 			/// </summary>
-			//public Avatar.GameEvent Event { get; set; }
+			IGameEvent Event { get; set; }
 			/// <summary>
 			/// Map ID where the tile is located (not necessarily
 			///  the current map). Use "Game.GameData.MapFactory.getMap(e[1])" to
 			///  get the Game_Map object corresponding to that map.
 			/// </summary>
-			public int MapId { get; set; }
+			int MapId { get; set; }
 			/// <summary>
 			/// X-coordinate of the tile
 			/// </summary>
-			public float X { get; set; }
+			float X { get; set; }
 			/// <summary>
 			/// Y-coordinate of the tile
 			/// </summary>
-			public float Y { get; set; }
+			float Y { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
 		/// e[0] - Event that just entered a tile.
 		/// </summary>
-		public class OnStepTakenFieldMovementEventArgs : EventArgs
+		public interface IOnStepTakenFieldMovementEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnStepTakenFieldMovementEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnStepTakenFieldMovementEventArgs).GetHashCode();
 
-			public int Id { get { return EventId; } }
+			//int Id { get { return EventId; } }
 			/// <summary>
 			/// Event that just entered a tile.
 			/// </summary>
-			public int Index { get; set; }
+			int Index { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -314,15 +327,15 @@ namespace PokemonEssentials.Interface
 		/// If an event handler moves the player to a new map, it should set this value
 		/// to true. Other event handlers should check this parameter's value.
 		/// </summary>
-		public class OnStepTakenTransferPossibleEventArgs : EventArgs
+		public interface IOnStepTakenTransferPossibleEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnStepTakenTransferPossibleEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnStepTakenTransferPossibleEventArgs).GetHashCode();
 
-			public int Id { get { return EventId; } }
+			//int Id { get { return EventId; } }
 			/// <summary>
 			/// Array that contains a single boolean value.
 			/// </summary>
-			public bool Index { get; set; }
+			bool Index { get; set; }
 		}
 		/// <summary>
 		/// Parameters: 
@@ -330,17 +343,17 @@ namespace PokemonEssentials.Interface
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 		/// </summary>
-		public class OnWildBattleOverrideEventArgs : EventArgs
+		public interface IOnWildBattleOverrideEventArgs : IEventArgs
 		{
-			public static readonly int EventId = typeof(OnWildBattleOverrideEventArgs).GetHashCode();
+			//static readonly int EventId = typeof(OnWildBattleOverrideEventArgs).GetHashCode();
 
-			public int Id { get { return EventId; } }
-			public Pokemons Species { get; set; }
-			public int Level { get; set; }
+			//int Id { get { return EventId; } }
+			Pokemons Species { get; set; }
+			int Level { get; set; }
 			/// <summary>
 			/// Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 			/// </summary>
-			public BattleResults Result { get; set; }
+			BattleResults Result { get; set; }
 		}
 		/// <summary>
 		/// Parameters: 
@@ -348,31 +361,31 @@ namespace PokemonEssentials.Interface
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 		/// </summary>
-		public class OnWildBattleEndEventArgs : EventArgs
+		public interface IOnWildBattleEndEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnWildBattleEndEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnWildBattleEndEventArgs).GetHashCode();
 
-			public int Id { get { return EventId; } }
-			public Pokemons Species { get; set; }
-			public int Level { get; set; }
+			//int Id { get { return EventId; } }
+			Pokemons Species { get; set; }
+			int Level { get; set; }
 			/// <summary>
 			/// Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 			/// </summary>
-			public BattleResults Result { get; set; }
+			BattleResults Result { get; set; }
 		}
 		/// <summary>
 		/// Parameters: 
 		/// e[0] - Pokémon being created
 		/// </summary>
-		public class OnWildPokemonCreateEventArgs : EventArgs
+		public interface IOnWildPokemonCreateEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnWildPokemonCreateEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnWildPokemonCreateEventArgs).GetHashCode();
 
-			public int Id { get; }
+			//int Id { get; }
 			/// <summary>
 			/// Pokémon being created
 			/// </summary>
-			public IPokemon Pokemon { get; set; }
+			IPokemon Pokemon { get; set; }
 		}
 		/// <summary>
 		/// Parameters: 
@@ -380,17 +393,17 @@ namespace PokemonEssentials.Interface
 		/// e[1] - Items possessed by the trainer
 		/// e[2] - Party
 		/// </summary>
-		public class OnTrainerPartyLoadEventArgs : EventArgs
+		public interface IOnTrainerPartyLoadEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnTrainerPartyLoadEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnTrainerPartyLoadEventArgs).GetHashCode();
 
-			public int Id { get; }
-			public int Trainer { get; set; }
+			//int Id { get; }
+			ITrainer Trainer { get; set; }
 			/// <summary>
 			/// Items possessed by the trainer
 			/// </summary>
-			public Items[] Items { get; set; }
-			public IPokemon[] Party { get; set; }
+			Items[] Items { get; set; }
+			IPokemon[] Party { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -399,19 +412,19 @@ namespace PokemonEssentials.Interface
 		///   false, some other code had called <see cref="Game.GameData.Scene.createSpritesets"/>
 		///   to regenerate the map scene without transferring the player elsewhere
 		/// </summary>
-		public class OnMapSceneChangeEventArgs : EventArgs
+		public interface IOnMapSceneChangeEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnMapSceneChangeEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnMapSceneChangeEventArgs).GetHashCode();
 
-			public int Id { get; }
+			//int Id { get; }
 			/// <summary>
 			/// Scene_Map object.
 			/// </summary>
-			public int Object { get; set; }
+			ISceneMap Object { get; set; }
 			/// <summary>
 			/// Whether the player just moved to a new map (either true or false).
 			/// </summary>
-			public bool NewMap { get; set; }
+			bool NewMap { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -419,23 +432,24 @@ namespace PokemonEssentials.Interface
 		/// e[1] = Viewport used for tilemap and characters
 		/// e[0].map = Map associated with the spriteset (not necessarily the current map).
 		/// </summary>
-		public class OnSpritesetCreateEventArgs : EventArgs
+		public interface IOnSpritesetCreateEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnSpritesetCreateEventArgs).GetHashCode();
+			//readonly int EventId = typeof(OnSpritesetCreateEventArgs).GetHashCode();
 
-			public int Id { get; }
+			//int Id { get; }
 			/// <summary>
 			/// Spriteset being created
 			/// </summary>
-			public int SpritesetId { get; set; }
+			int SpritesetId { get; set; }
 			/// <summary>
 			/// Viewport used for tilemap and characters
 			/// </summary>
-			public int Viewport { get; set; }
+			IViewport Viewport { get; set; }
 			/// <summary>
 			/// Map associated with the spriteset (not necessarily the current map).
 			/// </summary>
-			public int MapId { get; set; }
+			int MapId { get; set; }
+			//ISpritesetMap Map { get; set; }
 		}
 		#endregion
 	}

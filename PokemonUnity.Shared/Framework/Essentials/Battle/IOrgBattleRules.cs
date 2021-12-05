@@ -6,6 +6,7 @@ using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Battle
@@ -48,16 +49,16 @@ namespace PokemonEssentials.Interface.Battle
 
 	public interface ILevelAdjustment
 	{
-		int BothTeams { get; } //= 0;
-		int EnemyTeam { get; } //= 1;
-		int MyTeam { get; } //= 2;
-		int BothTeamsDifferent { get; } //= 3;
+		//int BothTeams { get; } //= 0;
+		//int EnemyTeam { get; } //= 1;
+		//int MyTeam { get; } //= 2;
+		//int BothTeamsDifferent { get; } //= 3;
 
 		int type { get; }
 
 		//ILevelAdjustment(int adjustment);
 
-		int[] getNullAdjustment(IPokemon[] thisTeam, IPokemon[] otherTeam);
+		//int[] getNullAdjustment(IPokemon[] thisTeam, IPokemon[] otherTeam);
 
 		int[] getAdjustment(IPokemon[] thisTeam, IPokemon[] otherTeam);
 
@@ -176,7 +177,7 @@ namespace PokemonEssentials.Interface.Battle
 
 	public interface IMinimumLevelRestriction : IBattleRestriction
 	{
-		int level { get; set; }
+		int level { get; }
 
 		//IMinimumLevelRestriction(int minLevel);
 		//bool isValid(IPokemon pokemon);
@@ -184,7 +185,7 @@ namespace PokemonEssentials.Interface.Battle
 
 	public interface IMaximumLevelRestriction : IBattleRestriction
 	{
-		int level { get; set; }
+		int level { get; }
 
 		//IMaximumLevelRestriction(int maxLevel);
 		//bool isValid(IPokemon pokemon);
@@ -219,7 +220,7 @@ namespace PokemonEssentials.Interface.Battle
 
 	public interface ITotalLevelRestriction : IBattleTeamRestriction
 	{
-		int level { get; set; }
+		int level { get; }
 
 		//ITotalLevelRestriction(int level);
 		//bool isValid(IPokemon[] team);
@@ -480,9 +481,9 @@ namespace PokemonEssentials.Interface.Battle
 
 	public interface IPokemonChallengeRules
 	{
-		IPokemonRuleSet ruleset { get; set; }
-		IBattleType IBattleType { get; set; }
-		ILevelAdjustment ILevelAdjustment { get; set; }
+		IPokemonRuleSet ruleset				{ get; }
+		IBattleType IBattleType				{ get; }
+		ILevelAdjustment ILevelAdjustment	{ get; }
 
 		//IPokemonChallengeRules(IPokemonRuleSet ruleset = null);
 

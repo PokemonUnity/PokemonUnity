@@ -6,19 +6,19 @@ using System.Text;
 
 namespace PokemonEssentials.Interface.PokeBattle.Effects
 {
-    public interface IActiveSide
-    {
-        IEffectsSide effects { get; set; }
+	public interface IActiveSide
+	{
+		IEffectsSide effects { get; set; }
 
-        IActiveSide initialize();
-    }
+		IActiveSide initialize();
+	}
 
 
 
-    public interface IActiveField
-    {
-        IEffectsField effects { get; set; }
+	public interface IActiveField
+	{
+		IEffectsField effects { get; set; }
 
-        IActiveField initialize();
-    }
+		IActiveField initialize();
+	}
 }

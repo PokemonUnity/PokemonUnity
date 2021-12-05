@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.UX;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonEssentials.Interface
 {
@@ -16,11 +17,11 @@ namespace PokemonEssentials.Interface
 	{
 		IAudioSE bump_se { get; set; }
 
-		IGameMap map { get; }
+		//IGameMap map { get; }
 		//int bush_depth { get; }
 
 		//IGamePlayer(Game_Map map);
-		IGamePlayer initialize(IGameMap map);
+		//IGamePlayer initialize(IGameMap map);
 
 		bool pbHasDependentEvents();
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +13,7 @@ using PokemonUnity.Saving;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Utility;
 
-namespace PokemonEssentials.Interface.PokeBattle
+namespace PokemonEssentials.Interface
 {
 	public interface IMoveData
 	{
@@ -39,7 +38,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// This move's ID
 		/// </summary>
-		Moves id { get; set; }
+		Moves id { get; }
 		/// <summary>
 		/// The amount of PP remaining for this move
 		/// </summary>
@@ -62,6 +61,6 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Initializes this object to the specified move ID.
 		/// </summary>
-		IMove initialize(Moves moveid);
+		IMove initialize(Moves moveid = Moves.NONE);
 	}
 }

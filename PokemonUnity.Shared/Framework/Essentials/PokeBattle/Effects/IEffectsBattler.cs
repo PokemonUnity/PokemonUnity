@@ -54,7 +54,7 @@ namespace PokemonEssentials.Interface.PokeBattle.Effects
 		/// <summary>
 		/// Takes image of last person on team
 		/// </summary>
-		PokemonUnity.Monster.Pokemon Illusion		{ get; set; }
+		IPokemon Illusion		{ get; set; }
 		bool Imprison			{ get; set; }
 		bool Ingrain				{ get; set; }
 		bool KingsShield			{ get; set; }
