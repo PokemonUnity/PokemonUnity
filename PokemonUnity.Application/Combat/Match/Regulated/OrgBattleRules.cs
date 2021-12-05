@@ -54,1590 +54,6 @@ namespace PokemonUnity
 			return weight > maxWeightInKg;
 		}
 
-		public partial class LevelAdjustment : PokemonEssentials.Interface.Battle.ILevelAdjustment
-		{
-			public const int BothTeams = 0;
-			public const int EnemyTeam = 1;
-			public const int MyTeam = 2;
-			public const int BothTeamsDifferent = 3;
-			private int adjustment;
-
-			public virtual int type
-			{
-				get
-				{
-					return @adjustment;
-				}
-			}
-
-			public LevelAdjustment(int adjustment)
-			{
-				this.adjustment = adjustment;
-			}
-
-			//int[] PokemonEssentials.Interface.Battle.ILevelAdjustment.getNullAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
-			//{
-			//	return LevelAdjustment.getNullAdjustment(thisTeam, otherTeam);
-			//}
-
-			public static int[] getNullAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
-			{
-				int[] ret = new int[6];
-				for (int i = 0; i < thisTeam.Length; i++)
-				{
-					ret[i] = thisTeam[i].Level;
-				}
-				return ret;
-			}
-
-			public virtual int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
-			{
-				return LevelAdjustment.getNullAdjustment(thisTeam, otherTeam);
-			}
-
-			public int?[] getOldExp(PokemonEssentials.Interface.PokeBattle.IPokemon[] team1, PokemonEssentials.Interface.PokeBattle.IPokemon[] team2)
-			{
-				//List<int> ret=new List<int>();
-				int?[] ret = new int?[6];
-				for (int i = 0; i < team1.Length; i++)
-				{
-					//ret.Add(team1[i].exp);
-					//ret.Add(team1[i].Experience.Total);
-					if (team1[i].IsNotNullOrNone()) ret[i] = team1[i].Experience.Total;
-				}
-				//return ret.ToArray();
-				return ret;
-			}
-
-			public virtual void unadjustLevels(PokemonEssentials.Interface.PokeBattle.IPokemon[] team1, PokemonEssentials.Interface.PokeBattle.IPokemon[] team2, int?[][] adjustments)
-			{
-				for (int i = 0; i < team1.Length; i++)
-				{
-					int? exp = adjustments[0][i];
-					if (exp != null && team1[i].Experience.Total != exp)
-					{
-						team1[i].Exp = exp.Value;
-						team1[i].calcStats();
-					}
-				}
-				for (int i = 0; i < team2.Length; i++)
-				{
-					int? exp = adjustments[1][i];
-					if (exp != null && team2[i].Experience.Total != exp)
-					{
-						team2[i].Exp = exp.Value;
-						team2[i].calcStats();
-					}
-				}
-			}
-
-			public virtual int?[][] adjustLevels(PokemonEssentials.Interface.PokeBattle.IPokemon[] team1, PokemonEssentials.Interface.PokeBattle.IPokemon[] team2)
-			{
-				int[] adj1 = null;
-				int[] adj2 = null;
-				int?[][] ret = new int?[][] { getOldExp(team1, team2), getOldExp(team2, team1) };
-				if (@adjustment == BothTeams || @adjustment == MyTeam)
-				{
-					adj1 = getAdjustment(team1, team2);
-				}
-				else if (@adjustment == BothTeamsDifferent)
-				{
-					adj1 = getMyAdjustment(team1, team2);
-				}
-				if (@adjustment == BothTeams || @adjustment == EnemyTeam)
-				{
-					adj2 = getAdjustment(team2, team1);
-				}
-				else if (@adjustment == BothTeamsDifferent)
-				{
-					adj2 = getTheirAdjustment(team2, team1);
-				}
-				if (adj1 != null)
-				{
-					for (int i = 0; i < team1.Length; i++)
-					{
-						if (team1[i].Level != adj1[i])
-						{
-							//team1[i].Level=adj1[i];
-							team1[i].SetLevel((byte)adj1[i]);
-							team1[i].calcStats();
-						}
-					}
-				}
-				if (adj2 != null)
-				{
-					for (int i = 0; i < team2.Length; i++)
-					{
-						if (team2[i].Level != adj2[i])
-						{
-							//team2[i].Level=adj2[i];
-							team2[i].SetLevel((byte)adj2[i]);
-							team2[i].calcStats();
-						}
-					}
-				}
-				return ret;
-			}
-			public virtual int[] getMyAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] myTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] theirTeam)
-			{
-				return getNullAdjustment(myTeam, theirTeam);
-			}
-			public virtual int[] getTheirAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] theirTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] myTeam)
-			{
-				return getNullAdjustment(theirTeam, myTeam);
-			}
-		}
-
-		public partial class LevelBalanceAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.ILevelBalanceAdjustment
-		{
-			private int minLevel;
-			public LevelBalanceAdjustment(int minLevel) : base(LevelAdjustment.BothTeams)
-			{
-				//base.initialize(LevelAdjustment.BothTeams);
-				this.minLevel = minLevel;
-			}
-
-			public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
-			{
-				int[] ret = new int[6];
-				for (int i = 0; i < thisTeam.Length; i++)
-				{
-					ret[i] = Game.pbBalancedLevelFromBST(thisTeam[i].Species);
-				}
-				return ret;
-			}
-		}
-
-		public partial class EnemyLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.IEnemyLevelAdjustment
-		{
-			private int level;
-			public EnemyLevelAdjustment(int level) : base(LevelAdjustment.EnemyTeam)
-			{
-				//base.initialize(LevelAdjustment.EnemyTeam);
-				this.level = Math.Min(Math.Max(1, level), Core.MAXIMUMLEVEL);
-			}
-
-			public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
-			{
-				int[] ret = new int[6];
-				for (int i = 0; i < thisTeam.Length; i++)
-				{
-					ret[i] = @level;
-				}
-				return ret;
-			}
-		}
-
-		public partial class CombinedLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.ICombinedLevelAdjustment
-		{
-			private LevelAdjustment my;
-			private LevelAdjustment their;
-			public CombinedLevelAdjustment(LevelAdjustment my, LevelAdjustment their) : base(LevelAdjustment.BothTeamsDifferent)
-			{
-				//base.initialize(LevelAdjustment.BothTeamsDifferent);
-				this.my = my;
-				this.their = their;
-			}
-
-			public override int[] getMyAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] myTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] theirTeam)
-			{
-				return @my != null ? @my.getAdjustment(myTeam, theirTeam) :
-				   LevelAdjustment.getNullAdjustment(myTeam, theirTeam);
-			}
-
-			public override int[] getTheirAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] theirTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] myTeam)
-			{
-				return @their != null ? @their.getAdjustment(theirTeam, myTeam) :
-				   LevelAdjustment.getNullAdjustment(theirTeam, myTeam);
-			}
-		}
-
-		public partial class SinglePlayerCappedLevelAdjustment : CombinedLevelAdjustment, PokemonEssentials.Interface.Battle.ISinglePlayerCappedLevelAdjustment
-		{
-			public SinglePlayerCappedLevelAdjustment(int level) : base(new CappedLevelAdjustment(level), new FixedLevelAdjustment(level))
-			{
-				//base.initialize(new CappedLevelAdjustment(level),new FixedLevelAdjustment(level));
-			}
-		}
-
-		public partial class CappedLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.ICappedLevelAdjustment
-		{
-			private int level;
-			public CappedLevelAdjustment(int level) : base(LevelAdjustment.BothTeams)
-			{
-				//base.initialize(LevelAdjustment.BothTeams);
-				this.level = Math.Min(Math.Max(1, level), Core.MAXIMUMLEVEL);
-			}
-
-			public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
-			{
-				int[] ret = new int[6];
-				for (int i = 0; i < thisTeam.Length; i++)
-				{
-					ret[i] = Math.Min(thisTeam[i].Level, @level);
-				}
-				return ret;
-			}
-		}
-
-		public partial class FixedLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.IFixedLevelAdjustment
-		{
-			private int level;
-			public FixedLevelAdjustment(int level) : base(LevelAdjustment.BothTeams)
-			{
-				//base.initialize(LevelAdjustment.BothTeams);
-				this.level = Math.Min(Math.Max(1, level), Core.MAXIMUMLEVEL);
-			}
-
-			public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
-			{
-				int[] ret = new int[6];
-				for (int i = 0; i < thisTeam.Length; i++)
-				{
-					ret[i] = @level;
-				}
-				return ret;
-			}
-		}
-
-		public partial class TotalLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.ITotalLevelAdjustment
-		{
-			private int minLevel;
-			private int maxLevel;
-			private int totalLevel;
-			public TotalLevelAdjustment(int minLevel, int maxLevel, int totalLevel) : base(LevelAdjustment.EnemyTeam)
-			{
-				//base.initialize(LevelAdjustment.EnemyTeam);
-				this.minLevel = Math.Min(Math.Max(1, minLevel), Core.MAXIMUMLEVEL);
-				this.maxLevel = Math.Min(Math.Max(1, maxLevel), Core.MAXIMUMLEVEL);
-				this.totalLevel = totalLevel;
-			}
-
-			public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
-			{
-				int[] ret = new int[6];
-				int total = 0;
-				for (int i = 0; i < thisTeam.Length; i++)
-				{
-					ret[i] = @minLevel;
-					total += @minLevel;
-				}
-				do //;loop
-				{
-					bool work = false;
-					for (int i = 0; i < thisTeam.Length; i++)
-					{
-						if (ret[i] >= @maxLevel || total >= @totalLevel)
-						{
-							continue;
-						}
-						ret[i] += 1;
-						total += 1;
-						work = true;
-					}
-					if (!work) break;
-				} while (true);
-				return ret;
-			}
-		}
-
-		public partial class OpenLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.IOpenLevelAdjustment
-		{
-			private int minLevel;
-			public OpenLevelAdjustment(int minLevel = 1) : base(LevelAdjustment.EnemyTeam)
-			{
-				//base.initialize(LevelAdjustment.EnemyTeam);
-				this.minLevel = minLevel;
-			}
-
-			public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
-			{
-				int maxLevel = 1;
-				for (int i = 0; i < otherTeam.Length; i++)
-				{
-					int level = otherTeam[i].Level;
-					if (maxLevel < level) maxLevel = level;
-				}
-				if (maxLevel < @minLevel) maxLevel = @minLevel;
-				int[] ret = new int[6];
-				for (int i = 0; i < thisTeam.Length; i++)
-				{
-					ret[i] = maxLevel;
-				}
-				return ret;
-			}
-		}
-
-		public partial class NonEggRestriction : PokemonEssentials.Interface.Battle.IBattleRestriction, PokemonEssentials.Interface.Battle.INonEggRestriction
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				return pokemon != null && !pokemon.isEgg;
-			}
-		}
-
-		public partial class AblePokemonRestriction : PokemonEssentials.Interface.Battle.IBattleRestriction, PokemonEssentials.Interface.Battle.IAblePokemonRestriction
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				return pokemon != null && !pokemon.isEgg && pokemon.HP > 0;
-			}
-		}
-
-		public partial class SpeciesRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.ISpeciesRestriction
-		{
-			private Pokemons[] specieslist;
-			public SpeciesRestriction(params Pokemons[] specieslist)
-			{
-				this.specieslist = specieslist;
-			}
-
-			public bool isSpecies(Pokemons species, Pokemons[] specieslist)
-			{
-				foreach (var s in specieslist)
-				{
-					if (species == s) return true;
-				}
-				return false;
-			}
-
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				int count = 0;
-				if (isSpecies(pokemon.Species, @specieslist))
-				{
-					count += 1;
-				}
-				return count != 0;
-			}
-		}
-
-		public partial class BannedSpeciesRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IBannedSpeciesRestriction
-		{
-			private Pokemons[] specieslist;
-			public BannedSpeciesRestriction(params Pokemons[] specieslist)
-			{
-				this.specieslist = specieslist;
-			}
-
-			public bool isSpecies(Pokemons species, Pokemons[] specieslist)
-			{
-				foreach (var s in specieslist)
-				{
-					if (species == s) return true;
-				}
-				return false;
-			}
-
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				int count = 0;
-				if (isSpecies(pokemon.Species, @specieslist))
-				{
-					count += 1;
-				}
-				return count == 0;
-			}
-		}
-
-		public partial class BannedItemRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IBannedItemRestriction
-		{
-			private Items[] specieslist;
-			public BannedItemRestriction(params Items[] specieslist)
-			{
-				this.specieslist = specieslist;
-			}
-
-			//public bool isSpecies (Pokemons species,Pokemons[] specieslist) {
-			public bool isSpecies(Items species, Items[] specieslist)
-			{
-				foreach (var s in specieslist)
-				{
-					if (species == s) return true;
-				}
-				return false;
-			}
-
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				int count = 0;
-				if (pokemon.Item != 0 && isSpecies(pokemon.Item, @specieslist))
-				{
-					count += 1;
-				}
-				return count == 0;
-			}
-		}
-
-		public partial class RestrictedSpeciesRestriction : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.IRestrictedSpeciesRestriction
-		{
-			string IBattleTeamRestriction.errorMessage { get; }
-			private int maxValue;
-			private Pokemons[] specieslist;
-			public RestrictedSpeciesRestriction(int maxValue, params Pokemons[] specieslist)
-			{
-				this.specieslist = specieslist;
-				this.maxValue = maxValue;
-			}
-
-			public bool isSpecies(Pokemons species, Pokemons[] specieslist)
-			{
-				foreach (var s in specieslist)
-				{
-					if (species == s) return true;
-				}
-				return false;
-			}
-
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
-			{
-				int count = 0;
-				for (int i = 0; i < team.Length; i++)
-				{
-					if (isSpecies(team[i].Species, @specieslist))
-					{
-						count += 1;
-					}
-				}
-				return count <= @maxValue;
-			}
-		}
-
-		public partial class RestrictedSpeciesTeamRestriction : RestrictedSpeciesRestriction, PokemonEssentials.Interface.Battle.IRestrictedSpeciesTeamRestriction
-		{
-			public RestrictedSpeciesTeamRestriction(params Pokemons[] specieslist) : base(4, specieslist)
-			{
-				//base.initialize(4,*specieslist);
-			}
-		}
-
-		public partial class RestrictedSpeciesSubsetRestriction : RestrictedSpeciesRestriction, PokemonEssentials.Interface.Battle.IRestrictedSpeciesSubsetRestriction
-		{
-			public RestrictedSpeciesSubsetRestriction(params Pokemons[] specieslist) : base(2, specieslist)
-			{
-				//base.initialize(2,*specieslist);
-			}
-		}
-
-		public partial class StandardRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IStandardRestriction
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				if (pokemon == null || pokemon.isEgg) return false;
-				//dexdata=pbOpenDexData();
-				//pbDexDataOffset(dexdata,pokemon.Species,10);
-				int basestatsum = PokemonData[pokemon.Species].BaseStatsHP; //dexdata.fgetb;
-				basestatsum += PokemonData[pokemon.Species].BaseStatsATK; //dexdata.fgetb;
-				basestatsum += PokemonData[pokemon.Species].BaseStatsDEF; //dexdata.fgetb;
-				basestatsum += PokemonData[pokemon.Species].BaseStatsSPE; //dexdata.fgetb;
-				basestatsum += PokemonData[pokemon.Species].BaseStatsSPD; //dexdata.fgetb;
-				basestatsum += PokemonData[pokemon.Species].BaseStatsSPA; //dexdata.fgetb;
-				//pbDexDataOffset(dexdata,pokemon.Species,2);
-				Abilities ability1 = PokemonData[pokemon.Species].Ability[0]; //dexdata.fgetw;
-				Abilities ability2 = PokemonData[pokemon.Species].Ability[1]; //dexdata.fgetw;
-				//dexdata.close();
-				//  Species with disadvantageous abilities are not banned
-				if (ability1 == Abilities.TRUANT ||
-				   ability2 == Abilities.SLOW_START)
-				{
-					return true;
-				}
-				//  Certain named species are banned
-				Pokemons[] blacklist = new Pokemons[] { Pokemons.WYNAUT, Pokemons.WOBBUFFET };
-				foreach (var i in blacklist)
-				{
-					if (pokemon.Species == i) return false;
-				}
-				//  Certain named species are not banned
-				Pokemons[] whitelist = new Pokemons[] { Pokemons.DRAGONITE, Pokemons.SALAMENCE, Pokemons.TYRANITAR };
-				foreach (Pokemons i in whitelist)
-				{
-					if (pokemon.Species == i) return true;
-				}
-				//  Species with total base stat 600 or more are banned
-				if (basestatsum >= 600)
-				{
-					return false;
-				}
-				return true;
-			}
-		}
-
-		public partial class LevelRestriction : PokemonEssentials.Interface.Battle.ILevelRestriction { }
-
-		public partial class MinimumLevelRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IMinimumLevelRestriction
-		{
-			public int level { get; protected set; }
-
-			public MinimumLevelRestriction(int minLevel)
-			{
-				@level = minLevel;
-			}
-
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				return pokemon.Level >= @level;
-			}
-		}
-
-		public partial class MaximumLevelRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IMaximumLevelRestriction
-		{
-			public int level { get; protected set; }
-
-			public MaximumLevelRestriction(int maxLevel)
-			{
-				@level = maxLevel;
-			}
-
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				return pokemon.Level <= @level;
-			}
-		}
-
-		public partial class HeightRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IHeightRestriction
-		{
-			private int level;
-			public HeightRestriction(int maxHeightInMeters)
-			{
-				@level = maxHeightInMeters;
-			}
-
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				return !Game.pbTooTall(pokemon, @level);
-			}
-		}
-
-		public partial class WeightRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IWeightRestriction
-		{
-			private int level;
-			public WeightRestriction(int maxWeightInKg)
-			{
-				@level = maxWeightInKg;
-			}
-
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				return !Game.pbTooHeavy(pokemon, @level);
-			}
-		}
-
-		public partial class SoulDewClause : IBattleRestriction, PokemonEssentials.Interface.Battle.ISoulDewClause
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				return pokemon.Item != Items.SOUL_DEW;
-			}
-		}
-
-		public partial class ItemsDisallowedClause : IBattleRestriction, PokemonEssentials.Interface.Battle.IItemsDisallowedClause
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				return !pokemon.hasItem();
-			}
-		}
-
-		public partial class NegativeExtendedGameClause : IBattleRestriction, PokemonEssentials.Interface.Battle.INegativeExtendedGameClause
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				if (pokemon.Species == Pokemons.ARCEUS) return false;
-				if (pokemon.Item == Items.MICLE_BERRY) return false;
-				if (pokemon.Item == Items.CUSTAP_BERRY) return false;
-				if (pokemon.Item == Items.JABOCA_BERRY) return false;
-				if (pokemon.Item == Items.ROWAP_BERRY) return false;
-				return true;
-			}
-		}
-
-		public partial class TotalLevelRestriction : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ITotalLevelRestriction
-		{
-			public int level { get; protected set; }
-
-			public TotalLevelRestriction(int level)
-			{
-				this.level = level;
-			}
-
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
-			{
-				int totalLevel = 0;
-				for (int i = 0; i < team.Length - 1; i++)
-				{
-					if (team[i].Species == 0) continue;
-					totalLevel += team[i].Level;
-				}
-				return (totalLevel <= @level);
-			}
-
-			public string errorMessage
-			{
-				get
-				{
-					return string.Format("The combined levels exceed {0}.", @level);
-				}
-			}
-		}
-
-		public partial class SameSpeciesClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ISameSpeciesClause
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
-			{
-				Pokemons species = 0;
-				for (int i = 0; i < team.Length - 1; i++)
-				{
-					if (team[i].Species == 0) continue;
-					if (species == 0)
-					{
-						species = team[i].Species;
-					}
-					else
-					{
-						if (team[i].Species != species) return false;
-					}
-				}
-				return true;
-			}
-
-			public string errorMessage
-			{
-				get
-				{
-					return Game._INTL("Pokémon can't be the same.");
-				}
-			}
-		}
-
-		public partial class SpeciesClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ISpeciesClause
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
-			{
-				for (int i = 0; i < team.Length - 1; i++)
-				{
-					if (team[i].Species == 0) continue;
-					for (int j = i + 1; j < team.Length; j++)
-					{
-						if (team[i].Species == team[j].Species) return false;
-					}
-				}
-				return true;
-			}
-
-			public string errorMessage
-			{
-				get
-				{
-					return Game._INTL("Pokémon can't be the same.");
-				}
-			}
-		}
-
-		//public static Pokemons[] babySpeciesData = {}
-		//public static Pokemons[] canEvolve       = {}
-
-		public partial class BabyRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IBabyRestriction
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				//baby=babySpeciesData[pokemon.Species] != null ? babySpeciesData[pokemon.Species] :
-				//   (babySpeciesData[pokemon.Species]=pbGetBabySpecies(pokemon.Species));
-				//return baby==pokemon.Species;
-				return Game.PokemonData[pokemon.Species].IsBaby;
-			}
-		}
-
-		public partial class UnevolvedFormRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IUnevolvedFormRestriction
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				//baby=$babySpeciesData[pokemon.Species] ? $babySpeciesData[pokemon.Species] :
-				//   ($babySpeciesData[pokemon.Species]=pbGetBabySpecies(pokemon.Species))
-				//if (baby!=pokemon.Species) return false;
-				if (!Game.PokemonData[pokemon.Species].IsBaby) return false;
-				//bool canEvolve=(canEvolve[pokemon.Species]!=null) ? canEvolve[pokemon.Species] :
-				//   (canEvolve[pokemon.Species]=(pbGetEvolvedFormData(pokemon.Species).Length!=0));
-				bool canEvolve = Game.PokemonEvolutionsData[pokemon.Species].Length != 0;
-				if (!canEvolve) return false;
-				return true;
-			}
-		}
-
-		public partial class LittleCupRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.ILittleCupRestriction
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				if (pokemon.Item == Items.BERRY_JUICE) return false;
-				if (pokemon.Item == Items.DEEP_SEA_TOOTH) return false;
-				if (pokemon.hasMove(Moves.SONIC_BOOM)) return false;
-				if (pokemon.hasMove(Moves.DRAGON_RAGE)) return false;
-				if (pokemon.Species == Pokemons.SCYTHER) return false;
-				if (pokemon.Species == Pokemons.SNEASEL) return false;
-				if (pokemon.Species == Pokemons.MEDITITE) return false;
-				if (pokemon.Species == Pokemons.YANMA) return false;
-				if (pokemon.Species == Pokemons.TANGELA) return false;
-				if (pokemon.Species == Pokemons.MURKROW) return false;
-				return true;
-			}
-		}
-
-		public partial class ItemClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.IItemClause
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
-			{
-				for (int i = 0; i < team.Length - 1; i++)
-				{
-					if (!team[i].hasItem()) continue;
-					for (int j = i + 1; j < team.Length; j++)
-					{
-						if (team[i].Item == team[j].Item) return false;
-					}
-				}
-				return true;
-			}
-
-			public string errorMessage
-			{
-				get
-				{
-					return Game._INTL("No identical hold items.");
-				}
-			}
-		}
-
-		public partial class NicknameChecker //: PokemonEssentials.Interface.Battle.INicknameChecker
-		{
-			public static IDictionary<Pokemons, string> names = new Dictionary<Pokemons, string>();
-			public static int namesMaxValue = 0;
-
-			public static string getName(Pokemons species)
-			{
-				string n = names[species];
-				if (n != null) return n;
-				n = species.ToString(TextScripts.Name);
-				names[species] = n.ToUpper(); //.upcase;
-				return n;
-			}
-
-			public static bool check(string name, Pokemons species)
-			{
-				name = name.ToUpper(); //.upcase;
-				if (name == getName(species)) return true;
-				if (@names.Values.Contains(name))
-				{
-					return false;
-				}
-				//foreach (var i in @@namesMaxValue..PBSpecies.maxValue) {
-				foreach (Pokemons i in PokemonData.Keys)
-				{
-					if (i != species)
-					{
-						string n = getName(i);
-						if (n == name) return false;
-					}
-				}
-				return true;
-			}
-		}
-
-		/// <summary>
-		/// No two Pokemon can have the same nickname.
-		/// No nickname can be the same as the (real) name of another Pokemon character.
-		/// </summary>
-		public partial class NicknameClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.INicknameClause
-		{
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
-			{
-				for (int i = 0; i < team.Length - 1; i++)
-				{
-					for (int j = i + 1; j < team.Length; j++)
-					{
-						if (team[i].Name == team[j].Name) return false;
-						if (!NicknameChecker.check(team[i].Name, team[i].Species)) return false;
-					}
-				}
-				return true;
-			}
-
-			public string errorMessage
-			{
-				get
-				{
-					return Game._INTL("No identical nicknames.");
-				}
-			}
-		}
-
-		public partial class PokemonRuleSet : PokemonEssentials.Interface.Battle.IPokemonRuleSet
-		{
-			public int minTeamLength
-			{
-				get
-				{
-					return Math.Min(1, this.minLength);
-				}
-			}
-
-			public int maxTeamLength
-			{
-				get
-				{
-					return Math.Max(6, this.maxLength);
-				}
-			}
-
-			public int minLength
-			{
-				get
-				{
-					return _minLength.HasValue ? _minLength.Value : this.maxLength;
-				}
-			}
-
-			public int maxLength
-			{
-				get
-				{
-					return @number < 0 ? 6 : @number;
-				}
-			}
-
-			public int number
-			{
-				get
-				{
-					return _maxLength;
-				}
-			}
-			private int _maxLength;
-			private int? _minLength;
-			private List<IBattleRestriction> pokemonRules;
-			private List<IBattleTeamRestriction> teamRules;
-			private List<IBattleTeamRestriction> subsetRules;
-
-			public PokemonRuleSet(int number = 0)
-			{
-				@pokemonRules = new List<IBattleRestriction>();
-				@teamRules = new List<IBattleTeamRestriction>();
-				@subsetRules = new List<IBattleTeamRestriction>();
-				_minLength = 1;
-				_maxLength = number <= 0 ? GameData.Features.LimitPokemonPartySize : number;
-			}
-
-			public IPokemonRuleSet copy()
-			{
-				IPokemonRuleSet ret = new PokemonRuleSet(@number);
-				foreach (var rule in @pokemonRules)
-				{
-					ret.addPokemonRule(rule);
-				}
-				foreach (var rule in @teamRules)
-				{
-					ret.addTeamRule(rule);
-				}
-				foreach (var rule in @subsetRules)
-				{
-					ret.addSubsetRule(rule);
-				}
-				return ret;
-			}
-
-			/// <summary>
-			/// Returns the length of a valid subset of a Pokemon team.
-			/// </summary>
-			public int suggestedNumber
-			{
-				get
-				{
-					return this.maxLength;
-				}
-			}
-
-			/// <summary>
-			/// Returns a valid level to assign to each member of a valid Pokemon team.
-			/// </summary>
-			/// <returns></returns>
-			public int suggestedLevel
-			{ get {  
-				int minLevel = 1;
-				int maxLevel = Core.MAXIMUMLEVEL;
-				int num = this.suggestedNumber;
-				foreach (var rule in @pokemonRules)
-				{
-					if (rule is MinimumLevelRestriction r1)
-					{
-						minLevel = r1.level; //rule.level;
-					}
-					else if (rule is MaximumLevelRestriction r2)
-					{
-						maxLevel = r2.level; //rule.level;
-					}
-				}
-				int totalLevel = maxLevel * num;
-				foreach (var rule in @subsetRules)
-				{
-					if (rule is TotalLevelRestriction r)
-					{
-						totalLevel = r.level; //rule.level;
-					}
-				}
-				if (totalLevel >= maxLevel * num)
-				{
-					return Math.Max(maxLevel, minLevel);
-				}
-				else
-				{
-					return Math.Max((totalLevel / this.suggestedNumber), minLevel);
-				}
-			} }
-
-			public IPokemonRuleSet setNumberRange(int minValue, int maxValue)
-			{
-				_minLength = Math.Max(1, minValue);
-				_maxLength = Math.Min(maxValue, 6);
-				return this;
-			}
-
-			public IPokemonRuleSet setNumber(int value)
-			{
-				return setNumberRange(value, value);
-			}
-
-			public IPokemonRuleSet addPokemonRule(IBattleRestriction rule)
-			{
-				@pokemonRules.Add(rule);
-				return this;
-			}
-
-			/// <summary>
-			///  This rule checks
-			///  - the entire team to determine whether a subset of the team meets the rule, or 
-			///  - a list of Pokemon whose length is equal to the suggested number. For an
-			///    entire team, the condition must hold for at least one possible subset of
-			///    the team, but not necessarily for the entire team.
-			///  A subset rule is "number-dependent", that is, whether the condition is likely
-			///  to hold depends on the number of Pokemon in the subset.
-			/// </summary>
-			/// <example>
-			///  Example of a subset rule:
-			///  - The combined level of X Pokemon can't exceed Y.
-			/// </example>
-			/// <param name="rule"></param>
-			/// <returns>
-			/// </returns>
-			public IPokemonRuleSet addSubsetRule(IBattleTeamRestriction rule)
-			{
-				@teamRules.Add(rule);
-				return this;
-			}
-
-			/// <summary>
-			///  This rule checks either<para>
-			///  - the entire team to determine whether a subset of the team meets the rule, or </para>
-			///  - whether the entire team meets the rule. If the condition holds for the
-			///    entire team, the condition must also hold for any possible subset of the
-			///    team with the suggested number.
-			/// </summary>
-			/// <example>
-			///  Examples of team rules:
-			///  - No two Pokemon can be the same species.
-			///  - No two Pokemon can hold the same items.
-			/// </example>
-			/// <param name="rule"></param>
-			/// <returns></returns>
-			public IPokemonRuleSet addTeamRule(IBattleTeamRestriction rule)
-			{
-				@teamRules.Add(rule);
-				return this;
-			}
-
-			public IPokemonRuleSet clearPokemonRules()
-			{
-				@pokemonRules.Clear();
-				return this;
-			}
-
-			public IPokemonRuleSet clearTeamRules()
-			{
-				@teamRules.Clear();
-				return this;
-			}
-
-			public IPokemonRuleSet clearSubsetRules()
-			{
-				@subsetRules.Clear();
-				return this;
-			}
-
-			public bool isPokemonValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-			{
-				if (!pokemon.IsNotNullOrNone()) return false;
-				foreach (var rule in @pokemonRules)
-				{
-					if (!rule.isValid(pokemon))
-					{
-						return false;
-					}
-				}
-				return true;
-			}
-
-			public bool hasRegistrableTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] list)
-			{
-				if (list == null || list.Length < this.minTeamLength) return false;
-				Array.ForEach<PokemonEssentials.Interface.PokeBattle.IPokemon[]>(pbEachCombination(list, this.maxTeamLength), (comb) =>
-				{//PokemonEssentials.Interface.PokeBattle.IPokemon[] |comb|
-					if (canRegisterTeam(comb)) return true;
-				});
-				return false;
-			}
-
-			/// <summary>
-			///  Returns true if the team's length is greater or equal to the suggested number
-			///  and is 6 or less, the team as a whole meets the requirements of any team
-			///  rules, and at least one subset of the team meets the requirements of any
-			///  subset rules. Each Pokemon in the team must be valid.
-			/// </summary>
-			/// <param name="team"></param>
-			/// <returns></returns>
-			public bool canRegisterTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
-			{
-				if (team == null || team.Length < this.minTeamLength)
-				{
-					return false;
-				}
-				if (team.Length > this.maxTeamLength)
-				{
-					return false;
-				}
-				int teamNumber = Math.Min(this.maxLength, team.Length);
-				foreach (var pokemon in team)
-				{
-					if (!isPokemonValid(pokemon))
-					{
-						return false;
-					}
-				}
-				foreach (var rule in @teamRules)
-				{
-					if (!rule.isValid(team))
-					{
-						return false;
-					}
-				}
-				if (@subsetRules.Count > 0)
-				{
-					//pbEachCombination(team,teamNumber){|comb|
-					//   bool isValid=true;
-					//   foreach (var rule in @subsetRules) {
-					//     if (!rule.isValid(comb)) {
-					//       isValid=false;
-					//       break;
-					//     }
-					//   }
-					//   if (isValid) return true;
-					//}
-					return false;
-				}
-				return true;
-			}
-
-			/// <summary>
-			///  Returns true if the team's length is greater or equal to the suggested number
-			///  and at least one subset of the team meets the requirements of any team rules
-			///  and subset rules. Not all Pokemon in the team have to be valid.
-			/// </summary>
-			/// <param name="team"></param>
-			/// <returns></returns>
-			public bool hasValidTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
-			{
-				if (team == null || team.Length < this.minTeamLength)
-				{
-					return false;
-				}
-				int teamNumber = Math.Min(this.maxLength, team.Length);
-				List<PokemonEssentials.Interface.PokeBattle.IPokemon> validPokemon = new List<PokemonEssentials.Interface.PokeBattle.IPokemon>();
-				foreach (var pokemon in team)
-				{
-					if (isPokemonValid(pokemon))
-					{
-						validPokemon.Add(pokemon);
-					}
-				}
-				if (validPokemon.Count < teamNumber)
-				{
-					return false;
-				}
-				if (@teamRules.Count > 0)
-				{
-					//pbEachCombination(team,teamNumber){|comb|
-					//   if (isValid(comb)) {
-					//     return true;
-					//   }
-					//}
-					return false;
-				}
-				return true;
-			}
-
-			/// <summary>
-			///  Returns true if the team's length meets the subset length range requirements
-			///  and the team meets the requirements of any team rules and subset rules. Each
-			///  Pokemon in the team must be valid.
-			/// </summary>
-			/// <param name="team"></param>
-			/// <param name="error"></param>
-			/// <returns></returns>
-			public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team, List<string> error = null)
-			{
-				if (team.Length < this.minLength)
-				{
-					if (error != null && this.minLength == 1) error.Add(Game._INTL("Choose a Pokémon."));
-					if (error != null && this.minLength > 1) error.Add(Game._INTL("{1} Pokémon are needed.", this.minLength));
-					return false;
-				}
-				else if (team.Length > this.maxLength)
-				{
-					if (error != null) error.Add(Game._INTL("No more than {1} Pokémon may enter.", this.maxLength));
-					return false;
-				}
-				foreach (var pokemon in team)
-				{
-					if (!isPokemonValid(pokemon))
-					{
-						if (pokemon.IsNotNullOrNone())
-						{
-							if (error != null) error.Add(Game._INTL("This team is not allowed.", pokemon.Name));
-						}
-						else
-						{
-							if (error != null) error.Add(Game._INTL("{1} is not allowed.", pokemon.Name));
-						}
-						return false;
-					}
-				}
-				foreach (var rule in @teamRules)
-				{
-					if (!rule.isValid(team))
-					{
-						if (error != null) error.Add(rule.errorMessage);
-						return false;
-					}
-				}
-				foreach (var rule in @subsetRules)
-				{
-					if (!rule.isValid(team))
-					{
-						if (error != null) error.Add(rule.errorMessage);
-						return false;
-					}
-				}
-				return true;
-			}
-		}
-
-		public partial class BattleType : IBattleType
-		{
-			public virtual PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
-			{
-				return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.Battle(scene,
-				   trainer1[0].party, trainer2[0].party, trainer1, trainer2);
-			}
-		}
-
-		public partial class BattleTower : BattleType, PokemonEssentials.Interface.Battle.IBattleTower
-		{
-			public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
-			{
-				return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattle(scene,
-				   trainer1[0].party, trainer2[0].party, trainer1, trainer2);
-			}
-		}
-
-		public partial class BattlePalace : BattleType, PokemonEssentials.Interface.Battle.IBattlePalace
-		{
-			public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
-			{
-				return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattlePalace(scene,
-				   trainer1[0].party, trainer2[0].party, trainer1, trainer2);
-			}
-		}
-
-		public partial class BattleArena : BattleType, PokemonEssentials.Interface.Battle.IBattleArena
-		{
-			public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
-			{
-				return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattleArena(scene,
-				   trainer1[0].party, trainer2[0].party, trainer1, trainer2);
-			}
-		}
-
-		public abstract partial class BattleRule : IBattleRule
-		{
-			public const string SOULDEWCLAUSE = "souldewclause";
-			public const string SLEEPCLAUSE = "sleepclause";
-			public const string FREEZECLAUSE = "freezeclause";
-			public const string EVASIONCLAUSE = "evasionclause";
-			public const string OHKOCLAUSE = "ohkoclause";
-			public const string PERISHSONG = "perishsong";
-			public const string SELFKOCLAUSE = "selfkoclause";
-			public const string SELFDESTRUCTCLAUSE = "selfdestructclause";
-			public const string SONICBOOMCLAUSE = "sonicboomclause";
-			public const string MODIFIEDSLEEPCLAUSE = "modifiedsleepclause";
-			public const string SKILLSWAPCLAUSE = "skillswapclause";
-			public virtual void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { }
-		}
-
-		public partial class DoubleBattle : BattleRule, PokemonEssentials.Interface.Battle.IDoubleBattle
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle)
-			{
-				battle.doublebattle = battle.pbDoubleBattleAllowed();
-			}
-		}
-
-		public partial class SingleBattle : BattleRule, PokemonEssentials.Interface.Battle.ISingleBattle
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle)
-			{
-				battle.doublebattle = false;
-			}
-		}
-
-		public partial class SoulDewBattleClause : BattleRule, PokemonEssentials.Interface.Battle.ISoulDewBattleClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["souldewclause"] = true; }
-		}
-
-		public partial class SleepClause : BattleRule, PokemonEssentials.Interface.Battle.ISleepClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["sleepclause"] = true; }
-		}
-
-		public partial class FreezeClause : BattleRule, PokemonEssentials.Interface.Battle.IFreezeClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["freezeclause"] = true; }
-		}
-
-		public partial class EvasionClause : BattleRule, PokemonEssentials.Interface.Battle.IEvasionClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["evasionclause"] = true; }
-		}
-
-		public partial class OHKOClause : BattleRule, PokemonEssentials.Interface.Battle.IOHKOClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["ohkoclause"] = true; }
-		}
-
-		public partial class PerishSongClause : BattleRule, PokemonEssentials.Interface.Battle.IPerishSongClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["perishsong"] = true; }
-		}
-
-		public partial class SelfKOClause : BattleRule, PokemonEssentials.Interface.Battle.ISelfKOClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["selfkoclause"] = true; }
-		}
-
-		public partial class SelfdestructClause : BattleRule, PokemonEssentials.Interface.Battle.ISelfdestructClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["selfdestructclause"] = true; }
-		}
-
-		public partial class SonicBoomClause : BattleRule, PokemonEssentials.Interface.Battle.ISonicBoomClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["sonicboomclause"] = true; }
-		}
-
-		public partial class ModifiedSleepClause : BattleRule, PokemonEssentials.Interface.Battle.IModifiedSleepClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["modifiedsleepclause"] = true; }
-		}
-
-		public partial class SkillSwapClause : BattleRule, PokemonEssentials.Interface.Battle.ISkillSwapClause
-		{
-			public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules["skillswapclause"] = true; }
-		}
-
-		public partial class PokemonChallengeRules : PokemonEssentials.Interface.Battle.IPokemonChallengeRules
-		{
-			public IPokemonRuleSet ruleset { get; protected set; }
-			public IBattleType battletype { get; protected set; }
-			public ILevelAdjustment levelAdjustment { get; protected set; }
-			private IList<IBattleRule> battlerules;
-
-			public PokemonChallengeRules(IPokemonRuleSet ruleset = null)
-			{
-				@ruleset = ruleset != null ? ruleset : new PokemonRuleSet();
-				@battletype = new BattleTower();
-				@levelAdjustment = null;
-				@battlerules = new List<IBattleRule>();
-			}
-
-			public IPokemonChallengeRules copy()
-			{
-				PokemonChallengeRules ret = new PokemonChallengeRules(@ruleset.copy());
-				ret.setBattleType(@battletype);
-				ret.setLevelAdjustment(@levelAdjustment);
-				foreach (var rule in @battlerules)
-				{
-					ret.addBattleRule(rule);
-				}
-				return ret;
-			}
-
-			public int number
-			{
-				get
-				{
-					return this.ruleset.number;
-				}
-			}
-
-			public IPokemonChallengeRules setNumber(int number)
-			{
-				this.ruleset.setNumber(number);
-				return this;
-			}
-
-			public IPokemonChallengeRules setDoubleBattle(bool value)
-			{
-				if (value)
-				{
-					this.ruleset.setNumber(4);
-					this.addBattleRule(new DoubleBattle());
-				}
-				else
-				{
-					this.ruleset.setNumber(3);
-					this.addBattleRule(new SingleBattle());
-				}
-				return this;
-			}
-
-			public int?[][] adjustLevelsBilateral(PokemonEssentials.Interface.PokeBattle.IPokemon[] party1, PokemonEssentials.Interface.PokeBattle.IPokemon[] party2)
-			{
-				if (@levelAdjustment != null && @levelAdjustment.type == LevelAdjustment.BothTeams)
-				{
-					return @levelAdjustment.adjustLevels(party1, party2);
-				}
-				else
-				{
-					return null;
-				}
-			}
-
-			public void unadjustLevelsBilateral(PokemonEssentials.Interface.PokeBattle.IPokemon[] party1, PokemonEssentials.Interface.PokeBattle.IPokemon[] party2, int?[][] adjusts)
-			{
-				if (@levelAdjustment != null && adjusts != null && @levelAdjustment.type == LevelAdjustment.BothTeams)
-				{
-					@levelAdjustment.unadjustLevels(party1, party2, adjusts);
-				}
-			}
-
-			public int?[][] adjustLevels(PokemonEssentials.Interface.PokeBattle.IPokemon[] party1, PokemonEssentials.Interface.PokeBattle.IPokemon[] party2)
-			{
-				if (@levelAdjustment != null)
-				{
-					return @levelAdjustment.adjustLevels(party1, party2);
-				}
-				else
-				{
-					return null;
-				}
-			}
-
-			public void unadjustLevels(PokemonEssentials.Interface.PokeBattle.IPokemon[] party1, PokemonEssentials.Interface.PokeBattle.IPokemon[] party2, int?[][] adjusts)
-			{
-				if (@levelAdjustment != null && adjusts != null)
-				{
-					@levelAdjustment.unadjustLevels(party1, party2, adjusts);
-				}
-			}
-
-			public IPokemonChallengeRules addPokemonRule(IBattleRestriction rule)
-			{
-				this.ruleset.addPokemonRule(rule);
-				return this;
-			}
-
-			public IPokemonChallengeRules addLevelRule(int minLevel, int maxLevel, int totalLevel)
-			{
-				this.addPokemonRule(new MinimumLevelRestriction(minLevel));
-				this.addPokemonRule(new MaximumLevelRestriction(maxLevel));
-				this.addSubsetRule(new TotalLevelRestriction(totalLevel));
-				this.setLevelAdjustment(new TotalLevelAdjustment(minLevel, maxLevel, totalLevel));
-				return this;
-			}
-
-			public IPokemonChallengeRules addSubsetRule(IBattleTeamRestriction rule)
-			{
-				this.ruleset.addSubsetRule(rule);
-				return this;
-			}
-
-			public IPokemonChallengeRules addTeamRule(IBattleTeamRestriction rule)
-			{
-				this.ruleset.addTeamRule(rule);
-				return this;
-			}
-
-			public IPokemonChallengeRules addBattleRule(IBattleRule rule)
-			{
-				@battlerules.Add(rule);
-				return this;
-			}
-
-			public PokemonEssentials.Interface.PokeBattle.IBattle createBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
-			{
-				PokemonEssentials.Interface.PokeBattle.IBattle battle = @battletype.pbCreateBattle(scene, trainer1, trainer2);
-				foreach (var p in @battlerules)
-				{
-					p.setRule(battle);
-				}
-				return battle;
-			}
-
-			public IPokemonChallengeRules setRuleset(IPokemonRuleSet rule)
-			{
-				@ruleset = rule;
-				return this;
-			}
-
-			public IPokemonChallengeRules setBattleType(IBattleType rule)
-			{
-				@battletype = rule;
-				return this;
-			}
-
-			public IPokemonChallengeRules setLevelAdjustment(ILevelAdjustment rule)
-			{
-				@levelAdjustment = rule;
-				return this;
-			}
-		}
-
-		#region Generation IV Cups
-		// ##########################################
-		//  Generation IV Cups
-		// ##########################################
-		public partial class StandardRules : PokemonRuleSet, PokemonEssentials.Interface.Battle.IStandardRules
-		{
-			//public int number				{ get; protected set; }
-
-			public StandardRules(int number, int? level = null) : base(number)
-			{
-				//base.initialize(number);
-				addPokemonRule(new StandardRestriction());
-				addTeamRule(new SpeciesClause()); //addPokemonRule(new SpeciesClause());
-				addTeamRule(new ItemClause()); //addPokemonRule(new ItemClause());
-				if (level != null)
-				{
-					addPokemonRule(new MaximumLevelRestriction(level.Value));
-				}
-			}
-		}
-
-		public partial class StandardCup : StandardRules, PokemonEssentials.Interface.Battle.IStandardCup
-		{
-			public StandardCup() : base(3, 50)
-			{
-				//base.initialize(3,50);
-			}
-
-			public string name
-			{
-				get
-				{
-					return Game._INTL("STANDARD Cup");
-				}
-			}
-		}
-
-		public partial class DoubleCup : StandardRules, PokemonEssentials.Interface.Battle.IDoubleCup
-		{
-			public DoubleCup() : base(4, 50)
-			{
-				//base.initialize(4,50);
-			}
-
-			public string name
-			{
-				get
-				{
-					return Game._INTL("DOUBLE Cup");
-				}
-			}
-		}
-
-		public partial class FancyCup : PokemonRuleSet, PokemonEssentials.Interface.Battle.IFancyCup
-		{
-			public FancyCup() : base(3)
-			{
-				//base.initialize(3);
-				addPokemonRule(new StandardRestriction());
-				addPokemonRule(new MaximumLevelRestriction(30));
-				addSubsetRule(new TotalLevelRestriction(80));
-				addPokemonRule(new HeightRestriction(2));
-				addPokemonRule(new WeightRestriction(20));
-				addPokemonRule(new BabyRestriction());
-				addTeamRule(new SpeciesClause()); //addPokemonRule(new SpeciesClause());
-				addTeamRule(new ItemClause()); //addPokemonRule(new ItemClause());
-			}
-
-			public string name
-			{
-				get
-				{
-					return Game._INTL("FANCY Cup");
-				}
-			}
-		}
-
-		public partial class LittleCup : PokemonRuleSet, PokemonEssentials.Interface.Battle.ILittleCup
-		{
-			public LittleCup() : base(3)
-			{
-				//base.initialize(3);
-				addPokemonRule(new StandardRestriction());
-				addPokemonRule(new MaximumLevelRestriction(5));
-				addPokemonRule(new BabyRestriction());
-				addTeamRule(new SpeciesClause()); //addPokemonRule(new SpeciesClause());
-				addTeamRule(new ItemClause()); //addPokemonRule(new ItemClause());
-			}
-
-			public string name
-			{
-				get
-				{
-					return Game._INTL("LITTLE Cup");
-				}
-			}
-		}
-
-		public partial class LightCup : PokemonRuleSet, PokemonEssentials.Interface.Battle.ILightCup
-		{
-			public LightCup() : base(3)
-			{
-				//base.initialize(3);
-				addPokemonRule(new StandardRestriction());
-				addPokemonRule(new MaximumLevelRestriction(50));
-				addPokemonRule(new WeightRestriction(99));
-				addPokemonRule(new BabyRestriction());
-				addTeamRule(new SpeciesClause()); //addPokemonRule(new SpeciesClause());
-				addTeamRule(new ItemClause()); //addPokemonRule(new ItemClause());
-			}
-			public string name
-			{
-				get
-				{
-					return Game._INTL("LIGHT Cup");
-				}
-			}
-		}
-		#endregion
-
 		#region Stadium Cups
 		// ##########################################
 		//  Stadium Cups
@@ -1947,4 +363,1590 @@ namespace PokemonUnity
 		Otherwise, the attack on top of the list is chosen.*/
 		#endregion
 	}
+
+	#region Rules Class for Inheriting
+	public partial class LevelAdjustment : PokemonEssentials.Interface.Battle.ILevelAdjustment
+	{
+		public const int BothTeams = 0;
+		public const int EnemyTeam = 1;
+		public const int MyTeam = 2;
+		public const int BothTeamsDifferent = 3;
+		private int adjustment;
+
+		public virtual int type
+		{
+			get
+			{
+				return @adjustment;
+			}
+		}
+
+		public LevelAdjustment(int adjustment)
+		{
+			this.adjustment = adjustment;
+		}
+
+		//int[] PokemonEssentials.Interface.Battle.ILevelAdjustment.getNullAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
+		//{
+		//	return LevelAdjustment.getNullAdjustment(thisTeam, otherTeam);
+		//}
+
+		public static int[] getNullAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
+		{
+			int[] ret = new int[6];
+			for (int i = 0; i < thisTeam.Length; i++)
+			{
+				ret[i] = thisTeam[i].Level;
+			}
+			return ret;
+		}
+
+		public virtual int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
+		{
+			return LevelAdjustment.getNullAdjustment(thisTeam, otherTeam);
+		}
+
+		public int?[] getOldExp(PokemonEssentials.Interface.PokeBattle.IPokemon[] team1, PokemonEssentials.Interface.PokeBattle.IPokemon[] team2)
+		{
+			//List<int> ret=new List<int>();
+			int?[] ret = new int?[team1.Length];
+			for (int i = 0; i < team1.Length; i++)
+			{
+				//ret.Add(team1[i].exp);
+				//ret.Add(team1[i].Experience.Total);
+				if (team1[i].IsNotNullOrNone()) ret[i] = team1[i].Experience.Total;
+			}
+			//return ret.ToArray();
+			return ret;
+		}
+
+		public virtual void unadjustLevels(PokemonEssentials.Interface.PokeBattle.IPokemon[] team1, PokemonEssentials.Interface.PokeBattle.IPokemon[] team2, int?[][] adjustments)
+		{
+			for (int i = 0; i < team1.Length; i++)
+			{
+				int? exp = adjustments[0][i];
+				if (exp != null && team1[i].Experience.Total != exp)
+				{
+					team1[i].Exp = exp.Value;
+					team1[i].calcStats();
+				}
+			}
+			for (int i = 0; i < team2.Length; i++)
+			{
+				int? exp = adjustments[1][i];
+				if (exp != null && team2[i].Experience.Total != exp)
+				{
+					team2[i].Exp = exp.Value;
+					team2[i].calcStats();
+				}
+			}
+		}
+
+		public virtual int?[][] adjustLevels(PokemonEssentials.Interface.PokeBattle.IPokemon[] team1, PokemonEssentials.Interface.PokeBattle.IPokemon[] team2)
+		{
+			int[] adj1 = null;
+			int[] adj2 = null;
+			int?[][] ret = new int?[][] { getOldExp(team1, team2), getOldExp(team2, team1) };
+			if (@adjustment == BothTeams || @adjustment == MyTeam)
+			{
+				adj1 = getAdjustment(team1, team2);
+			}
+			else if (@adjustment == BothTeamsDifferent)
+			{
+				adj1 = getMyAdjustment(team1, team2);
+			}
+			if (@adjustment == BothTeams || @adjustment == EnemyTeam)
+			{
+				adj2 = getAdjustment(team2, team1);
+			}
+			else if (@adjustment == BothTeamsDifferent)
+			{
+				adj2 = getTheirAdjustment(team2, team1);
+			}
+			if (adj1 != null)
+			{
+				for (int i = 0; i < team1.Length; i++)
+				{
+					if (team1[i].Level != adj1[i])
+					{
+						//team1[i].Level=adj1[i];
+						team1[i].SetLevel((byte)adj1[i]);
+						team1[i].calcStats();
+					}
+				}
+			}
+			if (adj2 != null)
+			{
+				for (int i = 0; i < team2.Length; i++)
+				{
+					if (team2[i].Level != adj2[i])
+					{
+						//team2[i].Level=adj2[i];
+						team2[i].SetLevel((byte)adj2[i]);
+						team2[i].calcStats();
+					}
+				}
+			}
+			return ret;
+		}
+		public virtual int[] getMyAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] myTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] theirTeam)
+		{
+			return getNullAdjustment(myTeam, theirTeam);
+		}
+		public virtual int[] getTheirAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] theirTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] myTeam)
+		{
+			return getNullAdjustment(theirTeam, myTeam);
+		}
+	}
+
+	public partial class LevelBalanceAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.ILevelBalanceAdjustment
+	{
+		private int minLevel;
+		public LevelBalanceAdjustment(int minLevel) : base(LevelAdjustment.BothTeams)
+		{
+			//base.initialize(LevelAdjustment.BothTeams);
+			this.minLevel = minLevel;
+		}
+
+		public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
+		{
+			int[] ret = new int[6];
+			for (int i = 0; i < thisTeam.Length; i++)
+			{
+				ret[i] = Game.pbBalancedLevelFromBST(thisTeam[i].Species);
+			}
+			return ret;
+		}
+	}
+
+	public partial class EnemyLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.IEnemyLevelAdjustment
+	{
+		private int level;
+		public EnemyLevelAdjustment(int level) : base(LevelAdjustment.EnemyTeam)
+		{
+			//base.initialize(LevelAdjustment.EnemyTeam);
+			this.level = Math.Min(Math.Max(1, level), Core.MAXIMUMLEVEL);
+		}
+
+		public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
+		{
+			int[] ret = new int[6];
+			for (int i = 0; i < thisTeam.Length; i++)
+			{
+				ret[i] = @level;
+			}
+			return ret;
+		}
+	}
+
+	public partial class CombinedLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.ICombinedLevelAdjustment
+	{
+		private LevelAdjustment my;
+		private LevelAdjustment their;
+		public CombinedLevelAdjustment(LevelAdjustment my, LevelAdjustment their) : base(LevelAdjustment.BothTeamsDifferent)
+		{
+			//base.initialize(LevelAdjustment.BothTeamsDifferent);
+			this.my = my;
+			this.their = their;
+		}
+
+		public override int[] getMyAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] myTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] theirTeam)
+		{
+			return @my != null ? @my.getAdjustment(myTeam, theirTeam) :
+				LevelAdjustment.getNullAdjustment(myTeam, theirTeam);
+		}
+
+		public override int[] getTheirAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] theirTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] myTeam)
+		{
+			return @their != null ? @their.getAdjustment(theirTeam, myTeam) :
+				LevelAdjustment.getNullAdjustment(theirTeam, myTeam);
+		}
+	}
+
+	public partial class SinglePlayerCappedLevelAdjustment : CombinedLevelAdjustment, PokemonEssentials.Interface.Battle.ISinglePlayerCappedLevelAdjustment
+	{
+		public SinglePlayerCappedLevelAdjustment(int level) : base(new CappedLevelAdjustment(level), new FixedLevelAdjustment(level))
+		{
+			//base.initialize(new CappedLevelAdjustment(level),new FixedLevelAdjustment(level));
+		}
+	}
+
+	public partial class CappedLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.ICappedLevelAdjustment
+	{
+		private int level;
+		public CappedLevelAdjustment(int level) : base(LevelAdjustment.BothTeams)
+		{
+			//base.initialize(LevelAdjustment.BothTeams);
+			this.level = Math.Min(Math.Max(1, level), Core.MAXIMUMLEVEL);
+		}
+
+		public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
+		{
+			int[] ret = new int[6];
+			for (int i = 0; i < thisTeam.Length; i++)
+			{
+				ret[i] = Math.Min(thisTeam[i].Level, @level);
+			}
+			return ret;
+		}
+	}
+
+	public partial class FixedLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.IFixedLevelAdjustment
+	{
+		private int level;
+		public FixedLevelAdjustment(int level) : base(LevelAdjustment.BothTeams)
+		{
+			//base.initialize(LevelAdjustment.BothTeams);
+			this.level = Math.Min(Math.Max(1, level), Core.MAXIMUMLEVEL);
+		}
+
+		public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
+		{
+			int[] ret = new int[6];
+			for (int i = 0; i < thisTeam.Length; i++)
+			{
+				ret[i] = @level;
+			}
+			return ret;
+		}
+	}
+
+	public partial class TotalLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.ITotalLevelAdjustment
+	{
+		private int minLevel;
+		private int maxLevel;
+		private int totalLevel;
+		public TotalLevelAdjustment(int minLevel, int maxLevel, int totalLevel) : base(LevelAdjustment.EnemyTeam)
+		{
+			//base.initialize(LevelAdjustment.EnemyTeam);
+			this.minLevel = Math.Min(Math.Max(1, minLevel), Core.MAXIMUMLEVEL);
+			this.maxLevel = Math.Min(Math.Max(1, maxLevel), Core.MAXIMUMLEVEL);
+			this.totalLevel = totalLevel;
+		}
+
+		public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
+		{
+			int[] ret = new int[6];
+			int total = 0;
+			for (int i = 0; i < thisTeam.Length; i++)
+			{
+				ret[i] = @minLevel;
+				total += @minLevel;
+			}
+			do //;loop
+			{
+				bool work = false;
+				for (int i = 0; i < thisTeam.Length; i++)
+				{
+					if (ret[i] >= @maxLevel || total >= @totalLevel)
+					{
+						continue;
+					}
+					ret[i] += 1;
+					total += 1;
+					work = true;
+				}
+				if (!work) break;
+			} while (true);
+			return ret;
+		}
+	}
+
+	public partial class OpenLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.IOpenLevelAdjustment
+	{
+		private int minLevel;
+		public OpenLevelAdjustment(int minLevel = 1) : base(LevelAdjustment.EnemyTeam)
+		{
+			//base.initialize(LevelAdjustment.EnemyTeam);
+			this.minLevel = minLevel;
+		}
+
+		public override int[] getAdjustment(PokemonEssentials.Interface.PokeBattle.IPokemon[] thisTeam, PokemonEssentials.Interface.PokeBattle.IPokemon[] otherTeam)
+		{
+			int maxLevel = 1;
+			for (int i = 0; i < otherTeam.Length; i++)
+			{
+				int level = otherTeam[i].Level;
+				if (maxLevel < level) maxLevel = level;
+			}
+			if (maxLevel < @minLevel) maxLevel = @minLevel;
+			int[] ret = new int[6];
+			for (int i = 0; i < thisTeam.Length; i++)
+			{
+				ret[i] = maxLevel;
+			}
+			return ret;
+		}
+	}
+
+	public partial class NonEggRestriction : PokemonEssentials.Interface.Battle.IBattleRestriction, PokemonEssentials.Interface.Battle.INonEggRestriction
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			return pokemon != null && !pokemon.isEgg;
+		}
+	}
+
+	public partial class AblePokemonRestriction : PokemonEssentials.Interface.Battle.IBattleRestriction, PokemonEssentials.Interface.Battle.IAblePokemonRestriction
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			return pokemon != null && !pokemon.isEgg && pokemon.HP > 0;
+		}
+	}
+
+	public partial class SpeciesRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.ISpeciesRestriction
+	{
+		private Pokemons[] specieslist;
+		public SpeciesRestriction(params Pokemons[] specieslist)
+		{
+			this.specieslist = specieslist;
+		}
+
+		public bool isSpecies(Pokemons species, Pokemons[] specieslist)
+		{
+			foreach (var s in specieslist)
+			{
+				if (species == s) return true;
+			}
+			return false;
+		}
+
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			int count = 0;
+			if (isSpecies(pokemon.Species, @specieslist))
+			{
+				count += 1;
+			}
+			return count != 0;
+		}
+	}
+
+	public partial class BannedSpeciesRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IBannedSpeciesRestriction
+	{
+		private Pokemons[] specieslist;
+		public BannedSpeciesRestriction(params Pokemons[] specieslist)
+		{
+			this.specieslist = specieslist;
+		}
+
+		public bool isSpecies(Pokemons species, Pokemons[] specieslist)
+		{
+			foreach (var s in specieslist)
+			{
+				if (species == s) return true;
+			}
+			return false;
+		}
+
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			int count = 0;
+			if (isSpecies(pokemon.Species, @specieslist))
+			{
+				count += 1;
+			}
+			return count == 0;
+		}
+	}
+
+	public partial class BannedItemRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IBannedItemRestriction
+	{
+		private Items[] specieslist;
+		public BannedItemRestriction(params Items[] specieslist)
+		{
+			this.specieslist = specieslist;
+		}
+
+		//public bool isSpecies (Pokemons species,Pokemons[] specieslist) {
+		public bool isSpecies(Items species, Items[] specieslist)
+		{
+			foreach (var s in specieslist)
+			{
+				if (species == s) return true;
+			}
+			return false;
+		}
+
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			int count = 0;
+			if (pokemon.Item != 0 && isSpecies(pokemon.Item, @specieslist))
+			{
+				count += 1;
+			}
+			return count == 0;
+		}
+	}
+
+	public partial class RestrictedSpeciesRestriction : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.IRestrictedSpeciesRestriction
+	{
+		string IBattleTeamRestriction.errorMessage { get; }
+		private int maxValue;
+		private Pokemons[] specieslist;
+		public RestrictedSpeciesRestriction(int maxValue, params Pokemons[] specieslist)
+		{
+			this.specieslist = specieslist;
+			this.maxValue = maxValue;
+		}
+
+		public bool isSpecies(Pokemons species, Pokemons[] specieslist)
+		{
+			foreach (var s in specieslist)
+			{
+				if (species == s) return true;
+			}
+			return false;
+		}
+
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		{
+			int count = 0;
+			for (int i = 0; i < team.Length; i++)
+			{
+				if (isSpecies(team[i].Species, @specieslist))
+				{
+					count += 1;
+				}
+			}
+			return count <= @maxValue;
+		}
+	}
+
+	public partial class RestrictedSpeciesTeamRestriction : RestrictedSpeciesRestriction, PokemonEssentials.Interface.Battle.IRestrictedSpeciesTeamRestriction
+	{
+		public RestrictedSpeciesTeamRestriction(params Pokemons[] specieslist) : base(4, specieslist)
+		{
+			//base.initialize(4,*specieslist);
+		}
+	}
+
+	public partial class RestrictedSpeciesSubsetRestriction : RestrictedSpeciesRestriction, PokemonEssentials.Interface.Battle.IRestrictedSpeciesSubsetRestriction
+	{
+		public RestrictedSpeciesSubsetRestriction(params Pokemons[] specieslist) : base(2, specieslist)
+		{
+			//base.initialize(2,*specieslist);
+		}
+	}
+
+	public partial class StandardRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IStandardRestriction
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			if (pokemon == null || pokemon.isEgg) return false;
+			//dexdata=pbOpenDexData();
+			//pbDexDataOffset(dexdata,pokemon.Species,10);
+			int basestatsum = PokemonData[pokemon.Species].BaseStatsHP; //dexdata.fgetb;
+			basestatsum += PokemonData[pokemon.Species].BaseStatsATK; //dexdata.fgetb;
+			basestatsum += PokemonData[pokemon.Species].BaseStatsDEF; //dexdata.fgetb;
+			basestatsum += PokemonData[pokemon.Species].BaseStatsSPE; //dexdata.fgetb;
+			basestatsum += PokemonData[pokemon.Species].BaseStatsSPD; //dexdata.fgetb;
+			basestatsum += PokemonData[pokemon.Species].BaseStatsSPA; //dexdata.fgetb;
+			//pbDexDataOffset(dexdata,pokemon.Species,2);
+			Abilities ability1 = PokemonData[pokemon.Species].Ability[0]; //dexdata.fgetw;
+			Abilities ability2 = PokemonData[pokemon.Species].Ability[1]; //dexdata.fgetw;
+			//dexdata.close();
+			//  Species with disadvantageous abilities are not banned
+			if (ability1 == Abilities.TRUANT ||
+				ability2 == Abilities.SLOW_START)
+			{
+				return true;
+			}
+			//  Certain named species are banned
+			Pokemons[] blacklist = new Pokemons[] { Pokemons.WYNAUT, Pokemons.WOBBUFFET };
+			foreach (var i in blacklist)
+			{
+				if (pokemon.Species == i) return false;
+			}
+			//  Certain named species are not banned
+			Pokemons[] whitelist = new Pokemons[] { Pokemons.DRAGONITE, Pokemons.SALAMENCE, Pokemons.TYRANITAR };
+			foreach (Pokemons i in whitelist)
+			{
+				if (pokemon.Species == i) return true;
+			}
+			//  Species with total base stat 600 or more are banned
+			if (basestatsum >= 600)
+			{
+				return false;
+			}
+			return true;
+		}
+	}
+
+	public partial class LevelRestriction : PokemonEssentials.Interface.Battle.ILevelRestriction { }
+
+	public partial class MinimumLevelRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IMinimumLevelRestriction
+	{
+		public int level { get; protected set; }
+
+		public MinimumLevelRestriction(int minLevel)
+		{
+			@level = minLevel;
+		}
+
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			return pokemon.Level >= @level;
+		}
+	}
+
+	public partial class MaximumLevelRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IMaximumLevelRestriction
+	{
+		public int level { get; protected set; }
+
+		public MaximumLevelRestriction(int maxLevel)
+		{
+			@level = maxLevel;
+		}
+
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			return pokemon.Level <= @level;
+		}
+	}
+
+	public partial class HeightRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IHeightRestriction
+	{
+		private int level;
+		public HeightRestriction(int maxHeightInMeters)
+		{
+			@level = maxHeightInMeters;
+		}
+
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			return !Game.pbTooTall(pokemon, @level);
+		}
+	}
+
+	public partial class WeightRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IWeightRestriction
+	{
+		private int level;
+		public WeightRestriction(int maxWeightInKg)
+		{
+			@level = maxWeightInKg;
+		}
+
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			return !Game.pbTooHeavy(pokemon, @level);
+		}
+	}
+
+	public partial class SoulDewClause : IBattleRestriction, PokemonEssentials.Interface.Battle.ISoulDewClause
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			return pokemon.Item != Items.SOUL_DEW;
+		}
+	}
+
+	public partial class ItemsDisallowedClause : IBattleRestriction, PokemonEssentials.Interface.Battle.IItemsDisallowedClause
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			return !pokemon.hasItem();
+		}
+	}
+
+	public partial class NegativeExtendedGameClause : IBattleRestriction, PokemonEssentials.Interface.Battle.INegativeExtendedGameClause
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			if (pokemon.Species == Pokemons.ARCEUS) return false;
+			if (pokemon.Item == Items.MICLE_BERRY) return false;
+			if (pokemon.Item == Items.CUSTAP_BERRY) return false;
+			if (pokemon.Item == Items.JABOCA_BERRY) return false;
+			if (pokemon.Item == Items.ROWAP_BERRY) return false;
+			return true;
+		}
+	}
+
+	public partial class TotalLevelRestriction : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ITotalLevelRestriction
+	{
+		public int level { get; protected set; }
+
+		public TotalLevelRestriction(int level)
+		{
+			this.level = level;
+		}
+
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		{
+			int totalLevel = 0;
+			for (int i = 0; i < team.Length - 1; i++)
+			{
+				if (team[i].Species == 0) continue;
+				totalLevel += team[i].Level;
+			}
+			return (totalLevel <= @level);
+		}
+
+		public string errorMessage
+		{
+			get
+			{
+				return string.Format("The combined levels exceed {0}.", @level);
+			}
+		}
+	}
+
+	public partial class SameSpeciesClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ISameSpeciesClause
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		{
+			Pokemons species = 0;
+			for (int i = 0; i < team.Length - 1; i++)
+			{
+				if (team[i].Species == 0) continue;
+				if (species == 0)
+				{
+					species = team[i].Species;
+				}
+				else
+				{
+					if (team[i].Species != species) return false;
+				}
+			}
+			return true;
+		}
+
+		public string errorMessage
+		{
+			get
+			{
+				return Game._INTL("Pokémon can't be the same.");
+			}
+		}
+	}
+
+	public partial class SpeciesClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ISpeciesClause
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		{
+			for (int i = 0; i < team.Length - 1; i++)
+			{
+				if (team[i].Species == 0) continue;
+				for (int j = i + 1; j < team.Length; j++)
+				{
+					if (team[i].Species == team[j].Species) return false;
+				}
+			}
+			return true;
+		}
+
+		public string errorMessage
+		{
+			get
+			{
+				return Game._INTL("Pokémon can't be the same.");
+			}
+		}
+	}
+
+	//public static Pokemons[] babySpeciesData = {}
+	//public static Pokemons[] canEvolve       = {}
+
+	public partial class BabyRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IBabyRestriction
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			//baby=babySpeciesData[pokemon.Species] != null ? babySpeciesData[pokemon.Species] :
+			//   (babySpeciesData[pokemon.Species]=pbGetBabySpecies(pokemon.Species));
+			//return baby==pokemon.Species;
+			return Game.PokemonData[pokemon.Species].IsBaby;
+		}
+	}
+
+	public partial class UnevolvedFormRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.IUnevolvedFormRestriction
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			//baby=$babySpeciesData[pokemon.Species] ? $babySpeciesData[pokemon.Species] :
+			//   ($babySpeciesData[pokemon.Species]=pbGetBabySpecies(pokemon.Species))
+			//if (baby!=pokemon.Species) return false;
+			if (!Game.PokemonData[pokemon.Species].IsBaby) return false;
+			//bool canEvolve=(canEvolve[pokemon.Species]!=null) ? canEvolve[pokemon.Species] :
+			//   (canEvolve[pokemon.Species]=(pbGetEvolvedFormData(pokemon.Species).Length!=0));
+			bool canEvolve = Game.PokemonEvolutionsData[pokemon.Species].Length != 0;
+			if (!canEvolve) return false;
+			return true;
+		}
+	}
+
+	public partial class LittleCupRestriction : IBattleRestriction, PokemonEssentials.Interface.Battle.ILittleCupRestriction
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			if (pokemon.Item == Items.BERRY_JUICE) return false;
+			if (pokemon.Item == Items.DEEP_SEA_TOOTH) return false;
+			if (pokemon.hasMove(Moves.SONIC_BOOM)) return false;
+			if (pokemon.hasMove(Moves.DRAGON_RAGE)) return false;
+			if (pokemon.Species == Pokemons.SCYTHER) return false;
+			if (pokemon.Species == Pokemons.SNEASEL) return false;
+			if (pokemon.Species == Pokemons.MEDITITE) return false;
+			if (pokemon.Species == Pokemons.YANMA) return false;
+			if (pokemon.Species == Pokemons.TANGELA) return false;
+			if (pokemon.Species == Pokemons.MURKROW) return false;
+			return true;
+		}
+	}
+
+	public partial class ItemClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.IItemClause
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		{
+			for (int i = 0; i < team.Length - 1; i++)
+			{
+				if (!team[i].hasItem()) continue;
+				for (int j = i + 1; j < team.Length; j++)
+				{
+					if (team[i].Item == team[j].Item) return false;
+				}
+			}
+			return true;
+		}
+
+		public string errorMessage
+		{
+			get
+			{
+				return Game._INTL("No identical hold items.");
+			}
+		}
+	}
+
+	public partial class NicknameChecker //: PokemonEssentials.Interface.Battle.INicknameChecker
+	{
+		public static IDictionary<Pokemons, string> names = new Dictionary<Pokemons, string>();
+		public static int namesMaxValue = 0;
+
+		public static string getName(Pokemons species)
+		{
+			string n = names[species];
+			if (n != null) return n;
+			n = species.ToString(TextScripts.Name);
+			names[species] = n.ToUpper(); //.upcase;
+			return n;
+		}
+
+		public static bool check(string name, Pokemons species)
+		{
+			name = name.ToUpper(); //.upcase;
+			if (name == getName(species)) return true;
+			if (@names.Values.Contains(name))
+			{
+				return false;
+			}
+			//foreach (var i in @@namesMaxValue..PBSpecies.maxValue) {
+			foreach (Pokemons i in PokemonData.Keys)
+			{
+				if (i != species)
+				{
+					string n = getName(i);
+					if (n == name) return false;
+				}
+			}
+			return true;
+		}
+	}
+
+	/// <summary>
+	/// No two Pokemon can have the same nickname.
+	/// No nickname can be the same as the (real) name of another Pokemon character.
+	/// </summary>
+	public partial class NicknameClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.INicknameClause
+	{
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		{
+			for (int i = 0; i < team.Length - 1; i++)
+			{
+				for (int j = i + 1; j < team.Length; j++)
+				{
+					if (team[i].Name == team[j].Name) return false;
+					if (!NicknameChecker.check(team[i].Name, team[i].Species)) return false;
+				}
+			}
+			return true;
+		}
+
+		public string errorMessage
+		{
+			get
+			{
+				return Game._INTL("No identical nicknames.");
+			}
+		}
+	}
+
+	public partial class PokemonRuleSet : PokemonEssentials.Interface.Battle.IPokemonRuleSet
+	{
+		public int minTeamLength
+		{
+			get
+			{
+				return Math.Min(1, this.minLength);
+			}
+		}
+
+		public int maxTeamLength
+		{
+			get
+			{
+				return Math.Max(6, this.maxLength);
+			}
+		}
+
+		public int minLength
+		{
+			get
+			{
+				return _minLength.HasValue ? _minLength.Value : this.maxLength;
+			}
+		}
+
+		public int maxLength
+		{
+			get
+			{
+				return @number < 0 ? 6 : @number;
+			}
+		}
+
+		public int number
+		{
+			get
+			{
+				return _maxLength;
+			}
+		}
+		private int _maxLength;
+		private int? _minLength;
+		private List<IBattleRestriction> pokemonRules;
+		private List<IBattleTeamRestriction> teamRules;
+		private List<IBattleTeamRestriction> subsetRules;
+
+		public PokemonRuleSet(int number = 0)
+		{
+			@pokemonRules = new List<IBattleRestriction>();
+			@teamRules = new List<IBattleTeamRestriction>();
+			@subsetRules = new List<IBattleTeamRestriction>();
+			_minLength = 1;
+			_maxLength = number <= 0 ? GameData.Features.LimitPokemonPartySize : number;
+		}
+
+		public IPokemonRuleSet copy()
+		{
+			IPokemonRuleSet ret = new PokemonRuleSet(@number);
+			foreach (var rule in @pokemonRules)
+			{
+				ret.addPokemonRule(rule);
+			}
+			foreach (var rule in @teamRules)
+			{
+				ret.addTeamRule(rule);
+			}
+			foreach (var rule in @subsetRules)
+			{
+				ret.addSubsetRule(rule);
+			}
+			return ret;
+		}
+
+		/// <summary>
+		/// Returns the length of a valid subset of a Pokemon team.
+		/// </summary>
+		public int suggestedNumber
+		{
+			get
+			{
+				return this.maxLength;
+			}
+		}
+
+		/// <summary>
+		/// Returns a valid level to assign to each member of a valid Pokemon team.
+		/// </summary>
+		/// <returns></returns>
+		public int suggestedLevel
+		{ get {  
+			int minLevel = 1;
+			int maxLevel = Core.MAXIMUMLEVEL;
+			int num = this.suggestedNumber;
+			foreach (var rule in @pokemonRules)
+			{
+				if (rule is MinimumLevelRestriction r1)
+				{
+					minLevel = r1.level; //rule.level;
+				}
+				else if (rule is MaximumLevelRestriction r2)
+				{
+					maxLevel = r2.level; //rule.level;
+				}
+			}
+			int totalLevel = maxLevel * num;
+			foreach (var rule in @subsetRules)
+			{
+				if (rule is TotalLevelRestriction r)
+				{
+					totalLevel = r.level; //rule.level;
+				}
+			}
+			if (totalLevel >= maxLevel * num)
+			{
+				return Math.Max(maxLevel, minLevel);
+			}
+			else
+			{
+				return Math.Max((totalLevel / this.suggestedNumber), minLevel);
+			}
+		} }
+
+		public IPokemonRuleSet setNumberRange(int minValue, int maxValue)
+		{
+			_minLength = Math.Max(1, minValue);
+			_maxLength = Math.Min(maxValue, 6);
+			return this;
+		}
+
+		public IPokemonRuleSet setNumber(int value)
+		{
+			return setNumberRange(value, value);
+		}
+
+		public IPokemonRuleSet addPokemonRule(IBattleRestriction rule)
+		{
+			@pokemonRules.Add(rule);
+			return this;
+		}
+
+		/// <summary>
+		///  This rule checks
+		///  - the entire team to determine whether a subset of the team meets the rule, or 
+		///  - a list of Pokemon whose length is equal to the suggested number. For an
+		///    entire team, the condition must hold for at least one possible subset of
+		///    the team, but not necessarily for the entire team.
+		///  A subset rule is "number-dependent", that is, whether the condition is likely
+		///  to hold depends on the number of Pokemon in the subset.
+		/// </summary>
+		/// <example>
+		///  Example of a subset rule:
+		///  - The combined level of X Pokemon can't exceed Y.
+		/// </example>
+		/// <param name="rule"></param>
+		/// <returns>
+		/// </returns>
+		public IPokemonRuleSet addSubsetRule(IBattleTeamRestriction rule)
+		{
+			@teamRules.Add(rule);
+			return this;
+		}
+
+		/// <summary>
+		///  This rule checks either<para>
+		///  - the entire team to determine whether a subset of the team meets the rule, or </para>
+		///  - whether the entire team meets the rule. If the condition holds for the
+		///    entire team, the condition must also hold for any possible subset of the
+		///    team with the suggested number.
+		/// </summary>
+		/// <example>
+		///  Examples of team rules:
+		///  - No two Pokemon can be the same species.
+		///  - No two Pokemon can hold the same items.
+		/// </example>
+		/// <param name="rule"></param>
+		/// <returns></returns>
+		public IPokemonRuleSet addTeamRule(IBattleTeamRestriction rule)
+		{
+			@teamRules.Add(rule);
+			return this;
+		}
+
+		public IPokemonRuleSet clearPokemonRules()
+		{
+			@pokemonRules.Clear();
+			return this;
+		}
+
+		public IPokemonRuleSet clearTeamRules()
+		{
+			@teamRules.Clear();
+			return this;
+		}
+
+		public IPokemonRuleSet clearSubsetRules()
+		{
+			@subsetRules.Clear();
+			return this;
+		}
+
+		public bool isPokemonValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
+		{
+			if (!pokemon.IsNotNullOrNone()) return false;
+			foreach (var rule in @pokemonRules)
+			{
+				if (!rule.isValid(pokemon))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		public bool hasRegistrableTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] list)
+		{
+			if (list == null || list.Length < this.minTeamLength) return false;
+			Array.ForEach<PokemonEssentials.Interface.PokeBattle.IPokemon[]>(pbEachCombination(list, this.maxTeamLength), (comb) =>
+			{//PokemonEssentials.Interface.PokeBattle.IPokemon[] |comb|
+				if (canRegisterTeam(comb)) return true;
+			});
+			return false;
+		}
+
+		/// <summary>
+		///  Returns true if the team's length is greater or equal to the suggested number
+		///  and is 6 or less, the team as a whole meets the requirements of any team
+		///  rules, and at least one subset of the team meets the requirements of any
+		///  subset rules. Each Pokemon in the team must be valid.
+		/// </summary>
+		/// <param name="team"></param>
+		/// <returns></returns>
+		public bool canRegisterTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		{
+			if (team == null || team.Length < this.minTeamLength)
+			{
+				return false;
+			}
+			if (team.Length > this.maxTeamLength)
+			{
+				return false;
+			}
+			int teamNumber = Math.Min(this.maxLength, team.Length);
+			foreach (var pokemon in team)
+			{
+				if (!isPokemonValid(pokemon))
+				{
+					return false;
+				}
+			}
+			foreach (var rule in @teamRules)
+			{
+				if (!rule.isValid(team))
+				{
+					return false;
+				}
+			}
+			if (@subsetRules.Count > 0)
+			{
+				//pbEachCombination(team,teamNumber){|comb|
+				//   bool isValid=true;
+				//   foreach (var rule in @subsetRules) {
+				//     if (!rule.isValid(comb)) {
+				//       isValid=false;
+				//       break;
+				//     }
+				//   }
+				//   if (isValid) return true;
+				//}
+				return false;
+			}
+			return true;
+		}
+
+		/// <summary>
+		///  Returns true if the team's length is greater or equal to the suggested number
+		///  and at least one subset of the team meets the requirements of any team rules
+		///  and subset rules. Not all Pokemon in the team have to be valid.
+		/// </summary>
+		/// <param name="team"></param>
+		/// <returns></returns>
+		public bool hasValidTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		{
+			if (team == null || team.Length < this.minTeamLength)
+			{
+				return false;
+			}
+			int teamNumber = Math.Min(this.maxLength, team.Length);
+			List<PokemonEssentials.Interface.PokeBattle.IPokemon> validPokemon = new List<PokemonEssentials.Interface.PokeBattle.IPokemon>();
+			foreach (var pokemon in team)
+			{
+				if (isPokemonValid(pokemon))
+				{
+					validPokemon.Add(pokemon);
+				}
+			}
+			if (validPokemon.Count < teamNumber)
+			{
+				return false;
+			}
+			if (@teamRules.Count > 0)
+			{
+				//pbEachCombination(team,teamNumber){|comb|
+				//   if (isValid(comb)) {
+				//     return true;
+				//   }
+				//}
+				return false;
+			}
+			return true;
+		}
+
+		/// <summary>
+		///  Returns true if the team's length meets the subset length range requirements
+		///  and the team meets the requirements of any team rules and subset rules. Each
+		///  Pokemon in the team must be valid.
+		/// </summary>
+		/// <param name="team"></param>
+		/// <param name="error"></param>
+		/// <returns></returns>
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team, List<string> error = null)
+		{
+			if (team.Length < this.minLength)
+			{
+				if (error != null && this.minLength == 1) error.Add(Game._INTL("Choose a Pokémon."));
+				if (error != null && this.minLength > 1) error.Add(Game._INTL("{1} Pokémon are needed.", this.minLength));
+				return false;
+			}
+			else if (team.Length > this.maxLength)
+			{
+				if (error != null) error.Add(Game._INTL("No more than {1} Pokémon may enter.", this.maxLength));
+				return false;
+			}
+			foreach (var pokemon in team)
+			{
+				if (!isPokemonValid(pokemon))
+				{
+					if (pokemon.IsNotNullOrNone())
+					{
+						if (error != null) error.Add(Game._INTL("This team is not allowed.", pokemon.Name));
+					}
+					else
+					{
+						if (error != null) error.Add(Game._INTL("{1} is not allowed.", pokemon.Name));
+					}
+					return false;
+				}
+			}
+			foreach (var rule in @teamRules)
+			{
+				if (!rule.isValid(team))
+				{
+					if (error != null) error.Add(rule.errorMessage);
+					return false;
+				}
+			}
+			foreach (var rule in @subsetRules)
+			{
+				if (!rule.isValid(team))
+				{
+					if (error != null) error.Add(rule.errorMessage);
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+
+	public partial class BattleType : IBattleType
+	{
+		public virtual PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		{
+			return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.Battle(scene,
+				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+		}
+	}
+
+	public partial class BattleTower : BattleType, PokemonEssentials.Interface.Battle.IBattleTower
+	{
+		public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		{
+			return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattle(scene,
+				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+		}
+	}
+
+	public partial class BattlePalace : BattleType, PokemonEssentials.Interface.Battle.IBattlePalace
+	{
+		public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		{
+			return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattlePalace(scene,
+				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+		}
+	}
+
+	public partial class BattleArena : BattleType, PokemonEssentials.Interface.Battle.IBattleArena
+	{
+		public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		{
+			return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattleArena(scene,
+				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+		}
+	}
+
+	public abstract partial class BattleRule : IBattleRule
+	{
+		public const string SOULDEWCLAUSE = "souldewclause";
+		public const string SLEEPCLAUSE = "sleepclause";
+		public const string FREEZECLAUSE = "freezeclause";
+		public const string EVASIONCLAUSE = "evasionclause";
+		public const string OHKOCLAUSE = "ohkoclause";
+		public const string PERISHSONG = "perishsong";
+		public const string SELFKOCLAUSE = "selfkoclause";
+		public const string SELFDESTRUCTCLAUSE = "selfdestructclause";
+		public const string SONICBOOMCLAUSE = "sonicboomclause";
+		public const string MODIFIEDSLEEPCLAUSE = "modifiedsleepclause";
+		public const string SKILLSWAPCLAUSE = "skillswapclause";
+		public virtual void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { }
+	}
+
+	public partial class DoubleBattle : BattleRule, PokemonEssentials.Interface.Battle.IDoubleBattle
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle)
+		{
+			battle.doublebattle = battle.pbDoubleBattleAllowed();
+		}
+	}
+
+	public partial class SingleBattle : BattleRule, PokemonEssentials.Interface.Battle.ISingleBattle
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle)
+		{
+			battle.doublebattle = false;
+		}
+	}
+
+	public partial class SoulDewBattleClause : BattleRule, PokemonEssentials.Interface.Battle.ISoulDewBattleClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.SOULDEWCLAUSE] = true; }
+	}
+
+	public partial class SleepClause : BattleRule, PokemonEssentials.Interface.Battle.ISleepClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.SLEEPCLAUSE] = true; }
+	}
+
+	public partial class FreezeClause : BattleRule, PokemonEssentials.Interface.Battle.IFreezeClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.FREEZECLAUSE] = true; }
+	}
+
+	public partial class EvasionClause : BattleRule, PokemonEssentials.Interface.Battle.IEvasionClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.EVASIONCLAUSE] = true; }
+	}
+
+	public partial class OHKOClause : BattleRule, PokemonEssentials.Interface.Battle.IOHKOClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.OHKOCLAUSE] = true; }
+	}
+
+	public partial class PerishSongClause : BattleRule, PokemonEssentials.Interface.Battle.IPerishSongClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.PERISHSONG] = true; }
+	}
+
+	public partial class SelfKOClause : BattleRule, PokemonEssentials.Interface.Battle.ISelfKOClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.SELFKOCLAUSE] = true; }
+	}
+
+	public partial class SelfdestructClause : BattleRule, PokemonEssentials.Interface.Battle.ISelfdestructClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.SELFDESTRUCTCLAUSE] = true; }
+	}
+
+	public partial class SonicBoomClause : BattleRule, PokemonEssentials.Interface.Battle.ISonicBoomClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.SONICBOOMCLAUSE] = true; }
+	}
+
+	public partial class ModifiedSleepClause : BattleRule, PokemonEssentials.Interface.Battle.IModifiedSleepClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.MODIFIEDSLEEPCLAUSE] = true; }
+	}
+
+	public partial class SkillSwapClause : BattleRule, PokemonEssentials.Interface.Battle.ISkillSwapClause
+	{
+		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { battle.rules[BattleRule.SKILLSWAPCLAUSE] = true; }
+	}
+
+	public partial class PokemonChallengeRules : PokemonEssentials.Interface.Battle.IPokemonChallengeRules
+	{
+		public IPokemonRuleSet ruleset { get; protected set; }
+		public IBattleType battletype { get; protected set; }
+		public ILevelAdjustment levelAdjustment { get; protected set; }
+		private IList<IBattleRule> battlerules;
+
+		public PokemonChallengeRules(IPokemonRuleSet ruleset = null)
+		{
+			@ruleset = ruleset != null ? ruleset : new PokemonRuleSet();
+			@battletype = new BattleTower();
+			@levelAdjustment = null;
+			@battlerules = new List<IBattleRule>();
+		}
+
+		public IPokemonChallengeRules copy()
+		{
+			PokemonChallengeRules ret = new PokemonChallengeRules(@ruleset.copy());
+			ret.setBattleType(@battletype);
+			ret.setLevelAdjustment(@levelAdjustment);
+			foreach (var rule in @battlerules)
+			{
+				ret.addBattleRule(rule);
+			}
+			return ret;
+		}
+
+		public int number
+		{
+			get
+			{
+				return this.ruleset.number;
+			}
+		}
+
+		public IPokemonChallengeRules setNumber(int number)
+		{
+			this.ruleset.setNumber(number);
+			return this;
+		}
+
+		public IPokemonChallengeRules setDoubleBattle(bool value)
+		{
+			if (value)
+			{
+				this.ruleset.setNumber(4);
+				this.addBattleRule(new DoubleBattle());
+			}
+			else
+			{
+				this.ruleset.setNumber(3);
+				this.addBattleRule(new SingleBattle());
+			}
+			return this;
+		}
+
+		public int?[][] adjustLevelsBilateral(PokemonEssentials.Interface.PokeBattle.IPokemon[] party1, PokemonEssentials.Interface.PokeBattle.IPokemon[] party2)
+		{
+			if (@levelAdjustment != null && @levelAdjustment.type == LevelAdjustment.BothTeams)
+			{
+				return @levelAdjustment.adjustLevels(party1, party2);
+			}
+			else
+			{
+				return null;
+			}
+		}
+
+		public void unadjustLevelsBilateral(PokemonEssentials.Interface.PokeBattle.IPokemon[] party1, PokemonEssentials.Interface.PokeBattle.IPokemon[] party2, int?[][] adjusts)
+		{
+			if (@levelAdjustment != null && adjusts != null && @levelAdjustment.type == LevelAdjustment.BothTeams)
+			{
+				@levelAdjustment.unadjustLevels(party1, party2, adjusts);
+			}
+		}
+
+		public int?[][] adjustLevels(PokemonEssentials.Interface.PokeBattle.IPokemon[] party1, PokemonEssentials.Interface.PokeBattle.IPokemon[] party2)
+		{
+			if (@levelAdjustment != null)
+			{
+				return @levelAdjustment.adjustLevels(party1, party2);
+			}
+			else
+			{
+				return null;
+			}
+		}
+
+		public void unadjustLevels(PokemonEssentials.Interface.PokeBattle.IPokemon[] party1, PokemonEssentials.Interface.PokeBattle.IPokemon[] party2, int?[][] adjusts)
+		{
+			if (@levelAdjustment != null && adjusts != null)
+			{
+				@levelAdjustment.unadjustLevels(party1, party2, adjusts);
+			}
+		}
+
+		public IPokemonChallengeRules addPokemonRule(IBattleRestriction rule)
+		{
+			this.ruleset.addPokemonRule(rule);
+			return this;
+		}
+
+		public IPokemonChallengeRules addLevelRule(int minLevel, int maxLevel, int totalLevel)
+		{
+			this.addPokemonRule(new MinimumLevelRestriction(minLevel));
+			this.addPokemonRule(new MaximumLevelRestriction(maxLevel));
+			this.addSubsetRule(new TotalLevelRestriction(totalLevel));
+			this.setLevelAdjustment(new TotalLevelAdjustment(minLevel, maxLevel, totalLevel));
+			return this;
+		}
+
+		public IPokemonChallengeRules addSubsetRule(IBattleTeamRestriction rule)
+		{
+			this.ruleset.addSubsetRule(rule);
+			return this;
+		}
+
+		public IPokemonChallengeRules addTeamRule(IBattleTeamRestriction rule)
+		{
+			this.ruleset.addTeamRule(rule);
+			return this;
+		}
+
+		public IPokemonChallengeRules addBattleRule(IBattleRule rule)
+		{
+			@battlerules.Add(rule);
+			return this;
+		}
+
+		public PokemonEssentials.Interface.PokeBattle.IBattle createBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		{
+			PokemonEssentials.Interface.PokeBattle.IBattle battle = @battletype.pbCreateBattle(scene, trainer1, trainer2);
+			foreach (var p in @battlerules)
+			{
+				p.setRule(battle);
+			}
+			return battle;
+		}
+
+		public IPokemonChallengeRules setRuleset(IPokemonRuleSet rule)
+		{
+			@ruleset = rule;
+			return this;
+		}
+
+		public IPokemonChallengeRules setBattleType(IBattleType rule)
+		{
+			@battletype = rule;
+			return this;
+		}
+
+		public IPokemonChallengeRules setLevelAdjustment(ILevelAdjustment rule)
+		{
+			@levelAdjustment = rule;
+			return this;
+		}
+	}
+	#endregion
+
+	#region Generation IV Cups
+	// ##########################################
+	//  Generation IV Cups
+	// ##########################################
+	public partial class StandardRules : PokemonRuleSet, PokemonEssentials.Interface.Battle.IStandardRules
+	{
+		//public int number				{ get; protected set; }
+
+		public StandardRules(int number, int? level = null) : base(number)
+		{
+			//base.initialize(number);
+			addPokemonRule(new StandardRestriction());
+			addTeamRule(new SpeciesClause()); //addPokemonRule(new SpeciesClause());
+			addTeamRule(new ItemClause()); //addPokemonRule(new ItemClause());
+			if (level != null)
+			{
+				addPokemonRule(new MaximumLevelRestriction(level.Value));
+			}
+		}
+	}
+
+	public partial class StandardCup : StandardRules, PokemonEssentials.Interface.Battle.IStandardCup
+	{
+		public StandardCup() : base(3, 50)
+		{
+			//base.initialize(3,50);
+		}
+
+		public string name
+		{
+			get
+			{
+				return Game._INTL("STANDARD Cup");
+			}
+		}
+	}
+
+	public partial class DoubleCup : StandardRules, PokemonEssentials.Interface.Battle.IDoubleCup
+	{
+		public DoubleCup() : base(4, 50)
+		{
+			//base.initialize(4,50);
+		}
+
+		public string name
+		{
+			get
+			{
+				return Game._INTL("DOUBLE Cup");
+			}
+		}
+	}
+
+	public partial class FancyCup : PokemonRuleSet, PokemonEssentials.Interface.Battle.IFancyCup
+	{
+		public FancyCup() : base(3)
+		{
+			//base.initialize(3);
+			addPokemonRule(new StandardRestriction());
+			addPokemonRule(new MaximumLevelRestriction(30));
+			addSubsetRule(new TotalLevelRestriction(80));
+			addPokemonRule(new HeightRestriction(2));
+			addPokemonRule(new WeightRestriction(20));
+			addPokemonRule(new BabyRestriction());
+			addTeamRule(new SpeciesClause()); //addPokemonRule(new SpeciesClause());
+			addTeamRule(new ItemClause()); //addPokemonRule(new ItemClause());
+		}
+
+		public string name
+		{
+			get
+			{
+				return Game._INTL("FANCY Cup");
+			}
+		}
+	}
+
+	public partial class LittleCup : PokemonRuleSet, PokemonEssentials.Interface.Battle.ILittleCup
+	{
+		public LittleCup() : base(3)
+		{
+			//base.initialize(3);
+			addPokemonRule(new StandardRestriction());
+			addPokemonRule(new MaximumLevelRestriction(5));
+			addPokemonRule(new BabyRestriction());
+			addTeamRule(new SpeciesClause()); //addPokemonRule(new SpeciesClause());
+			addTeamRule(new ItemClause()); //addPokemonRule(new ItemClause());
+		}
+
+		public string name
+		{
+			get
+			{
+				return Game._INTL("LITTLE Cup");
+			}
+		}
+	}
+
+	public partial class LightCup : PokemonRuleSet, PokemonEssentials.Interface.Battle.ILightCup
+	{
+		public LightCup() : base(3)
+		{
+			//base.initialize(3);
+			addPokemonRule(new StandardRestriction());
+			addPokemonRule(new MaximumLevelRestriction(50));
+			addPokemonRule(new WeightRestriction(99));
+			addPokemonRule(new BabyRestriction());
+			addTeamRule(new SpeciesClause()); //addPokemonRule(new SpeciesClause());
+			addTeamRule(new ItemClause()); //addPokemonRule(new ItemClause());
+		}
+		public string name
+		{
+			get
+			{
+				return Game._INTL("LIGHT Cup");
+			}
+		}
+	}
+	#endregion
 }

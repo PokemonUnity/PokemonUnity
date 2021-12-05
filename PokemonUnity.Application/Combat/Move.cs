@@ -851,7 +851,7 @@ namespace PokemonUnity.Combat
 				(attacker.Species == Pokemons.LATIAS ||
 				attacker.Species == Pokemons.LATIOS) && 
 				pbIsSpecial(type) &&
-				!battle.rules["souldewclause"])
+				!battle.rules[BattleRule.SOULDEWCLAUSE])
 				atkmult = Math.Round(atkmult * 1.5);
 			if (attacker.hasWorkingItem(Items.CHOICE_BAND) && pbIsPhysical(type))
 				atkmult = Math.Round(atkmult * 1.5);
@@ -918,7 +918,7 @@ namespace PokemonUnity.Combat
 				(opponent.Species == Pokemons.LATIAS ||
 				opponent.Species == Pokemons.LATIOS) && 
 				pbIsSpecial(type) &&
-				!battle.rules["souldewclause"]) 
+				!battle.rules[BattleRule.SOULDEWCLAUSE]) 
 				defmult = Math.Round(defmult * 1.5);
 			defense = (int)Math.Round(defense * defmult * 1.0 / 0x1000);
 			#endregion

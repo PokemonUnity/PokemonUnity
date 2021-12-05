@@ -24,7 +24,7 @@ namespace PokemonUnity.Combat
 
 		public virtual BattleResults pbDecisionOnDraw() { return (this as IBattleClause).pbDecisionOnDraw(); }
 		BattleResults IBattleClause.pbDecisionOnDraw() {
-			if (@rules["selfkoclause"]) {
+			if (@rules[BattleRule.SELFKOCLAUSE]) {
 				if (this.lastMoveUser<0) {
 					// in extreme cases there may be no last move user
 					return BattleResults.DRAW; // game is a draw
@@ -90,7 +90,7 @@ namespace PokemonUnity.Combat
 		}
 
 		public bool pbCanSleepYawn() {
-			if ((@battle.rules["sleepclause"] || @battle.rules["modifiedsleepclause"]) && 
+			if ((@battle.rules[BattleRule.SLEEPCLAUSE] || @battle.rules[BattleRule.MODIFIEDSLEEPCLAUSE]) && 
 				pbHasStatusPokemon(Status.SLEEP)) {
 				return false;
 			}
@@ -98,7 +98,7 @@ namespace PokemonUnity.Combat
 		}
 
 		public bool pbCanFreeze (IBattler attacker,bool showMessages,IBattleMove move=null) {
-			if (@battle.rules["freezeclause"] && pbHasStatusPokemon(Status.FROZEN)) {
+			if (@battle.rules[BattleRule.FREEZECLAUSE] && pbHasStatusPokemon(Status.FROZEN)) {
 				return false;
 			}
 			return _pbCanFreeze(attacker,showMessages,move);
@@ -106,7 +106,7 @@ namespace PokemonUnity.Combat
 
 		public bool pbCanSleep (IBattler attacker,bool showMessages,IBattleMove move=null,bool ignorestatus=false) {
 			bool selfsleep=(attacker.IsNotNullOrNone() && attacker.Index==this.Index);
-			if (((@battle.rules["modifiedsleepclause"]) || (!selfsleep && @battle.rules["sleepclause"])) && 
+			if (((@battle.rules[BattleRule.MODIFIEDSLEEPCLAUSE]) || (!selfsleep && @battle.rules[BattleRule.SLEEPCLAUSE])) && 
 				pbHasStatusPokemon(Status.SLEEP)) {
 				if (showMessages) {
 				@battle.pbDisplay(Game._INTL("But {1} couldn't sleep!",this.ToString(true)));
@@ -121,42 +121,42 @@ namespace PokemonUnity.Combat
 	#region Rules that Override Move Effect
 	public partial class PokeBattle_Move_022 { // Double Team
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
-			if (@battle.rules["evasionclause"]) return true;
+			if (@battle.rules[BattleRule.EVASIONCLAUSE]) return true;
 			return false;
 		}
 	}
 
 	public partial class PokeBattle_Move_034 { // Minimize
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
-			if (@battle.rules["evasionclause"]) return true;
+			if (@battle.rules[BattleRule.EVASIONCLAUSE]) return true;
 			return false;
 		}
 	}
 
 	public partial class PokeBattle_Move_067 { // Skill Swap
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
-			if (@battle.rules["skillswapclause"]) return true;
+			if (@battle.rules[BattleRule.SKILLSWAPCLAUSE]) return true;
 			return false;
 		}
 	}
 
 	public partial class PokeBattle_Move_06A { // Sonicboom
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
-			if (@battle.rules["sonicboomclause"]) return true;
+			if (@battle.rules[BattleRule.SONICBOOMCLAUSE]) return true;
 			return false;
 		}
 	}
 
 	public partial class PokeBattle_Move_06B { // Dragon Rage
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
-			if (@battle.rules["sonicboomclause"]) return true;
+			if (@battle.rules[BattleRule.SONICBOOMCLAUSE]) return true;
 			return false;
 		}
 	}
 
 	public partial class PokeBattle_Move_070 { // OHKO moves
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
-			if (@battle.rules["ohkoclause"]) return true;
+			if (@battle.rules[BattleRule.OHKOCLAUSE]) return true;
 			return false;
 		}
 	}
@@ -168,7 +168,7 @@ namespace PokemonUnity.Combat
 		//}
 
 		public override bool pbOnStartUse(IBattler attacker) {
-			if (@battle.rules["selfkoclause"]) {
+			if (@battle.rules[BattleRule.SELFKOCLAUSE]) {
 				// Check whether no unfainted Pokemon remain in either party
 				int count=attacker.NonActivePokemonCount;
 				count+=attacker.pbOppositeOpposing.NonActivePokemonCount;
@@ -177,7 +177,7 @@ namespace PokemonUnity.Combat
 					return false;
 				}
 			}
-			if (@battle.rules["selfdestructclause"]) {
+			if (@battle.rules[BattleRule.SELFDESTRUCTCLAUSE]) {
 				// Check whether no unfainted Pokemon remain in either party
 				int count=attacker.NonActivePokemonCount;
 				count+=attacker.pbOppositeOpposing.NonActivePokemonCount;
