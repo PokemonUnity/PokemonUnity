@@ -56,6 +56,6 @@ namespace PokemonEssentials.Interface
 		bool transition_processing { get; set; }
 
 		//Temp placeholder from Ispritewindow
-		int fadestate { get; }
+		int fadestate { get; set; }
 	}
 }

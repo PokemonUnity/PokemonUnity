@@ -119,11 +119,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// True if during the switching phase of the round
 		/// </summary>
-		bool switching { get; set; }
+		bool switching { get; }
 		/// <summary>
 		/// True if Future Sight is hitting
 		/// </summary>
-		bool futuresight { get; set; }
+		bool futuresight { get; }
 		/// <summary>
 		/// The Struggle move
 		/// </summary>
@@ -131,11 +131,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Choices made by each Pokémon this round
 		/// </summary>
-		IBattleChoice[] choices { get; set; }
+		IBattleChoice[] choices { get; }
 		/// <summary>
 		/// Success states
 		/// </summary>
-		ISuccessState[] successStates { get; set; }
+		ISuccessState[] successStates { get; }
 		/// <summary>
 		/// Last move used
 		/// </summary>
@@ -147,11 +147,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Battle index of each trainer's Pokémon to Mega Evolve
 		/// </summary>
-		int[][] megaEvolution { get; set; }
+		int[][] megaEvolution { get; }
 		/// <summary>
 		/// Whether Amulet Coin's effect applies
 		/// </summary>
-		bool amuletcoin { get; set; }
+		bool amuletcoin { get; }
 		/// <summary>
 		/// Money gained in battle by using Pay Day
 		/// </summary>
@@ -167,7 +167,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Speech by opponent when player wins
 		/// </summary>
-		int endspeech2 { get; set; }
+		string endspeech2 { get; set; }
 		/// <summary>
 		/// Speech by opponent when opponent wins
 		/// </summary>
@@ -190,7 +190,8 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int pbAIRandom(int x);
 
 		#region Initialise battle class.
-		IBattle initialize(IPokeBattle_Scene scene, IList<IPokemon> p1, IList<IPokemon> p2, IList<ITrainer> player, IList<ITrainer> opponent);
+		IBattle initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
+		//IBattle initialize(IPokeBattle_Scene scene, IList<IPokemon> p1, IList<IPokemon> p2, IList<ITrainer> player, IList<ITrainer> opponent);
 		#endregion
 
 		#region Info about battle.

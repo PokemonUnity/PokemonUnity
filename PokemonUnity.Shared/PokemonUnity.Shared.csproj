@@ -58,7 +58,6 @@
     <Compile Include="Application\Kernal.cs" />
     <Compile Include="Application\Scene.cs" />
     <Compile Include="Application\MoveRoutes.cs" />
-    <Compile Include="Application\Feature.cs" />
     <Compile Include="Application\Screen.cs" />
     <Compile Include="Attack\Data\Base.cs" />
     <Compile Include="Attack\Data\Meta.cs" />
@@ -83,7 +82,9 @@
     <Compile Include="Framework\Essentials\Field\IMiscData.cs" />
     <Compile Include="Framework\Essentials\IAnimationSprite.cs" />
     <Compile Include="Framework\Essentials\IGameUtility.cs" />
+    <Compile Include="Framework\Essentials\IMessage.cs" />
     <Compile Include="Framework\Essentials\ISceneMap.cs" />
+    <Compile Include="Framework\Essentials\Item\IMail.cs" />
     <Compile Include="Framework\Essentials\Item\IPokeRadar.cs" />
     <Compile Include="Framework\Essentials\Item\IPokeballHandlers.cs" />
     <Compile Include="Framework\Essentials\Item\IItemHandlers.cs" />
@@ -94,10 +95,12 @@
     <Compile Include="Framework\Essentials\Pokemon\IPokemonShadowPokemon.cs" />
     <Compile Include="Framework\Essentials\Pokemon\IPokemonMultipleForms.cs" />
     <Compile Include="Framework\Essentials\ISpritesetMap.cs" />
+    <Compile Include="Framework\Essentials\Screen\IBattle.cs" />
     <Compile Include="Framework\Essentials\Screen\IBattleSwap.cs" />
     <Compile Include="Framework\Essentials\Screen\IMysteryGift.cs" />
     <Compile Include="Framework\Essentials\Screen\IMart.cs" />
     <Compile Include="Framework\Essentials\Screen\IOption.cs" />
+    <Compile Include="Framework\Essentials\Screen\IPurifyChamber.cs" />
     <Compile Include="Framework\Essentials\Screen\ISave.cs" />
     <Compile Include="Framework\Essentials\Screen\ILoad.cs" />
     <Compile Include="Framework\Essentials\Screen\ITrainerCard.cs" />
@@ -142,7 +145,7 @@
     <Compile Include="Framework\Essentials\IInterpreter.cs" />
     <Compile Include="Framework\Essentials\IInterpreterFieldMixin.cs" />
     <Compile Include="Framework\Essentials\ILibrary.cs" />
-    <Compile Include="Framework\Essentials\IMove.cs" />
+    <Compile Include="Framework\Essentials\PokeBattle\IMove.cs" />
     <Compile Include="Framework\Essentials\Pokemon\IPokemon.cs" />
     <Compile Include="Framework\Essentials\IResourceObjects.cs" />
     <Compile Include="Framework\Essentials\ISpriteCharacter.cs" />

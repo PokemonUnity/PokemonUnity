@@ -110,7 +110,7 @@ namespace PokemonUnity.Monster.Data
 		public Shape ShapeId { get; private set; }
 		public Habitat HabitatId { get; private set; }
 		public LevelingRate GrowthRate { get; private set; }
-		public Color PokedexColor { get; private set; }
+		public Colors PokedexColor { get; private set; }
 		public Forms BaseForm { get; private set; }
 
 		/// <summary>
@@ -169,7 +169,7 @@ namespace PokemonUnity.Monster.Data
 							GenderRatio? genderRatio = GenderRatio.Genderless, float? maleRatio = null, int catchRate = 1, EggGroups eggGroup1 = EggGroups.NONE, EggGroups eggGroup2 = EggGroups.NONE, int hatchTime = 0,
 							float height = 0f, float weight = 0f, int baseExpYield = 0, LevelingRate levelingRate = LevelingRate.MEDIUMFAST,
 							int evHP = 0, int evATK = 0, int evDEF = 0, int evSPA = 0, int evSPD = 0, int evSPE = 0,
-							Color pokedexColor = Color.NONE, int baseFriendship = 0,
+							Colors pokedexColor = Colors.NONE, int baseFriendship = 0,
 							int baseStatsHP = 0, int baseStatsATK = 0, int baseStatsDEF = 0, int baseStatsSPA = 0, int baseStatsSPD = 0, int baseStatsSPE = 0,
 							Rarity rarity = Rarity.Common, //float luminance = 0f,
 							//PokemonMoveset[] movesetmoves = null,
@@ -221,7 +221,7 @@ namespace PokemonUnity.Monster.Data
 
 			this.Rarity = rarity;
 			//this.lightColor = lightColor;
-			this.PokedexColor = pokedexColor | Color.NONE;
+			this.PokedexColor = pokedexColor | Colors.NONE;
 
 			//ToDo: wild pokemon held items not yet implemented
 			this.HeldItem = heldItem; //[item id,% chance]

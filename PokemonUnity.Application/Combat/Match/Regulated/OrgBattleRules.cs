@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using PokemonUnity;
+using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.Screen;
@@ -60,7 +61,7 @@ namespace PokemonUnity
 		// ##########################################
 		public IPokemonChallengeRules pbPikaCupRules(bool @double)
 		{
-			PokemonChallengeRules ret = new PokemonChallengeRules();
+			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
 			ret.addLevelRule(15, 20, 50);
 			ret.addTeamRule(new SpeciesClause());
@@ -74,7 +75,7 @@ namespace PokemonUnity
 
 		public IPokemonChallengeRules pbPokeCupRules(bool @double)
 		{
-			PokemonChallengeRules ret = new PokemonChallengeRules();
+			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
 			ret.addLevelRule(50, 55, 155);
 			ret.addTeamRule(new SpeciesClause());
@@ -88,7 +89,7 @@ namespace PokemonUnity
 
 		public IPokemonChallengeRules pbPrimeCupRules(bool @double)
 		{
-			PokemonChallengeRules ret = new PokemonChallengeRules();
+			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.setLevelAdjustment(new OpenLevelAdjustment(Core.MAXIMUMLEVEL));
 			ret.addTeamRule(new SpeciesClause());
 			ret.addTeamRule(new ItemClause());
@@ -101,7 +102,7 @@ namespace PokemonUnity
 
 		public IPokemonChallengeRules pbFancyCupRules(bool @double)
 		{
-			PokemonChallengeRules ret = new PokemonChallengeRules();
+			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
 			ret.addLevelRule(25, 30, 80);
 			ret.addPokemonRule(new HeightRestriction(2));
@@ -119,7 +120,7 @@ namespace PokemonUnity
 
 		public IPokemonChallengeRules pbLittleCupRules(bool @double)
 		{
-			PokemonChallengeRules ret = new PokemonChallengeRules();
+			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
 			ret.addPokemonRule(new UnevolvedFormRestriction());
 			ret.setLevelAdjustment(new EnemyLevelAdjustment(5));
@@ -137,7 +138,7 @@ namespace PokemonUnity
 
 		public IPokemonChallengeRules pbStrictLittleCupRules(bool @double)
 		{
-			PokemonChallengeRules ret = new PokemonChallengeRules();
+			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
 			ret.addPokemonRule(new UnevolvedFormRestriction());
 			ret.setLevelAdjustment(new EnemyLevelAdjustment(5));
@@ -159,7 +160,7 @@ namespace PokemonUnity
 		// ##########################################
 		public IPokemonChallengeRules pbBattleTowerRules(bool @double, bool openlevel)
 		{
-			PokemonChallengeRules ret = new PokemonChallengeRules();
+			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			if (openlevel)
 			{
 				ret.setLevelAdjustment(new OpenLevelAdjustment(60));
@@ -188,7 +189,7 @@ namespace PokemonUnity
 
 		public IPokemonChallengeRules pbBattleFactoryRules(bool @double, bool openlevel)
 		{
-			PokemonChallengeRules ret = new PokemonChallengeRules();
+			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			if (openlevel)
 			{
 				ret.setLevelAdjustment(new FixedLevelAdjustment(100));
@@ -408,13 +409,12 @@ namespace PokemonUnity
 
 		public int?[] getOldExp(PokemonEssentials.Interface.PokeBattle.IPokemon[] team1, PokemonEssentials.Interface.PokeBattle.IPokemon[] team2)
 		{
-			//List<int> ret=new List<int>();
+			//IList<int> ret=new List<int>();
 			int?[] ret = new int?[team1.Length];
 			for (int i = 0; i < team1.Length; i++)
 			{
 				//ret.Add(team1[i].exp);
-				//ret.Add(team1[i].Experience.Total);
-				if (team1[i].IsNotNullOrNone()) ret[i] = team1[i].Experience.Total;
+				if (team1[i].IsNotNullOrNone()) ret[i] = team1[i].exp;
 			}
 			//return ret.ToArray();
 			return ret;
@@ -425,18 +425,18 @@ namespace PokemonUnity
 			for (int i = 0; i < team1.Length; i++)
 			{
 				int? exp = adjustments[0][i];
-				if (exp != null && team1[i].Experience.Total != exp)
+				if (exp != null && team1[i].exp != exp)
 				{
-					team1[i].Exp = exp.Value;
+					team1[i].exp = exp.Value;
 					team1[i].calcStats();
 				}
 			}
 			for (int i = 0; i < team2.Length; i++)
 			{
 				int? exp = adjustments[1][i];
-				if (exp != null && team2[i].Experience.Total != exp)
+				if (exp != null && team2[i].exp != exp)
 				{
-					team2[i].Exp = exp.Value;
+					team2[i].exp = exp.Value;
 					team2[i].calcStats();
 				}
 			}
@@ -541,8 +541,8 @@ namespace PokemonUnity
 
 	public partial class CombinedLevelAdjustment : LevelAdjustment, PokemonEssentials.Interface.Battle.ICombinedLevelAdjustment
 	{
-		private LevelAdjustment my;
-		private LevelAdjustment their;
+		private ILevelAdjustment my;
+		private ILevelAdjustment their;
 		public CombinedLevelAdjustment(LevelAdjustment my, LevelAdjustment their) : base(LevelAdjustment.BothTeamsDifferent)
 		{
 			//base.initialize(LevelAdjustment.BothTeamsDifferent);
@@ -1223,9 +1223,9 @@ namespace PokemonUnity
 		}
 		private int _maxLength;
 		private int? _minLength;
-		private List<IBattleRestriction> pokemonRules;
-		private List<IBattleTeamRestriction> teamRules;
-		private List<IBattleTeamRestriction> subsetRules;
+		private IList<IBattleRestriction> pokemonRules;
+		private IList<IBattleTeamRestriction> teamRules;
+		private IList<IBattleTeamRestriction> subsetRules;
 
 		public PokemonRuleSet(int number = 0)
 		{
@@ -1276,11 +1276,11 @@ namespace PokemonUnity
 			int num = this.suggestedNumber;
 			foreach (var rule in @pokemonRules)
 			{
-				if (rule is MinimumLevelRestriction r1)
+				if (rule is IMinimumLevelRestriction r1)
 				{
 					minLevel = r1.level; //rule.level;
 				}
-				else if (rule is MaximumLevelRestriction r2)
+				else if (rule is IMaximumLevelRestriction r2)
 				{
 					maxLevel = r2.level; //rule.level;
 				}
@@ -1288,7 +1288,7 @@ namespace PokemonUnity
 			int totalLevel = maxLevel * num;
 			foreach (var rule in @subsetRules)
 			{
-				if (rule is TotalLevelRestriction r)
+				if (rule is ITotalLevelRestriction r)
 				{
 					totalLevel = r.level; //rule.level;
 				}
@@ -1468,7 +1468,7 @@ namespace PokemonUnity
 				return false;
 			}
 			int teamNumber = Math.Min(this.maxLength, team.Length);
-			List<PokemonEssentials.Interface.PokeBattle.IPokemon> validPokemon = new List<PokemonEssentials.Interface.PokeBattle.IPokemon>();
+			IList<PokemonEssentials.Interface.PokeBattle.IPokemon> validPokemon = new List<PokemonEssentials.Interface.PokeBattle.IPokemon>();
 			foreach (var pokemon in team)
 			{
 				if (isPokemonValid(pokemon))
@@ -1500,7 +1500,7 @@ namespace PokemonUnity
 		/// <param name="team"></param>
 		/// <param name="error"></param>
 		/// <returns></returns>
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team, List<string> error = null)
+		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team, IList<string> error = null)
 		{
 			if (team.Length < this.minLength)
 			{
@@ -1688,7 +1688,7 @@ namespace PokemonUnity
 
 		public IPokemonChallengeRules copy()
 		{
-			PokemonChallengeRules ret = new PokemonChallengeRules(@ruleset.copy());
+			IPokemonChallengeRules ret = new PokemonChallengeRules(@ruleset.copy());
 			ret.setBattleType(@battletype);
 			ret.setLevelAdjustment(@levelAdjustment);
 			foreach (var rule in @battlerules)

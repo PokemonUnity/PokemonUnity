@@ -21,7 +21,7 @@ namespace PokemonUnity
 			if (Trainer == null) return;
 			IPartyDisplayScene sscene = Scenes.Party; //new PokemonScreen_Scene();
 			IPartyDisplayScreen sscreen = Screens.Party.initialize(sscene, Trainer.party); //new PokemonScreen(sscene,GameData.Trainer.party);
-			pbFadeOutIn(99999, () => { sscreen.pbPokemonScreen(); });
+			pbFadeOutIn(99999, block: () => { sscreen.pbPokemonScreen(); });
 		}
 
 		public void pbSaveScreen() {
@@ -93,7 +93,7 @@ namespace PokemonUnity
 		public int playerID									{ get; set; }
 		public int coins				                    { get; set; }
 		public int sootsack									{ get; set; }
-		public int? mailbox									{ get; set; }
+		public IList<IMail> mailbox							{ get; set; }
 		public IPCItemStorage pcItemStorage					{ get; set; }
 		public int stepcount				                { get; set; }
 		public int happinessSteps				            { get; set; }
@@ -102,7 +102,7 @@ namespace PokemonUnity
 		public bool daycareEgg								{ get; set; } //ToDo: int?...
 		public int daycareEggSteps							{ get; set; }
 		public bool[] pokedexUnlocked			            { get; set; } // Array storing which Dexes are unlocked
-		public List<int> pokedexViable						{ get; set; } // All Dexes of non-zero length and unlocked
+		public IList<int> pokedexViable						{ get; set; } // All Dexes of non-zero length and unlocked
 		public int pokedexDex				                { get; set; } // Dex currently looking at (-1 is National Dex)
 		public int[] pokedexIndex				            { get; set; } // Last species viewed per Dex
 		public int pokedexMode								{ get; set; } // Search mode
@@ -113,8 +113,8 @@ namespace PokemonUnity
 		public float pokecenterY				            { get; set; }
 		public int pokecenterDirection						{ get; set; }
 		public ITilePosition pokecenter						{ get; set; }
-		public List<int> visitedMaps				        { get; set; }
-		public List<int> mapTrail				            { get; set; }
+		public IList<int> visitedMaps				        { get; set; }
+		public IList<int> mapTrail				            { get; set; }
 		public IAudioBGM nextBattleBGM						{ get; set; }
 		public IAudioME nextBattleME						{ get; set; }
 		public IAudioObject nextBattleBack			        { get; set; }
@@ -123,10 +123,10 @@ namespace PokemonUnity
 		public ITrainer partner								{ get; set; }
 		public int? challenge				                { get; set; }
 		public IBattleRecordData lastbattle					{ get; set; }
-		public List<IPhoneContact> phoneNumbers			    { get; set; }
+		public IList<IPhoneContact> phoneNumbers			{ get; set; }
 		public int phoneTime				                { get; set; }
 		public bool safesave				                { get; set; }
-		public Dictionary<KeyValuePair<int,int>,int> eventvars				{ get; set; }
+		public IDictionary<KeyValuePair<int,int>,int> eventvars				{ get; set; }
 
 		//public float bridge { get {
 		//  if (@bridge == null) @bridge=0;

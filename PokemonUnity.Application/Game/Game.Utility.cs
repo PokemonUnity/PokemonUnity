@@ -1910,7 +1910,7 @@ namespace PokemonUnity
 			foreach (IPokemon i in Trainer.party) {
 				if (i.isEgg) continue;
 				foreach (IMove j in i.moves) {
-					if (j.MoveId==move) return i;
+					if (j.id==move) return i;
 				}
 			}
 			return null;
@@ -2082,7 +2082,7 @@ namespace PokemonUnity
 				if (i>=Trainer.party.Length) continue;
 				bool found=false;
 				for (int j = 0; j < 4; j++) {
-					if (!Trainer.party[i].isEgg && Trainer.party[i].moves[j].MoveId==move) {
+					if (!Trainer.party[i].isEgg && Trainer.party[i].moves[j].id==move) {
 						ret[i]=Game._INTL("LEARNED");
 						found=true;
 					}
@@ -2159,7 +2159,7 @@ namespace PokemonUnity
 			});
 			GameVariables[variableNumber]=ret;
 			if (ret>=0) {
-				GameVariables[nameVarNumber]=pokemon.moves[ret].MoveId.ToString(TextScripts.Name);
+				GameVariables[nameVarNumber]=pokemon.moves[ret].id.ToString(TextScripts.Name);
 			} else {
 				GameVariables[nameVarNumber]="";
 			}

@@ -91,7 +91,7 @@ namespace PokemonUnity.Combat
 						}
 						if (skill>=PBTrainerAI.bestSkill) {
 							foreach (var i in opponent.moves) {
-								Attack.Data.MoveData movedata=Game.MoveData[i.MoveId];
+								Attack.Data.MoveData movedata=Game.MoveData[i.id];
 								if (movedata.Effect==Attack.Data.Effects.x062 ||	// Sleep Talk
 									movedata.Effect==Attack.Data.Effects.x05D) {     // Snore
 									score-=50;
@@ -119,7 +119,7 @@ namespace PokemonUnity.Combat
 						}
 						if (skill>=PBTrainerAI.bestSkill) {
 							foreach (var i in opponent.moves) {
-								Attack.Data.MoveData movedata=Game.MoveData[i.MoveId];
+								Attack.Data.MoveData movedata=Game.MoveData[i.id];
 								if (movedata.Effect==Attack.Data.Effects.x062 ||	// Sleep Talk
 									movedata.Effect==Attack.Data.Effects.x05D) {     // Snore
 									score-=50;
@@ -154,7 +154,7 @@ namespace PokemonUnity.Combat
 				case Attack.Data.Effects.x007: case Attack.Data.Effects.x099: case Attack.Data.Effects.x114: case Attack.Data.Effects.x14C:
 					if (opponent.pbCanParalyze(attacker,false) &&
 						!(skill>=PBTrainerAI.mediumSkill &&
-						move.MoveId == Moves.THUNDER_WAVE &&
+						move.id == Moves.THUNDER_WAVE &&
 						pbTypeModifier(move.Type,attacker,opponent)==0)) {
 						score+=30;
 						if (skill>=PBTrainerAI.mediumSkill) {
@@ -343,7 +343,7 @@ namespace PokemonUnity.Combat
 							if (skill>=PBTrainerAI.mediumSkill) {
 								hasphysicalattack=false;
 								foreach (var thismove in attacker.moves) {
-									if (thismove.MoveId!=0 && thismove.Power>0 &&
+									if (thismove.id!=0 && thismove.Power>0 &&
 										thismove.pbIsPhysical(thismove.Type)) {
 										hasphysicalattack=true;
 									}
@@ -361,7 +361,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasphysicalattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsPhysical(thismove.Type)) {
 									hasphysicalattack=true;
 								}
@@ -415,7 +415,7 @@ namespace PokemonUnity.Combat
 							if (skill>=PBTrainerAI.mediumSkill) {
 								hasspecialattack=false;
 								foreach (var thismove in attacker.moves) {
-									if (thismove.MoveId!=0 && thismove.Power>0 &&
+									if (thismove.id!=0 && thismove.Power>0 &&
 										thismove.pbIsSpecial(thismove.Type)) {
 										hasspecialattack=true;
 									}
@@ -433,7 +433,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasspecialattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsSpecial(thismove.Type)) {
 									hasspecialattack=true;
 								}
@@ -504,7 +504,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasphysicalattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsPhysical(thismove.Type)) {
 									hasphysicalattack=true;
 								}
@@ -530,7 +530,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasphysicalattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsPhysical(thismove.Type)) {
 									hasphysicalattack=true;
 								}
@@ -555,7 +555,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasphysicalattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsPhysical(thismove.Type)) {
 									hasphysicalattack=true;
 								}
@@ -586,7 +586,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasdamagingattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0) {
+								if (thismove.id!=0 && thismove.Power>0) {
 									hasdamagingattack=true; break;
 								}
 							}
@@ -612,7 +612,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasphysicalattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsPhysical(thismove.Type)) {
 									hasphysicalattack=true;
 								}
@@ -648,7 +648,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasspecialattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsSpecial(thismove.Type)) {
 									hasspecialattack=true;
 								}
@@ -680,7 +680,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasspecialattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsSpecial(thismove.Type)) {
 									hasspecialattack=true;
 								}
@@ -702,7 +702,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasdamagingattack=false;
 						foreach (var thismove in attacker.moves) {
-							if (thismove.MoveId!=0 && thismove.Power>0) {
+							if (thismove.id!=0 && thismove.Power>0) {
 								hasdamagingattack=true;
 							}
 						}
@@ -722,7 +722,7 @@ namespace PokemonUnity.Combat
 							if (skill>=PBTrainerAI.mediumSkill) {
 								hasphysicalattack=false;
 								foreach (var thismove in attacker.moves) {
-									if (thismove.MoveId!=0 && thismove.Power>0 &&
+									if (thismove.id!=0 && thismove.Power>0 &&
 										thismove.pbIsPhysical(thismove.Type)) {
 										hasphysicalattack=true;
 									}
@@ -741,7 +741,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasphysicalattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsPhysical(thismove.Type)) {
 									hasphysicalattack=true;
 								}
@@ -800,7 +800,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 						hasspecialattack=false;
 						foreach (var thismove in attacker.moves) {
-							if (thismove.MoveId!=0 && thismove.Power>0 &&
+							if (thismove.id!=0 && thismove.Power>0 &&
 								thismove.pbIsSpecial(thismove.Type)) {
 							hasspecialattack=true;
 							}
@@ -819,7 +819,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasspecialattack=false;
 						foreach (var thismove in attacker.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0 &&
+						if (thismove.id!=0 && thismove.Power>0 &&
 							thismove.pbIsSpecial(thismove.Type)) {
 							hasspecialattack=true;
 						}
@@ -869,7 +869,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 					hasdamagingattack=false;
 					foreach (var thismove in attacker.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0) {
+						if (thismove.id!=0 && thismove.Power>0) {
 						hasdamagingattack=true;
 						}
 					}
@@ -889,7 +889,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasphysicalattack=false;
 						foreach (var thismove in attacker.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0 &&
+						if (thismove.id!=0 && thismove.Power>0 &&
 							thismove.pbIsPhysical(thismove.Type)) {
 							hasphysicalattack=true;
 						}
@@ -958,7 +958,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 						hasspecialattack=false;
 						foreach (var thismove in attacker.moves) {
-							if (thismove.MoveId!=0 && thismove.Power>0 &&
+							if (thismove.id!=0 && thismove.Power>0 &&
 								thismove.pbIsSpecial(thismove.Type)) {
 							hasspecialattack=true;
 							}
@@ -977,7 +977,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasspecialattack=false;
 						foreach (var thismove in attacker.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0 &&
+						if (thismove.id!=0 && thismove.Power>0 &&
 							thismove.pbIsSpecial(thismove.Type)) {
 							hasspecialattack=true;
 						}
@@ -998,7 +998,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasphysicalattack=false;
 						foreach (var thismove in attacker.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0 &&
+						if (thismove.id!=0 && thismove.Power>0 &&
 							thismove.pbIsPhysical(thismove.Type)) {
 							hasphysicalattack=true;
 						}
@@ -1059,7 +1059,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 						hasphysicalattack=false;
 						foreach (var thismove in opponent.moves) {
-							if (thismove.MoveId!=0 && thismove.Power>0 &&
+							if (thismove.id!=0 && thismove.Power>0 &&
 								thismove.pbIsPhysical(thismove.Type)) {
 							hasphysicalattack=true;
 							}
@@ -1077,7 +1077,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasphysicalattack=false;
 						foreach (var thismove in opponent.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0 &&
+						if (thismove.id!=0 && thismove.Power>0 &&
 							thismove.pbIsPhysical(thismove.Type)) {
 							hasphysicalattack=true;
 						}
@@ -1131,7 +1131,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 						hasspecialattack=false;
 						foreach (var thismove in opponent.moves) {
-							if (thismove.MoveId!=0 && thismove.Power>0 &&
+							if (thismove.id!=0 && thismove.Power>0 &&
 								thismove.pbIsSpecial(thismove.Type)) {
 							hasspecialattack=true;
 							}
@@ -1149,7 +1149,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasspecialattack=false;
 						foreach (var thismove in opponent.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0 &&
+						if (thismove.id!=0 && thismove.Power>0 &&
 							thismove.pbIsSpecial(thismove.Type)) {
 							hasspecialattack=true;
 						}
@@ -1235,7 +1235,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 						hasphysicalattack=false;
 						foreach (var thismove in opponent.moves) {
-							if (thismove.MoveId!=0 && thismove.Power>0 &&
+							if (thismove.id!=0 && thismove.Power>0 &&
 								thismove.pbIsPhysical(thismove.Type)) {
 							hasphysicalattack=true;
 							}
@@ -1254,7 +1254,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasphysicalattack=false;
 						foreach (var thismove in opponent.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0 &&
+						if (thismove.id!=0 && thismove.Power>0 &&
 							thismove.pbIsPhysical(thismove.Type)) {
 							hasphysicalattack=true;
 						}
@@ -1317,7 +1317,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 						hasspecialattack=false;
 						foreach (var thismove in opponent.moves) {
-							if (thismove.MoveId!=0 && thismove.Power>0 &&
+							if (thismove.id!=0 && thismove.Power>0 &&
 								thismove.pbIsSpecial(thismove.Type)) {
 							hasspecialattack=true;
 							}
@@ -1336,7 +1336,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasspecialattack=false;
 						foreach (var thismove in opponent.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0 &&
+						if (thismove.id!=0 && thismove.Power>0 &&
 							thismove.pbIsSpecial(thismove.Type)) {
 							hasspecialattack=true;
 						}
@@ -1572,7 +1572,7 @@ namespace PokemonUnity.Combat
 					score-=90;
 					}
 					foreach (var i in attacker.moves) {
-					if (i.MoveId==opponent.lastMoveUsed) {
+					if (i.id==opponent.lastMoveUsed) {
 						score-=90; break;
 					}
 					}
@@ -1590,7 +1590,7 @@ namespace PokemonUnity.Combat
 					score-=90;
 					}
 					foreach (var i in attacker.moves) {
-					if (i.MoveId==opponent.lastMoveUsedSketch) {
+					if (i.id==opponent.lastMoveUsedSketch) {
 						score-=90; break;
 					}
 					}
@@ -1602,7 +1602,7 @@ namespace PokemonUnity.Combat
 					else {
 					List<Types> types=new List<Types>();
 					foreach (var i in attacker.moves) {
-						if (i.MoveId==move.MoveId) continue;
+						if (i.id==move.id) continue;
 						//if (Types.isPseudoType(i.Type)) continue;
 						if (attacker.hasType(i.Type)) continue;
 						bool found=false;
@@ -1623,7 +1623,7 @@ namespace PokemonUnity.Combat
 					else {
 					Types atype=Types.UNKNOWN;
 					foreach (var i in opponent.moves) {
-						if (i.MoveId==opponent.lastMoveUsed) {
+						if (i.id==opponent.lastMoveUsed) {
 						atype=i.pbType(move.Type,attacker,opponent); break;
 						}
 					}
@@ -1913,8 +1913,8 @@ namespace PokemonUnity.Combat
 				case Attack.Data.Effects.x12E:
 					if (skill>=PBTrainerAI.mediumSkill) {
 					if (@doublebattle && !attacker.Partner.isFainted() &&
-									//attacker.Partner.pbHasMove(move.MoveId)) score+=20;
-									attacker.Partner.moves.Any(n => n.MoveId == move.MoveId)) score+=20;
+									//attacker.Partner.pbHasMove(move.id)) score+=20;
+									attacker.Partner.moves.Any(n => n.id == move.id)) score+=20;
 					}
 					break;
 				case Attack.Data.Effects.x0E7:
@@ -2345,7 +2345,7 @@ namespace PokemonUnity.Combat
 						// special case: attacker has no damaging moves
 						hasDamagingMove=false;
 						foreach (var m in attacker.moves) {
-						if (move.MoveId!=0 && move.Power>0) {
+						if (move.id!=0 && move.Power>0) {
 							hasDamagingMove=true;
 						}
 						}
@@ -2499,7 +2499,7 @@ namespace PokemonUnity.Combat
 					}
 					else {
 					foreach (IBattleMove m in attacker.moves) {
-						if (m.MoveId!=0 && m.Power>0 &&
+						if (m.id!=0 && m.Power>0 &&
 							m.Type == Types.FIRE) {
 						score+=20;
 						}
@@ -2515,7 +2515,7 @@ namespace PokemonUnity.Combat
 					}
 					else {
 					foreach (IBattleMove m in attacker.moves) {
-						if (m.MoveId!=0 && m.Power>0 &&
+						if (m.id!=0 && m.Power>0 &&
 							m.Type == Types.WATER) {
 						score+=20;
 						}
@@ -2935,7 +2935,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.mediumSkill) {
 						hasphysicalattack=false;
 						foreach (var thismove in opponent.moves) {
-						if (thismove.MoveId!=0 && thismove.Power>0 &&
+						if (thismove.id!=0 && thismove.Power>0 &&
 							thismove.pbIsPhysical(thismove.Type)) {
 							hasphysicalattack=true;
 						}
@@ -3119,7 +3119,7 @@ namespace PokemonUnity.Combat
 						if (skill>=PBTrainerAI.mediumSkill) {
 							hasspecialattack=false;
 							foreach (var thismove in attacker.moves) {
-								if (thismove.MoveId!=0 && thismove.Power>0 &&
+								if (thismove.id!=0 && thismove.Power>0 &&
 									thismove.pbIsSpecial(thismove.Type)) {
 									hasspecialattack=true;
 								}
@@ -3206,7 +3206,7 @@ namespace PokemonUnity.Combat
 									move.Effect!=Attack.Data.Effects.x093 ||				// Twister
 									move.Effect!=Attack.Data.Effects.x0D0 ||				// Sky Uppercut
 									move.Effect!=Attack.Data.Effects.x120 ||				// Smack Down
-									move.MoveId!=Moves.WHIRLWIND) miss=true;
+									move.id!=Moves.WHIRLWIND) miss=true;
 								break;
 							case Attack.Data.Effects.x101:									// Dig
 								if (move.Effect!=Attack.Data.Effects.x094 ||				// Earthquake
@@ -3339,7 +3339,7 @@ namespace PokemonUnity.Combat
 					float basedamage=realDamage*accuracy/100.0f;
 					// Two-turn attacks waste 2 turns to deal one lot of damage
 					//if (move.pbTwoTurnAttack(attacker) || move.Effect==Attack.Data.Effects.x051) {		        // Hyper Beam
-					if (Game.MoveMetaData[move.MoveId].MaxTurns > 1 || move.Effect==Attack.Data.Effects.x051) {		// Hyper Beam
+					if (Game.MoveMetaData[move.id].MaxTurns > 1 || move.Effect==Attack.Data.Effects.x051) {		// Hyper Beam
 						basedamage*=2/3;   // Not halved because semi-invulnerable during use or hits first turn
 					}
 					// Prefer flinching effects
@@ -3374,7 +3374,7 @@ namespace PokemonUnity.Combat
 					score=(int)Math.Round(score);
 					float oldscore=score;
 					score+=basedamage;
-					GameDebug.Log($"[AI] #{move.MoveId.ToString(TextScripts.Name)} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
+					GameDebug.Log($"[AI] #{move.id.ToString(TextScripts.Name)} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
 				}
 			}
 			else {
@@ -4302,7 +4302,7 @@ namespace PokemonUnity.Combat
 				int c=0;
 				c+=attacker.effects.FocusEnergy;
 				//if (move.hasHighCriticalRate) c+=1;
-				if (Game.MoveMetaData[move.MoveId].CritRate > 0) c+=1;
+				if (Game.MoveMetaData[move.id].CritRate > 0) c+=1;
 				if ((attacker.inHyperMode()) && move.Type == Types.SHADOW) c+=1; //rescue false
 				if (attacker.Species == Pokemons.CHANSEY && 
 					attacker.hasWorkingItem(Items.LUCKY_PUNCH)) c+=2;
@@ -4532,9 +4532,9 @@ namespace PokemonUnity.Combat
 				string x=$"[AI] #{attacker.ToString()}'s moves: ";
 				int j=0;
 				for (int i = 0; i < 4; i++) {
-					if (attacker.moves[i].MoveId!=0) {
+					if (attacker.moves[i].id!=0) {
 						if (j>0) x+=", ";
-						x+=attacker.moves[i].MoveId.ToString(TextScripts.Name)+"="+scores[i].ToString();
+						x+=attacker.moves[i].id.ToString(TextScripts.Name)+"="+scores[i].ToString();
 						j+=1;
 					}
 				}
@@ -4547,14 +4547,14 @@ namespace PokemonUnity.Combat
 					// there is a highly preferred move. Choose it.
 					List<int> preferredMoves=new List<int>();
 					for (int i = 0; i < 4; i++) {
-						if (attacker.moves[i].MoveId!=0 && (scores[i]>=maxscore*0.8 || scores[i]>=200)) {
+						if (attacker.moves[i].id!=0 && (scores[i]>=maxscore*0.8 || scores[i]>=200)) {
 							preferredMoves.Add(i);
 							if (scores[i]==maxscore) preferredMoves.Add(i);	// Doubly prefer the best move
 						}
 					}
 					if (preferredMoves.Count>0) {
 						int i=preferredMoves[Core.Rand.Next(preferredMoves.Count)];
-						GameDebug.Log($"[AI] Prefer #{attacker.moves[i].MoveId.ToString(TextScripts.Name)}");
+						GameDebug.Log($"[AI] Prefer #{attacker.moves[i].id.ToString(TextScripts.Name)}");
 						pbRegisterMove(index,i,false);
 						if (targets != null) target=targets[i];
 						if (@doublebattle && target>=0) {
@@ -4574,7 +4574,7 @@ namespace PokemonUnity.Combat
 					badmoves=true;
 					int movecount=0;
 					for (int i = 0; i < 4; i++) {
-						if (attacker.moves[i].MoveId!=0) {
+						if (attacker.moves[i].id!=0) {
 							if (scores[i]>0 && attacker.moves[i].Power>0) {
 								badmoves=false;
 							}
@@ -4759,7 +4759,7 @@ namespace PokemonUnity.Combat
 			if (skill>=PBTrainerAI.highSkill && @battlers[index].effects.PerishSong!=1) {
 				for (int i = 0; i < 4; i++) {
 					IBattleMove move=@battlers[index].moves[i];
-					if (move.MoveId!=0 && CanChooseMove(index,i,false) &&
+					if (move.id!=0 && CanChooseMove(index,i,false) &&
 						move.Effect==Attack.Data.Effects.x080) { // Baton Pass
 						batonpass=i;
 						break;
@@ -4908,8 +4908,8 @@ namespace PokemonUnity.Combat
 				IBattler pkmn=party[e];
 				int sum=0;
 				foreach (var move in pkmn.moves) {
-					if (move.MoveId==0) continue;
-					Attack.Data.MoveData md=Game.MoveData[move.MoveId];
+					if (move.id==0) continue;
+					Attack.Data.MoveData md=Game.MoveData[move.id];
 					if (md.Power==0) continue;
 					if (o1.IsNotNullOrNone()) {
 						//ToDo: uncomment below

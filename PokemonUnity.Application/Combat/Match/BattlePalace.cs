@@ -72,14 +72,20 @@ namespace PokemonUnity.Combat
 			42, 5,53,
 			56,22,22
 		};
-		public PokeBattle_BattlePalace(IPokeBattle_Scene scene, PokemonEssentials.Interface.PokeBattle.IPokemon[] p1, PokemonEssentials.Interface.PokeBattle.IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) : base (scene, p1, p2, player, opponent) { 
+		public PokeBattle_BattlePalace(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) : base (scene, p1, p2, player, opponent) { 
 			//public void initialize() {
 			//base.this();
 			@justswitched=new bool[] { false, false, false, false };
 		}
 
+		public IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		{
+			return new PokeBattle_RecordedBattlePalace(scene,
+				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+		}
+
 		public int pbMoveCategory(IBattleMove move) {
-			if (//Game.MoveData[move.MoveId].Target==Attack.Data.Targets. 0x10 ||	//ToDo: Finish Convert from Essentials to Veekun
+			if (//Game.MoveData[move.id].Target==Attack.Data.Targets. 0x10 ||	//ToDo: Finish Convert from Essentials to Veekun
 				move.Effect==Attack.Data.Effects.x01B) {							// Bide
 				return 1;
 			} else if (move.Power==0 || move.Effect==Attack.Data.Effects.x054 ||	// Counter
@@ -100,20 +106,20 @@ namespace PokemonUnity.Combat
 		public bool pbCanChooseMovePartial (int idxPokemon,int idxMove) {
 			PokemonEssentials.Interface.PokeBattle.I thispkmn=@battlers[idxPokemon];
 			IBattleMove thismove=thispkmn.moves[idxMove];
-			if (!thismove.IsNotNullOrNone()||thismove.MoveId==0) {
+			if (!thismove.IsNotNullOrNone()||thismove.id==0) {
 				return false;
 			}
 			if (thismove.PP<=0) {
 				return false;
 			}
 			if (thispkmn.effects.ChoiceBand>=0 && 
-				thismove.MoveId!=thispkmn.effects.ChoiceBand &&
+				thismove.id!=thispkmn.effects.ChoiceBand &&
 				thispkmn.hasWorkingItem(Items.CHOICE_BAND)) {
 				return false;
 			}
 			// though incorrect, just for convenience (actually checks Torment later)
 			if (thispkmn.effects.Torment) {
-				if (thismove.MoveId==thispkmn.lastMoveUsed) {
+				if (thismove.id==thispkmn.lastMoveUsed) {
 					return false;
 				}
 			}

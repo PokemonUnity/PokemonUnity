@@ -1,12 +1,15 @@
-﻿using PokemonUnity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 using PokemonUnity.Character;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using PokemonUnity.Combat;
+using PokemonEssentials.Interface.PokeBattle;
 
-namespace PokemonUnity.Combat { 
+namespace PokemonUnity//.Combat 
+{ 
 	public partial class Trainer : PokemonEssentials.Interface.PokeBattle.ITrainer {
 		#region Variables
 		public string name { get; private set; }
@@ -73,9 +76,14 @@ namespace PokemonUnity.Combat {
 			@money=Core.INITIALMONEY;
 			@party=new PokemonEssentials.Interface.PokeBattle.IPokemon[Core.MAXPARTYSIZE];
 		}
+
+		ITrainer ITrainer.initialize(string name, TrainerTypes trainertype)
+		{
+			throw new NotImplementedException();
+		}
 		#endregion
 
-			#region Methods
+		#region Methods
 		public string fullname { get {
 			return string.Format("{0} {1}",this.trainerTypeName,@name);
 		} }
@@ -113,7 +121,7 @@ namespace PokemonUnity.Combat {
 			return fid;
 		}
 
-		public void setForeignID(Trainer other) {
+		public void setForeignID(ITrainer other) {
 			@id=other.getForeignID();
 		}
 
@@ -193,6 +201,7 @@ namespace PokemonUnity.Combat {
 			return ret;
 		} }
 
+		int ITrainer.gender { get; }
 		public bool? gender { get { 
 			bool? ret=null;   // 2 = gender unknown
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|

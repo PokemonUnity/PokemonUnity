@@ -21,21 +21,21 @@ namespace PokemonUnity.Character
 		#region Variables
 		/// <summary>
 		/// </summary>
-		// KeyValuePair<Pokemon,steps>[]
+		// KeyValuePair<IPokemon,steps>[]
 		public KeyValuePair<IPokemon, int>[] Slot	{ get; private set; }
 		public bool HasEgg	{ get; }
 		public int Egg	{ get; }
 		public IPokemon this[int index]
 		{ 
 			get { return Slot[index].Key; }
-			set { Slot[index] = new KeyValuePair<Pokemon, int>(value, 0); } //ToDo: Add if/else null?
+			set { Slot[index] = new KeyValuePair<IPokemon, int>(value, 0); } //ToDo: Add if/else null?
 		}
 		#endregion
 
 		#region Constructor
 		public DayCare(int slots)
 		{
-			Slot = new KeyValuePair<Pokemon, int>[slots];
+			Slot = new KeyValuePair<IPokemon, int>[slots];
 		}
 		#endregion
 
@@ -73,7 +73,7 @@ namespace PokemonUnity.Character
 		}
 
 		public bool pbDayCareGetLevelGain(int index,int nameVariable,int levelVariable) {
-			Pokemon pkmn=Game.GameData.Global.daycare[index];//[0];
+			IPokemon pkmn=Game.GameData.Global.daycare[index];//[0];
 			if (!pkmn.IsNotNullOrNone()) return false;
 			Game.GameData.GameVariables[nameVariable]=pkmn.Name;
 			Game.GameData.GameVariables[levelVariable]=pkmn.Level-Game.GameData.Global.daycare[index].Level;//[1];
@@ -120,8 +120,8 @@ namespace PokemonUnity.Character
 
 		public int pbDayCareGetCompat() {
 			if (pbDayCareDeposited()==2) {
-				Pokemon pokemon1=Game.GameData.Global.daycare[0];//[0];
-				Pokemon pokemon2=Game.GameData.Global.daycare[1];//[0];
+				IPokemon pokemon1=Game.GameData.Global.daycare[0];//[0];
+				IPokemon pokemon2=Game.GameData.Global.daycare[1];//[0];
 				if ((pokemon1.isShadow)) return 0; //? rescue false
 				if ((pokemon2.isShadow)) return 0; //? rescue false
 				//dexdata=pbOpenDexData();
@@ -186,7 +186,7 @@ namespace PokemonUnity.Character
 			} else {
 				List<string> choices=new List<string>();
 				for (int i = 0; i < 2; i++) {
-					Pokemon pokemon=Game.GameData.Global.daycare[i];//[0]
+					IPokemon pokemon=Game.GameData.Global.daycare[i];//[0]
 					if (pokemon.IsMale) {
 						choices.Add(Game._INTL("{1} (♂, Lv{2})",pokemon.Name,pokemon.Level));
 					} else if (pokemon.IsFemale) {
@@ -209,10 +209,10 @@ namespace PokemonUnity.Character
 				//throw new Exception(Game._INTL("Can't store the egg"));
 				GameDebug.LogError(Game._INTL("Can't store the egg"));
 			}
-			Pokemon pokemon0=Game.GameData.Global.daycare[0];//[0]
-			Pokemon pokemon1=Game.GameData.Global.daycare[1];//[0]
-			Pokemon mother=null;
-			Pokemon father=null;
+			IPokemon pokemon0=Game.GameData.Global.daycare[0];//[0]
+			IPokemon pokemon1=Game.GameData.Global.daycare[1];//[0]
+			IPokemon mother=null;
+			IPokemon father=null;
 			Pokemons babyspecies=0;
 			bool ditto0=pbIsDitto(pokemon0);
 			bool ditto1=pbIsDitto(pokemon1);
@@ -238,8 +238,8 @@ namespace PokemonUnity.Character
 												Pokemons.ILLUMISE }[Core.Rand.Next(2)];
 			}
 			//Generate egg
-			//Combat.Pokemon egg=new PokeBattle_Pokemon(babyspecies,Core.EGGINITIALLEVEL,Game.GameData.Player);
-			Pokemon egg=new Pokemon(babyspecies,Core.EGGINITIALLEVEL,isEgg: true);//,Game.GameData.Player
+			//IPokemon egg=new PokeBattle_Pokemon(babyspecies,Core.EGGINITIALLEVEL,Game.GameData.Player);
+			IPokemon egg=new Pokemon(babyspecies,Core.EGGINITIALLEVEL,isEgg: true);//,Game.GameData.Player
 			//Randomise personal ID
 			int pid=Core.Rand.Next(65536);
 			pid|=(Core.Rand.Next(65536)<<16);
@@ -254,7 +254,7 @@ namespace PokemonUnity.Character
 			//Inheriting Moves
 			HashSet<Moves> moves=new HashSet<Moves>();
 			HashSet<Moves> othermoves=new HashSet<Moves>();
-			Pokemon movefather=father;Pokemon movemother=mother;
+			IPokemon movefather=father;IPokemon movemother=mother;
 			if (pbIsDitto(movefather) && !mother.IsFemale) {
 				movefather=mother; movemother=father;
 			}
@@ -352,7 +352,7 @@ namespace PokemonUnity.Character
 			}
 			List<int?> ivinherit=new List<int?>(2);
 			for (int i = 0; i < 2; i++) {
-				Pokemon parent=new Pokemon[] {mother,father}[i];
+				IPokemon parent=new IPokemon[] {mother,father}[i];
 				if (parent.Item == Items.POWER_WEIGHT)  ivinherit[i]=(int)Stats.HP;
 				if (parent.Item == Items.POWER_BRACER)  ivinherit[i]=(int)Stats.ATTACK;
 				if (parent.Item == Items.POWER_BELT)    ivinherit[i]=(int)Stats.DEFENSE;
@@ -363,7 +363,7 @@ namespace PokemonUnity.Character
 			int num=0;int r=Core.Rand.Next(2);
 			for (int i = 0; i < 2; i++) {
 				if (ivinherit[r]!=null) {
-					Pokemon parent=new Pokemon[] { mother, father }[r];
+					IPokemon parent=new IPokemon[] { mother, father }[r];
 					ivs[ivinherit[r].Value]=parent.IV[ivinherit[r].Value];
 					num+=1;
 					break;
@@ -381,7 +381,7 @@ namespace PokemonUnity.Character
 				}
 				if (freestats.Count==0) break;
 				r=freestats[Core.Rand.Next(freestats.Count)];
-				Pokemon parent=new Pokemon[] { mother, father }[Core.Rand.Next(2)];
+				IPokemon parent=new IPokemon[] { mother, father }[Core.Rand.Next(2)];
 				ivs[r]=parent.IV[r];
 				ivinherit.Add(r);
 				num+=1;
@@ -418,7 +418,7 @@ namespace PokemonUnity.Character
 					}
 				}
 			} else if (((!ditto0 && ditto1) || (!ditto1 && ditto0)) && Core.USENEWBATTLEMECHANICS) {
-				Pokemon parent=(!ditto0) ? mother : father;
+				IPokemon parent=(!ditto0) ? mother : father;
 				if (parent.hasHiddenAbility()) {
 					if (Core.Rand.Next(10)<6) egg.setAbility(parent.abilityIndex);
 				}
@@ -474,12 +474,12 @@ namespace PokemonUnity.Character
 				}
 			}
 			for (int i = 0; i < 2; i++) {
-				Pokemon pkmn=Game.GameData.Global.daycare.Slot[i].Key;
+				IPokemon pkmn=Game.GameData.Global.daycare.Slot[i].Key;
 				if (!pkmn.IsNotNullOrNone()) return;
 				int maxexp=Monster.Data.Experience.GetMaxExperience(pkmn.GrowthRate);
 				if (pkmn.Exp<maxexp) {
 					int oldlevel=pkmn.Level;
-					pkmn.Exp+=1;
+					pkmn.exp+=1;
 					if (pkmn.Level!=oldlevel) {
 						pkmn.calcStats();
 						//Moves[] movelist=pkmn.getMoveList();

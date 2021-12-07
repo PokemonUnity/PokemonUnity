@@ -21,13 +21,13 @@ namespace PokemonUnity
 	namespace Character
 	{
 		public partial class PokemonBox : PokemonEssentials.Interface.Screen.IPokemonBox {
-			public List<PokemonEssentials.Interface.PokeBattle.IPokemon> pokemon				{ get; protected set; }
+			public IList<PokemonEssentials.Interface.PokeBattle.IPokemon> pokemon				{ get; protected set; }
 			public string name						{ get; set; }
 			public string background				{ get; set; }
 
 			public PokemonBox(string name, int maxPokemon = 30)
 			{
-				initialize();
+				initialize(name, maxPokemon);
 			}
 
 			public IPokemonBox initialize (string name,int maxPokemon=30) {
@@ -67,7 +67,7 @@ namespace PokemonUnity
 
 			public static implicit operator PokemonBox (PokemonEssentials.Interface.PokeBattle.IPokemon[] party)
 			{
-				PokemonBox box = new PokemonBox("party", Game.GameData.Features.LimitPokemonPartySize);
+				IPokemonBox box = new PokemonBox("party", Game.GameData.Features.LimitPokemonPartySize);
 				int i = 0;
 				foreach(PokemonEssentials.Interface.PokeBattle.IPokemon p in party)
 				{
@@ -85,9 +85,9 @@ namespace PokemonUnity
 
 		public partial class PokemonStorage : PokemonEssentials.Interface.Screen.IPokemonStorage {
 			public IPokemonBox[] boxes				{ get; protected set; }
-			//public int party				{ get; protected set; }
-			public int currentBox				{ get; set; }
-			private int boxmode				{ get; set; }
+			//public IPokemon party					{ get; }
+			public int currentBox					{ get; set; }
+			private int boxmode						{ get; set; }
 
 			public int maxBoxes { get {
 				return @boxes.Length;
@@ -101,7 +101,10 @@ namespace PokemonUnity
 					GameDebug.LogError("Not supported");
 			} }
 
-			public static string[] MARKINGCHARS=new string[] { "●", "■", "▲", "♥" };
+			/// <summary>
+			/// ●, ▲, ■, ♥︎, ★, and ♦︎.
+			/// </summary>
+			public static string[] MARKINGCHARS=new string[] { "●", "▲", "■", "♥", "★", "♦︎" };
 
 			public PokemonStorage(int maxBoxes = Core.STORAGEBOXES, int maxPokemon = 30) { initialize(maxBoxes, maxPokemon); }
 			public PokemonEssentials.Interface.Screen.IPokemonStorage initialize (int maxBoxes=Core.STORAGEBOXES,int maxPokemon=30) {
@@ -114,6 +117,7 @@ namespace PokemonUnity
 				}
 				@currentBox=0;
 				@boxmode=-1;
+				return this;
 			}
 
 			public int maxPokemon(int box) {
@@ -122,7 +126,7 @@ namespace PokemonUnity
 			}
 
 			public IPokemonBox this[int x] { get {
-					return (x==-1) ? (IPokemonBox)this.party : @boxes[x];
+					return (x==-1) ? (IPokemonBox)(PokemonBox)this.party : @boxes[x];
 				}
 			}
 			public PokemonEssentials.Interface.PokeBattle.IPokemon this[int x,int y] { get {
@@ -214,9 +218,9 @@ namespace PokemonUnity
 				for (int i = 0; i < maxPokemon(box); i++) {
 					if (this[box,i]==null) {
 						if (box>=0) {
-							pkmn.Heal();
-							if (//pkmn.respond_to("formTime") && 
-								pkmn.formTime != null) pkmn.formTime=null;
+							pkmn.heal();
+							if (pkmn is IPokemonMultipleForms p && //pkmn.respond_to("formTime") && 
+								p.formTime != null) p.formTime=null;
 						}
 						this[box,i]=pkmn;
 						return true;
@@ -257,13 +261,13 @@ namespace PokemonUnity
 		public partial class PokemonStorageWithParty : PokemonStorage, PokemonEssentials.Interface.Screen.IPokemonStorageWithParty {
 			public override PokemonEssentials.Interface.PokeBattle.IPokemon[] party { get {
 					return base.party;
-				} 
+				}
 				set {
 					base.party=party;
 			} }
 
 			public PokemonStorageWithParty(int maxBoxes = 24, int maxPokemon = 30, PokemonEssentials.Interface.PokeBattle.IPokemon[] party = null) //: base (maxBoxes,maxPokemon)
-			{ (this as PokemonEssentials.Interface.Screen.IPokemonStorageWithParty).initialize(maxBoxes, maxPokemon, party); }
+			{ initialize(maxBoxes, maxPokemon, party); }
 			public IPokemonStorageWithParty initialize(int maxBoxes=24,int maxPokemon=30,PokemonEssentials.Interface.PokeBattle.IPokemon[] party=null) 
 			{
 				base.initialize(maxBoxes,maxPokemon);
@@ -334,7 +338,7 @@ namespace PokemonUnity
 				return getCurrentStorage.maxPokemon(box);
 			}
 
-			public PokemonEssentials.Interface.PokeBattle.IPokemon[] this[int x] { get {
+			public PokemonEssentials.Interface.Screen.IPokemonStorage this[int x] { get {
 				return getCurrentStorage[x];
 			} }
 			public PokemonEssentials.Interface.PokeBattle.IPokemon this[int x,int y] { get {
@@ -408,7 +412,7 @@ namespace PokemonUnity
 			public void access() {
 				Game.GameData.pbMessage(Game._INTL("\\se[accesspc]The Pokémon Storage System was opened."));
 				do { //;loop
-					int command=Game.pbShowCommandsWithHelp(null,
+					int command=Game.GameData.pbShowCommandsWithHelp(null,
 						new string[] {Game._INTL("Withdraw Pokémon"),
 							Game._INTL("Deposit Pokémon"),
 							Game._INTL("Move Pokémon"),
@@ -420,7 +424,7 @@ namespace PokemonUnity
 					);
 					if (command>=0 && command<3) {
 						if (command==0 && Game.GameData.PokemonStorage.party.Length>=6) {
-							Game.pbMessage(Game._INTL("Your party is full!"));
+							Game.GameData.pbMessage(Game._INTL("Your party is full!"));
 							continue;
 						}
 						int count=0;
@@ -428,14 +432,12 @@ namespace PokemonUnity
 							if (p.IsNotNullOrNone() && !p.isEgg && p.HP>0) count+=1;
 						}
 						if (command==1 && count<=1) {
-							Game.pbMessage(Game._INTL("Can't deposit the last Pokémon!"));
+							Game.GameData.pbMessage(Game._INTL("Can't deposit the last Pokémon!"));
 							continue;
 						}
-						Game.GameData.pbFadeOutIn(99999, () => {
-							//IPokemonStorageScene scene=new PokemonStorageScene();
-							//IPokemonStorageScreen screen=new PokemonStorageScreen(scene,Game.GameData.PokemonStorage);
-							IPokemonStorageScene scene=Game.GameData.PokemonStorageScene; scene.initialize();
-							IPokemonStorageScreen screen=Game.GameData.PokemonStorageScreen; screen.initialize(scene,Game.GameData.PokemonStorage);
+						Game.GameData.pbFadeOutIn(99999, block: () => {
+							IPokemonStorageScene scene=Game.GameData.Scenes.PokemonStorageScene; //new PokemonStorageScene();
+							IPokemonStorageScreen screen=Game.GameData.Screens.PokemonStorageScreen.initialize(scene,Game.GameData.PokemonStorage); //new PokemonStorageScreen(scene,Game.GameData.PokemonStorage);
 							screen.pbStartScreen(command);
 						});
 					} else {
@@ -445,16 +447,17 @@ namespace PokemonUnity
 			}
 		}
 
-		public partial class PokemonPCList : IPokemonPCList {
+		public static class PokemonPCList //: IPokemonPCList 
+		{
 			//PokemonPCList.registerPC(new StorageSystemPC());
 			//PokemonPCList.registerPC(new TrainerPC());
-			public IList<IPCMenuUser> @pclist=new List<IPCMenuUser>();
+			public static IList<IPCMenuUser> @pclist=new List<IPCMenuUser>();
 
-			public void registerPC(IPCMenuUser pc) {
+			public static void registerPC(IPCMenuUser pc) {
 				@pclist.Add(pc);
 			}
 
-			public string[] getCommandList() {
+			public static string[] getCommandList() {
 				List<string> commands=new List<string>();
 				foreach (var pc in @pclist) {
 					if (pc.shouldShow) {
@@ -465,7 +468,7 @@ namespace PokemonUnity
 				return commands.ToArray();
 			}
 
-			public bool callCommand(int cmd) {
+			public static bool callCommand(int cmd) {
 				if (cmd<0 || cmd>=@pclist.Count) {
 					return false;
 				}
@@ -496,9 +499,9 @@ namespace PokemonUnity
 		}
 		
 		public Items pbPCItemStorage() {
-			Items ret = Items.NONE;
+			//Items ret = Items.NONE;
 			do { //;loop
-				int command=pbShowCommandsWithHelp(null,
+				int command=(this as IGameMessage).pbShowCommandsWithHelp(null,
 					new string[] { Game._INTL("Withdraw Item"),
 						Game._INTL("Deposit Item"),
 						Game._INTL("Toss Item"),
@@ -509,35 +512,35 @@ namespace PokemonUnity
 						Game._INTL("Go back to the previous menu.") },-1
 				);
 				if (command==0) {		// Withdraw Item
-					if (!Global.pcItemStorage) {
+					if (Global.pcItemStorage == null) {
 						Global.pcItemStorage=new PCItemStorage();
 					}
-					if (Global.pcItemStorage.empty) {
-						pbMessage(Game._INTL("There are no items."));
+					if (Global.pcItemStorage.empty()) {
+						(this as IGameMessage).pbMessage(Game._INTL("There are no items."));
 					} else {
-						Game.UI.pbFadeOutIn(99999, () => {
+						pbFadeOutIn(99999, block: () => {
 							IWithdrawItemScene scene = Scenes.Bag_ItemWithdraw;//new WithdrawItemScene();
-							IPokemonBagScreen screen = Screens.Bag.initialize(scene,Bag);//new PokemonBagScreen(scene,Bag);
-							ret=screen.pbWithdrawItemScreen();
+							IBagScreen screen = Screens.Bag.initialize(scene,Bag);//new PokemonBagScreen(scene,Bag);
+							screen.pbWithdrawItemScreen();//ret=
 						});
 					}
 				} else if (command==1) {		// Deposit Item
-					Game.UI.pbFadeOutIn(99999, () => {
+					pbFadeOutIn(99999, block: () => {
 						IBagScene scene = Scenes.Bag;//new PokemonBag_Scene();
 						IBagScreen screen = Screens.Bag.initialize(scene,Bag);//new PokemonBagScreen(scene,Bag);
-						ret=screen.pbDepositItemScreen();
+						screen.pbDepositItemScreen();//ret=
 					});
 				} else if (command==2) {		// Toss Item
-					if (!Global.pcItemStorage) {
+					if (Global.pcItemStorage == null) {
 						Global.pcItemStorage=new PCItemStorage();
 					}
-					if (Global.pcItemStorage.empty) {
-						Game.pbMessage(Game._INTL("There are no items."));
+					if (Global.pcItemStorage.empty()) {
+						(this as IGameMessage).pbMessage(Game._INTL("There are no items."));
 					} else {
-						Game.UI.pbFadeOutIn(99999, () => {
+						pbFadeOutIn(99999, block: () => {
 							ITossItemScene scene = Scenes.Bag_ItemToss;//new TossItemScene();
 							IBagScreen screen = Screens.Bag.initialize(scene,Bag);//new PokemonBagScreen(scene,Bag);
-							ret=screen.pbTossItemScreen();
+							screen.pbTossItemScreen();//ret=
 						});
 					}
 				} else {
@@ -547,42 +550,43 @@ namespace PokemonUnity
 		}
 
 		public void pbPCMailbox() {
-			if (!Global.mailbox || Global.mailbox.Length==0) {
-				Game.pbMessage(Game._INTL("There's no Mail here."));
+			if (Global.mailbox == null || Global.mailbox.Count==0) {
+				(this as IGameMessage).pbMessage(Game._INTL("There's no Mail here."));
 			} else {
 				do { //;loop
 					List<string> commands=new List<string>();
-					foreach (var mail in Global.mailbox) {
+					foreach (IMail mail in Global.mailbox) {
 						commands.Add(mail.sender);
 					}
 					commands.Add(Game._INTL("Cancel"));
 					int command=Game.pbShowCommands(null,commands,-1);
-					if (command>=0 && command<Global.mailbox.Length) {
+					if (command>=0 && command<Global.mailbox.Count) {
 						int mailIndex=command;
-						command=Game.pbMessage(Game._INTL("What do you want to do with {1}'s Mail?",
+						command=(this as IGameMessage).pbMessage(Game._INTL("What do you want to do with {1}'s Mail?",
 							Global.mailbox[mailIndex].sender),new string[] {
-							Game._INTL("Read"),
-							Game._INTL("Move to Bag"),
-							Game._INTL("Give"),
-							Game._INTL("Cancel")
+								_INTL("Read"),
+								_INTL("Move to Bag"),
+								_INTL("Give"),
+								_INTL("Cancel")
 							},-1);
 						if (command==0) {		// Read
-							Game.UI.pbFadeOutIn(99999, () => {
+							pbFadeOutIn(99999, block: () => {
 								pbDisplayMail(Global.mailbox[mailIndex]);
 							});
 						} else if (command==1) {		// Move to Bag
-							if (pbConfirmMessage(Game._INTL("The message will be lost. Is that OK?"))) {
-								if (Bag.pbStoreItem(Global.mailbox[mailIndex].Item)) {
-									pbMessage(Game._INTL("The Mail was returned to the Bag with its message erased."));
-									Global.mailbox.delete_at(mailIndex);
+							if ((this as IGameMessage).pbConfirmMessage(_INTL("The message will be lost. Is that OK?"))) {
+								if (Bag.pbStoreItem(Global.mailbox[mailIndex].item)) {
+									(this as IGameMessage).pbMessage(_INTL("The Mail was returned to the Bag with its message erased."));
+									//Global.mailbox.delete_at(mailIndex);
+									Global.mailbox.RemoveAt(mailIndex);
 								} else {
-									Game.pbMessage(Game._INTL("The Bag is full."));
+									(this as IGameMessage).pbMessage(_INTL("The Bag is full."));
 								}
 							}
 						} else if (command==2) {		// Give
-							Game.UI.pbFadeOutIn(99999, () => {
-								IPokemonScreen_Scene sscene=new PokemonScreen_Scene();
-								IPokemonScreen sscreen=new PokemonScreen(sscene,Trainer.party);
+							pbFadeOutIn(99999, block: () => {
+								IPartyDisplayScene sscene=Scenes.Party; //new PokemonScreen_Scene();
+								IPartyDisplayScreen sscreen=Screens.Party.initialize(sscene,Trainer.party); //new PokemonScreen(sscene,Trainer.party);
 								sscreen.pbPokemonGiveMailScreen(mailIndex);
 							});
 						}
@@ -595,7 +599,7 @@ namespace PokemonUnity
 
 		public void pbTrainerPCMenu() {
 			do { //;loop
-				int command=Game.pbMessage(Game._INTL("What do you want to do?"),new string[] {
+				int command=(this as IGameMessage).pbMessage(Game._INTL("What do you want to do?"),new string[] {
 					Game._INTL("Item Storage"),
 					Game._INTL("Mailbox"),
 					Game._INTL("Turn Off")
@@ -611,16 +615,16 @@ namespace PokemonUnity
 		}
 
 		public void pbTrainerPC() {
-			pbMessage(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
+			(this as IGameMessage).pbMessage(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
 			pbTrainerPCMenu();
 			pbSEPlay("computerclose");
 		}
 
 		public void pbPokeCenterPC() {
-			pbMessage(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
+			(this as IGameMessage).pbMessage(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
 			do { //;loop
 				string[] commands=PokemonPCList.getCommandList();
-				int command=pbMessage(Game._INTL("Which PC should be accessed?"),
+				int command=(this as IGameMessage).pbMessage(Game._INTL("Which PC should be accessed?"),
 					commands,commands.Length);
 				if (!PokemonPCList.callCommand(command)) {
 					break;

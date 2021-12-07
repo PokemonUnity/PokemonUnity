@@ -65,20 +65,20 @@ namespace PokemonUnity
 		/// </summary>
 		public static IDictionary<Locations,int[]> LocationData { get; private set; }
 		/// <summary>
-		/// List of <see cref="Player.Area"/> that triggers <seealso cref="Overworld.EncounterData"/>
+		/// List of <see cref="Player.Area"/> that triggers <seealso cref="Overworld.IEncounterData"/>
 		/// <para></para>
 		/// Key: <seealso cref="Overworld.Area.Id"/> | Value: <seealso cref="Player.Area"/>
 		/// </summary>
 		public static IDictionary<int,Area> AreaData { get; private set; }
 		/// <summary>
-		/// Key: <seealso cref="Method"/> | Value: <seealso cref="EncounterData.Id"/>
+		/// Key: <seealso cref="Method"/> | Value: <seealso cref="IEncounterData.Id"/>
 		/// </summary>
 		public static IDictionary<Method,int[]> MethodData { get; private set; }
 		/// <summary>
-		/// Key: <seealso cref="EncounterData.Id"/> | Value: <seealso cref="Overworld.EncounterData"/>
+		/// Key: <seealso cref="IEncounterData.Id"/> | Value: <seealso cref="Overworld.IEncounterData"/>
 		/// </summary>
-		public static IDictionary<int,EncounterData> EncounterData { get; private set; }
-		//public static IDictionary<Method,EncounterData> EncounterMethodData { get; private set; }
+		public static IDictionary<int,IEncounterData> EncounterData { get; private set; }
+		//public static IDictionary<Method,IEncounterData> EncounterMethodData { get; private set; }
 		public static IDictionary<TrainerTypes,TrainerMetaData> TrainerMetaData { get; private set; }
 		public static IDictionary<GymBadges,Character.BadgeData> BadgeData { get; private set; }
 		public static IDictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; private set; }
@@ -288,7 +288,7 @@ namespace PokemonUnity
 		public static bool InitEncounters(bool sql = true)
 		{
 			MethodData = new Dictionary<Method, int[]>();
-			EncounterData = new Dictionary<int, EncounterData>();
+			EncounterData = new Dictionary<int, IEncounterData>();
 			if (sql) //using (con)
 				return GetEncountersFromSQL(con);
 			else return false;
@@ -383,7 +383,7 @@ namespace PokemonUnity
 							,evSPA: int.Parse(node.GetAttributeValueOrNull("eSPA"))
 							,evSPD: int.Parse(node.GetAttributeValueOrNull("eSPD"))
 							,evSPE: int.Parse(node.GetAttributeValueOrNull("eSPE"))
-							,pokedexColor: (Color)int.Parse(node.GetAttributeValueOrNull("Color"))
+							,pokedexColor: (Colors)int.Parse(node.GetAttributeValueOrNull("Color"))
 							,baseFriendship: int.Parse(node.GetAttributeValueOrNull("Friend"))
 							,baseStatsHP:  int.Parse(node.GetAttributeValueOrNull("HP" ))
 							,baseStatsATK: int.Parse(node.GetAttributeValueOrNull("ATK"))
@@ -2231,7 +2231,7 @@ namespace PokemonUnity
 									,evSPA: int.Parse((string)reader["espa"].ToString())
 									,evSPD: int.Parse((string)reader["espd"].ToString())
 									,evSPE: int.Parse((string)reader["espe"].ToString())
-									,pokedexColor: (Color)int.Parse(string.IsNullOrEmpty((string)reader["color_id"].ToString()) ? "0" : (string)reader["color_id"].ToString())
+									,pokedexColor: (Colors)int.Parse(string.IsNullOrEmpty((string)reader["color_id"].ToString()) ? "0" : (string)reader["color_id"].ToString())
 									,baseFriendship: int.Parse(string.IsNullOrEmpty((string)reader["base_happiness"].ToString()) ? "0" : (string)reader["base_happiness"].ToString())
 									,baseStatsHP:  int.Parse((string)reader["bhp"].ToString())
 									,baseStatsATK: int.Parse((string)reader["batk"].ToString())

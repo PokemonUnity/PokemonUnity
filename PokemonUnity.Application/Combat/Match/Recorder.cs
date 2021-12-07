@@ -17,8 +17,8 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Combat
 {
-	public class PokeBattle_RecordedBattleModule<out TBattle> : Battle, IRecordedBattleModule<TBattle>, IBattle, IBattleRecordData
-			where TBattle : IBattle, IBattleRecordData
+	public class PokeBattle_RecordedBattleModule<out IBattle> : Battle, IRecordedBattleModule<IBattle>, IBattle, IBattleRecordData
+			//where TBattle : IBattle, IBattleRecordData
 	{
 		#region Variables
 		public IList<int> randomnums { get; protected set; }
@@ -158,7 +158,7 @@ namespace PokemonUnity.Combat
 			base.pbCommandPhase();
 		}
 
-		public void pbStorePokemon(IPokemon pkmn) {
+		public override void pbStorePokemon(IPokemon pkmn) {
 		}
 
 		public override int pbRandom(int num) {
@@ -204,18 +204,18 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Playback?
 	/// </summary>
-	/// <typeparam name="TBattle"></typeparam>
-	public class PokeBattle_BattlePlayerModule<out TBattle> : PokeBattle_RecordedBattleModule<TBattle>, IBattlePlayerModule<TBattle>
-			where TBattle : PokeBattle_RecordedBattleModule<TBattle>, IRecordedBattleModule<TBattle>, IBattle, IBattleRecordData
+	/// <typeparam name="IBattle"></typeparam>
+	public class PokeBattle_BattlePlayerModule<out IPokeBattle_RecordedBattleModule> : PokeBattle_RecordedBattleModule<IBattle>, IBattlePlayerModule<IPokeBattle_RecordedBattleModule>
+			//where TBattle : PokeBattle_RecordedBattleModule<TBattle>, IRecordedBattleModule<TBattle>, IBattle, IBattleRecordData
 	{
 		#region Variables
 		public int randomindex { get; protected set; }
 		public int switchindex { get; protected set; }
 			#endregion
 
-		public PokeBattle_BattlePlayerModule(IPokeBattle_Scene scene, TBattle battle) : base (scene, battle.party1, battle.party2, battle.player, battle.opponent)
-		{ (this as IBattlePlayerModule<TBattle>).initialize(scene, battle); }
-		public TBattle initialize(IPokeBattle_Scene scene, IBattle battle)
+		public PokeBattle_BattlePlayerModule(IPokeBattle_Scene scene, IPokeBattle_RecordedBattleModule battle) : base (scene, battle.party1, battle.party2, battle.player, battle.opponent)
+		{ (this as IBattlePlayerModule<IBattle>).initialize(scene, battle); }
+		public IBattlePlayerModule<IPokeBattle_RecordedBattleModule> initialize(IPokeBattle_Scene scene, IBattle battle)
 		{
 			@battletype=battle.battletype;
 			@properties=battle.properties;

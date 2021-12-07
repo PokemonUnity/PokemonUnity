@@ -60,7 +60,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		bool pbIsSpecial(Types type);
 
-		bool pbIsStatus();
+		bool pbIsStatus { get; }
 
 		bool pbIsDamaging();
 
@@ -122,7 +122,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#region This move's type effectiveness
 		bool pbTypeImmunityByAbility(Types type, IBattler attacker, IBattler opponent);
 
-		double pbTypeModifier(Types type, IBattler attacker, IBattler opponent);
+		float pbTypeModifier(Types type, IBattler attacker, IBattler opponent);
 
 		double pbTypeModMessages(Types type, IBattler attacker, IBattler opponent);
 		#endregion
@@ -144,7 +144,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		double pbModifyDamage(double damagemult, IBattler attacker, IBattler opponent);
 
-		int pbCalcDamage(IBattler attacker, IBattler opponent, params int[] options); //= new int[] { 0 }
+		int pbCalcDamage(IBattler attacker, IBattler opponent, params byte[] options); //= new int[] { 0 }
 
 		int pbReduceHPDamage(int damage, IBattler attacker, IBattler opponent);
 		#endregion

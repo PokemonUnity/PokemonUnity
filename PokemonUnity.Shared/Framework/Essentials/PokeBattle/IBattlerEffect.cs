@@ -89,7 +89,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		#region Flinching
-		void pbFlinch(IBattler attacker);
+		bool pbFlinch(IBattler attacker);
 		#endregion
 
 		#region Increase stat stages

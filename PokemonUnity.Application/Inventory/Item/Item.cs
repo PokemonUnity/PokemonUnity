@@ -339,7 +339,7 @@ namespace PokemonUnity.Inventory
 		}
 
 		public static int pbRestorePP(IPokemon pokemon,int move,int pp) {
-			if (pokemon.moves[move].MoveId==0) return 0;
+			if (pokemon.moves[move].id==0) return 0;
 			if (pokemon.moves[move].TotalPP==0) return 0;
 			int newpp=pokemon.moves[move].PP+pp;
 			if (newpp>pokemon.moves[move].TotalPP) {
@@ -447,11 +447,11 @@ namespace PokemonUnity.Inventory
 			}
 			string pkmnname=pokemon.Name;
 			for (int i = 0; i < 4; i++) {
-				if (pokemon.moves[i].MoveId==move) {
+				if (pokemon.moves[i].id==move) {
 					if (!ignoreifknown) Game.pbMessage(Game._INTL("{1} already knows {2}.",pkmnname,movename));
 					return false;
 				}
-				if (pokemon.moves[i].MoveId==0) {
+				if (pokemon.moves[i].id==0) {
 					pokemon.moves[i]=new Attack.Move(move);
 					Game.pbMessage(Game._INTL("\\se[]{1} learned {2}!\\se[MoveLearnt]",pkmnname,movename));
 					return true;
@@ -464,7 +464,7 @@ namespace PokemonUnity.Inventory
 					Game.pbMessage(Game._INTL("Which move should be forgotten?"));
 					int forgetmove=pbForgetMove(pokemon,move);
 					if (forgetmove>=0) {
-						string oldmovename=pokemon.moves[forgetmove].MoveId.ToString(TextScripts.Name);
+						string oldmovename=pokemon.moves[forgetmove].id.ToString(TextScripts.Name);
 						byte oldmovepp=pokemon.moves[forgetmove].PP;
 						pokemon.moves[forgetmove]=new Attack.Move(move); // Replaces current/total PP
 						if (bymachine) pokemon.moves[forgetmove].PP=Math.Min(oldmovepp,pokemon.moves[forgetmove].TotalPP);

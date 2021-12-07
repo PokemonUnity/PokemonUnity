@@ -211,7 +211,7 @@ public static Pokemons pbMiniCheckEvolution(PokemonEssentials.Interface.PokeBatt
   //case EvolutionMethod.HappinessMoveType:
   //  if (pokemon.Happiness>=220) {
   //    for (int i = 0; i < 4; i++) {
-  //      if (pokemon.moves[i].MoveId>0 && pokemon.moves[i].Type==level) return poke;
+  //      if (pokemon.moves[i].id>0 && pokemon.moves[i].Type==level) return poke;
   //    }
   //  }
   //  break;
@@ -262,7 +262,7 @@ public static Pokemons pbMiniCheckEvolution(PokemonEssentials.Interface.PokeBatt
     break;
   case EvolutionMethod.Move: //.HasMove:
     for (int i = 0; i < 4; i++) {
-      if (pokemon.moves[i].MoveId==(Moves)level) return poke;
+      if (pokemon.moves[i].id==(Moves)level) return poke;
     }
     break;
   case EvolutionMethod.Party: //.HasInParty:

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
+using PokemonEssentials.Interface.Item;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
@@ -42,7 +43,7 @@ namespace PokemonEssentials.Interface.Field
 		int playerID { get; set; }
 		int coins { get; set; }
 		int sootsack { get; set; }
-		int? mailbox { get; set; }
+		IList<IMail> mailbox { get; set; }
 		IPCItemStorage pcItemStorage	{ get; set; }
 		int stepcount { get; set; }
 		int happinessSteps { get; set; }
@@ -51,7 +52,7 @@ namespace PokemonEssentials.Interface.Field
 		bool daycareEgg { get; set; } //ToDo: int?...
 		int daycareEggSteps { get; set; }
 		bool[] pokedexUnlocked { get; set; } // Array storing which Dexes are unlocked
-		List<int> pokedexViable { get; set; } // All Dexes of non-zero length and unlocked
+		IList<int> pokedexViable { get; set; } // All Dexes of non-zero length and unlocked
 		int pokedexDex { get; set; } // Dex currently looking at (-1 is National Dex)
 		int[] pokedexIndex { get; set; } // Last species viewed per Dex
 		int pokedexMode { get; set; } // Search mode
@@ -62,8 +63,8 @@ namespace PokemonEssentials.Interface.Field
 		float pokecenterY { get; set; }
 		int pokecenterDirection { get; set; }
 		ITilePosition pokecenter			{ get; set; }
-		List<int> visitedMaps { get; set; }
-		List<int> mapTrail { get; set; }
+		IList<int> visitedMaps { get; set; }
+		IList<int> mapTrail { get; set; }
 		IAudioBGM nextBattleBGM { get; set; }
 		IAudioME nextBattleME { get; set; }
 		IAudioObject nextBattleBack { get; set; }
@@ -72,7 +73,7 @@ namespace PokemonEssentials.Interface.Field
 		ITrainer partner { get; set; }
 		int? challenge { get; set; }
 		IBattleRecordData lastbattle { get; set; }
-		List<IPhoneContact> phoneNumbers { get; set; }
+		IList<IPhoneContact> phoneNumbers { get; set; }
 		/// <summary>
 		/// The time between successive received phone calls is set to a random amount of time between 20 and 40 minutes, 
 		/// and is counted down except when messages are being displayed or the player is being forced to move by a move route. 
@@ -80,7 +81,7 @@ namespace PokemonEssentials.Interface.Field
 		/// </summary>
 		int phoneTime { get; set; }
 		bool safesave { get; set; }
-		Dictionary<KeyValuePair<int, int>, int> eventvars { get; set; }
+		IDictionary<KeyValuePair<int, int>, int> eventvars { get; set; }
 
 
 		//IGlobalMetadata initialize();

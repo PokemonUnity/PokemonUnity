@@ -10,10 +10,11 @@ using PokemonUnity.Character;
 using PokemonUnity.Monster.Data;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.Item;
 
 namespace PokemonUnity.Monster
 {
-	public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IPokemon, IEquatable<Pokemon>, IEqualityComparer<Pokemon>
+	public partial class Pokemon : IPokemon, IEquatable<Pokemon>, IEqualityComparer<Pokemon>
 	{
 		#region Variables
 		private Pokemons pokemons { get; set; }
@@ -174,7 +175,7 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// The moves known when this Pokemon was obtained
 		/// </summary>
-		private List<Moves> firstMoves { get; set; }
+		private IList<Moves> firstMoves { get; set; }
 		/// <summary>
 		/// List of moves that this pokemon has learned, and is capable of relearning
 		/// </summary>
@@ -228,7 +229,7 @@ namespace PokemonUnity.Monster
 			StatusCount = 0;
 			ballUsed = Items.NONE;
 			Item = Items.NONE;
-			ribbons = new List<Ribbon>();
+			ribbons = new List<Ribbons>();
 			//calcStats();
 			//if (Game.GameData.GameMap != null)
 			//{
@@ -357,7 +358,7 @@ namespace PokemonUnity.Monster
 		/// <remarks>
 		/// I think this is only need for tested, not sure of purpose inside framework
 		/// </remarks>
-		public Pokemon(Pokemons pkmn, TrainerData? original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
+		public Pokemon(Pokemons pkmn, ITrainer original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
 
 		[System.Obsolete("Sample code for inspiration")]
 		public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
@@ -458,7 +459,7 @@ namespace PokemonUnity.Monster
 		/// <param name="timeEggHatched"></param>
 		/// ToDo: Maybe make this private? Move implicit convert to Pokemon class
 		public Pokemon(Pokemons species,
-			TrainerData? original,
+			ITrainer original,
 			string nickName, int form,
 			Abilities ability, Natures nature,
 			bool isShiny, bool? gender,
@@ -470,7 +471,7 @@ namespace PokemonUnity.Monster
 			int happiness, Status status, int statusCount,
 			int eggSteps, Items ballUsed,
 			string mail, Move[] moves, Moves[] history,
-			Ribbon[] ribbons, bool[] markings,
+			Ribbons[] ribbons, bool[] markings,
 			int personalId,
 			ObtainedMethod obtainedMethod,
 			DateTimeOffset timeReceived, DateTimeOffset? timeEggHatched) : this(species, original)
@@ -548,7 +549,7 @@ namespace PokemonUnity.Monster
 		public Pokemon(Pokemon pkmn, Items pokeball, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null)
 			: this(
 			species: pkmn.Species,
-			original: Game.GameData.Player.Trainer,
+			original: Game.GameData.Trainer,
 			nickName: nickname, form: pkmn.FormId,
 			ability: pkmn.Ability, nature: pkmn.Nature,
 			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
@@ -1395,8 +1396,8 @@ namespace PokemonUnity.Monster
 				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//int d = (Game.GameData.Player.Trainer.TrainerID ^ Game.GameData.Player.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
-				int d = ((!OT.Equals((object)null) ? OT.Value.TrainerID : Game.GameData.Player.Trainer.TrainerID)
-					^ (!OT.Equals((object)null) ? OT.Value.SecretID : Game.GameData.Player.Trainer.SecretID))
+				int d = ((!OT.Equals((object)null) ? OT.Value.TrainerID : Game.GameData.Trainer.publicID())
+					^ (!OT.Equals((object)null) ? OT.Value.SecretID : Game.GameData.Trainer.secretID()))
 					//^ ((Game.GameData.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Core.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Core.SHINYPOKEMONCHANCE) / 65536)
 					^ ((Game.GameData.Player.Party[0].Item == Items.SHINY_CHARM ? Core.SHINYPOKEMONCHANCE * 3 : Core.SHINYPOKEMONCHANCE) / 65536)
 					^ (PersonalId % 65536);
@@ -1552,7 +1553,7 @@ namespace PokemonUnity.Monster
 			int ret = 0;
 			for (int i = 0; i < 4; i++)
 			{//foreach(var move in this.moves){ 
-				if (this.moves[i].MoveId != Moves.NONE) ret += 1;//move.id
+				if (this.moves[i].id != Moves.NONE) ret += 1;//move.id
 			}
 			return ret;
 		}
@@ -1566,7 +1567,7 @@ namespace PokemonUnity.Monster
 			//if (move == Moves.NONE || move <= 0) return false;
 			for (int i = 0; i < 4; i++)
 			{
-				if (this.moves[i].MoveId == move) return true;
+				if (this.moves[i].id == move) return true;
 			}
 			return false;
 		}
@@ -1737,7 +1738,7 @@ namespace PokemonUnity.Monster
 			//for (int i = 0; i < _base.MoveSet.Length; i++){//foreach(var i in _base.MoveSet)
 			//    if (_base.MoveSet[i].Level <= this.Level)
 			//    {
-			//        movelist.Add(_base.MoveSet[i].MoveId);
+			//        movelist.Add(_base.MoveSet[i].id);
 			//    }
 			//}
 			for (int i = 0; i < 4; i++)
@@ -1764,10 +1765,10 @@ namespace PokemonUnity.Monster
 				return;
 			}
 			//for (int i = 0; i < 4; i++) {
-			//    if (moves[i].MoveId == move) { //Switch ordering of moves?
+			//    if (moves[i].id == move) { //Switch ordering of moves?
 			//        int j = i + 1;
 			//        while (j < 4) {
-			//            if (moves[j].MoveId == 0) break;
+			//            if (moves[j].id == 0) break;
 			//            Move tmp = moves[j];
 			//            moves[j] = moves[j - 1];
 			//            moves[j - 1] = tmp;
@@ -1783,7 +1784,7 @@ namespace PokemonUnity.Monster
 			}
 			for (int i = 0; i < 4; i++)
 			{
-				if (moves[i].MoveId == Moves.NONE)
+				if (moves[i].id == Moves.NONE)
 				{
 					moves[i] = new Move(move);
 					success = true;
@@ -1818,10 +1819,10 @@ namespace PokemonUnity.Monster
 			if (move <= 0) return;
 			for (int i = 0; i < 4; i++)
 			{
-				if (moves[i].MoveId == move)
+				if (moves[i].id == move)
 				{
 					int j = i + 1; while (j < 4) { 
-						if (@moves[j].MoveId == 0) break;
+						if (@moves[j].id == 0) break;
 						PokemonUnity.Attack.Move tmp = @moves[j];
 						@moves[j] = @moves[j - 1];
 						@moves[j - 1] = tmp;
@@ -1831,7 +1832,7 @@ namespace PokemonUnity.Monster
 				}
 			}
 			for (int i = 0; i< 4; i++) {
-				if (@moves[i].MoveId==0) {
+				if (@moves[i].id==0) {
 					@moves[i]=new PokemonUnity.Attack.Move(move);
 					return;
 				}
@@ -1893,7 +1894,7 @@ namespace PokemonUnity.Monster
 			List<Move> newmoves = new List<Move>();
 			for (int i = 0; i < 4; i++)
 			{
-				if (moves[i].MoveId != move) newmoves.Add(moves[i]);
+				if (moves[i].id != move) newmoves.Add(moves[i]);
 			}
 
 			newmoves.Add(new Move(0));
@@ -1944,7 +1945,7 @@ namespace PokemonUnity.Monster
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				if (moves[i].MoveId > 0) AddFirstMove(moves[i].MoveId);
+				if (moves[i].id > 0) AddFirstMove(moves[i].id);
 			}
 		}
 
@@ -1974,7 +1975,7 @@ namespace PokemonUnity.Monster
 
 		#region Contest attributes, ribbons
 		//ToDo: This is actually a hashset, and not list, because only store one of each
-		private List<Ribbon> ribbons { get; set; }
+		private List<Ribbons> ribbons { get; set; }
 		/// <summary>
 		/// Each region/ribbon sprite should have it's own Ribbon.EnumId
 		/// </summary>
@@ -1983,7 +1984,7 @@ namespace PokemonUnity.Monster
 		/// Does it make a difference if pokemon won contest in different regions? 
 		/// No -- ribbons are named after region; Do not need to record region data
 		/// ToDo: Dictionary(Ribbon,struct[DateTime/Bool])
-		public Ribbon[] Ribbons { get { return this.ribbons.ToArray(); } }
+		public Ribbons[] Ribbons { get { return this.ribbons.ToArray(); } }
 		/// <summary>
 		/// Contest stats; Max value is 255
 		/// </summary>
@@ -2001,7 +2002,7 @@ namespace PokemonUnity.Monster
 		{ 
 			get
 			{
-				if (@ribbons == null) @ribbons = new List<Ribbon>();
+				if (@ribbons == null) @ribbons = new List<Ribbons>();
 				return @ribbons.Count;
 			} 
 		}
@@ -2010,10 +2011,10 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="ribbon"></param>
 		/// <returns></returns>
-		public bool hasRibbon(Ribbon ribbon)
+		public bool hasRibbon(Ribbons ribbon)
 		{
-			if (@ribbons == null) @ribbons = new List<Ribbon>();
-			if (ribbon == Ribbon.NONE) return false;
+			if (@ribbons == null) @ribbons = new List<Ribbons>();
+			if (ribbon == PokemonUnity.Ribbons.NONE) return false;
 			//if (Ribbons.Count == 0) return false;
 			return Ribbons.Contains(ribbon);
 		}
@@ -2021,10 +2022,10 @@ namespace PokemonUnity.Monster
 		/// Gives this Pokémon the specified ribbon.
 		/// </summary>
 		/// <param name="ribbon"></param>
-		public void giveRibbon(Ribbon ribbon)
+		public void giveRibbon(Ribbons ribbon)
 		{
-			if (@ribbons == null) @ribbons = new List<Ribbon>();
-			if (ribbon == Ribbon.NONE) return;
+			if (@ribbons == null) @ribbons = new List<Ribbons>();
+			if (ribbon == PokemonUnity.Ribbons.NONE) return;
 			if (!Ribbons.Contains(ribbon)) this.ribbons.Add(ribbon);
 		}
 		/// <summary>
@@ -2032,17 +2033,17 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="arg"></param>
 		/// ToDo: Redo code below to something more hardcoded
-		public Ribbon upgradeRibbon(params Ribbon[] arg)
+		public Ribbons upgradeRibbon(params Ribbons[] arg)
 		{
-			if (@ribbons == null) @ribbons = new List<Ribbon>();
+			if (@ribbons == null) @ribbons = new List<Ribbons>();
 			for (int i = 0; i < arg.Length - 1; i++)
 			{
 				for (int j = 0; j < @ribbons.Count; j++)
 				{
-					Ribbon thisribbon = arg[i];
+					Ribbons thisribbon = arg[i];
 					if (@ribbons[j] == thisribbon)
 					{
-						Ribbon nextribbon = arg[i + 1];
+						Ribbons nextribbon = arg[i + 1];
 						@ribbons[j] = nextribbon;
 						return nextribbon;
 					}
@@ -2050,7 +2051,7 @@ namespace PokemonUnity.Monster
 			}
 			if (!hasRibbon(arg[arg.Length - 1]))
 			{
-				Ribbon firstribbon = arg[0];
+				Ribbons firstribbon = arg[0];
 				giveRibbon(firstribbon);
 				return firstribbon;
 			}
@@ -2060,7 +2061,7 @@ namespace PokemonUnity.Monster
 		/// Removes the specified ribbon from this Pokémon.
 		/// </summary>
 		/// <param name="ribbon"></param>
-		public void takeRibbon(Ribbon ribbon)
+		public void takeRibbon(Ribbons ribbon)
 		{
 			if (@ribbons == null) return;
 			if (ribbons.Count == 0) return;
@@ -2126,6 +2127,7 @@ namespace PokemonUnity.Monster
 		/// Not sure how i feel about this one... might consider removing
 		public Items[] wildHoldItems()
 		{
+			if (!Game.PokemonItemsData.ContainsKey(pokemons)) return new Items[0];
 			//_base.HeldItem
 			PokemonWildItems[] dexdata = Game.PokemonItemsData[pokemons];
 			//pbDexDataOffset(dexdata, @species, 48);
@@ -2315,7 +2317,7 @@ namespace PokemonUnity.Monster
 		/// When reverting back, return to original data, and split exp gained between fusion
 		/// ExpGained = (FusedExp - MiddleExpOfPokemons) / #ofPokemons
 		/// should remain null until needed
-		public Pokemon[] fused { get; set; }
+		public IPokemon[] fused { get; set; }
 		/// <summary>
 		/// Nickname
 		/// </summary>
@@ -2402,13 +2404,13 @@ namespace PokemonUnity.Monster
 		{
 			if (this.isEgg)
 				return false;
-			//if (index >= 0) moves[index] = new Move(moves[index].MoveId, moves[index].PPups, moves[index].TotalPP);
+			//if (index >= 0) moves[index] = new Move(moves[index].id, moves[index].PPups, moves[index].TotalPP);
 			if (index >= 0) moves[index].PP = moves[index].TotalPP;
 			else
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					//moves[i] = new Move(moves[i].MoveId, moves[i].PPups, moves[i].TotalPP);
+					//moves[i] = new Move(moves[i].id, moves[i].PPups, moves[i].TotalPP);
 					moves[i].PP = moves[i].TotalPP;
 				}
 			}
@@ -2481,7 +2483,7 @@ namespace PokemonUnity.Monster
 					if (Happiness < 200) gain = -15;
 					break;
 				default:
-					Game.pbMessage(Game._INTL("Unknown happiness-changing method."));
+					Game.GameData.pbMessage(Game._INTL("Unknown happiness-changing method."));
 					//break;
 					//If not listed above, then stop
 					//Otherwise rest of code will add points
@@ -2973,7 +2975,7 @@ namespace PokemonUnity.Monster
 		int IPokemon.spatk { get; set; }
 		int IPokemon.spdef { get; set; }
 		int[] IPokemon.iv { get; set; }
-		int IPokemon.ev { get; set; }
+		int[] IPokemon.ev { get; set; }
 		Pokemons IPokemon.species { get; set; }
 		int IPokemon.personalID { get; set; }
 		int IPokemon.trainerID { get; set; }
@@ -2983,8 +2985,8 @@ namespace PokemonUnity.Monster
 		int IPokemon.itemRecycle { get; set; }
 		int IPokemon.itemInitial { get; set; }
 		int IPokemon.belch { get; set; }
-		int IPokemon.mail { get; set; }
-		int IPokemon.fused { get; set; }
+		IMail IPokemon.mail { get; set; }
+		IPokemon[] IPokemon.fused { get; set; }
 		string IPokemon.name { get; set; }
 		int IPokemon.exp { get; set; }
 		int IPokemon.happiness { get; set; }
@@ -2992,22 +2994,22 @@ namespace PokemonUnity.Monster
 		int IPokemon.statusCount { get; set; }
 		int IPokemon.eggsteps { get; set; }
 		IMove[] IPokemon.moves { get; set; }
-		int IPokemon.firstmoves { get; set; }
+		IList<Moves> IPokemon.firstmoves { get; set; }
 		Items IPokemon.ballused { get; set; }
-		bool[] IPokemon.markings { get; set; }
+		bool[] IPokemon.markings { get; }
 		int IPokemon.obtainMode { get; set; }
 		int IPokemon.obtainMap { get; set; }
 		string IPokemon.obtainText { get; set; }
 		int IPokemon.obtainLevel { get; set; }
 		int IPokemon.hatchedMap { get; set; }
-		int IPokemon.language { get; set; }
+		int IPokemon.language { get; }
 		string IPokemon.ot { get; set; }
 		int IPokemon.otgender { get; set; }
 		int IPokemon.abilityflag { get; set; }
 		bool IPokemon.genderflag { get; set; }
 		int IPokemon.natureflag { get; set; }
 		bool IPokemon.shinyflag { get; set; }
-		int[] IPokemon.ribbons { get; set; }
+		IList<Ribbons> IPokemon.ribbons { get; set; }
 		int IPokemon.cool { get; set; }
 		int IPokemon.beauty { get; set; }
 		int IPokemon.cute { get; set; }
@@ -3081,11 +3083,6 @@ namespace PokemonUnity.Monster
 			throw new NotImplementedException();
 		}
 
-		KeyValuePair<Moves, int>[] IPokemon.getMoveList()
-		{
-			throw new NotImplementedException();
-		}
-
 		void IPokemon.pbDeleteMove(Moves move)
 		{
 			throw new NotImplementedException();
@@ -3111,7 +3108,7 @@ namespace PokemonUnity.Monster
 			throw new NotImplementedException();
 		}
 
-		int IPokemon.upgradeRibbon(params Ribbon[] arg)
+		int IPokemon.upgradeRibbon(params Ribbons[] arg)
 		{
 			throw new NotImplementedException();
 		}
@@ -3175,18 +3172,18 @@ namespace PokemonUnity.Monster
 			if (obj == null) return false;
 			return this == obj;
 		}
-		public bool Equals(PokemonUnity.Saving.SerializableClasses.SeriPokemon obj)
-		{
-			//if (obj == null) return false;
-			return this == obj; 
-		}
+		//public bool Equals(PokemonUnity.Saving.SerializableClasses.SeriPokemon obj)
+		//{
+		//	//if (obj == null) return false;
+		//	return this == obj; 
+		//}
 		public override bool Equals(object obj)
 		{
 			if (obj == null) return false;
 			if (obj.GetType() == typeof(Pokemon))
 				return Equals((Pokemon)obj);
-			if (obj.GetType() == typeof(PokemonUnity.Saving.SerializableClasses.SeriPokemon))
-				return Equals((PokemonUnity.Saving.SerializableClasses.SeriPokemon)obj);
+			//if (obj.GetType() == typeof(PokemonUnity.Saving.SerializableClasses.SeriPokemon))
+			//	return Equals((PokemonUnity.Saving.SerializableClasses.SeriPokemon)obj);
 			return base.Equals(obj);
 		}
 		public override int GetHashCode()

@@ -11,13 +11,15 @@ using PokemonUnity.Saving;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Utility;
 using PokemonUnity.Monster;
+using PokemonEssentials.Interface.Item;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IPokemon
 	{
 		/// <summary>
-		/// Current Total HP/ </summary>
+		/// Current Total HP
+		/// </summary>
 		int totalhp { get; set; }
 		/// <summary>
 		/// Current Attack stat
@@ -47,7 +49,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Effort Values
 		/// </summary>  
-		int ev { get; set; }
+		int[] ev { get; set; }
 		/// <summary>
 		/// Species (National Pokedex number)
 		/// </summary>
@@ -87,11 +89,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Mail
 		/// </summary>
-		int mail { get; set; }
+		IMail mail { get; set; }
 		/// <summary>
 		/// The Pokémon fused into this one
 		/// </summary>
-		int fused { get; set; }
+		IPokemon[] fused { get; set; }
 		/// <summary>
 		/// Nickname
 		/// </summary>
@@ -123,7 +125,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// The moves known when this Pokémon was obtained
 		/// </summary>
-		int firstmoves { get; set; }
+		IList<Moves> firstmoves { get; set; }
 		/// <summary>
 		/// Ball used
 		/// </summary>
@@ -131,7 +133,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Markings
 		/// </summary>
-		bool[] markings { get; set; }
+		//bool[] markings { get; }
 		/// <summary>
 		/// Manner obtained:
 		/// 0 - met, 1 - as egg, 2 - traded,
@@ -157,7 +159,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Language
 		/// </summary>
-		int language { get; set; }
+		//int language { get; set; }
 		/// <summary>
 		/// Original Trainer's name 
 		/// </summary>
@@ -165,9 +167,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Original Trainer's gender:
 		/// 0 - male, 1 - female, 2 - mixed, 3 - unknown
+		/// </summary>
+		/// <remarks>
 		/// For information only, not used to verify
 		/// ownership of the Pokemon
-		/// </summary>
+		/// </remarks>
 		int otgender { get; set; }
 		/// <summary>
 		/// Forces the first/second/hidden (0/1/2) ability
@@ -188,7 +192,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Array of ribbons
 		/// </summary>
-		int[] ribbons { get; set; }
+		IList<Ribbons> ribbons { get; set; }
 		/// <summary>
 		/// Contest stats
 		/// </summary>
@@ -456,26 +460,40 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns the list of moves this Pokémon can learn by levelling up.
 		/// </summary>
 		/// <returns></returns>
-		KeyValuePair<Moves, int>[] getMoveList();
+		//KeyValuePair<Moves, int>[] getMoveList();
+		Moves[] getMoveList(LearnMethod? method = null);
 
 		/// <summary>
 		/// Sets this Pokémon's movelist to the default movelist it originally had.
 		/// </summary>
 		void resetMoves();
 
-		// Silently learns the given move. Will erase the first known move if it has to.
+		/// <summary>
+		/// Silently learns the given move. Will erase the first known move if it has to.
+		/// </summary>
+		/// <param name="move"></param>
 		void pbLearnMove(Moves move);
 
-		// Deletes the given move from the Pokémon.
+		/// <summary>
+		/// Deletes the given move from the Pokémon.
+		/// </summary>
+		/// <param name="move"></param>
 		void pbDeleteMove(Moves move);
 
-		// Deletes the move at the given index from the Pokémon.
+		/// <summary>
+		/// Deletes the move at the given index from the Pokémon.
+		/// </summary>
+		/// <param name="index"></param>
 		void pbDeleteMoveAtIndex(int index);
 
-		// Deletes all moves from the Pokémon.
+		/// <summary>
+		/// Deletes all moves from the Pokémon.
+		/// </summary>
 		void pbDeleteAllMoves();
 
-		// Copies currently known moves into a separate array, for Move Relearner.
+		/// <summary>
+		/// Copies currently known moves into a separate array, for Move Relearner.
+		/// </summary>
 		void pbRecordFirstMoves();
 
 		bool isCompatibleWithMove(Moves move);
@@ -501,25 +519,25 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		/// <param name="ribbon"></param>
 		/// <returns></returns>
-		bool hasRibbon(Ribbon ribbon);
+		bool hasRibbon(Ribbons ribbon);
 
 		/// <summary>
 		/// Gives this Pokémon the specified ribbon.
 		/// </summary>
 		/// <param name="ribbon"></param>
-		void giveRibbon(Ribbon ribbon);
+		void giveRibbon(Ribbons ribbon);
 
 		/// <summary>
 		/// Replaces one ribbon with the next one along, if possible.
 		/// </summary>
 		/// <param name="arg"></param>
 		/// <returns></returns>
-		int upgradeRibbon(params Ribbon[] arg);
+		int upgradeRibbon(params Ribbons[] arg);
 
 		/// <summary>
 		/// Removes the specified ribbon from this Pokémon.
 		/// </summary>
-		void takeRibbon(Ribbon ribbon);
+		void takeRibbon(Ribbons ribbon);
 
 		/// <summary>
 		/// Removes all ribbons from this Pokémon.
@@ -551,15 +569,17 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokémon's mail.
 		/// </summary>
-		//void mail { get; }
+		//IMail mail { get; }
 
 		/// <summary>
 		/// Returns this Pokémon's language.
 		/// </summary>
-		//int language { get; }
+		int language { get; }
 
-		// Returns the markings this Pokémon has.
-		//void markings { get; }
+		/// <summary>
+		/// Returns the markings this Pokémon has.
+		/// </summary>
+		bool[] markings { get; }
 
 		/// <summary>
 		/// Returns a string stating the Unown form of this Pokémon.
@@ -643,7 +663,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="pv"></param>
 		void calcStat(int _base, int level, int iv, int ev, int pv);
 
-		// Recalculates this Pokémon's stats.
+		/// <summary>
+		/// Recalculates this Pokémon's stats.
+		/// </summary>
 		void calcStats();
 
 		/// <summary>

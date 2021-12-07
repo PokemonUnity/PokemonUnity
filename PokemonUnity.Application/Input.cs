@@ -2,15 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Globalization;
-using PokemonUnity;
-using PokemonUnity.Monster;
-using PokemonUnity.Inventory;
-using PokemonUnity.Saving;
-using System.IO;
-using PokemonUnity.Overworld;
 
 namespace PokemonUnity
 {
@@ -169,64 +160,44 @@ namespace PokemonUnity
 			switch (button) {
 				case Input.DOWN:
 					return new int[] { 0x28 }; // Down
-					break;
 				case Input.LEFT:
 					return new int[] { 0x25 }; // Left
-					break;
 				case Input.RIGHT:
 					return new int[] { 0x27 }; // Right
-					break;
 				case Input.UP:
 					return new int[] { 0x26 }; // Up
-					break;
 				case Input.A:
 					return new int[] { 0x5A,0x10 }; // Z, Shift
-					break;
 				case Input.B:
 					return new int[] { 0x58,0x1B }; // X, ESC 
-					break;
 				case Input.C:
 					return new int[] { 0x43,0x0D,0x20 }; // C, ENTER, Space
-					break;
 				case Input.X:
 					return new int[] { 0x41 }; // A
-					break;
 				case Input.Y:
 					return new int[] { 0x53 }; // S
-					break;
 				case Input.Z:
 					return new int[] { 0x44 }; // D
-					break;
 				case Input.L:
 					return new int[] { 0x51,0x21 }; // Q, Page Up
-					break;
 				case Input.R:
 					return new int[] { 0x57,0x22 }; // W, Page Down
-					break;
 				case Input.SHIFT:
 					return new int[] { 0x10 }; // Shift
-					break;
 				case Input.CTRL:
 					return new int[] { 0x11 }; // Ctrl
-					break;
 				case Input.ALT:
 					return new int[] { 0x12 }; // Alt
-					break;
 				case Input.F5:
 					return new int[] { 0x74 }; // F5
-					break;
 				case Input.F6:
 					return new int[] { 0x75 }; // F6
-					break;
 				case Input.F7:
 					return new int[] { 0x76 }; // F7
-					break;
 				case Input.F8:
 					return new int[] { 0x77 }; // F8
-					break;
 				case Input.F9:
 					return new int[] { 0x78 }; // F9
-					break;
 				default:
 					return new int[0];
 			}
@@ -264,13 +235,16 @@ namespace PokemonUnity
 			if (buttons.Count==0) {
 				return 0;
 			} else if (buttons.Count==1) {
-				return buttons[0][0];
+				//return buttons[0][0];
+				return buttons[0].Key;
 			} else if (buttons.Count==2) {
 				//  since buttons sorted by button, no need to sort here
-				if ((buttons[0][0]==Input.DOWN && buttons[1][0]==Input.UP)) {
+				//if ((buttons[0][0]==Input.DOWN && buttons[1][0]==Input.UP)) {
+				if ((buttons[0].Key==Input.DOWN && buttons[1].Key==Input.UP)) {
 					return 0;
 				}
-				if ((buttons[0][0]==Input.LEFT && buttons[1][0]==Input.RIGHT)) {
+				//if ((buttons[0][0]==Input.LEFT && buttons[1][0]==Input.RIGHT)) {
+				if ((buttons[0].Key==Input.LEFT && buttons[1].Key==Input.RIGHT)) {
 					return 0;
 				}
 			}
@@ -367,6 +341,7 @@ namespace PokemonUnity
 			public int Id { get { return EventId; } }
 			public int Button   { get; } // readonly
 			public bool IsDown  { get; } // readonly
+			//public int Player   { get; } // Multiple Players on One Game Screen?
 			public ButtonEventArgs(int button, bool isDown) { Button = button; IsDown = isDown; }
 		}
 	}

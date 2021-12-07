@@ -67,8 +67,8 @@ namespace PokemonUnity.Combat
 		}
 	}
 
-
-	public partial class Pokemon {
+	public partial class Pokemon : IBattlerClause
+	{
 		//unless (@__clauses__aliased) {
 		//  alias __clauses__pbCanSleep? pbCanSleep?;
 		//  alias __clauses__pbCanSleepYawn? pbCanSleepYawn?;
@@ -89,79 +89,84 @@ namespace PokemonUnity.Combat
 			return (count>0);
 		}
 
-		public bool pbCanSleepYawn() {
+		public bool pbCanSleepYawn() { return (this as IBattlerClause).pbCanSleepYawn(); }
+		bool IBattlerClause.pbCanSleepYawn() {
 			if ((@battle.rules[BattleRule.SLEEPCLAUSE] || @battle.rules[BattleRule.MODIFIEDSLEEPCLAUSE]) && 
 				pbHasStatusPokemon(Status.SLEEP)) {
 				return false;
 			}
-			return _pbCanSleepYawn();
+			//return _pbCanSleepYawn();
+			return (this as IBattlerEffect).pbCanSleepYawn();
 		}
 
-		public bool pbCanFreeze (IBattler attacker,bool showMessages,IBattleMove move=null) {
+		public bool pbCanFreeze (IBattler attacker,bool showMessages,IBattleMove move=null) { return (this as IBattlerClause).pbCanFreeze(attacker,showMessages,move); }
+		bool IBattlerClause.pbCanFreeze(IBattler attacker,bool showMessages,IBattleMove move) {
 			if (@battle.rules[BattleRule.FREEZECLAUSE] && pbHasStatusPokemon(Status.FROZEN)) {
 				return false;
 			}
-			return _pbCanFreeze(attacker,showMessages,move);
+			//return _pbCanFreeze(attacker,showMessages,move);
+			return (this as IBattlerEffect).pbCanFreeze(attacker,showMessages,move);
 		}
 
-		public bool pbCanSleep (IBattler attacker,bool showMessages,IBattleMove move=null,bool ignorestatus=false) {
+		public bool pbCanSleep (IBattler attacker,bool showMessages,IBattleMove move=null,bool ignorestatus=false) { return (this as IBattlerClause).pbCanSleep(attacker,showMessages,move,ignorestatus); }
+		bool IBattlerClause.pbCanSleep(IBattler attacker,bool showMessages,IBattleMove move,bool ignorestatus) {
 			bool selfsleep=(attacker.IsNotNullOrNone() && attacker.Index==this.Index);
 			if (((@battle.rules[BattleRule.MODIFIEDSLEEPCLAUSE]) || (!selfsleep && @battle.rules[BattleRule.SLEEPCLAUSE])) && 
 				pbHasStatusPokemon(Status.SLEEP)) {
 				if (showMessages) {
-				@battle.pbDisplay(Game._INTL("But {1} couldn't sleep!",this.ToString(true)));
+					@battle.pbDisplay(Game._INTL("But {1} couldn't sleep!",this.ToString(true)));
 				}
 				return false;
 			}
-			return _pbCanSleep(attacker,showMessages,move,ignorestatus);
+			//return _pbCanSleep(attacker,showMessages,move,ignorestatus);
+			return (this as IBattlerEffect).pbCanSleep(attacker,showMessages,move,ignorestatus);
 		}
 	}
-
 
 	#region Rules that Override Move Effect
-	public partial class PokeBattle_Move_022 { // Double Team
+	public partial class PokeBattle_Move_022 : IBattleMove_MoveFailed { // Double Team
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
 			if (@battle.rules[BattleRule.EVASIONCLAUSE]) return true;
 			return false;
 		}
 	}
 
-	public partial class PokeBattle_Move_034 { // Minimize
+	public partial class PokeBattle_Move_034 : IBattleMove_MoveFailed { // Minimize
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
 			if (@battle.rules[BattleRule.EVASIONCLAUSE]) return true;
 			return false;
 		}
 	}
 
-	public partial class PokeBattle_Move_067 { // Skill Swap
+	public partial class PokeBattle_Move_067 : IBattleMove_MoveFailed { // Skill Swap
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
 			if (@battle.rules[BattleRule.SKILLSWAPCLAUSE]) return true;
 			return false;
 		}
 	}
 
-	public partial class PokeBattle_Move_06A { // Sonicboom
+	public partial class PokeBattle_Move_06A : IBattleMove_MoveFailed { // Sonicboom
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
 			if (@battle.rules[BattleRule.SONICBOOMCLAUSE]) return true;
 			return false;
 		}
 	}
 
-	public partial class PokeBattle_Move_06B { // Dragon Rage
+	public partial class PokeBattle_Move_06B : IBattleMove_MoveFailed { // Dragon Rage
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
 			if (@battle.rules[BattleRule.SONICBOOMCLAUSE]) return true;
 			return false;
 		}
 	}
 
-	public partial class PokeBattle_Move_070 { // OHKO moves
+	public partial class PokeBattle_Move_070 : IBattleMove_MoveFailed { // OHKO moves
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
 			if (@battle.rules[BattleRule.OHKOCLAUSE]) return true;
 			return false;
 		}
 	}
 
-	public partial class PokeBattle_Move_0E0 { // Selfdestruct
+	public partial class PokeBattle_Move_0E0 : IBattleMove_MoveFailed { // Selfdestruct
 		//unless (@__clauses__aliased) {
 		//  alias __clauses__pbOnStartUse pbOnStartUse;
 		//  @__clauses__aliased=true;
@@ -191,7 +196,7 @@ namespace PokemonUnity.Combat
 		}
 	}
 
-	public partial class PokeBattle_Move_0E5 { // Perish Song
+	public partial class PokeBattle_Move_0E5 : IBattleMove_MoveFailed { // Perish Song
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
 			if (@battle.rules["perishsongclause"] && attacker.NonActivePokemonCount==0) {
 				return true;
@@ -200,7 +205,7 @@ namespace PokemonUnity.Combat
 		}
 	}
 
-	public partial class PokeBattle_Move_0E7 { // Destiny Bond
+	public partial class PokeBattle_Move_0E7 : IBattleMove_MoveFailed { // Destiny Bond
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
 			if (@battle.rules["perishsongclause"] && attacker.NonActivePokemonCount==0) {
 				return true;

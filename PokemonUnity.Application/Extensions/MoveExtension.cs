@@ -32,15 +32,15 @@ namespace PokemonUnity
 		#endregion
 		public static bool IsNotNullOrNone(this PokemonUnity.Attack.Move move)
 		{
-			return move != null || move.MoveId != Moves.NONE;
+			return move != null || move.id != Moves.NONE;
 		}
 		public static bool IsNotNullOrNone(this PokemonUnity.Combat.Move move)
 		{
-			return move != null || move.MoveId != Moves.NONE;
+			return move != null || move.id != Moves.NONE;
 		}
 		public static bool IsNotNullOrNone(this IBattleMove move)
 		{
-			return move != null || move.MoveId != Moves.NONE;
+			return move != null || move.id != Moves.NONE;
 		}
 		public static string ToString(this PokemonUnity.Moves move, TextScripts text)
 		{

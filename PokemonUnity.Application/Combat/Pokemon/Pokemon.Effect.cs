@@ -15,10 +15,10 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Combat
 {
-	public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IBattlerEffect
+	public partial class Pokemon : IBattlerEffect
 	{
 		#region Sleep
-		private bool _pbCanSleep(PokemonEssentials.Interface.PokeBattle.IBattler attacker, bool showMessages, IMove move=null, bool ignorestatus=false) {
+		bool IBattlerEffect.pbCanSleep(IBattler attacker, bool showMessages, IBattleMove move, bool ignorestatus) {
 			if (isFainted()) return false;
 			bool selfsleep=(attacker.IsNotNullOrNone() && attacker.Index==this.Index);
 			if (!ignorestatus && status==Status.SLEEP) {
@@ -41,7 +41,7 @@ namespace PokemonUnity.Combat
 					return false;
 				}
 			if ((attacker.IsNotNullOrNone() && attacker.hasMoldBreaker()) || !hasWorkingAbility(Abilities.SOUNDPROOF))
-				for (int i = 0; i< 4; i++)
+				for (int i = 0; i < @battle.battlers.Length; i++)
 					if (@battle.battlers[i].effects.Uproar>0) {
 						if (showMessages) @battle.pbDisplay(Game._INTL("But the uproar kept {1} awake!",ToString(true)));
 						return false;
@@ -73,10 +73,10 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		private bool _pbCanSleepYawn() {
+		bool IBattlerEffect.pbCanSleepYawn() {
 			if (status!=0) return false;
 			if (!hasWorkingAbility(Abilities.SOUNDPROOF))
-				for (int i = 0; i < 4; i++)
+				for (int i = 0; i < @battle.battlers.Length; i++)
 				if (@battle.battlers[i].effects.Uproar>0) return false;
 			if (!this.isAirborne()) {
 				if (@battle.field.ElectricTerrain>0) return false;
@@ -119,7 +119,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Poison
-		public bool pbCanPoison(Pokemon attacker,bool showMessages,Move move=null) {
+		public bool pbCanPoison(IBattler attacker,bool showMessages,IBattleMove move=null) {
 			if (isFainted()) return false;
 			if (status==Status.POISON) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("{1} is already poisoned.",ToString()));
@@ -161,7 +161,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public bool pbCanPoisonSynchronize(Pokemon opponent) {
+		public bool pbCanPoisonSynchronize(IBattler opponent) {
 			if (isFainted()) return false;
 			if ((hasType(Types.POISON) || hasType(Types.STEEL)) && !hasWorkingItem(Items.RING_TARGET)) {
 				@battle.pbDisplay(Game._INTL("{1}'s {2} had no effect on {3}!",
@@ -203,7 +203,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public void pbPoison(Pokemon attacker,string msg=null, bool toxic=false) {
+		public void pbPoison(IBattler attacker,string msg=null, bool toxic=false) {
 			this.status=Status.POISON;
 			this.StatusCount=(toxic) ? 1 : 0;
 			this.effects.Toxic=0;
@@ -231,7 +231,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Burn
-		public bool pbCanBurn(Pokemon attacker,bool showMessages,Move move=null) {
+		public bool pbCanBurn(IBattler attacker,bool showMessages,IBattleMove move=null) {
 			if (isFainted()) return false;
 			if (this.status==Status.BURN) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("{1} already has a burn.",ToString()));
@@ -273,7 +273,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public bool pbCanBurnSynchronize(Pokemon opponent) {
+		public bool pbCanBurnSynchronize(IBattler opponent) {
 			if (isFainted()) return false;
 			if (this.status!=0) return false;
 			if (hasType(Types.FIRE) && !hasWorkingItem(Items.RING_TARGET)) {
@@ -299,7 +299,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public void pbBurn(Pokemon attacker,string msg=null) {
+		public void pbBurn(IBattler attacker,string msg=null) {
 			this.status=Status.BURN;
 			this.StatusCount=0;
 			@battle.pbCommonAnimation("Burn",this,null);
@@ -319,7 +319,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Paralyze
-		public bool pbCanParalyze(Pokemon attacker,bool showMessages,Move move=null) {
+		public bool pbCanParalyze(IBattler attacker,bool showMessages,IBattleMove move=null) {
 			if (isFainted()) return false;
 			if (status==Status.PARALYSIS) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("{1} is already paralyzed!",ToString()));
@@ -361,7 +361,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public bool pbCanParalyzeSynchronize(Pokemon opponent) {
+		public bool pbCanParalyzeSynchronize(IBattler opponent) {
 			if (this.status!=0) return false;
 			if (@battle.field.MistyTerrain>0 && !this.isAirborne()) return false;
 			if (hasType(Types.ELECTRIC) && !hasWorkingItem(Items.RING_TARGET) && Core.USENEWBATTLEMECHANICS) return false;
@@ -383,7 +383,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public void pbParalyze(Pokemon attacker,string msg=null) {
+		public void pbParalyze(IBattler attacker,string msg=null) {
 			this.status=Status.PARALYSIS;
 			this.StatusCount=0;
 			@battle.pbCommonAnimation("Paralysis",this,null);
@@ -403,7 +403,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Freeze
-		private bool _pbCanFreeze(Pokemon attacker,bool showMessages,Move move=null) {
+		bool IBattlerEffect.pbCanFreeze(IBattler attacker,bool showMessages,IBattleMove move) {
 			if (isFainted()) return false;
 			if (status==Status.FROZEN) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("{1} is already frozen solid!",ToString()));
@@ -509,7 +509,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Confuse
-		public bool pbCanConfuse(Pokemon attacker=null,bool showMessages=true,Move move=null) {
+		public bool pbCanConfuse(IBattler attacker=null,bool showMessages=true,IBattleMove move=null) {
 			if (isFainted()) return false;
 			if (effects.Confusion>0) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("{1} is already confused!",ToString()));
@@ -573,7 +573,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Attraction
-		public bool pbCanAttract(Pokemon attacker,bool showMessages=true) {
+		public bool pbCanAttract(IBattler attacker,bool showMessages=true) {
 			if (isFainted()) return false;
 			if (!attacker.IsNotNullOrNone() || attacker.isFainted()) return false;
 			if (effects.Attract>=0) {
@@ -594,7 +594,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public void pbAttract(Pokemon attacker,string msg=null) {
+		public void pbAttract(IBattler attacker,string msg=null) {
 			effects.Attract=attacker.Index;
 			@battle.pbCommonAnimation("Attract",this,null);
 			if (!string.IsNullOrEmpty(msg))
@@ -610,7 +610,7 @@ namespace PokemonUnity.Combat
 			}
 		}
 
-		public void pbAnnounceAttract(Pokemon seducer) {
+		public void pbAnnounceAttract(IBattler seducer) {
 			@battle.pbCommonAnimation("Attract",this,null);
 			@battle.pbDisplayBrief(Game._INTL("{1} is in love with {2}!",
 				ToString(),seducer.ToString(true)));
@@ -627,7 +627,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Flinching
-		public bool pbFlinch(Pokemon attacker) {
+		public bool pbFlinch(IBattler attacker) {
 			if ((!attacker.IsNotNullOrNone() || !attacker.hasMoldBreaker()) && hasWorkingAbility(Abilities.INNER_FOCUS)) return false;
 			effects.Flinch=true;
 			return true;
@@ -639,7 +639,7 @@ namespace PokemonUnity.Combat
 			return @stages[(int)stat]>=6;
 		}
 
-		public bool pbCanIncreaseStatStage(Stats stat,Pokemon attacker=null,bool showMessages=false,Move move=null,bool moldbreaker=false,bool ignoreContrary=false) {
+		public bool pbCanIncreaseStatStage(Stats stat,IBattler attacker=null,bool showMessages=false,IBattleMove move=null,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
 				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
@@ -653,7 +653,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public int pbIncreaseStatBasic(Stats stat,int increment,Pokemon attacker=null,bool moldbreaker=false,bool ignoreContrary=false) {
+		public int pbIncreaseStatBasic(Stats stat,int increment,IBattler attacker=null,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker()) { 
 					if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
@@ -666,7 +666,7 @@ namespace PokemonUnity.Combat
 			return increment;
 		}
 
-		public bool pbIncreaseStat(Stats stat,int increment,Pokemon attacker,bool showMessages,Move move=null,bool upanim=true,bool moldbreaker=false,bool ignoreContrary=false) {
+		public bool pbIncreaseStat(Stats stat,int increment,IBattler attacker,bool showMessages,IBattleMove move=null,bool upanim=true,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
 				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
@@ -691,7 +691,7 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public bool pbIncreaseStatWithCause(Stats stat,int increment,Pokemon attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false) {
+		public bool pbIncreaseStatWithCause(Stats stat,int increment,IBattler attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
 				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
@@ -739,7 +739,7 @@ namespace PokemonUnity.Combat
 		/// <param name="moldbreaker"></param>
 		/// <param name="ignoreContrary"></param>
 		/// <returns></returns>
-		public bool pbCanReduceStatStage(Stats stat,Pokemon attacker=null,bool showMessages=false,Move move=null,bool moldbreaker=false,bool ignoreContrary=false) {
+		public bool pbCanReduceStatStage(Stats stat,IBattler attacker=null,bool showMessages=false,IBattleMove move=null,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
 				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
@@ -798,7 +798,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public int pbReduceStatBasic(Stats stat,int increment,Pokemon attacker=null,bool moldbreaker=false,bool ignoreContrary=false) {
+		public int pbReduceStatBasic(Stats stat,int increment,IBattler attacker=null,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker) // moldbreaker is true only when Roar forces out a Pokémon into Sticky Web
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker()) {
 					if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
@@ -811,7 +811,7 @@ namespace PokemonUnity.Combat
 			return increment;
 		}
 
-		public bool pbReduceStat(Stats stat,int increment,Pokemon attacker,bool showMessages,Move move=null,bool downanim=true,bool moldbreaker=false,bool ignoreContrary=false) {
+		public bool pbReduceStat(Stats stat,int increment,IBattler attacker,bool showMessages,IBattleMove move=null,bool downanim=true,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
 				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
@@ -841,7 +841,7 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public bool pbReduceStatWithCause(Stats stat,int increment,Pokemon attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false) {
+		public bool pbReduceStatWithCause(Stats stat,int increment,IBattler attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
 				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
@@ -878,7 +878,7 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public bool pbReduceAttackStatIntimidate(Pokemon opponent) {
+		public bool pbReduceAttackStatIntimidate(IBattler opponent) {
 			if (isFainted()) return false;
 			if (effects.Substitute>0) {
 				@battle.pbDisplay(Game._INTL("{1}'s substitute protected it from {2}'s {3}!",

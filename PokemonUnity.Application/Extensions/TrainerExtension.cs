@@ -10,7 +10,12 @@ namespace PokemonUnity
 			return trainer != null || trainer.ID != TrainerTypes.WildPokemon;
 		}
 
-		public static bool IsNotNullOrNone(this PokemonUnity.Combat.Trainer[] trainer)
+		//public static bool IsNotNullOrNone(this PokemonUnity.Combat.Trainer[] trainer)
+		//{
+		//	return trainer != null || trainer.All(x => x.trainertype != TrainerTypes.WildPokemon); //|| trainer.ID != TrainerTypes.WildPokemon);
+		//}
+
+		public static bool IsNotNullOrNone(this PokemonEssentials.Interface.PokeBattle.ITrainer[] trainer)
 		{
 			return trainer != null || trainer.All(x => x.trainertype != TrainerTypes.WildPokemon); //|| trainer.ID != TrainerTypes.WildPokemon);
 		}

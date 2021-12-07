@@ -29,7 +29,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// <summary>
 	/// Partial <seealso cref="IBattler"/>
 	/// </summary>
-	public interface BattlerClause
+	public interface IBattlerClause
 	{
 		//alias __clauses__pbCanSleep? pbCanSleep ?;
 		//alias __clauses__pbCanSleepYawn? pbCanSleepYawn ?;

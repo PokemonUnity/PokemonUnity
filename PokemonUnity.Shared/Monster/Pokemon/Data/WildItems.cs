@@ -57,7 +57,6 @@ namespace PokemonUnity.Monster.Data
 		//		list.Add(Items.NONE);
 		//	}
 		//
-		//
 		//	//From list of 100 pokemons, select 1.
 		//	return list[Core.Rand.Next(list.Count)];
 		//}

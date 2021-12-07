@@ -10,7 +10,7 @@ using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonUnity
 {
-	public partial class Game
+	public partial class Game //: IGameSpriteWindow
 	{
 		// pbFadeOutIn(z) { block }
 		/// <summary>

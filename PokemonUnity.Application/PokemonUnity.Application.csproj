@@ -55,12 +55,8 @@
     <Compile Include="Combat\Effects\Field.cs" />
     <Compile Include="Combat\Effects\Move.cs" />
     <Compile Include="Combat\Effects\Side.cs" />
-    <Compile Include="Combat\Match\BattleArena.cs" />
-    <Compile Include="Combat\Match\BattlePalace.cs" />
-    <Compile Include="Combat\Match\Recorder.cs" />
     <Compile Include="Combat\Match\Regulated\OrgBattleRules.cs" />
     <Compile Include="Combat\Match\SafariZone.cs" />
-    <Compile Include="Combat\MoveEffectData.cs" />
     <Compile Include="Combat\Move.cs" />
     <Compile Include="Combat\Pokemon\Pokemon.cs" />
     <Compile Include="Combat\Pokemon\Pokemon.Effect.cs" />
@@ -73,12 +69,8 @@
     <Compile Include="Extensions\MoveExtension.cs" />
     <Compile Include="Extensions\TrainerExtension.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
-    <Compile Include="Extensions\Utility\Extensions.cs" />
-    <Compile Include="Extensions\Utility\LinearCongRandom.cs" />
-    <Compile Include="Extensions\Utility\MathHelper.cs" />
-    <Compile Include="Extensions\Utility\ScriptConversion.cs" />
-    <Compile Include="Extensions\Utility\StringHelper.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="Game\Feature.cs" />
     <Compile Include="Game\Game.Debugger.cs" />
     <Compile Include="Game\Game.Conditions.cs" />
     <Compile Include="Game\Game.cs" />
@@ -90,8 +82,8 @@
     <Compile Include="Game\Game.MiscData.cs" />
     <Compile Include="Game\Options.cs" />
     <Compile Include="GlobalMetadata\GlobalMetadata.cs" />
-    <Compile Include="Input.cs" />
     <Compile Include="Game\Item.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="Inventory\Item\Item.cs" />
     <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Inventory\Item\Item.Helper.cs" />

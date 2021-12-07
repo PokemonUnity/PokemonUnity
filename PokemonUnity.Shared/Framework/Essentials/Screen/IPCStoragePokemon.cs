@@ -19,7 +19,7 @@ using PokemonEssentials.Interface.EventArg;
 namespace PokemonEssentials.Interface.Screen
 {	
 	public interface IPokemonBox {
-		List<IPokemon> pokemon				{ get; }
+		IList<IPokemon> pokemon				{ get; }
 		string name							{ get; set; }
 		string background					{ get; set; }
 
@@ -38,7 +38,7 @@ namespace PokemonEssentials.Interface.Screen
 
 	public interface IPokemonStorage {
 		IPokemonBox[] boxes				{ get; }
-		//int party						{ get; }
+		//IPokemon[] party				{ get; }
 		int currentBox					{ get; set; }
 		int maxBoxes					{ get; }
 		IPokemon[] party				{ get; }
@@ -75,7 +75,8 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	public interface IPokemonStorageWithParty : IPokemonStorage {
-		//IPokemon[] party { get; set; }
+		new IPokemon[] party { get; set; }
+		//IPokemon[] party { set; }
 		
 		//IPokemonStorageWithParty initialize(int maxBoxes = 24, int maxPokemon = 30, IPokemon[] party = null); //: base (maxBoxes,maxPokemon)
 	}
@@ -98,7 +99,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		int maxPokemon(int box);
 
-		IPokemon[] this[int x] { get; }
+		IPokemonStorage this[int x] { get; }
 		IPokemon this[int x,int y] { get; set; }
 
 		bool full { get; }

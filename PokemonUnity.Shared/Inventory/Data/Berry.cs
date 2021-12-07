@@ -61,7 +61,7 @@ namespace PokemonUnity.Inventory
 		public float watering			{ get; private set; }
 		public float weeding			{ get; private set; }
 		public float pests				{ get; private set; }*/
-		public PokemonUnity.Color Color	{ get; private set; }
+		public PokemonUnity.Colors Color	{ get; private set; }
 
 		public int Power				{ get; private set; }
 		public Types Type				{ get; private set; }
@@ -133,7 +133,7 @@ namespace PokemonUnity.Inventory
 			growthRate = 0;
 			growthTime = growth;
 			moistIntake = soil;
-			Color = PokemonUnity.Color.NONE;
+			Color = PokemonUnity.Colors.NONE;
 
 			Spicy = spicy;
 			Dry = dry;
@@ -160,139 +160,139 @@ namespace PokemonUnity.Inventory
 				//(\d+)\s+(\w+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)
 				//BerryIndex = $1;\tmaxBerries = $3;\tgrowthRate = $4;\tmoistIntake = $5;\tSpicy = $6;\tDry = $7;\tSweet = $8;\tBitter = $9;\tSour = $10;\tSmooth = $11;\tPower = 60;\tthis.Type = Types.NONE;\tColor = Color.	break;\t//$2
 				case Items.AGUAV_BERRY:
-					growthRate = 5;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 15;	Sour = 0;	Color = Color.GREEN;	break;	//Aguav
+					growthRate = 5;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 15;	Sour = 0;	Color = Colors.GREEN;	break;	//Aguav
 				case Items.APICOT_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 10;	Dry = 30;	Sweet = 0;	Bitter = 0;		Sour = 30;	Color = Color.BLUE;	break;	//Apicot
+					growthRate = 24;	moistIntake = 4;	Spicy = 10;	Dry = 30;	Sweet = 0;	Bitter = 0;		Sour = 30;	Color = Colors.BLUE;	break;	//Apicot
 				case Items.ASPEAR_BERRY:
-					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Color.YELLOW;	break;	//Aspear
+					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Colors.YELLOW;	break;	//Aspear
 				case Items.BABIRI_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 25;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.GREEN;	break;	//Babiri
+					growthRate = 18;	moistIntake = 6;	Spicy = 25;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.GREEN;	break;	//Babiri
 				case Items.BELUE_BERRY:
-					growthRate = 15;	moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 30;	Color = Color.PURPLE;	break;	//Belue
+					growthRate = 15;	moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 30;	Color = Colors.PURPLE;	break;	//Belue
 				case Items.BLUK_BERRY:
-					growthRate = 2;		moistIntake = 35;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Color.PURPLE;	break;	//Bluk
+					growthRate = 2;		moistIntake = 35;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Bluk
 				case Items.CHARTI_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 20;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.YELLOW;	break;	//Charti
+					growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 20;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.YELLOW;	break;	//Charti
 				case Items.CHERI_BERRY:
-					growthRate = 3;		moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.RED;	break;	//Cheri
+					growthRate = 3;		moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Cheri
 				case Items.CHESTO_BERRY:
-					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.PURPLE;	break;	//Chesto
+					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Chesto
 				case Items.CHILAN_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 25;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Color.YELLOW;	break;	//Chilan
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 25;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.YELLOW;	break;	//Chilan
 				case Items.CHOPLE_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Color.RED;	break;	//Chople
+					growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Colors.RED;	break;	//Chople
 				case Items.COBA_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 15;	Sour = 0;	Color = Color.BLUE;	break;	//Coba
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 15;	Sour = 0;	Color = Colors.BLUE;	break;	//Coba
 				case Items.COLBUR_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 20;	Color = Color.PURPLE;	break;	//Colbur
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 20;	Color = Colors.PURPLE;	break;	//Colbur
 				case Items.CORNN_BERRY:
-					growthRate = 6;		moistIntake = 10;	Spicy = 0;	Dry = 20;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Color.PURPLE;	break;	//Cornn
+					growthRate = 6;		moistIntake = 10;	Spicy = 0;	Dry = 20;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Cornn
 				case Items.CUSTAP_BERRY:
-					growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 0;	Sweet = 40;	Bitter = 10;	Sour = 0;	Color = Color.RED;	break;	//Custap
+					growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 0;	Sweet = 40;	Bitter = 10;	Sour = 0;	Color = Colors.RED;	break;	//Custap
 				case Items.DURIN_BERRY:
-					growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 30;	Sour = 10;	Color = Color.GREEN;	break;	//Durin
+					growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 30;	Sour = 10;	Color = Colors.GREEN;	break;	//Durin
 				case Items.ENIGMA_BERRY:
-					growthRate = 24;	moistIntake = 7;	Spicy = 40;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.PURPLE;	break;	//Enigma
+					growthRate = 24;	moistIntake = 7;	Spicy = 40;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Enigma
 				case Items.FIGY_BERRY:
-					growthRate = 5;		moistIntake = 10;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.RED;	break;	//Figy
+					growthRate = 5;		moistIntake = 10;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Figy
 				case Items.GANLON_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 0;	Dry = 30;	Sweet = 10;	Bitter = 30;	Sour = 0;	Color = Color.PURPLE;	break;	//Ganlon
+					growthRate = 24;	moistIntake = 4;	Spicy = 0;	Dry = 30;	Sweet = 10;	Bitter = 30;	Sour = 0;	Color = Colors.PURPLE;	break;	//Ganlon
 				case Items.GREPA_BERRY:
-					growthRate = 8;		moistIntake = 8;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 0;		Sour = 10;	Color = Color.YELLOW;	break;	//Grepa
+					growthRate = 8;		moistIntake = 8;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 0;		Sour = 10;	Color = Colors.YELLOW;	break;	//Grepa
 				case Items.HABAN_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 20;	Sour = 0;	Color = Color.RED;	break;	//Haban
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 20;	Sour = 0;	Color = Colors.RED;	break;	//Haban
 				case Items.HONDEW_BERRY:
-					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Color.GREEN;	break;	//Hondew
+					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Colors.GREEN;	break;	//Hondew
 				case Items.IAPAPA_BERRY:
-					growthRate = 5;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 15;	Color = Color.YELLOW;	break;	//Iapapa
+					growthRate = 5;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 15;	Color = Colors.YELLOW;	break;	//Iapapa
 				case Items.JABOCA_BERRY:
-					growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 40;	Sour = 10;	Color = Color.YELLOW;	break;	//Jaboca
+					growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 40;	Sour = 10;	Color = Colors.YELLOW;	break;	//Jaboca
 				case Items.KASIB_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 20;	Bitter = 0;		Sour = 0;	Color = Color.PURPLE;	break;	//Kasib
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 20;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Kasib
 				case Items.KEBIA_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 15;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Color.GREEN;	break;	//Kebia
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 15;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Colors.GREEN;	break;	//Kebia
 				case Items.KEE_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 30;	Sweet = 10;	Bitter = 10;	Sour = 10;	Color = Color.YELLOW;	break;	//Copied: Liechi
+					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 30;	Sweet = 10;	Bitter = 10;	Sour = 10;	Color = Colors.YELLOW;	break;	//Copied: Liechi
 				case Items.KELPSY_BERRY:
-					growthRate = 8;		moistIntake = 8;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 10;	Color = Color.BLUE;	break;	//Kelpsy
+					growthRate = 8;		moistIntake = 8;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 10;	Color = Colors.BLUE;	break;	//Kelpsy
 				case Items.LANSAT_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 10;	Sour = 30;	Color = Color.RED;	break;	//Lansat
+					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 10;	Sour = 30;	Color = Colors.RED;	break;	//Lansat
 				case Items.LEPPA_BERRY:
-					growthRate = 4;		moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 10;	Color = Color.RED;	break;	//Leppa
+					growthRate = 4;		moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 10;	Color = Colors.RED;	break;	//Leppa
 				case Items.LIECHI_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 0;		Sour = 0;	Color = Color.RED;	break;	//Liechi
+					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Liechi
 				case Items.LUM_BERRY:
-					growthRate = 12;	moistIntake = 8;	Spicy = 10;	Dry = 10;	Sweet = 10;	Bitter = 10;	Sour = 0;	Color = Color.GREEN;	break;	//Lum
+					growthRate = 12;	moistIntake = 8;	Spicy = 10;	Dry = 10;	Sweet = 10;	Bitter = 10;	Sour = 0;	Color = Colors.GREEN;	break;	//Lum
 				case Items.MAGO_BERRY:
-					growthRate = 5;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 15;	Bitter = 0;		Sour = 0;	Color = Color.PINK;	break;	//Mago
+					growthRate = 5;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 15;	Bitter = 0;		Sour = 0;	Color = Colors.PINK;	break;	//Mago
 				case Items.MAGOST_BERRY:
-					growthRate = 6;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 20;	Bitter = 10;	Sour = 0;	Color = Color.PINK;	break;	//Magost
+					growthRate = 6;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 20;	Bitter = 10;	Sour = 0;	Color = Colors.PINK;	break;	//Magost
 				case Items.MARANGA_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 10;	Dry = 10;	Sweet = 30;	Bitter = 30;	Sour = 10;	Color = Color.BLUE;	break;	//Copied: Liechi
+					growthRate = 24;	moistIntake = 4;	Spicy = 10;	Dry = 10;	Sweet = 30;	Bitter = 30;	Sour = 10;	Color = Colors.BLUE;	break;	//Copied: Liechi
 				case Items.MICLE_BERRY:
-					growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 40;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Color.GREEN;	break;	//Micle
+					growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 40;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.GREEN;	break;	//Micle
 				case Items.NANAB_BERRY:
-					growthRate = 2;		moistIntake = 35;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 0;	Color = Color.PINK;	break;	//Nanab
+					growthRate = 2;		moistIntake = 35;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 0;	Color = Colors.PINK;	break;	//Nanab
 				case Items.NOMEL_BERRY:
-					growthRate = 6;		moistIntake = 10;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 20;	Color = Color.YELLOW;	break;	//Nomel
+					growthRate = 6;		moistIntake = 10;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 20;	Color = Colors.YELLOW;	break;	//Nomel
 				case Items.OCCA_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Color.RED;	break;	//Occa
+					growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Occa
 				case Items.ORAN_BERRY:
-					growthRate = 4;		moistIntake = 15;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 10;	Color = Color.BLUE;	break;	//Oran
+					growthRate = 4;		moistIntake = 15;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 10;	Color = Colors.BLUE;	break;	//Oran
 				case Items.PAMTRE_BERRY:
-					growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 30;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Color.PURPLE;	break;	//Pamtre
+					growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 30;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Pamtre
 				case Items.PASSHO_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 15;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Color.BLUE;	break;	//Passho
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 15;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Colors.BLUE;	break;	//Passho
 				case Items.PAYAPA_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 15;	Color = Color.PURPLE;	break;	//Payapa
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 15;	Color = Colors.PURPLE;	break;	//Payapa
 				case Items.PECHA_BERRY:
-					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Color.PINK;	break;	//Pecha
+					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.PINK;	break;	//Pecha
 				case Items.PERSIM_BERRY:
-					growthRate = 4;		moistIntake = 15;	Spicy = 10;	Dry = 10;	Sweet = 10;	Bitter = 0;		Sour = 10;	Color = Color.PINK;	break;	//Persim
+					growthRate = 4;		moistIntake = 15;	Spicy = 10;	Dry = 10;	Sweet = 10;	Bitter = 0;		Sour = 10;	Color = Colors.PINK;	break;	//Persim
 				case Items.PETAYA_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 0;	Sweet = 0;	Bitter = 30;	Sour = 10;	Color = Color.PINK;	break;	//Petaya
+					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 0;	Sweet = 0;	Bitter = 30;	Sour = 10;	Color = Colors.PINK;	break;	//Petaya
 				case Items.PINAP_BERRY:
-					growthRate = 2;		moistIntake = 35;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Color.YELLOW;	break;	//Pinap
+					growthRate = 2;		moistIntake = 35;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Colors.YELLOW;	break;	//Pinap
 				case Items.POMEG_BERRY:
-					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 0;	Color = Color.RED;	break;	//Pomeg
+					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 0;	Color = Colors.RED;	break;	//Pomeg
 				case Items.QUALOT_BERRY:
-					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 10;	Color = Color.YELLOW;	break;	//Qualot
+					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 10;	Color = Colors.YELLOW;	break;	//Qualot
 				case Items.RABUTA_BERRY:
-					growthRate = 6;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 20;	Sour = 10;	Color = Color.GREEN;	break;	//Rabuta
+					growthRate = 6;		moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 20;	Sour = 10;	Color = Colors.GREEN;	break;	//Rabuta
 				case Items.RAWST_BERRY:
-					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Color.GREEN;	break;	//Rawst
+					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Colors.GREEN;	break;	//Rawst
 				case Items.RAZZ_BERRY:
-					growthRate = 2;		moistIntake = 35;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.RED;	break;	//Razz
+					growthRate = 2;		moistIntake = 35;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Razz
 				case Items.RINDO_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 15;	Sour = 0;	Color = Color.GREEN;	break;	//Rindo
+					growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 15;	Sour = 0;	Color = Colors.GREEN;	break;	//Rindo
 				case Items.ROSELI_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 25;	Bitter = 10;	Sour = 0;	Color = Color.PINK;	break;	//Copied: Occa
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 25;	Bitter = 10;	Sour = 0;	Color = Colors.PINK;	break;	//Copied: Occa
 				case Items.ROWAP_BERRY:
-					growthRate = 24;	moistIntake = 7;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 40;	Color = Color.BLUE;	break;	//Rowap
+					growthRate = 24;	moistIntake = 7;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 40;	Color = Colors.BLUE;	break;	//Rowap
 				case Items.SALAC_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 0;	Dry = 0;	Sweet = 30;	Bitter = 10;	Sour = 30;	Color = Color.GREEN;	break;	//Salac
+					growthRate = 24;	moistIntake = 4;	Spicy = 0;	Dry = 0;	Sweet = 30;	Bitter = 10;	Sour = 30;	Color = Colors.GREEN;	break;	//Salac
 				case Items.SHUCA_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 0;	Sweet = 15;	Bitter = 0;		Sour = 0;	Color = Color.YELLOW;	break;	//Shuca
+					growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 0;	Sweet = 15;	Bitter = 0;		Sour = 0;	Color = Colors.YELLOW;	break;	//Shuca
 				case Items.SITRUS_BERRY:
-					growthRate = 8;		moistIntake = 7;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 10;	Sour = 10;	Color = Color.YELLOW;	break;	//Sitrus
+					growthRate = 8;		moistIntake = 7;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 10;	Sour = 10;	Color = Colors.YELLOW;	break;	//Sitrus
 				case Items.SPELON_BERRY:
-					growthRate = 15;	moistIntake = 8;	Spicy = 30;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.RED;	break;	//Spelon
+					growthRate = 15;	moistIntake = 8;	Spicy = 30;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Spelon
 				case Items.STARF_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 10;	Sour = 30;	Color = Color.GREEN;	break;	//Starf
+					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 10;	Sour = 30;	Color = Colors.GREEN;	break;	//Starf
 				case Items.TAMATO_BERRY:
-					growthRate = 8;		moistIntake = 8;	Spicy = 20;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.RED;	break;	//Tamato
+					growthRate = 8;		moistIntake = 8;	Spicy = 20;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Tamato
 				case Items.TANGA_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 20;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Color.GREEN;	break;	//Tanga
+					growthRate = 18;	moistIntake = 6;	Spicy = 20;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Colors.GREEN;	break;	//Tanga
 				case Items.WACAN_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 15;	Bitter = 0;		Sour = 10;	Color = Color.YELLOW;	break;	//Wacan
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 15;	Bitter = 0;		Sour = 10;	Color = Colors.YELLOW;	break;	//Wacan
 				case Items.WATMEL_BERRY:
-					growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 0;	Sweet = 30;	Bitter = 10;	Sour = 0;	Color = Color.PINK;	break;	//Watmel
+					growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 0;	Sweet = 30;	Bitter = 10;	Sour = 0;	Color = Colors.PINK;	break;	//Watmel
 				case Items.WEPEAR_BERRY:
-					growthRate = 2;		moistIntake = 35;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 10;	Color = Color.GREEN;	break;	//Wepear
+					growthRate = 2;		moistIntake = 35;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 10;	Color = Colors.GREEN;	break;	//Wepear
 				case Items.WIKI_BERRY:
-					growthRate = 5;		moistIntake = 10;	Spicy = 0;	Dry = 15;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Color.PURPLE;	break;	//Wiki
+					growthRate = 5;		moistIntake = 10;	Spicy = 0;	Dry = 15;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Wiki
 				case Items.YACHE_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 15;	Color = Color.BLUE;	break;	//Yache
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 15;	Color = Colors.BLUE;	break;	//Yache
 				default:
 					break;
 			}

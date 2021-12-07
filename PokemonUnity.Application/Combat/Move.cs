@@ -21,7 +21,7 @@ namespace PokemonUnity.Combat
 	/// to prevent temp changes from being permanent to original pokemon profile
 	/// </summary>
 	// ToDo: Rename to `MoveFactory`
-	public abstract class Move : IBattleMove
+	public abstract class Move //: IBattleMove
 	{
 		#region Variables
 		public Attack.Move thismove			{ get; protected set; }
@@ -69,7 +69,7 @@ namespace PokemonUnity.Combat
 		public virtual IBattleMove Initialize(IBattle battle, IMove move) 
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
-			Attack.Data.MoveData movedata    = Game.MoveData[move.MoveId];
+			Attack.Data.MoveData movedata    = Game.MoveData[move.id];
 			this.battle		= battle;
 			Power			= movedata.Power ?? 0; //.BaseDamage;
 			Type			= movedata.Type;
@@ -81,7 +81,7 @@ namespace PokemonUnity.Combat
 			Category		= movedata.Category;
 			thismove		= move;
 			//name			= ""
-			MoveId			= move.MoveId;
+			MoveId			= move.id;
 			//PP			= base.PP;
 			//TotalPP		= base.TotalPP;
 			PP				= move.PP;
@@ -102,7 +102,7 @@ namespace PokemonUnity.Combat
 		public static IBattleMove pbFromPBMove(IBattle battle, IMove move)
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
-			//Attack.Data.MoveData movedata = Game.MoveData[move.MoveId];
+			//Attack.Data.MoveData movedata = Game.MoveData[move.id];
 			//Type className = Type.GetType(string.Format("PokeBattle_Move_{0}X", movedata.Effect));
 			////if Object.const_defined(className)
 			//	//return (className).new (battle, move);
@@ -271,7 +271,7 @@ namespace PokemonUnity.Combat
 		public virtual bool hasHighCriticalRate { get{
 			//return (@flags&0x80)!=0;} //# flag h: Has high critical hit rate
 			return Game.MoveMetaData[MoveId].CritRate > 0;} 
-		}		
+		}
 
 		/// <summary>
 		/// Causes perfect accuracy and double damage
@@ -1145,7 +1145,7 @@ namespace PokemonUnity.Combat
 				battle.pbDisplay(Game._INTL("{1} hung on using its Focus Band!", opponent.ToString()));
 		}
 
-		public virtual int pbEffectFixedDamage(int damage, IBattler attacker, IBattler opponent, byte hitnum= 0, int[] alltargets= null, bool showanimation= true){
+		public virtual int pbEffectFixedDamage(int damage, IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
 			Types type=pbType(this.Type, attacker, opponent);
 			double typemod=pbTypeModMessages(type, attacker, opponent);
 			opponent.damagestate.Critical=false;
@@ -1165,7 +1165,7 @@ namespace PokemonUnity.Combat
 			return 0;
 		}
 
-		public virtual int pbEffect(IBattler attacker, IBattler opponent, byte hitnum= 0, int[] alltargets= null, bool showanimation= true){
+		public virtual int pbEffect(IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
 			if (opponent.Species == Pokemons.NONE)return 0;
 			int damage = pbCalcDamage(attacker, opponent);
 			if (opponent.damagestate.TypeMod!=0)
@@ -1203,7 +1203,7 @@ namespace PokemonUnity.Combat
 			return 0;
 		}
 
-		public virtual void pbShowAnimation(Moves id, IBattler attacker, IBattler opponent, byte hitnum= 0, int[] alltargets= null, bool showanimation= true){
+		public virtual void pbShowAnimation(Moves id, IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
 			if (!showanimation)return;
 			if (attacker.effects.ParentalBond == 1) { 
 				battle.pbCommonAnimation("ParentalBond",attacker,opponent);

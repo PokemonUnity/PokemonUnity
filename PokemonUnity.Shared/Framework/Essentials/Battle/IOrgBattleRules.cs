@@ -375,7 +375,7 @@ namespace PokemonEssentials.Interface.Battle
 		/// <param name="team"></param>
 		/// <param name="error"></param>
 		/// <returns></returns>
-		bool isValid(IPokemon[] team, List<string> error = null);
+		bool isValid(IPokemon[] team, IList<string> error = null);
 	}
 
 	public interface IBattleType //: IBattleType
@@ -482,8 +482,8 @@ namespace PokemonEssentials.Interface.Battle
 	public interface IPokemonChallengeRules
 	{
 		IPokemonRuleSet ruleset				{ get; }
-		IBattleType IBattleType				{ get; }
-		ILevelAdjustment ILevelAdjustment	{ get; }
+		IBattleType battletype				{ get; }
+		ILevelAdjustment levelAdjustment	{ get; }
 
 		//IPokemonChallengeRules(IPokemonRuleSet ruleset = null);
 

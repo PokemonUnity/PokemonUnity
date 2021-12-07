@@ -23,80 +23,79 @@ namespace PokemonUnity
 
 	public partial class Game : IGameShadowPokemon
 	{
-		public void pbPurify(IPokemonShadowPokemon pokemon, IScene scene)
+		public void pbPurify(IPokemonShadowPokemon pkmn, IPurifyChamberScene scene)
 		{
-			if (pokemon.heartgauge == 0 && pokemon.shadow)
+			if (pkmn.heartgauge == 0 && pkmn.shadow && pkmn is IPokemon pokemon)
 			{
-				if (pokemon.savedev == null && pokemon.savedexp == 0) return;
-				pokemon.shadow = false;
-				pokemon.giveRibbon(Ribbon.NATIONAL);
-				scene.pbDisplay(Game._INTL("{1} opened the door to its heart!", pokemon.Name));
+				if (pkmn.savedev == null && pkmn.savedexp == 0) return;
+				pkmn.shadow = false;
+				pokemon.giveRibbon(Ribbons.NATIONAL);
+				scene.pbDisplay(Game._INTL("{1} opened the door to its heart!", pokemon.name));
 				Moves[] oldmoves = new Moves[4];
-				//for (int i = 0; i < 4; i++) { oldmoves.Add(pokemon.moves[i].MoveId); }
-				for (int i = 0; i < 4; i++) { oldmoves[i] = pokemon.moves[i].MoveId; }
-				pokemon.pbUpdateShadowMoves();
+				//for (int i = 0; i < 4; i++) { oldmoves.Add(pokemon.moves[i].id); }
+				for (int i = 0; i < 4; i++) { oldmoves[i] = pokemon.moves[i].id; }
+				pkmn.pbUpdateShadowMoves();
 				for (int i = 0; i < 4; i++)
 				{
-					if (pokemon.moves[i].MoveId != 0 && pokemon.moves[i].MoveId != oldmoves[i])
+					if (pokemon.moves[i].id != 0 && pokemon.moves[i].id != oldmoves[i])
 					{
 						scene.pbDisplay(Game._INTL("{1} regained the move \n{2}!",
-						   pokemon.Name, pokemon.moves[i].MoveId.ToString(TextScripts.Name)));
+						   pokemon.name, pokemon.moves[i].id.ToString(TextScripts.Name)));
 					}
 				}
-				pokemon.RecordFirstMoves();
-				if (pokemon.savedev != null)
+				pokemon.pbRecordFirstMoves();
+				if (pkmn.savedev != null)
 				{
 					for (int i = 0; i < 6; i++)
 					{
-						Game.pbApplyEVGain(pokemon, (Stats)i, pokemon.savedev[i]);
+						pbApplyEVGain(pokemon, (Stats)i, pkmn.savedev[i]);
 					}
-					pokemon.savedev = null;
+					pkmn.savedev = null;
 				}
-				int newexp = Experience.pbAddExperience(pokemon.Experience.Total, pokemon.savedexp, pokemon.GrowthRate);
-				pokemon.savedexp = 0;
+				int newexp = Experience.pbAddExperience(pokemon.exp, pkmn.savedexp, pokemon.GrowthRate);
+				pkmn.savedexp = 0;
 				int newlevel = Experience.GetLevelFromExperience(pokemon.GrowthRate, newexp);
 				int curlevel = pokemon.Level;
-				if (newexp != pokemon.Experience.Total)
+				if (newexp != pokemon.exp)
 				{
-					scene.pbDisplay(Game._INTL("{1} regained {2} Exp. Points!", pokemon.Name, newexp - pokemon.Experience.Total));
+					scene.pbDisplay(Game._INTL("{1} regained {2} Exp. Points!", pokemon.name, newexp - pokemon.exp));
 				}
 				if (newlevel == curlevel)
 				{
-					pokemon.Exp = newexp;
+					pokemon.exp = newexp;
 					pokemon.calcStats();
 				}
 				else
 				{
 					//Game.pbChangeLevel(pokemon, newlevel, scene); // for convenience
-					pokemon.Exp = newexp;
+					pokemon.exp = newexp;
 				}
-				string speciesname = pokemon.Species.ToString(TextScripts.Name);
-				//ToDo: Uncomment and replace `IScene` with something less generic...
-				//if (scene.pbConfirm(_INTL("Would you like to give a nickname to {1}?", speciesname)))
-				//{
-				//	string helptext = Game._INTL("{1}'s nickname?", speciesname);
-				//	//string newname = Game.UI.pbEnterPokemonName(helptext, 0, 10, "", pokemon);
-				//	//if (newname != "") pokemon.Name = newname;
-				//}
+				string speciesname = pokemon.species.ToString(TextScripts.Name);
+				if (scene.pbConfirm(Game._INTL("Would you like to give a nickname to {1}?", speciesname)))
+				{
+					string helptext = Game._INTL("{1}'s nickname?", speciesname);
+					string newname = pbEnterPokemonName(helptext, 0, 10, "", pokemon);
+					if (newname != "") pokemon.name = newname;
+				}
 			}
 		}
 
 		#region Use with Relic Stone (Move to separate class?)
 		public void pbRelicStoneScreen(IPokemonShadowPokemon pkmn)
 		{
-			bool retval = true;
+			//bool retval = true;
 			pbFadeOutIn(99999, block: () => {
 				IRelicStoneScene scene = Scenes.RelicStone; //new RelicStoneScene();
 				IRelicStoneScreen screen = Screens.RelicStone.initialize(scene); //new RelicStoneScreen(scene);
 				screen.pbStartScreen(pkmn); //retval = 
 				screen.pbStartScreen(pkmn);
 			});
-			return retval;
+			//return retval;
 		}
 
 		public bool pbIsPurifiable(IPokemonShadowPokemon pkmn)
 		{
-			if (!pkmn.IsNotNullOrNone()) return false;
+			if (!(pkmn as IPokemon).IsNotNullOrNone()) return false;
 			if (pkmn.isShadow && pkmn.heartgauge == 0)
 			//   && pkmn.Species != Pokemons.LUGIA)
 			{
@@ -107,7 +106,7 @@ namespace PokemonUnity
 
 		public bool pbHasPurifiableInParty()
 		{
-			return Trainer.party.Any(item => pbIsPurifiable(item));
+			return Trainer.party.Any(item => pbIsPurifiable(item as IPokemonShadowPokemon));
 		}
 
 		public void pbRelicStone()
@@ -122,7 +121,7 @@ namespace PokemonUnity
 				);
 				if ((int)GameVariables[1] >= 0)
 				{
-					pbRelicStoneScreen(Trainer.party[(int)GameVariables[1]]);
+					pbRelicStoneScreen(Trainer.party[(int)GameVariables[1]] as IPokemonShadowPokemon);
 				}
 			}
 			else
@@ -138,35 +137,35 @@ namespace PokemonUnity
 				scene.pbDisplay(_INTL("It won't have any effect."));
 				return false;
 			}
-			if (pokemon.Happiness == 255 && pokemon.heartgauge == 0)
+			if ((pokemon as IPokemon).Happiness == 255 && pokemon.heartgauge == 0)
 			{
 				scene.pbDisplay(_INTL("It won't have any effect."));
 				return false;
 			}
-			else if (pokemon.Happiness == 255)
+			else if ((pokemon as IPokemon).Happiness == 255)
 			{
 				pokemon.adjustHeart(-amount);
-				scene.pbDisplay(_INTL("{1} adores you!\nThe door to its heart opened a little.", pokemon.Name));
+				scene.pbDisplay(Game._INTL("{1} adores you!\nThe door to its heart opened a little.", (pokemon as IPokemon).name));
 				pbReadyToPurify(pokemon);
 				return true;
 			}
 			else if (pokemon.heartgauge == 0)
 			{
-				pokemon.ChangeHappiness(HappinessMethods.VITAMIN);
-				scene.pbDisplay(_INTL("{1} turned friendly.", pokemon.Name));
+				(pokemon as IPokemon).ChangeHappiness(HappinessMethods.VITAMIN);
+				scene.pbDisplay(_INTL("{1} turned friendly.", (pokemon as IPokemon).name));
 				return true;
 			}
 			else
 			{
-				pokemon.ChangeHappiness(HappinessMethods.VITAMIN);
+				(pokemon as IPokemon).ChangeHappiness(HappinessMethods.VITAMIN);
 				pokemon.adjustHeart(-amount);
-				scene.pbDisplay(_INTL("{1} turned friendly.\nThe door to its heart opened a little.", pokemon.Name));
+				scene.pbDisplay(_INTL("{1} turned friendly.\nThe door to its heart opened a little.", (pokemon as IPokemon).name));
 				pbReadyToPurify(pokemon);
 				return true;
 			}
 		}
 
-		public void pbApplyEVGain(IPokemonShadowPokemon pokemon,Stats ev,int evgain)
+		public void pbApplyEVGain(IPokemon pokemon,Stats ev,int evgain)
 		{
 			int totalev = 0;
 			for (int i = 0; i < 6; i++)
@@ -188,7 +187,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbReplaceMoves(IPokemonShadowPokemon pokemon,Moves move1,Moves move2= 0,Moves move3= 0,Moves move4= 0)
+		public void pbReplaceMoves(IPokemon pokemon,Moves move1,Moves move2= 0,Moves move3= 0,Moves move4= 0)
 		{
 			if (!pokemon.IsNotNullOrNone()) return;
 			//new Moves[] { move1, move2, move3, move4 }.each{|move|
@@ -200,7 +199,7 @@ namespace PokemonUnity
 					//  Look for given move
 					for (int i = 0; i < 4; i++)
 					{
-						if (pokemon.moves[i].MoveId == move) moveIndex = i;
+						if (pokemon.moves[i].id == move) moveIndex = i;
 					}
 				}
 				if (moveIndex == -1)
@@ -208,11 +207,11 @@ namespace PokemonUnity
 					//  Look for slot to replace move
 					for (int i = 0; i < 4; i++)
 					{
-						if ((pokemon.moves[i].MoveId == 0 && move != 0) || (
-							pokemon.moves[i].MoveId != move1 &&
-							pokemon.moves[i].MoveId != move2 &&
-							pokemon.moves[i].MoveId != move3 &&
-							pokemon.moves[i].MoveId != move4)) {
+						if ((pokemon.moves[i].id == 0 && move != 0) || (
+							pokemon.moves[i].id != move1 &&
+							pokemon.moves[i].id != move2 &&
+							pokemon.moves[i].id != move3 &&
+							pokemon.moves[i].id != move4)) {
 							//  Replace move
 							pokemon.moves[i] = new Move(move);
 							break;
@@ -225,11 +224,11 @@ namespace PokemonUnity
 
 		public void pbReadyToPurify(IPokemonShadowPokemon pokemon)
 		{
-			if (!pokemon.IsNotNullOrNone() || !pokemon.isShadow) return;
+			if (!(pokemon as IPokemon).IsNotNullOrNone() || !pokemon.isShadow) return;
 			pokemon.pbUpdateShadowMoves();
 			if (pokemon.heartgauge == 0)
 			{
-				pbMessage(Game._INTL("{1} can now be purified!", pokemon.Name));
+				pbMessage(Game._INTL("{1} can now be purified!", (pokemon as IPokemon).name));
 			}
 		}
 
@@ -374,7 +373,7 @@ namespace PokemonUnity
 				//}
 				for (int i = 0; i < 4; i++)
 				{   // Save old moves
-					this.shadowmoves[4 + i] = this.moves[i].MoveId;
+					this.shadowmoves[4 + i] = this.moves[i].id;
 				}
 				pbUpdateShadowMoves();
 			}

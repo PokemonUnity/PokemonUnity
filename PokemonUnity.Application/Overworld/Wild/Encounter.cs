@@ -11,12 +11,12 @@ namespace PokemonUnity.Overworld
 	{
 		#region Variables
 		//protected virtual List<Pokemon> PokemonPool { get; private set; }
-		public virtual EncounterData[] Encounters { get; protected set; }
+		public virtual IEncounterData[] Encounters { get; protected set; }
 		//public ConditionValue[] Conditions { get; private set; }
 		/// <summary>
 		/// Key: SlotId | Value: Pokemon Array
 		/// </summary>
-		public virtual Dictionary<int, List<Pokemons>> Slot { get; protected set; }
+		public virtual IDictionary<int, IList<Pokemons>> Slot { get; protected set; }
 
 		/// <summary>
 		/// This array of numbers total up to 100%, 
@@ -36,12 +36,12 @@ namespace PokemonUnity.Overworld
 		public Encounter()
 		{
 			//PokemonPool = new List<Pokemon>();
-			Encounters = new EncounterData[0];
+			Encounters = new IEncounterData[0];
 			//Conditions = new ConditionValue[0];
-			Slot = new Dictionary<int, List<Pokemons>>();
+			Slot = new Dictionary<int, IList<Pokemons>>();
 		}
 
-		public Encounter(int[] slots, EncounterData[] data) : this()
+		public Encounter(int[] slots, IEncounterData[] data) : this()
 		{
 			Chances = slots;
 			int i = 0;
@@ -53,7 +53,6 @@ namespace PokemonUnity.Overworld
 		}
 
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="method"></param>
 		/// <param name="density">

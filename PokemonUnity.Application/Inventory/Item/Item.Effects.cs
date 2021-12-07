@@ -1141,7 +1141,7 @@ namespace PokemonUnity//.Inventory
 						return false;
 					} else {
 						pokemon.moves[move].PPups+=1;
-						string movename=pokemon.moves[move].MoveId.ToString(TextScripts.Name);
+						string movename=pokemon.moves[move].id.ToString(TextScripts.Name);
 						scene.pbDisplay(Game._INTL("{1}'s PP increased.",movename));
 						return true;
 					}
@@ -1157,7 +1157,7 @@ namespace PokemonUnity//.Inventory
 						return false;
 					} else {
 						pokemon.moves[move].PPups=3;
-						string movename=pokemon.moves[move].MoveId.ToString(TextScripts.Name);
+						string movename=pokemon.moves[move].id.ToString(TextScripts.Name);
 						scene.pbDisplay(Game._INTL("{1}'s PP increased.",movename));
 						return true;
 					}

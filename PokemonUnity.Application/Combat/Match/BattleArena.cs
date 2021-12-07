@@ -14,15 +14,21 @@ namespace PokemonUnity.Combat
 		public int[] starthp { get; private set; }
 		public int[] partyindexes { get; private set; }
 		public int count { get; private set; }
-		public PokeBattle_BattleArena(IPokeBattleArena_Scene scene, PokemonEssentials.Interface.PokeBattle.IPokemon[] p1, PokemonEssentials.Interface.PokeBattle.IPokemon[] p2, PokemonEssentials.Interface.PokeBattle.ITrainer[] player, PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent) : base (scene, p1, p2, player, opponent) { 
-		//public void initialize(*arg) {
-			//base.this();
+		public void initialize(PokemonEssentials.Interface.PokeBattle.IPokeBattleArena_Scene scene, PokemonEssentials.Interface.PokeBattle.IPokemon[] p1, PokemonEssentials.Interface.PokeBattle.IPokemon[] p2, PokemonEssentials.Interface.PokeBattle.ITrainer[] player, PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent) { return this; } //ToDo: finish this later...
+		public PokeBattle_BattleArena(PokemonEssentials.Interface.PokeBattle.IPokeBattleArena_Scene scene, PokemonEssentials.Interface.PokeBattle.IPokemon[] p1, PokemonEssentials.Interface.PokeBattle.IPokemon[] p2, PokemonEssentials.Interface.PokeBattle.ITrainer[] player, PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent) : base (scene, p1, p2, player, opponent) { 
+			//base.this() //base.initialize();
 			@battlerschanged=true;
 			@mind=new int[] { 0, 0 };
 			@skill=new int[] { 0, 0 };
 			@starthp=new int[] { 0, 0 };
 			@count=0;
 			@partyindexes=new int[] { 0, 0 };
+		}
+
+		PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, PokemonEssentials.Interface.PokeBattle.ITrainer[] trainer1, PokemonEssentials.Interface.PokeBattle.ITrainer[] trainer2)
+		{
+			return new PokeBattle_RecordedBattleArena(scene,
+				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
 		}
 
 		public override bool pbDoubleBattleAllowed() {
@@ -87,7 +93,7 @@ namespace PokemonUnity.Combat
 			base.pbOnActiveAll(); //return
 		}
 
-		public override bool pbOnActiveOne(Pokemon pkmn, bool onlyabilities = false, bool moldbreaker = false) {
+		public override bool pbOnActiveOne(PokemonEssentials.Interface.PokeBattle.IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false) {
 			@battlerschanged=true;
 			@mind[0]=0;
 			@mind[1]=0;
@@ -212,7 +218,7 @@ namespace PokemonUnity.Combat
 	}
 
 	/*public partial class PokeBattle_Scene : IPokeBattleArena_Scene {
-		public void updateJudgment(window,int phase,Combat.Pokemon battler1,Combat.Pokemon battler2,int[] ratings1,int[] ratings2) {
+		public void updateJudgment(window,int phase,PokemonEssentials.Interface.PokeBattle.IBattler battler1,PokemonEssentials.Interface.PokeBattle.IBattler battler2,int[] ratings1,int[] ratings2) {
 		int total1=0;
 		int total2=0;
 		for (int i = 0; i < phase; i++) {
@@ -245,12 +251,12 @@ namespace PokemonUnity.Combat
 		window.contents.fill_rect(16,150,256,4,new Color(80,80,80));
 		}
 
-		public void pbBattleArenaBattlers(Combat.Pokemon battler1,Combat.Pokemon battler2) {
+		public void pbBattleArenaBattlers(PokemonEssentials.Interface.PokeBattle.IBattler battler1,PokemonEssentials.Interface.PokeBattle.IBattler battler2) {
 		Game.pbMessage(Game._INTL("REFEREE: {1} VS {2}!\nCommence battling!\\wtnp[20]",
 			battler1.Name,battler2.Name)); { pbUpdate(); }
 		}
 
-		public void pbBattleArenaJudgment(Combat.Pokemon battler1,Combat.Pokemon battler2,int[] ratings1,int[] ratings2) {
+		public void pbBattleArenaJudgment(PokemonEssentials.Interface.PokeBattle.IBattler battler1,PokemonEssentials.Interface.PokeBattle.IBattler battler2,int[] ratings1,int[] ratings2) {
 		msgwindow=null;
 		dimmingvp=null;
 		infowindow=null;

@@ -429,7 +429,7 @@ public void pbSpindaSpots(pokemon,bitmap) {
 				int hasoldmove=-1;
 				for (int i = 0; i < 4; i++) {
 					for (int j = 0; j < moves.Length; j++) {
-						if (pokemon.moves[i].MoveId == moves[j]) {
+						if (pokemon.moves[i].id == moves[j]) {
 							hasoldmove=i; break;
 						}
 					}
@@ -440,7 +440,7 @@ public void pbSpindaSpots(pokemon,bitmap) {
 					if (newmove!=Moves.NONE) { //&& hasConst(PBMoves,newmove)
 						if (hasoldmove>=0) {
 							// Automatically replace the old form's special move with the new one's
-							string oldmovename=pokemon.moves[hasoldmove].MoveId.ToString(TextScripts.Name);
+							string oldmovename=pokemon.moves[hasoldmove].id.ToString(TextScripts.Name);
 							string newmovename=newmove.ToString(TextScripts.Name);
 							pokemon.moves[hasoldmove]=new Attack.Move(newmove);
 							Game.GameData.pbMessage(Game._INTL("\\se[]1,\\wt[4] 2,\\wt[4] and...\\wt[8] ...\\wt[8] ...\\wt[8] Poof!\\se[balldrop]\\1"));
@@ -458,10 +458,10 @@ public void pbSpindaSpots(pokemon,bitmap) {
 				else {
 					if (hasoldmove>=0) {
 						// Forget the old form's special move
-						string oldmovename=pokemon.moves[hasoldmove].MoveId.ToString(TextScripts.Name);
+						string oldmovename=pokemon.moves[hasoldmove].id.ToString(TextScripts.Name);
 						pokemon.DeleteMoveAtIndex(hasoldmove);
 						Game.GameData.pbMessage(Game._INTL("{1} forgot {2}...",pokemon.Name,oldmovename));
-						if (pokemon.moves.Count(i => i.MoveId!=0)==0) {
+						if (pokemon.moves.Count(i => i.id!=0)==0) {
 							Game.GameData.pbLearnMove(pokemon,Moves.THUNDER_SHOCK);
 							//pokemon.LearnMove(Moves.THUNDER_SHOCK, out bool s);
 						}

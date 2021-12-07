@@ -1473,7 +1473,7 @@ namespace PokemonUnity
 	}
 	#endregion
 	#region 
-	public enum Ribbon
+	public enum Ribbons
 	{
 		NONE = 0,
 		HOENNCOOL = 1,
@@ -1639,7 +1639,7 @@ namespace PokemonUnity
 		ELITEFOUR_Lance,
 		CHAMPION
 	}
-	public enum Color
+	public enum Colors
 	{
 		RED = 8,
 		BLUE = 2,

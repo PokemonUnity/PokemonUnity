@@ -14,7 +14,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		//{
 		//	SeriMove seriMove = new SeriMove
 		//	{
-		//		Move = (int)move.MoveId,
+		//		Move = (int)move.id,
 		//		PP = move.PP,
 		//		PPups = move.PPups
 		//	};

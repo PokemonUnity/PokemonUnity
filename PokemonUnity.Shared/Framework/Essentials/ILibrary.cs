@@ -29,7 +29,7 @@ namespace PokemonEssentials.Interface
 		#endregion
 	}
 
-	public interface IGame : IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime
+	public interface IGame : IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime, IGameMessage
 	{
 		PokemonEssentials.Interface.IGlobalMetadata Global					{ get; }
 		//PokemonEssentials.Interface.Field.IPokemonMapFactory MapFactory	{ get; }
@@ -55,7 +55,7 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.IGameScreen GameScreen					{ get; set; }
 		PokemonEssentials.Interface.IGamePlayer GamePlayer					{ get; set; }
 		PokemonEssentials.Interface.IGameMap GameMap						{ get; set; }
-		//IGameMessage GameMessage											{ get; set; }
+		//PokemonEssentials.Interface.IGameMessage GameMessage				{ get; set; }
 		//int SpeechFrame													{ get; }
 	}
 	public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }

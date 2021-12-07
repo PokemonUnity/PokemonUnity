@@ -18,7 +18,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	{
 		string name { get; }
 		int id { get; set; }
-		int metaID { get; }
+		int? metaID { get; }
 		TrainerTypes trainertype { get; }
 		int? outfit { get; set; }
 		bool[] badges { get; }
@@ -51,7 +51,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		int getForeignID();
 
-		int setForeignID(int other);
+		void setForeignID(ITrainer other);
 
 		//int metaID();
 
@@ -70,9 +70,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 		bool isMale { get; }
 		bool isFemale { get; }
 
-		IPokemon[] pokemonParty { get; }
+		IEnumerable<IPokemon> pokemonParty { get; }
 
-		IPokemon[] ablePokemonParty { get; }
+		IEnumerable<IPokemon> ablePokemonParty { get; }
 
 		int partyCount { get; }
 
@@ -92,9 +92,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		IPokemon lastAblePokemon { get; }
 
-		int pokedexSeen(int region = -1);
+		int pokedexSeen(Regions? region = null); //int region = -1
 
-		int pokedexOwned(int region = -1);
+		int pokedexOwned(Regions? region = null); //int region = -1
 
 		int numFormsSeen(Pokemons species);
 

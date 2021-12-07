@@ -19,16 +19,16 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// </summary>
 	/// <typeparam name="TBattle">any <see cref="IBattle"/> entity</typeparam>
 	//Should be both Recorded Data and the Battle logic itself...
-	public interface IRecordedBattleModule<out TBattle> : IBattleRecordData
+	public interface IRecordedBattleModule<out TBattle> //: IBattleRecordData
 		where TBattle : IBattle//, IBattleRecordData
 	{
 		IList<int> randomnums { get; }
-		IList<int[][]> rounds { get; }
-		//List<KeyValuePair<MenuCommands,int>[]> rounds { get; }
+		//IList<int[][]> rounds { get; }
+		IList<KeyValuePair<MenuCommands,int>[]> rounds { get; }
 		//int battletype { get; }
 		//object properties { get; }
 		//int roundindex { get; }
-		//List<int> switches { get; }
+		//IList<int> switches { get; }
 
 		#region Methods
 		IBattle initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
@@ -104,9 +104,10 @@ namespace PokemonEssentials.Interface.PokeBattle
 		//ToDo: this should be replaced with json object class
 		//IDictionary<string, IBattleMetaData> properties { get; }
 		IBattleMetaData properties { get; }
-		List<int[][]> rounds { get; }
-		List<int> randomnumbers { get; }
-		List<int> switches { get; }
+		//IList<int[][]> rounds { get; }
+		IList<KeyValuePair<MenuCommands, int>[]> rounds { get; }
+		IList<int> randomnumbers { get; }
+		IList<int> switches { get; }
 	}
 	/// <summary>
 	/// </summary>

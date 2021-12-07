@@ -46,7 +46,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// </summary>
 	public interface IGameShadowPokemon
 	{
-		void pbPurify(IPokemonShadowPokemon pokemon, IScene scene);
+		void pbPurify(IPokemonShadowPokemon pokemon, IPurifyChamberScene scene);
 
 		#region Relic Stone Logic
 		void pbRelicStoneScreen(IPokemonShadowPokemon pkmn);
@@ -59,9 +59,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		bool pbRaiseHappinessAndReduceHeart(IPokemonShadowPokemon pokemon, IScene scene, int amount);
 
-		void pbApplyEVGain(IPokemonShadowPokemon pokemon, Stats ev, int evgain);
+		void pbApplyEVGain(IPokemon pokemon, Stats ev, int evgain);
 
-		void pbReplaceMoves(IPokemonShadowPokemon pokemon, Moves move1, Moves move2 = 0, Moves move3 = 0, Moves move4 = 0);
+		void pbReplaceMoves(IPokemon pokemon, Moves move1, Moves move2 = 0, Moves move3 = 0, Moves move4 = 0);
 		#endregion
 
 		void pbReadyToPurify(IPokemonShadowPokemon pokemon);
@@ -129,7 +129,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		//alias __shadow_pbInitPokemon pbInitPokemon;
 		//alias __shadow_pbEndTurn pbEndTurn;
 
-		void pbInitPokemon(IPokemon pkmn, sbyte pkmnIndex);
+		void pbInitPokemon(IPokemon pkmn, int pkmnIndex);
 
 		void pbEndTurn(Choice choice);
 
@@ -139,7 +139,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		void pbHyperMode();
 
-		bool pbHyperModeObedience(IMove move);
+		bool pbHyperModeObedience(IBattleMove move);
 	}
 
 	//Events.onStartBattle+=delegate(object sender, EventArgs e) {
