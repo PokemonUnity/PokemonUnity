@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity;
 
 public class CustomEvent : MonoBehaviour
 {
@@ -218,7 +219,7 @@ public class CustomEvent : MonoBehaviour
 
                     if (i < currentEvent.strings.Length - 1)
                     {
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -228,7 +229,7 @@ public class CustomEvent : MonoBehaviour
                 {
                     if (nextEvent.eventType != CustomEventDetails.CustomEventType.Choice)
                     {
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -240,7 +241,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 else
                 {
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -315,7 +316,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 yield return new WaitForSeconds(itemGetMFX.length);
 
-                bool itemAdd = SaveData.currentSave.Bag.addItem(currentEvent.string0, currentEvent.int0);
+                bool itemAdd = SaveData.currentSave.Bag.addItem(currentEvent.string0.ToItems(), currentEvent.int0);
 
                 Dialog.drawDialogBox();
                 if (itemAdd)
@@ -345,7 +346,7 @@ public class CustomEvent : MonoBehaviour
                                     " \\away into the bag.");
                         }
                     }
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -353,7 +354,7 @@ public class CustomEvent : MonoBehaviour
                 else
                 {
                     yield return Dialog.StartCoroutine("drawTextSilent", "But there was no room...");
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -361,150 +362,134 @@ public class CustomEvent : MonoBehaviour
                 Dialog.undrawDialogBox();
                 break;
 
-            case CustomEventDetails.CustomEventType.ReceivePokemon:
-                //if (SaveData.currentSave.PC.hasSpace(0))
-                if (SaveData.currentSave.Player.Party.HasSpace(SaveData.currentSave.Player.Party.Length))
-                {
-                    //Play Great for Pokemon
-                    AudioClip pokeGetMFX = Resources.Load<AudioClip>("Audio/mfx/GetGreat");
-
-                    PokemonData pkd = PokemonDatabase.getPokemon(currentEvent.ints[0]);
-
-                    string pkName = pkd.getName();
-                    Pokemon.Gender pkGender = Pokemon.Gender.CALCULATE;
-
-                    if (pkd.getMaleRatio() == -1)
-                    {
-                        pkGender = Pokemon.Gender.NONE;
-                    }
-                    else if (pkd.getMaleRatio() == 0)
-                    {
-                        pkGender = Pokemon.Gender.FEMALE;
-                    }
-                    else if (pkd.getMaleRatio() == 100)
-                    {
-                        pkGender = Pokemon.Gender.MALE;
-                    }
-                    else
-                    {
-//if not a set gender
-                        if (currentEvent.ints[2] == 0)
-                        {
-                            pkGender = Pokemon.Gender.MALE;
-                        }
-                        else if (currentEvent.ints[2] == 1)
-                        {
-                            pkGender = Pokemon.Gender.FEMALE;
-                        }
-                    }
-
-                    Dialog.drawDialogBox();
-                    yield return
-                        Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.Player.Name + " received the " + pkName + "!");
-                    BgmHandler.main.PlayMFX(pokeGetMFX);
-                    yield return new WaitForSeconds(pokeGetMFX.length);
-
-                    string nickname = currentEvent.strings[0];
-                    if (currentEvent.strings[1].Length == 0)
-                    {
-                        //If no OT set, allow nicknaming of Pokemon
-
-                        Dialog.drawDialogBox();
-                        yield return
-                            StartCoroutine(
-                                Dialog.drawTextSilent("Would you like to give a nickname to \nthe " + pkName +
-                                                      " you received?"));
-                        Dialog.drawChoiceBox();
-                        yield return StartCoroutine(Dialog.choiceNavigate());
-                        int nicknameCI = Dialog.chosenIndex;
-                        Dialog.undrawDialogBox();
-                        Dialog.undrawChoiceBox();
-
-                        if (nicknameCI == 1)
-                        {
-                            //give nickname
-                            //SfxHandler.Play(selectClip);
-                            yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-
-                            Scene.main.Typing.gameObject.SetActive(true);
-                            StartCoroutine(Scene.main.Typing.control(10, "", pkGender,
-                                Pokemon.GetIconsFromID_(currentEvent.ints[0], currentEvent.bool0)));
-                            while (Scene.main.Typing.gameObject.activeSelf)
-                            {
-                                yield return null;
-                            }
-                            if (Scene.main.Typing.typedString.Length > 0)
-                            {
-                                nickname = Scene.main.Typing.typedString;
-                            }
-
-                            yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-                        }
-                    }
-                    if (!EventRequiresDialogBox(nextEvent.eventType))
-                    {
-                        Dialog.undrawDialogBox();
-                    }
-
-                    int[] IVs = new int[]
-                    {
-                        Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
-                        Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32)
-                    };
-                    if (currentEvent.bool1)
-                    {
-                        //if using Custom IVs
-                        IVs[0] = currentEvent.ints[5];
-                        IVs[1] = currentEvent.ints[6];
-                        IVs[2] = currentEvent.ints[7];
-                        IVs[3] = currentEvent.ints[8];
-                        IVs[4] = currentEvent.ints[9];
-                        IVs[5] = currentEvent.ints[10];
-                    }
-
-                    string pkNature = (currentEvent.ints[3] == 0)
-                        ? NatureDatabase.getRandomNature().getName()
-                        : NatureDatabase.getNature(currentEvent.ints[3] - 1).getName();
-
-                    string[] pkMoveset = pkd.GenerateMoveset(currentEvent.ints[1]);
-                    for (int i = 0; i < 4; i++)
-                    {
-                        string ConverterName;
-                        PokemonUnity.Moves[] tempo = new PokemonUnity.Moves[4];
-                        if (currentEvent.strings[4 + i].Length > 0)
-                        {
-                            //pkMoveset[i] = currentEvent.strings[4 + i];
-                            
-                            ConverterName = currentEvent.strings[4 + i].ToString().Replace(" ", "_");
-                            ConverterName = ConverterName.ToString().Replace("-", "_");
-                            ConverterName = ConverterName.ToUpper();
-
-                            tempo[i] = (PokemonUnity.Moves)System.Enum.Parse(typeof(PokemonUnity.Moves), ConverterName);
-
-                            pkMoveset[i] = currentEvent.strings[4 + i];
-                        }
-                    }
-
-                    Debug.Log(pkMoveset[0] + ", " + pkMoveset[1] + ", " + pkMoveset[2] + ", " + pkMoveset[3]);
-                    Debug.Log("Not Setup, yet");
-
-
-                    //Pokemon pk = new Pokemon((PokemonUnity.Pokemons)currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
-                    //    currentEvent.bool0, currentEvent.strings[2], currentEvent.strings[3],
-                    //    currentEvent.strings[1], IVs[0], IVs[1], IVs[2], IVs[3], IVs[4], IVs[5], 0, 0, 0, 0, 0, 0,
-                    //    pkNature, currentEvent.ints[4],
-                    //    pkMoveset, new int[4]);
-                    
-                    //SaveData.currentSave.Player.addPokemon(pk);
-                }
-                else
-                {
-                    //jump to new tree
-                    JumpToTree(currentEvent.int0);
-                }
-                break;
-
+            //case CustomEventDetails.CustomEventType.ReceivePokemon:
+            //    if (SaveData.currentSave.Player.Party.HasSpace(SaveData.currentSave.Player.Party.Length))
+            //    {
+            //        //Play Great for Pokemon
+            //        AudioClip pokeGetMFX = Resources.Load<AudioClip>("Audio/mfx/GetGreat");
+            //
+            //        //PokemonData pkd = PokemonDatabase.getPokemon(currentEvent.ints[0]);
+            //
+            //        Pokemons pkd = (Pokemons)currentEvent.ints[0];
+            //
+            //        string pkName = pkd.toString();
+            //        //Pokemon.Gender pkGender = Pokemon.Gender.CALCULATE;
+            //        //
+            //        //if (pkd.getMaleRatio() == -1)
+            //        //{
+            //        //    pkGender = Pokemon.Gender.NONE;
+            //        //}
+            //        //else if (pkd.getMaleRatio() == 0)
+            //        //{
+            //        //    pkGender = Pokemon.Gender.FEMALE;
+            //        //}
+            //        //else if (pkd.getMaleRatio() == 100)
+            //        //{
+            //        //    pkGender = Pokemon.Gender.MALE;
+            //        //}
+            //        //else
+            //        //{
+            //        //    //if not a set gender
+            //        //    if (currentEvent.ints[2] == 0)
+            //        //    {
+            //        //        pkGender = Pokemon.Gender.MALE;
+            //        //    }
+            //        //    else if (currentEvent.ints[2] == 1)
+            //        //    {
+            //        //        pkGender = Pokemon.Gender.FEMALE;
+            //        //    }
+            //        //}
+            //
+            //        Dialog.drawDialogBox();
+            //        yield return
+            //            Dialog.StartCoroutine("drawText",
+            //                SaveData.currentSave.Player.Name + " received the " + pkName + "!");
+            //        BgmHandler.main.PlayMFX(pokeGetMFX);
+            //        yield return new WaitForSeconds(pokeGetMFX.length);
+            //
+            //        string nickname = currentEvent.strings[0];
+            //        if (currentEvent.strings[1].Length == 0)
+            //        {
+            //            //If no OT set, allow nicknaming of Pokemon
+            //
+            //            Dialog.drawDialogBox();
+            //            yield return
+            //                StartCoroutine(
+            //                    Dialog.drawTextSilent("Would you like to give a nickname to \nthe " + pkName +
+            //                                          " you received?"));
+            //            Dialog.drawChoiceBox();
+            //            yield return StartCoroutine(Dialog.choiceNavigate());
+            //            int nicknameCI = Dialog.chosenIndex;
+            //            Dialog.undrawDialogBox();
+            //            Dialog.undrawChoiceBox();
+            //
+            //            if (nicknameCI == 1)
+            //            {
+            //                //give nickname
+            //                //SfxHandler.Play(selectClip);
+            //                yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+            //
+            //                Scene.main.Typing.gameObject.SetActive(true);
+            //                //StartCoroutine(Scene.main.Typing.control(10, "", pkGender,
+            //                //    Pokemon.GetIconsFromID_(currentEvent.ints[0], currentEvent.bool0)));
+            //                while (Scene.main.Typing.gameObject.activeSelf)
+            //                {
+            //                    yield return null;
+            //                }
+            //                if (Scene.main.Typing.typedString.Length > 0)
+            //                {
+            //                    nickname = Scene.main.Typing.typedString;
+            //                }
+            //
+            //                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+            //            }
+            //        }
+            //        if (!EventRequiresDialogBox(nextEvent.eventType))
+            //        {
+            //            Dialog.undrawDialogBox();
+            //        }
+            //
+            //        int[] IVs = new int[]
+            //        {
+            //            Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
+            //            Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32)
+            //        };
+            //        if (currentEvent.bool1)
+            //        {
+            //            //if using Custom IVs
+            //            IVs[0] = currentEvent.ints[5];
+            //            IVs[1] = currentEvent.ints[6];
+            //            IVs[2] = currentEvent.ints[7];
+            //            IVs[3] = currentEvent.ints[8];
+            //            IVs[4] = currentEvent.ints[9];
+            //            IVs[5] = currentEvent.ints[10];
+            //        }
+            //
+            //        string pkNature = (currentEvent.ints[3] == 0)
+            //            ? NatureDatabase.getRandomNature().getName()
+            //            : NatureDatabase.getNature(currentEvent.ints[3] - 1).getName();
+            //
+            //        Moves[] pkMoveset = pkd.GenerateMoveset((byte)currentEvent.ints[1]);
+            //
+            //        Debug.Log(pkMoveset[0] + ", " + pkMoveset[1] + ", " + pkMoveset[2] + ", " + pkMoveset[3]);
+            //        Debug.Log("Not Setup, yet");
+            //
+            //
+            //        //Pokemon pk = new Pokemon((PokemonUnity.Pokemons)currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
+            //        //    currentEvent.bool0, currentEvent.strings[2], currentEvent.strings[3],
+            //        //    currentEvent.strings[1], IVs[0], IVs[1], IVs[2], IVs[3], IVs[4], IVs[5], 0, 0, 0, 0, 0, 0,
+            //        //    pkNature, currentEvent.ints[4],
+            //        //    pkMoveset, new int[4]);
+            //        
+            //        //SaveData.currentSave.Player.addPokemon(pk);
+            //    }
+            //    else
+            //    {
+            //        //jump to new tree
+            //        JumpToTree(currentEvent.int0);
+            //    }
+            //    break;
+            //
             case (CustomEventDetails.CustomEventType.SetActive):
                 if (currentEvent.bool0)
                 {
@@ -585,7 +570,7 @@ public class CustomEvent : MonoBehaviour
                             if (SaveData.currentSave.Player.Party[pi] != null)
                             {
                                 //if (SaveData.currentSave.PC.boxes[0][pi].getID() ==
-                                if (SaveData.currentSave.Player.Party[pi].getID() ==
+                                if ((int)SaveData.currentSave.Player.Party[pi].Species ==
                                     Mathf.FloorToInt(currentEvent.float0))
                                 {
                                     passedCheck = true;
@@ -597,7 +582,6 @@ public class CustomEvent : MonoBehaviour
                     case CustomEventDetails.Logic.SpaceInParty:
                         if (currentEvent.bool0)
                         {
-                            //if (!SaveData.currentSave.PC.hasSpace(0))
                             if (!SaveData.currentSave.Player.Party.HasSpace(SaveData.currentSave.Player.Party.Length))
                             {
                                 passedCheck = true;
@@ -636,8 +620,8 @@ public class CustomEvent : MonoBehaviour
         //Events that require immediate use of the DialogBox
         if (eventType == CustomEventDetails.CustomEventType.Dialog ||
             eventType == CustomEventDetails.CustomEventType.Choice ||
-            eventType == CustomEventDetails.CustomEventType.ReceiveItem ||
-            eventType == CustomEventDetails.CustomEventType.ReceivePokemon)
+            eventType == CustomEventDetails.CustomEventType.ReceiveItem /*||
+            eventType == CustomEventDetails.CustomEventType.ReceivePokemon*/)
         {
             return true;
         }
@@ -671,7 +655,7 @@ public class CustomEventDetails
         Choice, //strings: choices (none for Yes/No) | ints: eventTrees to jump to (same for continue)
         Sound, //sound: sound to play
         ReceiveItem,
-        ReceivePokemon, //ints[0]: Pokemon ID | ints[1]: Level | ints[2]: Gender | ints[3]: Nature | ints[4]: Ability
+        //ReceivePokemon, //ints[0]: Pokemon ID | ints[1]: Level | ints[2]: Gender | ints[3]: Nature | ints[4]: Ability
         //strings[0]: Nickname | strings[1]: OT | strings[2]: Poké Ball | strings[3]: Held Item
         //ints[5-10]: Custom IVs | strings[4-7]: Custom Moves | bool0: Is Shiny | bool1: Use Custom IVs
         SetActive, //object0: game object to activate
@@ -719,7 +703,6 @@ public class CustomEventDetails
     public GameObject object1;
 
     public AudioClip sound;
-
 
     public bool runSimultaneously;
 }

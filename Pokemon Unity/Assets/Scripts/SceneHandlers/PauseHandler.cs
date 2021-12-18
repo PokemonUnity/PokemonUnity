@@ -466,66 +466,66 @@ public class PauseHandler : MonoBehaviour
                     else if (selectedIcon == 5)
                     {
                         //Save
-                        //saveDataDisplay.gameObject.SetActive(true);
-                        //saveDataDisplay.texture =
-                        //    Resources.Load<Texture>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
-                        //iconPokedex.hide = true; //hide this icon as it is in the way
-                        //int badgeTotal = 0;
-                        //for (int i = 0; i < 12; i++)
-                        //{
-                        //    if (SaveData.currentSave.savefile.gymsBeaten[i])
-                        //    {
-                        //        badgeTotal += 1;
-                        //    }
-                        //}
-                        //string playerTime = "" + SaveData.currentSave.savefile.playerMinutes;
-                        //if (playerTime.Length == 1)
-                        //{
-                        //    playerTime = "0" + playerTime;
-                        //}
-                        //playerTime = SaveData.currentSave.savefile.playerHours + " : " + playerTime;
-                        //
-                        //mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
-                        //dataText.text = SaveData.currentSave.savefile.playerName + "\n" +
-                        //                badgeTotal + "\n" +
-                        //                "0" + "\n" + //pokedex not yet implemented
-                        //                playerTime;
-                        //mapNameShadow.text = mapName.text;
-                        //dataTextShadow.text = dataText.text;
-                        //
-                        //Dialog.drawDialogBox();
-                        //yield return StartCoroutine(Dialog.drawText("Would you like to save the game?"));
-                        //Dialog.drawChoiceBoxNo();
-                        //yield return new WaitForSeconds(0.2f);
-                        //yield return StartCoroutine(Dialog.choiceNavigateNo());
-                        //int chosenIndex = Dialog.chosenIndex;
-                        //if (chosenIndex == 1)
-                        //{
-                        //    //update save file
-                        //    Dialog.undrawChoiceBox();
-                        //    Dialog.drawDialogBox();
-                        //
-                        //    SaveData.currentSave.savefile.levelName = Application.loadedLevelName;
-                        //    SaveData.currentSave.savefile.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
-                        //    SaveData.currentSave.savefile.playerDirection = PlayerMovement.player.direction;
-                        //    SaveData.currentSave.savefile.mapName = PlayerMovement.player.accessedMapSettings.mapName;
-                        //
-                        //    NonResettingHandler.saveDataToGlobal();
-                        //
-                        //    SaveLoad.Save();
-                        //
-                        //    yield return
-                        //        StartCoroutine(Dialog.drawText(SaveData.currentSave.savefile.playerName + " saved the game!"));
-                        //    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                        //    {
-                        //        yield return null;
-                        //    }
-                        //}
-                        //Dialog.undrawDialogBox();
-                        //Dialog.undrawChoiceBox();
-                        //iconPokedex.hide = false;
-                        //saveDataDisplay.gameObject.SetActive(false);
-                        Debug.Log("Save not yet implemented");
+                        saveDataDisplay.gameObject.SetActive(true);
+                        saveDataDisplay.texture =
+                            Resources.Load<Texture>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
+                        iconPokedex.hide = true; //hide this icon as it is in the way
+                        int badgeTotal = 0;
+                        for (int i = 0; i < 12; i++)
+                        {
+                            if (SaveData.currentSave.Player.gymsBeaten[i])
+                            {
+                                badgeTotal += 1;
+                            }
+                        }
+                        string playerTime = "" + SaveData.currentSave.Player.PlayTime.Minutes;
+                        if (playerTime.Length == 1)
+                        {
+                            playerTime = "0" + playerTime;
+                        }
+                        playerTime = SaveData.currentSave.Player.PlayTime.Hours + " : " + playerTime;
+                        
+                        mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
+                        dataText.text = SaveData.currentSave.Player.Name + "\n" +
+                                        badgeTotal + "\n" +
+                                        "0" + "\n" + //pokedex not yet implemented
+                                        playerTime;
+                        mapNameShadow.text = mapName.text;
+                        dataTextShadow.text = dataText.text;
+                        
+                        Dialog.drawDialogBox();
+                        yield return StartCoroutine(Dialog.drawText("Would you like to save the game?"));
+                        Dialog.drawChoiceBoxNo();
+                        yield return new WaitForSeconds(0.2f);
+                        yield return StartCoroutine(Dialog.choiceNavigateNo());
+                        int chosenIndex = Dialog.chosenIndex;
+                        if (chosenIndex == 1)
+                        {
+                            //update save file
+                            Dialog.undrawChoiceBox();
+                            Dialog.drawDialogBox();
+                        
+                            SaveData.currentSave.savefile.levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+                            SaveData.currentSave.Player.Position = new SeriV3(PlayerMovement.player.transform.position);
+                            SaveData.currentSave.Player.Direction = PlayerMovement.player.direction;
+                            SaveData.currentSave.savefile.mapName = PlayerMovement.player.accessedMapSettings.mapName;
+                        
+                            NonResettingHandler.saveDataToGlobal();
+                        
+                            SaveLoad.Save();
+                        
+                            yield return
+                                StartCoroutine(Dialog.drawText(SaveData.currentSave.Player.Name + " saved the game!"));
+                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            {
+                                yield return null;
+                            }
+                        }
+                        Dialog.undrawDialogBox();
+                        Dialog.undrawChoiceBox();
+                        iconPokedex.hide = false;
+                        saveDataDisplay.gameObject.SetActive(false);
+                        //Debug.Log("Save not yet implemented");
                         yield return new WaitForSeconds(0.2f);
                     }
                     else if (selectedIcon == 6)

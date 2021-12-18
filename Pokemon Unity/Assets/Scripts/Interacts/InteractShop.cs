@@ -12,7 +12,7 @@ public class InteractShop : MonoBehaviour
     public string returnDialog = "Is there anything else I may do\nfor you?";
     public string leaveDialog = "Please come again!";
 
-    public string[] itemCatalog;
+    public PokemonUnity.Inventory.Items[] itemCatalog;
     //custom prices not yet implemented
     public int[] customPrices;
 

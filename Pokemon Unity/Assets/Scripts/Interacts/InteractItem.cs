@@ -84,7 +84,7 @@ public class InteractItem : MonoBehaviour
             }
             yield return new WaitForSeconds(itemGetMFX.length);
 
-            bool itemAdd = SaveData.currentSave.Bag.addItem(item, quantity);
+            bool itemAdd = SaveData.currentSave.Bag.addItem(item.ToItems(), quantity);
 
             Dialog.drawDialogBox();
             if (itemAdd)

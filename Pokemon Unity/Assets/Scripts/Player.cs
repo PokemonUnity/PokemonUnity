@@ -1,7 +1,6 @@
 ﻿using PokemonUnity;
 using PokemonUnity.Character;
-using System.Collections;
-using System.Collections.Generic;
+using PokemonUnity.Monster;
 using UnityEngine;
 
 // Custom
@@ -16,6 +15,7 @@ public class Player
     public TrainerData Trainer { get { return new TrainerData(name: Name, gender: IsMale, tID: trainerId, sID: secretId); } }
     
     public PC PC { get; private set; }
+    
     public Bag Bag { get; private set; }
 
     public int Money { get { return playerMoney; } set { playerMoney = value > Core.MAXMONEY ? Core.MAXMONEY : value; } }
@@ -54,6 +54,14 @@ public class Player
         Party = new Pokemon[6];
     }
 
+    public Player(int? trainerId, int? secretId, string Name, bool IsMale, Pokemon[] Party, PC Pc, PokemonUnity.Inventory.Items[] Bag, int playerMoney, int playerScore, Vector3 Position, int Direction,
+        string playerOutfit, string[] registeredItems, bool[] gymsEncountered, bool[] gymsBeaten, string[] gymsBeatTime, System.DateTime StartDate, System.TimeSpan PlayTime)
+    {
+        this.trainerId = trainerId; this.secretId = secretId; this.Name = Name; this.IsMale = IsMale; this.Party = Party; PC = Pc; this.Bag = new Bag(Bag); this.playerMoney = playerMoney; this.playerScore = playerScore;
+        this.Position = Position; this.Direction = Direction; this.playerOutfit = playerOutfit; this.registeredItems = registeredItems; this.gymsEncountered = gymsEncountered; this.gymsBeaten = gymsBeaten;
+        this.StartDate = StartDate; this.PlayTime = PlayTime;
+    }
+
     /// <summary>
     /// Skims every available box player has, and attempts to add pokemon.
     /// </summary>
@@ -67,29 +75,26 @@ public class Player
             Party.PackParty();
             Party[Party.Length - 1] = pokemon;
             Party.PackParty();
-            return true;
+            return true; //true
         }
         else
         {
-            for (int i = 0; i < PC.boxes.Length; i++)
+            //Could not be stored in PC because all boxes full
+            System.Collections.Generic.KeyValuePair<int, int>? slot = null;
+            //attempt to add to the earliest available PC box. 
+            for (int numOfBoxes = 0, curBox = PC.ActiveBox; numOfBoxes < PC.AllBoxes.Length; numOfBoxes++, curBox++)
             {
-                if (PC.hasSpace(i))
-                {
-                    for (int i2 = 0; i2 < PC.boxes[i].Length; i2++)
-                    {
-                        if (PC.boxes[i][i2] == null)
-                        {
-                            PC.boxes[i][i2] = pokemon;
-                            return true;
-                        }
-                    }
-                }
+                slot = PC[(byte)(curBox % Core.STORAGEBOXES)].addPokemon(pokemon);
+                if (slot != null)
+                    //Returns the box pokemon was stored to
+                    return true; //true
+                if (!Game.GameData.Features.OverflowPokemonsIntoNextBox) break; //else PC.ActiveBox = curBox; //change active box too?
             }
+            return false;
         }
-        //if could not add a pokemon, return false. Party and PC are both full.
-        return false;
     }
 
+    // ToDo: Merge swapPartyPokemon and swapPokemon
     public void swapPartyPokemon(int pos1, int pos2)
     {
         Pokemon temp = Party[pos1];
@@ -102,15 +107,16 @@ public class Player
     {
         Pokemon temp;
         Pokemon temp2;
+
         if (index1 == -1)
             temp = Party[pos1];
         else
-            temp = PC.boxes[index1][pos1];
+            temp = PC.AllBoxes[index1][pos1];
 
         if (index2 == -1)
             temp2 = Party[pos2];
         else
-            temp2 = PC.boxes[index2][pos2];
+            temp2 = PC.AllBoxes[index2][pos2];
 
         if (index1 == -1 && index2 == -1)
         {
@@ -120,34 +126,36 @@ public class Player
         {
             if (index1 == -1)
             {
-                PC.boxes[index2][pos2] = temp;
+                PC.addPokemon(index2, pos2, temp);
+                //PC.AllBoxes[index2][pos2] = temp;
                 Party[pos1] = temp2;
             }
             else
             {
                 Party[pos2] = temp;
-                PC.boxes[index1][pos1] = temp2;
+                PC.addPokemon(index1, pos1, temp2);
+                //PC.AllBoxes[index1][pos1] = temp2;
             }
         }
         else
         {
-            PC.boxes[index1][pos1] = temp2;
-            PC.boxes[index2][pos2] = temp;
+            PC.swapPokemon(index1, pos1, index2, pos2);
+            //PC.AllBoxes[index1][pos1] = temp2;
+            //PC.AllBoxes[index2][pos2] = temp;
         }
     }
 
-    public Pokemon getFirstFEUserInParty(string moveName)
+    public Pokemon getFirstFEUserInParty(Moves moveName)
     {
         for (int i = 0; i < 6; i++)
         {
             if (Party[i] != null)
             {
-                string[] moveset = Party[i].getMoveset();
-                for (int i2 = 0; i2 < moveset.Length; i2++)
+                for (int i2 = 0; i2 < Party[i].moves.Length; i2++)
                 {
-                    if (moveset[i2] != null)
+                    if (Party[i].moves[i2].MoveId != Moves.NONE)
                     {
-                        if (MoveDatabase.getMove(moveset[i2]).getFieldEffect() == moveName)
+                        if (Party[i].moves[i2].MoveId == moveName)
                         {
                             return Party[i];
                         }

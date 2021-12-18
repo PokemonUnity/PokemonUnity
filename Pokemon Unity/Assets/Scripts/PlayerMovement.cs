@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity.Monster;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -235,7 +236,7 @@ public class PlayerMovement : MonoBehaviour
             string namez = "";
             for (int i = 0; i < encounterList.Length; i++)
             {
-                namez += PokemonDatabase.getPokemon(encounterList[i].ID).getName() + ", ";
+                namez += ((PokemonUnity.Pokemons)encounterList[i].ID).toString() + ", ";
             }
             Debug.Log("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
         }
@@ -895,13 +896,11 @@ public class PlayerMovement : MonoBehaviour
                     if (destinationTag == 2)
                     {
                         //surf tile
-                        //Debug.Log("Not Implement Encounter! Surf Tile");
                         //StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Location.Surfing));
                     }
                     else
                     {
                         //land tile
-                        //Debug.Log("Not Implement Encounter! Land Tile");
                         //StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Location.Standard));
                     }
                 }
@@ -951,7 +950,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 movement = getForwardVector();
 
             //check destination for transparents
-            Collider objectCollider = null;
+            //Collider objectCollider = null;
             Collider transparentCollider = null;
             Collider[] hitColliders = Physics.OverlapSphere(transform.position + movement + new Vector3(0, 0.5f, 0),
                 0.4f);
@@ -1074,9 +1073,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator surfCheck()
     {
-        //Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Surf");
-        Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty("Surf");
-        if (targetPokemon != null)
+        Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty(PokemonUnity.Moves.SURF);
+        if (targetPokemon.IsNotNullOrNone())
         {
             if (getForwardVector(direction, false) != Vector3.zero)
             {
@@ -1095,7 +1093,7 @@ public class PlayerMovement : MonoBehaviour
                         Dialog.drawDialogBox();
                         yield return
                             Dialog.StartCoroutine("drawText",
-                                targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Surf") + "!");
+                                targetPokemon.Name + " used " + PokemonUnity.Moves.SURF.toString() + "!");
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
                             yield return null;

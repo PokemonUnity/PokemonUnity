@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
+// ToDo: Make Better SaveData System
 public class SaveData
 {
     [System.Serializable]
@@ -11,36 +11,11 @@ public class SaveData
     {
         public int fileIndex;
         public int buildID;
-        public Player player;
+        public SeriPlayer player;
 
         public string levelName;
-        //public SeriV3 playerPosition = new SeriV3(new Vector3());
-        //public int playerDirection;
-        
-        //public string playerName;
-        //public bool isMale;
-        //public int playerID;
-        //public string fileCreationDate;
 
         public string mapName;
-
-        //public SeriPC PC;
-        //public Bag Bag = new Bag();
-
-        //public string[] registeredItems;
-
-        //public string playerOutfit;
-
-        //public int playerScore;
-        //public int playerMoney;
-        
-        //public int playerHours;
-        //public int playerMinutes;
-        //public int playerSeconds;
-        
-        //public bool[] gymsEncountered;
-        //public bool[] gymsBeaten;
-        //public string[] gymsBeatTime;
 
         //Important gameplay data
         public string respawnSceneName;
@@ -60,8 +35,9 @@ public class SaveData
     public static SaveData currentSave;
     public SaveFile savefile;
 
-    public PC PC { get { return Player.PC; } }
-    public Bag Bag { get { return Player.Bag; } }
+    public PokemonUnity.Character.PC PC { get { return Player.PC; } }
+    
+    public PokemonUnity.Character.Bag Bag { get { return Player.Bag; } }
 
     public Player Player { get; set; }
 
@@ -71,7 +47,6 @@ public class SaveData
     {
         savefile = new SaveFile();
         savefile.fileIndex = fileIndex;
-        //PC = new PC();
         Player = new Player();
         Save();
     }
@@ -80,12 +55,12 @@ public class SaveData
     {
         savefile = loadData;
         savefile.fileIndex = loadData.fileIndex;
-        Player = loadData.player;
+        Player = loadData.player.GetPlayer();
     }
 
     public void Save()
     {
-        savefile.player = Player;
+        savefile.player = new SeriPlayer(Player);
     }
 
     public int getFileIndex()

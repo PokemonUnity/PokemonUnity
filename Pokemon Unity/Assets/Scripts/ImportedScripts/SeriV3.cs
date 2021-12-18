@@ -3,87 +3,13 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using PokemonUnity.Saving.SerializableClasses;
 using System.Runtime.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 
 #endif
-using PokemonUnity.Saving.Test;
 
-[System.Serializable]
-public struct SerializePokemon
-{
-    public SeriPokemon m_Pokemon { get; private set; }
-    private int rareValue;
-
-    private string metDate;
-    private string metMap;
-    public SerializePokemon(Pokemon pokemon) 
-    {
-        if (pokemon != null && pokemon.getID() != 0)
-        {
-            m_Pokemon = pokemon.GetPokemon(); rareValue = pokemon.GetRareValue();
-            metDate = pokemon.getMetDate(); metMap = pokemon.getMetMap();
-        }
-        else
-        {
-            m_Pokemon = new Pokemon().GetPokemon(); rareValue = 0;
-            metDate = null; metMap = null;
-        }
-    }
-
-    public static implicit operator SerializePokemon(Pokemon pokemon) { return new SerializePokemon(pokemon); }
-    public static implicit operator Pokemon(SerializePokemon pokemon) { return new Pokemon(pokemon.m_Pokemon, pokemon.rareValue, pokemon.metDate, pokemon.metMap); }
-}
-
-[System.Serializable]
-public class SeriPC
-{
-    public SerializePokemon[][] boxes { get; private set; }
-    public string[] boxName { get; private set; }
-    public int[] boxTexture { get; private set; }
-
-    public SeriPC(PC pc)
-    {
-        boxes = new SerializePokemon[pc.boxes.Length][];
-        for (int i = 0; i < pc.boxes.Length; i++)
-        {
-            boxes[i] = new SerializePokemon[pc.boxes[i].Length];
-            for (int j = 0; j < boxes[i].Length; j++)
-            {
-                boxes[i][j] = pc.boxes[i][j];
-            }
-        }
-        boxName = pc.boxName;
-        boxTexture = pc.boxTexture;
-    }
-
-    public PC GetPC()
-    {
-        PC pc = new PC();
-        if (pc.boxes.Length == boxes.Length)
-        {
-            for (int i = 0; i < pc.boxes.Length; i++)
-            {
-                if (pc.boxes[i].Length == boxes[i].Length)
-                {
-                    for (int j = 0; j < pc.boxes[i].Length; j++)
-                    {
-                        pc.boxes[i][j] = boxes[i][j];
-                        //Debug.Log("Pokemon ID: " + boxes[i][j].getID());
-                    }
-                }
-                else
-                    Debug.Log("(for I) Length is not equal");
-            }
-        }
-        else
-            Debug.Log("boxes.length is not equal");
-        pc.boxName = boxName;
-        pc.boxTexture = boxTexture;
-        return pc;
-    }
-}
 
 [System.Serializable]
 public class SeriV3 : ISerializable
@@ -173,3 +99,4 @@ public static class Utex
         return new Vector3(v.x, v.y, z);
     }
 }
+

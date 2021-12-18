@@ -106,11 +106,9 @@ public class InteractPokemonCenter : MonoBehaviour
                 //place balls on machine, healing as they get shown
                 for (int i = 0; i < 6; i++)
                 {
-                    //if (SaveData.currentSave.PC.boxes[0][i] != null)
                     if (SaveData.currentSave.Player.Party[i] != null)
                     {
-                        //SaveData.currentSave.PC.boxes[0][i].healFull();
-                        SaveData.currentSave.Player.Party[i].healFull();
+                        SaveData.currentSave.Player.Party[i].Heal();
                         pokeBalls[i].enabled = true;
                         SfxHandler.Play(ballPlaceClip);
                         yield return new WaitForSeconds(0.45f);
@@ -201,10 +199,9 @@ public class InteractPokemonCenter : MonoBehaviour
             //place balls on machine, healing as they get shown
             for (int i = 0; i < 6; i++)
             {
-                //if (SaveData.currentSave.PC.boxes[0][i] != null)
                 if (SaveData.currentSave.Player.Party[i] != null)
                 {
-                    SaveData.currentSave.Player.Party[i].healFull();
+                    SaveData.currentSave.Player.Party[i].Heal();
                     pokeBalls[i].enabled = true;
                     SfxHandler.Play(ballPlaceClip);
                     yield return new WaitForSeconds(0.45f);
