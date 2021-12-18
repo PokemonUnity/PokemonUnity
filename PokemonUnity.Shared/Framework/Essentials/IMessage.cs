@@ -92,7 +92,7 @@ namespace PokemonEssentials.Interface
 
 		int pbChooseNumber(IWindow msgwindow, IChooseNumberParams param, Action block = null);
 
-		int pbShowCommandsWithHelp(IWindow msgwindow,string[] commands,string help,int cmdIfCancel=0,int defaultCmd=0, Action block = null);
+		int pbShowCommandsWithHelp(IWindow msgwindow,string[] commands,string[] help,int cmdIfCancel=0,int defaultCmd=0, Action block = null);
 
 		int pbShowCommands(IWindow msgwindow,string[] commands=null,int cmdIfCancel=0,int defaultCmd=0, Action block = null);
 
@@ -106,15 +106,15 @@ namespace PokemonEssentials.Interface
 
 		int pbMessage(string message,string[] commands=null,int cmdIfCancel=0,int? skin=null,int defaultCmd=0, Action block = null); //ref Action block
 
-		int pbMessageChooseNumber(string message,string[] param, ref Action block);
+		int pbMessageChooseNumber(string message,string[] param, ref Action block); //Action block = null
 
-		bool pbConfirmMessage(string message,Action block);
+		bool pbConfirmMessage(string message,Action block = null);
 
-		bool pbConfirmMessageSerious(string message,Action block);
+		bool pbConfirmMessageSerious(string message,Action block = null);
 
-		IWindow pbCreateStatusWindow(IViewport viewport=null); //IWindow_AdvancedTextPokemon
+		IWindow_AdvancedTextPokemon pbCreateStatusWindow(IViewport viewport=null);
 
-		IWindow pbCreateMessageWindow(IViewport viewport=null,int? skin=null); //IWindow_AdvancedTextPokemon
+		IWindow_AdvancedTextPokemon pbCreateMessageWindow(IViewport viewport=null,int? skin=null);
 
 		void pbDisposeMessageWindow(IWindow msgwindow);
 
@@ -134,9 +134,9 @@ namespace PokemonEssentials.Interface
 
 		string pbGetGoldString();
 
-		IWindow pbDisplayGoldWindow(IWindow msgwindow); //IWindow_AdvancedTextPokemon
+		IWindow_AdvancedTextPokemon pbDisplayGoldWindow(IWindow msgwindow);
 
-		IWindow pbDisplayCoinsWindow(IWindow msgwindow,IWindow goldwindow); //IWindow_AdvancedTextPokemon
+		IWindow_AdvancedTextPokemon pbDisplayCoinsWindow(IWindow msgwindow,IWindow goldwindow);
 
 		void pbMessageWaitForInput(IWindow msgwindow,int frames,bool showPause=false);
 
@@ -269,7 +269,7 @@ namespace PokemonEssentials.Interface
 		//int numDigits(int number);
 	}
 
-	public interface IFaceWindowVX //: ISpriteWindow_Base  
+	public interface IFaceWindowVX : ISpriteWindow_Base  
 	{
 		IFaceWindowVX initialize(string face);
 

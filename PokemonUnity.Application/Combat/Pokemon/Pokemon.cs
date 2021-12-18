@@ -607,7 +607,7 @@ namespace PokemonUnity.Combat
 				statusCount		= pkmn.StatusCount;
 				pokemon			= pkmn;
 				Index			= pkmnIndex;
-				participants	= new List<byte>();
+				participants	= new List<int>();
 				moves			= new IBattleMove[] {
 					PokemonUnity.Combat.Move.pbFromPBMove(@battle,pkmn.moves[0]),
 					PokemonUnity.Combat.Move.pbFromPBMove(@battle,pkmn.moves[1]),
@@ -2153,7 +2153,7 @@ namespace PokemonUnity.Combat
 							if (!pbAddTarget(targets,targetBattler))
 								if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
 						else
-							if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.Partner);
+							if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattlerPartner);
 					}
 					else
 						pbRandomTarget(targets);
@@ -2165,7 +2165,7 @@ namespace PokemonUnity.Combat
 				//		  if (!pbAddTarget(targets,targetBattler))
 				//			if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
 				//		else
-				//		  if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.Partner);
+				//		  if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattlerPartner);
 				//	}
 				//	else
 				//		pbRandomTarget(targets);
@@ -2187,12 +2187,12 @@ namespace PokemonUnity.Combat
 				case Attack.Data.Targets.USER_OR_ALLY: //Attack.Target.UserOrPartner:
 					if (target>=0) { // Pre-chosen target
 						IBattler targetBattler=@battle.battlers[target];
-						if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.Partner);
+						if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattlerPartner);
 					}
 					else
 						pbAddTarget(targets,this);
 					break;
-				case Attack.Data.Targets.ALLY: //Attack.Target.Partner:
+				case Attack.Data.Targets.ALLY: //Attack.TargetPartner:
 					pbAddTarget(targets,Partner);
 					break;
 				default:
@@ -2665,7 +2665,7 @@ namespace PokemonUnity.Combat
 						(!user.pbOpposing1.isFainted() ? 1 : 0) + (!user.pbOpposing2.isFainted() ? 1 : 0) > 1)
 						@battle.pbDisplay(Game._INTL("{1} avoided the attack!",target.ToString()));
 					else if (thismove.Target==Attack.Data.Targets.ALL_OTHER_POKEMON && //thismove.Targets==Attack.Target.AllNonUsers
-						(!user.pbOpposing1.isFainted() ? 1 : 0) + (!user.pbOpposing2.isFainted() ? 1 : 0) + (!user.Partner.isFainted() ? 1 : 0) > 1)
+						(!user.pbOpposing1.isFainted() ? 1 : 0) + (!user.pbOpposing2.isFainted() ? 1 : 0) + (!userPartner.isFainted() ? 1 : 0) > 1)
 						@battle.pbDisplay(Game._INTL("{1} avoided the attack!",target.ToString()));
 					else if (target.effects.TwoTurnAttack>0)
 						@battle.pbDisplay(Game._INTL("{1} avoided the attack!",target.ToString()));
@@ -3264,7 +3264,7 @@ namespace PokemonUnity.Combat
 					thismove.Target==Attack.Data.Targets.RANDOM_OPPONENT ||	//.Targets==Attack.Target.RandomOpposing ||
 					thismove.Target==Attack.Data.Targets.ALL_OPPONENTS ||		//.Targets==Attack.Target.AllOpposing ||
 					thismove.Target==Attack.Data.Targets.ALL_OTHER_POKEMON ||		//.Targets==Attack.Target.AllNonUsers ||
-					thismove.Target==Attack.Data.Targets.ALLY ||			//.Targets==Attack.Target.Partner ||
+					thismove.Target==Attack.Data.Targets.ALLY ||			//.Targets==Attack.TargetPartner ||
 					thismove.Target==Attack.Data.Targets.USER_OR_ALLY ||	//.Targets==Attack.Target.UserOrPartner ||
 					//thismove.Target==Attack.Data.Targets.SingleOpposing ||	//.Targets==Attack.Target.SingleOpposing ||
 					thismove.Target==Attack.Data.Targets.OPPONENTS_FIELD)	//.Targets==Attack.Target.OppositeOpposing)
@@ -3289,7 +3289,7 @@ namespace PokemonUnity.Combat
 					IBattler target=userandtarget[1];
 					if (battle.doublebattle && i==0 && thismove.Target==Attack.Data.Targets.ALL_OPPONENTS) //thismove.Targets==Attack.Target.AllOpposing
 						// Add target's partner to list of targets
-						pbAddTarget(ref targets,target.Partner);
+						pbAddTarget(ref targets,targetPartner);
 					// If couldn't get the next target
 					if (!success) {
 						i+=1;

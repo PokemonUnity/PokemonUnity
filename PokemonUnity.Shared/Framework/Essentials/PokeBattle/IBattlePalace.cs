@@ -19,10 +19,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int[] BattlePalaceUsualTable { get; }
 		int[] BattlePalacePinchTable { get; }
 
-		IBattlePalace initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
+		new IBattlePalace initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
 
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="move"></param>
 		/// <returns>Returns Categgory?</returns>

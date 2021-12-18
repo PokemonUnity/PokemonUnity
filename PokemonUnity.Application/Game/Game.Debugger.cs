@@ -25,14 +25,14 @@ namespace PokemonUnity
 		{
 			set
 			{
-				if (Core.DEBUG && OnLog != null) OnLog.Invoke(this, new OnDebugEventArgs { Message = value, Error = null });
+				if (Core.DEBUG && OnLog != null) OnLog.Invoke(null, new OnDebugEventArgs { Message = value, Error = null });
 			}
 		}
 		private static string DebugWarning
 		{
 			set
 			{
-				if (Core.DEBUG && OnLog != null) OnLog.Invoke(this, new OnDebugEventArgs { Message = value, Error = false });
+				if (Core.DEBUG && OnLog != null) OnLog.Invoke(null, new OnDebugEventArgs { Message = value, Error = false });
 			}
 		}
 		//ToDo: Errors should be known whether in debug or production?
@@ -40,42 +40,52 @@ namespace PokemonUnity
 		{
 			set
 			{
-				if (OnLog != null) OnLog.Invoke(this, new OnDebugEventArgs { Message = value, Error = true });
+				if (OnLog != null) OnLog.Invoke(null, new OnDebugEventArgs { Message = value, Error = true });
 			}
 		}
-		private static System.IO.StreamWriter logFile = null;
+		//private static System.IO.StreamWriter logFile = null;
+		private static string logFile = null;
 		/// <summary>
 		/// Determines whether or not to store Debug Log to a file, or display only
 		/// </summary>
 		private static bool DebugToFile { get { return logFile != null; } }
+		//private static readonly string filename = GetTempPath() + "TranslationLog.txt";
+		//private static string GetTempPath()
+		//{
+		//	string path = System.Environment.GetEnvironmentVariable("TEMP");
+		//	if (!path.EndsWith("\\")) path += "\\";
+		//	return path;
+		//}
 
 		public static void Init(string logfilePath, string logBaseName)
 		{
-			// Try creating logName; attempt a number of suffixxes
+			// Try creating logName; attempt a number of suffixes
 			string name = "";
-			for (var i = 0; i < 10; i++)
+			for (int i = 0; ; i++)
 			{
 				name = logBaseName + (i == 0 ? "" : "_" + i) + ".log";
-				try
-				{
-					logFile = System.IO.File.CreateText(logfilePath + "/" + name);
-					logFile.AutoFlush = true;
+				//try
+				//{
+					//logFile = System.IO.File.CreateText(logfilePath + "/" + name);
+					//logFile = System.IO.File.OpenWrite(logfilePath + "/" + name);
+					//logFile.AutoFlush = true;
+					logFile = logfilePath + "/" + name;
 					break;
-				}
-				catch
-				{
-					name = "<none>";
-				}
+				//}
+				//catch
+				//{
+				//	name = "<none>";
+				//}
 			}
 			Log("GameDebug initialized. Logging to " + logfilePath + "/" + name);
 		}
 
-		public static void Shutdown()
-		{
-			if (DebugToFile)
-				logFile.Close();
-			logFile = null;
-		}
+		//public static void Shutdown()
+		//{
+		//	if (DebugToFile)
+		//		logFile.Close();
+		//	logFile = null;
+		//}
 
 		public static void Log(string message)
 		{
@@ -96,7 +106,8 @@ namespace PokemonUnity
 		{
 			//Console.Write(message); //UnityEngine.Time.frameCount + ": " + 
 			//if (logFile != null)
-				logFile.WriteLine(message + "\n"); //UnityEngine.Time.frameCount + ": " + 
+			//	logFile.WriteLine("[LOG] " + message + "\n");
+				LogMessageToFile("[LOG] " + message + "\n"); 
 		}
 
 		public static void LogWarning(string message)
@@ -110,7 +121,8 @@ namespace PokemonUnity
 		{
 			//Console.Write("[WARN] " + message); //UnityEngine.Time.frameCount + 
 			//if (logFile != null)
-				logFile.WriteLine("[WARN] " + message + "\n");
+			//	logFile.WriteLine("[WARN] " + message + "\n");
+				LogMessageToFile("[WARN] " + message + "\n");
 		}
 
 		public static void LogError(string message)
@@ -125,7 +137,32 @@ namespace PokemonUnity
 		{
 			//Console.Write("[ERR] " + message); //UnityEngine.Time.frameCount + 
 			//if (logFile != null)
-				logFile.WriteLine("[ERR] " + message + "\n");
+			//	logFile.WriteLine("[ERR] " + message + "\n");
+				LogMessageToFile("[ERR] " + message + "\n");
+		}
+
+		public static void LogMessageToFile(string msg)
+		{
+			using (System.IO.StreamWriter sw = System.IO.File.AppendText(logFile))
+				try
+				{
+					msg = System.String.Format("{0:G}: {1}", System.DateTime.Now, msg);
+					sw.WriteLine(msg);
+				}
+				catch(Exception ex)
+				{
+					DebugError = ex.Message;
+				}
+				//finally
+				//{
+				//	sw.Close();
+				//}
+		}
+
+		public static void LogMessageFile(string msg)
+		{
+			msg = System.String.Format("{0:G}: {1}{2}", System.DateTime.Now, msg, System.Environment.NewLine);
+			System.IO.File.AppendAllText(logFile, msg);
 		}
 	}
 }

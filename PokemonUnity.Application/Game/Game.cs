@@ -33,8 +33,8 @@ namespace PokemonUnity
 		#region Constructor
 		static Game()
 		{
-			UserLanguage = Languages.English;
-			GameData = new Game();
+			//UserLanguage = Languages.English;
+			GameData = (PokemonEssentials.Interface.IGame)new Game();
 
 			//GameDebug.Init(null, "GameTestLog");
 		}
@@ -55,8 +55,8 @@ namespace PokemonUnity
 			//		* give warning to player if problems
 			//	Scan for save files and previous game progress
 			// Load Player/Character/Overworld THEN Encounter
-			ResetSqlConnection();
-			con.Open();
+			//ResetSqlConnection();
+			//con.Open();
 			//InitTypes();
 			//InitNatures();
 			//InitPokemons();

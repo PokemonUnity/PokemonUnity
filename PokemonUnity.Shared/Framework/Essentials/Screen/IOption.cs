@@ -123,7 +123,7 @@ namespace PokemonEssentials.Interface.Screen
 		int battlestyle			    { get; set; }
 		int frame				    { get; set; }
 		int textskin				{ get; }
-		string font				    { get; set; }
+		int font				    { get; set; }
 		int screensize				{ get; set; }
 		int language				{ get; }
 		int border				    { get; }

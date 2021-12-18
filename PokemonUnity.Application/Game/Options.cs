@@ -268,7 +268,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Font (see also <seealso cref="VersionStyles"/>)
 		/// </summary>
-		public string font					{ get; set; }
+		public int font						{ get; set; }
 		/// <summary>
 		/// 0=half size, 1=full size, 2=double size
 		/// </summary>

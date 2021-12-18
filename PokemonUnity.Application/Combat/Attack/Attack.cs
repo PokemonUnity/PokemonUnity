@@ -152,21 +152,6 @@ namespace PokemonUnity.Combat
 		{
 			throw new NotImplementedException();
 		}
-
-		int IBattleMove.pbEffectFixedDamage(int damage, IBattler attacker, IBattler opponent, int hitnum, int[] alltargets, bool showanimation)
-		{
-			throw new NotImplementedException();
-		}
-
-		int IBattleMove.pbEffect(IBattler attacker, IBattler opponent, int hitnum, int[] alltargets, bool showanimation)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattleMove.pbShowAnimation(Moves id, IBattler attacker, IBattler opponent, int hitnum, int[] alltargets, bool showanimation)
-		{
-			throw new NotImplementedException();
-		}
 		#endregion
 	}
 
@@ -951,11 +936,11 @@ namespace PokemonUnity.Combat
 					   opponent.ToString(), opponent.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
-				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
+				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(), opponent.Partner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(), opponent.pbPartner.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
 			}
@@ -1061,7 +1046,7 @@ namespace PokemonUnity.Combat
 			{
 				battle.pbDisplay(Game._INTL("A bell chimed!"));
 			}
-			List<sbyte> activepkmn = new List<sbyte>();
+			IList<int> activepkmn = new List<int>();
 			foreach (IBattler i in this.battle.battlers)
 			{
 				if (attacker.IsOpposing(i.Index) || i.isFainted()) continue; //next
@@ -1096,7 +1081,7 @@ namespace PokemonUnity.Combat
 
 			}
 			IPokemon[] party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
-			for (sbyte i = 0; i < party.Length; i++)
+			for (int i = 0; i < party.Length; i++)
 			{
 				if (activepkmn.Contains(i)) continue; //next
 				if (party[i].Species == Pokemons.NONE || party[i].isEgg || party[i].HP <= 0) continue; //next
@@ -2242,9 +2227,9 @@ namespace PokemonUnity.Combat
 			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
-				if (attacker.Partner.IsNotNullOrNone() && !attacker.Partner.isFainted())
+				if (attacker.pbPartner.IsNotNullOrNone() && !attacker.pbPartner.isFainted())
 				{
-					attacker.Partner.ReduceHP((int)Math.Floor(attacker.Partner.TotalHP / 16f), true);
+					attacker.pbPartner.ReduceHP((int)Math.Floor(attacker.pbPartner.TotalHP / 16f), true);
 				}
 				bool showanim = true;
 				if (attacker.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
@@ -4105,7 +4090,7 @@ namespace PokemonUnity.Combat
 		{
 			if (attacker.lastAttacker.Count > 0)
 			{
-				sbyte lastattacker = attacker.lastAttacker[attacker.lastAttacker.Count - 1];
+				int lastattacker = attacker.lastAttacker[attacker.lastAttacker.Count - 1];
 				if (lastattacker >= 0 && attacker.IsOpposing(lastattacker))
 				{
 					if (!attacker.pbAddTarget(targets, this.battle.battlers[lastattacker]))
@@ -4140,11 +4125,11 @@ namespace PokemonUnity.Combat
 			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
-				if (opponent.Partner.IsNotNullOrNone() && !opponent.Partner.isFainted() &&
-				   !opponent.Partner.hasWorkingAbility(Abilities.MAGIC_GUARD))
+				if (opponent.pbPartner.IsNotNullOrNone() && !opponent.pbPartner.isFainted() &&
+				   !opponent.pbPartner.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
-					opponent.Partner.ReduceHP((int)Math.Floor(opponent.Partner.TotalHP / 16f));
-					battle.pbDisplay(Game._INTL("The bursting flame hit {1}!", opponent.Partner.ToString(true)));
+					opponent.pbPartner.ReduceHP((int)Math.Floor(opponent.pbPartner.TotalHP / 16f));
+					battle.pbDisplay(Game._INTL("The bursting flame hit {1}!", opponent.pbPartner.ToString(true)));
 				}
 			}
 			return ret;
@@ -4458,7 +4443,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_081(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
-			if (attacker.lastHPLost > 0 && attacker.lastAttacker.Contains((sbyte)opponent.Index))
+			if (attacker.lastHPLost > 0 && attacker.lastAttacker.Contains((int)opponent.Index))
 			{
 				return basedmg * 2;
 			}
@@ -4510,15 +4495,15 @@ namespace PokemonUnity.Combat
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				attacker.OwnSide.Round += 1;
-				if (attacker.Partner.IsNotNullOrNone() && !attacker.Partner.hasMovedThisRound())
+				if (attacker.pbPartner.IsNotNullOrNone() && !attacker.pbPartner.hasMovedThisRound())
 				{
-					if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Will use a move
+					if ((int)this.battle.choices[attacker.pbPartner.Index].Action == 1)	// Will use a move
 					{
-						IBattleMove partnermove = this.battle.choices[attacker.Partner.Index].Move;
+						IBattleMove partnermove = this.battle.choices[attacker.pbPartner.Index].Move;
 						if (partnermove.Effect == this.Effect)
 						{
-							attacker.Partner.effects.MoveNext = true;
-							attacker.Partner.effects.Quash = false;
+							attacker.pbPartner.effects.MoveNext = true;
+							attacker.pbPartner.effects.Quash = false;
 						}
 					}
 				}
@@ -6381,11 +6366,11 @@ namespace PokemonUnity.Combat
 					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
-				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
+				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),opponent.Partner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
 			}
@@ -6442,11 +6427,11 @@ namespace PokemonUnity.Combat
 					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
-				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
+				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),opponent.Partner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
 			}
@@ -6492,11 +6477,11 @@ namespace PokemonUnity.Combat
 					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
-				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
+				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),opponent.Partner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
 			}
@@ -6531,11 +6516,11 @@ namespace PokemonUnity.Combat
 					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
-				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
+				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),opponent.Partner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
 			}
@@ -6584,11 +6569,11 @@ namespace PokemonUnity.Combat
 					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
-				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
+				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),opponent.Partner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
 					return -1;
 				}
 			}
@@ -8723,9 +8708,9 @@ namespace PokemonUnity.Combat
 					}
 					// Symbiosis
 					if (attacker.Item == 0 &&
-					   attacker.Partner.IsNotNullOrNone() && attacker.Partner.hasWorkingAbility(Abilities.SYMBIOSIS))
+					   attacker.pbPartner.IsNotNullOrNone() && attacker.pbPartner.hasWorkingAbility(Abilities.SYMBIOSIS))
 					{
-						IBattler partner = attacker.Partner;
+						IBattler partner = attacker.pbPartner;
 						if (partner.Item > 0 &&
 						   !this.battle.pbIsUnlosableItem(partner, partner.Item) &&
 						   !this.battle.pbIsUnlosableItem(attacker, partner.Item))
@@ -9543,7 +9528,7 @@ namespace PokemonUnity.Combat
 
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!this.battle.doublebattle || attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
+			if (!this.battle.doublebattle || attacker.pbPartner.Species == Pokemons.NONE || attacker.pbPartner.isFainted())
 			{
 				attacker.effects.FirstPledge = 0;
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -9595,14 +9580,14 @@ namespace PokemonUnity.Combat
 			// Set up partner for a combined move
 			attacker.effects.FirstPledge = 0;
 			Attack.Data.Effects partnermove = Attack.Data.Effects.NONE; //-1;
-			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Chose a move
+			if ((int)this.battle.choices[attacker.pbPartner.Index].Action == 1)	// Chose a move
 			{
-				if (!attacker.Partner.hasMovedThisRound())
+				if (!attacker.pbPartner.hasMovedThisRound())
 				{
-					Moves move = this.battle.choices[attacker.Partner.Index].Move.id;
+					Moves move = this.battle.choices[attacker.pbPartner.Index].Move.id;
 					if (move > 0)
 					{
-						partnermove = this.battle.choices[attacker.Partner.Index].Move.Effect;
+						partnermove = this.battle.choices[attacker.pbPartner.Index].Move.Effect;
 					}
 
 				}
@@ -9610,9 +9595,9 @@ namespace PokemonUnity.Combat
 			if (partnermove == Attack.Data.Effects.x146 ||		// Fire Pledge
 			    partnermove == Attack.Data.Effects.x145)		// Water Pledge
 			{
-				battle.pbDisplay(Game._INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.Partner.ToString(true)));
-				attacker.Partner.effects.FirstPledge = this.Effect;//(Attack.Effect)
-				attacker.Partner.effects.MoveNext = true;
+				battle.pbDisplay(Game._INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.pbPartner.ToString(true)));
+				attacker.pbPartner.effects.FirstPledge = this.Effect;//(Attack.Effect)
+				attacker.pbPartner.effects.MoveNext = true;
 				return 0;
 
 			}
@@ -9676,7 +9661,7 @@ namespace PokemonUnity.Combat
 
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!this.battle.doublebattle || attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
+			if (!this.battle.doublebattle || attacker.pbPartner.Species == Pokemons.NONE || attacker.pbPartner.isFainted())
 			{
 				attacker.effects.FirstPledge = 0;
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -9728,14 +9713,14 @@ namespace PokemonUnity.Combat
 			// Set up partner for a combined move
 			attacker.effects.FirstPledge = 0;
 			Attack.Data.Effects partnermove = Attack.Data.Effects.NONE; //-1;
-			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Chose a move
+			if ((int)this.battle.choices[attacker.pbPartner.Index].Action == 1)	// Chose a move
 			{
-				if (!attacker.Partner.hasMovedThisRound())
+				if (!attacker.pbPartner.hasMovedThisRound())
 				{
-					Moves move = this.battle.choices[attacker.Partner.Index].Move.id;
+					Moves move = this.battle.choices[attacker.pbPartner.Index].Move.id;
 					if (move > 0)	//move && 
 					{
-						partnermove = this.battle.choices[attacker.Partner.Index].Move.Effect;
+						partnermove = this.battle.choices[attacker.pbPartner.Index].Move.Effect;
 					}
 
 				}
@@ -9743,9 +9728,9 @@ namespace PokemonUnity.Combat
 			if (partnermove == Attack.Data.Effects.x147 ||		// Grass Pledge
 			    partnermove == Attack.Data.Effects.x145)		// Water Pledge
 			{
-				battle.pbDisplay(Game._INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.Partner.ToString(true)));
-				attacker.Partner.effects.FirstPledge = this.Effect;//(Attack.Effect)
-				attacker.Partner.effects.MoveNext = true;
+				battle.pbDisplay(Game._INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.pbPartner.ToString(true)));
+				attacker.pbPartner.effects.FirstPledge = this.Effect;//(Attack.Effect)
+				attacker.pbPartner.effects.MoveNext = true;
 				return 0;
 
 			}
@@ -9809,7 +9794,7 @@ namespace PokemonUnity.Combat
 
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!this.battle.doublebattle || attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
+			if (!this.battle.doublebattle || attacker.pbPartner.Species == Pokemons.NONE || attacker.pbPartner.isFainted())
 			{
 				attacker.effects.FirstPledge = 0;
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -9861,14 +9846,14 @@ namespace PokemonUnity.Combat
 			// Set up partner for a combined move
 			attacker.effects.FirstPledge = 0;
 			Attack.Data.Effects partnermove = Attack.Data.Effects.NONE; //-1;
-			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Chose a move
+			if ((int)this.battle.choices[attacker.pbPartner.Index].Action == 1)	// Chose a move
 			{
-				if (!attacker.Partner.hasMovedThisRound())
+				if (!attacker.pbPartner.hasMovedThisRound())
 				{
-					Moves move = this.battle.choices[attacker.Partner.Index].Move.id;
+					Moves move = this.battle.choices[attacker.pbPartner.Index].Move.id;
 					if (move > 0)	//move != null && 
 					{
-						partnermove = this.battle.choices[attacker.Partner.Index].Move.Effect;
+						partnermove = this.battle.choices[attacker.pbPartner.Index].Move.Effect;
 					}
 
 				}
@@ -9876,9 +9861,9 @@ namespace PokemonUnity.Combat
 			if (partnermove == Attack.Data.Effects.x147 ||		// Grass Pledge
 			    partnermove == Attack.Data.Effects.x146)		// Fire Pledge
 			{
-				battle.pbDisplay(Game._INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.Partner.ToString(true)));
-				attacker.Partner.effects.FirstPledge = this.Effect;//(Attack.Effect)
-				attacker.Partner.effects.MoveNext = true;
+				battle.pbDisplay(Game._INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.pbPartner.ToString(true)));
+				attacker.pbPartner.effects.FirstPledge = this.Effect;//(Attack.Effect)
+				attacker.pbPartner.effects.MoveNext = true;
 				return 0;
 
 			}
@@ -10468,9 +10453,9 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
 			attacker.effects.FollowMe = 1;
-			if (!attacker.Partner.isFainted() && attacker.Partner.effects.FollowMe > 0)
+			if (!attacker.pbPartner.isFainted() && attacker.pbPartner.effects.FollowMe > 0)
 			{
-				attacker.effects.FollowMe = attacker.Partner.effects.FollowMe + 1;
+				attacker.effects.FollowMe = attacker.pbPartner.effects.FollowMe + 1;
 			}
 			battle.pbDisplay(Game._INTL("{1} became the center of attention!", attacker.ToString()));
 			return 0;
@@ -10741,8 +10726,8 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (!this.battle.doublebattle ||
-			   attacker.Partner.Species == Pokemons.NONE ||
-			   attacker.Partner.isFainted())
+			   attacker.pbPartner.Species == Pokemons.NONE ||
+			   attacker.pbPartner.isFainted())
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
@@ -10750,7 +10735,7 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
 			IBattler a = this.battle.battlers[attacker.Index];
-			IBattler b = this.battle.battlers[attacker.Partner.Index];
+			IBattler b = this.battle.battlers[attacker.pbPartner.Index];
 
 			IBattler temp = a; a = b; b = temp;
 			// Swap effects that point at the position rather than the Pokémon
@@ -11049,7 +11034,7 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (!this.battle.doublebattle ||
-			   attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
+			   attacker.pbPartner.Species == Pokemons.NONE || attacker.pbPartner.isFainted())
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
@@ -11114,7 +11099,7 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			bool didsomething = false;
-			foreach (IBattler i in new IBattler[] { attacker, attacker.Partner })
+			foreach (IBattler i in new IBattler[] { attacker, attacker.pbPartner })
 			{
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 				if (!i.hasWorkingAbility(Abilities.PLUS) && !i.hasWorkingAbility(Abilities.MINUS)) continue; //next 
@@ -11336,7 +11321,7 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			bool didsomething = false; //ToDo: If double battle?
-			foreach (IBattler i in new IBattler[] { attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2 })
+			foreach (IBattler i in new IBattler[] { attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2 })
 			{
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 				if (!i.hasType(Types.GRASS)) continue; //next
@@ -11378,7 +11363,7 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			bool didsomething = false; //ToDo: If double battle?
-			foreach (IBattler i in new IBattler[] { attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2 })
+			foreach (IBattler i in new IBattler[] { attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2 })
 			{
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 				if (!i.hasType(Types.GRASS)) continue; //next

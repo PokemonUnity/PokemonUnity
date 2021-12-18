@@ -39,7 +39,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Double battle flag
 		/// </summary>
-		bool doublebattle { get; }
+		bool doublebattle { get; set; }
 		/// <summary>
 		/// True if player can't escape
 		/// </summary>
@@ -190,6 +190,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int pbAIRandom(int x);
 
 		#region Initialise battle class.
+		IBattle initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent);
 		IBattle initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
 		//IBattle initialize(IPokeBattle_Scene scene, IList<IPokemon> p1, IList<IPokemon> p2, IList<ITrainer> player, IList<ITrainer> opponent);
 		#endregion

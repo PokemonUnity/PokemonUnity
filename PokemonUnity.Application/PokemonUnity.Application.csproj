@@ -84,6 +84,8 @@
     <Compile Include="GlobalMetadata\GlobalMetadata.cs" />
     <Compile Include="Game\Item.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="Interface\Essentials\PokeBattle\IBattle.cs" />
+    <Compile Include="Interface\Essentials\Pokemon\IPokemon.cs" />
     <Compile Include="Inventory\Item\Item.cs" />
     <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Inventory\Item\Item.Helper.cs" />

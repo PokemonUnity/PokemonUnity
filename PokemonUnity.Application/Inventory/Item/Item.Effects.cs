@@ -9,6 +9,7 @@ using PokemonUnity.Monster;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.EventArg;
 using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface;
 
 namespace PokemonUnity//.Inventory
 {
@@ -77,11 +78,11 @@ namespace PokemonUnity//.Inventory
 	{
 		public ItemUseResults pbRepel(Items item,int steps) {
 			if (RepelSteps>0) {
-				pbMessage(Game._INTL("But the effects of a Repel lingered from earlier."));
+				(this as IGameMessage).pbMessage(Game._INTL("But the effects of a Repel lingered from earlier."));
 				//return 0;
 				return ItemUseResults.NotUsed;
 			} else {
-				pbMessage(Game._INTL("{1} used the {2}.",Trainer.name,item.ToString(TextScripts.Name)));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Trainer.name,item.ToString(TextScripts.Name)));
 				RepelSteps=steps;
 				//return 3;
 				return ItemUseResults.UsedItemConsumed;
@@ -96,16 +97,16 @@ namespace PokemonUnity//.Inventory
 			UseFromBag.Add(Items.SUPER_REPEL, () => { return pbRepel(Items.SUPER_REPEL,200); });
 			UseFromBag.Add(Items.MAX_REPEL, () => { return pbRepel(Items.MAX_REPEL,250); });
 			UseFromBag.Add(Items.BLACK_FLUTE, () => {
-				pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Items.BLACK_FLUTE.ToString(TextScripts.Name)));
-				pbMessage(Game._INTL("Wild Pokémon will be repelled."));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Items.BLACK_FLUTE.ToString(TextScripts.Name)));
+				(this as IGameMessage).pbMessage(Game._INTL("Wild Pokémon will be repelled."));
 				MapData.blackFluteUsed=true;
 				MapData.whiteFluteUsed=false;
 				//next 1;
 				return ItemUseResults.UsedNotConsumed;
 			});
 			UseFromBag.Add(Items.WHITE_FLUTE, () => {
-				pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Items.WHITE_FLUTE.ToString(TextScripts.Name)));
-				pbMessage(Game._INTL("Wild Pokémon will be lured."));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Items.WHITE_FLUTE.ToString(TextScripts.Name)));
+				(this as IGameMessage).pbMessage(Game._INTL("Wild Pokémon will be lured."));
 				MapData.blackFluteUsed=false;
 				MapData.whiteFluteUsed=true;
 				//next 1;
@@ -114,7 +115,7 @@ namespace PokemonUnity//.Inventory
 			UseFromBag.Add(Items.HONEY, () => { return ItemUseResults.CloseBagItemConsumed; });
 			UseFromBag.Add(Items.ESCAPE_ROPE, () => {
 				if (GamePlayer.pbHasDependentEvents()) {
-					pbMessage(Game._INTL("It can't be used when you have someone with you."));
+					(this as IGameMessage).pbMessage(Game._INTL("It can't be used when you have someone with you."));
 					//next 0;
 					return ItemUseResults.NotUsed;
 				}
@@ -122,7 +123,7 @@ namespace PokemonUnity//.Inventory
 					//next 4; // End screen and consume item
 					return ItemUseResults.CloseBagItemConsumed;
 				} else {
-					pbMessage(Game._INTL("Can't use that here."));
+					(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 					//next 0;
 					return ItemUseResults.NotUsed;
 				}
@@ -130,12 +131,12 @@ namespace PokemonUnity//.Inventory
 			UseFromBag.Add(Items.SACRED_ASH, () => {
 				int revived=0;
 				if (Trainer.pokemonCount==0) {
-					pbMessage(Game._INTL("There is no Pokémon."));
+					(this as IGameMessage).pbMessage(Game._INTL("There is no Pokémon."));
 					//next 0;
 					return ItemUseResults.NotUsed;
 				}
 				//ToDo: Redo below into an Event Listener (Subscribe to on Frontend)
-				pbFadeOutIn(99999, () => {
+				pbFadeOutIn(99999, block: () => {
 					IPartyDsplayScene scene=Scenes.Party; //new PokemonScreen_Scene();
 					IPartyDsplayScreen screen = Screens.Party.initialize(scene,Player.Party); //new PokemonScreen(scene,Player.Party);
 					screen.pbStartScene(Game._INTL("Using item..."),false);
@@ -177,7 +178,7 @@ namespace PokemonUnity//.Inventory
 					//next 2;
 					return ItemUseResults.CloseBagNotConsumed;
 				} else {
-					pbMessage(Game._INTL("Can't use that here."));
+					(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 					//next 0;
 					return ItemUseResults.NotUsed;
 				}
@@ -190,7 +191,7 @@ namespace PokemonUnity//.Inventory
 					//next 2;
 					return ItemUseResults.CloseBagNotConsumed;
 				} else {
-					pbMessage(Game._INTL("Can't use that here."));
+					(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 					//next 0;
 					return ItemUseResults.NotUsed;
 				}
@@ -203,7 +204,7 @@ namespace PokemonUnity//.Inventory
 					//next 2;
 					return ItemUseResults.CloseBagNotConsumed;
 				} else {
-					pbMessage(Game._INTL("Can't use that here."));
+					(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 					//next 0;
 					return ItemUseResults.NotUsed;
 				}
@@ -216,19 +217,19 @@ namespace PokemonUnity//.Inventory
 				return ItemUseResults.UsedNotConsumed; 
 			});
 			UseFromBag.Add(Items.COIN_CASE, () => {
-				pbMessage(Game._INTL("Coins: {1}",Player.Coins));
+				(this as IGameMessage).pbMessage(Game._INTL("Coins: {1}",Player.Coins));
 				//next 1; // Continue
 				return ItemUseResults.UsedNotConsumed; 
 			});
 			UseFromBag.Add(Items.EXP_ALL, () => {
 				Bag.pbChangeItem(Items.EXP_ALL, Items.EXP_ALL_OFF);
-				pbMessage(Game._INTL("The Exp Share was turned off."));
+				(this as IGameMessage).pbMessage(Game._INTL("The Exp Share was turned off."));
 				//next 1; // Continue
 				return ItemUseResults.UsedNotConsumed; 
 			});
 			UseFromBag.Add(Items.EXP_ALL_OFF, () => {
 				Bag.pbChangeItem(Items.EXP_ALL_OFF, Items.EXP_ALL);
-				pbMessage(Game._INTL("The Exp Share was turned on."));
+				(this as IGameMessage).pbMessage(Game._INTL("The Exp Share was turned on."));
 				//next 1; // Continue
 				return ItemUseResults.UsedNotConsumed; 
 			});
@@ -236,23 +237,23 @@ namespace PokemonUnity//.Inventory
 
 			#region UseInField handlers
 			UseInField.Add(Items.HONEY, () => {  
-				pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Items.HONEY.ToString(TextScripts.Name)));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Items.HONEY.ToString(TextScripts.Name)));
 				pbSweetScent();
 			});
 			UseInField.Add(Items.ESCAPE_ROPE, () => {
 				int[] escape=Global.escapePoint; //rescue null
 				if (escape == null || escape.Length==0) {
-					pbMessage(Game._INTL("Can't use that here."));
+					(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 					//next;
 					return;
 				}
 				if (GamePlayer.pbHasDependentEvents()) {
-					pbMessage(Game._INTL("It can't be used when you have someone with you."));
+					(this as IGameMessage).pbMessage(Game._INTL("It can't be used when you have someone with you."));
 					//next;
 					return;
 				}
-				pbMessage(Game._INTL("{1} used the {2}.",Player.Name,item.ToString(TextScripts.Name)));
-				pbFadeOutIn(99999, () => {
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,item.ToString(TextScripts.Name)));
+				pbFadeOutIn(99999, block: () => {
 					pbCancelVehicles();
 					GameTemp.player_new_map_id=escape[0];
 					GameTemp.player_new_x=escape[1];
@@ -297,7 +298,7 @@ namespace PokemonUnity//.Inventory
 				Terrains terrain=pbFacingTerrainTag();
 				bool notCliff=GameMap.passable/(GamePlayer.x,GamePlayer.y,GamePlayer.direction);
 				if (!Terrain.isWater(terrain) || (!notCliff && !Global.surfing)) {
-					pbMessage(Game._INTL("Can't use that here."));
+					(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 					//next;
 					return;
 				}
@@ -311,7 +312,7 @@ namespace PokemonUnity//.Inventory
 				Terrains terrain=pbFacingTerrainTag();
 				bool notCliff=GameMap.passable(GamePlayer.x,GamePlayer.y,GamePlayer.direction);
 				if (!Terrain.isWater(terrain) || (!notCliff && !Global.surfing)) {
-					pbMessage(Game._INTL("Can't use that here."));
+					(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 					//next;
 					return;
 				}
@@ -325,7 +326,7 @@ namespace PokemonUnity//.Inventory
 				Terrains terrain=pbFacingTerrainTag();
 				bool notCliff=GameMap.passable(GamePlayer.x,GamePlayer.y,GamePlayer.direction);
 				if (!Terrain.isWater(terrain) || (!notCliff && !Global.surfing)) {
-					pbMessage(Game._INTL("Can't use that here."));
+					(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 					//next;
 					return;
 				}
@@ -338,7 +339,7 @@ namespace PokemonUnity//.Inventory
 			UseInField.Add(Items.DOWSING_MACHINE, () => {//item == Items.ITEM_FINDER || item == Items.DOWSING_MCHN || 
 				@event=Item.pbClosestHiddenItem();
 				if (@event == null) {
-					pbMessage(Game._INTL("... ... ... ...Nope!\r\nThere's no response."));
+					(this as IGameMessage).pbMessage(Game._INTL("... ... ... ...Nope!\r\nThere's no response."));
 				} else {
 					int offsetX=@event.x-GamePlayer.x;
 					int offsetY=@event.y-GamePlayer.y;
@@ -349,7 +350,7 @@ namespace PokemonUnity//.Inventory
 							if ((i&7)==0) GamePlayer.turn_right_90();
 							pbUpdateSceneMap();
 						}
-						pbMessage(Game._INTL(@"The {1}'s indicating something right underfoot!\1",item.ToString(TextScripts.Name)));
+						(this as IGameMessage).pbMessage(Game._INTL(@"The {1}'s indicating something right underfoot!\1",item.ToString(TextScripts.Name)));
 					} else {
 						int direction=GamePlayer.direction;
 						if (Math.Abs(offsetX)>Math.Abs(offsetY)) {
@@ -368,8 +369,8 @@ namespace PokemonUnity//.Inventory
 							}
 							pbUpdateSceneMap();
 						}
-						pbMessage(Game._INTL(@"Huh?\nThe {1}'s responding!\1",item.ToString(TextScripts.Name)));
-						pbMessage(Game._INTL("There's an item buried around here!"));
+						(this as IGameMessage).pbMessage(Game._INTL(@"Huh?\nThe {1}'s responding!\1",item.ToString(TextScripts.Name)));
+						(this as IGameMessage).pbMessage(Game._INTL("There's an item buried around here!"));
 					}
 				}
 			});
@@ -379,7 +380,7 @@ namespace PokemonUnity//.Inventory
 			});
 
 			UseInField.Add(Items.COIN_CASE, () => {
-				pbMessage(Game._INTL("Coins: {1}",Player.Coins));
+				(this as IGameMessage).pbMessage(Game._INTL("Coins: {1}",Player.Coins));
 				//next 1; // Continue
 				//return ItemUseResults.UsedNotConsumed;
 			});
@@ -400,7 +401,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					//ToDo: Add a check to cycle through all evolves
-					pbFadeOutInWithMusic(99999, () => {
+					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo = Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution(false);
@@ -428,7 +429,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					//ToDo: Add a check to cycle through all evolves
-					pbFadeOutInWithMusic(99999, () => {
+					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo = Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution(false);
@@ -456,7 +457,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					//ToDo: Add a check to cycle through all evolves
-					pbFadeOutInWithMusic(99999, () => {
+					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo = Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution(false);
@@ -484,7 +485,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					//ToDo: Add a check to cycle through all evolves
-					pbFadeOutInWithMusic(99999, () => {
+					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo = Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution(false);
@@ -512,7 +513,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					//ToDo: Add a check to cycle through all evolves
-					pbFadeOutInWithMusic(99999, () => {
+					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo = Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution(false);
@@ -540,7 +541,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					//ToDo: Add a check to cycle through all evolves
-					pbFadeOutInWithMusic(99999, () => {
+					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo = Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution(false);
@@ -568,7 +569,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					//ToDo: Add a check to cycle through all evolves
-					pbFadeOutInWithMusic(99999, () => {
+					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo = Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution(false);
@@ -596,7 +597,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					//ToDo: Add a check to cycle through all evolves
-					pbFadeOutInWithMusic(99999, () => {
+					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo = Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution(false);
@@ -624,7 +625,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					//ToDo: Add a check to cycle through all evolves
-					pbFadeOutInWithMusic(99999, () => {
+					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo= Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution(false);
@@ -2914,10 +2915,10 @@ namespace PokemonUnity//.Inventory
 				if (RepelSteps>0) {
 					RepelSteps-=1;
 					if (RepelSteps<=0) {
-						pbMessage(Game._INTL("Repel's effect wore off..."));
+						(this as IGameMessage).pbMessage(Game._INTL("Repel's effect wore off..."));
 						Items ret=Item.pbChooseItemFromList(Game._INTL("Do you want to use another Repel?"),1,
 							Items.REPEL, Items.SUPER_REPEL, Items.MAX_REPEL);
-						if (ret>0) Item.pbUseItem(Bag,ret);
+						if (ret>0) pbUseItem(Bag,ret); //Item.pbUseItem(Bag,ret);
 					}
 				}
 			}

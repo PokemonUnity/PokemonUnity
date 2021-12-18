@@ -251,36 +251,36 @@ namespace PokemonUnity//.Combat
 		} }
 
 		public PokemonEssentials.Interface.PokeBattle.IPokemon firstParty { get {
-			if (@party.Length==0) return new PokemonEssentials.Interface.PokeBattle.IPokemon();
+			if (@party.Length==0) return new PokemonUnity.Monster.Pokemon();
 			return @party[0];
 		} }
 
 		public PokemonEssentials.Interface.PokeBattle.IPokemon firstPokemon { get {
 			PokemonEssentials.Interface.PokeBattle.IPokemon[] p=this.pokemonParty.ToArray();
-			if (p.Length==0) return new PokemonEssentials.Interface.PokeBattle.IPokemon();
+			if (p.Length==0) return new PokemonUnity.Monster.Pokemon();
 			return p[0];
 		} }
 
 		public PokemonEssentials.Interface.PokeBattle.IPokemon firstAblePokemon { get {
 			PokemonEssentials.Interface.PokeBattle.IPokemon[] p=this.ablePokemonParty.ToArray();
-			if (p.Length==0) return new PokemonEssentials.Interface.PokeBattle.IPokemon();
+			if (p.Length==0) return new PokemonUnity.Monster.Pokemon();
 			return p[0];
 		} }
 
 		public PokemonEssentials.Interface.PokeBattle.IPokemon lastParty { get {
-			if (@party.Length==0) return new PokemonEssentials.Interface.PokeBattle.IPokemon();
+			if (@party.Length==0) return new PokemonUnity.Monster.Pokemon();
 			return @party[@party.Length-1];
 		} }
 
 		public PokemonEssentials.Interface.PokeBattle.IPokemon lastPokemon { get {
 			PokemonEssentials.Interface.PokeBattle.IPokemon[] p=this.pokemonParty.ToArray();
-			if (p.Length==0) return new PokemonEssentials.Interface.PokeBattle.IPokemon();
+			if (p.Length==0) return new PokemonUnity.Monster.Pokemon();
 			return p[p.Length-1];
 		} }
 
 		public PokemonEssentials.Interface.PokeBattle.IPokemon lastAblePokemon { get {
 			PokemonEssentials.Interface.PokeBattle.IPokemon[] p=this.ablePokemonParty.ToArray();
-			if (p.Length==0) return new PokemonEssentials.Interface.PokeBattle.IPokemon();
+			if (p.Length==0) return new PokemonUnity.Monster.Pokemon();
 			return p[p.Length-1];
 		} }
 

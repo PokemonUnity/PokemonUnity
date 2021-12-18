@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PokemonUnity.UX;
+//using PokemonUnity.UX;
 
 //Interface for RPG Maker User Experience
 //namespace PokemonUnity.UX.RPGMaker
@@ -219,7 +219,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// The game window class. Created internally from multiple sprites.
 	/// </summary>
-	public interface IWindow
+	public interface IWindow : IDisposable
 	{
 		/// <summary>
 		/// Refers to the bitmap (Bitmap) used as a windowskin.

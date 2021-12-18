@@ -104,7 +104,7 @@ namespace PokemonUnity
 
 		public static string DatabasePath  = @"Data Source=..\..\..\\veekun-pokedex.sqlite";
 		public static IDbConnection con { get; private set; }
-		public static void ResetSqlConnection() { con = new System.Data.SQLite.IDbConnection(DatabasePath); }
+		//public static void ResetSqlConnection() { con = new System.Data.SQLite.IDbConnection(DatabasePath); }
 
 		/// <summary>
 		/// Reset and Init SQL with database path
@@ -115,14 +115,18 @@ namespace PokemonUnity
 		public static void ResetSqlConnection(string databasePath)
 		{
 			if (!File.Exists(databasePath))
-				throw new Exception("The Database could not found!");
+			{
+				//throw new Exception("The Database could not found!");
+				GameDebug.LogError("The Database could not found!");
+				return;
+			}
 
 			if (!databasePath.StartsWith("Data Source"))
 				databasePath = "Data Source =" + databasePath;
 			DatabasePath = databasePath;
 			if (con.State == System.Data.ConnectionState.Open)
 				con.Close();
-			ResetSqlConnection();
+			//ResetSqlConnection();
 			con.Open();
 
 			InitTypes();

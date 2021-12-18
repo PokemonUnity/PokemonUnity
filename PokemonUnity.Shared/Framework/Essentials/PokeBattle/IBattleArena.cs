@@ -17,7 +17,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IBattleArena : IBattle
 	{
-		IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
+		new IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
 
 		new bool pbDoubleBattleAllowed();
 

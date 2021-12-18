@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PokemonEssentials.Interface
 {
-	interface IGameAudio
+	public interface IGameAudio
 	{
 		void getPlayMusic();
 		void getPlaySound();
@@ -48,7 +48,7 @@ namespace PokemonEssentials.Interface
 		void Audio_se_stop();
 	}
 
-	interface IAudioContext
+	public interface IAudioContext
 	{
 		int context { get; set; }
 
@@ -82,9 +82,9 @@ namespace PokemonEssentials.Interface
 	  File.open(f,"rb") { ret=true } rescue null;
 	  return ret;
 	}
-		*/
+	*/
 
-	interface IAudioState
+	public interface IAudioState
 	{
 		void setWaitingBGM(IAudioBGM bgm, int volume, float pitch, int position);
 
@@ -102,8 +102,6 @@ namespace PokemonEssentials.Interface
 		float pitch { get; set; }
 		int volume { get; set; }
 	}
-
-
 
 
 	// ###################################################

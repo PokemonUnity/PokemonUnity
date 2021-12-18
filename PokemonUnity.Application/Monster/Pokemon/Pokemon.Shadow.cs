@@ -113,7 +113,7 @@ namespace PokemonUnity
 		{
 			if (pbHasPurifiableInParty())
 			{
-				pbMessage(Game._INTL("There's a Pokemon that may open the door to its heart!"));
+				(this as IGameMessage).pbMessage(Game._INTL("There's a Pokemon that may open the door to its heart!"));
 				//  Choose a purifiable Pokemon
 				//pbChoosePokemon(1, 2, proc {| poke |
 				pbChoosePokemon(1, 2, ableProc: poke => //Trainer.party.Select(poke => 
@@ -126,7 +126,7 @@ namespace PokemonUnity
 			}
 			else
 			{
-				pbMessage(_INTL("You have no Pokemon that can be purified."));
+				(this as IGameMessage).pbMessage(_INTL("You have no Pokemon that can be purified."));
 			}
 		}
 
@@ -228,7 +228,7 @@ namespace PokemonUnity
 			pokemon.pbUpdateShadowMoves();
 			if (pokemon.heartgauge == 0)
 			{
-				pbMessage(Game._INTL("{1} can now be purified!", (pokemon as IPokemon).name));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} can now be purified!", (pokemon as IPokemon).name));
 			}
 		}
 

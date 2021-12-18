@@ -171,7 +171,7 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// Moves (PBMove)
 		/// </summary>
-		public Move[] moves { get; private set; }
+		public IMove[] moves { get; private set; }
 		/// <summary>
 		/// The moves known when this Pokemon was obtained
 		/// </summary>
@@ -470,7 +470,7 @@ namespace PokemonUnity.Monster
 			int obtainedLevel, /*int currentLevel,*/ int currentExp,
 			int happiness, Status status, int statusCount,
 			int eggSteps, Items ballUsed,
-			string mail, Move[] moves, Moves[] history,
+			string mail, IMove[] moves, Moves[] history,
 			Ribbons[] ribbons, bool[] markings,
 			int personalId,
 			ObtainedMethod obtainedMethod,
@@ -2982,9 +2982,6 @@ namespace PokemonUnity.Monster
 		int IPokemon.hp { get; set; }
 		int IPokemon.pokerus { get; set; }
 		Items IPokemon.item { get; set; }
-		int IPokemon.itemRecycle { get; set; }
-		int IPokemon.itemInitial { get; set; }
-		int IPokemon.belch { get; set; }
 		IMail IPokemon.mail { get; set; }
 		IPokemon[] IPokemon.fused { get; set; }
 		string IPokemon.name { get; set; }
@@ -2993,7 +2990,6 @@ namespace PokemonUnity.Monster
 		Status IPokemon.status { get; set; }
 		int IPokemon.statusCount { get; set; }
 		int IPokemon.eggsteps { get; set; }
-		IMove[] IPokemon.moves { get; set; }
 		IList<Moves> IPokemon.firstmoves { get; set; }
 		Items IPokemon.ballused { get; set; }
 		bool[] IPokemon.markings { get; }

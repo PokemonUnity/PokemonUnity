@@ -46,7 +46,7 @@ namespace PokemonEssentials.Interface
 	{
 		public static void PackParty(this IBattler[] Party)
 		{
-			IBattler[] packedArray = new PokemonUnity.Combat.Pokemon[Party.Length];
+			IBattler[] packedArray = new IBattler[Party.Length];
 			int i2 = 0; //counter for packed array
 			for (int i = 0; i < Party.Length; i++)
 			{
@@ -62,7 +62,7 @@ namespace PokemonEssentials.Interface
 		}
 		public static void PackParty(this IPokemon[] Party)
 		{
-			PokemonUnity.Monster.Pokemon[] packedArray = new PokemonUnity.Monster.Pokemon[Party.Length];
+			IPokemon[] packedArray = new IPokemon[Party.Length];
 			int i2 = 0; //counter for packed array
 			for (int i = 0; i < Party.Length; i++)
 			{
@@ -97,7 +97,7 @@ namespace PokemonEssentials.Interface
 	}
 }
 
-namespace PokemonUnity
+/*namespace PokemonUnity
 {
 	public static class PokemonExtension
 	{
@@ -133,7 +133,7 @@ namespace PokemonUnity
 		public static string ToIdString(this PokemonUnity.Pokemons pokemon, int digits = 3)
 		{
 			return System.Text.RegularExpressions.Regex.Replace(((int)pokemon).ToString(), "[0-9]+", match => match.Value.PadLeft(digits, '0'));
-		}*/
+		}* /
 	}
 
 	public static class PokemonPartyExtension
@@ -189,4 +189,4 @@ namespace PokemonUnity
 			return result;
 		}
 	}
-}
+}*/

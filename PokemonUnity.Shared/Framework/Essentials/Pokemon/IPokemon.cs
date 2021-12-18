@@ -77,15 +77,15 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Consumed held item (used in battle only)
 		/// </summary>
-		int itemRecycle { get; set; }
+		Items itemRecycle { get; set; }
 		/// <summary>
 		/// Resulting held item (used in battle only)
 		/// </summary>
-		int itemInitial { get; set; }
+		Items itemInitial { get; set; }
 		/// <summary>
 		/// Whether Pokémon can use Belch (used in battle only)
 		/// </summary>
-		int belch { get; set; }
+		bool belch { get; set; }
 		/// <summary>
 		/// Mail
 		/// </summary>
@@ -121,7 +121,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Moves (PBMove)
 		/// </summary>
-		IMove[] moves { get; set; }
+		IMove[] moves { get; }
 		/// <summary>
 		/// The moves known when this Pokémon was obtained
 		/// </summary>

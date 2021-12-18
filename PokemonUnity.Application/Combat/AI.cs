@@ -46,7 +46,7 @@ namespace PokemonUnity.Combat
 			if (skill<PBTrainerAI.minimumSkill) skill=PBTrainerAI.minimumSkill;
 			float score=100; if (move.Type == Types.SHADOW) score += 20; // Shadow moves are more preferable
 			if (!opponent.IsNotNullOrNone()) opponent=attacker.pbOppositeOpposing;
-			if (opponent.IsNotNullOrNone() && opponent.isFainted()) opponent=opponent.Partner;
+			if (opponent.IsNotNullOrNone() && opponent.isFainted()) opponent=opponent.pbPartner;
 			#region switch variables
 			bool hasspecialattack = false;
 			bool hasphysicalattack = false;
@@ -1869,7 +1869,7 @@ namespace PokemonUnity.Combat
 					if (opponent.effects.HyperBeam>0) score-=90;
 					break;
 				case Attack.Data.Effects.x122:
-					if (!opponent.Partner.isFainted()) score+=10;
+					if (!opponent.pbPartner.isFainted()) score+=10;
 					break;
 				case Attack.Data.Effects.x102:
 					break;
@@ -1912,9 +1912,9 @@ namespace PokemonUnity.Combat
 					break;
 				case Attack.Data.Effects.x12E:
 					if (skill>=PBTrainerAI.mediumSkill) {
-					if (@doublebattle && !attacker.Partner.isFainted() &&
-									//attacker.Partner.pbHasMove(move.id)) score+=20;
-									attacker.Partner.moves.Any(n => n.id == move.id)) score+=20;
+					if (@doublebattle && !attacker.pbPartner.isFainted() &&
+									//attacker.pbPartner.pbHasMove(move.id)) score+=20;
+									attacker.pbPartner.moves.Any(n => n.id == move.id)) score+=20;
 					}
 					break;
 				case Attack.Data.Effects.x0E7:
@@ -1957,7 +1957,7 @@ namespace PokemonUnity.Combat
 				case Attack.Data.Effects.x124:
 					break;
 				case Attack.Data.Effects.x0B1:
-					if (attacker.Partner.isFainted()) score-=90;
+					if (attacker.pbPartner.isFainted()) score-=90;
 					break;
 				case Attack.Data.Effects.x0CA:
 					if (attacker.effects.MudSport) score-=90;
@@ -2693,7 +2693,7 @@ namespace PokemonUnity.Combat
 				case Attack.Data.Effects.x0AD:
 					if (!@doublebattle) {
 					score-=100;
-					} else if (attacker.Partner.isFainted()) {
+					} else if (attacker.pbPartner.isFainted()) {
 					score-=90;
 					}
 					break;
@@ -2902,28 +2902,28 @@ namespace PokemonUnity.Combat
 				case Attack.Data.Effects.x16F:
 					if (attacker.pbTooHigh(Stats.DEFENSE) &&
 						attacker.pbTooHigh(Stats.SPDEF) &&
-						!attacker.Partner.isFainted() &&
-						attacker.Partner.pbTooHigh(Stats.DEFENSE) &&
-						attacker.Partner.pbTooHigh(Stats.SPDEF)) {
+						!attacker.pbPartner.isFainted() &&
+						attacker.pbPartner.pbTooHigh(Stats.DEFENSE) &&
+						attacker.pbPartner.pbTooHigh(Stats.SPDEF)) {
 					score-=90;
 					}
 					else {
 					score-=attacker.stages[(int)Stats.DEFENSE]*10;
 					score-=attacker.stages[(int)Stats.SPDEF]*10;
-					if (!attacker.Partner.isFainted()) {
-						score-=attacker.Partner.stages[(int)Stats.DEFENSE]*10;
-						score-=attacker.Partner.stages[(int)Stats.SPDEF]*10;
+					if (!attacker.pbPartner.isFainted()) {
+						score-=attacker.pbPartner.stages[(int)Stats.DEFENSE]*10;
+						score-=attacker.pbPartner.stages[(int)Stats.SPDEF]*10;
 					}
 					}
 					break;
 				case Attack.Data.Effects.x16B:
 					if (!@doublebattle) {
 					score-=100;
-					} else if (attacker.Partner.isFainted()) {
+					} else if (attacker.pbPartner.isFainted()) {
 					score-=90;
 					}
 					else {
-					score-=attacker.Partner.stages[(int)Stats.SPDEF]*10;
+					score-=attacker.pbPartner.stages[(int)Stats.SPDEF]*10;
 					}
 					break;
 				case Attack.Data.Effects.x165:
@@ -4009,7 +4009,7 @@ namespace PokemonUnity.Combat
 			if (skill>=PBTrainerAI.mediumSkill) {
 				if ((attacker.hasWorkingAbility(Abilities.PLUS) ||
 					attacker.hasWorkingAbility(Abilities.MINUS)) && move.pbIsSpecial(type)) {
-					IBattler partner=attacker.Partner;
+					IBattler partner=attacker.pbPartner;
 					if (partner.hasWorkingAbility(Abilities.PLUS) || partner.hasWorkingAbility(Abilities.MINUS)) {
 						atk=(int)Math.Round(atk*1.5);
 					}
@@ -4057,8 +4057,8 @@ namespace PokemonUnity.Combat
 						attacker.Species == Pokemons.CHERRIM) {
 						atk=(int)Math.Round(atk*1.5);
 					}
-					if (doublebattle && attacker.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT) &&
-						attacker.Partner.Species == Pokemons.CHERRIM) {
+					if (doublebattle && attacker.pbPartner.hasWorkingAbility(Abilities.FLOWER_GIFT) &&
+						attacker.pbPartner.Species == Pokemons.CHERRIM) {
 						atk=(int)Math.Round(atk*1.5);
 					}
 				}
@@ -4118,8 +4118,8 @@ namespace PokemonUnity.Combat
 						opponent.Species == Pokemons.CHERRIM) {
 						defense=(int)Math.Round(defense*1.5);
 					}
-					if (opponent.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT) &&
-						opponent.Partner.Species == Pokemons.CHERRIM) {
+					if (opponent.pbPartner.hasWorkingAbility(Abilities.FLOWER_GIFT) &&
+						opponent.pbPartner.Species == Pokemons.CHERRIM) {
 						defense=(int)Math.Round(defense*1.5);
 					}
 				}
@@ -4208,7 +4208,7 @@ namespace PokemonUnity.Combat
 			// Reflect
 			if (skill>=PBTrainerAI.highSkill) {
 				if (opponent.OwnSide.Reflect>0 && move.pbIsPhysical(type)) {
-					if (!opponent.Partner.isFainted()) {
+					if (!opponent.pbPartner.isFainted()) {
 						damage=(int)Math.Round(damage*0.66);
 					}
 					else {
@@ -4219,7 +4219,7 @@ namespace PokemonUnity.Combat
 			// Light Screen
 			if (skill>=PBTrainerAI.highSkill) {
 				if (opponent.OwnSide.LightScreen>0 && move.pbIsSpecial(type)) {
-					if (!opponent.Partner.isFainted()) {
+					if (!opponent.pbPartner.isFainted()) {
 						damage=(int)Math.Round(damage*0.66);
 					}
 					else {
@@ -4242,7 +4242,7 @@ namespace PokemonUnity.Combat
 			}
 			// Friend Guard
 			if (skill>=PBTrainerAI.bestSkill) {
-				if (opponent.Partner.hasWorkingAbility(Abilities.FRIEND_GUARD)) {
+				if (opponent.pbPartner.hasWorkingAbility(Abilities.FRIEND_GUARD)) {
 					damage=(int)Math.Round(damage*0.75);
 				}
 			}
@@ -4346,7 +4346,7 @@ namespace PokemonUnity.Combat
 				if (attacker.hasWorkingAbility(Abilities.COMPOUND_EYES)) accuracy*=1.3f;
 				if (attacker.hasWorkingAbility(Abilities.VICTORY_STAR)) accuracy*=1.1f;
 				if (skill>=PBTrainerAI.highSkill) {
-					IBattler partner=!doublebattle ? null : attacker.Partner;
+					IBattler partner=!doublebattle ? null : attacker.pbPartner;
 					if (partner.IsNotNullOrNone() && partner.hasWorkingAbility(Abilities.VICTORY_STAR)) accuracy*=1.1f;
 				}
 				if (attacker.effects.MicleBerry) accuracy*=1.2f;
@@ -4428,9 +4428,9 @@ namespace PokemonUnity.Combat
 			else {
 				skill=Game.TrainerMetaData[pbGetOwner(attacker.Index).trainertype].SkillLevel; //|| 0;
 				IBattler opponent=attacker.pbOppositeOpposing;
-				if (@doublebattle && !opponent.isFainted() && !opponent.Partner.isFainted()) {
+				if (@doublebattle && !opponent.isFainted() && !opponent.pbPartner.isFainted()) {
 					// Choose a target and move.  Also care about partner.
-					IBattler otheropp=opponent.Partner;
+					IBattler otheropp=opponent.pbPartner;
 					List<int[]> scoresAndTargets=new List<int[]>();
 					targets=new int[] { -1, -1, -1, -1 };
 					for (int i = 0; i < 4; i++) {
@@ -4443,14 +4443,14 @@ namespace PokemonUnity.Combat
 								|| attacker.moves[i].Target == Attack.Data.Targets.ALL_OTHER_POKEMON
 								|| attacker.moves[i].Target == Attack.Data.Targets.ENTIRE_FIELD
 								|| attacker.moves[i].Target == Attack.Data.Targets.USERS_FIELD) {
-								if (attacker.Partner.isFainted()) {		// No partner
+								if (attacker.pbPartner.isFainted()) {		// No partner
 									score1*=5/3;
 									score2*=5/3;
 								}
 								else {
 									// If this move can also target the partner, get the partner's
 									// score too
-									int s=pbGetMoveScore(attacker.moves[i],attacker,attacker.Partner,skill);
+									int s=pbGetMoveScore(attacker.moves[i],attacker,attacker.pbPartner,skill);
 									if (s>=140) {		        // Highly effective
 										score1*=1/3;
 										score2*=1/3;
@@ -4497,7 +4497,7 @@ namespace PokemonUnity.Combat
 				else {
 					// Choose a move. There is only 1 opposing Pokémon.
 					if (@doublebattle && opponent.isFainted()) {
-						opponent=opponent.Partner;
+						opponent=opponent.pbPartner;
 					}
 					for (int i = 0; i < 4; i++) {
 						if (CanChooseMove(index,i,false)) {
@@ -4734,7 +4734,7 @@ namespace PokemonUnity.Combat
 			if (@opponent!= null && !shouldswitch && @battlers[index].turncount>0) {
 				if (skill>=PBTrainerAI.highSkill) {
 					IBattler opponent=@battlers[index].pbOppositeOpposing;
-					if (opponent.isFainted()) opponent=opponent.Partner;
+					if (opponent.isFainted()) opponent=opponent.pbPartner;
 					if (!opponent.isFainted() && opponent.lastMoveUsed>0 && 
 						Math.Abs(opponent.Level-@battlers[index].Level)<=6) {
 						Attack.Data.MoveData move=Game.MoveData[opponent.lastMoveUsed];

@@ -45,13 +45,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Project DLLs\SQLite\System.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -81,9 +77,11 @@
     <Compile Include="Framework\Essentials\Field\IHiddenMoves.cs" />
     <Compile Include="Framework\Essentials\Field\IMiscData.cs" />
     <Compile Include="Framework\Essentials\IAnimationSprite.cs" />
+    <Compile Include="Framework\Essentials\IAudioPlay.cs" />
     <Compile Include="Framework\Essentials\IGameUtility.cs" />
     <Compile Include="Framework\Essentials\IMessage.cs" />
     <Compile Include="Framework\Essentials\ISceneMap.cs" />
+    <Compile Include="Framework\Essentials\ISpriteWindow.cs" />
     <Compile Include="Framework\Essentials\Item\IMail.cs" />
     <Compile Include="Framework\Essentials\Item\IPokeRadar.cs" />
     <Compile Include="Framework\Essentials\Item\IPokeballHandlers.cs" />
@@ -195,7 +193,6 @@
     <Compile Include="Extensions\Utility\MathHelper.cs" />
     <Compile Include="Extensions\Utility\ScriptConversion.cs" />
     <Compile Include="Extensions\Utility\StringHelper.cs" />
-    <Compile Include="Framework\Essentials\ISpriteWrapper.cs" />
     <Compile Include="Combat\Data\Choice.cs" />
     <Compile Include="Combat\Data\DamageState.cs" />
     <Compile Include="Combat\Data\SuccessState.cs" />

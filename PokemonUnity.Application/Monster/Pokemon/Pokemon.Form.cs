@@ -395,9 +395,9 @@ public void pbSpindaSpots(pokemon,bitmap) {
 			if (pokemon.Species == Pokemons.BURMY)
 			{
 				//Environment env=Environment.None;
-				Environments env=Game.pbGetEnvironment();
-				//if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id).Global.Outdoor) {
+				Environments env=Game.GameData.pbGetEnvironment();
+				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand ||
@@ -420,11 +420,11 @@ public void pbSpindaSpots(pokemon,bitmap) {
 			if (pokemon.Species == Pokemons.ROTOM)
 			{
 				Moves[] moves=new Moves[] {
-					Moves.OVERHEAT,  // Heat, Microwave
-					Moves.HYDRO_PUMP, // Wash, Washing Machine
-					Moves.BLIZZARD,  // Frost, Refrigerator
-					Moves.AIR_SLASH,  // Fan
-					Moves.LEAF_STORM  // Mow, Lawnmower
+					Moves.OVERHEAT,		// Heat, Microwave
+					Moves.HYDRO_PUMP,	// Wash, Washing Machine
+					Moves.BLIZZARD,		// Frost, Refrigerator
+					Moves.AIR_SLASH,	// Fan
+					Moves.LEAF_STORM	// Mow, Lawnmower
 				};
 				int hasoldmove=-1;
 				for (int i = 0; i < 4; i++) {
@@ -450,7 +450,7 @@ public void pbSpindaSpots(pokemon,bitmap) {
 						}
 						else {
 							// Try to learn the new form's special move
-							Game.GameData.pbLearnMove(pokemon,newmove,true);
+							Game.GameData.pbLearnMove((IPokemon)pokemon,newmove,true);
 							//pokemon.LearnMove(newmove, out bool s);
 						}
 					}
@@ -462,7 +462,7 @@ public void pbSpindaSpots(pokemon,bitmap) {
 						pokemon.DeleteMoveAtIndex(hasoldmove);
 						Game.GameData.pbMessage(Game._INTL("{1} forgot {2}...",pokemon.Name,oldmovename));
 						if (pokemon.moves.Count(i => i.id!=0)==0) {
-							Game.GameData.pbLearnMove(pokemon,Moves.THUNDER_SHOCK);
+							Game.GameData.pbLearnMove((IPokemon)pokemon,Moves.THUNDER_SHOCK);
 							//pokemon.LearnMove(Moves.THUNDER_SHOCK, out bool s);
 						}
 					}
@@ -482,11 +482,11 @@ public void pbSpindaSpots(pokemon,bitmap) {
 			}
 			else if (pokemon == Pokemons.BURMY)
 			{
-				Environments env=Game.pbGetEnvironment();
-				//if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id).Global.Outdoor) {
+				Environments env=Game.GameData.pbGetEnvironment();
+				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
-					return 2; // Trash Cloak
+					return Forms.BURMY_TRASH; //2; // Trash Cloak
 				} else if (env==Environments.Sand ||
 							env==Environments.Rock ||
 							env==Environments.Cave) {
@@ -498,9 +498,9 @@ public void pbSpindaSpots(pokemon,bitmap) {
 			}
 			else if (pokemon == Pokemons.WORMADAM)
 			{
-				Environments env=Game.pbGetEnvironment();
-				//if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id).Global.Outdoor) {
+				Environments env=Game.GameData.pbGetEnvironment();
+				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand || env==Environments.Rock ||
@@ -581,44 +581,55 @@ public void pbSpindaSpots(pokemon,bitmap) {
 			}
 			else if (pokemon == Pokemons.BURMY)
 			{
-				Environments env=Game.pbGetEnvironment();
-				//if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id).Global.Outdoor) {
+				Environments env=Game.GameData.pbGetEnvironment();
+				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
-					return 2; // Trash Cloak
+					return Forms.BURMY_TRASH; //2; // Trash Cloak
 				} else if (env==Environments.Sand ||
 							env==Environments.Rock ||
 							env==Environments.Cave) {
-					return 1; // Sandy Cloak
+					return Forms.BURMY_SANDY; //1; // Sandy Cloak
 				}
 				else {
-					return 0; // Plant Cloak
+					return Forms.BURMY_PLANT; //0; // Plant Cloak
 				}
 			}
 			else if (pokemon == Pokemons.WORMADAM)
 			{
-				Environments env=Game.pbGetEnvironment();
-				//if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (!Game.pbGetMetadata(Game.GameData.GameMap.map_id).Global.Outdoor) {
+				Environments env=Game.GameData.pbGetEnvironment();
+				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
-					return 2; // Trash Cloak
+					return Forms.WORMADAM_TRASH; //2; // Trash Cloak
 				} else if (env==Environments.Sand || env==Environments.Rock ||
 					env==Environments.Cave) {
-					return 1; // Sandy Cloak
+					return Forms.WORMADAM_SANDY; //1; // Sandy Cloak
 				}
 				else {
-					return 0; // Plant Cloak
+					return Forms.WORMADAM_PLANT; //0; // Plant Cloak
 				}
 			}
-			else if (pokemon == Pokemons.SHELLOS || pokemon == Pokemons.GASTRODON)
+			else if (pokemon == Pokemons.SHELLOS)
 			{
 				int[] maps=new int[] { 2, 5, 39, 41, 44, 69 };   // Map IDs for second form
 				if (Game.GameData.GameMap != null && maps.Contains(Game.GameData.GameMap.map_id)) {
 				//if (Game.GameData != null && maps.Contains(Game.GameData.Player.Area)) {
-					return 1;
+					return Forms.SHELLOS_EAST; //1;
 				}
 				else {
-					return 0;
+					return Forms.SHELLOS_WEST; //0;
+				}
+			}
+			else if (pokemon == Pokemons.GASTRODON)
+			{
+				int[] maps=new int[] { 2, 5, 39, 41, 44, 69 };   // Map IDs for second form
+				if (Game.GameData.GameMap != null && maps.Contains(Game.GameData.GameMap.map_id)) {
+				//if (Game.GameData != null && maps.Contains(Game.GameData.Player.Area)) {
+					return Forms.GASTRODON_EAST; //1;
+				}
+				else {
+					return Forms.GASTRODON_WEST; //0;
 				}
 			}
 			else if (pokemon == Pokemons.BASCULIN)
@@ -648,7 +659,7 @@ public void pbSpindaSpots(pokemon,bitmap) {
 					,Forms.SCATTERBUG_OCEAN			
 					,Forms.SCATTERBUG_JUNGLE			
 					,Forms.SCATTERBUG_FANCY			
-					,Forms.SCATTERBUG_POKE_BALL		}[(int)Game.GameData.Trainer.secretID%18];
+					,Forms.SCATTERBUG_POKE_BALL		}[(int)Game.GameData.Trainer.secretID()%18];
 			}
 			else if (pokemon == Pokemons.SPEWPA)
 			{
@@ -672,7 +683,7 @@ public void pbSpindaSpots(pokemon,bitmap) {
 					,Forms.SPEWPA_OCEAN			
 					,Forms.SPEWPA_JUNGLE			
 					,Forms.SPEWPA_FANCY			
-					,Forms.SPEWPA_POKE_BALL		}[(int)Game.GameData.Trainer.secretID%18];
+					,Forms.SPEWPA_POKE_BALL		}[(int)Game.GameData.Trainer.secretID()%18];
 			}
 			else if (pokemon == Pokemons.VIVILLON)
 			{
@@ -694,7 +705,7 @@ public void pbSpindaSpots(pokemon,bitmap) {
 					,Forms.VIVILLON_SAVANNA		
 					,Forms.VIVILLON_SUN			
 					,Forms.VIVILLON_OCEAN			
-					,Forms.VIVILLON_JUNGLE		}[(int)Game.GameData.Trainer.secretID%18];
+					,Forms.VIVILLON_JUNGLE		}[(int)Game.GameData.Trainer.secretID()%18];
 			}
 			else if (pokemon == Pokemons.FLABEBE)
 			{
@@ -739,11 +750,6 @@ public void pbSpindaSpots(pokemon,bitmap) {
 					,Forms.GOURGEIST_LARGE 
 					,Forms.GOURGEIST_SUPER }[(int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4))];
 			}
-			else if (pokemon == Pokemons.SHELLOS)
-			{
-				return Forms.SHELLOS_WEST;
-			}
-			//ToDo:Shellos East...
 			else if (pokemon == Pokemons.DEOXYS_ATTACK)
 			{
 				return Forms.DEOXYS_ATTACK;

@@ -67,7 +67,7 @@ namespace PokemonUnity
 
 			public static implicit operator PokemonBox (PokemonEssentials.Interface.PokeBattle.IPokemon[] party)
 			{
-				IPokemonBox box = new PokemonBox("party", Game.GameData.Features.LimitPokemonPartySize);
+				IPokemonBox box = (IPokemonBox)new PokemonBox("party", Game.GameData.Features.LimitPokemonPartySize);
 				int i = 0;
 				foreach(PokemonEssentials.Interface.PokeBattle.IPokemon p in party)
 				{
@@ -77,10 +77,10 @@ namespace PokemonUnity
 				}
 				return box;
 			}
-			public static implicit operator PokemonEssentials.Interface.PokeBattle.IPokemon[] (PokemonBox box)
-			{
-				return box.pokemon.ToArray();
-			}
+			//public static implicit operator PokemonEssentials.Interface.PokeBattle.IPokemon[] (PokemonBox box)
+			//{
+			//	return box.pokemon.ToArray();
+			//}
 		}
 
 		public partial class PokemonStorage : PokemonEssentials.Interface.Screen.IPokemonStorage {
@@ -285,9 +285,9 @@ namespace PokemonUnity
 		// Regional Storage scripts
 		// ###############################################################################
 		public partial class RegionalStorage : IRegionalStorage {
-			public List<IPokemonStorage> storages { get; set; }
-			public int lastmap { get; set; }
-			public int rgnmap { get; set; }
+			protected IList<IPokemonStorage> storages { get; set; }
+			protected int lastmap { get; set; }
+			protected int rgnmap { get; set; }
 
 			public IRegionalStorage initialize() {
 				@storages=new List<IPokemonStorage>();
@@ -520,7 +520,7 @@ namespace PokemonUnity
 					} else {
 						pbFadeOutIn(99999, block: () => {
 							IWithdrawItemScene scene = Scenes.Bag_ItemWithdraw;//new WithdrawItemScene();
-							IBagScreen screen = Screens.Bag.initialize(scene,Bag);//new PokemonBagScreen(scene,Bag);
+							IBagScreen screen = Screens.Bag.initialize((IBagScene)scene,Bag);//new PokemonBagScreen(scene,Bag);
 							screen.pbWithdrawItemScreen();//ret=
 						});
 					}
@@ -539,7 +539,7 @@ namespace PokemonUnity
 					} else {
 						pbFadeOutIn(99999, block: () => {
 							ITossItemScene scene = Scenes.Bag_ItemToss;//new TossItemScene();
-							IBagScreen screen = Screens.Bag.initialize(scene,Bag);//new PokemonBagScreen(scene,Bag);
+							IBagScreen screen = Screens.Bag.initialize((IBagScene)scene,Bag);//new PokemonBagScreen(scene,Bag);
 							screen.pbTossItemScreen();//ret=
 						});
 					}
@@ -617,7 +617,7 @@ namespace PokemonUnity
 		public void pbTrainerPC() {
 			(this as IGameMessage).pbMessage(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
 			pbTrainerPCMenu();
-			pbSEPlay("computerclose");
+			(this as IGameAudioPlay).pbSEPlay("computerclose");
 		}
 
 		public void pbPokeCenterPC() {
@@ -630,7 +630,7 @@ namespace PokemonUnity
 					break;
 				}
 			} while (true);
-			pbSEPlay("computerclose");
+			(this as IGameAudioPlay).pbSEPlay("computerclose");
 		}
 	}
 }

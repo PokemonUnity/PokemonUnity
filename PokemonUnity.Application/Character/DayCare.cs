@@ -196,7 +196,7 @@ namespace PokemonUnity.Character
 					}
 				}
 				choices.Add(Game._INTL("CANCEL"));
-				int command=Game.pbMessage(text,choices.ToArray(),choices.Count);
+				int command=Game.GameData.pbMessage(text,choices.ToArray(),choices.Count);
 				Game.GameData.GameVariables[variable]=(command==2) ? -1 : command;
 			}
 		}
@@ -456,15 +456,15 @@ namespace PokemonUnity.Character
 		//Events.onStepTaken+=delegate(object sender, EventArgs e) {
 		public void OnStepTakenEventHandler(object sender, IOnStepTakenFieldMovementEventArgs e) {
 			if (Game.GameData.Player == null) return;
-			int deposited=DayCare.pbDayCareDeposited();
+			int deposited= Game.GameData.Global.daycare.pbDayCareDeposited();
 			if (deposited==2 && !Game.GameData.Global.daycareEgg) {//==0
 				if (Game.GameData.Global.daycareEggSteps == null) Game.GameData.Global.daycareEggSteps=0;
 					Game.GameData.Global.daycareEggSteps+=1;
 				if (Game.GameData.Global.daycareEggSteps==256) {
 					Game.GameData.Global.daycareEggSteps=0;
-					int compatval=new int[] {0,20,50,70}[DayCare.pbDayCareGetCompat()];
+					int compatval=new int[] {0,20,50,70}[Game.GameData.Global.daycare.pbDayCareGetCompat()];
 					if (Game.GameData.Bag.pbQuantity(Items.OVAL_CHARM)>0) { //hasConst?(PBItems,:OVALCHARM) &&
-						compatval=new int[] {0,40,80,88}[DayCare.pbDayCareGetCompat()];
+						compatval=new int[] {0,40,80,88}[Game.GameData.Global.daycare.pbDayCareGetCompat()];
 					}
 					int rnd=Core.Rand.Next(100);
 					if (rnd<compatval) {

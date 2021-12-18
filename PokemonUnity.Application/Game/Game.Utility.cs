@@ -154,10 +154,10 @@ namespace PokemonUnity
 		public void pbChangePlayer(int id) {
 			if (id < 0 || id >= 8) return; //false;
 			//IPokemonMetadata meta=pbGetMetadata(0,MetadataPlayerA+id);
-			MetadataPlayer meta=pbGetMetadata(0).Global.Players[MetadataPlayerA+id];
+			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[MetadataPlayerA+id];
 			if (meta == null) return; //false;
-			if (Trainer != null) Trainer.trainertype=(TrainerTypes)meta.Type; //meta[0];
-			GamePlayer.character_name=meta.Name; //meta[1];
+			if (Trainer != null) Trainer.trainertype=(TrainerTypes)meta?.Type; //meta[0];
+			GamePlayer.character_name=meta?.Name; //meta[1];
 			GamePlayer.character_hue=0;
 			Global.playerID=id;
 			if (Trainer != null) Trainer.metaID=id;
@@ -167,16 +167,16 @@ namespace PokemonUnity
 			int id=Global.playerID;
 			if (id<0 || id>=8) return "";
 			//IPokemonMetadata meta=pbGetMetadata(0,MetadataPlayerA+id);
-			MetadataPlayer meta=pbGetMetadata(0).Global.Players[MetadataPlayerA+id];
+			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[MetadataPlayerA+id];
 			if (meta == null) return "";
-			return pbPlayerSpriteFile((TrainerTypes)meta.Type); //meta[0]
+			return pbPlayerSpriteFile((TrainerTypes)meta?.Type); //meta[0]
 		}
 
 		public TrainerTypes pbGetPlayerTrainerType() {
 			int id=Global.playerID;
 			if (id<0 || id>=8) return 0;
 			//IPokemonMetadata meta=pbGetMetadata(0,MetadataPlayerA+id);
-			MetadataPlayer meta=pbGetMetadata(0).Global.Players[MetadataPlayerA+id];
+			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[MetadataPlayerA+id];
 			if (meta == null) return 0;
 			return (TrainerTypes)meta.Type; //meta[0];
 		}
@@ -461,16 +461,16 @@ namespace PokemonUnity
 			}
 			switch (error) {
 				case 1:
-					pbMessage(Game._INTL("The recorded data could not be found or saved."));
+					(this as IGameMessage).pbMessage(Game._INTL("The recorded data could not be found or saved."));
 					break;
 				case 2:
-					pbMessage(Game._INTL("The recorded data was in an invalid format."));
+					(this as IGameMessage).pbMessage(Game._INTL("The recorded data was in an invalid format."));
 					break;
 				case 3:
-					pbMessage(Game._INTL("The recorded data's format is not supported."));
+					(this as IGameMessage).pbMessage(Game._INTL("The recorded data's format is not supported."));
 					break;
 				case 4:
-					pbMessage(Game._INTL("There was no sound in the recording. Please ensure that a microphone is attached to the computer /and/ is ready."));
+					(this as IGameMessage).pbMessage(Game._INTL("There was no sound in the recording. Please ensure that a microphone is attached to the computer /and/ is ready."));
 					break;
 				default:
 					return error;
@@ -490,15 +490,15 @@ namespace PokemonUnity
 				case 0:
 					return true;
 				case 256+66:
-					pbMessage(Game._INTL("All recording devices are in use. Recording is not possible now."));
+					(this as IGameMessage).pbMessage(Game._INTL("All recording devices are in use. Recording is not possible now."));
 					return false;
 				case 256+72:
-					pbMessage(Game._INTL("No supported recording device was found. Recording is not possible."));
+					(this as IGameMessage).pbMessage(Game._INTL("No supported recording device was found. Recording is not possible."));
 					return false;
 				default:
 					string buffer=new int[256].ToString(); //"\0"*256;
 					//MciErrorString.call(code,buffer,256);
-					pbMessage(Game._INTL("Recording failed: {1}",buffer));//.gsub(/\x00/,"")
+					(this as IGameMessage).pbMessage(Game._INTL("Recording failed: {1}",buffer));//.gsub(/\x00/,"")
 					return false;
 			}
 		}
@@ -1288,8 +1288,8 @@ namespace PokemonUnity
 
 		public void pbStorePokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
 			if (pbBoxesFull()) {
-				pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
-				pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
+				(this as IGameMessage).pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
+				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return;
 			}
 			pokemon.RecordFirstMoves();
@@ -1305,26 +1305,26 @@ namespace PokemonUnity
 				if (Global.seenStorageCreator) creator=pbGetStorageCreator();
 				if (storedbox!=oldcurbox) {
 					if (!string.IsNullOrEmpty(creator)) {
-						pbMessage(Game._INTL(@"Box ""{1}"" on {2}'s PC was full.\1",curboxname,creator));
+						(this as IGameMessage).pbMessage(Game._INTL(@"Box ""{1}"" on {2}'s PC was full.\1",curboxname,creator));
 					} else {
-						pbMessage(Game._INTL(@"Box ""{1}"" on someone's PC was full.\1",curboxname));
+						(this as IGameMessage).pbMessage(Game._INTL(@"Box ""{1}"" on someone's PC was full.\1",curboxname));
 					}
-					pbMessage(Game._INTL("{1} was transferred to box \"{2}.\"",pokemon.Name,boxname));
+					(this as IGameMessage).pbMessage(Game._INTL("{1} was transferred to box \"{2}.\"",pokemon.Name,boxname));
 				} else {
 					if (!string.IsNullOrEmpty(creator)) {
-						pbMessage(Game._INTL(@"{1} was transferred to {2}'s PC.\1",pokemon.Name,creator));
+						(this as IGameMessage).pbMessage(Game._INTL(@"{1} was transferred to {2}'s PC.\1",pokemon.Name,creator));
 					} else {
-						pbMessage(Game._INTL(@"{1} was transferred to someone's PC.\1",pokemon.Name));
+						(this as IGameMessage).pbMessage(Game._INTL(@"{1} was transferred to someone's PC.\1",pokemon.Name));
 					}
-					pbMessage(Game._INTL("It was stored in box \"{1}.\"",boxname));
+					(this as IGameMessage).pbMessage(Game._INTL("It was stored in box \"{1}.\"",boxname));
 				}
 			}
 		}
 
 		public void pbNicknameAndStore(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
 			if (pbBoxesFull()) {
-				pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
-				pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
+				(this as IGameMessage).pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
+				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return;
 			}
 			Trainer.seen[pokemon.Species]=true;
@@ -1337,8 +1337,8 @@ namespace PokemonUnity
 			if (pkmn == Pokemons.NONE || Trainer == null) return false;
 			IPokemon pokemon = null;
 			if (pbBoxesFull()) {
-				pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
-				pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
+				(this as IGameMessage).pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
+				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return false;
 			}
 			//if (pokemon is String || pokemon is Symbol) {
@@ -1349,7 +1349,7 @@ namespace PokemonUnity
 				pokemon=new Monster.Pokemon(pkmn,level:(byte)level.Value,original:Trainer);
 			}
 			string speciesname=pokemon.Species.ToString(TextScripts.Name);
-			pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
+			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
 			pbNicknameAndStore(pokemon);
 			if (seeform) pbSeenForm(pokemon);
 			return true;
@@ -1358,12 +1358,12 @@ namespace PokemonUnity
 		public bool pbAddPokemon(IPokemon pokemon,int? level=null,bool seeform=true) {
 			if (!pokemon.IsNotNullOrNone() || Trainer == null) return false;
 			if (pbBoxesFull()) {
-				pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
-				pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
+				(this as IGameMessage).pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
+				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return false;
 			}
 			string speciesname=pokemon.Species.ToString(TextScripts.Name);
-			pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
+			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
 			pbNicknameAndStore(pokemon);
 			if (seeform) pbSeenForm(pokemon);
 			return true;
@@ -1416,7 +1416,7 @@ namespace PokemonUnity
 				pokemon=new Pokemon(pkmn,level:(byte)level.Value,original:Trainer);
 			}
 			string speciesname=pokemon.Species.ToString(TextScripts.Name);
-			pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
+			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
 			pbNicknameAndStore(pokemon);
 			if (seeform) pbSeenForm(pokemon);
 			return true;
@@ -1425,7 +1425,7 @@ namespace PokemonUnity
 		public bool pbAddToParty(IPokemon pokemon,int? level=null,bool seeform=true) {
 			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
 			string speciesname=pokemon.Species.ToString(TextScripts.Name);
-			pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
+			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
 			pbNicknameAndStore(pokemon);
 			if (seeform) pbSeenForm(pokemon);
 			return true;
@@ -1478,9 +1478,9 @@ namespace PokemonUnity
 			//Recalculate stats
 			pokemon.calcStats();
 			if (ownerName != null) {
-				pbMessage(Game._INTL("{1} received a Pokémon from {2}.\\se[PokemonGet]\\1",Trainer.name,ownerName));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} received a Pokémon from {2}.\\se[PokemonGet]\\1",Trainer.name,ownerName));
 			} else {
-				pbMessage(Game._INTL("{1} received a Pokémon.\\se[PokemonGet]\\1",Trainer.name));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} received a Pokémon.\\se[PokemonGet]\\1",Trainer.name));
 			}
 			pbStorePokemon(pokemon);
 			Trainer.seen[pokemon.Species]=true;
@@ -1502,9 +1502,9 @@ namespace PokemonUnity
 			//Recalculate stats
 			pokemon.calcStats();
 			if (ownerName != null) {
-				pbMessage(Game._INTL("{1} received a Pokémon from {2}.\\se[PokemonGet]\\1",Trainer.name,ownerName));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} received a Pokémon from {2}.\\se[PokemonGet]\\1",Trainer.name,ownerName));
 			} else {
-				pbMessage(Game._INTL("{1} received a Pokémon.\\se[PokemonGet]\\1",Trainer.name));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} received a Pokémon.\\se[PokemonGet]\\1",Trainer.name));
 			}
 			pbStorePokemon(pokemon);
 			Trainer.seen[pokemon.Species]=true;
@@ -2114,7 +2114,7 @@ namespace PokemonUnity
 					//}
 				}
 			}
-			pbFadeOutIn(99999, () => {
+			pbFadeOutIn(99999, block: () => {
 				IPartyDisplayScene scene=Scenes.Party; //new PokemonScreen_Scene();
 				string movename=move.ToString(TextScripts.Name);
 				IPartyDisplayScreen screen=Screens.Party.initialize(scene,Trainer.party); //new PokemonScreen(scene,Trainer.party);
@@ -2125,15 +2125,15 @@ namespace PokemonUnity
 					if (chosen>=0) {
 						Pokemon pokemon=Trainer.party[chosen];
 						if (pokemon.isEgg) {
-							pbMessage(Game._INTL("{1} can't be taught to an Egg.",movename));
+							(this as IGameMessage).pbMessage(Game._INTL("{1} can't be taught to an Egg.",movename));
 						} else if ((pokemon.isShadow)) { //rescue false
-							pbMessage(Game._INTL("Shadow Pokémon can't be taught any moves."));
+							(this as IGameMessage).pbMessage(Game._INTL("Shadow Pokémon can't be taught any moves."));
 						} else if (movelist != null && !movelist.Any(j => j==pokemon.Species )) {
-							pbMessage(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
-							pbMessage(Game._INTL("{1} can't be learned.",movename));
+							(this as IGameMessage).pbMessage(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
+							(this as IGameMessage).pbMessage(Game._INTL("{1} can't be learned.",movename));
 						} else if (!pokemon.isCompatibleWithMove(move)) {
-							pbMessage(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
-							pbMessage(Game._INTL("{1} can't be learned.",movename));
+							(this as IGameMessage).pbMessage(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
+							(this as IGameMessage).pbMessage(Game._INTL("{1} can't be learned.",movename));
 						} else {
 							if (pbLearnMove(pokemon,move,false,bymachine)) {
 								ret=true;
@@ -2152,7 +2152,7 @@ namespace PokemonUnity
 		public void pbChooseMove(IPokemon pokemon,int variableNumber,int nameVarNumber) {
 			if (!pokemon.IsNotNullOrNone()) return;
 			int ret=-1;
-			pbFadeOutIn(99999, () => {
+			pbFadeOutIn(99999, block: () => {
 				IPokemonSummaryScene scene=Scenes.Summary; //new PokemonSummaryScene();
 				IPokemonSummaryScreen screen=Screens.Summary.initialize(scene); //new PokemonSummary(scene);
 				ret=screen.pbStartForgetScreen(pokemon,0,0);

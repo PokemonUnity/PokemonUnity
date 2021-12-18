@@ -122,7 +122,7 @@ namespace PokemonEssentials.Interface
 		IRect rect { get; set; }
 	}
 
-	public interface IPlane
+	public interface IPlane : IPlaneSpriteWindow
 	{
 		//unless (@SpriteResizerMethodsAliased) {
 		//  alias _initialize_SpriteResizer initialize;

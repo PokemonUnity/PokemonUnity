@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace PokemonUnity
+namespace PokemonUnity.Extension
 {
 	public static class MoveExtension
 	{

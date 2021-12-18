@@ -134,11 +134,12 @@ namespace PokemonUnity
 		//} }
 
 		public Pokemons[] roamPokemonCaught { get {
-			if (@roamPokemonCaught == null) {
-				@roamPokemonCaught= new Pokemons[0];
+			if (_roamPokemonCaught == null) {
+				_roamPokemonCaught= new List<Pokemons>();
 			}
-			return @roamPokemonCaught;
+			return _roamPokemonCaught.ToArray();
 		} }
+		private IList<Pokemons> _roamPokemonCaught;
 
 		public GlobalMetadata() {
 			@bicycle              = false;

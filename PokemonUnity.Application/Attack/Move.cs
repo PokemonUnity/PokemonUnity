@@ -27,7 +27,7 @@ namespace PokemonUnity.Attack
 		/// Could possibly replace SET as a new constructor
 		public byte PP
 		{
-			get { return this.pp; } //ToDo: If greater than totalPP throw error?
+			get { return (byte)this.pp; } //ToDo: If greater than totalPP throw error?
 			set
 			{
 				this.pp = value < 0 ? (byte)0 : (value > this.TotalPP ? TotalPP : value);

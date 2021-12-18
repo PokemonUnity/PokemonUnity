@@ -182,7 +182,7 @@ namespace PokemonUnity.Inventory
 				//pokemon.Exp=Experience.GetStartExperience(pokemon.GrowthRate, newlevel);
 				pokemon.calcStats();
 				scene.pbRefresh();
-				Game.pbMessage(Game._INTL("{1} was downgraded to Level {2}!",pokemon.Name,pokemon.Level));
+				Game.GameData.pbMessage(Game._INTL("{1} was downgraded to Level {2}!",pokemon.Name,pokemon.Level));
 				attackdiff=pokemon.ATK-attackdiff;
 				defensediff=pokemon.DEF-defensediff;
 				speeddiff=pokemon.SPE-speeddiff;
@@ -194,7 +194,7 @@ namespace PokemonUnity.Inventory
 				pbTopRightWindow(Game._INTL("Max. HP<r>{1}\r\nAttack<r>{2}\r\nDefense<r>{3}\r\nSp. Atk<r>{4}\r\nSp. Def<r>{5}\r\nSpeed<r>{6}",
 					pokemon.TotalHP,pokemon.ATK,pokemon.DEF,pokemon.SPA,pokemon.SPD,pokemon.SPE));
 			} else if (pokemon.Level==newlevel) {
-				Game.pbMessage(Game._INTL("{1}'s level remained unchanged.",pokemon.Name));
+				Game.GameData.pbMessage(Game._INTL("{1}'s level remained unchanged.",pokemon.Name));
 			} else {
 				int attackdiff=pokemon.ATK;
 				int defensediff=pokemon.DEF;
@@ -209,7 +209,7 @@ namespace PokemonUnity.Inventory
 				pokemon.ChangeHappiness(HappinessMethods.LEVELUP);
 				pokemon.calcStats();
 				scene.pbRefresh();
-				Game.pbMessage(Game._INTL("{1} was elevated to Level {2}!",pokemon.Name,pokemon.Level));
+				Game.GameData.pbMessage(Game._INTL("{1} was elevated to Level {2}!",pokemon.Name,pokemon.Level));
 				attackdiff=pokemon.ATK-attackdiff;
 				defensediff=pokemon.DEF-defensediff;
 				speeddiff=pokemon.SPE-speeddiff;
@@ -229,7 +229,7 @@ namespace PokemonUnity.Inventory
 				}
 				Pokemons newspecies=Evolution.pbCheckEvolution(pokemon)[0];
 				if (newspecies>0) {
-					Game.UI.pbFadeOutInWithMusic(99999, () => {
+					Game.UI.pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo=Game.GameData.Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution();
@@ -358,60 +358,63 @@ namespace PokemonUnity.Inventory
 			return ret;
 		}
 
-		/*public static bool pbBikeCheck() {
+		public static bool pbBikeCheck() {
 			if (Game.GameData.Global.surfing ||
 				(!Game.GameData.Global.bicycle && Terrain.onlyWalk(Game.GameData.pbGetTerrainTag()))) {
-			Game.pbMessage(Game._INTL("Can't use that here."));
-			return false;
+				Game.GameData.pbMessage(Game._INTL("Can't use that here."));
+				return false;
 			}
 			if (Game.GameData.GamePlayer.pbHasDependentEvents()) {
-			Game.pbMessage(Game._INTL("It can't be used when you have someone with you."));
-			return false;
+				Game.GameData.pbMessage(Game._INTL("It can't be used when you have someone with you."));
+				return false;
 			}
 			if (Game.GameData.Global.bicycle) {
-			if (Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataBicycleAlways)) {
-				Game.pbMessage(Game._INTL("You can't dismount your Bike here."));
-				return false;
-			}
-			return true;
+				//if (Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataBicycleAlways)) {
+				if (Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id).Map.BicycleAlways) {
+					Game.GameData.pbMessage(Game._INTL("You can't dismount your Bike here."));
+					return false;
+				}
+				return true;
 			} else {
-			bool? val=Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataBicycle);
-			if (val == null) val=Game.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor);
-			if (val == null) {
-				Game.pbMessage(Game._INTL("Can't use that here."));
-				return false;
-			}
-			return true;
+				//bool? val=Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataBicycle);
+				bool? val=Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Bicycle;
+				//if (val == null) val=Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor);
+				if (val == null) val=Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor;
+				if (val == null) {
+					Game.GameData.pbMessage(Game._INTL("Can't use that here."));
+					return false;
+				}
+				return true;
 			}
 		}
 
-		public static Avatar.Character pbClosestHiddenItem() {
-			List<Avatar.GameEvent> result = new List<Avatar.GameEvent>();
+		public static IGameCharacter pbClosestHiddenItem() {
+			List<IGameEvent> result = new List<IGameEvent>();
 			float playerX=Game.GameData.GamePlayer.x;
 			float playerY=Game.GameData.GamePlayer.y;
-			foreach (Avatar.GameEvent @event in Game.GameData.GameMap.events.Values) {
-			if (@event.name!="HiddenItem") continue;
-			if (Math.Abs(playerX-@event.x)>=8) continue;
-			if (Math.Abs(playerY-@event.y)>=6) continue;
-			if (Game.GameData.GameSelfSwitches[(int)[Game.GameData.GameMap.map_id,@event.id,"A"]]) continue;
-			result.Add(@event);
+			foreach (IGameEvent @event in Game.GameData.GameMap.events.Values) {
+				if (@event.name!="HiddenItem") continue;
+				if (Math.Abs(playerX-@event.x)>=8) continue;
+				if (Math.Abs(playerY-@event.y)>=6) continue;
+				if (Game.GameData.GameSelfSwitches[new SelfSwitchVariable(Game.GameData.GameMap.map_id,@event.id,"A")]) continue;
+				result.Add(@event);
 			}
 			if (result.Count==0) return null;
-			Avatar.Character ret=null;
+			IGameCharacter ret=null;
 			float retmin=0;
 			foreach (Avatar.GameEvent @event in result) {
-			float dist=Math.Abs(playerX-@event.x)+Math.Abs(playerY-@event.y);
-			if (ret == null || retmin>dist) {
-				ret=@event;
-				retmin=dist;
-			}
+				float dist=Math.Abs(playerX-@event.x)+Math.Abs(playerY-@event.y);
+				if (ret == null || retmin>dist) {
+					ret=@event;
+					retmin=dist;
+				}
 			}
 			return ret;
-		}*/
+		}
 
 		public static void pbUseKeyItemInField(Items item) { //Move to game class
 			if (!ItemHandlers.triggerUseInField(item)) {
-				Game.pbMessage(Game._INTL("Can't use that here."));
+				Game.GameData.pbMessage(Game._INTL("Can't use that here."));
 			}
 		}
 
@@ -426,8 +429,8 @@ namespace PokemonUnity.Inventory
 
 		public static int pbForgetMove(IPokemon pokemon,Moves moveToLearn) {
 			int ret=-1;
-			Game.UI.pbFadeOutIn(99999, () => {
-				IPokemonSummaryScene scene= Game.PokemonSummaryScene; //new PokemonSummaryScene();
+			Game.GameData.pbFadeOutIn(99999, block: () => {
+				IPokemonSummaryScene scene= Game.GameData.Scenes.Summary; //new PokemonSummaryScene();
 				IPokemonSummary screen=Game.PokemonSummary.initialize(scene); //new PokemonSummary(scene);
 				ret=screen.pbStartForgetScreen(pokemon,0,moveToLearn);
 			});
@@ -438,45 +441,45 @@ namespace PokemonUnity.Inventory
 			if (!pokemon.IsNotNullOrNone()) return false;
 			string movename=move.ToString(TextScripts.Name);
 			if (pokemon.isEgg && !Core.DEBUG) {
-				Game.pbMessage(Game._INTL("{1} can't be taught to an Egg.",movename));
+				Game.GameData.pbMessage(Game._INTL("{1} can't be taught to an Egg.",movename));
 				return false;
 			}
 			if (pokemon is IShadowPokemon && pokemon.isShadow) {
-				Game.pbMessage(Game._INTL("{1} can't be taught to this Pokémon.",movename));
+				Game.GameData.pbMessage(Game._INTL("{1} can't be taught to this Pokémon.",movename));
 				return false;
 			}
 			string pkmnname=pokemon.Name;
 			for (int i = 0; i < 4; i++) {
 				if (pokemon.moves[i].id==move) {
-					if (!ignoreifknown) Game.pbMessage(Game._INTL("{1} already knows {2}.",pkmnname,movename));
+					if (!ignoreifknown) Game.GameData.pbMessage(Game._INTL("{1} already knows {2}.",pkmnname,movename));
 					return false;
 				}
 				if (pokemon.moves[i].id==0) {
 					pokemon.moves[i]=new Attack.Move(move);
-					Game.pbMessage(Game._INTL("\\se[]{1} learned {2}!\\se[MoveLearnt]",pkmnname,movename));
+					Game.GameData.pbMessage(Game._INTL("\\se[]{1} learned {2}!\\se[MoveLearnt]",pkmnname,movename));
 					return true;
 				}
 			}
 			do { //;loop
-				Game.UI.pbMessage(Game._INTL("{1} wants to learn the move {2}.",pkmnname,movename));
-				Game.pbMessage(Game._INTL("However, {1} already knows four moves.",pkmnname));
+				Game.GameData.pbMessage(Game._INTL("{1} wants to learn the move {2}.",pkmnname,movename));
+				Game.GameData.pbMessage(Game._INTL("However, {1} already knows four moves.",pkmnname));
 				if (Game.UI.pbConfirmMessage(Game._INTL("Should a move be deleted and replaced with {1}?",movename))) {
-					Game.pbMessage(Game._INTL("Which move should be forgotten?"));
+					Game.GameData.pbMessage(Game._INTL("Which move should be forgotten?"));
 					int forgetmove=pbForgetMove(pokemon,move);
 					if (forgetmove>=0) {
 						string oldmovename=pokemon.moves[forgetmove].id.ToString(TextScripts.Name);
 						byte oldmovepp=pokemon.moves[forgetmove].PP;
 						pokemon.moves[forgetmove]=new Attack.Move(move); // Replaces current/total PP
 						if (bymachine) pokemon.moves[forgetmove].PP=Math.Min(oldmovepp,pokemon.moves[forgetmove].TotalPP);
-						Game.pbMessage(Game._INTL("\\se[]1,\\wt[16] 2, and\\wt[16]...\\wt[16] ...\\wt[16] ... Ta-da!\\se[balldrop]"));
-						Game.pbMessage(Game._INTL("\\se[]{1} forgot how to use {2}. And... {1} learned {3}!\\se[MoveLearnt]",pkmnname,oldmovename,movename));
+						Game.GameData.pbMessage(Game._INTL("\\se[]1,\\wt[16] 2, and\\wt[16]...\\wt[16] ...\\wt[16] ... Ta-da!\\se[balldrop]"));
+						Game.GameData.pbMessage(Game._INTL("\\se[]{1} forgot how to use {2}. And... {1} learned {3}!\\se[MoveLearnt]",pkmnname,oldmovename,movename));
 						return true;
 					} else if (Game.UI.pbConfirmMessage(Game._INTL("Give up on learning the move {1}?",movename))) {
-						Game.pbMessage(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
+						Game.GameData.pbMessage(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
 						return false;
 					}
 				} else if (Game.UI.pbConfirmMessage(Game._INTL("Give up on learning the move {1}?",movename))) {
-					Game.pbMessage(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
+					Game.GameData.pbMessage(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
 					return false;
 				}
 			} while (true);
@@ -501,43 +504,43 @@ namespace PokemonUnity.Inventory
 		/*public static bool pbUseItemOnPokemon(Items item,IPokemon pokemon,IScene scene) {
 			//if (Game.ItemData[item][ITEMUSE]==3 || Game.ItemData[item][ITEMUSE]==4) {		// TM or HM
 			if (Item.pbIsMachine(item)) {
-			Moves machine=Game.MachineData[(int)item].Move;
-			if (machine==Moves.NONE) return false;
-			string movename=machine.ToString(TextScripts.Name);
-			if (pokemon.isShadow) { //? rescue false
-				Game.pbMessage(Game._INTL("Shadow Pokémon can't be taught any moves."));
-			} else if (!pokemon.isCompatibleWithMove(machine)) {
-				Game.pbMessage(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
-				Game.pbMessage(Game._INTL("{1} can't be learned.",movename));
-			} else {
-				if (pbIsHiddenMachine(item)) {
-				Game.pbMessage(Game._INTL("\\se[accesspc]Booted up an HM."));
-				Game.pbMessage(Game._INTL(@"It contained {1}.\1",movename));
+				Moves machine=Game.MachineData[(int)item].Move;
+				if (machine==Moves.NONE) return false;
+				string movename=machine.ToString(TextScripts.Name);
+				if (pokemon.isShadow) { //? rescue false
+					Game.GameData.pbMessage(Game._INTL("Shadow Pokémon can't be taught any moves."));
+				} else if (!pokemon.isCompatibleWithMove(machine)) {
+					Game.GameData.pbMessage(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
+					Game.GameData.pbMessage(Game._INTL("{1} can't be learned.",movename));
 				} else {
-				Game.pbMessage(Game._INTL("\\se[accesspc]Booted up a TM."));
-				Game.pbMessage(Game._INTL(@"It contained {1}.\1",movename));
+					if (pbIsHiddenMachine(item)) {
+						Game.GameData.pbMessage(Game._INTL("\\se[accesspc]Booted up an HM."));
+						Game.GameData.pbMessage(Game._INTL(@"It contained {1}.\1",movename));
+					} else {
+						Game.GameData.pbMessage(Game._INTL("\\se[accesspc]Booted up a TM."));
+						Game.GameData.pbMessage(Game._INTL(@"It contained {1}.\1",movename));
+					}
+					if (Game.GameData.pbConfirmMessage(Game._INTL("Teach {1} to {2}?",movename,pokemon.Name))) {
+						if (pbLearnMove(pokemon,machine,false,true)) {
+							if (pbIsTechnicalMachine(item) && !Core.INFINITETMS) Game.GameData.Bag.pbDeleteItem(item);
+							return true;
+						}
+					}
 				}
-				if (Game.UI.pbConfirmMessage(Game._INTL("Teach {1} to {2}?",movename,pokemon.Name))) {
-				if (pbLearnMove(pokemon,machine,false,true)) {
-					if (pbIsTechnicalMachine(item) && !Core.INFINITETMS) Game.GameData.Bag.pbDeleteItem(item);
-					return true;
-				}
-				}
-			}
-			return false;
+				return false;
 			} else {
-			bool ret=ItemHandlers.triggerUseOnPokemon(item,pokemon,scene);
-			scene.pbClearAnnotations();
-			scene.pbHardRefresh();
-			if (ret && Game.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1 Usable on Pokémon, consumed
-				Game.GameData.Bag.pbDeleteItem(item);
+				bool ret=ItemHandlers.triggerUseOnPokemon(item,pokemon,scene);
+				scene.pbClearAnnotations();
+				scene.pbHardRefresh();
+				if (ret && Game.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1 Usable on Pokémon, consumed
+					Game.GameData.Bag.pbDeleteItem(item);
+				}
+				if (Game.GameData.Bag.pbQuantity(item)<=0) {
+					Game.GameData.pbMessage(Game._INTL("You used your last {1}.",item.ToString(TextScripts.Name)));
+				}
+				return ret;
 			}
-			if (Game.GameData.Bag.pbQuantity(item)<=0) {
-				Game.pbMessage(Game._INTL("You used your last {1}.",item.ToString(TextScripts.Name)));
-			}
-			return ret;
-			}
-			Game.pbMessage(Game._INTL("Can't use that on {1}.",pokemon.Name));
+			Game.GameData.pbMessage(Game._INTL("Can't use that on {1}.",pokemon.Name));
 			return false;
 		}
 
@@ -548,16 +551,16 @@ namespace PokemonUnity.Inventory
 			Moves machine=Game.MachineData[(int)item].Move;
 			if (machine==Moves.NONE) return 0;
 			if (Game.GameData.Trainer.pokemonCount==0) {
-				Game.pbMessage(Game._INTL("There is no Pokémon."));
+				Game.GameData.pbMessage(Game._INTL("There is no Pokémon."));
 				return 0;
 			}
 			string movename=machine.ToString(TextScripts.Name);
 			if (pbIsHiddenMachine(item)) {
-				Game.pbMessage(Game._INTL("\\se[accesspc]Booted up an HM."));
-				Game.pbMessage(Game._INTL(@"It contained {1}.\1",movename));
+				Game.GameData.pbMessage(Game._INTL("\\se[accesspc]Booted up an HM."));
+				Game.GameData.pbMessage(Game._INTL(@"It contained {1}.\1",movename));
 			} else {
-				Game.pbMessage(Game._INTL("\\se[accesspc]Booted up a TM."));
-				Game.pbMessage(Game._INTL(@"It contained {1}.\1",movename));
+				Game.GameData.pbMessage(Game._INTL("\\se[accesspc]Booted up a TM."));
+				Game.GameData.pbMessage(Game._INTL(@"It contained {1}.\1",movename));
 			}
 			if (!Game.UI.pbConfirmMessage(Game._INTL("Teach {1} to a Pokémon?",movename))) {
 				return 0;
@@ -569,7 +572,7 @@ namespace PokemonUnity.Inventory
 			}
 			} else if (Game.ItemData[item].Flags.Consumable || Game.ItemData[item][ITEMUSE]==5) {		//[ITEMUSE]==1| Item is usable on a Pokémon
 			if (Game.GameData.Trainer.pokemonCount==0) {
-				Game.pbMessage(Game._INTL("There is no Pokémon."));
+				Game.GameData.pbMessage(Game._INTL("There is no Pokémon."));
 				return 0;
 			}
 			bool ret=false;
@@ -581,7 +584,7 @@ namespace PokemonUnity.Inventory
 				annot.Add(elig ? Game._INTL("ABLE") : Game._INTL("NOT ABLE"));
 				}
 			}
-			Game.UI.pbFadeOutIn(99999, () => {
+			Game.UI.pbFadeOutIn(99999, block: () => {
 				IPokemonScreen_Scene scene=Game.PokemonScreenScene.initialize(); //new PokemonScreen_Scene();
 				IPokemonScreen screen=Game.PokemonScreen.initialize(scene,Game.GameData.Trainer.party); //new PokemonScreen(scene,Game.GameData.Trainer.party);
 				screen.pbStartScene(Game._INTL("Use on which Pokémon?"),false,annot);
@@ -598,7 +601,7 @@ namespace PokemonUnity.Inventory
 						bag.pbDeleteItem(item);
 						}
 						if (bag.pbQuantity(item)<=0) {
-						Game.pbMessage(Game._INTL("You used your last {1}.",item.ToString(TextScripts.Name)));
+						Game.GameData.pbMessage(Game._INTL("You used your last {1}.",item.ToString(TextScripts.Name)));
 						break;
 						}
 					}
@@ -632,11 +635,11 @@ namespace PokemonUnity.Inventory
 						return 2;
 						break;
 					default:
-						Game.pbMessage(Game._INTL("Can't use that here."));
+						Game.GameData.pbMessage(Game._INTL("Can't use that here."));
 						return 0;
 				}
 			} else {
-				Game.pbMessage(Game._INTL("Can't use that here."));
+				Game.GameData.pbMessage(Game._INTL("Can't use that here."));
 				return 0;
 			}
 		}
@@ -645,8 +648,8 @@ namespace PokemonUnity.Inventory
 			Items ret=0; //int?
 			IPokemonBag_Scene scene=Game.PokemonBagScene; //new PokemonBag_Scene();
 			IPokemonBagScreen screen=Game.PokemonBagScreen.initialize(scene,Game.GameData.Bag); //new PokemonBagScreen(scene,Game.GameData.Bag);
-			Game.UI.pbFadeOutIn(99999, () => { 
-			ret=screen.pbChooseItemScreen();
+			Game.UI.pbFadeOutIn(99999, block: () => { 
+				ret=screen.pbChooseItemScreen();
 			});
 			if (var>0) Game.GameData.GameVariables[var]=ret;
 			return ret;
@@ -667,8 +670,8 @@ namespace PokemonUnity.Inventory
 				//if (hasConst(PBItems,item)) {
 					Items id=(Items)item;
 					if (Game.GameData.Bag.pbQuantity(id)>0) {
-					commands.Add(id.ToString(TextScripts.Name));
-					itemid.Add(id);
+						commands.Add(id.ToString(TextScripts.Name));
+						itemid.Add(id);
 					}
 				//}
 			}
@@ -678,7 +681,7 @@ namespace PokemonUnity.Inventory
 			}
 			commands.Add(Game._INTL("Cancel"));
 			itemid.Add(0);
-			int ret=Game.pbMessage(message,commands.ToArray(),-1);
+			int ret=Game.GameData.pbMessage(message,commands.ToArray(),-1);
 			if (ret<0 || ret>=commands.Count-1) {
 				Game.GameData.GameVariables[variable]=-1;
 				return Items.NONE;
@@ -689,21 +692,21 @@ namespace PokemonUnity.Inventory
 		}
 
 		private static void pbTopRightWindow(string text) {
-			//Window_AdvancedTextPokemon window=new Window_AdvancedTextPokemon(text);
-			//window.z=99999;
-			//window.width=198;
-			//window.y=0;
-			//window.x=Graphics.width-window.width;
-			//Game.UI.pbPlayDecisionSE();
-			//do { //;loop
-			//  Graphics.update();
-			//  Input.update();
-			//  window.update();
-			//  if (Input.trigger(Input.t)) {
-			//    break;
-			//  }
-			//} while (true);
-			//window.dispose();
+			IWindow_AdvancedTextPokemon window = null; //new Window_AdvancedTextPokemon(text);
+			window.z=99999;
+			window.width=198;
+			window.y=0;
+			window.x=Graphics.width-window.width;
+			Game.GameData.pbPlayDecisionSE();
+			do { //;loop
+				//Graphics.update();
+				Input.update();
+				window.update();
+				if (Input.trigger(Input.A)) {
+					break;
+				}
+			} while (true);
+			window.dispose();
 		}
 		#endregion
 	}

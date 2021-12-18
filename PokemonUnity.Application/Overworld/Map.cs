@@ -5,6 +5,7 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Overworld;
 using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonUnity
@@ -14,7 +15,8 @@ namespace PokemonUnity
 		/// This class handles the map. It includes scrolling and passable determining
 		/// functions. Refer to <see cref="IGame.GameMap"/> for the instance of this class.
 		/// </summary>
-		public partial class Game_Map : IGameMap {
+		public partial class Game_Map : PokemonEssentials.Interface.IGameMap, IGameMapOrgBattle
+		{
 			#region Variables
 			public MapData map				            { get; set; }
 			public int map_id				            { get; set; }
@@ -26,7 +28,7 @@ namespace PokemonUnity
 			public int fog_hue				            { get; set; }     // fog hue
 			public float fog_opacity				    { get; set; }     // fog opacity level
 			public int fog_blend_type				    { get; set; }     // fog blending method
-			public int fog_zoom				        { get; set; }     // fog zoom rate
+			public int fog_zoom							{ get; set; }     // fog zoom rate
 			public float fog_sx				            { get; set; }     // fog sx
 			public float fog_sy				            { get; set; }     // fog sy
 			public string battleback_name			    { get; set; }     // battleback file name

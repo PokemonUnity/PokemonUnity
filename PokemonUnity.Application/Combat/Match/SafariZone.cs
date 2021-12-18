@@ -13,9 +13,10 @@ namespace PokemonUnity.Combat
 		//public Pokemon[] party1 { get; private set; }
 		//public Pokemon[] party2 { get; private set; }
 		//public Trainer player { get; private set; }
-		//public int battlescene { get; private set; }
+		//public bool battlescene { get; private set; }
+		//public int debugupdate { get; private set; }
 		//include PokeBattle_BattleCommon;
-		public PokeBattle_SafariZone(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.ITrainer[] player,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2) : base(scene, p1, p2, player, null)
+		public PokeBattle_SafariZone(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.ITrainer player,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2) : base(scene, p1, p2, player, null)
 		//public void initialize(IPokeBattle_Scene scene,Trainer player,Pokemon[] party) 
 		{
 			//base.scene=scene;
@@ -40,12 +41,12 @@ namespace PokemonUnity.Combat
 		//public override bool pbIsDoubleBattler (int index) {
 		//  return (index>=2);
 		//}
-		//public override Combat.Pokemon[] battlers { get; private set; }
+		//public override IPokemon[] battlers { get; private set; }
 		//  return @battlers; }
 		//public override Trainer[] opponent { get {
 		//  return null; } }
-		//public override bool doublebattle() {
-		//  return false; }
+		//public override bool doublebattle { get {
+		//  return false; } set { } }
 		private int ballcount { get; set; }
 		public int ballCount{ get {
 				return (@ballcount<0) ? 0 : @ballcount;
@@ -55,14 +56,15 @@ namespace PokemonUnity.Combat
 		} }
 
 		//public Player pbPlayer() {
-		//  return @player;
+		//	return @player;
 		//}
 
 		//public class BattleAbortedException : Exception{
 		//}
 
-		//public void pbAbort() {
-		//  throw new BattleAbortedException("Battle aborted");
+		//public override void pbAbort() {
+		//	//throw new BattleAbortedException("Battle aborted");
+		//	GameDebug.LogError("Battle aborted");
 		//}
 
 		public int pbEscapeRate(int rareness) {
@@ -159,11 +161,11 @@ namespace PokemonUnity.Combat
 
 		// ############
 		public void pbDebugUpdate() {
-			//@debugupdate+=1;
-			//if (@debugupdate==30) {
-			//  //Graphics.update();
-			//  @debugupdate=0;
-			//}
+			@debugupdate+=1;
+			if (@debugupdate==30) {
+				//Graphics.update();
+				@debugupdate=0;
+			}
 		}
 
 		public override void pbDisplayPaused(string msg) {

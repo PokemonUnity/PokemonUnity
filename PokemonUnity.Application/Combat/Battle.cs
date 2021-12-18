@@ -62,6 +62,7 @@ namespace PokemonUnity.Combat
 		/// Debug flag
 		/// </summary>
 		public bool debug { get; private set; }
+		public int debugupdate { get; protected set; }
 		/// <summary>
 		/// Player trainer
 		/// </summary>
@@ -236,9 +237,17 @@ namespace PokemonUnity.Combat
 		#region Constructor
 		/// <summary>
 		/// </summary>
+		public Battle(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent)
+		{
+			(this as IBattle).initialize(scene, p1, p2, player, opponent);
+		}
 		public Battle(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
 		{
 			(this as IBattle).initialize(scene, p1, p2, player, opponent);
+		}
+		IBattle IBattle.initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent)
+		{
+			return initialize(scene, p1, p2, player == null ? null : new ITrainer[] { player }, opponent == null ? null : new ITrainer[] { opponent });
 		}
 		IBattle IBattle.initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
 		{
@@ -246,7 +255,7 @@ namespace PokemonUnity.Combat
 		}
 		public IBattle initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent, int maxBattlers = 4)
 		{
-			//if opponent is not null but player array is empty, then player is null
+			//if opponent (trainer battle) is not null but player array is empty, then player is null
 			//if (opponent != null && player.Length == 0)
 			//	this.player = null; //player[0];
 
@@ -254,8 +263,8 @@ namespace PokemonUnity.Combat
 			//if (opponent != null && opponent.Length == 0)
 			//	this.opponent = null; //opponent[0];
 
-			this.player = player ?? new Combat.Trainer[0];                   //Trainer object
-			this.opponent = opponent ?? new Combat.Trainer[0];               //Trainer object
+			this.player = player ?? new ITrainer[0];                   //Trainer object
+			this.opponent = opponent ?? new ITrainer[0];               //Trainer object
 
 			if (p1.Length == 0) {
 				//raise new ArgumentError(Game._INTL("Party 1 has no Pokémon."))
@@ -283,7 +292,7 @@ namespace PokemonUnity.Combat
 			shiftStyle = true;
 			battlescene = true;
 			debug = Core.DEBUG;
-			//debugupdate = 0;
+			debugupdate = 0;
 
 			party1 = p1;
 			party2 = p2;
@@ -372,9 +381,9 @@ namespace PokemonUnity.Combat
 
 			//struggle.PP = -1;
 
-			for (byte i = 0; i < battlers.Length; i++) {
+			for (int i = 0; i < battlers.Length; i++) {
 				this.battlers[i] = new Pokemon(this, (sbyte)i);
-			} for (byte i = 0; i < battlers.Length; i++) {
+			} for (int i = 0; i < battlers.Length; i++) {
 				this.battlers[i].initialize(this, (sbyte)i);
 			}
 
@@ -403,7 +412,7 @@ namespace PokemonUnity.Combat
 			return Core.Rand.Next(index);
 		}
 
-		public void pbAbort() {
+		public virtual void pbAbort() {
 			//throw new BattleAbortedException("Battle aborted");
 			GameDebug.LogError("Battle aborted");
 		}
@@ -456,7 +465,7 @@ namespace PokemonUnity.Combat
 			else
 				battler = battlers[idxPokemon].OppositeOpposing;
 			if (battler.isFainted())
-				battler = battler.Partner;
+				battler = battler.pbPartner;
 			pbDisplayBrief(Game._INTL("{1} threw one {2}!", Game.GameData.Player.Name, itemname));
 			if (battler.isFainted())
 			{
@@ -604,8 +613,8 @@ namespace PokemonUnity.Combat
 			if (!@fullparty2 && @party2.Length>Core.MAXPARTYSIZE) {
 				return false;
 			}
-			Trainer[] _opponent=@opponent;
-			Trainer[] _player=@player;
+			ITrainer[] _opponent=@opponent;
+			ITrainer[] _player=@player;
 			// Wild battle
 			if (_opponent?.Length == 0) {
 				if (@party2.Length==1)
@@ -807,10 +816,8 @@ namespace PokemonUnity.Combat
 				return @player[0];
 			}
 			else {
-				return new Combat.Trainer(battlers[0].Name, TrainerTypes.WildPokemon); //null;
+				return new Trainer(battlers[0].Name, TrainerTypes.WildPokemon); //null;
 			}
-			//Active player is always going to be in First slot...
-			//return Game.GameData.Player; //@player[0];
 		}
 
 		public Items[] pbGetOwnerItems(int battlerIndex) {
@@ -1020,7 +1027,7 @@ namespace PokemonUnity.Combat
 				}
 				else {
 					//return null; //@opponent;
-					return new Combat.Trainer(null,TrainerTypes.WildPokemon);
+					return new Trainer(null,TrainerTypes.WildPokemon);
 				}
 			}
 			else {
@@ -1029,7 +1036,7 @@ namespace PokemonUnity.Combat
 				}
 				else {
 					//return null; //@player;
-					return new Combat.Trainer(null,TrainerTypes.WildPokemon);
+					return new Trainer(null,TrainerTypes.WildPokemon);
 				}
 			}
 		}
@@ -1041,7 +1048,7 @@ namespace PokemonUnity.Combat
 				}
 				else {
 					//return @opponent[0];
-					return new Combat.Trainer(null,TrainerTypes.WildPokemon);
+					return new Trainer(null,TrainerTypes.WildPokemon);
 				}
 			}
 			else {
@@ -1050,7 +1057,7 @@ namespace PokemonUnity.Combat
 				}
 				else {
 					//return @player[0];
-					return new Combat.Trainer(null,TrainerTypes.WildPokemon);
+					return new Trainer(null,TrainerTypes.WildPokemon);
 				}
 			}
 		}
@@ -1077,11 +1084,11 @@ namespace PokemonUnity.Combat
 		public ITrainer pbPartyGetOwner(int battlerIndex, int partyIndex) {
 			int secondParty=pbSecondPartyBegin(battlerIndex);
 			if (!isOpposing(battlerIndex)) {
-				if (@player == null || @player.Length == 0) return new Combat.Trainer(null,TrainerTypes.WildPokemon);//wild pokemon instead of @player?
+				if (@player == null || @player.Length == 0) return new Trainer(null,TrainerTypes.WildPokemon);//wild pokemon instead of @player?
 				return (partyIndex<secondParty) ? @player[0] : @player[1];
 			}
 			else {
-				if (@opponent == null || @opponent.Length == 0) return new Combat.Trainer(null,TrainerTypes.WildPokemon);//wild pokemon instead of @opponent?
+				if (@opponent == null || @opponent.Length == 0) return new Trainer(null,TrainerTypes.WildPokemon);//wild pokemon instead of @opponent?
 				return (partyIndex<secondParty) ? @opponent[0] : @opponent[1];
 			}
 		}
@@ -1515,7 +1522,7 @@ namespace PokemonUnity.Combat
 					return false;
 				}
 				if (!pbIsOwner(idxPokemon,pkmnidxTo)) {
-					Trainer owner=pbPartyGetOwner(idxPokemon,pkmnidxTo);
+					ITrainer owner=pbPartyGetOwner(idxPokemon,pkmnidxTo);
 					if (showMessages) pbDisplayPaused(Game._INTL("You can't switch {1}'s Pokémon with one of yours!",owner.name));
 					return false;
 				}
@@ -1524,7 +1531,7 @@ namespace PokemonUnity.Combat
 					return false;
 				}
 				if (@battlers[idxPokemon].pokemonIndex==pkmnidxTo ||
-					@battlers[idxPokemon].Partner.pokemonIndex==pkmnidxTo) {
+					@battlers[idxPokemon].pbPartner.pokemonIndex==pkmnidxTo) {
 					if (showMessages) pbDisplayPaused(Game._INTL("{1} is already in battle!",party[pkmnidxTo].Name));
 					return false;
 				}
@@ -1634,7 +1641,7 @@ namespace PokemonUnity.Combat
 						if (newenemy>=0 && pbParty(index)[newenemy].Ability == Abilities.ILLUSION) {
 							newenemyname=pbGetLastPokeInTeam(index);
 						}
-						Combat.Trainer opponent=pbGetOwner(index);
+						ITrainer opponent=pbGetOwner(index);
 						if (!@doublebattle && firstbattlerhp>0 && @shiftStyle && this.opponent.Length > 0 &&
 							@internalbattle && pbCanChooseNonActive(0) && isOpposing(index) &&
 							@battlers[0].effects.Outrage==0) {
@@ -1708,7 +1715,7 @@ namespace PokemonUnity.Combat
 			IPokemon[] party=pbParty(index);
 			int oldpoke=@battlers[index].pokemonIndex;
 			// Initialise the new Pokémon
-			@battlers[index].Initialize(party[newpoke],(sbyte)newpoke,batonpass);
+			@battlers[index].pbInitialize(party[newpoke],(sbyte)newpoke,batonpass);
 			// Reorder the party for this battle
 			int[] partyorder=(!isOpposing(index) ? @party1order : @party2order).ToArray();
 			int bpo=-1; int bpn=-1;
@@ -1770,7 +1777,7 @@ namespace PokemonUnity.Combat
 					//throw new BattleAbortedException();
 					GameDebug.LogError("BattleAbortedException"); pbAbort();
 				}
-				Combat.Trainer owner=pbGetOwner(index);
+				ITrainer owner=pbGetOwner(index);
 				pbDisplayBrief(Game._INTL("{1} sent\r\nout {2}!",owner.name,party[newpokename].Name));
 				GameDebug.Log($"[Send out Pokémon] Opponent sent out #{party[newpokename].Name} in position #{index}");
 			}
@@ -1922,7 +1929,7 @@ namespace PokemonUnity.Combat
 			if (!@internalbattle) return; //0
 			Items[] items=pbGetOwnerItems(battler.Index);
 			if (items == null) return; //Items.NONE
-			Combat.Trainer opponent=pbGetOwner(battler.Index);
+			ITrainer opponent=pbGetOwner(battler.Index);
 			for (int i = 0; i < items.Length; i++) {
 				if (items[i]==item) {
 					//items.delete_at(i);
@@ -2084,7 +2091,7 @@ namespace PokemonUnity.Combat
 			// Note: not pbSpeed, because using unmodified Speed
 			int speedPlayer=@battlers[idxPokemon].pokemon.speed;
 			IBattler opposing=@battlers[idxPokemon].pbOppositeOpposing();
-			if (opposing.isFainted()) opposing=opposing.Partner;
+			if (opposing.isFainted()) opposing=opposing.pbPartner;
 			if (!opposing.isFainted()) {
 				int speedEnemy=opposing.pokemon.speed;
 				if (speedPlayer>speedEnemy) {
@@ -2198,7 +2205,7 @@ namespace PokemonUnity.Combat
 
 		#region Call Battler
 		public void pbCall(int index) {
-			Combat.Trainer owner=pbGetOwner(index);
+			ITrainer owner=pbGetOwner(index);
 			pbDisplay(Game._INTL("{1} called {2}!",owner.name,@battlers[index].Name));
 			pbDisplay(Game._INTL("{1}!",@battlers[index].Name));
 			GameDebug.Log($"[Call to Pokémon] #{owner.name} called to #{@battlers[index].ToString(true)}");
@@ -2881,7 +2888,7 @@ namespace PokemonUnity.Combat
 						//@party2 = new Pokemon[] { @party2[0], new Pokemon(this,2) }; //ToDo: Fixed error?
 					}
 					IPokemon wildpoke=@party2[0];
-					@battlers[1].Initialize(wildpoke,0,false);
+					@battlers[1].pbInitialize(wildpoke,0,false);
 					@peer.pbOnEnteringBattle(this,wildpoke); 
 					pbSetSeen(wildpoke);
 					@scene.pbStartBattle(this);
@@ -2893,8 +2900,8 @@ namespace PokemonUnity.Combat
 						GameDebug.LogError(Game._INTL("Only one wild Pokémon is allowed in single battles"));
 						@party2 = new IPokemon[] { @party2[0] }; //Fixed error.
 					}
-					@battlers[1].Initialize(@party2[0],0,false);
-					@battlers[3].Initialize(@party2[1],0,false);
+					@battlers[1].pbInitialize(@party2[0],0,false);
+					@battlers[3].pbInitialize(@party2[1],0,false);
 					@peer.pbOnEnteringBattle(this,@party2[0]); 
 					@peer.pbOnEnteringBattle(this,@party2[1]); 
 					pbSetSeen(@party2[0]);
@@ -2918,7 +2925,7 @@ namespace PokemonUnity.Combat
 					else if (@opponent.Length!=2) {
 						//throw new Exception(Game._INTL("Opponents with zero or more than two people are not allowed"));
 						GameDebug.LogError(Game._INTL("Opponents with zero or more than two people are not allowed"));
-						@opponent= new Trainer[] { @opponent[0], @opponent[1] }; //Resolved Error
+						@opponent= new ITrainer[] { @opponent[0], @opponent[1] }; //Resolved Error
 					}
 				}
 				if (@player.Length > 0) {
@@ -2928,7 +2935,7 @@ namespace PokemonUnity.Combat
 					else if (@player.Length!=2) {
 						//throw new Exception(Game._INTL("Player trainers with zero or more than two people are not allowed"));
 						GameDebug.LogError(Game._INTL("Player trainers with zero or more than two people are not allowed"));
-						@player= new Trainer[] { @player[0], @player[1] }; //Resolved Error
+						@player= new ITrainer[] { @player[0], @player[1] }; //Resolved Error
 					}
 				}
 				@scene.pbStartBattle(this);
@@ -2938,10 +2945,10 @@ namespace PokemonUnity.Combat
 					if (sendout1<0) GameDebug.LogError(Game._INTL("Opponent 1 has no unfainted Pokémon")); //throw new Exception(Game._INTL("Opponent 1 has no unfainted Pokémon"));
 					int sendout2=pbFindNextUnfainted(@party2,pbSecondPartyBegin(1));
 					if (sendout2<0) GameDebug.LogError(Game._INTL("Opponent 2 has no unfainted Pokémon")); //throw new Exception(Game._INTL("Opponent 2 has no unfainted Pokémon"));
-					@battlers[1].Initialize(@party2[sendout1],(sbyte)sendout1,false);
+					@battlers[1]	(@party2[sendout1],(sbyte)sendout1,false);
 					pbDisplayBrief(Game._INTL("{1} sent\r\nout {2}!",@opponent[0].name,@battlers[1].Name));
 					pbSendOut(1,@party2[sendout1]);
-					@battlers[3].Initialize(@party2[sendout2],(sbyte)sendout2,false);
+					@battlers[3].pbInitialize(@party2[sendout2],(sbyte)sendout2,false);
 					pbDisplayBrief(Game._INTL("{1} sent\r\nout {2}!",@opponent[1].name,@battlers[3].Name));
 					pbSendOut(3,@party2[sendout2]);
 				}
@@ -2953,8 +2960,8 @@ namespace PokemonUnity.Combat
 						//throw new Exception(Game._INTL("Opponent doesn't have two unfainted Pokémon"));
 						GameDebug.LogError(Game._INTL("Opponent doesn't have two unfainted Pokémon"));
 					}
-					@battlers[1].Initialize(@party2[sendout1],(sbyte)sendout1,false);
-					@battlers[3].Initialize(@party2[sendout2],(sbyte)sendout2,false);
+					@battlers[1].pbInitialize(@party2[sendout1],(sbyte)sendout1,false);
+					@battlers[3].pbInitialize(@party2[sendout2],(sbyte)sendout2,false);
 					pbDisplayBrief(Game._INTL("{1} sent\r\nout {2} and {3}!",
 						@opponent[0].name,@battlers[1].Name,@battlers[3].Name));
 					pbSendOut(1,@party2[sendout1]);
@@ -2968,16 +2975,16 @@ namespace PokemonUnity.Combat
 				if (sendout<0) GameDebug.LogError(Game._INTL("Trainer has no unfainted Pokémon")); //throw new Exception(Game._INTL("Trainer has no unfainted Pokémon"));
 				if (@opponent.Length > 0) {
 					if (@opponent.Length!=1) GameDebug.LogError(Game._INTL("Opponent trainer must be only one person in single battles")); //throw new Exception(Game._INTL("Opponent trainer must be only one person in single battles"));
-					@opponent=new Combat.Trainer[] { @opponent[0] };
+					@opponent=new ITrainer[] { @opponent[0] };
 				}
 				if (@player.Length > 0) {
 					if (@player.Length!=1) GameDebug.LogError(Game._INTL("Player trainer must be only one person in single battles")); //throw new Exception(Game._INTL("Player trainer must be only one person in single battles"));
-					@player=new Combat.Trainer[] { @player[0] };
+					@player=new ITrainer[] { @player[0] };
 				}
 				IPokemon trainerpoke=@party2[sendout];
 				@scene.pbStartBattle(this);
 				pbDisplayPaused(Game._INTL("{1}\r\nwould like to battle!",@opponent[0].name));
-				@battlers[1].Initialize(trainerpoke,(sbyte)sendout,false);
+				@battlers[1].pbInitialize(trainerpoke,(sbyte)sendout,false);
 				pbDisplayBrief(Game._INTL("{1} sent\r\nout {2}!",@opponent[0].name,@battlers[1].Name));
 				pbSendOut(1,trainerpoke);
 			}
@@ -2990,8 +2997,8 @@ namespace PokemonUnity.Combat
 					if (sendout1<0) GameDebug.LogError(Game._INTL("Player 1 has no unfainted Pokémon")); //throw new Exception(Game._INTL("Player 1 has no unfainted Pokémon"));
 					sendout2=pbFindNextUnfainted(@party1,pbSecondPartyBegin(0));
 					if (sendout2<0) GameDebug.LogError(Game._INTL("Player 2 has no unfainted Pokémon")); //throw new Exception(Game._INTL("Player 2 has no unfainted Pokémon"));
-					@battlers[0].Initialize(@party1[sendout1],(sbyte)sendout1,false);
-					@battlers[2].Initialize(@party1[sendout2],(sbyte)sendout2,false);
+					@battlers[0].pbInitialize(@party1[sendout1],(sbyte)sendout1,false);
+					@battlers[2].pbInitialize(@party1[sendout2],(sbyte)sendout2,false);
 					pbDisplayBrief(Game._INTL("{1} sent\r\nout {2}! Go! {3}!",
 						@player[1].name,@battlers[2].Name,@battlers[0].Name));
 					pbSetSeen(@party1[sendout1]);
@@ -3004,8 +3011,8 @@ namespace PokemonUnity.Combat
 						//throw new Exception(Game._INTL("Player doesn't have two unfainted Pokémon"));
 						GameDebug.LogError(Game._INTL("Player doesn't have two unfainted Pokémon"));
 					}
-					@battlers[0].Initialize(@party1[sendout1],(sbyte)sendout1,false);
-					@battlers[2].Initialize(@party1[sendout2],(sbyte)sendout2,false);
+					@battlers[0].pbInitialize(@party1[sendout1],(sbyte)sendout1,false);
+					@battlers[2].pbInitialize(@party1[sendout2],(sbyte)sendout2,false);
 					pbDisplayBrief(Game._INTL("Go! {1} and {2}!",@battlers[0].Name,@battlers[2].Name));
 				}
 				pbSendOut(0,@party1[sendout1]);
@@ -3019,7 +3026,7 @@ namespace PokemonUnity.Combat
 					//throw new Exception(Game._INTL("Player has no unfainted Pokémon"));
 					GameDebug.LogError(Game._INTL("Player has no unfainted Pokémon"));
 				}
-				@battlers[0].Initialize(@party1[sendout],(sbyte)sendout,false);
+				@battlers[0].pbInitialize(@party1[sendout],(sbyte)sendout,false);
 				pbDisplayBrief(Game._INTL("Go! {1}!",@battlers[0].Name));
 				pbSendOut(0,@party1[sendout]);
 			}
@@ -3297,7 +3304,7 @@ namespace PokemonUnity.Combat
 					}
 					this.lastMoveUser=i.Index;
 					if (!pbOwnedByPlayer(i.Index)) {
-						Trainer owner=pbGetOwner(i.Index);
+						ITrainer owner=pbGetOwner(i.Index);
 						pbDisplayBrief(Game._INTL("{1} withdrew {2}!",owner.name,i.Name));
 						GameDebug.Log($"[Withdrew Pokémon] Opponent withdrew #{i.ToString(true)}");
 					}
@@ -3786,7 +3793,7 @@ namespace PokemonUnity.Combat
 				}
 				// Healer
 				if (i.hasWorkingAbility(Abilities.HEALER) && pbRandom(10)<3) {
-					IBattler partner=i.Partner;
+					IBattler partner=i.pbPartner;
 					if (partner.IsNotNullOrNone() && partner.Status>0) {
 						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString(TextScripts.Name)}");
 						Status s=partner.Status;

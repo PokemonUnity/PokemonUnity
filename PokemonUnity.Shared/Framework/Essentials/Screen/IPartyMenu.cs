@@ -47,13 +47,13 @@ namespace PokemonEssentials.Interface.Screen
 		void pbMessageFreeText(string text,string startMsg,int maxlength);
 	}
 
-	public interface IPartyDisplayScreen : IScreen
+	public interface IPartyDisplayScreen : IScreen, IHasDisplayMessage
 	{
 		IPartyDisplayScreen initialize(IPartyDisplayScene scene, IPokemon[] party);
 		void pbHardRefresh();
 		void pbRefresh();
 		void pbRefreshSingle(int i);
-		void pbDisplay(string text);
+		//void pbDisplay(string text);
 		void pbConfirm(string text);
 		void pbSwitch(int oldid,int newid);
 		void pbMailScreen(Items item, IPokemon pkmn, int pkmnid);

@@ -200,7 +200,7 @@ namespace PokemonUnity.Combat
 				// TODO: should apply even if partner faints during an attack
 				if (!attacker.pbOpposing1.isFainted())numtargets+=1; 
 				if (!attacker.pbOpposing2.isFainted())numtargets+=1; 
-				if (!attacker.Partner.isFainted())numtargets+=1; 
+				if (!attacker.pbPartner.isFainted())numtargets+=1; 
 				return numtargets>1;
 			} //ToDo: All pokemons (including user) and entire field (pokemons not off screen)?
 			return false;
@@ -483,7 +483,7 @@ namespace PokemonUnity.Combat
 				accuracy*=0.8;
 			if (attacker.hasWorkingAbility(Abilities.VICTORY_STAR))
 				accuracy*=1.1;
-			IBattler partner = !battle.doublebattle ? null : attacker.Partner;
+			IBattler partner = !battle.doublebattle ? null : attacker.pbPartner;
 			if (partner.IsNotNullOrNone() && partner.hasWorkingAbility(Abilities.VICTORY_STAR))
 				accuracy*=1.1;
 			if (attacker.effects.MicleBerry){
@@ -810,7 +810,7 @@ namespace PokemonUnity.Combat
 				atkmult = Math.Round(atkmult * 1.5);
 			if ((attacker.hasWorkingAbility(Abilities.PLUS) || attacker.hasWorkingAbility(Abilities.MINUS)) &&
 				pbIsSpecial (type)){
-				IBattler partner = !battle.doublebattle ? null : attacker.Partner;
+				IBattler partner = !battle.doublebattle ? null : attacker.pbPartner;
 				if (partner.hasWorkingAbility(Abilities.PLUS) || partner.hasWorkingAbility(Abilities.MINUS))
 					atkmult=Math.Round(atkmult*1.5);
 			}
@@ -833,7 +833,7 @@ namespace PokemonUnity.Combat
 			if ((battle.Weather==Weather.SUNNYDAY ||
 				battle.Weather==Weather.HARSHSUN) && pbIsPhysical(type))
 				if (attacker.hasWorkingAbility(Abilities.FLOWER_GIFT) ||
-					(battle.doublebattle && attacker.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
+					(battle.doublebattle && attacker.pbPartner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
 				atkmult=Math.Round(atkmult*1.5);
 			if (attacker.hasWorkingItem(Items.THICK_CLUB) &&
 				(attacker.Species == Pokemons.CUBONE ||
@@ -895,7 +895,7 @@ namespace PokemonUnity.Combat
 				if ((battle.Weather==Weather.SUNNYDAY ||
 					battle.Weather==Weather.HARSHSUN) && pbIsSpecial(type))
 				if (opponent.hasWorkingAbility(Abilities.FLOWER_GIFT) ||
-					(battle.doublebattle && opponent.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
+					(battle.doublebattle && opponent.pbPartner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
 					defmult=Math.Round(defmult*1.5);
 			}
 			if (opponent.hasWorkingItem(Items.ASSAULT_VEST) && pbIsSpecial(type))
@@ -1005,7 +1005,7 @@ namespace PokemonUnity.Combat
 					opponent.hasWorkingAbility(Abilities.FILTER)) &&
 					opponent.damagestate.TypeMod>8)
 					finaldamagemult=Math.Round(finaldamagemult*0.75);
-				if (battle.doublebattle && opponent.Partner.hasWorkingAbility(Abilities.FRIEND_GUARD))
+				if (battle.doublebattle && opponent.pbPartner.hasWorkingAbility(Abilities.FRIEND_GUARD))
 					finaldamagemult=Math.Round(finaldamagemult*0.75);
 			}
 			if (attacker.hasWorkingItem(Items.METRONOME)){

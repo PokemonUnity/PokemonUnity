@@ -360,7 +360,7 @@ namespace PokemonUnity.Utility
 			return s.Split(new[] { splitAt }, System.StringSplitOptions.None);
 		}
 
-		public static List<T> Randomize<T>(this List<T> L)
+		public static IList<T> Randomize<T>(this IList<T> L)
 		{
 			return Randomize<T>(L.ToArray()).ToList();
 		}
@@ -408,6 +408,11 @@ namespace PokemonUnity.Utility
 		//    return new Vector2(System.Convert.ToSingle(((v4.x / (double)v4.w + 1) * (windowSize.width / (double)2))), System.Convert.ToSingle(((1 - v4.y / (double)v4.w) * (windowSize.height / (double)2))));
 		//}
 
+		public static int ToInt(this float s)
+		{
+			return ToInteger(s);
+		}
+
 		public static int ToInteger(this float s)
 		{
 			return System.Convert.ToInt32(s);
@@ -431,12 +436,9 @@ namespace PokemonUnity.Utility
 			return s.Replace(".", StringHelper.DecSeparator);
 		}
 
-		///// <summary>
-		///// Converts a System.Drawing.Color into a Xna.Framework.Color.
-		///// </summary>
-		//public static Color ToXNA(this System.Drawing.Color c)
-		//{
-		//    return new Color(c.R, c.G, c.B, c.A);
-		//}
+		public static string PadNumbers(this string input)
+		{
+			return System.Text.RegularExpressions.Regex.Replace(input, "[0-9]+", match => match.Value.PadLeft(3, '0'));
+		}
 	}
 }

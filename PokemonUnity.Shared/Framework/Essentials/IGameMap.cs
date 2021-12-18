@@ -6,7 +6,7 @@ using PokemonEssentials.Interface.Screen;
 
 namespace PokemonEssentials.Interface
 {
-	public interface IGameMap
+	public interface IGameMap : Battle.IGameMapOrgBattle
 	{
 		/// <summary>
 		/// tileset file name

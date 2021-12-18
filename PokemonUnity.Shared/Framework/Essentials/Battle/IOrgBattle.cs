@@ -31,7 +31,7 @@ namespace PokemonEssentials.Interface.Battle
 		bool pbHasEligible(params object[] args);
 
 		ITrainer[] pbGetBTTrainers(int challengeID);
-		PokeBattle.IPokemon pbGetBTPokemon(int challengeID);
+		IPokemon pbGetBTPokemon(int challengeID);
 
 
 		void pbRecordLastBattle();
@@ -62,14 +62,14 @@ namespace PokemonEssentials.Interface.Battle
 
 
 
-		PokeBattle.IPokemon[] pbBattleFactoryPokemon(IPokemonChallengeRules rule, int numwins, int numswaps, PokeBattle.IPokemon[] rentals);
+		IPokemon[] pbBattleFactoryPokemon(IPokemonChallengeRules rule, int numwins, int numswaps, IPokemon[] rentals);
 
 		ITrainer pbGenerateBattleTrainer(int trainerid, IPokemonChallengeRules rule);
 
 		//ToDo: return bool?
 		BattleResults pbOrganizedBattleEx(ITrainer opponent, IPokemonChallengeRules challengedata, string endspeech, string endspeechwin);
 
-		bool pbIsBanned(PokeBattle.IPokemon pokemon);
+		bool pbIsBanned(IPokemon pokemon);
 	}
 
 	public interface IPokemonSerialized
@@ -102,7 +102,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		IPokemonSerialized fromInspected(string str);
 
-		IPokemonSerialized fromPokemon(PokeBattle.IPokemon pokemon);
+		IPokemonSerialized fromPokemon(IPokemon pokemon);
 
 		string inspect();
 
@@ -116,10 +116,10 @@ namespace PokemonEssentials.Interface.Battle
 
 		Moves convertMove(Moves move);
 
-		PokeBattle.IPokemon createPokemon(int level, int[] iv, ITrainer trainer);
+		IPokemon createPokemon(int level, int[] iv, ITrainer trainer);
 	}
 
-	public interface IGameMap : PokemonEssentials.Interface.IGameMap
+	public interface IGameMapOrgBattle //: PokemonEssentials.Interface.IGameMap
 	{
 		int map_id { get; set; }
 	}
@@ -158,7 +158,7 @@ namespace PokemonEssentials.Interface.Battle
 		int battleNumber { get; set; }
 		int numRounds { get; set; }
 		int decision { get; set; }
-		PokeBattle.IPokemon[] party { get; set; }
+		IPokemon[] party { get; set; }
 		IBattleFactoryData extraData { get; set; }
 
 		IBattleChallengeData initialize();
@@ -175,7 +175,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		void pbGoToStart();
 
-		void setParty(PokeBattle.IPokemon[] value);
+		void setParty(IPokemon[] value);
 
 		void pbStart(IBattleChallengeType t, int numRounds);
 
@@ -238,7 +238,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		void setDecision(BattleResults value);
 
-		void setParty(PokeBattle.IPokemon[] value);
+		void setParty(IPokemon[] value);
 
 		IBattleFactoryData extra { get; }
 		BattleResults decision  { get; }
