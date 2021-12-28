@@ -57,27 +57,26 @@ namespace PokemonUnity
 		}
 
 		/// <summary>
-		/// Iterates through the array and yields each combination of _num_ elements in
-		/// the array.
+		/// Iterates through the array and yields each combination of <paramref name="num"/> 
+		/// elements in the array.
 		/// </summary>
 		/// <param name="array"></param>
 		/// <param name="num"></param>
 		/// <returns></returns>
 		//public IEnumerator<T[]> pbEachCombination<T>(T[] array,int num) {
-		public IEnumerator<int[]> pbEachCombination(int[] array,int num) {
+		public IEnumerable<T[]> pbEachCombination<T>(T[] array,int num) {
 			if (array.Length<num || num<=0) yield break; //return;
 			if (array.Length==num) {
 				yield return array;
 				yield break; //return;
 			} else if (num==1) {
-				foreach (var x in array) {
+				foreach (T x in array) {
 					yield return new T[] { x };
-			}
+				}
 				yield break; //return;
 			}
 			int[] currentComb=new int[num];
-			//T[] arr=new T[num];
-			int[] arr=new int[num];
+			T[] arr=new T[num];
 			for (int i = 0; i < num; i++) {
 				currentComb[i]=i;
 			}
@@ -154,7 +153,7 @@ namespace PokemonUnity
 		public void pbChangePlayer(int id) {
 			if (id < 0 || id >= 8) return; //false;
 			//IPokemonMetadata meta=pbGetMetadata(0,MetadataPlayerA+id);
-			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[MetadataPlayerA+id];
+			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[id];
 			if (meta == null) return; //false;
 			if (Trainer != null) Trainer.trainertype=(TrainerTypes)meta?.Type; //meta[0];
 			GamePlayer.character_name=meta?.Name; //meta[1];
@@ -167,7 +166,7 @@ namespace PokemonUnity
 			int id=Global.playerID;
 			if (id<0 || id>=8) return "";
 			//IPokemonMetadata meta=pbGetMetadata(0,MetadataPlayerA+id);
-			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[MetadataPlayerA+id];
+			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[id];
 			if (meta == null) return "";
 			return pbPlayerSpriteFile((TrainerTypes)meta?.Type); //meta[0]
 		}
@@ -176,9 +175,9 @@ namespace PokemonUnity
 			int id=Global.playerID;
 			if (id<0 || id>=8) return 0;
 			//IPokemonMetadata meta=pbGetMetadata(0,MetadataPlayerA+id);
-			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[MetadataPlayerA+id];
+			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[id];
 			if (meta == null) return 0;
-			return (TrainerTypes)meta.Type; //meta[0];
+			return (TrainerTypes)meta?.Type; //meta[0];
 		}
 
 		public int pbGetTrainerTypeGender(TrainerTypes trainertype) {
@@ -204,12 +203,12 @@ namespace PokemonUnity
 			}
 			TrainerTypes trainertype=pbGetPlayerTrainerType();
 			string trname=name;
-			Trainer=new Combat.Trainer(trname,trainertype);
+			Trainer=new Trainer(trname,trainertype);
 			Trainer.outfit=outfit;
 			if (trname==null) {
 				trname=pbEnterPlayerName(Game._INTL("Your name?"),0,7);
 				if (trname=="") {
-					bool gender=pbGetTrainerTypeGender(trainertype) ;
+					int gender=pbGetTrainerTypeGender(trainertype);
 					trname=pbSuggestTrainerName(gender);
 				}
 			}
@@ -218,7 +217,7 @@ namespace PokemonUnity
 			PokemonTemp.begunNewGame=true;
 		}
 
-		public string pbSuggestTrainerName(bool gender) {
+		public string pbSuggestTrainerName(int gender) {
 			string userName=pbGetUserName();
 			//userName=userName.gsub(/\s+.*$/,""); // trim space
 			if (userName.Length>0 && userName.Length<7) {
@@ -459,22 +458,22 @@ namespace PokemonUnity
 					File.Delete(filename);
 				} catch (Exception) { } //Errno::EINVAL, Errno::EACCES, Errno::ENOENT;
 			}
-			switch (error) {
-				case 1:
+			//switch (error) {
+				if (error == 1) //case 1:
 					(this as IGameMessage).pbMessage(Game._INTL("The recorded data could not be found or saved."));
-					break;
-				case 2:
+			//		break;
+				else if (error == 2) //case 2:
 					(this as IGameMessage).pbMessage(Game._INTL("The recorded data was in an invalid format."));
-					break;
-				case 3:
+			//		break;
+				else if (error == 3) //case 3:
 					(this as IGameMessage).pbMessage(Game._INTL("The recorded data's format is not supported."));
-					break;
-				case 4:
+			//		break;
+				else if (error == 4) //case 4:
 					(this as IGameMessage).pbMessage(Game._INTL("There was no sound in the recording. Please ensure that a microphone is attached to the computer /and/ is ready."));
-					break;
-				default:
+			//		break;
+				else //default:
 					return error;
-			}
+			//}
 			return null;
 		}
 
@@ -542,8 +541,8 @@ namespace PokemonUnity
 		}
 
 		public void pbShowObjects(IList<object> visibleObjects) {
-			foreach (var o in visibleObjects) {
-				if (!pbDisposed(o)) {
+			foreach (IViewport o in visibleObjects) {
+				if (!(this as IGameSpriteWindow).pbDisposed(o)) {
 					o.visible=true;
 				}
 			}
@@ -608,37 +607,38 @@ namespace PokemonUnity
 				Graphics.update();
 				Input.update();
 				interp.update();
-				pbUpdateSceneMap();
+				(this as IGameMessage).pbUpdateSceneMap();
 			} while (interp.running);
 			return true;
 		}
 
 		public void pbExclaim(IGameCharacter[] @event,int id=Core.EXCLAMATION_ANIMATION_ID,bool tinting=false) {
 			ISprite sprite=null;
-			if (@event.Length > 0) { //is Array
-				List<IGameCharacter> done=new List<IGameCharacter>();
+			if (@event?.Length > 0) { //is Array
+				//List<IGameCharacter> done=new List<IGameCharacter>();
+				List<int> done=new List<int>();
 				foreach (var i in @event) {
 					if (!done.Contains(i.id)) {
-						sprite=((ISpritesetMapAnimation)Scene).spriteset.addUserAnimation(id,i.x,i.y,tinting);
+						sprite=((ISpritesetMapAnimation)Scene.spriteset()).addUserAnimation(id,i.x,i.y,tinting);
 						done.Add(i.id);
 					}
 				}
-			} else {
-				sprite=((ISpritesetMapAnimation)Scene.spriteset).addUserAnimation(id,@event.x,@event.y,tinting);
+			//} else {
+			//	sprite=((ISpritesetMapAnimation)Scene.spriteset()).addUserAnimation(id,@event.x,@event.y,tinting);
 			}
-			while (!sprite.disposed()) {
+			while (!sprite.disposed) {
 				Graphics.update();
 				Input.update();
-				pbUpdateSceneMap();
+				(this as IGameMessage).pbUpdateSceneMap();
 			}
 		}
 
 		public void pbNoticePlayer(IGameCharacter @event) {
-			if (!pbFacingEachOther(@event,GamePlayer)) {
+			if (!(this as IGameField).pbFacingEachOther(@event,GamePlayer)) {
 				pbExclaim(new IGameCharacter[] { @event });
 			}
-			pbTurnTowardEvent(GamePlayer,@event);
-			pbMoveTowardPlayer(@event);
+			(this as IGameField).pbTurnTowardEvent(GamePlayer,@event);
+			(this as IGameField).pbMoveTowardPlayer(@event);
 		}
 		#endregion
 
@@ -648,14 +648,14 @@ namespace PokemonUnity
 			if (shiny) {
 				//  Load shiny bitmap
 				string ret=string.Format("Graphics/Battlers/{0}s{1}",species.ToString(),back ? "b" : ""); //rescue null
-				if (!pbResolveBitmap(ret)) {
+				if ((this as IGameSpriteWindow).pbResolveBitmap(ret) == null) {
 					ret=string.Format("Graphics/Battlers/{0}s{1}",species,back ? "b" : "");
 				}
 				return ret;
 			} else {
 				//  Load normal bitmap
 				string ret=string.Format("Graphics/Battlers/{0}{1}",species.ToString(),back ? "b" : ""); //rescue null
-				if (!pbResolveBitmap(ret)) {
+				if ((this as IGameSpriteWindow).pbResolveBitmap(ret) == null) {
 					ret=string.Format("Graphics/Battlers/{0}{1}",species,back ? "b" : "");
 				}
 				return ret;
@@ -1008,25 +1008,49 @@ namespace PokemonUnity
 			return null;
 		}
 		
+		public int pbCryFrameLength(Pokemons pokemon,float? pitch=null) {
+			if (pokemon == Pokemons.NONE) return 0;
+			if (pitch == null) pitch=100;
+			pitch=pitch/100;
+			if (pitch<=0) return 0;
+			float playtime=0.0f;
+			//if (pokemon is Numeric) {
+				string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
+				if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
+			//} else if (!pokemon.isEgg) {
+			//	if (pokemon is IPokemonChatter p && p.chatter != null) { //pokemon.respond_to("chatter")
+			//		playtime=p.chatter.time;
+			//		pitch=1.0f;
+			//	} else {
+			//		string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
+			//		if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
+			//	}
+			//}
+			playtime/=pitch.Value; // sound is lengthened the lower the pitch
+			//  4 is added to provide a buffer between sounds
+			return (int)Math.Ceiling(playtime*Graphics.frame_rate)+4;
+		}
+		
 		public int pbCryFrameLength(IPokemon pokemon,float? pitch=null) {
 			if (!pokemon.IsNotNullOrNone()) return 0;
 			if (pitch == null) pitch=100;
 			pitch=pitch/100;
 			if (pitch<=0) return 0;
 			float playtime=0.0f;
-			if (pokemon is Numeric) {
-				string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
-				if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
-			} else if (!pokemon.isEgg) {
+			//if (pokemon is Numeric) {
+			//	string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
+			//	if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
+			//} else 
+			if (!pokemon.isEgg) {
 				if (pokemon is IPokemonChatter p && p.chatter != null) { //pokemon.respond_to("chatter")
 					playtime=p.chatter.time;
 					pitch=1.0f;
 				} else {
 					string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
-					if (pkmnwav) playtime=getPlayTime(pkmnwav);
+					if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
 				}
 			}
-			playtime/=pitch; // sound is lengthened the lower the pitch
+			playtime/=pitch.Value; // sound is lengthened the lower the pitch
 			//  4 is added to provide a buffer between sounds
 			return (int)Math.Ceiling(playtime*Graphics.frame_rate)+4;
 		}
@@ -1060,8 +1084,8 @@ namespace PokemonUnity
 			if (pokemon == Pokemons.NONE) return null;
 			//if (pokemon is Numeric) {
 				string filename=string.Format("Cries/{0}Cry",pokemon.ToString()); //rescue null
-				if (!pbResolveAudioSE(filename)) filename=string.Format("Cries/%03dCry",pokemon);
-				if (pbResolveAudioSE(filename)) return filename;
+				if (pbResolveAudioSE(filename) == null) filename=string.Format("Cries/%03dCry",pokemon);
+				if (pbResolveAudioSE(filename) != null) return filename;
 			//}
 			return null;
 		}
@@ -1070,12 +1094,12 @@ namespace PokemonUnity
 			if (pokemon == null) return null;
 			if (!pokemon.isEgg) {
 				string filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species.ToString(),pokemon.form); //rescue 0 rescue null
-				if (!pbResolveAudioSE(filename)) filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species,pokemon.form); //rescue 0
-				if (!pbResolveAudioSE(filename)) {
+				if (pbResolveAudioSE(filename) == null) filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species,pokemon.form); //rescue 0
+				if (pbResolveAudioSE(filename) == null) {
 					filename=string.Format("Cries/{0}Cry",pokemon.Species.ToString()); //rescue null;
 				}
-				if (!pbResolveAudioSE(filename)) filename=string.Format("Cries/{0}Cry",pokemon.Species);
-				if (pbResolveAudioSE(filename)) return filename;
+				if (pbResolveAudioSE(filename) == null) filename=string.Format("Cries/{0}Cry",pokemon.Species);
+				if (pbResolveAudioSE(filename) != null) return filename;
 			}
 			return null;
 		}
@@ -1090,7 +1114,7 @@ namespace PokemonUnity
 				//IPokemonMetadata music=pbGetMetadata(GameMap.map_id,MetadataMapWildBattleBGM);
 				string music=pbGetMetadata(GameMap.map_id).Map.WildBattleBGM;
 				if (music != null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
@@ -1098,10 +1122,10 @@ namespace PokemonUnity
 				//IPokemonMetadata music=pbGetMetadata(0,MetadataWildBattleBGM);
 				string music=pbGetMetadata(0).Map.WildBattleBGM;
 				if (music != null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=pbStringToAudioFile("002-Battle02");
+			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile("002-Battle02");
 			return ret;
 		}
 		
@@ -1115,7 +1139,7 @@ namespace PokemonUnity
 				//string music=pbGetMetadata(GameMap.map_id,MetadataMapWildVictoryME);
 				string music=pbGetMetadata(GameMap.map_id).Map.WildVictoryME;
 				if (music != null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
@@ -1123,10 +1147,10 @@ namespace PokemonUnity
 				//string music=pbGetMetadata(0,MetadataWildVictoryME);
 				string music=pbGetMetadata(GameMap.map_id).Map.WildVictoryME;
 				if (music != null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=pbStringToAudioFile("001-Victory01");
+			if (ret == null) ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile("001-Victory01");
 			ret.name="../../Audio/ME/"+ret.name;
 			return ret;
 		}
@@ -1134,11 +1158,11 @@ namespace PokemonUnity
 		public void pbPlayTrainerIntroME(TrainerTypes trainertype) {
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
 			//	trainertypes=Marshal.load(f);
-				if (trainertypes[trainertype] != null) {
-					string bgm=trainertypes[trainertype][6];
-					if (bgm!=null && bgm!="") {
-						bgm=pbStringToAudioFile(bgm);
-						pbMEPlay(bgm);
+				if (Kernal.TrainerMetaData.ContainsKey(trainertype)) { //Kernal.TrainerMetaData[trainertype] != null
+					string bgm=Kernal.TrainerMetaData[trainertype].IntroME; //trainertypes[trainertype][6];
+					if (!string.IsNullOrEmpty(bgm)) { //!=null && bgm!=""
+						IAudioME bgm_=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(bgm);
+						(this as IGameAudioPlay).pbMEPlay(bgm_);
 						return;
 					}
 				}
@@ -1157,25 +1181,25 @@ namespace PokemonUnity
 				if (trainer == null) { //is Array && trainer.Length > 1
 					trainerarray = new ITrainer[0]; //{ trainer[0] };
 				} else {
-					ITrainer[] trainerarray=trainer;
+					trainerarray=trainer;
 				}
 				for (int i = 0; i < trainerarray.Length; i++) {
 					TrainerTypes trainertype=trainerarray[i].trainertype;
-					if (trainertypes[trainertype]) {
-						music=trainertypes[trainertype][4];
+					if (Kernal.TrainerMetaData.ContainsKey(trainertype)) { //trainertypes[trainertype] != null
+						music=Kernal.TrainerMetaData[trainertype].BattleBGM; //trainertypes[trainertype][4];
 					}
 				}
 			//}
 			IAudioBGM ret=null;
 			if (music != null && music!="") {
-				ret=pbStringToAudioFile(music);
+				ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
 			}
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
 				//music=pbGetMetadata(GameMap.map_id,MetadataMapTrainerBattleBGM);
 				music=pbGetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
 				if (music!=null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
@@ -1183,10 +1207,10 @@ namespace PokemonUnity
 				//music=pbGetMetadata(0,MetadataTrainerBattleBGM);
 				music=pbGetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
 				if (music!=null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=pbStringToAudioFile("005-Boss01");
+			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile("005-Boss01");
 			return ret;
 		}
 		
@@ -1197,20 +1221,20 @@ namespace PokemonUnity
 			string music=null;
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
 			//	trainertypes=Marshal.load(f);
-				if (trainertypes[trainertype]) {
-					music=trainertypes[trainertype][4];
+				if (Kernal.TrainerMetaData.ContainsKey(trainertype)) { //trainertypes[trainertype] != null
+					music=Kernal.TrainerMetaData[trainertype].BattleBGM; //trainertypes[trainertype][4];
 				}
 			//}
 			IAudioBGM ret=null;
 			if (music!=null && music!="") {
-				ret=pbStringToAudioFile(music);
+				ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
 			}
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
 				//music=pbGetMetadata(GameMap.map_id,MetadataMapTrainerBattleBGM);
 				music=pbGetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
 				if (music!=null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
@@ -1218,10 +1242,10 @@ namespace PokemonUnity
 				//music=pbGetMetadata(0,MetadataTrainerBattleBGM);
 				music=pbGetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
 				if (music!=null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=pbStringToAudioFile("005-Boss01");
+			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile("005-Boss01");
 			return ret;
 		}
 		
@@ -1239,22 +1263,22 @@ namespace PokemonUnity
 					ITrainer[] trainerarray=trainer;
 				//}
 				for (int i = 0; i < trainerarray?.Length; i++) {
-					trainertype=trainerarray[i].trainertype;
-					if (trainertypes[trainertype] != null) {
-						music=trainertypes[trainertype][5]; //trainertypes[trainertype][5]
+					TrainerTypes trainertype=trainerarray[i].trainertype;
+					if (Kernal.TrainerMetaData.ContainsKey(trainertype)) { //trainertypes[trainertype] != null
+						music=Kernal.TrainerMetaData[trainertype].VictoryBGM; //trainertypes[trainertype][5];
 					}
 				}
 			//}
 			IAudioME ret=null;
 			if (music!=null && music!="") {
-				ret=pbStringToAudioFile(music);
+				ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
 			}
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
 				//music=pbGetMetadata(GameMap.map_id,MetadataMapTrainerVictoryME);
 				music=pbGetMetadata(GameMap.map_id).Map.TrainerVictoryME;
 				if (music!=null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
@@ -1262,10 +1286,10 @@ namespace PokemonUnity
 				//music=pbGetMetadata(0,MetadataTrainerVictoryME);
 				music=pbGetMetadata(GameMap.map_id).Map.TrainerVictoryME;
 				if (music!=null && music!="") {
-					ret=pbStringToAudioFile(music);
+					ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=pbStringToAudioFile("001-Victory01");
+			if (ret == null) ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile("001-Victory01");
 			ret.name="../../Audio/ME/"+ret.name;
 			return ret;
 		}
@@ -1278,11 +1302,11 @@ namespace PokemonUnity
 
 		public void pbNickname(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
 			string speciesname=pokemon.Species.ToString(TextScripts.Name);
-			if (UI.pbConfirmMessage(Game._INTL("Would you like to give a nickname to {1}?",speciesname))) {
+			if ((this as IGameMessage).pbConfirmMessage(Game._INTL("Would you like to give a nickname to {1}?",speciesname))) {
 				string helptext=Game._INTL("{1}'s nickname?",speciesname);
 				string newname=UI.pbEnterPokemonName(helptext,0,Pokemon.NAMELIMIT,"",pokemon);
-				//if (newname!="") pokemon.Name=newname;
-				if (newname!="") pokemon.SetNickname(newname);
+				if (newname!="") pokemon.Name=newname;
+				//if (newname!="") pokemon.SetNickname(newname);
 			}
 		}
 
@@ -1584,8 +1608,8 @@ namespace PokemonUnity
 		}
 
 		public void pbSeenForm(Pokemons poke,int gender=0,int form=0) {
-			if (Trainer.formseen==null) Trainer.formseen=new int[];
-			if (Trainer.formlastseen==null) Trainer.formlastseen=new int[];
+			if (Trainer.formseen==null) Trainer.formseen=new int?[0][] { };
+			if (Trainer.formlastseen==null) Trainer.formlastseen=new int?[0];
 			//if (poke is String || poke is Symbol) {
 			//  poke=getID(PBSpecies,poke);
 			//}
@@ -1599,7 +1623,7 @@ namespace PokemonUnity
 			//}
 			if (species<=0) return; //!species || 
 			if (gender>1) gender=0;
-			string formnames=pbGetMessage(MessageTypes.FormNames,species);
+			string formnames=(this as IGameMessage).pbGetMessage(MessageTypes.FormNames,species);
 			if (string.IsNullOrEmpty(formnames)) form=0;
 			if (Trainer.formseen[species] == null) Trainer.formseen[species]=new int?[0][] { new int?[0],new int?[0] };
 			Trainer.formseen[species][gender][form]=true;
@@ -1837,7 +1861,7 @@ namespace PokemonUnity
 			});
 			pbSet(variableNumber,chosen);
 			if (chosen>=0) {
-				pbSet(nameVarNumber,Trainer.party[chosen].name);
+				pbSet(nameVarNumber,Trainer.party[chosen].Name);
 			} else {
 				pbSet(nameVarNumber,"");
 			}
@@ -2071,7 +2095,7 @@ namespace PokemonUnity
 
 		#region Other utilities
 		public void pbTextEntry(string helptext,int minlength,int maxlength,int variableNumber) {
-			GameVariables[variableNumber]=pbEnterText(helptext,minlength,maxlength);
+			GameVariables[variableNumber]=(this as IGameMessage).pbEnterText(helptext,minlength,maxlength);
 			if (GameMap != null) GameMap.need_refresh = true;
 		}
 
@@ -2123,10 +2147,10 @@ namespace PokemonUnity
 				do { //;loop
 					int chosen=screen.pbChoosePokemon();
 					if (chosen>=0) {
-						Pokemon pokemon=Trainer.party[chosen];
+						IPokemon pokemon=Trainer.party[chosen];
 						if (pokemon.isEgg) {
 							(this as IGameMessage).pbMessage(Game._INTL("{1} can't be taught to an Egg.",movename));
-						} else if ((pokemon.isShadow)) { //rescue false
+						} else if (pokemon is IPokemonShadowPokemon p && p.isShadow) { //rescue false
 							(this as IGameMessage).pbMessage(Game._INTL("Shadow Pokémon can't be taught any moves."));
 						} else if (movelist != null && !movelist.Any(j => j==pokemon.Species )) {
 							(this as IGameMessage).pbMessage(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));

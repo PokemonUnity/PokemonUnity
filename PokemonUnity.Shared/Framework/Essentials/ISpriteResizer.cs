@@ -23,13 +23,13 @@ namespace PokemonEssentials.Interface
 		void setScreenBorderName(string border);
 	}
 
-	public interface Graphics
+	public partial interface IGraphics
 	{
-		// // Nominal screen size
-		int @width { get; }
-		int @height { get; }
-
-		int brightness { get; set; }
+		// Nominal screen size
+		//int @width { get; }
+		//int @height { get; }
+		
+		//int brightness { get; set; }
 
 		void fadein(int frames);
 

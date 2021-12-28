@@ -24,7 +24,7 @@ namespace PokemonUnity.Combat
 	public abstract class Move //: IBattleMove
 	{
 		#region Variables
-		public Attack.Move thismove			{ get; protected set; }
+		public IMove thismove			{ get; protected set; }
 		public Attack.Category Category		{ get; set; }
 		public Moves MoveId					{ get; set; }
 		//public Attack.Target Targets		{ get; set; }
@@ -32,7 +32,7 @@ namespace PokemonUnity.Combat
 		public Types Type					{ get; set; }
 		//public Attack.MoveFlags Flag		{ get; set; }
 		public Attack.Data.Flag Flags		{ get; set; }
-		public byte PP						{ get; set; }
+		public int PP						{ get; set; }
 		/// <summary>
 		/// The probability that the move's additional effect occurs, as a percentage. 
 		/// If the move has no additional effect (e.g. all status moves), this value is 0.
@@ -58,7 +58,7 @@ namespace PokemonUnity.Combat
 		public string Name					{ get { return Game.MoveData[MoveId].Name; } }
 		//public string EffectString		{ get; set; }
 		//public Battle Battle				{ get { return this.battle ?? Game.battle; } }
-		public Battle battle				{ get; set; }
+		public IBattle battle				{ get; set; }
 		internal const string Nothing = "But nothing happened!";
 		private int totalpp;
 		#endregion
@@ -71,7 +71,7 @@ namespace PokemonUnity.Combat
 			if (move == null) move = new Attack.Move(Moves.NONE);
 			Attack.Data.MoveData movedata    = Game.MoveData[move.id];
 			this.battle		= battle;
-			Power			= movedata.Power ?? 0; //.BaseDamage;
+			Power			= movedata.basedamage ?? 0; //.BaseDamage;
 			Type			= movedata.Type;
 			Accuracy		= movedata.Accuracy ?? 0;
 			//Effect		= movedata.Effect;
@@ -88,7 +88,7 @@ namespace PokemonUnity.Combat
 			totalpp			= move.TotalPP;
 			PowerBoost		= false;
 
-			return this;
+			return (IBattleMove)this;
 		}
 
 		/// <summary>
@@ -334,7 +334,7 @@ namespace PokemonUnity.Combat
 				(opponent.hasWorkingAbility(Abilities.WATER_ABSORB) && type == Types.WATER)){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{@Name} ineffective)");
 				if (opponent.effects.HealBlock==0){
-					if (opponent.RecoverHP((int)Math.Floor(opponent.TotalHP/4d),true)>0)
+					if (opponent.pbRecoverHP((int)Math.Floor(opponent.TotalHP/4d),true)>0)
 						battle.pbDisplay(Game._INTL("{1}'s {2} restored its HP!",
 							opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
 					else
@@ -355,7 +355,7 @@ namespace PokemonUnity.Combat
 				return true;
 			}
 			if (opponent.hasWorkingAbility(Abilities.TELEPATHY) && pbIsDamaging() &&
-				!opponent.IsOpposing(attacker.Index)){
+				!opponent.pbIsOpposing(attacker.Index)){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Telepathy (made #{@Name} ineffective)");
 				battle.pbDisplay(Game._INTL("{1} avoids attacks by its ally Pokémon!",opponent.ToString()));
 				return true;
@@ -371,7 +371,7 @@ namespace PokemonUnity.Combat
 
 		public virtual float pbTypeModifier(Types type, IBattler attacker, IBattler opponent){
 			if (type<0) return 8; 
-			if (opponent.hasType(Types.FLYING) && type == Types.GROUND && 
+			if (opponent.pbHasType(Types.FLYING) && type == Types.GROUND && 
 				opponent.hasWorkingItem(Items.IRON_BALL) && !Core.USENEWBATTLEMECHANICS) return 8; 
 			Types atype = type; //# attack type
 			Types otype1= opponent.Type1;
@@ -409,7 +409,7 @@ namespace PokemonUnity.Combat
 						if (otype3 == Types.DARK && atype.GetCombinedEffectiveness(otype3) == TypeEffective.Ineffective)mod3 = 2; //
 			}
 			// Delta Stream's weather
-			if (battle.Weather==Weather.STRONGWINDS) { 
+			if (battle.pbWeather==Weather.STRONGWINDS) { 
 				if (otype1 == Types.FLYING && atype.GetCombinedEffectiveness(otype1) == TypeEffective.SuperEffective)mod1 = 2; //
 					if (otype2 == Types.FLYING && atype.GetCombinedEffectiveness(otype2) == TypeEffective.SuperEffective)mod2 = 2; //
 						if (otype3 == Types.FLYING && atype.GetCombinedEffectiveness(otype3) == TypeEffective.SuperEffective)mod3 = 2; //
@@ -498,16 +498,16 @@ namespace PokemonUnity.Combat
 				accuracy*=1.2;
 			if (!attacker.hasMoldBreaker()){
 				if (opponent.hasWorkingAbility(Abilities.WONDER_SKIN) && pbIsStatus &&
-					attacker.IsOpposing(opponent.Index))
+					attacker.pbIsOpposing(opponent.Index))
 					if (accuracy>50) accuracy = 50;
 				if (opponent.hasWorkingAbility(Abilities.TANGLED_FEET) &&
 					opponent.effects.Confusion>0)
 					evasion*=1.2;
 				if (opponent.hasWorkingAbility(Abilities.SAND_VEIL) &&
-					battle.Weather==Weather.SANDSTORM)
+					battle.pbWeather==Weather.SANDSTORM)
 					evasion*=1.25;
 				if (opponent.hasWorkingAbility(Abilities.SNOW_CLOAK) &&
-					battle.Weather==Weather.HAIL)
+					battle.pbWeather==Weather.HAIL)
 					evasion*=1.25;
 			}
 			if (opponent.hasWorkingItem(Items.BRIGHT_POWDER))
@@ -528,7 +528,7 @@ namespace PokemonUnity.Combat
 				if (opponent.hasWorkingAbility(Abilities.BATTLE_ARMOR) ||
 					opponent.hasWorkingAbility(Abilities.SHELL_ARMOR))
 				return false;
-			if (opponent.OwnSide.LuckyChant>0) return false;
+			if (opponent.pbOwnSide.LuckyChant>0) return false;
 			if (pbCritialOverride(attacker, opponent)) return true;
 			int c=0;
 			int[] ratios=(Core.USENEWBATTLEMECHANICS)?new int[] { 16, 8, 2, 1, 1 } : new int[] { 16, 8, 4, 3, 2 };
@@ -609,7 +609,7 @@ namespace PokemonUnity.Combat
 					damagemult=Math.Round(damagemult*0.75);
 			}
 			if (attacker.hasWorkingAbility(Abilities.SAND_FORCE) &&
-				battle.Weather==Weather.SANDSTORM 
+				battle.pbWeather==Weather.SANDSTORM 
 				&& (type == Types.ROCK ||
 				type == Types.GROUND ||
 				type == Types.STEEL))
@@ -821,8 +821,8 @@ namespace PokemonUnity.Combat
 				attacker.hasWorkingAbility(Abilities.HUGE_POWER)) && pbIsPhysical(type))
 				atkmult = Math.Round(atkmult * 2.0);
 			if (attacker.hasWorkingAbility(Abilities.SOLAR_POWER) && pbIsSpecial(type) &&
-				(battle.Weather==Weather.SUNNYDAY ||
-				battle.Weather==Weather.HARSHSUN))
+				(battle.pbWeather==Weather.SUNNYDAY ||
+				battle.pbWeather==Weather.HARSHSUN))
 				atkmult=Math.Round(atkmult*1.5);
 			if (attacker.hasWorkingAbility(Abilities.FLASH_FIRE) &&
 				attacker.effects.FlashFire && type == Types.FIRE)
@@ -830,8 +830,8 @@ namespace PokemonUnity.Combat
 			if (attacker.hasWorkingAbility(Abilities.SLOW_START) &&
 				attacker.turncount<=5 && pbIsPhysical(type))
 				atkmult = Math.Round(atkmult * 0.5);
-			if ((battle.Weather==Weather.SUNNYDAY ||
-				battle.Weather==Weather.HARSHSUN) && pbIsPhysical(type))
+			if ((battle.pbWeather==Weather.SUNNYDAY ||
+				battle.pbWeather==Weather.HARSHSUN) && pbIsPhysical(type))
 				if (attacker.hasWorkingAbility(Abilities.FLOWER_GIFT) ||
 					(battle.doublebattle && attacker.pbPartner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
 				atkmult=Math.Round(atkmult*1.5);
@@ -874,8 +874,8 @@ namespace PokemonUnity.Combat
 				if (opponent.damagestate.Critical && defstage>6)defstage=6; 
 				defense=(int)Math.Floor(defense*1.0*stagemul[defstage]/stagediv[defstage]);
 			}
-			if (battle.Weather==Weather.SANDSTORM &&
-				opponent.hasType(Types.ROCK) && applysandstorm)
+			if (battle.pbWeather==Weather.SANDSTORM &&
+				opponent.pbHasType(Types.ROCK) && applysandstorm)
 				defense = (int)Math.Round(defense * 1.5);
 			double defmult = 0x1000;
 			if (battle.internalbattle){
@@ -892,8 +892,8 @@ namespace PokemonUnity.Combat
 				if (opponent.hasWorkingAbility(Abilities.MARVEL_SCALE) &&
 					opponent.Status>0 && pbIsPhysical(type))
 					defmult = Math.Round(defmult * 1.5);
-				if ((battle.Weather==Weather.SUNNYDAY ||
-					battle.Weather==Weather.HARSHSUN) && pbIsSpecial(type))
+				if ((battle.pbWeather==Weather.SUNNYDAY ||
+					battle.pbWeather==Weather.HARSHSUN) && pbIsSpecial(type))
 				if (opponent.hasWorkingAbility(Abilities.FLOWER_GIFT) ||
 					(battle.doublebattle && opponent.pbPartner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
 					defmult=Math.Round(defmult*1.5);
@@ -928,7 +928,7 @@ namespace PokemonUnity.Combat
 			if (pbTargetsMultiple(attacker))
 				damage = (int)Math.Round(damage * 0.75);
 			// Weather
-			switch (battle.Weather) { 
+			switch (battle.pbWeather) { 
 				case Weather.SUNNYDAY: case Weather.HARSHSUN:
 					if (type == Types.FIRE)
 					damage=(int)Math.Round(damage*1.5);
@@ -951,7 +951,7 @@ namespace PokemonUnity.Combat
 				damage=(int)Math.Floor(damage* random/100.0);
 			}
 			// STAB
-			if (attacker.hasType(type) && options.Contains(Core.IGNOREPKMNTYPES))
+			if (attacker.pbHasType(type) && options.Contains(Core.IGNOREPKMNTYPES))
 				if (attacker.hasWorkingAbility(Abilities.ADAPTABILITY))
 					damage= (int)Math.Round(damage*2d);
 				else
@@ -980,13 +980,13 @@ namespace PokemonUnity.Combat
 			if (!opponent.damagestate.Critical && options.Contains(Core.NOREFLECT) &&
 				!attacker.hasWorkingAbility(Abilities.INFILTRATOR)){
 				// Reflect
-				if (opponent.OwnSide.Reflect>0 && pbIsPhysical(type))
+				if (opponent.pbOwnSide.Reflect>0 && pbIsPhysical(type))
 					if (battle.doublebattle)
 						finaldamagemult = Math.Round(finaldamagemult * 0.66);
 					else
 						finaldamagemult=Math.Round(finaldamagemult*0.5);
 				// Light Screen
-				if (opponent.OwnSide.LightScreen>0 && pbIsSpecial(type))
+				if (opponent.pbOwnSide.LightScreen>0 && pbIsSpecial(type))
 					if (battle.doublebattle)
 						finaldamagemult = Math.Round(finaldamagemult * 0.66);
 					else

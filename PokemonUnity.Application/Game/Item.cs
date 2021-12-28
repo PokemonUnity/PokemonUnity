@@ -98,11 +98,11 @@ namespace PokemonUnity//.Inventory
 		}
 
 		public bool pbIsMail (Items item) {
-			return Kernal.ItemData.ContainsKey(item) && (ItemData.pbIsLetter(item)); //[ITEMTYPE]==1 || Kernal.ItemData[item][ITEMTYPE]==2
+			return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData.pbIsLetter(item)); //[ITEMTYPE]==1 || Kernal.ItemData[item][ITEMTYPE]==2
 		}
 
 		public bool pbIsSnagBall (Items item) {
-			return Kernal.ItemData.ContainsKey(item) && (ItemData.pbIsPokeBall(item) || Kernal.ItemData[item].Pocket == ItemPockets.POKEBALL);// || //[ITEMTYPE]==3
+			return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData.pbIsPokeBall(item) || Kernal.ItemData[item].Pocket == ItemPockets.POKEBALL);// || //[ITEMTYPE]==3
 				//(Global.snagMachine)); //Kernal.ItemData[item][ITEMTYPE]==4 && 4: SnagBall Item
 		}
 

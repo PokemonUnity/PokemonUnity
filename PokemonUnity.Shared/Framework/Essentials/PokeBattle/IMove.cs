@@ -42,21 +42,21 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// The amount of PP remaining for this move
 		/// </summary>
-		int pp { get; set; }
+		int PP { get; set; }
 		/// <summary>
 		/// The number of PP Ups used for this move
 		/// </summary>
-		int ppup { get; set; }
+		int PPups { get; set; }
 
 		/// <summary>
 		/// Gets this move's type.
 		/// </summary>
-		Types type { get; }
+		Types Type { get; }
 
 		/// <summary>
 		/// Gets the maximum PP for this move.
 		/// </summary>
-		int totalpp { get; }
+		int TotalPP { get; }
 
 		/// <summary>
 		/// Initializes this object to the specified move ID.

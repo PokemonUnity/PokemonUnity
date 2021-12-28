@@ -18,19 +18,19 @@ namespace PokemonEssentials.Interface.PokeBattle
 	{
 		Moves id { get; set; }
 		IBattle battle { get; set; }
-		string name { get; }
+		string Name { get; }
 		//int function { get; set; }
 		PokemonUnity.Attack.Data.Effects Effect { get; }
 		int basedamage { get; set; }
-		Types type { get; set; }
-		int accuracy { get; set; }
-		int addlEffect { get; }
-		PokemonUnity.Attack.Data.Targets target { get; set; }
+		Types Type { get; set; }
+		int Accuracy { get; set; }
+		int AddlEffect { get; }
+		PokemonUnity.Attack.Data.Targets Target { get; set; }
 		int priority { get; set; }
-		PokemonUnity.Attack.Data.Flag flags { get; set; }
+		PokemonUnity.Attack.Data.Flag Flags { get; set; }
 		IMove thismove { get; }
-		int pp { get; set; }
-		int totalpp { get; set; }
+		int PP { get; set; }
+		int TotalPP { get; set; }
 
 		#region Creating a move
 		IBattleMove initialize(IBattle battle, IMove move);

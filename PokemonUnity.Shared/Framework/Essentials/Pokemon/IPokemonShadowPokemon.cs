@@ -131,7 +131,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		void pbInitPokemon(IPokemon pkmn, int pkmnIndex);
 
-		void pbEndTurn(Choice choice);
+		void pbEndTurn(IBattleChoice choice);
 
 		bool isShadow();
 

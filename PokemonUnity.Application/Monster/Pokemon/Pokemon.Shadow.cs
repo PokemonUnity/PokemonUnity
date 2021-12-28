@@ -30,7 +30,7 @@ namespace PokemonUnity
 				if (pkmn.savedev == null && pkmn.savedexp == 0) return;
 				pkmn.shadow = false;
 				pokemon.giveRibbon(Ribbons.NATIONAL);
-				scene.pbDisplay(Game._INTL("{1} opened the door to its heart!", pokemon.name));
+				scene.pbDisplay(Game._INTL("{1} opened the door to its heart!", pokemon.Name));
 				Moves[] oldmoves = new Moves[4];
 				//for (int i = 0; i < 4; i++) { oldmoves.Add(pokemon.moves[i].id); }
 				for (int i = 0; i < 4; i++) { oldmoves[i] = pokemon.moves[i].id; }
@@ -40,7 +40,7 @@ namespace PokemonUnity
 					if (pokemon.moves[i].id != 0 && pokemon.moves[i].id != oldmoves[i])
 					{
 						scene.pbDisplay(Game._INTL("{1} regained the move \n{2}!",
-						   pokemon.name, pokemon.moves[i].id.ToString(TextScripts.Name)));
+						   pokemon.Name, pokemon.moves[i].id.ToString(TextScripts.Name)));
 					}
 				}
 				pokemon.pbRecordFirstMoves();
@@ -58,7 +58,7 @@ namespace PokemonUnity
 				int curlevel = pokemon.Level;
 				if (newexp != pokemon.exp)
 				{
-					scene.pbDisplay(Game._INTL("{1} regained {2} Exp. Points!", pokemon.name, newexp - pokemon.exp));
+					scene.pbDisplay(Game._INTL("{1} regained {2} Exp. Points!", pokemon.Name, newexp - pokemon.exp));
 				}
 				if (newlevel == curlevel)
 				{
@@ -70,12 +70,12 @@ namespace PokemonUnity
 					//Game.pbChangeLevel(pokemon, newlevel, scene); // for convenience
 					pokemon.exp = newexp;
 				}
-				string speciesname = pokemon.species.ToString(TextScripts.Name);
+				string speciesname = pokemon.Species.ToString(TextScripts.Name);
 				if (scene.pbConfirm(Game._INTL("Would you like to give a nickname to {1}?", speciesname)))
 				{
 					string helptext = Game._INTL("{1}'s nickname?", speciesname);
 					string newname = pbEnterPokemonName(helptext, 0, 10, "", pokemon);
-					if (newname != "") pokemon.name = newname;
+					if (newname != "") pokemon.Name = newname;
 				}
 			}
 		}
@@ -117,7 +117,7 @@ namespace PokemonUnity
 				//  Choose a purifiable Pokemon
 				//pbChoosePokemon(1, 2, proc {| poke |
 				pbChoosePokemon(1, 2, ableProc: poke => //Trainer.party.Select(poke => 
-					!poke.isEgg && poke.hp > 0 && poke is IPokemonShadowPokemon p && p.isShadow && p.heartgauge == 0
+					!poke.isEgg && poke.HP > 0 && poke is IPokemonShadowPokemon p && p.isShadow && p.heartgauge == 0
 				);
 				if ((int)GameVariables[1] >= 0)
 				{
@@ -145,21 +145,21 @@ namespace PokemonUnity
 			else if ((pokemon as IPokemon).Happiness == 255)
 			{
 				pokemon.adjustHeart(-amount);
-				scene.pbDisplay(Game._INTL("{1} adores you!\nThe door to its heart opened a little.", (pokemon as IPokemon).name));
+				scene.pbDisplay(Game._INTL("{1} adores you!\nThe door to its heart opened a little.", (pokemon as IPokemon).Name));
 				pbReadyToPurify(pokemon);
 				return true;
 			}
 			else if (pokemon.heartgauge == 0)
 			{
 				(pokemon as IPokemon).ChangeHappiness(HappinessMethods.VITAMIN);
-				scene.pbDisplay(_INTL("{1} turned friendly.", (pokemon as IPokemon).name));
+				scene.pbDisplay(_INTL("{1} turned friendly.", (pokemon as IPokemon).Name));
 				return true;
 			}
 			else
 			{
 				(pokemon as IPokemon).ChangeHappiness(HappinessMethods.VITAMIN);
 				pokemon.adjustHeart(-amount);
-				scene.pbDisplay(_INTL("{1} turned friendly.\nThe door to its heart opened a little.", (pokemon as IPokemon).name));
+				scene.pbDisplay(_INTL("{1} turned friendly.\nThe door to its heart opened a little.", (pokemon as IPokemon).Name));
 				pbReadyToPurify(pokemon);
 				return true;
 			}
@@ -228,7 +228,7 @@ namespace PokemonUnity
 			pokemon.pbUpdateShadowMoves();
 			if (pokemon.heartgauge == 0)
 			{
-				(this as IGameMessage).pbMessage(Game._INTL("{1} can now be purified!", (pokemon as IPokemon).name));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} can now be purified!", (pokemon as IPokemon).Name));
 			}
 		}
 

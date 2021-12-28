@@ -15,18 +15,18 @@ namespace PokemonEssentials.Interface.PokeBattle
 	{
 		IBattle battle				{ get; set; }
 		IPokemon pokemon			{ get; set; }
-		string name					{ get; set; }
-		int index					{ get; set; }
+		string Name					{ get; set; }
+		int Index					{ get; set; }
 		int pokemonIndex			{ get; set; }
-		int totalhp					{ get; set; }
+		int TotalHP					{ get; set; }
 		bool fainted				{ get; set; }
 		IList<int> lastAttacker		{ get; set; }
 		int turncount				{ get; set; }
 		IEffectsBattler effects		{ get; set; }
-		Pokemons species			{ get; set; }
-		Types type1					{ get; set; }
-		Types type2					{ get; set; }
-		Abilities ability			{ get; set; }
+		Pokemons Species			{ get; set; }
+		Types Type1					{ get; set; }
+		Types Type2					{ get; set; }
+		Abilities Ability			{ get; set; }
 		int gender					{ get; set; }
 		int attack					{ get; set; }
 		int defense					{ get; set; }
@@ -34,7 +34,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int spdef					{ get; set; }
 		int speed					{ get; set; }
 		int[] stages				{ get; }
-		int[] iv					{ get; }
+		int[] IV					{ get; }
 		IBattleMove[] moves			{ get; }
 		IList<int> participants		{ get; set; }
 		int tookDamage				{ get; set; }
@@ -62,11 +62,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		bool isMega					{ get; }
 		bool hasPrimal				{ get; }
 		bool isPrimal				{ get; }
-		int level					{ get; set; }
-		Status status				{ get; set; }
-		int statusCount				{ get; set; }
-		int hp						{ get; set; }
-		Items item					{ get; set; }
+		int Level					{ get; set; }
+		Status Status				{ get; set; }
+		int StatusCount				{ get; set; }
+		int HP						{ get; set; }
+		Items Item					{ get; set; }
 		int weight(IBattler attacker = null);
 		//string name				{ get; }
 		int displayGender			{ get; }
@@ -103,7 +103,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		#region About this battler
-		string pbThis(bool lowercase = false);
+		string ToString(bool lowercase = false);
 
 		bool pbHasType(Types type);
 

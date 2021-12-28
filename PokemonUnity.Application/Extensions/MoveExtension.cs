@@ -9,7 +9,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity
 {
-	public static class MoveExtension : Extension.MoveExtension
+	public static class MoveExtension //: Extension.MoveExtension
 	{
 		#region Targets
 		//public static bool HasMultipleTargets(this PokemonUnity.Attack.Data.Targets target)
@@ -36,13 +36,17 @@ namespace PokemonUnity
 		}
 		public static bool IsNotNullOrNone(this PokemonUnity.Combat.Move move)
 		{
+			return move != null || move.MoveId != Moves.NONE;
+		}
+		public static bool IsNotNullOrNone(this IMove move)
+		{
 			return move != null || move.id != Moves.NONE;
 		}
 		public static bool IsNotNullOrNone(this IBattleMove move)
 		{
 			return move != null || move.id != Moves.NONE;
 		}
-		public override static string ToString(this PokemonUnity.Moves move, TextScripts text)
+		public static string ToString(this PokemonUnity.Moves move, TextScripts text)
 		{
 			//create a switch, and return Locale Name or Description
 			return move.ToString();

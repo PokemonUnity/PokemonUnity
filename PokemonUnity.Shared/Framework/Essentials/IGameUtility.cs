@@ -28,14 +28,14 @@ namespace PokemonEssentials.Interface
 		bool _pbNextComb(int[] comb, int length);
 
 		/// <summary>
-		/// Iterates through the array and yields each combination of _num_ elements in
-		/// the array.
+		/// Iterates through the array and yields each combination of <paramref name="num"/> 
+		/// elements in the array.
 		/// </summary>
 		/// <param name="array"></param>
 		/// <param name="num"></param>
 		/// <returns></returns>
 		//IEnumerator<T[]> pbEachCombination<T>(T[] array, int num);
-		IEnumerator<int[]> pbEachCombination(int[] array, int num);
+		IEnumerable<T[]> pbEachCombination<T>(T[] array, int num);
 
 		/// <summary>
 		/// Gets the path of the user's "My Documents" folder.
@@ -82,7 +82,7 @@ namespace PokemonEssentials.Interface
 
 		void pbTrainerName(string name = null, int outfit = 0);
 
-		string pbSuggestTrainerName(bool gender);
+		string pbSuggestTrainerName(int gender);
 
 		string pbGetUserName();
 

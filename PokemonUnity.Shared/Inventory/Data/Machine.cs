@@ -34,21 +34,22 @@ namespace PokemonUnity.Inventory
 			Type = type;
 		}
 
-		public string ToString(TextScripts text)
-		{
-			if (text == TextScripts.Name)
-			{
-				if (Type == MachineType.TechnicalMachine)
-					return string.Format("TM{0}", Id.ToString("00"));
-				if (Type == MachineType.HiddenMachine)
-					return string.Format("HM{0}", Id.ToString("00"));
-				if (Type == MachineType.TechnicalRecord)
-					return string.Format("TR{0}", Id.ToString("00"));
-			}
-			if (text == TextScripts.Description)
-				return string.Format("Teaches {0} to a compatible Pokémon", Move.ToString(TextScripts.Name));
-			else return null;
-		}
+		//ToDo: Create an Interface and Move Function to Application Library
+		//public string ToString(TextScripts text)
+		//{
+		//	if (text == TextScripts.Name)
+		//	{
+		//		if (Type == MachineType.TechnicalMachine)
+		//			return string.Format("TM{0}", Id.ToString("00"));
+		//		if (Type == MachineType.HiddenMachine)
+		//			return string.Format("HM{0}", Id.ToString("00"));
+		//		if (Type == MachineType.TechnicalRecord)
+		//			return string.Format("TR{0}", Id.ToString("00"));
+		//	}
+		//	if (text == TextScripts.Description)
+		//		return string.Format("Teaches {0} to a compatible Pokémon", Move.ToString(TextScripts.Name));
+		//	else return null;
+		//}
 
 		public enum MachineType
 		{

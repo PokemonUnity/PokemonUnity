@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using PokemonUnity.UX;
 
 //Interface for RPG Maker User Experience
 //namespace PokemonUnity.UX.RPGMaker
@@ -79,7 +78,7 @@ namespace PokemonEssentials.Interface
 	}
 	public interface IAudioObject
 	{
-		string name { get; }
+		string name { get; set; }
 		float volume { get; }
 		float pitch { get; }
 	}
@@ -316,7 +315,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// The viewport's visibility. If TRUE, the viewport is visible.
 		/// </summary>
-		bool visible { get; }
+		bool visible { get; set; }
 		/// <summary>
 		/// The X-coordinate of the viewport's starting point. Change this value to shake the screen, etc.
 		/// </summary>
@@ -367,21 +366,21 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE.If not, returns FALSE.</returns>
-		bool press(InputKeys num);
+		bool press(PokemonUnity.UX.InputKeys num);
 		/// <summary>
 		/// Determines whether the button num is being pressed again.
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>"Pressed again" is seen as time having passed between the button being not pressed and being pressed.</remarks>
-		bool trigger(InputKeys num);
+		bool trigger(PokemonUnity.UX.InputKeys num);
 		/// <summary>
 		/// Determines whether the button num is being pressed again.
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>Unlike <see cref="trigger"/>, takes into account the repeat input of a button being held down continuously.</remarks>
-		bool repeat(InputKeys num);
+		bool repeat(PokemonUnity.UX.InputKeys num);
 	}
 
 	public interface IRPGSprite : IDisposable
@@ -519,7 +518,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// The module that carries out graphics processing.
 	/// </summary>
-	public interface IGraphics
+	public partial interface IGraphics
 	{
 		/// <summary>
 		/// The number of times the screen is refreshed per second. The larger the value, the more CPU power is required. Normally set at 60.

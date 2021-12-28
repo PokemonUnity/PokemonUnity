@@ -12,7 +12,7 @@ namespace PokemonUnity
 {
 	namespace Monster { 
 		public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IPokemonChatter {
-			public PokemonEssentials.Interface.IAudioObject chatter				{ get; set; }
+			public PokemonEssentials.Interface.IAudioSE chatter				{ get; set; }
 		}
 	}
 	public partial class Game : PokemonEssentials.Interface.IGameChatter { 
@@ -31,10 +31,10 @@ namespace PokemonUnity
 					}
 				}
 				if ((this as IGameMessage).pbConfirmMessage(_INTL("Do you want to change its song now?"))) {
-					PokemonEssentials.Interface.IAudioObject wave=null;//UI.pbRecord(null,5);
-					if (wave != null) {
+					PokemonEssentials.Interface.IAudioSE wave=null;//UI.pbRecord(null,5);
+					if (wave != null && pokemon is IPokemon p) {
 						pokemon.chatter=wave;
-						(this as IGameMessage).pbMessage(_INTL("{1} learned a new song!",pokemon.Name));
+						(this as IGameMessage).pbMessage(_INTL("{1} learned a new song!",p.Name));
 					}
 				}
 				iconwindow.dispose();

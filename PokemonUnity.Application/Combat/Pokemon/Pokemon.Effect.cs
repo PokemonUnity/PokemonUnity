@@ -50,16 +50,16 @@ namespace PokemonUnity.Combat
 				if (hasWorkingAbility(Abilities.VITAL_SPIRIT) ||
 					hasWorkingAbility(Abilities.INSOMNIA) ||
 					hasWorkingAbility(Abilities.SWEET_VEIL) ||
-					(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) ||
-					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
-					@battle.Weather==Weather.HARSHSUN))) {
+					(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
+					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
+					@battle.pbWeather==Weather.HARSHSUN))) {
 					string abilityname=this.ability.ToString(TextScripts.Name);
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1} stayed awake using its {2}!",ToString(),abilityname));
 					return false;
 				}
 				if (Partner.hasWorkingAbility(Abilities.SWEET_VEIL) ||
-					(Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS))) {
-					string abilityname=Partner.ability.ToString(TextScripts.Name);
+					(Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS))) {
+					string abilityname=Partner.Ability.ToString(TextScripts.Name);
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1} stayed awake using its partner's {2}!",ToString(),abilityname));
 					return false;
 				}
@@ -85,8 +85,8 @@ namespace PokemonUnity.Combat
 			if (hasWorkingAbility(Abilities.VITAL_SPIRIT) ||
 				hasWorkingAbility(Abilities.INSOMNIA) ||
 				hasWorkingAbility(Abilities.SWEET_VEIL) ||
-				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
-				@battle.Weather==Weather.HARSHSUN)))
+				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
+				@battle.pbWeather==Weather.HARSHSUN)))
 				return false;
 			if (Partner.hasWorkingAbility(Abilities.SWEET_VEIL)) return false;
 			return true;
@@ -130,7 +130,7 @@ namespace PokemonUnity.Combat
 				if (showMessages) @battle.pbDisplay(Game._INTL("But it failed!"));
 				return false;
 			}
-			if ((hasType(Types.POISON) || hasType(Types.STEEL)) && !hasWorkingItem(Items.RING_TARGET)) {
+			if ((pbHasType(Types.POISON) || pbHasType(Types.STEEL)) && !hasWorkingItem(Items.RING_TARGET)) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("It doesn't affect {1}...",ToString(true)));
 				return false;
 			}
@@ -141,14 +141,14 @@ namespace PokemonUnity.Combat
 			}
 			if (!attacker.IsNotNullOrNone() || !attacker.hasMoldBreaker()) {
 				if (hasWorkingAbility(Abilities.IMMUNITY) ||
-					(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) ||
-					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
-					@battle.Weather==Weather.HARSHSUN))) {
+					(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
+					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
+					@battle.pbWeather==Weather.HARSHSUN))) {
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s {2} prevents poisoning!",ToString(),this.ability.ToString(TextScripts.Name)));
 					return false;
 				}
-				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) {
-					string abilityname=Partner.ability.ToString(TextScripts.Name);
+				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) {
+					string abilityname=Partner.Ability.ToString(TextScripts.Name);
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s partner's {2} prevents poisoning!",ToString(),abilityname));
 					return false;
 				}
@@ -163,25 +163,25 @@ namespace PokemonUnity.Combat
 
 		public bool pbCanPoisonSynchronize(IBattler opponent) {
 			if (isFainted()) return false;
-			if ((hasType(Types.POISON) || hasType(Types.STEEL)) && !hasWorkingItem(Items.RING_TARGET)) {
+			if ((pbHasType(Types.POISON) || pbHasType(Types.STEEL)) && !hasWorkingItem(Items.RING_TARGET)) {
 				@battle.pbDisplay(Game._INTL("{1}'s {2} had no effect on {3}!",
-					opponent.ToString(),opponent.ability.ToString(TextScripts.Name),ToString(true)));
+					opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),ToString(true)));
 				return false;
 			}   
 			if (this.status!=0) return false;
 			if (hasWorkingAbility(Abilities.IMMUNITY) ||
-				(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) ||
-				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
-													@battle.Weather==Weather.HARSHSUN))) {
+				(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
+				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
+													@battle.pbWeather==Weather.HARSHSUN))) {
 				@battle.pbDisplay(Game._INTL("{1}'s {2} prevents {3}'s {4} from working!",
 					ToString(),this.ability.ToString(TextScripts.Name),
-					opponent.ToString(true),opponent.ability.ToString(TextScripts.Name)));
+					opponent.ToString(true),opponent.Ability.ToString(TextScripts.Name)));
 				return false;
 			}
-			if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) {
+			if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) {
 				@battle.pbDisplay(Game._INTL("{1}'s {2} prevents {3}'s {4} from working!",
-					Partner.ToString(),Partner.ability.ToString(TextScripts.Name),
-					opponent.ToString(true),opponent.ability.ToString(TextScripts.Name)));
+					Partner.ToString(),Partner.Ability.ToString(TextScripts.Name),
+					opponent.ToString(true),opponent.Ability.ToString(TextScripts.Name)));
 				return false;
 			}
 			return true;
@@ -190,14 +190,14 @@ namespace PokemonUnity.Combat
 		public bool pbCanPoisonSpikes(bool moldbreaker=false) {
 			if (isFainted()) return false;
 			if (this.status!=0) return false;
-			if (hasType(Types.POISON) || hasType(Types.STEEL)) return false;
+			if (pbHasType(Types.POISON) || pbHasType(Types.STEEL)) return false;
 			if (!moldbreaker) {
 				if (hasWorkingAbility(Abilities.IMMUNITY) ||
-					(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) ||
-					(Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS))) return false;
+					(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
+					(Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS))) return false;
 				if (hasWorkingAbility(Abilities.LEAF_GUARD) &&
-					(@battle.Weather==Weather.SUNNYDAY ||
-					@battle.Weather==Weather.HARSHSUN)) return false;
+					(@battle.pbWeather==Weather.SUNNYDAY ||
+					@battle.pbWeather==Weather.HARSHSUN)) return false;
 			}
 			if (OwnSide.Safeguard>0) return false;
 			return true;
@@ -222,9 +222,9 @@ namespace PokemonUnity.Combat
 				GameDebug.Log($"[Status change] #{ToString()} was poisoned");
 			if (attacker.IsNotNullOrNone() && this.Index!=attacker.Index &&
 				this.hasWorkingAbility(Abilities.SYNCHRONIZE))
-				if (attacker.pbCanPoisonSynchronize(this)) {
+				if (attacker is IBattlerEffect a && a.pbCanPoisonSynchronize(this)) {
 					GameDebug.Log($"[Ability triggered] #{this.ToString()}'s Synchronize");
-					attacker.pbPoison(null,Game._INTL("{1}'s {2} poisoned {3}!",this.ToString(),
+					a.pbPoison(null,Game._INTL("{1}'s {2} poisoned {3}!",this.ToString(),
 						this.ability.ToString(TextScripts.Name),attacker.ToString(true)),toxic);
 				}
 		}
@@ -247,20 +247,20 @@ namespace PokemonUnity.Combat
 				if (showMessages) @battle.pbDisplay(Game._INTL("The Misty Terrain prevented {1} from being burned!",ToString(true)));
 				return false;
 			}
-			if (hasType(Types.FIRE) && !hasWorkingItem(Items.RING_TARGET)) {
+			if (pbHasType(Types.FIRE) && !hasWorkingItem(Items.RING_TARGET)) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("It doesn't affect {1}...",ToString(true)));
 				return false;
 			}
 			if (!attacker.IsNotNullOrNone() || !attacker.hasMoldBreaker()) {
 				if (hasWorkingAbility(Abilities.WATER_VEIL) ||
-					(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) ||
-					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
-					@battle.Weather==Weather.HARSHSUN))) {
+					(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
+					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
+					@battle.pbWeather==Weather.HARSHSUN))) {
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s {2} prevents burns!",ToString(),this.ability.ToString(TextScripts.Name)));
 						return false;
 				}
-				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) {
-					string abilityname=Partner.ability.ToString(TextScripts.Name);
+				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) {
+					string abilityname=Partner.Ability.ToString(TextScripts.Name);
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s partner's {2} prevents burns!",ToString(),abilityname));
 					return false;
 				}
@@ -276,24 +276,24 @@ namespace PokemonUnity.Combat
 		public bool pbCanBurnSynchronize(IBattler opponent) {
 			if (isFainted()) return false;
 			if (this.status!=0) return false;
-			if (hasType(Types.FIRE) && !hasWorkingItem(Items.RING_TARGET)) {
+			if (pbHasType(Types.FIRE) && !hasWorkingItem(Items.RING_TARGET)) {
 				@battle.pbDisplay(Game._INTL("{1}'s {2} had no effect on {3}!",
-					opponent.ToString(),opponent.ability.ToString(TextScripts.Name),ToString(true)));
+					opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),ToString(true)));
 				return false;
 			}   
 			if (hasWorkingAbility(Abilities.WATER_VEIL) ||
-				(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) ||
-				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
-				@battle.Weather==Weather.HARSHSUN))) {
+				(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
+				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
+				@battle.pbWeather==Weather.HARSHSUN))) {
 				@battle.pbDisplay(Game._INTL("{1}'s {2} prevents {3}'s {4} from working!",
 					ToString(),this.ability.ToString(TextScripts.Name),
-					opponent.ToString(true),opponent.ability.ToString(TextScripts.Name)));
+					opponent.ToString(true),opponent.Ability.ToString(TextScripts.Name)));
 				return false;
 			}
-			if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) {
+			if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) {
 				@battle.pbDisplay(Game._INTL("{1}'s {2} prevents {3}'s {4} from working!",
-					Partner.ToString(),Partner.ability.ToString(TextScripts.Name),
-					opponent.ToString(true),opponent.ability.ToString(TextScripts.Name)));
+					Partner.ToString(),Partner.Ability.ToString(TextScripts.Name),
+					opponent.ToString(true),opponent.Ability.ToString(TextScripts.Name)));
 				return false;
 			}
 			return true;
@@ -310,9 +310,9 @@ namespace PokemonUnity.Combat
 			GameDebug.Log($"[Status change] #{ToString()} was burned");
 			if (attacker.IsNotNullOrNone() && this.Index!=attacker.Index &&
 				this.hasWorkingAbility(Abilities.SYNCHRONIZE))
-				if (attacker.pbCanBurnSynchronize(this)) {
+				if (attacker is IBattlerEffect a && a.pbCanBurnSynchronize(this)) {
 					GameDebug.Log($"[Ability triggered] #{this.ToString()}'s Synchronize");
-					attacker.pbBurn(null,Game._INTL("{1}'s {2} burned {3}!",this.ToString(),
+					a.pbBurn(null,Game._INTL("{1}'s {2} burned {3}!",this.ToString(),
 						this.ability.ToString(TextScripts.Name),attacker.ToString(true)));
 				}
 		}
@@ -335,20 +335,20 @@ namespace PokemonUnity.Combat
 				if (showMessages) @battle.pbDisplay(Game._INTL("The Misty Terrain prevented {1} from being paralyzed!",ToString(true)));
 				return false;
 			}
-			if (hasType(Types.ELECTRIC) && !hasWorkingItem(Items.RING_TARGET) && Core.USENEWBATTLEMECHANICS) {
+			if (pbHasType(Types.ELECTRIC) && !hasWorkingItem(Items.RING_TARGET) && Core.USENEWBATTLEMECHANICS) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("It doesn't affect {1}...",ToString(true)));
 				return false;
 			}
 			if (!attacker.IsNotNullOrNone() || !attacker.hasMoldBreaker()) {
 				if (hasWorkingAbility(Abilities.LIMBER) ||
-					(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) ||
-					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
-					@battle.Weather==Weather.HARSHSUN))) {
+					(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
+					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
+					@battle.pbWeather==Weather.HARSHSUN))) {
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s {2} prevents paralysis!",ToString(),this.ability.ToString(TextScripts.Name)));
 					return false;
 				}
-				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) {
-					string abilityname=Partner.ability.ToString(TextScripts.Name);
+				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) {
+					string abilityname=Partner.Ability.ToString(TextScripts.Name);
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s partner's {2} prevents paralysis!",ToString(),abilityname));
 					return false;
 				}
@@ -364,20 +364,20 @@ namespace PokemonUnity.Combat
 		public bool pbCanParalyzeSynchronize(IBattler opponent) {
 			if (this.status!=0) return false;
 			if (@battle.field.MistyTerrain>0 && !this.isAirborne()) return false;
-			if (hasType(Types.ELECTRIC) && !hasWorkingItem(Items.RING_TARGET) && Core.USENEWBATTLEMECHANICS) return false;
+			if (pbHasType(Types.ELECTRIC) && !hasWorkingItem(Items.RING_TARGET) && Core.USENEWBATTLEMECHANICS) return false;
 			if (hasWorkingAbility(Abilities.LIMBER) ||
-				(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) ||
-				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
-				@battle.Weather==Weather.HARSHSUN))) {
+				(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
+				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
+				@battle.pbWeather==Weather.HARSHSUN))) {
 				@battle.pbDisplay(Game._INTL("{1}'s {2} prevents {3}'s {4} from working!",
 					ToString(),this.ability.ToString(TextScripts.Name),
-					opponent.ToString(true),opponent.ability.ToString(TextScripts.Name)));
+					opponent.ToString(true),opponent.Ability.ToString(TextScripts.Name)));
 				return false;
 			}
-			if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) {
+			if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) {
 				@battle.pbDisplay(Game._INTL("{1}'s {2} prevents {3}'s {4} from working!",
-					Partner.ToString(),Partner.ability.ToString(TextScripts.Name),
-					opponent.ToString(true),opponent.ability.ToString(TextScripts.Name)));
+					Partner.ToString(),Partner.Ability.ToString(TextScripts.Name),
+					opponent.ToString(true),opponent.Ability.ToString(TextScripts.Name)));
 				return false;
 			}
 			return true;
@@ -394,9 +394,9 @@ namespace PokemonUnity.Combat
 			GameDebug.Log($"[Status change] #{ToString()} was paralyzed");
 			if (attacker.IsNotNullOrNone() && this.Index!=attacker.Index &&
 				this.hasWorkingAbility(Abilities.SYNCHRONIZE))
-				if (attacker.pbCanParalyzeSynchronize(this)) {
+				if (attacker is IBattlerEffect a && a.pbCanParalyzeSynchronize(this)) {
 					GameDebug.Log($"[Ability triggered] #{this.ToString()}'s Synchronize");
-					attacker.pbParalyze(null,Game._INTL("{1}'s {2} paralyzed {3}! It may be unable to move!",
+					a.pbParalyze(null,Game._INTL("{1}'s {2} paralyzed {3}! It may be unable to move!",
 						this.ToString(),this.ability.ToString(TextScripts.Name),attacker.ToString(true)));
 				}
 		}
@@ -411,12 +411,12 @@ namespace PokemonUnity.Combat
 			}
 			if (this.status!=0 ||
 				(effects.Substitute>0 && (!move.IsNotNullOrNone() || !move.ignoresSubstitute(attacker))) ||
-				@battle.Weather==Weather.SUNNYDAY ||
-				@battle.Weather==Weather.HARSHSUN) {
+				@battle.pbWeather==Weather.SUNNYDAY ||
+				@battle.pbWeather==Weather.HARSHSUN) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("But it failed!"));
 				return false;
 			}
-			if (hasType(Types.ICE) && !hasWorkingItem(Items.RING_TARGET)) {
+			if (pbHasType(Types.ICE) && !hasWorkingItem(Items.RING_TARGET)) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("It doesn't affect {1}...",ToString(true)));
 				return false;
 			}
@@ -427,14 +427,14 @@ namespace PokemonUnity.Combat
 			}
 			if (!attacker.IsNotNullOrNone() || !attacker.hasMoldBreaker()) {
 				if (hasWorkingAbility(Abilities.MAGMA_ARMOR) ||
-					(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) ||
-					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
-					@battle.Weather==Weather.HARSHSUN))) {
+					(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
+					(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
+					@battle.pbWeather==Weather.HARSHSUN))) {
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s {2} prevents freezing!",ToString(),this.ability.ToString(TextScripts.Name)));
 					return false;
 				}
-				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) {
-					string abilityname=Partner.ability.ToString(TextScripts.Name);
+				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) {
+					string abilityname=Partner.Ability.ToString(TextScripts.Name);
 					if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s partner's {2} prevents freezing!",ToString(),abilityname));
 					return false;
 				}
@@ -603,9 +603,9 @@ namespace PokemonUnity.Combat
 				@battle.pbDisplay(Game._INTL("{1} fell in love!",ToString()));
 			GameDebug.Log($"[Lingering effect triggered] #{ToString()} became infatuated (with #{attacker.ToString(true)})");
 			if (this.hasWorkingItem(Items.DESTINY_KNOT) &&
-				attacker.pbCanAttract(this,false)) {
+				attacker is IBattlerEffect a && a.pbCanAttract(this,false)) {
 				GameDebug.Log($"[Item triggered] #{ToString()}'s Destiny Knot");
-				attacker.pbAttract(this,Game._INTL("{1}'s {2} made {3} fall in love!",ToString(),
+				a.pbAttract(this,Game._INTL("{1}'s {2} made {3} fall in love!",ToString(),
 					this.Item.ToString(TextScripts.Name),attacker.ToString(true)));
 			}
 		}
@@ -763,13 +763,13 @@ namespace PokemonUnity.Combat
 						if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s {2} prevents stat loss!",ToString(),abilityname));
 						return false;
 					}
-					if (hasType(Types.GRASS))
+					if (pbHasType(Types.GRASS))
 						if (hasWorkingAbility(Abilities.FLOWER_VEIL)) {
 							abilityname=this.ability.ToString(TextScripts.Name);
 							if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s {2} prevents stat loss!",ToString(),abilityname));
 							return false;
 						} else if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL)) {
-							abilityname=Partner.ability.ToString(TextScripts.Name);
+							abilityname=Partner.Ability.ToString(TextScripts.Name);
 							if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s {2} prevents {3}'s stat loss!",Partner.ToString(),abilityname,ToString(true)));
 							return false;
 						}
@@ -831,10 +831,10 @@ namespace PokemonUnity.Combat
 						Game._INTL("{1}'s {2} severely fell!",ToString(),stat.ToString(TextScripts.Name))};
 					@battle.pbDisplay(arrStatTexts[Math.Min(increment-1,2)]);
 					// Defiant
-					if (hasWorkingAbility(Abilities.DEFIANT) && (!attacker.IsNotNullOrNone() || attacker.IsOpposing(this.Index)))
+					if (hasWorkingAbility(Abilities.DEFIANT) && (!attacker.IsNotNullOrNone() || attacker.pbIsOpposing(this.Index)))
 						pbIncreaseStatWithCause(Stats.ATTACK,2,this,this.ability.ToString(TextScripts.Name));
 					// Competitive
-					if (hasWorkingAbility(Abilities.COMPETITIVE) && (!attacker.IsNotNullOrNone() || attacker.IsOpposing(this.Index)))
+					if (hasWorkingAbility(Abilities.COMPETITIVE) && (!attacker.IsNotNullOrNone() || attacker.pbIsOpposing(this.Index)))
 						pbIncreaseStatWithCause(Stats.SPATK,2,this,this.ability.ToString(TextScripts.Name));
 					return true;
 				}
@@ -867,10 +867,10 @@ namespace PokemonUnity.Combat
 						Game._INTL("{1}'s {2} severely lowered {3}'s {4}!",attacker.ToString(),cause,ToString(true),stat.ToString(TextScripts.Name))};
 				if (showmessage) @battle.pbDisplay(arrStatTexts[Math.Min(increment-1,2)]); 
 				// Defiant
-				if (hasWorkingAbility(Abilities.DEFIANT) && (!attacker.IsNotNullOrNone() || attacker.IsOpposing(this.Index)))
+				if (hasWorkingAbility(Abilities.DEFIANT) && (!attacker.IsNotNullOrNone() || attacker.pbIsOpposing(this.Index)))
 					pbIncreaseStatWithCause(Stats.ATTACK,2,this,this.ability.ToString(TextScripts.Name));
 				// Competitive
-				if (hasWorkingAbility(Abilities.COMPETITIVE) && (!attacker.IsNotNullOrNone() || attacker.IsOpposing(this.Index)))
+				if (hasWorkingAbility(Abilities.COMPETITIVE) && (!attacker.IsNotNullOrNone() || attacker.pbIsOpposing(this.Index)))
 					pbIncreaseStatWithCause(Stats.SPATK,2,this,this.ability.ToString(TextScripts.Name));
 					return true;
 				}
@@ -882,33 +882,33 @@ namespace PokemonUnity.Combat
 			if (isFainted()) return false;
 			if (effects.Substitute>0) {
 				@battle.pbDisplay(Game._INTL("{1}'s substitute protected it from {2}'s {3}!",
-					ToString(),opponent.ToString(true),opponent.ability.ToString(TextScripts.Name)));
+					ToString(),opponent.ToString(true),opponent.Ability.ToString(TextScripts.Name)));
 				return false;
 			}
 			if (!opponent.hasWorkingAbility(Abilities.CONTRARY)) {
 				if (OwnSide.Mist>0) {
 					@battle.pbDisplay(Game._INTL("{1} is protected from {2}'s {3} by Mist!",
-						ToString(),opponent.ToString(true),opponent.ability.ToString(TextScripts.Name)));
+						ToString(),opponent.ToString(true),opponent.Ability.ToString(TextScripts.Name)));
 					return false;
 				}
 				if (hasWorkingAbility(Abilities.CLEAR_BODY) || hasWorkingAbility(Abilities.WHITE_SMOKE) ||
 					hasWorkingAbility(Abilities.HYPER_CUTTER) ||
-					(hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS))) {
+					(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS))) {
 					string abilityname=this.ability.ToString(TextScripts.Name);
-					string oppabilityname=opponent.ability.ToString(TextScripts.Name);
+					string oppabilityname=opponent.Ability.ToString(TextScripts.Name);
 					@battle.pbDisplay(Game._INTL("{1}'s {2} prevented {3}'s {4} from working!",
 						ToString(),abilityname,opponent.ToString(true),oppabilityname));
 					return false;
 				}
-				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && hasType(Types.GRASS)) {
-					string abilityname=Partner.ability.ToString(TextScripts.Name);
-					string oppabilityname=opponent.ability.ToString(TextScripts.Name);
+				if (Partner.hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) {
+					string abilityname=Partner.Ability.ToString(TextScripts.Name);
+					string oppabilityname=opponent.Ability.ToString(TextScripts.Name);
 					@battle.pbDisplay(Game._INTL("{1}'s {2} prevented {3}'s {4} from working!",
 						Partner.ToString(),abilityname,opponent.ToString(true),oppabilityname));
 					return false;
 				}
 			}
-			return pbReduceStatWithCause(Stats.ATTACK,1,opponent,opponent.ability.ToString(TextScripts.Name));
+			return pbReduceStatWithCause(Stats.ATTACK,1,opponent,opponent.Ability.ToString(TextScripts.Name));
 		}
 		#endregion
 	}

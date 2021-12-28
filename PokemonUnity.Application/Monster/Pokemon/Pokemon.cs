@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using PokemonUnity;
 using PokemonUnity.Attack;
+using PokemonUnity.Utility;
 using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 using PokemonUnity.Character;
@@ -617,7 +618,7 @@ namespace PokemonUnity.Monster
 		/// <remarks>
 		/// ToDo: PlayerTrainer's hash value instead of class; maybe GUID?
 		/// </remarks>
-		public TrainerData? OT { get; private set; }
+		public ITrainer OT { get; private set; }
 		/// <summary>
 		/// Personal/Pokemon ID
 		/// </summary>
@@ -629,7 +630,7 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="trainer"></param>
 		/// <returns></returns>
-		public bool isForeign(PokemonUnity.Character.TrainerData trainer)
+		public bool isForeign(ITrainer trainer)
 		{
 			return trainer != this.OT;
 		}
@@ -644,7 +645,7 @@ namespace PokemonUnity.Monster
 		/// <returns></returns>
 		public string TrainerId
 		{
-			get { return OT != null ? OT.Value.PlayerID : "00000"; }
+			get { return OT != null ? OT.publicID().ToString().PadLeft(5) : "00000"; }
 		}
 
 		/// <summary>
@@ -721,7 +722,7 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="Ball">The Pokéball this Pokémon got captured in.</param>
 		/// <param name="Method">The capture method.</param>
-		public Pokemon SetCatchInfos(TrainerData Trainer, Items Ball = Items.POKE_BALL, ObtainedMethod Method = ObtainedMethod.MET)
+		public Pokemon SetCatchInfos(ITrainer Trainer, Items Ball = Items.POKE_BALL, ObtainedMethod Method = ObtainedMethod.MET)
 		{
 			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
 			//this.obtainMap = Game.GameData.Level.MapName;
@@ -959,7 +960,7 @@ namespace PokemonUnity.Monster
 					case EvolutionMethod.HoldItemNight:
 					case EvolutionMethod.Type:
 					case EvolutionMethod.Location:
-					case EvolutionMethod.Weather:
+					case EvolutionMethod.pbWeather:
 					case EvolutionMethod.Deaths:
 					default:
 						break;
@@ -1396,10 +1397,10 @@ namespace PokemonUnity.Monster
 				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//int d = (Game.GameData.Player.Trainer.TrainerID ^ Game.GameData.Player.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
-				int d = ((!OT.Equals((object)null) ? OT.Value.TrainerID : Game.GameData.Trainer.publicID())
-					^ (!OT.Equals((object)null) ? OT.Value.SecretID : Game.GameData.Trainer.secretID()))
+				int d = ((!OT.Equals((object)null) ? OT.publicID() : Game.GameData.Trainer.publicID())
+					^ (!OT.Equals((object)null) ? OT.secretID() : Game.GameData.Trainer.secretID()))
 					//^ ((Game.GameData.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Core.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Core.SHINYPOKEMONCHANCE) / 65536)
-					^ ((Game.GameData.Player.Party[0].Item == Items.SHINY_CHARM ? Core.SHINYPOKEMONCHANCE * 3 : Core.SHINYPOKEMONCHANCE) / 65536)
+					^ ((Game.GameData.Trainer.party[0].Item == Items.SHINY_CHARM ? Core.SHINYPOKEMONCHANCE * 3 : Core.SHINYPOKEMONCHANCE) / 65536)
 					^ (PersonalId % 65536);
 				shinyFlag = d < _base.ShinyChance;
 				return shinyFlag.Value;
@@ -1823,7 +1824,7 @@ namespace PokemonUnity.Monster
 				{
 					int j = i + 1; while (j < 4) { 
 						if (@moves[j].id == 0) break;
-						PokemonUnity.Attack.Move tmp = @moves[j];
+						IMove tmp = @moves[j];
 						@moves[j] = @moves[j - 1];
 						@moves[j - 1] = tmp;
 						j += 1;
@@ -1891,7 +1892,7 @@ namespace PokemonUnity.Monster
 		public void DeleteMove(Moves move)
 		{
 			if (move <= 0) return;
-			List<Move> newmoves = new List<Move>();
+			IList<IMove> newmoves = new List<IMove>();
 			for (int i = 0; i < 4; i++)
 			{
 				if (moves[i].id != move) newmoves.Add(moves[i]);
@@ -1911,7 +1912,7 @@ namespace PokemonUnity.Monster
 		/// <returns></returns>
 		public void DeleteMoveAtIndex(int index)
 		{
-			List<Move> newmoves = new List<Move>();
+			IList<IMove> newmoves = new List<IMove>();
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -2968,30 +2969,21 @@ namespace PokemonUnity.Monster
 
 		//ToDo: Finish migrating interface implimentation
 		#region Explicit Interface Implemenation
-		int IPokemon.totalhp { get; set; }
 		int IPokemon.attack { get; set; }
 		int IPokemon.defense { get; set; }
 		int IPokemon.speed { get; set; }
 		int IPokemon.spatk { get; set; }
 		int IPokemon.spdef { get; set; }
-		int[] IPokemon.iv { get; set; }
-		int[] IPokemon.ev { get; set; }
-		Pokemons IPokemon.species { get; set; }
+		Pokemons IPokemon.Species { get; set; }
 		int IPokemon.personalID { get; set; }
 		int IPokemon.trainerID { get; set; }
-		int IPokemon.hp { get; set; }
 		int IPokemon.pokerus { get; set; }
-		Items IPokemon.item { get; set; }
 		IMail IPokemon.mail { get; set; }
 		IPokemon[] IPokemon.fused { get; set; }
-		string IPokemon.name { get; set; }
+		string IPokemon.Name { get; set; }
 		int IPokemon.exp { get; set; }
-		int IPokemon.happiness { get; set; }
-		Status IPokemon.status { get; set; }
-		int IPokemon.statusCount { get; set; }
 		int IPokemon.eggsteps { get; set; }
 		IList<Moves> IPokemon.firstmoves { get; set; }
-		Items IPokemon.ballused { get; set; }
 		bool[] IPokemon.markings { get; }
 		int IPokemon.obtainMode { get; set; }
 		int IPokemon.obtainMap { get; set; }
@@ -3016,17 +3008,10 @@ namespace PokemonUnity.Monster
 		DateTime? IPokemon.timeReceived { get; set; }
 		DateTime? IPokemon.timeEggHatched { get; set; }
 		bool IPokemon.egg { get; }
-		LevelingRate IPokemon.growthrate { get; }
 		int IPokemon.baseExp { get; }
-		int IPokemon.gender { get; }
 		bool IPokemon.isSingleGendered { get; }
-		bool IPokemon.isMale { get; }
-		bool IPokemon.isGenderless { get; }
-		Abilities IPokemon.ability { get; }
 		bool IPokemon.isShiny { get; }
 		int IPokemon.pokerusStage { get; }
-		Types IPokemon.type1 { get; }
-		Types IPokemon.type2 { get; }
 		char IPokemon.unownShape { get; }
 		float IPokemon.height { get; }
 		float IPokemon.weight { get; }
@@ -3040,11 +3025,6 @@ namespace PokemonUnity.Monster
 		}
 
 		bool IPokemon.isFemale(int b, int genderRate)
-		{
-			throw new NotImplementedException();
-		}
-
-		bool IPokemon.isFemale()
 		{
 			throw new NotImplementedException();
 		}

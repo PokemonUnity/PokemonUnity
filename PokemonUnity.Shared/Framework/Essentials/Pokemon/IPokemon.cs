@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Current Total HP
 		/// </summary>
-		int totalhp { get; set; }
+		int TotalHP { get; }
 		/// <summary>
 		/// Current Attack stat
 		/// </summary>
@@ -45,15 +45,15 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Array of 6 Individual Values for HP, Atk, Def,
 		/// Speed, Sp Atk, and Sp Def
 		/// </summary>
-		int[] iv { get; set; }
+		int[] IV { get; }
 		/// <summary>
 		/// Effort Values
 		/// </summary>  
-		int[] ev { get; set; }
+		byte[] EV { get; }
 		/// <summary>
 		/// Species (National Pokedex number)
 		/// </summary>
-		Pokemons species { get; set; }
+		Pokemons Species { get; set; }
 		/// <summary>
 		/// Personal ID
 		/// </summary>
@@ -65,7 +65,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Current HP
 		/// </summary>
-		int hp { get; set; }
+		int HP { get; set; }
 		/// <summary>
 		/// Pokérus strain and infection time
 		/// </summary>
@@ -73,7 +73,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Held item
 		/// </summary>
-		Items item { get; set; }
+		Items Item { get; }
 		/// <summary>
 		/// Consumed held item (used in battle only)
 		/// </summary>
@@ -97,7 +97,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Nickname
 		/// </summary>
-		string name { get; set; }
+		string Name { get; set; }
 		/// <summary>
 		/// Current experience points
 		/// </summary>
@@ -105,15 +105,15 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Current happiness
 		/// </summary>
-		int happiness { get; set; }
+		int Happiness { get; }
 		/// <summary>
 		/// Status problem (PBStatuses) 
 		/// </summary>
-		Status status { get; set; }
+		Status Status { get; set; }
 		/// <summary>
 		/// Sleep count/Toxic flag
 		/// </summary>
-		int statusCount { get; set; }
+		int StatusCount { get; set; }
 		/// <summary>
 		/// Steps to hatch egg, 0 if Pokémon is not an egg
 		/// </summary>
@@ -129,7 +129,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Ball used
 		/// </summary>
-		Items ballused { get; set; }
+		Items ballUsed { get; set; }
 		/// <summary>
 		/// Markings
 		/// </summary>
@@ -257,7 +257,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokemon's level.
 		/// </summary>
-		//int level { get; }
+		int Level { get; }
 
 		/// <summary>
 		/// Returns whether this Pokemon is an egg.
@@ -269,7 +269,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokemon's growth rate.
 		/// </summary>
-		LevelingRate growthrate { get; }
+		LevelingRate GrowthRate { get; }
 
 		/// <summary>
 		/// Returns this Pokemon's base Experience value.
@@ -282,7 +282,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokemon's gender. 0=male, 1=female, 2=genderless
 		/// </summary>
-		int gender { get; }
+		int Gender { get; }
 
 		/// <summary>
 		/// Helper function that determines whether the input values would make a female.
@@ -301,17 +301,17 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns whether this Pokémon is male.
 		/// </summary>
-		bool isMale { get; }
+		bool IsMale { get; }
 
 		/// <summary>
 		/// Returns whether this Pokémon is female.
 		/// </summary>
-		bool isFemale();
+		bool IsFemale { get; }
 
 		/// <summary>
 		/// Returns whether this Pokémon is genderless.
 		/// </summary>
-		bool isGenderless { get; }
+		bool IsGenderless { get; }
 
 		/// <summary>
 		/// Sets this Pokémon's gender to a particular gender (if possible).
@@ -333,7 +333,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns the ID of this Pokemon's ability.
 		/// </summary>
-		Abilities ability { get; }
+		Abilities Ability { get; }
 
 		/// <summary>
 		/// Returns whether this Pokémon has a particular ability.
@@ -432,12 +432,12 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokémon's first type.
 		/// </summary>
-		Types type1 { get; }
+		Types Type1 { get; }
 
 		/// <summary>
 		/// Returns this Pokémon's second type.
 		/// </summary>
-		Types type2 { get; }
+		Types Type2 { get; }
 
 		// ###############################################################################
 		// Moves
@@ -641,7 +641,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns this Pokémon's base stats.  An array of six values.
 		/// </summary>
 		/// <returns></returns>
-		int[] baseStats();
+		int[] baseStats { get; }
 
 		/// <summary>
 		/// Returns the maximum HP of this Pokémon.

@@ -16,18 +16,18 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface ITrainer
 	{
-		string name { get; }
+		string name { get; set; }
 		int id { get; set; }
-		int? metaID { get; }
-		TrainerTypes trainertype { get; }
+		int? metaID { get; set; }
+		TrainerTypes trainertype { get; set; }
 		int? outfit { get; set; }
 		bool[] badges { get; }
-		int money { get; }
+		int Money { get; set; }
 		IDictionary<Pokemons, bool> seen { get; }
 		IDictionary<Pokemons,bool> owned { get; }
 		int?[][] formseen { get; }
 		KeyValuePair<int,int>[] formlastseen { get; }
-		IList<Pokemons> shadowcaught { get; }
+		IList<Pokemons> shadowcaught { get; set; }
 		IPokemon[] party { get; set; }
 		/// <summary>
 		/// Whether the Pokédex was obtained

@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
+using PokemonUnity.Utility;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface;
 
 namespace PokemonUnity
 {
@@ -469,8 +471,8 @@ namespace PokemonUnity
 				{
 					if (team1[i].Level != adj1[i])
 					{
-						//team1[i].Level=adj1[i];
-						team1[i].SetLevel((byte)adj1[i]);
+						team1[i].Level=adj1[i];
+						//team1[i].SetLevel((byte)adj1[i]);
 						team1[i].calcStats();
 					}
 				}
@@ -481,8 +483,8 @@ namespace PokemonUnity
 				{
 					if (team2[i].Level != adj2[i])
 					{
-						//team2[i].Level=adj2[i];
-						team2[i].SetLevel((byte)adj2[i]);
+						team2[i].Level=adj2[i];
+						//team2[i].SetLevel((byte)adj2[i]);
 						team2[i].calcStats();
 					}
 				}
@@ -513,7 +515,7 @@ namespace PokemonUnity
 			int[] ret = new int[6];
 			for (int i = 0; i < thisTeam.Length; i++)
 			{
-				ret[i] = Game.pbBalancedLevelFromBST(thisTeam[i].Species);
+				ret[i] = (Game.GameData as IGameOrgBattleRules).pbBalancedLevelFromBST(thisTeam[i].Species);
 			}
 			return ret;
 		}
@@ -837,15 +839,15 @@ namespace PokemonUnity
 			if (pokemon == null || pokemon.isEgg) return false;
 			//dexdata=pbOpenDexData();
 			//pbDexDataOffset(dexdata,pokemon.Species,10);
-			int basestatsum = PokemonData[pokemon.Species].BaseStatsHP; //dexdata.fgetb;
-			basestatsum += PokemonData[pokemon.Species].BaseStatsATK; //dexdata.fgetb;
-			basestatsum += PokemonData[pokemon.Species].BaseStatsDEF; //dexdata.fgetb;
-			basestatsum += PokemonData[pokemon.Species].BaseStatsSPE; //dexdata.fgetb;
-			basestatsum += PokemonData[pokemon.Species].BaseStatsSPD; //dexdata.fgetb;
-			basestatsum += PokemonData[pokemon.Species].BaseStatsSPA; //dexdata.fgetb;
+			int basestatsum = Kernal.PokemonData[pokemon.Species].BaseStatsHP; //dexdata.fgetb;
+			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsATK; //dexdata.fgetb;
+			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsDEF; //dexdata.fgetb;
+			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsSPE; //dexdata.fgetb;
+			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsSPD; //dexdata.fgetb;
+			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsSPA; //dexdata.fgetb;
 			//pbDexDataOffset(dexdata,pokemon.Species,2);
-			Abilities ability1 = PokemonData[pokemon.Species].Ability[0]; //dexdata.fgetw;
-			Abilities ability2 = PokemonData[pokemon.Species].Ability[1]; //dexdata.fgetw;
+			Abilities ability1 = Kernal.PokemonData[pokemon.Species].Ability[0]; //dexdata.fgetw;
+			Abilities ability2 = Kernal.PokemonData[pokemon.Species].Ability[1]; //dexdata.fgetw;
 			//dexdata.close();
 			//  Species with disadvantageous abilities are not banned
 			if (ability1 == Abilities.TRUANT ||
@@ -916,7 +918,7 @@ namespace PokemonUnity
 
 		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
 		{
-			return !Game.pbTooTall(pokemon, @level);
+			return !(Game.GameData as IGameOrgBattleRules).pbTooTall(pokemon, @level);
 		}
 	}
 
@@ -930,7 +932,7 @@ namespace PokemonUnity
 
 		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
 		{
-			return !Game.pbTooHeavy(pokemon, @level);
+			return !(Game.GameData as IGameOrgBattleRules).pbTooHeavy(pokemon, @level);
 		}
 	}
 
@@ -1140,7 +1142,7 @@ namespace PokemonUnity
 				return false;
 			}
 			//foreach (var i in @@namesMaxValue..PBSpecies.maxValue) {
-			foreach (Pokemons i in PokemonData.Keys)
+			foreach (Pokemons i in Kernal.PokemonData.Keys)
 			{
 				if (i != species)
 				{
@@ -1233,7 +1235,7 @@ namespace PokemonUnity
 			@teamRules = new List<IBattleTeamRestriction>();
 			@subsetRules = new List<IBattleTeamRestriction>();
 			_minLength = 1;
-			_maxLength = number <= 0 ? GameData.Features.LimitPokemonPartySize : number;
+			_maxLength = number <= 0 ? Game.GameData.Features.LimitPokemonPartySize : number;
 		}
 
 		public IPokemonRuleSet copy()
@@ -1397,10 +1399,12 @@ namespace PokemonUnity
 		public bool hasRegistrableTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] list)
 		{
 			if (list == null || list.Length < this.minTeamLength) return false;
-			Array.ForEach<PokemonEssentials.Interface.PokeBattle.IPokemon[]>(pbEachCombination(list, this.maxTeamLength), (comb) =>
-			{//PokemonEssentials.Interface.PokeBattle.IPokemon[] |comb|
+			//Array.ForEach<PokemonEssentials.Interface.PokeBattle.IPokemon[]>( //PokemonEssentials.Interface.PokeBattle.IPokemon[] |comb|
+			//	(Game.GameData as IGameUtility).pbEachCombination(list, this.maxTeamLength), (comb) => {
+			foreach ( PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in
+				(Game.GameData as IGameUtility).pbEachCombination(list, this.maxTeamLength)) {
 				if (canRegisterTeam(comb)) return true;
-			});
+			};
 			return false;
 		}
 
@@ -1513,7 +1517,7 @@ namespace PokemonUnity
 				if (error != null) error.Add(Game._INTL("No more than {1} Pokémon may enter.", this.maxLength));
 				return false;
 			}
-			foreach (var pokemon in team)
+			foreach (IPokemon pokemon in team)
 			{
 				if (!isPokemonValid(pokemon))
 				{
@@ -1561,8 +1565,10 @@ namespace PokemonUnity
 	{
 		public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
-			return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattle(scene,
-				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			//ToDo: Uncomment... After adding recorded battles classes
+			//return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattle(scene,
+			//	trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			throw new NotImplementedException("Removed because didnt finish setting up recorded battle classes");
 		}
 	}
 
@@ -1570,8 +1576,10 @@ namespace PokemonUnity
 	{
 		public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
-			return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattlePalace(scene,
-				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			//ToDo: Uncomment... After adding recorded battles classes
+			//return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattlePalace(scene,
+			//	trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			throw new NotImplementedException("Removed because didnt finish setting up recorded battle classes");
 		}
 	}
 
@@ -1579,8 +1587,10 @@ namespace PokemonUnity
 	{
 		public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
-			return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattleArena(scene,
-				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			//ToDo: Uncomment... After adding recorded battles classes
+			//return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattleArena(scene,
+			//	trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			throw new NotImplementedException("Removed because didnt finish setting up recorded battle classes");
 		}
 	}
 
@@ -1592,11 +1602,14 @@ namespace PokemonUnity
 		public const string EVASIONCLAUSE = "evasionclause";
 		public const string OHKOCLAUSE = "ohkoclause";
 		public const string PERISHSONG = "perishsong";
+		public const string PERISHSONGCLAUSE = "perishsongclause";
 		public const string SELFKOCLAUSE = "selfkoclause";
 		public const string SELFDESTRUCTCLAUSE = "selfdestructclause";
 		public const string SONICBOOMCLAUSE = "sonicboomclause";
 		public const string MODIFIEDSLEEPCLAUSE = "modifiedsleepclause";
 		public const string SKILLSWAPCLAUSE = "skillswapclause";
+		public const string SUDDENDEATH = "suddendeath";
+		public const string MODIFIEDSELFDESTRUCTCLAUSE = "modifiedselfdestructclause";
 		public virtual void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle) { }
 	}
 

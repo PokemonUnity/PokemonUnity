@@ -138,9 +138,9 @@ namespace PokemonUnity//.Inventory
 				//ToDo: Redo below into an Event Listener (Subscribe to on Frontend)
 				pbFadeOutIn(99999, block: () => {
 					IPartyDsplayScene scene=Scenes.Party; //new PokemonScreen_Scene();
-					IPartyDsplayScreen screen = Screens.Party.initialize(scene,Player.Party); //new PokemonScreen(scene,Player.Party);
+					IPartyDsplayScreen screen = Screens.Party.initialize(scene,Trainer.party); //new PokemonScreen(scene,Trainer.party);
 					screen.pbStartScene(Game._INTL("Using item..."),false);
-					foreach (Pokemon i in Player.Party) {
+					foreach (Pokemon i in Trainer.party) {
 						if (i.HP<=0 && !i.isEgg) {
 							revived+=1;
 							i.Heal();
@@ -1400,11 +1400,11 @@ namespace PokemonUnity//.Inventory
 				if (pokemon.Species == Pokemons.KYUREM) {
 					if (pokemon.HP>0) {
 						if (pokemon.fused!=null) {
-							if (Player.Party.Length>=6) { //ToDo: Party count has 2 slots open
+							if (Trainer.party.Length>=6) { //ToDo: Party count has 2 slots open
 								scene.pbDisplay(Game._INTL("You have no room to separate the Pokémon."));
 								return false;
 							} else {
-								Player.Party[Player.Party.Length]=pokemon.fused[1];
+								Trainer.party[Trainer.party.Length]=pokemon.fused[1];
 								pokemon.fused=null;
 								pokemon.SetForm(0);
 								scene.pbHardRefresh();
@@ -1816,8 +1816,8 @@ namespace PokemonUnity//.Inventory
 					pokemon.HP=(int)Math.Floor(pokemon.TotalHP/2f);
 					//Item.pbItemRestoreHP(pokemon,(int)Math.Floor(pokemon.TotalHP/2f));
 					pokemon.HealStatus();
-					for (int i = 0; i < Player.Party.Length; i++) {
-						if (Player.Party[i]==pokemon) {
+					for (int i = 0; i < Trainer.party.Length; i++) {
+						if (Trainer.party[i]==pokemon) {
 							if (battler.IsNotNullOrNone()) battler.Initialize(pokemon,(sbyte)i,false);
 							break;
 						}
@@ -1835,8 +1835,8 @@ namespace PokemonUnity//.Inventory
 				} else {
 					pokemon.HealHP();
 					pokemon.HealStatus();
-					for (int i = 0; i < Player.Party.Length; i++) {
-						if (Player.Party[i]==pokemon) {
+					for (int i = 0; i < Trainer.party.Length; i++) {
+						if (Trainer.party[i]==pokemon) {
 							if (battler.IsNotNullOrNone()) battler.Initialize(pokemon,(sbyte)i,false);
 							break;
 						}
@@ -1886,8 +1886,8 @@ namespace PokemonUnity//.Inventory
 					pokemon.HealStatus();
 					//pokemon.HP=pokemon.TotalHP;
 					pokemon.HealHP();
-					for (int i = 0; i < Player.Party.Length; i++) {
-						if (Player.Party[i]==pokemon) {
+					for (int i = 0; i < Trainer.party.Length; i++) {
+						if (Trainer.party[i]==pokemon) {
 							if (battler.IsNotNullOrNone()) battler.Initialize(pokemon,(sbyte)i,false);
 							break;
 						}
@@ -2326,13 +2326,13 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.GUARD_SPEC, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
 				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
-				if (battler.OwnSide.Mist>0) {
+				if (battler.pbOwnSide.Mist>0) {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
 					return false;
 				} else { 
-					battler.OwnSide.Mist=5;
+					battler.pbOwnSide.Mist=5;
 					if (!scene.pbIsOpposing(battler.Index)) { //Create new Delegate for attacker?
-					//if (!scene.IsOpposing(battler.Index)) { //if player's pokemon...
+					//if (!scene.pbIsOpposing(battler.Index)) { //if player's pokemon...
 						scene.pbDisplay(Game._INTL("Your team became shrouded in mist!"));
 					} else {
 						scene.pbDisplay(Game._INTL("The foe's team became shrouded in mist!"));
@@ -2379,7 +2379,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.POKE_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2394,7 +2394,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.BEAST_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2408,7 +2408,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.CHERISH_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2422,7 +2422,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.DIVE_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2436,7 +2436,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.DREAM_BALL, (item, battler, scene) => { //ToDo: Only in dreamworld?
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2450,7 +2450,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.DUSK_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2464,7 +2464,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.FAST_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2478,7 +2478,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.FRIEND_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 					scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 					return false;
 					}
@@ -2492,7 +2492,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.GREAT_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2506,7 +2506,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.HEAL_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2520,7 +2520,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.HEAVY_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2534,7 +2534,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.IRON_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2548,7 +2548,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.LEVEL_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2562,7 +2562,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.LIGHT_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2576,7 +2576,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.LOVE_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2590,7 +2590,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.LURE_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2604,7 +2604,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.LUXURY_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2618,7 +2618,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.MASTER_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2632,7 +2632,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.MOON_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2646,7 +2646,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.NEST_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2660,7 +2660,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.NET_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2674,7 +2674,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.PARK_BALL, (item, battler, scene) => { //ToDo: Only in park?
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2688,7 +2688,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.PREMIER_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2702,7 +2702,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.QUICK_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2716,7 +2716,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.REPEAT_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2730,7 +2730,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.SAFARI_BALL, (item, battler, scene) => { //ToDo: Only during safari contest?
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2744,7 +2744,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.SMOKE_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2758,7 +2758,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.SPORT_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2772,7 +2772,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.TIMER_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2786,7 +2786,7 @@ namespace PokemonUnity//.Inventory
 			BattleUseOnBattler.Add(Items.ULTRA_BALL, (item, battler, scene) => {
 				IBattle battle=battler.battle;
 				if (!battler.pbOpposing1.isFainted() && !battler.pbOpposing2.isFainted()) {
-					if (!battle.pbIsSnagBall(item)) {
+					if (!(Game.GameData as IItemCheck).pbIsSnagBall(item)) { //battle.pbIsSnagBall(item)
 						scene.pbDisplay(Game._INTL("It's no good! It's impossible to aim when there are two Pokémon!"));
 						return false;
 					}
@@ -2909,9 +2909,9 @@ namespace PokemonUnity//.Inventory
 
 
 		//Events.onStepTaken+=proc {
-		private static void OnStepTakenEventHandler(object sender, EventArgs e)
+		private void OnStepTakenEventHandler(object sender, EventArgs e)
 		{
-			if (!Terrain.isIce(GamePlayer.terrain_tag)) {		// Shouldn't count down if on ice
+			if (!Terrain.isIce(Player.terrain_tag)) {		// Shouldn't count down if on ice
 				if (RepelSteps>0) {
 					RepelSteps-=1;
 					if (RepelSteps<=0) {

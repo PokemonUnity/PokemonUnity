@@ -321,7 +321,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		//void pbDisplay(string msg);
 
-		void pbConfirm(string msg);
+		bool pbConfirm(string msg);
 
 		void pbShowCommands(string msg, string[] commands);
 

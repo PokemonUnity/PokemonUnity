@@ -48,20 +48,20 @@ namespace PokemonUnity.Character
 		public int pbDayCareDeposited() {
 			int ret=0;
 			for (int i = 0; i < 2; i++) {
-				if (Game.GameData.Global.daycare[i].IsNotNullOrNone()) ret+=1;//[0]
+				if (this[i].IsNotNullOrNone()) ret+=1;//[0]
 			}
 			return ret;
 		}
 
 		public void pbDayCareDeposit(int index) {
 			for (int i = 0; i < 2; i++) {
-				if (!Game.GameData.Global.daycare[i].IsNotNullOrNone()) {//[0]
-					Game.GameData.Global.daycare[i]=Game.GameData.Player.Party[index];//[0]
-					//Game.GameData.Global.daycare[i][1]=Game.GameData.Player.Party[index].Level;
-					Game.GameData.Global.daycare[i].Heal();//[0]
-					Game.GameData.Player.Party[index]=null;
-					//Game.GameData.Player.Party.compact()!;
-					Game.GameData.Player.Party.PackParty();
+				if (!this[i].IsNotNullOrNone()) {//[0]
+					this[i]=Game.GameData.Trainer.party[index];//[0]
+					//this[i][1]=Game.GameData.Trainer.party[index].Level;
+					this[i].Heal();//[0]
+					Game.GameData.Trainer.party[index]=null;
+					//Game.GameData.Trainer.party.compact()!;
+					Game.GameData.Trainer.party.PackParty();
 					Game.GameData.Global.daycareEgg=false;//0;
 					Game.GameData.Global.daycareEggSteps=0;
 					return;
@@ -73,21 +73,21 @@ namespace PokemonUnity.Character
 		}
 
 		public bool pbDayCareGetLevelGain(int index,int nameVariable,int levelVariable) {
-			IPokemon pkmn=Game.GameData.Global.daycare[index];//[0];
+			IPokemon pkmn=this[index];//[0];
 			if (!pkmn.IsNotNullOrNone()) return false;
 			Game.GameData.GameVariables[nameVariable]=pkmn.Name;
-			Game.GameData.GameVariables[levelVariable]=pkmn.Level-Game.GameData.Global.daycare[index].Level;//[1];
+			Game.GameData.GameVariables[levelVariable]=pkmn.Level-this[index].Level;//[1];
 			return true;
 		}
 
 		public void pbDayCareGetDeposited(int index,int nameVariable,int costVariable) {
 			for (int i = 0; i < 2; i++) {
-				if ((index<0||i==index) && Game.GameData.Global.daycare[i].IsNotNullOrNone()) {//[0]
-					int cost=Game.GameData.Global.daycare[i].Level-Game.GameData.Global.daycare[i].Level;//[0]|[1] ToDo: Levels raised since drop-off
+				if ((index<0||i==index) && this[i].IsNotNullOrNone()) {//[0]
+					int cost=this[i].Level-this[i].Level;//[0]|[1] ToDo: Levels raised since drop-off
 					cost+=1;
 					cost*=100;
 					if (costVariable>=0) Game.GameData.GameVariables[costVariable]=cost;
-					if (nameVariable>=0) Game.GameData.GameVariables[nameVariable]=Game.GameData.Global.daycare[i].Name;//[0]
+					if (nameVariable>=0) Game.GameData.GameVariables[nameVariable]=this[i].Name;//[0]
 					return;
 				}
 			}
@@ -120,10 +120,10 @@ namespace PokemonUnity.Character
 
 		public int pbDayCareGetCompat() {
 			if (pbDayCareDeposited()==2) {
-				IPokemon pokemon1=Game.GameData.Global.daycare[0];//[0];
-				IPokemon pokemon2=Game.GameData.Global.daycare[1];//[0];
-				if ((pokemon1.isShadow)) return 0; //? rescue false
-				if ((pokemon2.isShadow)) return 0; //? rescue false
+				IPokemon pokemon1=this[0];//[0];
+				IPokemon pokemon2=this[1];//[0];
+				if (pokemon1.isShadow) return 0; //? rescue false
+				if (pokemon2.isShadow) return 0; //? rescue false
 				//dexdata=pbOpenDexData();
 				//pbDexDataOffset(dexdata,pokemon1.Species,31);
 				EggGroups compat10=Game.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
@@ -145,7 +145,7 @@ namespace PokemonUnity.Character
 						if (pbDayCareCompatibleGender(pokemon1,pokemon2)) {
 							int ret=1;
 							if (pokemon1.Species==pokemon2.Species) ret+=1;
-							if (pokemon1.TrainerId!=pokemon2.TrainerId) ret+=1;
+							if (pokemon1.publicID!=pokemon2.publicID) ret+=1;
 							return ret;
 						}
 					}
@@ -159,18 +159,18 @@ namespace PokemonUnity.Character
 		}
 
 		public void pbDayCareWithdraw(int index) {
-			if (!Game.GameData.Global.daycare[index].IsNotNullOrNone()) {//[0]
+			if (!this[index].IsNotNullOrNone()) {//[0]
 				//raise Game._INTL("There's no Pokémon here...");
 				//throw new Exception(Game._INTL("There's no Pokémon here..."));
 				GameDebug.LogError(Game._INTL("There's no Pokémon here..."));
-			} else if (Game.GameData.Player.Party.Length>=6) {
+			} else if (Game.GameData.Trainer.party.Length>=6) {
 				//raise Game._INTL("Can't store the Pokémon...");
 				//throw new Exception(Game._INTL("Can't store the Pokémon..."));
 				GameDebug.LogError(Game._INTL("Can't store the Pokémon..."));
 			} else {
-				Game.GameData.Player.Party[Game.GameData.Player.Party.Length]=Game.GameData.Global.daycare[index];//[0];
-				Game.GameData.Global.daycare[index]=null;//[0]
-				//Game.GameData.Global.daycare[index][1]=0;
+				Game.GameData.Trainer.party[Game.GameData.Trainer.party.Length]=this[index];//[0];
+				this[index]=null;//[0]
+				//this[index][1]=0;
 				Game.GameData.Global.daycareEgg=false;//0;
 			}
 		}
@@ -182,11 +182,11 @@ namespace PokemonUnity.Character
 				//throw new Exception(Game._INTL("There's no Pokémon here..."));
 				GameDebug.LogError(Game._INTL("There's no Pokémon here..."));
 			} else if (count==1) {
-				Game.GameData.GameVariables[variable]=Game.GameData.Global.daycare[0].IsNotNullOrNone() ? 0 : 1;//[0]
+				Game.GameData.GameVariables[variable]=this[0].IsNotNullOrNone() ? 0 : 1;//[0]
 			} else {
 				List<string> choices=new List<string>();
 				for (int i = 0; i < 2; i++) {
-					IPokemon pokemon=Game.GameData.Global.daycare[i];//[0]
+					IPokemon pokemon=this[i];//[0]
 					if (pokemon.IsMale) {
 						choices.Add(Game._INTL("{1} (♂, Lv{2})",pokemon.Name,pokemon.Level));
 					} else if (pokemon.IsFemale) {
@@ -204,13 +204,13 @@ namespace PokemonUnity.Character
 		public void pbDayCareGenerateEgg() {
 			if (pbDayCareDeposited()!=2) {
 				return;
-			} else if (Game.GameData.Player.Party.Length>=6) {
+			} else if (Game.GameData.Trainer.party.Length>=6) {
 				//raise Game._INTL("Can't store the egg");
 				//throw new Exception(Game._INTL("Can't store the egg"));
 				GameDebug.LogError(Game._INTL("Can't store the egg"));
 			}
-			IPokemon pokemon0=Game.GameData.Global.daycare[0];//[0]
-			IPokemon pokemon1=Game.GameData.Global.daycare[1];//[0]
+			IPokemon pokemon0=this[0];//[0]
+			IPokemon pokemon1=this[1];//[0]
 			IPokemon mother=null;
 			IPokemon father=null;
 			Pokemons babyspecies=0;
@@ -450,21 +450,21 @@ namespace PokemonUnity.Character
 			if (Core.Rand.Next(65536)<Core.POKERUSCHANCE) {
 				egg.GivePokerus();
 			}
-			Game.GameData.Player.Party[Game.GameData.Player.Party.Length]=egg;
+			Game.GameData.Trainer.party[Game.GameData.Trainer.party.Length]=egg;
 		}
 
 		//Events.onStepTaken+=delegate(object sender, EventArgs e) {
 		public void OnStepTakenEventHandler(object sender, IOnStepTakenFieldMovementEventArgs e) {
 			if (Game.GameData.Player == null) return;
-			int deposited= Game.GameData.Global.daycare.pbDayCareDeposited();
+			int deposited= this.pbDayCareDeposited();
 			if (deposited==2 && !Game.GameData.Global.daycareEgg) {//==0
 				if (Game.GameData.Global.daycareEggSteps == null) Game.GameData.Global.daycareEggSteps=0;
 					Game.GameData.Global.daycareEggSteps+=1;
 				if (Game.GameData.Global.daycareEggSteps==256) {
 					Game.GameData.Global.daycareEggSteps=0;
-					int compatval=new int[] {0,20,50,70}[Game.GameData.Global.daycare.pbDayCareGetCompat()];
+					int compatval=new int[] {0,20,50,70}[this.pbDayCareGetCompat()];
 					if (Game.GameData.Bag.pbQuantity(Items.OVAL_CHARM)>0) { //hasConst?(PBItems,:OVALCHARM) &&
-						compatval=new int[] {0,40,80,88}[Game.GameData.Global.daycare.pbDayCareGetCompat()];
+						compatval=new int[] {0,40,80,88}[this.pbDayCareGetCompat()];
 					}
 					int rnd=Core.Rand.Next(100);
 					if (rnd<compatval) {
@@ -474,7 +474,7 @@ namespace PokemonUnity.Character
 				}
 			}
 			for (int i = 0; i < 2; i++) {
-				IPokemon pkmn=Game.GameData.Global.daycare.Slot[i].Key;
+				IPokemon pkmn=this.Slot[i].Key;
 				if (!pkmn.IsNotNullOrNone()) return;
 				int maxexp=Monster.Data.Experience.GetMaxExperience(pkmn.GrowthRate);
 				if (pkmn.Exp<maxexp) {

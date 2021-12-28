@@ -198,7 +198,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#region Info about battle.
 		bool pbDoubleBattleAllowed();
 
-		Weather pbWeather();
+		Weather pbWeather { get; }
 		#endregion
 
 		#region Get battler info.

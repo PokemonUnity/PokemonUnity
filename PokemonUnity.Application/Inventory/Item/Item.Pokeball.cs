@@ -94,7 +94,7 @@ namespace PokemonUnity
 					return (int)Math.Floor(catchRate*3/2f);
 				}
 				else if (ball == Items.NET_BALL) {
-					if (battler.hasType(Types.BUG) || battler.hasType(Types.WATER)) catchRate*=3;
+					if (battler.pbHasType(Types.BUG) || battler.pbHasType(Types.WATER)) catchRate*=3;
 					return catchRate;
 				}
 				else if (ball == Items.DIVE_BALL) {

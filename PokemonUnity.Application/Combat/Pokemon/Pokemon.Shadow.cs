@@ -30,8 +30,8 @@ namespace PokemonUnity.Combat
 			}
 		}
 
-		public virtual void pbEndTurn(Choice choice) { (this as IBattlerShadowPokemon).pbEndTurn(choice); }
-		void IBattlerShadowPokemon.pbEndTurn(Choice choice) { //, params object[] placeholder
+		public virtual void pbEndTurn(IBattleChoice choice) { (this as IBattlerShadowPokemon).pbEndTurn(choice); }
+		void IBattlerShadowPokemon.pbEndTurn(IBattleChoice choice) { //, params object[] placeholder
 			(this as IBattler).pbEndTurn(choice); //this._pbEndTurn(choice);
 			if (inHyperMode() && !this.battle.pbAllFainted(this.battle.party1) &&
 				!this.battle.pbAllFainted(this.battle.party2)) { 
@@ -106,8 +106,8 @@ namespace PokemonUnity.Combat
 		{ return (this as IBattleShadowPokemon).pbUseItemOnPokemon(item, pkmnIndex, userPkmn, scene); }
 		bool IBattleShadowPokemon.pbUseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene)
 		{
-			IBattler pokemon = this.party1[pkmnIndex];
-			if (pokemon is IBattlerShadowPokemon p && p.hypermode) { //&&
+			IPokemon pokemon = this.party1[pkmnIndex];
+			if (pokemon is IPokemonShadowPokemon p && p.hypermode) { //&&
 				//item != Items.JOY_SCENT &&
 				//item != Items.EXCITE_SCENT &&
 				//item != Items.VIVID_SCENT) {

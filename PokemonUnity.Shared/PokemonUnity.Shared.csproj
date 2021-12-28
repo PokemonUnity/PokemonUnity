@@ -65,6 +65,8 @@
     <Compile Include="Character\Gear\Pokedex.cs" />
     <Compile Include="Character\Gear\PokeRadar.cs" />
     <Compile Include="Enums\UI.cs" />
+    <Compile Include="Extensions\ItemExtension.cs" />
+    <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="Extensions\Utility\LinearCongRandom.cs" />
     <Compile Include="Framework\Essentials\Battle\IOrgBattleGenerator.cs" />
     <Compile Include="Framework\Essentials\Battle\IBugContest.cs" />
@@ -182,11 +184,7 @@
     <Compile Include="Enums\Overworld.cs" />
     <Compile Include="Enums\Pokemons.cs" />
     <Compile Include="Enums\SaveEvent.cs" />
-    <Compile Include="Extensions\ItemExtension.cs" />
     <Compile Include="Extensions\PokemonExtension.cs" />
-    <Compile Include="Extensions\AbilityExtension.cs" />
-    <Compile Include="Extensions\MoveExtension.cs" />
-    <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="Framework\Core.cs" />
     <Compile Include="Framework\IDebugger.cs" />
     <Compile Include="Extensions\Utility\Extensions.cs" />

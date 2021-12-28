@@ -113,7 +113,7 @@ namespace PokemonEssentials.Interface
 			get;
 		}
 
-		int terrain_tag
+		PokemonUnity.Overworld.Terrains terrain_tag
 		{
 			get;
 		}

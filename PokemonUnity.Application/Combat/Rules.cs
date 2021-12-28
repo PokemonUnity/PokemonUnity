@@ -45,7 +45,7 @@ namespace PokemonUnity.Combat
 						@decision=isOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
 					}
 				}
-			} else if (@rules["modifiedselfdestructclause"] && move.IsNotNullOrNone() && 
+			} else if (@rules[BattleRule.MODIFIEDSELFDESTRUCTCLAUSE] && move.IsNotNullOrNone() && 
 				move.Effect==Attack.Data.Effects.x008) { // Selfdestruct
 				if (pbAllFainted(@party1) && pbAllFainted(@party2)) {
 					@decision=isOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
@@ -53,11 +53,11 @@ namespace PokemonUnity.Combat
 			}
 		}
 
-		public virtual void pbEndOfRoundPhase() { return (this as IBattleClause).pbEndOfRoundPhase(); }
+		public virtual void pbEndOfRoundPhase() { (this as IBattleClause).pbEndOfRoundPhase(); }
 		void IBattleClause.pbEndOfRoundPhase() {
 			//_pbEndOfRoundPhase();
 			(this as IBattle).pbEndOfRoundPhase();
-			if (@rules["suddendeath"] && @decision==BattleResults.ABORTED) {
+			if (@rules[BattleRule.SUDDENDEATH] && @decision==BattleResults.ABORTED) {
 				if (pbPokemonCount(@party1)>pbPokemonCount(@party2)) {
 					@decision=BattleResults.LOST; // loss
 				} else if (pbPokemonCount(@party1)<pbPokemonCount(@party2)) {
@@ -175,8 +175,8 @@ namespace PokemonUnity.Combat
 		public override bool pbOnStartUse(IBattler attacker) {
 			if (@battle.rules[BattleRule.SELFKOCLAUSE]) {
 				// Check whether no unfainted Pokemon remain in either party
-				int count=attacker.NonActivePokemonCount;
-				count+=attacker.pbOppositeOpposing.NonActivePokemonCount;
+				int count=attacker.pbNonActivePokemonCount;
+				count+=attacker.pbOppositeOpposing.pbNonActivePokemonCount;
 				if (count==0) {
 					@battle.pbDisplay("But it failed!");
 					return false;
@@ -184,21 +184,21 @@ namespace PokemonUnity.Combat
 			}
 			if (@battle.rules[BattleRule.SELFDESTRUCTCLAUSE]) {
 				// Check whether no unfainted Pokemon remain in either party
-				int count=attacker.NonActivePokemonCount;
-				count+=attacker.pbOppositeOpposing.NonActivePokemonCount;
+				int count=attacker.pbNonActivePokemonCount;
+				count+=attacker.pbOppositeOpposing.pbNonActivePokemonCount;
 				if (count==0) {
 					@battle.pbDisplay(Game._INTL("{1}'s team was disqualified!",attacker.ToString()));
-					@battle.decision=@battle.isOpposing(attacker.Index) ? BattleResults.WON : BattleResults.LOST;
+					@battle.decision=@battle.pbIsOpposing(attacker.Index) ? BattleResults.WON : BattleResults.LOST;
 					return false;
 				}
 			}
-			return _pbOnStartUse(attacker);
+			return (this as IBattleMove).pbOnStartUse(attacker);
 		}
 	}
 
 	public partial class PokeBattle_Move_0E5 : IBattleMove_MoveFailed { // Perish Song
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
-			if (@battle.rules["perishsongclause"] && attacker.NonActivePokemonCount==0) {
+			if (@battle.rules[BattleRule.PERISHSONGCLAUSE] && attacker.pbNonActivePokemonCount==0) {
 				return true;
 			}
 			return false;
@@ -207,7 +207,7 @@ namespace PokemonUnity.Combat
 
 	public partial class PokeBattle_Move_0E7 : IBattleMove_MoveFailed { // Destiny Bond
 		public override bool pbMoveFailed(IBattler attacker,IBattler opponent) {
-			if (@battle.rules["perishsongclause"] && attacker.NonActivePokemonCount==0) {
+			if (@battle.rules[BattleRule.PERISHSONGCLAUSE] && attacker.pbNonActivePokemonCount==0) {
 				return true;
 			}
 			return false;

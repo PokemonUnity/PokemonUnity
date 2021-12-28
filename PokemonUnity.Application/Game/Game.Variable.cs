@@ -52,6 +52,7 @@ namespace PokemonUnity
 		/// Singleton Instance of Game class to store current/active play state.
 		/// </summary>
 		public static PokemonEssentials.Interface.IGame GameData { get; set; }
+		public PokemonEssentials.Interface.IGraphics Graphics { get; set; }
 		public UX.Scene Scenes { get; private set; }
 		public UX.Screen Screens { get; private set; }
 		public Feature Features { get; private set; }
