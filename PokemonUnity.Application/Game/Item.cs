@@ -98,20 +98,21 @@ namespace PokemonUnity//.Inventory
 		}
 
 		public bool pbIsMail (Items item) {
-			return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData.pbIsLetter(item)); //[ITEMTYPE]==1 || Kernal.ItemData[item][ITEMTYPE]==2
+			return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData[item].IsLetter); //[ITEMTYPE]==1 || Kernal.ItemData[item][ITEMTYPE]==2
 		}
 
 		public bool pbIsSnagBall (Items item) {
-			return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData.pbIsPokeBall(item) || Kernal.ItemData[item].Pocket == ItemPockets.POKEBALL);// || //[ITEMTYPE]==3
-				//(Global.snagMachine)); //Kernal.ItemData[item][ITEMTYPE]==4 && 4: SnagBall Item
+			//return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData[item].IsPokeBall || Kernal.ItemData[item].Pocket == ItemPockets.POKEBALL) && //[ITEMTYPE]==3
+			//	Global.snagMachine; //Kernal.ItemData[item][ITEMTYPE]==4 && 4: SnagBall Item
+			return pbIsPokeBall(item) && Global.snagMachine;
 		}
 
 		public bool pbIsPokeBall (Items item) {
-			return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData.pbIsPokeBall(item) || Kernal.ItemData[item].Pocket == ItemPockets.POKEBALL);//[ITEMTYPE]==4
+			return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData[item].IsPokeBall || Kernal.ItemData[item].Pocket == ItemPockets.POKEBALL);//[ITEMTYPE]==4
 		}
 
 		public bool pbIsBerry (Items item) {
-			return Kernal.ItemData.ContainsKey(item) && Kernal.ItemData.pbIsBerry(item); //[ITEMTYPE]==5 
+			return Kernal.ItemData.ContainsKey(item) && Kernal.ItemData[item].IsBerry; //[ITEMTYPE]==5 
 		}
 
 		public bool pbIsKeyItem (Items item) {
@@ -180,7 +181,7 @@ namespace PokemonUnity//.Inventory
 				int spdefdiff=pokemon.SPD;
 				int totalhpdiff=pokemon.TotalHP;
 				//pokemon.Level=newlevel;
-				pokemon.SetLevel((byte)newlevel);
+				(pokemon as Pokemon).SetLevel((byte)newlevel);
 				//pokemon.Exp=Experience.GetStartExperience(pokemon.GrowthRate, newlevel);
 				pokemon.calcStats();
 				scene.pbRefresh();
@@ -206,9 +207,9 @@ namespace PokemonUnity//.Inventory
 				int totalhpdiff=pokemon.TotalHP;
 				int oldlevel=pokemon.Level;
 				//pokemon.Level=newlevel;
-				pokemon.SetLevel((byte)newlevel);
+				(pokemon as Pokemon).SetLevel((byte)newlevel);
 				//pokemon.Exp = Experience.GetStartExperience(pokemon.GrowthRate, newlevel);
-				pokemon.ChangeHappiness(HappinessMethods.LEVELUP);
+				(pokemon as Pokemon).ChangeHappiness(HappinessMethods.LEVELUP);
 				pokemon.calcStats();
 				scene.pbRefresh();
 				(this as IGameMessage).pbMessage(Game._INTL("{1} was elevated to Level {2}!",pokemon.Name,pokemon.Level));
@@ -229,7 +230,7 @@ namespace PokemonUnity//.Inventory
 						pbLearnMove(pokemon,i.Key,true);
 					}
 				}
-				Pokemons newspecies=Evolution.pbCheckEvolution(pokemon)[0];
+				Pokemons newspecies=EvolutionHelper.pbCheckEvolution(pokemon)[0];
 				if (newspecies>0) {
 					pbFadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo=Scenes.EvolvingScene; //new PokemonEvolutionScene();
@@ -328,7 +329,7 @@ namespace PokemonUnity//.Inventory
 				return false;
 			}
 			if (h) {
-				pokemon.ChangeHappiness(HappinessMethods.EVBERRY);
+				(pokemon as Pokemon).ChangeHappiness(HappinessMethods.EVBERRY);
 			}
 			if (e) {
 				pokemon.EV[(int)ev]-=10;
@@ -362,7 +363,7 @@ namespace PokemonUnity//.Inventory
 
 		public bool pbBikeCheck() {
 			if (Global.surfing ||
-				(!Global.bicycle && Terrain.onlyWalk(pbGetTerrainTag()))) {
+				(!Global.bicycle && Terrain.onlyWalk((this as PokemonEssentials.Interface.Field.IGameField).pbGetTerrainTag()))) {
 				(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 				return false;
 			}
@@ -470,7 +471,7 @@ namespace PokemonUnity//.Inventory
 					int forgetmove=pbForgetMove(pokemon,move);
 					if (forgetmove>=0) {
 						string oldmovename=pokemon.moves[forgetmove].id.ToString(TextScripts.Name);
-						byte oldmovepp=pokemon.moves[forgetmove].PP;
+						int oldmovepp=pokemon.moves[forgetmove].PP;
 						pokemon.moves[forgetmove]=new Attack.Move(move); // Replaces current/total PP
 						if (bymachine) pokemon.moves[forgetmove].PP=Math.Min(oldmovepp,pokemon.moves[forgetmove].TotalPP);
 						(this as IGameMessage).pbMessage(Game._INTL("\\se[]1,\\wt[16] 2, and\\wt[16]...\\wt[16] ...\\wt[16] ... Ta-da!\\se[balldrop]"));
@@ -501,9 +502,15 @@ namespace PokemonUnity//.Inventory
 			return false;
 		}
 
-		// Only called when in the party screen and having chosen an item to be used on
-		// the selected Pokémon
-		public bool pbUseItemOnPokemon(Items item,IPokemon pokemon,IScene scene) {
+		/// <summary>
+		/// Only called when in the party screen and having chosen an item to be used on
+		/// the selected Pokémon
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="pokemon"></param>
+		/// <param name="scene"></param>
+		/// <returns></returns>
+		public bool pbUseItemOnPokemon(Items item,IPokemon pokemon,IPartyDisplayScreen scene) {
 			//if (Kernal.ItemData[item][ITEMUSE]==3 || Kernal.ItemData[item][ITEMUSE]==4) {		// TM or HM
 			if (pbIsMachine(item)) {
 				Moves machine=Kernal.MachineData[(int)item].Move;
@@ -529,7 +536,7 @@ namespace PokemonUnity//.Inventory
 						}
 					}
 				}
-				return false;
+				//return false;
 			} else {
 				bool ret=ItemHandlers.triggerUseOnPokemon(item,pokemon,scene);
 				scene.pbClearAnnotations();
@@ -572,7 +579,7 @@ namespace PokemonUnity//.Inventory
 				} else {
 					return 0;
 				}
-			} else if (Kernal.ItemData[item].Flags.Consumable || Kernal.ItemData[item][ITEMUSE]==5) {		//[ITEMUSE]==1| Item is usable on a Pokémon
+			} else if (Kernal.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1|[ITEMUSE]==5 Item is usable on a Pokémon
 				if (Trainer.pokemonCount==0) {
 					(this as IGameMessage).pbMessage(Game._INTL("There is no Pokémon."));
 					return 0;
@@ -582,7 +589,7 @@ namespace PokemonUnity//.Inventory
 				if (pbIsEvolutionStone(item)) {
 					annot=new List<string>();
 					foreach (var pkmn in Trainer.party) {
-						bool elig=Evolution.pbCheckEvolution(pkmn,item).Length>0;
+						bool elig=EvolutionHelper.pbCheckEvolution(pkmn,item).Length>0;
 						annot.Add(elig ? Game._INTL("ABLE") : Game._INTL("NOT ABLE"));
 					}
 				}
@@ -616,26 +623,21 @@ namespace PokemonUnity//.Inventory
 					if (bagscene!=null) bagscene.pbRefresh();
 				});
 				return ret ? 1 : 0;
-			} else if (Kernal.ItemData[item][ITEMUSE]==2) {		// Item is usable from bag
+			} else if (Kernal.ItemData[item].Flags.Useable_Overworld) {		//[ITEMUSE]==2 Item is usable from bag
 				int intret=(int)ItemHandlers.triggerUseFromBag(item);
 				switch (intret) {
 					case 0:
 						return 0;
-						break;
 					case 1: // Item used
 						return 1;
-						break;
 					case 2: // Item used, end screen
 						return 2;
-						break;
 					case 3: // Item used, consume item
 						bag.pbDeleteItem(item);
 						return 1;
-						break;
 					case 4: // Item used, end screen and consume item
 						bag.pbDeleteItem(item);
 						return 2;
-						break;
 					default:
 						(this as IGameMessage).pbMessage(Game._INTL("Can't use that here."));
 						return 0;

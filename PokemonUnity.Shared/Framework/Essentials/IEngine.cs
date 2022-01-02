@@ -79,7 +79,7 @@ namespace PokemonEssentials.Interface
 	public interface IAudioObject
 	{
 		string name { get; set; }
-		float volume { get; }
+		int volume { get; }
 		float pitch { get; }
 	}
 	public interface IAudioBGM : IAudioObject
@@ -102,6 +102,7 @@ namespace PokemonEssentials.Interface
 		/// Starts the BGM playback.
 		/// </summary>
 		void play();
+		IAudioBGM clone();
 	}
 	public interface IAudioBGS : IAudio
 	{
@@ -123,6 +124,7 @@ namespace PokemonEssentials.Interface
 		/// Starts the BGS playback.
 		/// </summary>
 		void play();
+		IAudioBGS clone();
 	}
 	public interface IAudioME : IAudio
 	{
@@ -139,6 +141,7 @@ namespace PokemonEssentials.Interface
 		/// Starts the ME playback.
 		/// </summary>
 		void play();
+		IAudioME clone();
 	}
 	public interface IAudioSE : IAudio
 	{
@@ -148,6 +151,19 @@ namespace PokemonEssentials.Interface
 		void stop();
 		/// <summary>
 		/// Starts the SE playback.
+		/// </summary>
+		void play();
+		IAudioSE clone();
+	}
+	public interface IWaveData
+	{
+		/// <summary>
+		/// </summary>
+		byte intensity();
+		/// <summary>
+		/// </summary>
+		int time();
+		/// <summary>
 		/// </summary>
 		void play();
 	}
@@ -176,10 +192,10 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface ITone
 	{
-		float red { get; }
-		float green { get; }
-		float blue { get; }
-		float gray { get; }
+		float red { get; set; }
+		float green { get; set; }
+		float blue { get; set; }
+		float gray { get; set; }
 		/// <summary>
 		/// The color tone class. Each component is handled with a floating point value. (-255<>255)
 		/// </summary>
@@ -188,6 +204,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="blue"></param>
 		/// <param name="gray">only 0-255</param>
 		void set(float red, float green, float blue, float gray = 0);
+		ITone clone();
 	}
 	/// <summary>
 	/// The rectangle class.
@@ -328,7 +345,7 @@ namespace PokemonEssentials.Interface
 		/// The color (Color) to be blended with the viewport. Alpha values are used in the blending ratio.
 		/// Handled separately from the color blended into a flash effect.
 		/// </summary>
-		IColor color { get; }
+		IColor color { get; set; }
 		/// <summary>
 		/// Returns TRUE if the viewport has been freed.
 		/// </summary>

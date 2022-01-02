@@ -24,7 +24,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		public interface IPokemonChatter
 		{
-			IAudioSE chatter		{ get; set; }
+			IWaveData chatter		{ get; set; }
 		}
 	}
 

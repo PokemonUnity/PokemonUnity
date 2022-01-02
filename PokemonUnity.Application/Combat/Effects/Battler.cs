@@ -23,7 +23,7 @@ namespace PokemonUnity.Combat
 			public Moves ChoiceBand			{ get; set; }
 			public int Confusion			{ get; set; }
 			public int Counter				{ get; set; }
-			public sbyte CounterTarget		{ get; set; } //ToDo: maybe `byte?` and do `.HasValue`?
+			public int CounterTarget		{ get; set; } //ToDo: maybe nullable and do `.HasValue`?
 			public bool Curse				{ get; set; }
 			public bool DefenseCurl			{ get; set; }
 			public bool DestinyBond			{ get; set; }

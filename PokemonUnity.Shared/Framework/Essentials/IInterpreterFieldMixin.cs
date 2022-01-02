@@ -10,7 +10,7 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface IInterpreterFieldMixin
 	{
-		object[] pbParams { get; }
+		//object[] pbParams { get; }
 
 		object getVariable(params int[] arg);
 		PokemonEssentials.Interface.PokeBattle.IPokemon pbGetPokemon(int id);

@@ -1663,7 +1663,8 @@ namespace PokemonUnity
 		EVBERRY,
 		POWDER,
 		ENERGYROOT,
-		REVIVALHERB
+		REVIVALHERB,
+		FRIENDBALL
 	}
 	#endregion
 	#region Game Variables

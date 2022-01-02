@@ -71,7 +71,7 @@ namespace PokemonUnity.Combat
 			if (move == null) move = new Attack.Move(Moves.NONE);
 			Attack.Data.MoveData movedata    = Game.MoveData[move.id];
 			this.battle		= battle;
-			Power			= movedata.basedamage ?? 0; //.BaseDamage;
+			Power			= movedata.Power ?? 0; //.BaseDamage;
 			Type			= movedata.Type;
 			Accuracy		= movedata.Accuracy ?? 0;
 			//Effect		= movedata.Effect;
@@ -103,17 +103,19 @@ namespace PokemonUnity.Combat
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
 			//Attack.Data.MoveData movedata = Game.MoveData[move.id];
+			Attack.Data.Effects effect = Game.MoveData[move.id].Effect;
 			//Type className = Type.GetType(string.Format("PokeBattle_Move_{0}X", movedata.Effect));
 			////if Object.const_defined(className)
 			//	//return (className).new (battle, move);
 			//	return Activitor.CreateInstance(className, battle, move);
-			if (Game.MoveEffectData.ContainsKey(move.Effect))
-				return Game.MoveEffectData[move.Effect].Initialize(battle, move);
+			if (Game.MoveEffectData.ContainsKey(effect)) //move.Effect
+				return Game.MoveEffectData[effect].Initialize(battle, move);
 				//return move.Effect.ToBattleMove().Initialize(battle, move);
 			else
 				return new PokeBattle_UnimplementedMove().Initialize(battle, move);
 		}
 
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
 		#region About the move
 		public virtual int TotalPP { get {
 				if (totalpp>0) return totalpp; //totalpp != null && 
@@ -303,8 +305,8 @@ namespace PokemonUnity.Combat
 			if (attacker.hasMoldBreaker())return false; 
 			if (opponent.hasWorkingAbility(Abilities.SAP_SIPPER) && type == Types.GRASS){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sap Sipper (made #{Game.MoveData[MoveId].Name} ineffective)");
-				if (opponent.pbCanIncreaseStatStage(Stats.ATTACK, opponent))
-					opponent.pbIncreaseStatWithCause(Stats.ATTACK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
+				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.ATTACK, opponent))
+					b.pbIncreaseStatWithCause(Stats.ATTACK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
 						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
@@ -313,8 +315,8 @@ namespace PokemonUnity.Combat
 			if ((opponent.hasWorkingAbility(Abilities.STORM_DRAIN) && type == Types.WATER) ||
 				(opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD) && type == Types.ELECTRIC)){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{Game.MoveData[MoveId].Name} ineffective)");
-				if (opponent.pbCanIncreaseStatStage(Stats.SPATK, opponent))
-					opponent.pbIncreaseStatWithCause(Stats.SPATK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
+				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPATK, opponent))
+					b.pbIncreaseStatWithCause(Stats.SPATK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
 						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
@@ -322,8 +324,8 @@ namespace PokemonUnity.Combat
 			}
 			if (opponent.hasWorkingAbility(Abilities.MOTOR_DRIVE) && type == Types.ELECTRIC){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Motor Drive (made #{Game.MoveData[MoveId].Name} ineffective)");
-				if (opponent.pbCanIncreaseStatStage (Stats.SPEED, opponent))
-					opponent.pbIncreaseStatWithCause(Stats.SPEED,1, opponent, opponent.Ability.ToString(TextScripts.Name));
+				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage (Stats.SPEED, opponent))
+					b.pbIncreaseStatWithCause(Stats.SPEED,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
 						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
@@ -531,10 +533,10 @@ namespace PokemonUnity.Combat
 			if (opponent.pbOwnSide.LuckyChant>0) return false;
 			if (pbCritialOverride(attacker, opponent)) return true;
 			int c=0;
-			int[] ratios=(Core.USENEWBATTLEMECHANICS)?new int[] { 16, 8, 2, 1, 1 } : new int[] { 16, 8, 4, 3, 2 };
+			int[] ratios=Core.USENEWBATTLEMECHANICS?new int[] { 16, 8, 2, 1, 1 } : new int[] { 16, 8, 4, 3, 2 };
 				c+=attacker.effects.FocusEnergy;
 				if (hasHighCriticalRate) c+=1;
-			if (attacker.IsHyperMode && Type == Types.SHADOW)
+			if (attacker is IBattlerShadowPokemon p && p.inHyperMode() && Type == Types.SHADOW)
 				c+=1;
 			if (attacker.hasWorkingAbility(Abilities.SUPER_LUCK)) c+=1;
 			if (attacker.hasWorkingItem(Items.STICK) 
@@ -1239,5 +1241,6 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 		#endregion
+#pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
 	}
 }

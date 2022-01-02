@@ -90,7 +90,7 @@ namespace PokemonUnity//.Inventory
 		}
 
 		//static ItemHandlers() {
-		private void RegisterItemHandlers() {
+		/*private void RegisterItemHandlers() {
 			//Events.OnStepTaken+=OnStepTakenEventHandler;
 			#region UseFromBag handlers
 			UseFromBag.Add(Items.REPEL, () => { return pbRepel(Items.REPEL, 100); });
@@ -2905,7 +2905,7 @@ namespace PokemonUnity//.Inventory
 				battle.pbThrowPokeball(battler.Index, item);
 			});
 			#endregion
-		}
+		}*/
 
 
 		//Events.onStepTaken+=proc {
@@ -2916,8 +2916,8 @@ namespace PokemonUnity//.Inventory
 					RepelSteps-=1;
 					if (RepelSteps<=0) {
 						(this as IGameMessage).pbMessage(Game._INTL("Repel's effect wore off..."));
-						Items ret=Item.pbChooseItemFromList(Game._INTL("Do you want to use another Repel?"),1,
-							Items.REPEL, Items.SUPER_REPEL, Items.MAX_REPEL);
+						Items ret=this is IGameItem g ? g.pbChooseItemFromList(Game._INTL("Do you want to use another Repel?"),1,
+							Items.REPEL, Items.SUPER_REPEL, Items.MAX_REPEL) : Items.NONE;
 						if (ret>0) pbUseItem(Bag,ret); //Item.pbUseItem(Bag,ret);
 					}
 				}

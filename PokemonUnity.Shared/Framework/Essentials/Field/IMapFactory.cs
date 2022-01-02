@@ -178,9 +178,9 @@ namespace PokemonEssentials.Interface.Field
 		/// <param name="thisEvent"></param>
 		/// <param name="otherEvent"></param>
 		/// <returns></returns>
-		void getThisAndOtherEventRelativePos(IGameCharacter thisEvent, IGameCharacter otherEvent);
+		IPoint getThisAndOtherEventRelativePos(IGameCharacter thisEvent, IGameCharacter otherEvent);
 
-		void getThisAndOtherPosRelativePos(IGameCharacter thisEvent, int otherMapID, float otherX, float otherY);
+		IPoint getThisAndOtherPosRelativePos(IGameCharacter thisEvent, int otherMapID, float otherX, float otherY);
 
 		ITilePosition getOffsetEventPos(IGameCharacter @event, float xOffset, float yOffset);
 

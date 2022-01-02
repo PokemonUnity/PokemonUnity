@@ -35,6 +35,7 @@ namespace PokemonEssentials.Interface
 
 	public interface IMove
 	{
+		PokemonUnity.Attack.Data.Effects Effect { get; }
 		/// <summary>
 		/// This move's ID
 		/// </summary>

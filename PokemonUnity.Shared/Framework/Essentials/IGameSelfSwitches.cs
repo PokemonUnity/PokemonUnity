@@ -2,7 +2,7 @@
 
 namespace PokemonEssentials.Interface
 {
-	public struct SelfSwitchVariable
+	public struct SelfSwitchVariable : ISelfSwitchVariable
 	{
 		public int MapId	{ get; private set; }
 		public int EventId	{ get; private set; }

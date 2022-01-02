@@ -89,7 +89,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="tone">color tone</param>
 		/// <param name="duration">time</param>
-		void start_tone_change(ITone tone, int duration);
+		void start_tone_change(ITone tone, float duration);
 		/// <summary>
 		/// Erase Picture
 		/// </summary>

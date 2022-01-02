@@ -320,7 +320,7 @@ namespace PokemonUnity
 
 		public int tilemap { get { return Core.MAPVIEWMODE; } }
 
-		public PokemonSystem() { return initialize(); }
+		public PokemonSystem() { initialize(); }
 		public PokemonEssentials.Interface.Screen.IPokemonSystemOption initialize() {
 			@textspeed   = 1;   // Text speed (0=slow, 1=normal, 2=fast)
 			@battlescene = 0;   // Battle effects (animations) (0=on, 1=off)

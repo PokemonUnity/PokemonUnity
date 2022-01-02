@@ -276,7 +276,7 @@ namespace PokemonEssentials.Interface
 
 			// Only called when in the party screen and having chosen an item to be used on
 			// the selected Pokémon
-			bool pbUseItemOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IScene scene);
+			bool pbUseItemOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IPartyDisplayScreen scene);
 
 			int pbUseItem(IBag bag, Items item, PokemonEssentials.Interface.Screen.IScene bagscene = null);
 

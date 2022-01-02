@@ -29,8 +29,8 @@ namespace PokemonEssentials.Interface
 		/// <param name="volume">Volume of the file, up to 100</param>
 		/// <param name="pitch">Pitch of the file, normally 100</param>
 		/// <returns></returns>
-		IAudioObject pbResolveAudioFile(string str, int? volume = null, int? pitch = null);
-		IAudioObject pbResolveAudioFile(IAudioObject str, int? volume = null, int? pitch = null);
+		IAudioObject pbResolveAudioFile(string str, int? volume = null, float? pitch = null);
+		IAudioObject pbResolveAudioFile(IAudioObject str, int? volume = null, float? pitch = null);
 
 		// ###############################################################################
 
@@ -43,8 +43,8 @@ namespace PokemonEssentials.Interface
 		// filename:volume:pitch
 		// volume -- Volume of the file, up to 100
 		// pitch -- Pitch of the file, normally 100
-		void pbBGMPlay(string param, int? volume = null, int? pitch = null);
-		void pbBGMPlay(IAudioObject param, int? volume = null, int? pitch = null);
+		void pbBGMPlay(string param, int? volume = null, float? pitch = null);
+		void pbBGMPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		// Fades out or stops BGM playback. 'x' is the time in seconds to fade out.
 		void pbBGMFade(float x = 0);
@@ -63,8 +63,8 @@ namespace PokemonEssentials.Interface
 		// filename:volume:pitch
 		// volume -- Volume of the file, up to 100
 		// pitch -- Pitch of the file, normally 100
-		void pbMEPlay(string param, int? volume = null, int? pitch = null);
-		void pbMEPlay(IAudioObject param, int? volume = null, int? pitch = null);
+		void pbMEPlay(string param, int? volume = null, float? pitch = null);
+		void pbMEPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		// Fades out or stops ME playback. 'x' is the time in seconds to fade out.
 		void pbMEFade(float x = 0);
@@ -83,8 +83,8 @@ namespace PokemonEssentials.Interface
 		// filename:volume:pitch
 		// volume -- Volume of the file, up to 100
 		// pitch -- Pitch of the file, normally 100
-		void pbBGSPlay(string param, int? volume = null, int? pitch = null);
-		void pbBGSPlay(IAudioObject param, int? volume = null, int? pitch = null);
+		void pbBGSPlay(string param, int? volume = null, float? pitch = null);
+		void pbBGSPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		// Fades out or stops BGS playback. 'x' is the time in seconds to fade out.
 		void pbBGSFade(float x = 0);
@@ -103,8 +103,8 @@ namespace PokemonEssentials.Interface
 		// filename:volume:pitch
 		// volume -- Volume of the file, up to 100
 		// pitch -- Pitch of the file, normally 100
-		void pbSEPlay(string param, int? volume = null, int? pitch = null);
-		void pbSEPlay(IAudioObject param, int? volume = null, int? pitch = null);
+		void pbSEPlay(string param, int? volume = null, float? pitch = null);
+		void pbSEPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		// Stops SE playback.
 		void pbSEFade(float x = 0);

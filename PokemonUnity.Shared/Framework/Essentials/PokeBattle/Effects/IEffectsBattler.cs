@@ -22,7 +22,7 @@ namespace PokemonEssentials.Interface.PokeBattle.Effects
 		Moves ChoiceBand			{ get; set; }
 		int Confusion			{ get; set; }
 		int Counter				{ get; set; }
-		sbyte CounterTarget		{ get; set; } //ToDo: maybe `byte?` and do `.HasValue`?
+		int CounterTarget		{ get; set; } //ToDo: maybe `byte?` and do `.HasValue`?
 		bool Curse				{ get; set; }
 		bool DefenseCurl			{ get; set; }
 		bool DestinyBond			{ get; set; }

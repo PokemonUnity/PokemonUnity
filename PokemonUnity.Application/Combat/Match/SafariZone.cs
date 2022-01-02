@@ -4,10 +4,11 @@ using System.Linq;
 using PokemonUnity.Inventory;
 using PokemonUnity.Combat.Data;
 using PokemonUnity.Character;
+using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonUnity.Combat
 {
-	public class PokeBattle_SafariZone : Battle//, PokemonEssentials.Interface.PokeBattle.IPokeBattle_SafariZone 
+	public class PokeBattle_SafariZone : Battle, PokemonEssentials.Interface.PokeBattle.ISafariZone 
 	{
 		//public Environment environment { get; private set; }
 		//public Pokemon[] party1 { get; private set; }
@@ -17,22 +18,26 @@ namespace PokemonUnity.Combat
 		//public int debugupdate { get; private set; }
 		//include PokeBattle_BattleCommon;
 		public PokeBattle_SafariZone(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.ITrainer player,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2) : base(scene, p1, p2, player, null)
-		//public void initialize(IPokeBattle_Scene scene,Trainer player,Pokemon[] party) 
+        {
+			initialize(scene, player, p2);
+        }
+		public PokemonEssentials.Interface.PokeBattle.ISafariZone initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,ITrainer player,IPokemon[] party) 
 		{
-			//base.scene=scene;
-			//base.party2=party;
-			//@peer=new PokeBattle_BattlePeer();
-			//base.player=player;
-			//@battlers=new Pokemon[] {
-			//   new Pokemon(this,0), //PokeBattle_FakeBattler(party[0],0),
-			//   new Pokemon(this,1), //PokeBattle_FakeBattler(party[0],1),
-			//   new Pokemon(this,2), //PokeBattle_FakeBattler(party[0],2),
-			//   new Pokemon(this,3)  //PokeBattle_FakeBattler(party[0],3)
-			//};
-			//@environment=Environment.None;
-			//@battlescene=true; 
-			//@decision=BattleResults.InProgress;
+			base.scene=scene;
+			base.party2=party;
+			@peer=Monster.PokeBattle_BattlePeer.create();
+			base.player=new ITrainer[] { player };
+			@battlers=new IBattler[] {
+			   new Pokemon(this,0), //PokeBattle_FakeBattler(party[0],0),
+			   new Pokemon(this,1), //PokeBattle_FakeBattler(party[0],1),
+			   new Pokemon(this,2), //PokeBattle_FakeBattler(party[0],2),
+			   new Pokemon(this,3)  //PokeBattle_FakeBattler(party[0],3)
+			};
+			@environment=Overworld.Environments.None;
+			@battlescene=true; 
+			@decision=BattleResults.InProgress;
 			@ballcount=0;
+			return this;
 		}
 
 		//public override bool pbIsOpposing (int index) {
@@ -41,7 +46,7 @@ namespace PokemonUnity.Combat
 		//public override bool pbIsDoubleBattler (int index) {
 		//  return (index>=2);
 		//}
-		//public override IPokemon[] battlers { get; private set; }
+		//public override IBattler[] battlers { get; private set; }
 		//  return @battlers; }
 		//public override Trainer[] opponent { get {
 		//  return null; } }
@@ -51,7 +56,7 @@ namespace PokemonUnity.Combat
 		public int ballCount{ get {
 				return (@ballcount<0) ? 0 : @ballcount;
 			}
-			private set {
+			set {
 				@ballcount=(value<0) ? 0 : value;
 		} }
 
@@ -79,8 +84,8 @@ namespace PokemonUnity.Combat
 		public BattleResults pbStartBattle() {
 			try { //begin
 				PokemonEssentials.Interface.PokeBattle.IPokemon wildpoke=@party2[0];
-				//this.pbPlayer.seen[wildpoke.Species]=true;
-				Game.GameData.Player.Pokedex[(int)wildpoke.Species,0]=(byte)1;
+				this.pbPlayer().seen[wildpoke.Species]=true;
+				//Game.GameData.Player.Pokedex[(int)wildpoke.Species,0]=(byte)1;
 				//Game.pbSeenForm(wildpoke);
 				base.pbSetSeen(wildpoke);
 				@scene.pbStartBattle(this);
@@ -100,8 +105,8 @@ namespace PokemonUnity.Combat
 					int cmd=@scene.pbSafariCommandMenu(0);
 					switch (cmd) {
 						case 0: // Ball
-							//if (Game.GameData.Player.PC.pbBoxesFull()) {
-							if (Game.GameData.Player.PC.hasSpace()) {
+							if (Game.GameData is PokemonEssentials.Interface.IGameUtility pc && pc.pbBoxesFull()) {
+							//if (Game.GameData.Player.PC.hasSpace()) {
 								pbDisplay(Game._INTL("The boxes are full! You can't catch any more Pokémon!"));
 								continue;
 							}

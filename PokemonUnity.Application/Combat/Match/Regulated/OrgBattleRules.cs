@@ -471,8 +471,8 @@ namespace PokemonUnity
 				{
 					if (team1[i].Level != adj1[i])
 					{
-						team1[i].Level=adj1[i];
-						//team1[i].SetLevel((byte)adj1[i]);
+						//team1[i].Level=adj1[i];
+						(team1[i] as Pokemon).SetLevel((byte)adj1[i]);
 						team1[i].calcStats();
 					}
 				}
@@ -483,8 +483,8 @@ namespace PokemonUnity
 				{
 					if (team2[i].Level != adj2[i])
 					{
-						team2[i].Level=adj2[i];
-						//team2[i].SetLevel((byte)adj2[i]);
+						//team2[i].Level=adj2[i];
+						(team2[i] as Pokemon).SetLevel((byte)adj2[i]);
 						team2[i].calcStats();
 					}
 				}
@@ -1235,7 +1235,7 @@ namespace PokemonUnity
 			@teamRules = new List<IBattleTeamRestriction>();
 			@subsetRules = new List<IBattleTeamRestriction>();
 			_minLength = 1;
-			_maxLength = number <= 0 ? Game.GameData.Features.LimitPokemonPartySize : number;
+			_maxLength = number <= 0 ? (Game.GameData as Game).Features.LimitPokemonPartySize : number;
 		}
 
 		public IPokemonRuleSet copy()

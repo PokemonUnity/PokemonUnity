@@ -16,11 +16,11 @@ namespace PokemonUnity
 		public IDictionary<int,IPokemonMetadata> pbLoadMetadata() {
 			if (PokemonTemp == null) PokemonTemp=new PokemonTemp();
 			if (PokemonTemp.pokemonMetadata == null) {
-				if (pbRgssExists("Data/metadata.dat") == null) {
-					PokemonTemp.pokemonMetadata=new Dictionary<int,IPokemonMetadata>(); //IPokemonMetadata[0]
-				} else {
-					PokemonTemp.pokemonMetadata=load_data("Data/metadata.dat");
-				}
+				//if (pbRgssExists("Data/metadata.dat") == null) {
+				//	PokemonTemp.pokemonMetadata=new Dictionary<int,IPokemonMetadata>(); //IPokemonMetadata[0]
+				//} else {
+				//	PokemonTemp.pokemonMetadata=load_data("Data/metadata.dat");
+				//}
 			}
 			return PokemonTemp.pokemonMetadata;
 		}
@@ -33,13 +33,13 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public GlobalMetadata pbGetMetadata(int mapid,GlobalMetadatas metadataType) {
+		public PokemonEssentials.Interface.Field.GlobalMetadata? pbGetMetadata(int mapid,GlobalMetadatas metadataType) {
 			IDictionary<int,IPokemonMetadata> meta=pbLoadMetadata();
 			if (meta[mapid] != null) return meta[mapid].Global; //[metadataType]
 			return null;
 		}
 
-		public MapMetadata pbGetMetadata(int mapid,MapMetadatas metadataType) {
+		public MapMetadata? pbGetMetadata(int mapid,MapMetadatas metadataType) {
 			IDictionary<int,IPokemonMetadata> meta=pbLoadMetadata();
 			if (meta[mapid] != null) return meta[mapid].Map; //[metadataType]
 			return null;
@@ -55,18 +55,20 @@ namespace PokemonUnity
 			return PokemonTemp.pokemonPhoneData;
 		}
 
-		public IList<string> pbOpenDexData() {
+		public IList<string> pbOpenDexData(Func<IList<string>,IList<string>> block = null) {
 			if (PokemonTemp == null) PokemonTemp=new PokemonTemp();
 			if (PokemonTemp.pokemonDexData == null) {
 				//pbRgssOpen("Data/dexdata.dat","rb"){|f|
 				//   PokemonTemp.pokemonDexData=f.read();
 				//}
 			}
-			//if (block_given) {
-			//  StringInput.open(PokemonTemp.pokemonDexData) {|f| yield f }
-			//} else {
-			//  return StringInput.open(PokemonTemp.pokemonDexData);
-			//}
+			if (block != null) { //PokemonTemp.pokemonDexData != null
+				//StringInput.open(PokemonTemp.pokemonDexData) {|f| yield f }
+				return block.Invoke(PokemonTemp.pokemonDexData);
+			} else {
+				//return StringInput.open(PokemonTemp.pokemonDexData);
+				return PokemonTemp.pokemonDexData;
+			}
 		}
 
 		//public void pbDexDataOffset(IList<string> dexdata,Pokemons species,int offset) {
@@ -75,11 +77,14 @@ namespace PokemonUnity
 
 		public void pbClearData() {
 			if (PokemonTemp != null) {
-				PokemonTemp.pokemonDexData=null;
-				PokemonTemp.pokemonMetadata=null;
-				PokemonTemp.pokemonPhoneData=null;
+				//PokemonTemp.pokemonDexData=null;
+				//PokemonTemp.pokemonMetadata=null;
+				//PokemonTemp.pokemonPhoneData=null;
+				PokemonTemp.pokemonDexData.Clear();
+				PokemonTemp.pokemonMetadata.Clear();
+				PokemonTemp.pokemonPhoneData.Clear();
 			}
-			MapFactoryHelper.clear();
+			//MapFactoryHelper.clear(); //ToDo: Create static class and uncomment
 			if (GameMap != null && PokemonEncounters != null) {
 				PokemonEncounters.setup(GameMap.map_id);
 			}

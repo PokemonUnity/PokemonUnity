@@ -34,7 +34,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Get List of Event Commands
 		/// </summary>
-		//List<> list { get; }
+		IList<PokemonEssentials.Interface.RPGMaker.Kernal.IEventCommand> list { get; }
 		/// <summary>
 		/// Checks if switch is on
 		/// </summary>

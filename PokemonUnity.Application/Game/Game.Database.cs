@@ -199,7 +199,7 @@ namespace PokemonUnity
 			PokemonData = new Dictionary<Pokemons, Monster.Data.PokemonData>();
 			if (sql) //using (con)
 				return GetPokemonsFromSQL(con);
-			else return GetPokemonsFromXML();
+			else return false; //GetPokemonsFromXML();
 		}
 		public static bool InitPokemonMoves(bool sql = true)
 		{
@@ -319,7 +319,7 @@ namespace PokemonUnity
 			HiddenMoveData = new Dictionary<HiddenMoves, HiddenMoveData>();
 			if (sql) //using (con)
 				return false; //GetGymBadgesFromSQL(con);
-			else return GetGymBadgesFromXML();
+			else return false; //SGetGymBadgesFromXML();
 		}
 		public static bool InitPokedex(bool sql = true)
 		{
@@ -340,7 +340,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region From XML
-		static bool GetPokemonsFromXML()
+		/*static bool GetPokemonsFromXML()
 		{
 			var xmlDocument = new XmlDocument();
 			xmlDocument.LoadXml(LockFileStream(FilePokemonXML));
@@ -430,7 +430,7 @@ namespace PokemonUnity
 			//}
 
 			return true; //dictionary;
-		}
+		}*/
 		static bool GetMoveEffectFromXML()
 		{
 			try
@@ -1920,7 +1920,7 @@ namespace PokemonUnity
 				return false;
 			}
 		}
-		static bool GetGymBadgesFromXML()
+		/*static bool GetGymBadgesFromXML()
 		{
 			try
 			{
@@ -2162,7 +2162,7 @@ namespace PokemonUnity
 				GameDebug.LogError("Exception Error Thrown on...");
 				return false;
 			}
-		}
+		}*/
 		#endregion
 		#region From SQL
 		static bool GetPokemonsFromSQL(IDbConnection con)
@@ -2208,7 +2208,7 @@ namespace PokemonUnity
 						PokemonData.Add(Pokemons.NONE, new Monster.Data.PokemonData(Id:Pokemons.NONE, hatchTime: 1000));
 						while(reader.Read()) //if(reader.Read())
 						{
-							if (OnLoad != null) { onLoad.Piece = reader.StepCount; OnLoad.Invoke(Game.GameData, onLoad); }
+							//if (OnLoad != null) { onLoad.Piece = reader.StepCount; OnLoad.Invoke(Game.GameData, onLoad); }
 							PokemonData.Add((Pokemons)int.Parse((string)reader["id"].ToString()),
 								new PokemonUnity.Monster.Data.PokemonData(
 									Id: (Pokemons)int.Parse((string)reader["id"].ToString())
@@ -3434,7 +3434,7 @@ namespace PokemonUnity
 				--where i.encounter_condition_value_group IS NOT NULL
 				--where i.encounter_condition_value_id IS NOT NULL
 				where e.location_area_id = {0}
-				group by e.location_area_id, s.encounter_method_id, s.slot, s.rarity; --e.pokemon_id;", GameData.Area);
+				group by e.location_area_id, s.encounter_method_id, s.slot, s.rarity; --e.pokemon_id;", GameData.GamePlayer.map.map_id);
 				IDataReader reader = stmt.ExecuteReader();
 
 				//Step 4: Read the results

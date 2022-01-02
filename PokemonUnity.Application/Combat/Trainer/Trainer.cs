@@ -12,10 +12,10 @@ namespace PokemonUnity//.Combat
 { 
 	public partial class Trainer : PokemonEssentials.Interface.PokeBattle.ITrainer {
 		#region Variables
-		public string name { get; private set; }
+		public string name { get; set; }
 		public int id { get; set; }
-		public int? metaID { get; private set; }
-		public TrainerTypes trainertype { get; private set; }
+		public int? metaID { get; set; }
+		public TrainerTypes trainertype { get; set; }
 		public int? outfit { get; set; }
 		public bool[] badges { get; private set; }
 		public int money { get; private set; }
@@ -25,9 +25,9 @@ namespace PokemonUnity//.Combat
 		//public bool[] owned { get; private set; }
 		//ToDo: if false: seen, if true: caught?
 		public IDictionary<Pokemons,bool> owned { get; private set; }
-		public int?[][] formseen { get; private set; }
+		public int?[][] formseen { get; set; }
 		//public int[][] formlastseen { get; private set; }
-		public KeyValuePair<int, int>[] formlastseen { get; private set; }
+		public KeyValuePair<int, int?>[] formlastseen { get; set; }
 		//public bool[] shadowcaught { get; private set; }
 		public IList<Pokemons> shadowcaught { get; set; }
 		public PokemonEssentials.Interface.PokeBattle.IPokemon[] party { get; set; }
@@ -51,7 +51,7 @@ namespace PokemonUnity//.Combat
 		#region Constructor
 		public Trainer (string name,TrainerTypes trainertype) {
 			this.name=name;
-			@language=Game.pbGetLanguage();
+			@language=(Languages)(Game.GameData as PokemonEssentials.Interface.IGameUtility).pbGetLanguage();
 			this.trainertype=trainertype;
 			@id=Core.Rand.Next(256);
 			@id|=Core.Rand.Next(256)<<8;
@@ -137,7 +137,7 @@ namespace PokemonUnity//.Combat
 		} }
 
 		public Languages Language { get {
-			if (!@language.HasValue) @language=Game.pbGetLanguage();
+			if (!@language.HasValue) @language=(Languages)(Game.GameData as PokemonEssentials.Interface.IGameUtility).pbGetLanguage();
 			return @language.Value;
 		} }
 
@@ -372,7 +372,7 @@ namespace PokemonUnity//.Combat
 			@seen.Clear(); //=new Dictionary<Pokemons, bool>();
 			@owned.Clear(); //=new Dictionary<Pokemons, bool>();
 			@formseen=new int?[0][];
-			@formlastseen=new int[0][];
+			@formlastseen=new KeyValuePair<int, int?>[0];
 			//for (int i = 1; i < Game.PokemonData.Count; i++) {
 			//  @seen[i]=false;
 			//  @owned[i]=false;

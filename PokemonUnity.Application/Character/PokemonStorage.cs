@@ -50,7 +50,7 @@ namespace PokemonUnity
 			} }
 
 			public int length { get { //capacity
-				return @pokemon.Capacity;
+				return (@pokemon as List<Pokemon>).Capacity;
 			} }
 
 			public IEnumerable<PokemonEssentials.Interface.PokeBattle.IPokemon> each() {
@@ -67,7 +67,7 @@ namespace PokemonUnity
 
 			public static implicit operator PokemonBox (PokemonEssentials.Interface.PokeBattle.IPokemon[] party)
 			{
-				IPokemonBox box = (IPokemonBox)new PokemonBox("party", Game.GameData.Features.LimitPokemonPartySize);
+				IPokemonBox box = new PokemonBox("party", (Game.GameData as Game).Features.LimitPokemonPartySize);
 				int i = 0;
 				foreach(PokemonEssentials.Interface.PokeBattle.IPokemon p in party)
 				{
@@ -75,7 +75,7 @@ namespace PokemonUnity
 						box[i] = p;
 					i++;
 				}
-				return box;
+				return (PokemonBox)box;
 			}
 			//public static implicit operator PokemonEssentials.Interface.PokeBattle.IPokemon[] (PokemonBox box)
 			//{
@@ -122,7 +122,7 @@ namespace PokemonUnity
 
 			public int maxPokemon(int box) {
 				if (box>=this.maxBoxes) return 0;
-				return box<0 ? Game.GameData.Features.LimitPokemonPartySize : this[box].length;
+				return box<0 ? (Game.GameData as Game).Features.LimitPokemonPartySize : this[box].length;
 			}
 
 			public IPokemonBox this[int x] { get {
@@ -193,8 +193,8 @@ namespace PokemonUnity
 						GameDebug.LogWarning("Trying to copy null to storage"); // not localized
 					}
 					this[boxSrc,indexSrc].Heal();
-					if (//this[boxSrc,indexSrc].respond_to("formTime") &&
-						this[boxSrc,indexSrc].formTime != null) this[boxSrc,indexSrc].formTime=null;
+					if (this[boxSrc,indexSrc] is IPokemonMultipleForms f && //this[boxSrc,indexSrc].respond_to("formTime") &&
+						f.formTime != null) f.formTime=null;
 					this[boxDst,indexDst]=this[boxSrc,indexSrc];
 				}
 				return true;
@@ -218,7 +218,7 @@ namespace PokemonUnity
 				for (int i = 0; i < maxPokemon(box); i++) {
 					if (this[box,i]==null) {
 						if (box>=0) {
-							pkmn.heal();
+							pkmn.Heal();
 							if (pkmn is IPokemonMultipleForms p && //pkmn.respond_to("formTime") && 
 								p.formTime != null) p.formTime=null;
 						}
@@ -275,7 +275,7 @@ namespace PokemonUnity
 					//ToDo: Feature not setup... 
 					this.party=party;
 				} else {
-					@party=new Pokemon[Game.GameData.Features.LimitPokemonPartySize];
+					@party=new Pokemon[(Game.GameData as Game).Features.LimitPokemonPartySize];
 				}
 				return this;
 			}
@@ -302,7 +302,7 @@ namespace PokemonUnity
 					GameDebug.LogError(Game._INTL("The player is not on a map, so the region could not be determined."));
 				}
 				if (@lastmap!=Game.GameData.GameMap.map_id) {
-					@rgnmap=pbGetCurrentRegion(); // may access file IO, so caching result
+					@rgnmap=Game.GameData is IGameUtility g ? g.pbGetCurrentRegion() : -1; // may access file IO, so caching result
 					@lastmap=Game.GameData.GameMap.map_id;
 				}
 				if (@rgnmap<0) {
@@ -338,7 +338,7 @@ namespace PokemonUnity
 				return getCurrentStorage.maxPokemon(box);
 			}
 
-			public PokemonEssentials.Interface.Screen.IPokemonStorage this[int x] { get {
+			public PokemonEssentials.Interface.Screen.IPokemonBox this[int x] { get {
 				return getCurrentStorage[x];
 			} }
 			public PokemonEssentials.Interface.PokeBattle.IPokemon this[int x,int y] { get {
@@ -392,7 +392,7 @@ namespace PokemonUnity
 
 			public void access() {
 				Game.GameData.pbMessage(Game._INTL("\\se[accesspc]Accessed {1}'s PC.",Game.GameData.Trainer.name));
-				Game.GameData.pbTrainerPCMenu();
+				if (Game.GameData is IGamePCStorage s) s.pbTrainerPCMenu();
 			}
 		}
 
@@ -402,8 +402,8 @@ namespace PokemonUnity
 			} }
 
 			public string name { get {
-				if (Game.GameData.Global.seenStorageCreator) {
-					return Game._INTL("{1}'s PC",Game.GameData.pbGetStorageCreator());
+				if (Game.GameData.Global.seenStorageCreator && Game.GameData is IGamePCStorage s) {
+					return Game._INTL("{1}'s PC",s.pbGetStorageCreator());
 				} else {
 					return Game._INTL("Someone's PC");
 				}
@@ -435,9 +435,9 @@ namespace PokemonUnity
 							Game.GameData.pbMessage(Game._INTL("Can't deposit the last Pokémon!"));
 							continue;
 						}
-						Game.GameData.pbFadeOutIn(99999, block: () => {
-							IPokemonStorageScene scene=Game.GameData.Scenes.PokemonStorageScene; //new PokemonStorageScene();
-							IPokemonStorageScreen screen=Game.GameData.Screens.PokemonStorageScreen.initialize(scene,Game.GameData.PokemonStorage); //new PokemonStorageScreen(scene,Game.GameData.PokemonStorage);
+						if (Game.GameData is IGameSpriteWindow g) g.pbFadeOutIn(99999, block: () => {
+							IPokemonStorageScene scene=(Game.GameData as Game).Scenes.PokemonStorageScene; //new PokemonStorageScene();
+							IPokemonStorageScreen screen=(Game.GameData as Game).Screens.PokemonStorageScreen.initialize(scene,Game.GameData.PokemonStorage); //new PokemonStorageScreen(scene,Game.GameData.PokemonStorage);
 							screen.pbStartScreen(command);
 						});
 					} else {
@@ -498,7 +498,7 @@ namespace PokemonUnity
 			return creator;
 		}
 		
-		public Items pbPCItemStorage() {
+		public void pbPCItemStorage() {
 			//Items ret = Items.NONE;
 			do { //;loop
 				int command=(this as IGameMessage).pbShowCommandsWithHelp(null,
@@ -559,7 +559,7 @@ namespace PokemonUnity
 						commands.Add(mail.sender);
 					}
 					commands.Add(Game._INTL("Cancel"));
-					int command=Game.pbShowCommands(null,commands,-1);
+					int command=(this as IGameMessage).pbShowCommands(null,commands.ToArray(),-1);
 					if (command>=0 && command<Global.mailbox.Count) {
 						int mailIndex=command;
 						command=(this as IGameMessage).pbMessage(Game._INTL("What do you want to do with {1}'s Mail?",
@@ -571,7 +571,7 @@ namespace PokemonUnity
 							},-1);
 						if (command==0) {		// Read
 							pbFadeOutIn(99999, block: () => {
-								pbDisplayMail(Global.mailbox[mailIndex]);
+								if(this is IGameMail m) m.pbDisplayMail(Global.mailbox[mailIndex]);
 							});
 						} else if (command==1) {		// Move to Bag
 							if ((this as IGameMessage).pbConfirmMessage(_INTL("The message will be lost. Is that OK?"))) {

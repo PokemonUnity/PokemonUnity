@@ -79,7 +79,7 @@ namespace PokemonEssentials.Interface
 		string battleback_name { get; set; }
 		int[] passages { get; set; }
 		int[] priorities { get; set; }
-		int[] terrain_tags { get; set; }
+        PokemonUnity.Overworld.Terrains[] terrain_tags { get; set; }
 	}
 
 	namespace RPGMaker.Kernal

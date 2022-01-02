@@ -388,14 +388,12 @@ namespace PokemonUnity
 		/// <summary>
 		/// The Global Switch that is set to ON when the player whites out.
 		/// </summary>
-		// ToDo: Move to Game class, as this is not a core const...
-		public static bool STARTING_OVER_SWITCH = true;
+		public static int STARTING_OVER_SWITCH = 0; //true;
 		/// <summary>
 		/// The Global Switch that is set to ON when the player has seen Pokérus in the
 		///    Poké Center, and doesn't need to be told about it again.
 		/// </summary>
-		// ToDo: Move to Game class, as this is not a core const...
-		public static bool SEEN_POKERUS_SWITCH = false;
+		public static int SEEN_POKERUS_SWITCH = 0; //false;
 		/// <summary>
 		/// The Global Switch which, while ON, makes all wild Pokémon created be
 		///    shiny.
@@ -416,6 +414,9 @@ namespace PokemonUnity
 		///    Evolving even if they otherwise could.
 		/// </summary>
 		public const bool NO_MEGA_EVOLUTION = true;
+
+		public const int FISHINGBEGINCOMMONEVENT = 0;
+		public const int FISHINGENDCOMMONEVENT = 0;
 		#endregion
 
 		#region Move Settings

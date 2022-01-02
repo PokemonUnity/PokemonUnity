@@ -43,13 +43,14 @@ namespace PokemonUnity
 			public float fog_oy				            { get; set; }     // fog y-coordinate starting point
 			public ITone fog_tone				        { get; set; }     // fog color tone
 			public int mapsInRange				        { get; set; }
+			private ITone @fog_tone_target;
 			private int fog_tone_duration;
 			private int fog_opacity_duration;
 			private float fog_opacity_target;
 			private int scroll_direction;
-			private int scroll_rest;
+			private float scroll_rest;
 			private float scroll_speed;
-			private Dictionary<int, object> common_events;
+			private Dictionary<int, IGameCommonEvent> common_events;
 			#endregion
 
 			#region Constructor
@@ -85,14 +86,14 @@ namespace PokemonUnity
 				@need_refresh = false;
 				//Events.onMapCreate.trigger(this,map_id, @map, tileset);
 				//Events.OnMapCreate.Invoke(this,map_id, @map, tileset);
-				//@events = new Dictionary<int, IGameEvent>();
-				//foreach (int i in @map.events.Keys) {
-				//  @events[i] = new Game_Event(@map_id, @map.events[i],this);
-				//}
-				//@common_events = new Dictionary<int,object>();
-				//for (int i = 1; i < DataCommonEvents.size; i++) {
-				//  @common_events[i] = new Game_CommonEvent(i);
-				//}
+				@events = new Dictionary<int, IGameEvent>();
+				foreach (int i in @map.events.Keys) {
+					//@events[i] = new Game_Event(@map_id, @map.events[i],this);
+				}
+				@common_events = new Dictionary<int,IGameCommonEvent>();
+				for (int i = 1; i < Game.GameData.DataCommonEvents.Length; i++) {
+					//@common_events[i] = new Game_CommonEvent(i);
+				}
 				//@fog_tone = new Tone(0, 0, 0, 0);
 				//@fog_tone_target = new Tone(0, 0, 0, 0);
 				@fog_ox = 0;
@@ -174,19 +175,19 @@ namespace PokemonUnity
 			}
 
 			public void scroll_down(float distance) {
-				@display_y = Math.Min(@display_y + distance, (this.height - 15) * 128);
+				@display_y = (int)Math.Min(@display_y + distance, (this.height - 15) * 128);
 			}
 
 			public void scroll_left(float distance) {
-				@display_x = Math.Max(@display_x - distance, 0);
+				@display_x = (int)Math.Max(@display_x - distance, 0);
 			}
 
 			public void scroll_right(float distance) {
-				@display_x = Math.Min(@display_x + distance, (this.width - 20) * 128);
+				@display_x = (int)Math.Min(@display_x + distance, (this.width - 20) * 128);
 			}
 
 			public void scroll_up(float distance) {
-				@display_y = Math.Max(@display_y - distance, 0);
+				@display_y = (int)Math.Max(@display_y - distance, 0);
 			}
 
 			public bool valid (float x,float y) {
@@ -204,8 +205,8 @@ namespace PokemonUnity
 					if (@event.tile_id >= 0 && @event != self_event &&
 						@event.x == x && @event.y == y && !@event.through) {
 //						if @terrain_tags[@event.tile_id]!=Terrains.Neutral
-							if (@passages[@event.tile_id] & bit != 0) return false;
-							if (@passages[@event.tile_id] & 0x0f == 0x0f) return false;
+							if ((@passages[@event.tile_id] & bit) != 0) return false;
+							if ((@passages[@event.tile_id] & 0x0f) == 0x0f) return false;
 							if (@priorities[@event.tile_id] == 0) return true;
 //						}
 					}
@@ -336,7 +337,7 @@ namespace PokemonUnity
 
 			public bool passableStrict (float x,float y,int d,IGameCharacter self_event = null) {
 				if (!valid(x, y)) return false;
-				foreach (Avatar.GameEvent @event in events.Values) {
+				foreach (IGameEvent @event in events.Values) {
 					if (@event.tile_id >= 0 && @event != self_event &&
 						@event.x == x && @event.y == y && !@event.through) {
 //						if @terrain_tags[@event.tile_id]!=Terrains.Neutral
@@ -457,12 +458,12 @@ namespace PokemonUnity
 				}
 			}
 
-			public bool in_range (object @object) {
+			public bool in_range (IGameCharacter @object) {
 				if (GameData.PokemonSystem.tilemap==2) return true;
 				float screne_x = display_x - 4*32*4;
 				float screne_y = display_y - 4*32*4;
-				int screne_width = display_x + Graphics.width*4 + 4*32*4;
-				int screne_height = display_y + Graphics.height*4 + 4*32*4;
+				int screne_width = display_x + (Game.GameData as Game).Graphics.width*4 + 4*32*4;
+				int screne_height = display_y + (Game.GameData as Game).Graphics.height*4 + 4*32*4;
 				if (@object.real_x <= screne_x) return false;
 				if (@object.real_x >= screne_width) return false;
 				if (@object.real_y <= screne_y) return false;
@@ -500,14 +501,14 @@ namespace PokemonUnity
 						@event.update();
 					}
 				}
-				foreach (var common_event in @common_events.Values) {
+				foreach (IGameCommonEvent common_event in @common_events.Values) {
 					common_event.update();
 				}
 				@fog_ox -= @fog_sx / 8.0f;
 				@fog_oy -= @fog_sy / 8.0f;
 				if (@fog_tone_duration >= 1) {
 					int d = @fog_tone_duration;
-					target = @fog_tone_target;
+					ITone target = @fog_tone_target;
 					@fog_tone.red = (@fog_tone.red * (d - 1) + target.red) / d;
 					@fog_tone.green = (@fog_tone.green * (d - 1) + target.green) / d;
 					@fog_tone.blue = (@fog_tone.blue * (d - 1) + target.blue) / d;

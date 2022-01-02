@@ -71,7 +71,7 @@ namespace PokemonUnity
 				Items.SPORT_BALL         //23=>
 			};
 
-			public static bool IsUnconditional(Items ball,Battle battle,Pokemon battler) {
+			public static bool IsUnconditional(Items ball,IBattle battle,IBattler battler) {
 				//if (!IsUnconditional[ball]) return false;
 				//return IsUnconditional.trigger(ball,battle,battler);
 				if (ball == Items.MASTER_BALL) {
@@ -80,7 +80,7 @@ namespace PokemonUnity
 				else return false;
 			}
 
-			public static int ModifyCatchRate(Items ball,int catchRate,Battle battle,Pokemon battler) {
+			public static int ModifyCatchRate(Items ball,int catchRate,IBattle battle,IBattler battler) {
 				//if (!ModifyCatchRate[ball]) return catchRate;
 				//return ModifyCatchRate.trigger(ball,catchRate,battle,battler);
 				#region Pokeball ModifyCatchRate
@@ -173,8 +173,8 @@ namespace PokemonUnity
 					return (int)Math.Min(catchRate,255);
 				}
 				else if (ball == Items.LOVE_BALL) {
-					Pokemon pbattler=battle.battlers[0];
-					Pokemon pbattler2=null;
+					IBattler pbattler=battle.battlers[0];
+					IBattler pbattler2=null;
 					if (battle.battlers[2].IsNotNullOrNone()) pbattler2=battle.battlers[2];
 					if (pbattler.Species==battler.Species &&
 						((battler.Gender==false && pbattler.Gender==true) ||
@@ -215,7 +215,7 @@ namespace PokemonUnity
 				else return catchRate;
 			}
 
-			public static void OnCatch(Items ball,Battle battle,Monster.Pokemon pokemon) {
+			public static void OnCatch(Items ball,IBattle battle,IPokemon pokemon) {
 				//if (!OnCatch[ball]) return;
 				//OnCatch.trigger(ball,battle,pokemon);
 				//if (OnCatch != null) OnCatch.Invoke(ball,battle,pokemon);
@@ -224,7 +224,7 @@ namespace PokemonUnity
 				}
 				else if (ball == Items.FRIEND_BALL) {
 					//pokemon.Happiness=200;
-					pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
+					//pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
 				}
 				else return;
 			}
@@ -242,7 +242,7 @@ namespace PokemonUnity
 				else return;
 			}
 
-			public static void OnFailCatch(Items ball,Battle battle,Pokemon battler) {
+			public static void OnFailCatch(Items ball,IBattle battle,IBattler battler) {
 				//if (!OnFailCatch[ball]) return;
 				//OnFailCatch.trigger(ball,battle,battler);
 				//if (OnFailCatch != null) OnFailCatch.Invoke(ball,battle,battler);

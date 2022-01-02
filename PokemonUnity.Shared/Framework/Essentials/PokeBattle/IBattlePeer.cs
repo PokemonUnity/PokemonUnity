@@ -16,7 +16,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IBattlePeer
 	{
-		void pbStorePokemon(IGamePlayer player, IPokemon pokemon);
+		int pbStorePokemon(ITrainer player, IPokemon pokemon);
 
 		string pbGetStorageCreator();
 

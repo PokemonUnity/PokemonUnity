@@ -116,9 +116,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_12C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!opponent.pbCanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
 			pbShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
-			bool ret = opponent.pbReduceStat(Stats.EVASION, increment: 2, attacker: attacker, showMessages: false);
+			bool ret = opponent is IBattlerEffect b0 && b0.pbReduceStat(Stats.EVASION, increment: 2, attacker: attacker, showMessages: false);
 			if (ret && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
 			return ret ? 0 : -1;
 		}

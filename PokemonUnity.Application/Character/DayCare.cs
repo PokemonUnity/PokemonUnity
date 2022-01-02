@@ -122,8 +122,8 @@ namespace PokemonUnity.Character
 			if (pbDayCareDeposited()==2) {
 				IPokemon pokemon1=this[0];//[0];
 				IPokemon pokemon2=this[1];//[0];
-				if (pokemon1.isShadow) return 0; //? rescue false
-				if (pokemon2.isShadow) return 0; //? rescue false
+				if (pokemon1 is IPokemonShadowPokemon s0 && s0.isShadow) return 0; //? rescue false
+				if (pokemon2 is IPokemonShadowPokemon s1 && s1.isShadow) return 0; //? rescue false
 				//dexdata=pbOpenDexData();
 				//pbDexDataOffset(dexdata,pokemon1.Species,31);
 				EggGroups compat10=Game.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
@@ -225,7 +225,7 @@ namespace PokemonUnity.Character
 				mother=pokemon1;
 				father=pokemon0;
 			}
-			babyspecies= PokemonUnity.Monster.Evolution.pbGetBabySpecies(babyspecies,mother.Item,father.Item);
+			babyspecies= EvolutionHelper.pbGetBabySpecies(babyspecies,mother.Item,father.Item);
 			if (babyspecies == Pokemons.MANAPHY) {				//&& hasConst?(PBSpecies,:PHIONE)
 				babyspecies=Pokemons.PHIONE;
 			} else if ((babyspecies == Pokemons.NIDORAN_F) ||	//&& hasConst?(PBSpecies,:NIDORANmA)
@@ -245,11 +245,12 @@ namespace PokemonUnity.Character
 			pid|=(Core.Rand.Next(65536)<<16);
 			//egg.PersonalId=pid;
 			//Inheriting form
-			if (babyspecies == Pokemons.BURMY ||
+			if ((egg is IPokemonMultipleForms e && mother is IPokemonMultipleForms m) && (
+				babyspecies == Pokemons.BURMY ||
 				babyspecies == Pokemons.SHELLOS ||
-				babyspecies == Pokemons.BASCULIN) {
-				//egg.form=mother.Form;
-				egg.SetForm(mother.FormId);
+				babyspecies == Pokemons.BASCULIN)) {
+				e.form=m.form;
+				//egg.SetForm(mother.FormId);
 			}
 			//Inheriting Moves
 			HashSet<Moves> moves=new HashSet<Moves>();
@@ -403,7 +404,7 @@ namespace PokemonUnity.Character
 				for (int i = 0; i < shinyretries; i++) {
 					if (egg.IsShiny) break;
 					//egg.PersonalId=Core.Rand.Next(65536)|(Core.Rand.Next(65536)<<16);
-					egg.shuffleShiny();
+					(egg as Pokemon).shuffleShiny();
 				}
 			}
 			//  Inheriting ability from the mother
@@ -477,7 +478,7 @@ namespace PokemonUnity.Character
 				IPokemon pkmn=this.Slot[i].Key;
 				if (!pkmn.IsNotNullOrNone()) return;
 				int maxexp=Monster.Data.Experience.GetMaxExperience(pkmn.GrowthRate);
-				if (pkmn.Exp<maxexp) {
+				if (pkmn.exp<maxexp) {
 					int oldlevel=pkmn.Level;
 					pkmn.exp+=1;
 					if (pkmn.Level!=oldlevel) {

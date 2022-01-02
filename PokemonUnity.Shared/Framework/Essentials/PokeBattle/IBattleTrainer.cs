@@ -25,8 +25,8 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int Money { get; set; }
 		IDictionary<Pokemons, bool> seen { get; }
 		IDictionary<Pokemons,bool> owned { get; }
-		int?[][] formseen { get; }
-		KeyValuePair<int,int>[] formlastseen { get; }
+		int?[][] formseen { get; set; }
+		KeyValuePair<int,int?>[] formlastseen { get; set; }
 		IList<Pokemons> shadowcaught { get; set; }
 		IPokemon[] party { get; set; }
 		/// <summary>

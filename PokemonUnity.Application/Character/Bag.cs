@@ -407,11 +407,11 @@ namespace PokemonUnity.Character
 
 		public PokemonBag() {
 			@lastpocket=1;
-			@pockets=new Items[PokemonBag.numPockets][];
-			//@choices=new int[PokemonBag.numPockets];
+			@pockets=new Items[numPockets][];
+			//@choices=new int[numPockets];
 			@choices=new Dictionary<ItemPockets, int>();
 			//  Initialize each pocket of the array
-			for (int i = 0; i < PokemonBag.numPockets; i++) {
+			for (int i = 0; i < numPockets; i++) {
 				@pockets[i]=new Items[0];
 				@choices.Add((ItemPockets)i,0); //@choices[i]=0;
 			}
@@ -419,14 +419,14 @@ namespace PokemonUnity.Character
 		}
 
 		public void rearrange() {
-			if ((@pockets.Length-1)!=PokemonBag.numPockets) {
-				List<Items>[] newpockets=new List<Items>[PokemonBag.numPockets];
-				Items[][] n=new Items[PokemonBag.numPockets][];
-				for (int i = 0; i < PokemonBag.numPockets; i++) {
+			if ((@pockets.Length-1)!=numPockets) {
+				List<Items>[] newpockets=new List<Items>[numPockets];
+				Items[][] n=new Items[numPockets][];
+				for (int i = 0; i < numPockets; i++) {
 					newpockets[i]=new List<Items>();
 					if (@choices[(ItemPockets)i] == null) @choices[(ItemPockets)i]=0;
 				}
-				int nump=PokemonBag.numPockets;
+				int nump=numPockets;
 				for (int i = 0; i < @pockets.Length; i++) {
 					foreach (Items item in @pockets[i]) {
 						//ItemPockets p=pbGetPocket(item[0]);
@@ -445,7 +445,7 @@ namespace PokemonUnity.Character
 		/// <param name="pocket"></param>
 		/// <returns></returns>
 		public int getChoice(ItemPockets pocket) {
-			if (pocket<0 || (int)pocket>PokemonBag.numPockets) {
+			if (pocket<0 || (int)pocket>numPockets) {
 				//throw new Exception(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
 				GameDebug.LogError(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
 			}
@@ -471,7 +471,7 @@ namespace PokemonUnity.Character
 		/// <param name="pocket"></param>
 		/// <param name="value"></param>
 		public void setChoice(ItemPockets pocket,int value) {
-			if (pocket<=0 || (int)pocket>PokemonBag.numPockets) {
+			if (pocket<=0 || (int)pocket>numPockets) {
 				//throw new Exception(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
 				GameDebug.LogError(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
 			}
@@ -567,7 +567,7 @@ namespace PokemonUnity.Character
 		  int pocket=(int)(Game.ItemData[item].Pocket??ItemPockets.MISC);
 		  int maxsize=maxPocketSize(pocket);
 		  if (maxsize<0) maxsize=@pockets[pocket].Length+1;
-		  return ItemStorageHelper.pbStoreAllOrNone(ref
+		  return ItemStorageHelper.pbStoreItem(ref
 		     @pockets[pocket],maxsize,Core.BAGMAXPERSLOT,item,qty);
 		}
 

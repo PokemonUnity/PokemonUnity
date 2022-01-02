@@ -253,7 +253,6 @@ namespace PokemonUnity.Monster
 					break;
 				case EvolutionMethod.Shedinja:
 					return Pokemons.NONE; //-1;
-					break;
 				case EvolutionMethod.HoldItemDay: //.DayHoldItem:
 					if (pokemon.Item==(Items)level && Game.IsDay) return poke;
 					break;
@@ -278,23 +277,22 @@ namespace PokemonUnity.Monster
 				//  }
 				//  break;
 				case EvolutionMethod.Location:
-					if ((Game.GameData.GameMap as PokemonEssentials.Interface.Battle.IGameMapOrgBattle).map_id==level) return poke;
+					if (Game.GameData.GameMap is PokemonEssentials.Interface.Battle.IGameMapOrgBattle m && m.map_id==level) return poke;
 					break;
 				case EvolutionMethod.LevelRain:
 					if (pokemon.Level>=level) {
 						if (Game.GameData.GameScreen != null && (Game.GameData.GameScreen.weather_type == FieldWeathers.Rain ||
-											Game.GameData.GameScreen.weather_type == FieldWeathers.HeavyRain ||
-											Game.GameData.GameScreen.weather_type == FieldWeathers.Thunderstorm)) {
-						return poke;
+							Game.GameData.GameScreen.weather_type == FieldWeathers.HeavyRain ||
+							Game.GameData.GameScreen.weather_type == FieldWeathers.Thunderstorm)) {
+							return poke;
 						}
 					}
 					break;
 				case EvolutionMethod.Beauty: // Feebas
-					if (pokemon.Beauty>=level) return poke;
+					if (pokemon.beauty>=level) return poke;
 					break;
 				case EvolutionMethod.Trade: case EvolutionMethod.TradeItem: case EvolutionMethod.TradeSpecies:
 					return Pokemons.NONE; //-1;
-					break;
 				//case EvolutionMethod.Custom1:
 				//  //  Add code for custom evolution type 1
 				//  break;
@@ -338,7 +336,7 @@ namespace PokemonUnity.Monster
 		/// <param name="pokemon"></param>
 		public static Pokemons pbCheckEvolutionEx(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
 			if (pokemon.Species<=0 || pokemon.isEgg) return 0;
-			if (pokemon.Species == Pokemons.PICHU && pokemon.form==1) return 0;
+			if (pokemon.Species == Pokemons.PICHU && pokemon is PokemonEssentials.Interface.PokeBattle.IPokemonMultipleForms f && f.form==1) return 0;
 			if (pokemon.Item == Items.EVERSTONE &&
 				pokemon.Species != Pokemons.KADABRA) return 0;
 			Pokemons ret=0;
@@ -359,7 +357,7 @@ namespace PokemonUnity.Monster
 		/// <param name="item"></param>
 		public static Pokemons[] pbCheckEvolution(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,Items item=0) {
 			if (pokemon.Species<=0 || pokemon.isEgg) return new Pokemons[0];
-			if (pokemon.Species == Pokemons.PICHU && pokemon.form==1) return new Pokemons[0];
+			if (pokemon.Species == Pokemons.PICHU && pokemon is PokemonEssentials.Interface.PokeBattle.IPokemonMultipleForms f && f.form==1) return new Pokemons[0];
 			if (pokemon.Item == Items.EVERSTONE &&
 				pokemon.Species != Pokemons.KADABRA) return new Pokemons[0];
 			if (item==0) {

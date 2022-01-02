@@ -56,6 +56,7 @@ namespace PokemonEssentials.Interface.Field
 	/// </summary>
 	[Serializable] public struct MetadataPlayer
 	{
+		public string this[int charset] { get { return ""; } }
 		public string Name { get; set; }
 		/// <summary>
 		/// The player's trainer type <see cref="TrainerTypes"/>. 
@@ -111,7 +112,7 @@ namespace PokemonEssentials.Interface.Field
 		/// Direction the player should face 
 		/// (2=down, 4=left, 6=right, 8=up, 0=retain direction)
 		/// </summary>
-		public float Direction { get; set; }
+		public int Direction { get; set; }
 		//public IQuaternion Rotation { get; set; }
 		//public IVector Position { get; set; }
 	}
@@ -452,7 +453,7 @@ namespace PokemonEssentials.Interface.Field
 
 		IList<int> pbLoadPhoneData();
 
-		IList<string> pbOpenDexData();
+		IList<string> pbOpenDexData(Func<IList<string>, IList<string>> block = null);
 
 		//void pbDexDataOffset(ref IList<string> dexdata,Pokemons species,int offset) {
 		//  dexdata.pos=76*(species-1)+offset;

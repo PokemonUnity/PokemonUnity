@@ -13,8 +13,6 @@ using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving;
 using PokemonUnity.Overworld;
-using PokemonEssentials.Interface;
-using PokemonEssentials.Interface.Field;
 
 namespace PokemonUnity
 {
@@ -44,7 +42,7 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.IGameScreen GameScreen { get; set; }
 		public PokemonEssentials.Interface.IGamePlayer GamePlayer { get; set; }
 		public PokemonEssentials.Interface.IGameMap GameMap { get; set; }
-		//public IGameMessage GameMessage { get; set; }
+		//public PokemonEssentials.Interface.IGameMessage GameMessage { get; set; }
 
 		//public static PokemonUnity.UX.IFrontEnd UI { get; private set; }
 		
@@ -53,6 +51,7 @@ namespace PokemonUnity
 		/// </summary>
 		public static PokemonEssentials.Interface.IGame GameData { get; set; }
 		public PokemonEssentials.Interface.IGraphics Graphics { get; set; }
+		//public PokemonEssentials.Interface.IInterpreter Interpreter { get; set; }
 		public UX.Scene Scenes { get; private set; }
 		public UX.Screen Screens { get; private set; }
 		public Feature Features { get; private set; }

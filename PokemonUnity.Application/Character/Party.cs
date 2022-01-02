@@ -37,7 +37,7 @@ namespace PokemonUnity.Character
 
 		public Party(int? maxPokemon = null)
 		{
-			if (!maxPokemon.HasValue) maxPokemon = Game.GameData.Features.LimitPokemonPartySize;
+			if (!maxPokemon.HasValue) maxPokemon = (Game.GameData as Game).Features.LimitPokemonPartySize;
 			Pokemons = new List<PokemonEssentials.Interface.PokeBattle.IPokemon>(
 				capacity: maxPokemon.Value > Core.MAXPARTYSIZE 
 					? Core.MAXPARTYSIZE 

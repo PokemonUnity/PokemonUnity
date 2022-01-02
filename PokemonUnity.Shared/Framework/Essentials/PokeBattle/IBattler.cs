@@ -13,31 +13,31 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IBattler
 	{
-		IBattle battle				{ get; set; }
-		IPokemon pokemon			{ get; set; }
+		IBattle battle				{ get; }
+		IPokemon pokemon			{ get; }
 		string Name					{ get; set; }
 		int Index					{ get; set; }
 		int pokemonIndex			{ get; set; }
-		int TotalHP					{ get; set; }
-		bool fainted				{ get; set; }
-		IList<int> lastAttacker		{ get; set; }
+		int TotalHP					{ get; }
+		bool Fainted				{ get; }
+		IList<int> lastAttacker		{ get; }
 		int turncount				{ get; set; }
-		IEffectsBattler effects		{ get; set; }
-		Pokemons Species			{ get; set; }
+		IEffectsBattler effects		{ get; }
+		Pokemons Species			{ get; }
 		Types Type1					{ get; set; }
 		Types Type2					{ get; set; }
 		Abilities Ability			{ get; set; }
-		int gender					{ get; set; }
-		int attack					{ get; set; }
-		int defense					{ get; set; }
-		int spatk					{ get; set; }
-		int spdef					{ get; set; }
-		int speed					{ get; set; }
+		bool? Gender				{ get; set; }
+		int ATK						{ get; set; }
+		int DEF						{ get; set; }
+		int SPA						{ get; set; }
+		int SPD						{ get; set; }
+		int SPE						{ get; set; }
 		int[] stages				{ get; }
 		int[] IV					{ get; }
 		IBattleMove[] moves			{ get; }
 		IList<int> participants		{ get; set; }
-		int tookDamage				{ get; set; }
+		bool tookDamage				{ get; set; }
 		int lastHPLost				{ get; set; }
 		Moves lastMoveUsed			{ get; set; }
 		Types lastMoveUsedType		{ get; set; }
@@ -55,7 +55,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		//int defense				{ get; }
 		//int spdef					{ get; }
 		Natures nature				{ get; }
-		int happiness				{ get; }
+		int Happiness				{ get; }
 		int pokerusStage			{ get; }
 		int form					{ get; set; }
 		bool hasMega				{ get; }
@@ -67,10 +67,10 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int StatusCount				{ get; set; }
 		int HP						{ get; set; }
 		Items Item					{ get; set; }
-		int weight(IBattler attacker = null);
+		float Weight(IBattler attacker = null);
 		//string name				{ get; }
 		int displayGender			{ get; }
-		bool isShiny				{ get; }
+		bool IsShiny				{ get; }
 		bool owned					{ get; }
 		#endregion
 

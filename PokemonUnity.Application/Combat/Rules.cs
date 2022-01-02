@@ -28,7 +28,7 @@ namespace PokemonUnity.Combat
 				if (this.lastMoveUser<0) {
 					// in extreme cases there may be no last move user
 					return BattleResults.DRAW; // game is a draw
-				} else if (isOpposing(this.lastMoveUser)) {
+				} else if (pbIsOpposing(this.lastMoveUser)) {
 					return BattleResults.LOST; // loss
 				} else {
 					return BattleResults.WON; // win
@@ -42,13 +42,13 @@ namespace PokemonUnity.Combat
 			if (@rules["drawclause"]) {															// Note: Also includes Life Orb (not implemented)
 				if (!(move.IsNotNullOrNone() && move.Effect==Attack.Data.Effects.x15A)) {		// Not a draw if fainting occurred due to Liquid Ooze
 					if (pbAllFainted(@party1) && pbAllFainted(@party2)) {
-						@decision=isOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
+						@decision=pbIsOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
 					}
 				}
 			} else if (@rules[BattleRule.MODIFIEDSELFDESTRUCTCLAUSE] && move.IsNotNullOrNone() && 
 				move.Effect==Attack.Data.Effects.x008) { // Selfdestruct
 				if (pbAllFainted(@party1) && pbAllFainted(@party2)) {
-					@decision=isOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
+					@decision=pbIsOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
 				}
 			}
 		}

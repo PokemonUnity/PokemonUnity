@@ -52,7 +52,7 @@ namespace PokemonUnity.Combat
 		//int		IBattleMove.Accuracy			{ get; set; }
 		//int		IBattleMove.AddlEffect			{ get; }
 		//Targets	IBattleMove.Target				{ get; set; }
-		int		IBattleMove.priority			{ get; set; }
+		//int		IBattleMove.priority			{ get; set; }
 		//Flag	IBattleMove.Flags				{ get; set; }
 		//IMove	IBattleMove.thismove			{ get; }
 		//int		IBattleMove.PP					{ get; set; }
@@ -346,7 +346,7 @@ namespace PokemonUnity.Combat
 			{
 				pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-				if (b is IBattlerEffect o) o.pbSleep();
+				if (opponent is IBattlerEffect o) o.pbSleep();
 				return 0;
 			}
 			return -1;
@@ -357,7 +357,7 @@ namespace PokemonUnity.Combat
 			if (opponent.damagestate.Substitute) return;
 			if (opponent is IBattlerClause b && b.pbCanSleep(attacker, false, this))
 			{
-				if (b is IBattlerEffect o) o.pbSleep();
+				if (opponent is IBattlerEffect o) o.pbSleep();
 			}
 		}
 
@@ -370,11 +370,11 @@ namespace PokemonUnity.Combat
 					!(attacker.hasWorkingAbility(Abilities.SHEER_FORCE) && this.AddlEffect > 0) &&
 					!attacker.isFainted())
 				{
-					attacker.FormId = (attacker.FormId + 1) % 2;
-					attacker.Update(true);
-					this.battle.scene.pbChangePokemon(attacker, attacker.Form.Id);//.Species);
+					attacker.form = (attacker.form + 1) % 2;
+					attacker.pbUpdate(true);
+					this.battle.scene.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//.Species);
 					battle.pbDisplay(Game._INTL("{1} transformed!", attacker.ToString()));
-					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{attacker.Form.Pokemon.ToString(TextScripts.Name)}");
+					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{(attacker as Pokemon).Form.Pokemon.ToString(TextScripts.Name)}");
 				}
 			}
 		}
@@ -655,7 +655,7 @@ namespace PokemonUnity.Combat
 			if (opponent.damagestate.Substitute) return;
 			if (opponent is IBattlerClause b && b.pbCanFreeze(attacker, false, this))
 			{
-				if (b is IBattlerEffect o) o.pbFreeze();
+				if (opponent is IBattlerEffect o) o.pbFreeze();
 			}
 		}
 	}
@@ -682,7 +682,7 @@ namespace PokemonUnity.Combat
 			if (opponent.damagestate.Substitute) return;
 			if (opponent is IBattlerClause b && b.pbCanFreeze(attacker, false, this))
 			{
-				if (b is IBattlerEffect o) o.pbFreeze();
+				if (opponent is IBattlerEffect o) o.pbFreeze();
 			}
 		}
 
@@ -710,7 +710,7 @@ namespace PokemonUnity.Combat
 			{
 				if (opponent is IBattlerClause b && b.pbCanFreeze(attacker, false, this))
 				{
-					if (b is IBattlerEffect o) o.pbFreeze();
+					if (opponent is IBattlerEffect o) o.pbFreeze();
 				}
 
 			}
@@ -849,9 +849,9 @@ namespace PokemonUnity.Combat
 			get
 			{
 				if (Core.USENEWBATTLEMECHANICS) return 100;
-				//if (attacker.IsNotNullOrNone() && attacker is IPokemonChatter a && a.chatter != null) {
-				//	return (attacker.pokemon as IPokemonChatter).chatter.intensity * 10 / 127;
-				//}
+				if (attacker.pokemon.IsNotNullOrNone() && attacker.pokemon is IPokemonChatter a && a.chatter != null) {
+					return a.chatter.intensity() * 10 / 127;
+				}
 				return 0;
 			}
 		}
@@ -1159,8 +1159,8 @@ namespace PokemonUnity.Combat
 				  (attacker.Status == Status.PARALYSIS && !b.pbCanParalyze(attacker, false, this)) ||
 				  (attacker.Status == Status.POISON && !b.pbCanPoison(attacker, false, this)) ||
 				  (attacker.Status == Status.BURN && !b.pbCanBurn(attacker, false, this)) ||
-				  (attacker.Status == Status.SLEEP && b is IBattlerClause b1 && !b1.pbCanSleep(attacker, false, this)) ||
-				  (attacker.Status == Status.FROZEN && b is IBattlerClause b2 && !b2.pbCanFreeze(attacker, false, this))
+				  (attacker.Status == Status.SLEEP && opponent is IBattlerClause b1 && !b1.pbCanSleep(attacker, false, this)) ||
+				  (attacker.Status == Status.FROZEN && opponent is IBattlerClause b2 && !b2.pbCanFreeze(attacker, false, this))
 				)))
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
@@ -1223,18 +1223,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this);
+			bool ret = false; //attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this);
+			if (attacker is IBattlerEffect a) ret = a.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this);
+				b.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this);
 			}
 		}
 	}
@@ -1249,18 +1250,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
+			bool ret = false; //attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
+			if (attacker is IBattlerEffect a) ret = a.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
+				b.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
 			}
 		}
 	}
@@ -1276,10 +1278,11 @@ namespace PokemonUnity.Combat
 		{
 
 			attacker.effects.DefenseCurl = true;
-			if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
+			bool ret = false; //attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
+			if (attacker is IBattlerEffect a) ret = a.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 	}
@@ -1294,18 +1297,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.SPEED, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this);
+			bool ret = false; //attacker.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this);
+			if (attacker is IBattlerEffect a) ret = a.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this);
+				b.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this);
 			}
 		}
 	}
@@ -1320,18 +1324,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.SPATK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this);
+			bool ret = false; //attacker.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this);
+			if (attacker is IBattlerEffect a) ret = a.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this);
+				b.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this);
 			}
 		}
 	}
@@ -1349,11 +1354,11 @@ namespace PokemonUnity.Combat
 
 			attacker.effects.Charge = 2;
 			battle.pbDisplay(Game._INTL("{1} began charging power!", attacker.ToString()));
-			if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, true, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, true, this))
 			{
 				pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-				attacker.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this);
+				b.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this);
 			}
 			return 0;
 		}
@@ -1369,18 +1374,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.EVASION, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.EVASION, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.EVASION, 1, attacker, false, this);
+			bool ret = false; //attacker.pbIncreaseStat(Stats.EVASION, 1, attacker, false, this);
+			if (attacker is IBattlerEffect a) ret = a.pbIncreaseStat(Stats.EVASION, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.EVASION, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.EVASION, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.EVASION, 1, attacker, false, this);
+				b.pbIncreaseStat(Stats.EVASION, 1, attacker, false, this);
 			}
 		}
 	}
@@ -1426,8 +1432,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_024(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1435,14 +1442,14 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -1458,9 +1465,10 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_025(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1468,19 +1476,19 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
+			if (attacker is IBattlerEffect b2 && b2.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ACCURACY, 1, attacker, false, this, showanim);
+				b2.pbIncreaseStat(Stats.ACCURACY, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -1496,8 +1504,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_026(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1505,14 +1514,14 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -1528,8 +1537,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_027(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1537,14 +1547,14 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -1561,8 +1571,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_028(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1577,14 +1588,14 @@ namespace PokemonUnity.Combat
 				increment = 2;
 
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, increment, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.ATTACK, increment, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, increment, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.SPATK, increment, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -1600,8 +1611,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_029(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1609,14 +1621,14 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ACCURACY, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.ACCURACY, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -1632,8 +1644,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_02A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1641,14 +1654,14 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -1664,9 +1677,10 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_02B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1674,19 +1688,19 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b2 && b2.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this, showanim);
+				b2.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -1702,8 +1716,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_02C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1711,14 +1726,14 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -1737,29 +1752,29 @@ namespace PokemonUnity.Combat
 		{
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b2 && b2.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
+				b2.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b3 && b3.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
+				b3.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b4 && b4.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this, showanim);
+				b4.pbIncreaseStat(Stats.SPEED, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 		}
@@ -1775,18 +1790,18 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this);
+				b.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this);
 			}
 		}
 	}
@@ -1801,18 +1816,18 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.DEFENSE, 2, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.DEFENSE, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.DEFENSE, 2, attacker, false, this);
+				b.pbIncreaseStat(Stats.DEFENSE, 2, attacker, false, this);
 			}
 		}
 	}
@@ -1827,18 +1842,18 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.SPEED, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this);
+				b.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this);
 			}
 		}
 	}
@@ -1852,10 +1867,10 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_031(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.SPEED, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this);
 			if (ret)
 			{
 				attacker.effects.WeightChange -= 1000;
@@ -1876,18 +1891,18 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.SPATK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.SPATK, 2, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.SPATK, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, 2, attacker, false, this);
+				b.pbIncreaseStat(Stats.SPATK, 2, attacker, false, this);
 			}
 		}
 	}
@@ -1902,18 +1917,18 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.SPDEF, 2, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.SPDEF, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPDEF, 2, attacker, false, this);
+				b.pbIncreaseStat(Stats.SPDEF, 2, attacker, false, this);
 			}
 		}
 	}
@@ -1929,11 +1944,11 @@ namespace PokemonUnity.Combat
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			attacker.effects.Minimize = true;
-			if (!attacker.pbCanIncreaseStatStage(Stats.EVASION, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.EVASION, attacker, true, this)) return -1;
 
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.EVASION, 2, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.EVASION, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
@@ -1941,9 +1956,9 @@ namespace PokemonUnity.Combat
 		{
 
 			attacker.effects.Minimize = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.EVASION, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.EVASION, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.EVASION, 2, attacker, false, this);
+				b.pbIncreaseStat(Stats.EVASION, 2, attacker, false, this);
 			}
 		}
 	}
@@ -1958,9 +1973,10 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_035(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -1968,30 +1984,30 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+				b0.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				attacker.pbReduceStat(Stats.SPDEF, 1, attacker, false, this, showanim);
+				b1.pbReduceStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b2 && b2.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this, showanim);
+				b2.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b3 && b3.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, 2, attacker, false, this, showanim);
+				b3.pbIncreaseStat(Stats.SPATK, 2, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b4 && b4.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this, showanim);
+				b4.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -2007,8 +2023,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_036(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -2016,14 +2033,14 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -2053,7 +2070,7 @@ namespace PokemonUnity.Combat
 			foreach (var i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
 				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
-				if (opponent.pbCanIncreaseStatStage(i, attacker, false, this)) array.Add(i);
+				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage(i, attacker, false, this)) array.Add(i);
 			}
 			if (array.Count == 0)
 			{
@@ -2064,7 +2081,7 @@ namespace PokemonUnity.Combat
 
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			opponent.pbIncreaseStat(stat, 2, attacker, false, this); //int ret = 
+			if (opponent is IBattlerEffect o) o.pbIncreaseStat(stat, 2, attacker, false, this); //int ret = 
 			return 0;
 		}
 	}
@@ -2079,18 +2096,18 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.DEFENSE, 3, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.DEFENSE, 3, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.DEFENSE, 3, attacker, false, this);
+				b.pbIncreaseStat(Stats.DEFENSE, 3, attacker, false, this);
 			}
 		}
 	}
@@ -2105,18 +2122,18 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, true, this)) return -1;
+			if (attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.SPATK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.SPATK, 3, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.SPATK, 3, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
-			if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, 3, attacker, false, this);
+				b.pbIncreaseStat(Stats.SPATK, 3, attacker, false, this);
 			}
 		}
 	}
@@ -2131,7 +2148,7 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (attacker.HP <= Math.Floor(attacker.TotalHP / 2f) ||
-			   !attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			   attacker is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
@@ -2169,14 +2186,14 @@ namespace PokemonUnity.Combat
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				bool showanim = true;
-				if (attacker.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this))
+				if (attacker is IBattlerEffect b0 && b0.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+					b0.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
-				if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
+				if (attacker is IBattlerEffect b1 && b1.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+					b1.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
 			}
@@ -2198,14 +2215,14 @@ namespace PokemonUnity.Combat
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				bool showanim = true;
-				if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
+				if (attacker is IBattlerEffect b0 && b0.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+					b0.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
-				if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
+				if (attacker is IBattlerEffect b1 && b1.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.SPDEF, 1, attacker, false, this, showanim);
+					b1.pbReduceStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
 			}
@@ -2232,19 +2249,19 @@ namespace PokemonUnity.Combat
 					attacker.pbPartner.pbReduceHP((int)Math.Floor(attacker.pbPartner.TotalHP / 16f), true);
 				}
 				bool showanim = true;
-				if (attacker.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
+				if (attacker is IBattlerEffect b0 && b0.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.SPEED, 1, attacker, false, this, showanim);
+					b0.pbReduceStat(Stats.SPEED, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
-				if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
+				if (attacker is IBattlerEffect b1 && b1.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+					b1.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
-				if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
+				if (attacker is IBattlerEffect b2 && b2.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.SPDEF, 1, attacker, false, this, showanim);
+					b2.pbReduceStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
 			}
@@ -2265,9 +2282,9 @@ namespace PokemonUnity.Combat
 			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
-				if (attacker.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
+				if (attacker is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.SPEED, 1, attacker, false, this);
+					b.pbReduceStat(Stats.SPEED, 1, attacker, false, this);
 				}
 			}
 			return ret;
@@ -2287,9 +2304,9 @@ namespace PokemonUnity.Combat
 			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
-				if (attacker.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
+				if (attacker is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
+					b.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
 				}
 			}
 			return ret;
@@ -2313,14 +2330,14 @@ namespace PokemonUnity.Combat
 			int ret = -1;
 
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
-			if (opponent.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (opponent is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				opponent.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this);
+				b0.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this);
 				ret = 0;
 			}
-			if (opponent is IBattlerEffect b && b.pbCanConfuse(attacker, true, this))
+			if (opponent is IBattlerEffect b1 && b1.pbCanConfuse(attacker, true, this))
 			{
-				b.pbConfuse();
+				b1.pbConfuse();
 				battle.pbDisplay(Game._INTL("{1} became confused!", opponent.ToString()));
 				ret = 0;
 			}
@@ -2345,14 +2362,14 @@ namespace PokemonUnity.Combat
 			int ret = -1;
 
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
-			if (opponent.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+			if (opponent is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				opponent.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this);
+				b0.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this);
 				ret = 0;
 			}
-			if (opponent is IBattlerEffect b && b.pbCanConfuse(attacker, true, this))
+			if (opponent is IBattlerEffect b1 && b1.pbCanConfuse(attacker, true, this))
 			{
-				b.pbConfuse();
+				b1.pbConfuse();
 				battle.pbDisplay(Game._INTL("{1} became confused!", opponent.ToString()));
 				ret = 0;
 			}
@@ -2370,7 +2387,7 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.ATTACK, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.ATTACK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool ret = false; //opponent.pbReduceStat(Stats.ATTACK, 1, attacker, false, this);
@@ -2381,9 +2398,9 @@ namespace PokemonUnity.Combat
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.ATTACK, 1, attacker, false, this);
+				b.pbReduceStat(Stats.ATTACK, 1, attacker, false, this);
 			}
 		}
 	}
@@ -2398,19 +2415,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this);
+				b.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this);
 			}
 		}
 	}
@@ -2425,19 +2442,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.SPEED, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.SPEED, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.SPEED, 1, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.SPEED, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.SPEED, 1, attacker, false, this);
+				b.pbReduceStat(Stats.SPEED, 1, attacker, false, this);
 			}
 		}
 
@@ -2462,19 +2479,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.SPATK, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.SPATK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.SPATK, 1, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.SPATK, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.SPATK, 1, attacker, false, this);
+				b.pbReduceStat(Stats.SPATK, 1, attacker, false, this);
 			}
 		}
 	}
@@ -2489,19 +2506,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.SPDEF, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.SPDEF, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.SPDEF, 1, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.SPDEF, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.SPDEF, 1, attacker, false, this);
+				b.pbReduceStat(Stats.SPDEF, 1, attacker, false, this);
 			}
 		}
 	}
@@ -2516,19 +2533,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.ACCURACY, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.ACCURACY, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.ACCURACY, 1, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.ACCURACY, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.ACCURACY, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.ACCURACY, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.ACCURACY, 1, attacker, false, this);
+				b.pbReduceStat(Stats.ACCURACY, 1, attacker, false, this);
 			}
 		}
 	}
@@ -2543,21 +2560,21 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			byte increment = (Core.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
-			bool ret = opponent.pbReduceStat(Stats.EVASION, increment, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.EVASION, increment, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.EVASION, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.EVASION, attacker, false, this))
 			{
 				byte increment = (Core.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
-				opponent.pbReduceStat(Stats.EVASION, increment, attacker, false, this);
+				b.pbReduceStat(Stats.EVASION, increment, attacker, false, this);
 			}
 		}
 	}
@@ -2575,7 +2592,7 @@ namespace PokemonUnity.Combat
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			opponent.pbReduceStat(Stats.EVASION, 1, attacker, false, this);
+			if (opponent is IBattlerEffect o) o.pbReduceStat(Stats.EVASION, 1, attacker, false, this);
 			opponent.pbOwnSide.Reflect = 0;
 			opponent.pbOwnSide.LightScreen = 0;
 			opponent.pbOwnSide.Mist = 0;
@@ -2587,21 +2604,13 @@ namespace PokemonUnity.Combat
 			if (Core.USENEWBATTLEMECHANICS)
 			{
 				opponent.pbOpposingSide.Reflect = 0;
-
-				opponent.OpposingSide.LightScreen = 0;
-
-				opponent.OpposingSide.Mist = 0;
-
-				opponent.OpposingSide.Safeguard = 0;
-
-				opponent.OpposingSide.Spikes = 0;
-
-				opponent.OpposingSide.StealthRock = false;
-
-				opponent.OpposingSide.StickyWeb = false;
-
-				opponent.OpposingSide.ToxicSpikes = 0;
-
+				opponent.pbOpposingSide.LightScreen = 0;
+				opponent.pbOpposingSide.Mist = 0;
+				opponent.pbOpposingSide.Safeguard = 0;
+				opponent.pbOpposingSide.Spikes = 0;
+				opponent.pbOpposingSide.StealthRock = false;
+				opponent.pbOpposingSide.StickyWeb = false;
+				opponent.pbOpposingSide.ToxicSpikes = 0;
 			}
 			return 0;
 		}
@@ -2609,8 +2618,8 @@ namespace PokemonUnity.Combat
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (!opponent.damagestate.Substitute)
-				if (opponent.pbCanReduceStatStage(Stats.EVASION, attacker, false, this))
-					opponent.pbReduceStat(Stats.EVASION, 1, attacker, false, this);
+				if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.EVASION, attacker, false, this))
+					b.pbReduceStat(Stats.EVASION, 1, attacker, false, this);
 
 			opponent.pbOwnSide.Reflect = 0;
 			opponent.pbOwnSide.LightScreen = 0;
@@ -2622,14 +2631,14 @@ namespace PokemonUnity.Combat
 			opponent.pbOwnSide.ToxicSpikes = 0;
 			if (Core.USENEWBATTLEMECHANICS)
 			{
-				opponent.OpposingSide.Reflect = 0;
-				opponent.OpposingSide.LightScreen = 0;
-				opponent.OpposingSide.Mist = 0;
-				opponent.OpposingSide.Safeguard = 0;
-				opponent.OpposingSide.Spikes = 0;
-				opponent.OpposingSide.StealthRock = false;
-				opponent.OpposingSide.StickyWeb = false;
-				opponent.OpposingSide.ToxicSpikes = 0;
+				opponent.pbOpposingSide.Reflect = 0;
+				opponent.pbOpposingSide.LightScreen = 0;
+				opponent.pbOpposingSide.Mist = 0;
+				opponent.pbOpposingSide.Safeguard = 0;
+				opponent.pbOpposingSide.Spikes = 0;
+				opponent.pbOpposingSide.StealthRock = false;
+				opponent.pbOpposingSide.StickyWeb = false;
+				opponent.pbOpposingSide.ToxicSpikes = 0;
 			}
 		}
 	}
@@ -2650,8 +2659,9 @@ namespace PokemonUnity.Combat
 				battle.pbDisplay(Game._INTL("{1}'s attack missed!", attacker.ToString()));
 				return -1;
 			}
-			if (opponent.pbTooLow(Stats.ATTACK) &&
-			   opponent.pbTooLow(Stats.DEFENSE))
+			if (opponent is IBattlerEffect b &&
+				b.pbTooLow(Stats.ATTACK) &&
+				b.pbTooLow(Stats.DEFENSE))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any lower!", opponent.ToString()));
 				return -1;
@@ -2676,27 +2686,25 @@ namespace PokemonUnity.Combat
 
 			int ret = -1; bool showanim = true;
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.HYPER_CUTTER) &&
-			   !opponent.pbTooLow(Stats.ATTACK))
+				opponent is IBattlerEffect b0 && !b0.pbTooLow(Stats.ATTACK))
 			{
 				string abilityname = opponent.Ability.ToString(TextScripts.Name);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} prevents Attack loss!", opponent.ToString(), abilityname));
 			}
-			else if (opponent.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim))
+			else if (opponent is IBattlerEffect b1 && b1.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim))
 			{
-
 				ret = 0; showanim = false;
 			}
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.BIG_PECKS) &&
-			   !opponent.pbTooLow(Stats.DEFENSE))
+				opponent is IBattlerEffect b2 && !b2.pbTooLow(Stats.DEFENSE))
 			{
 				string abilityname = opponent.Ability.ToString(TextScripts.Name);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} prevents Defense loss!", opponent.ToString(), abilityname));
 			}
-			else if (opponent.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim))
+			else if (opponent is IBattlerEffect b3 && b3.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim))
 			{
-
 				ret = 0; showanim = false;
 			}
 			return ret;
@@ -2713,19 +2721,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.ATTACK, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.ATTACK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.ATTACK, 2, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.ATTACK, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.ATTACK, 2, attacker, false, this);
+				b.pbReduceStat(Stats.ATTACK, 2, attacker, false, this);
 			}
 		}
 	}
@@ -2740,19 +2748,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.DEFENSE, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.DEFENSE, 2, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.DEFENSE, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.DEFENSE, 2, attacker, false, this);
+				b.pbReduceStat(Stats.DEFENSE, 2, attacker, false, this);
 			}
 		}
 	}
@@ -2768,21 +2776,21 @@ namespace PokemonUnity.Combat
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (pbTypeImmunityByAbility(pbType(this.type, attacker, opponent), attacker, opponent)) return -1;
-			if (!opponent.pbCanReduceStatStage(Stats.SPEED, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.SPEED, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			byte increment = (id == Moves.STRING_SHOT && !Core.USENEWBATTLEMECHANICS) ? (byte)1 : (byte)2;
-			bool ret = opponent.pbReduceStat(Stats.SPEED, increment, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.SPEED, increment, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
 			{
 				byte increment = (id == Moves.STRING_SHOT && !Core.USENEWBATTLEMECHANICS) ? (byte)1 : (byte)2;
-				opponent.pbReduceStat(Stats.SPEED, increment, attacker, false, this);
+				b.pbReduceStat(Stats.SPEED, increment, attacker, false, this);
 			}
 		}
 	}
@@ -2798,7 +2806,7 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.SPATK, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.SPATK, attacker, true, this)) return -1;
 			if (!attacker.Gender.HasValue || !opponent.Gender.HasValue || attacker.Gender.Value == opponent.Gender.Value)
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
@@ -2812,7 +2820,7 @@ namespace PokemonUnity.Combat
 			}
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
@@ -2823,12 +2831,11 @@ namespace PokemonUnity.Combat
 			{
 				if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.OBLIVIOUS))
 				{
-					if (opponent.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
+					if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
 					{
-						opponent.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
+						b.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
 					}
 				}
-
 			}
 		}
 	}
@@ -2843,19 +2850,19 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (!opponent.pbCanReduceStatStage(Stats.SPDEF, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.SPDEF, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.SPDEF, 2, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.SPDEF, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.SPDEF, 2, attacker, false, this);
+				b.pbReduceStat(Stats.SPDEF, 2, attacker, false, this);
 			}
 		}
 	}
@@ -3588,7 +3595,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, opponent.Form.Id);//Species);
+				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3629,7 +3636,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, opponent.Form.Id);//Species);
+				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3679,7 +3686,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{attacker.ToString()}'s Illusion ended");
 				attacker.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(attacker, attacker.Form.Id);//Species);
+				this.battle.scene.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", attacker.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3738,7 +3745,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, opponent.Form.Id);//Species);
+				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3815,7 +3822,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, opponent.Form.Id);//Species);
+				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -4641,7 +4648,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_089(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
-			return (int)Math.Max(Math.Floor(attacker.happiness * 2 / 5f), 1);
+			return (int)Math.Max(Math.Floor(attacker.Happiness * 2 / 5f), 1);
 		}
 	}
 
@@ -4654,7 +4661,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_08A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
-			return (int)Math.Max(Math.Floor((255 - attacker.happiness) * 2f / 5f), 1);
+			return (int)Math.Max(Math.Floor((255 - attacker.Happiness) * 2f / 5f), 1);
 		}
 	}
 
@@ -4948,7 +4955,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_096(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbOnStartUse(IBattler attacker)
 		{
-			if (!Item.pbIsBerry(attacker.Item) ||
+			if (Game.GameData is IItemCheck i && !i.pbIsBerry(attacker.Item) ||
 			   attacker.effects.Embargo > 0 ||
 			   this.battle.field.MagicRoom > 0 ||
 			   attacker.hasWorkingAbility(Abilities.KLUTZ) ||
@@ -5455,16 +5462,15 @@ namespace PokemonUnity.Combat
 			{
 				if (opponent is IBattlerClause b && b.pbCanSleep(attacker, false, this))
 				{
-					if (b is IBattlerEffect o) o.pbSleep();
+					if (opponent is IBattlerEffect o) o.pbSleep();
 				}
 				return;
 			}
 			else if (this.battle.field.MistyTerrain > 0)
 			{
-				if (opponent.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
+				if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
 				{
-
-					opponent.pbReduceStat(Stats.SPATK, 1, attacker, false, this);
+					b.pbReduceStat(Stats.SPATK, 1, attacker, false, this);
 				}
 				return;
 			}
@@ -6142,7 +6148,7 @@ namespace PokemonUnity.Combat
 				if (attacker.moves[i].id == 0) continue; //next
 				if (blacklist.Contains(attacker.moves[i].Effect)) found = true;
 				if (found) continue; //next
-				if (this.battle.CanChooseMove(attacker.Index, i, false, true)) choices.Add(i);
+				if (this.battle.pbCanChooseMove(attacker.Index, i, false, true)) choices.Add(i);
 			}
 			if (choices.Count == 0)
 			{
@@ -6662,7 +6668,7 @@ namespace PokemonUnity.Combat
 
 		public override bool pbOnStartUse(IBattler attacker)
 		{
-			this.calcbasedmg = base.basedamage;
+			this.calcbasedmg = base.Power;
 			this.checks = !attacker.hasWorkingAbility(Abilities.SKILL_LINK);
 			return true;
 		}
@@ -7032,9 +7038,9 @@ namespace PokemonUnity.Combat
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
 				battle.pbDisplay(Game._INTL("{1} tucked in its head!", attacker.ToString()));
-				if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+				if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 				{
-					attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
+					b.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
 				}
 			}
 			if (this.immediate)
@@ -8049,11 +8055,11 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			int ret = -1; bool showanim = true;
-			if (opponent.pbReduceStat(Stats.ATTACK, 2, attacker, false, this, showanim))
+			if (opponent is IBattlerEffect b0 && b0.pbReduceStat(Stats.ATTACK, 2, attacker, false, this, showanim))
 			{
 				ret = 0; showanim = false;
 			}
-			if (opponent.pbReduceStat(Stats.SPATK, 2, attacker, false, this, showanim))
+			if (opponent is IBattlerEffect b1 && b1.pbReduceStat(Stats.SPATK, 2, attacker, false, this, showanim))
 			{
 				ret = 0; showanim = false;
 			}
@@ -8545,14 +8551,11 @@ namespace PokemonUnity.Combat
 
 					opponent.effects.Unburden = true;
 					if (this.battle.opponent.Length == 0 && // In a wild battle
-					   attacker.itemInitial == 0 &&
-
-					   opponent.itemInitial == attacker.Item)
+					   attacker.pokemon.itemInitial == 0 &&
+					   opponent.pokemon.itemInitial == attacker.Item)
 					{
-						attacker.itemInitial = attacker.Item;
-
-						opponent.itemInitial = 0;
-
+						attacker.pokemon.itemInitial = attacker.Item;
+						opponent.pokemon.itemInitial = 0;
 					}
 					battle.pbDisplay(Game._INTL("{1} stole {2}'s {3}!", attacker.ToString(), opponent.ToString(true), itemname));
 				}
@@ -8603,14 +8606,11 @@ namespace PokemonUnity.Combat
 			attacker.Item = opponent.Item;
 			opponent.Item = tmpitem;
 			if (this.battle.opponent.Length == 0 && // In a wild battle
-			   attacker.itemInitial == oldattitem &&
-
-			   opponent.itemInitial == oldoppitem)
+			   attacker.pokemon.itemInitial == oldattitem &&
+			   opponent.pokemon.itemInitial == oldoppitem)
 			{
-				attacker.itemInitial = oldoppitem;
-
-				opponent.itemInitial = oldattitem;
-
+				attacker.pokemon.itemInitial = oldoppitem;
+				opponent.pokemon.itemInitial = oldattitem;
 			}
 			battle.pbDisplay(Game._INTL("{1} switched items with its opponent!", attacker.ToString()));
 			if (oldoppitem > 0 && oldattitem > 0)
@@ -8662,14 +8662,11 @@ namespace PokemonUnity.Combat
 
 			attacker.effects.Unburden = true;
 			if (this.battle.opponent.Length == 0 && // In a wild battle
-			   opponent.itemInitial == 0 &&
-
-			   attacker.itemInitial == opponent.Item)
+			   opponent.pokemon.itemInitial == 0 &&
+			   attacker.pokemon.itemInitial == opponent.Item)
 			{
-				opponent.itemInitial = opponent.Item;
-
-				attacker.itemInitial = 0;
-
+				opponent.pokemon.itemInitial = opponent.Item;
+				attacker.pokemon.itemInitial = 0;
 			}
 			battle.pbDisplay(Game._INTL("{1} received {2} from {3}!", opponent.ToString(), itemname, attacker.ToString(true)));
 			return 0;
@@ -8685,7 +8682,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_0F4(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override void pbEffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects)
 		{
-			if (!attacker.isFainted() && !opponent.isFainted() && Item.pbIsBerry(opponent.Item) &&
+			if (!attacker.isFainted() && !opponent.isFainted() && Game.GameData is IItemCheck i && i.pbIsBerry(opponent.Item) &&
 			   opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute)
 			{
 				if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
@@ -8737,7 +8734,7 @@ namespace PokemonUnity.Combat
 			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (!attacker.isFainted() && opponent.damagestate.CalcDamage > 0 &&
 			   !opponent.damagestate.Substitute &&
-			   (Item.pbIsBerry(opponent.Item) || (Core.USENEWBATTLEMECHANICS && Item.pbIsGem(opponent.Item))))
+			   (Game.GameData is IItemCheck i && i.pbIsBerry(opponent.Item) || (Core.USENEWBATTLEMECHANICS && i.pbIsGem(opponent.Item))))
 			{
 				string itemname = Game.ItemData[opponent.Item].Name;
 				opponent.pbConsumeItem(false, false);
@@ -8757,23 +8754,22 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_0F6(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker.Species == Pokemons.NONE || attacker.itemRecycle == 0)
+			if (attacker.Species == Pokemons.NONE || attacker.pokemon.itemRecycle == 0)
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
-			Items item = attacker.itemRecycle;
-			string itemname = Game.ItemData[item].Name;
+			Items item = attacker.pokemon.itemRecycle;
+			string itemname = Kernal.ItemData[item].Name;
 
 			attacker.Item = item;
 			if (this.battle.opponent.Length == 0)	// In a wild battle
 			{
-				if (attacker.itemInitial == 0) attacker.itemInitial = item;
-
+				if (attacker.pokemon.itemInitial == 0) attacker.pokemon.itemInitial = item;
 			}
-			attacker.itemRecycle = 0;
+			attacker.pokemon.itemRecycle = 0;
 
 			attacker.effects.PickupItem = 0;
 
@@ -8879,7 +8875,7 @@ namespace PokemonUnity.Combat
 		{
 			if (attacker.Item == 0 ||
 				this.battle.pbIsUnlosableItem(attacker, attacker.Item) ||
-				Item.pbIsPokeBall(attacker.Item) ||
+				Game.GameData is IItemCheck i0 && i0.pbIsPokeBall(attacker.Item) ||
 				this.battle.field.MagicRoom > 0 ||
 				attacker.hasWorkingAbility(Abilities.KLUTZ) ||
 				attacker.effects.Embargo > 0) return true;
@@ -8891,7 +8887,7 @@ namespace PokemonUnity.Combat
 				//	}
 				//}
 			}
-			if (Item.pbIsBerry(attacker.Item) &&
+			if (Game.GameData is IItemCheck i1 && i1.pbIsBerry(attacker.Item) &&
 				!attacker.pbOpposing1.hasWorkingAbility(Abilities.UNNERVE) &&
 				!attacker.pbOpposing2.hasWorkingAbility(Abilities.UNNERVE)) return false;
 			return true;
@@ -8899,8 +8895,8 @@ namespace PokemonUnity.Combat
 
 		public override int pbBaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
-			if (Item.pbIsBerry(attacker.Item)) return 10;
-			if (Item.pbIsMegaStone(attacker.Item)) return 80;
+			if (Game.GameData is IItemCheck i0 && i0.pbIsBerry(attacker.Item)) return 10;
+			if (Game.GameData is IItemCheck i1 && i1.pbIsMegaStone(attacker.Item)) return 80;
 			foreach (Items i in flingarray.Keys)
 			{
 				//if (flingarray[i] != null){
@@ -8926,7 +8922,7 @@ namespace PokemonUnity.Combat
 			if (opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
 			   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SHIELD_DUST)))
 			{
-				if (attacker.hasWorkingBerry())
+				if ((attacker as Combat.Pokemon).hasWorkingBerry())
 				{
 					opponent.pbActivateBerryEffect(attacker.Item, false);
 
@@ -9393,14 +9389,14 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_103(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker.OpposingSide.Spikes >= 3)
+			if (attacker.pbOpposingSide.Spikes >= 3)
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
-			attacker.OpposingSide.Spikes += 1;
+			attacker.pbOpposingSide.Spikes += 1;
 			if (!this.battle.pbIsOpposing(attacker.Index))
 			{
 				battle.pbDisplay(Game._INTL("Spikes were scattered all around the opposing team's feet!"));
@@ -9423,14 +9419,14 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_104(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker.OpposingSide.ToxicSpikes >= 2)
+			if (attacker.pbOpposingSide.ToxicSpikes >= 2)
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
-			attacker.OpposingSide.ToxicSpikes += 1;
+			attacker.pbOpposingSide.ToxicSpikes += 1;
 			if (!this.battle.pbIsOpposing(attacker.Index))
 			{
 				battle.pbDisplay(Game._INTL("Poison spikes were scattered all around the opposing team's feet!"));
@@ -9452,14 +9448,14 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_105(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker.OpposingSide.StealthRock)
+			if (attacker.pbOpposingSide.StealthRock)
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
-			attacker.OpposingSide.StealthRock = true;
+			attacker.pbOpposingSide.StealthRock = true;
 			if (!this.battle.pbIsOpposing(attacker.Index))
 			{
 				battle.pbDisplay(Game._INTL("Pointed stones float in the air around the opposing team!"));
@@ -9528,7 +9524,7 @@ namespace PokemonUnity.Combat
 				int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
-					attacker.OpposingSide.SeaOfFire = 4;
+					attacker.pbOpposingSide.SeaOfFire = 4;
 					if (!this.battle.pbIsOpposing(attacker.Index))
 					{
 						battle.pbDisplay(Game._INTL("A sea of fire enveloped the opposing team!"));
@@ -9549,7 +9545,7 @@ namespace PokemonUnity.Combat
 				int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
-					attacker.OpposingSide.Swamp = 4;
+					attacker.pbOpposingSide.Swamp = 4;
 					if (!this.battle.pbIsOpposing(attacker.Index))
 					{
 						battle.pbDisplay(Game._INTL("A swamp enveloped the opposing team!"));
@@ -9661,7 +9657,7 @@ namespace PokemonUnity.Combat
 				if (opponent.damagestate.CalcDamage > 0)
 				{
 
-					attacker.OpposingSide.SeaOfFire = 4;
+					attacker.pbOpposingSide.SeaOfFire = 4;
 					if (!this.battle.pbIsOpposing(attacker.Index))
 					{
 						battle.pbDisplay(Game._INTL("A sea of fire enveloped the opposing team!"));
@@ -9793,7 +9789,7 @@ namespace PokemonUnity.Combat
 				if (opponent.damagestate.CalcDamage > 0)
 				{
 
-					attacker.OpposingSide.Swamp = 4;
+					attacker.pbOpposingSide.Swamp = 4;
 					if (!this.battle.pbIsOpposing(attacker.Index))
 					{
 						battle.pbDisplay(Game._INTL("A swamp enveloped the opposing team!"));
@@ -9906,9 +9902,9 @@ namespace PokemonUnity.Combat
 		{
 
 			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (attacker.OpposingSide.Reflect > 0)
+			if (attacker.pbOpposingSide.Reflect > 0)
 			{
-				attacker.OpposingSide.Reflect = 0;
+				attacker.pbOpposingSide.Reflect = 0;
 				if (!this.battle.pbIsOpposing(attacker.Index))
 				{
 					battle.pbDisplay(Game._INTL("The opposing team's Reflect wore off!"));
@@ -9918,9 +9914,9 @@ namespace PokemonUnity.Combat
 					battle.pbDisplayPaused(Game._INTL("Your team's Reflect wore off!"));
 				}
 			}
-			if (attacker.OpposingSide.LightScreen > 0)
+			if (attacker.pbOpposingSide.LightScreen > 0)
 			{
-				attacker.OpposingSide.LightScreen = 0;
+				attacker.pbOpposingSide.LightScreen = 0;
 				if (!this.battle.pbIsOpposing(attacker.Index))
 				{
 					battle.pbDisplay(Game._INTL("The opposing team's Light Screen wore off!"));
@@ -9935,8 +9931,8 @@ namespace PokemonUnity.Combat
 
 		public override void pbShowAnimation(Moves id, IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker.OpposingSide.Reflect > 0 ||
-			   attacker.OpposingSide.LightScreen > 0)
+			if (attacker.pbOpposingSide.Reflect > 0 ||
+			   attacker.pbOpposingSide.LightScreen > 0)
 			{
 				base.pbShowAnimation(id, attacker, opponent, 1, alltargets, showanimation); // Wall-breaking anim;
 			}
@@ -10027,9 +10023,9 @@ namespace PokemonUnity.Combat
 			}
 			else
 			{
-				bool lowerspeed = attacker.pbCanReduceStatStage(Stats.SPEED, attacker, false, this);
-				bool raiseatk = attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this);
-				bool raisedef = attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this);
+				bool lowerspeed = attacker is IBattlerEffect b0 && b0.pbCanReduceStatStage(Stats.SPEED, attacker, false, this);
+				bool raiseatk = attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this);
+				bool raisedef = attacker is IBattlerEffect b2 && b2.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this);
 				if (!lowerspeed && !raiseatk && !raisedef)
 				{
 					failed = true;
@@ -10039,24 +10035,22 @@ namespace PokemonUnity.Combat
 					pbShowAnimation(this.id, attacker, null, 1, alltargets, showanimation); // Non-Ghost move animation;
 					if (lowerspeed)
 					{
-						attacker.pbReduceStat(Stats.SPEED, 1, attacker, false, this);
-
+						(attacker as IBattlerEffect).pbReduceStat(Stats.SPEED, 1, attacker, false, this);
 					}
 					bool showanim = true;
 					if (raiseatk)
 					{
-						attacker.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+						(attacker as IBattlerEffect).pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 
 						showanim = false;
 					}
 					if (raisedef)
 					{
-						attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+						(attacker as IBattlerEffect).pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 
 						showanim = false;
 					}
 				}
-
 			}
 			if (failed)
 			{
@@ -10247,15 +10241,15 @@ namespace PokemonUnity.Combat
 			battle.pbDisplay(Game._INTL("{1} stockpiled {2}!",attacker.ToString(),
 				attacker.effects.Stockpile));
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 				attacker.effects.StockpileDef += 1;
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 				attacker.effects.StockpileSpDef += 1;
 				showanim = false;
 			}
@@ -10285,23 +10279,21 @@ namespace PokemonUnity.Combat
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
-
 				bool showanim = true;
 				if (attacker.effects.StockpileDef > 0)
 				{
-					if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
+					if (attacker is IBattlerEffect b && b.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
 					{
-
-						attacker.pbReduceStat(Stats.DEFENSE, attacker.effects.StockpileDef,
+						b.pbReduceStat(Stats.DEFENSE, attacker.effects.StockpileDef,
 						   attacker, false, this, showanim);
 						showanim = false;
 					}
 				}
 				if (attacker.effects.StockpileSpDef > 0)
 				{
-					if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
+					if (attacker is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
 					{
-						attacker.pbReduceStat(Stats.SPDEF, attacker.effects.StockpileSpDef,
+						b.pbReduceStat(Stats.SPDEF, attacker.effects.StockpileSpDef,
 						   attacker, false, this, showanim);
 						showanim = false;
 					}
@@ -10359,18 +10351,18 @@ namespace PokemonUnity.Combat
 			bool showanim = true;
 			if (attacker.effects.StockpileDef > 0)
 			{
-				if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
+				if (attacker is IBattlerEffect b && b.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.DEFENSE, attacker.effects.StockpileDef,
+					b.pbReduceStat(Stats.DEFENSE, attacker.effects.StockpileDef,
 					   attacker, false, this, showanim);
 					showanim = false;
 				}
 			}
 			if (attacker.effects.StockpileSpDef > 0)
 			{
-				if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
+				if (attacker is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPDEF, attacker, false, this))
 				{
-					attacker.pbReduceStat(Stats.SPDEF, attacker.effects.StockpileSpDef,
+					b.pbReduceStat(Stats.SPDEF, attacker.effects.StockpileSpDef,
 					   attacker, false, this, showanim);
 					showanim = false;
 				}
@@ -10734,8 +10726,8 @@ namespace PokemonUnity.Combat
 			foreach (BattlerEffects i in effectstoswap)
 			{
 				//a.effects[i], b.effects[i]= b.effects[i], a.effects[i];
-				Effects.Battler atemp = a.effects;
-				Effects.Battler btemp = b.effects;
+				IEffectsBattler atemp = a.effects;
+				IEffectsBattler btemp = b.effects;
 				a.effects.Attract          = btemp.Attract         ;
 				a.effects.BatonPass        = btemp.BatonPass       ;
 				a.effects.Bide             = btemp.Bide            ;
@@ -10904,9 +10896,9 @@ namespace PokemonUnity.Combat
 				b.effects.Yawn             = atemp.Yawn            ;
 			}
 
-			attacker.Update(true);
+			attacker.pbUpdate(true);
 
-			opponent.Update(true);
+			opponent.pbUpdate(true);
 			battle.pbDisplay(Game._INTL("{1} and {2} switched places!", opponent.ToString(), attacker.ToString(true)));
 			return 0;//ToDo: Not sure what to return here, so i added null/0
 		}
@@ -11055,7 +11047,7 @@ namespace PokemonUnity.Combat
 			if (opponent.damagestate.Substitute) return;
 			if (opponent is IBattlerClause b && b.pbCanFreeze(attacker, false, this))
 			{
-				if (b is IBattlerEffect o) o.pbFreeze();
+				if (opponent is IBattlerEffect o) o.pbFreeze();
 			}
 		}
 	}
@@ -11085,20 +11077,21 @@ namespace PokemonUnity.Combat
 			{
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 				if (!i.hasWorkingAbility(Abilities.PLUS) && !i.hasWorkingAbility(Abilities.MINUS)) continue; //next 
-				if (!i.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
-						!i.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this)) continue; //next 
+				if (i is IBattlerEffect b && 
+					!b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
+					!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this)) continue; //next 
 				if (!didsomething) pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 				didsomething = true;
 
 				bool showanim = true;
-				if (i.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+				if (i is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 				{
-					i.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+					b0.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
-				if (i.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+				if (i is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 				{
-					i.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
+					b1.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
 			}
@@ -11121,14 +11114,14 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (!this.battle.doublebattle || opponent.Species == Pokemons.NONE ||
-			   !opponent.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			   opponent is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = attacker.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this);
+			bool ret = attacker is IBattlerEffect a && a.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 	}
@@ -11147,10 +11140,10 @@ namespace PokemonUnity.Combat
 
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!opponent.pbCanReduceStatStage(Stats.ATTACK, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.ATTACK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.ATTACK, 1, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.ATTACK, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 	}
@@ -11171,8 +11164,9 @@ namespace PokemonUnity.Combat
 				battle.pbDisplay(Game._INTL("{1}'s attack missed!", attacker.ToString()));
 				return -1;
 			}
-			if (opponent.pbTooLow(Stats.ATTACK) &&
-			   opponent.pbTooLow(Stats.SPATK))
+			if (opponent is IBattlerEffect b &&
+				b.pbTooLow(Stats.ATTACK) &&
+				b.pbTooLow(Stats.SPATK))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any lower!", opponent.ToString()));
 				return -1;
@@ -11201,11 +11195,11 @@ namespace PokemonUnity.Combat
 				string abilityname = opponent.Ability.ToString(TextScripts.Name);
 				battle.pbDisplay(Game._INTL("{1}'s {2} prevents Attack loss!", opponent.ToString(), abilityname));
 			}
-			else if (opponent.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim))
+			else if (opponent is IBattlerEffect b0 && b0.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim))
 			{
 				ret = 0; showanim = false;
 			}
-			if (opponent.pbReduceStat(Stats.SPATK, 1, attacker, false, this, showanim))
+			if (opponent is IBattlerEffect b1 && b1.pbReduceStat(Stats.SPATK, 1, attacker, false, this, showanim))
 			{
 				ret = 0; showanim = false;
 			}
@@ -11223,7 +11217,7 @@ namespace PokemonUnity.Combat
 		public override bool pbMoveFailed(IBattler attacker, IBattler opponent)
 		{
 			if (attacker.Species == Pokemons.HOOPA) return true;
-			if (attacker.FormId != 1) return true;
+			if (attacker.form != 1) return true;
 			return false;
 		}
 
@@ -11235,9 +11229,9 @@ namespace PokemonUnity.Combat
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.DEFENSE, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this);
+				b.pbReduceStat(Stats.DEFENSE, 1, attacker, false, this);
 			}
 		}
 	}
@@ -11256,10 +11250,10 @@ namespace PokemonUnity.Combat
 
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (!opponent.pbCanReduceStatStage(Stats.SPATK, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.SPATK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.SPATK, 1, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.SPATK, 1, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 	}
@@ -11275,19 +11269,19 @@ namespace PokemonUnity.Combat
 		{
 			if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (pbTypeImmunityByAbility(pbType(this.type, attacker, opponent), attacker, opponent)) return -1;
-			if (!opponent.pbCanReduceStatStage(Stats.SPATK, attacker, true, this)) return -1;
+			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.SPATK, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			bool ret = opponent.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
+			bool ret = opponent is IBattlerEffect o && o.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
 			return ret ? 0 : -1;
 		}
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
 			if (opponent.damagestate.Substitute) return;
-			if (opponent.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
+			if (opponent is IBattlerEffect b && b.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
 			{
-				opponent.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
+				b.pbReduceStat(Stats.SPATK, 2, attacker, false, this);
 			}
 		}
 	}
@@ -11308,20 +11302,21 @@ namespace PokemonUnity.Combat
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 				if (!i.pbHasType(Types.GRASS)) continue; //next
 				if (i.isAirborne(attacker.hasMoldBreaker())) continue; //next
-				if (!i.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
-					  !i.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this)) continue;//next
+				if (i is IBattlerEffect b && 
+					!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
+						!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this)) continue;//next
 				if (!didsomething) pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 				didsomething = true;
 
 				bool showanim = true;
-				if (i.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+				if (i is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 				{
-					i.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+					b0.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
-				if (i.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+				if (i is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 				{
-					i.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
+					b1.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
 			}
@@ -11349,14 +11344,14 @@ namespace PokemonUnity.Combat
 			{
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 				if (!i.pbHasType(Types.GRASS)) continue; //next
-				if (!i.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this)) continue; //next
+				if (i is IBattlerEffect b && !b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this)) continue; //next
 				if (!didsomething) pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 				didsomething = true;
 
 				bool showanim = true;
-				if (i.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
+				if (i is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 				{
-					i.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
+					b0.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
 			}
@@ -11384,26 +11379,27 @@ namespace PokemonUnity.Combat
 			{
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 				if (i.Status != Status.POISON) continue; //next
-				if (!i.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this) &&
-							  !i.pbCanReduceStatStage(Stats.SPATK, attacker, false, this) &&
-							  !i.pbCanReduceStatStage(Stats.SPEED, attacker, false, this)) continue; //next
+				if (i is IBattlerEffect b && 
+					!b.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this) &&
+					!b.pbCanReduceStatStage(Stats.SPATK, attacker, false, this) &&
+					!b.pbCanReduceStatStage(Stats.SPEED, attacker, false, this)) continue; //next
 				if (!didsomething) pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 				didsomething = true;
 
 				bool showanim = true;
-				if (i.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this))
+				if (i is IBattlerEffect b0 && b0.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this))
 				{
-					i.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim);
+					b0.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
-				if (i.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
+				if (i is IBattlerEffect b1 && b1.pbCanReduceStatStage(Stats.SPATK, attacker, false, this))
 				{
-					i.pbReduceStat(Stats.SPATK, 1, attacker, false, this, showanim);
+					b1.pbReduceStat(Stats.SPATK, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
-				if (i.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
+				if (i is IBattlerEffect b2 && b2.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
 				{
-					i.pbReduceStat(Stats.SPEED, 1, attacker, false, this, showanim);
+					b2.pbReduceStat(Stats.SPEED, 1, attacker, false, this, showanim);
 					showanim = false;
 				}
 			}
@@ -11903,9 +11899,10 @@ namespace PokemonUnity.Combat
 				attacker.pbConsumeItem();
 			}
 			if (attacker.effects.TwoTurnAttack > 0) return 0;
-			if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this) &&
-			   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b && 
+				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this) &&
+				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString()));
 				return -1;
@@ -11913,19 +11910,19 @@ namespace PokemonUnity.Combat
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			bool showanim = true;
-			if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
+			if (attacker is IBattlerEffect b0 && b0.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPATK, 2, attacker, false, this, showanim);
+				b0.pbIncreaseStat(Stats.SPATK, 2, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
+			if (attacker is IBattlerEffect b1 && b1.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPDEF, 2, attacker, false, this, showanim);
+				b1.pbIncreaseStat(Stats.SPDEF, 2, attacker, false, this, showanim);
 				showanim = false;
 			}
-			if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
+			if (attacker is IBattlerEffect b2 && b2.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
-				attacker.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this, showanim);
+				b2.pbIncreaseStat(Stats.SPEED, 2, attacker, false, this, showanim);
 				showanim = false;
 			}
 			return 0;
@@ -11980,9 +11977,9 @@ namespace PokemonUnity.Combat
 			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0 && opponent.isFainted())
 			{
-				if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
+				if (attacker is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this))
 				{
-					attacker.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this);
+					b.pbIncreaseStat(Stats.ATTACK, 2, attacker, false, this);
 				}
 			}
 			return ret;
@@ -12006,11 +12003,11 @@ namespace PokemonUnity.Combat
 			   attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SOUNDPROOF))
 			{
 				bool showanim = true;
-				if (opponent.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim))
+				if (opponent is IBattlerEffect b0 && b0.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim))
 				{
 					showanim = false; ret = 0;
 				}
-				if (opponent.pbReduceStat(Stats.SPATK, 1, attacker, false, this, showanim))
+				if (opponent is IBattlerEffect b1 && b1.pbReduceStat(Stats.SPATK, 1, attacker, false, this, showanim))
 				{
 					showanim = false; ret = 0;
 				}
@@ -12057,14 +12054,14 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_153(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker.OpposingSide.StickyWeb)
+			if (attacker.pbOpposingSide.StickyWeb)
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
-			attacker.OpposingSide.StickyWeb = true;
+			attacker.pbOpposingSide.StickyWeb = true;
 			if (!this.battle.pbIsOpposing(attacker.Index))
 			{
 				battle.pbDisplay(Game._INTL("A sticky web has been laid out beneath the opposing team's feet!"));
@@ -12186,7 +12183,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_158(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override bool pbMoveFailed(IBattler attacker, IBattler opponent)
 		{
-			return attacker.Species == Pokemons.NONE || !attacker.belch;
+			return attacker.Species == Pokemons.NONE || !attacker.pokemon.belch;
 		}
 	}
 	#endregion

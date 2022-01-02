@@ -32,7 +32,8 @@ namespace PokemonUnity
 		/// Fires whenever the player moves to a new map. Event handler receives the old
 		/// map ID or 0 if none.  Also fires when the first map of the game is loaded
 		/// </summary>
-		public static event EventHandler OnMapChange;
+		//public static event EventHandler<OnMapChangeEventArgs> OnMapChange;
+		public static event Action<object, IOnMapChangeEventArgs> OnMapChange;
 		/// <summary>
 		/// Fires whenever the map scene is regenerated and soon after the player moves
 		/// to a new map.
@@ -48,7 +49,8 @@ namespace PokemonUnity
 		/// receives the new map ID and the Game_Map object representing the new map.
 		/// When the event handler is called, Game.GameData.GameMap still refers to the old map.
 		/// </summary>
-		public static event EventHandler OnMapChanging;
+		//public static event EventHandler<OnMapChangingEventArgs> OnMapChanging;
+		public static event Action<object, IOnMapChangingEventArgs> OnMapChanging;
 		/// <summary>
 		/// Fires whenever the player or another event leaves a tile.
 		/// </summary>

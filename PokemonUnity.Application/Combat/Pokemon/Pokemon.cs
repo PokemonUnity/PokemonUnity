@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Combat.Data;
 using PokemonUnity.Inventory;
-using PokemonUnity.Localization;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.Item;
@@ -12,7 +11,6 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
-
 
 namespace PokemonUnity.Combat
 {
@@ -35,7 +33,7 @@ namespace PokemonUnity.Combat
 		/// Returns the position of this pkmn in battle lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == battle.Party[this.pkmn.index]
-		public int Index						{ get; private set; }
+		public int Index						{ get; set; }
 		/// <summary>
 		/// Index list of all pokemons who attacked this battler on this/previous turn
 		/// </summary>
@@ -48,11 +46,11 @@ namespace PokemonUnity.Combat
 		/// <remarks>
 		/// 0: Attack, 1: Defense, 2: Speed, 3: SpAtk, 4: SpDef, 5: Evasion, 6: Accuracy
 		/// </remarks>
-		public int[] stages						{ get; private set; }//ToDo: sbyte?
+		public int[] stages						{ get; private set; }
 		/// <summary>
 		/// Participants will earn Exp. Points if this battler is defeated
 		/// </summary>
-		public IList<int> participants			{ get; private set; }
+		public IList<int> participants			{ get; set; }
 		public bool tookDamage					{ get; set; }
 		public int lastHPLost					{ get; set; }
 		public Moves lastMoveUsed				{ get; protected set; }
@@ -66,12 +64,7 @@ namespace PokemonUnity.Combat
 		public bool captured					{ get; set; }
 		#endregion
 		#region Inherit Base Pokemon Data
-		public int HP							{ get { return hp; } set 
-			{ 
-				hp = value; 
-				//if (pokemon.IsNotNullOrNone()) pokemon.HP = value; //PokemonEssentials.Interface.PokeBattle.IPokemon is assigned after battle
-			} 
-		}
+		public int HP							{ get { return hp; } set { hp = value; } }
 		private int hp							{ get; set; }
 		public int TotalHP						{ get; protected set; }
 		public int ATK							{ get { return effects.PowerTrick ? DEF : attack; } set { attack = value; } }
@@ -152,22 +145,23 @@ namespace PokemonUnity.Combat
 			}
 			set { speed = value; }
 		}
-		public int Level						{ //PokemonEssentials.Interface.PokeBattle.IPokemon is assigned after battle
-			get { return level; } //pokemon.IsNotNullOrNone() ? pokemon.Level : 0; } 
-			set { level = value; } //if (pokemon.IsNotNullOrNone()) pokemon.SetLevel((byte)value); } 
-		}
+		public int Level						{
+													get { return level; } //pokemon.IsNotNullOrNone() ? pokemon.Level : 0; } 
+													set { level = value; } //if (pokemon.IsNotNullOrNone()) pokemon.SetLevel((byte)value); } 
+												}
 		private int level						{ get; set; }
-		public int happiness					{ get { return pokemon.IsNotNullOrNone() ? pokemon.Happiness : 0; } }
+		public int Happiness					{ get { return happiness; } set { happiness = value; } }
+		private int happiness					{ get; set; } //{ return pokemon.IsNotNullOrNone() ? pokemon.Happiness : 0; } }
 		public string Name { get {
 				//if name is not nickname return illusion.Name?
 				if (effects.Illusion != null)
 					return effects.Illusion.Species.ToString(TextScripts.Name);
-				return name; } }
-		private string name						{ get { return pokemon.Name; } }
+				return name; } set { name = value; } }
+		private string name						{ get; set;} //{ return pokemon.Name; } }
 		public bool? Gender { get {
 				if (effects.Illusion != null)
 					return effects.Illusion.Gender;
-				return this.gender; } }
+				return this.gender; } set { gender = value; } }
 		private bool? gender					{ get; set; }
 		public bool IsShiny { get {
 				if (effects.Illusion != null)
@@ -175,17 +169,9 @@ namespace PokemonUnity.Combat
 				if (pokemon.IsNotNullOrNone()) return pokemon.IsShiny;
 				return false; }
 		}
-		public Pokemons Species { get { return Game.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
-		public int StatusCount
-		{
-			get { return statusCount; }
-			set
-			{
-				statusCount = value;
-				if (pokemon.IsNotNullOrNone()) pokemon.StatusCount = 0;
-			}
-		}
-		private int statusCount { get; set; }
+		public Pokemons Species					{ get { return Game.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
+		public int StatusCount					{ get { return statusCount; } set { statusCount = value; } }
+		private int statusCount					{ get; set; }
 		public Status Status
 		{
 			get
@@ -197,32 +183,22 @@ namespace PokemonUnity.Combat
 				if (status == Status.SLEEP && value == 0)
 					effects.Truant = false;
 				status = value;
-				//if (pokemon.IsNotNullOrNone()) pokemon.Status = value;
 				if (value != Status.POISON)
 					effects.Toxic = 0;
 				if (value != Status.POISON && value != Status.SLEEP)
 					StatusCount = 0;
-					//if (pokemon.IsNotNullOrNone()) pokemon.StatusCount = 0;
 			}
 		}
-		private Status status { get; set; }
-		public Items Item 
-		{
-			get { return item; }
-			set
-			{
-				item = value;
-				//if (pokemon.IsNotNullOrNone()) pokemon.setItem(value);
-			}
-		}
-		private Items item { get; set; } 
-		public Types Type1 { get; set; }
-		public Types Type2 { get; set; }
-		public int[] IV { get; private set; } 
-		//public int[] IV { get { return pokemon.IV; } }
-		public Abilities Ability { get { return ability; } }
-		internal Abilities ability { private get; set; }
-		public IBattleMove[] moves { get; set; }
+		private Status status					{ get; set; }
+		public Items Item						{ get { return item; } set { item = value; } }
+		private Items item						{ get; set; } 
+		public Types Type1						{ get; set; }
+		public Types Type2						{ get; set; }
+		public int[] IV							{ get; private set; } 
+		//public int[] IV						{ get { return pokemon.IV; } }
+		public Abilities Ability				{ get { return ability; } }
+		private Abilities ability				{ get; set; }
+		public IBattleMove[] moves				{ get; set; }
 		#endregion
 		#region Move to PokemonBattle Class
 		/// <summary>
@@ -287,36 +263,21 @@ namespace PokemonUnity.Combat
 					return false;
 				return isHyperMode; }
 		}
-		private int form { get; set; }
+		public int form { get; set; } //ToDo: Rename to FormId and set `form` private get/set 
 		public Monster.Data.Form Form { get { return Kernal.PokemonFormsData[Species][form]; } }
-		public int FormId
-		{
-			get
-			{
-				//if (@pokemon.IsNotNullOrNone()) return @pokemon.FormId;
-				return form; //0;
-			}
-			set
-			{
-				@form = value;
-				//if (@pokemon.IsNotNullOrNone()) @pokemon.form = value;
-				//if (@pokemon.IsNotNullOrNone()) @pokemon.SetForm(value);
-			}
-		}
 		public bool hasMega { get {
 			if (@effects.Transform) return false;
 			if (@pokemon.IsNotNullOrNone())
 			{
-				return @pokemon.hasMegaForm();// ? rescue false
+				return @pokemon is IPokemonMegaEvolution m == false ? false : m.hasMegaForm();// ? rescue false
 			}
 			return false;
 		} }
 
-		public bool IsMega { get { return isMega(); } }
 		public bool isMega { get {
 			if (@pokemon.IsNotNullOrNone())
 			{
-				return @pokemon.isMega();// ? rescue false
+				return @pokemon is IPokemonMegaEvolution m == false ? false : m.isMega();// ? rescue false
 			}
 			return false;
 		} }
@@ -325,16 +286,15 @@ namespace PokemonUnity.Combat
 			if (@effects.Transform) return false;
 			if (@pokemon.IsNotNullOrNone())
 			{
-				return @pokemon.hasPrimalForm();// ? rescue false
+				return @pokemon is IPokemonMegaEvolution m == false ? false : m.hasPrimalForm();// ? rescue false
 			}
 			return false;
 		} }
 
-		public bool IsPrimal { get { return isPrimal(); } }
 		public bool isPrimal { get {
 			if (@pokemon.IsNotNullOrNone())
 			{
-				return @pokemon.isPrimal();// ? rescue false
+				return @pokemon is IPokemonMegaEvolution m == false ? false : m.isPrimal();// ? rescue false
 			}
 			return false;
 		} }
@@ -345,7 +305,7 @@ namespace PokemonUnity.Combat
 		{
 			(this as IBattler).initialize(btl, idx);
 		}
-		IBattler IBattler.initialize(IBattle btl, int index)
+		IBattler IBattler.initialize(IBattle btl, int idx)
 		{
 			battle			= btl;
 			Index			= idx;
@@ -597,7 +557,7 @@ namespace PokemonUnity.Combat
 				item			= pkmn.Item;
 				Type1			= pkmn.Type1;
 				Type2			= pkmn.Type2;
-				form			= pkmn.FormId;
+				form			= pkmn is IPokemonMultipleForms f ? f.form : 0;
 				attack			= pkmn.ATK;
 				defense			= pkmn.DEF;
 				speed			= pkmn.SPE;
@@ -816,7 +776,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Change HP
-		public int ReduceHP(int amt, bool animate = false, bool registerDamage = true)
+		public int pbReduceHP(int amt, bool animate = false, bool registerDamage = true)
 		{
 			if (amt >= HP)
 				amt = HP;
@@ -840,7 +800,7 @@ namespace PokemonUnity.Combat
 			return amt;
 		}
 
-		public int RecoverHP(int amount, bool animate = false)
+		public int pbRecoverHP(int amount, bool animate = false)
 		{
 			// the checks here are redundant, cause they're also placed on HP { set; }
 			if (HP + amount > TotalHP)
@@ -882,15 +842,17 @@ namespace PokemonUnity.Combat
 			//Status = 0;
 			StatusCount = 0;
 			if (pokemon != null && battle.internalbattle)
-				pokemon.ChangeHappiness(HappinessMethods.FAINT);
-			if (IsMega)
+				(pokemon as Monster.Pokemon).ChangeHappiness(HappinessMethods.FAINT);
+			if (isMega) { 
 				//Change form to before transformation
-				pokemon.makeUnmega();
-				//form = pokemon.FormId;
-			if (IsPrimal)
+				if (pokemon is IPokemonMegaEvolution m) m.makeUnmega();
+				form = pokemon is IPokemonMultipleForms f ? f.form : 0;
+			}
+			if (isPrimal) { 
 				//Change form to before transformation
-				pokemon.makeUnprimal();
-				//form = pokemon.FormId;
+				if (pokemon is IPokemonMegaEvolution m) m.makeUnprimal();
+				form = pokemon is IPokemonMultipleForms f ? f.form : 0;
+			}
 			//Fainted = true;
 			Status = Status.FAINT;
 			//reset choice
@@ -914,20 +876,15 @@ namespace PokemonUnity.Combat
 		/// Returns the data structure for the opposing Pokémon's side
 		/// </summary>
 		/// Player: 1 and 3; Foe: 0 and 2
-		public IEffectsSide OpposingSide { get { return battle.sides[(Index&1)^1]; } }
-		public IEffectsSide pbOpposingSide { get { return OpposingSide; } }
+		public IEffectsSide pbOpposingSide { get { return battle.sides[(Index&1)^1]; } }
 		/// <summary>
 		/// Returns whether the position belongs to the opposing Pokémon's side
 		/// </summary>
 		/// <param name="i"></param>
 		/// <returns></returns>
-		public bool IsOpposing(int i)
-		{
-			return (Index & 1) != (i & 1);
-		}
 		public bool pbIsOpposing(int i)
 		{
-			return IsOpposing;
+			return (Index & 1) != (i & 1);
 		}
 		/// <summary>
 		/// Returns the battler's partner
@@ -937,7 +894,6 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Returns the battler's first opposing Pokémon
 		/// </summary>
-		public IBattler OppositeOpposing { get { return battle.battlers[(Index ^ 1)]; } }
 		public IBattler pbOppositeOpposing { get { return battle.battlers[(Index ^ 1)]; } }
 		//ToDo: If not double battle return null?
 		public IBattler pbOppositeOpposing2 { get { return battle.battlers[(Index ^ 1) | ((Index & 2) ^ 2)]; } }
@@ -1031,25 +987,25 @@ namespace PokemonUnity.Combat
 			}
 			if (Species == Pokemons.SHAYMIN)
 			{
-				if (form != pokemon.FormId)
+				if (form != (pokemon is IPokemonMultipleForms f ? f.form : 0))
 				{
-					form = pokemon.FormId;
+					form = pokemon is IPokemonMultipleForms f1 ? f1.form : 0;
 					transformed = true;
 				}
 			}
 			if (Species == Pokemons.GIRATINA)
 			{
-				if (form != pokemon.FormId)
+				if (form != (pokemon is IPokemonMultipleForms f ? f.form : 0))
 				{
-					form = pokemon.FormId;
+					form = pokemon is IPokemonMultipleForms f1 ? f1.form : 0;
 					transformed = true;
 				}
 			}
 			if (Species == Pokemons.ARCEUS && Ability == Abilities.MULTITYPE)
 			{
-				if (form != pokemon.FormId)
+				if (form != (pokemon is IPokemonMultipleForms f ? f.form : 0))
 				{
-					form = pokemon.FormId;
+					form = pokemon is IPokemonMultipleForms f1 ? f1.form : 0;
 					transformed = true;
 				}
 			}
@@ -1070,17 +1026,17 @@ namespace PokemonUnity.Combat
 			}
 			if (Species == Pokemons.KELDEO)
 			{
-				if (form != pokemon.FormId)
+				if (form != (pokemon is IPokemonMultipleForms f ? f.form : 0))
 				{
-					form = pokemon.FormId;
+					form = pokemon is IPokemonMultipleForms f1 ? f1.form : 0;
 					transformed = true;
 				}
 			}
 			if (Species == Pokemons.GENESECT)
 			{
-				if (form != pokemon.FormId)
+				if (form != (pokemon is IPokemonMultipleForms f ? f.form : 0))
 				{
-					form = pokemon.FormId;
+					form = pokemon is IPokemonMultipleForms f1 ? f1.form : 0;
 					transformed = true;
 				}
 			}
@@ -1119,7 +1075,7 @@ namespace PokemonUnity.Combat
 			{
 				if(hasWorkingAbility(Abilities.PRIMORDIAL_SEA) && battle.pbWeather != Weather.HEAVYRAIN)
 				{
-					battle.SetWeather(Weather.HEAVYRAIN);
+					battle.weather = (Weather.HEAVYRAIN);
 					battle.weatherduration = -1;
 					battle.pbCommonAnimation("HeavyRain", null, null);
 					battle.pbDisplay(Game._INTL("{1}'s {2} made a heavy rain begin to fall!", ToString(), Ability.ToString(TextScripts.Name)));
@@ -1128,7 +1084,7 @@ namespace PokemonUnity.Combat
 				}
 				if(hasWorkingAbility(Abilities.DESOLATE_LAND) && battle.pbWeather != Weather.HARSHSUN)
 				{
-					battle.SetWeather(Weather.HARSHSUN);
+					battle.weather = (Weather.HARSHSUN);
 					battle.weatherduration = -1;
 					battle.pbCommonAnimation("HarshSun", null, null);
 					battle.pbDisplay(Game._INTL("{1}'s {2} turned the sunlight extremely harsh!", ToString(), Ability.ToString(TextScripts.Name)));
@@ -1137,7 +1093,7 @@ namespace PokemonUnity.Combat
 				}
 				if(hasWorkingAbility(Abilities.DELTA_STREAM) && battle.pbWeather != Weather.STRONGWINDS)
 				{
-					battle.SetWeather(Weather.STRONGWINDS);
+					battle.weather = (Weather.STRONGWINDS);
 					battle.weatherduration = -1;
 					battle.pbCommonAnimation("StrongWinds", null, null);
 					battle.pbDisplay(Game._INTL("{1}'s {2} caused a mysterious air current that protects Flying-type Pokémon!", ToString(), Ability.ToString(TextScripts.Name)));
@@ -1151,7 +1107,7 @@ namespace PokemonUnity.Combat
 					if (hasWorkingAbility(Abilities.DRIZZLE) &&
 						(battle.pbWeather != Weather.RAINDANCE || battle.weatherduration != -1))
 					{
-						battle.SetWeather(Weather.RAINDANCE);
+						battle.weather = (Weather.RAINDANCE);
 						if (Core.USENEWBATTLEMECHANICS)
 						{
 							battle.weatherduration = 5;
@@ -1168,7 +1124,7 @@ namespace PokemonUnity.Combat
 					if (hasWorkingAbility(Abilities.DROUGHT) &&
 						(battle.pbWeather != Weather.SUNNYDAY || battle.weatherduration != -1))
 					{
-						battle.SetWeather(Weather.SUNNYDAY);
+						battle.weather = (Weather.SUNNYDAY);
 						if (Core.USENEWBATTLEMECHANICS)
 						{
 							battle.weatherduration = 5;
@@ -1186,7 +1142,7 @@ namespace PokemonUnity.Combat
 					if (hasWorkingAbility(Abilities.SAND_STREAM) &&
 						(battle.pbWeather != Weather.SANDSTORM || battle.weatherduration != -1))
 					{
-						battle.SetWeather(Weather.SANDSTORM);
+						battle.weather = (Weather.SANDSTORM);
 						if (Core.USENEWBATTLEMECHANICS)
 						{
 							battle.weatherduration = 5;
@@ -1203,7 +1159,7 @@ namespace PokemonUnity.Combat
 					if (hasWorkingAbility(Abilities.SNOW_WARNING) &&
 						(battle.pbWeather != Weather.HAIL || battle.weatherduration != -1))
 					{
-						battle.SetWeather(Weather.HAIL);
+						battle.weather = (Weather.HAIL);
 						if (Core.USENEWBATTLEMECHANICS)
 						{
 							battle.weatherduration = 5;
@@ -1220,7 +1176,7 @@ namespace PokemonUnity.Combat
 				}
 				if(hasWorkingAbility(Abilities.AIR_LOCK) || hasWorkingAbility(Abilities.CLOUD_NINE))
 				{
-					battle.SetWeather(Weather.NONE);
+					battle.weather = (Weather.NONE);
 					battle.weatherduration = 0;
 					battle.pbDisplay(Game._INTL("{1} has {2}!", ToString(), Ability.ToString(TextScripts.Name)));
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HasAbility", ToString(), Ability.ToString().Translate().Value).Value);
@@ -1239,7 +1195,7 @@ namespace PokemonUnity.Combat
 				for (int i = 0; i < battle.battlers.Length; i++)
 				{
 					IBattler foe = battle.battlers[i];
-					if (IsOpposing(i) && !foe.isFainted())
+					if (pbIsOpposing(i) && !foe.isFainted())
 					{
 						Abilities abil = foe.Ability;
 						if (abil > 0 &&
@@ -1268,27 +1224,27 @@ namespace PokemonUnity.Combat
 			if (this.hasWorkingAbility(Abilities.INTIMIDATE) && onactive) {
 				GameDebug.Log($"[Ability triggered] #{ToString()}'s Intimidate");
 				for (int i = 0; i < 4; i++)
-				if (IsOpposing(i) && !@battle.battlers[i].isFainted())
-					@battle.battlers[i].pbReduceAttackStatIntimidate(this);
+				if (pbIsOpposing(i) && !@battle.battlers[i].isFainted() && @battle.battlers[i] is IBattlerEffect b)
+					b.pbReduceAttackStatIntimidate(this);
 			}
 			#endregion Intimidate
 			#region Download
 			if (this.hasWorkingAbility(Abilities.DOWNLOAD) && onactive) {
 				int odef = 0; int ospdef = 0;
 				if (pbOpposing1.IsNotNullOrNone() && !pbOpposing1.isFainted()) {
-					odef+=pbOpposing1.defense;
-					ospdef+=pbOpposing1.spdef;
+					odef+=pbOpposing1.DEF;
+					ospdef+=pbOpposing1.SPD;
 				}
 				if (pbOpposing2.IsNotNullOrNone() && !pbOpposing2.isFainted()) {
-					odef+=pbOpposing2.defense;
-					ospdef+=pbOpposing1.spdef;
+					odef+=pbOpposing2.DEF;
+					ospdef+=pbOpposing1.SPD;
 				}
 				if (ospdef>odef)
-				if (pbIncreaseStatWithCause(Stats.ATTACK,1,this,ability.ToString(TextScripts.Name)))
-					GameDebug.Log($"[Ability triggered] #{ToString()}'s Download (raising Attack)");
-				else
-				if (pbIncreaseStatWithCause(Stats.SPATK,1,this,ability.ToString(TextScripts.Name)))
-					GameDebug.Log($"[Ability triggered] #{ToString()}'s Download (raising Special Attack)");
+					if (pbIncreaseStatWithCause(Stats.ATTACK,1,this,ability.ToString(TextScripts.Name)))
+						GameDebug.Log($"[Ability triggered] #{ToString()}'s Download (raising Attack)");
+					else
+						if (pbIncreaseStatWithCause(Stats.SPATK,1,this,ability.ToString(TextScripts.Name)))
+							GameDebug.Log($"[Ability triggered] #{ToString()}'s Download (raising Special Attack)");
 			}
 			#endregion Download
 			#region Frisk
@@ -1319,7 +1275,7 @@ namespace PokemonUnity.Combat
 					foreach (var j in foe.moves) {
 						Attack.Data.MoveData movedata=Game.MoveData[j.id];
 						TypeEffective eff=movedata.Type.GetCombinedEffectiveness(Type1,Type2,@effects.Type3);
-						if ((movedata.basedamage>0 && eff == TypeEffective.SuperEffective) ||
+						if ((movedata.Power>0 && eff == TypeEffective.SuperEffective) ||
 							(movedata.Effect== Attack.Data.Effects.x027 && eff != TypeEffective.Ineffective)) { // OHKO
 							found=true;
 							break;
@@ -1339,7 +1295,7 @@ namespace PokemonUnity.Combat
 					if (foe.isFainted()) continue;
 					foreach (var j in foe.moves) {
 						Attack.Data.MoveData movedata=Game.MoveData[j.id];
-						int power=movedata.basedamage??0;
+						int power=movedata.Power??0;
 						if (movedata.Effect == Attack.Data.Effects.x027) power=160;    // OHKO
 						if (movedata.Effect == Attack.Data.Effects.x0BF) power=150;    // Eruption
 						if (movedata.Effect == Attack.Data.Effects.x05A || // Counter
@@ -1397,13 +1353,13 @@ namespace PokemonUnity.Combat
 			if (this.hasWorkingAbility(Abilities.IMPOSTER) && !@effects.Transform && onactive) {
 				IBattler choice=pbOppositeOpposing;
 				List<Attack.Data.Effects> blacklist=new List<Attack.Data.Effects>() {
-					Attack.Data.Effects.x09C,    // Fly
-					Attack.Data.Effects.x101,    // Dig
-					Attack.Data.Effects.x100,    // Dive
-					Attack.Data.Effects.x108,    // Bounce
-					Attack.Data.Effects.x138,    // Sky Drop
-					//Attack.Data.Effects.x111,    // Shadow Force
-					Attack.Data.Effects.x111    // Phantom Force
+					Attack.Data.Effects.x09C,	// Fly
+					Attack.Data.Effects.x101,	// Dig
+					Attack.Data.Effects.x100,	// Dive
+					Attack.Data.Effects.x108,	// Bounce
+					Attack.Data.Effects.x138,	// Sky Drop
+					//Attack.Data.Effects.x111,	// Shadow Force
+					Attack.Data.Effects.x111	// Phantom Force
 				};
 				if (choice.effects.Transform ||
 					choice.effects.Illusion.IsNotNullOrNone() ||
@@ -1419,11 +1375,11 @@ namespace PokemonUnity.Combat
 					@Type2=choice.Type2;
 					@effects.Type3=Types.NONE;
 					@ability=choice.Ability;
-					@attack=choice.attack;
-					@defense=choice.defense;
-					@speed=choice.speed;
-					@spatk=choice.spatk;
-					@spdef=choice.spdef;
+					@attack=choice.ATK;
+					@defense=choice.DEF;
+					@speed=choice.SPE;
+					@spatk=choice.SPA;
+					@spdef=choice.SPD;
 					foreach (var i in new Stats[] { Stats.ATTACK,Stats.DEFENSE,Stats.SPEED,
 								Stats.SPATK,Stats.SPDEF,Stats.ACCURACY,Stats.EVASION })
 						@stages[(int)i]=choice.stages[(int)i];
@@ -1451,9 +1407,9 @@ namespace PokemonUnity.Combat
 						target.Item=0;
 						target.effects.Unburden=true;
 						if (@battle.opponent.Length == 0 && !@battle.pbIsOpposing(user.Index))
-						if (user.itemInitial==Items.NONE && target.itemInitial==user.Item) {
-							user.itemInitial=user.Item;
-							target.itemInitial=Items.NONE;
+						if (user.pokemon.itemInitial==Items.NONE && target.pokemon.itemInitial==user.Item) {
+							user.pokemon.itemInitial=user.Item;
+							target.pokemon.itemInitial=Items.NONE;
 						}
 						@battle.pbDisplay(Game._INTL("{1}'s {2} was transferred to {3}!",
 							target.ToString(),user.Item.ToString(TextScripts.Name),user.ToString(true)));
@@ -1477,9 +1433,9 @@ namespace PokemonUnity.Combat
 							@battle.pbDisplay(Game._INTL("{1} was caught in the aftermath!",user.ToString()));
 						}
 					if (target.hasWorkingAbility(Abilities.CUTE_CHARM) && @battle.pbRandom(10)<3)
-						if (!user.isFainted() && user is IBattlerEffect u0 && u0.pbCanAttract(target,false)) {
+						if (!user.isFainted() && user is IBattlerEffect u && u.pbCanAttract(target,false)) {
 							GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Cute Charm");
-							u0.pbAttract(target,Game._INTL("{1}'s {2} made {3} fall in love!",target.ToString(),
+							u.pbAttract(target,Game._INTL("{1}'s {2} made {3} fall in love!",target.ToString(),
 								target.Ability.ToString(TextScripts.Name),user.ToString(true)));
 						}
 					if (target.hasWorkingAbility(Abilities.EFFECT_SPORE,true) && @battle.pbRandom(10)<3)
@@ -1544,7 +1500,7 @@ namespace PokemonUnity.Combat
 							target.ToString(),target.Ability.ToString(TextScripts.Name),user.ToString(true)));
 					}
 					if (target.hasWorkingAbility(Abilities.GOOEY,true))
-						if (user.pbReduceStatWithCause(Stats.SPEED,1,target,target.Ability.ToString(TextScripts.Name)))
+						if (user is IBattlerEffect u3 && u3.pbReduceStatWithCause(Stats.SPEED,1,target,target.Ability.ToString(TextScripts.Name)))
 							GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Gooey");
 					if (user.hasWorkingAbility(Abilities.POISON_TOUCH,true) &&
 						target is IBattlerEffect t && t.pbCanPoison(null,false) && @battle.pbRandom(10)<3) {
@@ -1564,18 +1520,18 @@ namespace PokemonUnity.Combat
 							GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Cursed Body disabled #{user.ToString(true)}");
 						}
 					if (target.hasWorkingAbility(Abilities.JUSTIFIED) && movetype == Types.DARK)
-						if (target.pbIncreaseStatWithCause(Stats.ATTACK,1,target,target.Ability.ToString(TextScripts.Name)))
+						if (target is IBattlerEffect t && t.pbIncreaseStatWithCause(Stats.ATTACK,1,target,target.Ability.ToString(TextScripts.Name)))
 							GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Justified");
 					if (target.hasWorkingAbility(Abilities.RATTLED) &&
 						(movetype == Types.BUG ||
 						movetype == Types.DARK ||
 						movetype == Types.GHOST))
-						if (target.pbIncreaseStatWithCause(Stats.SPEED,1,target,target.Ability.ToString(TextScripts.Name)))
+						if (target is IBattlerEffect t && t.pbIncreaseStatWithCause(Stats.SPEED,1,target,target.Ability.ToString(TextScripts.Name)))
 							GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Rattled");
 					if (target.hasWorkingAbility(Abilities.WEAK_ARMOR) && move.pbIsPhysical(movetype)) {
-						if (target.pbReduceStatWithCause(Stats.DEFENSE,1,target,target.Ability.ToString(TextScripts.Name)))
+						if (target is IBattlerEffect t0 && t0.pbReduceStatWithCause(Stats.DEFENSE,1,target,target.Ability.ToString(TextScripts.Name)))
 							GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Weak Armor (lower Defense)");
-						if (target.pbIncreaseStatWithCause(Stats.SPEED,1,target,target.Ability.ToString(TextScripts.Name)))
+						if (target is IBattlerEffect t1 && t1.pbIncreaseStatWithCause(Stats.SPEED,1,target,target.Ability.ToString(TextScripts.Name)))
 							GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Weak Armor (raise Speed)");
 					}
 					if (target.hasWorkingItem(Items.AIR_BALLOON,true)) {
@@ -1583,32 +1539,32 @@ namespace PokemonUnity.Combat
 						@battle.pbDisplay(Game._INTL("{1}'s Air Balloon popped!",target.ToString()));
 						target.pbConsumeItem(true,false);
 					} else if (target.hasWorkingItem(Items.ABSORB_BULB) && movetype == Types.WATER)
-						if (target.pbIncreaseStatWithCause(Stats.SPATK,1,target,target.Item.ToString(TextScripts.Name))) {
+						if (target is IBattlerEffect t0 && t0.pbIncreaseStatWithCause(Stats.SPATK,1,target,target.Item.ToString(TextScripts.Name))) {
 							GameDebug.Log($"[Item triggered] #{target.ToString()}'s #{target.Item.ToString(TextScripts.Name)}");
 							target.pbConsumeItem();
 						}
 					else if (target.hasWorkingItem(Items.LUMINOUS_MOSS) && movetype == Types.WATER)
-						if (target.pbIncreaseStatWithCause(Stats.SPDEF,1,target,target.Item.ToString(TextScripts.Name))) {
+						if (target is IBattlerEffect t1 && t1.pbIncreaseStatWithCause(Stats.SPDEF,1,target,target.Item.ToString(TextScripts.Name))) {
 							GameDebug.Log($"[Item triggered] #{target.ToString()}'s #{target.Item.ToString(TextScripts.Name)}");
 							target.pbConsumeItem();
 						}
 					else if (target.hasWorkingItem(Items.CELL_BATTERY) && movetype == Types.ELECTRIC)
-						if (target.pbIncreaseStatWithCause(Stats.ATTACK,1,target,target.Item.ToString(TextScripts.Name))) {
+						if (target is IBattlerEffect t2 && t2.pbIncreaseStatWithCause(Stats.ATTACK,1,target,target.Item.ToString(TextScripts.Name))) {
 							GameDebug.Log($"[Item triggered] #{target.ToString()}'s #{target.Item.ToString(TextScripts.Name)}");
 							target.pbConsumeItem();
 						}
 					else if (target.hasWorkingItem(Items.SNOWBALL) && movetype == Types.ICE)
-						if (target.pbIncreaseStatWithCause(Stats.ATTACK,1,target,target.Item.ToString(TextScripts.Name))) {
+						if (target is IBattlerEffect t3 && t3.pbIncreaseStatWithCause(Stats.ATTACK,1,target,target.Item.ToString(TextScripts.Name))) {
 							GameDebug.Log($"[Item triggered] #{target.ToString()}'s #{target.Item.ToString(TextScripts.Name)}");
 							target.pbConsumeItem();
 						}
 					else if (target.hasWorkingItem(Items.WEAKNESS_POLICY) && target.damagestate.TypeMod>8) {
 						bool showanim=true;
-						if (target.pbIncreaseStatWithCause(Stats.ATTACK,2,target,target.Item.ToString(TextScripts.Name),showanim)) {
+						if (target is IBattlerEffect t4 && t4.pbIncreaseStatWithCause(Stats.ATTACK,2,target,target.Item.ToString(TextScripts.Name),showanim)) {
 							GameDebug.Log($"[Item triggered] #{target.ToString()}'s Weakness Policy (Attack)");
 							showanim=false;
 						}
-						if (target.pbIncreaseStatWithCause(Stats.SPATK,2,target,target.Item.ToString(TextScripts.Name),showanim)) {
+						if (target is IBattlerEffect t5 && t5.pbIncreaseStatWithCause(Stats.SPATK,2,target,target.Item.ToString(TextScripts.Name),showanim)) {
 							GameDebug.Log($"[Item triggered] #{target.ToString()}'s Weakness Policy (Special Attack)");
 							showanim=false;
 						}
@@ -1632,7 +1588,7 @@ namespace PokemonUnity.Combat
 				}
 				if (target.hasWorkingAbility(Abilities.ANGER_POINT))
 					if (target.damagestate.Critical && !target.damagestate.Substitute &&
-						target.pbCanIncreaseStatStage(Stats.ATTACK,target)) {
+						target is IBattlerEffect t && t.pbCanIncreaseStatStage(Stats.ATTACK,target)) {
 						GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Anger Point");
 						target.stages[(int)Stats.ATTACK]=6;
 						@battle.pbCommonAnimation("StatUp",target,null);
@@ -1691,7 +1647,7 @@ namespace PokemonUnity.Combat
 			}
 			// Moxie
 			if (user.hasWorkingAbility(Abilities.MOXIE) && target.isFainted())
-				if (user.pbIncreaseStatWithCause(Stats.ATTACK,1,user,user.Ability.ToString(TextScripts.Name)))
+				if (user is IBattlerEffect u && u.pbIncreaseStatWithCause(Stats.ATTACK,1,user,user.Ability.ToString(TextScripts.Name)))
 					GameDebug.Log($"[Ability triggered] #{user.ToString()}'s Moxie");
 			// Magician
 			if (user.hasWorkingAbility(Abilities.MAGICIAN))
@@ -1706,10 +1662,10 @@ namespace PokemonUnity.Combat
 					target.Item=0;
 					target.effects.Unburden=true;
 					if (@battle.opponent.Length != 0 &&   // In a wild battle
-						user.itemInitial==Items.NONE &&
-						target.itemInitial==user.Item) {
-						user.itemInitial=user.Item;
-						target.itemInitial=Items.NONE;
+						user.pokemon.itemInitial==Items.NONE &&
+						target.pokemon.itemInitial==user.Item) {
+						user.pokemon.itemInitial=user.Item;
+						target.pokemon.itemInitial=Items.NONE;
 					}
 					@battle.pbDisplay(Game._INTL("{1} stole {2}'s {3} with {4}!",user.ToString(),
 						target.ToString(true),user.Item.ToString(TextScripts.Name),user.Ability.ToString(TextScripts.Name)));
@@ -1728,10 +1684,10 @@ namespace PokemonUnity.Combat
 					user.Item=0;
 					user.effects.Unburden=true;
 					if (@battle.opponent.Length != 0 &&   // In a wild battle
-						target.itemInitial==Items.NONE &&
-						user.itemInitial==target.Item) {
-						target.itemInitial=target.Item;
-						user.itemInitial=Items.NONE;
+						target.pokemon.itemInitial==Items.NONE &&
+						user.pokemon.itemInitial==target.Item) {
+						target.pokemon.itemInitial=target.Item;
+						user.pokemon.itemInitial=Items.NONE;
 					}
 					@battle.pbDisplay(Game._INTL("{1} pickpocketed {2}'s {3}!",target.ToString(),
 						user.ToString(true),target.Item.ToString(TextScripts.Name)));
@@ -1826,8 +1782,8 @@ namespace PokemonUnity.Combat
 				@battle.pbDisplay(message1);
 				//if ((this.Nature%5)==flavor && (int)Math.Floor(this.Nature/5d)!=(this.Nature%5)) {
 				if (Game.NatureData[pokemon.Nature].Dislikes==flavor) {
-				@battle.pbDisplay(message2);
-				pbConfuseSelf();
+					@battle.pbDisplay(message2);
+					pbConfuseSelf();
 				}
 				return true;
 			}
@@ -1893,7 +1849,7 @@ namespace PokemonUnity.Combat
 							found.Add(i);
 				if (found.Count>0) {
 					int choice=(consume) ? found[0] : found[@battle.pbRandom(found.Count)];
-					Attack.Move pokemove=@pokemon.moves[choice];
+					IMove pokemove=@pokemon.moves[choice];
 					pokemove.PP+=10;
 					if (pokemove.PP > pokemove.TotalPP) pokemove.PP=pokemove.TotalPP;
 					this.moves[choice].PP=pokemove.PP;
@@ -2116,7 +2072,7 @@ namespace PokemonUnity.Combat
 				@effects.HealBlock==0) {
 				GameDebug.Log($"[Item triggered] #{ToString()}'s Leftovers");
 				@battle.pbCommonAnimation("UseItem",this,null);
-				RecoverHP((int)Math.Floor(this.TotalHP/16d),true);
+				pbRecoverHP((int)Math.Floor(this.TotalHP/16d),true);
 				@battle.pbDisplay(Game._INTL("{1} restored a little HP using its {2}!",ToString(),itemname));
 			}
 			if (hpcure && this.hasWorkingItem(Items.BLACK_SLUDGE)) {
@@ -2125,13 +2081,13 @@ namespace PokemonUnity.Combat
 						(!Core.USENEWBATTLEMECHANICS || @effects.HealBlock==0)) {
 						GameDebug.Log($"[Item triggered] #{ToString()}'s Black Sludge (heal)");
 						@battle.pbCommonAnimation("UseItem",this,null);
-						RecoverHP((int)Math.Floor(this.TotalHP/16d),true);
+						pbRecoverHP((int)Math.Floor(this.TotalHP/16d),true);
 						@battle.pbDisplay(Game._INTL("{1} restored a little HP using its {2}!",ToString(),itemname));
 					}
 				else if (!this.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
 					GameDebug.Log($"[Item triggered] #{ToString()}'s Black Sludge (damage)");
 					@battle.pbCommonAnimation("UseItem",this,null);
-					ReduceHP((int)Math.Floor(this.TotalHP/8d),true);
+					pbReduceHP((int)Math.Floor(this.TotalHP/8d),true);
 					@battle.pbDisplay(Game._INTL("{1} was hurt by its {2}!",ToString(),itemname));
 				}
 				if (this.isFainted()) pbFaint();
@@ -2149,11 +2105,11 @@ namespace PokemonUnity.Combat
 				case Attack.Data.Targets.SELECTED_POKEMON: //Attack.Target.SingleNonUser:
 					if (target>=0) {
 						IBattler targetBattler=@battle.battlers[target];
-						if (!IsOpposing(targetBattler.Index))
+						if (!pbIsOpposing(targetBattler.Index))
 							if (!pbAddTarget(targets,targetBattler))
 								if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
 						else
-							if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattlerPartner);
+							if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.pbPartner);
 					}
 					else
 						pbRandomTarget(targets);
@@ -2170,7 +2126,7 @@ namespace PokemonUnity.Combat
 				//	else
 				//		pbRandomTarget(targets);
 				//	break;
-				case Attack.Data.Targets.OPPONENTS_FIELD: //Attack.Target.OppositeOpposing:
+				case Attack.Data.Targets.OPPONENTS_FIELD: //Attack.Target.pbOppositeOpposing:
 					if (!pbAddTarget(targets,pbOppositeOpposing2)) pbAddTarget(targets,pbOppositeOpposing);
 					break;
 				case Attack.Data.Targets.RANDOM_OPPONENT: //Attack.Target.RandomOpposing:
@@ -2187,7 +2143,7 @@ namespace PokemonUnity.Combat
 				case Attack.Data.Targets.USER_OR_ALLY: //Attack.Target.UserOrPartner:
 					if (target>=0) { // Pre-chosen target
 						IBattler targetBattler=@battle.battlers[target];
-						if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattlerPartner);
+						if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.pbPartner);
 					}
 					else
 						pbAddTarget(targets,this);
@@ -2202,7 +2158,7 @@ namespace PokemonUnity.Combat
 			return user;
 		}
 		public IBattler pbChangeUser(IBattleMove thismove,IBattler user) {
-			IBattler[] priority=@battle.priority;
+			IBattler[] priority=@battle.pbPriority();
 			// Change user to user of Snatch
 			if (thismove.Flags.Snatch)
 				foreach (var i in priority)
@@ -2226,7 +2182,7 @@ namespace PokemonUnity.Combat
 			//Attack.Target target=move.Targets;
 			Attack.Data.Targets target=move.Target;
 			if (move.Effect == Attack.Data.Effects.x06E && pbHasType(Types.GHOST)) // Curse
-				//target=Attack.Target.OppositeOpposing;
+				//target=Attack.Target.pbOppositeOpposing;
 				target=Attack.Data.Targets.OPPONENTS_FIELD;
 			return target;
 		}
@@ -2253,7 +2209,7 @@ namespace PokemonUnity.Combat
 				pbAddTarget(targets,choices[@battle.pbRandom(choices.Count)]);
 		}
 		public bool pbChangeTarget(IBattleMove thismove,IBattler[] userandtarget,IBattler[] targets) {
-			IBattler[] priority=@battle.priority;
+			IBattler[] priority=@battle.pbPriority();
 			int changeeffect=0;
 			IBattler user=userandtarget[0];
 			IBattler target=userandtarget[1];
@@ -2477,7 +2433,7 @@ namespace PokemonUnity.Combat
 			if (user.effects.TwoTurnAttack>0)
 				return true;
 			// TODO: "Before Protect" applies to Counter/Mirror Coat
-			if (thismove.Effect == Attack.Data.Effects.x009 && target.status!=Status.SLEEP) { // Dream Eater
+			if (thismove.Effect == Attack.Data.Effects.x009 && target.Status!=Status.SLEEP) { // Dream Eater
 				@battle.pbDisplay(Game._INTL("{1} wasn't affected!",target.ToString()));
 				GameDebug.Log($"[Move failed] #{user.ToString()}'s Dream Eater's target isn't asleep");
 				return false;
@@ -2537,8 +2493,8 @@ namespace PokemonUnity.Combat
 				@battle.pbDisplay(Game._INTL("{1} protected itself!",target.ToString()));
 				@battle.successStates[user.Index].Protected=true;
 				GameDebug.Log($"[Move failed] #{target.ToString()}'s King's Shield stopped the attack");
-				if (thismove.Flags.Contact)
-				user.pbReduceStat(Stats.ATTACK,2,null,false);
+				if (thismove.Flags.Contact && user is IBattlerEffect u)
+					u.pbReduceStat(Stats.ATTACK,2,null,false);
 				return false;
 			}
 			// Spiky Shield
@@ -2665,7 +2621,7 @@ namespace PokemonUnity.Combat
 						(!user.pbOpposing1.isFainted() ? 1 : 0) + (!user.pbOpposing2.isFainted() ? 1 : 0) > 1)
 						@battle.pbDisplay(Game._INTL("{1} avoided the attack!",target.ToString()));
 					else if (thismove.Target==Attack.Data.Targets.ALL_OTHER_POKEMON && //thismove.Targets==Attack.Target.AllNonUsers
-						(!user.pbOpposing1.isFainted() ? 1 : 0) + (!user.pbOpposing2.isFainted() ? 1 : 0) + (!userPartner.isFainted() ? 1 : 0) > 1)
+						(!user.pbOpposing1.isFainted() ? 1 : 0) + (!user.pbOpposing2.isFainted() ? 1 : 0) + (!user.pbPartner.isFainted() ? 1 : 0) > 1)
 						@battle.pbDisplay(Game._INTL("{1} avoided the attack!",target.ToString()));
 					else if (target.effects.TwoTurnAttack>0)
 						@battle.pbDisplay(Game._INTL("{1} avoided the attack!",target.ToString()));
@@ -2892,7 +2848,7 @@ namespace PokemonUnity.Combat
 					damage>0 && !target.damagestate.Substitute) {
 					GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Illusion ended");
 					target.effects.Illusion=null;
-					@battle.scene.pbChangePokemon(target,target.Form.Id);//target.pokemon.Species);
+					@battle.scene.pbChangePokemon(target,(target as Pokemon).Form.Id);//target.pokemon.Species);
 					@battle.pbDisplay(Game._INTL("{1}'s {2} wore off!",target.ToString(),
 						target.Ability.ToString(TextScripts.Name)));
 				}
@@ -2950,19 +2906,19 @@ namespace PokemonUnity.Combat
 						canflinch=true;
 					if (canflinch && @battle.pbRandom(10)==0) {
 						GameDebug.Log($"[Item/ability triggered] #{user.ToString()}'s King's Rock/Razor Fang or Stench");
-						if (target is IBattlerEffect t) t.pbFlinch(user);
+						if (target is IBattlerEffect t0) t0.pbFlinch(user);
 					}
 				}
-				if (target.damagestate.CalcDamage>0 && !target.isFainted()) {
+				if (target.damagestate.CalcDamage>0 && !target.isFainted() && target is IBattlerEffect t) {
 					// Defrost
-					if (target.status==Status.FROZEN &&
+					if (target.Status==Status.FROZEN &&
 						(thismove.pbType(thismove.Type,user,target) == Types.FIRE ||
 						(Core.USENEWBATTLEMECHANICS && thismove.id == Moves.SCALD)))
-						target.pbCureStatus();
+						t.pbCureStatus();
 					// Rage
 					if (target.effects.Rage && target.pbIsOpposing(user.Index))
 						// TODO: Apparently triggers if opposing Pokémon uses Future Sight after a Future Sight attack
-						if (target.pbIncreaseStatWithCause(Stats.ATTACK,1,target,"",true,false)) {
+						if (t.pbIncreaseStatWithCause(Stats.ATTACK,1,target,"",true,false)) {
 							GameDebug.Log($"[Lingering effect triggered] #{target.ToString()}'s Rage");
 							@battle.pbDisplay(Game._INTL("{1}'s rage is building!",target.ToString()));
 						}
@@ -3267,7 +3223,7 @@ namespace PokemonUnity.Combat
 					thismove.Target==Attack.Data.Targets.ALLY ||				//.Targets==Attack.TargetPartner ||
 					thismove.Target==Attack.Data.Targets.USER_OR_ALLY ||		//.Targets==Attack.Target.UserOrPartner ||
 					//thismove.Target==Attack.Data.Targets.SingleOpposing ||	//.Targets==Attack.Target.SingleOpposing ||
-					thismove.Target==Attack.Data.Targets.OPPONENTS_FIELD)		//.Targets==Attack.Target.OppositeOpposing)
+					thismove.Target==Attack.Data.Targets.OPPONENTS_FIELD)		//.Targets==Attack.Target.pbOppositeOpposing)
 					@battle.pbDisplay(Game._INTL("But there was no target..."));
 				else
 					//GameDebug.logonerr(thismove.pbEffect(user,null));
@@ -3332,7 +3288,7 @@ namespace PokemonUnity.Combat
 						@battle.choices[i]=new Choice();		// Replacement Pokémon does nothing this round
 					}
 				}
-				foreach(IBattler i in @battle.priority) {
+				foreach(IBattler i in @battle.pbPriority()) {
 					if (!switched.Contains(i.Index)) continue;
 					i.pbAbilitiesOnSwitchIn(true);
 				}
@@ -3359,7 +3315,7 @@ namespace PokemonUnity.Combat
 						@battle.choices[i]= new Choice();		// Replacement Pokémon does nothing this round
 					}
 				}
-			foreach(IBattler i in @battle.priority)
+			foreach(IBattler i in @battle.pbPriority())
 			// Baton Pass
 			if (user.effects.BatonPass) {
 				user.effects.BatonPass=false;
@@ -3492,20 +3448,7 @@ namespace PokemonUnity.Combat
 
 		//ToDo: Finish migrating interface implimentation
 		#region Explicit Interface Implemenation
-		IBattle IBattler.battle { get; set; }
-		IPokemon IBattler.pokemon { get; set; }
-		bool IBattler.fainted { get; set; }
-		IList<int> IBattler.lastAttacker { get; set; }
-		IEffectsBattler IBattler.effects { get; set; }
 		Abilities IBattler.Ability { get; set; }
-		int IBattler.gender { get; set; }
-		int IBattler.attack { get; set; }
-		int IBattler.defense { get; set; }
-		int IBattler.spatk { get; set; }
-		int IBattler.spdef { get; set; }
-		int IBattler.speed { get; set; }
-		IList<int> IBattler.participants { get; set; }
-		int IBattler.tookDamage { get; set; }
 		Moves IBattler.lastMoveUsed { get; set; }
 		Types IBattler.lastMoveUsedType { get; set; }
 		Moves IBattler.lastMoveUsedSketch { get; set; }
@@ -3514,16 +3457,9 @@ namespace PokemonUnity.Combat
 		bool IBattler.isShadow { get; }
 		Monster.Natures IBattler.nature { get; }
 		int IBattler.pokerusStage { get; }
-		int IBattler.form { get; set; }
 		int IBattler.displayGender { get; }
-		bool IBattler.isShiny { get; }
 		bool IBattler.owned { get; }
 		int IBattler.pbSpeed { get; }
-
-		int IBattler.weight(IBattler attacker)
-		{
-			throw new NotImplementedException();
-		}
 
 		void IBattler.pbInitDummyPokemon(IPokemon pkmn, int pkmnIndex)
 		{
@@ -3586,11 +3522,6 @@ namespace PokemonUnity.Combat
 		}
 
 		bool IBattler.hasMovedThisRound()
-		{
-			throw new NotImplementedException();
-		}
-
-		int IBattler.pbReduceHP(int amt, bool anim, bool registerDamage)
 		{
 			throw new NotImplementedException();
 		}

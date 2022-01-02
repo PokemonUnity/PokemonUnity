@@ -99,7 +99,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		int maxPokemon(int box);
 
-		IPokemonStorage this[int x] { get; }
+		IPokemonBox this[int x] { get; }
 		IPokemon this[int x,int y] { get; set; }
 
 		bool full { get; }
@@ -135,7 +135,8 @@ namespace PokemonEssentials.Interface.Screen
 		/// </remarks>
 		string pbGetStorageCreator();
 
-		Items pbPCItemStorage();
+		//Items pbPCItemStorage();
+		void pbPCItemStorage();
 
 		void pbPCMailbox();
 
@@ -218,7 +219,7 @@ namespace PokemonEssentials.Interface.Screen
 		IPokemonStorage storage { get; }
 
 		void debugMenu(KeyValuePair<int, int> selected, IPokemon pkmn, IPokemon heldpoke);
-		void IPokemonStorageScreen(IPokemonStorageScene scene, IPokemonStorage storage);
+		IPokemonStorageScreen initialize(IPokemonStorageScene scene, IPokemonStorage storage);
 		bool pbAble(IPokemon pokemon);
 		void pbBoxCommands();
 		int? pbChoosePokemon(IPokemon[] party = null);

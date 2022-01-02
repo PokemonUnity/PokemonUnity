@@ -25,8 +25,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 		Types Type { get; set; }
 		int Accuracy { get; set; }
 		int AddlEffect { get; }
+		PokemonUnity.Attack.Category Category { get; } //ToDo: Move to application layer
 		PokemonUnity.Attack.Data.Targets Target { get; set; }
-		int priority { get; set; }
+		int Priority { get; set; }
 		PokemonUnity.Attack.Data.Flag Flags { get; set; }
 		IMove thismove { get; }
 		int PP { get; set; }

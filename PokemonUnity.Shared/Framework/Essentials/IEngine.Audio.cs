@@ -29,7 +29,7 @@ namespace PokemonEssentials.Interface
 
 		int Audio_bgm_get_volume { get; }
 
-		void Audio_bgm_set_volume(int volume);
+		void Audio_bgm_set_volume(float volume);
 
 		void Audio_me_play(string name, int volume, float pitch, int position = 0);
 

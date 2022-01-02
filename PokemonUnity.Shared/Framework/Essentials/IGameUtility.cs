@@ -117,7 +117,7 @@ namespace PokemonEssentials.Interface
 		/// <returns></returns>
 		/// Requires the script AudioUtilities
 		/// Requires the script "PokemonMessages"
-		int? getWaveDataUI(string filename, bool deleteFile = false);
+		IWaveData getWaveDataUI(string filename, bool deleteFile = false);
 
 		/// <summary>
 		/// Starts recording, and displays a message if the recording failed to start.

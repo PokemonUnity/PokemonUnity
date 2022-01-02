@@ -15,7 +15,7 @@ namespace PokemonEssentials.Interface.PokeBattle.Effects
 		bool CraftyShield { get; set; }
 		byte EchoedVoiceCounter { get; set; }
 		bool EchoedVoiceUsed { get; set; }
-		byte LastRoundFainted { get; set; }
+		int LastRoundFainted { get; set; }
 		byte LightScreen { get; set; }
 		byte LuckyChant { get; set; }
 		bool MatBlock { get; set; }

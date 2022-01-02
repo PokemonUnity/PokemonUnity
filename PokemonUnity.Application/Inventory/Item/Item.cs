@@ -178,7 +178,7 @@ namespace PokemonUnity.Inventory
 				int spdefdiff=pokemon.SPD;
 				int totalhpdiff=pokemon.TotalHP;
 				//pokemon.Level=newlevel;
-				pokemon.SetLevel((byte)newlevel);
+				(pokemon as Pokemon).SetLevel((byte)newlevel);
 				//pokemon.Exp=Experience.GetStartExperience(pokemon.GrowthRate, newlevel);
 				pokemon.calcStats();
 				scene.pbRefresh();
@@ -204,9 +204,9 @@ namespace PokemonUnity.Inventory
 				int totalhpdiff=pokemon.TotalHP;
 				int oldlevel=pokemon.Level;
 				//pokemon.Level=newlevel;
-				pokemon.SetLevel((byte)newlevel);
+				(pokemon as Pokemon).SetLevel((byte)newlevel);
 				//pokemon.Exp = Experience.GetStartExperience(pokemon.GrowthRate, newlevel);
-				pokemon.ChangeHappiness(HappinessMethods.LEVELUP);
+				(pokemon as Pokemon).ChangeHappiness(HappinessMethods.LEVELUP);
 				pokemon.calcStats();
 				scene.pbRefresh();
 				Game.GameData.pbMessage(Game._INTL("{1} was elevated to Level {2}!",pokemon.Name,pokemon.Level));
@@ -227,10 +227,10 @@ namespace PokemonUnity.Inventory
 						pbLearnMove(pokemon,i.Key,true);
 					}
 				}
-				Pokemons newspecies=Evolution.pbCheckEvolution(pokemon)[0];
-				if (newspecies>0) {
-					Game.GameData.pbFadeOutInWithMusic(99999, block: () => {
-						IPokemonEvolutionScene evo=Game.GameData.Scenes.EvolvingScene; //new PokemonEvolutionScene();
+				Pokemons newspecies=EvolutionHelper.pbCheckEvolution(pokemon)[0];
+				if (newspecies>0 && Game.GameData is IGameUtility u) {
+					u.pbFadeOutInWithMusic(99999, block: () => {
+						IPokemonEvolutionScene evo=(Game.GameData as Game).Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution();
 						evo.pbEndScreen();
@@ -326,7 +326,7 @@ namespace PokemonUnity.Inventory
 				return false;
 			}
 			if (h) {
-				pokemon.ChangeHappiness(HappinessMethods.EVBERRY);
+				(pokemon as Pokemon).ChangeHappiness(HappinessMethods.EVBERRY);
 			}
 			if (e) {
 				pokemon.EV[(int)ev]-=10;
@@ -429,9 +429,9 @@ namespace PokemonUnity.Inventory
 
 		public static int pbForgetMove(IPokemon pokemon,Moves moveToLearn) {
 			int ret=-1;
-			Game.GameData.pbFadeOutIn(99999, block: () => {
-				IPokemonSummaryScene scene= Game.GameData.Scenes.Summary; //new PokemonSummaryScene();
-				IPokemonSummary screen=Game.PokemonSummary.initialize(scene); //new PokemonSummary(scene);
+			if (Game.GameData is IGameSpriteWindow w) w.pbFadeOutIn(99999, block: () => {
+				IPokemonSummaryScene scene= (Game.GameData as Game).Scenes.Summary; //new PokemonSummaryScene();
+				IPokemonSummaryScreen screen=(Game.GameData as Game).Screens.Summary.initialize(scene); //new PokemonSummary(scene);
 				ret=screen.pbStartForgetScreen(pokemon,0,moveToLearn);
 			});
 			return ret;
@@ -584,7 +584,7 @@ namespace PokemonUnity.Inventory
 				annot.Add(elig ? Game._INTL("ABLE") : Game._INTL("NOT ABLE"));
 				}
 			}
-			Game.UI.pbFadeOutIn(99999, block: () => {
+			if (Game.GameData is IGameSpriteWindow w) w.pbFadeOutIn(99999, block: () => {
 				IPokemonScreen_Scene scene=Game.PokemonScreenScene.initialize(); //new PokemonScreen_Scene();
 				IPokemonScreen screen=Game.PokemonScreen.initialize(scene,Game.GameData.Trainer.party); //new PokemonScreen(scene,Game.GameData.Trainer.party);
 				screen.pbStartScene(Game._INTL("Use on which Pokémon?"),false,annot);
@@ -598,11 +598,11 @@ namespace PokemonUnity.Inventory
 					} else {
 						ret=ItemHandlers.triggerUseOnPokemon(item,pokemon,screen);
 						if (ret && Game.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1 Usable on Pokémon, consumed
-						bag.pbDeleteItem(item);
+							bag.pbDeleteItem(item);
 						}
 						if (bag.pbQuantity(item)<=0) {
-						Game.GameData.pbMessage(Game._INTL("You used your last {1}.",item.ToString(TextScripts.Name)));
-						break;
+							Game.GameData.pbMessage(Game._INTL("You used your last {1}.",item.ToString(TextScripts.Name)));
+							break;
 						}
 					}
 					} else {
@@ -696,7 +696,7 @@ namespace PokemonUnity.Inventory
 			window.z=99999;
 			window.width=198;
 			window.y=0;
-			window.x=Graphics.width-window.width;
+			window.x=(Game.GameData as Game).Graphics.width-window.width;
 			Game.GameData.pbPlayDecisionSE();
 			do { //;loop
 				//Graphics.update();
@@ -897,7 +897,7 @@ namespace PokemonUnity.Inventory
 		}
 
 		//static ItemHandlers() {
-		private static void RegisterItemHandlers() {
+		/*private static void RegisterItemHandlers() {
 			//Events.OnStepTaken+=OnStepTakenEventHandler;
 			#region UseFromBag handlers
 			UseFromBag.Add(Items.REPEL, () => { return pbRepel(Items.REPEL, 100); });
@@ -1144,7 +1144,7 @@ namespace PokemonUnity.Inventory
 			});
 
 			UseInField.Add(Items.DOWSING_MACHINE, () => {//item == Items.ITEM_FINDER || item == Items.DOWSING_MCHN || 
-				@event=Item.pbClosestHiddenItem();
+				@event=Game.GameData is IItemCheck i && i.pbClosestHiddenItem();
 				if (@event == null) {
 					(this as IGameMessage).pbMessage(Game._INTL("... ... ... ...Nope!\r\nThere's no response."));
 				} else {
@@ -1450,7 +1450,7 @@ namespace PokemonUnity.Inventory
 
 			UseOnPokemon.Add(Items.POTION, (item, pokemon, scene) => {
 				//next pbHPItem(pokemon,20,scene);
-				return Item.pbHPItem(pokemon,20,scene);
+				return Game.GameData is IGameItem i && i.pbHPItem(pokemon,20,scene);
 			});
 
 			UseOnPokemon.Add(Items.SUPER_POTION, (item, pokemon, scene) => {
@@ -3712,6 +3712,6 @@ namespace PokemonUnity.Inventory
 				battle.pbThrowPokeball(battler.Index, item);
 			});
 			#endregion
-		}
+		}*/
 	}
 }

@@ -41,8 +41,8 @@ namespace PokemonEssentials.Interface
 			/// Time when Furfrou's/Hoopa's form was set
 			/// </summary>
 			/// Either use int as datetime value in seconds, or just regular datetime class
-			//int formTime				{ get; }
-			DateTime? formTime			{ get; }
+			//int formTime				{ get; set; }
+			DateTime? formTime			{ get; set; }
 			int form					{ get; set; }
 
 
@@ -88,14 +88,17 @@ namespace PokemonEssentials.Interface
 			//int dexEntry { get; }
 
 			//IPokemon initialize(*args);
-	  }
+		}
 
-		public interface IPokeBattle_RealBattlePeer {
-			void pbOnEnteringBattle(IBattle battle, IPokemonMultipleForms pokemon);
-			int pbStorePokemon(ITrainer player, IPokemonMultipleForms pokemon);
-			string pbGetStorageCreator();
-			int pbCurrentBox();
-			string pbBoxName(int box);
+		/// <summary>
+		/// Extension of <see cref="IBattlePeer"/>
+		/// </summary>
+		public interface IBattlePeerMultipleForms {
+			void pbOnEnteringBattle(IBattle battle, IPokemon pokemon);
+			//int pbStorePokemon(ITrainer player, IPokemonMultipleForms pokemon);
+			//string pbGetStorageCreator();
+			//int pbCurrentBox();
+			//string pbBoxName(int box);
 		}
 
 		//public interface IMultipleForms {

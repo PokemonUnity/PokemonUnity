@@ -16,7 +16,7 @@ namespace PokemonUnity.Combat
 			public bool CraftyShield		{ get; set; }
 			public byte EchoedVoiceCounter	{ get; set; }
 			public bool EchoedVoiceUsed		{ get; set; }
-			public byte LastRoundFainted	{ get; set; }
+			public int LastRoundFainted	{ get; set; }
 			public byte LightScreen			{ get; set; }
 			public byte LuckyChant			{ get; set; }
 			public bool MatBlock			{ get; set; }

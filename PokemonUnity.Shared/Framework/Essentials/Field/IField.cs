@@ -61,9 +61,9 @@ namespace PokemonEssentials.Interface
 		{
 			IPokeBattle_Scene pbNewBattleScene();
 
-			IEnumerator pbSceneStandby();
+			IEnumerator pbSceneStandby(Action block = null);
 
-			IEnumerator pbBattleAnimation(IAudioBGM bgm = null, int trainerid = -1, string trainername = "");
+			IEnumerator pbBattleAnimation(IAudioBGM bgm = null, int trainerid = -1, string trainername = "", Action block = null);
 
 			/// <summary>
 			/// Override and use this method if you want to add a custom battle intro animation
@@ -213,7 +213,8 @@ namespace PokemonEssentials.Interface
 			bool pbBatteryLow();
 
 			#region Audio playing
-			void pbCueBGM(IAudioBGM bgm, int seconds, int? volume = null, int? pitch = null);
+			void pbCueBGM(string bgm, float seconds, int? volume = null, float? pitch = null);
+			void pbCueBGM(IAudioBGM bgm, float seconds, int? volume = null, float? pitch = null);
 
 			void pbAutoplayOnTransition();
 
@@ -224,7 +225,7 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// </summary>
 			/// BGM audio file?
-			IAudioObject pbRecord(string text, float maxtime = 30.0f);
+			IWaveData pbRecord(string text, float maxtime = 30.0f);
 
 			bool pbRxdataExists(string file);
 			#endregion
@@ -288,7 +289,7 @@ namespace PokemonEssentials.Interface
 		public interface ITempMetadataField
 		{
 			#region 
-			EncounterTypes encounterType	{ get; set; }
+			EncounterTypes? encounterType	{ get; set; }
 			int evolutionLevels				{ get; set; }
 			#endregion
 

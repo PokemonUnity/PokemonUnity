@@ -151,13 +151,13 @@ namespace PokemonUnity
 			}
 			else if (pokemon.heartgauge == 0)
 			{
-				(pokemon as IPokemon).ChangeHappiness(HappinessMethods.VITAMIN);
+				(pokemon as Pokemon).ChangeHappiness(HappinessMethods.VITAMIN);
 				scene.pbDisplay(_INTL("{1} turned friendly.", (pokemon as IPokemon).Name));
 				return true;
 			}
 			else
 			{
-				(pokemon as IPokemon).ChangeHappiness(HappinessMethods.VITAMIN);
+				(pokemon as Pokemon).ChangeHappiness(HappinessMethods.VITAMIN);
 				pokemon.adjustHeart(-amount);
 				scene.pbDisplay(_INTL("{1} turned friendly.\nThe door to its heart opened a little.", (pokemon as IPokemon).Name));
 				pbReadyToPurify(pokemon);
@@ -386,7 +386,7 @@ namespace PokemonUnity
 					if (!@shadow)
 					{
 						//  No shadow moves
-						Game.pbReplaceMoves(this, m[4], m[5], m[6], m[7]);
+						if (Game.GameData is IGameShadowPokemon g) g.pbReplaceMoves(this, m[4], m[5], m[6], m[7]);
 						@shadowmoves = null;
 					}
 					else
@@ -406,7 +406,7 @@ namespace PokemonUnity
 								moves.Add(m[i + 4]); relearned += 1;
 							}
 						}
-						Game.pbReplaceMoves(this, moves[0] != null ? moves[0] : Moves.NONE, moves[1] != null ? moves[1] : Moves.NONE, moves[2] != null ? moves[2] : Moves.NONE, moves[3] != null ? moves[3] : Moves.NONE);
+						if (Game.GameData is IGameShadowPokemon g) g.pbReplaceMoves(this, moves[0] != null ? moves[0] : Moves.NONE, moves[1] != null ? moves[1] : Moves.NONE, moves[2] != null ? moves[2] : Moves.NONE, moves[3] != null ? moves[3] : Moves.NONE);
 					}
 				}
 			}

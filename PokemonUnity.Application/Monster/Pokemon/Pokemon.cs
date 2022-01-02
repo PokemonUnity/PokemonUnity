@@ -570,6 +570,7 @@ namespace PokemonUnity.Monster
 		}
 		#endregion
 
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
 		#region Ownership, obtained information
 		/// <summary>
 		/// Manner Obtained:
@@ -736,7 +737,7 @@ namespace PokemonUnity.Monster
 				this.ballUsed = Ball;
 			else this.ballUsed = Items.POKE_BALL;
 
-			RecordFirstMoves();
+			pbRecordFirstMoves();
 			return this;
 		}
 		#endregion
@@ -960,7 +961,7 @@ namespace PokemonUnity.Monster
 					case EvolutionMethod.HoldItemNight:
 					case EvolutionMethod.Type:
 					case EvolutionMethod.Location:
-					case EvolutionMethod.pbWeather:
+					case EvolutionMethod.Weather:
 					case EvolutionMethod.Deaths:
 					default:
 						break;
@@ -1621,7 +1622,7 @@ namespace PokemonUnity.Monster
 			resetMoves();
 			int numMove = Core.Rand.Next(4) + 1; //number of moves pokemon will have, between 0 and 3
 			List<Moves> movelist = new List<Moves>();
-			if (isEgg || egg || Game.GameData.Features.CatchPokemonsWithEggMoves)
+			if (isEgg || egg || (Game.GameData as Game).Features.CatchPokemonsWithEggMoves)
 				movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
 			int?[] rejected = new int?[movelist.Count]; //default null, to exclude `0`
 			switch (level)
@@ -1728,7 +1729,7 @@ namespace PokemonUnity.Monster
 					}
 					break;
 			}
-			RecordFirstMoves();
+			pbRecordFirstMoves();
 		}
 
 		/// <summary>
@@ -1942,7 +1943,7 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// Copies currently known moves into a separate array, for Move Relearner.
 		/// </summary>
-		public void RecordFirstMoves()
+		public void pbRecordFirstMoves()
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -2331,7 +2332,7 @@ namespace PokemonUnity.Monster
 		/// Nickname; 
 		/// Returns Pokemon species name if not nicknamed.
 		/// </summary>
-		public virtual string Name { get { if (Species == Pokemons.NONE) return string.Empty; if (isEgg) return "Egg"; return IsNicknamed ? name : Species.ToString(TextScripts.Name); } }
+		public virtual string Name { get { if (Species == Pokemons.NONE) return string.Empty; if (isEgg) return "Egg"; return IsNicknamed ? name : Species.ToString(TextScripts.Name); } set { name = value; } }
 		public void SetNickname(string nick) { name = nick; }
 
 		/// <summary>
@@ -2966,25 +2967,18 @@ namespace PokemonUnity.Monster
 			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPEED.ToString()}  EV gain: #{gainEVSpeed}  EVs: #{EV.ToString()}");
 		}
 		#endregion
+#pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
 
 		//ToDo: Finish migrating interface implimentation
 		#region Explicit Interface Implemenation
-		int IPokemon.attack { get; set; }
-		int IPokemon.defense { get; set; }
-		int IPokemon.speed { get; set; }
-		int IPokemon.spatk { get; set; }
-		int IPokemon.spdef { get; set; }
 		Pokemons IPokemon.Species { get; set; }
-		int IPokemon.personalID { get; set; }
 		int IPokemon.trainerID { get; set; }
-		int IPokemon.pokerus { get; set; }
 		IMail IPokemon.mail { get; set; }
 		IPokemon[] IPokemon.fused { get; set; }
 		string IPokemon.Name { get; set; }
 		int IPokemon.exp { get; set; }
 		int IPokemon.eggsteps { get; set; }
 		IList<Moves> IPokemon.firstmoves { get; set; }
-		bool[] IPokemon.markings { get; }
 		int IPokemon.obtainMode { get; set; }
 		int IPokemon.obtainMap { get; set; }
 		string IPokemon.obtainText { get; set; }
@@ -3010,8 +3004,6 @@ namespace PokemonUnity.Monster
 		bool IPokemon.egg { get; }
 		int IPokemon.baseExp { get; }
 		bool IPokemon.isSingleGendered { get; }
-		bool IPokemon.isShiny { get; }
-		int IPokemon.pokerusStage { get; }
 		char IPokemon.unownShape { get; }
 		float IPokemon.height { get; }
 		float IPokemon.weight { get; }
@@ -3034,17 +3026,7 @@ namespace PokemonUnity.Monster
 			throw new NotImplementedException();
 		}
 
-		void IPokemon.setAbility(Abilities value)
-		{
-			throw new NotImplementedException();
-		}
-
 		bool IPokemon.hasNature(Natures? value)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPokemon.givePokerus(int strain)
 		{
 			throw new NotImplementedException();
 		}
@@ -3074,11 +3056,6 @@ namespace PokemonUnity.Monster
 			throw new NotImplementedException();
 		}
 
-		void IPokemon.pbRecordFirstMoves()
-		{
-			throw new NotImplementedException();
-		}
-
 		int IPokemon.ribbonCount()
 		{
 			throw new NotImplementedException();
@@ -3089,32 +3066,7 @@ namespace PokemonUnity.Monster
 			throw new NotImplementedException();
 		}
 
-		void IPokemon.healHP()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPokemon.healStatus()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPokemon.healPP(int index)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPokemon.heal()
-		{
-			throw new NotImplementedException();
-		}
-
 		void IPokemon.changeHappiness(HappinessMethods method)
-		{
-			throw new NotImplementedException();
-		}
-
-		int[] IPokemon.baseStats()
 		{
 			throw new NotImplementedException();
 		}

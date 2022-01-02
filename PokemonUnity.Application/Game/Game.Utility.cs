@@ -214,7 +214,7 @@ namespace PokemonUnity
 			}
 			Trainer.name=trname;
 			Bag=new Character.PokemonBag();
-			PokemonTemp.begunNewGame=true;
+			PokemonTemp.begunNewGame=true; //new game because you changed your name?
 		}
 
 		public string pbSuggestTrainerName(int gender) {
@@ -427,14 +427,14 @@ namespace PokemonUnity
 		/// and "SpriteWindow" (for <seealso cref="pbFadeOutIn"/>).
 		/// </remarks>
 		/// <param name="zViewport"></param>
-		public void pbFadeOutInWithMusic(int zViewport, Action action = null) {
+		public void pbFadeOutInWithMusic(int zViewport, Action block = null) {
 			PokemonEssentials.Interface.IAudioBGS playingBGS=GameSystem.getPlayingBGS();
 			PokemonEssentials.Interface.IAudioBGM playingBGM=GameSystem.getPlayingBGM();
 			GameSystem.bgm_pause(1.0f);
 			GameSystem.bgs_pause(1.0f);
 			int pos=GameSystem.bgm_position;
 			pbFadeOutIn(zViewport, block: () => {
-				if (action != null) action.Invoke(); //(block_given ?) yield;
+				if (block != null) block.Invoke(); //(block_given ?) yield;
 				GameSystem.bgm_position=pos;
 				GameSystem.bgm_resume(playingBGM);
 				GameSystem.bgs_resume(playingBGS);
@@ -451,28 +451,28 @@ namespace PokemonUnity
 		/// <returns></returns>
 		/// Requires the script AudioUtilities
 		/// Requires the script "PokemonMessages"
-		public int? getWaveDataUI(string filename,bool deleteFile=false) {
-			int error=getWaveData(filename);
+		public IWaveData getWaveDataUI(string filename,bool deleteFile=false) {
+			IWaveData error = null; //getWaveData(filename);
 			if (deleteFile) {
 				try {
 					File.Delete(filename);
 				} catch (Exception) { } //Errno::EINVAL, Errno::EACCES, Errno::ENOENT;
 			}
 			//switch (error) {
-				if (error == 1) //case 1:
-					(this as IGameMessage).pbMessage(Game._INTL("The recorded data could not be found or saved."));
+			//	if (error == 1) //case 1:
+			//		(this as IGameMessage).pbMessage(Game._INTL("The recorded data could not be found or saved."));
 			//		break;
-				else if (error == 2) //case 2:
-					(this as IGameMessage).pbMessage(Game._INTL("The recorded data was in an invalid format."));
+			//	else if (error == 2) //case 2:
+			//		(this as IGameMessage).pbMessage(Game._INTL("The recorded data was in an invalid format."));
 			//		break;
-				else if (error == 3) //case 3:
-					(this as IGameMessage).pbMessage(Game._INTL("The recorded data's format is not supported."));
+			//	else if (error == 3) //case 3:
+			//		(this as IGameMessage).pbMessage(Game._INTL("The recorded data's format is not supported."));
 			//		break;
-				else if (error == 4) //case 4:
-					(this as IGameMessage).pbMessage(Game._INTL("There was no sound in the recording. Please ensure that a microphone is attached to the computer /and/ is ready."));
+			//	else if (error == 4) //case 4:
+			//		(this as IGameMessage).pbMessage(Game._INTL("There was no sound in the recording. Please ensure that a microphone is attached to the computer /and/ is ready."));
 			//		break;
-				else //default:
-					return error;
+			//	else //default:
+			//		return error;
 			//}
 			return null;
 		}
@@ -484,7 +484,7 @@ namespace PokemonUnity
 		/// Requires the script AudioUtilities
 		/// Requires the script "PokemonMessages"
 		public bool beginRecordUI() {
-			int code=beginRecord();
+			int code = 0; //beginRecord();
 			switch (code) {
 				case 0:
 					return true;
@@ -504,7 +504,7 @@ namespace PokemonUnity
 
 		public IList<object> pbHideVisibleObjects() 
 		{
-			IList<object> visibleObjects= new List<object>();
+			IList<object> visibleObjects= new List<object>(); //ToDo: ISpriteWindow?
 			////ObjectSpace.each_object(Sprite){|o|
 			//ObjectSpace.each_object(Sprite){|o|
 			//	if (!o.disposed && o.visible) {
@@ -555,16 +555,16 @@ namespace PokemonUnity
 			Graphics.freeze();
 			oldscene.disposeSpritesets();
 			IList<object> visibleObjects=pbHideVisibleObjects();
-			Graphics.transition(15);
+			Graphics.transition(15,null,0); //ToDo: revisit this again...
 			Graphics.freeze();
 			while (Scene != null && !(Scene is ISceneMap)) {
 				Scene.main();
 			}
-			Graphics.transition(15);
+			Graphics.transition(15,null,0); //ToDo: revisit this again...
 			Graphics.freeze();
 			oldscene.createSpritesets();
 			pbShowObjects(visibleObjects);
-			Graphics.transition(20);
+			Graphics.transition(20,null,0); //ToDo: revisit this again...
 			Scene=oldscene;
 		}
 
@@ -600,7 +600,7 @@ namespace PokemonUnity
 			if (id<0) return false;
 			IGameCommonEvent ce=DataCommonEvents[id];
 			if (ce==null) return false;
-			List<> celist=ce.list;
+			IList<PokemonEssentials.Interface.RPGMaker.Kernal.IEventCommand> celist=ce.list;
 			IInterpreter interp=new Interpreter();
 			interp.setup(celist,0);
 			do {
@@ -662,65 +662,68 @@ namespace PokemonUnity
 			}
 		}
 
-		//public IAnimatedBitmap pbLoadPokemonBitmap(IPokemon pokemon,bool back=false) {
-		//	return pbLoadPokemonBitmapSpecies(pokemon,pokemon.Species,back);
-		//}
+		public IAnimatedBitmap pbLoadPokemonBitmap(IPokemon pokemon, bool back = false)
+		{
+			return pbLoadPokemonBitmapSpecies(pokemon, pokemon.Species, back);
+		}
 
-		// Note: Returns an AnimatedBitmap, not a Bitmap
-		//public IAnimatedBitmap pbLoadPokemonBitmapSpecies(IPokemon pokemon,Pokemons species, bool back=false) {
-		//	IAnimatedBitmap ret=null;
-		//	//if (pokemon.isEgg?) {
-		//	//	bitmapFileName=string.Format("Graphics/Battlers/%segg",species.ToString()); //rescue null
-		//	//	if (!pbResolveBitmap(bitmapFileName)) {
-		//	//		bitmapFileName=string.Format("Graphics/Battlers/%03degg",species);
-		//	//		if (!pbResolveBitmap(bitmapFileName)) {
-		//	//			bitmapFileName=string.Format("Graphics/Battlers/egg");
-		//	//		}
-		//	//	}
-		//	//	bitmapFileName=pbResolveBitmap(bitmapFileName);
-		//	//} else {
-		//	//	bitmapFileName=pbCheckPokemonBitmapFiles([species,back,
-		//	//												(pokemon.isFemale?),
-		//	//												pokemon.isShiny?,
-		//	//												(pokemon.form rescue 0),
-		//	//												(pokemon.isShadow? rescue false)])
-		//	//	//  Alter bitmap if supported
-		//	//	alterBitmap=(MultipleForms.getFunction(species,"alterBitmap") rescue null);
-		//	//}
-		//	//if (bitmapFileName != null && alterBitmap) {
-		//	//	animatedBitmap=new AnimatedBitmap(bitmapFileName);
-		//	//	copiedBitmap=animatedBitmap.copy;
-		//	//	animatedBitmap.dispose();
-		//	//	copiedBitmap.each {|bitmap|
-		//	//		alterBitmap.call(pokemon,bitmap);
-		//	//	}
-		//	//	ret=copiedBitmap;
-		//	//} else if (bitmapFileName) {
-		//	//	ret=new AnimatedBitmap(bitmapFileName);
-		//	//}
-		//	return ret;
-		//}
+		//Note: Returns an AnimatedBitmap, not a Bitmap
+		public IAnimatedBitmap pbLoadPokemonBitmapSpecies(IPokemon pokemon, Pokemons species, bool back = false)
+		{
+			IAnimatedBitmap ret = null;
+			//if (pokemon.isEgg?) {
+			//	bitmapFileName=string.Format("Graphics/Battlers/%segg",species.ToString()); //rescue null
+			//	if (!pbResolveBitmap(bitmapFileName)) {
+			//		bitmapFileName=string.Format("Graphics/Battlers/%03degg",species);
+			//		if (!pbResolveBitmap(bitmapFileName)) {
+			//			bitmapFileName=string.Format("Graphics/Battlers/egg");
+			//		}
+			//	}
+			//	bitmapFileName=pbResolveBitmap(bitmapFileName);
+			//} else {
+			//	bitmapFileName=pbCheckPokemonBitmapFiles([species,back,
+			//												(pokemon.isFemale?),
+			//												pokemon.isShiny?,
+			//												(pokemon.form rescue 0),
+			//												(pokemon.isShadow? rescue false)])
+			//	//  Alter bitmap if supported
+			//	alterBitmap=(MultipleForms.getFunction(species,"alterBitmap") rescue null);
+			//}
+			//if (bitmapFileName != null && alterBitmap) {
+			//	animatedBitmap=new AnimatedBitmap(bitmapFileName);
+			//	copiedBitmap=animatedBitmap.copy;
+			//	animatedBitmap.dispose();
+			//	copiedBitmap.each {|bitmap|
+			//		alterBitmap.call(pokemon,bitmap);
+			//	}
+			//	ret=copiedBitmap;
+			//} else if (bitmapFileName) {
+			//	ret=new AnimatedBitmap(bitmapFileName);
+			//}
+			return ret;
+		}
 
-		// Note: Returns an AnimatedBitmap, not a Bitmap
-		//public IAnimatedBitmap pbLoadSpeciesBitmap(Pokemons species,bool female=false,int form=0,bool shiny=false,bool shadow=false,bool back=false,bool egg=false) {
-		//	IAnimatedBitmap ret=null;
-		//	//if (egg) {
-		//	//	bitmapFileName=string.Format("Graphics/Battlers/%segg",getConstantName(PBSpecies,species)) rescue null;
-		//	//	if (!pbResolveBitmap(bitmapFileName)) {
-		//	//		bitmapFileName=string.Format("Graphics/Battlers/%03degg",species);
-		//	//		if (!pbResolveBitmap(bitmapFileName)) {
-		//	//			bitmapFileName=string.Format("Graphics/Battlers/egg");
-		//	//		}
-		//	//	}
-		//	//	bitmapFileName=pbResolveBitmap(bitmapFileName);
-		//	//} else {
-		//	//	bitmapFileName=pbCheckPokemonBitmapFiles([species,back,female,shiny,form,shadow]);
-		//	//}
-		//	//if (bitmapFileName) {
-		//	//	ret=new AnimatedBitmap(bitmapFileName);
-		//	//}
-		//	return ret;
-		//}
+		//Note: Returns an AnimatedBitmap, not a Bitmap
+		public IAnimatedBitmap pbLoadSpeciesBitmap(Pokemons species, bool female = false, int form = 0, bool shiny = false, bool shadow = false, bool back = false, bool egg = false)
+		{
+			IAnimatedBitmap ret = null;
+			//if (egg) {
+			//	bitmapFileName=string.Format("Graphics/Battlers/%segg",getConstantName(PBSpecies,species)) rescue null;
+			//	if (!pbResolveBitmap(bitmapFileName)) {
+			//		bitmapFileName=string.Format("Graphics/Battlers/%03degg",species);
+			//		if (!pbResolveBitmap(bitmapFileName)) {
+			//			bitmapFileName=string.Format("Graphics/Battlers/egg");
+			//		}
+			//	}
+			//	bitmapFileName=pbResolveBitmap(bitmapFileName);
+			//} else {
+			//	bitmapFileName=pbCheckPokemonBitmapFiles([species,back,female,shiny,form,shadow]);
+			//}
+			//if (bitmapFileName) {
+			//	ret=new AnimatedBitmap(bitmapFileName);
+			//}
+			return ret;
+		}
 
 		public string pbCheckPokemonBitmapFiles(params object[] args) {
 			//Pokemons species=params[0];
@@ -1016,7 +1019,7 @@ namespace PokemonUnity
 			float playtime=0.0f;
 			//if (pokemon is Numeric) {
 				string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
-				if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
+				if (pkmnwav != null) playtime = 0; //getPlayTime(pkmnwav); //ToDo: uncomment and finish...
 			//} else if (!pokemon.isEgg) {
 			//	if (pokemon is IPokemonChatter p && p.chatter != null) { //pokemon.respond_to("chatter")
 			//		playtime=p.chatter.time;
@@ -1043,11 +1046,11 @@ namespace PokemonUnity
 			//} else 
 			if (!pokemon.isEgg) {
 				if (pokemon is IPokemonChatter p && p.chatter != null) { //pokemon.respond_to("chatter")
-					playtime=p.chatter.time;
+					playtime=p.chatter.time();
 					pitch=1.0f;
 				} else {
 					string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
-					if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
+					if (pkmnwav != null) playtime = 0; //getPlayTime(pkmnwav); //ToDo: uncomment and finish...
 				}
 			}
 			playtime/=pitch.Value; // sound is lengthened the lower the pitch
@@ -1093,8 +1096,8 @@ namespace PokemonUnity
 		public string pbCryFile(IPokemon pokemon) {
 			if (pokemon == null) return null;
 			if (!pokemon.isEgg) {
-				string filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species.ToString(),pokemon.form); //rescue 0 rescue null
-				if (pbResolveAudioSE(filename) == null) filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species,pokemon.form); //rescue 0
+				string filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species.ToString(),pokemon is IPokemonMultipleForms f0 ? f0.form : 0); //rescue 0 rescue null
+				if (pbResolveAudioSE(filename) == null) filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species,pokemon is IPokemonMultipleForms f1 ? f1.form : 0); //rescue 0
 				if (pbResolveAudioSE(filename) == null) {
 					filename=string.Format("Cries/{0}Cry",pokemon.Species.ToString()); //rescue null;
 				}
@@ -1304,7 +1307,7 @@ namespace PokemonUnity
 			string speciesname=pokemon.Species.ToString(TextScripts.Name);
 			if ((this as IGameMessage).pbConfirmMessage(Game._INTL("Would you like to give a nickname to {1}?",speciesname))) {
 				string helptext=Game._INTL("{1}'s nickname?",speciesname);
-				string newname=UI.pbEnterPokemonName(helptext,0,Pokemon.NAMELIMIT,"",pokemon);
+				string newname=pbEnterPokemonName(helptext,0,Pokemon.NAMELIMIT,"",pokemon);
 				if (newname!="") pokemon.Name=newname;
 				//if (newname!="") pokemon.SetNickname(newname);
 			}
@@ -1316,7 +1319,7 @@ namespace PokemonUnity
 				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return;
 			}
-			pokemon.RecordFirstMoves();
+			pokemon.pbRecordFirstMoves();
 			if (Trainer.party.Length < Features.LimitPokemonPartySize) {
 				//ToDo: Change to `.Add(Pokemon)`?
 				Trainer.party[Trainer.party.Length]=pokemon;
@@ -1405,7 +1408,7 @@ namespace PokemonUnity
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
 			if (seeform) pbSeenForm(pokemon);
-			pokemon.RecordFirstMoves();
+			pokemon.pbRecordFirstMoves();
 			if (Trainer.party.Length<Features.LimitPokemonPartySize) {
 				//ToDo: Change to `.Add(Pokemon)`?
 				Trainer.party[Trainer.party.Length]=pokemon;
@@ -1420,7 +1423,7 @@ namespace PokemonUnity
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
 			if (seeform) pbSeenForm(pokemon);
-			pokemon.RecordFirstMoves();
+			pokemon.pbRecordFirstMoves();
 			if (Trainer.party.Length<Features.LimitPokemonPartySize) {
 				//ToDo: Change to `.Add(Pokemon)`?
 				Trainer.party[Trainer.party.Length]=pokemon;
@@ -1467,7 +1470,7 @@ namespace PokemonUnity
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
 			if (seeform) pbSeenForm(pokemon);
-			pokemon.RecordFirstMoves();
+			pokemon.pbRecordFirstMoves();
 			Trainer.party[Trainer.party.Length]=pokemon;
 			return true;
 		}
@@ -1477,7 +1480,7 @@ namespace PokemonUnity
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
 			if (seeform) pbSeenForm(pokemon);
-			pokemon.RecordFirstMoves();
+			pokemon.pbRecordFirstMoves();
 			Trainer.party[Trainer.party.Length]=pokemon;
 			return true;
 		}
@@ -1601,15 +1604,15 @@ namespace PokemonUnity
 			Pokemons species = Pokemons.NONE;
 			//if (poke is IPokemon) {
 				int gender=0; //poke.Gender;
-				int form = poke.FormId; //rescue 0
+				int form = poke is IPokemonMultipleForms f ? f.form : 0; //rescue 0
 				species = poke.Species;
 			//}
 			pbSeenForm(species, gender, form);
 		}
 
-		public void pbSeenForm(Pokemons poke,int gender=0,int form=0) {
+		public void pbSeenForm(Pokemons poke,int gender=0,int form=0) { //ToDo: redo this function...
 			if (Trainer.formseen==null) Trainer.formseen=new int?[0][] { };
-			if (Trainer.formlastseen==null) Trainer.formlastseen=new int?[0];
+			if (Trainer.formlastseen==null) Trainer.formlastseen=new KeyValuePair<int, int?>[0]; //int?[0];
 			//if (poke is String || poke is Symbol) {
 			//  poke=getID(PBSpecies,poke);
 			//}
@@ -1623,13 +1626,13 @@ namespace PokemonUnity
 			//}
 			if (species<=0) return; //!species || 
 			if (gender>1) gender=0;
-			string formnames=(this as IGameMessage).pbGetMessage(MessageTypes.FormNames,species);
+			string formnames = ""; //pbGetMessage(MessageTypes.FormNames,species);
 			if (string.IsNullOrEmpty(formnames)) form=0;
-			if (Trainer.formseen[species] == null) Trainer.formseen[species]=new int?[0][] { new int?[0],new int?[0] };
-			Trainer.formseen[species][gender][form]=true;
+			if (Trainer.formseen[(int)species] == null) Trainer.formseen[(int)species] = new int?[0];
+			//Trainer.formseen[(int)species][gender][form]=true;
 			//if (Trainer.formlastseen[species] == null) Trainer.formlastseen[species]=new [];
 			//if (Trainer.formlastseen[species] == []) Trainer.formlastseen[species]= new []{ gender,form };
-			if (Trainer.formlastseen[species] == null) Trainer.formlastseen[species] = new KeyValuePair<int, int>(gender,form);
+			if (Trainer.formlastseen[(int)species].Value == null) Trainer.formlastseen[(int)species] = new KeyValuePair<int, int?>(gender,form);
 			//if(Player.Pokedex[(int)species, 2] < 0)
 			//Player.Pokedex[(int)species,2] = (byte)form; 
 		}
@@ -1801,9 +1804,9 @@ namespace PokemonUnity
 				compat1 == EggGroups.UNDISCOVERED ||
 				compat2 == EggGroups.DITTO ||
 				compat2 == EggGroups.UNDISCOVERED) return false;
-			Pokemons baby=Evolution.pbGetBabySpecies(species);
+			Pokemons baby=EvolutionHelper.pbGetBabySpecies(species);
 			if (species==baby) return true;	// Is a basic species
-			baby=Evolution.pbGetBabySpecies(species,0,0);
+			baby=EvolutionHelper.pbGetBabySpecies(species,0,0);
 			if (species==baby) return true;	// Is an egg species without incense
 			return false;
 		}
@@ -2051,14 +2054,15 @@ namespace PokemonUnity
 				switch (numDexes) {
 					case 1:          // National Dex only
 						if (Global.pokedexUnlocked[0] != null) {
-							if (Trainer.pokedexSeen>0) {
+							if (Trainer.pokedexSeen()>0) {
 								Global.pokedexViable.Add(0);
 							}
 						}
 						break;
 					default:            // Regional dexes + National Dex
 						for (int i = 0; i < numDexes; i++) {
-						int regionToCheck=(i==numDexes-1) ? -1 : i;
+						//int regionToCheck=(i==numDexes-1) ? -1 : i;
+						Regions? regionToCheck=(i==numDexes-1) ? (Regions?)null : (Regions)i;
 							if (Global.pokedexUnlocked[i] != null) {
 								if (Trainer.pokedexSeen(regionToCheck)>0) {
 									Global.pokedexViable.Add(i);
@@ -2095,7 +2099,7 @@ namespace PokemonUnity
 
 		#region Other utilities
 		public void pbTextEntry(string helptext,int minlength,int maxlength,int variableNumber) {
-			GameVariables[variableNumber]=(this as IGameMessage).pbEnterText(helptext,minlength,maxlength);
+			GameVariables[variableNumber]=pbEnterText(helptext,minlength,maxlength);
 			if (GameMap != null) GameMap.need_refresh = true;
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
@@ -12,7 +13,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity
 {
-	public partial class Game //: IGameMetadata
+	public partial class Game : IGameMetadataMisc
 	{
 		/// <summary>
 		/// Opens the Pokémon screen
@@ -24,7 +25,7 @@ namespace PokemonUnity
 			pbFadeOutIn(99999, block: () => { sscreen.pbPokemonScreen(); });
 		}
 
-		public void pbSaveScreen() {
+		public bool pbSaveScreen() {
 			bool ret=false;
 			ISaveScene scene = Scenes.Save; //new PokemonSaveScene();
 			ISaveScreen screen = Screens.Save.initialize(scene); //new PokemonSave(scene);
@@ -33,18 +34,18 @@ namespace PokemonUnity
 		}
 
 		public void pbConvertItemToItem(int? variable, object[] array) {
-			Items item=pbGet(variable);
+			Items item=(Items)pbGet(variable);
 			pbSet(variable,0);
 			for (int i = 0; i < (array.Length/2); i++) {
 				if (array[2*i] is Items) { //isConst(item,PBItems,array[2*i])
-					pbSet(variable,array[2*i+1] as Items); //getID(PBItems,array[2*i+1])
+					pbSet(variable,array[2*i+1] as Items?); //getID(PBItems,array[2*i+1])
 					return;
 				}
 			}
 		}
 		
 		public void pbConvertItemToPokemon(int? variable,object[] array) {
-			Pokemons item=pbGet(variable);
+			Pokemons item=(Pokemons)pbGet(variable);
 			pbSet(variable,0);
 			for (int i = 0; i < (array.Length/2); i++) {
 				if (array[2*i] is Pokemons) { //isConst(item,PBItems,array[2*i])
@@ -55,7 +56,7 @@ namespace PokemonUnity
 		}
 
 		public bool pbRecordTrainer() {
-			IAudioObject wave = pbRecord(null,10);
+			IWaveData wave = this is IGameField f ? f.pbRecord(null,10) : null;
 			if (wave != null) {
 				Global.trainerRecording=wave;
 				return true;
@@ -66,7 +67,7 @@ namespace PokemonUnity
 
 	public partial class GlobalMetadata : PokemonEssentials.Interface.Field.IGlobalMetadata
 	{
-		public IAudioObject trainerRecording { get; set; }
+		public IWaveData trainerRecording { get; set; }
 		public bool bicycle					{ get; set; }
 		public bool surfing					{ get; set; }
 		public bool diving					{ get; set; }
@@ -126,7 +127,7 @@ namespace PokemonUnity
 		public IList<IPhoneContact> phoneNumbers			{ get; set; }
 		public int phoneTime				                { get; set; }
 		public bool safesave				                { get; set; }
-		public IDictionary<KeyValuePair<int,int>,int> eventvars				{ get; set; }
+		public IDictionary<KeyValuePair<int,int>,long> eventvars				{ get; set; }
 
 		//public float bridge { get {
 		//  if (@bridge == null) @bridge=0;
@@ -194,9 +195,9 @@ namespace PokemonUnity
 			@partner              = null;
 			@challenge            = null;
 			@lastbattle           = null;
-			@phoneNumbers         = new List<int>();
+			@phoneNumbers         = new List<IPhoneContact>();
 			@phoneTime            = 0;
-			@eventvars            = new Dictionary<KeyValuePair<int, int>, int>();
+			@eventvars            = new Dictionary<KeyValuePair<int, int>, long>();
 			@safesave             = false;
 		}
 	}

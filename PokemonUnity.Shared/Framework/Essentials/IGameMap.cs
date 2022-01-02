@@ -131,11 +131,11 @@ namespace PokemonEssentials.Interface
 		bool counter(float x, float y);
 		Terrains terrain_tag(float x, float y, bool countBridge = false);
 		int? check_event(float x, float y);
-		void start_scroll(int direction, int distance, int speed);
+		void start_scroll(int direction, int distance, float speed);
 		bool scrolling { get; }
 		void start_fog_tone_change(ITone tone, int duration);
 		void start_fog_opacity_change(float opacity, int duration);
-		bool in_range(object @object);
+		bool in_range(IGameCharacter @object);
 		void update();
 	}
 }

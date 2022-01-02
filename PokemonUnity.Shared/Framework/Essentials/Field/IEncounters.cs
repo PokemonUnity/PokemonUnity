@@ -71,7 +71,7 @@ namespace PokemonEssentials.Interface.Field
 		IEncounter pbEncounteredPokemon(EncounterTypes enctype, int tries = 1);
 		//IPokemon pbEncounteredPokemon(EncounterTypes enctype, int tries = 1);
 
-		bool pbCanEncounter(IPokemon encounter);
+		bool pbCanEncounter(IEncounter encounter);
 
 		IEncounter pbGenerateEncounter(EncounterTypes enctype);
 		//IPokemon pbGenerateEncounter(EncounterTypes enctype);

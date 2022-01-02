@@ -5,9 +5,9 @@ namespace PokemonEssentials.Interface.Battle
 {
 	public interface ISafariState 
 	{
-		int ballcount				{ get; }
-		BattleResults decision      { get; }
-		int steps				    { get; }
+		int ballcount				{ get; set; }
+		BattleResults decision      { get; set; }
+		int steps				    { get; set; }
 
 		ISafariState initialize();
 

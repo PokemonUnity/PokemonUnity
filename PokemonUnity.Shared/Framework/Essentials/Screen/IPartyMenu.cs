@@ -76,7 +76,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name=""></param>
 		void pbCheckItems(Items[] array);
 		void pbPokemonMultipleEntryScreenEx(string[] ruleset);
-		int pbChooseAblePokemon(Func<IPokemon,bool> ableProc,bool allowIneligible= false);
+		int pbChooseAblePokemon(Predicate<IPokemon> ableProc,bool allowIneligible= false);
 		void pbRefreshAnnotations(bool ableProc);
 		void pbClearAnnotations();
 		void pbPokemonDebug(IPokemon pkmn, int pkmnid);

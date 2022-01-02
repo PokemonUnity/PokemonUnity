@@ -580,8 +580,8 @@ namespace PokemonUnity.Combat
 				if (showMessages) @battle.pbDisplay(Game._INTL("But it failed!"));
 				return false;
 			}
-			bool? agender=attacker.gender;
-			bool? ogender=this.gender;
+			bool? agender=attacker.Gender;
+			bool? ogender=this.Gender;
 			if (!agender.HasValue || !ogender.HasValue || agender==ogender) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("But it failed!"));
 				return false;

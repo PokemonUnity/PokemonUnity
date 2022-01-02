@@ -17,6 +17,7 @@ namespace PokemonEssentials.Interface.Field
 	/// </summary>
 	public interface IGlobalMetadata
 	{
+		IWaveData trainerRecording { get; set; }
 		bool bicycle { get; set; }
 		bool surfing { get; set; }
 		bool diving { get; set; }
@@ -51,11 +52,26 @@ namespace PokemonEssentials.Interface.Field
 		IDayCare daycare { get; set; }
 		bool daycareEgg { get; set; } //ToDo: int?...
 		int daycareEggSteps { get; set; }
-		bool[] pokedexUnlocked { get; set; } // Array storing which Dexes are unlocked
-		IList<int> pokedexViable { get; set; } // All Dexes of non-zero length and unlocked
-		int pokedexDex { get; set; } // Dex currently looking at (-1 is National Dex)
-		int[] pokedexIndex { get; set; } // Last species viewed per Dex
-		int pokedexMode { get; set; } // Search mode
+		/// <summary>
+		/// Array storing which Dexes are unlocked
+		/// </summary>
+		bool[] pokedexUnlocked { get; set; } 
+		/// <summary>
+		/// All Dexes of non-zero length and unlocked
+		/// </summary>
+		IList<int> pokedexViable { get; set; } 
+		/// <summary>
+		/// Dex currently looking at (-1 is National Dex)
+		/// </summary>
+		int pokedexDex { get; set; } 
+		/// <summary>
+		/// Last species viewed per Dex
+		/// </summary>
+		int[] pokedexIndex { get; set; } 
+		/// <summary>
+		/// Search mode
+		/// </summary>
+		int pokedexMode { get; set; } 
 		int? healingSpot { get; set; }
 		float[] escapePoint { get; set; }
 		int pokecenterMapId { get; set; }
@@ -81,7 +97,7 @@ namespace PokemonEssentials.Interface.Field
 		/// </summary>
 		int phoneTime { get; set; }
 		bool safesave { get; set; }
-		IDictionary<KeyValuePair<int, int>, int> eventvars { get; set; }
+		IDictionary<KeyValuePair<int, int>, long> eventvars { get; set; }
 
 
 		//IGlobalMetadata initialize();

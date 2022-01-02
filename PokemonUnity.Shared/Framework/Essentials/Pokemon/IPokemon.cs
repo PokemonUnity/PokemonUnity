@@ -24,23 +24,23 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Current Attack stat
 		/// </summary>
-		int attack { get; set; }
+		int ATK { get; }
 		/// <summary>
 		/// Current Defense stat
 		/// </summary>
-		int defense { get; set; }
+		int DEF { get; }
 		/// <summary>
 		/// Current Speed stat
 		/// </summary>
-		int speed { get; set; }
+		int SPE { get; }
 		/// <summary>
 		/// Current Special Attack stat
 		/// </summary>
-		int spatk { get; set; }
+		int SPA { get; }
 		/// <summary>
 		/// Current Special Defense stat
 		/// </summary>
-		int spdef { get; set; }
+		int SPD { get; }
 		/// <summary>
 		/// Array of 6 Individual Values for HP, Atk, Def,
 		/// Speed, Sp Atk, and Sp Def
@@ -57,7 +57,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Personal ID
 		/// </summary>
-		int personalID { get; set; }
+		int PersonalId { get; }
 		/// <summary>
 		/// 32-bit Trainer ID (the secret ID is in the upper 16 bits)
 		/// </summary>
@@ -69,7 +69,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Pokérus strain and infection time
 		/// </summary>
-		int pokerus { get; set; }
+		int[] Pokerus { get; }
 		/// <summary>
 		/// Held item
 		/// </summary>
@@ -282,7 +282,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokemon's gender. 0=male, 1=female, 2=genderless
 		/// </summary>
-		int Gender { get; }
+		bool? Gender { get; }
 
 		/// <summary>
 		/// Helper function that determines whether the input values would make a female.
@@ -346,7 +346,8 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Sets this Pokémon's ability to a particular ability (if possible).
 		/// </summary>
 		/// <param name="value"></param>
-		void setAbility(Abilities value);
+		void setAbility(int value);
+		//void setAbility(Abilities value);
 
 		bool hasHiddenAbility();
 
@@ -383,7 +384,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns whether this Pokemon is shiny (differently colored).
 		/// </summary>
-		bool isShiny { get; }
+		bool IsShiny { get; }
 
 		/// <summary>
 		/// Makes this Pokemon shiny.
@@ -402,7 +403,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Gives this Pokemon Pokérus (either the specified strain or a random one).
 		/// </summary>
 		/// <param name="strain"></param>
-		void givePokerus(int strain = 0);
+		void GivePokerus(int strain = 0);
 
 		/// <summary>
 		/// Resets the infection time for this Pokemon's Pokérus (even if cured).
@@ -417,7 +418,8 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns the Pokérus infection stage for this Pokemon.
 		/// </summary>
-		int pokerusStage { get; }
+		//int PokerusStage { get; }
+		bool? PokerusStage { get; }
 
 		// ###############################################################################
 		// Types
@@ -579,7 +581,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns the markings this Pokémon has.
 		/// </summary>
-		bool[] markings { get; }
+		bool[] Markings { get; }
 
 		/// <summary>
 		/// Returns a string stating the Unown form of this Pokémon.
@@ -613,23 +615,23 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Heals all HP of this Pokémon.
 		/// </summary>
-		void healHP();
+		bool HealHP();
 
 		/// <summary>
 		/// Heals the status problem of this Pokémon.
 		/// </summary>
-		void healStatus();
+		bool HealStatus();
 
 		/// <summary>
 		/// Heals all PP of this Pokémon.
 		/// </summary>
 		/// <param name="index"></param>
-		void healPP(int index = -1);
+		bool HealPP(int index = -1);
 
 		/// <summary>
 		/// Heals all HP, PP, and status problems of this Pokémon.
 		/// </summary>
-		void heal();
+		bool Heal();
 
 		// Changes the happiness of this Pokémon depending on what happened to change it.
 		void changeHappiness(HappinessMethods method);

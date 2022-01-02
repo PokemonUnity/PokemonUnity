@@ -35,7 +35,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Internal battle flag
 		/// </summary>
-		bool internalbattle { get; }
+		bool internalbattle { get; set; }
 		/// <summary>
 		/// Double battle flag
 		/// </summary>
@@ -109,7 +109,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		PokemonUnity.Overworld.Environments environment { get; set; }
 		/// <summary>
-		/// Current weather, custom methods should use pbWeather instead
+		/// Current weather, custom methods should use <see cref="pbWeather"/> instead
 		/// </summary>
 		Weather weather { get; set; }
 		/// <summary>

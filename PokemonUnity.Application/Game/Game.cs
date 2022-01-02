@@ -207,31 +207,31 @@ namespace PokemonUnity
 			return this;
 		}
 
-		public static implicit operator Game(GameState state)
-		{
-			Game game = new Game()
-			{
-				Player				= state.GetPlayer()
-				,RepelSteps			= state.RepelSteps
-				//,Rival				= state.Rival
-				//,PlayerPosition		= state.PlayerPosition
-				,Checkpoint			= (Locations)state.PokeCenterId
-				//,Area				= data.ActiveMapId;
-				//,PC					= state.PlayerPC
-				//,Bag				= state.PlayerBag
-				//PlayerItemData		= state.PlayerItemData
-				//,PlayerBerryData	= state.PlayerBerryData
-				//,PlayerNPCData		= state.PlayerNPCData
-				//,PlayerApricornData	= state.PlayerApricornData
-				//PC_Poke = data.PC.GetPokemonsFromSeri();
-				//PC_boxNames = data.PC.BoxNames;
-				//PC_boxTexture = data.PC.BoxTextures;
-				//PC_Items = new List<Items>(data.PC.GetItemsFromSeri());
-				//Bag_Items = data.PlayerBag;
-				,Challenge = state.Challenge
-				,Features = state.Features
-			};
-			return game;
-		}
+		//public static implicit operator Game(GameState state)
+		//{
+		//	Game game = new Game()
+		//	{
+		//		Player				= state.GetPlayer()
+		//		,RepelSteps			= state.RepelSteps
+		//		//,Rival				= state.Rival
+		//		//,PlayerPosition		= state.PlayerPosition
+		//		,Checkpoint			= (Locations)state.PokeCenterId
+		//		//,Area				= data.ActiveMapId;
+		//		//,PC					= state.PlayerPC
+		//		//,Bag				= state.PlayerBag
+		//		//PlayerItemData		= state.PlayerItemData
+		//		//,PlayerBerryData	= state.PlayerBerryData
+		//		//,PlayerNPCData		= state.PlayerNPCData
+		//		//,PlayerApricornData	= state.PlayerApricornData
+		//		//PC_Poke = data.PC.GetPokemonsFromSeri();
+		//		//PC_boxNames = data.PC.BoxNames;
+		//		//PC_boxTexture = data.PC.BoxTextures;
+		//		//PC_Items = new List<Items>(data.PC.GetItemsFromSeri());
+		//		//Bag_Items = data.PlayerBag;
+		//		,Challenge = state.Challenge
+		//		,Features = state.Features
+		//	};
+		//	return game;
+		//}
 	}
 }

@@ -13,18 +13,18 @@ namespace PokemonEssentials.Interface.Field
 	/// </summary>
 	public interface ITempMetadata
 	{
-		int menuLastChoice									{ get; }
-		int keyItemCalling									{ get; }
-		int hiddenMoveEventCalling							{ get; }
-		bool begunNewGame									{ get; }
-		int miniupdate										{ get; }
-		int waitingTrainer									{ get; }
-		int darknessSprite									{ get; }
+		int menuLastChoice									{ get; set; }
+		int keyItemCalling									{ get; set; }
+		int hiddenMoveEventCalling							{ get; set; }
+		bool begunNewGame									{ get; set; }
+		int miniupdate										{ get; set; }
+		int waitingTrainer									{ get; set; }
+		int darknessSprite									{ get; set; }
 		IList<string> pokemonDexData						{ get; }
-		IDictionary<int, IPokemonMetadata> pokemonMetadata	{ get; }
+		IDictionary<int, IPokemonMetadata> pokemonMetadata	{ get; set; }
 		IList<int> pokemonPhoneData							{ get; }
-		int lastbattle										{ get; }
-		int flydata											{ get; }
+		int lastbattle										{ get; set; }
+		int flydata											{ get; set; }
 
 		//ITempMetadata initialize();
 	}
