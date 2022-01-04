@@ -74,7 +74,7 @@ namespace PokemonUnity
 				if (scene.pbConfirm(Game._INTL("Would you like to give a nickname to {1}?", speciesname)))
 				{
 					string helptext = Game._INTL("{1}'s nickname?", speciesname);
-					string newname = pbEnterPokemonName(helptext, 0, 10, "", pokemon);
+					string newname = this is IGameTextEntry t ? t.pbEnterPokemonName(helptext, 0, 10, "", pokemon) : speciesname;
 					if (newname != "") pokemon.Name = newname;
 				}
 			}

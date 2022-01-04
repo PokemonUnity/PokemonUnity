@@ -997,32 +997,32 @@ namespace PokemonEssentials.Interface
 
 	public interface ISpriteWindow : IWindow {
 		ITone tone				{ get; set; }
-		IColor color				{ get; set; }
-		IViewport viewport		{ get; set; }
+		//IColor color				{ get; set; }
+		//IViewport viewport		{ get; set; }
 		int contents				{ get; set; }
-		int ox					{ get; set; }
-		int oy					{ get; set; }
-		int x						{ get; set; }
-		int y						{ get; set; }
-		int z						{ get; set; }
+		//int ox					{ get; set; }
+		//int oy					{ get; set; }
+		//int x						{ get; set; }
+		//int y						{ get; set; }
+		//int z						{ get; set; }
 		int zoom_x				{ get; set; }
 		int zoom_y				{ get; set; }
 		int offset_x				{ get; set; }
 		int offset_y				{ get; set; }
-		int width					{ get; set; }
-		int active				{ get; set; }
-		int pause					{ get; set; }
-		int height				{ get; set; }
-		int opacity				{ get; set; }
-		int back_opacity			{ get; set; }
-		int contents_opacity		{ get; set; }
-		int visible				{ get; set; }
+		//int width					{ get; set; }
+		//int active				{ get; set; }
+		//int pause					{ get; set; }
+		//int height				{ get; set; }
+		//int opacity				{ get; set; }
+		//int back_opacity			{ get; set; }
+		//int contents_opacity		{ get; set; }
+		//bool visible				{ get; set; }
 		int cursor_rect			{ get; set; }
 		int contents_blend_type	{ get; set; }
 		int blend_type			{ get; set; }
-		int openness				{ get; set; }
+		//int openness				{ get; set; }
 
-		int windowskin { get; } //();
+		//int windowskin { get; } //();
 		//	@_windowskin;
 		//}
 

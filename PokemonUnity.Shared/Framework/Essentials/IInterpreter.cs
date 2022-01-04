@@ -71,7 +71,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="parameter">parameter</param>
 		/// <returns></returns>
-		IGameCharacter get_character(int parameter);
+		IGameEvent get_character(int parameter);
 		/// <summary>
 		/// Calculate Operated Value
 		/// </summary>

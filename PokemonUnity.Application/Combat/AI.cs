@@ -4901,7 +4901,7 @@ namespace PokemonUnity.Combat
 
 		public int pbChooseBestNewEnemy(int index,IBattler[] party,int[] enemies) {
 			if (enemies == null || enemies.Length==0) return -1;
-			if (Game.GameData.PokemonTemp == null) Game.GameData.PokemonTemp=new PokemonTemp();
+			if (Game.GameData.PokemonTemp == null) Game.GameData.PokemonTemp=new PokemonTemp().initialize();
 			IBattler o1=@battlers[index].pbOpposing1;
 			IBattler o2=@battlers[index].pbOpposing2;
 			if (o1.IsNotNullOrNone() && o1.isFainted()) o1=null;

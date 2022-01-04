@@ -46,6 +46,7 @@
     <Compile Include="Character\Bag.cs" />
     <Compile Include="Character\DayCare.cs" />
     <Compile Include="Character\Party.cs" />
+    <Compile Include="Character\PC.cs" />
     <Compile Include="Character\PokemonStorage.cs" />
     <Compile Include="Combat\AI.cs" />
     <Compile Include="Combat\Attack\Attack.cs" />
@@ -76,10 +77,11 @@
     <Compile Include="Game\Game.SpriteWindow.cs" />
     <Compile Include="Game\Game.Utility.cs" />
     <Compile Include="Game\Game.Variable.cs" />
-    <Compile Include="Game\GameExtension.cs" />
+    <Compile Include="Extensions\GameExtension.cs" />
     <Compile Include="Game\Game.MiscData.cs" />
     <Compile Include="Game\Options.cs" />
-    <Compile Include="GlobalMetadata\GlobalMetadata.cs" />
+    <Compile Include="Game\Temporary\PokemonTemp.cs" />
+    <Compile Include="Game\Temporary\GlobalMetadata.cs" />
     <Compile Include="Game\Item.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Inventory\Item\Item.cs" />
@@ -97,8 +99,10 @@
     <Compile Include="Overworld\Map.cs" />
     <Compile Include="Overworld\Safari.cs" />
     <Compile Include="Overworld\Terrain.cs" />
+    <Compile Include="Overworld\TilePosition.cs" />
     <Compile Include="Overworld\Wild\Encounter.cs" />
     <Compile Include="Extensions\PokemonExtension.cs" />
+    <Compile Include="Overworld\Wild\EncounterData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

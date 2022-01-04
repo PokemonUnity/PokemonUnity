@@ -53,6 +53,19 @@ namespace PokemonEssentials.Interface.Screen
 		bool pbMoveCursor();
 		int wrapmod(int x, int y);
 	}
+
+	public interface IGameTextEntry
+    {
+		string pbEnterText(string helptext, int minlength, int maxlength, string initialText = "", int mode = 0, IPokemon pokemon = null, bool nofadeout = false);
+
+		string pbEnterPlayerName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
+
+		string pbEnterPokemonName(string helptext, int minlength, int maxlength, string initialText = "", IPokemon pokemon = null, bool nofadeout = false);
+
+		string pbEnterBoxName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
+
+		string pbEnterNPCName(string helptext, int minlength, int maxlength, string initialText = "", int id = 0, bool nofadeout = false);
+	}
 	#endregion
 
 	#region Evolution

@@ -63,7 +63,7 @@ namespace PokemonEssentials.Interface
 
 			IEnumerator pbSceneStandby(Action block = null);
 
-			IEnumerator pbBattleAnimation(IAudioBGM bgm = null, int trainerid = -1, string trainername = "", Action block = null);
+			void pbBattleAnimation(IAudioBGM bgm = null, int trainerid = -1, string trainername = "", Action block = null);
 
 			/// <summary>
 			/// Override and use this method if you want to add a custom battle intro animation
@@ -93,7 +93,7 @@ namespace PokemonEssentials.Interface
 
 			void pbCheckAllFainted();
 
-			void pbEvolutionCheck(int currentlevels);
+			void pbEvolutionCheck(int[] currentlevels);
 
 			Items[] pbDynamicItemList(params Items[] args);
 
@@ -144,7 +144,7 @@ namespace PokemonEssentials.Interface
 			#region Field movement
 			bool pbLedge(float xOffset, float yOffset);
 
-			void pbSlideOnIce(IEntity _event = null);
+			void pbSlideOnIce(IGamePlayer _event = null);
 
 			void pbBattleOnStepTaken();
 
@@ -210,7 +210,7 @@ namespace PokemonEssentials.Interface
 			bool pbPokerus();
 			#endregion
 
-			bool pbBatteryLow();
+			//bool pbBatteryLow();
 
 			#region Audio playing
 			void pbCueBGM(string bgm, float seconds, int? volume = null, float? pitch = null);
@@ -239,31 +239,31 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region Bridges
-			void pbBridgeOn(int height = 2);
+			void pbBridgeOn(float height = 2);
 
 			void pbBridgeOff();
 			#endregion
 
 			#region Event locations, terrain tags
-			bool pbEventFacesPlayer(IEntity _event, IGamePlayer player, int distance);
+			bool pbEventFacesPlayer(IGameCharacter _event, IGamePlayer player, float distance);
 
-			bool pbEventCanReachPlayer(IEntity _event, IGamePlayer player, int distance);
+			bool pbEventCanReachPlayer(IGameCharacter _event, IGamePlayer player, float distance);
 
-			ITilePosition pbFacingTileRegular(int? direction = null, IEntity _event = null);
+			ITilePosition pbFacingTileRegular(float? direction = null, IGameCharacter _event = null);
 
-			ITilePosition pbFacingTile(int? direction = null, IEntity _event = null);
+			ITilePosition pbFacingTile(float? direction = null, IGameCharacter _event = null);
 
-			bool pbFacingEachOther(IEntity event1, IEntity event2);
+			bool pbFacingEachOther(IGameCharacter event1, IGameCharacter event2);
 
-			Terrains pbGetTerrainTag(IEntity _event = null, bool countBridge = false);
+			Terrains pbGetTerrainTag(IGameCharacter _event = null, bool countBridge = false);
 
-			Terrains pbFacingTerrainTag(IEntity _event = null, int? dir = null);
+			Terrains? pbFacingTerrainTag(IGameCharacter _event = null, float? dir = null);
 			#endregion
 
 			#region Event movement
-			IEnumerator pbTurnTowardEvent(IEntity _event, IEntity otherEvent);
+			void pbTurnTowardEvent(IGameCharacter _event, IGameCharacter otherEvent);
 
-			IEnumerator pbMoveTowardPlayer(IEntity _event);
+			void pbMoveTowardPlayer(IGameCharacter _event);
 
 			bool pbJumpToward(int dist = 1, bool playSound = false, bool cancelSurf = false);
 
@@ -273,13 +273,13 @@ namespace PokemonEssentials.Interface
 			//IMoveRoute pbMoveRoute(IEntity _event, string[] commands, bool waitComplete= false);
 
 			#region Screen effects
-			void pbToneChangeAll(ITone tone, int duration);
+			void pbToneChangeAll(ITone tone, float duration);
 
 			void pbShake(int power, int speed, int frames);
 
 			void pbFlash(IColor color, int frames);
 
-			void pbScrollMap(int direction, int distance, int speed);
+			void pbScrollMap(int direction, int distance, float speed);
 			#endregion
 		}
 
@@ -294,9 +294,9 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region 
-			bool batterywarning { get; set; }
+			bool batterywarning { get; }
 			IAudioBGM cueBGM { get; set; }
-			int cueFrames { get; set; }
+			float? cueFrames { get; set; }
 			#endregion
 		}
 

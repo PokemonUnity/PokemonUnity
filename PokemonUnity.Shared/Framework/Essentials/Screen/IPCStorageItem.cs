@@ -22,8 +22,8 @@ namespace PokemonEssentials.Interface.Screen
 	/// The PC item storage object, which actually contains all the items
 	/// </summary>
 	public interface IPCItemStorage {
-		int MAXSIZE       { get; } //= 50;    // Number of different slots in storage
-		int MAXPERSLOT    { get; } //= 999;   // Max. number of items per slot
+		//int MAXSIZE       { get; } //= 50;    // Number of different slots in storage
+		//int MAXPERSLOT    { get; } //= 999;   // Max. number of items per slot
 
 		IPCItemStorage initialize();
 

@@ -177,7 +177,7 @@ namespace PokemonEssentials.Interface
 		float red { get; }
 		float green { get; }
 		float blue { get; }
-		float alpha { get; }
+		float alpha { get; set; }
 		/// <summary>
 		/// The RGBAA color class. Each component is handled with a floating point value. (0<>255)
 		/// </summary>
@@ -601,6 +601,6 @@ namespace PokemonEssentials.Interface
 		/// <param name="duration">duration is the number of frames the transition will last. When omitted, this value is set to 8.</param>
 		/// <param name="filename">filename specifies the transition graphic file name. When not specified, a standard fade will be used.</param>
 		/// <param name="vague">vague sets the ambiguity of the borderline between the graphic's starting and ending points. The larger the value, the greater the ambiguity. When omitted, this value is set to 40.</param>
-		void transition(float duration, string filename, int vague);
+		void transition(float duration, string filename, int vague = 40);
 	}
 }

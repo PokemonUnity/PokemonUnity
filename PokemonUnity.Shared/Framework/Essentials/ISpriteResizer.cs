@@ -41,7 +41,7 @@ namespace PokemonEssentials.Interface
 
 		bool deletefailed { get; set; }
 
-		void snap_to_bitmap();
+		ISprite snap_to_bitmap();
 	}
 
 	/// <summary>
@@ -160,7 +160,7 @@ namespace PokemonEssentials.Interface
 		void refresh();
 	}
 
-	public interface IBitmap
+	public interface IBitmap //: IDisposable
 	{
 		//  Fast methods for retrieving bitmap data
 		//RtlMoveMemory_pi = new Win32API('kernel32', 'RtlMoveMemory', 'pii', 'i');

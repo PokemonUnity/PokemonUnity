@@ -11,12 +11,109 @@ using PokemonUnity.Character;
 
 namespace PokemonUnity.Character
 {
+	/// <summary>
+	/// The PC item storage object, which actually contains all the items
+	/// </summary>
+	public partial class PCItemStorage : PokemonEssentials.Interface.Screen.IPCItemStorage
+	{
+		/// <summary>
+        /// Number of different slots in storage
+        /// </summary>
+		public const int MAXSIZE = 50;
+		/// <summary>
+        /// Max. number of items per slot
+        /// </summary>
+		public const int MAXPERSLOT = 999;
+		private IList<Items> items;
+
+
+		public PCItemStorage() { initialize(); }
+		public PokemonEssentials.Interface.Screen.IPCItemStorage initialize()
+		{
+			@items = new Items[0]; //[];
+			//  Start storage with a Potion
+			//if (hasConst(PBItems,:POTION)) {
+				//ItemStorageHelper.pbStoreItem(ref
+				//   @items.ToArray(), MAXSIZE, MAXPERSLOT, Items.POTION, 1);
+			//}
+			return this;
+		}
+
+		public bool empty()
+		{
+			return @items.Count == 0;
+		}
+
+		public int length()
+		{
+			return @items.Count;
+		}
+
+		public Items this[int i]
+		{
+			get
+			{
+				return @items[i];
+			}
+		}
+
+		public Items getItem(int index)
+		{
+			if (index < 0 || index >= @items.Count)
+			{
+				return 0;
+			}
+			else
+			{
+				return @items[index];//[0];
+				//return @items[index].Key;//[0];
+			}
+		}
+
+		public int getCount(int index)
+		{
+			if (index < 0 || index >= @items.Count)
+			{
+				return 0;
+			}
+			else
+			{
+				//return @items[index].Value;//[1];
+				return @items.Count;
+			}
+		}
+
+		public int pbQuantity(Items item)
+		{
+			return ItemStorageHelper.pbQuantity(@items.ToArray(), MAXSIZE, item);
+		}
+
+		public bool pbDeleteItem(Items item, int qty = 1)
+		{
+			Items[] i = @items.ToArray();
+			//return ItemStorageHelper.pbDeleteItem(ref @items.ToArray(), MAXSIZE, item, qty);
+			return ItemStorageHelper.pbDeleteItem(ref i, MAXSIZE, item, qty);
+		}
+
+		public bool pbCanStore(Items item, int qty = 1)
+		{
+			return ItemStorageHelper.pbCanStore(@items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
+		}
+
+		public bool pbStoreItem(Items item, int qty = 1)
+		{
+			Items[] i = @items.ToArray();
+			//return ItemStorageHelper.pbStoreItem(@items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
+			return ItemStorageHelper.pbStoreItem(ref i, MAXSIZE, MAXPERSLOT, item, qty);
+		}
+	}
+
 	//ToDo: Add Function to add more boxes to player pc
 	// OR! A function to disable boxes until they're "unlocked"
 	// Max # of boxes would be hard-capped if option 2
 	//Add Game.GameData.Feature where player unlocks more boxes
 	[System.Obsolete("Something i plan to transistion to; not yet ready for full integration")]
-	public class PC_Refactpr
+	public class PC_Refactor
 	{
 		#region Variables		
 		//private List<Mail> mails { get; set; } //ToDo: Add Mail to PC class
@@ -103,7 +200,7 @@ namespace PokemonUnity.Character
 			}
 		}
 		//ToDo: return pokemon box, without changing activebox
-		public PC_Refactpr this[byte i]
+		public PC_Refactor this[byte i]
 		{
 			get
 			{
@@ -123,7 +220,7 @@ namespace PokemonUnity.Character
 		#endregion
 
 		#region Constructors
-		public PC_Refactpr()
+		public PC_Refactor()
 		{
 			//PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
 			pokemons = new Pokemon[Core.STORAGEBOXES, 30];
@@ -148,7 +245,7 @@ namespace PokemonUnity.Character
 			items = new Dictionary<Items, int>() { { Inventory.Items.POTION, 1 } };
 		}
 
-		public PC_Refactpr(Pokemon[][] pkmns = null, KeyValuePair<Items,int>[] items = null, byte? box = null, string[] names = null, int[] textures = null) : this()
+		public PC_Refactor(Pokemon[][] pkmns = null, KeyValuePair<Items,int>[] items = null, byte? box = null, string[] names = null, int[] textures = null) : this()
 		{
 			if (names != null)
 				BoxNames = names;
@@ -232,22 +329,22 @@ namespace PokemonUnity.Character
 			}
 			return false;
 		}
-		public bool Switch_PC_And_Party_Pokemon(Player player, int PartyID, int PCBoxID)
-		{
-			try
-			{
-				Pokemon PartyHolder = player.Party[PartyID];
-				player.Party[PartyID] = player.PC.Pokemons[PCBoxID];
-				Pokemons[PCBoxID] = PartyHolder;
-				pokemons[ActiveBox, PCBoxID] = PartyHolder;
-				return true;
-			}
-			catch
-			{
-				//If could not switch pokemons
-				return false;
-			}
-		}
+		//public bool Switch_PC_And_Party_Pokemon(PokemonEssentials.Interface.PokeBattle.ITrainer player, int PartyID, int PCBoxID)
+		//{
+		//	try
+		//	{
+        //        PokemonEssentials.Interface.PokeBattle.IPokemon PartyHolder = player.party[PartyID];
+		//		player.party[PartyID] = player.PC.Pokemons[PCBoxID];
+		//		Pokemons[PCBoxID] = PartyHolder;
+		//		pokemons[ActiveBox, PCBoxID] = PartyHolder;
+		//		return true;
+		//	}
+		//	catch
+		//	{
+		//		//If could not switch pokemons
+		//		return false;
+		//	}
+		//}
 		public bool addPokemon(int box, int position, Pokemon pokemon)
 		{
 			try

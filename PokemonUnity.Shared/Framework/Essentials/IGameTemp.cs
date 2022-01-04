@@ -6,7 +6,7 @@ namespace PokemonEssentials.Interface
 {
 	public interface IGameTemp
 	{
-		int background_bitmap { get; }
+		ISprite background_bitmap { get; set; }
 
 		bool battle_abort { get; set; }
 		bool battle_calling { get; set; }

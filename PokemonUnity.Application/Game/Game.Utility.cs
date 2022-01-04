@@ -205,8 +205,8 @@ namespace PokemonUnity
 			string trname=name;
 			Trainer=new Trainer(trname,trainertype);
 			Trainer.outfit=outfit;
-			if (trname==null) {
-				trname=pbEnterPlayerName(Game._INTL("Your name?"),0,7);
+			if (trname==null && this is IGameTextEntry t) {
+				trname=t.pbEnterPlayerName(Game._INTL("Your name?"),0,7);
 				if (trname=="") {
 					int gender=pbGetTrainerTypeGender(trainertype);
 					trname=pbSuggestTrainerName(gender);
@@ -601,7 +601,7 @@ namespace PokemonUnity
 			IGameCommonEvent ce=DataCommonEvents[id];
 			if (ce==null) return false;
 			IList<PokemonEssentials.Interface.RPGMaker.Kernal.IEventCommand> celist=ce.list;
-			IInterpreter interp=new Interpreter();
+			IInterpreter interp=Interpreter.initialize(); //new Interpreter();
 			interp.setup(celist,0);
 			do {
 				Graphics.update();
@@ -1307,7 +1307,7 @@ namespace PokemonUnity
 			string speciesname=pokemon.Species.ToString(TextScripts.Name);
 			if ((this as IGameMessage).pbConfirmMessage(Game._INTL("Would you like to give a nickname to {1}?",speciesname))) {
 				string helptext=Game._INTL("{1}'s nickname?",speciesname);
-				string newname=pbEnterPokemonName(helptext,0,Pokemon.NAMELIMIT,"",pokemon);
+				string newname=this is IGameTextEntry t ? t.pbEnterPokemonName(helptext,0,Pokemon.NAMELIMIT,"",pokemon) : speciesname;
 				if (newname!="") pokemon.Name=newname;
 				//if (newname!="") pokemon.SetNickname(newname);
 			}
@@ -2099,7 +2099,7 @@ namespace PokemonUnity
 
 		#region Other utilities
 		public void pbTextEntry(string helptext,int minlength,int maxlength,int variableNumber) {
-			GameVariables[variableNumber]=pbEnterText(helptext,minlength,maxlength);
+			if (this is IGameTextEntry t) GameVariables[variableNumber]=t.pbEnterText(helptext,minlength,maxlength);
 			if (GameMap != null) GameMap.need_refresh = true;
 		}
 

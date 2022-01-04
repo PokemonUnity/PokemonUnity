@@ -12,6 +12,7 @@ using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Utility;
 using PokemonUnity.Monster;
 using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.EventArg;
 using PokemonEssentials.Interface.PokeBattle;
@@ -35,7 +36,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	//}
 
 	/// <summary>
-	/// Extensions of <seealso cref="Interface.ITempMetadata"/>
+	/// Extensions of <seealso cref="ITempMetadata"/>
 	/// </summary>
 	public interface ITempMetadataPokemonShadow {
 		int[] heartgauges				{ get; }

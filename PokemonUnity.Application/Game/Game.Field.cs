@@ -21,16 +21,16 @@ namespace PokemonUnity
 	// Battles
 	// ===============================================================================
 	public partial class GameTemp {
-		public int background_bitmap			{ get; protected set; }
+		public ISprite background_bitmap			{ get; protected set; }
 	}
 
-	public partial class PokemonTemp {
+	public partial class PokemonTemp : ITempMetadataField
+	{
 		public EncounterTypes? encounterType	{ get; set; } 
 		public int evolutionLevels			    { get; set; }
-	}
 
-	public partial class PokemonTemp {
-		public int batterywarning				{ get; protected set; }
+
+		public bool batterywarning				{ get; protected set; }
 		public IAudioBGM cueBGM					{ get; set; }
 		public float? cueFrames				    { get; set; }
 	}
@@ -68,19 +68,329 @@ namespace PokemonUnity
 		}
 	}
 
-	public partial class Game //: IGameField
+	public partial class Game : IGameField
 	{
-		public System.Collections.IEnumerator pbSceneStandby(Action action = null) {
+		public IPokeBattle_Scene pbNewBattleScene()
+		{
+			return null; //new PokeBattle_Scene();
+		}
+
+		public System.Collections.IEnumerator pbSceneStandby(Action block = null) {
 			if (Scene != null && Scene is ISceneMap s0) {
 				s0.disposeSpritesets();
 			}
 			GC.Collect();
 			Graphics.frame_reset();
 			yield return null;
-			action.Invoke();
+			block.Invoke();
 			if (Scene != null && Scene is ISceneMap s1) {
 				s1.createSpritesets();
 			}
+		}
+
+		public void pbBattleAnimation(IAudioBGM bgm=null,int trainerid=-1,string trainername="", Action block = null) {
+			bool handled=false;
+			IAudioBGS playingBGS=null;
+			IAudioBGM playingBGM=null;
+			if (Game.GameData.GameSystem != null && Game.GameData.GameSystem is IGameSystem s) {
+				playingBGS=s.getPlayingBGS();
+				playingBGM=s.getPlayingBGM();
+				s.bgm_pause();
+				s.bgs_pause();
+			}
+			if (this is IGameAudioPlay a0) a0.pbMEFade(0.25f);
+			pbWait(10);
+			if (this is IGameAudioPlay a1) a1.pbMEStop();
+			if (bgm != null) {
+				if (this is IGameAudioPlay a2) a2.pbBGMPlay(bgm);
+			} else {
+				if (this is IGameAudioPlay a2) a2.pbBGMPlay(pbGetWildBattleBGM(0));
+			}
+			IViewport viewport=null; //new Viewport(0,0,Graphics.width,Graphics.height);
+			//viewport.z=99999;
+			// Fade to gray a few times.
+			viewport.color=null; //new Color(17*8,17*8,17*8);
+			int z = 0; do { //3.times ;
+				viewport.color.alpha=0;
+				int x = 0; do { //6.times do;
+					viewport.color.alpha+=30;
+					Graphics.update();
+					Input.update();
+					if (this is IGameMessage m) m.pbUpdateSceneMap(); x++;
+				} while (x < 6);
+				int y = 0; do { //6.times do;
+					viewport.color.alpha-=30;
+					Graphics.update();
+					Input.update();
+					if (this is IGameMessage m) m.pbUpdateSceneMap(); y++;
+				} while (y < 6); z++;
+			} while (z < 3);
+			if (GameTemp.background_bitmap != null) {
+				GameTemp.background_bitmap.dispose();
+			}
+			GameTemp.background_bitmap=Graphics.snap_to_bitmap();
+			//  Check for custom battle intro animations
+			handled=pbBattleAnimationOverride(viewport,trainerid,trainername);
+			//  Default battle intro animation
+			if (!handled) {
+				//if (Sprite.method_defined(:wave_amp) && Core.Rand.Next(15)==0) {
+				//	viewport.color=new Color(0,0,0,255);
+				//	sprite = new Sprite();
+				//	bitmap=Graphics.snap_to_bitmap;
+				//	bm=bitmap.clone();
+				//	sprite.z=99999;
+				//	sprite.bitmap = bm;
+				//	sprite.wave_speed=500;
+				//	for (int i = 0; i < 25; i++) {
+				//		sprite.opacity-=10;
+				//		sprite.wave_amp+=60;
+				//		sprite.update();
+				//		sprite.wave_speed+=30;
+				//		2.times do;
+				//			Graphics.update();
+				//		}
+				//	}
+				//	bitmap.dispose();
+				//	bm.dispose();
+				//	sprite.dispose();
+				//} else if (Bitmap.method_defined(:radial_blur) && Core.Rand.Next(15)==0) {
+				//	viewport.color=new Color(0,0,0,255);
+				//	sprite = new Sprite();
+				//	bitmap=Graphics.snap_to_bitmap;
+				//	bm=bitmap.clone();
+				//	sprite.z=99999;
+				//	sprite.bitmap = bm;
+				//	for (int i = 0; i < 15; i++) {
+				//		bm.radial_blur(i,2);
+				//		sprite.opacity-=15;
+				//		2.times do;
+				//			Graphics.update();
+				//		}
+				//	}
+				//	bitmap.dispose();
+				//	bm.dispose();
+				//	sprite.dispose();
+				//} else 
+				if (Core.Rand.Next(10)==0) {		// Custom transition method
+					string[] scroll=new string[] {"ScrollDown","ScrollLeft","ScrollRight","ScrollUp",
+							"ScrollDownRight","ScrollDownLeft","ScrollUpRight","ScrollUpLeft" };
+					Graphics.freeze();
+					viewport.color=null; //new Color(0,0,0,255);
+					Graphics.transition(50,string.Format("Graphics/Transitions/{0}",scroll[Core.Rand.Next(scroll.Length)]));
+				} else {
+					string[] transitions= new string[] {
+						//  Transitions with graphic files
+						"021-Normal01","022-Normal02",
+						"Battle","battle1","battle2","battle3","battle4",
+						"computertr","computertrclose",
+						"hexatr","hexatrc","hexatzr",
+						"Image1","Image2","Image3","Image4",
+						//  Custom transition methods
+						"Splash","Random_stripe_v","Random_stripe_h",
+						"RotatingPieces","ShrinkingPieces",
+						"BreakingGlass","Mosaic","zoomin"
+					};
+					int rnd=Core.Rand.Next(transitions.Length);
+					Graphics.freeze();
+					viewport.color=null; //new Color(0,0,0,255);
+					Graphics.transition(40,string.Format("Graphics/Transitions/%s",transitions[rnd]));
+				}
+				int i = 0; do { //5.times do;
+					Graphics.update();
+					Input.update();
+					if (this is IGameMessage m) m.pbUpdateSceneMap();
+				} while (i < 5);
+			}
+			pbPushFade();
+			//if (block_given?) yield;
+			if (block != null) block.Invoke();
+			pbPopFade();
+			if (GameSystem != null && Game.GameData.GameSystem is IGameSystem s1) {
+				s1.bgm_resume(playingBGM);
+				s1.bgs_resume(playingBGS);
+			}
+			Global.nextBattleBGM=null;
+			Global.nextBattleME=null;
+			Global.nextBattleBack=null;
+			PokemonEncounters.clearStepCount();
+			for (int j = 0; j < 17; j++) {
+				viewport.color=null; //new Color(0,0,0,(17-j)*15);
+				Graphics.update();
+				Input.update();
+				if (this is IGameMessage m) m.pbUpdateSceneMap();
+			}
+			viewport.dispose();
+		}
+
+		// Alias and use this method if you want to add a custom battle intro animation
+		// e.g. variants of the Vs. animation.
+		// Note that Game.GameData.GameTemp.background_bitmap contains an image of the current game
+		// screen.
+		// When the custom animation has finished, the screen should have faded to black
+		// somehow.
+		public bool pbBattleAnimationOverride(IViewport viewport,int trainerid=-1,string trainername="") {
+			//  The following example runs a common event that ought to do a custom
+			//  animation if some condition is true:
+			// 
+			//  if (GameMap != null && GameMap.map_id==20) {   // If on map 20
+			//		pbCommonEvent(20);
+			//		return true;                          // Note that the battle animation is done
+			//  }
+			// 
+			// #### VS. animation, by Luka S.J. #####
+			// #### Tweaked by Maruno           #####
+			/*if (trainerid>=0) {
+				string tbargraphic=string.Format("Graphics/Transitions/vsBar%s",trainerid.ToString()); //getConstantName(PBTrainers,trainerid) rescue null;
+				if (pbResolveBitmap(tbargraphic) == null) tbargraphic=string.Format("Graphics/Transitions/vsBar%d",trainerid);
+				string tgraphic=string.Format("Graphics/Transitions/vsTrainer%s",trainerid.ToString()); //getConstantName(PBTrainers,trainerid) rescue null;
+				if (pbResolveBitmap(tgraphic) == null) tgraphic=string.Format("Graphics/Transitions/vsTrainer%d",trainerid);
+				if (pbResolveBitmap(tbargraphic) != null && pbResolveBitmap(tgraphic) != null) {
+					int outfit=Trainer != null ? Trainer.outfit??0 : 0;
+					//  Set up
+					IViewport viewplayer=new Viewport(0,Graphics.height/3,Graphics.width/2,128);
+					//viewplayer.z=viewport.z;
+					IViewport viewopp=new Viewport(Graphics.width/2,Graphics.height/3,Graphics.width/2,128);
+					viewopp.z=viewport.z;
+					IViewport viewvs=new Viewport(0,0,Graphics.width,Graphics.height);
+					viewvs.z=viewport.z;
+					double xoffset=(Graphics.width/2)/10;
+					xoffset=Math.Round(xoffset);
+					xoffset=xoffset*10;
+					ISprite fade=new Sprite(viewport);
+					fade.bitmap=BitmapCache.load_bitmap("Graphics/Transitions/vsFlash");
+					fade.tone=new Tone(-255,-255,-255);
+					fade.opacity=100;
+					ISprite overlay=new Sprite(viewport);
+					overlay.bitmap=new Bitmap(Graphics.width,Graphics.height);
+					pbSetSystemFont(overlay.bitmap);
+					ISprite bar1=new Sprite(viewplayer);
+					string pbargraphic=string.Format("Graphics/Transitions/vsBar%s_%d",Trainer.trainertype,outfit); //getConstantName(PBTrainers,Trainer.trainertype) rescue null;
+					if (pbResolveBitmap(pbargraphic) == null) pbargraphic=string.Format("Graphics/Transitions/vsBar%d_%d",Trainer.trainertype,outfit);
+					if (pbResolveBitmap(pbargraphic) == null) {
+						pbargraphic=string.Format("Graphics/Transitions/vsBar%s",Trainer.trainertype); //getConstantName(PBTrainers,Trainer.trainertype) rescue null;
+					}
+					if (pbResolveBitmap(pbargraphic) == null) pbargraphic=string.Format("Graphics/Transitions/vsBar%d",Trainer.trainertype);
+					bar1.bitmap=BitmapCache.load_bitmap(pbargraphic);
+					bar1.x=-xoffset;
+					ISprite bar2=new Sprite(viewopp);
+					bar2.bitmap=BitmapCache.load_bitmap(tbargraphic);
+					bar2.x=xoffset;
+					ISprite vs=new Sprite(viewvs);
+					vs.bitmap=BitmapCache.load_bitmap("Graphics/Transitions/vs");
+					vs.ox=vs.bitmap.width/2;
+					vs.oy=vs.bitmap.height/2;
+					vs.x=Graphics.width/2;
+					vs.y=Graphics.height/1.5;
+					vs.visible=false;
+					ISprite flash=new Sprite(viewvs);
+					flash.bitmap=BitmapCache.load_bitmap("Graphics/Transitions/vsFlash");
+					flash.opacity=0;
+					//  Animation
+					int i = 0; do { //10.times do;
+						bar1.x+=xoffset/10;
+						bar2.x-=xoffset/10;
+						pbWait(1); i++;
+					} while (i < 10);
+					pbSEPlay("Flash2");
+					pbSEPlay("Sword2");
+					flash.opacity=255;
+					bar1.dispose();
+					bar2.dispose();
+					bar1=new AnimatedPlane(viewplayer);
+					bar1.bitmap=BitmapCache.load_bitmap(pbargraphic);
+					ISprite player=new Sprite(viewplayer);
+					string pgraphic=string.Format("Graphics/Transitions/vsTrainer%s_%d",getConstantName(PBTrainers,Game.GameData.Trainer.trainertype),outfit) rescue null;
+					if (pbResolveBitmap(pgraphic) == null) pgraphic=string.Format("Graphics/Transitions/vsTrainer%d_%d",Game.GameData.Trainer.trainertype,outfit);
+					if (pbResolveBitmap(pgraphic) == null) {
+						pgraphic=string.Format("Graphics/Transitions/vsTrainer%s",getConstantName(PBTrainers,Game.GameData.Trainer.trainertype)) rescue null;
+					}
+					if (pbResolveBitmap(pgraphic) == null) pgraphic=string.Format("Graphics/Transitions/vsTrainer%d",Game.GameData.Trainer.trainertype);
+					player.bitmap=BitmapCache.load_bitmap(pgraphic);
+					player.x=-xoffset;
+					bar2=new AnimatedPlane(viewopp);
+					bar2.bitmap=BitmapCache.load_bitmap(tbargraphic);
+					trainer=new Sprite(viewopp);
+					trainer.bitmap=BitmapCache.load_bitmap(tgraphic);
+					trainer.x=xoffset;
+					trainer.tone=new Tone(-255,-255,-255);
+					i = 0; do { //25.times do;
+						if (flash.opacity>0) flash.opacity-=51;
+						bar1.ox-=16;
+						bar2.ox+=16;
+						pbWait(1); i++;
+					} while (i < 25);
+					i = 0; do { //11.times do;
+						bar1.ox-=16;
+						bar2.ox+=16;
+						player.x+=xoffset/10;
+						trainer.x-=xoffset/10;
+						pbWait(1); i++;
+					} while (i < 11);
+					i = 0; do { //2.times do;
+						bar1.ox-=16;
+						bar2.ox+=16;
+						player.x-=xoffset/20;
+						trainer.x+=xoffset/20;
+						pbWait(1); i++;
+					} while (i < 2);
+					i = 0; do { //10.times do;
+						bar1.ox-=16;
+						bar2.ox+=16;
+						pbWait(1); i++;
+					} while (i < 10);
+					int val=2;
+					flash.opacity=255;
+					vs.visible=true;
+					trainer.tone=new Tone(0,0,0);
+					textpos=new {
+						new { _INTL("{1}",Game.GameData.Trainer.name),Graphics.width/4,(Graphics.height/1.5)+10,2,
+						new Color(248,248,248),new Color(12*6,12*6,12*6) },
+						new { _INTL("{1}",trainername),(Graphics.width/4)+(Graphics.width/2),(Graphics.height/1.5)+10,2,
+						new Color(248,248,248),new Color(12*6,12*6,12*6) };
+					};
+					pbDrawTextPositions(overlay.bitmap,textpos);
+					pbSEPlay("Sword2");
+					i = 0; do { //70.times do;
+						bar1.ox-=16;
+						bar2.ox+=16;
+						if (flash.opacity>0) flash.opacity-=25.5;
+						vs.x+=val;
+						vs.y-=val;
+						if (vs.x<=(Graphics.width/2)-2) val=2;
+						if (vs.x>=(Graphics.width/2)+2) val=-2;
+						pbWait(1); i++;
+					} while (i < 70);
+					i = 0; do { //30.times do;
+						bar1.ox-=16;
+						bar2.ox+=16;
+						vs.zoom_x+=0.2;
+						vs.zoom_y+=0.2;
+						pbWait(1); i++;
+					} while (i < 30);
+					flash.tone=new Tone(-255,-255,-255);
+					i = 0; do { //10.times do;
+						bar1.ox-=16;
+						bar2.ox+=16;
+						flash.opacity+=25.5;
+						pbWait(1); i++;
+					} while (i < 10);
+			//  }
+					player.dispose();
+					trainer.dispose();
+					flash.dispose();
+					vs.dispose();
+					bar1.dispose();
+					bar2.dispose();
+					overlay.dispose();
+					fade.dispose();
+					viewvs.dispose();
+					viewopp.dispose();
+					viewplayer.dispose();
+					viewport.color=new Color(0,0,0,255);
+					return true;
+				}
+			}*/
+			return false;
 		}
 
 		public void pbPrepareBattle(IBattle battle) {
@@ -189,7 +499,7 @@ namespace PokemonUnity
 			return genwildpoke;
 		}
 
-		public bool pbWildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
+		public Combat.BattleResults pbWildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
 			if ((Input.press(Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
 				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
 					m.pbMessage(Game._INTL("SKIPPING BATTLE..."));
@@ -198,7 +508,7 @@ namespace PokemonUnity
 				Global.nextBattleBGM=null;
 				Global.nextBattleME=null;
 				Global.nextBattleBack=null;
-				return true;
+				return Combat.BattleResults.WON; //true;
 			}
 			//if (species is String || species is Symbol) {
 			//  species=getID(PBSpecies,species);
@@ -207,7 +517,8 @@ namespace PokemonUnity
 			//Events.onWildBattleOverride.trigger(null,species,level,handled);
 			//Events.OnWildBattleOverride?.Invoke(null,species,level,handled);
 			if (handled[0]!=null) {
-				return handled[0].Value;
+				//return handled[0].Value;
+				return handled[0].Value ? Combat.BattleResults.WON : Combat.BattleResults.ABORTED;
 			}
 			List<int> currentlevels=new List<int>();
 			foreach (var i in Trainer.party) {
@@ -226,25 +537,25 @@ namespace PokemonUnity
 				pbSceneStandby(() => {
 				decision=battle.pbStartBattle(canlose);
 				});
-				foreach (var i in Trainer.party) { i.makeUnmega(); } //rescue null
+				foreach (var i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
 				if (Global.partner != null) {
 					pbHealAll();
 					foreach (IPokemon i in Global.partner.party) { //partner[3]
 						i.Heal();
-						i.makeUnmega(); //rescue null
+						if (i is IPokemonMegaEvolution f) f.makeUnmega(); //rescue null
 					}
 				}
 				if (decision==Combat.BattleResults.LOST || decision==Combat.BattleResults.DRAW) {		// If loss or draw
-				if (canlose) {
-					foreach (var i in Trainer.party) { i.Heal(); }
-					for (int i = 0; i < 10; i++) {
-					update(); //Graphics.update();
+					if (canlose) {
+						foreach (var i in Trainer.party) { i.Heal(); }
+						for (int i = 0; i < 10; i++) {
+							Graphics.update();
+						}
+//					} else {
+//						GameSystem.bgm_unpause();
+//						GameSystem.bgs_unpause();
+//						Game.pbStartOver();
 					}
-			//     } else {
-			//         GameSystem.bgm_unpause()
-			//         GameSystem.bgs_unpause()
-			//         Game.pbStartOver()
-				}
 				}
 				//Events.onEndBattle.trigger(null,decision,canlose);
 			});
@@ -252,10 +563,10 @@ namespace PokemonUnity
 			pbSet(variable,decision);
 			//Events.onWildBattleEnd.trigger(null,species,level,decision);
 			//Events.OnWildBattleEnd.Invoke(null,species,level,decision);
-			return (decision!=Combat.BattleResults.LOST);
+			return decision; //!=Combat.BattleResults.LOST;
 		}
 
-		public bool pbDoubleWildBattle(Pokemons species1,int level1,Pokemons species2,int level2,int? variable=null,bool canescape=true,bool canlose=false) {
+		public Combat.BattleResults pbDoubleWildBattle(Pokemons species1,int level1,Pokemons species2,int level2,int? variable=null,bool canescape=true,bool canlose=false) {
 			if ((Input.press(Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
 				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
 					m.pbMessage(Game._INTL("SKIPPING BATTLE..."));
@@ -264,7 +575,7 @@ namespace PokemonUnity
 				Global.nextBattleBGM=null;
 				Global.nextBattleME=null;
 				Global.nextBattleBack=null;
-				return true;
+				return Combat.BattleResults.WON; //true;
 			}
 			//if (species1 is String || species1 is Symbol) {
 			//  species1=getID(PBSpecies,species1);
@@ -307,11 +618,11 @@ namespace PokemonUnity
 			battle.cantescape=!canescape;
 			pbPrepareBattle(battle);
 			Combat.BattleResults decision=0;
-			pbBattleAnimation(pbGetWildBattleBGM(species1), action: () => { 
+			pbBattleAnimation(pbGetWildBattleBGM(species1), block: () => { 
 				pbSceneStandby(() => {
 					decision=battle.pbStartBattle(canlose);
 				});
-				foreach (var i in Trainer.party) { i.makeUnmega(); } //rescue null
+				foreach (var i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
 				if (Global.partner != null) {
 					pbHealAll();
 					foreach (Monster.Pokemon i in Global.partner.party) {//[3]
@@ -323,19 +634,19 @@ namespace PokemonUnity
 					if (canlose) {
 						foreach (var i in Trainer.party) { i.Heal(); }
 						for (int i = 0; i < 10; i++) {
-							update(); //Graphics.update();
+							Graphics.update();
 						}
-			//      else {
-			//			GameSystem.bgm_unpause()
-			//			GameSystem.bgs_unpause()
-			//			Game.pbStartOver()
+//					} else {
+//						GameSystem.bgm_unpause();
+//						GameSystem.bgs_unpause();
+//						Game.pbStartOver();
 					}
 				}
 				//Events.onEndBattle.trigger(null,decision,canlose);
 			});
 			Input.update();
 			pbSet(variable,decision);
-			return (decision!=Combat.BattleResults.LOST && decision!=Combat.BattleResults.DRAW);
+			return decision; //!=Combat.BattleResults.LOST && decision!=Combat.BattleResults.DRAW;
 		}
 
 		public void pbCheckAllFainted() {
@@ -358,7 +669,7 @@ namespace PokemonUnity
 					Pokemons newspecies=EvolutionHelper.pbCheckEvolution(pokemon)[0];
 					if (newspecies>0) {
 						//  Start evolution scene
-						IPokemonEvolutionScene evo=new PokemonEvolutionScene();
+						IPokemonEvolutionScene evo=Scenes.EvolvingScene; //new PokemonEvolutionScene();
 						evo.pbStartScreen(pokemon,newspecies);
 						evo.pbEvolution();
 						evo.pbEndScreen();
@@ -382,7 +693,7 @@ namespace PokemonUnity
 		/// Runs the Pickup event after a battle if a Pokemon has the ability Pickup.
 		/// </summary>
 		/// <param name="pokemon"></param>
-		public void pbPickup(Pokemon pokemon) {
+		public void pbPickup(IPokemon pokemon) {
 			if (pokemon.Ability != Abilities.PICKUP || pokemon.isEgg) return;
 			if (pokemon.Item!=0) return;
 			if (Core.Rand.Next(10)!=0) return;
@@ -448,16 +759,16 @@ namespace PokemonUnity
 				if (!encounter1.IsNotNullOrNone()) return false;
 				IEncounter encounter2=PokemonEncounters.pbEncounteredPokemon(enctype);
 				if (!encounter2.IsNotNullOrNone()) return false;
-				PokemonTemp.encounterType=enctype;
+				if (PokemonTemp is ITempMetadataField f0) f0.encounterType=enctype;
 				pbDoubleWildBattle(encounter1.Pokemon,encounter1.Level,encounter2.Pokemon,encounter2.Level); //[0]|[1]
-				PokemonTemp.encounterType=null;
+				if (PokemonTemp is ITempMetadataField f1) f1.encounterType=null;
 				return true;
 			} else {
 				IEncounter encounter=PokemonEncounters.pbEncounteredPokemon(enctype);
 				if (!encounter.IsNotNullOrNone()) return false;
-				PokemonTemp.encounterType=enctype;
+				if (PokemonTemp is ITempMetadataField f0) f0.encounterType=enctype;
 				pbWildBattle(encounter.Pokemon,encounter.Level); //[0]|[1]
-				PokemonTemp.encounterType=null;
+				if (PokemonTemp is ITempMetadataField f1) f1.encounterType=null;
 				return true;
 			}
 		}
@@ -538,9 +849,10 @@ namespace PokemonUnity
 		//  spriteset.addUserSprite(new Particle_Engine(viewport,map));
 		//}
 
-		//public static void pbOnSpritesetCreate(spriteset,viewport) {
-		//  Events.onSpritesetCreate.trigger(null,spriteset,viewport);
-		//}
+		public void pbOnSpritesetCreate(ISpritesetMap spriteset,IViewport viewport) {
+			//Events.onSpritesetCreate.trigger(null,spriteset,viewport);
+			//Events.OnSpritesetCreate.Invoke(null,spriteset,viewport);
+		}
 		#endregion
 
 		#region Field movement
@@ -691,7 +1003,7 @@ namespace PokemonUnity
 		}
 
 		public void pbOnStepTaken(bool eventTriggered) {
-			if (GamePlayer.move_route_forcing || pbMapInterpreterRunning() || Trainer == null) {
+			if (GamePlayer.move_route_forcing || (this is IGameMessage g && g.pbMapInterpreterRunning()) || Trainer == null) {
 			//  if forced movement or if no trainer was created yet
 			//Events.onStepTakenFieldMovement.trigger(null,GamePlayer);
 			return;
@@ -716,7 +1028,7 @@ namespace PokemonUnity
 			string ret=meta[charset];
 			if (ret == null || ret=="") ret=meta[1];
 		//  if FileTest.image_exist("Graphics/Characters/"+ret+"_"+outfit.ToString())
-			if (pbResolveBitmap("Graphics/Characters/"+ret+"_"+outfit.ToString())) {
+			if (pbResolveBitmap("Graphics/Characters/"+ret+"_"+outfit.ToString()) != null) {
 			ret=ret+"_"+outfit.ToString();
 			}
 			return ret;
@@ -889,7 +1201,7 @@ namespace PokemonUnity
 				Graphics.update();
 				Input.update();
 				if (this is IGameMessage m1) m1.pbUpdateSceneMap();
-				if (Input.trigger((int)Input.t) || Input.trigger((int)Input.t)) {
+				if (Input.trigger((int)Input.C) || Input.trigger((int)Input.B)) {
 					return true;
 				} i++;
 			} while (i < frames);
@@ -905,7 +1217,7 @@ namespace PokemonUnity
 					Graphics.update();
 					Input.update();
 					if (this is IGameMessage m1) m1.pbUpdateSceneMap();
-					if (Input.trigger((int)Input.t) || Input.trigger((int)Input.t)) {
+					if (Input.trigger((int)Input.C) || Input.trigger((int)Input.B)) {
 						return true;
 					} j++;
 				} while (j < 20); i++;
@@ -1172,7 +1484,7 @@ namespace PokemonUnity
 		#region Partner trainer
 		public void pbRegisterPartner(TrainerTypes trainerid,string trainername,int partyid=0) {
 			pbCancelVehicles();
-			ITrainer trainer=Trainer.pbLoadTrainer(trainerid,trainername,partyid);
+			ITrainer trainer = null; //Trainer.pbLoadTrainer(trainerid,trainername,partyid); //ToDo: Uncomment
 			//Events.OnTrainerPartyLoad.trigger(null,trainer);
 			ITrainer trainerobject=new Trainer(Game._INTL(trainer.name),trainerid);
 			trainerobject.setForeignID(Trainer);
@@ -1276,13 +1588,65 @@ namespace PokemonUnity
 		//}
 		#endregion
 
+		#region Audio playing
+		public void pbCueBGM(string bgm, float seconds, int? volume = null, float? pitch = null) {
+			if (bgm == null) return;
+			if (this is IGameAudioPlay a)
+				pbCueBGM((IAudioBGM)a.pbResolveAudioFile(bgm,volume,pitch), seconds, volume, pitch);
+			//IAudioBGM playingBGM=GameSystem.playing_bgm;
+			//if (playingBGM == null || playingBGM.name!=bgm.name || playingBGM.pitch!=bgm.pitch) {
+			//	pbBGMFade(seconds);
+			//	if (PokemonTemp.cueFrames == null) {
+			//		PokemonTemp.cueFrames=(int)((seconds*Graphics.frame_rate)*3/5);
+			//	}
+			//	PokemonTemp.cueBGM=bgm;
+			//} else if (playingBGM != null) {
+			//	pbBGMPlay(bgm);
+			//}
+		}
+		
+		public void pbCueBGM(IAudioBGM bgm, float seconds, int? volume = null, float? pitch = null) {
+			if (bgm == null) return;
+			if (this is IGameAudioPlay a)
+				bgm=(IAudioBGM)a.pbResolveAudioFile(bgm,volume,pitch);
+			IAudioBGM playingBGM=GameSystem.playing_bgm;
+			if (playingBGM == null || playingBGM.name!=bgm.name || playingBGM.pitch!=bgm.pitch) {
+				if (this is IGameAudioPlay a1) a1.pbBGMFade(seconds);
+				if (PokemonTemp is ITempMetadataField f0 && f0.cueFrames == null) {
+					f0.cueFrames=(seconds*Graphics.frame_rate)*3/5;
+				}
+				if (PokemonTemp is ITempMetadataField f1) f1.cueBGM=bgm;
+			} else if (playingBGM != null && this is IGameAudioPlay a2) {
+				a2.pbBGMPlay(bgm);
+			}
+		}
 
+		public void pbAutoplayOnTransition() {
+			//string surfbgm=pbGetMetadata(0,MetadataSurfBGM);
+			string surfbgm=pbGetMetadata(0).Global.SurfBGM;
+			if (Global.surfing && surfbgm != null && this is IGameAudioPlay a) {
+				a.pbBGMPlay(surfbgm);
+			} else {
+				GameMap.autoplayAsCue();
+			}
+		}
+
+		public void pbAutoplayOnSave() {
+			//string surfbgm=pbGetMetadata(0,MetadataSurfBGM);
+			string surfbgm=pbGetMetadata(0).Global.SurfBGM;
+			if (Global.surfing && surfbgm != null && this is IGameAudioPlay a) {
+				a.pbBGMPlay(surfbgm);
+			} else {
+				GameMap.autoplay();
+			}
+		}
+		#endregion
 
 		#region Voice recorder
 		public IWaveData pbRecord(string text,float maxtime=30.0f) {
 			if (text == null) text="";
-			IWindow textwindow=new Window_UnformattedTextPokemon().WithSize(text,
-				0,0,Graphics.width,Graphics.height-96);
+			IWindow_UnformattedTextPokemon textwindow = null; //new Window_UnformattedTextPokemon().WithSize(text,
+			//	0,0,Graphics.width,Graphics.height-96);
 			//textwindow.z=99999;
 			if (text=="") {
 				textwindow.visible=false;
@@ -1300,7 +1664,7 @@ namespace PokemonUnity
 					Input.update();
 					textwindow.update();
 					msgwindow.update();
-					if (Input.trigger(Input.t)) {
+					if (Input.trigger(Input.B)) {
 						if (this is IGameAudio a2) a2.Audio_bgm_set_volume(oldvolume);
 						(this as IGameMessage).pbDisposeMessageWindow(msgwindow);
 						textwindow.dispose();
@@ -1317,13 +1681,13 @@ namespace PokemonUnity
 					Input.update();
 					textwindow.update();
 					msgwindow.update();
-					if (Input.trigger(Input.t)) {
+					if (Input.trigger(Input.B)) {
 						break;
 					}
 				} while(i < frames);
 				string tmpFile="\\record.wav";//ENV["TEMP"]+
-				endRecord(tmpFile);
-				wave=getWaveDataUI(tmpFile,true);
+				//endRecord(tmpFile); //ToDo: Stops recording and saves the recording to a file.
+				wave =getWaveDataUI(tmpFile,true);
 				if (wave != null) {
 					(this as IGameMessage).pbMessageDisplay(msgwindow,Game._INTL("PLAYING BACK..."),false);
 					textwindow.update();
@@ -1345,13 +1709,13 @@ namespace PokemonUnity
 			return wave;
 		}
 
-		//public static void pbRxdataExists(string file) {
-		//  if ($RPGVX) {
-		//    return pbRgssExists(file+".rvdata");
-		//  } else {
-		//    return pbRgssExists(file+".rxdata") ;
-		//  }
-		//}
+		public bool pbRxdataExists(string file) {
+			if (false) { //$RPGVX
+				return pbRgssExists(file+".rvdata");
+			} else {
+				return pbRgssExists(file+".rxdata") ;
+			}
+		}
 		#endregion
 
 		#region Gaining items
@@ -1459,7 +1823,7 @@ namespace PokemonUnity
 			return found;
 		}
 
-		public static bool pbEventCanReachPlayer (IGameCharacter @event,IGamePlayer player,float distance) {
+		public bool pbEventCanReachPlayer (IGameCharacter @event,IGamePlayer player,float distance) {
 			if (distance<=0) return false;
 		//  Event can't reach player if no coordinates coincide
 			if (@event.x!=player.x && @event.y!=player.y) return false;
@@ -1525,7 +1889,7 @@ namespace PokemonUnity
 					y-=1; x+=1;
 					break;
 			}
-			return GameMap != null ? GameMap.map_id : new TilePosition(0, x, y);
+			return GameMap != null ? new TilePosition(GameMap.map_id, x, y) : new TilePosition(0, x, y);
 		}
 
 		public ITilePosition pbFacingTile(float? direction=null,IGameCharacter @event=null) {
@@ -1761,30 +2125,30 @@ namespace PokemonUnity
 			}
 		}
 		#endregion
-		}
+	}
 
 	// ===============================================================================
 	// Events
 	// ===============================================================================
-	public partial class GameEvent {
-		public bool cooledDown (int seconds) {
-			if (!(expired(seconds) && tsOff("A"))) {
-				this.need_refresh=true;
-				return false;
-			} else {
-				return true;
-			}
-		}
-
-		public bool cooledDownDays (int days) {
-			if (!(expiredDays(days) && tsOff("A"))) {
-				this.need_refresh=true;
-				return false;
-			} else {
-				return true;
-			}
-		}
-	}
+	//public partial class GameEvent {
+	//	public bool cooledDown (int seconds) {
+	//		if (!(expired(seconds) && tsOff("A"))) {
+	//			this.need_refresh=true;
+	//			return false;
+	//		} else {
+	//			return true;
+	//		}
+	//	}
+	//
+	//	public bool cooledDownDays (int days) {
+	//		if (!(expiredDays(days) && tsOff("A"))) {
+	//			this.need_refresh=true;
+	//			return false;
+	//		} else {
+	//			return true;
+	//		}
+	//	}
+	//}
 
 	public partial class InterpreterFieldMixin : IInterpreterFieldMixin
 	{
@@ -1794,7 +2158,7 @@ namespace PokemonUnity
 		//  Used in boulder events. Allows an event to be pushed. To be used in
 		//  a script event command.
 		public void pbPushThisEvent() {
-			@event=Game.GameData.get_character(0);
+			@event=(Game.GameData as Game).Interpreter.get_character(0);
 			float oldx=@event.x;
 			float oldy=@event.y;
 		//  Apply strict version of passable, which makes impassable
@@ -1836,7 +2200,7 @@ namespace PokemonUnity
 		}
 
 		public bool pbHeadbutt() {
-			Game.GameData.pbHeadbutt(Game.GameData.get_character(0));
+			Game.GameData.pbHeadbutt((Game.GameData as Game).Interpreter.get_character(0));
 			return true;
 		}
 
@@ -1852,7 +2216,7 @@ namespace PokemonUnity
 
 		public void pbTrainerEnd() {
 			if (this is IInterpreterMixinMessage m) m.pbGlobalUnlock();
-			IGameEvent e=get_character(0);
+			IGameEvent e=(Game.GameData as Game).Interpreter.get_character(0);
 			if (e != null) e.erase_route();
 		}
 
@@ -1896,22 +2260,22 @@ namespace PokemonUnity
 		}
 
 		public bool tsOff (string c) {
-			return get_character(0).tsOff(c);
+			return (Game.GameData as Game).Interpreter.get_character(0).tsOff(c);
 		}
 
 		public bool tsOn (string c) {
-			return get_character(0).tsOn(c);
+			return (Game.GameData as Game).Interpreter.get_character(0).tsOn(c);
 		}
 
 		//alias isTempSwitchOn? tsOn?;
 		//alias isTempSwitchOff? tsOff?;
 
 		public void setTempSwitchOn(string c) {
-			get_character(0).setTempSwitchOn(c);
+			(Game.GameData as Game).Interpreter.get_character(0).setTempSwitchOn(c);
 		}
 
 		public void setTempSwitchOff(string c) {
-			get_character(0).setTempSwitchOff(c);
+			(Game.GameData as Game).Interpreter.get_character(0).setTempSwitchOff(c);
 		}
 
 		// Must use this approach to share the methods because the methods already

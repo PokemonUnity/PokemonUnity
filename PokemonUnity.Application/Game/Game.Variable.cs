@@ -24,7 +24,7 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.Field.IMapMetadata PokemonMap { get; private set; }
 		public PokemonEssentials.Interface.Field.IMapMetadata MapData { get; private set; }
 		public PokemonEssentials.Interface.Screen.IPokemonSystemOption PokemonSystem { get; private set; }
-		public PokemonEssentials.Interface.ITempMetadata PokemonTemp { get; set; }
+		public PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp { get; set; }
 		public PokemonEssentials.Interface.Field.IEncounters PokemonEncounters { get; private set; }
 		public PokemonEssentials.Interface.Screen.IPokemonStorage PokemonStorage { get; private set; }
 		public PokemonEssentials.Interface.Screen.IBag Bag { get; private set; }
@@ -51,7 +51,7 @@ namespace PokemonUnity
 		/// </summary>
 		public static PokemonEssentials.Interface.IGame GameData { get; set; }
 		public PokemonEssentials.Interface.IGraphics Graphics { get; set; }
-		//public PokemonEssentials.Interface.IInterpreter Interpreter { get; set; }
+		public PokemonEssentials.Interface.IInterpreter Interpreter { get; set; }
 		public UX.Scene Scenes { get; private set; }
 		public UX.Screen Screens { get; private set; }
 		public Feature Features { get; private set; }

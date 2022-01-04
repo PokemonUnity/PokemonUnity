@@ -5,6 +5,8 @@ using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Overworld;
 using PokemonUnity.UX;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Item
@@ -17,7 +19,7 @@ namespace PokemonEssentials.Interface.Item
 		int pokeradarBattery { get; }
 	}
 	/// <summary>
-	/// Extension of <seealso cref="Interface.ITempMetadata"/>
+	/// Extension of <seealso cref="ITempMetadata"/>
 	/// </summary>
 	public interface ITempMetadataPokeRadar
 	{ 

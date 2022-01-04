@@ -10,7 +10,7 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonUnity
 {
-	public partial class Game { 
+    public partial class Game { 
 		/// <summary>
 		/// This class handles the map. It includes scrolling and passable determining
 		/// functions. Refer to <see cref="IGame.GameMap"/> for the instance of this class.

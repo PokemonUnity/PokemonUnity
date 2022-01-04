@@ -7,11 +7,11 @@ namespace PokemonUnity.Overworld
 {
 	public static class Terrain
 	{
-		public static bool isSurfable (Terrains tag) {
+		public static bool isSurfable (Terrains? tag) {
 			return isWater(tag);
 		}
 
-		public static bool isWater (Terrains tag) {
+		public static bool isWater (Terrains? tag) {
 			return tag == Terrains.Water ||
 				   tag == Terrains.StillWater ||
 				   tag == Terrains.DeepWater ||
@@ -19,20 +19,20 @@ namespace PokemonUnity.Overworld
 				   tag == Terrains.Waterfall;
 		}
 
-		public static bool isPassableWater (Terrains tag) {
+		public static bool isPassableWater (Terrains? tag) {
 			return tag == Terrains.Water ||
 				   tag == Terrains.StillWater ||
 				   tag == Terrains.DeepWater ||
 				   tag == Terrains.WaterfallCrest;
 		}
 
-		public static bool isJustWater (Terrains tag) {
+		public static bool isJustWater (Terrains? tag) {
 			return tag == Terrains.Water ||
 				   tag == Terrains.StillWater ||
 				   tag == Terrains.DeepWater;
 		}
 
-		public static bool isGrass (Terrains tag) {
+		public static bool isGrass (Terrains? tag) {
 			return tag == Terrains.Grass ||
 				   tag == Terrains.TallGrass ||
 				   tag == Terrains.UnderwaterGrass ||
@@ -44,29 +44,29 @@ namespace PokemonUnity.Overworld
 		/// </summary>
 		/// <param name="tag"></param>
 		/// <returns></returns>
-		public static bool isJustGrass (Terrains tag) {
+		public static bool isJustGrass (Terrains? tag) {
 			return tag == Terrains.Grass ||
 				   tag == Terrains.SootGrass;
 		}
 
-		public static bool isLedge (Terrains tag) {
+		public static bool isLedge (Terrains? tag) {
 			return tag == Terrains.Ledge;
 		}
 
-		public static bool isIce (Terrains tag) {
+		public static bool isIce (Terrains? tag) {
 			return tag == Terrains.Ice;
 		}
 
-		public static bool isBridge (Terrains tag) {
+		public static bool isBridge (Terrains? tag) {
 			return tag == Terrains.Bridge;
 		}
 
-		public static bool hasReflections (Terrains tag) {
+		public static bool hasReflections (Terrains? tag) {
 			return tag == Terrains.StillWater ||
 				   tag == Terrains.Puddle;
 		}
 
-		public static bool onlyWalk (Terrains tag) {
+		public static bool onlyWalk (Terrains? tag) {
 			return tag == Terrains.TallGrass ||
 				   tag == Terrains.Ice;
 		}
