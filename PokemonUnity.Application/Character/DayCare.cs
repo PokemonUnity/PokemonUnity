@@ -99,8 +99,8 @@ namespace PokemonUnity.Character
 		public bool pbIsDitto (IPokemon pokemon) {
 			//dexdata=pbOpenDexData();
 			//pbDexDataOffset(dexdata,pokemon.Species,31);
-			EggGroups compat10=Game.PokemonData[pokemon.Species].EggGroup[0]; //dexdata.fgetb();
-			EggGroups compat11=Game.PokemonData[pokemon.Species].EggGroup[1]; //dexdata.fgetb();
+			EggGroups compat10=Kernal.PokemonData[pokemon.Species].EggGroup[0]; //dexdata.fgetb();
+			EggGroups compat11=Kernal.PokemonData[pokemon.Species].EggGroup[1]; //dexdata.fgetb();
 			//dexdata.close();
 			return compat10 == EggGroups.DITTO ||
 					compat11 == EggGroups.DITTO;
@@ -126,11 +126,11 @@ namespace PokemonUnity.Character
 				if (pokemon2 is IPokemonShadowPokemon s1 && s1.isShadow) return 0; //? rescue false
 				//dexdata=pbOpenDexData();
 				//pbDexDataOffset(dexdata,pokemon1.Species,31);
-				EggGroups compat10=Game.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
-				EggGroups compat11=Game.PokemonData[pokemon1.Species].EggGroup[1]; //dexdata.fgetb();
+				EggGroups compat10=Kernal.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
+				EggGroups compat11=Kernal.PokemonData[pokemon1.Species].EggGroup[1]; //dexdata.fgetb();
 				//pbDexDataOffset(dexdata,pokemon2.Species,31);
-				EggGroups compat20=Game.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
-				EggGroups compat21=Game.PokemonData[pokemon1.Species].EggGroup[1]; //dexdata.fgetb();
+				EggGroups compat20=Kernal.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
+				EggGroups compat21=Kernal.PokemonData[pokemon1.Species].EggGroup[1]; //dexdata.fgetb();
 				//dexdata.close();
 				if (compat10 != EggGroups.UNDISCOVERED &&
 					compat11 != EggGroups.UNDISCOVERED &&
@@ -262,7 +262,7 @@ namespace PokemonUnity.Character
 			//Initial Moves
 			Moves[] initialmoves=egg.getMoveList(); //Level|Moves
 			//foreach (Moves k in initialmoves) { //Key: Level | Value: Move
-			foreach (KeyValuePair<Moves,int> k in Game.PokemonMovesData[egg.Species].LevelUp) { 
+			foreach (KeyValuePair<Moves,int> k in Kernal.PokemonMovesData[egg.Species].LevelUp) { 
 				if (k.Value<=Core.EGGINITIALLEVEL) {
 					moves.Add(k.Key);
 				} else {
@@ -484,7 +484,7 @@ namespace PokemonUnity.Character
 					if (pkmn.Level!=oldlevel) {
 						pkmn.calcStats();
 						//Moves[] movelist=pkmn.getMoveList();
-						var movelist=Game.PokemonMovesData[pkmn.Species].LevelUp;
+						var movelist=Kernal.PokemonMovesData[pkmn.Species].LevelUp;
 						foreach (KeyValuePair<Moves,int> j in movelist) {
 							if (j.Value==pkmn.Level) pkmn.pbLearnMove(j.Key);	// Learned a new move
 						}

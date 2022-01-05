@@ -19,7 +19,7 @@ namespace PokemonUnity.Monster
 	// ###############################################################################
 	public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IPokemonMegaEvolution
 	{
-		public bool IsMega { get { return Game.PokemonFormsData[Species][form].IsMega; } }
+		public bool IsMega { get { return Kernal.PokemonFormsData[Species][form].IsMega; } }
 		//public override bool hasMegaForm { get { if (effects.Transform) return false; return base.hasMegaForm; } }
 		public bool IsPrimal { get; private set; }
 		//public override bool hasPrimalForm { get { if (effects.Transform) return false; return base.hasPrimalForm; } }

@@ -87,7 +87,7 @@ namespace PokemonUnity.Attack
 		/// Either this or {public get, public set}
 		public Move(Moves move, int ppUp, byte pp) : this(move: move)
 		{
-			//_base = Game.MoveData[move];
+			//_base = Kernal.MoveData[move];
 			PPups	= ppUp;
 			PP		= pp;
 		}
@@ -98,7 +98,7 @@ namespace PokemonUnity.Attack
 		public PokemonEssentials.Interface.IMove initialize(Moves move = Moves.NONE)
 		{
 			/*if (move != Moves.NONE)*/
-			_base	= Game.MoveData[move];
+			_base	= Kernal.MoveData[move];
 			id		= move;
 			PPups	= 0;
 			PP		= _base.PP;

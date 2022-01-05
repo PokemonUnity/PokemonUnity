@@ -95,7 +95,7 @@ namespace PokemonUnity.Combat
 				//pbDexDataOffset(dexdata,wildpoke.Species,16);
 				//rareness=dexdata.fgetb; // Get rareness from dexdata file
 				//dexdata.close;
-				int rareness = (int)Game.PokemonData[wildpoke.Species].Rarity;
+				int rareness = (int)Kernal.PokemonData[wildpoke.Species].Rarity;
 				int g=(rareness*100)/1275;
 				int e=(pbEscapeRate(rareness)*100)/1275;
 				g=(int)Math.Min((int)Math.Max(g,3),20);

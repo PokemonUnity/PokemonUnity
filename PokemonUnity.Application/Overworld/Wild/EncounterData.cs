@@ -22,7 +22,7 @@ namespace PokemonUnity.Overworld
 		/// </summary>
 		public int MapId { get; }
 		public Method Method { get; }
-		//Slots Slot { get; } //ToDo { get { return Game.EncounterSlotData[Generation][SlotId]; } }
+		//Slots Slot { get; } //ToDo { get { return Kernal.EncounterSlotData[Generation][SlotId]; } }
 		public int SlotId { get; }
 		/// <summary>
 		/// </summary>

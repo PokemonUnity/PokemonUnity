@@ -44,11 +44,11 @@ namespace PokemonUnity.Monster
 			{  //pbRgssOpen("Data/evolutions.dat","rb"){|f|
 				//f.pos=(species-1)*8;
 				//offset=f.fgetdw();
-				int length=Game.PokemonEvolutionsData[species].Length; //f.fgetdw();
+				int length=Kernal.PokemonEvolutionsData[species].Length; //f.fgetdw();
 				if (length>0) {
 					//f.pos=offset;
 					int i=0; do { //unless (i<length) break; //loop
-						Data.PokemonEvolution evo=Game.PokemonEvolutionsData[species][i]; //f.fgetb();
+						Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb();
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw();
 						Pokemons poke=evo.Species; //f.fgetw();
@@ -77,7 +77,7 @@ namespace PokemonUnity.Monster
 		//       if (length>0) {
 		//         //f.pos=offset;
 		//         int i=0; do { //unless (i<length) break; //loop
-		//           //Data.PokemonEvolution evo=Game.PokemonEvolutionsData[species][i]; //f.fgetb;
+		//           //Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb;
 		//           EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 		//           int level=(int)evo.EvolveValue; //f.fgetw;
 		//           Pokemons poke=evo.Species; //f.fgetw;
@@ -101,16 +101,16 @@ namespace PokemonUnity.Monster
 			{ //pbRgssOpen("Data/evolutions.dat","rb"){|f|
 				//f.pos=(species-1)*8;
 				//offset=f.fgetdw();
-				int length=Game.PokemonData[species].EvoChainId; //f.fgetdw();
+				int length=Kernal.PokemonData[species].EvoChainId; //f.fgetdw();
 				if (length>0) {
 					//f.pos=offset;
 					int i=0; do { //unless (i<length) break; //loop
-						Data.PokemonEvolution evo=Game.PokemonEvolutionsData[species][i]; //f.fgetb;
+						Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb;
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw;
 						Pokemons poke=evo.Species; //f.fgetw;
 						//if ((evo&_EVODATAMASK)==_EVOPREVFORM) {
-						if (Game.PokemonData[poke].EvolveFrom != Pokemons.NONE) {
+						if (Kernal.PokemonData[poke].EvolveFrom != Pokemons.NONE) {
 						return poke;
 						}
 						i++;//+=5;
@@ -128,15 +128,15 @@ namespace PokemonUnity.Monster
 			{ //pbRgssOpen("Data/evolutions.dat","rb"){|f|
 				//f.pos=(species-1)*8;
 				//offset=f.fgetdw();
-				int length=Game.PokemonEvolutionsData[species].Length; //f.fgetdw();
+				int length=Kernal.PokemonEvolutionsData[species].Length; //f.fgetdw();
 				if (length>0) {
 					//f.pos=offset;
 					int i=0; do { //unless (i<length) break; //loop
-						Data.PokemonEvolution evo=Game.PokemonEvolutionsData[species][i]; //f.fgetb();
+						Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb();
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw();
 						//Pokemons poke=evo.Species; //f.fgetw();
-						if (//poke<=Game.PokemonData.Count && //PBSpecies.maxValue
+						if (//poke<=Kernal.PokemonData.Count && //PBSpecies.maxValue
 							//(evo&_EVODATAMASK)==_EVOPREVFORM && // evolved from
 							new EvolutionMethod[] {EvolutionMethod.Level,EvolutionMethod.LevelMale,
 							EvolutionMethod.LevelFemale,EvolutionMethod.AttackGreater,
@@ -163,21 +163,21 @@ namespace PokemonUnity.Monster
 			{ //pbRgssOpen("Data/evolutions.dat","rb"){ |f|
 				//f.pos=(species-1)*8;
 				//offset=f.fgetdw();
-				int length=Game.PokemonEvolutionsData[species].Length; //f.fgetdw();
+				int length=Kernal.PokemonEvolutionsData[species].Length; //f.fgetdw();
 				if (length>0) {
 					//f.pos=offset();
 					int i=0; do { //unless (i<length) break; //loop
-						Data.PokemonEvolution evo=Game.PokemonEvolutionsData[species][i]; //f.fgetb();
+						Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb();
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw();
 						Pokemons poke=evo.Species; //f.fgetw();
 						//if (poke<=PBSpecies.maxValue && (evo&_EVODATAMASK)==_EVOPREVFORM) {		// evolved from
-						if (//poke<=Game.PokemonData.Keys.Count && 
-							Game.PokemonData[poke].IsBaby) {		// evolved from
+						if (//poke<=Kernal.PokemonData.Keys.Count && 
+							Kernal.PokemonData[poke].IsBaby) {		// evolved from
 							if (item1>=0 && item2>=0) {
 								//dexdata=pbOpenDexData();
 								//pbDexDataOffset(dexdata,poke,54);
-								Items incense=Game.PokemonData[poke].Incense; //dexdata.fgetw();
+								Items incense=Kernal.PokemonData[poke].Incense; //dexdata.fgetw();
 								//dexdata.close();
 								if (item1==incense || item2==incense) ret=poke;
 							} else {
@@ -341,7 +341,7 @@ namespace PokemonUnity.Monster
 				pokemon.Species != Pokemons.KADABRA) return 0;
 			Pokemons ret=0;
 			//foreach (var form in pbGetEvolvedFormData(pokemon.Species)) {
-			foreach (Data.PokemonEvolution form in Game.PokemonEvolutionsData[pokemon.Species]) {
+			foreach (Data.PokemonEvolution form in Kernal.PokemonEvolutionsData[pokemon.Species]) {
 				//ret=yield pokemon,form[0],form[1],form[2]; //EvolveMethod evonib,int level,poke
 				ret=form.Species;
 				if (ret>0) break;
@@ -364,14 +364,14 @@ namespace PokemonUnity.Monster
 				//return pbCheckEvolutionEx(pokemon) { //|pokemon,evonib,level,poke|
 				//   next pbMiniCheckEvolution(pokemon,evonib,level,poke);
 				//}
-				return Game.PokemonEvolutionsData[pokemon.Species].Where(a =>
+				return Kernal.PokemonEvolutionsData[pokemon.Species].Where(a =>
 						pbMiniCheckEvolution(pokemon,a.EvolveMethod,(int)a.EvolveValue,a.Species) != Pokemons.NONE
 					).Select(b => b.Species).ToArray();
 			} else {
 				//return pbCheckEvolutionEx(pokemon) { //|pokemon,evonib,level,poke|
 				//   next pbMiniCheckEvolutionItem(pokemon,evonib,level,poke,item);
 				//}
-				return Game.PokemonEvolutionsData[pokemon.Species].Where(a =>
+				return Kernal.PokemonEvolutionsData[pokemon.Species].Where(a =>
 						pbMiniCheckEvolutionItem(pokemon,a.EvolveMethod,(Items)a.EvolveValue,a.Species, item) != Pokemons.NONE
 					).Select(b => b.Species).ToArray();
 			}

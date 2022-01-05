@@ -21,8 +21,8 @@ namespace PokemonUnity.Overworld
 		/// Returns list of Encounters
 		/// <seealso cref="Encounters(Method)"/>
 		/// </summary>
-		//public int[] Encounters { get { return Game.MethodData[Method]; } }//{ get { return Game.EncounterData[Id]; } }
-		//public int[] this[Method method] { get { return Game.MethodData[method]; } }//{ get { return Game.EncounterData[Id]; } }
+		//public int[] Encounters { get { return Kernal.MethodData[Method]; } }//{ get { return Kernal.EncounterData[Id]; } }
+		//public int[] this[Method method] { get { return Kernal.MethodData[method]; } }//{ get { return Kernal.EncounterData[Id]; } }
 		public int[] this[Method method] { get { return Encounters(method); } }
 		/*// <summary>
 		/// </summary>
@@ -41,6 +41,6 @@ namespace PokemonUnity.Overworld
 		/// <summary>
 		/// </summary>
 		public int[] Encounters (Method method) //{ get 
-		{ return Kernal.MethodData[method]; } //}//{ get { return Game.EncounterData[Id]; } }
+		{ return Kernal.MethodData[method]; } //}//{ get { return Kernal.EncounterData[Id]; } }
 	}
 }

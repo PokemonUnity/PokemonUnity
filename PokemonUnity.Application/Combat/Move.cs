@@ -40,8 +40,8 @@ namespace PokemonUnity.Combat
 		/// which is not the same thing as having an effect that will always occur. 
 		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
 		/// </summary>
-		public virtual int AddlEffect		{ get { return Game.MoveData[MoveId].EffectChance??0; } }
-		public Attack.Data.Effects Effect	{ get { return Game.MoveData[MoveId].Effect; } }
+		public virtual int AddlEffect		{ get { return Kernal.MoveData[MoveId].EffectChance??0; } }
+		public Attack.Data.Effects Effect	{ get { return Kernal.MoveData[MoveId].Effect; } }
 		/// <summary>
 		/// The move's accuracy, as a percentage. 
 		/// An accuracy of 0 means the move doesn't perform an accuracy check 
@@ -55,7 +55,7 @@ namespace PokemonUnity.Combat
 		//public bool IsSpecial				{ get; set; }// { return Category == Attack.Category.SPECIAL; } }
 		public bool PowerBoost				{ get; set; }
 		//public bool pbIsStatus()			{ return false; }
-		public string Name					{ get { return Game.MoveData[MoveId].Name; } }
+		public string Name					{ get { return Kernal.MoveData[MoveId].Name; } }
 		//public string EffectString		{ get; set; }
 		//public Battle Battle				{ get { return this.battle ?? Game.battle; } }
 		public IBattle battle				{ get; set; }
@@ -69,7 +69,7 @@ namespace PokemonUnity.Combat
 		public virtual IBattleMove Initialize(IBattle battle, IMove move) 
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
-			Attack.Data.MoveData movedata    = Game.MoveData[move.id];
+			Attack.Data.MoveData movedata    = Kernal.MoveData[move.id];
 			this.battle		= battle;
 			Power			= movedata.Power ?? 0; //.BaseDamage;
 			Type			= movedata.Type;
@@ -102,14 +102,14 @@ namespace PokemonUnity.Combat
 		public static IBattleMove pbFromPBMove(IBattle battle, IMove move)
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
-			//Attack.Data.MoveData movedata = Game.MoveData[move.id];
-			Attack.Data.Effects effect = Game.MoveData[move.id].Effect;
+			//Attack.Data.MoveData movedata = Kernal.MoveData[move.id];
+			Attack.Data.Effects effect = Kernal.MoveData[move.id].Effect;
 			//Type className = Type.GetType(string.Format("PokeBattle_Move_{0}X", movedata.Effect));
 			////if Object.const_defined(className)
 			//	//return (className).new (battle, move);
 			//	return Activitor.CreateInstance(className, battle, move);
-			if (Game.MoveEffectData.ContainsKey(effect)) //move.Effect
-				return Game.MoveEffectData[effect].Initialize(battle, move);
+			if (Kernal.MoveEffectData.ContainsKey(effect)) //move.Effect
+				return Kernal.MoveEffectData[effect].initialize(battle, move);
 				//return move.Effect.ToBattleMove().Initialize(battle, move);
 			else
 				return new PokeBattle_UnimplementedMove().Initialize(battle, move);
@@ -119,7 +119,7 @@ namespace PokemonUnity.Combat
 		#region About the move
 		public virtual int TotalPP { get {
 				if (totalpp>0) return totalpp; //totalpp != null && 
-				if (Game.MoveData.ContainsKey(MoveId)) return Game.MoveData[MoveId].PP;
+				if (Kernal.MoveData.ContainsKey(MoveId)) return Kernal.MoveData[MoveId].PP;
 				return 0; }
 			set { totalpp = value; }
 		}
@@ -171,14 +171,14 @@ namespace PokemonUnity.Combat
 			if (Core.USEMOVECATEGORY)
 				return Category == Attack.Category.PHYSICAL;
 			else
-				return Game.TypeData[type].Category == Attack.Category.PHYSICAL;     
+				return Kernal.TypeData[type].Category == Attack.Category.PHYSICAL;     
 		}
 
 		public virtual bool pbIsSpecial(Types type){
 			if (Core.USEMOVECATEGORY)
 				return Category == Attack.Category.SPECIAL;
 			else
-				return Game.TypeData[type].Category == Attack.Category.SPECIAL;     
+				return Kernal.TypeData[type].Category == Attack.Category.SPECIAL;     
 		}
 
 		public virtual bool pbIsStatus{ get{
@@ -230,7 +230,7 @@ namespace PokemonUnity.Combat
 					}
 				}
 			if (pbIsMultiHit()) 
-				return Core.Rand.Next(Game.MoveMetaData[MoveId].MinHits.Value, Game.MoveMetaData[MoveId].MaxHits.Value);
+				return Core.Rand.Next(Kernal.MoveMetaData[MoveId].MinHits.Value, Kernal.MoveMetaData[MoveId].MaxHits.Value);
 				//ToDo: Need to record that Parental Bond applies, to weaken the second attack
 				//attacker.effects.ParentalBondApplied = true; 
 			return 1;
@@ -240,8 +240,8 @@ namespace PokemonUnity.Combat
 		/// not the same as pbNumHits>1
 		/// </summary>
 		public virtual bool pbIsMultiHit() { //get {   
-			return (Game.MoveMetaData[MoveId].MinHits.HasValue || 
-					Game.MoveMetaData[MoveId].MaxHits.HasValue);//}
+			return (Kernal.MoveMetaData[MoveId].MinHits.HasValue || 
+					Kernal.MoveMetaData[MoveId].MaxHits.HasValue);//}
 		}
 
 		public virtual bool pbTwoTurnAttack(IBattler attacker){
@@ -256,7 +256,7 @@ namespace PokemonUnity.Combat
 
 		public virtual bool isHealingMove() { //get {
 			//return Flags.Heal;//}
-			return Game.MoveMetaData[MoveId].Healing > 0;//}
+			return Kernal.MoveMetaData[MoveId].Healing > 0;//}
 		}
 
 		public virtual bool isRecoilMove() { //get {
@@ -272,7 +272,7 @@ namespace PokemonUnity.Combat
 		/// </summary>
 		public virtual bool hasHighCriticalRate { get{
 			//return (@flags&0x80)!=0;} //# flag h: Has high critical hit rate
-			return Game.MoveMetaData[MoveId].CritRate > 0;} 
+			return Kernal.MoveMetaData[MoveId].CritRate > 0;} 
 		}
 
 		/// <summary>
@@ -304,31 +304,31 @@ namespace PokemonUnity.Combat
 			if (attacker.Index==opponent.Index)return false; 
 			if (attacker.hasMoldBreaker())return false; 
 			if (opponent.hasWorkingAbility(Abilities.SAP_SIPPER) && type == Types.GRASS){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sap Sipper (made #{Game.MoveData[MoveId].Name} ineffective)");
+				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sap Sipper (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.ATTACK, opponent))
 					b.pbIncreaseStatWithCause(Stats.ATTACK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
+						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if ((opponent.hasWorkingAbility(Abilities.STORM_DRAIN) && type == Types.WATER) ||
 				(opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD) && type == Types.ELECTRIC)){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{Game.MoveData[MoveId].Name} ineffective)");
+				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPATK, opponent))
 					b.pbIncreaseStatWithCause(Stats.SPATK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
+						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if (opponent.hasWorkingAbility(Abilities.MOTOR_DRIVE) && type == Types.ELECTRIC){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Motor Drive (made #{Game.MoveData[MoveId].Name} ineffective)");
+				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Motor Drive (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage (Stats.SPEED, opponent))
 					b.pbIncreaseStatWithCause(Stats.SPEED,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
+						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if ((opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.WATER) ||
@@ -341,7 +341,7 @@ namespace PokemonUnity.Combat
 							opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
 					else
 						battle.pbDisplay(Game._INTL("{1}'s {2} made {3} useless!",
-							opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
+							opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
 					return true;
 				}
 			}
@@ -353,7 +353,7 @@ namespace PokemonUnity.Combat
 						opponent.ToString(), opponent.Ability.ToString(TextScripts.Name))); }
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
+						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if (opponent.hasWorkingAbility(Abilities.TELEPATHY) && pbIsDamaging() &&
@@ -365,7 +365,7 @@ namespace PokemonUnity.Combat
 			if (opponent.hasWorkingAbility(Abilities.BULLETPROOF) && Flags.Ballistics){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Bulletproof (made #{@Name} ineffective)");
 				battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-					opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
+					opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			return false;
@@ -667,7 +667,7 @@ namespace PokemonUnity.Combat
 					damagemult=(Core.USENEWBATTLEMECHANICS)? Math.Round(damagemult*1.3) : Math.Round(damagemult * 1.5);
 					battle.pbCommonAnimation("UseItem", attacker, null);
 					battle.pbDisplayBrief(Game._INTL("The {1} strengthened {2}'s power!",
-						Game.ItemData[attacker.Item].ToString(), Game.MoveData[MoveId].Name));
+						Kernal.ItemData[attacker.Item].ToString(), Kernal.MoveData[MoveId].Name));
 					attacker.pbConsumeItem();
 				}
 			}
@@ -905,7 +905,7 @@ namespace PokemonUnity.Combat
 			if (opponent.hasWorkingItem(Items.EVIOLITE)){
 				//Data.PokemonEvolution[] evos=Evolution.pbGetEvolvedFormData(opponent.Species);
 				//if (evos != null && evos.Length>0)      
-				if (Game.PokemonEvolutionsData[opponent.Species].Length>0)
+				if (Kernal.PokemonEvolutionsData[opponent.Species].Length>0)
 					defmult=Math.Round(defmult*1.5);
 			}
 			if (opponent.hasWorkingItem(Items.DEEP_SEA_SCALE) &&
@@ -1201,7 +1201,7 @@ namespace PokemonUnity.Combat
 		/// 2 if Bide is storing energy
 		/// </returns>
 		public virtual int pbDisplayUseMessage(IBattler attacker){
-			battle.pbDisplayBrief(Game._INTL("{1} used\r\n{2}!",attacker.ToString(), Game.MoveData[MoveId].Name));
+			battle.pbDisplayBrief(Game._INTL("{1} used\r\n{2}!",attacker.ToString(), Kernal.MoveData[MoveId].Name));
 			return 0;
 		}
 

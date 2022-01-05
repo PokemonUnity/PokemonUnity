@@ -94,7 +94,7 @@ namespace PokemonUnity.Combat
 						}
 						if (skill>=PBTrainerAI.bestSkill) {
 							foreach (var i in opponent.moves) {
-								Attack.Data.MoveData movedata=Game.MoveData[i.id];
+								Attack.Data.MoveData movedata=Kernal.MoveData[i.id];
 								if (movedata.Effect==Attack.Data.Effects.x062 ||	// Sleep Talk
 									movedata.Effect==Attack.Data.Effects.x05D) {	// Snore
 									score-=50;
@@ -122,7 +122,7 @@ namespace PokemonUnity.Combat
 						}
 						if (skill>=PBTrainerAI.bestSkill) {
 							foreach (var i in opponent.moves) {
-								Attack.Data.MoveData movedata=Game.MoveData[i.id];
+								Attack.Data.MoveData movedata=Kernal.MoveData[i.id];
 								if (movedata.Effect==Attack.Data.Effects.x062 ||	// Sleep Talk
 									movedata.Effect==Attack.Data.Effects.x05D) {     // Snore
 									score-=50;
@@ -1570,8 +1570,8 @@ namespace PokemonUnity.Combat
 					};
 					if (attacker.effects.Transform ||
 						opponent.lastMoveUsed<=0 ||
-						Game.MoveData[opponent.lastMoveUsed].Type == Types.SHADOW ||
-						blacklist.Contains(Game.MoveData[opponent.lastMoveUsed].Effect)) {
+						Kernal.MoveData[opponent.lastMoveUsed].Type == Types.SHADOW ||
+						blacklist.Contains(Kernal.MoveData[opponent.lastMoveUsed].Effect)) {
 						score-=90;
 					}
 					foreach (var i in attacker.moves) {
@@ -1588,8 +1588,8 @@ namespace PokemonUnity.Combat
 					};
 					if (attacker.effects.Transform ||
 						opponent.lastMoveUsedSketch<=0 ||
-						Game.MoveData[opponent.lastMoveUsedSketch].Type == Types.SHADOW ||
-						blacklist.Contains(Game.MoveData[opponent.lastMoveUsedSketch].Effect)) {
+						Kernal.MoveData[opponent.lastMoveUsedSketch].Type == Types.SHADOW ||
+						blacklist.Contains(Kernal.MoveData[opponent.lastMoveUsedSketch].Effect)) {
 						score-=90;
 					}
 					foreach (var i in attacker.moves) {
@@ -1620,7 +1620,7 @@ namespace PokemonUnity.Combat
 					if (attacker.Ability == Abilities.MULTITYPE) {
 						score-=90;
 					} else if (opponent.lastMoveUsed<=0
-						) { //|| PBTypes.isPseudoType(Game.MoveData[opponent.lastMoveUsed].Type)
+						) { //|| PBTypes.isPseudoType(Kernal.MoveData[opponent.lastMoveUsed].Type)
 						score-=90;
 					}
 					else {
@@ -1635,8 +1635,8 @@ namespace PokemonUnity.Combat
 						}
 						else {
 							List<Types> types=new List<Types>();
-							//for (int i = 0; i < Game.TypeData.Keys.Count; i++) {
-							foreach (Types i in Game.TypeData.Keys) {
+							//for (int i = 0; i < Kernal.TypeData.Keys.Count; i++) {
+							foreach (Types i in Kernal.TypeData.Keys) {
 								if (attacker.pbHasType(i)) continue;
 								if (atype.GetEffectiveness(i)<2 ) types.Add(i);
 							}
@@ -1840,10 +1840,10 @@ namespace PokemonUnity.Combat
 							score-=60;
 						} else if (skill>=PBTrainerAI.mediumSkill &&
 							opponent.lastMoveUsed>0) {
-							moveData=Game.MoveData[opponent.lastMoveUsed];
+							moveData=Kernal.MoveData[opponent.lastMoveUsed];
 							if (moveData.Power>0 &&
 								(Core.USEMOVECATEGORY && moveData.Category==Attack.Category.STATUS) ||
-								(!Core.USEMOVECATEGORY && Game.TypeData[moveData.Type].Category == Attack.Category.SPECIAL)) {
+								(!Core.USEMOVECATEGORY && Kernal.TypeData[moveData.Type].Category == Attack.Category.SPECIAL)) {
 								score-=60;
 							}
 						}
@@ -1859,10 +1859,10 @@ namespace PokemonUnity.Combat
 						if (attack>spatk*1.5) {
 							score-=60;
 						} else if (skill>=PBTrainerAI.mediumSkill && opponent.lastMoveUsed>0) {
-							moveData=Game.MoveData[opponent.lastMoveUsed];
+							moveData=Kernal.MoveData[opponent.lastMoveUsed];
 							if (moveData.Power>0 &&
 								(Core.USEMOVECATEGORY && moveData.Category==Attack.Category.SPECIAL) ||
-								(!Core.USEMOVECATEGORY && Game.TypeData[moveData.Type].Category != Attack.Category.SPECIAL)) {
+								(!Core.USEMOVECATEGORY && Kernal.TypeData[moveData.Type].Category != Attack.Category.SPECIAL)) {
 							score-=60;
 							}
 						}
@@ -2032,8 +2032,8 @@ namespace PokemonUnity.Combat
 					score-=40;
 					if (skill>=PBTrainerAI.highSkill) {
 					if (opponent.lastMoveUsed<=0 ||
-						//(Game.MoveData[opponent.lastMoveUsed].flags&0x010)==0) score-=100; // flag e: Copyable by Mirror Move
-						Game.MoveData[opponent.lastMoveUsed].Flags.Mirror) score-=100; 
+						//(Kernal.MoveData[opponent.lastMoveUsed].flags&0x010)==0) score-=100; // flag e: Copyable by Mirror Move
+						Kernal.MoveData[opponent.lastMoveUsed].Flags.Mirror) score-=100; 
 					}
 					break;
 				case Attack.Data.Effects.x0F3:
@@ -2083,7 +2083,7 @@ namespace PokemonUnity.Combat
 							score-=90;
 						}
 						else {
-							moveData=Game.MoveData[opponent.lastMoveUsed];
+							moveData=Kernal.MoveData[opponent.lastMoveUsed];
 							if (moveData.Power==0 && (moveData.Target==(Attack.Data.Targets)0x10 || moveData.Target==(Attack.Data.Targets)0x20)) {
 							score+=60;
 							} else if (moveData.Power!=0 && moveData.Target==0x00 &&
@@ -2395,7 +2395,7 @@ namespace PokemonUnity.Combat
 						attacker.hasWorkingItem(Items.CHOICE_SPECS)) {
 						score+=50;
 					} else if (attacker.Item==0 && opponent.Item!=0) {
-						if (Game.MoveData[attacker.lastMoveUsed].Effect==Attack.Data.Effects.x0B2) score-=30;	// Trick/Switcheroo
+						if (Kernal.MoveData[attacker.lastMoveUsed].Effect==Attack.Data.Effects.x0B2) score-=30;	// Trick/Switcheroo
 					}
 					break;
 				case Attack.Data.Effects.x144:
@@ -2676,14 +2676,14 @@ namespace PokemonUnity.Combat
 					break;
 				case Attack.Data.Effects.x0A3:
 					if (attacker.effects.Stockpile==0) {
-					score-=90;
+						score-=90;
 					} else if (attacker.HP==attacker.TotalHP) {
-					score-=90;
+						score-=90;
 					}
 					else {
-					int mult=new int[] {0,25,50,100}[attacker.effects.Stockpile];
-					score+=mult;
-					score-=(attacker.HP*mult*2/attacker.TotalHP);
+						int mult=new int[] {0,25,50,100}[attacker.effects.Stockpile];
+						score+=mult;
+						score-=(attacker.HP*mult*2/attacker.TotalHP);
 					}
 					break;
 				case Attack.Data.Effects.x0AB:
@@ -2695,58 +2695,58 @@ namespace PokemonUnity.Combat
 					break;
 				case Attack.Data.Effects.x0AD:
 					if (!@doublebattle) {
-					score-=100;
+						score-=100;
 					} else if (attacker.pbPartner.isFainted()) {
-					score-=90;
+						score-=90;
 					}
 					break;
 				case Attack.Data.Effects.x0D8:
 					if (@field.Gravity>0) {
-					score-=90;
+						score-=90;
 					} else if (skill>=PBTrainerAI.mediumSkill) {
-					score-=30;
-					if (attacker.effects.SkyDrop) score-=20;
-					if (attacker.effects.MagnetRise>0) score-=20;
-					if (attacker.effects.Telekinesis>0) score-=20;
-					if (attacker.pbHasType(Types.FLYING)) score-=20;
-					if (attacker.hasWorkingAbility(Abilities.LEVITATE)) score-=20;
-					if (attacker.hasWorkingItem(Items.AIR_BALLOON)) score-=20;
-					if (opponent.effects.SkyDrop) score+=20;
-					if (opponent.effects.MagnetRise>0) score+=20;
-					if (opponent.effects.Telekinesis>0) score+=20;
-					if (Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x09C ||	// Fly
-									Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x108 || // Bounce
-									Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x138) score+=20;    // Sky Drop
-					if (opponent.pbHasType(Types.FLYING)) score+=20;
-					if (opponent.hasWorkingAbility(Abilities.LEVITATE)) score+=20;
-					if (opponent.hasWorkingItem(Items.AIR_BALLOON)) score+=20;
+						score-=30;
+						if (attacker.effects.SkyDrop) score-=20;
+						if (attacker.effects.MagnetRise>0) score-=20;
+						if (attacker.effects.Telekinesis>0) score-=20;
+						if (attacker.pbHasType(Types.FLYING)) score-=20;
+						if (attacker.hasWorkingAbility(Abilities.LEVITATE)) score-=20;
+						if (attacker.hasWorkingItem(Items.AIR_BALLOON)) score-=20;
+						if (opponent.effects.SkyDrop) score+=20;
+						if (opponent.effects.MagnetRise>0) score+=20;
+						if (opponent.effects.Telekinesis>0) score+=20;
+						if (Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x09C ||	// Fly
+							Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x108 || // Bounce
+							Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x138) score+=20;    // Sky Drop
+						if (opponent.pbHasType(Types.FLYING)) score+=20;
+						if (opponent.hasWorkingAbility(Abilities.LEVITATE)) score+=20;
+						if (opponent.hasWorkingItem(Items.AIR_BALLOON)) score+=20;
 					}
 					break;
 				case Attack.Data.Effects.x0FD:
 					if (attacker.effects.MagnetRise>0 ||
 						attacker.effects.Ingrain ||
 						attacker.effects.SmackDown) {
-					score-=90;
+						score-=90;
 					}
 					break;
 				case Attack.Data.Effects.x11E:
 					if (opponent.effects.Telekinesis>0 ||
 						opponent.effects.Ingrain ||
 						opponent.effects.SmackDown) {
-					score-=90;
+						score-=90;
 					}
 					break;
 				case Attack.Data.Effects.x0D0:
 					break;
 				case Attack.Data.Effects.x120:
 					if (skill>=PBTrainerAI.mediumSkill) {
-					if (opponent.effects.MagnetRise>0) score+=20;
-					if (opponent.effects.Telekinesis>0) score+=20;
-					if (Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x09C ||	// Fly
-									Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x108) score+=20;    // Bounce
-					if (opponent.pbHasType(Types.FLYING)) score+=20;
-					if (opponent.hasWorkingAbility(Abilities.LEVITATE)) score+=20;
-					if (opponent.hasWorkingItem(Items.AIR_BALLOON)) score+=20;
+						if (opponent.effects.MagnetRise>0) score+=20;
+						if (opponent.effects.Telekinesis>0) score+=20;
+						if (Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x09C ||	// Fly
+							Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x108) score+=20;    // Bounce
+						if (opponent.pbHasType(Types.FLYING)) score+=20;
+						if (opponent.hasWorkingAbility(Abilities.LEVITATE)) score+=20;
+						if (opponent.hasWorkingItem(Items.AIR_BALLOON)) score+=20;
 					}
 					break;
 				case Attack.Data.Effects.x12D:
@@ -3195,7 +3195,7 @@ namespace PokemonUnity.Combat
 			// Don't prefer attacking the opponent if they'd be semi-invulnerable
 			if (opponent.effects.TwoTurnAttack>0 &&
 				skill>=PBTrainerAI.highSkill) {
-				Attack.Data.Effects invulmove=Game.MoveData[opponent.effects.TwoTurnAttack].Effect;
+				Attack.Data.Effects invulmove=Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect;
 				if (move.Accuracy>0 &&  		// Checks accuracy, i.e. targets opponent
 					(new Attack.Data.Effects[] { Attack.Data.Effects.x09C,Attack.Data.Effects.x101,Attack.Data.Effects.x100,Attack.Data.Effects.x108,Attack.Data.Effects.x111,Attack.Data.Effects.x138 }.Contains(invulmove) ||
 					opponent.effects.SkyDrop) &&
@@ -3343,7 +3343,7 @@ namespace PokemonUnity.Combat
 					float basedamage=realDamage*accuracy/100.0f;
 					// Two-turn attacks waste 2 turns to deal one lot of damage
 					//if (move.pbTwoTurnAttack(attacker) || move.Effect==Attack.Data.Effects.x051) {		        // Hyper Beam
-					if (Game.MoveMetaData[move.id].MaxTurns > 1 || move.Effect==Attack.Data.Effects.x051) {		// Hyper Beam
+					if (Kernal.MoveMetaData[move.id].MaxTurns > 1 || move.Effect==Attack.Data.Effects.x051) {		// Hyper Beam
 						basedamage*=2/3;   // Not halved because semi-invulnerable during use or hits first turn
 					}
 					// Prefer flinching effects
@@ -3517,15 +3517,15 @@ namespace PokemonUnity.Combat
 				basedamage=60;
 				break;
 			case Attack.Data.Effects.x102: ///case 0x12D: // case Surf: Shadow Storm
-				if (Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x100) basedamage*=2;	// Dive
+				if (Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x100) basedamage*=2;	// Dive
 				break;
 			case Attack.Data.Effects.x094: // Earthquake
-				if (Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x101) basedamage*=2;	// Dig
+				if (Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x101) basedamage*=2;	// Dig
 				break;
 			case Attack.Data.Effects.x096: case Attack.Data.Effects.x093: // case Gust: Twister
-				if (Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x09C ||				// Fly
-					Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x108 ||				// Bounce
-					Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x138) basedamage*=2;	// Sky Drop
+				if (Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x09C ||				// Fly
+					Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x108 ||				// Bounce
+					Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x138) basedamage*=2;	// Sky Drop
 				break;
 			case Attack.Data.Effects.x11C: // Venoshock
 				if (opponent.Status==Status.POISON) basedamage*=2;
@@ -3604,7 +3604,7 @@ namespace PokemonUnity.Combat
 				break;
 			case Attack.Data.Effects.x07F: // Magnitude
 				basedamage=71;
-				if (Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x101) basedamage*=2;	// Dig
+				if (Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x101) basedamage*=2;	// Dig
 				break;
 			case Attack.Data.Effects.x0DF: // Natural Gift
 				KeyValuePair<Items, int>[] damagearray = new KeyValuePair<Items, int>[] {
@@ -3711,7 +3711,7 @@ namespace PokemonUnity.Combat
 				break;
 			case Attack.Data.Effects.x106: // Whirlpool
 				if (skill>=PBTrainerAI.mediumSkill) {
-					if (Game.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x100) basedamage*=2;	// Dive
+					if (Kernal.MoveData[opponent.effects.TwoTurnAttack].Effect==Attack.Data.Effects.x100) basedamage*=2;	// Dive
 				}
 				break;
 			case Attack.Data.Effects.x076: // Rollout
@@ -4132,7 +4132,7 @@ namespace PokemonUnity.Combat
 			if (skill>=PBTrainerAI.highSkill) {
 				if (opponent.hasWorkingItem(Items.EVIOLITE)) {
 					//Pokemon[] evos=pbGetEvolvedFormData(opponent.Species);
-					int evos=Game.PokemonEvolutionsData[opponent.Species].Length;
+					int evos=Kernal.PokemonEvolutionsData[opponent.Species].Length;
 					//if (evos && evos.Length>0) {
 					if (evos>0) {
 						defense=(int)Math.Round(defense*1.5);
@@ -4306,7 +4306,7 @@ namespace PokemonUnity.Combat
 				int c=0;
 				c+=attacker.effects.FocusEnergy;
 				//if (move.hasHighCriticalRate) c+=1;
-				if (Game.MoveMetaData[move.id].CritRate > 0) c+=1;
+				if (Kernal.MoveMetaData[move.id].CritRate > 0) c+=1;
 				if (attacker is IBattlerShadowPokemon s && s.inHyperMode() && move.Type == Types.SHADOW) c+=1; //rescue false
 				if (attacker.Species == Pokemons.CHANSEY && 
 					attacker.hasWorkingItem(Items.LUCKY_PUNCH)) c+=2;
@@ -4430,7 +4430,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			else {
-				skill=Game.TrainerMetaData[pbGetOwner(attacker.Index).trainertype].SkillLevel; //|| 0;
+				skill=Kernal.TrainerMetaData[pbGetOwner(attacker.Index).trainertype].SkillLevel; //|| 0;
 				IBattler opponent=attacker.pbOppositeOpposing;
 				if (@doublebattle && !opponent.isFainted() && !opponent.pbPartner.isFainted()) {
 					// Choose a target and move.  Also care about partner.
@@ -4734,14 +4734,14 @@ namespace PokemonUnity.Combat
 			bool typecheck=false;
 			int batonpass=-1;
 			Types movetype=Types.NONE;
-			int skill=Game.TrainerMetaData[pbGetOwner(index).trainertype].SkillLevel;// || 0;
+			int skill=Kernal.TrainerMetaData[pbGetOwner(index).trainertype].SkillLevel;// || 0;
 			if (@opponent!= null && !shouldswitch && @battlers[index].turncount>0) {
 				if (skill>=PBTrainerAI.highSkill) {
 					IBattler opponent=@battlers[index].pbOppositeOpposing;
 					if (opponent.isFainted()) opponent=opponent.pbPartner;
 					if (!opponent.isFainted() && opponent.lastMoveUsed>0 && 
 						Math.Abs(opponent.Level-@battlers[index].Level)<=6) {
-						Attack.Data.MoveData move=Game.MoveData[opponent.lastMoveUsed];
+						Attack.Data.MoveData move=Kernal.MoveData[opponent.lastMoveUsed];
 						float typemod=pbTypeModifier(move.Type,@battlers[index],@battlers[index]);
 						movetype=move.Type;
 						if (move.Power>70 && typemod>8) {
@@ -4913,7 +4913,7 @@ namespace PokemonUnity.Combat
 				int sum=0;
 				foreach (var move in pkmn.moves) {
 					if (move.id==0) continue;
-					Attack.Data.MoveData md=Game.MoveData[move.id];
+					Attack.Data.MoveData md=Kernal.MoveData[move.id];
 					if (md.Power==0) continue;
 					if (o1.IsNotNullOrNone()) {
 						//ToDo: uncomment below

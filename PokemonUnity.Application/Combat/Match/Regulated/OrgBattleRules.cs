@@ -20,12 +20,12 @@ namespace PokemonUnity
 			//dexdata=pbOpenDexData();
 			//pbDexDataOffset(dexdata,species,10);
 			//int bst=dexdata.fgetb;
-			int bst = PokemonData[species].BaseStatsHP; //dexdata.fgetb;
-			bst += PokemonData[species].BaseStatsATK; //dexdata.fgetb;
-			bst += PokemonData[species].BaseStatsDEF; //dexdata.fgetb;
-			bst += PokemonData[species].BaseStatsSPE; //dexdata.fgetb;
-			bst += PokemonData[species].BaseStatsSPA; //dexdata.fgetb;
-			bst += PokemonData[species].BaseStatsSPD; //dexdata.fgetb;
+			int bst = Kernal.PokemonData[species].BaseStatsHP; //dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsATK; //dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsDEF; //dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsSPE; //dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsSPA; //dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsSPD; //dexdata.fgetb;
 			//dexdata.close();
 			return bst;
 		}
@@ -39,8 +39,8 @@ namespace PokemonUnity
 		{
 			//dexdata=pbOpenDexData();
 			//pbDexDataOffset(dexdata,pokemon is Numeric ? pokemon : pokemon.Species,33);
-			float height = PokemonData[pokemon.Species].Height; //dexdata.fgetw;
-			float weight = PokemonData[pokemon.Species].Weight; //dexdata.fgetw;
+			float height = Kernal.PokemonData[pokemon.Species].Height; //dexdata.fgetw;
+			float weight = Kernal.PokemonData[pokemon.Species].Weight; //dexdata.fgetw;
 			maxHeightInMeters = Math.Round(maxHeightInMeters * 10);
 			//dexdata.close();
 			return height > maxHeightInMeters;
@@ -50,8 +50,8 @@ namespace PokemonUnity
 		{
 			//dexdata=pbOpenDexData();
 			//pbDexDataOffset(dexdata,pokemon is Numeric ? pokemon : pokemon.Species,33);
-			float height = PokemonData[pokemon.Species].Height; //dexdata.fgetw;
-			float weight = PokemonData[pokemon.Species].Weight; //dexdata.fgetw;
+			float height = Kernal.PokemonData[pokemon.Species].Height; //dexdata.fgetw;
+			float weight = Kernal.PokemonData[pokemon.Species].Weight; //dexdata.fgetw;
 			maxWeightInKg = Math.Round(maxWeightInKg * 10f);
 			//dexdata.close();
 			return weight > maxWeightInKg;
@@ -1057,7 +1057,7 @@ namespace PokemonUnity
 			//baby=babySpeciesData[pokemon.Species] != null ? babySpeciesData[pokemon.Species] :
 			//   (babySpeciesData[pokemon.Species]=pbGetBabySpecies(pokemon.Species));
 			//return baby==pokemon.Species;
-			return Game.PokemonData[pokemon.Species].IsBaby;
+			return Kernal.PokemonData[pokemon.Species].IsBaby;
 		}
 	}
 
@@ -1068,10 +1068,10 @@ namespace PokemonUnity
 			//baby=$babySpeciesData[pokemon.Species] ? $babySpeciesData[pokemon.Species] :
 			//   ($babySpeciesData[pokemon.Species]=pbGetBabySpecies(pokemon.Species))
 			//if (baby!=pokemon.Species) return false;
-			if (!Game.PokemonData[pokemon.Species].IsBaby) return false;
+			if (!Kernal.PokemonData[pokemon.Species].IsBaby) return false;
 			//bool canEvolve=(canEvolve[pokemon.Species]!=null) ? canEvolve[pokemon.Species] :
 			//   (canEvolve[pokemon.Species]=(pbGetEvolvedFormData(pokemon.Species).Length!=0));
-			bool canEvolve = Game.PokemonEvolutionsData[pokemon.Species].Length != 0;
+			bool canEvolve = Kernal.PokemonEvolutionsData[pokemon.Species].Length != 0;
 			if (!canEvolve) return false;
 			return true;
 		}

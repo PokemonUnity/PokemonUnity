@@ -65,7 +65,7 @@ namespace PokemonUnity//.Combat
 			owned = new Dictionary<Pokemons, bool>();
 			clearPokedex();
 			//@shadowcaught=new bool[0];
-			//for (int i = 1; i < Game.PokemonData.Count; i++) {
+			//for (int i = 1; i < Kernal.PokemonData.Count; i++) {
 			//  @shadowcaught[i]=false;
 			//}
 			@shadowcaught=new List<Pokemons>();
@@ -153,8 +153,8 @@ namespace PokemonUnity//.Combat
 			int ret=0;
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
 			//   trainertypes=Marshal.load(f);
-			//   if (!Game.TrainerMetaData[@trainertype]) return 30;
-				ret=Game.TrainerMetaData[@trainertype].BaseMoney;
+			//   if (!Kernal.TrainerMetaData[@trainertype]) return 30;
+				ret=Kernal.TrainerMetaData[@trainertype].BaseMoney;
 			//}
 			return ret;
 		} }
@@ -168,7 +168,7 @@ namespace PokemonUnity//.Combat
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
 			//   trainertypes=Marshal.load(f);
 			//   if (!trainertypes[@trainertype]) return 30;
-				ret= Game.TrainerMetaData[@trainertype].SkillLevel;
+				ret= Kernal.TrainerMetaData[@trainertype].SkillLevel;
 			//}
 			return ret;
 		} }
@@ -178,7 +178,7 @@ namespace PokemonUnity//.Combat
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
 			//   trainertypes=Marshal.load(f);
 			//   if (!trainertypes[@trainertype]) return "";
-				ret= Game.TrainerMetaData[@trainertype].SkillCodes.Value.ToString();
+				ret= Kernal.TrainerMetaData[@trainertype].SkillCodes.Value.ToString();
 			//}
 			return ret;
 		} }
@@ -210,7 +210,7 @@ namespace PokemonUnity//.Combat
 			//	  ret=null;
 			//	}
 			//	else {
-					ret= Game.TrainerMetaData[@trainertype].Gender;
+					ret= Kernal.TrainerMetaData[@trainertype].Gender;
 			//		if (!ret.HasValue) ret=null;
 			//	}
 			//}
@@ -292,7 +292,7 @@ namespace PokemonUnity//.Combat
 		public int pokedexSeen(Regions? region=null) {   
 			int ret=0;
 			if (region==null) {
-				//for (int i = 0; i < Game.PokemonData.Count; i++) {
+				//for (int i = 0; i < Kernal.PokemonData.Count; i++) {
 				//  if (@seen[i]) ret+=1;
 				//}
 				return seen.Count;
@@ -315,7 +315,7 @@ namespace PokemonUnity//.Combat
 		public int pokedexOwned(Regions? region=null) {   
 			int ret=0;
 			if (region==null) {
-				//for (int i = 0; i < Game.PokemonData.Count; i++) {
+				//for (int i = 0; i < Kernal.PokemonData.Count; i++) {
 				//  if (@owned[i]) ret+=1;
 				//}
 				return owned.Count;
@@ -373,7 +373,7 @@ namespace PokemonUnity//.Combat
 			@owned.Clear(); //=new Dictionary<Pokemons, bool>();
 			@formseen=new int?[0][];
 			@formlastseen=new KeyValuePair<int, int?>[0];
-			//for (int i = 1; i < Game.PokemonData.Count; i++) {
+			//for (int i = 1; i < Kernal.PokemonData.Count; i++) {
 			//  @seen[i]=false;
 			//  @owned[i]=false;
 			//  @formlastseen[i]=[];

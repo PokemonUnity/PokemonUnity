@@ -186,11 +186,11 @@ namespace PokemonUnity
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
 			//	trainertypes=Marshal.load(f);
 			//	if (!trainertypes[trainertype]) {
-				if (!TrainerMetaData.ContainsKey(trainertype)) {
+				if (!Kernal.TrainerMetaData.ContainsKey(trainertype)) {
 					ret=2;
 				} else {
 					//ret=trainertypes[trainertype][7];
-					ret=TrainerMetaData[trainertype].Gender == true ? 1 : (TrainerMetaData[trainertype].Gender == false ? 0 : (int?)null);
+					ret= Kernal.TrainerMetaData[trainertype].Gender == true ? 1 : (Kernal.TrainerMetaData[trainertype].Gender == false ? 0 : (int?)null);
 					if (!ret.HasValue) ret=2;
 				}
 			//}
@@ -1792,7 +1792,7 @@ namespace PokemonUnity
 			//if (species is String || species is Symbol) {
 			//  species=getID(PBSpecies,species);
 			//}
-			//Pokemons[][] evospecies=pbGetEvolvedFormData(species); //Game.PokemonEvolutionsData[species][0].
+			//Pokemons[][] evospecies=pbGetEvolvedFormData(species); //Kernal.PokemonEvolutionsData[species][0].
 			//Kernal.PokemonData[species].IsBaby
 			//Pokemons compatspecies=(evospecies != null && evospecies[0] != null) ? evospecies[0][2] : species;
 			//dexdata=pbOpenDexData();

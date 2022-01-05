@@ -131,7 +131,7 @@ namespace PokemonUnity
 					//pbDexDataOffset(dexdata,battler.Species,13);
 					//basespeed=dexdata.fgetb;
 					//dexdata.close;
-					int basespeed=Game.PokemonData[battler.Species].BaseStatsSPE;
+					int basespeed=Kernal.PokemonData[battler.Species].BaseStatsSPE;
 					if (basespeed>=100) catchRate*=4;
 					return (int)Math.Min(catchRate,255);
 				}

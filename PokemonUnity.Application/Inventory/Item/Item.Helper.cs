@@ -163,7 +163,7 @@ namespace PokemonUnity.Inventory
 					//qty-=items[i].Value;
 					if (sorting) {
 						//if (Core.POCKETAUTOSORT[ItemData[item][ITEMPOCKET]]) items.Sort();
-						if (Core.POCKETAUTOSORT[(int)(Game.ItemData[item].Pocket??0)]) items.OrderBy(x => x);
+						if (Core.POCKETAUTOSORT[(int)(Kernal.ItemData[item].Pocket??0)]) items.OrderBy(x => x);
 					}
 					if (qty==0) return true;
 				} else if (itemslot==item && count<maxPerSlot) {
@@ -191,7 +191,7 @@ namespace PokemonUnity.Inventory
 					qty-=items[i].Value;
 					if (sorting) {
 						//if (Core.POCKETAUTOSORT[ItemData[item][ITEMPOCKET]]) items.Sort();
-						if (Core.POCKETAUTOSORT[(int)(Game.ItemData[item].Pocket??0)]) items.OrderBy(x => x.Key);
+						if (Core.POCKETAUTOSORT[(int)(Kernal.ItemData[item].Pocket??0)]) items.OrderBy(x => x.Key);
 					}
 					if (qty==0) return true;
 				} else if (itemslot.Value.Key==item && itemslot.Value.Value<maxPerSlot) {

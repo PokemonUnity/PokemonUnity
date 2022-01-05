@@ -40,61 +40,8 @@ namespace PokemonUnity
 	/// During boot-up, game will check directory for save files and load data.
 	/// Game class will overwrite all the other class default values when player triggers a load state.
 	/// </summary>
-	//ToDo: Missing (Trainer)Player.Rival variable (KeyValuePair <Type,Name>)
-	//ToDo: Add Write_DB_To_File Function
 	public partial class Game //: IDatabase
 	{
-		#region Variables
-		public static string FilePokemonXML = "";
-		public static IDictionary<Pokemons, PokemonUnity.Monster.Data.PokemonEvolution[]> PokemonEvolutionsData { get; private set; }
-		public static IDictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]> PokemonItemsData { get; private set; }
-		public static IDictionary<Pokemons, PokemonUnity.Monster.Data.Form[]> PokemonFormsData { get; private set; }
-		public static IDictionary<Pokemons, PokemonUnity.Monster.Data.PokemonMoveTree> PokemonMovesData { get; private set; }
-		public static IDictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData> PokemonData { get; private set; }
-		public static IDictionary<Natures,PokemonUnity.Monster.Nature> NatureData { get; private set; }
-		public static IDictionary<Types,PokemonUnity.Monster.Data.Type> TypeData { get; private set; }
-		public static IDictionary<Moves,Attack.Data.MoveData> MoveData { get; private set; }
-		public static IDictionary<Moves,Attack.Data.MetaData> MoveMetaData { get; private set; }
-		public static IDictionary<Attack.Data.Effects,Combat.Move> MoveEffectData { get; private set; } //ToDo: Replace with Func<Attack.Data.Effects,Combat.Move> instead?
-		public static IDictionary<Items,ItemData> ItemData { get; private set; }
-		public static IDictionary<Items,BerryData> BerryData { get; private set; }
-		public static IDictionary<Regions,Locations[]> RegionData { get; private set; }
-		public static IDictionary<Regions,Pokedex> PokedexData { get; private set; }
-		/// <summary>
-		/// Key: <seealso cref="Locations"/> | Value: <seealso cref="Area.Id"/>
-		/// </summary>
-		public static IDictionary<Locations,int[]> LocationData { get; private set; }
-		/// <summary>
-		/// List of <see cref="Player.Area"/> that triggers <seealso cref="Overworld.IEncounterData"/>
-		/// <para></para>
-		/// Key: <seealso cref="Overworld.Area.Id"/> | Value: <seealso cref="Player.Area"/>
-		/// </summary>
-		public static IDictionary<int,Area> AreaData { get; private set; }
-		/// <summary>
-		/// Key: <seealso cref="Method"/> | Value: <seealso cref="IEncounterData.Id"/>
-		/// </summary>
-		public static IDictionary<Method,int[]> MethodData { get; private set; }
-		/// <summary>
-		/// Key: <seealso cref="IEncounterData.Id"/> | Value: <seealso cref="Overworld.IEncounterData"/>
-		/// </summary>
-		public static IDictionary<int,IEncounterData> EncounterData { get; private set; }
-		//public static IDictionary<Method,IEncounterData> EncounterMethodData { get; private set; }
-		public static IDictionary<TrainerTypes,TrainerMetaData> TrainerMetaData { get; private set; }
-		public static IDictionary<GymBadges,Character.BadgeData> BadgeData { get; private set; }
-		public static IDictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; private set; }
-		public static IDictionary<int,MachineData> MachineData { get; private set; }
-		//public static IDictionary<Items,KeyValuePair<Moves,int[]>[]> MachineMetaData { get; private set; }
-		//public static IDictionary<int,Machine> MapData { get; private set; }
-		//public static IDictionary<int,int> TextureData1 { get; private set; }
-		//public static IDictionary<int,int> TextureData2 { get; private set; }
-		//public static IDictionary<Location,Script[]> ScriptData { get; private set; }
-		//public static IDictionary<Location,Script[]> LevelScriptData { get; private set; }
-		//public static IDictionary<Location,Text[]> TextData { get; private set; }
-		//public static IDictionary<Location,EventData> EventData { get; private set; }
-		//public static IDictionary<Location,Event[]> EventData { get; private set; }
-		//public static IDictionary<Location,EventFlags[]> MapFlagData { get; private set; }
-		#endregion
-		
 		//On Project start...
 		//all XML files are opened, and locked
 		//one by one, they're scanned and checked to see if they're up to date (match latest with compile time info)
@@ -196,57 +143,57 @@ namespace PokemonUnity
 		#region Initialize Data From Database
 		public static bool InitPokemons(bool sql = true)
 		{
-			PokemonData = new Dictionary<Pokemons, Monster.Data.PokemonData>();
+			//PokemonData = new Dictionary<Pokemons, Monster.Data.PokemonData>();
 			if (sql) //using (con)
 				return GetPokemonsFromSQL(con);
 			else return false; //GetPokemonsFromXML();
 		}
 		public static bool InitPokemonMoves(bool sql = true)
 		{
-			PokemonMovesData = new Dictionary<Pokemons, Monster.Data.PokemonMoveTree>();
+			//PokemonMovesData = new Dictionary<Pokemons, Monster.Data.PokemonMoveTree>();
 			if (sql) //using (con)
 				return GetPokemonMovesFromSQL(con);
 			else return false;
 		}
 		public static bool InitPokemonEvolutions(bool sql = true)
 		{
-			PokemonEvolutionsData = new Dictionary<Pokemons, Monster.Data.PokemonEvolution[]>();
+			//PokemonEvolutionsData = new Dictionary<Pokemons, Monster.Data.PokemonEvolution[]>();
 			if (sql) //using (con)
 				return GetPokemonEvolutionsFromSQL(con);
 			else return false;
 		}
 		public static bool InitPokemonItems(bool sql = true)
 		{
-			PokemonItemsData = new Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]>();
+			//PokemonItemsData = new Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]>();
 			if (sql) //using (con)
 				return GetPokemonItemsFromSQL(con);
 			else return false;
 		}
 		public static bool InitPokemonForms(bool sql = true)
 		{
-			PokemonFormsData = new Dictionary<Pokemons, Monster.Data.Form[]>();
+			//PokemonFormsData = new Dictionary<Pokemons, Monster.Data.Form[]>();
 			if (sql) //using (con)
 				return GetPokemonFormsFromSQL(con);
 			else return false;
 		}
 		public static bool InitNatures(bool sql = true)
 		{
-			NatureData = new Dictionary<Natures, Nature>();
+			//NatureData = new Dictionary<Natures, Nature>();
 			if (sql) //using (con)
 				return GetNaturesFromSQL(con);
 			else return false;
 		}
 		public static bool InitTypes(bool sql = true)
 		{
-			TypeData = new Dictionary<Types, PokemonUnity.Monster.Data.Type>();
+			//TypeData = new Dictionary<Types, PokemonUnity.Monster.Data.Type>();
 			if (sql) //using (con)
 				return GetTypesFromSQL(con);
 			else return false;
 		}
 		public static bool InitMoves(bool sql = true)
 		{
-			MoveData = new Dictionary<Moves, Attack.Data.MoveData>();
-			MoveMetaData = new Dictionary<Moves, Attack.Data.MetaData>();
+			//MoveData = new Dictionary<Moves, Attack.Data.MoveData>();
+			//MoveMetaData = new Dictionary<Moves, Attack.Data.MetaData>();
 			//MoveEffectData = new Dictionary<Attack.Data.Effects, Combat.Move>(); //Below
 			if (sql) //using (con)
 				return GetMovesFromSQL(con);
@@ -254,28 +201,28 @@ namespace PokemonUnity
 		}
 		public static bool InitMoveEffects(bool sql = false)
 		{
-			MoveEffectData = new Dictionary<Attack.Data.Effects, Combat.Move>();
+			//MoveEffectData = new Dictionary<Attack.Data.Effects, Combat.Move>();
 			if (sql) //using (con)
 				return false;
 			else return GetMoveEffectFromXML();
 		}
 		public static bool InitItems(bool sql = true)
 		{
-			ItemData = new Dictionary<Items, ItemData>();
+			//ItemData = new Dictionary<Items, ItemData>();
 			if (sql) //using (con)
 				return GetItemsFromSQL(con);
 			else return false;
 		}
 		public static bool InitBerries(bool sql = true)
 		{
-			BerryData = new Dictionary<Items, BerryData>();
+			//BerryData = new Dictionary<Items, BerryData>();
 			if (sql) //using (con)
 				return GetBerriesFromSQL(con);
 			else return false;
 		}
 		public static bool InitRegions(bool sql = true)
 		{
-			RegionData = new Dictionary<Regions, Locations[]>();
+			//RegionData = new Dictionary<Regions, Locations[]>();
 			//PokedexData = new Dictionary<Regions, Pokedex>();
 			if (sql) //using (con)
 				return  GetRegionsFromSQL(con);
@@ -283,16 +230,16 @@ namespace PokemonUnity
 		}
 		public static bool InitLocations(bool sql = true)
 		{
-			LocationData = new Dictionary<Locations, int[]>();
-			AreaData = new Dictionary<int, Area>();
+			//LocationData = new Dictionary<Locations, int[]>();
+			//AreaData = new Dictionary<int, Area>();
 			if (sql) //using (con)
 				return  GetLocationsFromSQL(con);
 			else return false;
 		}
 		public static bool InitEncounters(bool sql = true)
 		{
-			MethodData = new Dictionary<Method, int[]>();
-			EncounterData = new Dictionary<int, IEncounterData>();
+			//MethodData = new Dictionary<Method, int[]>();
+			//EncounterData = new Dictionary<int, IEncounterData>();
 			if (sql) //using (con)
 				return GetEncountersFromSQL(con);
 			else return false;
@@ -307,7 +254,7 @@ namespace PokemonUnity
 		}
 		public static bool InitTrainers(bool sql = false)
 		{
-			TrainerMetaData = new Dictionary<TrainerTypes, TrainerMetaData>();
+			//TrainerMetaData = new Dictionary<TrainerTypes, TrainerMetaData>();
 			//TrainerData = new Dictionary<int, Encounter>();
 			if (sql) //using (con)
 				return false; //GetTrainersFromSQL(con);
@@ -315,8 +262,8 @@ namespace PokemonUnity
 		}
 		public static bool InitGymBadges(bool sql = false)
 		{
-			BadgeData = new Dictionary<GymBadges, Character.BadgeData>();
-			HiddenMoveData = new Dictionary<HiddenMoves, HiddenMoveData>();
+			//BadgeData = new Dictionary<GymBadges, Character.BadgeData>();
+			//HiddenMoveData = new Dictionary<HiddenMoves, HiddenMoveData>();
 			if (sql) //using (con)
 				return false; //GetGymBadgesFromSQL(con);
 			else return false; //SGetGymBadgesFromXML();
@@ -324,7 +271,7 @@ namespace PokemonUnity
 		public static bool InitPokedex(bool sql = true)
 		{
 			//Init in Region Method
-			PokedexData = new Dictionary<Regions, Pokedex>();
+			//PokedexData = new Dictionary<Regions, Pokedex>();
 			if (sql) //using (con)
 				return GetPokedexFromSQL(con);
 			else return false;
@@ -442,177 +389,177 @@ namespace PokemonUnity
 						case Effects.NONE:
 							break;
 						case Effects.x001:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_000());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_000());
 							break;
 						case Effects.x002:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_003());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_003());
 							break;
 						case Effects.x003:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_005());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_005());
 							break;
 						case Effects.x004:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DD());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DD());
 							break;
 						case Effects.x005:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00A());
 							break;
 						case Effects.x006:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00C());
 							break;
 						case Effects.x007:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_007());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_007());
 							break;
 						case Effects.x008:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E0());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E0());
 							break;
 						case Effects.x009:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DE());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DE());
 							break;
 						case Effects.x00A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AE());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AE());
 							break;
 						case Effects.x00B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01C());
 							break;
 						case Effects.x00C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01D());
 							break;
 						case Effects.x00E:
 							break;
 						case Effects.x011:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_022());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_022());
 							break;
 						case Effects.x012:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A5());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A5());
 							break;
 						case Effects.x013:
 							break;
 						case Effects.x014:
 							//ToDo: Tail whip has just one effect
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_043());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_043());
 							break;
 						case Effects.x015:
 							//ToDo: low-sweep and electroweb
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_044());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_044());
 							break;
 						case Effects.x018:
 							//ToDo: Only has one effect
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_047());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_047());
 							break;
 						case Effects.x019:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_048());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_048());
 							break;
 						case Effects.x01A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_051());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_051());
 							break;
 						case Effects.x01B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D4());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D4());
 							break;
 						case Effects.x01C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D2());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D2());
 							break;
 						case Effects.x01D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EB());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EB());
 							break;
 						case Effects.x01E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C0());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C0());
 							break;
 						case Effects.x01F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05E());
 							break;
 						case Effects.x020:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00F());
 							break;
 						case Effects.x021:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D5());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D5());
 							break;
 						case Effects.x022:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_006());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_006());
 							break;
 						case Effects.x023:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_109());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_109());
 							break;
 						case Effects.x024:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A3());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A3());
 							break;
 						case Effects.x025:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_017());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_017());
 							break;
 						case Effects.x026:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D9());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D9());
 							break;
 						case Effects.x027:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_070());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_070());
 							break;
 						case Effects.x028:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C3());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C3());
 							break;
 						case Effects.x029:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06C());
 							break;
 						case Effects.x02A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06B());
 							break;
 						case Effects.x02B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CF());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CF());
 							break;
 						case Effects.x02C:
 							//ToDo: has an effect...
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_000());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_000());
 							break;
 						case Effects.x02D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BD());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BD());
 							break;
 						case Effects.x02E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10B());
 							break;
 						case Effects.x02F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_056());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_056());
 							break;
 						case Effects.x030:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_023());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_023());
 							break;
 						case Effects.x031:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FA());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FA());
 							break;
 						case Effects.x032:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_12A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_12A());
 							break;
 						case Effects.x033:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02E());
 							break;
 						case Effects.x034:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02F());
 							break;
 						case Effects.x035:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_030());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_030());
 							break;
 						case Effects.x036:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_032());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_032());
 							break;
 						case Effects.x037:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_033());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_033());
 							break;
 						case Effects.x03A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_069());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_069());
 							break;
 						case Effects.x03B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04B());
 							break;
 						case Effects.x03C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04C());
 							break;
 						case Effects.x03D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04D());
 							break;
 						case Effects.x03E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13D());
 							break;
 						case Effects.x03F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04F());
 							break;
 						case Effects.x042:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A2());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A2());
 							break;
 						case Effects.x043:
 							break;
@@ -621,880 +568,880 @@ namespace PokemonUnity
 						case Effects.x045:
 							break;
 						case Effects.x046:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_043());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_043());
 							break;
 						case Effects.x047:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_044());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_044());
 							break;
 						case Effects.x048:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_045());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_045());
 							break;
 						case Effects.x049:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_046());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_046());
 							break;
 						case Effects.x04A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_047());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_047());
 							break;
 						case Effects.x04B:
 							break;
 						case Effects.x04C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C7());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C7());
 							break;
 						case Effects.x04D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_013());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_013());
 							break;
 						case Effects.x04E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BE());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BE());
 							break;
 						case Effects.x04F:
 							break;
 						case Effects.x050:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10C());
 							break;
 						case Effects.x051:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C2());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C2());
 							break;
 						case Effects.x052:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_093());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_093());
 							break;
 						case Effects.x053:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05C());
 							break;
 						case Effects.x054:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B6());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B6());
 							break;
 						case Effects.x055:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DC());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DC());
 							break;
 						case Effects.x056:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_001());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_001());
 							break;
 						case Effects.x057:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B9());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B9());
 							break;
 						case Effects.x058:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06D());
 							break;
 						case Effects.x059:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06F());
 							break;
 						case Effects.x05A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_071());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_071());
 							break;
 						case Effects.x05B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BC());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BC());
 							break;
 						case Effects.x05C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05A());
 							break;
 						case Effects.x05D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_011());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_011());
 							break;
 						case Effects.x05E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05F());
 							break;
 						case Effects.x05F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A6());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A6());
 							break;
 						case Effects.x060:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05D());
 							break;
 						case Effects.x062:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B4());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B4());
 							break;
 						case Effects.x063:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E7());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E7());
 							break;
 						case Effects.x064:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_098());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_098());
 							break;
 						case Effects.x065:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10E());
 							break;
 						case Effects.x066:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E9());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E9());
 							break;
 						case Effects.x067:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_019());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_019());
 							break;
 						case Effects.x068:
 							break;
 						case Effects.x069:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BF());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BF());
 							break;
 						case Effects.x06A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F1());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F1());
 							break;
 						case Effects.x06B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EF());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EF());
 							break;
 						case Effects.x06C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10F());
 							break;
 						case Effects.x06D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_034());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_034());
 							break;
 						case Effects.x06E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10D());
 							break;
 						case Effects.x070:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AA());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AA());
 							break;
 						case Effects.x071:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_103());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_103());
 							break;
 						case Effects.x072:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A7());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A7());
 							break;
 						case Effects.x073:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E5());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E5());
 							break;
 						case Effects.x074:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_101());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_101());
 							break;
 						case Effects.x075:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E8());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E8());
 							break;
 						case Effects.x076:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D3());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D3());
 							break;
 						case Effects.x077:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_041());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_041());
 							break;
 						case Effects.x078:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_091());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_091());
 							break;
 						case Effects.x079:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_016());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_016());
 							break;
 						case Effects.x07A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_089());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_089());
 							break;
 						case Effects.x07B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_094());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_094());
 							break;
 						case Effects.x07C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08A());
 							break;
 						case Effects.x07D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01A());
 							break;
 						case Effects.x07E:
 							break;
 						case Effects.x07F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_095());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_095());
 							break;
 						case Effects.x080:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0ED());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0ED());
 							break;
 						case Effects.x081:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_088());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_088());
 							break;
 						case Effects.x082:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_110());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_110());
 							break;
 						case Effects.x083:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06A());
 							break;
 						case Effects.x085:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D8());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D8());
 							break;
 						case Effects.x088:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_090());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_090());
 							break;
 						case Effects.x089:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_100());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_100());
 							break;
 						case Effects.x08A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FF());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FF());
 							break;
 						case Effects.x08B:
 							//ToDo: Has other effects beyond this class
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01D());
 							break;
 						case Effects.x08C:
 							break;
 						case Effects.x08D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02D());
 							break;
 						case Effects.x08F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03A());
 							break;
 						case Effects.x090:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_055());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_055());
 							break;
 						case Effects.x091:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_072());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_072());
 							break;
 						case Effects.x092:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C8());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C8());
 							break;
 						case Effects.x093:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_078());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_078());
 							break;
 						case Effects.x094:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_076());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_076());
 							break;
 						case Effects.x095:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_111());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_111());
 							break;
 						case Effects.x096:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_077());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_077());
 							break;
 						case Effects.x097:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_010());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_010());
 							break;
 						case Effects.x098:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C4());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C4());
 							break;
 						case Effects.x099:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_008());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_008());
 							break;
 						case Effects.x09A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EA());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EA());
 							break;
 						case Effects.x09B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C1());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C1());
 							break;
 						case Effects.x09C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C9());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C9());
 							break;
 						case Effects.x09D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01E());
 							break;
 						case Effects.x09F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_012());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_012());
 							break;
 						case Effects.x0A0:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D1());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D1());
 							break;
 						case Effects.x0A1:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_112());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_112());
 							break;
 						case Effects.x0A2:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_113());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_113());
 							break;
 						case Effects.x0A3:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_114());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_114());
 							break;
 						case Effects.x0A5:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_102());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_102());
 							break;
 						case Effects.x0A6:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B7());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B7());
 							break;
 						case Effects.x0A7:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_040());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_040());
 							break;
 						case Effects.x0A8:
 							break;
 						case Effects.x0A9:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E2());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E2());
 							break;
 						case Effects.x0AA:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07E());
 							break;
 						case Effects.x0AB:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_115());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_115());
 							break;
 						case Effects.x0AC:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07C());
 							break;
 						case Effects.x0AD:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_117());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_117());
 							break;
 						case Effects.x0AE:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B3());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B3());
 							break;
 						case Effects.x0AF:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_021());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_021());
 							break;
 						case Effects.x0B0:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BA());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BA());
 							break;
 						case Effects.x0B1:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09C());
 							break;
 						case Effects.x0B2:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F2());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F2());
 							break;
 						case Effects.x0B3:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_065());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_065());
 							break;
 						case Effects.x0B4:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D7());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D7());
 							break;
 						case Effects.x0B5:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B5());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B5());
 							break;
 						case Effects.x0B6:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DB());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DB());
 							break;
 						case Effects.x0B7:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03B());
 							break;
 						case Effects.x0B8:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B1());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B1());
 							break;
 						case Effects.x0B9:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F6());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F6());
 							break;
 						case Effects.x0BA:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_081());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_081());
 							break;
 						case Effects.x0BB:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_10A());
 							break;
 						case Effects.x0BC:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_004());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_004());
 							break;
 						case Effects.x0BD:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F0());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F0());
 							break;
 						case Effects.x0BE:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_06E());
 							break;
 						case Effects.x0BF:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08B());
 							break;
 						case Effects.x0C0:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_067());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_067());
 							break;
 						case Effects.x0C1:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B8());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B8());
 							break;
 						case Effects.x0C2:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_018());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_018());
 							break;
 						case Effects.x0C3:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E6());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E6());
 							break;
 						case Effects.x0C4:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B2());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B2());
 							break;
 						case Effects.x0C5:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09A());
 							break;
 						case Effects.x0C6:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A4());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A4());
 							break;
 						case Effects.x0C7:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FB());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FB());
 							break;
 						case Effects.x0C8:
 							break;
 						case Effects.x0C9:
 							break;
 						case Effects.x0CA:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09D());
 							break;
 						case Effects.x0CB:
 							break;
 						case Effects.x0CC:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_087());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_087());
 							break;
 						case Effects.x0CD:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03F());
 							break;
 						case Effects.x0CE:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04A());
 							break;
 						case Effects.x0CF:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02A());
 							break;
 						case Effects.x0D0:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11B());
 							break;
 						case Effects.x0D1:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_024());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_024());
 							break;
 						case Effects.x0D2:
 							break;
 						case Effects.x0D3:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09E());
 							break;
 						case Effects.x0D4:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02C());
 							break;
 						case Effects.x0D5:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_026());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_026());
 							break;
 						case Effects.x0D6:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_060());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_060());
 							break;
 						case Effects.x0D7:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D6());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D6());
 							break;
 						case Effects.x0D8:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_118());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_118());
 							break;
 						case Effects.x0D9:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A8());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A8());
 							break;
 						case Effects.x0DA:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07D());
 							break;
 						case Effects.x0DB:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03E());
 							break;
 						case Effects.x0DC:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08D());
 							break;
 						case Effects.x0DD:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E3());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E3());
 							break;
 						case Effects.x0DE:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_080());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_080());
 							break;
 						case Effects.x0DF:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_096());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_096());
 							break;
 						case Effects.x0E0:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AD());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AD());
 							break;
 						case Effects.x0E1:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F4());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F4());
 							break;
 						case Effects.x0E2:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_05B());
 							break;
 						case Effects.x0E3:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_037());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_037());
 							break;
 						case Effects.x0E4:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_073());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_073());
 							break;
 						case Effects.x0E5:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EE());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EE());
 							break;
 						case Effects.x0E6:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03C());
 							break;
 						case Effects.x0E7:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_084());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_084());
 							break;
 						case Effects.x0E8:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_082());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_082());
 							break;
 						case Effects.x0E9:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F8());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F8());
 							break;
 						case Effects.x0EA:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F7());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F7());
 							break;
 						case Effects.x0EB:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01B());
 							break;
 						case Effects.x0EC:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_097());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_097());
 							break;
 						case Effects.x0ED:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BB());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0BB());
 							break;
 						case Effects.x0EE:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08C());
 							break;
 						case Effects.x0EF:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_057());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_057());
 							break;
 						case Effects.x0F0:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_068());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_068());
 							break;
 						case Effects.x0F1:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A1());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A1());
 							break;
 						case Effects.x0F2:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B0());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0B0());
 							break;
 						case Effects.x0F3:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AF());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AF());
 							break;
 						case Effects.x0F4:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_052());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_052());
 							break;
 						case Effects.x0F5:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_053());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_053());
 							break;
 						case Effects.x0F6:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08F());
 							break;
 						case Effects.x0F7:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_125());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_125());
 							break;
 						case Effects.x0F8:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_064());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_064());
 							break;
 						case Effects.x0F9:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_116());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_116());
 							break;
 						case Effects.x0FA:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_104());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_104());
 							break;
 						case Effects.x0FB:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_054());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_054());
 							break;
 						case Effects.x0FC:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DA());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DA());
 							break;
 						case Effects.x0FD:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_119());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_119());
 							break;
 						case Effects.x0FE:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FE());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FE());
 							break;
 						case Effects.x0FF:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_002());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_002());
 							break;
 						case Effects.x100:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CB());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CB());
 							break;
 						case Effects.x101:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CA());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CA());
 							break;
 						case Effects.x102:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_075());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_075());
 							break;
 						case Effects.x103:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_049());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_049());
 							break;
 						case Effects.x104:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11F());
 							break;
 						case Effects.x105:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00D());
 							break;
 						case Effects.x106:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D0());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0D0());
 							break;
 						case Effects.x107:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FD());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FD());
 							break;
 						case Effects.x108:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CC());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CC());
 							break;
 						case Effects.x10A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04E());
 							break;
 						case Effects.x10B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_105());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_105());
 							break;
 						case Effects.x10C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_014());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_014());
 							break;
 						case Effects.x10D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09F());
 							break;
 						case Effects.x10E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FC());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0FC());
 							break;
 						case Effects.x10F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E4());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E4());
 							break;
 						case Effects.x110:
 							//ToDo: Seed Flare additional effect
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04F());
 							break;
 						case Effects.x111:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CD());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CD());
 							//ToDo: Phantom and shadow force are the same...
 							//MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14D());
 							break;
 						case Effects.x112:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00B());
 							break;
 						case Effects.x113:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_00E());
 							break;
 						case Effects.x114:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_009());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_009());
 							break;
 						case Effects.x115:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_020());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_020());
 							break;
 						case Effects.x116:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_029());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_029());
 							break;
 						case Effects.x117:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AC());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AC());
 							break;
 						case Effects.x118:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_059());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_059());
 							break;
 						case Effects.x119:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_058());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_058());
 							break;
 						case Effects.x11A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_124());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_124());
 							break;
 						case Effects.x11B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_122());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_122());
 							break;
 						case Effects.x11C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07B());
 							break;
 						case Effects.x11D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_031());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_031());
 							break;
 						case Effects.x11E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11A());
 							break;
 						case Effects.x11F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F9());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F9());
 							break;
 						case Effects.x120:
 							//ToDo: Smack down has different effect
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11C());
 							break;
 						case Effects.x121:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A0());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A0());
 							break;
 						case Effects.x122:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_074());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_074());
 							break;
 						case Effects.x123:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_02B());
 							break;
 						case Effects.x124:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_09B());
 							break;
 						case Effects.x125:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_123());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_123());
 							break;
 						case Effects.x126:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_099());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_099());
 							break;
 						case Effects.x127:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_061());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_061());
 							break;
 						case Effects.x128:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_01F());
 							break;
 						case Effects.x129:
 							//ToDo: Acid-spray additional effects
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_04F());
 							break;
 						case Effects.x12A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_121());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_121());
 							break;
 						case Effects.x12B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_063());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_063());
 							break;
 						case Effects.x12C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_066());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_066());
 							break;
 						case Effects.x12D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11D());
 							break;
 						case Effects.x12E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_083());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_083());
 							break;
 						case Effects.x12F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_092());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_092());
 							break;
 						case Effects.x130:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A9());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A9());
 							break;
 						case Effects.x131:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_050());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_050());
 							break;
 						case Effects.x132:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_08E());
 							break;
 						case Effects.x133:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AB());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0AB());
 							break;
 						case Effects.x134:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_120());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_120());
 							break;
 						case Effects.x135:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_035());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_035());
 							break;
 						case Effects.x136:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DF());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DF());
 							break;
 						case Effects.x137:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07F());
 							break;
 						case Effects.x138:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CE());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0CE());
 							break;
 						case Effects.x139:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_036());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_036());
 							break;
 						case Effects.x13A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EC());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EC());
 							break;
 						case Effects.x13B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F5());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F5());
 							break;
 						case Effects.x13C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11E());
 							break;
 						case Effects.x13D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_028());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_028());
 							break;
 						case Effects.x13E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_086());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_086());
 							break;
 						case Effects.x13F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_062());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_062());
 							break;
 						case Effects.x140:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_085());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_085());
 							break;
 						case Effects.x141:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E1());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0E1());
 							break;
 						case Effects.x142:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_039());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_039());
 							break;
 						case Effects.x143:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_025());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_025());
 							break;
 						case Effects.x144:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F3());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0F3());
 							break;
 						case Effects.x145:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_108());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_108());
 							break;
 						case Effects.x146:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_107());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_107());
 							break;
 						case Effects.x147:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_106());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_106());
 							break;
 						case Effects.x148:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_027());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_027());
 							break;
 						case Effects.x149:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_038());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_038());
 							break;
 						case Effects.x14A:
 							break;
 						case Effects.x14B:
 							//ToDo: Glaciate
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_044());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_044());
 							break;
 						case Effects.x14C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C5());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C5());
 							break;
 						case Effects.x14D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C6());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C6());
 							break;
 						case Effects.x14E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_015());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_015());
 							break;
 						case Effects.x14F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03D());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_03D());
 							break;
 						case Effects.x150:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_07A());
 							break;
 						case Effects.x151:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_079());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_079());
 							break;
 						case Effects.x152:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_144());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_144());
 							break;
 						case Effects.x153:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_158());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_158());
 							break;
 						case Effects.x154:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13E());
 							break;
 						case Effects.x155:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_153());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_153());
 							break;
 						case Effects.x156:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_150());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_150());
 							break;
 						case Effects.x157:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_142());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_142());
 							break;
 						case Effects.x158:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13A());
 							break;
 						case Effects.x159:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_146());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_146());
 							break;
 						case Effects.x15A:
 							//ToDo: Parabolic charge has different effect
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DD());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0DD());
 							break;
 						case Effects.x15B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_151());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_151());
 							break;
 						case Effects.x15C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_141());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_141());
 							break;
 						case Effects.x15D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14F());
 							break;
 						case Effects.x15E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14A());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14A());
 							break;
 						case Effects.x15F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13F());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13F());
 							break;
 						case Effects.x160:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_155());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_155());
 							break;
 						case Effects.x161:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_156());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_156());
 							break;
 						case Effects.x162:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_145());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_145());
 							break;
 						case Effects.x163:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_152());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_152());
 							break;
 						case Effects.x164:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14B());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14B());
 							break;
 						case Effects.x165:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_139());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_139());
 							break;
 						case Effects.x166:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13C());
 							break;
 						case Effects.x167:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_136());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_136());
 							break;
 						case Effects.x168:
 							//ToDo: I think the function both do the samething
 							//MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13B());
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_147());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_147());
 							break;
 						case Effects.x169:
 							//ToDo: Water Shuriken has different effect
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C0());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0C0());
 							break;
 						case Effects.x16A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14C());
 							break;
 						case Effects.x16B:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_138());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_138());
 							break;
 						case Effects.x16C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_140());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_140());
 							break;
 						case Effects.x16D:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_042());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_042());
 							break;
 						case Effects.x16E:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_14E());
 							break;
 						case Effects.x16F:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_137());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_137());
 							break;
 						case Effects.x170:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_157());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_157());
 							break;
 						case Effects.x171:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_154());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_154());
 							break;
 						case Effects.x172:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_134());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_134());
 							break;
 						case Effects.x173:
 							break;
@@ -1502,31 +1449,31 @@ namespace PokemonUnity
 							break;
 						case Effects.x175:
 							//ToDo: Thousand arrows....
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_11C());
 							break;
 						case Effects.x176:
 							//ToDo: Thousand wave has different effects
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EF());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0EF());
 							break;
 						case Effects.x177:
 							break;
 						case Effects.x178:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_143());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_143());
 							break;
 						case Effects.x179:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_149());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_149());
 							break;
 						case Effects.x17A:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_148());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_148());
 							break;
 						case Effects.x17B:
 							break;
 						case Effects.x17C:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_135());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_135());
 							break;
 						case Effects.x17D:
 							//Disarming voice, inflices extra effects
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A5());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A5());
 							break;
 						case Effects.x17E:
 							break;
@@ -1609,22 +1556,22 @@ namespace PokemonUnity
 						case Effects.x711:
 							//126	No effect.	Shadow Blast, Shadow Blitz, Shadow Break, Shadow Rave, Shadow Rush, Shadow Wave
 							//Effect x711 is only used by Shadow Rush... the others just deal regular damage, with no additional effects 
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_126());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_126());
 							break;
 						case Effects.x712:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_130());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_130());
 							break;
 						case Effects.x713:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_12E());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_12E());
 							break;
 						case Effects.x714:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_12C());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_12C());
 							break;
 						case Effects.x715:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_132());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_132());
 							break;
 						case Effects.x716:
-							MoveEffectData.Add(effect, new Combat.PokeBattle_Move_131());
+							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_131());
 							break;
 						default:
 							break;
@@ -1903,7 +1850,7 @@ namespace PokemonUnity
 							break;
 					}
 					#endregion
-					TrainerMetaData.Add(type, new TrainerMetaData(
+					Kernal.TrainerMetaData.Add(type, new TrainerMetaData(
 							id: type
 							, @double: doubel
 							, baseMoney: BaseMoney
@@ -2205,11 +2152,11 @@ namespace PokemonUnity
 					using(reader)
 					{
 						if (OnLoad != null) { onLoad.TotalPieces = (int)reader[0]; OnLoad.Invoke(Game.GameData, onLoad); } reader.NextResult();
-						PokemonData.Add(Pokemons.NONE, new Monster.Data.PokemonData(Id:Pokemons.NONE, hatchTime: 1000));
+						Kernal.PokemonData.Add(Pokemons.NONE, new Monster.Data.PokemonData(Id:Pokemons.NONE, hatchTime: 1000));
 						while(reader.Read()) //if(reader.Read())
 						{
 							//if (OnLoad != null) { onLoad.Piece = reader.StepCount; OnLoad.Invoke(Game.GameData, onLoad); }
-							PokemonData.Add((Pokemons)int.Parse((string)reader["id"].ToString()),
+							Kernal.PokemonData.Add((Pokemons)int.Parse((string)reader["id"].ToString()),
 								new PokemonUnity.Monster.Data.PokemonData(
 									Id: (Pokemons)int.Parse((string)reader["id"].ToString())
 									,baseForm: (Forms)int.Parse((string)reader["species_id"].ToString())
@@ -2328,10 +2275,10 @@ namespace PokemonUnity
 					reader.Close();
 					reader.Dispose();
 					#endregion
-					PokemonMovesData.Add(Pokemons.NONE, new Monster.Data.PokemonMoveTree(new Monster.Data.PokemonMoveset[] { }));
+					Kernal.PokemonMovesData.Add(Pokemons.NONE, new Monster.Data.PokemonMoveTree(new Monster.Data.PokemonMoveset[] { }));
 					foreach (var pkmn in p)
 					{
-						PokemonMovesData.Add(pkmn.Key, new Monster.Data.PokemonMoveTree(pkmn.Value.ToArray()));
+						Kernal.PokemonMovesData.Add(pkmn.Key, new Monster.Data.PokemonMoveTree(pkmn.Value.ToArray()));
 					}
 				}
 				return true;
@@ -2347,7 +2294,7 @@ namespace PokemonUnity
 			try
 			{
 				Dictionary<Pokemons, List<Monster.Data.Form>> p = new Dictionary<Pokemons, List<Monster.Data.Form>>();
-				foreach (Pokemons x in PokemonData.Keys)//for(int n = 1; n <= PokemonData.Keys.Length; n++)
+				foreach (Pokemons x in Kernal.PokemonData.Keys)//for(int n = 1; n <= PokemonData.Keys.Length; n++)
 				{
 					p.Add(x, new List<Monster.Data.Form>());
 				}
@@ -2427,14 +2374,14 @@ namespace PokemonUnity
 				#endregion
 				foreach (var pkmn in p)
 				{
-					PokemonFormsData.Add(pkmn.Key, pkmn.Value
+					Kernal.PokemonFormsData.Add(pkmn.Key, pkmn.Value
 						//.OrderBy(x => x.FormOrder)
 						.ToArray());
 					//if (PokemonFormsData[pkmn.Value[0].Pokemon].Length == 0)
 					if (pkmn.Key == Pokemons.NONE)// && pkmn.Value[0].Pokemon != pkmn.Value[0].Base)
-						PokemonFormsData[Pokemons.NONE] = new Monster.Data.Form[] { new Monster.Data.Form(Forms.NONE, Pokemons.NONE, Pokemons.NONE) };
+						Kernal.PokemonFormsData[Pokemons.NONE] = new Monster.Data.Form[] { new Monster.Data.Form(Forms.NONE, Pokemons.NONE, Pokemons.NONE) };
 					else if (pkmn.Key != Pokemons.NONE && pkmn.Value[0].Pokemon != pkmn.Value[0].Base)
-						PokemonFormsData[pkmn.Key] = PokemonFormsData[pkmn.Value[0].Base];
+						Kernal.PokemonFormsData[pkmn.Key] = Kernal.PokemonFormsData[pkmn.Value[0].Base];
 				}
 				return true;
 			} catch (DbException e) {
@@ -2449,10 +2396,10 @@ namespace PokemonUnity
 			try
 			{
 				Dictionary<Pokemons, List<Monster.Data.EvolutionTrigger>> p = new Dictionary<Pokemons, List<Monster.Data.EvolutionTrigger>>();
-				foreach (Pokemons x in PokemonData.Keys)//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
+				foreach (Pokemons x in Kernal.PokemonData.Keys)//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
 				{
 					//p.Add(x, new List<Monster.Data.EvolutionTrigger>());
-					PokemonEvolutionsData[x] = new Monster.Data.PokemonEvolution[0];
+					Kernal.PokemonEvolutionsData[x] = new Monster.Data.PokemonEvolution[0];
 				}
 				//Step 3: Running a Command
 				IDbCommand stmt = con.CreateCommand();
@@ -2520,7 +2467,7 @@ namespace PokemonUnity
 					//else if (pkmn.Key == Pokemons.EEVEE)
 					//	PokemonEvolutionsData[pkmn.Key] = new Monster.Data.PokemonEvolution[pkmn.Value.Count-2];
 					//else
-						PokemonEvolutionsData[pkmn.Key] = new Monster.Data.PokemonEvolution[pkmn.Value.Count];
+						Kernal.PokemonEvolutionsData[pkmn.Key] = new Monster.Data.PokemonEvolution[pkmn.Value.Count];
 					for(int i = 0; i < pkmn.Value.Count; i++)
 					{
 						//if (!pkmn.Value[i].Location.HasValue && (pkmn.Key == Pokemons.MAGNETON || pkmn.Key == Pokemons.NOSEPASS || pkmn.Value[i].Species == Pokemons.LEAFEON || pkmn.Value[i].Species == Pokemons.GLACEON))// || pkmn.Key == Pokemons.ESPURR
@@ -2529,18 +2476,18 @@ namespace PokemonUnity
 						if (pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 0 //"night"
 							&& pkmn.Value[i].Happiness.HasValue)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessNight, pkmn.Value[i].Happiness.Value);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessNight, pkmn.Value[i].Happiness.Value);
 							continue;
 						}
 						else if (pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 1 //"day"
 								&& pkmn.Value[i].Happiness.HasValue)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessDay, pkmn.Value[i].Happiness.Value);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessDay, pkmn.Value[i].Happiness.Value);
 							continue;
 						}
 						else if (pkmn.Value[i].Happiness.HasValue)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Happiness, pkmn.Value[i].Happiness.Value);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Happiness, pkmn.Value[i].Happiness.Value);
 							continue;
 						}
 						#endregion
@@ -2549,18 +2496,18 @@ namespace PokemonUnity
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == true //"1"
 							&& pkmn.Value[i].Trigger != Items.NONE)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemFemale, pkmn.Value[i].Trigger);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemFemale, pkmn.Value[i].Trigger);
 							continue;
 						}
 						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == false //"2"
 							&& pkmn.Value[i].Trigger != Items.NONE)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemMale, pkmn.Value[i].Trigger);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemMale, pkmn.Value[i].Trigger);
 							continue;
 						}
 						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Trigger != Items.NONE)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Item, pkmn.Value[i].Trigger);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Item, pkmn.Value[i].Trigger);
 							continue;
 						}
 						#endregion
@@ -2568,7 +2515,7 @@ namespace PokemonUnity
 						#region Location Evolution
 						if (pkmn.Value[i].Location.HasValue)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Location, pkmn.Value[i].Location.Value);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Location, pkmn.Value[i].Location.Value);
 							continue;
 						}
 						#endregion
@@ -2576,17 +2523,17 @@ namespace PokemonUnity
 						#region Trade Evolution
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.trade && pkmn.Value[i].TradeSpecies != Pokemons.NONE)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.TradeSpecies, pkmn.Value[i].TradeSpecies);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.TradeSpecies, pkmn.Value[i].TradeSpecies);
 							continue;
 						}
 						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.trade && pkmn.Value[i].Held != Items.NONE && pkmn.Value[i].TradeSpecies == Pokemons.NONE)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.TradeItem, pkmn.Value[i].Held);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.TradeItem, pkmn.Value[i].Held);
 							continue;
 						}
 						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.trade && pkmn.Value[i].Held == Items.NONE && pkmn.Value[i].TradeSpecies == Pokemons.NONE)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Trade, null);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Trade, null);
 							continue;
 						}
 						#endregion
@@ -2595,18 +2542,18 @@ namespace PokemonUnity
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 1 //"day"
 								&& pkmn.Value[i].Held != Items.NONE)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemDay, pkmn.Value[i].Held);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemDay, pkmn.Value[i].Held);
 							continue;
 						}
 						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 0 //"night"
 							&& pkmn.Value[i].Held != Items.NONE)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemNight, pkmn.Value[i].Held);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemNight, pkmn.Value[i].Held);
 							continue;
 						}
 						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Held != Items.NONE)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItem, pkmn.Value[i].Held);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItem, pkmn.Value[i].Held);
 							continue;
 						}
 						#endregion
@@ -2614,12 +2561,12 @@ namespace PokemonUnity
 						#region Beauty/Affection
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Beauty.HasValue)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Beauty, pkmn.Value[i].Beauty.Value);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Beauty, pkmn.Value[i].Beauty.Value);
 							continue;
 						}
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Affection.HasValue)
 						{
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Affection, pkmn.Value[i].KnownType);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Affection, pkmn.Value[i].KnownType);
 							continue;
 						}
 						#endregion
@@ -2629,7 +2576,7 @@ namespace PokemonUnity
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<Moves>(Pokemons.{name.ToUpper()}, EvolutionMethod.Move, Moves.{tempMove.ToUpper()}),";
 							//break;
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Move, pkmn.Value[i].KnownMove);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Move, pkmn.Value[i].KnownMove);
 							continue;
 						}
 						#endregion
@@ -2639,14 +2586,14 @@ namespace PokemonUnity
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<Pokemons>(Pokemons.{name.ToUpper()}, EvolutionMethod.Party, Pokemons.{pkmn.Value[i].Species.ToUpper()}),";
 							//break;
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Party, pkmn.Value[i].PartySpecies);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Party, pkmn.Value[i].PartySpecies);
 							continue;
 						}
 						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].KnownType != Types.NONE)
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<Types>(Pokemons.{name.ToUpper()}, EvolutionMethod.Move, Types.{tempType.ToUpper()}),";
 							//break;
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Type, pkmn.Value[i].PartyType);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Type, pkmn.Value[i].PartyType);
 							continue;
 						}
 						#endregion
@@ -2655,19 +2602,19 @@ namespace PokemonUnity
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.HasValue && pkmn.Value[i].PhysicalStat.Value == 1)           //Attack Greater Than Defense (Attack > Defense)    1
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.AttackGreater),";
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.AttackGreater, pkmn.Value[i].PartyType);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.AttackGreater, pkmn.Value[i].PartyType);
 							continue;
 						}
 						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.HasValue && pkmn.Value[i].PhysicalStat.Value == -1)    //Defense Greater Than Attack (Attack < Defense)    -1
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.DefenseGreater),";
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.DefenseGreater, pkmn.Value[i].PartyType);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.DefenseGreater, pkmn.Value[i].PartyType);
 							continue;
 						}
 						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.HasValue && pkmn.Value[i].PhysicalStat.Value == 0)    //Attack Equal To Attack (Attack = Defense)         0
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.AtkDefEqual),";
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.AtkDefEqual, pkmn.Value[i].PartyType);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.AtkDefEqual, pkmn.Value[i].PartyType);
 							continue;
 						}
 						#endregion
@@ -2676,7 +2623,7 @@ namespace PokemonUnity
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Species == Pokemons.SILCOON)
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.Silcoon),";
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Silcoon);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Silcoon);
 							continue;
 						}
 						#endregion
@@ -2685,7 +2632,7 @@ namespace PokemonUnity
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Species == Pokemons.CASCOON)
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.Cascoon),";
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Cascoon);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Cascoon);
 							continue;
 						}
 						#endregion
@@ -2694,7 +2641,7 @@ namespace PokemonUnity
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Species == Pokemons.NINJASK)
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.Ninjask),";
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Ninjask);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Ninjask);
 							continue;
 						}
 						#endregion
@@ -2703,7 +2650,7 @@ namespace PokemonUnity
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Species == Pokemons.SHEDINJA)
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.Shedinja),";
-							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Shedinja);
+							Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Shedinja);
 							continue;
 						}
 						#endregion
@@ -2714,25 +2661,25 @@ namespace PokemonUnity
 							if (pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == true) //"1"
 							{
 								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.LevelFemale, {csv.Context.Record[4]}),";
-								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.LevelFemale, pkmn.Value[i].MinLevel);
+								Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.LevelFemale, pkmn.Value[i].MinLevel);
 								continue;
 							}
 							else if (pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == false) //"2"
 							{
 								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.LevelMale, {csv.Context.Record[4]}),";
-								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.LevelMale, pkmn.Value[i].MinLevel);
+								Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.LevelMale, pkmn.Value[i].MinLevel);
 								continue;
 							}
 							else if (pkmn.Value[i].Time.HasValue) //"Lycanroc"
 							{
 								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.Lycanroc, {csv.Context.Record[4]}),";
-								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Lycanroc, pkmn.Value[i].MinLevel);
+								Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Lycanroc, pkmn.Value[i].MinLevel);
 								continue;
 							}
 							else
 							{
 								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.Level, {csv.Context.Record[4]}),";
-								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Level, pkmn.Value[i].MinLevel);
+								Kernal.PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Level, pkmn.Value[i].MinLevel);
 								continue;
 							}
 						}
@@ -2753,7 +2700,7 @@ namespace PokemonUnity
 			try
 			{
 				Dictionary<Pokemons, List<Monster.Data.PokemonWildItems>> p = new Dictionary<Pokemons, List<Monster.Data.PokemonWildItems>>();
-				foreach (Pokemons x in PokemonData.Keys)//for(int n = 1; n <= PokemonData.Keys.Length; n++)
+				foreach (Pokemons x in Kernal.PokemonData.Keys)//for(int n = 1; n <= PokemonData.Keys.Length; n++)
 				{
 					p.Add(x, new List<Monster.Data.PokemonWildItems>());
 				}
@@ -2790,7 +2737,7 @@ namespace PokemonUnity
 					//PokemonItemsData.Add(Pokemons.NONE, new Monster.Data.PokemonWildItems[] { });
 					foreach (var pkmn in p)
 					{
-						PokemonItemsData.Add(pkmn.Key, pkmn.Value.ToArray());
+						Kernal.PokemonItemsData.Add(pkmn.Key, pkmn.Value.ToArray());
 					}
 				}
 				return true;
@@ -2819,7 +2766,7 @@ namespace PokemonUnity
 					//NatureData.Add(Natures.UNSET, new Nature());
 					while(reader.Read()) //if(reader.Read())
 					{
-						NatureData.Add((Natures)(int.Parse((string)reader["id"].ToString())-1),
+						Kernal.NatureData.Add((Natures)(int.Parse((string)reader["id"].ToString())-1),
 							new Nature(
 								nature: (Natures)(int.Parse((string)reader["id"].ToString())-1)
 								,increase: (Stats)(int.Parse((string)reader["increased_stat_id"].ToString())-1)
@@ -2893,7 +2840,7 @@ namespace PokemonUnity
 						Dictionary<Types, byte> x = new Dictionary<Types, byte>();
 						foreach (KeyValuePair<Types, int> y in area.Value)
 							x.Add(key: y.Key, value: (byte)y.Value);
-						TypeData.Add(area.Key,
+						Kernal.TypeData.Add(area.Key,
 							new Monster.Data.Type(
 								atk: area.Key
 								//,table: a.Where(x => x.Key == area.Key).Select<KeyValuePair<Method, int>>(n => n.Value).ToArray()
@@ -2902,8 +2849,8 @@ namespace PokemonUnity
 							)
 						);
 					}
-					TypeData.Add(Types.UNKNOWN, new Monster.Data.Type());
-					TypeData.Add(Types.SHADOW, new Monster.Data.Type());
+					Kernal.TypeData.Add(Types.UNKNOWN, new Monster.Data.Type());
+					Kernal.TypeData.Add(Types.SHADOW, new Monster.Data.Type());
 				}
 				return true;
 			} catch (DbException e) {
@@ -2955,7 +2902,7 @@ namespace PokemonUnity
 				//Step 4: Read the results
 				using(reader)
 				{
-					MoveData.Add(Moves.NONE, new Attack.Data.MoveData());
+					Kernal.MoveData.Add(Moves.NONE, new Attack.Data.MoveData());
 					while(reader.Read()) //if(reader.Read())
 					{
 						string[] f = ((string)reader["move_flag_group"].ToString()).Split(',');
@@ -3004,7 +2951,7 @@ namespace PokemonUnity
 						debug = string.IsNullOrEmpty((string)reader["appeal"].ToString()) ? (int?)null : int.Parse((string)reader["appeal"].ToString());
 						debug = string.IsNullOrEmpty((string)reader["super_appeal"].ToString()) ? (int?)null : int.Parse((string)reader["super_appeal"].ToString());
 						debug = string.IsNullOrEmpty((string)reader["jam"].ToString()) ? (int?)null : int.Parse((string)reader["jam"].ToString());*/
-						MoveData.Add((Moves)int.Parse((string)reader["id"].ToString()),
+						Kernal.MoveData.Add((Moves)int.Parse((string)reader["id"].ToString()),
 							new MoveData(
 								id: (Moves)int.Parse((string)reader["id"].ToString())
 								,category: (Category)int.Parse((string)reader["damage_class_id"].ToString())
@@ -3053,7 +3000,7 @@ namespace PokemonUnity
 							)
 						);
 						if(!string.IsNullOrEmpty((string)reader["meta_category_id"].ToString()))
-							MoveMetaData.Add((Moves)int.Parse((string)reader["id"].ToString()),
+							Kernal.MoveMetaData.Add((Moves)int.Parse((string)reader["id"].ToString()),
 								new MetaData(
 									move: (Moves)int.Parse((string)reader["id"].ToString())
 									,category: (MetaCategory)int.Parse((string)reader["meta_category_id"].ToString())
@@ -3140,12 +3087,12 @@ namespace PokemonUnity
 				//Step 4: Read the results
 				using(reader)
 				{
-					ItemData.Add(Items.EXP_ALL, new ItemData());
-					ItemData.Add(Items.NONE, new ItemData());
+					Kernal.ItemData.Add(Items.EXP_ALL, new ItemData());
+					Kernal.ItemData.Add(Items.NONE, new ItemData());
 					while(reader.Read()) //if(reader.Read())
 					{
 						string[] f = ((string)reader["item_flag_group"].ToString()).Split(',');
-						ItemData.Add((Items)int.Parse((string)reader["id"].ToString()),
+						Kernal.ItemData.Add((Items)int.Parse((string)reader["id"].ToString()),
 							new ItemData(
 								itemId: (Items)int.Parse((string)reader["id"].ToString())
 								,price: int.Parse((string)reader["cost"].ToString())
@@ -3215,7 +3162,7 @@ namespace PokemonUnity
 					//NatureData.Add(Natures.UNSET, new Nature());
 					while(reader.Read()) //if(reader.Read())
 					{
-						BerryData.Add((Items)(int.Parse((string)reader["item_id"].ToString())-1),
+						Kernal.BerryData.Add((Items)(int.Parse((string)reader["item_id"].ToString())-1),
 							new BerryData(
 								berry: (Items)int.Parse((string)reader["item_id"].ToString())
 								,firmness: (FirmnessLevel)int.Parse((string)reader["firmness_id"].ToString())
@@ -3297,7 +3244,7 @@ namespace PokemonUnity
 					foreach (var reg in r)
 					{
 						//RegionData.Add((Regions)int.Parse((string)reader["region_id"].ToString()), reg.Value.ToArray());
-						RegionData.Add((Regions)reg.Key, reg.Value.ToArray());
+						Kernal.RegionData.Add((Regions)reg.Key, reg.Value.ToArray());
 					}
 				}
 				return true;
@@ -3363,15 +3310,15 @@ namespace PokemonUnity
 					reader.Close();
 					reader.Dispose();
 					#endregion
-					LocationData.Add(Locations.NOT_IN_OVERWORLD, new List<int>() { }.ToArray());
+					Kernal.LocationData.Add(Locations.NOT_IN_OVERWORLD, new List<int>() { }.ToArray());
 					foreach (var loc in l)
 					{
 						//LocationData.Add((Locations)int.Parse((string)reader["location_id"].ToString()), loc.Value.ToArray());
-						LocationData.Add((Locations)loc.Key, loc.Value.ToArray());
+						Kernal.LocationData.Add((Locations)loc.Key, loc.Value.ToArray());
 					}
 					foreach (var area in a)
 					{
-						AreaData.Add(area.Key,//int.Parse((string)reader["location_area_id"].ToString()),
+						Kernal.AreaData.Add(area.Key,//int.Parse((string)reader["location_area_id"].ToString()),
 							new Area(
 								id: area.Key
 								//,rate: a.Where(x => x.Key == area.Key).Select<KeyValuePair<Method, int>>(n => n.Value).ToArray()
@@ -3448,7 +3395,7 @@ namespace PokemonUnity
 						e[(Method)int.Parse((string)reader["encounter_method_id"].ToString())]
 							.Add(int.Parse((string)reader["id"].ToString())
 						);
-						EncounterData.Add(int.Parse((string)reader["id"].ToString()),
+						Kernal.EncounterData.Add(int.Parse((string)reader["id"].ToString()),
 							new EncounterData(
 								id: int.Parse((string)reader["id"].ToString())
 								,mapId: int.Parse((string)reader["location_area_id"].ToString())
@@ -3472,7 +3419,7 @@ namespace PokemonUnity
 					//EncounterData.Add(Method.NONE, new List<Encounter>() { }.ToArray());
 					foreach (var en in e)
 					{
-						MethodData.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), en.Value.ToArray());
+						Kernal.MethodData.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), en.Value.ToArray());
 					}
 				}
 				return true;
@@ -3512,7 +3459,7 @@ namespace PokemonUnity
 						e[(Method)int.Parse((string)reader["encounter_method_id"].ToString())]
 							.Add(int.Parse((string)reader["id"].ToString())
 						);
-						EncounterData.Add(int.Parse((string)reader["id"].ToString()),
+						Kernal.EncounterData.Add(int.Parse((string)reader["id"].ToString()),
 							new EncounterData(
 								id: int.Parse((string)reader["id"].ToString())
 								,mapId: int.Parse((string)reader["location_area_id"].ToString())
@@ -3536,7 +3483,7 @@ namespace PokemonUnity
 					//EncounterData.Add(Method.NONE, new List<Encounter>() { }.ToArray());
 					foreach (var en in e)
 					{
-						MethodData.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), en.Value.ToArray());
+						Kernal.MethodData.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), en.Value.ToArray());
 					}
 				}
 				return true;

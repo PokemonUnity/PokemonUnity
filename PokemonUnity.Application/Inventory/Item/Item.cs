@@ -34,13 +34,13 @@ namespace PokemonUnity.Inventory
 		/// <returns></returns>
 		/// <seealso cref="HiddenMoves"/>
 		public static bool pbIsHiddenMove (Moves move) { //ToDo: Move to Game Class
-			//if (Game.ItemData == null) return false;
-			////for (int i = 0; i < Game.ItemData.Count; i++) {
-			//for (int i = 0; i < Game.MachineData.Count; i++) {
+			//if (Kernal.ItemData == null) return false;
+			////for (int i = 0; i < Kernal.ItemData.Count; i++) {
+			//for (int i = 0; i < Kernal.MachineData.Count; i++) {
 			//  //if (!pbIsHiddenMachine(i)) continue;
-			//  //if(Game.ItemData[i].Pocket == ItemPockets.MACHINE)
-			//  //atk=Game.ItemData[i][ITEMMACHINE];
-			//  MachineData atk = Game.MachineData[i]; //HiddenMachine is not HiddenMove
+			//  //if(Kernal.ItemData[i].Pocket == ItemPockets.MACHINE)
+			//  //atk=Kernal.ItemData[i][ITEMMACHINE];
+			//  MachineData atk = Kernal.MachineData[i]; //HiddenMachine is not HiddenMove
 			//  if (atk.Type != MachineData.MachineType.HiddenMachine && move==atk.Move) return true;
 			//}
 			Moves[] hidden = new Moves[] {
@@ -62,11 +62,11 @@ namespace PokemonUnity.Inventory
 		}
 
 		public static int pbGetPrice(Items item) {
-			return Game.ItemData[item].Price; //[ITEMPRICE];
+			return Kernal.ItemData[item].Price; //[ITEMPRICE];
 		}
 
 		public static ItemPockets? pbGetPocket(Items item) {
-			return Game.ItemData[item].Pocket; //[ITEMPOCKET];
+			return Kernal.ItemData[item].Pocket; //[ITEMPOCKET];
 		}
 
 		/// <summary>
@@ -75,46 +75,46 @@ namespace PokemonUnity.Inventory
 		/// <param name="item"></param>
 		/// <returns></returns>
 		public static bool pbIsImportantItem (Items item) {
-			return Game.ItemData.ContainsKey(item) && (pbIsKeyItem(item) ||
+			return Kernal.ItemData.ContainsKey(item) && (pbIsKeyItem(item) ||
 				pbIsHiddenMachine(item) ||
 				(Core.INFINITETMS && pbIsTechnicalMachine(item)));
 		}
 
 		public static bool pbIsMachine (Items item) {
-			return Game.ItemData[item].Category == ItemCategory.ALL_MACHINES || (pbIsTechnicalMachine(item) || pbIsHiddenMachine(item));
+			return Kernal.ItemData[item].Category == ItemCategory.ALL_MACHINES || (pbIsTechnicalMachine(item) || pbIsHiddenMachine(item));
 		}
 
 		public static bool pbIsTechnicalMachine (Items item) {
-			//return Game.ItemData.ContainsKey(item) && (Game.ItemData[item][ITEMUSE]==3);
+			//return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData[item][ITEMUSE]==3);
 			Items[] TMs = new Items[] { Items.TM_ALL }; //Items.TM01, Items.TM02, Items.TM03, Items.TM04, Items.TM05, Items.TM06, Items.TM07, Items.TM08, Items.TM09, Items.TM10, Items.TM11, Items.TM12, Items.TM13, Items.TM14, Items.TM15, Items.TM16, Items.TM17, Items.TM18, Items.TM19, Items.TM20, Items.TM21, Items.TM22, Items.TM23, Items.TM24, Items.TM25, Items.TM26, Items.TM27, Items.TM28, Items.TM29, Items.TM30, Items.TM31, Items.TM32, Items.TM33, Items.TM34, Items.TM35, Items.TM36, Items.TM37, Items.TM38, Items.TM39, Items.TM40, Items.TM41, Items.TM42, Items.TM43, Items.TM44, Items.TM45, Items.TM46, Items.TM47, Items.TM48, Items.TM49, Items.TM50, Items.TM51, Items.TM52, Items.TM53, Items.TM54, Items.TM55, Items.TM56, Items.TM57, Items.TM58, Items.TM59, Items.TM60, Items.TM61, Items.TM62, Items.TM63, Items.TM64, Items.TM65, Items.TM66, Items.TM67, Items.TM68, Items.TM69, Items.TM70, Items.TM71, Items.TM72, Items.TM73, Items.TM74, Items.TM75, Items.TM76, Items.TM77, Items.TM78, Items.TM79, Items.TM80, Items.TM81, Items.TM82, Items.TM83, Items.TM84, Items.TM85, Items.TM86, Items.TM87, Items.TM88, Items.TM89, Items.TM90, Items.TM91, Items.TM92, Items.TM93, Items.TM94, Items.TM95, Items.TM96, Items.TM97, Items.TM98, Items.TM99, Items.TM100 };
 			return TMs.Contains(item);
 		}
 
 		public static bool pbIsHiddenMachine (Items item) {
-			//return Game.ItemData.ContainsKey(item) && (Game.ItemData[item][ITEMUSE]==4);
+			//return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData[item][ITEMUSE]==4);
 			Items[] HMs = new Items[] { Items.HM01, Items.HM02, Items.HM03, Items.HM04, Items.HM05, Items.HM06, Items.HM07, Items.HM08 };
 			return HMs.Contains(item);
 		}
 
 		public static bool pbIsMail (Items item) {
-			return Game.ItemData.ContainsKey(item) && (ItemData.pbIsLetter(item)); //[ITEMTYPE]==1 || Game.ItemData[item][ITEMTYPE]==2
+			return Kernal.ItemData.ContainsKey(item) && (ItemData.pbIsLetter(item)); //[ITEMTYPE]==1 || Kernal.ItemData[item][ITEMTYPE]==2
 		}
 
 		public static bool pbIsSnagBall (Items item) {
-			return Game.ItemData.ContainsKey(item) && (ItemData.pbIsPokeBall(item) || Game.ItemData[item].Pocket == ItemPockets.POKEBALL);// || //[ITEMTYPE]==3
-				//(Game.GameData.Global.snagMachine)); //Game.ItemData[item][ITEMTYPE]==4 && 4: SnagBall Item
+			return Kernal.ItemData.ContainsKey(item) && (ItemData.pbIsPokeBall(item) || Kernal.ItemData[item].Pocket == ItemPockets.POKEBALL);// || //[ITEMTYPE]==3
+				//(Game.GameData.Global.snagMachine)); //Kernal.ItemData[item][ITEMTYPE]==4 && 4: SnagBall Item
 		}
 
 		public static bool pbIsPokeBall (Items item) {
-			return Game.ItemData.ContainsKey(item) && (ItemData.pbIsPokeBall(item) || Game.ItemData[item].Pocket == ItemPockets.POKEBALL);//[ITEMTYPE]==4
+			return Kernal.ItemData.ContainsKey(item) && (ItemData.pbIsPokeBall(item) || Kernal.ItemData[item].Pocket == ItemPockets.POKEBALL);//[ITEMTYPE]==4
 		}
 
 		public static bool pbIsBerry (Items item) {
-			return Game.ItemData.ContainsKey(item) && ItemData.pbIsBerry(item); //[ITEMTYPE]==5 
+			return Kernal.ItemData.ContainsKey(item) && ItemData.pbIsBerry(item); //[ITEMTYPE]==5 
 		}
 
 		public static bool pbIsKeyItem (Items item) {
-			return Game.ItemData.ContainsKey(item) && (Game.ItemData[item].Pocket == ItemPockets.KEY);//[ITEMTYPE]==6
+			return Kernal.ItemData.ContainsKey(item) && (Kernal.ItemData[item].Pocket == ItemPockets.KEY);//[ITEMTYPE]==6
 		}
 
 		public static bool pbIsGem (Items item) {
@@ -126,7 +126,7 @@ namespace PokemonUnity.Inventory
 			//  if (item == i) return true;
 			//}
 			//return false;
-			return gems.Contains(item) || Game.ItemData[item].Category == ItemCategory.JEWELS;
+			return gems.Contains(item) || Kernal.ItemData[item].Category == ItemCategory.JEWELS;
 		}
 
 		public static bool pbIsEvolutionStone (Items item) {
@@ -136,7 +136,7 @@ namespace PokemonUnity.Inventory
 			//  if (item == i) return true;
 			//}
 			//return false;
-			return stones.Contains(item) || Game.ItemData[item].Category == ItemCategory.EVOLUTION;
+			return stones.Contains(item) || Kernal.ItemData[item].Category == ItemCategory.EVOLUTION;
 		}
 
 		public static bool pbIsMegaStone (Items item) {   // Does NOT include Red Orb/Blue Orb
@@ -154,7 +154,7 @@ namespace PokemonUnity.Inventory
 			//  if (item == i) return true;
 			//}
 			//return false;
-			return stones.Contains(item) || Game.ItemData[item].Category == ItemCategory.MEGA_STONES;
+			return stones.Contains(item) || Kernal.ItemData[item].Category == ItemCategory.MEGA_STONES;
 		}
 
 		public static bool pbIsMulch (Items item) {
@@ -163,7 +163,7 @@ namespace PokemonUnity.Inventory
 			//  if (item == i) return true;
 			//}
 			//return false;
-			return mulches.Contains(item) || Game.ItemData[item].Category == ItemCategory.MULCH;
+			return mulches.Contains(item) || Kernal.ItemData[item].Category == ItemCategory.MULCH;
 		}
 
 		#region Move to Game class?
@@ -222,7 +222,7 @@ namespace PokemonUnity.Inventory
 					pokemon.TotalHP,pokemon.ATK,pokemon.DEF,pokemon.SPA,pokemon.SPD,pokemon.SPE));
 				//Moves[] movelist=pokemon.getMoveList();
 				//foreach (Moves i in pokemon.getMoveList(LearnMethod.levelup)) { //movelist
-				foreach (KeyValuePair<Moves,int> i in Game.PokemonMovesData[pokemon.Species].LevelUp) { 
+				foreach (KeyValuePair<Moves,int> i in Kernal.PokemonMovesData[pokemon.Species].LevelUp) { 
 					if (i.Value==pokemon.Level) {		// Learned a new move
 						pbLearnMove(pokemon,i.Key,true);
 					}
@@ -424,7 +424,7 @@ namespace PokemonUnity.Inventory
 			//data=load_data("Data/tm.dat");
 			//if (!data[move]) return false;
 			//return data[move].Any(item => item==species);
-			return Game.PokemonMovesData[species].Machine.Contains(move);
+			return Kernal.PokemonMovesData[species].Machine.Contains(move);
 		}
 
 		public static int pbForgetMove(IPokemon pokemon,Moves moveToLearn) {
@@ -490,9 +490,9 @@ namespace PokemonUnity.Inventory
 		}
 
 		public static bool pbConsumeItemInBattle(PokemonBag bag,Items item) {
-			if (item!=0 && Game.ItemData[item].Flags.Consumable && //!=3 disappear after use
-				//Game.ItemData[item].Flags!=4 && //used on enemy and disappears after use (i.e. pokeball)
-				Game.ItemData[item].Flags.Useable_In_Battle) { //!=0 cannot be used in battle
+			if (item!=0 && Kernal.ItemData[item].Flags.Consumable && //!=3 disappear after use
+				//Kernal.ItemData[item].Flags!=4 && //used on enemy and disappears after use (i.e. pokeball)
+				Kernal.ItemData[item].Flags.Useable_In_Battle) { //!=0 cannot be used in battle
 				//  Delete the item just used from stock
 				return Game.GameData.Bag.pbDeleteItem(item);
 			}
@@ -502,9 +502,9 @@ namespace PokemonUnity.Inventory
 		// Only called when in the party screen and having chosen an item to be used on
 		// the selected Pokémon
 		/*public static bool pbUseItemOnPokemon(Items item,IPokemon pokemon,IScene scene) {
-			//if (Game.ItemData[item][ITEMUSE]==3 || Game.ItemData[item][ITEMUSE]==4) {		// TM or HM
+			//if (Kernal.ItemData[item][ITEMUSE]==3 || Kernal.ItemData[item][ITEMUSE]==4) {		// TM or HM
 			if (Item.pbIsMachine(item)) {
-				Moves machine=Game.MachineData[(int)item].Move;
+				Moves machine=Kernal.MachineData[(int)item].Move;
 				if (machine==Moves.NONE) return false;
 				string movename=machine.ToString(TextScripts.Name);
 				if (pokemon.isShadow) { //? rescue false
@@ -532,7 +532,7 @@ namespace PokemonUnity.Inventory
 				bool ret=ItemHandlers.triggerUseOnPokemon(item,pokemon,scene);
 				scene.pbClearAnnotations();
 				scene.pbHardRefresh();
-				if (ret && Game.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1 Usable on Pokémon, consumed
+				if (ret && Kernal.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1 Usable on Pokémon, consumed
 					Game.GameData.Bag.pbDeleteItem(item);
 				}
 				if (Game.GameData.Bag.pbQuantity(item)<=0) {
@@ -546,9 +546,9 @@ namespace PokemonUnity.Inventory
 
 		public static int pbUseItem(PokemonBag bag,Items item,IScene bagscene=null) {
 			//bool found=false;
-			//if (Game.ItemData[item][ITEMUSE]==3 || Game.ItemData[item][ITEMUSE]==4) {		// TM or HM
+			//if (Kernal.ItemData[item][ITEMUSE]==3 || Kernal.ItemData[item][ITEMUSE]==4) {		// TM or HM
 			if (Item.pbIsMachine(item)) {
-			Moves machine=Game.MachineData[(int)item].Move;
+			Moves machine=Kernal.MachineData[(int)item].Move;
 			if (machine==Moves.NONE) return 0;
 			if (Game.GameData.Trainer.pokemonCount==0) {
 				Game.GameData.pbMessage(Game._INTL("There is no Pokémon."));
@@ -570,7 +570,7 @@ namespace PokemonUnity.Inventory
 			} else {
 				return 0;
 			}
-			} else if (Game.ItemData[item].Flags.Consumable || Game.ItemData[item][ITEMUSE]==5) {		//[ITEMUSE]==1| Item is usable on a Pokémon
+			} else if (Kernal.ItemData[item].Flags.Consumable || Kernal.ItemData[item][ITEMUSE]==5) {		//[ITEMUSE]==1| Item is usable on a Pokémon
 			if (Game.GameData.Trainer.pokemonCount==0) {
 				Game.GameData.pbMessage(Game._INTL("There is no Pokémon."));
 				return 0;
@@ -597,7 +597,7 @@ namespace PokemonUnity.Inventory
 						Game.UI.pbPlayBuzzerSE();
 					} else {
 						ret=ItemHandlers.triggerUseOnPokemon(item,pokemon,screen);
-						if (ret && Game.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1 Usable on Pokémon, consumed
+						if (ret && Kernal.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1 Usable on Pokémon, consumed
 							bag.pbDeleteItem(item);
 						}
 						if (bag.pbQuantity(item)<=0) {
@@ -614,7 +614,7 @@ namespace PokemonUnity.Inventory
 				if (bagscene!=null) bagscene.pbRefresh();
 			});
 			return ret ? 1 : 0;
-			} else if (Game.ItemData[item][ITEMUSE]==2) {		// Item is usable from bag
+			} else if (Kernal.ItemData[item][ITEMUSE]==2) {		// Item is usable from bag
 				int intret=(int)ItemHandlers.triggerUseFromBag(item);
 				switch (intret) {
 					case 0:
@@ -803,7 +803,7 @@ namespace PokemonUnity.Inventory
 
 		public static bool hasUseInBattle(Items item) {
 			return !UseInBattle.ContainsKey(item) && UseInBattle[item]!=null;
-			//return Game.ItemData[item].Flags.Useable_In_Battle;
+			//return Kernal.ItemData[item].Flags.Useable_In_Battle;
 		}
 
 		/// <summary>
@@ -824,7 +824,7 @@ namespace PokemonUnity.Inventory
 			if (!UseFromBag.ContainsKey(item) || UseFromBag[item] == null) { //Search List
 				// Check the UseInField handler if present
 				if (UseInField[item] != null) {
-				//if (!Game.ItemData[item].Flags.Useable_Overworld) {
+				//if (!Kernal.ItemData[item].Flags.Useable_Overworld) {
 					UseInField[item].Invoke();
 					//ItemHandlers.UseInField(item);
 					return ItemUseResults.UsedNotConsumed; // item was used
@@ -839,7 +839,7 @@ namespace PokemonUnity.Inventory
 		public static bool triggerUseInField(Items item) {
 			// No return value
 			if (!UseInField.ContainsKey(item) || UseInField[item] == null) {
-			//if (!Game.ItemData[item].Flags.Useable_Overworld) {
+			//if (!Kernal.ItemData[item].Flags.Useable_Overworld) {
 				return false;
 			} else {
 				UseInField[item].Invoke();
@@ -866,7 +866,7 @@ namespace PokemonUnity.Inventory
 		public static bool triggerBattleUseOnBattler(Items item,IBattler battler,IPokeBattle_Scene scene) {
 			// Returns whether item was used
 			if (!BattleUseOnBattler.ContainsKey(item) || BattleUseOnBattler[item] == null) {
-			//if (!Game.ItemData[item].Flags.Useable_In_Battle) {
+			//if (!Kernal.ItemData[item].Flags.Useable_In_Battle) {
 				return false;
 			} else {
 				return BattleUseOnBattler[item].Invoke(item,battler,scene);
@@ -877,7 +877,7 @@ namespace PokemonUnity.Inventory
 		public static bool triggerBattleUseOnPokemon(Items item,IPokemon pokemon,IBattler battler,IPokeBattle_Scene scene) {
 			// Returns whether item was used
 			if (!BattleUseOnPokemon.ContainsKey(item) || BattleUseOnPokemon[item] == null) {
-			//if (!Game.ItemData[item].Flags.Useable_In_Battle) {
+			//if (!Kernal.ItemData[item].Flags.Useable_In_Battle) {
 				return false;
 			} else {
 				return BattleUseOnPokemon[item].Invoke(pokemon,battler,scene);
@@ -888,7 +888,7 @@ namespace PokemonUnity.Inventory
 		public static void triggerUseInBattle(Items item,IBattler battler,PokemonUnity.Combat.Battle battle) {
 			// Returns whether item was used
 			if (!UseInBattle.ContainsKey(item) || UseInBattle[item] == null) {
-			//if (!Game.ItemData[item].Flags.Useable_In_Battle) {
+			//if (!Kernal.ItemData[item].Flags.Useable_In_Battle) {
 				return;
 			} else {
 				UseInBattle[item].Invoke(item,battler,battle);

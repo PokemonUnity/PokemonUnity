@@ -42,7 +42,7 @@ namespace PokemonUnity.Monster
 		///	<see cref="Pokemons.PIKACHU"/>, 
 		/// and MegaEvolutions?
 		/// </remarks>
-		//public Forms Form { get { return form.Id; } } //set { foreach(Form f in Game.PokemonFormsData[pokemons]) if (value == f.Id) formId = f.Order; } }
+		//public Forms Form { get { return form.Id; } } //set { foreach(Form f in Kernal.PokemonFormsData[pokemons]) if (value == f.Id) formId = f.Order; } }
 		public Monster.Data.Form Form { get { return Kernal.PokemonFormsData[pokemons][formId]; } }// set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
 		public int FormId { get {
 				if (@forcedform!=null) return @forcedform.Value;
@@ -56,7 +56,7 @@ namespace PokemonUnity.Monster
 				return @formId; //|| 0
 			}
 			set {
-				//if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) 
+				//if (value >= 0 && value <= Kernal.PokemonFormsData[pokemons].Length) 
 					@formId=value;
 				//MultipleForms.call("onSetForm",this,value);
 				MultipleForms.onSetForm(this,value);
@@ -66,8 +66,8 @@ namespace PokemonUnity.Monster
 		// Maybe a method, where when a form is changed
 		// checks pokemon value and overwrites name and stats
 		// Some forms have a SpeciesId and others are battle only
-		public bool SetForm(int value) { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) { formId = value; return true; } else return false; } //Overwrite pokemons with when form changes? `pokemons = Form.Pokemon;`
-		public bool SetForm(Forms value) { int i = 0; foreach (Form f in Game.PokemonFormsData[pokemons]) { if (value == f.Id) return SetForm(i); i++; } return false; }
+		public bool SetForm(int value) { if (value >= 0 && value <= Kernal.PokemonFormsData[pokemons].Length) { formId = value; return true; } else return false; } //Overwrite pokemons with when form changes? `pokemons = Form.Pokemon;`
+		public bool SetForm(Forms value) { int i = 0; foreach (Form f in Kernal.PokemonFormsData[pokemons]) { if (value == f.Id) return SetForm(i); i++; } return false; }
 
 
 		//public int form { get; internal set; } //ToDo: private get
@@ -426,7 +426,7 @@ namespace PokemonUnity.Monster
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
 				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
 				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
-				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
+				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand ||
 							env==Environments.Rock ||
@@ -506,14 +506,14 @@ namespace PokemonUnity.Monster
 			if (pokemon.Species == Pokemons.UNOWN)
 			{
 				//return Core.Rand.Next(28);
-				return Core.Rand.Next(Game.PokemonFormsData[pokemon.Species].Length);
+				return Core.Rand.Next(Kernal.PokemonFormsData[pokemon.Species].Length);
 			}
 			else if (pokemon.Species == Pokemons.BURMY)
 			{
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
 				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
 				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
-				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
+				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand ||
 							env==Environments.Rock ||
@@ -529,7 +529,7 @@ namespace PokemonUnity.Monster
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
 				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
 				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
-				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
+				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand || env==Environments.Rock ||
 							env==Environments.Cave) {
@@ -577,7 +577,7 @@ namespace PokemonUnity.Monster
 			if (pokemon == Pokemons.UNOWN)
 			{
 				//return Core.Rand.Next(28);
-				//return Core.Rand.Next(Game.PokemonFormsData[pokemon].Length);
+				//return Core.Rand.Next(Kernal.PokemonFormsData[pokemon].Length);
 				return new Forms[] { Forms.UNOWN_A	
 					,Forms.UNOWN_B		
 					,Forms.UNOWN_C		
@@ -612,7 +612,7 @@ namespace PokemonUnity.Monster
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
 				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
 				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
-				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
+				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return Forms.BURMY_TRASH; //2; // Trash Cloak
 				} else if (env==Environments.Sand ||
 							env==Environments.Rock ||
@@ -628,7 +628,7 @@ namespace PokemonUnity.Monster
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
 				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
 				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
-				//if (Game.TileData[Game.GameData.Player.Area] == Indoor) {
+				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return Forms.WORMADAM_TRASH; //2; // Trash Cloak
 				} else if (env==Environments.Sand || env==Environments.Rock ||
 					env==Environments.Cave) {

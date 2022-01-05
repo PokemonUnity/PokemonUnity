@@ -3217,8 +3217,8 @@ namespace PokemonUnity.Combat
 			};
 			if (attacker.effects.Transform ||
 			   opponent.lastMoveUsed <= 0 ||
-			   Game.MoveData[(Moves)opponent.lastMoveUsed].Type == Types.SHADOW || 
-			   blacklist.Contains(Game.MoveData[(Moves)opponent.lastMoveUsed].Effect))
+			   Kernal.MoveData[(Moves)opponent.lastMoveUsed].Type == Types.SHADOW || 
+			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Effect))
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
@@ -3269,8 +3269,8 @@ namespace PokemonUnity.Combat
 			};
 			if (attacker.effects.Transform ||
 			   opponent.lastMoveUsedSketch <= 0 ||
-			   Game.MoveData[(Moves)opponent.lastMoveUsedSketch].Type == Types.SHADOW ||
-			   blacklist.Contains(Game.MoveData[(Moves)opponent.lastMoveUsedSketch].Effect))
+			   Kernal.MoveData[(Moves)opponent.lastMoveUsedSketch].Type == Types.SHADOW ||
+			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsedSketch].Effect))
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
@@ -3378,7 +3378,7 @@ namespace PokemonUnity.Combat
 				return -1;
 			}
 			if (opponent.lastMoveUsed <= 0 
-				//|| PBTypes.isPseudoType(Game.MoveData[(Moves)opponent.lastMoveUsed].Type)
+				//|| PBTypes.isPseudoType(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Type)
 			   )
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
@@ -3398,7 +3398,7 @@ namespace PokemonUnity.Combat
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
-			for (int i = 0; i < Game.TypeData.Count; i++)
+			for (int i = 0; i < Kernal.TypeData.Count; i++)
 			{
 				//if (PBTypes.isPseudoType((Types)i)) continue;
 				if (attacker.pbHasType((Types)i)) continue; //next
@@ -3854,7 +3854,7 @@ namespace PokemonUnity.Combat
 			   opponent.effects.Illusion.Species != Pokemons.NONE ||
 			   (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
 			   opponent.effects.SkyDrop ||
-			   blacklist.Contains(Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect))
+			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect))
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
@@ -4154,7 +4154,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_075(Battle battle, Attack.Move move) : base(battle, move) { }
 		public int pbModifyDamage(int damagemult, IBattler attacker, IBattler opponent)
 		{
-			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x100)	// Dive
+			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x100)	// Dive
 			{
 				return (int)Math.Round(damagemult * 2.0f);
 			}
@@ -4174,7 +4174,7 @@ namespace PokemonUnity.Combat
 		public int pbModifyDamage(int damagemult, IBattler attacker, IBattler opponent)
 		{
 			int ret = damagemult;
-			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x101)   // Dig
+			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x101)   // Dig
 			{
 				ret = (int)Math.Round(damagemult * 2.0f);
 			}
@@ -4196,9 +4196,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_077(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
-			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C || // Fly
-			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 || // Bounce
-			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138 || // Sky Drop
+			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C || // Fly
+			    Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 || // Bounce
+			    Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138 || // Sky Drop
 			   opponent.effects.SkyDrop)
 			{
 				return basedmg * 2;
@@ -4218,9 +4218,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_078(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
-			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C || // Fly
-			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 || // Bounce
-			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138 || // Sky Drop
+			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C || // Fly
+			    Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 || // Bounce
+			    Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138 || // Sky Drop
 			   opponent.effects.SkyDrop)
 			{
 				return basedmg * 2;
@@ -4773,12 +4773,12 @@ namespace PokemonUnity.Combat
 			byte powermax = 70;
 			int type = 0; int baseY = 0;
 			List<Types> types = new List<Types>();
-			for (int i = 0; i < Game.TypeData.Count; i++)
+			for (int i = 0; i < Kernal.TypeData.Count; i++)
 			{
 				if (//!PBTypes.isPseudoType((Types)i) && 
 					(Types)i != Types.NORMAL && (Types)i != Types.SHADOW) types.Add((Types)i); 
 			}
-			//Types[] types = Game.TypeData.Keys.ToArray();
+			//Types[] types = Kernal.TypeData.Keys.ToArray();
 			type |= (iv[(int)Stats.HP] & 1);
 			type |= (iv[(int)Stats.ATTACK] & 1) << 1;
 			type |= (iv[(int)Stats.DEFENSE] & 1) << 2;
@@ -4933,7 +4933,7 @@ namespace PokemonUnity.Combat
 		{
 
 			int ret = this.calcbasedmg;
-			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x101)	// Dig
+			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x101)	// Dig
 			{
 				ret *= 2;
 			}
@@ -5695,7 +5695,7 @@ namespace PokemonUnity.Combat
 				Attack.Data.Effects.x164,   // King's Shield
 				Attack.Data.Effects.x16A    // Spiky Shield
 			};
-			if (!ratesharers.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			if (!ratesharers.Contains(Kernal.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				attacker.effects.ProtectRate = 1;
 			}
@@ -5749,7 +5749,7 @@ namespace PokemonUnity.Combat
 				Attack.Data.Effects.x164,   // King's Shield
 				Attack.Data.Effects.x16A    // Spiky Shield
 			};
-			if (!ratesharers.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			if (!ratesharers.Contains(Kernal.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				attacker.effects.ProtectRate = 1;
 			}
@@ -5810,7 +5810,7 @@ namespace PokemonUnity.Combat
 				Attack.Data.Effects.x164,   // King's Shield
 				Attack.Data.Effects.x16A    // Spiky Shield
 			};
-			if (!ratesharers.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			if (!ratesharers.Contains(Kernal.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				attacker.effects.ProtectRate = 1;
 			}
@@ -5878,7 +5878,7 @@ namespace PokemonUnity.Combat
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (opponent.lastMoveUsed <= 0 || //(
-			   !Game.MoveData[(Moves)attacker.lastMoveUsed].Flags.Mirror //& 0x10)==0
+			   !Kernal.MoveData[(Moves)attacker.lastMoveUsed].Flags.Mirror //& 0x10)==0
 			   ) // flag e: Copyable by Mirror Move
 			{
 				battle.pbDisplay(Game._INTL("The mirror move failed!"));
@@ -5942,7 +5942,7 @@ namespace PokemonUnity.Combat
 				});
 			}
 			if (this.battle.lastMoveUsed <= 0 ||
-			   blacklist.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			   blacklist.Contains(Kernal.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
@@ -6240,7 +6240,7 @@ namespace PokemonUnity.Combat
 						if (j.Type == Types.SHADOW) continue; //next
 						if (j.id == 0) continue; //next
 						//bool found=false;
-						if (!blacklist.Contains(Game.MoveData[(Moves)MoveId].Effect)) moves.Add(j.id);
+						if (!blacklist.Contains(Kernal.MoveData[(Moves)MoveId].Effect)) moves.Add(j.id);
 					}
 				}
 
@@ -6312,10 +6312,10 @@ namespace PokemonUnity.Combat
 			};
 			for (int i = 0; i < 1000; i++) //loop do break unless i<1000
 			{
-				Moves move = (Moves)(this.battle.pbRandom(Game.MoveData.Keys.Count) + 1);
-				if (Game.MoveData[(Moves)move].Type == Types.SHADOW) continue; //next
+				Moves move = (Moves)(this.battle.pbRandom(Kernal.MoveData.Keys.Count) + 1);
+				if (Kernal.MoveData[(Moves)move].Type == Types.SHADOW) continue; //next
 				bool found = false;
-				if (blacklist.Contains(Game.MoveData[(Moves)move].Effect))
+				if (blacklist.Contains(Kernal.MoveData[(Moves)move].Effect))
 					found = true;
 				else
 				{
@@ -6442,7 +6442,7 @@ namespace PokemonUnity.Combat
 
 					opponent.effects.Disable = 5;
 					opponent.effects.DisableMove = opponent.lastMoveUsed;
-					battle.pbDisplay(Game._INTL("{1}'s {2} was disabled!", opponent.ToString(), Game.MoveData[(Moves)i.id].Name));
+					battle.pbDisplay(Game._INTL("{1}'s {2} was disabled!", opponent.ToString(), Kernal.MoveData[(Moves)i.id].Name));
 					return 0;
 				}
 			}
@@ -6555,7 +6555,7 @@ namespace PokemonUnity.Combat
 				return -1;
 			}
 			if (opponent.lastMoveUsed <= 0 ||
-			   blacklist.Contains(Game.MoveData[(Moves)opponent.lastMoveUsed].Effect))
+			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Effect))
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
@@ -7428,7 +7428,7 @@ namespace PokemonUnity.Combat
 
 		public int pbModifyDamage(int damagemult, IBattler attacker, IBattler opponent)
 		{
-			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x100)	// Dive
+			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x100)	// Dive
 			{
 				return (int)Math.Round(damagemult * 2.0f);
 			}
@@ -8225,7 +8225,7 @@ namespace PokemonUnity.Combat
 				Attack.Data.Effects.x164,	// King's Shield
 				Attack.Data.Effects.x16A	// Spiky Shield
 			};
-			if (!ratesharers.Contains(Game.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+			if (!ratesharers.Contains(Kernal.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				attacker.effects.ProtectRate = 1;
 			}
@@ -8494,11 +8494,11 @@ namespace PokemonUnity.Combat
 				if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
 				{
 					string abilityname = opponent.Ability.ToString(TextScripts.Name);
-					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!", opponent.ToString(), abilityname, Game.MoveData[MoveId].Name));
+					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!", opponent.ToString(), abilityname, Kernal.MoveData[MoveId].Name));
 				}
 				else if (!this.battle.pbIsUnlosableItem(opponent, opponent.Item))
 				{
-					string itemname = Game.ItemData[opponent.Item].Name;
+					string itemname = Kernal.ItemData[opponent.Item].Name;
 
 					opponent.Item = 0;
 					opponent.effects.ChoiceBand = Moves.NONE;//-1;
@@ -8536,14 +8536,14 @@ namespace PokemonUnity.Combat
 				if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
 				{
 					string abilityname = opponent.Ability.ToString(TextScripts.Name);
-					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!", opponent.ToString(), abilityname, Game.MoveData[MoveId].Name));
+					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!", opponent.ToString(), abilityname, Kernal.MoveData[MoveId].Name));
 				}
 				else if (!this.battle.pbIsUnlosableItem(opponent, opponent.Item) &&
 					!this.battle.pbIsUnlosableItem(attacker, opponent.Item) &&
 					attacker.Item == 0 &&
 					(this.battle.opponent.Length == 0 || !this.battle.pbIsOpposing(attacker.Index)))
 				{
-					string itemname = Game.ItemData[opponent.Item].Name;
+					string itemname = Kernal.ItemData[opponent.Item].Name;
 					attacker.Item = opponent.Item;
 					opponent.Item = 0;
 
@@ -8599,8 +8599,8 @@ namespace PokemonUnity.Combat
 			Items oldattitem = attacker.Item;
 			Items oldoppitem = opponent.Item;
 
-			string oldattitemname = Game.ItemData[oldattitem].Name;
-			string oldoppitemname = Game.ItemData[oldoppitem].Name;
+			string oldattitemname = Kernal.ItemData[oldattitem].Name;
+			string oldoppitemname = Kernal.ItemData[oldoppitem].Name;
 
 			Items tmpitem = attacker.Item;
 			attacker.Item = opponent.Item;
@@ -8654,7 +8654,7 @@ namespace PokemonUnity.Combat
 			}
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			string itemname = Game.ItemData[attacker.Item].Name;
+			string itemname = Kernal.ItemData[attacker.Item].Name;
 			opponent.Item = attacker.Item;
 			attacker.Item = 0;
 
@@ -8688,7 +8688,7 @@ namespace PokemonUnity.Combat
 				if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
 				{
 					Items item = opponent.Item;
-					string itemname = Game.ItemData[item].Name;
+					string itemname = Kernal.ItemData[item].Name;
 
 					opponent.pbConsumeItem(false, false);
 					battle.pbDisplay(Game._INTL("{1} stole and ate its target's {2}!", attacker.ToString(), itemname));
@@ -8708,7 +8708,7 @@ namespace PokemonUnity.Combat
 						{
 							battle.pbDisplay(Game._INTL("{1}'s {2} let it share its {3} with {4}!",
 							   partner.ToString(), partner.Ability.ToString(TextScripts.Name),
-							   Game.ItemData[partner.Item].Name, attacker.ToString(true)));
+							   Kernal.ItemData[partner.Item].Name, attacker.ToString(true)));
 							attacker.Item = partner.Item;
 							partner.Item = 0;
 							partner.effects.Unburden = true;
@@ -8736,7 +8736,7 @@ namespace PokemonUnity.Combat
 			   !opponent.damagestate.Substitute &&
 			   (Game.GameData is IItemCheck i && i.pbIsBerry(opponent.Item) || (Core.USENEWBATTLEMECHANICS && i.pbIsGem(opponent.Item))))
 			{
-				string itemname = Game.ItemData[opponent.Item].Name;
+				string itemname = Kernal.ItemData[opponent.Item].Name;
 				opponent.pbConsumeItem(false, false);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} was incinerated!", opponent.ToString(), itemname));
@@ -8901,7 +8901,7 @@ namespace PokemonUnity.Combat
 			{
 				//if (flingarray[i] != null){
 				//	foreach (var j in flingarray[i]){ 
-						if (attacker.Item == i) return flingarray[i]; //Game.ItemData[i].FlingPower.Value;
+						if (attacker.Item == i) return flingarray[i]; //Kernal.ItemData[i].FlingPower.Value;
 				//	}
 				//}
 			}
@@ -8917,7 +8917,7 @@ namespace PokemonUnity.Combat
 			}
 			attacker.effects.Unburden = true;
 
-			battle.pbDisplay(Game._INTL("{1} flung its {2}!", attacker.ToString(), Game.ItemData[attacker.Item].Name));
+			battle.pbDisplay(Game._INTL("{1} flung its {2}!", attacker.ToString(), Kernal.ItemData[attacker.Item].Name));
 			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
 			   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SHIELD_DUST)))
@@ -10078,7 +10078,7 @@ namespace PokemonUnity.Combat
 					int reduction = Math.Min(4, i.PP);
 					opponent.pbSetPP(i, (byte)(i.PP - reduction));
 
-					battle.pbDisplay(Game._INTL("It reduced the PP of {1}'s {2} by {3}!", opponent.ToString(true), Game.MoveData[i.id].Name, ((int)reduction).ToString()));
+					battle.pbDisplay(Game._INTL("It reduced the PP of {1}'s {2} by {3}!", opponent.ToString(true), Kernal.MoveData[i.id].Name, ((int)reduction).ToString()));
 					return 0;
 				}
 			}
@@ -10461,9 +10461,9 @@ namespace PokemonUnity.Combat
 			{
 				IBattler poke = this.battle.battlers[i];
 				if (poke.Species == Pokemons.NONE) continue; //next
-				if (Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C ||	// Fly
-				    Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 ||	// Bounce
-				    Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138)	// Sky Drop
+				if (Kernal.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C ||	// Fly
+				    Kernal.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 ||	// Bounce
+				    Kernal.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138)	// Sky Drop
 				{
 					poke.effects.TwoTurnAttack = 0;
 				}
@@ -10564,9 +10564,9 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_11C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbBaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
-			if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C ||// Fly
-			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 || // Bounce
-			    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138 || // Sky Drop
+			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C ||// Fly
+			    Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108 || // Bounce
+			    Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x138 || // Sky Drop
 			   opponent.effects.SkyDrop)
 			{
 				return basedmg * 2;
@@ -10585,8 +10585,8 @@ namespace PokemonUnity.Combat
 
 				bool showmsg = opponent.pbHasType(Types.FLYING) ||
 						 opponent.hasWorkingAbility(Abilities.LEVITATE);
-				if (Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C ||// Fly
-				    Game.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108)	// Bounce
+				if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x09C ||// Fly
+				    Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Data.Effects.x108)	// Bounce
 				{
 					opponent.effects.TwoTurnAttack = 0; showmsg = true;
 				}

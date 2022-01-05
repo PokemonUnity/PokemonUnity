@@ -42,7 +42,7 @@ namespace PokemonUnity.Character
 				foreach (Items Item in this.items)
 				{
 					//Item item = global::Item.GetItem(Item.Key);
-					ItemData item = Game.ItemData[Item];
+					ItemData item = Kernal.ItemData[Item];
 					if(Item != Items.NONE)
 					switch (item.Pocket)
 					{
@@ -127,7 +127,7 @@ namespace PokemonUnity.Character
 		{
 			get
 			{
-				return Game.ItemData[items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item)];
+				return Kernal.ItemData[items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item)];
 			}
 		}
 		#endregion
@@ -230,17 +230,17 @@ namespace PokemonUnity.Character
 			{
 				case Order.Alphabet:
 					reverseOrder = !reverseOrder;
-					//return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Name).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Name).ToArray();
-					return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Id.ToString()).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Id.ToString()).ToArray();
+					//return this.reverseOrder? items.OrderBy(x => Kernal.ItemData[x.Key].Name).ToArray() : items.OrderByDescending(x => Kernal.ItemData[x.Key].Name).ToArray();
+					return this.reverseOrder? items.OrderBy(x => Kernal.ItemData[x.Key].Id.ToString()).ToArray() : items.OrderByDescending(x => Kernal.ItemData[x.Key].Id.ToString()).ToArray();
 				case Order.Quantity:
 					reverseOrder = !reverseOrder;
 					return this.reverseOrder? items.OrderBy(x => x.Value).ToArray() : items.OrderByDescending(x => x.Value).ToArray();
 				case Order.Price:
 					reverseOrder = !reverseOrder;
-					return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Price).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Price).ToArray();
+					return this.reverseOrder? items.OrderBy(x => Kernal.ItemData[x.Key].Price).ToArray() : items.OrderByDescending(x => Kernal.ItemData[x.Key].Price).ToArray();
 				case Order.Category:
 					reverseOrder = !reverseOrder;
-					return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Category).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Category).ToArray();
+					return this.reverseOrder? items.OrderBy(x => Kernal.ItemData[x.Key].Category).ToArray() : items.OrderByDescending(x => Kernal.ItemData[x.Key].Category).ToArray();
 				default:
 					break;
 			}
@@ -324,7 +324,7 @@ namespace PokemonUnity.Character
 		public int GetMiscItems()
 		{
 			double total = 0;
-			foreach (Items item in items.Distinct().Where(x => Game.ItemData[x].Pocket == ItemPockets.MISC))
+			foreach (Items item in items.Distinct().Where(x => Kernal.ItemData[x].Pocket == ItemPockets.MISC))
 			{
 				int count = GetItemAmount(item);
 				int groups = (int)Math.Floor(total / Core.BAGMAXPERSLOT);
@@ -341,7 +341,7 @@ namespace PokemonUnity.Character
 			//Check if storage limit is met
 			//ToDo: If pocket is full, cannot hold any more items.
 			//ToDo: if individual item capicity is reached, reject add
-			if (Game.ItemData[item].Pocket == ItemPockets.MISC)
+			if (Kernal.ItemData[item].Pocket == ItemPockets.MISC)
 			{
 				if (Core.MAXPOCKETSIZE[(int)ItemPockets.MISC] == -1) return true;
 				//get item slots used / out of / item slots available
@@ -365,9 +365,9 @@ namespace PokemonUnity.Character
 		{
 			string Message = "";
 			if (quantity == 1)
-				Message = Game.GameData.Player.Name + " stored it in the~" + Game.ItemData[item].Pocket.ToString() + " pocket.";
+				Message = Game.GameData.Player.Name + " stored it in the~" + Kernal.ItemData[item].Pocket.ToString() + " pocket.";
 			else
-				Message = Game.GameData.Player.Name + " stored them~in the " + Game.ItemData[item].Pocket.ToString() + " pocket.";
+				Message = Game.GameData.Player.Name + " stored them~in the " + Kernal.ItemData[item].Pocket.ToString() + " pocket.";
 			//scene.pbDisplayMessage(Message);
 		}
 
@@ -430,7 +430,7 @@ namespace PokemonUnity.Character
 				for (int i = 0; i < @pockets.Length; i++) {
 					foreach (Items item in @pockets[i]) {
 						//ItemPockets p=pbGetPocket(item[0]);
-						ItemPockets p=Game.ItemData[item].Pocket??ItemPockets.MISC;
+						ItemPockets p=Kernal.ItemData[item].Pocket??ItemPockets.MISC;
 						if ((int)p<=nump) newpockets[(int)p].Add(item);
 					}
 					n[i] =newpockets[(int)i].ToArray();
@@ -510,7 +510,7 @@ namespace PokemonUnity.Character
 			//  return 0;
 			//}
 			//ItemPockets pocket=pbGetPocket(item);
-			int pocket=(int)(Game.ItemData[item].Pocket??ItemPockets.MISC);
+			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[(int)pocket].Length;
 			return ItemStorageHelper.pbQuantity(@pockets[pocket],maxsize,item);
@@ -529,7 +529,7 @@ namespace PokemonUnity.Character
 			//  return false;
 			//}
 			//ItemPockets pocket=pbGetPocket(item);
-			int pocket=(int)(Game.ItemData[item].Pocket??ItemPockets.MISC);
+			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length;
 			bool ret=ItemStorageHelper.pbDeleteItem(ref @pockets[pocket],maxsize,item,qty);
@@ -548,7 +548,7 @@ namespace PokemonUnity.Character
 			//  return false;
 			//}
 			//ItemPockets pocket=pbGetPocket(item);
-			int pocket=(int)(Game.ItemData[item].Pocket??ItemPockets.MISC);
+			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length+1;
 			return ItemStorageHelper.pbCanStore(
@@ -564,7 +564,7 @@ namespace PokemonUnity.Character
 		  //  return false;
 		  //}
 		  //ItemPockets pocket=pbGetPocket(item);
-		  int pocket=(int)(Game.ItemData[item].Pocket??ItemPockets.MISC);
+		  int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 		  int maxsize=maxPocketSize(pocket);
 		  if (maxsize<0) maxsize=@pockets[pocket].Length+1;
 		  return ItemStorageHelper.pbStoreItem(ref
@@ -580,7 +580,7 @@ namespace PokemonUnity.Character
 			//  return false;
 			//}
 			//ItemPockets pocket=pbGetPocket(item);
-			int pocket=(int)(Game.ItemData[item].Pocket??ItemPockets.MISC);
+			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length+1;
 			return ItemStorageHelper.pbStoreItem(ref
@@ -600,7 +600,7 @@ namespace PokemonUnity.Character
 				return false;
 			}
 			//ItemPockets pocket=pbGetPocket(olditem);
-			int pocket=(int)(Game.ItemData[olditem].Pocket??ItemPockets.MISC);
+			int pocket=(int)(Kernal.ItemData[olditem].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length;
 			bool ret=false;

@@ -54,7 +54,7 @@ namespace PokemonUnity.Combat
 		public bool tookDamage					{ get; set; }
 		public int lastHPLost					{ get; set; }
 		public Moves lastMoveUsed				{ get; protected set; }
-		public Types lastMoveUsedType			{ get { return Game.MoveData[lastMoveUsed].Type; } }
+		public Types lastMoveUsedType			{ get { return Kernal.MoveData[lastMoveUsed].Type; } }
 		public Moves lastMoveUsedSketch			{ get; protected set; }
 		public Moves lastRegularMoveUsed		{ get; protected set; }
 		public int? lastRoundMoved				{ get; set; }
@@ -169,7 +169,7 @@ namespace PokemonUnity.Combat
 				if (pokemon.IsNotNullOrNone()) return pokemon.IsShiny;
 				return false; }
 		}
-		public Pokemons Species					{ get { return Game.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
+		public Pokemons Species					{ get { return Kernal.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
 		public int StatusCount					{ get { return statusCount; } set { statusCount = value; } }
 		private int statusCount					{ get; set; }
 		public Status Status
@@ -244,7 +244,7 @@ namespace PokemonUnity.Combat
 
 		public float Weight(IBattler attacker = null)
 		{
-			float w = Game.PokemonData[Form.Pokemon].Weight;
+			float w = Kernal.PokemonData[Form.Pokemon].Weight;
 			if (attacker.IsNotNullOrNone() && !attacker.hasMoldBreaker())
 			//if (this.IsNotNullOrNone() || !hasMoldBreaker())
 			{
@@ -758,7 +758,7 @@ namespace PokemonUnity.Combat
 			if (effects.Embargo > 0) return false;
 			if (battle.field.MagicRoom > 0) return false;
 			if (this.hasWorkingAbility(Abilities.KLUTZ, ignorefainted)) return false;
-			return Game.ItemData[this.Item].IsBerry;//.Pocket == ItemPockets.BERRY;//pbIsBerry?(@item)
+			return Kernal.ItemData[this.Item].IsBerry;//.Pocket == ItemPockets.BERRY;//pbIsBerry?(@item)
 		}
 
 		public bool isAirborne(bool ignoreability=false){
@@ -1273,7 +1273,7 @@ namespace PokemonUnity.Combat
 				foreach (var foe in new IBattler[] { pbOpposing1, pbOpposing2 }) {
 					if (foe.isFainted()) continue;
 					foreach (var j in foe.moves) {
-						Attack.Data.MoveData movedata=Game.MoveData[j.id];
+						Attack.Data.MoveData movedata=Kernal.MoveData[j.id];
 						TypeEffective eff=movedata.Type.GetCombinedEffectiveness(Type1,Type2,@effects.Type3);
 						if ((movedata.Power>0 && eff == TypeEffective.SuperEffective) ||
 							(movedata.Effect== Attack.Data.Effects.x027 && eff != TypeEffective.Ineffective)) { // OHKO
@@ -1294,7 +1294,7 @@ namespace PokemonUnity.Combat
 				foreach (var foe in new IBattler[] { pbOpposing1, pbOpposing2 }) {
 					if (foe.isFainted()) continue;
 					foreach (var j in foe.moves) {
-						Attack.Data.MoveData movedata=Game.MoveData[j.id];
+						Attack.Data.MoveData movedata=Kernal.MoveData[j.id];
 						int power=movedata.Power??0;
 						if (movedata.Effect == Attack.Data.Effects.x027) power=160;    // OHKO
 						if (movedata.Effect == Attack.Data.Effects.x0BF) power=150;    // Eruption
@@ -1365,7 +1365,7 @@ namespace PokemonUnity.Combat
 					choice.effects.Illusion.IsNotNullOrNone() ||
 					choice.effects.Substitute>0 ||
 					choice.effects.SkyDrop ||
-					blacklist.Contains(Game.MoveData[choice.effects.TwoTurnAttack].Effect))
+					blacklist.Contains(Kernal.MoveData[choice.effects.TwoTurnAttack].Effect))
 					GameDebug.Log($"[Ability triggered] #{ToString()}'s Imposter couldn't transform");
 				else {
 					GameDebug.Log($"[Ability triggered] #{ToString()}'s Imposter");
@@ -1781,7 +1781,7 @@ namespace PokemonUnity.Combat
 			if (amt>0) {
 				@battle.pbDisplay(message1);
 				//if ((this.Nature%5)==flavor && (int)Math.Floor(this.Nature/5d)!=(this.Nature%5)) {
-				if (Game.NatureData[pokemon.Nature].Dislikes==flavor) {
+				if (Kernal.NatureData[pokemon.Nature].Dislikes==flavor) {
 					@battle.pbDisplay(message2);
 					pbConfuseSelf();
 				}
@@ -1890,23 +1890,23 @@ namespace PokemonUnity.Combat
 					consumed=true;
 				}
 			else if (berry == Items.FIGY_BERRY)
-				consumed=pbConfusionBerry(Game.BerryData[berry].Flavour,
+				consumed=pbConfusionBerry(Kernal.BerryData[berry].Flavour,
 					Game._INTL("{1}'s {2} restored health!",ToString(),berryname),
 					Game._INTL("For {1}, the {2} was too spicy!",ToString(true),berryname));
 			else if (berry == Items.WIKI_BERRY)
-				consumed=pbConfusionBerry(Game.BerryData[berry].Flavour,
+				consumed=pbConfusionBerry(Kernal.BerryData[berry].Flavour,
 					Game._INTL("{1}'s {2} restored health!",ToString(),berryname),
 					Game._INTL("For {1}, the {2} was too dry!",ToString(true),berryname));
 			else if (berry == Items.MAGO_BERRY)
-				consumed=pbConfusionBerry(Game.BerryData[berry].Flavour,
+				consumed=pbConfusionBerry(Kernal.BerryData[berry].Flavour,
 					Game._INTL("{1}'s {2} restored health!",ToString(),berryname),
 					Game._INTL("For {1}, the {2} was too sweet!",ToString(true),berryname));
 			else if (berry == Items.AGUAV_BERRY)
-				consumed=pbConfusionBerry(Game.BerryData[berry].Flavour,
+				consumed=pbConfusionBerry(Kernal.BerryData[berry].Flavour,
 					Game._INTL("{1}'s {2} restored health!",ToString(),berryname),
 					Game._INTL("For {1}, the {2} was too bitter!",ToString(true),berryname));
 			else if (berry == Items.IAPAPA_BERRY)
-				consumed=pbConfusionBerry(Game.BerryData[berry].Flavour,
+				consumed=pbConfusionBerry(Kernal.BerryData[berry].Flavour,
 					Game._INTL("{1}'s {2} restored health!",ToString(),berryname),
 					Game._INTL("For {1}, the {2} was too sour!",ToString(true),berryname));
 			else if (berry == Items.LIECHI_BERRY)
@@ -2565,7 +2565,7 @@ namespace PokemonUnity.Combat
 					return true;
 				}
 				bool miss=false; bool _override=false;
-				Attack.Data.Effects invulmove=Game.MoveData[target.effects.TwoTurnAttack].Effect;
+				Attack.Data.Effects invulmove=Kernal.MoveData[target.effects.TwoTurnAttack].Effect;
 				switch (invulmove) {
 					case Attack.Data.Effects.x09C: case Attack.Data.Effects.x108:	// Fly, Bounce
 						if (thismove.Effect != Attack.Data.Effects.x099 ||			// Thunder
@@ -2902,7 +2902,7 @@ namespace PokemonUnity.Combat
 						thismove.Effect != Attack.Data.Effects.x093 &&		// Twister
 						thismove.Effect != Attack.Data.Effects.x04C &&		// Sky Attack
 						//thismove.Effect != Attack.Data.Effects.   &&		// flinch-inducing moves
-						Game.MoveMetaData[thismove.id].FlinchChance == 0)	// flinch-inducing moves
+						Kernal.MoveMetaData[thismove.id].FlinchChance == 0)	// flinch-inducing moves
 						canflinch=true;
 					if (canflinch && @battle.pbRandom(10)==0) {
 						GameDebug.Log($"[Item/ability triggered] #{user.ToString()}'s King's Rock/Razor Fang or Stench");
@@ -3652,7 +3652,7 @@ namespace PokemonUnity.Combat
 		//		pkmn.EggSteps = pokemon.EggSteps;
 		//
 		//		pkmn.BallUsed = (int)pokemon.ballUsed;
-		//		if (pokemon.Item != Items.NONE && Game.ItemData[pokemon.Item].IsLetter)//PokemonUnity.Inventory.Mail.IsMail(pokemon.Item))
+		//		if (pokemon.Item != Items.NONE && Kernal.ItemData[pokemon.Item].IsLetter)//PokemonUnity.Inventory.Mail.IsMail(pokemon.Item))
 		//		{
 		//			pkmn.Mail = new SeriMail(pokemon.Item, pokemon.Mail);
 		//		}

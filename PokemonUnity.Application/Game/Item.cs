@@ -37,11 +37,11 @@ namespace PokemonUnity//.Inventory
 		public bool pbIsHiddenMove (Moves move) {
 			//if (Kernal.ItemData == null) return false;
 			////for (int i = 0; i < Kernal.ItemData.Count; i++) {
-			//for (int i = 0; i < Game.MachineData.Count; i++) {
+			//for (int i = 0; i < Kernal.MachineData.Count; i++) {
 			//  //if (!pbIsHiddenMachine(i)) continue;
 			//  //if(Kernal.ItemData[i].Pocket == ItemPockets.MACHINE)
 			//  //atk=Kernal.ItemData[i][ITEMMACHINE];
-			//  MachineData atk = Game.MachineData[i]; //HiddenMachine is not HiddenMove
+			//  MachineData atk = Kernal.MachineData[i]; //HiddenMachine is not HiddenMove
 			//  if (atk.Type != MachineData.MachineType.HiddenMachine && move==atk.Move) return true;
 			//}
 			Moves[] hidden = new Moves[] {

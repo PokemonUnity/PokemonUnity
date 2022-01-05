@@ -365,7 +365,7 @@ namespace PokemonUnity.Combat
 
 			runCommand = 0;
 
-			if (Game.MoveData.Keys.Contains(Moves.STRUGGLE))
+			if (Kernal.MoveData.Keys.Contains(Moves.STRUGGLE))
 				struggle = Combat.Move.pbFromPBMove(this, new Attack.Move(Moves.STRUGGLE));
 			else
 				struggle = new PokeBattle_Struggle().Initialize(this, new Attack.Move(Moves.STRUGGLE));
@@ -477,7 +477,7 @@ namespace PokemonUnity.Combat
 				Pokemons species = pokemon.Species;
 				if (!rareness.HasValue)
 				{
-					rareness = (int)Game.PokemonData[battler.Species].Rarity;
+					rareness = (int)Kernal.PokemonData[battler.Species].Rarity;
 				}
 				int a = battler.TotalHP;
 				int b = battler.HP;
@@ -718,7 +718,7 @@ namespace PokemonUnity.Combat
 		/// <param name="item"></param>
 		/// <returns></returns>
 		public bool pbIsUnlosableItem(IBattler pkmn, Items item) {
-			if (Game.ItemData[item].IsLetter) return true; //pbIsMail(item)
+			if (Kernal.ItemData[item].IsLetter) return true; //pbIsMail(item)
 			if (pkmn.effects.Transform) return false;
 			if (pkmn.Ability == Abilities.MULTITYPE) {
 				Items[] plates= new Items[] { Items.FIST_PLATE, Items.SKY_PLATE, Items.TOXIC_PLATE, Items.EARTH_PLATE, Items.STONE_PLATE,
@@ -2293,8 +2293,8 @@ namespace PokemonUnity.Combat
 			IPokemon thispoke=@party1[index];
 			// Original species, not current species
 			int level=defeated.Level;
-			float baseexp=Game.PokemonData[defeated.Species].BaseExpYield;
-			int[] evyield=Game.PokemonData[defeated.Species].EVYield;
+			float baseexp=Kernal.PokemonData[defeated.Species].BaseExpYield;
+			int[] evyield=Kernal.PokemonData[defeated.Species].EVYield;
 			// Gain effort value points, using RS effort values
 			int totalev=0;
 			for (int k = 0; k < Core.MAXPARTYSIZE; k++) {
@@ -3356,7 +3356,7 @@ namespace PokemonUnity.Combat
 						Items item=(Items)@choices[i.Index].Index;
 						if (item>0) {
 							//usetype=ItemData[item][Core.ITEMBATTLEUSE]; ToDo
-							int usetype=0;//Game.ItemData[item].Flags.[Core.ITEMBATTLEUSE]; //AIs can use items?
+							int usetype=0;//Kernal.ItemData[item].Flags.[Core.ITEMBATTLEUSE]; //AIs can use items?
 							if (usetype==1 || usetype==3) {
 								if (@choices[i.Index].Target>=0) { //@choices[i.Index][2]
 									pbUseItemOnPokemon(item,@choices[i.Index].Target,i,@scene);
@@ -3505,7 +3505,7 @@ namespace PokemonUnity.Combat
 									!new Attack.Data.Effects[] {
 										Attack.Data.Effects.x101, // Dig
 										Attack.Data.Effects.x100  // Dive
-									}.Contains(Game.MoveData[i.effects.TwoTurnAttack].Effect)) {
+									}.Contains(Kernal.MoveData[i.effects.TwoTurnAttack].Effect)) {
 									@scene.pbDamageAnimation(i,0);
 									i.pbReduceHP((int)Math.Floor(i.TotalHP/16f));
 									pbDisplay(Game._INTL("{1} is buffeted by the sandstorm!",i.ToString()));
@@ -3537,7 +3537,7 @@ namespace PokemonUnity.Combat
 									!i.hasWorkingAbility(Abilities.MAGIC_GUARD) &&
 									!i.hasWorkingAbility(Abilities.OVERCOAT) &&
 									!i.hasWorkingItem(Items.SAFETY_GOGGLES) &&
-									!new int[] { 0xCA,0xCB }.Contains((int)Game.MoveData[i.effects.TwoTurnAttack].Effect)) { // Dig, Dive
+									!new int[] { 0xCA,0xCB }.Contains((int)Kernal.MoveData[i.effects.TwoTurnAttack].Effect)) { // Dig, Dive
 									@scene.pbDamageAnimation(i,0);
 									i.pbReduceHP((int)Math.Floor(i.TotalHP/16f));
 									pbDisplay(Game._INTL("{1} is buffeted by the hail!",i.ToString()));
@@ -4373,7 +4373,7 @@ namespace PokemonUnity.Combat
 				}
 				// Harvest
 				if (i.hasWorkingAbility(Abilities.HARVEST) && i.Item<=0 && i.pokemon.itemRecycle>0) {
-					if (Game.ItemData[i.pokemon.itemRecycle].IsBerry && //pbIsBerry(i.itemRecycle)
+					if (Kernal.ItemData[i.pokemon.itemRecycle].IsBerry && //pbIsBerry(i.itemRecycle)
 						(pbWeather==Weather.SUNNYDAY ||
 						pbWeather==Weather.HARSHSUN || pbRandom(10)<5)) {
 						i.Item=i.pokemon.itemRecycle;

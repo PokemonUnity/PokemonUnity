@@ -30,7 +30,7 @@ namespace PokemonUnity.ConsoleApp
 		static void Main(string[] args)
 		{
 			//Game.ResetAndOpenSql(@"Data\veekun-pokedex.sqlite");
-			ResetSqlConnection(@"Data\veekun-pokedex.sqlite");
+			ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			System.Console.WriteLine("######################################");

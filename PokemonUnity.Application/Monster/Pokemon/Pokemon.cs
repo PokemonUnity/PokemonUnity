@@ -43,7 +43,7 @@ namespace PokemonUnity.Monster
 		{
 			get
 			{
-				return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[(int)Stats.ATTACK] + (EV[(int)Stats.ATTACK] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].ATK);
+				return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[(int)Stats.ATTACK] + (EV[(int)Stats.ATTACK] / 4)) * Level) / 100 + 5) * Kernal.NatureData[Nature].ATK);
 			}
 		}
 		/// <summary>
@@ -53,7 +53,7 @@ namespace PokemonUnity.Monster
 		{
 			get
 			{
-				return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[(int)Stats.DEFENSE] + (EV[(int)Stats.DEFENSE] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].DEF);
+				return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[(int)Stats.DEFENSE] + (EV[(int)Stats.DEFENSE] / 4)) * Level) / 100 + 5) * Kernal.NatureData[Nature].DEF);
 			}
 		}
 		/// <summary>
@@ -63,7 +63,7 @@ namespace PokemonUnity.Monster
 		{
 			get
 			{
-				return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[(int)Stats.SPATK] + (EV[(int)Stats.SPATK] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].SPA);
+				return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[(int)Stats.SPATK] + (EV[(int)Stats.SPATK] / 4)) * Level) / 100 + 5) * Kernal.NatureData[Nature].SPA);
 			}
 		}
 		/// <summary>
@@ -73,7 +73,7 @@ namespace PokemonUnity.Monster
 		{
 			get
 			{
-				return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[(int)Stats.SPDEF] + (EV[(int)Stats.SPDEF] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].SPD);
+				return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[(int)Stats.SPDEF] + (EV[(int)Stats.SPDEF] / 4)) * Level) / 100 + 5) * Kernal.NatureData[Nature].SPD);
 			}
 		}
 		/// <summary>
@@ -83,7 +83,7 @@ namespace PokemonUnity.Monster
 		{
 			get
 			{
-				return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[(int)Stats.SPEED] + (EV[(int)Stats.SPEED] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].SPE);
+				return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[(int)Stats.SPEED] + (EV[(int)Stats.SPEED] / 4)) * Level) / 100 + 5) * Kernal.NatureData[Nature].SPE);
 			}
 		}
 		/// <summary>
@@ -185,7 +185,7 @@ namespace PokemonUnity.Monster
 		/// Ball used
 		/// </summary>
 		public Items ballUsed { get; set; }
-		protected Data.PokemonData _base { get { return Game.PokemonData[Form.Pokemon]; } }
+		protected Data.PokemonData _base { get { return Kernal.PokemonData[Form.Pokemon]; } }
 		/// <summary>
 		/// Max total EVs
 		/// </summary>
@@ -214,7 +214,7 @@ namespace PokemonUnity.Monster
 			PersonalId |= Core.Rand.Next(256) << 16;
 			PersonalId |= Core.Rand.Next(256) << 24;
 			Ability = Abilities.NONE;
-			Nature = (Natures)(Core.Rand.Next(Kernal.NatureData.Count));//Game.NatureData.Keys.ToArray()[Core.Rand.Next(Game.NatureData.Keys.Count) + 1];
+			Nature = (Natures)(Core.Rand.Next(Kernal.NatureData.Count));//Kernal.NatureData.Keys.ToArray()[Core.Rand.Next(Kernal.NatureData.Keys.Count) + 1];
 			shinyFlag = IsShiny; //isShiny(); 
 			//Gender = isMale();
 			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
@@ -264,7 +264,7 @@ namespace PokemonUnity.Monster
 			if (Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
 			Heal();
 			//if (pokemons == Pokemons.UNOWN)
-			//	formId = Core.Rand.Next(Game.PokemonFormsData[pokemons].Length);
+			//	formId = Core.Rand.Next(Kernal.PokemonFormsData[pokemons].Length);
 			#region Initialize Forms
 			Forms? f = MultipleForms.getFormOnCreation(pokemons, false);
 			if (f != null)
@@ -337,9 +337,9 @@ namespace PokemonUnity.Monster
 		//timeReceived: DateTimeOffset.Now, timeEggHatched: null)
 		{
 			if (pokeball == Items.NONE
-				|| Game.ItemData[pokeball].Category == ItemCategory.STANDARD_BALLS
-				|| Game.ItemData[pokeball].Category == ItemCategory.SPECIAL_BALLS
-				|| Game.ItemData[pokeball].Category == ItemCategory.APRICORN_BALLS)
+				|| Kernal.ItemData[pokeball].Category == ItemCategory.STANDARD_BALLS
+				|| Kernal.ItemData[pokeball].Category == ItemCategory.SPECIAL_BALLS
+				|| Kernal.ItemData[pokeball].Category == ItemCategory.APRICORN_BALLS)
 				this.ballUsed = pokeball;
 			if (moves.Length == 4) this.moves = moves;
 			this.name = nickname;
@@ -522,7 +522,7 @@ namespace PokemonUnity.Monster
 			EggSteps = eggSteps;
 
 			this.ballUsed = ballUsed;
-			if (Game.ItemData[item].IsLetter)
+			if (Kernal.ItemData[item].IsLetter)
 			{
 				this.mail = new Inventory.Mail((Items)item);
 				this.mail.Message = mail;
@@ -733,7 +733,7 @@ namespace PokemonUnity.Monster
 			this.ObtainLevel = Level;
 			this.ObtainedMode = Method;
 			this.obtainWhen = DateTimeOffset.UtcNow;
-			if (Game.ItemData[Ball].Pocket == ItemPockets.POKEBALL)
+			if (Kernal.ItemData[Ball].Pocket == ItemPockets.POKEBALL)
 				this.ballUsed = Ball;
 			else this.ballUsed = Items.POKE_BALL;
 
@@ -900,10 +900,10 @@ namespace PokemonUnity.Monster
 		/// <returns>null means no evolves for pokemon, int[].Count == 0 means evolutions are not specific to leveling</returns>
 		public int[] GetEvolutionLevels()
 		{
-			if (Game.PokemonEvolutionsData[pokemons].Length > 0)
+			if (Kernal.PokemonEvolutionsData[pokemons].Length > 0)
 			{
 				List<int> levels = new List<int>();
-				foreach (PokemonEvolution evolution in Game.PokemonEvolutionsData[pokemons])
+				foreach (PokemonEvolution evolution in Kernal.PokemonEvolutionsData[pokemons])
 				{
 					if (evolution.EvolveMethod == EvolutionMethod.Level ||
 						evolution.EvolveMethod == EvolutionMethod.LevelMale ||
@@ -925,7 +925,7 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		public bool CanEvolveDuringBattle()
 		{
-			foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+			foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 			{
 				switch (item.EvolveMethod)
 				{
@@ -972,7 +972,7 @@ namespace PokemonUnity.Monster
 		public EvolutionMethod[] GetEvolutionMethods()
 		{
 			List<EvolutionMethod> methods = new List<EvolutionMethod>();
-			foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+			foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 			{
 				if (!methods.Contains(item.EvolveMethod))
 					methods.Add(item.EvolveMethod);
@@ -981,7 +981,7 @@ namespace PokemonUnity.Monster
 		}
 		public bool hasEvolveMethod(EvolutionMethod method)
 		{
-			foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+			foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 			{
 				if (item.EvolveMethod == method)
 					return true;
@@ -1001,7 +1001,7 @@ namespace PokemonUnity.Monster
 			switch (method)
 			{
 				case EvolutionMethod.Ninjask:
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 					{
 						if (item.EvolveMethod == method)
 							methods.Add(item.Species);
@@ -1023,14 +1023,14 @@ namespace PokemonUnity.Monster
 				case EvolutionMethod.LevelFemale:
 				//case EvolutionMethod.Ninjask:
 				case EvolutionMethod.Lycanroc:
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 					{
 						if ((int)item.EvolveValue < level && item.EvolveMethod == method)
 							methods.Add(item.Species);
 					}
 					return methods.ToArray();
 				case EvolutionMethod.Beauty:            //param int = beauty, not level
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 					{
 						if ((int)item.EvolveValue < Contest[(int)Contests.Beauty] && item.EvolveMethod == method)
 							methods.Add(item.Species);
@@ -1040,7 +1040,7 @@ namespace PokemonUnity.Monster
 				case EvolutionMethod.Happiness:         //param int = happiness, not level
 				case EvolutionMethod.HappinessDay:      //param int = happiness, not level
 				case EvolutionMethod.HappinessNight:    //param int = happiness, not level
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 					{
 						if ((int)item.EvolveValue < Happiness && item.EvolveMethod == method)
 							methods.Add(item.Species);
@@ -1064,7 +1064,7 @@ namespace PokemonUnity.Monster
 				case EvolutionMethod.HoldItemDay:
 				case EvolutionMethod.HoldItemNight:
 					List<Pokemons> methods = new List<Pokemons>();
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 					{
 						if ((Items)item.EvolveValue == itemUsed && item.EvolveMethod == method)
 							methods.Add(item.Species);
@@ -1084,7 +1084,7 @@ namespace PokemonUnity.Monster
 				case EvolutionMethod.TradeSpecies:
 				case EvolutionMethod.Shedinja:
 					List<Pokemons> methods = new List<Pokemons>();
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 					{
 						if ((Pokemons)item.EvolveValue == pkmn && item.EvolveMethod == method)
 							methods.Add(item.Species);
@@ -1102,7 +1102,7 @@ namespace PokemonUnity.Monster
 			{
 				case EvolutionMethod.Move:
 					List<Pokemons> methods = new List<Pokemons>();
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 					{
 						if ((Moves)item.EvolveValue == move && item.EvolveMethod == method)
 							methods.Add(item.Species);
@@ -1121,7 +1121,7 @@ namespace PokemonUnity.Monster
 				case EvolutionMethod.Type:
 				case EvolutionMethod.Affection:
 					List<Pokemons> methods = new List<Pokemons>();
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 					{
 						if ((Types)item.EvolveValue == type && item.EvolveMethod == method)
 							methods.Add(item.Species);
@@ -1134,7 +1134,7 @@ namespace PokemonUnity.Monster
 		//public void EvolvePokemon(Pokemons evolveTo, PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene = null)
 		//{
 		//	List<Pokemons> methods = new List<Pokemons>();
-		//	foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+		//	foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 		//		methods.Add(item.Species);
 		//	if (!methods.Contains(evolveTo)) return;
 		//	int oldtotalhp	= TotalHP;
@@ -1585,25 +1585,25 @@ namespace PokemonUnity.Monster
 			switch (method)
 			{
 				case LearnMethod.egg:
-					return Game.PokemonMovesData[pokemons].Egg;
+					return Kernal.PokemonMovesData[pokemons].Egg;
 				case LearnMethod.levelup:
-					return Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key).ToArray();
+					return Kernal.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key).ToArray();
 				case LearnMethod.machine:
-					return Game.PokemonMovesData[pokemons].Machine;
+					return Kernal.PokemonMovesData[pokemons].Machine;
 				case LearnMethod.tutor:
-					return Game.PokemonMovesData[pokemons].Tutor;
+					return Kernal.PokemonMovesData[pokemons].Tutor;
 				case LearnMethod.shadow:
 				case LearnMethod.xd_shadow:
 					List<Moves> s = new List<Moves>();
-					s.AddRange(Game.PokemonMovesData[pokemons].Shadow);
-					s.AddRange(Game.PokemonMovesData[pokemons].Shadow.Where(x => !s.Contains(x)).Select(x => x));
+					s.AddRange(Kernal.PokemonMovesData[pokemons].Shadow);
+					s.AddRange(Kernal.PokemonMovesData[pokemons].Shadow.Where(x => !s.Contains(x)).Select(x => x));
 					return s.ToArray();
 				default:
 					List<Moves> list = new List<Moves>();
-					list.AddRange(Game.PokemonMovesData[pokemons].Egg);
-					list.AddRange(Game.PokemonMovesData[pokemons].Machine.Where(x => !list.Contains(x)).Select(x => x));
-					list.AddRange(Game.PokemonMovesData[pokemons].Tutor.Where(x => !list.Contains(x)).Select(x => x));
-					list.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => !list.Contains(x.Key))//(x => x.Value <= this.Level)
+					list.AddRange(Kernal.PokemonMovesData[pokemons].Egg);
+					list.AddRange(Kernal.PokemonMovesData[pokemons].Machine.Where(x => !list.Contains(x)).Select(x => x));
+					list.AddRange(Kernal.PokemonMovesData[pokemons].Tutor.Where(x => !list.Contains(x)).Select(x => x));
+					list.AddRange(Kernal.PokemonMovesData[pokemons].LevelUp.Where(x => !list.Contains(x.Key))//(x => x.Value <= this.Level)
 						.Select(x => x.Key));
 					return list.ToArray();
 			}
@@ -1623,7 +1623,7 @@ namespace PokemonUnity.Monster
 			int numMove = Core.Rand.Next(4) + 1; //number of moves pokemon will have, between 0 and 3
 			List<Moves> movelist = new List<Moves>();
 			if (isEgg || egg || (Game.GameData as Game).Features.CatchPokemonsWithEggMoves)
-				movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
+				movelist.AddRange(Kernal.PokemonMovesData[pokemons].Egg);
 			int?[] rejected = new int?[movelist.Count]; //default null, to exclude `0`
 			switch (level)
 			{
@@ -1632,7 +1632,7 @@ namespace PokemonUnity.Monster
 				case 0:
 					//Set moveset based off of the highest level moves possible.
 					//string[] moves = new string[4];
-					int i = Game.PokemonMovesData[pokemons].LevelUp.Count - 1; //work backwards so that the highest level move possible is grabbed first
+					int i = Kernal.PokemonMovesData[pokemons].LevelUp.Count - 1; //work backwards so that the highest level move possible is grabbed first
 					int[,] movesetLevels = new int[1, 2]; //[index,{moveId,level}]
 					while (moves[3] == null)
 					{
@@ -1676,7 +1676,7 @@ namespace PokemonUnity.Monster
 					break;
 				#endregion
 				case null: //case -1:
-					movelist.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
+					movelist.AddRange(Kernal.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
 					rejected = new int?[movelist.Count];
 					for (int n = 0; n < movelist.Count; n++)
 					{
@@ -1699,8 +1699,8 @@ namespace PokemonUnity.Monster
 					}
 					break;
 				default:
-					//if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
-					movelist.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= level.Value).Select(x => x.Key));
+					//if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(Kernal.PokemonMovesData[pokemons].Egg);
+					movelist.AddRange(Kernal.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= level.Value).Select(x => x.Key));
 					rejected = new int?[movelist.Count];
 					//int listend = movelist.Count - 4;
 					//listend = listend < 0 ? 0 : listend + 4;
@@ -1853,10 +1853,10 @@ namespace PokemonUnity.Monster
 		{
 			bool moveLearned = false;
 			List<Moves> movelist = new List<Moves>();
-			if (isEgg || egg) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
+			if (isEgg || egg) movelist.AddRange(Kernal.PokemonMovesData[pokemons].Egg);
 			int?[] rejected = new int?[movelist.Count];
-			//if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
-			movelist.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value == level).Select(x => x.Key));
+			//if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(Kernal.PokemonMovesData[pokemons].Egg);
+			movelist.AddRange(Kernal.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value == level).Select(x => x.Key));
 			rejected = new int?[movelist.Count];
 			//int listend = movelist.Count - 4;
 			//listend = listend < 0 ? 0 : listend + 4;
@@ -2129,9 +2129,9 @@ namespace PokemonUnity.Monster
 		/// Not sure how i feel about this one... might consider removing
 		public Items[] wildHoldItems()
 		{
-			if (!Game.PokemonItemsData.ContainsKey(pokemons)) return new Items[0];
+			if (!Kernal.PokemonItemsData.ContainsKey(pokemons)) return new Items[0];
 			//_base.HeldItem
-			PokemonWildItems[] dexdata = Game.PokemonItemsData[pokemons];
+			PokemonWildItems[] dexdata = Kernal.PokemonItemsData[pokemons];
 			//pbDexDataOffset(dexdata, @species, 48);
 			Items itemcommon	= Items.NONE; //dexdata.fgetw;
 			Items itemuncommon	= Items.NONE; //dexdata.fgetw;
@@ -2155,7 +2155,7 @@ namespace PokemonUnity.Monster
 		{
 			get
 			{
-				if (this.mail == null || !Game.ItemData[this.Item].IsLetter) return null; //If empty return null
+				if (this.mail == null || !Kernal.ItemData[this.Item].IsLetter) return null; //If empty return null
 				//if (mail.Message.Length == 0 || this.Inventory == 0)//|| this.item.Category != Items.Category.Mail )
 				//{
 				//    //mail = null;
@@ -2261,7 +2261,7 @@ namespace PokemonUnity.Monster
 					}
 					else
 					{
-						if (Game.ItemData[Item].IsLetter)//(pbIsMail(item))
+						if (Kernal.ItemData[Item].IsLetter)//(pbIsMail(item))
 						{
 							//if (pbMailScreen(item, pkmn, pkmnid))
 							if (pbMailScreen(item, this))
@@ -2294,7 +2294,7 @@ namespace PokemonUnity.Monster
 			else
 			{
 				if (!pbIsMail(item) || pbMailScreen(item, pkmn, pkmnid)) // Open the mail screen if necessary
-				if (!Game.ItemData[Item].IsLetter || pbMailScreen(item, this)) // Open the mail screen if necessary
+				if (!Kernal.ItemData[Item].IsLetter || pbMailScreen(item, this)) // Open the mail screen if necessary
 				{
 					Game.GameData.Player.Bag.pbDeleteItem(item);
 					//setItem(item);
@@ -2614,12 +2614,12 @@ namespace PokemonUnity.Monster
 			int totalEVgain = 0;
 
 			// EV gains
-			int gainEVHP = Game.PokemonData[DefeatedPokemon].evYieldHP;
-			int gainEVAttack = Game.PokemonData[DefeatedPokemon].evYieldATK;
-			int gainEVDefense = Game.PokemonData[DefeatedPokemon].evYieldDEF;
-			int gainEVSpAttack = Game.PokemonData[DefeatedPokemon].evYieldSPA;
-			int gainEVSpDefense = Game.PokemonData[DefeatedPokemon].evYieldSPD;
-			int gainEVSpeed = Game.PokemonData[DefeatedPokemon].evYieldSPE;
+			int gainEVHP = Kernal.PokemonData[DefeatedPokemon].evYieldHP;
+			int gainEVAttack = Kernal.PokemonData[DefeatedPokemon].evYieldATK;
+			int gainEVDefense = Kernal.PokemonData[DefeatedPokemon].evYieldDEF;
+			int gainEVSpAttack = Kernal.PokemonData[DefeatedPokemon].evYieldSPA;
+			int gainEVSpDefense = Kernal.PokemonData[DefeatedPokemon].evYieldSPD;
+			int gainEVSpeed = Kernal.PokemonData[DefeatedPokemon].evYieldSPE;
 
 			int EVfactor = PokerusStage.HasValue && PokerusStage.Value ? 2 : 1; //if pokerus, ev values are doubled
 			if (SoS) //If the SoS-Ally Pokemon is defeated, double EV gain
@@ -2761,12 +2761,12 @@ namespace PokemonUnity.Monster
 			int totalEVgain = 0;
 
 			// EV gains
-			int gainEVHP = 0; //Game.PokemonData[UsedItem].evYieldHP;
-			int gainEVAttack = 0; //Game.PokemonData[UsedItem].evYieldATK;
-			int gainEVDefense = 0; //Game.PokemonData[UsedItem].evYieldDEF;
-			int gainEVSpAttack = 0; //Game.PokemonData[UsedItem].evYieldSPA;
-			int gainEVSpDefense = 0; //Game.PokemonData[UsedItem].evYieldSPD;
-			int gainEVSpeed = 0; //Game.PokemonData[UsedItem].evYieldSPE;
+			int gainEVHP = 0; //Kernal.PokemonData[UsedItem].evYieldHP;
+			int gainEVAttack = 0; //Kernal.PokemonData[UsedItem].evYieldATK;
+			int gainEVDefense = 0; //Kernal.PokemonData[UsedItem].evYieldDEF;
+			int gainEVSpAttack = 0; //Kernal.PokemonData[UsedItem].evYieldSPA;
+			int gainEVSpDefense = 0; //Kernal.PokemonData[UsedItem].evYieldSPD;
+			int gainEVSpeed = 0; //Kernal.PokemonData[UsedItem].evYieldSPE;
 
 			int EVfactor = 1;
 
