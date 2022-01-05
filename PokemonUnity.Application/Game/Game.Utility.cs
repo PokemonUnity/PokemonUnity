@@ -29,9 +29,10 @@ namespace PokemonUnity
 	{
 		public static string _INTL(string message, params object[] param)
 		{
-			for (int i = 0; param.Length > i; i++) //(int i = param.Length; i > 0; i--)
-				message.Replace($"{{{i}}}", $"{{{i - 1}}}");
-			return string.Format(message, param);
+			string msg = message;
+			for (int i = 0; param.Length >= i; i++) //(int i = param.Length; i > 0; i--)
+				msg = msg.Replace($"{{{i}}}", $"{{{i - 1}}}");
+			return string.Format(msg, param);
 		}
 			
 		#region General purpose utilities
@@ -1308,8 +1309,8 @@ namespace PokemonUnity
 			if ((this as IGameMessage).pbConfirmMessage(Game._INTL("Would you like to give a nickname to {1}?",speciesname))) {
 				string helptext=Game._INTL("{1}'s nickname?",speciesname);
 				string newname=this is IGameTextEntry t ? t.pbEnterPokemonName(helptext,0,Pokemon.NAMELIMIT,"",pokemon) : speciesname;
-				if (newname!="") pokemon.Name=newname;
-				//if (newname!="") pokemon.SetNickname(newname);
+				//if (newname!="") pokemon.Name=newname;
+				if (newname!="") (pokemon as Pokemon).SetNickname(newname);
 			}
 		}
 
@@ -1501,7 +1502,8 @@ namespace PokemonUnity
 				pokemon.otgender=ownerGender;
 			}
 			//Set nickname
-			if (!string.IsNullOrEmpty(nickname)) pokemon.Name=nickname.Substring(0,10);
+			//if (!string.IsNullOrEmpty(nickname)) pokemon.Name=nickname.Substring(0,10);
+			if (!string.IsNullOrEmpty(nickname)) (pokemon as Pokemon).SetNickname(nickname.Substring(0,10));
 			//Recalculate stats
 			pokemon.calcStats();
 			if (ownerName != null) {
@@ -1525,7 +1527,8 @@ namespace PokemonUnity
 				pokemon.otgender=ownerGender;
 			}
 			//Set nickname
-			if (!string.IsNullOrEmpty(nickname)) pokemon.Name=nickname.Substring(0,10);
+			//if (!string.IsNullOrEmpty(nickname)) pokemon.Name=nickname.Substring(0,10);
+			if (!string.IsNullOrEmpty(nickname)) (pokemon as Pokemon).SetNickname(nickname.Substring(0,10));
 			//Recalculate stats
 			pokemon.calcStats();
 			if (ownerName != null) {
@@ -1556,8 +1559,8 @@ namespace PokemonUnity
 			int eggsteps=0; //dexdata.fgetw();
 			//dexdata.close();
 			// Set egg's details
-			pokemon.Name=Game._INTL("Egg");
-			pokemon.eggsteps=eggsteps;
+			//pokemon.Name=Game._INTL("Egg"); //ToDo: Uncomment and assign?
+			pokemon.EggSteps = eggsteps;
 			pokemon.obtainText=text;
 			pokemon.calcStats();
 			// Add egg to party
@@ -1573,8 +1576,8 @@ namespace PokemonUnity
 			int eggsteps=0; //dexdata.fgetw();
 			//dexdata.close();
 			// Set egg's details
-			pokemon.Name=Game._INTL("Egg");
-			pokemon.eggsteps=eggsteps;
+			//pokemon.Name=Game._INTL("Egg"); //ToDo: Uncomment and assign?
+			pokemon.EggSteps = eggsteps;
 			pokemon.obtainText=text;
 			pokemon.calcStats();
 			// Add egg to party
@@ -1627,12 +1630,12 @@ namespace PokemonUnity
 			if (species<=0) return; //!species || 
 			if (gender>1) gender=0;
 			string formnames = ""; //pbGetMessage(MessageTypes.FormNames,species);
-			if (string.IsNullOrEmpty(formnames)) form=0;
-			if (Trainer.formseen[(int)species] == null) Trainer.formseen[(int)species] = new int?[0];
+			if (string.IsNullOrEmpty(formnames)) form=0; //ToDo: Rework pokedex logic below...
+			//if (Trainer.formseen[(int)species] == null) Trainer.formseen[(int)species] = new int?[0];
 			//Trainer.formseen[(int)species][gender][form]=true;
 			//if (Trainer.formlastseen[species] == null) Trainer.formlastseen[species]=new [];
 			//if (Trainer.formlastseen[species] == []) Trainer.formlastseen[species]= new []{ gender,form };
-			if (Trainer.formlastseen[(int)species].Value == null) Trainer.formlastseen[(int)species] = new KeyValuePair<int, int?>(gender,form);
+			//if (Trainer.formlastseen[(int)species].Value == null) Trainer.formlastseen[(int)species] = new KeyValuePair<int, int?>(gender,form);
 			//if(Player.Pokedex[(int)species, 2] < 0)
 			//Player.Pokedex[(int)species,2] = (byte)form; 
 		}

@@ -269,7 +269,7 @@ namespace PokemonUnity.Combat
 				return this;
 			}
 
-			if (p2.Length > 2 && opponent.Length == 0) { //ID == TrainerTypes.WildPokemon
+			if (p2.Length > 2 && this.opponent.Length == 0) { //ID == TrainerTypes.WildPokemon
 				//raise new ArgumentError(Game._INTL("Wild battles with more than two Pokémon are not allowed."))
 				GameDebug.LogError("Wild battles with more than two Pokémon are not allowed.");
 				return this;
@@ -302,8 +302,8 @@ namespace PokemonUnity.Combat
 			fullparty2 = false;
 			battlers = new Pokemon[maxBattlers];
 			//items = new List<Items>(); //null;
-			items = new Items[opponent.Length][];
-			for (int t = 0; t < opponent.Length; t++) //List of Trainers
+			items = new Items[this.opponent.Length][];
+			for (int t = 0; t < this.opponent.Length; t++) //List of Trainers
 				items[t] = new Items[0];
 
 			sides = new Effects.Side[] { new Effects.Side(),	// Player's side
@@ -328,7 +328,7 @@ namespace PokemonUnity.Combat
 			//nextPickupUse = 0;
 			pickupUse = 0;
 
-			megaEvolution = new int[][] { new int[player.Length], new int[opponent.Length] };
+			megaEvolution = new int[][] { new int[player.Length], new int[this.opponent.Length] };
 			//if (this.player.Length > 0) 									//ToDo: single/double or party?
 			//	megaEvolution[0] = new bool?[this.player.Party.Length]; 	//[-1] * player.Length;
 			//else
@@ -415,8 +415,8 @@ namespace PokemonUnity.Combat
 				if (pbDisplayConfirm(Game._INTL("Would you like to give a nickname to {1}?", pokemon.Species.ToString(TextScripts.Name))))
 				{
 					string nick = @scene.pbNameEntry(Game._INTL("{1}'s nickname?", pokemon.Species.ToString(TextScripts.Name)), pokemon);
-					if(!string.IsNullOrEmpty(nick)) pokemon.Name = nick;
-					//if(!string.IsNullOrEmpty(nick)) pokemon.SetNickname(nick);
+					//if(!string.IsNullOrEmpty(nick)) pokemon.Name = nick;
+					if(!string.IsNullOrEmpty(nick)) (pokemon as Monster.Pokemon).SetNickname(nick);
 				}
 			//ToDo: Add to party before attempting to store in PC
 			//Game.GameData.Player.addPokemon(pokemon)); return;
@@ -2411,10 +2411,10 @@ namespace PokemonUnity.Combat
 				thispoke.itemInitial == Items.LUCKY_EGG) exp=(int)Math.Floor(exp*3/2f);
 			Monster.LevelingRate growthrate=thispoke.GrowthRate;
 			//int newexp=new Experience(thispoke.exp,exp,growthrate).AddExperience(exp).Current;
-			Monster.Data.Experience gainedexp=new Monster.Data.Experience(growthrate,thispoke.exp);
+			Monster.Data.Experience gainedexp=new Monster.Data.Experience(growthrate,thispoke.Exp);
 			gainedexp.AddExperience(exp);
 			int newexp=gainedexp.Total;
-			exp=newexp-thispoke.exp;
+			exp=newexp-thispoke.Exp;
 			if (exp>0) {
 				if (showmessages) {
 					if (isOutsider) {
@@ -2428,7 +2428,7 @@ namespace PokemonUnity.Combat
 				//int tempexp=0;
 				int curlevel=thispoke.Level;
 				if (newlevel<curlevel) {
-					string debuginfo=$"#{thispoke.Name}: #{thispoke.Level}/#{newlevel} | #{thispoke.exp}/#{newexp} | gain: #{exp}";
+					string debuginfo=$"#{thispoke.Name}: #{thispoke.Level}/#{newlevel} | #{thispoke.Exp}/#{newexp} | gain: #{exp}";
 					//throw new RuntimeError(Game._INTL("The new level ({1}) is less than the Pokémon's\r\ncurrent level ({2}), which shouldn't happen.\r\n[Debug: {3}]",
 					GameDebug.LogError(Game._INTL("The new level {1) is less than the Pokémon's\r\ncurrent level (2), which shouldn't happen.\r\n[Debug: {3}]",
 					newlevel.ToString(),curlevel.ToString(),debuginfo));
@@ -2440,7 +2440,7 @@ namespace PokemonUnity.Combat
 					p.savedexp+=exp;
 				}
 				else {
-					int tempexp1=thispoke.exp;
+					int tempexp1=thispoke.Exp;
 					int tempexp2=0;
 					// Find battler
 					IBattler battler=pbFindPlayerBattler(index);
@@ -2449,7 +2449,7 @@ namespace PokemonUnity.Combat
 						int startexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel); //0
 						int endexp=Monster.Data.Experience.GetStartExperience(growthrate,curlevel+1); //100
 						tempexp2=(endexp<newexp) ? endexp : newexp; //final < 100?
-						thispoke.exp=tempexp2;
+						thispoke.Exp = tempexp2;
 						//thispoke.Experience.AddExperience(tempexp2 - thispoke.exp);
 						@scene.pbEXPBar(thispoke,battler,startexp,endexp,tempexp1,tempexp2);
 						tempexp1=tempexp2;
@@ -2875,7 +2875,7 @@ namespace PokemonUnity.Combat
 					@party2[i] = @party2[i];
 			}
 			#region Initialize wild Pokémon;
-			if (@opponent == null) {
+			if (@opponent == null || @opponent.Length == 0) {
 				if (@party2.Length==1) {
 					if (@doublebattle) {
 						//throw new Exception(Game._INTL("Only two wild Pokémon are allowed in double battles"));
@@ -2893,7 +2893,7 @@ namespace PokemonUnity.Combat
 					if (!@doublebattle) {
 						//throw new Exception(Game._INTL("Only one wild Pokémon is allowed in single battles"));
 						GameDebug.LogError(Game._INTL("Only one wild Pokémon is allowed in single battles"));
-						@party2 = new IPokemon[] { @party2[0] }; //Fixed error.
+						//@party2 = new IPokemon[] { @party2[0] }; //Doesnt fixed error...
 					}
 					@battlers[1].pbInitialize(@party2[0],0,false);
 					@battlers[3].pbInitialize(@party2[1],0,false);

@@ -94,7 +94,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Used only to erase the battler of a Shadow Pokémon that has been snagged.
 		/// </summary>
-		bool pbReset();
+		IBattler pbReset();
 
 		/// <summary>
 		/// Update Pokémon who will gain EXP if this battler is defeated

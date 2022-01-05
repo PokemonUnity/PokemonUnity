@@ -169,7 +169,7 @@ namespace PokemonUnity.Combat
 				if (pokemon.IsNotNullOrNone()) return pokemon.IsShiny;
 				return false; }
 		}
-		public Pokemons Species					{ get { return Kernal.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
+		public Pokemons Species					{ get { return pokemon == null ? Pokemons.NONE : Kernal.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
 		public int StatusCount					{ get { return statusCount; } set { statusCount = value; } }
 		private int statusCount					{ get; set; }
 		public Status Status
@@ -226,7 +226,7 @@ namespace PokemonUnity.Combat
 		#endregion
 		public bool Fainted { get; private set; }
 		public bool isFainted() { return HP == 0 || Status == Status.FAINT || Fainted; }
-		public bool isEgg { get { return pokemon.isEgg; } }
+		public bool isEgg { get { return pokemon?.isEgg??true; } }
 		/// <summary>
 		/// Returns the position of this pkmn in party lineup
 		/// </summary>
@@ -339,14 +339,14 @@ namespace PokemonUnity.Combat
 			pbInitEffects(batonpass);
 			return this;
 		}
-		private void pbInitBlank()
+		public void pbInitBlank()
 		{
 			//Pokemon blank = new Pokemon();
 			//Level = 0;
 			pokemonIndex = -1;
 			participants = new List<int>();
 		}
-		private void pbInitEffects(bool batonpass)
+		public void pbInitEffects(bool batonpass)
 		{
 			if (!batonpass)
 			{
@@ -524,7 +524,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 		}
-		private void pbInitPermanentEffects()
+		public void pbInitPermanentEffects()
 		{
 			// These effects are always retained even if a Pokémon is replaced
 			effects.FutureSight        = 0	  ;
@@ -584,7 +584,7 @@ namespace PokemonUnity.Combat
 				};
 			}
 		}
-		public void Update(bool fullchange = false)
+		public void pbUpdate(bool fullchange = false)
 		{
 			if(Species != Pokemons.NONE)
 			{
@@ -613,7 +613,7 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Used only to erase the battler of a Shadow Pokémon that has been snagged.
 		/// </summary>
-		public IBattler Reset()
+		public IBattler pbReset()
 		{
 			pokemon		= new PokemonUnity.Monster.Pokemon();
 			Index		= -1;
@@ -629,7 +629,7 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Update Pokémon who will gain EXP if this battler is defeated
 		/// </summary>
-		public void UpdateParticipants()
+		public void pbUpdateParticipants()
 		{
 			//Can't update if already fainted
 			if (!isFainted())
@@ -732,12 +732,12 @@ namespace PokemonUnity.Combat
 		//	return false;
 		//}
 
-		public bool HasMovedThisRound() {
+		public bool hasMovedThisRound() {
 			if (!lastRoundMoved.HasValue) return false;
 			return lastRoundMoved.Value == battle.turncount;
 		}
 		//ToDo: Double check this
-		public bool hasMovedThisRound(int? turncount = null){
+		public bool hasMovedThisRound(int? turncount){
 			if (!lastRoundMoved.HasValue) return false;
 			return !turncount.HasValue
 				? lastRoundMoved.Value == battle.turncount
@@ -934,7 +934,7 @@ namespace PokemonUnity.Combat
 		/// ToDo: Use PokemonUnity.Battle.Form to modify Pokemon._base,
 		/// Which will override and modify base stats for values that inherit it
 		/// Castform and Unown should use (int)Form, and others will use (PokemonData)Form
-		public void CheckForm()
+		public void pbCheckForm()
 		{
 			if (effects.Transform) return;
 			if (isFainted()) return;
@@ -1042,14 +1042,14 @@ namespace PokemonUnity.Combat
 			}
 			if (transformed)
 			{
-				Update(true);
+				pbUpdate(true);
 				battle.scene.ChangePokemon();
 				battle.pbDisplay(Game._INTL("{1} transformed!", ToString()));
 				//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "Transformed", ToString()).Value);
 				GameDebug.Log(string.Format("[Form changed] {0} changed to form {1}", ToString(), Form.Id.ToString(TextScripts.Name)));
 			}
 		}
-		public void ResetForm()
+		public void pbResetForm()
 		{
 			if (!effects.Transform){
 				if (Species == Pokemons.CASTFORM ||
@@ -1060,7 +1060,7 @@ namespace PokemonUnity.Combat
 					Species == Pokemons.XERNEAS)
 					form = 0;
 			}
-			Update(true);
+			pbUpdate(true);
 		}
 		#endregion
 
@@ -2318,7 +2318,7 @@ namespace PokemonUnity.Combat
 
 		#region Move PP
 		//ToDo: Revisit SetPP, and maybe try (int move, byte pp) or ref move
-		public void pbSetPP(IBattleMove move,byte pp) {
+		public void pbSetPP(IBattleMove move,int pp) {
 			move.PP=pp;
 			// Not effects.Mimic, since Mimic can't copy Mimic
 			if (move.thismove.IsNotNullOrNone() && move.id==move.thismove.id && !@effects.Transform)
@@ -2722,11 +2722,11 @@ namespace PokemonUnity.Combat
 					GameDebug.Log($"[Move effect triggered] #{ToString()} was defrosted by using #{thismove.id.ToString(TextScripts.Name)}");
 					this.pbCureStatus(false);
 					@battle.pbDisplay(Game._INTL("{1} melted the ice!",ToString()));
-					CheckForm();
+					pbCheckForm();
 				}
 				else if (@battle.pbRandom(10)<2 && !turneffects.SkipAccuracyCheck) {
 					this.pbCureStatus();
-					CheckForm();
+					pbCheckForm();
 				}
 				else if (!thismove.Flags.Defrost) {
 					this.pbContinueStatus();
@@ -3037,14 +3037,14 @@ namespace PokemonUnity.Combat
 				!@effects.Transform)
 				if (thismove.pbIsDamaging() && this.form!=1) {
 					this.form=1;
-					Update(true);
+					pbUpdate(true);
 					@battle.scene.pbChangePokemon(this,Form.Id);//@pokemon.Species
 					@battle.pbDisplay(Game._INTL("{1} changed to Blade Forme!",ToString()));
 					GameDebug.Log($"[Form changed] #{ToString()} changed to Blade Forme");
 				}
 				else if (thismove.id == Moves.KINGS_SHIELD && this.form!=0) {
 					this.form=0;
-					Update(true);
+					pbUpdate(true);
 					@battle.scene.pbChangePokemon(this,Form.Id);//@pokemon);
 					@battle.pbDisplay(Game._INTL("{1} changed to Shield Forme!",ToString()));
 					GameDebug.Log($"[Form changed] #{ToString()} changed to Shield Forme");
@@ -3466,41 +3466,6 @@ namespace PokemonUnity.Combat
 			throw new NotImplementedException();
 		}
 
-		void IBattler.pbInitBlank()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattler.pbInitPermanentEffects()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattler.pbInitEffects(bool batonpass)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattler.pbUpdate(bool fullchange)
-		{
-			throw new NotImplementedException();
-		}
-
-		bool IBattler.pbReset()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattler.pbUpdateParticipants()
-		{
-			throw new NotImplementedException();
-		}
-
-		string IBattler.ToString(bool lowercase)
-		{
-			throw new NotImplementedException();
-		}
-
 		bool IBattler.pbHasType(Types type)
 		{
 			throw new NotImplementedException();
@@ -3517,31 +3482,6 @@ namespace PokemonUnity.Combat
 		}
 
 		bool IBattler.pbHasMoveFunction(int code)
-		{
-			throw new NotImplementedException();
-		}
-
-		bool IBattler.hasMovedThisRound()
-		{
-			throw new NotImplementedException();
-		}
-
-		int IBattler.pbRecoverHP(int amt, bool anim)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattler.pbCheckForm()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattler.pbResetForm()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattler.pbSetPP(IBattleMove move, int pp)
 		{
 			throw new NotImplementedException();
 		}

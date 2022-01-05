@@ -29,6 +29,7 @@ namespace PokemonUnity.ConsoleApp
 
 		static void Main(string[] args)
 		{
+            GameDebug.OnLog += GameDebug_OnLog;
 			//Game.ResetAndOpenSql(@"Data\veekun-pokedex.sqlite");
 			ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -39,7 +40,7 @@ namespace PokemonUnity.ConsoleApp
 
 			Battle battle;
 			IPokeBattle_Scene pokeBattle = new PokeBattleScene();
-			pokeBattle.initialize();
+			//pokeBattle.initialize();
 
 
 			IPokemon[] p1 = new IPokemon[2] { new PokemonUnity.Monster.Pokemon(Pokemons.ABRA), new PokemonUnity.Monster.Pokemon(Pokemons.EEVEE) };
@@ -77,7 +78,18 @@ namespace PokemonUnity.ConsoleApp
 
 			battle.pbStartBattle(true);
 		}
-	}
+
+        private static void GameDebug_OnLog(object sender, OnDebugEventArgs e)
+        {
+			if (e != null || e != System.EventArgs.Empty)
+				if (e.Error == true)
+					System.Console.WriteLine("[ERR]: " + e.Message);
+				else if (e.Error == false)
+					System.Console.WriteLine("[WARN]: " + e.Message);
+				else
+					System.Console.WriteLine("[LOG]: " + e.Message);
+        }
+    }
 
 	public class PokeBattleScene : IPokeBattle_Scene
 	{
@@ -86,6 +98,11 @@ namespace PokemonUnity.ConsoleApp
 		public bool abortable;
 		public MenuCommands[] lastcmd;
 		public int[] lastmove;
+
+		public PokeBattleScene()
+        {
+			initialize();
+        }
 
 		public void initialize()
 		{
@@ -675,18 +692,24 @@ namespace PokemonUnity.ConsoleApp
 
 			if (battle.opponent != null)
 			{
-				GameDebug.Log("opponent founded!");
+				GameDebug.Log("Opponent found!");
 				if (battle.opponent.Length == 1)
 				{
 					GameDebug.Log("One opponent battle!");
 				}
+				if (battle.opponent.Length > 1)
+				{
+					GameDebug.Log("Multiple opponents battle!");
+				}
+				else
+					GameDebug.Log("Wild Pokemon battle!");
 			}
 
-			if (!battle.doublebattle)
+			if (battle.player?.Length > 0 && battle.opponent?.Length > 0 && !battle.doublebattle)
 			{
 				GameDebug.Log("Single Battle");
 				System.Console.WriteLine("Player: {0} has {1} in their party", battle.player[0].name, battle.party1.Length);
-				System.Console.WriteLine("Opponent: {0} has {1} in their party", battle.opponent[0].name, battle.party2.Length);
+				System.Console.WriteLine("Opponent: {0} has {1} in their party", battle.opponent?[0].name, battle.party2.Length);
 				//bool appearing = true;
 				//do
 				//{
@@ -700,8 +723,6 @@ namespace PokemonUnity.ConsoleApp
 				//}
 				//while (appearing);
 			}
-
-
 		}
 
 		int IPokeBattle_Scene.pbSwitch(int index, bool lax, bool cancancel)

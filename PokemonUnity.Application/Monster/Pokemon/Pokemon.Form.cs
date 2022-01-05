@@ -78,14 +78,15 @@ namespace PokemonUnity.Monster
 		public int? @forcedform { get; set; }
 		private int formId { get; set; }
 		public int form { get {
+				if (pokemons == Pokemons.NONE) return 0;
 				if (@forcedform!=null) return @forcedform.Value;
-				//int v=MultipleForms.getForm(this);
-				int? v=MultipleForms.getForm(this);
-				if (v!=null) {
-					//if form is not null, then value has been set already?...
-					if (v!=@formId) this.formId=v.Value; //|| @form == null
-					return v.Value;
-				}
+				//int v=MultipleForms.getForm(this); //ToDo: Deal with infinite recursive loop...
+				//int? v=MultipleForms.getForm(this);
+				//if (v!=null) {
+				//	//if form is not null, then value has been set already?...
+				//	if (v!=@formId) this.formId=v.Value; //|| @form == null
+				//	return v.Value;
+				//}
 				return @formId; //|| 0
 			}
 			set {

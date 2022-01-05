@@ -478,9 +478,9 @@ namespace PokemonUnity.Character
 				IPokemon pkmn=this.Slot[i].Key;
 				if (!pkmn.IsNotNullOrNone()) return;
 				int maxexp=Monster.Data.Experience.GetMaxExperience(pkmn.GrowthRate);
-				if (pkmn.exp<maxexp) {
+				if (pkmn.Exp < maxexp) {
 					int oldlevel=pkmn.Level;
-					pkmn.exp+=1;
+					pkmn.Exp += 1;
 					if (pkmn.Level!=oldlevel) {
 						pkmn.calcStats();
 						//Moves[] movelist=pkmn.getMoveList();

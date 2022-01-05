@@ -416,7 +416,7 @@ namespace PokemonUnity
 			for (int i = 0; i < team1.Length; i++)
 			{
 				//ret.Add(team1[i].exp);
-				if (team1[i].IsNotNullOrNone()) ret[i] = team1[i].exp;
+				if (team1[i].IsNotNullOrNone()) ret[i] = team1[i].Exp;
 			}
 			//return ret.ToArray();
 			return ret;
@@ -427,18 +427,18 @@ namespace PokemonUnity
 			for (int i = 0; i < team1.Length; i++)
 			{
 				int? exp = adjustments[0][i];
-				if (exp != null && team1[i].exp != exp)
+				if (exp != null && team1[i].Exp != exp)
 				{
-					team1[i].exp = exp.Value;
+					team1[i].Exp = exp.Value;
 					team1[i].calcStats();
 				}
 			}
 			for (int i = 0; i < team2.Length; i++)
 			{
 				int? exp = adjustments[1][i];
-				if (exp != null && team2[i].exp != exp)
+				if (exp != null && team2[i].Exp != exp)
 				{
-					team2[i].exp = exp.Value;
+					team2[i].Exp = exp.Value;
 					team2[i].calcStats();
 				}
 			}

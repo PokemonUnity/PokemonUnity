@@ -52,30 +52,31 @@ namespace PokemonUnity
 					}
 					pkmn.savedev = null;
 				}
-				int newexp = Experience.pbAddExperience(pokemon.exp, pkmn.savedexp, pokemon.GrowthRate);
+				int newexp = Experience.pbAddExperience(pokemon.Exp, pkmn.savedexp, pokemon.GrowthRate);
 				pkmn.savedexp = 0;
 				int newlevel = Experience.GetLevelFromExperience(pokemon.GrowthRate, newexp);
 				int curlevel = pokemon.Level;
-				if (newexp != pokemon.exp)
+				if (newexp != pokemon.Exp)
 				{
-					scene.pbDisplay(Game._INTL("{1} regained {2} Exp. Points!", pokemon.Name, newexp - pokemon.exp));
+					scene.pbDisplay(Game._INTL("{1} regained {2} Exp. Points!", pokemon.Name, newexp - pokemon.Exp));
 				}
 				if (newlevel == curlevel)
 				{
-					pokemon.exp = newexp;
+					pokemon.Exp = newexp;
 					pokemon.calcStats();
 				}
 				else
 				{
 					//Game.pbChangeLevel(pokemon, newlevel, scene); // for convenience
-					pokemon.exp = newexp;
+					pokemon.Exp = newexp;
 				}
 				string speciesname = pokemon.Species.ToString(TextScripts.Name);
 				if (scene.pbConfirm(Game._INTL("Would you like to give a nickname to {1}?", speciesname)))
 				{
 					string helptext = Game._INTL("{1}'s nickname?", speciesname);
 					string newname = this is IGameTextEntry t ? t.pbEnterPokemonName(helptext, 0, 10, "", pokemon) : speciesname;
-					if (newname != "") pokemon.Name = newname;
+					//if (newname != "") pokemon.Name = newname;
+					if (newname != "") (pokemon as Pokemon).SetNickname(newname);
 				}
 			}
 		}
@@ -280,7 +281,7 @@ namespace PokemonUnity
 				}
 				set 
 				{
-					if (this.isShadow)
+					if (this is IPokemonShadowPokemon s && s.isShadow)
 					{
 						@savedexp += value - this.Experience.Current;
 					}

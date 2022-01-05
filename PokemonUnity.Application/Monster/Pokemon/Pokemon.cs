@@ -144,7 +144,7 @@ namespace PokemonUnity.Monster
 			{
 				return eggSteps;
 			}
-			private set
+			set
 			{
 				if (eggSteps > 0 && value == 0)
 				{
@@ -176,7 +176,8 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// The moves known when this Pokemon was obtained
 		/// </summary>
-		private IList<Moves> firstMoves { get; set; }
+		public IList<Moves> firstMoves { get { return firstmoves; } }
+		private IList<Moves> firstmoves { get; set; }
 		/// <summary>
 		/// List of moves that this pokemon has learned, and is capable of relearning
 		/// </summary>
@@ -222,7 +223,7 @@ namespace PokemonUnity.Monster
 			EV = new byte[6];
 			Contest = new byte[6];
 			Experience = new Experience(GrowthRate);
-			firstMoves = new List<Moves>();
+			firstmoves = new List<Moves>();
 			moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
 			pokerus = new int[2];
 			Markings = new bool[6]; //{ false, false, false, false, false, false };
@@ -529,7 +530,7 @@ namespace PokemonUnity.Monster
 			}
 
 			this.moves = moves;
-			firstMoves = new List<Moves>(history);
+			firstmoves = new List<Moves>(history);
 
 			this.ribbons = ribbons.ToList();
 			Markings = markings;
@@ -2971,14 +2972,9 @@ namespace PokemonUnity.Monster
 
 		//ToDo: Finish migrating interface implimentation
 		#region Explicit Interface Implemenation
-		Pokemons IPokemon.Species { get; set; }
 		int IPokemon.trainerID { get; set; }
 		IMail IPokemon.mail { get; set; }
 		IPokemon[] IPokemon.fused { get; set; }
-		string IPokemon.Name { get; set; }
-		int IPokemon.exp { get; set; }
-		int IPokemon.eggsteps { get; set; }
-		IList<Moves> IPokemon.firstmoves { get; set; }
 		int IPokemon.obtainMode { get; set; }
 		int IPokemon.obtainMap { get; set; }
 		string IPokemon.obtainText { get; set; }

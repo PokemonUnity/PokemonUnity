@@ -53,7 +53,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Species (National Pokedex number)
 		/// </summary>
-		Pokemons Species { get; set; }
+		Pokemons Species { get; }
 		/// <summary>
 		/// Personal ID
 		/// </summary>
@@ -97,11 +97,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Nickname
 		/// </summary>
-		string Name { get; set; }
+		string Name { get; }
 		/// <summary>
 		/// Current experience points
 		/// </summary>
-		int exp { get; set; }
+		int Exp { get; set; }
 		/// <summary>
 		/// Current happiness
 		/// </summary>
@@ -117,7 +117,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Steps to hatch egg, 0 if Pokémon is not an egg
 		/// </summary>
-		int eggsteps { get; set; }
+		int EggSteps { get; set; }
 		/// <summary>
 		/// Moves (PBMove)
 		/// </summary>
@@ -125,7 +125,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// The moves known when this Pokémon was obtained
 		/// </summary>
-		IList<Moves> firstmoves { get; set; }
+		IList<Moves> firstMoves { get; }
 		/// <summary>
 		/// Ball used
 		/// </summary>
