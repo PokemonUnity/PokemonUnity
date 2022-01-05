@@ -49,7 +49,7 @@ namespace PokemonUnity
 		//else continue, and load the XML data into the variables
 		public static event EventHandler<OnLoadEventArgs> OnLoad;
 
-		public static string DatabasePath  = @"Data Source=..\..\..\\veekun-pokedex.sqlite";
+		public static string DatabasePath  = @"Data Source=..\..\..\veekun-pokedex.sqlite";
 		public static IDbConnection con { get; set; }
 		//public static void ResetSqlConnection() { con = new System.Data.SQLite.IDbConnection(DatabasePath); }
 
@@ -61,8 +61,15 @@ namespace PokemonUnity
 		/// </param>
 		public static void ResetSqlConnection(string databasePath)
 		{
-			if (!File.Exists(databasePath))
+			string path = databasePath.Substring(databasePath.IndexOf('=')+1);
+			if (!File.Exists(path))
 			{
+				string s0 = System.IO.Directory.GetParent("\\veekun - pokedex.sqlite").FullName;
+				string s1 = System.IO.Directory.GetParent("..\\veekun - pokedex.sqlite").FullName;
+				string s2 = System.IO.Directory.GetParent("..\\..\\veekun - pokedex.sqlite").FullName;
+				string s3 = System.IO.Directory.GetParent("..\\..\\..\\veekun - pokedex.sqlite").FullName;
+				string s4 = System.IO.Directory.GetParent("..\\..\\..\\..\\veekun - pokedex.sqlite").FullName;
+				string s5 = System.IO.Directory.GetParent("..\\..\\..\\..\\..\\veekun - pokedex.sqlite").FullName;
 				//throw new Exception("The Database could not found!");
 				GameDebug.LogError("The Database could not found!");
 				return;
