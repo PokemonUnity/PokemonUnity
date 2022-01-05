@@ -196,7 +196,7 @@ namespace PokemonUnity.Character
 					}
 				}
 				choices.Add(Game._INTL("CANCEL"));
-				int command=Game.GameData.pbMessage(text,choices.ToArray(),choices.Count);
+				int command=Game.GameData is IGameMessage m ? m.pbMessage(text,choices.ToArray(),choices.Count) : -1;
 				Game.GameData.GameVariables[variable]=(command==2) ? -1 : command;
 			}
 		}

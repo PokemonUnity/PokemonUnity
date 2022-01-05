@@ -3417,7 +3417,7 @@ namespace PokemonUnity.Combat
 				if (advance) continue;
 				n++;//break;
 			} while (n < 10);
-			Game.GameData.pbWait(20);
+			if (Game.GameData is IGameField f) f.pbWait(20);
 		}
 		#endregion
 

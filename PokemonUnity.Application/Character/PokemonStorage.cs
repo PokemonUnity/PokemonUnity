@@ -391,7 +391,7 @@ namespace PokemonUnity
 			} }
 
 			public void access() {
-				Game.GameData.pbMessage(Game._INTL("\\se[accesspc]Accessed {1}'s PC.",Game.GameData.Trainer.name));
+				if (Game.GameData is IGameMessage m) m.pbMessage(Game._INTL("\\se[accesspc]Accessed {1}'s PC.",Game.GameData.Trainer.name));
 				if (Game.GameData is IGamePCStorage s) s.pbTrainerPCMenu();
 			}
 		}
@@ -410,9 +410,9 @@ namespace PokemonUnity
 			} }
 
 			public void access() {
-				Game.GameData.pbMessage(Game._INTL("\\se[accesspc]The Pokémon Storage System was opened."));
+				if (Game.GameData is IGameMessage m) m.pbMessage(Game._INTL("\\se[accesspc]The Pokémon Storage System was opened."));
 				do { //;loop
-					int command=Game.GameData.pbShowCommandsWithHelp(null,
+					int command=Game.GameData is IGameMessage m0 ? m0.pbShowCommandsWithHelp(null,
 						new string[] {Game._INTL("Withdraw Pokémon"),
 							Game._INTL("Deposit Pokémon"),
 							Game._INTL("Move Pokémon"),
@@ -421,10 +421,10 @@ namespace PokemonUnity
 							Game._INTL("Store Pokémon in your party in Boxes."),
 							Game._INTL("Organize the Pokémon in Boxes and in your party."),
 							Game._INTL("Return to the previous menu.")},-1
-					);
+					) : -1;
 					if (command>=0 && command<3) {
 						if (command==0 && Game.GameData.PokemonStorage.party.Length>=6) {
-							Game.GameData.pbMessage(Game._INTL("Your party is full!"));
+							if (Game.GameData is IGameMessage m1) m1.pbMessage(Game._INTL("Your party is full!"));
 							continue;
 						}
 						int count=0;
@@ -432,7 +432,7 @@ namespace PokemonUnity
 							if (p.IsNotNullOrNone() && !p.isEgg && p.HP>0) count+=1;
 						}
 						if (command==1 && count<=1) {
-							Game.GameData.pbMessage(Game._INTL("Can't deposit the last Pokémon!"));
+							if (Game.GameData is IGameMessage m1) m1.pbMessage(Game._INTL("Can't deposit the last Pokémon!"));
 							continue;
 						}
 						if (Game.GameData is IGameSpriteWindow g) g.pbFadeOutIn(99999, block: () => {

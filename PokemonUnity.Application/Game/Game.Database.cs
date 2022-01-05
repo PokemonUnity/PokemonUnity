@@ -103,7 +103,7 @@ namespace PokemonUnity
 		public static event EventHandler<OnLoadEventArgs> OnLoad;
 
 		public static string DatabasePath  = @"Data Source=..\..\..\\veekun-pokedex.sqlite";
-		public static IDbConnection con { get; private set; }
+		public static IDbConnection con { get; set; }
 		//public static void ResetSqlConnection() { con = new System.Data.SQLite.IDbConnection(DatabasePath); }
 
 		/// <summary>

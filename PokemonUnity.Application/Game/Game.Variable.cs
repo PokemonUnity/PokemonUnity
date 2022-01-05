@@ -16,7 +16,7 @@ using PokemonUnity.Overworld;
 
 namespace PokemonUnity
 {
-	public partial class Game
+	public partial class Game : PokemonEssentials.Interface.IGame
 	{
 		public PokemonEssentials.Interface.IGlobalMetadata Global { get; private set; }
 		//public PokemonEssentials.Interface.Field.IPokemonMapFactory MapFactory { get; private set; }

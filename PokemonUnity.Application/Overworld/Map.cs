@@ -136,13 +136,13 @@ namespace PokemonUnity
 			public void autoplayAsCue() {
 				if (@map.autoplay_bgm) {
 					if (IsNight) { //&& FileTest.audio_exist("Audio/BGM/"+ @map.bgm.name+ "n")
-						GameData.pbCueBGM(@map.bgm.name+"n",1.0f,@map.bgm.volume,@map.bgm.pitch);
+						if (GameData is PokemonEssentials.Interface.Field.IGameField f) f.pbCueBGM(@map.bgm.name+"n",1.0f,@map.bgm.volume,@map.bgm.pitch);
 					} else {
-						GameData.pbCueBGM(@map.bgm,1.0f);
+						if (GameData is PokemonEssentials.Interface.Field.IGameField f) f.pbCueBGM(@map.bgm,1.0f);
 					}
 				}
 				if (@map.autoplay_bgs) {
-					GameData.pbBGSPlay(@map.bgs);
+					if (GameData is PokemonEssentials.Interface.IGameAudioPlay a) a.pbBGSPlay(@map.bgs);
 				}
 			}
 			/// <summary>
@@ -152,13 +152,13 @@ namespace PokemonUnity
 			public void autoplay() {
 				if (@map.autoplay_bgm) {
 					if (IsNight) { //&& FileTest.audio_exist("Audio/BGM/"+ @map.bgm.name+ "n")
-						GameData.pbBGMPlay(@map.bgm.name+"n",@map.bgm.volume,@map.bgm.pitch);
+						if (GameData is PokemonEssentials.Interface.IGameAudioPlay a) a.pbBGMPlay(@map.bgm.name+"n",@map.bgm.volume,@map.bgm.pitch);
 					} else {
-						GameData.pbBGMPlay(@map.bgm);
+						if (GameData is PokemonEssentials.Interface.IGameAudioPlay a) a.pbBGMPlay(@map.bgm);
 					}
 				}
 				if (@map.autoplay_bgs) {
-					GameData.pbBGSPlay(@map.bgs);
+					if (GameData is PokemonEssentials.Interface.IGameAudioPlay a) a.pbBGSPlay(@map.bgs);
 				}
 			}
 

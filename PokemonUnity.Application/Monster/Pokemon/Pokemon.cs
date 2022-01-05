@@ -214,7 +214,7 @@ namespace PokemonUnity.Monster
 			PersonalId |= Core.Rand.Next(256) << 16;
 			PersonalId |= Core.Rand.Next(256) << 24;
 			Ability = Abilities.NONE;
-			Nature = (Natures)(Core.Rand.Next(Game.NatureData.Count));//Game.NatureData.Keys.ToArray()[Core.Rand.Next(Game.NatureData.Keys.Count) + 1];
+			Nature = (Natures)(Core.Rand.Next(Kernal.NatureData.Count));//Game.NatureData.Keys.ToArray()[Core.Rand.Next(Game.NatureData.Keys.Count) + 1];
 			shinyFlag = IsShiny; //isShiny(); 
 			//Gender = isMale();
 			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
@@ -2485,7 +2485,7 @@ namespace PokemonUnity.Monster
 					if (Happiness < 200) gain = -15;
 					break;
 				default:
-					Game.GameData.pbMessage(Game._INTL("Unknown happiness-changing method."));
+					if (Game.GameData is IGameMessage m) m.pbMessage(Game._INTL("Unknown happiness-changing method."));
 					//break;
 					//If not listed above, then stop
 					//Otherwise rest of code will add points

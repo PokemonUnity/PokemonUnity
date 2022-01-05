@@ -29,7 +29,7 @@ namespace PokemonEssentials.Interface
 		#endregion
 	}
 
-	public interface IGame : IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime, IGameMessage, IGameAudioPlay, IGameMetadataMisc
+	public interface IGame //: IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime, IGameMessage, IGameAudioPlay, IGameMetadataMisc
 	{
 		PokemonEssentials.Interface.IGlobalMetadata Global					{ get; }
 		//PokemonEssentials.Interface.Field.IPokemonMapFactory MapFactory	{ get; }

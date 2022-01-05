@@ -15,9 +15,8 @@ namespace PokemonUnity
 		private MetadataPosition? start; //map object
 		private bool inProgress;
 
-		//public void initialize() {
 		public SafariState() {
-			(this as ISafariState).initialize();
+			initialize();
 				
 			Events.OnMapChange+=Events_OnMapChange;    
 			Events.OnStepTakenTransferPossible+=Events_OnStepTakenTransferPossible;    
@@ -71,7 +70,7 @@ namespace PokemonUnity
             Events.OnWildBattleOverride -= Events_OnWildBattleOverride;
         }
 
-        ISafariState ISafariState.initialize()
+        public ISafariState initialize()
 		{
 			@start=null;
 			@ballcount=0;
@@ -83,21 +82,21 @@ namespace PokemonUnity
 		}
 		private void Events_OnMapChange(object sender, IOnMapChangeEventArgs e)
 		{
-			if (!Game.GameData.pbInSafari) {
-				Game.GameData.pbSafariState.pbEnd();
+			if (Game.GameData is IGameSafari s && !s.pbInSafari) {
+				s.pbSafariState.pbEnd();
 			}
 		}
 		private void Events_OnStepTakenTransferPossible(object sender, IOnStepTakenTransferPossibleEventArgs e)
 		{
 			bool handled=e.Index;
 			if (!handled) return; //(handled) continue;
-			if (Game.GameData.pbInSafari && Game.GameData.pbSafariState.decision==0 && Core.SAFARISTEPS>0) {
-				Game.GameData.pbSafariState.steps-=1;
-				if (Game.GameData.pbSafariState.steps<=0) {
-					Game.GameData.pbMessage(Game._INTL("PA:  Ding-dong!\\1"));
-					Game.GameData.pbMessage(Game._INTL("PA:  Your safari game is over!"));
-					Game.GameData.pbSafariState.decision=Combat.BattleResults.WON; //1;
-					Game.GameData.pbSafariState.pbGoToStart();
+			if (Game.GameData is IGameSafari s && s.pbInSafari && s.pbSafariState.decision==0 && Core.SAFARISTEPS>0) {
+				s.pbSafariState.steps-=1;
+				if (s.pbSafariState.steps<=0) {
+					if (Game.GameData is IGameMessage m0) m0.pbMessage(Game._INTL("PA:  Ding-dong!\\1"));
+					if (Game.GameData is IGameMessage m1) m1.pbMessage(Game._INTL("PA:  Your safari game is over!"));
+					s.pbSafariState.decision=Combat.BattleResults.WON; //1;
+					s.pbSafariState.pbGoToStart();
 					handled=true;
 				}
 			}
@@ -108,8 +107,8 @@ namespace PokemonUnity
 			int level=e.Level;
 			Combat.BattleResults? handled=e.Result;
 			if (handled==null) return; //(handled!=null) continue;
-			if (Game.GameData.pbInSafari) return; //(!GameData.pbInSafari) continue;
-			handled=Game.GameData.pbSafariBattle(species,level);
+			if (Game.GameData is IGameSafari s && s.pbInSafari) return; //(!GameData.pbInSafari) continue;
+			handled=Game.GameData is IGameSafari s0 ? s0.pbSafariBattle(species,level) : (Combat.BattleResults?)null;
 		}
 	}
 
@@ -143,18 +142,18 @@ namespace PokemonUnity
 			if (this is IGameField f0) battle.environment=f0.pbGetEnvironment();
 			Combat.BattleResults decision=Combat.BattleResults.ABORTED; //0
 			if (this is IGameField f1) f1.pbBattleAnimation(pbGetWildBattleBGM(species), block: () => { 
-			   f1.pbSceneStandby(block: () => {
-			      decision=battle.pbStartBattle();
-			   });
+				f1.pbSceneStandby(block: () => {
+					decision=battle.pbStartBattle();
+				});
 			});
 			pbSafariState.ballcount=battle.ballCount;
 			Input.update();
 			if (pbSafariState.ballcount<=0) {
-			  if (decision!=Combat.BattleResults.LOST && decision!=Combat.BattleResults.DRAW) { //!=2 && !=5
-			    Game.GameData.pbMessage(_INTL("Announcer:  You're out of Safari Balls! Game over!"));
-			  }
-			  pbSafariState.decision=Combat.BattleResults.WON; //1
-			  pbSafariState.pbGoToStart();
+				if (decision!=Combat.BattleResults.LOST && decision!=Combat.BattleResults.DRAW) { //!=2 && !=5
+					if (Game.GameData is IGameMessage m) m.pbMessage(_INTL("Announcer:  You're out of Safari Balls! Game over!"));
+				}
+				pbSafariState.decision=Combat.BattleResults.WON; //1
+				pbSafariState.pbGoToStart();
 			}
 			//Events.onWildBattleEnd.trigger(null,species,level,decision);
 			//Events.OnWildBattleEndTrigger(null,species,level,decision);

@@ -2200,7 +2200,7 @@ namespace PokemonUnity
 		}
 
 		public bool pbHeadbutt() {
-			Game.GameData.pbHeadbutt((Game.GameData as Game).Interpreter.get_character(0));
+			if (Game.GameData is IGameHiddenMoves f) f.pbHeadbutt((Game.GameData as Game).Interpreter.get_character(0));
 			return true;
 		}
 

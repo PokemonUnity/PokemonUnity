@@ -34,7 +34,7 @@ namespace PokemonUnity
 		static Game()
 		{
 			//UserLanguage = Languages.English;
-			GameData = (PokemonEssentials.Interface.IGame)new Game();
+			GameData = new Game();
 
 			//GameDebug.Init(null, "GameTestLog");
 		}
