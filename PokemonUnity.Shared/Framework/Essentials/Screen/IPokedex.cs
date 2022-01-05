@@ -20,9 +20,9 @@ using PokemonEssentials.Interface.RPGMaker.Kernal;
 
 namespace PokemonEssentials.Interface.Screen
 {
-	public interface IPokemonPokedex : IScreen
+	public interface IPokemonPokedexScreen : IScreen
 	{
-		IPokemonPokedex initialize(IPokemonPokedexScene scene);
+		IPokemonPokedexScreen initialize(IPokemonPokedexScene scene);
 		void pbDexEntry(Pokemons species);
 		void pbStartScreen();
 	}

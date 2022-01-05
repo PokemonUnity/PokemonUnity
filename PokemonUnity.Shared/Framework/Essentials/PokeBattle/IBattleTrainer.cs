@@ -18,16 +18,16 @@ namespace PokemonEssentials.Interface.PokeBattle
 	{
 		string name { get; set; }
 		int id { get; set; }
-		int metaID { get; set; }
+		int? metaID { get; set; }
 		TrainerTypes trainertype { get; set; }
-		int outfit { get; set; }
-		int badges { get; set; }
-		int money { get; set; }
-		int seen { get; set; }
-		int owned { get; set; }
-		int formseen { get; set; }
-		int formlastseen { get; set; }
-		int shadowcaught { get; set; }
+		int? outfit { get; set; }
+		bool[] badges { get; }
+		int Money { get; set; }
+		IDictionary<Pokemons, bool> seen { get; }
+		IDictionary<Pokemons,bool> owned { get; }
+		int?[][] formseen { get; set; }
+		KeyValuePair<int,int?>[] formlastseen { get; set; }
+		IList<Pokemons> shadowcaught { get; set; }
 		IPokemon[] party { get; set; }
 		/// <summary>
 		/// Whether the Pokédex was obtained
@@ -37,7 +37,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Whether the Pokégear was obtained
 		/// </summary>
 		bool pokegear { get; set; }
-		int language { get; set; }
+		Languages? language { get; }
 		/// <summary>
 		/// Name of this trainer type (localized) 
 		/// </summary>
@@ -51,7 +51,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		int getForeignID();
 
-		int setForeignID(int other);
+		void setForeignID(ITrainer other);
 
 		//int metaID();
 
@@ -70,9 +70,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 		bool isMale { get; }
 		bool isFemale { get; }
 
-		IPokemon[] pokemonParty { get; }
+		IEnumerable<IPokemon> pokemonParty { get; }
 
-		IPokemon[] ablePokemonParty { get; }
+		IEnumerable<IPokemon> ablePokemonParty { get; }
 
 		int partyCount { get; }
 
@@ -92,9 +92,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		IPokemon lastAblePokemon { get; }
 
-		int pokedexSeen(int region = -1);
+		int pokedexSeen(Regions? region = null); //int region = -1
 
-		int pokedexOwned(int region = -1);
+		int pokedexOwned(Regions? region = null); //int region = -1
 
 		int numFormsSeen(Pokemons species);
 

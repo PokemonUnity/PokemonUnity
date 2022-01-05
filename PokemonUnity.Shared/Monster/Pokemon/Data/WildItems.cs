@@ -37,30 +37,29 @@ namespace PokemonUnity.Monster.Data
 		/// <param name="pokemon"></param>
 		/// <returns></returns>
 		/// RNG Bagging Technique using Dice Roll, without fallback (no matter rng, wont artificially modify results)
-		public static Items GetWildHoldItem(Pokemons pokemon)
-		{
-			List<Items> list = new List<Items>();
-
-			//loop through each position of list
-			foreach (PokemonWildItems item in Game.PokemonItemsData[pokemon])
-			{
-				//add encounter once for every Likelihood
-				for (int i = 0; i < item.Rarirty; i++)
-				{
-					list.Add(item.ItemId);
-				}
-			}
-
-			//Get list of 100 pokemons for given (specific to this) encounter...
-			for(int n = list.Count; n < 100; n++)
-			{
-				list.Add(Items.NONE);
-			}
-
-
-			//From list of 100 pokemons, select 1.
-			return list[Core.Rand.Next(list.Count)];
-		}
+		//public static Items GetWildHoldItem(Pokemons pokemon)
+		//{
+		//	List<Items> list = new List<Items>();
+		//
+		//	//loop through each position of list
+		//	foreach (PokemonWildItems item in Game.PokemonItemsData[pokemon])
+		//	{
+		//		//add encounter once for every Likelihood
+		//		for (int i = 0; i < item.Rarirty; i++)
+		//		{
+		//			list.Add(item.ItemId);
+		//		}
+		//	}
+		//
+		//	//Get list of 100 pokemons for given (specific to this) encounter...
+		//	for(int n = list.Count; n < 100; n++)
+		//	{
+		//		list.Add(Items.NONE);
+		//	}
+		//
+		//	//From list of 100 pokemons, select 1.
+		//	return list[Core.Rand.Next(list.Count)];
+		//}
 
 		#region Explicit Operators
 		public bool Equals(Items obj)

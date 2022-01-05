@@ -5,7 +5,7 @@ namespace PokemonUnity
 {
 	/// <summary>
 	/// Static and unchanging rules for game to function off of.<para></para>
-	/// <see cref="Game"/> is a singleton
+	/// <see cref="Kernal"/> is a singleton
 	/// that persist throughout the game and inbetween scene levels.
 	/// <see cref="Core"/> is not an <see cref="object"/>
 	/// but a series of const variables that will be used as rules 
@@ -14,24 +14,18 @@ namespace PokemonUnity
 	public static class Core
 	{
 		#region Constant Values and Game Rules
-		public static Translator.Languages UserLanguage { get; set; } //= Translator.Languages.English;
-		public static bool TextLTR { get; private set; }
+		//public static Translator.Languages UserLanguage { get; set; } //= Translator.Languages.English;
+		//public static bool TextLTR { get; private set; }
 		//Ping server for latest hash value?...
 		//public const string PKU_Server_Address = "";
-#if DEBUG
-		public const bool DEBUG = true;
 		/// <summary>
 		/// If pokemon battles are being done in an console for ai training, or visually for player experience
 		/// </summary>
 		public const bool INTERNAL = true;
-		//public const string FILEPATH = @"..\..\..\\Pokemon Unity\Assets\Scripts2\XML\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-		//string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-		//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+#if DEBUG
+		public const bool DEBUG = true;
 #else
 		public const bool DEBUG = false;
-		//public const string FILEPATH = UnityEngine.Application.dataPath + "/Scripts2/XML/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
-		//string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
 #endif
 		//public XmlFileLocalizationDictionaryProvider TranslationText;// = new XmlFileLocalizationDictionaryProvider(Server.MapPath("~/App_Data/"));
 		public const string FILENAME_POKEMON_DATABASE = "";
@@ -115,50 +109,6 @@ namespace PokemonUnity
 				return seed.Value;
 			//}
 		}
-
-		/*/// <summary>
-		/// Only an example. Do not use, will  not work.
-		/// <para>Could be combined with database values 
-		/// and used with ints instead of strings</para>
-		/// <para>Convert the pokemon type into a color 
-		/// that can be used with Unity's color lighting</para>
-		/// </summary>
-		/// <param name="color"></param>
-		/// <returns></returns>
-		public UnityEngine.Color ColorToUnity(Color color) {
-			switch (color)
-			{
-				//case 1:
-				//	return StringToColorDic["text"];
-				default:
-					return StringToColor(color.ToString());
-					break;
-			}
-				
-			//{"Black",Color.black },//dark
-			//{"", new Color() },//dark blue -> dark, 
-			{ "Blue",Color.blue },//water
-			{ "Clear",Color.clear },
-			{ "Cyan",Color.cyan },
-			{ "Gray",Color.gray },//grAy-American
-			//{"Grey",Color.grey },//grEy-European
-			//{"Grey",Color.grey },//dark grey -> rock,
-			{ "Green",Color.green },//grass
-			//{"", new Color() },//dark green -> bug,
-			{ "Magenta",Color.magenta },//magenta, purple -> poison
-			{ "Red",Color.red },//orange, dark red -> fire
-			{ "White",Color.white },//normals
-			{ "Yellow",Color.yellow },//electric
-			{ "Purple", new Color() },//ghost
-			{ "Brown", new Color() },//fighting
-			{ "Pink", new Color() }//,//fairy
-			//{"", new Color() },//pink, lavender -> psychic, 
-			//{"", new Color() },//ocre, brown -> ground
-			//{"", new Color() },
-			//{"", new Color() },
-			//{"", new Color() }//fly, drag, steel, psychic, ice, shadow, unknown, bug, ground, poison?
-		
-		}*/
 		#endregion
 
 		#region Screen Options
@@ -438,14 +388,12 @@ namespace PokemonUnity
 		/// <summary>
 		/// The Global Switch that is set to ON when the player whites out.
 		/// </summary>
-		// ToDo: Move to Game class, as this is not a core const...
-		public static bool STARTING_OVER_SWITCH = true;
+		public static int STARTING_OVER_SWITCH = 0; //true;
 		/// <summary>
 		/// The Global Switch that is set to ON when the player has seen Pokérus in the
 		///    Poké Center, and doesn't need to be told about it again.
 		/// </summary>
-		// ToDo: Move to Game class, as this is not a core const...
-		public static bool SEEN_POKERUS_SWITCH = false;
+		public static int SEEN_POKERUS_SWITCH = 0; //false;
 		/// <summary>
 		/// The Global Switch which, while ON, makes all wild Pokémon created be
 		///    shiny.
@@ -466,6 +414,9 @@ namespace PokemonUnity
 		///    Evolving even if they otherwise could.
 		/// </summary>
 		public const bool NO_MEGA_EVOLUTION = true;
+
+		public const int FISHINGBEGINCOMMONEVENT = 0;
+		public const int FISHINGENDCOMMONEVENT = 0;
 		#endregion
 
 		#region Move Settings
@@ -498,28 +449,40 @@ namespace PokemonUnity
 		#endregion
 
 		#region Pre-determined animations
-		// ===============================================================================
-		// * The ID of the animation played when the player steps on grass (shows grass
-		//      rustling).
-		// * The ID of the animation played when the player lands on the ground after
-		//      hopping over a ledge (shows a dust impact).
-		// * The ID of the animation played when a trainer notices the player (an
-		//      exclamation bubble).
-		// * The ID of the animation played when a patch of grass rustles due to using
-		//      the Poké Radar.
-		// * The ID of the animation played when a patch of grass rustles vigorously due
-		//      to using the Poké Radar. (Rarer species)
-		// * The ID of the animation played when a patch of grass rustles and shines due
-		//      to using the Poké Radar. (Shiny encounter)
-		// * The ID of the animation played when a berry tree grows a stage while the
-		//      player is on the map (for new plant growth mechanics only).
-		// ===============================================================================
+		/// <summary>
+		/// The ID of the animation played when the player steps on grass (shows grass
+		/// rustling).
+		/// </summary>
 		public const int GRASS_ANIMATION_ID = 1;
+		/// <summary>
+		/// The ID of the animation played when the player lands on the ground after
+		/// hopping over a ledge (shows a dust impact).
+		/// </summary>
 		public const int DUST_ANIMATION_ID = 2;
+		/// <summary>
+		/// The ID of the animation played when a trainer notices the player (an
+		/// exclamation bubble).
+		/// </summary>
 		public const int EXCLAMATION_ANIMATION_ID = 3;
+		/// <summary>
+		/// The ID of the animation played when a patch of grass rustles due to using
+		/// the Poké Radar.
+		/// </summary>
 		public const int RUSTLE_NORMAL_ANIMATION_ID = 1;
+		/// <summary>
+		/// The ID of the animation played when a patch of grass rustles vigorously due
+		/// to using the Poké Radar. (Rarer species)
+		/// </summary>
 		public const int RUSTLE_VIGOROUS_ANIMATION_ID = 5;
+		/// <summary>
+		/// The ID of the animation played when a patch of grass rustles and shines due
+		/// to using the Poké Radar. (Shiny encounter)
+		/// </summary>
 		public const int RUSTLE_SHINY_ANIMATION_ID = 6;
+		/// <summary>
+		/// The ID of the animation played when a berry tree grows a stage while the
+		/// player is on the map (for new plant growth mechanics only).
+		/// </summary>
 		public const int PLANT_SPARKLE_ANIMATION_ID = 7;
 		#endregion
 	}

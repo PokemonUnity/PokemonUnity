@@ -11,51 +11,53 @@ using PokemonUnity.Saving;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Utility;
 using PokemonUnity.Monster;
+using PokemonEssentials.Interface.Item;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IPokemon
 	{
 		/// <summary>
-		/// Current Total HP/ </summary>
-		int totalhp { get; set; }
+		/// Current Total HP
+		/// </summary>
+		int TotalHP { get; }
 		/// <summary>
 		/// Current Attack stat
 		/// </summary>
-		int attack { get; set; }
+		int ATK { get; }
 		/// <summary>
 		/// Current Defense stat
 		/// </summary>
-		int defense { get; set; }
+		int DEF { get; }
 		/// <summary>
 		/// Current Speed stat
 		/// </summary>
-		int speed { get; set; }
+		int SPE { get; }
 		/// <summary>
 		/// Current Special Attack stat
 		/// </summary>
-		int spatk { get; set; }
+		int SPA { get; }
 		/// <summary>
 		/// Current Special Defense stat
 		/// </summary>
-		int spdef { get; set; }
+		int SPD { get; }
 		/// <summary>
 		/// Array of 6 Individual Values for HP, Atk, Def,
 		/// Speed, Sp Atk, and Sp Def
 		/// </summary>
-		int[] iv { get; set; }
+		int[] IV { get; }
 		/// <summary>
 		/// Effort Values
 		/// </summary>  
-		int ev { get; set; }
+		byte[] EV { get; }
 		/// <summary>
 		/// Species (National Pokedex number)
 		/// </summary>
-		Pokemons species { get; set; }
+		Pokemons Species { get; }
 		/// <summary>
 		/// Personal ID
 		/// </summary>
-		int personalID { get; set; }
+		int PersonalId { get; }
 		/// <summary>
 		/// 32-bit Trainer ID (the secret ID is in the upper 16 bits)
 		/// </summary>
@@ -63,75 +65,75 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Current HP
 		/// </summary>
-		int hp { get; set; }
+		int HP { get; set; }
 		/// <summary>
 		/// Pokérus strain and infection time
 		/// </summary>
-		int pokerus { get; set; }
+		int[] Pokerus { get; }
 		/// <summary>
 		/// Held item
 		/// </summary>
-		Items item { get; set; }
+		Items Item { get; }
 		/// <summary>
 		/// Consumed held item (used in battle only)
 		/// </summary>
-		int itemRecycle { get; set; }
+		Items itemRecycle { get; set; }
 		/// <summary>
 		/// Resulting held item (used in battle only)
 		/// </summary>
-		int itemInitial { get; set; }
+		Items itemInitial { get; set; }
 		/// <summary>
 		/// Whether Pokémon can use Belch (used in battle only)
 		/// </summary>
-		int belch { get; set; }
+		bool belch { get; set; }
 		/// <summary>
 		/// Mail
 		/// </summary>
-		int mail { get; set; }
+		IMail mail { get; set; }
 		/// <summary>
 		/// The Pokémon fused into this one
 		/// </summary>
-		int fused { get; set; }
+		IPokemon[] fused { get; set; }
 		/// <summary>
 		/// Nickname
 		/// </summary>
-		string name { get; set; }
+		string Name { get; }
 		/// <summary>
 		/// Current experience points
 		/// </summary>
-		int exp { get; set; }
+		int Exp { get; set; }
 		/// <summary>
 		/// Current happiness
 		/// </summary>
-		int happiness { get; set; }
+		int Happiness { get; }
 		/// <summary>
 		/// Status problem (PBStatuses) 
 		/// </summary>
-		Status status { get; set; }
+		Status Status { get; set; }
 		/// <summary>
 		/// Sleep count/Toxic flag
 		/// </summary>
-		int statusCount { get; set; }
+		int StatusCount { get; set; }
 		/// <summary>
 		/// Steps to hatch egg, 0 if Pokémon is not an egg
 		/// </summary>
-		int eggsteps { get; set; }
+		int EggSteps { get; set; }
 		/// <summary>
 		/// Moves (PBMove)
 		/// </summary>
-		IMove[] moves { get; set; }
+		IMove[] moves { get; }
 		/// <summary>
 		/// The moves known when this Pokémon was obtained
 		/// </summary>
-		int firstmoves { get; set; }
+		IList<Moves> firstMoves { get; }
 		/// <summary>
 		/// Ball used
 		/// </summary>
-		Items ballused { get; set; }
+		Items ballUsed { get; set; }
 		/// <summary>
 		/// Markings
 		/// </summary>
-		bool[] markings { get; set; }
+		//bool[] markings { get; }
 		/// <summary>
 		/// Manner obtained:
 		/// 0 - met, 1 - as egg, 2 - traded,
@@ -157,7 +159,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Language
 		/// </summary>
-		int language { get; set; }
+		//int language { get; set; }
 		/// <summary>
 		/// Original Trainer's name 
 		/// </summary>
@@ -165,9 +167,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Original Trainer's gender:
 		/// 0 - male, 1 - female, 2 - mixed, 3 - unknown
+		/// </summary>
+		/// <remarks>
 		/// For information only, not used to verify
 		/// ownership of the Pokemon
-		/// </summary>
+		/// </remarks>
 		int otgender { get; set; }
 		/// <summary>
 		/// Forces the first/second/hidden (0/1/2) ability
@@ -188,7 +192,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Array of ribbons
 		/// </summary>
-		int[] ribbons { get; set; }
+		IList<Ribbons> ribbons { get; set; }
 		/// <summary>
 		/// Contest stats
 		/// </summary>
@@ -253,7 +257,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokemon's level.
 		/// </summary>
-		//int level { get; }
+		int Level { get; }
 
 		/// <summary>
 		/// Returns whether this Pokemon is an egg.
@@ -265,7 +269,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokemon's growth rate.
 		/// </summary>
-		LevelingRate growthrate { get; }
+		LevelingRate GrowthRate { get; }
 
 		/// <summary>
 		/// Returns this Pokemon's base Experience value.
@@ -278,7 +282,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokemon's gender. 0=male, 1=female, 2=genderless
 		/// </summary>
-		int gender { get; }
+		bool? Gender { get; }
 
 		/// <summary>
 		/// Helper function that determines whether the input values would make a female.
@@ -297,17 +301,17 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns whether this Pokémon is male.
 		/// </summary>
-		bool isMale { get; }
+		bool IsMale { get; }
 
 		/// <summary>
 		/// Returns whether this Pokémon is female.
 		/// </summary>
-		bool isFemale();
+		bool IsFemale { get; }
 
 		/// <summary>
 		/// Returns whether this Pokémon is genderless.
 		/// </summary>
-		bool isGenderless { get; }
+		bool IsGenderless { get; }
 
 		/// <summary>
 		/// Sets this Pokémon's gender to a particular gender (if possible).
@@ -329,7 +333,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns the ID of this Pokemon's ability.
 		/// </summary>
-		Abilities ability { get; }
+		Abilities Ability { get; }
 
 		/// <summary>
 		/// Returns whether this Pokémon has a particular ability.
@@ -342,7 +346,8 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Sets this Pokémon's ability to a particular ability (if possible).
 		/// </summary>
 		/// <param name="value"></param>
-		void setAbility(Abilities value);
+		void setAbility(int value);
+		//void setAbility(Abilities value);
 
 		bool hasHiddenAbility();
 
@@ -358,7 +363,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns the ID of this Pokémon's nature.
 		/// </summary>
-		Natures nature { get; }
+		Natures Nature { get; }
 
 		/// <summary>
 		/// Returns whether this Pokémon has a particular nature.
@@ -379,7 +384,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns whether this Pokemon is shiny (differently colored).
 		/// </summary>
-		bool isShiny { get; }
+		bool IsShiny { get; }
 
 		/// <summary>
 		/// Makes this Pokemon shiny.
@@ -398,7 +403,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Gives this Pokemon Pokérus (either the specified strain or a random one).
 		/// </summary>
 		/// <param name="strain"></param>
-		void givePokerus(int strain = 0);
+		void GivePokerus(int strain = 0);
 
 		/// <summary>
 		/// Resets the infection time for this Pokemon's Pokérus (even if cured).
@@ -413,7 +418,8 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns the Pokérus infection stage for this Pokemon.
 		/// </summary>
-		int pokerusStage { get; }
+		//int PokerusStage { get; }
+		bool? PokerusStage { get; }
 
 		// ###############################################################################
 		// Types
@@ -428,12 +434,12 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokémon's first type.
 		/// </summary>
-		Types type1 { get; }
+		Types Type1 { get; }
 
 		/// <summary>
 		/// Returns this Pokémon's second type.
 		/// </summary>
-		Types type2 { get; }
+		Types Type2 { get; }
 
 		// ###############################################################################
 		// Moves
@@ -456,26 +462,40 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns the list of moves this Pokémon can learn by levelling up.
 		/// </summary>
 		/// <returns></returns>
-		KeyValuePair<Moves, int>[] getMoveList();
+		//KeyValuePair<Moves, int>[] getMoveList();
+		Moves[] getMoveList(LearnMethod? method = null);
 
 		/// <summary>
 		/// Sets this Pokémon's movelist to the default movelist it originally had.
 		/// </summary>
 		void resetMoves();
 
-		// Silently learns the given move. Will erase the first known move if it has to.
+		/// <summary>
+		/// Silently learns the given move. Will erase the first known move if it has to.
+		/// </summary>
+		/// <param name="move"></param>
 		void pbLearnMove(Moves move);
 
-		// Deletes the given move from the Pokémon.
+		/// <summary>
+		/// Deletes the given move from the Pokémon.
+		/// </summary>
+		/// <param name="move"></param>
 		void pbDeleteMove(Moves move);
 
-		// Deletes the move at the given index from the Pokémon.
+		/// <summary>
+		/// Deletes the move at the given index from the Pokémon.
+		/// </summary>
+		/// <param name="index"></param>
 		void pbDeleteMoveAtIndex(int index);
 
-		// Deletes all moves from the Pokémon.
+		/// <summary>
+		/// Deletes all moves from the Pokémon.
+		/// </summary>
 		void pbDeleteAllMoves();
 
-		// Copies currently known moves into a separate array, for Move Relearner.
+		/// <summary>
+		/// Copies currently known moves into a separate array, for Move Relearner.
+		/// </summary>
 		void pbRecordFirstMoves();
 
 		bool isCompatibleWithMove(Moves move);
@@ -501,25 +521,25 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		/// <param name="ribbon"></param>
 		/// <returns></returns>
-		bool hasRibbon(Ribbon ribbon);
+		bool hasRibbon(Ribbons ribbon);
 
 		/// <summary>
 		/// Gives this Pokémon the specified ribbon.
 		/// </summary>
 		/// <param name="ribbon"></param>
-		void giveRibbon(Ribbon ribbon);
+		void giveRibbon(Ribbons ribbon);
 
 		/// <summary>
 		/// Replaces one ribbon with the next one along, if possible.
 		/// </summary>
 		/// <param name="arg"></param>
 		/// <returns></returns>
-		int upgradeRibbon(params Ribbon[] arg);
+		int upgradeRibbon(params Ribbons[] arg);
 
 		/// <summary>
 		/// Removes the specified ribbon from this Pokémon.
 		/// </summary>
-		void takeRibbon(Ribbon ribbon);
+		void takeRibbon(Ribbons ribbon);
 
 		/// <summary>
 		/// Removes all ribbons from this Pokémon.
@@ -551,15 +571,17 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns this Pokémon's mail.
 		/// </summary>
-		//void mail { get; }
+		//IMail mail { get; }
 
 		/// <summary>
 		/// Returns this Pokémon's language.
 		/// </summary>
-		//int language { get; }
+		int language { get; }
 
-		// Returns the markings this Pokémon has.
-		//void markings { get; }
+		/// <summary>
+		/// Returns the markings this Pokémon has.
+		/// </summary>
+		bool[] Markings { get; }
 
 		/// <summary>
 		/// Returns a string stating the Unown form of this Pokémon.
@@ -593,23 +615,23 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Heals all HP of this Pokémon.
 		/// </summary>
-		void healHP();
+		bool HealHP();
 
 		/// <summary>
 		/// Heals the status problem of this Pokémon.
 		/// </summary>
-		void healStatus();
+		bool HealStatus();
 
 		/// <summary>
 		/// Heals all PP of this Pokémon.
 		/// </summary>
 		/// <param name="index"></param>
-		void healPP(int index = -1);
+		bool HealPP(int index = -1);
 
 		/// <summary>
 		/// Heals all HP, PP, and status problems of this Pokémon.
 		/// </summary>
-		void heal();
+		bool Heal();
 
 		// Changes the happiness of this Pokémon depending on what happened to change it.
 		void changeHappiness(HappinessMethods method);
@@ -621,7 +643,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns this Pokémon's base stats.  An array of six values.
 		/// </summary>
 		/// <returns></returns>
-		int[] baseStats();
+		int[] baseStats { get; }
 
 		/// <summary>
 		/// Returns the maximum HP of this Pokémon.
@@ -643,7 +665,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="pv"></param>
 		void calcStat(int _base, int level, int iv, int ev, int pv);
 
-		// Recalculates this Pokémon's stats.
+		/// <summary>
+		/// Recalculates this Pokémon's stats.
+		/// </summary>
 		void calcStats();
 
 		/// <summary>

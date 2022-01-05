@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{37DD2ED4-81DC-4647-9652-D914F1A1607D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PokemonUnity.Application</RootNamespace>
+    <AssemblyName>PokemonUnity.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attack\Move.cs" />
+    <Compile Include="Character\Bag.cs" />
+    <Compile Include="Character\DayCare.cs" />
+    <Compile Include="Character\Party.cs" />
+    <Compile Include="Character\PC.cs" />
+    <Compile Include="Character\PokemonStorage.cs" />
+    <Compile Include="Combat\AI.cs" />
+    <Compile Include="Combat\Attack\Attack.cs" />
+    <Compile Include="Combat\Attack\Attack.Shadow.cs" />
+    <Compile Include="Combat\Battle.cs" />
+    <Compile Include="Combat\Effects\Battler.cs" />
+    <Compile Include="Combat\Effects\Field.cs" />
+    <Compile Include="Combat\Effects\Move.cs" />
+    <Compile Include="Combat\Effects\Side.cs" />
+    <Compile Include="Combat\Match\Regulated\OrgBattleRules.cs" />
+    <Compile Include="Combat\Match\SafariZone.cs" />
+    <Compile Include="Combat\Move.cs" />
+    <Compile Include="Combat\Pokemon\Pokemon.cs" />
+    <Compile Include="Combat\Pokemon\Pokemon.Effect.cs" />
+    <Compile Include="Combat\Pokemon\Pokemon.Shadow.cs" />
+    <Compile Include="Combat\Rules.cs" />
+    <Compile Include="Combat\Trainer\Trainer.cs" />
+    <Compile Include="Events.cs" />
+    <Compile Include="Extensions\AbilityExtension.cs" />
+    <Compile Include="Extensions\MoveExtension.cs" />
+    <Compile Include="Extensions\TrainerExtension.cs" />
+    <Compile Include="Game\Feature.cs" />
+    <Compile Include="Game\Game.Debugger.cs" />
+    <Compile Include="Game\Game.Conditions.cs" />
+    <Compile Include="Game\Game.cs" />
+    <Compile Include="Game\Game.Database.cs" />
+    <Compile Include="Game\Game.Field.cs" />
+    <Compile Include="Game\Game.SpriteWindow.cs" />
+    <Compile Include="Game\Game.Utility.cs" />
+    <Compile Include="Game\Game.Variable.cs" />
+    <Compile Include="Extensions\GameExtension.cs" />
+    <Compile Include="Game\Game.MiscData.cs" />
+    <Compile Include="Game\Options.cs" />
+    <Compile Include="Game\Temporary\PokemonTemp.cs" />
+    <Compile Include="Game\Temporary\GlobalMetadata.cs" />
+    <Compile Include="Game\Item.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="Inventory\Item\Item.cs" />
+    <Compile Include="Inventory\Item\Item.Effects.cs" />
+    <Compile Include="Inventory\Item\Item.Helper.cs" />
+    <Compile Include="Inventory\Item\Item.Pokeball.cs" />
+    <Compile Include="Monster\BattlePeer.cs" />
+    <Compile Include="Monster\Chatter.cs" />
+    <Compile Include="Monster\EvolutionHelper.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.Form.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.MegaEvolution.cs" />
+    <Compile Include="Monster\Pokemon\Pokemon.Shadow.cs" />
+    <Compile Include="Overworld\Area.cs" />
+    <Compile Include="Overworld\Map.cs" />
+    <Compile Include="Overworld\Safari.cs" />
+    <Compile Include="Overworld\Terrain.cs" />
+    <Compile Include="Overworld\TilePosition.cs" />
+    <Compile Include="Overworld\Wild\Encounter.cs" />
+    <Compile Include="Extensions\PokemonExtension.cs" />
+    <Compile Include="Overworld\Wild\EncounterData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PokemonUnity.Shared\PokemonUnity.Shared.csproj">
+      <Project>{c4bd7ac0-1333-4d62-a6cd-881a1806ffad}</Project>
+      <Name>PokemonUnity.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -71,7 +71,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		int pbDefaultChooseNewEnemy(int index, IBattler[] party);
 
-		int pbChooseBestNewEnemy(int index, Pokemon[] party, int[] enemies);
+		int pbChooseBestNewEnemy(int index, IBattler[] party, int[] enemies);
 		#endregion
 
 		#region Choose an action.

@@ -6,6 +6,7 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
+using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonEssentials.Interface.PokeBattle
@@ -26,7 +27,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Scene object for this battle
 		/// </summary>
-		IPokeBattle_Scene scene { get; set; }
+		IPokeBattle_Scene scene { get; }
 		/// <summary>
 		/// Decision: 0=undecided; 1=win; 2=loss; 3=escaped; 4=caught
 		/// </summary>
@@ -54,43 +55,43 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Debug flag
 		/// </summary>
-		bool debug { get; set; }
+		bool debug { get; }
 		/// <summary>
 		/// Player trainer
 		/// </summary>
-		ITrainer[] player { get; set; }
+		ITrainer[] player { get; }
 		/// <summary>
 		/// Opponent trainer
 		/// </summary>
-		ITrainer[] opponent { get; set; }
+		ITrainer[] opponent { get; }
 		/// <summary>
 		/// Player's Pokémon party
 		/// </summary>
-		IPokemon[] party1 { get; set; }
+		IPokemon[] party1 { get; }
 		/// <summary>
 		/// Foe's Pokémon party
 		/// </summary>
-		IPokemon[] party2 { get; set; }
+		IPokemon[] party2 { get; }
 		/// <summary>
 		/// Order of Pokémon in the player's party
 		/// </summary>
-		List<int> party1order { get; set; }
+		IList<int> party1order { get; }
 		/// <summary>
 		/// Order of Pokémon in the opponent's party
 		/// </summary>
-		List<int> party2order { get; set; }
+		IList<int> party2order { get; }
 		/// <summary>
 		/// True if player's party's max size is 6 instead of 3
 		/// </summary>
-		bool fullparty1 { get; set; }
+		bool fullparty1 { get; }
 		/// <summary>
 		/// True if opponent's party's max size is 6 instead of 3
 		/// </summary>
-		bool fullparty2 { get; set; }
+		bool fullparty2 { get; }
 		/// <summary>
 		/// Currently active Pokémon
 		/// </summary>
-		IBattler[] battlers { get; set; }
+		IBattler[] battlers { get; }
 		/// <summary>
 		/// Items held by opponents
 		/// </summary>
@@ -98,17 +99,17 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Effects common to each side of a battle
 		/// </summary>
-		IEffectsSide[] sides { get; set; }
+		IEffectsSide[] sides { get; }
 		/// <summary>
 		/// Effects common to the whole of a battle
 		/// </summary>
-		IEffectsField field { get; set; }
+		IEffectsField field { get; }
 		/// <summary>
 		/// Battle surroundings
 		/// </summary>
 		PokemonUnity.Overworld.Environments environment { get; set; }
 		/// <summary>
-		/// Current weather, custom methods should use pbWeather instead
+		/// Current weather, custom methods should use <see cref="pbWeather"/> instead
 		/// </summary>
 		Weather weather { get; set; }
 		/// <summary>
@@ -118,23 +119,23 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// True if during the switching phase of the round
 		/// </summary>
-		bool switching { get; set; }
+		bool switching { get; }
 		/// <summary>
 		/// True if Future Sight is hitting
 		/// </summary>
-		bool futuresight { get; set; }
+		bool futuresight { get; }
 		/// <summary>
 		/// The Struggle move
 		/// </summary>
-		IBattleMove struggle { get; set; }
+		IBattleMove struggle { get; }
 		/// <summary>
 		/// Choices made by each Pokémon this round
 		/// </summary>
-		IBattleChoice[] choices { get; set; }
+		IBattleChoice[] choices { get; }
 		/// <summary>
 		/// Success states
 		/// </summary>
-		ISuccessState[] successStates { get; set; }
+		ISuccessState[] successStates { get; }
 		/// <summary>
 		/// Last move used
 		/// </summary>
@@ -146,11 +147,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Battle index of each trainer's Pokémon to Mega Evolve
 		/// </summary>
-		int[][] megaEvolution { get; set; }
+		int[][] megaEvolution { get; }
 		/// <summary>
 		/// Whether Amulet Coin's effect applies
 		/// </summary>
-		bool amuletcoin { get; set; }
+		bool amuletcoin { get; }
 		/// <summary>
 		/// Money gained in battle by using Pay Day
 		/// </summary>
@@ -166,7 +167,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Speech by opponent when player wins
 		/// </summary>
-		int endspeech2 { get; set; }
+		string endspeech2 { get; set; }
 		/// <summary>
 		/// Speech by opponent when opponent wins
 		/// </summary>
@@ -175,7 +176,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Speech by opponent when opponent wins
 		/// </summary>
 		string endspeechwin2 { get; set; }
-		Dictionary<string, bool> rules { get; set; }
+		IDictionary<string, bool> rules { get; }
 		int turncount { get; set; }
 		bool controlPlayer { get; set; }
 		#endregion
@@ -189,13 +190,15 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int pbAIRandom(int x);
 
 		#region Initialise battle class.
-		IBattle initialize(IPokeBattle_Scene scene, IList<IPokemon> p1, IList<IPokemon> p2, IList<ITrainer> player, IList<ITrainer> opponent);
+		IBattle initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent);
+		IBattle initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
+		//IBattle initialize(IPokeBattle_Scene scene, IList<IPokemon> p1, IList<IPokemon> p2, IList<ITrainer> player, IList<ITrainer> opponent);
 		#endregion
 
 		#region Info about battle.
 		bool pbDoubleBattleAllowed();
 
-		Weather pbWeather();
+		Weather pbWeather { get; }
 		#endregion
 
 		#region Get battler info.
@@ -240,11 +243,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		#region Get party info, manipulate parties.
-		int pbPokemonCount(PokemonUnity.Monster.Pokemon[] party);
+		int pbPokemonCount(IPokemon[] party);
 
-		bool pbAllFainted(PokemonUnity.Monster.Pokemon[] party);
+		bool pbAllFainted(IPokemon[] party);
 
-		int pbMaxLevel(PokemonUnity.Monster.Pokemon[] party);
+		int pbMaxLevel(IPokemon[] party);
 
 		int pbMaxLevelFromIndex(int index);
 
@@ -271,7 +274,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		ITrainer pbGetOwner(int battlerIndex);
 
-		Trainer pbGetOwnerPartner(int battlerIndex);
+		ITrainer pbGetOwnerPartner(int battlerIndex);
 
 		int pbGetOwnerIndex(int battlerIndex);
 
@@ -391,7 +394,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#region Gaining Experience.
 		void pbGainEXP();
 
-		void pbGainExpOne(int index, Pokemon defeated, int partic, int expshare, bool haveexpall, bool showmessages = true);
+		void pbGainExpOne(int index, IBattler defeated, int partic, int expshare, bool haveexpall, bool showmessages = true);
 		#endregion
 
 		#region Learning a move.
@@ -401,7 +404,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#region Abilities.
 		void pbOnActiveAll();
 
-		bool pbOnActiveOne(Pokemon pkmn, bool onlyabilities = false, bool moldbreaker = false);
+		bool pbOnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
 
 		void pbPrimordialWeather();
 		#endregion
@@ -429,9 +432,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		void pbShowCommands(string msg, string[] commands, bool cancancel = true);
 
-		void pbAnimation(Moves move, Pokemon attacker, Pokemon opponent, int hitnum = 0);
+		void pbAnimation(Moves move, IBattler attacker, IBattler opponent, int hitnum = 0);
 
-		void pbCommonAnimation(string name, Pokemon attacker, Pokemon opponent, int hitnum = 0);
+		void pbCommonAnimation(string name, IBattler attacker, IBattler opponent, int hitnum = 0);
 		#endregion
 
 		#region Battle core.

@@ -42,9 +42,9 @@ namespace PokemonEssentials.Interface.Screen
 		void pbUpdate();
 	}
 
-	public interface IPokemonSummary : IScreen
+	public interface IPokemonSummaryScreen : IScreen
 	{
-		IPokemonSummary initialize(IPokemonSummaryScene scene);
+		IPokemonSummaryScreen initialize(IPokemonSummaryScene scene);
 		void pbStartScreen(IPokemon[] party, int partyindex);
 		//int pbStartForgetScreen(IPokemon[] party, int partyindex, Moves moveToLearn);
 		int pbStartForgetScreen(IPokemon party, int partyindex, Moves moveToLearn);
@@ -52,14 +52,14 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	public interface IMoveSelectionSprite : ISpriteWrapper, IDisposable 
-    {
-        int preselected				{ get; set; }
-        int index				    { get; set; }
-		bool visible { set; }
+	{
+		int preselected				{ get; set; }
+		int index				    { get; set; }
+		//bool visible				{ set; }
 
 		IMoveSelectionSprite initialize(IViewport viewport = null, bool fifthmove = false);
 
-		void dispose();
+		//void dispose();
 
 		//void index=(value) {
 		//@index=value;
@@ -73,6 +73,6 @@ namespace PokemonEssentials.Interface.Screen
 
 		void refresh();
 
-		void update();
+		//void update();
 	}
 }

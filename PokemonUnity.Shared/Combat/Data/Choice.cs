@@ -5,14 +5,14 @@ namespace PokemonUnity.Combat.Data
 	/// <summary>
 	/// Options made on a given turn, per pokemon.
 	/// </summary>
-	public struct Choice
+	public struct Choice : PokemonEssentials.Interface.PokeBattle.IBattleChoice
 	{
 		public ChoiceAction Action { get; private set; }
 		/// <summary>
 		/// Index of Action being used
 		/// </summary>
 		public int Index { get; private set; }
-		public Combat.IMove Move { get; private set; }
+		public PokemonEssentials.Interface.PokeBattle.IBattleMove Move { get; private set; }
 		public int Target { get; private set; }
 
 		/// <summary>
@@ -21,7 +21,7 @@ namespace PokemonUnity.Combat.Data
 		/// <param name="action"></param>
 		/// <param name="move"></param>
 		/// <param name="target"></param>
-		public Choice (ChoiceAction action, int moveIndex, Combat.IMove move, int target = -1)
+		public Choice (ChoiceAction action, int moveIndex, PokemonEssentials.Interface.PokeBattle.IBattleMove move, int target = -1)
 		{
 			Action = action;
 			Index = moveIndex;

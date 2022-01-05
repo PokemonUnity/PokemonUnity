@@ -87,7 +87,9 @@ namespace PokemonUnity.Attack.Data
 
 		public string ToString(TextScripts text)
 		{
-			return ID.ToString(text);
+			//ToDo: Create an Interface and Move Function to Application Library
+			//return ID.ToString(text);
+			return ID.ToString();
 		}
 	}
 

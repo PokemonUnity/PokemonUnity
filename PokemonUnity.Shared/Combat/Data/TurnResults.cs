@@ -2,11 +2,11 @@
 {
 	/// <summary>
 	/// </summary>
-	public struct Turn
+	public struct Turn //: PokemonEssentials.Interface.Battle.
 	{
-		public Choice[] Choices { get; private set; }
-		public SuccessState[] SuccessStates { get; private set; }
-		public DamageState[] DamageStates { get; private set; }
+		public PokemonEssentials.Interface.PokeBattle.IBattleChoice[] Choices { get; private set; }
+		public PokemonEssentials.Interface.PokeBattle.ISuccessState[] SuccessStates { get; private set; }
+		public PokemonEssentials.Interface.PokeBattle.IDamageState[] DamageStates { get; private set; }
 		public int[] FinalDamages { get; private set; }
 		public int[] Orders { get; private set; }
 	}

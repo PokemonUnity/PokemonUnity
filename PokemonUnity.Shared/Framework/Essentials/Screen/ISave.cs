@@ -18,28 +18,28 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
-    public interface IGameSave {
+	public interface IGameSave {
 
-        void pbEmergencySave();
+		void pbEmergencySave();
 
-        bool pbSave(bool safesave = false);
-    }
+		bool pbSave(bool safesave = false);
+	}
 
 	public interface ISaveScene : IScene {
-        void pbStartScreen();
+		void pbStartScreen();
 
-        void pbEndScreen();
-    }
+		void pbEndScreen();
+	}
 
-    public interface ISaveScreen : IScreen {
-        ISaveScreen initialize(ISaveScene scene);
+	public interface ISaveScreen : IScreen {
+		ISaveScreen initialize(ISaveScene scene);
 
-        void pbDisplay(string text, bool brief = false);
+		void pbDisplay(string text, bool brief = false);
 
-        void pbDisplayPaused(string text);
+		void pbDisplayPaused(string text);
 
-        bool pbConfirm(string text);
+		bool pbConfirm(string text);
 
-        bool pbSaveScreen();
-    }
+		bool pbSaveScreen();
+	}
 }

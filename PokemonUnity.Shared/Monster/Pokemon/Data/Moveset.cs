@@ -25,12 +25,12 @@ namespace PokemonUnity.Monster.Data
         /// Level needed to learn Move
         /// leaves door open to new game designs, if players want to limit move methods to a level requirement
         /// use to set min or max level needed for designated learn method
-        public int Level;
+        public int Level { get; private set; }
         /// <summary>
         /// Move learned upon leveling-up
         /// </summary>
-        public Moves MoveId;
-        //public int Generation;
+        public Moves MoveId { get; private set; }
+        //public int Generation { get; private set; }
         public PokemonMoveset(Moves moveId, LearnMethod method = LearnMethod.levelup, int level = 0, int? generation = null) //: this()
         {
             this.Level = level;

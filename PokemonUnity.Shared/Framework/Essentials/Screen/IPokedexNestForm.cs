@@ -37,9 +37,9 @@ namespace PokemonEssentials.Interface.Screen
 		/// <returns></returns>
 		int pbMapScene(int listlimits);
 	}
-	public interface IPokemonNestMap : IScreen
+	public interface IPokemonNestMapScreen : IScreen
 	{
-		void initialize(IPokemonNestMapScene scene);
+		IPokemonNestMapScreen initialize(IPokemonNestMapScene scene);
 		void pbStartScreen(Pokemons species,int region,int listlimits);
 	}
 
@@ -57,9 +57,9 @@ namespace PokemonEssentials.Interface.Screen
 		void pbStartScene(Pokemons species);
 		int pbControls(int listlimits);
 	}
-	public interface IPokemonForm : IScreen
+	public interface IPokemonFormScreen : IScreen
 	{
-		void initialize(IPokemonFormScene scene);
+		IPokemonFormScreen initialize(IPokemonFormScene scene);
 		void pbStartScreen(Pokemons species,int listlimits);
 	}
 }

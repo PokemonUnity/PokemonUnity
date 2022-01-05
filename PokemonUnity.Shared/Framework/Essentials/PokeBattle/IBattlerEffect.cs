@@ -89,7 +89,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		#region Flinching
-		void pbFlinch(IBattler attacker);
+		bool pbFlinch(IBattler attacker);
 		#endregion
 
 		#region Increase stat stages
@@ -119,11 +119,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="moldbreaker"></param>
 		/// <param name="ignoreContrary"></param>
 		/// <returns></returns>
-		bool pbCanReduceStatStage(Stats stat, IBattler attacker = null, bool showMessages = false, Move move = null, bool moldbreaker = false, bool ignoreContrary = false);
+		bool pbCanReduceStatStage(Stats stat, IBattler attacker = null, bool showMessages = false, IBattleMove move = null, bool moldbreaker = false, bool ignoreContrary = false);
 
 		int pbReduceStatBasic(Stats stat, int increment, IBattler attacker = null, bool moldbreaker = false, bool ignoreContrary = false);
 
-		bool pbReduceStat(Stats stat, int increment, IBattler attacker, bool showMessages, Move move = null, bool downanim = true, bool moldbreaker = false, bool ignoreContrary = false);
+		bool pbReduceStat(Stats stat, int increment, IBattler attacker, bool showMessages, IBattleMove move = null, bool downanim = true, bool moldbreaker = false, bool ignoreContrary = false);
 
 		bool pbReduceStatWithCause(Stats stat, int increment, IBattler attacker, string cause, bool showanim = true, bool showmessage = true, bool moldbreaker = false, bool ignoreContrary = false);
 

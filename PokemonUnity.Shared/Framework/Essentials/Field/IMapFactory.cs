@@ -5,6 +5,7 @@ using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Utility;
 using PokemonUnity.UX;
+using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Field
@@ -65,7 +66,7 @@ namespace PokemonEssentials.Interface.Field
 	/// </summary>
 	public interface IMapFactoryHelper
 	{
-		List<IMapConnection> MapConnections { get; }
+		IList<IMapConnection> MapConnections { get; }
 		/// <summary>
 		/// array of [width, height] for maps, indexed by id
 		/// </summary>
@@ -87,7 +88,7 @@ namespace PokemonEssentials.Interface.Field
 		/// <returns></returns>
 		int[] getMapDims(int id);
 
-		List<IMapConnection> getMapConnections();
+		IList<IMapConnection> getMapConnections();
 
 		bool hasConnections(int id);
 
@@ -177,9 +178,9 @@ namespace PokemonEssentials.Interface.Field
 		/// <param name="thisEvent"></param>
 		/// <param name="otherEvent"></param>
 		/// <returns></returns>
-		void getThisAndOtherEventRelativePos(IGameCharacter thisEvent, IGameCharacter otherEvent);
+		IPoint getThisAndOtherEventRelativePos(IGameCharacter thisEvent, IGameCharacter otherEvent);
 
-		void getThisAndOtherPosRelativePos(IGameCharacter thisEvent, int otherMapID, float otherX, float otherY);
+		IPoint getThisAndOtherPosRelativePos(IGameCharacter thisEvent, int otherMapID, float otherX, float otherY);
 
 		ITilePosition getOffsetEventPos(IGameCharacter @event, float xOffset, float yOffset);
 

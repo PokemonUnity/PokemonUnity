@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PokemonUnity.UX;
 
 //Interface for RPG Maker User Experience
 //namespace PokemonUnity.UX.RPGMaker
@@ -13,7 +12,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// The module that carries out music and sound processing.
 	/// </summary>
-	public interface IAudio
+	public interface IAudio : IAudioObject
 	{
 		/// <summary>
 		/// Starts BGM playback. Sets the file name, volume, and pitch in turn.
@@ -79,8 +78,8 @@ namespace PokemonEssentials.Interface
 	}
 	public interface IAudioObject
 	{
-		string name { get; }
-		float volume { get; }
+		string name { get; set; }
+		int volume { get; }
 		float pitch { get; }
 	}
 	public interface IAudioBGM : IAudioObject
@@ -103,6 +102,7 @@ namespace PokemonEssentials.Interface
 		/// Starts the BGM playback.
 		/// </summary>
 		void play();
+		IAudioBGM clone();
 	}
 	public interface IAudioBGS : IAudio
 	{
@@ -124,6 +124,7 @@ namespace PokemonEssentials.Interface
 		/// Starts the BGS playback.
 		/// </summary>
 		void play();
+		IAudioBGS clone();
 	}
 	public interface IAudioME : IAudio
 	{
@@ -140,6 +141,7 @@ namespace PokemonEssentials.Interface
 		/// Starts the ME playback.
 		/// </summary>
 		void play();
+		IAudioME clone();
 	}
 	public interface IAudioSE : IAudio
 	{
@@ -149,6 +151,19 @@ namespace PokemonEssentials.Interface
 		void stop();
 		/// <summary>
 		/// Starts the SE playback.
+		/// </summary>
+		void play();
+		IAudioSE clone();
+	}
+	public interface IWaveData
+	{
+		/// <summary>
+		/// </summary>
+		byte intensity();
+		/// <summary>
+		/// </summary>
+		int time();
+		/// <summary>
 		/// </summary>
 		void play();
 	}
@@ -162,7 +177,7 @@ namespace PokemonEssentials.Interface
 		float red { get; }
 		float green { get; }
 		float blue { get; }
-		float alpha { get; }
+		float alpha { get; set; }
 		/// <summary>
 		/// The RGBAA color class. Each component is handled with a floating point value. (0<>255)
 		/// </summary>
@@ -177,10 +192,10 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface ITone
 	{
-		float red { get; }
-		float green { get; }
-		float blue { get; }
-		float gray { get; }
+		float red { get; set; }
+		float green { get; set; }
+		float blue { get; set; }
+		float gray { get; set; }
 		/// <summary>
 		/// The color tone class. Each component is handled with a floating point value. (-255<>255)
 		/// </summary>
@@ -189,6 +204,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="blue"></param>
 		/// <param name="gray">only 0-255</param>
 		void set(float red, float green, float blue, float gray = 0);
+		ITone clone();
 	}
 	/// <summary>
 	/// The rectangle class.
@@ -219,7 +235,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// The game window class. Created internally from multiple sprites.
 	/// </summary>
-	public interface IWindow
+	public interface IWindow : IDisposable
 	{
 		/// <summary>
 		/// Refers to the bitmap (Bitmap) used as a windowskin.
@@ -316,7 +332,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// The viewport's visibility. If TRUE, the viewport is visible.
 		/// </summary>
-		bool visible { get; }
+		bool visible { get; set; }
 		/// <summary>
 		/// The X-coordinate of the viewport's starting point. Change this value to shake the screen, etc.
 		/// </summary>
@@ -329,7 +345,7 @@ namespace PokemonEssentials.Interface
 		/// The color (Color) to be blended with the viewport. Alpha values are used in the blending ratio.
 		/// Handled separately from the color blended into a flash effect.
 		/// </summary>
-		IColor color { get; }
+		IColor color { get; set; }
 		/// <summary>
 		/// Returns TRUE if the viewport has been freed.
 		/// </summary>
@@ -367,21 +383,21 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE.If not, returns FALSE.</returns>
-		bool press(InputKeys num);
+		bool press(PokemonUnity.UX.InputKeys num);
 		/// <summary>
 		/// Determines whether the button num is being pressed again.
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>"Pressed again" is seen as time having passed between the button being not pressed and being pressed.</remarks>
-		bool trigger(InputKeys num);
+		bool trigger(PokemonUnity.UX.InputKeys num);
 		/// <summary>
 		/// Determines whether the button num is being pressed again.
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>Unlike <see cref="trigger"/>, takes into account the repeat input of a button being held down continuously.</remarks>
-		bool repeat(InputKeys num);
+		bool repeat(PokemonUnity.UX.InputKeys num);
 	}
 
 	public interface IRPGSprite : IDisposable
@@ -519,7 +535,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// The module that carries out graphics processing.
 	/// </summary>
-	public interface IGraphics
+	public partial interface IGraphics
 	{
 		/// <summary>
 		/// The number of times the screen is refreshed per second. The larger the value, the more CPU power is required. Normally set at 60.
@@ -585,6 +601,6 @@ namespace PokemonEssentials.Interface
 		/// <param name="duration">duration is the number of frames the transition will last. When omitted, this value is set to 8.</param>
 		/// <param name="filename">filename specifies the transition graphic file name. When not specified, a standard fade will be used.</param>
 		/// <param name="vague">vague sets the ambiguity of the borderline between the graphic's starting and ending points. The larger the value, the greater the ambiguity. When omitted, this value is set to 40.</param>
-		void transition(float duration, string filename, int vague);
+		void transition(float duration, string filename, int vague = 40);
 	}
 }

@@ -18,19 +18,20 @@ namespace PokemonEssentials.Interface.PokeBattle
 	{
 		Moves id { get; set; }
 		IBattle battle { get; set; }
-		string name { get; set; }
+		string Name { get; }
 		//int function { get; set; }
 		PokemonUnity.Attack.Data.Effects Effect { get; }
 		int basedamage { get; set; }
-		Types type { get; set; }
-		int accuracy { get; set; }
-		int addlEffect { get; set; }
-		PokemonUnity.Attack.Data.Targets target { get; set; }
-		int priority { get; set; }
-		PokemonUnity.Attack.Data.Flag flags { get; set; }
-		IMove thismove { get; set; }
-		int pp { get; set; }
-		int totalpp { get; set; }
+		Types Type { get; set; }
+		int Accuracy { get; set; }
+		int AddlEffect { get; }
+		PokemonUnity.Attack.Category Category { get; } //ToDo: Move to application layer
+		PokemonUnity.Attack.Data.Targets Target { get; set; }
+		int Priority { get; set; }
+		PokemonUnity.Attack.Data.Flag Flags { get; set; }
+		IMove thismove { get; }
+		int PP { get; set; }
+		int TotalPP { get; set; }
 
 		#region Creating a move
 		IBattleMove initialize(IBattle battle, IMove move);
@@ -60,7 +61,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		bool pbIsSpecial(Types type);
 
-		bool pbIsStatus();
+		bool pbIsStatus { get; }
 
 		bool pbIsDamaging();
 
@@ -122,7 +123,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#region This move's type effectiveness
 		bool pbTypeImmunityByAbility(Types type, IBattler attacker, IBattler opponent);
 
-		double pbTypeModifier(Types type, IBattler attacker, IBattler opponent);
+		float pbTypeModifier(Types type, IBattler attacker, IBattler opponent);
 
 		double pbTypeModMessages(Types type, IBattler attacker, IBattler opponent);
 		#endregion
@@ -144,7 +145,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		double pbModifyDamage(double damagemult, IBattler attacker, IBattler opponent);
 
-		int pbCalcDamage(IBattler attacker, IBattler opponent, params int[] options); //= new int[] { 0 }
+		int pbCalcDamage(IBattler attacker, IBattler opponent, params byte[] options); //= new int[] { 0 }
 
 		int pbReduceHPDamage(int damage, IBattler attacker, IBattler opponent);
 		#endregion

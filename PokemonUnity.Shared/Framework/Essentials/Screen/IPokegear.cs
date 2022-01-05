@@ -57,7 +57,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		void refresh();
 
-		void update();
+		//void update();
 	}
 	#endregion
 }

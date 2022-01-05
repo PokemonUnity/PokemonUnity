@@ -241,7 +241,7 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IMartScene : IScene {
 		void update();
 
-		void pbRefresh();
+		//void pbRefresh();
 
 		void pbStartBuyOrSellScene(bool buying, Items[] stock, IMartAdapter adapter);
 

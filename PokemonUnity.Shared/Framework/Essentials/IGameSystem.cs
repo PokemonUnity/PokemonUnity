@@ -1,6 +1,4 @@
-﻿using PokemonUnity.UX;
-
-namespace PokemonEssentials.Interface
+﻿namespace PokemonEssentials.Interface
 {
 	public interface IGameSystem
 	{

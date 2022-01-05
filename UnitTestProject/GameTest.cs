@@ -22,7 +22,7 @@ namespace Tests
 		[TestMethod]
 		public void Pokemon_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.PokemonData.Count > 1);
+			Assert.IsTrue(Kernal.PokemonData.Count > 1);
 		}
 		[TestMethod]
 		public void Initialize_PokemonMoves_Test()
@@ -32,7 +32,7 @@ namespace Tests
 		[TestMethod]
 		public void PokemonMoves_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.PokemonMovesData.Count > 1);
+			Assert.IsTrue(Kernal.PokemonMovesData.Count > 1);
 		}
 		[TestMethod]
 		public void Initialize_PokemonEvolutions_Test()
@@ -42,7 +42,7 @@ namespace Tests
 		[TestMethod]
 		public void PokemonEvolutions_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.PokemonEvolutionsData.Count > 1);
+			Assert.IsTrue(Kernal.PokemonEvolutionsData.Count > 1);
 		}
 		[TestMethod]
 		public void Initialize_PokemonForms_Test()
@@ -52,7 +52,7 @@ namespace Tests
 		[TestMethod]
 		public void PokemonForms_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.PokemonFormsData.Count > 1);
+			Assert.IsTrue(Kernal.PokemonFormsData.Count > 1);
 		}
 		[TestMethod]
 		public void Initialize_PokemonItems_Test()
@@ -62,7 +62,7 @@ namespace Tests
 		[TestMethod]
 		public void PokemonItems_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.PokemonItemsData.Count > 1);
+			Assert.IsTrue(Kernal.PokemonItemsData.Count > 1);
 		}
 		[TestMethod]
 		public void Initialize_Natures_Test()
@@ -72,7 +72,7 @@ namespace Tests
 		[TestMethod]
 		public void Natures_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.NatureData.Count > 1, string.Format("NatureData: {0}",Game.NatureData.Count.ToString()));
+			Assert.IsTrue(Kernal.NatureData.Count > 1, string.Format("NatureData: {0}",Kernal.NatureData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Moves_Test()
@@ -82,7 +82,7 @@ namespace Tests
 		[TestMethod]
 		public void Moves_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.MoveData.Count > 1, string.Format("MoveData: {0} | MoveMetaData: {1}",Game.MoveData.Count.ToString(), Game.MoveMetaData.Count.ToString()));
+			Assert.IsTrue(Kernal.MoveData.Count > 1, string.Format("MoveData: {0} | MoveMetaData: {1}",Kernal.MoveData.Count.ToString(), Kernal.MoveMetaData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Items_Test()
@@ -92,7 +92,7 @@ namespace Tests
 		[TestMethod]
 		public void Items_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.ItemData.Count > 1, string.Format("ItemData: {0}",Game.ItemData.Count.ToString()));
+			Assert.IsTrue(Kernal.ItemData.Count > 1, string.Format("ItemData: {0}",Kernal.ItemData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Berries_Test()
@@ -102,7 +102,7 @@ namespace Tests
 		[TestMethod]
 		public void Berries_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.BerryData.Count > 1, string.Format("BerryData: {0}",Game.BerryData.Count.ToString()));
+			Assert.IsTrue(Kernal.BerryData.Count > 1, string.Format("BerryData: {0}",Kernal.BerryData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Regions_Test()
@@ -112,7 +112,7 @@ namespace Tests
 		[TestMethod]
 		public void Regions_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.RegionData.Count > 1, string.Format("RegionData: {0}",Game.RegionData.Count.ToString()));
+			Assert.IsTrue(Kernal.RegionData.Count > 1, string.Format("RegionData: {0}",Kernal.RegionData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Types_Test()
@@ -122,7 +122,7 @@ namespace Tests
 		[TestMethod]
 		public void Types_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.TypeData.Count > 1, string.Format("TypeData: {0}",Game.TypeData.Count.ToString()));
+			Assert.IsTrue(Kernal.TypeData.Count > 1, string.Format("TypeData: {0}",Kernal.TypeData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Locations_Test()
@@ -132,7 +132,7 @@ namespace Tests
 		[TestMethod]
 		public void Locations_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.LocationData.Count > 1, string.Format("LocationData: {0} | AreaData: {1}",Game.LocationData.Count.ToString(), Game.AreaData.Count.ToString()));
+			Assert.IsTrue(Kernal.LocationData.Count > 1, string.Format("LocationData: {0} | AreaData: {1}",Kernal.LocationData.Count.ToString(), Kernal.AreaData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Encounters_Test()
@@ -155,7 +155,7 @@ namespace Tests
 		[TestMethod]
 		public void Trainers_Data_IsLoaded()
 		{
-			Assert.IsTrue(Game.TrainerMetaData.Count > 1, string.Format("TrainerMetaData: {0}",Game.TrainerMetaData.Count.ToString()));
+			Assert.IsTrue(Kernal.TrainerMetaData.Count > 1, string.Format("TrainerMetaData: {0}",Kernal.TrainerMetaData.Count.ToString()));
 		}
 		#endregion
 

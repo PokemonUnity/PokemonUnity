@@ -11,28 +11,32 @@ using PokemonEssentials.Interface.Item;
 
 namespace PokemonEssentials.Interface
 {
-
 	namespace EventArg
 	{
 		#region PokeBall Handlers EventArgs
-		public class OnCatchEventArg : EventArgs
+		public interface IOnCatchEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnCatchEventArg).GetHashCode();
+			//readonly int EventId = typeof(OnCatchEventArgs).GetHashCode();
 
-			public int Id { get; }
-			public Items Ball { get; set; }
-			public IBattle Battle { get; set; }
-			public IPokemon Pokemon { get; set; }
+			//int Id { get { return EventId; } }
+			Items Ball { get; set; }
+			IBattle Battle { get; set; }
+			IPokemon Pokemon { get; set; }
 		}
-		public class OnFailCatchEventArg : EventArgs
+		public interface IOnFailCatchEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(OnCatchEventArg).GetHashCode();
+			//readonly int EventId = typeof(OnCatchEventArgs).GetHashCode();
 
-			public int Id { get; }
-			public Items Ball { get; set; }
-			public IBattle Battle { get; set; }
-			public IBattler Battler { get; set; }
+			//int Id { get { return EventId; } }
+			Items Ball { get; set; }
+			IBattle Battle { get; set; }
+			IBattler Battler { get; set; }
 		}
+
+		public delegate bool IsUnconditional(Items ball, IBattle battle, IBattler battler);
+		public delegate int ModifyCatchRate(Items ball, int catchRate, IBattle battle, IBattler battler);
+		public delegate void OnCatch(Items ball, IBattle battle, IPokemon pokemon);
+		public delegate void OnFailCatch(Items ball, IBattle battle, IBattler battler);
 		#endregion
 	}
 
@@ -46,18 +50,20 @@ namespace PokemonEssentials.Interface
 
 			event EventHandler IsUnconditional;
 			event EventHandler ModifyCatchRate;
-			event EventHandler<OnCatchEventArg> OnCatch;
-			event EventHandler<OnFailCatchEventArg> OnFailCatch;
+			//event EventHandler<IOnCatchEventArgs> OnCatch;
+			event Action<object, IOnCatchEventArgs> OnCatch;
+			//event EventHandler<IOnFailCatchEventArgs> OnFailCatch;
+			event Action<object, IOnFailCatchEventArgs> OnFailCatch;
 
 			bool isUnconditional(Items ball, IBattle battle, IBattler battler);
 
 			int modifyCatchRate(Items ball, int catchRate, IBattle battle, IBattler battler);
 
 			void onCatch(Items ball, IBattle battle, IPokemon pokemon);
-			//void OnCatch(object sender, OnCatchEventArg e)
+			//void OnCatch(object sender, OnCatchEventArgs e)
 
 			void onFailCatch(Items ball, IBattle battle, IBattler battler);
-			//void OnFailCatch(object sender, OnFailCatchEventArg e)
+			//void OnFailCatch(object sender, OnFailCatchEventArgs e)
 		}
 
 		/// <summary>

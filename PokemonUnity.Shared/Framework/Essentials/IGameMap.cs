@@ -1,11 +1,12 @@
-﻿using PokemonUnity;
-using PokemonUnity.UX;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using PokemonUnity;
+using PokemonUnity.Overworld;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonEssentials.Interface
 {
-	public interface IGameMap
+	public interface IGameMap : Battle.IGameMapOrgBattle
 	{
 		/// <summary>
 		/// tileset file name
@@ -14,7 +15,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// autotile file name
 		/// </summary>
-		int autotile_names { get; set; }
+		string[] autotile_names { get; set; }
 		/// <summary>
 		/// panorama file name
 		/// </summary>
@@ -26,7 +27,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// fog file name
 		/// </summary>
-		int fog_name { get; set; }
+		string fog_name { get; set; }
 		/// <summary>
 		/// fog hue
 		/// </summary>
@@ -46,11 +47,11 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// fog sx
 		/// </summary>
-		int fog_sx { get; set; }
+		float fog_sx { get; set; }
 		/// <summary>
 		/// fog sy
 		/// </summary>
-		int fog_sy { get; set; }
+		float fog_sy { get; set; }
 		/// <summary>
 		/// battleback file name
 		/// </summary>
@@ -70,7 +71,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// passage table
 		/// </summary>
-		int passages { get; set; }
+		int[] passages { get; set; }
 		/// <summary>
 		/// prioroty table
 		/// </summary>
@@ -78,19 +79,19 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// terrain tag table
 		/// </summary>
-		int terrain_tags { get; set; }
+		Terrains[] terrain_tags { get; set; }
 		/// <summary>
 		/// events
 		/// </summary>
-		Dictionary<int, IGameEvent> events { get; set; }
+		IDictionary<int, IGameEvent> events { get; set; }
 		/// <summary>
 		/// fog x-coordinate starting point
 		/// </summary>
-		int fog_ox { get; set; }
+		float fog_ox { get; set; }
 		/// <summary>
 		/// fog y-coordinate starting point
 		/// </summary>
-		int fog_oy { get; set; }
+		float fog_oy { get; set; }
 		/// <summary>
 		/// fog color tone
 		/// </summary>
@@ -98,7 +99,7 @@ namespace PokemonEssentials.Interface
 		int mapsInRange { get; set; }
 		int width { get; }
 		int height { get; }
-		int encounter_list { get; }
+		IList<Pokemons> encounter_list { get; }
 		int encounter_step { get; }
 		int?[,,] data { get; }
 		string name { get; }
@@ -122,19 +123,19 @@ namespace PokemonEssentials.Interface
 		void scroll_up(int distance);
 		bool valid(float x, float y);
 		bool validLax(float x, float y);
-		bool passable(float x, float y, int d, IEntity self_event = null);
-		bool playerPassable(float x, float y, int d, IEntity self_event = null);
-		bool passableStrict(float x, float y, int d, IEntity self_event = null);
+		bool passable(float x, float y, int d, IGameCharacter self_event = null);
+		bool playerPassable(float x, float y, int d, IGameCharacter self_event = null);
+		bool passableStrict(float x, float y, int d, IGameCharacter self_event = null);
 		bool deepBush(float x, float y);
 		bool bush(float x, float y);
 		bool counter(float x, float y);
-		int terrain_tag(float x, float y, bool countBridge = false);
-		int check_event(float x, float y);
-		void start_scroll(int direction, int distance, int speed);
-		bool scrolling();
+		Terrains terrain_tag(float x, float y, bool countBridge = false);
+		int? check_event(float x, float y);
+		void start_scroll(int direction, int distance, float speed);
+		bool scrolling { get; }
 		void start_fog_tone_change(ITone tone, int duration);
 		void start_fog_opacity_change(float opacity, int duration);
-		bool in_range(object @object);
-		IEnumerator update();
+		bool in_range(IGameCharacter @object);
+		void update();
 	}
 }

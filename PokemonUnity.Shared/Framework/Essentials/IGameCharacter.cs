@@ -7,7 +7,7 @@ using PokemonUnity.UX;
 
 namespace PokemonEssentials.Interface
 {
-	public interface IGameCharacter : IEntity
+	public interface IGameCharacter : PokemonEssentials.Interface.Screen.IEntity
 	{
 		int id { get; set; }
 		int x { get; set; }
@@ -113,7 +113,7 @@ namespace PokemonEssentials.Interface
 			get;
 		}
 
-		int terrain_tag
+		PokemonUnity.Overworld.Terrains terrain_tag
 		{
 			get;
 		}

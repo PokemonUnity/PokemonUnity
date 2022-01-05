@@ -3,86 +3,86 @@ using System.Linq;
 
 namespace PokemonUnity.Saving.SerializableClasses
 {
-    /// <summary>
-    /// Serializable version of Pokemon Unity's PC class
-    /// </summary>
-    [System.Serializable]
-    public struct SeriPC
-    {
-        public SeriPokemon[][] Pokemons { get; private set; }
-        public string[] BoxNames { get; private set; }
-        public int[] BoxTextures { get; private set; }
-        public int[] Items { get; private set; }
-        //ToDo: public int[] Mail { get; private set; }
-        public byte ActiveBox { get; private set; }
+	/// <summary>
+	/// Serializable version of Pokemon Unity's PC class
+	/// </summary>
+	[System.Serializable]
+	public struct SeriPC
+	{
+		public SeriPokemon[][] Pokemons { get; private set; }
+		public string[] BoxNames { get; private set; }
+		public int[] BoxTextures { get; private set; }
+		public int[] Items { get; private set; }
+		//ToDo: public int[] Mail { get; private set; }
+		public byte ActiveBox { get; private set; }
 
-        public SeriPC(Monster.Pokemon[,] pokemons, string[] boxNames, int[] boxTextures, List<Inventory.Items> boxItems, byte box = 0)
-        {
-			ActiveBox = box;
-            Pokemons = new SeriPokemon[pokemons.GetLength(0)][];
-            for (int i = 0; i < Pokemons.Length; i++)
-            {
-				Pokemons[i] = new SeriPokemon[pokemons.GetLength(1)];
-                for (int j = 0; j < Pokemons[i].Length; j++)
-                {
-                    Pokemons[i][j] = (SeriPokemon)pokemons[i, j];
-                }
-            }
-            BoxNames = boxNames;
-            BoxTextures = boxTextures;
-
-            Items = new int[boxItems.Count];
-            for (int i = 0; i < Items.Length; i++)
-            {
-                Items[i] = (int)boxItems[i];
-            }
-        }
-
-		public SeriPC(Character.PC pc)
+		public SeriPC(PokemonEssentials.Interface.PokeBattle.IPokemon[,] pokemons, string[] boxNames, int[] boxTextures, List<Inventory.Items> boxItems, byte box = 0)
 		{
-			ActiveBox = pc.ActiveBox;
-			Pokemons = new SeriPokemon[pc.AllBoxes.Length][];
+			ActiveBox = box;
+			Pokemons = new SeriPokemon[pokemons.GetLength(0)][];
 			for (int i = 0; i < Pokemons.Length; i++)
 			{
-				Pokemons[i] = new SeriPokemon[pc.AllBoxes[i].Length];
+				Pokemons[i] = new SeriPokemon[pokemons.GetLength(1)];
 				for (int j = 0; j < Pokemons[i].Length; j++)
 				{
-					Pokemons[i][j] = (SeriPokemon)pc.AllBoxes[i][j];
+					//Pokemons[i][j] = (SeriPokemon)pokemons[i, j];
 				}
 			}
-			BoxNames = pc.BoxNames;
-			BoxTextures = pc.BoxTextures;
+			BoxNames = boxNames;
+			BoxTextures = boxTextures;
 
-			//Items = new int[pc.Items.Length];
-			//for (int i = 0; i < Items.Length; i++)
-			//{
-			//	Items[i] = (int)pc.Items[i];
-			//}
-			//List<Inventory.Items> list = new List<Inventory.Items>();
-			List<int> list = new List<int>();
-			foreach (KeyValuePair<Inventory.Items, int> item in pc.Items)
-				for (int i = 0; i < item.Value; i++)
-					list.Add((int)item.Key);
-			Items = list.ToArray();
+			Items = new int[boxItems.Count];
+			for (int i = 0; i < Items.Length; i++)
+			{
+				Items[i] = (int)boxItems[i];
+			}
 		}
 
-		public Monster.Pokemon[,] GetPokemonsFromSeri()
-		{
-			//Monster.Pokemon[,] pkmn = new Monster.Pokemon[Pokemons.Length, Pokemons.GetLength(1)];
-			Monster.Pokemon[,] pkmn = new Monster.Pokemon[Pokemons.Length, Pokemons[0].Length];
-            for (int i = 0; i < Pokemons.Length; i++)
-            {
-                for (int j = 0; j < Pokemons[i].Length; j++)
-                {
-					//Easier if it only grabs actual pokemons (with values), than trying to copy everything...
-                    if((PokemonUnity.Pokemons)Pokemons[i][j].Species != PokemonUnity.Pokemons.NONE) //|| Pokemons[i][j] == null
-						pkmn[i, j] = (Monster.Pokemon)Pokemons[i][j];
-					else
-						pkmn[i, j] = new Monster.Pokemon(PokemonUnity.Pokemons.NONE);
-                }
-            }
-			return pkmn;
-		}
+		//public SeriPC(Character.PC pc)
+		//{
+		//	ActiveBox = pc.ActiveBox;
+		//	Pokemons = new SeriPokemon[pc.AllBoxes.Length][];
+		//	for (int i = 0; i < Pokemons.Length; i++)
+		//	{
+		//		Pokemons[i] = new SeriPokemon[pc.AllBoxes[i].Length];
+		//		for (int j = 0; j < Pokemons[i].Length; j++)
+		//		{
+		//			Pokemons[i][j] = (SeriPokemon)pc.AllBoxes[i][j];
+		//		}
+		//	}
+		//	BoxNames = pc.BoxNames;
+		//	BoxTextures = pc.BoxTextures;
+		//
+		//	//Items = new int[pc.Items.Length];
+		//	//for (int i = 0; i < Items.Length; i++)
+		//	//{
+		//	//	Items[i] = (int)pc.Items[i];
+		//	//}
+		//	//List<Inventory.Items> list = new List<Inventory.Items>();
+		//	List<int> list = new List<int>();
+		//	foreach (KeyValuePair<Inventory.Items, int> item in pc.Items)
+		//		for (int i = 0; i < item.Value; i++)
+		//			list.Add((int)item.Key);
+		//	Items = list.ToArray();
+		//}
+
+		//public PokemonEssentials.Interface.PokeBattle.IPokemon[,] GetPokemonsFromSeri()
+		//{
+		//	//PokemonEssentials.Interface.PokeBattle.IPokemon[,] pkmn = new Pokemon[Pokemons.Length, Pokemons.GetLength(1)];
+		//	PokemonEssentials.Interface.PokeBattle.IPokemon[,] pkmn = new Pokemon[Pokemons.Length, Pokemons[0].Length];
+		//	for (int i = 0; i < Pokemons.Length; i++)
+		//	{
+		//		for (int j = 0; j < Pokemons[i].Length; j++)
+		//		{
+		//			//Easier if it only grabs actual pokemons (with values), than trying to copy everything...
+		//			if((PokemonUnity.Pokemons)Pokemons[i][j].Species != PokemonUnity.Pokemons.NONE) //|| Pokemons[i][j] == null
+		//				pkmn[i, j] = (PokemonEssentials.Interface.PokeBattle.IPokemon)Pokemons[i][j];
+		//			else
+		//				pkmn[i, j] = new PokemonEssentials.Interface.PokeBattle.IPokemon(PokemonUnity.Pokemons.NONE);
+		//		}
+		//	}
+		//	return pkmn;
+		//}
 
 		public Inventory.Items[] GetItemsFromSeri()
 		{

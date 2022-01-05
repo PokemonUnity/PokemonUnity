@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using PokemonUnity;
 using PokemonUnity.Combat;
+using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 
@@ -12,65 +13,65 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IBattler
 	{
-		IBattle battle { get; set; }
-		IPokemon pokemon { get; set; }
-		string name { get; set; }
-		int index { get; set; }
-		int pokemonIndex { get; set; }
-		int totalhp { get; set; }
-		int fainted { get; set; }
-		int lastAttacker { get; set; }
-		int turncount { get; set; }
-		int effects { get; set; }
-		int species { get; set; }
-		Types type1 { get; set; }
-		Types type2 { get; set; }
-		Abilities ability { get; set; }
-		int gender { get; set; }
-		int attack { get; set; }
-		int defense { get; set; }
-		int spatk { get; set; }
-		int spdef { get; set; }
-		int speed { get; set; }
-		int[] stages { get; set; }
-		int[] iv { get; set; }
-		Moves[] moves { get; set; }
-		int participants { get; set; }
-		int tookDamage { get; set; }
-		int lastHPLost { get; set; }
-		int lastMoveUsed { get; set; }
-		int lastMoveUsedType { get; set; }
-		int lastMoveUsedSketch { get; set; }
-		int lastRegularMoveUsed { get; set; }
-		int lastRoundMoved { get; set; }
-		int movesUsed { get; set; }
-		int currentMove { get; set; }
-		int damagestate { get; set; }
-		int captured { get; set; }
-		bool inHyperMode { get; }
-		bool isShadow { get; }
+		IBattle battle				{ get; }
+		IPokemon pokemon			{ get; }
+		string Name					{ get; set; }
+		int Index					{ get; set; }
+		int pokemonIndex			{ get; set; }
+		int TotalHP					{ get; }
+		bool Fainted				{ get; }
+		IList<int> lastAttacker		{ get; }
+		int turncount				{ get; set; }
+		IEffectsBattler effects		{ get; }
+		Pokemons Species			{ get; }
+		Types Type1					{ get; set; }
+		Types Type2					{ get; set; }
+		Abilities Ability			{ get; set; }
+		bool? Gender				{ get; set; }
+		int ATK						{ get; set; }
+		int DEF						{ get; set; }
+		int SPA						{ get; set; }
+		int SPD						{ get; set; }
+		int SPE						{ get; set; }
+		int[] stages				{ get; }
+		int[] IV					{ get; }
+		IBattleMove[] moves			{ get; }
+		IList<int> participants		{ get; set; }
+		bool tookDamage				{ get; set; }
+		int lastHPLost				{ get; set; }
+		Moves lastMoveUsed			{ get; set; }
+		Types lastMoveUsedType		{ get; set; }
+		Moves lastMoveUsedSketch	{ get; set; }
+		Moves lastRegularMoveUsed	{ get; set; }
+		int? lastRoundMoved			{ get; }
+		IList<Moves> movesUsed		{ get; }
+		Moves currentMove			{ get; set; }
+		IDamageState damagestate	{ get; set; }
+		bool captured				{ get; set; }
+		bool inHyperMode			{ get; }
+		bool isShadow				{ get; }
 
 		#region Complex accessors
-		//int defense { get; }
-		//int spdef { get; }
-		PokemonUnity.Monster.Natures nature { get; }
-		int happiness { get; }
-		int pokerusStage { get; }
-		int form { get; set; }
-		bool hasMega { get; }
-		bool isMega { get; }
-		bool hasPrimal { get; }
-		bool isPrimal { get; }
-		int level { get; set; }
-		int status { get; set; }
-		int statusCount { get; set; }
-		int hp { get; set; }
-		Items item { get; set; }
-		int weight(IBattler attacker = null);
-		//string name { get; }
-		int displayGender { get; }
-		bool isShiny { get; }
-		bool owned { get; }
+		//int defense				{ get; }
+		//int spdef					{ get; }
+		Natures nature				{ get; }
+		int Happiness				{ get; }
+		int pokerusStage			{ get; }
+		int form					{ get; set; }
+		bool hasMega				{ get; }
+		bool isMega					{ get; }
+		bool hasPrimal				{ get; }
+		bool isPrimal				{ get; }
+		int Level					{ get; set; }
+		Status Status				{ get; set; }
+		int StatusCount				{ get; set; }
+		int HP						{ get; set; }
+		Items Item					{ get; set; }
+		float Weight(IBattler attacker = null);
+		//string name				{ get; }
+		int displayGender			{ get; }
+		bool IsShiny				{ get; }
+		bool owned					{ get; }
 		#endregion
 
 		#region Creating a battler
@@ -88,12 +89,12 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		void pbUpdate(bool fullchange = false);
 
-		void pbInitialize(IPokemon pkmn, int index, bool batonpass);
+		IBattler pbInitialize(IPokemon pkmn, int index, bool batonpass);
 
 		/// <summary>
 		/// Used only to erase the battler of a Shadow Pokémon that has been snagged.
 		/// </summary>
-		bool pbReset();
+		IBattler pbReset();
 
 		/// <summary>
 		/// Update Pokémon who will gain EXP if this battler is defeated
@@ -102,7 +103,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		#region About this battler
-		string pbThis(bool lowercase = false);
+		string ToString(bool lowercase = false);
 
 		bool pbHasType(Types type);
 
@@ -140,13 +141,13 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns the data structure for this battler's side
 		/// </summary>
 		/// <returns>Player: 0 and 2; Foe: 1 and 3</returns>
-		bool pbOwnSide();
+		IEffectsSide pbOwnSide { get; }
 
 		/// <summary>
 		/// Returns the data structure for the opposing Pokémon's side
 		/// </summary>
 		/// <returns>Player: 1 and 3; Foe: 0 and 2</returns>
-		bool pbOpposingSide();
+		IEffectsSide pbOpposingSide { get; }
 
 		/// <summary>
 		/// Returns whether the position belongs to the opposing Pokémon's side
@@ -159,25 +160,25 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns the battler's partner
 		/// </summary>
 		/// <returns></returns>
-		IBattler pbPartner();
+		IBattler pbPartner { get; }
 
 		/// <summary>
 		/// Returns the battler's first opposing Pokémon
 		/// </summary>
 		/// <returns></returns>
-		IBattler pbOpposing1();
+		IBattler pbOpposing1 { get; }
 
 		/// <summary>
 		/// Returns the battler's second opposing Pokémon
 		/// </summary>
 		/// <returns></returns>
-		IBattler pbOpposing2();
+		IBattler pbOpposing2 { get; }
 
-		IBattler pbOppositeOpposing();
+		IBattler pbOppositeOpposing { get; }
 
-		IBattler pbOppositeOpposing2();
+		IBattler pbOppositeOpposing2 { get; }
 
-		int pbNonActivePokemonCount();
+		int pbNonActivePokemonCount { get; }
 		#endregion
 
 		#region Forms
@@ -201,7 +202,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		bool pbConfusionBerry(PokemonUnity.Inventory.Plants.Flavours flavor, string message1, string message2);
 
-		bool pbStatIncreasingBerry(Stats stat, string berryname);
+		bool pbStatIncreasingBerry(PokemonUnity.Combat.Stats stat, string berryname);
 
 		void pbActivateBerryEffect(Items berry = Items.NONE, bool consume = true);
 
@@ -209,7 +210,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		#region Move user and targets
-		IBattler pbFindUser(IBattleChoice choice, IBattler targets);
+		IBattler pbFindUser(IBattleChoice choice, IBattler[] targets);
 
 		IBattler pbChangeUser(IBattleMove thismove, IBattler user);
 

@@ -6,7 +6,7 @@ namespace PokemonEssentials.Interface
 {
 	public interface IGameTemp
 	{
-		int background_bitmap { get; }
+		ISprite background_bitmap { get; set; }
 
 		bool battle_abort { get; set; }
 		bool battle_calling { get; set; }
@@ -54,5 +54,8 @@ namespace PokemonEssentials.Interface
 		bool to_title { get; set; }
 		string transition_name { get; set; }
 		bool transition_processing { get; set; }
+
+		//Temp placeholder from Ispritewindow
+		int fadestate { get; set; }
 	}
 }

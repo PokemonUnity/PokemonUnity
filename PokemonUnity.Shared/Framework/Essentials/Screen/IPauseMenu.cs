@@ -18,7 +18,7 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
-	public interface IPokemonMenu_Scene : IScene
+	public interface IPokemonMenuScene : IScene
 	{
 		void pbEndScene();
 		void pbHideMenu();
@@ -30,9 +30,9 @@ namespace PokemonEssentials.Interface.Screen
 		void pbStartScene();
 	}
 
-	public interface IPokemonMenu : IScreen
+	public interface IPokemonMenuScreen : IScreen
 	{
-		void initialize(IPokemonMenu_Scene scene);
+		void initialize(IPokemonMenuScene scene);
 		void pbShowMenu();
 		void pbStartPokemonMenu();
 	}

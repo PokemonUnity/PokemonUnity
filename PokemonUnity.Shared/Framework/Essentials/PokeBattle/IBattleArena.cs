@@ -11,12 +11,13 @@ using PokemonUnity.Character;
 using PokemonUnity.Saving;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Utility;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IBattleArena : IBattle
 	{
-		IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
+		new IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
 
 		new bool pbDoubleBattleAllowed();
 
@@ -28,7 +29,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		 
 		new void pbOnActiveAll();
 
-		bool pbOnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
+		new bool pbOnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
 
 		int pbMindScore(IBattleMove move);
 

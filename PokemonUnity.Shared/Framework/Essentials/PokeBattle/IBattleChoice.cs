@@ -7,7 +7,7 @@
 		/// Index of Action being used
 		/// </summary>
 		int Index { get; }
-		IMove Move { get; }
+		IBattleMove Move { get; }
 		int Target { get; }
 	}
 }

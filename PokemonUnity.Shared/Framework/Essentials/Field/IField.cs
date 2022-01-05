@@ -6,22 +6,23 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Overworld;
 using PokemonUnity.UX;
 using PokemonEssentials.Interface.Field;
-using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.EventArg;
+using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface
 {
 	namespace EventArg
 	{
 		#region Encounter Modifier EventArgs
-		public class EncounterModifierEventArgs : EventArgs
+		public interface IEncounterModifierEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(EncounterModifierEventArgs).GetHashCode();
+			//readonly int EventId = typeof(EncounterModifierEventArgs).GetHashCode();
 
-			public int Id { get; }
+			//int Id { get; }
 			//ToDo: Either it's the encounter logic or the pokemon itself...
 			//[species,min/max]; i dont think there's 3 parameters...
-			public IEncounter Encounter { get; set; }
+			IEncounter Encounter { get; set; }
 		}
 		#endregion
 	}
@@ -39,7 +40,8 @@ namespace PokemonEssentials.Interface
 			//List<Action<IEncounter>> procs { get; }
 			//List<Action> procsEnd { get; }
 
-			event EventHandler<EncounterModifierEventArgs> OnEncounter;
+			//event EventHandler<IEncounterModifierEventArgs> OnEncounter;
+			event Action<object, IEncounterModifierEventArgs> OnEncounter;
 			event EventHandler OnEncounterEnd;
 
 			//void register(Action<IEncounter> p);
@@ -59,16 +61,24 @@ namespace PokemonEssentials.Interface
 		{
 			IPokeBattle_Scene pbNewBattleScene();
 
-			IEnumerator pbSceneStandby();
+			IEnumerator pbSceneStandby(Action block = null);
 
-			IEnumerator pbBattleAnimation(IAudioBGM bgm = null, int trainerid = -1, string trainername = "");
+			void pbBattleAnimation(IAudioBGM bgm = null, int trainerid = -1, string trainername = "", Action block = null);
 
-			// Alias and use this method if you want to add a custom battle intro animation
-			// e.g. variants of the Vs. animation.
-			// Note that Game.GameData.GameTemp.background_bitmap contains an image of the current game
-			// screen.
-			// When the custom animation has finished, the screen should have faded to black
-			// somehow.
+			/// <summary>
+			/// Override and use this method if you want to add a custom battle intro animation
+			/// e.g. variants of the Vs. animation.
+			/// </summary>
+			/// <remarks>
+			/// Note that <see cref="IGameTemp.background_bitmap"/> contains an image of the current game
+			/// screen.
+			/// When the custom animation has finished, the screen should have faded to black
+			/// somehow.
+			/// </remarks>
+			/// <param name="viewport"></param>
+			/// <param name="trainerid"></param>
+			/// <param name="trainername"></param>
+			/// <returns></returns>
 			bool pbBattleAnimationOverride(IViewport viewport, int trainerid = -1, string trainername = "");
 
 			void pbPrepareBattle(IBattle battle);
@@ -83,11 +93,14 @@ namespace PokemonEssentials.Interface
 
 			void pbCheckAllFainted();
 
-			void pbEvolutionCheck(int currentlevels);
+			void pbEvolutionCheck(int[] currentlevels);
 
 			Items[] pbDynamicItemList(params Items[] args);
 
-			// Runs the Pickup event after a battle if a Pokemon has the ability Pickup.
+			/// <summary>
+			/// Runs the Pickup event after a battle if a Pokemon has the ability Pickup.
+			/// </summary>
+			/// <param name="pokemon"></param>
 			void pbPickup(IPokemon pokemon);
 
 			bool pbEncounter(EncounterTypes enctype);
@@ -126,12 +139,12 @@ namespace PokemonEssentials.Interface
 			//  }
 			//}
 
-			//void pbOnSpritesetCreate(spriteset, IViewport viewport);
+			void pbOnSpritesetCreate(ISpritesetMap spriteset, IViewport viewport);
 
 			#region Field movement
 			bool pbLedge(float xOffset, float yOffset);
 
-			void pbSlideOnIce(IEntity _event = null);
+			void pbSlideOnIce(IGamePlayer _event = null);
 
 			void pbBattleOnStepTaken();
 
@@ -197,10 +210,11 @@ namespace PokemonEssentials.Interface
 			bool pbPokerus();
 			#endregion
 
-			bool pbBatteryLow();
+			//bool pbBatteryLow();
 
 			#region Audio playing
-			void pbCueBGM(IAudioBGM bgm, int seconds, int? volume = null, int? pitch = null);
+			void pbCueBGM(string bgm, float seconds, int? volume = null, float? pitch = null);
+			void pbCueBGM(IAudioBGM bgm, float seconds, int? volume = null, float? pitch = null);
 
 			void pbAutoplayOnTransition();
 
@@ -211,7 +225,7 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// </summary>
 			/// BGM audio file?
-			IAudioObject pbRecord(string text, float maxtime = 30.0f);
+			IWaveData pbRecord(string text, float maxtime = 30.0f);
 
 			bool pbRxdataExists(string file);
 			#endregion
@@ -225,47 +239,47 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region Bridges
-			void pbBridgeOn(int height = 2);
+			void pbBridgeOn(float height = 2);
 
 			void pbBridgeOff();
 			#endregion
 
 			#region Event locations, terrain tags
-			bool pbEventFacesPlayer(IEntity _event, IGamePlayer player, int distance);
+			bool pbEventFacesPlayer(IGameCharacter _event, IGamePlayer player, float distance);
 
-			bool pbEventCanReachPlayer(IEntity _event, IGamePlayer player, int distance);
+			bool pbEventCanReachPlayer(IGameCharacter _event, IGamePlayer player, float distance);
 
-			ITilePosition pbFacingTileRegular(int? direction = null, IEntity _event = null);
+			ITilePosition pbFacingTileRegular(float? direction = null, IGameCharacter _event = null);
 
-			ITilePosition pbFacingTile(int? direction = null, IEntity _event = null);
+			ITilePosition pbFacingTile(float? direction = null, IGameCharacter _event = null);
 
-			bool pbFacingEachOther(IEntity event1, IEntity event2);
+			bool pbFacingEachOther(IGameCharacter event1, IGameCharacter event2);
 
-			Terrains pbGetTerrainTag(IEntity _event = null, bool countBridge = false);
+			Terrains pbGetTerrainTag(IGameCharacter _event = null, bool countBridge = false);
 
-			Terrains pbFacingTerrainTag(IEntity _event = null, int? dir = null);
+			Terrains? pbFacingTerrainTag(IGameCharacter _event = null, float? dir = null);
 			#endregion
 
 			#region Event movement
-			IEnumerator pbTurnTowardEvent(IEntity _event, IEntity otherEvent);
+			void pbTurnTowardEvent(IGameCharacter _event, IGameCharacter otherEvent);
 
-			IEnumerator pbMoveTowardPlayer(IEntity _event);
+			void pbMoveTowardPlayer(IGameCharacter _event);
 
 			bool pbJumpToward(int dist = 1, bool playSound = false, bool cancelSurf = false);
 
 			void pbWait(int numframes);
 			#endregion
 
-			//MoveRoute pbMoveRoute(IEntity _event, string[] commands, bool waitComplete= false);
+			//IMoveRoute pbMoveRoute(IEntity _event, string[] commands, bool waitComplete= false);
 
 			#region Screen effects
-			void pbToneChangeAll(ITone tone, int duration);
+			void pbToneChangeAll(ITone tone, float duration);
 
 			void pbShake(int power, int speed, int frames);
 
 			void pbFlash(IColor color, int frames);
 
-			void pbScrollMap(int direction, int distance, int speed);
+			void pbScrollMap(int direction, int distance, float speed);
 			#endregion
 		}
 
@@ -275,80 +289,79 @@ namespace PokemonEssentials.Interface
 		public interface ITempMetadataField
 		{
 			#region 
-			EncounterTypes encounterType	{ get; set; }
+			EncounterTypes? encounterType	{ get; set; }
 			int evolutionLevels				{ get; set; }
 			#endregion
 
 			#region 
-			bool batterywarning { get; set; }
+			bool batterywarning { get; }
 			IAudioBGM cueBGM { get; set; }
-			int cueFrames { get; set; }
+			float? cueFrames { get; set; }
 			#endregion
 		}
 
-		// ===============================================================================
-		// Scene_Map and Spriteset_Map
-		// ===============================================================================
-		//public interface Scene_Map
+		#region Scene_Map and Spriteset_Map
+		//public interface ISceneMap
 		//{
 		//	void createSingleSpriteset(map);
 		//}
-
-		//public interface Spriteset_Map
-		//{
-		//	public void getAnimations();
 		//
-		//	public void restoreAnimations(anims);
+		//public interface ISpritesetMap
+		//{
+		//	void getAnimations();
+		//
+		//	void restoreAnimations(anims);
 		//}
+		#endregion
 
-		/*public static partial class PBMoveRoute
+		/*public static partial class IMoveRoute
 		{
 			Down               = 1;
-		  Left               = 2;
-		  Right              = 3;
-		  Up                 = 4;
-		  LowerLeft          = 5;
-		  LowerRight         = 6;
-		  UpperLeft          = 7;
-		  UpperRight         = 8;
-		  Random             = 9;
-		  TowardPlayer       = 10;
-		  AwayFromPlayer     = 11;
-		  Forward            = 12
-		  Backward           = 13;
-		  Jump               = 14; // xoffset, yoffset
-		  Wait               = 15; // frames
-		  TurnDown           = 16;
-		  TurnLeft           = 17;
-		  TurnRight          = 18;
-		  TurnUp             = 19;
-		  TurnRight90        = 20;
-		  TurnLeft90         = 21;
-		  Turn180            = 22;
-		  TurnRightOrLeft90  = 23;
-		  TurnRandom         = 24;
-		  TurnTowardPlayer   = 25;
-		  TurnAwayFromPlayer = 26;
-		  SwitchOn           = 27; // 1 param
-		  SwitchOff          = 28; // 1 param
-		  ChangeSpeed        = 29; // 1 param
-		  ChangeFreq         = 30; // 1 param
-		  WalkAnimeOn        = 31;
-		  WalkAnimeOff       = 32;
-		  StepAnimeOn        = 33;
-		  StepAnimeOff       = 34;
-		  DirectionFixOn     = 35;
-		  DirectionFixOff    = 36;
-		  ThroughOn          = 37;
-		  ThroughOff         = 38;
-		  AlwaysOnTopOn      = 39;
-		  AlwaysOnTopOff     = 40;
-		  Graphic            = 41; // Name, hue, direction, pattern
-		  Opacity            = 42; // 1 param
-		  Blending           = 43; // 1 param
-		  PlaySE             = 44; // 1 param
-		  Script             = 45; // 1 param
-		  ScriptAsync        = 101; // 1 param
+			Left               = 2;
+			Right              = 3;
+			Up                 = 4;
+			LowerLeft          = 5;
+			LowerRight         = 6;
+			UpperLeft          = 7;
+			UpperRight         = 8;
+			Random             = 9;
+			TowardPlayer       = 10;
+			AwayFromPlayer     = 11;
+			Forward            = 12
+			Backward           = 13;
+			Jump               = 14; // xoffset, yoffset
+			Wait               = 15; // frames
+			TurnDown           = 16;
+			TurnLeft           = 17;
+			TurnRight          = 18;
+			TurnUp             = 19;
+			TurnRight90        = 20;
+			TurnLeft90         = 21;
+			Turn180            = 22;
+			TurnRightOrLeft90  = 23;
+			TurnRandom         = 24;
+			TurnTowardPlayer   = 25;
+			TurnAwayFromPlayer = 26;
+			SwitchOn           = 27; // 1 param
+			SwitchOff          = 28; // 1 param
+			ChangeSpeed        = 29; // 1 param
+			ChangeFreq         = 30; // 1 param
+			WalkAnimeOn        = 31;
+			WalkAnimeOff       = 32;
+			StepAnimeOn        = 33;
+			StepAnimeOff       = 34;
+			DirectionFixOn     = 35;
+			DirectionFixOff    = 36;
+			ThroughOn          = 37;
+			ThroughOff         = 38;
+			AlwaysOnTopOn      = 39;
+			AlwaysOnTopOff     = 40;
+			Graphic            = 41; // Name, hue, direction, pattern
+			Opacity            = 42; // 1 param
+			Blending           = 43; // 1 param
+			PlaySE             = 44; // 1 param
+			Script             = 45; // 1 param
+			ScriptAsync        = 101; // 1 param
 		}*/
 
 		// ===============================================================================
@@ -363,8 +376,10 @@ namespace PokemonEssentials.Interface
 
 		public interface IInterpreterFieldMixinField
 		{
-			//  Used in boulder events. Allows an event to be pushed. To be used in
-			//  a script event command.
+			/// <summary>
+			/// Used in boulder events. Allows an event to be pushed. To be used in
+			/// a script event command.
+			/// </summary>
 			void pbPushThisEvent();
 
 			void pbPushThisBoulder();

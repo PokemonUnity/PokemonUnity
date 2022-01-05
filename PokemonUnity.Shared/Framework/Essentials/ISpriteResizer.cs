@@ -23,13 +23,13 @@ namespace PokemonEssentials.Interface
 		void setScreenBorderName(string border);
 	}
 
-	public interface Graphics
+	public partial interface IGraphics
 	{
-		// // Nominal screen size
-		int @width { get; }
-		int @height { get; }
-
-		int brightness { get; set; }
+		// Nominal screen size
+		//int @width { get; }
+		//int @height { get; }
+		
+		//int brightness { get; set; }
 
 		void fadein(int frames);
 
@@ -41,7 +41,7 @@ namespace PokemonEssentials.Interface
 
 		bool deletefailed { get; set; }
 
-		void snap_to_bitmap();
+		ISprite snap_to_bitmap();
 	}
 
 	/// <summary>
@@ -88,15 +88,15 @@ namespace PokemonEssentials.Interface
 	{
 		void setNotifyProc(Action proc);
 
-		void set(float x, float y, float width, float height);
+		//void set(float x, float y, float width, float height);
 
-		float x { set; }
+		//float x { set; }
 
-		float y { set; }
+		//float y { set; }
 
-		float width { set; }
+		//float width { set; }
 
-		float height { set; }
+		//float height { set; }
 	}
 
 	/// <summary>
@@ -122,7 +122,7 @@ namespace PokemonEssentials.Interface
 		IRect rect { get; set; }
 	}
 
-	public interface IPlane
+	public interface IPlane : IPlaneSpriteWindow
 	{
 		//unless (@SpriteResizerMethodsAliased) {
 		//  alias _initialize_SpriteResizer initialize;
@@ -160,7 +160,7 @@ namespace PokemonEssentials.Interface
 		void refresh();
 	}
 
-	public interface IBitmap
+	public interface IBitmap //: IDisposable
 	{
 		//  Fast methods for retrieving bitmap data
 		//RtlMoveMemory_pi = new Win32API('kernel32', 'RtlMoveMemory', 'pii', 'i');

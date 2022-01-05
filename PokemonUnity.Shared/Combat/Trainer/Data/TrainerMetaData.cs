@@ -29,19 +29,19 @@ namespace PokemonUnity.Character
 		/// Typically only defined for Gym Leaders, Elite Four members and rivals.	
 		/// Optional. If undefined, the default BGM is used.
 		/// </summary>
-		public int 	BattleBGM { get; private set; }
+		public string 	BattleBGM { get; private set; }
 		/// <summary>
 		/// The name of a background music (BGM) file in the folder "Audio/BGM". 
 		/// The victory background music that plays upon defeat of trainers of this type.	
 		/// Optional. If undefined, the default victory BGM is used.
 		/// </summary>
-		public int 	VictoryBGM { get; private set; }
+		public string 	VictoryBGM { get; private set; }
 		/// <summary>
 		/// The name of a music effect (ME) file in the folder "Audio/ME". 
 		/// The music that plays before the battle begins, while still talking to the trainer.	
 		/// Optional. If undefined, the default ME is used.
 		/// </summary>
-		public int 	IntroME { get; private set; }
+		public string 	IntroME { get; private set; }
 		/// <summary>
 		/// The gender of all trainers of this type. Is one of:
 		/// Male, Female, Mixed(i.e. if the type shows a pair of trainers)
@@ -80,7 +80,7 @@ namespace PokemonUnity.Character
 		public string ScriptBattleEnd { get; private set; }
 		#endregion
 
-		public TrainerMetaData(TrainerTypes id, bool @double, byte baseMoney = 0, bool? gender = null, byte skillLevel = 0, int? skillCodes = null, int introME = 0, int battleBGM = 0, int victoryBGM = 0, string scriptIdle = null, string scriptBattleIntro = null, string scriptBattleEnd = null)
+		public TrainerMetaData(TrainerTypes id, bool @double, byte baseMoney = 0, bool? gender = null, byte skillLevel = 0, int? skillCodes = null, string introME = null, string battleBGM = null, string victoryBGM = null, string scriptIdle = null, string scriptBattleIntro = null, string scriptBattleEnd = null)
 		{
 			ID = id;
 			Double = @double;

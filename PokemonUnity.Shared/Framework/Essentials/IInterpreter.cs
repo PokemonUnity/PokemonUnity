@@ -26,7 +26,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="list">list of event commands</param>
 		/// <param name="event_id">event ID</param>
 		/// <param name="map_id"></param>
-		void setup(List<IEventCommand> list, int event_id, int? map_id = null);
+		void setup(IList<IEventCommand> list, int event_id, int? map_id = null);
 
 		bool running { get; }
 
@@ -71,7 +71,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="parameter">parameter</param>
 		/// <returns></returns>
-		IGameCharacter get_character(int parameter);
+		IGameEvent get_character(int parameter);
 		/// <summary>
 		/// Calculate Operated Value
 		/// </summary>

@@ -1,10 +1,10 @@
-﻿using PokemonUnity;
-using PokemonUnity.Inventory;
-using PokemonUnity.Combat;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PokemonUnity;
+using PokemonUnity.Inventory;
+using PokemonUnity.Combat;
 using PokemonUnity.Monster;
 using PokemonUnity.Utility;
 using PokemonEssentials.Interface;
@@ -17,37 +17,49 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonEssentials.Interface
 {
-	public interface IGame : IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime
+	namespace EventArg
 	{
-		/*PokemonEssentials.Interface.IGlobalMetadata Global { get; }
-		IMapFactory MapFactory { get; }
-		//public IPokemonMapMetadata PokemonMap { get; }
-		IMapMetadata MapData { get; }
-		PokemonSystem PokemonSystem { get; }
-		PokemonEssentials.Interface.ITempMetadata PokemonTemp { get; set; }
-		IEncounters PokemonEncounters { get; }
-		IStorage PokemonStorage { get; }
-		IBag Bag { get; }
-		ISceneState Scene { get; set; }
-		IGameTemp GameTemp { get; }
-		IGamePlayer Player { get; set; }
-		ITrainer Trainer { get; set; }
-		//ITrainer DataSystem { get; set; }
-		//ITrainer[] DataTilesets { get; set; }
-		IGameCommonEvent[] DataCommonEvents { get; set; }
-		IGameSystem GameSystem { get; set; }
-		Dictionary<int, bool> GameSwitches { get; set; }
-		Dictionary<int, bool> GameSelfSwitches { get; set; }
-		Dictionary<int, object> GameVariables { get; set; }
-		IGameScreen GameScreen { get; set; }
-		IGamePlayer GamePlayer { get; set; }
-		IGameMap GameMap { get; set; }
-		IGameMessage GameMessage { get; set; }
-		int SpeechFrame { get; }
-		PokemonUnity.UX.IFrontEnd UI { get; }*/
+		#region Application EventArgs
+		public interface IButtonEventArgs : IEventArgs
+		{
+			//ButtonEventArgs(int button, bool isDown) { Button = button; IsDown = isDown; }
+			int Button { get; } // readonly
+			bool IsDown { get; } // readonly
+		}
+		#endregion
+	}
+
+	public interface IGame //: IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime, IGameMessage, IGameAudioPlay, IGameMetadataMisc
+	{
+		PokemonEssentials.Interface.IGlobalMetadata Global					{ get; }
+		//PokemonEssentials.Interface.Field.IPokemonMapFactory MapFactory	{ get; }
+		PokemonEssentials.Interface.Field.IMapFactory MapFactory			{ get; }
+		PokemonEssentials.Interface.Field.IMapMetadata PokemonMap			{ get; }
+		PokemonEssentials.Interface.Field.IMapMetadata MapData				{ get; }
+		PokemonEssentials.Interface.Screen.IPokemonSystemOption PokemonSystem { get; }
+		PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp				{ get; set; }
+		PokemonEssentials.Interface.Field.IEncounters PokemonEncounters		{ get; }
+		PokemonEssentials.Interface.Screen.IPokemonStorage PokemonStorage	{ get; }
+		PokemonEssentials.Interface.Screen.IBag Bag							{ get; }
+		PokemonEssentials.Interface.ISceneMap Scene							{ get; set; }
+		PokemonEssentials.Interface.IGameTemp GameTemp						{ get; }
+		PokemonEssentials.Interface.IGamePlayer Player						{ get; set; }
+		PokemonEssentials.Interface.PokeBattle.ITrainer Trainer				{ get; set; }
+		PokemonEssentials.Interface.RPGMaker.Kernal.ISystem DataSystem		{ get; set; }
+		PokemonEssentials.Interface.ITileset[] DataTilesets					{ get; set; }
+		PokemonEssentials.Interface.IGameCommonEvent[] DataCommonEvents		{ get; set; }
+		PokemonEssentials.Interface.IGameSystem GameSystem					{ get; set; }
+		PokemonEssentials.Interface.IGameSwitches GameSwitches				{ get; set; }
+		PokemonEssentials.Interface.IGameSelfSwitches GameSelfSwitches		{ get; set; }
+		PokemonEssentials.Interface.IGameVariable GameVariables				{ get; set; }
+		PokemonEssentials.Interface.IGameScreen GameScreen					{ get; set; }
+		PokemonEssentials.Interface.IGamePlayer GamePlayer					{ get; set; }
+		PokemonEssentials.Interface.IGameMap GameMap						{ get; set; }
+		//PokemonEssentials.Interface.IGameMessage GameMessage				{ get; set; }
+		//int SpeechFrame													{ get; }
 	}
 	public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }
-	public interface ITempMetadata : Field.ITempMetadata, ITempMetadataBerryPlants, ITempMetadataDependantEvents, ITempMetadataField, ITempMetadataPokeRadar, ITempMetadataRoaming { }
+	//public interface ITempMetadata : Field.ITempMetadata, ITempMetadataBerryPlants, ITempMetadataDependantEvents, ITempMetadataField, ITempMetadataPokeRadar, ITempMetadataRoaming, ITempMetadataPokemonShadow { }
 
 	public interface ITileset
 	{
@@ -67,7 +79,7 @@ namespace PokemonEssentials.Interface
 		string battleback_name { get; set; }
 		int[] passages { get; set; }
 		int[] priorities { get; set; }
-		int[] terrain_tags { get; set; }
+        PokemonUnity.Overworld.Terrains[] terrain_tags { get; set; }
 	}
 
 	namespace RPGMaker.Kernal

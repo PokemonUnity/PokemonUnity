@@ -1,6 +1,6 @@
 ﻿namespace PokemonUnity.Combat.Data
 {
-	public class DamageState
+	public class DamageState : PokemonEssentials.Interface.PokeBattle.IDamageState
 	{
 		/// <summary>
 		/// HP lost by opponent, inc. HP lost by a substitute
@@ -42,6 +42,11 @@
 		/// A type-resisting berry was used
 		/// </summary>
 		public bool BerryWeakened { get; set; }
+
+		public PokemonEssentials.Interface.PokeBattle.IDamageState initialize()
+		{
+			return this;
+		}
 
 		public void Reset()
 		{

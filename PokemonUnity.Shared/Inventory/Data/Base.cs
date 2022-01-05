@@ -397,7 +397,7 @@ namespace PokemonUnity.Inventory
 		}
 		#endregion
 
-		public string ToString(TextScripts text)
+		private string ToString(TextScripts text)
 		{
 			return Id.ToString(text);
 		}

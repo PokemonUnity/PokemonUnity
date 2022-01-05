@@ -11,6 +11,7 @@ using PokemonUnity.Saving;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Utility;
 using PokemonUnity.Monster;
+using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface
 {
@@ -102,9 +103,9 @@ namespace PokemonEssentials.Interface
 		// ===============================================================================
 		// Evolution methods
 		// ===============================================================================
-		Pokemons pbMiniCheckEvolution(Pokemon pokemon, EvolutionMethod evonib, int level, Pokemons poke);
+		Pokemons pbMiniCheckEvolution(IPokemon pokemon, EvolutionMethod evonib, int level, Pokemons poke);
 
-		Pokemons pbMiniCheckEvolutionItem(Pokemon pokemon, EvolutionMethod evonib, Items level, Pokemons poke, Items item);
+		Pokemons pbMiniCheckEvolutionItem(IPokemon pokemon, EvolutionMethod evonib, Items level, Pokemons poke, Items item);
 
 		/// <summary>
 		/// Checks whether a Pokemon can evolve now. If a block is given, calls the block
@@ -112,7 +113,7 @@ namespace PokemonEssentials.Interface
 		/// Pokemon to check; evolution type; level or other parameter; ID of the new Pokemon species
 		/// </summary>
 		/// <param name="pokemon"></param>
-		Pokemons pbCheckEvolutionEx(Pokemon pokemon);
+		Pokemons pbCheckEvolutionEx(IPokemon pokemon);
 
 		/// <summary>
 		/// Checks whether a Pokemon can evolve now. If an item is used on the Pokémon,
@@ -120,7 +121,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <param name="item"></param>
-		Pokemons[] pbCheckEvolution(Pokemon pokemon, Items item = 0);
+		Pokemons[] pbCheckEvolution(IPokemon pokemon, Items item = 0);
 
 		// ===============================================================================
 		// Evolution animation

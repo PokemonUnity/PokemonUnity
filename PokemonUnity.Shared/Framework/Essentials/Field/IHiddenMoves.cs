@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Overworld;
-using PokemonUnity.UX;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface
 {
-
 	namespace EventArg
 	{
 		#region Hidden Moves EventArgs
@@ -19,19 +17,19 @@ namespace PokemonEssentials.Interface
 		/// e[0] = Move being created
 		/// e[1] = Pokemon using the move
 		/// </summary>
-		public class HiddenMoveEventArgs : EventArgs
+		public interface IHiddenMoveEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(HiddenMoveEventArgs).GetHashCode();
+			//readonly int EventId = typeof(HiddenMoveEventArgs).GetHashCode();
 
-			public int Id { get; }
+			//int Id { get; }
 			/// <summary>
 			/// Move being created
 			/// </summary>
-			public Moves Move { get; set; }
+			Moves Move { get; set; }
 			/// <summary>
 			/// Pokemon using the move
 			/// </summary>
-			public IPokemon Pokemon { get; set; }
+			IPokemon Pokemon { get; set; }
 		}
 		#endregion
 	}
@@ -39,9 +37,6 @@ namespace PokemonEssentials.Interface
 	namespace Field
 	{
 		#region Interpolators
-		// ===============================================================================
-		// Interpolators
-		// ===============================================================================
 		public interface IRectInterpolator
 		{
 			IRectInterpolator initialize(IRect oldrect, IRect newrect, int frames);
@@ -71,9 +66,6 @@ namespace PokemonEssentials.Interface
 		#endregion
 
 		#region Hidden move handlers
-		// ===============================================================================
-		// Hidden move handlers
-		// ===============================================================================
 		//public interface IMoveHandlerHash : IHandlerHash {
 		//    void initialize();
 		//}
@@ -83,8 +75,10 @@ namespace PokemonEssentials.Interface
 			IDictionary<Moves, Func<Moves, IPokemon, bool>> CanUseMove { get; }
 			IDictionary<Moves, Func<Moves, IPokemon, bool>> UseMove { get; }
 
-			event EventHandler<HiddenMoveEventArgs> OnCanUseMove;
-			event EventHandler<HiddenMoveEventArgs> OnUseMove;
+			//event EventHandler<IHiddenMoveEventArgs> OnCanUseMove;
+			event Action<object,IHiddenMoveEventArgs> OnCanUseMove;
+			//event EventHandler<IHiddenMoveEventArgs> OnUseMove;
+			event Action<object,IHiddenMoveEventArgs> OnUseMove;
 
 			void addCanUseMove(Moves item, Func<Moves, IPokemon, bool> proc);
 
@@ -105,9 +99,6 @@ namespace PokemonEssentials.Interface
 			void pbHiddenMoveEvent();
 
 			#region Hidden move animation
-			// ===============================================================================
-			// Hidden move animation
-			// ===============================================================================
 			void pbHiddenMoveAnimation(IPokemon pokemon);
 			#endregion
 

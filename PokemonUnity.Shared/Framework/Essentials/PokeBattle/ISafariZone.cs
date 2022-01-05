@@ -6,6 +6,7 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
@@ -42,11 +43,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 	public interface ISafariZone : IBattleCommon
 	{
-		int environment { get; set; }
-		int party1 { get; set; }
-		int party2 { get; set; }
-		int player { get; set; }
-		int battlescene { get; set; }
+        PokemonUnity.Overworld.Environments environment { get; set; }
+		IPokemon[] party1 { get; }
+		IPokemon[] party2 { get; }
+		ITrainer[] player { get; }
+		bool battlescene { get; set; }
 
 		ISafariZone initialize(IPokeBattle_Scene scene, ITrainer player, IPokemon[] party2);
 
@@ -55,10 +56,10 @@ namespace PokemonEssentials.Interface.PokeBattle
 		bool pbIsDoubleBattler(int index);
 
 		IBattler[] battlers { get; }
-		ITrainer opponent { get; }
+		ITrainer[] opponent { get; }
 		bool doublebattle { get; }
 
-		int ballcount { get; set; }
+		int ballCount { get; set; }
 
 		ITrainer pbPlayer();
 
@@ -66,7 +67,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		int pbEscapeRate(int rareness);
 
-		void pbStartBattle();
+		BattleResults pbStartBattle();
 
 		// ############
 		void pbDebugUpdate();
@@ -79,7 +80,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		bool pbDisplayConfirm(string msg);
 
-		int pbAIRandom(int x);
+		//int pbAIRandom(int x);
 
 		int pbRandom(int x);
 

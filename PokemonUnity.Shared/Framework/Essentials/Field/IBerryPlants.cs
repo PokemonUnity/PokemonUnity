@@ -10,20 +10,21 @@ using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Field
 {
-    /// <summary>
-    /// Used to track individual entity status for berry plants. 
-    /// This is what gets saved and loaded to game memory
-    /// </summary>
-    public interface IBerryMetadata 
-    {
-        // Hours/stage, drying/hour, min yield, max yield
-    }
-    public interface ITempMetadataBerryPlants {
-        int berryPlantData				{ get; }
+	/// <summary>
+	/// Used to track individual entity status for berry plants. 
+	/// This is what gets saved and loaded to game memory
+	/// </summary>
+	//ToDo: Berry Field Data (0x18 per tree, 36 trees)
+	public interface IBerryMetadata 
+	{
+		// Hours/stage, drying/hour, min yield, max yield
+	}
+	public interface ITempMetadataBerryPlants {
+		int berryPlantData				{ get; }
 
-        //int[] pbGetBerryPlantData(Items item);
-        BerryData pbGetBerryPlantData(Items item);
-    }
+		//int[] pbGetBerryPlantData(Items item);
+		BerryData pbGetBerryPlantData(Items item);
+	}
 
 //Events.onSpritesetCreate+=delegate(object sender, EventArgs e) {
 //   spriteset=e[0];
@@ -37,42 +38,42 @@ namespace PokemonEssentials.Interface.Field
 //   }
 //}
 
-    public interface IBerryPlantMoistureSprite : IDisposable {
-        IBerryPlantMoistureSprite initialize(IGameCharacter @event,IGameMap map,IViewport viewport=null);
+	public interface IBerryPlantMoistureSprite : IDisposable {
+		IBerryPlantMoistureSprite initialize(IGameCharacter @event,IGameMap map,IViewport viewport=null);
 
-        bool disposed();
+		bool disposed();
 
-        void dispose();
+		void dispose();
 
-        void updateGraphic();
+		void updateGraphic();
 
-        void update();
-    }
+		void update();
+	}
 
-    public interface IBerryPlantSprite : IDisposable {
-        //REPLANTS = 9;
+	public interface IBerryPlantSprite : IDisposable {
+		//REPLANTS = 9;
 
-        IBerryPlantSprite initialize(IGameCharacter @event, IGameMap map,IViewport viewport);
+		IBerryPlantSprite initialize(IGameCharacter @event, IGameMap map,IViewport viewport);
 
-        void dispose();
+		void dispose();
 
-        bool disposed();
+		bool disposed();
 
-        /// <summary>
-        /// Constantly updates, used only to immediately
-        /// change sprite when planting/picking berries
-        /// </summary>
-        IEnumerator update();
+		/// <summary>
+		/// Constantly updates, used only to immediately
+		/// change sprite when planting/picking berries
+		/// </summary>
+		IEnumerator update();
 
-        BerryData updatePlantDetails(BerryData berryData);
+		BerryData updatePlantDetails(BerryData berryData);
 
-        void setGraphic(BerryData berryData, bool fullcheck = false);    
-    }
+		void setGraphic(BerryData berryData, bool fullcheck = false);    
+	}
 
-    public interface IGameBerryPlants
+	public interface IGameBerryPlants
 	{
-        void pbBerryPlant();
+		void pbBerryPlant();
 
-        void pbPickBerry(Items berry, int qty = 1);
+		void pbPickBerry(Items berry, int qty = 1);
 	}
 }

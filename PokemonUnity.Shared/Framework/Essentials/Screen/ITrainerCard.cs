@@ -30,8 +30,8 @@ namespace PokemonEssentials.Interface.Screen
 		void pbEndScene();
 	}
 
-	public interface ITrainerCard : IScreen {
-		ITrainerCard initialize(ITrainerCardScene scene);
+	public interface ITrainerCardScreen : IScreen {
+		ITrainerCardScreen initialize(ITrainerCardScene scene);
 
 		void pbStartScreen();
 	}

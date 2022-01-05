@@ -17,62 +17,62 @@ namespace PokemonEssentials.Interface
 	namespace EventArg
 	{
 		#region Item Handlers EventArgs
-		public class UseFromBagEventArgs : EventArgs
+		public interface IUseFromBagEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(UseFromBagEventArgs).GetHashCode();
+			//readonly int EventId = typeof(UseFromBagEventArgs).GetHashCode();
 
-			public int Id { get; }
-			public Items Item { get; set; }
-			public ItemUseResults Response { get; set; }
+			//int Id { get { return EventId; } }
+			Items Item { get; set; }
+			ItemUseResults Response { get; set; }
 		}
-		public class UseInFieldEventArgs : EventArgs
+		public interface IUseInFieldEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(UseInFieldEventArgs).GetHashCode();
+			//readonly int EventId = typeof(UseInFieldEventArgs).GetHashCode();
 
-			public int Id { get; }
-			public Items Item { get; set; }
-			//public Action Action { get; set; }
-			public bool Response { get; set; }
+			//int Id { get { return EventId; } }
+			Items Item { get; set; }
+			//Action Action { get; set; }
+			bool Response { get; set; }
 		}
-		public class UseOnPokemonEventArgs : EventArgs
+		public interface IUseOnPokemonEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(UseOnPokemonEventArgs).GetHashCode();
+			//readonly int EventId = typeof(UseOnPokemonEventArgs).GetHashCode();
 
-			public int Id { get; }
-			public Items Item { get; set; }
-			public IPokemon Pokemon { get; set; }
-			public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
-			public bool Response { get; set; }
+			//int Id { get { return EventId; } }
+			Items Item { get; set; }
+			IPokemon Pokemon { get; set; }
+			PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			bool Response { get; set; }
 		}
-		public class BattleUseOnPokemonEventArgs : EventArgs
+		public interface IBattleUseOnPokemonEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(BattleUseOnPokemonEventArgs).GetHashCode();
+			//readonly int EventId = typeof(BattleUseOnPokemonEventArgs).GetHashCode();
 
-			public int Id { get; }
-			public Items Item { get; set; }
-			public IPokemon Pokemon { get; set; }
-			public IBattler Battler { get; set; }
-			public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
-			public bool Response { get; set; }
+			//int Id { get { return EventId; } }
+			Items Item { get; set; }
+			IPokemon Pokemon { get; set; }
+			IBattler Battler { get; set; }
+			PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			bool Response { get; set; }
 		}
-		public class BattleUseOnBattlerEventArgs : EventArgs
+		public interface IBattleUseOnBattlerEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(BattleUseOnBattlerEventArgs).GetHashCode();
+			//readonly int EventId = typeof(BattleUseOnBattlerEventArgs).GetHashCode();
 
-			public int Id { get; }
-			public Items Item { get; set; }
-			public IBattler Battler { get; set; }
-			public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
-			public bool Response { get; set; }
+			//int Id { get { return EventId; } }
+			Items Item { get; set; }
+			IBattler Battler { get; set; }
+			PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			bool Response { get; set; }
 		}
-		public class UseInBattleEventArgs : EventArgs
+		public interface IUseInBattleEventArgs : IEventArgs
 		{
-			public readonly int EventId = typeof(UseInBattleEventArgs).GetHashCode();
+			//readonly int EventId = typeof(UseInBattleEventArgs).GetHashCode();
 
-			public int Id { get; }
-			public Items Item { get; set; }
-			public IBattler Battler { get; set; }
-			public IBattle Battle { get; set; }
+			//int Id { get { return EventId; } }
+			Items Item { get; set; }
+			IBattler Battler { get; set; }
+			IBattle Battle { get; set; }
 		}
 		#endregion
 
@@ -92,12 +92,18 @@ namespace PokemonEssentials.Interface
 			//IDictionary<Items, BattleUseOnPokemonDelegate> BattleUseOnPokemon { get; }
 			//IDictionary<Items, UseInBattleDelegate> UseInBattle { get; }
 			
-			event EventHandler<UseFromBagEventArgs> OnUseFromBag;
-			event EventHandler<UseInFieldEventArgs> OnUseInField;
-			event EventHandler<UseOnPokemonEventArgs> OnUseOnPokemon;
-			event EventHandler<BattleUseOnBattlerEventArgs> OnBattleUseOnBattler;
-			event EventHandler<BattleUseOnPokemonEventArgs> OnBattleUseOnPokemon;
-			event EventHandler<UseInBattleEventArgs> OnUseInBattle;
+			//event EventHandler<IUseFromBagEventArgs> OnUseFromBag;
+			event Action<object,IUseFromBagEventArgs> OnUseFromBag;
+			//event EventHandler<IUseInFieldEventArgs> OnUseInField;
+			event Action<object,IUseInFieldEventArgs> OnUseInField;
+			//event EventHandler<IUseOnPokemonEventArgs> OnUseOnPokemon;
+			event Action<object,IUseOnPokemonEventArgs> OnUseOnPokemon;
+			//event EventHandler<IBattleUseOnBattlerEventArgs> OnBattleUseOnBattler;
+			event Action<object,IBattleUseOnBattlerEventArgs> OnBattleUseOnBattler;
+			//event EventHandler<IBattleUseOnPokemonEventArgs> OnBattleUseOnPokemon;
+			event Action<object,IBattleUseOnPokemonEventArgs> OnBattleUseOnPokemon;
+			//event EventHandler<IUseInBattleEventArgs> OnUseInBattle;
+			event Action<object,IUseInBattleEventArgs> OnUseInBattle;
 
 			void addUseFromBag(Items item, Func<ItemUseResults> proc);
 
@@ -270,7 +276,7 @@ namespace PokemonEssentials.Interface
 
 			// Only called when in the party screen and having chosen an item to be used on
 			// the selected Pokémon
-			bool pbUseItemOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IScene scene);
+			bool pbUseItemOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IPartyDisplayScreen scene);
 
 			int pbUseItem(IBag bag, Items item, PokemonEssentials.Interface.Screen.IScene bagscene = null);
 
