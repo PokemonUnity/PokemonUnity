@@ -47,7 +47,7 @@ namespace PokemonEssentials.Interface.Field
 
 		void clearStepCount();
 
-		bool hasEncounter(EncounterTypes enc);
+		bool hasEncounter(Method enc);
 
 		bool isCave();
 
@@ -57,23 +57,23 @@ namespace PokemonEssentials.Interface.Field
 
 		bool isWater();
 
-		EncounterTypes? pbEncounterType();
+		Method? pbEncounterType();
 
 		bool isEncounterPossibleHere();
 
 		void setup(int mapID);
 
-		bool pbMapHasEncounter(int mapID, EncounterTypes enctype);
+		bool pbMapHasEncounter(int mapID, Method enctype);
 
-		IEncounter pbMapEncounter(int mapID, EncounterTypes enctype);
+		IEncounter pbMapEncounter(int mapID, Method enctype);
 		//IPokemon pbMapEncounter(int mapID, EncounterTypes enctype);
 
-		IEncounter pbEncounteredPokemon(EncounterTypes enctype, int tries = 1);
+		IEncounter pbEncounteredPokemon(Method enctype, int tries = 1);
 		//IPokemon pbEncounteredPokemon(EncounterTypes enctype, int tries = 1);
 
 		bool pbCanEncounter(IEncounter encounter);
 
-		IEncounter pbGenerateEncounter(EncounterTypes enctype);
+		IEncounter pbGenerateEncounter(Method enctype);
 		//IPokemon pbGenerateEncounter(EncounterTypes enctype);
 
 		#region Encounter Modifiers

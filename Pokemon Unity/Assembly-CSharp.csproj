@@ -72,6 +72,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\GameMain\Scripts\Definition\Enum\MapTiles.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Enum\TileShapes.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleAudio.cs" />
     <Compile Include="Assets\Modules\DOTweenModulePhysics.cs" />
     <Compile Include="Assets\Modules\DOTweenModulePhysics2D.cs" />

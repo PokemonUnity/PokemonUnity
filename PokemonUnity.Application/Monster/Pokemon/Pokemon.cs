@@ -799,46 +799,6 @@ namespace PokemonUnity.Monster
 		public void SetLevel (byte level) { Level = level; }
 
 		/// <summary>
-		/// Gives the Pokémon experience points and levels it up.
-		/// </summary>
-		/// <param name="Exp">The amount of EXP.</param>
-		/// <param name="LearnRandomAttack">If the Pokémon should learn an attack if it could learn one at level up.</param>
-		//public void AddExperience(int exp, bool LearnRandomAttack)
-		//{
-		//	//this.Experience += exp;
-		//	this.Experience.AddExperience(exp);
-		//	//while (this.Exp.Current >= this.Exp.NeedExperience(this.Level + 1))
-		//	//while (this.Exp.Current >= this.Exp.NextLevel)
-		//	//while (Level > TempLevel)
-		//	//	this.LevelUp(LearnRandomAttack); //ToDo: Trigger EventHandler here
-		//	//this.TempLevel = TempLevel < 1 ? 1 : (TempLevel > Core.MAXIMUMLEVEL ? Core.MAXIMUMLEVEL : TempLevel);
-		//	//this.TempLevel = Level.Clamp(1, Core.MAXIMUMLEVEL);
-		//}
-
-		/// <summary>
-		/// Rasies the Pokémon's level by one.
-		/// </summary>
-		/// <param name="LearnRandomAttack">If one attack of the Pokémon should be replaced by an attack potentially learned on the new level.</param>
-		//public void LevelUp(bool LearnRandomAttack)
-		//{
-		//	this.TempLevel += 1;
-		//	int currentMaxHP = this.TotalHP;
-		//	bool success;
-		//	//this.CalculateStats();
-		//
-		//	// Heals the Pokémon by the HP difference.
-		//	int HPDifference = this.TotalHP - currentMaxHP;
-		//	if (HPDifference > 0)
-		//		//this.Heal(HPDifference);
-		//		HP += HPDifference;
-		//
-		//	if (LearnRandomAttack)
-		//		//this.LearnAttack(this.Level);
-		//		LearnMove(GetMove(TempLevel), out success);
-		//	ChangeHappiness(HappinessMethods.LEVELUP);
-		//}
-
-		/// <summary>
 		/// Returns whether this Pokemon is an egg.
 		/// </summary>
 		public bool isEgg
@@ -861,13 +821,13 @@ namespace PokemonUnity.Monster
 		/// Returns this Pokemon's base Experience value.
 		/// </summary>
 		/// When this pokemon is defeated, this is the amount of experience points it offers
-		//public int baseExp
-		//{
-		//    get
-		//    {
-		//        return _base.BaseExpYield; //Check Pokemon.Form too...
-		//    }
-		//}
+		public int baseExp
+		{
+		    get
+		    {
+		        return _base.BaseExpYield; //ToDo: Check Pokemon.Form too...
+		    }
+		}
 
 		/// <summary>
 		/// Use this with an event handler, that adds a step on event trigger
@@ -1172,24 +1132,12 @@ namespace PokemonUnity.Monster
 		/// Should consider gender as byte? bool takes up same amount of space
 		/// </remarks>
 		/// isMale; null = genderless?
-		public virtual bool? Gender { get; private set; }
-
+		public virtual bool? Gender { get { return gender; } }
 		/// <summary>
 		/// Helper function that determines whether the input values would make a female. 
 		/// </summary>
 		/// isMale/isFemale/isGenderless
-		private bool? gender //(float genderRate = this._base.MaleRatio)
-		{
-			get
-			{
-				//if (genderRate == 100f) return true; 
-				if (_base.GenderEnum == GenderRatio.AlwaysMale) return true;
-				//if (genderRate == 100f) return false; //Always female
-				if (_base.GenderEnum == GenderRatio.AlwaysFemale) return false;
-				if (_base.GenderEnum == GenderRatio.Genderless) return null; //genderless
-				return getGender();
-			}
-		}
+		private bool? gender { get; set; }
 
 		private bool? getGender()
 		{
@@ -2997,8 +2945,6 @@ namespace PokemonUnity.Monster
 		int IPokemon.publicID { get; }
 		DateTime? IPokemon.timeReceived { get; set; }
 		DateTime? IPokemon.timeEggHatched { get; set; }
-		bool IPokemon.egg { get; }
-		int IPokemon.baseExp { get; }
 		bool IPokemon.isSingleGendered { get; }
 		char IPokemon.unownShape { get; }
 		float IPokemon.height { get; }

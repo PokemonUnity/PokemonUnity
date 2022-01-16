@@ -264,8 +264,6 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		bool isEgg { get; }
 
-		bool egg { get; }
-
 		/// <summary>
 		/// Returns this Pokemon's growth rate.
 		/// </summary>

@@ -150,12 +150,10 @@ namespace PokemonUnity
 				}
 				else if (ball == Items.LURE_BALL) {
 					if (Game.GameData.PokemonTemp is PokemonEssentials.Interface.Field.ITempMetadataField f && (
-						f.encounterType==EncounterTypes.OldRod ||
-						f.encounterType==EncounterTypes.GoodRod ||
-						f.encounterType==EncounterTypes.SuperRod)) catchRate*=3;
-					//if (Game.GameData.PokemonTemp.encounterType==Overworld.Method.OLD_ROD || //EncounterTypes.OldRod
-					//	Game.GameData.PokemonTemp.encounterType==Overworld.Method.GOOD_ROD || //EncounterTypes.GoodRod
-					//	Game.GameData.PokemonTemp.encounterType==Overworld.Method.SUPER_ROD) catchRate*=3; //EncounterTypes.SuperRod
+						f.encounterType==Method.OLD_ROD ||
+						f.encounterType==Method.GOOD_ROD ||
+						f.encounterType==Method.SUPER_ROD ||
+						f.encounterType==Method.SUPER_ROD_SPOTS)) catchRate*=3;
 					return (int)Math.Min(catchRate,255);
 				}
 				else if (ball == Items.HEAVY_BALL) {

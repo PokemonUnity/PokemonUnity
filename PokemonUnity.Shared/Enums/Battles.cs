@@ -45,7 +45,7 @@ namespace PokemonUnity.Combat
 		Run = 5
 	}
 
-	public enum BattleResults
+	public enum BattleResults : int
 	{
 		InProgress = -1,
 		/// <summary>

@@ -277,7 +277,7 @@ namespace PokemonUnity
             throw new NotImplementedException();
         }
 
-        public object pbRgssOpen(string file, int? mode = null, Action action = null)
+        public IDisposable pbRgssOpen(string file, int? mode = null, Action action = null)
         {
             throw new NotImplementedException();
         }

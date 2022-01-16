@@ -21,24 +21,24 @@ namespace PokemonUnity.UX
 		UP    = 8,
 		//A     = 11,
 		//B     = 12,
-		//C     = 13,
-		//X     = 14,
+		//C     = 13, //Use
+		//X     = 14, //Back
 		//Y     = 15,
-		//Z     = 16,
+		//Z     = 16, //Action
 		//L     = 17,
 		//R     = 18,
-		//SHIFT = 21,
+		//SHIFT = 21, //Action
 		//CTRL  = 22,
 		//ALT   = 23,
 		//F5    = 25,
 		//F6    = 26,
 		//F7    = 27,
-		//F8    = 28,
-		//F9    = 29,
 		LeftMouseKey  = -1,
 		RightMouseKey = -2,
 		ACTION	= 11,
 		CANCEL	= 12,
 		DEBUG	= 0
+		//F8    = 28, //Screenshot
+		//F9    = 29, //DebugMenu
 	}
 }

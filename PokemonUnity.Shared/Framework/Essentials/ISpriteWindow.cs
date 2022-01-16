@@ -238,9 +238,15 @@ namespace PokemonEssentials.Interface
 		// audio file). Doesn't check RTP, but does check encrypted archives.
 		bool pbRgssExists(string filename);
 
-		// Opens an IO, even if the file is in an encrypted archive.
-		// Doesn't check RTP for the file.
-		object pbRgssOpen(string file, int? mode = null, Action action = null);
+		/// <summary>
+		/// Opens an IO, even if the file is in an encrypted archive.
+		/// Doesn't check RTP for the file.
+		/// </summary>
+		/// <param name="file">path to file</param>
+		/// <param name="mode"></param>
+		/// <param name="action">logic to perform on file</param>
+		/// <returns></returns>
+		IDisposable pbRgssOpen(string file, int? mode = null, Action action = null);
 
 		// Gets at least the first byte of a file. Doesn't check RTP, but does check
 		// encrypted archives.

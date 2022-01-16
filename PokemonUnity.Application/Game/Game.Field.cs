@@ -26,7 +26,7 @@ namespace PokemonUnity
 
 	public partial class PokemonTemp : ITempMetadataField
 	{
-		public EncounterTypes? encounterType	{ get; set; } 
+		public Method? encounterType	{ get; set; } 
 		public int evolutionLevels			    { get; set; }
 
 
@@ -753,7 +753,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public bool pbEncounter(EncounterTypes enctype) {
+		public bool pbEncounter(Method enctype) {
 			if (Global.partner != null) {
 				IEncounter encounter1=PokemonEncounters.pbEncounteredPokemon(enctype);
 				if (!encounter1.IsNotNullOrNone()) return false;
@@ -983,7 +983,7 @@ namespace PokemonUnity
 
 		public void pbBattleOnStepTaken() {
 			if (Trainer.party.Length>0) {
-				EncounterTypes? encounterType=PokemonEncounters.pbEncounterType();
+				Method? encounterType=PokemonEncounters.pbEncounterType();
 				if (encounterType>=0) {
 					if (PokemonEncounters.isEncounterPossibleHere()) {
 						IEncounter encounter=PokemonEncounters.pbGenerateEncounter(encounterType.Value);
@@ -1700,7 +1700,7 @@ namespace PokemonUnity
 						Input.update();
 						textwindow.update();
 						msgwindow.update();
-					} while(i < (Graphics.frame_rate*wave.time())); //Graphics.frame_rate
+					} while(i < (Graphics.frame_rate*wave.time()));
 				}
 			}
 			if (this is IGameAudio a3) a3.Audio_bgm_set_volume(oldvolume);

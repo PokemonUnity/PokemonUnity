@@ -61,6 +61,21 @@ namespace PokemonEssentials.Interface.Field
 		//EncounterModifier.registerEncounterEnd(proc {});
 		//EncounterModifier.registerEncounterEnd(Action);
 
+		/// <summary>
+		/// </summary>
+		/// <param name="enctype">
+		/// None		= 0,
+		/// Any encounter method (except triggered ones and Bug Contest);
+		/// Walking		= 1,
+		/// Grass (except Bug Contest)/walking in caves only;
+		/// Surfing		= 2,
+		/// Surfing only;
+		/// Fishing		= 3,
+		/// Fishing only;
+		/// AnyWater	= 4
+		/// Water-based only
+		/// </param>
+		/// <returns></returns>
 		bool pbRoamingMethodAllowed(EncounterRestrictions enctype);
 	}
 }

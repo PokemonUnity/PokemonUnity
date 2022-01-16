@@ -13,7 +13,6 @@ using PokemonEssentials.Interface.Screen;
 
 namespace PokemonUnity
 {
-	[ExecuteInEditMode]
 	public class TypingForm : UGuiForm, IPokemonEntryScene, IPokemonEntryScene2
 	{
 		public int Id;

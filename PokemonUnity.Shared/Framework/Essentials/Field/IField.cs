@@ -103,7 +103,7 @@ namespace PokemonEssentials.Interface
 			/// <param name="pokemon"></param>
 			void pbPickup(IPokemon pokemon);
 
-			bool pbEncounter(EncounterTypes enctype);
+			bool pbEncounter(Method enctype);
 
 			//Events.onStartBattle+=delegate(object sender, EventArgs e) {
 			//  Game.GameData.PokemonTemp.evolutionLevels=[];
@@ -289,7 +289,7 @@ namespace PokemonEssentials.Interface
 		public interface ITempMetadataField
 		{
 			#region 
-			EncounterTypes? encounterType	{ get; set; }
+			Method? encounterType	{ get; set; }
 			int evolutionLevels				{ get; set; }
 			#endregion
 

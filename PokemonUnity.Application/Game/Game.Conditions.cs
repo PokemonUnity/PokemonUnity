@@ -11,6 +11,7 @@ using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving;
 using PokemonUnity.Overworld;
+using PokemonEssentials.Interface;
 
 namespace PokemonUnity
 {
@@ -24,7 +25,8 @@ namespace PokemonUnity
 		public static bool IsAurora { get; private set; }
 		//public static Environments Environment { get; set; }
 		public static Overworld.FieldWeathers Weather { get; set; }
-		public static Season Season
+		public static Season Season { get; private set; }
+		public static Season CurrentSeason
 		{
 			get
 			//{
@@ -398,346 +400,351 @@ namespace PokemonUnity
 			return FieldWeathers.Clear;
 		}
 
-#region Day and night system
-public static DateTime pbGetTimeNow() {
-  return DateTime.Now;
-}
+		#region Day and night system
+		public static DateTime pbGetTimeNow() {
+			return DateTime.Now;
+		}
 
-public static partial class PBDayNight {
-  public static float oneOverSixty=1/60.0f;
-  //public static Tone HourlyTones=new Tone[] {
-  //   new Tone(-142.5,-142.5,-22.5,68),     // Midnight
-  //   new Tone(-135.5,-135.5,-24,  68),
-  //   new Tone(-127.5,-127.5,-25.5,68),
-  //   new Tone(-127.5,-127.5,-25.5,68),
-  //   new Tone(-119,  -96.3, -45.3,45.3),
-  //   new Tone(-51,   -73.7, -73.7,22.7),
-  //   new Tone(17,    -51,   -102, 0),      // 6AM
-  //   new Tone(14.2,  -42.5, -85,  0),
-  //   new Tone(11.3,  -34,   -68,  0),
-  //   new Tone(8.5,   -25.5, -51,  0),
-  //   new Tone(5.7,   -17,   -34,  0),
-  //   new Tone(2.8,   -8.5,  -17,  0),
-  //   new Tone(0,     0,     0,    0),      // Noon
-  //   new Tone(0,     0,     0,    0),
-  //   new Tone(0,     0,     0,    0),
-  //   new Tone(0,     0,     0,    0),
-  //   new Tone(-3,    -7,    -2,   0),
-  //   new Tone(-10,   -18,   -5,   0),
-  //   new Tone(-36,   -75,   -13,  0),      // 6PM
-  //   new Tone(-72,   -136,  -34,  3),
-  //   new Tone(-88.5, -133,  -31,  34),
-  //   new Tone(-108.5,-129,  -28,  68),
-  //   new Tone(-127.5,-127.5,-25.5,68),
-  //   new Tone(-142.5,-142.5,-22.5,68)
-  //};
-  //@cachedTone=null;
-  //@dayNightToneLastUpdate=null;
-  //@oneOverSixty=1/60.0f;
+		public static partial class PBDayNight {
+			public static float oneOverSixty=1/60.0f;
+			public static ITone[] HourlyTones=new ITone[] {
+				//new Tone(-142.5,-142.5,-22.5,68),     // Midnight
+				//new Tone(-135.5,-135.5,-24,  68),
+				//new Tone(-127.5,-127.5,-25.5,68),
+				//new Tone(-127.5,-127.5,-25.5,68),
+				//new Tone(-119,  -96.3, -45.3,45.3),
+				//new Tone(-51,   -73.7, -73.7,22.7),
+				//new Tone(17,    -51,   -102, 0),      // 6AM
+				//new Tone(14.2,  -42.5, -85,  0),
+				//new Tone(11.3,  -34,   -68,  0),
+				//new Tone(8.5,   -25.5, -51,  0),
+				//new Tone(5.7,   -17,   -34,  0),
+				//new Tone(2.8,   -8.5,  -17,  0),
+				//new Tone(0,     0,     0,    0),      // Noon
+				//new Tone(0,     0,     0,    0),
+				//new Tone(0,     0,     0,    0),
+				//new Tone(0,     0,     0,    0),
+				//new Tone(-3,    -7,    -2,   0),
+				//new Tone(-10,   -18,   -5,   0),
+				//new Tone(-36,   -75,   -13,  0),      // 6PM
+				//new Tone(-72,   -136,  -34,  3),
+				//new Tone(-88.5, -133,  -31,  34),
+				//new Tone(-108.5,-129,  -28,  68),
+				//new Tone(-127.5,-127.5,-25.5,68),
+				//new Tone(-142.5,-142.5,-22.5,68)
+			};
+			private static ITone cachedTone=null;
+			private static int? @dayNightToneLastUpdate=null;
+			//private static float @oneOverSixty=1/60.0f;
 
-/// <summary>
-/// Returns true if it's day.
-/// </summary>
-/// <param name="time"></param>
-/// <returns></returns>
-  public static bool isDay(DateTime? @time=null) {
-    if (@time == null) @time=pbGetTimeNow();
-    return (@time.Value.Hour>=6 && @time.Value.Hour<20);
-  }
+			/// <summary>
+			/// Returns true if it's day.
+			/// </summary>
+			/// <param name="time"></param>
+			/// <returns></returns>
+			public static bool isDay(DateTime? @time=null) {
+				if (@time == null) @time=pbGetTimeNow();
+				return (@time.Value.Hour>=6 && @time.Value.Hour<20);
+			}
 
-/// <summary>
-/// Returns true if it's night.
-/// </summary>
-/// <param name="time"></param>
-/// <returns></returns>
-  public static bool isNight(DateTime? @time=null) {
-    if (@time == null) @time=pbGetTimeNow();
-    return (@time.Value.Hour>=20 || @time.Value.Hour<6);
-  }
+			/// <summary>
+			/// Returns true if it's night.
+			/// </summary>
+			/// <param name="time"></param>
+			/// <returns></returns>
+			public static bool isNight(DateTime? @time=null) {
+				if (@time == null) @time=pbGetTimeNow();
+				return (@time.Value.Hour>=20 || @time.Value.Hour<6);
+			}
 
-/// <summary>
-/// Returns true if it's morning.
-/// </summary>
-/// <param name="time"></param>
-/// <returns></returns>
-  public static bool isMorning(DateTime? @time=null) {
-    if (@time == null) @time=pbGetTimeNow();
-    return (@time.Value.Hour>=6 && @time.Value.Hour<12);
-  }
+			/// <summary>
+			/// Returns true if it's morning.
+			/// </summary>
+			/// <param name="time"></param>
+			/// <returns></returns>
+			public static bool isMorning(DateTime? @time=null) {
+				if (@time == null) @time=pbGetTimeNow();
+				return (@time.Value.Hour>=6 && @time.Value.Hour<12);
+			}
 
-/// <summary>
-/// Returns true if it's the afternoon.
-/// </summary>
-/// <param name="time"></param>
-/// <returns></returns>
-  public static bool isAfternoon(DateTime? @time=null) {
-    if (@time == null) @time=pbGetTimeNow();
-    return (@time.Value.Hour>=12 && @time.Value.Hour<20);
-  }
+			/// <summary>
+			/// Returns true if it's the afternoon.
+			/// </summary>
+			/// <param name="time"></param>
+			/// <returns></returns>
+			public static bool isAfternoon(DateTime? @time=null) {
+				if (@time == null) @time=pbGetTimeNow();
+				return (@time.Value.Hour>=12 && @time.Value.Hour<20);
+			}
 
-/// <summary>
-/// Returns true if it's the evening.
-/// </summary>
-/// <param name="time"></param>
-/// <returns></returns>
-  public static bool isEvening(DateTime? @time=null) {
-    if (@time == null) @time=pbGetTimeNow();
-    return (@time.Value.Hour>=17 && @time.Value.Hour<20);
-  }
+			/// <summary>
+			/// Returns true if it's the evening.
+			/// </summary>
+			/// <param name="time"></param>
+			/// <returns></returns>
+			public static bool isEvening(DateTime? @time=null) {
+				if (@time == null) @time=pbGetTimeNow();
+				return (@time.Value.Hour>=17 && @time.Value.Hour<20);
+			}
 
-  public static int pbGetDayNightMinutes() {
-    DateTime now=pbGetTimeNow();   // Get the current in-game time
-    return (now.Hour*60)+now.Minute;
-  }
+			public static int pbGetDayNightMinutes() {
+				DateTime now=pbGetTimeNow();   // Get the current in-game time
+				return (now.Hour*60)+now.Minute;
+			}
 
-/// <summary>
-/// Gets a number representing the amount of daylight (0=full night, 255=full day).
-/// </summary>
-/// <returns></returns>
-  public static int getShade() {
-    int @time=pbGetDayNightMinutes();
-    if (@time>(12*60)) @time=(24*60)-@time;
-    int shade=255*@time/(12*60);
-    return shade;
-  }
+			/// <summary>
+			/// Gets a number representing the amount of daylight (0=full night, 255=full day).
+			/// </summary>
+			/// <returns></returns>
+			public static int getShade() {
+				int @time=pbGetDayNightMinutes();
+				if (@time>(12*60)) @time=(24*60)-@time;
+				int shade=255*@time/(12*60);
+				return shade;
+			}
 
-/*// <summary>
-/// Gets a Tone object representing a suggested shading
-/// tone for the current time of day.
-/// </summary>
-  public Tone getTone() {
-    if (!@cachedTone) @cachedTone=new Tone(0,0,0);
-    if (!Core.ENABLESHADING) return @cachedTone;
-    if (!@dayNightToneLastUpdate || @dayNightToneLastUpdate!=Graphics.frame_count) {
-      getToneInternal();
-      @dayNightToneLastUpdate=Graphics.frame_count;
-    }
-    return @cachedTone;
-  }
+			/// <summary>
+			/// Gets a Tone object representing a suggested shading
+			/// tone for the current time of day.
+			/// </summary>
+			//public ITone getTone() {
+			//	if (!@cachedTone) @cachedTone=new Tone(0,0,0);
+			//	if (!Core.ENABLESHADING) return @cachedTone;
+			//	if (@dayNightToneLastUpdate == null || @dayNightToneLastUpdate!=Graphics.frame_count) {
+			//		getToneInternal();
+			//		@dayNightToneLastUpdate=Graphics.frame_count;
+			//	}
+			//	return @cachedTone;
+			//}
 
-  public void getToneInternal() {
-	//Calculates the tone for the current frame, used for day/night effects
-    int realMinutes=pbGetDayNightMinutes();
-    int hour=realMinutes/60;
-    int minute=realMinutes%60;
-    Tone tone=HourlyTones[hour];
-    Tone nexthourtone=HourlyTones[(hour+1)%24];
-	//Calculate current tint according to current and next hour's tint and
-	//depending on current minute
-    @cachedTone.red=((nexthourtone.red-tone.red)*minute*@oneOverSixty)+tone.red;
-    @cachedTone.green=((nexthourtone.green-tone.green)*minute*@oneOverSixty)+tone.green;
-    @cachedTone.blue=((nexthourtone.blue-tone.blue)*minute*@oneOverSixty)+tone.blue;
-    @cachedTone.gray=((nexthourtone.gray-tone.gray)*minute*@oneOverSixty)+tone.gray;
-  }*/
-}
+			public static void getToneInternal() {
+				//Calculates the tone for the current frame, used for day/night effects
+				int realMinutes=pbGetDayNightMinutes();
+				int hour=realMinutes/60;
+				int minute=realMinutes%60;
+				ITone tone=HourlyTones[hour];
+				ITone nexthourtone=HourlyTones[(hour+1)%24];
+				//Calculate current tint according to current and next hour's tint and
+				//depending on current minute
+				@cachedTone.red=((nexthourtone.red-tone.red)*minute*@oneOverSixty)+tone.red;
+				@cachedTone.green=((nexthourtone.green-tone.green)*minute*@oneOverSixty)+tone.green;
+				@cachedTone.blue=((nexthourtone.blue-tone.blue)*minute*@oneOverSixty)+tone.blue;
+				@cachedTone.gray=((nexthourtone.gray-tone.gray)*minute*@oneOverSixty)+tone.gray;
+			}
+		}
 
-//public void pbDayNightTint(object obj) {
-//  if (!(Game.GameData.Scene is Scene_Map)) {
-//    return;
-//  } else {
-//    if (Core.ENABLESHADING && Game.GameData.GameMap != null && pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-//      Tone tone=PBDayNight.getTone();
-//      obj.tone.set(tone.red,tone.green,tone.blue,tone.gray);
-//    } else {
-//      obj.tone.set(0,0,0,0);
-//    }
-//  }
-//}
-#endregion
+		//public void pbDayNightTint(object obj) {
+		//  if (!(Game.GameData.Scene is ISceneMap)) {
+		//    return;
+		//  } else {
+		//    if (Core.ENABLESHADING && Game.GameData.GameMap != null && pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+		//      ITone tone=PBDayNight.getTone();
+		//      obj.tone.set(tone.red,tone.green,tone.blue,tone.gray);
+		//    } else {
+		//      obj.tone.set(0,0,0,0);
+		//    }
+		//  }
+		//}
+		#endregion
 
-#region Moon phases and Zodiac
-// Calculates the phase of the moon.
-// 0 - New Moon
-// 1 - Waxing Crescent
-// 2 - First Quarter
-// 3 - Waxing Gibbous
-// 4 - Full Moon
-// 5 - Waning Gibbous
-// 6 - Last Quarter
-// 7 - Waning Crescent
-public static int moonphase(DateTime? @time=null) { // in UTC
-  if (@time == null) time=pbGetTimeNow();
-  double[] transitions=new double[] {
-     1.8456618033125,
-     5.5369854099375,
-     9.2283090165625,
-     12.9196326231875,
-     16.6109562298125,
-     20.3022798364375,
-     23.9936034430625,
-     27.6849270496875 };
-  int yy=time.Value.Year-(int)Math.Floor((12-time.Value.Month)/10.0);
-  double j=Math.Floor(365.25*(4712+yy)) + Math.Floor(((time.Value.Month+9)%12)*30.6+0.5) + time.Value.Day+59;
-  if (j>2299160) j-=(int)Math.Floor(Math.Floor((yy/100.0)+49)*0.75)-38;
-  j+=(((time.Value.Hour*60)+time.Value.Minute*60)+time.Value.Second)/86400.0;
-  double v=(j-2451550.1)/29.530588853d;
-  v=((v-Math.Floor(v))+(v<0 ? 1 : 0));
-  double ag=v*29.53;
-  for (int i = 0; i < transitions.Length; i++) {
-    if (ag<=transitions[i]) return i;
-  }
-  return 0;
-}
+		#region Moon phases and Zodiac
+		/// <summary>
+		/// Calculates the phase of the moon.
+		/// </summary>
+		/// <param name="time"></param>
+		/// <returns>
+		/// 0 - New Moon
+		/// 1 - Waxing Crescent
+		/// 2 - First Quarter
+		/// 3 - Waxing Gibbous
+		/// 4 - Full Moon
+		/// 5 - Waning Gibbous
+		/// 6 - Last Quarter
+		/// 7 - Waning Crescent
+		/// </returns>
+		public static int moonphase(DateTime? @time=null) { // in UTC
+			if (@time == null) time=pbGetTimeNow();
+			double[] transitions=new double[] {
+				1.8456618033125,
+				5.5369854099375,
+				9.2283090165625,
+				12.9196326231875,
+				16.6109562298125,
+				20.3022798364375,
+				23.9936034430625,
+				27.6849270496875 };
+			int yy=time.Value.Year-(int)Math.Floor((12-time.Value.Month)/10.0);
+			double j=Math.Floor(365.25*(4712+yy)) + Math.Floor(((time.Value.Month+9)%12)*30.6+0.5) + time.Value.Day+59;
+			if (j>2299160) j-=(int)Math.Floor(Math.Floor((yy/100.0)+49)*0.75)-38;
+			j+=(((time.Value.Hour*60)+time.Value.Minute*60)+time.Value.Second)/86400.0;
+			double v=(j-2451550.1)/29.530588853d;
+			v=((v-Math.Floor(v))+(v<0 ? 1 : 0));
+			double ag=v*29.53;
+			for (int i = 0; i < transitions.Length; i++) {
+				if (ag<=transitions[i]) return i;
+			}
+			return 0;
+		}
 
-/// <summary>
-/// Calculates the zodiac sign based on the given month and day:
-/// 0 is Aries, 11 is Pisces. Month is 1 if January, and so on.
-/// </summary>
-/// <param name="month"></param>
-/// <param name="day"></param>
-/// <returns></returns>
-public static int zodiac(int month,int day) {
-  int[] time=new int[] {
-     3,21,4,19,   // Aries
-     4,20,5,20,   // Taurus
-     5,21,6,20,   // Gemini
-     6,21,7,20,   // Cancer
-     7,23,8,22,   // Leo
-     8,23,9,22,   // Virgo 
-     9,23,10,22,  // Libra
-     10,23,11,21, // Scorpio
-     11,22,12,21, // Sagittarius
-     12,22,1,19,  // Capricorn
-     1,20,2,18,   // Aquarius
-     2,19,3,20    // Pisces
-  };
-  for (int i = 0; i < 12; i++) {
-    if (month==time[i*4] && day>=time[i*4+1]) return i;
-    if (month==time[i*4+2] && day<=time[i*4+2]) return i;
-  }
-  return 0;
-}
+		/// <summary>
+		/// Calculates the zodiac sign based on the given month and day:
+		/// 0 is Aries, 11 is Pisces. Month is 1 if January, and so on.
+		/// </summary>
+		/// <param name="month"></param>
+		/// <param name="day"></param>
+		/// <returns></returns>
+		public static int zodiac(int month,int day) {
+			int[] time=new int[] {
+				3,21,4,19,   // Aries
+				4,20,5,20,   // Taurus
+				5,21,6,20,   // Gemini
+				6,21,7,20,   // Cancer
+				7,23,8,22,   // Leo
+				8,23,9,22,   // Virgo 
+				9,23,10,22,  // Libra
+				10,23,11,21, // Scorpio
+				11,22,12,21, // Sagittarius
+				12,22,1,19,  // Capricorn
+				1,20,2,18,   // Aquarius
+				2,19,3,20    // Pisces
+			};
+			for (int i = 0; i < 12; i++) {
+				if (month==time[i*4] && day>=time[i*4+1]) return i;
+				if (month==time[i*4+2] && day<=time[i*4+2]) return i;
+			}
+			return 0;
+		}
  
-/// <summary>
-/// Returns the opposite of the given zodiac sign.
-/// 0 is Aries, 11 is Pisces.
-/// </summary>
-/// <param name="sign"></param>
-/// <returns></returns>
-public static int zodiacOpposite(int sign) {
-  return (sign+6)%12;
-}
+		/// <summary>
+		/// Returns the opposite of the given zodiac sign.
+		/// 0 is Aries, 11 is Pisces.
+		/// </summary>
+		/// <param name="sign"></param>
+		/// <returns></returns>
+		public static int zodiacOpposite(int sign) {
+			return (sign+6)%12;
+		}
 
-/// <summary>
-/// 0 is Aries, 11 is Pisces.
-/// </summary>
-/// <param name="sign"></param>
-/// <returns></returns>
-public static int[] zodiacPartners(int sign) {
-  return new int[] { (sign + 4) % 12, (sign + 8) % 12 };
-}
+		/// <summary>
+		/// 0 is Aries, 11 is Pisces.
+		/// </summary>
+		/// <param name="sign"></param>
+		/// <returns></returns>
+		public static int[] zodiacPartners(int sign) {
+			return new int[] { (sign + 4) % 12, (sign + 8) % 12 };
+		}
 
-/// <summary>
-/// 0 is Aries, 11 is Pisces.
-/// </summary>
-/// <param name="sign"></param>
-/// <returns></returns>
-public static int[] zodiacComplements(int sign) {
-  return new int[] { (sign + 1) % 12, (sign + 11) % 12 };
-}
-#endregion
+		/// <summary>
+		/// 0 is Aries, 11 is Pisces.
+		/// </summary>
+		/// <param name="sign"></param>
+		/// <returns></returns>
+		public static int[] zodiacComplements(int sign) {
+			return new int[] { (sign + 1) % 12, (sign + 11) % 12 };
+		}
+		#endregion
 
-#region Days of the week
-public static bool pbIsWeekday(int wdayVariable,params int[] arg) {
-  DateTime timenow=pbGetTimeNow();
-  int wday=(int)timenow.DayOfWeek;//.wday;
-  bool ret=false;
-  foreach (int wd in arg) {
-    if (wd==wday) ret=true;
-  }
-  if (wdayVariable>0) {
-    Game.GameData.GameVariables[wdayVariable]=new string[] {
-       Game._INTL("Sunday"),
-       Game._INTL("Monday"),
-       Game._INTL("Tuesday"),
-       Game._INTL("Wednesday"),
-       Game._INTL("Thursday"),
-       Game._INTL("Friday"),
-       Game._INTL("Saturday")}[wday];
-    //if (Game.GameData.GameMap != null) Game.GameData.GameMap.need_refresh = true;
-  }
-  return ret;
-}
-#endregion
+		#region Days of the week
+		public static bool pbIsWeekday(int wdayVariable,params int[] arg) {
+			DateTime timenow=pbGetTimeNow();
+			int wday=(int)timenow.DayOfWeek;//.wday;
+			bool ret=false;
+			foreach (int wd in arg) {
+				if (wd==wday) ret=true;
+			}
+			if (wdayVariable>0) {
+				Game.GameData.GameVariables[wdayVariable]=new string[] {
+					Game._INTL("Sunday"),
+					Game._INTL("Monday"),
+					Game._INTL("Tuesday"),
+					Game._INTL("Wednesday"),
+					Game._INTL("Thursday"),
+					Game._INTL("Friday"),
+					Game._INTL("Saturday")}[wday];
+				if (Game.GameData.GameMap != null) Game.GameData.GameMap.need_refresh = true;
+			}
+			return ret;
+		}
+		#endregion
 
-#region Months
-public static bool pbIsMonth(int monVariable,params int[] arg) {
-  DateTime timenow=pbGetTimeNow();
-  int thismon=timenow.Month;
-  bool ret=false;
-  foreach (int wd in arg) {
-    if (wd==thismon) ret=true;
-  }
-  if (monVariable>0) {
-    Game.GameData.GameVariables[monVariable]=new string[] {
-       Game._INTL("January"),
-       Game._INTL("February"),
-       Game._INTL("March"),
-       Game._INTL("April"),
-       Game._INTL("May"),
-       Game._INTL("June"),
-       Game._INTL("July"),
-       Game._INTL("August"),
-       Game._INTL("September"),
-       Game._INTL("October"),
-       Game._INTL("November"),
-       Game._INTL("December")}[thismon-1];
-    //if (Game.GameData.GameMap != null) Game.GameData.GameMap.need_refresh = true;
-  }
-  return ret;
-}
+		#region Months
+		public static bool pbIsMonth(int monVariable,params int[] arg) {
+			DateTime timenow=pbGetTimeNow();
+			int thismon=timenow.Month;
+			bool ret=false;
+			foreach (int wd in arg) {
+				if (wd==thismon) ret=true;
+			}
+			if (monVariable>0) {
+				Game.GameData.GameVariables[monVariable]=new string[] {
+					Game._INTL("January"),
+					Game._INTL("February"),
+					Game._INTL("March"),
+					Game._INTL("April"),
+					Game._INTL("May"),
+					Game._INTL("June"),
+					Game._INTL("July"),
+					Game._INTL("August"),
+					Game._INTL("September"),
+					Game._INTL("October"),
+					Game._INTL("November"),
+					Game._INTL("December")}[thismon-1];
+				if (Game.GameData.GameMap != null) Game.GameData.GameMap.need_refresh = true;
+			}
+			return ret;
+		}
 
-public static string pbGetAbbrevMonthName(int month) {
-  return new string[] {"",
-          Game._INTL("Jan."),
-          Game._INTL("Feb."),
-          Game._INTL("Mar."),
-          Game._INTL("Apr."),
-          Game._INTL("May"),
-          Game._INTL("Jun."),
-          Game._INTL("Jul."),
-          Game._INTL("Aug."),
-          Game._INTL("Sep."),
-          Game._INTL("Oct."),
-          Game._INTL("Nov."),
-          Game._INTL("Dec.") }[month];
-}
-#endregion
+		public static string pbGetAbbrevMonthName(int month) {
+			return new string[] {"",
+					Game._INTL("Jan."),
+					Game._INTL("Feb."),
+					Game._INTL("Mar."),
+					Game._INTL("Apr."),
+					Game._INTL("May"),
+					Game._INTL("Jun."),
+					Game._INTL("Jul."),
+					Game._INTL("Aug."),
+					Game._INTL("Sep."),
+					Game._INTL("Oct."),
+					Game._INTL("Nov."),
+					Game._INTL("Dec.") }[month];
+		}
+		#endregion
 
-#region Seasons
-public static int pbGetSeason() {
-  return (pbGetTimeNow().Month-1)%4;
-}
+		#region Seasons
+		public static int pbGetSeason() {
+			return (pbGetTimeNow().Month-1)%4;
+		}
 
-public static bool pbIsSeason(int seasonVariable,params int[] arg) {
-  int thisseason=pbGetSeason();
-  bool ret=false;
-  foreach (int wd in arg) {
-    if (wd==thisseason) ret=true;
-  }
-  if (seasonVariable>0) {
-    Game.GameData.GameVariables[seasonVariable]=new string[] {
-       Game._INTL("Spring"),
-       Game._INTL("Summer"),
-       Game._INTL("Autumn"),
-       Game._INTL("Winter")}[thisseason];
-    //if (Game.GameData.GameMap != null) Game.GameData.GameMap.need_refresh = true;
-  }
-  return ret;
-}
+		public static bool pbIsSeason(int seasonVariable,params int[] arg) {
+			int thisseason=pbGetSeason();
+			bool ret=false;
+			foreach (int wd in arg) {
+				if (wd==thisseason) ret=true;
+			}
+			if (seasonVariable>0) {
+				Game.GameData.GameVariables[seasonVariable]=new string[] {
+					Game._INTL("Spring"),
+					Game._INTL("Summer"),
+					Game._INTL("Autumn"),
+					Game._INTL("Winter")}[thisseason];
+				if (Game.GameData.GameMap != null) Game.GameData.GameMap.need_refresh = true;
+			}
+			return ret;
+		}
 
-public static bool pbIsSpring() { return pbIsSeason(0,0); } // Jan, May, Sep
-public static bool pbIsSummer() { return pbIsSeason(0,1); } // Feb, Jun, Oct
-public static bool pbIsAutumn() { return pbIsSeason(0,2); } // Mar, Jul, Nov
-public static bool pbIsFall() { return pbIsAutumn(); }
-public static bool pbIsWinter() { return pbIsSeason(0,3); } // Apr, Aug, Dec
+		public static bool pbIsSpring() { return pbIsSeason(0,0); } // Jan, May, Sep
+		public static bool pbIsSummer() { return pbIsSeason(0,1); } // Feb, Jun, Oct
+		public static bool pbIsAutumn() { return pbIsSeason(0,2); } // Mar, Jul, Nov
+		public static bool pbIsFall() { return pbIsAutumn(); }
+		public static bool pbIsWinter() { return pbIsSeason(0,3); } // Apr, Aug, Dec
 
-public static string pbGetSeasonName(int season) {
-  return new string[] { Game._INTL("Spring"),
-          Game._INTL("Summer"),
-          Game._INTL("Autumn"),
-          Game._INTL("Winter") }[season];
-}
-#endregion
+		public static string pbGetSeasonName(int season) {
+			return new string[] { Game._INTL("Spring"),
+					Game._INTL("Summer"),
+					Game._INTL("Autumn"),
+					Game._INTL("Winter") }[season];
+		}
+		#endregion
 	}
 }
