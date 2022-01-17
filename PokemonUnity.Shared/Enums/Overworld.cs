@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PokemonUnity;
-
-namespace PokemonUnity
+﻿namespace PokemonUnity
 {
-namespace Overworld
-{
+	namespace Overworld
+	{
 	#region Maps & Overworld
 	public enum DayTime : int
 	{
@@ -363,6 +357,7 @@ namespace Overworld
 		/// </summary>
 		SEASON_WINTER = 20
 	}
+	#endregion
 
 		public enum EdgeMasks
 		{
@@ -388,24 +383,6 @@ namespace Overworld
 		,UNOVA	= 5
 		,KALOS	= 6
 		,ALOLA	= 7
-	}
-	/// <summary>
-	/// Each "region" has their own individual maps.
-	/// <seealso cref="PokemonUnity.Overworld.Area"/>
-	/// </summary>
-	public enum Maps
-	{
-		Safari = 0
-	}
-	public enum Direction
-	{
-		/// <summary>
-		/// Facing Foward, towards camera
-		/// </summary>
-		Down = 0,
-		Up,
-		Left,
-		Right
 	}
 	public enum Season
 	{

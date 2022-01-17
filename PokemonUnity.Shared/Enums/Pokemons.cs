@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PokemonUnity;
-
-
-/// <summary>
-/// Namespace to nest all Pokemon Enums
-/// </summary>
-namespace PokemonUnity.Monster
+﻿namespace PokemonUnity.Monster
 {
 	#region PokemonData Enumerators
 	public enum Rarity
@@ -28,16 +18,14 @@ namespace PokemonUnity.Monster
 	/// </summary>
 	public enum GenderRatio
 	{
-		AlwaysMale,
-		FemaleOneEighth,
-		Female25Percent,
-        //no inbetween?
-		Female50Percent,
-        //divided by 8 and missing values in between...
-		Female75Percent,
-		FemaleSevenEighths,
-		AlwaysFemale,
-		Genderless
+		AlwaysMale			= 0,
+		FemaleOneEighth		= 1,
+		Female25Percent		= 2,
+		Female50Percent		= 4,
+		Female75Percent		= 6,
+		FemaleSevenEighths	= 7,
+		AlwaysFemale		= 8,
+		Genderless			= -1
 	}
 	public enum LevelingRate
 	{

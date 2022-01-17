@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PokemonUnity;
-
-
-/// <summary>
-/// Namespace to nest all Pokemon Item Enums
-/// </summary>
-namespace PokemonUnity.Inventory
+﻿namespace PokemonUnity.Inventory
 {
 	/// <summary>
 	/// Item ids are connected to XML file. 
@@ -1958,44 +1948,6 @@ namespace PokemonUnity.Inventory
 		/// Or possibly limit and restrict to one per user
 		/// </summary>
 		KEY = 8
-	}
-
-	/// <summary>
-	/// </summary>
-	public enum ItemFlags
-	{
-		/// <summary>
-		/// Has a count in the bag
-		/// </summary>
-		COUNTABLE = 1,
-		/// <summary>
-		/// Consumed when used
-		/// </summary>
-		CONSUMABLE = 2,
-		/// <summary>
-		/// Usable outside battle
-		/// </summary>
-		USEABLE_OVERWORLD = 3,
-		/// <summary>
-		/// Usable in battle
-		/// </summary>
-		USEABLE_IN_BATTLE = 4,
-		/// <summary>
-		/// Can be held by a pokemon
-		/// </summary>
-		HOLDABLE = 5,
-		/// <summary>
-		/// Works passively when held
-		/// </summary>
-		HOLDABLE_PASSIVE = 6,
-		/// <summary>
-		/// Usable by a pokemon when held
-		/// </summary>
-		HOLDABLE_ACTIVE = 7,
-		/// <summary>
-		/// Appears in Sinnoh Underground
-		/// </summary>
-		UNDERGROUND = 8
 	}
 
 	/// <summary>
