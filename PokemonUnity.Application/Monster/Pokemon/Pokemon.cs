@@ -261,7 +261,7 @@ namespace PokemonUnity.Monster
 			pokemons = pokemon;
 			eggSteps = 0;
 			Ability = abilityFlag;
-			Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+			gender = getGender();
 			if (Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
 			Heal();
 			//if (pokemons == Pokemons.UNOWN)
@@ -436,7 +436,7 @@ namespace PokemonUnity.Monster
 		/// <param name="ability"></param>
 		/// <param name="nature"></param>
 		/// <param name="isShiny"></param>
-		/// <param name="gender"></param>
+		/// <param name="genderflag"></param>
 		/// <param name="pokerus"></param>
 		/// <param name="ishyper"></param>
 		/// <param name="shadowLevel"></param>
@@ -464,7 +464,7 @@ namespace PokemonUnity.Monster
 			ITrainer original,
 			string nickName, int form,
 			Abilities ability, Natures nature,
-			bool isShiny, bool? gender,
+			bool isShiny, bool? genderflag,
 			int[] pokerus, int heartSize, //bool ishyper,
 			int? shadowLevel,
 			int currentHp, Items item,
@@ -494,7 +494,7 @@ namespace PokemonUnity.Monster
 			PersonalId = personalId;
 
 			shinyFlag = isShiny;
-			Gender = gender;
+			gender = genderflag;
 
 			this.pokerus = pokerus;
 
@@ -554,7 +554,7 @@ namespace PokemonUnity.Monster
 			original: Game.GameData.Trainer,
 			nickName: nickname, form: pkmn.FormId,
 			ability: pkmn.Ability, nature: pkmn.Nature,
-			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
+			isShiny: pkmn.IsShiny, genderflag: pkmn.Gender,
 			pokerus: pkmn.Pokerus, heartSize: pkmn.HeartGuageSize, //ishyper: pkmn.isHyperMode,
 			shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP,
 			item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV,
@@ -1185,10 +1185,11 @@ namespace PokemonUnity.Monster
 			//genderbyte = dexdata.fgetb;
 			//dexdata.close();
 			//if (genderbyte != 255 && genderbyte != 0 && genderbyte != 254)
-			//{
-			//	@genderflag = value;
-			//}
-			Gender = value;
+			if (_base.GenderEnum != GenderRatio.AlwaysMale && _base.GenderEnum != GenderRatio.AlwaysFemale && _base.GenderEnum != GenderRatio.Genderless)
+			{
+				//@genderflag = value;
+				gender = value;
+			}
 		}
 
 		public void makeMale() { setGender(true); } //0

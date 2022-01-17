@@ -76,6 +76,6 @@ namespace PokemonEssentials.Interface.Field
 		/// Water-based only
 		/// </param>
 		/// <returns></returns>
-		bool pbRoamingMethodAllowed(EncounterRestrictions enctype);
+		bool pbRoamingMethodAllowed(Method enctype);
 	}
 }

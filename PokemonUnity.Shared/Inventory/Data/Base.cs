@@ -26,8 +26,8 @@ namespace PokemonUnity.Inventory
 			get
 			{
 				ItemPockets? itemPocket;
-				switch (this.Category)
-				{//([\w]*) = [\d]*, //PocketId = ([\d]*)
+				switch (this.Category) //([\w]*) = [\d]*, //PocketId = ([\d]*)
+				{
 					case ItemCategory.COLLECTIBLES:     //itemPocket = (ItemPockets)1; break;
 					case ItemCategory.EVOLUTION:        //itemPocket = (ItemPockets)1; break;
 					case ItemCategory.SPELUNKING:       //itemPocket = (ItemPockets)1; break;
