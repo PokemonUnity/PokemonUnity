@@ -436,7 +436,7 @@ namespace PokemonUnity.Monster
 		/// <param name="ability"></param>
 		/// <param name="nature"></param>
 		/// <param name="isShiny"></param>
-		/// <param name="gender"></param>
+		/// <param name="genderflag"></param>
 		/// <param name="pokerus"></param>
 		/// <param name="ishyper"></param>
 		/// <param name="shadowLevel"></param>
