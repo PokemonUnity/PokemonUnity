@@ -702,7 +702,7 @@ namespace PokemonUnity.Inventory
 				//Graphics.update();
 				Input.update();
 				window.update();
-				if (Input.trigger(Input.A)) {
+				if (Input.trigger((int)PokemonUnity.Shared.Enums.InputKeys.ACTION.Id)) {
 					break;
 				}
 			} while (true);

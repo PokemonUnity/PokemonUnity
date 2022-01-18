@@ -206,13 +206,13 @@ namespace PokemonUnity
 		public static int dir4() {
 			int button=0;
 			int repeatcount=0;
-			if (Input.press(Input.DOWN) && Input.press(Input.UP)) {
+			if (Input.press(PokemonUnity.Shared.Enums.InputKeys.DOWN.Id) && Input.press(PokemonUnity.Shared.Enums.InputKeys.UP.Id)) {
 				return 0;
 			}
-			if (Input.press(Input.LEFT) && Input.press(Input.RIGHT)) {
+			if (Input.press(PokemonUnity.Shared.Enums.InputKeys.LEFT.Id) && Input.press(PokemonUnity.Shared.Enums.InputKeys.RIGHT.Id)) {
 				return 0;
 			}
-			foreach (int b in new int[] { Input.DOWN, Input.LEFT, Input.RIGHT, Input.UP }) {
+			foreach (int b in new int[] { PokemonUnity.Shared.Enums.InputKeys.DOWN.Id, PokemonUnity.Shared.Enums.InputKeys.LEFT.Id, PokemonUnity.Shared.Enums.InputKeys.RIGHT.Id, PokemonUnity.Shared.Enums.InputKeys.UP.Id }) {
 				int rc=Input.count(b);
 				if (rc>0) {
 					if (repeatcount==0 || rc<repeatcount) {
@@ -226,7 +226,7 @@ namespace PokemonUnity
 
 		public static int dir8() {
 			List<KeyValuePair<int,int>> buttons=new List<KeyValuePair<int, int>>();
-			foreach (var b in new int[] { Input.DOWN, Input.LEFT, Input.RIGHT, Input.UP }) {
+			foreach (var b in new int[] { PokemonUnity.Shared.Enums.InputKeys.DOWN.Id, PokemonUnity.Shared.Enums.InputKeys.LEFT.Id, PokemonUnity.Shared.Enums.InputKeys.RIGHT.Id, PokemonUnity.Shared.Enums.InputKeys.UP.Id }) {
 				int rc=Input.count(b);
 				if (rc>0) {
 					buttons.Add(new KeyValuePair<int, int>(b,rc));
@@ -239,12 +239,12 @@ namespace PokemonUnity
 				return buttons[0].Key;
 			} else if (buttons.Count==2) {
 				//  since buttons sorted by button, no need to sort here
-				//if ((buttons[0][0]==Input.DOWN && buttons[1][0]==Input.UP)) {
-				if ((buttons[0].Key==Input.DOWN && buttons[1].Key==Input.UP)) {
+				//if ((buttons[0][0]==PokemonUnity.Shared.Enums.InputKeys.DOWN.Id && buttons[1][0]==PokemonUnity.Shared.Enums.InputKeys.UP.Id)) {
+				if ((buttons[0].Key==PokemonUnity.Shared.Enums.InputKeys.DOWN.Id && buttons[1].Key==PokemonUnity.Shared.Enums.InputKeys.UP.Id)) {
 					return 0;
 				}
-				//if ((buttons[0][0]==Input.LEFT && buttons[1][0]==Input.RIGHT)) {
-				if ((buttons[0].Key==Input.LEFT && buttons[1].Key==Input.RIGHT)) {
+				//if ((buttons[0][0]==PokemonUnity.Shared.Enums.InputKeys.LEFT.Id && buttons[1][0]==PokemonUnity.Shared.Enums.InputKeys.RIGHT.Id)) {
+				if ((buttons[0].Key==PokemonUnity.Shared.Enums.InputKeys.LEFT.Id && buttons[1].Key==PokemonUnity.Shared.Enums.InputKeys.RIGHT.Id)) {
 					return 0;
 				}
 			}
@@ -253,24 +253,24 @@ namespace PokemonUnity
 			int updown=0;
 			int leftright=0;
 			foreach (var b in buttons) {
-				if (updown==0 && (b.Key==Input.UP || b.Key==Input.DOWN)) {
+				if (updown==0 && (b.Key==PokemonUnity.Shared.Enums.InputKeys.UP.Id || b.Key==PokemonUnity.Shared.Enums.InputKeys.DOWN.Id)) {
 					updown=b.Key;
 				}
-				if (leftright==0 && (b.Key==Input.LEFT || b.Key==Input.RIGHT)) {
+				if (leftright==0 && (b.Key==PokemonUnity.Shared.Enums.InputKeys.LEFT.Id || b.Key==PokemonUnity.Shared.Enums.InputKeys.RIGHT.Id)) {
 					leftright=b.Key;
 				}
 			}
-			if (updown==Input.DOWN) {
-				if (leftright==Input.LEFT) return 1;
-				if (leftright==Input.RIGHT) return 3;
+			if (updown==PokemonUnity.Shared.Enums.InputKeys.DOWN.Id) {
+				if (leftright==PokemonUnity.Shared.Enums.InputKeys.LEFT.Id) return 1;
+				if (leftright==PokemonUnity.Shared.Enums.InputKeys.RIGHT.Id) return 3;
 				return 2;
-			} else if (updown==Input.UP) {
-				if (leftright==Input.LEFT) return 7;
-				if (leftright==Input.RIGHT) return 9;
+			} else if (updown==PokemonUnity.Shared.Enums.InputKeys.UP.Id) {
+				if (leftright==PokemonUnity.Shared.Enums.InputKeys.LEFT.Id) return 7;
+				if (leftright==PokemonUnity.Shared.Enums.InputKeys.RIGHT.Id) return 9;
 				return 8;
 			} else {
-				if (leftright==Input.LEFT) return 4;
-				if (leftright==Input.RIGHT) return 6;
+				if (leftright==PokemonUnity.Shared.Enums.InputKeys.LEFT.Id) return 4;
+				if (leftright==PokemonUnity.Shared.Enums.InputKeys.RIGHT.Id) return 6;
 				return 0;
 			}
 		}

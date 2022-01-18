@@ -2049,7 +2049,7 @@ namespace PokemonUnity
 			if (Core.DEXDEPENDSONLOCATION) {
 				int region=pbGetCurrentRegion();
 				if (region>=Global.pokedexUnlocked.Length-1) region=-1;
-				if (Trainer.pokedexSeen((Regions)region)>0) {
+				if (Trainer.pokedexSeen(region)>0) {
 					Global.pokedexViable.Add(region); //[0]=region;
 				}
 			} else {
@@ -2064,8 +2064,8 @@ namespace PokemonUnity
 						break;
 					default:            // Regional dexes + National Dex
 						for (int i = 0; i < numDexes; i++) {
-						//int regionToCheck=(i==numDexes-1) ? -1 : i;
-						Regions? regionToCheck=(i==numDexes-1) ? (Regions?)null : (Regions)i;
+						int regionToCheck=(i==numDexes-1) ? -1 : i;
+						//Regions? regionToCheck=(i==numDexes-1) ? (Regions?)null : (Regions)i;
 							if (Global.pokedexUnlocked[i] != null) {
 								if (Trainer.pokedexSeen(regionToCheck)>0) {
 									Global.pokedexViable.Add(i);

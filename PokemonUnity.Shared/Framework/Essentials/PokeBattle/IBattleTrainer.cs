@@ -92,9 +92,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		IPokemon lastAblePokemon { get; }
 
-		int pokedexSeen(Regions? region = null); //int region = -1
+		int pokedexSeen(int region = -1); //int region = -1
 
-		int pokedexOwned(Regions? region = null); //int region = -1
+		int pokedexOwned(int region = -1); //int region = -1
 
 		int numFormsSeen(Pokemons species);
 

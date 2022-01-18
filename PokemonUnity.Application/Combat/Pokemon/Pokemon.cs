@@ -2864,7 +2864,7 @@ namespace PokemonUnity.Combat
 					if ((user.hasWorkingAbility(Abilities.SERENE_GRACE) ||
 						user.pbOwnSide.Rainbow>0) &&
 						thismove.Effect != Attack.Data.Effects.x0C6) addleffect*=2; // Secret Power
-					if (Core.DEBUG && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) addleffect=100;
+					if (Core.DEBUG && Input.press((int)PokemonUnity.Shared.Enums.InputKeys.DEBUG.Id)) addleffect=100;
 					if (@battle.pbRandom(100)<addleffect) {
 						GameDebug.Log($"[Move effect triggered] #{thismove.id.ToString(TextScripts.Name)}'s added effect");
 						thismove.pbAdditionalEffect(user,target);

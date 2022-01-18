@@ -64,6 +64,14 @@
     <Compile Include="Combat\Pokemon\Pokemon.Shadow.cs" />
     <Compile Include="Combat\Rules.cs" />
     <Compile Include="Combat\Trainer\Trainer.cs" />
+    <Compile Include="Enums\Contests.cs" />
+    <Compile Include="Enums\EvolutionMethods.cs" />
+    <Compile Include="Enums\GymBadges.cs" />
+    <Compile Include="Enums\HiddenMoves.cs" />
+    <Compile Include="Enums\Languages.cs" />
+    <Compile Include="Enums\Locations.cs" />
+    <Compile Include="Enums\Pokemons.cs" />
+    <Compile Include="Enums\Versions.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Extensions\AbilityExtension.cs" />
     <Compile Include="Extensions\MoveExtension.cs" />

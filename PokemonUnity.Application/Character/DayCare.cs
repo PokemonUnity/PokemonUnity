@@ -99,11 +99,13 @@ namespace PokemonUnity.Character
 		public bool pbIsDitto (IPokemon pokemon) {
 			//dexdata=pbOpenDexData();
 			//pbDexDataOffset(dexdata,pokemon.Species,31);
-			EggGroups compat10=Kernal.PokemonData[pokemon.Species].EggGroup[0]; //dexdata.fgetb();
-			EggGroups compat11=Kernal.PokemonData[pokemon.Species].EggGroup[1]; //dexdata.fgetb();
+			//EggGroups compat10=Kernal.PokemonData[pokemon.Species].EggGroup[0]; //dexdata.fgetb();
+			//EggGroups compat11=Kernal.PokemonData[pokemon.Species].EggGroup[1]; //dexdata.fgetb();
+			int compat10=PokemonUnity.Shared.Enums.Pokemons.FromValue<PokemonUnity.Shared.Enums.Pokemons>((int)pokemon.Species).EggGroup[0];
+			int compat11=PokemonUnity.Shared.Enums.Pokemons.FromValue<PokemonUnity.Shared.Enums.Pokemons>((int)pokemon.Species).EggGroup[1];
 			//dexdata.close();
-			return compat10 == EggGroups.DITTO ||
-					compat11 == EggGroups.DITTO;
+			return compat10 == PokemonUnity.Shared.Enums.EggGroups.DITTO.Id ||
+					compat11 == PokemonUnity.Shared.Enums.EggGroups.DITTO.Id;
 		}
 
 		public bool pbDayCareCompatibleGender(IPokemon pokemon1,IPokemon pokemon2) {
@@ -126,22 +128,26 @@ namespace PokemonUnity.Character
 				if (pokemon2 is IPokemonShadowPokemon s1 && s1.isShadow) return 0; //? rescue false
 				//dexdata=pbOpenDexData();
 				//pbDexDataOffset(dexdata,pokemon1.Species,31);
-				EggGroups compat10=Kernal.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
-				EggGroups compat11=Kernal.PokemonData[pokemon1.Species].EggGroup[1]; //dexdata.fgetb();
+				//EggGroups compat10=Kernal.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
+				//EggGroups compat11=Kernal.PokemonData[pokemon1.Species].EggGroup[1]; //dexdata.fgetb();
+				int compat10=PokemonUnity.Shared.Enums.Pokemons.FromValue<PokemonUnity.Shared.Enums.Pokemons>((int)pokemon1.Species).EggGroup[0];
+				int compat11=PokemonUnity.Shared.Enums.Pokemons.FromValue<PokemonUnity.Shared.Enums.Pokemons>((int)pokemon1.Species).EggGroup[1];
 				//pbDexDataOffset(dexdata,pokemon2.Species,31);
-				EggGroups compat20=Kernal.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
-				EggGroups compat21=Kernal.PokemonData[pokemon1.Species].EggGroup[1]; //dexdata.fgetb();
+				//EggGroups compat20=Kernal.PokemonData[pokemon1.Species].EggGroup[0]; //dexdata.fgetb();
+				//EggGroups compat21=Kernal.PokemonData[pokemon1.Species].EggGroup[1]; //dexdata.fgetb();
+				int compat20=PokemonUnity.Shared.Enums.Pokemons.FromValue<PokemonUnity.Shared.Enums.Pokemons>((int)pokemon2.Species).EggGroup[0];
+				int compat21=PokemonUnity.Shared.Enums.Pokemons.FromValue<PokemonUnity.Shared.Enums.Pokemons>((int)pokemon2.Species).EggGroup[1];
 				//dexdata.close();
-				if (compat10 != EggGroups.UNDISCOVERED &&
-					compat11 != EggGroups.UNDISCOVERED &&
-					compat20 != EggGroups.UNDISCOVERED &&
-					compat21 != EggGroups.UNDISCOVERED) {
+				if (compat10 != PokemonUnity.Shared.Enums.EggGroups.UNDISCOVERED.Id &&
+					compat11 != PokemonUnity.Shared.Enums.EggGroups.UNDISCOVERED.Id &&
+					compat20 != PokemonUnity.Shared.Enums.EggGroups.UNDISCOVERED.Id &&
+					compat21 != PokemonUnity.Shared.Enums.EggGroups.UNDISCOVERED.Id) {
 					if (compat10==compat20 || compat11==compat20 ||
 						compat10==compat21 || compat11==compat21 ||
-						compat10 == EggGroups.DITTO ||
-						compat11 == EggGroups.DITTO ||
-						compat20 == EggGroups.DITTO ||
-						compat21 == EggGroups.DITTO) {
+						compat10 == PokemonUnity.Shared.Enums.EggGroups.DITTO.Id ||
+						compat11 == PokemonUnity.Shared.Enums.EggGroups.DITTO.Id ||
+						compat20 == PokemonUnity.Shared.Enums.EggGroups.DITTO.Id ||
+						compat21 == PokemonUnity.Shared.Enums.EggGroups.DITTO.Id) {
 						if (pbDayCareCompatibleGender(pokemon1,pokemon2)) {
 							int ret=1;
 							if (pokemon1.Species==pokemon2.Species) ret+=1;
@@ -225,11 +231,11 @@ namespace PokemonUnity.Character
 				mother=pokemon1;
 				father=pokemon0;
 			}
-			babyspecies= EvolutionHelper.pbGetBabySpecies(babyspecies,mother.Item,father.Item);
+			babyspecies=EvolutionHelper.pbGetBabySpecies(babyspecies,mother.Item,father.Item);
 			if (babyspecies == Pokemons.MANAPHY) {				//&& hasConst?(PBSpecies,:PHIONE)
 				babyspecies=Pokemons.PHIONE;
-			} else if ((babyspecies == Pokemons.NIDORAN_F) ||	//&& hasConst?(PBSpecies,:NIDORANmA)
-				(babyspecies == Pokemons.NIDORAN_M)) {			//&& hasConst?(PBSpecies,:NIDORANfE)
+			} else if ((babyspecies == Pokemons.NIDORAN_M) ||	//&& hasConst?(PBSpecies,:NIDORANmA)
+				(babyspecies == Pokemons.NIDORAN_F)) {			//&& hasConst?(PBSpecies,:NIDORANfE)
 				babyspecies=new Pokemons[]{	Pokemons.NIDORAN_M,
 											Pokemons.NIDORAN_F }[Core.Rand.Next(2)];
 			} else if ((babyspecies == Pokemons.VOLBEAT) ||		//&& hasConst?(PBSpecies,:ILLUMISE)

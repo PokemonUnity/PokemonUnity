@@ -500,7 +500,7 @@ namespace PokemonUnity
 		}
 
 		public Combat.BattleResults pbWildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
-			if ((Input.press(Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
+			if ((Input.press((int)PokemonUnity.Shared.Enums.InputKeys.DEBUG.Id) && Core.DEBUG) || Trainer.pokemonCount==0) {
 				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
 					m.pbMessage(Game._INTL("SKIPPING BATTLE..."));
 				}
@@ -567,7 +567,7 @@ namespace PokemonUnity
 		}
 
 		public Combat.BattleResults pbDoubleWildBattle(Pokemons species1,int level1,Pokemons species2,int level2,int? variable=null,bool canescape=true,bool canlose=false) {
-			if ((Input.press(Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
+			if ((Input.press((int)PokemonUnity.Shared.Enums.InputKeys.DEBUG.Id) && Core.DEBUG) || Trainer.pokemonCount==0) {
 				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
 					m.pbMessage(Game._INTL("SKIPPING BATTLE..."));
 				}
@@ -1201,7 +1201,7 @@ namespace PokemonUnity
 				Graphics.update();
 				Input.update();
 				if (this is IGameMessage m1) m1.pbUpdateSceneMap();
-				if (Input.trigger((int)Input.C) || Input.trigger((int)Input.B)) {
+				if (Input.trigger((int)PokemonUnity.Shared.Enums.InputKeys.USE.Id) || Input.trigger((int)PokemonUnity.Shared.Enums.InputKeys.CANCEL.Id)) {
 					return true;
 				} i++;
 			} while (i < frames);
@@ -1217,7 +1217,7 @@ namespace PokemonUnity
 					Graphics.update();
 					Input.update();
 					if (this is IGameMessage m1) m1.pbUpdateSceneMap();
-					if (Input.trigger((int)Input.C) || Input.trigger((int)Input.B)) {
+					if (Input.trigger((int)PokemonUnity.Shared.Enums.InputKeys.USE.Id) || Input.trigger((int)PokemonUnity.Shared.Enums.InputKeys.CANCEL.Id)) {
 						return true;
 					} j++;
 				} while (j < 20); i++;
@@ -1664,7 +1664,7 @@ namespace PokemonUnity
 					Input.update();
 					textwindow.update();
 					msgwindow.update();
-					if (Input.trigger(Input.B)) {
+					if (Input.trigger((int)PokemonUnity.Shared.Enums.InputKeys.CANCEL.Id)) {
 						if (this is IGameAudio a2) a2.Audio_bgm_set_volume(oldvolume);
 						(this as IGameMessage).pbDisposeMessageWindow(msgwindow);
 						textwindow.dispose();
@@ -1681,7 +1681,7 @@ namespace PokemonUnity
 					Input.update();
 					textwindow.update();
 					msgwindow.update();
-					if (Input.trigger(Input.B)) {
+					if (Input.trigger((int)PokemonUnity.Shared.Enums.InputKeys.CANCEL.Id)) {
 						break;
 					}
 				} while(i < frames);
