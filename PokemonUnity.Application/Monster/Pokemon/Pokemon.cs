@@ -261,7 +261,7 @@ namespace PokemonUnity.Monster
 			pokemons = pokemon;
 			eggSteps = 0;
 			Ability = abilityFlag;
-			Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+			gender = getGender();
 			if (Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
 			Heal();
 			//if (pokemons == Pokemons.UNOWN)
@@ -464,7 +464,7 @@ namespace PokemonUnity.Monster
 			ITrainer original,
 			string nickName, int form,
 			Abilities ability, Natures nature,
-			bool isShiny, bool? gender,
+			bool isShiny, bool? genderflag,
 			int[] pokerus, int heartSize, //bool ishyper,
 			int? shadowLevel,
 			int currentHp, Items item,
@@ -494,7 +494,7 @@ namespace PokemonUnity.Monster
 			PersonalId = personalId;
 
 			shinyFlag = isShiny;
-			Gender = gender;
+			gender = genderflag;
 
 			this.pokerus = pokerus;
 
@@ -554,7 +554,7 @@ namespace PokemonUnity.Monster
 			original: Game.GameData.Trainer,
 			nickName: nickname, form: pkmn.FormId,
 			ability: pkmn.Ability, nature: pkmn.Nature,
-			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
+			isShiny: pkmn.IsShiny, genderflag: pkmn.Gender,
 			pokerus: pkmn.Pokerus, heartSize: pkmn.HeartGuageSize, //ishyper: pkmn.isHyperMode,
 			shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP,
 			item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV,
@@ -993,7 +993,7 @@ namespace PokemonUnity.Monster
 				case EvolutionMethod.Beauty:            //param int = beauty, not level
 					foreach (PokemonEvolution item in Kernal.PokemonEvolutionsData[pokemons])
 					{
-						if ((int)item.EvolveValue < Contest[(int)Contests.Beauty] && item.EvolveMethod == method)
+						if ((int)item.EvolveValue < Contest[(int)PokemonUnity.Enums.Contests.BEAUTY.Id] && item.EvolveMethod == method)
 							methods.Add(item.Species);
 					}
 					return methods.ToArray();
@@ -1140,38 +1140,13 @@ namespace PokemonUnity.Monster
 		private bool? gender { get; set; }
 
 		private bool? getGender()
-		{
-			switch (_base.GenderEnum)
-			{
-				//case GenderRatio.FemaleOneEighth:
-				//	break;
-				//case GenderRatio.Female25Percent:
-				//	break;
-				//case GenderRatio.Female50Percent:
-				//	break;
-				//case GenderRatio.Female75Percent:
-				//	break;
-				//case GenderRatio.FemaleSevenEighths:
-				//	break;
-				case GenderRatio.AlwaysMale:
-					return true;
-				case GenderRatio.AlwaysFemale:
-					return false;
-				case GenderRatio.Genderless:
-					return null;
-				default:
-					//byte n = (byte)(Core.Rand.Next(0, 100) + 1);
-					double n = (Core.Rand.NextDouble() * 100) + 1;
-					if (_base.GenderEnum == GenderRatio.AlwaysFemale && n > 0f && n < 12.5f) return false;
-					else if (_base.GenderEnum == GenderRatio.FemaleSevenEighths && n >= 12.5f && n < 25f) return false;
-					else if (_base.GenderEnum == GenderRatio.Female75Percent && n >= 25f && n < 37.5f) return false;
-					else if (_base.GenderEnum == GenderRatio.Female75Percent && n >= 37.5f && n < 50f) return false;
-					else if (_base.GenderEnum == GenderRatio.Female50Percent && n >= 50f && n < 62.5f) return false;
-					else if (_base.GenderEnum == GenderRatio.Female50Percent && n >= 62.5f && n < 75f) return false;
-					else if (_base.GenderEnum == GenderRatio.Female25Percent && n >= 75f && n < 87.5f) return false;
-					else if (_base.GenderEnum == GenderRatio.FemaleOneEighth && n >= 87.5f && n < 100f) return false;
-					else return true;
-			}
+		{			
+			//if (genderRate == 100f) return true; 
+			if ((int)_base.GenderEnum == PokemonUnity.Shared.Enums.GenderRatio.AlwaysMale.Id) return true;
+			//if (genderRate == 100f) return false; //Always female
+			if ((int)_base.GenderEnum == PokemonUnity.Shared.Enums.GenderRatio.AlwaysFemale.Id) return false;
+			if ((int)_base.GenderEnum == PokemonUnity.Shared.Enums.GenderRatio.Genderless.Id) return null; //genderless
+			return PokemonUnity.Shared.Enums.GenderRatio.GetAll<PokemonUnity.Shared.Enums.GenderRatio>().FirstOrDefault(x => x.Id == (int)_base.GenderEnum).Func.Invoke();
 		}
 
 		/// <summary>
@@ -1185,10 +1160,13 @@ namespace PokemonUnity.Monster
 			//genderbyte = dexdata.fgetb;
 			//dexdata.close();
 			//if (genderbyte != 255 && genderbyte != 0 && genderbyte != 254)
-			//{
-			//	@genderflag = value;
-			//}
-			Gender = value;
+			if ((int)_base.GenderEnum != PokemonUnity.Shared.Enums.GenderRatio.AlwaysMale.Id &&
+				(int)_base.GenderEnum != PokemonUnity.Shared.Enums.GenderRatio.AlwaysFemale.Id &&
+				(int)_base.GenderEnum != PokemonUnity.Shared.Enums.GenderRatio.Genderless.Id)
+			{
+				//@genderflag = value;
+				gender = value;
+			}
 		}
 
 		public void makeMale() { setGender(true); } //0
@@ -1940,12 +1918,12 @@ namespace PokemonUnity.Monster
 		/// Contest stats; Max value is 255
 		/// </summary>
 		public byte[] Contest { get; private set; }
-		public int Cool		{ get { return Contest[(int)Contests.Cool]; } }
-		public int Beauty	{ get { return Contest[(int)Contests.Beauty]; } }
-		public int Cute		{ get { return Contest[(int)Contests.Cute]; } }
-		public int Smart	{ get { return Contest[(int)Contests.Smart]; } }
-		public int Tough	{ get { return Contest[(int)Contests.Tough]; } }
-		public int Sheen	{ get { return Contest[(int)Contests.Sheen]; } }
+		public int Cool		{ get { return Contest[(int)PokemonUnity.Enums.Contests.COOL.Id]; } }
+		public int Beauty	{ get { return Contest[(int)PokemonUnity.Enums.Contests.BEAUTY.Id]; } }
+		public int Cute		{ get { return Contest[(int)PokemonUnity.Enums.Contests.CUTE.Id]; } }
+		public int Smart	{ get { return Contest[(int)PokemonUnity.Enums.Contests.SMART.Id]; } }
+		public int Tough	{ get { return Contest[(int)PokemonUnity.Enums.Contests.TOUGH.Id]; } }
+		public int Sheen	{ get { return Contest[(int)PokemonUnity.Enums.Contests.SHEEN.Id]; } }
 		/// <summary>
 		/// Returns the number of ribbons this Pokemon has.
 		/// </summary>

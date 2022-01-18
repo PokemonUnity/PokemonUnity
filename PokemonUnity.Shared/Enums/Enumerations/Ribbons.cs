@@ -1,0 +1,89 @@
+﻿namespace PokemonUnity.Shared.Enums
+{
+	public class Ribbons : Enumeration
+	{
+		public int FamilyId { get; private set; }
+		protected Ribbons(int id, string name) : base(id, name) { }
+		public static readonly Ribbons NONE						= new Ribbons(0,	"NONE");
+		public static readonly Ribbons HOENNCOOL				= new Ribbons(1,	"HOENNCOOL");
+		public static readonly Ribbons HOENNCOOLSUPER			= new Ribbons(2,	"HOENNCOOLSUPER");
+		public static readonly Ribbons HOENNCOOLHYPER			= new Ribbons(3,	"HOENNCOOLHYPER");
+		public static readonly Ribbons HOENNCOOLMASTER			= new Ribbons(4,	"HOENNCOOLMASTER");
+		public static readonly Ribbons HOENNBEAUTY				= new Ribbons(5,	"HOENNBEAUTY");
+		public static readonly Ribbons HOENNBEAUTYSUPER			= new Ribbons(6,	"HOENNBEAUTYSUPER");
+		public static readonly Ribbons HOENNBEAUTYHYPER			= new Ribbons(7,	"HOENNBEAUTYHYPER");
+		public static readonly Ribbons HOENNBEAUTYMASTER		= new Ribbons(8,	"HOENNBEAUTYMASTER");
+		public static readonly Ribbons HOENNCUTE				= new Ribbons(9,	"HOENNCUTE");
+		public static readonly Ribbons HOENNCUTESUPER			= new Ribbons(10,	"HOENNCUTESUPER");
+		public static readonly Ribbons HOENNCUTEHYPER			= new Ribbons(11,	"HOENNCUTEHYPER");
+		public static readonly Ribbons HOENNCUTEMASTER			= new Ribbons(12,	"HOENNCUTEMASTER");
+		public static readonly Ribbons HOENNSMART				= new Ribbons(13,	"HOENNSMART");
+		public static readonly Ribbons HOENNSMARTSUPER			= new Ribbons(14,	"HOENNSMARTSUPER");
+		public static readonly Ribbons HOENNSMARTHYPER			= new Ribbons(15,	"HOENNSMARTHYPER");
+		public static readonly Ribbons HOENNSMARTMASTER			= new Ribbons(16,	"HOENNSMARTMASTER");
+		public static readonly Ribbons HOENNTOUGH				= new Ribbons(17,	"HOENNTOUGH");
+		public static readonly Ribbons HOENNTOUGHSUPER			= new Ribbons(18,	"HOENNTOUGHSUPER");
+		public static readonly Ribbons HOENNTOUGHHYPER			= new Ribbons(19,	"HOENNTOUGHHYPER");
+		public static readonly Ribbons HOENNTOUGHMASTER			= new Ribbons(20,	"HOENNTOUGHMASTER");
+		public static readonly Ribbons SINNOHCOOL				= new Ribbons(21,	"SINNOHCOOL");
+		public static readonly Ribbons SINNOHCOOLSUPER			= new Ribbons(22,	"SINNOHCOOLSUPER");
+		public static readonly Ribbons SINNOHCOOLHYPER			= new Ribbons(23,	"SINNOHCOOLHYPER");
+		public static readonly Ribbons SINNOHCOOLMASTER			= new Ribbons(24,	"SINNOHCOOLMASTER");
+		public static readonly Ribbons SINNOHBEAUTY				= new Ribbons(25,	"SINNOHBEAUTY");
+		public static readonly Ribbons SINNOHBEAUTYSUPER		= new Ribbons(26,	"SINNOHBEAUTYSUPER");
+		public static readonly Ribbons SINNOHBEAUTYHYPER		= new Ribbons(27,	"SINNOHBEAUTYHYPER");
+		public static readonly Ribbons SINNOHBEAUTYMASTER		= new Ribbons(28,	"SINNOHBEAUTYMASTER");
+		public static readonly Ribbons SINNOHCUTE				= new Ribbons(29,	"SINNOHCUTE");
+		public static readonly Ribbons SINNOHCUTESUPER			= new Ribbons(30,	"SINNOHCUTESUPER");
+		public static readonly Ribbons SINNOHCUTEHYPER			= new Ribbons(31,	"SINNOHCUTEHYPER");
+		public static readonly Ribbons SINNOHCUTEMASTER			= new Ribbons(32,	"SINNOHCUTEMASTER");
+		public static readonly Ribbons SINNOHSMART				= new Ribbons(33,	"SINNOHSMART");
+		public static readonly Ribbons SINNOHSMARTSUPER			= new Ribbons(34,	"SINNOHSMARTSUPER");
+		public static readonly Ribbons SINNOHSMARTHYPER			= new Ribbons(35,	"SINNOHSMARTHYPER");
+		public static readonly Ribbons SINNOHSMARTMASTER		= new Ribbons(36,	"SINNOHSMARTMASTER");
+		public static readonly Ribbons SINNOHTOUGH				= new Ribbons(37,	"SINNOHTOUGH");
+		public static readonly Ribbons SINNOHTOUGHSUPER			= new Ribbons(38,	"SINNOHTOUGHSUPER");
+		public static readonly Ribbons SINNOHTOUGHHYPER			= new Ribbons(39,	"SINNOHTOUGHHYPER");
+		public static readonly Ribbons SINNOHTOUGHMASTER		= new Ribbons(40,	"SINNOHTOUGHMASTER");
+		public static readonly Ribbons WINNING					= new Ribbons(41,	"WINNING");
+		public static readonly Ribbons VICTORY					= new Ribbons(42,	"VICTORY");
+		public static readonly Ribbons ABILITY					= new Ribbons(43,	"ABILITY");
+		public static readonly Ribbons GREATABILITY				= new Ribbons(44,	"GREATABILITY");
+		public static readonly Ribbons DOUBLEABILITY			= new Ribbons(45,	"DOUBLEABILITY");
+		public static readonly Ribbons MULTIABILITY				= new Ribbons(46,	"MULTIABILITY");
+		public static readonly Ribbons PAIRABILITY				= new Ribbons(47,	"PAIRABILITY");
+		public static readonly Ribbons WORLDABILITY				= new Ribbons(48,	"WORLDABILITY");
+		public static readonly Ribbons CHAMPION					= new Ribbons(49,	"CHAMPION");
+		public static readonly Ribbons SINNOHCHAMP				= new Ribbons(50,	"SINNOHCHAMP");
+		public static readonly Ribbons RECORD					= new Ribbons(51,	"RECORD");
+		public static readonly Ribbons EVENT					= new Ribbons(52,	"EVENT");
+		public static readonly Ribbons LEGEND					= new Ribbons(53,	"LEGEND");
+		public static readonly Ribbons GORGEOUS					= new Ribbons(54,	"GORGEOUS");
+		public static readonly Ribbons ROYAL					= new Ribbons(55,	"ROYAL");
+		public static readonly Ribbons GORGEOUSROYAL			= new Ribbons(56,	"GORGEOUSROYAL");
+		public static readonly Ribbons ALERT					= new Ribbons(57,	"ALERT");
+		public static readonly Ribbons SHOCK					= new Ribbons(58,	"SHOCK");
+		public static readonly Ribbons DOWNCAST					= new Ribbons(59,	"DOWNCAST");
+		public static readonly Ribbons CARELESS					= new Ribbons(60,	"CARELESS");
+		public static readonly Ribbons RELAX					= new Ribbons(61,	"RELAX");
+		public static readonly Ribbons SNOOZE					= new Ribbons(62,	"SNOOZE");
+		public static readonly Ribbons SMILE					= new Ribbons(63,	"SMILE");
+		public static readonly Ribbons FOOTPRINT				= new Ribbons(64,	"FOOTPRINT");
+		public static readonly Ribbons ARTIST					= new Ribbons(65,	"ARTIST");
+		public static readonly Ribbons EFFORT					= new Ribbons(66,	"EFFORT");
+		public static readonly Ribbons BIRTHDAY					= new Ribbons(67,	"BIRTHDAY");
+		public static readonly Ribbons SPECIAL					= new Ribbons(68,	"SPECIAL");
+		public static readonly Ribbons CLASSIC					= new Ribbons(69,	"CLASSIC");
+		public static readonly Ribbons PREMIER					= new Ribbons(70,	"PREMIER");
+		public static readonly Ribbons SOUVENIR					= new Ribbons(71,	"SOUVENIR");
+		public static readonly Ribbons WISHING					= new Ribbons(72,	"WISHING");
+		public static readonly Ribbons NATIONAL					= new Ribbons(73,	"NATIONAL");
+		public static readonly Ribbons COUNTRY					= new Ribbons(74,	"COUNTRY");
+		public static readonly Ribbons BATTLECHAMPION			= new Ribbons(75,	"BATTLECHAMPION");
+		public static readonly Ribbons REGIONALCHAMPION			= new Ribbons(76,	"REGIONALCHAMPION");
+		public static readonly Ribbons EARTH					= new Ribbons(77,	"EARTH");
+		public static readonly Ribbons WORLD					= new Ribbons(78,	"WORLD");
+		public static readonly Ribbons NATIONALCHAMPION			= new Ribbons(79,	"NATIONALCHAMPION");
+		public static readonly Ribbons WORLDCHAMPION			= new Ribbons(80,	"WORLDCHAMPION");
+	}
+}

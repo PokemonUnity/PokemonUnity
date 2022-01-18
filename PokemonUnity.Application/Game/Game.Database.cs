@@ -1686,33 +1686,6 @@ namespace PokemonUnity
 						default:
 							break;
 					}
-					switch (type)
-					{
-						case TrainerTypes.BURGLAR:
-						case TrainerTypes.GAMBLER:
-							SkillLevel = 32;
-							break;
-						case TrainerTypes.LADY:
-							SkillLevel = 72;
-							break;
-						case TrainerTypes.TUBER_M:
-						case TrainerTypes.TUBER2_M:
-						case TrainerTypes.SWIMMER_M:
-						case TrainerTypes.SWIMMER2_M:
-							SkillLevel = 32;
-							break;
-						case TrainerTypes.TUBER_F:
-						case TrainerTypes.TUBER2_F:
-						case TrainerTypes.SWIMMER_F:
-						case TrainerTypes.SWIMMER2_F:
-							break;
-						case TrainerTypes.COOLCOUPLE:
-						case TrainerTypes.SISANDBRO:
-						case TrainerTypes.YOUNGCOUPLE:
-							break;
-						default:
-							break;
-					}
 					#endregion
 					#region Base Money
 					switch (type)
@@ -2913,51 +2886,6 @@ namespace PokemonUnity
 					while(reader.Read()) //if(reader.Read())
 					{
 						string[] f = ((string)reader["move_flag_group"].ToString()).Split(',');
-						/*object debug = null;
-						debug = (Moves)int.Parse((string)reader["id"].ToString());
-						debug = (Category)int.Parse((string)reader["damage_class_id"].ToString());
-						debug = int.Parse((string)reader["generation_id"].ToString());
-						debug = string.IsNullOrEmpty((string)reader["accuracy"].ToString()) ? (int?)null : int.Parse((string)reader["accuracy"].ToString());
-						debug = string.IsNullOrEmpty((string)reader["power"].ToString()) ? (int?)null : int.Parse((string)reader["power"].ToString());
-						debug = string.IsNullOrEmpty((string)reader["pp"].ToString()) ? (byte)0 : (byte)int.Parse((string)reader["pp"].ToString());
-						debug = int.Parse((string)reader["priority"].ToString());
-						//debug = (Flag)new Flag(;
-							debug = f.Contains("14");
-							debug = f.Contains("16");
-							debug = f.Contains("18");
-							debug = f.Contains("2");
-							debug = f.Contains("1");
-							//debug = f.Contains("1");
-							debug = f.Contains("21");
-							debug = f.Contains("11");
-							debug = f.Contains("12");
-							//a = f.Contains("1");
-							debug = f.Contains("10");
-							debug = f.Contains("13");
-							debug = f.Contains("7");
-							debug = f.Contains("19");
-							debug = f.Contains("20");
-							debug = f.Contains("15");
-							debug = f.Contains("4");
-							debug = f.Contains("17");
-							debug = f.Contains("8");
-							debug = f.Contains("3");
-							debug = f.Contains("5");
-							debug = f.Contains("6");
-							debug = f.Contains("9");
-						debug = (Targets)int.Parse((string)reader["target_id"].ToString());
-						debug = (Types)int.Parse((string)reader["type_id"].ToString());
-						debug = string.IsNullOrEmpty((string)reader["contest_type_id"].ToString()) ? (Contests?)null : (Contests)int.Parse((string)reader["contest_type_id"].ToString());
-						//debug = int.Parse((string)reader["decreased_stat_id"].ToString());
-						//debug = int.Parse((string)reader["decreased_stat_id"].ToString());
-						debug = (Effects)int.Parse((string)reader["effect_id"].ToString());
-						debug = string.IsNullOrEmpty((string)reader["effect_chance"].ToString()) ? (int?)null : int.Parse((string)reader["effect_chance"].ToString());
-						//debug = int.Parse((string)reader["decreased_stat_id"].ToString());
-						debug = string.IsNullOrEmpty((string)reader["contest_effect_id"].ToString()) ? (int?)null : int.Parse((string)reader["contest_effect_id"].ToString());//(ContestEffects)
-						debug = string.IsNullOrEmpty((string)reader["super_contest_effect_id"].ToString()) ? (int?)null : int.Parse((string)reader["super_contest_effect_id"].ToString());//(SuperContestEffects)
-						debug = string.IsNullOrEmpty((string)reader["appeal"].ToString()) ? (int?)null : int.Parse((string)reader["appeal"].ToString());
-						debug = string.IsNullOrEmpty((string)reader["super_appeal"].ToString()) ? (int?)null : int.Parse((string)reader["super_appeal"].ToString());
-						debug = string.IsNullOrEmpty((string)reader["jam"].ToString()) ? (int?)null : int.Parse((string)reader["jam"].ToString());*/
 						Kernal.MoveData.Add((Moves)int.Parse((string)reader["id"].ToString()),
 							new MoveData(
 								id: (Moves)int.Parse((string)reader["id"].ToString())

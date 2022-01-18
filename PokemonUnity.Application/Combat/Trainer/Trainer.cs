@@ -289,9 +289,10 @@ namespace PokemonUnity//.Combat
 		/// </summary>
 		/// <param name="region"></param>
 		/// <returns></returns>
-		public int pokedexSeen(Regions? region=null) {   
+		//public int pokedexSeen(Regions? region=null) {   
+		public int pokedexSeen(int region=-1) {   
 			int ret=0;
-			if (region==null) {
+			if (region<1) { //(region==null)
 				//for (int i = 0; i < Kernal.PokemonData.Count; i++) {
 				//  if (@seen[i]) ret+=1;
 				//}
@@ -301,7 +302,7 @@ namespace PokemonUnity//.Combat
 				//int[] regionlist=Game.pbAllRegionalSpecies(region);
 				Pokemons[] regionlist=new Pokemons[0];
 				foreach (Pokemons i in regionlist) {
-				if (@seen[i]) ret+=1;
+					if (@seen[i]) ret+=1;
 				}
 			}
 			return ret;
@@ -312,9 +313,10 @@ namespace PokemonUnity//.Combat
 		/// </summary>
 		/// <param name="region"></param>
 		/// <returns></returns>
-		public int pokedexOwned(Regions? region=null) {   
+		//public int pokedexOwned(Regions? region=null) {   
+		public int pokedexOwned(int region=-1) {   
 			int ret=0;
-			if (region==null) {
+			if (region<1) { //(region==null)
 				//for (int i = 0; i < Kernal.PokemonData.Count; i++) {
 				//  if (@owned[i]) ret+=1;
 				//}
@@ -324,7 +326,7 @@ namespace PokemonUnity//.Combat
 				//int[] regionlist=Game.GameData.pbAllRegionalSpecies(region);
 				Pokemons[] regionlist=new Pokemons[0];
 				foreach (Pokemons i in regionlist) {
-				if (@owned[i]) ret+=1;
+					if (@owned[i]) ret+=1;
 				}
 			}
 			return ret;
