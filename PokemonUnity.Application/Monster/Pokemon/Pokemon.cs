@@ -2919,7 +2919,7 @@ namespace PokemonUnity.Monster
 		#endregion
 #pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
 
-		//ToDo: Finish migrating interface implimentation
+		//ToDo: Finish migrating interface implementation
 		#region Explicit Interface Implemenation
 		int IPokemon.trainerID { get; set; }
 		IMail IPokemon.mail { get; set; }
