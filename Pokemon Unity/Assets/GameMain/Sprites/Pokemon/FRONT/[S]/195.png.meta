@@ -1,0 +1,1182 @@
+fileFormatVersion: 2
+guid: 892b7c048d4c2e54192baffdcdb98534
+timeCreated: 1527283174
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 195_0
+    21300002: 195_1
+    21300004: 195_2
+    21300006: 195_3
+    21300008: 195_4
+    21300010: 195_5
+    21300012: 195_6
+    21300014: 195_7
+    21300016: 195_8
+    21300018: 195_9
+    21300020: 195_10
+    21300022: 195_11
+    21300024: 195_12
+    21300026: 195_13
+    21300028: 195_14
+    21300030: 195_15
+    21300032: 195_16
+    21300034: 195_17
+    21300036: 195_18
+    21300038: 195_19
+    21300040: 195_20
+    21300042: 195_21
+    21300044: 195_22
+    21300046: 195_23
+    21300048: 195_24
+    21300050: 195_25
+    21300052: 195_26
+    21300054: 195_27
+    21300056: 195_28
+    21300058: 195_29
+    21300060: 195_30
+    21300062: 195_31
+    21300064: 195_32
+    21300066: 195_33
+    21300068: 195_34
+    21300070: 195_35
+    21300072: 195_36
+    21300074: 195_37
+    21300076: 195_38
+    21300078: 195_39
+    21300080: 195_40
+    21300082: 195_41
+    21300084: 195_42
+    21300086: 195_43
+    21300088: 195_44
+    21300090: 195_45
+    21300092: 195_46
+    21300094: 195_47
+    21300096: 195_48
+    21300098: 195_49
+    21300100: 195_50
+    21300102: 195_51
+    21300104: 195_52
+    21300106: 195_53
+    21300108: 195_54
+    21300110: 195_55
+    21300112: 195_56
+    21300114: 195_57
+    21300116: 195_58
+    21300118: 195_59
+    21300120: 195_60
+    21300122: 195_61
+    21300124: 195_62
+    21300126: 195_63
+    21300128: 195_64
+    21300130: 195_65
+    21300132: 195_66
+    21300134: 195_67
+    21300136: 195_68
+    21300138: 195_69
+    21300140: 195_70
+    21300142: 195_71
+    21300144: 195_72
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 1
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 128
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 128
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 195_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_1
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_2
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_3
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_4
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_5
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_6
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_7
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_8
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_9
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 1120
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_11
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_12
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_13
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_14
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_15
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_16
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_17
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_18
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_19
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 960
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_21
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_22
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_23
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_24
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_25
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_26
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_27
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_28
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_29
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_31
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_32
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_33
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_34
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_35
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_36
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_37
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_38
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_39
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_41
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_42
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_43
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_44
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_45
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_46
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_47
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_48
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_49
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_51
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_52
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_53
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_54
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_55
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_56
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_57
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_58
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_59
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_61
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_62
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_63
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_64
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_65
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_66
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_67
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_68
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_69
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_71
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 195_72
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

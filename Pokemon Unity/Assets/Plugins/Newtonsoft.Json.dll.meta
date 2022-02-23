@@ -1,5 +1,14 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: d2fe9e2250b2bee499fcc491ac1d1647
+=======
+guid: 0268f98d7c649564a818b0768fc68d4b
+labels:
+- ExitGames
+- PUN
+- Photon
+- Networking
+>>>>>>> beta
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -11,12 +20,20 @@ PluginImporter:
   - first:
       Any: 
     second:
+<<<<<<< HEAD
       enabled: 1
+=======
+      enabled: 0
+>>>>>>> beta
       settings: {}
   - first:
       Editor: Editor
     second:
+<<<<<<< HEAD
       enabled: 0
+=======
+      enabled: 1
+>>>>>>> beta
       settings:
         DefaultValueInitialized: true
   - first:

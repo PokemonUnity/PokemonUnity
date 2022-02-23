@@ -9,7 +9,7 @@ public class CustomEvent : MonoBehaviour
     public CustomEventTree[] interactEventTrees;
     public CustomEventTree[] bumpEventTrees;
 
-    private DialogBoxHandler Dialog;
+    private DialogBoxManager Dialog;
 
     private NPCHandler thisNPCHandler;
     private bool deactivateOnFinish = false;
@@ -24,7 +24,7 @@ public class CustomEvent : MonoBehaviour
         {
             thisNPCHandler = transform.GetComponent<NPCHandler>();
         }
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        Dialog = GameObject.Find("CanvasUI").GetComponent<DialogBoxManager>();
     }
 
     public void setThisNPCHandlerBusy(bool boolValue)
@@ -214,13 +214,26 @@ public class CustomEvent : MonoBehaviour
             case (CustomEventDetails.CustomEventType.Dialog):
                 for (int i = 0; i < currentEvent.strings.Length; i++)
                 {
+                    Dialog.animContinueOFF();
                     Dialog.drawDialogBox();
+                    //yield return StartCoroutine(Dialog.drawText("Test text"));
                     yield return StartCoroutine(Dialog.drawText(currentEvent.strings[i]));
+                    Debug.Log(currentEvent.strings[i]);
+
+                    if (Dialog.DialogBoxString == currentEvent.strings[i]){
+                        Dialog.animContinueON();
+                    }
 
                     if (i < currentEvent.strings.Length - 1)
                     {
+<<<<<<< HEAD
                         while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
+=======
+                        
+                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+>>>>>>> beta
                         {
+                            
                             yield return null;
                         }
                     }
@@ -261,7 +274,7 @@ public class CustomEvent : MonoBehaviour
                     yield return StartCoroutine(Dialog.choiceNavigate());
                 }
                 int chosenIndex = Dialog.chosenIndex;
-                chosenIndex = currentEvent.ints.Length - 1 - chosenIndex; //flip it to reflect the original input
+                //chosenIndex = currentEvent.ints.Length - 1 - chosenIndex; //flip it to reflect the original input
                 Dialog.undrawChoiceBox();
                 Dialog.undrawDialogBox();
                 if (chosenIndex < currentEvent.ints.Length)
@@ -279,7 +292,7 @@ public class CustomEvent : MonoBehaviour
                 SfxHandler.Play(currentEvent.sound);
                 break;
 
-            case CustomEventDetails.CustomEventType.ReceiveItem:
+            /* case CustomEventDetails.CustomEventType.ReceiveItem:
                 //Play Good for TM, Average for Item
                 AudioClip itemGetMFX = (currentEvent.bool0)
                     ? Resources.Load<AudioClip>("Audio/mfx/GetGood")
@@ -290,21 +303,33 @@ public class CustomEvent : MonoBehaviour
                 Dialog.drawDialogBox();
                 if (currentEvent.bool0)
                 {
+<<<<<<< HEAD
                     Debug.LogError("Not IMPLEMENT, YET");
                     //Dialog.StartCoroutine("drawText",
                     //    SaveData.currentSave.playerName + " received TM" +
                     //    ItemDatabase.getItem(currentEvent.string0).getTMNo() + ": " + currentEvent.string0 + "!");
+=======
+                    Dialog.StartCoroutine(Dialog.drawText(
+                        SaveData.currentSave.playerName + " received TM" +
+                        ItemDatabase.getItem(currentEvent.string0).getTMNo() + ": " + currentEvent.string0 + "!"));
+>>>>>>> beta
                 }
                 else
                 {
                     if (currentEvent.int0 > 1)
                     {
+<<<<<<< HEAD
                         Dialog.StartCoroutine("drawText",
                             SaveData.currentSave.Player.Name + " received " + currentEvent.string0 + "s!");
+=======
+                        Dialog.StartCoroutine(Dialog.drawText(
+                            SaveData.currentSave.playerName + " received " + currentEvent.string0 + "s!"));
+>>>>>>> beta
                     }
                     else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
                              firstLetter == "u")
                     {
+<<<<<<< HEAD
                         Dialog.StartCoroutine("drawText",
                             SaveData.currentSave.Player.Name + " received an " + currentEvent.string0 + "!");
                     }
@@ -312,6 +337,15 @@ public class CustomEvent : MonoBehaviour
                     {
                         Dialog.StartCoroutine("drawText",
                             SaveData.currentSave.Player.Name + " received a " + currentEvent.string0 + "!");
+=======
+                        Dialog.StartCoroutine(Dialog.drawText(
+                            SaveData.currentSave.playerName + " received an " + currentEvent.string0 + "!"));
+                    }
+                    else
+                    {
+                        Dialog.StartCoroutine(Dialog.drawText(
+                            SaveData.currentSave.playerName + " received a " + currentEvent.string0 + "!"));
+>>>>>>> beta
                     }
                 }
                 yield return new WaitForSeconds(itemGetMFX.length);
@@ -323,27 +357,46 @@ public class CustomEvent : MonoBehaviour
                 {
                     if (currentEvent.bool0)
                     {
+<<<<<<< HEAD
                         //yield return
                         //    Dialog.StartCoroutine("drawTextSilent",
                         //        SaveData.currentSave.playerName + " put the TM" +
                         //        ItemDatabase.getItem(currentEvent.string0).getTMNo() + " \\away into the bag.");
                         Debug.LogError("IT WAS NOT IMPLEMENT!");
+=======
+                        yield return
+                            Dialog.StartCoroutine(Dialog.drawTextSilent(
+                                SaveData.currentSave.playerName + " put the TM" +
+                                ItemDatabase.getItem(currentEvent.string0).getTMNo() + " \\away into the bag."));
+>>>>>>> beta
                     }
                     else
                     {
                         if (currentEvent.int0 > 1)
                         {
                             yield return
+<<<<<<< HEAD
                                 Dialog.StartCoroutine("drawTextSilent",
                                     SaveData.currentSave.Player.Name + " put the " + currentEvent.string0 +
                                     "s \\away into the bag.");
+=======
+                                Dialog.StartCoroutine(Dialog.drawTextSilent(
+                                    SaveData.currentSave.playerName + " put the " + currentEvent.string0 +
+                                    "s \\away into the bag."));
+>>>>>>> beta
                         }
                         else
                         {
                             yield return
+<<<<<<< HEAD
                                 Dialog.StartCoroutine("drawTextSilent",
                                     SaveData.currentSave.Player.Name + " put the " + currentEvent.string0 +
                                     " \\away into the bag.");
+=======
+                                Dialog.StartCoroutine(Dialog.drawTextSilent(
+                                    SaveData.currentSave.playerName + " put the " + currentEvent.string0 +
+                                    " \\away into the bag."));
+>>>>>>> beta
                         }
                     }
                     while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
@@ -353,8 +406,13 @@ public class CustomEvent : MonoBehaviour
                 }
                 else
                 {
+<<<<<<< HEAD
                     yield return Dialog.StartCoroutine("drawTextSilent", "But there was no room...");
                     while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
+=======
+                    yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "But there was no room..."));
+                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+>>>>>>> beta
                     {
                         yield return null;
                     }
@@ -362,6 +420,7 @@ public class CustomEvent : MonoBehaviour
                 Dialog.undrawDialogBox();
                 break;
 
+<<<<<<< HEAD
             //case CustomEventDetails.CustomEventType.ReceivePokemon:
             //    if (SaveData.currentSave.Player.Party.HasSpace(SaveData.currentSave.Player.Party.Length))
             //    {
@@ -490,6 +549,140 @@ public class CustomEvent : MonoBehaviour
             //    }
             //    break;
             //
+=======
+            case CustomEventDetails.CustomEventType.ReceivePokemon:
+                if (SaveData.currentSave.PC.hasSpace(0))
+                {
+                    //Play Great for Pokemon
+                    AudioClip pokeGetMFX = Resources.Load<AudioClip>("Audio/mfx/GetGreat");
+
+                    PokemonData pkd = PokemonDatabase.getPokemon(currentEvent.ints[0]);
+
+                    string pkName = pkd.getName();
+                    Pokemon.Gender pkGender = Pokemon.Gender.CALCULATE;
+
+                    if (pkd.getMaleRatio() == -1)
+                    {
+                        pkGender = Pokemon.Gender.NONE;
+                    }
+                    else if (pkd.getMaleRatio() == 0)
+                    {
+                        pkGender = Pokemon.Gender.FEMALE;
+                    }
+                    else if (pkd.getMaleRatio() == 100)
+                    {
+                        pkGender = Pokemon.Gender.MALE;
+                    }
+                    else
+                    {
+//if not a set gender
+                        if (currentEvent.ints[2] == 0)
+                        {
+                            pkGender = Pokemon.Gender.MALE;
+                        }
+                        else if (currentEvent.ints[2] == 1)
+                        {
+                            pkGender = Pokemon.Gender.FEMALE;
+                        }
+                    }
+
+                    Dialog.drawDialogBox();
+                    yield return
+                        Dialog.StartCoroutine(Dialog.drawText(
+                            SaveData.currentSave.playerName + " received the " + pkName + "!"));
+                    BgmHandler.main.PlayMFX(pokeGetMFX);
+                    yield return new WaitForSeconds(pokeGetMFX.length);
+
+                    string nickname = currentEvent.strings[0];
+                    if (currentEvent.strings[1].Length == 0)
+                    {
+                        //If no OT set, allow nicknaming of Pokemon
+
+                        Dialog.drawDialogBox();
+                        yield return
+                            StartCoroutine(
+                                Dialog.drawTextSilent("Would you like to give a nickname to \nthe " + pkName +
+                                                      " you received?"));
+                        Dialog.drawChoiceBox();
+                        yield return StartCoroutine(Dialog.choiceNavigate());
+                        int nicknameCI = Dialog.chosenIndex;
+                        Dialog.undrawDialogBox();
+                        Dialog.undrawChoiceBox();
+
+                        if (nicknameCI == 1)
+                        {
+                            //give nickname
+                            //SfxHandler.Play(selectClip);
+                            yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+
+                            Scene.main.Typing.gameObject.SetActive(true);
+                            StartCoroutine(Scene.main.Typing.control(10, "", pkGender,
+                                Pokemon.GetIconsFromID_(currentEvent.ints[0], currentEvent.bool0)));
+                            while (Scene.main.Typing.gameObject.activeSelf)
+                            {
+                                yield return null;
+                            }
+                            if (Scene.main.Typing.typedString.Length > 0)
+                            {
+                                nickname = Scene.main.Typing.typedString;
+                            }
+
+                            yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                        }
+                    }
+                    if (!EventRequiresDialogBox(nextEvent.eventType))
+                    {
+                        Dialog.undrawDialogBox();
+                    }
+
+                    int[] IVs = new int[]
+                    {
+                        Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
+                        Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32)
+                    };
+                    if (currentEvent.bool1)
+                    {
+                        //if using Custom IVs
+                        IVs[0] = currentEvent.ints[5];
+                        IVs[1] = currentEvent.ints[6];
+                        IVs[2] = currentEvent.ints[7];
+                        IVs[3] = currentEvent.ints[8];
+                        IVs[4] = currentEvent.ints[9];
+                        IVs[5] = currentEvent.ints[10];
+                    }
+
+                    string pkNature = (currentEvent.ints[3] == 0)
+                        ? NatureDatabase.getRandomNature().getName()
+                        : NatureDatabase.getNature(currentEvent.ints[3] - 1).getName();
+
+                    string[] pkMoveset = pkd.GenerateMoveset(currentEvent.ints[1]);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (currentEvent.strings[4 + i].Length > 0)
+                        {
+                            pkMoveset[i] = currentEvent.strings[4 + i];
+                        }
+                    }
+
+                    Debug.Log(pkMoveset[0] + ", " + pkMoveset[1] + ", " + pkMoveset[2] + ", " + pkMoveset[3]);
+
+
+                    Pokemon pk = new Pokemon(currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
+                        currentEvent.bool0, currentEvent.strings[2], currentEvent.strings[3],
+                        currentEvent.strings[1], IVs[0], IVs[1], IVs[2], IVs[3], IVs[4], IVs[5], 0, 0, 0, 0, 0, 0,
+                        pkNature, currentEvent.ints[4],
+                        pkMoveset, new int[4]);
+
+                    SaveData.currentSave.PC.addPokemon(pk);
+                }
+                else
+                {
+                    //jump to new tree
+                    JumpToTree(currentEvent.int0);
+                }
+                break;
+
+>>>>>>> beta
             case (CustomEventDetails.CustomEventType.SetActive):
                 if (currentEvent.bool0)
                 {
@@ -507,9 +700,9 @@ public class CustomEvent : MonoBehaviour
                         currentEvent.object0.SetActive(false);
                     }
                 }
-                break;
+                break; */
 
-            case CustomEventDetails.CustomEventType.SetCVariable:
+            /* case CustomEventDetails.CustomEventType.SetCVariable:
                 SaveData.currentSave.setCVariable(currentEvent.string0, currentEvent.float0);
                 break;
 
@@ -606,12 +799,61 @@ public class CustomEvent : MonoBehaviour
                         JumpToTree(newTreeIndex);
                     }
                 }
-                break;
+                break; */
 
-            case CustomEventDetails.CustomEventType.TrainerBattle:
+            /* case CustomEventDetails.CustomEventType.TrainerBattle:
 
+<<<<<<< HEAD
                 new System.NotImplementedException();
                 break;
+=======
+                //custom cutouts not yet implemented
+                StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
+
+                //Automatic LoopStart usage not yet implemented
+                Scene.main.Battle.gameObject.SetActive(true);
+
+                Trainer trainer = currentEvent.object0.GetComponent<Trainer>();
+
+                if (trainer.battleBGM != null)
+                {
+                    Debug.Log(trainer.battleBGM.name);
+                    BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
+                }
+                else
+                {
+                    BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
+                        Scene.main.Battle.defaultTrainerBGMLoopStart);
+                }
+                Scene.main.Battle.gameObject.SetActive(false);
+                yield return new WaitForSeconds(1.6f);
+
+                Scene.main.Battle.gameObject.SetActive(true);
+                StartCoroutine(Scene.main.Battle.control(true, trainer, currentEvent.bool0));
+
+                while (Scene.main.Battle.gameObject.activeSelf)
+                {
+                    yield return null;
+                }
+
+                //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
+                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f)); 
+
+                if (currentEvent.bool0)
+                {
+                    if (Scene.main.Battle.victor == 1)
+                    {
+                        int newTreeIndex = currentEvent.int0;
+                        if (newTreeIndex != eventTreeIndex && //only change tree if index is valid
+                            newTreeIndex < treesArray.Length)
+                        {
+                            JumpToTree(newTreeIndex);
+                        }
+                    }
+                }
+
+                break;*/
+>>>>>>> beta
         }
     }
 
@@ -661,7 +903,8 @@ public class CustomEventDetails
         SetActive, //object0: game object to activate
         SetCVariable, //string0: CVariable name | float0: new value
         LogicCheck, //logic | float0: check value | string0: CVariable name
-        TrainerBattle //object0: trainer script | bool0: allowed to lose | int0: tree to jump to on loss
+        TrainerBattle, //object0: trainer script | bool0: allowed to lose | int0: tree to jump to on loss
+        Teleport //sends the player to another scene
     }
 
     public enum Direction

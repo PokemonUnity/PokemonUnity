@@ -2,11 +2,12 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class InteractDoorway : MonoBehaviour
 {
-    private GameObject Player;
-    private DialogBoxHandler Dialog;
+    //private GameObject Player;
+    private DialogBoxManager Dialog;
 
     private Animator myAnimator;
     private SpriteRenderer objectSprite;
@@ -50,8 +51,8 @@ public class InteractDoorway : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Player = PlayerMovement.player.gameObject;
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        //Player = PlayerMovement.player.gameObject;
+        Dialog = GameObject.Find("CanvasUI").GetComponent<DialogBoxManager>();
 
         objectLight = this.GetComponentInChildren<Light>();
         if (objectLight != null)
@@ -229,7 +230,7 @@ public class InteractDoorway : MonoBehaviour
                     GlobalVariables.global.playerDirection = transferDirection;
                     GlobalVariables.global.playerForwardOnLoad = movesForward;
                     GlobalVariables.global.fadeIn = true;
-                    Application.LoadLevel(transferScene);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(transferScene);
                 }
                 else
                 {
