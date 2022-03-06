@@ -2887,7 +2887,7 @@ namespace PokemonUnity.Combat
 					if (@peer is IBattlePeerMultipleForms p) p.pbOnEnteringBattle(this,wildpoke); 
 					pbSetSeen(wildpoke);
 					@scene.pbStartBattle(this);
-					pbDisplayPaused(Game._INTL("Wild {1} appeared!",wildpoke.Name));
+					pbDisplayPaused(Game._INTL("Wild {1} appeared!",Game._INTL(wildpoke.Species.ToString(TextScripts.Name)))); //Wild pokemons dont get nicknames
 				}
 				else if (@party2.Length>1) { //ToDo: length==2
 					if (!@doublebattle) {
@@ -2903,7 +2903,7 @@ namespace PokemonUnity.Combat
 					pbSetSeen(@party2[1]);
 					@scene.pbStartBattle(this);
 					pbDisplayPaused(Game._INTL("Wild {1} and\r\n{2} appeared!",
-						@party2[0].Name,@party2[1].Name));
+						Game._INTL(@party2[0].Species.ToString(TextScripts.Name)),Game._INTL(@party2[1].Species.ToString(TextScripts.Name)))); //Wild pokemons dont get nicknames
 				}
 				else {
 					//throw new Exception(Game._INTL("Only one or two wild Pokémon are allowed"));
