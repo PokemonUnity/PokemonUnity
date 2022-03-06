@@ -27,9 +27,16 @@ namespace PokemonUnity
 	/// </summary>
 	public partial class Game : PokemonEssentials.Interface.IGameUtility
 	{
+		/// <summary>
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="param"></param>
+		/// <returns></returns>
+		//ToDo: Might need to redo function to use a global/const identifier string (KeyValuePair)
 		public static string _INTL(string message, params object[] param)
 		{
 			string msg = message;
+			//ToDo: Lookup Localization Dictionary for message string in translations...
 			for (int i = 0; param.Length >= i; i++) //(int i = param.Length; i > 0; i--)
 				msg = msg.Replace($"{{{i}}}", $"{{{i - 1}}}");
 			return string.Format(msg, param);

@@ -7,6 +7,10 @@ namespace PokemonUnity
 	{		
 		public static string ToString(this PokemonUnity.Types type, TextScripts text)
 		{
+			if (text == TextScripts.Name)
+				return string.Format("TYPE_NAME_{0}", (int)type);
+			if (text == TextScripts.Description)
+				return string.Format("TYPE_DESC_{0}", (int)type);
 			//create a switch, and return Locale Name or Description
 			return type.ToString();
 		}
