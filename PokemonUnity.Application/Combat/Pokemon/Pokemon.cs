@@ -269,7 +269,7 @@ namespace PokemonUnity.Combat
 			if (@effects.Transform) return false;
 			if (@pokemon.IsNotNullOrNone())
 			{
-				return @pokemon is IPokemonMegaEvolution m == false ? false : m.hasMegaForm();// ? rescue false
+				return !(@pokemon is IPokemonMegaEvolution m) ? false : m.hasMegaForm();// ? rescue false
 			}
 			return false;
 		} }
@@ -277,7 +277,7 @@ namespace PokemonUnity.Combat
 		public bool isMega { get {
 			if (@pokemon.IsNotNullOrNone())
 			{
-				return @pokemon is IPokemonMegaEvolution m == false ? false : m.isMega();// ? rescue false
+				return !(@pokemon is IPokemonMegaEvolution m) ? false : m.isMega();// ? rescue false
 			}
 			return false;
 		} }
@@ -286,7 +286,7 @@ namespace PokemonUnity.Combat
 			if (@effects.Transform) return false;
 			if (@pokemon.IsNotNullOrNone())
 			{
-				return @pokemon is IPokemonMegaEvolution m == false ? false : m.hasPrimalForm();// ? rescue false
+				return !(@pokemon is IPokemonMegaEvolution m) ? false : m.hasPrimalForm();// ? rescue false
 			}
 			return false;
 		} }
@@ -294,7 +294,7 @@ namespace PokemonUnity.Combat
 		public bool isPrimal { get {
 			if (@pokemon.IsNotNullOrNone())
 			{
-				return @pokemon is IPokemonMegaEvolution m == false ? false : m.isPrimal();// ? rescue false
+				return !(@pokemon is IPokemonMegaEvolution m) ? false : m.isPrimal();// ? rescue false
 			}
 			return false;
 		} }
