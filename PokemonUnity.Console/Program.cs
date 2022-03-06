@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
+using PokemonUnity.Localization;
 using PokemonUnity.Attack.Data;
 using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
@@ -29,7 +30,13 @@ namespace PokemonUnity.ConsoleApp
 
 		static void Main(string[] args)
 		{
-            GameDebug.OnLog += GameDebug_OnLog;
+			GameDebug.OnLog += GameDebug_OnLog;
+			XmlStringRes englishLocalization = new XmlStringRes(new Debugger());
+			string localePath = "..\\..\\..\\LocalizationStrings.xml";
+			//System.Console.WriteLine(System.IO.Directory.GetParent(localePath).FullName);
+			englishLocalization.Initialize(localePath, (int)Languages.English);
+			Game.LocalizationDictionary = englishLocalization;
+
 			//Game.ResetAndOpenSql(@"Data\veekun-pokedex.sqlite");
 			ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -79,8 +86,8 @@ namespace PokemonUnity.ConsoleApp
 			battle.pbStartBattle(true);
 		}
 
-        private static void GameDebug_OnLog(object sender, OnDebugEventArgs e)
-        {
+		private static void GameDebug_OnLog(object sender, OnDebugEventArgs e)
+		{
 			if (e != null || e != System.EventArgs.Empty)
 				if (e.Error == true)
 					System.Console.WriteLine("[ERR]: " + e.Message);
@@ -88,8 +95,8 @@ namespace PokemonUnity.ConsoleApp
 					System.Console.WriteLine("[WARN]: " + e.Message);
 				else
 					System.Console.WriteLine("[LOG]: " + e.Message);
-        }
-    }
+		}
+	}
 
 	public class PokeBattleScene : IPokeBattle_Scene
 	{
@@ -100,9 +107,9 @@ namespace PokemonUnity.ConsoleApp
 		public int[] lastmove;
 
 		public PokeBattleScene()
-        {
+		{
 			initialize();
-        }
+		}
 
 		public void initialize()
 		{

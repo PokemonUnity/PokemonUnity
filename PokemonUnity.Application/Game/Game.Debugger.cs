@@ -15,7 +15,7 @@ namespace PokemonUnity
 	///    *IF* we are in editor, they are also sent to Debug.* so they show up in editor Console window
 	///    </para><para>
 	/// Console.Write =>
-	///    Only used for things that should not be logged. Typically reponses to user commands. Only shown on Console.
+	///    Only used for things that should not be logged. Typically responses to user commands. Only shown on Console.
 	/// </para>
 	/// </summary>
 	public static class GameDebug //: IDebugger
@@ -163,6 +163,87 @@ namespace PokemonUnity
 		{
 			msg = System.String.Format("{0:G}: {1}{2}", System.DateTime.Now, msg, System.Environment.NewLine);
 			System.IO.File.AppendAllText(logFile, msg);
+		}
+	}
+	public class Debugger : IDebugger
+	{
+		public event EventHandler<OnDebugEventArgs> OnLog;
+		//private System.IO.StreamWriter logFile = null;
+		private string logFile = null;
+		//private readonly string filename = GetTempPath() + "TranslationLog.txt";
+		//private string GetTempPath()
+		//{
+		//	string path = System.Environment.GetEnvironmentVariable("TEMP");
+		//	if (!path.EndsWith("\\")) path += "\\";
+		//	return path;
+		//}
+
+		public void Init(string logfilePath, string logBaseName)
+		{
+			// Try creating logName; attempt a number of suffixes
+			string name = "";
+			for (int i = 0; ; i++)
+			{
+				name = logBaseName + (i == 0 ? "" : "_" + i) + ".log";
+				//try
+				//{
+					//logFile = System.IO.File.CreateText(logfilePath + "/" + name);
+					//logFile = System.IO.File.OpenWrite(logfilePath + "/" + name);
+					//logFile.AutoFlush = true;
+					logFile = logfilePath + "/" + name;
+					break;
+				//}
+				//catch
+				//{
+				//	name = "<none>";
+				//}
+			}
+			Log("GameDebug initialized. Logging to " + logfilePath + "/" + name);
+		}
+
+		public void Shutdown()
+		{
+			//if (DebugToFile)
+			//	logFile.Close();
+			logFile = null;
+		}
+
+		public void Log(string message)
+		{
+			GameDebug.Log(message);
+		}
+
+		public void Log(string message, params object[] param)
+		{
+			Log(string.Format(message, param));
+		}
+
+		public void LogWarning(string message)
+		{
+			GameDebug.LogWarning(message);
+		}
+
+		public void LogError(string message)
+		{
+			GameDebug.LogError(message);
+		}
+
+		public void LogMessageToFile(string msg)
+		{
+			using (System.IO.StreamWriter sw = System.IO.File.AppendText(logFile))
+				try
+				{
+					msg = System.String.Format("{0:G}: {1}", System.DateTime.Now, msg);
+					sw.WriteLine(msg);
+				}
+				catch(Exception ex)
+				{
+					LogError(ex.Message);
+				}
+				//finally
+				//{
+				//	sw.Close();
+				//}
 		}
 	}
 }
