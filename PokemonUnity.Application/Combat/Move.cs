@@ -55,7 +55,7 @@ namespace PokemonUnity.Combat
 		//public bool IsSpecial				{ get; set; }// { return Category == Attack.Category.SPECIAL; } }
 		public bool PowerBoost				{ get; set; }
 		//public bool pbIsStatus()			{ return false; }
-		public string Name					{ get { return Kernal.MoveData[MoveId].Name; } }
+		public string Name					{ get { return Game._INTL(Kernal.MoveData[MoveId].Name); } }
 		//public string EffectString		{ get; set; }
 		//public Battle Battle				{ get { return this.battle ?? Game.battle; } }
 		public IBattle battle				{ get; set; }
@@ -1067,7 +1067,7 @@ namespace PokemonUnity.Combat
 				if (damage>opponent.effects.Substitute)damage=opponent.effects.Substitute;
 				opponent.effects.Substitute-=damage;
 				opponent.damagestate.Substitute= true;
-				battle.scene.pbDamageAnimation(opponent,0);
+				if (battle.scene is IPokeBattle_DebugSceneNoGraphics s0) s0.pbDamageAnimation(opponent,0);
 				battle.pbDisplayPaused(Game._INTL("The substitute took damage for {1}!",opponent.Name));
 				if (opponent.effects.Substitute<=0){
 				opponent.effects.Substitute=0;
@@ -1111,8 +1111,8 @@ namespace PokemonUnity.Combat
 				else if (opponent.damagestate.TypeMod>8)
 					effectiveness=2;   // "Super effective"
 				if (opponent.damagestate.TypeMod!=0)
-					battle.scene.pbDamageAnimation(opponent, effectiveness);
-				battle.scene.pbHPChanged(opponent, oldhp);
+					if (battle.scene is IPokeBattle_DebugSceneNoGraphics s1) s1.pbDamageAnimation(opponent, (TypeEffective)effectiveness);
+				if (battle.scene is IPokeBattle_DebugSceneNoGraphics s2) s2.pbHPChanged(opponent, oldhp);
 				opponent.damagestate.HPLost=damage;
 			}
 			return damage;

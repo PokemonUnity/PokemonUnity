@@ -306,7 +306,7 @@ namespace PokemonUnity.Monster
 		/// <param name="isEgg">Whether or not this pokemon is hatched; 
 		/// if pokemon <see cref="isEgg"/> is false, it loses benefits 
 		/// of learning egg moves</param>
-		public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; GenerateMoveset(); Heal(); }
+		public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; GenerateMoveset(level, isEgg); Heal(); }
 
 		/// <summary>
 		/// Use this constructor when creating battle pokemon, for NPC Trainers
@@ -1574,7 +1574,7 @@ namespace PokemonUnity.Monster
 			List<Moves> movelist = new List<Moves>();
 			if (isEgg || egg || (Game.GameData as Game).Features.CatchPokemonsWithEggMoves)
 				movelist.AddRange(Kernal.PokemonMovesData[pokemons].Egg);
-			int?[] rejected = new int?[movelist.Count]; //default null, to exclude `0`
+			IList<int?> rejected = new int?[movelist.Count]; //default null, to exclude `0`
 			switch (level)
 			{
 				#region sample from alpha version
@@ -1625,7 +1625,7 @@ namespace PokemonUnity.Monster
 					//return moveset;
 					break;
 				#endregion
-				case null: //case -1:
+				case null: //case -1: //Only occurs on `new Pokemon()` call
 					movelist.AddRange(Kernal.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
 					rejected = new int?[movelist.Count];
 					for (int n = 0; n < movelist.Count; n++)

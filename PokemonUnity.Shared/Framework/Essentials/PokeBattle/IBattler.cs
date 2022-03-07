@@ -26,7 +26,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		Pokemons Species			{ get; }
 		Types Type1					{ get; set; }
 		Types Type2					{ get; set; }
-		Abilities Ability			{ get; set; }
+		Abilities Ability			{ get; set; } //ToDo: use a Func to replace setter?
 		bool? Gender				{ get; set; }
 		int ATK						{ get; set; }
 		int DEF						{ get; set; }
@@ -39,10 +39,10 @@ namespace PokemonEssentials.Interface.PokeBattle
 		IList<int> participants		{ get; set; }
 		bool tookDamage				{ get; set; }
 		int lastHPLost				{ get; set; }
-		Moves lastMoveUsed			{ get; set; }
-		Types lastMoveUsedType		{ get; set; }
-		Moves lastMoveUsedSketch	{ get; set; }
-		Moves lastRegularMoveUsed	{ get; set; }
+		Moves lastMoveUsed			{ get; }
+		Types lastMoveUsedType		{ get; }
+		Moves lastMoveUsedSketch	{ get; }
+		Moves lastRegularMoveUsed	{ get; }
 		int? lastRoundMoved			{ get; }
 		IList<Moves> movesUsed		{ get; }
 		Moves currentMove			{ get; set; }
@@ -54,9 +54,10 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#region Complex accessors
 		//int defense				{ get; }
 		//int spdef					{ get; }
-		Natures nature				{ get; }
+		Natures Nature				{ get; }
 		int Happiness				{ get; }
-		int pokerusStage			{ get; }
+		//int pokerusStage			{ get; }
+		bool? PokerusStage			{ get; }
 		int form					{ get; set; }
 		bool hasMega				{ get; }
 		bool isMega					{ get; }

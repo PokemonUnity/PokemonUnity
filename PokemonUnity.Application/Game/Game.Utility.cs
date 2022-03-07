@@ -41,7 +41,7 @@ namespace PokemonUnity
 			if(LocalizationDictionary != null)
 			{
 				msg = LocalizationDictionary.GetStr(message);
-				if (msg == message) GameDebug.Log("Couldn't map localization string for: `{0}`", message);
+				//if (msg == message) GameDebug.Log("Couldn't map localization string for: `{0}`", message);
 			}
 			if(!msg.Contains("{0}") && param?.Length > 0) //only loop if params start at 1+
 				for (int i = 0; param.Length >= i; i++) //(int i = param.Length; i > 0; i--)

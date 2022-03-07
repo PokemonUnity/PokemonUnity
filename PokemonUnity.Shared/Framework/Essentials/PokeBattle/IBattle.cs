@@ -27,7 +27,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Scene object for this battle
 		/// </summary>
-		IPokeBattle_Scene scene { get; }
+		IScene scene { get; }
 		/// <summary>
 		/// Decision: 0=undecided; 1=win; 2=loss; 3=escaped; 4=caught
 		/// </summary>
@@ -446,7 +446,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#region Command phase.
 		MenuCommands pbCommandMenu(int i);
 
-		KeyValuePair<Items, int> pbItemMenu(int i);
+		KeyValuePair<Items, int?> pbItemMenu(int i);
 
 		bool pbAutoFightMenu(int i);
 

@@ -62,7 +62,6 @@ namespace PokemonUnity.Combat
 
 		//public PokeBattle_Move(Battle battle, Attack.Move move) : base(battle, move) { }
 
-		#region Interface Implementation
 		IBattleMove IBattleMove.initialize(IBattle battle, IMove move)
 		{
 			return this.Initialize(battle, move);
@@ -73,6 +72,7 @@ namespace PokemonUnity.Combat
 			return Move.pbFromPBMove(battle, move);
 		}
 
+		#region Interface Implementation
 		int IBattleMove.ToInt()
 		{
 			throw new NotImplementedException();
@@ -372,7 +372,7 @@ namespace PokemonUnity.Combat
 				{
 					attacker.form = (attacker.form + 1) % 2;
 					attacker.pbUpdate(true);
-					this.battle.scene.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//.Species);
+					if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//.Species);
 					battle.pbDisplay(Game._INTL("{1} transformed!", attacker.ToString()));
 					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{(attacker as Pokemon).Form.Pokemon.ToString(TextScripts.Name)}");
 				}
@@ -3161,8 +3161,8 @@ namespace PokemonUnity.Combat
 			attacker.HP = Math.Min(avhp, attacker.TotalHP);
 			opponent.HP = Math.Min(avhp, opponent.TotalHP);
 
-			this.battle.scene.pbHPChanged(attacker, olda);
-			this.battle.scene.pbHPChanged(opponent, oldo);
+			if (this.battle.scene is IPokeBattle_Scene s0) s0.pbHPChanged(attacker, olda);
+			if (this.battle.scene is IPokeBattle_Scene s1) s1.pbHPChanged(opponent, oldo);
 			battle.pbDisplay(Game._INTL("The battlers shared their pain!"));
 			return 0;
 		}
@@ -3595,7 +3595,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3636,7 +3636,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3686,7 +3686,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{attacker.ToString()}'s Illusion ended");
 				attacker.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", attacker.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3745,7 +3745,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3822,7 +3822,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
