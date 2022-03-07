@@ -19,7 +19,7 @@ namespace PokemonUnity.Attack
 	public class Move : PokemonEssentials.Interface.IMove
 	{
 		#region Properties
-		private MoveData _base { get; set; }
+		private MoveData _base { get { return Kernal.MoveData[id]; } } //{ get; set; }
 		private int pp { get; set; }
 		/// <summary>
 		/// The amount of PP remaining for this move
@@ -54,7 +54,6 @@ namespace PokemonUnity.Attack
 		/// </summary>
 		public int? Power			{ get; private set; } //{ get { return _base.basedamage; } }    
 		public int? Accuracy		{ get; private set; } //{ get { return _base.Accuracy; } }  
-		public Types type			{ get; private set; } //ToDo: Rename across entire solution
 		public Types Type			{ get; private set; } //{ get { return _base.Type; } }
 		public Targets Targets		{ get; private set; } //{ get { return _base.Target; } }
 		public Flag Flag			{ get; private set; } //{ get { return _base.Flags; } }      
@@ -66,7 +65,7 @@ namespace PokemonUnity.Attack
 		public int? EffectChance	{ get; private set; } //{ get { return _base.EffectChance; } }        
 		public Category Category	{ get; private set; } //{ get { return _base.Category; } }  
 		#endregion
-		public Moves id				{ get; private set; } //ToDo: Rename across entire solution
+		public Moves id				{ get; private set; }
 		/// <summary>
 		/// For Aerilate, Pixilate, Refrigerate
 		/// </summary>
@@ -78,7 +77,7 @@ namespace PokemonUnity.Attack
 		/// </summary>
 		public Move(Moves move = Moves.NONE)
 		{
-			initialize();
+			initialize(move);
 		}
 
 		/// <summary>
@@ -98,7 +97,7 @@ namespace PokemonUnity.Attack
 		public PokemonEssentials.Interface.IMove initialize(Moves move = Moves.NONE)
 		{
 			/*if (move != Moves.NONE)*/
-			_base	= Kernal.MoveData[move];
+			//_base	= Kernal.MoveData[move];
 			id		= move;
 			PPups	= 0;
 			PP		= _base.PP;
