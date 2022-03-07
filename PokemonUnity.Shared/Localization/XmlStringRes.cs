@@ -25,7 +25,7 @@ namespace PokemonUnity.Localization
 			_logger = logger;
 		}
 
-		public bool Initialize(string fileName, int languageId)
+		public bool Initialize(string fileName, int languageId = 0)
 		{
 			if (string.IsNullOrEmpty(fileName)) return false;
 

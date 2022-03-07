@@ -21,9 +21,9 @@ namespace PokemonEssentials.Interface.Screen
 	#region Pokemon Battle
 	public interface ISceneHasChatter
 	{
-		void pbChatter(IBattler attacker,ITrainer opponent);
+		void pbChatter(IBattler attacker,IBattler opponent);
 	}
-	public interface IPokeBattle_Scene : IScene, ISceneHasChatter
+	public interface IPokeBattle_Scene : IScene, ISceneHasChatter, IPokeBattle_DebugScene
 	{
 		//event EventHandler<PokeballThrowTargetArgs> OnPokeballThrown;
 		/*
@@ -231,23 +231,23 @@ namespace PokemonEssentials.Interface.Screen
 	}
 	#endregion
 	
-	public interface IPokeBattle_DebugScene : IScene//, IPokeBattle_Scene
+	public interface IPokeBattle_DebugScene : IScene, IPokeBattle_DebugSceneNoLogging
 	{
-		void pbDisplayMessage(string msg,bool brief= false);
-		void pbDisplayPausedMessage(string msg);
-		void pbDisplayConfirmMessage(string msg);
+		new void pbDisplayMessage(string msg,bool brief= false);
+		new void pbDisplayPausedMessage(string msg);
+		new void pbDisplayConfirmMessage(string msg);
 		void pbFrameUpdate(object cw);
 		//void pbRefresh();
 		/// <summary>
 		/// Called whenever a new round begins.
 		/// </summary>
-		void pbBeginCommandPhase();
-		void pbStartBattle(IBattle battle);
-		void pbEndBattle(PokemonUnity.Combat.BattleResults result);
-		void pbTrainerSendOut(IBattle battle,IPokemon pkmn);
-		void pbSendOut(IBattle battle,IPokemon pkmn);
-		void pbTrainerWithdraw(IBattle battle,IPokemon pkmn);
-		void pbWithdraw(IBattle battle,IPokemon pkmn);
+		new void pbBeginCommandPhase();
+		new void pbStartBattle(IBattle battle);
+		new void pbEndBattle(PokemonUnity.Combat.BattleResults result);
+		new void pbTrainerSendOut(IBattle battle,IPokemon pkmn);
+		new void pbSendOut(IBattle battle,IPokemon pkmn);
+		new void pbTrainerWithdraw(IBattle battle,IPokemon pkmn);
+		new void pbWithdraw(IBattle battle,IPokemon pkmn);
 		/// <summary>
 		/// Called whenever a Pokémon should forget a move. It should return -1 if the
 		/// selection is canceled, or 0 to 3 to indicate the move to forget.
@@ -255,22 +255,22 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		/// <param name="pkmn"></param>
 		/// <param name="move"></param>
-		void pbForgetMove(IPokemon pkmn,Moves move);
-		void pbBeginAttackPhase();
-		void pbCommandMenu(int index);
+		new void pbForgetMove(IPokemon pkmn,Moves move);
+		new void pbBeginAttackPhase();
+		new void pbCommandMenu(int index);
 		void pbPokemonString(IPokemon pkmn);
 		void pbMoveString(string move);
 		/// <summary>
 		/// Use this method to display the list of moves for a Pokémon
 		/// </summary>
 		/// <param name="index"></param>
-		void pbFightMenu(int index);
+		new void pbFightMenu(int index);
 		/// <summary>
 		/// Use this method to display the inventory
 		/// The return value is the item chosen, or 0 if the choice was canceled.
 		/// </summary>
 		/// <param name="index"></param>
-		void pbItemMenu(int index);
+		new void pbItemMenu(int index);
 		void pbFirstTarget(int index,int targettype);
 		void pbNextTarget(int cur,int index);
 		void pbPrevTarget(int cur,int index);
@@ -280,8 +280,8 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name=""></param>
-		void pbChooseTarget(int index,int targettype);
-		void pbSwitch(int index,bool lax,bool cancancel);
+		new void pbChooseTarget(int index,int targettype);
+		new void pbSwitch(int index,bool lax,bool cancancel);
 		/// <summary>
 		/// This method is called whenever a Pokémon's HP changes.
 		/// Used to animate the HP bar.
@@ -289,12 +289,46 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="pkmn"></param>
 		/// <param name="oldhp"></param>
 		/// <param name="anim"></param>
-		void pbHPChanged(IPokemon pkmn,int oldhp,bool anim= false);
+		new void pbHPChanged(IPokemon pkmn,int oldhp,bool anim= false);
 		/// <summary>
 		/// This method is called whenever a Pokémon faints
 		/// </summary>
 		/// <param name="pkmn"></param>
-		void pbFainted(IPokemon pkmn);
+		new void pbFainted(IPokemon pkmn);
+		new void pbChooseEnemyCommand(int index);
+		/// <summary>
+		/// Use this method to choose a new Pokémon for the enemy
+		/// The enemy's party is guaranteed to have at least one choosable member.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <param name="party"></param>
+		new void pbChooseNewEnemy(int index,IPokemon[] party);
+		/// <summary>
+		/// This method is called when the player wins a wild Pokémon battle.
+		/// This method can change the battle's music for example.
+		/// </summary>
+		new void pbWildBattleSuccess();
+		/// <summary>
+		/// This method is called when the player wins a Trainer battle.
+		/// This method can change the battle's music for example.
+		/// </summary>
+		new void pbTrainerBattleSuccess();
+		new void pbEXPBar(IBattler battler,IPokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
+		new void pbLevelUp(IBattler battler,IPokemon thispoke,int oldtotalhp,int oldattack,
+			int olddefense,int oldspeed,int oldspatk,int oldspdef);
+		new void pbShowOpponent(ITrainer opp);
+		new void pbHideOpponent();
+		new void pbRecall(int battlerindex);
+		new void pbDamageAnimation(IPokemon pkmn,TypeEffective effectiveness);
+		new void pbAnimation(Moves moveid,IBattler attacker,IBattler opponent,int hitnum= 0);
+	}
+	public interface IPokeBattle_SceneNonInteractive : IScene
+	{
+		void pbCommandMenu(int index);
+		void pbFightMenu(int index);
+		void pbItemMenu(int index);
+		void pbChooseTarget(int index,int targettype);
+		int pbSwitch(int index,bool lax,bool cancancel);
 		void pbChooseEnemyCommand(int index);
 		/// <summary>
 		/// Use this method to choose a new Pokémon for the enemy
@@ -303,6 +337,105 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="index"></param>
 		/// <param name="party"></param>
 		void pbChooseNewEnemy(int index,IPokemon[] party);
+	}
+	public interface IPokeBattle_DebugSceneNoLogging : IScene, ISceneHasChatter, IPokeBattle_DebugSceneNoGraphics
+	{
+		new void pbDisplayMessage(string msg,bool brief= false);
+		new void pbDisplayPausedMessage(string msg);
+		new bool pbDisplayConfirmMessage(string msg);
+		new int pbShowCommands(string msg,string[] commands,bool defaultValue);
+		new void pbBeginCommandPhase();
+		new void pbStartBattle(IBattle battle);
+		new void pbEndBattle(BattleResults result);
+		new void pbTrainerSendOut(IBattle battle,IPokemon pkmn);
+		new void pbSendOut(IBattle battle,IPokemon pkmn);
+		new void pbTrainerWithdraw(IBattle battle,IPokemon pkmn);
+		new void pbWithdraw(IBattle battle,IPokemon pkmn);
+		new int pbForgetMove(IPokemon pkmn,Moves move);
+		new void pbBeginAttackPhase();
+		new int pbCommandMenu(int index);
+		new int pbFightMenu(int index);
+		new int pbItemMenu(int index);
+		new int pbChooseTarget(int index,int targettype);
+		//void pbRefresh();
+		new int pbSwitch(int index,bool lax,bool cancancel);
+		new void pbHPChanged(IPokemon pkmn,int oldhp,bool anim= false);
+		new void pbFainted(IPokemon pkmn);
+		new void pbChooseEnemyCommand(int index);
+		new void pbChooseNewEnemy(int index,IPokemon[] party);
+		new void pbWildBattleSuccess();
+		new void pbTrainerBattleSuccess();
+		new void pbEXPBar(IBattler battler,IPokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
+		new void pbLevelUp(IBattler battler,IPokemon thispoke,int oldtotalhp,int oldattack,
+			int olddefense,int oldspeed,int oldspatk,int oldspdef);
+		new int pbBlitz(int keys);
+		//new void pbChatter(IBattler attacker,IBattler opponent);
+		new void pbShowOpponent(ITrainer opp);
+		new void pbHideOpponent();
+		new void pbRecall(int battlerindex);
+		new void pbDamageAnimation(IPokemon pkmn,TypeEffective effectiveness);
+		new void pbBattleArenaJudgment(IBattle b1,IBattle b2, int[] r1, int[] r2);
+		new void pbBattleArenaBattlers(IBattle b1,IBattle b2);
+		new void pbCommonAnimation(Moves moveid,IBattler attacker,IBattler opponent,int hitnum= 0);
+		new void pbAnimation(Moves moveid,IBattler attacker,IBattler opponent,int hitnum= 0);
+	}
+	public interface IPokeBattle_DebugSceneNoGraphics : IScene, ISceneHasChatter, IPokeBattle_SceneNonInteractive
+	{
+		void initialize();
+		void pbDisplayMessage(string msg, bool brief = false);
+		void pbDisplayPausedMessage(string msg);
+		bool pbDisplayConfirmMessage(string msg);
+		int pbShowCommands(string msg, string[] commands, bool defaultValue);
+		/// <summary>
+		/// Called whenever a new round begins.
+		/// </summary>
+		void pbBeginCommandPhase();
+		/// <summary>
+		/// Called whenever the battle begins
+		/// </summary>
+		/// <param name="battle"></param>
+		void pbStartBattle(IBattle battle);
+		void pbEndBattle(BattleResults result);
+		void pbTrainerSendOut(IBattle battle, IPokemon pkmn);
+		void pbSendOut(IBattle battle, IPokemon pkmn);
+		void pbTrainerWithdraw(IBattle battle, IPokemon pkmn);
+		void pbWithdraw(IBattle battle, IPokemon pkmn);
+		/// <summary>
+		/// Called whenever a Pokémon should forget a move.  It should return -1 if the
+		/// selection is canceled, or 0 to 3 to indicate the move to forget.
+		/// The function should not allow HM moves to be forgotten.
+		/// </summary>
+		/// <param name="pkmn"></param>
+		/// <param name="move"></param>
+		int pbForgetMove(IPokemon pkmn, Moves move);
+		void pbBeginAttackPhase();
+		new int pbCommandMenu(int index);
+		new int pbFightMenu(int index);
+		new int pbItemMenu(int index);
+		new int pbChooseTarget(int index, int targettype);
+		//void pbRefresh();
+		new int pbSwitch(int index, bool lax, bool cancancel);
+		/// <summary>
+		/// This method is called whenever a Pokémon's HP changes.
+		/// Used to animate the HP bar.
+		/// </summary>
+		/// <param name="pkmn"></param>
+		/// <param name="oldhp"></param>
+		/// <param name="anim"></param>
+		void pbHPChanged(IPokemon pkmn, int oldhp, bool anim = false);
+		/// <summary>
+		/// This method is called whenever a Pokémon faints
+		/// </summary>
+		/// <param name="pkmn"></param>
+		void pbFainted(IPokemon pkmn);
+		new void pbChooseEnemyCommand(int index);
+		/// <summary>
+		/// Use this method to choose a new Pokémon for the enemy
+		/// The enemy's party is guaranteed to have at least one choosable member.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <param name="party"></param>
+		new void pbChooseNewEnemy(int index, IPokemon[] party);
 		/// <summary>
 		/// This method is called when the player wins a wild Pokémon battle.
 		/// This method can change the battle's music for example.
@@ -313,71 +446,18 @@ namespace PokemonEssentials.Interface.Screen
 		/// This method can change the battle's music for example.
 		/// </summary>
 		void pbTrainerBattleSuccess();
-		void pbEXPBar(IBattler battler,IPokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
-		void pbLevelUp(IBattler battler,IPokemon thispoke,int oldtotalhp,int oldattack,
-			int olddefense,int oldspeed,int oldspatk,int oldspdef);
-		void pbShowOpponent(ITrainer opp);
-		void pbHideOpponent();
-		void pbRecall(int battlerindex);
-		void pbDamageAnimation(IPokemon pkmn,TypeEffective effectiveness);
-		void pbAnimation(Moves moveid,IBattler attacker,IBattler opponent,int hitnum= 0);
-	}
-	public interface IPokeBattle_SceneNonInteractive : IScene//, IPokeBattle_Scene
-	{
-		void pbCommandMenu(int index);
-		void pbFightMenu(int index);
-		void pbItemMenu(int index);
-		void pbChooseTarget(int index,int targettype);
-		void pbSwitch(int index,bool lax,bool cancancel);
-		void pbChooseEnemyCommand(int index);
-		/// <summary>
-		/// Use this method to choose a new Pokémon for the enemy
-		/// The enemy's party is guaranteed to have at least one choosable member.
-		/// </summary>
-		/// <param name="index"></param>
-		/// <param name="party"></param>
-		void pbChooseNewEnemy(int index,IPokemon[] party);
-	}
-	public interface IPokeBattle_DebugSceneNoLogging : IScene//, IPokeBattle_Scene
-	{
-		void pbDisplayMessage(string msg,bool brief= false);
-		void pbDisplayPausedMessage(string msg);
-		bool pbDisplayConfirmMessage(string msg);
-		int pbShowCommands(string msg,string[] commands,bool defaultValue);
-		void pbBeginCommandPhase();
-		void pbStartBattle(IBattle battle);
-		void pbEndBattle(BattleResults result);
-		void pbTrainerSendOut(IBattle battle,IPokemon pkmn);
-		void pbSendOut(IBattle battle,IPokemon pkmn);
-		void pbTrainerWithdraw(IBattle battle,IPokemon pkmn);
-		void pbWithdraw(IBattle battle,IPokemon pkmn);
-		int pbForgetMove(IPokemon pkmn,Moves move);
-		void pbBeginAttackPhase();
-		int pbCommandMenu(int index);
-		int pbFightMenu(int index);
-		int pbItemMenu(int index);
-		int pbChooseTarget(int index,int targettype);
-		//void pbRefresh();
-		int pbSwitch(int index,bool lax,bool cancancel);
-		void pbHPChanged(IPokemon pkmn,int oldhp,bool anim= false);
-		void pbFainted(IPokemon pkmn);
-		void pbChooseEnemyCommand(int index);
-		void pbChooseNewEnemy(int index,IPokemon[] party);
-		void pbWildBattleSuccess();
-		void pbTrainerBattleSuccess();
-		void pbEXPBar(IBattler battler,IPokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
-		void pbLevelUp(IBattler battler,IPokemon thispoke,int oldtotalhp,int oldattack,
-			int olddefense,int oldspeed,int oldspatk,int oldspdef);
+		void pbEXPBar(IBattler battler, IPokemon thispoke, int startexp, int endexp, int tempexp1, int tempexp2);
+		void pbLevelUp(IBattler battler, IPokemon thispoke, int oldtotalhp, int oldattack,
+			int olddefense, int oldspeed, int oldspatk, int oldspdef);
 		int pbBlitz(int keys);
-		void pbChatter(IBattle attacker,IBattle opponent);
+		//void pbChatter(IBattler attacker, IBattler opponent);
 		void pbShowOpponent(ITrainer opp);
 		void pbHideOpponent();
 		void pbRecall(int battlerindex);
-		void pbDamageAnimation(IPokemon pkmn,TypeEffective effectiveness);
-		void pbBattleArenaJudgment(IBattle b1,IBattle b2, int[] r1, int[] r2);
-		void pbBattleArenaBattlers(IBattle b1,IBattle b2);
-		void pbCommonAnimation(Moves moveid,IBattle attacker,IBattle opponent,int hitnum= 0);
-		void pbAnimation(Moves moveid,IBattle attacker,IBattle opponent,int hitnum= 0);
+		void pbDamageAnimation(IPokemon pkmn, TypeEffective effectiveness);
+		void pbBattleArenaJudgment(IBattle b1, IBattle b2, int[] r1, int[] r2);
+		void pbBattleArenaBattlers(IBattle b1, IBattle b2);
+		void pbCommonAnimation(Moves moveid, IBattler attacker, IBattler opponent, int hitnum = 0);
+		void pbAnimation(Moves moveid, IBattler attacker, IBattler opponent, int hitnum = 0);
 	}
-	public interface IPokeBattle_DebugSceneNoGraphics : IScene { }
 }

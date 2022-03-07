@@ -4886,7 +4886,7 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public int pbDefaultChooseNewEnemy(int index,IBattler[] party) {
+		public int pbDefaultChooseNewEnemy(int index,IPokemon[] party) {
 			List<int> enemies=new List<int>();
 			for (int i = 0; i < party.Length-1; i++) {
 				if (pbCanSwitchLax(index,i,false)) {
@@ -4899,7 +4899,7 @@ namespace PokemonUnity.Combat
 			return -1;
 		}
 
-		public int pbChooseBestNewEnemy(int index,IBattler[] party,int[] enemies) {
+		public int pbChooseBestNewEnemy(int index,IPokemon[] party,int[] enemies) {
 			if (enemies == null || enemies.Length==0) return -1;
 			if (Game.GameData.PokemonTemp == null) Game.GameData.PokemonTemp=new PokemonTemp().initialize();
 			IBattler o1=@battlers[index].pbOpposing1;
@@ -4909,7 +4909,7 @@ namespace PokemonUnity.Combat
 			int best=-1;
 			int bestSum=0;
 			foreach (int e in enemies) {
-				IBattler pkmn=party[e];
+				IPokemon pkmn=party[e];
 				int sum=0;
 				foreach (var move in pkmn.moves) {
 					if (move.id==0) continue;

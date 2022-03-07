@@ -21,7 +21,7 @@ namespace PokemonUnity.Utility
 			return string.Join(separator, source.ToArray());
 		}
 
-		/*// <summary>
+		/// <summary>
 		/// Concatenates the members of a collection, using the specified separator between each member.
 		/// This is a shortcut for string.Join(...)
 		/// </summary>
@@ -31,8 +31,11 @@ namespace PokemonUnity.Utility
 		/// <returns>A string that consists of the members of values delimited by the separator string. If values has no members, the method returns System.String.Empty.</returns>
 		public static string JoinAsString<T>(this IEnumerable<T> source, string separator)
 		{
-			return string.Join(separator, source);
-		}*/
+			IList<string> s = new List<string>();
+			Array.ForEach(source.ToArray(), (x) => s.Add(s.ToString()));
+			//return string.Join(separator, s.ToArray());
+			return s.JoinAsString(separator);
+		}
 
 		/// <summary>
 		/// Filters a <see cref="IEnumerable{T}"/> by given predicate if given condition is true.

@@ -69,9 +69,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		bool pbEnemyShouldWithdrawEx(int index, bool alwaysSwitch);
 
-		int pbDefaultChooseNewEnemy(int index, IBattler[] party);
+		int pbDefaultChooseNewEnemy(int index, IPokemon[] party);
 
-		int pbChooseBestNewEnemy(int index, IBattler[] party, int[] enemies);
+		int pbChooseBestNewEnemy(int index, IPokemon[] party, int[] enemies);
 		#endregion
 
 		#region Choose an action.

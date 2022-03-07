@@ -228,23 +228,23 @@ namespace PokemonUnity.Combat
 		#region Constructor
 		/// <summary>
 		/// </summary>
-		public Battle(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent)
+		public Battle(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent)
 		{
 			(this as IBattle).initialize(scene, p1, p2, player, opponent);
 		}
-		public Battle(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
+		public Battle(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
 		{
 			(this as IBattle).initialize(scene, p1, p2, player, opponent);
 		}
-		IBattle IBattle.initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent)
+		IBattle IBattle.initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent)
 		{
 			return initialize(scene, p1, p2, player == null ? null : new ITrainer[] { player }, opponent == null ? null : new ITrainer[] { opponent });
 		}
-		IBattle IBattle.initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
+		IBattle IBattle.initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
 		{
 			return initialize(scene, p1, p2, player, opponent);
 		}
-		public IBattle initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent, int maxBattlers = 4)
+		public IBattle initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent, int maxBattlers = 4)
 		{
 			//if opponent (trainer battle) is not null but player array is empty, then player is null
 			//if (opponent != null && player.Length == 0)
@@ -275,7 +275,7 @@ namespace PokemonUnity.Combat
 				return this;
 			}
 
-			this.scene = scene;
+			this.scene = scene as IPokeBattle_Scene;
 			decision = 0;
 			internalbattle = Core.INTERNAL;
 			doublebattle = false;
@@ -1363,7 +1363,7 @@ namespace PokemonUnity.Combat
 				quickclaw[i]=false;
 				lagging[i]=false;
 				//if (!ignorequickclaw && @choices[i][0]==1) { // Chose to use a move
-				if (!ignorequickclaw && @choices[i].Action==ChoiceAction.UseMove) {
+				if (!ignorequickclaw && @choices[i]?.Action==ChoiceAction.UseMove) {
 					if (!quickclaw[i] && @battlers[i].hasWorkingItem(Items.CUSTAP_BERRY) &&
 						!@battlers[i].pbOpposing1.hasWorkingAbility(Abilities.UNNERVE) &&
 						!@battlers[i].pbOpposing2.hasWorkingAbility(Abilities.UNNERVE)) {
@@ -1397,7 +1397,7 @@ namespace PokemonUnity.Combat
 			for (int i = 0; i < battlers.Length; i++) {
 				// Assume that doing something other than using a move is priority 0
 				int pri=0;
-				if (@choices[i].Action==ChoiceAction.UseMove) { // Chose to use a move
+				if (@choices[i]?.Action==ChoiceAction.UseMove) { // Chose to use a move
 					pri=@choices[i].Move.Priority;
 					if (@battlers[i].hasWorkingAbility(Abilities.PRANKSTER) &&
 						@choices[i].Move.pbIsStatus) pri+=1;
@@ -1427,7 +1427,7 @@ namespace PokemonUnity.Combat
 					@priority[@priority.Length]=@battlers[temp[0]]; //ToDo: Redo this, maybe use Math.Min to sort..
 				}
 				else if (temp.Count>1) {
-					int n=temp.Count;
+					int n=temp.Count - 1;
 					for (int m = 0; m < temp.Count-1; m++) {
 						for (int i = 1; i < temp.Count; i++) {
 							// For each pair of battlers, rank the second compared to the first
@@ -2560,7 +2560,7 @@ namespace PokemonUnity.Combat
 			@usepriority=false;
 			IBattler[] priority=pbPriority();
 			foreach (var i in priority) {
-				i.pbAbilitiesOnSwitchIn(true);
+				i?.pbAbilitiesOnSwitchIn(true);
 			}
 			// Check forms are correct
 			for (int i = 0; i < battlers.Length; i++) {

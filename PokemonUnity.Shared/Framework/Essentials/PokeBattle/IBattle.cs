@@ -190,9 +190,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int pbAIRandom(int x);
 
 		#region Initialise battle class.
-		IBattle initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent);
-		IBattle initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
-		//IBattle initialize(IPokeBattle_Scene scene, IList<IPokemon> p1, IList<IPokemon> p2, IList<ITrainer> player, IList<ITrainer> opponent);
+		IBattle initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent);
+		IBattle initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
+		//IBattle initialize(IScene scene, IList<IPokemon> p1, IList<IPokemon> p2, IList<ITrainer> player, IList<ITrainer> opponent);
 		#endregion
 
 		#region Info about battle.
