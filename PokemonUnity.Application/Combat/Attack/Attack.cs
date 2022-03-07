@@ -35,19 +35,19 @@ namespace PokemonUnity.Combat
 		protected int calcbasedmg { get; set; }
 		//public int BaseDamage { get; set; }
 		//public byte PP { get; set; }
-		protected byte accuracy { get; set; }
+		protected byte accuracy { get { return (byte)Accuracy; } set { Accuracy = value; } }
 		//public List<byte> participants { get; set; }
 		//public PokemonUnity.Attack.Effect function { get; set; }
 		//public Items berry { get; set; }
-		public Moves id { get; set; }
-		public Types type { get; set; }
+		public Moves id { get { return MoveId; } set { MoveId = value; } }
+		public Types type { get { return Type; } set { Type = value; } }
 		//public Battle battle { get; set; }
 		//public virtual int AddlEffect { get { return thismove.AddlEffect; } }
 		//public Attack.Move thismove { get; set; }
 		//Moves	IBattleMove.id					{ get; set; }
 		//IBattle	IBattleMove.battle				{ get; set; }
 		//string	IBattleMove.Name				{ get; }
-		int		IBattleMove.basedamage			{ get; set; }
+		int		IBattleMove.basedamage			{ get { return Power; } set { Power = value; } }
 		//Types	IBattleMove.Type				{ get; set; }
 		//int		IBattleMove.Accuracy			{ get; set; }
 		//int		IBattleMove.AddlEffect			{ get; }

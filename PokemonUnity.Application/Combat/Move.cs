@@ -111,6 +111,8 @@ namespace PokemonUnity.Combat
 			if (Kernal.MoveEffectData.ContainsKey(effect)) //move.Effect
 				return Kernal.MoveEffectData[effect].initialize(battle, move);
 				//return move.Effect.ToBattleMove().Initialize(battle, move);
+			else if (effect.ToBattleMove() is IBattleMove m && m != null) //move.Effect
+				return m.initialize(battle, move);
 			else
 				return new PokeBattle_UnimplementedMove().Initialize(battle, move);
 		}
@@ -1168,7 +1170,7 @@ namespace PokemonUnity.Combat
 		}
 
 		public virtual int pbEffect(IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
-			if (opponent.Species == Pokemons.NONE)return 0;
+			if (!opponent.IsNotNullOrNone()) return 0; //.Species == Pokemons.NONE
 			int damage = pbCalcDamage(attacker, opponent);
 			if (opponent.damagestate.TypeMod!=0)
 				pbShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
