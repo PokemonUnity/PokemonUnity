@@ -3147,7 +3147,7 @@ namespace PokemonUnity.Combat
 							if (cmd==MenuCommands.FIGHT) { // Fight
 								if (CanShowFightMenu(i)) {
 									if (pbAutoFightMenu(i)) commandDone=true;
-									if(!commandDone) {
+									do {
 										int index=(@scene as IPokeBattle_SceneNonInteractive).pbFightMenu(i);
 										if (index<0) {
 											int side=(pbIsOpposing(i)) ? 1 : 0;
@@ -3163,7 +3163,8 @@ namespace PokemonUnity.Combat
 											//Attack.Target target=@battlers[i].pbTarget(thismove);
 											Attack.Data.Targets targets=@battlers[i].pbTarget(thismove);
 											//if (target==Attack.Target.SingleNonUser) {            // single non-user
-											if (targets==Attack.Data.Targets.SELECTED_POKEMON) {    // single non-user
+											if (targets==Attack.Data.Targets.SELECTED_POKEMON ||	// single non-user
+												targets==Attack.Data.Targets.SELECTED_POKEMON_ME_FIRST) {
 												int target=(@scene as IPokeBattle_SceneNonInteractive).pbChooseTarget(i,targets);
 												if (target<0) continue;
 												pbRegisterTarget(i,target);
@@ -3174,16 +3175,17 @@ namespace PokemonUnity.Combat
 												if (target<0 || (target%2)==1) continue; //no choice or enemy
 												pbRegisterTarget(i,target);
 											}
+											//ToDo: Else... random selected pokemon (not target select, but still register target)
 										}
 										commandDone=true;
-									}
+									} while (!commandDone);
 								}
 								else {
 									pbAutoChooseMove(i);
 									commandDone=true;
 								}
 							}
-							else if (cmd!=0 && @battlers[i].effects.SkyDrop) {
+							else if (cmd!=MenuCommands.FIGHT && @battlers[i].effects.SkyDrop) {
 								pbDisplay(Game._INTL("Sky Drop won't let {1} go!",@battlers[i].ToString(true)));
 							}
 							else if (cmd==MenuCommands.BAG) { // Bag
@@ -3247,7 +3249,7 @@ namespace PokemonUnity.Combat
 								return;
 							}
 							if (commandDone) break;
-						} while (!commandDone);
+						} while (true);
 					}
 				}
 			}
