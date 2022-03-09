@@ -412,12 +412,12 @@ namespace PokemonUnity.Combat
 		public virtual void pbStorePokemon(IPokemon pokemon)
 		{
 			if(pokemon is IPokemonShadowPokemon p && !p.isShadow)
-				if (pbDisplayConfirm(Game._INTL("Would you like to give a nickname to {1}?", pokemon.Species.ToString(TextScripts.Name))))
+				if (pbDisplayConfirm(Game._INTL("Would you like to give a nickname to {1}?", Game._INTL(pokemon.Species.ToString(TextScripts.Name)))))
 				{
-					//string nick = @scene.pbNameEntry(Game._INTL("{1}'s nickname?", pokemon.Species.ToString(TextScripts.Name)), pokemon);
+					//string nick = @scene.pbNameEntry(Game._INTL("{1}'s nickname?", Game._INTL(pokemon.Species.ToString(TextScripts.Name))), pokemon);
 					string nick = string.Empty;
 					if (@scene is IPokeBattle_Scene s0)
-						nick = s0.pbNameEntry(Game._INTL("{1}'s nickname?", pokemon.Species.ToString(TextScripts.Name)), pokemon);
+						nick = s0.pbNameEntry(Game._INTL("{1}'s nickname?", Game._INTL(pokemon.Species.ToString(TextScripts.Name))), pokemon);
 					//if(!string.IsNullOrEmpty(nick)) pokemon.Name = nick;
 					if(!string.IsNullOrEmpty(nick)) (pokemon as Monster.Pokemon).SetNickname(nick);
 				}
@@ -848,7 +848,7 @@ namespace PokemonUnity.Combat
 				foreach (Items i in Core.MEGARINGS) {
 					//if (!hasConst(PBItems,i)) continue;
 					if (Game.GameData.Bag.pbQuantity(i)>0) return Game._INTL(i.ToString(TextScripts.Name));
-					//if (Game.GameData.Player.Bag.GetItemAmount(i)>0) return i.ToString(TextScripts.Name);
+					//if (Game.GameData.Player.Bag.GetItemAmount(i)>0) return Game._INTL(i.ToString(TextScripts.Name));
 				}
 			}
 			// Add your own Mega objects for particular trainer types here
@@ -1202,7 +1202,7 @@ namespace PokemonUnity.Combat
 				return false;
 			}
 			if (thispkmn.hasWorkingItem(Items.ASSAULT_VEST)) {// && thismove.IsStatus?
-				if (showMessages) pbDisplayPaused(Game._INTL("The effects of the {1} prevent status moves from being used!", thispkmn.Item.ToString(TextScripts.Name)));
+				if (showMessages) pbDisplayPaused(Game._INTL("The effects of the {1} prevent status moves from being used!", Game._INTL(thispkmn.Item.ToString(TextScripts.Name))));
 				return false;
 			}
 			if ((int)thispkmn.effects.ChoiceBand >= 0 &&
@@ -1218,8 +1218,8 @@ namespace PokemonUnity.Combat
 				if (hasmove && thismove.id != thispkmn.effects.ChoiceBand) {
 					if (showMessages)
 						pbDisplayPaused(Game._INTL("{1} allows the use of only {2}!",
-							thispkmn.Item.ToString(TextScripts.Name),
-							thispkmn.effects.ChoiceBand.ToString(TextScripts.Name)));
+							Game._INTL(thispkmn.Item.ToString(TextScripts.Name)),
+							Game._INTL(thispkmn.effects.ChoiceBand.ToString(TextScripts.Name))));
 					return false;
 				}
 			}
@@ -1230,8 +1230,8 @@ namespace PokemonUnity.Combat
 					thismove.id == opp1.moves[2].id ||
 					thismove.id == opp1.moves[3].id)
 				{
-					if (showMessages) pbDisplayPaused(Game._INTL("{1} can't use the sealed {2}!", thispkmn.ToString(), thismove.id.ToString(TextScripts.Name)));
-					GameDebug.Log($"[CanChoose][#{opp1.ToString()} has: #{opp1.moves[0].id.ToString(TextScripts.Name)}, #{opp1.moves[1].id.ToString(TextScripts.Name)}, #{opp1.moves[2].id.ToString(TextScripts.Name)}, #{opp1.moves[3].id.ToString(TextScripts.Name)}]");
+					if (showMessages) pbDisplayPaused(Game._INTL("{1} can't use the sealed {2}!", thispkmn.ToString(), Game._INTL(thismove.id.ToString(TextScripts.Name))));
+					GameDebug.Log($"[CanChoose][#{opp1.ToString()} has: #{Game._INTL(opp1.moves[0].id.ToString(TextScripts.Name))}, #{Game._INTL(opp1.moves[1].id.ToString(TextScripts.Name))}, #{Game._INTL(opp1.moves[2].id.ToString(TextScripts.Name))}, #{Game._INTL(opp1.moves[3].id.ToString(TextScripts.Name))}]");
 					return false;
 				}
 			}
@@ -1242,13 +1242,13 @@ namespace PokemonUnity.Combat
 					 thismove.id == opp2.moves[2].id ||
 					 thismove.id == opp2.moves[3].id)
 				{
-					if (showMessages) pbDisplayPaused(Game._INTL("{1} can't use the sealed {2}!", thispkmn.ToString(), thismove.id.ToString(TextScripts.Name)));
-					GameDebug.Log($"[CanChoose][#{opp2.ToString()} has: #{opp2.moves[0].id.ToString(TextScripts.Name)}, #{opp2.moves[1].id.ToString(TextScripts.Name)}, #{opp2.moves[2].id.ToString(TextScripts.Name)}, #{opp2.moves[3].id.ToString(TextScripts.Name)}]");
+					if (showMessages) pbDisplayPaused(Game._INTL("{1} can't use the sealed {2}!", thispkmn.ToString(), Game._INTL(thismove.id.ToString(TextScripts.Name))));
+					GameDebug.Log($"[CanChoose][#{opp2.ToString()} has: #{Game._INTL(opp2.moves[0].id.ToString(TextScripts.Name))}, #{Game._INTL(opp2.moves[1].id.ToString(TextScripts.Name))}, #{Game._INTL(opp2.moves[2].id.ToString(TextScripts.Name))}, #{Game._INTL(opp2.moves[3].id.ToString(TextScripts.Name))}]");
 					return false;
 				}
 			}
 			if (thispkmn.effects.Taunt > 0 && thismove.basedamage == 0) {
-				if (showMessages) pbDisplayPaused(Game._INTL("{1} can't use {2} after the taunt!", thispkmn.ToString(), thismove.id.ToString(TextScripts.Name)));
+				if (showMessages) pbDisplayPaused(Game._INTL("{1} can't use {2} after the taunt!", thispkmn.ToString(), Game._INTL(thismove.id.ToString(TextScripts.Name))));
 				return false;
 			}
 			if (thispkmn.effects.Torment) {
@@ -1258,7 +1258,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			if (thismove.id==thispkmn.effects.DisableMove && !sleeptalk) {
-				if (showMessages) pbDisplayPaused(Game._INTL("{1}'s {2} is disabled!", thispkmn.ToString(), thismove.id.ToString(TextScripts.Name)));
+				if (showMessages) pbDisplayPaused(Game._INTL("{1}'s {2} is disabled!", thispkmn.ToString(), Game._INTL(thismove.id.ToString(TextScripts.Name))));
 				return false;
 			}
 			if (thismove.Effect==Attack.Data.Effects.x153 && // ToDo: Belch
@@ -1283,7 +1283,7 @@ namespace PokemonUnity.Combat
 			}
 			if (thispkmn.effects.Encore>0 &&
 				CanChooseMove(idxPokemon,thispkmn.effects.EncoreIndex,false)) {
-				GameDebug.Log($"[Auto choosing Encore move] #{thispkmn.moves[thispkmn.effects.EncoreIndex].id.ToString(TextScripts.Name)}");
+				GameDebug.Log($"[Auto choosing Encore move] #{Game._INTL(thispkmn.moves[thispkmn.effects.EncoreIndex].id.ToString(TextScripts.Name))}");
 				//@choices[idxPokemon][0]=1;    // "Use move"
 				//@choices[idxPokemon][1]=thispkmn.effects.EncoreIndex; // Index of move
 				//@choices[idxPokemon][2]=thispkmn.moves[thispkmn.effects.EncoreIndex];
@@ -1375,7 +1375,7 @@ namespace PokemonUnity.Combat
 							pbCommonAnimation("UseItem",@battlers[i],null);
 							quickclaw[i]=true;
 							pbDisplayBrief(Game._INTL("{1}'s {2} let it move first!",
-								@battlers[i].ToString(),@battlers[i].Item.ToString(TextScripts.Name)));
+								@battlers[i].ToString(),Game._INTL(@battlers[i].Item.ToString(TextScripts.Name))));
 							@battlers[i].pbConsumeItem();
 						}
 					}
@@ -1384,7 +1384,7 @@ namespace PokemonUnity.Combat
 							pbCommonAnimation("UseItem",@battlers[i],null);
 							quickclaw[i]=true;
 							pbDisplayBrief(Game._INTL("{1}'s {2} let it move first!",
-								@battlers[i].ToString(),@battlers[i].Item.ToString(TextScripts.Name)));
+								@battlers[i].ToString(),Game._INTL(@battlers[i].Item.ToString(TextScripts.Name))));
 						}
 					}
 					if (!quickclaw[i] &&
@@ -1587,7 +1587,7 @@ namespace PokemonUnity.Combat
 				if (opp2.hasWorkingAbility(Abilities.SHADOW_TAG)) opp=opp2;
 			}
 			if (opp.IsNotNullOrNone()) {
-				string abilityname=opp.Ability.ToString(TextScripts.Name);
+				string abilityname=Game._INTL(opp.Ability.ToString(TextScripts.Name));
 				if (showMessages) pbDisplayPaused(Game._INTL("{1}'s {2} prevents switching!",opp.ToString(),abilityname));
 				return false;
 			}
@@ -1815,8 +1815,8 @@ namespace PokemonUnity.Combat
 			IBattler battler=null;
 			string name=pbGetOwner(userPkmn.Index).name;
 			if (pbBelongsToPlayer(userPkmn.Index)) name=pbGetOwner(userPkmn.Index).name;
-			pbDisplayBrief(Game._INTL("{1} used the\r\n{2}.",name,item.ToString(TextScripts.Name)));
-			GameDebug.Log($"[Use item] Player used #{item.ToString(TextScripts.Name)} on #{pokemon.Name}");
+			pbDisplayBrief(Game._INTL("{1} used the\r\n{2}.",name,Game._INTL(item.ToString(TextScripts.Name))));
+			GameDebug.Log($"[Use item] Player used #{Game._INTL(item.ToString(TextScripts.Name))} on #{pokemon.Name}");
 			bool ret=false;
 			if (pokemon.isEgg) {
 				pbDisplay(Game._INTL("But it had no effect!"));
@@ -1850,7 +1850,7 @@ namespace PokemonUnity.Combat
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		public bool pbUseItemOnBattler(Items item,int index,IBattler userPkmn,IHasDisplayMessage scene) {
-			GameDebug.Log($"[Use item] Player used #{item.ToString(TextScripts.Name)} on #{@battlers[index].ToString(true)}");
+			GameDebug.Log($"[Use item] Player used #{Game._INTL(item.ToString(TextScripts.Name))} on #{@battlers[index].ToString(true)}");
 			bool ret=ItemHandlers.triggerBattleUseOnBattler(item,@battlers[index],scene);
 			if (!ret && pbBelongsToPlayer(userPkmn.Index)) {
 				if (Game.GameData.Bag.pbCanStore(item)) {
@@ -1935,7 +1935,7 @@ namespace PokemonUnity.Combat
 					break;
 				}
 			}
-			string itemname=item.ToString(TextScripts.Name);
+			string itemname=Game._INTL(item.ToString(TextScripts.Name));
 			pbDisplayBrief(Game._INTL("{1} used the\r\n{2}!",opponent.name,itemname));
 			GameDebug.Log($"[Use item] Opponent used #{itemname} on #{battler.ToString(true)}");
 			if (item == Items.POTION) {
@@ -2076,7 +2076,7 @@ namespace PokemonUnity.Combat
 					pbDisplayPaused(Game._INTL("Got away safely!"));
 				}
 				else {
-					pbDisplayPaused(Game._INTL("{1} escaped using its {2}!",thispkmn.ToString(),thispkmn.Item.ToString(TextScripts.Name)));
+					pbDisplayPaused(Game._INTL("{1} escaped using its {2}!",thispkmn.ToString(),Game._INTL(thispkmn.Item.ToString(TextScripts.Name))));
 				}
 				@decision=BattleResults.FORFEIT;
 				return 1;
@@ -2151,7 +2151,7 @@ namespace PokemonUnity.Combat
 				//  break;
 			} else { //default:
 				pbDisplay(Game._INTL("{1}'s {2} is reacting to {3}'s {4}!",
-					@battlers[index].ToString(),@battlers[index].Item.ToString(TextScripts.Name),
+					@battlers[index].ToString(),Game._INTL(@battlers[index].Item.ToString(TextScripts.Name)),
 					ownername,pbGetMegaRingName(index)));
 				//  break;
 			}
@@ -2163,7 +2163,7 @@ namespace PokemonUnity.Combat
 			pbCommonAnimation("MegaEvolution2",@battlers[index],null);
 			string meganame=@battlers[index].pokemon.Name; //megaName rescue null
 			if (string.IsNullOrEmpty(meganame)) {
-				meganame=Game._INTL("Mega {1}",@battlers[index].pokemon.Species.ToString(TextScripts.Name));
+				meganame=Game._INTL("Mega {1}",Game._INTL(@battlers[index].pokemon.Species.ToString(TextScripts.Name)));
 			}
 			pbDisplay(Game._INTL("{1} has Mega Evolved into {2}!",@battlers[index].ToString(),meganame));
 			GameDebug.Log($"[Mega Evolution] #{@battlers[index].ToString()} Mega Evolved");
@@ -2280,7 +2280,7 @@ namespace PokemonUnity.Combat
 									@party1[j].itemInitial == Items.EXP_SHARE) continue;
 								if (@battlers[i].participants.Contains((byte)j)) continue;
 								if (showmessage) pbDisplayPaused(Game._INTL("The rest of your team gained Exp. Points thanks to the {1}!",
-									Items.EXP_ALL.ToString(TextScripts.Name)));
+									Game._INTL(Items.EXP_ALL.ToString(TextScripts.Name))));
 								showmessage=false;
 								pbGainExpOne(j,@battlers[i],partic,expshare,haveexpall,false);
 							}
@@ -2498,7 +2498,7 @@ namespace PokemonUnity.Combat
 			if (!pokemon.IsNotNullOrNone()) return;
 			string pkmnname=pokemon.Name;
 			IBattler battler=pbFindPlayerBattler(pkmnIndex);
-			string movename=move.ToString(TextScripts.Name);
+			string movename=Game._INTL(move.ToString(TextScripts.Name));
 			for (int i = 0; i < pokemon.moves.Length; i++) {
 				if (pokemon.moves[i].id==move) return;
 				if (pokemon.moves[i].id==0) {
@@ -2517,7 +2517,7 @@ namespace PokemonUnity.Combat
 					pbDisplayPaused(Game._INTL("Which move should be forgotten?"));
 					int forgetmove=(@scene as IPokeBattle_DebugSceneNoGraphics).pbForgetMove(pokemon,move);
 					if (forgetmove>=0) {
-						string oldmovename=pokemon.moves[forgetmove].id.ToString(TextScripts.Name);
+						string oldmovename=Game._INTL(pokemon.moves[forgetmove].id.ToString(TextScripts.Name));
 						pokemon.moves[forgetmove]=new PokemonUnity.Attack.Move(move); // Replaces current/total PP
 						if (battler.IsNotNullOrNone())
 							battler.moves[forgetmove]=Combat.Move.pbFromPBMove(this,pokemon.moves[forgetmove]); //ToDo: Use ForgetMove Method in Pokemon Class?
@@ -3715,7 +3715,7 @@ namespace PokemonUnity.Combat
 					pbWeather==Weather.HEAVYRAIN)) {
 					GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Rain Dish");
 					int hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/16f),true);
-					if (hpgain>0) pbDisplay(Game._INTL("{1}'s {2} restored its HP a little!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+					if (hpgain>0) pbDisplay(Game._INTL("{1}'s {2} restored its HP a little!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 				}
 				// Dry Skin
 				if (i.hasWorkingAbility(Abilities.DRY_SKIN)) {
@@ -3723,21 +3723,21 @@ namespace PokemonUnity.Combat
 						pbWeather==Weather.HEAVYRAIN) {
 						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Dry Skin (in rain)");
 						int hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/8f),true);
-						if (hpgain>0) pbDisplay(Game._INTL("{1}'s {2} was healed by the rain!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+						if (hpgain>0) pbDisplay(Game._INTL("{1}'s {2} was healed by the rain!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 					}
 					else if (pbWeather==Weather.SUNNYDAY ||
 							pbWeather==Weather.HARSHSUN) {
 						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Dry Skin (in sun)");
 						(@scene as IPokeBattle_DebugSceneNoGraphics).pbDamageAnimation(i,0);
 						int hploss=i.pbReduceHP((int)Math.Floor(i.TotalHP/8f));
-						if (hploss>0) pbDisplay(Game._INTL("{1}'s {2} was hurt by the sunlight!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+						if (hploss>0) pbDisplay(Game._INTL("{1}'s {2} was hurt by the sunlight!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 					}
 				}
 				// Ice Body
 				if (i.hasWorkingAbility(Abilities.ICE_BODY) && pbWeather==Weather.HAIL) {
 					GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Ice Body");
 					int hpgain=i.pbRecoverHP((int)Math.Floor(i.TotalHP/16f),true);
-					if (hpgain>0) pbDisplay(Game._INTL("{1}'s {2} restored its HP a little!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+					if (hpgain>0) pbDisplay(Game._INTL("{1}'s {2} restored its HP a little!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 				}
 				if (i.isFainted()) {
 					if (!i.pbFaint()) return;
@@ -3784,24 +3784,24 @@ namespace PokemonUnity.Combat
 					(i.hasWorkingAbility(Abilities.HYDRATION) && (pbWeather==Weather.RAINDANCE ||
 					pbWeather==Weather.HEAVYRAIN))) {
 					if (i.Status>0) {
-						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString(TextScripts.Name)}");
+						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{Game._INTL(i.Ability.ToString(TextScripts.Name))}");
 						Status s=i.Status;
 						if (i is IBattlerEffect b) b.pbCureStatus(false);
 						switch (s) {
 							case Status.SLEEP:
-								pbDisplay(Game._INTL("{1}'s {2} cured its sleep problem!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} cured its sleep problem!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 							case Status.POISON:
-								pbDisplay(Game._INTL("{1}'s {2} cured its poison problem!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} cured its poison problem!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 							case Status.BURN:
-								pbDisplay(Game._INTL("{1}'s {2} healed its burn!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} healed its burn!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 							case Status.PARALYSIS:
-								pbDisplay(Game._INTL("{1}'s {2} cured its paralysis!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} cured its paralysis!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 							case Status.FROZEN:
-								pbDisplay(Game._INTL("{1}'s {2} thawed it out!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} thawed it out!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 						}
 					}
@@ -3810,24 +3810,24 @@ namespace PokemonUnity.Combat
 				if (i.hasWorkingAbility(Abilities.HEALER) && pbRandom(10)<3) {
 					IBattler partner=i.pbPartner;
 					if (partner.IsNotNullOrNone() && partner.Status>0) {
-						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString(TextScripts.Name)}");
+						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{Game._INTL(i.Ability.ToString(TextScripts.Name))}");
 						Status s=partner.Status;
 						if (partner is IBattlerEffect b) b.pbCureStatus(false);
 						switch (s) {
 							case Status.SLEEP:
-								pbDisplay(Game._INTL("{1}'s {2} cured its partner's sleep problem!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} cured its partner's sleep problem!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 							case Status.POISON:
-								pbDisplay(Game._INTL("{1}'s {2} cured its partner's poison problem!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} cured its partner's poison problem!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 							case Status.BURN:
-								pbDisplay(Game._INTL("{1}'s {2} healed its partner's burn!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} healed its partner's burn!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 							case Status.PARALYSIS:
-								pbDisplay(Game._INTL("{1}'s {2} cured its partner's paralysis!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} cured its partner's paralysis!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 							case Status.FROZEN:
-								pbDisplay(Game._INTL("{1}'s {2} thawed its partner out!",i.ToString(),i.Ability.ToString(TextScripts.Name)));
+								pbDisplay(Game._INTL("{1}'s {2} thawed its partner out!",i.ToString(),Game._INTL(i.Ability.ToString(TextScripts.Name))));
 								break;
 						}
 					}
@@ -3976,7 +3976,7 @@ namespace PokemonUnity.Combat
 				if (i.isFainted()) continue;
 				if (i.effects.MultiTurn>0) {
 					i.effects.MultiTurn-=1;
-					string movename=i.effects.MultiTurnAttack.ToString(TextScripts.Name);
+					string movename=Game._INTL(i.effects.MultiTurnAttack.ToString(TextScripts.Name));
 					if (i.effects.MultiTurn==0) {
 						GameDebug.Log($"[End of effect] Trapping move #{movename} affecting #{i.ToString()} ended");
 						pbDisplay(Game._INTL("{1} was freed from {2}!",i.ToString(),movename));
@@ -4348,8 +4348,8 @@ namespace PokemonUnity.Combat
 				// Speed Boost
 				// A Pokémon's turncount is 0 if it became active after the beginning of a round
 				if (i.turncount>0 && i.hasWorkingAbility(Abilities.SPEED_BOOST)) {
-					if (i is IBattlerEffect b && b.pbIncreaseStatWithCause(Stats.SPEED,1,i,i.Ability.ToString(TextScripts.Name))) {
-						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString(TextScripts.Name)}");
+					if (i is IBattlerEffect b && b.pbIncreaseStatWithCause(Stats.SPEED,1,i,Game._INTL(i.Ability.ToString(TextScripts.Name)))) {
+						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s #{Game._INTL(i.Ability.ToString(TextScripts.Name))}");
 					}
 				}
 				// Bad Dreams
@@ -4387,7 +4387,7 @@ namespace PokemonUnity.Combat
 							i.pokemon.itemInitial=item;
 							@battlers[index].pokemon.itemInitial=0;
 						}
-						pbDisplay(Game._INTL("{1} found one {2}!",i.ToString(),item.ToString(TextScripts.Name)));
+						pbDisplay(Game._INTL("{1} found one {2}!",i.ToString(),Game._INTL(item.ToString(TextScripts.Name))));
 						i.pbBerryCureCheck(true);
 					}
 				}
@@ -4399,7 +4399,7 @@ namespace PokemonUnity.Combat
 						i.Item=i.pokemon.itemRecycle;
 						i.pokemon.itemRecycle=0;
 						if (i.pokemon.itemInitial==0) i.pokemon.itemInitial=i.Item;
-						pbDisplay(Game._INTL("{1} harvested one {2}!",i.ToString(),i.Item.ToString(TextScripts.Name)));
+						pbDisplay(Game._INTL("{1} harvested one {2}!",i.ToString(),Game._INTL(i.Item.ToString(TextScripts.Name))));
 						i.pbBerryCureCheck(true);
 					}
 				}
@@ -4414,7 +4414,7 @@ namespace PokemonUnity.Combat
 					if (randomup.Count>0) {
 						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Moody (raise stat)");
 						int r=pbRandom(randomup.Count);
-						if (i is IBattlerEffect b) b.pbIncreaseStatWithCause(randomup[r],2,i,i.Ability.ToString(TextScripts.Name));
+						if (i is IBattlerEffect b) b.pbIncreaseStatWithCause(randomup[r],2,i,Game._INTL(i.Ability.ToString(TextScripts.Name)));
 						for (int j = 0; j < randomdown.Count; j++) {
 							if (randomdown[j]==randomup[r]) {
 								//randomdown[j]=null; randomdown.compact!;
@@ -4426,7 +4426,7 @@ namespace PokemonUnity.Combat
 					if (randomdown.Count>0) {
 						GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Moody (lower stat)");
 						int r=pbRandom(randomdown.Count);
-						if (i is IBattlerEffect b) b.pbReduceStatWithCause(randomdown[r],1,i,i.Ability.ToString(TextScripts.Name));
+						if (i is IBattlerEffect b) b.pbReduceStatWithCause(randomdown[r],1,i,Game._INTL(i.Ability.ToString(TextScripts.Name)));
 					}
 				}
 			}
@@ -4436,19 +4436,19 @@ namespace PokemonUnity.Combat
 				if (i.hasWorkingItem(Items.TOXIC_ORB) && i.Status==0 && i is IBattlerEffect b0 && b0.pbCanPoison(null,false)) {
 					GameDebug.Log($"[Item triggered] #{i.ToString()}'s Toxic Orb");
 					b0.pbPoison(null,Game._INTL("{1} was badly poisoned by its {2}!",i.ToString(),
-						i.Item.ToString(TextScripts.Name)),true);
+						Game._INTL(i.Item.ToString(TextScripts.Name))),true);
 				}
 				// Flame Orb
 				if (i.hasWorkingItem(Items.FLAME_ORB) && i.Status==0 && i is IBattlerEffect b1 && b1.pbCanBurn(null,false)) {
 					GameDebug.Log($"[Item triggered] #{i.ToString()}'s Flame Orb");
-					b1.pbBurn(null,Game._INTL("{1} was burned by its {2}!",i.ToString(),i.Item.ToString(TextScripts.Name)));
+					b1.pbBurn(null,Game._INTL("{1} was burned by its {2}!",i.ToString(),Game._INTL(i.Item.ToString(TextScripts.Name))));
 				}
 				// Sticky Barb
 				if (i.hasWorkingItem(Items.STICKY_BARB) && !i.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
 					GameDebug.Log($"[Item triggered] #{i.ToString()}'s Sticky Barb");
 					(@scene as IPokeBattle_DebugSceneNoGraphics).pbDamageAnimation(i,0);
 					i.pbReduceHP((int)Math.Floor(i.TotalHP/8f));
-					pbDisplay(Game._INTL("{1} is hurt by its {2}!",i.ToString(),i.Item.ToString(TextScripts.Name)));
+					pbDisplay(Game._INTL("{1} is hurt by its {2}!",i.ToString(),Game._INTL(i.Item.ToString(TextScripts.Name))));
 				}
 				if (i.isFainted()) {
 					if (!i.pbFaint()) return;

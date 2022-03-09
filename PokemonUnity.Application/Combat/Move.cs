@@ -308,42 +308,42 @@ namespace PokemonUnity.Combat
 			if (opponent.hasWorkingAbility(Abilities.SAP_SIPPER) && type == Types.GRASS){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sap Sipper (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.ATTACK, opponent))
-					b.pbIncreaseStatWithCause(Stats.ATTACK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
+					b.pbIncreaseStatWithCause(Stats.ATTACK,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
+						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if ((opponent.hasWorkingAbility(Abilities.STORM_DRAIN) && type == Types.WATER) ||
 				(opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD) && type == Types.ELECTRIC)){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{Kernal.MoveData[MoveId].Name} ineffective)");
+				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPATK, opponent))
-					b.pbIncreaseStatWithCause(Stats.SPATK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
+					b.pbIncreaseStatWithCause(Stats.SPATK,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
+						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if (opponent.hasWorkingAbility(Abilities.MOTOR_DRIVE) && type == Types.ELECTRIC){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Motor Drive (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage (Stats.SPEED, opponent))
-					b.pbIncreaseStatWithCause(Stats.SPEED,1, opponent, opponent.Ability.ToString(TextScripts.Name));
+					b.pbIncreaseStatWithCause(Stats.SPEED,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
+						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if ((opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.WATER) ||
 				(opponent.hasWorkingAbility(Abilities.VOLT_ABSORB) && type == Types.ELECTRIC) ||
 				(opponent.hasWorkingAbility(Abilities.WATER_ABSORB) && type == Types.WATER)){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{@Name} ineffective)");
+				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{@Name} ineffective)");
 				if (opponent.effects.HealBlock==0){
 					if (opponent.pbRecoverHP((int)Math.Floor(opponent.TotalHP/4d),true)>0)
 						battle.pbDisplay(Game._INTL("{1}'s {2} restored its HP!",
-							opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
+							opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					else
 						battle.pbDisplay(Game._INTL("{1}'s {2} made {3} useless!",
-							opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
+							opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 					return true;
 				}
 			}
@@ -352,10 +352,10 @@ namespace PokemonUnity.Combat
 				if (!opponent.effects.FlashFire) {
 					opponent.effects.FlashFire= true;
 					battle.pbDisplay(Game._INTL("{1}'s {2} raised its Fire power!",
-						opponent.ToString(), opponent.Ability.ToString(TextScripts.Name))); }
+						opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name)))); }
 				else
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-						opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
+						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if (opponent.hasWorkingAbility(Abilities.TELEPATHY) && pbIsDamaging() &&
@@ -367,7 +367,7 @@ namespace PokemonUnity.Combat
 			if (opponent.hasWorkingAbility(Abilities.BULLETPROOF) && Flags.Ballistics){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Bulletproof (made #{@Name} ineffective)");
 				battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
-					opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Kernal.MoveData[MoveId].Name));
+					opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			return false;

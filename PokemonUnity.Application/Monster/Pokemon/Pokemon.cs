@@ -1111,7 +1111,7 @@ namespace PokemonUnity.Monster
 		//		calcStats(); //Refresh HP
 		//		scene.pbRefresh();
 		//		//ToDo: sort out issues here
-		//		Game.GameData.pbDisplayPaused(Game._INTL("{1} evolved to {2}!", Name, Species.ToString(TextScripts.Name)));
+		//		Game.GameData.pbDisplayPaused(Game._INTL("{1} evolved to {2}!", Name, Game._INTL(Species.ToString(TextScripts.Name))));
 		//		scene.pbLevelUp(this, null,//battler, 
 		//			oldtotalhp, oldattack, olddefense, oldspeed, oldspatk, oldspdef);
 		//	}
@@ -2170,7 +2170,7 @@ namespace PokemonUnity.Monster
 			else
 			{
 				Game.GameData.Player.Bag.pbStoreItem(Item);
-				string itemname = Item.ToString(TextScripts.Name);
+				string itemname = Game._INTL(Item.ToString(TextScripts.Name));
 
 				pbDisplay(Game._INTL("Received the {1} from {2}.", itemname, Name));
 				//setItem(0);
@@ -2180,7 +2180,7 @@ namespace PokemonUnity.Monster
 
 		public bool pbGiveMail(Items item)//, pkmn, pkmnid= 0)
 		{
-			string thisitemname = item.ToString(TextScripts.Name);
+			string thisitemname = Game._INTL(item.ToString(TextScripts.Name));
 			if (isEgg)
 			{
 				pbDisplay(Game._INTL("Eggs can't hold items."));
@@ -2193,7 +2193,7 @@ namespace PokemonUnity.Monster
 			}
 			if (item!=Items.NONE)
 			{
-				string itemname = Item.ToString(TextScripts.Name);
+				string itemname = Game._INTL(Item.ToString(TextScripts.Name));
 
 				pbDisplay(Game._INTL("{1} is already holding one {2}.\1", name, itemname));
 				if (pbConfirm(Game._INTL("Would you like to switch the two items?")))
@@ -2282,7 +2282,7 @@ namespace PokemonUnity.Monster
 		/// Nickname; 
 		/// Returns Pokemon species name if not nicknamed.
 		/// </summary>
-		public virtual string Name { get { if (Species == Pokemons.NONE) return string.Empty; if (isEgg) return "Egg"; return IsNicknamed ? name : Species.ToString(TextScripts.Name); } set { name = value; } }
+		public virtual string Name { get { if (Species == Pokemons.NONE) return string.Empty; if (isEgg) return "Egg"; return IsNicknamed ? name : Game._INTL(Species.ToString(TextScripts.Name)); } set { name = value; } }
 		public void SetNickname(string nick) { name = nick; }
 
 		/// <summary>

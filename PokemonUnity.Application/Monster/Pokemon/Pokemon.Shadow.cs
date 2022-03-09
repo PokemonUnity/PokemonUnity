@@ -40,7 +40,7 @@ namespace PokemonUnity
 					if (pokemon.moves[i].id != 0 && pokemon.moves[i].id != oldmoves[i])
 					{
 						scene.pbDisplay(Game._INTL("{1} regained the move \n{2}!",
-						   pokemon.Name, pokemon.moves[i].id.ToString(TextScripts.Name)));
+						   pokemon.Name, Game._INTL(pokemon.moves[i].id.ToString(TextScripts.Name))));
 					}
 				}
 				pokemon.pbRecordFirstMoves();
@@ -70,7 +70,7 @@ namespace PokemonUnity
 					//Game.pbChangeLevel(pokemon, newlevel, scene); // for convenience
 					pokemon.Exp = newexp;
 				}
-				string speciesname = pokemon.Species.ToString(TextScripts.Name);
+				string speciesname = Game._INTL(pokemon.Species.ToString(TextScripts.Name));
 				if (scene.pbConfirm(Game._INTL("Would you like to give a nickname to {1}?", speciesname)))
 				{
 					string helptext = Game._INTL("{1}'s nickname?", speciesname);

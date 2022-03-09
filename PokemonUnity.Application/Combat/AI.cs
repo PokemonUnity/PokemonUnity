@@ -3378,7 +3378,7 @@ namespace PokemonUnity.Combat
 					score=(int)Math.Round(score);
 					float oldscore=score;
 					score+=basedamage;
-					GameDebug.Log($"[AI] #{move.id.ToString(TextScripts.Name)} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
+					GameDebug.Log($"[AI] #{Game._INTL(move.id.ToString(TextScripts.Name))} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
 				}
 			}
 			else {
@@ -4538,7 +4538,7 @@ namespace PokemonUnity.Combat
 				for (int i = 0; i < 4; i++) {
 					if (attacker.moves[i].id!=0) {
 						if (j>0) x+=", ";
-						x+=attacker.moves[i].id.ToString(TextScripts.Name)+"="+scores[i].ToString();
+						x+=Game._INTL(attacker.moves[i].id.ToString(TextScripts.Name))+"="+scores[i].ToString();
 						j+=1;
 					}
 				}
@@ -4558,7 +4558,7 @@ namespace PokemonUnity.Combat
 					}
 					if (preferredMoves.Count>0) {
 						int i=preferredMoves[Core.Rand.Next(preferredMoves.Count)];
-						GameDebug.Log($"[AI] Prefer #{attacker.moves[i].id.ToString(TextScripts.Name)}");
+						GameDebug.Log($"[AI] Prefer #{Game._INTL(attacker.moves[i].id.ToString(TextScripts.Name))}");
 						pbRegisterMove(index,i,false);
 						if (targets != null) target=targets[i];
 						if (@doublebattle && target>=0) {

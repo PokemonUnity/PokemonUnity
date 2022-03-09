@@ -73,7 +73,7 @@ namespace PokemonUnity.Monster
 		//       //f.pos=(species-1)*8;
 		//       //offset=f.fgetdw;
 		//       int length=f.fgetdw;
-		//       GameDebug.Log(species.ToString(TextScripts.Name));
+		//       GameDebug.Log(Game._INTL(species.ToString(TextScripts.Name)));
 		//       if (length>0) {
 		//         //f.pos=offset;
 		//         int i=0; do { //unless (i<length) break; //loop
@@ -82,7 +82,7 @@ namespace PokemonUnity.Monster
 		//           int level=(int)evo.EvolveValue; //f.fgetw;
 		//           Pokemons poke=evo.Species; //f.fgetw;
 		//           GameDebug.Log(string.Format("type=%02X, data=%02X, name=%s, level=%d",
-		//              evonib,evo&_EVODATAMASK,poke.ToString(TextScripts.Name),level));
+		//              evonib,evo&_EVODATAMASK,Game._INTL(poke.ToString(TextScripts.Name)),level));
 		//           if (poke==0) {
 		//             //p f.eof?;
 		//             break;

@@ -1724,13 +1724,13 @@ namespace PokemonUnity
 			//  item=getID(PBItems,item);
 			//}
 			if (item == null || item<=0 || quantity<1) return false;
-			string itemname=(quantity>1) ? Kernal.ItemData[item].Plural : item.ToString(TextScripts.Name);
+			string itemname=(quantity>1) ? Kernal.ItemData[item].Plural : Game._INTL(item.ToString(TextScripts.Name));
 			//int pocket=pbGetPocket(item);
 			ItemPockets pocket=Kernal.ItemData[item].Pocket??ItemPockets.MISC;
 			if (Bag.pbStoreItem(item,quantity)) {		// If item can be picked up
 				if (Kernal.ItemData[item].Category==ItemCategory.ALL_MACHINES) { //[ITEMUSE]==3 || Kernal.ItemData[item][ITEMUSE]==4) { If item is TM=>3 or HM=>4
 					(this as IGameMessage).pbMessage(Game._INTL("\\se[ItemGet]{1} found \\c[1]{2}\\c[0]!\\nIt contained \\c[1]{3}\\c[0].\\wtnp[30]",
-						Trainer.name,itemname,Kernal.ItemData[item].Id.ToString(TextScripts.Name)));//ToDo:[ITEMMACHINE] param for Machine-to-Move Id
+						Trainer.name,itemname,Game._INTL(Kernal.ItemData[item].Id.ToString(TextScripts.Name))));//ToDo:[ITEMMACHINE] param for Machine-to-Move Id
 				} else if (item == Items.LEFTOVERS) {
 					(this as IGameMessage).pbMessage(Game._INTL("\\se[ItemGet]{1} found some \\c[1]{2}\\c[0]!\\wtnp[30]",Trainer.name,itemname));
 				} else if (quantity>1) {
@@ -1761,12 +1761,12 @@ namespace PokemonUnity
 			//  item=getID(PBItems,item);
 			//}
 			if (item == null || item<=0 || quantity<1) return false;
-			string itemname=(quantity>1) ? Kernal.ItemData[item].Plural : item.ToString(TextScripts.Name);
+			string itemname=(quantity>1) ? Kernal.ItemData[item].Plural : Game._INTL(item.ToString(TextScripts.Name));
 			//int pocket=pbGetPocket(item);
 			ItemPockets pocket=Kernal.ItemData[item].Pocket??ItemPockets.MISC;
 			if (Kernal.ItemData[item].Category==ItemCategory.ALL_MACHINES) { //[ITEMUSE]==3 || Kernal.ItemData[item][ITEMUSE]==4) {
 				(this as IGameMessage).pbMessage(Game._INTL("\\se[ItemGet]Obtained \\c[1]{1}\\c[0]!\\nIt contained \\c[1]{2}\\c[0].\\wtnp[30]",
-					itemname,Kernal.ItemData[item].Id.ToString(TextScripts.Name)));//ToDo:[ITEMMACHINE] param for Machine-to-Move Id
+					itemname,Game._INTL(Kernal.ItemData[item].Id.ToString(TextScripts.Name))));//ToDo:[ITEMMACHINE] param for Machine-to-Move Id
 			} else if (item == Items.LEFTOVERS) {
 				(this as IGameMessage).pbMessage(Game._INTL("\\se[ItemGet]Obtained some \\c[1]{1}\\c[0]!\\wtnp[30]",itemname));
 			} else if (quantity>1) {

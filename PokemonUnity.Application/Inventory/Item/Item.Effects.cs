@@ -82,7 +82,7 @@ namespace PokemonUnity//.Inventory
 				//return 0;
 				return ItemUseResults.NotUsed;
 			} else {
-				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Trainer.name,item.ToString(TextScripts.Name)));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Trainer.name,Game._INTL(item.ToString(TextScripts.Name))));
 				RepelSteps=steps;
 				//return 3;
 				return ItemUseResults.UsedItemConsumed;
@@ -97,7 +97,7 @@ namespace PokemonUnity//.Inventory
 			UseFromBag.Add(Items.SUPER_REPEL, () => { return pbRepel(Items.SUPER_REPEL,200); });
 			UseFromBag.Add(Items.MAX_REPEL, () => { return pbRepel(Items.MAX_REPEL,250); });
 			UseFromBag.Add(Items.BLACK_FLUTE, () => {
-				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Items.BLACK_FLUTE.ToString(TextScripts.Name)));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Game._INTL(Items.BLACK_FLUTE.ToString(TextScripts.Name))));
 				(this as IGameMessage).pbMessage(Game._INTL("Wild Pokémon will be repelled."));
 				MapData.blackFluteUsed=true;
 				MapData.whiteFluteUsed=false;
@@ -105,7 +105,7 @@ namespace PokemonUnity//.Inventory
 				return ItemUseResults.UsedNotConsumed;
 			});
 			UseFromBag.Add(Items.WHITE_FLUTE, () => {
-				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Items.WHITE_FLUTE.ToString(TextScripts.Name)));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Game._INTL(Items.WHITE_FLUTE.ToString(TextScripts.Name))));
 				(this as IGameMessage).pbMessage(Game._INTL("Wild Pokémon will be lured."));
 				MapData.blackFluteUsed=false;
 				MapData.whiteFluteUsed=true;
@@ -237,7 +237,7 @@ namespace PokemonUnity//.Inventory
 
 			#region UseInField handlers
 			UseInField.Add(Items.HONEY, () => {  
-				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Items.HONEY.ToString(TextScripts.Name)));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Game._INTL(Items.HONEY.ToString(TextScripts.Name))));
 				pbSweetScent();
 			});
 			UseInField.Add(Items.ESCAPE_ROPE, () => {
@@ -252,7 +252,7 @@ namespace PokemonUnity//.Inventory
 					//next;
 					return;
 				}
-				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,item.ToString(TextScripts.Name)));
+				(this as IGameMessage).pbMessage(Game._INTL("{1} used the {2}.",Player.Name,Game._INTL(item.ToString(TextScripts.Name))));
 				pbFadeOutIn(99999, block: () => {
 					pbCancelVehicles();
 					GameTemp.player_new_map_id=escape[0];
@@ -350,7 +350,7 @@ namespace PokemonUnity//.Inventory
 							if ((i&7)==0) GamePlayer.turn_right_90();
 							pbUpdateSceneMap();
 						}
-						(this as IGameMessage).pbMessage(Game._INTL(@"The {1}'s indicating something right underfoot!\1",item.ToString(TextScripts.Name)));
+						(this as IGameMessage).pbMessage(Game._INTL(@"The {1}'s indicating something right underfoot!\1",Game._INTL(item.ToString(TextScripts.Name))));
 					} else {
 						int direction=GamePlayer.direction;
 						if (Math.Abs(offsetX)>Math.Abs(offsetY)) {
@@ -369,7 +369,7 @@ namespace PokemonUnity//.Inventory
 							}
 							pbUpdateSceneMap();
 						}
-						(this as IGameMessage).pbMessage(Game._INTL(@"Huh?\nThe {1}'s responding!\1",item.ToString(TextScripts.Name)));
+						(this as IGameMessage).pbMessage(Game._INTL(@"Huh?\nThe {1}'s responding!\1",Game._INTL(item.ToString(TextScripts.Name))));
 						(this as IGameMessage).pbMessage(Game._INTL("There's an item buried around here!"));
 					}
 				}
@@ -1142,7 +1142,7 @@ namespace PokemonUnity//.Inventory
 						return false;
 					} else {
 						pokemon.moves[move].PPups+=1;
-						string movename=pokemon.moves[move].id.ToString(TextScripts.Name);
+						string movename=Game._INTL(pokemon.moves[move].id.ToString(TextScripts.Name));
 						scene.pbDisplay(Game._INTL("{1}'s PP increased.",movename));
 						return true;
 					}
@@ -1158,7 +1158,7 @@ namespace PokemonUnity//.Inventory
 						return false;
 					} else {
 						pokemon.moves[move].PPups=3;
-						string movename=pokemon.moves[move].id.ToString(TextScripts.Name);
+						string movename=Game._INTL(pokemon.moves[move].id.ToString(TextScripts.Name));
 						scene.pbDisplay(Game._INTL("{1}'s PP increased.",movename));
 						return true;
 					}
@@ -1480,13 +1480,13 @@ namespace PokemonUnity//.Inventory
 					return false;
 				}
 				int newabil=(pokemon.abilityIndex+1)%2;
-				string newabilname=(newabil==0) ? abil1.ToString(TextScripts.Name) : abil2.ToString(TextScripts.Name);
+				string newabilname=(newabil==0) ? Game._INTL(abil1.ToString(TextScripts.Name)) : Game._INTL(abil2.ToString(TextScripts.Name));
 				if (scene.pbConfirm(Game._INTL("Would you like to change {1}'s Ability to {2}?",
 					pokemon.Name,newabilname))) {
 					pokemon.setAbility(newabil);
 					scene.pbRefresh();
 					scene.pbDisplay(Game._INTL("{1}'s Ability changed to {2}!",pokemon.Name,
-					pokemon.Ability.ToString(TextScripts.Name)));
+					Game._INTL(pokemon.Ability.ToString(TextScripts.Name))));
 					return true;
 				}
 				return false;
@@ -2004,7 +2004,7 @@ namespace PokemonUnity//.Inventory
 			#region BattleUseOnBattler handlers
 			BattleUseOnBattler.Add(Items.X_ATTACK, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.ATTACK,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.ATTACK,1,battler,true);
 					return true;
@@ -2016,7 +2016,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_ATTACK_2, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.ATTACK,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.ATTACK,2,battler,true);
 					return true;
@@ -2028,7 +2028,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_ATTACK_3, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.ATTACK,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.ATTACK,3,battler,true);
 					return true;
@@ -2040,8 +2040,8 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_ATTACK_6, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
-				if (battler.pbIncreaseStatWithCause(Combat.Stats.ATTACK,6,battler,item.ToString(TextScripts.Name))) {
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
+				if (battler.pbIncreaseStatWithCause(Combat.Stats.ATTACK,6,battler,Game._INTL(item.ToString(TextScripts.Name)))) {
 					return true;
 				} else {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
@@ -2051,7 +2051,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_DEFENSE, (item, battler, scene) => { //item == Items.X_DEFEND ||
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.DEFENSE,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.DEFENSE,1,battler,true);
 					return true;
@@ -2063,7 +2063,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_DEFENSE_2, (item, battler, scene) => { //item == Items.XDEFEND2 || 
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.DEFENSE,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.DEFENSE,2,battler,true);
 					return true;
@@ -2075,7 +2075,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_DEFENSE_3, (item, battler, scene) => { //item == Items.XDEFEND3 || 
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.DEFENSE,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.DEFENSE,3,battler,true);
 					return true;
@@ -2087,8 +2087,8 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_DEFENSE_6, (item, battler, scene) => { //item == Items.XDEFEND6 || 
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
-				if (battler.pbIncreaseStatWithCause(Combat.Stats.DEFENSE,6,battler,item.ToString(TextScripts.Name))) {
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
+				if (battler.pbIncreaseStatWithCause(Combat.Stats.DEFENSE,6,battler,Game._INTL(item.ToString(TextScripts.Name)))) {
 					return true;
 				} else {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
@@ -2098,7 +2098,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SP_ATK, (item, battler, scene) => { //item == Items.X_SPECIAL || 
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.SPATK,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.SPATK,1,battler,true);
 					return true;
@@ -2110,7 +2110,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SP_ATK_2, (item, battler, scene) => { //item == Items.XSPECIAL2 || 
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.SPATK,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.SPATK,2,battler,true);
 					return true;
@@ -2122,7 +2122,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SP_ATK_3, (item, battler, scene) => { //item == Items.XSPECIAL3 || 
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.SPATK,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.SPATK,3,battler,true);
 					return true;
@@ -2134,8 +2134,8 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SP_ATK_6, (item, battler, scene) => { //item == Items.XSPECIAL6 || 
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
-				if (battler.pbIncreaseStatWithCause(Combat.Stats.SPATK,6,battler,item.ToString(TextScripts.Name))) {
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
+				if (battler.pbIncreaseStatWithCause(Combat.Stats.SPATK,6,battler,Game._INTL(item.ToString(TextScripts.Name)))) {
 					return true;
 				} else {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
@@ -2145,7 +2145,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SP_DEF, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.SPDEF,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.SPDEF,1,battler,true);
 					return true;
@@ -2157,7 +2157,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SP_DEF_2, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.SPDEF,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.SPDEF,2,battler,true);
 					return true;
@@ -2169,7 +2169,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SP_DEF_3, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.SPDEF,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.SPDEF,3,battler,true);
 					return true;
@@ -2181,8 +2181,8 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SP_DEF_6, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
-				if (battler.pbIncreaseStatWithCause(Combat.Stats.SPDEF,6,battler,item.ToString(TextScripts.Name))) {
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
+				if (battler.pbIncreaseStatWithCause(Combat.Stats.SPDEF,6,battler,Game._INTL(item.ToString(TextScripts.Name)))) {
 					return true;
 				} else {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
@@ -2192,7 +2192,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SPEED, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.SPEED,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.SPEED,1,battler,true);
 					return true;
@@ -2204,7 +2204,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SPEED_2, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.SPEED,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.SPEED,2,battler,true);
 					return true;
@@ -2216,7 +2216,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SPEED_3, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.SPEED,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.SPEED,3,battler,true);
 					return true;
@@ -2228,8 +2228,8 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_SPEED_6, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
-				if (battler.pbIncreaseStatWithCause(Combat.Stats.SPEED,6,battler,item.ToString(TextScripts.Name))) {
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
+				if (battler.pbIncreaseStatWithCause(Combat.Stats.SPEED,6,battler,Game._INTL(item.ToString(TextScripts.Name)))) {
 					return true;
 				} else {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
@@ -2239,7 +2239,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_ACCURACY, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.ACCURACY,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.ACCURACY,1,battler,true);
 					return true;
@@ -2251,7 +2251,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_ACCURACY_2, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.ACCURACY,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.ACCURACY,2,battler,true);
 					return true;
@@ -2263,7 +2263,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_ACCURACY_3, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbCanIncreaseStatStage(Combat.Stats.ACCURACY,battler,false)) {
 					battler.pbIncreaseStat(Combat.Stats.ACCURACY,3,battler,true);
 					return true;
@@ -2275,8 +2275,8 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.X_ACCURACY_6, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
-				if (battler.pbIncreaseStatWithCause(Combat.Stats.ACCURACY,6,battler,item.ToString(TextScripts.Name))) {
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
+				if (battler.pbIncreaseStatWithCause(Combat.Stats.ACCURACY,6,battler,Game._INTL(item.ToString(TextScripts.Name)))) {
 					return true;
 				} else {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
@@ -2286,7 +2286,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.DIRE_HIT, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.effects.FocusEnergy>=1) {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
 					return false;
@@ -2299,7 +2299,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.DIRE_HIT_2, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.effects.FocusEnergy>=2) {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
 					return false;
@@ -2312,7 +2312,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.DIRE_HIT_3, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.effects.FocusEnergy>=3) {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
 					return false;
@@ -2325,7 +2325,7 @@ namespace PokemonUnity//.Inventory
 
 			BattleUseOnBattler.Add(Items.GUARD_SPEC, (item, battler, scene) => {
 				string playername=battler.battle.pbPlayer().name;
-				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+				scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.pbOwnSide.Mist>0) {
 					scene.pbDisplay(Game._INTL("But it had no effect!"));
 					return false;
@@ -2348,7 +2348,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					string playername=battle.pbPlayer().name;
-					scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+					scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 					return true;
 				}
 			});
@@ -2359,7 +2359,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					string playername=battle.pbPlayer().name;
-					scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+					scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 					return true;
 				}
 			});
@@ -2370,7 +2370,7 @@ namespace PokemonUnity//.Inventory
 					return false;
 				} else {
 					string playername=battle.pbPlayer().name;
-					scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,item.ToString(TextScripts.Name)));
+					scene.pbDisplay(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 					return true;
 				}
 			});
