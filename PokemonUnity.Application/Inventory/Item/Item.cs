@@ -699,7 +699,7 @@ namespace PokemonUnity.Inventory
 			window.x=(Game.GameData as Game).Graphics.width-window.width;
 			if (Game.GameData is IGameAudioPlay a) a.pbPlayDecisionSE();
 			do { //;loop
-				//Graphics.update();
+				//Graphics?.update();
 				Input.update();
 				window.update();
 				if (Input.trigger(Input.A)) {
@@ -1152,7 +1152,7 @@ namespace PokemonUnity.Inventory
 					int offsetY=@event.y-GamePlayer.y;
 					if (offsetX==0 && offsetY==0) {
 						for (int i = 0; i < 32; i++) {
-							Graphics.update();
+							Graphics?.update();
 							Input.update();
 							if ((i&7)==0) GamePlayer.turn_right_90();
 							pbUpdateSceneMap();
@@ -1166,7 +1166,7 @@ namespace PokemonUnity.Inventory
 							direction=(offsetY<0) ? 8 : 2;
 						}
 						for (int i = 0; i < 8; i++) {
-							Graphics.update();
+							Graphics?.update();
 							Input.update();
 							if (i==0) {
 								if (direction==2) GamePlayer.turn_down();

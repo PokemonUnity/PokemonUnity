@@ -328,7 +328,7 @@ namespace PokemonUnity.Combat
 			//nextPickupUse = 0;
 			pickupUse = 0;
 
-			megaEvolution = new int[][] { new int[player.Length], new int[this.opponent.Length] };
+			megaEvolution = new int[][] { new int[party1.Length], new int[party2.Length] };
 			//if (this.player.Length > 0) 									//ToDo: single/double or party?
 			//	megaEvolution[0] = new bool?[this.player.Party.Length]; 	//[-1] * player.Length;
 			//else
@@ -404,8 +404,8 @@ namespace PokemonUnity.Combat
 		}
 
 		public virtual void pbAbort() {
-			//throw new BattleAbortedException("Battle aborted");
-			GameDebug.LogError("Battle aborted");
+			//GameDebug.LogError("Battle aborted");
+			throw new BattleAbortedException("Battle aborted");
 		}
 
 		#region Catching and storing Pokémon.
@@ -453,7 +453,7 @@ namespace PokemonUnity.Combat
 		}
 		public virtual void pbThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false)
 		{
-			string itemname = ball.ToString(TextScripts.Name);
+			string itemname = Game._INTL(ball.ToString(TextScripts.Name));
 			IBattler battler = null;
 			if (pbIsOpposing(idxPokemon))
 				battler = battlers[idxPokemon];
@@ -847,7 +847,7 @@ namespace PokemonUnity.Combat
 			if (pbBelongsToPlayer(battlerIndex)) {
 				foreach (Items i in Core.MEGARINGS) {
 					//if (!hasConst(PBItems,i)) continue;
-					if (Game.GameData.Bag.pbQuantity(i)>0) return i.ToString(TextScripts.Name);
+					if (Game.GameData.Bag.pbQuantity(i)>0) return Game._INTL(i.ToString(TextScripts.Name));
 					//if (Game.GameData.Player.Bag.GetItemAmount(i)>0) return i.ToString(TextScripts.Name);
 				}
 			}
@@ -1109,8 +1109,8 @@ namespace PokemonUnity.Combat
 				for (int i = partyIndex; i < party.Length+1; i++) {
 					for (int j = 0; j < @battlers.Length; j++) {
 						if (!@battlers[j].IsNotNullOrNone()) continue;
-						if (pbGetOwner(j)==side[0] && @battlers[j].pokemonIndex==i) { //ToDo: NULL cant equal Trainer?
-							@battlers[j].pokemonIndex-=1; //ToDo: why should it equal -1?
+						if (pbGetOwner(j)==side[0] && @battlers[j].pokemonIndex==i) {
+							@battlers[j].pokemonIndex-=1; //Remove pokemon from party and adjust ref position for new party line-up
 							break;
 						}
 					}
@@ -1791,12 +1791,12 @@ namespace PokemonUnity.Combat
 		}
 
 		public int pbSwitchPlayer(int index,bool lax, bool cancancel) {
-			if (@debug) {
-				return (@scene as IPokeBattle_SceneNonInteractive).pbChooseNewEnemy(index,pbParty(index));
-			}
-			else {
+			//if (@debug) {
+			//	return (@scene as IPokeBattle_SceneNonInteractive).pbChooseNewEnemy(index,pbParty(index));
+			//}
+			//else {
 				return (@scene as IPokeBattle_SceneNonInteractive).pbSwitch(index,lax,cancancel);
-			}
+			//}
 		}
 		#endregion
 
@@ -2850,6 +2850,7 @@ namespace PokemonUnity.Combat
 		public virtual BattleResults pbStartBattle(bool canlose=false) {
 			GameDebug.Log($"");
 			GameDebug.Log($"******************************************");
+			@decision = BattleResults.InProgress;
 			try { 
 				pbStartBattleCore(canlose);
 			} catch (BattleAbortedException e){ //rescue BattleAbortedException;
@@ -2879,11 +2880,13 @@ namespace PokemonUnity.Combat
 			}
 			#region Initialize wild Pokémon;
 			if (@opponent == null || @opponent.Length == 0) {
+				initialize_wild_battle:
 				if (@party2.Length==1) {
 					if (@doublebattle) {
 						//throw new Exception(Game._INTL("Only two wild Pokémon are allowed in double battles"));
 						GameDebug.LogError(Game._INTL("Only two wild Pokémon are allowed in double battles"));
-						//@party2 = new Pokemon[] { @party2[0], new Pokemon(this,2) }; //ToDo: Fixed error?
+						doublebattle = false;
+							GameDebug.LogWarning("Changed battle to single.");
 					}
 					IPokemon wildpoke=@party2[0];
 					@battlers[1].pbInitialize(wildpoke,0,false);
@@ -2892,11 +2895,21 @@ namespace PokemonUnity.Combat
 					(@scene as IPokeBattle_DebugSceneNoGraphics).pbStartBattle(this);
 					pbDisplayPaused(Game._INTL("Wild {1} appeared!",Game._INTL(wildpoke.Species.ToString(TextScripts.Name)))); //Wild pokemons dont get nicknames
 				}
-				else if (@party2.Length>1) { //ToDo: length==2
+				else if (@party2.Length>1) { //length==2
 					if (!@doublebattle) {
 						//throw new Exception(Game._INTL("Only one wild Pokémon is allowed in single battles"));
 						GameDebug.LogError(Game._INTL("Only one wild Pokémon is allowed in single battles"));
-						//@party2 = new IPokemon[] { @party2[0] }; //Doesnt fixed error...
+						if (party1.GetBattleCount() > 1) //either set double to true, or remove wild pokemon
+						{
+							doublebattle = true;
+							GameDebug.LogWarning("Changed battle to double.");
+						}
+						else
+						{
+							@party2 = new IPokemon[] { @party2.First((x) => x.IsNotNullOrNone()) };
+							GameDebug.LogWarning("Removed additional wild pokemon from opposing side.");
+							goto initialize_wild_battle;
+						}
 					}
 					@battlers[1].pbInitialize(@party2[0],0,false);
 					@battlers[3].pbInitialize(@party2[1],0,false);
@@ -3085,7 +3098,7 @@ namespace PokemonUnity.Combat
 				//}
 				if (@decision>0) break;
 				@turncount+=1;
-			} while (this.decision == BattleResults.InProgress);
+			} while (this.decision == BattleResults.InProgress); //while (true);
 			#endregion
 			pbEndOfBattle(canlose);
 		}
@@ -3131,7 +3144,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			for (int i = 0; i < battlers.Length; i++) {
-				if (@decision!=0) break;
+				if (@decision==0) break;
 				if (@choices[i].Action!=0) continue; //@choices[i][0]!=0
 				if (!pbOwnedByPlayer(i) || @controlPlayer) {
 					if (!@battlers[i].isFainted() && CanShowCommands(i)) {
@@ -3658,8 +3671,8 @@ namespace PokemonUnity.Combat
 					i.effects.FutureSight-=1;
 					if (i.effects.FutureSight==0) {
 						Moves move=i.effects.FutureSightMove;
-						GameDebug.Log($"[Lingering effect triggered] #{move.ToString(TextScripts.Name)} struck #{i.ToString(true)}");
-						pbDisplay(Game._INTL("{1} took the {2} attack!",i.ToString(),move.ToString(TextScripts.Name)));
+						GameDebug.Log($"[Lingering effect triggered] #{Game._INTL(move.ToString(TextScripts.Name))} struck #{i.ToString(true)}");
+						pbDisplay(Game._INTL("{1} took the {2} attack!",i.ToString(),Game._INTL(move.ToString(TextScripts.Name))));
 						IBattler moveuser=null;
 						foreach (var j in battlers) {
 						if (j.pbIsOpposing(i.effects.FutureSightUserPos)) continue;
@@ -4702,5 +4715,8 @@ namespace PokemonUnity.Combat
 		#endregion
 	}
 
-	public class BattleAbortedException : Exception { }
+	public class BattleAbortedException : Exception 
+	{ 
+		public BattleAbortedException(string message) : base(message) { }
+	}
 }

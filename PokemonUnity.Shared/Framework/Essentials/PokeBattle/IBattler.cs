@@ -16,7 +16,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		IBattle battle				{ get; }
 		IPokemon pokemon			{ get; }
 		string Name					{ get; set; }
-		int Index					{ get; set; }
+		int Index					{ get; }
 		int pokemonIndex			{ get; set; }
 		int TotalHP					{ get; }
 		bool Fainted				{ get; }

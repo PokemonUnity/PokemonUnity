@@ -114,13 +114,13 @@ namespace PokemonUnity
 				viewport.color.alpha=0;
 				int x = 0; do { //6.times do;
 					viewport.color.alpha+=30;
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					if (this is IGameMessage m) m.pbUpdateSceneMap(); x++;
 				} while (x < 6);
 				int y = 0; do { //6.times do;
 					viewport.color.alpha-=30;
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					if (this is IGameMessage m) m.pbUpdateSceneMap(); y++;
 				} while (y < 6); z++;
@@ -147,7 +147,7 @@ namespace PokemonUnity
 				//		sprite.update();
 				//		sprite.wave_speed+=30;
 				//		2.times do;
-				//			Graphics.update();
+				//			Graphics?.update();
 				//		}
 				//	}
 				//	bitmap.dispose();
@@ -164,7 +164,7 @@ namespace PokemonUnity
 				//		bm.radial_blur(i,2);
 				//		sprite.opacity-=15;
 				//		2.times do;
-				//			Graphics.update();
+				//			Graphics?.update();
 				//		}
 				//	}
 				//	bitmap.dispose();
@@ -196,7 +196,7 @@ namespace PokemonUnity
 					Graphics.transition(40,string.Format("Graphics/Transitions/%s",transitions[rnd]));
 				}
 				int i = 0; do { //5.times do;
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					if (this is IGameMessage m) m.pbUpdateSceneMap();
 				} while (i < 5);
@@ -215,7 +215,7 @@ namespace PokemonUnity
 			PokemonEncounters.clearStepCount();
 			for (int j = 0; j < 17; j++) {
 				viewport.color=null; //new Color(0,0,0,(17-j)*15);
-				Graphics.update();
+				Graphics?.update();
 				Input.update();
 				if (this is IGameMessage m) m.pbUpdateSceneMap();
 			}
@@ -549,7 +549,7 @@ namespace PokemonUnity
 					if (canlose) {
 						foreach (var i in Trainer.party) { i.Heal(); }
 						for (int i = 0; i < 10; i++) {
-							Graphics.update();
+							Graphics?.update();
 						}
 //					} else {
 //						GameSystem.bgm_unpause();
@@ -634,7 +634,7 @@ namespace PokemonUnity
 					if (canlose) {
 						foreach (var i in Trainer.party) { i.Heal(); }
 						for (int i = 0; i < 10; i++) {
-							Graphics.update();
+							Graphics?.update();
 						}
 //					} else {
 //						GameSystem.bgm_unpause();
@@ -883,7 +883,7 @@ namespace PokemonUnity
 				if (!Terrain.isIce(pbGetTerrainTag(@event))) break;
 				@event.move_forward();
 				while (@event.moving) {
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					if (this is IGameMessage s) s.pbUpdateSceneMap();
 				}
@@ -1109,7 +1109,7 @@ namespace PokemonUnity
 					int pattern = 0; do { //4.times |pattern|
 						if (GamePlayer is IGamePlayerRunMovement p) p.setDefaultCharName(charset,patternb-pattern);
 						int i = 0; do { //;2.times 
-							Graphics.update();
+							Graphics?.update();
 							Input.update();
 							if (this is IGameMessage a) a.pbUpdateSceneMap(); i++;
 						} while (i < 2); pattern++;
@@ -1130,7 +1130,7 @@ namespace PokemonUnity
 					int pattern = 0; do { //4.times |pattern|
 						if (GamePlayer is IGamePlayerRunMovement p) p.setDefaultCharName(charset,patternb+pattern);
 						int i = 0; do { //;2.times 
-							Graphics.update();
+							Graphics?.update();
 							Input.update();
 							if (this is IGameMessage a) a.pbUpdateSceneMap(); i++;
 						} while (i < 2); pattern++;
@@ -1198,7 +1198,7 @@ namespace PokemonUnity
 			if (Core.FISHINGAUTOHOOK) return true;
 			if (this is IGameMessage m0) m0.pbMessageDisplay(msgwindow,message,false);
 			int i = 0; do { //;frames.times 
-				Graphics.update();
+				Graphics?.update();
 				Input.update();
 				if (this is IGameMessage m1) m1.pbUpdateSceneMap();
 				if (Input.trigger((int)Input.C) || Input.trigger((int)Input.B)) {
@@ -1214,7 +1214,7 @@ namespace PokemonUnity
 				if (i>0) message+=". ";
 				if (this is IGameMessage m0) m0.pbMessageDisplay(msgwindow,message,false);
 				int j = 0; do { //20.times ;
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					if (this is IGameMessage m1) m1.pbUpdateSceneMap();
 					if (Input.trigger((int)Input.C) || Input.trigger((int)Input.B)) {
@@ -1419,7 +1419,7 @@ namespace PokemonUnity
 			//    rectwidth-=bandwidth*2;
 			//    rectheight-=bandheight*2;
 			//  }
-			//  Graphics.update();
+			//  Graphics?.update();
 			//  Input.update(); j++;
 			//} while (j < totalFrames);
 			//if (exiting) {
@@ -1433,12 +1433,12 @@ namespace PokemonUnity
 			//  } else {
 			//    sprite.color=new Color(0,0,0,j*255/15) ;
 			//  }
-			//  Graphics.update();
+			//  Graphics?.update();
 			//  Input.update();
 			//}
 			//pbToneChangeAll(new Tone(0,0,0),8);
 			//for (j = 0; j < 5; j++) {
-			//  Graphics.update();
+			//  Graphics?.update();
 			//  Input.update();
 			//}
 			//sprite.dispose();
@@ -1660,7 +1660,7 @@ namespace PokemonUnity
 				if (this is IGameMessage m) m.pbMessageDisplay(msgwindow,
 					string.Format("Recording in {0} second(s)...\nPress ESC to cancel.",delay-i),false);
 				int n = 0; do { //;Graphics.frame_rate.times 
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					textwindow.update();
 					msgwindow.update();
@@ -1677,7 +1677,7 @@ namespace PokemonUnity
 			if (beginRecordUI()) {
 				int frames=(int)(maxtime*Graphics.frame_rate);
 				i = 0; do { //;frames.times 
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					textwindow.update();
 					msgwindow.update();
@@ -1692,11 +1692,11 @@ namespace PokemonUnity
 					(this as IGameMessage).pbMessageDisplay(msgwindow,Game._INTL("PLAYING BACK..."),false);
 					textwindow.update();
 					msgwindow.update();
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					wave.play();
 					i = 0; do { //(Graphics.frame_rate*wave.time).to_i.times 
-						Graphics.update();
+						Graphics?.update();
 						Input.update();
 						textwindow.update();
 						msgwindow.update();
@@ -1982,7 +1982,7 @@ namespace PokemonUnity
 				@event.move_toward_player();
 				if (@event.x==x && @event.y==y) break;
 				while (@event.moving) {
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					if (this is IGameMessage m) m.pbUpdateSceneMap();
 				}
@@ -2011,7 +2011,7 @@ namespace PokemonUnity
 				if (playSound && this is IGameAudioPlay a) a.pbSEPlay("jump");
 				if (cancelSurf) pbCancelVehicles();
 				while (GamePlayer.jumping) {
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					if (this is IGameMessage m) m.pbUpdateSceneMap();
 				}
@@ -2021,8 +2021,9 @@ namespace PokemonUnity
 		}
 
 		public void pbWait(int numframes) {
+			if (Core.INTERNAL) return; //if there's no ui connected...
 			do { //;numframes.times 
-				Graphics.update();
+				Graphics?.update();
 				Input.update();
 				if (this is IGameMessage m) m.pbUpdateSceneMap();
 			} while (true);
@@ -2110,7 +2111,7 @@ namespace PokemonUnity
 				float oldx=GameMap.display_x;
 				float oldy=GameMap.display_y;
 				do { //;loop
-					Graphics.update();
+					Graphics?.update();
 					Input.update();
 					if (!GameMap.scrolling) {
 					break;
@@ -2184,7 +2185,7 @@ namespace PokemonUnity
 			if (oldx!=@event.x || oldy!=@event.y) {
 					Game.GameData.GamePlayer._lock();
 					do {
-						(Game.GameData as Game).Graphics.update();
+						(Game.GameData as Game).Graphics?.update();
 						Input.update();
 						if (Game.GameData is IGameMessage m) m.pbUpdateSceneMap();
 					} while (@event.moving);

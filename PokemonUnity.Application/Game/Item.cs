@@ -703,7 +703,7 @@ namespace PokemonUnity//.Inventory
 			window.x=Graphics.width-window.width;
 			(this as IGameAudioPlay).pbPlayDecisionSE();
 			do { //;loop
-			  Graphics.update();
+			  Graphics?.update();
 			  Input.update();
 			  window.update();
 			  if (Input.trigger(Input.A)) {

@@ -168,7 +168,7 @@ namespace PokemonUnity.Combat
 		public void pbDebugUpdate() {
 			@debugupdate+=1;
 			if (@debugupdate==30) {
-				//Graphics.update();
+				//Graphics?.update();
 				@debugupdate=0;
 			}
 		}

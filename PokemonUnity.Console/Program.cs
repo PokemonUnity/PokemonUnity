@@ -31,7 +31,13 @@ namespace PokemonUnity.ConsoleApp
 
 		static void Main(string[] args)
 		{
+			System.Console.OutputEncoding = System.Text.Encoding.UTF8;
 			GameDebug.OnLog += GameDebug_OnLog;
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			System.Console.WriteLine("######################################");
+			System.Console.WriteLine("# Hello - Welcome to Console Battle! #");
+			System.Console.WriteLine("######################################");
+
 			string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
 			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
 			Game.LocalizationDictionary = new XmlStringRes(null); //new Debugger());
@@ -39,25 +45,19 @@ namespace PokemonUnity.ConsoleApp
 
 			//Game.ResetAndOpenSql(@"Data\veekun-pokedex.sqlite");
 			ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			System.Console.WriteLine("######################################");
-			System.Console.WriteLine("# Hello - Welcome to Console Battle! #");
-			System.Console.WriteLine("######################################");
-
-			Battle battle;
-			IPokeBattle_DebugSceneNoGraphics pokeBattle = new PokeBattleScene();
+			//IPokeBattle_DebugSceneNoGraphics pokeBattle = new PokeBattleScene();
 			//pokeBattle.initialize();
 
 
-			IPokemon[] p1 = new IPokemon[2] { new PokemonUnity.Monster.Pokemon(Pokemons.ABRA), new PokemonUnity.Monster.Pokemon(Pokemons.EEVEE) };
-			IPokemon[] p2 = new IPokemon[2] { new PokemonUnity.Monster.Pokemon(Pokemons.MONFERNO), new PokemonUnity.Monster.Pokemon(Pokemons.SEEDOT) };
+			IPokemon[] p1 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.ABRA), new PokemonUnity.Monster.Pokemon(Pokemons.EEVEE) };
+			IPokemon[] p2 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.MONFERNO) }; //, new PokemonUnity.Monster.Pokemon(Pokemons.SEEDOT) };
 
 			p1[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
 			p1[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
 
 			p2[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
-			p2[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+			//p2[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
 
 			//PokemonUnity.Character.TrainerData trainerData = new PokemonUnity.Character.TrainerData("FlakTester", true, 120, 002);
 			//Game.GameData.Player = new PokemonUnity.Character.Player(trainerData, p1);
@@ -67,15 +67,16 @@ namespace PokemonUnity.ConsoleApp
 			(p1[1] as PokemonUnity.Monster.Pokemon).SetNickname("Test2");
 
 			(p2[0] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest1");
-			(p2[1] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest2");
+			//(p2[1] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest2");
 
 			//ITrainer player = new Trainer(Game.GameData.Trainer.name, TrainerTypes.PLAYER);
 			ITrainer player = new Trainer("FlakTester",TrainerTypes.CHAMPION);
 			//ITrainer pokemon = new Trainer("Wild Pokemon", TrainerTypes.WildPokemon);
 			Game.GameData.Trainer = player;
+			Game.GameData.Trainer.party = p1;
 
-			//battle = new Battle(pokeBattle, Game.GameData.Trainer.party, p2, Game.GameData.Trainer, null, 2);
-			battle = new Battle(pokeBattle, p1, p2, Game.GameData.Trainer, null);
+			//IBattle battle = new Battle(pokeBattle, Game.GameData.Trainer.party, p2, Game.GameData.Trainer, null, 2);
+			IBattle battle = new Battle(new PokeBattleScene(), p1, p2, Game.GameData.Trainer, null);
 
 			battle.rules.Add(BattleRule.SUDDENDEATH, false);
 			battle.rules.Add("drawclause", false);
@@ -389,8 +390,9 @@ namespace PokemonUnity.ConsoleApp
 			{
 				System.Console.WriteLine(commands[i]);
 			}
+			System.Console.WriteLine("Press Q to return back to Command Menu");
 			bool appearing = true;
-			int result = 0;
+			int result = -2;
 			do
 			{
 				ConsoleKeyInfo fs = System.Console.ReadKey(true);
@@ -400,26 +402,35 @@ namespace PokemonUnity.ConsoleApp
 					lastmove[index] = index_;
 					appearing = false;
 					result = 0;
+					GameDebug.Log($"int=#{result}, pp=#{moves[result].PP}");
 				}
 				else if (fs.Key == ConsoleKey.D2)
 				{
 					lastmove[index] = index_;
 					appearing = false;
 					result = 1;
+					GameDebug.Log($"int=#{result}, pp=#{moves[result].PP}");
 				}
 				else if (fs.Key == ConsoleKey.D3)
 				{
 					lastmove[index] = index_;
 					appearing = false;
 					result = 2;
+					GameDebug.Log($"int=#{result}, pp=#{moves[result].PP}");
 				}
 				else if (fs.Key == ConsoleKey.D4)
 				{
 					lastmove[index] = index_;
 					appearing = false;
 					result = 3;
+					GameDebug.Log($"int=#{result}, pp=#{moves[result].PP}");
 				}
-			} while (appearing && battle.battlers[index].moves[result].id == Moves.NONE);
+				else if (fs.Key == ConsoleKey.Q)
+				{
+					appearing = false;
+					result = -1; //CANCEL FIGHT MENU
+				}
+			} while (appearing && (result == -2 || battle.battlers[index].moves[result].id == Moves.NONE));
 
 			return result;
 		}
@@ -436,15 +447,16 @@ namespace PokemonUnity.ConsoleApp
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
+			//Doesnt include multiple targets at once...
 			List<int> targets = new List<int>();
 			for (int i = 0; i < 4; i++)
 			{
 				//if (@battle.battlers[index].pbIsOpposing(i) &&
 				//   !@battle.battlers[i].isFainted()) targets.Add(i);
 				if (!@battle.battlers[i].isFainted())
-					if ((targettype == Targets.ALL_OPPONENTS
+					if ((targettype == Targets.RANDOM_OPPONENT
+						//|| targettype == Targets.ALL_OPPONENTS
 						//|| targettype == Targets.OPPONENTS_FIELD
-						|| targettype == Targets.RANDOM_OPPONENT
 						|| targettype == Targets.SELECTED_POKEMON
 						|| targettype == Targets.SELECTED_POKEMON_ME_FIRST) &&
 						@battle.battlers[index].pbIsOpposing(i))
@@ -456,9 +468,42 @@ namespace PokemonUnity.ConsoleApp
 						!@battle.battlers[index].pbIsOpposing(i))
 						targets.Add(i);
 			}
-			//Doesnt include multiple targets...
 			if (targets.Count == 0) return -1;
-			return targets[Core.Rand.Next(targets.Count)];
+			//return targets[Core.Rand.Next(targets.Count)];
+
+			for (int i = 0; i < targets.Count; i++)
+			{
+				System.Console.WriteLine("Target {0}: {1} HP: {2}/{3} => {4}", targets[i] % 2 == 1 ? "Enemy" : "Ally", battle.battlers[targets[i]].Name, battle.battlers[targets[i]].HP, battle.battlers[targets[i]].TotalHP, i);
+			}
+			bool appearing = true;
+			int result = 0;
+			do
+			{
+				ConsoleKeyInfo fs = System.Console.ReadKey(true);
+
+				if (fs.Key == ConsoleKey.D1)
+				{
+					appearing = false;
+					result = 0;
+				}
+				else if (fs.Key == ConsoleKey.D2)
+				{
+					appearing = false;
+					result = 1;
+				}
+				else if (fs.Key == ConsoleKey.D3)
+				{
+					appearing = false;
+					result = 2;
+				}
+				else if (fs.Key == ConsoleKey.D4)
+				{
+					appearing = false;
+					result = 3;
+				}
+			} while (appearing && targets.Contains(result));
+
+			return result;
 		}
 
 		public void pbRefresh()
@@ -471,18 +516,131 @@ namespace PokemonUnity.ConsoleApp
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			for (int i = 0; i < @battle.pbParty(index).Length - 1; i++)
+			IPokemon[] party = @battle.pbParty(index);
+			IList<string> commands = new List<string>();
+			bool[] inactives = new bool[] { true, true, true, true, true, true };
+			IList<int> partypos = new List<int>();
+			//int activecmd = 0; //if cursor is on first or second pokemon when viewing ui
+			int numactive = battle.doublebattle ? 2 : 1;
+			IBattler battler = @battle.battlers[0];
+			//commands[commands.Count] = pbPokemonString(party[battler.pokemonIndex]);
+			commands.Add(pbPokemonString(party[battler.pokemonIndex]));
+			//if (battler.Index == index) activecmd = 0;
+			inactives[battler.pokemonIndex] = false;
+			//partypos[partypos.Count] = battler.pokemonIndex;
+			partypos.Add(battler.pokemonIndex);
+			if (@battle.doublebattle)
 			{
-				if (lax)
+				battler = @battle.battlers[2];
+				//commands[commands.Count] = pbPokemonString(party[battler.pokemonIndex]);
+				commands.Add(pbPokemonString(party[battler.pokemonIndex]));
+				//if (battler.Index == index) activecmd = 1;
+				inactives[battler.pokemonIndex] = false;
+				//partypos[partypos.Count] = battler.pokemonIndex;
+				partypos.Add(battler.pokemonIndex);
+			}
+			for (int i = 0; i < party.Length; i++)
+			{
+				if (inactives[i])
 				{
-					if (@battle.pbCanSwitchLax(index, i, false)) return i;
-				}
-				else
-				{
-					if (@battle.pbCanSwitch(index, i, false)) return i;
+					//commands[commands.Count] = pbPokemonString(party[i]);
+					commands.Add(pbPokemonString(party[i]));
+					//System.Console.WriteLine(pbPokemonString(party[i]));
+					//partypos[partypos.Count] = i;
+					partypos.Add(i);
 				}
 			}
-			return -1;
+			for (int i = 0; i < commands.Count; i++)
+			{
+				System.Console.WriteLine("Press {0} => {1}",i+1,commands[i]);
+			}
+			System.Console.WriteLine("Press Q to return back to Command Menu");
+			bool appearing = true;
+			int ret = -2;
+			do
+			{
+				ConsoleKeyInfo fs = System.Console.ReadKey(true);
+				bool canswitch = false; int pkmnindex = -1;
+				if (fs.Key == ConsoleKey.D1)
+				{
+					pkmnindex = partypos[0];
+					canswitch = lax ? @battle.pbCanSwitchLax(index, pkmnindex, true) :
+					   @battle.pbCanSwitch(index, pkmnindex, true);
+					if (canswitch)
+					{
+						ret = pkmnindex;
+						appearing = false;
+						//break;
+					}
+				}
+				else if (fs.Key == ConsoleKey.D2)
+				{
+					pkmnindex = partypos[1];
+					canswitch = lax ? @battle.pbCanSwitchLax(index, pkmnindex, true) :
+					   @battle.pbCanSwitch(index, pkmnindex, true);
+					if (canswitch)
+					{
+						ret = pkmnindex;
+						appearing = false;
+						//break;
+					}
+				}
+				else if (fs.Key == ConsoleKey.D3)
+				{
+					pkmnindex = partypos[2];
+					canswitch = lax ? @battle.pbCanSwitchLax(index, pkmnindex, true) :
+					   @battle.pbCanSwitch(index, pkmnindex, true);
+					if (canswitch)
+					{
+						ret = pkmnindex;
+						appearing = false;
+						//break;
+					}
+				}
+				else if (fs.Key == ConsoleKey.D4)
+				{
+					pkmnindex = partypos[3];
+					canswitch = lax ? @battle.pbCanSwitchLax(index, pkmnindex, true) :
+					   @battle.pbCanSwitch(index, pkmnindex, true);
+					if (canswitch)
+					{
+						ret = pkmnindex;
+						appearing = false;
+						//break;
+					}
+				}
+				else if (fs.Key == ConsoleKey.D5)
+				{
+					pkmnindex = partypos[4];
+					canswitch = lax ? @battle.pbCanSwitchLax(index, pkmnindex, true) :
+					   @battle.pbCanSwitch(index, pkmnindex, true);
+					if (canswitch)
+					{
+						ret = pkmnindex;
+						appearing = false;
+						//break;
+					}
+				}
+				else if (fs.Key == ConsoleKey.D6)
+				{
+					pkmnindex = partypos[5];
+					canswitch = lax ? @battle.pbCanSwitchLax(index, pkmnindex, true) :
+					   @battle.pbCanSwitch(index, pkmnindex, true);
+					if (canswitch)
+					{
+						ret = pkmnindex;
+						appearing = false;
+						//break;
+					}
+				}
+				else if (fs.Key == ConsoleKey.Q && cancancel)
+				{
+					appearing = false;
+					ret = -1; //CANCEL POKEMON MENU
+				}
+			} while (appearing && (ret == -2 || ret == -2 || inactives[ret]));//!battle.pbParty(index)[ret].IsNotNullOrNone()
+
+			return ret;
 		}
 
 		//public IEnumerator pbHPChanged(PokemonEssentials.Interface.PokeBattle.IBattler pkmn, int oldhp, bool animate)
@@ -703,7 +861,18 @@ namespace PokemonUnity.ConsoleApp
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			throw new NotImplementedException();
+			for (int i = 0; i < @battle.pbParty(index).Length - 1; i++)
+			{
+				if (lax)
+				{
+					if (@battle.pbCanSwitchLax(index, i, false)) return i;
+				}
+				else
+				{
+					if (@battle.pbCanSwitch(index, i, false)) return i;
+				}
+			}
+			return -1;
 		}
 
 		void IPokeBattle_SceneNonInteractive.pbChooseEnemyCommand(int index)
@@ -720,6 +889,72 @@ namespace PokemonUnity.ConsoleApp
 			throw new NotImplementedException();
 		}*/
 		#endregion
+
+		private string pbPokemonString(IPokemon pkmn)
+		{
+			string status = string.Empty;
+			if (pkmn.HP <= 0)
+			{
+				status = " [FNT]";
+			}
+			else
+			{
+				switch (pkmn.Status)
+				{
+					case Status.SLEEP:
+						status = " [SLP]";
+						break;
+					case Status.FROZEN:
+						status = " [FRZ]";
+						break;
+					case Status.BURN:
+						status = " [BRN]";
+						break;
+					case Status.PARALYSIS:
+						status = " [PAR]";
+						break;
+					case Status.POISON:
+						status = " [PSN]";
+						break;
+				}
+			}
+			return $"#{pkmn.Name} (Lv. #{pkmn.Level})#{status} HP: #{pkmn.HP}/#{pkmn.TotalHP}";
+		}
+		
+		private string pbPokemonString(IBattler pkmn)
+		{
+			if (!pkmn.pokemon.IsNotNullOrNone())
+			{
+				return "";
+			}
+			string status = string.Empty;
+			if (pkmn.HP <= 0)
+			{
+				status = " [FNT]";
+			}
+			else
+			{
+				switch (pkmn.Status)
+				{
+					case Status.SLEEP:
+						status = " [SLP]";
+						break;
+					case Status.FROZEN:
+						status = " [FRZ]";
+						break;
+					case Status.BURN:
+						status = " [BRN]";
+						break;
+					case Status.PARALYSIS:
+						status = " [PAR]";
+						break;
+					case Status.POISON:
+						status = " [PSN]";
+						break;
+				}
+			}
+			return $"#{pkmn.Name} (Lv. #{pkmn.Level})#{status} HP: #{pkmn.HP}/#{pkmn.TotalHP}";
+		}
 
 		private string pbMoveString(IMove move, int index)
 		{

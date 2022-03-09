@@ -33,7 +33,8 @@ namespace PokemonUnity.Combat
 		/// Returns the position of this pkmn in battle lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == battle.Party[this.pkmn.index]
-		public int Index						{ get; set; }
+		public int Index						{ get; 
+			private set; }
 		/// <summary>
 		/// Index list of all pokemons who attacked this battler on this/previous turn
 		/// </summary>
@@ -568,7 +569,7 @@ namespace PokemonUnity.Combat
 				status			= pkmn.Status;
 				statusCount		= pkmn.StatusCount;
 				pokemon			= pkmn;
-				Index			= pkmnIndex;
+				pokemonIndex	= pkmnIndex;
 				participants	= new List<int>();
 				moves			= new IBattleMove[] {
 					PokemonUnity.Combat.Move.pbFromPBMove(@battle,pkmn.moves[0]),
@@ -641,13 +642,13 @@ namespace PokemonUnity.Combat
 					bool found1, found2; found1 = found2 = false;
 					for (int i = 0; i < participants.Count; i++)
 					{
-						if (participants[i] == battle.battlers[3].Index) found1 = true;
-						if (participants[i] == battle.battlers[4].Index) found2 = true;
+						if (participants[i] == battle.battlers[2].Index) found1 = true;
+						if (participants[i] == battle.battlers[3].Index) found2 = true;
 					}
-					if (!found1 && !battle.battlers[3].isFainted())
+					if (!found1 && !battle.battlers[2].isFainted())
+						participants.Add((byte)battle.battlers[2].Index);
+					if (!found2 && !battle.battlers[3].isFainted())
 						participants.Add((byte)battle.battlers[3].Index);
-					if (!found2 && !battle.battlers[4].isFainted())
-						participants.Add((byte)battle.battlers[4].Index);
 				}
 			}
 		}
@@ -2098,13 +2099,14 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Move user and targets
-		public IBattler pbFindUser(IBattleChoice choice,IBattler[] targets) {//ToDo: ref List<IBattler> targets) {
-			IBattleMove move=choice.Move; //ToDo: Attack.Move, and switch call below should be Attack.Data.Targets
+		public IBattler pbFindUser(IBattleChoice choice,IBattler[] targets) {//ToDo: ref IList<IBattler> targets) {
+			IBattleMove move=choice.Move;
 			int target=choice.Target;
 			IBattler user = this;   // Normally, the user is this
 			// Targets in normal cases
 			switch (pbTarget(move)) { //ToDo: Select everyone (including user)
 				case Attack.Data.Targets.SELECTED_POKEMON: //Attack.Target.SingleNonUser:
+				case Attack.Data.Targets.SELECTED_POKEMON_ME_FIRST: 
 					if (target>=0) {
 						IBattler targetBattler=@battle.battlers[target];
 						if (!pbIsOpposing(targetBattler.Index))
@@ -3442,7 +3444,7 @@ namespace PokemonUnity.Combat
 			// Use the move
 			//   @battle.pbDisplayPaused("Before: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]"); //Log instead?
 			GameDebug.Log($"#{ToString()} used #{choice.Move.id.ToString(TextScripts.Name)}");
-			try{ pbUseMove(choice, choice.Move == @battle.struggle); } catch (Exception e) { GameDebug.Log(e.Message); GameDebug.Log(e.StackTrace); }
+			try{ pbUseMove(choice, choice.Move == @battle.struggle); } catch (Exception e) { GameDebug.Log(e.Message); } //GameDebug.Log(e.StackTrace);
 			//   @battle.pbDisplayPaused("After: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]");
 			return true;
 		}

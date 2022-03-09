@@ -619,7 +619,7 @@ namespace PokemonUnity
 			IInterpreter interp=Interpreter.initialize(); //new Interpreter();
 			interp.setup(celist,0);
 			do {
-				Graphics.update();
+				Graphics?.update();
 				Input.update();
 				interp.update();
 				(this as IGameMessage).pbUpdateSceneMap();
@@ -642,7 +642,7 @@ namespace PokemonUnity
 			//	sprite=((ISpritesetMapAnimation)Scene.spriteset()).addUserAnimation(id,@event.x,@event.y,tinting);
 			}
 			while (!sprite.disposed) {
-				Graphics.update();
+				Graphics?.update();
 				Input.update();
 				(this as IGameMessage).pbUpdateSceneMap();
 			}
