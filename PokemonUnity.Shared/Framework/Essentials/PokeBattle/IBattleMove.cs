@@ -163,7 +163,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#region Using the move
 		bool pbOnStartUse(IBattler attacker);
 
-		void pbAddTarget(IBattler[] targets, IBattler attacker);
+		void pbAddTarget(IList<IBattler> targets, IBattler attacker);
 
 		int pbDisplayUseMessage(IBattler attacker);
 

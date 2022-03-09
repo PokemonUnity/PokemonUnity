@@ -2099,61 +2099,62 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Move user and targets
-		public IBattler pbFindUser(IBattleChoice choice,IBattler[] targets) {//ToDo: ref IList<IBattler> targets) {
+		public IBattler pbFindUser(IBattleChoice choice,IList<IBattler> targets) {//ToDo: ref IList<IBattler> targets) {
 			IBattleMove move=choice.Move;
 			int target=choice.Target;
 			IBattler user = this;   // Normally, the user is this
 			// Targets in normal cases
-			switch (pbTarget(move)) { //ToDo: Select everyone (including user)
+			switch (pbTarget(move)) { //ToDo: Missing `Select everyone` (including user)
 				case Attack.Data.Targets.SELECTED_POKEMON: //Attack.Target.SingleNonUser:
 				case Attack.Data.Targets.SELECTED_POKEMON_ME_FIRST: 
 					if (target>=0) {
 						IBattler targetBattler=@battle.battlers[target];
 						if (!pbIsOpposing(targetBattler.Index))
-							if (!pbAddTarget(targets,targetBattler))
-								if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
+							if (!pbAddTarget(ref targets,targetBattler))
+								if (!pbAddTarget(ref targets,pbOpposing1)) pbAddTarget(ref targets,pbOpposing2);
 						else
-							if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.pbPartner);
+							if (!pbAddTarget(ref targets,targetBattler)) pbAddTarget(ref targets,targetBattler.pbPartner);
 					}
 					else
 						pbRandomTarget(targets);
 					break;
 				//case Attack.Data.Targets.SELECTED_POKEMON: //Attack.Target.SingleOpposing:
+				//case Attack.Data.Targets.SELECTED_POKEMON_ME_FIRST: 
 				//	if (target>=0) {
 				//		IBattler targetBattler=@battle.battlers[target];
 				//		if (!IsOpposing(targetBattler.Index))
-				//		  if (!pbAddTarget(targets,targetBattler))
-				//			if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
+				//			if (!pbAddTarget(targets,targetBattler))
+				//				if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
 				//		else
-				//		  if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattlerPartner);
+				//			if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.pbPartner);
 				//	}
 				//	else
 				//		pbRandomTarget(targets);
 				//	break;
 				case Attack.Data.Targets.OPPONENTS_FIELD: //Attack.Target.pbOppositeOpposing:
-					if (!pbAddTarget(targets,pbOppositeOpposing2)) pbAddTarget(targets,pbOppositeOpposing);
+					if (!pbAddTarget(ref targets,pbOppositeOpposing2)) pbAddTarget(ref targets,pbOppositeOpposing);
 					break;
 				case Attack.Data.Targets.RANDOM_OPPONENT: //Attack.Target.RandomOpposing:
 					pbRandomTarget(targets);
 					break;
 				case Attack.Data.Targets.ALL_OPPONENTS: //Attack.Target.AllOpposing:
 					// Just pbOpposing1 because partner is determined late
-					if (!pbAddTarget(targets,pbOpposing1)) pbAddTarget(targets,pbOpposing2);
+					if (!pbAddTarget(ref targets,pbOpposing1)) pbAddTarget(ref targets,pbOpposing2);
 					break;
 				case Attack.Data.Targets.ALL_OTHER_POKEMON: //Attack.Target.AllNonUsers:
 					for (int i = 0; i < 4; i++) // not ordered by priority
-					if (i!=@Index) pbAddTarget(targets,@battle.battlers[i]);
+					if (i!=@Index) pbAddTarget(ref targets,@battle.battlers[i]);
 					break;
 				case Attack.Data.Targets.USER_OR_ALLY: //Attack.Target.UserOrPartner:
 					if (target>=0) { // Pre-chosen target
 						IBattler targetBattler=@battle.battlers[target];
-						if (!pbAddTarget(targets,targetBattler)) pbAddTarget(targets,targetBattler.pbPartner);
+						if (!pbAddTarget(ref targets,targetBattler)) pbAddTarget(ref targets,targetBattler.pbPartner);
 					}
 					else
-						pbAddTarget(targets,this);
+						pbAddTarget(ref targets,this);
 					break;
 				case Attack.Data.Targets.ALLY: //Attack.TargetPartner:
-					pbAddTarget(targets,Partner);
+					pbAddTarget(ref targets,Partner);
 					break;
 				default:
 					move.pbAddTarget(targets,this);
@@ -2190,27 +2191,27 @@ namespace PokemonUnity.Combat
 				target=Attack.Data.Targets.OPPONENTS_FIELD;
 			return target;
 		}
-		public bool pbAddTarget(IBattler[] targets,IBattler target) {
-			if (!target.isFainted()) {
-				targets[targets.Length - 1]=target; // Add target to end of the list...
-				return true;
-			}
-			return false;
-		}
-		public bool pbAddTarget(ref List<IBattler> targets,IBattler target) {
+		//public bool pbAddTarget(IList<IBattler> targets,IBattler target) {
+		//	if (!target.isFainted()) {
+		//		targets[targets.Count - 1]=target; // Add target to end of the list...
+		//		return true;
+		//	}
+		//	return false;
+		//}
+		public bool pbAddTarget(ref IList<IBattler> targets,IBattler target) {
 			if (!target.isFainted()) {
 				targets.Add(target);
 				return true;
 			}
 			return false;
 		}
-		public void pbRandomTarget(IBattler[] targets) {
-			List<IBattler> choices= new List<IBattler>();
+		public void pbRandomTarget(IList<IBattler> targets) {
+			IList<IBattler> choices= new List<IBattler>();
 			pbAddTarget(ref choices,pbOpposing1);
 			if (battle.doublebattle)
 				pbAddTarget(ref choices,pbOpposing2);
 			if (choices.Count>0)
-				pbAddTarget(targets,choices[@battle.pbRandom(choices.Count)]);
+				pbAddTarget(ref targets,choices[@battle.pbRandom(choices.Count)]);
 		}
 		public bool pbChangeTarget(IBattleMove thismove,IBattler[] userandtarget,IBattler[] targets) {
 			IBattler[] priority=@battle.pbPriority();
@@ -2982,13 +2983,15 @@ namespace PokemonUnity.Combat
 		}
 
 		public void pbUseMoveSimple(Moves moveid,int index=-1,int target=-1) {
-			IBattleChoice choice= new Choice();
+			//IBattleChoice choice= new Choice();
 			//choice[0]=1;           // "Use move"
 			//choice.Action=index;   // Index of move to be used in user's moveset
 			//choice.Move=PokeBattle_Move.pbFromPBMove(@battle,new Attack.Move(moveid)); // PokeBattle_Move object of the move
 			//choice.Move.PP=-1;
 			//choice.Target=target;  // Target (-1 means no target yet)
-			choice = new Choice(action: ChoiceAction.UseMove, moveIndex: index, move: Combat.Move.pbFromPBMove(@battle, new Attack.Move(moveid)), target: target);
+			IBattleMove move = Combat.Move.pbFromPBMove(@battle, new Attack.Move(moveid));
+			move.PP = -1;
+			IBattleChoice choice = new Choice(action: ChoiceAction.UseMove, moveIndex: index, move: move, target: target);
 			if (index>=0)
 				//@battle.choices[@Index].Index=index;
 				@battle.choices[@Index]=new Choice(action: @battle.choices[@Index].Action, moveIndex: index, move: @battle.choices[@Index].Move, target: @battle.choices[@Index].Target);
@@ -3032,7 +3035,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			IBattleMove thismove=choice.Move;
-			if (!thismove.IsNotNullOrNone() || thismove.id==0) return; //if move was not chosen
+			if (!thismove.IsNotNullOrNone() || thismove.id<=0) return; //if move was not chosen
 			if (!turneffects.SpecialUsage) {
 				// TODO: Quick Claw message
 			}
@@ -3096,10 +3099,10 @@ namespace PokemonUnity.Combat
 			else
 				this.effects.Metronome=0;
 			// "X used Y!" message
-			//switch (thismove.pbDisplayUseMessage(this)) {
-				if (thismove.pbDisplayUseMessage(this) == 2) //case 2:   // Continuing Bide
+			int zxy = thismove.pbDisplayUseMessage(this); //switch (thismove.pbDisplayUseMessage(this)) {
+				if (zxy == 2) //case 2:   // Continuing Bide
 					return;
-				else if (thismove.pbDisplayUseMessage(this) == 1) { //case 1:   // Starting Bide
+				else if (zxy == 1) { //case 1:   // Starting Bide
 					this.lastMoveUsed=thismove.id;
 					//this.lastMoveUsedType=thismove.pbType(thismove.Type,this,null);
 					if (!turneffects.SpecialUsage) {
@@ -3111,7 +3114,7 @@ namespace PokemonUnity.Combat
 					@battle.successStates[this.Index].UseState=null;
 					@battle.successStates[this.Index].TypeMod=8;
 					return;
-				} else if (thismove.pbDisplayUseMessage(this) == -1) { //case -1:   // Was hurt while readying Focus Punch, fails use
+				} else if (zxy == -1) { //case -1:   // Was hurt while readying Focus Punch, fails use
 					this.lastMoveUsed=thismove.id;
 					//this.lastMoveUsedType=thismove.pbType(thismove.Type,this,null);
 					if (!turneffects.SpecialUsage) {
@@ -3126,10 +3129,10 @@ namespace PokemonUnity.Combat
 					return;
 			}
 			// Find the user and target(s)
-			List<IBattler> targets= new List<IBattler>();
+			IList<IBattler> targets= new List<IBattler>();
 			//targets.Add(null); // Empty for slot 0
-			//targets.Add(pbOpposing1);
-			IBattler user=pbFindUser(choice,targets.ToArray()); //ToDo: ref List<> here
+			targets.Add(pbOpposing1);
+			IBattler user=pbFindUser(choice,targets); //ToDo: ref List<> here?
 			// Battle Arena only - assume failure
 			@battle.successStates[user.Index].UseState=true;
 			@battle.successStates[user.Index].TypeMod=8;
@@ -3444,7 +3447,8 @@ namespace PokemonUnity.Combat
 			// Use the move
 			//   @battle.pbDisplayPaused("Before: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]"); //Log instead?
 			GameDebug.Log($"#{ToString()} used #{Game._INTL(choice.Move.id.ToString(TextScripts.Name))}");
-			try{ pbUseMove(choice, choice.Move == @battle.struggle); } catch (Exception e) { GameDebug.Log(e.Message); } //GameDebug.Log(e.StackTrace);
+			//try{ pbUseMove(choice, choice.Move == @battle.struggle); } catch (Exception e) { GameDebug.Log(e.Message); } //GameDebug.Log(e.StackTrace);
+			pbUseMove(choice, choice.Move == @battle.struggle);
 			//   @battle.pbDisplayPaused("After: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]");
 			return true;
 		}

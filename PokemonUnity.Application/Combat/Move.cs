@@ -1189,7 +1189,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public virtual void pbAddTarget(IBattler[] targets, IBattler attacker){
+		public virtual void pbAddTarget(IList<IBattler> targets, IBattler attacker){
 		}
 
 		/// <summary>

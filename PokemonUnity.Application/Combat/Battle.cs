@@ -1292,7 +1292,7 @@ namespace PokemonUnity.Combat
 				if (@doublebattle) {
 					IBattleMove thismove=thispkmn.moves[thispkmn.effects.EncoreIndex];
 					Attack.Data.Targets targets=thispkmn.pbTarget(thismove);
-					if (targets==Attack.Data.Targets.SELECTED_POKEMON) { //Targets.SingleNonUser
+					if (targets==Attack.Data.Targets.SELECTED_POKEMON || targets==Attack.Data.Targets.SELECTED_POKEMON_ME_FIRST) { //Targets.SingleNonUser
 						int target=(@scene as IPokeBattle_SceneNonInteractive).pbChooseTarget(idxPokemon,targets);
 						if (target>=0) pbRegisterTarget(idxPokemon,target);
 					}

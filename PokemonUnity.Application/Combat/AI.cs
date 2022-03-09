@@ -3351,7 +3351,7 @@ namespace PokemonUnity.Combat
 						opponent.effects.Substitute==0) {
 						if ((attacker.hasWorkingItem(Items.KINGS_ROCK) || attacker.hasWorkingItem(Items.RAZOR_FANG))
 						) { //&& move.canKingsRock //ToDo: Check if can flinch
-						basedamage*=1.05f;
+							basedamage*=1.05f;
 						} else if (attacker.hasWorkingAbility(Abilities.STENCH) &&
 							move.Effect!=Attack.Data.Effects.x114 &&    // Thunder Fang
 							move.Effect!=Attack.Data.Effects.x112 &&    // Fire Fang
@@ -4419,7 +4419,7 @@ namespace PokemonUnity.Combat
 			int totalscore=0;
 			int target=-1;
 			int skill=0;
-			bool wildbattle=@opponent==null && pbIsOpposing(index);
+			bool wildbattle=(@opponent==null || @opponent.Length == 0) && pbIsOpposing(index);
 			if (wildbattle) {		// If wild battle
 				for (int i = 0; i < 4; i++) {
 					if (CanChooseMove(index,i,false)) {

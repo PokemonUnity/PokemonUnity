@@ -4031,12 +4031,12 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_071() : base() { }
 		//public PokeBattle_Move_071(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override void pbAddTarget(IBattler[] targets, IBattler attacker)
+		public override void pbAddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.effects.CounterTarget >= 0 &&
 			   attacker.pbIsOpposing(attacker.effects.CounterTarget))
 			{
-				if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.CounterTarget]))
+				if (!attacker.pbAddTarget(ref targets, this.battle.battlers[attacker.effects.CounterTarget]))
 				{
 					attacker.pbRandomTarget(targets);
 				}
@@ -4062,12 +4062,12 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_072() : base() { }
 		//public PokeBattle_Move_072(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override void pbAddTarget(IBattler[] targets, IBattler attacker)
+		public override void pbAddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.effects.MirrorCoatTarget >= 0 &&
 			   attacker.pbIsOpposing(attacker.effects.MirrorCoatTarget))
 			{
-				if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.MirrorCoatTarget]))
+				if (!attacker.pbAddTarget(ref targets, this.battle.battlers[attacker.effects.MirrorCoatTarget]))
 				{
 					attacker.pbRandomTarget(targets);
 				}
@@ -4094,14 +4094,14 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_073() : base() { }
 		//public PokeBattle_Move_073(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override void pbAddTarget(IBattler[] targets, IBattler attacker)
+		public override void pbAddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.lastAttacker.Count > 0)
 			{
 				int lastattacker = attacker.lastAttacker[attacker.lastAttacker.Count - 1];
 				if (lastattacker >= 0 && attacker.pbIsOpposing(lastattacker))
 				{
-					if (!attacker.pbAddTarget(targets, this.battle.battlers[lastattacker]))
+					if (!attacker.pbAddTarget(ref targets, this.battle.battlers[lastattacker]))
 					{
 						attacker.pbRandomTarget(targets);
 					}
@@ -7569,11 +7569,11 @@ namespace PokemonUnity.Combat
 			}
 		}
 
-		public override void pbAddTarget(IBattler[] targets, IBattler attacker)
+		public override void pbAddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.effects.BideTarget >= 0)
 			{
-				if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.BideTarget]))
+				if (!attacker.pbAddTarget(ref targets, this.battle.battlers[attacker.effects.BideTarget]))
 				{
 					attacker.pbRandomTarget(targets);
 				}

@@ -211,15 +211,15 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		#region Move user and targets
-		IBattler pbFindUser(IBattleChoice choice, IBattler[] targets);
+		IBattler pbFindUser(IBattleChoice choice, IList<IBattler> targets);
 
 		IBattler pbChangeUser(IBattleMove thismove, IBattler user);
 
 		PokemonUnity.Attack.Data.Targets pbTarget(IBattleMove move);
 
-		bool pbAddTarget(IBattler[] targets, IBattler target);
+		bool pbAddTarget(ref IList<IBattler> targets, IBattler target);
 
-		void pbRandomTarget(IBattler[] targets);
+		void pbRandomTarget(IList<IBattler> targets);
 
 		bool pbChangeTarget(IBattleMove thismove, IBattler[] userandtarget, IBattler[] targets);
 		#endregion
