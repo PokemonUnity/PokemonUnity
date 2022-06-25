@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 56794cd7ac5b02945a0213a5e908b9b9
+timeCreated: 1445490461
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - itemListTex: {fileID: 2800000, guid: 0dfedd3095227ca4c9ece9499f7baa02, type: 3}
+  - itemListHighlightTex: {fileID: 2800000, guid: 6b1458838af8087459992333441baa96,
+      type: 3}
+  - itemListPlaceTex: {fileID: 2800000, guid: 473ddfbf06a0afa43ac95db95dac7957, type: 3}
+  - itemListSelectedTex: {fileID: 2800000, guid: 3edc7c69211193f44be6ed5a024804bb,
+      type: 3}
+  - itemListPlaceSelectedTex: {fileID: 2800000, guid: 62cab49d5e81efb4f83ca36a1a7f1f14,
+      type: 3}
+  - partySlotTex: {fileID: 2800000, guid: ba37253d00667f44fb11b3f18cd80ea3, type: 3}
+  - partySlotSelectedTex: {fileID: 2800000, guid: 536748d4b32a0894bb4c81294c0ba0b6,
+      type: 3}
+  - selectClip: {fileID: 8300000, guid: 02766f301753af9469c46d685fb3d48c, type: 3}
+  - healClip: {fileID: 8300000, guid: 4e3246179322430459432ab7176e7e86, type: 3}
+  - tmBootupClip: {fileID: 8300000, guid: 8d6f822eca4eef34388bf98f099fe2fa, type: 3}
+  - saleClip: {fileID: 8300000, guid: d43bed8076231154faddc8a8109f07d3, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

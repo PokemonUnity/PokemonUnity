@@ -1,8 +1,11 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
+using System;
 using UnityEngine;
 using System.Collections;
-using PokemonUnity.Monster;
+using System.Diagnostics;
+using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 public class NPCHandler : MonoBehaviour
 {
@@ -17,6 +20,7 @@ public class NPCHandler : MonoBehaviour
 
     public NPCBehaviour npcBehaviour;
 
+    public Texture2D sprite;
     public string npcSpriteName;
     private Sprite[] spriteSheet;
     private Sprite[] lightSheet;
@@ -25,6 +29,7 @@ public class NPCHandler : MonoBehaviour
     public Vector2 walkRange;
     private Vector3 initialPosition;
 
+    public bool animated = false;
     public bool trainerSurfing = false;
 
     public bool busy = false;
@@ -48,36 +53,48 @@ public class NPCHandler : MonoBehaviour
 
     private int frame;
     private int frames;
-    private int framesPerSec;
+    public int framesPerSec;
     private float secPerFrame;
-    private bool animPause = true;
+    public bool animPause = true;
+
+    private int modulo;
 
 
     void Awake()
     {
         pawnSprite = transform.Find("Pawn").GetComponent<SpriteRenderer>();
+        
         pawnReflectionSprite = transform.Find("PawnReflection").GetComponent<SpriteRenderer>();
+
+        modulo = 2;
 
         if (pokemonID != 0)
         {
-            pawnLightSprite = transform.Find("PawnLight").GetComponent<SpriteRenderer>();
-            pawnLightReflectionSprite = transform.Find("PawnLightReflection").GetComponent<SpriteRenderer>();
+            pawnLightSprite = pawnSprite.transform.Find("PawnLight").GetComponent<SpriteRenderer>();
+            pawnLightReflectionSprite = pawnReflectionSprite.transform.Find("PawnLightReflection").GetComponent<SpriteRenderer>();
             npcLight = transform.Find("Point light").GetComponent<Light>();
+
+            modulo = 2;
         }
 
         hitBox = transform.Find("NPC_Object");
+
+        if (hitBox == null)
+        {
+            hitBox = transform.Find("NPC_Transparent");
+        }
+        
         if (pokemonID == 0)
         {
             spriteSheet = Resources.LoadAll<Sprite>("OverworldNPCSprites/" + npcSpriteName);
         }
         else
         {
-            Pokemon pokemon = new Pokemon((PokemonUnity.Pokemons)pokemonID);
-            spriteSheet = pokemon.GetSprite(false);
+            spriteSheet = Pokemon.GetNewSpriteFromID(pokemonID, false, false);
 
-            npcLight.intensity = pokemon.Species.getLuminance();
-            npcLight.color = pokemon.Species.getLightColor();
-            lightSheet = pokemon.GetSprite(true);
+            npcLight.intensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
+            npcLight.color = PokemonDatabase.getPokemon(pokemonID).getLightColor();
+            lightSheet = Pokemon.GetNewSpriteFromID(pokemonID, false, true);
         }
 
         exclaim = transform.Find("Exclaim").gameObject;
@@ -91,6 +108,8 @@ public class NPCHandler : MonoBehaviour
 
         exclaim.SetActive(false);
 
+        if (animated) animPause = false;
+        
         StartCoroutine("animateSprite");
 
 
@@ -132,6 +151,39 @@ public class NPCHandler : MonoBehaviour
         }
     }
 
+    
+    //Jump animation
+    public IEnumerator jump(float speed, AudioClip jumpClip, bool hasLandClip)
+    {
+        if (speed == 0)
+            speed = 1;
+        
+        float increment = 0f;
+        float parabola = 0;
+        float height = 2.1f;
+        Vector3 startPosition = pawnSprite.transform.position;
+        
+        if (jumpClip != null)
+            SfxHandler.Play(jumpClip);
+
+        while (increment < 1)
+        {
+            increment += (1 * speed*2) * Time.deltaTime; //TODO make walkspeed modulable
+            if (increment > 1)
+            {
+                increment = 1;
+            }
+            parabola = -height * (increment * increment) + (height * increment);
+            pawnSprite.transform.position = new Vector3(pawnSprite.transform.position.x, startPosition.y + parabola, pawnSprite.transform.position.z);
+            yield return null;
+        }
+        pawnSprite.transform.position = new Vector3(pawnSprite.transform.position.x, startPosition.y, pawnSprite.transform.position.z);
+
+        if (hasLandClip)
+        {
+            SfxHandler.Play(PlayerMovement.player.landClip);
+        }
+    }
 
     //Better exclaimation not yet implemented
     public IEnumerator exclaimAnimation()
@@ -164,7 +216,10 @@ public class NPCHandler : MonoBehaviour
         {
             frame = 0;
             frames = 4;
-            framesPerSec = 7;
+            if (framesPerSec == 0)
+            {
+                framesPerSec = 7;
+            }
             secPerFrame = 1f / (float) framesPerSec;
             while (true)
             {
@@ -175,11 +230,11 @@ public class NPCHandler : MonoBehaviour
                     {
                         yield return null;
                     }
-                    if (animPause && frame % 2 != 0)
+                    if (animPause && frame % modulo != 0)
                     {
                         frame -= 1;
                     }
-                    pawnSprite.sprite = spriteSheet[direction * frames + frame];
+                    pawnSprite.sprite = spriteSheet[direction%4 * frames + frame];
                     pawnReflectionSprite.sprite = pawnSprite.sprite;
                     yield return new WaitForSeconds(secPerFrame / 4f);
                 }
@@ -200,8 +255,8 @@ public class NPCHandler : MonoBehaviour
             {
                 for (int i = 0; i < 6; i++)
                 {
-                    pawnSprite.sprite = spriteSheet[direction * 2 + frame];
-                    pawnLightSprite.sprite = lightSheet[direction * 2 + frame];
+                    pawnSprite.sprite = spriteSheet[direction * modulo + frame];
+                    pawnLightSprite.sprite = lightSheet[direction * modulo + frame];
 
                     pawnReflectionSprite.sprite = pawnSprite.sprite;
                     pawnLightReflectionSprite.sprite = pawnLightSprite.sprite;
@@ -222,9 +277,51 @@ public class NPCHandler : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        float scale;
+
+        Transform cam = PlayerMovement.player.transform.Find("Camera") != null
+            ? PlayerMovement.player.transform.Find("Camera")
+            : GameObject.Find("Camera").transform;
+
+        Vector3 position = cam.position - PlayerMovement.player.getCamOrigin();
+
+        if (transform.position.z > position.z)
+        {
+            scale = 0.0334f * (Math.Abs(transform.position.z - position.z))+0.9f;
+            if (transform.position.z > position.z + 3)
+            {
+                scale = 1;
+            }
+        }
+        else
+        {
+            scale = 0.9f;
+        }
+        
+        //scale = 0.0334f * (transform.position.z - PlayerMovement.player.transform.position.z)+0.9f;
+        
+        pawnSprite.transform.localScale = new Vector3(scale,scale,scale);
+        
+        Camera camera = PlayerMovement.player.transform.Find("Camera") != null
+            ? PlayerMovement.player.transform.Find("Camera").GetComponent<Camera>()
+            : GameObject.Find("Camera").GetComponent<Camera>();
+        
+        pawnSprite.transform.LookAt(camera.transform);
+
+        //if (PlayerMovement.player.transform.Find("Camera") == null)
+        pawnSprite.transform.localRotation = Quaternion.Euler(camera.transform.rotation.x-50, 180, 0);
+		
+        pawnSprite.transform.Rotate( new Vector3(0, 180, 0), Space.Self );
+        
+        //pawnSprite.transform.rotation = PlayerMovement.player.transform.Find("Pawn").transform.rotation;
+            
+    }
+
     public void setFrameStill()
     {
-        if (frame % 2 != 0)
+        if (frame % modulo != 0)
         {
             frame -= 1;
         }
@@ -491,7 +588,6 @@ public class NPCHandler : MonoBehaviour
         return Vector3.zero;
     }
 
-
     public IEnumerator move(Vector3 movement)
     {
         yield return StartCoroutine(move(movement, 1));
@@ -529,7 +625,8 @@ public class NPCHandler : MonoBehaviour
             }
             yield return null;
         }
-        animPause = true;
+        if (!animated)
+            animPause = true;
     }
 
     public void setOverrideBusy(bool set)

@@ -2,11 +2,10 @@
 
 using UnityEngine;
 using System.Collections;
-using PokemonUnity.Monster;
 
 public class InteractBreak : MonoBehaviour
 {
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
 
     private Animator myAnimator;
     private SpriteRenderer objectSprite;
@@ -19,12 +18,12 @@ public class InteractBreak : MonoBehaviour
 
     public string examineText;
     public string interactText;
-    public PokemonUnity.Moves fieldEffect;
+    public string fieldEffect;
 
     // Use this for initialization
     void Start()
     {
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
         myAnimator = (Animator) this.GetComponentInChildren<Animator>();
         objectSprite = this.GetComponentInChildren<SpriteRenderer>();
@@ -54,39 +53,38 @@ public class InteractBreak : MonoBehaviour
 
     public IEnumerator interact()
     {
-        Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty(fieldEffect);
-        if (targetPokemon.IsNotNullOrNone())
+        Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty(fieldEffect);
+        if (targetPokemon != null)
         {
             if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
             {
-                Dialog.drawDialogBox();
+                Dialog.DrawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                yield return Dialog.StartCoroutine("drawText", interactText);
+                yield return Dialog.StartCoroutine(Dialog.DrawText(interactText));
                 /* 			//This inactive code is used to print a third line of text.
                     while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){	//these 3 lines stop the next bit from running until space is pressed.
                         yield return null;
                     }
                     Dialog.StartCoroutine("scrollText");
-                    yield return Dialog.StartCoroutine("drawText", "\\That'd be neat.");
+                    yield return Dialog.StartCoroutine(Dialog.DrawText( "\\That'd be neat.");
             */
-                Dialog.drawChoiceBox();
+                yield return StartCoroutine(Dialog.DrawChoiceBox());
 
                 //You CAN NOT get a value from a Coroutine. As a result, the coroutine runs and resets a public int in it's own script.
-                yield return Dialog.StartCoroutine(Dialog.choiceNavigate()); //it then assigns a value to that int
-                Dialog.undrawChoiceBox();
+                Dialog.UndrawChoiceBox();
                 if (Dialog.chosenIndex == 1)
                 {
                     //check that int's value
 
-                    Dialog.drawDialogBox();
+                    Dialog.DrawDialogBox();
                     yield return
-                        Dialog.StartCoroutine("drawText",
-                            targetPokemon.Name + " used " + fieldEffect + "!");
+                        Dialog.StartCoroutine(Dialog.DrawText(
+                            targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance(fieldEffect) + "!"));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
-                    Dialog.undrawDialogBox();
+                    Dialog.UndrawDialogBox();
 
                     yield return new WaitForSeconds(0.5f);
 
@@ -103,7 +101,7 @@ public class InteractBreak : MonoBehaviour
 
                     yield return new WaitForSeconds(1f);
                 }
-                Dialog.undrawDialogBox();
+                Dialog.UndrawDialogBox();
                 yield return new WaitForSeconds(0.2f);
                 PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
             }
@@ -112,14 +110,14 @@ public class InteractBreak : MonoBehaviour
         {
             if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
             {
-                Dialog.drawDialogBox();
+                Dialog.DrawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                yield return Dialog.StartCoroutine("drawText", examineText);
+                yield return Dialog.StartCoroutine(Dialog.DrawText( examineText));
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
-                Dialog.undrawDialogBox();
+                Dialog.UndrawDialogBox();
                 yield return new WaitForSeconds(0.2f);
                 PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
             }

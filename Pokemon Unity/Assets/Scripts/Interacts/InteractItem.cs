@@ -5,7 +5,7 @@ using System.Collections;
 
 public class InteractItem : MonoBehaviour
 {
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
 
     public string item;
     public int quantity;
@@ -21,7 +21,7 @@ public class InteractItem : MonoBehaviour
 
     void Awake()
     {
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
         itemSprite = transform.Find("ItemSprite").GetComponent<SpriteRenderer>();
         itemShadow = transform.Find("ItemShadow").GetComponent<SpriteRenderer>();
@@ -58,35 +58,34 @@ public class InteractItem : MonoBehaviour
             BgmHandler.main.PlayMFX(itemGetMFX);
 
             string firstLetter = item.Substring(0, 1).ToLowerInvariant();
-            Dialog.drawDialogBox();
+            Dialog.DrawDialogBox();
             if (TM)
             {
-                Debug.LogError("TM WAS NOT IMPLEMENT");
-                //Dialog.StartCoroutine("drawText",
-                //    SaveData.currentSave.playerName + " found TM" + ItemDatabase.getItem(item).getTMNo() + ": " + item +
-                //    "!");
+                Dialog.StartCoroutine(Dialog.DrawText(
+                    SaveData.currentSave.playerName + " found TM" + ItemDatabase.getItem(item).getTMNo() + ": " + item +
+                    "!"));
             }
             else
             {
                 if (quantity > 1)
                 {
-                    Dialog.StartCoroutine("drawText", SaveData.currentSave.Player.Name + " found " + item + "s!");
+                    Dialog.StartCoroutine(Dialog.DrawText( SaveData.currentSave.playerName + " found " + item + "s!"));
                 }
                 else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
                          firstLetter == "u")
                 {
-                    Dialog.StartCoroutine("drawText", SaveData.currentSave.Player.Name + " found an " + item + "!");
+                    Dialog.StartCoroutine(Dialog.DrawText( SaveData.currentSave.playerName + " found an " + item + "!"));
                 }
                 else
                 {
-                    Dialog.StartCoroutine("drawText", SaveData.currentSave.Player.Name + " found a " + item + "!");
+                    Dialog.StartCoroutine(Dialog.DrawText( SaveData.currentSave.playerName + " found a " + item + "!"));
                 }
             }
             yield return new WaitForSeconds(itemGetMFX.length);
 
-            bool itemAdd = SaveData.currentSave.Bag.addItem(item.ToItems(), quantity);
+            bool itemAdd = SaveData.currentSave.Bag.addItem(item, quantity);
 
-            Dialog.drawDialogBox();
+            Dialog.DrawDialogBox();
             if (itemAdd)
             {
                 itemSprite.enabled = false;
@@ -96,44 +95,43 @@ public class InteractItem : MonoBehaviour
 
                 if (TM)
                 {
-                    //yield return
-                    //    Dialog.StartCoroutine("drawTextSilent",
-                    //        SaveData.currentSave.playerName + " put the TM" + ItemDatabase.getItem(item).getTMNo() +
-                    //        " \\away into the bag.");
-                    Debug.LogError("TM WAS NOT IMPLEMENT");
+                    yield return
+                        Dialog.StartCoroutine(Dialog.DrawTextSilent(
+                            SaveData.currentSave.playerName + " put the TM" + ItemDatabase.getItem(item).getTMNo() +
+                            " \\away into the bag."));
                 }
                 else
                 {
                     if (quantity > 1)
                     {
                         yield return
-                            Dialog.StartCoroutine("drawTextSilent",
-                                SaveData.currentSave.Player.Name + " put the " + item + "s \\away into the bag.");
+                            Dialog.StartCoroutine(Dialog.DrawTextSilent(
+                                SaveData.currentSave.playerName + " put the " + item + "s \\away into the bag."));
                     }
                     else
                     {
                         yield return
-                            Dialog.StartCoroutine("drawTextSilent",
-                                SaveData.currentSave.Player.Name + " put the " + item + " \\away into the bag.");
+                            Dialog.StartCoroutine(Dialog.DrawTextSilent(
+                                SaveData.currentSave.playerName + " put the " + item + " \\away into the bag."));
                     }
                 }
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
-                Dialog.undrawDialogBox();
+                Dialog.UndrawDialogBox();
 
                 PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
                 gameObject.SetActive(false);
             }
             else
             {
-                yield return Dialog.StartCoroutine("drawTextSilent", "But there was no room...");
+                yield return Dialog.StartCoroutine(Dialog.DrawTextSilent( "But there was no room..."));
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
-                Dialog.undrawDialogBox();
+                Dialog.UndrawDialogBox();
 
                 PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
             }

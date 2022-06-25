@@ -13,6 +13,10 @@ public class TypingHandler : MonoBehaviour
     public int pageIndex = 0;
     public int typeSpaceCount = 12;
 
+    public AudioClip decideClip;
+    public AudioClip typeClip;
+    public AudioClip cancelClip;
+
     private Sprite[] iconAnim;
 
     private Image icon;
@@ -356,23 +360,30 @@ public class TypingHandler : MonoBehaviour
         }
     }
 
+    private void resetText()
+    {
+        typedString = "";
+        for (int i = 0; i < typeSpaceText.Length; ++i)
+        {
+            typeSpaceText[i].text = "";
+            typeSpaceIndex = 0;
+        }
+    }
+
     private void addCharacterToString(bool caps, string character, string capsCharacter)
     {
-        if (pageIndex == 3)
+        if (typeSpaceIndex < typeSpaceCount)
         {
-            if (typeSpaceIndex < typeSpaceCount)
+            if (!caps)
             {
-                if (!caps)
-                {
-                    typeSpaceText[typeSpaceIndex].text = character;
-                }
-                else
-                {
-                    typeSpaceText[typeSpaceIndex].text = capsCharacter;
-                }
-                typeSpaceTextShadow[typeSpaceIndex].text = typeSpaceText[typeSpaceIndex].text;
-                typeSpaceIndex += 1;
+                typeSpaceText[typeSpaceIndex].text = character;
             }
+            else
+            {
+                typeSpaceText[typeSpaceIndex].text = capsCharacter;
+            }
+            typeSpaceTextShadow[typeSpaceIndex].text = typeSpaceText[typeSpaceIndex].text;
+            typeSpaceIndex += 1;
         }
     }
 
@@ -403,11 +414,12 @@ public class TypingHandler : MonoBehaviour
     }
 
 
-    public IEnumerator control(int typeSpaces, string defaultString, bool? genderDisplay, Sprite[] iconAnimation)
+    public IEnumerator control(int typeSpaces, string defaultString, Pokemon.Gender genderDisplay = Pokemon.Gender.NONE,
+        Sprite[] iconAnimation = null)
     {
         typeSpaceCount = typeSpaces;
         iconAnim = iconAnimation;
-        if (iconAnimation == null)
+        if (iconAnimation != null)
         {
             icon.sprite = (iconAnimation.Length < 1) ? null : iconAnim[0];
         }
@@ -415,22 +427,24 @@ public class TypingHandler : MonoBehaviour
         selectorIndex = 0;
         pageIndex = 0;
 
-        if (genderDisplay == null)
-        {
-            genderText.text = null;
-        }
-        else if (!genderDisplay.HasValue)
+        if (genderDisplay == Pokemon.Gender.FEMALE)
         {
             genderText.text = "♀";
             genderText.color = new Color(1, 0.2f, 0.2f, 1);
         }
-        else if (genderDisplay.HasValue) // Male
+        else if (genderDisplay == Pokemon.Gender.MALE)
         {
             genderText.text = "♂";
             genderText.color = new Color(0.2f, 0.4f, 1, 1);
         }
+        else
+        {
+            genderText.text = null;
+        }
         genderTextShadow.text = genderText.text;
 
+        typeSpaceIndex = 0;
+        
         for (int i = 0; i < typeSpaceCount; i++)
         {
             if (i < defaultString.Length)
@@ -466,6 +480,10 @@ public class TypingHandler : MonoBehaviour
         StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
 
         bool running = true;
+        
+        yield return StartCoroutine(typeWithKeyboard());
+        
+        /*
         while (running)
         {
             if (Input.GetAxisRaw("Horizontal") > 0)
@@ -665,6 +683,7 @@ public class TypingHandler : MonoBehaviour
 
             yield return null;
         }
+        */
 
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
         yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
@@ -679,7 +698,7 @@ public class TypingHandler : MonoBehaviour
 
         keyboardText.text = "Press Esc to stop typing";
         keyboardTextShadow.text = keyboardText.text;
-        yield return null;
+        //yield return null;
 
         while (running)
         {
@@ -877,6 +896,22 @@ public class TypingHandler : MonoBehaviour
             else if (Input.GetButtonDown("Back") && !Input.GetKeyDown(KeyCode.X))
             {
                 running = false;
+            }
+
+            else if (Input.GetButtonDown("Enter"))
+            {
+                compileString();
+                if (typedString.Length > 0)
+                {
+                    SfxHandler.Play(decideClip);
+                    running = false;
+                }
+                else
+                {
+                    SfxHandler.Play(cancelClip);
+                }
+
+                yield return new WaitForSeconds(0.4f);
             }
 
             yield return null;

@@ -2,12 +2,14 @@
 
 using UnityEngine;
 using System.Collections;
+using Classes;
+using UnityEditor;
 using UnityEngine.SceneManagement;
 
 public class InteractDoorway : MonoBehaviour
 {
-    //private GameObject Player;
-    private DialogBoxManager Dialog;
+    private GameObject Player;
+    private DialogBoxHandlerNew Dialog;
 
     private Animator myAnimator;
     private SpriteRenderer objectSprite;
@@ -36,14 +38,14 @@ public class InteractDoorway : MonoBehaviour
     public EntranceStyle entranceStyle;
 
     public bool movesForward = false;
-
-    public string transferScene; //If blank, will transfer to the currently loaded scene
+    
+    public string transferSceneName;
     public Vector3 transferPosition;
     public int transferDirection;
     public string examineText;
-    public string lockedExamineText;
-
-    public Texture2D fadeTex;
+    private string lockedExamineText;
+    
+    public Sprite fadeSprite;
 
     private bool lockPlayerCamera = false;
     private Vector3 lockedPosition;
@@ -51,8 +53,8 @@ public class InteractDoorway : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //Player = PlayerMovement.player.gameObject;
-        Dialog = GameObject.Find("CanvasUI").GetComponent<DialogBoxManager>();
+        Player = PlayerMovement.player.gameObject;
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
         objectLight = this.GetComponentInChildren<Light>();
         if (objectLight != null)
@@ -86,19 +88,28 @@ public class InteractDoorway : MonoBehaviour
     {
         if (isLocked)
         {
+            switch (Language.getLang())
+            {
+                default:
+                    lockedExamineText = "The door is locked.";
+                    break;
+                case Language.Country.FRANCAIS:
+                    lockedExamineText = "La porte est verrouillée.";
+                    break;
+            }
             if (lockedExamineText.Length > 0)
             {
                 if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
                 {
-                    Dialog.drawDialogBox();
+                    Dialog.DrawBlackFrame();
                         //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine("drawText", lockedExamineText);
+                    yield return Dialog.StartCoroutine(Dialog.DrawText( lockedExamineText));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         //these 3 lines stop the next bit from running until space is pressed.
                         yield return null;
                     }
-                    Dialog.undrawDialogBox();
+                    Dialog.UndrawDialogBox();
                     yield return new WaitForSeconds(0.2f);
                     PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
                 }
@@ -110,15 +121,15 @@ public class InteractDoorway : MonoBehaviour
             {
                 if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
                 {
-                    Dialog.drawDialogBox();
+                    Dialog.DrawDialogBox();
                         //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine("drawText", examineText);
+                    yield return Dialog.StartCoroutine(Dialog.DrawText( examineText));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         //these 3 lines stop the next bit from running until space is pressed.
                         yield return null;
                     }
-                    Dialog.undrawDialogBox();
+                    Dialog.UndrawDialogBox();
                     yield return new WaitForSeconds(0.2f);
                     PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
                 }
@@ -130,7 +141,7 @@ public class InteractDoorway : MonoBehaviour
     {
         if (!isLocked && !PlayerMovement.player.isInputPaused())
         {
-            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+            if (PlayerMovement.player.setCheckBusyWith(gameObject))
             {
                 if (enterSound != null)
                 {
@@ -159,9 +170,9 @@ public class InteractDoorway : MonoBehaviour
                         }
                         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
                             yRotation + (90f * increment), transform.localEulerAngles.z);
-                        PlayerMovement.player.mainCamera.fieldOfView = PlayerMovement.player.mainCameraDefaultFOV -
+                        /*PlayerMovement.player.mainCamera.fieldOfView = PlayerMovement.player.mainCameraDefaultFOV -
                                                                        ((PlayerMovement.player.mainCameraDefaultFOV /
-                                                                         10f) * increment);
+                                                                         10f) * increment);*/
                         yield return null;
                     }
 
@@ -184,7 +195,7 @@ public class InteractDoorway : MonoBehaviour
                         }
                         transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y,
                             1f - (0.92f * increment));
-                        PlayerMovement.player.mainCamera.fieldOfView = 20f - (2f * increment);
+                        /*PlayerMovement.player.mainCamera.fieldOfView = 20f - (2f * increment);*/
                         yield return null;
                     }
                     yield return new WaitForSeconds(0.2f);
@@ -200,13 +211,20 @@ public class InteractDoorway : MonoBehaviour
                     }
                     PlayerMovement.player.forceMoveForward();
                 }
-
-                //fade out the scene and load a new scene
-                GlobalVariables.global.fadeTex = fadeTex;
+                
                 //float fadeTime = sceneTransition.FadeOut() + 0.4f;
+                WeatherHandler.fadeSound();
                 float fadeTime = ScreenFade.slowedSpeed + 0.4f;
                 //fadeCutouts for doorways not yet implemented
-                StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed));
+                if (fadeSprite == null)
+                {
+                    StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed));
+                }
+                else
+                {
+                    StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.defaultSpeed, fadeSprite));
+                }
+                
                 if (!dontFadeMusic)
                 {
                     BgmHandler.main.PlayMain(null, 0);
@@ -215,27 +233,28 @@ public class InteractDoorway : MonoBehaviour
 
 
                 //reset camera and doorway transforms
-                PlayerMovement.player.mainCamera.transform.localPosition =
-                    PlayerMovement.player.mainCameraDefaultPosition;
+                /*PlayerMovement.player.mainCamera.transform.localPosition =
+                    PlayerMovement.player.mainCameraDefaultPosition;*/
                 PlayerMovement.player.mainCamera.fieldOfView = PlayerMovement.player.mainCameraDefaultFOV;
                 transform.localPosition = initPosition;
                 transform.localRotation = initRotation;
                 transform.localScale = initScale;
 
-                if (!string.IsNullOrEmpty(transferScene))
+                if (transferSceneName.Length > 0)
                 {
                     NonResettingHandler.saveDataToGlobal();
 
                     GlobalVariables.global.playerPosition = transferPosition;
                     GlobalVariables.global.playerDirection = transferDirection;
                     GlobalVariables.global.playerForwardOnLoad = movesForward;
+                    GlobalVariables.global.playerExiting = true;
                     GlobalVariables.global.fadeIn = true;
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(transferScene);
+                    SceneManager.LoadScene(transferSceneName);
                 }
                 else
                 {
                     //uncheck busy with to ensure events at destination can be run.
-                    PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                    PlayerMovement.player.unsetCheckBusyWith(gameObject);
 
                     //transfer to current scene, no saving/loading nessecary
                     PlayerMovement.player.updateAnimation("walk", PlayerMovement.player.walkFPS);
@@ -243,6 +262,10 @@ public class InteractDoorway : MonoBehaviour
 
                     PlayerMovement.player.transform.position = transferPosition;
                     PlayerMovement.player.updateDirection(transferDirection);
+                    
+                    
+                    PlayerMovement.player.followerScript.direction = GlobalVariables.global.playerDirection;
+                    PlayerMovement.player.followerScript.transform.localPosition = -Direction.Vectorize(transferDirection);
                     if (movesForward)
                     {
                         PlayerMovement.player.forceMoveForward();
@@ -253,7 +276,9 @@ public class InteractDoorway : MonoBehaviour
                     StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
 
                     yield return new WaitForSeconds(0.1f);
-                    PlayerMovement.player.pauseInput(0.2f);
+                    PlayerMovement.player.pauseInput();
+                    yield return new WaitForSeconds(0.8f);
+                    PlayerMovement.player.unpauseInput();
                 }
             }
         }

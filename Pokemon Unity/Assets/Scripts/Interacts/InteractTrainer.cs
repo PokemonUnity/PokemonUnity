@@ -1,7 +1,10 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
+using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Trainer))]
 public class InteractTrainer : MonoBehaviour
@@ -22,6 +25,9 @@ public class InteractTrainer : MonoBehaviour
         Patrol
     }
 
+    public bool doubleBattle;
+    public Trainer ally;
+
     public Gender trainerGender;
     public TrainerBehaviour trainerBehaviour;
 
@@ -35,9 +41,23 @@ public class InteractTrainer : MonoBehaviour
     public bool[] turnableDirections = new bool[4];
     public WalkCommand[] patrol = new WalkCommand[1];
 
-    public string[] trainerConfrontDialog;
-    public string[] trainerDefeatDialog;
-    public string[] trainerPostDefeatDialog;
+    
+    [Space]
+    
+    [Header("English Dialog")]
+    [FormerlySerializedAs("trainerConfrontDialog")] 
+    public string[] en_trainerConfrontDialog;
+    [FormerlySerializedAs("trainerDefeatDialog")] 
+    public string[] en_trainerDefeatDialog;
+    [FormerlySerializedAs("trainerPostDefeatDialog")] 
+    public string[] en_trainerPostDefeatDialog;
+    
+    [Space]
+    
+    [Header("French Dialog")]
+    public string[] fr_trainerConfrontDialog;
+    public string[] fr_trainerDefeatDialog;
+    public string[] fr_trainerPostDefeatDialog;
 
     public bool trainerSurfing = false;
 
@@ -68,14 +88,14 @@ public class InteractTrainer : MonoBehaviour
     private bool animPause = true;
 
 
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
     //private SceneTransition sceneTransition;
 
     void Awake()
     {
         trainer = transform.GetComponent<Trainer>();
 
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
         sight = transform.Find("Sight");
         sightCollider = sight.GetComponents<BoxCollider>();
@@ -144,6 +164,47 @@ public class InteractTrainer : MonoBehaviour
 
         updateDirection(direction);
         StartCoroutine(refireSightColliders());
+    }
+
+    private void LateUpdate()
+    {
+        float scale;
+
+        Transform cam = PlayerMovement.player.transform.Find("Camera") != null
+            ? PlayerMovement.player.transform.Find("Camera")
+            : GameObject.Find("Camera").transform;
+
+        Vector3 position = cam.position - PlayerMovement.player.getCamOrigin();
+
+        if (transform.position.z > position.z)
+        {
+            scale = 0.0334f * (Math.Abs(transform.position.z - position.z))+0.9f;
+            if (transform.position.z > position.z + 3)
+            {
+                scale = 1;
+            }
+        }
+        else
+        {
+            scale = 0.9f;
+        }
+        
+        //scale = 0.0334f * (transform.position.z - PlayerMovement.player.transform.position.z)+0.9f;
+        
+        pawnSprite.transform.localScale = new Vector3(scale,scale,scale);
+        
+        Camera camera = PlayerMovement.player.transform.Find("Camera") != null
+            ? PlayerMovement.player.transform.Find("Camera").GetComponent<Camera>()
+            : GameObject.Find("Camera").GetComponent<Camera>();
+        
+        pawnSprite.transform.LookAt(camera.transform);
+
+        //if (PlayerMovement.player.transform.Find("Camera") == null)
+        pawnSprite.transform.localRotation = Quaternion.Euler(camera.transform.rotation.x-50, 180, 0);
+		
+        pawnSprite.transform.Rotate( new Vector3(0, 180, 0), Space.Self );
+        
+        //pawnSprite.transform.rotation = PlayerMovement.player.transform.Find("Pawn").transform.rotation;
     }
 
     public void updateDirection(int newDirection)
@@ -246,7 +307,7 @@ public class InteractTrainer : MonoBehaviour
 
         exclaim.transform.localScale = new Vector3(1, 1, 1);
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(0.4f);
         exclaim.SetActive(false);
     }
 
@@ -529,7 +590,7 @@ public class InteractTrainer : MonoBehaviour
                 BgmHandler.main.PlayOverlay(introBGM, samplesLoopStart);
                 //DISPLAY "!"
                 yield return StartCoroutine(exclaimAnimation());
-                yield return new WaitForSeconds(1.2f);
+                yield return new WaitForSeconds(0.6f);
 
                 //approach player
                 Vector3 movement = getForwardsVector();
@@ -585,34 +646,88 @@ public class InteractTrainer : MonoBehaviour
                 BgmHandler.main.PlayOverlay(introBGM, samplesLoopStart);
 
                 //Display all of the confrontation Dialog.
-                for (int i = 0; i < trainerConfrontDialog.Length; i++)
+                for (int i = 0; i < en_trainerConfrontDialog.Length; i++)
                 {
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", trainerConfrontDialog[i]);
+                    Dialog.DrawDialogBox();
+                    yield return Dialog.StartCoroutine(Dialog.DrawText( en_trainerConfrontDialog[i]));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
-                    Dialog.undrawDialogBox();
+                    Dialog.UndrawDialogBox();
                 }
 
                 //custom cutouts not yet implemented
                 StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
 
-                new System.NotImplementedException();
+                //Automatic LoopStart usage not yet implemented
+                Scene.main.Battle.gameObject.SetActive(true);
+                if (trainer.battleBGM != null)
+                {
+                    Scene.main.Battle.battleBGM = trainer.battleBGM;
+                    Scene.main.Battle.battleBGMLoopStart = trainer.samplesLoopStart;
+                    BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
+                }
+                else
+                {
+                    Scene.main.Battle.battleBGM = Scene.main.Battle.defaultTrainerBGM;
+                    Scene.main.Battle.battleBGMLoopStart = Scene.main.Battle.defaultTrainerBGMLoopStart;
+                    BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
+                        Scene.main.Battle.defaultTrainerBGMLoopStart);
+                }
+                Scene.main.Battle.gameObject.SetActive(false);
+                yield return new WaitForSeconds(1.6f);
+
+                Trainer player2 = null;
+
+                if (PlayerMovement.player.npcFollower)
+                {
+                    if (PlayerMovement.player.npcFollower.GetComponent<Trainer>() != null)
+                    {
+                        player2 = PlayerMovement.player.npcFollower.GetComponent<Trainer>();
+                    }
+                }
+
+                Scene.main.Battle.gameObject.SetActive(true);
+                StartCoroutine(Scene.main.Battle.control(trainer, doubleBattle, ally, player2));
+
+                while (Scene.main.Battle.gameObject.activeSelf)
+                {
+                    yield return null;
+                }
+
+                //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
+                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+
+                if (Scene.main.Battle.victor == 0)
+                {
+                    defeated = true;
+                    recentlyDefeated = true;
+                    //Display all of the defeated Dialog. (if any)
+                    for (int i = 0; i < en_trainerDefeatDialog.Length; i++)
+                    {
+                        Dialog.DrawDialogBox();
+                        yield return Dialog.StartCoroutine(Dialog.DrawText( en_trainerDefeatDialog[i]));
+                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        {
+                            yield return null;
+                        }
+                        Dialog.UndrawDialogBox();
+                    }
+                }
             }
             else
             {
                 //Display all of the post defeat Dialog.
-                for (int i = 0; i < trainerPostDefeatDialog.Length; i++)
+                for (int i = 0; i < en_trainerPostDefeatDialog.Length; i++)
                 {
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", trainerPostDefeatDialog[i]);
+                    Dialog.DrawDialogBox();
+                    yield return Dialog.StartCoroutine(Dialog.DrawText( en_trainerPostDefeatDialog[i]));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
-                    Dialog.undrawDialogBox();
+                    Dialog.UndrawDialogBox();
                 }
             }
 

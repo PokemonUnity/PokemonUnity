@@ -3,13 +3,11 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using PokemonUnity.Saving.SerializableClasses;
 using System.Runtime.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 
 #endif
-
 
 [System.Serializable]
 public class SeriV3 : ISerializable
@@ -99,4 +97,3 @@ public static class Utex
         return new Vector3(v.x, v.y, z);
     }
 }
-

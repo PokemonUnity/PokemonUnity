@@ -1,9 +1,90 @@
 fileFormatVersion: 2
-guid: 9cd4d7d72c6719a45bb59bd4d1738c13
+guid: e9a6bb18b229cd7439f21f5212c862fb
+timeCreated: 1459619216
+licenseType: Free
 MonoImporter:
-  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - defaultTrainerBGM: {fileID: 8300000, guid: 07457156b9b555f4d8d2c7d2414ac9b5, type: 3}
+  - defaultTrainerVictoryBGM: {fileID: 8300000, guid: a96cbb833b84b21448c65d39c708c538,
+      type: 3}
+  - defaultWildBGM: {fileID: 8300000, guid: 0bbaf1e49a96421488ad45023dcdc912, type: 3}
+  - defaultWildVictoryBGM: {fileID: 8300000, guid: e627b1621c21a594db130862cad5fe90,
+      type: 3}
+  - scrollClip: {fileID: 8300000, guid: 02766f301753af9469c46d685fb3d48c, type: 3}
+  - selectClip: {fileID: 8300000, guid: ce4e939249ac5cf4a8907f1f07991047, type: 3}
+  - runClip: {fileID: 8300000, guid: 010b799b04cef584797a44590a7d5a14, type: 3}
+  - statUpClip: {fileID: 8300000, guid: ef8ca35750679d648a91d344a06d3ba2, type: 3}
+  - statDownClip: {fileID: 8300000, guid: 87b2439c8e4892d4c951a502d93fb243, type: 3}
+  - healFieldClip: {fileID: 8300000, guid: fa9ff9b63abf6224ebd0b0f385cea43a, type: 3}
+  - fillExpClip: {fileID: 8300000, guid: 64ccd68d1cc46ae4e9e2e1142101f23e, type: 3}
+  - expFullClip: {fileID: 8300000, guid: a3acbdafc39167948be77dd88cc9028f, type: 3}
+  - pokeballOpenClip: {fileID: 8300000, guid: 4f877b301181b6f4da677db0b67ce740, type: 3}
+  - faintClip: {fileID: 8300000, guid: 266df25f6bab1e645a5b74bbc4a4f421, type: 3}
+  - hitClip: {fileID: 8300000, guid: a538482c81a5fa245a991f5dbb7c9df9, type: 3}
+  - hitSuperClip: {fileID: 8300000, guid: ddcd1d195c0799a408ef4038684264e9, type: 3}
+  - hitPoorClip: {fileID: 8300000, guid: 4255972e9571fea42b072df6ca8483a3, type: 3}
+  - partySpaceTex: {fileID: 21300000, guid: 2802d39015db89b4c952b69d40bc20f5, type: 3}
+  - partyBallTex: {fileID: 21300000, guid: e35de3fa68776c34aa9b7e67650bb354, type: 3}
+  - partyStatusTex: {fileID: 21300000, guid: fdb69ce2decb28148829964dc5cabb8a, type: 3}
+  - partyFaintTex: {fileID: 21300000, guid: a6f4b0ab5d8818c459a8eb0cb5e58359, type: 3}
+  - buttonFightTex: {fileID: 21300000, guid: 81934b37d31e95d4aa107c6698514353, type: 3}
+  - buttonFightSelTex: {fileID: 21300000, guid: 7a57c984296a3ab4c9671e105d56c872,
+      type: 3}
+  - buttonBagTex: {fileID: 21300000, guid: 837c82213bfe92c458bfb23f458e7a58, type: 3}
+  - buttonBagSelTex: {fileID: 21300000, guid: bc3ab1632dde1154da47225cb255b455, type: 3}
+  - buttonRunTex: {fileID: 21300000, guid: 690b9e340566ae2458bf5fa74a28c42d, type: 3}
+  - buttonRunSelTex: {fileID: 21300000, guid: 8e8ff6849bcff6149b91bb7089102c03, type: 3}
+  - buttonPokeTex: {fileID: 21300000, guid: b5930d6ecf70fe643924da65cef28a43, type: 3}
+  - buttonPokeSelTex: {fileID: 21300000, guid: 7dd9ca4cb7bd5824b9130f7cad5c0543, type: 3}
+  - buttonMoveBackgroundTex: {fileID: 21300000, guid: 7e18faf20209faf48ba74d2eb9b266cc,
+      type: 3}
+  - buttonMoveBackgroundSelTex: {fileID: 21300000, guid: 8be1a9650f6d9654ca9ff9a69f4b9f65,
+      type: 3}
+  - buttonMegaTex: {fileID: 21300000, guid: e735b66045b40cd43a976a0c8cef9c57, type: 3}
+  - buttonMegaActiveTex: {fileID: 21300000, guid: 3b60b886e2b136346badfdf964b6cc2f,
+      type: 3}
+  - buttonMegaActiveSelTex: {fileID: 21300000, guid: 1ebdb9e355859134ea5bdca8758ee284,
+      type: 3}
+  - buttonReturnTex: {fileID: 21300000, guid: c5ae0a2358cda8b44a461e5f4339e957, type: 3}
+  - buttonReturnSelTex: {fileID: 21300000, guid: 80199bb706220974192170b8e43000df,
+      type: 3}
+  - buttonBlueTex: {fileID: 21300000, guid: 61e0cc59442c3244193769c7d9f0f320, type: 3}
+  - buttonBlueSelTex: {fileID: 21300000, guid: c9feac040aeb81d4184e39093ce28270, type: 3}
+  - buttonBackBagTex: {fileID: 21300000, guid: 90c904c1911982b42867c0b110acbee3, type: 3}
+  - buttonBackBagSelTex: {fileID: 21300000, guid: 08418d8a178295b40a166a168c32f2ed,
+      type: 3}
+  - buttonBagItemCategoryTex: {fileID: 21300000, guid: b8d0b0ec6c3e24c4283bf5b65a1de571,
+      type: 3}
+  - buttonBagItemCategorySelTex: {fileID: 21300000, guid: e5cca518a40debe4ab8e4a56359d7b2e,
+      type: 3}
+  - buttonBagItemListTex: {fileID: 21300000, guid: 48b4aeb4154712d479c84e66ba9f6aa1,
+      type: 3}
+  - buttonBagItemListSelTex: {fileID: 21300000, guid: afb5b27db003a084ea7cd7a9ccf3a944,
+      type: 3}
+  - buttonBackPokeTex: {fileID: 21300000, guid: 7e05ef900da77d44a9015716a932a190,
+      type: 3}
+  - buttonBackPokeSelTex: {fileID: 21300000, guid: d79e8d47e669dc8459ecbddb0a964b6f,
+      type: 3}
+  - buttonPokemonTex: {fileID: 21300000, guid: cdc68d516b313d0429499db5d03ada24, type: 3}
+  - buttonPokemonRoundTex: {fileID: 21300000, guid: 28f349551ca9bc443ae1c85285577226,
+      type: 3}
+  - buttonPokemonFntTex: {fileID: 21300000, guid: 8a56a809437859b4c8574418a9f15c3f,
+      type: 3}
+  - buttonPokemonRoundFntTex: {fileID: 21300000, guid: 518b68144a3dbd84ea5b4f20ba16d926,
+      type: 3}
+  - buttonPokemonSelTex: {fileID: 21300000, guid: c4f171c46f44ab34eb7d109c8c01da35,
+      type: 3}
+  - buttonPokemonRoundSelTex: {fileID: 21300000, guid: 59336be6a167f2e46b5d6dd0ee4cbd97,
+      type: 3}
+  - buttonPokemonFntSelTex: {fileID: 21300000, guid: a9b7b71582a89624f86d5ea4cf49c2a6,
+      type: 3}
+  - buttonPokemonRoundFntSelTex: {fileID: 21300000, guid: e20c8fc762caa69488d92e839529bd0b,
+      type: 3}
+  - overlayHealTex: {fileID: 2800000, guid: ce11f55534eba4647ba48f038622408a, type: 3}
+  - overlayStatUpTex: {fileID: 2800000, guid: 95851338e226915449c855926279d0bf, type: 3}
+  - overlayStatDownTex: {fileID: 2800000, guid: 8afc7d480d74f5049aa465b6afe3b9d4,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

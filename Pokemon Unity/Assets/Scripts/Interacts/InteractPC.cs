@@ -5,9 +5,11 @@ using System.Collections;
 
 public class InteractPC : MonoBehaviour
 {
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
 
-    private SpriteRenderer spriteLight;
+    //private SpriteRenderer spriteLight;
+
+    private GameObject pc_off;
 
     private AudioSource PCaudio;
 
@@ -20,38 +22,26 @@ public class InteractPC : MonoBehaviour
 
     void Awake()
     {
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
-        spriteLight = transform.Find(gameObject.name + "_SpriteLight").GetComponent<SpriteRenderer>();
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
+        //spriteLight = transform.Find(gameObject.name + "_SpriteLight").GetComponent<SpriteRenderer>();
+        pc_off = transform.Find("pc").gameObject;
         PCaudio = GetComponent<AudioSource>();
         PClight = GetComponentInChildren<Light>();
     }
 
     private IEnumerator onAnim()
     {
-        float increment = 0;
         float fadeSpeed = 0.17f;
-        float initialIntensity = PClight.intensity;
-        while (increment < 1)
-        {
-            increment += (1 / fadeSpeed) * Time.deltaTime;
-            spriteLight.color = new Color(1, 1, 1, increment);
-            PClight.intensity = initialIntensity * increment;
-            yield return null;
-        }
-        while (increment > 0)
-        {
-            increment -= (1 / fadeSpeed) * Time.deltaTime;
-            spriteLight.color = new Color(1, 1, 1, increment);
-            PClight.intensity = initialIntensity * increment;
-            yield return null;
-        }
-        while (increment < 1)
-        {
-            increment += (1 / fadeSpeed) * Time.deltaTime;
-            spriteLight.color = new Color(1, 1, 1, increment);
-            PClight.intensity = initialIntensity * increment;
-            yield return null;
-        }
+
+        pc_off.SetActive(false);
+        PClight.enabled = true;
+        yield return new WaitForSeconds(fadeSpeed);
+        pc_off.SetActive(true);
+        PClight.enabled = false;
+        yield return new WaitForSeconds(fadeSpeed);
+        pc_off.SetActive(false);
+        PClight.enabled = true;
+        yield return new WaitForSeconds(fadeSpeed);
     }
 
 
@@ -61,12 +51,10 @@ public class InteractPC : MonoBehaviour
         {
             if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
             {
-                spriteLight.enabled = true;
-                PClight.enabled = true;
                 SfxHandler.Play(onClip);
                 yield return StartCoroutine("onAnim");
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawTextSilent", "Gold turned on the PC!");
+                Dialog.DrawDialogBox();
+                yield return Dialog.StartCoroutine(Dialog.DrawTextSilent( SaveData.currentSave.playerName + " turned on the PC!"));
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
@@ -74,20 +62,19 @@ public class InteractPC : MonoBehaviour
                 int accessedPC = -1;
                 while (accessedPC != 0)
                 {
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", "Which PC should be accessed?");
-                    Dialog.drawChoiceBox(new string[] {"Someone's", "Switch off"});
-                    yield return Dialog.StartCoroutine("choiceNavigate");
-                    Dialog.undrawChoiceBox();
+                    Dialog.DrawDialogBox();
+                    yield return Dialog.StartCoroutine(Dialog.DrawText( "Which PC should be accessed?"));
+                    yield return StartCoroutine(Dialog.DrawChoiceBox(new string[] {"Someone's", "Switch off"}));
+                    Dialog.UndrawChoiceBox();
                     accessedPC = Dialog.chosenIndex;
                     int accessedBox = -1;
                     if (accessedPC != 0)
                     {
                         //if not turning off computer
-                        Dialog.drawDialogBox();
+                        Dialog.DrawDialogBox();
                         SfxHandler.Play(openClip);
                         yield return
-                            Dialog.StartCoroutine("drawTextSilent", "The Pokémon Storage System \\was accessed.");
+                            Dialog.StartCoroutine(Dialog.DrawTextSilent( "The Pokémon Storage System \\was accessed."));
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
                             yield return null;
@@ -98,14 +85,14 @@ public class InteractPC : MonoBehaviour
                             string[] choices = new string[] {"Move", "Log off"};
                             string[] choicesFlavour = new string[]
                             {
-                                "You may rearrange Pokémon in and \\between your party and Boxes.",
-                                "Log out of the Pokémon Storage \\System."
+                                "You may rearrange Pokémon in and \nbetween your party and Boxes.",
+                                "Log out of the Pokémon Storage System."
                             };
-                            Dialog.drawChoiceBox(choices);
-                            Dialog.drawDialogBox();
-                            Dialog.drawTextInstant(choicesFlavour[0]);
+                            
+                            Dialog.DrawDialogBox();
+                            Dialog.DrawTextInstant(choicesFlavour[0]);
                             yield return new WaitForSeconds(0.2f);
-                            yield return StartCoroutine(Dialog.choiceNavigate(choices, choicesFlavour));
+                            yield return StartCoroutine(Dialog.DrawChoiceBox(choices, choicesFlavour));
                             accessedBox = Dialog.chosenIndex;
                             //SceneTransition sceneTransition = Dialog.transform.GetComponent<SceneTransition>();
 
@@ -129,12 +116,12 @@ public class InteractPC : MonoBehaviour
                                 //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
                             }
 
-                            Dialog.undrawChoiceBox();
+                            Dialog.UndrawChoiceBox();
                         }
                     }
                 }
-                Dialog.undrawDialogBox();
-                spriteLight.enabled = false;
+                Dialog.UndrawDialogBox();
+                pc_off.SetActive(true);
                 PClight.enabled = false;
                 SfxHandler.Play(offClip);
                 yield return new WaitForSeconds(0.2f);

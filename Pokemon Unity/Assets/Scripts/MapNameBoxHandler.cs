@@ -3,7 +3,6 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class MapNameBoxHandler : MonoBehaviour
 {
@@ -17,25 +16,24 @@ public class MapNameBoxHandler : MonoBehaviour
     public float speed;
     private float increment;
 
+    private Animator animator;
+
     void Awake()
     {
-        
-        mapName = GameObject.Find("MapName").transform;
-        if (mapName == null){
-            Debug.Log(gameObject.transform.Find("MapName").transform);
-        }
+        mapName = transform.Find("MapName");
         mapNameBox = mapName.GetComponent<Image>();
-        mapNameText = mapNameBox.transform.Find("BoxText").GetComponent<Text>();
-        //mapNameTextShadow = mapName.Find("BoxTextShadow").GetComponent<GUIText>();
+        mapNameText = mapName.Find("BoxText").GetComponent<Text>();
+        mapNameTextShadow = mapName.Find("BoxTextShadow").GetComponent<Text>();
+
+        animator = mapName.GetComponent<Animator>();
     }
 
     void Start()
     {
-        mapNameBox.rectTransform.DOAnchorPos(new Vector3(-114f, 118f, mapName.position.z),0f);
+        //mapName.position = new Vector3(0, 0.17f, mapName.position.z);
     }
 
-    public void display(Sprite boxTexture, string name, Color textColor)
-    {
+    public void display(string name, Color textColor) {
         //do not display when on a map of the same name
         if (mapNameText.text != name)
         {
@@ -43,63 +41,38 @@ public class MapNameBoxHandler : MonoBehaviour
             {
                 StopCoroutine(mainDisplay);
             }
-            mainDisplay = StartCoroutine(displayCoroutine(boxTexture, name, textColor));
+            mainDisplay = StartCoroutine(displayCoroutine(name, textColor));
         }
     }
 
-    private IEnumerator displayCoroutine(Sprite boxTexture, string name, Color textColor)
+    private IEnumerator displayCoroutine(string name, Color textColor)
     {
-        //Useless part, using DOTween solves it easily
-        /* if (mapName.position.y != 0.17f)
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("MapName Appear"))
         {
-            increment = mapName.position.y / 0.17f;
-            while (increment < 1)
-            {
-                increment += (1 / speed) * Time.deltaTime;
-                if (increment > 1)
-                {
-                    increment = 1;
-                }
-                mapName.position = new Vector3(0, 0.17f * increment, mapName.position.z);
-                yield return null;
-            }
-        } */
-        mapNameBox.rectTransform.DOAnchorPos(new Vector3(-114f, 74f, mapName.position.z),speed);
-        //mapNameBox.texture = boxTexture;
-        mapNameBox.sprite = boxTexture;
+            animator.Play("MapName Disappear", 0, 0f);
+            animator.speed = 2;
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("MapName Appear"))
+        {
+            animator.speed = 2;
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
+        }
+        
+        animator.speed = 1;
+
+        //mapNameBox.sprite = boxTexture;
         mapNameText.text = name;
+        mapNameTextShadow.text = name;
+        //mapNameText.color = textColor;
 
-        //Useless part, using DOTween solves it easily
-        //mapNameTextShadow.text = name;
-        mapNameText.color = textColor;
-
-        /* increment = 0f;
-        while (increment < 1)
-        {
-            increment += (1 / speed) * Time.deltaTime;
-            if (increment > 1)
-            {
-                increment = 1;
-            }
-            mapName.position = new Vector3(0, 0.17f - (0.17f * increment), mapName.position.z);
-            yield return null;
-        } */
+        animator.Play("MapName Appear", 0, 0f);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
 
         yield return new WaitForSeconds(2f);
 
-        mapNameBox.rectTransform.DOAnchorPos(new Vector3(-114f, 118f, mapName.position.z),speed);
-
-        //Same as upper
-        /* increment = 0f;
-        while (increment < 1)
-        {
-            increment += (1 / speed) * Time.deltaTime;
-            if (increment > 1)
-            {
-                increment = 1;
-            }
-            mapName.position = new Vector3(0, 0.17f * increment, mapName.position.z);
-            yield return null;
-        } */
+        animator.Play("MapName Disappear", 0, 0f);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
+        animator.Play("MapName Idle", 0, 0f);
     }
 }

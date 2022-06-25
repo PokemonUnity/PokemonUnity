@@ -48,20 +48,23 @@ public class NonResettingHandler : MonoBehaviour
         }
     }
 
-    void Start()
+    public void Run()
     {
+        Debug.Log("Starting running Non Resetting Handler");
+        
         int sceneNonResettingListIndex = SaveData.currentSave.getNonResettingListIndex(Application.loadedLevelName);
 
         //if entry is already in global, update everything to match
         if (sceneNonResettingListIndex >= 0)
         {
-            NonResettingList sceneNonResettingList = SaveData.currentSave.savefile.nonResettingLists[sceneNonResettingListIndex];
+            NonResettingList sceneNonResettingList = SaveData.currentSave.nonResettingLists[sceneNonResettingListIndex];
 
             for (int i = 0; i < trainers.Length; i++)
             {
                 if (i < sceneNonResettingList.sceneTrainers.Length)
                 {
                     trainers[i].defeated = sceneNonResettingList.sceneTrainers[i];
+                    trainers[i].gameObject.SetActive(sceneNonResettingList.sceneTrainersActive[i]);
                 }
                 else
                 {
@@ -87,6 +90,27 @@ public class NonResettingHandler : MonoBehaviour
                 if (i < sceneNonResettingList.sceneEvents.Length)
                 {
                     events[i].SetActive(sceneNonResettingList.sceneEvents[i]);
+                    if (sceneNonResettingList.sceneEvents[i])
+                    {
+                        if (events[i].GetComponent<CustomEvent>() != null)
+                        {
+                            events[i].GetComponent<CustomEvent>().CVariableToggle();
+                        }
+                    }
+                    
+                    // Update follower npcs with the last values
+                    if (sceneNonResettingList.sceneFollowerEvents[i] != null)
+                    {
+                        events[i].GetComponent<NPCFollower>().enabled = sceneNonResettingList.sceneFollowerEvents[i].enabled;
+                        if (sceneNonResettingList.sceneFollowerEvents[i].enabled)
+                        {
+                            events[i].transform.position = sceneNonResettingList.sceneFollowerEvents[i].position;
+                            events[i].GetComponent<NPCHandler>().direction = sceneNonResettingList.sceneFollowerEvents[i].direction;
+
+                            PlayerMovement.player.npcFollower = events[i].GetComponent<NPCFollower>();
+                            GlobalVariables.global.followerOut = false;
+                        }
+                    }
                 }
                 else
                 {
@@ -94,17 +118,23 @@ public class NonResettingHandler : MonoBehaviour
                 }
             }
         }
+        
+        Debug.Log("Finished running Non Resetting Handler");
     }
 
     private NonResettingList compileListOfNonResetters()
     {
         bool[] sceneTrainers = new bool[trainers.Length];
+        bool[] sceneTrainersActive = new bool[trainers.Length];
         bool[] sceneItems = new bool[items.Length];
         bool[] sceneEvents = new bool[events.Length];
+        FollowerEvent[] sceneFollowerEvents = new FollowerEvent[events.Length];
 
         for (int i = 0; i < trainers.Length; i++)
         {
+            Debug.Log(trainers[i].name);
             sceneTrainers[i] = trainers[i].defeated;
+            sceneTrainersActive[i] = trainers[i].gameObject.activeSelf;
         }
         for (int i = 0; i < items.Length; i++)
         {
@@ -113,13 +143,23 @@ public class NonResettingHandler : MonoBehaviour
         for (int i = 0; i < events.Length; i++)
         {
             sceneEvents[i] = events[i].activeSelf;
+            if (events[i].GetComponent<NPCFollower>() != null &&
+                events[i].activeSelf)
+            {
+                sceneFollowerEvents[i] = new FollowerEvent(events[i].GetComponent<NPCFollower>().enabled, events[i].transform.position, events[i].GetComponent<NPCHandler>().direction);
+            }
+            else
+            {
+                sceneFollowerEvents[i] = null;
+            }
         }
 
         if (sceneTrainers.Length == 0 && sceneItems.Length == 0 && sceneEvents.Length == 0)
         {
             return null;
         } //return null when there actually isn't anything in any of the arrays
-        return new NonResettingList(Application.loadedLevelName, sceneTrainers, sceneItems, sceneEvents);
+
+        return new NonResettingList(Application.loadedLevelName, sceneTrainers, sceneTrainersActive, sceneItems, sceneEvents, sceneFollowerEvents);
     }
 
     public static void saveDataToGlobal()
@@ -131,18 +171,18 @@ public class NonResettingHandler : MonoBehaviour
             if (thisNonResettingList != null)
             {
                 bool listUpdated = false;
-                for (int i = 0; i < SaveData.currentSave.savefile.nonResettingLists.Count; i++)
+                for (int i = 0; i < SaveData.currentSave.nonResettingLists.Count; i++)
                 {
-                    if (SaveData.currentSave.savefile.nonResettingLists[i].sceneName == thisNonResettingList.sceneName)
+                    if (SaveData.currentSave.nonResettingLists[i].sceneName == thisNonResettingList.sceneName)
                     {
-                        SaveData.currentSave.savefile.nonResettingLists[i] = thisNonResettingList;
+                        SaveData.currentSave.nonResettingLists[i] = thisNonResettingList;
                         listUpdated = true;
-                        i = SaveData.currentSave.savefile.nonResettingLists.Count;
+                        i = SaveData.currentSave.nonResettingLists.Count;
                     }
                 }
                 if (!listUpdated)
                 {
-                    SaveData.currentSave.savefile.nonResettingLists.Add(thisNonResettingList);
+                    SaveData.currentSave.nonResettingLists.Add(thisNonResettingList);
                 }
             }
         }
@@ -155,14 +195,33 @@ public class NonResettingList
     public string sceneName;
 
     public bool[] sceneTrainers;
+    public bool[] sceneTrainersActive;
     public bool[] sceneItems;
     public bool[] sceneEvents;
+    public FollowerEvent[] sceneFollowerEvents;
 
-    public NonResettingList(string sceneName, bool[] sceneTrainers, bool[] sceneItems, bool[] sceneEvents)
+    public NonResettingList(string sceneName, bool[] sceneTrainers, bool[] sceneTrainersActive, bool[] sceneItems, bool[] sceneEvents, FollowerEvent[] sceneFollowerEvents)
     {
         this.sceneName = sceneName;
         this.sceneTrainers = sceneTrainers;
+        this.sceneTrainersActive = sceneTrainersActive;
         this.sceneItems = sceneItems;
         this.sceneEvents = sceneEvents;
+        this.sceneFollowerEvents = sceneFollowerEvents;
+    }
+}
+
+[System.Serializable]
+public class FollowerEvent
+{
+    public bool enabled;
+    public SeriV3 position;
+    public int direction;
+
+    public FollowerEvent(bool enabled, Vector3 position, int direction)
+    {
+        this.enabled = enabled;
+        this.position = new SeriV3(position);
+        this.direction = direction;
     }
 }

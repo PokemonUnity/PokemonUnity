@@ -2,11 +2,10 @@
 
 using UnityEngine;
 using System.Collections;
-using PokemonUnity.Monster;
 
 public class InteractPush : MonoBehaviour
 {
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
     private PlayerMovement Player;
 
     private AudioSource pushSound;
@@ -34,7 +33,7 @@ public class InteractPush : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
         pushSound = gameObject.GetComponent<AudioSource>();
         hitBox = transform.Find("Boulder_Object");
@@ -49,52 +48,51 @@ public class InteractPush : MonoBehaviour
     {
         if (!Player.strength)
         {
-            Pokemon targetPokemon = SaveData.currentSave.Player.getFirstFEUserInParty(PokemonUnity.Moves.STRENGTH);
-            if (targetPokemon.IsNotNullOrNone())
+            Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Strength");
+            if (targetPokemon != null)
             {
                 if (Player.setCheckBusyWith(this.gameObject))
                 {
-                    Dialog.drawDialogBox();
+                    Dialog.DrawDialogBox();
                         //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine("drawText", interactText);
-                    Dialog.drawChoiceBox();
+                    yield return Dialog.StartCoroutine(Dialog.DrawText( interactText));
 
                     //You CAN NOT get a value from a Coroutine. As a result, the coroutine runs and resets a public int in it's own script.
-                    yield return Dialog.StartCoroutine(Dialog.choiceNavigate()); //it then assigns a value to that int
-                    Dialog.undrawChoiceBox();
+                    yield return Dialog.StartCoroutine(Dialog.DrawChoiceBox()); //it then assigns a value to that int
+                    Dialog.UndrawChoiceBox();
                     if (Dialog.chosenIndex == 1)
                     {
-                        Dialog.drawDialogBox();
+                        Dialog.DrawDialogBox();
                         yield return
-                            Dialog.StartCoroutine("drawText",
-                                targetPokemon.Name + " used " + PokemonUnity.Moves.STRENGTH.toString() + "!")
+                            Dialog.StartCoroutine(Dialog.DrawText(
+                                targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Strength") + "!"))
                             ;
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
-                        Dialog.undrawDialogBox();
+                        Dialog.UndrawDialogBox();
 
                         //Activate strength
                         Player.activateStrength();
 
                         yield return new WaitForSeconds(0.5f);
                     }
-                    Dialog.undrawDialogBox();
+                    Dialog.UndrawDialogBox();
                 }
             }
             else
             {
                 if (Player.setCheckBusyWith(this.gameObject))
                 {
-                    Dialog.drawDialogBox();
+                    Dialog.DrawDialogBox();
                         //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine("drawText", examineText);
+                    yield return Dialog.StartCoroutine(Dialog.DrawText( examineText));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
-                    Dialog.undrawDialogBox();
+                    Dialog.UndrawDialogBox();
                 }
             }
         }
@@ -102,14 +100,14 @@ public class InteractPush : MonoBehaviour
         {
             if (Player.setCheckBusyWith(this.gameObject))
             {
-                Dialog.drawDialogBox();
+                Dialog.DrawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                yield return Dialog.StartCoroutine("drawText", examineTextStrengthActive);
+                yield return Dialog.StartCoroutine(Dialog.DrawText( examineTextStrengthActive));
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
-                Dialog.undrawDialogBox();
+                Dialog.UndrawDialogBox();
             }
         }
         yield return new WaitForSeconds(0.2f);
