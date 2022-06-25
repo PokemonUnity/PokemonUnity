@@ -52,8 +52,8 @@ namespace PokemonUnity.Attack.Data
 		public int? SuperAppeal { get; private set; }
 		public int? Appeal { get; private set; }
 		public int? Jamming { get; private set; }
-		public string Name { get { return ToString(TextScripts.Name); } }
-		public string Description { get { return ToString(TextScripts.Description); } }
+		public string Name { get { return string.Format("MOVE_NAME_{0}", (int)ID); } } //Game._INTL(ID.ToString(TextScripts.Name)); } }
+		public string Description { get { return string.Format("MOVE_DESC_{0}", (int)ID); } } //ID.ToString(TextScripts.Description); } }
 		#endregion
 
 		public MoveData(Moves id = Moves.NONE, Category category = Category.STATUS, int generationId = 0, 
@@ -85,12 +85,12 @@ namespace PokemonUnity.Attack.Data
 			Jamming = jamming;
 		}
 
-		public string ToString(TextScripts text)
-		{
-			//ToDo: Create an Interface and Move Function to Application Library
-			//return ID.ToString(text);
-			return ID.ToString();
-		}
+		//public string ToString(TextScripts text)
+		//{
+		//	//ToDo: Create an Interface and Move Function to Application Library
+		//	//return ID.ToString(text);
+		//	return ID.ToString();
+		//}
 	}
 
 	public enum Effects

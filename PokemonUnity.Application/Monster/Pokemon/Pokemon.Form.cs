@@ -469,8 +469,8 @@ namespace PokemonUnity.Monster
 					if (newmove!=Moves.NONE) { //&& hasConst(PBMoves,newmove)
 						if (hasoldmove>=0 && Game.GameData is PokemonEssentials.Interface.IGameMessage m) {
 							// Automatically replace the old form's special move with the new one's
-							string oldmovename=pokemon.moves[hasoldmove].id.ToString(TextScripts.Name);
-							string newmovename=newmove.ToString(TextScripts.Name);
+							string oldmovename=Game._INTL(pokemon.moves[hasoldmove].id.ToString(TextScripts.Name));
+							string newmovename=Game._INTL(newmove.ToString(TextScripts.Name));
 							pokemon.moves[hasoldmove]=new Attack.Move(newmove);
 							m.pbMessage(Game._INTL("\\se[]1,\\wt[4] 2,\\wt[4] and...\\wt[8] ...\\wt[8] ...\\wt[8] Poof!\\se[balldrop]\\1"));
 							m.pbMessage(Game._INTL("{1} forgot how to\r\nuse {2}.\\1",pokemon.Name,oldmovename));
@@ -487,7 +487,7 @@ namespace PokemonUnity.Monster
 				else {
 					if (hasoldmove>=0) {
 						// Forget the old form's special move
-						string oldmovename=pokemon.moves[hasoldmove].id.ToString(TextScripts.Name);
+						string oldmovename=Game._INTL(pokemon.moves[hasoldmove].id.ToString(TextScripts.Name));
 						pokemon.pbDeleteMoveAtIndex(hasoldmove);
 						if (Game.GameData is PokemonEssentials.Interface.IGameMessage m) m.pbMessage(Game._INTL("{1} forgot {2}...",pokemon.Name,oldmovename));
 						if (pokemon.moves.Count(i => i.id!=0)==0) {

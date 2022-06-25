@@ -88,9 +88,9 @@ namespace PokemonUnity.Combat
 				//Game.GameData.Player.Pokedex[(int)wildpoke.Species,0]=(byte)1;
 				//Game.pbSeenForm(wildpoke);
 				base.pbSetSeen(wildpoke);
-				@scene.pbStartBattle(this);
+				if (@scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics s0) s0.pbStartBattle(this);
 				pbDisplayPaused(Game._INTL("Wild {1} appeared!",wildpoke.Name));
-				@scene.pbSafariStart();
+				if (@scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s1) s1.pbSafariStart();
 				//dexdata=pbOpenDexData;
 				//pbDexDataOffset(dexdata,wildpoke.Species,16);
 				//rareness=dexdata.fgetb; // Get rareness from dexdata file
@@ -102,7 +102,7 @@ namespace PokemonUnity.Combat
 				e=(int)Math.Min((int)Math.Max(e,3),20);
 				int lastCommand=0;
 				do { //begin;
-					int cmd=@scene.pbSafariCommandMenu(0);
+					int cmd=(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_Scene).pbSafariCommandMenu(0);
 					switch (cmd) {
 						case 0: // Ball
 							if (Game.GameData is PokemonEssentials.Interface.IGameUtility pc && pc.pbBoxesFull()) {
@@ -119,7 +119,7 @@ namespace PokemonUnity.Combat
 							break;
 						case 1: // Bait
 							pbDisplayBrief(Game._INTL("{1} threw some bait at the {2}!",this.pbPlayer().name,wildpoke.Name));
-							@scene.pbThrowBait();
+							(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_Scene).pbThrowBait();
 							g/=2; // Harder to catch
 							e/=2; // Less likely to escape
 							g=(int)Math.Min((int)Math.Max(g,3),20);
@@ -128,7 +128,7 @@ namespace PokemonUnity.Combat
 							break;
 						case 2: // Rock
 							pbDisplayBrief(Game._INTL("{1} threw a rock at the {2}!",this.pbPlayer().name,wildpoke.Name));
-							@scene.pbThrowRock();
+							(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_Scene).pbThrowRock();
 							g*=2; // Easier to catch
 							e*=2; // More likely to escape
 							g=(int)Math.Min((int)Math.Max(g,3),20);
@@ -156,10 +156,10 @@ namespace PokemonUnity.Combat
 						}
 					}
 				} while (@decision==0);
-				@scene.pbEndBattle(@decision);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbEndBattle(@decision);
 			} catch { //rescue BattleAbortedException;
 				@decision=0;
-				@scene.pbEndBattle(@decision);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbEndBattle(@decision);
 			}
 			return @decision;
 		}
@@ -168,7 +168,7 @@ namespace PokemonUnity.Combat
 		public void pbDebugUpdate() {
 			@debugupdate+=1;
 			if (@debugupdate==30) {
-				//Graphics.update();
+				//Graphics?.update();
 				@debugupdate=0;
 			}
 		}
@@ -179,7 +179,7 @@ namespace PokemonUnity.Combat
 				GameDebug.Log(msg);
 			}
 			else {
-				@scene.pbDisplayPausedMessage(msg);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbDisplayPausedMessage(msg);
 			}
 		}
 
@@ -189,7 +189,7 @@ namespace PokemonUnity.Combat
 				GameDebug.Log(msg);
 			}
 			else {
-				@scene.pbDisplayMessage(msg);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbDisplayMessage(msg);
 			}
 		}
 
@@ -199,7 +199,7 @@ namespace PokemonUnity.Combat
 				GameDebug.Log(msg);
 			}
 			else {
-				@scene.pbDisplayMessage(msg,true);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbDisplayMessage(msg,true);
 			}
 		}
 
@@ -210,7 +210,7 @@ namespace PokemonUnity.Combat
 				return true;
 			}
 			else {
-				return @scene.pbDisplayConfirmMessage(msg);
+				return (@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbDisplayConfirmMessage(msg);
 			}
 		}
 

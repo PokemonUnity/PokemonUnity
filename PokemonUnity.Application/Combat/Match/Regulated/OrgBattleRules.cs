@@ -1128,7 +1128,7 @@ namespace PokemonUnity
 		{
 			string n = names[species];
 			if (n != null) return n;
-			n = species.ToString(TextScripts.Name);
+			n = Game._INTL(species.ToString(TextScripts.Name));
 			names[species] = n.ToUpper(); //.upcase;
 			return n;
 		}

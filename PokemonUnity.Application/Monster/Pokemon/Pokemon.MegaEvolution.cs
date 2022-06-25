@@ -47,7 +47,7 @@ namespace PokemonUnity.Monster
 
 		public string megaName() {
 			string v=null; //MultipleForms.getMegaName(this);
-			return (v!=null) ? v : Game._INTL("Mega {1}",this.Species.ToString(TextScripts.Name));
+			return (v!=null) ? v : Game._INTL("Mega {1}",Game._INTL(this.Species.ToString(TextScripts.Name)));
 		}
 
 		public int megaMessage() {

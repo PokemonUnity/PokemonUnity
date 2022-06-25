@@ -46,8 +46,18 @@ namespace PokemonUnity
 		{
 			return move != null || move.id != Moves.NONE;
 		}
+		/// <summary>
+		/// </summary>
+		/// <param name="move"></param>
+		/// <param name="text"></param>
+		/// <returns>Returns the lookup identifier for localization dictionary</returns>
+		/// <remarks>Requires <seealso cref="Game._INTL(string, object[])"/> to retrieve actual value</remarks>
 		public static string ToString(this PokemonUnity.Moves move, TextScripts text)
 		{
+			if (text == TextScripts.Name)
+				return string.Format("MOVE_NAME_{0}", (int)move);
+			if (text == TextScripts.Description)
+				return string.Format("MOVE_DESC_{0}", (int)move);
 			//create a switch, and return Locale Name or Description
 			return move.ToString();
 		}

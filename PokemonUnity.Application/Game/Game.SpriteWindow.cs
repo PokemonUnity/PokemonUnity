@@ -29,7 +29,7 @@ namespace PokemonUnity
 			{
 				col.set(0, 0, 0, j * 15);
 				viewport.color = col;
-				Graphics.update();
+				Graphics?.update();
 				Input.update();
 			}
 			pbPushFade();
@@ -43,7 +43,7 @@ namespace PokemonUnity
 					{
 						col.set(0, 0, 0, (17 - j) * 15);
 						viewport.color = col;
-						Graphics.update();
+						Graphics?.update();
 						Input.update();
 					}
 				}

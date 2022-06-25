@@ -35,19 +35,19 @@ namespace PokemonUnity.Combat
 		protected int calcbasedmg { get; set; }
 		//public int BaseDamage { get; set; }
 		//public byte PP { get; set; }
-		protected byte accuracy { get; set; }
+		protected byte accuracy { get { return (byte)Accuracy; } set { Accuracy = value; } }
 		//public List<byte> participants { get; set; }
 		//public PokemonUnity.Attack.Effect function { get; set; }
 		//public Items berry { get; set; }
-		public Moves id { get; set; }
-		public Types type { get; set; }
+		public Moves id { get { return MoveId; } set { MoveId = value; } }
+		public Types type { get { return Type; } set { Type = value; } }
 		//public Battle battle { get; set; }
 		//public virtual int AddlEffect { get { return thismove.AddlEffect; } }
 		//public Attack.Move thismove { get; set; }
 		//Moves	IBattleMove.id					{ get; set; }
 		//IBattle	IBattleMove.battle				{ get; set; }
 		//string	IBattleMove.Name				{ get; }
-		int		IBattleMove.basedamage			{ get; set; }
+		int		IBattleMove.basedamage			{ get { return Power; } set { Power = value; } }
 		//Types	IBattleMove.Type				{ get; set; }
 		//int		IBattleMove.Accuracy			{ get; set; }
 		//int		IBattleMove.AddlEffect			{ get; }
@@ -62,7 +62,6 @@ namespace PokemonUnity.Combat
 
 		//public PokeBattle_Move(Battle battle, Attack.Move move) : base(battle, move) { }
 
-		#region Interface Implementation
 		IBattleMove IBattleMove.initialize(IBattle battle, IMove move)
 		{
 			return this.Initialize(battle, move);
@@ -73,6 +72,7 @@ namespace PokemonUnity.Combat
 			return Move.pbFromPBMove(battle, move);
 		}
 
+		#region Interface Implementation
 		int IBattleMove.ToInt()
 		{
 			throw new NotImplementedException();
@@ -267,7 +267,7 @@ namespace PokemonUnity.Combat
 			if (move.id != Moves.NONE)
 			{
 				MoveId = move.id;
-				//name	= id.ToString(TextScripts.Name);
+				//name	= Game._INTL(id.ToString(TextScripts.Name));
 			}
 			return this;
 		}
@@ -372,9 +372,9 @@ namespace PokemonUnity.Combat
 				{
 					attacker.form = (attacker.form + 1) % 2;
 					attacker.pbUpdate(true);
-					this.battle.scene.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//.Species);
+					if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//.Species);
 					battle.pbDisplay(Game._INTL("{1} transformed!", attacker.ToString()));
-					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{(attacker as Pokemon).Form.Pokemon.ToString(TextScripts.Name)}");
+					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{Game._INTL((attacker as Pokemon).Form.Pokemon.ToString(TextScripts.Name))}");
 				}
 			}
 		}
@@ -933,14 +933,14 @@ namespace PokemonUnity.Combat
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(), opponent.Ability.ToString(TextScripts.Name)));
+					   opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.pbPartner.ToString(), opponent.pbPartner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(), Game._INTL(opponent.pbPartner.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 			}
@@ -2677,7 +2677,7 @@ namespace PokemonUnity.Combat
 				   opponent.hasWorkingAbility(Abilities.WHITE_SMOKE))
 				{
 					battle.pbDisplay(Game._INTL("{1}'s {2} prevents stat loss!", opponent.ToString(),
-					   opponent.Ability.ToString(TextScripts.Name)));
+					   Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 			}
@@ -2688,7 +2688,7 @@ namespace PokemonUnity.Combat
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.HYPER_CUTTER) &&
 				opponent is IBattlerEffect b0 && !b0.pbTooLow(Stats.ATTACK))
 			{
-				string abilityname = opponent.Ability.ToString(TextScripts.Name);
+				string abilityname = Game._INTL(opponent.Ability.ToString(TextScripts.Name));
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} prevents Attack loss!", opponent.ToString(), abilityname));
 			}
@@ -2699,7 +2699,7 @@ namespace PokemonUnity.Combat
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.BIG_PECKS) &&
 				opponent is IBattlerEffect b2 && !b2.pbTooLow(Stats.DEFENSE))
 			{
-				string abilityname = opponent.Ability.ToString(TextScripts.Name);
+				string abilityname = Game._INTL(opponent.Ability.ToString(TextScripts.Name));
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} prevents Defense loss!", opponent.ToString(), abilityname));
 			}
@@ -2815,7 +2815,7 @@ namespace PokemonUnity.Combat
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.OBLIVIOUS))
 			{
 				battle.pbDisplay(Game._INTL("{1}'s {2} prevents romance!", opponent.ToString(),
-				 opponent.Ability.ToString(TextScripts.Name)));
+				 Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 				return -1;
 			}
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
@@ -3161,8 +3161,8 @@ namespace PokemonUnity.Combat
 			attacker.HP = Math.Min(avhp, attacker.TotalHP);
 			opponent.HP = Math.Min(avhp, opponent.TotalHP);
 
-			this.battle.scene.pbHPChanged(attacker, olda);
-			this.battle.scene.pbHPChanged(opponent, oldo);
+			if (this.battle.scene is IPokeBattle_Scene s0) s0.pbHPChanged(attacker, olda);
+			if (this.battle.scene is IPokeBattle_Scene s1) s1.pbHPChanged(opponent, oldo);
 			battle.pbDisplay(Game._INTL("The battlers shared their pain!"));
 			return 0;
 		}
@@ -3240,7 +3240,7 @@ namespace PokemonUnity.Combat
 					Attack.Move newmove = new Attack.Move(opponent.lastMoveUsed);
 					attacker.moves[i] = Combat.Move.pbFromPBMove(this.battle, newmove);
 
-					string movename = opponent.lastMoveUsed.ToString(TextScripts.Name);
+					string movename = Game._INTL(opponent.lastMoveUsed.ToString(TextScripts.Name));
 
 					battle.pbDisplay(Game._INTL("{1} learned {2}!", attacker.ToString(), movename));
 					return 0;
@@ -3302,7 +3302,7 @@ namespace PokemonUnity.Combat
 					party[attacker.pokemonIndex].moves[i] = newmove;
 
 
-					string movename = opponent.lastMoveUsedSketch.ToString(TextScripts.Name);
+					string movename = Game._INTL(opponent.lastMoveUsedSketch.ToString(TextScripts.Name));
 
 					battle.pbDisplay(Game._INTL("{1} learned {2}!", attacker.ToString(), movename));
 					return 0;
@@ -3355,7 +3355,7 @@ namespace PokemonUnity.Combat
 
 			attacker.effects.Type3 = Types.NONE; //-1;
 
-			string typename = newtype.ToString(TextScripts.Name);
+			string typename = Game._INTL(newtype.ToString(TextScripts.Name));
 
 			battle.pbDisplay(Game._INTL("{1} transformed into the {2} type!", attacker.ToString(), typename));
 			return 0; //ToDo: Wasnt sure what to return, so put null/0
@@ -3417,7 +3417,7 @@ namespace PokemonUnity.Combat
 
 			attacker.effects.Type3 = Types.NONE; //-1;
 
-			string typename = newtype.ToString(TextScripts.Name);
+			string typename = Game._INTL(newtype.ToString(TextScripts.Name));
 
 			battle.pbDisplay(Game._INTL("{1} transformed into the {2} type!", attacker.ToString(), typename));
 			return 0;
@@ -3481,7 +3481,7 @@ namespace PokemonUnity.Combat
 			attacker.Type2 = type;
 			attacker.effects.Type3 = Types.NONE; //-1;
 
-			string typename = type.ToString(TextScripts.Name);
+			string typename = Game._INTL(type.ToString(TextScripts.Name));
 
 			battle.pbDisplay(Game._INTL("{1} transformed into the {2} type!", attacker.ToString(), typename));
 			return 0;
@@ -3522,7 +3522,7 @@ namespace PokemonUnity.Combat
 			opponent.Type2 = Types.WATER;
 
 			opponent.effects.Type3 = Types.NONE; //-1;
-			string typename = Types.WATER.ToString(TextScripts.Name);
+			string typename = Game._INTL(Types.WATER.ToString(TextScripts.Name));
 			battle.pbDisplay(Game._INTL("{1} transformed into the {2} type!", opponent.ToString(), typename));
 			return 0;
 		}
@@ -3589,15 +3589,15 @@ namespace PokemonUnity.Combat
 
 			Abilities oldabil = opponent.Ability;
 			opponent.Ability = Abilities.SIMPLE;
-			string abilityname = Abilities.SIMPLE.ToString(TextScripts.Name);
+			string abilityname = Game._INTL(Abilities.SIMPLE.ToString(TextScripts.Name));
 			battle.pbDisplay(Game._INTL("{1} acquired {2}!", opponent.ToString(), abilityname));
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
-				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
+				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
 			return 0;
 		}
@@ -3630,15 +3630,15 @@ namespace PokemonUnity.Combat
 
 			Abilities oldabil = opponent.Ability;
 			opponent.Ability = Abilities.INSOMNIA;
-			string abilityname = Abilities.INSOMNIA.ToString(TextScripts.Name);
+			string abilityname = Game._INTL(Abilities.INSOMNIA.ToString(TextScripts.Name));
 			battle.pbDisplay(Game._INTL("{1} acquired {2}!", opponent.ToString(), abilityname));
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
-				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
+				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
 			return 0;
 		}
@@ -3679,16 +3679,16 @@ namespace PokemonUnity.Combat
 
 			Abilities oldabil = attacker.Ability;
 			attacker.Ability = opponent.Ability;
-			string abilityname = opponent.Ability.ToString(TextScripts.Name);
+			string abilityname = Game._INTL(opponent.Ability.ToString(TextScripts.Name));
 
 			battle.pbDisplay(Game._INTL("{1} copied {2}'s {3}!", attacker.ToString(), opponent.ToString(true), abilityname));
 			if (attacker.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
 				GameDebug.Log($"[Ability triggered] #{attacker.ToString()}'s Illusion ended");
 				attacker.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//Species);
 
-				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", attacker.ToString(), oldabil.ToString(TextScripts.Name)));
+				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", attacker.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
 			return 0;
 		}
@@ -3738,16 +3738,16 @@ namespace PokemonUnity.Combat
 
 			Abilities oldabil = opponent.Ability;
 			opponent.Ability = attacker.Ability;
-			string abilityname = attacker.Ability.ToString(TextScripts.Name);
+			string abilityname = Game._INTL(attacker.Ability.ToString(TextScripts.Name));
 
 			battle.pbDisplay(Game._INTL("{1} acquired {2}!", opponent.ToString(), abilityname));
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
-				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
+				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
 			return 0;
 		}
@@ -3783,8 +3783,8 @@ namespace PokemonUnity.Combat
 			opponent.Ability = tmp;
 
 			battle.pbDisplay(Game._INTL("{1} swapped its {2} Ability with its target's {3} Ability!",
-			   attacker.ToString(), opponent.Ability.ToString(TextScripts.Name),
-			   attacker.Ability.ToString(TextScripts.Name)));
+			   attacker.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name)),
+			   Game._INTL(attacker.Ability.ToString(TextScripts.Name))));
 			attacker.pbAbilitiesOnSwitchIn(true);
 			opponent.pbAbilitiesOnSwitchIn(true);
 			return 0;
@@ -3822,9 +3822,9 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
 
-				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
+				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
 			return 0;
 		}
@@ -4000,7 +4000,7 @@ namespace PokemonUnity.Combat
 		{
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STURDY))
 			{
-				battle.pbDisplay(Game._INTL("{1} was protected by {2}!", opponent.ToString(), opponent.Ability.ToString(TextScripts.Name)));
+				battle.pbDisplay(Game._INTL("{1} was protected by {2}!", opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 				return false;
 			}
 			if (opponent.Level > attacker.Level)
@@ -4031,12 +4031,12 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_071() : base() { }
 		//public PokeBattle_Move_071(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override void pbAddTarget(IBattler[] targets, IBattler attacker)
+		public override void pbAddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.effects.CounterTarget >= 0 &&
 			   attacker.pbIsOpposing(attacker.effects.CounterTarget))
 			{
-				if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.CounterTarget]))
+				if (!attacker.pbAddTarget(ref targets, this.battle.battlers[attacker.effects.CounterTarget]))
 				{
 					attacker.pbRandomTarget(targets);
 				}
@@ -4062,12 +4062,12 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_072() : base() { }
 		//public PokeBattle_Move_072(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override void pbAddTarget(IBattler[] targets, IBattler attacker)
+		public override void pbAddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.effects.MirrorCoatTarget >= 0 &&
 			   attacker.pbIsOpposing(attacker.effects.MirrorCoatTarget))
 			{
-				if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.MirrorCoatTarget]))
+				if (!attacker.pbAddTarget(ref targets, this.battle.battlers[attacker.effects.MirrorCoatTarget]))
 				{
 					attacker.pbRandomTarget(targets);
 				}
@@ -4094,14 +4094,14 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_073() : base() { }
 		//public PokeBattle_Move_073(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override void pbAddTarget(IBattler[] targets, IBattler attacker)
+		public override void pbAddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.lastAttacker.Count > 0)
 			{
 				int lastattacker = attacker.lastAttacker[attacker.lastAttacker.Count - 1];
 				if (lastattacker >= 0 && attacker.pbIsOpposing(lastattacker))
 				{
-					if (!attacker.pbAddTarget(targets, this.battle.battlers[lastattacker]))
+					if (!attacker.pbAddTarget(ref targets, this.battle.battlers[lastattacker]))
 					{
 						attacker.pbRandomTarget(targets);
 					}
@@ -6082,7 +6082,7 @@ namespace PokemonUnity.Combat
 			}
 			string thismovename = Name;
 
-			string movename = move.ToString(TextScripts.Name);
+			string movename = Game._INTL(move.ToString(TextScripts.Name));
 			battle.pbDisplay(Game._INTL("{1} turned into {2}!", thismovename, movename));
 			int target = (Core.USENEWBATTLEMECHANICS && opponent.IsNotNullOrNone()) ? opponent.Index : -1;
 			attacker.pbUseMoveSimple(move, -1, target);
@@ -6362,14 +6362,14 @@ namespace PokemonUnity.Combat
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
+					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),Game._INTL(opponent.pbPartner.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 			}
@@ -6423,14 +6423,14 @@ namespace PokemonUnity.Combat
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
+					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),Game._INTL(opponent.pbPartner.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 			}
@@ -6473,14 +6473,14 @@ namespace PokemonUnity.Combat
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
+					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),Game._INTL(opponent.pbPartner.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 			}
@@ -6512,14 +6512,14 @@ namespace PokemonUnity.Combat
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
+					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),Game._INTL(opponent.pbPartner.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 			}
@@ -6565,14 +6565,14 @@ namespace PokemonUnity.Combat
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
+					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 				else if (opponent.pbPartner.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 
 					battle.pbDisplay(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.pbPartner.ToString(),opponent.pbPartner.Ability.ToString(TextScripts.Name)));
+					   opponent.pbPartner.ToString(),Game._INTL(opponent.pbPartner.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 			}
@@ -7569,11 +7569,11 @@ namespace PokemonUnity.Combat
 			}
 		}
 
-		public override void pbAddTarget(IBattler[] targets, IBattler attacker)
+		public override void pbAddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.effects.BideTarget >= 0)
 			{
-				if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.BideTarget]))
+				if (!attacker.pbAddTarget(ref targets, this.battle.battlers[attacker.effects.BideTarget]))
 				{
 					attacker.pbRandomTarget(targets);
 				}
@@ -7984,7 +7984,7 @@ namespace PokemonUnity.Combat
 				if (bearer != null)
 				{
 					battle.pbDisplay(Game._INTL("{1}'s {2} prevents {3} from using {4}!",
-					   bearer.ToString(), bearer.Ability.ToString(TextScripts.Name), attacker.ToString(true), Name));
+					   bearer.ToString(), Game._INTL(bearer.Ability.ToString(TextScripts.Name)), attacker.ToString(true), Name));
 					return false;
 				}
 			}
@@ -8159,7 +8159,7 @@ namespace PokemonUnity.Combat
 					{
 						battle.pbDisplay(Game._INTL("{1}'s {2} blocks {3}!", this.battle.battlers[i].ToString(),
 							 //PBAbilities.getName(this.battle.battlers[i].Ability), Name));
-							 this.battle.battlers[i].Ability.ToString(TextScripts.Name), Name));
+							 Game._INTL(this.battle.battlers[i].Ability.ToString(TextScripts.Name)), Name));
 					}
 					else
 					{
@@ -8303,7 +8303,7 @@ namespace PokemonUnity.Combat
 		{
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.SUCTION_CUPS))
 			{
-				battle.pbDisplay(Game._INTL("{1} anchored itself with {2}!", opponent.ToString(), opponent.Ability.ToString(TextScripts.Name)));
+				battle.pbDisplay(Game._INTL("{1} anchored itself with {2}!", opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 				return -1;
 			}
 			if (opponent.effects.Ingrain)
@@ -8493,7 +8493,7 @@ namespace PokemonUnity.Combat
 			{
 				if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
 				{
-					string abilityname = opponent.Ability.ToString(TextScripts.Name);
+					string abilityname = Game._INTL(opponent.Ability.ToString(TextScripts.Name));
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!", opponent.ToString(), abilityname, Kernal.MoveData[MoveId].Name));
 				}
 				else if (!this.battle.pbIsUnlosableItem(opponent, opponent.Item))
@@ -8535,7 +8535,7 @@ namespace PokemonUnity.Combat
 			{
 				if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
 				{
-					string abilityname = opponent.Ability.ToString(TextScripts.Name);
+					string abilityname = Game._INTL(opponent.Ability.ToString(TextScripts.Name));
 					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!", opponent.ToString(), abilityname, Kernal.MoveData[MoveId].Name));
 				}
 				else if (!this.battle.pbIsUnlosableItem(opponent, opponent.Item) &&
@@ -8590,7 +8590,7 @@ namespace PokemonUnity.Combat
 			}
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
 			{
-				string abilityname = opponent.Ability.ToString(TextScripts.Name);
+				string abilityname = Game._INTL(opponent.Ability.ToString(TextScripts.Name));
 				battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!", opponent.ToString(), abilityname, Name));
 				return -1;
 			}
@@ -8707,7 +8707,7 @@ namespace PokemonUnity.Combat
 						   !this.battle.pbIsUnlosableItem(attacker, partner.Item))
 						{
 							battle.pbDisplay(Game._INTL("{1}'s {2} let it share its {3} with {4}!",
-							   partner.ToString(), partner.Ability.ToString(TextScripts.Name),
+							   partner.ToString(), Game._INTL(partner.Ability.ToString(TextScripts.Name)),
 							   Kernal.ItemData[partner.Item].Name, attacker.ToString(true)));
 							attacker.Item = partner.Item;
 							partner.Item = 0;
@@ -10125,7 +10125,7 @@ namespace PokemonUnity.Combat
 			{
 				if (attacker.effects.MultiTurn > 0)
 				{
-					string mtattack = attacker.effects.MultiTurnAttack.ToString(TextScripts.Name);
+					string mtattack = Game._INTL(attacker.effects.MultiTurnAttack.ToString(TextScripts.Name));
 					IBattler mtuser = this.battle.battlers[attacker.effects.MultiTurnUser];
 
 					battle.pbDisplay(Game._INTL("{1} got free of {2}'s {3}!", attacker.ToString(), mtuser.ToString(true), mtattack));
@@ -11187,7 +11187,7 @@ namespace PokemonUnity.Combat
 				   opponent.hasWorkingAbility(Abilities.WHITE_SMOKE))
 				{
 					battle.pbDisplay(Game._INTL("{1}'s {2} prevents stat loss!", opponent.ToString(),
-					   opponent.Ability.ToString(TextScripts.Name)));
+					   Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					return -1;
 				}
 			}
@@ -11197,7 +11197,7 @@ namespace PokemonUnity.Combat
 			int ret = -1; bool showanim = true;
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.HYPER_CUTTER))
 			{
-				string abilityname = opponent.Ability.ToString(TextScripts.Name);
+				string abilityname = Game._INTL(opponent.Ability.ToString(TextScripts.Name));
 				battle.pbDisplay(Game._INTL("{1}'s {2} prevents Attack loss!", opponent.ToString(), abilityname));
 			}
 			else if (opponent is IBattlerEffect b0 && b0.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim))
@@ -11471,7 +11471,7 @@ namespace PokemonUnity.Combat
 
 			opponent.effects.Type3 = Types.GHOST;
 
-			string typename = Types.GHOST.ToString(TextScripts.Name);
+			string typename = Game._INTL(Types.GHOST.ToString(TextScripts.Name));
 			battle.pbDisplay(Game._INTL("{1} transformed into the {2} type!", opponent.ToString(), typename));
 			return 0;
 		}
@@ -11507,7 +11507,7 @@ namespace PokemonUnity.Combat
 
 			opponent.effects.Type3 = Types.GRASS;
 
-			string typename = Types.GRASS.ToString(TextScripts.Name);
+			string typename = Game._INTL(Types.GRASS.ToString(TextScripts.Name));
 			battle.pbDisplay(Game._INTL("{1} transformed into the {2} type!", opponent.ToString(), typename));
 			return 0;
 		}

@@ -4,9 +4,19 @@ using PokemonUnity.Monster.Data;
 namespace PokemonUnity
 {
 	public static class TypeExtension
-	{		
+	{
+		/// <summary>
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="text"></param>
+		/// <returns>Returns the lookup identifier for localization dictionary</returns>
+		/// <remarks>Requires <seealso cref="Game._INTL(string, object[])"/> to retrieve actual value</remarks>
 		public static string ToString(this PokemonUnity.Types type, TextScripts text)
 		{
+			if (text == TextScripts.Name)
+				return string.Format("TYPE_NAME_{0}", (int)type);
+			if (text == TextScripts.Description)
+				return string.Format("TYPE_DESC_{0}", (int)type);
 			//create a switch, and return Locale Name or Description
 			return type.ToString();
 		}

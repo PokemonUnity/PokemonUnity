@@ -112,7 +112,7 @@ namespace PokemonUnity
 			//return (@GetKeyState.call(key)&0x8000)>0;
 			//return keystate[key]>0;
 			//Check if key is down, to confirm if pressed...
-			return keyIsDown[key];
+			return keyIsDown.ContainsKey(key) ? keyIsDown[key] : false;
 		}
 
 		public static void updateKeyState(int i) {

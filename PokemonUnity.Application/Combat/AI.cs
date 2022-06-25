@@ -3351,7 +3351,7 @@ namespace PokemonUnity.Combat
 						opponent.effects.Substitute==0) {
 						if ((attacker.hasWorkingItem(Items.KINGS_ROCK) || attacker.hasWorkingItem(Items.RAZOR_FANG))
 						) { //&& move.canKingsRock //ToDo: Check if can flinch
-						basedamage*=1.05f;
+							basedamage*=1.05f;
 						} else if (attacker.hasWorkingAbility(Abilities.STENCH) &&
 							move.Effect!=Attack.Data.Effects.x114 &&    // Thunder Fang
 							move.Effect!=Attack.Data.Effects.x112 &&    // Fire Fang
@@ -3378,7 +3378,7 @@ namespace PokemonUnity.Combat
 					score=(int)Math.Round(score);
 					float oldscore=score;
 					score+=basedamage;
-					GameDebug.Log($"[AI] #{move.id.ToString(TextScripts.Name)} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
+					GameDebug.Log($"[AI] #{Game._INTL(move.id.ToString(TextScripts.Name))} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
 				}
 			}
 			else {
@@ -4419,7 +4419,7 @@ namespace PokemonUnity.Combat
 			int totalscore=0;
 			int target=-1;
 			int skill=0;
-			bool wildbattle=@opponent==null && pbIsOpposing(index);
+			bool wildbattle=(@opponent==null || @opponent.Length == 0) && pbIsOpposing(index);
 			if (wildbattle) {		// If wild battle
 				for (int i = 0; i < 4; i++) {
 					if (CanChooseMove(index,i,false)) {
@@ -4538,7 +4538,7 @@ namespace PokemonUnity.Combat
 				for (int i = 0; i < 4; i++) {
 					if (attacker.moves[i].id!=0) {
 						if (j>0) x+=", ";
-						x+=attacker.moves[i].id.ToString(TextScripts.Name)+"="+scores[i].ToString();
+						x+=Game._INTL(attacker.moves[i].id.ToString(TextScripts.Name))+"="+scores[i].ToString();
 						j+=1;
 					}
 				}
@@ -4558,7 +4558,7 @@ namespace PokemonUnity.Combat
 					}
 					if (preferredMoves.Count>0) {
 						int i=preferredMoves[Core.Rand.Next(preferredMoves.Count)];
-						GameDebug.Log($"[AI] Prefer #{attacker.moves[i].id.ToString(TextScripts.Name)}");
+						GameDebug.Log($"[AI] Prefer #{Game._INTL(attacker.moves[i].id.ToString(TextScripts.Name))}");
 						pbRegisterMove(index,i,false);
 						if (targets != null) target=targets[i];
 						if (@doublebattle && target>=0) {
@@ -4886,7 +4886,7 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public int pbDefaultChooseNewEnemy(int index,IBattler[] party) {
+		public int pbDefaultChooseNewEnemy(int index,IPokemon[] party) {
 			List<int> enemies=new List<int>();
 			for (int i = 0; i < party.Length-1; i++) {
 				if (pbCanSwitchLax(index,i,false)) {
@@ -4899,7 +4899,7 @@ namespace PokemonUnity.Combat
 			return -1;
 		}
 
-		public int pbChooseBestNewEnemy(int index,IBattler[] party,int[] enemies) {
+		public int pbChooseBestNewEnemy(int index,IPokemon[] party,int[] enemies) {
 			if (enemies == null || enemies.Length==0) return -1;
 			if (Game.GameData.PokemonTemp == null) Game.GameData.PokemonTemp=new PokemonTemp().initialize();
 			IBattler o1=@battlers[index].pbOpposing1;
@@ -4909,7 +4909,7 @@ namespace PokemonUnity.Combat
 			int best=-1;
 			int bestSum=0;
 			foreach (int e in enemies) {
-				IBattler pkmn=party[e];
+				IPokemon pkmn=party[e];
 				int sum=0;
 				foreach (var move in pkmn.moves) {
 					if (move.id==0) continue;

@@ -99,5 +99,18 @@ namespace PokemonUnity
 			}
 			return result;
 		}
+
+		public static int GetBattleCount(this IPokemon[] partyOrPC)
+		{
+			int result = 0;
+			for (int i = 0; i < partyOrPC.Length; i++)
+			{
+				if (partyOrPC[i].IsNotNullOrNone() && !partyOrPC[i].isEgg)// != null || partyOrPC[i].Species != Pokemons.NONE)
+				{
+					result += 1;
+				}
+			}
+			return result;
+		}
 	}
 }

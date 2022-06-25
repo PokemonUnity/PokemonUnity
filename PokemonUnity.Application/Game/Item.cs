@@ -442,7 +442,7 @@ namespace PokemonUnity//.Inventory
 
 		public bool pbLearnMove(IPokemon pokemon,Moves move,bool ignoreifknown=false,bool bymachine=false) {
 			if (!pokemon.IsNotNullOrNone()) return false;
-			string movename=move.ToString(TextScripts.Name);
+			string movename=Game._INTL(move.ToString(TextScripts.Name));
 			if (pokemon.isEgg && !Core.DEBUG) {
 				(this as IGameMessage).pbMessage(Game._INTL("{1} can't be taught to an Egg.",movename));
 				return false;
@@ -470,7 +470,7 @@ namespace PokemonUnity//.Inventory
 					(this as IGameMessage).pbMessage(Game._INTL("Which move should be forgotten?"));
 					int forgetmove=pbForgetMove(pokemon,move);
 					if (forgetmove>=0) {
-						string oldmovename=pokemon.moves[forgetmove].id.ToString(TextScripts.Name);
+						string oldmovename=Game._INTL(pokemon.moves[forgetmove].id.ToString(TextScripts.Name));
 						int oldmovepp=pokemon.moves[forgetmove].PP;
 						pokemon.moves[forgetmove]=new Attack.Move(move); // Replaces current/total PP
 						if (bymachine) pokemon.moves[forgetmove].PP=Math.Min(oldmovepp,pokemon.moves[forgetmove].TotalPP);
@@ -515,7 +515,7 @@ namespace PokemonUnity//.Inventory
 			if (pbIsMachine(item)) {
 				Moves machine=Kernal.MachineData[(int)item].Move;
 				if (machine==Moves.NONE) return false;
-				string movename=machine.ToString(TextScripts.Name);
+				string movename=Game._INTL(machine.ToString(TextScripts.Name));
 				if (pokemon is IPokemonShadowPokemon p && p.isShadow) { //? rescue false
 					(this as IGameMessage).pbMessage(Game._INTL("Shadow Pokémon can't be taught any moves."));
 				} else if (!pokemon.isCompatibleWithMove(machine)) {
@@ -545,7 +545,7 @@ namespace PokemonUnity//.Inventory
 					Bag.pbDeleteItem(item);
 				}
 				if (Bag.pbQuantity(item)<=0) {
-					(this as IGameMessage).pbMessage(Game._INTL("You used your last {1}.",item.ToString(TextScripts.Name)));
+					(this as IGameMessage).pbMessage(Game._INTL("You used your last {1}.",Game._INTL(item.ToString(TextScripts.Name))));
 				}
 				return ret;
 			}
@@ -563,7 +563,7 @@ namespace PokemonUnity//.Inventory
 					(this as IGameMessage).pbMessage(Game._INTL("There is no Pokémon."));
 					return 0;
 				}
-				string movename=machine.ToString(TextScripts.Name);
+				string movename=Game._INTL(machine.ToString(TextScripts.Name));
 				if (pbIsHiddenMachine(item)) {
 					(this as IGameMessage).pbMessage(Game._INTL("\\se[accesspc]Booted up an HM."));
 					(this as IGameMessage).pbMessage(Game._INTL(@"It contained {1}.\1",movename));
@@ -610,7 +610,7 @@ namespace PokemonUnity//.Inventory
 									bag.pbDeleteItem(item);
 								}
 								if (bag.pbQuantity(item)<=0) {
-									(this as IGameMessage).pbMessage(Game._INTL("You used your last {1}.",item.ToString(TextScripts.Name)));
+									(this as IGameMessage).pbMessage(Game._INTL("You used your last {1}.",Game._INTL(item.ToString(TextScripts.Name))));
 									break;
 								}
 							}
@@ -674,7 +674,7 @@ namespace PokemonUnity//.Inventory
 				//if (hasConst(PBItems,item)) {
 					Items id=(Items)item;
 					if (Bag.pbQuantity(id)>0) {
-						commands.Add(id.ToString(TextScripts.Name));
+						commands.Add(Game._INTL(id.ToString(TextScripts.Name)));
 						itemid.Add(id);
 					}
 				//}
@@ -703,7 +703,7 @@ namespace PokemonUnity//.Inventory
 			window.x=Graphics.width-window.width;
 			(this as IGameAudioPlay).pbPlayDecisionSE();
 			do { //;loop
-			  Graphics.update();
+			  Graphics?.update();
 			  Input.update();
 			  window.update();
 			  if (Input.trigger(Input.A)) {

@@ -27,11 +27,25 @@ namespace PokemonUnity
 	/// </summary>
 	public partial class Game : PokemonEssentials.Interface.IGameUtility
 	{
+		public static Localization.XmlStringRes LocalizationDictionary;
+		/// <summary>
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="param"></param>
+		/// <returns></returns>
+		//ToDo: Might need to redo function to use a global/const identifier string (KeyValuePair)
 		public static string _INTL(string message, params object[] param)
 		{
 			string msg = message;
-			for (int i = 0; param.Length >= i; i++) //(int i = param.Length; i > 0; i--)
-				msg = msg.Replace($"{{{i}}}", $"{{{i - 1}}}");
+			//Lookup Localization Dictionary for message string in translations...
+			if(LocalizationDictionary != null)
+			{
+				msg = LocalizationDictionary.GetStr(message);
+				//if (msg == message) GameDebug.Log("Couldn't map localization string for: `{0}`", message);
+			}
+			if(!msg.Contains("{0}") && param?.Length > 0) //only loop if params start at 1+
+				for (int i = 0; param.Length >= i; i++) //(int i = param.Length; i > 0; i--)
+					msg = msg.Replace($"{{{i}}}", $"{{{i - 1}}}");
 			return string.Format(msg, param);
 		}
 			
@@ -605,7 +619,7 @@ namespace PokemonUnity
 			IInterpreter interp=Interpreter.initialize(); //new Interpreter();
 			interp.setup(celist,0);
 			do {
-				Graphics.update();
+				Graphics?.update();
 				Input.update();
 				interp.update();
 				(this as IGameMessage).pbUpdateSceneMap();
@@ -628,7 +642,7 @@ namespace PokemonUnity
 			//	sprite=((ISpritesetMapAnimation)Scene.spriteset()).addUserAnimation(id,@event.x,@event.y,tinting);
 			}
 			while (!sprite.disposed) {
-				Graphics.update();
+				Graphics?.update();
 				Input.update();
 				(this as IGameMessage).pbUpdateSceneMap();
 			}
@@ -1305,7 +1319,7 @@ namespace PokemonUnity
 		}
 
 		public void pbNickname(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
-			string speciesname=pokemon.Species.ToString(TextScripts.Name);
+			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
 			if ((this as IGameMessage).pbConfirmMessage(Game._INTL("Would you like to give a nickname to {1}?",speciesname))) {
 				string helptext=Game._INTL("{1}'s nickname?",speciesname);
 				string newname=this is IGameTextEntry t ? t.pbEnterPokemonName(helptext,0,Pokemon.NAMELIMIT,"",pokemon) : speciesname;
@@ -1376,7 +1390,7 @@ namespace PokemonUnity
 				//pokemon=new Pokemon(pokemon.Species,level:(byte)level.Value,original:Trainer);
 				pokemon=new Monster.Pokemon(pkmn,level:(byte)level.Value,original:Trainer);
 			}
-			string speciesname=pokemon.Species.ToString(TextScripts.Name);
+			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
 			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
 			pbNicknameAndStore(pokemon);
 			if (seeform) pbSeenForm(pokemon);
@@ -1390,7 +1404,7 @@ namespace PokemonUnity
 				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return false;
 			}
-			string speciesname=pokemon.Species.ToString(TextScripts.Name);
+			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
 			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
 			pbNicknameAndStore(pokemon);
 			if (seeform) pbSeenForm(pokemon);
@@ -1443,7 +1457,7 @@ namespace PokemonUnity
 			if (level != null) { //pokemon is Integer && level is int
 				pokemon=new Pokemon(pkmn,level:(byte)level.Value,original:Trainer);
 			}
-			string speciesname=pokemon.Species.ToString(TextScripts.Name);
+			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
 			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
 			pbNicknameAndStore(pokemon);
 			if (seeform) pbSeenForm(pokemon);
@@ -1452,7 +1466,7 @@ namespace PokemonUnity
 
 		public bool pbAddToParty(IPokemon pokemon,int? level=null,bool seeform=true) {
 			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
-			string speciesname=pokemon.Species.ToString(TextScripts.Name);
+			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
 			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
 			pbNicknameAndStore(pokemon);
 			if (seeform) pbSeenForm(pokemon);
@@ -2147,7 +2161,7 @@ namespace PokemonUnity
 			}
 			pbFadeOutIn(99999, block: () => {
 				IPartyDisplayScene scene=Scenes.Party; //new PokemonScreen_Scene();
-				string movename=move.ToString(TextScripts.Name);
+				string movename=Game._INTL(move.ToString(TextScripts.Name));
 				IPartyDisplayScreen screen=Screens.Party.initialize(scene,Trainer.party); //new PokemonScreen(scene,Trainer.party);
 				string[] annot=pbMoveTutorAnnotations(move,movelist);
 				screen.pbStartScene(Game._INTL("Teach which Pokémon?"),false,annot);
@@ -2190,7 +2204,7 @@ namespace PokemonUnity
 			});
 			GameVariables[variableNumber]=ret;
 			if (ret>=0) {
-				GameVariables[nameVarNumber]=pokemon.moves[ret].id.ToString(TextScripts.Name);
+				GameVariables[nameVarNumber]=Game._INTL(pokemon.moves[ret].id.ToString(TextScripts.Name));
 			} else {
 				GameVariables[nameVarNumber]="";
 			}

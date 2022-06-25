@@ -58,7 +58,7 @@ namespace PokemonUnity
 	//    //  pbPlayCry(attacker.pokemon,90,100);
 	//    //}
 	//    //int i = 0; do { //;Graphics.frame_rate.times 
-	//    //  Graphics.update();
+	//    //  Graphics?.update();
 	//    //  Input.update(); i++;
 	//    //} while (i < Graphics.frame_rate);
 	//    yield return null;
