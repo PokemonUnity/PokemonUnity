@@ -263,14 +263,14 @@ public class MainMenuHandler : MonoBehaviour
         int minimumButton = 0;
         int maximumButton = MGButtonImage.Length - 1;
 
-        yield return StartCoroutine(mysteryGiftMenu.GetComponent<MysteryGiftHandler>().startRequest());
+        /*yield return StartCoroutine(mysteryGiftMenu.GetComponent<MysteryGiftHandler>().startRequest());
         
         MysteryGiftHandler.MysteryGift[] giftList = mysteryGiftMenu.GetComponent<MysteryGiftHandler>().getList();
 
         if (giftList.Length == 0)
         {
             leave = true;
-            //start dialog to tell that the connection wasn't etablished
+            //start dialog to tell that the connection wasn't established
             //===> add a dialog box handler
         }
             
@@ -543,7 +543,7 @@ public class MainMenuHandler : MonoBehaviour
             yield return null;
         }
         if (giftList.Length > 0)
-            SfxHandler.Play(cancelClip);
+            SfxHandler.Play(cancelClip);*/
         
         BgmHandler.main.PlayMain(null, 0);
         yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));

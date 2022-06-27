@@ -1008,6 +1008,13 @@
     <Compile Include="Assets\Scripts\Interacts\InteractSign.cs" />
     <Compile Include="Assets\Scripts\Interacts\InteractTrainer.cs" />
     <Compile Include="Assets\Scripts\Interacts\InteractTrainerSight.cs" />
+    <Compile Include="Assets\Scripts\LeanTween\LeanAudio.cs" />
+    <Compile Include="Assets\Scripts\LeanTween\LeanSmooth.cs" />
+    <Compile Include="Assets\Scripts\LeanTween\LeanTween.cs" />
+    <Compile Include="Assets\Scripts\LeanTween\LeanTweenExt.cs" />
+    <Compile Include="Assets\Scripts\LeanTween\LTDescr.cs" />
+    <Compile Include="Assets\Scripts\LeanTween\LTDescrOptional.cs" />
+    <Compile Include="Assets\Scripts\LeanTween\LTSeq.cs" />
     <Compile Include="Assets\Scripts\MapCollider.cs" />
     <Compile Include="Assets\Scripts\MapNameBoxHandler.cs" />
     <Compile Include="Assets\Scripts\MapSettings.cs" />

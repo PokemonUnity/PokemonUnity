@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 using System;
-using DiscordPresence;
+//using DiscordPresence;
 using Random = System.Random;
 
 public class PlayerMovement : MonoBehaviour
@@ -377,14 +377,15 @@ public class PlayerMovement : MonoBehaviour
             dayTime = "Night";
         }
 
-        PresenceManager.UpdatePresence(
-            detail: accessedMapSettings.mapName+" - "+dayTime, 
-            state: "Exploring the region",
-            largeKey: accessedMapSettings.RPCImageKey, 
-            largeText: "",
-            smallKey: "", 
-            smallText: ""
-        );
+        //Discord API Library
+        //PresenceManager.UpdatePresence(
+        //    detail: accessedMapSettings.mapName+" - "+dayTime, 
+        //    state: "Exploring the region",
+        //    largeKey: accessedMapSettings.RPCImageKey, 
+        //    largeText: "",
+        //    smallKey: "", 
+        //    smallText: ""
+        //);
     }
 
     private bool isDirectionKeyHeld(int directionCheck)

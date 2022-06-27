@@ -2,7 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
-using FMOD;
+//using FMOD;
 using Debug = UnityEngine.Debug;
 
 public class BgmHandler : MonoBehaviour

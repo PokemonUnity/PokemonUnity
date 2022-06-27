@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class BattleCameraHandler : MonoBehaviour
 {
-	private CPC_CameraPath currentPath;
+	/*private CPC_CameraPath currentPath;
 	private CPC_CameraPath intro_path;
 	private CPC_CameraPath waiting_path;
 	private CPC_CameraPath[] waiting_paths;
@@ -20,12 +21,6 @@ public class BattleCameraHandler : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 		
-	}
-
-	public IEnumerator StartTravelling()
-	{
-		yield return new WaitForSeconds(4);
-		yield return StartCoroutine(StartTravellingIE(waiting_path, 20f, 1));
 	}
 
 	private IEnumerator StartTravellingIE(CPC_CameraPath path, float time, int waypoint)
@@ -49,20 +44,26 @@ public class BattleCameraHandler : MonoBehaviour
 		yield return null;
 	}
 
+	public IEnumerator StartTravelling()
+	{
+		yield return new WaitForSeconds(4);
+		yield return StartCoroutine(StartTravellingIE(waiting_path, 20f, 1));
+	}
+
 	public IEnumerator PauseTravelling()
 	{
 		currentPath.PausePath();
 		yield return null;
-	}
+	}*/
 	
 	public void StopTravelling()
 	{
-		if (currentPath != null)
-		{
-			currentPath.SetCurrentWayPoint(1);
-			currentPath.StopPath();
-			ResetCameraPosition();
-		}
+		//if (currentPath != null)
+		//{
+		//	currentPath.SetCurrentWayPoint(1);
+		//	currentPath.StopPath();
+		//	ResetCameraPosition();
+		//}
 	}
 
 	public void ResetCameraPosition()

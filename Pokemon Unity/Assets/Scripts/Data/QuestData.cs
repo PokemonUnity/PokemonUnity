@@ -35,8 +35,9 @@ public class QuestReward
     private int money;
     private ItemData[] items;
     private int[] itemsAmount;
-    
-    public QuestReward() : this(0, Array.Empty<ItemData>(), Array.Empty<int>()) {}
+
+    //public QuestReward() : this(0, Array.Empty<ItemData>(), Array.Empty<int>()) {}
+    public QuestReward() : this(0, new ItemData[0], new int[0]) {}
         
     public QuestReward(int money, ItemData[] items, int[] itemsAmount)
     {
@@ -45,7 +46,8 @@ public class QuestReward
         this.itemsAmount = itemsAmount;
     }
 
-    public QuestReward(int money) : this(money, Array.Empty<ItemData>(), Array.Empty<int>()) {}
+    //public QuestReward(int money) : this(money, Array.Empty<ItemData>(), Array.Empty<int>()) {}
+    public QuestReward(int money) : this(money, new ItemData[0], new int[0]) {}
 
     public QuestReward(ItemData[] items, int[] itemsAmount) : this(0, items, itemsAmount) {}
 

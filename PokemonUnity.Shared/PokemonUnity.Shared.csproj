@@ -59,7 +59,6 @@
     <Compile Include="Attack\Data\Meta.cs" />
     <Compile Include="Attack\Data\Flag.cs" />
     <Compile Include="Character\BadgeData.cs" />
-    <Compile Include="Character\Entity.cs" />
     <Compile Include="Character\DayCareData.cs" />
     <Compile Include="Character\Gear\Phone.cs" />
     <Compile Include="Character\Gear\Pokedex.cs" />

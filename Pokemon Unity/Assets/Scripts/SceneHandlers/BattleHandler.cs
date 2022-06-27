@@ -14,6 +14,7 @@ using UnityEngine.Serialization;
 
 public class BattleHandler : MonoBehaviour
 {
+    #region Property Variables
     public int victor = -1; //0 = player, 1 = opponent, 2 = tie
     private bool trainerBattle;
 
@@ -650,6 +651,7 @@ public class BattleHandler : MonoBehaviour
         pressurePlayer, // Pressure applied by players (player side)
         pressureOpponent // Pressure applied by opponents (opponent side)
         ;
+    #endregion
 
     void Awake()
     {
@@ -1109,10 +1111,11 @@ public class BattleHandler : MonoBehaviour
     {
         RectTransform ability;
         string pkm_name = pokemon[index].getName();
-        string s = Language.getLang() switch
-        {
-            _ => pkm_name[^1] == 's' ? "'" : "'s"
-        };
+        //string s = Language.getLang() switch
+        //{
+        //    _ => pkm_name[^1] == 's' ? "'" : "'s"
+        //};
+        string s = pkm_name[pkm_name.Length - 1] == 's' ? "'" : "'s";
 
         if (index < 3)
         {
@@ -1252,9 +1255,10 @@ public class BattleHandler : MonoBehaviour
 
     private IEnumerator introTravelling(float time)
     {
-        CPC_CameraPath camera_path =
-            BattleScene.transform.Find("CameraPaths/Intro").GetComponent<CPC_CameraPath>();
-        camera_path.PlayPath(time);
+        //ToDo: Missing Battle Camera logic
+        //CPC_CameraPath camera_path =
+        //    BattleScene.transform.Find("CameraPaths/Intro").GetComponent<CPC_CameraPath>();
+        //camera_path.PlayPath(time);
         
         yield return new WaitForSeconds(time);
         
@@ -9180,13 +9184,14 @@ public class BattleHandler : MonoBehaviour
             dayTime = "Night";
         }
 
-        PresenceManager.UpdatePresence(
-            detail: PlayerMovement.player.accessedMapSettings.mapName+" - "+dayTime, 
-            state: "In "+((isTrainer) ? "Trainer" : "Wild")+" Battle",
-            largeKey: PlayerMovement.player.accessedMapSettings.RPCImageKey,
-            largeText: "",
-            smallKey: "pokeball", 
-            smallText: "Vs " + ((isTrainer) ? trainer.GetName() : trainer.GetParty()[0].getName() + " Lv." + trainer.GetParty()[0].getLevel() )
-        );
+        //Discord API Library
+        //PresenceManager.UpdatePresence(
+        //    detail: PlayerMovement.player.accessedMapSettings.mapName+" - "+dayTime, 
+        //    state: "In "+((isTrainer) ? "Trainer" : "Wild")+" Battle",
+        //    largeKey: PlayerMovement.player.accessedMapSettings.RPCImageKey,
+        //    largeText: "",
+        //    smallKey: "pokeball", 
+        //    smallText: "Vs " + ((isTrainer) ? trainer.GetName() : trainer.GetParty()[0].getName() + " Lv." + trainer.GetParty()[0].getLevel() )
+        //);
     }
 }

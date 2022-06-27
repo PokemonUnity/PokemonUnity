@@ -3,8 +3,8 @@
 using System;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
+//using UnityEngine.Rendering.PostProcessing;
 
 public class PauseHandler : MonoBehaviour
 {
@@ -691,40 +691,42 @@ public class PauseHandler : MonoBehaviour
 
     public IEnumerator Blur(float speed)
     {
-        PostProcessVolume postProcessVolume = PlayerMovement.player.mainCamera.GetComponent<PostProcessVolume>();
-        DepthOfField dof;
-
-        postProcessVolume.profile.TryGetSettings(out dof);
-
-        dof.active = true;
-
-        while (dof.focalLength.GetValue<float>() < 21)
-        {
-            dof.focalLength.Override(dof.focalLength + Time.deltaTime * speed);
-
-            if (dof.focalLength.GetValue<float>() > 21) dof.focalLength.Override(21f);
-            
-            yield return null;
-        }
+        //PostProcessVolume postProcessVolume = PlayerMovement.player.mainCamera.GetComponent<PostProcessVolume>();
+        //DepthOfField dof;
+        //
+        //postProcessVolume.profile.TryGetSettings(out dof);
+        //
+        //dof.active = true;
+        //
+        //while (dof.focalLength.GetValue<float>() < 21)
+        //{
+        //    dof.focalLength.Override(dof.focalLength + Time.deltaTime * speed);
+        //
+        //    if (dof.focalLength.GetValue<float>() > 21) dof.focalLength.Override(21f);
+        //    
+        //    yield return null;
+        //}
+        yield return null;
     }
     
     public IEnumerator UnBlur(float speed)
     {
-        PostProcessVolume postProcessVolume = PlayerMovement.player.mainCamera.GetComponent<PostProcessVolume>();
-        DepthOfField dof;
-
-        postProcessVolume.profile.TryGetSettings(out dof);
-        
-        while (dof.focalLength.GetValue<float>() > 1)
-        {
-            dof.focalLength.Override(dof.focalLength - Time.deltaTime * speed);
-
-            if (dof.focalLength.GetValue<float>() < 1) dof.focalLength.Override(1);
-            
-            yield return null;
-        }
-        
-        dof.active = false;
+        //PostProcessVolume postProcessVolume = PlayerMovement.player.mainCamera.GetComponent<PostProcessVolume>();
+        //DepthOfField dof;
+        //
+        //postProcessVolume.profile.TryGetSettings(out dof);
+        //
+        //while (dof.focalLength.GetValue<float>() > 1)
+        //{
+        //    dof.focalLength.Override(dof.focalLength - Time.deltaTime * speed);
+        //
+        //    if (dof.focalLength.GetValue<float>() < 1) dof.focalLength.Override(1);
+        //    
+        //    yield return null;
+        //}
+        //
+        //dof.active = false;
+        yield return null;
     }
 
     public IEnumerator animateDevelopArrow()

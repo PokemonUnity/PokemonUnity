@@ -120,7 +120,7 @@ namespace PokemonUnity.Character
 		/// </summary>
 		/// <param name="id">Positive Id is above ground npc entity, and Negative Id is special map tile?</param>
 		/// <param name="name"></param>
-		protected Entities(int id, string name) : base(id, name) { }
+		protected Entities(int id, string name) { } //: base(id, name) { }
 		public static readonly Entities Floor = new Entities(0, "Entities_Text_Floor");//Default?...
 		/// <summary>
 		/// Renders sides from all directions.
