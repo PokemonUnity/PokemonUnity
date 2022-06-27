@@ -981,6 +981,7 @@
     <Compile Include="Assets\Scripts\flycameraDebug.cs" />
     <Compile Include="Assets\Scripts\FollowCameraView.cs" />
     <Compile Include="Assets\Scripts\FollowerMovement.cs" />
+    <Compile Include="Assets\Scripts\GameDebugger.cs" />
     <Compile Include="Assets\Scripts\GlobalVariables.cs" />
     <Compile Include="Assets\Scripts\GrassPatchHandler.cs" />
     <Compile Include="Assets\Scripts\GUIParticleHandler.cs" />
@@ -1035,6 +1036,7 @@
     <Compile Include="Assets\Scripts\Save\PlayerPosition\SerializeQuaternion.cs" />
     <Compile Include="Assets\Scripts\Save\PlayerPosition\SerializeVector3.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BagHandler.cs" />
+    <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\EvolutionHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\MainMenuHandler.cs" />

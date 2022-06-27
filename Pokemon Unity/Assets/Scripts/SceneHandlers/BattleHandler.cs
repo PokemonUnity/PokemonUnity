@@ -3,16 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity.Monster;
 using PokemonUnity.Attack.Data;
-using PokemonEssentials;
-using PokemonEssentials.Interface;
-using PokemonEssentials.Interface.Battle;
-using PokemonEssentials.Interface.PokeBattle;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Serialization;
 //using DiscordPresence;
 
-public class BattleHandler : MonoBehaviour
+public partial class BattleHandler : MonoBehaviour
 {
     #region Property Variables
     public int victor = -1; //0 = player, 1 = opponent, 2 = tie
