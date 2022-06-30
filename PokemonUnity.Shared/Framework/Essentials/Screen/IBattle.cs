@@ -394,6 +394,7 @@ namespace PokemonEssentials.Interface.Screen
 		void pbDisplayPausedMessage(string msg);
 		bool pbDisplayConfirmMessage(string msg);
 		int pbShowCommands(string msg, string[] commands, bool defaultValue);
+		int pbShowCommands(string msg, string[] commands, int defaultValue);
 		/// <summary>
 		/// Called whenever a new round begins.
 		/// </summary>

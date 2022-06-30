@@ -563,6 +563,9 @@
     <Reference Include="LitJson">
       <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\LitJson.dll</HintPath>
     </Reference>
+    <Reference Include="PokemonUnity.Application">
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Application.dll</HintPath>
+    </Reference>
     <Reference Include="PokemonUnity.Shared">
       <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Shared.dll</HintPath>
     </Reference>
@@ -981,7 +984,6 @@
     <Compile Include="Assets\Scripts\flycameraDebug.cs" />
     <Compile Include="Assets\Scripts\FollowCameraView.cs" />
     <Compile Include="Assets\Scripts\FollowerMovement.cs" />
-    <Compile Include="Assets\Scripts\GameDebugger.cs" />
     <Compile Include="Assets\Scripts\GlobalVariables.cs" />
     <Compile Include="Assets\Scripts\GrassPatchHandler.cs" />
     <Compile Include="Assets\Scripts\GUIParticleHandler.cs" />

@@ -2833,6 +2833,10 @@ namespace PokemonUnity.Combat
 			(@scene as IPokeBattle_DebugSceneNoGraphics).pbShowCommands(msg,commands,cancancel);
 		}
 
+		public void pbShowCommands(string msg,string[] commands,int cancancel) {
+			(@scene as IPokeBattle_DebugSceneNoGraphics).pbShowCommands(msg,commands,cancancel);
+		}
+
 		public void pbAnimation(Moves move,IBattler attacker,IBattler opponent,int hitnum=0) {
 			if (@battlescene) {
 				(@scene as IPokeBattle_DebugSceneNoGraphics).pbAnimation(move,attacker,opponent,hitnum);
