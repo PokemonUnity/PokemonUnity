@@ -21,7 +21,7 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IPartyDisplayScene : IScene
 	{
 		//IPartyDisplayScene initialize();
-		void pbShowCommands(string helptext, string[] commands,int index= 0);
+		int pbShowCommands(string helptext, string[] commands,int index= 0);
 		void update();
 		void pbSetHelpText(string helptext);
 		void pbStartScene(IPokemon[] party,string starthelptext,string[] annotations= null,bool multiselect= false);

@@ -3116,7 +3116,7 @@ namespace PokemonUnity.Combat
 		public virtual KeyValuePair<Items,int?> pbItemMenu(int i) {
 			//return (@scene as IPokeBattle_SceneNonInteractive).pbItemMenu(i);
 			//Returns from UI the Selected item, and the target for the item's usage
-			return new KeyValuePair<Items,int?>((Items)(@scene as IPokeBattle_SceneNonInteractive).pbItemMenu(i), null);
+			return new KeyValuePair<Items,int?>((@scene as IPokeBattle_SceneNonInteractive).pbItemMenu(i), null);
 		}
 
 		public virtual bool pbAutoFightMenu(int i) {

@@ -178,5 +178,7 @@ namespace PokemonEssentials.Interface
 		void saveToPng(string filename);
 
 		string address { get; }
+		float width { get; }
+		float height { get; }
 	}
 }

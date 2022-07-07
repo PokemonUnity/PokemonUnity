@@ -98,7 +98,7 @@ namespace PokemonUnity
 		public IPCItemStorage pcItemStorage					{ get; set; }
 		public int stepcount				                { get; set; }
 		public int happinessSteps				            { get; set; }
-		public int? pokerusTime								{ get; set; }
+		public DateTime? pokerusTime						{ get; set; }
 		public IDayCare daycare								{ get; set; }
 		public bool daycareEgg								{ get; set; } //ToDo: int?...
 		public int daycareEggSteps							{ get; set; }

@@ -57,6 +57,8 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.IGameMap GameMap						{ get; set; }
 		//PokemonEssentials.Interface.IGameMessage GameMessage				{ get; set; }
 		//int SpeechFrame													{ get; }
+		PokemonEssentials.Interface.Screen.IGameScenesUI Scenes			{ get; }
+		PokemonEssentials.Interface.Screen.IGameScreensUI Screens		{ get; }
 	}
 	public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }
 	//public interface ITempMetadata : Field.ITempMetadata, ITempMetadataBerryPlants, ITempMetadataDependantEvents, ITempMetadataField, ITempMetadataPokeRadar, ITempMetadataRoaming, ITempMetadataPokemonShadow { }

@@ -272,7 +272,7 @@ namespace PokemonEssentials.Interface.Field
 		/// The weather in effect on this map, and the likelihood of it.
 		/// <para>For which maps: </para>
 		/// </summary>
-		public MetadataWeather Weather		{ get; set; }
+		public MetadataWeather? Weather		{ get; set; }
 		/// <summary>
 		/// If this is TRUE, this map is enshrouded in darkness and a small circle of light will appear around the player. 
 		/// If this is FALSE (or this line doesn't exist), there is no darkness. 

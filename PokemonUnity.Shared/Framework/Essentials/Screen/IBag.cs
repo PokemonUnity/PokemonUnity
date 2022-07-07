@@ -83,54 +83,82 @@ namespace PokemonEssentials.Interface.Screen
 	#region Bag Scene
 	public interface IBagScene : IScene
 	{
+		IBagScene initialize();
 		void update();
 		void pbStartScene(IBag bag);
 		void pbEndScene();
 		int pbChooseNumber(string helptext, int maximum);
 		void pbDisplay(string msg, bool brief = false);
 		void pbConfirm(string msg);
-		void pbShowCommands(string helptext, int commands);
+		int pbShowCommands(string helptext, IList<string> commands);
 		//void pbRefresh();
 
-		// Called when the item screen wants an item to be chosen from the screen
+		/// <summary>
+		/// Called when the item screen wants an item to be chosen from the screen
+		/// </summary>
+		/// <param name="lockpocket"></param>
+		/// <returns></returns>
 		Items pbChooseItem(bool lockpocket = false);
 	}
 
+	/// <summary>
+	/// Functions and Menu options for Bag Component.
+	/// Can share the same GameObject entity as <seealso cref="IWindow_PokemonBag"/>
+	/// </summary>
 	public interface IBagScreen : IScreen
 	{
 		IBagScreen initialize(IBagScene scene, IBag bag);
 		void pbDisplay(string text);
 		void pbConfirm(string text);
 
-		// UI logic for the item screen when an item is to be held by a Pokémon.
+		/// <summary>
+		/// UI logic for the item screen when an item is to be held by a Pokémon.
+		/// </summary>
+		/// <returns></returns>
 		Items pbGiveItemScreen();
 
-		// UI logic for the item screen when an item is used on a Pokémon from the party screen.
+		/// <summary>
+		/// UI logic for the item screen when an item is used on a Pokémon from the party screen.
+		/// </summary>
+		/// <param name="pokemon"></param>
+		/// <returns></returns>
 		Items pbUseItemScreen(Pokemons pokemon);
 
-		// UI logic for the item screen for choosing an item
+		/// <summary>
+		/// UI logic for the item screen for choosing an item
+		/// </summary>
+		/// <returns></returns>
 		Items pbChooseItemScreen();
 
-		// UI logic for the item screen for choosing a Berry
+		/// <summary>
+		/// UI logic for the item screen for choosing a Berry
+		/// </summary>
+		/// <returns></returns>
 		Items pbChooseBerryScreen();
 
-		// UI logic for tossing an item in the item screen.
+		/// <summary>
+		/// UI logic for tossing an item in the item screen.
+		/// </summary>
 		void pbTossItemScreen();
 
-		// UI logic for withdrawing an item in the item screen.
+		/// <summary>
+		/// UI logic for withdrawing an item in the item screen.
+		/// </summary>
 		void pbWithdrawItemScreen();
 
-		// UI logic for depositing an item in the item screen.
+		/// <summary>
+		/// UI logic for depositing an item in the item screen.
+		/// </summary>
 		void pbDepositItemScreen();
 		Items pbStartScreen();
 	}
 	#endregion
 
-	#region UI Elements
-	// ===============================================================================
-	// Bag screen
-	// ===============================================================================
-	public interface IWindow_PokemonBag //: IWindow_DrawableCommand
+	#region Bag Screen UI Elements
+	/// <summary>
+	/// UI Elements for the Bag screen
+	/// </summary>
+	public interface IWindow_PokemonBag : IWindow_DrawableCommand
 	{
 		int pocket { get; set; }
 		int sortIndex { get; set; }

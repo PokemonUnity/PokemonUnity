@@ -290,7 +290,7 @@ namespace PokemonEssentials.Interface
 		{
 			#region 
 			Method? encounterType	{ get; set; }
-			int evolutionLevels				{ get; set; }
+			int[] evolutionLevels				{ get; set; }
 			#endregion
 
 			#region 

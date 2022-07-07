@@ -27,7 +27,7 @@ namespace PokemonUnity
 	public partial class PokemonTemp : ITempMetadataField
 	{
 		public Method? encounterType	{ get; set; } 
-		public int evolutionLevels			    { get; set; }
+		public int[] evolutionLevels			    { get; set; }
 
 
 		public bool batterywarning				{ get; protected set; }
@@ -72,7 +72,7 @@ namespace PokemonUnity
 	{
 		public IPokeBattle_Scene pbNewBattleScene()
 		{
-			return null; //new PokeBattle_Scene();
+			return Scenes.BattleScene.initialize(); //new PokeBattle_Scene();
 		}
 
 		public System.Collections.IEnumerator pbSceneStandby(Action block = null) {
@@ -88,7 +88,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbBattleAnimation(IAudioBGM bgm=null,int trainerid=-1,string trainername="", Action block = null) {
+		public virtual void pbBattleAnimation(IAudioBGM bgm=null,int trainerid=-1,string trainername="", Action block = null) {
 			bool handled=false;
 			IAudioBGS playingBGS=null;
 			IAudioBGM playingBGM=null;
@@ -135,9 +135,9 @@ namespace PokemonUnity
 			if (!handled) {
 				//if (Sprite.method_defined(:wave_amp) && Core.Rand.Next(15)==0) {
 				//	viewport.color=new Color(0,0,0,255);
-				//	sprite = new Sprite();
-				//	bitmap=Graphics.snap_to_bitmap;
-				//	bm=bitmap.clone();
+				//	ISprite sprite = new Sprite();
+				//	bitmap=Graphics.snap_to_bitmap();
+				//	IBitmap bm=bitmap.clone();
 				//	sprite.z=99999;
 				//	sprite.bitmap = bm;
 				//	sprite.wave_speed=500;
@@ -146,9 +146,9 @@ namespace PokemonUnity
 				//		sprite.wave_amp+=60;
 				//		sprite.update();
 				//		sprite.wave_speed+=30;
-				//		2.times do;
+				//		do {
 				//			Graphics?.update();
-				//		}
+				//		} while (); //2.times 
 				//	}
 				//	bitmap.dispose();
 				//	bm.dispose();
@@ -163,9 +163,9 @@ namespace PokemonUnity
 				//	for (int i = 0; i < 15; i++) {
 				//		bm.radial_blur(i,2);
 				//		sprite.opacity-=15;
-				//		2.times do;
+				//		do {
 				//			Graphics?.update();
-				//		}
+				//		} while ();//2.times 
 				//	}
 				//	bitmap.dispose();
 				//	bm.dispose();
@@ -228,7 +228,7 @@ namespace PokemonUnity
 		// screen.
 		// When the custom animation has finished, the screen should have faded to black
 		// somehow.
-		public bool pbBattleAnimationOverride(IViewport viewport,int trainerid=-1,string trainername="") {
+		public virtual bool pbBattleAnimationOverride(IViewport viewport,int trainerid=-1,string trainername="") {
 			//  The following example runs a common event that ought to do a custom
 			//  animation if some condition is true:
 			// 
@@ -492,10 +492,11 @@ namespace PokemonUnity
 			}
 			//Events.onWildPokemonCreate.trigger(null,genwildpoke);
 			//Events.OnWildPokemonCreateEventArgs eventArgs = new Events.OnWildPokemonCreateEventArgs()
-			//{
-			//  Pokemon = genwildpoke
-			//};
-			//Events.OnWildPokemonCreate?.Invoke(null,eventArgs);
+			PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs eventArgs = new PokemonUnity.EventArg.OnWildPokemonCreateEventArgs()
+			{
+				Pokemon = genwildpoke
+			};
+			Events.OnWildPokemonCreate?.Invoke(null,eventArgs);
 			return genwildpoke;
 		}
 
@@ -515,7 +516,14 @@ namespace PokemonUnity
 			//}
 			bool?[] handled= new bool?[]{ null };
 			//Events.onWildBattleOverride.trigger(null,species,level,handled);
-			//Events.OnWildBattleOverride?.Invoke(null,species,level,handled);
+			PokemonEssentials.Interface.EventArg.IOnWildBattleOverrideEventArgs e1 = new PokemonUnity.EventArg.OnWildBattleOverrideEventArgs()
+			{
+				Species = species,
+				Level = level
+				//,Result = handled
+			};
+			Events.OnWildBattleOverride?.Invoke(null, e1);
+			//handled[0] = eventArgs.Result;
 			if (handled[0]!=null) {
 				//return handled[0].Value;
 				return handled[0].Value ? Combat.BattleResults.WON : Combat.BattleResults.ABORTED;
@@ -526,7 +534,11 @@ namespace PokemonUnity
 			}
 			IPokemon genwildpoke=pbGenerateWildPokemon(species,level);
 			//Events.onStartBattle.trigger(null,genwildpoke);
-			//Events.OnStartBattle.Invoke(null,genwildpoke);
+			//PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs eventArgs = new PokemonUnity.EventArg.OnWildPokemonCreateEventArgs()
+			//{
+			//	Pokemon = genwildpoke
+			//};
+			Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
 			IPokeBattle_Scene scene=pbNewBattleScene();
 			IBattle battle=new Combat.Battle(scene,Trainer.party,new IPokemon[] { genwildpoke },new ITrainer[] { Trainer },null);
 			battle.internalbattle=true;
@@ -562,7 +574,13 @@ namespace PokemonUnity
 			Input.update();
 			pbSet(variable,decision);
 			//Events.onWildBattleEnd.trigger(null,species,level,decision);
-			//Events.OnWildBattleEnd.Invoke(null,species,level,decision);
+			PokemonEssentials.Interface.EventArg.IOnWildBattleEndEventArgs e3 = new PokemonUnity.EventArg.OnWildBattleEndEventArgs()
+			{
+				Species = species,
+				Level = level
+				//,Result = decision
+			};
+			Events.OnWildBattleEnd?.Invoke(null,e3);
 			return decision; //!=Combat.BattleResults.LOST;
 		}
 
@@ -590,7 +608,7 @@ namespace PokemonUnity
 			IPokemon genwildpoke=pbGenerateWildPokemon(species1,level1);
 			IPokemon genwildpoke2=pbGenerateWildPokemon(species2,level2);
 			//Events.onStartBattle.trigger(null,genwildpoke);
-			//Events.OnStartBattle.Invoke(null,genwildpoke);
+			Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
 			IPokeBattle_Scene scene=pbNewBattleScene();
 			Combat.Battle battle;
 			if (Global.partner != null) {
@@ -643,6 +661,12 @@ namespace PokemonUnity
 					}
 				}
 				//Events.onEndBattle.trigger(null,decision,canlose);
+				//PokemonEssentials.Interface.EventArg.IOnBattleEndEventArgs e2 = new PokemonUnity.EventArg.OnBattleEndEventArgs()
+				//{
+				//	 = decision,
+				//	 = canlose
+				//};
+				//Events.OnBattleEnd?.Invoke(null,e2);
 			});
 			Input.update();
 			pbSet(variable,decision);
@@ -651,7 +675,7 @@ namespace PokemonUnity
 
 		public void pbCheckAllFainted() {
 			if (pbAllFainted() && this is IGameMessage m) {
-				m.pbMessage(Game._INTL(@"{1} has no usable Pokémon!\1",Trainer.name));
+				m.pbMessage(Game._INTL("{1} has no usable Pokémon!\\1",Trainer.name));
 				m.pbMessage(Game._INTL("{1} blacked out!",Trainer.name));
 				if (this is IGameAudioPlay a) a.pbBGMFade(1.0f);
 				if (this is IGameAudioPlay a1) a1.pbBGSFade(1.0f);
@@ -774,42 +798,54 @@ namespace PokemonUnity
 		}
 
 		//Events.onStartBattle+=delegate(object sender, EventArgs e) {
-		//  PokemonTemp.evolutionLevels=new int[6];
-		//  for (int i = 0; i < Trainer.party.Length; i++) {
-		//    PokemonTemp.evolutionLevels[i]=Trainer.party[i].Level;
-		//  }
-		//}
-		//
+		//Events.OnStartBattle+=delegate(object sender, PokemonEssentials.Interface.EventArg.IOnStartBattleEventArgs e) {
+		private void OnStartBattle(object sender, EventArgs e) {
+			if (PokemonTemp is ITempMetadataField m)
+			{
+				//PokemonTemp.evolutionLevels = new int[6];
+				m.evolutionLevels = new int[6];
+				for (int i = 0; i < Trainer.party.Length; i++)
+				{
+					//PokemonTemp.evolutionLevels[i] = Trainer.party[i].Level;
+					m.evolutionLevels[i] = Trainer.party[i].Level;
+				}
+			}
+		}
+		
 		//Events.onEndBattle+=delegate(object sender, EventArgs e) {
-		//  int decision=e[0];
-		//  bool canlose=e[1];
-		//  if (Core.USENEWBATTLEMECHANICS || (decision!=2 && decision!=5)) {		// not a loss or a draw
-		//    if (PokemonTemp.evolutionLevels) {
-		//      pbEvolutionCheck(PokemonTemp.evolutionLevels);
-		//      PokemonTemp.evolutionLevels=null;
-		//    }
-		//  }
-		//  if (decision==1) {
-		//    foreach (Pokemon pkmn in Trainer.party) {
-		//      Game.pbPickup(pkmn);
-		//      if (pkmn.Ability == Abilities.HONEYGATHER && !pkmn.isEgg && !pkmn.hasItem) {
-		//        //if (hasConst(PBItems,:HONEY)) {
-		//          int chance = 5 + Math.Floor((pkmn.Level-1)/10)*5;
-		//          if (Core.Rand.Next(100)<chance) pkmn.setItem(Items.HONEY);
-		//        //}
-		//      }
-		//    }
-		//  }
-		//  if ((decision==2 || decision==5) && !canlose) {
-		//    GameSystem.bgm_unpause();
-		//    GameSystem.bgs_unpause();
-		//    Game.pbStartOver();
-		//  }
-		//}
+		//Events.OnEndBattle+=delegate(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
+		private void OnEndBattle(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
+			int decision = (int)e.Decision; //[0];
+			bool canlose = e.CanLose; //[1];
+			if (Core.USENEWBATTLEMECHANICS || (decision!=2 && decision!=5)) {		// not a loss or a draw
+				if (PokemonTemp is ITempMetadataField m && m.evolutionLevels != null) {
+					//pbEvolutionCheck(PokemonTemp.evolutionLevels);
+					//PokemonTemp.evolutionLevels=null;
+					pbEvolutionCheck(m.evolutionLevels);
+					m.evolutionLevels=null;
+				}
+			}
+			if (decision==1) {
+				foreach (IPokemon pkmn in Trainer.party) {
+					pbPickup(pkmn);
+					if (pkmn.Ability == Abilities.HONEY_GATHER && !pkmn.isEgg && !pkmn.hasItem()) {
+						//if (hasConst(PBItems,:HONEY)) {
+							int chance = 5 + (int)Math.Floor((pkmn.Level-1)/10d)*5;
+							if (Core.Rand.Next(100)<chance) pkmn.setItem(Items.HONEY);
+						//}
+					}
+				}
+			}
+			if ((decision==2 || decision==5) && !canlose) {
+				GameSystem.bgm_unpause();
+				GameSystem.bgs_unpause();
+				pbStartOver();
+			}
+		}
 
 		#region Scene_Map and Spriteset_Map
 		public partial class Scene_Map {
-			public void createSingleSpriteset(int map) {
+			public virtual void createSingleSpriteset(int map) {
 				//temp=Game.GameData.Scene.spriteset().getAnimations();
 				//@spritesets[map]=new Spriteset_Map(MapFactory.maps[map]);
 				//Game.GameData.Scene.spriteset().restoreAnimations(temp);
@@ -830,24 +866,25 @@ namespace PokemonUnity
 		}
 
 		//Events.onSpritesetCreate+=delegate(object sender, EventArgs e) {
-		//  spriteset=e[0]; // Spriteset being created
-		//  viewport=e[1]; // Viewport used for tilemap and characters
-		//  map=spriteset.map; // Map associated with the spriteset (not necessarily the current map).
-		//  foreach (var i in map.events.keys) {
-		//    if (map.events[i].name[/^OutdoorLight\((\w+)\)$/]) {
-		//      filename=$~[1].ToString();
-		//      spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map,filename));
-		//    } else if (map.events[i].name=="OutdoorLight") {
-		//      spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map));
-		//    } else if (map.events[i].name[/^Light\((\w+)\)$/]) {
-		//      filename=$~[1].ToString();
-		//      spriteset.addUserSprite(new LightEffect_Basic(map.events[i],viewport,map,filename));
-		//    } else if (map.events[i].name=="Light") {
-		//      spriteset.addUserSprite(new LightEffect_Basic(map.events[i],viewport,map));
-		//    }
-		//  }
-		//  spriteset.addUserSprite(new Particle_Engine(viewport,map));
-		//}
+		protected virtual void OnSpritesetCreate(object sender, EventArgs e) {
+			//ISpritesetMap spriteset=e[0]; // Spriteset being created
+			//IViewport viewport=e[1]; // Viewport used for tilemap and characters
+			//IGameMap map=spriteset.map; // Map associated with the spriteset (not necessarily the current map).
+			//foreach (var i in map.events.keys) {
+			//	if (map.events[i].name[/^OutdoorLight\((\w+)\)$/]) {
+			//		string filename=$~[1].ToString();
+			//		spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map,filename));
+			//	} else if (map.events[i].name=="OutdoorLight") {
+			//		spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map));
+			//	} else if (map.events[i].name[/^Light\((\w+)\)$/]) {
+			//		string filename=$~[1].ToString();
+			//		spriteset.addUserSprite(new LightEffect_Basic(map.events[i],viewport,map,filename));
+			//	} else if (map.events[i].name=="Light") {
+			//		spriteset.addUserSprite(new LightEffect_Basic(map.events[i],viewport,map));
+			//	}
+			//}
+			//spriteset.addUserSprite(new Particle_Engine(viewport,map));
+		}
 
 		public void pbOnSpritesetCreate(ISpritesetMap spriteset,IViewport viewport) {
 			//Events.onSpritesetCreate.trigger(null,spriteset,viewport);
@@ -859,7 +896,7 @@ namespace PokemonUnity
 		public bool pbLedge(float xOffset,float yOffset) {
 			if (Terrain.isLedge(pbFacingTerrainTag())) {
 				if (pbJumpToward(2,true)) {
-					if (Scene.spriteset() is ISpritesetMapAnimation s) s.addUserAnimation(Core.DUST_ANIMATION_ID,GamePlayer.x,GamePlayer.y,true);
+					if (Scene.spriteset is ISpritesetMapAnimation s) s.addUserAnimation(Core.DUST_ANIMATION_ID,GamePlayer.x,GamePlayer.y,true);
 					GamePlayer.increase_steps();
 					GamePlayer.check_event_trigger_here(new int[] { 1, 2 });
 				}
@@ -894,92 +931,107 @@ namespace PokemonUnity
 			Global.sliding=false;
 		}
 
-		// Poison event on each step taken
+		/// <summary>
+		/// Poison event on each step taken
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		//Events.onStepTakenTransferPossible+=delegate(object sender, EventArgs e) {
-		//  handled=e[0];
-		//  if (handled[0]) continue;
-		//  if (Global.stepcount % 4 == 0 && POISONINFIELD) {
-		//    flashed=false;
-		//    foreach (Pokemon i in Trainer.party) {
-		//      if (i.status==Statuses.POISON && i.HP>0 && !i.isEgg? &&
-		//         !i.Ability == Abilities.IMMUNITY) {
-		//        if (!flashed) {
-		//          GameScreen.start_flash(new Color(255,0,0,128), 4);
-		//          flashed=true;
-		//        }
-		//        if (i.HP==1 && !POISONFAINTINFIELD && this is IGameMessage m0) {
-		//          i.status=0;
-		//          m0.pbMessage(Game._INTL("{1} survived the poisoning.\\nThe poison faded away!\\1",i.name));
-		//          continue;
-		//        }
-		//        i.HP-=1;
-		//        if (i.HP==1 && !POISONFAINTINFIELD && this is IGameMessage m1) {
-		//          i.status=0;
-		//          m1.pbMessage(Game._INTL("{1} survived the poisoning.\\nThe poison faded away!\\1",i.name));
-		//        }
-		//        if (i.HP==0 && this is IGameMessage m2) {
-		//          i.changeHappiness("faint");
-		//          i.status=0;
-		//          m2.pbMessage(Game._INTL("{1} fainted...\\1",i.name));
-		//        }
-		//        if (pbAllFainted) handled[0]=true;
-		//        pbCheckAllFainted();
-		//      }
-		//    }
-		//  }
-		//}
-		//
+		protected virtual void OnStepTakenTransferPossible(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs e) {
+			bool[] handled = new bool[] { e.Index }; //[0];
+			if (handled[0]) return; //continue;
+			if (Global.stepcount % 4 == 0 && Core.POISONINFIELD) {
+				bool flashed=false;
+				foreach (Pokemon i in Trainer.party) {
+					if (i.Status==Status.POISON && i.HP>0 && !i.isEgg &&
+						i.Ability != Abilities.IMMUNITY) {
+						if (!flashed) {
+							//GameScreen.start_flash(new Color(255,0,0,128), 4);
+							flashed=true;
+						}
+						if (i.HP==1 && !Core.POISONFAINTINFIELD && this is IGameMessage m0) {
+							i.Status=0;
+							m0.pbMessage(Game._INTL("{1} survived the poisoning.\\nThe poison faded away!\\1",i.Name));
+							continue;
+						}
+						i.HP-=1;
+						if (i.HP==1 && !Core.POISONFAINTINFIELD && this is IGameMessage m1) {
+							i.Status=0;
+							m1.pbMessage(Game._INTL("{1} survived the poisoning.\\nThe poison faded away!\\1",i.Name));
+						}
+						if (i.HP==0 && this is IGameMessage m2) {
+							//i.ChangeHappiness("faint");
+							i.ChangeHappiness(HappinessMethods.FAINT);
+							i.Status=0;
+							m2.pbMessage(Game._INTL("{1} fainted...\\1",i.Name));
+						}
+						if (pbAllFainted()) handled[0]=true;
+						pbCheckAllFainted();
+					}
+				}
+			}
+		}
+		
 		//Events.onStepTaken+=proc{
-		//  if (!Global.happinessSteps) Global.happinessSteps=0;
-		//  Global.happinessSteps+=1;
-		//  if (Global.happinessSteps==128) {
-		//    foreach (var pkmn in Trainer.party) {
-		//      if (pkmn.HP>0 && !pkmn.isEgg?) {
-		//        if (Core.Rand.Next(2)==0) pkmn.changeHappiness("walking");
-		//      }
-		//    }
-		//    Global.happinessSteps=0;
-		//  }
+		protected virtual void OnStepTaken(object sender, EventArgs e) {
+			//if (Global.happinessSteps == null) Global.happinessSteps=0;
+			Global.happinessSteps+=1;
+			if (Global.happinessSteps==128) {
+				foreach (var pkmn in Trainer.party) {
+					if (pkmn.HP>0 && !pkmn.isEgg) {
+						if (Core.Rand.Next(2)==0) 
+							//pkmn.changeHappiness("walking");
+							pkmn.changeHappiness(HappinessMethods.WALKING);
+					}
+				}
+				Global.happinessSteps=0;
+			}
+		}
+		
+		//Events.onStepTakenFieldMovement+=delegate(object sender, EventArgs e) {
+		protected virtual void OnStepTakenFieldMovement(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenFieldMovementEventArgs e) {
+			//IGamePlayer @event=e[0]; // Get the event affected by field movement
+			IGamePlayer @event=e.Index; // Get the event affected by field movement
+			ITilePosition thistile=MapFactory.getRealTilePos(@event.map.map_id,@event.x,@event.y);
+			IGameMap map=MapFactory.getMap(thistile.MapId); //thistile[0]
+			int sootlevel=-1;
+			foreach (int i in new int[] { 2, 1, 0 }) {
+				//int? tile_id = map.data[thistile[1],thistile[2],i];
+				int? tile_id = map.data[(int)thistile.X,(int)thistile.Y,i];
+				if (tile_id == null) continue;
+				if (//map.terrain_tags[tile_id.Value] != Terrains.NULL &&
+					map.terrain_tags[tile_id.Value]==Terrains.SootGrass) {
+					sootlevel=i;
+					break;
+				}
+			}
+			if (sootlevel>=0) { //&& hasConst(PBItems,:SOOTSACK)
+				//if (Global.sootsack == null) Global.sootsack=0;
+				//map.data[thistile[1],thistile[2],sootlevel]=0
+				//map.data[(int)thistile.X,(int)thistile.Y,sootlevel]=0;
+				if (@event==GamePlayer && Bag.pbQuantity(Items.SOOT_SACK)>0) {
+					Global.sootsack+=1;
+				}
+				//Scene.createSingleSpriteset(map.map_id)
+			}
 		//}
 		//
-		//Events.onStepTakenFieldMovement+=delegate(object sender, EventArgs e) {
-		//  @event=e[0]; // Get the event affected by field movement
-		//  thistile=MapFactory.getRealTilePos(@event.map.map_id,@event.x,@event.y);
-		//  map=MapFactory.getMap(thistile[0]);
-		//  sootlevel=-1;
-		//  foreach (var i in [2, 1, 0]) {
-		//    tile_id = map.data[thistile[1],thistile[2],i];
-		//    if (tile_id == null) continue;
-		//    if (map.terrain_tags[tile_id] &&
-		//       map.terrain_tags[tile_id]==Terrains.SootGrass) {
-		//      sootlevel=i;
-		//      break;
-		//    }
-		//  }
-		//  if (sootlevel>=0 && hasConst(PBItems,:SOOTSACK)) {
-		//    if (!Global.sootsack) Global.sootsack=0;
-		//    //map.data[thistile[1],thistile[2],sootlevel]=0
-		//    if (@event==GamePlayer && Bag.pbQuantity(:SOOTSACK)>0) {
-		//      Global.sootsack+=1;
-		//    }
-		//    //Scene.createSingleSpriteset(map.map_id)
-		//  }
-		//}
-		//
-		//Events.onStepTakenFieldMovement+=delegate(object sender, EventArgs e) {
-		//  @event=e[0]; // Get the event affected by field movement
-		//  if (Scene is Scene_Map) {
-		//    currentTag=pbGetTerrainTag(@event);
-		//    if (Terrain.isJustGrass(pbGetTerrainTag(@event,true))) {		// Won't show if under bridge
-		//      Scene.spriteset.addUserAnimation(GRASS_ANIMATION_ID,@event.x,@event.y,true);
-		//    } else if (@event==GamePlayer && currentTag==Terrains.WaterfallCrest) {
-		//      //Descend waterfall, but only if this event is the player
-		//      Game.pbDescendWaterfall(@event);
-		//    } else if (@event==GamePlayer && Terrain.isIce(currentTag) && !Global.sliding) {
-		//      Game.pbSlideOnIce(@event);
-		//    }
-		//  }
-		//}
+		////Events.onStepTakenFieldMovement+=delegate(object sender, EventArgs e) {
+		//protected virtual void OnStepTakenFieldMovement(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenFieldMovementEventArgs e) {
+		//	//IGamePlayer @event=e[0]; // Get the event affected by field movement
+		//	IGamePlayer @event=e.Index; // Get the event affected by field movement
+			if (Scene is ISceneMap) {
+				Terrains currentTag=pbGetTerrainTag(@event);
+				if (Terrain.isJustGrass(pbGetTerrainTag(@event,true))) {		// Won't show if under bridge
+					//Scene.spriteset.addUserAnimation(Core.GRASS_ANIMATION_ID,@event.x,@event.y,true);
+				} else if (@event==GamePlayer && currentTag==Terrains.WaterfallCrest) {
+					//Descend waterfall, but only if this event is the player
+					//if (this is IGameField f0) f0.pbDescendWaterfall(@event);
+				} else if (@event==GamePlayer && Terrain.isIce(currentTag) && !Global.sliding) {
+					if (this is IGameField f1) f1.pbSlideOnIce(@event);
+				}
+			}
+		}
 
 		public void pbBattleOnStepTaken() {
 			if (Trainer.party.Length>0) {
@@ -1004,20 +1056,28 @@ namespace PokemonUnity
 
 		public void pbOnStepTaken(bool eventTriggered) {
 			if (GamePlayer.move_route_forcing || (this is IGameMessage g && g.pbMapInterpreterRunning()) || Trainer == null) {
-			//  if forced movement or if no trainer was created yet
-			//Events.onStepTakenFieldMovement.trigger(null,GamePlayer);
-			return;
+				//  if forced movement or if no trainer was created yet
+				//Events.onStepTakenFieldMovement.trigger(null,GamePlayer);
+				PokemonEssentials.Interface.EventArg.IOnStepTakenFieldMovementEventArgs e0 = new PokemonUnity.EventArg.OnStepTakenFieldMovementEventArgs()
+				{
+					Index = GamePlayer
+				};
+				Events.OnStepTakenFieldMovement?.Invoke(null,e0);
+				return;
 			}
 			//if (Global.stepcount == null) Global.stepcount=0;
 			Global.stepcount+=1;
 			Global.stepcount&=0x7FFFFFFF;
 			//Events.onStepTaken.trigger(null);
-			//  Events.onStepTakenFieldMovement.trigger(null,GamePlayer)
+			Events.OnStepTaken?.Invoke(null,EventArgs.Empty);
+			//Events.onStepTakenFieldMovement.trigger(null,GamePlayer)
 			bool?[] handled= new bool?[]{ null };
 			//Events.OnStepTakenTransferPossible.trigger(null,handled);
+			PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs e1 = new PokemonUnity.EventArg.OnStepTakenTransferPossibleEventArgs();
+			Events.OnStepTakenTransferPossible?.Invoke(null,e1); //handled[0]=e1.
 			if (handled[0]==true) return;
 			if (!eventTriggered) {
-			pbBattleOnStepTaken();
+				pbBattleOnStepTaken();
 			}
 		}
 
@@ -1228,101 +1288,112 @@ namespace PokemonUnity
 
 		#region Moving between maps
 		//Events.onMapChange+=delegate(object sender, EventArgs e) {
-		//  oldid=e[0]; // previous map ID, 0 if no map ID
-		//  healing=pbGetMetadata(GameMap.map_id,MetadataHealingSpot);
-		//  if (healing) Global.healingSpot=healing;
-		//  if (PokemonMap) PokemonMap.clear;
-		//  if (PokemonEncounters) PokemonEncounters.setup(GameMap.map_id);
-		//  Global.visitedMaps[GameMap.map_id]=true;
-		//  if (oldid!=0 && oldid!=GameMap.map_id) {
-		//    mapinfos=$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
-		//    weather=pbGetMetadata(GameMap.map_id,MetadataWeather);
-		//    if (GameMap.name!=mapinfos[oldid].name) {
-		//      if (weather && Core.Rand.Next(100)<weather[1]) GameScreen.weather(weather[0],8,20);
-		//    } else {
-		//      oldweather=pbGetMetadata(oldid,MetadataWeather);
-		//      if (weather && !oldweather && Core.Rand.Next(100)<weather[1]) GameScreen.weather(weather[0],8,20);
-		//    }
-		//  }
-		//}
-		//
+		protected virtual void OnMapChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangeEventArgs e) {
+			int oldid=e.MapId; //[0] previous map ID, 0 if no map ID
+			ITilePosition healing=pbGetMetadata(GameMap.map_id).Map.HealingSpot;
+			if (healing != null) Global.healingSpot=healing;
+			if (PokemonMap != null) PokemonMap.clear();
+			if (PokemonEncounters != null) PokemonEncounters.setup(GameMap.map_id);
+			Global.visitedMaps[GameMap.map_id]=true;
+			if (oldid!=0 && oldid!=GameMap.map_id) {
+				IList<object> mapinfos=$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
+				MetadataWeather? weather=pbGetMetadata(GameMap.map_id).Map.Weather;
+				if (GameMap.name!=mapinfos[oldid].name) {
+					//if (weather != null && Core.Rand.Next(100)<weather[1]) GameScreen.weather(weather[0],8,20);
+					if (weather != null && Core.Rand.Next(100)<weather.Value.Chance) GameScreen.weather(weather.Value.Weather,8,20);
+				} else {
+					MetadataWeather? oldweather=pbGetMetadata(oldid).Map.Weather;
+					//if (weather && !oldweather && Core.Rand.Next(100)<weather[1]) GameScreen.weather(weather[0],8,20);
+					if (weather!=null && oldweather==null && Core.Rand.Next(100)<weather.Value.Chance) GameScreen.weather(weather.Value.Weather,8,20);
+				}
+			}
+		}
+		
 		//Events.onMapChanging+=delegate(object sender, EventArgs e) {
-		//  newmapID=e[0];
-		//  newmap=e[1];
-		////  Undo the weather (GameMap still refers to the old map)
-		//  mapinfos=$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
-		//  if (newmapID>0) {
-		//    oldweather=pbGetMetadata(GameMap.map_id,MetadataWeather);
-		//    if (GameMap.name!=mapinfos[newmapID].name) {
-		//      if (oldweather) GameScreen.weather(0,0,0);
-		//    } else {
-		//      newweather=pbGetMetadata(newmapID,MetadataWeather);
-		//      if (oldweather && !newweather) GameScreen.weather(0,0,0);
-		//    }
-		//  }
-		//}
-		//
+		protected virtual void OnMapChanging(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangingEventArgs e) {
+			int newmapID = e.MapId; //[0];
+			IGameMap newmap = e.GameMap; //[1];
+		//  Undo the weather (GameMap still refers to the old map)
+			IList<object> mapinfos=$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
+			if (newmapID>0) {
+				MetadataWeather? oldweather=pbGetMetadata(GameMap.map_id).Map.Weather;
+				if (GameMap.name!=mapinfos[newmapID].name) {
+					if (oldweather != null) GameScreen.weather(0,0,0);
+				} else {
+					MetadataWeather? newweather=pbGetMetadata(newmapID).Map.Weather;
+					if (oldweather!= null && newweather == null) GameScreen.weather(0,0,0);
+				}
+			}
+		}
+		
 		//Events.onMapSceneChange+=delegate(object sender, EventArgs e) {
-		//  scene=e[0];
-		//  mapChanged=e[1];
-		//  if (!scene || !scene.spriteset) return;
-		//  if (GameMap) {
-		//    lastmapdetails=Global.mapTrail[0] ?;
-		//       pbGetMetadata(Global.mapTrail[0],MetadataMapPosition) : [-1,0,0];
-		//    if (!lastmapdetails) lastmapdetails= new []{ -1,0,0 };
-		//    newmapdetails=GameMap.map_id ?;
-		//       pbGetMetadata(GameMap.map_id,MetadataMapPosition) : [-1,0,0];
-		//    if (!newmapdetails) newmapdetails= new []{ -1,0,0 };
-		//    if (!Global.mapTrail) Global.mapTrail=[];
-		//    if (Global.mapTrail[0]!=GameMap.map_id) {
-		//      if (Global.mapTrail[2]) Global.mapTrail[3]=Global.mapTrail[2];
-		//      if (Global.mapTrail[1]) Global.mapTrail[2]=Global.mapTrail[1];
-		//      if (Global.mapTrail[0]) Global.mapTrail[1]=Global.mapTrail[0];
-		//    }
-		//    Global.mapTrail[0]=GameMap.map_id;   // Update map trail
-		//  }
-		//  darkmap=pbGetMetadata(GameMap.map_id,MetadataDarkMap);
-		//  if (darkmap) {
-		//    if (Global.flashUsed) {
-		//      PokemonTemp.darknessSprite=new DarknessSprite();
-		//      scene.spriteset.addUserSprite(PokemonTemp.darknessSprite);
-		//      darkness=PokemonTemp.darknessSprite;
-		//      darkness.radius=176;
-		//    } else {
-		//      PokemonTemp.darknessSprite=new DarknessSprite();
-		//      scene.spriteset.addUserSprite(PokemonTemp.darknessSprite);
-		//    }
-		//  } else if (!darkmap) {
-		//    Global.flashUsed=false;
-		//    if (PokemonTemp.darknessSprite) {
-		//      PokemonTemp.darknessSprite.dispose();
-		//      PokemonTemp.darknessSprite=null;
-		//    }
-		//  }
-		//  if (mapChanged) {
-		//    if (pbGetMetadata(GameMap.map_id,MetadataShowArea)) {
-		//      nosignpost=false;
-		//      if (Global.mapTrail[1]) {
-		//        for (int i = 0; i < NOSIGNPOSTS.Length; i++) {/2
-		//          if (NOSIGNPOSTS[2*i]==Global.mapTrail[1] && NOSIGNPOSTS[2*i+1]==GameMap.map_id) /nosignpost=true;
-		//          if (NOSIGNPOSTS[2*i+1]==Global.mapTrail[1] && NOSIGNPOSTS[2*i]==GameMap.map_id) /nosignpost=true;
-		//          if (nosignpost) break;
-		//        }
-		//        mapinfos=$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
-		//        oldmapname=mapinfos[Global.mapTrail[1]].name;
-		//        if (GameMap.name==oldmapname) nosignpost=true;
-		//      }
-		//      if (!nosignpost) scene.spriteset.addUserSprite(new LocationWindow(GameMap.name));
-		//    }
-		//  }
-		//  if (pbGetMetadata(GameMap.map_id,MetadataBicycleAlways)) {
-		//    Game.pbMountBike;
-		//  } else {
-		//    if (!pbCanUseBike(GameMap.map_id)) {
-		//      Game.pbDismountBike;
-		//    }
-		//  }
-		//}
+		protected virtual void OnMapSceneChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapSceneChangeEventArgs e) {
+			ISceneMap scene = e.Object; //[0];
+			bool mapChanged = e.NewMap; //[1];
+			if (scene == null || scene.spriteset == null) return;
+			if (GameMap != null) {
+				ITilePosition lastmapdetails=Global.mapTrail[0] != null ?
+					pbGetMetadata(Global.mapTrail[0]).Map.MapPosition : new TilePosition(-1, 0, 0); //new int[] { -1, 0, 0 };
+				if (lastmapdetails == null) lastmapdetails = new TilePosition(-1, 0, 0); //new int[]{ -1,0,0 };
+				ITilePosition newmapdetails=GameMap.map_id != null ?
+					pbGetMetadata(GameMap.map_id).Map.MapPosition : new TilePosition(-1, 0, 0); //new int[] { -1, 0, 0 };
+				if (newmapdetails == null) newmapdetails = new TilePosition(-1, 0, 0); //new int[]{ -1,0,0 };
+				if (Global.mapTrail == null) Global.mapTrail=new int[4];
+				if (Global.mapTrail[0]!=GameMap.map_id) {
+					if (Global.mapTrail.Count > 3) Global.mapTrail[3]=Global.mapTrail[2]; //(Global.mapTrail[2] != null)
+					if (Global.mapTrail.Count > 2) Global.mapTrail[2]=Global.mapTrail[1]; //(Global.mapTrail[1] != null)
+					if (Global.mapTrail.Count > 1) Global.mapTrail[1]=Global.mapTrail[0]; //(Global.mapTrail[0] != null)
+				}
+				Global.mapTrail[0]=GameMap.map_id;   // Update map trail
+			}
+			bool darkmap=pbGetMetadata(GameMap.map_id).Map.DarkMap;
+			if (darkmap) {
+				if (Global.flashUsed) {
+					PokemonTemp.darknessSprite.initialize(); //=new DarknessSprite();
+					if (scene.spriteset is PokemonEssentials.Interface.ISpritesetMapAnimation s0) s0.addUserSprite(PokemonTemp.darknessSprite);
+					//darkness=PokemonTemp.darknessSprite;
+					//darkness.radius=176;
+				} else {
+					PokemonTemp.darknessSprite.initialize(); //=new DarknessSprite();
+					if (scene.spriteset is PokemonEssentials.Interface.ISpritesetMapAnimation s1) s1.addUserSprite(PokemonTemp.darknessSprite);
+				}
+			} else if (!darkmap) {
+				Global.flashUsed=false;
+				if (PokemonTemp.darknessSprite != null) {
+					PokemonTemp.darknessSprite.dispose();
+					PokemonTemp.darknessSprite=null;
+				}
+			}
+			if (mapChanged) {
+				if (pbGetMetadata(GameMap.map_id).Map.ShowArea) {
+					bool nosignpost=false;
+					if (Global.mapTrail.Count > 1) { //(Global.mapTrail[1] != null)
+						for (int i = 0; i < Core.NOSIGNPOSTS.Length/2; i++) {
+							if (Core.NOSIGNPOSTS[2*i]==Global.mapTrail[1] && Core.NOSIGNPOSTS[2*i+1]==GameMap.map_id) nosignpost=true;
+							if (Core.NOSIGNPOSTS[2*i+1]==Global.mapTrail[1] && Core.NOSIGNPOSTS[2*i]==GameMap.map_id) nosignpost=true;
+							if (nosignpost) break;
+						}
+						IList<object> mapinfos=$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
+						string oldmapname=mapinfos[Global.mapTrail[1]].name;
+						if (GameMap.name==oldmapname) nosignpost=true;
+					}
+					if (!nosignpost) 
+						if (scene.spriteset is PokemonEssentials.Interface.ISpritesetMapAnimation s2)
+						{
+							//s2.addUserSprite(new LocationWindow(GameMap.name));
+							//LocationWindow.initialize(GameMap.name); //ToDo: make a UI variable for sign-post
+							//s2.addUserSprite(LocationWindow);
+						}
+				}
+			}
+			if (pbGetMetadata(GameMap.map_id).Map.BicycleAlways) {
+				pbMountBike();
+			} else {
+				if (!pbCanUseBike(GameMap.map_id)) {
+					pbDismountBike();
+				}
+			}
+		}
 
 		public void pbStartOver(bool gameover=false) {
 			if (this is IGameBugContest c && c.pbInBugContest) {
@@ -1349,7 +1420,7 @@ namespace PokemonUnity
 			} else {
 				//int[] homedata=(int[])pbGetMetadata(0,GlobalMetadatas.MetadataHome);
 				MetadataPosition? homedata=pbGetMetadata(0).Global.Home;
-				//Overworld.TilePosition homedata=(int[])Game.pbGetMetadata(0,GlobalMetadatas.MetadataHome);
+				//ITilePosition homedata=Game.pbGetMetadata(0,GlobalMetadatas.MetadataHome);
 				if (homedata != null && !pbRxdataExists(string.Format("Data/Map%03d",homedata.Value.MapId))) { //homedata[0]
 					if (Core.DEBUG && this is IGameMessage m) {
 						m.pbMessage(string.Format("Can't find the map 'Map{0}' in the Data folder. The game will resume at the player's position.",homedata.Value.MapId)); //homedata[0]
@@ -1380,7 +1451,7 @@ namespace PokemonUnity
 			pbEraseEscapePoint();
 		}
 
-		public void pbCaveEntranceEx(bool exiting) {
+		public virtual void pbCaveEntranceEx(bool exiting) {
 			//sprite=new BitmapSprite(Graphics.width,Graphics.height);
 			//Bitmap sprite=new BitmapSprite(Graphics.width,Graphics.height);
 			////sprite.z=100000;
@@ -1507,17 +1578,38 @@ namespace PokemonUnity
 		#region Constant checks
 		// ===============================================================================
 		//Events.onMapUpdate+=delegate(object sender, EventArgs e) {   // Pokérus check
-		//  last=Global.pokerusTime;
-		//  now=pbGetTimeNow();
-		//  if (!last || last.year!=now.year || last.month!=now.month || last.day!=now.day) {
-		//    if (Trainer && Trainer.party) {
-		//      foreach (var i in Trainer.pokemonParty) {
-		//        i.lowerPokerusCount;
-		//      }
-		//      Global.pokerusTime=now;
-		//    }
-		//  }
+		protected virtual void OnMapUpdate(object sender, EventArgs e) {   // Pokérus check
+			DateTime? last=Global.pokerusTime;
+			DateTime now=pbGetTimeNow();
+			if (last == null || last?.Year!=now.Year || last?.Month!=now.Month || last?.Day!=now.Day) {
+				if (Trainer != null && Trainer.party != null) {
+					foreach (IPokemon i in Trainer.pokemonParty) {
+						i.lowerPokerusCount();
+					}
+					Global.pokerusTime=now;
+				}
+			}
 		//}
+		//Mostly just about showing low batt on screen...
+		//Events.onMapUpdate+=delegate(object sender, EventArgs e) {
+		//	DateTime time=pbGetTimeNow();
+		//	if (time.Second==0 && Trainer != null && Global != null && GamePlayer != null && GameMap != null &&
+		//		!PokemonTemp.batterywarning && !GamePlayer.move_route_forcing &&
+		//		!pbMapInterpreterRunning && !GameTemp.message_window_showing) {
+		//		//&& pbBatteryLow()) {
+		//		PokemonTemp.batterywarning=true;
+		//		if (this is IGameMessage m) m.pbMessage(Game._INTL("The game has detected that the battery is low. You should save soon to avoid losing your progress."));
+		//	}
+		//	if (PokemonTemp.cueFrames) {
+		//		PokemonTemp.cueFrames-=1;
+		//		if (PokemonTemp.cueFrames<=0) {
+		//			PokemonTemp.cueFrames=null;
+		//			if (GameSystem.getPlayingBGM==null) {
+		//				pbBGMPlay(PokemonTemp.cueBGM);
+		//			}
+		//		}
+		//	}
+		}
 
 		/// <summary>
 		/// Returns whether the Poké Center should explain Pokérus to the player, if a
@@ -1565,26 +1657,6 @@ namespace PokemonUnity
 		//    }
 		//  }
 		//  return false;
-		//}
-
-		//Events.onMapUpdate+=delegate(object sender, EventArgs e) {
-		//  DateTime time=pbGetTimeNow();
-		//  if (time.Sec==0 && Trainer != null && Global != null && GamePlayer != null && GameMap != null &&
-		//     !PokemonTemp.batterywarning && !GamePlayer.move_route_forcing &&
-		//     !pbMapInterpreterRunning? && !GameTemp.message_window_showing &&
-		//     pbBatteryLow?) {
-		//    PokemonTemp.batterywarning=true;
-		//    if (this is IGameMessage m) m.pbMessage(Game._INTL("The game has detected that the battery is low. You should save soon to avoid losing your progress."));
-		//  }
-		//  if (PokemonTemp.cueFrames) {
-		//    PokemonTemp.cueFrames-=1;
-		//    if (PokemonTemp.cueFrames<=0) {
-		//      PokemonTemp.cueFrames=null;
-		//      if (GameSystem.getPlayingBGM==null) {
-		//        pbBGMPlay(PokemonTemp.cueBGM);
-		//      }
-		//    }
-		//  }
 		//}
 		#endregion
 
@@ -1954,7 +2026,7 @@ namespace PokemonUnity
 			float sx=0;
 			float sy=0;
 			if (MapFactory != null) {
-                IPoint relativePos=MapFactory.getThisAndOtherEventRelativePos(otherEvent,@event);
+				IPoint relativePos=MapFactory.getThisAndOtherEventRelativePos(otherEvent,@event);
 				sx = relativePos.x;
 				sy = relativePos.y;
 			} else {
@@ -2029,39 +2101,39 @@ namespace PokemonUnity
 			} while (true);
 		}
 
-		public IMoveRoute pbMoveRoute(IGameCharacter @event,int[] commands,bool waitComplete=false) {
+		public virtual IMoveRoute pbMoveRoute(IGameCharacter @event,int[] commands,bool waitComplete=false) {
 			//IMoveRoute route=new RPG.MoveRoute();
 			//route.repeat=false;
 			//route.skippable=true;
 			//route.list.Clear();
 			//route.list.Add(new RPG.MoveCommand(MoveRoutes.ThroughOn));
 			//int i=0; while (i<commands.Length) { 
-			//switch (commands[i]) {
-			//case MoveRoutes.Wait: case MoveRoutes.SwitchOn: case MoveRoutes.SwitchOff: case
-			//	MoveRoutes.ChangeSpeed: case MoveRoutes.ChangeFreq: case MoveRoutes.Opacity: case
-			//	MoveRoutes.Blending: case MoveRoutes.PlaySE: case MoveRoutes.Script:
-			//	route.list.Add(new RPG.MoveCommand(commands[i],new int[] { commands[i + 1] }));
+			//	switch (commands[i]) {
+			//		case MoveRoutes.Wait: case MoveRoutes.SwitchOn: case MoveRoutes.SwitchOff: case
+			//			MoveRoutes.ChangeSpeed: case MoveRoutes.ChangeFreq: case MoveRoutes.Opacity: case
+			//			MoveRoutes.Blending: case MoveRoutes.PlaySE: case MoveRoutes.Script:
+			//			route.list.Add(new RPG.MoveCommand(commands[i],new int[] { commands[i + 1] }));
+			//			i+=1;
+			//			break;
+			//		case MoveRoutes.ScriptAsync:
+			//			route.list.Add(new RPG.MoveCommand(MoveRoutes.Script,new int[] { commands[i + 1] }));
+			//			route.list.Add(new RPG.MoveCommand(MoveRoutes.Wait,new int[] { 0 }));
+			//			i+=1;
+			//			break;
+			//		case MoveRoutes.Jump:
+			//			route.list.Add(new RPG.MoveCommand(commands[i],new int[] { commands[i + 1], commands[i + 2] }));
+			//			i+=2;
+			//			break;
+			//		case MoveRoutes.Graphic:
+			//			route.list.Add(new RPG.MoveCommand(commands[i],
+			//				new int[] { commands[i + 1], commands[i + 2], commands[i + 3], commands[i + 4] }));
+			//			i+=4;
+			//			break;
+			//		default:
+			//			route.list.Add(new RPG.MoveCommand(commands[i]));
+			//			break;
+			//	}
 			//	i+=1;
-			//	break;
-			//case MoveRoutes.ScriptAsync:
-			//	route.list.Add(new RPG.MoveCommand(MoveRoutes.Script,new int[] { commands[i + 1] }));
-			//	route.list.Add(new RPG.MoveCommand(MoveRoutes.Wait,new int[] { 0 }));
-			//	i+=1;
-			//	break;
-			//case MoveRoutes.Jump:
-			//	route.list.Add(new RPG.MoveCommand(commands[i],new int[] { commands[i + 1], commands[i + 2] }));
-			//	i+=2;
-			//	break;
-			//case MoveRoutes.Graphic:
-			//	route.list.Add(new RPG.MoveCommand(commands[i],
-			//		new int[] { commands[i + 1], commands[i + 2], commands[i + 3], commands[i + 4] }));
-			//	i+=4;
-			//	break;
-			//default:
-			//	route.list.Add(new RPG.MoveCommand(commands[i]));
-			//	break;
-			//}
-			//i+=1;
 			//}
 			//route.list.Add(new RPG.MoveCommand(MoveRoutes.ThroughOff));
 			//route.list.Add(new RPG.MoveCommand(0));

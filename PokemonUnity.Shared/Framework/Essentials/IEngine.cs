@@ -79,8 +79,8 @@ namespace PokemonEssentials.Interface
 	public interface IAudioObject
 	{
 		string name { get; set; }
-		int volume { get; }
-		float pitch { get; }
+		int volume { get; set; }
+		float pitch { get; set; }
 	}
 	public interface IAudioBGM : IAudioObject
 	{
@@ -315,6 +315,7 @@ namespace PokemonEssentials.Interface
 		IColor color { get; set; }
 		IEnumerator update();
 		void dispose();
+		bool disposed { get; }
 		/// <summary>
 		/// Creates a Window object. Specifies a Viewport (Viewport) when necessary.
 		/// </summary>
@@ -329,6 +330,7 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface IViewport : IDisposable
 	{
+		IViewport initialize(float x, float y, float height, float width);
 		/// <summary>
 		/// The viewport's visibility. If TRUE, the viewport is visible.
 		/// </summary>
@@ -346,6 +348,7 @@ namespace PokemonEssentials.Interface
 		/// Handled separately from the color blended into a flash effect.
 		/// </summary>
 		IColor color { get; set; }
+		IRect rect { get; set; }
 		/// <summary>
 		/// Returns TRUE if the viewport has been freed.
 		/// </summary>

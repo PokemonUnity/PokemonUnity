@@ -1,6 +1,7 @@
 //Original Scripts by IIColour (IIColour_Spectrum)
 using System.Collections;
 using System.Collections.Generic;
+using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Attack.Data;
 using UnityEngine;
@@ -560,18 +561,6 @@ public partial class BattleHandler : MonoBehaviour
         MISTY
     }
 
-    private WeatherEffect weather = WeatherEffect.NONE;
-    private int weatherTurns = 0;
-    private TerrainEffect terrain = TerrainEffect.NONE;
-    private int terrainTurns = 0;
-    private int gravityTurns = 0;
-    private int[] reflectTurns = new int[2];
-    private int[] lightScreenTurns = new int[2];
-    private int[] tailwindTurns = new int[2];
-    private bool[] stealthRocks = new bool[2];
-    private bool[] stickyWeb = new bool[2];
-    private int[] spikesLayers = new int[2];
-    private int[] toxicSpikesLayers = new int[2];
 
     //Pokemon Effects
     private bool[] confused = new bool[6];
@@ -651,6 +640,13 @@ public partial class BattleHandler : MonoBehaviour
 
     void Awake()
     {
+        //GameDebug.OnLog += GameDebug_OnLog;
+        //GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+        string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
+        //System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
+        Game.LocalizationDictionary = new PokemonUnity.Localization.XmlStringRes(null); //new Debugger());
+        Game.LocalizationDictionary.Initialize(englishLocalization, (int)PokemonUnity.Languages.English);
+
         //Setup Battle Scene
         BattleScene = GameObject.Find("Global/BattleScene");
 
@@ -3606,67 +3602,67 @@ public partial class BattleHandler : MonoBehaviour
 
 
     /// TEMPORARILY USED FOR EVERYTHING NOT COVERED BY AN EXISTING METHOD
-    private float calculateModifiedDamage(int attackerPosition, int targetPosition, MoveData move, float baseDamage,
-        bool applyCritical)
-    {
-        float modifiedDamage = baseDamage;
-
-        //apply STAB
-        if (pokemonType1[attackerPosition] == move.getType() ||
-            pokemonType2[attackerPosition] == move.getType() ||
-            pokemonType3[attackerPosition] == move.getType())
-        {
-            modifiedDamage *= 1.5f;
-        }
-
-        //apply Offence/Defence boosts 
-        if (move.getCategory() == MoveData.Category.PHYSICAL)
-        {
-            modifiedDamage *= calculateStatModifier(pokemonStatsMod[0][attackerPosition]);
-            if (!applyCritical)
-            {
-                //exclude defensive buffs in a critical hit
-                modifiedDamage /= calculateStatModifier(pokemonStatsMod[1][targetPosition]);
-            }
-        }
-        else if (move.getCategory() == MoveData.Category.SPECIAL)
-        {
-            modifiedDamage *= calculateStatModifier(pokemonStatsMod[2][attackerPosition]);
-            if (!applyCritical)
-            {
-                //exclude defensive buffs in a critical hit
-                modifiedDamage /= calculateStatModifier(pokemonStatsMod[3][targetPosition]);
-            }
-        }
-
-
-        //not yet implemented
-        //apply held item
-        //apply ability
-        //apply field advantages
-        //reflect/lightScreen
-        if (!applyCritical)
-        {
-            if (move.getCategory() == MoveData.Category.PHYSICAL)
-            {
-                if (reflectTurns[Mathf.FloorToInt((float) targetPosition / 3f)] > 0)
-                {
-                    modifiedDamage *= 0.5f;
-                }
-            }
-            else if (move.getCategory() == MoveData.Category.SPECIAL)
-            {
-                if (lightScreenTurns[Mathf.FloorToInt((float) targetPosition / 3f)] > 0)
-                {
-                    modifiedDamage *= 0.5f;
-                }
-            }
-        }
-
-        //apply multi-target debuff 
-
-        return Mathf.Floor(modifiedDamage);
-    }
+    //private float calculateModifiedDamage(int attackerPosition, int targetPosition, MoveData move, float baseDamage,
+    //    bool applyCritical)
+    //{
+    //    float modifiedDamage = baseDamage;
+    //
+    //    //apply STAB
+    //    if (pokemonType1[attackerPosition] == move.getType() ||
+    //        pokemonType2[attackerPosition] == move.getType() ||
+    //        pokemonType3[attackerPosition] == move.getType())
+    //    {
+    //        modifiedDamage *= 1.5f;
+    //    }
+    //
+    //    //apply Offence/Defence boosts 
+    //    if (move.getCategory() == MoveData.Category.PHYSICAL)
+    //    {
+    //        modifiedDamage *= calculateStatModifier(pokemonStatsMod[0][attackerPosition]);
+    //        if (!applyCritical)
+    //        {
+    //            //exclude defensive buffs in a critical hit
+    //            modifiedDamage /= calculateStatModifier(pokemonStatsMod[1][targetPosition]);
+    //        }
+    //    }
+    //    else if (move.getCategory() == MoveData.Category.SPECIAL)
+    //    {
+    //        modifiedDamage *= calculateStatModifier(pokemonStatsMod[2][attackerPosition]);
+    //        if (!applyCritical)
+    //        {
+    //            //exclude defensive buffs in a critical hit
+    //            modifiedDamage /= calculateStatModifier(pokemonStatsMod[3][targetPosition]);
+    //        }
+    //    }
+    //
+    //
+    //    //not yet implemented
+    //    //apply held item
+    //    //apply ability
+    //    //apply field advantages
+    //    //reflect/lightScreen
+    //    if (!applyCritical)
+    //    {
+    //        if (move.getCategory() == MoveData.Category.PHYSICAL)
+    //        {
+    //            //if (reflectTurns[Mathf.FloorToInt((float) targetPosition / 3f)] > 0)
+    //            //{
+    //            //    modifiedDamage *= 0.5f;
+    //            //}
+    //        }
+    //        else if (move.getCategory() == MoveData.Category.SPECIAL)
+    //        {
+    //            //if (lightScreenTurns[Mathf.FloorToInt((float) targetPosition / 3f)] > 0)
+    //            //{
+    //            //    modifiedDamage *= 0.5f;
+    //            //}
+    //        }
+    //    }
+    //
+    //    //apply multi-target debuff 
+    //
+    //    return Mathf.Floor(modifiedDamage);
+    //}
 
     private float calculateStatModifier(int modifier)
     {
@@ -4294,7 +4290,7 @@ public partial class BattleHandler : MonoBehaviour
                             yield return new WaitForSeconds(0.4f);
                             SfxHandler.Play(pokeballBounceClip);
                             yield return StartCoroutine(Dialog.DrawTextSilent("Poof!"));
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
@@ -4310,7 +4306,7 @@ public partial class BattleHandler : MonoBehaviour
                             BgmHandler.main.PlayMFX(mfx);
                             StartCoroutine(Dialog.DrawTextSilent(selectedPokemon.getName() + " learned \n" + move + "!"));
                             yield return new WaitForSeconds(mfx.length);
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
@@ -4349,7 +4345,7 @@ public partial class BattleHandler : MonoBehaviour
                     BgmHandler.main.PlayMFX(mfx);
                     StartCoroutine(Dialog.DrawTextSilent(selectedPokemon.getName() + " learned \n" + move + "!"));
                     yield return new WaitForSeconds(mfx.length);
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -4842,14 +4838,14 @@ public partial class BattleHandler : MonoBehaviour
 
         if (time > 0)
         {
-            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") && Time.time < startTime + time)
+            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back") && Time.time < startTime + time)
             {
                 yield return null;
             }
         }
         else
         {
-            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
@@ -5758,28 +5754,28 @@ public partial class BattleHandler : MonoBehaviour
                 //DEBUG OVERLAY TEXTURES
                 
                 
-                if (Input.GetKeyDown(KeyCode.Y))
+                if (UnityEngine.Input.GetKeyDown(KeyCode.Y))
                 {
                     SfxHandler.Play(hitClip);
                     StartCoroutine(HitAnimation(opponentSpriteRenderer));
                     //StartCoroutine(animateOverlayer(opponent1Overlay, overlayHealTex, -1f, 0, 1.2f, 0.3f));
                 }
                 
-                if (Input.GetKeyDown(KeyCode.U))
+                if (UnityEngine.Input.GetKeyDown(KeyCode.U))
                 {
                     SfxHandler.Play(hitClip);
                     StartCoroutine(HitAnimation(playerSpriteRenderer));
                     //StartCoroutine(animateOverlayer(opponent1Overlay, overlayStatUpTex, -1f, 0, 1.2f, 0.3f));
                 }
                 
-                if (Input.GetKeyDown(KeyCode.M))
+                if (UnityEngine.Input.GetKeyDown(KeyCode.M))
                 {
                     StartCoroutine(animateMegaEvolution(false));
                     //StartCoroutine(animateOverlayer(opponent1Overlay, overlayStatUpTex, -1f, 0, 1.2f, 0.3f));
                 }
                 
                 /*
-                if (Input.GetKeyDown(KeyCode.I))
+                if (UnityEngine.Input.GetKeyDown(KeyCode.I))
                 {
                     StartCoroutine(animateOverlayer(opponent1Overlay, overlayStatDownTex, 1f, 0, 1.2f, 0.3f));
                 }
@@ -5795,7 +5791,7 @@ public partial class BattleHandler : MonoBehaviour
                 buttonRun.sprite = (taskPosition == 4) ? buttonRunSelTex : buttonRunTex;
                  */
                 
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     if (taskPosition > 1)
                     {
@@ -5804,7 +5800,7 @@ public partial class BattleHandler : MonoBehaviour
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     if (taskPosition < 4)
                     {
@@ -5813,7 +5809,7 @@ public partial class BattleHandler : MonoBehaviour
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
-                else if (Input.GetButtonDown("Select"))
+                else if (UnityEngine.Input.GetButtonDown("Select"))
                 {
                     int currentPokemon = currentActivePokemon;
                     
@@ -5833,7 +5829,7 @@ public partial class BattleHandler : MonoBehaviour
                         //while still in Move Selection menu
                         while (currentTask == 1)
                         {
-                            if (Input.GetAxisRaw("Horizontal") < 0) // Left
+                            if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0) // Left
                             {
                                 if (movePosition > 1 && movePosition != 3)
                                 {
@@ -5855,7 +5851,7 @@ public partial class BattleHandler : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (Input.GetAxisRaw("Horizontal") > 0) // Right
+                            else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0) // Right
                             {
                                 if (movePosition < 5 && movePosition != 2)
                                 {
@@ -5912,7 +5908,7 @@ public partial class BattleHandler : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (Input.GetAxisRaw("Vertical") > 0) // Up
+                            else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0) // Up
                             {
                                 if (movePosition == 3)
                                 {
@@ -5952,7 +5948,7 @@ public partial class BattleHandler : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (Input.GetAxisRaw("Vertical") < 0) // Down
+                            else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0) // Down
                             {
                                 if (movePosition < 3)
                                 {
@@ -6009,7 +6005,7 @@ public partial class BattleHandler : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (Input.GetButtonDown("Select"))
+                            else if (UnityEngine.Input.GetButtonDown("Select"))
                             {
                                 if (movePosition == 0)
                                 {
@@ -6068,19 +6064,19 @@ public partial class BattleHandler : MonoBehaviour
                                         bool targetSelection = true;
                                         while (targetSelection)
                                         {
-                                            if (Input.GetAxisRaw("Horizontal") < 0) // Left
+                                            if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0) // Left
                                             {
                                                 target = 3;
                                                 SfxHandler.Play(scrollClip);
                                                 yield return new WaitForSeconds(0.2f);
                                             }
-                                            else if (Input.GetAxisRaw("Horizontal") > 0) // Right
+                                            else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0) // Right
                                             {
                                                 target = 4;
                                                 SfxHandler.Play(scrollClip);
                                                 yield return new WaitForSeconds(0.2f);
                                             }
-                                            else if (Input.GetButtonDown("Select"))
+                                            else if (UnityEngine.Input.GetButtonDown("Select"))
                                             {
                                                 commandTarget[currentPokemon] = target;
                                                 Debug.Log("Target = " + target);
@@ -6120,7 +6116,7 @@ public partial class BattleHandler : MonoBehaviour
                                                     currentActivePokemon = 0;
                                                 }
                                             }
-                                            else if (Input.GetButtonDown("Back"))
+                                            else if (UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 runState = true;
                                                 targetSelection = false;
@@ -6193,7 +6189,7 @@ public partial class BattleHandler : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (Input.GetButtonDown("Back"))
+                            else if (UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 SfxHandler.Play(selectClip);
                                 updateCurrentTask(0);
@@ -6217,7 +6213,7 @@ public partial class BattleHandler : MonoBehaviour
                                     LeanTween.rotateLocal(BattleCamera.gameObject, playerFocusCameraAngle[1], 0.25f);
                                 }
                             }
-                            else if (canMegaEvolve && Input.GetKeyDown(KeyCode.M))
+                            else if (canMegaEvolve && UnityEngine.Input.GetKeyDown(KeyCode.M))
                             {
                                 megaActivate = !megaActivate;
                                 updateSelectedMove(movePosition);
@@ -6273,7 +6269,7 @@ public partial class BattleHandler : MonoBehaviour
                         //while still in Bag menu
                         while (currentTask == 2)
                         {
-                            if (Input.GetAxisRaw("Vertical") < 0)
+                            if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                             {
                                 if (bagCategoryPosition < 4)
                                 {
@@ -6282,7 +6278,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (Input.GetAxisRaw("Horizontal") > 0)
+                            else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                             {
                                 if (bagCategoryPosition == 0 || bagCategoryPosition == 2 || bagCategoryPosition == 4)
                                 {
@@ -6291,7 +6287,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (Input.GetAxisRaw("Horizontal") < 0)
+                            else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                             {
                                 if (bagCategoryPosition == 1 || bagCategoryPosition == 3 || bagCategoryPosition == 5)
                                 {
@@ -6300,7 +6296,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (Input.GetAxisRaw("Vertical") > 0)
+                            else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                             {
                                 if (bagCategoryPosition > 1)
                                 {
@@ -6309,7 +6305,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (Input.GetButtonDown("Select"))
+                            else if (UnityEngine.Input.GetButtonDown("Select"))
                             {
                                 if (bagCategoryPosition < 4)
                                 {
@@ -6321,7 +6317,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                     while (currentTask == 4)
                                     {
-                                        if (Input.GetAxisRaw("Vertical") < 0)
+                                        if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                                         {
                                             if (itemListPosition < 8)
                                             {
@@ -6341,7 +6337,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 }
                                             }
                                         }
-                                        else if (Input.GetAxisRaw("Horizontal") > 0)
+                                        else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                                         {
                                             if (itemListPosition < 8)
                                             {
@@ -6370,7 +6366,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 }
                                             }
                                         }
-                                        else if (Input.GetAxisRaw("Horizontal") < 0)
+                                        else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                                         {
                                             if (itemListPosition < 8)
                                             {
@@ -6399,7 +6395,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 }
                                             }
                                         }
-                                        else if (Input.GetAxisRaw("Vertical") > 0)
+                                        else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                                         {
                                             if (itemListPosition > 1)
                                             {
@@ -6412,7 +6408,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 }
                                             }
                                         }
-                                        else if (Input.GetButtonDown("Select"))
+                                        else if (UnityEngine.Input.GetButtonDown("Select"))
                                         {
                                             if (itemListPosition == 8)
                                             {
@@ -6522,7 +6518,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 }
                                             }
                                         }
-                                        else if (Input.GetButtonDown("Back"))
+                                        else if (UnityEngine.Input.GetButtonDown("Back"))
                                         {
                                             SfxHandler.Play(selectClip);
                                             updateCurrentTask(2);
@@ -6547,7 +6543,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (Input.GetButtonDown("Back"))
+                            else if (UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 SfxHandler.Play(selectClip);
                                 updateCurrentTask(0);
@@ -6569,7 +6565,7 @@ public partial class BattleHandler : MonoBehaviour
                         //while still in Poke menu
                         while (currentTask == 3)
                         {
-                            if (Input.GetAxisRaw("Vertical") < 0)
+                            if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                             {
                                 if (pokePartyPosition < 6)
                                 {
@@ -6585,7 +6581,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (Input.GetAxisRaw("Horizontal") > 0)
+                            else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                             {
                                 if (pokePartyPosition < 6)
                                 {
@@ -6594,7 +6590,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (Input.GetAxisRaw("Horizontal") < 0)
+                            else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                             {
                                 if (pokePartyPosition > 0)
                                 {
@@ -6603,7 +6599,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (Input.GetAxisRaw("Vertical") > 0)
+                            else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                             {
                                 if (pokePartyPosition > 1)
                                 {
@@ -6619,7 +6615,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (Input.GetButtonDown("Select"))
+                            else if (UnityEngine.Input.GetButtonDown("Select"))
                             {
                                 if (pokePartyPosition == 6)
                                 {
@@ -6637,7 +6633,7 @@ public partial class BattleHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                     while (currentTask == 5)
                                     {
-                                        if (Input.GetAxisRaw("Vertical") < 0)
+                                        if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                                         {
                                             if (pokePartyPosition < 5)
                                             {
@@ -6652,7 +6648,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 yield return new WaitForSeconds(0.2f);
                                             }
                                         }
-                                        else if (Input.GetAxisRaw("Horizontal") > 0)
+                                        else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                                         {
                                             if (summaryPosition < 2)
                                             {
@@ -6661,7 +6657,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 yield return new WaitForSeconds(0.2f);
                                             }
                                         }
-                                        else if (Input.GetAxisRaw("Horizontal") < 0)
+                                        else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                                         {
                                             if (summaryPosition > 0)
                                             {
@@ -6670,7 +6666,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 yield return new WaitForSeconds(0.2f);
                                             }
                                         }
-                                        else if (Input.GetAxisRaw("Vertical") > 0)
+                                        else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                                         {
                                             if (pokePartyPosition > 0)
                                             {
@@ -6685,7 +6681,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 yield return new WaitForSeconds(0.2f);
                                             }
                                         }
-                                        else if (Input.GetButtonDown("Select"))
+                                        else if (UnityEngine.Input.GetButtonDown("Select"))
                                         {
                                             if (summaryPosition == 0)
                                             {
@@ -6788,7 +6784,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 int movesPosition = 5; //0-3 = Moves, 4 = Switch, 5 = Summary, 6 = Back
                                                 while (currentTask == 6)
                                                 {
-                                                    if (Input.GetAxisRaw("Vertical") < 0)
+                                                    if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                                                     {
                                                         if (movesPosition < 4)
                                                         {
@@ -6804,7 +6800,7 @@ public partial class BattleHandler : MonoBehaviour
                                                             yield return new WaitForSeconds(0.2f);
                                                         }
                                                     }
-                                                    else if (Input.GetAxisRaw("Horizontal") > 0)
+                                                    else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                                                     {
                                                         if (movesPosition != 1 || movesPosition != 3 ||
                                                             movesPosition != 6)
@@ -6814,7 +6810,7 @@ public partial class BattleHandler : MonoBehaviour
                                                             yield return new WaitForSeconds(0.2f);
                                                         }
                                                     }
-                                                    else if (Input.GetAxisRaw("Horizontal") < 0)
+                                                    else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                                                     {
                                                         if (movesPosition == 1 || movesPosition == 3 ||
                                                             movesPosition > 4)
@@ -6824,7 +6820,7 @@ public partial class BattleHandler : MonoBehaviour
                                                             yield return new WaitForSeconds(0.2f);
                                                         }
                                                     }
-                                                    else if (Input.GetAxisRaw("Vertical") > 0)
+                                                    else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                                                     {
                                                         if (movesPosition > 1)
                                                         {
@@ -6840,7 +6836,7 @@ public partial class BattleHandler : MonoBehaviour
                                                             yield return new WaitForSeconds(0.2f);
                                                         }
                                                     }
-                                                    else if (Input.GetButtonDown("Select"))
+                                                    else if (UnityEngine.Input.GetButtonDown("Select"))
                                                     {
                                                         if (movesPosition == 4)
                                                         {
@@ -6918,7 +6914,7 @@ public partial class BattleHandler : MonoBehaviour
                                                             yield return new WaitForSeconds(0.2f);
                                                         }
                                                     }
-                                                    else if (Input.GetButtonDown("Back"))
+                                                    else if (UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         updateCurrentTask(3);
                                                         SfxHandler.Play(selectClip);
@@ -6936,7 +6932,7 @@ public partial class BattleHandler : MonoBehaviour
                                                 yield return new WaitForSeconds(0.2f);
                                             }
                                         }
-                                        else if (Input.GetButtonDown("Back"))
+                                        else if (UnityEngine.Input.GetButtonDown("Back"))
                                         {
                                             updateCurrentTask(3);
                                             SfxHandler.Play(selectClip);
@@ -6947,7 +6943,7 @@ public partial class BattleHandler : MonoBehaviour
                                     }
                                 }
                             }
-                            else if (Input.GetButtonDown("Back"))
+                            else if (UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 SfxHandler.Play(selectClip);
                                 updateCurrentTask(0);
@@ -6957,7 +6953,7 @@ public partial class BattleHandler : MonoBehaviour
                         }
                     }
                 }
-                else if (Input.GetButtonDown("Back"))
+                else if (UnityEngine.Input.GetButtonDown("Back"))
                 {
                     if (currentActivePokemon == 1 && pokemon[0] != null)
                     {
@@ -7108,7 +7104,7 @@ public partial class BattleHandler : MonoBehaviour
                                     SfxHandler.Play(runClip);
                                     Dialog.DrawBlackFrame();
                                     yield return StartCoroutine(Dialog.DrawTextSilent("Got away safely!"));
-                                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                     {
                                         yield return null;
                                     }
@@ -8439,7 +8435,7 @@ public partial class BattleHandler : MonoBehaviour
                             yield return new WaitForSeconds(0.2f);
                             while (currentTask == 3)
                             {
-                                if (Input.GetAxisRaw("Vertical") < 0)
+                                if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                                 {
                                     if (pokePartyPosition < 5)
                                     {
@@ -8459,7 +8455,7 @@ public partial class BattleHandler : MonoBehaviour
                                         }
                                     }
                                 }
-                                else if (Input.GetAxisRaw("Horizontal") > 0)
+                                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                                 {
                                     if (pokePartyPosition < 6)
                                     {
@@ -8472,7 +8468,7 @@ public partial class BattleHandler : MonoBehaviour
                                         }
                                     }
                                 }
-                                else if (Input.GetAxisRaw("Horizontal") < 0)
+                                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                                 {
                                     if (pokePartyPosition > 0)
                                     {
@@ -8485,7 +8481,7 @@ public partial class BattleHandler : MonoBehaviour
                                         }
                                     }
                                 }
-                                else if (Input.GetAxisRaw("Vertical") > 0)
+                                else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                                 {
                                     if (pokePartyPosition > 1)
                                     {
@@ -8505,7 +8501,7 @@ public partial class BattleHandler : MonoBehaviour
                                         }
                                     }
                                 }
-                                else if (Input.GetButtonDown("Select"))
+                                else if (UnityEngine.Input.GetButtonDown("Select"))
                                 {
                                     if (pokePartyPosition == 6)
                                     {
@@ -8520,7 +8516,7 @@ public partial class BattleHandler : MonoBehaviour
                                         yield return new WaitForSeconds(0.2f);
                                         while (currentTask == 5)
                                         {
-                                            if (Input.GetAxisRaw("Vertical") < 0)
+                                            if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                                             {
                                                 if (pokePartyPosition < 5)
                                                 {
@@ -8535,7 +8531,7 @@ public partial class BattleHandler : MonoBehaviour
                                                     yield return new WaitForSeconds(0.2f);
                                                 }
                                             }
-                                            else if (Input.GetAxisRaw("Horizontal") > 0)
+                                            else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                                             {
                                                 if (summaryPosition < 2)
                                                 {
@@ -8544,7 +8540,7 @@ public partial class BattleHandler : MonoBehaviour
                                                     yield return new WaitForSeconds(0.2f);
                                                 }
                                             }
-                                            else if (Input.GetAxisRaw("Horizontal") < 0)
+                                            else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                                             {
                                                 if (summaryPosition > 0)
                                                 {
@@ -8553,7 +8549,7 @@ public partial class BattleHandler : MonoBehaviour
                                                     yield return new WaitForSeconds(0.2f);
                                                 }
                                             }
-                                            else if (Input.GetAxisRaw("Vertical") > 0)
+                                            else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                                             {
                                                 if (pokePartyPosition > 0)
                                                 {
@@ -8568,7 +8564,7 @@ public partial class BattleHandler : MonoBehaviour
                                                     yield return new WaitForSeconds(0.2f);
                                                 }
                                             }
-                                            else if (Input.GetButtonDown("Select"))
+                                            else if (UnityEngine.Input.GetButtonDown("Select"))
                                             {
                                                 if (summaryPosition == 0)
                                                 {
@@ -8674,7 +8670,7 @@ public partial class BattleHandler : MonoBehaviour
                                                         //0-3 = Moves, 4 = Switch, 5 = Summary, 6 = Back
                                                     while (currentTask == 6)
                                                     {
-                                                        if (Input.GetAxisRaw("Vertical") < 0)
+                                                        if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                                                         {
                                                             if (movesPosition < 4)
                                                             {
@@ -8692,7 +8688,7 @@ public partial class BattleHandler : MonoBehaviour
                                                                 yield return new WaitForSeconds(0.2f);
                                                             }
                                                         }
-                                                        else if (Input.GetAxisRaw("Horizontal") > 0)
+                                                        else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                                                         {
                                                             if (movesPosition != 1 || movesPosition != 3 ||
                                                                 movesPosition != 6)
@@ -8702,7 +8698,7 @@ public partial class BattleHandler : MonoBehaviour
                                                                 yield return new WaitForSeconds(0.2f);
                                                             }
                                                         }
-                                                        else if (Input.GetAxisRaw("Horizontal") < 0)
+                                                        else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                                                         {
                                                             if (movesPosition == 1 || movesPosition == 3 ||
                                                                 movesPosition > 4)
@@ -8712,7 +8708,7 @@ public partial class BattleHandler : MonoBehaviour
                                                                 yield return new WaitForSeconds(0.2f);
                                                             }
                                                         }
-                                                        else if (Input.GetAxisRaw("Vertical") > 0)
+                                                        else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                                                         {
                                                             if (movesPosition > 1)
                                                             {
@@ -8729,7 +8725,7 @@ public partial class BattleHandler : MonoBehaviour
                                                                 yield return new WaitForSeconds(0.2f);
                                                             }
                                                         }
-                                                        else if (Input.GetButtonDown("Select"))
+                                                        else if (UnityEngine.Input.GetButtonDown("Select"))
                                                         {
                                                             if (movesPosition == 4)
                                                             {
@@ -8863,7 +8859,7 @@ public partial class BattleHandler : MonoBehaviour
                                                                 yield return new WaitForSeconds(0.2f);
                                                             }
                                                         }
-                                                        else if (Input.GetButtonDown("Back"))
+                                                        else if (UnityEngine.Input.GetButtonDown("Back"))
                                                         {
                                                             updateCurrentTask(3);
                                                             SfxHandler.Play(selectClip);
@@ -8881,7 +8877,7 @@ public partial class BattleHandler : MonoBehaviour
                                                     yield return new WaitForSeconds(0.2f);
                                                 }
                                             }
-                                            else if (Input.GetButtonDown("Back"))
+                                            else if (UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 updateCurrentTask(3);
                                                 SfxHandler.Play(selectClip);

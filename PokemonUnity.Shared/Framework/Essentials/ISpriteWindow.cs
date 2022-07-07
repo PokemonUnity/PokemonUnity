@@ -290,8 +290,8 @@ namespace PokemonEssentials.Interface
 // ############################
 // ############################
 
-	public interface IAnimatedBitmap : IBitmap {
-		//void initialize(file,hue=0) {
+	public interface IAnimatedBitmap : IBitmap, IDisposable {
+		IAnimatedBitmap initialize(string file, int hue= 0); //{
 		//	if (file==null) raise "filename is null";
 		//	if (file[/^\[(\d+)\]/]  ) {		// Starts with 1 or more digits in brackets
 		//	  @bitmap=new PngAnimatedBitmap(file,hue);
@@ -300,20 +300,20 @@ namespace PokemonEssentials.Interface
 		//	}
 		//}
 
-		//void [](index) { @bitmap[index]; }
-		//void width() { @bitmap.bitmap.width; }
-		//void height() { @bitmap.bitmap.height; }
-		//void length() { @bitmap.Length; }
-		//void each() { @bitmap.each {|item| yield item }; }
-		//void bitmap() { @bitmap.bitmap; }
-		//void currentIndex() { @bitmap.currentIndex; }
-		//void frameDelay() { @bitmap.frameDelay; }
-		//void totalFrames() { @bitmap.totalFrames; }
-		//bool disposed { @bitmap.disposed(); }
-		//void update() { @bitmap.update(); }
-		//void dispose() { @bitmap.dispose(); }
-		//void deanimate() { @bitmap.deanimate; }
-		//void copy() { @bitmap.copy; }
+		IBitmap this[int index] { get; } //{ @bitmap[index]; }
+		int width(); //{ @bitmap.bitmap.width; }
+		int height(); //{ @bitmap.bitmap.height; }
+		int length(); //{ @bitmap.Length; }
+		IEnumerable<IBitmap> each(); //{ @bitmap.each {|item| yield item }; }
+		IBitmap bitmap(); //{ @bitmap.bitmap; }
+		int currentIndex(); //{ @bitmap.currentIndex; }
+		int frameDelay(); //{ @bitmap.frameDelay; }
+		int totalFrames(); //{ @bitmap.totalFrames; }
+		bool disposed { get; } //{ @bitmap.disposed(); }
+		void update(); //{ @bitmap.update(); }
+		void dispose(); //{ @bitmap.dispose(); }
+		IBitmap deanimate(); //{ @bitmap.deanimate; }
+		IAnimatedBitmap copy(); //{ @bitmap.copy; }
 	}
 
 //// ########################
@@ -837,49 +837,31 @@ namespace PokemonEssentials.Interface
 	// ###############################################################################
 	// SpriteWrapper is a class based on Sprite which wraps Sprite's properties.
 	// ###############################################################################
-	public interface ISpriteWrapper : ISprite {
-		ISpriteWrapper initialize(IViewport viewport= null);
+	public interface ISpriteWrapper : ISprite, IDisposable {
+		float angle { get; set; }
+		IBitmap bitmap { get; set; }
+		int blend_type { get; set; }
+		int bush_depth { get; set; }
+		IColor color { get; set; }
+		bool disposed { get; }
+		bool mirror { get; set; }
+		float opacity { get; set; }
+		float ox { get; set; }
+		float oy { get; set; }
+		IRect src_rect { get; set; }
+		ITone tone { get; set; }
+		IViewport viewport { get; set; }
+		bool visible { get; set; }
+		float x { get; set; }
+		float y { get; set; }
+		float z { get; set; }
+		float zoom_x { get; set; }
+		float zoom_y { get; set; }
 
+		ISpriteWrapper initialize(IViewport viewport= null);
 		void dispose();
-		bool disposed();
 		void flash(IColor color, int duration);
 		void update();
-		IViewport viewport { get; set; }
-		//void viewport();
-		//void x() {                     @sprite.x; }
-		//void x=(value) {             @sprite.x=value; }
-		//void y() {                     @sprite.y; }
-		//void y=(value) {             @sprite.y=value; }
-		//void bitmap() {                @sprite.bitmap; }
-		//void bitmap=(value) {        @sprite.bitmap=value; }
-		//void src_rect() {              @sprite.src_rect; }
-		//void src_rect=(value) {      @sprite.src_rect=value; }
-		//void visible() {               @sprite.visible; }
-		//void visible=(value) {       @sprite.visible=value; }
-		//void z() {                     @sprite.z; }
-		//void z=(value) {             @sprite.z=value; }
-		//void ox() {                    @sprite.ox; }
-		//void ox=(value) {            @sprite.ox=value; }
-		//void oy() {                    @sprite.oy; }
-		//void oy=(value) {            @sprite.oy=value; }
-		//void zoom_x() {                @sprite.zoom_x; }
-		//void zoom_x=(value) {        @sprite.zoom_x=value; }
-		//void zoom_y() {                @sprite.zoom_y; }
-		//void zoom_y=(value) {        @sprite.zoom_y=value; }
-		//void angle() {                 @sprite.angle; }
-		//void angle=(value) {         @sprite.angle=value; }
-		//void mirror() {                @sprite.mirror; }
-		//void mirror=(value) {        @sprite.mirror=value; }
-		//void bush_depth() {            @sprite.bush_depth; }
-		//void bush_depth=(value) {    @sprite.bush_depth=value; }
-		//void opacity() {               @sprite.opacity; }
-		//void opacity=(value) {       @sprite.opacity=value; }
-		//void blend_type() {            @sprite.blend_type; }
-		//void blend_type=(value) {    @sprite.blend_type=value; }
-		//void color() {                 @sprite.color; }
-		//void color=(value) {         @sprite.color=value; }
-		//void tone() {                  @sprite.tone; }
-		//void tone=(value) {          @sprite.tone=value; }
 	}
 
 // ########################################################################
@@ -1050,83 +1032,9 @@ namespace PokemonEssentials.Interface
 		//	privRefresh(true);
 		//  }
 
-		//  void initialize(viewport=null) {
-		//	@sprites={}
-		//	@spritekeys=[
-		//	   "back",
-		//	   "corner0","side0","scroll0",
-		//	   "corner1","side1","scroll1",
-		//	   "corner2","side2","scroll2",
-		//	   "corner3","side3","scroll3",
-		//	   "cursor","contents","pause";
-		//	];
-		//	@viewport=viewport;
-		//	@sidebitmaps= new []{ null,null,null,null };
-		//	@cursorbitmap=null;
-		//	@bgbitmap=null;
-		//	foreach (var i in @spritekeys) {
-		//	  @sprites[i]=new Sprite(@viewport);
-		//	}
-		//	@disposed=false;
-		//	@tone=new Tone(0,0,0);
-		//	@color=new Color(0,0,0,0);
-		//	@blankcontents=new Bitmap(1,1); // RGSS2 requires this
-		//	@contents=@blankcontents;
-		//	@_windowskin=null;
-		//	@rpgvx=false;
-		//	@compat=CompatBits.sxpandBack|CompatBits.stretchSides;
-		//	@x=0;
-		//	@y=0;
-		//	@width=0;
-		//	@height=0;
-		//	@offset_x=0;
-		//	@offset_y=0;
-		//	@zoom_x=1.0;
-		//	@zoom_y=1.0;
-		//	@ox=0;
-		//	@oy=0;
-		//	@z=0;
-		//	@stretch=true;
-		//	@visible=true;
-		//	@active=true;
-		//	@openness=255;
-		//	@opacity=255;
-		//	@back_opacity=255;
-		//	@blend_type=0;
-		//	@contents_blend_type=0;
-		//	@contents_opacity=255;
-		//	@cursor_rect=new SpriteWindowCursorRect(self);
-		//	@cursorblink=0;
-		//	@cursoropacity=255;
-		//	@pause=false;
-		//	@pauseframe=0;
-		//	@flash=0;
-		//	@pauseopacity=0;
-		//	@skinformat=0;
-		//	@skinrect=new Rect(0,0,0,0);
-		//	@trim= new []{ 16,16,16,16 };
-		//	privRefresh(true);
-		//  }
+		ISpriteWindow initialize(IViewport viewport=null);
 
-		//  void dispose() {
-		//	if (!this.disposed?) {
-		//	  foreach (var i in @sprites) {
-		//		if (i[1]) i[1].dispose();
-		//		@sprites[i[0]]=null;
-		//	  }
-		//	  for (int i = 0; i < @sidebitmaps.Length; i++) {
-		//		if (@sidebitmaps[i]) @sidebitmaps[i].dispose();
-		//		@sidebitmaps[i]=null;
-		//	  }
-		//	  @blankcontents.dispose();
-		//	  if (@cursorbitmap) @cursorbitmap.dispose();
-		//	  if (@backbitmap) @backbitmap.dispose();
-		//	  @sprites.clear();
-		//	  @sidebitmaps.clear();
-		//	  @_windowskin=null;
-		//	  @disposed=true;
-		//	}
-		//  }
+		void dispose();
 
 		//  void stretch=(value) {
 		//	@stretch=value;
@@ -1473,9 +1381,7 @@ namespace PokemonEssentials.Interface
 
 		ISpriteWindow_Selectable initialize(float x, float y, float width, float height);
 
-		//void ignore_input=(value) {
-		//@ignore_input=value;
-		//}
+		bool ignore_input { set; } 
 		//
 		//void count() {
 		//return @item_max;
@@ -1538,6 +1444,8 @@ namespace PokemonEssentials.Interface
 	{
 		//include UpDownArrowMixin;
 
+		new IViewport viewport { set; }
+
 		//void initialize(*arg);
 	}
 
@@ -1567,6 +1475,7 @@ namespace PokemonEssentials.Interface
 	}
 
 	public interface IWindow_CommandPokemon : IWindow_DrawableCommand {
+		new IColor color				{ get; set; }
 		string[] commands				{ get; set; }
 
 		IWindow_CommandPokemon initialize(string[] commands,float? width=null);
@@ -1575,7 +1484,7 @@ namespace PokemonEssentials.Interface
 
 		IWindow_CommandPokemon Empty(float x, float y, float width, float height, IViewport viewport= null);
 
-		float index { get; set; }
+		int index { get; set; }
 
 		float width { get; set; }
 
@@ -1589,7 +1498,7 @@ namespace PokemonEssentials.Interface
 	}
 
 	public interface IWindow_AdvancedCommandPokemon : IWindow_DrawableCommand {
-		string[] commands				{ get; set; }
+		IList<string> commands				{ get; set; }
 
 		int textWidth(IBitmap bitmap, string text);
 
@@ -1692,13 +1601,13 @@ namespace PokemonEssentials.Interface
 		//	refresh();
 		//}
 
-		bool busy();
+		bool busy { get; }
 
-		bool pausing();
+		bool pausing { get; }
 
 		bool resume();
 
-		void dispose();
+		//void dispose();
 
 		int cursorMode				{ get; set; }
 
@@ -1805,15 +1714,20 @@ namespace PokemonEssentials.Interface
 		void update();
 	}
 
-	// Displays an icon bitmap in a sprite. Supports animated images.
+	/// <summary>
+	/// Displays an icon bitmap in a sprite. Supports animated images.
+	/// </summary>
 	public interface IIconSprite : ISpriteWrapper {
-		//  Sets the icon's filename.  Alias for setBitmap.
+		/// <summary>
+		/// Sets the icon's filename.  Alias for <seealso cref="setBitmap"/>.
+		/// </summary>
 		string name				{ get; set; }
 		//void name=(value) {
 		//	setBitmap(value);
 		//}
 
 		//IIconSprite initialize(*args);
+		IIconSprite initialize(float x, float y, IViewport viewport);
 
 		void dispose();
 
@@ -1821,7 +1735,11 @@ namespace PokemonEssentials.Interface
 
 		void clearBitmaps();
 
-		//  Sets the icon's filename.
+		/// <summary>
+		/// Sets the icon's filename.
+		/// </summary>
+		/// <param name="file"></param>
+		/// <param name="hue"></param>
 		void setBitmap(string file, int hue= 0);
 	}
 

@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IPokemonSummaryScene : IScene
 	{
-		//IPokemonSummaryScene initialize();
+		IPokemonSummaryScene initialize();
 		//void drawMarkings(bitmap,int x,int y,int width,int height, bool[] markings);
 		void drawPageOne(IPokemon pokemon);
 		void drawPageOneEgg(IPokemon pokemon);
@@ -49,6 +49,7 @@ namespace PokemonEssentials.Interface.Screen
 		//int pbStartForgetScreen(IPokemon[] party, int partyindex, Moves moveToLearn);
 		int pbStartForgetScreen(IPokemon party, int partyindex, Moves moveToLearn);
 		void pbStartChooseMoveScreen(IPokemon[] party, int partyindex, string message);
+		int pbStartChooseMoveScreen(IPokemon party, int partyindex, string message);
 	}
 
 	public interface IMoveSelectionSprite : ISpriteWrapper, IDisposable 

@@ -84,6 +84,7 @@
     <Compile Include="Framework\Essentials\IGameUtility.cs" />
     <Compile Include="Framework\Essentials\IMessage.cs" />
     <Compile Include="Framework\Essentials\ISceneMap.cs" />
+    <Compile Include="Framework\Essentials\ISpritePokemon.cs" />
     <Compile Include="Framework\Essentials\ISpriteWindow.cs" />
     <Compile Include="Framework\Essentials\Item\IMail.cs" />
     <Compile Include="Framework\Essentials\Item\IPokeRadar.cs" />

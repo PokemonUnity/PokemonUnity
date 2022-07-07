@@ -984,6 +984,7 @@
     <Compile Include="Assets\Scripts\flycameraDebug.cs" />
     <Compile Include="Assets\Scripts\FollowCameraView.cs" />
     <Compile Include="Assets\Scripts\FollowerMovement.cs" />
+    <Compile Include="Assets\Scripts\GlobalVariables.Refactor.cs" />
     <Compile Include="Assets\Scripts\GlobalVariables.cs" />
     <Compile Include="Assets\Scripts\GrassPatchHandler.cs" />
     <Compile Include="Assets\Scripts\GUIParticleHandler.cs" />
@@ -1028,6 +1029,13 @@
     <Compile Include="Assets\Scripts\NPCFollower.cs" />
     <Compile Include="Assets\Scripts\NPCHandler.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\FileTest.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Game_System.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\BattleScene.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuDisplay.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokeBattle_SceneConstants.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\FightMenuButtons.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\FightMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\ReflectiveWaterHandler.cs" />
     <Compile Include="Assets\Scripts\SandTileHandler.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
@@ -1038,7 +1046,6 @@
     <Compile Include="Assets\Scripts\Save\PlayerPosition\SerializeQuaternion.cs" />
     <Compile Include="Assets\Scripts\Save\PlayerPosition\SerializeVector3.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BagHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\EvolutionHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\MainMenuHandler.cs" />

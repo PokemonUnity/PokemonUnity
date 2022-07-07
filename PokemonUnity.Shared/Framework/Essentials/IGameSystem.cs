@@ -63,7 +63,7 @@
 		void bgm_pause(float fadetime = 0);
 		void bgm_play(IAudioBGM bgm);
 		void bgm_play_internal(IAudioBGM bgm, int position);
-		void bgm_play_internal2(string name, float volume, float pitch, float position);
+		void bgm_play_internal2(string name, float volume, float pitch, int position);
 		/// <summary>
 		/// Plays the currently memorized background music
 		/// </summary>
@@ -86,6 +86,8 @@
 		IAudioBGM getPlayingBGM();
 		IAudioBGS getPlayingBGS();
 		void me_play(IAudioME me);
+		void me_fade(float time);
+		void me_stop();
 		void setDefaultBGM(IAudioBGM bgm, float volume = 80, float pitch = 100);
 		void se_play(IAudioSE se);
 		void se_stop();

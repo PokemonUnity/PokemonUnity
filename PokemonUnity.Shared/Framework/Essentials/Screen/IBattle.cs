@@ -18,7 +18,229 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
+	#region Battle UI Components
+	/// <summary>
+	/// Command menu (Fight/Pokémon/Bag/Run)
+	/// </summary>
+	public interface ICommandMenuDisplay : IDisposable
+	{
+		int mode { get; set; }
+		float x { get; set; }
+		float y { get; set; }
+		float z { get; set; }
+		float ox { get; set; }
+		float oy { get; set; }
+		bool visible { get; set; }
+		IColor color { get; set; }
+
+		ICommandMenuDisplay initialize(IViewport viewport = null);
+
+		bool disposed { get; }
+
+		void dispose();
+
+		int index { get; set; }
+
+		void setTexts(params string[] value);
+
+		void refresh();
+
+		void update();
+	}
+
+	public interface ICommandMenuButtons : IBitmapSprite {
+		new ICommandMenuButtons initialize(int index = 0, int mode = 0, IViewport viewport = null);
+
+		//void dispose();
+
+		void update(int index = 0, int mode = 0);
+
+		void refresh(int index, int mode = 0);
+	}
+
+	/// <summary>
+	/// Fight menu (choose a move)
+	/// </summary>
+	public interface IFightMenuDisplay : IDisposable
+	{
+		IBattler battler			{ get; set; }
+		int index					{ get; }
+		int megaButton				{ get; set; }
+
+		float x { get; set; }
+		float y { get; set; }
+		float z { get; set; }
+		float ox { get; set; }
+		float oy { get; set; }
+		bool visible { get; set; }
+		IColor color { get; set; }
+
+		IFightMenuDisplay initialize(IBattler battler, IViewport viewport = null);
+
+		bool disposed { get; }
+
+		void dispose();
+
+		bool setIndex(int value);
+
+		void refresh();
+
+		void update();
+	}
+
+	public interface IFightMenuButtons : IDisposable, IBitmapSprite
+	{
+		IFightMenuButtons initialize(int index = 0, IBattleMove[] moves = null, IViewport viewport = null);
+
+		//void dispose();
+
+		void update(int index= 0, IBattleMove[] moves= null, int megaButton= 0);
+
+		void refresh(int index, IBattleMove[] moves, int megaButton);
+	}
+
+	/// <summary>
+	/// Data box for safari battles
+	/// </summary>
+	public interface ISafariDataBox : ISpriteWrapper
+	{
+		int selected		{ get; }
+		bool appearing		{ get; }
+
+		ISafariDataBox initialize(IBattle battle, IViewport viewport = null);
+
+		//void appear();
+
+		void refresh();
+
+		//void update();
+	}
+
+	/// <summary>
+	/// Data box for regular battles (both single and double)
+	/// </summary>
+	public interface IPokemonDataBox : ISpriteWrapper {
+		IBattler battler		{ get; }
+		int selected			{ get; set; }
+		bool appearing			{ get; }
+		bool animatingHP			{ get; }
+		bool animatingEXP		{ get; }
+
+		IPokemonDataBox initialize(IBattler battler, bool doublebattle, IViewport viewport = null);
+
+		//void dispose();
+
+		void refreshExpLevel();
+
+		int exp { get; }
+
+		int hp { get; }
+
+		void animateHP(int oldhp, int newhp);
+
+		void animateEXP(int oldexp, int newexp);
+
+		//void appear();
+
+		void refresh();
+
+		//void update();
+	}
+
+	/// <summary>
+	/// Shows the enemy trainer(s)'s Pokémon being thrown out.  It appears at coords
+	/// (@spritex,@spritey), and moves in y to @endspritey where it stays for the rest
+	/// of the battle, i.e. the latter is the more important value.
+	/// Doesn't show the ball itself being thrown.
+	/// </summary>
+	public interface IPokeballSendOutAnimation : IDisposable
+	{
+		//SPRITESTEPS=10;
+		//STARTZOOM=0.125;
+
+		//IPokeballSendOutAnimation initialize(ISprite sprite, int spritehash, IPokemon pkmn, IPokemon illusionpoke, bool doublebattle);
+		IPokeballSendOutAnimation initialize(IPokemonBattlerSprite sprite, IDictionary<string,ISprite> spritehash, IBattler pkmn, IPokemon illusionpoke, bool doublebattle);
+
+		bool disposed { get; }
+
+		bool animdone { get; }
+
+		void dispose();
+
+		void update();
+	}
+
+	/// <summary>
+	/// Shows the player's (or partner's) Pokémon being thrown out.  It appears at
+	/// (@spritex,@spritey), and moves in y to @endspritey where it stays for the rest
+	/// of the battle, i.e. the latter is the more important value.
+	/// Doesn't show the ball itself being thrown.
+	/// </summary>
+	public interface IPokeballPlayerSendOutAnimation : IDisposable
+	{
+		//  Ball curve: 8,52; 22,44; 52, 96
+		//  Player: new Color(16*8,23*8,30*8)
+		//SPRITESTEPS=10;
+		//STARTZOOM=0.125;
+
+		IPokeballPlayerSendOutAnimation initialize(ISprite sprite, int spritehash, IPokemon pkmn, IPokemon illusionpoke, bool doublebattle);
+
+		bool disposed { get; }
+
+		bool animdone { get; }
+
+		void dispose();
+
+		void update();
+	}
+
+	/// <summary>
+	/// Shows the enemy trainer(s) and the enemy party lineup sliding off screen.
+	/// Doesn't show the ball thrown or the Pokémon.
+	/// </summary>
+	public interface ITrainerFadeAnimation
+	{
+		//ITrainerFadeAnimation initialize(ISprite[] sprites);
+		ITrainerFadeAnimation initialize(IDictionary<string,ISprite> sprites);
+
+		bool animdone { get; }
+
+		void update();
+	}
+
+	/// <summary>
+	/// Shows the player (and partner) and the player party lineup sliding off screen.
+	/// Shows the player's/partner's throwing animation (if they have one).
+	/// Doesn't show the ball thrown or the Pokémon.
+	/// </summary>
+	public interface IPlayerFadeAnimation
+	{
+		IPlayerFadeAnimation initialize(ISprite[] sprites);
+
+		bool animdone { get; }
+
+		void update();
+	}
+	
+	/// <summary>
+	/// Shows the player's Poké Ball being thrown to capture a Pokémon.
+	/// </summary>
+	/// <param name="ball"></param>
+	/// <param name="shakes"></param>
+	/// <param name="critical"></param>
+	/// <param name="targetBattler"></param>
+	/// <param name="scene"></param>
+	/// <param name="battler"></param>
+	/// <param name="burst"></param>
+	/// <param name="showplayer"></param>
+	//void pokeballThrow(Items ball, int shakes, bool critical, IBattler targetBattler, IScene scene, IBattler battler, int burst = -1, bool showplayer = false);
+
+	#endregion
+
 	#region Pokemon Battle
+	/// <summary>
+	/// 
+	/// </summary>
 	public interface ISceneHasChatter
 	{
 		void pbChatter(IBattler attacker,IBattler opponent);
@@ -53,7 +275,7 @@ namespace PokemonEssentials.Interface.Screen
 		access the battler)
 		*/
 
-		//new void initialize();
+		new IPokeBattle_Scene initialize();
 		void pbUpdate();
 		void pbGraphicsUpdate();
 		void pbInputUpdate();
@@ -68,8 +290,8 @@ namespace PokemonEssentials.Interface.Screen
 		//new void pbShowCommands(string msg, string[] commands, bool canCancel);
 		//new void pbFrameUpdate(object cw = null);
 		//void pbRefresh();
-		void pbAddSprite(string id, double x, double y, string filename, int viewport);
-		void pbAddPlane(int id, string filename, int viewport);
+		IIconSprite pbAddSprite(string id, float x, float y, string filename, IViewport viewport);
+		void pbAddPlane(string id, string filename, IViewport viewport);
 		void pbDisposeSprites();
 		//new void pbBeginCommandPhase();
 		//new IEnumerator pbShowOpponent(int index);
@@ -198,10 +420,9 @@ namespace PokemonEssentials.Interface.Screen
 		//new void pbTrainerBattleSuccess();
 		//new void pbEXPBar(IBattler battler, IPokemon pokemon, int startexp, int endexp, int tempexp1, int tempexp2);
 		void pbShowPokedex(Pokemons species, int form = 0);
-		void pbChangeSpecies(IBattler attacker, Pokemons species);
-		void ChangePokemon();
+		//void pbChangePokemon(IBattler attacker, IPokemon pokemon);
 		void pbChangePokemon(IBattler attacker, PokemonUnity.Monster.Forms pokemon);
-		void pbSaveShadows();
+		void pbSaveShadows(Action action = null);
 		void pbFindAnimation(Moves moveid, int userIndex, int hitnum);
 		void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum = 0);
 		//new void pbAnimation(Moves moveid, IBattler user, IBattler target, int hitnum = 0);
@@ -230,13 +451,14 @@ namespace PokemonEssentials.Interface.Screen
 		void updateJudgment(IWindow window, int phase, IBattler battler1, IBattler battler2, int[] ratings1, int[] ratings2);
 	}
 	#endregion
-	
+
+	#region Debugging
 	public interface IPokeBattle_DebugScene : IScene, IPokeBattle_DebugSceneNoLogging
 	{
 		//new void pbDisplayMessage(string msg,bool brief= false);
 		//new void pbDisplayPausedMessage(string msg);
 		//new void pbDisplayConfirmMessage(string msg);
-		void pbFrameUpdate(object cw);
+		void pbFrameUpdate(IWindow_CommandPokemon cw);
 		//void pbRefresh();
 		/// <summary>
 		/// Called whenever a new round begins.
@@ -262,7 +484,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		/// <param name="pkmn"></param>
 		void pbPokemonString(IPokemon pkmn);
-		void pbMoveString(string move);
+		string pbMoveString(IBattleMove move);
 		/// <summary>
 		/// Use this method to display the list of moves for a Pokémon
 		/// </summary>
@@ -333,7 +555,7 @@ namespace PokemonEssentials.Interface.Screen
 	{
 		int pbCommandMenu(int index);
 		int pbFightMenu(int index);
-		int pbItemMenu(int index);
+		Items pbItemMenu(int index);
 		//int pbChooseTarget(int index, int targettype);
 		int pbChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
 		int pbSwitch(int index,bool lax,bool cancancel);
@@ -389,11 +611,11 @@ namespace PokemonEssentials.Interface.Screen
 	}
 	public interface IPokeBattle_DebugSceneNoGraphics : IScene, ISceneHasChatter, IPokeBattle_SceneNonInteractive
 	{
-		void initialize();
+		IPokeBattle_DebugSceneNoGraphics initialize();
 		void pbDisplayMessage(string msg, bool brief = false);
 		void pbDisplayPausedMessage(string msg);
 		bool pbDisplayConfirmMessage(string msg);
-		int pbShowCommands(string msg, string[] commands, bool defaultValue);
+		bool pbShowCommands(string msg, string[] commands, bool defaultValue);
 		int pbShowCommands(string msg, string[] commands, int defaultValue);
 		/// <summary>
 		/// Called whenever a new round begins.
@@ -420,7 +642,7 @@ namespace PokemonEssentials.Interface.Screen
 		void pbBeginAttackPhase();
 		new int pbCommandMenu(int index);
 		new int pbFightMenu(int index);
-		new int pbItemMenu(int index);
+		new Items pbItemMenu(int index);
 		//new int pbChooseTarget(int index, int targettype);
 		new int pbChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
 		//void pbRefresh();
@@ -470,4 +692,5 @@ namespace PokemonEssentials.Interface.Screen
 		void pbCommonAnimation(Moves moveid, IBattler attacker, IBattler opponent, int hitnum = 0);
 		void pbAnimation(Moves moveid, IBattler attacker, IBattler opponent, int hitnum = 0);
 	}
+	#endregion
 }

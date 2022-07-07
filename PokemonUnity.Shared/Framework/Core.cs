@@ -199,6 +199,21 @@ namespace PokemonUnity
 		/// as in older Gens (false).
 		/// </summary>
 		public const bool INFINITETMS = true;
+
+		/// <summary>
+		/// Whether outdoor maps should be shaded according to the time of day.
+		/// </summary>
+		public const bool ENABLESHADING = true;
+
+		/// <summary>
+		/// Pairs of map IDs, where the location signpost isn't shown when moving from
+		///      one of the maps in a pair to the other (and vice versa). Useful for
+		///      single long routes/towns that are spread over multiple maps.
+		/// e.g. [4,5,16,17,42,43] will be map pairs 4,5 and 16,17 and 42,43.
+		///   Moving between two maps that have the exact same name won't show the
+		///      location signpost anyway, so you don't need to list those maps here.
+		/// </summary>
+		public static int[] NOSIGNPOSTS = new int[0];
 		#endregion
 
 		#region Battle Settings

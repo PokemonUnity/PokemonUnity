@@ -21,35 +21,66 @@ namespace PokemonEssentials.Interface
 		/// Converts an object to an audio file. 
 		/// </summary>
 		/// <param name="str">Either a string showing the filename or an RPG.AudioFile object.
-		/// Possible formats for _str_:
-		/// filename                        volume and pitch 100
-		/// filename:volume           pitch 100
+		/// Possible formats for <paramref name="str"/>:<para>
+		/// filename                        volume and pitch 100</para><para>
+		/// filename:volume           pitch 100</para>
 		/// filename:volume:pitch
 		/// </param>
 		/// <param name="volume">Volume of the file, up to 100</param>
 		/// <param name="pitch">Pitch of the file, normally 100</param>
 		/// <returns></returns>
 		IAudioObject pbResolveAudioFile(string str, int? volume = null, float? pitch = null);
+		/// <summary>
+		/// Converts an object to an audio file. 
+		/// </summary>
+		/// <param name="str">Either a string showing the filename or an RPG.AudioFile object.
+		/// Possible formats for <paramref name="str"/>:<para>
+		/// filename                        volume and pitch 100</para><para>
+		/// filename:volume           pitch 100</para>
+		/// filename:volume:pitch
+		/// </param>
+		/// <param name="volume">Volume of the file, up to 100</param>
+		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <returns></returns>
 		IAudioObject pbResolveAudioFile(IAudioObject str, int? volume = null, float? pitch = null);
 
 		// ###############################################################################
 
-		// Plays a BGM file.
-		// param -- Either a string showing the filename 
-		// (relative to Audio/BGM/) or an RPG.AudioFile object.
-		// Possible formats for _param_:
-		// filename                        volume and pitch 100
-		// filename:volume           pitch 100
-		// filename:volume:pitch
-		// volume -- Volume of the file, up to 100
-		// pitch -- Pitch of the file, normally 100
+		/// <summary>
+		/// Plays a BGM file.
+		/// </summary>
+		/// <param name="param">Either a string showing the filename (relative to Audio/BGM/) or an RPG.AudioFile object.
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        volume and pitch 100</para><para>
+		/// filename:volume           pitch 100</para>
+		/// filename:volume:pitch
+		/// </param>
+		/// <param name="volume">Volume of the file, up to 100</param>
+		/// <param name="pitch">Pitch of the file, normally 100</param>
 		void pbBGMPlay(string param, int? volume = null, float? pitch = null);
+		/// <summary>
+		/// Plays a BGM file.
+		/// </summary>
+		/// <param name="param">Either a string showing the filename (relative to Audio/BGM/) or an RPG.AudioFile object.
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        volume and pitch 100</para><para>
+		/// filename:volume           pitch 100</para>
+		/// filename:volume:pitch
+		/// </param>
+		/// <param name="volume">Volume of the file, up to 100</param>
+		/// <param name="pitch">Pitch of the file, normally 100</param>
 		void pbBGMPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
-		// Fades out or stops BGM playback. 'x' is the time in seconds to fade out.
+		/// <summary>
+		/// Fades out or stops BGM playback. 
+		/// </summary>
+		/// <param name="x">'x' is the time in seconds to fade out.</param>
 		void pbBGMFade(float x = 0);
 
-		// Fades out or stops BGM playback. 'x' is the time in seconds to fade out.
+		/// <summary>
+		/// Fades out or stops BGM playback. 
+		/// </summary>
+		/// <param name="timeInSeconds">'x' is the time in seconds to fade out.</param>
 		void pbBGMStop(float timeInSeconds = 0);
 
 		// ###############################################################################
@@ -66,10 +97,16 @@ namespace PokemonEssentials.Interface
 		void pbMEPlay(string param, int? volume = null, float? pitch = null);
 		void pbMEPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
-		// Fades out or stops ME playback. 'x' is the time in seconds to fade out.
+		/// <summary>
+		/// Fades out or stops ME playback. 
+		/// </summary>
+		/// <param name="x">'x' is the time in seconds to fade out.</param>
 		void pbMEFade(float x = 0);
 
-		// Fades out or stops ME playback. 'x' is the time in seconds to fade out.
+		/// <summary>
+		/// Fades out or stops ME playback. 
+		/// </summary>
+		/// <param name="timeInSeconds">'x' is the time in seconds to fade out.</param>
 		void pbMEStop(float timeInSeconds = 0);
 
 		// ###############################################################################
@@ -86,10 +123,16 @@ namespace PokemonEssentials.Interface
 		void pbBGSPlay(string param, int? volume = null, float? pitch = null);
 		void pbBGSPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
-		// Fades out or stops BGS playback. 'x' is the time in seconds to fade out.
+		/// <summary>
+		/// Fades out or stops BGS playback. 
+		/// </summary>
+		/// <param name="x">'x' is the time in seconds to fade out.</param>
 		void pbBGSFade(float x = 0);
 
-		// Fades out or stops BGS playback. 'x' is the time in seconds to fade out.
+		/// <summary>
+		/// Fades out or stops BGS playback. 
+		/// </summary>
+		/// <param name="timeInSeconds">'x' is the time in seconds to fade out.</param>
 		void pbBGSStop(float timeInSeconds = 0);
 
 		// ###############################################################################
@@ -106,24 +149,38 @@ namespace PokemonEssentials.Interface
 		void pbSEPlay(string param, int? volume = null, float? pitch = null);
 		void pbSEPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
-		// Stops SE playback.
+		/// <summary>
+		/// Stops SE playback.
+		/// </summary>
+		/// <param name="x"></param>
 		void pbSEFade(float x = 0);
 
-		// Stops SE playback.
+		/// <summary>
+		/// Stops SE playback.
+		/// </summary>
+		/// <param name="timeInSeconds"></param>
 		void pbSEStop(float timeInSeconds = 0);
 
 		// ###############################################################################
 
-		// Plays a sound effect that plays when the player moves the cursor.
+		/// <summary>
+		/// Plays a sound effect that plays when the player moves the cursor.
+		/// </summary>
 		void pbPlayCursorSE();
 
-		// Plays a sound effect that plays when a decision is confirmed or a choice is made.
+		/// <summary>
+		/// Plays a sound effect that plays when a decision is confirmed or a choice is made.
+		/// </summary>
 		void pbPlayDecisionSE();
 
-		// Plays a sound effect that plays when a choice is canceled.
+		/// <summary>
+		/// Plays a sound effect that plays when a choice is canceled.
+		/// </summary>
 		void pbPlayCancelSE();
 
-		// Plays a buzzer sound effect.
+		/// <summary>
+		/// Plays a buzzer sound effect.
+		/// </summary>
 		void pbPlayBuzzerSE();
 	}
 }

@@ -517,7 +517,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public IList<object> pbHideVisibleObjects() 
+		public virtual IList<object> pbHideVisibleObjects() 
 		{
 			IList<object> visibleObjects= new List<object>(); //ToDo: ISpriteWindow?
 			////ObjectSpace.each_object(Sprite){|o|
@@ -557,7 +557,7 @@ namespace PokemonUnity
 
 		public void pbShowObjects(IList<object> visibleObjects) {
 			foreach (IViewport o in visibleObjects) {
-				if (!(this as IGameSpriteWindow).pbDisposed(o)) {
+				if (this is IGameSpriteWindow s && !s.pbDisposed(o)) {
 					o.visible=true;
 				}
 			}
@@ -622,7 +622,7 @@ namespace PokemonUnity
 				Graphics?.update();
 				Input.update();
 				interp.update();
-				(this as IGameMessage).pbUpdateSceneMap();
+				if (this is IGameMessage m) m.pbUpdateSceneMap();
 			} while (interp.running);
 			return true;
 		}
@@ -634,7 +634,7 @@ namespace PokemonUnity
 				List<int> done=new List<int>();
 				foreach (var i in @event) {
 					if (!done.Contains(i.id)) {
-						sprite=((ISpritesetMapAnimation)Scene.spriteset()).addUserAnimation(id,i.x,i.y,tinting);
+						sprite=((ISpritesetMapAnimation)Scene.spriteset).addUserAnimation(id,i.x,i.y,tinting);
 						done.Add(i.id);
 					}
 				}
@@ -644,16 +644,18 @@ namespace PokemonUnity
 			while (!sprite.disposed) {
 				Graphics?.update();
 				Input.update();
-				(this as IGameMessage).pbUpdateSceneMap();
+				if (this is IGameMessage m) m.pbUpdateSceneMap();
 			}
 		}
 
 		public void pbNoticePlayer(IGameCharacter @event) {
-			if (!(this as IGameField).pbFacingEachOther(@event,GamePlayer)) {
-				pbExclaim(new IGameCharacter[] { @event });
+			if (this is IGameField f) {
+				if (!f.pbFacingEachOther(@event,GamePlayer)) {
+					pbExclaim(new IGameCharacter[] { @event });
+				}
+				f.pbTurnTowardEvent(GamePlayer,@event);
+				f.pbMoveTowardPlayer(@event);
 			}
-			(this as IGameField).pbTurnTowardEvent(GamePlayer,@event);
-			(this as IGameField).pbMoveTowardPlayer(@event);
 		}
 		#endregion
 
@@ -663,14 +665,14 @@ namespace PokemonUnity
 			if (shiny) {
 				//  Load shiny bitmap
 				string ret=string.Format("Graphics/Battlers/{0}s{1}",species.ToString(),back ? "b" : ""); //rescue null
-				if ((this as IGameSpriteWindow).pbResolveBitmap(ret) == null) {
+				if ((this is IGameSpriteWindow g0) && g0.pbResolveBitmap(ret) == null) {
 					ret=string.Format("Graphics/Battlers/{0}s{1}",species,back ? "b" : "");
 				}
 				return ret;
 			} else {
 				//  Load normal bitmap
 				string ret=string.Format("Graphics/Battlers/{0}{1}",species.ToString(),back ? "b" : ""); //rescue null
-				if ((this as IGameSpriteWindow).pbResolveBitmap(ret) == null) {
+				if ((this is IGameSpriteWindow g1) && g1.pbResolveBitmap(ret) == null) {
 					ret=string.Format("Graphics/Battlers/{0}{1}",species,back ? "b" : "");
 				}
 				return ret;

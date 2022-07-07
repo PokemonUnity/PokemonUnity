@@ -115,7 +115,7 @@ namespace PokemonUnity.ConsoleApp
 			initialize();
 		}
 
-		public void initialize()
+		public IPokeBattle_DebugSceneNoGraphics initialize()
 		{
 			battle = null;
 			lastcmd = new MenuCommands[] { 0, 0, 0, 0 };
@@ -126,6 +126,8 @@ namespace PokemonUnity.ConsoleApp
 			//@messagemode = false;
 			abortable = true;
 			aborted = false;
+
+			return this;
 		}
 
 		public void pbDisplay(string v)
@@ -181,13 +183,13 @@ namespace PokemonUnity.ConsoleApp
 			return result;
 		}
 
-		int IPokeBattle_DebugSceneNoGraphics.pbShowCommands(string msg, string[] commands, bool defaultValue)
+		bool IPokeBattle_DebugSceneNoGraphics.pbShowCommands(string msg, string[] commands, bool defaultValue)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			GameDebug.Log(msg);
 			@messageCount += 1;
-			return 0;
+			return false;
 		}
 
 		int IPokeBattle_DebugSceneNoGraphics.pbShowCommands(string msg, string[] commands, int defaultValue)
@@ -444,12 +446,12 @@ namespace PokemonUnity.ConsoleApp
 			return result;
 		}
 
-		int IPokeBattle_DebugSceneNoGraphics.pbItemMenu(int index)
+		Items IPokeBattle_DebugSceneNoGraphics.pbItemMenu(int index)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//System.Console.WriteLine("Need to implment item system in textbased-line");
-			return -1;
+			//System.Console.WriteLine("Need to implement item system in textbased-line");
+			return Items.NONE;
 		}
 
 		int IPokeBattle_DebugSceneNoGraphics.pbChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype)
@@ -840,7 +842,7 @@ namespace PokemonUnity.ConsoleApp
 			return (this as IPokeBattle_DebugSceneNoGraphics).pbFightMenu(index);
 		}
 
-		int IPokeBattle_SceneNonInteractive.pbItemMenu(int index)
+		Items IPokeBattle_SceneNonInteractive.pbItemMenu(int index)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 

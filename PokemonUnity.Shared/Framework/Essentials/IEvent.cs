@@ -155,7 +155,8 @@ namespace PokemonEssentials.Interface
 		//event EventHandler<IOnSpritesetCreateEventArgs> OnSpritesetCreate;
 		event Action<object, IOnSpritesetCreateEventArgs> OnSpritesetCreate;
 		event EventHandler OnStartBattle;
-		event EventHandler OnEndBattle;
+		//event EventHandler OnEndBattle;
+		event Action<object, IOnEndBattleEventArgs> OnEndBattle;
 		/// <summary>
 		/// Fires whenever a map is created. Event handler receives two parameters: the
 		/// map (RPG.Map) and the tileset (RPG.Tileset)
@@ -319,7 +320,8 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// Event that just entered a tile.
 			/// </summary>
-			int Index { get; set; }
+			//int Index { get; set; }
+			IGamePlayer Index { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -386,6 +388,22 @@ namespace PokemonEssentials.Interface
 			/// Pokémon being created
 			/// </summary>
 			IPokemon Pokemon { get; set; }
+		}
+		/// <summary>
+		/// Parameters: int decision
+		/// e[0] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
+		/// e[1] - If allowed to be defeated, or is stuck in a battle loop until Win
+		/// </summary>
+		public interface IOnEndBattleEventArgs : IEventArgs
+		{
+			//readonly int EventId = typeof(OnWildBattleEndEventArgs).GetHashCode();
+
+			//int Id { get { return EventId; } }
+			bool CanLose { get; set; }
+			/// <summary>
+			/// Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
+			/// </summary>
+			BattleResults Decision { get; set; }
 		}
 		/// <summary>
 		/// Parameters: 

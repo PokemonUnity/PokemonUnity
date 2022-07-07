@@ -1,16 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using System.Threading.Tasks;
-//using Localization;
-//using Localization.Dictionaries;
-//using Localization.Dictionaries.Xml;
-//using System.IO;
-using System.Xml;
-using System.Collections;
-//using System.Collections.Immutable;
-using System.Globalization;
 using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Inventory;

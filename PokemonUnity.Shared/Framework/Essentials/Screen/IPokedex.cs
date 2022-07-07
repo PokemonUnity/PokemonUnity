@@ -28,6 +28,7 @@ namespace PokemonEssentials.Interface.Screen
 	}
 	public interface IPokemonPokedexScene : IScene
 	{
+		IPokemonPokedexScene initialize();
 		void pbUpdate();
 		void pbEndScene();
 		void pbStartScene();
@@ -57,11 +58,11 @@ namespace PokemonEssentials.Interface.Screen
 	//   false.
 	// * Adapted from the Pokégear menu script by Maruno.
 	// ===============================================================================
-	public interface IWindow_DexesList //: IWindow_CommandPokemon
+	public interface IWindow_DexesList : IWindow_CommandPokemon
 	{
 		IWindow_DexesList initialize(string[] commands, float width, int seen, int owned);
 
-		void drawItem(int index, int count, IRect rect);
+		//void drawItem(int index, int count, IRect rect);
 	}
 
 	public interface IScene_PokedexMenu 
@@ -78,37 +79,41 @@ namespace PokemonEssentials.Interface.Screen
 	// ===============================================================================
 	// Pokédex main screen
 	// ===============================================================================
-	public interface IWindow_CommandPokemonWhiteArrow //: IWindow_CommandPokemon 
+	public interface IWindow_CommandPokemonWhiteArrow : IWindow_CommandPokemon 
 	{
-		void drawCursor(int index, IRect rect);
+		//void drawCursor(int index, IRect rect);
 	}
 
-	public interface IWindow_Pokedex //: IWindow_DrawableCommand, IDisposable 
+	public interface IWindow_Pokedex : IWindow_DrawableCommand, IDisposable 
 	{
-		IWindow_Pokedex initialize(float x, float y, float width, float height);
-
-		void drawCursor(int index, IRect rect);
-
 		string[] commands { set; }
-
-		void dispose();
 
 		Pokemons species { get; }
 
-		int itemCount { get; }
+		//int itemCount { get; }
 
-		void drawItem(int index, int count, IRect rect);
+		new IWindow_Pokedex initialize(float x, float y, float width, float height);
+
+		//void dispose();
+		//
+		//void drawCursor(int index, IRect rect);
+		//
+		//void drawItem(int index, int count, IRect rect);
 	}
 
-	public interface IWindow_ComplexCommandPokemon //: IWindow_DrawableCommand 
+	public interface IWindow_ComplexCommandPokemon : IWindow_DrawableCommand 
 	{
 		string[] commands				{ get; set; }
+		
+		//float width { set; }
+		//
+		//float height { set; }
 
 		IWindow_ComplexCommandPokemon initialize(string[] commands, float? width = null);
 
 		IRect Empty(float x, float y, float width, float height, IViewport viewport = null);
 
-		int index { set; }
+		//int index { set; }
 
 		//[i1, i2]
 		//int[] indexToCommand(int index);
@@ -116,16 +121,10 @@ namespace PokemonEssentials.Interface.Screen
 
 		string getText(string[] array, int index);
 
-		//string[] commands { set; }
-
-		float width { set; }
-
-		float height { set; }
-
 		void resizeToFit(string[] commands);
 
-		int itemCount();
+		//int itemCount();
 
-		void drawItem(int index, int count, IRect rect);
+		//void drawItem(int index, int count, IRect rect);
 	}
 }

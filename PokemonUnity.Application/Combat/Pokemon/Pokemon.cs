@@ -1046,7 +1046,9 @@ namespace PokemonUnity.Combat
 			if (transformed)
 			{
 				pbUpdate(true);
-				if (@battle.scene is IPokeBattle_Scene s0) s0.ChangePokemon();
+				if (@battle.scene is IPokeBattle_Scene s0) 
+					//s0.ChangePokemon();
+					s0.pbChangePokemon(this, Form.Id);
 				battle.pbDisplay(Game._INTL("{1} transformed!", ToString()));
 				//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "Transformed", ToString()).Value);
 				GameDebug.Log(string.Format("[Form changed] {0} changed to form {1}", ToString(), Game._INTL(Form.Id.ToString(TextScripts.Name))));

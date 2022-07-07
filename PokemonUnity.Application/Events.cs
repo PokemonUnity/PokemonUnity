@@ -98,7 +98,8 @@ namespace PokemonUnity
 		//public static event EventHandler<OnSpritesetCreateEventArgs> OnSpritesetCreate;
 		public static Action<object, IOnSpritesetCreateEventArgs> OnSpritesetCreate;
 		public static event EventHandler OnStartBattle;
-		public static event EventHandler OnEndBattle;
+		//public static event EventHandler OnEndBattle;
+		public event Action<object, IOnEndBattleEventArgs> OnEndBattle;
 		/// <summary>
 		/// Fires whenever a map is created. Event handler receives two parameters: the
 		/// map (RPG.Map) and the tileset (RPG.Tileset)
@@ -219,7 +220,7 @@ namespace PokemonUnity
 		/// </summary>
 		public static void OnMapSceneChangeTrigger()
 		{
-			IOnMapSceneChangeEventArgs e= new OnMapSceneChangeEventArgs(); 
+			IOnMapSceneChangeEventArgs e = new OnMapSceneChangeEventArgs(); 
 			if(OnMapSceneChange != null) OnMapSceneChange.Invoke(null, e);
 		}
 		/// <summary>
@@ -309,7 +310,7 @@ namespace PokemonUnity
 			/// <summary>
 			/// Event that just entered a tile.
 			/// </summary>
-			public int Index { get; set; }
+			public IGamePlayer Index { get; set; }
 		}
 		/// <summary>
 		/// Parameters:

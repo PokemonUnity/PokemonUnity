@@ -3,7 +3,7 @@
 	/// <summary>
 	/// List of all the screens that utilized by frontend platform
 	/// </summary>
-	public class Screen 
+	public class Screen : PokemonEssentials.Interface.Screen.IGameScreensUI
 	{
 		public PokemonEssentials.Interface.Screen.IPokemonEntryScreen TextEntryScreen { get; set; }
 		public PokemonEssentials.Interface.Screen.IIntroEventScreen IntroScreen { get; set; }
@@ -32,6 +32,11 @@
 
 		public Screen(params PokemonEssentials.Interface.Screen.IScreen[] screens)
 		{
+			initialize(screens);
+		}
+
+		public PokemonEssentials.Interface.Screen.IGameScreensUI initialize(params PokemonEssentials.Interface.Screen.IScreen[] screens)
+		{
 			foreach (PokemonEssentials.Interface.Screen.IScreen screen in screens)
 			{
 				if (screen is PokemonEssentials.Interface.Screen.IPokemonEntryScreen		s0) TextEntryScreen			= s0;
@@ -51,7 +56,8 @@
 				else if (screen is PokemonEssentials.Interface.Screen.IMartScreen			s14) Mart					= s14;
 				else if (screen is PokemonEssentials.Interface.Screen.IRelicStoneScreen		s15) RelicStone				= s15; 
 				else if (screen is PokemonEssentials.Interface.Screen.IBattleSwapScreen		s16) BattleSwapScreen		= s16;
-			}																				 
+			}
+			return this;
 		}																					 
 	}																						 
 }																							 

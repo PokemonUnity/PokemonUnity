@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class GlobalVariables : MonoBehaviour
 {
-    public static GlobalVariables global;
+	#region Property Variables
+	public static GlobalVariables global;
 
     public Vector3 playerPosition;
     public int playerDirection;
@@ -44,6 +45,7 @@ public class GlobalVariables : MonoBehaviour
 
     //Important gameplay data
     public bool respawning = false;
+	#endregion
 
     void OnDestroy()
     {

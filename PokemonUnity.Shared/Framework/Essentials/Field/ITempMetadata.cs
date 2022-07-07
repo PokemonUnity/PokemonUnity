@@ -19,7 +19,7 @@ namespace PokemonEssentials.Interface.Field
 		bool begunNewGame									{ get; set; }
 		int miniupdate										{ get; set; }
 		int waitingTrainer									{ get; set; }
-		int darknessSprite									{ get; set; }
+		ISprite darknessSprite								{ get; set; }
 		IList<string> pokemonDexData						{ get; }
 		IDictionary<int, IPokemonMetadata> pokemonMetadata	{ get; set; }
 		IList<int> pokemonPhoneData							{ get; }

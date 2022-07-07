@@ -48,7 +48,7 @@ namespace PokemonEssentials.Interface.Field
 		IPCItemStorage pcItemStorage	{ get; set; }
 		int stepcount { get; set; }
 		int happinessSteps { get; set; }
-		int? pokerusTime { get; set; }
+		DateTime? pokerusTime { get; set; }
 		IDayCare daycare { get; set; }
 		bool daycareEgg { get; set; } //ToDo: int?...
 		int daycareEggSteps { get; set; }
@@ -72,14 +72,14 @@ namespace PokemonEssentials.Interface.Field
 		/// Search mode
 		/// </summary>
 		int pokedexMode { get; set; } 
-		int? healingSpot { get; set; }
+		ITilePosition healingSpot { get; set; }
 		float[] escapePoint { get; set; }
 		int pokecenterMapId { get; set; }
 		float pokecenterX { get; set; }
 		float pokecenterY { get; set; }
 		int pokecenterDirection { get; set; }
 		ITilePosition pokecenter			{ get; set; }
-		IList<int> visitedMaps { get; set; }
+		IDictionary<int,bool> visitedMaps { get; set; }
 		IList<int> mapTrail { get; set; }
 		IAudioBGM nextBattleBGM { get; set; }
 		IAudioME nextBattleME { get; set; }

@@ -2,7 +2,7 @@
 {
 	public interface ISceneMap 
 	{
-		IGameMap spriteset();
+		IGameMap spriteset { get; }
 
 		void disposeSpritesets();
 
