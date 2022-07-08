@@ -144,10 +144,14 @@ namespace PokemonEssentials.Interface
 	}
 
 	public interface IInterpreterMixinMessage { //static
-		// Freezes all events on the map (for use at the beginning of common events)
+		/// <summary>
+		/// Freezes all events on the map (for use at the beginning of common events)
+		/// </summary>
 		void pbGlobalLock();
 
-		// Unfreezes all events on the map (for use at the end of common events)
+		/// <summary>
+		/// Unfreezes all events on the map (for use at the end of common events)
+		/// </summary>
 		void pbGlobalUnlock();
 
 		int pbRepeatAbove(int index);
@@ -156,24 +160,50 @@ namespace PokemonEssentials.Interface
 
 		void pbJumpToLabel(int index, string label_name);
 
-		// Gets the next index in the interpreter, ignoring
-		// certain events between messages
+		/// <summary>
+		/// Gets the next index in the interpreter, ignoring
+		/// certain events between messages
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
 		int pbNextIndex(int index);
 
-		// Helper function that shows a picture in a script.  To be used in
-		// a script event command.
+		/// <summary>
+		/// Helper function that shows a picture in a script.  To be used in
+		/// a script event command.
+		/// </summary>
+		/// <param name="number"></param>
+		/// <param name="name"></param>
+		/// <param name="origin"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="zoomX"></param>
+		/// <param name="zoomY"></param>
+		/// <param name="opacity"></param>
+		/// <param name="blendType"></param>
 		void pbShowPicture(int number, string name, float origin, float x, float y, int zoomX = 100, int zoomY = 100, byte opacity = 255, int blendType = 0);
 
-		// Erases an event and adds it to the list of erased events so that
-		// it can stay erased when the game is saved then loaded again.  To be used in
-		// a script event command.
+		/// <summary>
+		/// Erases an event and adds it to the list of erased events so that
+		/// it can stay erased when the game is saved then loaded again.  To be used in
+		/// a script event command.
+		/// </summary>
+		/// <returns></returns>
 		bool pbEraseThisEvent();
 
-		// Runs a common event.  To be used in a script event command.
+		/// <summary>
+		/// Runs a common event.  To be used in a script event command.
+		/// </summary>
+		/// <param name="id"></param>
 		void pbCommonEvent(int id);
 
-		// Sets another event's self switch (eg. pbSetSelfSwitch(20,"A",true) ).
-		// To be used in a script event command.
+		/// <summary>
+		/// Sets another event's self switch (eg. pbSetSelfSwitch(20,"A",true) ).
+		/// To be used in a script event command.
+		/// </summary>
+		/// <param name="event"></param>
+		/// <param name="swtch"></param>
+		/// <param name="value"></param>
 		void pbSetSelfSwitch(int @event, string swtch, bool value);
 
 		// Must use this approach to share the methods because the methods already
@@ -190,7 +220,9 @@ namespace PokemonEssentials.Interface
 		//_END_;
 	}
 
-	// Used by RMVX
+	/// <summary>
+	/// Used by RMVX
+	/// </summary>
 	public interface IGameInterpreterMessage {   //static
 		//include IInterpreterMixinMessage; InterpreterMixin;
 		//eval(InterpreterMixin.CustomEventCommands);
@@ -209,7 +241,9 @@ namespace PokemonEssentials.Interface
 		#endregion
 	}
 
-	// Used by RMXP
+	/// <summary>
+	/// Used by RMXP
+	/// </summary>
 	public interface IInterpreterMessage {   
 		//include InterpreterMixin;
 		//eval(InterpreterMixin.CustomEventCommands);
@@ -231,7 +265,9 @@ namespace PokemonEssentials.Interface
 
 		void setMessageSkin(int value);
 
-		// Set the full path for the message's window skin
+		/// <summary>
+		/// Set the full path for the message's window skin
+		/// </summary>
 		void messageSkin();
 
 		void setSkin(int value);
@@ -273,8 +309,7 @@ namespace PokemonEssentials.Interface
 	{
 		IFaceWindowVX initialize(string face);
 
-		void update();
-
-		void dispose();
+		//void update();
+		//void dispose();
 	}
 }
