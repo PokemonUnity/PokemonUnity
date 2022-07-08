@@ -220,7 +220,9 @@ namespace PokemonEssentials.Interface
 		//_END_;
 	}
 
-	// Used by RMVX
+	/// <summary>
+	/// Used by RMVX
+	/// </summary>
 	public interface IGameInterpreterMessage {   //static
 		//include IInterpreterMixinMessage; InterpreterMixin;
 		//eval(InterpreterMixin.CustomEventCommands);
@@ -239,7 +241,9 @@ namespace PokemonEssentials.Interface
 		#endregion
 	}
 
-	// Used by RMXP
+	/// <summary>
+	/// Used by RMXP
+	/// </summary>
 	public interface IInterpreterMessage {   
 		//include InterpreterMixin;
 		//eval(InterpreterMixin.CustomEventCommands);
@@ -261,7 +265,9 @@ namespace PokemonEssentials.Interface
 
 		void setMessageSkin(int value);
 
-		// Set the full path for the message's window skin
+		/// <summary>
+		/// Set the full path for the message's window skin
+		/// </summary>
 		void messageSkin();
 
 		void setSkin(int value);
@@ -303,8 +309,7 @@ namespace PokemonEssentials.Interface
 	{
 		IFaceWindowVX initialize(string face);
 
-		void update();
-
-		void dispose();
+		//void update();
+		//void dispose();
 	}
 }
