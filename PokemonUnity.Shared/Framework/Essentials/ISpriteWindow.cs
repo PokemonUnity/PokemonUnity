@@ -167,8 +167,13 @@ namespace PokemonEssentials.Interface
 		bool pbIsFaded { get; }
 
 		// pbFadeOutIn(z) { block }
-		// Fades out the screen before a block is run and fades it back in after the
-		// block exits.  z indicates the z-coordinate of the viewport used for this effect
+		/// <summary>
+		/// Fades out the screen before a <paramref name="block"/> is run
+		/// and fades it back in after the <paramref name="block"/> exits.
+		/// </summary>
+		/// <param name="z">z indicates the z-coordinate of the viewport used for this effect</param>
+		/// <param name="nofadeout"></param>
+		/// <param name="block"></param>
 		void pbFadeOutIn(int z, bool nofadeout = false, Action block = null);
 
 		void pbFadeOutAndHide(ISprite[] sprites);
@@ -219,19 +224,34 @@ namespace PokemonEssentials.Interface
 		// _viewport_ is a viewport to place the background in.
 		void addBackgroundOrColoredPlane(ISprite[] sprites, string planename, string background, IColor color, IViewport viewport = null);
 
-		// Sets a bitmap's font to the system font.
+		/// <summary>
+		/// Sets a bitmap's font to the system font.
+		/// </summary>
+		/// <param name="bitmap"></param>
 		void pbSetSystemFont(IBitmap bitmap);
 
-		// Gets the name of the system small font.
+		/// <summary>
+		/// Gets the name of the system small font.
+		/// </summary>
+		/// <returns></returns>
 		string pbSmallFontName();
 
-		// Gets the name of the system narrow font.
+		/// <summary>
+		/// Gets the name of the system narrow font.
+		/// </summary>
+		/// <returns></returns>
 		string pbNarrowFontName();
 
-		// Sets a bitmap's font to the system small font.
+		/// <summary>
+		/// Sets a bitmap's font to the system small font.
+		/// </summary>
+		/// <param name="bitmap"></param>
 		void pbSetSmallFont(IBitmap bitmap);
 
-		// Sets a bitmap's font to the system narrow font.
+		/// <summary>
+		/// Sets a bitmap's font to the system narrow font.
+		/// </summary>
+		/// <param name="bitmap"></param>
 		void pbSetNarrowFont(IBitmap bitmap);
 
 		// Used to determine whether a data file exists (rather than a graphics or
