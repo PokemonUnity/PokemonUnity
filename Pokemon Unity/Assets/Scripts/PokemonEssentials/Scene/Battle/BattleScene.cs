@@ -29,9 +29,11 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	public ITrainerFadeAnimation fadeanim;
 	public IPokeballSendOutAnimation sendout;
 	public IWindow_CommandPokemon commandPokemon;
+	public ICommandMenuDisplay commandWindow;
+	public IFightMenuDisplay fightWindow;
 	public IWindow_UnformattedTextPokemon helpWindow;
 	public IPartyDisplayScreen @switchscreen;
-	public IWindow MessageWindow;
+	public IWindow_AdvancedTextPokemon messageWindow;
 	public IList<IWindow> pkmnwindows;
 	public IDictionary<string, ISpriteWrapper> sprites;
 	public bool aborted;
