@@ -522,7 +522,8 @@ namespace PokemonUnity
 				Level = level
 				//,Result = handled
 			};
-			Events.OnWildBattleOverride?.Invoke(null, e1);
+			//Events.OnWildBattleOverride?.Invoke(null, e1);
+			Events.OnWildBattleOverrideTrigger(null, e1);
 			//handled[0] = eventArgs.Result;
 			if (handled[0]!=null) {
 				//return handled[0].Value;
@@ -538,7 +539,8 @@ namespace PokemonUnity
 			//{
 			//	Pokemon = genwildpoke
 			//};
-			Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
+			//Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
+			Events.OnStartBattleTrigger(this);
 			IPokeBattle_Scene scene=pbNewBattleScene();
 			IBattle battle=new Combat.Battle(scene,Trainer.party,new IPokemon[] { genwildpoke },new ITrainer[] { Trainer },null);
 			battle.internalbattle=true;
@@ -570,6 +572,13 @@ namespace PokemonUnity
 					}
 				}
 				//Events.onEndBattle.trigger(null,decision,canlose);
+				PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e2 = new PokemonUnity.EventArg.OnEndBattleEventArgs()
+				{
+					Decision = decision,
+					CanLose = canlose
+				};
+				//Events.OnBattleEnd?.Invoke(null,e2);
+				Events.OnEndBattleTrigger(this, e2);
 			});
 			Input.update();
 			pbSet(variable,decision);
@@ -608,7 +617,8 @@ namespace PokemonUnity
 			IPokemon genwildpoke=pbGenerateWildPokemon(species1,level1);
 			IPokemon genwildpoke2=pbGenerateWildPokemon(species2,level2);
 			//Events.onStartBattle.trigger(null,genwildpoke);
-			Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
+			//Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
+			Events.OnStartBattleTrigger(this);
 			IPokeBattle_Scene scene=pbNewBattleScene();
 			Combat.Battle battle;
 			if (Global.partner != null) {
@@ -661,12 +671,13 @@ namespace PokemonUnity
 					}
 				}
 				//Events.onEndBattle.trigger(null,decision,canlose);
-				//PokemonEssentials.Interface.EventArg.IOnBattleEndEventArgs e2 = new PokemonUnity.EventArg.OnBattleEndEventArgs()
-				//{
-				//	 = decision,
-				//	 = canlose
-				//};
+				PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e2 = new PokemonUnity.EventArg.OnEndBattleEventArgs()
+				{
+					Decision = decision,
+					CanLose = canlose
+				};
 				//Events.OnBattleEnd?.Invoke(null,e2);
+				Events.OnEndBattleTrigger(this,e2);
 			});
 			Input.update();
 			pbSet(variable,decision);
@@ -905,7 +916,7 @@ namespace PokemonUnity
 			return false;
 		}
 
-		public void pbSlideOnIce(IGamePlayer @event=null) {
+		public virtual void pbSlideOnIce(IGamePlayer @event=null) {
 			if (@event == null) @event=GamePlayer;
 			if (@event == null) return;
 			if (!Terrain.isIce(pbGetTerrainTag(@event))) return;
@@ -1062,19 +1073,22 @@ namespace PokemonUnity
 				{
 					Index = GamePlayer
 				};
-				Events.OnStepTakenFieldMovement?.Invoke(null,e0);
+				//Events.OnStepTakenFieldMovement?.Invoke(null,e0);
+				Events.OnStepTakenFieldMovementTrigger(this,e0);
 				return;
 			}
 			//if (Global.stepcount == null) Global.stepcount=0;
 			Global.stepcount+=1;
 			Global.stepcount&=0x7FFFFFFF;
 			//Events.onStepTaken.trigger(null);
-			Events.OnStepTaken?.Invoke(null,EventArgs.Empty);
+			//Events.OnStepTaken?.Invoke(null,EventArgs.Empty);
+			Events.OnStepTakenTrigger(this);
 			//Events.onStepTakenFieldMovement.trigger(null,GamePlayer)
 			bool?[] handled= new bool?[]{ null };
 			//Events.OnStepTakenTransferPossible.trigger(null,handled);
 			PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs e1 = new PokemonUnity.EventArg.OnStepTakenTransferPossibleEventArgs();
-			Events.OnStepTakenTransferPossible?.Invoke(null,e1); //handled[0]=e1.
+			//Events.OnStepTakenTransferPossible?.Invoke(null,e1); //handled[0]=e1.
+			Events.OnStepTakenTransferPossibleTrigger(this, e1);
 			if (handled[0]==true) return;
 			if (!eventTriggered) {
 				pbBattleOnStepTaken();
@@ -1094,7 +1108,7 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public void pbUpdateVehicle() {
+		public virtual void pbUpdateVehicle() {
 			//string[] meta=(string[])Game.pbGetMetadata(0, GlobalMetadatas.MetadataPlayerA+Global.playerID);
 			MetadataPlayer meta=pbGetMetadata(0).Global.Players[Global.playerID];
 			//if (meta != null) {
@@ -1156,7 +1170,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region Fishing
-		public void pbFishingBegin() {
+		public virtual void pbFishingBegin() {
 			Global.fishing=true;
 			if (!pbCommonEvent(Core.FISHINGBEGINCOMMONEVENT)) {
 				int patternb = 2*GamePlayer.direction - 1;
@@ -1178,7 +1192,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbFishingEnd() {
+		public virtual void pbFishingEnd() {
 			if (!pbCommonEvent(Core.FISHINGENDCOMMONEVENT)) {
 				int patternb = 2*(GamePlayer.direction - 2);
 				//TrainerTypes playertrainer=pbGetPlayerTrainerType();
@@ -1200,7 +1214,7 @@ namespace PokemonUnity
 			Global.fishing=false;
 		}
 
-		public bool pbFishing(bool hasencounter,int rodtype=1) {
+		public virtual bool pbFishing(bool hasencounter,int rodtype=1) {
 			bool speedup=(Trainer.firstParty.IsNotNullOrNone() && !Trainer.firstParty.isEgg &&
 				(Trainer.firstParty.Ability == Abilities.STICKY_HOLD ||
 				Trainer.firstParty.Ability == Abilities.SUCTION_CUPS));
@@ -1254,7 +1268,7 @@ namespace PokemonUnity
 			return false;
 		}
 
-		public bool pbWaitForInput(IWindow msgwindow,string message,int frames) {
+		public virtual bool pbWaitForInput(IWindow msgwindow,string message,int frames) {
 			if (Core.FISHINGAUTOHOOK) return true;
 			if (this is IGameMessage m0) m0.pbMessageDisplay(msgwindow,message,false);
 			int i = 0; do { //;frames.times 
@@ -1268,7 +1282,7 @@ namespace PokemonUnity
 			return false;
 		}
 
-		public bool pbWaitMessage(IWindow msgwindow,int time) {
+		public virtual bool pbWaitMessage(IWindow msgwindow,int time) {
 			string message="";
 			int i = 0; do { //(time+1).times |i|
 				if (i>0) message+=". ";
@@ -1531,18 +1545,18 @@ namespace PokemonUnity
 			float yco=GamePlayer.y;
 			float dir = 0;
 			switch (GamePlayer.direction) {
-			case 2:   // Down
-			yco-=1; dir=8;
-			break;
-			case 4:   // Left
-			xco+=1; dir=6;
-			break;
-			case 6:   // Right
-			xco-=1; dir=4;
-			break;
-			case 8:   // Up
-			yco+=1; dir=2;
-			break;
+				case 2:   // Down
+					yco-=1; dir=8;
+					break;
+				case 4:   // Left
+					xco+=1; dir=6;
+					break;
+				case 6:   // Right
+					xco-=1; dir=4;
+					break;
+				case 8:   // Up
+					yco+=1; dir=2;
+					break;
 			}
 			Global.escapePoint=new float[] { GameMap.map_id, xco, yco, dir };
 		}
@@ -1715,7 +1729,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region Voice recorder
-		public IWaveData pbRecord(string text,float maxtime=30.0f) {
+		public virtual IWaveData pbRecord(string text,float maxtime=30.0f) {
 			if (text == null) text="";
 			IWindow_UnformattedTextPokemon textwindow = null; //new Window_UnformattedTextPokemon().WithSize(text,
 			//	0,0,Graphics.width,Graphics.height-96);
@@ -2022,7 +2036,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region Event movement
-		public void pbTurnTowardEvent(IGameCharacter @event,IGameCharacter otherEvent) {
+		public virtual void pbTurnTowardEvent(IGameCharacter @event,IGameCharacter otherEvent) {
 			float sx=0;
 			float sy=0;
 			if (MapFactory != null) {
@@ -2045,7 +2059,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbMoveTowardPlayer(IGameCharacter @event) {
+		public virtual void pbMoveTowardPlayer(IGameCharacter @event) {
 			int maxsize=Math.Max(GameMap.width,GameMap.height);
 			if (!pbEventCanReachPlayer(@event,GamePlayer,maxsize)) return;
 			do { //;loop
@@ -2062,7 +2076,7 @@ namespace PokemonUnity
 			if (PokemonMap != null) PokemonMap.addMovedEvent(@event.id);
 		}
 
-		public bool pbJumpToward(int dist=1,bool playSound=false,bool cancelSurf=false) {
+		public virtual bool pbJumpToward(int dist=1,bool playSound=false,bool cancelSurf=false) {
 			float x=GamePlayer.x;
 			float y=GamePlayer.y;
 			switch (GamePlayer.direction) {
@@ -2092,13 +2106,14 @@ namespace PokemonUnity
 			return false;
 		}
 
+		//ToDo: One solid coroutine function...
 		public void pbWait(int numframes) {
 			if (Core.INTERNAL) return; //if there's no ui connected...
-			do { //;numframes.times 
+			int i = 0; do { //;numframes.times 
 				Graphics?.update();
 				Input.update();
 				if (this is IGameMessage m) m.pbUpdateSceneMap();
-			} while (true);
+			} while (i < numframes);
 		}
 
 		public virtual IMoveRoute pbMoveRoute(IGameCharacter @event,int[] commands,bool waitComplete=false) {
@@ -2161,7 +2176,7 @@ namespace PokemonUnity
 			GameScreen.start_flash(color,frames * 2);
 		}
 
-		public void pbScrollMap(int direction, int distance, float speed) {
+		public virtual void pbScrollMap(int direction, int distance, float speed) {
 			if (GameMap == null) return;
 			if (speed==0) {
 				switch (direction) {
@@ -2186,11 +2201,11 @@ namespace PokemonUnity
 					Graphics?.update();
 					Input.update();
 					if (!GameMap.scrolling) {
-					break;
+						break;
 					}
 					if (this is IGameMessage m) m.pbUpdateSceneMap();
 					if (GameMap.display_x==oldx && GameMap.display_y==oldy) {
-					break;
+						break;
 					}
 					oldx=GameMap.display_x;
 					oldy=GameMap.display_y;

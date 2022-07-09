@@ -498,7 +498,7 @@ namespace PokemonUnity
 			return creator;
 		}
 		
-		public void pbPCItemStorage() {
+		public virtual void pbPCItemStorage() {
 			//Items ret = Items.NONE;
 			do { //;loop
 				int command=(this as IGameMessage).pbShowCommandsWithHelp(null,
@@ -549,7 +549,7 @@ namespace PokemonUnity
 			} while (true);
 		}
 
-		public void pbPCMailbox() {
+		public virtual void pbPCMailbox() {
 			if (Global.mailbox == null || Global.mailbox.Count==0) {
 				(this as IGameMessage).pbMessage(Game._INTL("There's no Mail here."));
 			} else {

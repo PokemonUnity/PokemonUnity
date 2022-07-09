@@ -81,14 +81,15 @@ public class UnityPokemonScenes : MonoBehaviour
 	private void Awake()
 	{
 		BattleScene = transform.GetComponent<BattleScene>();
-		(Game as UnityGame).SetScenes(
+		(Game as Game).SetScenes(
 			BattleScene
 		);
-		(Game as UnityGame).SetScreens();
+		(Game as Game).SetScreens();
 	}
 }
 
-public partial class UnityGame : Game, PokemonEssentials.Interface.IGame
-{
-	
-}
+//public partial class UnityGame : Game, PokemonEssentials.Interface.IGame
+//{
+//	public PokemonEssentials.Interface.Screen.IGameScenesUI Scenes { get; private set; }
+//	public PokemonEssentials.Interface.Screen.IGameScreensUI Screens { get; private set; }
+//}

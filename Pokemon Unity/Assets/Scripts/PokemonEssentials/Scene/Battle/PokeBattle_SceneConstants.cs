@@ -18,32 +18,32 @@ namespace PokemonUnity
 		public static readonly bool USEFIGHTBOX				= true; // If true, expects the file Graphics/Pictures/battleFight.png
 
 		//  Text colors
-		public static readonly IColor MESSAGEBASECOLOR			= new Color(80,80,88);
-		public static readonly IColor MESSAGESHADOWCOLOR		= new Color(160,160,168);
-		public static readonly IColor MENUBASECOLOR				= MESSAGEBASECOLOR;
-		public static readonly IColor MENUSHADOWCOLOR			= MESSAGESHADOWCOLOR;
-		public static readonly IColor BOXTEXTBASECOLOR			= new Color(72,72,72);
-		public static readonly IColor BOXTEXTSHADOWCOLOR		= new Color(184,184,184);
-		public static readonly IColor PPTEXTBASECOLOR			= MESSAGEBASECOLOR;        // More than 1/2 of total PP
-		public static readonly IColor PPTEXTSHADOWCOLOR			= MESSAGESHADOWCOLOR;
-		public static readonly IColor PPTEXTBASECOLORYELLOW		= new Color(248,192,0);    // 1/2 of total PP or less
-		public static readonly IColor PPTEXTSHADOWCOLORYELLOW	= new Color(144,104,0);
-		public static readonly IColor PPTEXTBASECOLORORANGE		= new Color(248,136,32);   // 1/4 of total PP or less
-		public static readonly IColor PPTEXTSHADOWCOLORORANGE	= new Color(144,72,24);
-		public static readonly IColor PPTEXTBASECOLORRED		= new Color(248,72,72);    // Zero PP
-		public static readonly IColor PPTEXTSHADOWCOLORRED		= new Color(136,48,48);
-
-		//  HP bar colors
-		public static readonly IColor HPCOLORGREEN				= new Color(24,192,32);
-		public static readonly IColor HPCOLORGREENDARK			= new Color(0,144,0);
-		public static readonly IColor HPCOLORYELLOW				= new Color(248,176,0);
-		public static readonly IColor HPCOLORYELLOWDARK			= new Color(176,104,8);
-		public static readonly IColor HPCOLORRED				= new Color(248,88,40);
-		public static readonly IColor HPCOLORREDDARK			= new Color(168,48,56);
-
-		//  Exp bar colors
-		public static readonly IColor EXPCOLORBASE				= new Color(72,144,248);
-		public static readonly IColor EXPCOLORSHADOW			= new Color(48,96,216);
+		public static readonly IColor MESSAGEBASECOLOR			; //= new Color(80,80,88);
+		public static readonly IColor MESSAGESHADOWCOLOR		; //= new Color(160,160,168);
+		public static readonly IColor MENUBASECOLOR				; //= MESSAGEBASECOLOR;
+		public static readonly IColor MENUSHADOWCOLOR			; //= MESSAGESHADOWCOLOR;
+		public static readonly IColor BOXTEXTBASECOLOR			; //= new Color(72,72,72);
+		public static readonly IColor BOXTEXTSHADOWCOLOR		; //= new Color(184,184,184);
+		public static readonly IColor PPTEXTBASECOLOR			; //= MESSAGEBASECOLOR;        // More than 1/2 of total PP
+		public static readonly IColor PPTEXTSHADOWCOLOR			; //= MESSAGESHADOWCOLOR;
+		public static readonly IColor PPTEXTBASECOLORYELLOW		; //= new Color(248,192,0);    // 1/2 of total PP or less
+		public static readonly IColor PPTEXTSHADOWCOLORYELLOW	; //= new Color(144,104,0);
+		public static readonly IColor PPTEXTBASECOLORORANGE		; //= new Color(248,136,32);   // 1/4 of total PP or less
+		public static readonly IColor PPTEXTSHADOWCOLORORANGE	; //= new Color(144,72,24);
+		public static readonly IColor PPTEXTBASECOLORRED		; //= new Color(248,72,72);    // Zero PP
+		public static readonly IColor PPTEXTSHADOWCOLORRED		; //= new Color(136,48,48);
+																
+		//  HP bar colors										
+		public static readonly IColor HPCOLORGREEN				; //= new Color(24,192,32);
+		public static readonly IColor HPCOLORGREENDARK			; //= new Color(0,144,0);
+		public static readonly IColor HPCOLORYELLOW				; //= new Color(248,176,0);
+		public static readonly IColor HPCOLORYELLOWDARK			; //= new Color(176,104,8);
+		public static readonly IColor HPCOLORRED				; //= new Color(248,88,40);
+		public static readonly IColor HPCOLORREDDARK			; //= new Color(168,48,56);
+																
+		//  Exp bar colors										
+		public static readonly IColor EXPCOLORBASE				; //= new Color(72,144,248);
+		public static readonly IColor EXPCOLORSHADOW			; //= new Color(48,96,216);
 
 		//  Position and width of HP/Exp bars
 		public static readonly float HPGAUGE_X				= 102;

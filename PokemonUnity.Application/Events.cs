@@ -137,7 +137,7 @@ namespace PokemonUnity
 		/// e[3] - Y-coordinate of the tile
 		/// </summary>
 		//public static void OnLeaveTileTrigger(object @event, int mapId, float x, float y, float z) { OnLeaveTileTrigger(@event, mapId, new Vector(x, y, z)); }
-		public static void OnLeaveTileTrigger(object @event, int mapId, IVector tile)
+		public static void OnLeaveTileTrigger(IGameCharacter @event, ITilePosition tile)
 		{
 			IOnLeaveTileEventArgs e = new OnLeaveTileEventArgs();
 			//EventHandler<OnLeaveTileEventArgs> handler = OnLeaveTile;
@@ -148,10 +148,10 @@ namespace PokemonUnity
 		/// Parameters:
 		/// e[0] - Event that just entered a tile.
 		/// </summary>
-		public static void OnStepTakenFieldMovementTrigger()
+		public static void OnStepTakenFieldMovementTrigger(object sender, IOnStepTakenFieldMovementEventArgs e)
 		{
-			IOnStepTakenFieldMovementEventArgs e = new OnStepTakenFieldMovementEventArgs(); 
-			if(OnStepTakenFieldMovement != null) OnStepTakenFieldMovement.Invoke(null, e);
+			//IOnStepTakenFieldMovementEventArgs e = new OnStepTakenFieldMovementEventArgs();
+			if(OnStepTakenFieldMovement != null) OnStepTakenFieldMovement.Invoke(sender, e);
 		}
 		/// <summary>
 		/// Parameters:
@@ -159,9 +159,9 @@ namespace PokemonUnity
 		/// If an event handler moves the player to a new map, it should set this value
 		/// to true. Other event handlers should check this parameter's value.
 		/// </summary>
-		public static void OnStepTakenTransferPossibleTrigger()
+		public static void OnStepTakenTransferPossibleTrigger(object sender, IOnStepTakenTransferPossibleEventArgs e)
 		{
-			IOnStepTakenTransferPossibleEventArgs e = new OnStepTakenTransferPossibleEventArgs(); 
+			//IOnStepTakenTransferPossibleEventArgs e = new OnStepTakenTransferPossibleEventArgs(); 
 			if(OnStepTakenTransferPossible != null) OnStepTakenTransferPossible.Invoke(null, e);
 		}
 		/// <summary>
@@ -171,10 +171,11 @@ namespace PokemonUnity
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 		/// </summary>
 		//public static void OnWildBattleOverrideTrigger(Pokemons species,int level,BattleResults handled)//object @event,
-		//{
-		//	OnWildBattleOverrideEventArgs e = new OnWildBattleOverrideEventArgs();
-		//	if(OnWildBattleOverride != null) OnWildBattleOverride.Invoke(null, e);
-		//}
+		public static void OnWildBattleOverrideTrigger(object sender, IOnWildBattleOverrideEventArgs e)
+		{
+			//IOnWildBattleOverrideEventArgs e = new OnWildBattleOverrideEventArgs();
+			if(OnWildBattleOverride != null) OnWildBattleOverride.Invoke(null, e);
+		}
 		/// <summary>
 		/// Parameters: 
 		/// e[0] - Pokémon species
@@ -233,6 +234,18 @@ namespace PokemonUnity
 		{
 			IOnSpritesetCreateEventArgs e = new OnSpritesetCreateEventArgs(); 
 			if(OnSpritesetCreate != null) OnSpritesetCreate.Invoke(null, e);
+		}
+		public static void OnStepTakenTrigger(object sender)
+		{
+			if (OnStepTaken != null) OnStepTaken.Invoke(sender, EventArgs.Empty);
+		}
+		public static void OnStartBattleTrigger(object sender)
+		{
+			if (OnStartBattle != null) OnStartBattle.Invoke(sender, EventArgs.Empty);
+		}
+		public static void OnEndBattleTrigger(object sender, IOnEndBattleEventArgs e)
+		{
+			if (OnEndBattle != null) OnEndBattle.Invoke(sender, e);
 		}
 		#endregion
 	}
@@ -440,6 +453,14 @@ namespace PokemonUnity
 			/// Map associated with the spriteset (not necessarily the current map).
 			/// </summary>
 			public int MapId { get; set; }
+		}
+		public class OnEndBattleEventArgs : EventArgs, IOnEndBattleEventArgs
+		{
+			public static readonly int EventId = typeof(OnEndBattleEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public bool CanLose { get; set; }
+			public BattleResults Decision { get; set; }
 		}
 		#endregion
 	}

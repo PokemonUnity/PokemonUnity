@@ -201,6 +201,7 @@
     <Compile Include="Inventory\Data\Berry.cs" />
     <Compile Include="Inventory\Data\ItemFlags.cs" />
     <Compile Include="Inventory\Data\Mail.cs" />
+    <Compile Include="Localization\XmlStringRes.cs" />
     <Compile Include="Monster\Nature.cs" />
     <Compile Include="Monster\Pokemon\Data\Base.cs" />
     <Compile Include="Monster\Pokemon\Data\Evolution.cs" />

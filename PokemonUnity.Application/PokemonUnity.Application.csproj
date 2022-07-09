@@ -88,7 +88,6 @@
     <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Inventory\Item\Item.Helper.cs" />
     <Compile Include="Inventory\Item\Item.Pokeball.cs" />
-    <Compile Include="Localization\XmlStringRes.cs" />
     <Compile Include="Monster\BattlePeer.cs" />
     <Compile Include="Monster\Chatter.cs" />
     <Compile Include="Monster\EvolutionHelper.cs" />
