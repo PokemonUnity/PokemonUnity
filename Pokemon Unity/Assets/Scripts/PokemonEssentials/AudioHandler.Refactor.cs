@@ -26,7 +26,7 @@ namespace PokemonUnity
 
 		public void bgm_play(string filename, float volume, float pitch)
 		{
-			throw new NotImplementedException();
+			bgm_play(name, volume, pitch, null);
 		}
 		public void bgm_play(string name, float volume= 80, float pitch= 100, int? position= null)
 		{
