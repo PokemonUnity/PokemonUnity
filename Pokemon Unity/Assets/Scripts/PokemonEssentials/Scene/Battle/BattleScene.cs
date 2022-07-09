@@ -142,7 +142,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 										  windowtype == COMMANDBOX ||
 										  windowtype == FIGHTBOX ||
 										  windowtype == BLANK);
-		@sprites["messagewindow"].visible = (windowtype == MESSAGEBOX);
+		(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).visible = (windowtype == MESSAGEBOX);
 		(@sprites["commandwindow"] as ICommandMenuDisplay).visible = (windowtype == COMMANDBOX);
 		(@sprites["fightwindow"] as IFightMenuDisplay).visible = (windowtype == FIGHTBOX);
 	}
@@ -984,8 +984,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		//@sprites["messagewindow"] = new Window_AdvancedTextPokemon("");
 		(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).initialize("");
 		(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).letterbyletter = true;
-		@sprites["messagewindow"].viewport = @viewport;
-		@sprites["messagewindow"].z = 100;
+		(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).viewport = @viewport;
+		(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).z = 100;
 		//@sprites["commandwindow"] = new CommandMenuDisplay(@viewport);
 		(@sprites["commandwindow"] as ICommandMenuDisplay).initialize(@viewport);
 		(@sprites["commandwindow"] as ICommandMenuDisplay).z = 100;
