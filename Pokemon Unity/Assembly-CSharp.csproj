@@ -945,10 +945,11 @@
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\AudioHandler.cs" />
+    <Compile Include="Assets\Scripts\BgmHandler.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\AudioHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\BattleCameraHandler.cs" />
     <Compile Include="Assets\Scripts\BattleDebug.cs" />
     <Compile Include="Assets\Scripts\BattleSceneHandler.cs" />
-    <Compile Include="Assets\Scripts\BgmHandler.cs" />
     <Compile Include="Assets\Scripts\Billboarding.cs" />
     <Compile Include="Assets\Scripts\BridgeHandler.cs" />
     <Compile Include="Assets\Scripts\CameraTrigger.cs" />
@@ -984,7 +985,7 @@
     <Compile Include="Assets\Scripts\flycameraDebug.cs" />
     <Compile Include="Assets\Scripts\FollowCameraView.cs" />
     <Compile Include="Assets\Scripts\FollowerMovement.cs" />
-    <Compile Include="Assets\Scripts\GlobalVariables.Refactor.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\GlobalVariables.Refactor.cs" />
     <Compile Include="Assets\Scripts\GlobalVariables.cs" />
     <Compile Include="Assets\Scripts\GrassPatchHandler.cs" />
     <Compile Include="Assets\Scripts\GUIParticleHandler.cs" />
@@ -1030,12 +1031,14 @@
     <Compile Include="Assets\Scripts\NPCHandler.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\FileTest.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\LevelLoader.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Game_System.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\BattleScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokeBattle_SceneConstants.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\FightMenuButtons.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\FightMenuDisplay.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\GameEvents.cs" />
     <Compile Include="Assets\Scripts\ReflectiveWaterHandler.cs" />
     <Compile Include="Assets\Scripts\SandTileHandler.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
