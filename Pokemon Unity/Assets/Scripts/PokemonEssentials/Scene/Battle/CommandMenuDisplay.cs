@@ -16,7 +16,7 @@ namespace PokemonUnity
 	/// <summary>
 	/// Command menu (Fight/Pokémon/Bag/Run)
 	/// </summary>
-	public partial class CommandMenuDisplay : ICommandMenuDisplay
+	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay
 	{
 		public int mode { get; set; }
 		public string title;
