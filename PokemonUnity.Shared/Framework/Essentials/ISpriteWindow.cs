@@ -205,8 +205,11 @@ namespace PokemonEssentials.Interface
 		// archives.  Returns _x_ if the path can't be found.
 		string pbBitmapName(string x);
 
-		// Finds the real path for an image file.  This includes paths in encrypted
-		// archives.  Returns null if the path can't be found.
+		/// <summary>
+		/// Finds the real path for an image file. This includes paths in encrypted archives.  
+		/// </summary>
+		/// <param name="x"></param>
+		/// <returns>Returns null if the path can't be found.</returns>
 		string pbResolveBitmap(string x);
 
 		// Adds a background to the sprite hash.
@@ -268,12 +271,20 @@ namespace PokemonEssentials.Interface
 		/// <returns></returns>
 		IDisposable pbRgssOpen(string file, int? mode = null, Action action = null);
 
-		// Gets at least the first byte of a file. Doesn't check RTP, but does check
-		// encrypted archives.
+		/// <summary>
+		/// Gets at least the first byte of a file. 
+		/// </summary>
+		/// <param name="file"></param>
+		/// <returns></returns>
+		/// Doesn't check RTP, but does check encrypted archives.
 		string pbGetFileChar(string file);
 
-		// Gets the contents of a file. Doesn't check RTP, but does check
-		// encrypted archives.
+		/// <summary>
+		/// Gets the contents of a file. 
+		/// </summary>
+		/// <param name="file"></param>
+		/// <returns></returns>
+		/// Doesn't check RTP, but does check encrypted archives.
 		string pbGetFileString(string file);
 	}
 
