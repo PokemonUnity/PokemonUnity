@@ -13,7 +13,7 @@ using PokemonUnity.Utility;
 namespace PokemonUnity.Character
 {
 	//ToDo: Somehow manage to combine the two set of information into one complete class logic
-	public class Entities
+	/*public class Entities
 	{		   
 		/// <summary>
 		/// An event with this text in its name is treated as occupying multiple tiles at once(in this case, a rectangle 2 tiles wide and and 3 tiles tall). The event's rectangle is positioned such that its bottom left corner is where the event has been placed in the map.
@@ -256,5 +256,5 @@ namespace PokemonUnity.Character
 		public static readonly Entities OverworldPokemon = new Entities(0, "Entities_Text_OverworldPokemon");
 		public static readonly Entities OwnPlayer = new Entities(0, "Entities_Text_OwnPlayer");
 		public static readonly Entities Particle = new Entities(0, "Entities_Text_Particle");
-	}
+	}*/
 }
