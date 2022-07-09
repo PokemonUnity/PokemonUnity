@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.UX;
-using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonUnity
 {
@@ -20,7 +21,7 @@ namespace PokemonUnity
 		public bool begunNewGame { get; set; }
 		public int miniupdate { get; set; }
 		public int waitingTrainer { get; set; }
-		public int darknessSprite { get; set; }
+		public ISprite darknessSprite { get; set; }
 		public IList<string> pokemonDexData { get; }
 		public IDictionary<int, IPokemonMetadata> pokemonMetadata { get; set; }
 		public IList<int> pokemonPhoneData { get; }
@@ -29,8 +30,8 @@ namespace PokemonUnity
 
 		public PokemonTemp() { initialize(); }
 		public PokemonEssentials.Interface.Field.ITempMetadata initialize()
-        {
+		{
 			return this;
-        }
+		}
 	}
 }

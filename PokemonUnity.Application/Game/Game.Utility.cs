@@ -27,7 +27,7 @@ namespace PokemonUnity
 	/// </summary>
 	public partial class Game : PokemonEssentials.Interface.IGameUtility
 	{
-		public static Localization.XmlStringRes LocalizationDictionary;
+		public static PokemonUnity.Localization.XmlStringRes LocalizationDictionary;
 		/// <summary>
 		/// </summary>
 		/// <param name="message"></param>

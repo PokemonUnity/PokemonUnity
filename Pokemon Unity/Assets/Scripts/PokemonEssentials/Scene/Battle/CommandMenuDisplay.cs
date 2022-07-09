@@ -33,19 +33,19 @@ namespace PokemonUnity
 			if (PokeBattle_SceneConstants.USECOMMANDBOX)
 			{
 				//set display to true
-				//@display = new IconSprite(0, Graphics.height - 96, viewport);
-				@display.initialize(0, Graphics.height - 96, viewport);
+				//@display = new IconSprite(0, (Game.GameData as Game).Graphics.height - 96, viewport);
+				@display.initialize(0, (Game.GameData as Game).Graphics.height - 96, viewport);
 				@display.setBitmap("Graphics/Pictures/battleCommand");
 			}
-			//@window = new Window_CommandPokemon()WithSize([],
-			//	Graphics.width - 240,Graphics.height - 96,240,96,viewport);
-			@window.WithSize(new string[0], Graphics.width - 240,Graphics.height - 96,240,96,viewport);
+			//@window = new Window_CommandPokemon().WithSize([],
+			//	(Game.GameData as Game).Graphics.width - 240,(Game.GameData as Game).Graphics.height - 96,240,96,viewport);
+			@window.WithSize(new string[0], (Game.GameData as Game).Graphics.width - 240,(Game.GameData as Game).Graphics.height - 96,240,96,viewport);
 			@window.columns = 2;
 			@window.columnSpacing = 4;
 			@window.ignore_input = true;
 			//@msgbox = new Window_UnformattedTextPokemon()WithSize(
-			//	 "", 16, Graphics.height - 96 + 2, 220, 96, viewport);
-			@msgbox.WithSize("", 16, Graphics.height - 96 + 2, 220, 96, viewport);
+			//	 "", 16, (Game.GameData as Game).Graphics.height - 96 + 2, 220, 96, viewport);
+			@msgbox.WithSize("", 16, (Game.GameData as Game).Graphics.height - 96 + 2, 220, 96, viewport);
 			@msgbox.baseColor = PokeBattle_SceneConstants.MESSAGEBASECOLOR;
 			@msgbox.shadowColor = PokeBattle_SceneConstants.MESSAGESHADOWCOLOR;
 			@msgbox.windowskin = null;
@@ -55,7 +55,7 @@ namespace PokemonUnity
 			{
 				//set display to true
 				@window.opacity = 0;
-				@window.x = Graphics.width;
+				@window.x = (Game.GameData as Game).Graphics.width;
 				//@buttons = new CommandMenuButtons(this.index, this.mode, viewport);
 				@buttons.initialize(this.index, this.mode, viewport);
 			}*/

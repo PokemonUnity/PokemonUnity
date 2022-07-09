@@ -99,7 +99,7 @@ namespace PokemonUnity
 		public static Action<object, IOnSpritesetCreateEventArgs> OnSpritesetCreate;
 		public static event EventHandler OnStartBattle;
 		//public static event EventHandler OnEndBattle;
-		public event Action<object, IOnEndBattleEventArgs> OnEndBattle;
+		public static event Action<object, IOnEndBattleEventArgs> OnEndBattle;
 		/// <summary>
 		/// Fires whenever a map is created. Event handler receives two parameters: the
 		/// map (RPG.Map) and the tileset (RPG.Tileset)

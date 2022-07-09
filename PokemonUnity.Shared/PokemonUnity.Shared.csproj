@@ -59,6 +59,7 @@
     <Compile Include="Attack\Data\Meta.cs" />
     <Compile Include="Attack\Data\Flag.cs" />
     <Compile Include="Character\BadgeData.cs" />
+    <Compile Include="Character\Entity.cs" />
     <Compile Include="Character\DayCareData.cs" />
     <Compile Include="Character\Gear\Phone.cs" />
     <Compile Include="Character\Gear\Pokedex.cs" />
@@ -84,7 +85,6 @@
     <Compile Include="Framework\Essentials\IGameUtility.cs" />
     <Compile Include="Framework\Essentials\IMessage.cs" />
     <Compile Include="Framework\Essentials\ISceneMap.cs" />
-    <Compile Include="Framework\Essentials\ISpritePokemon.cs" />
     <Compile Include="Framework\Essentials\ISpriteWindow.cs" />
     <Compile Include="Framework\Essentials\Item\IMail.cs" />
     <Compile Include="Framework\Essentials\Item\IPokeRadar.cs" />
@@ -201,7 +201,6 @@
     <Compile Include="Inventory\Data\Berry.cs" />
     <Compile Include="Inventory\Data\ItemFlags.cs" />
     <Compile Include="Inventory\Data\Mail.cs" />
-    <Compile Include="Localization\XmlStringRes.cs" />
     <Compile Include="Monster\Nature.cs" />
     <Compile Include="Monster\Pokemon\Data\Base.cs" />
     <Compile Include="Monster\Pokemon\Data\Evolution.cs" />

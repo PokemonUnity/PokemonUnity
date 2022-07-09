@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Pokemon Unity\Assets\GameMain\Libraries\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -88,6 +88,7 @@
     <Compile Include="Inventory\Item\Item.Effects.cs" />
     <Compile Include="Inventory\Item\Item.Helper.cs" />
     <Compile Include="Inventory\Item\Item.Pokeball.cs" />
+    <Compile Include="Localization\XmlStringRes.cs" />
     <Compile Include="Monster\BattlePeer.cs" />
     <Compile Include="Monster\Chatter.cs" />
     <Compile Include="Monster\EvolutionHelper.cs" />

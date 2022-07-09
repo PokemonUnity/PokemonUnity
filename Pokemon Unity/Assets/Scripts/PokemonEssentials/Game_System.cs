@@ -142,7 +142,7 @@ namespace PokemonUnity
 				bgm_play_internal2("Audio/BGM/" + @defaultBGM.name,
 				  @defaultBGM.volume, @defaultBGM.pitch, @bgm_position);
 			}
-			//Graphics.frame_reset();
+			//(Game.GameData as Game).Graphics.frame_reset();
 		}
 		// :nodoc:
 		public void bgm_pause(float fadetime = 0f)
@@ -282,7 +282,7 @@ namespace PokemonUnity
 			//{
 			//	Audio.AudioHandler.me_stop();
 			//}
-			//Graphics.frame_reset();
+			//(Game.GameData as Game).Graphics.frame_reset();
 		}
 
 		public void me_play(IAudioME me)
@@ -305,7 +305,7 @@ namespace PokemonUnity
 			{
 				Audio.AudioHandler.me_stop();
 			}
-			//Graphics.frame_reset();
+			//(Game.GameData as Game).Graphics.frame_reset();
 		}
 
 		public void me_fade(float time)
@@ -349,7 +349,7 @@ namespace PokemonUnity
 				@playing_bgs = null;
 				Audio.AudioHandler.bgs_stop();
 			}
-			//Graphics.frame_reset();
+			//(Game.GameData as Game).Graphics.frame_reset();
 		}
 		// :nodoc:
 		public void bgs_pause(float fadetime = 0.0f)

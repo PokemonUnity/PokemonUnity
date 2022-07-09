@@ -118,7 +118,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 
 		partyAnimationUpdate();
 		//if (sprites["battlebg"] is GameObject g) g.pbUpdate();
-		//Graphics.Update();
+		//(Game.GameData as Game).Graphics.Update();
 	}
 
 	public void pbInputUpdate()
@@ -159,9 +159,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			msgwindow.shadowColor = PokeBattle_SceneConstants.MENUSHADOWCOLOR;
 			msgwindow.opacity = 255;
 			msgwindow.x = 16;
-			msgwindow.width = Graphics.width;
+			msgwindow.width = (Game.GameData as Game).Graphics.width;
 			msgwindow.height = 96;
-			msgwindow.y = Graphics.height - msgwindow.height + 2;
+			msgwindow.y = (Game.GameData as Game).Graphics.height - msgwindow.height + 2;
 		
 		}
 		else 
@@ -170,9 +170,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			msgwindow.shadowColor = PokeBattle_SceneConstants.MESSAGESHADOWCOLOR;
 			msgwindow.opacity = 0;
 			msgwindow.x = 16;
-			msgwindow.width = Graphics.width - 32;
+			msgwindow.width = (Game.GameData as Game).Graphics.width - 32;
 			msgwindow.height = 96;
-			msgwindow.y = Graphics.height - msgwindow.height + 2;
+			msgwindow.y = (Game.GameData as Game).Graphics.height - msgwindow.height + 2;
 		}*/
 	}
 
@@ -315,8 +315,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		dw.text = msg;
 		//IWindow_CommandPokemon cw = new Window_CommandPokemon(commands);
 		IWindow_CommandPokemon cw = commandPokemon.initialize(commands);
-		//cw.x = Graphics.width - cw.width;
-		//cw.y = Graphics.height - cw.height - dw.height;
+		//cw.x = (Game.GameData as Game).Graphics.width - cw.width;
+		//cw.y = (Game.GameData as Game).Graphics.height - cw.height - dw.height;
 		cw.index = 0;
 		cw.viewport = @viewport;
 		pbRefresh();
@@ -370,8 +370,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		dw.text = msg;
 		//IWindow_CommandPokemon cw = new Window_CommandPokemon(commands);
 		IWindow_CommandPokemon cw = commandPokemon.initialize(commands);
-		//cw.x = Graphics.width - cw.width;
-		//cw.y = Graphics.height - cw.height - dw.height;
+		//cw.x = (Game.GameData as Game).Graphics.width - cw.width;
+		//cw.y = (Game.GameData as Game).Graphics.height - cw.height - dw.height;
 		cw.index = 0;
 		cw.viewport = @viewport;
 		pbRefresh();
@@ -551,7 +551,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		{
 			trainerfile = "Graphics/Characters/trfront";
 		}
-		pbAddSprite("trainer", Graphics.width, PokeBattle_SceneConstants.FOETRAINER_Y,
+		pbAddSprite("trainer", (Game.GameData as Game).Graphics.width, PokeBattle_SceneConstants.FOETRAINER_Y,
 		   trainerfile, @viewport);
 		if (@sprites["trainer"].bitmap != null)
 		{
@@ -591,7 +591,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		//(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).resizeToFit(text, Graphics.width);
+		//(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).resizeToFit(text, (Game.GameData as Game).Graphics.width);
 		(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).y = 0;
 		(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).x = 0;
 		(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).text = text;
@@ -734,7 +734,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			@xposplayer = PokeBattle_SceneConstants.PLAYERPARTYBALL1_X;
 			int counter = 0;
 			//  Make sure the ball starts off-screen
-			while (@xposplayer < Graphics.width)
+			while (@xposplayer < (Game.GameData as Game).Graphics.width)
 			{
 				counter += 1; @xposplayer += ballmovedist;
 			}
@@ -825,10 +825,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		@showingplayer = true;
 		@showingenemy = true;
 		@sprites.Clear();
-		//@viewport = new Viewport(0, Graphics.height / 2, Graphics.width, 0);
-		@viewport.initialize(0, Graphics.height / 2, Graphics.width, 0);
+		//@viewport = new Viewport(0, (Game.GameData as Game).Graphics.height / 2, (Game.GameData as Game).Graphics.width, 0);
+		@viewport.initialize(0, (Game.GameData as Game).Graphics.height / 2, (Game.GameData as Game).Graphics.width, 0);
 		//@viewport.z = 99999;
-		@traineryoffset = (Graphics.height - 320); // Adjust player's side for screen size
+		@traineryoffset = ((Game.GameData as Game).Graphics.height - 320); // Adjust player's side for screen size
 		@foeyoffset = (float)Math.Floor(@traineryoffset * 3f / 4f);  // Adjust foe's side for screen size
 		pbBackdrop();
 		pbAddSprite("partybarfoe",
@@ -975,7 +975,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			(@sprites["battlebox2"] as IPokemonDataBox).initialize(battle.battlers[2], battle.doublebattle, @viewport);
 			(@sprites["battlebox3"] as IPokemonDataBox).initialize(battle.battlers[3], battle.doublebattle, @viewport);
 		}
-		pbAddSprite("messagebox", 0, Graphics.height - 96, "Graphics/Pictures/battleMessage", @viewport);
+		pbAddSprite("messagebox", 0, (Game.GameData as Game).Graphics.height - 96, "Graphics/Pictures/battleMessage", @viewport);
 		@sprites["messagebox"].z = 90;
 		//@sprites["helpwindow"] = new Window_UnformattedTextPokemon().WithSize("", 0, 0, 32, 32, @viewport);
 		(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).initialize().WithSize("", 0, 0, 32, 32, @viewport);
@@ -1055,25 +1055,25 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		// ################
 		//  Move trainers/bases/etc. off-screen
 		float[] oldx = new float[8];
-		oldx[0] = @sprites["playerbase"].x; @sprites["playerbase"].x += Graphics.width;
-		oldx[1] = @sprites["player"].x; @sprites["player"].x += Graphics.width;
+		oldx[0] = @sprites["playerbase"].x; @sprites["playerbase"].x += (Game.GameData as Game).Graphics.width;
+		oldx[1] = @sprites["player"].x; @sprites["player"].x += (Game.GameData as Game).Graphics.width;
 		if (@sprites["playerB"] != null)
 		{
-			oldx[2] = @sprites["playerB"].x; @sprites["playerB"].x += Graphics.width;
+			oldx[2] = @sprites["playerB"].x; @sprites["playerB"].x += (Game.GameData as Game).Graphics.width;
 		}
-		oldx[3] = @sprites["enemybase"].x; @sprites["enemybase"].x -= Graphics.width;
-		oldx[4] = trainersprite1.x; trainersprite1.x -= Graphics.width;
+		oldx[3] = @sprites["enemybase"].x; @sprites["enemybase"].x -= (Game.GameData as Game).Graphics.width;
+		oldx[4] = trainersprite1.x; trainersprite1.x -= (Game.GameData as Game).Graphics.width;
 		if (trainersprite2 != null)
 		{
-			oldx[5] = trainersprite2.x; trainersprite2.x -= Graphics.width;
+			oldx[5] = trainersprite2.x; trainersprite2.x -= (Game.GameData as Game).Graphics.width;
 		}
-		oldx[6] = (@sprites["shadow1"] as IIconSprite).x; (@sprites["shadow1"] as IIconSprite).x -= Graphics.width;
+		oldx[6] = (@sprites["shadow1"] as IIconSprite).x; (@sprites["shadow1"] as IIconSprite).x -= (Game.GameData as Game).Graphics.width;
 		if (@sprites["shadow3"] != null)
 		{
-			oldx[7] = (@sprites["shadow3"] as IIconSprite).x; (@sprites["shadow3"] as IIconSprite).x -= Graphics.width;
+			oldx[7] = (@sprites["shadow3"] as IIconSprite).x; (@sprites["shadow3"] as IIconSprite).x -= (Game.GameData as Game).Graphics.width;
 		}
 		@sprites["partybarfoe"].x -= PokeBattle_SceneConstants.FOEPARTYBAR_X;
-		@sprites["partybarplayer"].x += Graphics.width - PokeBattle_SceneConstants.PLAYERPARTYBAR_X;
+		@sprites["partybarplayer"].x += (Game.GameData as Game).Graphics.width - PokeBattle_SceneConstants.PLAYERPARTYBAR_X;
 		// ################
 		int appearspeed = 12;
 		int n = 0;
@@ -1085,7 +1085,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 				@viewport.rect.y -= appearspeed / 2;
 				if (@viewport.rect.y < 0) @viewport.rect.y = 0;
 				@viewport.rect.height += appearspeed;
-				if (@viewport.rect.height > Graphics.height) @viewport.rect.height = Graphics.height;
+				if (@viewport.rect.height > (Game.GameData as Game).Graphics.height) @viewport.rect.height = (Game.GameData as Game).Graphics.height;
 				tobreak = false;
 			}
 			if (!tobreak)
@@ -1142,7 +1142,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			pbInputUpdate();
 			pbFrameUpdate();
 			if (tobreak) break; n++;
-		} while (n < (1 + Graphics.width / appearspeed));
+		} while (n < (1 + (Game.GameData as Game).Graphics.width / appearspeed));
 		// ################
 		if (@battle.opponent != null) {
 			@enablePartyAnim=true;
@@ -2638,12 +2638,12 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		pictureBall.moveXY(0, 1, 10, 180);
 		//  directives
 		pictureBall.moveSE(1, "Audio/SE/throw");
-		pictureBall.moveCurve(30, 1, 150, 70, 30 + Graphics.width / 2, 10, center[0], center[1]);
+		pictureBall.moveCurve(30, 1, 150, 70, 30 + (Game.GameData as Game).Graphics.width / 2, 10, center[0], center[1]);
 		pictureBall.moveAngle(30, 1, -1080);
 		pictureBall.moveAngle(0, pictureBall.totalDuration, 0);
 		delay = pictureBall.totalDuration;
 		pictureBall.moveSE(delay, "Audio/SE/balldrop");
-		pictureBall.moveXY(20, delay, 0, Graphics.height);
+		pictureBall.moveXY(20, delay, 0, (Game.GameData as Game).Graphics.height);
 		do //;loop
 		{
 			pictureBall.update();
@@ -2691,7 +2691,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		//	@briefmessage=false;
 		//	(AudioHandler as IGameAudioPlay).pbMEPlay("Jingle - HMTM");
 		//	//All of this below should be a coroutine that returns the value selected in UI
-		//	int frames=(int)(3.5*Graphics.frame_rate);
+		//	int frames=(int)(3.5*(Game.GameData as Game).Graphics.frame_rate);
 		//	int i = 0; do {
 		//		pbGraphicsUpdate();
 		//		pbInputUpdate();
@@ -2755,7 +2755,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		picturePlayer.moveXY(0, 1, playerpos[0], playerpos[1]);
 		//  directives
 		picturePoke.moveSE(1, "Audio/SE/throw");
-		pictureBall.moveCurve(30, 1, 64, 256, Graphics.width / 2, 48,
+		pictureBall.moveCurve(30, 1, 64, 256, (Game.GameData as Game).Graphics.width / 2, 48,
 							  PokeBattle_SceneConstants.FOEBATTLER_X - 48,
 							  PokeBattle_SceneConstants.FOEBATTLER_Y);
 		pictureBall.moveAngle(30, 1, -720);
@@ -2847,7 +2847,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		pictureAnger.moveZoom(0,1,100);
 		//  directives
 		picturePoke.moveSE(1,"Audio/SE/throw");
-		pictureBall.moveCurve(30,1,64,256,Graphics.width/2,48,pokecenter[0],pokecenter[1]);
+		pictureBall.moveCurve(30,1,64,256,(Game.GameData as Game).Graphics.width/2,48,pokecenter[0],pokecenter[1]);
 		pictureBall.moveAngle(30,1,-720);
 		pictureBall.moveAngle(0,pictureBall.totalDuration,0);
 		pictureBall.moveSE(30,"Audio/SE/notverydamage");
@@ -2907,9 +2907,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		//All of this below should be a coroutine that returns the value selected in UI
 		//int i = 0; do //Idle animation for 1 second...
 		//{
-		//	Graphics.update();
+		//	(Game.GameData as Game).Graphics.update();
 		//	PokemonUnity.Input.update(); i++;
-		//} while (i < Graphics.frame_rate); //;Graphics.frame_rate.times 
+		//} while (i < (Game.GameData as Game).Graphics.frame_rate); //;(Game.GameData as Game).Graphics.frame_rate.times 
 	}
 
 	IPokeBattle_DebugSceneNoGraphics IPokeBattle_DebugSceneNoGraphics.initialize()

@@ -74,10 +74,10 @@ namespace PokemonUnity
 
 		public IFightMenuButtons initialize(int index= 0, IBattleMove[] moves = null, IViewport viewport= null)
 		{
-			//super(Graphics.width, 96 + UPPERGAP, viewport);
-			//(this as IBitmapSprite).initialize(Graphics.width, 96 + UPPERGAP, viewport);
+			//super((Game.GameData as Game).Graphics.width, 96 + UPPERGAP, viewport);
+			//(this as IBitmapSprite).initialize((Game.GameData as Game).Graphics.width, 96 + UPPERGAP, viewport);
 			/*this.x = 0;
-			this.y = Graphics.height - 96 - UPPERGAP;
+			this.y = (Game.GameData as Game).Graphics.height - 96 - UPPERGAP;
 			pbSetNarrowFont(this.bitmap);*/
 			//@buttonbitmap = new AnimatedBitmap("Graphics/Pictures/battleFightButtons");
 			//@typebitmap = new AnimatedBitmap(Game._INTL("Graphics/Pictures/types"));

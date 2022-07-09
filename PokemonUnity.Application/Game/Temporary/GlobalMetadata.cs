@@ -107,14 +107,14 @@ namespace PokemonUnity
 		public int pokedexDex				                { get; set; } // Dex currently looking at (-1 is National Dex)
 		public int[] pokedexIndex				            { get; set; } // Last species viewed per Dex
 		public int pokedexMode								{ get; set; } // Search mode
-		public int? healingSpot								{ get; set; }
+		public ITilePosition healingSpot					{ get; set; }
 		public float[] escapePoint							{ get; set; }
 		public int pokecenterMapId							{ get; set; }
 		public float pokecenterX				            { get; set; }
 		public float pokecenterY				            { get; set; }
 		public int pokecenterDirection						{ get; set; }
 		public ITilePosition pokecenter						{ get; set; }
-		public IList<int> visitedMaps				        { get; set; }
+		public IDictionary<int,bool> visitedMaps			{ get; set; }
 		public IList<int> mapTrail				            { get; set; }
 		public IAudioBGM nextBattleBGM						{ get; set; }
 		public IAudioME nextBattleME						{ get; set; }
@@ -185,7 +185,7 @@ namespace PokemonUnity
 			@pokecenterX          = -1;
 			@pokecenterY          = -1;
 			@pokecenterDirection  = -1;
-			@visitedMaps          = new List<int>();
+			@visitedMaps          = new Dictionary<int,bool>();
 			@mapTrail             = new List<int>();
 			@nextBattleBGM        = null;
 			@nextBattleME         = null;

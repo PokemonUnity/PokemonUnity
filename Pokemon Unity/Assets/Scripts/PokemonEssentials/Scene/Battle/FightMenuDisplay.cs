@@ -135,19 +135,19 @@ namespace PokemonUnity
 			@display = null;
 			/*if (PokeBattle_SceneConstants.USEFIGHTBOX)
 			{
-				//@display = new IconSprite().initialize(0, Graphics.height - 96, viewport);
-				@display.initialize(0, Graphics.height - 96, viewport);
+				//@display = new IconSprite().initialize(0, (Game.GameData as Game).Graphics.height - 96, viewport);
+				@display.initialize(0, (Game.GameData as Game).Graphics.height - 96, viewport);
 				@display.setBitmap("Graphics/Pictures/battleFight");
 			}
-			//@window = new Window_CommandPokemon().WithSize([],0,Graphics.height - 96,320,96,viewport);
-			@window.WithSize(new string[0],0,Graphics.height - 96,320,96,viewport);
+			//@window = new Window_CommandPokemon().WithSize([],0,(Game.GameData as Game).Graphics.height - 96,320,96,viewport);
+			@window.WithSize(new string[0],0,(Game.GameData as Game).Graphics.height - 96,320,96,viewport);
 			@window.columns = 2;
 			@window.columnSpacing = 4;
 			@window.ignore_input = true;
 			pbSetNarrowFont(@window.contents);
 			//@info = new Window_AdvancedTextPokemon().WithSize(
-			//	 "", 320, Graphics.height - 96, Graphics.width - 320, 96, viewport);
-			@info.WithSize("", 320, Graphics.height - 96, Graphics.width - 320, 96, viewport);
+			//	 "", 320, (Game.GameData as Game).Graphics.height - 96, (Game.GameData as Game).Graphics.width - 320, 96, viewport);
+			@info.WithSize("", 320, (Game.GameData as Game).Graphics.height - 96, (Game.GameData as Game).Graphics.width - 320, 96, viewport);
 			pbSetNarrowFont(@info.contents);
 			@ctag = shadowctag(PokeBattle_SceneConstants.MENUBASECOLOR,
 							 PokeBattle_SceneConstants.MENUSHADOWCOLOR);
@@ -158,9 +158,9 @@ namespace PokemonUnity
 			if (PokeBattle_SceneConstants.USEFIGHTBOX)
 			{
 				@window.opacity = 0;
-				@window.x = Graphics.width;
+				@window.x = (Game.GameData as Game).Graphics.width;
 				@info.opacity = 0;
-				@info.x = Graphics.width + Graphics.width - 96;
+				@info.x = (Game.GameData as Game).Graphics.width + (Game.GameData as Game).Graphics.width - 96;
 				//@buttons = new FightMenuButtons().initialize(this.index, null, viewport);
 				@buttons.initialize(this.index, null, viewport);
 			}*/

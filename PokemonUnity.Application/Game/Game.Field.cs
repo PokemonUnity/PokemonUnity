@@ -1296,9 +1296,9 @@ namespace PokemonUnity
 			if (PokemonEncounters != null) PokemonEncounters.setup(GameMap.map_id);
 			Global.visitedMaps[GameMap.map_id]=true;
 			if (oldid!=0 && oldid!=GameMap.map_id) {
-				IList<object> mapinfos=$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
+				IDictionary<int, string> mapinfos = new Dictionary<int, string>(); //$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
 				MetadataWeather? weather=pbGetMetadata(GameMap.map_id).Map.Weather;
-				if (GameMap.name!=mapinfos[oldid].name) {
+				if (GameMap.name!=mapinfos[oldid]) { //GameMap.name!=mapinfos[oldid].name
 					//if (weather != null && Core.Rand.Next(100)<weather[1]) GameScreen.weather(weather[0],8,20);
 					if (weather != null && Core.Rand.Next(100)<weather.Value.Chance) GameScreen.weather(weather.Value.Weather,8,20);
 				} else {
@@ -1314,10 +1314,10 @@ namespace PokemonUnity
 			int newmapID = e.MapId; //[0];
 			IGameMap newmap = e.GameMap; //[1];
 		//  Undo the weather (GameMap still refers to the old map)
-			IList<object> mapinfos=$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
+			IDictionary<int, string> mapinfos = new Dictionary<int, string>(); //$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
 			if (newmapID>0) {
 				MetadataWeather? oldweather=pbGetMetadata(GameMap.map_id).Map.Weather;
-				if (GameMap.name!=mapinfos[newmapID].name) {
+				if (GameMap.name!=mapinfos[newmapID]) { //GameMap.name!=mapinfos[newmapID].name
 					if (oldweather != null) GameScreen.weather(0,0,0);
 				} else {
 					MetadataWeather? newweather=pbGetMetadata(newmapID).Map.Weather;
@@ -1373,8 +1373,8 @@ namespace PokemonUnity
 							if (Core.NOSIGNPOSTS[2*i+1]==Global.mapTrail[1] && Core.NOSIGNPOSTS[2*i]==GameMap.map_id) nosignpost=true;
 							if (nosignpost) break;
 						}
-						IList<object> mapinfos=$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
-						string oldmapname=mapinfos[Global.mapTrail[1]].name;
+						IDictionary<int, string> mapinfos = new Dictionary<int, string>(); //$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
+						string oldmapname=mapinfos[Global.mapTrail[1]]; //mapinfos[Global.mapTrail[1]].name
 						if (GameMap.name==oldmapname) nosignpost=true;
 					}
 					if (!nosignpost) 
