@@ -105,11 +105,11 @@ namespace PokemonUnity
 			vol = (int)vol;
 			try
 			{
-				Audio.bgm_play(name, vol, pitch, position);
+				(Audio.AudioHandler as Audio).bgm_play(name, vol, pitch, position);
 			}
 			catch //ArgumentError;
 			{
-				Audio.bgm_play(name, vol, pitch);
+				Audio.AudioHandler.bgm_play(name, vol, pitch);
 			}
 		}
 		// :nodoc:
@@ -135,7 +135,7 @@ namespace PokemonUnity
 					@bgm_position = position;
 				}
 				@playing_bgm = null;
-				if (defaultBGM == null) Audio.bgm_stop();
+				if (defaultBGM == null) Audio.AudioHandler.bgm_stop();
 			}
 			if (defaultBGM != null)
 			{
@@ -147,7 +147,7 @@ namespace PokemonUnity
 		// :nodoc:
 		public void bgm_pause(float fadetime = 0f)
 		{
-			int pos = Audio.bgm_position; //rescue 0;
+			int pos = (Audio.AudioHandler as Audio).bgm_position; //rescue 0;
 			if (fadetime > 0.0)
 			{
 				this.bgm_fade(fadetime);
@@ -179,7 +179,7 @@ namespace PokemonUnity
 				@bgm_position = 0;
 			}
 			@playing_bgm = null;
-			if (defaultBGM == null) Audio.bgm_stop();
+			if (defaultBGM == null) Audio.AudioHandler.bgm_stop();
 		}
 		// :nodoc:
 		public void bgm_fade(float time)
@@ -189,7 +189,7 @@ namespace PokemonUnity
 				@bgm_position = 0;
 			}
 			@playing_bgm = null;
-			if (defaultBGM == null) Audio.bgm_fade((int)Math.Floor(time * 1000));
+			if (defaultBGM == null) Audio.AudioHandler.bgm_fade((int)Math.Floor(time * 1000));
 		}
 
 		//public IAudioBGM playing_bgm()
@@ -197,19 +197,26 @@ namespace PokemonUnity
 		//	return @playing_bgm;
 		//}
 
-		//  Saves the currently playing background music for later playback.
+		/// <summary>
+		/// Saves the currently playing background music for later playback.
+		/// </summary>
 		public void bgm_memorize()
 		{
 			@memorized_bgm = @playing_bgm;
 		}
 
-		//  Plays the currently memorized background music
+		/// <summary>
+		/// Plays the currently memorized background music
+		/// </summary>
 		public void bgm_restore()
 		{
 			bgm_play(@memorized_bgm);
 		}
 
-		//  Returns an RPG.AudioFile object for the currently playing background music
+		/// <summary>
+		/// Returns an AudioTrack().initialize object for the currently playing background music
+		/// </summary>
+		/// <returns></returns>
 		public IAudioBGM getPlayingBGM()
 		{
 			return @playing_bgm != null ? @playing_bgm.clone() : null;
@@ -219,7 +226,7 @@ namespace PokemonUnity
 		{
 			if (!string.IsNullOrEmpty(bgm))
 			{
-				setDefaultBGM(new RPG.AudioFile(bgm, volume, pitch) as IAudioBGM, volume, pitch);
+				setDefaultBGM(new AudioTrack().initialize(bgm, volume, pitch) as IAudioBGM, volume, pitch);
 			}
 			//if (bgm != null && bgm.name != "")
 			//{
@@ -238,7 +245,7 @@ namespace PokemonUnity
 		{
 			//if (bgm is string)
 			//{
-			//	bgm = new RPG.AudioFile(bgm, volume, pitch);
+			//	bgm = new AudioTrack().initialize(bgm, volume, pitch);
 			//}
 			if (bgm != null && bgm.name != "")
 			{
@@ -259,7 +266,7 @@ namespace PokemonUnity
 		{
 			if (!string.IsNullOrEmpty(me))
 			{
-				me_play(new RPG.AudioFile(me) as IAudioME);
+				me_play(new AudioTrack().initialize(me) as IAudioME);
 			}
 			//if (me != null && me.name != "")
 			//{
@@ -268,12 +275,12 @@ namespace PokemonUnity
 			//		int vol = me.volume;
 			//		if (Game.GameData.PokemonSystem) vol *= (Game.GameData.PokemonSystem.bgmvolume / 100.0f);
 			//		vol = vol.to_i;
-			//		Audio.me_play("Audio/ME/" + me.name, vol, me.pitch);
+			//		Audio.AudioHandler.me_play("Audio/ME/" + me.name, vol, me.pitch);
 			//	}
 			//}
 			//else
 			//{
-			//	Audio.me_stop();
+			//	Audio.AudioHandler.me_stop();
 			//}
 			//Graphics.frame_reset();
 		}
@@ -282,7 +289,7 @@ namespace PokemonUnity
 		{
 			//if (me is String)
 			//{
-			//	me = new RPG.AudioFile(me);
+			//	me = new AudioTrack().initialize(me);
 			//}
 			if (me != null && me.name != "")
 			{
@@ -291,12 +298,12 @@ namespace PokemonUnity
 					float vol = me.volume;
 					if (Game.GameData.PokemonSystem != null) vol *= (Game.GameData.PokemonSystem.bgmvolume / 100.0f);
 					vol = (int)vol;
-					Audio.me_play("Audio/ME/" + me.name, vol, me.pitch);
+					Audio.AudioHandler.me_play("Audio/ME/" + me.name, vol, me.pitch);
 				}
 			}
 			else
 			{
-				Audio.me_stop();
+				Audio.AudioHandler.me_stop();
 			}
 			//Graphics.frame_reset();
 		}
@@ -308,7 +315,7 @@ namespace PokemonUnity
 			//	@bgm_position = 0;
 			//}
 			//@playing_bgm = null;
-			//if (defaultBGM == null) Audio.me_fade((int)Math.Floor(time * 1000));
+			//if (defaultBGM == null) Audio.AudioHandler.me_fade((int)Math.Floor(time * 1000));
 		}
 
 		public void me_stop()
@@ -318,7 +325,7 @@ namespace PokemonUnity
 			//	@bgm_position = 0;
 			//}
 			//@playing_bgm = null;
-			//if (defaultBGM == null) Audio.me_stop();
+			//if (defaultBGM == null) Audio.AudioHandler.me_stop();
 		}
 
 		// ###############################################################################
@@ -333,14 +340,14 @@ namespace PokemonUnity
 					float vol = bgs.volume;
 					if (Game.GameData.PokemonSystem != null) vol *= (Game.GameData.PokemonSystem.sevolume / 100.0f);
 					vol = (int)vol;
-					Audio.bgs_play("Audio/BGS/" + bgs.name, vol, bgs.pitch);
+					Audio.AudioHandler.bgs_play("Audio/BGS/" + bgs.name, vol, bgs.pitch);
 				}
 			}
 			else
 			{
 				@bgs_position = 0;
 				@playing_bgs = null;
-				Audio.bgs_stop();
+				Audio.AudioHandler.bgs_stop();
 			}
 			//Graphics.frame_reset();
 		}
@@ -376,14 +383,14 @@ namespace PokemonUnity
 		{
 			@bgs_position = 0;
 			@playing_bgs = null;
-			Audio.bgs_stop();
+			Audio.AudioHandler.bgs_stop();
 		}
 
 		public void bgs_fade(float time)
 		{
 			@bgs_position = 0;
 			@playing_bgs = null;
-			Audio.bgs_fade((int)Math.Floor(time * 1000));
+			Audio.AudioHandler.bgs_fade((int)Math.Floor(time * 1000));
 		}
 
 		//public IAudioBGS playing_bgs()
@@ -412,7 +419,7 @@ namespace PokemonUnity
 		{
 			if (!string.IsNullOrEmpty(se))
 			{
-				se_play(new RPG.AudioFile(se));
+				se_play(new AudioTrack().initialize(se) as IAudioSE);
 			}
 			//if (se != null && se.name != "")
 			//{
@@ -421,7 +428,7 @@ namespace PokemonUnity
 			//		int vol = se.volume;
 			//		if (Game.GameData.PokemonSystem) vol *= (Game.GameData.PokemonSystem.sevolume / 100.0f);
 			//		vol = vol.to_i;
-			//		Audio.se_play("Audio/SE/" + se.name, vol, se.pitch);
+			//		Audio.AudioHandler.se_play("Audio/SE/" + se.name, vol, se.pitch);
 			//	}
 			//}
 		}
@@ -430,7 +437,7 @@ namespace PokemonUnity
 		{
 			//if (se is String)
 			//{
-			//	se = new RPG.AudioFile(se);
+			//	se = new AudioTrack().initialize(se);
 			//}
 			if (se != null && se.name != "")
 			{
@@ -439,14 +446,14 @@ namespace PokemonUnity
 					float vol = se.volume;
 					if (Game.GameData.PokemonSystem != null) vol *= (Game.GameData.PokemonSystem.sevolume / 100.0f);
 					vol = (int)vol;
-					Audio.se_play("Audio/SE/" + se.name, vol, se.pitch);
+					Audio.AudioHandler.se_play("Audio/SE/" + se.name, vol, se.pitch);
 				}
 			}
 		}
 
 		public void se_stop()
 		{
-			Audio.se_stop();
+			Audio.AudioHandler.se_stop();
 		}
 
 		// ###############################################################################

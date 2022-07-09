@@ -131,7 +131,7 @@ namespace PokemonUnity
 			}
 			public PokemonEssentials.Interface.PokeBattle.IPokemon this[int x,int y] { get {
 					//if (y==null) {
-					//	return (x==-1) ? this.party : @boxes[x];
+					//	return (x==-1) ? (IList<IPokemon)this.party : (IList<IPokemon)@boxes[x];
 					//} else {
 					//	foreach (var i in @boxes) {
 					//		if (i is PokemonEssentials.Interface.PokeBattle.IPokemon) raise "Box is a Pokémon, not a box";

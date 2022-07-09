@@ -355,8 +355,12 @@ public class BgmHandler : MonoBehaviour
     }
 }
 
-public class AudioTrack
+public class AudioTrack : PokemonEssentials.Interface.IAudioObject
 {
+	public string name { get; set; }
+	public int volume { get; set; }
+	public float pitch { get; set; }
+
     public AudioClip clip;
     public int loopStartSamples;
     public int samplesPosition;
@@ -374,4 +378,12 @@ public class AudioTrack
         this.loopStartSamples = loopStartSamples;
         this.samplesPosition = 0;
     }
+
+    public PokemonEssentials.Interface.IAudioObject initialize(string name, float volume = 100, float pitch = 100)
+	{
+        this.name = name;
+        this.volume = (int)volume;
+        this.pitch = pitch;
+        return this;
+	}
 }

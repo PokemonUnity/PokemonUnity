@@ -685,7 +685,7 @@ namespace PokemonUnity
 		}
 
 		//Note: Returns an AnimatedBitmap, not a Bitmap
-		public IAnimatedBitmap pbLoadPokemonBitmapSpecies(IPokemon pokemon, Pokemons species, bool back = false)
+		public virtual IAnimatedBitmap pbLoadPokemonBitmapSpecies(IPokemon pokemon, Pokemons species, bool back = false)
 		{
 			IAnimatedBitmap ret = null;
 			//if (pokemon.isEgg?) {
@@ -721,7 +721,7 @@ namespace PokemonUnity
 		}
 
 		//Note: Returns an AnimatedBitmap, not a Bitmap
-		public IAnimatedBitmap pbLoadSpeciesBitmap(Pokemons species, bool female = false, int form = 0, bool shiny = false, bool shadow = false, bool back = false, bool egg = false)
+		public virtual IAnimatedBitmap pbLoadSpeciesBitmap(Pokemons species, bool female = false, int form = 0, bool shiny = false, bool shadow = false, bool back = false, bool egg = false)
 		{
 			IAnimatedBitmap ret = null;
 			//if (egg) {
@@ -742,7 +742,7 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public string pbCheckPokemonBitmapFiles(params object[] args) {
+		public virtual string pbCheckPokemonBitmapFiles(params object[] args) {
 			//Pokemons species=params[0];
 			//bool back=params[1];
 			//List<> factors=[];
@@ -798,7 +798,7 @@ namespace PokemonUnity
 			return null; //new AnimatedBitmap(pbPokemonIconFile(pokemon)).deanimate;
 		}
 
-		public string pbPokemonIconFile(IPokemon pokemon) {
+		public virtual string pbPokemonIconFile(IPokemon pokemon) {
 			string bitmapFileName=null;
 			//bitmapFileName=pbCheckPokemonIconFiles([pokemon.Species,
 			//										(pokemon.isFemale?),
@@ -809,7 +809,7 @@ namespace PokemonUnity
 			return bitmapFileName;
 		}
 
-		public string pbCheckPokemonIconFiles(object[] param,bool egg=false) {
+		public virtual string pbCheckPokemonIconFiles(object[] param,bool egg=false) {
 			//Pokemons species=params[0];
 			//if (egg) {
 			//	bitmapFileName=string.Format("Graphics/Icons/icon%segg",getConstantName(PBSpecies,species)); //rescue null
@@ -869,8 +869,12 @@ namespace PokemonUnity
 			return null;
 		}
 
-		// Used by the Pokédex
-		public string pbPokemonFootprintFile(Pokemons pokemon) {   
+		/// <summary>
+		/// Used by the Pokédex
+		/// </summary>
+		/// <param name="pokemon"></param>
+		/// <returns></returns>
+		public virtual string pbPokemonFootprintFile(Pokemons pokemon) {   
 			//if (!pokemon) return null;
 			string bitmapFileName = null;
 			//if (pokemon is Numeric) {
@@ -880,7 +884,7 @@ namespace PokemonUnity
 			//return pbResolveBitmap(bitmapFileName);
 			return null;
 		}
-		public string pbPokemonFootprintFile(IPokemon pokemon) {   
+		public virtual string pbPokemonFootprintFile(IPokemon pokemon) {   
 			if (pokemon == null) return null;
 			string bitmapFileName = null;
 			//{
@@ -899,7 +903,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string pbItemIconFile(Items item) {
+		public virtual string pbItemIconFile(Items item) {
 			//if (!item) return null;
 			string bitmapFileName=null;
 			//if (item==0) {
@@ -913,7 +917,7 @@ namespace PokemonUnity
 			return bitmapFileName;
 		}
 
-		public string pbMailBackFile(Items item) {
+		public virtual string pbMailBackFile(Items item) {
 			//if (!item) return null;
 			//string bitmapFileName=string.Format("Graphics/Pictures/mail%s",getConstantName(PBItems,item)); //rescue null
 			//if (!pbResolveBitmap(bitmapFileName)) {
@@ -923,7 +927,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string pbTrainerCharFile(TrainerTypes type) {
+		public virtual string pbTrainerCharFile(TrainerTypes type) {
 			//if (!type) return null;
 			//bitmapFileName=string.Format("Graphics/Characters/trchar%s",getConstantName(PBTrainers,type)) rescue null;
 			//if (!pbResolveBitmap(bitmapFileName)) {
@@ -933,7 +937,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string pbTrainerCharNameFile(TrainerTypes type) {
+		public virtual string pbTrainerCharNameFile(TrainerTypes type) {
 			//if (!type) return null;
 			//bitmapFileName=string.Format("trchar%s",getConstantName(PBTrainers,type)) rescue null;
 			//if (!pbResolveBitmap(string.Format("Graphics/Characters/"+bitmapFileName))) {
@@ -943,7 +947,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string pbTrainerHeadFile(TrainerTypes type) {
+		public virtual string pbTrainerHeadFile(TrainerTypes type) {
 			//if (!type) return null;
 			//bitmapFileName=string.Format("Graphics/Pictures/mapPlayer%s",getConstantName(PBTrainers,type)) rescue null;
 			//if (!pbResolveBitmap(bitmapFileName)) {
@@ -953,7 +957,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string pbPlayerHeadFile(TrainerTypes type) {
+		public virtual string pbPlayerHeadFile(TrainerTypes type) {
 			//if (!type) return null;
 			//int outfit=Game.GameData.Trainer ? Game.GameData.Trainer.outfit : 0;
 			//string bitmapFileName=string.Format("Graphics/Pictures/mapPlayer%s_%d",
@@ -968,7 +972,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string pbTrainerSpriteFile(TrainerTypes type) {
+		public virtual string pbTrainerSpriteFile(TrainerTypes type) {
 			//if (!type) return null;
 			//string bitmapFileName=string.Format("Graphics/Characters/trainer%s",getConstantName(PBTrainers,type)) rescue null;
 			//if (!pbResolveBitmap(bitmapFileName)) {
@@ -978,7 +982,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string pbTrainerSpriteBackFile(TrainerTypes type) {
+		public virtual string pbTrainerSpriteBackFile(TrainerTypes type) {
 			//if (!type) return null;
 			//bitmapFileName=string.Format("Graphics/Characters/trback%s",getConstantName(PBTrainers,type)) rescue null;
 			//if (!pbResolveBitmap(bitmapFileName)) {
@@ -988,7 +992,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string pbPlayerSpriteFile(TrainerTypes type) {
+		public virtual string pbPlayerSpriteFile(TrainerTypes type) {
 			//if (!type) return null;
 			//int outfit=Game.GameData.Trainer ? Game.GameData.Trainer.outfit : 0;
 			//string bitmapFileName=string.Format("Graphics/Characters/trainer%s_%d",
@@ -1003,7 +1007,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string pbPlayerSpriteBackFile(TrainerTypes type) {
+		public virtual string pbPlayerSpriteBackFile(TrainerTypes type) {
 			//if (!type) return null;
 			//int outfit=Game.GameData.Trainer ? Game.GameData.Trainer.outfit : 0;
 			//string bitmapFileName=string.Format("Graphics/Characters/trback%s_%d",
@@ -1083,7 +1087,7 @@ namespace PokemonUnity
 				} else {
 					string pkmnwav=pbCryFile(pokemon);
 					if (pkmnwav != null) {
-						//pbSEPlay(new RPG.AudioFile(pkmnwav,volume,
+						//pbSEPlay(new AudioTrack().initialize(pkmnwav,volume,
 						//	pitch != null ? pitch : (pokemon.HP*25/pokemon.TotalHP)+75)); //rescue null
 					}
 				}
@@ -1095,7 +1099,7 @@ namespace PokemonUnity
 			//if (pokemon is Numeric) {
 				string pkmnwav=pbCryFile(pokemon);
 				if (pkmnwav != null) {
-					//pbSEPlay(new RPG.AudioFile(pkmnwav,volume,pitch != null ? pitch : 100)); //rescue null
+					//pbSEPlay(new AudioTrack().initialize(pkmnwav,volume,pitch != null ? pitch : 100)); //rescue null
 				}
 			//}
 		}

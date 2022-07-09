@@ -37,5 +37,20 @@ namespace PokemonUnity
 			@data = new int?[width, height, 3];
 			@events = new Dictionary<int, int>();
 		}
+
+		public MapData(int width, int height, IAudioBGM bgmusic, IAudioBGS bgsound)
+		{
+			@tileset_id = 1;
+			this.width = width;
+			this.height = height;
+			@autoplay_bgm = false;
+			@bgm = bgmusic; //new AudioFile().initialize();
+			@autoplay_bgs = false;
+			@bgs = bgsound; //new AudioFile().initialize("", 80);
+			@encounter_list = new List<Pokemons>();
+			@encounter_step = 30;
+			@data = new int?[width, height, 3];
+			@events = new Dictionary<int, int>();
+		}
 	}
 }
