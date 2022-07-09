@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Converts an object to an audio file. 
 		/// </summary>
-		/// <param name="str">Either a string showing the filename or an RPG.AudioFile object.
+		/// <param name="str">a string showing the filename.
 		/// Possible formats for <paramref name="str"/>:<para>
 		/// filename                        volume and pitch 100</para><para>
 		/// filename:volume           pitch 100</para>
@@ -33,14 +33,15 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Converts an object to an audio file. 
 		/// </summary>
-		/// <param name="str">Either a string showing the filename or an RPG.AudioFile object.
-		/// Possible formats for <paramref name="str"/>:<para>
-		/// filename                        volume and pitch 100</para><para>
-		/// filename:volume           pitch 100</para>
-		/// filename:volume:pitch
-		/// </param>
+		/// <param name="str">an <seealso cref="IAudioObject"/> object.</param>
 		/// <param name="volume">Volume of the file, up to 100</param>
 		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <remarks>
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        (volume and pitch 100)</para><para>
+		/// filename:volume           (pitch 100)</para>
+		/// filename:volume:pitch
+		/// </remarks>
 		/// <returns></returns>
 		IAudioObject pbResolveAudioFile(IAudioObject str, int? volume = null, float? pitch = null);
 
@@ -49,26 +50,28 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Plays a BGM file.
 		/// </summary>
-		/// <param name="param">Either a string showing the filename (relative to Audio/BGM/) or an RPG.AudioFile object.
-		/// Possible formats for <paramref name="param"/>:<para>
-		/// filename                        volume and pitch 100</para><para>
-		/// filename:volume           pitch 100</para>
-		/// filename:volume:pitch
-		/// </param>
+		/// <param name="param">a string showing the filename (relative to Audio/BGM/).</param>
 		/// <param name="volume">Volume of the file, up to 100</param>
 		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <remarks>
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        (volume and pitch 100)</para><para>
+		/// filename:volume           (pitch 100)</para>
+		/// filename:volume:pitch
+		/// </remarks>
 		void pbBGMPlay(string param, int? volume = null, float? pitch = null);
 		/// <summary>
 		/// Plays a BGM file.
 		/// </summary>
-		/// <param name="param">Either a string showing the filename (relative to Audio/BGM/) or an RPG.AudioFile object.
-		/// Possible formats for <paramref name="param"/>:<para>
-		/// filename                        volume and pitch 100</para><para>
-		/// filename:volume           pitch 100</para>
-		/// filename:volume:pitch
-		/// </param>
+		/// <param name="param">an <seealso cref="IAudioObject"/> object.</param>
 		/// <param name="volume">Volume of the file, up to 100</param>
 		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <remarks>
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        (volume and pitch 100)</para><para>
+		/// filename:volume           (pitch 100)</para>
+		/// filename:volume:pitch
+		/// </remarks>
 		void pbBGMPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		/// <summary>
@@ -85,16 +88,31 @@ namespace PokemonEssentials.Interface
 
 		// ###############################################################################
 
-		// Plays an ME file.
-		// param -- Either a string showing the filename 
-		// (relative to Audio/ME/) or an RPG.AudioFile object.
-		// Possible formats for _param_:
-		// filename                        volume and pitch 100
-		// filename:volume           pitch 100
-		// filename:volume:pitch
-		// volume -- Volume of the file, up to 100
-		// pitch -- Pitch of the file, normally 100
+		/// <summary>
+		/// Plays an ME file.
+		/// </summary>
+		/// <param name="param">a string showing the filename (relative to Audio/ME/).</param>
+		/// <param name="volume">Volume of the file, up to 100</param>
+		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <remarks>
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        (volume and pitch 100)</para><para>
+		/// filename:volume           (pitch 100)</para>
+		/// filename:volume:pitch
+		/// </remarks>
 		void pbMEPlay(string param, int? volume = null, float? pitch = null);
+		/// <summary>
+		/// Plays an ME file.
+		/// </summary>
+		/// <param name="param">an <seealso cref="IAudioObject"/> object.</param>
+		/// <param name="volume">Volume of the file, up to 100</param>
+		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <remarks>
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        (volume and pitch 100)</para><para>
+		/// filename:volume           (pitch 100)</para>
+		/// filename:volume:pitch
+		/// </remarks>
 		void pbMEPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		/// <summary>
@@ -111,16 +129,31 @@ namespace PokemonEssentials.Interface
 
 		// ###############################################################################
 
-		// Plays a BGS file.
-		// param -- Either a string showing the filename 
-		// (relative to Audio/BGS/) or an RPG.AudioFile object.
-		// Possible formats for _param_:
-		// filename                        volume and pitch 100
-		// filename:volume           pitch 100
-		// filename:volume:pitch
-		// volume -- Volume of the file, up to 100
-		// pitch -- Pitch of the file, normally 100
+		/// <summary>
+		/// Plays a BGS file.
+		/// </summary>
+		/// <param name="param">a string showing the filename (relative to Audio/BGS/).</param>
+		/// <param name="volume">Volume of the file, up to 100</param>
+		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <remarks>
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        (volume and pitch 100)</para><para>
+		/// filename:volume           (pitch 100)</para>
+		/// filename:volume:pitch
+		/// </remarks>
 		void pbBGSPlay(string param, int? volume = null, float? pitch = null);
+		/// <summary>
+		/// Plays a BGS file.
+		/// </summary>
+		/// <param name="param">an <seealso cref="IAudioObject"/> object.</param>
+		/// <param name="volume">Volume of the file, up to 100</param>
+		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <remarks>
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        (volume and pitch 100)</para><para>
+		/// filename:volume           (pitch 100)</para>
+		/// filename:volume:pitch
+		/// </remarks>
 		void pbBGSPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		/// <summary>
@@ -137,16 +170,31 @@ namespace PokemonEssentials.Interface
 
 		// ###############################################################################
 
-		// Plays an SE file.
-		// param -- Either a string showing the filename 
-		// (relative to Audio/SE/) or an RPG.AudioFile object.
-		// Possible formats for _param_:
-		// filename                  volume and pitch 100
-		// filename:volume           pitch 100
-		// filename:volume:pitch
-		// volume -- Volume of the file, up to 100
-		// pitch -- Pitch of the file, normally 100
+		/// <summary>
+		/// Plays an SE file.
+		/// </summary>
+		/// <param name="param">a string showing the filename (relative to Audio/SE/).</param>
+		/// <param name="volume">Volume of the file, up to 100</param>
+		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <remarks>
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        (volume and pitch 100)</para><para>
+		/// filename:volume           (pitch 100)</para>
+		/// filename:volume:pitch
+		/// </remarks>
 		void pbSEPlay(string param, int? volume = null, float? pitch = null);
+		/// <summary>
+		/// Plays an SE file.
+		/// </summary>
+		/// <param name="param">an <seealso cref="IAudioObject"/> object.</param>
+		/// <param name="volume">Volume of the file, up to 100</param>
+		/// <param name="pitch">Pitch of the file, normally 100</param>
+		/// <remarks>
+		/// Possible formats for <paramref name="param"/>:<para>
+		/// filename                        (volume and pitch 100)</para><para>
+		/// filename:volume           (pitch 100)</para>
+		/// filename:volume:pitch
+		/// </remarks>
 		void pbSEPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		/// <summary>
