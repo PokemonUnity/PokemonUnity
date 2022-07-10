@@ -25,39 +25,10 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 {
 	#region Variable Property
-	public GameAudioPlay AudioHandler;
-	public ITrainerFadeAnimation fadeanim;
-	public IPokeballSendOutAnimation sendout;
-	public IWindow_CommandPokemon commandPokemon;
-	public ICommandMenuDisplay commandWindow;
-	public IFightMenuDisplay fightWindow;
-	public IWindow_UnformattedTextPokemon helpWindow;
-	public IPartyDisplayScreen @switchscreen;
-	public IWindow_AdvancedTextPokemon messageWindow;
-	public IList<IWindow> pkmnwindows;
-	public IDictionary<string, ISpriteWrapper> sprites;
-	public bool aborted;
-	public bool abortable;
-	public bool battlestart;
-	public bool messagemode;
-	public bool briefmessage;
-	public bool showingplayer;
-	public bool showingenemy;
-	public bool enablePartyAnim;
-	public int partyAnimPhase;
-	public float xposplayer;
-	public float xposenemy;
-	public float foeyoffset;
-	public float traineryoffset;
-	public IViewport viewport;
-	private MenuCommands[] lastcmd;
-	//private IList<int> lastcmd;
-	private int[] lastmove;
-	private PokemonEssentials.Interface.PokeBattle.IBattle battle;
-	public const int BLANK = 0;
-	public const int MESSAGEBOX = 1;
-	public const int COMMANDBOX = 2;
-	public const int FIGHTBOX = 3;
+	const int BLANK = 0;
+	const int MESSAGEBOX = 1;
+	const int COMMANDBOX = 2;
+	const int FIGHTBOX = 3;
 	/// <summary>
 	/// 
 	/// </summary>
@@ -74,6 +45,73 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	/// Select Pokemon's attack move for given turn
 	/// </summary>
 	const string UI_FIGHTWINDOW = "fightwindow";
+	private MenuCommands[] lastcmd;
+	//private IList<int> lastcmd;
+	private int[] lastmove;
+	private PokemonEssentials.Interface.PokeBattle.IBattle battle;
+	public GameAudioPlay AudioHandler;
+	public ITrainerFadeAnimation fadeanim;
+	public IPokeballSendOutAnimation sendout;
+	public IWindow_CommandPokemon commandPokemon;
+	public ICommandMenuDisplay commandWindow;
+	public IFightMenuDisplay fightWindow;
+	public IWindow_UnformattedTextPokemon helpWindow;
+	public IWindow_AdvancedTextPokemon messageWindow;
+	public IWindow_AdvancedTextPokemon messageBox;
+	public IPartyDisplayScreen @switchscreen;
+	public ISpriteWrapper player;
+	public ISpriteWrapper playerB;
+	public ISpriteWrapper trainer;
+	public ISpriteWrapper trainer2;
+	public ISpriteWrapper battlebg;
+	public ISpriteWrapper enemybase;
+	public ISpriteWrapper playerbase;
+	public ISpriteWrapper partybarfoe;
+	public ISpriteWrapper partybarplayer;
+	public IPokemonDataBox battlebox0;
+	public IPokemonDataBox battlebox1;
+	public IPokemonDataBox battlebox2;
+	public IPokemonDataBox battlebox3;
+	/// <summary>
+	/// Your side primary battle pokemon; slot one
+	/// </summary>
+	public IPokemonBattlerSprite pokemon0;
+	/// <summary>
+	/// Your side ally battle pokemon; slot two (only appears in double battles)
+	/// </summary>
+	public IPokemonBattlerSprite pokemon2;
+	/// <summary>
+	/// Enemy side primary battle pokemon; slot one
+	/// </summary>
+	public IPokemonBattlerSprite pokemon1;
+	/// <summary>
+	/// Enemy side ally battle pokemon; slot two (only appears in double battles)
+	/// </summary>
+	public IPokemonBattlerSprite pokemon3;
+	public IIconSprite shadow0;
+	public IIconSprite shadow1;
+	public IIconSprite shadow2;
+	public IIconSprite shadow3;
+	/// <summary>
+	/// pokeball thrown at pokemons for capture animation
+	/// </summary>
+	public IIconSprite spriteBall;
+	public IList<IWindow> pkmnwindows;
+	public IDictionary<string, ISpriteWrapper> sprites;
+	public bool aborted;
+	public bool abortable;
+	public bool battlestart;
+	public bool messagemode;
+	public bool briefmessage;
+	public bool showingplayer;
+	public bool showingenemy;
+	public bool enablePartyAnim;
+	public int partyAnimPhase;
+	public float xposplayer;
+	public float xposenemy;
+	public float foeyoffset;
+	public float traineryoffset;
+	public IViewport viewport;
 	#endregion
 
 	public bool inPartyAnimation { get { return @enablePartyAnim && @partyAnimPhase < 3; } }
@@ -98,7 +136,35 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		lastcmd = new MenuCommands[] { 0, 0, 0, 0 };
 		lastmove = new int[] { 0, 0, 0, 0 };
 		pkmnwindows = new IWindow[] { null, null, null, null };
-		sprites = new Dictionary<string, ISpriteWrapper>();
+		sprites = new Dictionary<string, ISpriteWrapper>() {
+			{ UI_MESSAGEBOX, messageBox as ISpriteWrapper },
+			{ UI_FIGHTWINDOW, fightWindow as ISpriteWrapper },
+			{ UI_COMMANDWINDOW, commandWindow as ISpriteWrapper },
+			{ UI_MESSAGEWINDOW, messageWindow as ISpriteWrapper },
+			{ "helpwindow", helpWindow as ISpriteWrapper },
+			{ "battlebg", battlebg as ISpriteWrapper },
+			{ "player", player as ISpriteWrapper },
+			{ "playerB", playerB as ISpriteWrapper },
+			{ "trainer", trainer as ISpriteWrapper },
+			{ "trainer2", trainer2 as ISpriteWrapper },
+			{ "playerbase", playerbase as ISpriteWrapper },
+			{ "enemybase", enemybase as ISpriteWrapper },
+			{ "partybarplayer", partybarplayer as ISpriteWrapper },
+			{ "partybarfoe", partybarfoe as ISpriteWrapper },
+			{ "capture", spriteBall as ISpriteWrapper },
+			{ "battlebox0", battlebox0 as ISpriteWrapper },
+			{ "battlebox1", battlebox1 as ISpriteWrapper },
+			{ "battlebox2", battlebox2 as ISpriteWrapper },
+			{ "battlebox3", battlebox3 as ISpriteWrapper },
+			{ "pokemon0", pokemon0 as ISpriteWrapper },
+			{ "pokemon1", pokemon1 as ISpriteWrapper },
+			{ "pokemon2", pokemon2 as ISpriteWrapper },
+			{ "pokemon3", pokemon3 as ISpriteWrapper },
+			{ "shadow0", shadow0 as ISpriteWrapper },
+			{ "shadow1", shadow1 as ISpriteWrapper },
+			{ "shadow2", shadow2 as ISpriteWrapper },
+			{ "shadow3", shadow3 as ISpriteWrapper },
+		};
 		battlestart = true;
 		messagemode = false;
 		abortable = true;
@@ -459,7 +525,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			{
 				(@sprites[$"battlebox#{i}"] as IPokemonDataBox).update();
 			}
-			if (@sprites.ContainsKey($"battlebox#{i}") && @sprites[$"pokemon#{i}"] != null)
+			if (@sprites.ContainsKey($"pokemon#{i}") && @sprites[$"pokemon#{i}"] != null)
 			{
 				(@sprites[$"pokemon#{i}"] as IPokemonBattlerSprite).update();
 			}
@@ -1477,14 +1543,14 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		@briefmessage = false;
 		//@sprites["battlebox0"] = new SafariDataBox(@battle, @viewport);
 		(@sprites["battlebox0"] as ISafariDataBox).initialize(@battle, @viewport);
-		(@sprites["battlebox0"] as IPokemonDataBox).appear();
+		(@sprites["battlebox0"] as ISafariDataBox).appear();
 		do //;loop
 		{
-			(@sprites["battlebox0"] as IPokemonDataBox).update();
+			(@sprites["battlebox0"] as ISafariDataBox).update();
 			pbGraphicsUpdate();
 			pbInputUpdate();
 			pbFrameUpdate();
-			if (!(@sprites["battlebox0"] as IPokemonDataBox).appearing) break;
+			if (!(@sprites["battlebox0"] as ISafariDataBox).appearing) break;
 		} while (true);
 		pbRefresh();
 	}
