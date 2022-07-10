@@ -29,10 +29,6 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	const int MESSAGEBOX = 1;
 	const int COMMANDBOX = 2;
 	const int FIGHTBOX = 3;
-	const string UI_MESSAGEBOX = "messagebox";
-	const string UI_MESSAGEWINDOW = "messagewindow";
-	const string UI_COMMANDWINDOW = "commandwindow";
-	const string UI_FIGHTWINDOW = "fightwindow";
 	private MenuCommands[] lastcmd;
 	//private IList<int> lastcmd;
 	private int[] lastmove;
@@ -149,10 +145,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		lastmove = new int[] { 0, 0, 0, 0 };
 		pkmnwindows = new IWindow[] { null, null, null, null };
 		sprites = new Dictionary<string, ISpriteWrapper>() {
-			{ UI_MESSAGEBOX, messageBox as ISpriteWrapper },
-			{ UI_FIGHTWINDOW, fightWindow as ISpriteWrapper },
-			{ UI_COMMANDWINDOW, commandWindow as ISpriteWrapper },
-			{ UI_MESSAGEWINDOW, messageWindow as ISpriteWrapper },
+			{ "messagebox", messageBox as ISpriteWrapper },
+			{ "fightwindow", fightWindow as ISpriteWrapper },
+			{ "commandwindow", commandWindow as ISpriteWrapper },
+			{ "messagewindow", messageWindow as ISpriteWrapper },
 			{ "helpwindow", helpWindow as ISpriteWrapper },
 			{ "battlebg", battlebg as ISpriteWrapper },
 			{ "player", player as ISpriteWrapper },
@@ -232,7 +228,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		/*
 		@messagemode = mode;
-		IWindow_AdvancedTextPokemon msgwindow = @sprites[UI_MESSAGEWINDOW] as IWindow_AdvancedTextPokemon;
+		IWindow_AdvancedTextPokemon msgwindow = @sprites["messagewindow"] as IWindow_AdvancedTextPokemon;
 		if (mode)       // Within Pokémon command
 		{
 			msgwindow.baseColor = PokeBattle_SceneConstants.MENUBASECOLOR;
