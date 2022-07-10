@@ -113,7 +113,7 @@ namespace PokemonUnity
 					int ip1=i+1;
 					@boxes[i]=new PokemonBox(string.Format("Box {0}",ip1),maxPokemon);
 					int backid=i%24;
-					@boxes[i].background=$"box#{backid}";
+					@boxes[i].background=$"box{backid}";
 				}
 				@currentBox=0;
 				@boxmode=-1;
