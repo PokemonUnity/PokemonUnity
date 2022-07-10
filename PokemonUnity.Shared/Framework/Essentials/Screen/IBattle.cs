@@ -119,7 +119,8 @@ namespace PokemonEssentials.Interface.Screen
 	/// <summary>
 	/// Data box for regular battles (both single and double)
 	/// </summary>
-	public interface IPokemonDataBox : ISpriteWrapper {
+	public interface IPokemonDataBox : ISpriteWrapper, ISafariDataBox
+	{
 		IBattler battler		{ get; }
 		int selected			{ get; set; }
 		bool appearing			{ get; }
