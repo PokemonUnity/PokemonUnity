@@ -15,7 +15,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{F6278824-EF26-0B19-80EC-89090458C325}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -73,14 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\CustomEventEditor.cs" />
-    <Compile Include="Assets\Editor\MapBuilder.cs" />
-    <Compile Include="Assets\Editor\MapCompiler.cs" />
-    <Compile Include="Assets\Editor\UnitySpriteEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\EventHandlerTest.cs" />
-    <Compile Include="Assets\Resources\Editor\NewEditModeTest.cs" />
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>../Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
-  </PropertyGroup>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -300,8 +294,6 @@
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>../Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>../Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
@@ -323,8 +315,6 @@
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>../Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.XR.LegacyInputHelpers">
-      <HintPath>../Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     <Reference Include="UnityEngine.Networking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
     </Reference>
@@ -343,8 +333,6 @@
     <Reference Include="UnityEngine.AccessibilityModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll</HintPath>
     <Reference Include="UnityEditor.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll</HintPath>
     </Reference>
@@ -600,6 +588,7 @@
     </Reference>
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/Boo.Lang.dll</HintPath>
+    </Reference>
     <Reference Include="JetBrains.Rider.Unity.Editor.Plugin.Repacked">
       <HintPath>..\Pokemon Unity\Assets\Plugins\Editor\JetBrains\JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
@@ -997,6 +986,7 @@
       <Name>UnityGameFramework.Editor</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

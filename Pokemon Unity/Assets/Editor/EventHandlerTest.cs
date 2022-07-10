@@ -72,7 +72,7 @@ public class EventHandlerTest {
 	#endregion
 
 	#region Asset (3d Model) Test
-	[UnityTest]
+	/*[UnityTest]
 	public IEnumerator TestAssetModelExist() {
 		int pokemonNumber = 1;
 		System.Collections.Generic.Dictionary<int, string> dir = new System.Collections.Generic.Dictionary<int, string>();
@@ -143,6 +143,6 @@ public class EventHandlerTest {
 			}
 		//}
 		yield return null;
-	}
+	}*/
 	#endregion
 }
