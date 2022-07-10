@@ -29,21 +29,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	const int MESSAGEBOX = 1;
 	const int COMMANDBOX = 2;
 	const int FIGHTBOX = 3;
-	/// <summary>
-	/// 
-	/// </summary>
 	const string UI_MESSAGEBOX = "messagebox";
-	/// <summary>
-	/// 
-	/// </summary>
 	const string UI_MESSAGEWINDOW = "messagewindow";
-	/// <summary>
-	/// Select turn action; Fight, Bag, Item, Run...
-	/// </summary>
 	const string UI_COMMANDWINDOW = "commandwindow";
-	/// <summary>
-	/// Select Pokemon's attack move for given turn
-	/// </summary>
 	const string UI_FIGHTWINDOW = "fightwindow";
 	private MenuCommands[] lastcmd;
 	//private IList<int> lastcmd;
@@ -53,10 +41,22 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	public ITrainerFadeAnimation fadeanim;
 	public IPokeballSendOutAnimation sendout;
 	public IWindow_CommandPokemon commandPokemon;
+	/// <summary>
+	/// Select turn action; Fight, Bag, Item, Run...
+	/// </summary>
 	public ICommandMenuDisplay commandWindow;
+	/// <summary>
+	/// Select Pokemon's attack move for given turn
+	/// </summary>
 	public IFightMenuDisplay fightWindow;
 	public IWindow_UnformattedTextPokemon helpWindow;
+	/// <summary>
+	/// Display text and system responses to player
+	/// </summary>
 	public IWindow_AdvancedTextPokemon messageWindow;
+	/// <summary>
+	/// The container canvas frame with custom UI border
+	/// </summary>
 	public IWindow_AdvancedTextPokemon messageBox;
 	public IPartyDisplayScreen @switchscreen;
 	public ISpriteWrapper player;
@@ -68,9 +68,21 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	public ISpriteWrapper playerbase;
 	public ISpriteWrapper partybarfoe;
 	public ISpriteWrapper partybarplayer;
+	/// <summary>
+	/// HP, Exp, and other status of battling pokemon; Player side slot 1
+	/// </summary>
 	public IPokemonDataBox battlebox0;
+	/// <summary>
+	/// HP, Exp, and other status of battling pokemon; Enemy side slot 1
+	/// </summary>
 	public IPokemonDataBox battlebox1;
+	/// <summary>
+	/// HP, Exp, and other status of battling pokemon; Player side slot 2
+	/// </summary>
 	public IPokemonDataBox battlebox2;
+	/// <summary>
+	/// HP, Exp, and other status of battling pokemon; Enemy side slot 2
+	/// </summary>
 	public IPokemonDataBox battlebox3;
 	/// <summary>
 	/// Your side primary battle pokemon; slot one
