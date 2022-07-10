@@ -521,13 +521,13 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		//if (cw != null) cw.update();
 		for (int i = 0; i < 4; i++)
 		{
-			if (@sprites.ContainsKey($"battlebox#{i}") && @sprites[$"battlebox#{i}"] != null)
+			if (@sprites.ContainsKey($"battlebox{i}") && @sprites[$"battlebox{i}"] != null)
 			{
-				(@sprites[$"battlebox#{i}"] as IPokemonDataBox).update();
+				(@sprites[$"battlebox{i}"] as IPokemonDataBox).update();
 			}
-			if (@sprites.ContainsKey($"pokemon#{i}") && @sprites[$"pokemon#{i}"] != null)
+			if (@sprites.ContainsKey($"pokemon{i}") && @sprites[$"pokemon{i}"] != null)
 			{
-				(@sprites[$"pokemon#{i}"] as IPokemonBattlerSprite).update();
+				(@sprites[$"pokemon{i}"] as IPokemonBattlerSprite).update();
 			}
 		}
 	}
@@ -538,9 +538,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 
 		for (int i = 0; i < 4; i++)
 		{
-			if (@sprites.ContainsKey($"battlebox#{i}") && @sprites[$"battlebox#{i}"] != null)
+			if (@sprites.ContainsKey($"battlebox{i}") && @sprites[$"battlebox{i}"] != null)
 			{
-				(@sprites[$"battlebox#{i}"] as IPokemonDataBox).refresh();
+				(@sprites[$"battlebox{i}"] as IPokemonDataBox).refresh();
 			}
 		}
 	}
@@ -826,10 +826,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 						ballgraphic = "Graphics/Pictures/ballnormal";
 					}
 				}
-				pbAddSprite($"player#{i}", //Instantiate player GameObject, then adds to dictionary for tracking...
+				pbAddSprite($"player{i}", //Instantiate player GameObject, then adds to dictionary for tracking...
 				   @xposplayer + i * ballmovedist * 6, PokeBattle_SceneConstants.PLAYERPARTYBALL1_Y,
 				   ballgraphic, @viewport);
-				@sprites[$"player#{i}"].z = 41;
+				@sprites[$"player{i}"].z = 41;
 				//  Choose the ball's graphic (opponent's side)
 				ballgraphic = "Graphics/Pictures/ballempty";
 				int enemyindex = i;
@@ -852,10 +852,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 						ballgraphic = "Graphics/Pictures/ballnormal";
 					}
 				}
-				pbAddSprite($"enemy#{i}",
+				pbAddSprite($"enemy{i}",
 				   @xposenemy - i * ballmovedist * 6, PokeBattle_SceneConstants.FOEPARTYBALL1_Y,
 				   ballgraphic, @viewport);
-				@sprites[$"enemy#{i}"].z = 41;
+				@sprites[$"enemy{i}"].z = 41;
 			}
 			@partyAnimPhase = 2;
 		}
@@ -864,14 +864,14 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		{
 			for (int i = 0; i < 6; i++)
 			{
-				if (@sprites[$"enemy#{i}"].x < PokeBattle_SceneConstants.FOEPARTYBALL1_X - i * PokeBattle_SceneConstants.FOEPARTYBALL_GAP)
+				if (@sprites[$"enemy{i}"].x < PokeBattle_SceneConstants.FOEPARTYBALL1_X - i * PokeBattle_SceneConstants.FOEPARTYBALL_GAP)
 				{
-					@sprites[$"enemy#{i}"].x += ballmovedist;
-					@sprites[$"player#{i}"].x -= ballmovedist;
-					if (@sprites[$"enemy#{i}"].x >= PokeBattle_SceneConstants.FOEPARTYBALL1_X - i * PokeBattle_SceneConstants.FOEPARTYBALL_GAP)
+					@sprites[$"enemy{i}"].x += ballmovedist;
+					@sprites[$"player{i}"].x -= ballmovedist;
+					if (@sprites[$"enemy{i}"].x >= PokeBattle_SceneConstants.FOEPARTYBALL1_X - i * PokeBattle_SceneConstants.FOEPARTYBALL_GAP)
 					{
-						@sprites[$"enemy#{i}"].x = PokeBattle_SceneConstants.FOEPARTYBALL1_X - i * PokeBattle_SceneConstants.FOEPARTYBALL_GAP;
-						@sprites[$"player#{i}"].x = PokeBattle_SceneConstants.PLAYERPARTYBALL1_X + i * PokeBattle_SceneConstants.PLAYERPARTYBALL_GAP;
+						@sprites[$"enemy{i}"].x = PokeBattle_SceneConstants.FOEPARTYBALL1_X - i * PokeBattle_SceneConstants.FOEPARTYBALL_GAP;
+						@sprites[$"player{i}"].x = PokeBattle_SceneConstants.PLAYERPARTYBALL1_X + i * PokeBattle_SceneConstants.PLAYERPARTYBALL_GAP;
 						if (i == 5)
 						{
 							@partyAnimPhase = 3;
@@ -1286,7 +1286,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 				if (battlerindex == 1) origin = PokeBattle_SceneConstants.FOEBATTLERD1_Y;
 				if (battlerindex == 3) origin = PokeBattle_SceneConstants.FOEBATTLERD2_Y;
 			}
-			(@sprites[$"shadow#{battlerindex}"] as IIconSprite).visible = false;
+			(@sprites[$"shadow{battlerindex}"] as IIconSprite).visible = false;
 		}
 		else
 		{
@@ -1297,7 +1297,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 				if (battlerindex == 2) origin = PokeBattle_SceneConstants.PLAYERBATTLERD2_Y;
 			}
 		}
-		IPokemonBattlerSprite spritePoke = @sprites[$"pokemon#{battlerindex}"] as IPokemonBattlerSprite;
+		IPokemonBattlerSprite spritePoke = @sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite;
 		IPictureEx picturePoke = new PictureEx(spritePoke.z);
 		float[] dims = new float[] { spritePoke.x, spritePoke.y };
 		float[] center = getSpriteCenter(spritePoke);
@@ -1340,19 +1340,19 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			fadeanim.initialize(@sprites);
 		}
 		int frame=0;
-		(@sprites[$"pokemon#{battlerindex}"] as IPokemonBattlerSprite).setPokemonBitmap(pkmn,false);
+		(@sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite).setPokemonBitmap(pkmn,false);
 		if (illusionpoke != null) {
-			(@sprites[$"pokemon#{battlerindex}"] as IPokemonBattlerSprite).setPokemonBitmap(illusionpoke,false);
+			(@sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite).setPokemonBitmap(illusionpoke,false);
 		}
-		//IPokeballSendOutAnimation sendout=new PokeballSendOutAnimation(@sprites[$"pokemon#{battlerindex}"],
-		sendout.initialize(@sprites[$"pokemon#{battlerindex}"] as IPokemonBattlerSprite,
+		//IPokeballSendOutAnimation sendout=new PokeballSendOutAnimation(@sprites[$"pokemon{battlerindex}"],
+		sendout.initialize(@sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite,
 			@sprites,@battle.battlers[battlerindex],illusionpoke,@battle.doublebattle);
 		do  //;loop
 		{
 			if (fadeanim != null) fadeanim.update();
 			frame += 1;
 			if (frame == 1) {
-				(@sprites[$"battlebox#{battlerindex}"] as IPokemonDataBox).appear();
+				(@sprites[$"battlebox{battlerindex}"] as IPokemonDataBox).appear();
 			}
 			if (frame >= 10) {
 				sendout.update();
@@ -1361,7 +1361,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			pbInputUpdate();
 			pbFrameUpdate();
 			if ((fadeanim == null || fadeanim.animdone) && sendout.animdone &&
-				!(@sprites[$"battlebox#{battlerindex}"] as IPokemonDataBox).appearing) break;
+				!(@sprites[$"battlebox{battlerindex}"] as IPokemonDataBox).appearing) break;
 		} while (true);
 		if (@battle.battlers[battlerindex].IsShiny && @battle.battlescene) {
 			pbCommonAnimation("Shiny",@battle.battlers[battlerindex],null);
@@ -1372,7 +1372,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			pbDisposeSprite(@sprites,"trainer");
 			pbDisposeSprite(@sprites,"partybarfoe");
 			for (int i = 0; i < 6; i++) {
-				pbDisposeSprite(@sprites,$"enemy#{i}");
+				pbDisposeSprite(@sprites,$"enemy{i}");
 			}
 		}
 		pbRefresh();*/
@@ -1428,7 +1428,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			angle%=360;
 		}
 		pictureBall.adjustPosition(0,@traineryoffset);
-		(@sprites[$"battlebox#{battlerindex}"] as IPokemonDataBox).visible=false;
+		(@sprites[$"battlebox{battlerindex}"] as IPokemonDataBox).visible=false;
 		@briefmessage=false;
 		//fadeanim=null;
 		if (@showingplayer) {
@@ -1436,19 +1436,19 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			fadeanim.initialize(@sprites);
 		}
 		int frame=0;
-		(@sprites[$"pokemon#{battlerindex}"] as IPokemonBattlerSprite).setPokemonBitmap(pkmn,true);
+		(@sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite).setPokemonBitmap(pkmn,true);
 		if (illusionpoke != null) {
-			(@sprites[$"pokemon#{battlerindex}"] as IPokemonBattlerSprite).setPokemonBitmap(illusionpoke,true);
+			(@sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite).setPokemonBitmap(illusionpoke,true);
 		}
-		//sendout=new PokeballPlayerSendOutAnimation(@sprites[$"pokemon#{battlerindex}"],
-		sendout.initialize(@sprites[$"pokemon#{battlerindex}"] as IPokemonBattlerSprite,
+		//sendout=new PokeballPlayerSendOutAnimation(@sprites[$"pokemon{battlerindex}"],
+		sendout.initialize(@sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite,
 			@sprites,@battle.battlers[battlerindex],illusionpoke,@battle.doublebattle);
 		do  //;loop
 		{
 			if (fadeanim != null) fadeanim.update();
 			frame += 1;
-			if (frame > 1 && !pictureBall.running && !(@sprites[$"battlebox#{battlerindex}"] as IPokemonDataBox).appearing) {
-				(@sprites[$"battlebox#{battlerindex}"] as IPokemonDataBox).appear();
+			if (frame > 1 && !pictureBall.running && !(@sprites[$"battlebox{battlerindex}"] as IPokemonDataBox).appearing) {
+				(@sprites[$"battlebox{battlerindex}"] as IPokemonDataBox).appear();
 			}
 			if (frame >= 3 && !pictureBall.running) {
 				sendout.update();
@@ -1461,7 +1461,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			pbInputUpdate();
 			pbFrameUpdate();
 			if ((fadeanim == null || fadeanim.animdone) && sendout.animdone &&
-				!(@sprites[$"battlebox#{battlerindex}"] as IPokemonDataBox).appearing) break;
+				!(@sprites[$"battlebox{battlerindex}"] as IPokemonDataBox).appearing) break;
 		} while (true);
 		spriteBall.dispose();
 		sendout.dispose();
@@ -1473,7 +1473,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			pbDisposeSprite(@sprites,"player");
 			pbDisposeSprite(@sprites,"partybarplayer");
 			for (int i = 0; i < 6; i++) {
-				pbDisposeSprite(@sprites,$"player#{i}");
+				pbDisposeSprite(@sprites,$"player{i}");
 			}
 		}
 		pbRefresh();*/
@@ -1874,9 +1874,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		int numwindows = @battle.doublebattle ? 4 : 2;
 		for (int i = 0; i < numwindows; i++)
 		{
-			IPokemonDataBox sprite0 = @sprites[$"battlebox#{i}"] as IPokemonDataBox;
+			IPokemonDataBox sprite0 = @sprites[$"battlebox{i}"] as IPokemonDataBox;
 			sprite0.selected = (i == index) ? selectmode : 0;
-			IPokemonBattlerSprite sprite1 = @sprites[$"pokemon#{i}"] as IPokemonBattlerSprite;
+			IPokemonBattlerSprite sprite1 = @sprites[$"pokemon{i}"] as IPokemonBattlerSprite;
 			sprite1.selected = (i == index) ? selectmode : 0;
 		}
 	}
@@ -1922,16 +1922,16 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		{
 			if (i == index)
 			{
-				(@sprites[$"battlebox#{i}"] as IPokemonDataBox).selected = 2;
-				(@sprites[$"pokemon#{i}"] as IPokemonBattlerSprite).selected = 2;
+				(@sprites[$"battlebox{i}"] as IPokemonDataBox).selected = 2;
+				(@sprites[$"pokemon{i}"] as IPokemonBattlerSprite).selected = 2;
 			}
 			else
 			{
-				(@sprites[$"battlebox#{i}"] as IPokemonDataBox).selected = 0;
-				(@sprites[$"pokemon#{i}"] as IPokemonBattlerSprite).selected = 0;
+				(@sprites[$"battlebox{i}"] as IPokemonDataBox).selected = 0;
+				(@sprites[$"pokemon{i}"] as IPokemonBattlerSprite).selected = 0;
 			}
-			(@sprites[$"battlebox#{i}"] as IPokemonDataBox).update();
-			(@sprites[$"pokemon#{i}"] as IPokemonBattlerSprite).update();
+			(@sprites[$"battlebox{i}"] as IPokemonDataBox).update();
+			(@sprites[$"pokemon{i}"] as IPokemonBattlerSprite).update();
 		}
 	}
 
@@ -2119,9 +2119,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		IPokemonBattlerSprite pkmnsprite = @sprites[$"pokemon#{pkmn.Index}"] as IPokemonBattlerSprite;
-		IIconSprite shadowsprite = @sprites[$"shadow#{pkmn.Index}"] as IIconSprite;
-		IPokemonDataBox sprite = @sprites[$"battlebox#{pkmn.Index}"] as IPokemonDataBox;
+		IPokemonBattlerSprite pkmnsprite = @sprites[$"pokemon{pkmn.Index}"] as IPokemonBattlerSprite;
+		IIconSprite shadowsprite = @sprites[$"shadow{pkmn.Index}"] as IIconSprite;
+		IPokemonDataBox sprite = @sprites[$"battlebox{pkmn.Index}"] as IPokemonDataBox;
 		bool oldshadowvisible = shadowsprite.visible;
 		bool oldvisible = sprite.visible;
 		sprite.selected = 3;
@@ -2198,7 +2198,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 				pbCommonAnimation("HealthDown", pkmn, null);
 			}
 		}
-		IPokemonDataBox sprite = @sprites[$"battlebox#{pkmn.Index}"] as IPokemonDataBox;
+		IPokemonDataBox sprite = @sprites[$"battlebox{pkmn.Index}"] as IPokemonDataBox;
 		sprite.animateHP(oldhp, pkmn.HP);
 		while (sprite.animatingHP)
 		{
@@ -2224,8 +2224,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			pbInputUpdate();
 			pbFrameUpdate(); i++;
 		} while (i < frames); //frames.times 
-		@sprites[$"shadow#{pkmn.Index}"].visible=false;
-		IPokemonBattlerSprite pkmnsprite = @sprites[$"pokemon#{pkmn.Index}"] as IPokemonBattlerSprite;
+		@sprites[$"shadow{pkmn.Index}"].visible=false;
+		IPokemonBattlerSprite pkmnsprite = @sprites[$"pokemon{pkmn.Index}"] as IPokemonBattlerSprite;
 		int ycoord=0;
 		if (@battle.doublebattle) {
 			if (pkmn.Index==0) ycoord=PokeBattle_SceneConstants.PLAYERBATTLERD1_Y;
@@ -2260,12 +2260,12 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		pkmnsprite.visible = false;
 		i = 0; do
 		{
-			(@sprites[$"battlebox#{pkmn.Index}"] as IPokemonDataBox).opacity -= 32;
+			(@sprites[$"battlebox{pkmn.Index}"] as IPokemonDataBox).opacity -= 32;
 			pbGraphicsUpdate();
 			pbInputUpdate();
 			pbFrameUpdate();
 		} while (i < 8); //8.times 
-		(@sprites[$"battlebox#{pkmn.Index}"] as IPokemonDataBox).visible = false;
+		(@sprites[$"battlebox{pkmn.Index}"] as IPokemonDataBox).visible = false;
 		pkmn.pbResetForm();*/
 	}
 
@@ -2316,7 +2316,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 
 		//if (battler != null)
 		//{
-		//	(@sprites[$"battlebox#{battler.Index}"] as IPokemonDataBox).refreshExpLevel();
+		//	(@sprites[$"battlebox{battler.Index}"] as IPokemonDataBox).refreshExpLevel();
 		//	int exprange = (endexp - startexp);
 		//	int startexplevel = 0;
 		//	int endexplevel = 0;
@@ -2325,13 +2325,13 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		//		startexplevel = (tempexp1 - startexp) * PokeBattle_SceneConstants.EXPGAUGESIZE / exprange;
 		//		endexplevel = (tempexp2 - startexp) * PokeBattle_SceneConstants.EXPGAUGESIZE / exprange;
 		//	}
-		//	(@sprites[$"battlebox#{battler.Index}"] as IPokemonDataBox).animateEXP(startexplevel, endexplevel);
-		//	while ((@sprites[$"battlebox#{battler.Index}"] as IPokemonDataBox).animatingEXP)
+		//	(@sprites[$"battlebox{battler.Index}"] as IPokemonDataBox).animateEXP(startexplevel, endexplevel);
+		//	while ((@sprites[$"battlebox{battler.Index}"] as IPokemonDataBox).animatingEXP)
 		//	{
 		//		pbGraphicsUpdate();
 		//		pbInputUpdate();
 		//		pbFrameUpdate();
-		//		(@sprites[$"battlebox#{battler.Index}"] as IPokemonDataBox).update();
+		//		(@sprites[$"battlebox{battler.Index}"] as IPokemonDataBox).update();
 		//	}
 		//}
 	}
@@ -2353,8 +2353,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		pkmn = @sprites[$"pokemon#{attacker.Index}"];
-		shadow = @sprites[$"shadow#{attacker.Index}"];
+		pkmn = @sprites[$"pokemon{attacker.Index}"];
+		shadow = @sprites[$"shadow{attacker.Index}"];
 		back = !@battle.pbIsOpposing(attacker.Index);
 		pkmn.setPokemonBitmapSpecies(attacker.pokemon, species, back);
 		pkmn.x = -pkmn.bitmap.width / 2;
@@ -2398,8 +2398,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		/*
-		IPokemonBattlerSprite pkmn = @sprites[$"pokemon#{attacker.Index}"] as IPokemonBattlerSprite;
-		IIconSprite shadow = @sprites[$"shadow#{attacker.Index}"] as IIconSprite;
+		IPokemonBattlerSprite pkmn = @sprites[$"pokemon{attacker.Index}"] as IPokemonBattlerSprite;
+		IIconSprite shadow = @sprites[$"shadow{attacker.Index}"] as IIconSprite;
 		bool back = !@battle.pbIsOpposing(attacker.Index);
 		pkmn.setPokemonBitmap(pokemon, back); //set pokemon battle sprite to current form 
 		pkmn.x = -pkmn.bitmap.width / 2;
@@ -2453,14 +2453,14 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		IIconSprite s = null;
 		for (int i = 0; i < 4; i++)
 		{
-			s = @sprites[$"shadow#{i}"] as IIconSprite;
+			s = @sprites[$"shadow{i}"] as IIconSprite;
 			shadows[i] = s != null ? s.visible : false;
 			if (s != null) s.visible = false;
 		}
 		if (action != null) action.Invoke(); //yield return null;
 		for (int i = 0; i < 4; i++)
 		{
-			s = @sprites[$"shadow#{i}"] as IIconSprite;
+			s = @sprites[$"shadow{i}"] as IIconSprite;
 			if (s != null) s.visible = shadows[i];
 		}
 	}
@@ -2606,8 +2606,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		/*
 		if (!animation) return;
 		@briefmessage = false;
-		usersprite = (user) ? @sprites[$"pokemon#{user.Index}"] : null;
-		targetsprite = (target) ? @sprites[$"pokemon#{target.Index}"] : null;
+		usersprite = (user) ? @sprites[$"pokemon{user.Index}"] : null;
+		targetsprite = (target) ? @sprites[$"pokemon{target.Index}"] : null;
 		olduserx = usersprite ? usersprite.x : 0;
 		oldusery = usersprite ? usersprite.y : 0;
 		oldtargetx = targetsprite ? targetsprite.x : 0;
@@ -2697,8 +2697,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		IIconSprite spriteBall = new IconSprite(0, 0, @viewport);
 		spriteBall.visible = false;
 		//  picture
-		pictureBall = new PictureEx((@sprites[$"pokemon#{targetBattler}"] as IPokemonBattlerSprite).z + 1);
-		IPoint center = getSpriteCenter(@sprites[$"pokemon#{targetBattler}"]);
+		pictureBall = new PictureEx((@sprites[$"pokemon{targetBattler}"] as IPokemonBattlerSprite).z + 1);
+		IPoint center = getSpriteCenter(@sprites[$"pokemon{targetBattler}"]);
 		//  starting positions
 		pictureBall.moveVisible(1, true);
 		pictureBall.moveName(1, ball);
