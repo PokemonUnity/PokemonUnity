@@ -1,7 +1,23 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
 using System.Collections;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Trainer : MonoBehaviour
@@ -63,7 +79,7 @@ public class Trainer : MonoBehaviour
     public bool isFemale = false;
 
     public PokemonInitialiser[] trainerParty = new PokemonInitialiser[1];
-    private Pokemon[] party;
+    private IPokemon[] party;
 
     [Header("Music")]
     
@@ -103,7 +119,7 @@ public class Trainer : MonoBehaviour
     public string[] fr_playerVictoryDialog;
     public string[] fr_playerLossDialog;
 
-    public Trainer(Pokemon[] party)
+    public Trainer(IPokemon[] party)
     {
         this.trainerClass = Class.Trainer;
         this.trainerName = "";
@@ -113,22 +129,22 @@ public class Trainer : MonoBehaviour
 
     void Awake()
     {
-        party = new Pokemon[trainerParty.Length];
+        party = new IPokemon[trainerParty.Length];
     }
 
     void Start()
     {
         for (int i = 0; i < trainerParty.Length; i++)
         {
-            party[i] = new Pokemon(trainerParty[i].ID, trainerParty[i].gender, trainerParty[i].level, "Poké Ball",
-                trainerParty[i].heldItem, trainerName, trainerParty[i].ability);
+            //party[i] = new Pokemon(trainerParty[i].ID, trainerParty[i].gender, trainerParty[i].level, "Poké Ball",
+            //    trainerParty[i].heldItem, trainerName, trainerParty[i].ability);
             
             int moveIndex = 0;
             for (int k = 0; k < trainerParty[i].moveset.Length && k < 4; ++k)
             {
                 if (trainerParty[i].moveset[k].Length > 0)
                 {
-                    party[i].replaceMove(moveIndex, trainerParty[i].moveset[k]);
+                    //party[i].replaceMove(moveIndex, trainerParty[i].moveset[k]);
                     moveIndex++;
                 }
                 else
@@ -142,7 +158,7 @@ public class Trainer : MonoBehaviour
     }
 
 
-    public Pokemon[] GetParty()
+    public IPokemon[] GetParty()
     {
         return party;
     }
@@ -194,7 +210,7 @@ public class Trainer : MonoBehaviour
         int averageLevel = 0;
         for (int i = 0; i < party.Length; i++)
         {
-            averageLevel += party[i].getLevel();
+            averageLevel += party[i].Level;
         }
         averageLevel = Mathf.CeilToInt((float) averageLevel / (float) party.Length);
         return averageLevel * prizeMoney;
@@ -202,9 +218,9 @@ public class Trainer : MonoBehaviour
 
     public void HealParty()
     {
-        foreach (Pokemon pokemon in party)
+        foreach (IPokemon pokemon in party)
         {
-            pokemon.healFull();
+            pokemon.Heal();
         }
     }
 }
@@ -215,7 +231,7 @@ public class PokemonInitialiser
 {
     public int ID;
     public int level;
-    public Pokemon.Gender gender;
+    public bool? gender;
     public string heldItem;
     public int ability;
     public string[] moveset;

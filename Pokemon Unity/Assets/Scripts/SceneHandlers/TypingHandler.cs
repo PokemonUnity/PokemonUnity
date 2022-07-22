@@ -1,7 +1,23 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
 using System.Collections;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TypingHandler : MonoBehaviour
@@ -111,7 +127,7 @@ public class TypingHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Y))
         {
             int newHeirIndex = page[0].GetSiblingIndex();
             int oldHeirIndex = page[2].GetSiblingIndex();
@@ -414,7 +430,7 @@ public class TypingHandler : MonoBehaviour
     }
 
 
-    public IEnumerator control(int typeSpaces, string defaultString, Pokemon.Gender genderDisplay = Pokemon.Gender.NONE,
+    public IEnumerator control(int typeSpaces, string defaultString, bool? genderDisplay = null,
         Sprite[] iconAnimation = null)
     {
         typeSpaceCount = typeSpaces;
@@ -427,12 +443,12 @@ public class TypingHandler : MonoBehaviour
         selectorIndex = 0;
         pageIndex = 0;
 
-        if (genderDisplay == Pokemon.Gender.FEMALE)
+        if (genderDisplay == false)
         {
             genderText.text = "♀";
             genderText.color = new Color(1, 0.2f, 0.2f, 1);
         }
-        else if (genderDisplay == Pokemon.Gender.MALE)
+        else if (genderDisplay == true)
         {
             genderText.text = "♂";
             genderText.color = new Color(0.2f, 0.4f, 1, 1);
@@ -486,7 +502,7 @@ public class TypingHandler : MonoBehaviour
         /*
         while (running)
         {
-            if (Input.GetAxisRaw("Horizontal") > 0)
+            if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
             {
                 if (selectorIndex < 5)
                 {
@@ -509,7 +525,7 @@ public class TypingHandler : MonoBehaviour
                     yield return new WaitForSeconds(buttonDelay);
                 }
             }
-            else if (Input.GetAxisRaw("Horizontal") < 0)
+            else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
             {
                 if (selectorIndex <= 5)
                 {
@@ -535,7 +551,7 @@ public class TypingHandler : MonoBehaviour
                     yield return new WaitForSeconds(buttonDelay);
                 }
             }
-            if (Input.GetAxisRaw("Vertical") > 0)
+            if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
             {
                 if (pageIndex == 3)
                 {
@@ -580,7 +596,7 @@ public class TypingHandler : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetAxisRaw("Vertical") < 0)
+            else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
             {
                 if (pageIndex == 3)
                 {
@@ -621,16 +637,16 @@ public class TypingHandler : MonoBehaviour
                     yield return new WaitForSeconds(buttonDelay);
                 }
             }
-            if (Input.GetButtonDown("Start"))
+            if (UnityEngine.Input.GetButtonDown("Start"))
             {
                 setSelectorPosition(5);
                 yield return new WaitForSeconds(buttonDelay);
             }
-            else if (Input.GetButtonDown("Back") || Input.GetButtonDown("Run"))
+            else if (UnityEngine.Input.GetButtonDown("Back") || UnityEngine.Input.GetButtonDown("Run"))
             {
                 yield return StartCoroutine(backspace());
             }
-            else if (Input.GetButtonDown("Select"))
+            else if (UnityEngine.Input.GetButtonDown("Select"))
             {
                 if (selectorIndex == 0)
                 {
@@ -702,7 +718,7 @@ public class TypingHandler : MonoBehaviour
 
         while (running)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
             {
                 caps = true;
             }
@@ -711,194 +727,194 @@ public class TypingHandler : MonoBehaviour
                 caps = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.BackQuote))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.BackQuote))
             {
                 addCharacterToString(caps, "‘", "~");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha1))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1))
             {
                 addCharacterToString(caps, "1", "!");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2))
             {
                 addCharacterToString(caps, "2", "@");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha3))
             {
                 addCharacterToString(caps, "3", "#");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha4))
             {
                 addCharacterToString(caps, "4", "4");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha5))
             {
                 addCharacterToString(caps, "5", "%");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha6))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha6))
             {
                 addCharacterToString(caps, "6", "6");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha7))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha7))
             {
                 addCharacterToString(caps, "7", "&");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha8))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha8))
             {
                 addCharacterToString(caps, "8", "*");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha9))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha9))
             {
                 addCharacterToString(caps, "9", "(");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha0))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha0))
             {
                 addCharacterToString(caps, "0", ")");
             }
 
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Q))
             {
                 addCharacterToString(caps, "q", "Q");
             }
-            else if (Input.GetKeyDown(KeyCode.W))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.W))
             {
                 addCharacterToString(caps, "w", "W");
             }
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.E))
             {
                 addCharacterToString(caps, "e", "E");
             }
-            else if (Input.GetKeyDown(KeyCode.R))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.R))
             {
                 addCharacterToString(caps, "r", "R");
             }
-            else if (Input.GetKeyDown(KeyCode.T))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.T))
             {
                 addCharacterToString(caps, "t", "T");
             }
-            else if (Input.GetKeyDown(KeyCode.Y))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Y))
             {
                 addCharacterToString(caps, "y", "Y");
             }
-            else if (Input.GetKeyDown(KeyCode.U))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.U))
             {
                 addCharacterToString(caps, "u", "U");
             }
-            else if (Input.GetKeyDown(KeyCode.I))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.I))
             {
                 addCharacterToString(caps, "i", "I");
             }
-            else if (Input.GetKeyDown(KeyCode.O))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.O))
             {
                 addCharacterToString(caps, "o", "O");
             }
-            else if (Input.GetKeyDown(KeyCode.P))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.P))
             {
                 addCharacterToString(caps, "p", "P");
             }
 
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.A))
             {
                 addCharacterToString(caps, "a", "A");
             }
-            else if (Input.GetKeyDown(KeyCode.S))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.S))
             {
                 addCharacterToString(caps, "s", "S");
             }
-            else if (Input.GetKeyDown(KeyCode.D))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.D))
             {
                 addCharacterToString(caps, "d", "D");
             }
-            else if (Input.GetKeyDown(KeyCode.F))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.F))
             {
                 addCharacterToString(caps, "f", "F");
             }
-            else if (Input.GetKeyDown(KeyCode.G))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.G))
             {
                 addCharacterToString(caps, "g", "G");
             }
-            else if (Input.GetKeyDown(KeyCode.H))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.H))
             {
                 addCharacterToString(caps, "h", "H");
             }
-            else if (Input.GetKeyDown(KeyCode.J))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.J))
             {
                 addCharacterToString(caps, "j", "J");
             }
-            else if (Input.GetKeyDown(KeyCode.K))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.K))
             {
                 addCharacterToString(caps, "k", "K");
             }
-            else if (Input.GetKeyDown(KeyCode.L))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.L))
             {
                 addCharacterToString(caps, "l", "L");
             }
-            else if (Input.GetKeyDown(KeyCode.Semicolon))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Semicolon))
             {
                 addCharacterToString(caps, ";", ":");
             }
-            else if (Input.GetKeyDown(KeyCode.Quote))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Quote))
             {
                 addCharacterToString(caps, "’", "”");
             }
 
-            else if (Input.GetKeyDown(KeyCode.Z))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Z))
             {
                 addCharacterToString(caps, "z", "Z");
             }
-            else if (Input.GetKeyDown(KeyCode.X))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.X))
             {
                 addCharacterToString(caps, "x", "X");
             }
-            else if (Input.GetKeyDown(KeyCode.C))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.C))
             {
                 addCharacterToString(caps, "c", "C");
             }
-            else if (Input.GetKeyDown(KeyCode.V))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.V))
             {
                 addCharacterToString(caps, "v", "V");
             }
-            else if (Input.GetKeyDown(KeyCode.B))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.B))
             {
                 addCharacterToString(caps, "b", "B");
             }
-            else if (Input.GetKeyDown(KeyCode.N))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.N))
             {
                 addCharacterToString(caps, "n", "N");
             }
-            else if (Input.GetKeyDown(KeyCode.M))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.M))
             {
                 addCharacterToString(caps, "m", "M");
             }
-            else if (Input.GetKeyDown(KeyCode.Comma))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Comma))
             {
                 addCharacterToString(caps, ",", ",");
             }
-            else if (Input.GetKeyDown(KeyCode.Period))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Period))
             {
                 addCharacterToString(caps, ".", ".");
             }
-            else if (Input.GetKeyDown(KeyCode.Slash))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Slash))
             {
                 addCharacterToString(caps, "/", "?");
             }
 
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
                 addCharacterToString(caps, " ", " ");
             }
 
-            else if (Input.GetKeyDown(KeyCode.Backspace))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Backspace))
             {
                 yield return StartCoroutine(backspace());
             }
 
-            else if (Input.GetButtonDown("Back") && !Input.GetKeyDown(KeyCode.X))
+            else if (UnityEngine.Input.GetButtonDown("Back") && !UnityEngine.Input.GetKeyDown(KeyCode.X))
             {
                 running = false;
             }
 
-            else if (Input.GetButtonDown("Enter"))
+            else if (UnityEngine.Input.GetButtonDown("Enter"))
             {
                 compileString();
                 if (typedString.Length > 0)

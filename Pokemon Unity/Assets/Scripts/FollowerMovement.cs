@@ -1,8 +1,8 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using System;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using Random = System.Random;
 
 public class FollowerMovement : MonoBehaviour
@@ -316,17 +316,17 @@ public class FollowerMovement : MonoBehaviour
                     if (Language.getLang() == Language.Country.FRANCAIS)
                     {
                         Dialog.StartCoroutine(Dialog.DrawText("Vous ne pouvez pas appeler " +
-                                                              SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                                                              SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                                                               " pour le moment."));
                     }
                     else
                     {
                         Dialog.StartCoroutine(Dialog.DrawText("You can't release " +
-                                                              SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                                                              SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                                                               " for now."));
                     }
                 
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -413,7 +413,7 @@ public class FollowerMovement : MonoBehaviour
             followerLight = GetComponentInChildren<Light>();
         }
         followerIndex = index;
-        pokemonID = SaveData.currentSave.PC.boxes[0][followerIndex].getID();
+        pokemonID = SaveData.currentSave.PC.boxes[0][followerIndex].Species;
         spriteSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetNewSprite(false);
 
         hasLight = PokemonDatabase.getPokemon(pokemonID).hasLight();
@@ -502,10 +502,11 @@ public class FollowerMovement : MonoBehaviour
         }
     }
     
-    private float PlayCry(Pokemon pokemon)
+    private float PlayCry(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
     {
-        SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
-        return pokemon.GetCry().length / pokemon.GetCryPitch();
+        //SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
+        //return pokemon.GetCry().length / pokemon.GetCryPitch();
+        return 0;
     }
 
     private void playClip(AudioClip clip)
@@ -517,7 +518,7 @@ public class FollowerMovement : MonoBehaviour
         PlayerAudio.Play();
     }
 
-    private IEnumerator PlayCryAndWait(Pokemon pokemon)
+    private IEnumerator PlayCryAndWait(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
     {
         yield return new WaitForSeconds(PlayCry(pokemon));
     }
@@ -632,33 +633,33 @@ public class FollowerMovement : MonoBehaviour
         if (WeatherHandler.currentWeather == null) return Hapiness.NORMAL;
         if (WeatherHandler.currentWeather.type == Weather.WeatherType.Rain)
         {
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.WATER ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.WATER)
             {
                 return Hapiness.HAPPY;
             }
             
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.FIRE ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.FIRE)
             {
                 return Hapiness.SAD;
             }
             
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.ROCK ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.ROCK)
             {
                 return Hapiness.SAD;
             }
             
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.GROUND ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.GROUND)
             {
                 return Hapiness.SAD;
@@ -666,49 +667,49 @@ public class FollowerMovement : MonoBehaviour
         }
         else if (WeatherHandler.currentWeather.type == Weather.WeatherType.Sand)
         {
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.GROUND ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.GROUND)
             {
                 return Hapiness.HAPPY;
             }
             
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.FIRE ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.FIRE)
             {
                 return Hapiness.SAD;
             }
             
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.ROCK ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.ROCK)
             {
                 return Hapiness.SAD;
             }
             
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.STEEL ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.STEEL)
             {
                 return Hapiness.SAD;
             }
             
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.POISON ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.POISON)
             {
                 return Hapiness.SAD;
             }
             
-            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType1() ==
+            if (PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType1() ==
                 PokemonData.Type.WATER ||
-                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].getID()).getType2() ==
+                PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][followerIndex].Species).getType2() ==
                 PokemonData.Type.WATER)
             {
                 return Hapiness.SAD;
@@ -732,14 +733,14 @@ public class FollowerMovement : MonoBehaviour
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " is enjoying the rain."));
                 }
                 else
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " is enjoying the weather."));
                 }
                 
@@ -749,21 +750,21 @@ public class FollowerMovement : MonoBehaviour
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " apprécie être sous la pluie."));
                 }
                 else
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " apprécie la météo."));
                 }
                 
                 break;
         }
         //is enjoying walking with you
-        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
         {
             yield return null;
         }
@@ -781,21 +782,21 @@ public class FollowerMovement : MonoBehaviour
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " seems to hate being soaked."));
                 }
                 else if (WeatherHandler.currentWeather.name == "Sandstorm")
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " gets sand in the eyes."));
                 }
                 else
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " seems to complain about the weather."));
                 }
                 
@@ -805,28 +806,28 @@ public class FollowerMovement : MonoBehaviour
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " semble détester être trempé."));
                 }
                 else if (WeatherHandler.currentWeather.type == Weather.WeatherType.Sand)
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " a du sable dans les yeux."));
                 }
                 else
                 {
                     yield return
                         Dialog.StartCoroutine(Dialog.DrawText(
-                            SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                            SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                             " semble se plaindre de la météo."));
                 }
                 
                 break;
         }
         //is enjoying walking with you
-        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
         {
             yield return null;
         }
@@ -845,18 +846,18 @@ public class FollowerMovement : MonoBehaviour
             default:
                 yield return
                     Dialog.StartCoroutine(Dialog.DrawText(
-                        SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                        SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                         " seems very happy."));
                 break;
             case (Language.Country.FRANCAIS):
                 yield return
                     Dialog.StartCoroutine(Dialog.DrawText(
-                        SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                        SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                         " semble très heureux."));
                 break;
         }
          //is enjoying walking with you
-        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
         {
             yield return null;
         }
@@ -903,18 +904,18 @@ public class FollowerMovement : MonoBehaviour
             default:
                 yield return
                     Dialog.StartCoroutine(Dialog.DrawText(
-                        SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                        SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                         " is tired."));
                 break;
             case (Language.Country.FRANCAIS):
                 yield return
                     Dialog.StartCoroutine(Dialog.DrawText(
-                        SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                        SaveData.currentSave.PC.boxes[0][followerIndex].Name +
                         " est fatigué."));
                 break;
         }
         //is enjoying walking with you
-        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
         {
             yield return null;
         }

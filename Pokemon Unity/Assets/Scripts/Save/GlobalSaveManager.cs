@@ -7,6 +7,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
 using UnityEngine.SceneManagement;
 
 public static class GlobalSaveManager
@@ -59,14 +75,14 @@ public static class GlobalSaveManager
             saveLocation = UnityEngine.Application.dataPath + "/Saves/";
         }
 
-        Pokemon[][] Party = SaveData.currentSave.PC.boxes;
+        //Pokemon[][] Party = SaveData.currentSave.PC.boxes;
         Bag PlayerBag = SaveData.currentSave.Bag;
 
         CustomSaveData DataToSave = new CustomSaveData(
             Player.transform.position, Player.GetComponent<PlayerMovement>().direction,
             Player.transform.Find("Follower").transform.position, Player.GetComponentInChildren<FollowerMovement>().direction,
-            SceneManager.GetActiveScene().buildIndex,
-            Party, PlayerBag, EventSaves, "");
+            SceneManager.GetActiveScene().buildIndex, //Party, 
+                PlayerBag, EventSaves, "");
 
         BinaryFormatter bf = new BinaryFormatter();
         try
@@ -134,7 +150,7 @@ public static class GlobalSaveManager
                 else
                 {
                     //Loads the Trainer's Party into the CurrentSave
-                    SaveData.currentSave.PC.boxes = DataToLoad.Party;
+                    //SaveData.currentSave.PC.boxes = DataToLoad.Party;
                     //Loads the Bag (containing the Items that the player owns) into the CurrentSave
                     SaveData.currentSave.Bag = DataToLoad.PlayerBag;
 
@@ -239,7 +255,7 @@ public static class GlobalSaveManager
         private SerializableVector3 pCenterFposition;
         private int pCenterFdirection;
 
-        public Pokemon[][] Party;
+        //public Pokemon[][] Party;
         public Bag PlayerBag;
 
         public List<CustomSaveEvent> SaveData;
@@ -259,7 +275,9 @@ public static class GlobalSaveManager
             SerializableVector3 playerPosition, int playerRotation, 
             SerializableVector3 followerPosition, int followerDirection,
             int activeScene,
-            Pokemon[][] party, Bag playerBag, List<CustomSaveEvent> saveData,
+            //Pokemon[][] party, 
+            Bag playerBag, 
+            List<CustomSaveEvent> saveData,
             string saveName)
         {
             PlayerPosition = playerPosition;
@@ -270,7 +288,7 @@ public static class GlobalSaveManager
 
             ActiveScene = activeScene;
 
-            Party = party;
+            //Party = party;
             PlayerBag = playerBag;
 
             SaveData = saveData;

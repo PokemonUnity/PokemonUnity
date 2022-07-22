@@ -1,7 +1,23 @@
 //Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
 using System.Collections;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PCHandler : MonoBehaviour
@@ -26,7 +42,7 @@ public class PCHandler : MonoBehaviour
 
     private DialogBoxHandlerNew Dialog;
 
-    private Pokemon selectedPokemon;
+    private IPokemon selectedPokemon;
 
     private Transform selectedInfo;
 
@@ -338,7 +354,7 @@ public class PCHandler : MonoBehaviour
     }
 
 
-    private void updateSelectedInfo(Pokemon selectedPokemon)
+    private void updateSelectedInfo(IPokemon selectedPokemon)
     {
         if (!carrying)
         {
@@ -362,14 +378,14 @@ public class PCHandler : MonoBehaviour
             }
             else
             {
-                selectedName.text = selectedPokemon.getName();
+                selectedName.text = selectedPokemon.Name;
                 selectedNameShadow.text = selectedName.text;
-                if (selectedPokemon.getGender() == Pokemon.Gender.FEMALE)
+                if (selectedPokemon.Gender == false)
                 {
                     selectedGender.text = "♀";
                     selectedGender.color = new Color(1, 0.2f, 0.2f, 1);
                 }
-                else if (selectedPokemon.getGender() == Pokemon.Gender.MALE)
+                else if (selectedPokemon.Gender == true)
                 {
                     selectedGender.text = "♂";
                     selectedGender.color = new Color(0.2f, 0.4f, 1, 1);
@@ -379,10 +395,10 @@ public class PCHandler : MonoBehaviour
                     selectedGender.text = null;
                 }
                 selectedGenderShadow.text = selectedGender.text;
-                selectedSpriteAnimation = selectedPokemon.GetFrontAnim_();
+                //selectedSpriteAnimation = selectedPokemon.GetFrontAnim_();
                 selectedSprite.sprite = selectedSpriteAnimation[0];
-                string type1 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType1().ToString();
-                string type2 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType2().ToString();
+                string type1 = selectedPokemon.Type1.ToString(TextScripts.Name);
+                string type2 = selectedPokemon.Type2.ToString(TextScripts.Name);
                 selectedType1.sprite = null;
                 selectedType2.sprite = null;
                 if (type1 != "NONE")
@@ -393,29 +409,28 @@ public class PCHandler : MonoBehaviour
                 {
                     selectedType2.sprite = Resources.Load<Sprite>("PCSprites/type" + type2);
                 }
-                selectedLevel.text = "Level " + selectedPokemon.getLevel();
+                selectedLevel.text = "Level " + selectedPokemon.Level;
                 selectedLevelShadow.text = selectedLevel.text;
-                selectedAbility.text =
-                    PokemonDatabase.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
+                selectedAbility.text = selectedPokemon.Ability.ToString(TextScripts.Name);
                 selectedAbilityShadow.text = selectedAbility.text;
                 selectedItem.text = "None";
-                if (selectedPokemon.getHeldItem() != null)
+                if (selectedPokemon.Item != Items.NONE)
                 {
-                    selectedItem.text = selectedPokemon.getHeldItem();
+                    selectedItem.text = selectedPokemon.Item.ToString(TextScripts.Name);
                 }
                 selectedItemShadow.text = selectedItem.text;
                 selectedStatus.sprite = null;
-                if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
+                if (selectedPokemon.Status != Status.NONE)
                 {
                     selectedStatus.sprite =
-                        Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.getStatus().ToString());
+                        Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
                 }
             }
         }
     }
 
     //Show the selectedInfo regardless of carrying or not.
-    private void updateSelectedInfoOverride(Pokemon selectedPokemon)
+    private void updateSelectedInfoOverride(IPokemon selectedPokemon)
     {
         if (carrying)
         {
@@ -784,8 +799,8 @@ public class PCHandler : MonoBehaviour
         //cursor.border = new RectOffset(32, 0, 0, 32);
         SfxHandler.Play(pickUpClip);
         yield return StartCoroutine(moveCursor(new Vector2(cursor.rectTransform.position.x, cursor.rectTransform.position.y - 10)));
-        grabbedPokemon.sprite = selectedPokemon.GetIcons();
-        if (!string.IsNullOrEmpty(selectedPokemon.getHeldItem()))
+        //grabbedPokemon.sprite = selectedPokemon.GetIcons();
+        if (selectedPokemon.Item != Items.NONE)
         {
             grabbedPokemonItem.enabled = true;
         }
@@ -1055,22 +1070,23 @@ public class PCHandler : MonoBehaviour
         StartCoroutine("animateCursor");
         StartCoroutine("animatePokemon");
         yield return new WaitForSeconds(0.5f);
-        while (running)
+        //ToDo: Why is this coroutine so massive?
+        /*while (running)
         {
             //if cursor is in boxIndex
             if (currentPosition < 3)
             {
-                if (Input.GetAxisRaw("Horizontal") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
-                    /*	if(currentPosition < 2){
-                            currentPosition += 1;
-                            SfxHandler.Play(selectClip);
-                            updateSelectedInfo(null);}
-                        yield return StartCoroutine(moveCursor(cursorPositions[currentPosition])); */
+                    //	if(currentPosition < 2){
+                    //        currentPosition += 1;
+                    //        SfxHandler.Play(selectClip);
+                    //        updateSelectedInfo(null);}
+                    //    yield return StartCoroutine(moveCursor(cursorPositions[currentPosition])); 
                     SfxHandler.Play(selectClip);
                     yield return StartCoroutine(moveBox(1));
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     if (currentPosition == 0)
                     {
@@ -1092,17 +1108,17 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
-                    /*	if(currentPosition > 0){
-                            currentPosition -= 1;
-                            SfxHandler.Play(selectClip);
-                            updateSelectedInfo(null);}
-                        yield return StartCoroutine(moveCursor(cursorPositions[currentPosition])); */
+                    //	if(currentPosition > 0){
+                    //        currentPosition -= 1;
+                    //        SfxHandler.Play(selectClip);
+                    //        updateSelectedInfo(null);}
+                    //    yield return StartCoroutine(moveCursor(cursorPositions[currentPosition])); 
                     SfxHandler.Play(selectClip);
                     yield return StartCoroutine(moveBox(-1));
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
                     string[] choices = new string[] {"Jump", "Wallpaper", "Name", "Cancel"};
                     Dialog.DrawDialogBox();
@@ -1131,7 +1147,7 @@ public class PCHandler : MonoBehaviour
                         yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 
                         Scene.main.Typing.gameObject.SetActive(true);
-                        StartCoroutine(Scene.main.Typing.control(8, currentBoxHeader.text, Pokemon.Gender.NONE,
+                        StartCoroutine(Scene.main.Typing.control(8, currentBoxHeader.text, null,
                             new Sprite[] {boxEditIcon}));
                         while (Scene.main.Typing.gameObject.activeSelf)
                         {
@@ -1151,14 +1167,14 @@ public class PCHandler : MonoBehaviour
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
-                else if (Input.GetButton("Back"))
+                else if (UnityEngine.Input.GetButton("Back"))
                 {
                     if (carrying)
                     {
                         Dialog.DrawDialogBox();
                         Dialog.DrawTextInstant("You're holding a Pokémon!");
                         yield return new WaitForSeconds(0.2f);
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -1193,21 +1209,21 @@ public class PCHandler : MonoBehaviour
             //if cursor is in boxContents
             else if (currentPosition > 2 && currentPosition < 33)
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     //if along the top row, act differently depending on location
                     if (currentPosition < 9)
                     {
-                        /*		if(currentPosition == 3){
-                                    currentPosition = 0;
-                                    SfxHandler.Play(selectClip);
-                                    updateSelectedInfo(null);}
-                                else if(currentPosition == 8){
-                                    currentPosition = 2;
-                                    SfxHandler.Play(selectClip);
-                                    updateSelectedInfo(null);}
-                                else{
-                        */
+                        //		if(currentPosition == 3){
+                        //          currentPosition = 0;
+                        //          SfxHandler.Play(selectClip);
+                        //          updateSelectedInfo(null);}
+                        //      else if(currentPosition == 8){
+                        //          currentPosition = 2;
+                        //          SfxHandler.Play(selectClip);
+                        //          updateSelectedInfo(null);}
+                        //      else{
+                        //
                         currentPosition = 1;
                         SfxHandler.Play(selectClip);
                         updateSelectedInfo(null);
@@ -1221,7 +1237,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
                     //if along the right column, move to party
                     if (currentPosition == 8 || currentPosition == 14)
@@ -1251,7 +1267,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     if (currentPosition < 27)
                     {
@@ -1273,7 +1289,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
                     //if not along the left column, move left one
                     if ((currentPosition + 3) % 6 != 0)
@@ -1284,7 +1300,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
                     if (SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3] != null)
                     {
@@ -1319,9 +1335,9 @@ public class PCHandler : MonoBehaviour
 
                                     //Set SceneSummary to be active so that it appears
                                     Scene.main.Summary.gameObject.SetActive(true);
-                                    StartCoroutine(
-                                        Scene.main.Summary.control(SaveData.currentSave.PC.boxes[currentBoxID],
-                                            currentPosition - 3));
+                                    //StartCoroutine( //ToDo: uncomment and review
+                                    //    Scene.main.Summary.control(SaveData.currentSave.PC.boxes[currentBoxID],
+                                    //        currentPosition - 3));
                                     //Start an empty loop that will only stop when ScenePC is no longer active (is closed)
                                     while (Scene.main.Summary.gameObject.activeSelf)
                                     {
@@ -1336,17 +1352,17 @@ public class PCHandler : MonoBehaviour
                                 else if (chosenIndex == 3)
                                 {
                                     //ITEM
-                                    Pokemon currentPokemon =
+                                    IPokemon currentPokemon =
                                         SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3];
 
                                     Dialog.UndrawChoiceBox();
                                     Dialog.DrawDialogBox();
-                                    if (!string.IsNullOrEmpty(currentPokemon.getHeldItem()))
+                                    if (currentPokemon.Item != Items.NONE)
                                     {
                                         yield return
                                             StartCoroutine(
-                                                Dialog.DrawText(currentPokemon.getName() + " is holding " +
-                                                                currentPokemon.getHeldItem() + "."));
+                                                Dialog.DrawText(currentPokemon.Name + " is holding " +
+                                                                currentPokemon.Item.ToString(TextScripts.Name) + "."));
                                         string[] itemChoices = new string[]
                                         {
                                             "Swap", "Take", "Cancel"
@@ -1384,7 +1400,7 @@ public class PCHandler : MonoBehaviour
                                                 Dialog.DrawDialogBox();
                                                 yield return
                                                     StartCoroutine(
-                                                        Dialog.DrawText("Swap " + currentPokemon.getHeldItem() + " for " +
+                                                        Dialog.DrawText("Swap " + currentPokemon.Item.ToString(TextScripts.Name) + " for " +
                                                                         chosenItem + "?"));
                                                 yield return StartCoroutine( Dialog.DrawChoiceBox());
 
@@ -1400,10 +1416,10 @@ public class PCHandler : MonoBehaviour
                                                     Dialog.DrawDialogBox();
                                                     yield return
                                                         Dialog.StartCoroutine(Dialog.DrawText(
-                                                            "Gave " + chosenItem + " to " + currentPokemon.getName() +
+                                                            "Gave " + chosenItem + " to " + currentPokemon.Name +
                                                             ","));
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
@@ -1411,8 +1427,8 @@ public class PCHandler : MonoBehaviour
                                                     yield return
                                                         Dialog.StartCoroutine(Dialog.DrawText(
                                                             "and received " + receivedItem + " in return."));
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
@@ -1434,8 +1450,8 @@ public class PCHandler : MonoBehaviour
                                             yield return
                                                 StartCoroutine(
                                                     Dialog.DrawText("Took " + receivedItem + " from " +
-                                                                    currentPokemon.getName() + "."));
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                                                    currentPokemon.Name + "."));
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -1445,7 +1461,7 @@ public class PCHandler : MonoBehaviour
                                     {
                                         yield return
                                             StartCoroutine(
-                                                Dialog.DrawText(currentPokemon.getName() + " isn't holding anything."));
+                                                Dialog.DrawText(currentPokemon.Name + " isn't holding anything."));
                                         string[] itemChoices = new string[]
                                         {
                                             "Give", "Cancel"
@@ -1489,8 +1505,8 @@ public class PCHandler : MonoBehaviour
                                                 Dialog.DrawDialogBox();
                                                 yield return
                                                     Dialog.StartCoroutine(Dialog.DrawText(
-                                                        "Gave " + chosenItem + " to " + currentPokemon.getName() + "."));
-                                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                                        "Gave " + chosenItem + " to " + currentPokemon.Name + "."));
+                                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                                 {
                                                     yield return null;
                                                 }
@@ -1511,7 +1527,7 @@ public class PCHandler : MonoBehaviour
                                         Dialog.DrawDialogBox();
                                         Dialog.DrawTextInstant("Your party is full!");
                                         yield return new WaitForSeconds(0.2f);
-                                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                         {
                                             yield return null;
                                         }
@@ -1546,14 +1562,14 @@ public class PCHandler : MonoBehaviour
                                             Dialog.DrawDialogBox();
                                             Dialog.DrawTextInstant(pokemonName + " was released.");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
                                             Dialog.DrawDialogBox();
                                             Dialog.DrawTextInstant("Bye bye, " + pokemonName + "!");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -1605,8 +1621,8 @@ public class PCHandler : MonoBehaviour
                                 Dialog.DrawDialogBox();
                                 Dialog.DrawTextInstant("Your party is full!");
                                 yield return new WaitForSeconds(0.2f);
-                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
-                                       Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back") &&
+                                       UnityEngine.Input.GetAxisRaw("Horizontal") == 0 && UnityEngine.Input.GetAxisRaw("Vertical") == 0)
                                 {
                                     yield return null;
                                 }
@@ -1625,14 +1641,14 @@ public class PCHandler : MonoBehaviour
                         yield return StartCoroutine(putDownPokemon(currentBoxID, currentPosition - 3));
                     }
                 }
-                else if (Input.GetButton("Back"))
+                else if (UnityEngine.Input.GetButton("Back"))
                 {
                     if (carrying)
                     {
                         Dialog.DrawDialogBox();
                         Dialog.DrawTextInstant("You're holding a Pokémon!");
                         yield return new WaitForSeconds(0.2f);
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -1667,7 +1683,7 @@ public class PCHandler : MonoBehaviour
             //if cursor is in partyContents
             else if (currentPosition > 32 && currentPosition < 39)
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     if (currentPosition > 34)
                     {
@@ -1677,7 +1693,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
                     if (currentPosition % 2 == 1)
                     {
@@ -1687,7 +1703,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     if (currentPosition < 37)
                     {
@@ -1703,7 +1719,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
                     if (currentPosition == 33)
                     {
@@ -1731,7 +1747,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
                     if (SaveData.currentSave.PC.boxes[0][currentPosition - 33] != null)
                     {
@@ -1767,7 +1783,7 @@ public class PCHandler : MonoBehaviour
                                             Dialog.DrawDialogBox();
                                             Dialog.DrawTextInstant("That's your last Pokémon!");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -1802,12 +1818,12 @@ public class PCHandler : MonoBehaviour
 
                                         Dialog.UndrawChoiceBox();
                                         Dialog.DrawDialogBox();
-                                        if (!string.IsNullOrEmpty(currentPokemon.getHeldItem()))
+                                        if (!string.IsNullOrEmpty(currentPokemon.HeldItem))
                                         {
                                             yield return
                                                 StartCoroutine(
-                                                    Dialog.DrawText(currentPokemon.getName() + " is holding " +
-                                                                    currentPokemon.getHeldItem() + "."));
+                                                    Dialog.DrawText(currentPokemon.Name + " is holding " +
+                                                                    currentPokemon.HeldItem + "."));
                                             string[] itemChoices = new string[]
                                             {
                                                 "Swap", "Take", "Cancel"
@@ -1845,7 +1861,7 @@ public class PCHandler : MonoBehaviour
                                                     Dialog.DrawDialogBox();
                                                     yield return
                                                         StartCoroutine(
-                                                            Dialog.DrawText("Swap " + currentPokemon.getHeldItem() +
+                                                            Dialog.DrawText("Swap " + currentPokemon.HeldItem +
                                                                             " for " + chosenItem + "?"));
                                                     yield return StartCoroutine(Dialog.DrawChoiceBox());
 
@@ -1861,10 +1877,10 @@ public class PCHandler : MonoBehaviour
                                                         Dialog.DrawDialogBox();
                                                         yield return
                                                             Dialog.StartCoroutine(Dialog.DrawText(
-                                                                "Gave " + chosenItem + " to " + currentPokemon.getName() +
+                                                                "Gave " + chosenItem + " to " + currentPokemon.Name +
                                                                 ","));
-                                                        while (!Input.GetButtonDown("Select") &&
-                                                               !Input.GetButtonDown("Back"))
+                                                        while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                               !UnityEngine.Input.GetButtonDown("Back"))
                                                         {
                                                             yield return null;
                                                         }
@@ -1872,8 +1888,8 @@ public class PCHandler : MonoBehaviour
                                                         yield return
                                                             Dialog.StartCoroutine(Dialog.DrawText(
                                                                 "and received " + receivedItem + " in return."));
-                                                        while (!Input.GetButtonDown("Select") &&
-                                                               !Input.GetButtonDown("Back"))
+                                                        while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                               !UnityEngine.Input.GetButtonDown("Back"))
                                                         {
                                                             yield return null;
                                                         }
@@ -1895,8 +1911,8 @@ public class PCHandler : MonoBehaviour
                                                 yield return
                                                     StartCoroutine(
                                                         Dialog.DrawText("Took " + receivedItem + " from " +
-                                                                        currentPokemon.getName() + "."));
-                                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                                                        currentPokemon.Name + "."));
+                                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                                 {
                                                     yield return null;
                                                 }
@@ -1906,7 +1922,7 @@ public class PCHandler : MonoBehaviour
                                         {
                                             yield return
                                                 StartCoroutine(
-                                                    Dialog.DrawText(currentPokemon.getName() +
+                                                    Dialog.DrawText(currentPokemon.Name +
                                                                     " isn't holding anything."));
                                             string[] itemChoices = new string[]
                                             {
@@ -1951,10 +1967,10 @@ public class PCHandler : MonoBehaviour
                                                     Dialog.DrawDialogBox();
                                                     yield return
                                                         Dialog.StartCoroutine(Dialog.DrawText(
-                                                            "Gave " + chosenItem + " to " + currentPokemon.getName() +
+                                                            "Gave " + chosenItem + " to " + currentPokemon.Name +
                                                             "."));
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
@@ -1987,7 +2003,7 @@ public class PCHandler : MonoBehaviour
                                                 Dialog.DrawDialogBox();
                                                 Dialog.DrawTextInstant("The box is full!");
                                                 yield return new WaitForSeconds(0.2f);
-                                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                                 {
                                                     yield return null;
                                                 }
@@ -2008,7 +2024,7 @@ public class PCHandler : MonoBehaviour
                                             Dialog.DrawDialogBox();
                                             Dialog.DrawTextInstant("That's your last Pokémon!");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -2038,16 +2054,16 @@ public class PCHandler : MonoBehaviour
                                                     Dialog.DrawDialogBox();
                                                     Dialog.DrawTextInstant(pokemonName + " was released.");
                                                     yield return new WaitForSeconds(0.2f);
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
                                                     Dialog.DrawDialogBox();
                                                     Dialog.DrawTextInstant("Bye bye, " + pokemonName + "!");
                                                     yield return new WaitForSeconds(0.2f);
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
@@ -2065,7 +2081,7 @@ public class PCHandler : MonoBehaviour
                                             Dialog.DrawDialogBox();
                                             Dialog.DrawTextInstant("That's your last Pokémon!");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -2098,8 +2114,8 @@ public class PCHandler : MonoBehaviour
                                     Dialog.DrawDialogBox();
                                     Dialog.DrawTextInstant("That's your last Pokémon!");
                                     yield return new WaitForSeconds(0.2f);
-                                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
-                                           Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back") &&
+                                           UnityEngine.Input.GetAxisRaw("Horizontal") == 0 && UnityEngine.Input.GetAxisRaw("Vertical") == 0)
                                     {
                                         yield return null;
                                     }
@@ -2137,8 +2153,8 @@ public class PCHandler : MonoBehaviour
                                     Dialog.DrawDialogBox();
                                     Dialog.DrawTextInstant("The box is full!");
                                     yield return new WaitForSeconds(0.2f);
-                                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
-                                           Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back") &&
+                                           UnityEngine.Input.GetAxisRaw("Horizontal") == 0 && UnityEngine.Input.GetAxisRaw("Vertical") == 0)
                                     {
                                         yield return null;
                                     }
@@ -2156,8 +2172,8 @@ public class PCHandler : MonoBehaviour
                                 Dialog.DrawDialogBox();
                                 Dialog.DrawTextInstant("That's your last Pokémon!");
                                 yield return new WaitForSeconds(0.2f);
-                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
-                                       Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back") &&
+                                       UnityEngine.Input.GetAxisRaw("Horizontal") == 0 && UnityEngine.Input.GetAxisRaw("Vertical") == 0)
                                 {
                                     yield return null;
                                 }
@@ -2171,14 +2187,14 @@ public class PCHandler : MonoBehaviour
                         yield return StartCoroutine(putDownPokemon(0, currentPosition - 33));
                     }
                 }
-                else if (Input.GetButton("Back"))
+                else if (UnityEngine.Input.GetButton("Back"))
                 {
                     if (carrying)
                     {
                         Dialog.DrawDialogBox();
                         Dialog.DrawTextInstant("You're holding a Pokémon!");
                         yield return new WaitForSeconds(0.2f);
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -2213,7 +2229,7 @@ public class PCHandler : MonoBehaviour
             //if cursor is on the bottom buttons
             else
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     if (currentPosition == 39)
                     {
@@ -2235,7 +2251,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
                     if (currentPosition < 41)
                     {
@@ -2245,7 +2261,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
                     if (currentPosition > 39)
                     {
@@ -2255,7 +2271,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
                     if (currentPosition == 40)
                     {
@@ -2284,7 +2300,7 @@ public class PCHandler : MonoBehaviour
                             Dialog.DrawDialogBox();
                             Dialog.DrawTextInstant("You're holding a Pokémon!");
                             yield return new WaitForSeconds(0.2f);
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
@@ -2311,14 +2327,14 @@ public class PCHandler : MonoBehaviour
                         }
                     }
                 }
-                else if (Input.GetButton("Back"))
+                else if (UnityEngine.Input.GetButton("Back"))
                 {
                     if (carrying)
                     {
                         Dialog.DrawDialogBox();
                         Dialog.DrawTextInstant("You're holding a Pokémon!");
                         yield return new WaitForSeconds(0.2f);
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -2351,7 +2367,7 @@ public class PCHandler : MonoBehaviour
                 }
             }
             yield return null;
-        }
+        }*/
         SfxHandler.Play(offClip);
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
         yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
