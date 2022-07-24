@@ -456,12 +456,13 @@ public class CustomEvent : MonoBehaviour
 
             case (CustomEventDetails.CustomEventType.Choice):
 
-                string[] strings = Language.getLang() switch
-                {
-                    Language.Country.ENGLISH => currentEvent.en_dialog,
-                    _ => currentEvent.fr_dialog
-                };
-                
+                string[] strings = new string[0]; //PokemonUnity.Game._INTL(currentEvent.en_dialog);
+                //Language.getLang() switch
+                //{
+                //    Language.Country.ENGLISH => currentEvent.en_dialog,
+                //    _ => currentEvent.fr_dialog
+                //};
+
                 if (strings.Length > 1)
                 {
                     yield return StartCoroutine(Dialog.DrawChoiceBox(strings));
@@ -859,7 +860,7 @@ public class CustomEvent : MonoBehaviour
                         {
                             if (SaveData.currentSave.PC.boxes[0][pi] != null)
                             {
-                                if (SaveData.currentSave.PC.boxes[0][pi].Species ==
+                                if ((int)PokemonUnity.Game.GameData.Trainer.party[pi].Species ==
                                     Mathf.FloorToInt(currentEvent.float0))
                                 {
                                     passedCheck = true;

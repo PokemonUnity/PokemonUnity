@@ -153,12 +153,12 @@ public class PauseHandler : MonoBehaviour
         }
     }
     
-    private App party = new (1);
-    private App pokedexApp = new (2);
-    private App bag = new (3);
-    private App trainer = new (4);
-    private App save = new (5);
-    private App settings = new (6);
+    private App party = new App(1);
+    private App pokedexApp = new App(2);
+    private App bag = new App(3);
+    private App trainer = new App(4);
+    private App save = new App(5);
+    private App settings = new App(6);
 
     void Awake()
     {
@@ -633,7 +633,7 @@ public class PauseHandler : MonoBehaviour
         //display party
         for (int i = 0; i < saveParty.Length; ++i)
         {
-            IPokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            IPokemon selectedPokemon = Game.GameData.Trainer.party[i];
 
             if (selectedPokemon == null)
             {
@@ -873,7 +873,7 @@ public class PauseHandler : MonoBehaviour
             {
                 if (SaveData.currentSave.PC.boxes[0][i] != null)
                 {
-                    IPokemon p = SaveData.currentSave.PC.boxes[0][i];
+                    IPokemon p = Game.GameData.Trainer.party[i];
                     
                     pkmTeam[i].gameObject.SetActive(true);
                     //pkmTeam[i].sprite = p.GetIconsSprite()[0];
