@@ -14,21 +14,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
 	/// <summary>
 	/// 实体表。
 	/// </summary>
-	public class DREntity : DataRowBase
+	public class DREntity //: DataRowBase
 	{
 		private int m_Id = 0;
 
 		/// <summary>
 		/// 获取实体编号。
 		/// </summary>
-		public override int Id
+		public int Id
 		{
 			get
 			{

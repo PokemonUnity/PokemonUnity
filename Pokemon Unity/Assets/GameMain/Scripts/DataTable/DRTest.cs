@@ -14,21 +14,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
 	/// <summary>
 	/// 测试表格生成。
 	/// </summary>
-	public class DRTest : DataRowBase
+	public class DRTest //: DataRowBase
 	{
 		private int m_Id = 0;
 
 		/// <summary>
 		/// 获取编号。
 		/// </summary>
-		public override int Id
+		public int Id
 		{
 			get
 			{

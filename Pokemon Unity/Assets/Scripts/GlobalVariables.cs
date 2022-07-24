@@ -449,7 +449,7 @@ public class GlobalVariables : MonoBehaviour
         {
             if (SaveData.currentSave.PC.boxes[0][i] != null)
             {
-                if (SaveData.currentSave.PC.boxes[0][i].Status != PokemonUnity.Status.FAINT)
+                if (PokemonUnity.Game.GameData.Trainer.party[i].Status != PokemonUnity.Status.FAINT)
                 {
                     FollowerSettings.changeFollower(i);
                     i = 6;

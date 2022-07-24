@@ -185,7 +185,7 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            IPokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            IPokemon selectedPokemon = PokemonUnity.Game.GameData.Trainer.party[i];
             if (selectedPokemon == null)
             {
                 //slot[i].gameObject.SetActive(false);
@@ -339,7 +339,7 @@ public class PartyHandler : MonoBehaviour
                 //add
                 if (currentPosition < 5)
                 {
-                    if (SaveData.currentSave.PC.boxes[0][currentPosition + 1] == null)
+                    if (PokemonUnity.Game.GameData.Trainer.party[currentPosition + 1] == null)
                     {
                         currentPosition = 6;
                     }
@@ -377,7 +377,7 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            IPokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            IPokemon selectedPokemon = PokemonUnity.Game.GameData.Trainer.party[i];
             if (selectedPokemon != null)
             {
                 if (i == swapPosition)
@@ -828,7 +828,7 @@ public class PartyHandler : MonoBehaviour
                 }
                 else
                 {
-                    IPokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][currentPosition];
+                    IPokemon selectedPokemon = PokemonUnity.Game.GameData.Trainer.party[currentPosition];
                     int chosenIndex = -1;
                     while (chosenIndex != 0)
                     {

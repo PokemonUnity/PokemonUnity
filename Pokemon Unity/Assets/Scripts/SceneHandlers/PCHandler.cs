@@ -746,7 +746,7 @@ public class PCHandler : MonoBehaviour
                 partyItems[icon].rectTransform.position = new Vector2(partyPositions[icon].x + 17, partyPositions[icon].y + 2);
                 SaveData.currentSave.PC.swapPokemon(0, icon - 1, 0, icon);
                 icon -= 1;
-                updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition]);
+                updateSelectedInfo(PokemonUnity.Game.GameData.Trainer.party[currentPosition]);
             }
             if (SaveData.currentSave.PC.boxes[0][icon - 1] == null)
             {
@@ -758,7 +758,7 @@ public class PCHandler : MonoBehaviour
                 partyItems[icon].enabled = false;
                 partyItems[icon].rectTransform.position = new Vector2(partyPositions[icon].x + 17, partyPositions[icon].y + 2);
                 SaveData.currentSave.PC.swapPokemon(0, icon - 1, 0, icon);
-                updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition]);
+                updateSelectedInfo(PokemonUnity.Game.GameData.Trainer.party[currentPosition]);
             }
             icon = 0;
         }
@@ -792,7 +792,7 @@ public class PCHandler : MonoBehaviour
 
     private IEnumerator pickUpPokemon(int currentBoxID, int currentPosition)
     {
-        selectedPokemon = SaveData.currentSave.PC.boxes[currentBoxID][currentPosition];
+        selectedPokemon = PokemonUnity.Game.GameData.Trainer.party[currentPosition];//[currentBoxID]
         selectedBoxID = currentBoxID;
         selectedIndex = currentPosition;
         carrying = true;
@@ -862,7 +862,7 @@ public class PCHandler : MonoBehaviour
             {
                 //fully heal if depositing into PC
                 SaveData.currentSave.PC.boxes[currentBoxID][currentPosition].healFull();
-                updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition]);
+                updateSelectedInfo(PokemonUnity.Game.GameData.Trainer.party[currentPosition]);//[currentBoxID]
             }
         }
     }
@@ -905,7 +905,7 @@ public class PCHandler : MonoBehaviour
             grabbedPokemonItem.enabled = itemTemp;
 
             //update selected info
-            updateSelectedInfoOverride(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition]);
+            updateSelectedInfoOverride(PokemonUnity.Game.GameData.Trainer.party[currentPosition]);//[currentBoxID]
             //swap pokemon
             SaveData.currentSave.PC.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
 
@@ -1061,7 +1061,7 @@ public class PCHandler : MonoBehaviour
 
         updateBoxesAndParty();
 
-        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
+        updateSelectedInfo(PokemonUnity.Game.GameData.Trainer.party[currentPosition - 3]);//[currentBoxID]
         cursor.rectTransform.position = new Vector2(cursorPositions[currentPosition].x, cursorPositions[currentPosition].y);
         grabbedPokemon.sprite = null;
         grabbedPokemonItem.enabled = false;

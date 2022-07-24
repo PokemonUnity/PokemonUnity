@@ -14,21 +14,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
 	/// <summary>
 	/// 场景配置表。
 	/// </summary>
-	public class DRScene : DataRowBase
+	public class DRScene //: DataRowBase
 	{
 		private int m_Id = 0;
 
 		/// <summary>
 		/// 获取场景编号。
 		/// </summary>
-		public override int Id
+		public int Id
 		{
 			get
 			{

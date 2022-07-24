@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
@@ -30,16 +30,16 @@ namespace PokemonUnity
 		private TypingForm parentForm = null;
 		//private RectTransform m_CachedTransform = null;
 		//private CanvasGroup m_CachedCanvasGroup = null;
-		/*private Entity m_Owner = null;
-		private int m_OwnerId = 0;
-
-		public Entity Owner
-		{
-			get
-			{
-				return m_Owner;
-			}
-		}*/
+		//private Entity m_Owner = null;
+		//private int m_OwnerId = 0;
+		//
+		//public Entity Owner
+		//{
+		//	get
+		//	{
+		//		return m_Owner;
+		//	}
+		//}
 
 		//public void Init(Entity owner, Canvas parentCanvas, float fromHPRatio, float toHPRatio)
 		public void Init(int index, TypingForm parentform)
@@ -47,7 +47,7 @@ namespace PokemonUnity
 			//if (owner == null)
 			if (parentform == null)
 			{
-				Log.Error("Owner is invalid.");
+				//Log.Error("Owner is invalid.");
 				return;
 			}
 
@@ -57,13 +57,13 @@ namespace PokemonUnity
 			gameObject.SetActive(true);
 			StopAllCoroutines();
 
-			/*m_CachedCanvasGroup.alpha = 1f;
-			if (m_Owner != owner || m_OwnerId != owner.Id)
-			{
-				m_CharKey.value = fromHPRatio;
-				m_Owner = owner;
-				m_OwnerId = owner.Id;
-			}*/
+			//m_CachedCanvasGroup.alpha = 1f;
+			//if (m_Owner != owner || m_OwnerId != owner.Id)
+			//{
+			//	m_CharKey.value = fromHPRatio;
+			//	m_Owner = owner;
+			//	m_OwnerId = owner.Id;
+			//}
 			charKeyIndex = index;
 
 			Refresh();
@@ -73,23 +73,23 @@ namespace PokemonUnity
 
 		public bool Refresh()
 		{
-			/*if (m_CachedCanvasGroup.alpha <= 0f)
-			{
-				return false;
-			}
-
-			if (m_Owner != null && Owner.Available && Owner.Id == m_OwnerId)
-			{
-				Vector3 worldPosition = m_Owner.CachedTransform.position + Vector3.forward;
-				Vector3 screenPosition = GameEntry.Scene.MainCamera.WorldToScreenPoint(worldPosition);
-
-				Vector2 position;
-				if (RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)m_ParentCanvas.transform, screenPosition,
-					m_ParentCanvas.worldCamera, out position))
-				{
-					m_CachedTransform.anchoredPosition = position;
-				}
-			}*/
+			//if (m_CachedCanvasGroup.alpha <= 0f)
+			//{
+			//	return false;
+			//}
+			//
+			//if (m_Owner != null && Owner.Available && Owner.Id == m_OwnerId)
+			//{
+			//	Vector3 worldPosition = m_Owner.CachedTransform.position + Vector3.forward;
+			//	Vector3 screenPosition = GameEntry.Scene.MainCamera.WorldToScreenPoint(worldPosition);
+			//
+			//	Vector2 position;
+			//	if (RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)m_ParentCanvas.transform, screenPosition,
+			//		m_ParentCanvas.worldCamera, out position))
+			//	{
+			//		m_CachedTransform.anchoredPosition = position;
+			//	}
+			//}
 
 			charKeyText.text = TypingForm.PageCharArray[parentForm.pageIndex][CharKeyIndex].ToString();
 
@@ -124,14 +124,14 @@ namespace PokemonUnity
 			charKeyText = GetComponent<Text>();
 			if (charKeyText == null)
 			{
-				Log.Error("Text component is invalid.");
+				//Log.Error("Text component is invalid.");
 				return;
 			}
 
 			charKeySelectable = GetComponentInChildren<Image>(true);
 			if (charKeySelectable == null)
 			{
-				Log.Error("Selectable component is invalid.");
+				//Log.Error("Selectable component is invalid.");
 				return;
 			}
 		}

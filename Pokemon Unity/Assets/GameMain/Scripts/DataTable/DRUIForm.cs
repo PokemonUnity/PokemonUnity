@@ -14,21 +14,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
 	/// <summary>
 	/// 界面配置表。
 	/// </summary>
-	public class DRUIForm : DataRowBase
+	public class DRUIForm //: DataRowBase
 	{
 		private int m_Id = 0;
 
 		/// <summary>
 		/// 获取界面编号。
 		/// </summary>
-		public override int Id
+		public int Id
 		{
 			get
 			{

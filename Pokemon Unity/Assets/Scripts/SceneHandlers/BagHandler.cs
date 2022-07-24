@@ -535,7 +535,7 @@ public class BagHandler : MonoBehaviour
         IPokemon currentPokemon;
         for (int i = 0; i < 6; i++)
         {
-            currentPokemon = SaveData.currentSave.PC.boxes[0][i];
+            currentPokemon = PokemonUnity.Game.GameData.Trainer.party[i];
             if (currentPokemon == null)
             {
                 pkmParty[i].gameObject.SetActive(false);
