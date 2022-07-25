@@ -16,6 +16,7 @@ namespace PokemonUnity
 	/// <summary>
 	/// Fight menu (choose a move)
 	/// </summary>
+	//[RequireComponent(typeof())]
 	public partial class FightMenuDisplay : MonoBehaviour, IFightMenuDisplay
 	{
 		private IWindow_CommandPokemon window;

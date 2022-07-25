@@ -29,22 +29,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	const int MESSAGEBOX = 1;
 	const int COMMANDBOX = 2;
 	const int FIGHTBOX = 3;
-	/// <summary>
-	/// 
-	/// </summary>
-	const string UI_MESSAGEBOX = "messagebox";
-	/// <summary>
-	/// 
-	/// </summary>
-	const string UI_MESSAGEWINDOW = "messagewindow";
-	/// <summary>
-	/// Select turn action; Fight, Bag, Item, Run...
-	/// </summary>
-	const string UI_COMMANDWINDOW = "commandwindow";
-	/// <summary>
-	/// Select Pokemon's attack move for given turn
-	/// </summary>
-	const string UI_FIGHTWINDOW = "fightwindow";
+	//const string UI_MESSAGEBOX = "messagebox";
+	//const string UI_MESSAGEWINDOW = "messagewindow";
+	//const string UI_COMMANDWINDOW = "commandwindow";
+	//const string UI_FIGHTWINDOW = "fightwindow";
 	private MenuCommands[] lastcmd;
 	//private IList<int> lastcmd;
 	private int[] lastmove;
@@ -53,8 +41,14 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	public ITrainerFadeAnimation fadeanim;
 	public IPokeballSendOutAnimation sendout;
 	public IWindow_CommandPokemon commandPokemon;
-	public ICommandMenuDisplay commandWindow;
-	public IFightMenuDisplay fightWindow;
+	/// <summary>
+	/// Select turn action; Fight, Bag, Item, Run...
+	/// </summary>
+	public CommandMenuDisplay commandWindow;
+	/// <summary>
+	/// Select Pokemon's attack move for given turn
+	/// </summary>
+	public FightMenuDisplay fightWindow;
 	public IWindow_UnformattedTextPokemon helpWindow;
 	public IWindow_AdvancedTextPokemon messageWindow;
 	public IWindow_AdvancedTextPokemon messageBox;
@@ -113,6 +107,56 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	public float traineryoffset;
 	public IViewport viewport;
 	#endregion
+	#region Unity's MonoBehavior Variables	
+	/*#region Pokemon HUD
+	public UnityEngine.GameObject _fadeanim;
+	public UnityEngine.GameObject _sendout;
+	public UnityEngine.GameObject _commandPokemon;
+	public UnityEngine.GameObject _commandWindow;
+	public UnityEngine.GameObject _fightWindow;
+	public UnityEngine.GameObject _helpWindow;
+	public UnityEngine.GameObject _messageWindow;
+	public UnityEngine.GameObject _messageBox;
+	public UnityEngine.GameObject _switchscreen;
+	public UnityEngine.GameObject _player;
+	public UnityEngine.GameObject _playerB;
+	public UnityEngine.GameObject _trainer;
+	public UnityEngine.GameObject _trainer2;
+	public UnityEngine.GameObject _battlebg;
+	public UnityEngine.GameObject _enemybase;
+	public UnityEngine.GameObject _playerbase;
+	public UnityEngine.GameObject _partybarfoe;
+	public UnityEngine.GameObject _partybarplayer;
+	public UnityEngine.GameObject _battlebox0;
+	public UnityEngine.GameObject _battlebox1;
+	public UnityEngine.GameObject _battlebox2;
+	public UnityEngine.GameObject _battlebox3;
+	/// <summary>
+	/// Your side primary battle pokemon; slot one
+	/// </summary>
+	public UnityEngine.GameObject _pokemon0;
+	/// <summary>
+	/// Your side ally battle pokemon; slot two (only appears in double battles)
+	/// </summary>
+	public UnityEngine.GameObject _pokemon2;
+	/// <summary>
+	/// Enemy side primary battle pokemon; slot one
+	/// </summary>
+	public UnityEngine.GameObject _pokemon1;
+	/// <summary>
+	/// Enemy side ally battle pokemon; slot two (only appears in double battles)
+	/// </summary>
+	public UnityEngine.GameObject _pokemon3;
+	public UnityEngine.GameObject _shadow0;
+	public UnityEngine.GameObject _shadow1;
+	public UnityEngine.GameObject _shadow2;
+	public UnityEngine.GameObject _shadow3;
+	/// <summary>
+	/// pokeball thrown at pokemons for capture animation
+	/// </summary>
+	public UnityEngine.GameObject _spriteBall;
+	#endregion*/
+	#endregion
 
 	public bool inPartyAnimation { get { return @enablePartyAnim && @partyAnimPhase < 3; } }
 
@@ -126,6 +170,34 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
 		Game.LocalizationDictionary = new PokemonUnity.Localization.XmlStringRes(null); //new Debugger());
 		Game.LocalizationDictionary.Initialize(englishLocalization, (int)PokemonUnity.Languages.English);
+
+		//messageBox = _messageBox.GetComponent<>() as ISpriteWrapper;
+		//fightWindow = _fightWindow.GetComponent<FightMenuDisplay>() as ISpriteWrapper;
+		//commandWindow = _commandWindow.GetComponent<>() as ISpriteWrapper;
+		//messageWindow = _messageWindow.GetComponent<>() as ISpriteWrapper;
+		//helpWindow = _helpwindow.GetComponent<>() as ISpriteWrapper;
+		//battlebg = _battlebg.GetComponent<>() as ISpriteWrapper;
+		//player = _player.GetComponent<>() as ISpriteWrapper;
+		//playerB = _playerB.GetComponent<>() as ISpriteWrapper;
+		//trainer = _trainer.GetComponent<>() as ISpriteWrapper;
+		//trainer2 = _trainer2.GetComponent<>() as ISpriteWrapper;
+		//playerbase = _playerbase.GetComponent<>() as ISpriteWrapper;
+		//enemybase = _enemybase.GetComponent<>() as ISpriteWrapper;
+		//partybarplayer = _partybarplayer.GetComponent<>() as ISpriteWrapper;
+		//partybarfoe = _partybarfoe.GetComponent<>() as ISpriteWrapper;
+		//spriteBall = _capture.GetComponent<>() as ISpriteWrapper;
+		//battlebox0 = _battlebox0.GetComponent<>() as ISpriteWrapper;
+		//battlebox1 = _battlebox1.GetComponent<>() as ISpriteWrapper;
+		//battlebox2 = _battlebox2.GetComponent<>() as ISpriteWrapper;
+		//battlebox3 = _battlebox3.GetComponent<>() as ISpriteWrapper;
+		//pokemon0 = _pokemon0.GetComponent<>() as ISpriteWrapper;
+		//pokemon1 = _pokemon1.GetComponent<>() as ISpriteWrapper;
+		//pokemon2 = _pokemon2.GetComponent<>() as ISpriteWrapper;
+		//pokemon3 = _pokemon3.GetComponent<>() as ISpriteWrapper;
+		//shadow0 = _shadow0.GetComponent<>() as ISpriteWrapper;
+		//shadow1 = _shadow1.GetComponent<>() as ISpriteWrapper;
+		//shadow2 = _shadow2.GetComponent<>() as ISpriteWrapper;
+		//shadow3 = _shadow3.GetComponent<>() as ISpriteWrapper;
 	}
 
 	public IPokeBattle_Scene initialize()
@@ -137,10 +209,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		lastmove = new int[] { 0, 0, 0, 0 };
 		pkmnwindows = new IWindow[] { null, null, null, null };
 		sprites = new Dictionary<string, ISpriteWrapper>() {
-			{ UI_MESSAGEBOX, messageBox as ISpriteWrapper },
-			{ UI_FIGHTWINDOW, fightWindow as ISpriteWrapper },
-			{ UI_COMMANDWINDOW, commandWindow as ISpriteWrapper },
-			{ UI_MESSAGEWINDOW, messageWindow as ISpriteWrapper },
+			{ "messagebox", messageBox as ISpriteWrapper },
+			{ "fightwindow", fightWindow as ISpriteWrapper },
+			{ "commandwindow", commandWindow as ISpriteWrapper },
+			{ "messagewindow", messageWindow as ISpriteWrapper },
 			{ "helpwindow", helpWindow as ISpriteWrapper },
 			{ "battlebg", battlebg as ISpriteWrapper },
 			{ "player", player as ISpriteWrapper },

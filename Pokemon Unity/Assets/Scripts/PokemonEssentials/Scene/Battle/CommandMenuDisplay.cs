@@ -16,10 +16,11 @@ namespace PokemonUnity
 	/// <summary>
 	/// Command menu (Fight/Pokémon/Bag/Run)
 	/// </summary>
+	//[RequireComponent(typeof())]
 	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay
 	{
 		public int mode { get; set; }
-		public string title;
+		//public string title;
 		public bool disposedValue;
 		public IIconSprite display;
 		public IWindow_CommandPokemon window;
@@ -172,6 +173,7 @@ namespace PokemonUnity
 		public void setTexts(params string[] value)
 		{
 			@msgbox.text = value[0];
+			//if using sprites/images as menu option, may need to change logic below
 			IList<string> commands = new List<string>();
 			for (int i = 1; i < 4; i++)
 			{

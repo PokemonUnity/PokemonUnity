@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Item;
@@ -12,6 +13,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity
 {
+	//[RequireComponent(typeof(Image))]
 	public class FightMenuButtons : MonoBehaviour, IFightMenuButtons //BitmapSprite
 	{
 		const int UPPERGAP=46;
