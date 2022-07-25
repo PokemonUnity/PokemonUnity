@@ -9,7 +9,7 @@ using UnityEngine.Events;
 
 
 public enum Emotion { happy, sad, suprised, angry };
-[System.Serializable] public class ColorEvent : UnityEvent<PokemonUnity.Color> { }
+[System.Serializable] public class ColorEvent : UnityEvent<PokemonUnity.Colors> { }
 
 [System.Serializable] public class EmotionEvent : UnityEvent<Emotion> { }
 

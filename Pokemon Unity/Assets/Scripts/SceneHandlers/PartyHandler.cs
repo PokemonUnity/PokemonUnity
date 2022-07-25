@@ -1,7 +1,23 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
 using System.Collections;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PartyHandler : MonoBehaviour
@@ -169,7 +185,7 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            IPokemon selectedPokemon = PokemonUnity.Game.GameData.Trainer.party[i];
             if (selectedPokemon == null)
             {
                 //slot[i].gameObject.SetActive(false);
@@ -180,7 +196,7 @@ public class PartyHandler : MonoBehaviour
             else
             {
                 //Add icons to the IconsSprite list
-                pkmIconsSprite[i] = selectedPokemon.GetIconsSprite();
+                //pkmIconsSprite[i] = selectedPokemon.GetIconsSprite();
                 
                 
                 //TODO arrange update slots
@@ -188,15 +204,15 @@ public class PartyHandler : MonoBehaviour
                 pokemonSlotEmpty[i].gameObject.SetActive(false);
                 
                 pkmIcon[i].sprite = pkmIconsSprite[i][0];
-                pkmName[i].text = selectedPokemon.getName();
+                pkmName[i].text = selectedPokemon.Name;
                 pkmNameShadow[i].text = pkmName[i].text;
                 
-                if (selectedPokemon.getGender() == Pokemon.Gender.FEMALE)
+                if (selectedPokemon.Gender == false)
                 {
                     pkmGender[i].text = "♀";
                     pkmGender[i].color = new Color(1, 0.2f, 0.2f, 1);
                 }
-                else if (selectedPokemon.getGender() == Pokemon.Gender.MALE)
+                else if (selectedPokemon.Gender == true)
                 {
                     pkmGender[i].text = "♂";
                     pkmGender[i].color = new Color(0.2f, 0.4f, 1, 1);
@@ -209,13 +225,13 @@ public class PartyHandler : MonoBehaviour
                 pkmGenderShadow[i].text = pkmGender[i].text;
                 
                 //TODO vérifier si cette formule fonctionne
-                pkmHPBar[i].rectTransform.sizeDelta = new Vector2(64*((float) selectedPokemon.getCurrentHP() / selectedPokemon.getHP()), 2f);
+                pkmHPBar[i].rectTransform.sizeDelta = new Vector2(64*((float) selectedPokemon.HP / selectedPokemon.TotalHP), 2f);
 
-                if (selectedPokemon.getCurrentHP() < (selectedPokemon.getHP() / 4f))
+                if (selectedPokemon.HP < (selectedPokemon.TotalHP / 4f))
                 {
                     pkmHPBar[i].color = new Color(1, 0.125f, 0, 1);
                 }
-                else if (selectedPokemon.getCurrentHP() < (selectedPokemon.getHP() / 2f))
+                else if (selectedPokemon.HP < (selectedPokemon.TotalHP / 2f))
                 {
                     pkmHPBar[i].color = new Color(1, 0.75f, 0, 1);
                 }
@@ -224,16 +240,16 @@ public class PartyHandler : MonoBehaviour
                     pkmHPBar[i].color = new Color(0.125f, 1, 0.065f, 1);
                 }
                 
-                pkmLevel[i].text = "" + selectedPokemon.getLevel();
+                pkmLevel[i].text = "" + selectedPokemon.Level;
                 pkmLevelShadow[i].text = pkmLevel[i].text;
-                pkmPV[i].text = "" + selectedPokemon.getCurrentHP();
+                pkmPV[i].text = "" + selectedPokemon.HP;
                 pkmPVShadow[i].text = pkmPV[i].text;
-                pkmMaxPV[i].text = "" + selectedPokemon.getHP();
+                pkmMaxPV[i].text = "" + selectedPokemon.TotalHP;
                 pkmMaxPVShadow[i].text = pkmMaxPV[i].text;
-                if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
+                if (selectedPokemon.Status != Status.NONE)
                 {
                     pkmStatus[i].sprite =
-                        Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.getStatus().ToString());
+                        Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
                 }
                 else
                 {
@@ -241,9 +257,9 @@ public class PartyHandler : MonoBehaviour
 
                 }
                 //Active ou désactive l'affichage du status
-                pkmStatus[i].enabled = selectedPokemon.getStatus() != Pokemon.Status.NONE;
+                pkmStatus[i].enabled = selectedPokemon.Status != Status.NONE;
                 //Active ou désactive l'affichage de l'item
-                pkmItem[i].enabled = !string.IsNullOrEmpty(selectedPokemon.getHeldItem());
+                pkmItem[i].enabled = selectedPokemon.Item == Items.NONE;
 
                 //FIN
                 
@@ -323,7 +339,7 @@ public class PartyHandler : MonoBehaviour
                 //add
                 if (currentPosition < 5)
                 {
-                    if (SaveData.currentSave.PC.boxes[0][currentPosition + 1] == null)
+                    if (PokemonUnity.Game.GameData.Trainer.party[currentPosition + 1] == null)
                     {
                         currentPosition = 6;
                     }
@@ -361,7 +377,7 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            IPokemon selectedPokemon = PokemonUnity.Game.GameData.Trainer.party[i];
             if (selectedPokemon != null)
             {
                 if (i == swapPosition)
@@ -395,7 +411,7 @@ public class PartyHandler : MonoBehaviour
                 }
                 else
                 {
-                    if (selectedPokemon.getCurrentHP() == 0)
+                    if (selectedPokemon.HP == 0)
                     {
                         if (i == 0)
                         {
@@ -720,7 +736,7 @@ public class PartyHandler : MonoBehaviour
         StartCoroutine("animateIcons");
         while (running)
         {
-            if (Input.GetAxisRaw("Horizontal") > 0)
+            if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
             {
                 if (currentPosition < 6)
                 {
@@ -729,7 +745,7 @@ public class PartyHandler : MonoBehaviour
                     yield return new WaitForSeconds(0.2f);
                 }
             }
-            else if (Input.GetAxisRaw("Horizontal") < 0)
+            else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
             {
                 if (currentPosition > 0)
                 {
@@ -738,7 +754,7 @@ public class PartyHandler : MonoBehaviour
                     yield return new WaitForSeconds(0.2f);
                 }
             }
-            else if (Input.GetAxisRaw("Vertical") > 0)
+            else if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
             {
                 if (currentPosition > 0)
                 {
@@ -754,7 +770,7 @@ public class PartyHandler : MonoBehaviour
                     yield return new WaitForSeconds(0.2f);
                 }
             }
-            else if (Input.GetAxisRaw("Vertical") < 0)
+            else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
             {
                 if (currentPosition < 6)
                 {
@@ -763,7 +779,7 @@ public class PartyHandler : MonoBehaviour
                     yield return new WaitForSeconds(0.2f);
                 }
             }
-            else if (Input.GetButton("Select"))
+            else if (UnityEngine.Input.GetButton("Select"))
             {
                 if (currentPosition == 6)
                 {
@@ -812,7 +828,7 @@ public class PartyHandler : MonoBehaviour
                 }
                 else
                 {
-                    Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][currentPosition];
+                    IPokemon selectedPokemon = PokemonUnity.Game.GameData.Trainer.party[currentPosition];
                     int chosenIndex = -1;
                     while (chosenIndex != 0)
                     {
@@ -825,10 +841,11 @@ public class PartyHandler : MonoBehaviour
                         SfxHandler.Play(decideClip);
 
                         Dialog.DrawDialogBox();
-                        yield return StartCoroutine(Dialog.DrawTextInstantSilent("Do what with " + selectedPokemon.getName() + "?"));
+                        yield return StartCoroutine(Dialog.DrawTextInstantSilent("Do what with " + selectedPokemon.Name + "?"));
                         yield return new WaitForSeconds(0.2f);
                         yield return StartCoroutine(Dialog.DrawChoiceBox(choices, 0, 100));
                         chosenIndex = Dialog.chosenIndex;
+                        /*ToDo: Uncommont and review...
                         if (chosenIndex == 3)
                         {
                             //Summary
@@ -862,7 +879,7 @@ public class PartyHandler : MonoBehaviour
                             chosenIndex = 0;
                             Dialog.UndrawChoiceBox();
                             Dialog.DrawDialogBox();
-                            yield return StartCoroutine(Dialog.DrawTextInstantSilent("Move " + selectedPokemon.getName() + " to where?"));
+                            yield return StartCoroutine(Dialog.DrawTextInstantSilent("Move " + selectedPokemon.Name + " to where?"));
                             yield return new WaitForSeconds(0.2f);
                         }
                         else if (chosenIndex == 1)
@@ -874,8 +891,8 @@ public class PartyHandler : MonoBehaviour
                             {
                                 yield return
                                     StartCoroutine(
-                                        Dialog.DrawText(selectedPokemon.getName() + " is holding " +
-                                                        selectedPokemon.getHeldItem() + "."));
+                                        Dialog.DrawText(selectedPokemon.Name + " is holding " +
+                                                        selectedPokemon.Item + "."));
                                 choices = new string[]
                                 {
                                     "Swap", "Take", "Cancel"
@@ -917,7 +934,7 @@ public class PartyHandler : MonoBehaviour
                                         Dialog.DrawDialogBox();
                                         yield return
                                             StartCoroutine(
-                                                Dialog.DrawText("Swap " + selectedPokemon.getHeldItem() + " for " +
+                                                Dialog.DrawText("Swap " + selectedPokemon.Item + " for " +
                                                                 chosenItem + "?"));
                                         yield return StartCoroutine(Dialog.DrawChoiceBox());
 
@@ -933,8 +950,8 @@ public class PartyHandler : MonoBehaviour
                                             Dialog.DrawDialogBox();
                                             yield return
                                                 Dialog.StartCoroutine(Dialog.DrawText(
-                                                    "Gave " + chosenItem + " to " + selectedPokemon.getName() + ","));
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                                    "Gave " + chosenItem + " to " + selectedPokemon.Name + ","));
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -942,7 +959,7 @@ public class PartyHandler : MonoBehaviour
                                             yield return
                                                 Dialog.StartCoroutine(Dialog.DrawText(
                                                     "and received " + receivedItem + " in return."));
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -963,8 +980,8 @@ public class PartyHandler : MonoBehaviour
                                     yield return
                                         StartCoroutine(
                                             Dialog.DrawText("Took " + receivedItem + " from " +
-                                                            selectedPokemon.getName() + "."));
-                                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                                            selectedPokemon.Name + "."));
+                                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                     {
                                         yield return null;
                                     }
@@ -974,7 +991,7 @@ public class PartyHandler : MonoBehaviour
                             {
                                 yield return
                                     StartCoroutine(
-                                        Dialog.DrawText(selectedPokemon.getName() + " isn't holding anything."));
+                                        Dialog.DrawText(selectedPokemon.Name + " isn't holding anything."));
                                 choices = new string[]
                                 {
                                     "Give", "Cancel"
@@ -1020,8 +1037,8 @@ public class PartyHandler : MonoBehaviour
 
                                         Dialog.DrawDialogBox();
                                         yield return
-                                            Dialog.StartCoroutine(Dialog.DrawText("Gave " + chosenItem + " to " + selectedPokemon.getName() + "."));
-                                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            Dialog.StartCoroutine(Dialog.DrawText("Gave " + chosenItem + " to " + selectedPokemon.Name + "."));
+                                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                         {
                                             yield return null;
                                         }
@@ -1042,7 +1059,7 @@ public class PartyHandler : MonoBehaviour
                             SfxHandler.Play(cancelClip);
                             yield return new WaitForSeconds(0.2f);
                             Dialog.UndrawChoiceBox();
-                        }
+                        }*/
                     }
                     if (!switching)
                     {
@@ -1053,7 +1070,7 @@ public class PartyHandler : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetButton("Back"))
+            else if (UnityEngine.Input.GetButton("Back"))
             {
                 if (switching)
                 {

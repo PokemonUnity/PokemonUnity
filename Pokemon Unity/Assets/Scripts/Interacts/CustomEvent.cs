@@ -1,10 +1,10 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using System;
-using UnityEngine;
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
@@ -422,7 +422,7 @@ public class CustomEvent : MonoBehaviour
 
                     if (i < dialog.Length - 1)
                     {
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -432,7 +432,7 @@ public class CustomEvent : MonoBehaviour
                 {
                     if (nextEvent.eventType != CustomEventDetails.CustomEventType.Choice)
                     {
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -445,7 +445,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 else
                 {
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -456,12 +456,13 @@ public class CustomEvent : MonoBehaviour
 
             case (CustomEventDetails.CustomEventType.Choice):
 
-                string[] strings = Language.getLang() switch
-                {
-                    Language.Country.ENGLISH => currentEvent.en_dialog,
-                    _ => currentEvent.fr_dialog
-                };
-                
+                string[] strings = new string[0]; //PokemonUnity.Game._INTL(currentEvent.en_dialog);
+                //Language.getLang() switch
+                //{
+                //    Language.Country.ENGLISH => currentEvent.en_dialog,
+                //    _ => currentEvent.fr_dialog
+                //};
+
                 if (strings.Length > 1)
                 {
                     yield return StartCoroutine(Dialog.DrawChoiceBox(strings));
@@ -573,7 +574,7 @@ public class CustomEvent : MonoBehaviour
                                     " \\away into the bag."));
                         }
                     }
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -581,7 +582,7 @@ public class CustomEvent : MonoBehaviour
                 else
                 {
                     yield return Dialog.StartCoroutine(Dialog.DrawTextSilent( "But there was no room..."));
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -590,14 +591,14 @@ public class CustomEvent : MonoBehaviour
                 break;
 
             case CustomEventDetails.CustomEventType.ReceivePokemon:
-                if (SaveData.currentSave.PC.hasSpace(0))
+                /*if (SaveData.currentSave.PC.hasSpace(0))
                 {
                     //Play Great for Pokemon
                     AudioClip pokeGetMFX = Resources.Load<AudioClip>("Audio/mfx/GetGreat");
 
                     PokemonData pkd = PokemonDatabase.getPokemon(currentEvent.ints[0]);
 
-                    string pkName = pkd.getName();
+                    string pkName = pkd.Name;
                     Pokemon.Gender pkGender = Pokemon.Gender.CALCULATE;
 
                     if (pkd.getMaleRatio() == -1)
@@ -745,8 +746,8 @@ public class CustomEvent : MonoBehaviour
                     }
 
                     string pkNature = (currentEvent.ints[3] <= 0)
-                        ? NatureDatabase.getRandomNature().getName()
-                        : NatureDatabase.getNature(currentEvent.ints[3] - 1).getName();
+                        ? NatureDatabase.getRandomNature().Name
+                        : NatureDatabase.getNature(currentEvent.ints[3] - 1).Name;
 
                     string[] pkMoveset = pkd.GenerateMoveset(currentEvent.ints[1]);
                     for (int i = 0; i < 4; i++)
@@ -766,7 +767,7 @@ public class CustomEvent : MonoBehaviour
                         heldItem = currentEvent.strings[3];
                     }
 
-                    Pokemon pk = new Pokemon(currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
+                    PokemonEssentials.Interface.PokeBattle.IPokemon pk = new Pokemon(currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
                         currentEvent.bool0, currentEvent.strings[2], heldItem,
                         currentEvent.strings[1], IVs[0], IVs[1], IVs[2], IVs[3], IVs[4], IVs[5], 0, 0, 0, 0, 0, 0,
                         pkNature, currentEvent.ints[4],
@@ -778,7 +779,7 @@ public class CustomEvent : MonoBehaviour
                 {
                     //jump to new tree
                     JumpToTree(currentEvent.int0);
-                }
+                }*/
                 break;
 
             case (CustomEventDetails.CustomEventType.SetActive):
@@ -859,7 +860,7 @@ public class CustomEvent : MonoBehaviour
                         {
                             if (SaveData.currentSave.PC.boxes[0][pi] != null)
                             {
-                                if (SaveData.currentSave.PC.boxes[0][pi].getID() ==
+                                if ((int)PokemonUnity.Game.GameData.Trainer.party[pi].Species ==
                                     Mathf.FloorToInt(currentEvent.float0))
                                 {
                                     passedCheck = true;
@@ -1163,11 +1164,11 @@ public class CustomEvent : MonoBehaviour
                         PlayerMovement.player.transform.Find("Camera").transform : GameObject.Find("Camera").transform, currentEvent.float0));
                 break;
             case CustomEventDetails.CustomEventType.AddPokemon:
-                if (SaveData.currentSave.PC.hasSpace(0))
+                /*if (SaveData.currentSave.PC.hasSpace(0))
                 {
                     PokemonData pkd = PokemonDatabase.getPokemon(currentEvent.ints[0]);
 
-                    string pkName = pkd.getName();
+                    string pkName = pkd.Name;
                     Pokemon.Gender pkGender = Pokemon.Gender.CALCULATE;
 
                     if (pkd.getMaleRatio() == -1)
@@ -1214,8 +1215,8 @@ public class CustomEvent : MonoBehaviour
                     }
 
                     string pkNature = (currentEvent.ints[3] == 0)
-                        ? NatureDatabase.getRandomNature().getName()
-                        : NatureDatabase.getNature(currentEvent.ints[3] - 1).getName();
+                        ? NatureDatabase.getRandomNature().Name
+                        : NatureDatabase.getNature(currentEvent.ints[3] - 1).Name;
 
                     string[] pkMoveset = pkd.GenerateMoveset(currentEvent.ints[1]);
                     for (int i = 0; i < 4; i++)
@@ -1229,14 +1230,14 @@ public class CustomEvent : MonoBehaviour
                     Debug.Log(pkMoveset[0] + ", " + pkMoveset[1] + ", " + pkMoveset[2] + ", " + pkMoveset[3]);
 
 
-                    Pokemon pk = new Pokemon(currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
+                    PokemonEssentials.Interface.PokeBattle.IPokemon pk = new Pokemon(currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
                         currentEvent.bool0, currentEvent.strings[2], currentEvent.strings[3],
                         currentEvent.strings[1], IVs[0], IVs[1], IVs[2], IVs[3], IVs[4], IVs[5], 0, 0, 0, 0, 0, 0,
                         pkNature, currentEvent.ints[4],
                         pkMoveset, new int[4]);
 
                     SaveData.currentSave.PC.addPokemon(pk);
-                }
+                }*/
                 break;
             case CustomEventDetails.CustomEventType.WithdrawPokemon:
                 yield return StartCoroutine(PlayerMovement.player.followerScript.withdrawToBall());
@@ -1291,7 +1292,7 @@ public class CustomEvent : MonoBehaviour
 
                 yield return new WaitForSeconds(5);
                 
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
@@ -1440,11 +1441,11 @@ public class CustomEvent : MonoBehaviour
 
     private IEnumerator HealParty()
     {
-        foreach (Pokemon p in SaveData.currentSave.PC.boxes[0])
-        {
-            if (p == null) break;
-            p.healFull();
-        }
+        //foreach (PokemonEssentials.Interface.PokeBattle.IPokemon p in SaveData.currentSave.PC.boxes[0])
+        //{
+        //    if (p == null) break;
+        //    p.healFull();
+        //}
 
         yield return null;
     }

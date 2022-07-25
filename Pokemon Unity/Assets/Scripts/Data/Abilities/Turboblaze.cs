@@ -13,13 +13,14 @@ namespace Data.Abilities
         public override IEnumerator EffectOnSent(BattleHandler battleHandler, int pokemonIndex, int other)
         {
             DialogBoxHandlerNew dialog = battleHandler.getDialog();
-            Pokemon user = battleHandler.getPokemon(pokemonIndex);
-            string dialog_string = Language.getLang() switch
-            {
-                Language.Country.FRANCAIS => " dégage une aura\nde flammes incandescentes!",
-                _ => " is radiating\na blazing aura!"
-            };
-            
+            //Pokemon user = battleHandler.getPokemon(pokemonIndex);
+            string dialog_string = PokemonUnity.Game._INTL(" is radiating\na blazing aura!");
+            //Language.getLang() switch
+            //{
+            //    Language.Country.FRANCAIS => " dégage une aura\nde flammes incandescentes!",
+            //    _ => " is radiating\na blazing aura!"
+            //};
+
             yield return base.EffectOnSent(battleHandler, pokemonIndex);
 
             yield return battleHandler.StartCoroutine(battleHandler.DisplayAbility(pokemonIndex, GetLangName()));

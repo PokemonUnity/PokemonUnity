@@ -1,6 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -61,7 +77,7 @@ public class StarterChoiceHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator releasePokemon(SpriteRenderer sprite, Pokemon pokemon)
+    private IEnumerator releasePokemon(SpriteRenderer sprite, IPokemon pokemon)
     {
         float 
             spawnDuration = 0.5f,
@@ -105,13 +121,14 @@ public class StarterChoiceHandler : MonoBehaviour
         yield return null;
     }
     
-    private float PlayCry(Pokemon pokemon)
+    private float PlayCry(IPokemon pokemon)
     {
-        SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
-        return pokemon.GetCry().length / pokemon.GetCryPitch();
+        //SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
+        //return pokemon.GetCry().length / pokemon.GetCryPitch();
+        return 0;
     }
 
-    private IEnumerator PlayCryAndWait(Pokemon pokemon)
+    private IEnumerator PlayCryAndWait(IPokemon pokemon)
     {
         yield return new WaitForSeconds(PlayCry(pokemon));
     }
@@ -121,13 +138,14 @@ public class StarterChoiceHandler : MonoBehaviour
         display.SetActive(true);
         
         bool running = true;
-        Pokemon[] starterPokemonList = new Pokemon[3];
+        IPokemon[] starterPokemonList = new IPokemon[3];
         
         /* Setup Sprites */
         for (int i = 0; i < starterSprites.Length; ++i)
         {
-            starterPokemonList[i] = new Pokemon(starterPokemonIds[i], Pokemon.Gender.CALCULATE, 5, "Poké Ball", null, null, -1);
-            StartCoroutine(animatePokemon(starterSprites[i], starterPokemonList[i].GetFrontAnim_()));
+            //starterPokemonList[i] = new Pokemon(starterPokemonIds[i], Pokemon.Gender.CALCULATE, 5, "Poké Ball", null, null, -1);
+            starterPokemonList[i] = new PokemonUnity.Monster.Pokemon((Pokemons)starterPokemonIds[i], level: 5);
+            //StartCoroutine(animatePokemon(starterSprites[i], starterPokemonList[i].GetFrontAnim_()));
         }
 
         /* Fade In */
@@ -160,7 +178,7 @@ public class StarterChoiceHandler : MonoBehaviour
         
         while (running)
         {
-            if (Input.GetAxisRaw("Horizontal") > 0) // Right 
+            if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0) // Right 
             {
                 if (starterIndex < starterSprites.Length - 1)
                 {
@@ -170,7 +188,7 @@ public class StarterChoiceHandler : MonoBehaviour
                     yield return new WaitForSeconds(inputDelay);
                 }
             }
-            else if (Input.GetAxisRaw("Horizontal") < 0) // Left 
+            else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0) // Left 
             {
                 if (starterIndex > 0)
                 {
@@ -180,7 +198,7 @@ public class StarterChoiceHandler : MonoBehaviour
                     yield return new WaitForSeconds(inputDelay);
                 }
             }
-            else if (Input.GetButtonDown("Select"))
+            else if (UnityEngine.Input.GetButtonDown("Select"))
             {
                 dialog.UndrawDialogBox();
                 dialog.DrawBlackFrame();
@@ -194,7 +212,7 @@ public class StarterChoiceHandler : MonoBehaviour
                     "Water"
                 };
                 
-                yield return StartCoroutine(dialog.DrawTextSilent("Do you want to choose "+starterPokemonList[starterIndex].getName()+" \nThe "+starterType[starterIndex]+" Pokémon?"));
+                yield return StartCoroutine(dialog.DrawTextSilent("Do you want to choose "+starterPokemonList[starterIndex].Name+" \nThe "+starterType[starterIndex]+" Pokémon?"));
                 yield return StartCoroutine(dialog.DrawChoiceBox());
 
                 if (dialog.chosenIndex == 1)

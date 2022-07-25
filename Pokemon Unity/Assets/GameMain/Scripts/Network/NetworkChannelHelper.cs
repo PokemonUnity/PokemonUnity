@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
@@ -61,7 +61,7 @@ namespace PokemonUnity
 					Type packetType = GetServerToClientPacketType(packetBase.Id);
 					if (packetType != null)
 					{
-						Log.Warning("Already exist packet type '{0}', check '{1}' or '{2}'?.", packetBase.Id.ToString(), packetType.Name, packetBase.GetType().Name);
+						//Log.Warning("Already exist packet type '{0}', check '{1}' or '{2}'?.", packetBase.Id.ToString(), packetType.Name, packetBase.GetType().Name);
 						continue;
 					}
 
@@ -74,11 +74,11 @@ namespace PokemonUnity
 				}
 			}
 
-			GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnNetworkConnected);
-			GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkClosedEventArgs.EventId, OnNetworkClosed);
-			GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs.EventId, OnNetworkMissHeartBeat);
-			GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkErrorEventArgs.EventId, OnNetworkError);
-			GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkCustomErrorEventArgs.EventId, OnNetworkCustomError);
+			//GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnNetworkConnected);
+			//GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkClosedEventArgs.EventId, OnNetworkClosed);
+			//GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs.EventId, OnNetworkMissHeartBeat);
+			//GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkErrorEventArgs.EventId, OnNetworkError);
+			//GameEntry.Event.Subscribe(UnityGameFramework.Runtime.NetworkCustomErrorEventArgs.EventId, OnNetworkCustomError);
 		}
 
 		/// <summary>
@@ -86,11 +86,11 @@ namespace PokemonUnity
 		/// </summary>
 		public void Shutdown()
 		{
-			GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnNetworkConnected);
-			GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkClosedEventArgs.EventId, OnNetworkClosed);
-			GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs.EventId, OnNetworkMissHeartBeat);
-			GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkErrorEventArgs.EventId, OnNetworkError);
-			GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkCustomErrorEventArgs.EventId, OnNetworkCustomError);
+			//GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnNetworkConnected);
+			//GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkClosedEventArgs.EventId, OnNetworkClosed);
+			//GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs.EventId, OnNetworkMissHeartBeat);
+			//GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkErrorEventArgs.EventId, OnNetworkError);
+			//GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkCustomErrorEventArgs.EventId, OnNetworkCustomError);
 
 			m_NetworkChannel = null;
 		}
@@ -117,13 +117,13 @@ namespace PokemonUnity
 			PacketBase packetImpl = packet as PacketBase;
 			if (packetImpl == null)
 			{
-				Log.Warning("Packet is invalid.");
+				//Log.Warning("Packet is invalid.");
 				return false;
 			}
 
 			if (packetImpl.PacketType != PacketType.ClientToServer)
 			{
-				Log.Warning("Send packet invalid.");
+				//Log.Warning("Send packet invalid.");
 				return false;
 			}
 
@@ -169,7 +169,7 @@ namespace PokemonUnity
 			SCPacketHeader scPacketHeader = packetHeader as SCPacketHeader;
 			if (scPacketHeader == null)
 			{
-				Log.Warning("Packet header is invalid.");
+				//Log.Warning("Packet header is invalid.");
 				return null;
 			}
 
@@ -183,12 +183,12 @@ namespace PokemonUnity
 				}
 				else
 				{
-					Log.Warning("Can not deserialize packet for packet id '{0}'.", scPacketHeader.Id.ToString());
+					//Log.Warning("Can not deserialize packet for packet id '{0}'.", scPacketHeader.Id.ToString());
 				}
 			}
 			else
 			{
-				Log.Warning("Packet header is invalid.");
+				//Log.Warning("Packet header is invalid.");
 			}
 
 			ReferencePool.Release(scPacketHeader);
@@ -208,64 +208,64 @@ namespace PokemonUnity
 
 		private void OnNetworkConnected(object sender, GameEventArgs e)
 		{
-			UnityGameFramework.Runtime.NetworkConnectedEventArgs ne = (UnityGameFramework.Runtime.NetworkConnectedEventArgs)e;
-			if (ne.NetworkChannel != m_NetworkChannel)
-			{
-				return;
-			}
-
-			Log.Info("Network channel '{0}' connected, local address '{1}', remote address '{2}'.", ne.NetworkChannel.Name, ne.NetworkChannel.Socket.LocalEndPoint.ToString(), ne.NetworkChannel.Socket.RemoteEndPoint.ToString());
+			//UnityGameFramework.Runtime.NetworkConnectedEventArgs ne = (UnityGameFramework.Runtime.NetworkConnectedEventArgs)e;
+			//if (ne.NetworkChannel != m_NetworkChannel)
+			//{
+			//	return;
+			//}
+			//
+			//Log.Info("Network channel '{0}' connected, local address '{1}', remote address '{2}'.", ne.NetworkChannel.Name, ne.NetworkChannel.Socket.LocalEndPoint.ToString(), ne.NetworkChannel.Socket.RemoteEndPoint.ToString());
 		}
 
 		private void OnNetworkClosed(object sender, GameEventArgs e)
 		{
-			UnityGameFramework.Runtime.NetworkClosedEventArgs ne = (UnityGameFramework.Runtime.NetworkClosedEventArgs)e;
-			if (ne.NetworkChannel != m_NetworkChannel)
-			{
-				return;
-			}
-
-			Log.Info("Network channel '{0}' closed.", ne.NetworkChannel.Name);
+			//UnityGameFramework.Runtime.NetworkClosedEventArgs ne = (UnityGameFramework.Runtime.NetworkClosedEventArgs)e;
+			//if (ne.NetworkChannel != m_NetworkChannel)
+			//{
+			//	return;
+			//}
+			//
+			//Log.Info("Network channel '{0}' closed.", ne.NetworkChannel.Name);
 		}
 
 		private void OnNetworkMissHeartBeat(object sender, GameEventArgs e)
 		{
-			UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs ne = (UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs)e;
-			if (ne.NetworkChannel != m_NetworkChannel)
-			{
-				return;
-			}
-
-			Log.Info("Network channel '{0}' miss heart beat '{1}' times.", ne.NetworkChannel.Name, ne.MissCount.ToString());
-
-			if (ne.MissCount < 2)
-			{
-				return;
-			}
-
-			ne.NetworkChannel.Close();
+			//UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs ne = (UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs)e;
+			//if (ne.NetworkChannel != m_NetworkChannel)
+			//{
+			//	return;
+			//}
+			//
+			//Log.Info("Network channel '{0}' miss heart beat '{1}' times.", ne.NetworkChannel.Name, ne.MissCount.ToString());
+			//
+			//if (ne.MissCount < 2)
+			//{
+			//	return;
+			//}
+			//
+			//ne.NetworkChannel.Close();
 		}
 
 		private void OnNetworkError(object sender, GameEventArgs e)
 		{
-			UnityGameFramework.Runtime.NetworkErrorEventArgs ne = (UnityGameFramework.Runtime.NetworkErrorEventArgs)e;
-			if (ne.NetworkChannel != m_NetworkChannel)
-			{
-				return;
-			}
-
-			Log.Info("Network channel '{0}' error, error code is '{1}', error message is '{2}'.", ne.NetworkChannel.Name, ne.ErrorCode.ToString(), ne.ErrorMessage);
-
-			ne.NetworkChannel.Close();
+			//UnityGameFramework.Runtime.NetworkErrorEventArgs ne = (UnityGameFramework.Runtime.NetworkErrorEventArgs)e;
+			//if (ne.NetworkChannel != m_NetworkChannel)
+			//{
+			//	return;
+			//}
+			//
+			//Log.Info("Network channel '{0}' error, error code is '{1}', error message is '{2}'.", ne.NetworkChannel.Name, ne.ErrorCode.ToString(), ne.ErrorMessage);
+			//
+			//ne.NetworkChannel.Close();
 		}
 
 		private void OnNetworkCustomError(object sender, GameEventArgs e)
 		{
-			UnityGameFramework.Runtime.NetworkCustomErrorEventArgs ne = (UnityGameFramework.Runtime.NetworkCustomErrorEventArgs)e;
-			if (ne.NetworkChannel != m_NetworkChannel)
-			{
-				return;
-			}
+			//UnityGameFramework.Runtime.NetworkCustomErrorEventArgs ne = (UnityGameFramework.Runtime.NetworkCustomErrorEventArgs)e;
+			//if (ne.NetworkChannel != m_NetworkChannel)
+			//{
+			//	return;
+			//}
 		}
 
 		public void PrepareForConnecting()

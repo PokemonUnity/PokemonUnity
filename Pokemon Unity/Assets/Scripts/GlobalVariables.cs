@@ -1,8 +1,8 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
 using System.Collections;
 using Classes;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -146,7 +146,7 @@ public class GlobalVariables : MonoBehaviour
         //SaveData.currentSave.PC.addPokemon(new Pokemon(483, Pokemon.Gender.CALCULATE, 100, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(484, Pokemon.Gender.CALCULATE, 100, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         
-        SaveData.currentSave.PC.addPokemon(new Pokemon(394, Pokemon.Gender.CALCULATE, 17, "Poké Ball", "", SaveData.currentSave.playerName, 0));
+        //SaveData.currentSave.PC.addPokemon(new Pokemon(394, Pokemon.Gender.CALCULATE, 17, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(487, Pokemon.Gender.CALCULATE, 50, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(18, Pokemon.Gender.CALCULATE, 50, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 50, "Poké Ball", "", SaveData.currentSave.playerName, 0));
@@ -196,7 +196,7 @@ public class GlobalVariables : MonoBehaviour
 
         SaveData.currentSave.PC.swapPokemon(0, 2, 1, 4);
 
-        SaveData.currentSave.PC.boxes[0][1].setStatus(Pokemon.Status.POISONED);
+        SaveData.currentSave.PC.boxes[0][1].setStatus(Status.POISONED);
         SaveData.currentSave.PC.boxes[0][1].addExp(420);
 
         SaveData.currentSave.PC.packParty();
@@ -213,10 +213,10 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.PC.boxes[0][3].removePP(0, 6);
         SaveData.currentSave.PC.boxes[0][0].removePP(2, 11);
 
-        //PC.boxes[0][0].setStatus(Pokemon.Status.FROZEN);
-        SaveData.currentSave.PC.boxes[0][2].setStatus(Pokemon.Status.PARALYZED);
-        SaveData.currentSave.PC.boxes[0][3].setStatus(Pokemon.Status.BURNED);
-        SaveData.currentSave.PC.boxes[0][4].setStatus(Pokemon.Status.ASLEEP);
+        //PC.boxes[0][0].setStatus(Status.FROZEN);
+        SaveData.currentSave.PC.boxes[0][2].setStatus(Status.PARALYZED);
+        SaveData.currentSave.PC.boxes[0][3].setStatus(Status.BURNED);
+        SaveData.currentSave.PC.boxes[0][4].setStatus(Status.ASLEEP);
 
 
         SaveData.currentSave.PC.addPokemon(new Pokemon(012, null, Pokemon.Gender.CALCULATE, 35, false, "Great Ball", "",
@@ -449,7 +449,7 @@ public class GlobalVariables : MonoBehaviour
         {
             if (SaveData.currentSave.PC.boxes[0][i] != null)
             {
-                if (SaveData.currentSave.PC.boxes[0][i].getStatus() != Pokemon.Status.FAINTED)
+                if (PokemonUnity.Game.GameData.Trainer.party[i].Status != PokemonUnity.Status.FAINT)
                 {
                     FollowerSettings.changeFollower(i);
                     i = 6;

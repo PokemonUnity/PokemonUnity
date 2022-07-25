@@ -1,9 +1,25 @@
 //Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
+using System;
 using System.Collections;
 using System.Linq;
-using System;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using UnityEngine;
 //using DiscordPresence;
 using Random = System.Random;
 
@@ -317,27 +333,27 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //check for new inputs, so that the new direction can be set accordingly
-        if (Input.GetButtonDown("Horizontal"))
+        if (UnityEngine.Input.GetButtonDown("Horizontal"))
         {
-            if (Input.GetAxisRaw("Horizontal") > 0)
+            if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
             {
                 //	Debug.Log("NEW INPUT: Right");
                 mostRecentDirectionPressed = 1;
             }
-            else if (Input.GetAxisRaw("Horizontal") < 0)
+            else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
             {
                 //	Debug.Log("NEW INPUT: Left");
                 mostRecentDirectionPressed = 3;
             }
         }
-        else if (Input.GetButtonDown("Vertical"))
+        else if (UnityEngine.Input.GetButtonDown("Vertical"))
         {
-            if (Input.GetAxisRaw("Vertical") > 0)
+            if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
             {
                 //	Debug.Log("NEW INPUT: Up");
                 mostRecentDirectionPressed = 0;
             }
-            else if (Input.GetAxisRaw("Vertical") < 0)
+            else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
             {
                 //	Debug.Log("NEW INPUT: Down");
                 mostRecentDirectionPressed = 2;
@@ -390,10 +406,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDirectionKeyHeld(int directionCheck)
     {
-        if ((directionCheck == 0 && Input.GetAxisRaw("Vertical") > 0) ||
-            (directionCheck == 1 && Input.GetAxisRaw("Horizontal") > 0) ||
-            (directionCheck == 2 && Input.GetAxisRaw("Vertical") < 0) ||
-            (directionCheck == 3 && Input.GetAxisRaw("Horizontal") < 0))
+        if ((directionCheck == 0 && UnityEngine.Input.GetAxisRaw("Vertical") > 0) ||
+            (directionCheck == 1 && UnityEngine.Input.GetAxisRaw("Horizontal") > 0) ||
+            (directionCheck == 2 && UnityEngine.Input.GetAxisRaw("Vertical") < 0) ||
+            (directionCheck == 3 && UnityEngine.Input.GetAxisRaw("Horizontal") < 0))
         {
             return true;
         }
@@ -415,7 +431,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (!surfing && !bike)
                 {
-                    if (Input.GetButton("Run"))
+                    if (UnityEngine.Input.GetButton("Run"))
                     {
                         running = true;
                         if (moving)
@@ -435,10 +451,10 @@ public class PlayerMovement : MonoBehaviour
                         speed = walkSpeed;
                     }
                 }
-                if (Input.GetButton("Start")) //Start
+                if (UnityEngine.Input.GetButton("Start")) //Start
                 {
                     //open Pause Menu
-                    if (moving || Input.GetButtonDown("Start")) //Start
+                    if (moving || UnityEngine.Input.GetButtonDown("Start")) //Start
                     {
                         if (setCheckBusyWith(Scene.main.Pause.gameObject))
                         {
@@ -453,13 +469,13 @@ public class PlayerMovement : MonoBehaviour
                         }
                     }
                 }
-                else if (Input.GetButtonDown("Select"))
+                else if (UnityEngine.Input.GetButtonDown("Select"))
                 {
                     interact();
                 }
                 //if pausing/interacting/etc. is not being called, then moving is possible.
                 //		(if any direction input is being entered)
-                else if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
                 {
                     //if most recent direction pressed is held, but it isn't the current direction, set it to be
                     if (mostRecentDirectionPressed != direction && isDirectionKeyHeld(mostRecentDirectionPressed))
@@ -527,7 +543,7 @@ public class PlayerMovement : MonoBehaviour
                         yield return StartCoroutine(moveForward());
                     }
                 }
-                else if (Input.GetKeyDown("g"))
+                else if (UnityEngine.Input.GetKeyDown("g"))
                 {
                     //DEBUG
                     Debug.Log(currentMap.getTileTag(transform.position));
@@ -1268,7 +1284,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator surfCheck()
     {
-        Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Surf");
+        IPokemon targetPokemon = null; //SaveData.currentSave.PC.getFirstFEUserInParty("Surf");
         if (targetPokemon != null)
         {
             if (getForwardVector(direction, false) != Vector3.zero)
@@ -1285,8 +1301,9 @@ public class PlayerMovement : MonoBehaviour
                     {
                         Dialog.DrawDialogBox();
                         yield return
-                            Dialog.StartCoroutine(Dialog.DrawText(targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Surf") + "!"));
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            //Dialog.StartCoroutine(Dialog.DrawText(targetPokemon.Name + " used " + targetPokemon.getFirstFEInstance("Surf") + "!"));
+                            Dialog.StartCoroutine(Dialog.DrawText(targetPokemon.Name + " used " + "Surf" + "!"));
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -1335,7 +1352,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Dialog.DrawDialogBox();
                 yield return Dialog.StartCoroutine(Dialog.DrawText("The water is dyed a deep blue."));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
@@ -1354,7 +1371,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (setCheckBusyWith(Scene.main.Battle.gameObject))
                 {
-                    Pokemon wildpkm = accessedMapSettings.getRandomEncounter(encounterLocation);
+                    IPokemon wildpkm = accessedMapSettings.getRandomEncounter(encounterLocation);
             
                     Scene.main.Battle.PlayWildBGM(wildpkm);
 
@@ -1383,7 +1400,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (setCheckBusyWith(Scene.main.Battle.gameObject))
         {
-            Pokemon wildpkm = accessedMapSettings.getRandomEncounter(WildPokemonInitialiser.Location.Grass);
+            IPokemon wildpkm = accessedMapSettings.getRandomEncounter(WildPokemonInitialiser.Location.Grass);
             
             Scene.main.Battle.PlayWildBGM(wildpkm);
 

@@ -14,21 +14,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
 	/// <summary>
 	/// 声音配置表。
 	/// </summary>
-	public class DRUISound : DataRowBase
+	public class DRUISound //: DataRowBase
 	{
 		private int m_Id = 0;
 
 		/// <summary>
 		/// 获取声音编号。
 		/// </summary>
-		public override int Id
+		public int Id
 		{
 			get
 			{

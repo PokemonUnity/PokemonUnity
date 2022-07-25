@@ -1,7 +1,7 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class InteractBreak : MonoBehaviour
 {
@@ -53,7 +53,7 @@ public class InteractBreak : MonoBehaviour
 
     public IEnumerator interact()
     {
-        Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty(fieldEffect);
+        PokemonEssentials.Interface.PokeBattle.IPokemon targetPokemon = null; //SaveData.currentSave.PC.getFirstFEUserInParty(fieldEffect);
         if (targetPokemon != null)
         {
             if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
@@ -62,7 +62,7 @@ public class InteractBreak : MonoBehaviour
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
                 yield return Dialog.StartCoroutine(Dialog.DrawText(interactText));
                 /* 			//This inactive code is used to print a third line of text.
-                    while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){	//these 3 lines stop the next bit from running until space is pressed.
+                    while(!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back")){	//these 3 lines stop the next bit from running until space is pressed.
                         yield return null;
                     }
                     Dialog.StartCoroutine("scrollText");
@@ -78,9 +78,10 @@ public class InteractBreak : MonoBehaviour
 
                     Dialog.DrawDialogBox();
                     yield return
-                        Dialog.StartCoroutine(Dialog.DrawText(
-                            targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance(fieldEffect) + "!"));
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        Dialog.StartCoroutine(Dialog.DrawText( //To
+                            //targetPokemon.Name + " used " + targetPokemon.getFirstFEInstance(fieldEffect) + "!"));
+                            targetPokemon.Name + " used " + fieldEffect + "!"));
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -113,7 +114,7 @@ public class InteractBreak : MonoBehaviour
                 Dialog.DrawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
                 yield return Dialog.StartCoroutine(Dialog.DrawText( examineText));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }

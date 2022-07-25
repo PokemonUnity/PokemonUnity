@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using PokemonUnity;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonUnity.UX
 {
@@ -48,7 +49,7 @@ namespace PokemonUnity.UX
 		}
 
 		//public void initialize(pics, splash, viewport= null)
-		public override void initialize()
+		new public IIntroEventScene initialize()
 		{
 			//super(null);
 			base.initialize();
@@ -63,6 +64,7 @@ namespace PokemonUnity.UX
 			//pbBGMPlay(data_system.title_bgm);
 			//pbBGMPlay(title_bgm);
 			openPic();
+			return this;
 		}
 
 		public void openPic()

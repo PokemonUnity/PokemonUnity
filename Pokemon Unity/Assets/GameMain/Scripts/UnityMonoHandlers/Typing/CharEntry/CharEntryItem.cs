@@ -8,7 +8,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity //.Battle.Pokemon
 {
@@ -61,7 +61,7 @@ namespace PokemonUnity //.Battle.Pokemon
 		{
 			if (owner == null)
 			{
-				Log.Error("Owner is invalid.");
+				//Log.Error("Owner is invalid.");
 				return;
 			}
 
@@ -90,18 +90,18 @@ namespace PokemonUnity //.Battle.Pokemon
 				return false;
 			}
 
-			if (m_Owner != null && Owner.Available && Owner.Id == m_OwnerId)
-			{
-				Vector3 worldPosition = m_Owner.CachedTransform.position + Vector3.forward;
-				Vector3 screenPosition = GameEntry.Scene.MainCamera.WorldToScreenPoint(worldPosition);
-
-				Vector2 position;
-				if (RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)m_ParentCanvas.transform, screenPosition,
-					m_ParentCanvas.worldCamera, out position))
-				{
-					m_CachedTransform.anchoredPosition = position;
-				}
-			}
+			//if (m_Owner != null && Owner.Available && Owner.Id == m_OwnerId)
+			//{
+			//	Vector3 worldPosition = m_Owner.CachedTransform.position + Vector3.forward;
+			//	Vector3 screenPosition = GameEntry.Scene.MainCamera.WorldToScreenPoint(worldPosition);
+			//
+			//	Vector2 position;
+			//	if (RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)m_ParentCanvas.transform, screenPosition,
+			//		m_ParentCanvas.worldCamera, out position))
+			//	{
+			//		m_CachedTransform.anchoredPosition = position;
+			//	}
+			//}
 
 			return true;
 		}
@@ -120,14 +120,14 @@ namespace PokemonUnity //.Battle.Pokemon
 			m_CachedTransform = GetComponent<RectTransform>();
 			if (m_CachedTransform == null)
 			{
-				Log.Error("RectTransform is invalid.");
+				//Log.Error("RectTransform is invalid.");
 				return;
 			}
 
 			m_CachedCanvasGroup = GetComponent<CanvasGroup>();
 			if (m_CachedCanvasGroup == null)
 			{
-				Log.Error("CanvasGroup is invalid.");
+				//Log.Error("CanvasGroup is invalid.");
 				return;
 			}
 		}

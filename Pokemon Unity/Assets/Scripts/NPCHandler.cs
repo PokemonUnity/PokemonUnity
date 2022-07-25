@@ -1,9 +1,9 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using System;
-using UnityEngine;
 using System.Collections;
 using System.Diagnostics;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
@@ -90,11 +90,11 @@ public class NPCHandler : MonoBehaviour
         }
         else
         {
-            spriteSheet = Pokemon.GetNewSpriteFromID(pokemonID, false, false);
+            //spriteSheet = Pokemon.GetNewSpriteFromID(pokemonID, false, false);
 
             npcLight.intensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
             npcLight.color = PokemonDatabase.getPokemon(pokemonID).getLightColor();
-            lightSheet = Pokemon.GetNewSpriteFromID(pokemonID, false, true);
+            //lightSheet = Pokemon.GetNewSpriteFromID(pokemonID, false, true);
         }
 
         exclaim = transform.Find("Exclaim").gameObject;

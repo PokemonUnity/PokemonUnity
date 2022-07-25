@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using PokemonUnity;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonUnity.UX
 {
 	//Maybe change to ScriptableObject instead...
 	public class EventScene : MonoBehaviour, IEventScene
 	{
+		//ToDo: These are EventListeners, not bools...
 		public bool onATrigger { get; set; }
 		public bool onBTrigger { get; set; }
 		public bool onUpdate { get; set; }
 		public bool disposed { get; private set; }
 
 		//public void initialize(viewport= null)
-		public virtual void initialize()
+		public virtual IEventScene initialize()
 		{
 			//@viewport = viewport;
 			//@onCTrigger = new Event();
@@ -28,6 +30,7 @@ namespace PokemonUnity.UX
 			//@picturesprites =[];
 			//@usersprites =[];
 			@disposed = false;
+			return this;
 		}
 
 		public IEnumerator main()
@@ -41,12 +44,12 @@ namespace PokemonUnity.UX
 
 		public void addImage(float x, float y, string name)
 		{
-			throw new System.NotImplementedException();
+			//instantiate a sprite
 		}
 
 		public void addLabel(float x, float y, float width, string text)
 		{
-			throw new System.NotImplementedException();
+			//instantiate a text
 		}
 
 		public void dispose()

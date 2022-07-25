@@ -1,8 +1,24 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using System;
-using UnityEngine;
 using System.Collections;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.Rendering.PostProcessing;
 
@@ -137,12 +153,12 @@ public class PauseHandler : MonoBehaviour
         }
     }
     
-    private App party = new (1);
-    private App pokedexApp = new (2);
-    private App bag = new (3);
-    private App trainer = new (4);
-    private App save = new (5);
-    private App settings = new (6);
+    private App party = new App(1);
+    private App pokedexApp = new App(2);
+    private App bag = new App(3);
+    private App trainer = new App(4);
+    private App save = new App(5);
+    private App settings = new App(6);
 
     void Awake()
     {
@@ -617,7 +633,7 @@ public class PauseHandler : MonoBehaviour
         //display party
         for (int i = 0; i < saveParty.Length; ++i)
         {
-            Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            IPokemon selectedPokemon = Game.GameData.Trainer.party[i];
 
             if (selectedPokemon == null)
             {
@@ -626,7 +642,7 @@ public class PauseHandler : MonoBehaviour
             else
             {
                 saveParty[i].gameObject.SetActive(true);
-                saveParty[i].sprite = selectedPokemon.GetIconsSprite()[0];
+                //saveParty[i].sprite = selectedPokemon.GetIconsSprite()[0];
             }
         }
 
@@ -674,7 +690,7 @@ public class PauseHandler : MonoBehaviour
             SfxHandler.Play(saveClip);
             yield return
                 StartCoroutine(Dialog.DrawText(SaveData.currentSave.playerName + " saved the game!"));
-            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
@@ -857,32 +873,32 @@ public class PauseHandler : MonoBehaviour
             {
                 if (SaveData.currentSave.PC.boxes[0][i] != null)
                 {
-                    Pokemon p = SaveData.currentSave.PC.boxes[0][i];
+                    IPokemon p = Game.GameData.Trainer.party[i];
                     
                     pkmTeam[i].gameObject.SetActive(true);
-                    pkmTeam[i].sprite = p.GetIconsSprite()[0];
+                    //pkmTeam[i].sprite = p.GetIconsSprite()[0];
 
-                    if (p.getStatus() == Pokemon.Status.FAINTED)
+                    if (p.Status == Status.FAINT)
                     {
                         pkmTeam[i].color = new Color(1, 1, 1, 0.2f);
                     }
-                    else if (p.getStatus() == Pokemon.Status.POISONED)
+                    else if (p.Status == Status.POISON)
                     {
                         pkmTeam[i].color = new Color(1, 0, 1, 1);
                     }
-                    else if (p.getStatus() == Pokemon.Status.PARALYZED)
+                    else if (p.Status == Status.PARALYSIS)
                     {
                         pkmTeam[i].color = new Color(1, 1, 0, 1);
                     }
-                    else if (p.getStatus() == Pokemon.Status.ASLEEP)
+                    else if (p.Status == Status.SLEEP)
                     {
                         pkmTeam[i].color = new Color(0.5f, 0.5f, 0.5f, 1);
                     }
-                    else if (p.getStatus() == Pokemon.Status.BURNED)
+                    else if (p.Status == Status.BURN)
                     {
                         pkmTeam[i].color = new Color(1, 0, 0, 1);
                     }
-                    else if (p.getStatus() == Pokemon.Status.FROZEN)
+                    else if (p.Status == Status.FROZEN)
                     {
                         pkmTeam[i].color = new Color(0, 1, 1, 1);
                     }
@@ -892,7 +908,7 @@ public class PauseHandler : MonoBehaviour
                     }
                     
                     // PV Bar
-                    float hp = p.getPercentHP();
+                    float hp = (p.HP / p.TotalHP) * 100;
                     pkmPV[i].GetComponent<RectTransform>().sizeDelta = new Vector2(hp * 22, 2);
                     
                     pkmPV[i].gameObject.SetActive(true);
@@ -946,25 +962,25 @@ public class PauseHandler : MonoBehaviour
         {
             if (selectedIcon <= 0)
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     selectedIcon = 2;
                     StartCoroutine("updateIcon", selectedIcon);
                     SfxHandler.Play(selectClip);
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
                     selectedIcon = 1;
                     StartCoroutine("updateIcon", selectedIcon);
                     SfxHandler.Play(selectClip);
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     selectedIcon = 5;
                     StartCoroutine("updateIcon", selectedIcon);
                     SfxHandler.Play(selectClip);
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
                     selectedIcon = 3;
                     StartCoroutine("updateIcon", selectedIcon);
@@ -973,7 +989,7 @@ public class PauseHandler : MonoBehaviour
             }
             else
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     if (selectedApp.appUp != null)
                     {
@@ -997,7 +1013,7 @@ public class PauseHandler : MonoBehaviour
                     }
                     */
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
                     if (selectedApp.appRight != null)
                     {
@@ -1020,7 +1036,7 @@ public class PauseHandler : MonoBehaviour
                     }
                     */
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     if (selectedApp.appDown != null)
                     {
@@ -1043,7 +1059,7 @@ public class PauseHandler : MonoBehaviour
                     }
                     */
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
                     if (selectedApp.appLeft != null)
                     {
@@ -1066,7 +1082,7 @@ public class PauseHandler : MonoBehaviour
                     }
                     */
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
                     switch (selectedApp.type)
                     {
@@ -1116,7 +1132,7 @@ public class PauseHandler : MonoBehaviour
                     */
                 }
             }
-            if (Input.GetButton("Start") || Input.GetButton("Back"))
+            if (UnityEngine.Input.GetButton("Start") || UnityEngine.Input.GetButton("Back"))
             {
                 running = false;
                 SfxHandler.Play(cancelClip);

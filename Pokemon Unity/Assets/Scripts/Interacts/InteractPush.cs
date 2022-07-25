@@ -1,7 +1,7 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class InteractPush : MonoBehaviour
 {
@@ -48,7 +48,7 @@ public class InteractPush : MonoBehaviour
     {
         if (!Player.strength)
         {
-            Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Strength");
+            PokemonEssentials.Interface.PokeBattle.IPokemon targetPokemon = null; //SaveData.currentSave.PC.getFirstFEUserInParty("Strength");
             if (targetPokemon != null)
             {
                 if (Player.setCheckBusyWith(this.gameObject))
@@ -65,9 +65,9 @@ public class InteractPush : MonoBehaviour
                         Dialog.DrawDialogBox();
                         yield return
                             Dialog.StartCoroutine(Dialog.DrawText(
-                                targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Strength") + "!"))
-                            ;
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                //targetPokemon.Name + " used " + targetPokemon.getFirstFEInstance("Strength") + "!"));
+                                targetPokemon.Name + " used " + "Strength" + "!"));
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -88,7 +88,7 @@ public class InteractPush : MonoBehaviour
                     Dialog.DrawDialogBox();
                         //yield return StartCoroutine blocks the next code from running until coroutine is done.
                     yield return Dialog.StartCoroutine(Dialog.DrawText( examineText));
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -103,7 +103,7 @@ public class InteractPush : MonoBehaviour
                 Dialog.DrawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
                 yield return Dialog.StartCoroutine(Dialog.DrawText( examineTextStrengthActive));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }

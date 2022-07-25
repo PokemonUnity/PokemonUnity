@@ -312,7 +312,7 @@ public class MapSettings : MonoBehaviour
         return packedList;
     }
 
-    public Pokemon getRandomEncounter(WildPokemonInitialiser.Location location)
+    public PokemonEssentials.Interface.PokeBattle.IPokemon getRandomEncounter(WildPokemonInitialiser.Location location)
     {
         WildPokemonInitialiser[] list = getEncounterList(location);
 
@@ -337,17 +337,17 @@ public class MapSettings : MonoBehaviour
         //randomly pick a number from the list's length
         int encounterIndex = Random.Range(0, chanceSplitList.Length);
 
-        /*/		DEBUG
-            string debugtext = "";
-            for(int i = 0; i < chanceSplitList.Length; i++){
-                debugtext += PokemonDatabase.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
-            Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
-            //*/
+            //		DEBUG
+            //string debugtext = "";
+            //for(int i = 0; i < chanceSplitList.Length; i++){
+            //    debugtext += PokemonDatabase.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
+            //Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
         Debug.Log("debug wild battle "+chanceSplitList.Length);
 
-        return new Pokemon(chanceSplitList[encounterIndex].ID, Pokemon.Gender.CALCULATE,
-            Random.Range(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
-            null, null, null, -1);
+        //return new Pokemon(chanceSplitList[encounterIndex].ID, Pokemon.Gender.CALCULATE,
+        //    Random.Range(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
+        //    null, null, null, -1);
+        return null;
     }
 }
 

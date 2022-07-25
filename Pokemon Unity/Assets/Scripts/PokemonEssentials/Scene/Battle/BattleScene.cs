@@ -29,6 +29,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	const int MESSAGEBOX = 1;
 	const int COMMANDBOX = 2;
 	const int FIGHTBOX = 3;
+	//const string UI_MESSAGEBOX = "messagebox";
+	//const string UI_MESSAGEWINDOW = "messagewindow";
+	//const string UI_COMMANDWINDOW = "commandwindow";
+	//const string UI_FIGHTWINDOW = "fightwindow";
 	private MenuCommands[] lastcmd;
 	//private IList<int> lastcmd;
 	private int[] lastmove;
@@ -40,11 +44,11 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	/// <summary>
 	/// Select turn action; Fight, Bag, Item, Run...
 	/// </summary>
-	public ICommandMenuDisplay commandWindow;
+	public CommandMenuDisplay commandWindow;
 	/// <summary>
 	/// Select Pokemon's attack move for given turn
 	/// </summary>
-	public IFightMenuDisplay fightWindow;
+	public FightMenuDisplay fightWindow;
 	public IWindow_UnformattedTextPokemon helpWindow;
 	/// <summary>
 	/// Display text and system responses to player
@@ -121,6 +125,56 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	public float traineryoffset;
 	public IViewport viewport;
 	#endregion
+	#region Unity's MonoBehavior Variables	
+	/*#region Pokemon HUD
+	public UnityEngine.GameObject _fadeanim;
+	public UnityEngine.GameObject _sendout;
+	public UnityEngine.GameObject _commandPokemon;
+	public UnityEngine.GameObject _commandWindow;
+	public UnityEngine.GameObject _fightWindow;
+	public UnityEngine.GameObject _helpWindow;
+	public UnityEngine.GameObject _messageWindow;
+	public UnityEngine.GameObject _messageBox;
+	public UnityEngine.GameObject _switchscreen;
+	public UnityEngine.GameObject _player;
+	public UnityEngine.GameObject _playerB;
+	public UnityEngine.GameObject _trainer;
+	public UnityEngine.GameObject _trainer2;
+	public UnityEngine.GameObject _battlebg;
+	public UnityEngine.GameObject _enemybase;
+	public UnityEngine.GameObject _playerbase;
+	public UnityEngine.GameObject _partybarfoe;
+	public UnityEngine.GameObject _partybarplayer;
+	public UnityEngine.GameObject _battlebox0;
+	public UnityEngine.GameObject _battlebox1;
+	public UnityEngine.GameObject _battlebox2;
+	public UnityEngine.GameObject _battlebox3;
+	/// <summary>
+	/// Your side primary battle pokemon; slot one
+	/// </summary>
+	public UnityEngine.GameObject _pokemon0;
+	/// <summary>
+	/// Your side ally battle pokemon; slot two (only appears in double battles)
+	/// </summary>
+	public UnityEngine.GameObject _pokemon2;
+	/// <summary>
+	/// Enemy side primary battle pokemon; slot one
+	/// </summary>
+	public UnityEngine.GameObject _pokemon1;
+	/// <summary>
+	/// Enemy side ally battle pokemon; slot two (only appears in double battles)
+	/// </summary>
+	public UnityEngine.GameObject _pokemon3;
+	public UnityEngine.GameObject _shadow0;
+	public UnityEngine.GameObject _shadow1;
+	public UnityEngine.GameObject _shadow2;
+	public UnityEngine.GameObject _shadow3;
+	/// <summary>
+	/// pokeball thrown at pokemons for capture animation
+	/// </summary>
+	public UnityEngine.GameObject _spriteBall;
+	#endregion*/
+	#endregion
 
 	public bool inPartyAnimation { get { return @enablePartyAnim && @partyAnimPhase < 3; } }
 
@@ -130,10 +184,147 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	{
 		GameDebug.OnLog += GameDebug_OnLog;
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		try
+		{
+			//GameDebug.Log("0-" + System.IO.Path.GetFullPath("..\\veekun-pokedex.sqlite"));
+			//GameDebug.Log("1-" + System.IO.Path.GetFullPath("..\\..\\veekun-pokedex.sqlite"));
+			//GameDebug.Log("2-" + System.IO.Path.GetFullPath("..\\..\\..\\veekun-pokedex.sqlite"));
+			//GameDebug.Log("3-" + System.IO.Path.GetFullPath("..\\..\\..\\..\\veekun-pokedex.sqlite"));
+			//GameDebug.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
+			Game.DatabasePath = "Data Source=..\\veekun-pokedex.sqlite";
+			Game.con = (System.Data.IDbConnection)new System.Data.SQLite.SQLiteConnection(Game.DatabasePath);
+			Game.ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
+			GameDebug.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
+			//Game.ResetAndOpenSql(@"Data\veekun-pokedex.sqlite");
+			//Game.ResetSqlConnection();
+			Game g = new Game();
+		}
+		catch (InvalidOperationException) { GameDebug.LogError("problem connecting with database"); } //ignore...
+		finally
+		{
+			//Game.con.Open();
+
+			GameDebug.Log("Is Pokemon DB Null? " + (Kernal.PokemonData == null).ToString());
+			if (Kernal.PokemonData == null)
+			{
+				//Game.InitPokemons();
+				try
+				{
+					Game.InitTypes();
+					Game.InitNatures();
+					Game.InitPokemons();
+					Game.InitPokemonForms();
+					Game.InitPokemonMoves();
+					//Game.InitPokemonEvolutions();
+					Game.InitPokemonItems();
+					Game.InitMoves();
+					Game.InitItems();
+					Game.InitBerries();
+					Game.InitTrainers();
+					//Game.InitRegions();
+					//Game.InitLocations();
+				}
+				catch (Exception) { GameDebug.LogError("there were some problems running sql..."); } //ignore...
+			}
+			GameDebug.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
+				(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
+			if (Kernal.PokemonData.Count == 0)
+				GameDebug.Log("Was Pokemon DB Successfully Created? " + Game.InitPokemons());
+			GameDebug.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
+				(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
+		}
+
+		GameDebug.Log("Is Game Null? " + (Game.GameData == null).ToString());
+		GameDebug.Log("Is Player Null? " + (Game.GameData.Player == null).ToString());
+		if (Game.GameData.Player == null)
+		{
+			GameDebug.Log("Create Player Object");
+			//IGamePlayer p = new Player();
+			GameDebug.Log("Saving Player Object to Global Singleton");
+			//Game.GameData.Player = p;
+		}
+		GameDebug.Log("Is Trainer Null? " + (Game.GameData.Trainer == null).ToString());
+
+		//messageBox = _messageBox.GetComponent<>() as ISpriteWrapper;
+		//fightWindow = _fightWindow.GetComponent<FightMenuDisplay>() as ISpriteWrapper;
+		//commandWindow = _commandWindow.GetComponent<>() as ISpriteWrapper;
+		//messageWindow = _messageWindow.GetComponent<>() as ISpriteWrapper;
+		//helpWindow = _helpwindow.GetComponent<>() as ISpriteWrapper;
+		//battlebg = _battlebg.GetComponent<>() as ISpriteWrapper;
+		//player = _player.GetComponent<>() as ISpriteWrapper;
+		//playerB = _playerB.GetComponent<>() as ISpriteWrapper;
+		//trainer = _trainer.GetComponent<>() as ISpriteWrapper;
+		//trainer2 = _trainer2.GetComponent<>() as ISpriteWrapper;
+		//playerbase = _playerbase.GetComponent<>() as ISpriteWrapper;
+		//enemybase = _enemybase.GetComponent<>() as ISpriteWrapper;
+		//partybarplayer = _partybarplayer.GetComponent<>() as ISpriteWrapper;
+		//partybarfoe = _partybarfoe.GetComponent<>() as ISpriteWrapper;
+		//spriteBall = _capture.GetComponent<>() as ISpriteWrapper;
+		//battlebox0 = _battlebox0.GetComponent<>() as ISpriteWrapper;
+		//battlebox1 = _battlebox1.GetComponent<>() as ISpriteWrapper;
+		//battlebox2 = _battlebox2.GetComponent<>() as ISpriteWrapper;
+		//battlebox3 = _battlebox3.GetComponent<>() as ISpriteWrapper;
+		//pokemon0 = _pokemon0.GetComponent<>() as ISpriteWrapper;
+		//pokemon1 = _pokemon1.GetComponent<>() as ISpriteWrapper;
+		//pokemon2 = _pokemon2.GetComponent<>() as ISpriteWrapper;
+		//pokemon3 = _pokemon3.GetComponent<>() as ISpriteWrapper;
+		//shadow0 = _shadow0.GetComponent<>() as ISpriteWrapper;
+		//shadow1 = _shadow1.GetComponent<>() as ISpriteWrapper;
+		//shadow2 = _shadow2.GetComponent<>() as ISpriteWrapper;
+		//shadow3 = _shadow3.GetComponent<>() as ISpriteWrapper;
+	}
+
+	private void Start()
+	{
+		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.Log("######################################");
+		GameDebug.Log("# Hello - Welcome to Unity Battle! #");
+		GameDebug.Log("######################################");
+
 		string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
 		//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
-		Game.LocalizationDictionary = new PokemonUnity.Localization.XmlStringRes(null); //new Debugger());
-		Game.LocalizationDictionary.Initialize(englishLocalization, (int)PokemonUnity.Languages.English);
+		Game.LocalizationDictionary = new XmlStringRes(null); //new Debugger());
+		Game.LocalizationDictionary.Initialize(englishLocalization, (int)Languages.English);
+
+		//IPokeBattle_DebugSceneNoGraphics pokeBattle = new PokeBattleScene();
+		//pokeBattle.initialize();
+
+
+		IPokemon[] p1 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.ABRA), new PokemonUnity.Monster.Pokemon(Pokemons.EEVEE) };
+		IPokemon[] p2 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.MONFERNO) }; //, new PokemonUnity.Monster.Pokemon(Pokemons.SEEDOT) };
+
+		p1[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+		p1[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+
+		p2[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+		//p2[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+
+		//PokemonUnity.Character.TrainerData trainerData = new PokemonUnity.Character.TrainerData("FlakTester", true, 120, 002);
+		//Game.GameData.Player = new PokemonUnity.Character.Player(trainerData, p1);
+		//Game.GameData.Trainer = new Trainer("FlakTester", true, 120, 002);
+
+		(p1[0] as PokemonUnity.Monster.Pokemon).SetNickname("Test1");
+		(p1[1] as PokemonUnity.Monster.Pokemon).SetNickname("Test2");
+
+		(p2[0] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest1");
+		//(p2[1] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest2");
+
+		//ITrainer player = new Trainer(Game.GameData.Trainer.name, TrainerTypes.PLAYER);
+		ITrainer player = new PokemonUnity.Trainer("FlakTester", TrainerTypes.CHAMPION);
+		//ITrainer pokemon = new Trainer("Wild Pokemon", TrainerTypes.WildPokemon);
+		Game.GameData.Trainer = player;
+		Game.GameData.Trainer.party = p1;
+
+		//IBattle battle = new Battle(pokeBattle, Game.GameData.Trainer.party, p2, Game.GameData.Trainer, null, 2);
+		IBattle battle = new Battle(this, p1, p2, Game.GameData.Trainer, null);
+
+		battle.rules.Add(BattleRule.SUDDENDEATH, false);
+		battle.rules.Add("drawclause", false);
+		battle.rules.Add(BattleRule.MODIFIEDSELFDESTRUCTCLAUSE, false);
+
+		battle.weather = PokemonUnity.Combat.Weather.SUNNYDAY;
+
+		battle.pbStartBattle(true);
 	}
 
 	public IPokeBattle_Scene initialize()
@@ -145,33 +336,33 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		lastmove = new int[] { 0, 0, 0, 0 };
 		pkmnwindows = new IWindow[] { null, null, null, null };
 		sprites = new Dictionary<string, ISpriteWrapper>() {
-			{ "messagebox", messageBox as ISpriteWrapper },
-			{ "fightwindow", fightWindow as ISpriteWrapper },
-			{ "commandwindow", commandWindow as ISpriteWrapper },
-			{ "messagewindow", messageWindow as ISpriteWrapper },
-			{ "helpwindow", helpWindow as ISpriteWrapper },
-			{ "battlebg", battlebg as ISpriteWrapper },
-			{ "player", player as ISpriteWrapper },
-			{ "playerB", playerB as ISpriteWrapper },
-			{ "trainer", trainer as ISpriteWrapper },
-			{ "trainer2", trainer2 as ISpriteWrapper },
-			{ "playerbase", playerbase as ISpriteWrapper },
-			{ "enemybase", enemybase as ISpriteWrapper },
-			{ "partybarplayer", partybarplayer as ISpriteWrapper },
-			{ "partybarfoe", partybarfoe as ISpriteWrapper },
-			{ "capture", spriteBall as ISpriteWrapper },
-			{ "battlebox0", battlebox0 as ISpriteWrapper },
-			{ "battlebox1", battlebox1 as ISpriteWrapper },
-			{ "battlebox2", battlebox2 as ISpriteWrapper },
-			{ "battlebox3", battlebox3 as ISpriteWrapper },
-			{ "pokemon0", pokemon0 as ISpriteWrapper },
-			{ "pokemon1", pokemon1 as ISpriteWrapper },
-			{ "pokemon2", pokemon2 as ISpriteWrapper },
-			{ "pokemon3", pokemon3 as ISpriteWrapper },
-			{ "shadow0", shadow0 as ISpriteWrapper },
-			{ "shadow1", shadow1 as ISpriteWrapper },
-			{ "shadow2", shadow2 as ISpriteWrapper },
-			{ "shadow3", shadow3 as ISpriteWrapper },
+			{ "messagebox",		messageBox			as ISpriteWrapper },
+			{ "fightwindow",	fightWindow			as ISpriteWrapper },
+			{ "commandwindow",	commandWindow		as ISpriteWrapper },
+			{ "messagewindow",	messageWindow		as ISpriteWrapper },
+			{ "helpwindow",		helpWindow			as ISpriteWrapper },
+			{ "battlebg",		battlebg			as ISpriteWrapper },
+			{ "player",			player				as ISpriteWrapper },
+			{ "playerB",		playerB				as ISpriteWrapper },
+			{ "trainer",		trainer				as ISpriteWrapper },
+			{ "trainer2",		trainer2			as ISpriteWrapper },
+			{ "playerbase",		playerbase			as ISpriteWrapper },
+			{ "enemybase",		enemybase			as ISpriteWrapper },
+			{ "partybarplayer",	partybarplayer		as ISpriteWrapper },
+			{ "partybarfoe",	partybarfoe			as ISpriteWrapper },
+			{ "capture",		spriteBall			as ISpriteWrapper },
+			{ "battlebox0",		battlebox0			as ISpriteWrapper },
+			{ "battlebox1",		battlebox1			as ISpriteWrapper },
+			{ "battlebox2",		battlebox2			as ISpriteWrapper },
+			{ "battlebox3",		battlebox3			as ISpriteWrapper },
+			{ "pokemon0",		pokemon0			as ISpriteWrapper },
+			{ "pokemon1",		pokemon1			as ISpriteWrapper },
+			{ "pokemon2",		pokemon2			as ISpriteWrapper },
+			{ "pokemon3",		pokemon3			as ISpriteWrapper },
+			{ "shadow0",		shadow0				as ISpriteWrapper },
+			{ "shadow1",		shadow1				as ISpriteWrapper },
+			{ "shadow2",		shadow2				as ISpriteWrapper },
+			{ "shadow3",		shadow3             as ISpriteWrapper }
 		};
 		battlestart = true;
 		messagemode = false;
@@ -3043,12 +3234,12 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		if (e != null || e != System.EventArgs.Empty)
 			if (e.Error == true)
 				//System.Console.WriteLine("[ERR]: " + e.Message);
-				UnityEngine.Debug.LogError("[ERR] " + UnityEngine.Time.frameCount + e.Message);
+				UnityEngine.Debug.LogError("[ERR] " + UnityEngine.Time.frameCount + ": " + e.Message);
 			else if (e.Error == false)
 				//System.Console.WriteLine("[WARN]: " + e.Message);
-				UnityEngine.Debug.LogWarning("[WARN] " + UnityEngine.Time.frameCount + e.Message);
+				UnityEngine.Debug.LogWarning("[WARN] " + UnityEngine.Time.frameCount + ": " + e.Message);
 			else
 				//System.Console.WriteLine("[LOG]: " + e.Message);
-				UnityEngine.Debug.Log("[LOG] " + UnityEngine.Time.frameCount + e.Message);
+				UnityEngine.Debug.Log("[LOG] " + UnityEngine.Time.frameCount + ": " + e.Message);
 	}
 }

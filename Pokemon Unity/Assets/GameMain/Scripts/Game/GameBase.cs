@@ -7,7 +7,7 @@
 
 using GameFramework.Event;
 using UnityEngine;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
@@ -45,8 +45,8 @@ namespace PokemonUnity
 
 		public virtual void Initialize()
 		{
-			GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
-			GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
+			//GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
+			//GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
 
 			DialogTextTMP = UnityEngine.GameObject.Find("DialogTextTMP").GetComponent<TMP_Animated>();//GetComponent<TMP_Animated>();
 			//SceneBackground = Object.FindObjectOfType<ScrollableBackground>();
@@ -69,8 +69,8 @@ namespace PokemonUnity
 
 		public virtual void Shutdown()
 		{
-			GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
-			GameEntry.Event.Unsubscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
+			//GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
+			//GameEntry.Event.Unsubscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
 		}
 
 		public virtual void Update(float elapseSeconds, float realElapseSeconds)
@@ -84,7 +84,7 @@ namespace PokemonUnity
 
 		protected virtual void OnShowEntitySuccess(object sender, GameEventArgs e)
 		{
-			ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
+			//ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
 			//if (ne.EntityLogicType == typeof(MyAircraft))
 			//{
 			//    m_MyAircraft = (MyAircraft)ne.Entity.Logic;
@@ -93,8 +93,8 @@ namespace PokemonUnity
 
 		protected virtual void OnShowEntityFailure(object sender, GameEventArgs e)
 		{
-			ShowEntityFailureEventArgs ne = (ShowEntityFailureEventArgs)e;
-			Log.Warning("Show entity failure with error message '{0}'.", ne.ErrorMessage);
+			//ShowEntityFailureEventArgs ne = (ShowEntityFailureEventArgs)e;
+			//Log.Warning("Show entity failure with error message '{0}'.", ne.ErrorMessage);
 		}
 	}
 }

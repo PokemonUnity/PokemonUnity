@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using GameFramework;
-using UnityGameFramework.Runtime;
+//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {

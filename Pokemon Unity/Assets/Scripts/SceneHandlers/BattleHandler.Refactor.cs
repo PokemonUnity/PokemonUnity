@@ -21,7 +21,7 @@ using UnityEngine.UI;
 using UnityEngine.Serialization;
 //using DiscordPresence;
 
-public partial class BattleHandler : IPokeBattle_Scene
+public partial class BattleHandler //: IPokeBattle_Scene
 {
 	public GameAudioPlay AudioHandler;
 	public IWindow MessageWindow;
@@ -62,11 +62,11 @@ public partial class BattleHandler : IPokeBattle_Scene
 	public const string UI_FIGHTWINDOW = "fightwindow";
 
 
-	bool IPokeBattle_Scene.inPartyAnimation { get { return @enablePartyAnim && @partyAnimPhase < 3; } }
+	/*bool IPokeBattle_Scene.inPartyAnimation { get { return @enablePartyAnim && @partyAnimPhase < 3; } }
 
 	int IScene.Id { get { return 0; } }
 
-	void IPokeBattle_DebugSceneNoGraphics.initialize()
+	public IPokeBattle_Scene initialize()
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -79,6 +79,8 @@ public partial class BattleHandler : IPokeBattle_Scene
 		messagemode = false;
 		abortable = true;
 		aborted = false;
+
+		return this;
 	}
 
 	void IPokeBattle_Scene.pbUpdate()
@@ -129,27 +131,27 @@ public partial class BattleHandler : IPokeBattle_Scene
 
 		@messagemode = mode;
 		IWindow msgwindow = @sprites[UI_MESSAGEWINDOW];
-		if (mode)
-		{       // Within Pokémon command
-			msgwindow.baseColor = PokeBattle_SceneConstants.MENUBASECOLOR;
-			msgwindow.shadowColor = PokeBattle_SceneConstants.MENUSHADOWCOLOR;
-			msgwindow.opacity = 255;
-			msgwindow.x = 16;
-			msgwindow.width = Graphics.width;
-			msgwindow.height = 96;
-			msgwindow.y = Graphics.height - msgwindow.height + 2;
-		
-		}
-		else 
-		{
-			msgwindow.baseColor = PokeBattle_SceneConstants.MESSAGEBASECOLOR;
-			msgwindow.shadowColor = PokeBattle_SceneConstants.MESSAGESHADOWCOLOR;
-			msgwindow.opacity = 0;
-			msgwindow.x = 16;
-			msgwindow.width = Graphics.width - 32;
-			msgwindow.height = 96;
-			msgwindow.y = Graphics.height - msgwindow.height + 2;
-		}
+		//if (mode)
+		//{       // Within Pokémon command
+		//	msgwindow.baseColor = PokeBattle_SceneConstants.MENUBASECOLOR;
+		//	msgwindow.shadowColor = PokeBattle_SceneConstants.MENUSHADOWCOLOR;
+		//	msgwindow.opacity = 255;
+		//	msgwindow.x = 16;
+		//	msgwindow.width = Graphics.width;
+		//	msgwindow.height = 96;
+		//	msgwindow.y = Graphics.height - msgwindow.height + 2;
+		//
+		//}
+		//else 
+		//{
+		//	msgwindow.baseColor = PokeBattle_SceneConstants.MESSAGEBASECOLOR;
+		//	msgwindow.shadowColor = PokeBattle_SceneConstants.MESSAGESHADOWCOLOR;
+		//	msgwindow.opacity = 0;
+		//	msgwindow.x = 16;
+		//	msgwindow.width = Graphics.width - 32;
+		//	msgwindow.height = 96;
+		//	msgwindow.y = Graphics.height - msgwindow.height + 2;
+		//}
 	}
 
 	void IPokeBattle_Scene.pbWaitMessage()
@@ -309,7 +311,7 @@ public partial class BattleHandler : IPokeBattle_Scene
 				}
 				if (enemyindex < @battle.party2.Length && @battle.party2[enemyindex].IsNotNullOrNone())
 				{
-					if (@battle.party2[enemyindex].HP <= 0 || @battle.party2[enemyindex].isEgg ?)
+					if (@battle.party2[enemyindex].HP <= 0 || @battle.party2[enemyindex].isEgg)
 					{
 						ballgraphic = "Graphics/Pictures/ballfainted";
 					}
@@ -322,9 +324,9 @@ public partial class BattleHandler : IPokeBattle_Scene
 						ballgraphic = "Graphics/Pictures/ballnormal";
 					}
 				}
-				pbAddSprite("enemy#{i}",
-				   @xposenemy - i * ballmovedist * 6, PokeBattle_SceneConstants.FOEPARTYBALL1_Y,
-				   ballgraphic, @viewport);
+				//pbAddSprite("enemy#{i}",
+				//   @xposenemy - i * ballmovedist * 6, PokeBattle_SceneConstants.FOEPARTYBALL1_Y,
+				//   ballgraphic, @viewport);
 				@sprites["enemy#{i}"].z = 41;
 			}
 			@partyAnimPhase = 2;
@@ -903,7 +905,7 @@ public partial class BattleHandler : IPokeBattle_Scene
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
-	}
+	}*/
 
 
 	private static void GameDebug_OnLog(object sender, OnDebugEventArgs e)
