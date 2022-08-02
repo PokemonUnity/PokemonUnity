@@ -31,7 +31,7 @@ public class PCHandler : MonoBehaviour
 
     public CursorMode cursorMode = CursorMode.Standard;
 
-    public Sprite boxEditIcon;
+    public UnityEngine.Sprite boxEditIcon;
 
     private int currentBoxID;
     private int nextBoxID;
@@ -51,7 +51,7 @@ public class PCHandler : MonoBehaviour
     private Text selectedGender;
     private Text selectedGenderShadow;
     private int frame = 0;
-    private Sprite[] selectedSpriteAnimation;
+    private UnityEngine.Sprite[] selectedSpriteAnimation;
     private Image selectedSprite;
     private Image selectedType1;
     private Image selectedType2;
@@ -309,30 +309,30 @@ public class PCHandler : MonoBehaviour
         //update box textures
         if (SaveData.currentSave.PC.boxTexture[currentBoxID] == 0)
         {
-            currentBoxTexture.sprite = Resources.Load<Sprite>("PCSprites/box" + currentBoxID);
+            currentBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + currentBoxID);
         }
         else
         {
             currentBoxTexture.sprite =
-                Resources.Load<Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
         }
         if (SaveData.currentSave.PC.boxTexture[nextBoxID] == 0)
         {
-            nextBoxTexture.sprite = Resources.Load<Sprite>("PCSprites/box" + nextBoxID);
+            nextBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + nextBoxID);
         }
         else
         {
             nextBoxTexture.sprite =
-                Resources.Load<Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
         }
         if (SaveData.currentSave.PC.boxTexture[previousBoxID] == 0)
         {
-            previousBoxTexture.sprite = Resources.Load<Sprite>("PCSprites/box" + previousBoxID);
+            previousBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + previousBoxID);
         }
         else
         {
             previousBoxTexture.sprite =
-                Resources.Load<Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
         }
 
         //set Selected Info to null because nothing is selected by default
@@ -340,7 +340,7 @@ public class PCHandler : MonoBehaviour
         selectedNameShadow.text = null;
         selectedGender.text = null;
         selectedGenderShadow.text = null;
-        selectedSpriteAnimation = new Sprite[] {};
+        selectedSpriteAnimation = new UnityEngine.Sprite[] {};
         selectedSprite.sprite = null;
         selectedType1.sprite = null;
         selectedType2.sprite = null;
@@ -364,7 +364,7 @@ public class PCHandler : MonoBehaviour
                 selectedNameShadow.text = null;
                 selectedGender.text = null;
                 selectedGenderShadow.text = null;
-                selectedSpriteAnimation = new Sprite[] {};
+                selectedSpriteAnimation = new UnityEngine.Sprite[] {};
                 selectedSprite.sprite = null;
                 selectedType1.sprite = null;
                 selectedType2.sprite = null;
@@ -403,11 +403,11 @@ public class PCHandler : MonoBehaviour
                 selectedType2.sprite = null;
                 if (type1 != "NONE")
                 {
-                    selectedType1.sprite = Resources.Load<Sprite>("PCSprites/type" + type1);
+                    selectedType1.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type1);
                 }
                 if (type2 != "NONE")
                 {
-                    selectedType2.sprite = Resources.Load<Sprite>("PCSprites/type" + type2);
+                    selectedType2.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type2);
                 }
                 selectedLevel.text = "Level " + selectedPokemon.Level;
                 selectedLevelShadow.text = selectedLevel.text;
@@ -423,7 +423,7 @@ public class PCHandler : MonoBehaviour
                 if (selectedPokemon.Status != Status.NONE)
                 {
                     selectedStatus.sprite =
-                        Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
+                        Resources.Load<UnityEngine.Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
                 }
             }
         }
@@ -548,30 +548,30 @@ public class PCHandler : MonoBehaviour
         //update box textures
         if (SaveData.currentSave.PC.boxTexture[currentBoxID] == 0)
         {
-            currentBoxTexture.sprite = Resources.Load<Sprite>("PCSprites/box" + currentBoxID);
+            currentBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + currentBoxID);
         }
         else
         {
             currentBoxTexture.sprite =
-                Resources.Load<Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
         }
         if (SaveData.currentSave.PC.boxTexture[nextBoxID] == 0)
         {
-            nextBoxTexture.sprite = Resources.Load<Sprite>("PCSprites/box" + nextBoxID);
+            nextBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + nextBoxID);
         }
         else
         {
             nextBoxTexture.sprite =
-                Resources.Load<Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
         }
         if (SaveData.currentSave.PC.boxTexture[previousBoxID] == 0)
         {
-            previousBoxTexture.sprite = Resources.Load<Sprite>("PCSprites/box" + previousBoxID);
+            previousBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + previousBoxID);
         }
         else
         {
             previousBoxTexture.sprite =
-                Resources.Load<Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
         }
 
         //update box icons
@@ -891,7 +891,7 @@ public class PCHandler : MonoBehaviour
                 StartCoroutine(moveIcon(targetIcon,
                     new Vector2(targetIcon.rectTransform.position.x - 5, targetIcon.rectTransform.position.y + 5)));
 
-            Sprite temp = targetIcon.sprite;
+            UnityEngine.Sprite temp = targetIcon.sprite;
             bool itemTemp = targetItem.enabled;
             //swap target icon's position and grabbedPokemon's position, and update their new textures
             targetIcon.rectTransform.position = new Vector2(targetIcon.rectTransform.position.x + 10, targetIcon.rectTransform.position.y);

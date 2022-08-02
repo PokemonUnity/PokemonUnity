@@ -56,7 +56,7 @@ public class StarterChoiceHandler : MonoBehaviour
         gameObject.SetActive(false);
     }
     
-    private IEnumerator animatePokemon(SpriteRenderer pokemon, Sprite[] animation)
+    private IEnumerator animatePokemon(SpriteRenderer pokemon, UnityEngine.Sprite[] animation)
     {
         int frame = 0;
         while (animation != null)

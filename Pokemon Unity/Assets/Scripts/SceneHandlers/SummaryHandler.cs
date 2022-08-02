@@ -41,7 +41,7 @@ public class SummaryHandler : MonoBehaviour
         selectedHeldItemShadow;
 
     private int frame = 0;
-    private Sprite[] selectedSpriteAnimation;
+    private UnityEngine.Sprite[] selectedSpriteAnimation;
 
     private GameObject[] pages = new GameObject[8];
 
@@ -286,7 +286,7 @@ public class SummaryHandler : MonoBehaviour
         PlayCry(selectedPokemon);
 
         //selectedCaughtBall.sprite = Resources.Load<Sprite>("null");
-        selectedCaughtBall.sprite = Resources.Load<Sprite>("PCSprites/summary" + selectedPokemon.ballUsed.ToString());
+        selectedCaughtBall.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/summary" + selectedPokemon.ballUsed.ToString());
         selectedName.text = selectedPokemon.Name;
         selectedNameShadow.text = selectedName.text;
         if (selectedPokemon.Gender == false)
@@ -306,7 +306,7 @@ public class SummaryHandler : MonoBehaviour
         selectedGenderShadow.text = selectedGender.text;
         selectedLevel.text = "" + selectedPokemon.Level;
         selectedLevelShadow.text = selectedLevel.text;
-        selectedSpriteAnimation = new Sprite[0]; //selectedPokemon.GetFrontAnim_();
+        selectedSpriteAnimation = new UnityEngine.Sprite[0]; //selectedPokemon.GetFrontAnim_();
         if (selectedSpriteAnimation.Length > 0)
         {
             selectedSprite.sprite = selectedSpriteAnimation[0];
@@ -323,20 +323,20 @@ public class SummaryHandler : MonoBehaviour
         selectedHeldItemShadow.text = selectedHeldItem.text;
         if (selectedPokemon.Status != Status.NONE)
         {
-            selectedStatus.sprite = Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
+            selectedStatus.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
         }
         else
         {
-            selectedStatus.sprite = Resources.Load<Sprite>("null");
+            selectedStatus.sprite = Resources.Load<UnityEngine.Sprite>("null");
         }
 
         if (selectedPokemon.IsShiny)
         {
-            selectedShiny.sprite = Resources.Load<Sprite>("PCSprites/shiny");
+            selectedShiny.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/shiny");
         }
         else
         {
-            selectedShiny.sprite = Resources.Load<Sprite>("null");
+            selectedShiny.sprite = Resources.Load<UnityEngine.Sprite>("null");
         }
 
         dexNo.text = selectedPokemon.Species.ToIdString();
@@ -345,15 +345,15 @@ public class SummaryHandler : MonoBehaviour
         speciesShadow.text = species.text;
         string type1string = selectedPokemon.Type1.ToString(TextScripts.Name);
         string type2string = selectedPokemon.Type2.ToString(TextScripts.Name);
-        type1.sprite = Resources.Load<Sprite>("null");
-        type2.sprite = Resources.Load<Sprite>("null");
+        type1.sprite = Resources.Load<UnityEngine.Sprite>("null");
+        type2.sprite = Resources.Load<UnityEngine.Sprite>("null");
         if (type1string != "NONE")
         {
-            type1.sprite = Resources.Load<Sprite>("PCSprites/type" + type1string);
+            type1.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type1string);
         }
         if (type2string != "NONE")
         {
-            type2.sprite = Resources.Load<Sprite>("PCSprites/type" + type2string);
+            type2.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type2string);
         }
         OT.text = ""; //selectedPokemon.getOT();
         OTShadow.text = OT.text;
@@ -487,7 +487,7 @@ public class SummaryHandler : MonoBehaviour
             move1Name.text = selectedPokemon.moves[0].id.ToString(TextScripts.Name);
             move1NameShadow.text = move1Name.text;
             move1Type.sprite =
-                Resources.Load<Sprite>("PCSprites/type" + selectedPokemon.moves[0].Type.ToString(TextScripts.Name));
+                Resources.Load<UnityEngine.Sprite>("PCSprites/type" + selectedPokemon.moves[0].Type.ToString(TextScripts.Name));
             move1PPText.text = "PP";
             move1PPTextShadow.text = move1PPText.text;
             move1PP.text = selectedPokemon.moves[0].PP + "/" + selectedPokemon.moves[0].TotalPP;
@@ -497,7 +497,7 @@ public class SummaryHandler : MonoBehaviour
         {
             move1Name.text = null;
             move1NameShadow.text = move1Name.text;
-            move1Type.sprite = Resources.Load<Sprite>("null");
+            move1Type.sprite = Resources.Load<UnityEngine.Sprite>("null");
             move1PPText.text = null;
             move1PPTextShadow.text = move1PPText.text;
             move1PP.text = null;
@@ -508,7 +508,7 @@ public class SummaryHandler : MonoBehaviour
             move2Name.text = selectedPokemon.moves[1].id.ToString(TextScripts.Name);
             move2NameShadow.text = move2Name.text;
             move2Type.sprite =
-                Resources.Load<Sprite>("PCSprites/type" + selectedPokemon.moves[1].Type.ToString(TextScripts.Name));
+                Resources.Load<UnityEngine.Sprite>("PCSprites/type" + selectedPokemon.moves[1].Type.ToString(TextScripts.Name));
             move2PPText.text = "PP";
             move2PPTextShadow.text = move2PPText.text;
             move2PP.text = selectedPokemon.moves[1].PP + "/" + selectedPokemon.moves[1].TotalPP;
@@ -518,7 +518,7 @@ public class SummaryHandler : MonoBehaviour
         {
             move2Name.text = null;
             move2NameShadow.text = move2Name.text;
-            move2Type.sprite = Resources.Load<Sprite>("null");
+            move2Type.sprite = Resources.Load<UnityEngine.Sprite>("null");
             move2PPText.text = null;
             move2PPTextShadow.text = move2PPText.text;
             move2PP.text = null;
@@ -529,7 +529,7 @@ public class SummaryHandler : MonoBehaviour
             move3Name.text = selectedPokemon.moves[2].id.ToString(TextScripts.Name);
             move3NameShadow.text = move3Name.text;
             move3Type.sprite =
-                Resources.Load<Sprite>("PCSprites/type" + selectedPokemon.moves[2].Type.ToString(TextScripts.Name));
+                Resources.Load<UnityEngine.Sprite>("PCSprites/type" + selectedPokemon.moves[2].Type.ToString(TextScripts.Name));
             move3PPText.text = "PP";
             move3PPTextShadow.text = move3PPText.text;
             move3PP.text = selectedPokemon.moves[2].PP + "/" + selectedPokemon.moves[2].TotalPP;
@@ -539,7 +539,7 @@ public class SummaryHandler : MonoBehaviour
         {
             move3Name.text = null;
             move3NameShadow.text = move3Name.text;
-            move3Type.sprite = Resources.Load<Sprite>("null");
+            move3Type.sprite = Resources.Load<UnityEngine.Sprite>("null");
             move3PPText.text = null;
             move3PPTextShadow.text = move3PPText.text;
             move3PP.text = null;
@@ -550,7 +550,7 @@ public class SummaryHandler : MonoBehaviour
             move4Name.text = selectedPokemon.moves[3].id.ToString(TextScripts.Name);
             move4NameShadow.text = move4Name.text;
             move4Type.sprite =
-                Resources.Load<Sprite>("PCSprites/type" + selectedPokemon.moves[3].Type.ToString(TextScripts.Name));
+                Resources.Load<UnityEngine.Sprite>("PCSprites/type" + selectedPokemon.moves[3].Type.ToString(TextScripts.Name));
             move4PPText.text = "PP";
             move4PPTextShadow.text = move4PPText.text;
             move4PP.text = selectedPokemon.moves[3].PP + "/" + selectedPokemon.moves[3].TotalPP;
@@ -560,7 +560,7 @@ public class SummaryHandler : MonoBehaviour
         {
             move4Name.text = null;
             move4NameShadow.text = move4Name.text;
-            move4Type.sprite = Resources.Load<Sprite>("null");
+            move4Type.sprite = Resources.Load<UnityEngine.Sprite>("null");
             move4PPText.text = null;
             move4PPTextShadow.text = move4PPText.text;
             move4PP.text = null;
@@ -575,7 +575,7 @@ public class SummaryHandler : MonoBehaviour
         MoveData move = MoveDatabase.getMove(moveName);
         moveNewName.text = moveName;
         moveNewNameShadow.text = moveNewName.text;
-        moveNewType.sprite = Resources.Load<Sprite>("PCSprites/type" + move.getType().ToString());
+        moveNewType.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + move.getType().ToString());
         moveNewPPText.text = "PP";
         moveNewPPTextShadow.text = moveNewPPText.text;
         moveNewPP.text = move.getPP() + "/" + move.getPP();
@@ -586,7 +586,7 @@ public class SummaryHandler : MonoBehaviour
     {
         if (string.IsNullOrEmpty(moveName))
         {
-            selectedCategory.sprite = Resources.Load<Sprite>("null");
+            selectedCategory.sprite = Resources.Load<UnityEngine.Sprite>("null");
             selectedPower.text = null;
             selectedPowerShadow.text = selectedPower.text;
             selectedAccuracy.text = null;
@@ -598,7 +598,7 @@ public class SummaryHandler : MonoBehaviour
         {
             MoveData selectedMove = MoveDatabase.getMove(moveName);
             selectedCategory.sprite =
-                Resources.Load<Sprite>("PCSprites/category" + selectedMove.getCategory().ToString());
+                Resources.Load<UnityEngine.Sprite>("PCSprites/category" + selectedMove.getCategory().ToString());
             selectedPower.text = "" + selectedMove.getPower();
             if (selectedPower.text == "0")
             {

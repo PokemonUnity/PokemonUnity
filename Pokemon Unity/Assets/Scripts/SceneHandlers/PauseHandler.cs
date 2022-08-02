@@ -58,7 +58,7 @@ public class PauseHandler : MonoBehaviour
 
     private Vector3[] slotPositions;
 
-    public Sprite[]
+    public UnityEngine.Sprite[]
         slotSprite,
         partySpriteIcon,
         pokedexSpriteIcon,
@@ -393,9 +393,9 @@ public class PauseHandler : MonoBehaviour
     }
     */
 
-    public Sprite[] getIconSprite(int index)
+    public UnityEngine.Sprite[] getIconSprite(int index)
     {
-        Sprite[] localSprites;
+        UnityEngine.Sprite[] localSprites;
         switch (index)
         {
             case 1:

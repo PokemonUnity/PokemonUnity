@@ -84,10 +84,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 mountPosition;
 
     private string animationName;
-    private Sprite[] spriteSheet;
-    private Sprite[] haircutSpriteSheet;
-    private Sprite[] eyeSpriteSheet;
-    private Sprite[] mountSpriteSheet;
+    private UnityEngine.Sprite[] spriteSheet;
+    private UnityEngine.Sprite[] haircutSpriteSheet;
+    private UnityEngine.Sprite[] eyeSpriteSheet;
+    private UnityEngine.Sprite[] mountSpriteSheet;
 
     private int frame;
     private int frames;
@@ -592,7 +592,7 @@ public class PlayerMovement : MonoBehaviour
         mount.enabled = enabled;
         if (!mount.enabled)
         {
-            mountSpriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/" + spriteName);
+            mountSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + spriteName);
             mount.sprite = mountSpriteSheet[direction];
         }
     }
@@ -603,13 +603,13 @@ public class PlayerMovement : MonoBehaviour
         {
             animationName = newAnimationName;
             spriteSheet =
-                Resources.LoadAll<Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() +
+                Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() +
                                           newAnimationName);
             haircutSpriteSheet = 
-                Resources.LoadAll<Sprite>("PlayerSprites/hairs/" + SaveData.currentSave.playerHaircut.getFileName() + '_' +
+                Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/hairs/" + SaveData.currentSave.playerHaircut.getFileName() + '_' +
                                                            newAnimationName);
             eyeSpriteSheet = 
-                Resources.LoadAll<Sprite>("PlayerSprites/eyes/" + SaveData.currentSave.getPlayerSpritePrefix() +
+                Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/eyes/" + SaveData.currentSave.getPlayerSpritePrefix() +
                                           newAnimationName);
             //TODO Add eyes too
             

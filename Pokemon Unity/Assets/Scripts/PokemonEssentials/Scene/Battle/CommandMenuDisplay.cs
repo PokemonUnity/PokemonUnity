@@ -161,7 +161,7 @@ namespace PokemonUnity
 			@msgbox.dispose();
 			@window.dispose();
 			if (@display != null) @display.dispose();
-			if (@buttons != null) @buttons.dispose();
+			if (@buttons != null) @buttons.Dispose();
 		}
 
 		public int index

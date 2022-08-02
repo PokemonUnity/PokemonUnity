@@ -14,7 +14,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 namespace PokemonUnity
 {
 	//[RequireComponent(typeof(Image))]
-	public class FightMenuButtons : MonoBehaviour, IFightMenuButtons //BitmapSprite
+	public class FightMenuButtons : SpriteWrapper, IFightMenuButtons //BitmapSprite
 	{
 		const int UPPERGAP=46;
 		public IAnimatedBitmap bitmap;
@@ -91,7 +91,7 @@ namespace PokemonUnity
 			return this;
 		}
 
-		public void dispose()
+		public void Dispose()
 		{
 			@buttonbitmap.dispose();
 			@typebitmap.dispose();
@@ -159,7 +159,7 @@ namespace PokemonUnity
 				if (disposing)
 				{
 					// TODO: dispose managed state (managed objects)
-					dispose();
+					Dispose();
 				}
 
 				// TODO: free unmanaged resources (unmanaged objects) and override finalizer
@@ -182,13 +182,14 @@ namespace PokemonUnity
 			GC.SuppressFinalize(this);
 		}
 
-		#region
+		#region 
 		IBitmapSprite IBitmapSprite.initialize(int width, int height, IViewport viewport)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
+			return this;
 		}
 
-		ISpriteWrapper ISpriteWrapper.initialize(IViewport viewport)
+		/*ISpriteWrapper ISpriteWrapper.initialize(IViewport viewport)
 		{
 			throw new NotImplementedException();
 		}
@@ -263,7 +264,7 @@ namespace PokemonUnity
 			throw new NotImplementedException();
 		}
 
-		IEnumerator IRPGSprite.update()
+		void IRPGSprite.update()
 		{
 			throw new NotImplementedException();
 		}
@@ -273,10 +274,10 @@ namespace PokemonUnity
 			throw new NotImplementedException();
 		}
 
-		ISprite IRPGSprite.initialize(IViewport viewport)
+		IRPGSprite IRPGSprite.initialize(IViewport viewport)
 		{
 			throw new NotImplementedException();
-		}
+		}*/
 		#endregion
 	}
 }

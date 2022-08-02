@@ -182,7 +182,7 @@ namespace PokemonUnity
 			if (disposed) return;
 			@info.dispose();
 			if (@display != null) @display.dispose();
-			if (@buttons != null) @buttons.dispose();
+			if (@buttons != null) @buttons.Dispose();
 			@window.dispose();
 		}
 

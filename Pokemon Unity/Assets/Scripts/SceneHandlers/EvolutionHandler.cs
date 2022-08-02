@@ -27,8 +27,8 @@ public class EvolutionHandler : MonoBehaviour
 
     private int pokemonFrame = 0;
     private int evolutionFrame = 0;
-    private Sprite[] pokemonSpriteAnimation;
-    private Sprite[] evolutionSpriteAnimation;
+    private UnityEngine.Sprite[] pokemonSpriteAnimation;
+    private UnityEngine.Sprite[] evolutionSpriteAnimation;
     private Image pokemonSprite;
     private Image evolutionSprite;
 
@@ -46,7 +46,7 @@ public class EvolutionHandler : MonoBehaviour
         evolvedClip,
         forgetMoveClip;
 
-    public Sprite smokeParticle;
+    public UnityEngine.Sprite smokeParticle;
 
     private bool stopAnimations = false;
 

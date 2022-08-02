@@ -89,14 +89,14 @@ public class PartyHandler : MonoBehaviour
     public GameObject[] pokemonSlotEmpty = new GameObject[teamSize];
     public GameObject cancelButton;
     
-    public Sprite pkmSlotSprite;
-    public Sprite pkmSlotSelectedSprite;
-    public Sprite pkmSlotSwapSprite;
-    public Sprite pkmSlotSelectedSwapSprite;
-    public Sprite pkmSlotFaintedSprite;
-    public Sprite pkmSlotSelectedFaintedSprite;
-    public Sprite cancelSprite;
-    public Sprite cancelSelectedSprite;
+    public UnityEngine.Sprite pkmSlotSprite;
+    public UnityEngine.Sprite pkmSlotSelectedSprite;
+    public UnityEngine.Sprite pkmSlotSwapSprite;
+    public UnityEngine.Sprite pkmSlotSelectedSwapSprite;
+    public UnityEngine.Sprite pkmSlotFaintedSprite;
+    public UnityEngine.Sprite pkmSlotSelectedFaintedSprite;
+    public UnityEngine.Sprite cancelSprite;
+    public UnityEngine.Sprite cancelSelectedSprite;
 
     private Image[] pkmSlotImages = new Image[teamSize];
     private Image[] pkmIcon = new Image[teamSize];
@@ -116,7 +116,7 @@ public class PartyHandler : MonoBehaviour
 
     private Image cancelButtonImage;
 
-    private Sprite[][] pkmIconsSprite = new Sprite[teamSize][];
+    private UnityEngine.Sprite[][] pkmIconsSprite = new UnityEngine.Sprite[teamSize][];
 
     void Awake()
     {
@@ -249,7 +249,7 @@ public class PartyHandler : MonoBehaviour
                 if (selectedPokemon.Status != Status.NONE)
                 {
                     pkmStatus[i].sprite =
-                        Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
+                        Resources.Load<UnityEngine.Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
                 }
                 else
                 {

@@ -170,35 +170,35 @@ public class Trainer : MonoBehaviour
             : classString[(int) trainerClass];
     }
 
-    public Sprite[] GetSprites()
+    public UnityEngine.Sprite[] GetSprites()
     {
-        Sprite[] sprites = new Sprite[0];
+        UnityEngine.Sprite[] sprites = new UnityEngine.Sprite[0];
         if (uniqueSprites.Length > 0)
         {
-            sprites = Resources.LoadAll<Sprite>("TrainerBattlers/" + uniqueSprites);
+            sprites = Resources.LoadAll<UnityEngine.Sprite>("TrainerBattlers/" + uniqueSprites);
         }
         else
         {
             //Try to load female sprite if female
             if (isFemale)
             {
-                sprites = Resources.LoadAll<Sprite>("TrainerBattlers/" + classString[(int) trainerClass] + "_f");
+                sprites = Resources.LoadAll<UnityEngine.Sprite>("TrainerBattlers/" + classString[(int) trainerClass] + "_f");
             }
             //Try to load regular sprite if male or female load failed
             if (!isFemale || (isFemale && sprites.Length < 1))
             {
-                sprites = Resources.LoadAll<Sprite>("TrainerBattlers/" + classString[(int) trainerClass]);
+                sprites = Resources.LoadAll<UnityEngine.Sprite>("TrainerBattlers/" + classString[(int) trainerClass]);
             }
         }
         //if all load calls failed, load null as an array
         if (sprites.Length == 0)
         {
-            sprites = new Sprite[] {Resources.Load<Sprite>("null")};
+            sprites = new UnityEngine.Sprite[] {Resources.Load<UnityEngine.Sprite>("null")};
         }
         
         for (int i = 0; i < sprites.Length; ++i)
         {
-            sprites[i] = Sprite.Create(sprites[i].texture, sprites[i].rect, new Vector2(0.5f, 0), 16f);
+            sprites[i] = UnityEngine.Sprite.Create(sprites[i].texture, sprites[i].rect, new Vector2(0.5f, 0), 16f);
         }
         
         return sprites;

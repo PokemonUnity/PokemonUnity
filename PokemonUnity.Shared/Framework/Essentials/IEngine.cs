@@ -212,11 +212,11 @@ namespace PokemonEssentials.Interface
 	public interface IRect
 	{
 		/// <summary>
-		/// The X-coordinate of the rectange's upper left corner.
+		/// The X-coordinate of the rectangle's upper left corner.
 		/// </summary>
 		float x { get; set; }
 		/// <summary>
-		/// The Y-coordinate of the rectange's upper left corner.
+		/// The Y-coordinate of the rectangle's upper left corner.
 		/// </summary>
 		float y { get; set; }
 		/// <summary>
@@ -382,20 +382,20 @@ namespace PokemonEssentials.Interface
 		/// <returns></returns>
 		IEnumerator update();
 		/// <summary>
-		/// Determines whether the button num is currently being pressed.
+		/// Determines whether the button number is currently being pressed.
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE.If not, returns FALSE.</returns>
 		bool press(PokemonUnity.UX.InputKeys num);
 		/// <summary>
-		/// Determines whether the button num is being pressed again.
+		/// Determines whether the button number is being pressed again.
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>"Pressed again" is seen as time having passed between the button being not pressed and being pressed.</remarks>
 		bool trigger(PokemonUnity.UX.InputKeys num);
 		/// <summary>
-		/// Determines whether the button num is being pressed again.
+		/// Determines whether the button number is being pressed again.
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
@@ -488,11 +488,11 @@ namespace PokemonEssentials.Interface
 		/// If a flash or wave is not needed, it is not necessary to call this.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerator update();
+		void update();
 		/// <summary>
 		/// Frees the sprite. If the sprite has already been freed, does nothing.
 		/// </summary>
-		void dispose();
+		void Dispose();
 		/// <summary>
 		/// Begins flashing the sprite. duration specifies the number of frames the flash will last.
 		/// If color is set to nil, the sprite will disappear while flashing.
@@ -500,7 +500,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="color"></param>
 		/// <param name="duration"></param>
 		void flash(IColor color, int duration);
-		ISprite initialize(IViewport viewport = null);
+		IRPGSprite initialize(IViewport viewport = null);
 	}
 	public interface ISpriteResizer //: ISprite
 	{
@@ -552,7 +552,7 @@ namespace PokemonEssentials.Interface
 		int frame_count { get; set; }
 		/// <summary>
 		/// The brightness of the screen. Takes a value from 0 to 255. 
-		/// The fadeout, fadein, and transition methods change this value internally, as required.
+		/// The fadeout, fade-in, and transition methods change this value internally, as required.
 		/// </summary>
 		/// ToDO: Takes a value from -126 to 126. Negative use black overlay, positive use white.
 		byte brightness { get; set; }

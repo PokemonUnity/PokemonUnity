@@ -126,7 +126,7 @@ namespace PokemonUnity
 				} while (y < 6); z++;
 			} while (z < 3);
 			if (GameTemp.background_bitmap != null) {
-				GameTemp.background_bitmap.dispose();
+				GameTemp.background_bitmap.Dispose();
 			}
 			GameTemp.background_bitmap=Graphics.snap_to_bitmap();
 			//  Check for custom battle intro animations
@@ -1374,7 +1374,7 @@ namespace PokemonUnity
 			} else if (!darkmap) {
 				Global.flashUsed=false;
 				if (PokemonTemp.darknessSprite != null) {
-					PokemonTemp.darknessSprite.dispose();
+					PokemonTemp.darknessSprite.Dispose();
 					PokemonTemp.darknessSprite=null;
 				}
 			}

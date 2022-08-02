@@ -30,11 +30,11 @@ public class BagHandler : MonoBehaviour
     
 
     public GameObject[] pkmParty = new GameObject[6];
-    public Sprite pkmPartySlotSprite;
-    public Sprite pkmPartySlotSpriteSelected;
-    public Sprite itemSlotSprite;
-    public Sprite itemSlotSpriteSelected;
-    public Sprite itemSlotSpriteSwap;
+    public UnityEngine.Sprite pkmPartySlotSprite;
+    public UnityEngine.Sprite pkmPartySlotSpriteSelected;
+    public UnityEngine.Sprite itemSlotSprite;
+    public UnityEngine.Sprite itemSlotSpriteSelected;
+    public UnityEngine.Sprite itemSlotSpriteSwap;
     
     private Image[] pkmSlot = new Image[6];
     private Image[] pkmIcon = new Image[6];
@@ -48,11 +48,11 @@ public class BagHandler : MonoBehaviour
     public Image bagUp;
     public Image bagDown;
 
-    public Sprite bagUpSprite;
-    public Sprite bagDownSprite;
-    
-    public Sprite shopUpSprite;
-    public Sprite shopDownSprite;
+    public UnityEngine.Sprite bagUpSprite;
+    public UnityEngine.Sprite bagDownSprite;
+           
+    public UnityEngine.Sprite shopUpSprite;
+    public UnityEngine.Sprite shopDownSprite;
 
     //items
     public Image[] bagSlot = new Image[8];
@@ -323,11 +323,11 @@ public class BagHandler : MonoBehaviour
                     if (item.getItemType() == ItemData.ItemType.TM)
                     {
                         bagItemIcon[i].sprite =
-                            Resources.Load<Sprite>("Items/tm" + MoveDatabase.getMove(item.getName()).getType().ToString());
+                            Resources.Load<UnityEngine.Sprite>("Items/tm" + MoveDatabase.getMove(item.getName()).getType().ToString());
                     }
                     else
                     {
-                        bagItemIcon[i].sprite = Resources.Load<Sprite>("Items/" + items[i]);
+                        bagItemIcon[i].sprite = Resources.Load<UnityEngine.Sprite>("Items/" + items[i]);
                     }
                     if (item.getItemType() == ItemData.ItemType.TM)
                     {
@@ -401,8 +401,8 @@ public class BagHandler : MonoBehaviour
                 MoveData selectedTM = MoveDatabase.getMove(selectedItem);
 
                 //Update descriptions of TM
-                bagItemType.sprite = Resources.Load<Sprite>("PCSprites/type" + selectedTM.getType().ToString());
-                bagItemCategory.sprite = Resources.Load<Sprite>("PCSprites/category" + selectedTM.getCategory().ToString());
+                bagItemType.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + selectedTM.getType().ToString());
+                bagItemCategory.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/category" + selectedTM.getCategory().ToString());
                 bagItemPower.text = "" + selectedTM.getPower();
                 if (bagItemPower.text == "0")
                 {
@@ -563,7 +563,7 @@ public class BagHandler : MonoBehaviour
                 {
                     pkmStatus[i].gameObject.SetActive(true);
                     pkmStatus[i].sprite =
-                        Resources.Load<Sprite>("PCSprites/status" + currentPokemon.Status.ToString());
+                        Resources.Load<UnityEngine.Sprite>("PCSprites/status" + currentPokemon.Status.ToString());
                 }
                 else
                 {

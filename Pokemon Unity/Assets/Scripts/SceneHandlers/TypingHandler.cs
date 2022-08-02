@@ -33,7 +33,7 @@ public class TypingHandler : MonoBehaviour
 	public AudioClip typeClip;
 	public AudioClip cancelClip;
 
-	private Sprite[] iconAnim;
+	private UnityEngine.Sprite[] iconAnim;
 
 	private Image icon;
 	private Image iconShadow;

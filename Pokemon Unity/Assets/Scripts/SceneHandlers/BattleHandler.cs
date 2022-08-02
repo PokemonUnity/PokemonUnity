@@ -89,7 +89,7 @@ public partial class BattleHandler : MonoBehaviour
         megaEvolveFinishClip,
         laser;
 
-    public Sprite
+    public UnityEngine.Sprite
         partySpaceTex,
         partyBallTex,
         partyStatusTex,
@@ -229,14 +229,14 @@ public partial class BattleHandler : MonoBehaviour
         pokemonSlotStatus = new Image[6],
         pokemonSlotItem = new Image[6];
 
-    private Sprite[][] pokemonIconAnim = new Sprite[][]
+    private UnityEngine.Sprite[][] pokemonIconAnim = new UnityEngine.Sprite[][]
     {
-        new Sprite[2],
-        new Sprite[2],
-        new Sprite[2],
-        new Sprite[2],
-        new Sprite[2],
-        new Sprite[2]
+        new UnityEngine.Sprite[2],
+        new UnityEngine.Sprite[2],
+        new UnityEngine.Sprite[2],
+        new UnityEngine.Sprite[2],
+        new UnityEngine.Sprite[2],
+        new UnityEngine.Sprite[2]
     };
 
     //POKE SELECTED DETAILS
@@ -421,18 +421,18 @@ public partial class BattleHandler : MonoBehaviour
     public bool canMegaEvolve;
     private bool megaActivate;
 
-    private Sprite[] playerTrainer1Animation;
+    private UnityEngine.Sprite[] playerTrainer1Animation;
     private Image playerTrainerSprite1;
-    private Sprite[] trainer1Animation;
-    private Sprite[] trainer2Animation;
+    private UnityEngine.Sprite[] trainer1Animation;
+    private UnityEngine.Sprite[] trainer2Animation;
     private Image trainerSprite1;
 
-    private Sprite[] player1Animation;
-    private Sprite[] player2Animation;
+    private UnityEngine.Sprite[] player1Animation;
+    private UnityEngine.Sprite[] player2Animation;
     private Image player1;
     private RawImage player1Overlay;
-    private Sprite[] opponent1Animation;
-    private Sprite[] opponent2Animation;
+    private UnityEngine.Sprite[] opponent1Animation;
+    private UnityEngine.Sprite[] opponent2Animation;
     private Image opponent1;
     private RawImage opponent1Overlay;
 
@@ -1202,7 +1202,7 @@ public partial class BattleHandler : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
     }
 
-    private IEnumerator animateOpponentTrainer(SpriteRenderer trainer, Sprite[] animation)
+    private IEnumerator animateOpponentTrainer(SpriteRenderer trainer, UnityEngine.Sprite[] animation)
     {
         int frame = 0;
         while (frame < animation.Length)
@@ -1388,7 +1388,7 @@ public partial class BattleHandler : MonoBehaviour
         yield return null;
     }
     
-    private IEnumerator animatePokemon(Image pokemon, Sprite[] animation)
+    private IEnumerator animatePokemon(Image pokemon, UnityEngine.Sprite[] animation)
     {
         int frame = 0;
         while (animation != null)
@@ -1409,7 +1409,7 @@ public partial class BattleHandler : MonoBehaviour
         }
     }
     
-    private IEnumerator animatePokemonSpriteRenderer(SpriteRenderer pokemon, Sprite[] animation)
+    private IEnumerator animatePokemonSpriteRenderer(SpriteRenderer pokemon, UnityEngine.Sprite[] animation)
     {
         int frame = 0;
         while (animation != null)
@@ -1538,7 +1538,7 @@ public partial class BattleHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator animatePlayerThrow(Image trainer, Sprite[] throwAnim, bool finishThrow)
+    private IEnumerator animatePlayerThrow(Image trainer, UnityEngine.Sprite[] throwAnim, bool finishThrow)
     {
         trainer.sprite = throwAnim[1];
         yield return new WaitForSeconds(0.4f);
@@ -1552,7 +1552,7 @@ public partial class BattleHandler : MonoBehaviour
         }
     }
 
-    private Sprite[] getBallSprite(string caughtBall)
+    private UnityEngine.Sprite[] getBallSprite(string caughtBall)
     {
         string spriteName;
         switch (caughtBall)
@@ -1571,10 +1571,10 @@ public partial class BattleHandler : MonoBehaviour
                 break;
         }
         
-        return Resources.LoadAll<Sprite>("Balls/" + spriteName);
+        return Resources.LoadAll<UnityEngine.Sprite>("Balls/" + spriteName);
     }
 
-    private IEnumerator animateBall(SpriteRenderer ball, Sprite[] animation)
+    private IEnumerator animateBall(SpriteRenderer ball, UnityEngine.Sprite[] animation)
     {
         int frame = 0;
         while (animation != null)
@@ -1617,7 +1617,7 @@ public partial class BattleHandler : MonoBehaviour
         position = ball.transform.position;
         distance = (target - position) * 0.7f;
 
-        Sprite[] animation = new Sprite[0]; //getBallSprite(pokemon[index].getCaughtBall());
+        UnityEngine.Sprite[] animation = new UnityEngine.Sprite[0]; //getBallSprite(pokemon[index].getCaughtBall());
         Coroutine anim_coroutine = StartCoroutine(animateBall(ball, animation));
 
         ball.gameObject.SetActive(true);
@@ -1653,7 +1653,7 @@ public partial class BattleHandler : MonoBehaviour
         position = ball.transform.position;
         distance = (target - position) * 0.7f;
 
-        Sprite[] animation = new Sprite[0]; //getBallSprite(pokemon[1].getCaughtBall());
+        UnityEngine.Sprite[] animation = new UnityEngine.Sprite[0]; //getBallSprite(pokemon[1].getCaughtBall());
         Coroutine anim_coroutine = StartCoroutine(animateBall(ball, animation));
 
         ball.gameObject.SetActive(true);
@@ -1680,8 +1680,8 @@ public partial class BattleHandler : MonoBehaviour
         float offset = 3;
         Vector3 opponentPosition = opponentSpriteRenderer.transform.position;
         Vector3 position = new Vector3(opponentPosition.x, opponentPosition.y+offset, opponentPosition.z);
-        
-        Sprite[] animation = new Sprite[0]; //getBallSprite(pokemon[index].getCaughtBall());
+
+        UnityEngine.Sprite[] animation = new UnityEngine.Sprite[0]; //getBallSprite(pokemon[index].getCaughtBall());
 
         SpriteRenderer ball;
         if (index == 3)
@@ -2568,11 +2568,11 @@ public partial class BattleHandler : MonoBehaviour
             if (pokemon[position].Status != Status.NONE)
             {
                 statsStatus[position].sprite =
-                    Resources.Load<Sprite>("PCSprites/status" + pokemon[position].Status.ToString());
+                    Resources.Load<UnityEngine.Sprite>("PCSprites/status" + pokemon[position].Status.ToString());
             }
             else
             {
-                statsStatus[position].sprite = Resources.Load<Sprite>("null");
+                statsStatus[position].sprite = Resources.Load<UnityEngine.Sprite>("null");
             }
             //test
             /*if (position == 0)
@@ -2625,75 +2625,75 @@ public partial class BattleHandler : MonoBehaviour
                 {
                     case PokemonData.Type.BUG:
                         buttonMoveCover[i].color = new Color(0.47f, 0.57f, 0.06f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.DARK:
                         buttonMoveCover[i].color = new Color(0.32f, 0.28f, 0.24f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.DRAGON:
                         buttonMoveCover[i].color = new Color(0.32f, 0.25f, 1f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.ELECTRIC:
                         buttonMoveCover[i].color = new Color(0.64f, 0.52f, 0.04f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.FAIRY:
                         buttonMoveCover[i].color = new Color(0.7f, 0.33f, 0.6f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.FIGHTING:
                         buttonMoveCover[i].color = new Color(0.75f, 0.19f, 0.15f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.FIRE:
                         buttonMoveCover[i].color = new Color(0.94f, 0.5f, 0.19f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.FLYING:
                         buttonMoveCover[i].color = new Color(0.5f, 0.43f, 0.72f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.GHOST:
                         buttonMoveCover[i].color = new Color(0.4f, 0.32f, 0.55f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.GRASS:
                         buttonMoveCover[i].color = new Color(0.34f, 0.5f, 0.25f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.GROUND:
                         buttonMoveCover[i].color = new Color(0.53f, 0.4f, 0.19f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.ICE:
                         buttonMoveCover[i].color = new Color(0.4f, 0.6f, 0.6f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.NORMAL:
                         buttonMoveCover[i].color = new Color(0.5f, 0.5f, 0.35f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.POISON:
                         buttonMoveCover[i].color = new Color(0.63f, 0.25f, 0.63f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.PSYCHIC:
                         buttonMoveCover[i].color = new Color(0.75f, 0.25f, 0.4f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.ROCK:
                         buttonMoveCover[i].color = new Color(0.48f, 0.35f, 0.14f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.STEEL:
                         buttonMoveCover[i].color = new Color(0.6f, 0.6f, 0.67f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                     case PokemonData.Type.WATER:
                         buttonMoveCover[i].color = new Color(0.25f, 0.42f, 0.75f, 1);
-                        buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
+                        buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type.ToString());
                         break;
                 }
 
@@ -2707,7 +2707,7 @@ public partial class BattleHandler : MonoBehaviour
             else
             {
                 buttonMoveCover[i].color = new Color(0.5f, 0.5f, 0.5f, 1);
-                buttonMoveType[i].sprite = Resources.Load<Sprite>("null");
+                buttonMoveType[i].sprite = Resources.Load<UnityEngine.Sprite>("null");
                 buttonMoveName[i].text = "";
                 buttonMoveNameShadow[i].text = buttonMoveName[i].text;
                 buttonMovePP[i].text = "";
@@ -2760,7 +2760,7 @@ public partial class BattleHandler : MonoBehaviour
             if (itemListPageString[i] != null)
             {
                 buttonItemList[i].gameObject.SetActive(true);
-                itemListIcon[i].sprite = Resources.Load<Sprite>("Items/" + itemListPageString[i]);
+                itemListIcon[i].sprite = Resources.Load<UnityEngine.Sprite>("Items/" + itemListPageString[i]);
                 itemListName[i].text = itemListPageString[i];
                 itemListNameShadow[i].text = itemListName[i].text;
                 itemListQuantity[i].text = "" + SaveData.currentSave.Bag.getQuantity(itemListPageString[i]);
@@ -2871,11 +2871,11 @@ public partial class BattleHandler : MonoBehaviour
                 if (selectedPokemon.Status != Status.NONE)
                 {
                     pokemonSlotStatus[i].sprite =
-                        Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
+                        Resources.Load<UnityEngine.Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
                 }
                 else
                 {
-                    pokemonSlotStatus[i].sprite = Resources.Load<Sprite>("null");
+                    pokemonSlotStatus[i].sprite = Resources.Load<UnityEngine.Sprite>("null");
                 }
                 pokemonSlotItem[i].enabled = selectedPokemon.Item != Items.NONE;
             }
@@ -2907,23 +2907,23 @@ public partial class BattleHandler : MonoBehaviour
         if (selectedPokemon.Status != Status.NONE)
         {
             pokemonSelectedStatus.sprite =
-                Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
+                Resources.Load<UnityEngine.Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
         }
         else
         {
-            pokemonSelectedStatus.sprite = Resources.Load<Sprite>("null");
+            pokemonSelectedStatus.sprite = Resources.Load<UnityEngine.Sprite>("null");
         }
-        pokemonSelectedType1.sprite = Resources.Load<Sprite>("null");
-        pokemonSelectedType2.sprite = Resources.Load<Sprite>("null");
+        pokemonSelectedType1.sprite = Resources.Load<UnityEngine.Sprite>("null");
+        pokemonSelectedType2.sprite = Resources.Load<UnityEngine.Sprite>("null");
         PokemonUnity.Types type1 = selectedPokemon.Type1;
         PokemonUnity.Types type2 = selectedPokemon.Type2;
         if (type1 != PokemonUnity.Types.NONE)
         {
-            pokemonSelectedType1.sprite = Resources.Load<Sprite>("PCSprites/type" + type1.ToString());
+            pokemonSelectedType1.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type1.ToString());
         }
         if (type2 != PokemonUnity.Types.NONE)
         {
-            pokemonSelectedType2.sprite = Resources.Load<Sprite>("PCSprites/type" + type2.ToString());
+            pokemonSelectedType2.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type2.ToString());
         }
 
         //Summary
@@ -2938,11 +2938,11 @@ public partial class BattleHandler : MonoBehaviour
         pokemonSummaryNextLevelEXP.text = "" + (expNextlevel - selectedPokemon.Exp);
         pokemonSummaryNextLevelEXPShadow.text = pokemonSummaryNextLevelEXP.text;
         pokemonSummaryEXPBar.rectTransform.sizeDelta = new Vector2(Mathf.Floor(expDistance * 64), 3f);
-        pokemonSummaryItemIcon.sprite = Resources.Load<Sprite>("null");
+        pokemonSummaryItemIcon.sprite = Resources.Load<UnityEngine.Sprite>("null");
         pokemonSummaryItemName.text = "No held item.";
         if (selectedPokemon.Item != Items.NONE)
         {
-            pokemonSummaryItemIcon.sprite = Resources.Load<Sprite>("Items/" + selectedPokemon.Item);
+            pokemonSummaryItemIcon.sprite = Resources.Load<UnityEngine.Sprite>("Items/" + selectedPokemon.Item);
             pokemonSummaryItemName.text = selectedPokemon.Item.ToString(TextScripts.Name);
         }
 
@@ -3008,7 +3008,7 @@ public partial class BattleHandler : MonoBehaviour
                 pokemonMovesName[i].text = moveset[i].id.ToString(TextScripts.Name);
                 pokemonMovesNameShadow[i].text = pokemonMovesName[i].text;
                 pokemonMovesType[i].sprite =
-                    Resources.Load<Sprite>("PCSprites/type" + moveset[i].Type.ToString());
+                    Resources.Load<UnityEngine.Sprite>("PCSprites/type" + moveset[i].Type.ToString());
                 pokemonMovesPPText[i].text = "PP";
                 pokemonMovesPPTextShadow[i].text = pokemonMovesPPText[i].text;
                 pokemonMovesPP[i].text = selectedPokemon.moves[i].PP + "/" + selectedPokemon.moves[i].TotalPP;
@@ -3018,7 +3018,7 @@ public partial class BattleHandler : MonoBehaviour
             {
                 pokemonMovesName[i].text = null;
                 pokemonMovesNameShadow[i].text = pokemonMovesName[i].text;
-                pokemonMovesType[i].sprite = Resources.Load<Sprite>("null");
+                pokemonMovesType[i].sprite = Resources.Load<UnityEngine.Sprite>("null");
                 pokemonMovesPPText[i].text = null;
                 pokemonMovesPPTextShadow[i].text = pokemonMovesPPText[i].text;
                 pokemonMovesPP[i].text = null;
@@ -3427,7 +3427,7 @@ public partial class BattleHandler : MonoBehaviour
             string[] moveset = SaveData.currentSave.PC.boxes[0][pokePartyPosition].getMoveset();
             if (string.IsNullOrEmpty(moveset[newPosition]))
             {
-                pokemonMovesSelectedCategory.sprite = Resources.Load<Sprite>("null");
+                pokemonMovesSelectedCategory.sprite = Resources.Load<UnityEngine.Sprite>("null");
                 pokemonMovesSelectedPower.text = null;
                 pokemonMovesSelectedPowerShadow.text = pokemonMovesSelectedPower.text;
                 pokemonMovesSelectedAccuracy.text = null;
@@ -3439,7 +3439,7 @@ public partial class BattleHandler : MonoBehaviour
             {
                 MoveData selectedMove = MoveDatabase.getMove(moveset[newPosition]);
                 pokemonMovesSelectedCategory.sprite =
-                    Resources.Load<Sprite>("PCSprites/category" + selectedMove.getCategory().ToString());
+                    Resources.Load<UnityEngine.Sprite>("PCSprites/category" + selectedMove.getCategory().ToString());
                 pokemonMovesSelectedPower.text = "" + selectedMove.getPower();
                 if (pokemonMovesSelectedPower.text == "0")
                 {
@@ -3470,7 +3470,7 @@ public partial class BattleHandler : MonoBehaviour
         }
         else
         {
-            pokemonMovesSelectedCategory.sprite = Resources.Load<Sprite>("null");
+            pokemonMovesSelectedCategory.sprite = Resources.Load<UnityEngine.Sprite>("null");
             pokemonMovesSelectedPower.text = null;
             pokemonMovesSelectedPowerShadow.text = pokemonMovesSelectedPower.text;
             pokemonMovesSelectedAccuracy.text = null;
@@ -5202,7 +5202,7 @@ public partial class BattleHandler : MonoBehaviour
         opponentBase.sprite = playerBase.sprite;
 
         //Set and pokemon Trainer Sprites
-        trainer1Animation = new Sprite[] {Resources.Load<Sprite>("null")};
+        trainer1Animation = new UnityEngine.Sprite[] {Resources.Load<UnityEngine.Sprite>("null")};
         if (trainerBattle)
         {
             trainer1Animation = trainer.GetSprites();
@@ -5247,7 +5247,7 @@ public partial class BattleHandler : MonoBehaviour
         }
         
         playerTrainer1Animation =
-            Resources.LoadAll<Sprite>("PlayerSprites/" + "m_hgss_" + "back");
+            Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + "m_hgss_" + "back");
         playerTrainerSprite1.sprite = playerTrainer1Animation[0];
         //Note: the player animation should NEVER have no sprites 
         if (trainer1Animation.Length > 0)
@@ -5257,7 +5257,7 @@ public partial class BattleHandler : MonoBehaviour
         }
         else
         {
-            trainerSprite1.sprite = Resources.Load<Sprite>("null");
+            trainerSprite1.sprite = Resources.Load<UnityEngine.Sprite>("null");
         }
 
         if (trainer2 != null && trainer2Animation.Length > 0)
