@@ -25,55 +25,6 @@ namespace PokemonUnity
 		private float x;
 		private float y;
 
-		#region Need to Implement using Unity Engine
-		IBitmap IBitmapSprite.bitmap { set => throw new NotImplementedException(); }
-		float ISpriteWrapper.angle { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		IBitmap ISpriteWrapper.bitmap { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		int ISpriteWrapper.blend_type { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		int ISpriteWrapper.bush_depth { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		IColor ISpriteWrapper.color { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-		bool ISpriteWrapper.disposed => throw new NotImplementedException();
-
-		bool ISpriteWrapper.mirror { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float ISpriteWrapper.opacity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float ISpriteWrapper.ox { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float ISpriteWrapper.oy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		IRect ISpriteWrapper.src_rect { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		ITone ISpriteWrapper.tone { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		IViewport ISpriteWrapper.viewport { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		bool ISpriteWrapper.visible { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float ISpriteWrapper.x { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float ISpriteWrapper.y { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float ISpriteWrapper.z { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float ISpriteWrapper.zoom_x { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float ISpriteWrapper.zoom_y { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		bool ISprite.blink { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		bool ISprite.effect { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.angle { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		int IRPGSprite.blend_type { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		int IRPGSprite.bush_depth { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		IColor IRPGSprite.color { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-		bool IRPGSprite.disposed => throw new NotImplementedException();
-
-		bool IRPGSprite.mirror { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.opacity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.ox { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.oy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		IRect IRPGSprite.src_rect { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		ITone IRPGSprite.tone { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		IViewport IRPGSprite.viewport { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		bool IRPGSprite.visible { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.x { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.y { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.z { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.zoom_x { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.zoom_y { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.width { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		float IRPGSprite.height { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		#endregion
-
 		public IFightMenuButtons initialize(int index= 0, IBattleMove[] moves = null, IViewport viewport= null)
 		{
 			//super((Game.GameData as Game).Graphics.width, 96 + UPPERGAP, viewport);
