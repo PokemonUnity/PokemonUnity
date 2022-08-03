@@ -42,12 +42,12 @@ namespace PokemonUnity
 			return this;
 		}
 
-		public void Dispose()
+		public override void Dispose()
 		{
 			@buttonbitmap.dispose();
 			@typebitmap.dispose();
 			@megaevobitmap.dispose();
-			//super;
+			base.Dispose();//super;
 		}
 
 		public void update(int index= 0, IBattleMove[] moves = null, int megaButton= 0)
@@ -57,11 +57,10 @@ namespace PokemonUnity
 
 		public void refresh(int index, IBattleMove[] moves, int megaButton)
 		{
-			/*
-			if (moves == null) return;
+			/*if (moves == null) return;
 			this.bitmap.clear();
 			string moveboxes = Game._INTL("Graphics/Pictures/battleFightButtons");
-			IList<> textpos = new List<>();
+			IList<IEnumOption> textpos = new List<IEnumOption>();
 			for (int i = 0; i < 4; i++)
 			{
 				if (i == index) continue;
@@ -75,10 +74,10 @@ namespace PokemonUnity
 			}
 			IColor[] ppcolors=new IColor[] {
 			   PokeBattle_SceneConstants.PPTEXTBASECOLOR, PokeBattle_SceneConstants.PPTEXTSHADOWCOLOR,
-			   PokeBattle_SceneConstants.HPTEXTBASECOLOR, PokeBattle_SceneConstants.HPTEXTSHADOWCOLOR,
-			   PokeBattle_SceneConstants.HPTEXTBASECOLORYELLOW, PokeBattle_SceneConstants.HPTEXTSHADOWCOLORYELLOW,
-			   PokeBattle_SceneConstants.HPTEXTBASECOLORORANGE, PokeBattle_SceneConstants.HPTEXTSHADOWCOLORORANGE,
-			   PokeBattle_SceneConstants.HPTEXTBASECOLORRED, PokeBattle_SceneConstants.HPTEXTSHADOWCOLORRED
+			   PokeBattle_SceneConstants.PPTEXTBASECOLOR, PokeBattle_SceneConstants.PPTEXTSHADOWCOLOR,
+			   PokeBattle_SceneConstants.PPTEXTBASECOLORYELLOW, PokeBattle_SceneConstants.PPTEXTSHADOWCOLORYELLOW,
+			   PokeBattle_SceneConstants.PPTEXTBASECOLORORANGE, PokeBattle_SceneConstants.PPTEXTSHADOWCOLORORANGE,
+			   PokeBattle_SceneConstants.PPTEXTBASECOLORRED, PokeBattle_SceneConstants.PPTEXTSHADOWCOLORRED
 			};
 			for (int i = 0; i < 4; i++) {
 				if (i!=index) continue;
@@ -91,7 +90,7 @@ namespace PokemonUnity
 				textpos.Add(new { Game._INTL("{1}", moves[i].name), x + 96, y + 8, 2,
 					PokeBattle_SceneConstants.MENUBASECOLOR, PokeBattle_SceneConstants.MENUSHADOWCOLOR});
 				if (moves[i].TotalPP>0) {
-				int ppfraction=Math.Ceiling(4.0*moves[i].PP/moves[i].TotalPP);
+				int ppfraction=(int)Math.Ceiling(4.0*moves[i].PP/moves[i].TotalPP);
 				textpos.Add(new { Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP),
 					448, 50 + UPPERGAP, 2, ppcolors[(4 - ppfraction) * 2], ppcolors[(4 - ppfraction) * 2 + 1] });
 				}
