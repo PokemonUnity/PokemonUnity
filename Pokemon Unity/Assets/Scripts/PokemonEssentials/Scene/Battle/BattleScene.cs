@@ -71,19 +71,19 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	/// <summary>
 	/// HP, Exp, and other status of battling pokemon; Player side slot 1
 	/// </summary>
-	public IPokemonDataBox battlebox0;
+	public PokemonDataBox battlebox0;
 	/// <summary>
 	/// HP, Exp, and other status of battling pokemon; Enemy side slot 1
 	/// </summary>
-	public IPokemonDataBox battlebox1;
+	public PokemonDataBox battlebox1;
 	/// <summary>
 	/// HP, Exp, and other status of battling pokemon; Player side slot 2
 	/// </summary>
-	public IPokemonDataBox battlebox2;
+	public PokemonDataBox battlebox2;
 	/// <summary>
 	/// HP, Exp, and other status of battling pokemon; Enemy side slot 2
 	/// </summary>
-	public IPokemonDataBox battlebox3;
+	public PokemonDataBox battlebox3;
 	/// <summary>
 	/// Your side primary battle pokemon; slot one
 	/// </summary>

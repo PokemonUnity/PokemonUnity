@@ -154,9 +154,9 @@ namespace PokemonEssentials.Interface
 		//      Otherwise, the text is left aligned.
 		//  4 - Base color
 		//  5 - Shadow color
-		void pbDrawTextPositions(IBitmap bitmap, object[] textpos);
+		void pbDrawTextPositions(IBitmap bitmap, IList<ITextPosition> textpos);
 
-		void pbDrawImagePositions(IBitmap bitmap, object[] textpos);
+		void pbDrawImagePositions(IBitmap bitmap, IList<ITextPosition> textpos);
 
 
 

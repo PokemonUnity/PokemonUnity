@@ -133,9 +133,9 @@ namespace PokemonEssentials.Interface.Screen
 
 		void refreshExpLevel();
 
-		int exp { get; }
+		int Exp { get; }
 
-		int hp { get; }
+		int HP { get; }
 
 		void animateHP(int oldhp, int newhp);
 

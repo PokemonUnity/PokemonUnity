@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Kernal.cs" />
+    <Compile Include="Framework\Essentials\ITextPosition.cs" />
     <Compile Include="Application\Scene.cs" />
     <Compile Include="Application\MoveRoutes.cs" />
     <Compile Include="Application\Screen.cs" />
