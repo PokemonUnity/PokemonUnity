@@ -38,12 +38,12 @@ namespace PokemonUnity.Utility
 	/// between Vector3 and SerializableVector3
 	/// </summary>
 	[System.Serializable]
-	public class SeriV3 : ISerializable, IVector
+	public struct SeriV3 : ISerializable, IVector
 	{
 		/// <summary>
 		/// Serializable Vector 3
 		/// </summary>
-		public UnityEngine.Vector3 v3 { get; set; }
+		public UnityEngine.Vector3 v3 { get; set; } //new UnityEngine.Vector3(v.x, v.y, v.z); }
 
 		public float x
 		{
@@ -70,9 +70,10 @@ namespace PokemonUnity.Utility
 
 		public SeriV3(float rX, float rY, float rZ)
 		{
-			x = rX;
-			y = rY;
-			z = rZ;
+			//x = rX;
+			//y = rY;
+			//z = rZ;
+			v3 = new UnityEngine.Vector3(rX, rY, rZ);
 		}
 
 		/// <summary>
@@ -91,14 +92,26 @@ namespace PokemonUnity.Utility
 		}
 
 
+		/// <summary>
+		/// Automatic conversion from SerializableVector3 to UnityVector3
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
 		public static implicit operator UnityEngine.Vector3(SeriV3 v)
 		{
-			return v.v3;
+			//return v.v3;
+			return new UnityEngine.Vector3(v.x, v.y, v.z);
 		}
 
-		public static explicit operator SeriV3(UnityEngine.Vector3 v)
+		/// <summary>
+		/// Automatic conversion from UnityVector3 to SerializableVector3
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static implicit operator SeriV3(UnityEngine.Vector3 v)
 		{
-			return new SeriV3(v);
+			//return new SeriV3(v);
+			return new SeriV3(v.x, v.y, v.z);
 		}
 
 		public static UnityEngine.Vector3 operator *(SeriV3 v, float f)
@@ -113,8 +126,13 @@ namespace PokemonUnity.Utility
 			info.AddValue("y", v3.y, typeof(float));
 			info.AddValue("z", v3.z, typeof(float));
 		}
+		/// <summary>
+		/// Returns a string representation of the object
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
+			//return string.Format("[{0}, {1}, {2}]", x, y, z);
 			return string.Format("[x={0}, y={1}, z={2}]", x, y, z);
 		}
 	}

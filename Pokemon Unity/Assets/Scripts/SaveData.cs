@@ -17,11 +17,11 @@ public class SaveData
 
     //file loading data
     public string levelName;
-    public SeriV3 playerPosition;
+    public PokemonUnity.Utility.SeriV3 playerPosition;
     public int playerDirection;
 
     public bool followerOut;
-    public SeriV3 followerPosition;
+    public PokemonUnity.Utility.SeriV3? followerPosition;
     public int followerdirection;
     public bool followerIsActive;
 
@@ -32,9 +32,9 @@ public class SaveData
     public string fileCreationDate;
     
     public CosmeticData playerHaircut;
-    public SerializableColor playerHairColor;
+    public PokemonUnity.Utility.SeriColor playerHairColor;
     
-    public SerializableColor playerEyeColor;
+    public PokemonUnity.Utility.SeriColor playerEyeColor;
     //
 
     public string mapName;
@@ -62,7 +62,7 @@ public class SaveData
 
     //Important gameplay data
     public string respawnSceneName;
-    public SeriV3 respawnScenePosition;
+    public PokemonUnity.Utility.SeriV3 respawnScenePosition;
     public int respawnSceneDirection;
     public string[] respawnText;
     

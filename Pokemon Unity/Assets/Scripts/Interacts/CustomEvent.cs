@@ -1246,7 +1246,7 @@ public class CustomEvent : MonoBehaviour
                 yield return StartCoroutine(PlayerMovement.player.followerScript.releaseFromBall());
                 break;
             case CustomEventDetails.CustomEventType.SetRespawn:
-                SaveData.currentSave.respawnScenePosition = new SeriV3(new Vector3(currentEvent.ints[0], currentEvent.ints[1], currentEvent.ints[2]));
+                SaveData.currentSave.respawnScenePosition = new PokemonUnity.Utility.SeriV3(new Vector3(currentEvent.ints[0], currentEvent.ints[1], currentEvent.ints[2]));
                 SaveData.currentSave.respawnSceneDirection = currentEvent.int0;
                 switch (Language.getLang())
                 {

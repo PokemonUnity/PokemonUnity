@@ -11,7 +11,7 @@ public class BumpRespawnSet : MonoBehaviour
 
     private IEnumerator bump()
     {
-        SaveData.currentSave.respawnScenePosition = new SeriV3(transform.position + respawnPositionOffset);
+        SaveData.currentSave.respawnScenePosition = new PokemonUnity.Utility.SeriV3(transform.position + respawnPositionOffset);
         SaveData.currentSave.respawnSceneDirection = respawnDirection;
         SaveData.currentSave.respawnText = respawnText;
         SaveData.currentSave.respawnSceneName = Application.loadedLevelName;

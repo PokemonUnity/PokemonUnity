@@ -134,8 +134,8 @@ public class GlobalVariables : MonoBehaviour
         //SaveData.currentSave.playerHairColor = new SerializableColor(0.984f, 0.882f, 0.451f, 1);
         //SaveData.currentSave.playerEyeColor = new SerializableColor(0.227f, 0.545f, 0.588f, 1);
         
-        SaveData.currentSave.playerHairColor = new SerializableColor(0.984f, 0.882f, 0.451f, 0);
-        SaveData.currentSave.playerEyeColor = new SerializableColor(0.227f, 0.545f, 0.588f, 0);
+        SaveData.currentSave.playerHairColor = new PokemonUnity.Utility.SeriColor(0.984f, 0.882f, 0.451f, 0);
+        SaveData.currentSave.playerEyeColor = new PokemonUnity.Utility.SeriColor(0.227f, 0.545f, 0.588f, 0);
 
 
         SaveData.currentSave.playerOutfit = "bw";

@@ -7,7 +7,7 @@ public class CustomSaveEvent
     public SaveEventType EventType;
     public int SceneIndex;
     public string ObjectName;
-    public SerializableVector3 ObjectPosition;
+    public PokemonUnity.Utility.SeriV3 ObjectPosition;
 
     public CustomSaveEvent(SaveEventType eventType, UnityEngine.GameObject eventObject, int sceneIndex)
     {

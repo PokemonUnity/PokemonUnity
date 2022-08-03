@@ -614,7 +614,7 @@ public class MainMenuHandler : MonoBehaviour
 
                     if (SaveData.currentSave.followerPosition != null && SaveData.currentSave.followerdirection != null)
                     {
-                        GlobalVariables.global.followerPosition = SaveData.currentSave.followerPosition.v3;
+                        GlobalVariables.global.followerPosition = SaveData.currentSave.followerPosition.Value.v3;
                         GlobalVariables.global.followerDirection = SaveData.currentSave.followerdirection;
                     }
                     

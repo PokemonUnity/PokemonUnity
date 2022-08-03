@@ -79,8 +79,8 @@ public static class GlobalSaveManager
         Bag PlayerBag = SaveData.currentSave.Bag;
 
         CustomSaveData DataToSave = new CustomSaveData(
-            Player.transform.position, Player.GetComponent<PlayerMovement>().direction,
-            Player.transform.Find("Follower").transform.position, Player.GetComponentInChildren<FollowerMovement>().direction,
+			(SeriV3)Player.transform.position, Player.GetComponent<PlayerMovement>().direction,
+            (SeriV3)Player.transform.Find("Follower").transform.position, Player.GetComponentInChildren<FollowerMovement>().direction,
             SceneManager.GetActiveScene().buildIndex, //Party, 
                 PlayerBag, EventSaves, "");
 
@@ -237,10 +237,10 @@ public static class GlobalSaveManager
         public DateTime TimeCreated;
 
         //Player
-        public SerializableVector3 PlayerPosition;
+        public SeriV3 PlayerPosition;
         public int PlayerDirection;
         //Follower
-        public SerializableVector3 FollowerPosition;
+        public SeriV3 FollowerPosition;
         public int FollowerDirection;
 
         public int ActiveScene;
@@ -249,10 +249,10 @@ public static class GlobalSaveManager
         /// When the Player blacks out they need to return to the last visited Pokemon Center
         /// </summary>
         private int pCenterScene;
-        private SerializableVector3 pCenterPosition;
+        private SeriV3 pCenterPosition;
         private int pCenterDirection;
 
-        private SerializableVector3 pCenterFposition;
+        private SeriV3 pCenterFposition;
         private int pCenterFdirection;
 
         //public Pokemon[][] Party;
@@ -260,7 +260,7 @@ public static class GlobalSaveManager
 
         public List<CustomSaveEvent> SaveData;
 
-        public void AddPokemonCenter(int scene, SerializableVector3 position, int direction, SerializableVector3 fPosition, int fDirection)
+        public void AddPokemonCenter(int scene, SeriV3 position, int direction, SeriV3 fPosition, int fDirection)
         {
             pCenterScene = scene;
 
@@ -272,8 +272,8 @@ public static class GlobalSaveManager
         }
 
         public CustomSaveData(
-            SerializableVector3 playerPosition, int playerRotation, 
-            SerializableVector3 followerPosition, int followerDirection,
+            SeriV3 playerPosition, int playerRotation, 
+            SeriV3 followerPosition, int followerDirection,
             int activeScene,
             //Pokemon[][] party, 
             Bag playerBag, 

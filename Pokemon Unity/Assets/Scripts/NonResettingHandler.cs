@@ -68,7 +68,7 @@ public class NonResettingHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("NonResettingList Inconsistancy for" + trainers[i].gameObject.name);
+                    Debug.Log("NonResettingList Inconsistency for" + trainers[i].gameObject.name);
                 }
             }
             for (int i = 0; i < items.Length; i++)
@@ -82,7 +82,7 @@ public class NonResettingHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("NonResettingList Inconsistancy for" + items[i].name);
+                    Debug.Log("NonResettingList Inconsistency for" + items[i].name);
                 }
             }
             for (int i = 0; i < events.Length; i++)
@@ -114,7 +114,7 @@ public class NonResettingHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("NonResettingList Inconsistancy for" + events[i].name);
+                    Debug.Log("NonResettingList Inconsistency for" + events[i].name);
                 }
             }
         }
@@ -215,13 +215,13 @@ public class NonResettingList
 public class FollowerEvent
 {
     public bool enabled;
-    public SeriV3 position;
+    public PokemonUnity.Utility.SeriV3 position;
     public int direction;
 
     public FollowerEvent(bool enabled, Vector3 position, int direction)
     {
         this.enabled = enabled;
-        this.position = new SeriV3(position);
+        this.position = new PokemonUnity.Utility.SeriV3(position);
         this.direction = direction;
     }
 }
