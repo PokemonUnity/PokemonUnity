@@ -122,9 +122,9 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IPokemonDataBox : ISpriteWrapper, ISafariDataBox
 	{
 		IBattler battler		{ get; }
-		int selected			{ get; set; }
+		new int selected		{ get; set; }
 		bool appearing			{ get; }
-		bool animatingHP			{ get; }
+		bool animatingHP		{ get; }
 		bool animatingEXP		{ get; }
 
 		IPokemonDataBox initialize(IBattler battler, bool doublebattle, IViewport viewport = null);

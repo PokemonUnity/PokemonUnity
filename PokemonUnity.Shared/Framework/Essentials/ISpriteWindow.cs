@@ -890,9 +890,9 @@ namespace PokemonEssentials.Interface
 		float zoom_y { get; set; }
 
 		ISpriteWrapper initialize(IViewport viewport= null);
-		void dispose();
+		void Dispose();
 		void flash(IColor color, int duration);
-		void update();
+		//void update();
 	}
 
 // ########################################################################
@@ -1786,7 +1786,7 @@ namespace PokemonEssentials.Interface
 
 		IBitmap bitmap { set; }
 
-		void dispose();
+		void Dispose();
 	}
 
 	/// <summary>
