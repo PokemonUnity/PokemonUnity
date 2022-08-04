@@ -55,8 +55,8 @@ namespace PokemonUnity
 		public static readonly float EXPGAUGESIZE			= 192;
 
 		//  Coordinates of the top left of the player's data boxes
-		public static readonly float PLAYERBOX_X			= (Game.GameData as Game).Graphics.width - 244;
-		public static readonly float PLAYERBOX_Y			= (Game.GameData as Game).Graphics.height - 192;
+		public static readonly float PLAYERBOX_X			= 0; //(Game.GameData as Game).Graphics.width - 244;
+		public static readonly float PLAYERBOX_Y			= 0; //(Game.GameData as Game).Graphics.height - 192;
 		public static readonly float PLAYERBOXD1_X			= PLAYERBOX_X - 12;
 		public static readonly float PLAYERBOXD1_Y			= PLAYERBOX_Y - 20;
 		public static readonly float PLAYERBOXD2_X			= PLAYERBOX_X;
@@ -71,13 +71,13 @@ namespace PokemonUnity
 		public static readonly float FOEBOXD2_Y				= FOEBOX_Y + 20;
 
 		//  Coordinates of the top left of the player's Safari game data box
-		public static readonly float SAFARIBOX_X			= (Game.GameData as Game).Graphics.width - 232;
-		public static readonly float SAFARIBOX_Y			= (Game.GameData as Game).Graphics.height - 184;
+		public static readonly float SAFARIBOX_X			= 0; //(Game.GameData as Game).Graphics.width - 232;
+		public static readonly float SAFARIBOX_Y			= 0; //(Game.GameData as Game).Graphics.height - 184;
 
 		//  Coordinates of the party bars and balls of both sides
 		//  Coordinates are the top left of the graphics except where specified
-		public static readonly float PLAYERPARTYBAR_X		= (Game.GameData as Game).Graphics.width - 248;
-		public static readonly float PLAYERPARTYBAR_Y		= (Game.GameData as Game).Graphics.height - 142;
+		public static readonly float PLAYERPARTYBAR_X		= 0; //(Game.GameData as Game).Graphics.width - 248;
+		public static readonly float PLAYERPARTYBAR_Y		= 0; //(Game.GameData as Game).Graphics.height - 142;
 		public static readonly float PLAYERPARTYBALL1_X		= PLAYERPARTYBAR_X + 44;
 		public static readonly float PLAYERPARTYBALL1_Y		= PLAYERPARTYBAR_Y - 30;
 		public static readonly float PLAYERPARTYBALL_GAP	= 32;
@@ -90,7 +90,7 @@ namespace PokemonUnity
 		//  Coordinates of the center bottom of the player's battler's sprite
 		//  Is also the center middle of its shadow
 		public static readonly float PLAYERBATTLER_X		= 128;
-		public static readonly float PLAYERBATTLER_Y		= (Game.GameData as Game).Graphics.height - 80;
+		public static readonly float PLAYERBATTLER_Y		= 0; //(Game.GameData as Game).Graphics.height - 80;
 		public static readonly float PLAYERBATTLERD1_X		= PLAYERBATTLER_X - 48;
 		public static readonly float PLAYERBATTLERD1_Y		= PLAYERBATTLER_Y;
 		public static readonly float PLAYERBATTLERD2_X		= PLAYERBATTLER_X + 32;
@@ -98,8 +98,8 @@ namespace PokemonUnity
 
 		//  Coordinates of the center bottom of the foe's battler's sprite
 		//  Is also the center middle of its shadow
-		public static readonly float FOEBATTLER_X			= (Game.GameData as Game).Graphics.width - 128;
-		public static readonly float FOEBATTLER_Y			= ((Game.GameData as Game).Graphics.height* 3/4) - 112;
+		public static readonly float FOEBATTLER_X			= 0; //(Game.GameData as Game).Graphics.width - 128;
+		public static readonly float FOEBATTLER_Y			= 0; //((Game.GameData as Game).Graphics.height* 3/4) - 112;
 		public static readonly float FOEBATTLERD1_X			= FOEBATTLER_X + 48;
 		public static readonly float FOEBATTLERD1_Y			= FOEBATTLER_Y;
 		public static readonly float FOEBATTLERD2_X			= FOEBATTLER_X - 32;

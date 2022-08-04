@@ -19,49 +19,13 @@ namespace PokemonUnity
 	//[RequireComponent(typeof())]
 	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay
 	{
-		public int mode { get; set; }
 		//public string title;
 		public bool disposedValue;
 		public IIconSprite display;
 		public IWindow_CommandPokemon window;
 		public IWindow_UnformattedTextPokemon msgbox;
 		public ICommandMenuButtons buttons;
-
-		public ICommandMenuDisplay initialize(IViewport viewport= null)
-		{
-			/*
-			//@display = null; //set display to false
-			if (PokeBattle_SceneConstants.USECOMMANDBOX)
-			{
-				//set display to true
-				//@display = new IconSprite(0, (Game.GameData as Game).Graphics.height - 96, viewport);
-				@display.initialize(0, (Game.GameData as Game).Graphics.height - 96, viewport);
-				@display.setBitmap("Graphics/Pictures/battleCommand");
-			}
-			//@window = new Window_CommandPokemon().WithSize([],
-			//	(Game.GameData as Game).Graphics.width - 240,(Game.GameData as Game).Graphics.height - 96,240,96,viewport);
-			@window.WithSize(new string[0], (Game.GameData as Game).Graphics.width - 240,(Game.GameData as Game).Graphics.height - 96,240,96,viewport);
-			@window.columns = 2;
-			@window.columnSpacing = 4;
-			@window.ignore_input = true;
-			//@msgbox = new Window_UnformattedTextPokemon()WithSize(
-			//	 "", 16, (Game.GameData as Game).Graphics.height - 96 + 2, 220, 96, viewport);
-			@msgbox.WithSize("", 16, (Game.GameData as Game).Graphics.height - 96 + 2, 220, 96, viewport);
-			@msgbox.baseColor = PokeBattle_SceneConstants.MESSAGEBASECOLOR;
-			@msgbox.shadowColor = PokeBattle_SceneConstants.MESSAGESHADOWCOLOR;
-			@msgbox.windowskin = null;
-			@title = "";
-			//@buttons = null; //set display to false
-			if (PokeBattle_SceneConstants.USECOMMANDBOX)
-			{
-				//set display to true
-				@window.opacity = 0;
-				@window.x = (Game.GameData as Game).Graphics.width;
-				//@buttons = new CommandMenuButtons(this.index, this.mode, viewport);
-				@buttons.initialize(this.index, this.mode, viewport);
-			}*/
-			return this;
-		}
+		public int mode { get; set; }
 
 		public float x
 		{
@@ -147,6 +111,12 @@ namespace PokemonUnity
 			}
 		}
 
+		public int index
+		{
+			get { return @window.index; }
+			set { @window.index = value; }
+		}
+
 		public bool disposed 
 		{ 
 			get
@@ -155,19 +125,40 @@ namespace PokemonUnity
 			} 
 		}
 
-		public void dispose()
+		public ICommandMenuDisplay initialize(IViewport viewport= null)
 		{
-			if (disposed) return;
-			@msgbox.dispose();
-			@window.dispose();
-			if (@display != null) @display.dispose();
-			if (@buttons != null) @buttons.Dispose();
-		}
-
-		public int index
-		{
-			get { return @window.index; }
-			set { @window.index = value; }
+			/*
+			//@display = null; //set display to false
+			if (PokeBattle_SceneConstants.USECOMMANDBOX)
+			{
+				//set display to true
+				//@display = new IconSprite(0, (Game.GameData as Game).Graphics.height - 96, viewport);
+				@display.initialize(0, (Game.GameData as Game).Graphics.height - 96, viewport);
+				@display.setBitmap("Graphics/Pictures/battleCommand");
+			}
+			//@window = new Window_CommandPokemon().WithSize([],
+			//	(Game.GameData as Game).Graphics.width - 240,(Game.GameData as Game).Graphics.height - 96,240,96,viewport);
+			@window.WithSize(new string[0], (Game.GameData as Game).Graphics.width - 240,(Game.GameData as Game).Graphics.height - 96,240,96,viewport);
+			@window.columns = 2;
+			@window.columnSpacing = 4;
+			@window.ignore_input = true;
+			//@msgbox = new Window_UnformattedTextPokemon()WithSize(
+			//	 "", 16, (Game.GameData as Game).Graphics.height - 96 + 2, 220, 96, viewport);
+			@msgbox.WithSize("", 16, (Game.GameData as Game).Graphics.height - 96 + 2, 220, 96, viewport);
+			@msgbox.baseColor = PokeBattle_SceneConstants.MESSAGEBASECOLOR;
+			@msgbox.shadowColor = PokeBattle_SceneConstants.MESSAGESHADOWCOLOR;
+			@msgbox.windowskin = null;
+			@title = "";
+			//@buttons = null; //set display to false
+			if (PokeBattle_SceneConstants.USECOMMANDBOX)
+			{
+				//set display to true
+				@window.opacity = 0;
+				@window.x = (Game.GameData as Game).Graphics.width;
+				//@buttons = new CommandMenuButtons(this.index, this.mode, viewport);
+				@buttons.initialize(this.index, this.mode, viewport);
+			}*/
+			return this;
 		}
 
 		public void setTexts(params string[] value)
@@ -201,12 +192,16 @@ namespace PokemonUnity
 
 		protected virtual void Dispose(bool disposing)
 		{
-			if (!disposedValue)
+			if (!disposedValue || !disposed)
 			{
 				if (disposing)
 				{
 					// TODO: dispose managed state (managed objects)
-					dispose();
+					//if (disposed) return;
+					@msgbox.Dispose();
+					@window.Dispose();
+					if (@display != null) @display.Dispose();
+					if (@buttons != null) @buttons.Dispose();
 				}
 
 				// TODO: free unmanaged resources (unmanaged objects) and override finalizer

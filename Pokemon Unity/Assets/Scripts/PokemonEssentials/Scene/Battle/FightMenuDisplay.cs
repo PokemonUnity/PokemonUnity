@@ -126,6 +126,14 @@ namespace PokemonUnity
 			}
 		}
 
+		public bool disposed
+		{
+			get
+			{
+				return @info.disposed || @window.disposed;
+			}
+		}
+
 		void Awake()
 		{
 			buttons = transform.GetComponent<FightMenuButtons>();
@@ -169,21 +177,8 @@ namespace PokemonUnity
 			return this;
 		}
 
-		public bool disposed
-		{
-			get
-			{
-				return @info.disposed || @window.disposed;
-			}
-		}
-
 		public void dispose()
 		{
-			if (disposed) return;
-			@info.dispose();
-			if (@display != null) @display.dispose();
-			if (@buttons != null) @buttons.Dispose();
-			@window.dispose();
 		}
 
 		public bool setIndex(int value)
@@ -236,12 +231,16 @@ namespace PokemonUnity
 
 		protected virtual void Dispose(bool disposing)
 		{
-			if (!disposedValue)
+			if (!disposedValue || !disposed)
 			{
 				if (disposing)
 				{
 					// TODO: dispose managed state (managed objects)
-					dispose();
+					//if (disposed) return;
+					@info.Dispose();
+					if (@display != null) @display.Dispose();
+					if (@buttons != null) @buttons.Dispose();
+					@window.Dispose();
 				}
 
 				// TODO: free unmanaged resources (unmanaged objects) and override finalizer

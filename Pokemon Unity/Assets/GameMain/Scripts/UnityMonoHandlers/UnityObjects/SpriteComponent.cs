@@ -235,7 +235,8 @@ namespace PokemonUnity
 		/// <summary>
 		/// The sprite's visibility. If TRUE, the sprite is visible.
 		/// </summary>
-		public bool visible { get; set; }
+		public bool visible { get { return gameObject.activeInHierarchy; } //gameObject.activeSelf;
+			set { gameObject.SetActive(value); } }
 		/// <summary>
 		/// The sprite's X-coordinate.
 		/// </summary>

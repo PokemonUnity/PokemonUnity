@@ -37,7 +37,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		bool disposed { get; }
 
-		void dispose();
+		//void dispose();
 
 		int index { get; set; }
 
@@ -79,7 +79,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		bool disposed { get; }
 
-		void dispose();
+		//void dispose();
 
 		bool setIndex(int value);
 

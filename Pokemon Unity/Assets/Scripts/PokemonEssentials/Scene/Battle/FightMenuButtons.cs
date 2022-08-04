@@ -22,8 +22,6 @@ namespace PokemonUnity
 		public IAnimatedBitmap typebitmap;
 		public IAnimatedBitmap megaevobitmap;
 		private bool disposedValue;
-		private float x;
-		private float y;
 
 		public IFightMenuButtons initialize(int index= 0, IBattleMove[] moves = null, IViewport viewport= null)
 		{
@@ -40,14 +38,6 @@ namespace PokemonUnity
 			@megaevobitmap.initialize(Game._INTL("Graphics/Pictures/battleMegaEvo"));
 			refresh(index, moves, 0);
 			return this;
-		}
-
-		public override void Dispose()
-		{
-			@buttonbitmap.dispose();
-			@typebitmap.dispose();
-			@megaevobitmap.dispose();
-			base.Dispose();//super;
 		}
 
 		public void update(int index= 0, IBattleMove[] moves = null, int megaButton= 0)
@@ -109,7 +99,10 @@ namespace PokemonUnity
 				if (disposing)
 				{
 					// TODO: dispose managed state (managed objects)
-					Dispose();
+					@buttonbitmap.Dispose();
+					@typebitmap.Dispose();
+					@megaevobitmap.Dispose();
+					base.Dispose();//super;
 				}
 
 				// TODO: free unmanaged resources (unmanaged objects) and override finalizer

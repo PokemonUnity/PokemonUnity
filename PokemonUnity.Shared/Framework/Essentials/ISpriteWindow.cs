@@ -342,7 +342,7 @@ namespace PokemonEssentials.Interface
 		int totalFrames(); //{ @bitmap.totalFrames; }
 		bool disposed { get; } //{ @bitmap.disposed(); }
 		void update(); //{ @bitmap.update(); }
-		void dispose(); //{ @bitmap.dispose(); }
+		//void dispose(); //{ @bitmap.dispose(); }
 		IBitmap deanimate(); //{ @bitmap.deanimate; }
 		IAnimatedBitmap copy(); //{ @bitmap.copy; }
 	}
@@ -1065,7 +1065,7 @@ namespace PokemonEssentials.Interface
 
 		ISpriteWindow initialize(IViewport viewport=null);
 
-		void dispose();
+		//void dispose();
 
 		//  void stretch=(value) {
 		//	@stretch=value;
@@ -1394,7 +1394,7 @@ namespace PokemonEssentials.Interface
 
 		void update();
 
-		void dispose();
+		//void dispose();
 	}
 
 	public interface ISpriteWindow_Selectable : ISpriteWindow_Base {
@@ -1492,7 +1492,7 @@ namespace PokemonEssentials.Interface
 
 		IRect drawCursor(int index, IRect rect);
 
-		void dispose();
+		//void dispose();
 
 		// to be implemented by derived classes
 		int itemCount();
@@ -1760,7 +1760,7 @@ namespace PokemonEssentials.Interface
 		//IIconSprite initialize(*args);
 		IIconSprite initialize(float x, float y, IViewport viewport);
 
-		void dispose();
+		//void dispose();
 
 		void update();
 
