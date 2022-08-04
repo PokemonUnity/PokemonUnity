@@ -236,13 +236,13 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 
 		GameDebug.Log("Is Game Null? " + (Game.GameData == null).ToString());
 		GameDebug.Log("Is Player Null? " + (Game.GameData.Player == null).ToString());
-		if (Game.GameData.Player == null)
-		{
-			GameDebug.Log("Create Player Object");
-			//IGamePlayer p = new Player();
-			GameDebug.Log("Saving Player Object to Global Singleton");
-			//Game.GameData.Player = p;
-		}
+		//if (Game.GameData.Player == null)
+		//{
+		//	GameDebug.Log("Create Player Object");
+		//	//IGamePlayer p = new Player();
+		//	GameDebug.Log("Saving Player Object to Global Singleton");
+		//	//Game.GameData.Player = p;
+		//}
 		GameDebug.Log("Is Trainer Null? " + (Game.GameData.Trainer == null).ToString());
 
 		//messageBox = _messageBox.GetComponent<>() as ISpriteWrapper;
@@ -287,7 +287,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		Game.LocalizationDictionary.Initialize(englishLocalization, (int)Languages.English);
 
 		//IPokeBattle_DebugSceneNoGraphics pokeBattle = new PokeBattleScene();
-		//pokeBattle.initialize();
+		(this as IPokeBattle_Scene).initialize(); //pokeBattle.initialize();
 
 
 		IPokemon[] p1 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.ABRA), new PokemonUnity.Monster.Pokemon(Pokemons.EEVEE) };

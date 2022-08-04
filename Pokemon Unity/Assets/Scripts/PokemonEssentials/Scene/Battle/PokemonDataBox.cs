@@ -9,6 +9,7 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 using UnityEngine;
+using PokemonUnity.Utility;
 
 namespace PokemonUnity
 {
@@ -28,11 +29,19 @@ namespace PokemonUnity
 		public bool animatingEXP { get; private set; }
 		public int Exp { get { return @animatingEXP ? @currentexp : @explevel; } }
 		public int HP { get { return @animatingHP ? @currenthp : @battler.HP; } }
+		/// <summary>
+		/// Reference to the UI's health bar.
+		/// </summary>
 		public UnityEngine.UI.Slider sliderHP;
+		/// <summary>
+		/// Reference to the UI's experience bar.
+		/// </summary>
 		public UnityEngine.UI.Slider sliderExp;
-		private UnityEngine.UI.Image panelbg;
-		private UnityEngine.Sprite databox; //AnimatedBitmap
-		private UnityEngine.Sprite statuses;
+		public UnityEngine.UI.Image spriteStatus, spriteFillHP;
+		public UnityEngine.UI.Text currentHP, maxHP, Name, level, gender;
+		//private UnityEngine.UI.Image panelbg;
+		//private UnityEngine.Sprite databox; //AnimatedBitmap
+		//private UnityEngine.Sprite statuses;
 		private int frame;
 		private int explevel;
 		private int starthp;
@@ -44,12 +53,17 @@ namespace PokemonUnity
 		private bool showexp;
 		private bool showhp;
 		private float spritebaseX;
-		private float spriteX;
-		private float spriteY;
+		//private float spriteX;
+		//private float spriteY;
 
 		private void Awake()
 		{
 			panelbg = GetComponent<UnityEngine.UI.Image>();
+
+			sliderHP.minValue = sliderExp.minValue = 0;
+			sliderHP.wholeNumbers = sliderExp.wholeNumbers = true;
+			//Adds a listener to the main slider and invokes a method when the value changes.
+			sliderHP.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
 		}
 
 		private void Start()
@@ -59,7 +73,8 @@ namespace PokemonUnity
 
 		public IPokemonDataBox initialize(IBattler battler, bool doublebattle, IViewport viewport = null)
 		{
-			//super(viewport);
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			base.initialize(viewport);
 			this.battler = battler;
 			@explevel = 0;
 			@selected = 0;
@@ -80,7 +95,7 @@ namespace PokemonUnity
 			//{
 			//	@spritebaseX = 16;
 			//}
-			if (doublebattle)
+			/*if (doublebattle)
 			{
 				switch (@battler.Index)
 				{
@@ -116,6 +131,8 @@ namespace PokemonUnity
 						@spriteY = PokeBattle_SceneConstants.PLAYERBOX_Y;
 						@showhp = true;
 						@showexp = true;
+						currentHP.gameObject.SetActive(true);
+						maxHP.gameObject.SetActive(true);
 						break;
 					case 1:
 						@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxS");
@@ -124,9 +141,11 @@ namespace PokemonUnity
 						break;
 				}
 			}
-			@statuses = Resources.Load<UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses")); //if image is localized, grab the current region
+			panelbg.sprite = databox;
+			//@statuses = Resources.Load<UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses")); //if image is localized, grab the current region
+			@spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses"));
 			//@contents = new BitmapWrapper(@databox.width, @databox.height);
-			//this.bitmap = @contents;
+			//this.bitmap = @contents;*/
 			this.visible = false;
 			this.z = 50;
 			refreshExpLevel();
@@ -136,6 +155,7 @@ namespace PokemonUnity
 
 		//public void Dispose()
 		//{
+		//	GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		//	@statuses.dispose();
 		//	@databox.dispose();
 		//	@contents.dispose();
@@ -144,6 +164,7 @@ namespace PokemonUnity
 				
 		public void refreshExpLevel()
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			if (!@battler.pokemon.IsNotNullOrNone())
 			{
 				@explevel = 0;
@@ -152,36 +173,46 @@ namespace PokemonUnity
 			{
 				Monster.LevelingRate growthrate = @battler.pokemon.GrowthRate;
 				int startexp = Monster.Data.Experience.GetStartExperience(growthrate, @battler.pokemon.Level);
-				int endexp = Monster.Data.Experience.GetStartExperience(growthrate, @battler.pokemon.Level + 1);
+				int endexp = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.NextLevel; //Monster.Data.Experience.GetStartExperience(growthrate, @battler.pokemon.Level + 1);
 				if (startexp == endexp)
 				{
 					@explevel = 0;
 				}
 				else
 				{
-					@explevel = (int)((@battler.pokemon.Exp - startexp) * PokeBattle_SceneConstants.EXPGAUGESIZE / (endexp - startexp));
+					@explevel = (int)(((@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Total - startexp) * PokeBattle_SceneConstants.EXPGAUGESIZE / (endexp - startexp));
+					sliderExp.maxValue = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Current + (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.PointsNeeded;
+					StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(currenthp));
+					StartCoroutine(AnimateSliderExp((@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Current)); //sliderExp.value = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Current;
 				}
 			}
 		}
 				
+		/// <summary>
+		/// Assigns variables to store new value changes that will take effect during next frame updates
+		/// </summary>
+		/// <param name="oldhp"></param>
+		/// <param name="newhp"></param>
 		public void animateHP(int oldhp, int newhp)
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			@starthp = oldhp;
 			@currenthp = oldhp;
 			@endhp = newhp;
 			@animatingHP = true;
-			//Start Coroutine on Slider...
-			//LeanTween.easeOutCubic(oldhp, newhp);
-			//sliderHP.value = oldhp;
-			//StartCoroutine(sliderHP.SmoothValue(newhp, 1f));
 		}
 				
+		/// <summary>
+		/// Assigns variables to store new value changes that will take effect during next frame updates
+		/// </summary>
+		/// <param name="oldhp"></param>
+		/// <param name="newhp"></param>
 		public void animateEXP(int oldexp, int newexp)
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			@currentexp = oldexp;
 			@endexp = newexp;
 			@animatingEXP = true;
-			//Start Coroutine on Slider...
 		}
 		 
 		/// <summary>
@@ -189,6 +220,7 @@ namespace PokemonUnity
 		/// </summary>
 		public override void appear()
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			refreshExpLevel();
 			refresh();
 			this.visible = true;
@@ -207,16 +239,18 @@ namespace PokemonUnity
 				
 		public override void refresh()
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//this.bitmap.clear();
 			if (!@battler.pokemon.IsNotNullOrNone()) return;
 			//this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
-			IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
-			IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
+			//IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
+			//IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
 			string pokename = @battler.Name;
 			//pbSetSystemFont(this.bitmap);
-			IList<ITextPosition> textpos = new List<ITextPosition>() {
-				new TextPosition (pokename,@spritebaseX+8,6,false,base_,shadow)
-			};
+			//IList<ITextPosition> textpos = new List<ITextPosition>() {
+			//	new TextPosition (pokename,@spritebaseX+8,6,false,base_,shadow)
+			//};
+			Name.text = pokename;
 			//Set gender toggle on/off; chage color based on gender
 			//float genderX = this.bitmap.text_size(pokename).width;
 			//genderX += @spritebaseX + 14;
@@ -229,50 +263,87 @@ namespace PokemonUnity
 			//		textpos.Add(new TextPosition(Game._INTL("♀"), genderX, 6, false, new Color(248, 88, 40), shadow));
 			//		break;
 			//}
+			if (@battler.displayGender > 0)
+			{
+				if (@battler.displayGender == 1)
+				{
+					gender.text = "♂"; // Male
+					gender.color = new Color32(255, 34, 34, 255);   // Red
+				}
+				else
+				{
+					gender.text = "♀"; // Female
+					gender.color = new Color32(255, 34, 34, 255);   // Red
+				}
+			}
+			else
+				gender.text = string.Empty;
 			//pbDrawTextPositions(this.bitmap,textpos);
 			//pbSetSmallFont(this.bitmap);
-			textpos = new List<ITextPosition>() {
-				new TextPosition (Game._INTL("Lv{1}",@battler.Level),@spritebaseX+202,8,true,base_,shadow)
-			};
+			//textpos = new List<ITextPosition>() {
+			//	new TextPosition (Game._INTL("Lv{1}",@battler.Level),@spritebaseX+202,8,true,base_,shadow)
+			//};
+			level.text = Game._INTL("{0}", @battler.Level);
 			if (@showhp)
 			{
-				string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
-				textpos.Add(new TextPosition(hpstring, @spritebaseX + 188, 48, true, base_, shadow));
+				//string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
+				//textpos.Add(new TextPosition(hpstring, @spritebaseX + 188, 48, true, base_, shadow));
+				// Text changes automatically when slider value is set...
+				StopCoroutine("AnimateSliderHP"); //(AnimateSliderHP(currenthp));
+				StartCoroutine(AnimateSliderHP(currenthp)); //sliderHP.value = currenthp;
 			}
 			//pbDrawTextPositions(this.bitmap,textpos);
-			IList<ITextPosition> imagepos = new List<ITextPosition>();
-			if (@battler.IsShiny)
-			{
-				float shinyX = 206;
-				if ((@battler.Index & 1) == 0) shinyX = -6; // If player's Pokémon
-				imagepos.Add(new TextPosition("Graphics/Pictures/shiny.png", @spritebaseX + shinyX, 36, 0, 0, -1, -1));
-			}
-			if (@battler.isMega)
-			{
-				imagepos.Add(new TextPosition("Graphics/Pictures/battleMegaEvoBox.png", @spritebaseX + 8, 34, 0, 0, -1, -1));
-			}
-			else if (@battler.isPrimal)
-			{
-				if (@battler.pokemon.Species == Pokemons.KYOGRE)
-				{
-					imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalKyogreBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
-				}
-				else if (@battler.pokemon.Species == Pokemons.GROUDON)
-				{
-					imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalGroudonBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
-				}
-			}
+			//IList<ITextPosition> imagepos = new List<ITextPosition>();
+			//ToDo: Uncomment below if UI is setup for generation features/gimmick
+			//if (@battler.IsShiny)
+			//{
+			//	float shinyX = 206;
+			//	if ((@battler.Index & 1) == 0) shinyX = -6; // If player's Pokémon
+			//	imagepos.Add(new TextPosition("Graphics/Pictures/shiny.png", @spritebaseX + shinyX, 36, 0, 0, -1, -1));
+			//}
+			//if (@battler.isMega)
+			//{
+			//	imagepos.Add(new TextPosition("Graphics/Pictures/battleMegaEvoBox.png", @spritebaseX + 8, 34, 0, 0, -1, -1));
+			//}
+			//else if (@battler.isPrimal)
+			//{
+			//	if (@battler.pokemon.Species == Pokemons.KYOGRE)
+			//	{
+			//		imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalKyogreBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
+			//	}
+			//	else if (@battler.pokemon.Species == Pokemons.GROUDON)
+			//	{
+			//		imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalGroudonBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
+			//	}
+			//}
 			if (@battler.owned && (@battler.Index & 1) == 1)
 			{
-				imagepos.Add(new TextPosition("Graphics/Pictures/battleBoxOwned.png", @spritebaseX + 8, 36, 0, 0, -1, -1));
+				//imagepos.Add(new TextPosition("Graphics/Pictures/battleBoxOwned.png", @spritebaseX + 8, 36, 0, 0, -1, -1));
+				gameObject.transform.Find("Caught").gameObject.SetActive(true);
 			}
 			//pbDrawImagePositions(this.bitmap,imagepos);
+			//switch (@battler.Status)
+			//{
+			//	case PokemonUnity.Status.SLEEP:
+			//	case PokemonUnity.Status.POISON:
+			//	case PokemonUnity.Status.PARALYSIS:
+			//	case PokemonUnity.Status.BURN:
+			//	case PokemonUnity.Status.FROZEN:
+			//		StatusIcon.sprite = Resources.Load<Sprite>(string.Format("PCSprites/status{0}" + @battler.Status.ToString()));
+			//		break;
+			//	case PokemonUnity.Status.NONE:
+			//	default:
+			//		StatusIcon.sprite = Resources.Load<Sprite>("null");
+			//		break;
+			//}
 			if (@battler.Status > 0)
 			{
 				//Enable the sprite that represents this status on the pokemon's HUD panel
 				//this.bitmap.blt(@spritebaseX + 24, 36, @statuses.bitmap,
 				//   new Rect(0, (@battler.Status - 1) * 16, 44, 16));
+				spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>(string.Format("PCSprites/status{0}" + @battler.Status.ToString()));
 			}
+			else spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>("null");
 			int hpGaugeSize = (int)PokeBattle_SceneConstants.HPGAUGESIZE;
 			int hpgauge = @battler.TotalHP == 0 ? 0 : (this.HP * hpGaugeSize / @battler.TotalHP);
 			if (hpgauge == 0 && this.HP > 0) hpgauge = 2;
@@ -299,6 +370,8 @@ namespace PokemonUnity
 			//  fill with HP color
 			//this.bitmap.fill_rect(@spritebaseX + hpGaugeX, hpGaugeY, hpgauge, 2, hpcolors[hpzone * 2]);
 			//this.bitmap.fill_rect(@spritebaseX + hpGaugeX, hpGaugeY + 2, hpgauge, 4, hpcolors[hpzone * 2 + 1]);
+			StopCoroutine("AnimateSliderHP"); //(AnimateSliderHP(currenthp));
+			StartCoroutine(AnimateSliderHP(this.HP)); //sliderHP.value = this.HP;
 			if (@showexp)
 			{
 				//  fill with EXP color
@@ -308,11 +381,14 @@ namespace PokemonUnity
 				//   PokeBattle_SceneConstants.EXPCOLORSHADOW);
 				//this.bitmap.fill_rect(@spritebaseX + expGaugeX, expGaugeY + 2, this.Exp, 2,
 				//   PokeBattle_SceneConstants.EXPCOLORBASE); //Same X value, just 2 Y values lower
+				StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(currenthp));
+				StartCoroutine(AnimateSliderExp(this.Exp)); //sliderExp.value = this.Exp;
 			}
 		}
 				
 		public override void update()
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			base.update();
 			@frame += 1;
 			if (@animatingHP)
@@ -330,6 +406,7 @@ namespace PokemonUnity
 				if (@currenthp == @endhp) @animatingHP = false;
 				refresh();
 			}
+			//ToDo: New coroutine to flash white and blue when leveling-up, chime at 100%, and begin again from 0.
 			if (@animatingEXP)
 			{
 				if (!@showexp)
@@ -418,6 +495,58 @@ namespace PokemonUnity
 				this.y = @spriteY + 2;
 			}
 		}
+
+		/// <summary>
+		/// Invoked when the value of the slider changes.
+		/// </summary>
+		public void ValueChangeCheck()
+		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//if (sliderHP.value <= (sliderHP.maxValue / 4)) { Fill.color = hpzone2; }
+			if (.3f > sliderHP.normalizedValue) { spriteFillHP.color = (SeriColor)PokeBattle_SceneConstants.HPCOLORRED; }
+			//else if (sliderHP.value < (sliderHP.normalizedValue.CompareTo(0.5f))) //  / 2)) 
+			else if (.75f > (sliderHP.normalizedValue)) //  / 2)) 
+			{
+				//Change color of hp bar
+				spriteFillHP.color = (SeriColor)PokeBattle_SceneConstants.HPCOLORYELLOW;
+				//Change background image for health slider
+			}
+			else
+				spriteFillHP.color = (SeriColor)PokeBattle_SceneConstants.HPCOLORGREEN;
+			//each time the silder's value is changed, write to text displaying the hp
+			currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
+		}
+
+		private System.Collections.IEnumerator AnimateSliderHP(int amount) //Slider as input?
+		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//Debug.Log(amount);
+			while (sliderHP.value != amount)
+			{
+				sliderHP.value = Mathf.Lerp(sliderHP.value + amount, sliderHP.value, 1f * Time.deltaTime);
+				yield return null;
+			}
+			//new WaitForSeconds(1f);
+			//fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
+			//yield return null;
+		}
+		/// <summary>
+		/// </summary>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		private System.Collections.IEnumerator AnimateSliderExp(int amount) //Slider as input?
+		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//Debug.Log(amount);
+			while (sliderExp.value != amount)
+			{
+				sliderExp.value = Mathf.Lerp(sliderExp.value + amount, sliderExp.value, 1f * Time.deltaTime);
+				yield return null;
+			}
+			//new WaitForSeconds(1f);
+			//fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
+			//yield return null;
+		}
 	}
 
 	/// <summary>
@@ -426,11 +555,11 @@ namespace PokemonUnity
 	{
 		public int selected { get; set; }
 		public bool appearing { get; protected set; }
-		private UnityEngine.UI.Image panelbg;
-		private UnityEngine.Sprite databox; //AnimatedBitmap
+		public UnityEngine.UI.Image panelbg;
+		public UnityEngine.Sprite databox; //AnimatedBitmap
 		private IBattle battle;
-		private float spriteX;
-		private float spriteY;
+		protected float spriteX;
+		protected float spriteY;
 
 		private void Awake()
 		{
@@ -444,11 +573,13 @@ namespace PokemonUnity
 
 		public ISafariDataBox initialize(IBattle battle, IViewport viewport = null)
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			base.initialize(viewport);
 			@selected = 0;
 			this.battle = battle;
 			//@databox = new AnimatedBitmap("Graphics/Pictures/battlePlayerSafari");
-			@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerSafari");
+			//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerSafari");
+			//panelbg.sprite = databox;
 			@spriteX = PokeBattle_SceneConstants.SAFARIBOX_X;
 			@spriteY = PokeBattle_SceneConstants.SAFARIBOX_Y;
 			@appearing = false;
@@ -465,6 +596,7 @@ namespace PokemonUnity
 		/// </summary>
 		public override void appear()
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			refresh();
 			this.visible = true;
 			this.opacity = 255;
@@ -475,6 +607,7 @@ namespace PokemonUnity
 				
 		public virtual void refresh()
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//this.bitmap.clear();
 			//this.bitmap.blt(0, 0, @databox.bitmap, new Rect(0, 0, @databox.width, @databox.height));
 			//pbSetSystemFont(this.bitmap);
@@ -488,6 +621,7 @@ namespace PokemonUnity
 				
 		public override void update()
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			base.update();
 			if (@appearing)
 			{

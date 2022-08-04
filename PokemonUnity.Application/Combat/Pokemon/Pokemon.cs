@@ -3456,12 +3456,12 @@ namespace PokemonUnity.Combat
 		}
 		#endregion
 
-		//ToDo: Finish migrating interface implimentation
-		#region Explicit Interface Implemenation
+		//ToDo: Finish migrating interface implementation
+		#region Explicit Interface Implementation
 		bool IBattler.inHyperMode { get; }
 		bool IBattler.isShadow { get; }
-		int IBattler.displayGender { get; }
-		bool IBattler.owned { get; }
+		int IBattler.displayGender { get { if (Gender == true) return 1; else if (Gender == false) return 0; else return -1; } }
+		bool IBattler.owned { get { return IsOwned; } }
 		int IBattler.pbSpeed { get; }
 
 		void IBattler.pbInitDummyPokemon(IPokemon pkmn, int pkmnIndex)

@@ -158,6 +158,12 @@ namespace PokemonUnity
 
 		public Canvas m_CachedCanvas = null;
 
+		private void Awake()
+		{
+			rect = GetComponent<UnityEngine.RectTransform>();
+			image = GetComponent<UnityEngine.UI.Image>();
+		}
+
 		private void Start()
 		{
 			//if (m_CharEntryInstanceRoot == null)
