@@ -37,7 +37,7 @@ namespace PokemonUnity
 		/// Reference to the UI's experience bar.
 		/// </summary>
 		public UnityEngine.UI.Slider sliderExp;
-		public UnityEngine.UI.Image spriteStatus, spriteFillHP;
+		public UnityEngine.UI.Image spriteItem, spriteStatus, spriteCaught, spriteFillHP;
 		public UnityEngine.UI.Text currentHP, maxHP, Name, level, gender;
 		//private UnityEngine.UI.Image panelbg;
 		//private UnityEngine.Sprite databox; //AnimatedBitmap
@@ -148,6 +148,8 @@ namespace PokemonUnity
 			//this.bitmap = @contents;
 			this.visible = false;
 			this.z = 50;*/
+			spriteCaught?.gameObject.SetActive(false);
+			spriteItem?.gameObject.SetActive(false);
 			refreshExpLevel();
 			refresh();
 			return this;
@@ -171,8 +173,8 @@ namespace PokemonUnity
 			}
 			else
 			{
-				Monster.LevelingRate growthrate = @battler.pokemon.GrowthRate;
-				int startexp = Monster.Data.Experience.GetStartExperience(growthrate, @battler.pokemon.Level);
+				//Monster.LevelingRate growthrate = @battler.pokemon.GrowthRate;
+				int startexp = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.ExperienceNeeded(battler.Level); //Monster.Data.Experience.GetStartExperience(growthrate, @battler.pokemon.Level);
 				int endexp = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.NextLevel; //Monster.Data.Experience.GetStartExperience(growthrate, @battler.pokemon.Level + 1);
 				if (startexp == endexp)
 				{
@@ -180,10 +182,13 @@ namespace PokemonUnity
 				}
 				else
 				{
-					@explevel = (int)(((@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Total - startexp) * PokeBattle_SceneConstants.EXPGAUGESIZE / (endexp - startexp));
-					sliderExp.maxValue = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Current + (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.PointsNeeded;
-					StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(currenthp));
-					StartCoroutine(AnimateSliderExp((@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Current)); //sliderExp.value = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Current;
+					//@explevel = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Current; //(int)(((@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Total - startexp) * PokeBattle_SceneConstants.EXPGAUGESIZE / (endexp - startexp));
+					//sliderExp.maxValue = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Current + (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.PointsNeeded;
+					@explevel = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Total;
+					sliderExp.minValue = startexp;
+					sliderExp.maxValue = endexp;
+					StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(@explevel));
+					StartCoroutine(AnimateSliderExp(@explevel)); //sliderExp.value = @explevel;
 				}
 			}
 		}
@@ -318,10 +323,17 @@ namespace PokemonUnity
 			//		imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalGroudonBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
 			//	}
 			//}
-			if (@battler.owned && (@battler.Index & 1) == 1)
+			if ((@battler.Index & 1) == 0) //if pokemon is on player side
 			{
-				//imagepos.Add(new TextPosition("Graphics/Pictures/battleBoxOwned.png", @spritebaseX + 8, 36, 0, 0, -1, -1));
-				//gameObject.transform.Find("Caught").gameObject.SetActive(true);
+				spriteItem?.gameObject.SetActive(battler.Item != Inventory.Items.NONE);
+			}
+			else //if pokemon is on opponent side
+			{
+				if (@battler.owned) 
+				{
+					//imagepos.Add(new TextPosition("Graphics/Pictures/battleBoxOwned.png", @spritebaseX + 8, 36, 0, 0, -1, -1));
+					spriteCaught?.gameObject.SetActive(true); //gameObject.transform.Find("Caught").gameObject.SetActive(true);
+				}
 			}
 			//pbDrawImagePositions(this.bitmap,imagepos);
 			//switch (@battler.Status)
@@ -346,12 +358,12 @@ namespace PokemonUnity
 				spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>(string.Format("PCSprites/status{0}" + @battler.Status.ToString()));
 			}
 			else spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>("null");
-			int hpGaugeSize = (int)PokeBattle_SceneConstants.HPGAUGESIZE;
-			int hpgauge = @battler.TotalHP == 0 ? 0 : (this.HP * hpGaugeSize / @battler.TotalHP);
-			if (hpgauge == 0 && this.HP > 0) hpgauge = 2;
-			int hpzone = 0;
-			if (this.HP <= Math.Floor(@battler.TotalHP / 2f)) hpzone = 1;
-			if (this.HP <= Math.Floor(@battler.TotalHP / 4f)) hpzone = 2;
+			//int hpGaugeSize = (int)PokeBattle_SceneConstants.HPGAUGESIZE;
+			//int hpgauge = @battler.TotalHP == 0 ? 0 : (this.HP * hpGaugeSize / @battler.TotalHP);
+			//if (hpgauge == 0 && this.HP > 0) hpgauge = 2;
+			//int hpzone = 0;
+			//if (this.HP <= Math.Floor(@battler.TotalHP / 2f)) hpzone = 1;
+			//if (this.HP <= Math.Floor(@battler.TotalHP / 4f)) hpzone = 2;
 			IColor[] hpcolors = new IColor[] {
 				PokeBattle_SceneConstants.HPCOLORGREENDARK,
 				PokeBattle_SceneConstants.HPCOLORGREEN,
@@ -361,8 +373,8 @@ namespace PokemonUnity
 				PokeBattle_SceneConstants.HPCOLORRED
 			};
 			//  fill with black (shows what the HP used to be)
-			float hpGaugeX = PokeBattle_SceneConstants.HPGAUGE_X;
-			float hpGaugeY = PokeBattle_SceneConstants.HPGAUGE_Y;
+			//float hpGaugeX = PokeBattle_SceneConstants.HPGAUGE_X;
+			//float hpGaugeY = PokeBattle_SceneConstants.HPGAUGE_Y;
 			if (@animatingHP && this.HP > 0)
 			{
 				//value of hp bar is "@starthp * hpGaugeSize / @battler.TotalHP"; current hp divided by total multiply by length of sprite bg
@@ -383,6 +395,8 @@ namespace PokemonUnity
 				//   PokeBattle_SceneConstants.EXPCOLORSHADOW);
 				//this.bitmap.fill_rect(@spritebaseX + expGaugeX, expGaugeY + 2, this.Exp, 2,
 				//   PokeBattle_SceneConstants.EXPCOLORBASE); //Same X value, just 2 Y values lower
+				sliderExp.minValue = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.ExperienceNeeded(battler.Level);
+				sliderExp.maxValue = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.NextLevel;
 				StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(this.Exp));
 				StartCoroutine(AnimateSliderExp(this.Exp)); //sliderExp.value = this.Exp;
 			}
@@ -397,12 +411,14 @@ namespace PokemonUnity
 			{
 				if (@currenthp < @endhp)
 				{
-					@currenthp +=(int)Math.Max(1, Math.Floor(@battler.TotalHP / PokeBattle_SceneConstants.HPGAUGESIZE));
+					//@currenthp +=(int)Math.Max(1, Math.Floor(@battler.TotalHP / PokeBattle_SceneConstants.HPGAUGESIZE));
+					@currenthp +=(int)Math.Max(1, Math.Floor(@battler.TotalHP / sliderHP.maxValue));
 					if (@currenthp > @endhp) @currenthp = @endhp;
 				}
 				else if (@currenthp > @endhp)
 				{
-					@currenthp -=(int)Math.Max(1, Math.Floor(@battler.TotalHP / PokeBattle_SceneConstants.HPGAUGESIZE));
+					//@currenthp -=(int)Math.Max(1, Math.Floor(@battler.TotalHP / PokeBattle_SceneConstants.HPGAUGESIZE));
+					@currenthp -=(int)Math.Max(1, Math.Floor(@battler.TotalHP / sliderHP.maxValue));
 					if (@currenthp < @endhp) @currenthp = @endhp;
 				}
 				if (@currenthp == @endhp) @animatingHP = false;
@@ -417,8 +433,10 @@ namespace PokemonUnity
 				}
 				else if (@currentexp < @endexp)			// Gaining Exp
 				{
-					if (@endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE ||
-					   @endexp - @currentexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
+					//if (@endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE ||
+					//   @endexp - @currentexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
+					if (@endexp >= sliderExp.maxValue ||
+					   @endexp - @currentexp >= sliderExp.maxValue / 4)
 					{
 						@currentexp += 4;
 					}
@@ -431,7 +449,8 @@ namespace PokemonUnity
 				else if (@currentexp > @endexp)			// Losing Exp
 				{
 					if (@endexp == 0 ||
-					   @currentexp - @endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
+					   //@currentexp - @endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
+					   @currentexp - @endexp >= sliderExp.maxValue / 4)
 					{
 						@currentexp -= 4;
 					}
@@ -444,7 +463,8 @@ namespace PokemonUnity
 				refresh();
 				if (@currentexp == @endexp)
 				{
-					if (@currentexp == PokeBattle_SceneConstants.EXPGAUGESIZE)
+					//if (@currentexp == PokeBattle_SceneConstants.EXPGAUGESIZE)
+					if (@currentexp == sliderExp.maxValue)
 					{
 						if (@expflash == 0)
 						{
