@@ -154,9 +154,9 @@ namespace PokemonEssentials.Interface
 		//      Otherwise, the text is left aligned.
 		//  4 - Base color
 		//  5 - Shadow color
-		void pbDrawTextPositions(IBitmap bitmap, object[] textpos);
+		void pbDrawTextPositions(IBitmap bitmap, IList<ITextPosition> textpos);
 
-		void pbDrawImagePositions(IBitmap bitmap, object[] textpos);
+		void pbDrawImagePositions(IBitmap bitmap, IList<ITextPosition> textpos);
 
 
 
@@ -332,9 +332,9 @@ namespace PokemonEssentials.Interface
 		//}
 
 		IBitmap this[int index] { get; } //{ @bitmap[index]; }
-		int width(); //{ @bitmap.bitmap.width; }
-		int height(); //{ @bitmap.bitmap.height; }
-		int length(); //{ @bitmap.Length; }
+		int width { get; } //{ @bitmap.bitmap.width; }
+		int height { get; } //{ @bitmap.bitmap.height; }
+		int length { get; } //{ @bitmap.Length; }
 		IEnumerable<IBitmap> each(); //{ @bitmap.each {|item| yield item }; }
 		IBitmap bitmap(); //{ @bitmap.bitmap; }
 		int currentIndex(); //{ @bitmap.currentIndex; }
@@ -342,7 +342,7 @@ namespace PokemonEssentials.Interface
 		int totalFrames(); //{ @bitmap.totalFrames; }
 		bool disposed { get; } //{ @bitmap.disposed(); }
 		void update(); //{ @bitmap.update(); }
-		void dispose(); //{ @bitmap.dispose(); }
+		//void dispose(); //{ @bitmap.dispose(); }
 		IBitmap deanimate(); //{ @bitmap.deanimate; }
 		IAnimatedBitmap copy(); //{ @bitmap.copy; }
 	}
@@ -1065,7 +1065,7 @@ namespace PokemonEssentials.Interface
 
 		ISpriteWindow initialize(IViewport viewport=null);
 
-		void dispose();
+		//void dispose();
 
 		//  void stretch=(value) {
 		//	@stretch=value;
@@ -1394,7 +1394,7 @@ namespace PokemonEssentials.Interface
 
 		void update();
 
-		void dispose();
+		//void dispose();
 	}
 
 	public interface ISpriteWindow_Selectable : ISpriteWindow_Base {
@@ -1492,7 +1492,7 @@ namespace PokemonEssentials.Interface
 
 		IRect drawCursor(int index, IRect rect);
 
-		void dispose();
+		//void dispose();
 
 		// to be implemented by derived classes
 		int itemCount();
@@ -1760,7 +1760,7 @@ namespace PokemonEssentials.Interface
 		//IIconSprite initialize(*args);
 		IIconSprite initialize(float x, float y, IViewport viewport);
 
-		void dispose();
+		//void dispose();
 
 		void update();
 

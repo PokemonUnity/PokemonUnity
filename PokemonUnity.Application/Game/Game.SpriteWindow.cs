@@ -172,12 +172,12 @@ namespace PokemonUnity
             throw new NotImplementedException();
         }
 
-        public void pbDrawTextPositions(IBitmap bitmap, object[] textpos)
+        public void pbDrawTextPositions(IBitmap bitmap, IList<ITextPosition> textpos)
         {
             throw new NotImplementedException();
         }
 
-        public void pbDrawImagePositions(IBitmap bitmap, object[] textpos)
+        public void pbDrawImagePositions(IBitmap bitmap, IList<ITextPosition> textpos)
         {
             throw new NotImplementedException();
         }

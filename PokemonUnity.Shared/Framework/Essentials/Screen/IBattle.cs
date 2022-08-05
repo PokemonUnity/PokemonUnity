@@ -37,7 +37,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		bool disposed { get; }
 
-		void dispose();
+		//void dispose();
 
 		int index { get; set; }
 
@@ -79,7 +79,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		bool disposed { get; }
 
-		void dispose();
+		//void dispose();
 
 		bool setIndex(int value);
 
@@ -133,9 +133,9 @@ namespace PokemonEssentials.Interface.Screen
 
 		void refreshExpLevel();
 
-		int exp { get; }
+		int Exp { get; }
 
-		int hp { get; }
+		int HP { get; }
 
 		void animateHP(int oldhp, int newhp);
 

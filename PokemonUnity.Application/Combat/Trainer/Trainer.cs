@@ -61,6 +61,8 @@ namespace PokemonUnity//.Combat
 			@outfit=0;
 			@pokegear=false;
 			@pokedex=false;
+			//IDictionary<Pokemons, bool> p = (IDictionary<Pokemons, bool>)Kernal.PokemonData.Keys.ToDictionary<Pokemons, bool>(p0 => false);
+			//	//.Select(p => new KeyValuePair<Pokemons, bool>(p0, false)).ToDictionary<Pokemons, bool>();
 			seen = new Dictionary<Pokemons, bool>();
 			owned = new Dictionary<Pokemons, bool>();
 			clearPokedex();
