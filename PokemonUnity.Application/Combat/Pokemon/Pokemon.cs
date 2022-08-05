@@ -239,7 +239,7 @@ namespace PokemonUnity.Combat
 		{ 
 			get 
 			{ 
-				return (pokemon.IsNotNullOrNone()) ? Game.GameData.Trainer.owned[@pokemon.Species] && !@battle.opponent.IsNotNullOrNone() : false;
+				return (pokemon.IsNotNullOrNone()) ? Game.GameData.Trainer.owned.ContainsKey(@pokemon.Species) && Game.GameData.Trainer.owned[@pokemon.Species] && !@battle.opponent.IsNotNullOrNone() : false;
 				//return Game.GameData.Player.Pokedex[(byte)Species, 1] == 1; 
 			} 
 		}

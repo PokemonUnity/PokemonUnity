@@ -332,9 +332,9 @@ namespace PokemonEssentials.Interface
 		//}
 
 		IBitmap this[int index] { get; } //{ @bitmap[index]; }
-		int width(); //{ @bitmap.bitmap.width; }
-		int height(); //{ @bitmap.bitmap.height; }
-		int length(); //{ @bitmap.Length; }
+		int width { get; } //{ @bitmap.bitmap.width; }
+		int height { get; } //{ @bitmap.bitmap.height; }
+		int length { get; } //{ @bitmap.Length; }
 		IEnumerable<IBitmap> each(); //{ @bitmap.each {|item| yield item }; }
 		IBitmap bitmap(); //{ @bitmap.bitmap; }
 		int currentIndex(); //{ @bitmap.currentIndex; }

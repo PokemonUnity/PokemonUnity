@@ -79,8 +79,8 @@ namespace PokemonUnity
 			@explevel = 0;
 			@selected = 0;
 			@frame = 0;
-			@showhp = false;
-			@showexp = false;
+			@showhp = true; //false;
+			@showexp = true; //false;
 			@appearing = false;
 			@animatingHP = false;
 			@starthp = 0;
@@ -145,9 +145,9 @@ namespace PokemonUnity
 			//@statuses = Resources.Load<UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses")); //if image is localized, grab the current region
 			@spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses"));
 			//@contents = new BitmapWrapper(@databox.width, @databox.height);
-			//this.bitmap = @contents;*/
+			//this.bitmap = @contents;
 			this.visible = false;
-			this.z = 50;
+			this.z = 50;*/
 			refreshExpLevel();
 			refresh();
 			return this;
@@ -251,7 +251,7 @@ namespace PokemonUnity
 			//	new TextPosition (pokename,@spritebaseX+8,6,false,base_,shadow)
 			//};
 			Name.text = pokename;
-			//Set gender toggle on/off; chage color based on gender
+			//Set gender toggle on/off; change color based on gender
 			//float genderX = this.bitmap.text_size(pokename).width;
 			//genderX += @spritebaseX + 14;
 			//switch (@battler.displayGender)
@@ -289,8 +289,10 @@ namespace PokemonUnity
 				//string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
 				//textpos.Add(new TextPosition(hpstring, @spritebaseX + 188, 48, true, base_, shadow));
 				// Text changes automatically when slider value is set...
-				StopCoroutine("AnimateSliderHP"); //(AnimateSliderHP(currenthp));
-				StartCoroutine(AnimateSliderHP(currenthp)); //sliderHP.value = currenthp;
+				GameDebug.Log(string.Format("Pokemon HP: `{0}/{1}`", this.HP, @battler.TotalHP));
+				sliderHP.maxValue = @battler.TotalHP;
+				maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
+				currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
 			}
 			//pbDrawTextPositions(this.bitmap,textpos);
 			//IList<ITextPosition> imagepos = new List<ITextPosition>();
@@ -319,7 +321,7 @@ namespace PokemonUnity
 			if (@battler.owned && (@battler.Index & 1) == 1)
 			{
 				//imagepos.Add(new TextPosition("Graphics/Pictures/battleBoxOwned.png", @spritebaseX + 8, 36, 0, 0, -1, -1));
-				gameObject.transform.Find("Caught").gameObject.SetActive(true);
+				//gameObject.transform.Find("Caught").gameObject.SetActive(true);
 			}
 			//pbDrawImagePositions(this.bitmap,imagepos);
 			//switch (@battler.Status)
@@ -370,7 +372,7 @@ namespace PokemonUnity
 			//  fill with HP color
 			//this.bitmap.fill_rect(@spritebaseX + hpGaugeX, hpGaugeY, hpgauge, 2, hpcolors[hpzone * 2]);
 			//this.bitmap.fill_rect(@spritebaseX + hpGaugeX, hpGaugeY + 2, hpgauge, 4, hpcolors[hpzone * 2 + 1]);
-			StopCoroutine("AnimateSliderHP"); //(AnimateSliderHP(currenthp));
+			StopCoroutine("AnimateSliderHP"); //(AnimateSliderHP(this.HP));
 			StartCoroutine(AnimateSliderHP(this.HP)); //sliderHP.value = this.HP;
 			if (@showexp)
 			{
@@ -381,7 +383,7 @@ namespace PokemonUnity
 				//   PokeBattle_SceneConstants.EXPCOLORSHADOW);
 				//this.bitmap.fill_rect(@spritebaseX + expGaugeX, expGaugeY + 2, this.Exp, 2,
 				//   PokeBattle_SceneConstants.EXPCOLORBASE); //Same X value, just 2 Y values lower
-				StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(currenthp));
+				StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(this.Exp));
 				StartCoroutine(AnimateSliderExp(this.Exp)); //sliderExp.value = this.Exp;
 			}
 		}
@@ -513,7 +515,8 @@ namespace PokemonUnity
 			}
 			else
 				spriteFillHP.color = (SeriColor)PokeBattle_SceneConstants.HPCOLORGREEN;
-			//each time the silder's value is changed, write to text displaying the hp
+			//each time the slider's value is changed, write to text displaying the hp
+			maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
 			currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
 		}
 
