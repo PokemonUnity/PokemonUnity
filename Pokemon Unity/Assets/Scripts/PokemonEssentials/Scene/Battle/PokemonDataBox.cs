@@ -37,21 +37,22 @@ namespace PokemonUnity
 		/// Reference to the UI's experience bar.
 		/// </summary>
 		public UnityEngine.UI.Slider sliderExp;
-		public UnityEngine.UI.Image spriteItem, spriteStatus, spriteCaught, spriteFillHP;
+		public UnityEngine.UI.Image spriteItem, spriteStatus, spriteCaught, spriteFillHP, spriteFillExp;
 		public UnityEngine.UI.Text currentHP, maxHP, Name, level, gender;
+		//private UnityEngine.Color colorFillExp;
 		//private UnityEngine.UI.Image panelbg;
 		//private UnityEngine.Sprite databox; //AnimatedBitmap
 		//private UnityEngine.Sprite statuses;
+		public int explevel;
+		public int starthp;
+		public int currenthp;
+		public int currentexp;
+		public int endhp;
+		public int endexp;
+		public int expflash;
+		public bool showexp;
+		public bool showhp;
 		private int frame;
-		private int explevel;
-		private int starthp;
-		private int currenthp;
-		private int currentexp;
-		private int endhp;
-		private int endexp;
-		private int expflash;
-		private bool showexp;
-		private bool showhp;
 		private float spritebaseX;
 		//private float spriteX;
 		//private float spriteY;
@@ -60,6 +61,7 @@ namespace PokemonUnity
 		{
 			panelbg = GetComponent<UnityEngine.UI.Image>();
 
+			//colorFillExp = spriteFillExp.color;
 			sliderHP.minValue = sliderExp.minValue = 0;
 			sliderHP.wholeNumbers = sliderExp.wholeNumbers = true;
 			//Adds a listener to the main slider and invokes a method when the value changes.
@@ -469,7 +471,8 @@ namespace PokemonUnity
 						if (@expflash == 0)
 						{
 							//(AudioHandler as IGameAudioPlay).pbSEPlay("expfull");
-							//this.flash(new Color(64, 200, 248), 8);
+							this.flash(spriteFillExp, new SeriColor(64, 200, 248), 8); //this.flash(new SeriColor(64, 200, 248), 8);
+							//spriteFillExp.color = new Color(64, 200, 248);
 							@expflash = 8;
 						}
 						else
@@ -521,7 +524,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Invoked when the value of the slider changes.
 		/// </summary>
-		public void ValueChangeCheck()
+		private void ValueChangeCheck()
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//if (sliderHP.value <= (sliderHP.maxValue / 4)) { Fill.color = hpzone2; }

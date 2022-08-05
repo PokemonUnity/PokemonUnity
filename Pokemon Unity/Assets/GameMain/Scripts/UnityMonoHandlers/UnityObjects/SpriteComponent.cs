@@ -291,6 +291,18 @@ namespace PokemonUnity
 
 		}
 
+		/// <summary>
+		/// Begins flashing the sprite. duration specifies the number of frames the flash will last.
+		/// If color is set to nil, the sprite will disappear while flashing.
+		/// </summary>
+		/// <param name="sprite"></param>
+		/// <param name="color"></param>
+		/// <param name="duration"></param>
+		public virtual void flash(UnityEngine.UI.Image sprite, IColor color, int duration)
+		{
+
+		}
+
 		public IRPGSprite initialize(IViewport viewport = null)
 		{
 			return this;
