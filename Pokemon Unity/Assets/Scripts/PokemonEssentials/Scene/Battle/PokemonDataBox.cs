@@ -153,14 +153,14 @@ namespace PokemonUnity
 			return this;
 		}
 
-		//public void Dispose()
-		//{
-		//	GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-		//	@statuses.dispose();
-		//	@databox.dispose();
-		//	@contents.dispose();
-		//	base.Dispose();
-		//}
+		public override void Dispose()
+		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//@statuses.Dispose();
+			//@databox.Dispose();
+			//@contents.Dispose();
+			base.Dispose();
+		}
 				
 		public void refreshExpLevel()
 		{
