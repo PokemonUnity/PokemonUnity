@@ -15,7 +15,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	{
 		void pbStorePokemon(IPokemon pokemon);
 
-		void pbThrowPokeBall(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false);
+		void pbThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false);
 	}
 
 	/// <summary>
@@ -282,7 +282,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		ITrainer pbPartyGetOwner(int battlerIndex, int partyIndex);
 
-		void pbAddToPlayerParty(IBattler pokemon);
+		void pbAddToPlayerParty(IPokemon pokemon);
 
 		void pbRemoveFromParty(int battlerIndex, int partyIndex);
 		#endregion
@@ -325,7 +325,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		void pbSwitch(bool favorDraws= false);
 
-		void pbSendOut(int index, IBattler pokemon);
+		void pbSendOut(int index, IPokemon pokemon);
 
 		void pbReplace(int index, int newpoke, bool batonpass = false);
 

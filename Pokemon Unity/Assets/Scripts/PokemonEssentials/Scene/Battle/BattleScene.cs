@@ -3301,6 +3301,13 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		throw new System.NotImplementedException();
 	}
 
+	bool IHasDisplayMessage.pbDisplayConfirm(string v)
+	{
+		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+		return pbDisplayConfirmMessage(v);
+	}
+
 
 	private static void GameDebug_OnLog(object sender, OnDebugEventArgs e)
 	{
