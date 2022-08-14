@@ -9,7 +9,7 @@ namespace PokemonUnity.Networking.Packets
     {
         public OutgoingPacketType Type;
         public IOutPacket PacketContainer;
-        public System.DateTime Time = System.DateTime.Now;
+        public System.DateTime Time = System.DateTime.UtcNow;
 
         #region Constructors
 

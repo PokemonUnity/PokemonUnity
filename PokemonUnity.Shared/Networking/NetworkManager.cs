@@ -102,7 +102,7 @@ namespace PokemonUnity.Networking
 							IAuthenticatePacket token = (IAuthenticatePacket)collectedPacket.PacketContainer;
 							switch (token.Authenticated)
 							{
-								case IAuthenticatePacket.AuthOptions.SUCCES:
+								case IAuthenticatePacket.AuthOptions.SUCCESS:
 									isAuth = true;
 									authToken = token.AuthenticationKey;
 									EmptyOutgoingStack();
@@ -136,7 +136,7 @@ namespace PokemonUnity.Networking
 						}
 						else if(collectedPacket.Type == IncomingPacketType.BATTLE)
 						{
-							//Pass data through to OnlineBattleManager
+							//Pass data through to BattleManager
 						}
 					}
 				}
