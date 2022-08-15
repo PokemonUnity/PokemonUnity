@@ -869,14 +869,6 @@
       <Project>{689E422C-B77F-5B31-E119-AD21E63C6EE7}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityGameFramework.Runtime.csproj">
-      <Project>{F955B8A7-3B15-FCAA-76F3-928611529034}</Project>
-      <Name>UnityGameFramework.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityGameFramework.Editor.csproj">
-      <Project>{6D00EDE9-E56F-6E70-AF3B-7DA5564A42AC}</Project>
-      <Name>UnityGameFramework.Editor</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
@@ -1011,7 +1003,6 @@
     <Compile Include="Assets\Scripts\Transition\DefaultTransition.cs" />
     <Compile Include="Assets\Scripts\WindowLight.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
