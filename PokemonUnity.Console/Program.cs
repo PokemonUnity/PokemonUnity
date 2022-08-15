@@ -18,6 +18,9 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
+//using Newtonsoft.Json.Linq;
+//using SignalR.Client._20.Hubs;
+using System.Diagnostics;
 
 namespace PokemonUnity.ConsoleApp
 {
@@ -28,6 +31,36 @@ namespace PokemonUnity.ConsoleApp
 			Game.con = (System.Data.IDbConnection)new System.Data.SQLite.SQLiteConnection(db); 
 			Game.ResetSqlConnection(db); 
 		}
+		
+		/*public static void BeginOnlineBattle(string[] args)
+		{
+			#region Netplay Logic
+			string _sessionCode = args.Length > 0 ? args[0] : "4575";
+			string _url = args.Length > 1 ? args[1] : "http://localhost:62190/";
+
+			HubConnection _conn = new HubConnection(_url);
+			IHubProxy _proxy = _conn.CreateProxy("digitalClass");
+
+			_proxy.Subscribe("invokeCommand").Data += data => {
+				if (data == null || data.Length == 0)
+					return;
+
+				JToken _first = data[0] as JToken;
+
+				if (_first["command"].ToString() == "PauseActivity")
+					Console.WriteLine("Pause Game");
+
+				if (_first["command"].ToString() == "ResumeActivity")
+					Console.WriteLine("Resume Game");
+
+				if (_first["command"].ToString() == "ClosePresentation")
+					Console.WriteLine("Close Game");
+			};
+
+			_conn.Start();
+			_proxy.Invoke("JoinFromGame", _sessionCode);
+			#endregion
+		}*/
 
 		static void Main(string[] args)
 		{
@@ -48,7 +81,6 @@ namespace PokemonUnity.ConsoleApp
 
 			//IPokeBattle_DebugSceneNoGraphics pokeBattle = new PokeBattleScene();
 			//pokeBattle.initialize();
-
 
 			IPokemon[] p1 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.ABRA), new PokemonUnity.Monster.Pokemon(Pokemons.EEVEE) };
 			IPokemon[] p2 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.MONFERNO) }; //, new PokemonUnity.Monster.Pokemon(Pokemons.SEEDOT) };
