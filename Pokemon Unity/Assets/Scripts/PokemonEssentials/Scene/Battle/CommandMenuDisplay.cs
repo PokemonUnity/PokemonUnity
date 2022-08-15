@@ -19,12 +19,11 @@ namespace PokemonUnity
 	//[RequireComponent(typeof())]
 	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay
 	{
-		//public string title;
 		public bool disposedValue;
 		public IIconSprite display;
 		public IWindow_CommandPokemon window;
 		public IWindow_UnformattedTextPokemon msgbox;
-		public ICommandMenuButtons buttons;
+		public CommandMenuButtons buttons;
 		public int mode { get; set; }
 
 		public float x
