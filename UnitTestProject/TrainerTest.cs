@@ -1,8 +1,9 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
 using PokemonUnity.Character;
 using PokemonUnity.Monster;
+using PokemonEssentials.Interface.PokeBattle;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
@@ -36,9 +37,9 @@ namespace Tests
         [TestMethod]
         public void Trainer_Party_GetPokemonCount()
 		{
-			TrainerData trainer = new TrainerData(TrainerTypes.PLAYER);
-			Player player = new Player(trainer);
-			int count = player.Party.GetCount();
+			ITrainer trainer = new Trainer("bill", TrainerTypes.PLAYER);
+			//Player player = new Player(trainer);
+			int count = trainer.party.GetCount();
 			//if (!count.HasValue) Assert.Fail("Party ");
 			//Assert.AreEqual(PokemonUnity.Core.MAXPARTYSIZE, count); //Should return a full party
 			Assert.AreEqual(0, count); //Should return an empty party
@@ -52,12 +53,12 @@ namespace Tests
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = false;
-			TrainerData trainer = new TrainerData(playerName, isMale, tID: trainerID, sID: secretID);
-			Player player = new Player(trainer);
+			ITrainer trainer = new Trainer(playerName, TrainerTypes.PLAYER); //isMale, tID: trainerID, sID: secretID);
+			//Player player = new Player(trainer);
 			//player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
 			PokemonUnity.Monster.Pokemon pkmn = new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER);
 			pkmn.SetCatchInfos(trainer);
-			player.addPokemon(pkmn);
+			//player.addPokemon(pkmn);
 
 			/*SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
 				name,
@@ -82,7 +83,7 @@ namespace Tests
 				new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));*/
 			CollectionAssert.AreNotEqual( //ToDo: Change to AreEqual, and use expected results with more precision...
 				new Pokemons[] { Pokemons.CHARMANDER, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, 
-				new Pokemons[] { player.Party[0].Species, player.Party[1].Species, player.Party[2].Species, player.Party[3].Species, player.Party[4].Species, player.Party[5].Species } 
+				new Pokemons[] { trainer.party[0].Species, trainer.party[1].Species, trainer.party[2].Species, trainer.party[3].Species, trainer.party[4].Species, trainer.party[5].Species } 
 			);
 		}
 

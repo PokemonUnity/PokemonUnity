@@ -8,7 +8,7 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonUnity
 {
-	public partial class SafariState : PokemonEssentials.Interface.Battle.ISafariState {
+	public partial class SafariState : PokemonEssentials.Interface.Field.ISafariState {
 		public int ballcount				                { get; set; }
 		public int steps					                { get; set; }
 		public Combat.BattleResults decision				{ get; set; }
@@ -137,7 +137,7 @@ namespace PokemonUnity
 		public Combat.BattleResults pbSafariBattle(Pokemons species,int level) {
 			IPokemon genwildpoke=(this as IGameField).pbGenerateWildPokemon(species,level);
 			IPokeBattle_Scene scene=(this as IGameField).pbNewBattleScene();
-			ISafariZone battle=new Combat.PokeBattle_SafariZone(scene,Trainer,null,new IPokemon[] { genwildpoke });
+			ISafariZone_Scene battle=new Combat.PokeBattle_SafariZone(scene,Trainer,null,new IPokemon[] { genwildpoke });
 			battle.ballCount=pbSafariState.ballcount;
 			if (this is IGameField f0) battle.environment=f0.pbGetEnvironment();
 			Combat.BattleResults decision=Combat.BattleResults.ABORTED; //0

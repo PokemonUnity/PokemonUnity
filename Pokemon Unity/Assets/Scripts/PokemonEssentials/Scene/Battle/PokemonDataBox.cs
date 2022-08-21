@@ -641,7 +641,7 @@ namespace PokemonUnity
 			IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
 			IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
 			textpos.Add(new TextPosition(Game._INTL("Safari Balls"), 30, 8, false, base_, shadow));
-			textpos.Add(new TextPosition(Game._INTL("Left: {1}", (@battle as ISafariZone).ballCount), 30, 38, false, base_, shadow));
+			textpos.Add(new TextPosition(Game._INTL("Left: {1}", (@battle as ISafariZone_Scene).ballCount), 30, 38, false, base_, shadow));
 			//pbDrawTextPositions(this.bitmap, textpos);
 		}
 				

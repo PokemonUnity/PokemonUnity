@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using PokemonUnity;
 using PokemonUnity.Localization;
 using PokemonUnity.Attack.Data;
@@ -11,6 +12,7 @@ using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 using PokemonUnity.Utility;
+using PokemonUnity.Client.Hubs;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.Item;
@@ -19,8 +21,6 @@ using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using Newtonsoft.Json.Linq;
-//using SignalR.Client._20.Hubs;
-using System.Diagnostics;
 
 namespace PokemonUnity.ConsoleApp
 {

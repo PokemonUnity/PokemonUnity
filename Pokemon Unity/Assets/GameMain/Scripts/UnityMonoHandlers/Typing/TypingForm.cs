@@ -15,8 +15,7 @@ namespace PokemonUnity
 {
 	public class TypingForm : IPokemonEntryScene, IPokemonEntryScene2
 	{
-		public int Id;
-		int IScene.Id { get { return Id;} }
+		public int Id { get { return 0;} }
 		public string helptext;
 		public int Minlength;
 		public int Maxlength;
@@ -109,7 +108,6 @@ namespace PokemonUnity
 		void Update()
 		{
 		}
-		#endregion
 
 		//public void OnKeysButtonClick()
 		//{
@@ -139,6 +137,7 @@ namespace PokemonUnity
 		//		m_OnClickBack(m_UserData);
 		//	}
 		//}
+		#endregion
 
 		#region MyRegion
 		private bool CanBackspace() { if (typeSpaceIndex == 0) return false; else return true; }
@@ -553,39 +552,39 @@ namespace PokemonUnity
 			} else if (Input.repeat(Input.UP)) {
 			  if (@cursorpos<0) {		// Controls
 				switch (@cursorpos) {
-				case MODE1:
-				  @cursorpos=ROWS*(COLUMNS-1);
-				  break;
-				case MODE2:
-				  @cursorpos=ROWS*(COLUMNS-1)+2;
-				  break;
-				case MODE3:
-				  @cursorpos=ROWS*(COLUMNS-1)+4;
-				  break;
-				case BACK:
-				  @cursorpos=ROWS*(COLUMNS-1)+8;
-				  break;
-				case OK:
-				  @cursorpos=ROWS*(COLUMNS-1)+11;
-				  break;
+					case MODE1:
+					  @cursorpos=ROWS*(COLUMNS-1);
+					  break;
+					case MODE2:
+					  @cursorpos=ROWS*(COLUMNS-1)+2;
+					  break;
+					case MODE3:
+					  @cursorpos=ROWS*(COLUMNS-1)+4;
+					  break;
+					case BACK:
+					  @cursorpos=ROWS*(COLUMNS-1)+8;
+					  break;
+					case OK:
+					  @cursorpos=ROWS*(COLUMNS-1)+11;
+					  break;
 				}
 			  } else if (@cursorpos<ROWS) {		// Top row of letters
 				switch (@cursorpos) {
-				case 0: case 1:
-				  @cursorpos=MODE1;
-				  break;
-				case 2: case 3:
-				  @cursorpos=MODE2;
-				  break;
-				case 4: case 5: case 6:
-				  @cursorpos=MODE3;
-				  break;
-				case 7: case 8: case 9: case 10:
-				  @cursorpos=BACK;
-				  break;
-				case 11: case 12:
-				  @cursorpos=OK;
-				  break;
+					case 0: case 1:
+					  @cursorpos=MODE1;
+					  break;
+					case 2: case 3:
+					  @cursorpos=MODE2;
+					  break;
+					case 4: case 5: case 6:
+					  @cursorpos=MODE3;
+					  break;
+					case 7: case 8: case 9: case 10:
+					  @cursorpos=BACK;
+					  break;
+					case 11: case 12:
+					  @cursorpos=OK;
+					  break;
 				}
 			  } else {
 				cursordiv=wrapmod((cursordiv-1),COLUMNS);
@@ -594,39 +593,39 @@ namespace PokemonUnity
 			} else if (Input.repeat(Input.DOWN)) {
 			  if (@cursorpos<0) {		// Controls
 				switch (@cursorpos) {
-				case MODE1:
-				  @cursorpos=0;
-				  break;
-				case MODE2:
-				  @cursorpos=2;
-				  break;
-				case MODE3:
-				  @cursorpos=4;
-				  break;
-				case BACK:
-				  @cursorpos=8;
-				  break;
-				case OK:
-				  @cursorpos=11;
-				  break;
+					case MODE1:
+					  @cursorpos=0;
+					  break;
+					case MODE2:
+					  @cursorpos=2;
+					  break;
+					case MODE3:
+					  @cursorpos=4;
+					  break;
+					case BACK:
+					  @cursorpos=8;
+					  break;
+					case OK:
+					  @cursorpos=11;
+					  break;
 				}
 			  } else if (@cursorpos>=ROWS*(COLUMNS-1)) {		// Bottom row of letters
 				switch (@cursorpos) {
-				case ROWS*(COLUMNS-1): case ROWS*(COLUMNS-1)+1:
-				  @cursorpos=MODE1;
-				  break;
-				case ROWS*(COLUMNS-1)+2: case ROWS*(COLUMNS-1)+3:
-				  @cursorpos=MODE2;
-				  break;
-				case ROWS*(COLUMNS-1)+4: case ROWS*(COLUMNS-1)+5: case ROWS*(COLUMNS-1)+6:
-				  @cursorpos=MODE3;
-				  break;
-				case ROWS*(COLUMNS-1)+7: case ROWS*(COLUMNS-1)+8: case ROWS*(COLUMNS-1)+9: case ROWS*(COLUMNS-1)+10:
-				  @cursorpos=BACK;
-				  break;
-				case ROWS*(COLUMNS-1)+11: case ROWS*(COLUMNS-1)+12:
-				  @cursorpos=OK;
-				  break;
+					case ROWS*(COLUMNS-1): case ROWS*(COLUMNS-1)+1:
+					  @cursorpos=MODE1;
+					  break;
+					case ROWS*(COLUMNS-1)+2: case ROWS*(COLUMNS-1)+3:
+					  @cursorpos=MODE2;
+					  break;
+					case ROWS*(COLUMNS-1)+4: case ROWS*(COLUMNS-1)+5: case ROWS*(COLUMNS-1)+6:
+					  @cursorpos=MODE3;
+					  break;
+					case ROWS*(COLUMNS-1)+7: case ROWS*(COLUMNS-1)+8: case ROWS*(COLUMNS-1)+9: case ROWS*(COLUMNS-1)+10:
+					  @cursorpos=BACK;
+					  break;
+					case ROWS*(COLUMNS-1)+11: case ROWS*(COLUMNS-1)+12:
+					  @cursorpos=OK;
+					  break;
 				}
 			  } else {
 				cursordiv=wrapmod((cursordiv+1),COLUMNS);
@@ -692,63 +691,63 @@ namespace PokemonUnity
 			//@sprites["helpwindow"].shadowColor=new Color(168,184,184);
 			//addBackgroundPlane(@sprites,"background","naming2bg",@viewport);
 			//switch (subject) {
-			//case 1:   // Player
-			//  if (Game.GameData.Global) {
-			//    meta=pbGetMetadata(0,MetadataPlayerA+Game.GameData.Global.playerID);
-			//    if (meta != null) {
-			//      @sprites["shadow"]=new IconSprite(0,0,@viewport);
-			//      @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
-			//      @sprites["shadow"].x=33*2;
-			//      @sprites["shadow"].y=32*2;
-			//      string filename=pbGetPlayerCharset(meta,1);
-			//      @sprites["subject"]=new TrainerWalkingCharSprite(filename,@viewport);
-			//      int charwidth=@sprites["subject"].bitmap.width;
-			//      int charheight=@sprites["subject"].bitmap.height;
-			//      @sprites["subject"].x = 44*2 - charwidth/8;
-			//      @sprites["subject"].y = 38*2 - charheight/4;
-			//    }
-			//  }
-			//  break;
-			//case 2:   // Pokémon
-			//  if (pokemon) {
-			//    @sprites["shadow"]=new IconSprite(0,0,@viewport);
-			//    @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
-			//    @sprites["shadow"].x=33*2;
-			//    @sprites["shadow"].y=32*2;
-			//    @sprites["subject"]=new PokemonIconSprite(pokemon,@viewport);
-			//    @sprites["subject"].x=56;
-			//    @sprites["subject"].y=14;
-			//    @sprites["gender"]=new BitmapSprite(32,32,@viewport);
-			//    @sprites["gender"].x=430;
-			//    @sprites["gender"].y=54;
-			//    @sprites["gender"].bitmap.clear;
-			//    pbSetSystemFont(@sprites["gender"].bitmap);
-			//    textpos=[];
-			//    if (pokemon.isMale?) {
-			//      textpos.Add([_INTL("♂"),0,0,false,new Color(0,128,248),new Color(168,184,184)]);
-			//    } else if (pokemon.isFemale?) {
-			//      textpos.Add([_INTL("♀"),0,0,false,new Color(248,24,24),new Color(168,184,184)]);
-			//    }
-			//    pbDrawTextPositions(@sprites["gender"].bitmap,textpos);
-			//  }
-			//  break;
-			//case 3:   // Storage box
-			//  @sprites["subject"]=new IconSprite(0,0,@viewport);
-			//  @sprites["subject"].setBitmap("Graphics/Pictures/namingStorage");
-			//  @sprites["subject"].x=68;
-			//  @sprites["subject"].y=32;
-			//  break;
-			//case 4:   // NPC
-			//  @sprites["shadow"]=new IconSprite(0,0,@viewport);
-			//  @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
-			//  @sprites["shadow"].x=33*2;
-			//  @sprites["shadow"].y=32*2;
-			//  @sprites["subject"]=new TrainerWalkingCharSprite(pokemon.ToString(),@viewport);
-			//  charwidth=@sprites["subject"].bitmap.width;
-			//  charheight=@sprites["subject"].bitmap.height;
-			//  @sprites["subject"].x = 44*2 - charwidth/8;
-			//  @sprites["subject"].y = 38*2 - charheight/4;
-			//  break;
+			//	case 1:   // Player
+			//	  if (Game.GameData.Global != null) {
+			//	    meta=pbGetMetadata(0,MetadataPlayerA+Game.GameData.Global.playerID);
+			//	    if (meta != null) {
+			//	      @sprites["shadow"]=new IconSprite(0,0,@viewport);
+			//	      @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
+			//	      @sprites["shadow"].x=33*2;
+			//	      @sprites["shadow"].y=32*2;
+			//	      string filename=pbGetPlayerCharset(meta,1);
+			//	      @sprites["subject"]=new TrainerWalkingCharSprite(filename,@viewport);
+			//	      int charwidth=@sprites["subject"].bitmap.width;
+			//	      int charheight=@sprites["subject"].bitmap.height;
+			//	      @sprites["subject"].x = 44*2 - charwidth/8;
+			//	      @sprites["subject"].y = 38*2 - charheight/4;
+			//	    }
+			//	  }
+			//	  break;
+			//	case 2:   // Pokémon
+			//	  if (pokemon.IsNotNullOrNone()) {
+			//	    @sprites["shadow"]=new IconSprite(0,0,@viewport);
+			//	    @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
+			//	    @sprites["shadow"].x=33*2;
+			//	    @sprites["shadow"].y=32*2;
+			//	    @sprites["subject"]=new PokemonIconSprite(pokemon,@viewport);
+			//	    @sprites["subject"].x=56;
+			//	    @sprites["subject"].y=14;
+			//	    @sprites["gender"]=new BitmapSprite(32,32,@viewport);
+			//	    @sprites["gender"].x=430;
+			//	    @sprites["gender"].y=54;
+			//	    @sprites["gender"].bitmap.clear;
+			//	    pbSetSystemFont(@sprites["gender"].bitmap);
+			//	    textpos=[];
+			//	    if (pokemon.isMale?) {
+			//	      textpos.Add([_INTL("♂"),0,0,false,new Color(0,128,248),new Color(168,184,184)]);
+			//	    } else if (pokemon.isFemale?) {
+			//	      textpos.Add([_INTL("♀"),0,0,false,new Color(248,24,24),new Color(168,184,184)]);
+			//	    }
+			//	    pbDrawTextPositions(@sprites["gender"].bitmap,textpos);
+			//	  }
+			//	  break;
+			//	case 3:   // Storage box
+			//	  @sprites["subject"]=new IconSprite(0,0,@viewport);
+			//	  @sprites["subject"].setBitmap("Graphics/Pictures/namingStorage");
+			//	  @sprites["subject"].x=68;
+			//	  @sprites["subject"].y=32;
+			//	  break;
+			//	case 4:   // NPC
+			//	  @sprites["shadow"]=new IconSprite(0,0,@viewport);
+			//	  @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
+			//	  @sprites["shadow"].x=33*2;
+			//	  @sprites["shadow"].y=32*2;
+			//	  @sprites["subject"]=new TrainerWalkingCharSprite(pokemon.ToString(),@viewport);
+			//	  charwidth=@sprites["subject"].bitmap.width;
+			//	  charheight=@sprites["subject"].bitmap.height;
+			//	  @sprites["subject"].x = 44*2 - charwidth/8;
+			//	  @sprites["subject"].y = 38*2 - charheight/4;
+			//	  break;
 			//}
 			//pbFadeInAndShow(@sprites);
 		}
@@ -839,100 +838,107 @@ namespace PokemonUnity
 
 		public void pbDisplay(string v)
 		{
-			throw new System.NotImplementedException();
+			//Coroutine for displaying game text on screen, using a prompt window
+		}
+
+		public bool pbDisplayConfirm(string v)
+		{
+			//Coroutine for displaying game text on screen, using a prompt window
+			return true;
 		}
 
 		public partial class NameEntryCursor {
-				public int @cursorPos;
-				public void initialize(IViewport viewport) {
-					//@sprite=new SpriteWrapper(viewport);
-					//@cursortype=0;
-					//@cursor1=new AnimatedBitmap("Graphics/Pictures/NamingCursor1");
-					//@cursor2=new AnimatedBitmap("Graphics/Pictures/NamingCursor2");
-					//@cursor3=new AnimatedBitmap("Graphics/Pictures/NamingCursor3");
-					@cursorPos=0;
-					updateInternal();
-				}
-
-				public void setCursorPos(int value) {
-					@cursorPos=value;
-				}
-
-				public void updateCursorPos() {
-					int value=@cursorPos;
-					//if (value==PokemonEntryScene.MODE1) {		// Upper case
-					//  @sprite.x=48;
-					//  @sprite.y=120;
-					//  @cursortype=1;
-					//} else if (value==PokemonEntryScene.MODE2) {		// Lower case
-					//  @sprite.x=112;
-					//  @sprite.y=120;
-					//  @cursortype=1;
-					//} else if (value==PokemonEntryScene.MODE3) {		// Other symbols
-					//  @sprite.x=176;
-					//  @sprite.y=120;
-					//  @cursortype=1;
-					//} else if (value==PokemonEntryScene.BACK) {		// Back
-					//  @sprite.x=312;
-					//  @sprite.y=120;
-					//  @cursortype=2;
-					//} else if (value==PokemonEntryScene.OK) {		// OK
-					//  @sprite.x=392;
-					//  @sprite.y=120;
-					//  @cursortype=2;
-					//} else if (value>=0) {
-					//  @sprite.x=52+32*(value%PokemonEntryScene.ROWS);
-					//  @sprite.y=180+38*(value/PokemonEntryScene.ROWS);
-					//  @cursortype=0;
-					//}
-				}
-
-				//public bool visible { get {
-				//  return @sprite.visible;
-				//}
-				//set {
-				//  @sprite.visible=value;
-				//} }
-				//
-				//public UnityEngine.Color color { get {
-				//  return @sprite.color;
-				//}
-				//set {
-				//  @sprite.color=value;
-				//} }
-				//		
-				//public bool disposed { get {
-				//  return @sprite.disposed;
-				//} }
-
-				public void updateInternal() {
-					//@cursor1.update();
-					//@cursor2.update();
-					//@cursor3.update();
-					//updateCursorPos();
-					//switch (@cursortype) {
-					//case 0:
-					//  @sprite.bitmap=@cursor1.bitmap;
-					//  break;
-					//case 1:
-					//  @sprite.bitmap=@cursor2.bitmap;
-					//  break;
-					//case 2:
-					//  @sprite.bitmap=@cursor3.bitmap;
-					//  break;
-					//}
-				}
-
-				public void update() {
-					updateInternal();
-				}
-
-				public void dispose() {
-					//@cursor1.dispose();
-					//@cursor2.dispose();
-					//@cursor3.dispose();
-					//@sprite.dispose();
-				}
+			private int cursortype;
+			public int @cursorPos;
+			public void initialize(IViewport viewport) {
+				//@sprite=new SpriteWrapper(viewport);
+				//@cursortype=0;
+				//@cursor1=new AnimatedBitmap("Graphics/Pictures/NamingCursor1");
+				//@cursor2=new AnimatedBitmap("Graphics/Pictures/NamingCursor2");
+				//@cursor3=new AnimatedBitmap("Graphics/Pictures/NamingCursor3");
+				@cursorPos=0;
+				updateInternal();
 			}
+
+			public void setCursorPos(int value) {
+				@cursorPos=value;
+			}
+
+			public void updateCursorPos() {
+				int value=@cursorPos;
+				//if (value==PokemonEntryScene.MODE1) {		// Upper case
+				//  @sprite.x=48;
+				//  @sprite.y=120;
+				//  @cursortype=1;
+				//} else if (value==PokemonEntryScene.MODE2) {		// Lower case
+				//  @sprite.x=112;
+				//  @sprite.y=120;
+				//  @cursortype=1;
+				//} else if (value==PokemonEntryScene.MODE3) {		// Other symbols
+				//  @sprite.x=176;
+				//  @sprite.y=120;
+				//  @cursortype=1;
+				//} else if (value==PokemonEntryScene.BACK) {		// Back
+				//  @sprite.x=312;
+				//  @sprite.y=120;
+				//  @cursortype=2;
+				//} else if (value==PokemonEntryScene.OK) {		// OK
+				//  @sprite.x=392;
+				//  @sprite.y=120;
+				//  @cursortype=2;
+				//} else if (value>=0) {
+				//  @sprite.x=52+32*(value%PokemonEntryScene.ROWS);
+				//  @sprite.y=180+38*(value/PokemonEntryScene.ROWS);
+				//  @cursortype=0;
+				//}
+			}
+
+			//public bool visible { get {
+			//  return @sprite.visible;
+			//}
+			//set {
+			//  @sprite.visible=value;
+			//} }
+			//
+			//public UnityEngine.Color color { get {
+			//  return @sprite.color;
+			//}
+			//set {
+			//  @sprite.color=value;
+			//} }
+			//		
+			//public bool disposed { get {
+			//  return @sprite.disposed;
+			//} }
+
+			public void updateInternal() {
+				//@cursor1.update();
+				//@cursor2.update();
+				//@cursor3.update();
+				//updateCursorPos();
+				//switch (@cursortype) {
+				//	case 0:
+				//		@sprite.bitmap=@cursor1.bitmap;
+				//		break;
+				//	case 1:
+				//		@sprite.bitmap=@cursor2.bitmap;
+				//		break;
+				//	case 2:
+				//		@sprite.bitmap=@cursor3.bitmap;
+				//		break;
+				//}
+			}
+
+			public void update() {
+				updateInternal();
+			}
+
+			public void dispose() {
+				//@cursor1.dispose();
+				//@cursor2.dispose();
+				//@cursor3.dispose();
+				//@sprite.dispose();
+			}
+		}
 	}
 }

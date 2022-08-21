@@ -65,6 +65,10 @@
       <Project>{37dd2ed4-81dc-4647-9652-d914f1a1607d}</Project>
       <Name>PokemonUnity.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PokemonUnity.Client\PokemonUnity.Client.csproj">
+      <Project>{42923e10-1ce8-4500-aafa-476b18f321aa}</Project>
+      <Name>PokemonUnity.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PokemonUnity.Shared\PokemonUnity.Shared.csproj">
       <Project>{c4bd7ac0-1333-4d62-a6cd-881a1806ffad}</Project>
       <Name>PokemonUnity.Shared</Name>

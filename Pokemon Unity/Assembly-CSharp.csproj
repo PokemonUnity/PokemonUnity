@@ -237,6 +237,7 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Game_System.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GameEvents.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GlobalVariables.Refactor.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\OnlineBattleScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\BattleScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuButtons.cs" />
@@ -707,6 +708,9 @@
     </Reference>
     <Reference Include="PokemonUnity.Application">
       <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Application.dll</HintPath>
+    </Reference>
+    <Reference Include="PokemonUnity.Client">
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Client.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Shared">
       <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Shared.dll</HintPath>

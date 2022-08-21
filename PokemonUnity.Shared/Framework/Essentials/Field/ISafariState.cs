@@ -1,7 +1,7 @@
 ﻿using PokemonUnity;
 using PokemonUnity.Combat;
 
-namespace PokemonEssentials.Interface.Battle
+namespace PokemonEssentials.Interface.Field
 {
 	public interface ISafariState 
 	{

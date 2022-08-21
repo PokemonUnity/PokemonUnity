@@ -10,6 +10,7 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 using PokemonUnity.Overworld;
 using PokemonUnity.Utility;
+using PokemonUnity.Client.Hubs;
 using PokemonEssentials;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Battle;
@@ -18,12 +19,22 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
+//using Newtonsoft.Json;
+//using Newtonsoft.Json.Linq;
+//using Newtonsoft.Json.Converters;
+//using Newtonsoft.Json.Serialization;
 //using UnityEngine;
 //using UnityEngine.UI;
 //using UnityEngine.Serialization;
 
-public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
+public class OnlineBattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 {
+	public bool useSignalR = true;
+	public string signalRUrl = "http://localhost:5225/";
+
+	private HubConnection _hubConnection = null;
+	private IHubProxy _battleHubProxy;
+	private Subscription _incomming;
 	#region Variable Property
 	const int BLANK = 0;
 	const int MESSAGEBOX = 1;
@@ -180,9 +191,6 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 
 	public bool inPartyAnimation { get { return @enablePartyAnim && @partyAnimPhase < 3; } }
 
-	/// <summary>
-	/// Scene Id; Match against unity's scene loader management, and use this value as input parameter
-	/// </summary>
 	public int Id { get { return 0; } }
 
 	private void Awake()
@@ -291,9 +299,11 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		Game.LocalizationDictionary = new XmlStringRes(null); //new Debugger());
 		Game.LocalizationDictionary.Initialize(englishLocalization, (int)Languages.English);
 
+		if (useSignalR)
+			StartSignalR();
+
 		//IPokeBattle_DebugSceneNoGraphics pokeBattle = new PokeBattleScene();
 		(this as IPokeBattle_Scene).initialize(); //pokeBattle.initialize();
-
 
 		IPokemon[] p1 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.ABRA), new PokemonUnity.Monster.Pokemon(Pokemons.EEVEE) };
 		IPokemon[] p2 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.MONFERNO) }; //, new PokemonUnity.Monster.Pokemon(Pokemons.SEEDOT) };
@@ -330,6 +340,66 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		battle.weather = PokemonUnity.Combat.Weather.SUNNYDAY;
 
 		battle.pbStartBattle(true);
+	}
+
+	void StartSignalR()
+	{
+		if (_hubConnection == null)
+		{
+			_hubConnection = new HubConnection(signalRUrl);
+
+			_battleHubProxy = _hubConnection.CreateProxy("PokemonUnityHub");
+			//_incomming = _battleHubProxy.Subscribe("broadcastMessage");
+			_incomming = _battleHubProxy.Subscribe("serverMessage");
+			_incomming.Data += data =>
+			{
+				if (data.Length > 0)
+				{
+					//name = data[0].ToObject<string>();
+				}
+				GameDebug.Log("signalR called us back");
+			};
+			_hubConnection.Start();
+		}
+		else
+			GameDebug.Log("Signalr already connected...");
+
+	}
+
+	public void Send(string method, string message)
+	{
+		if (!useSignalR)
+			return;
+
+		var json = "{" + string.Format("\"action\": \"{0}\", \"value\": {1}", method, message) + "}";
+		_battleHubProxy.Invoke("Send", "UnityClient", json);
+
+	}
+
+	public void SendTrainer(ITrainer trainer)
+	{
+		if (!useSignalR)
+			return;
+
+		System.Text.StringBuilder json = new System.Text.StringBuilder(); //"{" + string.Format("\"action\": \"{0}\", \"value\": {1}", method, message) + "}";
+		json.Append("{");
+		//json.Append(string.Format("\"action\": \"{0}\", \"value\": {1}", method, message));
+		json.Append(string.Format("\"TrainerType\": \"{0}\"", trainer.trainertype));
+		json.Append(string.Format("\"Name\": \"{0}\"", trainer.name));
+		json.Append("\"Party\": ");
+		if(trainer.party != null)
+		{
+			json.Append("[");
+			foreach(IPokemon p in trainer.party)
+			{
+				json.Append("{" + string.Format("\"action\": \"{0}\", \"value\": {1}", method, message) + "}");
+			}
+			json.Append("]");
+		}
+		else json.Append("null");
+		json.Append("}");
+		_battleHubProxy.Invoke("Send", "UnityClient", json);
+
 	}
 
 	public IPokeBattle_Scene initialize()
@@ -2715,7 +2785,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	}
 
 	//public void pbSaveShadows()
-	public void pbSaveShadows(Action action = null)
+	public void pbSaveShadows(System.Action action = null)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 

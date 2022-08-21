@@ -1684,6 +1684,36 @@
 		Name,
 		Description
 	}
+	/// <summary>
+	/// Different category sections a piece of translated text could belong to
+	/// </summary>
+	public enum TextLocalization
+	{
+		Species           = 1 ,
+		Kinds             = 2 ,
+		Entries           = 3 ,
+		FormNames         = 4 ,
+		Moves             = 5 ,
+		MoveDescriptions  = 6 ,
+		Items             = 7 ,
+		ItemPlurals       = 8 ,
+		ItemDescriptions  = 9 ,
+		Abilities         = 10,
+		AbilityDescs      = 11,
+		Types             = 12,
+		TrainerTypes      = 13,
+		TrainerNames      = 14,
+		BeginSpeech       = 15,
+		EndSpeechWin      = 16,
+		EndSpeechLose     = 17,
+		RegionNames       = 18,
+		PlaceNames        = 19,
+		PlaceDescriptions = 20,
+		MapNames          = 21,
+		PhoneMessages     = 22,
+		ScriptTexts       = 23,
+		Errors			  = 24
+	}
 	public enum Generation
 	{
 		All = 0,
