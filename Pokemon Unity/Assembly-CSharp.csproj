@@ -130,13 +130,6 @@
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV3.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV4.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\WebUtility.cs" />
-    <Compile Include="Assets\Modules\DOTweenModuleAudio.cs" />
-    <Compile Include="Assets\Modules\DOTweenModulePhysics.cs" />
-    <Compile Include="Assets\Modules\DOTweenModulePhysics2D.cs" />
-    <Compile Include="Assets\Modules\DOTweenModuleSprite.cs" />
-    <Compile Include="Assets\Modules\DOTweenModuleUI.cs" />
-    <Compile Include="Assets\Modules\DOTweenModuleUnityVersion.cs" />
-    <Compile Include="Assets\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\AudioHandler.cs" />
