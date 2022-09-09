@@ -123,7 +123,6 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	private float xposenemy;
 	private float foeyoffset;
 	private float traineryoffset;
-	private object _coroutineValue;
 	public IViewport viewport;
 	#endregion
 	#region Unity's MonoBehavior Variables	
@@ -1809,12 +1808,13 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 				return -1;
 			}
 		} while (true);*/
+		int _coroutineValue = -1;
 		StopCoroutine("WaitFor");
-		StartCoroutine(WaitFor(index, texts, mode));
+		StartCoroutine(WaitFor(index, texts, mode, r => _coroutineValue = r));
 		return (int)_coroutineValue;
 	}
 
-	private IEnumerator WaitFor(int index, string[] texts, int mode)
+	private IEnumerator WaitFor(int index, string[] texts, int mode, System.Action<int> result)
 	{
 		pbShowWindow(COMMANDBOX);
 		ICommandMenuDisplay cw = @sprites["commandwindow"] as ICommandMenuDisplay;
@@ -1855,13 +1855,13 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 				int ret = cw.index;
 				@lastcmd[index] = (MenuCommands)ret;
 				//return ret;
-				_coroutineValue = ret;
+				result(ret); break;
 			}
 			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B) && index == 2 && @lastcmd[0] != (MenuCommands)2)  // Cancel
 			{
 				(AudioHandler as IGameAudioPlay).pbPlayDecisionSE();
 				//return -1;
-				_coroutineValue = -1;
+				result(-1); break;
 			}
 			yield return null;
 		} while (true);
