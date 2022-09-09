@@ -99,23 +99,3 @@ namespace PokemonUnity
 		#endregion
 	}
 }
-namespace PokemonEssentials.Interface.EventArg
-{
-	public class  OnLoadLevelEventArgs : EventArgs, PokemonEssentials.Interface.EventArg.IEventArgs
-	{
-		public static readonly int EventId = typeof(OnLoadLevelEventArgs).GetHashCode();
-
-		public int Id { get { return EventId; } }
-		public IScene Scene { get; set; }
-	}
-
-	public interface IOnLoadLevelEventArgs : IEventArgs
-	{
-		//readonly int EventId = typeof(OnMapCreateEventArgs).GetHashCode();
-
-		//int Id { get { return EventId; } }
-		//int Id { get { return Pokemon.GetHashCode(); } } //EventId;
-		IScene Scene { get; set; }
-		//ToDo: Make an Enum for Transition Animation Type?
-	}
-}

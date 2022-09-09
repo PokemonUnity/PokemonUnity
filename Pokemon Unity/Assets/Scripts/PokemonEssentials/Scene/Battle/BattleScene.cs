@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
-using PokemonUnity.Localization;
 using PokemonUnity.Attack.Data;
 using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
@@ -187,69 +186,6 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 
 	private void Awake()
 	{
-		GameDebug.OnLog += GameDebug_OnLog;
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-		try
-		{
-			//GameDebug.Log("0-" + System.IO.Path.GetFullPath("..\\veekun-pokedex.sqlite"));
-			//GameDebug.Log("1-" + System.IO.Path.GetFullPath("..\\..\\veekun-pokedex.sqlite"));
-			//GameDebug.Log("2-" + System.IO.Path.GetFullPath("..\\..\\..\\veekun-pokedex.sqlite"));
-			//GameDebug.Log("3-" + System.IO.Path.GetFullPath("..\\..\\..\\..\\veekun-pokedex.sqlite"));
-			//GameDebug.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
-			Game.DatabasePath = "Data Source=..\\veekun-pokedex.sqlite";
-			Game.con = (System.Data.IDbConnection)new System.Data.SQLite.SQLiteConnection(Game.DatabasePath);
-			Game.ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
-			GameDebug.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
-			//Game.ResetAndOpenSql(@"Data\veekun-pokedex.sqlite");
-			//Game.ResetSqlConnection();
-			Game g = new Game();
-		}
-		catch (InvalidOperationException) { GameDebug.LogError("problem connecting with database"); } //ignore...
-		finally
-		{
-			//Game.con.Open();
-
-			GameDebug.Log("Is Pokemon DB Null? " + (Kernal.PokemonData == null).ToString());
-			if (Kernal.PokemonData == null)
-			{
-				//Game.InitPokemons();
-				try
-				{
-					Game.InitTypes();
-					Game.InitNatures();
-					Game.InitPokemons();
-					Game.InitPokemonForms();
-					Game.InitPokemonMoves();
-					//Game.InitPokemonEvolutions();
-					Game.InitPokemonItems();
-					Game.InitMoves();
-					Game.InitItems();
-					Game.InitBerries();
-					Game.InitTrainers();
-					//Game.InitRegions();
-					//Game.InitLocations();
-				}
-				catch (Exception) { GameDebug.LogError("there were some problems running sql..."); } //ignore...
-			}
-			GameDebug.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
-				(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
-			if (Kernal.PokemonData.Count == 0)
-				GameDebug.Log("Was Pokemon DB Successfully Created? " + Game.InitPokemons());
-			GameDebug.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
-				(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
-		}
-
-		GameDebug.Log("Is Game Null? " + (Game.GameData == null).ToString());
-		GameDebug.Log("Is Player Null? " + (Game.GameData.Player == null).ToString());
-		//if (Game.GameData.Player == null)
-		//{
-		//	GameDebug.Log("Create Player Object");
-		//	//IGamePlayer p = new Player();
-		//	GameDebug.Log("Saving Player Object to Global Singleton");
-		//	//Game.GameData.Player = p;
-		//}
-		GameDebug.Log("Is Trainer Null? " + (Game.GameData.Trainer == null).ToString());
-
 		//messageBox = _messageBox.GetComponent<>() as ISpriteWrapper;
 		//fightWindow = _fightWindow.GetComponent<FightMenuDisplay>() as ISpriteWrapper;
 		//commandWindow = _commandWindow.GetComponent<>() as ISpriteWrapper;
@@ -285,11 +221,6 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		GameDebug.Log("######################################");
 		GameDebug.Log("# Hello - Welcome to Unity Battle! #");
 		GameDebug.Log("######################################");
-
-		string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
-		//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
-		Game.LocalizationDictionary = new XmlStringRes(null); //new Debugger());
-		Game.LocalizationDictionary.Initialize(englishLocalization, (int)Languages.English);
 
 		//IPokeBattle_DebugSceneNoGraphics pokeBattle = new PokeBattleScene();
 		(this as IPokeBattle_Scene).initialize(); //pokeBattle.initialize();
@@ -3309,20 +3240,5 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		return pbDisplayConfirmMessage(v);
-	}
-
-
-	private static void GameDebug_OnLog(object sender, OnDebugEventArgs e)
-	{
-		if (e != null || e != System.EventArgs.Empty)
-			if (e.Error == true)
-				//System.Console.WriteLine("[ERR]: " + e.Message);
-				UnityEngine.Debug.LogError("[ERR] " + UnityEngine.Time.frameCount + ": " + e.Message);
-			else if (e.Error == false)
-				//System.Console.WriteLine("[WARN]: " + e.Message);
-				UnityEngine.Debug.LogWarning("[WARN] " + UnityEngine.Time.frameCount + ": " + e.Message);
-			else
-				//System.Console.WriteLine("[LOG]: " + e.Message);
-				UnityEngine.Debug.Log("[LOG] " + UnityEngine.Time.frameCount + ": " + e.Message);
 	}
 }
