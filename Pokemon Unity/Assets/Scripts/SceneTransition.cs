@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SceneTransition : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class SceneTransition : MonoBehaviour
     private bool fadingOut = false;
     private float increment = 0.5f;
 
-    private GUITexture screenFader;
-    public Texture defaultFadeTex;
-    private RotatableGUIItem screenFaderOnGUI;
+    private Image screenFader;
+    public Sprite defaultFadeTex;
+    private Image screenFaderOnGUI;
 
     private bool RotatableGUI;
 
@@ -26,7 +27,7 @@ public class SceneTransition : MonoBehaviour
             gameScene = this;
         }
 
-        screenFader = transform.Find("ScreenFader").GetComponent<GUITexture>();
+        screenFader = transform.Find("ScreenFader").GetComponent<Image>();
         if (screenFader != null)
         {
             RotatableGUI = false;
@@ -37,12 +38,13 @@ public class SceneTransition : MonoBehaviour
         }
         if (!RotatableGUI)
         {
-            screenFader.pixelInset = new Rect(0, 0, 342, 192);
+            screenFader.rectTransform.position = new Vector2(0, 0);
+            screenFader.rectTransform.sizeDelta = new Vector2(342, 192);
         }
         else
         {
-            screenFaderOnGUI = transform.Find("ScreenFader").GetComponent<RotatableGUIItem>();
-            screenFaderOnGUI.size = new Vector2(342, 192);
+            screenFaderOnGUI = transform.Find("ScreenFader").GetComponent<Image>();
+            screenFaderOnGUI.rectTransform.sizeDelta = new Vector2(342, 192);
         }
     }
 
@@ -69,16 +71,16 @@ public class SceneTransition : MonoBehaviour
     {
         if (!RotatableGUI)
         {
-            if (screenFader.texture == null)
+            if (screenFader.sprite == null)
             {
-                screenFader.texture = defaultFadeTex;
+                screenFader.sprite = defaultFadeTex;
             }
         }
         else
         {
-            if (screenFaderOnGUI.texture == null)
+            if (screenFaderOnGUI.sprite == null)
             {
-                screenFaderOnGUI.texture = (Texture2D) defaultFadeTex;
+                screenFaderOnGUI.sprite = defaultFadeTex;
             }
         }
         if (speed == 0)
@@ -157,22 +159,20 @@ public class SceneTransition : MonoBehaviour
         fading = false;
     }
 
-    public float FadeIn()
+    public float FadeIn(float speed = -1)
     {
-        return FadeIn(fadeSpeed);
-    }
+        if (speed < 0)
+            speed = fadeSpeed;
 
-    public float FadeIn(float speed)
-    {
         if (!RotatableGUI)
         {
             screenFader.enabled = true;
-            screenFader.texture = GlobalVariables.global.fadeTex;
+            screenFader.sprite = GlobalVariables.global.fadeTex;
         }
         else
         {
             screenFaderOnGUI.enabled = true;
-            screenFaderOnGUI.texture = (Texture2D) GlobalVariables.global.fadeTex;
+            screenFaderOnGUI.sprite = GlobalVariables.global.fadeTex;
         }
         increment = 0;
         fadingOut = false;
@@ -182,37 +182,20 @@ public class SceneTransition : MonoBehaviour
         return speed;
     }
 
-    public float FadeOut()
+    public float FadeOut(float speed = -1)
     {
-        if (!RotatableGUI)
-        {
-            screenFader.enabled = true;
-            screenFader.texture = GlobalVariables.global.fadeTex;
-        }
-        else
-        {
-            screenFaderOnGUI.enabled = true;
-            screenFaderOnGUI.texture = (Texture2D) GlobalVariables.global.fadeTex;
-        }
-        increment = 0;
-        fadingOut = true;
-        fading = true;
-        StartCoroutine("fade", fadeSpeed);
-        GlobalVariables.global.fadeIn = true;
-        return fadeSpeed;
-    }
+        if (speed < 0)
+            speed = fadeSpeed;
 
-    public float FadeOut(float speed)
-    {
         if (!RotatableGUI)
         {
             screenFader.enabled = true;
-            screenFader.texture = GlobalVariables.global.fadeTex;
+            screenFader.sprite = GlobalVariables.global.fadeTex;
         }
         else
         {
             screenFaderOnGUI.enabled = true;
-            screenFaderOnGUI.texture = (Texture2D) GlobalVariables.global.fadeTex;
+            screenFaderOnGUI.sprite = GlobalVariables.global.fadeTex;
         }
         increment = 0;
         fadingOut = true;

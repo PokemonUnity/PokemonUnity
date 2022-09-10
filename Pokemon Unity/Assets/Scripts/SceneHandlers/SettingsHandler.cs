@@ -2,14 +2,15 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SettingsHandler : MonoBehaviour
 {
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
 
-    private GUITexture selectRow;
+    private Image selectRow;
 
-    private GUIText
+    private Text
         textSpeed,
         textSpeedShadow,
         textSpeedHighlight,
@@ -37,14 +38,14 @@ public class SettingsHandler : MonoBehaviour
     private bool running;
     private int selectedOption;
 
-    private int[] selectedOptionSize = new int[]
+    private int[] selectedOptionSize =
     {
-        3, 21, 21, 2, 2, 2, 5, 3
+        3, 21, 21, 2, 2, 2
     };
 
-    private int[] selectedOptionIndex = new int[]
+    private int[] selectedOptionIndex =
     {
-        2, 7, 14, 0, 1, 0, 0, 0
+        2, 7, 14, 1, 0, 0
     };
 
     private string[] selectedOptionText = new string[]
@@ -52,10 +53,8 @@ public class SettingsHandler : MonoBehaviour
         "How quickly to draw text to the screen.",
         "Adjust the volume of the music.",
         "Adjust the volume of the sound effects.",
-        "Change the appearance of the text boxes.",
         "Display animations during battles.",
         "Switch before opponent's next Pokemon?",
-        "Adjust the resolution of the screen.",
         "Set the fullscreen mode."
     };
 
@@ -63,50 +62,53 @@ public class SettingsHandler : MonoBehaviour
     public AudioClip selectClip;
 
     private GameObject DialogBox;
-    private GUIText DialogBoxText;
-    private GUIText DialogBoxTextShadow;
-    private GUITexture DialogBoxBorder;
+    private Text DialogBoxText;
+    private Text DialogBoxTextShadow;
+    private Image DialogBoxBorder;
 
     void Awake()
     {
         SettingsAudio = transform.GetComponent<AudioSource>();
-        Dialog = gameObject.GetComponent<DialogBoxHandler>();
+        Dialog = gameObject.GetComponent<DialogBoxHandlerNew>();
 
-        selectRow = transform.Find("selectRow").GetComponent<GUITexture>();
+        selectRow = transform.Find("selectRow").GetComponent<Image>();
+    
+        textSpeedShadow = transform.Find("TextSpeedShadow").GetComponent<Text>();
+        textSpeed = textSpeedShadow.transform.Find("TextSpeed").GetComponent<Text>();
+        textSpeedHighlight = textSpeedShadow.transform.Find("TextSpeedHighlight").GetComponent<Text>();
+        
+        musicVolumeShadow = transform.Find("MusicVolumeShadow").GetComponent<Text>();
+        musicVolume = musicVolumeShadow.transform.Find("MusicVolume").GetComponent<Text>();
+        musicVolumeHighlight = musicVolumeShadow.transform.Find("MusicVolumeHighlight").GetComponent<Text>();
+        
+        sfxVolumeShadow = transform.Find("SFXVolumeShadow").GetComponent<Text>();
+        sfxVolume = sfxVolumeShadow.transform.Find("SFXVolume").GetComponent<Text>();
+        sfxVolumeHighlight = sfxVolumeShadow.transform.Find("SFXVolumeHighlight").GetComponent<Text>();
 
-        textSpeed = transform.Find("TextSpeed").GetComponent<GUIText>();
-        textSpeedShadow = textSpeed.transform.Find("TextSpeedShadow").GetComponent<GUIText>();
-        textSpeedHighlight = textSpeed.transform.Find("TextSpeedHighlight").GetComponent<GUIText>();
-        musicVolume = transform.Find("MusicVolume").GetComponent<GUIText>();
-        musicVolumeShadow = musicVolume.transform.Find("MusicVolumeShadow").GetComponent<GUIText>();
-        musicVolumeHighlight = musicVolume.transform.Find("MusicVolumeHighlight").GetComponent<GUIText>();
-        sfxVolume = transform.Find("SFXVolume").GetComponent<GUIText>();
-        sfxVolumeShadow = sfxVolume.transform.Find("SFXVolumeShadow").GetComponent<GUIText>();
-        sfxVolumeHighlight = sfxVolume.transform.Find("SFXVolumeHighlight").GetComponent<GUIText>();
-        frameStyle = transform.Find("FrameStyle").GetComponent<GUIText>();
-        frameStyleShadow = frameStyle.transform.Find("FrameStyleShadow").GetComponent<GUIText>();
-        battleScene = transform.Find("BattleScene").GetComponent<GUIText>();
-        battleSceneShadow = battleScene.transform.Find("BattleSceneShadow").GetComponent<GUIText>();
-        battleSceneHighlight = battleScene.transform.Find("BattleSceneHighlight").GetComponent<GUIText>();
-        battleStyle = transform.Find("BattleStyle").GetComponent<GUIText>();
-        battleStyleShadow = battleStyle.transform.Find("BattleStyleShadow").GetComponent<GUIText>();
-        battleStyleHighlight = battleStyle.transform.Find("BattleStyleHighlight").GetComponent<GUIText>();
-        screenSize = transform.Find("ScreenSize").GetComponent<GUIText>();
-        screenSizeShadow = screenSize.transform.Find("ScreenSizeShadow").GetComponent<GUIText>();
-        screenSizeHighlight = screenSize.transform.Find("ScreenSizeHighlight").GetComponent<GUIText>();
-        fullscreen = transform.Find("Fullscreen").GetComponent<GUIText>();
-        fullscreenShadow = fullscreen.transform.Find("FullscreenShadow").GetComponent<GUIText>();
-        fullscreenHighlight = fullscreen.transform.Find("FullscreenHighlight").GetComponent<GUIText>();
+        battleSceneShadow = transform.Find("BattleSceneShadow").GetComponent<Text>();
+        battleScene = battleSceneShadow.transform.Find("BattleScene").GetComponent<Text>();
+        battleSceneHighlight = battleSceneShadow.transform.Find("BattleSceneHighlight").GetComponent<Text>();
+        
+        battleStyleShadow = transform.Find("BattleStyleShadow").GetComponent<Text>();
+        battleStyle = battleStyleShadow.transform.Find("BattleStyle").GetComponent<Text>();
+        battleStyleHighlight = battleStyleShadow.transform.Find("BattleStyleHighlight").GetComponent<Text>();
+        
+        screenSizeShadow = transform.Find("ScreenSizeShadow").GetComponent<Text>();
+        screenSize = screenSizeShadow.transform.Find("ScreenSize").GetComponent<Text>();
+        screenSizeHighlight = screenSizeShadow.transform.Find("ScreenSizeHighlight").GetComponent<Text>();
+        
+        fullscreenShadow = transform.Find("FullscreenShadow").GetComponent<Text>();
+        fullscreen = fullscreenShadow.transform.Find("Fullscreen").GetComponent<Text>();
+        fullscreenHighlight = fullscreenShadow.transform.Find("FullscreenHighlight").GetComponent<Text>();
 
         DialogBox = transform.Find("Description").gameObject;
-        DialogBoxText = DialogBox.transform.Find("DescriptionText").GetComponent<GUIText>();
-        DialogBoxTextShadow = DialogBox.transform.Find("DescriptionTextShadow").GetComponent<GUIText>();
-        DialogBoxBorder = DialogBox.transform.Find("DescriptionBorder").GetComponent<GUITexture>();
+        DialogBoxText = DialogBox.transform.Find("DescriptionText").GetComponent<Text>();
+        DialogBoxTextShadow = DialogBox.transform.Find("DescriptionTextShadow").GetComponent<Text>();
+        DialogBoxBorder = DialogBox.transform.Find("DescriptionBorder").GetComponent<Image>();
     }
 
     void Start()
     {
-        updateResolutions();
         gameObject.SetActive(false);
     }
 
@@ -188,49 +190,10 @@ public class SettingsHandler : MonoBehaviour
     {
         float increment = 0;
         float moveSpeed = 0.2f;
-        float startY = selectRow.pixelInset.y;
-        while (increment < 1)
-        {
-            increment += (1 / moveSpeed) * Time.deltaTime;
-            if (increment > 1)
-            {
-                increment = 1;
-            }
-            selectRow.pixelInset = new Rect(selectRow.pixelInset.x, startY + (16 * increment * direction),
-                selectRow.pixelInset.width, selectRow.pixelInset.height);
-            yield return null;
-        }
-    }
-
-    private void updateResolutions()
-    {
-        int resWidth = Screen.currentResolution.width + 10; //add a buffer
-        int resHeight = Screen.currentResolution.height + 6;
-        if (1710 < resWidth && 960 < resHeight)
-        {
-            screenSize.text = "x1     x2     x3     x4     x5";
-            selectedOptionSize[6] = 5;
-        }
-        else if (1368 < resWidth && 768 < resHeight)
-        {
-            screenSize.text = "x1     x2     x3     x4";
-            selectedOptionSize[6] = 4;
-        }
-        else if (1026 < resWidth && 576 < resHeight)
-        {
-            screenSize.text = "x1     x2     x3";
-            selectedOptionSize[6] = 3;
-        }
-        else if (684 < resWidth && 384 < resHeight)
-        {
-            screenSize.text = "x1     x2";
-            selectedOptionSize[6] = 2;
-        }
-        else
-        {
-            screenSize.text = "x1";
-            selectedOptionSize[6] = 1;
-        }
+        float startY = selectRow.rectTransform.position.y;
+        float delta = 32;
+        LeanTween.moveY(selectRow.gameObject, startY + direction*delta, moveSpeed);
+        yield return new WaitForSeconds(moveSpeed);
     }
 
     private void updateOption()
@@ -240,19 +203,19 @@ public class SettingsHandler : MonoBehaviour
             if (selectedOptionIndex[selectedOption] == 0)
             {
                 textSpeedHighlight.text = "Slow";
-                textSpeedHighlight.pixelOffset = new Vector2(155, 159);
+                LeanTween.moveX(textSpeedHighlight.gameObject, 450.8f, 0);
                 PlayerPrefs.SetInt("textSpeed", 0);
             }
             else if (selectedOptionIndex[selectedOption] == 1)
             {
                 textSpeedHighlight.text = "Medium";
-                textSpeedHighlight.pixelOffset = new Vector2(191, 159);
+                LeanTween.moveX(textSpeedHighlight.gameObject, 523.0f, 0);
                 PlayerPrefs.SetInt("textSpeed", 1);
             }
             else
             {
                 textSpeedHighlight.text = "Fast";
-                textSpeedHighlight.pixelOffset = new Vector2(238, 159);
+                LeanTween.moveX(textSpeedHighlight.gameObject, 617.4f, 0);
                 PlayerPrefs.SetInt("textSpeed", 2);
             }
         }
@@ -280,104 +243,43 @@ public class SettingsHandler : MonoBehaviour
         }
         else if (selectedOption == 3)
         {
-            frameStyle.text = "Style " + (selectedOptionIndex[selectedOption] + 1);
-            frameStyleShadow.text = frameStyle.text;
-            DialogBoxBorder.texture = Resources.Load<Texture>("Frame/dialog" + (selectedOptionIndex[3] + 1));
-            PlayerPrefs.SetInt("frameStyle", selectedOptionIndex[3] + 1);
+            if (selectedOptionIndex[selectedOption] == 0)
+            {
+                battleSceneHighlight.text = "Off";
+                LeanTween.moveX(battleSceneHighlight.gameObject, 515.9f, 0);
+            }
+            else
+            {
+                battleSceneHighlight.text = "On";
+                LeanTween.moveX(battleSceneHighlight.gameObject, 578.4f, 0);
+            }
         }
         else if (selectedOption == 4)
         {
             if (selectedOptionIndex[selectedOption] == 0)
             {
-                battleSceneHighlight.text = "Off";
-                battleSceneHighlight.pixelOffset = new Vector2(186, 95);
+                battleStyleHighlight.text = "Switch";
+                LeanTween.moveX(battleStyleHighlight.gameObject, 485.6f, 0);
             }
             else
             {
-                battleSceneHighlight.text = "On";
-                battleSceneHighlight.pixelOffset = new Vector2(217, 95);
+                battleStyleHighlight.text = "Set";
+                LeanTween.moveX(battleStyleHighlight.gameObject, 578, 0);
             }
         }
         else if (selectedOption == 5)
         {
             if (selectedOptionIndex[selectedOption] == 0)
             {
-                battleStyleHighlight.text = "Switch";
-                battleStyleHighlight.pixelOffset = new Vector2(171, 79);
-            }
-            else
-            {
-                battleStyleHighlight.text = "Set";
-                battleStyleHighlight.pixelOffset = new Vector2(217, 79);
-            }
-        }
-        else if (selectedOption == 6)
-        {
-            if (selectedOptionIndex[selectedOption] == 0)
-            {
-                screenSizeHighlight.text = "x1";
-                screenSizeHighlight.pixelOffset = new Vector2(150, 63);
-                if (!Screen.fullScreen)
-                {
-                    Screen.SetResolution(342, 192, Screen.fullScreen);
-                }
-            }
-            else if (selectedOptionIndex[selectedOption] == 1)
-            {
-                screenSizeHighlight.text = "x2";
-                screenSizeHighlight.pixelOffset = new Vector2(177, 63);
-                if (!Screen.fullScreen)
-                {
-                    Screen.SetResolution(684, 384, Screen.fullScreen);
-                }
-            }
-            else if (selectedOptionIndex[selectedOption] == 2)
-            {
-                screenSizeHighlight.text = "x3";
-                screenSizeHighlight.pixelOffset = new Vector2(204, 63);
-                if (!Screen.fullScreen)
-                {
-                    Screen.SetResolution(1026, 576, Screen.fullScreen);
-                }
-            }
-            else if (selectedOptionIndex[selectedOption] == 3)
-            {
-                screenSizeHighlight.text = "x4";
-                screenSizeHighlight.pixelOffset = new Vector2(231, 63);
-                if (!Screen.fullScreen)
-                {
-                    Screen.SetResolution(1368, 768, Screen.fullScreen);
-                }
-            }
-            else
-            {
-                screenSizeHighlight.text = "x5";
-                screenSizeHighlight.pixelOffset = new Vector2(258, 63);
-                if (!Screen.fullScreen)
-                {
-                    Screen.SetResolution(1710, 960, Screen.fullScreen);
-                }
-            }
-        }
-        else if (selectedOption == 7)
-        {
-            if (selectedOptionIndex[selectedOption] == 0)
-            {
                 fullscreenHighlight.text = "Off";
-                fullscreenHighlight.pixelOffset = new Vector2(149, 47);
-                Screen.SetResolution(342 * (selectedOptionIndex[6] + 1), 192 * (selectedOptionIndex[6] + 1), false);
+                LeanTween.moveX(fullscreenHighlight.gameObject, 516.6f, 0);
+                Screen.SetResolution(684, 384, false);
             }
             else if (selectedOptionIndex[selectedOption] == 1)
             {
-                fullscreenHighlight.text = "Border";
-                fullscreenHighlight.pixelOffset = new Vector2(180, 47);
-                Screen.SetResolution(342 * (selectedOptionIndex[6] + 1), 192 * (selectedOptionIndex[6] + 1), true);
-            }
-            else if (selectedOptionIndex[selectedOption] == 2)
-            {
-                fullscreenHighlight.text = "Stretch";
-                fullscreenHighlight.pixelOffset = new Vector2(231, 47);
-                Screen.SetResolution(342 * selectedOptionSize[6], 192 * selectedOptionSize[6], true);
+                fullscreenHighlight.text = "On";
+                LeanTween.moveX(fullscreenHighlight.gameObject, 578.8f, 0);
+                Screen.SetResolution(684, 384, true);
             }
         }
     }
@@ -392,24 +294,20 @@ public class SettingsHandler : MonoBehaviour
             float sVol = ((float) selectedOptionIndex[2] / 20f) * ((float) selectedOptionIndex[2] / 20f);
             PlayerPrefs.SetFloat("musicVolume", mVol);
             PlayerPrefs.SetFloat("sfxVolume", sVol);
-            PlayerPrefs.SetInt("frameStyle", selectedOptionIndex[3] + 1);
-            PlayerPrefs.SetInt("battleScene", selectedOptionIndex[4]);
-            PlayerPrefs.SetInt("battleStyle", selectedOptionIndex[5]);
-            PlayerPrefs.SetInt("screenSize", selectedOptionIndex[6] + 1);
-            PlayerPrefs.SetInt("fullscreen", selectedOptionIndex[7]);
+            PlayerPrefs.SetInt("battleScene", selectedOptionIndex[3]);
+            PlayerPrefs.SetInt("battleStyle", selectedOptionIndex[4]);
+            PlayerPrefs.SetInt("fullscreen", selectedOptionIndex[5]);
         }
         else
         {
             selectedOptionIndex[0] = PlayerPrefs.GetInt("textSpeed");
             selectedOptionIndex[1] = Mathf.RoundToInt(Mathf.Sqrt(PlayerPrefs.GetFloat("musicVolume")) * 20f);
             selectedOptionIndex[2] = Mathf.RoundToInt(Mathf.Sqrt(PlayerPrefs.GetFloat("sfxVolume")) * 20f);
-            selectedOptionIndex[3] = PlayerPrefs.GetInt("frameStyle") - 1;
-            selectedOptionIndex[4] = PlayerPrefs.GetInt("battleScene");
-            selectedOptionIndex[5] = PlayerPrefs.GetInt("battleStyle");
-            selectedOptionIndex[6] = PlayerPrefs.GetInt("screenSize") - 1;
-            selectedOptionIndex[7] = PlayerPrefs.GetInt("fullscreen");
+            selectedOptionIndex[3] = PlayerPrefs.GetInt("battleScene");
+            selectedOptionIndex[4] = PlayerPrefs.GetInt("battleStyle");
+            selectedOptionIndex[5] = PlayerPrefs.GetInt("fullscreen");
         }
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 6; i++)
         {
             selectedOption = i;
             updateOption();
@@ -424,11 +322,9 @@ public class SettingsHandler : MonoBehaviour
         float sVol = ((float) selectedOptionIndex[2] / 20f) * ((float) selectedOptionIndex[2] / 20f);
         PlayerPrefs.SetFloat("musicVolume", mVol);
         PlayerPrefs.SetFloat("sfxVolume", sVol);
-        PlayerPrefs.SetInt("frameStyle", selectedOptionIndex[3] + 1);
-        PlayerPrefs.SetInt("battleScene", selectedOptionIndex[4]);
-        PlayerPrefs.SetInt("battleStyle", selectedOptionIndex[5]);
-        PlayerPrefs.SetInt("screenSize", selectedOptionIndex[6] + 1);
-        PlayerPrefs.SetInt("fullscreen", selectedOptionIndex[7]);
+        PlayerPrefs.SetInt("battleScene", selectedOptionIndex[3]);
+        PlayerPrefs.SetInt("battleStyle", selectedOptionIndex[4]);
+        PlayerPrefs.SetInt("fullscreen", selectedOptionIndex[5]);
         PlayerPrefs.Save();
     }
 
@@ -447,14 +343,12 @@ public class SettingsHandler : MonoBehaviour
             selectedOptionIndex[2],
             selectedOptionIndex[3],
             selectedOptionIndex[4],
-            selectedOptionIndex[5],
-            selectedOptionIndex[6],
-            selectedOptionIndex[7]
+            selectedOptionIndex[5]
         };
         //	float originalMVol = PlayerPrefs.GetFloat("musicVolume");
 //		float originalSVol = PlayerPrefs.GetFloat("sfxVolume");
         selectedOption = 0;
-        selectRow.pixelInset = new Rect(51, 144, selectRow.pixelInset.width, selectRow.pixelInset.height);
+        LeanTween.moveY(selectRow.gameObject, 306.5f, 0);
         drawDialogBox();
         drawTextInstant(selectedOptionText[0]);
         while (running)
@@ -479,7 +373,7 @@ public class SettingsHandler : MonoBehaviour
             }
             else if (Input.GetAxisRaw("Vertical") < 0)
             {
-                if (selectedOption < 7)
+                if (selectedOption < 5)
                 {
                     selectedOption += 1;
                     StopCoroutine("drawText");
@@ -589,12 +483,11 @@ public class SettingsHandler : MonoBehaviour
             }
             else if (Input.GetButton("Back"))
             {
-                Dialog.drawDialogBox();
+                Dialog.DrawDialogBox();
                 yield return
-                    Dialog.StartCoroutine("drawText", "Would you like to save the currently \\selected settings?");
-                Dialog.drawChoiceBoxNo();
+                    Dialog.StartCoroutine(Dialog.DrawText( "Would you like to save the currently \\selected settings?"));
                 yield return new WaitForSeconds(0.2f);
-                yield return StartCoroutine(Dialog.choiceNavigateNo());
+                yield return StartCoroutine( Dialog.DrawChoiceBoxNo());
                 int chosenIndex = Dialog.chosenIndex;
                 if (chosenIndex == 1)
                 {
@@ -610,8 +503,8 @@ public class SettingsHandler : MonoBehaviour
                     saveSettings();
                     GlobalVariables.global.updateResolution();
                 }
-                Dialog.undrawDialogBox();
-                Dialog.undrawChoiceBox();
+                Dialog.UndrawDialogBox();
+                Dialog.UndrawChoiceBox();
                 //yield return new WaitForSeconds(sceneTransition.FadeOut());
                 yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
                 running = false;

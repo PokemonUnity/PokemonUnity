@@ -1,6 +1,8 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
@@ -11,29 +13,31 @@ public static class SaveLoad
         null, null, null
     };
 
+
     public static void Save()
     {
-        if (SaveData.currentSave.IsNotNullFile())
+        if (SaveData.currentSave != null)
         {
             if (SaveData.currentSave.getFileIndex() >= 0 && SaveData.currentSave.getFileIndex() < savedGames.Length)
             {
-                SaveData.currentSave.Save();
                 savedGames[SaveData.currentSave.getFileIndex()] = SaveData.currentSave;
                 BinaryFormatter bf = new BinaryFormatter();
-                if (File.Exists(Application.persistentDataPath + "/playerData.pkud"))
-                    File.Delete(Application.persistentDataPath + "/playerData.pkud");
-
                 FileStream file = File.Create(Application.persistentDataPath + "/playerData.pkud");
-                SaveData.SaveFile[] savedFiles = new SaveData.SaveFile[savedGames.Length];
-                for (int i = 0; i < savedGames.Length; i++)
-                {
-                    if (savedGames[i] != null)
-                    {
-                        savedGames[i].Save();
-                        savedFiles[i] = savedGames[i].savefile;
-                    }
-                }
-                bf.Serialize(file, savedFiles);
+                bf.Serialize(file, SaveLoad.savedGames);
+                file.Close();
+            }
+        }
+    }
+    
+    public static void Save(int fileIndex)
+    {
+        if (savedGames[fileIndex] != null)
+        {
+            if (fileIndex >= 0 && fileIndex < savedGames.Length)
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream file = File.Create(Application.persistentDataPath + "/playerData.pkud");
+                bf.Serialize(file, savedGames);
                 file.Close();
             }
         }
@@ -46,12 +50,7 @@ public static class SaveLoad
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerData.pkud", FileMode.Open);
-            SaveData.SaveFile[] savedFiles = (SaveData.SaveFile[])bf.Deserialize(file);
-            for (int i = 0; i < savedFiles.Length; i++)
-            {
-                if (savedFiles[i] != null)
-                    savedGames[i] = new SaveData(savedFiles[i]);
-            }
+            SaveLoad.savedGames = (SaveData[]) bf.Deserialize(file);
             file.Close();
             return true;
         }

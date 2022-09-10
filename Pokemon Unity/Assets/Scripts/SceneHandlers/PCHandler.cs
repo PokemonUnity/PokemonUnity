@@ -1,8 +1,25 @@
 //Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
 using System.Collections;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using UnityEngine;
+using UnityEngine.UI;
+
 public class PCHandler : MonoBehaviour
 {
     public enum CursorMode
@@ -14,7 +31,7 @@ public class PCHandler : MonoBehaviour
 
     public CursorMode cursorMode = CursorMode.Standard;
 
-    public Sprite boxEditIcon;
+    public UnityEngine.Sprite boxEditIcon;
 
     private int currentBoxID;
     private int nextBoxID;
@@ -23,67 +40,59 @@ public class PCHandler : MonoBehaviour
     private int selectedBoxID;
     private int selectedIndex;
 
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
 
-    private GameObject dialogBox;
-    private GameObject choiceBox;
-
-    private GUIText dialogText;
-    private GUIText dialogTextShadow;
-    private GUIText choiceText;
-    private GUIText choiceTextShadow;
-
-    private Pokemon selectedPokemon;
+    private IPokemon selectedPokemon;
 
     private Transform selectedInfo;
 
-    private GUIText selectedName;
-    private GUIText selectedNameShadow;
-    private GUIText selectedGender;
-    private GUIText selectedGenderShadow;
+    private Text selectedName;
+    private Text selectedNameShadow;
+    private Text selectedGender;
+    private Text selectedGenderShadow;
     private int frame = 0;
-    private Texture[] selectedSpriteAnimation;
-    private GUITexture selectedSprite;
-    private GUITexture selectedType1;
-    private GUITexture selectedType2;
-    private GUIText selectedLevel;
-    private GUIText selectedLevelShadow;
-    private GUIText selectedAbility;
-    private GUIText selectedAbilityShadow;
-    private GUIText selectedItem;
-    private GUIText selectedItemShadow;
-    private GUITexture selectedStatus;
+    private UnityEngine.Sprite[] selectedSpriteAnimation;
+    private Image selectedSprite;
+    private Image selectedType1;
+    private Image selectedType2;
+    private Text selectedLevel;
+    private Text selectedLevelShadow;
+    private Text selectedAbility;
+    private Text selectedAbilityShadow;
+    private Text selectedItem;
+    private Text selectedItemShadow;
+    private Image selectedStatus;
 
-    private GUITexture cursor;
-    private GUITexture grabbedPokemon;
-    private GUITexture grabbedPokemonItem;
+    private Image cursor;
+    private Image grabbedPokemon;
+    private Image grabbedPokemonItem;
 
-    private GUITexture[] partyIcons = new GUITexture[6];
-    private GUITexture[] partyItems = new GUITexture[6];
+    private Image[] partyIcons = new Image[6];
+    private Image[] partyItems = new Image[6];
 
     private GameObject currentBox;
     private GameObject nextBox;
     private GameObject previousBox;
 
-    private GUITexture currentBoxTexture;
-    private GUITexture nextBoxTexture;
-    private GUITexture previousBoxTexture;
-    private GUIText currentBoxHeader;
-    private GUIText nextBoxHeader;
-    private GUIText previousBoxHeader;
-    private GUIText currentBoxHeaderShadow;
-    private GUIText nextBoxHeaderShadow;
-    private GUIText previousBoxHeaderShadow;
+    private Image currentBoxTexture;
+    private Image nextBoxTexture;
+    private Image previousBoxTexture;
+    private Text currentBoxHeader;
+    private Text nextBoxHeader;
+    private Text previousBoxHeader;
+    private Text currentBoxHeaderShadow;
+    private Text nextBoxHeaderShadow;
+    private Text previousBoxHeaderShadow;
 
     private Transform currentBoxIcons;
-    private GUITexture[] currentBoxIconsArray = new GUITexture[30];
-    private GUITexture[] currentBoxItemsArray = new GUITexture[30];
+    private Image[] currentBoxIconsArray = new Image[30];
+    private Image[] currentBoxItemsArray = new Image[30];
     private Transform nextBoxIcons;
-    private GUITexture[] nextBoxIconsArray = new GUITexture[30];
-    private GUITexture[] nextBoxItemsArray = new GUITexture[30];
+    private Image[] nextBoxIconsArray = new Image[30];
+    private Image[] nextBoxItemsArray = new Image[30];
     private Transform previousBoxIcons;
-    private GUITexture[] previousBoxIconsArray = new GUITexture[30];
-    private GUITexture[] previousBoxItemsArray = new GUITexture[30];
+    private Image[] previousBoxIconsArray = new Image[30];
+    private Image[] previousBoxItemsArray = new Image[30];
 
     private AudioSource PCaudio;
 
@@ -95,7 +104,7 @@ public class PCHandler : MonoBehaviour
 
     private bool running = false;
     private bool carrying = false;
-    //private bool switching = false;
+    private bool switching = false;
 
     //private SceneTransition sceneTransition;
 
@@ -103,82 +112,77 @@ public class PCHandler : MonoBehaviour
 
     void Awake()
     {
-        Dialog = this.gameObject.GetComponent<DialogBoxHandler>();
+        Dialog = gameObject.GetComponent<DialogBoxHandlerNew>();
 
-        dialogBox = this.transform.Find("DialogBox").gameObject;
-        choiceBox = this.transform.Find("ChoiceBox").gameObject;
-
-        PCaudio = this.gameObject.GetComponent<AudioSource>();
+        PCaudio = gameObject.GetComponent<AudioSource>();
 
         //sceneTransition = this.gameObject.GetComponent<SceneTransition>();
 
-        dialogText = dialogBox.transform.Find("BoxText").GetComponent<GUIText>();
-        dialogTextShadow = choiceBox.transform.Find("BoxTextShadow").GetComponent<GUIText>();
-        choiceText = choiceBox.transform.Find("BoxText").GetComponent<GUIText>();
-        choiceTextShadow = choiceBox.transform.Find("BoxTextShadow").GetComponent<GUIText>();
-
         selectedPokemon = null;
 
-        selectedInfo = this.transform.Find("SelectedInfo");
+        selectedInfo = transform.Find("SelectedInfo");
 
-        selectedName = selectedInfo.Find("SelectedName").GetComponent<GUIText>();
-        selectedNameShadow = selectedName.transform.Find("SelectedNameShadow").GetComponent<GUIText>();
-        selectedGender = selectedInfo.Find("SelectedGender").GetComponent<GUIText>();
-        selectedGenderShadow = selectedGender.transform.Find("SelectedGenderShadow").GetComponent<GUIText>();
-        selectedSprite = selectedInfo.Find("SelectedSprite").GetComponent<GUITexture>();
-        selectedType1 = selectedInfo.Find("SelectedType1").GetComponent<GUITexture>();
-        selectedType2 = selectedInfo.Find("SelectedType2").GetComponent<GUITexture>();
-        selectedLevel = selectedInfo.Find("SelectedLevel").GetComponent<GUIText>();
-        selectedLevelShadow = selectedLevel.transform.Find("SelectedLevelShadow").GetComponent<GUIText>();
-        selectedAbility = selectedInfo.Find("SelectedAbility").GetComponent<GUIText>();
-        selectedAbilityShadow = selectedAbility.transform.Find("SelectedAbilityShadow").GetComponent<GUIText>();
-        selectedItem = selectedInfo.Find("SelectedItem").GetComponent<GUIText>();
-        selectedItemShadow = selectedItem.transform.Find("SelectedItemShadow").GetComponent<GUIText>();
-        selectedStatus = selectedInfo.Find("SelectedStatus").GetComponent<GUITexture>();
+        selectedNameShadow = selectedInfo.Find("SelectedNameShadow").GetComponent<Text>();
+        selectedName = selectedNameShadow.transform.Find("SelectedName").GetComponent<Text>();
+        selectedGenderShadow = selectedInfo.Find("SelectedGenderShadow").GetComponent<Text>();
+        selectedGender = selectedGenderShadow.transform.Find("SelectedGender").GetComponent<Text>();
+        selectedSprite = selectedInfo.Find("SelectedSprite").GetComponent<Image>();
+        selectedType1 = selectedInfo.Find("SelectedType1").GetComponent<Image>();
+        selectedType2 = selectedInfo.Find("SelectedType2").GetComponent<Image>();
+        selectedLevelShadow = selectedInfo.Find("SelectedLevelShadow").GetComponent<Text>();
+        selectedLevel = selectedLevelShadow.transform.Find("SelectedLevel").GetComponent<Text>();
+        selectedAbilityShadow = selectedInfo.Find("SelectedAbilityShadow").GetComponent<Text>();
+        selectedAbility = selectedAbilityShadow.transform.Find("SelectedAbility").GetComponent<Text>();
+        selectedItemShadow = selectedInfo.Find("SelectedItemShadow").GetComponent<Text>();
+        selectedItem = selectedItemShadow.transform.Find("SelectedItem").GetComponent<Text>();
+        selectedStatus = selectedInfo.Find("SelectedStatus").GetComponent<Image>();
 
-        cursor = this.transform.Find("Cursor").GetComponent<GUITexture>();
-        grabbedPokemon = cursor.transform.Find("GrabbedPokemon").GetComponent<GUITexture>();
-        grabbedPokemonItem = grabbedPokemon.transform.Find("Item").GetComponent<GUITexture>();
+        cursor = this.transform.Find("Cursor").GetComponent<Image>();
+        grabbedPokemon = cursor.transform.Find("GrabbedPokemon").GetComponent<Image>();
+        grabbedPokemonItem = grabbedPokemon.transform.Find("Item").GetComponent<Image>();
 
         for (int i = 0; i < 6; i++)
         {
-            partyIcons[i] = transform.Find("Party").Find("Pokemon" + i).GetComponent<GUITexture>();
-            partyItems[i] = partyIcons[i].transform.Find("Item").GetComponent<GUITexture>();
+            partyIcons[i] = transform.Find("Party").Find("Pokemon" + i).GetComponent<Image>();
+            partyItems[i] = partyIcons[i].transform.Find("Item").GetComponent<Image>();
         }
 
         currentBox = this.transform.Find("CurrentBox").gameObject;
         nextBox = currentBox.transform.Find("NextBox").gameObject;
         previousBox = currentBox.transform.Find("PreviousBox").gameObject;
 
-        currentBoxTexture = currentBox.GetComponent<GUITexture>();
-        nextBoxTexture = currentBox.transform.Find("NextBox").GetComponent<GUITexture>();
-        previousBoxTexture = currentBox.transform.Find("PreviousBox").GetComponent<GUITexture>();
-        currentBoxHeader = currentBox.transform.Find("BoxHeader").GetComponent<GUIText>();
-        nextBoxHeader = currentBox.transform.Find("NextBox").Find("BoxHeader").GetComponent<GUIText>();
-        previousBoxHeader = currentBox.transform.Find("PreviousBox").Find("BoxHeader").GetComponent<GUIText>();
-        currentBoxHeaderShadow = currentBoxHeader.transform.Find("BoxHeaderShadow").GetComponent<GUIText>();
-        nextBoxHeaderShadow = nextBoxHeader.transform.Find("BoxHeaderShadow").GetComponent<GUIText>();
-        previousBoxHeaderShadow = previousBoxHeader.transform.Find("BoxHeaderShadow").GetComponent<GUIText>();
+        currentBoxTexture = currentBox.GetComponent<Image>();
+        nextBoxTexture = currentBox.transform.Find("NextBox").GetComponent<Image>();
+        previousBoxTexture = currentBox.transform.Find("PreviousBox").GetComponent<Image>();
+        
+        currentBoxHeaderShadow = currentBox.transform.Find("BoxHeaderShadow").GetComponent<Text>();
+        currentBoxHeader = currentBoxHeaderShadow.transform.Find("BoxHeader").GetComponent<Text>();
+        
+        nextBoxHeaderShadow = currentBox.transform.Find("NextBox").Find("BoxHeaderShadow").GetComponent<Text>();
+        nextBoxHeader = nextBoxHeaderShadow.transform.Find("BoxHeader").GetComponent<Text>();
+        
+        previousBoxHeaderShadow = currentBox.transform.Find("PreviousBox").Find("BoxHeaderShadow").GetComponent<Text>();
+        previousBoxHeader = previousBoxHeaderShadow.transform.Find("BoxHeader").GetComponent<Text>();
 
         currentBoxIcons = currentBox.transform.Find("BoxIcons").transform;
         for (int i = 0; i < 30; i++)
         {
-            currentBoxIconsArray[i] = currentBoxIcons.Find("Pokemon" + i).GetComponent<GUITexture>();
-            currentBoxItemsArray[i] = currentBoxIconsArray[i].transform.Find("Item").GetComponent<GUITexture>();
+            currentBoxIconsArray[i] = currentBoxIcons.Find("Pokemon" + i).GetComponent<Image>();
+            currentBoxItemsArray[i] = currentBoxIconsArray[i].transform.Find("Item").GetComponent<Image>();
         }
 
         nextBoxIcons = nextBox.transform.Find("BoxIcons").transform;
         for (int i = 0; i < 30; i++)
         {
-            nextBoxIconsArray[i] = nextBoxIcons.Find("Pokemon" + i).GetComponent<GUITexture>();
-            nextBoxItemsArray[i] = nextBoxIconsArray[i].transform.Find("Item").GetComponent<GUITexture>();
+            nextBoxIconsArray[i] = nextBoxIcons.Find("Pokemon" + i).GetComponent<Image>();
+            nextBoxItemsArray[i] = nextBoxIconsArray[i].transform.Find("Item").GetComponent<Image>();
         }
 
         previousBoxIcons = previousBox.transform.Find("BoxIcons").transform;
         for (int i = 0; i < 30; i++)
         {
-            previousBoxIconsArray[i] = previousBoxIcons.Find("Pokemon" + i).GetComponent<GUITexture>();
-            previousBoxItemsArray[i] = previousBoxIconsArray[i].transform.Find("Item").GetComponent<GUITexture>();
+            previousBoxIconsArray[i] = previousBoxIcons.Find("Pokemon" + i).GetComponent<Image>();
+            previousBoxItemsArray[i] = previousBoxIconsArray[i].transform.Find("Item").GetComponent<Image>();
         }
     }
 
@@ -192,15 +196,15 @@ public class PCHandler : MonoBehaviour
         //update box icons
         for (int i = 0; i < 30; i++)
         {
-            if (SaveData.currentSave.PC.AllBoxes[currentBoxID][i] == null)
+            if (SaveData.currentSave.PC.boxes[currentBoxID][i] == null)
             {
-                currentBoxIconsArray[i].texture = null;
+                currentBoxIconsArray[i].sprite = null;
                 currentBoxItemsArray[i].enabled = false;
             }
             else
             {
-                currentBoxIconsArray[i].texture = SaveData.currentSave.PC.AllBoxes[currentBoxID][i].GetIcons();
-                if (SaveData.currentSave.PC.AllBoxes[currentBoxID][i].hasItem())
+                currentBoxIconsArray[i].sprite = SaveData.currentSave.PC.boxes[currentBoxID][i].GetIcons();
+                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[currentBoxID][i].getHeldItem()))
                 {
                     currentBoxItemsArray[i].enabled = true;
                 }
@@ -212,15 +216,15 @@ public class PCHandler : MonoBehaviour
         }
         for (int i = 0; i < 30; i++)
         {
-            if (SaveData.currentSave.PC.AllBoxes[nextBoxID][i] == null)
+            if (SaveData.currentSave.PC.boxes[nextBoxID][i] == null)
             {
-                nextBoxIconsArray[i].texture = null;
+                nextBoxIconsArray[i].sprite = null;
                 nextBoxItemsArray[i].enabled = false;
             }
             else
             {
-                nextBoxIconsArray[i].texture = SaveData.currentSave.PC.AllBoxes[nextBoxID][i].GetIcons();
-                if (SaveData.currentSave.PC.AllBoxes[nextBoxID][i].hasItem())
+                nextBoxIconsArray[i].sprite = SaveData.currentSave.PC.boxes[nextBoxID][i].GetIcons();
+                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[nextBoxID][i].getHeldItem()))
                 {
                     nextBoxItemsArray[i].enabled = true;
                 }
@@ -232,15 +236,15 @@ public class PCHandler : MonoBehaviour
         }
         for (int i = 0; i < 30; i++)
         {
-            if (SaveData.currentSave.PC.AllBoxes[previousBoxID][i] == null)
+            if (SaveData.currentSave.PC.boxes[previousBoxID][i] == null)
             {
-                previousBoxIconsArray[i].texture = null;
+                previousBoxIconsArray[i].sprite = null;
                 previousBoxItemsArray[i].enabled = false;
             }
             else
             {
-                previousBoxIconsArray[i].texture = SaveData.currentSave.PC.AllBoxes[previousBoxID][i].GetIcons();
-                if (SaveData.currentSave.PC.AllBoxes[previousBoxID][i].hasItem())
+                previousBoxIconsArray[i].sprite = SaveData.currentSave.PC.boxes[previousBoxID][i].GetIcons();
+                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[previousBoxID][i].getHeldItem()))
                 {
                     previousBoxItemsArray[i].enabled = true;
                 }
@@ -254,15 +258,15 @@ public class PCHandler : MonoBehaviour
         //update party textures
         for (int i = 0; i < 6; i++)
         {
-            if (SaveData.currentSave.Player.Party[i] == null)
+            if (SaveData.currentSave.PC.boxes[0][i] == null)
             {
-                partyIcons[i].texture = null;
+                partyIcons[i].sprite = null;
                 partyItems[i].enabled = false;
             }
             else
             {
-                partyIcons[i].texture = SaveData.currentSave.Player.Party[i].GetIcons();
-                if (SaveData.currentSave.Player.Party[i].hasItem())
+                partyIcons[i].sprite = SaveData.currentSave.PC.boxes[0][i].GetIcons();
+                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[0][i].getHeldItem()))
                 {
                     partyItems[i].enabled = true;
                 }
@@ -274,61 +278,61 @@ public class PCHandler : MonoBehaviour
         }
 
         //update box names
-        if (string.IsNullOrEmpty(SaveData.currentSave.PC.BoxNames[currentBoxID]))
+        if (string.IsNullOrEmpty(SaveData.currentSave.PC.boxName[currentBoxID]))
         {
-            currentBoxHeader.text = "Box " + (currentBoxID + 1);
+            currentBoxHeader.text = "Box " + currentBoxID;
         }
         else
         {
-            currentBoxHeader.text = SaveData.currentSave.PC.BoxNames[currentBoxID];
+            currentBoxHeader.text = SaveData.currentSave.PC.boxName[currentBoxID];
         }
-        if (string.IsNullOrEmpty(SaveData.currentSave.PC.BoxNames[nextBoxID]))
+        if (string.IsNullOrEmpty(SaveData.currentSave.PC.boxName[nextBoxID]))
         {
-            nextBoxHeader.text = "Box " + (nextBoxID + 1);
-        }
-        else
-        {
-            nextBoxHeader.text = SaveData.currentSave.PC.BoxNames[nextBoxID];
-        }
-        if (string.IsNullOrEmpty(SaveData.currentSave.PC.BoxNames[previousBoxID]))
-        {
-            previousBoxHeader.text = "Box " + (previousBoxID + 1);
+            nextBoxHeader.text = "Box " + nextBoxID;
         }
         else
         {
-            previousBoxHeader.text = SaveData.currentSave.PC.BoxNames[previousBoxID];
+            nextBoxHeader.text = SaveData.currentSave.PC.boxName[nextBoxID];
+        }
+        if (string.IsNullOrEmpty(SaveData.currentSave.PC.boxName[previousBoxID]))
+        {
+            previousBoxHeader.text = "Box " + previousBoxID;
+        }
+        else
+        {
+            previousBoxHeader.text = SaveData.currentSave.PC.boxName[previousBoxID];
         }
         currentBoxHeaderShadow.text = currentBoxHeader.text;
         nextBoxHeaderShadow.text = nextBoxHeader.text;
         previousBoxHeaderShadow.text = previousBoxHeader.text;
 
         //update box textures
-        if (SaveData.currentSave.PC.BoxTextures[currentBoxID] == 0)
+        if (SaveData.currentSave.PC.boxTexture[currentBoxID] == 0)
         {
-            currentBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + (currentBoxID + 1));
+            currentBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + currentBoxID);
         }
         else
         {
-            currentBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.BoxTextures[currentBoxID]);
+            currentBoxTexture.sprite =
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
         }
-        if (SaveData.currentSave.PC.BoxTextures[nextBoxID] == 0)
+        if (SaveData.currentSave.PC.boxTexture[nextBoxID] == 0)
         {
-            nextBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + (nextBoxID + 1));
-        }
-        else
-        {
-            nextBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.BoxTextures[nextBoxID]);
-        }
-        if (SaveData.currentSave.PC.BoxTextures[previousBoxID] == 0)
-        {
-            previousBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + (previousBoxID + 1));
+            nextBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + nextBoxID);
         }
         else
         {
-            previousBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.BoxTextures[previousBoxID]);
+            nextBoxTexture.sprite =
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
+        }
+        if (SaveData.currentSave.PC.boxTexture[previousBoxID] == 0)
+        {
+            previousBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + previousBoxID);
+        }
+        else
+        {
+            previousBoxTexture.sprite =
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
         }
 
         //set Selected Info to null because nothing is selected by default
@@ -336,97 +340,97 @@ public class PCHandler : MonoBehaviour
         selectedNameShadow.text = null;
         selectedGender.text = null;
         selectedGenderShadow.text = null;
-        selectedSpriteAnimation = new Texture[] {};
-        selectedSprite.texture = null;
-        selectedType1.texture = null;
-        selectedType2.texture = null;
+        selectedSpriteAnimation = new UnityEngine.Sprite[] {};
+        selectedSprite.sprite = null;
+        selectedType1.sprite = null;
+        selectedType2.sprite = null;
         selectedLevel.text = null;
         selectedLevelShadow.text = null;
         selectedAbility.text = null;
         selectedAbilityShadow.text = null;
         selectedItem.text = null;
         selectedItemShadow.text = null;
-        selectedStatus.texture = null;
+        selectedStatus.sprite = null;
     }
 
-    private void updateSelectedInfo(Pokemon selectedPokemon)
+
+    private void updateSelectedInfo(IPokemon selectedPokemon)
     {
         if (!carrying)
         {
-            if (selectedPokemon == null || selectedPokemon.Species == PokemonUnity.Pokemons.NONE)
+            if (selectedPokemon == null)
             {
                 selectedName.text = null;
                 selectedNameShadow.text = null;
                 selectedGender.text = null;
                 selectedGenderShadow.text = null;
-                selectedSpriteAnimation = new Texture[] {};
-                selectedSprite.texture = null;
-                selectedType1.texture = null;
-                selectedType2.texture = null;
+                selectedSpriteAnimation = new UnityEngine.Sprite[] {};
+                selectedSprite.sprite = null;
+                selectedType1.sprite = null;
+                selectedType2.sprite = null;
                 selectedLevel.text = null;
                 selectedLevelShadow.text = null;
                 selectedAbility.text = null;
                 selectedAbilityShadow.text = null;
                 selectedItem.text = null;
                 selectedItemShadow.text = null;
-                selectedStatus.texture = null;
+                selectedStatus.sprite = null;
             }
             else
             {
                 selectedName.text = selectedPokemon.Name;
                 selectedNameShadow.text = selectedName.text;
-                if (selectedPokemon.IsGenderless)
-                {
-                    selectedGender.text = null;
-                }
-                else if (!selectedPokemon.IsMale)
+                if (selectedPokemon.Gender == false)
                 {
                     selectedGender.text = "♀";
                     selectedGender.color = new Color(1, 0.2f, 0.2f, 1);
                 }
-                else if (selectedPokemon.IsMale)
+                else if (selectedPokemon.Gender == true)
                 {
                     selectedGender.text = "♂";
                     selectedGender.color = new Color(0.2f, 0.4f, 1, 1);
                 }
+                else
+                {
+                    selectedGender.text = null;
+                }
                 selectedGenderShadow.text = selectedGender.text;
-                selectedSpriteAnimation = selectedPokemon.GetFrontAnim();
-                selectedSprite.texture = selectedSpriteAnimation[0];
-                string type1 = selectedPokemon.Type1.ToString();
-                string type2 = selectedPokemon.Type2.ToString();
-                selectedType1.texture = null;
-                selectedType2.texture = null;
+                //selectedSpriteAnimation = selectedPokemon.GetFrontAnim_();
+                selectedSprite.sprite = selectedSpriteAnimation[0];
+                string type1 = selectedPokemon.Type1.ToString(TextScripts.Name);
+                string type2 = selectedPokemon.Type2.ToString(TextScripts.Name);
+                selectedType1.sprite = null;
+                selectedType2.sprite = null;
                 if (type1 != "NONE")
                 {
-                    selectedType1.texture = Resources.Load<Texture>("PCSprites/type" + type1);
+                    selectedType1.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type1);
                 }
                 if (type2 != "NONE")
                 {
-                    selectedType2.texture = Resources.Load<Texture>("PCSprites/type" + type2);
+                    selectedType2.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + type2);
                 }
                 selectedLevel.text = "Level " + selectedPokemon.Level;
                 selectedLevelShadow.text = selectedLevel.text;
-                selectedAbility.text = selectedPokemon.Ability.ToString();
-                    //PokemonDatabase.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
+                selectedAbility.text = selectedPokemon.Ability.ToString(TextScripts.Name);
                 selectedAbilityShadow.text = selectedAbility.text;
                 selectedItem.text = "None";
-                if (selectedPokemon.hasItem())
+                if (selectedPokemon.Item != Items.NONE)
                 {
-                    selectedItem.text = selectedPokemon.Item.toString();
+                    selectedItem.text = selectedPokemon.Item.ToString(TextScripts.Name);
                 }
                 selectedItemShadow.text = selectedItem.text;
-                selectedStatus.texture = null;
-                if (selectedPokemon.Status != PokemonUnity.Status.NONE)
+                selectedStatus.sprite = null;
+                if (selectedPokemon.Status != Status.NONE)
                 {
-                    selectedStatus.texture =
-                        Resources.Load<Texture>("PCSprites/status" + selectedPokemon.Status.ToString());
+                    selectedStatus.sprite =
+                        Resources.Load<UnityEngine.Sprite>("PCSprites/status" + selectedPokemon.Status.ToString());
                 }
             }
         }
     }
 
     //Show the selectedInfo regardless of carrying or not.
-    private void updateSelectedInfoOverride(Pokemon selectedPokemon)
+    private void updateSelectedInfoOverride(IPokemon selectedPokemon)
     {
         if (carrying)
         {
@@ -450,13 +454,13 @@ public class PCHandler : MonoBehaviour
             //update destination box's icons incase something has been changed 
             for (int i = 0; i < 30; i++)
             {
-                if (SaveData.currentSave.PC.AllBoxes[nextBoxID][i] == null)
+                if (SaveData.currentSave.PC.boxes[nextBoxID][i] == null)
                 {
-                    nextBoxIconsArray[i].texture = null;
+                    nextBoxIconsArray[i].sprite = null;
                 }
                 else
                 {
-                    nextBoxIconsArray[i].texture = SaveData.currentSave.PC.AllBoxes[nextBoxID][i].GetIcons();
+                    nextBoxIconsArray[i].sprite = SaveData.currentSave.PC.boxes[nextBoxID][i].GetIcons();
                 }
             }
             Vector3 destinationPosition = startPosition + new Vector3(-0.537f, 0, 0);
@@ -472,13 +476,13 @@ public class PCHandler : MonoBehaviour
             //update destination box's icons incase something has been changed 
             for (int i = 0; i < 30; i++)
             {
-                if (SaveData.currentSave.PC.AllBoxes[previousBoxID][i] == null)
+                if (SaveData.currentSave.PC.boxes[previousBoxID][i] == null)
                 {
-                    previousBoxIconsArray[i].texture = null;
+                    previousBoxIconsArray[i].sprite = null;
                 }
                 else
                 {
-                    previousBoxIconsArray[i].texture = SaveData.currentSave.PC.AllBoxes[previousBoxID][i].GetIcons();
+                    previousBoxIconsArray[i].sprite = SaveData.currentSave.PC.boxes[previousBoxID][i].GetIcons();
                 }
             }
             Vector3 destinationPosition = startPosition + new Vector3(0.537f, 0, 0);
@@ -490,99 +494,98 @@ public class PCHandler : MonoBehaviour
             }
         }
         //update BoxIDs
-        int MaxBoxLength = 12;
         currentBoxID += direction;
         nextBoxID = currentBoxID + 1;
         previousBoxID = currentBoxID - 1;
-        if (currentBoxID == 0)
+        if (currentBoxID == 1)
         {
-            previousBoxID = MaxBoxLength - 1;
+            previousBoxID = SaveData.currentSave.PC.boxes.Length - 1;
         }
-        else if (currentBoxID < 0)
+        else if (currentBoxID < 1)
         {
-            currentBoxID = MaxBoxLength - 1;
-            previousBoxID = MaxBoxLength - 2;
+            currentBoxID = SaveData.currentSave.PC.boxes.Length - 1;
+            previousBoxID = SaveData.currentSave.PC.boxes.Length - 2;
         }
-        else if (currentBoxID == MaxBoxLength - 1)
+        else if (currentBoxID == SaveData.currentSave.PC.boxes.Length - 1)
         {
-            nextBoxID = 0;
-        }
-        else if (currentBoxID > MaxBoxLength - 1)
-        {
-            currentBoxID = 0;
             nextBoxID = 1;
         }
-        
+        else if (currentBoxID > SaveData.currentSave.PC.boxes.Length - 1)
+        {
+            currentBoxID = 1;
+            nextBoxID = 2;
+        }
+
         //update box names
-        if (string.IsNullOrEmpty(SaveData.currentSave.PC.BoxNames[currentBoxID]))
+        if (string.IsNullOrEmpty(SaveData.currentSave.PC.boxName[currentBoxID]))
         {
-            currentBoxHeader.text = "Box " + (currentBoxID + 1);
+            currentBoxHeader.text = "Box " + currentBoxID;
         }
         else
         {
-            currentBoxHeader.text = SaveData.currentSave.PC.BoxNames[currentBoxID];
+            currentBoxHeader.text = SaveData.currentSave.PC.boxName[currentBoxID];
         }
-        if (string.IsNullOrEmpty(SaveData.currentSave.PC.BoxNames[nextBoxID]))
+        if (string.IsNullOrEmpty(SaveData.currentSave.PC.boxName[nextBoxID]))
         {
-            nextBoxHeader.text = "Box " + (nextBoxID + 1);
-        }
-        else
-        {
-            nextBoxHeader.text = SaveData.currentSave.PC.BoxNames[nextBoxID];
-        }
-        if (string.IsNullOrEmpty(SaveData.currentSave.PC.BoxNames[previousBoxID]))
-        {
-            previousBoxHeader.text = "Box " + (previousBoxID + 1);
+            nextBoxHeader.text = "Box " + nextBoxID;
         }
         else
         {
-            previousBoxHeader.text = SaveData.currentSave.PC.BoxNames[previousBoxID];
+            nextBoxHeader.text = SaveData.currentSave.PC.boxName[nextBoxID];
+        }
+        if (string.IsNullOrEmpty(SaveData.currentSave.PC.boxName[previousBoxID]))
+        {
+            previousBoxHeader.text = "Box " + previousBoxID;
+        }
+        else
+        {
+            previousBoxHeader.text = SaveData.currentSave.PC.boxName[previousBoxID];
         }
         currentBoxHeaderShadow.text = currentBoxHeader.text;
         nextBoxHeaderShadow.text = nextBoxHeader.text;
         previousBoxHeaderShadow.text = previousBoxHeader.text;
 
         //update box textures
-        if (SaveData.currentSave.PC.BoxTextures[currentBoxID] == 0)
+        if (SaveData.currentSave.PC.boxTexture[currentBoxID] == 0)
         {
-            currentBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + (currentBoxID + 1));
+            currentBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + currentBoxID);
         }
         else
         {
-            currentBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.BoxTextures[currentBoxID]);
+            currentBoxTexture.sprite =
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
         }
-        if (SaveData.currentSave.PC.BoxTextures[nextBoxID] == 0)
+        if (SaveData.currentSave.PC.boxTexture[nextBoxID] == 0)
         {
-            nextBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + (nextBoxID + 1));
-        }
-        else
-        {
-            nextBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.BoxTextures[nextBoxID]);
-        }
-        if (SaveData.currentSave.PC.BoxTextures[previousBoxID] == 0)
-        {
-            previousBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + (previousBoxID + 1));
+            nextBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + nextBoxID);
         }
         else
         {
-            previousBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.BoxTextures[previousBoxID]);
+            nextBoxTexture.sprite =
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
+        }
+        if (SaveData.currentSave.PC.boxTexture[previousBoxID] == 0)
+        {
+            previousBoxTexture.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/box" + previousBoxID);
+        }
+        else
+        {
+            previousBoxTexture.sprite =
+                Resources.Load<UnityEngine.Sprite>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
         }
 
         //update box icons
         for (int i = 0; i < 30; i++)
         {
-            if (SaveData.currentSave.PC.AllBoxes[currentBoxID][i] == null)
+            if (SaveData.currentSave.PC.boxes[currentBoxID][i] == null)
             {
-                currentBoxIconsArray[i].texture = null;
+                currentBoxIconsArray[i].sprite = null;
                 currentBoxItemsArray[i].enabled = false;
             }
             else
             {
-                currentBoxIconsArray[i].texture = SaveData.currentSave.PC.AllBoxes[currentBoxID][i].GetIcons();
-                if (SaveData.currentSave.PC.AllBoxes[currentBoxID][i].hasItem())
+                currentBoxIconsArray[i].sprite = SaveData.currentSave.PC.boxes[currentBoxID][i].GetIcons();
+                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[currentBoxID][i].getHeldItem()))
                 {
                     currentBoxItemsArray[i].enabled = true;
                 }
@@ -594,15 +597,15 @@ public class PCHandler : MonoBehaviour
         }
         for (int i = 0; i < 30; i++)
         {
-            if (SaveData.currentSave.PC.AllBoxes[nextBoxID][i] == null)
+            if (SaveData.currentSave.PC.boxes[nextBoxID][i] == null)
             {
-                nextBoxIconsArray[i].texture = null;
+                nextBoxIconsArray[i].sprite = null;
                 nextBoxItemsArray[i].enabled = false;
             }
             else
             {
-                nextBoxIconsArray[i].texture = SaveData.currentSave.PC.AllBoxes[nextBoxID][i].GetIcons();
-                if (SaveData.currentSave.PC.AllBoxes[nextBoxID][i].hasItem())
+                nextBoxIconsArray[i].sprite = SaveData.currentSave.PC.boxes[nextBoxID][i].GetIcons();
+                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[nextBoxID][i].getHeldItem()))
                 {
                     nextBoxItemsArray[i].enabled = true;
                 }
@@ -614,15 +617,15 @@ public class PCHandler : MonoBehaviour
         }
         for (int i = 0; i < 30; i++)
         {
-            if (SaveData.currentSave.PC.AllBoxes[previousBoxID][i] == null)
+            if (SaveData.currentSave.PC.boxes[previousBoxID][i] == null)
             {
-                previousBoxIconsArray[i].texture = null;
+                previousBoxIconsArray[i].sprite = null;
                 previousBoxItemsArray[i].enabled = false;
             }
             else
             {
-                previousBoxIconsArray[i].texture = SaveData.currentSave.PC.AllBoxes[previousBoxID][i].GetIcons();
-                if (SaveData.currentSave.PC.AllBoxes[previousBoxID][i].hasItem())
+                previousBoxIconsArray[i].sprite = SaveData.currentSave.PC.boxes[previousBoxID][i].GetIcons();
+                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[previousBoxID][i].getHeldItem()))
                 {
                     previousBoxItemsArray[i].enabled = true;
                 }
@@ -641,8 +644,8 @@ public class PCHandler : MonoBehaviour
     private IEnumerator moveCursor(Vector2 destination)
     {
         float increment = 0;
-        float startX = cursor.pixelInset.x;
-        float startY = cursor.pixelInset.y;
+        float startX = cursor.rectTransform.position.x;
+        float startY = cursor.rectTransform.position.y;
         float distanceX = destination.x - startX;
         float distanceY = destination.y - startY;
         while (increment < 1)
@@ -652,12 +655,9 @@ public class PCHandler : MonoBehaviour
             {
                 increment = 1;
             }
-            cursor.pixelInset = new Rect(startX + (increment * distanceX), startY + (increment * distanceY),
-                cursor.pixelInset.width, cursor.pixelInset.height);
-            grabbedPokemon.pixelInset = new Rect(cursor.pixelInset.x, cursor.pixelInset.y - 11,
-                grabbedPokemon.pixelInset.width, grabbedPokemon.pixelInset.height);
-            grabbedPokemonItem.pixelInset = new Rect(cursor.pixelInset.x + 17, cursor.pixelInset.y - 9,
-                grabbedPokemonItem.pixelInset.width, grabbedPokemonItem.pixelInset.height);
+            cursor.rectTransform.position = new Vector2(startX + (increment * distanceX), startY + (increment * distanceY));
+            grabbedPokemon.rectTransform.position = new Vector2(cursor.rectTransform.position.x, cursor.rectTransform.position.y - 11);
+            grabbedPokemonItem.rectTransform.position = new Vector2(cursor.rectTransform.position.x + 17, cursor.rectTransform.position.y - 9);
             yield return null;
         }
     }
@@ -668,11 +668,11 @@ public class PCHandler : MonoBehaviour
         {
             while (!carrying)
             {
-                cursor.border = new RectOffset(32, 0, 32, 0);
+                //cursor.border = new RectOffset(32, 0, 32, 0);
                 yield return new WaitForSeconds(0.4f);
                 if (!carrying)
                 {
-                    cursor.border = new RectOffset(0, 32, 32, 0);
+                    //cursor.border = new RectOffset(0, 32, 32, 0);
                     yield return new WaitForSeconds(0.4f);
                 }
             }
@@ -687,39 +687,35 @@ public class PCHandler : MonoBehaviour
         {
             Vector2[] partyPositions = new Vector2[]
             {
-                new Vector2(partyIcons[0].pixelInset.x, partyIcons[0].pixelInset.y),
-                new Vector2(partyIcons[1].pixelInset.x, partyIcons[1].pixelInset.y),
-                new Vector2(partyIcons[2].pixelInset.x, partyIcons[2].pixelInset.y),
-                new Vector2(partyIcons[3].pixelInset.x, partyIcons[3].pixelInset.y),
-                new Vector2(partyIcons[4].pixelInset.x, partyIcons[4].pixelInset.y),
-                new Vector2(partyIcons[5].pixelInset.x, partyIcons[5].pixelInset.y)
+                new Vector2(partyIcons[0].rectTransform.position.x, partyIcons[0].rectTransform.position.y),
+                new Vector2(partyIcons[1].rectTransform.position.x, partyIcons[1].rectTransform.position.y),
+                new Vector2(partyIcons[2].rectTransform.position.x, partyIcons[2].rectTransform.position.y),
+                new Vector2(partyIcons[3].rectTransform.position.x, partyIcons[3].rectTransform.position.y),
+                new Vector2(partyIcons[4].rectTransform.position.x, partyIcons[4].rectTransform.position.y),
+                new Vector2(partyIcons[5].rectTransform.position.x, partyIcons[5].rectTransform.position.y)
             };
             while (hole < 4)
             {
                 //until the hole is either at the end of the party, or not there.
-                SaveData.currentSave.Player.swapPartyPokemon(hole, hole + 1);
+                SaveData.currentSave.PC.swapPokemon(0, hole, 0, hole + 1);
                 StartCoroutine(moveIcon(partyIcons[hole + 1], partyPositions[hole]));
                 hole += 1;
             }
-            SaveData.currentSave.Player.swapPartyPokemon(hole, hole + 1);
+            SaveData.currentSave.PC.swapPokemon(0, hole, 0, hole + 1);
             yield return StartCoroutine(moveIcon(partyIcons[hole + 1], partyPositions[hole]));
             hole = currentPosition;
             while (hole < 5)
             {
-                partyIcons[hole].texture = partyIcons[hole + 1].texture;
+                partyIcons[hole].sprite = partyIcons[hole + 1].sprite;
                 partyItems[hole].enabled = partyItems[hole + 1].enabled;
-                partyIcons[hole].pixelInset = new Rect(partyPositions[hole].x, partyPositions[hole].y,
-                    partyIcons[hole].pixelInset.width, partyIcons[hole].pixelInset.height);
-                partyItems[hole].pixelInset = new Rect(partyPositions[hole].x + 17, partyPositions[hole].y + 2,
-                    partyItems[hole].pixelInset.width, partyItems[hole].pixelInset.height);
+                partyIcons[hole].rectTransform.position = new Vector2(partyPositions[hole].x, partyPositions[hole].y);
+                partyItems[hole].rectTransform.position = new Vector2(partyPositions[hole].x + 17, partyPositions[hole].y + 2);
                 hole += 1;
             }
-            partyIcons[5].texture = null;
+            partyIcons[5].sprite = null;
             partyItems[5].enabled = false;
-            partyIcons[5].pixelInset = new Rect(partyPositions[5].x, partyPositions[5].y, partyIcons[5].pixelInset.width,
-                partyIcons[5].pixelInset.height);
-            partyItems[5].pixelInset = new Rect(partyPositions[5].x + 17, partyPositions[5].y + 2,
-                partyItems[5].pixelInset.width, partyItems[5].pixelInset.height);
+            partyIcons[5].rectTransform.position = new Vector2(partyPositions[5].x, partyPositions[5].y);
+            partyItems[5].rectTransform.position = new Vector2(partyPositions[5].x + 17, partyPositions[5].y + 2);
             selectedIndex = hole;
         }
     }
@@ -729,59 +725,55 @@ public class PCHandler : MonoBehaviour
         int icon = currentPosition;
         Vector2[] partyPositions = new Vector2[]
         {
-            new Vector2(partyIcons[0].pixelInset.x, partyIcons[0].pixelInset.y),
-            new Vector2(partyIcons[1].pixelInset.x, partyIcons[1].pixelInset.y),
-            new Vector2(partyIcons[2].pixelInset.x, partyIcons[2].pixelInset.y),
-            new Vector2(partyIcons[3].pixelInset.x, partyIcons[3].pixelInset.y),
-            new Vector2(partyIcons[4].pixelInset.x, partyIcons[4].pixelInset.y),
-            new Vector2(partyIcons[5].pixelInset.x, partyIcons[5].pixelInset.y)
+            new Vector2(partyIcons[0].rectTransform.position.x, partyIcons[0].rectTransform.position.y),
+            new Vector2(partyIcons[1].rectTransform.position.x, partyIcons[1].rectTransform.position.y),
+            new Vector2(partyIcons[2].rectTransform.position.x, partyIcons[2].rectTransform.position.y),
+            new Vector2(partyIcons[3].rectTransform.position.x, partyIcons[3].rectTransform.position.y),
+            new Vector2(partyIcons[4].rectTransform.position.x, partyIcons[4].rectTransform.position.y),
+            new Vector2(partyIcons[5].rectTransform.position.x, partyIcons[5].rectTransform.position.y)
         };
         if (icon > 0)
         {
-            while (SaveData.currentSave.Player.Party[icon - 1] == null && icon > 1)
+            while (SaveData.currentSave.PC.boxes[0][icon - 1] == null && icon > 1)
             {
                 //if the previous spot is free, and is not first spot
                 yield return StartCoroutine(moveIcon(partyIcons[icon], partyPositions[icon - 1]));
-                partyIcons[icon - 1].texture = partyIcons[icon].texture;
-                partyIcons[icon].texture = null;
-                partyIcons[icon].pixelInset = new Rect(partyPositions[icon].x, partyPositions[icon].y,
-                    partyIcons[icon].pixelInset.width, partyIcons[icon].pixelInset.height);
+                partyIcons[icon - 1].sprite = partyIcons[icon].sprite;
+                partyIcons[icon].sprite = null;
+                partyIcons[icon].rectTransform.position = new Vector2(partyPositions[icon].x, partyPositions[icon].y);
                 partyItems[icon - 1].enabled = partyItems[icon].enabled;
                 partyItems[icon].enabled = false;
-                partyItems[icon].pixelInset = new Rect(partyPositions[icon].x + 17, partyPositions[icon].y + 2,
-                    partyItems[icon].pixelInset.width, partyItems[icon].pixelInset.height);
-                SaveData.currentSave.Player.swapPartyPokemon(icon - 1, icon);
+                partyItems[icon].rectTransform.position = new Vector2(partyPositions[icon].x + 17, partyPositions[icon].y + 2);
+                SaveData.currentSave.PC.swapPokemon(0, icon - 1, 0, icon);
                 icon -= 1;
-                updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition]);
+                updateSelectedInfo(PokemonUnity.Game.GameData.Trainer.party[currentPosition]);
             }
-            if (SaveData.currentSave.Player.Party[icon - 1] == null)
+            if (SaveData.currentSave.PC.boxes[0][icon - 1] == null)
             {
                 yield return StartCoroutine(moveIcon(partyIcons[icon], partyPositions[icon - 1]));
-                partyIcons[icon - 1].texture = partyIcons[icon].texture;
-                partyIcons[icon].texture = null;
-                partyIcons[icon].pixelInset = new Rect(partyPositions[icon].x, partyPositions[icon].y,
-                    partyIcons[icon].pixelInset.width, partyIcons[icon].pixelInset.height);
+                partyIcons[icon - 1].sprite = partyIcons[icon].sprite;
+                partyIcons[icon].sprite = null;
+                partyIcons[icon].rectTransform.position = new Vector2(partyPositions[icon].x, partyPositions[icon].y);
                 partyItems[icon - 1].enabled = partyItems[icon].enabled;
                 partyItems[icon].enabled = false;
-                partyItems[icon].pixelInset = new Rect(partyPositions[icon].x + 17, partyPositions[icon].y + 2,
-                    partyItems[icon].pixelInset.width, partyItems[icon].pixelInset.height);
-                SaveData.currentSave.Player.swapPartyPokemon(icon - 1, icon);
-                updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition]);
+                partyItems[icon].rectTransform.position = new Vector2(partyPositions[icon].x + 17, partyPositions[icon].y + 2);
+                SaveData.currentSave.PC.swapPokemon(0, icon - 1, 0, icon);
+                updateSelectedInfo(PokemonUnity.Game.GameData.Trainer.party[currentPosition]);
             }
             icon = 0;
         }
     }
 
-    private IEnumerator moveIcon(GUITexture icon, Vector2 destination)
+    private IEnumerator moveIcon(Image icon, Vector2 destination)
     {
-        GUITexture item = icon.transform.Find("Item").GetComponent<GUITexture>();
+        Image item = icon.transform.Find("Item").GetComponent<Image>();
 
-        float startX = icon.pixelInset.x;
-        float startY = icon.pixelInset.y;
+        float startX = icon.rectTransform.position.x;
+        float startY = icon.rectTransform.position.y;
         float distanceX = destination.x - startX;
         float distanceY = destination.y - startY;
-        float itemOffsetX = item.pixelInset.x - icon.pixelInset.x;
-        float itemOffsetY = item.pixelInset.y - icon.pixelInset.y;
+        float itemOffsetX = item.rectTransform.position.x - icon.rectTransform.position.x;
+        float itemOffsetY = item.rectTransform.position.y - icon.rectTransform.position.y;
 
         float increment = 0;
         while (increment < 1)
@@ -791,29 +783,24 @@ public class PCHandler : MonoBehaviour
             {
                 increment = 1;
             }
-            icon.pixelInset = new Rect(startX + (increment * distanceX), startY + (increment * distanceY),
-                icon.pixelInset.width, icon.pixelInset.height);
-            item.pixelInset = new Rect(startX + (increment * distanceX) + itemOffsetX,
-                startY + (increment * distanceY) + itemOffsetY, item.pixelInset.width, item.pixelInset.height);
+            icon.rectTransform.position = new Vector2(startX + (increment * distanceX), startY + (increment * distanceY));
+            item.rectTransform.position = new Vector2(startX + (increment * distanceX) + itemOffsetX,
+                startY + (increment * distanceY) + itemOffsetY);
             yield return null;
         }
     }
 
     private IEnumerator pickUpPokemon(int currentBoxID, int currentPosition)
     {
-        if (currentBoxID == -1)
-            selectedPokemon = SaveData.currentSave.Player.Party[currentPosition];
-        else
-            selectedPokemon = SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition];
-
+        selectedPokemon = PokemonUnity.Game.GameData.Trainer.party[currentPosition];//[currentBoxID]
         selectedBoxID = currentBoxID;
         selectedIndex = currentPosition;
         carrying = true;
-        cursor.border = new RectOffset(32, 0, 0, 32);
+        //cursor.border = new RectOffset(32, 0, 0, 32);
         SfxHandler.Play(pickUpClip);
-        yield return StartCoroutine(moveCursor(new Vector2(cursor.pixelInset.x, cursor.pixelInset.y - 10)));
-        grabbedPokemon.texture = selectedPokemon.GetIcons();
-        if (selectedPokemon.hasItem())
+        yield return StartCoroutine(moveCursor(new Vector2(cursor.rectTransform.position.x, cursor.rectTransform.position.y - 10)));
+        //grabbedPokemon.sprite = selectedPokemon.GetIcons();
+        if (selectedPokemon.Item != Items.NONE)
         {
             grabbedPokemonItem.enabled = true;
         }
@@ -821,19 +808,19 @@ public class PCHandler : MonoBehaviour
         {
             grabbedPokemonItem.enabled = false;
         }
-        if (currentBoxID == -1)
+        if (currentBoxID == 0)
         {
-            partyIcons[currentPosition].texture = null;
+            partyIcons[currentPosition].sprite = null;
             partyItems[currentPosition].enabled = false;
             StartCoroutine(packParty(currentPosition));
         }
         else
         {
-            currentBoxIconsArray[currentPosition].texture = null;
+            currentBoxIconsArray[currentPosition].sprite = null;
             currentBoxItemsArray[currentPosition].enabled = false;
         }
-        cursor.border = new RectOffset(0, 32, 0, 32);
-        yield return StartCoroutine(moveCursor(new Vector2(cursor.pixelInset.x, cursor.pixelInset.y + 10)));
+        //cursor.border = new RectOffset(0, 32, 0, 32);
+        yield return StartCoroutine(moveCursor(new Vector2(cursor.rectTransform.position.x, cursor.rectTransform.position.y + 10)));
     }
 
     private IEnumerator putDownPokemon(int currentBoxID, int currentPosition)
@@ -843,61 +830,50 @@ public class PCHandler : MonoBehaviour
         {
             originalSpot = true;
         }
-        Pokemon temp;
-        if (currentBoxID != -1)
-            temp = SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition];
-        else
-            temp = SaveData.currentSave.Player.Party[currentPosition];
-        if (!temp.IsNotNullOrNone() || originalSpot)
+        if (SaveData.currentSave.PC.boxes[currentBoxID][currentPosition] == null || originalSpot)
         {
             SfxHandler.Play(putDownClip);
-            yield return StartCoroutine(moveCursor(new Vector2(cursor.pixelInset.x, cursor.pixelInset.y - 10)));
-            if (currentBoxID == -1)
+            yield return StartCoroutine(moveCursor(new Vector2(cursor.rectTransform.position.x, cursor.rectTransform.position.y - 10)));
+            if (currentBoxID == 0)
             {
-                partyIcons[currentPosition].texture = grabbedPokemon.texture;
+                partyIcons[currentPosition].sprite = grabbedPokemon.sprite;
                 partyItems[currentPosition].enabled = grabbedPokemonItem.enabled;
                 StartCoroutine(endOfParty(currentPosition));
             }
             else
             {
-                currentBoxIconsArray[currentPosition].texture = grabbedPokemon.texture;
+                currentBoxIconsArray[currentPosition].sprite = grabbedPokemon.sprite;
                 currentBoxItemsArray[currentPosition].enabled = grabbedPokemonItem.enabled;
             }
-            if (selectedBoxID == -1)
+            if (selectedBoxID == 0)
             {
-                SaveData.currentSave.Player.swapPokemon(selectedBoxID, 5, currentBoxID, currentPosition);
+                SaveData.currentSave.PC.swapPokemon(selectedBoxID, 5, currentBoxID, currentPosition);
             }
             else
             {
-                SaveData.currentSave.Player.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
+                SaveData.currentSave.PC.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
             }
-            grabbedPokemon.texture = null;
+            grabbedPokemon.sprite = null;
             grabbedPokemonItem.enabled = false;
-            cursor.border = new RectOffset(32, 0, 0, 32);
-            yield return StartCoroutine(moveCursor(new Vector2(cursor.pixelInset.x, cursor.pixelInset.y + 10)));
+            //cursor.border = new RectOffset(32, 0, 0, 32);
+            yield return StartCoroutine(moveCursor(new Vector2(cursor.rectTransform.position.x, cursor.rectTransform.position.y + 10)));
             carrying = false;
-            if (currentBoxID != -1)
+            if (currentBoxID != 0)
             {
                 //fully heal if depositing into PC
-                SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition].Heal();
-                updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition]);
+                SaveData.currentSave.PC.boxes[currentBoxID][currentPosition].healFull();
+                updateSelectedInfo(PokemonUnity.Game.GameData.Trainer.party[currentPosition]);//[currentBoxID]
             }
         }
     }
 
     private IEnumerator switchPokemon(int currentBoxID, int currentPosition)
     {
-        Pokemon Ptemp;
-        if (currentBoxID != -1)
-            Ptemp = SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition];
-        else
-            Ptemp = SaveData.currentSave.Player.Party[currentPosition];
-
-        if (Ptemp.IsNotNullOrNone())
+        if (SaveData.currentSave.PC.boxes[currentBoxID][currentPosition] != null)
         {
-            GUITexture targetIcon = null;
-            GUITexture targetItem = null;
-            if (currentBoxID == -1)
+            Image targetIcon = null;
+            Image targetItem = null;
+            if (currentBoxID == 0)
             {
                 targetIcon = partyIcons[currentPosition];
                 targetItem = partyItems[currentPosition];
@@ -907,57 +883,53 @@ public class PCHandler : MonoBehaviour
                 targetIcon = currentBoxIconsArray[currentPosition];
                 targetItem = currentBoxItemsArray[currentPosition];
             }
-            cursor.border = new RectOffset(32, 0, 0, 32);
+            //cursor.border = new RectOffset(32, 0, 0, 32);
             SfxHandler.Play(putDownClip);
             StartCoroutine(moveIcon(grabbedPokemon,
-                new Vector2(grabbedPokemon.pixelInset.x + 5, grabbedPokemon.pixelInset.y - 5)));
+                new Vector2(grabbedPokemon.rectTransform.position.x + 5, grabbedPokemon.rectTransform.position.y - 5)));
             yield return
                 StartCoroutine(moveIcon(targetIcon,
-                    new Vector2(targetIcon.pixelInset.x - 5, targetIcon.pixelInset.y + 5)));
+                    new Vector2(targetIcon.rectTransform.position.x - 5, targetIcon.rectTransform.position.y + 5)));
 
-            Texture temp = targetIcon.texture;
+            UnityEngine.Sprite temp = targetIcon.sprite;
             bool itemTemp = targetItem.enabled;
             //swap target icon's position and grabbedPokemon's position, and update their new textures
-            targetIcon.pixelInset = new Rect(targetIcon.pixelInset.x + 10, targetIcon.pixelInset.y,
-                targetIcon.pixelInset.width, targetIcon.pixelInset.height);
-            targetItem.pixelInset = new Rect(targetItem.pixelInset.x + 10, targetItem.pixelInset.y,
-                targetItem.pixelInset.width, targetItem.pixelInset.height);
-            targetIcon.texture = grabbedPokemon.texture;
+            targetIcon.rectTransform.position = new Vector2(targetIcon.rectTransform.position.x + 10, targetIcon.rectTransform.position.y);
+            targetItem.rectTransform.position = new Vector2(targetItem.rectTransform.position.x + 10, targetItem.rectTransform.position.y);
+            targetIcon.sprite = grabbedPokemon.sprite;
             targetItem.enabled = grabbedPokemonItem.enabled;
-            grabbedPokemon.pixelInset = new Rect(grabbedPokemon.pixelInset.x - 10, grabbedPokemon.pixelInset.y,
-                grabbedPokemon.pixelInset.width, grabbedPokemon.pixelInset.height);
-            grabbedPokemonItem.pixelInset = new Rect(grabbedPokemonItem.pixelInset.x - 10,
-                grabbedPokemonItem.pixelInset.y, grabbedPokemonItem.pixelInset.width,
-                grabbedPokemonItem.pixelInset.height);
-            grabbedPokemon.texture = temp;
+            grabbedPokemon.rectTransform.position = new Vector2(grabbedPokemon.rectTransform.position.x - 10, grabbedPokemon.rectTransform.position.y);
+            grabbedPokemonItem.rectTransform.position = new Vector2(grabbedPokemonItem.rectTransform.position.x - 10,
+                grabbedPokemonItem.rectTransform.position.y);
+            grabbedPokemon.sprite = temp;
             grabbedPokemonItem.enabled = itemTemp;
 
             //update selected info
-            updateSelectedInfoOverride(Ptemp);
+            updateSelectedInfoOverride(PokemonUnity.Game.GameData.Trainer.party[currentPosition]);//[currentBoxID]
             //swap pokemon
-            SaveData.currentSave.Player.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
+            SaveData.currentSave.PC.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
 
             SfxHandler.Play(pickUpClip);
             StartCoroutine(moveIcon(grabbedPokemon,
-                new Vector2(grabbedPokemon.pixelInset.x + 5, grabbedPokemon.pixelInset.y + 5)));
+                new Vector2(grabbedPokemon.rectTransform.position.x + 5, grabbedPokemon.rectTransform.position.y + 5)));
             yield return
                 StartCoroutine(moveIcon(targetIcon,
-                    new Vector2(targetIcon.pixelInset.x - 5, targetIcon.pixelInset.y - 5)));
+                    new Vector2(targetIcon.rectTransform.position.x - 5, targetIcon.rectTransform.position.y - 5)));
 
-            cursor.border = new RectOffset(0, 32, 0, 32);
+            //cursor.border = new RectOffset(0, 32, 0, 32);
 
-            if (currentBoxID != -1)
+            if (currentBoxID != 0)
             {
                 //fully heal if depositing into PC
-                SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition].Heal();
+                SaveData.currentSave.PC.boxes[currentBoxID][currentPosition].healFull();
             }
         }
     }
 
     private IEnumerator releasePokemon(int currentBoxID, int currentPosition)
     {
-        GUITexture targetIcon = null;
-        if (currentBoxID == -1)
+        Image targetIcon = null;
+        if (currentBoxID == 0)
         {
             targetIcon = partyIcons[currentPosition];
         }
@@ -967,7 +939,7 @@ public class PCHandler : MonoBehaviour
         }
         float increment = 0;
         float moveSpeedSlow = 0.4f;
-        float startY = targetIcon.pixelInset.y;
+        float startY = targetIcon.rectTransform.position.y;
         while (increment < 1)
         {
             increment += (1 / moveSpeedSlow) * Time.deltaTime;
@@ -975,17 +947,13 @@ public class PCHandler : MonoBehaviour
             {
                 increment = 1;
             }
-            targetIcon.pixelInset = new Rect(targetIcon.pixelInset.x, startY + (16 * increment), 32,
-                (32f * (1f - increment)));
+            targetIcon.rectTransform.position = new Vector2(targetIcon.rectTransform.position.x, startY + (16 * increment));
+            targetIcon.rectTransform.sizeDelta = new Vector2(32, (32f * (1f - increment)));
             yield return null;
         }
-        if (currentBoxID != -1)
-            SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition] = null;
-        else
-            SaveData.currentSave.Player.Party[currentPosition] = null;
-        
-        targetIcon.texture = null;
-        targetIcon.pixelInset = new Rect(targetIcon.pixelInset.x, startY, 32, 32);
+        SaveData.currentSave.PC.boxes[currentBoxID][currentPosition] = null;
+        targetIcon.sprite = null;
+        targetIcon.rectTransform.position = new Vector2(targetIcon.rectTransform.position.x, startY);
     }
 
     private IEnumerator withdrawPokemon(int currentPosition)
@@ -993,7 +961,7 @@ public class PCHandler : MonoBehaviour
         int targetPosition = 6;
         for (int i = 1; i < 6; i++)
         {
-            if (!SaveData.currentSave.Player.Party[i].IsNotNullOrNone())
+            if (SaveData.currentSave.PC.boxes[0][i] == null)
             {
                 targetPosition = i;
                 i = 6;
@@ -1002,13 +970,13 @@ public class PCHandler : MonoBehaviour
         if (targetPosition < 6)
         {
             yield return StartCoroutine(pickUpPokemon(currentBoxID, currentPosition));
-            float startX = cursor.pixelInset.x;
-            float startY = cursor.pixelInset.y;
+            float startX = cursor.rectTransform.position.x;
+            float startY = cursor.rectTransform.position.y;
             yield return
                 StartCoroutine(
-                    moveCursor(new Vector2(partyIcons[targetPosition].pixelInset.x + 267,
-                        partyIcons[targetPosition].pixelInset.y + 20)));
-            yield return StartCoroutine(putDownPokemon(-1, targetPosition));
+                    moveCursor(new Vector2(partyIcons[targetPosition].rectTransform.position.x + 267,
+                        partyIcons[targetPosition].rectTransform.position.y + 20)));
+            yield return StartCoroutine(putDownPokemon(0, targetPosition));
             yield return StartCoroutine(moveCursor(new Vector2(startX, startY)));
         }
     }
@@ -1017,13 +985,13 @@ public class PCHandler : MonoBehaviour
     {
         if (targetPosition < 30)
         {
-            yield return StartCoroutine(pickUpPokemon(-1, currentPosition));
-            float startX = cursor.pixelInset.x;
-            float startY = cursor.pixelInset.y;
+            yield return StartCoroutine(pickUpPokemon(0, currentPosition));
+            float startX = cursor.rectTransform.position.x;
+            float startY = cursor.rectTransform.position.y;
             yield return
                 StartCoroutine(
-                    moveCursor(new Vector2(currentBoxIconsArray[targetPosition].pixelInset.x + 92,
-                        currentBoxIconsArray[targetPosition].pixelInset.y + 58)));
+                    moveCursor(new Vector2(currentBoxIconsArray[targetPosition].rectTransform.position.x + 92,
+                        currentBoxIconsArray[targetPosition].rectTransform.position.y + 58)));
             yield return StartCoroutine(putDownPokemon(currentBoxID, targetPosition));
             yield return StartCoroutine(moveCursor(new Vector2(startX, startY)));
         }
@@ -1044,7 +1012,7 @@ public class PCHandler : MonoBehaviour
                 {
                     frame = 0;
                 }
-                selectedSprite.texture = selectedSpriteAnimation[frame];
+                selectedSprite.sprite = selectedSpriteAnimation[frame];
             }
             yield return new WaitForSeconds(0.08f);
         }
@@ -1086,79 +1054,79 @@ public class PCHandler : MonoBehaviour
         cursor.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         cursorMode = CursorMode.Standard;
 
-        currentBoxID = 0;
-        nextBoxID = 1;
-        previousBoxID = SaveData.currentSave.PC.AllBoxes.Length - 1;
+
+        currentBoxID = 1;
+        nextBoxID = 2;
+        previousBoxID = SaveData.currentSave.PC.boxes.Length - 1;
 
         updateBoxesAndParty();
 
-        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
-        cursor.pixelInset = new Rect(cursorPositions[currentPosition].x, cursorPositions[currentPosition].y,
-            cursor.pixelInset.width, cursor.pixelInset.height);
-        grabbedPokemon.texture = null;
+        updateSelectedInfo(PokemonUnity.Game.GameData.Trainer.party[currentPosition - 3]);//[currentBoxID]
+        cursor.rectTransform.position = new Vector2(cursorPositions[currentPosition].x, cursorPositions[currentPosition].y);
+        grabbedPokemon.sprite = null;
         grabbedPokemonItem.enabled = false;
 
         running = true;
         StartCoroutine("animateCursor");
         StartCoroutine("animatePokemon");
         yield return new WaitForSeconds(0.5f);
-        while (running)
+        //ToDo: Why is this coroutine so massive?
+        /*while (running)
         {
             //if cursor is in boxIndex
             if (currentPosition < 3)
             {
-                if (Input.GetAxisRaw("Horizontal") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
-                    /*	if(currentPosition < 2){
-                            currentPosition += 1;
-                            SfxHandler.Play(selectClip);
-                            updateSelectedInfo(null);}
-                        yield return StartCoroutine(moveCursor(cursorPositions[currentPosition])); */
+                    //	if(currentPosition < 2){
+                    //        currentPosition += 1;
+                    //        SfxHandler.Play(selectClip);
+                    //        updateSelectedInfo(null);}
+                    //    yield return StartCoroutine(moveCursor(cursorPositions[currentPosition])); 
                     SfxHandler.Play(selectClip);
                     yield return StartCoroutine(moveBox(1));
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     if (currentPosition == 0)
                     {
                         currentPosition = 3;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     else if (currentPosition == 1)
                     {
                         currentPosition = 6;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     else if (currentPosition == 2)
                     {
                         currentPosition = 8;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
-                    /*	if(currentPosition > 0){
-                            currentPosition -= 1;
-                            SfxHandler.Play(selectClip);
-                            updateSelectedInfo(null);}
-                        yield return StartCoroutine(moveCursor(cursorPositions[currentPosition])); */
+                    //	if(currentPosition > 0){
+                    //        currentPosition -= 1;
+                    //        SfxHandler.Play(selectClip);
+                    //        updateSelectedInfo(null);}
+                    //    yield return StartCoroutine(moveCursor(cursorPositions[currentPosition])); 
                     SfxHandler.Play(selectClip);
                     yield return StartCoroutine(moveBox(-1));
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
                     string[] choices = new string[] {"Jump", "Wallpaper", "Name", "Cancel"};
-                    Dialog.drawDialogBox();
-                    Dialog.drawTextInstant("What would you like to do?");
-                    Dialog.drawChoiceBox(choices);
+                    Dialog.DrawDialogBox();
+                    Dialog.DrawTextInstant("What would you like to do?");
                     yield return new WaitForSeconds(0.2f);
-                    yield return StartCoroutine(Dialog.choiceNavigate(choices));
-                    Dialog.undrawChoiceBox();
-                    Dialog.undrawDialogBox();
+                    yield return StartCoroutine(Dialog.DrawChoiceBox(choices));
+                    Dialog.UndrawChoiceBox();
+                    Dialog.UndrawDialogBox();
                     int chosenIndex = Dialog.chosenIndex;
                     if (chosenIndex == 3)
                     {
@@ -1187,7 +1155,7 @@ public class PCHandler : MonoBehaviour
                         }
                         if (Scene.main.Typing.typedString.Length > 0)
                         {
-                            SaveData.currentSave.PC.BoxNames[currentBoxID] = Scene.main.Typing.typedString;
+                            SaveData.currentSave.PC.boxName[currentBoxID] = Scene.main.Typing.typedString;
                         }
                         updateBoxesAndParty();
 
@@ -1199,18 +1167,18 @@ public class PCHandler : MonoBehaviour
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
-                else if (Input.GetButton("Back"))
+                else if (UnityEngine.Input.GetButton("Back"))
                 {
                     if (carrying)
                     {
-                        Dialog.drawDialogBox();
-                        Dialog.drawTextInstant("You're holding a Pokémon!");
+                        Dialog.DrawDialogBox();
+                        Dialog.DrawTextInstant("You're holding a Pokémon!");
                         yield return new WaitForSeconds(0.2f);
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
-                        Dialog.undrawDialogBox();
+                        Dialog.UndrawDialogBox();
                         yield return new WaitForSeconds(0.2f);
                     }
                     else
@@ -1220,13 +1188,12 @@ public class PCHandler : MonoBehaviour
                         updateSelectedInfo(null);
                         yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
 
-                        Dialog.drawDialogBox();
-                        Dialog.drawTextInstant("Continue Box operations?");
-                        Dialog.drawChoiceBox();
+                        Dialog.DrawDialogBox();
+                        Dialog.DrawTextInstant("Continue Box operations?");
                         yield return new WaitForSeconds(0.2f);
-                        yield return Dialog.StartCoroutine("choiceNavigate");
-                        Dialog.undrawChoiceBox();
-                        Dialog.undrawDialogBox();
+                        yield return Dialog.StartCoroutine(Dialog.DrawChoiceBox());
+                        Dialog.UndrawChoiceBox();
+                        Dialog.UndrawDialogBox();
                         int chosenIndex = Dialog.chosenIndex;
                         if (chosenIndex == 0)
                         {
@@ -1242,21 +1209,21 @@ public class PCHandler : MonoBehaviour
             //if cursor is in boxContents
             else if (currentPosition > 2 && currentPosition < 33)
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     //if along the top row, act differently depending on location
                     if (currentPosition < 9)
                     {
-                        /*		if(currentPosition == 3){
-                                    currentPosition = 0;
-                                    SfxHandler.Play(selectClip);
-                                    updateSelectedInfo(null);}
-                                else if(currentPosition == 8){
-                                    currentPosition = 2;
-                                    SfxHandler.Play(selectClip);
-                                    updateSelectedInfo(null);}
-                                else{
-                        */
+                        //		if(currentPosition == 3){
+                        //          currentPosition = 0;
+                        //          SfxHandler.Play(selectClip);
+                        //          updateSelectedInfo(null);}
+                        //      else if(currentPosition == 8){
+                        //          currentPosition = 2;
+                        //          SfxHandler.Play(selectClip);
+                        //          updateSelectedInfo(null);}
+                        //      else{
+                        //
                         currentPosition = 1;
                         SfxHandler.Play(selectClip);
                         updateSelectedInfo(null);
@@ -1266,47 +1233,47 @@ public class PCHandler : MonoBehaviour
                     {
                         currentPosition -= 6;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
                     //if along the right column, move to party
                     if (currentPosition == 8 || currentPosition == 14)
                     {
                         currentPosition = 33;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                     }
                     else if (currentPosition == 20)
                     {
                         currentPosition = 35;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                     }
                     else if (currentPosition == 26 || currentPosition == 32)
                     {
                         currentPosition = 37;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                     }
                     //otherwise go one to the right
                     else
                     {
                         currentPosition += 1;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     if (currentPosition < 27)
                     {
                         currentPosition += 6;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     else if (currentPosition < 31)
                     {
@@ -1322,22 +1289,22 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
                     //if not along the left column, move left one
                     if ((currentPosition + 3) % 6 != 0)
                     {
                         currentPosition -= 1;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
-                    if (SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3].IsNotNullOrNone())
+                    if (SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3] != null)
                     {
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                         //STANDARD
                         if (cursorMode == CursorMode.Standard)
                         {
@@ -1345,15 +1312,14 @@ public class PCHandler : MonoBehaviour
                             {
                                 string[] choices = new string[]
                                     {"Pick Up", "Summary", "Item", "Withdraw", "Release", "Cancel"};
-                                Dialog.drawDialogBox();
-                                Dialog.drawTextInstant("What would you like to do with " +
-                                                       SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]
-                                                           .Name + "?");
-                                Dialog.drawChoiceBox(choices);
+                                Dialog.DrawDialogBox();
+                                Dialog.DrawTextInstant("What would you like to do with " +
+                                                       SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]
+                                                           .getName() + "?");
                                 yield return new WaitForSeconds(0.2f);
-                                yield return StartCoroutine(Dialog.choiceNavigate(choices));
-                                Dialog.undrawChoiceBox();
-                                Dialog.undrawDialogBox();
+                                yield return StartCoroutine(Dialog.DrawChoiceBox(choices));
+                                Dialog.UndrawChoiceBox();
+                                Dialog.UndrawDialogBox();
                                 int chosenIndex = Dialog.chosenIndex;
                                 if (chosenIndex == 5)
                                 {
@@ -1369,9 +1335,9 @@ public class PCHandler : MonoBehaviour
 
                                     //Set SceneSummary to be active so that it appears
                                     Scene.main.Summary.gameObject.SetActive(true);
-                                    StartCoroutine(
-                                        Scene.main.Summary.control(SaveData.currentSave.PC.AllBoxes[currentBoxID],
-                                            currentPosition - 3));
+                                    //StartCoroutine( //ToDo: uncomment and review
+                                    //    Scene.main.Summary.control(SaveData.currentSave.PC.boxes[currentBoxID],
+                                    //        currentPosition - 3));
                                     //Start an empty loop that will only stop when ScenePC is no longer active (is closed)
                                     while (Scene.main.Summary.gameObject.activeSelf)
                                     {
@@ -1386,25 +1352,24 @@ public class PCHandler : MonoBehaviour
                                 else if (chosenIndex == 3)
                                 {
                                     //ITEM
-                                    Pokemon currentPokemon =
-                                        SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3];
+                                    IPokemon currentPokemon =
+                                        SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3];
 
-                                    Dialog.undrawChoiceBox();
-                                    Dialog.drawDialogBox();
-                                    if (currentPokemon.hasItem())
+                                    Dialog.UndrawChoiceBox();
+                                    Dialog.DrawDialogBox();
+                                    if (currentPokemon.Item != Items.NONE)
                                     {
                                         yield return
                                             StartCoroutine(
-                                                Dialog.drawText(currentPokemon.Name + " is holding " +
-                                                                currentPokemon.Item.toString() + "."));
+                                                Dialog.DrawText(currentPokemon.Name + " is holding " +
+                                                                currentPokemon.Item.ToString(TextScripts.Name) + "."));
                                         string[] itemChoices = new string[]
                                         {
                                             "Swap", "Take", "Cancel"
                                         };
                                         int itemChosenIndex = -1;
-                                        Dialog.drawChoiceBox(itemChoices);
                                         yield return new WaitForSeconds(0.2f);
-                                        yield return StartCoroutine(Dialog.choiceNavigate(itemChoices));
+                                        yield return StartCoroutine(Dialog.DrawChoiceBox(itemChoices));
 
                                         itemChosenIndex = Dialog.chosenIndex;
 
@@ -1424,48 +1389,46 @@ public class PCHandler : MonoBehaviour
 
                                             string chosenItem = Scene.main.Bag.chosenItem;
 
-                                            Dialog.undrawChoiceBox();
-                                            Dialog.undrawDialogBox();
+                                            Dialog.UndrawChoiceBox();
+                                            Dialog.UndrawDialogBox();
 
                                             //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
                                             yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 
                                             if (!string.IsNullOrEmpty(chosenItem))
                                             {
-                                                Dialog.drawDialogBox();
+                                                Dialog.DrawDialogBox();
                                                 yield return
                                                     StartCoroutine(
-                                                        Dialog.drawText("Swap " + currentPokemon.Item.toString() + " for " +
+                                                        Dialog.DrawText("Swap " + currentPokemon.Item.ToString(TextScripts.Name) + " for " +
                                                                         chosenItem + "?"));
-                                                Dialog.drawChoiceBox();
-                                                yield return StartCoroutine(Dialog.choiceNavigate());
+                                                yield return StartCoroutine( Dialog.DrawChoiceBox());
 
                                                 itemChosenIndex = Dialog.chosenIndex;
-                                                Dialog.undrawChoiceBox();
+                                                Dialog.UndrawChoiceBox();
 
                                                 if (itemChosenIndex == 1)
                                                 {
-                                                    //string receivedItem = currentPokemon.swapHeldItem(chosenItem);
-                                                    string receivedItem = currentPokemon.SwapItem(chosenItem.ToItems()).toString();
-                                                    SaveData.currentSave.Bag.addItem(receivedItem.ToItems(), 1);
-                                                    SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
+                                                    string receivedItem = currentPokemon.swapHeldItem(chosenItem);
+                                                    SaveData.currentSave.Bag.addItem(receivedItem, 1);
+                                                    SaveData.currentSave.Bag.removeItem(chosenItem, 1);
 
-                                                    Dialog.drawDialogBox();
+                                                    Dialog.DrawDialogBox();
                                                     yield return
-                                                        Dialog.StartCoroutine("drawText",
+                                                        Dialog.StartCoroutine(Dialog.DrawText(
                                                             "Gave " + chosenItem + " to " + currentPokemon.Name +
-                                                            ",");
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                            ","));
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
-                                                    Dialog.drawDialogBox();
+                                                    Dialog.DrawDialogBox();
                                                     yield return
-                                                        Dialog.StartCoroutine("drawText",
-                                                            "and received " + receivedItem + " in return.");
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                        Dialog.StartCoroutine(Dialog.DrawText(
+                                                            "and received " + receivedItem + " in return."));
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
@@ -1475,20 +1438,20 @@ public class PCHandler : MonoBehaviour
                                         else if (itemChosenIndex == 1)
                                         {
                                             //Take
-                                            Dialog.undrawChoiceBox();
-                                            string receivedItem = currentPokemon.SwapItem(PokemonUnity.Inventory.Items.NONE).toString();
-                                            SaveData.currentSave.Bag.addItem(receivedItem.ToItems(), 1);
+                                            Dialog.UndrawChoiceBox();
+                                            string receivedItem = currentPokemon.swapHeldItem("");
+                                            SaveData.currentSave.Bag.addItem(receivedItem, 1);
 
                                             //adjust displayed data
                                             updateSelectedInfo(currentPokemon);
                                             currentBoxItemsArray[currentPosition - 3].enabled = false;
 
-                                            Dialog.drawDialogBox();
+                                            Dialog.DrawDialogBox();
                                             yield return
                                                 StartCoroutine(
-                                                    Dialog.drawText("Took " + receivedItem + " from " +
+                                                    Dialog.DrawText("Took " + receivedItem + " from " +
                                                                     currentPokemon.Name + "."));
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -1498,15 +1461,14 @@ public class PCHandler : MonoBehaviour
                                     {
                                         yield return
                                             StartCoroutine(
-                                                Dialog.drawText(currentPokemon.Name + " isn't holding anything."));
+                                                Dialog.DrawText(currentPokemon.Name + " isn't holding anything."));
                                         string[] itemChoices = new string[]
                                         {
                                             "Give", "Cancel"
                                         };
                                         int itemChosenIndex = -1;
-                                        Dialog.drawChoiceBox(itemChoices);
                                         yield return new WaitForSeconds(0.2f);
-                                        yield return StartCoroutine(Dialog.choiceNavigate(itemChoices));
+                                        yield return StartCoroutine(Dialog.DrawChoiceBox(itemChoices));
                                         itemChosenIndex = Dialog.chosenIndex;
 
                                         if (itemChosenIndex == 1)
@@ -1525,57 +1487,57 @@ public class PCHandler : MonoBehaviour
 
                                             string chosenItem = Scene.main.Bag.chosenItem;
 
-                                            Dialog.undrawChoiceBox();
-                                            Dialog.undrawDialogBox();
+                                            Dialog.UndrawChoiceBox();
+                                            Dialog.UndrawDialogBox();
 
                                             //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
                                             yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 
                                             if (!string.IsNullOrEmpty(chosenItem))
                                             {
-                                                currentPokemon.SwapItem(chosenItem.ToItems()).toString();
-                                                SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
+                                                currentPokemon.swapHeldItem(chosenItem);
+                                                SaveData.currentSave.Bag.removeItem(chosenItem, 1);
 
                                                 //adjust displayed data
                                                 updateSelectedInfo(currentPokemon);
                                                 currentBoxItemsArray[currentPosition - 3].enabled = true;
 
-                                                Dialog.drawDialogBox();
+                                                Dialog.DrawDialogBox();
                                                 yield return
-                                                    Dialog.StartCoroutine("drawText",
-                                                        "Gave " + chosenItem + " to " + currentPokemon.Name + ".");
-                                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                                    Dialog.StartCoroutine(Dialog.DrawText(
+                                                        "Gave " + chosenItem + " to " + currentPokemon.Name + "."));
+                                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                                 {
                                                     yield return null;
                                                 }
                                             }
                                         }
                                     }
-                                    Dialog.undrawChoiceBox();
-                                    Dialog.undrawDialogBox();
+                                    Dialog.UndrawChoiceBox();
+                                    Dialog.UndrawDialogBox();
                                     yield return new WaitForSeconds(0.2f);
                                     chosenIndex = 0;
                                 }
                                 else if (chosenIndex == 2)
                                 {
                                     //WITHDRAW
-                                    if (SaveData.currentSave.Player.Party[5].IsNotNullOrNone())
+                                    if (SaveData.currentSave.PC.boxes[0][5] != null)
                                     {
                                         //if party is full
-                                        Dialog.drawDialogBox();
-                                        Dialog.drawTextInstant("Your party is full!");
+                                        Dialog.DrawDialogBox();
+                                        Dialog.DrawTextInstant("Your party is full!");
                                         yield return new WaitForSeconds(0.2f);
-                                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                         {
                                             yield return null;
                                         }
-                                        Dialog.undrawDialogBox();
+                                        Dialog.UndrawDialogBox();
                                     }
                                     else
                                     {
                                         yield return StartCoroutine(withdrawPokemon(currentPosition - 3));
                                         updateSelectedInfo(
-                                            SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                                            SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                                         chosenIndex = 0;
                                     }
                                 }
@@ -1584,40 +1546,39 @@ public class PCHandler : MonoBehaviour
                                     //RELEASE
                                     int releaseIndex = 1;
                                     string pokemonName =
-                                        SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3].Name;
+                                        SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3].getName();
                                     while (releaseIndex != 0)
                                     {
-                                        Dialog.drawDialogBox();
-                                        Dialog.drawTextInstant("Do you want to release " + pokemonName + "?");
-                                        Dialog.drawChoiceBoxNo();
+                                        Dialog.DrawDialogBox();
+                                        Dialog.DrawTextInstant("Do you want to release " + pokemonName + "?");
                                         yield return new WaitForSeconds(0.2f);
-                                        yield return StartCoroutine(Dialog.choiceNavigateNo());
-                                        Dialog.undrawChoiceBox();
+                                        yield return StartCoroutine(Dialog.DrawChoiceBoxNo());
+                                        Dialog.UndrawChoiceBox();
                                         releaseIndex = Dialog.chosenIndex;
                                         if (releaseIndex == 1)
                                         {
                                             yield return
                                                 StartCoroutine(releasePokemon(currentBoxID, currentPosition - 3));
-                                            Dialog.drawDialogBox();
-                                            Dialog.drawTextInstant(pokemonName + " was released.");
+                                            Dialog.DrawDialogBox();
+                                            Dialog.DrawTextInstant(pokemonName + " was released.");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
-                                            Dialog.drawDialogBox();
-                                            Dialog.drawTextInstant("Bye bye, " + pokemonName + "!");
+                                            Dialog.DrawDialogBox();
+                                            Dialog.DrawTextInstant("Bye bye, " + pokemonName + "!");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
                                             releaseIndex = 0;
                                             chosenIndex = 0;
                                             updateSelectedInfo(
-                                                SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                                                SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                                         }
-                                        Dialog.undrawDialogBox();
+                                        Dialog.UndrawDialogBox();
                                     }
                                     yield return new WaitForSeconds(0.2f);
                                 }
@@ -1654,24 +1615,24 @@ public class PCHandler : MonoBehaviour
                         //WITHDRAW DEPOSIT
                         else
                         {
-                            if (SaveData.currentSave.Player.Party[5].IsNotNullOrNone())
+                            if (SaveData.currentSave.PC.boxes[0][5] != null)
                             {
                                 //if party is full
-                                Dialog.drawDialogBox();
-                                Dialog.drawTextInstant("Your party is full!");
+                                Dialog.DrawDialogBox();
+                                Dialog.DrawTextInstant("Your party is full!");
                                 yield return new WaitForSeconds(0.2f);
-                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
-                                       Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back") &&
+                                       UnityEngine.Input.GetAxisRaw("Horizontal") == 0 && UnityEngine.Input.GetAxisRaw("Vertical") == 0)
                                 {
                                     yield return null;
                                 }
-                                Dialog.undrawDialogBox();
+                                Dialog.UndrawDialogBox();
                                 yield return new WaitForSeconds(0.2f);
                             }
                             else
                             {
                                 yield return StartCoroutine(withdrawPokemon(currentPosition - 3));
-                                updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                                updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                             }
                         }
                     }
@@ -1680,18 +1641,18 @@ public class PCHandler : MonoBehaviour
                         yield return StartCoroutine(putDownPokemon(currentBoxID, currentPosition - 3));
                     }
                 }
-                else if (Input.GetButton("Back"))
+                else if (UnityEngine.Input.GetButton("Back"))
                 {
                     if (carrying)
                     {
-                        Dialog.drawDialogBox();
-                        Dialog.drawTextInstant("You're holding a Pokémon!");
+                        Dialog.DrawDialogBox();
+                        Dialog.DrawTextInstant("You're holding a Pokémon!");
                         yield return new WaitForSeconds(0.2f);
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
-                        Dialog.undrawDialogBox();
+                        Dialog.UndrawDialogBox();
                         yield return new WaitForSeconds(0.2f);
                     }
                     else
@@ -1701,13 +1662,12 @@ public class PCHandler : MonoBehaviour
                         updateSelectedInfo(null);
                         yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
 
-                        Dialog.drawDialogBox();
-                        Dialog.drawTextInstant("Continue Box operations?");
-                        Dialog.drawChoiceBox();
+                        Dialog.DrawDialogBox();
+                        Dialog.DrawTextInstant("Continue Box operations?");
                         yield return new WaitForSeconds(0.2f);
-                        yield return Dialog.StartCoroutine("choiceNavigate");
-                        Dialog.undrawChoiceBox();
-                        Dialog.undrawDialogBox();
+                        yield return Dialog.StartCoroutine(Dialog.DrawChoiceBox());
+                        Dialog.UndrawChoiceBox();
+                        Dialog.UndrawDialogBox();
                         int chosenIndex = Dialog.chosenIndex;
                         if (chosenIndex == 0)
                         {
@@ -1723,33 +1683,33 @@ public class PCHandler : MonoBehaviour
             //if cursor is in partyContents
             else if (currentPosition > 32 && currentPosition < 39)
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     if (currentPosition > 34)
                     {
                         currentPosition -= 2;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
                     if (currentPosition % 2 == 1)
                     {
                         currentPosition += 1;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     if (currentPosition < 37)
                     {
                         currentPosition += 2;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                     }
                     else
                     {
@@ -1759,42 +1719,42 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
                     if (currentPosition == 33)
                     {
                         currentPosition = 8;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     else if (currentPosition == 35)
                     {
                         currentPosition = 20;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     else if (currentPosition == 37)
                     {
                         currentPosition = 26;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     else
                     {
                         currentPosition -= 1;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
-                    if (SaveData.currentSave.Player.Party[currentPosition - 33].IsNotNullOrNone())
+                    if (SaveData.currentSave.PC.boxes[0][currentPosition - 33] != null)
                     {
                         //STANDARD
                         if (cursorMode == CursorMode.Standard)
                         {
-                            updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                            updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                             if (!carrying)
                             {
                                 int chosenIndex = 1;
@@ -1802,29 +1762,28 @@ public class PCHandler : MonoBehaviour
                                 {
                                     string[] choices = new string[]
                                         {"Pick Up", "Summary", "Item", "Deposit", "Release", "Cancel"};
-                                    Dialog.drawDialogBox();
-                                    Dialog.drawTextInstant("What would you like to do?");
-                                    Dialog.drawChoiceBox(choices);
+                                    Dialog.DrawDialogBox();
+                                    Dialog.DrawTextInstant("What would you like to do?");
                                     yield return new WaitForSeconds(0.2f);
-                                    yield return StartCoroutine(Dialog.choiceNavigate(choices));
-                                    Dialog.undrawChoiceBox();
-                                    Dialog.undrawDialogBox();
+                                    yield return StartCoroutine(Dialog.DrawChoiceBox(choices));
+                                    Dialog.UndrawChoiceBox();
+                                    Dialog.UndrawDialogBox();
                                     chosenIndex = Dialog.chosenIndex;
                                     if (chosenIndex == 5)
                                     {
                                         //PICK UP
-                                        if (SaveData.currentSave.Player.Party[1].IsNotNullOrNone())
+                                        if (SaveData.currentSave.PC.boxes[0][1] != null)
                                         {
                                             //if there is more than one pokemon in the party
-                                            yield return StartCoroutine(pickUpPokemon(-1, currentPosition - 33));
+                                            yield return StartCoroutine(pickUpPokemon(0, currentPosition - 33));
                                             chosenIndex = 0;
                                         }
                                         else
                                         {
-                                            Dialog.drawDialogBox();
-                                            Dialog.drawTextInstant("That's your last Pokémon!");
+                                            Dialog.DrawDialogBox();
+                                            Dialog.DrawTextInstant("That's your last Pokémon!");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -1840,7 +1799,7 @@ public class PCHandler : MonoBehaviour
 
                                         //Set SceneSummary to be active so that it appears
                                         Scene.main.Summary.gameObject.SetActive(true);
-                                        StartCoroutine(Scene.main.Summary.control(SaveData.currentSave.Player.Party,
+                                        StartCoroutine(Scene.main.Summary.control(SaveData.currentSave.PC.boxes[0],
                                             currentPosition - 33));
                                         //Start an empty loop that will only stop when ScenePC is no longer active (is closed)
                                         while (Scene.main.Summary.gameObject.activeSelf)
@@ -1855,24 +1814,23 @@ public class PCHandler : MonoBehaviour
                                     else if (chosenIndex == 3)
                                     {
                                         //ITEM
-                                        Pokemon currentPokemon = SaveData.currentSave.Player.Party[currentPosition - 33];
+                                        Pokemon currentPokemon = SaveData.currentSave.PC.boxes[0][currentPosition - 33];
 
-                                        Dialog.undrawChoiceBox();
-                                        Dialog.drawDialogBox();
-                                        if (currentPokemon.hasItem())
+                                        Dialog.UndrawChoiceBox();
+                                        Dialog.DrawDialogBox();
+                                        if (!string.IsNullOrEmpty(currentPokemon.HeldItem))
                                         {
                                             yield return
                                                 StartCoroutine(
-                                                    Dialog.drawText(currentPokemon.Name + " is holding " +
-                                                                    currentPokemon.Item.toString() + "."));
+                                                    Dialog.DrawText(currentPokemon.Name + " is holding " +
+                                                                    currentPokemon.HeldItem + "."));
                                             string[] itemChoices = new string[]
                                             {
                                                 "Swap", "Take", "Cancel"
                                             };
                                             int itemChosenIndex = -1;
-                                            Dialog.drawChoiceBox(itemChoices);
                                             yield return new WaitForSeconds(0.2f);
-                                            yield return StartCoroutine(Dialog.choiceNavigate(itemChoices));
+                                            yield return StartCoroutine(Dialog.DrawChoiceBox(itemChoices));
 
                                             itemChosenIndex = Dialog.chosenIndex;
 
@@ -1892,47 +1850,46 @@ public class PCHandler : MonoBehaviour
 
                                                 string chosenItem = Scene.main.Bag.chosenItem;
 
-                                                Dialog.undrawChoiceBox();
-                                                Dialog.undrawDialogBox();
+                                                Dialog.UndrawChoiceBox();
+                                                Dialog.UndrawDialogBox();
 
                                                 //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
                                                 yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 
                                                 if (!string.IsNullOrEmpty(chosenItem))
                                                 {
-                                                    Dialog.drawDialogBox();
+                                                    Dialog.DrawDialogBox();
                                                     yield return
                                                         StartCoroutine(
-                                                            Dialog.drawText("Swap " + currentPokemon.Item.toString() +
+                                                            Dialog.DrawText("Swap " + currentPokemon.HeldItem +
                                                                             " for " + chosenItem + "?"));
-                                                    Dialog.drawChoiceBox();
-                                                    yield return StartCoroutine(Dialog.choiceNavigate());
+                                                    yield return StartCoroutine(Dialog.DrawChoiceBox());
 
                                                     itemChosenIndex = Dialog.chosenIndex;
-                                                    Dialog.undrawChoiceBox();
+                                                    Dialog.UndrawChoiceBox();
 
                                                     if (itemChosenIndex == 1)
                                                     {
-                                                        string receivedItem = currentPokemon.SwapItem(chosenItem.ToItems()).toString();
-                                                        SaveData.currentSave.Bag.addItem(receivedItem.ToItems(), 1);
-                                                        SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
+                                                        string receivedItem = currentPokemon.swapHeldItem(chosenItem);
+                                                        SaveData.currentSave.Bag.addItem(receivedItem, 1);
+                                                        SaveData.currentSave.Bag.removeItem(chosenItem, 1);
 
-                                                        Dialog.drawDialogBox();
+                                                        Dialog.DrawDialogBox();
                                                         yield return
-                                                            Dialog.StartCoroutine("drawText",
+                                                            Dialog.StartCoroutine(Dialog.DrawText(
                                                                 "Gave " + chosenItem + " to " + currentPokemon.Name +
-                                                                ",");
-                                                        while (!Input.GetButtonDown("Select") &&
-                                                               !Input.GetButtonDown("Back"))
+                                                                ","));
+                                                        while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                               !UnityEngine.Input.GetButtonDown("Back"))
                                                         {
                                                             yield return null;
                                                         }
-                                                        Dialog.drawDialogBox();
+                                                        Dialog.DrawDialogBox();
                                                         yield return
-                                                            Dialog.StartCoroutine("drawText",
-                                                                "and received " + receivedItem + " in return.");
-                                                        while (!Input.GetButtonDown("Select") &&
-                                                               !Input.GetButtonDown("Back"))
+                                                            Dialog.StartCoroutine(Dialog.DrawText(
+                                                                "and received " + receivedItem + " in return."));
+                                                        while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                               !UnityEngine.Input.GetButtonDown("Back"))
                                                         {
                                                             yield return null;
                                                         }
@@ -1942,20 +1899,20 @@ public class PCHandler : MonoBehaviour
                                             else if (itemChosenIndex == 1)
                                             {
                                                 //Take
-                                                Dialog.undrawChoiceBox();
-                                                string receivedItem = currentPokemon.SwapItem(PokemonUnity.Inventory.Items.NONE).toString();
-                                                SaveData.currentSave.Bag.addItem(receivedItem.ToItems(), 1);
+                                                Dialog.UndrawChoiceBox();
+                                                string receivedItem = currentPokemon.swapHeldItem("");
+                                                SaveData.currentSave.Bag.addItem(receivedItem, 1);
 
                                                 //adjust displayed data
                                                 updateSelectedInfo(currentPokemon);
                                                 partyItems[currentPosition - 33].enabled = false;
 
-                                                Dialog.drawDialogBox();
+                                                Dialog.DrawDialogBox();
                                                 yield return
                                                     StartCoroutine(
-                                                        Dialog.drawText("Took " + receivedItem + " from " +
+                                                        Dialog.DrawText("Took " + receivedItem + " from " +
                                                                         currentPokemon.Name + "."));
-                                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                                 {
                                                     yield return null;
                                                 }
@@ -1965,16 +1922,15 @@ public class PCHandler : MonoBehaviour
                                         {
                                             yield return
                                                 StartCoroutine(
-                                                    Dialog.drawText(currentPokemon.Name +
+                                                    Dialog.DrawText(currentPokemon.Name +
                                                                     " isn't holding anything."));
                                             string[] itemChoices = new string[]
                                             {
                                                 "Give", "Cancel"
                                             };
                                             int itemChosenIndex = -1;
-                                            Dialog.drawChoiceBox(itemChoices);
                                             yield return new WaitForSeconds(0.2f);
-                                            yield return StartCoroutine(Dialog.choiceNavigate(itemChoices));
+                                            yield return StartCoroutine(Dialog.DrawChoiceBox(itemChoices));
                                             itemChosenIndex = Dialog.chosenIndex;
 
                                             if (itemChosenIndex == 1)
@@ -1993,49 +1949,49 @@ public class PCHandler : MonoBehaviour
 
                                                 string chosenItem = Scene.main.Bag.chosenItem;
 
-                                                Dialog.undrawChoiceBox();
-                                                Dialog.undrawDialogBox();
+                                                Dialog.UndrawChoiceBox();
+                                                Dialog.UndrawDialogBox();
 
                                                 //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
                                                 yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 
                                                 if (!string.IsNullOrEmpty(chosenItem))
                                                 {
-                                                    currentPokemon.SwapItem(chosenItem.ToItems());
-                                                    SaveData.currentSave.Bag.removeItem(chosenItem.ToItems(), 1);
+                                                    currentPokemon.swapHeldItem(chosenItem);
+                                                    SaveData.currentSave.Bag.removeItem(chosenItem, 1);
 
                                                     //adjust displayed data
                                                     updateSelectedInfo(currentPokemon);
                                                     partyItems[currentPosition - 33].enabled = true;
 
-                                                    Dialog.drawDialogBox();
+                                                    Dialog.DrawDialogBox();
                                                     yield return
-                                                        Dialog.StartCoroutine("drawText",
+                                                        Dialog.StartCoroutine(Dialog.DrawText(
                                                             "Gave " + chosenItem + " to " + currentPokemon.Name +
-                                                            ".");
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                            "."));
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
                                                 }
                                             }
                                         }
-                                        Dialog.undrawChoiceBox();
-                                        Dialog.undrawDialogBox();
+                                        Dialog.UndrawChoiceBox();
+                                        Dialog.UndrawDialogBox();
                                         yield return new WaitForSeconds(0.2f);
                                         chosenIndex = 0;
                                     }
                                     else if (chosenIndex == 2)
                                     {
                                         //DEPOSIT
-                                        if (SaveData.currentSave.Player.Party[1].IsNotNullOrNone())
+                                        if (SaveData.currentSave.PC.boxes[0][1] != null)
                                         {
                                             //if there is more than one pokemon in the party
                                             int targetPosition = 30;
                                             for (int i = 0; i < 30; i++)
                                             {
-                                                if (!SaveData.currentSave.PC.AllBoxes[currentBoxID][i].IsNotNullOrNone())
+                                                if (SaveData.currentSave.PC.boxes[currentBoxID][i] == null)
                                                 {
                                                     targetPosition = i;
                                                     i = 30;
@@ -2044,14 +2000,14 @@ public class PCHandler : MonoBehaviour
                                             if (targetPosition >= 30)
                                             {
                                                 //if box is full
-                                                Dialog.drawDialogBox();
-                                                Dialog.drawTextInstant("The box is full!");
+                                                Dialog.DrawDialogBox();
+                                                Dialog.DrawTextInstant("The box is full!");
                                                 yield return new WaitForSeconds(0.2f);
-                                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                                 {
                                                     yield return null;
                                                 }
-                                                Dialog.undrawDialogBox();
+                                                Dialog.UndrawDialogBox();
                                             }
                                             else
                                             {
@@ -2059,16 +2015,16 @@ public class PCHandler : MonoBehaviour
                                                     StartCoroutine(depositPokemon(currentPosition - 33, targetPosition))
                                                     ;
                                                 updateSelectedInfo(
-                                                    SaveData.currentSave.Player.Party[currentPosition - 33]);
+                                                    SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                                                 chosenIndex = 0;
                                             }
                                         }
                                         else
                                         {
-                                            Dialog.drawDialogBox();
-                                            Dialog.drawTextInstant("That's your last Pokémon!");
+                                            Dialog.DrawDialogBox();
+                                            Dialog.DrawTextInstant("That's your last Pokémon!");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -2077,57 +2033,55 @@ public class PCHandler : MonoBehaviour
                                     else if (chosenIndex == 1)
                                     {
                                         //RELEASE
-                                        if (SaveData.currentSave.Player.Party[1].IsNotNullOrNone())
+                                        if (SaveData.currentSave.PC.boxes[0][1] != null)
                                         {
                                             //if there is more than one pokemon in the party
                                             int releaseIndex = 1;
                                             string pokemonName =
-                                                SaveData.currentSave.Player.Party[currentPosition - 33].Name;
+                                                SaveData.currentSave.PC.boxes[0][currentPosition - 33].getName();
                                             while (releaseIndex != 0)
                                             {
-                                                Dialog.drawDialogBox();
-                                                Dialog.drawTextInstant("Do you want to release " + pokemonName + "?");
-                                                Dialog.drawChoiceBoxNo();
+                                                Dialog.DrawDialogBox();
+                                                Dialog.DrawTextInstant("Do you want to release " + pokemonName + "?");
                                                 yield return new WaitForSeconds(0.2f);
-                                                yield return StartCoroutine(Dialog.choiceNavigateNo());
-                                                Dialog.undrawChoiceBox();
+                                                yield return StartCoroutine(Dialog.DrawChoiceBoxNo());
+                                                Dialog.UndrawChoiceBox();
                                                 releaseIndex = Dialog.chosenIndex;
                                                 if (releaseIndex == 1)
                                                 {
-                                                    yield return StartCoroutine(releasePokemon(-1, currentPosition - 33))
+                                                    yield return StartCoroutine(releasePokemon(0, currentPosition - 33))
                                                         ;
-                                                    Dialog.drawDialogBox();
-                                                    Dialog.drawTextInstant(pokemonName + " was released.");
+                                                    Dialog.DrawDialogBox();
+                                                    Dialog.DrawTextInstant(pokemonName + " was released.");
                                                     yield return new WaitForSeconds(0.2f);
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
-                                                    Dialog.drawDialogBox();
-                                                    Dialog.drawTextInstant("Bye bye, " + pokemonName + "!");
+                                                    Dialog.DrawDialogBox();
+                                                    Dialog.DrawTextInstant("Bye bye, " + pokemonName + "!");
                                                     yield return new WaitForSeconds(0.2f);
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
+                                                    while (!UnityEngine.Input.GetButtonDown("Select") &&
+                                                           !UnityEngine.Input.GetButtonDown("Back"))
                                                     {
                                                         yield return null;
                                                     }
                                                     releaseIndex = 0;
                                                     chosenIndex = 0;
                                                     updateSelectedInfo(
-                                                        //SaveData.currentSave.PC.AllBoxes[0][currentPosition - 33]);
-                                                        SaveData.currentSave.Player.Party[currentPosition - 33]);
-                                                    Dialog.undrawDialogBox();
+                                                        SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
+                                                    Dialog.UndrawDialogBox();
                                                     StartCoroutine(packParty(currentPosition - 33));
                                                 }
                                             }
                                         }
                                         else
                                         {
-                                            Dialog.drawDialogBox();
-                                            Dialog.drawTextInstant("That's your last Pokémon!");
+                                            Dialog.DrawDialogBox();
+                                            Dialog.DrawTextInstant("That's your last Pokémon!");
                                             yield return new WaitForSeconds(0.2f);
-                                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
@@ -2136,13 +2090,13 @@ public class PCHandler : MonoBehaviour
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (selectedBoxID == -1 && currentPosition - 33 == selectedIndex)
+                            else if (selectedBoxID == 0 && currentPosition - 33 == selectedIndex)
                             {
-                                yield return StartCoroutine(putDownPokemon(-1, currentPosition - 33));
+                                yield return StartCoroutine(putDownPokemon(0, currentPosition - 33));
                             }
                             else
                             {
-                                yield return StartCoroutine(switchPokemon(-1, currentPosition - 33));
+                                yield return StartCoroutine(switchPokemon(0, currentPosition - 33));
                             }
                         }
                         //HOT MOVE
@@ -2150,43 +2104,44 @@ public class PCHandler : MonoBehaviour
                         {
                             if (!carrying)
                             {
-                                if (SaveData.currentSave.Player.Party[1].IsNotNullOrNone())
+                                if (SaveData.currentSave.PC.boxes[0][1] != null)
                                 {
-                                    yield return StartCoroutine(pickUpPokemon(-1, currentPosition - 33));
+                                    //if there is more than one pokemon in the party
+                                    yield return StartCoroutine(pickUpPokemon(0, currentPosition - 33));
                                 }
                                 else
                                 {
-                                    Dialog.drawDialogBox();
-                                    Dialog.drawTextInstant("That's your last Pokémon!");
+                                    Dialog.DrawDialogBox();
+                                    Dialog.DrawTextInstant("That's your last Pokémon!");
                                     yield return new WaitForSeconds(0.2f);
-                                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
-                                           Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back") &&
+                                           UnityEngine.Input.GetAxisRaw("Horizontal") == 0 && UnityEngine.Input.GetAxisRaw("Vertical") == 0)
                                     {
                                         yield return null;
                                     }
-                                    Dialog.undrawDialogBox();
+                                    Dialog.UndrawDialogBox();
                                     yield return new WaitForSeconds(0.2f);
                                 }
                             }
-                            else if (selectedBoxID == -1 && currentPosition - 33 == selectedIndex)
+                            else if (selectedBoxID == 0 && currentPosition - 33 == selectedIndex)
                             {
-                                yield return StartCoroutine(putDownPokemon(-1, currentPosition - 33));
+                                yield return StartCoroutine(putDownPokemon(0, currentPosition - 33));
                             }
                             else
                             {
-                                yield return StartCoroutine(switchPokemon(-1, currentPosition - 33));
+                                yield return StartCoroutine(switchPokemon(0, currentPosition - 33));
                             }
                         }
                         //WITHDRAW DEPOSIT
                         else
                         {
-                            if (SaveData.currentSave.Player.Party[1].IsNotNullOrNone())
+                            if (SaveData.currentSave.PC.boxes[0][1] != null)
                             {
                                 //if there is more than one pokemon in the party
                                 int targetPosition = 30;
                                 for (int i = 0; i < 30; i++)
                                 {
-                                    if (!SaveData.currentSave.PC.AllBoxes[currentBoxID][i].IsNotNullOrNone())
+                                    if (SaveData.currentSave.PC.boxes[currentBoxID][i] == null)
                                     {
                                         targetPosition = i;
                                         i = 30;
@@ -2195,55 +2150,55 @@ public class PCHandler : MonoBehaviour
                                 if (targetPosition >= 30)
                                 {
                                     //if box is full
-                                    Dialog.drawDialogBox();
-                                    Dialog.drawTextInstant("The box is full!");
+                                    Dialog.DrawDialogBox();
+                                    Dialog.DrawTextInstant("The box is full!");
                                     yield return new WaitForSeconds(0.2f);
-                                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
-                                           Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back") &&
+                                           UnityEngine.Input.GetAxisRaw("Horizontal") == 0 && UnityEngine.Input.GetAxisRaw("Vertical") == 0)
                                     {
                                         yield return null;
                                     }
-                                    Dialog.undrawDialogBox();
+                                    Dialog.UndrawDialogBox();
                                     yield return new WaitForSeconds(0.2f);
                                 }
                                 else
                                 {
                                     yield return StartCoroutine(depositPokemon(currentPosition - 33, targetPosition));
-                                    updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                                    updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                                 }
                             }
                             else
                             {
-                                Dialog.drawDialogBox();
-                                Dialog.drawTextInstant("That's your last Pokémon!");
+                                Dialog.DrawDialogBox();
+                                Dialog.DrawTextInstant("That's your last Pokémon!");
                                 yield return new WaitForSeconds(0.2f);
-                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
-                                       Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back") &&
+                                       UnityEngine.Input.GetAxisRaw("Horizontal") == 0 && UnityEngine.Input.GetAxisRaw("Vertical") == 0)
                                 {
                                     yield return null;
                                 }
-                                Dialog.undrawDialogBox();
+                                Dialog.UndrawDialogBox();
                                 yield return new WaitForSeconds(0.2f);
                             }
                         }
                     }
                     else if (carrying)
                     {
-                        yield return StartCoroutine(putDownPokemon(-1, currentPosition - 33));
+                        yield return StartCoroutine(putDownPokemon(0, currentPosition - 33));
                     }
                 }
-                else if (Input.GetButton("Back"))
+                else if (UnityEngine.Input.GetButton("Back"))
                 {
                     if (carrying)
                     {
-                        Dialog.drawDialogBox();
-                        Dialog.drawTextInstant("You're holding a Pokémon!");
+                        Dialog.DrawDialogBox();
+                        Dialog.DrawTextInstant("You're holding a Pokémon!");
                         yield return new WaitForSeconds(0.2f);
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
-                        Dialog.undrawDialogBox();
+                        Dialog.UndrawDialogBox();
                         yield return new WaitForSeconds(0.2f);
                     }
                     else
@@ -2253,13 +2208,12 @@ public class PCHandler : MonoBehaviour
                         updateSelectedInfo(null);
                         yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
 
-                        Dialog.drawDialogBox();
-                        Dialog.drawTextInstant("Continue Box operations?");
-                        Dialog.drawChoiceBox();
+                        Dialog.DrawDialogBox();
+                        Dialog.DrawTextInstant("Continue Box operations?");
                         yield return new WaitForSeconds(0.2f);
-                        yield return Dialog.StartCoroutine("choiceNavigate");
-                        Dialog.undrawChoiceBox();
-                        Dialog.undrawDialogBox();
+                        yield return Dialog.StartCoroutine(Dialog.DrawChoiceBox());
+                        Dialog.UndrawChoiceBox();
+                        Dialog.UndrawDialogBox();
                         int chosenIndex = Dialog.chosenIndex;
                         if (chosenIndex == 0)
                         {
@@ -2275,29 +2229,29 @@ public class PCHandler : MonoBehaviour
             //if cursor is on the bottom buttons
             else
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     if (currentPosition == 39)
                     {
                         currentPosition = 28;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     else if (currentPosition == 40)
                     {
                         currentPosition = 32;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.PC.AllBoxes[currentBoxID][currentPosition - 3]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                     }
                     else
                     {
                         currentPosition = 38;
                         SfxHandler.Play(selectClip);
-                        updateSelectedInfo(SaveData.currentSave.Player.Party[currentPosition - 33]);
+                        updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
                     if (currentPosition < 41)
                     {
@@ -2307,7 +2261,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
                     if (currentPosition > 39)
                     {
@@ -2317,7 +2271,7 @@ public class PCHandler : MonoBehaviour
                     }
                     yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
                     if (currentPosition == 40)
                     {
@@ -2343,25 +2297,24 @@ public class PCHandler : MonoBehaviour
                     {
                         if (carrying)
                         {
-                            Dialog.drawDialogBox();
-                            Dialog.drawTextInstant("You're holding a Pokémon!");
+                            Dialog.DrawDialogBox();
+                            Dialog.DrawTextInstant("You're holding a Pokémon!");
                             yield return new WaitForSeconds(0.2f);
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
-                            Dialog.undrawDialogBox();
+                            Dialog.UndrawDialogBox();
                             yield return new WaitForSeconds(0.2f);
                         }
                         else
                         {
-                            Dialog.drawDialogBox();
-                            Dialog.drawTextInstant("Continue Box operations?");
-                            Dialog.drawChoiceBox();
+                            Dialog.DrawDialogBox();
+                            Dialog.DrawTextInstant("Continue Box operations?");
                             yield return new WaitForSeconds(0.2f);
-                            yield return Dialog.StartCoroutine("choiceNavigate");
-                            Dialog.undrawChoiceBox();
-                            Dialog.undrawDialogBox();
+                            yield return Dialog.StartCoroutine(Dialog.DrawChoiceBox());
+                            Dialog.UndrawChoiceBox();
+                            Dialog.UndrawDialogBox();
                             int chosenIndex = Dialog.chosenIndex;
                             if (chosenIndex == 0)
                             {
@@ -2374,18 +2327,18 @@ public class PCHandler : MonoBehaviour
                         }
                     }
                 }
-                else if (Input.GetButton("Back"))
+                else if (UnityEngine.Input.GetButton("Back"))
                 {
                     if (carrying)
                     {
-                        Dialog.drawDialogBox();
-                        Dialog.drawTextInstant("You're holding a Pokémon!");
+                        Dialog.DrawDialogBox();
+                        Dialog.DrawTextInstant("You're holding a Pokémon!");
                         yield return new WaitForSeconds(0.2f);
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
-                        Dialog.undrawDialogBox();
+                        Dialog.UndrawDialogBox();
                         yield return new WaitForSeconds(0.2f);
                     }
                     else
@@ -2395,13 +2348,12 @@ public class PCHandler : MonoBehaviour
                         updateSelectedInfo(null);
                         yield return StartCoroutine(moveCursor(cursorPositions[currentPosition]));
 
-                        Dialog.drawDialogBox();
-                        Dialog.drawTextInstant("Continue Box operations?");
-                        Dialog.drawChoiceBox();
+                        Dialog.DrawDialogBox();
+                        Dialog.DrawTextInstant("Continue Box operations?");
                         yield return new WaitForSeconds(0.2f);
-                        yield return Dialog.StartCoroutine("choiceNavigate");
-                        Dialog.undrawChoiceBox();
-                        Dialog.undrawDialogBox();
+                        yield return Dialog.StartCoroutine(Dialog.DrawChoiceBox());
+                        Dialog.UndrawChoiceBox();
+                        Dialog.UndrawDialogBox();
                         int chosenIndex = Dialog.chosenIndex;
                         if (chosenIndex == 0)
                         {
@@ -2415,7 +2367,7 @@ public class PCHandler : MonoBehaviour
                 }
             }
             yield return null;
-        }
+        }*/
         SfxHandler.Play(offClip);
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
         yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));

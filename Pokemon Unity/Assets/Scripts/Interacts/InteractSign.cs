@@ -5,30 +5,44 @@ using System.Collections;
 
 public class InteractSign : MonoBehaviour
 {
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
 
-    public string signText;
+    private string signText;
+    public string en_text;
+    public string fr_text;
+    
     public Color signTint = new Color(0.5f, 0.5f, 0.5f, 1f);
-    public DialogBoxHandler.PrintTextMethod printTextMethod = DialogBoxHandler.PrintTextMethod.Typewriter;
+    public DialogBoxHandlerNew.PrintTextMethod printTextMethod = DialogBoxHandlerNew.PrintTextMethod.Typewriter;
 
     // Use this for initialization
     void Awake()
     {
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
     }
 
     public IEnumerator interact()
     {
         if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
         {
-            StartCoroutine(Dialog.drawSignBox(signTint));
-            if (printTextMethod == DialogBoxHandler.PrintTextMethod.Typewriter)
+            Dialog.DrawSignBox(signTint);
+
+            switch (Language.getLang())
             {
-                StartCoroutine(Dialog.drawTextSilent(signText));
+                default:
+                    signText = en_text;
+                    break;
+                case Language.Country.FRANCAIS:
+                    signText = fr_text;
+                    break;
             }
-            else if (printTextMethod == DialogBoxHandler.PrintTextMethod.Instant)
+            
+            if (printTextMethod == DialogBoxHandlerNew.PrintTextMethod.Typewriter)
             {
-                Dialog.drawTextInstant(signText);
+                StartCoroutine(Dialog.DrawTextSilent(signText));
+            }
+            else if (printTextMethod == DialogBoxHandlerNew.PrintTextMethod.Instant)
+            {
+                StartCoroutine(Dialog.DrawTextInstantSilent(signText));
             }
 
             yield return null;
@@ -39,7 +53,7 @@ public class InteractSign : MonoBehaviour
                 yield return null;
             }
 
-            StartCoroutine(Dialog.undrawSignBox());
+            StartCoroutine(Dialog.UndrawSignBox());
 
             yield return null;
             PlayerMovement.player.unsetCheckBusyWith(this.gameObject);

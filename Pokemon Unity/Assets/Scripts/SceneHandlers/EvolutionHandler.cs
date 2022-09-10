@@ -1,9 +1,24 @@
 //Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class EvolutionHandler : MonoBehaviour
 {
@@ -12,8 +27,8 @@ public class EvolutionHandler : MonoBehaviour
 
     private int pokemonFrame = 0;
     private int evolutionFrame = 0;
-    private Sprite[] pokemonSpriteAnimation;
-    private Sprite[] evolutionSpriteAnimation;
+    private UnityEngine.Sprite[] pokemonSpriteAnimation;
+    private UnityEngine.Sprite[] evolutionSpriteAnimation;
     private Image pokemonSprite;
     private Image evolutionSprite;
 
@@ -21,7 +36,7 @@ public class EvolutionHandler : MonoBehaviour
     private Image bottomBorder;
     private Image glow;
 
-    private Pokemon selectedPokemon;
+    private IPokemon selectedPokemon;
     private string evolutionMethod;
     private int evolutionID;
 
@@ -31,7 +46,7 @@ public class EvolutionHandler : MonoBehaviour
         evolvedClip,
         forgetMoveClip;
 
-    public Sprite smokeParticle;
+    public UnityEngine.Sprite smokeParticle;
 
     private bool stopAnimations = false;
 
@@ -101,24 +116,21 @@ public class EvolutionHandler : MonoBehaviour
     }
 
 
-    public IEnumerator control(Pokemon pokemonToEvolve, int index)
+    public IEnumerator control(IPokemon pokemonToEvolve, string methodOfEvolution)
     {
         selectedPokemon = pokemonToEvolve;
-        //evolutionMethod = method;
+        evolutionMethod = methodOfEvolution;
         //evolutionID = selectedPokemon.getEvolutionID(evolutionMethod);
-        evolutionID = selectedPokemon.getEvolutionSpecieID(index);
-
         string selectedPokemonName = selectedPokemon.Name;
 
-        pokemonSpriteAnimation = selectedPokemon.GetFrontAnim_();
-        evolutionSpriteAnimation = PokemonExtension.GetFrontAnimFromID_((PokemonUnity.Pokemons)evolutionID, selectedPokemon.Gender,
-            selectedPokemon.IsShiny);
+        //pokemonSpriteAnimation = selectedPokemon.GetFrontAnim_();
+        //evolutionSpriteAnimation = Pokemon.GetFrontAnimFromID_(evolutionID, selectedPokemon.Gender,
+        //    selectedPokemon.IsShiny);
         pokemonSprite.sprite = pokemonSpriteAnimation[0];
         evolutionSprite.sprite = evolutionSpriteAnimation[0];
-
         StartCoroutine(animatePokemon());
 
-        pokemonSprite.rectTransform.sizeDelta = new Vector2(128, 128);
+        pokemonSprite.rectTransform.sizeDelta = new Vector2(pokemonSprite.sprite.texture.width, pokemonSprite.sprite.texture.height);
         evolutionSprite.rectTransform.sizeDelta = new Vector2(0, 0);
 
         pokemonSprite.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
@@ -137,12 +149,12 @@ public class EvolutionHandler : MonoBehaviour
 
         dialog.DrawDialogBox();
         yield return StartCoroutine(dialog.DrawText("What?"));
-        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
         {
             yield return null;
         }
         yield return StartCoroutine(dialog.DrawText("\n" + selectedPokemon.Name + " is evolving!"));
-        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
         {
             yield return null;
         }
@@ -150,9 +162,10 @@ public class EvolutionHandler : MonoBehaviour
         dialog.UndrawDialogBox();
         evolving = true;
 
-        AudioClip cry = selectedPokemon.GetCry();
-        SfxHandler.Play(cry);
-        yield return new WaitForSeconds(cry.length);
+        //ToDo: Uncomment...
+        //AudioClip cry = selectedPokemon.GetCry();
+        //SfxHandler.Play(cry);
+        //yield return new WaitForSeconds(cry.length);
 
         BgmHandler.main.PlayOverlay(evolutionBGM, 753100);
         yield return new WaitForSeconds(0.4f);
@@ -164,9 +177,10 @@ public class EvolutionHandler : MonoBehaviour
 
         while (evolving)
         {
-            if (Input.GetButtonDown("Back"))
+            if (UnityEngine.Input.GetButtonDown("Back"))
             {
                 evolving = false;
+                StopCoroutine(c_animateEvolution);
 
                 //fadeTime = sceneTransition.FadeOut();
                 //yield return new WaitForSeconds(fadeTime);
@@ -181,12 +195,12 @@ public class EvolutionHandler : MonoBehaviour
 
                 dialog.DrawDialogBox();
                 yield return StartCoroutine(dialog.DrawText("Huh?"));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
                 yield return StartCoroutine(dialog.DrawText("\n" + selectedPokemon.Name + " stopped evolving."));
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
@@ -198,14 +212,16 @@ public class EvolutionHandler : MonoBehaviour
 
         if (evolved)
         {
+            //ToDo: Uncomment...
             //selectedPokemon.evolve(evolutionMethod);
-            selectedPokemon.evolve(index);
+            GlobalVariables.global.resetFollower();
 
             yield return new WaitForSeconds(3.2f);
 
-            cry = selectedPokemon.GetCry();
-            BgmHandler.main.PlayMFX(cry);
-            yield return new WaitForSeconds(cry.length);
+            //ToDo: Uncomment...
+            //cry = selectedPokemon.GetCry();
+            //BgmHandler.main.PlayMFX(cry);
+            //yield return new WaitForSeconds(cry.length);
             AudioClip evoMFX = Resources.Load<AudioClip>("Audio/mfx/GetGreat");
             BgmHandler.main.PlayMFXConsecutive(evoMFX);
 
@@ -214,28 +230,29 @@ public class EvolutionHandler : MonoBehaviour
             yield return new WaitForSeconds(0.8f);
             StartCoroutine(
                 dialog.DrawTextSilent("\nYour " + selectedPokemonName + " evolved into " +
-                                      ((PokemonUnity.Pokemons)evolutionID).toString() + "!"));
+                                      PokemonDatabase.getPokemon(evolutionID).getName() + "!"));
 
             //wait for MFX to stop
             float extraTime = (evoMFX.length - 0.8f > 0) ? evoMFX.length - 0.8f : 0;
             yield return new WaitForSeconds(extraTime);
 
-            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
 
-            PokemonUnity.Moves newMove = selectedPokemon.MoveLearnedAtLevel(selectedPokemon.Level);
-            if (newMove != PokemonUnity.Moves.NONE && !selectedPokemon.hasMove(newMove))
-            {
-                yield return StartCoroutine(LearnMove(selectedPokemon, newMove));
-            }
+            Moves[] newMove = selectedPokemon.getMoveList(LearnMethod.levelup); //ToDo: Uncomment below...
+            //string newMove = selectedPokemon.MoveLearnedAtLevel(selectedPokemon.Level);
+            //if (!string.IsNullOrEmpty(newMove) && !selectedPokemon.hasMove(newMove))
+            //{
+            //    yield return StartCoroutine(LearnMove(selectedPokemon, newMove));
+            //}
 
             dialog.UndrawDialogBox();
             bool running = true;
             while (running)
             {
-                if (Input.GetButtonDown("Select") || Input.GetButtonDown("Back"))
+                if (UnityEngine.Input.GetButtonDown("Select") || UnityEngine.Input.GetButtonDown("Back"))
                 {
                     running = false;
                 }
@@ -247,7 +264,7 @@ public class EvolutionHandler : MonoBehaviour
         }
 
         StartCoroutine(ScreenFade.main.Fade(false, 1f));
-        BgmHandler.main.ResumeMain(1.2f);
+        BgmHandler.main.ResumeMain(1.4f, PlayerMovement.player.accessedMapSettings.getBGM());
         yield return new WaitForSeconds(1.2f);
 
         this.gameObject.SetActive(false);
@@ -279,7 +296,7 @@ public class EvolutionHandler : MonoBehaviour
         bottomBorder.rectTransform.sizeDelta = new Vector2(342, 0);
         topBorder.rectTransform.sizeDelta = new Vector2(342, 0);
 
-        pokemonSprite.rectTransform.sizeDelta = new Vector2(128, 128);
+        pokemonSprite.rectTransform.sizeDelta = new Vector2(pokemonSprite.sprite.texture.width, pokemonSprite.sprite.texture.height);
         evolutionSprite.rectTransform.sizeDelta = new Vector2(0, 0);
         pokemonSprite.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 
@@ -438,22 +455,30 @@ public class EvolutionHandler : MonoBehaviour
                 }
                 if (originalPokemonShrunk)
                 {
-                    pokemonSprite.rectTransform.sizeDelta = new Vector2(128f * increment, 128f * increment);
+                    pokemonSprite.rectTransform.sizeDelta = new Vector2(pokemonSprite.sprite.texture.width * increment, pokemonSprite.sprite.texture.height * increment);
+                    /*
                     pokemonSprite.transform.localPosition = new Vector3(originalPosition.x,
                         centerPosition.y - (distance * increment), originalPosition.z);
-                    evolutionSprite.rectTransform.sizeDelta = new Vector2(128f - 128f * increment,
-                        128f - 128f * increment);
+                        */
+                    evolutionSprite.rectTransform.sizeDelta = new Vector2(evolutionSprite.sprite.texture.width - evolutionSprite.sprite.texture.width * increment,
+                        evolutionSprite.sprite.texture.height - evolutionSprite.sprite.texture.height * increment);
+                    /*
                     evolutionSprite.transform.localPosition = new Vector3(originalPosition.x,
                         originalPosition.y + (distance * increment), originalPosition.z);
+                        */
                 }
                 else
                 {
-                    pokemonSprite.rectTransform.sizeDelta = new Vector2(128f - 128f * increment, 128f - 128f * increment);
+                    pokemonSprite.rectTransform.sizeDelta = new Vector2(pokemonSprite.sprite.texture.width - pokemonSprite.sprite.texture.width * increment, pokemonSprite.sprite.texture.height - pokemonSprite.sprite.texture.height * increment);
+                    /*
                     pokemonSprite.transform.localPosition = new Vector3(originalPosition.x,
                         originalPosition.y + (distance * increment), originalPosition.z);
-                    evolutionSprite.rectTransform.sizeDelta = new Vector2(128f * increment, 128f * increment);
+                        */
+                    evolutionSprite.rectTransform.sizeDelta = new Vector2(evolutionSprite.sprite.texture.width * increment, evolutionSprite.sprite.texture.height * increment);
+                    /*
                     evolutionSprite.transform.localPosition = new Vector3(originalPosition.x,
                         centerPosition.y - (distance * increment), originalPosition.z);
+                        */
                 }
                 yield return null;
             }
@@ -577,9 +602,9 @@ public class EvolutionHandler : MonoBehaviour
             if (!stopAnimations)
             {
                 Image particle = particles.createParticle(smokeParticle, ScaleToScreen(positionX, positionYmodified),
-                    sizeModified, 0, 0.6f,
-                    ScaleToScreen(positionX + Random.Range(0.01f, 0.04f), positionYmodified - 0.02f), 0,
-                    sizeModified * 0.33f);
+                    ScaleToScreen(positionX + Random.Range(0.01f, 0.04f), positionYmodified - 0.02f),
+                    sizeModified, 0, 0.6f, 0, sizeModified * 0.33f);
+
                 if (particle != null)
                 {
                     particle.color = new Color((float) i / 7f * 0.7f, (float) i / 7f * 0.7f, (float) i / 7f * 0.7f,
@@ -610,7 +635,7 @@ public class EvolutionHandler : MonoBehaviour
     }
 
 
-    private IEnumerator LearnMove(Pokemon selectedPokemon, PokemonUnity.Moves move)
+    private IEnumerator LearnMove(IPokemon selectedPokemon, string move)
     {
         int chosenIndex = 1;
         if (chosenIndex == 1)
@@ -619,13 +644,13 @@ public class EvolutionHandler : MonoBehaviour
             while (learning)
             {
                 //Moveset is full
-                if (selectedPokemon.countMoves() == 4)
+                if (selectedPokemon.numMoves == 4)
                 {
                     dialog.DrawDialogBox();
                     yield return
                         StartCoroutine(
                             dialog.DrawText(selectedPokemon.Name + " wants to learn the \nmove " + move + "."));
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -633,7 +658,7 @@ public class EvolutionHandler : MonoBehaviour
                     yield return
                         StartCoroutine(
                             dialog.DrawText("However, " + selectedPokemon.Name + " already \nknows four moves."));
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -641,7 +666,6 @@ public class EvolutionHandler : MonoBehaviour
                     yield return
                         StartCoroutine(dialog.DrawText("Should a move be deleted and \nreplaced with " + move + "?"));
 
-                    // This function didn't show choice box
                     yield return StartCoroutine(dialog.DrawChoiceBox());
                     chosenIndex = dialog.chosenIndex;
                     dialog.UndrawChoiceBox();
@@ -649,7 +673,7 @@ public class EvolutionHandler : MonoBehaviour
                     {
                         dialog.DrawDialogBox();
                         yield return StartCoroutine(dialog.DrawText("Which move should \nbe forgotten?"));
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                         {
                             yield return null;
                         }
@@ -658,7 +682,7 @@ public class EvolutionHandler : MonoBehaviour
 
                         //Set SceneSummary to be active so that it appears
                         Scene.main.Summary.gameObject.SetActive(true);
-                        StartCoroutine(Scene.main.Summary.control(selectedPokemon, move));
+                        StartCoroutine(Scene.main.Summary.control(new IPokemon[] { selectedPokemon }, learning:learning, newMoveString:move));
                         //Start an empty loop that will only stop when SceneSummary is no longer active (is closed)
                         while (Scene.main.Summary.gameObject.activeSelf)
                         {
@@ -683,7 +707,7 @@ public class EvolutionHandler : MonoBehaviour
                             yield return new WaitForSeconds(0.4f);
                             SfxHandler.Play(forgetMoveClip);
                             yield return StartCoroutine(dialog.DrawTextSilent("Poof!"));
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
@@ -693,13 +717,13 @@ public class EvolutionHandler : MonoBehaviour
                                 StartCoroutine(
                                     dialog.DrawText(selectedPokemon.Name + " forgot how to \nuse " + replacedMove +
                                                     "."));
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
                             dialog.DrawDialogBox();
                             yield return StartCoroutine(dialog.DrawText("And..."));
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
@@ -709,7 +733,7 @@ public class EvolutionHandler : MonoBehaviour
                             BgmHandler.main.PlayMFX(mfx);
                             StartCoroutine(dialog.DrawTextSilent(selectedPokemon.Name + " learned \n" + move + "!"));
                             yield return new WaitForSeconds(mfx.length);
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                             {
                                 yield return null;
                             }
@@ -741,14 +765,15 @@ public class EvolutionHandler : MonoBehaviour
                 //Moveset is not full, can fit the new move easily
                 else
                 {
-                    selectedPokemon.addMove(move);
+                    //ToDo: Uncomment and add move to pokemon set
+                    //selectedPokemon.pbLearnMove(move);
 
                     dialog.DrawDialogBox();
                     AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
                     BgmHandler.main.PlayMFX(mfx);
                     StartCoroutine(dialog.DrawTextSilent(selectedPokemon.Name + " learned \n" + move + "!"));
                     yield return new WaitForSeconds(mfx.length);
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
                     {
                         yield return null;
                     }
@@ -763,7 +788,7 @@ public class EvolutionHandler : MonoBehaviour
             //cancel learning loop
             dialog.DrawDialogBox();
             yield return StartCoroutine(dialog.DrawText(selectedPokemon.Name + " did not learn \n" + move + "."));
-            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
             {
                 yield return null;
             }

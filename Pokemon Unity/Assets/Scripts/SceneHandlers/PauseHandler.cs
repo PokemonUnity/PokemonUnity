@@ -1,53 +1,214 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
-using UnityEngine;
+using System;
 using System.Collections;
+using PokemonUnity;
+using PokemonUnity.Localization;
+using PokemonUnity.Attack.Data;
+using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
+using PokemonUnity.Utility;
+using PokemonEssentials;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+using UnityEngine;
+using UnityEngine.UI;
+//using UnityEngine.Rendering.PostProcessing;
 
 public class PauseHandler : MonoBehaviour
 {
+    /*
     private GUITexture pauseTop;
     private GUITexture pauseBottom;
 
     private GUIText selectedText;
     private GUIText selectedTextShadow;
-
+    
     public Texture2D iconPokedexTex;
     public Texture2D iconPartyTex;
     public Texture2D iconBagTex;
     public Texture2D iconTrainerTex;
     public Texture2D iconSaveTex;
     public Texture2D iconSettingsTex;
+    */
 
+    /*
     private RotatableGUIItem iconPokedex;
     private RotatableGUIItem iconParty;
     private RotatableGUIItem iconBag;
     private RotatableGUIItem iconTrainer;
     private RotatableGUIItem iconSave;
     private RotatableGUIItem iconSettings;
+    */
 
-    private GUITexture saveDataDisplay;
-    private GUIText mapName;
-    private GUIText mapNameShadow;
-    private GUIText dataText;
-    private GUIText dataTextShadow;
+    public GameObject
+        slotParty,
+        slotPokedex,
+        slotBag,
+        slotTrainer,
+        slotSave,
+        slotSettings;
 
-    private DialogBoxHandler Dialog;
+    private Vector3[] slotPositions;
+
+    public UnityEngine.Sprite[]
+        slotSprite,
+        partySpriteIcon,
+        pokedexSpriteIcon,
+        bagSpriteIcon,
+        trainerSpriteIcon,
+        saveSpriteIcon,
+        settingsSpriteIcon;
+
+    private Image
+        imageParty,
+        imagePokedex,
+        imageBag,
+        imageTrainer,
+        imageSave,
+        imageSettings,
+
+        iconPokedex,
+        iconParty,
+        iconBag,
+        iconTrainer,
+        iconSave,
+        iconSettings;
+
+    private Text trainerText;
+    private Text trainerShadowText;
+
+    private GameObject saveDataDisplay;
+    private Text mapName;
+    private Text mapNameShadow;
+    private Text badges;
+    private Text badgesShadow;
+    private Text date;
+    private Text dateShadow;
+    private Text hour;
+    private Text hourShadow;
+    private Text pokedex;
+    private Text pokedexShadow;
+    private Text playTime;
+    private Text playTimeShadow;
+    private Image[] saveParty = new Image[6];
+
+    private DialogBoxHandlerNew Dialog;
 
     private AudioSource PauseAudio;
     public AudioClip selectClip;
     public AudioClip openClip;
+    public AudioClip decideClip;
+    public AudioClip cancelClip;
+    public AudioClip saveClip;
+
+    public Text money;
+    public Image[] pkmTeam;
+    public Image[] pkmPV;
 
     private int selectedIcon;
-    private RotatableGUIItem targetIcon;
+    private Image targetImage;
+    private Image targetIcon;
+
+    private int targetIndex;
 
     private bool running;
 
+    private RectTransform phone;
+    
+    private float transitionTime = 0.25f;
+    
+    private class App
+    {
+        public IEnumerator behavior;
+
+        public App
+            appUp = null,
+            appDown = null,
+            appLeft = null,
+            appRight = null;
+
+        public int index;
+        
+        public enum Type
+        {
+            NotImplemented,
+            Save,
+            Menu
+        }
+
+        public Type type;
+        public GameObject scene;
+
+        public App(int index)
+        {
+            this.index = index;
+        }
+    }
+    
+    private App party = new App(1);
+    private App pokedexApp = new App(2);
+    private App bag = new App(3);
+    private App trainer = new App(4);
+    private App save = new App(5);
+    private App settings = new App(6);
+
     void Awake()
     {
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
-
+        phone = transform.Find("phone").GetComponent<RectTransform>();
+        
         PauseAudio = transform.GetComponent<AudioSource>();
 
+        imageParty = slotParty.GetComponent<Image>();
+        imagePokedex = slotPokedex.GetComponent<Image>();
+        imageBag = slotBag.GetComponent<Image>();
+        imageTrainer = slotTrainer.GetComponent<Image>();
+        imageSave = slotSave.GetComponent<Image>();
+        imageSettings = slotSettings.GetComponent<Image>();
+
+        iconPokedex = slotPokedex.transform.Find("icon").GetComponent<Image>();
+        iconParty = slotParty.transform.Find("icon").GetComponent<Image>();
+        iconBag = slotBag.transform.Find("icon").GetComponent<Image>();
+        iconTrainer = slotTrainer.transform.Find("icon").GetComponent<Image>();
+        iconSave = slotSave.transform.Find("icon").GetComponent<Image>();
+        iconSettings = slotSettings.transform.Find("icon").GetComponent<Image>();
+
+        trainerText = slotTrainer.transform.Find("text").GetComponent<Text>();
+        trainerShadowText = slotTrainer.transform.Find("text_shadow").GetComponent<Text>();
+
+        //setup save display
+        Dialog = transform.Find("savedisplay").GetComponent<DialogBoxHandlerNew>();
+        
+        saveDataDisplay = transform.Find("savedisplay").gameObject;
+
+        mapNameShadow = saveDataDisplay.transform.Find("CurrentMap").GetComponent<Text>();
+        mapName = mapNameShadow.transform.Find("text").GetComponent<Text>();
+        badgesShadow = saveDataDisplay.transform.Find("Badges").GetComponent<Text>();
+        badges = badgesShadow.transform.Find("text").GetComponent<Text>();
+        dateShadow = saveDataDisplay.transform.Find("Date").GetComponent<Text>();
+        date = dateShadow.transform.Find("text").GetComponent<Text>();
+        hourShadow = saveDataDisplay.transform.Find("Hour").GetComponent<Text>();
+        hour = hourShadow.transform.Find("text").GetComponent<Text>();
+        pokedexShadow = saveDataDisplay.transform.Find("Encounters").GetComponent<Text>();
+        pokedex = pokedexShadow.transform.Find("text").GetComponent<Text>();
+        playTimeShadow = saveDataDisplay.transform.Find("PlayTime").GetComponent<Text>();
+        playTime = playTimeShadow.transform.Find("text").GetComponent<Text>();
+        
+        //setup save party icons
+        for (int i = 0; i < saveParty.Length; ++i)
+        {
+            int index = i + 1;
+            saveParty[i] = saveDataDisplay.transform.Find("party" + index).GetComponent<Image>();
+        }
+        
+        /*
         pauseTop = transform.Find("PauseTop").GetComponent<GUITexture>();
         pauseBottom = transform.Find("PauseBottom").GetComponent<GUITexture>();
 
@@ -60,16 +221,54 @@ public class PauseHandler : MonoBehaviour
         iconTrainer = transform.Find("IconTrainer").GetComponent<RotatableGUIItem>();
         iconSave = transform.Find("IconSave").GetComponent<RotatableGUIItem>();
         iconSettings = transform.Find("IconSettings").GetComponent<RotatableGUIItem>();
+        */
 
+        /*
         saveDataDisplay = transform.Find("SaveDataDisplay").GetComponent<GUITexture>();
         mapName = saveDataDisplay.transform.Find("MapName").GetComponent<GUIText>();
         mapNameShadow = mapName.transform.Find("MapNameShadow").GetComponent<GUIText>();
         dataText = saveDataDisplay.transform.Find("DataText").GetComponent<GUIText>();
         dataTextShadow = dataText.transform.Find("DataTextShadow").GetComponent<GUIText>();
+        */
     }
 
     void Start()
     {
+        transform.Find("left_interface").gameObject.SetActive(false);
+        
+        party.type = App.Type.Menu;
+        party.scene = Scene.main.Party.gameObject;
+        party.appDown = bag;
+        party.appRight = pokedexApp;
+        
+        pokedexApp.type = App.Type.NotImplemented;
+        pokedexApp.behavior = notYetImplementedMenu();
+        pokedexApp.appDown = trainer;
+        pokedexApp.appLeft = party;
+        
+        bag.type = App.Type.Menu;
+        bag.scene = Scene.main.Bag.gameObject;
+        bag.appDown = save;
+        bag.appUp = party;
+        bag.appRight = trainer;
+        
+        trainer.type = App.Type.Menu;
+        trainer.scene = Scene.main.Trainer.gameObject;
+        trainer.appDown = settings;
+        trainer.appUp = pokedexApp;
+        trainer.appLeft = bag;
+        
+        save.type = App.Type.Save;
+        save.behavior = startSaveMenu();
+        save.appUp = bag;
+        save.appRight = settings;
+        
+        settings.type = App.Type.Menu;
+        settings.scene = Scene.main.Settings.gameObject;
+        settings.appUp = trainer;
+        settings.appLeft = save;
+        
+        /*
         pauseTop.pixelInset = new Rect(0, 192, pauseTop.pixelInset.width, pauseTop.pixelInset.height);
         pauseBottom.pixelInset = new Rect(0, -96, pauseBottom.pixelInset.width, pauseBottom.pixelInset.height);
 
@@ -81,19 +280,29 @@ public class PauseHandler : MonoBehaviour
         iconTrainer.transform.position = new Vector3(iconTrainer.transform.position.x, 1.0833f, 1);
         iconSave.transform.position = new Vector3(iconSave.transform.position.x, 1.0833f, 1);
         iconSettings.transform.position = new Vector3(iconSettings.transform.position.x, 1.0833f, 1);
-
+        
+        */
         selectedIcon = 0;
-
+        
+        /*
         saveDataDisplay.gameObject.SetActive(false);
+        */
+        
+        slotPositions = new []
+        {
+            slotParty.transform.position,
+            slotPokedex.transform.position,
+            slotBag.transform.position,
+            slotTrainer.transform.position,
+            slotSave.transform.position,
+            slotSettings.transform.position
+            
+        };
+        
         this.gameObject.SetActive(false);
     }
-
-    private void setSelectedText(string text)
-    {
-        selectedText.text = text;
-        selectedTextShadow.text = text;
-    }
-
+    
+    /*
     private IEnumerator openAnim()
     {
         float increment = 0;
@@ -106,7 +315,7 @@ public class PauseHandler : MonoBehaviour
             }
             pauseBottom.pixelInset = new Rect(pauseBottom.pixelInset.x, -96 + (increment * 96),
                 pauseBottom.pixelInset.width, pauseBottom.pixelInset.height);
-            pauseTop.pixelInset = new Rect(pauseTop.pixelInset.x, 192 - (increment * 96), pauseTop.pixelInset.width,
+            pauseTop.pixelInset = new Rect(pauseTop.pixelInset.x, (192 - (increment * 96))*2, pauseTop.pixelInset.width,
                 pauseTop.pixelInset.height);
             iconPokedex.transform.position = new Vector3(iconPokedex.transform.position.x,
                 -0.0833f + (increment * 0.4167f), 1);
@@ -135,7 +344,7 @@ public class PauseHandler : MonoBehaviour
             }
             pauseBottom.pixelInset = new Rect(pauseBottom.pixelInset.x, 0 - (increment * 96),
                 pauseBottom.pixelInset.width, pauseBottom.pixelInset.height);
-            pauseTop.pixelInset = new Rect(pauseTop.pixelInset.x, 96 + (increment * 96), pauseTop.pixelInset.width,
+            pauseTop.pixelInset = new Rect(pauseTop.pixelInset.x, (96 + (increment * 96))*2, pauseTop.pixelInset.width,
                 pauseTop.pixelInset.height);
             iconPokedex.transform.position = new Vector3(iconPokedex.transform.position.x,
                 0.3333f - (increment * 0.4167f), 1);
@@ -182,45 +391,92 @@ public class PauseHandler : MonoBehaviour
             }
         }
     }
+    */
+
+    public UnityEngine.Sprite[] getIconSprite(int index)
+    {
+        UnityEngine.Sprite[] localSprites;
+        switch (index)
+        {
+            case 1:
+                localSprites = partySpriteIcon;
+                break;
+            case 2:
+                localSprites = pokedexSpriteIcon;
+                break;
+            case 3:
+                localSprites = bagSpriteIcon;
+                break;
+            case 4:
+                localSprites = trainerSpriteIcon;
+                break;
+            case 5:
+                localSprites = saveSpriteIcon;
+                break;
+            case 6:
+                localSprites = settingsSpriteIcon;
+                break;
+            default:
+                localSprites = partySpriteIcon;
+                break;
+        }
+
+        return localSprites;
+    }
 
     public IEnumerator updateIcon(int index)
     {
+        if (targetIndex != null && targetImage != null && targetIcon != null)
+        {
+            targetImage.sprite = slotSprite[0];
+            targetIcon.sprite = getIconSprite(targetIndex)[0];
+        }
+        //TODO remplacer les targeticon par des targetImage
         if (selectedIcon == 1)
         {
-            targetIcon = iconPokedex;
-            setSelectedText("Pokédex");
+            targetImage = imageParty;
+            targetIcon = iconParty;
         }
         else if (selectedIcon == 2)
         {
-            targetIcon = iconParty;
-            setSelectedText("Pokémon Party");
+            targetImage = imagePokedex;
+            targetIcon = iconPokedex;
         }
         else if (selectedIcon == 3)
         {
+            targetImage = imageBag;
             targetIcon = iconBag;
-            setSelectedText("Bag");
         }
         else if (selectedIcon == 4)
         {
+            targetImage = imageTrainer;
             targetIcon = iconTrainer;
-            setSelectedText(SaveData.currentSave.Player.Name);
         }
         else if (selectedIcon == 5)
         {
+            targetImage = imageSave;
             targetIcon = iconSave;
-            setSelectedText("Save Game");
         }
         else if (selectedIcon == 6)
         {
+            targetImage = imageSettings;
             targetIcon = iconSettings;
-            setSelectedText("Settings");
         }
         else
         {
+            targetImage = null;
             targetIcon = null;
-            setSelectedText("");
         }
 
+        if (targetImage != null && targetIcon != null)
+        {
+            targetImage.sprite = slotSprite[1];
+            targetIcon.sprite = getIconSprite(selectedIcon)[1];
+        }
+        
+        targetIndex = index;
+
+        /*
         iconPokedex.angle = 0;
         iconParty.angle = 0;
         iconBag.angle = 0;
@@ -234,6 +490,7 @@ public class PauseHandler : MonoBehaviour
         iconTrainer.size = new Vector2(32, 32);
         iconSave.size = new Vector2(32, 32);
         iconSettings.size = new Vector2(32, 32);
+        
 
         if (targetIcon != null)
         {
@@ -264,9 +521,13 @@ public class PauseHandler : MonoBehaviour
                 yield return null;
             }
         }
+        */
+        
         yield return null;
     }
 
+    /*
+    
     private void hideIcons()
     {
         iconPokedex.hide = true;
@@ -326,39 +587,400 @@ public class PauseHandler : MonoBehaviour
             yield return null;
         }
     }
+    */
+    
 
+    private IEnumerator notYetImplementedMenu()
+    {
+        Debug.Log("Pokédex not yet implemented");
+        yield return new WaitForSeconds(0.2f);
+    }
+    
+    private IEnumerator startMenu(GameObject sceneObject)
+    {
+        //Party
+        SfxHandler.Play(decideClip);
+
+        //Fade In
+        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+        //Start the scene
+        yield return StartCoroutine(runSceneUntilDeactivated(sceneObject));
+        //Fade Out
+        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+    }
+
+    private IEnumerator startSaveMenu()
+    {
+        //Save
+
+        saveDataDisplay.gameObject.SetActive(true);
+        
+        int badgeTotal = 0;
+        for (int i = 0; i < 12; i++)
+        {
+            if (SaveData.currentSave.gymsBeaten[i])
+            {
+                badgeTotal += 1;
+            }
+        }
+        string playerTime = "" + SaveData.currentSave.playerMinutes;
+        if (playerTime.Length == 1)
+        {
+            playerTime = "0" + playerTime;
+        }
+        playerTime = SaveData.currentSave.playerHours + " : " + playerTime;
+        
+        //display party
+        for (int i = 0; i < saveParty.Length; ++i)
+        {
+            IPokemon selectedPokemon = Game.GameData.Trainer.party[i];
+
+            if (selectedPokemon == null)
+            {
+                saveParty[i].gameObject.SetActive(false);
+            }
+            else
+            {
+                saveParty[i].gameObject.SetActive(true);
+                //saveParty[i].sprite = selectedPokemon.GetIconsSprite()[0];
+            }
+        }
+
+        mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
+        date.text = SaveData.currentSave.playerName; //date not yet implemented
+        hour.text = ""; //hour not yet implemented
+        badges.text = ""+badgeTotal;
+        pokedex.text = "0"; //pokedex not yet implemented
+        playTime.text = playerTime;
+
+
+        mapNameShadow.text = mapName.text;
+        dateShadow.text = date.text;
+        hourShadow.text = hour.text;
+        badgesShadow.text = badges.text;
+        pokedexShadow.text = pokedex.text;
+        playTimeShadow.text = playTime.text;
+
+        Dialog.DrawDialogBox();
+        yield return StartCoroutine(Dialog.DrawText("Would you like to save the game?"));
+        
+        yield return new WaitForSeconds(0.2f);
+        yield return StartCoroutine(Dialog.DrawChoiceBox(0));
+        int chosenIndex = Dialog.chosenIndex;
+        if (chosenIndex == 1)
+        {
+            //update save file
+            Dialog.UndrawChoiceBox();
+            Dialog.DrawDialogBox();
+            
+            // Saving the Scene and Positions of the player & follower
+            SaveData.currentSave.levelName = Application.loadedLevelName;
+            SaveData.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
+            SaveData.currentSave.playerDirection = PlayerMovement.player.direction;
+            SaveData.currentSave.followerPosition = new SeriV3(PlayerMovement.player.followerScript.transform.position);
+            SaveData.currentSave.followerdirection = PlayerMovement.player.followerScript.direction;
+            SaveData.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
+            SaveData.currentSave.followerOut = GlobalVariables.global.followerOut;
+
+            // Saving the Non Resetting Events
+            NonResettingHandler.saveDataToGlobal();
+
+            SaveLoad.Save();
+            
+            SfxHandler.Play(saveClip);
+            yield return
+                StartCoroutine(Dialog.DrawText(SaveData.currentSave.playerName + " saved the game!"));
+            while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
+            {
+                yield return null;
+            }
+        }
+        else if (chosenIndex == 0)
+        {
+            SfxHandler.Play(cancelClip);
+        }
+        Dialog.UndrawDialogBox();
+        Dialog.UndrawChoiceBox();
+        saveDataDisplay.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+    }
+
+    public IEnumerator Blur(float speed)
+    {
+        //PostProcessVolume postProcessVolume = PlayerMovement.player.mainCamera.GetComponent<PostProcessVolume>();
+        //DepthOfField dof;
+        //
+        //postProcessVolume.profile.TryGetSettings(out dof);
+        //
+        //dof.active = true;
+        //
+        //while (dof.focalLength.GetValue<float>() < 21)
+        //{
+        //    dof.focalLength.Override(dof.focalLength + Time.deltaTime * speed);
+        //
+        //    if (dof.focalLength.GetValue<float>() > 21) dof.focalLength.Override(21f);
+        //    
+        //    yield return null;
+        //}
+        yield return null;
+    }
+    
+    public IEnumerator UnBlur(float speed)
+    {
+        //PostProcessVolume postProcessVolume = PlayerMovement.player.mainCamera.GetComponent<PostProcessVolume>();
+        //DepthOfField dof;
+        //
+        //postProcessVolume.profile.TryGetSettings(out dof);
+        //
+        //while (dof.focalLength.GetValue<float>() > 1)
+        //{
+        //    dof.focalLength.Override(dof.focalLength - Time.deltaTime * speed);
+        //
+        //    if (dof.focalLength.GetValue<float>() < 1) dof.focalLength.Override(1);
+        //    
+        //    yield return null;
+        //}
+        //
+        //dof.active = false;
+        yield return null;
+    }
+
+    public IEnumerator animateDevelopArrow()
+    {
+        RectTransform arrow = transform.Find("develop").GetComponent<RectTransform>();
+        int x = 61;
+        arrow.gameObject.SetActive(true);
+
+        while (true)
+        {
+            LeanTween.moveX(arrow, x, 0);
+            yield return new WaitForSeconds(0.2f);
+            LeanTween.moveX(arrow, x + 1, 0);
+            yield return new WaitForSeconds(0.2f);
+            LeanTween.moveX(arrow, x, 0);
+            yield return new WaitForSeconds(0.2f);
+            LeanTween.moveX(arrow, x - 1, 0);
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
 
     public IEnumerator control()
     {
-        selectedIcon = 0;
-        unhideIcons();
-        StartCoroutine("updateIcon", selectedIcon);
+        Coroutine developArrowAnim;
+        GameObject left_interface = transform.Find("left_interface").gameObject;
+        
+        bool noPokemon = SaveData.currentSave.PC.getBoxLength(0) == 0;
+        bool noPokedex = SaveData.currentSave.getCVariable("has_pokedex") == 0;
+        bool noTrainerCard = SaveData.currentSave.getCVariable("has_trainerCard") == 0;
+        
+        trainerText.text = SaveData.currentSave.playerName;
+        trainerShadowText.text = trainerText.text;
+        
+        /* Reset apps */
+        
+        party.type = App.Type.Menu;
+        party.scene = Scene.main.Party.gameObject;
+        party.appDown = bag;
+        party.appRight = pokedexApp;
+        
+        pokedexApp.type = App.Type.NotImplemented;
+        pokedexApp.behavior = notYetImplementedMenu();
+        pokedexApp.appDown = trainer;
+        pokedexApp.appLeft = party;
+        
+        bag.type = App.Type.Menu;
+        bag.scene = Scene.main.Bag.gameObject;
+        bag.appDown = save;
+        bag.appUp = party;
+        bag.appRight = trainer;
+        
+        trainer.type = App.Type.Menu;
+        trainer.scene = Scene.main.Trainer.gameObject;
+        trainer.appDown = settings;
+        trainer.appUp = pokedexApp;
+        trainer.appLeft = bag;
+        
+        save.type = App.Type.Save;
+        save.behavior = startSaveMenu();
+        save.appUp = bag;
+        save.appRight = settings;
+        
+        settings.type = App.Type.Menu;
+        settings.scene = Scene.main.Settings.gameObject;
+        settings.appUp = trainer;
+        settings.appLeft = save;
+        
+        slotParty.transform.localScale = Vector3.one;
+        slotPokedex.transform.localScale = Vector3.one;
+        slotTrainer.transform.localScale = Vector3.one;
+        
+        /*   */
+        
+        App selectedApp = party;
+        selectedIcon = 1;
+        if (noPokemon) //noPokemon
+        {
+            selectedApp = pokedexApp;
+            selectedIcon = 2;
+
+            // Cut links between party App and others
+            bag.appUp = null;
+            pokedexApp.appLeft = null;
+            slotParty.transform.localScale = new Vector3(0,0,0);
+        }
+        if (noPokedex) //noPokedex && noPokemon
+        {
+            selectedApp = party;
+
+            // Cut links between pokedex App and others
+            trainer.appUp = null;
+            party.appRight = null;
+            slotPokedex.transform.localScale = new Vector3(0,0,0);
+
+            if (noPokemon)
+            {
+                selectedIcon = 3;
+                selectedApp = bag;
+            }
+        }
+        if (noTrainerCard) // no Trainer Card
+        {
+            bag.appRight = null;
+            settings.appUp = null;
+            pokedexApp.appDown = null;
+            slotTrainer.transform.localScale = new Vector3(0,0,0);
+        }
+
+        float speed = 50;
+
+        //unhideIcons();
+        yield return StartCoroutine("updateIcon", selectedIcon);
+
         SfxHandler.Play(openClip);
-        yield return StartCoroutine("openAnim");
+        
+        StartCoroutine(Blur(speed));
+        LeanTween.moveX(phone, 73, transitionTime);
+        yield return new WaitForSeconds(transitionTime);
+        
+        left_interface.SetActive(true);
+        money.text = "$" + SaveData.currentSave.playerMoney;
+        money.transform.parent.GetComponent<Text>().text = money.text;
+
+        if (SaveData.currentSave.PC.boxes[0].Length > 0)
+        {
+            pkmTeam[0].transform.parent.gameObject.SetActive(true);
+            for (int i = 0; i < pkmTeam.Length; ++i)
+            {
+                if (SaveData.currentSave.PC.boxes[0][i] != null)
+                {
+                    IPokemon p = Game.GameData.Trainer.party[i];
+                    
+                    pkmTeam[i].gameObject.SetActive(true);
+                    //pkmTeam[i].sprite = p.GetIconsSprite()[0];
+
+                    if (p.Status == Status.FAINT)
+                    {
+                        pkmTeam[i].color = new Color(1, 1, 1, 0.2f);
+                    }
+                    else if (p.Status == Status.POISON)
+                    {
+                        pkmTeam[i].color = new Color(1, 0, 1, 1);
+                    }
+                    else if (p.Status == Status.PARALYSIS)
+                    {
+                        pkmTeam[i].color = new Color(1, 1, 0, 1);
+                    }
+                    else if (p.Status == Status.SLEEP)
+                    {
+                        pkmTeam[i].color = new Color(0.5f, 0.5f, 0.5f, 1);
+                    }
+                    else if (p.Status == Status.BURN)
+                    {
+                        pkmTeam[i].color = new Color(1, 0, 0, 1);
+                    }
+                    else if (p.Status == Status.FROZEN)
+                    {
+                        pkmTeam[i].color = new Color(0, 1, 1, 1);
+                    }
+                    else
+                    {
+                        pkmTeam[i].color = new Color(1, 1, 1, 1);
+                    }
+                    
+                    // PV Bar
+                    float hp = (p.HP / p.TotalHP) * 100;
+                    pkmPV[i].GetComponent<RectTransform>().sizeDelta = new Vector2(hp * 22, 2);
+                    
+                    pkmPV[i].gameObject.SetActive(true);
+
+                    pkmPV[i].color = new Color(0, 1, 0, 1);
+                    
+                    if (hp < 0.1)
+                    {
+                        pkmPV[i].color = new Color(1, 0, 0, 1);
+                    }
+                    else if (hp < 0.5)
+                    {
+                        pkmPV[i].color = new Color(1, 0.6f, 0f, 1);
+                    }
+
+                }
+                else
+                {
+                    pkmTeam[i].sprite = null;
+                    pkmTeam[i].gameObject.SetActive(false);
+                    pkmPV[i].gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            pkmTeam[0].transform.parent.gameObject.SetActive(false);
+        }
+        
+        
+        developArrowAnim = StartCoroutine(animateDevelopArrow());
+        /*
+        app_text.gameObject.SetActive(true);
+        app_text_shadow.gameObject.SetActive(true);
+        
+        if (Language.getLang() == Language.Country.FRANCAIS)
+        {
+            app_text.text = "Appuyez sur R pour voir les applications";
+        }
+        else
+        {
+            app_text.text = "Press R to see applications";
+        }
+        app_text_shadow.text = app_text.text;
+        */
+        
+        yield return new WaitForSeconds(0.2f);
+
         running = true;
         while (running)
         {
-            if (selectedIcon == 0)
+            if (selectedIcon <= 0)
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
                     selectedIcon = 2;
                     StartCoroutine("updateIcon", selectedIcon);
                     SfxHandler.Play(selectClip);
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
                     selectedIcon = 1;
                     StartCoroutine("updateIcon", selectedIcon);
                     SfxHandler.Play(selectClip);
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
                     selectedIcon = 5;
                     StartCoroutine("updateIcon", selectedIcon);
                     SfxHandler.Play(selectClip);
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
                     selectedIcon = 3;
                     StartCoroutine("updateIcon", selectedIcon);
@@ -367,194 +989,170 @@ public class PauseHandler : MonoBehaviour
             }
             else
             {
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
                 {
-                    if (selectedIcon > 3)
+                    if (selectedApp.appUp != null)
                     {
-                        selectedIcon -= 3;
+                        selectedApp = selectedApp.appUp;
+                        selectedIcon = selectedApp.index;
                         StartCoroutine("updateIcon", selectedIcon);
                         SfxHandler.Play(selectClip);
+                        Debug.Log(selectedIcon);
                         yield return new WaitForSeconds(0.2f);
                     }
+                    
+
+                    /*
+                    if (selectedIcon != 1 && selectedIcon != 2)
+                    {
+                        selectedIcon -= 2;
+                        StartCoroutine("updateIcon", selectedIcon);
+                        SfxHandler.Play(selectClip);
+                        Debug.Log(selectedIcon);
+                        yield return new WaitForSeconds(0.2f);
+                    }
+                    */
                 }
-                else if (Input.GetAxisRaw("Horizontal") > 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
                 {
-                    if (selectedIcon != 3 && selectedIcon != 6)
+                    if (selectedApp.appRight != null)
+                    {
+                        selectedApp = selectedApp.appRight;
+                        selectedIcon = selectedApp.index;
+                        StartCoroutine("updateIcon", selectedIcon);
+                        SfxHandler.Play(selectClip);
+                        Debug.Log(selectedIcon);
+                        yield return new WaitForSeconds(0.2f);
+                    }
+                    
+                    /*
+                    if (selectedIcon != 2 && selectedIcon != 4 && selectedIcon != 6)
                     {
                         selectedIcon += 1;
                         StartCoroutine("updateIcon", selectedIcon);
                         SfxHandler.Play(selectClip);
+                        Debug.Log(selectedIcon);
                         yield return new WaitForSeconds(0.2f);
                     }
+                    */
                 }
-                else if (Input.GetAxisRaw("Vertical") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
                 {
-                    if (selectedIcon < 4)
+                    if (selectedApp.appDown != null)
                     {
-                        selectedIcon += 3;
+                        selectedApp = selectedApp.appDown;
+                        selectedIcon = selectedApp.index;
                         StartCoroutine("updateIcon", selectedIcon);
                         SfxHandler.Play(selectClip);
+                        Debug.Log(selectedIcon);
                         yield return new WaitForSeconds(0.2f);
                     }
+                    
+                    /*
+                    if (selectedIcon != 5 && selectedIcon != 6)
+                    {
+                        selectedIcon += 2;
+                        StartCoroutine("updateIcon", selectedIcon);
+                        SfxHandler.Play(selectClip);
+                        Debug.Log(selectedIcon);
+                        yield return new WaitForSeconds(0.2f);
+                    }
+                    */
                 }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
+                else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
                 {
-                    if (selectedIcon != 1 && selectedIcon != 4)
+                    if (selectedApp.appLeft != null)
+                    {
+                        selectedApp = selectedApp.appLeft;
+                        selectedIcon = selectedApp.index;
+                        StartCoroutine("updateIcon", selectedIcon);
+                        SfxHandler.Play(selectClip);
+                        Debug.Log(selectedIcon);
+                        yield return new WaitForSeconds(0.2f);
+                    }
+                    
+                    /*
+                    if (selectedIcon != 1 && selectedIcon != 3  && selectedIcon != 5)
                     {
                         selectedIcon -= 1;
                         StartCoroutine("updateIcon", selectedIcon);
                         SfxHandler.Play(selectClip);
+                        Debug.Log(selectedIcon);
                         yield return new WaitForSeconds(0.2f);
                     }
+                    */
                 }
-                else if (Input.GetButton("Select"))
+                else if (UnityEngine.Input.GetButton("Select"))
                 {
+                    switch (selectedApp.type)
+                    {
+                        case App.Type.Menu:
+                            yield return StartCoroutine(startMenu(selectedApp.scene));
+                            break;
+                        case App.Type.NotImplemented:
+                            yield return StartCoroutine(notYetImplementedMenu());
+                            break;
+                        case App.Type.Save:
+                            yield return StartCoroutine(startSaveMenu());
+                            break;
+                    }
+
+                    /*
                     if (selectedIcon == 1)
+                    {
+                        //Party
+                        yield return StartCoroutine(startMenu(Scene.main.Party.gameObject));
+                    }
+                    else if (selectedIcon == 2)
                     {
                         //Pokedex
                         Debug.Log("Pokédex not yet implemented");
                         yield return new WaitForSeconds(0.2f);
                     }
-                    else if (selectedIcon == 2)
-                    {
-                        //Party
-                        SfxHandler.Play(selectClip);
-                        //StartCoroutine(fadeIcons(0.4f));
-                        //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-                        hideIcons();
-
-                        yield return StartCoroutine(runSceneUntilDeactivated(Scene.main.Party.gameObject));
-
-                        unhideIcons();
-                        //StartCoroutine(unfadeIcons(0.4f));
-                        //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-                    }
                     else if (selectedIcon == 3)
                     {
                         //Bag
-                        SfxHandler.Play(selectClip);
-                        //StartCoroutine(fadeIcons(0.4f));
-                        //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-                        hideIcons();
-
-                        yield return StartCoroutine(runSceneUntilDeactivated(Scene.main.Bag.gameObject));
-
-                        unhideIcons();
-                        //StartCoroutine(unfadeIcons(0.4f));
-                        //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                        yield return StartCoroutine(startMenu(Scene.main.Bag.gameObject));
                     }
                     else if (selectedIcon == 4)
                     {
                         //TrainerCard
-                        SfxHandler.Play(selectClip);
-                        //StartCoroutine(fadeIcons(0.4f));
-                        //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-                        hideIcons();
-
-                        yield return StartCoroutine(runSceneUntilDeactivated(Scene.main.Trainer.gameObject));
-
-                        unhideIcons();
-                        //StartCoroutine(unfadeIcons(0.4f));
-                        //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                        yield return StartCoroutine(startMenu(Scene.main.Trainer.gameObject));
                     }
                     else if (selectedIcon == 5)
                     {
                         //Save
-                        saveDataDisplay.gameObject.SetActive(true);
-                        saveDataDisplay.texture =
-                            Resources.Load<Texture>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
-                        iconPokedex.hide = true; //hide this icon as it is in the way
-                        int badgeTotal = 0;
-                        for (int i = 0; i < 12; i++)
-                        {
-                            if (SaveData.currentSave.Player.gymsBeaten[i])
-                            {
-                                badgeTotal += 1;
-                            }
-                        }
-                        string playerTime = "" + SaveData.currentSave.Player.PlayTime.Minutes;
-                        if (playerTime.Length == 1)
-                        {
-                            playerTime = "0" + playerTime;
-                        }
-                        playerTime = SaveData.currentSave.Player.PlayTime.Hours + " : " + playerTime;
-                        
-                        mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
-                        dataText.text = SaveData.currentSave.Player.Name + "\n" +
-                                        badgeTotal + "\n" +
-                                        "0" + "\n" + //pokedex not yet implemented
-                                        playerTime;
-                        mapNameShadow.text = mapName.text;
-                        dataTextShadow.text = dataText.text;
-                        
-                        Dialog.drawDialogBox();
-                        yield return StartCoroutine(Dialog.drawText("Would you like to save the game?"));
-                        Dialog.drawChoiceBoxNo();
-                        yield return new WaitForSeconds(0.2f);
-                        yield return StartCoroutine(Dialog.choiceNavigateNo());
-                        int chosenIndex = Dialog.chosenIndex;
-                        if (chosenIndex == 1)
-                        {
-                            //update save file
-                            Dialog.undrawChoiceBox();
-                            Dialog.drawDialogBox();
-                        
-                            SaveData.currentSave.savefile.levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-                            SaveData.currentSave.Player.Position = new SeriV3(PlayerMovement.player.transform.position);
-                            SaveData.currentSave.Player.Direction = PlayerMovement.player.direction;
-                            SaveData.currentSave.savefile.mapName = PlayerMovement.player.accessedMapSettings.mapName;
-                        
-                            NonResettingHandler.saveDataToGlobal();
-                        
-                            SaveLoad.Save();
-                        
-                            yield return
-                                StartCoroutine(Dialog.drawText(SaveData.currentSave.Player.Name + " saved the game!"));
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                            {
-                                yield return null;
-                            }
-                        }
-                        Dialog.undrawDialogBox();
-                        Dialog.undrawChoiceBox();
-                        iconPokedex.hide = false;
-                        saveDataDisplay.gameObject.SetActive(false);
-                        //Debug.Log("Save not yet implemented");
-                        yield return new WaitForSeconds(0.2f);
+                        yield return StartCoroutine(startSaveMenu());
                     }
                     else if (selectedIcon == 6)
                     {
                         //Settings
-                        SfxHandler.Play(selectClip);
-                        //StartCoroutine(fadeIcons(0.4f));
-                        //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-                        hideIcons();
-
-                        yield return StartCoroutine(runSceneUntilDeactivated(Scene.main.Settings.gameObject));
-
-                        unhideIcons();
-                        //StartCoroutine(unfadeIcons(0.4f));
-                        //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                        yield return StartCoroutine(startMenu(Scene.main.Settings.gameObject));
                     }
+                    */
                 }
             }
-            if (Input.GetButton("Start") || Input.GetButton("Back"))
+            if (UnityEngine.Input.GetButton("Start") || UnityEngine.Input.GetButton("Back"))
             {
                 running = false;
+                SfxHandler.Play(cancelClip);
             }
 
             yield return null;
         }
 
-        yield return StartCoroutine("closeAnim");
+        /*
+        app_text.gameObject.SetActive(false);
+        app_text_shadow.gameObject.SetActive(false);
+        */
+        
+        StopCoroutine(developArrowAnim);
+        transform.Find("develop").gameObject.SetActive(false);
+        left_interface.SetActive(false);
+        
+        StartCoroutine(UnBlur(speed));
+        LeanTween.moveX(phone, 195, transitionTime);
+        yield return new WaitForSeconds(transitionTime);
 
         this.gameObject.SetActive(false);
     }

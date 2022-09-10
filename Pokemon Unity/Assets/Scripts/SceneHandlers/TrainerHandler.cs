@@ -2,83 +2,84 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TrainerHandler : MonoBehaviour
 {
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
 
-    private GUITexture cancel;
+    private Image cancel;
 
     private Transform screens;
 
-    private GUITexture card;
+    private Image card;
 
-    private GUITexture IDnoBox;
-    private GUIText IDnoText;
-    private GUIText IDnoTextShadow;
-    private GUIText IDnoData;
-    private GUIText IDnoDataShadow;
-    private GUITexture nameBox;
-    private GUIText nameText;
-    private GUIText nameTextShadow;
-    private GUIText nameData;
-    private GUIText nameDataShadow;
-    private GUITexture picture;
-    private GUITexture moneyBox;
-    private GUIText moneyText;
-    private GUIText moneyTextShadow;
-    private GUIText moneyData;
-    private GUIText moneyDataShadow;
-    private GUITexture pokedexBox;
-    private GUIText pokedexText;
-    private GUIText pokedexTextShadow;
-    private GUIText pokedexData;
-    private GUIText pokedexDataShadow;
-    private GUITexture scoreBox;
-    private GUIText scoreText;
-    private GUIText scoreTextShadow;
-    private GUIText scoreData;
-    private GUIText scoreDataShadow;
-    private GUITexture timeBox;
-    private GUIText timeText;
-    private GUIText timeTextShadow;
-    private GUIText timeHour;
-    private GUIText timeHourShadow;
-    private GUIText timeColon;
-    private GUIText timeColonShadow;
-    private GUIText timeMinute;
-    private GUIText timeMinuteShadow;
-    private GUITexture adventureBox;
-    private GUIText adventureText;
-    private GUIText adventureTextShadow;
-    private GUIText adventureData;
-    private GUIText adventureDataShadow;
+    private Image IDnoBox;
+    private Text IDnoText;
+    private Text IDnoTextShadow;
+    private Text IDnoData;
+    private Text IDnoDataShadow;
+    private Image nameBox;
+    private Text nameText;
+    private Text nameTextShadow;
+    private Text nameData;
+    private Text nameDataShadow;
+    private Image picture;
+    private Image moneyBox;
+    private Text moneyText;
+    private Text moneyTextShadow;
+    private Text moneyData;
+    private Text moneyDataShadow;
+    private Image pokedexBox;
+    private Text pokedexText;
+    private Text pokedexTextShadow;
+    private Text pokedexData;
+    private Text pokedexDataShadow;
+    private Image scoreBox;
+    private Text scoreText;
+    private Text scoreTextShadow;
+    private Text scoreData;
+    private Text scoreDataShadow;
+    private Image timeBox;
+    private Text timeText;
+    private Text timeTextShadow;
+    private Text timeHour;
+    private Text timeHourShadow;
+    private Text timeColon;
+    private Text timeColonShadow;
+    private Text timeMinute;
+    private Text timeMinuteShadow;
+    private Image adventureBox;
+    private Text adventureText;
+    private Text adventureTextShadow;
+    private Text adventureData;
+    private Text adventureDataShadow;
 
-    private GUITexture badgeBox;
+    private Image badgeBox;
 
-    private GUITexture badgeBoxLid;
-    private GUITexture GLPictureBox;
-    private GUITexture GLPicture;
-    private GUITexture GLNameBox;
-    private GUIText GLNameData;
-    private GUIText GLNameDataShadow;
-    private GUITexture GLTypeBox;
-    private GUITexture GLType;
-    private GUITexture GLBeatenBox;
-    private GUIText GLBeatenText;
-    private GUIText GLBeatenTextShadow;
-    private GUIText GLBeatenData;
-    private GUIText GLBeatenDataShadow;
-    private GUITexture[] badges = new GUITexture[12];
-    private GUITexture badgeSel;
+    private Image badgeBoxLid;
+    private Image GLPictureBox;
+    private Image GLPicture;
+    private Image GLNameBox;
+    private Text GLNameData;
+    private Text GLNameDataShadow;
+    private Image GLTypeBox;
+    private Image GLType;
+    private Image GLBeatenBox;
+    private Text GLBeatenText;
+    private Text GLBeatenTextShadow;
+    private Text GLBeatenData;
+    private Text GLBeatenDataShadow;
+    private Image[] badges = new Image[12];
+    private Image badgeSel;
 
-    private GUITexture background;
+    private Image background;
 
     private AudioSource TrainerAudio;
     public AudioClip selectClip;
 
-    public Texture cancelTex;
-    public Texture cancelHighlightTex;
+    public Sprite cancelTex;
+    public Sprite cancelHighlightTex;
 
     private bool running;
     private int currentScreen;
@@ -91,86 +92,86 @@ public class TrainerHandler : MonoBehaviour
         //sceneTransition = transform.GetComponent<SceneTransition>();
         TrainerAudio = transform.GetComponent<AudioSource>();
 
-        cancel = transform.Find("Cancel").GetComponent<GUITexture>();
+        cancel = transform.Find("Cancel").GetComponent<Image>();
 
         screens = transform.Find("Screens");
 
-        card = screens.Find("Card").GetComponent<GUITexture>();
+        card = screens.Find("Card").GetComponent<Image>();
 
-        IDnoBox = card.transform.Find("IDno").GetComponent<GUITexture>();
-        IDnoText = IDnoBox.transform.Find("IDnoText").GetComponent<GUIText>();
-        IDnoTextShadow = IDnoBox.transform.Find("IDnoTextShadow").GetComponent<GUIText>();
-        IDnoData = IDnoBox.transform.Find("IDnoData").GetComponent<GUIText>();
-        IDnoDataShadow = IDnoBox.transform.Find("IDnoDataShadow").GetComponent<GUIText>();
-        nameBox = card.transform.Find("NameBox").GetComponent<GUITexture>();
-        nameText = nameBox.transform.Find("NameText").GetComponent<GUIText>();
-        nameTextShadow = nameBox.transform.Find("NameTextShadow").GetComponent<GUIText>();
-        nameData = nameBox.transform.Find("NameData").GetComponent<GUIText>();
-        nameDataShadow = nameBox.transform.Find("NameDataShadow").GetComponent<GUIText>();
-        picture = card.transform.Find("Picture").GetComponent<GUITexture>();
-        moneyBox = card.transform.Find("Money").GetComponent<GUITexture>();
-        moneyText = moneyBox.transform.Find("MoneyText").GetComponent<GUIText>();
-        moneyTextShadow = moneyBox.transform.Find("MoneyTextShadow").GetComponent<GUIText>();
-        moneyData = moneyBox.transform.Find("MoneyData").GetComponent<GUIText>();
-        moneyDataShadow = moneyBox.transform.Find("MoneyDataShadow").GetComponent<GUIText>();
-        pokedexBox = card.transform.Find("Pokedex").GetComponent<GUITexture>();
-        pokedexText = pokedexBox.transform.Find("PokedexText").GetComponent<GUIText>();
-        pokedexTextShadow = pokedexBox.transform.Find("PokedexTextShadow").GetComponent<GUIText>();
-        pokedexData = pokedexBox.transform.Find("PokedexData").GetComponent<GUIText>();
-        pokedexDataShadow = pokedexBox.transform.Find("PokedexDataShadow").GetComponent<GUIText>();
-        scoreBox = card.transform.Find("Score").GetComponent<GUITexture>();
-        scoreText = scoreBox.transform.Find("ScoreText").GetComponent<GUIText>();
-        scoreTextShadow = scoreBox.transform.Find("ScoreTextShadow").GetComponent<GUIText>();
-        scoreData = scoreBox.transform.Find("ScoreData").GetComponent<GUIText>();
-        scoreDataShadow = scoreBox.transform.Find("ScoreDataShadow").GetComponent<GUIText>();
-        timeBox = card.transform.Find("Time").GetComponent<GUITexture>();
-        timeText = timeBox.transform.Find("TimeText").GetComponent<GUIText>();
-        timeTextShadow = timeText.transform.Find("TimeTextShadow").GetComponent<GUIText>();
-        timeHour = timeBox.transform.Find("TimeHour").GetComponent<GUIText>();
-        timeHourShadow = timeHour.transform.Find("TimeHourShadow").GetComponent<GUIText>();
-        timeColon = timeBox.transform.Find("TimeColon").GetComponent<GUIText>();
-        timeColonShadow = timeColon.transform.Find("TimeColonShadow").GetComponent<GUIText>();
-        timeMinute = timeBox.transform.Find("TimeMinute").GetComponent<GUIText>();
-        timeMinuteShadow = timeMinute.transform.Find("TimeMinuteShadow").GetComponent<GUIText>();
-        adventureBox = card.transform.Find("Adventure").GetComponent<GUITexture>();
-        adventureText = adventureBox.transform.Find("AdventureText").GetComponent<GUIText>();
-        adventureTextShadow = adventureBox.transform.Find("AdventureTextShadow").GetComponent<GUIText>();
-        adventureData = adventureBox.transform.Find("AdventureData").GetComponent<GUIText>();
-        adventureDataShadow = adventureBox.transform.Find("AdventureDataShadow").GetComponent<GUIText>();
+        IDnoBox = card.transform.Find("IDno").GetComponent<Image>();
+        IDnoText = IDnoBox.transform.Find("IDnoText").GetComponent<Text>();
+        IDnoTextShadow = IDnoBox.transform.Find("IDnoTextShadow").GetComponent<Text>();
+        IDnoData = IDnoBox.transform.Find("IDnoData").GetComponent<Text>();
+        IDnoDataShadow = IDnoBox.transform.Find("IDnoDataShadow").GetComponent<Text>();
+        nameBox = card.transform.Find("NameBox").GetComponent<Image>();
+        nameText = nameBox.transform.Find("NameText").GetComponent<Text>();
+        nameTextShadow = nameBox.transform.Find("NameTextShadow").GetComponent<Text>();
+        nameData = nameBox.transform.Find("NameData").GetComponent<Text>();
+        nameDataShadow = nameBox.transform.Find("NameDataShadow").GetComponent<Text>();
+        picture = card.transform.Find("Picture").GetComponent<Image>();
+        moneyBox = card.transform.Find("Money").GetComponent<Image>();
+        moneyText = moneyBox.transform.Find("MoneyText").GetComponent<Text>();
+        moneyTextShadow = moneyBox.transform.Find("MoneyTextShadow").GetComponent<Text>();
+        moneyData = moneyBox.transform.Find("MoneyData").GetComponent<Text>();
+        moneyDataShadow = moneyBox.transform.Find("MoneyDataShadow").GetComponent<Text>();
+        pokedexBox = card.transform.Find("Pokedex").GetComponent<Image>();
+        pokedexText = pokedexBox.transform.Find("PokedexText").GetComponent<Text>();
+        pokedexTextShadow = pokedexBox.transform.Find("PokedexTextShadow").GetComponent<Text>();
+        pokedexData = pokedexBox.transform.Find("PokedexData").GetComponent<Text>();
+        pokedexDataShadow = pokedexBox.transform.Find("PokedexDataShadow").GetComponent<Text>();
+        scoreBox = card.transform.Find("Score").GetComponent<Image>();
+        scoreText = scoreBox.transform.Find("ScoreText").GetComponent<Text>();
+        scoreTextShadow = scoreBox.transform.Find("ScoreTextShadow").GetComponent<Text>();
+        scoreData = scoreBox.transform.Find("ScoreData").GetComponent<Text>();
+        scoreDataShadow = scoreBox.transform.Find("ScoreDataShadow").GetComponent<Text>();
+        timeBox = card.transform.Find("Time").GetComponent<Image>();
+        timeText = timeBox.transform.Find("TimeText").GetComponent<Text>();
+        timeTextShadow = timeText.transform.Find("TimeTextShadow").GetComponent<Text>();
+        timeHour = timeBox.transform.Find("TimeHour").GetComponent<Text>();
+        timeHourShadow = timeHour.transform.Find("TimeHourShadow").GetComponent<Text>();
+        timeColon = timeBox.transform.Find("TimeColon").GetComponent<Text>();
+        timeColonShadow = timeColon.transform.Find("TimeColonShadow").GetComponent<Text>();
+        timeMinute = timeBox.transform.Find("TimeMinute").GetComponent<Text>();
+        timeMinuteShadow = timeMinute.transform.Find("TimeMinuteShadow").GetComponent<Text>();
+        adventureBox = card.transform.Find("Adventure").GetComponent<Image>();
+        adventureText = adventureBox.transform.Find("AdventureText").GetComponent<Text>();
+        adventureTextShadow = adventureBox.transform.Find("AdventureTextShadow").GetComponent<Text>();
+        adventureData = adventureBox.transform.Find("AdventureData").GetComponent<Text>();
+        adventureDataShadow = adventureBox.transform.Find("AdventureDataShadow").GetComponent<Text>();
 
-        badgeBox = screens.Find("BadgeBox").GetComponent<GUITexture>();
+        badgeBox = screens.Find("BadgeBox").GetComponent<Image>();
 
-        badgeBoxLid = badgeBox.transform.Find("BadgeBoxLid").GetComponent<GUITexture>();
-        GLPictureBox = badgeBox.transform.Find("GLPictureBox").GetComponent<GUITexture>();
-        GLPicture = GLPictureBox.transform.Find("Picture").GetComponent<GUITexture>();
-        GLNameBox = badgeBox.transform.Find("GLNameBox").GetComponent<GUITexture>();
-        GLNameData = GLNameBox.transform.Find("NameData").GetComponent<GUIText>();
-        GLNameDataShadow = GLNameBox.transform.Find("NameDataShadow").GetComponent<GUIText>();
-        GLTypeBox = badgeBox.transform.Find("GLTypeBox").GetComponent<GUITexture>();
-        GLType = GLTypeBox.transform.Find("Type").GetComponent<GUITexture>();
-        GLBeatenBox = badgeBox.transform.Find("GLBeatenBox").GetComponent<GUITexture>();
-        GLBeatenText = GLBeatenBox.transform.Find("BeatenText").GetComponent<GUIText>();
-        GLBeatenTextShadow = GLBeatenBox.transform.Find("BeatenTextShadow").GetComponent<GUIText>();
-        GLBeatenData = GLBeatenBox.transform.Find("BeatenData").GetComponent<GUIText>();
-        GLBeatenDataShadow = GLBeatenBox.transform.Find("BeatenDataShadow").GetComponent<GUIText>();
+        badgeBoxLid = badgeBox.transform.Find("BadgeBoxLid").GetComponent<Image>();
+        GLPictureBox = badgeBox.transform.Find("GLPictureBox").GetComponent<Image>();
+        GLPicture = GLPictureBox.transform.Find("Picture").GetComponent<Image>();
+        GLNameBox = badgeBox.transform.Find("GLNameBox").GetComponent<Image>();
+        GLNameData = GLNameBox.transform.Find("NameData").GetComponent<Text>();
+        GLNameDataShadow = GLNameBox.transform.Find("NameDataShadow").GetComponent<Text>();
+        GLTypeBox = badgeBox.transform.Find("GLTypeBox").GetComponent<Image>();
+        GLType = GLTypeBox.transform.Find("Type").GetComponent<Image>();
+        GLBeatenBox = badgeBox.transform.Find("GLBeatenBox").GetComponent<Image>();
+        GLBeatenText = GLBeatenBox.transform.Find("BeatenText").GetComponent<Text>();
+        GLBeatenTextShadow = GLBeatenBox.transform.Find("BeatenTextShadow").GetComponent<Text>();
+        GLBeatenData = GLBeatenBox.transform.Find("BeatenData").GetComponent<Text>();
+        GLBeatenDataShadow = GLBeatenBox.transform.Find("BeatenDataShadow").GetComponent<Text>();
 
         Transform badgesObject = badgeBox.transform.Find("Badges");
 
-        badges[0] = badgesObject.Find("Badge0").GetComponent<GUITexture>();
-        badges[1] = badgesObject.Find("Badge1").GetComponent<GUITexture>();
-        badges[2] = badgesObject.Find("Badge2").GetComponent<GUITexture>();
-        badges[3] = badgesObject.Find("Badge3").GetComponent<GUITexture>();
-        badges[4] = badgesObject.Find("Badge4").GetComponent<GUITexture>();
-        badges[5] = badgesObject.Find("Badge5").GetComponent<GUITexture>();
-        badges[6] = badgesObject.Find("Badge6").GetComponent<GUITexture>();
-        badges[7] = badgesObject.Find("Badge7").GetComponent<GUITexture>();
-        badges[8] = badgesObject.Find("Badge8").GetComponent<GUITexture>();
-        badges[9] = badgesObject.Find("Badge9").GetComponent<GUITexture>();
-        badges[10] = badgesObject.Find("Badge10").GetComponent<GUITexture>();
-        badges[11] = badgesObject.Find("Badge11").GetComponent<GUITexture>();
-        badgeSel = badgesObject.Find("BadgeSel").GetComponent<GUITexture>();
+        badges[0] = badgesObject.Find("Badge0").GetComponent<Image>();
+        badges[1] = badgesObject.Find("Badge1").GetComponent<Image>();
+        badges[2] = badgesObject.Find("Badge2").GetComponent<Image>();
+        badges[3] = badgesObject.Find("Badge3").GetComponent<Image>();
+        badges[4] = badgesObject.Find("Badge4").GetComponent<Image>();
+        badges[5] = badgesObject.Find("Badge5").GetComponent<Image>();
+        badges[6] = badgesObject.Find("Badge6").GetComponent<Image>();
+        badges[7] = badgesObject.Find("Badge7").GetComponent<Image>();
+        badges[8] = badgesObject.Find("Badge8").GetComponent<Image>();
+        badges[9] = badgesObject.Find("Badge9").GetComponent<Image>();
+        badges[10] = badgesObject.Find("Badge10").GetComponent<Image>();
+        badges[11] = badgesObject.Find("Badge11").GetComponent<Image>();
+        badgeSel = badgesObject.Find("BadgeSel").GetComponent<Image>();
 
-        background = transform.Find("background").GetComponent<GUITexture>();
+        background = transform.Find("background").GetComponent<Image>();
     }
 
     void Start()
@@ -187,9 +188,11 @@ public class TrainerHandler : MonoBehaviour
         if (!shutting)
         {
             yield return new WaitForSeconds(waitTime);
-            badgeBoxLid.pixelInset = new Rect(6, 20, 252, 165);
+            badgeBoxLid.rectTransform.position = new Vector2(6, 20);
+            badgeBoxLid.rectTransform.sizeDelta = new Vector2(252, 165);
+            
             float increment = 0;
-            float startY = badgeBoxLid.pixelInset.y;
+            float startY = badgeBoxLid.rectTransform.position.y;
             while (increment < 1)
             {
                 increment += (1 / openCloseSpeed) * Time.deltaTime;
@@ -197,13 +200,14 @@ public class TrainerHandler : MonoBehaviour
                 {
                     increment = 1;
                 }
-                badgeBoxLid.pixelInset = new Rect(badgeBoxLid.pixelInset.x, startY + (162f * increment), 252,
-                    165f - (160f * increment));
+                badgeBoxLid.rectTransform.position = new Vector2(badgeBoxLid.rectTransform.position.x, startY + (162f * increment));
+                badgeBoxLid.rectTransform.sizeDelta = new Vector2(252, 165f - (160f * increment));
                 yield return null;
             }
-            badgeBoxLid.pixelInset = new Rect(badgeBoxLid.pixelInset.x, badgeBoxLid.pixelInset.y + 5, 252, -5);
+            badgeBoxLid.rectTransform.position = new Vector2(badgeBoxLid.rectTransform.position.x, badgeBoxLid.rectTransform.position.y + 5);
+            badgeBoxLid.rectTransform.position = new Vector2(252, -5);
             increment = 0;
-            startY = badgeBoxLid.pixelInset.y;
+            startY = badgeBoxLid.rectTransform.position.y;
             while (increment < 1)
             {
                 increment += (1 / backSpeed) * Time.deltaTime;
@@ -211,16 +215,17 @@ public class TrainerHandler : MonoBehaviour
                 {
                     increment = 1;
                 }
-                badgeBoxLid.pixelInset = new Rect(badgeBoxLid.pixelInset.x, startY + (112f * increment), 252,
-                    -5f - (112f * increment));
+                badgeBoxLid.rectTransform.position = new Vector2(badgeBoxLid.rectTransform.position.x, startY + (112f * increment));
+                badgeBoxLid.rectTransform.sizeDelta = new Vector2(252, -5f - (112f * increment));
                 yield return null;
             }
         }
         else
         {
-            badgeBoxLid.pixelInset = new Rect(6, 299, 252, -177);
+            badgeBoxLid.rectTransform.position = new Vector2(6, 299);
+            badgeBoxLid.rectTransform.sizeDelta = new Vector2(252, -177);
             float increment = 0;
-            float startY = badgeBoxLid.pixelInset.y;
+            float startY = badgeBoxLid.rectTransform.position.y;
             while (increment < 1)
             {
                 increment += (1 / backSpeed) * Time.deltaTime;
@@ -228,13 +233,14 @@ public class TrainerHandler : MonoBehaviour
                 {
                     increment = 1;
                 }
-                badgeBoxLid.pixelInset = new Rect(badgeBoxLid.pixelInset.x, startY - (112f * increment), 252,
-                    -117f + (112f * increment));
+                badgeBoxLid.rectTransform.position = new Vector2(badgeBoxLid.rectTransform.position.x, startY - (112f * increment));
+                badgeBoxLid.rectTransform.sizeDelta = new Vector2(252, -117f + (112f * increment));
                 yield return null;
             }
-            badgeBoxLid.pixelInset = new Rect(badgeBoxLid.pixelInset.x, badgeBoxLid.pixelInset.y - 5, 252, +5);
+            badgeBoxLid.rectTransform.position = new Vector2(badgeBoxLid.rectTransform.position.x, badgeBoxLid.rectTransform.position.y - 5);
+            badgeBoxLid.rectTransform.sizeDelta = new Vector2(252, 5);
             increment = 0;
-            startY = badgeBoxLid.pixelInset.y;
+            startY = badgeBoxLid.rectTransform.position.y;
             while (increment < 1)
             {
                 increment += (1 / openCloseSpeed) * Time.deltaTime;
@@ -242,8 +248,8 @@ public class TrainerHandler : MonoBehaviour
                 {
                     increment = 1;
                 }
-                badgeBoxLid.pixelInset = new Rect(badgeBoxLid.pixelInset.x, startY - (162f * increment), 252,
-                    5f + (160f * increment));
+                badgeBoxLid.rectTransform.position = new Vector2(badgeBoxLid.rectTransform.position.x, startY - (162f * increment));
+                badgeBoxLid.rectTransform.sizeDelta = new Vector2(252, 5f + (160f * increment));
                 yield return null;
             }
         }
@@ -267,13 +273,13 @@ public class TrainerHandler : MonoBehaviour
                 if (currentScreen == 1)
                 {
                     destinationPosition = new Vector3(-0.806f, 0, 0);
-                    StartCoroutine("boxLid", false);
+                    StartCoroutine(boxLid(false));
                 }
                 else if (currentScreen == 0)
                 {
                     destinationPosition = new Vector3(0, 0, 0);
                     currentBadge = 0;
-                    badgeSel.pixelInset = badges[0].pixelInset;
+                    badgeSel.rectTransform.position = badges[0].rectTransform.position;
                 }
             }
             else
@@ -287,8 +293,8 @@ public class TrainerHandler : MonoBehaviour
                 {
                     destinationPosition = new Vector3(0, 0, 0);
                     currentBadge = 0;
-                    badgeSel.pixelInset = badges[0].pixelInset;
-                    StartCoroutine("boxLid", true);
+                    badgeSel.rectTransform.position = badges[0].rectTransform.position;
+                    StartCoroutine(boxLid(true));
                 }
             }
         }
@@ -298,12 +304,12 @@ public class TrainerHandler : MonoBehaviour
 
     private void updateData()
     {
-        IDnoData.text = "" + SaveData.currentSave.Player.Trainer.PlayerID;
+        IDnoData.text = "" + SaveData.currentSave.playerID;
         IDnoDataShadow.text = IDnoData.text;
-        nameData.text = SaveData.currentSave.Player.Name;
+        nameData.text = SaveData.currentSave.playerName;
         nameDataShadow.text = nameData.text;
-        //picture.texture = null; //player sprites not yet implemented.
-        string playerMoney = "" + SaveData.currentSave.Player.Money;
+        //picture.sprite = null; //player sprites not yet implemented.
+        string playerMoney = "" + SaveData.currentSave.playerMoney;
         char[] playerMoneyChars = playerMoney.ToCharArray();
         playerMoney = "";
         //format playerMoney into a currency style (e.g. $1,000,000)
@@ -319,22 +325,22 @@ public class TrainerHandler : MonoBehaviour
         moneyDataShadow.text = moneyData.text;
         pokedexData.text = "0"; //pokedex not yet implemented.
         pokedexDataShadow.text = pokedexData.text;
-        scoreData.text = "" + SaveData.currentSave.Player.playerScore;
+        scoreData.text = "" + SaveData.currentSave.playerScore;
         scoreDataShadow.text = scoreData.text;
-        timeHour.text = "" + SaveData.currentSave.Player.PlayTime.Hours;
+        timeHour.text = "" + SaveData.currentSave.playerHours;
         timeHourShadow.text = timeHour.text;
-        timeMinute.text = "" + SaveData.currentSave.Player.PlayTime.Minutes;
+        timeMinute.text = "" + SaveData.currentSave.playerMinutes;
         if (timeMinute.text.Length == 1)
         {
             timeMinute.text = "0" + timeMinute.text;
         }
         timeMinuteShadow.text = timeMinute.text;
-        adventureData.text = SaveData.currentSave.Player.StartDate.ToString("MMM. dd, yyyy");
+        adventureData.text = SaveData.currentSave.fileCreationDate;
         adventureDataShadow.text = adventureData.text;
 
         for (int i = 0; i < 12; i++)
         {
-            if (SaveData.currentSave.Player.gymsBeaten[i])
+            if (SaveData.currentSave.gymsBeaten[i])
             {
                 badges[i].enabled = true;
             }
@@ -352,85 +358,85 @@ public class TrainerHandler : MonoBehaviour
             GLNameBox.gameObject.SetActive(true);
             GLPictureBox.gameObject.SetActive(true);
             GLTypeBox.gameObject.SetActive(true);
-            if (SaveData.currentSave.Player.gymsEncountered[currentBadge])
+            if (SaveData.currentSave.gymsEncountered[currentBadge])
             {
                 if (currentBadge == 0)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "Jade";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeROCK");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeROCK");
                 }
                 else if (currentBadge == 1)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "Bob";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeNORMAL");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeNORMAL");
                 }
                 else if (currentBadge == 2)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "Avery";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeFLYING");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeFLYING");
                 }
                 else if (currentBadge == 3)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "Linda";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeGRASS");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeGRASS");
                 }
                 else if (currentBadge == 4)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "Cole";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeFIRE");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeFIRE");
                 }
                 else if (currentBadge == 5)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "Brooke";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeWATER");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeWATER");
                 }
                 else if (currentBadge == 6)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "Doug";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeGROUND");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeGROUND");
                 }
                 else if (currentBadge == 7)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "Apalala";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeDRAGON");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeDRAGON");
                 }
                 else if (currentBadge == 8)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "Zinka";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeSTEEL");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeSTEEL");
                 }
                 else if (currentBadge == 9)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typePSYCHIC");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typePSYCHIC");
                 }
                 else if (currentBadge == 10)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeGHOST");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeGHOST");
                 }
                 else if (currentBadge == 11)
                 {
-                    GLPicture.texture = null;
+                    GLPicture.sprite = null;
                     GLNameData.text = "";
-                    GLType.texture = Resources.Load<Texture>("PCSprites/typeDARK");
+                    GLType.sprite = Resources.Load<Sprite>("PCSprites/typeDARK");
                 }
 
-                if (SaveData.currentSave.Player.gymsBeaten[currentBadge])
+                if (SaveData.currentSave.gymsBeaten[currentBadge])
                 {
                     GLBeatenBox.gameObject.SetActive(true);
-                    GLBeatenData.text = SaveData.currentSave.Player.gymsBeatTime[currentBadge];
+                    GLBeatenData.text = SaveData.currentSave.gymsBeatTime[currentBadge];
                 }
                 else
                 {
@@ -441,9 +447,9 @@ public class TrainerHandler : MonoBehaviour
             }
             else
             {
-                GLPicture.texture = null;
+                GLPicture.sprite = null;
                 GLNameData.text = "???";
-                GLType.texture = null;
+                GLType.sprite = null;
                 GLBeatenBox.gameObject.SetActive(false);
                 GLNameDataShadow.text = GLNameData.text;
             }
@@ -457,14 +463,14 @@ public class TrainerHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator moveBadgeSelect(GUITexture target)
+    private IEnumerator moveBadgeSelect(Image target)
     {
         float increment = 0;
         float moveSpeed = 0.2f;
-        float startX = badgeSel.pixelInset.x;
-        float startY = badgeSel.pixelInset.y;
-        float distanceX = target.pixelInset.x - startX;
-        float distanceY = target.pixelInset.y - startY;
+        float startX = badgeSel.rectTransform.position.x;
+        float startY = badgeSel.rectTransform.position.y;
+        float distanceX = target.rectTransform.position.x - startX;
+        float distanceY = target.rectTransform.position.y - startY;
         while (increment < 1)
         {
             increment += (1 / moveSpeed) * Time.deltaTime;
@@ -472,8 +478,7 @@ public class TrainerHandler : MonoBehaviour
             {
                 increment = 1;
             }
-            badgeSel.pixelInset = new Rect(startX + (increment * distanceX), startY + (increment * distanceY),
-                badgeSel.pixelInset.width, badgeSel.pixelInset.height);
+            badgeSel.rectTransform.position = new Vector2(startX + (increment * distanceX), startY + (increment * distanceY));
             yield return null;
         }
     }
@@ -521,8 +526,7 @@ public class TrainerHandler : MonoBehaviour
                 {
                     increment = 1;
                 }
-                background.pixelInset = new Rect(Mathf.RoundToInt(-32f * increment), Mathf.RoundToInt(32f * increment),
-                    background.pixelInset.width, background.pixelInset.height);
+                background.rectTransform.position = new Vector2(Mathf.RoundToInt(-32f * increment), Mathf.RoundToInt(32f * increment));
                 yield return null;
             }
         }
@@ -532,23 +536,24 @@ public class TrainerHandler : MonoBehaviour
     public IEnumerator control()
     {
         screens.position = new Vector3(0, 0, 0);
-        badgeBoxLid.pixelInset = new Rect(6, 20, 252, 165);
+        badgeBoxLid.rectTransform.position = new Vector2(6, 20);
+        badgeBoxLid.rectTransform.sizeDelta = new Vector2(252, 165);
         //sceneTransition.FadeIn();
         StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
 
         running = true;
-        StartCoroutine("animBG");
-        StartCoroutine("animColon");
+        StartCoroutine(animBG());
+        StartCoroutine(animColon());
 
         cancelSelected = false;
-        cancel.texture = cancelTex;
+        cancel.sprite = cancelTex;
         updateData();
         currentScreen = 1;
         interactingScreen = false;
         badgeSel.enabled = false;
         currentBadge = 0;
         updateSelectedBadge();
-        badgeSel.pixelInset = badges[0].pixelInset;
+        badgeSel.rectTransform.position = badges[0].rectTransform.position;
 
 
         while (running)
@@ -605,7 +610,7 @@ public class TrainerHandler : MonoBehaviour
                     {
                         SfxHandler.Play(selectClip);
                         cancelSelected = false;
-                        cancel.texture = cancelTex;
+                        cancel.sprite = cancelTex;
                         badgeSel.enabled = true;
                         yield return new WaitForSeconds(0.2f);
                     }
@@ -623,7 +628,7 @@ public class TrainerHandler : MonoBehaviour
                     {
                         SfxHandler.Play(selectClip);
                         cancelSelected = false;
-                        cancel.texture = cancelTex;
+                        cancel.sprite = cancelTex;
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
@@ -643,7 +648,7 @@ public class TrainerHandler : MonoBehaviour
                     {
                         SfxHandler.Play(selectClip);
                         cancelSelected = true;
-                        cancel.texture = cancelHighlightTex;
+                        cancel.sprite = cancelHighlightTex;
                         badgeSel.enabled = false;
                         yield return new WaitForSeconds(0.2f);
                     }
@@ -652,7 +657,7 @@ public class TrainerHandler : MonoBehaviour
                 {
                     SfxHandler.Play(selectClip);
                     cancelSelected = true;
-                    cancel.texture = cancelHighlightTex;
+                    cancel.sprite = cancelHighlightTex;
                     yield return new WaitForSeconds(0.2f);
                 }
             }
@@ -680,7 +685,7 @@ public class TrainerHandler : MonoBehaviour
                         interactingScreen = false;
                         updateSelectedBadge();
                         cancelSelected = false;
-                        cancel.texture = cancelTex;
+                        cancel.sprite = cancelTex;
                         yield return StartCoroutine(moveScreen(new Vector3(-0.806f, 0, 0), 0.2f));
                     }
                 }
@@ -699,7 +704,7 @@ public class TrainerHandler : MonoBehaviour
                 {
                     SfxHandler.Play(selectClip);
                     cancelSelected = true;
-                    cancel.texture = cancelHighlightTex;
+                    cancel.sprite = cancelHighlightTex;
                     running = false;
                 }
             }
@@ -707,7 +712,7 @@ public class TrainerHandler : MonoBehaviour
         }
         if (currentScreen != 1)
         {
-            StartCoroutine("boxLid", true);
+            StartCoroutine(boxLid(true));
         }
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
         yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));

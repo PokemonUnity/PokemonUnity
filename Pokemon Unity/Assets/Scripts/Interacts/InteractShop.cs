@@ -5,21 +5,21 @@ using System.Collections;
 
 public class InteractShop : MonoBehaviour
 {
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
 
     private NPCHandler thisNPC;
     public string interactDialog = "Welcome! \nWhat do you need?";
     public string returnDialog = "Is there anything else I may do\nfor you?";
     public string leaveDialog = "Please come again!";
 
-    public PokemonUnity.Inventory.Items[] itemCatalog;
+    public string[] itemCatalog;
     //custom prices not yet implemented
     public int[] customPrices;
 
 
     void Awake()
     {
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
         if (transform.GetComponent<NPCHandler>() != null)
         {
@@ -63,17 +63,16 @@ public class InteractShop : MonoBehaviour
                 "Shop", "Leave"
             };
 
-            Dialog.drawDialogBox();
-            yield return StartCoroutine(Dialog.drawText(interactDialog));
-            Dialog.drawChoiceBox(choices);
-            yield return StartCoroutine(Dialog.choiceNavigate(choices));
+            Dialog.DrawDialogBox();
+            yield return StartCoroutine(Dialog.DrawText(interactDialog));
+            yield return StartCoroutine(Dialog.DrawChoiceBox(choices));
             int chosenIndex = Dialog.chosenIndex;
-            Dialog.undrawChoiceBox();
+            Dialog.UndrawChoiceBox();
             while (chosenIndex != 0)
             {
                 if (chosenIndex == 1)
                 {
-                    Dialog.undrawDialogBox();
+                    Dialog.UndrawDialogBox();
                     yield return StartCoroutine(PlayerMovement.player.moveCameraTo(new Vector3(7, 0, 0), 0.35f));
 
                     Scene.main.Bag.gameObject.SetActive(true);
@@ -87,21 +86,20 @@ public class InteractShop : MonoBehaviour
                     yield return StartCoroutine(PlayerMovement.player.moveCameraTo(new Vector3(0, 0, 0), 0.35f));
                 }
 
-                Dialog.drawDialogBox();
-                yield return StartCoroutine(Dialog.drawText(returnDialog));
-                Dialog.drawChoiceBox(choices);
-                yield return StartCoroutine(Dialog.choiceNavigate(choices));
+                Dialog.DrawDialogBox();
+                yield return StartCoroutine(Dialog.DrawText(returnDialog));
+                yield return StartCoroutine(Dialog.DrawChoiceBox(choices));
                 chosenIndex = Dialog.chosenIndex;
-                Dialog.undrawChoiceBox();
+                Dialog.UndrawChoiceBox();
             }
 
-            Dialog.drawDialogBox();
-            yield return StartCoroutine(Dialog.drawText(leaveDialog));
+            Dialog.DrawDialogBox();
+            yield return StartCoroutine(Dialog.DrawText(leaveDialog));
             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
-            Dialog.undrawDialogBox();
+            Dialog.UndrawDialogBox();
         }
         PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
     }

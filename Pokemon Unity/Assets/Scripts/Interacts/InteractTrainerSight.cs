@@ -57,7 +57,7 @@ public class InteractTrainerSight : MonoBehaviour
 
                 //if running past a random turner
                 if (PlayerMovement.player.running && playerLocation != -1 &&
-                    trainer.trainerBehaviour == InteractTrainer.TrainerBehaviour.Turn)
+                    trainer.trainerBehaviour == InteractTrainer.TrainerBehaviour.Turn && !trainer.defeated)
                 {
                     trainer.direction = playerLocation;
                     Vector3 checkPositionVector = trainer.hitBox.position;

@@ -23,7 +23,7 @@ public class ScreenFade : MonoBehaviour
         {
             main = this;
         }
-        image = this.GetComponent<Image>();
+        image = GetComponent<Image>();
     }
 
 
@@ -40,20 +40,10 @@ public class ScreenFade : MonoBehaviour
         float alpha = (fadeIn) ? 1f : 0f;
         image.color = new Color(color.r, color.g, color.b, alpha);
 
-        float increment = 0f;
-        while (increment < 1)
-        {
-            increment += (1 / speed) * Time.deltaTime;
-            if (increment > 1)
-            {
-                increment = 1;
-            }
-
-            alpha = (fadeIn) ? 1f - increment : increment;
-
-            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
-            yield return null;
-        }
+        
+        LeanTween.alpha(image.GetComponent<RectTransform>(), 1-alpha, 0.5f);
+        
+        yield return new WaitForSeconds(0.5f);
     }
 
     public IEnumerator FadeCutout(bool fadeIn, float speed, Sprite cutout)

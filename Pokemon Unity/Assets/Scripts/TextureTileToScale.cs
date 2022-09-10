@@ -5,16 +5,21 @@ using System.Collections;
 
 public class TextureTileToScale : MonoBehaviour
 {
-    public int scaleSizeReference = 16;
+    public float scaleSizeReference = 16;
 
     public enum TextureAnimation
     {
         None,
+        Sky,
         Lava,
         Lava2,
         LavaFlow,
         ClearWater,
         OceanWater,
+        OceanWater2,
+        OceanBorder1,
+        OceanBorder2,
+        CliffBorder,
         Waterfall_F
     }
 
@@ -76,8 +81,12 @@ public class TextureTileToScale : MonoBehaviour
         float yScale = (tileVertically) ? hScale / hMod : 1;
         mesh.material.SetTextureScale("_MainTex", new Vector2(xScale, yScale));
 
-
-        if (texAnimation == TextureAnimation.Lava)
+        
+        if (texAnimation == TextureAnimation.Sky)
+        {
+            StartCoroutine(animateAsSky());
+        }
+        else if (texAnimation == TextureAnimation.Lava)
         {
             StartCoroutine(animateAsLava());
         }
@@ -97,9 +106,57 @@ public class TextureTileToScale : MonoBehaviour
         {
             StartCoroutine(animateAsOcean());
         }
+        else if (texAnimation == TextureAnimation.OceanWater2)
+        {
+            StartCoroutine(animateAsOcean2());
+        }
+        else if (texAnimation == TextureAnimation.OceanBorder1)
+        {
+            StartCoroutine(animateAsOceanBorder1(1));
+        }
+        else if (texAnimation == TextureAnimation.OceanBorder2)
+        {
+            StartCoroutine(animateAsOceanBorder2());
+        }
+        else if (texAnimation == TextureAnimation.CliffBorder)
+        {
+            StartCoroutine(cliffBorder());
+        }
         else if (texAnimation == TextureAnimation.Waterfall_F)
         {
             StartCoroutine(animateAsDownFlow(0.5f));
+        }
+    }
+    
+    private IEnumerator animateAsSky()
+    {
+        float speed = 28.0f;
+
+        while (true)
+        {
+            float yMod = 0;
+            float xMod = 0;
+
+            float increment = 0;
+            bool incrementing = true;
+            while (incrementing)
+            {
+                increment += (1 / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                    incrementing = false;
+                }
+
+                xMod = texWidth * increment;
+                yMod = texHeight * increment;
+
+                mesh.material.SetTextureOffset("_MainTex",
+                    new Vector2(((xCornerPosition * scaleSizeReference) + xMod) * xOffsetPixel,
+                        ((yCornerPosition * scaleSizeReference) + yMod) * yOffsetPixel));
+
+                yield return null;
+            }
         }
     }
 
@@ -346,6 +403,232 @@ public class TextureTileToScale : MonoBehaviour
 
                 yield return null;
             }
+        }
+    }
+    
+    private IEnumerator animateAsOcean2()
+    {
+        float speed = 8.7f;
+
+        while (true)
+        {
+            float yMod = 0;
+            float xMod = 0;
+
+            float increment = 0;
+            bool incrementing = true;
+            while (incrementing)
+            {
+                increment += (1 / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                    incrementing = false;
+                }
+
+                xMod = texWidth * increment;
+                yMod = texHeight * increment;
+
+                mesh.material.SetTextureOffset("_MainTex",
+                    new Vector2(((xCornerPosition * scaleSizeReference) - xMod) * xOffsetPixel,
+                        ((yCornerPosition * scaleSizeReference) - yMod) * yOffsetPixel));
+
+                yield return null;
+            }
+        }
+    }
+    
+    private IEnumerator animateAsOceanBorder1(float speed)
+    {
+        int animState = 0; // at 4, it resets
+
+        float texQuarterHeight = texHeight / 4;
+
+        while (true)
+        {
+            float yMod = 0;
+
+            float increment = 0;
+            bool incrementing = true;
+            while (incrementing)
+            {
+                increment += (1 / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                    incrementing = false;
+                }
+
+                if (animState == 0)
+                {
+                    yMod = texQuarterHeight * increment;
+                }
+                else if (animState == 1)
+                {
+                    yMod = texQuarterHeight + (texQuarterHeight * increment);
+                }
+                else if (animState == 2)
+                {
+                    yMod = (texQuarterHeight * 2) + (texQuarterHeight * increment);
+                }
+                else
+                {
+                    yMod = (texQuarterHeight * 3) + (texQuarterHeight * increment);
+                }
+
+                for (int i = 0; i < mesh.materials.Length; i++)
+                {
+                    mesh.materials[i].SetTextureOffset("_MainTex",
+                        new Vector2(((xCornerPosition * scaleSizeReference) + yMod) * xOffsetPixel,
+                            0f));
+                }
+                yield return null;
+            }
+            animState = (animState >= 3) ? 0 : animState + 1;
+        }
+    }
+    
+    private IEnumerator animateAsOceanBorder2(float speed = 1.2f)
+    {
+        int animState = 0; // at 4, it resets
+        int animState2 = 0; // at 4, it resets
+
+        float texQuarterHeight = texHeight / 4;
+
+        while (true)
+        {
+            float xMod, yMod = 0;
+
+            float increment = 0;
+            bool incrementing = true;
+            while (incrementing)
+            {
+                increment += (1 / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                    incrementing = false;
+                }
+
+                if (animState == 0)
+                {
+                    xMod = -1*texQuarterHeight * increment;
+                }
+                else if (animState == 1)
+                {
+                    xMod = texQuarterHeight - (texQuarterHeight * increment);
+                }
+                else if (animState == 2)
+                {
+                    xMod = (texQuarterHeight * 2) - (texQuarterHeight * increment);
+                }
+                else
+                {
+                    xMod = (texQuarterHeight * 3) - (texQuarterHeight * increment);
+                }
+                
+                float start_pos = -0.05f;
+                float coeff = 5;
+                
+                if (animState2 == 0)
+                {
+                    yMod = start_pos + increment/coeff;
+                }
+                else if (animState2 == 1)
+                {
+                    yMod = start_pos + 1/coeff - increment / coeff /3;
+                }
+                else if (animState2 == 2)
+                {
+                    yMod = start_pos + 1/coeff - 1/coeff/3  - increment / coeff /3;
+                }
+                else if (animState2 == 3)
+                {
+                    yMod = start_pos + 1/coeff  - (1 / coeff / 3)*2 - increment / coeff /3;
+                }
+
+                for (int i = 0; i < mesh.materials.Length; i++)
+                {
+                    mesh.materials[i].SetTextureOffset("_MainTex",
+                        new Vector2(increment,
+                            yMod));
+                }
+                yield return null;
+            }
+            animState = (animState >= 3) ? 0 : animState + 1;
+            animState2 = (animState2 >= 3) ? 0 : animState2 + 1;
+        }
+    }
+    
+    private IEnumerator cliffBorder(float speed = 1.2f)
+    {
+        int animState = 0; // at 4, it resets
+        int animState2 = 0; // at 4, it resets
+
+        float texQuarterHeight = texHeight / 4;
+
+        while (true)
+        {
+            float xMod, yMod = 0;
+
+            float increment = 0;
+            bool incrementing = true;
+            while (incrementing)
+            {
+                increment += (1 / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                    incrementing = false;
+                }
+
+                if (animState == 0)
+                {
+                    xMod = -1*texQuarterHeight * increment;
+                }
+                else if (animState == 1)
+                {
+                    xMod = texQuarterHeight - (texQuarterHeight * increment);
+                }
+                else if (animState == 2)
+                {
+                    xMod = (texQuarterHeight * 2) - (texQuarterHeight * increment);
+                }
+                else
+                {
+                    xMod = (texQuarterHeight * 3) - (texQuarterHeight * increment);
+                }
+                
+                float start_pos = -0.05f;
+                float coeff = 5;
+                
+                if (animState2 == 0)
+                {
+                    yMod = start_pos + increment/coeff;
+                }
+                else if (animState2 == 1)
+                {
+                    yMod = start_pos + 1/coeff - increment / coeff /3;
+                }
+                else if (animState2 == 2)
+                {
+                    yMod = start_pos + 1/coeff - 1/coeff/3  - increment / coeff /3;
+                }
+                else if (animState2 == 3)
+                {
+                    yMod = start_pos + 1/coeff  - (1 / coeff / 3)*2 - increment / coeff /3;
+                }
+
+                for (int i = 0; i < mesh.materials.Length; i++)
+                {
+                    mesh.materials[i].SetTextureOffset("_MainTex",
+                        new Vector2(0,
+                            yMod));
+                }
+                yield return null;
+            }
+            animState = (animState >= 3) ? 0 : animState + 1;
+            animState2 = (animState2 >= 3) ? 0 : animState2 + 1;
         }
     }
 }

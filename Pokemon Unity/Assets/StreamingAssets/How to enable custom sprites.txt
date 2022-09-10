@@ -1,0 +1,11 @@
+To use the sprites in this directory as your player's sprites, you need to go into
+the Settings menu and enable the option that says "Use custom sprites."
+
+You can get custom sprites off of http://www.spriters-resource.com/ however
+they will need to be formatted correctly as Pokemon Unity uses a different
+configuration for spritesheets.
+
+Each player sprite will be 32x32 each, excluding the back sprite, which is 80x80.
+
+Thanks for using Pokemon Unity!
+Kisu-Amare.

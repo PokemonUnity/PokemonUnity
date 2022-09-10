@@ -35,25 +35,12 @@ public class ActivateTimeBased : MonoBehaviour
             if (activateTime < deactivateTime)
             {
                 //if time does not extend past midnight
-                if (currentTime >= activateTime && currentTime < deactivateTime)
-                {
-                    target.gameObject.SetActive(true);
-                }
-                else
-                {
-                    target.gameObject.SetActive(false);
-                }
+                target.gameObject.SetActive(currentTime >= activateTime && currentTime < deactivateTime);
+
             }
             else if (activateTime > deactivateTime)
             {
-                if (currentTime >= activateTime || currentTime < deactivateTime)
-                {
-                    target.gameObject.SetActive(true);
-                }
-                else
-                {
-                    target.gameObject.SetActive(false);
-                }
+                target.gameObject.SetActive(currentTime >= activateTime || currentTime < deactivateTime);
             }
 
             yield return new WaitForSeconds(1f); //wait a second before repeating

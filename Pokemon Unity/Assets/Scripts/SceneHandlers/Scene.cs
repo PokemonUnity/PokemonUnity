@@ -17,6 +17,7 @@ public class Scene : MonoBehaviour
     public SummaryHandler Summary;
     public TrainerHandler Trainer;
     public TypingHandler Typing;
+    public StarterChoiceHandler StarterChoice;
 
 
     void Awake()
@@ -34,7 +35,8 @@ public class Scene : MonoBehaviour
         PC.gameObject.SetActive(true);
         Settings.gameObject.SetActive(true);
         Summary.gameObject.SetActive(true);
-        Trainer.gameObject.SetActive(true);
+        Trainer.gameObject.SetActive(false); //TODO Trainer Handler
         Typing.gameObject.SetActive(true);
+        StarterChoice.gameObject.SetActive(true);
     }
 }

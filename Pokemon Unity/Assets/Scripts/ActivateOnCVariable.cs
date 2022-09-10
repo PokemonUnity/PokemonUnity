@@ -1,6 +1,7 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
+using System.Collections;
 
 public class ActivateOnCVariable : MonoBehaviour
 {
@@ -61,7 +62,7 @@ public class ActivateOnCVariable : MonoBehaviour
         if (not)
         {
             //invert bool
-            checkResult = (checkResult) ? false : true;
+            checkResult = !checkResult;
         }
         target.SetActive(checkResult);
     }

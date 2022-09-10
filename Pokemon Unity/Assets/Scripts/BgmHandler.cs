@@ -2,6 +2,8 @@
 
 using UnityEngine;
 using System.Collections;
+//using FMOD;
+using Debug = UnityEngine.Debug;
 
 public class BgmHandler : MonoBehaviour
 {
@@ -64,7 +66,8 @@ public class BgmHandler : MonoBehaviour
             }
             else
             {
-                Debug.Log("CLIP: " + mainTrack.clip);
+                int test = (source.clip.samples - samplesEndBuffer);
+                Debug.Log("CLIP: " + mainTrack.clip + "\nCurrent Sample:" + source.timeSamples  + "\nLoop Sample" + test);
             }
         }
 
@@ -90,6 +93,7 @@ public class BgmHandler : MonoBehaviour
 
     private IEnumerator Fade(float time)
     {
+        Debug.Log("Starting Fade");
         float increment = 0f;
         while (increment < 1)
         {
@@ -105,6 +109,7 @@ public class BgmHandler : MonoBehaviour
             yield return null;
         }
         fading = null;
+        Debug.Log("End Fade");
     }
 
     private void Play(Track trackType)
@@ -129,6 +134,7 @@ public class BgmHandler : MonoBehaviour
         source.clip = track.clip;
         source.timeSamples = track.samplesPosition;
         source.volume = baseVolume;
+        Debug.Log("Starting to play: "+source.clip);
         source.Play();
     }
 
@@ -187,16 +193,17 @@ public class BgmHandler : MonoBehaviour
     private void StopMainFade()
     {
         StopCoroutine(fading);
-        StopCoroutine("PlayMainIE");
+        fading = null;
+        StopCoroutine(PlayMainIE(null, 0));
         mainTrack = mainTrackNext;
     }
 
-    public void PlayOverlay(AudioClip bgm, int loopStartSamples)
+    public bool PlayingOverlay()
     {
-        PlayOverlay(bgm, loopStartSamples, 0.1f);
+        return currentTrack == Track.Overlay;
     }
 
-    public void PlayOverlay(AudioClip bgm, int loopStartSamples, float fadeTime)
+    public void PlayOverlay(AudioClip bgm, int loopStartSamples, float fadeTime = 0.1f)
     {
         //if overlay track is already playing the bgm, do not continue
         if (overlayTrack.clip != bgm || currentTrack != Track.Overlay)
@@ -204,8 +211,17 @@ public class BgmHandler : MonoBehaviour
             StartCoroutine(PlayOverlayIE(bgm, loopStartSamples, fadeTime));
         }
     }
+    
+    public void PlayOverlay(AudioClip bgm, int loopStartSamples, int startSample, float fadeTime = 0.1f)
+    {
+        //if overlay track is already playing the bgm, do not continue
+        if (overlayTrack.clip != bgm || currentTrack != Track.Overlay)
+        {
+            StartCoroutine(PlayOverlayIE(bgm, loopStartSamples, fadeTime, startSample));
+        }
+    }
 
-    private IEnumerator PlayOverlayIE(AudioClip bgm, int loopStartSamples, float fadeTime)
+    private IEnumerator PlayOverlayIE(AudioClip bgm, int loopStartSamples, float fadeTime, int startSample = 0)
     {
         loop = true;
         //if main is playing: fade at given time then Pause main track
@@ -229,6 +245,10 @@ public class BgmHandler : MonoBehaviour
         }
         //if MFX is playing:   ONLY set overlay track to new track, don't play
         overlayTrack = new AudioTrack(bgm, loopStartSamples);
+        if (startSample > 0)
+        {
+            overlayTrack.samplesPosition = startSample;
+        }
         if (currentTrack != Track.MFX)
         {
             Play(Track.Overlay);
@@ -275,33 +295,30 @@ public class BgmHandler : MonoBehaviour
         Play(previousTrackType);
     }
 
-    public void ResumeMain()
+
+
+    public void ResumeMain(float time = -1f, AudioClip clip = null, int loopStartSamples = 0)
     {
-        ResumeMain(defaultFadeSpeed, mainTrack);
+        ResumeMain(time == -1f ? defaultFadeSpeed : time, new AudioTrack(clip, loopStartSamples));
+    }
+    
+    public void ForceResumeMain(float time = -1f, AudioClip clip = null, int loopStartSamples = 0)
+    {
+        ResumeMain(time == -1f ? defaultFadeSpeed : time, new AudioTrack(clip, loopStartSamples), true);
     }
 
-    public void ResumeMain(float time)
-    {
-        ResumeMain(time, mainTrack);
-    }
-
-    public void ResumeMain(AudioClip clip, int loopStartSamples)
-    {
-        ResumeMain(defaultFadeSpeed, new AudioTrack(clip, loopStartSamples));
-    }
-
-    public void ResumeMain(float time, AudioClip clip, int loopStartSamples)
-    {
-        ResumeMain(time, new AudioTrack(clip, loopStartSamples));
-    }
-
-    private void ResumeMain(float time, AudioTrack track)
+    private void ResumeMain(float time, AudioTrack track, bool forceResume = false)
     {
         loop = true;
         //if overlay is playing, fade out and play main
-        if (currentTrack == Track.Overlay)
+        if (forceResume || currentTrack == Track.Overlay)
         {
+            Debug.Log("Overlay when resume");
             StartCoroutine(ResumeMainIE(track, time));
+        }
+        else
+        {
+            Debug.Log("Not Overlay when resume");
         }
     }
 
@@ -309,9 +326,12 @@ public class BgmHandler : MonoBehaviour
     {
         mainTrackNext = resumedTrack;
         //Fade out current track, THEN resume main track
+        Debug.Log("fading variable null: "+ (fading == null));
         if (fading == null)
         {
+            Debug.Log("Fade Coroutine");
             yield return fading = StartCoroutine(Fade(time));
+            Debug.Log("Playing: "+resumedTrack.ToString());
             Play(Track.Main);
         }
     }
@@ -327,10 +347,20 @@ public class BgmHandler : MonoBehaviour
         yield return new WaitForSeconds(time);
         source.mute = false;
     }
+
+    public int GetSample()
+    {
+        Debug.Log("[BgmHandler] Time samples : "+source.timeSamples);
+        return source.timeSamples;
+    }
 }
 
-public class AudioTrack
+public class AudioTrack : PokemonEssentials.Interface.IAudioObject
 {
+	public string name { get; set; }
+	public int volume { get; set; }
+	public float pitch { get; set; }
+
     public AudioClip clip;
     public int loopStartSamples;
     public int samplesPosition;
@@ -348,4 +378,12 @@ public class AudioTrack
         this.loopStartSamples = loopStartSamples;
         this.samplesPosition = 0;
     }
+
+    public PokemonEssentials.Interface.IAudioObject initialize(string name, float volume = 100, float pitch = 100)
+	{
+        this.name = name;
+        this.volume = (int)volume;
+        this.pitch = pitch;
+        return this;
+	}
 }

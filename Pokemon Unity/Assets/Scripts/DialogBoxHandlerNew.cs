@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class DialogBoxHandlerNew : MonoBehaviour
 {
+    public enum PrintTextMethod
+    {
+        Typewriter,
+        Instant
+    }
+    
     public string debugBoxString;
 
     private Image dialogBox;
@@ -18,6 +24,11 @@ public class DialogBoxHandlerNew : MonoBehaviour
     private Text choiceBoxTextShadow;
     private Image choiceBoxSelect;
 
+    private Image nameBox;
+    private Text nameBoxText;
+    private Text nameBoxTextShadow;
+
+
     public AudioClip selectClip;
 
     private float charPerSec = 60f;
@@ -28,9 +39,14 @@ public class DialogBoxHandlerNew : MonoBehaviour
     public bool hideDialogOnStart = true;
     public bool hideChoiceOnStart = true;
 
-    public int defaultChoiceWidth = 86;
+    private int defaultChoiceWidth = 55;
     public int defaultChoiceY = 0;
     public int defaultDialogLines = 2;
+
+    private bool dialogBoxSpriteEmpty;
+    private bool choiceBoxSpriteEmpty;
+
+    private float selectY;
 
 
     void Awake()
@@ -43,12 +59,26 @@ public class DialogBoxHandlerNew : MonoBehaviour
 
         Transform choiceBoxTrn = transform.Find("ChoiceBox");
         choiceBox = choiceBoxTrn.GetComponent<Image>();
-        choiceBoxText = choiceBoxTrn.Find("BoxText").GetComponent<Text>();
+        
         choiceBoxTextShadow = choiceBoxTrn.Find("BoxTextShadow").GetComponent<Text>();
+        choiceBoxText = choiceBoxTrn.transform.Find("BoxText").GetComponent<Text>();
         choiceBoxSelect = choiceBoxTrn.Find("BoxSelect").GetComponent<Image>();
+
+        if (transform.Find("NameBox") != null)
+        {
+            Transform nameBoxTrn = transform.Find("NameBox");
+            nameBox = nameBoxTrn.GetComponent<Image>();
+            nameBoxText = nameBoxTrn.Find("BoxText").GetComponent<Text>();
+            nameBoxTextShadow = nameBoxTrn.Find("BoxTextShadow").GetComponent<Text>();
+        }
 
         defaultDialogLines = Mathf.RoundToInt((dialogBoxBorder.rectTransform.sizeDelta.y - 16f) / 14f);
         defaultChoiceY = Mathf.FloorToInt(choiceBox.rectTransform.localPosition.y);
+        
+        dialogBoxSpriteEmpty = (dialogBoxBorder.sprite == null);
+        dialogBoxSpriteEmpty = (choiceBox.sprite == null);
+
+        selectY = choiceBoxSelect.rectTransform.anchoredPosition.y;
     }
 
     void Start()
@@ -61,12 +91,16 @@ public class DialogBoxHandlerNew : MonoBehaviour
         {
             choiceBox.gameObject.SetActive(false);
         }
+        if (nameBox != null)
+        {
+            nameBox.gameObject.SetActive(false);
+        }
     }
 
 
     public IEnumerator DrawText(string text)
     {
-        yield return StartCoroutine(DrawText(text, 1f / charPerSec, false));
+        yield return StartCoroutine(DrawText(text, -1, false));
     }
 
     public IEnumerator DrawText(string text, float secPerChar)
@@ -76,16 +110,33 @@ public class DialogBoxHandlerNew : MonoBehaviour
 
     public IEnumerator DrawTextSilent(string text)
     {
-        yield return StartCoroutine(DrawText(text, 1f / charPerSec, true));
+        yield return StartCoroutine(DrawText(text, -1, true));
     }
 
-    public IEnumerator DrawTextInstant(string text)
+    public void DrawTextInstant(string text)
     {
-        yield return StartCoroutine(DrawText(text, 0, false));
+         StartCoroutine(DrawText(text, 0, false));
+    }
+
+    public void DrawTextInstantSilentFunction(string text)
+    {
+        StartCoroutine(DrawTextInstantSilent(text));
+    }
+    
+    public IEnumerator DrawTextInstantSilent(string text)
+    {
+        yield return StartCoroutine(DrawText(text, 0, true));
     }
 
     public IEnumerator DrawText(string text, float secPerChar, bool silent)
     {
+        if (secPerChar < 0)
+        {
+            int textSpeed = PlayerPrefs.GetInt("textSpeed") + 1;
+            charPerSec = 16 + (textSpeed * textSpeed * 9);
+            secPerChar = 1 / charPerSec;
+        }
+        
         string[] words = text.Split(new char[] {' '});
 
         if (!silent)
@@ -110,10 +161,11 @@ public class DialogBoxHandlerNew : MonoBehaviour
         yield return StartCoroutine(DrawWord(word, false, false, false, secPerChar));
     }
 
-    private IEnumerator DrawWord(string word, bool large, bool bold, bool italic, float secPerChar)
+    private IEnumerator DrawWord(string word, bool large, bool bold, bool italic, float secPerChar, string color = "")
     {
         char[] chars = word.ToCharArray();
         float startTime = Time.time;
+
         if (chars.Length > 0)
         {
             //ensure no blank words get processed
@@ -127,12 +179,12 @@ public class DialogBoxHandlerNew : MonoBehaviour
                         if (secPerChar > 0)
                         {
                             yield return
-                                StartCoroutine(DrawWord(SaveData.currentSave.Player.Name, large, bold, italic, secPerChar))
-                                ;
+                                StartCoroutine(DrawWord(SaveData.currentSave.playerName, large, bold, italic,
+                                    secPerChar));
                         }
                         else
                         {
-                            StartCoroutine(DrawWord(SaveData.currentSave.Player.Name, large, bold, italic, secPerChar));
+                            StartCoroutine(DrawWord(SaveData.currentSave.playerName, large, bold, italic, secPerChar));
                         }
                         break;
                     case ('l'): //Large
@@ -147,7 +199,18 @@ public class DialogBoxHandlerNew : MonoBehaviour
                     case ('n'): //New Line
                         dialogBoxText.text += "\n";
                         break;
-                }
+                    /* colors */
+                    case ('R'):
+                        color = "#DD1F1F";
+                        break;
+                    case ('G'):
+                        color = "#5FF34D";
+                        break;
+                    case ('B'):
+                        color = "#1F95DD";
+                        break;
+
+                    }
                 if (chars.Length > 2)
                 {
                     //Run this function for the rest of the word
@@ -156,7 +219,46 @@ public class DialogBoxHandlerNew : MonoBehaviour
                     {
                         remainingWord += chars[i].ToString();
                     }
-                    yield return StartCoroutine(DrawWord(remainingWord, large, bold, italic, secPerChar));
+                    yield return StartCoroutine(DrawWord(remainingWord, large, bold, italic, secPerChar, color));
+                }
+            }
+            else if (chars[0] == '{')
+            {
+                //Apply Operator
+                switch (chars[1])
+                {
+                    case ('p'): //Player
+                        if (secPerChar > 0)
+                        {
+                            yield return
+                                StartCoroutine(DrawWord(SaveData.currentSave.playerName, large, bold, italic, secPerChar));
+                        }
+                        else
+                        {
+                            StartCoroutine(DrawWord(SaveData.currentSave.playerName, large, bold, italic, secPerChar));
+                        }
+                        break;
+                    case ('f'):
+                        if (secPerChar > 0)
+                        {
+                            yield return
+                                StartCoroutine(DrawWord(SaveData.currentSave.PC.boxes[0][0].getName(), large, bold, italic, secPerChar));
+                        }
+                        else
+                        {
+                            StartCoroutine(DrawWord(SaveData.currentSave.PC.boxes[0][0].getName(), large, bold, italic, secPerChar));
+                        }
+                        break;
+                    /* colors */
+                    case ('R'):
+                        color = "#DD1F1F";
+                        break;
+                    case ('G'):
+                        color = "#5FF34D";
+                        break;
+                    case ('B'):
+                        color = "#1F95DD";
+                        break;
                 }
             }
             else
@@ -169,9 +271,13 @@ public class DialogBoxHandlerNew : MonoBehaviour
                     string added = "";
 
                     //apply open tags
-                    added += (large) ? "<size=26>" : "";
+                    added += (large) ? "<size=32>" : "";
                     added += (bold) ? "<b>" : "";
                     added += (italic) ? "<i>" : "";
+                    if (color.Length > 0)
+                    {
+                        added += "<color=" + color + ">";
+                    }
 
                     //apply displayed text
                     for (int i2 = 0; i2 < i; i2++)
@@ -191,6 +297,10 @@ public class DialogBoxHandlerNew : MonoBehaviour
                     added += (italic) ? "</i>" : "";
                     added += (bold) ? "</b>" : "";
                     added += (large) ? "</size>" : "";
+                    if (color.Length > 0)
+                    {
+                        added += "</color>";
+                    }
 
                     dialogBoxText.text = currentText + added;
                     dialogBoxTextShadow.text = dialogBoxText.text;
@@ -215,12 +325,23 @@ public class DialogBoxHandlerNew : MonoBehaviour
 
     public void DrawDialogBox()
     {
-        StartCoroutine(DrawDialogBox(defaultDialogLines, new Color(1, 1, 1, 1), false));
+        StartCoroutine(DrawDialogBox(defaultDialogLines, Color.white, false));
     }
+    
+    public void DrawBlackFrame()
+    {
+        StartCoroutine(DrawBlackFrame(defaultDialogLines, Color.white, false));
+    }
+    
+    public void DrawScreamFrame()
+    {
+        StartCoroutine(DrawScreamFrame(defaultDialogLines, Color.white, false));
+    }
+
 
     public void DrawDialogBox(int lines)
     {
-        StartCoroutine(DrawDialogBox(lines, new Color(1, 1, 1, 1), false));
+        StartCoroutine(DrawDialogBox(lines, Color.white, false));
     }
 
     public void DrawSignBox(Color tint)
@@ -231,46 +352,96 @@ public class DialogBoxHandlerNew : MonoBehaviour
     private IEnumerator DrawDialogBox(int lines, Color tint, bool sign)
     {
         dialogBox.gameObject.SetActive(true);
-        dialogBoxBorder.sprite = (sign)
-            ? null
-            : Resources.Load<Sprite>("Frame/dialog" + PlayerPrefs.GetInt("frameStyle"));
-        dialogBox.sprite = (sign) ? Resources.Load<Sprite>("Frame/signBG") : Resources.Load<Sprite>("Frame/dialogBG");
-        dialogBox.color = tint;
-        dialogBoxText.text = "";
-        dialogBoxText.color = (sign) ? new Color(1f, 1f, 1f, 1f) : new Color(0.0625f, 0.0625f, 0.0625f, 1f);
-        dialogBoxTextShadow.text = dialogBoxText.text;
 
-        dialogBox.rectTransform.sizeDelta = new Vector2(dialogBox.rectTransform.sizeDelta.x,
-            Mathf.Round((float) lines * 14f) + 16f);
-        dialogBoxBorder.rectTransform.sizeDelta = new Vector2(dialogBox.rectTransform.sizeDelta.x,
-            dialogBox.rectTransform.sizeDelta.y);
-        dialogBoxText.rectTransform.localPosition = new Vector3(dialogBoxText.rectTransform.localPosition.x,
-            -37f + Mathf.Round((float) lines * 14f), 0);
-        dialogBoxTextShadow.rectTransform.localPosition = new Vector3(
-            dialogBoxTextShadow.rectTransform.localPosition.x, dialogBoxText.rectTransform.localPosition.y - 1f, 0);
-
+        dialogBoxBorder.sprite = Resources.Load<Sprite>("Frame/bwtextskin");
+        
         if (sign)
         {
-            float increment = 0f;
-            while (increment < 1)
-            {
-                increment += (1f / 0.2f) * Time.deltaTime;
-                if (increment > 1)
-                {
-                    increment = 1;
-                }
-
-                dialogBox.rectTransform.localPosition = new Vector2(dialogBox.rectTransform.localPosition.x,
-                    -dialogBox.rectTransform.sizeDelta.y + (dialogBox.rectTransform.sizeDelta.y * increment));
-                yield return null;
-            }
+            dialogBoxText.color = new Color(1, 1, 1, 1);
+            dialogBoxTextShadow.color = new Color(1, 1, 1, 1);
         }
+        else
+        {
+            dialogBoxText.color = new Color(0.32f, 0.32f, 0.32f, 1);
+            dialogBoxTextShadow.color = new Color(0.44f, 0.44f, 0.44f, 1);
+        }
+
+        dialogBoxBorder.color = tint;
+        dialogBoxText.text = "";
+        dialogBoxTextShadow.text = dialogBoxText.text;
+
+        yield return null;
     }
+    
+    private IEnumerator DrawBlackFrame(int lines, Color tint, bool sign)
+    {
+        dialogBox.gameObject.SetActive(true);
+        
+        dialogBoxBorder.sprite = Resources.Load<Sprite>("Frame/blacktextskin");
+        dialogBoxText.color = new Color(1, 1, 1, 1);
+        dialogBoxTextShadow.color = new Color(1, 1, 1, 0.5f);
+        
+        dialogBoxBorder.color = tint;
+        dialogBoxText.text = "";
+        dialogBoxTextShadow.text = dialogBoxText.text;
+
+        yield return null;
+    }
+
+    private IEnumerator DrawScreamFrame(int lines, Color tint, bool sign)
+    {
+        dialogBox.gameObject.SetActive(true);
+        
+        dialogBoxBorder.sprite = Resources.Load<Sprite>("Frame/scream");
+        dialogBoxText.color = new Color(0.32f, 0.32f, 0.32f, 1);
+        dialogBoxTextShadow.color = new Color(0.44f, 0.44f, 0.44f, 1);
+        
+        dialogBoxBorder.color = tint;
+        dialogBoxText.text = "";
+        dialogBoxTextShadow.text = dialogBoxText.text;
+
+        yield return null;
+    }
+    
+    // Name Boxes
+
+    public void DrawNameBox(string name)
+    {
+        nameBoxText.text = name;
+        nameBoxTextShadow.text = nameBoxText.text;
+        nameBox.rectTransform.sizeDelta = new Vector2(nameBoxText.preferredWidth + 18 ,nameBox.rectTransform.sizeDelta.y);
+        
+        nameBox.gameObject.SetActive(true);
+    }
+    
+    public void UndrawNameBox()
+    {
+        nameBox.gameObject.SetActive(false);
+    }
+    
+    // Choices Boxes
 
     public IEnumerator DrawChoiceBox()
     {
+        string[] choices;
+        switch (Language.getLang())
+        {
+            case Language.Country.FRANCAIS:
+                choices = new [] {"Oui", "Non"};
+                break;
+            default:
+                choices = new [] {"Yes", "No"};
+                break;
+        }
+
         yield return
-            StartCoroutine(DrawChoiceBox(new string[] {"Yes", "No"}, null, -1, defaultChoiceY, defaultChoiceWidth));
+            StartCoroutine(DrawChoiceBox(choices, null, -1, defaultChoiceY, defaultChoiceWidth));
+    }
+    
+    public IEnumerator DrawChoiceBoxNo()
+    {
+        yield return
+            StartCoroutine(DrawChoiceBox(0));
     }
 
     public IEnumerator DrawChoiceBox(string[] choices)
@@ -280,6 +451,17 @@ public class DialogBoxHandlerNew : MonoBehaviour
 
     public IEnumerator DrawChoiceBox(int startIndex)
     {
+        string[] choices;
+        switch (Language.getLang())
+        {
+            case Language.Country.FRANCAIS:
+                choices = new [] {"Oui", "Non"};
+                break;
+            default:
+                choices = new [] {"Yes", "No"};
+                break;
+        }
+        
         yield return
             StartCoroutine(DrawChoiceBox(new string[] {"Yes", "No"}, null, startIndex, defaultChoiceY,
                 defaultChoiceWidth));
@@ -297,21 +479,20 @@ public class DialogBoxHandlerNew : MonoBehaviour
 
     public IEnumerator DrawChoiceBox(string[] choices, string[] flavourText, int startIndex)
     {
-        yield return StartCoroutine(DrawChoiceBox(choices, flavourText, startIndex, defaultChoiceY, defaultChoiceWidth))
-            ;
+        yield return StartCoroutine(DrawChoiceBox(choices, flavourText, startIndex, defaultChoiceY, defaultChoiceWidth));
     }
 
     public IEnumerator DrawChoiceBox(string[] choices, int yPosition, int width)
     {
         yield return
-            StartCoroutine(DrawChoiceBox(new string[] {"Yes", "No"}, null, -1, defaultChoiceY, defaultChoiceWidth));
+            StartCoroutine(DrawChoiceBox(choices, null, -1, yPosition, width));
     }
 
     public IEnumerator DrawChoiceBox(string[] choices, int startIndex, int yPosition, int width)
     {
         yield return
-            StartCoroutine(DrawChoiceBox(new string[] {"Yes", "No"}, null, startIndex, defaultChoiceY,
-                defaultChoiceWidth));
+            StartCoroutine(DrawChoiceBox(choices, null, startIndex, yPosition,
+                width));
     }
 
     public IEnumerator DrawChoiceBox(string[] choices, string[] flavourText, int startIndex, int yPosition, int width)
@@ -322,13 +503,11 @@ public class DialogBoxHandlerNew : MonoBehaviour
         }
 
         choiceBox.gameObject.SetActive(true);
-        choiceBox.sprite = Resources.Load<Sprite>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
-        choiceBox.rectTransform.localPosition = new Vector3(171 - width - 1, yPosition - 96, 0);
-        choiceBox.rectTransform.sizeDelta = new Vector2(width, 16f + (14f * choices.Length));
-        choiceBoxSelect.rectTransform.localPosition = new Vector3(8, 9f + (14f * startIndex), 0);
-        choiceBoxText.rectTransform.sizeDelta = new Vector2(width - 30, choiceBox.rectTransform.sizeDelta.y);
-        choiceBoxTextShadow.rectTransform.sizeDelta = new Vector2(choiceBoxText.rectTransform.sizeDelta.x,
-            choiceBoxText.rectTransform.sizeDelta.y);
+        
+        if (choiceBoxSpriteEmpty)
+            choiceBox.sprite = Resources.Load<Sprite>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
+
+        
 
         choiceBoxText.text = "";
         for (int i = 0; i < choices.Length; i++)
@@ -340,9 +519,13 @@ public class DialogBoxHandlerNew : MonoBehaviour
             }
         }
         choiceBoxTextShadow.text = choiceBoxText.text;
+        
+        Debug.Log(choiceBoxText.preferredWidth);
+        choiceBox.rectTransform.sizeDelta = new Vector2(choiceBoxText.preferredWidth + 37, 16f + (15.5f * choices.Length));
+        choiceBoxSelect.rectTransform.anchoredPosition = new Vector2(choiceBoxSelect.rectTransform.anchoredPosition.x, -(15.5f * (choices.Length - 1 - startIndex)) - 15.5f);
 
         bool selected = false;
-        UpdateChosenIndex(startIndex, choices.Length, flavourText);
+        UpdateChosenIndex(startIndex, choices.Length, flavourText, true);
         while (!selected)
         {
             if (Input.GetButtonDown("Select"))
@@ -377,7 +560,7 @@ public class DialogBoxHandlerNew : MonoBehaviour
         }
     }
 
-    private bool UpdateChosenIndex(int newIndex, int choicesLength, string[] flavourText)
+    private bool UpdateChosenIndex(int newIndex, int choicesLength, string[] flavourText, bool silent = false)
     {
         //Check for an invalid new index
         if (newIndex < 0 || newIndex >= choicesLength)
@@ -385,7 +568,8 @@ public class DialogBoxHandlerNew : MonoBehaviour
             return false;
         }
         //Even if new index is the same as old, set the graphics in case of needing to override modified graphics.
-        choiceBoxSelect.rectTransform.localPosition = new Vector3(8, 9f + (14f * newIndex), 0);
+        choiceBoxSelect.rectTransform.anchoredPosition = new Vector2(choiceBoxSelect.rectTransform.anchoredPosition.x, -(15.5f * (choicesLength - 1 - newIndex)) - 15.5f);
+        //choiceBoxSelect.rectTransform.localPosition = new Vector3(choiceBoxSelect.rectTransform.localPosition.x, 14.5f + (15.2f * newIndex), 0);
         if (flavourText != null)
         {
             DrawDialogBox();
@@ -397,32 +581,35 @@ public class DialogBoxHandlerNew : MonoBehaviour
             return false;
         }
         chosenIndex = newIndex;
-        SfxHandler.Play(selectClip);
+        if (!silent)
+        {
+            SfxHandler.Play(selectClip);
+        }
         return true;
     }
 
 
     public void UndrawDialogBox()
     {
+        dialogBoxText.text = "";
+        dialogBoxTextShadow.text = "";
         dialogBox.gameObject.SetActive(false);
     }
 
     public IEnumerator UndrawSignBox()
     {
-        float increment = 0f;
-        while (increment < 1)
-        {
-            increment += (1f / 0.2f) * Time.deltaTime;
-            if (increment > 1)
-            {
-                increment = 1;
-            }
+        /*
+        Vector3 initialPos = dialogBox.rectTransform.localPosition;
 
-            dialogBox.rectTransform.localPosition = new Vector2(dialogBox.rectTransform.localPosition.x,
-                -dialogBox.rectTransform.sizeDelta.y * increment);
-            yield return null;
-        }
+        LeanTween.moveY(dialogBox.rectTransform, initialPos.y - 50, 0.2f);
+        
+        yield return new WaitForSeconds(0.2f);
         dialogBox.gameObject.SetActive(false);
+        LeanTween.moveY(dialogBox.rectTransform, initialPos.y, 0);
+        */
+        
+        dialogBox.gameObject.SetActive(false);
+        yield return null;
     }
 
     public void UndrawChoiceBox()

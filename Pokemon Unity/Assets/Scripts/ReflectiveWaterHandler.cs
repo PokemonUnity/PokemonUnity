@@ -60,7 +60,10 @@ public class ReflectiveWaterHandler : MonoBehaviour
     {
         if (!other.name.Contains("map"))
         {
-            other.transform.parent.gameObject.SendMessage("reflect", true, SendMessageOptions.DontRequireReceiver);
+            if (other.transform.parent != null)
+            {
+                other.transform.parent.gameObject.SendMessage("reflect", true, SendMessageOptions.DontRequireReceiver);
+            }
         }
     }
 

@@ -1,13 +1,14 @@
 fileFormatVersion: 2
 guid: 58875c8d9ee3e4341b95fa18a712cad0
+timeCreated: 1433062720
+licenseType: Free
 MonoImporter:
-  externalObjects: {}
   serializedVersion: 2
   defaultReferences:
   - fadeTex: {instanceID: 0}
   - surfBGM: {fileID: 8300000, guid: 9f70b0e7fff37dd4192cb4691a25ef1e, type: 3}
   - GUIDisplay: {fileID: 8400000, guid: b9a4c44f180103548beec89aeb674776, type: 2}
-  executionOrder: -50
+  executionOrder: 0
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

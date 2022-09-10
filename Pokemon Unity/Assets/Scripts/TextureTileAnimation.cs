@@ -47,14 +47,14 @@ public class TextureTileAnimation : MonoBehaviour
                 if (applyToMaterials[i])
                 {
                     mesh.materials[i].SetTextureOffset("_MainTex", new Vector2(0, 0));
-                    mesh.materials[i].SetTextureScale("_MainTex", new Vector2(xScale, yScale));
+                    mesh.materials[i].SetTextureScale("_MainTex", new Vector2(1, 1));
                 }
             }
         }
         else
         {
             mesh.materials[matID].SetTextureOffset("_MainTex", new Vector2(0, 0));
-            mesh.materials[matID].SetTextureScale("_MainTex", new Vector2(xScale, yScale));
+            mesh.materials[matID].SetTextureScale("_MainTex", new Vector2(1, 1));
         }
 
         StartCoroutine(animate());

@@ -5,7 +5,7 @@ using System.Collections;
 
 public class InteractPokemonCenter : MonoBehaviour
 {
-    private DialogBoxHandler Dialog;
+    private DialogBoxHandlerNew Dialog;
 
     public AudioClip ballPlaceClip;
     public AudioClip healMFX;
@@ -21,7 +21,7 @@ public class InteractPokemonCenter : MonoBehaviour
 
     void Awake()
     {
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
         nurse = transform.Find("NPC_nurse").GetComponent<NPCHandler>();
         screenSprite =
@@ -67,48 +67,84 @@ public class InteractPokemonCenter : MonoBehaviour
     {
         if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
         {
+            bool followerOut = GlobalVariables.global.followerOut;
+            
             for (int i = 0; i < 6; i++)
             {
                 pokeBalls[i].enabled = false;
             }
 
-            Dialog.drawDialogBox();
-            yield return StartCoroutine(Dialog.drawText("Hello, and welcome to \nthe Pokémon Center."));
+            Dialog.DrawDialogBox();
+            switch (Language.getLang())
+            {
+                case Language.Country.ENGLISH:
+                    yield return StartCoroutine(Dialog.DrawText("Hello, and welcome to the Pokémon Center."));
+                    break;
+                case Language.Country.FRANCAIS:
+                    yield return StartCoroutine(Dialog.DrawText("Bonjour, et bienvenue au Centre Pokémon."));
+                    break;
+            }
             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
-            Dialog.drawDialogBox();
-            yield return StartCoroutine(Dialog.drawText("We restore your tired Pokémon \nto full health."));
+            Dialog.DrawDialogBox();
+            switch (Language.getLang())
+            {
+                case Language.Country.ENGLISH:
+                    yield return StartCoroutine(Dialog.DrawText("We restore your tired Pokémon to full health."));
+                    break;
+                case Language.Country.FRANCAIS:
+                    yield return StartCoroutine(Dialog.DrawText("Nous pouvons soigner vos Pokémon exténués."));
+                    break;
+            }
             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
-            Dialog.drawDialogBox();
-            yield return StartCoroutine(Dialog.drawText("Would you like to rest your Pokémon?"));
-            Dialog.drawChoiceBox();
-            yield return StartCoroutine(Dialog.choiceNavigate());
+            Dialog.DrawDialogBox();
+            switch (Language.getLang())
+            {
+                case Language.Country.ENGLISH:
+                    yield return StartCoroutine(Dialog.DrawText("Would you like to rest your Pokémon?"));
+                    break;
+                case Language.Country.FRANCAIS:
+                    yield return StartCoroutine(Dialog.DrawText("Voulez-vous soigner vos Pokémon ?"));
+                    break;
+            }
+            yield return StartCoroutine(Dialog.DrawChoiceBox());
             int chosenIndex = Dialog.chosenIndex;
-            Dialog.undrawChoiceBox();
+            Dialog.UndrawChoiceBox();
 
             if (chosenIndex == 1)
             {
-                Dialog.drawDialogBox();
-                yield return StartCoroutine(Dialog.drawText("Okay, I'll take your Pokémon for \na few seconds."));
+                Dialog.DrawDialogBox();
+                switch (Language.getLang())
+                {
+                    case Language.Country.ENGLISH:
+                        yield return StartCoroutine(Dialog.DrawText("Okay, I'll take your Pokémon for a few seconds."));
+                        break;
+                    case Language.Country.FRANCAIS:
+                        yield return StartCoroutine(Dialog.DrawText("Très bien, laissez moi prendre vos Pokémon un instant"));
+                        break;
+                }
                 yield return new WaitForSeconds(0.1f);
-                StartCoroutine(PlayerMovement.player.followerScript.withdrawToBall());
-                yield return new WaitForSeconds(0.5f);
+                if (followerOut)
+                {
+                    StartCoroutine(PlayerMovement.player.followerScript.withdrawToBall());
+                    yield return new WaitForSeconds(0.5f);
+                }
 
-                nurse.setDirection(3);
+                nurse.setDirection(0);
 
                 yield return new WaitForSeconds(0.2f);
 
                 //place balls on machine, healing as they get shown
                 for (int i = 0; i < 6; i++)
                 {
-                    if (SaveData.currentSave.Player.Party[i] != null)
+                    if (SaveData.currentSave.PC.boxes[0][i] != null)
                     {
-                        SaveData.currentSave.Player.Party[i].Heal();
+                        SaveData.currentSave.PC.boxes[0][i].healFull();
                         pokeBalls[i].enabled = true;
                         SfxHandler.Play(ballPlaceClip);
                         yield return new WaitForSeconds(0.45f);
@@ -148,30 +184,57 @@ public class InteractPokemonCenter : MonoBehaviour
 
                 nurse.setDirection(2);
 
-                Dialog.drawDialogBox();
-                yield return StartCoroutine(Dialog.drawText("Thank you for waiting."));
+                Dialog.DrawDialogBox();
+                switch (Language.getLang())
+                {
+                    case Language.Country.ENGLISH:
+                        yield return StartCoroutine(Dialog.DrawText("Thank you for waiting."));
+                        break;
+                    case Language.Country.FRANCAIS:
+                        yield return StartCoroutine(Dialog.DrawText("Merci d'avoir patienté."));
+                        break;
+                }
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
-                Dialog.drawDialogBox();
-                yield return StartCoroutine(Dialog.drawText("We've restored your Pokémon \nto full health."));
+                Dialog.DrawDialogBox();
+                switch (Language.getLang())
+                {
+                    case Language.Country.ENGLISH:
+                        yield return StartCoroutine(Dialog.DrawText("We've restored your Pokémon to full health."));
+                        break;
+                    case Language.Country.FRANCAIS:
+                        yield return StartCoroutine(Dialog.DrawText("Vos Pokémon sont en pleine forme."));
+                        break;
+                }
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
-
+                if (followerOut)
+                {
+                    StartCoroutine(PlayerMovement.player.followerScript.releaseFromBall());
+                }
                 PlayerMovement.player.followerScript.canMove = true;
             }
 
-            Dialog.drawDialogBox();
-            yield return StartCoroutine(Dialog.drawText("We hope to see you again!"));
+            Dialog.DrawDialogBox();
+            switch (Language.getLang())
+            {
+                case Language.Country.ENGLISH:
+                    yield return StartCoroutine(Dialog.DrawText("We hope to see you again!"));
+                    break;
+                case Language.Country.FRANCAIS:
+                    yield return StartCoroutine(Dialog.DrawText("Au plaisir de vous revoir !"));
+                    break;
+            }
             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
 
-            Dialog.undrawDialogBox();
+            Dialog.UndrawDialogBox();
 
             PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
         }
@@ -181,6 +244,8 @@ public class InteractPokemonCenter : MonoBehaviour
     {
         if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
         {
+            bool followerOut = GlobalVariables.global.followerOut;
+            
             for (int i = 0; i < 6; i++)
             {
                 pokeBalls[i].enabled = false;
@@ -188,8 +253,16 @@ public class InteractPokemonCenter : MonoBehaviour
 
             yield return new WaitForSeconds(0.8f);
 
-            Dialog.drawDialogBox();
-            yield return StartCoroutine(Dialog.drawText("First, let's restore your Pokémon\nto full health."));
+            Dialog.DrawDialogBox();
+            switch (Language.getLang())
+            {
+                case Language.Country.ENGLISH:
+                    yield return StartCoroutine(Dialog.DrawText("First, let's restore your Pokémon to full health."));
+                    break;
+                case Language.Country.FRANCAIS:
+                    yield return StartCoroutine(Dialog.DrawText("Tout d'abord, laissez moi soigner vos Pokémon."));
+                    break;
+            }
             yield return new WaitForSeconds(0.5f);
 
             nurse.setDirection(3);
@@ -199,9 +272,9 @@ public class InteractPokemonCenter : MonoBehaviour
             //place balls on machine, healing as they get shown
             for (int i = 0; i < 6; i++)
             {
-                if (SaveData.currentSave.Player.Party[i] != null)
+                if (SaveData.currentSave.PC.boxes[0][i] != null)
                 {
-                    SaveData.currentSave.Player.Party[i].Heal();
+                    SaveData.currentSave.PC.boxes[0][i].healFull();
                     pokeBalls[i].enabled = true;
                     SfxHandler.Play(ballPlaceClip);
                     yield return new WaitForSeconds(0.45f);
@@ -241,23 +314,50 @@ public class InteractPokemonCenter : MonoBehaviour
 
             nurse.setDirection(2);
 
-            Dialog.drawDialogBox();
-            yield return StartCoroutine(Dialog.drawText("Your Pokémon have been healed to\nperfect health."));
+            Dialog.DrawDialogBox();
+            switch (Language.getLang())
+            {
+                case Language.Country.ENGLISH:
+                    yield return StartCoroutine(Dialog.DrawText("Your Pokémon have been healed to perfect health."));
+                    break;
+                case Language.Country.FRANCAIS:
+                    yield return StartCoroutine(Dialog.DrawText("Vos Pokémon sont maintenant en pleine forme."));
+                    break;
+            }
             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
-            Dialog.drawDialogBox();
-            yield return
-                StartCoroutine(Dialog.drawText("Please visit a Pokémon Center when your\nPokémon's HP goes down."));
+            Dialog.DrawDialogBox();
+            switch (Language.getLang())
+            {
+                case Language.Country.ENGLISH:
+                    yield return
+                        StartCoroutine(Dialog.DrawText("Please visit a Pokémon Center when your\nPokémon's HP goes down."));
+                    break;
+                case Language.Country.FRANCAIS:
+                    yield return
+                        StartCoroutine(Dialog.DrawText("Veuillez nous rendre visite si votre \néquipe tombe K.O."));
+                    break;
+            }
             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
-            Dialog.drawDialogBox();
-            yield return
-                StartCoroutine(
-                    Dialog.drawText("If you're planning to travel any distance,\nyou should stock up on Potions."));
+            Dialog.DrawDialogBox();
+            switch (Language.getLang())
+            {
+                case Language.Country.ENGLISH:
+                    yield return
+                        StartCoroutine(
+                            Dialog.DrawText("If you're planning to travel any distance,\nyou should stock up on Potions."));
+                    break;
+                case Language.Country.FRANCAIS:
+                    yield return
+                        StartCoroutine(
+                            Dialog.DrawText("Si vous comptez voyager, vous devriez acheter des Potions."));
+                    break;
+            }
             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
                 yield return null;
@@ -265,14 +365,30 @@ public class InteractPokemonCenter : MonoBehaviour
 
             PlayerMovement.player.followerScript.canMove = true;
 
-            Dialog.drawDialogBox();
-            yield return StartCoroutine(Dialog.drawText("Good luck, Trainer!"));
+            Dialog.DrawDialogBox();
+            switch (Language.getLang())
+            {
+                case Language.Country.ENGLISH:
+                    yield return StartCoroutine(Dialog.DrawText("Good luck, Trainer!"));
+                    break;
+                case Language.Country.FRANCAIS:
+                    if (SaveData.currentSave.isMale)
+                        yield return StartCoroutine(Dialog.DrawText("Bonne chance, dresseur !"));
+                    else
+                        yield return StartCoroutine(Dialog.DrawText("Bonne chance, dresseuse !"));
+                    break;
+            }
             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
                 yield return null;
             }
 
-            Dialog.undrawDialogBox();
+            Dialog.UndrawDialogBox();
+
+            if (followerOut)
+            {
+                yield return StartCoroutine(PlayerMovement.player.followerScript.releaseFromBall());
+            }
 
             PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
         }

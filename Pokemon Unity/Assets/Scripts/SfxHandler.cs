@@ -21,18 +21,14 @@ public class SfxHandler : MonoBehaviour
         }
 
         sources = this.gameObject.GetComponents<AudioSource>();
-        for (int i = 0; i < sources.Length; i++)
+        foreach(AudioSource source in sources)
         {
-            sources[i].loop = false;
+            source.loop = false;
         }
     }
 
-    public static AudioSource Play(AudioClip clip)
-    {
-        return Play(clip, 1f);
-    }
-
-    public static AudioSource Play(AudioClip clip, float pitch)
+    
+    public static AudioSource Play(AudioClip clip, float pitch = 1f, float volume = -1f)
     {
         AudioSource source = null;
         for (int i = 0; i < sfxHandler.sources.Length; i++)
@@ -66,7 +62,14 @@ public class SfxHandler : MonoBehaviour
             source = sfxHandler.sources[mostFinishedIndex];
         }
         source.clip = clip;
-        source.volume = PlayerPrefs.GetFloat("sfxVolume");
+        if (volume < 0)
+        {
+            source.volume = PlayerPrefs.GetFloat("sfxVolume");
+        }
+        else
+        {
+            source.volume = volume*PlayerPrefs.GetFloat("sfxVolume");
+        }
         source.pitch = pitch;
         source.Play();
 

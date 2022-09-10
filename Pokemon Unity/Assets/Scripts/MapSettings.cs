@@ -2,16 +2,17 @@
 
 using UnityEngine;
 using System.Collections;
-using PokemonUnity.Monster;
 
 public class MapSettings : MonoBehaviour
 {
+    public string RPCImageKey;
     public AudioClip mapBGMClip;
     public int mapBGMLoopStartSamples = 0;
     public AudioClip mapBGMNightClip = null;
     public int mapBGMNightLoopStartSamples = 0;
     public string mapName;
-    public Texture mapNameBoxTexture;
+    public Sprite mapNameBoxTexture;
+    public bool mapNameAppears = true;
     public Color mapNameColor = new Color(0.066f, 0.066f, 0.066f, 1);
 
     public enum PokemonRarity
@@ -34,7 +35,9 @@ public class MapSettings : MonoBehaviour
         IndoorC,
         Cave,
         CaveDark,
-        CaveDarker
+        CaveDarker,
+        Grass,
+        FieldAut
     }
 
     public Environment environment;
@@ -43,6 +46,9 @@ public class MapSettings : MonoBehaviour
     public PokemonRarity pokemonRarity = PokemonRarity.Uncommon;
 
     public WildPokemonInitialiser[] encounters = new WildPokemonInitialiser[0];
+
+    public int sunnyWeatherProbability = 1;
+    public WeatherProbability[] weathers;
 
     // returns the BGM to an external script
     public AudioClip getBGM()
@@ -73,12 +79,7 @@ public class MapSettings : MonoBehaviour
         return mapBGMLoopStartSamples;
     }
 
-    public Sprite getBattleBackground()
-    {
-        return getBattleBackground(0);
-    }
-
-    public Sprite getBattleBackground(int currentTag)
+    public GameObject getBattleBackground(int currentTag = 0)
     {
         float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
         string timeString = "";
@@ -135,20 +136,15 @@ public class MapSettings : MonoBehaviour
                 checkString = "Water";
             }
             //return with timestring attached
-            return Resources.Load<Sprite>("BattleBackgrounds/Backgrounds/" + checkString + timeString);
+            return Resources.Load<GameObject>("Prefabs/BattleBackgrounds/" + checkString);
         }
 
         //if (currentTag == 2) { checkString = "Water"; } //re-enable this line if you want the Water background to appear in inside environments
         //else return without timestring
-        return Resources.Load<Sprite>("BattleBackgrounds/Backgrounds/" + checkString);
+        return Resources.Load<GameObject>("Prefabs/BattleBackgrounds/" + checkString);
     }
 
-    public Sprite getBattleBase()
-    {
-        return getBattleBase(0);
-    }
-
-    public Sprite getBattleBase(int currentTag)
+    public Sprite getBattleBase(int currentTag = 0)
     {
         float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
         string timeString = "";
@@ -248,8 +244,19 @@ public class MapSettings : MonoBehaviour
                     //night
                     if (encounters[i].encounterNight)
                     {
-                        list[listIndex] = encounters[i];
-                        listIndex += 1;
+                        if (WeatherHandler.currentWeather == null)
+                        {
+                            if (encounters[i].encounterSunny)
+                            {
+                                list[listIndex] = encounters[i];
+                                listIndex += 1;
+                            }
+                        }
+                        else if (encounters[i].encounterWeather)
+                        {
+                            list[listIndex] = encounters[i];
+                            listIndex += 1;
+                        }
                     }
                 }
                 else if (time < 10f)
@@ -257,8 +264,19 @@ public class MapSettings : MonoBehaviour
                     //morning
                     if (encounters[i].encounterMorning)
                     {
-                        list[listIndex] = encounters[i];
-                        listIndex += 1;
+                        if (WeatherHandler.currentWeather == null)
+                        {
+                            if (encounters[i].encounterSunny)
+                            {
+                                list[listIndex] = encounters[i];
+                                listIndex += 1;
+                            }
+                        }
+                        else if (encounters[i].encounterWeather)
+                        {
+                            list[listIndex] = encounters[i];
+                            listIndex += 1;
+                        }
                     }
                 }
                 else
@@ -266,8 +284,19 @@ public class MapSettings : MonoBehaviour
                     //day
                     if (encounters[i].encounterDay)
                     {
-                        list[listIndex] = encounters[i];
-                        listIndex += 1;
+                        if (WeatherHandler.currentWeather == null)
+                        {
+                            if (encounters[i].encounterSunny)
+                            {
+                                list[listIndex] = encounters[i];
+                                listIndex += 1;
+                            }
+                        }
+                        else if (encounters[i].encounterWeather)
+                        {
+                            list[listIndex] = encounters[i];
+                            listIndex += 1;
+                        }
                     }
                 }
             }
@@ -283,7 +312,7 @@ public class MapSettings : MonoBehaviour
         return packedList;
     }
 
-    public Pokemon getRandomEncounter(WildPokemonInitialiser.Location location)
+    public PokemonEssentials.Interface.PokeBattle.IPokemon getRandomEncounter(WildPokemonInitialiser.Location location)
     {
         WildPokemonInitialiser[] list = getEncounterList(location);
 
@@ -308,21 +337,26 @@ public class MapSettings : MonoBehaviour
         //randomly pick a number from the list's length
         int encounterIndex = Random.Range(0, chanceSplitList.Length);
 
-        /*/		DEBUG
-            string debugtext = "";
-            for(int i = 0; i < chanceSplitList.Length; i++){
-                debugtext += PokemonDatabase.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
-            Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
-            //*/
+            //		DEBUG
+            //string debugtext = "";
+            //for(int i = 0; i < chanceSplitList.Length; i++){
+            //    debugtext += PokemonDatabase.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
+            //Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
+        Debug.Log("debug wild battle "+chanceSplitList.Length);
 
-
-        //return new Pokemon((PokemonUnity.Pokemons)chanceSplitList[encounterIndex].ID, Pokemon.Gender.CALCULATE,
+        //return new Pokemon(chanceSplitList[encounterIndex].ID, Pokemon.Gender.CALCULATE,
         //    Random.Range(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
         //    null, null, null, -1);
-        return new Pokemon();
+        return null;
     }
 }
 
+[System.Serializable]
+public class WeatherProbability
+{
+    public Weather weather;
+    public int probability;
+}
 
 [System.Serializable]
 public class WildPokemonInitialiser
@@ -330,6 +364,10 @@ public class WildPokemonInitialiser
     public enum Location
     {
         Grass,
+        Grass2,
+        Grass3,
+        Grass4,
+        Grass5,
         Standard,
         Surfing,
         OldRod,
@@ -348,4 +386,6 @@ public class WildPokemonInitialiser
     public bool encounterMorning = true;
     public bool encounterDay = true;
     public bool encounterNight = true;
+    public bool encounterSunny = true;
+    public bool encounterWeather = true;
 }
