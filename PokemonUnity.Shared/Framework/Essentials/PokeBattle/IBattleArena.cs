@@ -17,7 +17,8 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IBattleArena : IBattle
 	{
-		new IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
+		//new IBattleArena initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
+		IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
 
 		new bool pbDoubleBattleAllowed();
 
@@ -36,14 +37,5 @@ namespace PokemonEssentials.Interface.PokeBattle
 		new void pbCommandPhase();
 		 
 		new void pbEndOfRoundPhase();
-	}
-
-	public interface IPokeBattleArena_Scene : IPokeBattle_Scene
-	{
-		void pbBattleArenaBattlers(IBattler battler1, IBattler battler2);
-
-		void pbBattleArenaJudgment(IBattler battler1, IBattler battler2, int[] ratings1, int[] ratings2);
-
-		void updateJudgment(IWindow window, int phase, IBattler battler1, IBattler battler2, int[] ratings1, int[] ratings2);
 	}
 }

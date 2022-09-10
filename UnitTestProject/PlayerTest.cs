@@ -9,6 +9,7 @@ using PokemonUnity.Saving;
 using PokemonUnity.Utility;
 using System.Collections.Generic;
 using PokemonUnity.Saving.SerializableClasses;
+using PokemonEssentials.Interface.PokeBattle;
 
 namespace Tests
 {
@@ -42,7 +43,7 @@ namespace Tests
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = true;
-			TrainerData red = new TrainerData(playerName, isMale, tID: trainerID, sID: secretID);
+			ITrainer red = new Trainer(playerName, TrainerTypes.CHAMPION); //isMale, tID: trainerID, sID: secretID);
 
 			Pokemon[] playerParty = new Pokemon[]
 			{

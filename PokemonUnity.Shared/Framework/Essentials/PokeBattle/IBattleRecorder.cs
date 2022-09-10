@@ -22,7 +22,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	public interface IRecordedBattleModule<out TBattle> //: IBattleRecordData
 		where TBattle : IBattle//, IBattleRecordData
 	{
-		IList<int> randomnums { get; }
+		IList<int> randomnumbers { get; }
 		//IList<int[][]> rounds { get; }
 		IList<KeyValuePair<MenuCommands,int>[]> rounds { get; }
 		//int battletype { get; }
@@ -100,7 +100,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	//ToDo: maybe add <out IBattle> to interface?
 	public interface IBattleRecordData 
 	{
-		int pbGetBattleType { get; }
+		int pbGetBattleType(); //{ get; }
 		//ToDo: this should be replaced with json object class
 		//IDictionary<string, IBattleMetaData> properties { get; }
 		IBattleMetaData properties { get; }

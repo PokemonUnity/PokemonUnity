@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Pokemon-Unity Sample</title>
+
+	<style>
+		body {
+			background: url(Images/game-background.png);
+			/*background-size:*/
+			background-repeat: no-repeat;
+		}
+
+		#player {
+			position: absolute;
+			top: 30px;
+			left: 30px;
+		}
+	</style>
+</head>
+
+<body>
+	<img id="player" src="Images/OpenHand.png" />
+
+	<div id="infoContainer">
+		<label id="message"></label>
+	</div>
+
+	<!--Script references. -->
+	<!--Reference the jQuery library. -->
+	<script src="Scripts/jquery-1.6.4.min.js"></script>
+	<!--Reference the SignalR library. -->
+	<script src="Scripts/jquery.signalR-2.1.1.min.js"></script>
+	<!--Reference the auto-generated SignalR hub script. -->
+	<script src="signalr/hubs"></script>
+	<!--Add script to update the page and receive messages.-->
+	<script type="text/javascript">
+		$(function () {
+			// Declare a proxy to reference the hub.
+			var battleHub = $.connection.pokemonBattleHub;
+			// Create a function that the hub can call to broadcast messages.
+			battleHub.client.broadcastMessage = function (name, message) {
+				var messageobj = JSON.parse(message);
+				if (messageobj.action == 'Position') {
+					$('#player').css('left', messageobj.value.x + 'px');// update x value
+					$('#player').css('top', 500 - $('#message').height() - messageobj.value.y + 'px');// update x value
+					$('#message').text('x:' + messageobj.value.x + "px, y:" + messageobj.value.y + 'px');
+
+					if (messageobj.value.handOpen == 'True')
+						$('#player').attr('src', 'Images/OpenHand.png');
+					else
+						$('#player').attr('src', 'Images/ClosedHand.png');
+				}
+			};
+
+			// Start the connection.
+			$.connection.hub.start().done(function () {
+				$('#message').text('connected');
+			});
+		});
+	</script>
+</body>
+</html>

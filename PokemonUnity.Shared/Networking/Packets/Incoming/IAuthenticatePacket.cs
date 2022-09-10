@@ -8,7 +8,7 @@
 
         public enum AuthOptions
         {
-            SUCCES,
+            SUCCESS,
             FAILED,
             ERROR
         }

@@ -33,8 +33,7 @@ namespace PokemonUnity.Combat
 		/// Returns the position of this pkmn in battle lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == battle.Party[this.pkmn.index]
-		public int Index						{ get; 
-			private set; }
+		public int Index						{ get; private set; }
 		/// <summary>
 		/// Index list of all pokemons who attacked this battler on this/previous turn
 		/// </summary>
@@ -66,10 +65,10 @@ namespace PokemonUnity.Combat
 		#endregion
 		#region Inherit Base Pokemon Data
 		public int HP							{ get { return hp; } set { hp = value; } }
-		private int hp							{ get; set; }
+		private int hp;
 		public int TotalHP						{ get; protected set; }
 		public int ATK							{ get { return effects.PowerTrick ? DEF : attack; } set { attack = value; } }
-		private int attack						{ get; set; }
+		private int attack;
 		public int DEF                          { get
 			{
 				if (effects.PowerTrick) return attack;
@@ -77,12 +76,12 @@ namespace PokemonUnity.Combat
 			}
 			set { defense = value; }
 		}
-		private int defense						{ get; set; }
+		private int defense;
 		public int SPD							{ get { return battle.field.WonderRoom > 0 ? DEF : spdef; } set { spdef = value; } }
-		private int spdef						{ get; set; }
+		private int spdef;
 		public int SPA							{ get { return spatk; } set { spatk = value; } }
-		private int spatk						{ get; set; }
-		private int speed						{ get; set; }
+		private int spatk;
+		private int speed;
 		public int SPE						    { get
 			{
 				int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
@@ -150,7 +149,7 @@ namespace PokemonUnity.Combat
 													get { return level; } //pokemon.IsNotNullOrNone() ? pokemon.Level : 0; } 
 													set { level = value; } //if (pokemon.IsNotNullOrNone()) pokemon.SetLevel((byte)value); } 
 												}
-		private int level						{ get; set; }
+		private int level;
 		public Monster.Natures Nature			{ get { return pokemon.Nature; } }
 		public int Happiness					{ get { return pokemon.Happiness; } } //set { happiness = value; } }
 		//private int happiness					{ get; set; } //{ return pokemon.IsNotNullOrNone() ? pokemon.Happiness : 0; } }
@@ -160,12 +159,12 @@ namespace PokemonUnity.Combat
 				if (effects.Illusion != null)
 					return Game._INTL(effects.Illusion.Species.ToString(TextScripts.Name));
 				return name; } set { name = value; } }
-		private string name						{ get; set;} //{ return pokemon.Name; } }
+		private string name;					//{ get { return pokemon.Name; } }
 		public bool? Gender { get {
 				if (effects.Illusion != null)
 					return effects.Illusion.Gender;
 				return this.gender; } set { gender = value; } }
-		private bool? gender					{ get; set; }
+		private bool? gender;
 		public bool IsShiny { get {
 				if (effects.Illusion != null)
 					return effects.Illusion.IsShiny;
@@ -174,7 +173,7 @@ namespace PokemonUnity.Combat
 		}
 		public Pokemons Species					{ get { return pokemon == null ? Pokemons.NONE : Kernal.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
 		public int StatusCount					{ get { return statusCount; } set { statusCount = value; } }
-		private int statusCount					{ get; set; }
+		private int statusCount;
 		public Status Status
 		{
 			get
@@ -192,15 +191,15 @@ namespace PokemonUnity.Combat
 					StatusCount = 0;
 			}
 		}
-		private Status status					{ get; set; }
+		private Status status;
 		public Items Item						{ get { return item; } set { item = value; } }
-		private Items item						{ get; set; } 
+		private Items item;
 		public Types Type1						{ get; set; }
 		public Types Type2						{ get; set; }
 		public int[] IV							{ get; private set; } 
 		//public int[] IV						{ get { return pokemon.IV; } }
 		public Abilities Ability				{ get { return ability; } set { ability = value; } }
-		private Abilities ability				{ get; set; }
+		private Abilities ability;
 		public IBattleMove[] moves				{ get; set; }
 		#endregion
 		#region Move to PokemonBattle Class
@@ -3456,17 +3455,16 @@ namespace PokemonUnity.Combat
 		}
 		#endregion
 
-		//ToDo: Finish migrating interface implementation
 		#region Explicit Interface Implementation
-		bool IBattler.inHyperMode { get; }
-		bool IBattler.isShadow { get; }
+		bool IBattler.inHyperMode { get { return inHyperMode(); } }
+		bool IBattler.isShadow { get { return isShadow(); } }
 		int IBattler.displayGender { get { if (Gender == true) return 1; else if (Gender == false) return 0; else return -1; } }
 		bool IBattler.owned { get { return IsOwned; } }
-		int IBattler.pbSpeed { get; }
+		int IBattler.pbSpeed { get { return SPE; } }
 
 		void IBattler.pbInitDummyPokemon(IPokemon pkmn, int pkmnIndex)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 
 		bool IBattler.pbHasMove(Moves id)

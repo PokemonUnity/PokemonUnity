@@ -83,20 +83,22 @@ namespace PokemonUnity
 		#endregion
 
 		#region Variables
+		private static object _locker = new object();
 		/// <summary>
 		/// Constantly revolving random, that won't repeat the same seed number twice, 
 		/// until it cycles thru all possible seed values
 		/// </summary>
 		public static Random Rand { get { return new Random(Seed()); } }
+		//public static System.Collections.Generic.KeyValuePair<UInt16, Random> Rand { get { Random r = new Random(Seed()); return new System.Collections.Generic.KeyValuePair<UInt16, Random>(seed.Value, r); } }
 		/// <summary>
 		/// Constantly revolving random, that uses the same seed number that was previously used
 		/// </summary>
 		public static Random RandWithSetSeed { get { return new Random(Seed(true)); } }
-		public static System.UInt16? seed { get; private set; }// = 0x0000;
+		private static System.UInt16? seed; // = 0x0000;
 		public static UInt16 Seed(bool useFixedSeed = false)
 		{
-			//lock (Rand)
-			//{
+			lock (_locker) //(Rand)
+			{
 				if (!seed.HasValue) {
 					//seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
 					seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue); 
@@ -107,7 +109,7 @@ namespace PokemonUnity
 					seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
 				} 
 				return seed.Value;
-			//}
+			}
 		}
 		#endregion
 

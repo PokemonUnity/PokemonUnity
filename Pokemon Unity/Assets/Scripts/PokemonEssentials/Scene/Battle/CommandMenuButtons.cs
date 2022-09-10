@@ -13,14 +13,35 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity
 {
-	//[RequireComponent(typeof(Image))]
+	[RequireComponent(typeof(Image),typeof(TMPro.TextMeshProUGUI))]
 	public class CommandMenuButtons : SpriteWrapper, ICommandMenuButtons //BitmapSprite
 	{
 		public int Index;
+		public int Mode;
+		public IAnimatedBitmap buttonbitmap;
+		private CommandMenuDisplay commandMenuDisplay;
 		private bool disposedValue;
+		private Image button;
+		private TMPro.TextMeshProUGUI text;
+		private UnityEngine.Sprite buttonDefault;
+		private UnityEngine.Sprite buttonSelected;
+		private Color buttonTextDefaultColor;
+		private Color buttonTextSelectedColor;
+
+		private void Awake()
+		{
+			button = GetComponent<Image>();
+			text = GetComponent<TMPro.TextMeshProUGUI>();
+		}
 
 		public ICommandMenuButtons initialize(int index= 0, int mode = 0, IViewport viewport= null)
 		{
+			//base.initialize(260, 96, viewport);
+			//this.x = Graphics.width - 260;
+			//this.y = Graphics.height - 96;
+			Mode = mode;
+			//@buttonbitmap = new AnimatedBitmap(Game._INTL("Graphics/Pictures/battleCommandButtons"));
+			refresh(index, mode);
 			return this;
 		}
 
@@ -31,6 +52,45 @@ namespace PokemonUnity
 
 		public void refresh(int index, int mode = 0)
 		{
+			//this.bitmap.clear();
+			Mode = mode;
+			int[] cmdarray = new int[] { 0, 2, 1, 3 };
+			switch (@mode)
+			{
+				case 1:
+					cmdarray = new int[] { 0, 2, 1, 4 }; // Use "Call"
+					break;
+				case 2:
+					cmdarray = new int[] { 5, 7, 6, 3 }; // Safari Zone battle
+					break;
+				case 3:
+					cmdarray = new int[] { 0, 8, 1, 3 }; // Bug Catching Contest
+					break;
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				if (i == index) continue; //if selected
+				//x = ((i % 2) == 0) ? 0 : 126;
+				//y = ((i / 2) == 0) ? 6 : 48;
+				//this.bitmap.blt(x, y, @buttonbitmap.bitmap, new Rect(0, cmdarray[i] * 46, 130, 46));
+				
+				//Change sprite image/text/cursor to default
+                button.sprite = buttonSelected;
+                text.color = buttonTextSelectedColor;
+
+                //cursor.position = button.GetComponent<RectTransform>().position;
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				if (i != index) continue; //if not selected
+				//x = ((i % 2) == 0) ? 0 : 126;
+				//y = ((i / 2) == 0) ? 6 : 48;
+				//this.bitmap.blt(x, y, @buttonbitmap.bitmap, new Rect(130, cmdarray[i] * 46, 130, 46));
+				
+				//Change sprite image/text/cursor to alternative design
+                button.sprite = buttonDefault;
+                text.color = buttonTextDefaultColor;
+			}
 		}
 
 		protected virtual void Dispose(bool disposing)
@@ -40,6 +100,7 @@ namespace PokemonUnity
 				if (disposing)
 				{
 					// TODO: dispose managed state (managed objects)
+					@buttonbitmap.Dispose();
 					base.Dispose();
 				}
 
@@ -63,7 +124,7 @@ namespace PokemonUnity
 			GC.SuppressFinalize(this);
 		}
 
-		#region 
+		#region Implementing Interface
 		IBitmapSprite IBitmapSprite.initialize(int width, int height, IViewport viewport)
 		{
 			//throw new NotImplementedException();

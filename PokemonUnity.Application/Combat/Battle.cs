@@ -4674,47 +4674,28 @@ namespace PokemonUnity.Combat
 
 		IEnumerator IBattle.pbDebugUpdate()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
+			yield return null;
 		}
 
 		int IBattle.pbAIRandom(int x)
 		{
-			throw new NotImplementedException();
-		}
-
-		void IBattle.pbAddToPlayerParty(IBattler pokemon)
-		{
-			throw new NotImplementedException();
+			return pbRandom(x);
 		}
 
 		bool IBattle.pbCanShowCommands(int idxPokemon)
 		{
-			throw new NotImplementedException();
+			return CanShowCommands(idxPokemon);
 		}
 
 		bool IBattle.pbCanShowFightMenu(int idxPokemon)
 		{
-			throw new NotImplementedException();
+			return CanShowFightMenu(idxPokemon);
 		}
 
 		bool IBattle.pbCanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk)
 		{
-			throw new NotImplementedException();
-		}
-
-		void IBattle.pbSendOut(int index, IBattler pokemon)
-		{
-			throw new NotImplementedException();
-		}
-
-		bool IBattle.pbOnActiveOne(IBattler pkmn, bool onlyabilities, bool moldbreaker)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattleCommon.pbThrowPokeBall(int idxPokemon, Items ball, int? rareness, bool showplayer)
-		{
-			throw new NotImplementedException();
+			return CanChooseMove(idxPokemon, idxMove, showMessages, sleeptalk);
 		}
 		#endregion
 	}

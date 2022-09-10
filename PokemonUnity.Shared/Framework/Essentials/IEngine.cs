@@ -356,7 +356,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Frees the viewport. If the viewport has already been freed, does nothing.
 		/// </summary>
-		void dispose();
+		//void dispose();
 		/// <summary>
 		/// Begins flashing the viewport. duration specifies the number of frames the flash will last.
 		/// If color is set to nil, the viewport will disappear while flashing.
@@ -369,7 +369,7 @@ namespace PokemonEssentials.Interface
 		/// It is not necessary to call this method if no flash effect is needed.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerator update();
+		void update();
 	}
 	/// <summary>
 	/// A module that handles input data from a gamepad or keyboard.

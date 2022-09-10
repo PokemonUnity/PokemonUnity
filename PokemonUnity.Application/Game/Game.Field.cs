@@ -219,7 +219,7 @@ namespace PokemonUnity
 				Input.update();
 				if (this is IGameMessage m) m.pbUpdateSceneMap();
 			}
-			viewport.dispose();
+			viewport.Dispose();
 		}
 
 		// Alias and use this method if you want to add a custom battle intro animation

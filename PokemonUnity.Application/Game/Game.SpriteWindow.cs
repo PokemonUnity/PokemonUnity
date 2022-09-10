@@ -47,7 +47,7 @@ namespace PokemonUnity
 						Input.update();
 					}
 				}
-				viewport.dispose();
+				viewport.Dispose();
 			}
 		}
 

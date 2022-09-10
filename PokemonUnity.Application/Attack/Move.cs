@@ -6,6 +6,7 @@ using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Attack;
 using PokemonUnity.Attack.Data;
+using PokemonUnity.Saving.SerializableClasses;
 
 namespace PokemonUnity.Attack
 {
@@ -20,7 +21,7 @@ namespace PokemonUnity.Attack
 	{
 		#region Properties
 		private MoveData _base { get { return Kernal.MoveData[id]; } } //{ get; set; }
-		private int pp { get; set; }
+		private int pp;
 		/// <summary>
 		/// The amount of PP remaining for this move
 		/// </summary>
@@ -47,7 +48,7 @@ namespace PokemonUnity.Attack
 		/// <summary>
 		/// The number of PP Ups used for this move
 		/// </summary>
-		public int PPups { get; set; }
+		public int PPups			{ get; set; }
 		#region Values to be Overridden while in Battle?
 		/// <summary>
 		/// Base Damage
@@ -69,7 +70,7 @@ namespace PokemonUnity.Attack
 		/// <summary>
 		/// For Aerilate, Pixilate, Refrigerate
 		/// </summary>
-		public bool PowerBoost		{ get; private set; }
+		//public bool PowerBoost		{ get; private set; }
 		#endregion
 
 		/// <summary>
@@ -116,6 +117,23 @@ namespace PokemonUnity.Attack
 			Effect			= _base.Effect;
 			EffectChance	= _base.EffectChance;
 			return (PokemonEssentials.Interface.IMove)this;
+		}
+
+		public static implicit operator SeriMove(Move move)
+		{
+			SeriMove seriMove = new SeriMove(move: (int)move.id, pp: move.PP, ppups: move.PPups);
+			//{
+			//	Move = (int)move.id,
+			//	PP = move.PP,
+			//	PPups = move.PPups
+			//};
+			return seriMove;
+		}
+
+		public static implicit operator Move(SeriMove move)
+		{
+			Move normalMove = new Move((Moves)move.Move, move.PPups, (byte)move.PP);
+			return normalMove;
 		}
 	}
 }
