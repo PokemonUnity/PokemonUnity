@@ -305,6 +305,9 @@
     <Reference Include="UnityEngine.HotReloadModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.InputModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll</HintPath>
     </Reference>
@@ -370,6 +373,9 @@
     </Reference>
     <Reference Include="UnityEngine.UIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UNETModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll</HintPath>
