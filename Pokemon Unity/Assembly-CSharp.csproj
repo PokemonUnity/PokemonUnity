@@ -11,8 +11,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -97,7 +96,6 @@
     <Compile Include="Assets\GameMain\Scripts\UI\UIExtension.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIFormId.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\BattlePokemonHandler.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\SpriteComponent.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\AIUtility.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\LitJsonHelper.cs" />
@@ -202,13 +200,14 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\QualityLevelType.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\RelationType.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\TileShapes.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\SpriteComponent.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\FileTest.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Game_System.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GameEvents.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GlobalVariables.Refactor.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\BattleScene.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuButtons.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\FightMenuButtons.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\FightMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokeBattle_SceneConstants.cs" />
@@ -253,13 +252,13 @@
     <Compile Include="Assets\Scripts\WindowLight.cs" />
     <None Include="Assets\StreamingAssets\How to enable custom sprites.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -282,9 +281,6 @@
     <Reference Include="UnityEngine.BaselibModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.BaselibModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.ClothModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.ClusterInputModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
     </Reference>
@@ -297,9 +293,6 @@
     <Reference Include="UnityEngine.CrashReportingModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.DirectorModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.FileSystemHttpModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.FileSystemHttpModule.dll</HintPath>
     </Reference>
@@ -311,12 +304,6 @@
     </Reference>
     <Reference Include="UnityEngine.HotReloadModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll</HintPath>
@@ -341,9 +328,6 @@
     </Reference>
     <Reference Include="UnityEngine.ProfilerModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.ProfilerModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ScreenCaptureModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SharedInternalsModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll</HintPath>
@@ -387,17 +371,8 @@
     <Reference Include="UnityEngine.UIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UNETModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityConnectModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll</HintPath>
@@ -414,29 +389,11 @@
     <Reference Include="UnityEngine.UnityWebRequestAudioModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.VFXModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.VRModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VideoModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.WindModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.XRModule">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Locator">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/Managed/Unity.Locator.dll</HintPath>
@@ -463,34 +420,31 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="GameFramework">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameMain/Libraries/GameFramework.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\GameFramework.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameMain/Libraries/ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameMain/Libraries/LitJson.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\LitJson.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameMain/Libraries/Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Application">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameMain/Libraries/PokemonUnity.Application.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Application.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Offline">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameMain/Libraries/PokemonUnity.Offline.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Offline.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Shared">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameMain/Libraries/PokemonUnity.Shared.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Shared.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameMain/Libraries/protobuf-net.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Plugins/DOTween.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SQLite">
-      <HintPath>C:/Users/Admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Plugins/System.Data.SQLite.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Plugins\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
