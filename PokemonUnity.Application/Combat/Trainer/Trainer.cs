@@ -8,9 +8,11 @@ using PokemonUnity.Character;
 using PokemonUnity.Combat;
 using PokemonEssentials.Interface.PokeBattle;
 
-namespace PokemonUnity//.Combat 
-{ 
-	public partial class Trainer : PokemonEssentials.Interface.PokeBattle.ITrainer {
+namespace PokemonUnity
+{
+	[System.Serializable]
+	public partial class Trainer : PokemonEssentials.Interface.PokeBattle.ITrainer, IEquatable<Trainer>, IEqualityComparer<Trainer>
+	{
 		#region Variables
 		public string name { get; set; }
 		public int id { get; set; }
@@ -46,10 +48,48 @@ namespace PokemonUnity//.Combat
 		public string trainerTypeName { get { 
 			return @trainertype.ToString() ?? "PkMn Trainer"; }
 		}
+		/// <summary>
+		/// IDfinal = (IDtrainer + IDsecret × 65536).Last6
+		/// </summary>
+		/// <remarks>
+		/// only the last six digits are used so the Trainer Card will display an ID No.
+		/// </remarks>
+		public string PlayerID
+		{
+			get
+			{
+				//return GetHashCode().ToString().Substring(GetHashCode().ToString().Length - 6, GetHashCode().ToString().Length);
+				//(ulong) Does it matter if value is pos or negative, if only need last 5-6?
+				//ulong n = (ulong)(TrainerID + SecretID * 65536);
+				//ulong n = (ulong)System.Math.Abs(TrainerID + SecretID * 65536);
+				ulong n = (ulong)System.Math.Abs(publicID() + secretID() * 65536);
+				if (n == 0) return "000000";
+				string x = n.ToString();
+				// = x.PadLeft(6,'0');
+				return x.Substring(x.Length - 6, 6);
+			}
+		}
+		/// <summary>
+		/// Portion of the ID which is visible on the Trainer Card
+		/// </summary>
+		public string TrainerID
+		{
+			get
+			{
+				string x = publicID().ToString();
+				x = x.PadLeft(6,'0');
+				return x.Substring(x.Length - 6, 6);
+			}
+		}
 		#endregion
 
 		#region Constructor
 		public Trainer (string name,TrainerTypes trainertype) {
+			(this as ITrainer).initialize(name, trainertype);
+		}
+
+		ITrainer ITrainer.initialize(string name, TrainerTypes trainertype)
+		{
 			this.name=name;
 			@language=(Languages)(Game.GameData as PokemonEssentials.Interface.IGameUtility).pbGetLanguage();
 			this.trainertype=trainertype;
@@ -77,11 +117,7 @@ namespace PokemonUnity//.Combat
 			}
 			@money=Core.INITIALMONEY;
 			@party=new PokemonEssentials.Interface.PokeBattle.IPokemon[Core.MAXPARTYSIZE];
-		}
-
-		ITrainer ITrainer.initialize(string name, TrainerTypes trainertype)
-		{
-			throw new NotImplementedException();
+			return this;
 		}
 		#endregion
 
@@ -203,7 +239,7 @@ namespace PokemonUnity//.Combat
 			return ret;
 		} }
 
-		int ITrainer.gender { get; }
+		int ITrainer.gender { get { return gender == true ? 1 : (gender == false ? 0 : 2); } }
 		public bool? gender { get { 
 			bool? ret=null;   // 2 = gender unknown
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
@@ -388,5 +424,49 @@ namespace PokemonUnity//.Combat
 		//{
 		//	return new TrainerData(trainer.name, trainer.gender.Value, trainer.publicID(), trainer.secretID());
 		//}
+
+		#region Explicit Operators
+		public static bool operator ==(Trainer x, Trainer y)
+		{
+			//return ((x.gender == y.gender) && (x.publicID() == y.publicID()) && (x.secretID() == y.secretID())) & (x.name == y.name);
+			return ((x.gender == y.gender) && (x.id == y.id)) & (x.name == y.name);
+		}
+		public static bool operator !=(Trainer x, Trainer y)
+		{
+			//return ((x.gender != y.gender) || (x.publicID() != y.publicID()) || (x.secretID() != y.secretID())) | (x.name == y.name);
+			return ((x.gender != y.gender) || (x.id != y.id)) | (x.name == y.name);
+		}
+		public bool Equals(Trainer obj)
+		{
+			if (obj == null) return false;
+			return this == obj;
+		}
+		public override bool Equals(object obj)
+		{
+			if (obj == null) return false;
+			//if (obj.GetType() == typeof(Player))
+			//	return Equals((Player)obj);
+			if (obj.GetType() == typeof(Trainer))
+				return Equals((Trainer)obj);
+			return base.Equals(obj);
+		}
+		public override int GetHashCode()
+		{
+			//return ((ulong)(TrainerID + SecretID * 65536)).GetHashCode();
+			return id.GetHashCode();
+		}
+		bool IEquatable<Trainer>.Equals(Trainer other)
+		{
+			return Equals(obj: (object)other);
+		}
+		bool IEqualityComparer<Trainer>.Equals(Trainer x, Trainer y)
+		{
+			return x == y;
+		}
+		int IEqualityComparer<Trainer>.GetHashCode(Trainer obj)
+		{
+			return obj.GetHashCode();
+		}
+		#endregion
 	}
 }

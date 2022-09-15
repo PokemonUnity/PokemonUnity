@@ -706,7 +706,7 @@ namespace PokemonUnity.Inventory
 					break;
 				}
 			} while (true);
-			window.dispose();
+			window.Dispose();
 		}
 		#endregion
 	}

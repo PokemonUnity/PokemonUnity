@@ -70,6 +70,9 @@ namespace PokemonUnity
 
 	public partial class Game : IGameField
 	{
+		//event EventHandler IGameField.OnStartBattle { add { OnStartBattle += value; } remove { OnStartBattle -= value; } }
+		//event Action<object, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs> IGameField.OnEndBattle { add { OnEndBattle += value; } remove { OnEndBattle -= value; } }
+
 		public IPokeBattle_Scene pbNewBattleScene()
 		{
 			return Scenes.BattleScene.initialize(); //new PokeBattle_Scene();
@@ -150,9 +153,9 @@ namespace PokemonUnity
 				//			Graphics?.update();
 				//		} while (); //2.times 
 				//	}
-				//	bitmap.dispose();
-				//	bm.dispose();
-				//	sprite.dispose();
+				//	bitmap.Dispose();
+				//	bm.Dispose();
+				//	sprite.Dispose();
 				//} else if (Bitmap.method_defined(:radial_blur) && Core.Rand.Next(15)==0) {
 				//	viewport.color=new Color(0,0,0,255);
 				//	sprite = new Sprite();
@@ -167,9 +170,9 @@ namespace PokemonUnity
 				//			Graphics?.update();
 				//		} while ();//2.times 
 				//	}
-				//	bitmap.dispose();
-				//	bm.dispose();
-				//	sprite.dispose();
+				//	bitmap.Dispose();
+				//	bm.Dispose();
+				//	sprite.Dispose();
 				//} else 
 				if (Core.Rand.Next(10)==0) {		// Custom transition method
 					string[] scroll=new string[] {"ScrollDown","ScrollLeft","ScrollRight","ScrollUp",
@@ -219,7 +222,7 @@ namespace PokemonUnity
 				Input.update();
 				if (this is IGameMessage m) m.pbUpdateSceneMap();
 			}
-			viewport.dispose();
+			viewport.Dispose();
 		}
 
 		// Alias and use this method if you want to add a custom battle intro animation
@@ -294,8 +297,8 @@ namespace PokemonUnity
 					pbSEPlay("Flash2");
 					pbSEPlay("Sword2");
 					flash.opacity=255;
-					bar1.dispose();
-					bar2.dispose();
+					bar1.Dispose();
+					bar2.Dispose();
 					bar1=new AnimatedPlane(viewplayer);
 					bar1.bitmap=BitmapCache.load_bitmap(pbargraphic);
 					ISprite player=new Sprite(viewplayer);
@@ -375,17 +378,17 @@ namespace PokemonUnity
 						pbWait(1); i++;
 					} while (i < 10);
 			//  }
-					player.dispose();
-					trainer.dispose();
-					flash.dispose();
-					vs.dispose();
-					bar1.dispose();
-					bar2.dispose();
-					overlay.dispose();
-					fade.dispose();
-					viewvs.dispose();
-					viewopp.dispose();
-					viewplayer.dispose();
+					player.Dispose();
+					trainer.Dispose();
+					flash.Dispose();
+					vs.Dispose();
+					bar1.Dispose();
+					bar2.Dispose();
+					overlay.Dispose();
+					fade.Dispose();
+					viewvs.Dispose();
+					viewopp.Dispose();
+					viewplayer.Dispose();
 					viewport.color=new Color(0,0,0,255);
 					return true;
 				}
@@ -810,7 +813,7 @@ namespace PokemonUnity
 
 		//Events.onStartBattle+=delegate(object sender, EventArgs e) {
 		//Events.OnStartBattle+=delegate(object sender, PokemonEssentials.Interface.EventArg.IOnStartBattleEventArgs e) {
-		private void OnStartBattle(object sender, EventArgs e) {
+		protected virtual void Events_OnStartBattle(object sender, EventArgs e) {
 			if (PokemonTemp is ITempMetadataField m)
 			{
 				//PokemonTemp.evolutionLevels = new int[6];
@@ -825,7 +828,7 @@ namespace PokemonUnity
 		
 		//Events.onEndBattle+=delegate(object sender, EventArgs e) {
 		//Events.OnEndBattle+=delegate(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
-		private void OnEndBattle(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
+		protected virtual void Events_OnEndBattle(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
 			int decision = (int)e.Decision; //[0];
 			bool canlose = e.CanLose; //[1];
 			if (Core.USENEWBATTLEMECHANICS || (decision!=2 && decision!=5)) {		// not a loss or a draw
@@ -877,7 +880,7 @@ namespace PokemonUnity
 		}
 
 		//Events.onSpritesetCreate+=delegate(object sender, EventArgs e) {
-		protected virtual void OnSpritesetCreate(object sender, EventArgs e) {
+		protected virtual void Events_OnSpritesetCreate(object sender, EventArgs e) {
 			//ISpritesetMap spriteset=e[0]; // Spriteset being created
 			//IViewport viewport=e[1]; // Viewport used for tilemap and characters
 			//IGameMap map=spriteset.map; // Map associated with the spriteset (not necessarily the current map).
@@ -948,7 +951,7 @@ namespace PokemonUnity
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		//Events.onStepTakenTransferPossible+=delegate(object sender, EventArgs e) {
-		protected virtual void OnStepTakenTransferPossible(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs e) {
+		protected virtual void Events_OnStepTakenTransferPossible(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs e) {
 			bool[] handled = new bool[] { e.Index }; //[0];
 			if (handled[0]) return; //continue;
 			if (Global.stepcount % 4 == 0 && Core.POISONINFIELD) {
@@ -984,7 +987,7 @@ namespace PokemonUnity
 		}
 		
 		//Events.onStepTaken+=proc{
-		protected virtual void OnStepTaken(object sender, EventArgs e) {
+		protected virtual void Events_OnStepTaken(object sender, EventArgs e) {
 			//if (Global.happinessSteps == null) Global.happinessSteps=0;
 			Global.happinessSteps+=1;
 			if (Global.happinessSteps==128) {
@@ -1000,7 +1003,7 @@ namespace PokemonUnity
 		}
 		
 		//Events.onStepTakenFieldMovement+=delegate(object sender, EventArgs e) {
-		protected virtual void OnStepTakenFieldMovement(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenFieldMovementEventArgs e) {
+		protected virtual void Events_OnStepTakenFieldMovement(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenFieldMovementEventArgs e) {
 			//IGamePlayer @event=e[0]; // Get the event affected by field movement
 			IGamePlayer @event=e.Index; // Get the event affected by field movement
 			ITilePosition thistile=MapFactory.getRealTilePos(@event.map.map_id,@event.x,@event.y);
@@ -1302,7 +1305,7 @@ namespace PokemonUnity
 
 		#region Moving between maps
 		//Events.onMapChange+=delegate(object sender, EventArgs e) {
-		protected virtual void OnMapChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangeEventArgs e) {
+		protected virtual void Events_OnMapChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangeEventArgs e) {
 			int oldid=e.MapId; //[0] previous map ID, 0 if no map ID
 			ITilePosition healing=pbGetMetadata(GameMap.map_id).Map.HealingSpot;
 			if (healing != null) Global.healingSpot=healing;
@@ -1324,7 +1327,7 @@ namespace PokemonUnity
 		}
 		
 		//Events.onMapChanging+=delegate(object sender, EventArgs e) {
-		protected virtual void OnMapChanging(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangingEventArgs e) {
+		protected virtual void Events_OnMapChanging(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangingEventArgs e) {
 			int newmapID = e.MapId; //[0];
 			IGameMap newmap = e.GameMap; //[1];
 		//  Undo the weather (GameMap still refers to the old map)
@@ -1341,7 +1344,7 @@ namespace PokemonUnity
 		}
 		
 		//Events.onMapSceneChange+=delegate(object sender, EventArgs e) {
-		protected virtual void OnMapSceneChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapSceneChangeEventArgs e) {
+		protected virtual void Events_OnMapSceneChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapSceneChangeEventArgs e) {
 			ISceneMap scene = e.Object; //[0];
 			bool mapChanged = e.NewMap; //[1];
 			if (scene == null || scene.spriteset == null) return;
@@ -1526,7 +1529,7 @@ namespace PokemonUnity
 			//  Graphics?.update();
 			//  Input.update();
 			//}
-			//sprite.dispose();
+			//sprite.Dispose();
 		}
 
 		public void pbCaveEntrance() {
@@ -1592,7 +1595,7 @@ namespace PokemonUnity
 		#region Constant checks
 		// ===============================================================================
 		//Events.onMapUpdate+=delegate(object sender, EventArgs e) {   // Pokérus check
-		protected virtual void OnMapUpdate(object sender, EventArgs e) {   // Pokérus check
+		protected virtual void Events_OnMapUpdate(object sender, EventArgs e) {   // Pokérus check
 			DateTime? last=Global.pokerusTime;
 			DateTime now=pbGetTimeNow();
 			if (last == null || last?.Year!=now.Year || last?.Month!=now.Month || last?.Day!=now.Day) {
@@ -1753,7 +1756,7 @@ namespace PokemonUnity
 					if (Input.trigger(Input.B)) {
 						if (this is IGameAudio a2) a2.Audio_bgm_set_volume(oldvolume);
 						(this as IGameMessage).pbDisposeMessageWindow(msgwindow);
-						textwindow.dispose();
+						textwindow.Dispose();
 						return null;
 					} n++;
 				} while(n < Graphics.frame_rate); i++; 
@@ -1791,7 +1794,7 @@ namespace PokemonUnity
 			}
 			if (this is IGameAudio a3) a3.Audio_bgm_set_volume(oldvolume);
 			(this as IGameMessage).pbDisposeMessageWindow(msgwindow);
-			textwindow.dispose();
+			textwindow.Dispose();
 			return wave;
 		}
 

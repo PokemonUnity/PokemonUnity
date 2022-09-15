@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 //Interface for RPG Maker User Experience
 //namespace PokemonUnity.UX.RPGMaker
@@ -314,7 +312,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		IColor color { get; set; }
 		IEnumerator update();
-		void dispose();
+		//void dispose();
 		bool disposed { get; }
 		/// <summary>
 		/// Creates a Window object. Specifies a Viewport (Viewport) when necessary.
@@ -356,7 +354,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Frees the viewport. If the viewport has already been freed, does nothing.
 		/// </summary>
-		void dispose();
+		//void dispose();
 		/// <summary>
 		/// Begins flashing the viewport. duration specifies the number of frames the flash will last.
 		/// If color is set to nil, the viewport will disappear while flashing.
@@ -369,18 +367,20 @@ namespace PokemonEssentials.Interface
 		/// It is not necessary to call this method if no flash effect is needed.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerator update();
+		void update();
 	}
 	/// <summary>
 	/// A module that handles input data from a gamepad or keyboard.
 	/// </summary>
 	public interface IInput
 	{
+		//event ButtonEventArgs OnKeyPress;
+		event Action<object, EventArg.IButtonEventArgs> OnKeyPress;
 		/// <summary>
 		/// Updates input data. As a rule, this method is called once per frame.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerator update();
+		void update();
 		/// <summary>
 		/// Determines whether the button number is currently being pressed.
 		/// </summary>
@@ -401,6 +401,9 @@ namespace PokemonEssentials.Interface
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>Unlike <see cref="trigger"/>, takes into account the repeat input of a button being held down continuously.</remarks>
 		bool repeat(PokemonUnity.UX.InputKeys num);
+
+		//bool KeyPressed(int i_Key); //System.Windows.Forms.Keys
+		//void ChangeState(int key, bool state); //System.Windows.Forms.Keys
 	}
 
 	public interface IRPGSprite : IDisposable
@@ -492,7 +495,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Frees the sprite. If the sprite has already been freed, does nothing.
 		/// </summary>
-		void Dispose();
+		//void Dispose();
 		/// <summary>
 		/// Begins flashing the sprite. duration specifies the number of frames the flash will last.
 		/// If color is set to nil, the sprite will disappear while flashing.

@@ -82,8 +82,8 @@ namespace PokemonEssentials.Interface.Screen
 		PokemonEssentials.Interface.Screen.IPokeBattle_Scene BattleScene { get; set; }
 		PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene BattleArenaScene { get; set; }
 		PokemonEssentials.Interface.Screen.IBattleSwapScene BattleSwapScene { get; set; }
-		//PokemonEssentials.Interface.Screen. BattlePalaceScene { get; set; }
-		//PokemonEssentials.Interface.Screen. BattleSafari { get; set; }
+		//PokemonEssentials.Interface.Screen.IBattlePalace_Scene BattlePalaceScene { get; set; }
+		PokemonEssentials.Interface.Screen.ISafariZone_Scene BattleSafari { get; set; }
 		PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene BattleSceneDebug { get; set; }
 		PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive BattleSceneDebugNoUI { get; set; }
 		PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging BattleSceneDebugWithoutLog { get; set; }

@@ -19,24 +19,13 @@ namespace PokemonEssentials.Interface.Field
 	{
 		// Hours/stage, drying/hour, min yield, max yield
 	}
+
 	public interface ITempMetadataBerryPlants {
 		int berryPlantData				{ get; }
 
 		//int[] pbGetBerryPlantData(Items item);
 		BerryData pbGetBerryPlantData(Items item);
 	}
-
-//Events.onSpritesetCreate+=delegate(object sender, EventArgs e) {
-//   spriteset=e[0];
-//   viewport=e[1];
-//   map=spriteset.map;
-//   foreach (var i in map.events.keys) {
-//     if (map.events[i].name=="BerryPlant") {
-//       spriteset.addUserSprite(new BerryPlantMoistureSprite(map.events[i],map,viewport));
-//       spriteset.addUserSprite(new BerryPlantSprite(map.events[i],map,viewport));
-//     }
-//   }
-//}
 
 	public interface IBerryPlantMoistureSprite : IDisposable {
 		IBerryPlantMoistureSprite initialize(IGameCharacter @event,IGameMap map,IViewport viewport=null);
@@ -75,5 +64,22 @@ namespace PokemonEssentials.Interface.Field
 		void pbBerryPlant();
 
 		void pbPickBerry(Items berry, int qty = 1);
+
+		/// <summary>
+		/// Fires whenever a spriteset is created.
+		/// </summary>
+		//event EventHandler<IOnSpritesetCreateEventArgs> OnSpritesetCreate;
+		event Action<object, EventArg.IOnSpritesetCreateEventArgs> OnSpritesetCreate;
+		//Events.onSpritesetCreate+=delegate(object sender, EventArgs e) {
+		//   spriteset=e[0];
+		//   viewport=e[1];
+		//   map=spriteset.map;
+		//   foreach (var i in map.events.keys) {
+		//     if (map.events[i].name=="BerryPlant") {
+		//       spriteset.addUserSprite(new BerryPlantMoistureSprite(map.events[i],map,viewport));
+		//       spriteset.addUserSprite(new BerryPlantSprite(map.events[i],map,viewport));
+		//     }
+		//   }
+		//}
 	}
 }

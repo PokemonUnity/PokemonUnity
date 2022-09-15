@@ -23,6 +23,10 @@ namespace PokemonUnity
 
 	public partial class Game : IGameShadowPokemon
 	{
+		//event EventHandler IGameShadowPokemon.OnStepTaken { add { OnStepTaken += value; } remove { OnStepTaken -= value; } }
+		//event EventHandler IGameShadowPokemon.OnStartBattle { add { OnStartBattle += value; } remove { OnStartBattle -= value; } }
+		//event Action<object, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs> IGameShadowPokemon.OnEndBattle { add { OnEndBattle += value; } remove { OnEndBattle -= value; } }
+
 		public void pbPurify(IPokemonShadowPokemon pkmn, IPurifyChamberScene scene)
 		{
 			if (pkmn.heartgauge == 0 && pkmn.shadow && pkmn is IPokemon pokemon)

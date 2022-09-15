@@ -443,7 +443,7 @@ namespace PokemonEssentials.Interface.Screen
 		void pbBattleArenaJudgment(IBattler battler1, IBattler battler2, int[] ratings1, int[] ratings2);
 		/// <summary>
 		/// </summary>
-		/// <param name="window">infowindow as `SpriteWindow_Base` to display the results</param>
+		/// <param name="window">infoWindow as `SpriteWindow_Base` to display the results</param>
 		/// <param name="phase"></param>
 		/// <param name="battler1"></param>
 		/// <param name="battler2"></param>

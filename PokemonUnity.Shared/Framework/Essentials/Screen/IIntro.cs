@@ -17,21 +17,34 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
-	public interface IEventScene
+	public interface IEventScene : IDisposable
 	{
 		/// <summary>
 		/// Action Button Pressed...
 		/// </summary>
-		bool onATrigger { get; set; }
+		//bool onATrigger { get; set; }
+		event EventHandler onATrigger;
 		/// <summary>
 		/// Back/Cancel Button Pressed...
 		/// </summary>
-		bool onBTrigger { get; set; }
-		bool onUpdate { get; set; }
+		//bool onBTrigger { get; set; }
+		event EventHandler onBTrigger;
+		/// <summary>
+		/// Update has been triggered, and a new frame is called
+		/// </summary>
+		//bool onUpdate { get; set; }
+		event EventHandler onUpdate;
+		/// <summary>
+		/// Beginning starting point that runs and operates the entire game application
+		/// </summary>
+		/// <returns>
+		/// Enumerates through each frame tick and calls `update` across entire game assembly
+		/// </returns>
+		/// This is supposed to mimic behavior of Unity's Monobehavior `OnUpdate`
 		IEnumerator main();
-		IEventScene initialize();
+		IEventScene initialize(IViewport viewport = null);
 		bool disposed { get; }
-		void dispose();
+		//void dispose();
 		//void addBitmap(float x, float y, Bitmap bitmap);
 		void addLabel(float x, float y, float width, string text);
 		void addImage(float x, float y, string name);

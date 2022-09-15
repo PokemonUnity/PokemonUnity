@@ -22,6 +22,8 @@ namespace PokemonUnity
 	//ToDo: Should all variables in Game be static?
 	public partial class Game
 	{
+		//private readonly static Lazy<Game> _instance = new Lazy<Game>(() => new Game());
+
 		#region Constructor
 		static Game()
 		{

@@ -105,6 +105,7 @@ namespace PokemonEssentials.Interface
 
 			bool pbEncounter(Method enctype);
 
+			event EventHandler OnStartBattle;
 			//Events.onStartBattle+=delegate(object sender, EventArgs e) {
 			//  Game.GameData.PokemonTemp.evolutionLevels=[];
 			//  for (int i = 0; i < Game.GameData.Trainer.party.Length; i++) {
@@ -112,6 +113,8 @@ namespace PokemonEssentials.Interface
 			//  }
 			//}
 
+			//event EventHandler OnEndBattle;
+			event Action<object, IOnEndBattleEventArgs> OnEndBattle;
 			//Events.onEndBattle+=delegate(object sender, EventArgs e) {
 			//  decision=e[0];
 			//  canlose=e[1];

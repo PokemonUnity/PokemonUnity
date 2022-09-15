@@ -2,6 +2,7 @@
 using PokemonUnity;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
+using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonUnity.Inventory
 {
@@ -16,8 +17,8 @@ namespace PokemonUnity.Inventory
 		/// Used when displaying in UI, one character at a time.
 		/// </summary>
 		public char[] Display { get { return Message == null? null: Message.ToCharArray(); } }
-		public string Sender { get { return sender.Name; } }
-		private TrainerData sender { get; set; }//ToDO: Only need name and message..
+		public string Sender { get { return sender.name; } }
+		private ITrainer sender; //ToDO: Only need name and message..
 		//public bool IsLetter { get { return Game.ItemData[item].IsLetter; } }
 		//public static bool IsMail(Items item) { return Game.ItemData[item].IsLetter; }//{ return new Item(item).IsMail; }
 
@@ -31,7 +32,7 @@ namespace PokemonUnity.Inventory
 		/// <param name="item">Item represented by this mail</param>
 		/// <param name="message">Message text</param>
 		/// <param name="sender">Name of the message's sender</param>
-		public Mail(Items item, string message, TrainerData sender) : this(item)
+		public Mail(Items item, string message, ITrainer sender) : this(item)
 		{
 			if (!string.IsNullOrEmpty(message)) Message = message.Length > 255 ? message.Substring(0, (byte)255) : message;
 			this.sender = sender;
