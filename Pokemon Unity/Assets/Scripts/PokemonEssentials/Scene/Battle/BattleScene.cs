@@ -1952,7 +1952,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	/// </summary>
 	/// <param name="index"></param>
 	/// <returns>Callbacks an int</returns>
-	public IEnumerator pbFightMenuIE(int index, System.Action<int> result)
+	private IEnumerator pbFightMenuIE(int index, System.Action<int> result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -2106,12 +2106,12 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		//return [ret, retindex];
 		//return new KeyValuePair<Items,int> (ret, retindex);
 		int _coroutineValue = -1;
-		StopCoroutine("pbFightMenuIE");
-		StartCoroutine(pbFightMenuIE(index, r => _coroutineValue = r));
+		StopCoroutine("pbItemMenuIE");
+		StartCoroutine(pbItemMenuIE(index, r => _coroutineValue = r));
 		return _coroutineValue > 0 ? (Items)_coroutineValue : ret;
 	}
 
-	public IEnumerator pbItemMenuIE(int index, System.Action<Items> result)
+	private IEnumerator pbItemMenuIE(int index, System.Action<Items> result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -2423,7 +2423,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		return (int)_coroutineValue;
 	}
 	
-	public IEnumerator pbChooseTargetIE(int index, Targets targettype, System.Action<int> result)
+	private IEnumerator pbChooseTargetIE(int index, Targets targettype, System.Action<int> result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		
@@ -2549,7 +2549,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		return (int)_coroutineValue;
 	}
 	
-	public IEnumerator pbSwitchIE(int index, bool lax, bool cancancel, System.Action<int> result)
+	private IEnumerator pbSwitchIE(int index, bool lax, bool cancancel, System.Action<int> result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -3481,6 +3481,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		//	PokemonUnity.Input.update(); i++;
 		//} while (i < (Game.GameData as Game).Graphics.frame_rate); //;(Game.GameData as Game).Graphics.frame_rate.times 
 	}
+
 	private IEnumerator ForceFrameRefresh()
 	{
 		//UnityEngine.Canvas.ForceUpdateCanvases();
