@@ -22,7 +22,7 @@ namespace PokemonUnity
 	/// <summary>
 	/// </summary>
 	/// https://www.youtube.com/watch?v=gx0Lt4tCDE0
-	[ExecuteInEditMode]
+	//[ExecuteInEditMode]
 	public partial class GameEvents : MonoBehaviour
 	{
 		#region Variables
@@ -49,18 +49,21 @@ namespace PokemonUnity
 				//GameDebug.Log("1-" + System.IO.Path.GetFullPath("..\\..\\veekun-pokedex.sqlite"));
 				//GameDebug.Log("2-" + System.IO.Path.GetFullPath("..\\..\\..\\veekun-pokedex.sqlite"));
 				//GameDebug.Log("3-" + System.IO.Path.GetFullPath("..\\..\\..\\..\\veekun-pokedex.sqlite"));
-				GameDebug.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
 				Game.DatabasePath = "Data Source=..\\veekun-pokedex.sqlite";
+				GameDebug.Log("ConnectionString Database Path: " + Game.DatabasePath);
 				//Game.DatabasePath = "Data Source =" + UnityEngine.Application.dataPath + "/Data/veekun-pokedex.sqlite";
 				Game.con = (System.Data.IDbConnection)new System.Data.SQLite.SQLiteConnection(Game.DatabasePath);
 				//Game.con = new Mono.Data.Sqlite.SqliteConnection(Game.DatabasePath);
 				Game.ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
+				GameDebug.Log("Framework Connected to Database...");
 				GameDebug.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
 				//Game.ResetAndOpenSql(@"Data\veekun-pokedex.sqlite");
 				//Game.ResetSqlConnection();
 				game = new Game();
+				GameDebug.Log("New Game Entity Successfully Instantiated!~");
 			}
-			catch (InvalidOperationException) { GameDebug.LogError("problem connecting with database"); } //ignore...
+			catch (InvalidOperationException) { GameDebug.LogError("Problem executing SQL with connected database"); }
+			catch (Exception e) { GameDebug.LogError(e.Message); }
 			finally
 			{
 				//Game.con.Open();
