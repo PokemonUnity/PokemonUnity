@@ -1544,8 +1544,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	public void pbSendOut(int battlerindex, IPokemon pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-		/*
-		while (inPartyAnimation){ }
+		
+		/*while (inPartyAnimation){ } //ToDo: Uncomment, and ensure that logic has an exit
 		IPokemon illusionpoke=@battle.battlers[battlerindex].effects.Illusion;
 		Items balltype=pkmn.ballUsed;
 		if (illusionpoke != null) balltype=illusionpoke.ballUsed;
@@ -1591,7 +1591,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		}
 		//sendout=new PokeballPlayerSendOutAnimation(@sprites[$"pokemon{battlerindex}"],
 		sendout.initialize(@sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite,
-			@sprites,@battle.battlers[battlerindex],illusionpoke,@battle.doublebattle);
+			(IDictionary<string,ISprite>)@sprites,@battle.battlers[battlerindex],illusionpoke,@battle.doublebattle);
 		do  //;loop
 		{
 			if (fadeanim != null) fadeanim.update();
@@ -1624,8 +1624,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			for (int i = 0; i < 6; i++) {
 				pbDisposeSprite(@sprites,$"player{i}");
 			}
-		}
-		pbRefresh();*/
+		}*/
+		pbRefresh();
 	}
 
 	/// <summary>
@@ -1633,6 +1633,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	/// </summary>
 	/// <param name="battle"></param>
 	/// <param name="pkmn"></param>
+	/// Should be unused... i havent put together why this exist, or how to resolve the logic yet
 	public void pbSendOut(IBattle battle, IPokemon pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
