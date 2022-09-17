@@ -19,75 +19,75 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IGameScreensUI
 	{
-		PokemonEssentials.Interface.Screen.IPokemonEntryScreen TextEntryScreen { get; set; }
-		PokemonEssentials.Interface.Screen.IIntroEventScreen IntroScreen { get; set; }
-		PokemonEssentials.Interface.Screen.ILoadScreen Load { get; set; }
-		PokemonEssentials.Interface.Screen.ISaveScreen Save { get; set; }
-		PokemonEssentials.Interface.Screen.IOptionScreen OptionScreen { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonMenuScreen PauseMenuScreen { get; set; }
-		PokemonEssentials.Interface.Screen.IPartyDisplayScreen Party { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonSummaryScreen Summary { get; set; }
-		PokemonEssentials.Interface.Screen.IBagScreen Bag { get; set; }
-		//PokemonEssentials.Interface.Screen. RegionMap { get; set; }
-		//PokemonEssentials.Interface.Screen. Phone { get; set; }
-		PokemonEssentials.Interface.Screen.ITrainerCardScreen TrainerCard { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonStorageScreen PokemonStorageScreen { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonPokedexScreen PokedexScreen { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonNestMapScreen PokedexNestScreen { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonFormScreen PokedexFormScreen { get; set; }
-		//PokemonEssentials.Interface.Screen. EggHatching { get; set; }
-		//PokemonEssentials.Interface.Screen. Trading { get; set; }
-		//PokemonEssentials.Interface.Screen. MoveRelearner { get; set; }
-		PokemonEssentials.Interface.Screen.IMartScreen Mart { get; set; }
-		//PokemonEssentials.Interface.Screen. Debug { get; set; }
-		PokemonEssentials.Interface.Screen.IRelicStoneScreen RelicStone { get; set; } //Shadow Pokemon
-		//PokemonEssentials.Interface.Screen. PurityChamber { get; set; } //Shadow Pokemon
-		PokemonEssentials.Interface.Screen.IBattleSwapScreen BattleSwapScreen { get; set; }
+		PokemonEssentials.Interface.Screen.IPokemonEntryScreen TextEntryScreen { get; }
+		PokemonEssentials.Interface.Screen.IIntroEventScreen IntroScreen { get; }
+		PokemonEssentials.Interface.Screen.ILoadScreen Load { get; }
+		PokemonEssentials.Interface.Screen.ISaveScreen Save { get; }
+		PokemonEssentials.Interface.Screen.IOptionScreen OptionScreen { get; }
+		PokemonEssentials.Interface.Screen.IPokemonMenuScreen PauseMenuScreen { get; }
+		PokemonEssentials.Interface.Screen.IPartyDisplayScreen Party { get; }
+		PokemonEssentials.Interface.Screen.IPokemonSummaryScreen Summary { get; }
+		PokemonEssentials.Interface.Screen.IBagScreen Bag { get; }
+		//PokemonEssentials.Interface.Screen. RegionMap { get; }
+		//PokemonEssentials.Interface.Screen. Phone { get; }
+		PokemonEssentials.Interface.Screen.ITrainerCardScreen TrainerCard { get; }
+		PokemonEssentials.Interface.Screen.IPokemonStorageScreen PokemonStorageScreen { get; }
+		PokemonEssentials.Interface.Screen.IPokemonPokedexScreen PokedexScreen { get; }
+		PokemonEssentials.Interface.Screen.IPokemonNestMapScreen PokedexNestScreen { get; }
+		PokemonEssentials.Interface.Screen.IPokemonFormScreen PokedexFormScreen { get; }
+		//PokemonEssentials.Interface.Screen. EggHatching { get; }
+		//PokemonEssentials.Interface.Screen. Trading { get; }
+		//PokemonEssentials.Interface.Screen. MoveRelearner { get; }
+		PokemonEssentials.Interface.Screen.IMartScreen Mart { get; }
+		//PokemonEssentials.Interface.Screen. Debug { get; }
+		PokemonEssentials.Interface.Screen.IRelicStoneScreen RelicStone { get; } //Shadow Pokemon
+		//PokemonEssentials.Interface.Screen. PurityChamber { get; } //Shadow Pokemon
+		PokemonEssentials.Interface.Screen.IBattleSwapScreen BattleSwapScreen { get; }
 
 		IGameScreensUI initialize(params PokemonEssentials.Interface.Screen.IScreen[] screens);
 	}
 		
 	public interface IGameScenesUI
 	{
-		PokemonEssentials.Interface.Screen.IPokemonEntryScene TextEntryScene { get; set; }
-		PokemonEssentials.Interface.Screen.IIntroEventScene IntroScene { get; set; }
-		PokemonEssentials.Interface.Screen.ILoadScene Load { get; set; }
-		PokemonEssentials.Interface.Screen.ISaveScene Save { get; set; }
-		PokemonEssentials.Interface.Screen.IOptionScene OptionScene { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonMenuScene PauseMenuScene { get; set; }
-		PokemonEssentials.Interface.Screen.IPartyDisplayScene Party { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonSummaryScene Summary { get; set; }
-		PokemonEssentials.Interface.Screen.IBagScene Bag { get; set; }
-		PokemonEssentials.Interface.Screen.IItemStorageScene Bag_ItemStore { get; set; }
-		PokemonEssentials.Interface.Screen.IWithdrawItemScene Bag_ItemWithdraw { get; set; }
-		PokemonEssentials.Interface.Screen.ITossItemScene Bag_ItemToss { get; set; }
-		//PokemonEssentials.Interface.Screen. RegionMap { get; set; }
-		//PokemonEssentials.Interface.Screen. Phone { get; set; }
-		PokemonEssentials.Interface.Screen.IPokegearScene PokeGear { get; set; }
-		PokemonEssentials.Interface.Screen.ITrainerCardScene TrainerCard { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonStorageScene PokemonStorageScene { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonPokedexScene PokedexScene { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonNestMapScene PokedexNestScene { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonFormScene PokedexFormScene { get; set; }
-		PokemonEssentials.Interface.Screen.IPokemonEvolutionScene EvolvingScene { get; set; }
-		//PokemonEssentials.Interface.Screen. EggHatching { get; set; }
-		//PokemonEssentials.Interface.Screen. Trading { get; set; }
-		//PokemonEssentials.Interface.Screen. MoveRelearner { get; set; }
-		PokemonEssentials.Interface.Screen.IMartScene Mart { get; set; }
-		//PokemonEssentials.Interface.Screen. Debug { get; set; }
-		PokemonEssentials.Interface.Screen.IRelicStoneScene RelicStone { get; set; } //Shadow Pokemon
-		PokemonEssentials.Interface.Screen.IPurifyChamberScene PurityChamber { get; set; } //Shadow Pokemon
+		PokemonEssentials.Interface.Screen.IPokemonEntryScene TextEntryScene { get; }
+		PokemonEssentials.Interface.Screen.IIntroEventScene IntroScene { get; }
+		PokemonEssentials.Interface.Screen.ILoadScene Load { get; }
+		PokemonEssentials.Interface.Screen.ISaveScene Save { get; }
+		PokemonEssentials.Interface.Screen.IOptionScene OptionScene { get; }
+		PokemonEssentials.Interface.Screen.IPokemonMenuScene PauseMenuScene { get; }
+		PokemonEssentials.Interface.Screen.IPartyDisplayScene Party { get; }
+		PokemonEssentials.Interface.Screen.IPokemonSummaryScene Summary { get; }
+		PokemonEssentials.Interface.Screen.IBagScene Bag { get; }
+		PokemonEssentials.Interface.Screen.IItemStorageScene Bag_ItemStore { get; }
+		PokemonEssentials.Interface.Screen.IWithdrawItemScene Bag_ItemWithdraw { get; }
+		PokemonEssentials.Interface.Screen.ITossItemScene Bag_ItemToss { get; }
+		//PokemonEssentials.Interface.Screen. RegionMap { get; }
+		//PokemonEssentials.Interface.Screen. Phone { get; }
+		PokemonEssentials.Interface.Screen.IPokegearScene PokeGear { get; }
+		PokemonEssentials.Interface.Screen.ITrainerCardScene TrainerCard { get; }
+		PokemonEssentials.Interface.Screen.IPokemonStorageScene PokemonStorageScene { get; }
+		PokemonEssentials.Interface.Screen.IPokemonPokedexScene PokedexScene { get; }
+		PokemonEssentials.Interface.Screen.IPokemonNestMapScene PokedexNestScene { get; }
+		PokemonEssentials.Interface.Screen.IPokemonFormScene PokedexFormScene { get; }
+		PokemonEssentials.Interface.Screen.IPokemonEvolutionScene EvolvingScene { get; }
+		//PokemonEssentials.Interface.Screen. EggHatching { get; }
+		//PokemonEssentials.Interface.Screen. Trading { get; }
+		//PokemonEssentials.Interface.Screen. MoveRelearner { get; }
+		PokemonEssentials.Interface.Screen.IMartScene Mart { get; }
+		//PokemonEssentials.Interface.Screen. Debug { get; }
+		PokemonEssentials.Interface.Screen.IRelicStoneScene RelicStone { get; } //Shadow Pokemon
+		PokemonEssentials.Interface.Screen.IPurifyChamberScene PurityChamber { get; } //Shadow Pokemon
 
 
-		PokemonEssentials.Interface.Screen.IPokeBattle_Scene BattleScene { get; set; }
-		PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene BattleArenaScene { get; set; }
-		PokemonEssentials.Interface.Screen.IBattleSwapScene BattleSwapScene { get; set; }
-		//PokemonEssentials.Interface.Screen.IBattlePalace_Scene BattlePalaceScene { get; set; }
-		PokemonEssentials.Interface.Screen.ISafariZone_Scene BattleSafari { get; set; }
-		PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene BattleSceneDebug { get; set; }
-		PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive BattleSceneDebugNoUI { get; set; }
-		PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging BattleSceneDebugWithoutLog { get; set; }
-		PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics BattleSceneDebugWithoutGfx { get; set; }
+		PokemonEssentials.Interface.Screen.IPokeBattle_Scene BattleScene { get; }
+		PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene BattleArenaScene { get; }
+		PokemonEssentials.Interface.Screen.IBattleSwapScene BattleSwapScene { get; }
+		//PokemonEssentials.Interface.Screen.IBattlePalace_Scene BattlePalaceScene { get; }
+		PokemonEssentials.Interface.Screen.ISafariZone_Scene BattleSafari { get; }
+		PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene BattleSceneDebug { get; }
+		PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive BattleSceneDebugNoUI { get; }
+		PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging BattleSceneDebugWithoutLog { get; }
+		PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics BattleSceneDebugWithoutGfx { get; }
 
 		IGameScenesUI initialize(params PokemonEssentials.Interface.Screen.IScene[] scenes);
 	}

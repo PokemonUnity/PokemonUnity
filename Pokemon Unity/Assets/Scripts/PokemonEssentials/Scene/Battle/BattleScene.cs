@@ -213,6 +213,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		//shadow1 = _shadow1.GetComponent<>() as ISpriteWrapper;
 		//shadow2 = _shadow2.GetComponent<>() as ISpriteWrapper;
 		//shadow3 = _shadow3.GetComponent<>() as ISpriteWrapper;
+
+		//ToDo: Remove scene assign from here, and move to a consolidated monobehaviour game object
+		GameEvents.game.Scenes.BattleScene = this;
 	}
 
 	private void Start()
@@ -2111,7 +2114,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		return _coroutineValue > 0 ? (Items)_coroutineValue : ret;
 	}
 
-	private IEnumerator pbItemMenuIE(int index, System.Action<Items> result)
+	private IEnumerator pbItemMenuIE(int index, System.Action<int> result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 

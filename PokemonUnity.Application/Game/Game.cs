@@ -191,7 +191,9 @@ namespace PokemonUnity
 
 		public Game SetScenes(params PokemonEssentials.Interface.Screen.IScene[] scenes)
 		{
-			Scenes = new UX.Scene(scenes);
+			//Scenes = new UX.Scene(scenes);
+			//if (Scenes == null)
+			Scenes.initialize(scenes);
 			return this;
 		}
 

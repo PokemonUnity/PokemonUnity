@@ -55,10 +55,12 @@ namespace PokemonUnity.UX
 		public PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging BattleSceneDebugWithoutLog { get; set; }
 		public PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics BattleSceneDebugWithoutGfx { get; set; }
 
-		public Scene(params PokemonEssentials.Interface.Screen.IScene[] scenes)
-		{
-			initialize(scenes);
-		}
+		public Scene() { }
+		
+		//public Scene(params PokemonEssentials.Interface.Screen.IScene[] scenes)
+		//{
+		//	initialize(scenes);
+		//}
 
 		public IGameScenesUI initialize (params PokemonEssentials.Interface.Screen.IScene[] scenes)
 		{

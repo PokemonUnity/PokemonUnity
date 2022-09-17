@@ -202,8 +202,9 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\TileShapes.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\SpriteComponent.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\FileTest.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Game_System.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\GameBase.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GameEvents.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\GameSystem.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GlobalVariables.Refactor.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\BattleScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuButtons.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\InputManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Intro\IntroScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\LevelLoader.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\LevelLoader.SceneManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Typing\TypingForm.cs" />
     <Compile Include="Assets\Scripts\ReflectiveWaterHandler.cs" />
     <Compile Include="Assets\Scripts\SandTileHandler.cs" />

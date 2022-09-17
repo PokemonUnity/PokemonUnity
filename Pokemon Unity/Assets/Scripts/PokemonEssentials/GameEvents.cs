@@ -57,13 +57,11 @@ namespace PokemonUnity
 				Game.ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
 				GameDebug.Log("Framework Connected to Database...");
 				GameDebug.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
-				//Game.ResetAndOpenSql(@"Data\veekun-pokedex.sqlite");
-				//Game.ResetSqlConnection();
 				game = new Game();
 				GameDebug.Log("New Game Entity Successfully Instantiated!~");
 			}
 			catch (InvalidOperationException) { GameDebug.LogError("Problem executing SQL with connected database"); }
-			catch (Exception e) { GameDebug.LogError(e.Message); }
+			catch (Exception e) { GameDebug.LogError(e.ToString()); }
 			finally
 			{
 				//Game.con.Open();
@@ -93,9 +91,11 @@ namespace PokemonUnity
 				GameDebug.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
 					(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
 				if (Kernal.PokemonData.Count == 0)
+				{
 					GameDebug.Log("Was Pokemon DB Successfully Created? " + Game.InitPokemons());
-				GameDebug.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
-					(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
+					GameDebug.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
+						(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
+				}
 			}
 
 			GameDebug.Log("Is Game Null? " + (Game.GameData == null).ToString());
@@ -108,6 +108,8 @@ namespace PokemonUnity
 			//	//Game.GameData.Player = p;
 			//}
 			GameDebug.Log("Is Trainer Null? " + (Game.GameData.Trainer == null).ToString());
+
+			ConfigureScenes();
 		}
 		void Start()
 		{
@@ -117,6 +119,8 @@ namespace PokemonUnity
 			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
 			Game.LocalizationDictionary = new XmlStringRes(null); //new Debugger());
 			Game.LocalizationDictionary.Initialize(englishLocalization, (int)Languages.English);
+
+			((object)game.Scenes.BattleScene as GameObject).SetActive(true); //Enable "OnStart" to trigger battle scene...
 		}
 		#endregion
 
@@ -128,6 +132,12 @@ namespace PokemonUnity
 		public void OnLoadLevel(IScene scene)
 		{
 			if (onLoadLevel != null) onLoadLevel(scene);
+		}
+
+		private void ConfigureScenes()
+		{
+			//ToDo: Load all the different game scenes into an array, from unity inspector, and pass them as an input parameter below
+			(game as Game).SetScenes();
 		}
 		#endregion
 

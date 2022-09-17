@@ -24,7 +24,7 @@ namespace PokemonUnity
 	/// </summary>
 	/// https://www.youtube.com/watch?v=CE9VOZivb3I
 	[ExecuteInEditMode]
-	public class LevelLoader : MonoBehaviour
+	public partial class LevelLoader : MonoBehaviour
 	{
 		#region Variables
 		public float transitionTime = .5f;
