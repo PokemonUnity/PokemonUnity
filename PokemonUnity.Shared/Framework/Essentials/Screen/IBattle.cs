@@ -341,7 +341,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="index"></param>
 		/// <param name="texts"></param>
 		/// <param name="mode">0 - regular battle, 1 - Shadow Pokémon battle, 2 - Safari Zone, 3 - Bug Catching Contest</param>
-		int pbCommandMenuEx(int index, string[] texts, int mode = 0);
+		//int pbCommandMenuEx(int index, string[] texts, int mode = 0);
 		/// <summary>
 		/// Update selected command
 		/// Use this method to display the list of moves for a Pokémon

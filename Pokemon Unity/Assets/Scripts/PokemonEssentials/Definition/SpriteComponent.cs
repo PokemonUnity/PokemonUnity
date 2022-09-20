@@ -1,11 +1,4 @@
-﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2019 Jiang Yin. All rights reserved.
-// Homepage: http://gameframework.cn/
-// Feedback: mailto:jiangyin@gameframework.cn
-//------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
@@ -22,8 +15,6 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 using UnityEngine;
-using GameFramework.ObjectPool;
-//using UnityGameFramework.Runtime;
 
 namespace PokemonUnity
 {
@@ -147,22 +138,18 @@ namespace PokemonUnity
 		}
 	}
 
-	[RequireComponent(typeof(UnityEngine.RectTransform),typeof(UnityEngine.UI.Image))]
+	//[RequireComponent(typeof(UnityEngine.RectTransform),typeof(UnityEngine.UI.Image))]
 	public abstract class RPGSprite : MonoBehaviour, IRPGSprite
 	{
-		[SerializeField]
-		private UnityEngine.RectTransform rect = null;
+		//[SerializeField] private UnityEngine.RectTransform rect = null;
+		//[SerializeField] private UnityEngine.UI.Image image = null;
+		//public Canvas m_CachedCanvas = null;
 
-		[SerializeField]
-		private UnityEngine.UI.Image image = null;
-
-		public Canvas m_CachedCanvas = null;
-
-		private void Awake()
-		{
-			rect = GetComponent<UnityEngine.RectTransform>();
-			image = GetComponent<UnityEngine.UI.Image>();
-		}
+		//private void Awake()
+		//{
+		//	rect = GetComponent<UnityEngine.RectTransform>();
+		//	image = GetComponent<UnityEngine.UI.Image>();
+		//}
 
 		private void Start()
 		{
@@ -274,13 +261,6 @@ namespace PokemonUnity
 			//yield return null;
 		}
 		/// <summary>
-		/// Frees the sprite. If the sprite has already been freed, does nothing.
-		/// </summary>
-		public virtual void Dispose()
-		{
-
-		}
-		/// <summary>
 		/// Begins flashing the sprite. duration specifies the number of frames the flash will last.
 		/// If color is set to nil, the sprite will disappear while flashing.
 		/// </summary>
@@ -331,8 +311,13 @@ namespace PokemonUnity
 		//     Dispose(disposing: false);
 		// }
 
-		void IDisposable.Dispose()
+		/// <summary>
+		/// Frees the sprite. If the sprite has already been freed, does nothing.
+		/// </summary>
+		public void Dispose()
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+
 			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
 			Dispose(disposing: true);
 			GC.SuppressFinalize(this);

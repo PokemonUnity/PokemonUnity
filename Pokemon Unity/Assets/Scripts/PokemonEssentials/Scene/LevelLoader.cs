@@ -28,6 +28,7 @@ namespace PokemonUnity
 	{
 		#region Variables
 		public float transitionTime = .5f;
+		public UnityEngine.CanvasGroup canvasGroup;
 		#endregion
 
 		#region Unity Monobehavior
@@ -35,9 +36,7 @@ namespace PokemonUnity
 		{
 			GameEvents.current.onLoadLevel += Scene_onLoadLevel;
 		}
-		void Start()
-		{
-		}
+
 		void OnDestroy()
 		{
 			GameEvents.current.onLoadLevel -= Scene_onLoadLevel;
@@ -57,26 +56,47 @@ namespace PokemonUnity
 
 		IEnumerator LoadLevel(int level)
 		{
-			//play animation
 			//begin fade to black...
+			canvasGroup.interactable = true;
+			canvasGroup.blocksRaycasts = true;
+			//play animation
+			LeanTween.alphaCanvas(canvasGroup, 1f, transitionTime);
 
 			// wait
 			yield return new WaitForSeconds(transitionTime);
 
 			//load scene
 			SceneManager.LoadScene(level);
+
+			//undo fade to black...
+			canvasGroup.interactable = false;
+			canvasGroup.blocksRaycasts = false;
+			//play animation
+			//ToDo: check start fade, and use matching ending or random fade...
+			LeanTween.alphaCanvas(canvasGroup, 0f, transitionTime);
 		}
 
 		IEnumerator LoadLevel(IScene level)
 		{
-			//play animation
 			//begin fade to black...
+			canvasGroup.interactable = true;
+			canvasGroup.blocksRaycasts = true;
+			//play animation
+			//ToDo: use conditional to give different fade options...
+			LeanTween.alphaCanvas(canvasGroup, 1f, transitionTime);
 
 			// wait
 			yield return new WaitForSeconds(transitionTime);
 
 			//load scene
 			SceneManager.LoadScene(level.Id);
+
+			//undo fade to black...
+			canvasGroup.interactable = false;
+			canvasGroup.blocksRaycasts = false;
+			//play animation
+			//ToDo: check start fade, and use matching ending or random fade...
+			LeanTween.alphaCanvas(canvasGroup, 0f, transitionTime);
 		}
 
 		private void Scene_onLoadLevel(int level)
@@ -107,15 +127,5 @@ namespace PokemonEssentials.Interface.EventArg
 
 		public int Id { get { return EventId; } }
 		public IScene Scene { get; set; }
-	}
-
-	public interface IOnLoadLevelEventArgs : IEventArgs
-	{
-		//readonly int EventId = typeof(OnMapCreateEventArgs).GetHashCode();
-
-		//int Id { get { return EventId; } }
-		//int Id { get { return Pokemon.GetHashCode(); } } //EventId;
-		IScene Scene { get; set; }
-		//ToDo: Make an Enum for Transition Animation Type?
 	}
 }

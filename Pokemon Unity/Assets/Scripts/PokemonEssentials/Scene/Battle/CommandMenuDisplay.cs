@@ -19,15 +19,23 @@ namespace PokemonUnity
 	//[RequireComponent(typeof())]
 	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay, IViewport
 	{
-		public bool disposedValue;
+		[SerializeField] private CommandMenuButtons buttons;
+		private bool disposedValue;
+		public int Index;
+		public int Mode;
 		public IIconSprite display;
+		//ToDo: a prefab of child button for the parent panel to instantiate custom/dynamic commands in game scene
 		public IWindow_CommandPokemon window;
 		public IWindow_UnformattedTextPokemon msgbox;
-		public CommandMenuButtons buttons;
-		private RectTransform cursor;
+		/// <summary>
+		/// Collection of sprites, used to contain the background/text for unity button image 
+		/// that represents the command issued to pokemon during player's turn
+		/// </summary>
+		/// Should represent master collection of sprites, is assigned to UI using functions
+		public UnityEngine.Sprite[] commandSpriteArray;
 
 		#region Property
-		public int mode { get; set; }
+		public int mode { get { return Mode; } set { Mode = value; } }
 
 		public float x
 		{

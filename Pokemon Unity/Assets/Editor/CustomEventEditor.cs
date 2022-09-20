@@ -1,8 +1,7 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using PokemonUnity;
-
-using System.Collections.Generic;
 
 [CustomEditor(typeof(CustomEvent)), CanEditMultipleObjects]
 public class CustomEventEditor : Editor

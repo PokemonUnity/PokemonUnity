@@ -16,17 +16,20 @@ namespace PokemonUnity
 	/// <summary>
 	/// Fight menu (choose a move)
 	/// </summary>
-	//[RequireComponent(typeof())]
-	public partial class FightMenuDisplay : MonoBehaviour, IFightMenuDisplay
+	[RequireComponent(typeof(FightMenuButtons))]
+	public partial class FightMenuDisplay : MonoBehaviour, IFightMenuDisplay, IViewport
 	{
+		[SerializeField] private FightMenuButtons buttons;
+		[SerializeField] private int _index;
+		[SerializeField] private int _megaButton;
+		[SerializeField] private IBattler _battler;
 		private IWindow_CommandPokemon window;
 		private IWindow_AdvancedTextPokemon info;
 		private IIconSprite display;
-		private IFightMenuButtons buttons;
-		private IBattler _battler;
 		private bool disposedValue;
 		private string ctag;
 
+		#region
 		public IBattler battler
 		{
 			get { return _battler; }
@@ -36,11 +39,11 @@ namespace PokemonUnity
 				refresh();
 			}
 		}
-		public int index { get; protected set; }
+		public int index { get { return _index; } protected set { _index = value; } }
 		/// <summary>
 		/// 0=don't show, 1=show, 2=pressed
 		/// </summary>
-		public int megaButton { get; set; }
+		public int megaButton { get { return _megaButton; } set { _megaButton = value; } }
 
 		public float x
 		{
@@ -107,9 +110,9 @@ namespace PokemonUnity
 			get { return @window.visible; }
 			set
 			{
-				@window.visible = value;
-				@info.visible = value;
-				if (@display != null) @display.visible = value;
+				//@window.visible = value;
+				//@info.visible = value;
+				//if (@display != null) @display.visible = value;
 				if (@buttons != null) @buttons.visible = value;
 			}
 		}
@@ -133,6 +136,9 @@ namespace PokemonUnity
 				return @info.disposed || @window.disposed;
 			}
 		}
+
+		IRect IViewport.rect { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		#endregion
 
 		void Awake()
 		{
@@ -159,26 +165,22 @@ namespace PokemonUnity
 			@info.WithSize("", 320, (Game.GameData as Game).Graphics.height - 96, (Game.GameData as Game).Graphics.width - 320, 96, viewport);
 			pbSetNarrowFont(@info.contents);
 			@ctag = shadowctag(PokeBattle_SceneConstants.MENUBASECOLOR,
-							 PokeBattle_SceneConstants.MENUSHADOWCOLOR);
+							 PokeBattle_SceneConstants.MENUSHADOWCOLOR);*/
 			@buttons = null;
 			_battler = battler;
 			@index = 0;
 			@megaButton = 0; // 0=don't show, 1=show, 2=pressed
 			if (PokeBattle_SceneConstants.USEFIGHTBOX)
 			{
-				@window.opacity = 0;
-				@window.x = (Game.GameData as Game).Graphics.width;
-				@info.opacity = 0;
-				@info.x = (Game.GameData as Game).Graphics.width + (Game.GameData as Game).Graphics.width - 96;
+				//@window.opacity = 0;
+				//@window.x = (Game.GameData as Game).Graphics.width;
+				//@info.opacity = 0;
+				//@info.x = (Game.GameData as Game).Graphics.width + (Game.GameData as Game).Graphics.width - 96;
 				//@buttons = new FightMenuButtons().initialize(this.index, null, viewport);
 				@buttons.initialize(this.index, null, viewport);
-			}*/
+			}
 			refresh();
 			return this;
-		}
-
-		public void dispose()
-		{
 		}
 
 		public bool setIndex(int value)
@@ -219,8 +221,8 @@ namespace PokemonUnity
 
 		public void update()
 		{
-			@info.update();
-			@window.update();
+			@info?.update();
+			@window?.update();
 			if (@display != null) @display.update();
 			if (@buttons != null)
 			{
@@ -256,11 +258,21 @@ namespace PokemonUnity
 		//     Dispose(disposing: false);
 		// }
 
-		void IDisposable.Dispose()
+		public void Dispose()
 		{
 			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
 			Dispose(disposing: true);
 			GC.SuppressFinalize(this);
+		}
+
+		IViewport IViewport.initialize(float x, float y, float height, float width)
+		{
+			//throw new NotImplementedException();
+			return this;
+		}
+
+		void IViewport.flash(IColor color, int duration)
+		{
 		}
 	}
 }

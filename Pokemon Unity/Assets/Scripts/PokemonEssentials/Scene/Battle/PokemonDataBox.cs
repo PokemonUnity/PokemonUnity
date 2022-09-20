@@ -158,15 +158,6 @@ namespace PokemonUnity
 			refresh();
 			return this;
 		}
-
-		public override void Dispose()
-		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			//@statuses.Dispose();
-			//@databox.Dispose();
-			//@contents.Dispose();
-			base.Dispose();
-		}
 				
 		public void refreshExpLevel()
 		{
@@ -524,6 +515,25 @@ namespace PokemonUnity
 			else if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 2)    // When targeted or damaged
 			{
 				this.y = @spriteY + 2;
+			}
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				if (disposing)
+				{
+					// TODO: dispose managed state (managed objects)
+					//@statuses.Dispose();
+					//@databox.Dispose();
+					//@contents.Dispose();
+					base.Dispose(disposing);
+				}
+
+				// TODO: free unmanaged resources (unmanaged objects) and override finalizer
+				// TODO: set large fields to null
+				//disposed = true;
 			}
 		}
 

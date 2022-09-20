@@ -23,6 +23,7 @@ namespace PokemonUnity
 	/// </summary>
 	/// https://www.youtube.com/watch?v=gx0Lt4tCDE0
 	//[ExecuteInEditMode]
+	//[RequireComponent(typeof(LevelLoader))]
 	public partial class GameEvents : MonoBehaviour
 	{
 		#region Variables
@@ -32,6 +33,9 @@ namespace PokemonUnity
 		//public event Action<int> onLoadLevel;
 		public event Action<IScene> onLoadLevel;
 		//public event Action<IOnLoadLevelEventArgs> onLoadLevel;
+		//[SerializeField] private GameObject[] sceneList;
+		[SerializeField] private IGameScenesUI sceneList;
+		[SerializeField] private GameObject battle;
 		#endregion
 
 		#region Unity Monobehavior
@@ -120,7 +124,7 @@ namespace PokemonUnity
 			Game.LocalizationDictionary = new XmlStringRes(null); //new Debugger());
 			Game.LocalizationDictionary.Initialize(englishLocalization, (int)Languages.English);
 
-			((object)game.Scenes.BattleScene as GameObject).SetActive(true); //Enable "OnStart" to trigger battle scene...
+			((object)game.Scenes?.BattleScene as GameObject)?.SetActive(true); //Enable "OnStart" to trigger battle scene...
 		}
 		#endregion
 
@@ -136,8 +140,13 @@ namespace PokemonUnity
 
 		private void ConfigureScenes()
 		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+			game.Scenes = gameObject.GetComponent<LevelLoader>() as IGameScenesUI;
 			//ToDo: Load all the different game scenes into an array, from unity inspector, and pass them as an input parameter below
-			(game as Game).SetScenes();
+			//game.Scenes.initialize((IScene[])(object[])sceneList);
+			//game.Scenes.initialize((IPokeBattle_Scene)battle.GetComponent<BattleScene>());
+			(game as Game).SetScenes((IPokeBattle_Scene)battle.GetComponent<BattleScene>());
 		}
 		#endregion
 

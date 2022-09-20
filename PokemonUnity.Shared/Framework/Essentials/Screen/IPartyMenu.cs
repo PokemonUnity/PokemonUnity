@@ -49,7 +49,7 @@ namespace PokemonEssentials.Interface.Screen
 
 	public interface IPartyDisplayScreen : IScreen, IHasDisplayMessage
 	{
-		IPartyDisplayScreen initialize(IPartyDisplayScene scene, IPokemon[] party);
+		IPartyDisplayScreen initialize(IPartyDisplayScene scene, IList<IPokemon> party);
 		void pbHardRefresh();
 		void pbRefresh();
 		void pbRefreshSingle(int i);

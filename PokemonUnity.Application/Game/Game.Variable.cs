@@ -53,8 +53,8 @@ namespace PokemonUnity
 		public static PokemonEssentials.Interface.IGameAudioPlay Audio { get; set; }
 		public PokemonEssentials.Interface.IGraphics Graphics { get; set; }
 		public PokemonEssentials.Interface.IInterpreter Interpreter { get; set; }
-		public PokemonEssentials.Interface.Screen.IGameScenesUI Scenes { get; private set; }
-		public PokemonEssentials.Interface.Screen.IGameScreensUI Screens { get; private set; }
+		public PokemonEssentials.Interface.Screen.IGameScenesUI Scenes { get; set; }
+		public PokemonEssentials.Interface.Screen.IGameScreensUI Screens { get; set; }
 		public Feature Features { get; private set; }
 		public Challenges Challenge { get; private set; }
 		//public GameModes Mode { get; private set; }
