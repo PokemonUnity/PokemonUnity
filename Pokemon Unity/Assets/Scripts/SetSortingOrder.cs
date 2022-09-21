@@ -3,21 +3,24 @@
 using UnityEngine;
 using System.Collections;
 
-public class SetSortingOrder : MonoBehaviour
+namespace PokemonUnity.Legacy
 {
-    public string layerName;
-    public int order;
+	public class SetSortingOrder : MonoBehaviour
+	{
+		public string layerName;
+		public int order;
 
-    private MeshRenderer meshRenderer;
+		private MeshRenderer meshRenderer;
 
-    void Awake()
-    {
-        meshRenderer = gameObject.GetComponent<MeshRenderer>();
+		void Awake()
+		{
+			meshRenderer = gameObject.GetComponent<MeshRenderer>();
 
-        if (layerName.Length > 0)
-        {
-            meshRenderer.sortingLayerName = layerName;
-        }
-        meshRenderer.sortingOrder = order;
-    }
+			if (layerName.Length > 0)
+			{
+				meshRenderer.sortingLayerName = layerName;
+			}
+			meshRenderer.sortingOrder = order;
+		}
+	}
 }

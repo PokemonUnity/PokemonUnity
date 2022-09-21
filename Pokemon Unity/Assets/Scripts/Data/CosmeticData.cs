@@ -1,36 +1,39 @@
 ﻿using System;
 
-[System.Serializable]
-public class CosmeticData
+namespace PokemonUnity.Legacy
 {
-	public enum Gender
+	[System.Serializable]
+	public class CosmeticData
 	{
-		MALE,
-		FEMALE,
-		BOTH
-	}
+		public enum Gender
+		{
+			MALE,
+			FEMALE,
+			BOTH
+		}
 
-	public string name;
+		public string name;
 
-	private string file_name;
-	private Gender gender;
-
-
-	public CosmeticData(string name, string path, Gender gender)
-	{
-		this.name = name;
-		file_name = path;
-		this.gender = gender;
-	}
+		private string file_name;
+		private Gender gender;
 
 
-	public string getFileName()
-	{
-		return file_name;
-	}
+		public CosmeticData(string name, string path, Gender gender)
+		{
+			this.name = name;
+			file_name = path;
+			this.gender = gender;
+		}
 
-	public Gender getGender()
-	{
-		return gender;
+
+		public string getFileName()
+		{
+			return file_name;
+		}
+
+		public Gender getGender()
+		{
+			return gender;
+		}
 	}
 }

@@ -77,6 +77,7 @@
     <Compile Include="Assets\Editor\EventHandlerTest.cs" />
     <Compile Include="Assets\Editor\NewEditModeTest.cs" />
     <Compile Include="Assets\Editor\TMP_AnimatedEditor.cs" />
+    <Compile Include="Assets\Editor\TypeConstraint.cs" />
     <Compile Include="Assets\Scripts\Editor\BillboardingEditor.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>

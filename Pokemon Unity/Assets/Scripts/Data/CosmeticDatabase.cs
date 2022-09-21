@@ -2,42 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class CosmeticDatabase
+namespace PokemonUnity.Legacy
 {
-
-	public static CosmeticData[] haircut = new CosmeticData[]
+	public static class CosmeticDatabase
 	{
-		new CosmeticData("default", "default_f", CosmeticData.Gender.FEMALE),
-		new CosmeticData("default", "default_m", CosmeticData.Gender.MALE)
-	};
 
-	public static CosmeticData[] outfit = new CosmeticData[]
-	{
-		//empty for now / not implemented
-	};
-
-	static CosmeticData getDataByName(CosmeticData[] table, string name, bool isMale)
-	{
-		int i = 0;
-		while(i < table.Length)
+		public static CosmeticData[] haircut = new CosmeticData[]
 		{
-			if (isMale)
+			new CosmeticData("default", "default_f", CosmeticData.Gender.FEMALE),
+			new CosmeticData("default", "default_m", CosmeticData.Gender.MALE)
+		};
+
+		public static CosmeticData[] outfit = new CosmeticData[]
+		{
+			//empty for now / not implemented
+		};
+
+		static CosmeticData getDataByName(CosmeticData[] table, string name, bool isMale)
+		{
+			int i = 0;
+			while(i < table.Length)
 			{
-				if (table[i].name == name && table[i].getGender() == CosmeticData.Gender.MALE || table[i].getGender() == CosmeticData.Gender.BOTH) return table[i];
-			}
-			else
-			{
-				if (table[i].name == name && table[i].getGender() == CosmeticData.Gender.FEMALE || table[i].getGender() == CosmeticData.Gender.BOTH) return table[i];
+				if (isMale)
+				{
+					if (table[i].name == name && table[i].getGender() == CosmeticData.Gender.MALE || table[i].getGender() == CosmeticData.Gender.BOTH) return table[i];
+				}
+				else
+				{
+					if (table[i].name == name && table[i].getGender() == CosmeticData.Gender.FEMALE || table[i].getGender() == CosmeticData.Gender.BOTH) return table[i];
+				}
+
+				i++;
 			}
 
-			i++;
+			return null;
 		}
-
-		return null;
-	}
 	
-	public static CosmeticData getHaircut(string name, bool isMale)
-	{
-		return getDataByName(haircut, name, isMale);
+		public static CosmeticData getHaircut(string name, bool isMale)
+		{
+			return getDataByName(haircut, name, isMale);
+		}
 	}
 }

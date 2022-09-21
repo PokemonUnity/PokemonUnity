@@ -206,13 +206,17 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\GameEvents.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GameSystem.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GlobalVariables.Refactor.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\BattleInterface.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\BattleScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuButtons.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\FightMenuButtons.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\FightMenuDisplay.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\FightMoveButton.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokeBattle_SceneConstants.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokemonDataBox.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\UnityBattle.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\UnityItemHandlers.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\EventScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\InputManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Intro\IntroScene.cs" />
@@ -228,7 +232,6 @@
     <Compile Include="Assets\Scripts\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BagHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\EvolutionHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\MainMenuHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\PartyHandler.cs" />
@@ -243,7 +246,6 @@
     <Compile Include="Assets\Scripts\SceneTransition.cs" />
     <Compile Include="Assets\Scripts\ScreenFade.cs" />
     <Compile Include="Assets\Scripts\SetMatTint.cs" />
-    <Compile Include="Assets\Scripts\SetResolution.cs" />
     <Compile Include="Assets\Scripts\SetSortingOrder.cs" />
     <Compile Include="Assets\Scripts\SfxHandler.cs" />
     <Compile Include="Assets\Scripts\SO\Weather.cs" />
@@ -252,7 +254,6 @@
     <Compile Include="Assets\Scripts\TextureTileToScale.cs" />
     <Compile Include="Assets\Scripts\Transition\DefaultTransition.cs" />
     <Compile Include="Assets\Scripts\WindowLight.cs" />
-    <None Include="Assets\StreamingAssets\How to enable custom sprites.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>..\Pokemon Unity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

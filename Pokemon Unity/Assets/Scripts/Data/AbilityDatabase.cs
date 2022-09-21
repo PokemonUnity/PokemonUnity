@@ -1,22 +1,25 @@
-﻿using Data.Abilities;
+﻿using PokemonUnity.Legacy.Data.Abilities;
 using UnityEngine;
 
-public static class AbilityDatabase
+namespace PokemonUnity.Legacy
 {
-    private static AbilityData[] abilities =
-    {
-        new Pressure(),
-        new Teravolt(),
-        new Turboblaze()
-        
-    };
+	public static class AbilityDatabase
+	{
+		private static AbilityData[] abilities =
+		{
+			new Pressure(),
+			new Teravolt(),
+			new Turboblaze()
+		
+		};
 
-    public static AbilityData getAbility(string name)
-    {
-        foreach (AbilityData ab in abilities)
-        {
-            if (ab.GetName() == name) return ab;
-        }
-        return null;
-    }
+		public static AbilityData getAbility(string name)
+		{
+			foreach (AbilityData ab in abilities)
+			{
+				if (ab.GetName() == name) return ab;
+			}
+			return null;
+		}
+	}
 }

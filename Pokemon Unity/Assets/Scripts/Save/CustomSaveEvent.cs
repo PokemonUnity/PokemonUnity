@@ -1,26 +1,29 @@
 ﻿using System;
 
-[System.Serializable]
-public class CustomSaveEvent
+namespace PokemonUnity.Legacy
 {
-    public DateTime EventTime;
-    public SaveEventType EventType;
-    public int SceneIndex;
-    public string ObjectName;
-    public PokemonUnity.Utility.SeriV3 ObjectPosition;
+	[System.Serializable]
+	public class CustomSaveEvent
+	{
+		public DateTime EventTime;
+		public SaveEventType EventType;
+		public int SceneIndex;
+		public string ObjectName;
+		public PokemonUnity.Utility.SeriV3 ObjectPosition;
 
-    public CustomSaveEvent(SaveEventType eventType, UnityEngine.GameObject eventObject, int sceneIndex)
-    {
-        EventTime = DateTime.Now;
-        EventType = eventType;
-        SceneIndex = sceneIndex;
+		public CustomSaveEvent(SaveEventType eventType, UnityEngine.GameObject eventObject, int sceneIndex)
+		{
+			EventTime = DateTime.Now;
+			EventType = eventType;
+			SceneIndex = sceneIndex;
 
-        ObjectName = eventObject.name;
-        ObjectPosition = eventObject.transform.position;
-    }
+			ObjectName = eventObject.name;
+			ObjectPosition = eventObject.transform.position;
+		}
 
-    public override string ToString()
-    {
-        return ("EventType : " + EventType.ToString() + ", Time : " + EventTime + ", Map: " + SceneIndex);
-    }
+		public override string ToString()
+		{
+			return ("EventType : " + EventType.ToString() + ", Time : " + EventTime + ", Map: " + SceneIndex);
+		}
+	}
 }
