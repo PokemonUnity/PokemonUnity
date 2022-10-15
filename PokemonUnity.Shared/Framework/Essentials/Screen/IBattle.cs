@@ -459,7 +459,7 @@ namespace PokemonEssentials.Interface.Screen
 		//new void pbDisplayMessage(string msg,bool brief= false);
 		//new void pbDisplayPausedMessage(string msg);
 		//new void pbDisplayConfirmMessage(string msg);
-		void pbFrameUpdate(IWindow_CommandPokemon cw);
+		void pbFrameUpdate(IViewport cw);
 		//void pbRefresh();
 		/// <summary>
 		/// Called whenever a new round begins.
