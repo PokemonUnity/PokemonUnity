@@ -39,7 +39,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// Extensions of <seealso cref="ITempMetadata"/>
 	/// </summary>
 	public interface ITempMetadataPokemonShadow {
-		int[] heartgauges				{ get; }
+		int?[] heartgauges				{ get; set; }
 	}
 
 	/// <summary>

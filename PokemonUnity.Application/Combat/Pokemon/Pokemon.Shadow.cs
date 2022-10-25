@@ -1,6 +1,7 @@
 ﻿using PokemonUnity.Combat.Data;
 using PokemonUnity.Inventory;
 using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.EventArg;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 
@@ -20,7 +21,7 @@ namespace PokemonUnity.Combat
 			}
 			(this as IBattler).pbInitPokemon((IPokemon)pkmn, pkmnIndex); //this._InitPokemon(pkmn, pkmnIndex);
 			// Called into battle
-			if (isShadow()) { 
+			if (isShadow()) {
 				//if (hasConst(Types.SHADOW))
 					Type1=Types.SHADOW;
 					Type2=Types.SHADOW;
@@ -34,7 +35,7 @@ namespace PokemonUnity.Combat
 		void IBattlerShadowPokemon.pbEndTurn(IBattleChoice choice) { //, params object[] placeholder
 			(this as IBattler).pbEndTurn(choice); //this._pbEndTurn(choice);
 			if (inHyperMode() && !this.battle.pbAllFainted(this.battle.party1) &&
-				!this.battle.pbAllFainted(this.battle.party2)) { 
+				!this.battle.pbAllFainted(this.battle.party2)) {
 				this.battle.pbDisplay(Game._INTL("Its hyper mode attack hurt {1}!",this.ToString(true)));
 				pbConfusionDamage();
 			}
@@ -47,7 +48,7 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public bool inHyperMode() { 
+		public bool inHyperMode() {
 			if (isFainted()) return false;
 			PokemonEssentials.Interface.PokeBattle.IPokemon pkmn=this.pokemon;
 			if (pkmn.IsNotNullOrNone() && pkmn is IPokemonShadowPokemon p && p.hypermode)
@@ -55,7 +56,7 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public void pbHyperMode() { 
+		public void pbHyperMode() {
 			PokemonEssentials.Interface.PokeBattle.IPokemon pkmn=this.pokemon;
 			if (pkmn is IPokemonShadowPokemon p && isShadow() && !IsHyperMode)
 				if (@battle.pbRandom(p.ShadowLevel.Value)<=Monster.Pokemon.HEARTGAUGESIZE/4) { //p.heartgauge
@@ -64,31 +65,40 @@ namespace PokemonUnity.Combat
 				}
 		}
 
-		public bool pbHyperModeObedience(IBattleMove move) { 
+		public bool pbHyperModeObedience(IBattleMove move) {
 			if (!move.IsNotNullOrNone()) return true;
 			if (this.inHyperMode() && move.Type!=Types.SHADOW)
 				return @battle.pbRandom(10)<8 ? false : true;
 			return true;
 		}
-		
-		/*Events.onStartBattle+=delegate(object sender, EventArgs e) {
-			Game.GameData.PokemonTemp.heartgauges=[];
-			for (int i = 0; i < Game.GameData.Trainer.party.Length; i++) {
-				Game.GameData.PokemonTemp.heartgauges[i]=Game.GameData.Trainer.party[i].heartgauge;
+
+		//Events.onStartBattle+=delegate(object sender, EventArgs e) {
+		protected void Events_OnStartBattle(object sender, System.EventArgs e) {
+			if(Game.GameData.PokemonTemp is ITempMetadataPokemonShadow t)
+			{
+				//Game.GameData.PokemonTemp.heartgauges=[];
+				t.heartgauges=new int?[Game.GameData.Trainer.party.Length];
+				for (int i = 0; i < Game.GameData.Trainer.party.Length; i++) {
+					//Game.GameData.PokemonTemp.heartgauges[i]=Game.GameData.Trainer.party[i].heartgauge;
+					if (Game.GameData.Trainer.party[i] is IPokemonShadowPokemon p)
+						t.heartgauges[i]=p.heartgauge;
+				}
 			}
 		}
 
-		Events.onEndBattle+=delegate(object sender, EventArgs e) {
-			decision=e[0];
-			canlose=e[1];
-			for (int i = 0; i < Game.GameData.PokemonTemp.heartgauges.Length; i++) {
-				pokemon=Game.GameData.Trainer.party[i];
-				if (pokemon && (Game.GameData.PokemonTemp.heartgauges[i] &&
-					Game.GameData.PokemonTemp.heartgauges[i]!=0 && pokemon.heartgauge==0)) {
-					pbReadyToPurify(pokemon);
+		//Events.onEndBattle+=delegate(object sender, EventArgs e) {
+		protected void Events_OnEndBattle(object sender, IOnEndBattleEventArgs e) {
+			BattleResults decision=e.Decision; //[0];
+			bool canlose=e.CanLose; //[1];
+			if(Game.GameData.PokemonTemp is ITempMetadataPokemonShadow t)
+				for (int i = 0; i < t.heartgauges?.Length; i++) {
+					IPokemon pokemon = Game.GameData.Trainer.party[i];
+					if (pokemon is IPokemonShadowPokemon p && (t.heartgauges[i].HasValue &&
+						t.heartgauges[i]!=0 && p.heartgauge==0)) {
+						if (Game.GameData is IGameShadowPokemon g) g.pbReadyToPurify(p);
+					}
 				}
-			}
-		}*/
+		}
 	}
 
 	public partial class Battle : PokemonEssentials.Interface.PokeBattle.IBattleShadowPokemon
@@ -102,7 +112,7 @@ namespace PokemonUnity.Combat
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		/// <remarks>Specifically for Shadow Pokemon Usage</remarks>
-		public bool pbUseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene) 
+		public bool pbUseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene)
 		{ return (this as IBattleShadowPokemon).pbUseItemOnPokemon(item, pkmnIndex, userPkmn, scene); }
 		bool IBattleShadowPokemon.pbUseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene)
 		{

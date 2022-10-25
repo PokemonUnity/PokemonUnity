@@ -1723,7 +1723,7 @@ namespace PokemonUnity.Combat
 						}
 					}
 					if (skill>=PBTrainerAI.highSkill) {
-						if (opponent.Ability == Abilities.TRUANT && 
+						if (opponent.Ability == Abilities.TRUANT &&
 							attacker.pbIsOpposing(opponent.Index)) {
 							score-=90;
 						} else if (opponent.Ability == Abilities.SLOW_START &&
@@ -1751,7 +1751,7 @@ namespace PokemonUnity.Combat
 							score-=90;
 						}
 						if (skill>=PBTrainerAI.highSkill) {
-							if (attacker.Ability == Abilities.TRUANT && 
+							if (attacker.Ability == Abilities.TRUANT &&
 								attacker.pbIsOpposing(opponent.Index)) {
 							score+=90;
 							} else if (attacker.Ability == Abilities.SLOW_START &&
@@ -1776,7 +1776,7 @@ namespace PokemonUnity.Combat
 						}
 					}
 					if (skill>=PBTrainerAI.highSkill) {
-						if (opponent.Ability == Abilities.TRUANT && 
+						if (opponent.Ability == Abilities.TRUANT &&
 							attacker.pbIsOpposing(opponent.Index)) {
 							score-=90;
 						} else if (opponent.Ability == Abilities.SLOW_START &&
@@ -2033,7 +2033,7 @@ namespace PokemonUnity.Combat
 					if (skill>=PBTrainerAI.highSkill) {
 					if (opponent.lastMoveUsed<=0 ||
 						//(Kernal.MoveData[opponent.lastMoveUsed].flags&0x010)==0) score-=100; // flag e: Copyable by Mirror Move
-						Kernal.MoveData[opponent.lastMoveUsed].Flags.Mirror) score-=100; 
+						Kernal.MoveData[opponent.lastMoveUsed].Flags.Mirror) score-=100;
 					}
 					break;
 				case Attack.Data.Effects.x0F3:
@@ -2419,7 +2419,7 @@ namespace PokemonUnity.Combat
 					break;
 				case Attack.Data.Effects.x0E1: case Attack.Data.Effects.x13B:
 					if (opponent.effects.Substitute==0) {
-						if (skill>=PBTrainerAI.highSkill && Game.GameData is IItemCheck c && c.pbIsBerry(opponent.Item)) { 
+						if (skill>=PBTrainerAI.highSkill && Game.GameData is IItemCheck c && c.pbIsBerry(opponent.Item)) {
 							score+=30;
 						}
 					}
@@ -2884,7 +2884,7 @@ namespace PokemonUnity.Combat
 				//    score-=110;
 				//  }
 				//  break;
-				//case 0x133: 
+				//case 0x133:
 				case Attack.Data.Effects.x172:
 					score-=95;
 					if (skill>=PBTrainerAI.highSkill) {
@@ -2906,7 +2906,7 @@ namespace PokemonUnity.Combat
 					if ((abe?.pbTooHigh(Stats.DEFENSE)??false) &&
 						(abe?.pbTooHigh(Stats.SPDEF)??false) &&
 						!attacker.pbPartner.isFainted() &&
-						attacker.pbPartner is IBattlerEffect p && 
+						attacker.pbPartner is IBattlerEffect p &&
 						p.pbTooHigh(Stats.DEFENSE) &&
 						p.pbTooHigh(Stats.SPDEF)) {
 						score-=90;
@@ -3368,7 +3368,7 @@ namespace PokemonUnity.Combat
 					// Convert damage to proportion of opponent's remaining HP
 					basedamage=(basedamage*100.0f/opponent.HP);
 					// Don't prefer weak attacks
-					if (basedamage<40) basedamage/=2; 
+					if (basedamage<40) basedamage/=2;
 					// Prefer damaging attack if level difference is significantly high
 					if (attacker.Level-10>opponent.Level) basedamage*=1.2f;
 					// Adjust score
@@ -3482,7 +3482,7 @@ namespace PokemonUnity.Combat
 			return (int)Math.Floor(value*1.0f*stagemul[stage]/stagediv[stage]);
 		}
 
-		public int pbBetterBaseDamage(IBattleMove move,IBattler attacker,IBattler opponent,int skill,int basedamage) { 
+		public int pbBetterBaseDamage(IBattleMove move,IBattler attacker,IBattler opponent,int skill,int basedamage) {
 			int mult, n = 0; float weight = 0;
 			// Covers all function codes which have their own def pbBaseDamage
 			switch (move.Effect) {
@@ -4027,7 +4027,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Pure Power, Huge Power
-			if (skill>=PBTrainerAI.mediumSkill) {          
+			if (skill>=PBTrainerAI.mediumSkill) {
 				if (attacker.hasWorkingAbility(Abilities.PURE_POWER) ||
 					attacker.hasWorkingAbility(Abilities.HUGE_POWER)) {
 					atk=(int)Math.Round(atk*2.0);
@@ -4308,9 +4308,9 @@ namespace PokemonUnity.Combat
 				//if (move.hasHighCriticalRate) c+=1;
 				if (Kernal.MoveMetaData[move.id].CritRate > 0) c+=1;
 				if (attacker is IBattlerShadowPokemon s && s.inHyperMode() && move.Type == Types.SHADOW) c+=1; //rescue false
-				if (attacker.Species == Pokemons.CHANSEY && 
+				if (attacker.Species == Pokemons.CHANSEY &&
 					attacker.hasWorkingItem(Items.LUCKY_PUNCH)) c+=2;
-				if (attacker.Species == Pokemons.FARFETCHD && 
+				if (attacker.Species == Pokemons.FARFETCHD &&
 					attacker.hasWorkingItem(Items.STICK)) c+=2;
 				if (attacker.hasWorkingAbility(Abilities.SUPER_LUCK)) c+=1;
 				if (attacker.hasWorkingItem(Items.SCOPE_LENS)) c+=1;
@@ -4405,7 +4405,7 @@ namespace PokemonUnity.Combat
 			}
 			return (int)accuracy;
 		}
-		#endregion 
+		#endregion
 
 		/// <summary>
 		/// Choose a move to use.
@@ -4674,8 +4674,8 @@ namespace PokemonUnity.Combat
 			foreach (var i in items) {
 				if (pbEnemyItemAlreadyUsed(index,i,items)) continue;
 				if (i == Items.POTION ||
-					i == Items.SUPER_POTION || 
-					i == Items.HYPER_POTION || 
+					i == Items.SUPER_POTION ||
+					i == Items.HYPER_POTION ||
 					i == Items.MAX_POTION ||
 					i == Items.FULL_RESTORE ) {
 					hashpitem=true;
@@ -4689,9 +4689,9 @@ namespace PokemonUnity.Combat
 					if (battler.HP<=battler.TotalHP*2/3 &&
 						(battler.Status>0 || battler.effects.Confusion>0) &&
 						Core.Rand.Next(10)<3) return i;
-				} else if (i == Items.POTION || 
-					i == Items.SUPER_POTION || 
-					i == Items.HYPER_POTION || 
+				} else if (i == Items.POTION ||
+					i == Items.SUPER_POTION ||
+					i == Items.HYPER_POTION ||
 					i == Items.MAX_POTION) {
 					if (battler.HP<=battler.TotalHP/4) return i;
 					if (battler.HP<=battler.TotalHP/2 && Core.Rand.Next(10)<3) return i;
@@ -4739,7 +4739,7 @@ namespace PokemonUnity.Combat
 				if (skill>=PBTrainerAI.highSkill) {
 					IBattler opponent=@battlers[index].pbOppositeOpposing;
 					if (opponent.isFainted()) opponent=opponent.pbPartner;
-					if (!opponent.isFainted() && opponent.lastMoveUsed>0 && 
+					if (!opponent.isFainted() && opponent.lastMoveUsed>0 &&
 						Math.Abs(opponent.Level-@battlers[index].Level)<=6) {
 						Attack.Data.MoveData move=Kernal.MoveData[opponent.lastMoveUsed];
 						float typemod=pbTypeModifier(move.Type,@battlers[index],@battlers[index]);
@@ -4813,10 +4813,10 @@ namespace PokemonUnity.Combat
 				}
 			}
 			if (@rules["suddendeath"]) {
-				if (@battlers[index].HP<=(@battlers[index].TotalHP/4) && Core.Rand.Next(10)<3 && 
+				if (@battlers[index].HP<=(@battlers[index].TotalHP/4) && Core.Rand.Next(10)<3 &&
 					@battlers[index].turncount>0) {
 					shouldswitch=true;
-				} else if (@battlers[index].HP<=(@battlers[index].TotalHP/2) && Core.Rand.Next(10)<8 && 
+				} else if (@battlers[index].HP<=(@battlers[index].TotalHP/2) && Core.Rand.Next(10)<8 &&
 					@battlers[index].turncount>0) {
 					shouldswitch=true;
 				}
@@ -4974,7 +4974,7 @@ namespace PokemonUnity.Combat
 					varianceTimesN+=deviation*deviation;
 				}
 			}
-			// Using population standard deviation 
+			// Using population standard deviation
 			// [(n-1) makes it a sample std dev, would be 0 with only 1 sample]
 			return (int)Math.Sqrt((double)varianceTimesN/(double)n);
 		}

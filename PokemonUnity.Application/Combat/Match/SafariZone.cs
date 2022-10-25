@@ -25,10 +25,10 @@ namespace PokemonUnity.Combat
 		public virtual int Id { get { return 0; } }
 
 		public PokeBattle_SafariZone(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.ITrainer player,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2) : base(scene, p1, p2, player, null)
-        {
+		{
 			initialize(scene, player, p2);
-        }
-		public PokemonEssentials.Interface.Screen.ISafariZone_Scene initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,ITrainer player,IPokemon[] party) 
+		}
+		public PokemonEssentials.Interface.Screen.ISafariZone_Scene initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,ITrainer player,IPokemon[] party)
 		{
 			base.scene=scene;
 			base.party2=party;
@@ -41,7 +41,7 @@ namespace PokemonUnity.Combat
 			   new Pokemon(this,3)  //PokeBattle_FakeBattler(party[0],3)
 			};
 			@environment=Overworld.Environments.None;
-			@battlescene=true; 
+			@battlescene=true;
 			@decision=BattleResults.InProgress;
 			@ballcount=0;
 			return this;

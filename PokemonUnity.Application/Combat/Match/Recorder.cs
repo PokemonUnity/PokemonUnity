@@ -31,7 +31,7 @@ namespace PokemonUnity.Combat
 		protected int battletype;
 		#endregion
 
-		public PokeBattle_RecordedBattleModule(IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2,PokemonEssentials.Interface.PokeBattle.ITrainer[] player,PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent) 
+		public PokeBattle_RecordedBattleModule(IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2,PokemonEssentials.Interface.PokeBattle.ITrainer[] player,PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent)
 			: base (scene, p1, p2, player, opponent)
 		{ (this as IRecordedBattleModule<TBattle>).initialize(scene, p1, p2, player, opponent); }
 		public IBattle initialize(IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2,PokemonEssentials.Interface.PokeBattle.ITrainer[] player,PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent)
@@ -159,7 +159,7 @@ namespace PokemonUnity.Combat
 			@roundindex+=1;
 			//@rounds[@roundindex]=new int[4][]; //[[],[],[],[]];
 			//@rounds.Add(new int[battlers.Length][]); //[[],[],[],[]];
-			@rounds.Add(new KeyValuePair<MenuCommands, int>[battlers.Length]); 
+			@rounds.Add(new KeyValuePair<MenuCommands, int>[battlers.Length]);
 			base.pbCommandPhase();
 		}
 
@@ -315,7 +315,7 @@ namespace PokemonUnity.Combat
 		#endregion
 	}
 
-	public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle>, IRecordedBattle { 
+	public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle>, IRecordedBattle {
 		//include PokeBattle_RecordedBattleModule;
 		public PokeBattle_RecordedBattle(IPokeBattle_Scene scene, PokemonEssentials.Interface.PokeBattle.IPokemon[] p1, PokemonEssentials.Interface.PokeBattle.IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) : base(scene, p1, p2, player, opponent)
 		{

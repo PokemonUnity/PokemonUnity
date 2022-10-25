@@ -77,10 +77,10 @@ namespace PokemonUnity.Combat
 		};
 		public PokeBattle_BattlePalace(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
 			: base(scene, p1, p2, player, opponent)
-		{ 
+		{
 			base.initialize(scene, p1, p2, player, opponent);
 		}
-		public PokemonEssentials.Interface.PokeBattle.IBattlePalace initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) { 
+		public PokemonEssentials.Interface.PokeBattle.IBattlePalace initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) {
 			@justswitched=new bool[] { false, false, false, false };
 			return this;
 		}
@@ -120,7 +120,7 @@ namespace PokemonUnity.Combat
 			if (thismove.PP<=0) {
 				return false;
 			}
-			if (thispkmn.effects.ChoiceBand>=0 && 
+			if (thispkmn.effects.ChoiceBand>=0 &&
 				thismove.id!=thispkmn.effects.ChoiceBand &&
 				thispkmn.hasWorkingItem(Items.CHOICE_BAND)) {
 				return false;
@@ -136,11 +136,11 @@ namespace PokemonUnity.Combat
 
 		public void pbPinchChange(int idxPokemon) {
 			PokemonEssentials.Interface.PokeBattle.IBattler thispkmn=@battlers[idxPokemon];
-			if (!thispkmn.effects.Pinch && thispkmn.Status!=Status.SLEEP && 
+			if (!thispkmn.effects.Pinch && thispkmn.Status!=Status.SLEEP &&
 				thispkmn.HP<=(int)Math.Floor(thispkmn.TotalHP/2f)) {
 				Natures nature=thispkmn.pokemon.Nature;
 				thispkmn.effects.Pinch=true;
-				if (nature==Natures.QUIET|| 
+				if (nature==Natures.QUIET||
 					nature==Natures.BASHFUL||
 					nature==Natures.NAIVE||
 					nature==Natures.QUIRKY||

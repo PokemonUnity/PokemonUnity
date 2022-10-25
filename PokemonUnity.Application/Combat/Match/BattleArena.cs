@@ -14,7 +14,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Combat
 {
-	public class PokeBattle_BattleArena : Battle, PokemonEssentials.Interface.Battle.IBattleArena, PokemonEssentials.Interface.PokeBattle.IBattleArena 
+	public class PokeBattle_BattleArena : Battle, PokemonEssentials.Interface.Battle.IBattleArena, PokemonEssentials.Interface.PokeBattle.IBattleArena
 	{
 		public bool battlerschanged { get; private set; }
 		public int[] mind { get; private set; }
@@ -22,15 +22,15 @@ namespace PokemonUnity.Combat
 		public int[] starthp { get; private set; }
 		public int[] partyindexes { get; private set; }
 		public int count { get; private set; }
-		public PokeBattle_BattleArena(IPokeBattleArena_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) 
-			: base(scene, p1, p2, player, opponent) 
+		public PokeBattle_BattleArena(IPokeBattleArena_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
+			: base(scene, p1, p2, player, opponent)
 		{
 			base.initialize(scene, p1, p2, player, opponent);
 		}
-		public PokemonEssentials.Interface.PokeBattle.IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) { 
+		public PokemonEssentials.Interface.PokeBattle.IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) {
 			return initialize((IPokeBattleArena_Scene)scene, p1, p2, player, opponent);
 		}
-		public PokemonEssentials.Interface.PokeBattle.IBattleArena initialize(IPokeBattleArena_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) { 
+		public PokemonEssentials.Interface.PokeBattle.IBattleArena initialize(IPokeBattleArena_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) {
 			@battlerschanged=true;
 			@mind=new int[] { 0, 0 };
 			@skill=new int[] { 0, 0 };
@@ -121,7 +121,7 @@ namespace PokemonUnity.Combat
 			return base.pbOnActiveOne(pkmn, onlyabilities, moldbreaker);
 		}
 
-		public int pbMindScore(IBattleMove move) {       
+		public int pbMindScore(IBattleMove move) {
 			if (move.Effect==Attack.Data.Effects.x070 ||	// Detect/Protect
 				move.Effect==Attack.Data.Effects.x075 ||	// Endure
 				move.Effect==Attack.Data.Effects.x09F) {	// Fake Out
@@ -229,7 +229,7 @@ namespace PokemonUnity.Combat
 				}
 				pbGainEXP();
 				pbSwitch();
-			} 
+			}
 		}
 	}
 
@@ -291,7 +291,7 @@ namespace PokemonUnity.Combat
 			infowindow.visible=false;
 			for (int i = 0; i < 10; i++) {
 			pbGraphicsUpdate();
-			pbInputUpdate();  
+			pbInputUpdate();
 			msgwindow.update();
 			dimmingvp.update();
 			dimmingvp.color=new Color(0,0,0,i*128/10);
@@ -300,22 +300,22 @@ namespace PokemonUnity.Combat
 			infowindow.visible=true;
 			for (int i = 0; i < 10; i++) {
 			pbGraphicsUpdate();
-			pbInputUpdate();  
+			pbInputUpdate();
 			msgwindow.update();
 			dimmingvp.update();
 			infowindow.update();
 			}
 			updateJudgment(infowindow,1,battler1,battler2,ratings1,ratings2);
 			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judging category 1, Mind!\nThe Pokemon showing the most guts!\\wtnp[40]")); { 
-				pbUpdate(); dimmingvp.update(); infowindow.update(); } 
+				Game._INTL("REFEREE: Judging category 1, Mind!\nThe Pokemon showing the most guts!\\wtnp[40]")); {
+				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			updateJudgment(infowindow,2,battler1,battler2,ratings1,ratings2);
 			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judging category 2, Skill!\nThe Pokemon using moves the best!\\wtnp[40]")); { 
-				pbUpdate(); dimmingvp.update(); infowindow.update(); } 
+				Game._INTL("REFEREE: Judging category 2, Skill!\nThe Pokemon using moves the best!\\wtnp[40]")); {
+				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			updateJudgment(infowindow,3,battler1,battler2,ratings1,ratings2);
 			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judging category 3, Body!\nThe Pokemon with the most vitality!\\wtnp[40]")); { 
+				Game._INTL("REFEREE: Judging category 3, Body!\nThe Pokemon with the most vitality!\\wtnp[40]")); {
 				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			int total1=0;
 			int total2=0;
@@ -325,18 +325,18 @@ namespace PokemonUnity.Combat
 			}
 			if (total1==total2) {
 			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judgment: {1} to {2}!\nWe have a draw!\\wtnp[40]",total1,total2)); { 
+				Game._INTL("REFEREE: Judgment: {1} to {2}!\nWe have a draw!\\wtnp[40]",total1,total2)); {
 				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			} else if (total1>total2) {
 			Game.pbMessageDisplay(msgwindow,
 				Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}'s {4}!\\wtnp[40]",
-				total1,total2,@battle.pbGetOwner(battler1.index).Name,battler1.Name)); { 
+				total1,total2,@battle.pbGetOwner(battler1.index).Name,battler1.Name)); {
 				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			}
 			else {
 			Game.pbMessageDisplay(msgwindow,
 				Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}!\\wtnp[40]",
-				total1,total2,battler2.Name)); { 
+				total1,total2,battler2.Name)); {
 				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			}
 			infowindow.visible=false;

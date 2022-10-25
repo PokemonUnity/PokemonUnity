@@ -18,7 +18,7 @@ namespace PokemonUnity
 {
 	public partial class TempData : ITempMetadataPokemonShadow
 	{
-		public int[] heartgauges { get; protected set; }
+		public int?[] heartgauges { get; set; }
 	}
 
 	public partial class Game : IGameShadowPokemon
