@@ -1234,7 +1234,11 @@ namespace PokemonUnity.Monster
 				}
 				else
 				{
-					return _base.Ability[Core.Rand.Next(0, 2)];
+					if (_base.Ability[1] != Abilities.NONE)
+					{
+						return _base.Ability[Core.Rand.Next(0, 2)];
+					}
+					return _base.Ability[0];
 				}
 			}
 		}
@@ -1244,7 +1248,7 @@ namespace PokemonUnity.Monster
 		public Abilities Ability { get; set; }//{ get { return abilityFlag; } set { abilityFlag = value; } }
 
 		/// <summary>
-		/// Returns whether this Pokemon has a partiular ability
+		/// Returns whether this Pokemon has a particular ability
 		/// </summary>
 		/// <param name="ability"></param>
 		/// <returns></returns>
