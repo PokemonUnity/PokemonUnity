@@ -174,3 +174,177 @@ Received Import Request.
   path: Assets/GUIDisplay.renderTexture
   artifactKey: Guid(99c1ce6f81218a14c895588e846f49f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/GUIDisplay.renderTexture using Guid(99c1ce6f81218a14c895588e846f49f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a26bd9d68f3f5781e473adacd5fc840') in 0.024127 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 652.668137 seconds.
+  path: Assets/GameMain/Sprites/fogTex.png
+  artifactKey: Guid(6cbd5b634436e874ca487d073088727f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Sprites/fogTex.png using Guid(6cbd5b634436e874ca487d073088727f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e0b81b1fc492ee7dcb603dc43f7367e') in 0.014781 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.003029 seconds.
+  path: Assets/GameMain/Sprites/oceanTex.png
+  artifactKey: Guid(9d10272cfdd25e04e808bd48e53571fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Sprites/oceanTex.png using Guid(9d10272cfdd25e04e808bd48e53571fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9fcd44016b0860ed9d7919bb2ab5d4d5') in 0.006401 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/GameMain/Sprites/PokeCenterScreen.png
+  artifactKey: Guid(fc616440fdafbd64c832b63c68a33be0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Sprites/PokeCenterScreen.png using Guid(fc616440fdafbd64c832b63c68a33be0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32393a37bb75bb4077351ce70b32562a') in 0.015710 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/GameMain/Sprites/ShoreAnim.png
+  artifactKey: Guid(f54a20d2495a282438307e9995afb57f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Sprites/ShoreAnim.png using Guid(f54a20d2495a282438307e9995afb57f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e5497f8a94f8f6078f53771e3b2225a') in 0.006806 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/GameMain/Sprites/ShadowTex.png
+  artifactKey: Guid(97a5b45af0dc29c4ea8c39603fd857e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Sprites/ShadowTex.png using Guid(97a5b45af0dc29c4ea8c39603fd857e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f461d28a5a58edc1670b3d87746d3a0b') in 0.005957 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.449051 seconds.
+  path: Assets/GameMain/Resources/UI/exclaim.png
+  artifactKey: Guid(e46d7cb840c264e40b5ab6803d475ad1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/exclaim.png using Guid(e46d7cb840c264e40b5ab6803d475ad1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0dd7fa84a794102eea0f6f417b6559b7') in 0.009109 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/GameMain/Resources/UI/sign.png
+  artifactKey: Guid(4bd5d19fe358fa9468e63e55bee09fdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/sign.png using Guid(4bd5d19fe358fa9468e63e55bee09fdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c5f914eae1fca4fe79f51f5ec799ef4') in 0.007068 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/GameMain/Resources/UI/squaresFade.png
+  artifactKey: Guid(1fce306e4aa3e6442a5adb7fe0ed6aa6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/squaresFade.png using Guid(1fce306e4aa3e6442a5adb7fe0ed6aa6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d8f4064dd72984c24f3a8e95256b5ca') in 0.011871 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/GameMain/Resources/UI/selrow.png
+  artifactKey: Guid(a0617cb6a6ce9b048879ac2f7d6d53bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/selrow.png using Guid(a0617cb6a6ce9b048879ac2f7d6d53bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5bfcb0b99fb5eb2924d9896f2d0662cb') in 0.009798 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.101857 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/categoryPHYSICAL.png
+  artifactKey: Guid(cdfd63d508001964bbb2421ea475179b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/categoryPHYSICAL.png using Guid(cdfd63d508001964bbb2421ea475179b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ffadccb0a95f0becba58f2d3cbabcb6') in 0.009002 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/summary2a.PNG
+  artifactKey: Guid(5cc2211e9d2371e43bb1056c946ed445) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/summary2a.PNG using Guid(5cc2211e9d2371e43bb1056c946ed445) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ab4381bd02984477619a70702a562c93') in 0.011113 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/summaryShadowBar.png
+  artifactKey: Guid(6cf420d754d1a8e4da94ebce77cca6f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/summaryShadowBar.png using Guid(6cf420d754d1a8e4da94ebce77cca6f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ccb4afbfe36c497e1a2d506521069156') in 0.009248 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/damage_type_icon_00_henka.png
+  artifactKey: Guid(eacc8baafa5e0d542ac74306d7c93c28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/damage_type_icon_00_henka.png using Guid(eacc8baafa5e0d542ac74306d7c93c28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c71cc102ee3f8ce82aa655d490fcd6f') in 0.010308 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/summaryPokerus.png
+  artifactKey: Guid(2a223e6742e78ff46afb09ef2f77524c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/summaryPokerus.png using Guid(2a223e6742e78ff46afb09ef2f77524c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '95b93dd6e1686a7e35360f21da618443') in 0.007556 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/silverbutton.png
+  artifactKey: Guid(699fe52fbd7c0674d839ce4e2c695122) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/silverbutton.png using Guid(699fe52fbd7c0674d839ce4e2c695122) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7dacc225c16bb17b392de93247574299') in 0.005995 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/categorySTATUS.png
+  artifactKey: Guid(e9daf01b9cb49334494c7ab87d7d2713) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/categorySTATUS.png using Guid(e9daf01b9cb49334494c7ab87d7d2713) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59e929b0d4bc4623acb82cb415cd892f') in 0.008819 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000011 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/contest_icon_01.png
+  artifactKey: Guid(279360971fafb394ab0f05475bcecc77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/contest_icon_01.png using Guid(279360971fafb394ab0f05475bcecc77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c533919f7244a348afc144a07cfa2dc') in 0.007311 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/summary4.png
+  artifactKey: Guid(ea13fcf26c5511740ad5dbf8e14ec045) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/summary4.png using Guid(ea13fcf26c5511740ad5dbf8e14ec045) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb3eb38c52c876f79984a0582c2cecda') in 0.023354 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/heart01.png
+  artifactKey: Guid(06be27beb8d67cd4aba2633055c5fd10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/heart01.png using Guid(06be27beb8d67cd4aba2633055c5fd10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ffc5b645aa47a58f003aa51e1547e00') in 0.009030 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/GameMain/Resources/UI/Summary/ribbon_badges.png
+  artifactKey: Guid(713e3cab718e12b4e8418873c4a85d07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GameMain/Resources/UI/Summary/ribbon_badges.png using Guid(713e3cab718e12b4e8418873c4a85d07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '101240e5dc0f4eaede91ae49e4c89e8e') in 0.213498 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1480.831444 seconds.
+  path: Assets/Prefabs/CanvasUI.prefab
+  artifactKey: Guid(ec0a87f79e941cd4cbbb654156ac7d21) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/CanvasUI.prefab using Guid(ec0a87f79e941cd4cbbb654156ac7d21) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b63c9add05e3e75729de7152d5d425b') in 0.127599 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.451783 seconds.
+  path: Assets/Prefabs/Directional Light.prefab
+  artifactKey: Guid(4437b9a754a711b46904458de7e71bdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Directional Light.prefab using Guid(4437b9a754a711b46904458de7e71bdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '96415e15c856631ca7e84062d54b0092') in 0.004619 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.589317 seconds.
+  path: Assets/Prefabs/MainCamera.prefab
+  artifactKey: Guid(23ae055a07d230e4aa5b2315cd69f28b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/MainCamera.prefab using Guid(23ae055a07d230e4aa5b2315cd69f28b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0b5c56b6aed4f63f1ca32c69ef77be47') in 0.031223 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Prefabs/ScenePokedex.prefab
+  artifactKey: Guid(07548e8ec644d494db012cbaa78d8e12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/ScenePokedex.prefab using Guid(07548e8ec644d494db012cbaa78d8e12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e0130e760131a17c6c2e5d4d091e38de') in 0.004103 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Prefabs/SummaryScene.prefab
+  artifactKey: Guid(092e4a917089108438e1782c1091231c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/SummaryScene.prefab using Guid(092e4a917089108438e1782c1091231c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '292b9e4d00c3554c2ff12df2703aa380') in 0.018398 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Prefabs/NPC1.prefab
+  artifactKey: Guid(7213f136e3afad940b29a8e86f8a6016) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/NPC1.prefab using Guid(7213f136e3afad940b29a8e86f8a6016) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e2c598ac7c199b8cec9bd44fdf49da8') in 0.099428 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Prefabs/NPC.prefab
+  artifactKey: Guid(8fb405f25772dd442981110976c3eb17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/NPC.prefab using Guid(8fb405f25772dd442981110976c3eb17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '86076aa2fcaf9db399efe32d16e32203') in 0.009140 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Prefabs/NPPokemon.prefab
+  artifactKey: Guid(5127ceaefc46d814eb3f673a7a379033) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/NPPokemon.prefab using Guid(5127ceaefc46d814eb3f673a7a379033) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e389f5b640bc3aedc864732bb0ea5af6') in 0.026645 seconds 
+Thread 0000000000004D4C may have been prematurely finalized
+Thread 0000000000004D4C may have been prematurely finalized
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

@@ -4,15 +4,15 @@ using UnityEngine;
 using System.Collections;
 using System.Security.Cryptography;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
-public class MainMenuHandler : MonoBehaviour
-{
+public class MainMenuHandler : MonoBehaviour {
     public AudioClip scrollClip;
     public AudioClip decideClip;
     public AudioClip cancelClip;
     public AudioClip pokeGetMFX;
     public AudioClip itemGetMFX;
-    
+
     public int selectedButton = 0;
     public int selectedFile = 0;
 
@@ -23,11 +23,15 @@ public class MainMenuHandler : MonoBehaviour
 
     private GameObject fileDataPanel;
     private GameObject continueButton;
+    private GameObject newGameButton;
+    private GameObject mysteryGiftButton;
+    private GameObject settingsButton;
 
-    private Image[] buttonImage = new Image[4];
+    private List<Image> activeButtons = new List<Image>();
+    private List<Image> buttonImages = new List<Image>();
     private Text[] buttonTextImage = new Text[4];
     private Text[] buttonTextShadowImage = new Text[4];
-    
+
     private Text fileNumbers;
     private Text fileNumbersShadow;
     private Text fileSelectedText;
@@ -56,28 +60,28 @@ public class MainMenuHandler : MonoBehaviour
 
     private Image[] MGButtonImage = new Image[2];
 
-    void Awake()
-    {
+    void Awake() {
         SaveLoad.Load();
 
-        fileDataPanel = transform.Find("FileData").gameObject;
-        continueButton = transform.Find("Continue").gameObject;
+        fileDataPanel = GameObject.Find("FileData");
+        continueButton = GameObject.Find("Continue");
+        newGameButton = GameObject.Find("NewGame");
+        mysteryGiftButton = GameObject.Find("MysteryGift");
+        settingsButton = GameObject.Find("Settings");
 
-        Transform newGameButton = transform.Find("NewGame");
-        Transform mysteryGiftButton = transform.Find("MysteryGift");
-        Transform settingsButton = transform.Find("Settings");
-
-        buttonImage = new Image[]
-        {
+        /*{
             continueButton.GetComponent<Image>(),
             newGameButton.GetComponent<Image>(),
             mysteryGiftButton.GetComponent<Image>(),
             settingsButton.GetComponent<Image>()
-        };
-        for (int i = 0; i < 4; i++)
-        {
-            buttonTextShadowImage[i] = buttonImage[i].transform.Find("Shadow").GetComponent<Text>();
+        };*/
+        Transform buttons = transform.Find("Buttons");
+        for (int i = 0; i < buttons.childCount; i++) {
+            var buttonImage = buttons.GetChild(i).GetComponent<Image>();
+            buttonImages.Add(buttonImage);
+            buttonTextShadowImage[i] = buttonImage.transform.Find("Shadow").GetComponent<Text>();
             buttonTextImage[i] = buttonTextShadowImage[i].transform.Find("Text").GetComponent<Text>();
+            buttonImage.gameObject.SetActive(false);
         }
 
         fileNumbersTextShadow = continueButton.transform.Find("FileNumbers").GetComponent<Text>();
@@ -93,19 +97,18 @@ public class MainMenuHandler : MonoBehaviour
         badges = badgesShadow.transform.Find("Text").GetComponent<Text>();
         timeShadow = fileDataPanel.transform.Find("Time").GetComponent<Text>();
         time = timeShadow.transform.Find("Text").GetComponent<Text>();
-        
+
         /*
         dataText = fileDataPanel.transform.Find("DataText").GetComponent<Text>();
         dataTextShadow = dataText.transform.Find("DataTextShadow").GetComponent<Text>();
         */
 
-        for (int i = 0; i < 6; ++i)
-        {
+        for (int i = 0; i < 6; ++i) {
             pokemon[i] = fileDataPanel.transform.Find("pokemon" + i).GetComponent<Image>();
         }
-        
+
         //Mystery Gift Menu
-        
+
         MGButtonImage = new Image[]
         {
             mysteryGiftMenu.transform.Find("EnterCode").GetComponent<Image>(),
@@ -113,25 +116,33 @@ public class MainMenuHandler : MonoBehaviour
         };
     }
 
-    void Start()
-    {
+    void Start() {
         mysteryGiftMenu.SetActive(false);
         StartCoroutine(control());
     }
 
-    private void updateButton(int newButtonIndex)
-    {
-        if (newButtonIndex != selectedButton)
-        {
-            buttonImage[selectedButton].sprite = buttonDimmedSprite;
+    private void updateButton(int newButtonIndex) {
+        if (newButtonIndex != selectedButton) {
+            activeButtons[selectedButton].sprite = buttonDimmedSprite;
         }
         selectedButton = newButtonIndex;
 
-        buttonImage[selectedButton].sprite = buttonSelectedSprite;
+        activeButtons[selectedButton].sprite = buttonSelectedSprite;
     }
 
-    private void updateFile(int newFileIndex)
-    {
+    private void changeButtons(GameObject[] newButtons, int activeIndex = 0) {
+        foreach (var button in activeButtons) {
+            button.gameObject.SetActive(false);
+        }
+        activeButtons.Clear();
+        foreach (var button in newButtons) {
+            button.gameObject.SetActive(true);
+            activeButtons.Add(button.GetComponent<Image>());
+        }
+        updateButton(activeIndex);
+    }
+
+    private void updateFile(int newFileIndex) {
         selectedFile = newFileIndex;
 
         Vector3[] highlightPositions = new Vector3[]
@@ -143,26 +154,22 @@ public class MainMenuHandler : MonoBehaviour
         fileSelected.rectTransform.localPosition = highlightPositions[selectedFile];
         fileSelected.text = "" + (selectedFile + 1);
 
-        if (SaveLoad.savedGames[selectedFile] != null)
-        {
+        if (SaveLoad.savedGames[selectedFile] != null) {
             int badgeTotal = 0;
-            for (int i = 0; i < 12; i++)
-            {
-                if (SaveLoad.savedGames[selectedFile].gymsBeaten[i])
-                {
+            for (int i = 0; i < 12; i++) {
+                if (SaveLoad.savedGames[selectedFile].gymsBeaten[i]) {
                     badgeTotal += 1;
                 }
             }
             string playerTime = "" + SaveLoad.savedGames[selectedFile].playerMinutes;
-            if (playerTime.Length == 1)
-            {
+            if (playerTime.Length == 1) {
                 playerTime = "0" + playerTime;
             }
             playerTime = SaveLoad.savedGames[selectedFile].playerHours + " : " + playerTime;
 
             currentMap.text = SaveLoad.savedGames[selectedFile].mapName;
             currentMapShadow.text = currentMap.text;
-            
+
             /*
             private Text currentMap;
             private Text currentMapShadow;
@@ -179,15 +186,12 @@ public class MainMenuHandler : MonoBehaviour
             timeShadow.text = time.text;
             playerName.text = SaveLoad.savedGames[selectedFile].playerName;
             playerNameShadow.text = playerName.text;
-            
 
-            if (SaveLoad.savedGames[selectedFile].isMale)
-            {
+
+            if (SaveLoad.savedGames[selectedFile].isMale) {
                 playerSprite.sprite = maleSprite;
                 playerName.color = new Color(0.259f, 0.557f, 0.937f, 1.00f);
-            }
-            else
-            {
+            } else {
                 playerSprite.sprite = femaleSprite;
                 playerName.color = new Color(0.965f, 0.255f, 0.255f, 1.00f);
             }
@@ -200,15 +204,11 @@ public class MainMenuHandler : MonoBehaviour
             dataTextShadow.text = dataText.text;
             */
 
-            for (int i = 0; i < 6; i++)
-            {
-                if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null)
-                {
+            for (int i = 0; i < 6; i++) {
+                if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null) {
                     pokemon[i].enabled = true;
                     pokemon[i].sprite = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIconsSprite()[0];
-                }
-                else
-                {
+                } else {
                     pokemon[i].sprite = null;
                     pokemon[i].enabled = false;
                 }
@@ -216,27 +216,21 @@ public class MainMenuHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator animateIcons()
-    {
-        while (true)
-        {
-            for (int i = 0; i < 6; i++)
-            {
+    private IEnumerator animateIcons() {
+        while (true) {
+            for (int i = 0; i < 6; i++) {
                 //pokemon[i].sprite = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIconsSprite()[0];
             }
             yield return new WaitForSeconds(0.15f);
-            for (int i = 0; i < 6; i++)
-            {
+            for (int i = 0; i < 6; i++) {
                 //pokemon[i].sprite = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIconsSprite()[1];
             }
             yield return new WaitForSeconds(0.15f);
         }
     }
-    
-    private void updateMGButton(int newButtonIndex, int selectedButton)
-    {
-        if (newButtonIndex != selectedButton)
-        {
+
+    private void updateMGButton(int newButtonIndex, int selectedButton) {
+        if (newButtonIndex != selectedButton) {
             MGButtonImage[selectedButton].sprite = buttonDimmedSprite;
         }
 
@@ -244,9 +238,8 @@ public class MainMenuHandler : MonoBehaviour
 
         MGButtonImage[selectedButton].sprite = buttonSelectedSprite;
     }
-    
-    public IEnumerator mysteryGift()
-    {
+
+    public IEnumerator mysteryGift() {
         DialogBoxHandlerNew Dialog = mysteryGiftMenu.GetComponent<DialogBoxHandlerNew>();
 
         MGButtonImage[0].sprite = buttonSelectedSprite;
@@ -255,7 +248,7 @@ public class MainMenuHandler : MonoBehaviour
         yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
         mysteryGiftMenu.SetActive(true);
         yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-        
+
         BgmHandler.main.PlayMain(mysteryGiftBGM, loopSampleStart);
 
         bool leave = false;
@@ -544,66 +537,55 @@ public class MainMenuHandler : MonoBehaviour
         }
         if (giftList.Length > 0)
             SfxHandler.Play(cancelClip);*/
-        
+
         BgmHandler.main.PlayMain(null, 0);
         yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
         mysteryGiftMenu.SetActive(false);
         yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
     }
 
-    public IEnumerator control()
-    {
+    public IEnumerator control() {
         int fileCount = SaveLoad.getSavedGamesCount();
 
-        if (fileCount == 0)
-        {
-            updateButton(1);
+        if (fileCount == 0) {
+            changeButtons(new GameObject[] { newGameButton, settingsButton });
+            /*updateButton(1);
             continueButton.SetActive(false);
-            fileDataPanel.SetActive(false);
-            for (int i = 1; i < 4; i++)
-            {
-                buttonImage[i].rectTransform.position = new Vector3(
-                    buttonImage[i].rectTransform.position.x,
-                    buttonImage[i].rectTransform.position.y + 26f,
-                    buttonImage[i].rectTransform.position.z
+            fileDataPanel.SetActive(false);*/
+            for (int i = 1; i < 4; i++) {
+                buttonImages[i].rectTransform.position = new Vector3(
+                    buttonImages[i].rectTransform.position.x,
+                    buttonImages[i].rectTransform.position.y + 26f,
+                    buttonImages[i].rectTransform.position.z
                     );
             }
-        }
-        else
-        {
-            updateButton(0);
+        } else {
+            changeButtons(new GameObject[] { newGameButton, continueButton, settingsButton, fileDataPanel }, 1);
+            //updateButton(0);
             updateFile(0);
 
             StartCoroutine(animateIcons());
 
-            if (fileCount == 1)
-            {
+            if (fileCount == 1) {
                 fileNumbersText.text = "File     1";
-            }
-            else if (fileCount == 2)
-            {
+            } else if (fileCount == 2) {
                 fileNumbersText.text = "File     1   2";
-            }
-            else if (fileCount == 3)
-            {
+            } else if (fileCount == 3) {
                 fileNumbersText.text = "File     1   2   3";
             }
         }
 
         bool running = true;
-        while (running)
-        {
-            if (Input.GetButtonDown("Select"))
-            {
-                if (selectedButton == 0)
-                {
+        while (running) {
+            if (Input.GetButtonDown("Select")) {
+                if (selectedButton == 0) {
                     //CONTINUE
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
                     SfxHandler.Play(decideClip);
                     yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 
                     SaveData.currentSave = SaveLoad.savedGames[selectedFile];
-                    
+
                     Debug.Log(SaveLoad.savedGames[0]);
                     Debug.Log(SaveLoad.savedGames[1]);
                     Debug.Log(SaveLoad.savedGames[2]);
@@ -612,23 +594,20 @@ public class MainMenuHandler : MonoBehaviour
                     GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
                     GlobalVariables.global.followerOut = SaveData.currentSave.followerOut;
 
-                    if (SaveData.currentSave.followerPosition != null && SaveData.currentSave.followerdirection != null)
-                    {
+                    if (SaveData.currentSave.followerPosition != null && SaveData.currentSave.followerdirection != null) {
                         GlobalVariables.global.followerPosition = SaveData.currentSave.followerPosition.Value.v3;
                         GlobalVariables.global.followerDirection = SaveData.currentSave.followerdirection;
                     }
-                    
+
                     GlobalVariables.global.fadeIn = true;
 
                     Application.LoadLevel(SaveData.currentSave.levelName);
-                }
-                else if (selectedButton == 1)
-                {
+                } else if (selectedButton == 1) {
                     //NEW GAME
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
                     SfxHandler.Play(decideClip);
                     yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-                    
+
 
                     SaveData.currentSave = new SaveData(fileCount);
 
@@ -639,100 +618,73 @@ public class MainMenuHandler : MonoBehaviour
                     GlobalVariables.global.fadeIn = true;
                     Application.LoadLevel("route_3");
                     //Application.LoadLevel("flowery_town_indoors");
-                }
-                else if (selectedButton == 2)
-                {
+                } else if (selectedButton == 2) {
                     //TODO MYSTERY GIFT
                     SfxHandler.Play(decideClip);
                     yield return StartCoroutine(mysteryGift());
-                }
-                else if (selectedButton == 3)
-                {
+                } else if (selectedButton == 3) {
                     //SETTINGS
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
                     SfxHandler.Play(decideClip);
                     yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-                    
+
 
                     Scene.main.Settings.gameObject.SetActive(true);
                     StartCoroutine(Scene.main.Settings.control());
-                    while (Scene.main.Settings.gameObject.activeSelf)
-                    {
+                    while (Scene.main.Settings.gameObject.activeSelf) {
                         yield return null;
                     }
 
                     //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
                     yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
                 }
-            }
-            else if (Input.GetKeyDown(KeyCode.Delete))
-            {
+            } else if (Input.GetKeyDown(KeyCode.Delete)) {
                 //delete save file
                 float time = Time.time;
                 bool released = false;
                 Debug.Log("Save " + (selectedFile + 1) + " will be deleted! Release 'Delete' key to prevent this!");
-                while (Time.time < time + 4 && !released)
-                {
-                    if (Input.GetKeyUp(KeyCode.Delete))
-                    {
+                while (Time.time < time + 4 && !released) {
+                    if (Input.GetKeyUp(KeyCode.Delete)) {
                         released = true;
                     }
                     yield return null;
                 }
 
-                if (Input.GetKey(KeyCode.Delete) && !released)
-                {
+                if (Input.GetKey(KeyCode.Delete) && !released) {
                     SaveLoad.resetSaveGame(selectedFile);
                     Debug.Log("Save " + (selectedFile + 1) + " was deleted!");
 
                     yield return new WaitForSeconds(1f);
 
                     Application.LoadLevel(Application.loadedLevel);
-                }
-                else
-                {
+                } else {
                     Debug.Log("'Delete' key was released!");
                 }
-            }
-            else
-            {
-                if (Input.GetAxisRaw("Vertical") > 0)
-                {
-                    float minimumButton = (continueButton.activeSelf) ? 0 : 1;
-                    if (selectedButton > minimumButton)
-                    {
+            } else {
+                if (Input.GetAxisRaw("Vertical") > 0) {
+                    if (selectedButton > 0) {
                         updateButton(selectedButton - 1);
                         SfxHandler.Play(scrollClip);
                         yield return new WaitForSeconds(0.2f);
                     }
-                }
-                else if (Input.GetAxisRaw("Vertical") < 0)
-                {
-                    if (selectedButton < 3)
-                    {
+                } else if (Input.GetAxisRaw("Vertical") < 0) {
+                    if (selectedButton < activeButtons.Count - 1) {
                         updateButton(selectedButton + 1);
                         SfxHandler.Play(scrollClip);
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
-                if (Input.GetAxisRaw("Horizontal") > 0)
-                {
-                    if (selectedButton == 0)
-                    {
-                        if (selectedFile < fileCount - 1)
-                        {
+                if (Input.GetAxisRaw("Horizontal") > 0) {
+                    if (selectedButton == 0) {
+                        if (selectedFile < fileCount - 1) {
                             updateFile(selectedFile + 1);
                             SfxHandler.Play(scrollClip);
                             yield return new WaitForSeconds(0.2f);
                         }
                     }
-                }
-                else if (Input.GetAxisRaw("Horizontal") < 0)
-                {
-                    if (selectedButton == 0)
-                    {
-                        if (selectedFile > 0)
-                        {
+                } else if (Input.GetAxisRaw("Horizontal") < 0) {
+                    if (selectedButton == 0) {
+                        if (selectedFile > 0) {
                             updateFile(selectedFile - 1);
                             SfxHandler.Play(scrollClip);
                             yield return new WaitForSeconds(0.2f);
