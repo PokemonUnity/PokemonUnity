@@ -106,3 +106,5 @@ git-journal.fish
 /Pokemon Unity/Assets/GameFramework
 /PokemonUnity.Offline
 /Set-AssemblyVersion.ps1
+
+*.log
