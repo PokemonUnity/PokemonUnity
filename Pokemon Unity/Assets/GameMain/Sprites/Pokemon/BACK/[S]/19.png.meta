@@ -306,7 +306,7 @@ TextureImporter:
       213: 5641679640565795768
     second: 19_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -323,9 +323,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -334,9 +337,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -357,11 +360,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -372,7 +380,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -383,6 +392,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -2517,9 +2527,110 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      19_27: 21300034
+      19_77: 21300134
+      19_96: 21300172
+      19_70: 21300120
+      19_97: 21300174
+      19_62: 21300104
+      19_53: 21300086
+      19_17: 21300014
+      19_69: 21300118
+      19_25: 21300030
+      19_29: 21300038
+      19_38: 21300056
+      19_46: 21300072
+      19_73: 21300126
+      19_8: 6316459127705747107
+      19_72: 21300124
+      19_68: 21300116
+      19_90: 21300160
+      19_10: 21300000
+      19_35: 21300050
+      19_39: 21300058
+      19_55: 21300090
+      19_37: 21300054
+      19_20: 21300020
+      19_64: 21300108
+      19_99: 21300178
+      19_47: 21300074
+      19_79: 21300138
+      19_22: 21300024
+      19_31: 21300042
+      19_19: 21300018
+      19_28: 21300036
+      19_42: 21300064
+      19_48: 21300076
+      19_32: 21300044
+      19_94: 21300168
+      19_50: 21300080
+      19_91: 21300162
+      19_87: 21300154
+      19_100: 21300180
+      19_78: 21300136
+      19_34: 21300048
+      19_6: 1041731155323315350
+      19_56: 21300092
+      19_54: 21300088
+      19_13: 21300006
+      19_24: 21300028
+      19_26: 21300032
+      19_7: 5130503691554117400
+      19_14: 21300008
+      19_44: 21300068
+      19_15: 21300010
+      19_5: 6412307601150249667
+      19_4: 6310360485712417716
+      19_30: 21300040
+      19_3: -2664592855888653312
+      19_0: 7157561037332017152
+      19_60: 21300100
+      19_63: 21300106
+      19_86: 21300152
+      19_52: 21300084
+      19_75: 21300130
+      19_18: 21300016
+      19_66: 21300112
+      19_43: 21300066
+      19_58: 21300096
+      19_65: 21300110
+      19_67: 21300114
+      19_41: 21300062
+      19_36: 21300052
+      19_45: 21300070
+      19_89: 21300158
+      19_82: 21300144
+      19_59: 21300098
+      19_12: 21300004
+      19_2: 5570463874294589180
+      19_23: 21300026
+      19_51: 21300082
+      19_81: 21300142
+      19_80: 21300140
+      19_95: 21300170
+      19_40: 21300060
+      19_85: 21300150
+      19_9: 5641679640565795768
+      19_71: 21300122
+      19_88: 21300156
+      19_57: 21300094
+      19_98: 21300176
+      19_21: 21300022
+      19_11: 21300002
+      19_76: 21300132
+      19_1: -5344560350128605328
+      19_83: 21300146
+      19_93: 21300166
+      19_33: 21300046
+      19_61: 21300102
+      19_84: 21300148
+      19_16: 21300012
+      19_49: 21300078
+      19_74: 21300128
+      19_92: 21300164
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

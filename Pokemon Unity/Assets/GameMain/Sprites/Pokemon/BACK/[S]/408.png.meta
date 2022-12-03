@@ -378,7 +378,7 @@ TextureImporter:
       213: 4485646429581191614
     second: 408_29
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -395,9 +395,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -406,9 +409,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -429,11 +432,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -444,7 +452,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -455,6 +464,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3093,9 +3103,134 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      408_2: -8290696305857175699
+      408_36: 21300012
+      408_60: 21300060
+      408_27: -2382100566097426672
+      408_33: 21300006
+      408_81: 21300102
+      408_41: 21300022
+      408_44: 21300028
+      408_42: 21300024
+      408_14: 1913792081578642776
+      408_1: 1455042184907956083
+      408_49: 21300038
+      408_16: 8812045545791655477
+      408_47: 21300034
+      408_110: 21300160
+      408_35: 21300010
+      408_50: 21300040
+      408_28: -3449627913675429229
+      408_120: 21300180
+      408_98: 21300136
+      408_22: -5391193715883006118
+      408_67: 21300074
+      408_3: 616940362516829421
+      408_108: 21300156
+      408_65: 21300070
+      408_85: 21300110
+      408_21: 3080132362535682777
+      408_53: 21300046
+      408_46: 21300032
+      408_7: 2017246554963243219
+      408_19: -2392399984385961788
+      408_11: 3699035315835471110
+      408_9: 5922275837926893408
+      408_32: 21300004
+      408_100: 21300140
+      408_121: 21300182
+      408_18: 40634753899128633
+      408_59: 21300058
+      408_95: 21300130
+      408_71: 21300082
+      408_29: 4485646429581191614
+      408_13: 844071974542236144
+      408_30: 21300000
+      408_84: 21300108
+      408_34: 21300008
+      408_39: 21300018
+      408_17: 1667070577195195349
+      408_79: 21300098
+      408_99: 21300138
+      408_72: 21300084
+      408_74: 21300088
+      408_80: 21300100
+      408_23: 2976236395199703153
+      408_75: 21300090
+      408_102: 21300144
+      408_101: 21300142
+      408_86: 21300112
+      408_115: 21300170
+      408_37: 21300014
+      408_97: 21300134
+      408_70: 21300080
+      408_66: 21300072
+      408_45: 21300030
+      408_82: 21300104
+      408_90: 21300120
+      408_105: 21300150
+      408_78: 21300096
+      408_123: 21300186
+      408_77: 21300094
+      408_62: 21300064
+      408_96: 21300132
+      408_12: 4679965221892240023
+      408_124: 21300188
+      408_112: 21300164
+      408_113: 21300166
+      408_55: 21300050
+      408_93: 21300126
+      408_117: 21300174
+      408_64: 21300068
+      408_73: 21300086
+      408_88: 21300116
+      408_58: 21300056
+      408_40: 21300020
+      408_20: -1474942322163685458
+      408_48: 21300036
+      408_57: 21300054
+      408_61: 21300062
+      408_106: 21300152
+      408_52: 21300044
+      408_24: -7896022230394377858
+      408_91: 21300122
+      408_25: 9009812370643842963
+      408_54: 21300048
+      408_15: -6125551316791756845
+      408_63: 21300066
+      408_92: 21300124
+      408_68: 21300076
+      408_114: 21300168
+      408_69: 21300078
+      408_5: 8366574123819297225
+      408_89: 21300118
+      408_26: 1246337543456284212
+      408_4: 5845247447989100561
+      408_76: 21300092
+      408_43: 21300026
+      408_94: 21300128
+      408_10: -1748104482344495124
+      408_104: 21300148
+      408_109: 21300158
+      408_31: 21300002
+      408_111: 21300162
+      408_87: 21300114
+      408_38: 21300016
+      408_107: 21300154
+      408_118: 21300176
+      408_56: 21300052
+      408_119: 21300178
+      408_0: -3268302849931390478
+      408_83: 21300106
+      408_8: -85996565383749706
+      408_116: 21300172
+      408_51: 21300042
+      408_122: 21300184
+      408_6: -5248070859271809849
+      408_103: 21300146
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

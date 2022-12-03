@@ -366,7 +366,7 @@ TextureImporter:
       213: -9096441619284104526
     second: 531_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -383,9 +383,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -394,9 +397,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -417,11 +420,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -432,7 +440,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -443,6 +452,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -2997,9 +3007,130 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      531_105: 21300190
+      531_4: 4454598651795611650
+      531_9: -9096441619284104526
+      531_75: 21300130
+      531_48: 21300076
+      531_76: 21300132
+      531_43: 21300066
+      531_44: 21300068
+      531_29: 21300038
+      531_107: 21300194
+      531_28: 21300036
+      531_14: 21300008
+      531_12: 21300004
+      531_23: 21300026
+      531_92: 21300164
+      531_59: 21300098
+      531_117: 21300214
+      531_66: 21300112
+      531_42: 21300064
+      531_36: 21300052
+      531_65: 21300110
+      531_33: 21300046
+      531_58: 21300096
+      531_7: 8653405848355319718
+      531_86: 21300152
+      531_68: 21300116
+      531_64: 21300108
+      531_0: -6157306435291458315
+      531_45: 21300070
+      531_104: 21300188
+      531_109: 21300198
+      531_30: 21300040
+      531_113: 21300206
+      531_115: 21300210
+      531_3: 6808096176741978251
+      531_19: 21300018
+      531_8: -7595790228704672854
+      531_77: 21300134
+      531_50: 21300080
+      531_51: 21300082
+      531_85: 21300150
+      531_118: 21300216
+      531_60: 21300100
+      531_49: 21300078
+      531_52: 21300084
+      531_34: 21300048
+      531_38: 21300056
+      531_69: 21300118
+      531_74: 21300128
+      531_21: 21300022
+      531_11: 21300002
+      531_54: 21300088
+      531_73: 21300126
+      531_67: 21300114
+      531_37: 21300054
+      531_90: 21300160
+      531_100: 21300180
+      531_95: 21300170
+      531_103: 21300186
+      531_72: 21300124
+      531_55: 21300090
+      531_106: 21300192
+      531_25: 21300030
+      531_99: 21300178
+      531_27: 21300034
+      531_2: -5786940146014139273
+      531_93: 21300166
+      531_13: 21300006
+      531_18: 21300016
+      531_70: 21300120
+      531_20: 21300020
+      531_82: 21300144
+      531_89: 21300158
+      531_79: 21300138
+      531_10: 21300000
+      531_97: 21300174
+      531_24: 21300028
+      531_94: 21300168
+      531_62: 21300104
+      531_40: 21300060
+      531_119: 21300218
+      531_5: -7420537619708147386
+      531_96: 21300172
+      531_110: 21300200
+      531_61: 21300102
+      531_31: 21300042
+      531_114: 21300208
+      531_15: 21300010
+      531_39: 21300058
+      531_22: 21300024
+      531_6: 7295126836155422201
+      531_1: -5678546433533999567
+      531_41: 21300062
+      531_112: 21300204
+      531_101: 21300182
+      531_91: 21300162
+      531_83: 21300146
+      531_32: 21300044
+      531_102: 21300184
+      531_35: 21300050
+      531_46: 21300072
+      531_88: 21300156
+      531_63: 21300106
+      531_87: 21300154
+      531_120: 21300220
+      531_84: 21300148
+      531_26: 21300032
+      531_80: 21300140
+      531_108: 21300196
+      531_116: 21300212
+      531_53: 21300086
+      531_98: 21300176
+      531_57: 21300094
+      531_47: 21300074
+      531_111: 21300202
+      531_71: 21300122
+      531_81: 21300142
+      531_16: 21300012
+      531_17: 21300014
+      531_56: 21300092
+      531_78: 21300136
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

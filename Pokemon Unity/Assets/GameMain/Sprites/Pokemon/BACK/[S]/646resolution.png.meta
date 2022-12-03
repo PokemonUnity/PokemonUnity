@@ -318,7 +318,7 @@ TextureImporter:
       213: -9125479940458946769
     second: 646resolution_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -335,9 +335,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -346,9 +349,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -369,11 +372,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -384,7 +392,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -395,6 +404,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -2613,9 +2623,114 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      646resolution_72: 21300124
+      646resolution_33: 21300046
+      646resolution_98: 21300176
+      646resolution_49: 21300078
+      646resolution_19: 21300018
+      646resolution_52: 21300084
+      646resolution_89: 21300158
+      646resolution_23: 21300026
+      646resolution_4: -8215578465427312169
+      646resolution_61: 21300102
+      646resolution_12: 21300004
+      646resolution_0: 4950711704023524293
+      646resolution_14: 21300008
+      646resolution_32: 21300044
+      646resolution_25: 21300030
+      646resolution_8: -7868549589192860328
+      646resolution_84: 21300148
+      646resolution_60: 21300100
+      646resolution_86: 21300152
+      646resolution_55: 21300090
+      646resolution_66: 21300112
+      646resolution_47: 21300074
+      646resolution_17: 21300014
+      646resolution_38: 21300056
+      646resolution_51: 21300082
+      646resolution_29: 21300038
+      646resolution_63: 21300106
+      646resolution_100: 21300180
+      646resolution_67: 21300114
+      646resolution_78: 21300136
+      646resolution_15: 21300010
+      646resolution_65: 21300110
+      646resolution_73: 21300126
+      646resolution_77: 21300134
+      646resolution_88: 21300156
+      646resolution_71: 21300122
+      646resolution_39: 21300058
+      646resolution_53: 21300086
+      646resolution_56: 21300092
+      646resolution_83: 21300146
+      646resolution_30: 21300040
+      646resolution_50: 21300080
+      646resolution_35: 21300050
+      646resolution_9: -9125479940458946769
+      646resolution_21: 21300022
+      646resolution_44: 21300068
+      646resolution_79: 21300138
+      646resolution_7: 8666093300368399014
+      646resolution_81: 21300142
+      646resolution_58: 21300096
+      646resolution_41: 21300062
+      646resolution_59: 21300098
+      646resolution_45: 21300070
+      646resolution_46: 21300072
+      646resolution_10: 21300000
+      646resolution_68: 21300116
+      646resolution_2: 745843702437855379
+      646resolution_5: -2656214546225992742
+      646resolution_95: 21300170
+      646resolution_37: 21300054
+      646resolution_36: 21300052
+      646resolution_24: 21300028
+      646resolution_93: 21300166
+      646resolution_91: 21300162
+      646resolution_16: 21300012
+      646resolution_101: 21300182
+      646resolution_13: 21300006
+      646resolution_94: 21300168
+      646resolution_92: 21300164
+      646resolution_26: 21300032
+      646resolution_102: 21300184
+      646resolution_87: 21300154
+      646resolution_62: 21300104
+      646resolution_97: 21300174
+      646resolution_104: 21300188
+      646resolution_96: 21300172
+      646resolution_18: 21300016
+      646resolution_69: 21300118
+      646resolution_28: 21300036
+      646resolution_3: -7917479322376352738
+      646resolution_57: 21300094
+      646resolution_99: 21300178
+      646resolution_54: 21300088
+      646resolution_22: 21300024
+      646resolution_6: 5642810426852240944
+      646resolution_27: 21300034
+      646resolution_40: 21300060
+      646resolution_70: 21300120
+      646resolution_43: 21300066
+      646resolution_20: 21300020
+      646resolution_75: 21300130
+      646resolution_74: 21300128
+      646resolution_90: 21300160
+      646resolution_34: 21300048
+      646resolution_103: 21300186
+      646resolution_42: 21300064
+      646resolution_31: 21300042
+      646resolution_64: 21300108
+      646resolution_85: 21300150
+      646resolution_82: 21300144
+      646resolution_76: 21300132
+      646resolution_11: 21300002
+      646resolution_1: -190490855738919533
+      646resolution_80: 21300140
+      646resolution_48: 21300076
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

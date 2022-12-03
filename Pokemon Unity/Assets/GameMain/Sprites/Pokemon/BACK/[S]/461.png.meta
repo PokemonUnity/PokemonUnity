@@ -396,7 +396,7 @@ TextureImporter:
       213: -8138541260778376684
     second: 461_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -413,9 +413,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -424,9 +427,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -447,11 +450,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -462,7 +470,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -473,6 +482,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3237,9 +3247,140 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      461_19: 21300018
+      461_104: 21300188
+      461_109: 21300198
+      461_53: 21300086
+      461_111: 21300202
+      461_50: 21300080
+      461_71: 21300122
+      461_74: 21300128
+      461_93: 21300166
+      461_75: 21300130
+      461_38: 21300056
+      461_115: 21300210
+      461_2: 8218655346996654183
+      461_101: 21300182
+      461_92: 21300164
+      461_84: 21300148
+      461_83: 21300146
+      461_7: 3278202740877454385
+      461_122: 21300224
+      461_105: 21300190
+      461_65: 21300110
+      461_116: 21300212
+      461_23: 21300026
+      461_118: 21300216
+      461_85: 21300150
+      461_98: 21300176
+      461_63: 21300106
+      461_14: 21300008
+      461_79: 21300138
+      461_72: 21300124
+      461_39: 21300058
+      461_28: 21300036
+      461_52: 21300084
+      461_60: 21300100
+      461_6: 5944424283317406253
+      461_44: 21300068
+      461_13: 21300006
+      461_5: 4532565265439409951
+      461_43: 21300066
+      461_17: 21300014
+      461_103: 21300186
+      461_25: 21300030
+      461_69: 21300118
+      461_108: 21300196
+      461_61: 21300102
+      461_16: 21300012
+      461_24: 21300028
+      461_90: 21300160
+      461_88: 21300156
+      461_68: 21300116
+      461_112: 21300204
+      461_129: 21300238
+      461_8: -184357596210899534
+      461_59: 21300098
+      461_42: 21300064
+      461_41: 21300062
+      461_10: 21300000
+      461_125: 21300230
+      461_99: 21300178
+      461_73: 21300126
+      461_81: 21300142
+      461_95: 21300170
+      461_130: 21300240
+      461_18: 21300016
+      461_106: 21300192
+      461_48: 21300076
+      461_127: 21300234
+      461_110: 21300200
+      461_119: 21300218
+      461_49: 21300078
+      461_117: 21300214
+      461_97: 21300174
+      461_40: 21300060
+      461_78: 21300136
+      461_0: 290368891109986299
+      461_126: 21300232
+      461_114: 21300208
+      461_46: 21300072
+      461_64: 21300108
+      461_32: 21300044
+      461_94: 21300168
+      461_55: 21300090
+      461_87: 21300154
+      461_30: 21300040
+      461_51: 21300082
+      461_102: 21300184
+      461_47: 21300074
+      461_96: 21300172
+      461_128: 21300236
+      461_57: 21300094
+      461_77: 21300134
+      461_34: 21300048
+      461_56: 21300092
+      461_36: 21300052
+      461_29: 21300038
+      461_66: 21300112
+      461_26: 21300032
+      461_45: 21300070
+      461_62: 21300104
+      461_113: 21300206
+      461_11: 21300002
+      461_91: 21300162
+      461_123: 21300226
+      461_1: 6152563914947378664
+      461_31: 21300042
+      461_120: 21300220
+      461_100: 21300180
+      461_124: 21300228
+      461_86: 21300152
+      461_58: 21300096
+      461_121: 21300222
+      461_82: 21300144
+      461_15: 21300010
+      461_3: -1174606313636655176
+      461_35: 21300050
+      461_22: 21300024
+      461_9: -8138541260778376684
+      461_107: 21300194
+      461_70: 21300120
+      461_12: 21300004
+      461_80: 21300140
+      461_4: 4048431681581658005
+      461_37: 21300054
+      461_54: 21300088
+      461_20: 21300020
+      461_33: 21300046
+      461_76: 21300132
+      461_21: 21300022
+      461_89: 21300158
+      461_67: 21300114
+      461_27: 21300034
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

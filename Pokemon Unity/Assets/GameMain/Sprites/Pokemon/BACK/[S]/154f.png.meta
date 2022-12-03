@@ -276,7 +276,7 @@ TextureImporter:
       213: -893801733072400081
     second: 154f_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -293,9 +293,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -304,9 +307,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -327,11 +330,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -342,7 +350,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -353,6 +362,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -2277,9 +2287,100 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      154f_66: 21300112
+      154f_89: 21300158
+      154f_16: 21300012
+      154f_49: 21300078
+      154f_23: 21300026
+      154f_33: 21300046
+      154f_4: -2399009656437405313
+      154f_21: 21300022
+      154f_86: 21300152
+      154f_2: 3205177983224849761
+      154f_52: 21300084
+      154f_43: 21300066
+      154f_9: -893801733072400081
+      154f_19: 21300018
+      154f_48: 21300076
+      154f_81: 21300142
+      154f_41: 21300062
+      154f_11: 21300002
+      154f_80: 21300140
+      154f_47: 21300074
+      154f_30: 21300040
+      154f_70: 21300120
+      154f_32: 21300044
+      154f_18: 21300016
+      154f_35: 21300050
+      154f_38: 21300056
+      154f_53: 21300086
+      154f_72: 21300124
+      154f_37: 21300054
+      154f_10: 21300000
+      154f_75: 21300130
+      154f_13: 21300006
+      154f_58: 21300096
+      154f_8: 2463477418855183120
+      154f_88: 21300156
+      154f_74: 21300128
+      154f_0: 2618758210583779220
+      154f_34: 21300048
+      154f_77: 21300134
+      154f_14: 21300008
+      154f_85: 21300150
+      154f_12: 21300004
+      154f_56: 21300092
+      154f_54: 21300088
+      154f_84: 21300148
+      154f_20: 21300020
+      154f_82: 21300144
+      154f_51: 21300082
+      154f_79: 21300138
+      154f_40: 21300060
+      154f_62: 21300104
+      154f_67: 21300114
+      154f_36: 21300052
+      154f_68: 21300116
+      154f_65: 21300110
+      154f_44: 21300068
+      154f_22: 21300024
+      154f_69: 21300118
+      154f_24: 21300028
+      154f_46: 21300072
+      154f_71: 21300122
+      154f_87: 21300154
+      154f_64: 21300108
+      154f_3: -3463664811172069974
+      154f_26: 21300032
+      154f_61: 21300102
+      154f_60: 21300100
+      154f_15: 21300010
+      154f_42: 21300064
+      154f_29: 21300038
+      154f_55: 21300090
+      154f_57: 21300094
+      154f_73: 21300126
+      154f_5: -6085889775700788232
+      154f_78: 21300136
+      154f_50: 21300080
+      154f_25: 21300030
+      154f_7: -3692195206617425127
+      154f_17: 21300014
+      154f_83: 21300146
+      154f_27: 21300034
+      154f_45: 21300070
+      154f_76: 21300132
+      154f_63: 21300106
+      154f_90: 21300160
+      154f_28: 21300036
+      154f_31: 21300042
+      154f_59: 21300098
+      154f_1: 2063326396293664655
+      154f_39: 21300058
+      154f_6: -909884200446583919
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

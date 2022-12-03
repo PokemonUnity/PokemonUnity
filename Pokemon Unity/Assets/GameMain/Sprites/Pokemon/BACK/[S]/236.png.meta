@@ -225,7 +225,7 @@ TextureImporter:
       213: -87433956844536799
     second: 236_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -242,9 +242,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -253,9 +256,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -276,11 +279,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -291,7 +299,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -302,6 +311,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1869,9 +1879,83 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      236_65: 21300110
+      236_66: 21300112
+      236_54: 21300088
+      236_68: 21300116
+      236_70: 21300120
+      236_9: -87433956844536799
+      236_17: 21300014
+      236_51: 21300082
+      236_32: 21300044
+      236_53: 21300086
+      236_59: 21300098
+      236_29: 21300038
+      236_69: 21300118
+      236_10: 21300000
+      236_2: -1052065261156839702
+      236_0: -1137157626601762472
+      236_50: 21300080
+      236_49: 21300078
+      236_12: 21300004
+      236_22: 21300024
+      236_31: 21300042
+      236_56: 21300092
+      236_57: 21300094
+      236_33: 21300046
+      236_36: 21300052
+      236_52: 21300084
+      236_44: 21300068
+      236_71: 21300122
+      236_24: 21300028
+      236_46: 21300072
+      236_20: 21300020
+      236_26: 21300032
+      236_45: 21300070
+      236_23: 21300026
+      236_28: 21300036
+      236_7: 3980815964132644816
+      236_30: 21300040
+      236_19: 21300018
+      236_62: 21300104
+      236_6: -1687723840370420784
+      236_67: 21300114
+      236_73: 21300126
+      236_60: 21300100
+      236_47: 21300074
+      236_58: 21300096
+      236_41: 21300062
+      236_1: -6896633631639231463
+      236_43: 21300066
+      236_64: 21300108
+      236_15: 21300010
+      236_37: 21300054
+      236_3: 842081962792597218
+      236_38: 21300056
+      236_8: 7772425720403766584
+      236_34: 21300048
+      236_18: 21300016
+      236_14: 21300008
+      236_39: 21300058
+      236_42: 21300064
+      236_61: 21300102
+      236_4: 8471562779094736229
+      236_13: 21300006
+      236_5: 1633997048609801021
+      236_72: 21300124
+      236_48: 21300076
+      236_55: 21300090
+      236_63: 21300106
+      236_11: 21300002
+      236_35: 21300050
+      236_16: 21300012
+      236_40: 21300060
+      236_21: 21300022
+      236_25: 21300030
+      236_27: 21300034
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

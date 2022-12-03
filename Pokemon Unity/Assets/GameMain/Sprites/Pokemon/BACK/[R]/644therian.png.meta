@@ -954,7 +954,7 @@ TextureImporter:
       213: 4574100985248462171
     second: 644therian_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -971,9 +971,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -982,9 +985,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -1005,11 +1008,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -1020,7 +1028,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -1031,6 +1040,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -7701,9 +7711,326 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      644therian_74: 21300128
+      644therian_273: 21300526
+      644therian_146: 21300272
+      644therian_313: 21300606
+      644therian_151: 21300282
+      644therian_10: 21300000
+      644therian_256: 21300492
+      644therian_78: 21300136
+      644therian_79: 21300138
+      644therian_302: 21300584
+      644therian_164: 21300308
+      644therian_216: 21300412
+      644therian_301: 21300582
+      644therian_82: 21300144
+      644therian_175: 21300330
+      644therian_184: 21300348
+      644therian_262: 21300504
+      644therian_108: 21300196
+      644therian_284: 21300548
+      644therian_240: 21300460
+      644therian_23: 21300026
+      644therian_100: 21300180
+      644therian_110: 21300200
+      644therian_52: 21300084
+      644therian_136: 21300252
+      644therian_241: 21300462
+      644therian_49: 21300078
+      644therian_312: 21300604
+      644therian_205: 21300390
+      644therian_311: 21300602
+      644therian_145: 21300270
+      644therian_221: 21300422
+      644therian_3: 4712158768071052702
+      644therian_115: 21300210
+      644therian_60: 21300100
+      644therian_13: 21300006
+      644therian_36: 21300052
+      644therian_150: 21300280
+      644therian_95: 21300170
+      644therian_250: 21300480
+      644therian_299: 21300578
+      644therian_27: 21300034
+      644therian_261: 21300502
+      644therian_75: 21300130
+      644therian_198: 21300376
+      644therian_7: 1272827991111214703
+      644therian_55: 21300090
+      644therian_237: 21300454
+      644therian_295: 21300570
+      644therian_282: 21300544
+      644therian_225: 21300430
+      644therian_16: 21300012
+      644therian_179: 21300338
+      644therian_206: 21300392
+      644therian_65: 21300110
+      644therian_288: 21300556
+      644therian_38: 21300056
+      644therian_156: 21300292
+      644therian_152: 21300284
+      644therian_268: 21300516
+      644therian_14: 21300008
+      644therian_300: 21300580
+      644therian_116: 21300212
+      644therian_306: 21300592
+      644therian_53: 21300086
+      644therian_11: 21300002
+      644therian_42: 21300064
+      644therian_121: 21300222
+      644therian_296: 21300572
+      644therian_211: 21300402
+      644therian_107: 21300194
+      644therian_212: 21300404
+      644therian_280: 21300540
+      644therian_220: 21300420
+      644therian_96: 21300172
+      644therian_238: 21300456
+      644therian_149: 21300278
+      644therian_222: 21300424
+      644therian_200: 21300380
+      644therian_158: 21300296
+      644therian_31: 21300042
+      644therian_21: 21300022
+      644therian_293: 21300566
+      644therian_253: 21300486
+      644therian_120: 21300220
+      644therian_176: 21300332
+      644therian_32: 21300044
+      644therian_124: 21300228
+      644therian_86: 21300152
+      644therian_91: 21300162
+      644therian_83: 21300146
+      644therian_98: 21300176
+      644therian_214: 21300408
+      644therian_99: 21300178
+      644therian_30: 21300040
+      644therian_203: 21300386
+      644therian_254: 21300488
+      644therian_258: 21300496
+      644therian_195: 21300370
+      644therian_171: 21300322
+      644therian_61: 21300102
+      644therian_191: 21300362
+      644therian_266: 21300512
+      644therian_134: 21300248
+      644therian_183: 21300346
+      644therian_257: 21300494
+      644therian_97: 21300174
+      644therian_113: 21300206
+      644therian_48: 21300076
+      644therian_153: 21300286
+      644therian_51: 21300082
+      644therian_188: 21300356
+      644therian_114: 21300208
+      644therian_229: 21300438
+      644therian_162: 21300304
+      644therian_155: 21300290
+      644therian_236: 21300452
+      644therian_308: 21300596
+      644therian_201: 21300382
+      644therian_219: 21300418
+      644therian_290: 21300560
+      644therian_94: 21300168
+      644therian_56: 21300092
+      644therian_314: 21300608
+      644therian_63: 21300106
+      644therian_278: 21300536
+      644therian_58: 21300096
+      644therian_251: 21300482
+      644therian_5: -5649105314490620119
+      644therian_15: 21300010
+      644therian_25: 21300030
+      644therian_105: 21300190
+      644therian_18: 21300016
+      644therian_173: 21300326
+      644therian_26: 21300032
+      644therian_143: 21300266
+      644therian_223: 21300426
+      644therian_294: 21300568
+      644therian_154: 21300288
+      644therian_248: 21300476
+      644therian_19: 21300018
+      644therian_111: 21300202
+      644therian_101: 21300182
+      644therian_245: 21300470
+      644therian_265: 21300510
+      644therian_131: 21300242
+      644therian_135: 21300250
+      644therian_190: 21300360
+      644therian_174: 21300328
+      644therian_189: 21300358
+      644therian_202: 21300384
+      644therian_140: 21300260
+      644therian_142: 21300264
+      644therian_208: 21300396
+      644therian_147: 21300274
+      644therian_170: 21300320
+      644therian_17: 21300014
+      644therian_228: 21300436
+      644therian_161: 21300302
+      644therian_292: 21300564
+      644therian_148: 21300276
+      644therian_71: 21300122
+      644therian_267: 21300514
+      644therian_29: 21300038
+      644therian_64: 21300108
+      644therian_1: 2417111194982659664
+      644therian_246: 21300472
+      644therian_217: 21300414
+      644therian_260: 21300500
+      644therian_297: 21300574
+      644therian_247: 21300474
+      644therian_62: 21300104
+      644therian_123: 21300226
+      644therian_193: 21300366
+      644therian_84: 21300148
+      644therian_59: 21300098
+      644therian_92: 21300164
+      644therian_252: 21300484
+      644therian_215: 21300410
+      644therian_90: 21300160
+      644therian_233: 21300446
+      644therian_303: 21300586
+      644therian_275: 21300530
+      644therian_47: 21300074
+      644therian_160: 21300300
+      644therian_167: 21300314
+      644therian_68: 21300116
+      644therian_50: 21300080
+      644therian_129: 21300238
+      644therian_298: 21300576
+      644therian_22: 21300024
+      644therian_35: 21300050
+      644therian_66: 21300112
+      644therian_54: 21300088
+      644therian_70: 21300120
+      644therian_127: 21300234
+      644therian_269: 21300518
+      644therian_89: 21300158
+      644therian_141: 21300262
+      644therian_40: 21300060
+      644therian_197: 21300374
+      644therian_263: 21300506
+      644therian_230: 21300440
+      644therian_239: 21300458
+      644therian_4: 1681699408843916377
+      644therian_118: 21300216
+      644therian_316: 21300612
+      644therian_69: 21300118
+      644therian_102: 21300184
+      644therian_157: 21300294
+      644therian_126: 21300232
+      644therian_88: 21300156
+      644therian_180: 21300340
+      644therian_132: 21300244
+      644therian_277: 21300534
+      644therian_73: 21300126
+      644therian_137: 21300254
+      644therian_119: 21300218
+      644therian_117: 21300214
+      644therian_106: 21300192
+      644therian_209: 21300398
+      644therian_133: 21300246
+      644therian_80: 21300140
+      644therian_103: 21300186
+      644therian_81: 21300142
+      644therian_44: 21300068
+      644therian_234: 21300448
+      644therian_163: 21300306
+      644therian_196: 21300372
+      644therian_37: 21300054
+      644therian_85: 21300150
+      644therian_159: 21300298
+      644therian_242: 21300464
+      644therian_192: 21300364
+      644therian_276: 21300532
+      644therian_0: -286976935780782262
+      644therian_304: 21300588
+      644therian_41: 21300062
+      644therian_178: 21300336
+      644therian_2: -507657016400470349
+      644therian_138: 21300256
+      644therian_144: 21300268
+      644therian_264: 21300508
+      644therian_122: 21300224
+      644therian_181: 21300342
+      644therian_187: 21300354
+      644therian_67: 21300114
+      644therian_207: 21300394
+      644therian_224: 21300428
+      644therian_8: 5428532484782801596
+      644therian_249: 21300478
+      644therian_33: 21300046
+      644therian_169: 21300318
+      644therian_12: 21300004
+      644therian_186: 21300352
+      644therian_104: 21300188
+      644therian_45: 21300070
+      644therian_255: 21300490
+      644therian_204: 21300388
+      644therian_72: 21300124
+      644therian_177: 21300334
+      644therian_226: 21300432
+      644therian_227: 21300434
+      644therian_274: 21300528
+      644therian_210: 21300400
+      644therian_259: 21300498
+      644therian_213: 21300406
+      644therian_34: 21300048
+      644therian_232: 21300444
+      644therian_309: 21300598
+      644therian_46: 21300072
+      644therian_172: 21300324
+      644therian_182: 21300344
+      644therian_287: 21300554
+      644therian_244: 21300468
+      644therian_87: 21300154
+      644therian_281: 21300542
+      644therian_231: 21300442
+      644therian_130: 21300240
+      644therian_305: 21300590
+      644therian_283: 21300546
+      644therian_20: 21300020
+      644therian_286: 21300552
+      644therian_93: 21300166
+      644therian_166: 21300312
+      644therian_279: 21300538
+      644therian_125: 21300230
+      644therian_194: 21300368
+      644therian_243: 21300466
+      644therian_289: 21300558
+      644therian_271: 21300522
+      644therian_310: 21300600
+      644therian_315: 21300610
+      644therian_272: 21300524
+      644therian_139: 21300258
+      644therian_165: 21300310
+      644therian_57: 21300094
+      644therian_185: 21300350
+      644therian_6: -1290802013138649490
+      644therian_285: 21300550
+      644therian_199: 21300378
+      644therian_270: 21300520
+      644therian_43: 21300066
+      644therian_109: 21300198
+      644therian_77: 21300134
+      644therian_9: 4574100985248462171
+      644therian_128: 21300236
+      644therian_24: 21300028
+      644therian_168: 21300316
+      644therian_112: 21300204
+      644therian_307: 21300594
+      644therian_39: 21300058
+      644therian_28: 21300036
+      644therian_76: 21300132
+      644therian_218: 21300416
+      644therian_235: 21300450
+      644therian_291: 21300562
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -558,7 +558,7 @@ TextureImporter:
       213: 7358926235874599030
     second: 549blue_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -575,9 +575,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -586,9 +589,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -609,11 +612,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -624,7 +632,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -635,6 +644,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -4533,9 +4543,194 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      549blue_21: 21300022
+      549blue_20: 21300020
+      549blue_123: 21300226
+      549blue_78: 21300136
+      549blue_111: 21300202
+      549blue_51: 21300082
+      549blue_107: 21300194
+      549blue_29: 21300038
+      549blue_122: 21300224
+      549blue_16: 21300012
+      549blue_58: 21300096
+      549blue_70: 21300120
+      549blue_147: 21300274
+      549blue_124: 21300228
+      549blue_9: 7358926235874599030
+      549blue_139: 21300258
+      549blue_19: 21300018
+      549blue_36: 21300052
+      549blue_12: 21300004
+      549blue_25: 21300030
+      549blue_75: 21300130
+      549blue_0: -6046654879156846147
+      549blue_102: 21300184
+      549blue_174: 21300328
+      549blue_35: 21300050
+      549blue_64: 21300108
+      549blue_65: 21300110
+      549blue_66: 21300112
+      549blue_131: 21300242
+      549blue_92: 21300164
+      549blue_103: 21300186
+      549blue_141: 21300262
+      549blue_146: 21300272
+      549blue_117: 21300214
+      549blue_69: 21300118
+      549blue_27: 21300034
+      549blue_130: 21300240
+      549blue_85: 21300150
+      549blue_14: 21300008
+      549blue_47: 21300074
+      549blue_7: -2208232358733998932
+      549blue_38: 21300056
+      549blue_31: 21300042
+      549blue_120: 21300220
+      549blue_158: 21300296
+      549blue_129: 21300238
+      549blue_100: 21300180
+      549blue_49: 21300078
+      549blue_112: 21300204
+      549blue_30: 21300040
+      549blue_119: 21300218
+      549blue_161: 21300302
+      549blue_172: 21300324
+      549blue_145: 21300270
+      549blue_86: 21300152
+      549blue_90: 21300160
+      549blue_166: 21300312
+      549blue_52: 21300084
+      549blue_151: 21300282
+      549blue_89: 21300158
+      549blue_24: 21300028
+      549blue_157: 21300294
+      549blue_76: 21300132
+      549blue_137: 21300254
+      549blue_159: 21300298
+      549blue_4: -1121648276269242737
+      549blue_32: 21300044
+      549blue_46: 21300072
+      549blue_50: 21300080
+      549blue_108: 21300196
+      549blue_126: 21300232
+      549blue_95: 21300170
+      549blue_79: 21300138
+      549blue_23: 21300026
+      549blue_176: 21300332
+      549blue_53: 21300086
+      549blue_106: 21300192
+      549blue_96: 21300172
+      549blue_62: 21300104
+      549blue_68: 21300116
+      549blue_81: 21300142
+      549blue_110: 21300200
+      549blue_44: 21300068
+      549blue_10: 21300000
+      549blue_164: 21300308
+      549blue_116: 21300212
+      549blue_18: 21300016
+      549blue_72: 21300124
+      549blue_3: 1710725303310443903
+      549blue_57: 21300094
+      549blue_154: 21300288
+      549blue_37: 21300054
+      549blue_136: 21300252
+      549blue_48: 21300076
+      549blue_55: 21300090
+      549blue_155: 21300290
+      549blue_11: 21300002
+      549blue_5: -2398784135104520876
+      549blue_15: 21300010
+      549blue_43: 21300066
+      549blue_61: 21300102
+      549blue_97: 21300174
+      549blue_99: 21300178
+      549blue_135: 21300250
+      549blue_82: 21300144
+      549blue_67: 21300114
+      549blue_140: 21300260
+      549blue_165: 21300310
+      549blue_87: 21300154
+      549blue_88: 21300156
+      549blue_167: 21300314
+      549blue_1: -7921715488735186712
+      549blue_121: 21300222
+      549blue_34: 21300048
+      549blue_98: 21300176
+      549blue_142: 21300264
+      549blue_80: 21300140
+      549blue_173: 21300326
+      549blue_182: 21300344
+      549blue_6: -1011380089621948306
+      549blue_22: 21300024
+      549blue_13: 21300006
+      549blue_113: 21300206
+      549blue_171: 21300322
+      549blue_175: 21300330
+      549blue_33: 21300046
+      549blue_148: 21300276
+      549blue_60: 21300100
+      549blue_63: 21300106
+      549blue_77: 21300134
+      549blue_84: 21300148
+      549blue_93: 21300166
+      549blue_73: 21300126
+      549blue_162: 21300304
+      549blue_133: 21300246
+      549blue_71: 21300122
+      549blue_177: 21300334
+      549blue_128: 21300236
+      549blue_179: 21300338
+      549blue_150: 21300280
+      549blue_125: 21300230
+      549blue_160: 21300300
+      549blue_132: 21300244
+      549blue_138: 21300256
+      549blue_170: 21300320
+      549blue_168: 21300316
+      549blue_104: 21300188
+      549blue_149: 21300278
+      549blue_28: 21300036
+      549blue_105: 21300190
+      549blue_114: 21300208
+      549blue_169: 21300318
+      549blue_74: 21300128
+      549blue_41: 21300062
+      549blue_143: 21300266
+      549blue_39: 21300058
+      549blue_56: 21300092
+      549blue_101: 21300182
+      549blue_17: 21300014
+      549blue_153: 21300286
+      549blue_109: 21300198
+      549blue_152: 21300284
+      549blue_54: 21300088
+      549blue_156: 21300292
+      549blue_91: 21300162
+      549blue_118: 21300216
+      549blue_59: 21300098
+      549blue_2: 5605572924979975813
+      549blue_134: 21300248
+      549blue_184: 21300348
+      549blue_8: 7343791603442043535
+      549blue_178: 21300336
+      549blue_163: 21300306
+      549blue_94: 21300168
+      549blue_26: 21300032
+      549blue_83: 21300146
+      549blue_40: 21300060
+      549blue_181: 21300342
+      549blue_45: 21300070
+      549blue_183: 21300346
+      549blue_115: 21300210
+      549blue_127: 21300234
+      549blue_144: 21300268
+      549blue_42: 21300064
+      549blue_180: 21300340
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

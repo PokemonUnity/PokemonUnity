@@ -381,7 +381,7 @@ TextureImporter:
       213: -7198432232966350165
     second: 633_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -398,9 +398,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -409,9 +412,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -432,11 +435,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -447,7 +455,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -458,6 +467,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3117,9 +3127,135 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      633_58: 21300096
+      633_79: 21300138
+      633_104: 21300188
+      633_17: 21300014
+      633_30: 21300040
+      633_31: 21300042
+      633_51: 21300082
+      633_32: 21300044
+      633_90: 21300160
+      633_88: 21300156
+      633_29: 21300038
+      633_107: 21300194
+      633_54: 21300088
+      633_115: 21300210
+      633_59: 21300098
+      633_108: 21300196
+      633_122: 21300224
+      633_125: 21300230
+      633_27: 21300034
+      633_105: 21300190
+      633_11: 21300002
+      633_19: 21300018
+      633_120: 21300220
+      633_61: 21300102
+      633_95: 21300170
+      633_75: 21300130
+      633_70: 21300120
+      633_69: 21300118
+      633_94: 21300168
+      633_60: 21300100
+      633_109: 21300198
+      633_24: 21300028
+      633_34: 21300048
+      633_80: 21300140
+      633_110: 21300200
+      633_21: 21300022
+      633_47: 21300074
+      633_56: 21300092
+      633_48: 21300076
+      633_86: 21300152
+      633_43: 21300066
+      633_106: 21300192
+      633_78: 21300136
+      633_25: 21300030
+      633_121: 21300222
+      633_35: 21300050
+      633_87: 21300154
+      633_67: 21300114
+      633_124: 21300228
+      633_44: 21300068
+      633_64: 21300108
+      633_97: 21300174
+      633_119: 21300218
+      633_111: 21300202
+      633_103: 21300186
+      633_15: 21300010
+      633_39: 21300058
+      633_72: 21300124
+      633_26: 21300032
+      633_62: 21300104
+      633_45: 21300070
+      633_66: 21300112
+      633_71: 21300122
+      633_6: -5228519992418282258
+      633_89: 21300158
+      633_63: 21300106
+      633_74: 21300128
+      633_5: -4610903425492234131
+      633_49: 21300078
+      633_91: 21300162
+      633_28: 21300036
+      633_112: 21300204
+      633_16: 21300012
+      633_73: 21300126
+      633_18: 21300016
+      633_76: 21300132
+      633_57: 21300094
+      633_123: 21300226
+      633_7: 2654820745600035204
+      633_53: 21300086
+      633_0: 5968163249322406057
+      633_96: 21300172
+      633_38: 21300056
+      633_102: 21300184
+      633_2: -9004328637425579342
+      633_99: 21300178
+      633_8: -25221868093646286
+      633_37: 21300054
+      633_93: 21300166
+      633_46: 21300072
+      633_92: 21300164
+      633_42: 21300064
+      633_117: 21300214
+      633_22: 21300024
+      633_12: 21300004
+      633_33: 21300046
+      633_83: 21300146
+      633_41: 21300062
+      633_52: 21300084
+      633_65: 21300110
+      633_1: -6615815634986199815
+      633_3: 7839946660117201970
+      633_114: 21300208
+      633_84: 21300148
+      633_36: 21300052
+      633_85: 21300150
+      633_101: 21300182
+      633_13: 21300006
+      633_81: 21300142
+      633_82: 21300144
+      633_9: -7198432232966350165
+      633_20: 21300020
+      633_10: 21300000
+      633_50: 21300080
+      633_40: 21300060
+      633_113: 21300206
+      633_55: 21300090
+      633_14: 21300008
+      633_100: 21300180
+      633_77: 21300134
+      633_68: 21300116
+      633_118: 21300216
+      633_116: 21300212
+      633_98: 21300176
+      633_4: 6747513852704365710
+      633_23: 21300026
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

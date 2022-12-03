@@ -282,7 +282,7 @@ TextureImporter:
       213: -6498101896313107431
     second: 261_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -299,9 +299,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -310,9 +313,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -333,11 +336,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -348,7 +356,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -359,6 +368,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -2325,9 +2335,102 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      261_77: 21300134
+      261_20: 21300020
+      261_19: 21300018
+      261_40: 21300060
+      261_58: 21300096
+      261_31: 21300042
+      261_61: 21300102
+      261_52: 21300084
+      261_45: 21300070
+      261_74: 21300128
+      261_49: 21300078
+      261_92: 21300164
+      261_9: -6498101896313107431
+      261_25: 21300030
+      261_21: 21300022
+      261_90: 21300160
+      261_54: 21300088
+      261_69: 21300118
+      261_30: 21300040
+      261_86: 21300152
+      261_11: 21300002
+      261_16: 21300012
+      261_63: 21300106
+      261_42: 21300064
+      261_23: 21300026
+      261_56: 21300092
+      261_27: 21300034
+      261_71: 21300122
+      261_18: 21300016
+      261_39: 21300058
+      261_60: 21300100
+      261_53: 21300086
+      261_62: 21300104
+      261_7: 4036670132344755040
+      261_82: 21300144
+      261_64: 21300108
+      261_14: 21300008
+      261_44: 21300068
+      261_15: 21300010
+      261_3: -7357781097156419484
+      261_8: 1962950230460346923
+      261_57: 21300094
+      261_83: 21300146
+      261_75: 21300130
+      261_89: 21300158
+      261_37: 21300054
+      261_48: 21300076
+      261_46: 21300072
+      261_85: 21300150
+      261_24: 21300028
+      261_73: 21300126
+      261_36: 21300052
+      261_26: 21300032
+      261_67: 21300114
+      261_5: -6154044937230168652
+      261_47: 21300074
+      261_1: -289730963061234076
+      261_34: 21300048
+      261_22: 21300024
+      261_38: 21300056
+      261_33: 21300046
+      261_70: 21300120
+      261_72: 21300124
+      261_4: -830030437042977731
+      261_12: 21300004
+      261_43: 21300066
+      261_13: 21300006
+      261_59: 21300098
+      261_35: 21300050
+      261_10: 21300000
+      261_76: 21300132
+      261_29: 21300038
+      261_65: 21300110
+      261_84: 21300148
+      261_87: 21300154
+      261_0: 4237765213936429988
+      261_79: 21300138
+      261_41: 21300062
+      261_32: 21300044
+      261_51: 21300082
+      261_66: 21300112
+      261_17: 21300014
+      261_6: 2012528191229468841
+      261_55: 21300090
+      261_28: 21300036
+      261_91: 21300162
+      261_78: 21300136
+      261_88: 21300156
+      261_50: 21300080
+      261_81: 21300142
+      261_2: -6860855099123008874
+      261_68: 21300116
+      261_80: 21300140
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

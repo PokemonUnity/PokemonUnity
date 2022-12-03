@@ -306,7 +306,7 @@ TextureImporter:
       213: -9220612152160644754
     second: 19f_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -323,9 +323,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -334,9 +337,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -357,11 +360,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -372,7 +380,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -383,6 +392,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -2517,9 +2527,110 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      19f_69: 21300118
+      19f_51: 21300082
+      19f_16: 21300012
+      19f_25: 21300030
+      19f_70: 21300120
+      19f_82: 21300144
+      19f_4: 5074005288682703103
+      19f_36: 21300052
+      19f_92: 21300164
+      19f_77: 21300134
+      19f_95: 21300170
+      19f_6: 7316628998834812483
+      19f_42: 21300064
+      19f_73: 21300126
+      19f_50: 21300080
+      19f_3: -1604319196353309291
+      19f_0: 1318281247563514808
+      19f_15: 21300010
+      19f_1: -2215692268451691224
+      19f_8: 5355089768698830595
+      19f_18: 21300016
+      19f_39: 21300058
+      19f_9: -9220612152160644754
+      19f_46: 21300072
+      19f_71: 21300122
+      19f_41: 21300062
+      19f_21: 21300022
+      19f_83: 21300146
+      19f_29: 21300038
+      19f_91: 21300162
+      19f_57: 21300094
+      19f_74: 21300128
+      19f_81: 21300142
+      19f_84: 21300148
+      19f_88: 21300156
+      19f_75: 21300130
+      19f_76: 21300132
+      19f_13: 21300006
+      19f_60: 21300100
+      19f_85: 21300150
+      19f_34: 21300048
+      19f_33: 21300046
+      19f_61: 21300102
+      19f_64: 21300108
+      19f_20: 21300020
+      19f_49: 21300078
+      19f_80: 21300140
+      19f_5: -2232164915923899184
+      19f_90: 21300160
+      19f_59: 21300098
+      19f_62: 21300104
+      19f_56: 21300092
+      19f_86: 21300152
+      19f_12: 21300004
+      19f_52: 21300084
+      19f_53: 21300086
+      19f_11: 21300002
+      19f_97: 21300174
+      19f_40: 21300060
+      19f_45: 21300070
+      19f_54: 21300088
+      19f_27: 21300034
+      19f_38: 21300056
+      19f_22: 21300024
+      19f_63: 21300106
+      19f_94: 21300168
+      19f_2: -6821901790102024689
+      19f_17: 21300014
+      19f_10: 21300000
+      19f_99: 21300178
+      19f_26: 21300032
+      19f_43: 21300066
+      19f_19: 21300018
+      19f_67: 21300114
+      19f_23: 21300026
+      19f_28: 21300036
+      19f_65: 21300110
+      19f_37: 21300054
+      19f_55: 21300090
+      19f_66: 21300112
+      19f_7: -7936867975180301905
+      19f_24: 21300028
+      19f_93: 21300166
+      19f_78: 21300136
+      19f_30: 21300040
+      19f_89: 21300158
+      19f_87: 21300154
+      19f_47: 21300074
+      19f_100: 21300180
+      19f_32: 21300044
+      19f_68: 21300116
+      19f_98: 21300176
+      19f_35: 21300050
+      19f_72: 21300124
+      19f_79: 21300138
+      19f_44: 21300068
+      19f_48: 21300076
+      19f_14: 21300008
+      19f_58: 21300096
+      19f_96: 21300172
+      19f_31: 21300042
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

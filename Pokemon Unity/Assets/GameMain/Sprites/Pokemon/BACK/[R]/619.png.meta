@@ -402,7 +402,7 @@ TextureImporter:
       213: 8164948419591343511
     second: 619_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -419,9 +419,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -430,9 +433,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -453,11 +456,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -468,7 +476,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -479,6 +488,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3285,9 +3295,142 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      619_47: 21300074
+      619_104: 21300188
+      619_99: 21300178
+      619_10: 21300000
+      619_82: 21300144
+      619_12: 21300004
+      619_112: 21300204
+      619_95: 21300170
+      619_108: 21300196
+      619_71: 21300122
+      619_97: 21300174
+      619_119: 21300218
+      619_0: 6500561117001442057
+      619_114: 21300208
+      619_115: 21300210
+      619_118: 21300216
+      619_2: 273438959085429390
+      619_5: -3016756955591481004
+      619_101: 21300182
+      619_37: 21300054
+      619_127: 21300234
+      619_85: 21300150
+      619_1: 3218707776537248127
+      619_24: 21300028
+      619_20: 21300020
+      619_29: 21300038
+      619_120: 21300220
+      619_26: 21300032
+      619_92: 21300164
+      619_103: 21300186
+      619_31: 21300042
+      619_17: 21300014
+      619_16: 21300012
+      619_102: 21300184
+      619_54: 21300088
+      619_63: 21300106
+      619_96: 21300172
+      619_111: 21300202
+      619_126: 21300232
+      619_3: -8244436472827180655
+      619_33: 21300046
+      619_25: 21300030
+      619_56: 21300092
+      619_106: 21300192
+      619_21: 21300022
+      619_49: 21300078
+      619_55: 21300090
+      619_59: 21300098
+      619_88: 21300156
+      619_65: 21300110
+      619_13: 21300006
+      619_75: 21300130
+      619_68: 21300116
+      619_93: 21300166
+      619_117: 21300214
+      619_15: 21300010
+      619_6: -4549392718298511027
+      619_66: 21300112
+      619_51: 21300082
+      619_30: 21300040
+      619_19: 21300018
+      619_45: 21300070
+      619_109: 21300198
+      619_110: 21300200
+      619_113: 21300206
+      619_130: 21300240
+      619_7: 6272298997312945253
+      619_60: 21300100
+      619_35: 21300050
+      619_9: 8164948419591343511
+      619_84: 21300148
+      619_128: 21300236
+      619_61: 21300102
+      619_116: 21300212
+      619_46: 21300072
+      619_94: 21300168
+      619_44: 21300068
+      619_87: 21300154
+      619_124: 21300228
+      619_8: -2220800794169895538
+      619_34: 21300048
+      619_131: 21300242
+      619_36: 21300052
+      619_125: 21300230
+      619_83: 21300146
+      619_91: 21300162
+      619_22: 21300024
+      619_43: 21300066
+      619_123: 21300226
+      619_73: 21300126
+      619_23: 21300026
+      619_39: 21300058
+      619_53: 21300086
+      619_67: 21300114
+      619_121: 21300222
+      619_4: -6281763290483686276
+      619_78: 21300136
+      619_98: 21300176
+      619_48: 21300076
+      619_27: 21300034
+      619_41: 21300062
+      619_105: 21300190
+      619_74: 21300128
+      619_89: 21300158
+      619_132: 21300244
+      619_40: 21300060
+      619_57: 21300094
+      619_32: 21300044
+      619_64: 21300108
+      619_80: 21300140
+      619_107: 21300194
+      619_81: 21300142
+      619_18: 21300016
+      619_129: 21300238
+      619_77: 21300134
+      619_11: 21300002
+      619_42: 21300064
+      619_52: 21300084
+      619_79: 21300138
+      619_58: 21300096
+      619_86: 21300152
+      619_70: 21300120
+      619_76: 21300132
+      619_100: 21300180
+      619_72: 21300124
+      619_14: 21300008
+      619_28: 21300036
+      619_90: 21300160
+      619_50: 21300080
+      619_62: 21300104
+      619_122: 21300224
+      619_38: 21300056
+      619_69: 21300118
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

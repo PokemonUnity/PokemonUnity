@@ -402,7 +402,7 @@ TextureImporter:
       213: -6325598616238944312
     second: 554zen_29
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -419,9 +419,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -430,9 +433,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -453,11 +456,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -468,7 +476,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -479,6 +488,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3285,9 +3295,142 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      554zen_3: -5026463100712716611
+      554zen_24: -6093263687599719716
+      554zen_40: 21300020
+      554zen_55: 21300050
+      554zen_90: 21300120
+      554zen_47: 21300034
+      554zen_10: -3506330220994817256
+      554zen_92: 21300124
+      554zen_61: 21300062
+      554zen_106: 21300152
+      554zen_16: -9130545407829962888
+      554zen_85: 21300110
+      554zen_68: 21300076
+      554zen_19: -8178890623333168812
+      554zen_79: 21300098
+      554zen_91: 21300122
+      554zen_44: 21300028
+      554zen_45: 21300030
+      554zen_131: 21300202
+      554zen_105: 21300150
+      554zen_31: 21300002
+      554zen_122: 21300184
+      554zen_69: 21300078
+      554zen_117: 21300174
+      554zen_67: 21300074
+      554zen_75: 21300090
+      554zen_82: 21300104
+      554zen_96: 21300132
+      554zen_8: -4866488634597112298
+      554zen_49: 21300038
+      554zen_53: 21300046
+      554zen_21: -7674898095912245149
+      554zen_95: 21300130
+      554zen_109: 21300158
+      554zen_7: 3308342344224050285
+      554zen_127: 21300194
+      554zen_70: 21300080
+      554zen_130: 21300200
+      554zen_110: 21300160
+      554zen_125: 21300190
+      554zen_86: 21300112
+      554zen_94: 21300128
+      554zen_115: 21300170
+      554zen_30: 21300000
+      554zen_35: 21300010
+      554zen_17: 4723490747695692796
+      554zen_32: 21300004
+      554zen_84: 21300108
+      554zen_39: 21300018
+      554zen_64: 21300068
+      554zen_51: 21300042
+      554zen_74: 21300088
+      554zen_71: 21300082
+      554zen_121: 21300182
+      554zen_102: 21300144
+      554zen_65: 21300070
+      554zen_20: -3618046457502940127
+      554zen_118: 21300176
+      554zen_28: 4007941685509453849
+      554zen_37: 21300014
+      554zen_48: 21300036
+      554zen_46: 21300032
+      554zen_18: -3772674037222640566
+      554zen_33: 21300006
+      554zen_9: 7155766984820445253
+      554zen_72: 21300084
+      554zen_111: 21300162
+      554zen_112: 21300164
+      554zen_132: 21300204
+      554zen_99: 21300138
+      554zen_60: 21300060
+      554zen_77: 21300094
+      554zen_41: 21300022
+      554zen_50: 21300040
+      554zen_101: 21300142
+      554zen_120: 21300180
+      554zen_15: 3147373506579234212
+      554zen_66: 21300072
+      554zen_12: 605140543988654153
+      554zen_108: 21300156
+      554zen_22: 3918703525343457553
+      554zen_83: 21300106
+      554zen_119: 21300178
+      554zen_98: 21300136
+      554zen_42: 21300024
+      554zen_73: 21300086
+      554zen_81: 21300102
+      554zen_100: 21300140
+      554zen_124: 21300188
+      554zen_129: 21300198
+      554zen_88: 21300116
+      554zen_4: -7990092219474081256
+      554zen_126: 21300192
+      554zen_62: 21300064
+      554zen_0: 7933658115414061037
+      554zen_80: 21300100
+      554zen_113: 21300166
+      554zen_58: 21300056
+      554zen_38: 21300016
+      554zen_54: 21300048
+      554zen_5: 5204247809692404634
+      554zen_23: -6691655976229727376
+      554zen_1: -1627155929299645162
+      554zen_6: -3367211759521457496
+      554zen_93: 21300126
+      554zen_107: 21300154
+      554zen_13: -5983766084274383106
+      554zen_43: 21300026
+      554zen_63: 21300066
+      554zen_14: -5654114172180776093
+      554zen_36: 21300012
+      554zen_89: 21300118
+      554zen_128: 21300196
+      554zen_25: -273658045675347617
+      554zen_57: 21300054
+      554zen_11: -8080608556065690316
+      554zen_78: 21300096
+      554zen_29: -6325598616238944312
+      554zen_87: 21300114
+      554zen_97: 21300134
+      554zen_103: 21300146
+      554zen_59: 21300058
+      554zen_27: -3342227146987462108
+      554zen_114: 21300168
+      554zen_2: -7751354521288627485
+      554zen_56: 21300052
+      554zen_104: 21300148
+      554zen_116: 21300172
+      554zen_26: 7851126261111964227
+      554zen_34: 21300008
+      554zen_76: 21300092
+      554zen_52: 21300044
+      554zen_123: 21300186
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

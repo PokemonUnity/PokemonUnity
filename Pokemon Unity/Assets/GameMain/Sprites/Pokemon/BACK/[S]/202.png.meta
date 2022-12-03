@@ -366,7 +366,7 @@ TextureImporter:
       213: -4998927174476963919
     second: 202_9
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -383,9 +383,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -394,9 +397,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -417,11 +420,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -432,7 +440,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
@@ -443,6 +452,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -2997,9 +3007,130 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      202_14: 21300008
+      202_101: 21300182
+      202_36: 21300052
+      202_66: 21300112
+      202_44: 21300068
+      202_69: 21300118
+      202_12: 21300004
+      202_3: 2209841297838818502
+      202_43: 21300066
+      202_99: 21300178
+      202_16: 21300012
+      202_90: 21300160
+      202_108: 21300196
+      202_40: 21300060
+      202_2: 6811670240688017097
+      202_81: 21300142
+      202_109: 21300198
+      202_31: 21300042
+      202_9: -4998927174476963919
+      202_27: 21300034
+      202_52: 21300084
+      202_80: 21300140
+      202_113: 21300206
+      202_63: 21300106
+      202_22: 21300024
+      202_24: 21300028
+      202_73: 21300126
+      202_83: 21300146
+      202_21: 21300022
+      202_105: 21300190
+      202_119: 21300218
+      202_53: 21300086
+      202_45: 21300070
+      202_118: 21300216
+      202_58: 21300096
+      202_13: 21300006
+      202_59: 21300098
+      202_103: 21300186
+      202_61: 21300102
+      202_34: 21300048
+      202_68: 21300116
+      202_38: 21300056
+      202_5: 3174944236409803180
+      202_85: 21300150
+      202_112: 21300204
+      202_67: 21300114
+      202_32: 21300044
+      202_46: 21300072
+      202_97: 21300174
+      202_87: 21300154
+      202_117: 21300214
+      202_57: 21300094
+      202_102: 21300184
+      202_6: -3052493696361067508
+      202_95: 21300170
+      202_116: 21300212
+      202_93: 21300166
+      202_51: 21300082
+      202_54: 21300088
+      202_4: 8597243277290131015
+      202_111: 21300202
+      202_77: 21300134
+      202_0: 4808244930049875026
+      202_64: 21300108
+      202_60: 21300100
+      202_84: 21300148
+      202_106: 21300192
+      202_8: 1227760237172250651
+      202_17: 21300014
+      202_107: 21300194
+      202_33: 21300046
+      202_19: 21300018
+      202_79: 21300138
+      202_75: 21300130
+      202_78: 21300136
+      202_110: 21300200
+      202_92: 21300164
+      202_49: 21300078
+      202_74: 21300128
+      202_96: 21300172
+      202_28: 21300036
+      202_35: 21300050
+      202_65: 21300110
+      202_71: 21300122
+      202_115: 21300210
+      202_120: 21300220
+      202_7: 5886054734314969273
+      202_88: 21300156
+      202_10: 21300000
+      202_56: 21300092
+      202_98: 21300176
+      202_30: 21300040
+      202_89: 21300158
+      202_20: 21300020
+      202_25: 21300030
+      202_104: 21300188
+      202_41: 21300062
+      202_18: 21300016
+      202_55: 21300090
+      202_1: 5313759403415041888
+      202_62: 21300104
+      202_11: 21300002
+      202_42: 21300064
+      202_94: 21300168
+      202_114: 21300208
+      202_23: 21300026
+      202_50: 21300080
+      202_86: 21300152
+      202_70: 21300120
+      202_82: 21300144
+      202_26: 21300032
+      202_48: 21300076
+      202_39: 21300058
+      202_37: 21300054
+      202_100: 21300180
+      202_47: 21300074
+      202_29: 21300038
+      202_72: 21300124
+      202_15: 21300010
+      202_76: 21300132
+      202_91: 21300162
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
