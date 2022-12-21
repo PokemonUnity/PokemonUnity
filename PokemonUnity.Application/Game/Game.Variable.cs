@@ -53,11 +53,12 @@ namespace PokemonUnity
 		public static PokemonEssentials.Interface.IGameAudioPlay Audio { get; set; }
 		public PokemonEssentials.Interface.IGraphics Graphics { get; set; }
 		public PokemonEssentials.Interface.IInterpreter Interpreter { get; set; }
-		public PokemonEssentials.Interface.Screen.IGameScenesUI Scenes { get; private set; }
-		public PokemonEssentials.Interface.Screen.IGameScreensUI Screens { get; private set; }
+		public PokemonEssentials.Interface.Screen.IGameScenesUI Scenes { get; set; }
+		public PokemonEssentials.Interface.Screen.IGameScreensUI Screens { get; set; }
 		public Feature Features { get; private set; }
 		public Challenges Challenge { get; private set; }
 		//public GameModes Mode { get; private set; }
+
 		#region Player and Overworld Data
 		//public Regions Region { get; private set; }
 		//public Locations Location { get; private set; }
@@ -94,6 +95,88 @@ namespace PokemonUnity
 		//public List<Items> Bag_Items { get; set; }
 		//public Character.PC PC { get; private set; }
 		//public Character.Bag Bag { get; private set; }
+		#endregion
+
+		#region Events used by Game Interface
+		/// <summary>
+		/// Fires whenever the player moves to a new map. Event handler receives the old
+		/// map ID or 0 if none.  Also fires when the first map of the game is loaded
+		/// </summary>
+		public event EventHandler OnMapChange;
+		/// <summary>
+		/// Fires whenever the map scene is regenerated and soon after the player moves
+		/// to a new map.
+		/// </summary>
+		//event EventHandler<IOnMapSceneChangeEventArgs> OnMapSceneChange;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnMapSceneChangeEventArgs> OnMapSceneChange;
+		/// <summary>
+		/// Fires each frame during a map update.
+		/// </summary>
+		public event EventHandler OnMapUpdate;
+		/// <summary>
+		/// Fires whenever one map is about to change to a different one. Event handler
+		/// receives the new map ID and the Game_Map object representing the new map.
+		/// When the event handler is called, Game.GameData.GameMap still refers to the old map.
+		/// </summary>
+		public event EventHandler OnMapChanging;
+		/// <summary>
+		/// Fires whenever the player or another event leaves a tile.
+		/// </summary>
+		//event EventHandler<IOnLeaveTileEventArgs> OnLeaveTile;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnLeaveTileEventArgs> OnLeaveTile;
+		/// <summary>
+		/// Fires whenever the player takes a step.
+		/// </summary>
+		public event EventHandler OnStepTaken;
+		/// <summary>
+		/// Fires whenever the player takes a step. The event handler may possibly move
+		/// the player elsewhere.
+		/// </summary>
+		//event EventHandler<IOnStepTakenTransferPossibleEventArgs> OnStepTakenTransferPossible;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs> OnStepTakenTransferPossible;
+		/// <summary>
+		/// Fires whenever the player or another event enters a tile.
+		/// </summary>
+		//event EventHandler<IOnStepTakenFieldMovementEventArgs> OnStepTakenFieldMovement;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnStepTakenFieldMovementEventArgs> OnStepTakenFieldMovement;
+		/// <summary>
+		/// Triggers at the start of a wild battle.  Event handlers can provide their own
+		/// wild battle routines to override the default behavior.
+		/// </summary>
+		//event EventHandler<IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
+		/// <summary>
+		/// Triggers whenever a wild Pokémon battle ends
+		/// </summary>
+		//event EventHandler<IOnWildBattleEndEventArgs> OnWildBattleEnd;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnWildBattleEndEventArgs> OnWildBattleEnd;
+		/// <summary>
+		/// Triggers whenever a wild Pokémon is created
+		/// </summary>
+		//event EventHandler<IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
+		/// <summary>
+		/// Triggers whenever an NPC trainer's Pokémon party is loaded
+		/// </summary>
+		//event EventHandler<IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
+		/// <summary>
+		/// Fires whenever a spriteset is created.
+		/// </summary>
+		//event EventHandler<IOnSpritesetCreateEventArgs> OnSpritesetCreate;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnSpritesetCreateEventArgs> OnSpritesetCreate;
+		public event EventHandler OnStartBattle;
+		//event EventHandler OnEndBattle;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs> OnEndBattle;
+		/// <summary>
+		/// Fires whenever a map is created. Event handler receives two parameters: the
+		/// map (RPG.Map) and the tileset (RPG.Tileset)
+		/// </summary>
+		public event EventHandler OnMapCreate;
+		/// <summary>
+		/// Triggers when the player presses the Action button on the map.
+		/// </summary>
+		public event EventHandler OnAction;
 		#endregion
 	}
 }

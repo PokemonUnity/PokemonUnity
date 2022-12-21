@@ -90,7 +90,7 @@
     <Compile Include="Framework\Essentials\Item\IPokeRadar.cs" />
     <Compile Include="Framework\Essentials\Item\IPokeballHandlers.cs" />
     <Compile Include="Framework\Essentials\Item\IItemHandlers.cs" />
-    <Compile Include="Framework\Essentials\PokeBattle\ISafariZone.cs" />
+    <Compile Include="Framework\Essentials\PokeBattle\IFakeBattler.cs" />
     <Compile Include="Framework\Essentials\Pokemon\IPokemonEvolution.cs" />
     <Compile Include="Framework\Essentials\Pokemon\IPokemonMegaEvolution.cs" />
     <Compile Include="Framework\Essentials\Pokemon\IPokemonChatter.cs" />
@@ -99,6 +99,10 @@
     <Compile Include="Framework\Essentials\ISpritesetMap.cs" />
     <Compile Include="Framework\Essentials\Screen\IBattle.cs" />
     <Compile Include="Framework\Essentials\Screen\IBattleSwap.cs" />
+    <Compile Include="Framework\Essentials\Screen\IEvolution.cs" />
+    <Compile Include="Framework\Essentials\Screen\IIntro.cs" />
+    <Compile Include="Framework\Essentials\Screen\ISafari.cs" />
+    <Compile Include="Framework\Essentials\Screen\ITextEntry.cs" />
     <Compile Include="Framework\Essentials\Screen\IMysteryGift.cs" />
     <Compile Include="Framework\Essentials\Screen\IMart.cs" />
     <Compile Include="Framework\Essentials\Screen\IOption.cs" />
@@ -173,7 +177,7 @@
     <Compile Include="Framework\Essentials\PokeBattle\IBattlerEffect.cs" />
     <Compile Include="Framework\Essentials\PokeBattle\IBattleTrainer.cs" />
     <Compile Include="Framework\Essentials\PokeBattle\IDamageState.cs" />
-    <Compile Include="Framework\Essentials\Battle\ISafari.cs" />
+    <Compile Include="Framework\Essentials\Field\ISafariState.cs" />
     <Compile Include="Framework\Essentials\Battle\IOrgBattleRules.cs" />
     <Compile Include="Framework\IDatabase.cs" />
     <Compile Include="Combat\Trainer\Data\TrainerMetaData.cs" />
@@ -227,8 +231,6 @@
   <ItemGroup>
     <None Include=".editorconfig" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Framework\Essentials\System\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

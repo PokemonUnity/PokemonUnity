@@ -58,7 +58,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		public float Y { get; set; }
 		/// <summary>
-		/// If true or 1, the text is right aligned. If 2, the text is centered.
+		/// If false, the text is right aligned. If null, the text is centered.
 		/// Otherwise, the text is left aligned.
 		/// </summary>
 		public bool? LeftAligned { get; set; }
@@ -71,6 +71,38 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		public PokemonEssentials.Interface.IColor Shadow { get; set; }
 
+		/// <summary>
+		/// </summary>
+		/// <param name="text">Text to draw</param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="leftAligned">
+		/// If 1, the text is right aligned. If 2, the text is centered.
+		/// Otherwise, the text is left aligned.
+		/// </param>
+		/// <param name="base_"></param>
+		/// <param name="shadow"></param>
+		public TextPosition(string text, float x, float y, int leftAligned, IColor base_, IColor shadow)
+		{
+			Text = text;
+			X = x;
+			Y = y;
+			LeftAligned = leftAligned == 1 ? false : (leftAligned == 2 ? (bool?)null : true);
+			Base = base_;
+			Shadow = shadow;
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="text">Text to draw</param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="leftAligned">
+		/// If false, the text is right aligned. If null, the text is centered.
+		/// Otherwise, the text is left aligned.
+		/// </param>
+		/// <param name="base_"></param>
+		/// <param name="shadow"></param>
 		public TextPosition(string text, float x, float y, bool? leftAligned, IColor base_, IColor shadow)
 		{
 			Text = text;

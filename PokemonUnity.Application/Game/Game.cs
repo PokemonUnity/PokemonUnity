@@ -22,6 +22,8 @@ namespace PokemonUnity
 	//ToDo: Should all variables in Game be static?
 	public partial class Game
 	{
+		//private readonly static Lazy<Game> _instance = new Lazy<Game>(() => new Game());
+
 		#region Constructor
 		static Game()
 		{
@@ -189,7 +191,9 @@ namespace PokemonUnity
 
 		public Game SetScenes(params PokemonEssentials.Interface.Screen.IScene[] scenes)
 		{
-			Scenes = new UX.Scene(scenes);
+			//Scenes = new UX.Scene(scenes);
+			//if (Scenes == null)
+			Scenes.initialize(scenes);
 			return this;
 		}
 

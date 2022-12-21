@@ -167,7 +167,7 @@ namespace PokemonUnity.Combat
 				@battle.pbDisplay(Game._INTL("{1}'s {2} had no effect on {3}!",
 					opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),ToString(true)));
 				return false;
-			}   
+			}
 			if (this.status!=0) return false;
 			if (hasWorkingAbility(Abilities.IMMUNITY) ||
 				(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
@@ -280,7 +280,7 @@ namespace PokemonUnity.Combat
 				@battle.pbDisplay(Game._INTL("{1}'s {2} had no effect on {3}!",
 					opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),ToString(true)));
 				return false;
-			}   
+			}
 			if (hasWorkingAbility(Abilities.WATER_VEIL) ||
 				(hasWorkingAbility(Abilities.FLOWER_VEIL) && pbHasType(Types.GRASS)) ||
 				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.pbWeather==Weather.SUNNYDAY ||
@@ -460,7 +460,7 @@ namespace PokemonUnity.Combat
 		}
 		#endregion
 
-		#region Generalised status displays
+		#region Generalized status displays
 		public void pbContinueStatus(bool showAnim=true) {
 			switch (this.status) {
 				case Status.SLEEP:
@@ -490,7 +490,7 @@ namespace PokemonUnity.Combat
 			Status oldstatus=this.status;
 			this.status=0;
 			this.StatusCount=0;
-			if (showMessages)  
+			if (showMessages)
 				switch (oldstatus) {
 					case Status.SLEEP:
 						@battle.pbDisplay(Game._INTL("{1} woke up!",ToString()));
@@ -645,7 +645,7 @@ namespace PokemonUnity.Combat
 				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
 					return pbCanReduceStatStage(stat,attacker,showMessages,moldbreaker:moldbreaker,ignoreContrary: true);
 			if (isFainted()) return false;
-			if (pbTooHigh(stat)) { 
+			if (pbTooHigh(stat)) {
 				if (showMessages) @battle.pbDisplay(Game._INTL("{1}'s {2} won't go any higher!",
 					ToString(),Game._INTL(stat.ToString(TextScripts.Name))));
 				return false;
@@ -655,7 +655,7 @@ namespace PokemonUnity.Combat
 
 		public int pbIncreaseStatBasic(Stats stat,int increment,IBattler attacker=null,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
-				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker()) { 
+				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker()) {
 					if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
 						return pbReduceStatBasic(stat,increment,attacker,moldbreaker,true);
 					if (hasWorkingAbility(Abilities.SIMPLE)) increment*=2;
@@ -669,15 +669,15 @@ namespace PokemonUnity.Combat
 		public bool pbIncreaseStat(Stats stat,int increment,IBattler attacker,bool showMessages,IBattleMove move=null,bool upanim=true,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
-				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
-					return pbReduceStat(stat,increment,attacker,showMessages,move,upanim,moldbreaker,true);
+					if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
+						return pbReduceStat(stat,increment,attacker,showMessages,move,upanim,moldbreaker,true);
 			if (stat!=Stats.ATTACK && stat!=Stats.DEFENSE &&
 				stat!=Stats.SPATK && stat!=Stats.SPDEF &&
 				stat!=Stats.SPEED && stat!=Stats.EVASION &&
 				stat!=Stats.ACCURACY) return false;
-			if (pbCanIncreaseStatStage(stat, attacker, showMessages, move, moldbreaker, ignoreContrary)) { 
+			if (pbCanIncreaseStatStage(stat, attacker, showMessages, move, moldbreaker, ignoreContrary)) {
 				increment=pbIncreaseStatBasic(stat,increment,attacker,moldbreaker,ignoreContrary);
-				if (increment > 0) { 
+				if (increment > 0) {
 					if (ignoreContrary)
 						if (upanim) @battle.pbDisplay(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(this.ability.ToString(TextScripts.Name))));
 					if (upanim) @battle.pbCommonAnimation("StatUp", this, null);
@@ -694,18 +694,18 @@ namespace PokemonUnity.Combat
 		public bool pbIncreaseStatWithCause(Stats stat,int increment,IBattler attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
-				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
-					return pbReduceStatWithCause(stat,increment,attacker,cause,showanim,showmessage,moldbreaker,true);
+					if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
+						return pbReduceStatWithCause(stat,increment,attacker,cause,showanim,showmessage,moldbreaker,true);
 			if (stat!=Stats.ATTACK && stat!=Stats.DEFENSE &&
 				stat!=Stats.SPATK && stat!=Stats.SPDEF &&
 				stat!=Stats.SPEED && stat!=Stats.EVASION &&
 				stat!=Stats.ACCURACY) return false;
 			if (pbCanIncreaseStatStage(stat,attacker,false,null,moldbreaker,ignoreContrary))
 				increment=pbIncreaseStatBasic(stat,increment,attacker,moldbreaker,ignoreContrary);
-				if (increment > 0) { 
+				if (increment > 0) {
 					//if (ignoreContrary) //ToDo: UpAnimation?
 					//  if (upanim) @battle.pbDisplay(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(this.ability.ToString(TextScripts.Name))));
-					if (showanim) @battle.pbCommonAnimation("StatUp", this, null); 
+					if (showanim) @battle.pbCommonAnimation("StatUp", this, null);
 					string [] arrStatTexts = null;
 					if (attacker.Index==this.Index)
 						arrStatTexts=new string[] {Game._INTL("{1}'s {2} raised its {3}!",ToString(),cause,Game._INTL(stat.ToString(TextScripts.Name))),
@@ -715,7 +715,7 @@ namespace PokemonUnity.Combat
 						arrStatTexts=new string[] {Game._INTL("{1}'s {2} raised {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name))),
 							Game._INTL("{1}'s {2} sharply raised {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name))),
 							Game._INTL("{1}'s {2} drastically raised {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name)))};
-					if (showmessage) @battle.pbDisplay(arrStatTexts[Math.Min(increment-1,2)]); 
+					if (showmessage) @battle.pbDisplay(arrStatTexts[Math.Min(increment-1,2)]);
 					return true;
 				}
 			return false;
@@ -742,8 +742,8 @@ namespace PokemonUnity.Combat
 		public bool pbCanReduceStatStage(Stats stat,IBattler attacker=null,bool showMessages=false,IBattleMove move=null,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
-				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
-					return pbCanIncreaseStatStage(stat,attacker,showMessages,move,moldbreaker,true);
+					if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
+						return pbCanIncreaseStatStage(stat,attacker,showMessages,move,moldbreaker,true);
 			if (isFainted()) return false;
 			bool selfreduce=(attacker.IsNotNullOrNone() && attacker.Index==this.Index);
 			if (!selfreduce) {
@@ -814,18 +814,18 @@ namespace PokemonUnity.Combat
 		public bool pbReduceStat(Stats stat,int increment,IBattler attacker,bool showMessages,IBattleMove move=null,bool downanim=true,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
-				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
-					return pbIncreaseStat(stat,increment,attacker,showMessages,move,downanim,moldbreaker,true);
+					if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
+						return pbIncreaseStat(stat,increment,attacker,showMessages,move,downanim,moldbreaker,true);
 			if (stat!=Stats.ATTACK && stat!=Stats.DEFENSE &&
 				stat!=Stats.SPATK && stat!=Stats.SPDEF &&
 				stat!=Stats.SPEED && stat!=Stats.EVASION &&
 				stat!=Stats.ACCURACY) return false;
-			if (pbCanReduceStatStage(stat,attacker,showMessages,move,moldbreaker,ignoreContrary))
+			if (pbCanReduceStatStage(stat,attacker,showMessages,move,moldbreaker,ignoreContrary)) {
 				increment=pbReduceStatBasic(stat,increment,attacker,moldbreaker,ignoreContrary);
 				if (increment > 0) {
 					if (ignoreContrary)
 						if (downanim) @battle.pbDisplay(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(this.ability.ToString(TextScripts.Name))));
-					if (downanim) @battle.pbCommonAnimation("StatDown", this, null); 
+					if (downanim) @battle.pbCommonAnimation("StatDown", this, null);
 					string[] arrStatTexts= new string[] {Game._INTL("{1}'s {2} fell!",ToString(),Game._INTL(stat.ToString(TextScripts.Name))),
 						Game._INTL("{1}'s {2} harshly fell!",ToString(),Game._INTL(stat.ToString(TextScripts.Name))),
 						Game._INTL("{1}'s {2} severely fell!",ToString(),Game._INTL(stat.ToString(TextScripts.Name)))};
@@ -838,14 +838,15 @@ namespace PokemonUnity.Combat
 						pbIncreaseStatWithCause(Stats.SPATK,2,this,Game._INTL(this.ability.ToString(TextScripts.Name)));
 					return true;
 				}
+			}
 			return false;
 		}
 
 		public bool pbReduceStatWithCause(Stats stat,int increment,IBattler attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false) {
 			if (!moldbreaker)
 				if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker())
-				if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
-					return pbIncreaseStatWithCause(stat,increment,attacker,cause,showanim,showmessage,moldbreaker,true);
+					if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
+						return pbIncreaseStatWithCause(stat,increment,attacker,cause,showanim,showmessage,moldbreaker,true);
 			if (stat!=Stats.ATTACK && stat!=Stats.DEFENSE &&
 				stat!=Stats.SPATK && stat!=Stats.SPDEF &&
 				stat!=Stats.SPEED && stat!=Stats.EVASION &&
@@ -853,9 +854,9 @@ namespace PokemonUnity.Combat
 			if (pbCanReduceStatStage(stat, attacker, false, null, moldbreaker, ignoreContrary)) {
 				increment=pbReduceStatBasic(stat,increment,attacker,moldbreaker,ignoreContrary);
 				if (increment > 0) {
-				//if (ignoreContrary) //ToDo: DownAnimation?
-				//  if (downanim) @battle.pbDisplay(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(this.ability.ToString(TextScripts.Name)))); 
-				if (showanim) @battle.pbCommonAnimation("StatDown",this,null);
+					if (ignoreContrary) //DownAnimation?  must be a typo for "ShowAnimation" -> showanim
+						if (showanim) @battle.pbDisplay(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(this.ability.ToString(TextScripts.Name))));
+					if (showanim) @battle.pbCommonAnimation("StatDown",this,null);
 				string[] arrStatTexts = null;
 				if (attacker.Index==this.Index)
 					arrStatTexts=new string[] {Game._INTL("{1}'s {2} lowered its {3}!",ToString(),cause,Game._INTL(stat.ToString(TextScripts.Name))),
@@ -865,7 +866,7 @@ namespace PokemonUnity.Combat
 					arrStatTexts=new string[] {Game._INTL("{1}'s {2} lowered {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name))),
 						Game._INTL("{1}'s {2} harshly lowered {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name))),
 						Game._INTL("{1}'s {2} severely lowered {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name)))};
-				if (showmessage) @battle.pbDisplay(arrStatTexts[Math.Min(increment-1,2)]); 
+				if (showmessage) @battle.pbDisplay(arrStatTexts[Math.Min(increment-1,2)]);
 				// Defiant
 				if (hasWorkingAbility(Abilities.DEFIANT) && (!attacker.IsNotNullOrNone() || attacker.pbIsOpposing(this.Index)))
 					pbIncreaseStatWithCause(Stats.ATTACK,2,this,Game._INTL(this.ability.ToString(TextScripts.Name)));

@@ -42,17 +42,34 @@ namespace PokemonEssentials.Interface.Field
 
 		bool pbTestPass(IGameCharacter follower, float x, float y, int? direction = null);
 
-		// Same map only
+		/// <summary>
+		/// Same map only
+		/// </summary>
+		/// <param name="follower"></param>
+		/// <param name="direction"></param>
 		void moveThrough(IGameCharacter follower, int direction);
 
-		// Same map only
+		/// <summary>
+		/// Same map only
+		/// </summary>
+		/// <param name="follower"></param>
+		/// <param name="direction"></param>
 		void moveFancy(IGameCharacter follower, int direction);
 
-		// Same map only
+		/// <summary>
+		/// Same map only
+		/// </summary>
+		/// <param name="follower"></param>
+		/// <param name="direction"></param>
 		void jumpFancy(IGameCharacter follower, int direction);
 
 		void pbFancyMoveTo(IGameCharacter follower, float newX, float newY);
 
+		/// <summary>
+		/// Fires whenever a spriteset is created.
+		/// </summary>
+		//event EventHandler<IOnSpritesetCreateEventArgs> OnSpritesetCreate;
+		event Action<object, EventArg.IOnSpritesetCreateEventArgs> OnSpritesetCreate;
 		//Events.onSpritesetCreate+=delegate(object sender, EventArgs e) {
 		//   spriteset=e[0]; // Spriteset being created
 		//   viewport=e[1]; // Viewport used for tilemap and characters
@@ -60,6 +77,12 @@ namespace PokemonEssentials.Interface.Field
 		//   spriteset.addUserSprite(new DependentEventSprites(viewport,map));
 		//}
 
+		/// <summary>
+		/// Fires whenever the map scene is regenerated and soon after the player moves
+		/// to a new map.
+		/// </summary>
+		//event EventHandler<IOnMapSceneChangeEventArgs> OnMapSceneChange;
+		event Action<object, EventArg.IOnMapSceneChangeEventArgs> OnMapSceneChange;
 		//Events.onMapSceneChange+=delegate(object sender, EventArgs e) {
 		//   scene=e[0];
 		//   mapChanged=e[1];
@@ -130,8 +153,8 @@ namespace PokemonEssentials.Interface.Field
 
 		void update();
 
-		void dispose();
+		//void dispose();
 
-		bool disposed();
+		bool disposed { get; }
 	}
 }

@@ -17,31 +17,35 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Combat
 {
-	public class PokeBattle_RecordedBattleModule<out IBattle> : Battle, IRecordedBattleModule<IBattle>, IBattle, IBattleRecordData
-			//where TBattle : IBattle, IBattleRecordData
+	public class PokeBattle_RecordedBattleModule<TBattle> : Battle, IRecordedBattleModule<IBattle>, IBattle, IBattleRecordData
+			where TBattle : IBattle, IBattleRecordData
 	{
 		#region Variables
-		public IList<int> randomnums { get; protected set; }
+		public IList<int> randomnumbers { get; protected set; }
 		//public IList<int[][]> rounds { get; protected set; }
 		public IList<KeyValuePair<MenuCommands,int>[]> rounds { get; protected set; }
 		public IList<int> switches { get; protected set; }
 		public int roundindex { get; protected set; }
 		public IBattleMetaData properties { get; protected set; }
-		public int battletype { get; protected set; }
+		//public int pbGetBattleType { get { return battletype; } }
+		protected int battletype;
 		#endregion
 
-		public PokeBattle_RecordedBattleModule(IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2,PokemonEssentials.Interface.PokeBattle.ITrainer[] player,PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent) //: base (scene, p1, p2, player, opponent)
+		public PokeBattle_RecordedBattleModule(IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2,PokemonEssentials.Interface.PokeBattle.ITrainer[] player,PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent)
+			: base (scene, p1, p2, player, opponent)
 		{ (this as IRecordedBattleModule<TBattle>).initialize(scene, p1, p2, player, opponent); }
 		public IBattle initialize(IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2,PokemonEssentials.Interface.PokeBattle.ITrainer[] player,PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent)
 		{
+			battletype = pbGetBattleType();
 			//@randomnumbers=new List<int>();
-			@randomnums=new List<int>();
+			randomnumbers=new List<int>();
 			//@rounds=new List<int[][]>();
 			@rounds=new List<KeyValuePair<MenuCommands,int>[]>();
 			@switches=new List<int>();
 			@roundindex=-1;
 			//@properties=new object();
 			base.initialize(scene, p1, p2, player, opponent);
+			return this;
 		}
 
 		#region Methods
@@ -92,7 +96,8 @@ namespace PokemonUnity.Combat
 
 		public string pbDumpRecord() {
 			//return Marshal.dump([pbGetBattleType,@properties,@rounds,@randomnumbers,@switches]);
-			return new { pbGetBattleType(), @properties, @rounds, @randomnums, @switches }.ToString();
+			//return new { pbGetBattleType(), @properties, @rounds, randomnumbers, @switches }.ToString();
+			return new { @battletype, @properties, @rounds, randomnumbers, @switches }.ToString();
 		}
 
 		public override int pbSwitchInBetween(int i1,bool i2,bool i3) {
@@ -154,7 +159,7 @@ namespace PokemonUnity.Combat
 			@roundindex+=1;
 			//@rounds[@roundindex]=new int[4][]; //[[],[],[],[]];
 			//@rounds.Add(new int[battlers.Length][]); //[[],[],[],[]];
-			@rounds.Add(new KeyValuePair<MenuCommands, int>[battlers.Length]); 
+			@rounds.Add(new KeyValuePair<MenuCommands, int>[battlers.Length]);
 			base.pbCommandPhase();
 		}
 
@@ -164,38 +169,39 @@ namespace PokemonUnity.Combat
 		public override int pbRandom(int num) {
 			int ret=base.pbRandom(num);
 			//@randomnumbers.Add(ret);
-			@randomnums.Add(ret);
+			randomnumbers.Add(ret);
 			return ret;
 		}
 		#endregion
 	}
 
-	public static class BattlePlayerHelper {
+	/*public static class BattlePlayerHelper {
 		public static ITrainer[] pbGetOpponent(IBattle battle) {
 			//return this.pbCreateTrainerInfo(battle[1]["opponent"]);
 			return pbCreateTrainerInfo(battle.opponent);
 		}
 
 		public static IAudioBGM pbGetBattleBGM(IBattle battle) {
-			return pbGetTrainerBattleBGM(this.pbGetOpponent(battle));
+			return pbGetTrainerBattleBGM(BattlePlayerHelper.pbGetOpponent(battle));
 		}
 
 		public static ITrainer[] pbCreateTrainerInfo(ITrainer[] trainer) {
 			if (trainer == null) return null;
 			if (trainer.Length>1) {
-				ITrainer[] ret=new Combat.Trainer[2];
-				ret[0]=new Combat.Trainer(trainer[0].fullname, trainer[0].id); //trainer[0][1],trainer[0][0]
+				ITrainer[] ret=new Trainer[2];
+				ret[0]=new Trainer(trainer[0].fullname, trainer[0].trainertype); //trainer[0][1],trainer[0][0]
 				ret[0].id=trainer[0].id; //trainer[0][2];
-				ret[0].badges=trainer[0].badges; //trainer[0][3];
-				ret[1]=new Combat.Trainer(trainer[1].fullname, trainer[1].id); //trainer[1][1],trainer[1][0]
+				//ret[0].badges=trainer[0].badges; //trainer[0][3];
+				//ToDo: for-loop, foreach badge in array, assign same value to second variable
+				ret[1]=new Trainer(trainer[1].fullname, trainer[1].trainertype); //trainer[1][1],trainer[1][0]
 				ret[1].id=trainer[1].id; //trainer[1][2];
-				ret[1].badges=trainer[1].badges; //trainer[1][3];
+				//ret[1].badges=trainer[1].badges; //trainer[1][3];
 				return ret;
 			}
 			else {
-				Combat.Trainer[] ret=new Combat.Trainer[] { new Combat.Trainer(trainer[0].fullname, trainer[0].id) };//(trainer[0][1], trainer[0][0])
-				ret[0].id=trainer[0][2];
-				ret[0].badges=trainer[0][3];
+				ITrainer[] ret=new Trainer[] { new Trainer(trainer[0].fullname, trainer[0].trainertype) };//(trainer[0][1], trainer[0][0])
+				ret[0].trainertype=trainer[0].trainertype; //trainer[0][2];
+				//ret[0].badges=trainer[0].badges; //trainer[0][3];
 				return ret;
 			}
 		}
@@ -205,7 +211,7 @@ namespace PokemonUnity.Combat
 	/// Playback?
 	/// </summary>
 	/// <typeparam name="IBattle"></typeparam>
-	public class PokeBattle_BattlePlayerModule<out IPokeBattle_RecordedBattleModule> : PokeBattle_RecordedBattleModule<IBattle>, IBattlePlayerModule<IPokeBattle_RecordedBattleModule>
+	public class PokeBattle_BattlePlayerModule<IPokeBattle_RecordedBattleModule> : PokeBattle_RecordedBattleModule<IBattle>, IBattlePlayerModule<IPokeBattle_RecordedBattleModule>
 			//where TBattle : PokeBattle_RecordedBattleModule<TBattle>, IRecordedBattleModule<TBattle>, IBattle, IBattleRecordData
 	{
 		#region Variables
@@ -220,7 +226,7 @@ namespace PokemonUnity.Combat
 			@battletype=battle.battletype;
 			@properties=battle.properties;
 			@rounds=battle.rounds;
-			@randomnums=battle.randomnums;
+			randomnumbers=battle.randomnums;
 			@switches=battle.switches;
 			@roundindex=-1;
 			@randomindex=0;
@@ -235,20 +241,20 @@ namespace PokemonUnity.Combat
 
 		#region Methods
 		public override BattleResults pbStartBattle(bool canlose=false) {
-			/*@internalbattle=@properties["internalbattle"];
-			@endspeech=@properties["endspeech"].ToString();
-			@endspeech2=@properties["endspeech2"].ToString();
-			@endspeechwin=@properties["endspeechwin"].ToString();
-			@endspeechwin2=@properties["endspeechwin2"].ToString();
-			@doublebattle=(bool)@properties["doublebattle"];
-			@weather=@properties["weather"];
-			@weatherduration=@properties["weatherduration"];
-			@cantescape=(bool)@properties["cantescape"];
-			@shiftStyle=(bool)@properties["shiftStyle"];
-			@battlescene=@properties["battlescene"];
-			@items=Marshal.restore(new StringInput(@properties["items"]));
-			@rules=Marshal.restore(new StringInput(@properties["rules"]));
-			@environment=@properties["environment"];*/
+			//@internalbattle=@properties["internalbattle"];
+			//@endspeech=@properties["endspeech"].ToString();
+			//@endspeech2=@properties["endspeech2"].ToString();
+			//@endspeechwin=@properties["endspeechwin"].ToString();
+			//@endspeechwin2=@properties["endspeechwin2"].ToString();
+			//@doublebattle=(bool)@properties["doublebattle"];
+			//@weather=@properties["weather"];
+			//@weatherduration=@properties["weatherduration"];
+			//@cantescape=(bool)@properties["cantescape"];
+			//@shiftStyle=(bool)@properties["shiftStyle"];
+			//@battlescene=@properties["battlescene"];
+			//@items=Marshal.restore(new StringInput(@properties["items"]));
+			//@rules=Marshal.restore(new StringInput(@properties["rules"]));
+			//@environment=@properties["environment"];
 			return base.pbStartBattle(canlose);
 		}
 
@@ -259,7 +265,7 @@ namespace PokemonUnity.Combat
 		}
 
 		public override int pbRandom(int num) {
-			int ret=@randomnums[@randomindex];
+			int ret=randomnumbers[@randomindex];
 			@randomindex+=1;
 			return ret;
 		}
@@ -309,7 +315,7 @@ namespace PokemonUnity.Combat
 		#endregion
 	}
 
-	public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle>, IRecordedBattle { 
+	public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle>, IRecordedBattle {
 		//include PokeBattle_RecordedBattleModule;
 		public PokeBattle_RecordedBattle(IPokeBattle_Scene scene, PokemonEssentials.Interface.PokeBattle.IPokemon[] p1, PokemonEssentials.Interface.PokeBattle.IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) : base(scene, p1, p2, player, opponent)
 		{
@@ -358,5 +364,5 @@ namespace PokemonUnity.Combat
 		public PokeBattle_BattleArenaPlayer(IPokeBattle_Scene scene, PokeBattle_RecordedBattleModule<PokeBattle_BattleArena> battle) : base(scene, battle)
 		{
 		}
-	}
+	}*/
 }

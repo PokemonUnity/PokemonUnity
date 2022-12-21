@@ -9,16 +9,17 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 using PokemonUnity.Character;
 using PokemonUnity.Monster.Data;
+using PokemonUnity.Saving.SerializableClasses;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.Item;
 
 namespace PokemonUnity.Monster
 {
-	public partial class Pokemon : IPokemon, IEquatable<Pokemon>, IEqualityComparer<Pokemon>
+	public partial class Pokemon : IPokemon, IEquatable<Pokemon>, IEqualityComparer<Pokemon> //ToDo: ICloneable?
 	{
 		#region Variables
-		private Pokemons pokemons { get; set; }
+		private Pokemons pokemons;
 		/// <summary>
 		/// Current Total HP
 		/// </summary>
@@ -35,7 +36,7 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// Current HP
 		/// </summary>
-		private int hp { get; set; }
+		private int hp;
 		/// <summary>
 		/// Current Attack Stat
 		/// </summary>
@@ -121,7 +122,7 @@ namespace PokemonUnity.Monster
 		/// Current happiness
 		/// </summary>
 		/// <remarks>
-		/// This is the samething as "friendship";
+		/// This is the same thing as "friendship";
 		/// </remarks>
 		public int Happiness { get; private set; }
 		/// <summary>
@@ -168,7 +169,7 @@ namespace PokemonUnity.Monster
 						value;
 			}
 		}
-		private int eggSteps { get; set; }
+		private int eggSteps;
 		/// <summary>
 		/// Moves (PBMove)
 		/// </summary>
@@ -177,7 +178,7 @@ namespace PokemonUnity.Monster
 		/// The moves known when this Pokemon was obtained
 		/// </summary>
 		public IList<Moves> firstMoves { get { return firstmoves; } }
-		private IList<Moves> firstmoves { get; set; }
+		private IList<Moves> firstmoves;
 		/// <summary>
 		/// List of moves that this pokemon has learned, and is capable of relearning
 		/// </summary>
@@ -348,15 +349,15 @@ namespace PokemonUnity.Monster
 		}
 
 		/// <summary>
-		/// Instializes a new Pokemon, with values at default. 
+		/// Initializes a new Pokemon, with values at default. 
 		/// Pokemon is created at the level assigned in parameter, 
 		/// with all stats randomly generated/assigned (new roll).
 		/// </summary>
 		/// <param name="pkmn">Pokemon being generated</param>
-		/// <param name="original">Assigns original <see cref="TrainerData"/> 
+		/// <param name="original">Assigns original <see cref="ITrainer"/> 
 		/// of this pokemon. 
 		/// Affects ability to command pokemon, if player is not OT</param>
-		/// <param name="level">Level this pokemon start ats</param>
+		/// <param name="level">Level this pokemon starts at</param>
 		/// <remarks>
 		/// I think this is only need for tested, not sure of purpose inside framework
 		/// </remarks>
@@ -1233,7 +1234,11 @@ namespace PokemonUnity.Monster
 				}
 				else
 				{
-					return _base.Ability[Core.Rand.Next(0, 2)];
+					if (_base.Ability[1] != Abilities.NONE)
+					{
+						return _base.Ability[Core.Rand.Next(0, 2)];
+					}
+					return _base.Ability[0];
 				}
 			}
 		}
@@ -1243,7 +1248,7 @@ namespace PokemonUnity.Monster
 		public Abilities Ability { get; set; }//{ get { return abilityFlag; } set { abilityFlag = value; } }
 
 		/// <summary>
-		/// Returns whether this Pokemon has a partiular ability
+		/// Returns whether this Pokemon has a particular ability
 		/// </summary>
 		/// <param name="ability"></param>
 		/// <returns></returns>
@@ -3072,6 +3077,172 @@ namespace PokemonUnity.Monster
 		int IEqualityComparer<Pokemon>.GetHashCode(Pokemon obj)
 		{
 			return obj.GetHashCode();
+		}
+		
+		public static implicit operator SeriPokemon(Pokemon pokemon)
+		{
+			SeriPokemon seriPokemon = new SeriPokemon();
+			if (pokemon == null) return seriPokemon;
+		
+			if(pokemon.IsNotNullOrNone())// != null && pokemon.Species != Pokemons.NONE)
+			{
+				/*seriPokemon.PersonalId			= pokemon.PersonalId;
+				//PublicId in pokemon is null, so Pokemon returns null
+				//seriPokemon.PublicId			= pokemon.PublicId;
+		
+				if (!pokemon.OT.Equals((object)null))
+				{
+					seriPokemon.TrainerName			= pokemon.OT.name;
+					seriPokemon.TrainerIsMale		= pokemon.OT.gender == 1;
+					seriPokemon.TrainerTrainerId	= pokemon.OT.publicID();
+					seriPokemon.TrainerSecretId		= pokemon.OT.secretID();
+				}
+		
+				seriPokemon.Species				= (int)pokemon.Species;
+				seriPokemon.Form				= pokemon.FormId;
+				//Creates an error System OutOfBounds inside Pokemon
+				seriPokemon.NickName			= pokemon.Name;
+		
+				seriPokemon.Ability				= (int)pokemon.Ability;
+		
+				//seriPokemon.Nature = pokemon.getNature();
+				seriPokemon.Nature				= (int)pokemon.Nature;
+				seriPokemon.IsShiny				= pokemon.IsShiny; 
+				seriPokemon.Gender				= pokemon.Gender;
+		
+				//seriPokemon.PokerusStage		= pokemon.PokerusStage;
+				seriPokemon.Pokerus				= pokemon.Pokerus;
+				//seriPokemon.PokerusStrain		= pokemon.PokerusStrain;
+		
+				//seriPokemon.IsHyperMode		= pokemon.isHyperMode;
+				//seriPokemon.IsShadow			= pokemon.isShadow;
+				seriPokemon.HeartGuageSize		= pokemon.HeartGuageSize;
+				seriPokemon.ShadowLevel			= pokemon.ShadowLevel;
+		
+				seriPokemon.IV					= pokemon.IV;
+				seriPokemon.EV					= pokemon.EV;
+		
+				seriPokemon.ObtainedLevel		= pokemon.ObtainLevel;
+				//seriPokemon.CurrentLevel		= pokemon.Level;
+				seriPokemon.CurrentExp			= pokemon.Experience.Total;
+		
+				seriPokemon.CurrentHP			= pokemon.HP;
+				seriPokemon.Item				= (int)pokemon.Item;
+		
+				seriPokemon.Happiness			= pokemon.Happiness;
+		
+				seriPokemon.Status				= (int)pokemon.Status;
+				seriPokemon.StatusCount			= pokemon.StatusCount;
+		
+				seriPokemon.EggSteps			= pokemon.EggSteps;
+		
+				seriPokemon.BallUsed			= (int)pokemon.ballUsed;
+				if (pokemon.Item != Items.NONE && Kernal.ItemData[pokemon.Item].IsLetter)//PokemonUnity.Inventory.Mail.IsMail(pokemon.Item))
+				{
+					seriPokemon.Mail			= new SeriMail(pokemon.Item, pokemon.Mail);
+				}
+		
+				seriPokemon.Moves = new SeriMove[4];
+				for (int i = 0; i < 4; i++)
+				{
+					seriPokemon.Moves[i]		= (Move)pokemon.moves[i];
+				}
+		
+				if (pokemon.MoveArchive != null)
+				{
+					seriPokemon.Archive			= new int[pokemon.MoveArchive.Length];
+					for (int i = 0; i < seriPokemon.Archive.Length; i++)
+					{
+						seriPokemon.Archive[i]	= (int)pokemon.MoveArchive[i];
+					}
+				}
+		
+				//Ribbons is also null, we add a null check
+				if (pokemon.Ribbons != null)
+				{
+					seriPokemon.Ribbons			= new int[pokemon.Ribbons.Length];
+					for (int i = 0; i < seriPokemon.Ribbons.Length; i++)
+					{
+						seriPokemon.Ribbons[i]	= (int)pokemon.Ribbons[i];
+					}
+				}
+				//else //Dont need else, should copy whatever value is given, even if null...
+				//{
+				//	seriPokemon.Ribbons			= new int[0];
+				//}
+				seriPokemon.Markings			= pokemon.Markings;
+		
+				seriPokemon.ObtainedMethod		= (int)pokemon.ObtainedMode;
+				seriPokemon.TimeReceived		= pokemon.TimeReceived;
+				//try
+				//{
+					seriPokemon.TimeEggHatched	= pokemon.TimeEggHatched;
+				//}
+				//catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }*/
+				
+				return new SeriPokemon
+				(
+					(int)pokemon.Species, //(pokemon.TrainerName == null &&
+					//pokemon.TrainerTrainerId == 0 && pokemon.TrainerSecretId == 0) ? (ITrainer)null :
+					pokemon.OT.name, pokemon.OT.isMale,
+					pokemon.OT.publicID(), pokemon.OT.secretID(),
+					pokemon.Name, (int)pokemon.Form.FormOrder, (int)pokemon.Ability,
+					(int)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
+					pokemon.Pokerus, pokemon.HeartGuageSize, /*pokemon.IsHyperMode,*/ pokemon.ShadowLevel,
+					pokemon.HP, (int)pokemon.Item, pokemon.IV, pokemon.EV,
+					pokemon.ObtainLevel, /*pokemon.CurrentLevel,*/ pokemon.Experience.Total,
+					pokemon.Happiness, (int)pokemon.Status, pokemon.StatusCount,
+					pokemon.EggSteps, (int)pokemon.ballUsed, new SeriMail(), //pokemon.Mail.Message,
+					//(SeriMove[])pokemon.moves, (int[])pokemon.MoveArchive, (int[])pokemon.Ribbons, 
+					null, null, null, //ToDo: Remove this line, and uncomment the above
+					pokemon.Markings, pokemon.PersonalId,
+					(int)pokemon.ObtainedMode, pokemon.TimeReceived, pokemon.TimeEggHatched
+				);
+			}
+		
+			return seriPokemon;
+		}
+
+		public static implicit operator Pokemon(SeriPokemon pokemon)
+		{
+			//if (pokemon == null) return null;
+			if ((Pokemons)pokemon.Species == Pokemons.NONE) return new Pokemon(Pokemons.NONE);
+			Ribbons[] ribbons = new Ribbons[pokemon.Ribbons.Length];
+			for (int i = 0; i < ribbons.Length; i++)
+			{
+				ribbons[i] = (Ribbons)pokemon.Ribbons[i];
+			}
+		
+			Move[] moves = new Attack.Move[pokemon.Moves.Length];
+			for (int i = 0; i < moves.Length; i++)
+			{
+				moves[i] = pokemon.Moves[i];
+			}
+		
+			Moves[] history = new Moves[pokemon.Archive.Length];
+			for (int i = 0; i < pokemon.Archive.Length; i++)
+			{
+				history[i] = (Moves)pokemon.Archive[i];
+			}
+		
+			Pokemon normalPokemon =
+				new Pokemon
+				(
+					(Pokemons)pokemon.Species, (pokemon.TrainerName == null && 
+					pokemon.TrainerTrainerId == 0 && pokemon.TrainerSecretId == 0) ? (ITrainer)null :
+					new Trainer(pokemon.TrainerName, TrainerTypes.PLAYER),
+					pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
+					(Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
+					pokemon.Pokerus, pokemon.HeartGuageSize, /*pokemon.IsHyperMode,*/ pokemon.ShadowLevel,
+					pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
+					pokemon.ObtainedLevel, /*pokemon.CurrentLevel,*/ pokemon.CurrentExp,
+					pokemon.Happiness, (Status)pokemon.Status, pokemon.StatusCount,
+					pokemon.EggSteps, (Items)pokemon.BallUsed, pokemon.Mail.Message,
+					moves, history, ribbons, pokemon.Markings, pokemon.PersonalId,
+					(Pokemon.ObtainedMethod)pokemon.ObtainedMethod,
+					pokemon.TimeReceived, pokemon.TimeEggHatched
+				);
+			return normalPokemon;
 		}
 		#endregion
 

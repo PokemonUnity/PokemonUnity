@@ -73,7 +73,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		public int EggSteps { get; private set; }
 
 		public int BallUsed { get; private set; }
-		//Creating a seperate Seri class for Mail
+		//Creating a separate serialize class for Mail
 		public SeriMail Mail { get; private set; }
 
 		public SeriMove[] Moves { get; private set; }
@@ -96,6 +96,44 @@ namespace PokemonUnity.Saving.SerializableClasses
 		public DateTimeOffset TimeReceived { get; private set; }
 		public DateTimeOffset? TimeEggHatched { get; private set; }
 		#endregion
+
+		public SeriPokemon(int species, string trainerName, bool trainerIsMale, int trainerTrainerId, int trainerSecretId, string nickName, int form, int ability, int nature, bool isShiny, bool? gender, int[] pokerus, int heartGuageSize, int? shadowLevel, int currentHP, int item, int[] iV, byte[] eV, int obtainedLevel, int currentExp, int happiness, int status, int statusCount, int eggSteps, int ballUsed, SeriMail mail, SeriMove[] moves, int[] archive, int[] ribbons, bool[] markings, int personalId, int obtainedMethod, DateTimeOffset timeReceived, DateTimeOffset? timeEggHatched)
+		{
+			NickName = nickName ?? throw new ArgumentNullException(nameof(nickName));
+			Form = form;
+			Species = species;
+			Ability = ability;
+			Nature = nature;
+			IsShiny = isShiny;
+			Gender = gender;
+			Pokerus = pokerus; //?? throw new ArgumentNullException(nameof(pokerus));
+			ShadowLevel = shadowLevel;
+			HeartGuageSize = heartGuageSize;
+			CurrentHP = currentHP;
+			Item = item;
+			IV = iV; //?? throw new ArgumentNullException(nameof(iV));
+			EV = eV; //?? throw new ArgumentNullException(nameof(eV));
+			ObtainedLevel = obtainedLevel;
+			CurrentExp = currentExp;
+			Happiness = happiness;
+			Status = status;
+			StatusCount = statusCount;
+			EggSteps = eggSteps;
+			BallUsed = ballUsed;
+			Mail = mail;
+			Moves = moves; //?? throw new ArgumentNullException(nameof(moves));
+			Archive = archive; //?? throw new ArgumentNullException(nameof(archive));
+			Ribbons = ribbons; //?? throw new ArgumentNullException(nameof(ribbons));
+			Markings = markings; //?? throw new ArgumentNullException(nameof(markings));
+			PersonalId = personalId;
+			TrainerName = trainerName; //?? throw new ArgumentNullException(nameof(trainerName));
+			TrainerIsMale = trainerIsMale;
+			TrainerTrainerId = trainerTrainerId;
+			TrainerSecretId = trainerSecretId;
+			ObtainedMethod = obtainedMethod;
+			TimeReceived = timeReceived;
+			TimeEggHatched = timeEggHatched;
+		}
 
 		//public static implicit operator SeriPokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
 		//{

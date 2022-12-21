@@ -1,7 +1,7 @@
 ﻿using PokemonUnity;
 using PokemonUnity.Combat;
 
-namespace PokemonEssentials.Interface.Battle
+namespace PokemonEssentials.Interface.Field
 {
 	public interface ISafariState 
 	{
@@ -33,12 +33,23 @@ namespace PokemonEssentials.Interface.Battle
 
 		BattleResults pbSafariBattle(Pokemons species, int level);
 
+		/// <summary>
+		/// Fires whenever the player moves to a new map. Event handler receives the old
+		/// map ID or 0 if none.  Also fires when the first map of the game is loaded
+		/// </summary>
+		event System.EventHandler OnMapChange;
 		//Events.onMapChange+=proc{|sender,args|
 		//   if (!pbInSafari?) {
 		//     pbSafariState.pbEnd;
 		//   }
 		//}
 
+		/// <summary>
+		/// Fires whenever the player takes a step. The event handler may possibly move
+		/// the player elsewhere.
+		/// </summary>
+		//event EventHandler<IOnStepTakenTransferPossibleEventArgs> OnStepTakenTransferPossible;
+		event System.Action<object, EventArg.IOnStepTakenTransferPossibleEventArgs> OnStepTakenTransferPossible;
 		//Events.onStepTakenTransferPossible+=delegate(object sender, EventArgs e) {
 		//   handled=e[0];
 		//   if (handled[0]) continue;
@@ -54,6 +65,12 @@ namespace PokemonEssentials.Interface.Battle
 		//   }
 		//}
 
+		/// <summary>
+		/// Triggers at the start of a wild battle.  Event handlers can provide their own
+		/// wild battle routines to override the default behavior.
+		/// </summary>
+		//event EventHandler<IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
+		event System.Action<object, EventArg.IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
 		//Events.onWildBattleOverride+= delegate(object sender, EventArgs e) {
 		//   species=e[0];
 		//   level=e[1];

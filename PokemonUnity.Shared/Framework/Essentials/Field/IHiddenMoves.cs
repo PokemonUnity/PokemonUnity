@@ -92,6 +92,11 @@ namespace PokemonEssentials.Interface
 
 		public interface IGameHiddenMoves
 		{
+			/// <summary>
+			/// Triggers when the player presses the Action button on the map.
+			/// </summary>
+			event EventHandler OnAction;
+
 			bool pbCanUseHiddenMove(IPokemon pkmn, Moves move);
 
 			bool pbUseHiddenMove(IPokemon pokemon, Moves move);

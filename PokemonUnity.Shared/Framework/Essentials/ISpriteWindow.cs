@@ -645,7 +645,7 @@ namespace PokemonEssentials.Interface
 
 // ##########
 
-	public interface IPngAnimatedBitmap { // :nodoc:
+	public interface IPngAnimatedBitmap : IDisposable { // :nodoc:
 		//  Creates an animated bitmap from a PNG file.  
 		IPngAnimatedBitmap initialize(string file, int hue = 0);
 
@@ -673,7 +673,7 @@ namespace PokemonEssentials.Interface
 
 		void update();
 
-		void dispose();
+		//void dispose();
 
 		int frames				{ get; } // internal
 
@@ -890,7 +890,7 @@ namespace PokemonEssentials.Interface
 		float zoom_y { get; set; }
 
 		ISpriteWrapper initialize(IViewport viewport= null);
-		void Dispose();
+		//void Dispose();
 		void flash(IColor color, int duration);
 		//void update();
 	}
@@ -1457,10 +1457,10 @@ namespace PokemonEssentials.Interface
 		void refresh();
 	}
 
-	public interface IUpDownArrowMixin {
+	public interface IUpDownArrowMixin : IDisposable {
 		void initUpDownArrow();
 
-		void dispose();
+		//void dispose();
 
 		IViewport viewport { set; }
 
@@ -1725,7 +1725,7 @@ namespace PokemonEssentials.Interface
 
 		IAnimatedSprite create(string animname, int framecount, int frameskip, IViewport viewport = null);
 
-		void dispose();
+		//void dispose();
 
 		bool playing();
 
@@ -1786,7 +1786,7 @@ namespace PokemonEssentials.Interface
 
 		IBitmap bitmap { set; }
 
-		void Dispose();
+		//void Dispose();
 	}
 
 	/// <summary>
@@ -2021,7 +2021,7 @@ namespace PokemonEssentials.Interface
 
 		IIconWindow initialize(float x, float y, int width, int height, IViewport viewport= null);
 
-		void dispose();
+		//void dispose();
 
 		void update();
 
@@ -2036,7 +2036,7 @@ namespace PokemonEssentials.Interface
 	public interface IPictureWindow : ISpriteWindow_Base {
 		IPictureWindow initialize(string pathOrBitmap);
 
-		void dispose();
+		//void dispose();
 
 		void update();
 

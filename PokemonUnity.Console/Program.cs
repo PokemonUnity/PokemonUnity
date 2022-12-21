@@ -183,6 +183,13 @@ namespace PokemonUnity.ConsoleApp
 			return result;
 		}
 
+		bool IHasDisplayMessage.pbDisplayConfirm(string v)
+		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+			return (this as IPokeBattle_DebugSceneNoGraphics).pbDisplayConfirmMessage(v);
+		}
+
 		bool IPokeBattle_DebugSceneNoGraphics.pbShowCommands(string msg, string[] commands, bool defaultValue)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);

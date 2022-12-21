@@ -341,7 +341,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="index"></param>
 		/// <param name="texts"></param>
 		/// <param name="mode">0 - regular battle, 1 - Shadow Pokémon battle, 2 - Safari Zone, 3 - Bug Catching Contest</param>
-		int pbCommandMenuEx(int index, string[] texts, int mode = 0);
+		//int pbCommandMenuEx(int index, string[] texts, int mode = 0);
 		/// <summary>
 		/// Update selected command
 		/// Use this method to display the list of moves for a Pokémon
@@ -443,7 +443,7 @@ namespace PokemonEssentials.Interface.Screen
 		void pbBattleArenaJudgment(IBattler battler1, IBattler battler2, int[] ratings1, int[] ratings2);
 		/// <summary>
 		/// </summary>
-		/// <param name="window">infowindow as `SpriteWindow_Base` to display the results</param>
+		/// <param name="window">infoWindow as `SpriteWindow_Base` to display the results</param>
 		/// <param name="phase"></param>
 		/// <param name="battler1"></param>
 		/// <param name="battler2"></param>
@@ -459,7 +459,7 @@ namespace PokemonEssentials.Interface.Screen
 		//new void pbDisplayMessage(string msg,bool brief= false);
 		//new void pbDisplayPausedMessage(string msg);
 		//new void pbDisplayConfirmMessage(string msg);
-		void pbFrameUpdate(IWindow_CommandPokemon cw);
+		void pbFrameUpdate(IViewport cw);
 		//void pbRefresh();
 		/// <summary>
 		/// Called whenever a new round begins.

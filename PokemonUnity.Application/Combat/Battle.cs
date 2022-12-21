@@ -22,6 +22,7 @@ namespace PokemonUnity.Combat
 	/// </summary>
 	public partial class Battle : IBattle, IHasDisplayMessage
 	{
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected
 		#region Variables
 		/// <summary>
 		/// Scene object for this battle
@@ -35,7 +36,7 @@ namespace PokemonUnity.Combat
 		/// Internal battle flag
 		/// </summary>
 		/// <remarks>
-		/// battle occured without any frontend or ui output (most likely on backend for ai vs ai training)
+		/// battle occurred without any frontend or UI output (most likely on backend for AI vs AI training)
 		/// </remarks>
 		public bool internalbattle { get; set; }
 		/// <summary>
@@ -148,7 +149,7 @@ namespace PokemonUnity.Combat
 		/// The Struggle move
 		/// </summary>
 		/// <remarks>
-		/// Execute whaatever move/function is stored in this variable
+		/// Execute whatever move/function is stored in this variable
 		/// </remarks>
 		/// Func<PokeBattle>
 		public IBattleMove struggle { get; private set; }
@@ -671,7 +672,7 @@ namespace PokemonUnity.Combat
 					}
 				}
 				return @weather;
-			} 
+			}
 		}
 		#endregion
 
@@ -1712,7 +1713,7 @@ namespace PokemonUnity.Combat
 		public void pbReplace(int index,int newpoke,bool batonpass=false) {
 			IPokemon[] party=pbParty(index);
 			int oldpoke=@battlers[index].pokemonIndex;
-			// Initialise the new Pokémon
+			// Initialize the new Pokémon
 			@battlers[index].pbInitialize(party[newpoke],(sbyte)newpoke,batonpass);
 			// Reorder the party for this battle
 			int[] partyorder=(!pbIsOpposing(index) ? @party1order : @party2order).ToArray();
@@ -1791,9 +1792,9 @@ namespace PokemonUnity.Combat
 		}
 
 		public int pbSwitchPlayer(int index,bool lax, bool cancancel) {
-			//if (@debug) {
-			//	return (@scene as IPokeBattle_SceneNonInteractive).pbChooseNewEnemy(index,pbParty(index));
-			//}
+			if (@debug) {
+				return (@scene as IPokeBattle_SceneNonInteractive).pbChooseNewEnemy(index,pbParty(index));
+			}
 			//else {
 				return (@scene as IPokeBattle_SceneNonInteractive).pbSwitch(index,lax,cancancel);
 			//}
@@ -2177,7 +2178,7 @@ namespace PokemonUnity.Combat
 		public void pbPrimalReversion(int index) {
 			if (!@battlers[index].IsNotNullOrNone() || !@battlers[index].pokemon.IsNotNullOrNone()) return;
 			if (!@battlers[index].hasPrimal) return; //rescue false
-			if (@battlers[index].pokemon.Species != Pokemons.KYOGRE || 
+			if (@battlers[index].pokemon.Species != Pokemons.KYOGRE ||
 				@battlers[index].pokemon.Species != Pokemons.GROUDON) return;
 			if (@battlers[index].isPrimal) return; //rescue true
 			if (@battlers[index].pokemon.Species == Pokemons.KYOGRE) {
@@ -2458,7 +2459,7 @@ namespace PokemonUnity.Combat
 						tempexp1=tempexp2;
 						curlevel+=1;
 						if (curlevel>newlevel) {
-							thispoke.calcStats(); 
+							thispoke.calcStats();
 							if (battler.IsNotNullOrNone()) battler.pbUpdate(false);
 							@scene.pbRefresh();
 							break;
@@ -2472,7 +2473,7 @@ namespace PokemonUnity.Combat
 						if (battler.IsNotNullOrNone() && @internalbattle) { //&& battler.pokemon.IsNotNullOrNone()
 							(battler.pokemon as Monster.Pokemon).ChangeHappiness(HappinessMethods.LEVELUP);//"level up"
 						}
-						thispoke.calcStats(); 
+						thispoke.calcStats();
 						if (battler.IsNotNullOrNone()) battler.pbUpdate(false);
 						@scene.pbRefresh();
 						pbDisplayPaused(Game._INTL("{1} grew to Level {2}!",thispoke.Name,curlevel.ToString()));
@@ -2855,12 +2856,12 @@ namespace PokemonUnity.Combat
 			GameDebug.Log($"");
 			GameDebug.Log($"******************************************");
 			@decision = BattleResults.InProgress;
-			try { 
+			try {
 				pbStartBattleCore(canlose);
 			} catch (BattleAbortedException e){ //rescue BattleAbortedException;
 				GameDebug.LogError(e.Message);
 				GameDebug.LogError(e.StackTrace);
-	  
+
 				@decision = BattleResults.ABORTED;
 				(@scene as IPokeBattle_DebugSceneNoGraphics).pbEndBattle(@decision);
 			}
@@ -2894,7 +2895,7 @@ namespace PokemonUnity.Combat
 					}
 					IPokemon wildpoke=@party2[0];
 					@battlers[1].pbInitialize(wildpoke,0,false);
-					if (@peer is IBattlePeerMultipleForms p) p.pbOnEnteringBattle(this,wildpoke); 
+					if (@peer is IBattlePeerMultipleForms p) p.pbOnEnteringBattle(this,wildpoke);
 					pbSetSeen(wildpoke);
 					(@scene as IPokeBattle_DebugSceneNoGraphics).pbStartBattle(this);
 					pbDisplayPaused(Game._INTL("Wild {1} appeared!",Game._INTL(wildpoke.Species.ToString(TextScripts.Name)))); //Wild pokemons dont get nicknames
@@ -2917,8 +2918,8 @@ namespace PokemonUnity.Combat
 					}
 					@battlers[1].pbInitialize(@party2[0],0,false);
 					@battlers[3].pbInitialize(@party2[1],0,false);
-					if (@peer is IBattlePeerMultipleForms p0) p0.pbOnEnteringBattle(this,@party2[0]); 
-					if (@peer is IBattlePeerMultipleForms p1) p1.pbOnEnteringBattle(this,@party2[1]); 
+					if (@peer is IBattlePeerMultipleForms p0) p0.pbOnEnteringBattle(this,@party2[0]);
+					if (@peer is IBattlePeerMultipleForms p1) p1.pbOnEnteringBattle(this,@party2[1]);
 					pbSetSeen(@party2[0]);
 					pbSetSeen(@party2[1]);
 					(@scene as IPokeBattle_DebugSceneNoGraphics).pbStartBattle(this);
@@ -3089,16 +3090,29 @@ namespace PokemonUnity.Combat
 					pbAbort();
 					break;
 				}
-				//PBDebug.logonerr{
-					pbCommandPhase();
+				//try
+				//{
+					//PBDebug.logonerr{
+						pbCommandPhase();
+					//}
+					if (@decision>0) break;
+					//PBDebug.logonerr{
+						pbAttackPhase();
+					//}
+					if (@decision>0) break;
+					//PBDebug.logonerr{
+						pbEndOfRoundPhase();
+					//}
 				//}
-				if (@decision>0) break;
-				//PBDebug.logonerr{
-					pbAttackPhase();
+				//catch (BattleAbortedException ex)
+				//{
+				//	GameDebug.Log(ex.ToString());
+				//	pbAbort();
+				//	break;
 				//}
-				if (@decision>0) break;
-				//PBDebug.logonerr{
-					pbEndOfRoundPhase();
+				//catch (Exception ex)
+				//{
+				//	GameDebug.Log(ex.ToString());
 				//}
 				if (@decision>0) break;
 				@turncount+=1;
@@ -4590,8 +4604,8 @@ namespace PokemonUnity.Combat
 						if (!this.pbPlayer().shadowcaught.Contains(pkmn.Species)) this.pbPlayer().shadowcaught.Add(pkmn.Species);
 					}
 					@snaggedpokemon.Clear();
-					//break; 
-				} 
+					//break;
+				}
 				//#### LOSE, DRAW ####//
 				else if (@decision == BattleResults.LOST || @decision == BattleResults.DRAW) { //case BattleResults.LOST: case BattleResults.DRAW:
 					GameDebug.Log($"");
@@ -4674,53 +4688,35 @@ namespace PokemonUnity.Combat
 
 		IEnumerator IBattle.pbDebugUpdate()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
+			yield return null;
 		}
 
 		int IBattle.pbAIRandom(int x)
 		{
-			throw new NotImplementedException();
-		}
-
-		void IBattle.pbAddToPlayerParty(IBattler pokemon)
-		{
-			throw new NotImplementedException();
+			return pbRandom(x);
 		}
 
 		bool IBattle.pbCanShowCommands(int idxPokemon)
 		{
-			throw new NotImplementedException();
+			return CanShowCommands(idxPokemon);
 		}
 
 		bool IBattle.pbCanShowFightMenu(int idxPokemon)
 		{
-			throw new NotImplementedException();
+			return CanShowFightMenu(idxPokemon);
 		}
 
 		bool IBattle.pbCanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk)
 		{
-			throw new NotImplementedException();
-		}
-
-		void IBattle.pbSendOut(int index, IBattler pokemon)
-		{
-			throw new NotImplementedException();
-		}
-
-		bool IBattle.pbOnActiveOne(IBattler pkmn, bool onlyabilities, bool moldbreaker)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IBattleCommon.pbThrowPokeBall(int idxPokemon, Items ball, int? rareness, bool showplayer)
-		{
-			throw new NotImplementedException();
+			return CanChooseMove(idxPokemon, idxMove, showMessages, sleeptalk);
 		}
 		#endregion
+#pragma warning restore 0162
 	}
 
-	public class BattleAbortedException : Exception 
-	{ 
+	public class BattleAbortedException : Exception
+	{
 		public BattleAbortedException(string message) : base(message) { }
 	}
 }

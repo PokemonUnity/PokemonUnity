@@ -84,6 +84,11 @@ namespace PokemonEssentials.Interface.Field
 		// want it to apply to!
 		//###############################################################################
 
+		/// <summary>
+		/// Triggers whenever a wild Pokémon is created
+		/// </summary>
+		//event EventHandler<IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
+		event Action<object, EventArg.IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		//Events.onWildPokemonCreate+=proc {|sender,e|
 		//private void onWildPokemonCreate(object sender, EventArg.OnWildPokemonCreateEventArgs e) {
 		//   // Make all wild Pokémon shiny while a certain Switch is ON (see Settings).
@@ -111,13 +116,19 @@ namespace PokemonEssentials.Interface.Field
 		//   }
 		//}
 
-		// This is the basis of a trainer modifier.  It works both for trainers loaded
-		// when you battle them, and for partner trainers when they are registered.
-		// Note that you can only modify a partner trainer's Pokémon, and not the trainer
-		// themselves nor their items this way, as those are generated from scratch
-		// before each battle.
+		/// <summary>
+		/// Triggers whenever an NPC trainer's Pokémon party is loaded.
+		/// It works both for trainers loaded
+		/// when you battle them, and for partner trainers when they are registered.
+		/// Note that you can only modify a partner trainer's Pokémon, and not the trainer
+		/// themselves nor their items this way, as those are generated from scratch
+		/// before each battle.
+		/// </summary>
+		/// This is the basis of a trainer modifier.  
+		//event EventHandler<IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
+		event Action<object, EventArg.IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		//Events.onTrainerPartyLoad+=proc {|sender,e|
-		//private void onWildPokemonCreate(object sender, EventArgs e) {
+		//private void onTrainerPartyLoad(object sender, EventArgs e) {
 		//   if (e[0]) { // Game.GameData.Trainer data should exist to be loaded, but may not exist somehow
 		//     Game.GameData.Trainer trainer=e[0][0]; // A PokeBattle_Trainer object of the loaded trainer
 		//     Items[] items=e[0][1];   // An array of the trainer's items they can use
