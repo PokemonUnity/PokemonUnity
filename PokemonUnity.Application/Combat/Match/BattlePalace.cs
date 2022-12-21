@@ -16,9 +16,12 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Combat
 {
-	public class PokeBattle_BattlePalace : Battle, PokemonEssentials.Interface.Battle.IBattlePalace {
+	public class PokeBattle_BattlePalace : Battle, PokemonEssentials.Interface.Battle.IBattlePalace, PokemonEssentials.Interface.PokeBattle.IBattlePalace
+	{
 		public bool[] justswitched { get; private set; }
-		public static readonly int[] BattlePalaceUsualTable=new int[] {
+		public int[] BattlePalaceUsualTable { get { return battlePalaceUsualTable; } }
+		public int[] BattlePalacePinchTable { get { return battlePalacePinchTable; } }
+		private static readonly int[] battlePalaceUsualTable = new int[] {
 			61, 7,32,
 			20,25,55,
 			70,15,15,
@@ -45,7 +48,7 @@ namespace PokemonUnity.Combat
 			42,50, 8,
 			56,22,22
 		};
-		public static readonly int[] BattlePalacePinchTable=new int[] {
+		private static readonly int[] battlePalacePinchTable = new int[] {
 			61, 7,32,
 			84, 8, 8,
 			32,60, 8,
@@ -72,24 +75,29 @@ namespace PokemonUnity.Combat
 			42, 5,53,
 			56,22,22
 		};
-		public PokeBattle_BattlePalace(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) : base (scene, p1, p2, player, opponent) { 
-			//public void initialize() {
-			//base.this();
+		public PokeBattle_BattlePalace(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
+			: base(scene, p1, p2, player, opponent)
+		{
+			base.initialize(scene, p1, p2, player, opponent);
+		}
+		public PokemonEssentials.Interface.PokeBattle.IBattlePalace initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) {
 			@justswitched=new bool[] { false, false, false, false };
+			return this;
 		}
 
 		public IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
-			return new PokeBattle_RecordedBattlePalace(scene,
-				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			//return new PokeBattle_RecordedBattlePalace(scene, trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			//ToDo: Uncomment above and remove below...
+			return new PokeBattle_BattlePalace(scene, trainer1[0].party, trainer2[0].party, trainer1, trainer2);
 		}
 
 		public int pbMoveCategory(IBattleMove move) {
-			if (//Game.MoveData[move.id].Target==Attack.Data.Targets. 0x10 ||	//ToDo: Finish Convert from Essentials to Veekun
-				move.Effect==Attack.Data.Effects.x01B) {							// Bide
+			if (//Game.MoveData[move.id].Target==Attack.Data.Targets. 0x10 ||			//ToDo: Finish Convert from Essentials to Veekun
+				move.Effect==Attack.Data.Effects.x01B) {								// Bide
 				return 1;
-			} else if (move.Power==0 || move.Effect==Attack.Data.Effects.x054 ||	// Counter
-				move.Effect==Attack.Data.Effects.x091) {							// Mirror Coat
+			} else if (move.basedamage==0 || move.Effect==Attack.Data.Effects.x054 ||	// Counter
+				move.Effect==Attack.Data.Effects.x091) {								// Mirror Coat
 				return 2;
 			}
 			else {
@@ -104,7 +112,7 @@ namespace PokemonUnity.Combat
 		/// <param name="idxMove"></param>
 		/// <returns></returns>
 		public bool pbCanChooseMovePartial (int idxPokemon,int idxMove) {
-			PokemonEssentials.Interface.PokeBattle.I thispkmn=@battlers[idxPokemon];
+			PokemonEssentials.Interface.PokeBattle.IBattler thispkmn=@battlers[idxPokemon];
 			IBattleMove thismove=thispkmn.moves[idxMove];
 			if (!thismove.IsNotNullOrNone()||thismove.id==0) {
 				return false;
@@ -112,7 +120,7 @@ namespace PokemonUnity.Combat
 			if (thismove.PP<=0) {
 				return false;
 			}
-			if (thispkmn.effects.ChoiceBand>=0 && 
+			if (thispkmn.effects.ChoiceBand>=0 &&
 				thismove.id!=thispkmn.effects.ChoiceBand &&
 				thispkmn.hasWorkingItem(Items.CHOICE_BAND)) {
 				return false;
@@ -128,11 +136,11 @@ namespace PokemonUnity.Combat
 
 		public void pbPinchChange(int idxPokemon) {
 			PokemonEssentials.Interface.PokeBattle.IBattler thispkmn=@battlers[idxPokemon];
-			if (!thispkmn.effects.Pinch && thispkmn.Status!=Status.SLEEP && 
+			if (!thispkmn.effects.Pinch && thispkmn.Status!=Status.SLEEP &&
 				thispkmn.HP<=(int)Math.Floor(thispkmn.TotalHP/2f)) {
 				Natures nature=thispkmn.pokemon.Nature;
 				thispkmn.effects.Pinch=true;
-				if (nature==Natures.QUIET|| 
+				if (nature==Natures.QUIET||
 					nature==Natures.BASHFUL||
 					nature==Natures.NAIVE||
 					nature==Natures.QUIRKY||

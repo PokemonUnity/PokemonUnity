@@ -26,7 +26,7 @@ namespace PokemonUnity
 					(this as IGameMessage).pbMessage(_INTL("It will forget the song it knows."));
 					if (!(this as IGameMessage).pbConfirmMessage(_INTL("Are you sure you want to change it?")))
 					{
-						iconwindow.dispose();
+						iconwindow.Dispose();
 						return;
 					}
 				}
@@ -37,7 +37,7 @@ namespace PokemonUnity
 						(this as IGameMessage).pbMessage(_INTL("{1} learned a new song!",p.Name));
 					}
 				}
-				iconwindow.dispose();
+				iconwindow.Dispose();
 				return;
 			//}
 		}

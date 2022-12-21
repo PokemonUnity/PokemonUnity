@@ -8,7 +8,7 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonUnity
 {
-	public partial class SafariState : PokemonEssentials.Interface.Battle.ISafariState {
+	public partial class SafariState : PokemonEssentials.Interface.Field.ISafariState {
 		public int ballcount				                { get; set; }
 		public int steps					                { get; set; }
 		public Combat.BattleResults decision				{ get; set; }
@@ -80,13 +80,13 @@ namespace PokemonUnity
 				
 			return this;
 		}
-		private void Events_OnMapChange(object sender, IOnMapChangeEventArgs e)
+		protected virtual void Events_OnMapChange(object sender, IOnMapChangeEventArgs e)
 		{
 			if (Game.GameData is IGameSafari s && !s.pbInSafari) {
 				s.pbSafariState.pbEnd();
 			}
 		}
-		private void Events_OnStepTakenTransferPossible(object sender, IOnStepTakenTransferPossibleEventArgs e)
+		protected virtual void Events_OnStepTakenTransferPossible(object sender, IOnStepTakenTransferPossibleEventArgs e)
 		{
 			bool handled=e.Index;
 			if (!handled) return; //(handled) continue;
@@ -101,7 +101,7 @@ namespace PokemonUnity
 				}
 			}
 		}
-		private void Events_OnWildBattleOverride(object sender, IOnWildBattleOverrideEventArgs e)
+		protected virtual void Events_OnWildBattleOverride(object sender, IOnWildBattleOverrideEventArgs e)
 		{
 			Pokemons species=e.Species;
 			int level=e.Level;
@@ -113,6 +113,10 @@ namespace PokemonUnity
 	}
 
 	public partial class Game : IGameSafari { 
+		//event EventHandler IGameSafari.OnMapChange { add { OnMapChange += value; } remove { OnMapChange -= value; } }
+		//event Action<object, IOnStepTakenTransferPossibleEventArgs> IGameSafari.OnStepTakenTransferPossible { add { OnStepTakenTransferPossible += value; } remove { OnStepTakenTransferPossible += value; } }
+		//event Action<object, IOnWildBattleOverrideEventArgs> IGameSafari.OnWildBattleOverride { add { OnWildBattleOverride += value; } remove { OnWildBattleOverride += value; } }
+
 		public bool pbInSafari { get {
 			if (pbSafariState.InProgress) {
 				//  Reception map is handled separately from safari map since the reception
@@ -137,7 +141,7 @@ namespace PokemonUnity
 		public Combat.BattleResults pbSafariBattle(Pokemons species,int level) {
 			IPokemon genwildpoke=(this as IGameField).pbGenerateWildPokemon(species,level);
 			IPokeBattle_Scene scene=(this as IGameField).pbNewBattleScene();
-			ISafariZone battle=new Combat.PokeBattle_SafariZone(scene,Trainer,null,new IPokemon[] { genwildpoke });
+			ISafariZone_Scene battle=new Combat.PokeBattle_SafariZone(scene,Trainer,null,new IPokemon[] { genwildpoke });
 			battle.ballCount=pbSafariState.ballcount;
 			if (this is IGameField f0) battle.environment=f0.pbGetEnvironment();
 			Combat.BattleResults decision=Combat.BattleResults.ABORTED; //0

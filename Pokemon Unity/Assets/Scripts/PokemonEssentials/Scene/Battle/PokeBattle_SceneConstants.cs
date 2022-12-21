@@ -15,6 +15,9 @@ namespace PokemonUnity
 {
 	public static partial class PokeBattle_SceneConstants
 	{
+		/// <summary>
+		/// Use sprite for command menu, or create with text
+		/// </summary>
 		public static readonly bool USECOMMANDBOX			= true; // If true, expects the file Graphics/Pictures/battleCommand.png
 		public static readonly bool USEFIGHTBOX				= true; // If true, expects the file Graphics/Pictures/battleFight.png
 

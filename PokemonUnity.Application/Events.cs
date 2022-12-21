@@ -463,5 +463,13 @@ namespace PokemonUnity
 			public BattleResults Decision { get; set; }
 		}
 		#endregion
+
+		public class OnLoadLevelEventArgs : EventArgs, PokemonEssentials.Interface.EventArg.IEventArgs
+		{
+			public static readonly int EventId = typeof(OnLoadLevelEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public IScene Scene { get; set; }
+		}
 	}
 }

@@ -64,8 +64,8 @@ namespace PokemonUnity.Monster.Data
 		///	<see cref="Pokemons.UNOWN"/> = letter of the alphabet.
 		///	<see cref="Pokemons.DEOXYS"/> = which of the four forms.
 		///	<see cref="Pokemons.BURMY"/>/<see cref="Pokemons.WORMADAM"/> = cloak type. Does not change for Wormadam.
-		///	<see cref="Pokemons.SHELLOS"/>/<see cref="Pokemons.GASTRODON"/> = west/east alt colours.
-		///	<see cref="Pokemons.ROTOM"/> = different possesed appliance forms.
+		///	<see cref="Pokemons.SHELLOS"/>/<see cref="Pokemons.GASTRODON"/> = west/east alt colors.
+		///	<see cref="Pokemons.ROTOM"/> = different possessed appliance forms.
 		///	<see cref="Pokemons.GIRATINA"/> = Origin/Altered form.
 		///	<see cref="Pokemons.SHAYMIN"/> = Land/Sky form.
 		///	<see cref="Pokemons.ARCEUS"/> = Type.
@@ -77,7 +77,7 @@ namespace PokemonUnity.Monster.Data
 		///	<see cref="Pokemons.MELOETTA"/> = Aria/Pirouette forms.
 		///	<see cref="Pokemons.GENESECT"/> = different Drives.
 		///	<see cref="Pokemons.VIVILLON"/> = different Patterns.
-		///	<see cref="Pokemons.FLABEBE"/>/<see cref="Pokemons.FLOETTE"/>/<see cref="Pokemons.FLORGES"/> = Flower colour.
+		///	<see cref="Pokemons.FLABEBE"/>/<see cref="Pokemons.FLOETTE"/>/<see cref="Pokemons.FLORGES"/> = Flower color.
 		///	<see cref="Pokemons.FURFROU"/> = haircut.
 		///	<see cref="Pokemons.PUMPKABOO"/>/<see cref="Pokemons.GOURGEIST"/> = small/average/large/super sizes. 
 		///	<see cref="Pokemons.HOOPA"/> = Confined/Unbound forms.

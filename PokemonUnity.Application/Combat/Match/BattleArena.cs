@@ -4,31 +4,47 @@ using System.Linq;
 using PokemonUnity.Inventory;
 using PokemonUnity.Combat.Data;
 using PokemonUnity.Character;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Combat
 {
-	public class PokeBattle_BattleArena : Battle, PokemonEssentials.Interface.PokeBattle.IBattleArena {
+	public class PokeBattle_BattleArena : Battle, PokemonEssentials.Interface.Battle.IBattleArena, PokemonEssentials.Interface.PokeBattle.IBattleArena
+	{
 		public bool battlerschanged { get; private set; }
 		public int[] mind { get; private set; }
 		public int[] skill { get; private set; }
 		public int[] starthp { get; private set; }
 		public int[] partyindexes { get; private set; }
 		public int count { get; private set; }
-		public void initialize(PokemonEssentials.Interface.PokeBattle.IPokeBattleArena_Scene scene, PokemonEssentials.Interface.PokeBattle.IPokemon[] p1, PokemonEssentials.Interface.PokeBattle.IPokemon[] p2, PokemonEssentials.Interface.PokeBattle.ITrainer[] player, PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent) { return this; } //ToDo: finish this later...
-		public PokeBattle_BattleArena(PokemonEssentials.Interface.PokeBattle.IPokeBattleArena_Scene scene, PokemonEssentials.Interface.PokeBattle.IPokemon[] p1, PokemonEssentials.Interface.PokeBattle.IPokemon[] p2, PokemonEssentials.Interface.PokeBattle.ITrainer[] player, PokemonEssentials.Interface.PokeBattle.ITrainer[] opponent) : base (scene, p1, p2, player, opponent) { 
-			//base.this() //base.initialize();
+		public PokeBattle_BattleArena(IPokeBattleArena_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
+			: base(scene, p1, p2, player, opponent)
+		{
+			base.initialize(scene, p1, p2, player, opponent);
+		}
+		public PokemonEssentials.Interface.PokeBattle.IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) {
+			return initialize((IPokeBattleArena_Scene)scene, p1, p2, player, opponent);
+		}
+		public PokemonEssentials.Interface.PokeBattle.IBattleArena initialize(IPokeBattleArena_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) {
 			@battlerschanged=true;
 			@mind=new int[] { 0, 0 };
 			@skill=new int[] { 0, 0 };
 			@starthp=new int[] { 0, 0 };
 			@count=0;
 			@partyindexes=new int[] { 0, 0 };
+			return this;
 		}
 
-		PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, PokemonEssentials.Interface.PokeBattle.ITrainer[] trainer1, PokemonEssentials.Interface.PokeBattle.ITrainer[] trainer2)
+		public IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
-			return new PokeBattle_RecordedBattleArena(scene,
-				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			//return new PokeBattle_RecordedBattleArena(scene, trainer1[0].party, trainer2[0].party, trainer1, trainer2);
+			//ToDo: Uncomment above and remove below...
+			return new PokeBattle_BattleArena((IPokeBattleArena_Scene)scene, trainer1[0].party, trainer2[0].party, trainer1, trainer2);
 		}
 
 		public override bool pbDoubleBattleAllowed() {
@@ -41,7 +57,7 @@ namespace PokemonUnity.Combat
 
 		public override bool pbCanSwitchLax (int idxPokemon,int pkmnidxTo,bool showMessages) {
 			if (showMessages) {
-				PokemonEssentials.Interface.PokeBattle.IBattler thispkmn=@battlers[idxPokemon];
+				IBattler thispkmn=@battlers[idxPokemon];
 				pbDisplayPaused(Game._INTL("{1} can't be switched out!",thispkmn.ToString()));
 			}
 			return false;
@@ -74,7 +90,7 @@ namespace PokemonUnity.Combat
 				switched.Add(1);
 			}
 			if (switched.Count>0) {
-				PokemonEssentials.Interface.PokeBattle.IBattler[] priority=pbPriority();
+				IBattler[] priority=pbPriority();
 				foreach (var i in priority) {
 					if (switched.Contains(i.Index)) i.pbAbilitiesOnSwitchIn(true);
 				}
@@ -93,7 +109,7 @@ namespace PokemonUnity.Combat
 			base.pbOnActiveAll(); //return
 		}
 
-		public override bool pbOnActiveOne(PokemonEssentials.Interface.PokeBattle.IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false) {
+		public override bool pbOnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false) {
 			@battlerschanged=true;
 			@mind[0]=0;
 			@mind[1]=0;
@@ -105,7 +121,7 @@ namespace PokemonUnity.Combat
 			return base.pbOnActiveOne(pkmn, onlyabilities, moldbreaker);
 		}
 
-		public int pbMindScore(PokemonEssentials.Interface.PokeBattle.IBattleMove move) {       
+		public int pbMindScore(IBattleMove move) {
 			if (move.Effect==Attack.Data.Effects.x070 ||	// Detect/Protect
 				move.Effect==Attack.Data.Effects.x075 ||	// Endure
 				move.Effect==Attack.Data.Effects.x09F) {	// Fake Out
@@ -116,7 +132,7 @@ namespace PokemonUnity.Combat
 				move.Effect==Attack.Data.Effects.x01B) {	// Bide
 				return 0;
 			}
-			if (move.Power==0) {
+			if (move.basedamage==0) {
 				return 0;
 			}
 			else {
@@ -213,12 +229,12 @@ namespace PokemonUnity.Combat
 				}
 				pbGainEXP();
 				pbSwitch();
-			} 
+			}
 		}
 	}
 
 	/*public partial class PokeBattle_Scene : IPokeBattleArena_Scene {
-		public void updateJudgment(window,int phase,PokemonEssentials.Interface.PokeBattle.IBattler battler1,PokemonEssentials.Interface.PokeBattle.IBattler battler2,int[] ratings1,int[] ratings2) {
+		public void updateJudgment(window,int phase,IBattler battler1,IBattler battler2,int[] ratings1,int[] ratings2) {
 		int total1=0;
 		int total2=0;
 		for (int i = 0; i < phase; i++) {
@@ -251,12 +267,12 @@ namespace PokemonUnity.Combat
 		window.contents.fill_rect(16,150,256,4,new Color(80,80,80));
 		}
 
-		public void pbBattleArenaBattlers(PokemonEssentials.Interface.PokeBattle.IBattler battler1,PokemonEssentials.Interface.PokeBattle.IBattler battler2) {
+		public void pbBattleArenaBattlers(IBattler battler1,IBattler battler2) {
 		Game.pbMessage(Game._INTL("REFEREE: {1} VS {2}!\nCommence battling!\\wtnp[20]",
 			battler1.Name,battler2.Name)); { pbUpdate(); }
 		}
 
-		public void pbBattleArenaJudgment(PokemonEssentials.Interface.PokeBattle.IBattler battler1,PokemonEssentials.Interface.PokeBattle.IBattler battler2,int[] ratings1,int[] ratings2) {
+		public void pbBattleArenaJudgment(IBattler battler1,IBattler battler2,int[] ratings1,int[] ratings2) {
 		msgwindow=null;
 		dimmingvp=null;
 		infowindow=null;
@@ -275,7 +291,7 @@ namespace PokemonUnity.Combat
 			infowindow.visible=false;
 			for (int i = 0; i < 10; i++) {
 			pbGraphicsUpdate();
-			pbInputUpdate();  
+			pbInputUpdate();
 			msgwindow.update();
 			dimmingvp.update();
 			dimmingvp.color=new Color(0,0,0,i*128/10);
@@ -284,22 +300,22 @@ namespace PokemonUnity.Combat
 			infowindow.visible=true;
 			for (int i = 0; i < 10; i++) {
 			pbGraphicsUpdate();
-			pbInputUpdate();  
+			pbInputUpdate();
 			msgwindow.update();
 			dimmingvp.update();
 			infowindow.update();
 			}
 			updateJudgment(infowindow,1,battler1,battler2,ratings1,ratings2);
 			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judging category 1, Mind!\nThe Pokemon showing the most guts!\\wtnp[40]")); { 
-				pbUpdate(); dimmingvp.update(); infowindow.update(); } 
+				Game._INTL("REFEREE: Judging category 1, Mind!\nThe Pokemon showing the most guts!\\wtnp[40]")); {
+				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			updateJudgment(infowindow,2,battler1,battler2,ratings1,ratings2);
 			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judging category 2, Skill!\nThe Pokemon using moves the best!\\wtnp[40]")); { 
-				pbUpdate(); dimmingvp.update(); infowindow.update(); } 
+				Game._INTL("REFEREE: Judging category 2, Skill!\nThe Pokemon using moves the best!\\wtnp[40]")); {
+				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			updateJudgment(infowindow,3,battler1,battler2,ratings1,ratings2);
 			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judging category 3, Body!\nThe Pokemon with the most vitality!\\wtnp[40]")); { 
+				Game._INTL("REFEREE: Judging category 3, Body!\nThe Pokemon with the most vitality!\\wtnp[40]")); {
 				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			int total1=0;
 			int total2=0;
@@ -309,18 +325,18 @@ namespace PokemonUnity.Combat
 			}
 			if (total1==total2) {
 			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judgment: {1} to {2}!\nWe have a draw!\\wtnp[40]",total1,total2)); { 
+				Game._INTL("REFEREE: Judgment: {1} to {2}!\nWe have a draw!\\wtnp[40]",total1,total2)); {
 				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			} else if (total1>total2) {
 			Game.pbMessageDisplay(msgwindow,
 				Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}'s {4}!\\wtnp[40]",
-				total1,total2,@battle.pbGetOwner(battler1.index).Name,battler1.Name)); { 
+				total1,total2,@battle.pbGetOwner(battler1.index).Name,battler1.Name)); {
 				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			}
 			else {
 			Game.pbMessageDisplay(msgwindow,
 				Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}!\\wtnp[40]",
-				total1,total2,battler2.Name)); { 
+				total1,total2,battler2.Name)); {
 				pbUpdate(); dimmingvp.update(); infowindow.update(); }
 			}
 			infowindow.visible=false;

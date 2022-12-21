@@ -8,19 +8,20 @@ using PokemonUnity.Inventory;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.EventArg;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonEssentials.Interface
 {
 	/*// <summary>
 	/// Defines an event that procedures can subscribe to.
 	/// </summary>
-	public interface IEvent {
+	public interface IPokemonEvent {
 		/// <summary>
 		/// Add/Removes an event handler procedure from the event.
 		/// </summary>
 		event EventHandler EventName; //{ add; remove; }
 
-		IEvent initialize();
+		IPokemonEvent initialize();
 
 		/// <summary>
 		/// Sets an event handler for this event and removes all other event handlers.
@@ -241,7 +242,6 @@ namespace PokemonEssentials.Interface
 
 	namespace EventArg
 	{
-		#region Global Overworld EventArgs
 		/// <summary>
 		/// https://stackoverflow.com/a/47323956/3681384
 		/// </summary>
@@ -249,6 +249,8 @@ namespace PokemonEssentials.Interface
 		{
 			int Id { get; }
 		}
+		
+		#region Global Overworld EventArgs
 		public interface IOnMapCreateEventArgs : IEventArgs
 		{
 			//readonly int EventId = typeof(OnMapCreateEventArgs).GetHashCode();
@@ -470,5 +472,15 @@ namespace PokemonEssentials.Interface
 			//ISpritesetMap Map { get; set; }
 		}
 		#endregion
+
+		public interface IOnLoadLevelEventArgs : IEventArgs
+		{
+			//readonly int EventId = typeof(OnMapCreateEventArgs).GetHashCode();
+
+			//int Id { get { return EventId; } }
+			//int Id { get { return Pokemon.GetHashCode(); } } //EventId;
+			IScene Scene { get; set; }
+			//ToDo: Make an Enum for Transition Animation Type?
+		}
 	}
 }

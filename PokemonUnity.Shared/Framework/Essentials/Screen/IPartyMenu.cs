@@ -39,7 +39,7 @@ namespace PokemonEssentials.Interface.Screen
 		//void pbDisplay(string text);
 		void pbSwitchBegin(int oldid,int newid);
 		void pbSwitchEnd(int oldid,int newid);
-		void pbDisplayConfirm(string text);
+		//void pbDisplayConfirm(string text);
 		void pbAnnotate(string[] annot);
 		void pbSummary(int pkmnid);
 		void pbChooseItem(Items[] bag);
@@ -49,12 +49,12 @@ namespace PokemonEssentials.Interface.Screen
 
 	public interface IPartyDisplayScreen : IScreen, IHasDisplayMessage
 	{
-		IPartyDisplayScreen initialize(IPartyDisplayScene scene, IPokemon[] party);
+		IPartyDisplayScreen initialize(IPartyDisplayScene scene, IList<IPokemon> party);
 		void pbHardRefresh();
 		void pbRefresh();
 		void pbRefreshSingle(int i);
 		//void pbDisplay(string text);
-		void pbConfirm(string text);
+		//void pbConfirm(string text);
 		void pbSwitch(int oldid,int newid);
 		void pbMailScreen(Items item, IPokemon pkmn, int pkmnid);
 		void pbTakeMail(IPokemon pkmn);

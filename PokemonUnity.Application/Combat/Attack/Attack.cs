@@ -21,7 +21,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses current battle and manipulates the data then return the current battle with updated values.
 	/// </summary>
-	public abstract class PokeBattle_Move : Move, IBattleMove
+	public abstract class PokeBattle_Move : Move, IBattleMove, ICloneable
 	{
 		protected int[] astage { get; set; }
 		protected int[] ostage { get; set; }

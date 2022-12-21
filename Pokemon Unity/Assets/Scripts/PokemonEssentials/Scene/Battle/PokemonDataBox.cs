@@ -20,6 +20,7 @@ namespace PokemonUnity
 	/// Otherwise, you might just need to make an abstract factory for the constructor
 	//ToDo: SafariDataBox has different Update/Refresh values when overriding...
 	[RequireComponent(typeof(UnityEngine.UI.Image))]
+	[ExecuteInEditMode]
 	public class PokemonDataBox : SafariDataBox, IPokemonDataBox
 	{
 		public IBattler battler { get; private set; }
@@ -78,6 +79,7 @@ namespace PokemonUnity
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			base.initialize(viewport);
 			this.battler = battler;
+			GameDebug.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
 			@explevel = 0;
 			@selected = 0;
 			@frame = 0;
@@ -155,15 +157,6 @@ namespace PokemonUnity
 			refreshExpLevel();
 			refresh();
 			return this;
-		}
-
-		public override void Dispose()
-		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			//@statuses.Dispose();
-			//@databox.Dispose();
-			//@contents.Dispose();
-			base.Dispose();
 		}
 				
 		public void refreshExpLevel()
@@ -272,6 +265,7 @@ namespace PokemonUnity
 			//}
 			if (@battler.displayGender > 0)
 			{
+				gender.gameObject.SetActive(true);
 				if (@battler.displayGender == 1)
 				{
 					gender.text = "♂"; // Male
@@ -284,7 +278,10 @@ namespace PokemonUnity
 				}
 			}
 			else
+			{
+				gender.gameObject.SetActive(false);
 				gender.text = string.Empty;
+			}
 			//pbDrawTextPositions(this.bitmap,textpos);
 			//pbSetSmallFont(this.bitmap);
 			//textpos = new List<ITextPosition>() {
@@ -521,6 +518,25 @@ namespace PokemonUnity
 			}
 		}
 
+		protected override void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				if (disposing)
+				{
+					// TODO: dispose managed state (managed objects)
+					//@statuses.Dispose();
+					//@databox.Dispose();
+					//@contents.Dispose();
+					base.Dispose(disposing);
+				}
+
+				// TODO: free unmanaged resources (unmanaged objects) and override finalizer
+				// TODO: set large fields to null
+				//disposed = true;
+			}
+		}
+
 		/// <summary>
 		/// Invoked when the value of the slider changes.
 		/// </summary>
@@ -528,16 +544,19 @@ namespace PokemonUnity
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//if (sliderHP.value <= (sliderHP.maxValue / 4)) { Fill.color = hpzone2; }
-			if (.3f > sliderHP.normalizedValue) { spriteFillHP.color = (SeriColor)PokeBattle_SceneConstants.HPCOLORRED; }
+			if (.3f > sliderHP.normalizedValue) 
+			{ 
+				spriteFillHP.color = Color.red; //(SeriColor)PokeBattle_SceneConstants.HPCOLORRED; 
+			}
 			//else if (sliderHP.value < (sliderHP.normalizedValue.CompareTo(0.5f))) //  / 2)) 
 			else if (.75f > (sliderHP.normalizedValue)) //  / 2)) 
 			{
 				//Change color of hp bar
-				spriteFillHP.color = (SeriColor)PokeBattle_SceneConstants.HPCOLORYELLOW;
+				spriteFillHP.color = Color.yellow; //(SeriColor)PokeBattle_SceneConstants.HPCOLORYELLOW;
 				//Change background image for health slider
 			}
 			else
-				spriteFillHP.color = (SeriColor)PokeBattle_SceneConstants.HPCOLORGREEN;
+				spriteFillHP.color = Color.green; //(SeriColor)PokeBattle_SceneConstants.HPCOLORGREEN;
 			//each time the slider's value is changed, write to text displaying the hp
 			maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
 			currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
@@ -547,7 +566,8 @@ namespace PokemonUnity
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//Debug.Log(amount);
-			while (sliderHP.value != amount)
+			//while (sliderHP.value != amount)
+			while (Math.Abs(sliderHP.value - amount) > 0.001f)
 			{
 				sliderHP.value = Mathf.Lerp(sliderHP.value + amount, sliderHP.value, 1f * Time.deltaTime);
 				yield return null;
@@ -641,7 +661,7 @@ namespace PokemonUnity
 			IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
 			IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
 			textpos.Add(new TextPosition(Game._INTL("Safari Balls"), 30, 8, false, base_, shadow));
-			textpos.Add(new TextPosition(Game._INTL("Left: {1}", (@battle as ISafariZone).ballCount), 30, 38, false, base_, shadow));
+			textpos.Add(new TextPosition(Game._INTL("Left: {1}", (@battle as ISafariZone_Scene).ballCount), 30, 38, false, base_, shadow));
 			//pbDrawTextPositions(this.bitmap, textpos);
 		}
 				

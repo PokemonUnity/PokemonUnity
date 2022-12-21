@@ -50,16 +50,29 @@ namespace PokemonEssentials.Interface.Field
 		/// <param name="ignoretrail"></param>
 		void pbRoamPokemon(bool ignoretrail = false);
 
+		/// <summary>
+		/// Fires whenever the player moves to a new map. Event handler receives the old
+		/// map ID or 0 if none.  Also fires when the first map of the game is loaded
+		/// </summary>
+		event EventHandler OnMapChange;
 		//Events.OnMapChange+=proc {|sender,e|
 
+		/// <summary>
+		/// Triggers at the start of a wild battle.  Event handlers can provide their own
+		/// wild battle routines to override the default behavior.
+		/// </summary>
+		//event EventHandler<IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
+		event Action<object, EventArg.IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
 		//Events.OnWildBattleOverride+=proc { |sender,e|
 
 		PokemonUnity.Combat.BattleResults pbRoamingPokemonBattle(Pokemons species, int level);
 
 		//EncounterModifier.register(proc {|encounter|});
+		//void register(Func<IEncounter, IEncounter> p);
 
 		//EncounterModifier.registerEncounterEnd(proc {});
 		//EncounterModifier.registerEncounterEnd(Action);
+		//void registerEncounterEnd(Action p);
 
 		/// <summary>
 		/// </summary>

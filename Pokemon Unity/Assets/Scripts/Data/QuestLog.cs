@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class QuestLog
+namespace PokemonUnity.Legacy
 {
-    private QuestData[] quests;
-    
-    public QuestLog()
-    {
-        // TODO Quest log class
-    }
+	[Serializable]
+	public class QuestLog
+	{
+		private QuestData[] quests;
+	
+		public QuestLog()
+		{
+			// TODO Quest log class
+		}
+	}
 }

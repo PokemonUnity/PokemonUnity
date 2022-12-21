@@ -17,15 +17,25 @@ namespace PokemonUnity
 	/// Command menu (Fight/Pokémon/Bag/Run)
 	/// </summary>
 	//[RequireComponent(typeof())]
-	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay
+	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay, IViewport
 	{
-		//public string title;
-		public bool disposedValue;
+		[SerializeField] private CommandMenuButtons buttons;
+		private bool disposedValue;
+		public int Index;
+		public int Mode;
 		public IIconSprite display;
+		//ToDo: a prefab of child button for the parent panel to instantiate custom/dynamic commands in game scene
 		public IWindow_CommandPokemon window;
 		public IWindow_UnformattedTextPokemon msgbox;
-		public ICommandMenuButtons buttons;
-		public int mode { get; set; }
+		/// <summary>
+		/// Collection of sprites, used to contain the background/text for unity button image 
+		/// that represents the command issued to pokemon during player's turn
+		/// </summary>
+		/// Should represent master collection of sprites, is assigned to UI using functions
+		public UnityEngine.Sprite[] commandSpriteArray;
+
+		#region Property
+		public int mode { get { return Mode; } set { Mode = value; } }
 
 		public float x
 		{
@@ -96,6 +106,7 @@ namespace PokemonUnity
 				@msgbox.visible = value;
 				if (@display != null) @display.visible = value;
 				if (@buttons != null) @buttons.visible = value;
+				//gameObject.SetActive(value); //set this unity go IsActive status to value 
 			}
 		}
 
@@ -125,6 +136,9 @@ namespace PokemonUnity
 			} 
 		}
 
+		IRect IViewport.rect { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		#endregion
+
 		public ICommandMenuDisplay initialize(IViewport viewport= null)
 		{
 			/*
@@ -148,7 +162,7 @@ namespace PokemonUnity
 			@msgbox.baseColor = PokeBattle_SceneConstants.MESSAGEBASECOLOR;
 			@msgbox.shadowColor = PokeBattle_SceneConstants.MESSAGESHADOWCOLOR;
 			@msgbox.windowskin = null;
-			@title = "";
+			@title = "";*/
 			//@buttons = null; //set display to false
 			if (PokeBattle_SceneConstants.USECOMMANDBOX)
 			{
@@ -156,8 +170,8 @@ namespace PokemonUnity
 				@window.opacity = 0;
 				@window.x = (Game.GameData as Game).Graphics.width;
 				//@buttons = new CommandMenuButtons(this.index, this.mode, viewport);
-				@buttons.initialize(this.index, this.mode, viewport);
-			}*/
+				@buttons.initialize(this.index, this.mode, this);
+			}
 			return this;
 		}
 
@@ -201,7 +215,7 @@ namespace PokemonUnity
 					@msgbox.Dispose();
 					@window.Dispose();
 					if (@display != null) @display.Dispose();
-					if (@buttons != null) @buttons.Dispose();
+					if (@buttons != null) (@buttons as IDisposable).Dispose();
 				}
 
 				// TODO: free unmanaged resources (unmanaged objects) and override finalizer
@@ -222,6 +236,17 @@ namespace PokemonUnity
 			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
 			Dispose(disposing: true);
 			GC.SuppressFinalize(this);
+		}
+
+		IViewport IViewport.initialize(float x, float y, float height, float width)
+		{
+			//throw new NotImplementedException();
+			return this;
+		}
+
+		void IViewport.flash(IColor color, int duration)
+		{
+			//throw new NotImplementedException();
 		}
 	}
 }

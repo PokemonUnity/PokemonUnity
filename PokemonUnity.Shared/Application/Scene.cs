@@ -49,16 +49,18 @@ namespace PokemonUnity.UX
 		public PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene BattleArenaScene { get; set; }
 		public PokemonEssentials.Interface.Screen.IBattleSwapScene BattleSwapScene { get; set; }
 		//public PokemonEssentials.Interface.Screen. BattlePalaceScene { get; set; }
-		//public PokemonEssentials.Interface.Screen. BattleSafari { get; set; }
+		public PokemonEssentials.Interface.Screen.ISafariZone_Scene BattleSafari { get; set; }
 		public PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene BattleSceneDebug { get; set; }
 		public PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive BattleSceneDebugNoUI { get; set; }
 		public PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging BattleSceneDebugWithoutLog { get; set; }
 		public PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics BattleSceneDebugWithoutGfx { get; set; }
 
-		public Scene(params PokemonEssentials.Interface.Screen.IScene[] scenes)
-		{
-			initialize(scenes);
-		}
+		public Scene() { }
+		
+		//public Scene(params PokemonEssentials.Interface.Screen.IScene[] scenes)
+		//{
+		//	initialize(scenes);
+		//}
 
 		public IGameScenesUI initialize (params PokemonEssentials.Interface.Screen.IScene[] scenes)
 		{
@@ -89,10 +91,11 @@ namespace PokemonUnity.UX
 				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s22) BattleScene = s22;
 				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene s23) BattleArenaScene = s23;
 				else if (scene is PokemonEssentials.Interface.Screen.IBattleSwapScene s24) BattleSwapScene = s24;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene s25) BattleSceneDebug = s25;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive s26) BattleSceneDebugNoUI = s26;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging s27) BattleSceneDebugWithoutLog = s27;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics s28) BattleSceneDebugWithoutGfx = s28;
+				else if (scene is PokemonEssentials.Interface.Screen.ISafariZone_Scene s25) BattleSafari = s25;
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene s26) BattleSceneDebug = s26;
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive s27) BattleSceneDebugNoUI = s27;
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging s28) BattleSceneDebugWithoutLog = s28;
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics s29) BattleSceneDebugWithoutGfx = s29;
 			}
 			return this;
 		}
