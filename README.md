@@ -75,3 +75,32 @@ For Window:
 ### Demo and Downloads 
 
 There are also demos for Windows, Linux, and Mac zipped in [2016 Release](https://github.com/PokemonUnity/PokemonUnity/releases)
+
+## FAQ
+
+- Is Pokemon Unity still in development? 
+	- Yes
+- Is the Unity part of this project being worked on? 
+	- No
+- Is there a more up to date version and runnable version of this? 
+	- Not that we know
+- How do I start developing my own Pokemon game? 
+	- Thats completely up to you. The maintained Pokemon code in this repository is actually NOT related to Unity at all. This means someone can take the code here and start their own Pokemon game in any way that supports loading C# DLL libraries. Unity is just 1 way :)
+- What relevance do the folders other than the `Pokemon Unity` folder have? 
+	- The repo contains several projects. Each folder (probably) represents one of those projects. The `Pokemon Unity` folder is just where the Unity related files are found
+		- TODO: add breakdown of contents of each parent folder
+
+### Unity FAQ
+
+- Why is my screen pink?
+	- Unity metafiles were broken sometime in the past. Because of this, images in (probably) all scenes are corrupted and show up pink
+- How do I learn Unity? 
+	- There are several great tutorials on YouTube to learn Unity. To name a few
+		- [Brackeys](https://www.youtube.com/@Brackeys)
+		- [Code Monkey](https://www.youtube.com/@CodeMonkeyUnity)
+		- [Jason Weimann](https://www.youtube.com/@Unity3dCollege)
+		- [Unity](https://www.youtube.com/@unity)
+		- [Sebastian Lague](https://www.youtube.com/@SebastianLague)
+		- [Game Maker's Toolkit](https://www.youtube.com/@GMTK)
+- Why isnt the Unity side of things being worked on?
+	- There is only 1 developer currently active on this project. Their focus is on the non-Unity Pokemon framework

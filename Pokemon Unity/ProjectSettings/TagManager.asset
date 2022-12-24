@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CanvasUI
+  - CanvasScene
+  - DialogWindow
+  - PokemonIcon
   layers:
   - Default
   - TransparentFX

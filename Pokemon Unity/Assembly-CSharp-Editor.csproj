@@ -2,6 +2,9 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>9.0</LangVersion>
+    <_TargetFrameworkDirectories>non_empty_path_generated_by_rider_editor_plugin</_TargetFrameworkDirectories>
+    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_rider_editor_plugin</_FullFrameworkReferenceAssemblyPaths>
+    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -56,15 +59,17 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\NewEditModeTest.cs" />
-    <Compile Include="Assets\Editor\EventHandlerTest.cs" />
-    <Compile Include="Assets\Editor\TMP_AnimatedEditor.cs" />
-    <Compile Include="Assets\Scripts\Editor\BillboardingEditor.cs" />
-    <Compile Include="Assets\Editor\CustomEventEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\_Original\NewEditModeTest.cs" />
+    <Compile Include="Assets\Scripts\Editor\DescriptionAttributeDrawer.cs" />
+    <Compile Include="Assets\Scripts\Editor\_Original\TMP_AnimatedEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\FoldoutDrawer.cs" />
+    <Compile Include="Assets\Scripts\_Original\Editor\BillboardingEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\_Original\CustomEventEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\_Original\EventHandlerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Editor\DOTweenEditor.dll" />
-    <None Include="Assets\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\Scripts\Editor\_Original\DOTweenEditor.dll" />
+    <None Include="Assets\Scripts\Editor\_Original\DOTweenEditor.XML" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -338,7 +343,7 @@
       <HintPath>Assets\GameMain\Libraries\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenEditor">
-      <HintPath>Assets\Editor\DOTweenEditor.dll</HintPath>
+      <HintPath>Assets\Scripts\Editor\_Original\DOTweenEditor.dll</HintPath>
     </Reference>
     <Reference Include="JetBrains.Rider.Unity.Editor.Plugin.Repacked">
       <HintPath>Assets\Plugins\Editor\JetBrains\JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
