@@ -14,7 +14,6 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Combat
 {
-
 	/// <summary>
 	/// A Pokemon placeholder class to be used while in-battle,
 	/// to prevent changes from being permanent to original pokemon profile
@@ -28,25 +27,25 @@ namespace PokemonUnity.Combat
 #pragma warning disable 0162 //Warning CS0162  Unreachable code detected
 		#region Variables
 		#region Battle Related
-		public IBattle battle					{ get; private set; }//{ return Game.battle; }
+		public IBattle battle					{ get; protected set; }//{ return Game.battle; }
 		/// <summary>
 		/// Returns the position of this pkmn in battle lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == battle.Party[this.pkmn.index]
-		public int Index						{ get; private set; }
+		public int Index						{ get; protected set; }
 		/// <summary>
 		/// Index list of all pokemons who attacked this battler on this/previous turn
 		/// </summary>
-		public IList<int> lastAttacker			{ get; private set; }
+		public IList<int> lastAttacker			{ get; protected set; }
 		public int turncount					{ get; set; } //ToDo: Private set?
-		public IEffectsBattler effects			{ get; private set; }
+		public IEffectsBattler effects			{ get; protected set; }
 		/// <summary>
 		/// Int Buffs and debuffs (gains and loss) affecting this pkmn.
 		/// </summary>
 		/// <remarks>
 		/// 0: Attack, 1: Defense, 2: Speed, 3: SpAtk, 4: SpDef, 5: Evasion, 6: Accuracy
 		/// </remarks>
-		public int[] stages						{ get; private set; }
+		public int[] stages						{ get; protected set; }
 		/// <summary>
 		/// Participants will earn Exp. Points if this battler is defeated
 		/// </summary>
@@ -68,7 +67,7 @@ namespace PokemonUnity.Combat
 		private int hp;
 		public int TotalHP						{ get; protected set; }
 		public int ATK							{ get { return effects.PowerTrick ? DEF : attack; } set { attack = value; } }
-		private int attack;
+		protected int attack;
 		public int DEF                          { get
 			{
 				if (effects.PowerTrick) return attack;
@@ -76,12 +75,12 @@ namespace PokemonUnity.Combat
 			}
 			set { defense = value; }
 		}
-		private int defense;
+		protected int defense;
 		public int SPD							{ get { return battle.field.WonderRoom > 0 ? DEF : spdef; } set { spdef = value; } }
-		private int spdef;
+		protected int spdef;
 		public int SPA							{ get { return spatk; } set { spatk = value; } }
-		private int spatk;
-		private int speed;
+		protected int spatk;
+		protected int speed;
 		public int SPE						    { get
 			{
 				int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
@@ -149,7 +148,7 @@ namespace PokemonUnity.Combat
 													get { return level; } //pokemon.IsNotNullOrNone() ? pokemon.Level : 0; }
 													set { level = value; } //if (pokemon.IsNotNullOrNone()) pokemon.SetLevel((byte)value); }
 												}
-		private int level;
+		private int level; //ToDo: Do a null check for base.pokemon, and default to 0 if none?
 		public Monster.Natures Nature			{ get { return pokemon.Nature; } }
 		public int Happiness					{ get { return pokemon.Happiness; } } //set { happiness = value; } }
 		//private int happiness					{ get; set; } //{ return pokemon.IsNotNullOrNone() ? pokemon.Happiness : 0; } }
@@ -164,7 +163,7 @@ namespace PokemonUnity.Combat
 				if (effects.Illusion != null)
 					return effects.Illusion.Gender;
 				return this.gender; } set { gender = value; } }
-		private bool? gender;
+		protected bool? gender;
 		public bool IsShiny { get {
 				if (effects.Illusion != null)
 					return effects.Illusion.IsShiny;
@@ -198,7 +197,7 @@ namespace PokemonUnity.Combat
 		private Items item;
 		public Types Type1						{ get; set; }
 		public Types Type2						{ get; set; }
-		public int[] IV							{ get; private set; }
+		public int[] IV							{ get; protected set; }
 		//public int[] IV						{ get { return pokemon.IV; } }
 		public Abilities Ability				{ get { return ability; } set { ability = value; } }
 		private Abilities ability;
@@ -212,7 +211,7 @@ namespace PokemonUnity.Combat
 		/// In Hyper Mode, a Pokémon may attack its Trainer, but in Reverse Mode, they will not.
 		/// While in Reverse Mode, a Pokémon hurts itself after every turn, whereas a Pokémon in Hyper Mode incurs no self-damage
 		/// </remarks>
-		private bool isHyperMode { get; set; }
+		protected bool isHyperMode { get; set; }
 		/// <summary>
 		/// Consumed held item (used in battle only)
 		/// </summary>
@@ -228,7 +227,7 @@ namespace PokemonUnity.Combat
 		/// ToDo: Move to pkemonBattle class
 		public bool belch { get; set; }
 		#endregion
-		private bool fainted;	//ToDo: Remove because redundancy of `this.Status == Status.FAINT`?
+		protected bool fainted;	//ToDo: Remove because redundancy of `this.Status == Status.FAINT`?
 		public bool isFainted() { return HP == 0 || Status == Status.FAINT || fainted; }
 		public bool isEgg { get { return pokemon?.isEgg??true; } }
 		/// <summary>
@@ -244,7 +243,7 @@ namespace PokemonUnity.Combat
 				//return Game.GameData.Player.Pokedex[(byte)Species, 1] == 1;
 			}
 		}
-		public PokemonEssentials.Interface.PokeBattle.IPokemon pokemon { get; private set; }
+		public PokemonEssentials.Interface.PokeBattle.IPokemon pokemon { get; protected set; }
 
 		public float Weight(IBattler attacker = null)
 		{
@@ -545,7 +544,7 @@ namespace PokemonUnity.Combat
 			effects.WishAmount         = 0	  ;
 			effects.WishMaker          = -1	  ;
 		}
-		//private void _InitPokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn, sbyte pkmnIndex)
+		//protected void _InitPokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn, sbyte pkmnIndex)
 		void IBattler.pbInitPokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn, int pkmnIndex)
 		{
 			if (pkmn.isEgg)
@@ -3406,7 +3405,7 @@ namespace PokemonUnity.Combat
 						@battle.pbDisplay(Game._INTL("{1} woke up in the uproar!",ToString()));
 					}
 		}
-		//private void _pbEndTurn(IBattleChoice choice) {
+		//protected void _pbEndTurn(IBattleChoice choice) {
 		void IBattler.pbEndTurn(IBattleChoice choice) {
 			// True end(?)
 			if (@effects.ChoiceBand<0 && @lastMoveUsed>=0 && !this.isFainted() &&
