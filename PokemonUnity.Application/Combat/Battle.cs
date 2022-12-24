@@ -52,7 +52,7 @@ namespace PokemonUnity.Combat
 		/// False if there are no consequences to player's defeat.
 		/// </summary>
 		/// (Ground Hogs day anyone?)
-		public bool canLose { get; private set; }
+		public bool canLose { get; protected set; }
 		/// <summary>
 		/// Shift/Set "battle style" option
 		/// </summary>
@@ -86,7 +86,7 @@ namespace PokemonUnity.Combat
 		/// Pokémon party for All Trainers in Battle.
 		/// Array[4,6] = 0: Player, 1: Foe, 2: Ally, 3: Foe's Ally
 		/// </summary>
-		//public IPokemon[,] party { get; private set; }
+		//public IPokemon[,] party { get; protected set; }
 		/// <summary>
 		/// Order of Pokémon in the player's party
 		/// </summary>
@@ -110,18 +110,18 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Items held by opponents
 		/// </summary>
-		//public List<Items> items { get; private set; }
+		//public List<Items> items { get; protected set; }
 		public Items[][] items { get; set; }
 		/// <summary>
 		/// Effects common to each side of a battle
 		/// </summary>
-		/// public List<SideEffects> sides { get; private set; }
-		public IEffectsSide[] sides { get; private set; }
+		/// public List<SideEffects> sides { get; protected set; }
+		public IEffectsSide[] sides { get; protected set; }
 		/// <summary>
 		/// Effects common to the whole of a battle
 		/// </summary>
-		/// public List<FieldEffects> field { get; private set; }
-		public IEffectsField field { get; private set; }
+		/// public List<FieldEffects> field { get; protected set; }
+		public IEffectsField field { get; protected set; }
 		/// <summary>
 		/// Battle surroundings;
 		/// Environment node is used for background visual,
@@ -140,11 +140,11 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// True if during the switching phase of the round
 		/// </summary>
-		public bool switching { get; private set; }
+		public bool switching { get; protected set; }
 		/// <summary>
 		/// True if Future Sight is hitting
 		/// </summary>
-		public bool futuresight { get; private set; }
+		public bool futuresight { get; protected set; }
 		/// <summary>
 		/// The Struggle move
 		/// </summary>
@@ -152,7 +152,7 @@ namespace PokemonUnity.Combat
 		/// Execute whatever move/function is stored in this variable
 		/// </remarks>
 		/// Func<PokeBattle>
-		public IBattleMove struggle { get; private set; }
+		public IBattleMove struggle { get; protected set; }
 		/// <summary>
 		/// Choices made by each Pokémon this round
 		/// </summary>
@@ -160,7 +160,7 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Success states
 		/// </summary>
-		public ISuccessState[] successStates { get; private set; }
+		public ISuccessState[] successStates { get; protected set; }
 		/// <summary>
 		/// Last move used
 		/// </summary>
@@ -173,7 +173,7 @@ namespace PokemonUnity.Combat
 		/// Battle index of each trainer's Pokémon to Mega Evolve
 		/// </summary>
 		/// Instead of reflecting entire party, it displays for active on field?
-		public int[][] megaEvolution { get; private set; }
+		public int[][] megaEvolution { get; protected set; }
 		/// <summary>
 		/// Whether Amulet Coin's effect applies
 		/// </summary>
@@ -204,23 +204,23 @@ namespace PokemonUnity.Combat
 		public string endspeechwin2 { get; set; }
 		/// <summary>
 		/// </summary>
-		public IDictionary<string,bool> rules { get; private set; }
-		//public List<string> rules { get; private set; }
+		public IDictionary<string,bool> rules { get; protected set; }
+		//public List<string> rules { get; protected set; }
 		/// <summary>
 		/// Counter to track number of turns for battle
 		/// </summary>
 		public int turncount { get; set; }
 		public IBattler[] priority { get; protected set; }
-		public List<int> snaggedpokemon { get; private set; }
+		public List<int> snaggedpokemon { get; protected set; }
 		/// <summary>
 		/// Each time you use the option to flee, the counter goes up.
 		/// </summary>
-		public int runCommand { get; private set; }
+		public int runCommand { get; protected set; }
 		/// <summary>
 		/// Another counter that has something to do with tracking items picked up during a battle
 		/// </summary>
 		public int nextPickupUse { get { pickupUse+=1; return pickupUse; } }
-		private int pickupUse { get; set; }
+		protected int pickupUse;
 		public bool controlPlayer { get; set; }
 		public bool usepriority { get; set; }
 		public IBattlePeer peer { get; set; }
@@ -2721,7 +2721,8 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Judging
-		private void _pbJudgeCheckpoint(IBattler attacker,IBattleMove move=null) {
+		//protected void _pbJudgeCheckpoint(IBattler attacker,IBattleMove move=null) {
+		void IBattle.pbJudgeCheckpoint(IBattler attacker,IBattleMove move=null) {
 		}
 
 		public BattleResults pbDecisionOnTime() {
@@ -2782,7 +2783,7 @@ namespace PokemonUnity.Combat
 			return BattleResults.DRAW;                          // draw;
 		}
 
-		//private BattleResults _pbDecisionOnDraw() {
+		//protected BattleResults _pbDecisionOnDraw() {
 		BattleResults IBattle.pbDecisionOnDraw() {
 			return BattleResults.DRAW; // draw;
 		}
@@ -3460,7 +3461,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region End of round.
-		//private void _pbEndOfRoundPhase() {
+		//protected void _pbEndOfRoundPhase() {
 		void IBattle.pbEndOfRoundPhase() {
 			GameDebug.Log($"[End of round]");
 			for (int i = 0; i < battlers.Length; i++) {
