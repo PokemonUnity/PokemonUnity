@@ -248,7 +248,7 @@
     <Compile Include="Assets\Scripts\SetMatTint.cs" />
     <Compile Include="Assets\Scripts\SetSortingOrder.cs" />
     <Compile Include="Assets\Scripts\SfxHandler.cs" />
-    <Compile Include="Assets\Scripts\SO\Weather.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\Weather.cs" />
     <Compile Include="Assets\Scripts\SpriteAnimation.cs" />
     <Compile Include="Assets\Scripts\TextureTileAnimation.cs" />
     <Compile Include="Assets\Scripts\TextureTileToScale.cs" />
