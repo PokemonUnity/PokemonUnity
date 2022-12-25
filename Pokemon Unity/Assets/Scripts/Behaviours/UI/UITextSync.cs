@@ -20,5 +20,6 @@ If empty, defaults to the first childs Text Mesh Pro component (if it has one)")
     void Update()
     {
         shadowText.text = parentText.text;
+        shadowText.fontSize = parentText.fontSize;
     }
 }
