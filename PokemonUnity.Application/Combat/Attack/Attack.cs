@@ -75,82 +75,82 @@ namespace PokemonUnity.Combat
 		#region Interface Implementation
 		int IBattleMove.ToInt()
 		{
-			throw new NotImplementedException();
+			return (int)id;
 		}
 
 		bool IBattleMove.unusableInGravity()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isContactMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canProtectAgainst()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canMagicCoat()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canSnatch()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canMirrorMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canKingsRock()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canThawUser()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.hasHighCriticalRate()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isBitingMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isPunchingMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isSoundBased()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isPowderMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isPulseMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isBombMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 		#endregion
 	}
@@ -843,7 +843,7 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_014() : base() { }
 		//public PokeBattle_Move_014(Battle battle, Attack.Move move) : base(battle, move) { }
-		private IBattler attacker; //ToDo: use pbAdditionalEffect(IBattler attacker, IBattler opponent) to assign?
+		private IBattler attacker = null;
 		public override int AddlEffect
 		{
 			get
@@ -858,6 +858,7 @@ namespace PokemonUnity.Combat
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
+			this.attacker = attacker;
 			if (opponent.damagestate.Substitute) return;
 			if (opponent is IBattlerEffect b && b.pbCanConfuse(attacker, false, this))
 			{
