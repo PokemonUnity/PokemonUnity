@@ -25,7 +25,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157003056865455206}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -112,8 +112,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 80, y: -80}
-  m_SizeDelta: {x: -160, y: -160}
+  m_AnchoredPosition: {x: 30, y: -30}
+  m_SizeDelta: {x: -60, y: -60}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8687053509849378642
 MonoBehaviour:
@@ -133,7 +133,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 30
+  m_Spacing: 6
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -218,12 +218,12 @@ PrefabInstance:
     - target: {fileID: 2717433511128504901, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 450
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 2717433511128504901, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 128
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2717433511128504901, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
@@ -289,11 +289,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Continue
-      objectReference: {fileID: 0}
-    - target: {fileID: 4780322938166807865, guid: a0d42c054caa98d47ab058c32923f51c,
-        type: 3}
-      propertyPath: m_PixelsPerUnitMultiplier
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5326479048692013508, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
@@ -361,12 +356,12 @@ PrefabInstance:
     - target: {fileID: 2717433511128504901, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 450
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 2717433511128504901, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 128
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2717433511128504901, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
@@ -433,11 +428,21 @@ PrefabInstance:
       propertyPath: m_text
       value: New Game
       objectReference: {fileID: 0}
+    - target: {fileID: 4821714606003279629, guid: a0d42c054caa98d47ab058c32923f51c,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     - target: {fileID: 5326479048692013508, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
       propertyPath: m_Name
       value: New Game
       objectReference: {fileID: 0}
+    - target: {fileID: 8923488369115661604, guid: a0d42c054caa98d47ab058c32923f51c,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d42c054caa98d47ab058c32923f51c, type: 3}
@@ -493,12 +498,12 @@ PrefabInstance:
     - target: {fileID: 2717433511128504901, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 450
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 2717433511128504901, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 128
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2717433511128504901, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
@@ -565,11 +570,21 @@ PrefabInstance:
       propertyPath: m_text
       value: Settings
       objectReference: {fileID: 0}
+    - target: {fileID: 4821714606003279629, guid: a0d42c054caa98d47ab058c32923f51c,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     - target: {fileID: 5326479048692013508, guid: a0d42c054caa98d47ab058c32923f51c,
         type: 3}
       propertyPath: m_Name
       value: Settings
       objectReference: {fileID: 0}
+    - target: {fileID: 8923488369115661604, guid: a0d42c054caa98d47ab058c32923f51c,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d42c054caa98d47ab058c32923f51c, type: 3}

@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\_Original\Data\PokemonDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\TransformExtensions.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\SceneHandlers\StartScene\StartMenuHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Bag.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Game_System.cs" />
@@ -267,7 +268,6 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractRedirect.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\SceneHandlers\StartScene\StartMenuHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GameMain\Libraries\PokemonUnity.Shared.dll" />
