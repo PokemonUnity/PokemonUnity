@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class MainMenuHandler : MonoBehaviour {
+public class OLD_MainMenuHandler : MonoBehaviour {
     public AudioClip scrollClip;
     public AudioClip decideClip;
     public AudioClip cancelClip;
