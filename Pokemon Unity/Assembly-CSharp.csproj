@@ -199,6 +199,7 @@
     <Compile Include="Assets\Scripts\_Original\Save\CustomSaveEvent.cs" />
     <Compile Include="Assets\Scripts\_Original\BgmHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\SceneHandlers\MainMenuHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\UITextSingleSelect.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\MoveDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\ActivateOnCVariable.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\AIUtility.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\CSVReader.cs" />
     <Compile Include="Assets\Scripts\_Original\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\LevelLoader.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\ChangeTextColor.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarItemObject.cs" />
     <Compile Include="Assets\Scripts\_Original\DialogBoxHandlerNew.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\JsonHelper.cs" />
@@ -268,7 +270,6 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractRedirect.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\UITextSingleSelect.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GameMain\Libraries\PokemonUnity.Shared.dll" />
@@ -931,11 +932,17 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.1.9f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="EasyButtons.Editor">
+      <HintPath>Library\ScriptAssemblies\EasyButtons.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyButtons">
+      <HintPath>Library\ScriptAssemblies\EasyButtons.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
       <HintPath>Library\ScriptAssemblies\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>

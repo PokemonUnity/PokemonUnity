@@ -135,6 +135,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7601747482030271340, guid: 043a53bfd821a8b48b199f81ee2480f5,
         type: 3}
+      propertyPath: color.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7601747482030271340, guid: 043a53bfd821a8b48b199f81ee2480f5,
+        type: 3}
+      propertyPath: color.g
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7601747482030271340, guid: 043a53bfd821a8b48b199f81ee2480f5,
+        type: 3}
+      propertyPath: color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7601747482030271340, guid: 043a53bfd821a8b48b199f81ee2480f5,
+        type: 3}
+      propertyPath: TextColorChange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7601747482030271340, guid: 043a53bfd821a8b48b199f81ee2480f5,
+        type: 3}
       propertyPath: textInputPrefab
       value: 
       objectReference: {fileID: 7098413110193737968, guid: 02e1e0cd4d0980f4ab5ae94d82f9fd1b,

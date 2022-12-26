@@ -68,7 +68,7 @@ public class MainMenuHandler : MonoBehaviour {
     #endregion
 
     void Awake() {
-        menuHandler.EnableCanvas(0);
+        menuHandler.EnableCanvas(1);
         return;
         fileDataPanel = GameObject.Find("FileData");
         newGameButton = GameObject.Find("NewGame");

@@ -53,6 +53,11 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4046525495550909633, guid: b1ec65ad838c8964ba4565a1543509dd,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4306695679107060476, guid: b1ec65ad838c8964ba4565a1543509dd,
         type: 3}
       propertyPath: m_fontSize
@@ -62,6 +67,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSizeBase
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 2228183116013530003}
+    - target: {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: set_material
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: UnityEngine.UI.Graphic, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Material, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7453356502003191823, guid: b1ec65ad838c8964ba4565a1543509dd,
         type: 3}
@@ -192,3 +232,15 @@ PrefabInstance:
     - {fileID: 40243484206335859, guid: b1ec65ad838c8964ba4565a1543509dd, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: b1ec65ad838c8964ba4565a1543509dd, type: 3}
+--- !u!114 &2228183116013530003 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8600796151437371629, guid: b1ec65ad838c8964ba4565a1543509dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 7615642197986820990}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
