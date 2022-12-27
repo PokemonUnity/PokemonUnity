@@ -5,35 +5,23 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
 
+[RequireComponent(typeof(Canvas))]
 public class StartMenuHandler : MonoBehaviour
 {
+    [SerializeField] MainMenuHandler mainMenuHandler;
     [SerializeField] GameObject continueButton;
 
-    // Start is called before the first frame update
     void Start()
     {
-        bool hasSaveFile = SaveLoad.Load();
-        Selectable selectable = continueButton.GetComponent<Button>();
-        if (!hasSaveFile) {
-            for (int i = 0; i < Selectable.allSelectablesArray.Length; i++) {
-                if (Selectable.allSelectablesArray[i] == selectable) {
-                    if (i == Selectable.allSelectablesArray.Length - 1) {
-                        selectable = Selectable.allSelectablesArray[i-1];
-                        break;
-                    } else {
-                        selectable = Selectable.allSelectablesArray[i+1];
-                        break;
-                    }
-                }
-            }
-            continueButton.SetActive(false);
+        if (mainMenuHandler is null) {
+            Debug.LogError("Main Menu Handler component was not provided");
+            return;
         }
-        selectable.Select();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        MenuHandler menuHandler = mainMenuHandler.MenuHandler;
+        bool hasSaveFile = SaveLoad.Load();
+        if (!hasSaveFile)
+            continueButton.SetActive(false);
+        Canvas canvas = GetComponent<Canvas>();
+        menuHandler.ChangeMenu(menuHandler.GetCanvasIndex(canvas));
     }
 }

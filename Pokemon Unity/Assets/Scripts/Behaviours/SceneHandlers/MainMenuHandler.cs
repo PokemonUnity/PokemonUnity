@@ -11,7 +11,7 @@ public class MainMenuHandler : MonoBehaviour {
 
     #region Variables
 
-    [SerializeField] MenuHandler menuHandler;
+    public MenuHandler MenuHandler;
 
     public AudioClip scrollClip;
     public AudioClip decideClip;
@@ -67,8 +67,8 @@ public class MainMenuHandler : MonoBehaviour {
 
     #endregion
 
-    void Awake() {
-        menuHandler.EnableCanvas(1);
+    void Start() {
+        MenuHandler.ChangeMenu(MenuHandler.firstCanvas);
         return;
         fileDataPanel = GameObject.Find("FileData");
         newGameButton = GameObject.Find("NewGame");
@@ -119,12 +119,11 @@ public class MainMenuHandler : MonoBehaviour {
             mysteryGiftMenu.transform.Find("EnterCode").GetComponent<Image>(),
             mysteryGiftMenu.transform.Find("Quit").GetComponent<Image>()
         };
-    }
-
-    void Start() {
         //mysteryGiftMenu.SetActive(false);
         //StartCoroutine(control());
     }
+
+    public void ChangeMenu(int index) => MenuHandler.ChangeMenu(index);
 
     private void updateButton(int newButtonIndex) {
         if (newButtonIndex != selectedButton) {
