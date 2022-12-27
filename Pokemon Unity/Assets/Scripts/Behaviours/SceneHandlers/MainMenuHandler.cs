@@ -6,7 +6,9 @@ using System.Security.Cryptography;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(EventTrigger))]
 public class MainMenuHandler : MonoBehaviour {
 
     #region Variables
@@ -124,6 +126,7 @@ public class MainMenuHandler : MonoBehaviour {
     }
 
     public void ChangeMenu(int index) => MenuHandler.ChangeMenu(index);
+    public void ChangeToPreviousMenu() => MenuHandler.ChangeToPreviousMenu();
 
     private void updateButton(int newButtonIndex) {
         if (newButtonIndex != selectedButton) {

@@ -1,21 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 
 public class ChangeTextColor : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI text;
     [SerializeField] Color color;
+    Color previousColor;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public void ChangeColor() {
+        previousColor = text.color;
+        text.color = color;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void ChangeToPreviousColor() {
+        text.color = previousColor;
     }
 }

@@ -59,6 +59,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"t:tmpro.tmp_fontasset "
 	"t:sprite menuButto"
 	"t:sprite mainButton"
 	"t:sprite button"
