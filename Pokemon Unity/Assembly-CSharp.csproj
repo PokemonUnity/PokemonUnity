@@ -199,7 +199,7 @@
     <Compile Include="Assets\Scripts\_Original\Save\CustomSaveEvent.cs" />
     <Compile Include="Assets\Scripts\_Original\BgmHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\SceneHandlers\MainMenuHandler.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\UITextSingleSelect.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\TextSingleSelect.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\MoveDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\ActivateOnCVariable.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\AIUtility.cs" />
@@ -216,7 +216,7 @@
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\CSVReader.cs" />
     <Compile Include="Assets\Scripts\_Original\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\LevelLoader.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\ChangeTextColor.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\TextColorChanger.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarItemObject.cs" />
     <Compile Include="Assets\Scripts\_Original\DialogBoxHandlerNew.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\JsonHelper.cs" />
@@ -228,7 +228,7 @@
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\EvolutionHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractShop.cs" />
     <Compile Include="Assets\Scripts\_Original\Map\ScrollingText.cs" />
-    <Compile Include="Assets\Scripts\Library\MenuHandler.cs" />
+    <Compile Include="Assets\Scripts\Library\UI\MenuHandler.cs" />
     <Compile Include="Assets\Scripts\Editor Attributes\FoldoutAttribute.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarComponent.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\CSPacketBase.cs" />
@@ -270,6 +270,9 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractRedirect.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UICarousel.cs" />
+    <Compile Include="Assets\Scripts\Library\UI\TextCarousel.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\TextSingleSelectChoice.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GameMain\Libraries\PokemonUnity.Shared.dll" />

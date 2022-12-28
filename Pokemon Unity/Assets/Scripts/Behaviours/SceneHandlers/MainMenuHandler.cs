@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using System;
 
 [RequireComponent(typeof(EventTrigger))]
 public class MainMenuHandler : MonoBehaviour {
@@ -127,6 +128,8 @@ public class MainMenuHandler : MonoBehaviour {
 
     public void ChangeMenu(int index) => MenuHandler.ChangeMenu(index);
     public void ChangeToPreviousMenu() => MenuHandler.ChangeToPreviousMenu();
+    
+    // everything below is old code
 
     private void updateButton(int newButtonIndex) {
         if (newButtonIndex != selectedButton) {

@@ -1344,6 +1344,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1881000028512569509, guid: f57ab573987a0554399c991854840960,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1881000028512569509, guid: f57ab573987a0554399c991854840960,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2297069863507035110, guid: f57ab573987a0554399c991854840960,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1589,6 +1599,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6531877459466462218, guid: f57ab573987a0554399c991854840960,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6531877459466462218, guid: f57ab573987a0554399c991854840960,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7134163139656344906, guid: f57ab573987a0554399c991854840960,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1633,6 +1653,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644246218783654544, guid: f57ab573987a0554399c991854840960,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644246218783654544, guid: f57ab573987a0554399c991854840960,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8679867298776953463, guid: f57ab573987a0554399c991854840960,
         type: 3}

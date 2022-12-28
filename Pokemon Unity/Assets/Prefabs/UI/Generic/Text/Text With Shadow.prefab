@@ -151,11 +151,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa0712da5c351845994bc3b8a56a5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sourceText: {fileID: 9121052985448046019}
   syncText: 1
   syncFontSize: 1
   syncMargin: 1
   textsToSync:
-  - {fileID: 9121052985448046019}
+  - {fileID: 1609112489107969094}
 --- !u!114 &8533391077766381539
 MonoBehaviour:
   m_ObjectHideFlags: 0
