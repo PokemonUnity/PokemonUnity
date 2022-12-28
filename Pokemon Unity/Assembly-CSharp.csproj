@@ -198,7 +198,7 @@
     <Compile Include="Assets\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\Scripts\_Original\Save\CustomSaveEvent.cs" />
     <Compile Include="Assets\Scripts\_Original\BgmHandler.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\SceneHandlers\MainMenuHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MainMenuHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\TextSingleSelect.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\MoveDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\ActivateOnCVariable.cs" />
@@ -270,9 +270,10 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractRedirect.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UICarousel.cs" />
-    <Compile Include="Assets\Scripts\Library\UI\TextCarousel.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\TextCarousel.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\TextSingleSelectChoice.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\SelectableExtensions.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MenuHandlerBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GameMain\Libraries\PokemonUnity.Shared.dll" />

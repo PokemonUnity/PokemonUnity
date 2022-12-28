@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using System;
 using UnityEditor;
 using EasyButtons;
+using UnityEngine.Events;
 
 public class TextSingleSelect : MonoBehaviour
 {
@@ -22,6 +23,7 @@ No children will be generated if the GameObject already has Children. Use the bu
     int activeIndex = -1;
     [SerializeField] List<string> choices;
     TextSingleSelectChoice currentChoice;
+    public UnityEvent<string> OnChange;
 
     void Start()
     {
@@ -75,6 +77,7 @@ No children will be generated if the GameObject already has Children. Use the bu
         if (currentChoice is not null) currentChoice.colorChanger.ChangeToPreviousColor();
         choice.GetComponent<Selectable>().Select();
         currentChoice = choice;
+        OnChange.Invoke(choice.choiceText.text);
     }
 
     public void UpdateSelection(BaseEventData eventData) {

@@ -8,13 +8,12 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System;
+using EasyButtons;
 
 [RequireComponent(typeof(EventTrigger))]
-public class MainMenuHandler : MonoBehaviour {
+public class MainMenuHandler : MenuHandlerBehaviour {
 
     #region Variables
-
-    public MenuHandler MenuHandler;
 
     public AudioClip scrollClip;
     public AudioClip decideClip;
@@ -70,8 +69,8 @@ public class MainMenuHandler : MonoBehaviour {
 
     #endregion
 
-    void Start() {
-        MenuHandler.ChangeMenu(MenuHandler.firstCanvas);
+    new void Start() {
+        base.Start();
         return;
         fileDataPanel = GameObject.Find("FileData");
         newGameButton = GameObject.Find("NewGame");
@@ -129,6 +128,11 @@ public class MainMenuHandler : MonoBehaviour {
     public void ChangeMenu(int index) => MenuHandler.ChangeMenu(index);
     public void ChangeToPreviousMenu() => MenuHandler.ChangeToPreviousMenu();
     
+    [Button]
+    public void SeeCurrentlySelected() {
+        Debug.Log("Currently selected object", EventSystem.current.currentSelectedGameObject); 
+    }
+
     // everything below is old code
 
     private void updateButton(int newButtonIndex) {
@@ -706,11 +710,5 @@ public class MainMenuHandler : MonoBehaviour {
 
             yield return null;
         }
-    }
-
-    void OnNavigate(InputValue inputValue) {
-        Vector2 value = inputValue.Get<Vector2>();
-        if (value.magnitude == 0f) return;
-
     }
 }
