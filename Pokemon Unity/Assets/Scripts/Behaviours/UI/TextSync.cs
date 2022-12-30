@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(TMPro.TextMeshProUGUI))]
-public class UITextSync : MonoBehaviour
+public class TextSync : MonoBehaviour
 {
     [Description("Defaults to this GameObjects TextMeshPro (if available)")]
     public TMPro.TextMeshProUGUI sourceText;

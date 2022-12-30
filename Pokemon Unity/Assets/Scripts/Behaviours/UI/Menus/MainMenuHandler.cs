@@ -10,7 +10,6 @@ using UnityEngine.EventSystems;
 using System;
 using EasyButtons;
 
-[RequireComponent(typeof(EventTrigger))]
 public class MainMenuHandler : MenuHandlerBehaviour {
 
     #region Variables

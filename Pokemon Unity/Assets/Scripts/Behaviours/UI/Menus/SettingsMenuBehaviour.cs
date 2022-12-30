@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class SettingsHandler : MonoBehaviour
+public class SettingsMenuBehaviour :  MenuBehaviour
 {
     private DialogBoxHandlerNew Dialog;
 
@@ -68,6 +68,7 @@ public class SettingsHandler : MonoBehaviour
 
     void Awake()
     {
+        return;
         SettingsAudio = transform.GetComponent<AudioSource>();
         Dialog = gameObject.GetComponent<DialogBoxHandlerNew>();
 
@@ -109,6 +110,7 @@ public class SettingsHandler : MonoBehaviour
 
     void Start()
     {
+        return;
         gameObject.SetActive(false);
     }
 
@@ -186,13 +188,12 @@ public class SettingsHandler : MonoBehaviour
         }
     }
 
-    public IEnumerator moveSelection(int direction)
-    {
+    public IEnumerator moveSelection(int direction) {
         float increment = 0;
         float moveSpeed = 0.2f;
         float startY = selectRow.rectTransform.position.y;
         float delta = 32;
-        LeanTween.moveY(selectRow.gameObject, startY + direction*delta, moveSpeed);
+        LeanTween.moveY(selectRow.gameObject, startY + direction * delta, moveSpeed);
         yield return new WaitForSeconds(moveSpeed);
     }
 

@@ -6,9 +6,9 @@ public class MenuHandlerBehaviour : MonoBehaviour
 {
     public MenuHandler MenuHandler;
 
-    // Start is called before the first frame update
+    // Update is called once per frame
     protected void Start()
     {
-        MenuHandler.ChangeMenu(MenuHandler.firstCanvas);
+        MenuHandler.ChangeMenu(MenuHandler.firstMenuIndex);
     }
 }

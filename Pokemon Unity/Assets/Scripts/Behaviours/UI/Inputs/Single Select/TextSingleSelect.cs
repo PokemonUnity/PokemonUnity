@@ -9,7 +9,7 @@ using UnityEditor;
 using EasyButtons;
 using UnityEngine.Events;
 
-public class TextSingleSelect : MonoBehaviour
+public class TextSingleSelect : UIInputBehaviour
 {
     [SerializeField] GameObject textInputPrefab;
     [Description(@"Spawns a prefab for each choice provided. The root of this prefab must contain the TextSingleSelectChoice component.
@@ -23,7 +23,6 @@ No children will be generated if the GameObject already has Children. Use the bu
     int activeIndex = -1;
     [SerializeField] List<string> choices;
     TextSingleSelectChoice currentChoice;
-    public UnityEvent<string> OnChange;
 
     void Start()
     {
@@ -31,15 +30,14 @@ No children will be generated if the GameObject already has Children. Use the bu
         if (textInputPrefab == null) Debug.LogError("No text prefab provided");
         CreateChildren();
         CreateEvents();
-        UpdateSelection(SelectedIndex);
+        //ChangeSelection(SelectedIndex);
     }
 
     public void CreateEvents() {
         for (int i = 0; i < choices.Count; i++) {
             Selectable selectable = transform.GetChild(i).transform.FindFirst<Selectable>();
             EventTrigger eventTrigger = selectable.GetComponent<EventTrigger>();
-            if (eventTrigger is null)
-                selectable.gameObject.AddComponent<EventTrigger>();
+            if (eventTrigger is null) selectable.gameObject.AddComponent<EventTrigger>();
 
             EventTrigger.Entry entry = eventTrigger.triggers.Find((entries) => entries.eventID == EventTriggerType.Select);
             if (entry is null) {
@@ -47,7 +45,7 @@ No children will be generated if the GameObject already has Children. Use the bu
                 entry.eventID = EventTriggerType.Select;
                 eventTrigger.triggers.Add(entry);
             }
-            entry.callback.AddListener(UpdateSelection);
+            entry.callback.AddListener(ChangeSelection);
         }
     }
 
@@ -69,8 +67,10 @@ No children will be generated if the GameObject already has Children. Use the bu
         }
     }
 
-    public void UpdateSelection(TextSingleSelectChoice choice) {
+    public void ChangeSelection(TextSingleSelectChoice choice) {
         if (choice.transform.parent != transform) throw new NotMyChild();
+        OnSelect.Invoke(choice.gameObject);
+        Debug.Log(choice.gameObject.name);
         if (activeIndex == choice.transform.GetSiblingIndex()) return;
         activeIndex = choice.transform.GetSiblingIndex();
         choice.colorChanger.ChangeColor();
@@ -80,17 +80,19 @@ No children will be generated if the GameObject already has Children. Use the bu
         OnChange.Invoke(choice.choiceText.text);
     }
 
-    public void UpdateSelection(BaseEventData eventData) {
+    public void ChangeSelection(BaseEventData eventData) {
         if (!eventData.selectedObject.TryGetComponent(out TextSingleSelectChoice choice))
             throw new UnknownOptionError();
 
-        UpdateSelection(choice);
+        ChangeSelection(choice);
     }
 
-    public void UpdateSelection(int index) {
+    public void ChangeSelection(int index) {
         if (index < 0 || index >= choices.Count) return;
-        UpdateSelection(transform.GetChild(index).GetComponent<TextSingleSelectChoice>());
+        ChangeSelection(transform.GetChild(index).GetComponent<TextSingleSelectChoice>());
     }
+
+    #region Errors
 
     class UnknownOptionError : Exception {
         public UnknownOptionError() {
@@ -115,4 +117,6 @@ No children will be generated if the GameObject already has Children. Use the bu
             Debug.LogError("TextSingleSelectChoice provided is not a child of this GameObject");
         }
     }
+
+    #endregion
 }

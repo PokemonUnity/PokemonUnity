@@ -13,7 +13,7 @@ public class Scene : MonoBehaviour
     public PartyHandler Party;
     public PauseHandler Pause;
     public PCHandler PC;
-    public SettingsHandler Settings;
+    public OLD_SettingsHandler Settings;
     public SummaryHandler Summary;
     public TrainerHandler Trainer;
     public TypingHandler Typing;

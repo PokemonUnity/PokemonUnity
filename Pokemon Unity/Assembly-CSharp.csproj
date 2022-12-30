@@ -61,11 +61,12 @@
     <Compile Include="Assets\Scripts\_Original\Data\PokemonDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\TransformExtensions.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\SceneHandlers\StartScene\StartMenuHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Menus\StartMenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Bag.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Game_System.cs" />
     <Compile Include="Assets\Scripts\_Original\AudioHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\TextCarousel.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\AbilityData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Sound\SoundExtension.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\TrainerHandler.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\Scripts\_Original\LeanTween\LeanTweenExt.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV4.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Language.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MenuHandlerBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\TileShapes.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\NatureDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractItem.cs" />
@@ -89,7 +91,9 @@
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\FileTest.cs" />
     <Compile Include="Assets\Scripts\_Original\Map\WeatherHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\BumpRespawnSet.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\SelectableExtensions.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\QuestDataBase.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\CommandMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\Editor Attributes\DescriptionAttribute.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameBase.cs" />
@@ -106,6 +110,8 @@
     <Compile Include="Assets\Scripts\_Original\Data\PokemonData.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\FightMenuButtons.cs" />
     <Compile Include="Assets\Scripts\_Original\SO\Weather.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Menus\SettingsMenuBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\UIMoveTo.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\GameEvents.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\Entity.cs" />
@@ -132,7 +138,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractDoorway.cs" />
     <Compile Include="Assets\Scripts\_Original\SfxHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\BumpLedge.cs" />
-    <Compile Include="Assets\Scripts\_Original\SceneHandlers\SettingsHandler.cs" />
+    <Compile Include="Assets\Scripts\_Original\SceneHandlers\OLD_SettingsHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractTrainer.cs" />
     <Compile Include="Assets\Scripts\_Original\WindowLight.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\SCPacketHeader.cs" />
@@ -151,6 +157,7 @@
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Entity.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\DataStruct\VersionInfo.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\OLD_MainMenuHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\TextSingleSelectChoice.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\RelationType.cs" />
     <Compile Include="Assets\Scripts\_Original\LeanTween\LeanTween.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\CustomEvent.cs" />
@@ -224,7 +231,7 @@
     <Compile Include="Assets\Scripts\_Original\SandTileHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\Debugger\ChangeLanguageDebuggerWindow.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV2.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\UITextSync.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\TextSync.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\EvolutionHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractShop.cs" />
     <Compile Include="Assets\Scripts\_Original\Map\ScrollingText.cs" />
@@ -270,10 +277,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractRedirect.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\TextCarousel.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\TextSingleSelectChoice.cs" />
-    <Compile Include="Assets\Scripts\Library\Extensions\SelectableExtensions.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MenuHandlerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UIInputBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GameMain\Libraries\PokemonUnity.Shared.dll" />
