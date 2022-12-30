@@ -13,7 +13,7 @@ public class TextCarousel : UIInputBehaviour
     [SerializeField] TextMeshProUGUI TargetText;
     [SerializeField] Selectable selectable;
     public int ActiveIndex = 0;
-    int savedIndex = -1;
+    int activeIndex = -1;
     public List<string> CarouselItems;
 
     // Start is called before the first frame update
@@ -24,21 +24,21 @@ public class TextCarousel : UIInputBehaviour
         //UpdateSelection(ActiveIndex, true);
     }
 
-    public void UpdateSelectionRightClick() => UpdateSelection(savedIndex - 1);
-    public void UpdateSelectionLeftClick() => UpdateSelection(savedIndex + 1);
+    public void ChangeSelectionRightShift() => UpdateSelection(activeIndex - 1);
+    public void ChangeSelectionLeftShift() => UpdateSelection(activeIndex + 1);
 
     /// <summary>For button navigation</summary>
     public void UpdateSelection(CallbackContext context) {
-        UpdateSelection(savedIndex + (int)context.ReadValue<Vector2>().x);
+        UpdateSelection(activeIndex + (int)context.ReadValue<Vector2>().x);
     }
 
     public void UpdateSelection(int index, bool force = false) {
         if (EventSystem.current.currentSelectedGameObject != TargetText) return;
         OnSelect.Invoke(TargetText.gameObject);
-        if (index == savedIndex) return;
+        if (index == activeIndex) return;
         if (!selectable.IsSelected() && force == false) return;
         if (index < 0 || index >= CarouselItems.Count) return;
-        savedIndex = index;
+        activeIndex = index;
         TargetText.text = CarouselItems[index];
         OnChange.Invoke(CarouselItems[index]);
     }

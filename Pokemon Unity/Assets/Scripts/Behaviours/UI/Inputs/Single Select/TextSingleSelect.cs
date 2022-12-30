@@ -8,6 +8,7 @@ using System;
 using UnityEditor;
 using EasyButtons;
 using UnityEngine.Events;
+using static UnityEngine.InputSystem.InputAction;
 
 public class TextSingleSelect : UIInputBehaviour
 {
@@ -24,8 +25,9 @@ No children will be generated if the GameObject already has Children. Use the bu
     [SerializeField] List<string> choices;
     TextSingleSelectChoice currentChoice;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         if (choices.Count == 0) Debug.LogError("No selection choices provided");
         if (textInputPrefab == null) Debug.LogError("No text prefab provided");
         CreateChildren();
@@ -65,6 +67,10 @@ No children will be generated if the GameObject already has Children. Use the bu
             if (choiceComponent is null) throw new NoTextSingleSelectChoiceFound(i);
             choiceComponent.choiceText.text = choices[i];
         }
+    }
+
+    public void Navigate(CallbackContext context) {
+        ChangeSelection(activeIndex + (int)context.ReadValue<Vector2>().x);
     }
 
     public void ChangeSelection(TextSingleSelectChoice choice) {
