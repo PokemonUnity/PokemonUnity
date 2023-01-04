@@ -192,6 +192,7 @@
     <Compile Include="Assets\Scripts\_Original\Data\NatureData.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\DataStruct\BuildInfo.cs" />
     <Compile Include="Assets\Scripts\_Original\FollowerMovement.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UIInputBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokemon.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\PartyHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriColor.cs" />
@@ -275,10 +276,9 @@
     <Compile Include="Assets\Scripts\_Original\NPCHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItemObject.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractRedirect.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UIInputBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GameMain\Libraries\PokemonUnity.Shared.dll" />

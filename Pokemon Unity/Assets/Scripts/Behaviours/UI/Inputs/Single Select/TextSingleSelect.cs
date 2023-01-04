@@ -1,17 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.EventSystems;
 using System;
-using UnityEditor;
 using EasyButtons;
-using UnityEngine.Events;
-using static UnityEngine.InputSystem.InputAction;
 
 public class TextSingleSelect : UIInputBehaviour
 {
+    [SerializeField] EDirection NavigationDirection = EDirection.Horizontal;
     [SerializeField] GameObject textInputPrefab;
     [Description(@"Spawns a prefab for each choice provided. The root of this prefab must contain the TextSingleSelectChoice component.
 If possible, sets the Navigation property on each instantiated prefab.
@@ -19,7 +15,6 @@ If possible, sets the Navigation property on each instantiated prefab.
 No layout is applied. Apply a layout component to this GameObject to organize their position.
 
 No children will be generated if the GameObject already has Children. Use the button below to generate them on demand")]
-    [SerializeField] Navigation.Mode Navigation;
     public int SelectedIndex = 0;
     int activeIndex = -1;
     [SerializeField] List<string> choices;
@@ -32,7 +27,7 @@ No children will be generated if the GameObject already has Children. Use the bu
         if (textInputPrefab == null) Debug.LogError("No text prefab provided");
         CreateChildren();
         CreateEvents();
-        //ChangeSelection(SelectedIndex);
+        UpdateValue(SelectedIndex);
     }
 
     public void CreateEvents() {
@@ -47,7 +42,7 @@ No children will be generated if the GameObject already has Children. Use the bu
                 entry.eventID = EventTriggerType.Select;
                 eventTrigger.triggers.Add(entry);
             }
-            entry.callback.AddListener(ChangeSelection);
+            entry.callback.AddListener(UpdateValue);
         }
     }
 
@@ -58,44 +53,45 @@ No children will be generated if the GameObject already has Children. Use the bu
             var choicePrefab = Instantiate(textInputPrefab);
             choicePrefab.transform.SetParent(transform);
             choicePrefab.transform.localScale = new Vector3(1f, 1f, 1f);
-            Selectable selectable = choicePrefab.transform.FindFirst<Selectable>();
-            if (selectable is not null) {
-                Navigation nav = selectable.navigation;
-                nav.mode = Navigation;
-            }
             TextSingleSelectChoice choiceComponent = choicePrefab.GetComponent<TextSingleSelectChoice>();
             if (choiceComponent is null) throw new NoTextSingleSelectChoiceFound(i);
             choiceComponent.choiceText.text = choices[i];
         }
     }
 
-    public void Navigate(CallbackContext context) {
-        ChangeSelection(activeIndex + (int)context.ReadValue<Vector2>().x);
-    }
-
-    public void ChangeSelection(TextSingleSelectChoice choice) {
+    public void UpdateValue(TextSingleSelectChoice choice) {
         if (choice.transform.parent != transform) throw new NotMyChild();
-        OnSelect.Invoke(choice.gameObject);
-        Debug.Log(choice.gameObject.name);
         if (activeIndex == choice.transform.GetSiblingIndex()) return;
         activeIndex = choice.transform.GetSiblingIndex();
         choice.colorChanger.ChangeColor();
         if (currentChoice is not null) currentChoice.colorChanger.ChangeToPreviousColor();
         choice.GetComponent<Selectable>().Select();
         currentChoice = choice;
-        OnChange.Invoke(choice.choiceText.text);
+        OnValueChange.Invoke(choice.choiceText.text);
     }
 
-    public void ChangeSelection(BaseEventData eventData) {
+    public void UpdateValue(BaseEventData eventData) {
         if (!eventData.selectedObject.TryGetComponent(out TextSingleSelectChoice choice))
             throw new UnknownOptionError();
 
-        ChangeSelection(choice);
+        UpdateValue(choice);
     }
 
-    public void ChangeSelection(int index) {
+    public void UpdateValue(int index) {
         if (index < 0 || index >= choices.Count) return;
-        ChangeSelection(transform.GetChild(index).GetComponent<TextSingleSelectChoice>());
+        UpdateValue(transform.GetChild(index).GetComponent<TextSingleSelectChoice>());
+    }
+
+    public override void UpdateValue(Vector2 input) {
+        if (NavigationDirection == EDirection.Horizontal)
+            UpdateValue(activeIndex + (int)input.x);
+        else if (NavigationDirection == EDirection.Vertical)
+            UpdateValue(activeIndex + (int)input.y);
+    }
+
+    public enum EDirection {
+        Horizontal,
+        Vertical
     }
 
     #region Errors

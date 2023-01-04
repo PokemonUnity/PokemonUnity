@@ -41,7 +41,7 @@ PrefabInstance:
     - target: {fileID: 3078186737649913264, guid: 043a53bfd821a8b48b199f81ee2480f5,
         type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3078186737649913264, guid: 043a53bfd821a8b48b199f81ee2480f5,
         type: 3}
@@ -159,6 +159,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7098413110193737968, guid: 02e1e0cd4d0980f4ab5ae94d82f9fd1b,
         type: 3}
+    - target: {fileID: 7601747482030271340, guid: 043a53bfd821a8b48b199f81ee2480f5,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7601747482030271340, guid: 043a53bfd821a8b48b199f81ee2480f5,
         type: 3}
       propertyPath: choices.Array.data[0]

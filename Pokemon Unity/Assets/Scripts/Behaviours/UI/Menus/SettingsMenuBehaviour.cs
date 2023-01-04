@@ -68,6 +68,7 @@ public class SettingsMenuBehaviour :  MenuBehaviour
 
     void Awake()
     {
+        transform.FindFirst<Selectable>().Select();
         return;
         SettingsAudio = transform.GetComponent<AudioSource>();
         Dialog = gameObject.GetComponent<DialogBoxHandlerNew>();

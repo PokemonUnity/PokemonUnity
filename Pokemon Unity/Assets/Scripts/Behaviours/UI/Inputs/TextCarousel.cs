@@ -11,35 +11,31 @@ using static UnityEngine.InputSystem.InputAction;
 public class TextCarousel : UIInputBehaviour
 {
     [SerializeField] TextMeshProUGUI TargetText;
-    [SerializeField] Selectable selectable;
-    public int ActiveIndex = 0;
+    public int SelectedIndex = 0;
     int activeIndex = -1;
     public List<string> CarouselItems;
 
-    // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         if (TargetText is null) Debug.LogError("No TextMeshProUGUI provided");
-        if (selectable is null) Debug.LogError("No Selectable provided");
-        //UpdateSelection(ActiveIndex, true);
+        UpdateValue(SelectedIndex);
     }
 
-    public void ChangeSelectionRightShift() => UpdateSelection(activeIndex - 1);
-    public void ChangeSelectionLeftShift() => UpdateSelection(activeIndex + 1);
+    public void UpdateValueUp() => UpdateValue(activeIndex+1);
+    public void UpdateValueDown() => UpdateValue(activeIndex-1);
 
-    /// <summary>For button navigation</summary>
-    public void UpdateSelection(CallbackContext context) {
-        UpdateSelection(activeIndex + (int)context.ReadValue<Vector2>().x);
-    }
-
-    public void UpdateSelection(int index, bool force = false) {
-        if (EventSystem.current.currentSelectedGameObject != TargetText) return;
-        OnSelect.Invoke(TargetText.gameObject);
+    public void UpdateValue(int index) {
         if (index == activeIndex) return;
-        if (!selectable.IsSelected() && force == false) return;
         if (index < 0 || index >= CarouselItems.Count) return;
         activeIndex = index;
         TargetText.text = CarouselItems[index];
-        OnChange.Invoke(CarouselItems[index]);
+        OnValueChange.Invoke(CarouselItems[index]);
+    }
+
+    public override void UpdateValue(Vector2 navigationDirection) {
+        if (navigationDirection.magnitude == 0) return;
+        Audio.SelectSoundSource.Play();
+        UpdateValue(activeIndex + (int)navigationDirection.x);
     }
 }
