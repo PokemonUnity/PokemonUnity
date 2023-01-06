@@ -116,7 +116,7 @@ PrefabInstance:
     - target: {fileID: 4046525495550909633, guid: b1ec65ad838c8964ba4565a1543509dd,
         type: 3}
       propertyPath: m_Navigation.m_Mode
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4046525495550909633, guid: b1ec65ad838c8964ba4565a1543509dd,
         type: 3}
@@ -191,7 +191,7 @@ PrefabInstance:
     - target: {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd,
         type: 3}
@@ -550,6 +550,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 40243484206335859, guid: b1ec65ad838c8964ba4565a1543509dd, type: 3}
+    - {fileID: 5101065641943433660, guid: b1ec65ad838c8964ba4565a1543509dd, type: 3}
+    - {fileID: 4111643773925658478, guid: b1ec65ad838c8964ba4565a1543509dd, type: 3}
+    - {fileID: 298537139593182354, guid: b1ec65ad838c8964ba4565a1543509dd, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: b1ec65ad838c8964ba4565a1543509dd, type: 3}
 --- !u!114 &5879474900726800319 stripped

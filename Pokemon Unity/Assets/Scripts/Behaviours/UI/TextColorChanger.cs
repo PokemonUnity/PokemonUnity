@@ -6,21 +6,21 @@ public class TextColorChanger : MonoBehaviour {
     public TextMeshProUGUI text;
     [Description("Call the functions on this component in other components Events")]
     [SerializeField] Color color = new Color(255, 255, 255, 255f);
-    Color previousColor;
-
+    Color originalColor;
+    
     void Awake() {
         if (text is null) text = GetComponent<TextMeshProUGUI>();
         if (text is null) throw new NoTextMeshProUGUIProvided(gameObject);
-        previousColor = text.color;
+        originalColor = text.color;
     }
 
     public void ChangeColor() {
-        previousColor = text.color;
+        //originalColor = text.color;
         text.color = color;
     }
 
-    public void ChangeToPreviousColor() {
-        text.color = previousColor;
+    public void ChangeToOriginalColor() {
+        text.color = originalColor;
     }
 
     class NoTextMeshProUGUIProvided : Exception {

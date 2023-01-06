@@ -28,5 +28,6 @@ public class DescriptionAttributeDrawer : PropertyDrawer {
         EditorGUI.PropertyField(fieldPos, property);
         var descAttribute = (DescriptionAttribute)attribute;
         EditorGUI.LabelField(labelPos, descAttribute.description, style);
+        EditorGUILayout.Space();
     }
 }

@@ -255,6 +255,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   Audio:
     SelectSound: {fileID: 0}
+    SelectSoundSource: {fileID: 0}
   Input:
     OnNavigate:
       m_PersistentCalls:

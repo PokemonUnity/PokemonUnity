@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectFloat.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\AbilityDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PC.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PokemonDatabase.cs" />
@@ -66,7 +67,7 @@
     <Compile Include="Assets\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Game_System.cs" />
     <Compile Include="Assets\Scripts\_Original\AudioHandler.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\TextCarousel.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\CarouselText.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\AbilityData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Sound\SoundExtension.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\TrainerHandler.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Assets\Scripts\_Original\Data\QuestDataBase.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\CommandMenuDisplay.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\TyperBehaviour.cs" />
     <Compile Include="Assets\Scripts\Editor Attributes\DescriptionAttribute.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameBase.cs" />
     <Compile Include="Assets\Scripts\_Original\CameraTrigger.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Assets\Scripts\_Original\Save\GlobalSaveManager.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\CommonButton.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Abilities\Pressure.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelect.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\Display\DisplayItem.cs" />
     <Compile Include="Assets\Scripts\_Original\ActivateTimeBased.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\WebUtility.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarItemObject.cs" />
     <Compile Include="Assets\Scripts\_Original\TextureTileToScale.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\PacketHeaderBase.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UIInputBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\LeanTween\LTSeq.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameMode.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\PauseHandler.cs" />
@@ -192,7 +196,6 @@
     <Compile Include="Assets\Scripts\_Original\Data\NatureData.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\DataStruct\BuildInfo.cs" />
     <Compile Include="Assets\Scripts\_Original\FollowerMovement.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UIInputBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokemon.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\PartyHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriColor.cs" />
@@ -205,9 +208,10 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractSign.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\Scripts\_Original\Save\CustomSaveEvent.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectBool.cs" />
     <Compile Include="Assets\Scripts\_Original\BgmHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MainMenuHandler.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\TextSingleSelect.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectText.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\MoveDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\ActivateOnCVariable.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\AIUtility.cs" />
@@ -247,6 +251,7 @@
     <Compile Include="Assets\Scripts\_Original\FollowCameraView.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItem.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\LitJsonHelper.cs" />
+    <Compile Include="Assets\Scripts\Constants\PlayerPrefKeys.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Constant\Constant.ProcedureData.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\QuestData.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\PCHandler.cs" />
@@ -281,22 +286,43 @@
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\GameMain\Libraries\PokemonUnity.Shared.dll" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\GameMain\Libraries\Newtonsoft.Json.dll" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\GameMain\Libraries\GameFramework.dll" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\GameMain\Libraries\PokemonUnity.Application.dll" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\GameMain\Materials\Shaders\Sprites-Tinted.shader" />
     <None Include="Assets\GameMain\Materials\Shaders\RenderBehind.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\GameMain\Libraries\PokemonUnity.Offline.dll" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\GameMain\Libraries\System.Data.SQLite.dll" />
     <None Include="Assets\GameMain\Libraries\System.Data.SQLite.xml" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\GameMain\Materials\Shaders\Sprites-GUI.shader" />
     <None Include="Assets\StreamingAssets\How to enable custom sprites.txt" />
     <None Include="Assets\GameMain\Libraries\LitJson.dll" />
     <None Include="Assets\GameMain\Sprites\Animations\Animation.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\GameMain\Materials\Shaders\Sprites-DiffuseMod.shader" />
     <None Include="Assets\GameMain\Libraries\ICSharpCode.SharpZipLib.dll" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\GameMain\Libraries\protobuf-net.dll" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

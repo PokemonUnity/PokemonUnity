@@ -10,15 +10,40 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class UIInputBehaviour : Selectable
-{
+public interface PlayerPrefSetter<T> {
+    public abstract void SetPlayerPref(T value);
+    public abstract void SetPlayerPref();
+}
+
+public abstract class UIInputBehaviour<T> : UIInputBehaviour, PlayerPrefSetter<T> {
+    [Description("Automatically updates the player pref if selected option is not NONE")]
+    public EPlayerPrefKeys PlayerPreferenceKey = EPlayerPrefKeys.NONE;
+
+    protected new void Start() {
+        base.Start();
+        if (PlayerPreferenceKey != EPlayerPrefKeys.NONE) OnValueChange.AddListener(SetPlayerPref);
+    }
+
+    public abstract void SetPlayerPref(T value);
+
+    public abstract void SetPlayerPref();
+
+    public virtual void UpdateValue(InputValue<T> value) {
+        OnValueChange.Invoke(value.Value);
+    }
+
+    public abstract UnityEvent<T> OnValueChange { get; }
+}
+
+public class UIInputBehaviour : Selectable {
     public UIAudio Audio;
     public UIInput Input;
     public UIEvents Events;
 
-    public UnityEvent<string> OnValueChange { get => Events.OnValueChange; }
+    public string HelpText;
 
     protected new void Start() {
+        if (!Application.isPlaying) return;
         // PlayerInput events
         SubscribeToPlayerInputEvents();
         // EventTrigger events
@@ -33,7 +58,7 @@ public class UIInputBehaviour : Selectable
     }
 
     public override void OnSelect(BaseEventData eventData) {
-        if (Audio.SelectSoundSource is null) return;
+        if (Audio.SelectSoundSource == null) return;
         Audio.SelectSoundSource.Play();
         Audio.SelectSoundSource.mute = false;
     }
@@ -44,6 +69,7 @@ public class UIInputBehaviour : Selectable
     }
 
     void SubscribeToPlayerInputEvents() {
+        if (PlayerInputSingleton.Singleton == null) return;
         var navigateEvent = FindNavigateActionEvents();
         navigateEvent.AddListener((CallbackContext context) => Input.OnNavigate.Invoke(context));
         Input.OnNavigate.AddListener(Navigate);
@@ -51,7 +77,8 @@ public class UIInputBehaviour : Selectable
 
     protected PlayerInput.ActionEvent FindNavigateActionEvents() {
         PlayerInput playerInput = PlayerInputSingleton.Singleton;
-        if (playerInput is null) throw new PlayerInputSingleton.PlayerInputNotFoundError();
+        if (playerInput == null) return null;
+        if (playerInput == null) throw new PlayerInputSingleton.PlayerInputNotFoundError();
         var uiActionMap = playerInput.actions.FindActionMap("UI").FindAction("Navigate");
         return playerInput.actionEvents.First((actionEvent) => actionEvent.actionId == uiActionMap.id.ToString());
     }
@@ -72,8 +99,7 @@ public class UIInputBehaviour : Selectable
 
     [Serializable]
     public class UIEvents {
-        public UnityEvent<string> OnValueChange;
-        [HideInInspector] 
+        [HideInInspector]
         public EventTrigger EventTrigger;
         public List<Entry> Triggers;
     }
@@ -81,7 +107,12 @@ public class UIInputBehaviour : Selectable
     [Serializable]
     public class UIAudio {
         public AudioClip SelectSound;
-        public AudioSource SelectSoundSource;
+        [HideInInspector] public AudioSource SelectSoundSource;
+    }
+
+    [Serializable]
+    public class InputValue<T> {
+        public string DisplayText;
+        public T Value;
     }
 }
-

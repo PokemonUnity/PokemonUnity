@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,24 +6,39 @@ using UnityEngine;
 [RequireComponent(typeof(RectTransform))]
 public class UIMoveTo : MonoBehaviour
 {
-    [SerializeField] GameObject Target;
-    [SerializeField] EPosition positionType = EPosition.Anchored;
-    [Description("Seconds")]
-    [SerializeField] float moveToDuration = 1f;
-    public Vector2 Offset;
+    [SerializeField] MoveToTarget target;
+    [SerializeField] bool RunInUpdateLoop = false;
+    bool hasMoved = false;
 
     LTDescr currentTween;
 
     void Start()
     {
-        if (Target is not null) Move();
+        if (target.GameObject != null) Move();
+        if (!RunInUpdateLoop) enabled = false;
     }
 
-    public void Move() {
+    void Update() {
+        if (target.CurrentMoveToDuration == 0f) {
+            transform.position = GetPosition(target.GameObject);
+            return;
+        }
+        if (!LeanTween.isTweening(gameObject) && target != null) Move();
+    }
+
+    public void Move(Vector3 targetPosition) {
         if (LeanTween.isTweening(gameObject)) LeanTween.cancel(gameObject);
-        RectTransform rectTransform = (RectTransform)Target.transform;
+        currentTween = LeanTween.move((RectTransform)transform, targetPosition, target.CurrentMoveToDuration);
+        if (!hasMoved) currentTween.setOnComplete(() => {
+            hasMoved = true;
+            target.CurrentMoveToDuration = target.MoveToDuration;
+        });
+    }
+
+    public Vector3 GetPosition(GameObject gameObject) {
+        RectTransform rectTransform = (RectTransform)gameObject.transform;
         Vector3 targetPosition;
-        switch (positionType) {
+        switch (target.PositionType) {
             case EPosition.Global:
                 targetPosition = rectTransform.position;
                 break;
@@ -36,22 +52,28 @@ public class UIMoveTo : MonoBehaviour
                 targetPosition = rectTransform.anchoredPosition;
                 break;
         }
-        //Debug.Log("Target: " + Target.name + " Position: " + targetPosition.ToString() + " Offset: " + Offset.ToString());
-        targetPosition = targetPosition + (Vector3)Offset;
-        currentTween = LeanTween.move((RectTransform)transform, targetPosition, moveToDuration);
+        targetPosition += (Vector3)target.Offset;
+        return targetPosition;
     }
+
+    public void Move() => Move(GetPosition(target.GameObject));
 
     public void ChangeDuration(float duration) {
-        moveToDuration = duration;
+        target.CurrentMoveToDuration = duration;
     }
 
-    public void MoveTo(GameObject gameObject) {
-        MoveTo(gameObject, moveToDuration);
-    }
+    public void MoveTo(GameObject gameObject) => MoveTo(gameObject, target.CurrentMoveToDuration);
 
     public void MoveTo(GameObject gameObject, float duration) {
-        Target = gameObject;
-        moveToDuration = duration;
+        if (target.GameObject == gameObject) return;
+        target.GameObject = gameObject;
+        target.CurrentMoveToDuration = duration;
+        Move();
+    }
+
+    public void MoveTo(MoveToTarget target) {
+        if (this.target.GameObject == target.GameObject) return;
+        this.target = target;
         Move();
     }
 
@@ -59,5 +81,16 @@ public class UIMoveTo : MonoBehaviour
         Global,
         Local,
         Anchored
+    }
+
+    [Serializable]
+    public class MoveToTarget {
+        public GameObject GameObject;
+        public EPosition PositionType = EPosition.Anchored;
+        [Description("Seconds")]
+        public Vector2 Offset;
+        public float MoveToDuration = 1f;
+        public float InitialMoveToDuration = 1f;
+        [HideInInspector] public float CurrentMoveToDuration = 0f;
     }
 }

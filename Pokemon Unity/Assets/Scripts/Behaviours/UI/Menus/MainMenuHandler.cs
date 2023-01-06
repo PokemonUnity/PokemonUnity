@@ -129,7 +129,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
     
     [Button]
     public void SeeCurrentlySelected() {
-        Debug.Log("Currently selected object", EventSystem.current.currentSelectedGameObject); 
+        Debug.Log("Currently selected object: " + EventSystem.current.currentSelectedGameObject.name, EventSystem.current.currentSelectedGameObject); 
     }
 
     // everything below is old code
