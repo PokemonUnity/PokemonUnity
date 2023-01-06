@@ -24,35 +24,41 @@ No children will be generated if the GameObject already has Children. Use the bu
         base.Start();
         if (Choices.Count == 0) Debug.LogError("No selection choices provided");
         if (textInputPrefab == null && transform.childCount == 0) Debug.LogError("No children detected and no text prefab provided to generate children");
-        if (transform.childCount == 0) {
-            CreateChildren();
-            CreateEvents();
-        }
+        CreateChildren();
+        SyncChildren();
+        CreateEvents();
         UpdateValueIndex(SelectedIndex);
     }
 
     public void CreateEvents() {
         for (int i = 0; i < Choices.Count; i++) {
             Button button = transform.GetChild(i).transform.FindFirst<Button>();
+            button.onClick.AddListener(() => UpdateValueIndex(button.transform.GetSiblingIndex()));
             button.onClick.AddListener(SilentSelect);
-            button.onClick.AddListener(() => UpdateValueIndex(i));
         }
     }
 
-    [Button]
     void CreateChildren() {
         if (transform.childCount > 0) return;
         for (int i = 0; i < Choices.Count; i++) {
             var choicePrefab = Instantiate(textInputPrefab);
             choicePrefab.transform.SetParent(transform);
             choicePrefab.transform.localScale = new Vector3(1f, 1f, 1f);
-            TextSingleSelectChoice choiceComponent = choicePrefab.GetComponent<TextSingleSelectChoice>();
+            
+        }
+    }
+
+    void SyncChildren() {
+        for (int i = 0; i < transform.childCount; i++) {
+            if (i >= Choices.Count) break;
+            var choice = transform.GetChild(i);
+            SingleSelectChoice choiceComponent = choice.GetComponent<SingleSelectChoice>();
             if (choiceComponent == null) throw new NoTextSingleSelectChoiceFound(i);
             choiceComponent.choiceText.text = Choices[i].DisplayText;
         }
     }
 
-    public void UpdateValueIndex(int index) {
+        public void UpdateValueIndex(int index) {
         if (index < 0 || index >= Choices.Count) return;
         UpdateValue(Choices[index]);
     }

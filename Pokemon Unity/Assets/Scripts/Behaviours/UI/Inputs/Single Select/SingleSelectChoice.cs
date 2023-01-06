@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(TextColorChanger))]
 [RequireComponent(typeof(Selectable))]
-public class TextSingleSelectChoice : MonoBehaviour
+public class SingleSelectChoice : MonoBehaviour
 {
     public TextMeshProUGUI choiceText;
     [HideInInspector] public TextColorChanger colorChanger;

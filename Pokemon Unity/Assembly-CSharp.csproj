@@ -160,7 +160,7 @@
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Entity.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\DataStruct\VersionInfo.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\OLD_MainMenuHandler.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\TextSingleSelectChoice.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectChoice.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\RelationType.cs" />
     <Compile Include="Assets\Scripts\_Original\LeanTween\LeanTween.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\CustomEvent.cs" />
