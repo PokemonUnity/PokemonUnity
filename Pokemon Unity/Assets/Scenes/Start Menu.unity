@@ -59347,7 +59347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &30746974
 GameObject:
   m_ObjectHideFlags: 0
@@ -62123,7 +62123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &30757998
 GameObject:
   m_ObjectHideFlags: 0
@@ -67503,7 +67503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &30782084
 GameObject:
   m_ObjectHideFlags: 0
@@ -69636,7 +69636,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &30789554
 GameObject:
   m_ObjectHideFlags: 0
@@ -80098,7 +80098,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &30866390
 GameObject:
   m_ObjectHideFlags: 0
@@ -82637,7 +82637,7 @@ PrefabInstance:
     - target: {fileID: 2286976754901835890, guid: 9398ac423bd289840a0fa94264dc922d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 58.059998
+      value: 76
       objectReference: {fileID: 0}
     - target: {fileID: 2286976754901835890, guid: 9398ac423bd289840a0fa94264dc922d,
         type: 3}
@@ -84044,7 +84044,7 @@ MonoBehaviour:
     m_ActionName: Player/Move[/DualSenseGamepadHID/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6202010193024721644}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TextCarousel, Assembly-CSharp
         m_MethodName: UpdateSelection
         m_Mode: 0
@@ -84111,18 +84111,6 @@ MonoBehaviour:
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &6202010193024721644 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1721477276149805114, guid: 9398ac423bd289840a0fa94264dc922d,
-    type: 3}
-  m_PrefabInstance: {fileID: 4751892576033297110}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cda47dfe30207f438b8329b23925d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6229622814289353164
 MonoBehaviour:
   m_ObjectHideFlags: 0

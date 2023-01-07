@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[AddComponentMenu("Pokemon Unity/UI/Single Select/Single Select Text")]
 public class SingleSelectText : SingleSelect<string> {
     [SerializeField] UnityEvent<string> onValueChange;
     [SerializeField] List<InputValue<string>> choices;
@@ -10,10 +11,10 @@ public class SingleSelectText : SingleSelect<string> {
     public override List<InputValue<string>> Choices => choices;
 
     public override void SetPlayerPref(string value) {
-        PlayerPrefs.SetString(PlayerPrefKeys.Keys[PlayerPreferenceKey], value);
+        //PlayerPreferences.SetStringPreference(PlayerPreferenceKey, value);
     }
 
     public override void SetPlayerPref() {
-        PlayerPrefs.SetString(PlayerPrefKeys.Keys[PlayerPreferenceKey], currentValue);
+        //PlayerPreferences.SetStringPreference(PlayerPreferenceKey, currentValue);
     }
 }

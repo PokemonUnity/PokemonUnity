@@ -26,7 +26,8 @@ public class TyperBehaviour : MonoBehaviour
     }
 
     public void TypeMessage(string message) {
-        typingSpeed = PlayerPrefs.GetFloat(PlayerPrefKeys.Keys[EPlayerPrefKeys.TEXTSPEED]);
+        //typingSpeed = PlayerPreferences.GetTextSpeed();
+        typingSpeed = 0.01f;
         this.message = message;
         text.text = "";
         currentLength = 0;

@@ -18,10 +18,10 @@ public interface PlayerPrefSetter<T> {
 public abstract class UIInputBehaviour<T> : UIInputBehaviour, PlayerPrefSetter<T> {
     [Description("Automatically updates the player pref if selected option is not NONE")]
     public EPlayerPrefKeys PlayerPreferenceKey = EPlayerPrefKeys.NONE;
+    protected T currentValue;
 
     protected new void Start() {
         base.Start();
-        if (PlayerPreferenceKey != EPlayerPrefKeys.NONE) OnValueChange.AddListener(SetPlayerPref);
     }
 
     public abstract void SetPlayerPref(T value);
@@ -35,6 +35,7 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour, PlayerPrefSetter<T
     public abstract UnityEvent<T> OnValueChange { get; }
 }
 
+[AddComponentMenu("Pokemon Unity/UI/Generic Input")]
 public class UIInputBehaviour : Selectable {
     public UIAudio Audio;
     public UIInput Input;

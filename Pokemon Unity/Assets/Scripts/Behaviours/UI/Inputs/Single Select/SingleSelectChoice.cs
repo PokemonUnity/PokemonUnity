@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+[AddComponentMenu("Pokemon Unity/UI/Single Select/Single Select Choice")]
 [RequireComponent(typeof(TextColorChanger))]
 [RequireComponent(typeof(Selectable))]
 public class SingleSelectChoice : MonoBehaviour

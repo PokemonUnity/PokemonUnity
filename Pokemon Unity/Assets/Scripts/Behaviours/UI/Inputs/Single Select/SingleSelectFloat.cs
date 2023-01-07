@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[AddComponentMenu("Pokemon Unity/UI/Single Select/Single Select Float")]
 public class SingleSelectFloat : SingleSelect<float> {
     [SerializeField] UnityEvent<float> onValueChange;
     [SerializeField] List<InputValue<float>> choices;
@@ -10,10 +11,10 @@ public class SingleSelectFloat : SingleSelect<float> {
     public override List<InputValue<float>> Choices => choices;
 
     public override void SetPlayerPref(float value) {
-        PlayerPrefs.SetFloat(PlayerPrefKeys.Keys[PlayerPreferenceKey], value);
+        //PlayerPreferences.SetFloatPreference(PlayerPreferenceKey, value);
     }
 
     public override void SetPlayerPref() {
-        PlayerPrefs.SetFloat(PlayerPrefKeys.Keys[PlayerPreferenceKey], currentValue);
+        //PlayerPreferences.SetFloatPreference(PlayerPreferenceKey, currentValue);
     }
 }

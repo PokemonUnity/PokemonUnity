@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class SettingsMenuBehaviour :  MenuBehaviour
 {
+
+    #region Old vars
+
     private DialogBoxHandlerNew Dialog;
 
     private Image selectRow;
@@ -66,6 +69,8 @@ public class SettingsMenuBehaviour :  MenuBehaviour
     private Text DialogBoxTextShadow;
     private Image DialogBoxBorder;
 
+    #endregion
+
     void Awake()
     {
         return;
@@ -114,6 +119,12 @@ public class SettingsMenuBehaviour :  MenuBehaviour
         return;
         gameObject.SetActive(false);
     }
+
+    public void UpdateResolution() {
+        GlobalVariables.global.updateResolution();
+    }
+
+    #region Old funcs
 
     public void drawDialogBox()
     {
@@ -515,4 +526,6 @@ public class SettingsMenuBehaviour :  MenuBehaviour
         }
         this.gameObject.SetActive(false);
     }
+
+    #endregion
 }

@@ -460,41 +460,32 @@ public class GlobalVariables : MonoBehaviour
 
     public void updateResolution()
     {
-        if (PlayerPrefs.GetInt("fullscreen") == 0)
-        {
-            Screen.SetResolution(684 * PlayerPrefs.GetInt("screenSize"), 384 * PlayerPrefs.GetInt("screenSize"), false);
-        }
-        else if (PlayerPrefs.GetInt("fullscreen") == 1)
-        {
-            Screen.SetResolution(684 * PlayerPrefs.GetInt("screenSize"), 384 * PlayerPrefs.GetInt("screenSize"), true);
-        }
-        else
-        {
-            int resWidth = Screen.currentResolution.width + 16; //add a buffer
-            int resHeight = Screen.currentResolution.height + 9;
-            int maxSize = 1;
-            if (1710 < resWidth && 960 < resHeight)
-            {
-                maxSize = 5;
-            }
-            else if (1368 < resWidth && 768 < resHeight)
-            {
-                maxSize = 4;
-            }
-            else if (1026 < resWidth && 576 < resHeight)
-            {
-                maxSize = 3;
-            }
-            else if (684 < resWidth && 384 < resHeight)
-            {
-                maxSize = 2;
-            }
-            else
-            {
-                maxSize = 1;
-            }
-            Screen.SetResolution(684 * maxSize, 384 * maxSize, true);
-        }
+        Screen.fullScreen = PlayerPrefs.GetInt("fullscreen") == 1;
+        //if (PlayerPrefs.GetInt("fullscreen") == 0)
+        //{
+        //    Screen.SetResolution(684 * PlayerPrefs.GetInt("screenSize"), 384 * PlayerPrefs.GetInt("screenSize"), false);
+        //}
+        //else if (PlayerPrefs.GetInt("fullscreen") == 1)
+        //{
+        //    Screen.SetResolution(684 * PlayerPrefs.GetInt("screenSize"), 384 * PlayerPrefs.GetInt("screenSize"), true);
+        //}
+        //else {
+        //    int resWidth = Screen.currentResolution.width + 16; //add a buffer
+        //    int resHeight = Screen.currentResolution.height + 9;
+        //    int maxSize = 1;
+        //    if (1710 < resWidth && 960 < resHeight) {
+        //        maxSize = 5;
+        //    } else if (1368 < resWidth && 768 < resHeight) {
+        //        maxSize = 4;
+        //    } else if (1026 < resWidth && 576 < resHeight) {
+        //        maxSize = 3;
+        //    } else if (684 < resWidth && 384 < resHeight) {
+        //        maxSize = 2;
+        //    } else {
+        //        maxSize = 1;
+        //    }
+        //    Screen.SetResolution(684 * maxSize, 384 * maxSize, true);
+        //}
     }
 
 

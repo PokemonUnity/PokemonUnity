@@ -18,7 +18,6 @@ No children will be generated if the GameObject already has Children. Use the bu
     public int SelectedIndex = 0;
     int activeIndex = -1;
     GameObject currentChoice;
-    protected T currentValue;
 
     new void Start() {
         base.Start();
@@ -75,6 +74,7 @@ No children will be generated if the GameObject already has Children. Use the bu
         currentChoice = choice;
         Audio.SelectSoundSource.Play();
         currentValue = value.Value;
+        if (PlayerPreferenceKey != EPlayerPrefKeys.NONE) SetPlayerPref(currentValue);
         OnValueChange.Invoke(value.Value);
     }
 
