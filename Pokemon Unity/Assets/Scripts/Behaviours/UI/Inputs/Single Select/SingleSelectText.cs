@@ -10,11 +10,7 @@ public class SingleSelectText : SingleSelect<string> {
     public override UnityEvent<string> OnValueChange => onValueChange;
     public override List<InputValue<string>> Choices => choices;
 
-    public override void SetPlayerPref(string value) {
-        //PlayerPreferences.SetStringPreference(PlayerPreferenceKey, value);
-    }
-
-    public override void SetPlayerPref() {
-        //PlayerPreferences.SetStringPreference(PlayerPreferenceKey, currentValue);
-    }
+    public override void SetGameSetting(string value) => GameSettings.GetSetting<GameSettingText>(GameSettingsKey).Set(value);
+    
+    public override void SetGameSetting() => GameSettings.GetSetting<GameSettingText>(GameSettingsKey).Set(currentValue);
 }

@@ -27230,6 +27230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58875c8d9ee3e4341b95fa18a712cad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameSettings: {fileID: 11400000, guid: 246726d7819bc454386e461dba4af80c, type: 2}
   playerPosition: {x: 0, y: 0, z: 0}
   playerDirection: 0
   followerPosition: {x: 0, y: 0, z: 0}

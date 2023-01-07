@@ -10,25 +10,26 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public interface PlayerPrefSetter<T> {
-    public abstract void SetPlayerPref(T value);
-    public abstract void SetPlayerPref();
+public interface GameSettingsSetter<T> {
+    public abstract void SetGameSetting(T value);
+    public abstract void SetGameSetting();
 }
 
-public abstract class UIInputBehaviour<T> : UIInputBehaviour, PlayerPrefSetter<T> {
+public abstract class UIInputBehaviour<T> : UIInputBehaviour, GameSettingsSetter<T> {
     [Description("Automatically updates the player pref if selected option is not NONE")]
-    public EPlayerPrefKeys PlayerPreferenceKey = EPlayerPrefKeys.NONE;
+    public EGameSettingKey GameSettingsKey = EGameSettingKey.NONE;
     protected T currentValue;
 
     protected new void Start() {
         base.Start();
     }
 
-    public abstract void SetPlayerPref(T value);
+    public abstract void SetGameSetting(T value);
 
-    public abstract void SetPlayerPref();
+    public abstract void SetGameSetting();
 
     public virtual void UpdateValue(InputValue<T> value) {
+        if (GameSettingsKey != EGameSettingKey.NONE) SetGameSetting(value.Value);
         OnValueChange.Invoke(value.Value);
     }
 

@@ -1,46 +1,73 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Settings", menuName = "Pokemon Unity/Settings/Settings Singleton")]
-public class GameSettings : ScriptableObjectSingleton<GameSettings> {
+public class GameSettings : ScriptableObject {
+    #region Singleton
 
-    #region Inspector Editable Stuff
+    static GameSettings singleton;
 
-    public List<GameSetting> Settings;
+    public static GUID GUID() => new GUID("246726d7819bc454386e461dba4af80c"); // This needs to be updated when GUID's change
 
-    public Dictionary<EPlayerPrefKeys, GameSetting> playerPreferences;
+    public static string SingletonPath() => AssetDatabase.GUIDToAssetPath(GUID());
 
-    #endregion
+    public static GameSettings LoadSingleton() {
+        string path = SingletonPath();
+        int resourceFolderIndex = path.IndexOf("Resources");
+        if (resourceFolderIndex == -1) throw new NotInResourcesFolderError(path);
+        resourceFolderIndex = resourceFolderIndex + "Resources".Length + 1;
+        string resourcePath = path.Substring(resourceFolderIndex, path.Length - resourceFolderIndex);
+        resourcePath = Path.GetFileNameWithoutExtension(resourcePath);
+        GameSettings gameSettings = Resources.Load<GameSettings>(resourcePath);
+        return gameSettings;
+        //if (gameSettings == null) Debug.LogError("Failed to load ScriptableObject for some unknown reason");
+        //return Instantiate(gameSettings);
+    }
 
-    new void Awake() {
-        base.Awake();
-        if (Settings != null && Settings.Count > 0) {
-            foreach (var preference in Settings) {
-                playerPreferences.Add(preference.Key, preference);
+    class NotInResourcesFolderError : Exception {
+        public NotInResourcesFolderError(string path) {
+            Debug.LogError("ScriptableObject is not in a Resources folder. Cannot automatically create a Singleton. Path: " + path);
+        }
+    }
+
+    public static GameSettings Singleton {
+        get {
+            if (singleton == null) {
+                singleton = LoadSingleton();
+                Debug.Log(singleton.name + " loaded");
+                Initialize(singleton);
+            }
+            return singleton;
+        }
+        private set { singleton = value; }
+    }
+
+    static void Initialize(GameSettings gameSettings) {
+        if (gameSettings.Settings != null && gameSettings.Settings.Count > 0) {
+            foreach (var preference in gameSettings.Settings) {
+                gameSettings.playerPreferences.Add(preference.Key, preference);
             }
         }
     }
 
-    // Maybe remove this and just use enum.ToString()?
-    public static Dictionary<EPlayerPrefKeys, string> KeyStrings = new() {
-        { EPlayerPrefKeys.NONE, "" },
-        { EPlayerPrefKeys.TEXT_SPEED, "textSpeed" },
-        { EPlayerPrefKeys.FULLSCREEN, "fullscreen" },
-    };
+    #endregion
 
-    public static GameSetting GetPreference(EPlayerPrefKeys key) => Singleton.playerPreferences[key];
+    public List<GameSetting> Settings;
 
-    [Serializable]
-    public class PlayerPreferenceEntries {
-        public EPlayerPrefKeys Key;
-        public GameSetting Preference;
+    public Dictionary<EGameSettingKey, GameSetting> playerPreferences = new();
+
+    void Awake() {
+        if (Singleton != null) Destroy(this);
     }
+
+    public static T GetSetting<T>(EGameSettingKey key) where T : GameSetting => (T)Singleton.playerPreferences[key];
 }
 
-public enum EPlayerPrefKeys {
+public enum EGameSettingKey {
     NONE,
     TEXT_SPEED,
     MUSIC_VOLUME,

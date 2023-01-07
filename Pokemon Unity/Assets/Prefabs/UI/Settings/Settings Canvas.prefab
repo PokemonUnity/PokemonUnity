@@ -7708,7 +7708,7 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
   HelpText: Switch to fullscreen or windowed
-  PlayerPreferenceKey: 2
+  GameSettingsKey: 0
   NavigationDirection: 0
   textInputPrefab: {fileID: 0}
   SelectedIndex: 0
@@ -7784,6 +7784,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Interactable
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650693747317973101, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
+        type: 3}
+      propertyPath: GameSettingsKey
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4650693747317973101, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
@@ -8796,25 +8801,13 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
   HelpText: How quickly to draw text to the screen.
-  PlayerPreferenceKey: 1
+  GameSettingsKey: 1
   NavigationDirection: 0
   textInputPrefab: {fileID: 0}
   SelectedIndex: 1
   onValueChange:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7334603829859208276}
-        m_TargetAssemblyTypeName: SingleSelectFloat, Assembly-CSharp
-        m_MethodName: SetPlayerPref
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3099711119181914236}
         m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
         m_MethodName: TypeHelpText
@@ -9907,6 +9900,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Interactable
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650693747317973101, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
+        type: 3}
+      propertyPath: GameSettingsKey
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4650693747317973101, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}

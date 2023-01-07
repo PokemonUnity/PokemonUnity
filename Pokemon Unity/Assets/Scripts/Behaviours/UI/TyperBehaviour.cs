@@ -8,13 +8,16 @@ public class TyperBehaviour : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
     [TextArea][SerializeField] string message = "";
-    float typingSpeed = 0.1f;
+    float typingSpeed;
     int currentLength = 0;
     float passedTime = 0f;
 
     void Awake() {
-        if (PlayerPrefs.HasKey("Text Speed")) typingSpeed = PlayerPrefs.GetFloat("Text Speed");
+        typingSpeed = GameSettings.GetSetting<GameSettingFloat>(EGameSettingKey.TEXT_SPEED).Get();
+        GameSettings.GetSetting<GameSettingFloat>(EGameSettingKey.TEXT_SPEED).OnValueChange.AddListener(UpdateTypingSpeed);
     }
+
+    void UpdateTypingSpeed(float value) => typingSpeed = value;
 
     void Update() {
         if (typingSpeed == 0f) {
@@ -26,8 +29,6 @@ public class TyperBehaviour : MonoBehaviour
     }
 
     public void TypeMessage(string message) {
-        //typingSpeed = PlayerPreferences.GetTextSpeed();
-        typingSpeed = 0.01f;
         this.message = message;
         text.text = "";
         currentLength = 0;

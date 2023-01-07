@@ -10,11 +10,7 @@ public class SingleSelectBool : SingleSelect<bool> {
     public override UnityEvent<bool> OnValueChange => onValueChange;
     public override List<InputValue<bool>> Choices => choices;
 
-    public override void SetPlayerPref(bool value) {
-        //PlayerPreferences.SetBoolPreference(PlayerPreferenceKey, value);
-    }
+    public override void SetGameSetting(bool value) => GameSettings.GetSetting<GameSettingBool>(GameSettingsKey).Set(value);
 
-    public override void SetPlayerPref() {
-        //PlayerPreferences.SetBoolPreference(PlayerPreferenceKey, currentValue);
-    }
+    public override void SetGameSetting() => GameSettings.GetSetting<GameSettingBool>(GameSettingsKey).Set(currentValue);
 }

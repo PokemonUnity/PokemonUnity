@@ -5,16 +5,11 @@ using UnityEngine.EventSystems;
 using System;
 using EasyButtons;
 
-public abstract class SingleSelect<T> : UIInputBehaviour<T>, PlayerPrefSetter<T> {
+public abstract class SingleSelect<T> : UIInputBehaviour<T>, GameSettingsSetter<T> {
     public abstract List<InputValue<T>> Choices { get; }
     [SerializeField] EDirection NavigationDirection = EDirection.Horizontal;
     [SerializeField] GameObject textInputPrefab;
-    [Description(@"Spawns a prefab for each choice provided. The root of this prefab must contain the TextSingleSelectChoice component.
-If possible, sets the Navigation property on each instantiated prefab.
-
-No layout is applied. Apply a layout component to this GameObject to organize their position.
-
-No children will be generated if the GameObject already has Children. Use the button below to generate them on demand")]
+    [Description("If Game Setting Key is not None, this index will be overrided")]
     public int SelectedIndex = 0;
     int activeIndex = -1;
     GameObject currentChoice;
@@ -32,6 +27,7 @@ No children will be generated if the GameObject already has Children. Use the bu
     public void CreateEvents() {
         for (int i = 0; i < Choices.Count; i++) {
             Button button = transform.GetChild(i).transform.FindFirst<Button>();
+            if (button == null) throw new NoButtonFound(transform.GetChild(i));
             button.onClick.AddListener(() => UpdateValueIndex(button.transform.GetSiblingIndex()));
             button.onClick.AddListener(SilentSelect);
         }
@@ -40,10 +36,14 @@ No children will be generated if the GameObject already has Children. Use the bu
     void CreateChildren() {
         if (transform.childCount > 0) return;
         for (int i = 0; i < Choices.Count; i++) {
-            var choicePrefab = Instantiate(textInputPrefab);
+            GameObject choicePrefab;
+            if (textInputPrefab == null) {
+                // This probably doesnt work right, oh well for now
+                choicePrefab = new GameObject("Single Select Option " + i.ToString());
+                choicePrefab.transform.SetParent(transform);
+            } else choicePrefab = Instantiate(textInputPrefab);
             choicePrefab.transform.SetParent(transform);
             choicePrefab.transform.localScale = new Vector3(1f, 1f, 1f);
-            
         }
     }
 
@@ -56,8 +56,8 @@ No children will be generated if the GameObject already has Children. Use the bu
             choiceComponent.choiceText.text = Choices[i].DisplayText;
         }
     }
-
-        public void UpdateValueIndex(int index) {
+    
+    public void UpdateValueIndex(int index) {
         if (index < 0 || index >= Choices.Count) return;
         UpdateValue(Choices[index]);
     }
@@ -74,8 +74,7 @@ No children will be generated if the GameObject already has Children. Use the bu
         currentChoice = choice;
         Audio.SelectSoundSource.Play();
         currentValue = value.Value;
-        if (PlayerPreferenceKey != EPlayerPrefKeys.NONE) SetPlayerPref(currentValue);
-        OnValueChange.Invoke(value.Value);
+        base.UpdateValue(value);
     }
 
     public override void UpdateValue(Vector2 input) {
@@ -108,6 +107,12 @@ No children will be generated if the GameObject already has Children. Use the bu
     class NoTextSingleSelectChoiceFound : Exception {
         public NoTextSingleSelectChoiceFound(int index) {
             Debug.LogError("No TextSingleSelectChoice on Text Single Select child " + index.ToString());
+        }
+    }
+
+    class NoButtonFound : Exception {
+        public NoButtonFound(Transform transform) {
+            Debug.LogError("No Button component found on " + transform.name + " or any of its children");
         }
     }
 

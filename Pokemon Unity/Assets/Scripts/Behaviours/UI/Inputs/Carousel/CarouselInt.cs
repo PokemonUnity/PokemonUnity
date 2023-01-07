@@ -11,11 +11,7 @@ public class CarouselInt : Carousel<int> {
 
     public override List<InputValue<int>> Choices => choices;
 
-    public override void SetPlayerPref(int value) {
-        //PlayerPreferences.SetIntPreference(PlayerPreferenceKey, value);
-    }
+    public override void SetGameSetting(int value) => GameSettings.GetSetting<GameSettingInt>(GameSettingsKey).Set(value);
 
-    public override void SetPlayerPref() {
-        //PlayerPreferences.SetIntPreference(PlayerPreferenceKey, currentValue);
-    }
+    public override void SetGameSetting() => GameSettings.GetSetting<GameSettingInt>(GameSettingsKey).Set(currentValue);
 }

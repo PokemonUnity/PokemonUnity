@@ -8,7 +8,9 @@ using UnityEngine.UI;
 
 public class GlobalVariables : MonoBehaviour
 {
-	#region Property Variables
+    [SerializeField] GameSettings GameSettings;
+
+	#region Old - Property Variables
 	public static GlobalVariables global;
 
     public Vector3 playerPosition;
@@ -54,6 +56,7 @@ public class GlobalVariables : MonoBehaviour
     
     void Awake()
     {
+        return;
         SceneManager.sceneLoaded += CheckLevelLoaded;
         if (SaveData.currentSave == null)
         {
