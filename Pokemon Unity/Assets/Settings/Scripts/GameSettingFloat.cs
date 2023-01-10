@@ -1,10 +1,8 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Float Setting", menuName = "Pokemon Unity/Settings/Float")]
-public class GameSettingFloat : GameSetting<float> {
-    public override float Get() => PlayerPrefs.HasKey(KeyString) ? PlayerPrefs.GetInt(KeyString) : DefaultValue;
-    public override void Set(float value) {
-        PlayerPrefs.SetFloat(KeyString, value);
-        OnValueChange.Invoke(value);
-    }
+public class GameSettingFloat : GameSettingPlayerPref<float> {
+    protected override Func<string, float> PrefGetter => PlayerPrefs.GetFloat;
+    protected override Action<string, float> PrefSetter => PlayerPrefs.SetFloat;
 }

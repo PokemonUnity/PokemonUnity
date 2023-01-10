@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3078186737649913264}
   - component: {fileID: 3000871025532568647}
-  - component: {fileID: 7601747482030271340}
+  - component: {fileID: 2780991573885364998}
   m_Layer: 0
   m_Name: Text Single Select
   m_TagString: Untagged
@@ -31,7 +31,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &7601747482030271340
+--- !u!114 &2780991573885364998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,13 +77,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -105,20 +105,21 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
-  uiInput:
+  Audio:
+    SelectSound: {fileID: 0}
+    SelectSoundSource: {fileID: 0}
+  Input:
     OnNavigate:
       m_PersistentCalls:
         m_Calls: []
-    OnSelect:
+  Events:
+    EventTrigger: {fileID: 0}
+    Triggers: []
+    OnValueChanged:
       m_PersistentCalls:
         m_Calls: []
-    OnValueChange:
-      m_PersistentCalls:
-        m_Calls: []
-  textInputPrefab: {fileID: 806869081472373646, guid: b1ec65ad838c8964ba4565a1543509dd,
-    type: 3}
-  SelectedIndex: 0
-  choices:
-  - Yes
-  - Maybe
-  - No
+  HelpText: 
+  NavigationDirection: 0
+  defaultChoiceIndex: 0
+  gameSetting: {fileID: 0}
+  Choices: []

@@ -23,11 +23,16 @@ public class DescriptionAttributeDrawer : PropertyDrawer {
     }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+        var descAttribute = (DescriptionAttribute)attribute;
         Rect fieldPos = new Rect(position.x, position.y, position.width, 16f);
         Rect labelPos = new Rect(position.x, position.y + fieldPos.height, position.width, 16f);
+        
+        if (descAttribute.position == DescriptionAttribute.EPosition.Above) 
+            EditorGUI.LabelField(labelPos, descAttribute.description, style);
         EditorGUI.PropertyField(fieldPos, property);
-        var descAttribute = (DescriptionAttribute)attribute;
-        EditorGUI.LabelField(labelPos, descAttribute.description, style);
+        if (descAttribute.position == DescriptionAttribute.EPosition.Below)
+            EditorGUI.LabelField(labelPos, descAttribute.description, style);
+
         EditorGUILayout.Space();
     }
 }

@@ -9,8 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df934b69ee8b0624ba55678c438afb84, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f8a7ef412bf0174db398fad718160bb, type: 3}
   m_Name: Text Speed
   m_EditorClassIdentifier: 
-  key: 1
-  DefaultValue: 0.01
+  Key: Text Speed
+  defaultValue: 0.05
+  OnValueChange:
+    m_PersistentCalls:
+      m_Calls: []
+  choices:
+  - DisplayText: Slow
+    Value: 0.05
+  - DisplayText: Medium
+    Value: 0.025
+  - DisplayText: Fast
+    Value: 0.01
+  - DisplayText: Instant
+    Value: 0

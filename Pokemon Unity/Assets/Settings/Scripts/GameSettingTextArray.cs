@@ -1,4 +1,6 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "String Array Setting", menuName = "Pokemon Unity/Settings/String[]")]
-public class GameSettingTextArray : GameSettingArray<string> { }
+public class GameSettingTextArray : GameSettingPlayerPrefArray<string> {
+    public override bool IsEqual(string value1, string value2) => value1 == value2;
+}

@@ -4,24 +4,34 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class GameSetting<T> : GameSetting {
-    public T DefaultValue = default(T);
+    [InspectorName("Settings Key")]
+    public string Key;
+    [SerializeField] protected T defaultValue = default(T);
     [HideInInspector] public UnityEvent<T> OnValueChange;
 
-    public abstract T Get();
+    protected virtual T DefaultValue { get => defaultValue; }
 
-    public abstract void Set(T value);
+    public virtual bool HasValidKey() => Key != null && Key != "";
+
+    /// <summary>A function that takes in a settings key string, and returns a value of type T</summary>
+    protected abstract Func<T> Getter { get; }
+
+    /// <summary>A function that takes in the new value</summary>
+    protected abstract Action<T> Setter { get; }
+
+    protected abstract Func<string, bool> HasValue { get; }
+
+    public virtual T Get() => HasValue(Key) ? Getter() : DefaultValue;
+
+    public virtual void Set(T value) => Setter(value);
+
+    public virtual bool Exists() => HasValue(Key);
 }
 
 public class GameSetting : ScriptableObject {
-    [SerializeField] protected EGameSettingKey key = EGameSettingKey.NONE;
-
-    public virtual EGameSettingKey Key { get => key; }
-
-    public virtual string KeyString { get => Key.ToString(); }
-
-    class KeyDoesNotHaveThatSetterTypeError : Exception {
-        public KeyDoesNotHaveThatSetterTypeError(EGameSettingKey Key, Type intendedType) {
-            Debug.LogError("Player preference key '" + Key.ToString() + "' does not have a setter for type " + intendedType.ToString());
+    public class NoGameSettingComponentSet : Exception {
+        public NoGameSettingComponentSet(Type type, GameObject gameObject) {
+            Debug.LogError("Missing Game Setting component of type " + type.ToString(), gameObject);
         }
     }
 }

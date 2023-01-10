@@ -1,14 +1,16 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Vector2 Setting", menuName = "Pokemon Unity/Settings/Vector2")]
 public class GameSettingVector2 : GameSetting<Vector2> {
-    
-    public override Vector2 Get() {
-        return new Vector2(PlayerPrefs.GetFloat(KeyString + " x"), PlayerPrefs.GetFloat(KeyString + " y"));
+    protected override Action<Vector2> Setter => CustomSetter;
+
+    void CustomSetter(Vector2 value) {
+        PlayerPrefs.SetFloat(Key + " x", value.x);
+        PlayerPrefs.SetFloat(Key + " y", value.y);
     }
 
-    public override void Set(Vector2 value) {
-        PlayerPrefs.SetFloat(KeyString + " x", value.x);
-        PlayerPrefs.SetFloat(KeyString + " y", value.y);
-    }
+    protected override Func<string, bool> HasValue { get => (string key) => PlayerPrefs.HasKey(Key + " x") && PlayerPrefs.HasKey(Key + " y"); }
+
+    protected override Func<Vector2> Getter => () => new Vector2(PlayerPrefs.GetFloat(Key + " x"), PlayerPrefs.GetFloat(Key + " y"));
 }

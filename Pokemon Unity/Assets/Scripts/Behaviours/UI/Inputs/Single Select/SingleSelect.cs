@@ -1,27 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using System;
-using EasyButtons;
 
-public abstract class SingleSelect<T> : UIInputBehaviour<T>, GameSettingsSetter<T> {
-    public abstract List<InputValue<T>> Choices { get; }
-    [SerializeField] EDirection NavigationDirection = EDirection.Horizontal;
-    [SerializeField] GameObject textInputPrefab;
-    [Description("If Game Setting Key is not None, this index will be overrided")]
-    public int SelectedIndex = 0;
-    int activeIndex = -1;
-    GameObject currentChoice;
+public abstract class SingleSelect<T> : UIListInput<T> {
+    [SerializeField] 
+    protected EDirection NavigationDirection = EDirection.Horizontal;
+    protected GameObject currentChoice;
 
     new void Start() {
         base.Start();
-        if (Choices.Count == 0) Debug.LogError("No selection choices provided");
-        if (textInputPrefab == null && transform.childCount == 0) Debug.LogError("No children detected and no text prefab provided to generate children");
-        CreateChildren();
-        SyncChildren();
+        if (Choices.Count == 0) Debug.LogError("No selection choices provided", gameSetting);
+        //if (textInputPrefab == null && transform.childCount == 0) Debug.LogError("No children detected and no text prefab provided to generate children");
+        //CreateChildren();
         CreateEvents();
-        UpdateValueIndex(SelectedIndex);
     }
 
     public void CreateEvents() {
@@ -33,48 +25,43 @@ public abstract class SingleSelect<T> : UIInputBehaviour<T>, GameSettingsSetter<
         }
     }
 
-    void CreateChildren() {
-        if (transform.childCount > 0) return;
-        for (int i = 0; i < Choices.Count; i++) {
-            GameObject choicePrefab;
-            if (textInputPrefab == null) {
-                // This probably doesnt work right, oh well for now
-                choicePrefab = new GameObject("Single Select Option " + i.ToString());
-                choicePrefab.transform.SetParent(transform);
-            } else choicePrefab = Instantiate(textInputPrefab);
-            choicePrefab.transform.SetParent(transform);
-            choicePrefab.transform.localScale = new Vector3(1f, 1f, 1f);
-        }
-    }
+    //void CreateChildren() {
+    //    if (transform.childCount > 0) return;
+    //    for (int i = 0; i < Choices.Count; i++) {
+    //        GameObject choicePrefab;
+    //        if (textInputPrefab == null) {
+    //            // This probably doesnt work right, oh well for now
+    //            choicePrefab = new GameObject("Single Select Option " + i.ToString());
+    //            choicePrefab.transform.SetParent(transform);
+    //        } else choicePrefab = Instantiate(textInputPrefab);
+    //        choicePrefab.transform.SetParent(transform);
+    //        choicePrefab.transform.localScale = new Vector3(1f, 1f, 1f);
+    //    }
+    //}
 
-    void SyncChildren() {
+    protected override void SyncChildren() {
         for (int i = 0; i < transform.childCount; i++) {
             if (i >= Choices.Count) break;
             var choice = transform.GetChild(i);
-            SingleSelectChoice choiceComponent = choice.GetComponent<SingleSelectChoice>();
+            SingleSelectTextChoice choiceComponent = choice.GetComponent<SingleSelectTextChoice>();
             if (choiceComponent == null) throw new NoTextSingleSelectChoiceFound(i);
             choiceComponent.choiceText.text = Choices[i].DisplayText;
         }
     }
     
-    public void UpdateValueIndex(int index) {
-        if (index < 0 || index >= Choices.Count) return;
-        UpdateValue(Choices[index]);
-    }
-
-    public override void UpdateValue(InputValue<T> value) {
-        if (!Application.isPlaying) return;
-        activeIndex = Choices.FindIndex((value2) => value2 == value);
+    public override void UpdateValueIndex(int index) {
+        if (index < 0 || index >= Choices.Count || index == activeIndex) return;
+        var value = Choices[index];
+        activeIndex = index;
         GameObject choice = transform.GetChild(activeIndex).gameObject;
         if (choice.TryGetComponent(out TextColorChanger colorChanger)) {
             colorChanger.ChangeColor();
-            if (currentChoice != null && currentChoice.TryGetComponent(out colorChanger)) 
+            if (currentChoice != null && currentChoice.TryGetComponent(out colorChanger))
                 colorChanger.ChangeToOriginalColor();
         }
         currentChoice = choice;
-        Audio.SelectSoundSource.Play();
         currentValue = value.Value;
-        base.UpdateValue(value);
+        UpdateValue(Choices[index]);
     }
 
     public override void UpdateValue(Vector2 input) {

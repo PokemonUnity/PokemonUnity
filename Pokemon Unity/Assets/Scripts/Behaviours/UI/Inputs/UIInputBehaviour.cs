@@ -10,41 +10,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public interface GameSettingsSetter<T> {
-    public abstract void SetGameSetting(T value);
-    public abstract void SetGameSetting();
-}
-
-public abstract class UIInputBehaviour<T> : UIInputBehaviour, GameSettingsSetter<T> {
-    [Description("Automatically updates the player pref if selected option is not NONE")]
-    public EGameSettingKey GameSettingsKey = EGameSettingKey.NONE;
+public abstract class UIInputBehaviour<T> : Selectable {
     protected T currentValue;
-
-    protected new void Start() {
-        base.Start();
-    }
-
-    public abstract void SetGameSetting(T value);
-
-    public abstract void SetGameSetting();
-
-    public virtual void UpdateValue(InputValue<T> value) {
-        if (GameSettingsKey != EGameSettingKey.NONE) SetGameSetting(value.Value);
-        OnValueChange.Invoke(value.Value);
-    }
-
-    public abstract UnityEvent<T> OnValueChange { get; }
-}
-
-[AddComponentMenu("Pokemon Unity/UI/Generic Input")]
-public class UIInputBehaviour : Selectable {
     public UIAudio Audio;
     public UIInput Input;
-    public UIEvents Events;
-
+    public UIEvents<T> Events;
     public string HelpText;
 
-    protected new void Start() {
+    protected virtual new void Start() {
         if (!Application.isPlaying) return;
         // PlayerInput events
         SubscribeToPlayerInputEvents();
@@ -57,18 +30,13 @@ public class UIInputBehaviour : Selectable {
         if (Audio.SelectSoundSource is null) Debug.LogError("Failed to add an AudioSource for some reason");
         Audio.SelectSoundSource.playOnAwake = false;
         Audio.SelectSoundSource.clip = Audio.SelectSound;
+        if (ShouldHaveAGameSetting()) {
+            if (GameSetting == null) throw new GameSetting.NoGameSettingComponentSet(typeof(GameSetting<T>), gameObject);
+            GameSetting.OnValueChange.AddListener(SetGameSetting);
+        }
     }
 
-    public override void OnSelect(BaseEventData eventData) {
-        if (Audio.SelectSoundSource == null) return;
-        Audio.SelectSoundSource.Play();
-        Audio.SelectSoundSource.mute = false;
-    }
-
-    public void SilentSelect() {
-        Audio.SelectSoundSource.mute = true;
-        Select();
-    }
+    public bool ShouldHaveAGameSetting() => GetType() != typeof(UIInputBehaviour);
 
     void SubscribeToPlayerInputEvents() {
         if (PlayerInputSingleton.Singleton == null) return;
@@ -90,7 +58,35 @@ public class UIInputBehaviour : Selectable {
         UpdateValue(context.ReadValue<Vector2>());
     }
 
-    public virtual void UpdateValue(Vector2 navigationDirection) { }
+    public virtual void UpdateValue(InputValue<T> value) {
+        if (!Application.isPlaying) return;
+        Audio.SelectSoundSource.Play();
+        if (GameSetting != null) { 
+            GameSetting.Set(value.Value);
+        }
+        Events.OnValueChanged.Invoke(value.Value);
+    }
+
+    public abstract GameSetting<T> GameSetting { get; }
+
+    public void SetGameSetting(T value) => GameSetting.Set(value);
+
+    public void SetGameSetting() => GameSetting.Set(currentValue);
+
+    public override void OnSelect(BaseEventData eventData) {
+        if (Audio.SelectSoundSource == null) return;
+        Audio.SelectSoundSource.Play();
+        Audio.SelectSoundSource.mute = false;
+    }
+
+    public void SilentSelect() {
+        Audio.SelectSoundSource.mute = true;
+        Select();
+    }
+
+    public abstract void UpdateValue(Vector2 navigationDirection);
+
+    #region Subclasses
 
     [Serializable]
     public class UIInput {
@@ -107,14 +103,38 @@ public class UIInputBehaviour : Selectable {
     }
 
     [Serializable]
+    public class UIEvents<T> : UIEvents {
+        public UnityEvent<T> OnValueChanged;
+    }
+
+    [Serializable]
     public class UIAudio {
         public AudioClip SelectSound;
         [HideInInspector] public AudioSource SelectSoundSource;
     }
 
-    [Serializable]
-    public class InputValue<T> {
-        public string DisplayText;
-        public T Value;
+    #endregion
+}
+
+[AddComponentMenu("Pokemon Unity/UI/Generic Input")]
+public class UIInputBehaviour : UIInputBehaviour<bool> {
+    public override GameSetting<bool> GameSetting => null;
+
+    public override void UpdateValue(Vector2 input) { return; }
+}
+
+[Serializable]
+public class InputValue<T> {
+    public string DisplayText;
+    public T Value;
+
+    public InputValue(string displayText, T value) {
+        DisplayText = displayText;
+        Value = value;
+    }
+
+    public InputValue(InputValue<T> inputValue) {
+        DisplayText = inputValue.DisplayText;
+        Value = inputValue.Value;
     }
 }

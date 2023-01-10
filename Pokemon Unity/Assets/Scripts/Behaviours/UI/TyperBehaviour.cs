@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TyperBehaviour : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
+    public GameSetting<float> TypingSpeed;
     [TextArea][SerializeField] string message = "";
     float typingSpeed;
     int currentLength = 0;
     float passedTime = 0f;
 
     void Awake() {
-        typingSpeed = GameSettings.GetSetting<GameSettingFloat>(EGameSettingKey.TEXT_SPEED).Get();
-        GameSettings.GetSetting<GameSettingFloat>(EGameSettingKey.TEXT_SPEED).OnValueChange.AddListener(UpdateTypingSpeed);
+        if (TypingSpeed == null) throw new GameSetting.NoGameSettingComponentSet(typeof(GameSetting<float>), gameObject);
+        typingSpeed = TypingSpeed.Get();
+        TypingSpeed.OnValueChange.AddListener(UpdateTypingSpeed);
     }
 
     void UpdateTypingSpeed(float value) => typingSpeed = value;
@@ -36,6 +39,10 @@ public class TyperBehaviour : MonoBehaviour
 
     public void TypeHelpText(UIInputBehaviour input) {
         TypeMessage(input.HelpText);
+    }
+
+    public void TypeHelpText(BaseEventData eventData) {
+        TypeHelpText(eventData.selectedObject.GetComponent<BaseEventData>());
     }
 
     public void UpdateText() {

@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "String Setting", menuName = "Pokemon Unity/Settings/String")]
-public class GameSettingText : GameSetting<string> {
-    public override string Get() => PlayerPrefs.GetString(KeyString);
-    public override void Set(string value) => PlayerPrefs.SetString(KeyString, value);
+public class GameSettingText : GameSettingPlayerPref<string> {
+    protected override Action<string, string> PrefSetter => PlayerPrefs.SetString;
+
+    protected override Func<string, string> PrefGetter => PlayerPrefs.GetString;
 }

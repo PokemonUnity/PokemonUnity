@@ -49,7 +49,7 @@ public class GameSettings : ScriptableObject {
     static void Initialize(GameSettings gameSettings) {
         if (gameSettings.Settings != null && gameSettings.Settings.Count > 0) {
             foreach (var preference in gameSettings.Settings) {
-                gameSettings.playerPreferences.Add(preference.Key, preference);
+                //gameSettings.playerPreferences.Add(preference.Key, preference);
             }
         }
     }
@@ -60,21 +60,35 @@ public class GameSettings : ScriptableObject {
 
     public Dictionary<EGameSettingKey, GameSetting> playerPreferences = new();
 
+    static public Dictionary<Type, Type> SettingHandlers = new() {
+        { typeof(int), typeof(GameSettingInt) }
+    };
+
     void Awake() {
         if (Singleton != null) Destroy(this);
     }
 
-    public static T GetSetting<T>(EGameSettingKey key) where T : GameSetting => (T)Singleton.playerPreferences[key];
+    public static GameSettingPlayerPref<T> GetSetting<T>(EGameSettingKey key) {
+        if (Singleton.playerPreferences.ContainsKey(key)) {
+            GameSettingPlayerPref<T> setting = (GameSettingPlayerPref<T>)Singleton.playerPreferences[key];
+            if (SettingHandlers.ContainsKey(typeof(T))) {
+                Type type = SettingHandlers[typeof(T)];
+                Convert.ChangeType(setting, type);
+                return setting;
+            } else {
+                Debug.LogError("No handler for type " + typeof(T).ToString());
+                return setting;
+            }
+        }
+        return null;
+    }
+    
+    //public static T GetSetting<T>(EGameSettingKey key) where T : GameSetting => (T)Singleton.playerPreferences[key];
 }
 
 public enum EGameSettingKey {
     NONE,
-    TEXT_SPEED,
-    MUSIC_VOLUME,
-    SFX_VOLUME,
-    FRAME_STYLE,
-    BATTLE_SCENE,
-    BATTLE_STYLE,
+    
     RESOLUTION,
     FULLSCREEN,
 }

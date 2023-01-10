@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\BattleHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\_Original\Transition\DefaultTransition.cs" />
     <Compile Include="Assets\Scripts\_Original\NonResettingHandler.cs" />
+    <Compile Include="Assets\Settings\Scripts\GameSettingPlayerPref.cs" />
     <Compile Include="Assets\Scripts\_Original\BattleCameraHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\GUIParticleHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\BattleDebug.cs" />
@@ -133,10 +134,11 @@
     <Compile Include="Assets\GameMain\Scripts\UI\DialogParams.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyItemObject.cs" />
     <Compile Include="Assets\Settings\Scripts\GameSettingVector2.cs" />
-    <Compile Include="Assets\Settings\Scripts\GameSettingArray.cs" />
+    <Compile Include="Assets\Settings\Scripts\GameSettingPlayerPrefArray.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\StarterChoiceHandler.cs" />
     <Compile Include="Assets\Modules\DOTweenModulePhysics.cs" />
     <Compile Include="Assets\GameMain\Scripts\Scene\HideByBoundary.cs" />
+    <Compile Include="Assets\Settings\Scripts\GameSettingFloatArray.cs" />
     <Compile Include="Assets\Scripts\_Original\Save\GlobalSaveManager.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\CommonButton.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Abilities\Pressure.cs" />
@@ -167,7 +169,7 @@
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Entity.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\DataStruct\VersionInfo.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\OLD_MainMenuHandler.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectChoice.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectTextChoice.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\RelationType.cs" />
     <Compile Include="Assets\Scripts\_Original\LeanTween\LeanTween.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\CustomEvent.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="Assets\Scripts\Library\ScriptableObjectSingleton.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokemon.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\PartyHandler.cs" />
+    <Compile Include="Assets\Settings\Scripts\GameSettingArray.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriColor.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\PacketHandlerBase.cs" />
     <Compile Include="Assets\Scripts\_Original\SetSortingOrder.cs" />
@@ -239,7 +242,7 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\Elements\FrameStyleConsumer.cs" />
     <Compile Include="Assets\Scripts\_Original\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\LevelLoader.cs" />
-    <Compile Include="Assets\Settings\Scripts\GameSettings.cs" />
+    <Compile Include="Assets\Settings\Scripts\Depreciated\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\TextColorChanger.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarItemObject.cs" />
     <Compile Include="Assets\Scripts\_Original\DialogBoxHandlerNew.cs" />
@@ -299,6 +302,8 @@
     <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UIListInput.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselTexture2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

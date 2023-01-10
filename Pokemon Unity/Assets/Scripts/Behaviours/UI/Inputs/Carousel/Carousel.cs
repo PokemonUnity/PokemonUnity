@@ -1,29 +1,33 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public abstract class Carousel<T> : UIInputBehaviour<T> {
-    public abstract List<InputValue<T>> Choices { get; }
+public abstract class Carousel<T> : UIListInput<T> {
     [SerializeField] TextMeshProUGUI TargetText;
-    public int SelectedIndex = 0;
-    int activeIndex = -1;
+
+    public override GameSetting<T> GameSetting { get => gameSetting; }
 
     new void Start() {
+        if (TargetText is null) Debug.LogError("No TextMeshProUGUI provided", gameObject);
         base.Start();
-        if (TargetText is null) Debug.LogError("No TextMeshProUGUI provided");
-        UpdateValueIndex(SelectedIndex);
+    }
+
+    protected override void SyncChildren() {
+        if (activeIndex < 0 || activeIndex >= Choices.Count) return;
+        TargetText.text = Choices[activeIndex].DisplayText;
     }
 
     public void UpdateValueUp() => UpdateValueIndex(activeIndex + 1);
     public void UpdateValueDown() => UpdateValueIndex(activeIndex - 1);
 
-    public void UpdateValueIndex(int index) {
+    public override void UpdateValueIndex(int index) {
         if (index == activeIndex) return;
         if (index < 0 || index >= Choices.Count) return;
         activeIndex = index;
         TargetText.text = Choices[index].DisplayText;
         currentValue = Choices[index].Value;
-        OnValueChange.Invoke(currentValue);
+        Events.OnValueChanged.Invoke(currentValue);
     }
 
     public override void UpdateValue(Vector2 navigationDirection) {
