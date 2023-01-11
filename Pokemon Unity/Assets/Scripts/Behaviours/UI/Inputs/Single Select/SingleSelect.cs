@@ -10,7 +10,7 @@ public abstract class SingleSelect<T> : UIListInput<T> {
 
     new void Start() {
         base.Start();
-        if (Choices.Count == 0) Debug.LogError("No selection choices provided", gameSetting);
+        if (Choices.Count == 0) Debug.LogError("No selection choices provided", gameObject);
         //if (textInputPrefab == null && transform.childCount == 0) Debug.LogError("No children detected and no text prefab provided to generate children");
         //CreateChildren();
         CreateEvents();
@@ -50,10 +50,9 @@ public abstract class SingleSelect<T> : UIListInput<T> {
     }
     
     public override void UpdateValueIndex(int index) {
-        if (index < 0 || index >= Choices.Count || index == activeIndex) return;
+        if (index < 0 || index >= Choices.Count) return;
         var value = Choices[index];
-        activeIndex = index;
-        GameObject choice = transform.GetChild(activeIndex).gameObject;
+        GameObject choice = transform.GetChild(index).gameObject;
         if (choice.TryGetComponent(out TextColorChanger colorChanger)) {
             colorChanger.ChangeColor();
             if (currentChoice != null && currentChoice.TryGetComponent(out colorChanger))
@@ -61,6 +60,7 @@ public abstract class SingleSelect<T> : UIListInput<T> {
         }
         currentChoice = choice;
         currentValue = value.Value;
+        activeIndex = index;
         UpdateValue(Choices[index]);
     }
 

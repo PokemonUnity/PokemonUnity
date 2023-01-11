@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -27,7 +25,7 @@ public abstract class Carousel<T> : UIListInput<T> {
         activeIndex = index;
         TargetText.text = Choices[index].DisplayText;
         currentValue = Choices[index].Value;
-        Events.OnValueChanged.Invoke(currentValue);
+        base.UpdateValue(Choices[index]);
     }
 
     public override void UpdateValue(Vector2 navigationDirection) {

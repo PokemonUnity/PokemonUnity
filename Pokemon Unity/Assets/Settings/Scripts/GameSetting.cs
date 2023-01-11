@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,7 +22,10 @@ public abstract class GameSetting<T> : GameSetting {
 
     public virtual T Get() => HasValue(Key) ? Getter() : DefaultValue;
 
-    public virtual void Set(T value) => Setter(value);
+    public virtual void Set(T value) {
+        Setter(value);
+        OnValueChange.Invoke(value);
+    }
 
     public virtual bool Exists() => HasValue(Key);
 }

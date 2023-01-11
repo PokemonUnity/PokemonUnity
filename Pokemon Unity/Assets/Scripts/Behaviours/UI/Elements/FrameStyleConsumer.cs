@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +5,17 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class FrameStyleConsumer : MonoBehaviour
 {
-    Texture2D frame;
+    public GameSetting<Sprite> GameSetting;
     Image image;
 
-    void Awake()
+    void Start()
     {
-        //frame = PlayerPreferences.GetFrameStyle();
         image = GetComponent<Image>();
+        GameSetting?.OnValueChange.AddListener(UpdateFrame);
+        UpdateFrame(GameSetting?.Get());
+    }
+
+    public void UpdateFrame(Sprite frame) {
+        image.sprite = frame;
     }
 }

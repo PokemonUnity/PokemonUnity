@@ -9,18 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 794af8112e7138c47a5b7c06016b2922, type: 3}
+  m_Script: {fileID: 11500000, guid: afc731fcd4c0958458e68d48c5fe6300, type: 3}
   m_Name: Frame Style
   m_EditorClassIdentifier: 
   Key: Frame Style
-  defaultValue: {fileID: 2800000, guid: b8620f625f970084bb9cf2e751db651b, type: 3}
+  defaultValue: {fileID: 21300000, guid: b8620f625f970084bb9cf2e751db651b, type: 3}
   OnValueChange:
     m_PersistentCalls:
       m_Calls: []
   choices:
   - DisplayText: Frame 1
-    Value: {fileID: 2800000, guid: b8620f625f970084bb9cf2e751db651b, type: 3}
+    Value: {fileID: 21300000, guid: b8620f625f970084bb9cf2e751db651b, type: 3}
   - DisplayText: Frame 2
-    Value: {fileID: 2800000, guid: 7cdc6982905e3bf4d9565eb1f1e6f71c, type: 3}
+    Value: {fileID: 21300000, guid: 7cdc6982905e3bf4d9565eb1f1e6f71c, type: 3}
   - DisplayText: Frame 3
-    Value: {fileID: 2800000, guid: efa6d8b143bc0cb439e266451829203c, type: 3}
+    Value: {fileID: 21300000, guid: efa6d8b143bc0cb439e266451829203c, type: 3}

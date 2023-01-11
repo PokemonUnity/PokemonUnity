@@ -198,6 +198,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\CheckDisable.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\CommandMenuButtons.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\BumpPokemonCenterRespawn.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselTexture2D.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV3.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractBreak.cs" />
     <Compile Include="Assets\Settings\Scripts\GameSettingInt.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Assets\GameMain\Scripts\Network\PacketHandlerBase.cs" />
     <Compile Include="Assets\Scripts\_Original\SetSortingOrder.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\BattlePokemonHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UIListInput.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryComponent.cs" />
     <Compile Include="Assets\GameMain\Scripts\Scene\TextMeshProAnimated.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\CosmeticData.cs" />
@@ -302,8 +304,8 @@
     <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UIListInput.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselTexture2D.cs" />
+    <Compile Include="Assets\Settings\Scripts\GameSettingSpriteArray.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselSprite.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

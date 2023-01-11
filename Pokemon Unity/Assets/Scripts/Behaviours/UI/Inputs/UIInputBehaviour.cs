@@ -10,12 +10,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public abstract class UIInputBehaviour<T> : Selectable {
+public abstract class UIInputBehaviour<T> : UIInputBehaviour {
     protected T currentValue;
-    public UIAudio Audio;
-    public UIInput Input;
     public UIEvents<T> Events;
-    public string HelpText;
 
     protected virtual new void Start() {
         if (!Application.isPlaying) return;
@@ -30,13 +27,7 @@ public abstract class UIInputBehaviour<T> : Selectable {
         if (Audio.SelectSoundSource is null) Debug.LogError("Failed to add an AudioSource for some reason");
         Audio.SelectSoundSource.playOnAwake = false;
         Audio.SelectSoundSource.clip = Audio.SelectSound;
-        if (ShouldHaveAGameSetting()) {
-            if (GameSetting == null) throw new GameSetting.NoGameSettingComponentSet(typeof(GameSetting<T>), gameObject);
-            GameSetting.OnValueChange.AddListener(SetGameSetting);
-        }
     }
-
-    public bool ShouldHaveAGameSetting() => GetType() != typeof(UIInputBehaviour);
 
     void SubscribeToPlayerInputEvents() {
         if (PlayerInputSingleton.Singleton == null) return;
@@ -85,6 +76,13 @@ public abstract class UIInputBehaviour<T> : Selectable {
     }
 
     public abstract void UpdateValue(Vector2 navigationDirection);
+}
+
+[AddComponentMenu("Pokemon Unity/UI/Generic Input")]
+public class UIInputBehaviour : Selectable {
+    public string HelpText;
+    public UIAudio Audio;
+    public UIInput Input;
 
     #region Subclasses
 
@@ -114,13 +112,6 @@ public abstract class UIInputBehaviour<T> : Selectable {
     }
 
     #endregion
-}
-
-[AddComponentMenu("Pokemon Unity/UI/Generic Input")]
-public class UIInputBehaviour : UIInputBehaviour<bool> {
-    public override GameSetting<bool> GameSetting => null;
-
-    public override void UpdateValue(Vector2 input) { return; }
 }
 
 [Serializable]

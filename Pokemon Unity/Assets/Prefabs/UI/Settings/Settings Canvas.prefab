@@ -878,7 +878,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4279242768
-  m_fontColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
+  m_fontColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 255}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1199,8 +1199,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279242768
-  m_fontColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
+    rgba: 4280427263
+  m_fontColor: {r: 1, g: 0.13333334, b: 0.13333334, a: 255}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2576,6 +2576,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
+  HelpText: Set the size of the screen.
   Audio:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectSoundSource: {fileID: 0}
@@ -2583,41 +2584,6 @@ MonoBehaviour:
     OnNavigate:
       m_PersistentCalls:
         m_Calls: []
-  Events:
-    EventTrigger: {fileID: 0}
-    Triggers:
-    - eventID: 9
-      callback:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 1474390215927679690}
-            m_TargetAssemblyTypeName: UIMoveTo, Assembly-CSharp
-            m_MethodName: MoveTo
-            m_Mode: 2
-            m_Arguments:
-              m_ObjectArgument: {fileID: 2445187809694065389}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 3099711119181914236}
-            m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
-            m_MethodName: TypeHelpText
-            m_Mode: 2
-            m_Arguments:
-              m_ObjectArgument: {fileID: 4271848672550290544}
-              m_ObjectArgumentAssemblyTypeName: UIInputBehaviour, Assembly-CSharp
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-    OnValueChanged:
-      m_PersistentCalls:
-        m_Calls: []
-  HelpText: Set the size of the screen.
 --- !u!1 &3393684059923043406
 GameObject:
   m_ObjectHideFlags: 0
@@ -5381,7 +5347,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4279242768
-  m_fontColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
+  m_fontColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 255}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6636,12 +6602,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 970946296612165365}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2445187809694065389 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3212882758483489816, guid: d0478fb11d7133e4fa7dcc6a4a8d00ce,
-    type: 3}
-  m_PrefabInstance: {fileID: 970946296612165365}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1262791089782984199
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7036,6 +6996,12 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2671031142058606764}
     m_Modifications:
+    - target: {fileID: 1749020485919409441, guid: 4244addd8d0092544997db2791e6ae70,
+        type: 3}
+      propertyPath: GameSetting
+      value: 
+      objectReference: {fileID: 11400000, guid: 5331c92cfbaa3be42b7aab866a5fe315,
+        type: 2}
     - target: {fileID: 4331778786813172071, guid: 4244addd8d0092544997db2791e6ae70,
         type: 3}
       propertyPath: TypingSpeed
@@ -7689,6 +7655,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
+  HelpText: Switch to fullscreen or windowed
   Audio:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectSoundSource: {fileID: 0}
@@ -7730,7 +7697,6 @@ MonoBehaviour:
     OnValueChanged:
       m_PersistentCalls:
         m_Calls: []
-  HelpText: Switch to fullscreen or windowed
   defaultChoiceIndex: 0
   gameSetting: {fileID: 11400000, guid: e17a4aaec770d3e47ac625a1f8c8af31, type: 2}
   Choices: []
@@ -8771,6 +8737,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
+  HelpText: How quickly to draw text to the screen.
   Audio:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectSoundSource: {fileID: 0}
@@ -8811,8 +8778,19 @@ MonoBehaviour:
             m_CallState: 2
     OnValueChanged:
       m_PersistentCalls:
-        m_Calls: []
-  HelpText: How quickly to draw text to the screen.
+        m_Calls:
+        - m_Target: {fileID: 3099711119181914236}
+          m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
+          m_MethodName: TypeHelpText
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 7334603829859208276}
+            m_ObjectArgumentAssemblyTypeName: UIInputBehaviour, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   defaultChoiceIndex: 0
   gameSetting: {fileID: 11400000, guid: 455b5e5f606471c4e82233680e1d9fc3, type: 2}
   Choices:
@@ -10190,7 +10168,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6298705349097836631}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2435352650515662495
+--- !u!114 &202526177758633183
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10199,7 +10177,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 477952403279128524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b2b76b0fcc73e94bad0fd2e8954d920, type: 3}
+  m_Script: {fileID: 11500000, guid: 81e40b07a87729a4c982f30b1dc6ec48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -10231,6 +10209,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
+  HelpText: 
   Audio:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectSoundSource: {fileID: 0}
@@ -10272,16 +10251,15 @@ MonoBehaviour:
     OnValueChanged:
       m_PersistentCalls:
         m_Calls: []
-  HelpText: The style of text frame to use.
   defaultChoiceIndex: 0
-  gameSetting: {fileID: 11400000, guid: b3abb9f2f24ad2b49aa931b13f1465f3, type: 2}
+  gameSetting: {fileID: 11400000, guid: 5331c92cfbaa3be42b7aab866a5fe315, type: 2}
   Choices:
   - DisplayText: Frame 1
-    Value: {fileID: 2800000, guid: b8620f625f970084bb9cf2e751db651b, type: 3}
+    Value: {fileID: 21300000, guid: b8620f625f970084bb9cf2e751db651b, type: 3}
   - DisplayText: Frame 2
-    Value: {fileID: 2800000, guid: 7cdc6982905e3bf4d9565eb1f1e6f71c, type: 3}
-  - DisplayText: Frame 3
-    Value: {fileID: 2800000, guid: efa6d8b143bc0cb439e266451829203c, type: 3}
+    Value: {fileID: 21300000, guid: 7cdc6982905e3bf4d9565eb1f1e6f71c, type: 3}
+  - DisplayText: fdasfas
+    Value: {fileID: 21300000, guid: efa6d8b143bc0cb439e266451829203c, type: 3}
   TargetText: {fileID: 7295509787718436638}
 --- !u!224 &2094256891488681965 stripped
 RectTransform:

@@ -42,7 +42,8 @@ public class TyperBehaviour : MonoBehaviour
     }
 
     public void TypeHelpText(BaseEventData eventData) {
-        TypeHelpText(eventData.selectedObject.GetComponent<BaseEventData>());
+        UIInputBehaviour input = eventData.selectedObject.GetComponent<UIInputBehaviour>();
+        TypeHelpText(input);
     }
 
     public void UpdateText() {
