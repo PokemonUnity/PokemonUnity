@@ -3313,7 +3313,7 @@ GameObject:
   - component: {fileID: 2671031142058606764}
   - component: {fileID: 4751892576033297107}
   - component: {fileID: 632134538105121323}
-  - component: {fileID: 8401950408392870851}
+  - component: {fileID: 7244756679500123340}
   m_Layer: 0
   m_Name: Settings Canvas
   m_TagString: Untagged
@@ -3384,7 +3384,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8401950408392870851
+--- !u!114 &7244756679500123340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3393,11 +3393,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4709383403514347755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb4714d7cfb64b4998579ac6aa990b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 31597300a9e0d214ca449d9edd340fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 4751892576033297107}
-  selectClip: {fileID: 0}
 --- !u!1 &4728947622891498608
 GameObject:
   m_ObjectHideFlags: 0
@@ -6678,7 +6677,7 @@ PrefabInstance:
     - target: {fileID: 3627548736517019465, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
       propertyPath: m_text
-      value: 1600 x 900 @ 170Hz
+      value: 1366 x 768 @ 60Hz
       objectReference: {fileID: 0}
     - target: {fileID: 4614949635437909369, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
@@ -6948,14 +6947,13 @@ MonoBehaviour:
   defaultChoiceIndex: 0
   gameSetting: {fileID: 11400000, guid: f805ec5eaa9c49146ad1f305d85661b9, type: 2}
   Choices:
-  - DisplayText: 1176 x 664 @ 170Hz
-  - DisplayText: 1280 x 720 @ 170Hz
-  - DisplayText: 1360 x 768 @ 170Hz
-  - DisplayText: 1366 x 768 @ 170Hz
-  - DisplayText: 1600 x 900 @ 170Hz
-  - DisplayText: 1768 x 992 @ 170Hz
-  - DisplayText: 1920 x 1080 @ 170Hz
-  - DisplayText: 2560 x 1440 @ 170Hz
+  - DisplayText: 1176 x 664 @ 60Hz
+  - DisplayText: 1280 x 720 @ 60Hz
+  - DisplayText: 1360 x 768 @ 60Hz
+  - DisplayText: 1366 x 768 @ 60Hz
+  - DisplayText: 1600 x 900 @ 60Hz
+  - DisplayText: 1768 x 992 @ 60Hz
+  - DisplayText: 1920 x 1080 @ 60Hz
   TargetText: {fileID: 2471026193589469219}
 --- !u!224 &6513412086815094992 stripped
 RectTransform:
