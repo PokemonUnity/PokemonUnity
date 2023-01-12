@@ -4,10 +4,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
-public class ScreenFade : MonoBehaviour
+public class OLD_ScreenFade : MonoBehaviour
 {
-    public static ScreenFade main;
+    public static OLD_ScreenFade main;
     public static float defaultSpeed = 0.4f;
     public static float slowedSpeed = 1.2f;
 
@@ -15,16 +14,15 @@ public class ScreenFade : MonoBehaviour
 
     public Sprite[] fadeCutouts;
 
-    public Material fadeMaterial;
+    public Material fadeMat;
 
 
     void Awake()
     {
         if (main == null)
+        {
             main = this;
-        else
-            Destroy(this);
-
+        }
         image = GetComponent<Image>();
     }
 
@@ -56,7 +54,7 @@ public class ScreenFade : MonoBehaviour
         }
 
         image.sprite = cutout;
-        image.material = fadeMaterial;
+        image.material = fadeMat;
 
         float increment = 0f;
         while (increment < 1)

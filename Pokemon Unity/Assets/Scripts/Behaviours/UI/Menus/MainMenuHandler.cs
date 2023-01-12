@@ -9,10 +9,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System;
 using EasyButtons;
+using UnityEngine.SceneManagement;
 
 public class MainMenuHandler : MenuHandlerBehaviour {
-
-    #region Variables
+    // TODO: implement file selection and mystery gift menus
+    #region Old Variables
 
     public AudioClip scrollClip;
     public AudioClip decideClip;
@@ -71,68 +72,79 @@ public class MainMenuHandler : MenuHandlerBehaviour {
     new void Start() {
         base.Start();
         return;
-        fileDataPanel = GameObject.Find("FileData");
-        newGameButton = GameObject.Find("NewGame");
-        mysteryGiftButton = GameObject.Find("MysteryGift");
-        settingsButton = GameObject.Find("Settings");
+        //fileDataPanel = GameObject.Find("FileData");
+        //newGameButton = GameObject.Find("NewGame");
+        //mysteryGiftButton = GameObject.Find("MysteryGift");
+        //settingsButton = GameObject.Find("Settings");
 
-        /*{
-            continueButton.GetComponent<Image>(),
-            newGameButton.GetComponent<Image>(),
-            mysteryGiftButton.GetComponent<Image>(),
-            settingsButton.GetComponent<Image>()
-        };*/
-        Transform buttons = transform.Find("Buttons");
-        for (int i = 0; i < buttons.childCount; i++) {
-            var buttonImage = buttons.GetChild(i).GetComponent<Image>();
-            buttonImages.Add(buttonImage);
-            buttonTextShadowImage[i] = buttonImage.transform.Find("Shadow").GetComponent<Text>();
-            buttonTextImage[i] = buttonTextShadowImage[i].transform.Find("Text").GetComponent<Text>();
-            buttonImage.gameObject.SetActive(false);
-        }
+        ///*{
+        //    continueButton.GetComponent<Image>(),
+        //    newGameButton.GetComponent<Image>(),
+        //    mysteryGiftButton.GetComponent<Image>(),
+        //    settingsButton.GetComponent<Image>()
+        //};*/
+        //Transform buttons = transform.Find("Buttons");
+        //for (int i = 0; i < buttons.childCount; i++) {
+        //    var buttonImage = buttons.GetChild(i).GetComponent<Image>();
+        //    buttonImages.Add(buttonImage);
+        //    buttonTextShadowImage[i] = buttonImage.transform.Find("Shadow").GetComponent<Text>();
+        //    buttonTextImage[i] = buttonTextShadowImage[i].transform.Find("Text").GetComponent<Text>();
+        //    buttonImage.gameObject.SetActive(false);
+        //}
 
-        fileNumbersText = fileNumbersTextShadow.transform.Find("Text").GetComponent<Text>();
-        fileSelected = fileNumbersTextShadow.transform.Find("FileSelected").GetComponent<Text>();
+        //fileNumbersText = fileNumbersTextShadow.transform.Find("Text").GetComponent<Text>();
+        //fileSelected = fileNumbersTextShadow.transform.Find("FileSelected").GetComponent<Text>();
 
-        playerSprite = fileDataPanel.transform.Find("player").GetComponent<Image>();
-        playerNameShadow = fileDataPanel.transform.Find("playername").GetComponent<Text>();
-        playerName = playerNameShadow.transform.Find("Text").GetComponent<Text>();
-        currentMapShadow = fileDataPanel.transform.Find("MapName").GetComponent<Text>();
-        currentMap = currentMapShadow.transform.Find("Text").GetComponent<Text>();
-        badgesShadow = fileDataPanel.transform.Find("Badges").GetComponent<Text>();
-        badges = badgesShadow.transform.Find("Text").GetComponent<Text>();
-        timeShadow = fileDataPanel.transform.Find("Time").GetComponent<Text>();
-        time = timeShadow.transform.Find("Text").GetComponent<Text>();
+        //playerSprite = fileDataPanel.transform.Find("player").GetComponent<Image>();
+        //playerNameShadow = fileDataPanel.transform.Find("playername").GetComponent<Text>();
+        //playerName = playerNameShadow.transform.Find("Text").GetComponent<Text>();
+        //currentMapShadow = fileDataPanel.transform.Find("MapName").GetComponent<Text>();
+        //currentMap = currentMapShadow.transform.Find("Text").GetComponent<Text>();
+        //badgesShadow = fileDataPanel.transform.Find("Badges").GetComponent<Text>();
+        //badges = badgesShadow.transform.Find("Text").GetComponent<Text>();
+        //timeShadow = fileDataPanel.transform.Find("Time").GetComponent<Text>();
+        //time = timeShadow.transform.Find("Text").GetComponent<Text>();
 
-        /*
-        dataText = fileDataPanel.transform.Find("DataText").GetComponent<Text>();
-        dataTextShadow = dataText.transform.Find("DataTextShadow").GetComponent<Text>();
-        */
+        ///*
+        //dataText = fileDataPanel.transform.Find("DataText").GetComponent<Text>();
+        //dataTextShadow = dataText.transform.Find("DataTextShadow").GetComponent<Text>();
+        //*/
 
-        for (int i = 0; i < 6; ++i) {
-            pokemon[i] = fileDataPanel.transform.Find("pokemon" + i).GetComponent<Image>();
-        }
+        //for (int i = 0; i < 6; ++i) {
+        //    pokemon[i] = fileDataPanel.transform.Find("pokemon" + i).GetComponent<Image>();
+        //}
 
-        //Mystery Gift Menu
+        ////Mystery Gift Menu
 
-        MGButtonImage = new Image[]
-        {
-            mysteryGiftMenu.transform.Find("EnterCode").GetComponent<Image>(),
-            mysteryGiftMenu.transform.Find("Quit").GetComponent<Image>()
-        };
-        //mysteryGiftMenu.SetActive(false);
-        //StartCoroutine(control());
+        //MGButtonImage = new Image[]
+        //{
+        //    mysteryGiftMenu.transform.Find("EnterCode").GetComponent<Image>(),
+        //    mysteryGiftMenu.transform.Find("Quit").GetComponent<Image>()
+        //};
+        ////mysteryGiftMenu.SetActive(false);
     }
 
-    public void ChangeMenu(int index) => MenuHandler.ChangeMenu(index);
-    public void ChangeToPreviousMenu() => MenuHandler.ChangeToPreviousMenu();
-    
-    [Button]
-    public void SeeCurrentlySelected() {
-        Debug.Log("Currently selected object: " + EventSystem.current.currentSelectedGameObject.name, EventSystem.current.currentSelectedGameObject); 
+    public void NewGame() => StartCoroutine(NewGameCoroutine());
+
+    public IEnumerator NewGameCoroutine() {
+        //NEW GAME
+        //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
+        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+
+        int fileCount = SaveLoad.getSavedGamesCount();
+        SaveData.currentSave = new SaveData(fileCount);
+
+        GlobalVariables.global.SetDEBUGFileData();
+        GlobalVariables.global.playerPosition = new Vector3(2, 0, -3);
+        //GlobalVariables.global.playerPosition = new Vector3(32, 1, 5);
+        GlobalVariables.global.playerDirection = 0;
+        GlobalVariables.global.fadeIn = true;
+        SceneManager.LoadScene("route 3");
+        //Application.LoadLevel("route_3");
+        //Application.LoadLevel("flowery_town_indoors");
     }
 
-    // everything below is old code
+    #region everything below is old code
 
     private void updateButton(int newButtonIndex) {
         if (newButtonIndex != selectedButton) {
@@ -710,4 +722,6 @@ public class MainMenuHandler : MenuHandlerBehaviour {
             yield return null;
         }
     }
+
+    #endregion
 }

@@ -30972,7 +30972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeCutouts:
   - {fileID: 21300000, guid: 6edb30c379673bb48baee4f9e5014f08, type: 3}
-  fadeMat: {fileID: 2100000, guid: 286cf55e6950e864b9f377950baa2fb5, type: 2}
+  fadeMaterial: {fileID: 0}
 --- !u!114 &24728980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56741,6 +56741,7 @@ GameObject:
   - component: {fileID: 8475132}
   - component: {fileID: 8535666}
   - component: {fileID: 24652572}
+  - component: {fileID: 30678739}
   m_Layer: 0
   m_Name: ScreenFade
   m_TagString: Untagged
@@ -56748,6 +56749,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &30678739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30678738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf524aeb63e47a4b8587937a6dbef1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeCutouts:
+  - {fileID: 21300000, guid: 1fce306e4aa3e6442a5adb7fe0ed6aa6, type: 3}
+  fadeMaterial: {fileID: 2100000, guid: 912d8caae6a79174db33f307dd6d1c26, type: 2}
 --- !u!1 &30678778
 GameObject:
   m_ObjectHideFlags: 0
@@ -80873,7 +80889,7 @@ MonoBehaviour:
     firstMenuIndex: 0
     menus:
     - {fileID: 834140918973219549}
-    - {fileID: 0}
+    - {fileID: 4751892576033297111}
   scrollClip: {fileID: 0}
   decideClip: {fileID: 0}
   cancelClip: {fileID: 0}
@@ -83469,6 +83485,18 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 9398ac423bd289840a0fa94264dc922d, type: 3}
+--- !u!114 &4751892576033297111 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7244756679500123340, guid: 9398ac423bd289840a0fa94264dc922d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4751892576033297110}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31597300a9e0d214ca449d9edd340fbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5560946710403420497
 PrefabInstance:
   m_ObjectHideFlags: 0

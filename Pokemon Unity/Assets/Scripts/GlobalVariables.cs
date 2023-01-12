@@ -153,12 +153,12 @@ public class GlobalVariables : MonoBehaviour
 
         SaveData.currentSave.playerOutfit = "bw";
 
-        //PC test
-        
+        #region PC test
+
         //SaveData.currentSave.PC.addPokemon(new Pokemon(150, Pokemon.Gender.CALCULATE, 5, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(483, Pokemon.Gender.CALCULATE, 100, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(484, Pokemon.Gender.CALCULATE, 100, "Poké Ball", "", SaveData.currentSave.playerName, 0));
-        
+
         //SaveData.currentSave.PC.addPokemon(new Pokemon(394, Pokemon.Gender.CALCULATE, 17, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(487, Pokemon.Gender.CALCULATE, 50, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(18, Pokemon.Gender.CALCULATE, 50, "Poké Ball", "", SaveData.currentSave.playerName, 0));
@@ -166,9 +166,9 @@ public class GlobalVariables : MonoBehaviour
         //SaveData.currentSave.PC.addPokemon(new Pokemon(18, Pokemon.Gender.CALCULATE, 50, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.boxes[0][0].removeHP(140);
         //SaveData.currentSave.PC.boxes[0][1].removeHP(140);
-        
+
         //SaveData.currentSave.PC.addPokemon(new Pokemon(487, Pokemon.Gender.CALCULATE, 65, "Poké Ball", "", SaveData.currentSave.playerName, 0));
-        
+
         //SaveData.currentSave.PC.addPokemon(new Pokemon(405, Pokemon.Gender.CALCULATE, 58, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(398, Pokemon.Gender.CALCULATE, 59, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(454, Pokemon.Gender.CALCULATE, 58, "Poké Ball", "", SaveData.currentSave.playerName, 0));
@@ -182,7 +182,7 @@ public class GlobalVariables : MonoBehaviour
         //SaveData.currentSave.PC.addPokemon(new Pokemon(1115, Pokemon.Gender.CALCULATE, 5, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(1115, Pokemon.Gender.CALCULATE, 5, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         //SaveData.currentSave.PC.addPokemon(new Pokemon(1115, Pokemon.Gender.CALCULATE, 5, "Poké Ball", "", SaveData.currentSave.playerName, 0));
-        
+
         /*
         SaveData.currentSave.PC.addPokemon(new Pokemon(393, Pokemon.Gender.CALCULATE, 6, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 28, "Great Ball", "", SaveData.currentSave.playerName, -1));
@@ -243,8 +243,8 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.PC.swapPokemon(0, 4, 3, 4);
         SaveData.currentSave.PC.swapPokemon(0, 5, 3, 5);
         */
-        
-        
+
+
         /*
         SaveData.currentSave.PC.addPokemon(new Pokemon(006, null, Pokemon.Gender.CALCULATE, 5, false, "Poké Ball", "",
             "Gold",
@@ -252,7 +252,7 @@ public class GlobalVariables : MonoBehaviour
             Random.Range(0, 32),
             0, 0, 0, 0, 0, 0, "ADAMANT", 0, PokemonDatabase.getPokemon(4).GenerateMoveset(5), new int[4]));
         */
-        
+
         /*
         SaveData.currentSave.PC.addPokemon(new Pokemon(005, null, Pokemon.Gender.CALCULATE, 15, false, "Poké Ball", "",
             "Gold",
@@ -293,7 +293,9 @@ public class GlobalVariables : MonoBehaviour
             Random.Range(0, 32),
             0, 0, 0, 0, 0, 0, "ADAMANT", 0, PokemonDatabase.getPokemon(6).GenerateMoveset(36), new int[4]));
         */
-        
+
+        #endregion
+
         SaveData.currentSave.PC.packParty();
         
         
