@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,6 +29,10 @@ public abstract class GameSetting<T> : GameSetting {
     }
 
     public virtual bool Exists() => HasValue(Key);
+
+    public bool Compare(T x, T y) {
+        return EqualityComparer<T>.Default.Equals(x, y);
+    }
 }
 
 public class GameSetting : ScriptableObject {

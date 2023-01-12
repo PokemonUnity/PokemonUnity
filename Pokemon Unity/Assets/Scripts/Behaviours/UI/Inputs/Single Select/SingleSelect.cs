@@ -8,6 +8,11 @@ public abstract class SingleSelect<T> : UIListInput<T> {
     protected EDirection NavigationDirection = EDirection.Horizontal;
     protected GameObject currentChoice;
 
+    protected override void OnValidate() {
+        base.OnValidate();
+        ChangeAllToOriginalColor();
+    }
+
     new void Start() {
         base.Start();
         if (Choices.Count == 0) Debug.LogError("No selection choices provided", gameObject);
@@ -62,6 +67,14 @@ public abstract class SingleSelect<T> : UIListInput<T> {
         currentValue = value.Value;
         activeIndex = index;
         UpdateValue(Choices[index]);
+    }
+
+    public void ChangeAllToOriginalColor() {
+        foreach (Transform choice in transform) {
+            if (choice.TryGetComponent(out TextColorChanger colorChanger)) {
+                colorChanger.ChangeToOriginalColor();
+            }
+        }
     }
 
     public override void UpdateValue(Vector2 input) {

@@ -120,9 +120,9 @@ public class SettingsMenuBehaviour :  MenuBehaviour
         gameObject.SetActive(false);
     }
 
-    public void UpdateResolution() {
-        GlobalVariables.global.updateResolution();
-    }
+    //public void UpdateResolution() {
+    //    GlobalVariables.global.UpdateResolution();
+    //}
 
     #region Old funcs
 
@@ -514,7 +514,7 @@ public class SettingsMenuBehaviour :  MenuBehaviour
                     //	PlayerPrefs.Save();
                     selectedOptionIndex = originalIndexes;
                     saveSettings();
-                    GlobalVariables.global.updateResolution();
+                    //GlobalVariables.global.UpdateResolution();
                 }
                 Dialog.UndrawDialogBox();
                 Dialog.UndrawChoiceBox();

@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b21712809a6a74194b02a46d1d33c9, type: 3}
   m_Name: Battle Style Setting
   m_EditorClassIdentifier: 
-  key: 6
-  DefaultValue: 0
+  Key: Battle Style Setting
+  defaultValue: 0
+  OnValueChange:
+    m_PersistentCalls:
+      m_Calls: []

@@ -10,6 +10,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1609112489107969094, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
+      propertyPath: m_text
+      value: Settings
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609112489107969094, guid: e4759966538b98840899c7a9693d06a3,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609112489107969094, guid: e4759966538b98840899c7a9693d06a3,
+        type: 3}
       propertyPath: m_fontColor.b
       value: 0.2509804
       objectReference: {fileID: 0}
@@ -22,6 +32,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontColor.r
       value: 0.2509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609112489107969094, guid: e4759966538b98840899c7a9693d06a3,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1609112489107969094, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
@@ -61,7 +76,17 @@ PrefabInstance:
     - target: {fileID: 4865006285891335616, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
       propertyPath: m_Name
-      value: Light Bold Text With Shadow Variant
+      value: Settings Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542860723917598295, guid: e4759966538b98840899c7a9693d06a3,
+        type: 3}
+      propertyPath: m_text
+      value: Settings
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542860723917598295, guid: e4759966538b98840899c7a9693d06a3,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6542860723917598295, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
@@ -77,6 +102,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontColor.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542860723917598295, guid: e4759966538b98840899c7a9693d06a3,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6542860723917598295, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
@@ -151,27 +181,27 @@ PrefabInstance:
     - target: {fileID: 7842619675484943146, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7842619675484943146, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7842619675484943146, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7842619675484943146, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1
+      value: 25.3
       objectReference: {fileID: 0}
     - target: {fileID: 7842619675484943146, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 7842619675484943146, guid: e4759966538b98840899c7a9693d06a3,
         type: 3}

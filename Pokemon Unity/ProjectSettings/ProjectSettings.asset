@@ -42,7 +42,7 @@ PlayerSettings:
   m_SplashScreenLogos: []
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
-  defaultScreenWidth: 1923
+  defaultScreenWidth: 1920
   defaultScreenHeight: 1080
   defaultScreenWidthWeb: 342
   defaultScreenHeightWeb: 192
@@ -88,7 +88,7 @@ PlayerSettings:
   bakeCollisionMeshes: 0
   forceSingleInstance: 0
   useFlipModelSwapchain: 1
-  resizableWindow: 0
+  resizableWindow: 1
   useMacAppStoreValidation: 0
   macAppStoreCategory: public.app-category.games
   gpuSkinning: 0
@@ -135,7 +135,7 @@ PlayerSettings:
     4:3: 0
     5:4: 0
     16:10: 0
-    16:9: 0
+    16:9: 1
     Others: 0
   bundleVersion: 1.0
   preloadedAssets:

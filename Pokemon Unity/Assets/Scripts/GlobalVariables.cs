@@ -8,10 +8,11 @@ using UnityEngine.UI;
 
 public class GlobalVariables : MonoBehaviour
 {
-    [SerializeField] GameSettings GameSettings;
+    public GameSetting<FullScreenMode> FullscreenSetting;
+    public GameSetting<Resolution> ResolutionSetting;
 
-	#region Old - Property Variables
-	public static GlobalVariables global;
+    #region Old - Property Variables
+    public static GlobalVariables global;
 
     public Vector3 playerPosition;
     public int playerDirection;
@@ -56,6 +57,8 @@ public class GlobalVariables : MonoBehaviour
     
     void Awake()
     {
+        FullscreenSetting.OnValueChange.AddListener((FullScreenMode fullScreenMode) => UpdateResolution(fullScreenMode));
+        ResolutionSetting.OnValueChange.AddListener((Resolution resolution) => UpdateResolution(resolution));
         return;
         SceneManager.sceneLoaded += CheckLevelLoaded;
         if (SaveData.currentSave == null)
@@ -93,7 +96,7 @@ public class GlobalVariables : MonoBehaviour
                 PlayerPrefs.SetInt("fullscreen", 0);
                 PlayerPrefs.Save();
             }
-            updateResolution();
+            //UpdateResolution();
 
             RenderTexture.active = GUIDisplay;
             GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
@@ -461,9 +464,13 @@ public class GlobalVariables : MonoBehaviour
         }
     }
 
-    public void updateResolution()
+    public void UpdateResolution(FullScreenMode fullScreenMode) => UpdateResolution(ResolutionSetting.Get(), fullScreenMode);
+
+    public void UpdateResolution(Resolution resolution) => UpdateResolution(resolution, FullscreenSetting.Get());
+
+    public void UpdateResolution(Resolution resolution, FullScreenMode fullScreenMode)
     {
-        Screen.fullScreen = PlayerPrefs.GetInt("fullscreen") == 1;
+        Screen.SetResolution(resolution.width, resolution.height, fullScreenMode, resolution.refreshRate);
         //if (PlayerPrefs.GetInt("fullscreen") == 0)
         //{
         //    Screen.SetResolution(684 * PlayerPrefs.GetInt("screenSize"), 384 * PlayerPrefs.GetInt("screenSize"), false);

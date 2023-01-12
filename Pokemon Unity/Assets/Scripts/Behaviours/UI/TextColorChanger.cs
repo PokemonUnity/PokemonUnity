@@ -5,8 +5,8 @@ using System;
 public class TextColorChanger : MonoBehaviour {
     public TextMeshProUGUI text;
     [Description("Call the functions on this component in other components Events")]
-    [SerializeField] Color color = new Color(255, 255, 255, 255f);
-    Color originalColor;
+    [SerializeField] Color color = new Color(1f, 1f, 1f, 255f);
+    [SerializeField] Color originalColor = new Color(0.0627451f, 0.0627451f, 0.0627451f, 1f);
     
     void Awake() {
         if (text is null) text = GetComponent<TextMeshProUGUI>();

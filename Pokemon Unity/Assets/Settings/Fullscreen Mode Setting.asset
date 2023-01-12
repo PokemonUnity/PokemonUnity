@@ -9,11 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df934b69ee8b0624ba55678c438afb84, type: 3}
-  m_Name: Music Volume
+  m_Script: {fileID: 11500000, guid: a1c452a1af327ef43b2f4b642fa5897e, type: 3}
+  m_Name: Fullscreen Mode Setting
   m_EditorClassIdentifier: 
-  Key: Music Volume
-  defaultValue: 0
+  Key: Fullscreen Mode
+  defaultValue: 3
   OnValueChange:
     m_PersistentCalls:
       m_Calls: []
+  choices:
+  - DisplayText: Fullscreen Window
+    Value: 1
+  - DisplayText: Windowed
+    Value: 3
+  - DisplayText: Fullscreen
+    Value: 0

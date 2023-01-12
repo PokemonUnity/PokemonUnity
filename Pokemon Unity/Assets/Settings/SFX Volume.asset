@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df934b69ee8b0624ba55678c438afb84, type: 3}
   m_Name: SFX Volume
   m_EditorClassIdentifier: 
-  key: 3
-  DefaultValue: 1
+  Key: SFX Volume
+  defaultValue: 0
+  OnValueChange:
+    m_PersistentCalls:
+      m_Calls: []

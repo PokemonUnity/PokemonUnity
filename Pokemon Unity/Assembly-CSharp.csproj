@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\SettingsMenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\UIMoveTo.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\GameEvents.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselVector2.cs" />
     <Compile Include="Assets\Settings\Scripts\GameSetting.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\Entity.cs" />
@@ -153,7 +154,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractTrainer.cs" />
     <Compile Include="Assets\Scripts\_Original\WindowLight.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\SCPacketHeader.cs" />
-    <Compile Include="Assets\Settings\Scripts\GameSettingBattleStyle.cs" />
+    <Compile Include="Assets\Settings\Scripts\Enums\GameSettingBattleStyle.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\DataStruct\ImpactData.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\FightMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\SummaryHandler.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\UIInputBehaviour.cs" />
     <Compile Include="Assets\Settings\Scripts\GameSettingFloat.cs" />
     <Compile Include="Assets\Scripts\_Original\LeanTween\LTSeq.cs" />
+    <Compile Include="Assets\Settings\Scripts\GameSettingSpriteArray.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameMode.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\PauseHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\PacketHandler\SCHeartBeatHandler.cs" />
@@ -271,6 +273,7 @@
     <Compile Include="Assets\Scripts\_Original\FollowCameraView.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItem.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\LitJsonHelper.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselSprite.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Constant\Constant.ProcedureData.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\QuestData.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\PCHandler.cs" />
@@ -304,8 +307,14 @@
     <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Settings\Scripts\GameSettingSpriteArray.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselSprite.cs" />
+    <Compile Include="Assets\Settings\Scripts\GameSettingResolution.cs" />
+    <Compile Include="Assets\Settings\Scripts\GameSettingVector2Array.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\ResolutionExtensions.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselResolution.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectBattleStyle.cs" />
+    <Compile Include="Assets\Settings\Scripts\Enums\GameSettingFullscreenMode.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\Enums\CarouselFullscreenMode.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\EnumExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 254c8b402f09e8a4aa87f7c8aaa534b3, type: 3}
-  m_Name: Fullscreen
+  m_Script: {fileID: 11500000, guid: 9ba99c4d040611443a5bcd6d3d82790b, type: 3}
+  m_Name: Resolution Setting
   m_EditorClassIdentifier: 
-  key: 8
-  DefaultValue: 0
+  Key: Resolution
+  OnValueChange:
+    m_PersistentCalls:
+      m_Calls: []
+  choices:
+  - DisplayText: 1920 x 1080 170Hz

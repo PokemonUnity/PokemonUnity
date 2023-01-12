@@ -501,7 +501,7 @@ public class OLD_SettingsHandler : MonoBehaviour
                     //	PlayerPrefs.Save();
                     selectedOptionIndex = originalIndexes;
                     saveSettings();
-                    GlobalVariables.global.updateResolution();
+                    //GlobalVariables.global.UpdateResolution();
                 }
                 Dialog.UndrawDialogBox();
                 Dialog.UndrawChoiceBox();

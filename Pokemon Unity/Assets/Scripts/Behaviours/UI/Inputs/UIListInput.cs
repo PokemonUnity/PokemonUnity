@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,18 +10,20 @@ public abstract class UIListInput<T> : UIInputBehaviour<T>
     [SerializeField]
     [Description("Choices is synced with the Game Settings if it implements IGameSettingArray")]
     protected GameSetting<T> gameSetting;
-    public List<InputValue<T>> Choices = new();
+    public List<InputValue<T>> Choices;
     protected List<InputValue<T>> savedChoices = new();
     protected int activeIndex = -1;
+    bool hasSyncedChoices = false;
 
     public override GameSetting<T> GameSetting { get => gameSetting; }
 
-    protected override void OnValidate() {
+    protected new virtual void OnValidate() {
         SyncChoices();
     }
 
     protected override void Start() {
         base.Start();
+        savedChoices = Choices.ConvertAll(choice => new InputValue<T>(choice));
         SyncChoices();
         activeIndex = GetInitialIndex();
         SyncChildren();
@@ -29,21 +32,24 @@ public abstract class UIListInput<T> : UIInputBehaviour<T>
 
     public int GetInitialIndex() {
         if (GameSetting == null) return defaultChoiceIndex;
-        else return Choices.FindIndex((InputValue<T> value) => IsEqual(value.Value, gameSetting.Get()));
+        else return Choices.FindIndex((InputValue<T> value) => Compare(value.Value, gameSetting.Get()));
     }
 
     public virtual void SyncChoices() {
         if (GameSetting is IGameSettingArray<T>) {
             // deepcopy the values from the Game Setting
+            hasSyncedChoices = true;
             Choices = (gameSetting as IGameSettingArray<T>).Choices.ConvertAll(choice => new InputValue<T>(choice));
-        } else {
+        } else if (hasSyncedChoices) {
             Choices = savedChoices;
         }
     }
 
     protected abstract void SyncChildren();
 
-    public abstract bool IsEqual(T value1, T value2);
+    public bool Compare(T x, T y) {
+        return EqualityComparer<T>.Default.Equals(x, y);
+    }
 
     public abstract void UpdateValueIndex(int index);
 

@@ -80,6 +80,7 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
 
 [AddComponentMenu("Pokemon Unity/UI/Generic Input")]
 public class UIInputBehaviour : Selectable {
+    [TextArea]
     public string HelpText;
     public UIAudio Audio;
     public UIInput Input;
