@@ -22,8 +22,8 @@ public class VolumeBar : UIInputBehaviour<float> {
     [SerializeField] float updateIntervalTime = 0.1f;
     float currentWaitTime = 1f;
      
-    protected override void OnValidate() {
-        base.OnValidate();
+    new void OnValidate() {
+        //base.OnValidate();
         if (upperBound < lowerBound) upperBound = lowerBound;
         if (lowerBound > upperBound) lowerBound = upperBound;
     }
@@ -35,6 +35,7 @@ public class VolumeBar : UIInputBehaviour<float> {
         if (textUnitPrefab == null || textUnitPrefab == null) return;
         SpawnUnits();
         base.Start();
+        UpdateValue(GameSetting.Get());
     }
 
     void Update() {
@@ -90,10 +91,12 @@ public class VolumeBar : UIInputBehaviour<float> {
 
     protected override void Navigate(CallbackContext context) {
         if (gameObject != EventSystem.current.currentSelectedGameObject) return;
+        Vector2 navigationDirection = context.ReadValue<Vector2>();
+        if (navigationDirection.y != 0) return;
         navigateIsPressed = context.action.IsPressed();
         if (navigateIsPressed && context.action.triggered) {
             currentWaitTime = waitTimeOnButtonHold;
-            UpdateValue(context.ReadValue<Vector2>());
+            UpdateValue(navigationDirection);
         }
     }
 

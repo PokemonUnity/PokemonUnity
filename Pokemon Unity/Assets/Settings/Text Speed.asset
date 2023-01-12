@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Text Speed
   m_EditorClassIdentifier: 
   Key: Text Speed
-  defaultValue: 0.05
+  defaultValue: 0.025
   OnValueChange:
     m_PersistentCalls:
       m_Calls: []

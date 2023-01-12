@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280427263
+    rgba: 4279242768
   m_fontColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 255}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5221,7 +5221,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279242768
+    rgba: 4280427263
   m_fontColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 255}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -9112,7 +9112,7 @@ PrefabInstance:
     - target: {fileID: 3627548736517019465, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
       propertyPath: m_text
-      value: Frame 3
+      value: Frame 2
       objectReference: {fileID: 0}
     - target: {fileID: 4614949635437909369, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
@@ -10562,7 +10562,7 @@ PrefabInstance:
     - target: {fileID: 3627548736517019465, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
       propertyPath: m_text
-      value: Fullscreen
+      value: Windowed
       objectReference: {fileID: 0}
     - target: {fileID: 4614949635437909369, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}

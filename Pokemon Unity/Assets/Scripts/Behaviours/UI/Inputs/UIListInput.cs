@@ -55,7 +55,7 @@ public abstract class UIListInput<T> : UIInputBehaviour<T>
 
     public override void UpdateValue(Vector2 navigationDirection) {
         if (navigationDirection.magnitude == 0) return;
-        Audio.Play();
+        //Audio.Play();
         UpdateValueIndex(activeIndex + (int)navigationDirection.x);
     }
 

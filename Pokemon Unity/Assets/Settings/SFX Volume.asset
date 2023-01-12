@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SFX Volume
   m_EditorClassIdentifier: 
   Key: SFX Volume
-  defaultValue: 0
+  defaultValue: 0.5
   OnValueChange:
     m_PersistentCalls:
       m_Calls: []
