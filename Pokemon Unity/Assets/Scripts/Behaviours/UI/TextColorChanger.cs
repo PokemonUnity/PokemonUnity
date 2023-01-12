@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
+[AddComponentMenu("Pokemon Unity/UI/Text Color Changer")]
 public class TextColorChanger : MonoBehaviour {
     public TextMeshProUGUI text;
     [Description("Call the functions on this component in other components Events")]

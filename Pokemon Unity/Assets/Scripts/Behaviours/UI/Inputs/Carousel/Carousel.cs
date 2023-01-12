@@ -30,7 +30,7 @@ public abstract class Carousel<T> : UIListInput<T> {
 
     public override void UpdateValue(Vector2 navigationDirection) {
         if (navigationDirection.magnitude == 0) return;
-        Audio.SelectSoundSource.Play();
+        Audio.Play();
         UpdateValueIndex(activeIndex + (int)navigationDirection.x);
     }
 }

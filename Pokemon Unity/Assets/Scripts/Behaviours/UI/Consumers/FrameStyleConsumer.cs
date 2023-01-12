@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[AddComponentMenu("Pokemon Unity/Settings/Frame Style Provider")]
+[AddComponentMenu("Pokemon Unity/Settings/Frame Style Consumer")]
 [RequireComponent(typeof(Image))]
 public class FrameStyleConsumer : MonoBehaviour
 {

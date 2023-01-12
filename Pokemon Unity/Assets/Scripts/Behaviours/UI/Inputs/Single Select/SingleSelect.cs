@@ -26,7 +26,7 @@ public abstract class SingleSelect<T> : UIListInput<T> {
             Button button = transform.GetChild(i).transform.FindFirst<Button>();
             if (button == null) throw new NoButtonFound(transform.GetChild(i));
             button.onClick.AddListener(() => UpdateValueIndex(button.transform.GetSiblingIndex()));
-            button.onClick.AddListener(SilentSelect);
+            button.onClick.AddListener(SelectSilently);
         }
     }
 

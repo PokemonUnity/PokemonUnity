@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[AddComponentMenu("Pokemon Unity/UI/Typer")]
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TyperBehaviour : MonoBehaviour
 {
@@ -32,7 +33,13 @@ public class TyperBehaviour : MonoBehaviour
     }
 
     public void TypeMessage(string message) {
+        if (this.message == message) return;
         this.message = message;
+        text.text = "";
+        currentLength = 0;
+    }
+
+    public void TypeAgain() {
         text.text = "";
         currentLength = 0;
     }

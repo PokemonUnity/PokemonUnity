@@ -23,10 +23,7 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
         Events.EventTrigger = eventTrigger;
         Events.EventTrigger.triggers = Events.Triggers;
         // Audio
-        Audio.SelectSoundSource = gameObject.AddComponent<AudioSource>();
-        if (Audio.SelectSoundSource is null) Debug.LogError("Failed to add an AudioSource for some reason");
-        Audio.SelectSoundSource.playOnAwake = false;
-        Audio.SelectSoundSource.clip = Audio.SelectSound;
+        Audio.Initialize(gameObject);        
     }
 
     void SubscribeToPlayerInputEvents() {
@@ -44,20 +41,6 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
         return playerInput.actionEvents.First((actionEvent) => actionEvent.actionId == uiActionMap.id.ToString());
     }
 
-    protected virtual void Navigate(CallbackContext context) {
-        if (gameObject != EventSystem.current.currentSelectedGameObject) return;
-        UpdateValue(context.ReadValue<Vector2>());
-    }
-
-    public virtual void UpdateValue(InputValue<T> value) {
-        if (!Application.isPlaying) return;
-        Audio.SelectSoundSource.Play();
-        if (GameSetting != null) { 
-            GameSetting.Set(value.Value);
-        }
-        Events.OnValueChanged.Invoke(value.Value);
-    }
-
     public abstract GameSetting<T> GameSetting { get; }
 
     public void SetGameSetting(T value) => GameSetting.Set(value);
@@ -65,14 +48,27 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
     public void SetGameSetting() => GameSetting.Set(currentValue);
 
     public override void OnSelect(BaseEventData eventData) {
-        if (Audio.SelectSoundSource == null) return;
-        Audio.SelectSoundSource.Play();
-        Audio.SelectSoundSource.mute = false;
+        if (Audio.SelectAudioSource == null) return;
+        Audio.Play();
+        Audio.SelectAudioSource.mute = false;
     }
 
-    public void SilentSelect() {
-        Audio.SelectSoundSource.mute = true;
+    public void SelectSilently() {
+        Audio.SelectAudioSource.mute = true;
         Select();
+    }
+
+    protected virtual void Navigate(CallbackContext context) {
+        if (gameObject != EventSystem.current.currentSelectedGameObject) return;
+        UpdateValue(context.ReadValue<Vector2>());
+    }
+
+    public virtual void UpdateValue(T value) {
+        if (!Application.isPlaying) return;
+        Audio.Play();
+        GameSetting?.Set(value);
+        currentValue = value;
+        Events.OnValueChanged.Invoke(value);
     }
 
     public abstract void UpdateValue(Vector2 navigationDirection);
@@ -109,7 +105,27 @@ public class UIInputBehaviour : Selectable {
     [Serializable]
     public class UIAudio {
         public AudioClip SelectSound;
-        [HideInInspector] public AudioSource SelectSoundSource;
+        [Description("if not provided, an audio source is created")]
+        public AudioSource SelectAudioSource;
+        float originalVolume;
+
+        public void Initialize(GameObject gameObject) {
+            if (SelectAudioSource == null) SelectAudioSource = gameObject.AddComponent<AudioSource>();
+            if (SelectAudioSource == null) Debug.LogError("Failed to add an AudioSource for some reason");
+            SelectAudioSource.clip = SelectSound;
+            SelectAudioSource.playOnAwake = false;
+            originalVolume = SelectAudioSource.volume;
+        }
+
+        public void Play() {
+            AdjustVolume();
+            SelectAudioSource.Play();
+        }
+
+        public void AdjustVolume() {
+            SelectAudioSource.volume = originalVolume;
+            SelectAudioSource.volume *= GlobalVariables.SFXVolumeSetting.Get();
+        }
     }
 
     #endregion

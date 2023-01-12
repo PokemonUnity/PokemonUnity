@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[AddComponentMenu("Pokemon Unity/UI/Move To")]
 [RequireComponent(typeof(RectTransform))]
 public class UIMoveTo : MonoBehaviour
 {

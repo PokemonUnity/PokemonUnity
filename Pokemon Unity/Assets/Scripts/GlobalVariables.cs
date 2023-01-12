@@ -8,8 +8,13 @@ using UnityEngine.UI;
 
 public class GlobalVariables : MonoBehaviour
 {
-    public GameSetting<FullScreenMode> FullscreenSetting;
-    public GameSetting<Resolution> ResolutionSetting;
+    [SerializeField] GameSetting<FullScreenMode> fullscreenSetting;
+    [SerializeField] GameSetting<Resolution> resolutionSetting;
+    [SerializeField] GameSetting<float> sfxVolumeSetting;
+    [SerializeField] GameSetting<float> musicVolumeSetting;
+
+    public static GameSetting<float> SFXVolumeSetting;
+    public static GameSetting<float> MusicVolumeSetting;
 
     #region Old - Property Variables
     public static GlobalVariables global;
@@ -57,8 +62,10 @@ public class GlobalVariables : MonoBehaviour
     
     void Awake()
     {
-        FullscreenSetting.OnValueChange.AddListener((FullScreenMode fullScreenMode) => UpdateResolution(fullScreenMode));
-        ResolutionSetting.OnValueChange.AddListener((Resolution resolution) => UpdateResolution(resolution));
+        fullscreenSetting.OnValueChange.AddListener(UpdateResolution);
+        resolutionSetting.OnValueChange.AddListener(UpdateResolution);
+        SFXVolumeSetting = sfxVolumeSetting;
+        MusicVolumeSetting = musicVolumeSetting;
         return;
         SceneManager.sceneLoaded += CheckLevelLoaded;
         if (SaveData.currentSave == null)
@@ -464,9 +471,9 @@ public class GlobalVariables : MonoBehaviour
         }
     }
 
-    public void UpdateResolution(FullScreenMode fullScreenMode) => UpdateResolution(ResolutionSetting.Get(), fullScreenMode);
+    public void UpdateResolution(FullScreenMode fullScreenMode) => UpdateResolution(resolutionSetting.Get(), fullScreenMode);
 
-    public void UpdateResolution(Resolution resolution) => UpdateResolution(resolution, FullscreenSetting.Get());
+    public void UpdateResolution(Resolution resolution) => UpdateResolution(resolution, fullscreenSetting.Get());
 
     public void UpdateResolution(Resolution resolution, FullScreenMode fullScreenMode)
     {
