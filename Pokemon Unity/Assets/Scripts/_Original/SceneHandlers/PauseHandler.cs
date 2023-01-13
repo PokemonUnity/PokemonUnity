@@ -602,11 +602,11 @@ public class PauseHandler : MonoBehaviour
         SfxHandler.Play(decideClip);
 
         //Fade In
-        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
         //Start the scene
         yield return StartCoroutine(runSceneUntilDeactivated(sceneObject));
         //Fade Out
-        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
     }
 
     private IEnumerator startSaveMenu()

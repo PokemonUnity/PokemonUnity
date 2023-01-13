@@ -218,11 +218,11 @@ public class InteractDoorway : MonoBehaviour
                 //fadeCutouts for doorways not yet implemented
                 if (fadeSprite == null)
                 {
-                    StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed));
+                    StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.slowedSpeed));
                 }
                 else
                 {
-                    StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.defaultSpeed, fadeSprite));
+                    StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.defaultSpeed, fadeSprite));
                 }
                 
                 if (!dontFadeMusic)
@@ -273,7 +273,7 @@ public class InteractDoorway : MonoBehaviour
 
                     GlobalVariables.global.fadeIn = true;
                     //SceneTransition.gameScene.FadeIn();
-                    StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
+                    StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
 
                     yield return new WaitForSeconds(0.1f);
                     PlayerMovement.player.pauseInput();

@@ -6907,9 +6907,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
-    OnNavigate:
-      m_PersistentCalls:
-        m_Calls: []
+    Events: []
   Events:
     EventTrigger: {fileID: 0}
     Triggers:
@@ -8125,9 +8123,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
-    OnNavigate:
-      m_PersistentCalls:
-        m_Calls: []
+    Events: []
   Events:
     EventTrigger: {fileID: 0}
     Triggers:
@@ -9018,9 +9014,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
-    OnNavigate:
-      m_PersistentCalls:
-        m_Calls: []
+    Events: []
   Events:
     EventTrigger: {fileID: 0}
     Triggers:
@@ -9328,9 +9322,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
-    OnNavigate:
-      m_PersistentCalls:
-        m_Calls: []
+    Events: []
   Events:
     EventTrigger: {fileID: 0}
     Triggers:
@@ -10316,9 +10308,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
-    OnNavigate:
-      m_PersistentCalls:
-        m_Calls: []
+    Events: []
   Events:
     EventTrigger: {fileID: 0}
     Triggers:
@@ -10389,7 +10379,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gameSetting
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 2c285e4cc9ae6d14a903ef503e3fa602,
+        type: 2}
     - target: {fileID: 3275286876354957003, guid: 645114301366f1540860f7637c21af03,
         type: 3}
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -10874,9 +10865,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
-    OnNavigate:
-      m_PersistentCalls:
-        m_Calls: []
+    Events: []
   Events:
     EventTrigger: {fileID: 0}
     Triggers:

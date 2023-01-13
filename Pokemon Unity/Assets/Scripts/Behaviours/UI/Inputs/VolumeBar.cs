@@ -35,7 +35,7 @@ public class VolumeBar : UIInputBehaviour<float> {
         if (textUnitPrefab == null || textUnitPrefab == null) return;
         SpawnUnits();
         base.Start();
-        UpdateValue(GameSetting.Get());
+        if (GameSetting != null) UpdateValue(GameSetting.Get());
     }
 
     void Update() {

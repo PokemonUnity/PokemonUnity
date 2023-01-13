@@ -1377,7 +1377,7 @@ public class PlayerMovement : MonoBehaviour
 
                     //SceneTransition sceneTransition = Dialog.transform.GetComponent<SceneTransition>();
 
-                    yield return StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
+                    yield return StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.slowedSpeed, null));
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(1f));
                     Scene.main.Battle.gameObject.SetActive(true);
                     StartCoroutine(Scene.main.Battle.control(wildpkm));
@@ -1388,7 +1388,7 @@ public class PlayerMovement : MonoBehaviour
                     }
 
                     //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                    yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                    yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
 
                     unsetCheckBusyWith(Scene.main.Battle.gameObject);
                 }
@@ -1406,7 +1406,7 @@ public class PlayerMovement : MonoBehaviour
 
             //SceneTransition sceneTransition = Dialog.transform.GetComponent<SceneTransition>();
 
-            yield return StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
+            yield return StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.slowedSpeed, null));
             //yield return new WaitForSeconds(sceneTransition.FadeOut(1f));
             Scene.main.Battle.gameObject.SetActive(true);
             StartCoroutine(Scene.main.Battle.control(wildpkm));
@@ -1417,7 +1417,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-            yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+            yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
 
             unsetCheckBusyWith(Scene.main.Battle.gameObject);
         }

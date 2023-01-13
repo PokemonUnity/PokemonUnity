@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class ScreenFade : MonoBehaviour
 {
-    public static ScreenFade main;
+    public static ScreenFade Singleton;
     public static float defaultSpeed = 0.4f;
     public static float slowedSpeed = 1.2f;
 
@@ -20,8 +20,8 @@ public class ScreenFade : MonoBehaviour
 
     void Awake()
     {
-        if (main == null)
-            main = this;
+        if (Singleton == null)
+            Singleton = this;
         else
             Destroy(this);
 

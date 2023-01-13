@@ -245,9 +245,9 @@ public class OLD_MainMenuHandler : MonoBehaviour {
         MGButtonImage[0].sprite = buttonSelectedSprite;
         MGButtonImage[1].sprite = buttonDimmedSprite;
 
-        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
         mysteryGiftMenu.SetActive(true);
-        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
 
         BgmHandler.main.PlayMain(mysteryGiftBGM, loopSampleStart);
 
@@ -539,13 +539,13 @@ public class OLD_MainMenuHandler : MonoBehaviour {
             SfxHandler.Play(cancelClip);*/
 
         BgmHandler.main.PlayMain(null, 0);
-        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
         mysteryGiftMenu.SetActive(false);
-        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
     }
 
     public IEnumerator control() {
-        int fileCount = SaveLoad.getSavedGamesCount();
+        int fileCount = SaveLoad.GetSavedGamesCount();
 
         if (fileCount == 0) {
             changeButtons(new GameObject[] { newGameButton, settingsButton });
@@ -582,7 +582,7 @@ public class OLD_MainMenuHandler : MonoBehaviour {
                     //CONTINUE
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
                     SfxHandler.Play(decideClip);
-                    yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+                    yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
 
                     SaveData.currentSave = SaveLoad.savedGames[selectedFile];
 
@@ -606,12 +606,12 @@ public class OLD_MainMenuHandler : MonoBehaviour {
                     //NEW GAME
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
                     SfxHandler.Play(decideClip);
-                    yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+                    yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
 
 
                     SaveData.currentSave = new SaveData(fileCount);
 
-                    GlobalVariables.global.SetDEBUGFileData();
+                    //GlobalVariables.global.SetDebugFileData();
                     GlobalVariables.global.playerPosition = new Vector3(2, 0, -3);
                     //GlobalVariables.global.playerPosition = new Vector3(32, 1, 5);
                     GlobalVariables.global.playerDirection = 0;
@@ -626,7 +626,7 @@ public class OLD_MainMenuHandler : MonoBehaviour {
                     //SETTINGS
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
                     SfxHandler.Play(decideClip);
-                    yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+                    yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
 
 
                     Scene.main.Settings.gameObject.SetActive(true);
@@ -636,7 +636,7 @@ public class OLD_MainMenuHandler : MonoBehaviour {
                     }
 
                     //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                    yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                    yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
                 }
             } else if (Input.GetKeyDown(KeyCode.Delete)) {
                 //delete save file

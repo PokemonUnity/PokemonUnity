@@ -71,30 +71,10 @@ public class MainMenuHandler : MenuHandlerBehaviour {
 
     new void Start() {
         base.Start();
+        if (SaveLoad.GetSavedGamesCount() == 0)
+            ShowContinueButton();
+
         return;
-        //fileDataPanel = GameObject.Find("FileData");
-        //newGameButton = GameObject.Find("NewGame");
-        //mysteryGiftButton = GameObject.Find("MysteryGift");
-        //settingsButton = GameObject.Find("Settings");
-
-        ///*{
-        //    continueButton.GetComponent<Image>(),
-        //    newGameButton.GetComponent<Image>(),
-        //    mysteryGiftButton.GetComponent<Image>(),
-        //    settingsButton.GetComponent<Image>()
-        //};*/
-        //Transform buttons = transform.Find("Buttons");
-        //for (int i = 0; i < buttons.childCount; i++) {
-        //    var buttonImage = buttons.GetChild(i).GetComponent<Image>();
-        //    buttonImages.Add(buttonImage);
-        //    buttonTextShadowImage[i] = buttonImage.transform.Find("Shadow").GetComponent<Text>();
-        //    buttonTextImage[i] = buttonTextShadowImage[i].transform.Find("Text").GetComponent<Text>();
-        //    buttonImage.gameObject.SetActive(false);
-        //}
-
-        //fileNumbersText = fileNumbersTextShadow.transform.Find("Text").GetComponent<Text>();
-        //fileSelected = fileNumbersTextShadow.transform.Find("FileSelected").GetComponent<Text>();
-
         //playerSprite = fileDataPanel.transform.Find("player").GetComponent<Image>();
         //playerNameShadow = fileDataPanel.transform.Find("playername").GetComponent<Text>();
         //playerName = playerNameShadow.transform.Find("Text").GetComponent<Text>();
@@ -125,154 +105,59 @@ public class MainMenuHandler : MenuHandlerBehaviour {
     }
 
     public void NewGame() => StartCoroutine(NewGameCoroutine());
+    public void ContinueGame() => StartCoroutine(ContinueGameCoroutine());
+    public void MysteryGift() => StartCoroutine(MysteryGiftCoroutine());
+    public void Settings() => StartCoroutine(SettingsCoroutine());
 
     public IEnumerator NewGameCoroutine() {
-        //NEW GAME
-        //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
-        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
 
-        int fileCount = SaveLoad.getSavedGamesCount();
-        SaveData.currentSave = new SaveData(fileCount);
+        SaveData.currentSave = new SaveData(SaveLoad.GetSavedGamesCount());
+        SaveData.SetDebugFileData();
 
-        GlobalVariables.global.SetDEBUGFileData();
         GlobalVariables.global.playerPosition = new Vector3(2, 0, -3);
-        //GlobalVariables.global.playerPosition = new Vector3(32, 1, 5);
         GlobalVariables.global.playerDirection = 0;
         GlobalVariables.global.fadeIn = true;
-        SceneManager.LoadScene("route 3");
-        //Application.LoadLevel("route_3");
-        //Application.LoadLevel("flowery_town_indoors");
+
+        SceneManager.LoadScene("overworldTest");
     }
 
-    #region everything below is old code
+    public IEnumerator ContinueGameCoroutine() {
+        //CONTINUE
+        SfxHandler.Play(decideClip);
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
 
-    private void updateButton(int newButtonIndex) {
-        if (newButtonIndex != selectedButton) {
-            activeButtons[selectedButton].sprite = buttonDimmedSprite;
+        SaveData.currentSave = SaveLoad.savedGames[selectedFile];
+
+        Debug.Log(SaveLoad.savedGames[0]);
+        Debug.Log(SaveLoad.savedGames[1]);
+        Debug.Log(SaveLoad.savedGames[2]);
+
+        GlobalVariables.global.playerPosition = SaveData.currentSave.playerPosition.v3;
+        GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
+        GlobalVariables.global.followerOut = SaveData.currentSave.followerOut;
+
+        if (SaveData.currentSave.followerPosition != null && SaveData.currentSave.followerdirection != null) {
+            GlobalVariables.global.followerPosition = SaveData.currentSave.followerPosition.Value.v3;
+            GlobalVariables.global.followerDirection = SaveData.currentSave.followerdirection;
         }
-        selectedButton = newButtonIndex;
 
-        activeButtons[selectedButton].sprite = buttonSelectedSprite;
+        GlobalVariables.global.fadeIn = true;
+
+        SceneManager.LoadScene(SaveData.currentSave.levelName);
     }
 
-    private void changeButtons(GameObject[] newButtons, int activeIndex = 0) {
-        foreach (var button in activeButtons) {
-            button.gameObject.SetActive(false);
-        }
-        activeButtons.Clear();
-        foreach (var button in newButtons) {
-            button.gameObject.SetActive(true);
-            activeButtons.Add(button.GetComponent<Image>());
-        }
-        updateButton(activeIndex);
-    }
+    public IEnumerator MysteryGiftCoroutine() {
+        SfxHandler.Play(decideClip);
 
-    private void updateFile(int newFileIndex) {
-        selectedFile = newFileIndex;
-
-        Vector3[] highlightPositions = new Vector3[]
-        {
-            new Vector3(31f, 0, 0),
-            new Vector3(46, 0, 0),
-            new Vector3(61, 0, 0)
-        };
-        fileSelected.rectTransform.localPosition = highlightPositions[selectedFile];
-        fileSelected.text = "" + (selectedFile + 1);
-
-        if (SaveLoad.savedGames[selectedFile] != null) {
-            int badgeTotal = 0;
-            for (int i = 0; i < 12; i++) {
-                if (SaveLoad.savedGames[selectedFile].gymsBeaten[i]) {
-                    badgeTotal += 1;
-                }
-            }
-            string playerTime = "" + SaveLoad.savedGames[selectedFile].playerMinutes;
-            if (playerTime.Length == 1) {
-                playerTime = "0" + playerTime;
-            }
-            playerTime = SaveLoad.savedGames[selectedFile].playerHours + " : " + playerTime;
-
-            currentMap.text = SaveLoad.savedGames[selectedFile].mapName;
-            currentMapShadow.text = currentMap.text;
-
-            /*
-            private Text currentMap;
-            private Text currentMapShadow;
-            private Text badges;
-            private Text badgesShadow;
-            private Text time;
-            private Text timeShadow;
-            private Image playerSprite;
-            */
-
-            badges.text = "" + badgeTotal;
-            badgesShadow.text = badges.text;
-            time.text = "" + playerTime;
-            timeShadow.text = time.text;
-            playerName.text = SaveLoad.savedGames[selectedFile].playerName;
-            playerNameShadow.text = playerName.text;
-
-
-            if (SaveLoad.savedGames[selectedFile].isMale) {
-                playerSprite.sprite = maleSprite;
-                playerName.color = new Color(0.259f, 0.557f, 0.937f, 1.00f);
-            } else {
-                playerSprite.sprite = femaleSprite;
-                playerName.color = new Color(0.965f, 0.255f, 0.255f, 1.00f);
-            }
-
-            /*
-            dataText.text = SaveLoad.savedGames[selectedFile].playerName
-                            + "\n" + badgeTotal
-                            + "\n" + "0" //Pokedex not yet implemented
-                            + "\n" + playerTime;
-            dataTextShadow.text = dataText.text;
-            */
-
-            for (int i = 0; i < 6; i++) {
-                if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null) {
-                    pokemon[i].enabled = true;
-                    pokemon[i].sprite = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIconsSprite()[0];
-                } else {
-                    pokemon[i].sprite = null;
-                    pokemon[i].enabled = false;
-                }
-            }
-        }
-    }
-
-    private IEnumerator animateIcons() {
-        while (true) {
-            for (int i = 0; i < 6; i++) {
-                //pokemon[i].sprite = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIconsSprite()[0];
-            }
-            yield return new WaitForSeconds(0.15f);
-            for (int i = 0; i < 6; i++) {
-                //pokemon[i].sprite = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIconsSprite()[1];
-            }
-            yield return new WaitForSeconds(0.15f);
-        }
-    }
-
-    private void updateMysteryGiftButton(int newButtonIndex, int selectedButton) {
-        if (newButtonIndex != selectedButton) {
-            MGButtonImage[selectedButton].sprite = buttonDimmedSprite;
-        }
-
-        selectedButton = newButtonIndex;
-
-        MGButtonImage[selectedButton].sprite = buttonSelectedSprite;
-    }
-
-    public IEnumerator mysteryGift() {
         DialogBoxHandlerNew Dialog = mysteryGiftMenu.GetComponent<DialogBoxHandlerNew>();
 
         MGButtonImage[0].sprite = buttonSelectedSprite;
         MGButtonImage[1].sprite = buttonDimmedSprite;
 
-        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
         mysteryGiftMenu.SetActive(true);
-        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
 
         BgmHandler.main.PlayMain(mysteryGiftBGM, loopSampleStart);
 
@@ -280,6 +165,8 @@ public class MainMenuHandler : MenuHandlerBehaviour {
         int selectedButton = 1;
         int minimumButton = 0;
         int maximumButton = MGButtonImage.Length - 1;
+
+        #region commented code
 
         /*yield return StartCoroutine(mysteryGiftMenu.GetComponent<MysteryGiftHandler>().startRequest());
         
@@ -563,107 +450,147 @@ public class MainMenuHandler : MenuHandlerBehaviour {
         if (giftList.Length > 0)
             SfxHandler.Play(cancelClip);*/
 
+        #endregion
+
         BgmHandler.main.PlayMain(null, 0);
-        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
         mysteryGiftMenu.SetActive(false);
-        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
+    }
+
+    public IEnumerator SettingsCoroutine() {
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
+
+        //Scene.main.Settings.gameObject.SetActive(true);
+
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
+    }
+
+    public void ShowContinueButton() {
+        // TODO
+
+        //changeButtons(new GameObject[] { newGameButton, settingsButton });
+        ///*updateButton(1);
+        //continueButton.SetActive(false);
+        //fileDataPanel.SetActive(false);*/
+        //for (int i = 1; i < 4; i++) {
+        //    buttonImages[i].rectTransform.position = new Vector3(
+        //        buttonImages[i].rectTransform.position.x,
+        //        buttonImages[i].rectTransform.position.y + 26f,
+        //        buttonImages[i].rectTransform.position.z
+        //        );
+        //}
+    }
+
+    public void ShowFileSelection() {
+        //changeButtons(new GameObject[] { newGameButton, settingsButton, fileDataPanel }, 1);
+        //updateButton(0);
+        updateFile(0);
+
+        StartCoroutine(animateIcons());
+
+        int fileCount = SaveLoad.GetSavedGamesCount();
+        if (fileCount == 1) {
+            fileNumbersText.text = "File     1";
+        } else if (fileCount == 2) {
+            fileNumbersText.text = "File     1   2";
+        } else if (fileCount == 3) {
+            fileNumbersText.text = "File     1   2   3";
+        }
+    }
+
+    #region everything below is old code
+
+    private void updateFile(int newFileIndex) {
+        selectedFile = newFileIndex;
+
+        Vector3[] highlightPositions = new Vector3[]
+        {
+            new Vector3(31f, 0, 0),
+            new Vector3(46, 0, 0),
+            new Vector3(61, 0, 0)
+        };
+        fileSelected.rectTransform.localPosition = highlightPositions[selectedFile];
+        fileSelected.text = "" + (selectedFile + 1);
+
+        if (SaveLoad.savedGames[selectedFile] != null) {
+            int badgeTotal = 0;
+            for (int i = 0; i < 12; i++) {
+                if (SaveLoad.savedGames[selectedFile].gymsBeaten[i]) {
+                    badgeTotal += 1;
+                }
+            }
+            string playerTime = "" + SaveLoad.savedGames[selectedFile].playerMinutes;
+            if (playerTime.Length == 1) {
+                playerTime = "0" + playerTime;
+            }
+            playerTime = SaveLoad.savedGames[selectedFile].playerHours + " : " + playerTime;
+
+            currentMap.text = SaveLoad.savedGames[selectedFile].mapName;
+            currentMapShadow.text = currentMap.text;
+
+            /*
+            private Text currentMap;
+            private Text currentMapShadow;
+            private Text badges;
+            private Text badgesShadow;
+            private Text time;
+            private Text timeShadow;
+            private Image playerSprite;
+            */
+
+            badges.text = "" + badgeTotal;
+            badgesShadow.text = badges.text;
+            time.text = "" + playerTime;
+            timeShadow.text = time.text;
+            playerName.text = SaveLoad.savedGames[selectedFile].playerName;
+            playerNameShadow.text = playerName.text;
+
+
+            if (SaveLoad.savedGames[selectedFile].isMale) {
+                playerSprite.sprite = maleSprite;
+                playerName.color = new Color(0.259f, 0.557f, 0.937f, 1.00f);
+            } else {
+                playerSprite.sprite = femaleSprite;
+                playerName.color = new Color(0.965f, 0.255f, 0.255f, 1.00f);
+            }
+
+            /*
+            dataText.text = SaveLoad.savedGames[selectedFile].playerName
+                            + "\n" + badgeTotal
+                            + "\n" + "0" //Pokedex not yet implemented
+                            + "\n" + playerTime;
+            dataTextShadow.text = dataText.text;
+            */
+
+            for (int i = 0; i < 6; i++) {
+                if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null) {
+                    pokemon[i].enabled = true;
+                    pokemon[i].sprite = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIconsSprite()[0];
+                } else {
+                    pokemon[i].sprite = null;
+                    pokemon[i].enabled = false;
+                }
+            }
+        }
+    }
+
+    private IEnumerator animateIcons() {
+        while (true) {
+            for (int i = 0; i < 6; i++) {
+                //pokemon[i].sprite = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIconsSprite()[0];
+            }
+            yield return new WaitForSeconds(0.15f);
+            for (int i = 0; i < 6; i++) {
+                //pokemon[i].sprite = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIconsSprite()[1];
+            }
+            yield return new WaitForSeconds(0.15f);
+        }
     }
 
     public IEnumerator control() {
-        int fileCount = SaveLoad.getSavedGamesCount();
-
-        if (fileCount == 0) {
-            changeButtons(new GameObject[] { newGameButton, settingsButton });
-            /*updateButton(1);
-            continueButton.SetActive(false);
-            fileDataPanel.SetActive(false);*/
-            for (int i = 1; i < 4; i++) {
-                buttonImages[i].rectTransform.position = new Vector3(
-                    buttonImages[i].rectTransform.position.x,
-                    buttonImages[i].rectTransform.position.y + 26f,
-                    buttonImages[i].rectTransform.position.z
-                    );
-            }
-        } else {
-            changeButtons(new GameObject[] { newGameButton, settingsButton, fileDataPanel }, 1);
-            //updateButton(0);
-            updateFile(0);
-
-            StartCoroutine(animateIcons());
-
-            if (fileCount == 1) {
-                fileNumbersText.text = "File     1";
-            } else if (fileCount == 2) {
-                fileNumbersText.text = "File     1   2";
-            } else if (fileCount == 3) {
-                fileNumbersText.text = "File     1   2   3";
-            }
-        }
-
-        bool running = true;
-        while (running) {
-            if (Input.GetButtonDown("Select")) {
-                if (selectedButton == 0) {
-                    //CONTINUE
-                    //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
-                    SfxHandler.Play(decideClip);
-                    yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-
-                    SaveData.currentSave = SaveLoad.savedGames[selectedFile];
-
-                    Debug.Log(SaveLoad.savedGames[0]);
-                    Debug.Log(SaveLoad.savedGames[1]);
-                    Debug.Log(SaveLoad.savedGames[2]);
-
-                    GlobalVariables.global.playerPosition = SaveData.currentSave.playerPosition.v3;
-                    GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
-                    GlobalVariables.global.followerOut = SaveData.currentSave.followerOut;
-
-                    if (SaveData.currentSave.followerPosition != null && SaveData.currentSave.followerdirection != null) {
-                        GlobalVariables.global.followerPosition = SaveData.currentSave.followerPosition.Value.v3;
-                        GlobalVariables.global.followerDirection = SaveData.currentSave.followerdirection;
-                    }
-
-                    GlobalVariables.global.fadeIn = true;
-
-                    Application.LoadLevel(SaveData.currentSave.levelName);
-                } else if (selectedButton == 1) {
-                    //NEW GAME
-                    //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
-                    SfxHandler.Play(decideClip);
-                    yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-
-
-                    SaveData.currentSave = new SaveData(fileCount);
-
-                    GlobalVariables.global.SetDEBUGFileData();
-                    GlobalVariables.global.playerPosition = new Vector3(2, 0, -3);
-                    //GlobalVariables.global.playerPosition = new Vector3(32, 1, 5);
-                    GlobalVariables.global.playerDirection = 0;
-                    GlobalVariables.global.fadeIn = true;
-                    Application.LoadLevel("route_3");
-                    //Application.LoadLevel("flowery_town_indoors");
-                } else if (selectedButton == 2) {
-                    //TODO MYSTERY GIFT
-                    SfxHandler.Play(decideClip);
-                    yield return StartCoroutine(mysteryGift());
-                } else if (selectedButton == 3) {
-                    //SETTINGS
-                    //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
-                    SfxHandler.Play(decideClip);
-                    yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-
-
-                    Scene.main.Settings.gameObject.SetActive(true);
-                    StartCoroutine(Scene.main.Settings.control());
-                    while (Scene.main.Settings.gameObject.activeSelf) {
-                        yield return null;
-                    }
-
-                    //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                    yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-                }
-            } else if (Input.GetKeyDown(KeyCode.Delete)) {
+        while (true) {
+            if (Input.GetKeyDown(KeyCode.Delete)) {
                 //delete save file
                 float time = Time.time;
                 bool released = false;
@@ -685,39 +612,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
                 } else {
                     Debug.Log("'Delete' key was released!");
                 }
-            } else {
-                if (Input.GetAxisRaw("Vertical") > 0) {
-                    if (selectedButton > 0) {
-                        updateButton(selectedButton - 1);
-                        SfxHandler.Play(scrollClip);
-                        yield return new WaitForSeconds(0.2f);
-                    }
-                } else if (Input.GetAxisRaw("Vertical") < 0) {
-                    if (selectedButton < activeButtons.Count - 1) {
-                        updateButton(selectedButton + 1);
-                        SfxHandler.Play(scrollClip);
-                        yield return new WaitForSeconds(0.2f);
-                    }
-                }
-                if (Input.GetAxisRaw("Horizontal") > 0) {
-                    if (selectedButton == 0) {
-                        if (selectedFile < fileCount - 1) {
-                            updateFile(selectedFile + 1);
-                            SfxHandler.Play(scrollClip);
-                            yield return new WaitForSeconds(0.2f);
-                        }
-                    }
-                } else if (Input.GetAxisRaw("Horizontal") < 0) {
-                    if (selectedButton == 0) {
-                        if (selectedFile > 0) {
-                            updateFile(selectedFile - 1);
-                            SfxHandler.Play(scrollClip);
-                            yield return new WaitForSeconds(0.2f);
-                        }
-                    }
-                }
             }
-
 
             yield return null;
         }

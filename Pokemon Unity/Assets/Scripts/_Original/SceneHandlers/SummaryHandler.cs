@@ -683,7 +683,7 @@ public class SummaryHandler : MonoBehaviour
 
         replacedMove = null;
 
-        yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
 
         if (learning)
         {
@@ -782,7 +782,7 @@ public class SummaryHandler : MonoBehaviour
             }
         }
 
-        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
         this.gameObject.SetActive(false);
     }
 

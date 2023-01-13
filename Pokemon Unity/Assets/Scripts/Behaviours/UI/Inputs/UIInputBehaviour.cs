@@ -26,19 +26,16 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
         Audio.Initialize(gameObject);        
     }
 
-    void SubscribeToPlayerInputEvents() {
-        if (PlayerInputSingleton.Singleton == null) return;
-        var navigateEvent = FindNavigateActionEvents();
-        navigateEvent.AddListener((CallbackContext context) => Input.OnNavigate.Invoke(context));
-        Input.OnNavigate.AddListener(Navigate);
+    protected override void OnDestroy() {
+        Input.Unsubscribe();
     }
 
-    protected PlayerInput.ActionEvent FindNavigateActionEvents() {
-        PlayerInput playerInput = PlayerInputSingleton.Singleton;
-        if (playerInput == null) return null;
-        if (playerInput == null) throw new PlayerInputSingleton.PlayerInputNotFoundError();
-        var uiActionMap = playerInput.actions.FindActionMap("UI").FindAction("Navigate");
-        return playerInput.actionEvents.First((actionEvent) => actionEvent.actionId == uiActionMap.id.ToString());
+    void SubscribeToPlayerInputEvents() {
+        if (PlayerInputSingleton.Singleton == null) return;
+        PlayerInputEvent event_ = new PlayerInputEvent("UI", "Navigate");
+        event_.Callbacks.AddListener(Navigate);
+        Input.Events.Add(event_);
+        Input.Subscribe();
     }
 
     public abstract GameSetting<T> GameSetting { get; }
@@ -79,16 +76,9 @@ public class UIInputBehaviour : Selectable {
     [TextArea]
     public string HelpText;
     public UIAudio Audio;
-    public UIInput Input;
+    public PlayerInputEvents Input;
 
     #region Subclasses
-
-    [Serializable]
-    public class UIInput {
-        [Header("Player Input Events Passthrough")]
-        [Space]
-        public UnityEvent<CallbackContext> OnNavigate;
-    }
 
     [Serializable]
     public class UIEvents {

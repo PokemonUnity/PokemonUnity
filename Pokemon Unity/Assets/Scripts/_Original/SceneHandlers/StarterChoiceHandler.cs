@@ -153,7 +153,7 @@ public class StarterChoiceHandler : MonoBehaviour
         
         /* Introduction Animation */
         
-        yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
 
         yield return new WaitForSeconds(1);
         
@@ -239,7 +239,7 @@ public class StarterChoiceHandler : MonoBehaviour
             yield return null;
         }
         
-        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.slowedSpeed));
         display.SetActive(false);
         
         yield return null;

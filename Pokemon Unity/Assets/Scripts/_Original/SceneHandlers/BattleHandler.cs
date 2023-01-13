@@ -4277,7 +4277,7 @@ public partial class BattleHandler : MonoBehaviour
                     {
                         yield return StartCoroutine(drawTextAndWait("Which move should \nbe forgotten?"));
 
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+                        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
 
                         //Set SceneSummary to be active so that it appears
                         Scene.main.Summary.gameObject.SetActive(true);
@@ -4289,7 +4289,7 @@ public partial class BattleHandler : MonoBehaviour
                         }
 
                         string replacedMove = Scene.main.Summary.replacedMove;
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+                        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
 
                         if (!string.IsNullOrEmpty(replacedMove))
                         {
@@ -5451,7 +5451,7 @@ public partial class BattleHandler : MonoBehaviour
                 StartCoroutine(animateOpponentTrainer(opponentTrainer2ShadowSpriteRenderer, trainer2Animation));
             }
             
-            StartCoroutine(ScreenFade.main.Fade(true, 1.2f));
+            StartCoroutine(ScreenFade.Singleton.Fade(true, 1.2f));
             
             LeanTween.moveLocal(BattleCamera.gameObject, opponentFocusCameraAngle[0], 0.8f);
             LeanTween.rotateLocal(BattleCamera.gameObject, opponentFocusCameraAngle[1], 0.8f);
@@ -5558,7 +5558,7 @@ public partial class BattleHandler : MonoBehaviour
             player1.transform.parent.parent.gameObject.SetActive(false);
             opponent1.transform.parent.parent.gameObject.SetActive(false);
 
-            StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
+            StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
             
             LeanTween.moveLocal(BattleCamera.gameObject, opponentFocusCameraAngle[0], 0.6f);
             LeanTween.rotateLocal(BattleCamera.gameObject, opponentFocusCameraAngle[1], 0.6f);
@@ -9098,7 +9098,7 @@ public partial class BattleHandler : MonoBehaviour
         else
         {
             //if not defeated, the scene won't have faded out already
-            StartCoroutine(ScreenFade.main.Fade(false, 1f));
+            StartCoroutine(ScreenFade.Singleton.Fade(false, 1f));
             BgmHandler.main.ResumeMain(1.4f, PlayerMovement.player.accessedMapSettings.getBGM());
         }
         yield return new WaitForSeconds(1.4f);

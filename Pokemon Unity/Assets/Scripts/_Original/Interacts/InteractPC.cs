@@ -100,7 +100,7 @@ public class InteractPC : MonoBehaviour
                             {
                                 //access Move
                                 SfxHandler.Play(selectClip);
-                                StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+                                StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
                                 yield return new WaitForSeconds(ScreenFade.defaultSpeed + 0.4f);
                                 //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f) + 0.4f);
                                 SfxHandler.Play(openClip);
@@ -112,7 +112,7 @@ public class InteractPC : MonoBehaviour
                                 {
                                     yield return null;
                                 }
-                                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                                yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
                                 //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
                             }
 

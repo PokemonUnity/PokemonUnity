@@ -658,7 +658,7 @@ public class InteractTrainer : MonoBehaviour
                 }
 
                 //custom cutouts not yet implemented
-                StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
+                StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.slowedSpeed, null));
 
                 //Automatic LoopStart usage not yet implemented
                 Scene.main.Battle.gameObject.SetActive(true);
@@ -697,7 +697,7 @@ public class InteractTrainer : MonoBehaviour
                 }
 
                 //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
 
                 if (Scene.main.Battle.victor == 0)
                 {

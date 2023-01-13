@@ -722,7 +722,7 @@ public class PartyHandler : MonoBehaviour
     public IEnumerator control()
     {
         //sceneTransition.FadeIn();
-        StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+        StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
         running = true;
         switching = false;
         swapPosition = -1;
@@ -1096,7 +1096,7 @@ public class PartyHandler : MonoBehaviour
         }
         StopCoroutine(animateIcons());
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
-        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
         GlobalVariables.global.resetFollower();
         this.gameObject.SetActive(false);
     }

@@ -13,6 +13,8 @@ public class UIMoveTo : MonoBehaviour
 
     LTDescr currentTween;
 
+    public static Vector3 DefaultPosition = Vector3.zero;
+
     void Start()
     {
         if (target.GameObject != null) Move();
@@ -37,6 +39,7 @@ public class UIMoveTo : MonoBehaviour
     }
 
     public Vector3 GetPosition(GameObject gameObject) {
+        if (gameObject == null) return DefaultPosition;
         RectTransform rectTransform = (RectTransform)gameObject.transform;
         Vector3 targetPosition;
         switch (target.PositionType) {
@@ -66,14 +69,14 @@ public class UIMoveTo : MonoBehaviour
     public void MoveTo(GameObject gameObject) => MoveTo(gameObject, target.CurrentMoveToDuration);
 
     public void MoveTo(GameObject gameObject, float duration) {
-        if (target.GameObject == gameObject) return;
+        if (gameObject == null || target.GameObject == gameObject) return;
         target.GameObject = gameObject;
         target.CurrentMoveToDuration = duration;
         Move();
     }
 
     public void MoveTo(MoveToTarget target) {
-        if (this.target.GameObject == target.GameObject) return;
+        if (target.GameObject == null || this.target.GameObject == target.GameObject) return;
         this.target = target;
         Move();
     }

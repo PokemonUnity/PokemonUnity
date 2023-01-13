@@ -935,7 +935,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
+                    StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.slowedSpeed, null));
                     yield return new WaitForSeconds(1.6f);
                 }
 
@@ -949,7 +949,7 @@ public class CustomEvent : MonoBehaviour
                 }
 
                 //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
 
                 if (currentEvent.bool0)
                 {
@@ -1426,7 +1426,7 @@ public class CustomEvent : MonoBehaviour
     {
         Debug.Log("Starting Starter Cutscene");
         
-        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.slowedSpeed));
 
         GameObject.Find("Weather").GetComponent<WeatherHandler>().disable = true;
         
@@ -1436,7 +1436,7 @@ public class CustomEvent : MonoBehaviour
         
         GameObject.Find("Weather").GetComponent<WeatherHandler>().disable = false;
         
-        yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
     }
 
     private IEnumerator HealParty()
@@ -1454,7 +1454,7 @@ public class CustomEvent : MonoBehaviour
     {
         Debug.Log("Starting Fade In");
         
-        yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
         
     }
     
@@ -1462,7 +1462,7 @@ public class CustomEvent : MonoBehaviour
     {
         Debug.Log("Starting Fade Out");
         
-        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.slowedSpeed));
         
     }
 }

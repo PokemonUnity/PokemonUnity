@@ -57,7 +57,7 @@ public static class SaveLoad
         return false;
     }
 
-    public static int getSavedGamesCount()
+    public static int GetSavedGamesCount()
     {
         int count = 0;
         for (int i = 0; i < savedGames.Length; i++)

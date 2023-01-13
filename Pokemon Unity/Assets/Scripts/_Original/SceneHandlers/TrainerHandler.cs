@@ -539,7 +539,7 @@ public class TrainerHandler : MonoBehaviour
         badgeBoxLid.rectTransform.position = new Vector2(6, 20);
         badgeBoxLid.rectTransform.sizeDelta = new Vector2(252, 165);
         //sceneTransition.FadeIn();
-        StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+        StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
 
         running = true;
         StartCoroutine(animBG());
@@ -715,7 +715,7 @@ public class TrainerHandler : MonoBehaviour
             StartCoroutine(boxLid(true));
         }
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
-        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
         this.gameObject.SetActive(false);
     }
 }

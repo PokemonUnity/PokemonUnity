@@ -84,7 +84,7 @@ public class DefaultTransition : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        yield return StartCoroutine(ScreenFade.main.Fade(false, 1f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 1f));
         
         mugShotLeft.gameObject.SetActive(false);
         mugShotRight.gameObject.SetActive(false);

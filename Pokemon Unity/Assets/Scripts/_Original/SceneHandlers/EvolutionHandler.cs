@@ -144,7 +144,7 @@ public class EvolutionHandler : MonoBehaviour
         stopAnimations = false;
 
 
-        StartCoroutine(ScreenFade.main.Fade(true, 1f));
+        StartCoroutine(ScreenFade.Singleton.Fade(true, 1f));
         yield return new WaitForSeconds(1f);
 
         dialog.DrawDialogBox();
@@ -184,13 +184,13 @@ public class EvolutionHandler : MonoBehaviour
 
                 //fadeTime = sceneTransition.FadeOut();
                 //yield return new WaitForSeconds(fadeTime);
-                yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+                yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
 
                 stopAnimateEvolution();
 
                 //fadeTime = sceneTransition.FadeIn();
                 //yield return new WaitForSeconds(fadeTime);
-                yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+                yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
 
 
                 dialog.DrawDialogBox();
@@ -263,7 +263,7 @@ public class EvolutionHandler : MonoBehaviour
             yield return new WaitForSeconds(0.4f);
         }
 
-        StartCoroutine(ScreenFade.main.Fade(false, 1f));
+        StartCoroutine(ScreenFade.Singleton.Fade(false, 1f));
         BgmHandler.main.ResumeMain(1.4f, PlayerMovement.player.accessedMapSettings.getBGM());
         yield return new WaitForSeconds(1.2f);
 
@@ -332,7 +332,7 @@ public class EvolutionHandler : MonoBehaviour
     {
         //GlobalVariables.global.fadeTex = whiteTex;
         float speed = ScreenFade.slowedSpeed;
-        StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed, Color.white));
+        StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.slowedSpeed, Color.white));
 
         float increment = 0f;
         while (increment < 1)
@@ -344,7 +344,7 @@ public class EvolutionHandler : MonoBehaviour
             }
             yield return null;
         }
-        StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed, Color.white));
+        StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed, Color.white));
         //sceneTransition.FadeIn(1.2f);
     }
 
@@ -678,7 +678,7 @@ public class EvolutionHandler : MonoBehaviour
                             yield return null;
                         }
 
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+                        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
 
                         //Set SceneSummary to be active so that it appears
                         Scene.main.Summary.gameObject.SetActive(true);
@@ -690,7 +690,7 @@ public class EvolutionHandler : MonoBehaviour
                         }
 
                         string replacedMove = Scene.main.Summary.replacedMove;
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+                        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
 
                         if (!string.IsNullOrEmpty(replacedMove))
                         {
