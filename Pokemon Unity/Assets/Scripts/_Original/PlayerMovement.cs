@@ -1377,7 +1377,7 @@ public class PlayerMovement : MonoBehaviour
 
                     //SceneTransition sceneTransition = Dialog.transform.GetComponent<SceneTransition>();
 
-                    yield return StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.slowedSpeed, null));
+                    yield return StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.SlowedSpeed, null));
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(1f));
                     Scene.main.Battle.gameObject.SetActive(true);
                     StartCoroutine(Scene.main.Battle.control(wildpkm));
@@ -1406,7 +1406,7 @@ public class PlayerMovement : MonoBehaviour
 
             //SceneTransition sceneTransition = Dialog.transform.GetComponent<SceneTransition>();
 
-            yield return StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.slowedSpeed, null));
+            yield return StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.SlowedSpeed, null));
             //yield return new WaitForSeconds(sceneTransition.FadeOut(1f));
             Scene.main.Battle.gameObject.SetActive(true);
             StartCoroutine(Scene.main.Battle.control(wildpkm));

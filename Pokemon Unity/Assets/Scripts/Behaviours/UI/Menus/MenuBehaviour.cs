@@ -4,7 +4,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Canvas))]
 public class MenuBehaviour : MonoBehaviour
 {
+    [SerializeField] string menuName = "A menu";
     [SerializeField] Canvas canvas;
+
+    public string MenuName { get => menuName; }
 
     void Start() {
         if (canvas == null) Debug.LogError("No canvas was provided");

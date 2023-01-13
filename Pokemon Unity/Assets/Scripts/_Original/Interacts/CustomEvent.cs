@@ -935,7 +935,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.slowedSpeed, null));
+                    StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.SlowedSpeed, null));
                     yield return new WaitForSeconds(1.6f);
                 }
 
@@ -1426,7 +1426,7 @@ public class CustomEvent : MonoBehaviour
     {
         Debug.Log("Starting Starter Cutscene");
         
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.SlowedSpeed));
 
         GameObject.Find("Weather").GetComponent<WeatherHandler>().disable = true;
         
@@ -1436,7 +1436,7 @@ public class CustomEvent : MonoBehaviour
         
         GameObject.Find("Weather").GetComponent<WeatherHandler>().disable = false;
         
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.SlowedSpeed));
     }
 
     private IEnumerator HealParty()
@@ -1454,7 +1454,7 @@ public class CustomEvent : MonoBehaviour
     {
         Debug.Log("Starting Fade In");
         
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.SlowedSpeed));
         
     }
     
@@ -1462,7 +1462,7 @@ public class CustomEvent : MonoBehaviour
     {
         Debug.Log("Starting Fade Out");
         
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.slowedSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.SlowedSpeed));
         
     }
 }

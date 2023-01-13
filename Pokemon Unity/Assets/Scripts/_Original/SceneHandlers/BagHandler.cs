@@ -1018,7 +1018,7 @@ public class BagHandler : MonoBehaviour
             bagDown.sprite = bagDownSprite;
             
             //sceneTransition.FadeIn();
-            StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
+            StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));
         }
         shopNumberBox.SetActive(false);
 
@@ -1920,7 +1920,7 @@ public class BagHandler : MonoBehaviour
 
         if (!shopMode)
         {
-            yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
+            yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
             //yield return new WaitForSeconds(sceneTransition.FadeOut());
         }
 
@@ -2555,7 +2555,7 @@ public class BagHandler : MonoBehaviour
                             yield return null;
                         }
 
-                        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
+                        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
 
                         //Set SceneSummary to be active so that it appears
                         Scene.main.Summary.gameObject.SetActive(true);
@@ -2567,7 +2567,7 @@ public class BagHandler : MonoBehaviour
                         }
 
                         string replacedMove = Scene.main.Summary.replacedMove;
-                        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
+                        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));
 
                         if (!string.IsNullOrEmpty(replacedMove))
                         {

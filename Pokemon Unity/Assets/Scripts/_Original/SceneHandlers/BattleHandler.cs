@@ -4277,7 +4277,7 @@ public partial class BattleHandler : MonoBehaviour
                     {
                         yield return StartCoroutine(drawTextAndWait("Which move should \nbe forgotten?"));
 
-                        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
+                        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
 
                         //Set SceneSummary to be active so that it appears
                         Scene.main.Summary.gameObject.SetActive(true);
@@ -4289,7 +4289,7 @@ public partial class BattleHandler : MonoBehaviour
                         }
 
                         string replacedMove = Scene.main.Summary.replacedMove;
-                        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
+                        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));
 
                         if (!string.IsNullOrEmpty(replacedMove))
                         {
@@ -5558,7 +5558,7 @@ public partial class BattleHandler : MonoBehaviour
             player1.transform.parent.parent.gameObject.SetActive(false);
             opponent1.transform.parent.parent.gameObject.SetActive(false);
 
-            StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
+            StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.SlowedSpeed));
             
             LeanTween.moveLocal(BattleCamera.gameObject, opponentFocusCameraAngle[0], 0.6f);
             LeanTween.rotateLocal(BattleCamera.gameObject, opponentFocusCameraAngle[1], 0.6f);

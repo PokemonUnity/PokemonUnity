@@ -267,7 +267,6 @@
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\EvolutionHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractShop.cs" />
     <Compile Include="Assets\Scripts\_Original\Map\ScrollingText.cs" />
-    <Compile Include="Assets\Scripts\Library\UI\MenuHandler.cs" />
     <Compile Include="Assets\Scripts\Editor Attributes\FoldoutAttribute.cs" />
     <Compile Include="Assets\Settings\Scripts\GameSettingText.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarComponent.cs" />

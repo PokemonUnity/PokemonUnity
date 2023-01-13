@@ -11,6 +11,7 @@ using System;
 using EasyButtons;
 using UnityEngine.SceneManagement;
 
+[AddComponentMenu("Pokemon Unity/UI/Menus/Main Menu")]
 public class MainMenuHandler : MenuHandlerBehaviour {
     // TODO: implement file selection and mystery gift menus
     #region Old Variables
@@ -107,10 +108,10 @@ public class MainMenuHandler : MenuHandlerBehaviour {
     public void NewGame() => StartCoroutine(NewGameCoroutine());
     public void ContinueGame() => StartCoroutine(ContinueGameCoroutine());
     public void MysteryGift() => StartCoroutine(MysteryGiftCoroutine());
-    public void Settings() => StartCoroutine(SettingsCoroutine());
+    public void Settings() => ChangeMenu("Settings");
 
     public IEnumerator NewGameCoroutine() {
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, MenuFadeTime));
 
         SaveData.currentSave = new SaveData(SaveLoad.GetSavedGamesCount());
         SaveData.SetDebugFileData();
@@ -125,7 +126,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
     public IEnumerator ContinueGameCoroutine() {
         //CONTINUE
         SfxHandler.Play(decideClip);
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, MenuFadeTime));
 
         SaveData.currentSave = SaveLoad.savedGames[selectedFile];
 
@@ -155,9 +156,9 @@ public class MainMenuHandler : MenuHandlerBehaviour {
         MGButtonImage[0].sprite = buttonSelectedSprite;
         MGButtonImage[1].sprite = buttonDimmedSprite;
 
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, MenuFadeTime));
         mysteryGiftMenu.SetActive(true);
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, MenuFadeTime));
 
         BgmHandler.main.PlayMain(mysteryGiftBGM, loopSampleStart);
 
@@ -216,7 +217,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
                         string code = "";
                         
                         //Enter Code
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+                        yield return StartCoroutine(ScreenFade.main.Fade(false, MenuFadeTime));
 
                         Scene.main.Typing.gameObject.SetActive(true);
                         StartCoroutine(Scene.main.Typing.control(10, ""));
@@ -366,7 +367,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
                                 SfxHandler.Play(pk.GetCry());
                                 giftScene.Find("SelectedSprite").GetComponent<Image>().sprite = pk.GetFrontAnim_()[0];
                                 
-                                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                                yield return StartCoroutine(ScreenFade.main.Fade(true, MenuFadeTime));
 
                                 yield return new WaitForSeconds(1);
 
@@ -386,7 +387,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
 
                                 yield return new WaitForSeconds(0.5f);
                                 
-                                yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+                                yield return StartCoroutine(ScreenFade.main.Fade(false, MenuFadeTime));
                                 giftScene.gameObject.SetActive(false);
                                 mysteryGiftMenu.transform.Find("EnterCode").gameObject.SetActive(true);
                                 mysteryGiftMenu.transform.Find("Quit").gameObject.SetActive(true);
@@ -397,7 +398,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
                             //No Mystery Gift Found
                             mysteryGiftMenu.transform.Find("EnterCode").gameObject.SetActive(false);
                             mysteryGiftMenu.transform.Find("Quit").gameObject.SetActive(false);
-                            yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                            yield return StartCoroutine(ScreenFade.main.Fade(true, MenuFadeTime));
                             
                             Debug.Log("No Save Found.");
                             yield return new WaitForSeconds(1);
@@ -412,7 +413,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
                             
                             yield return new WaitForSeconds(0.5f);
 
-                            yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+                            yield return StartCoroutine(ScreenFade.main.Fade(false, MenuFadeTime));
                             mysteryGiftMenu.transform.Find("EnterCode").gameObject.SetActive(true);
                             mysteryGiftMenu.transform.Find("Quit").gameObject.SetActive(true);
                         }
@@ -421,7 +422,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
                             //No Mystery Gift Found
                             mysteryGiftMenu.transform.Find("EnterCode").gameObject.SetActive(false);
                             mysteryGiftMenu.transform.Find("Quit").gameObject.SetActive(false);
-                            yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                            yield return StartCoroutine(ScreenFade.main.Fade(true, MenuFadeTime));
                             
                             Debug.Log("No Mystery Gift Found");
                             yield return new WaitForSeconds(1);
@@ -436,12 +437,12 @@ public class MainMenuHandler : MenuHandlerBehaviour {
                             
                             yield return new WaitForSeconds(0.5f);
 
-                            yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+                            yield return StartCoroutine(ScreenFade.main.Fade(false, MenuFadeTime));
                             mysteryGiftMenu.transform.Find("EnterCode").gameObject.SetActive(true);
                             mysteryGiftMenu.transform.Find("Quit").gameObject.SetActive(true);
                         }
                         
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                        yield return StartCoroutine(ScreenFade.main.Fade(true, MenuFadeTime));
                         break;
                 }
             }
@@ -453,17 +454,9 @@ public class MainMenuHandler : MenuHandlerBehaviour {
         #endregion
 
         BgmHandler.main.PlayMain(null, 0);
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, MenuFadeTime));
         mysteryGiftMenu.SetActive(false);
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
-    }
-
-    public IEnumerator SettingsCoroutine() {
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
-
-        //Scene.main.Settings.gameObject.SetActive(true);
-
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, MenuFadeTime));
     }
 
     public void ShowContinueButton() {

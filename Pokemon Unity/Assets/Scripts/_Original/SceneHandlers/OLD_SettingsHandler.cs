@@ -332,7 +332,7 @@ public class OLD_SettingsHandler : MonoBehaviour
     public IEnumerator control()
     {
         //sceneTransition.FadeIn();
-        StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
+        StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));
 
         running = true;
         loadSettings();
@@ -506,7 +506,7 @@ public class OLD_SettingsHandler : MonoBehaviour
                 Dialog.UndrawDialogBox();
                 Dialog.UndrawChoiceBox();
                 //yield return new WaitForSeconds(sceneTransition.FadeOut());
-                yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
+                yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
                 running = false;
             }
             yield return null;

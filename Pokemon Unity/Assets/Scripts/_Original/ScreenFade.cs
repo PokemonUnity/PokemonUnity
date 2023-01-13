@@ -4,12 +4,13 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
+[AddComponentMenu("Pokemon Unity/UI/Screen Fade Singleton")]
 [RequireComponent(typeof(Image))]
 public class ScreenFade : MonoBehaviour
 {
     public static ScreenFade Singleton;
-    public static float defaultSpeed = 0.4f;
-    public static float slowedSpeed = 1.2f;
+    public static float DefaultSpeed = 0.4f;
+    public static float SlowedSpeed = 1.2f;
 
     private Image image;
 
@@ -17,6 +18,10 @@ public class ScreenFade : MonoBehaviour
 
     public Material fadeMaterial;
 
+    void OnValidate() {
+        if (image == null) image = GetComponent<Image>();
+        SetToFadedOut();
+    }
 
     void Awake()
     {
@@ -26,6 +31,7 @@ public class ScreenFade : MonoBehaviour
             Destroy(this);
 
         image = GetComponent<Image>();
+        SetToFadedIn();
     }
 
 
@@ -34,26 +40,23 @@ public class ScreenFade : MonoBehaviour
         yield return StartCoroutine(Fade(fadeIn, speed, Color.black));
     }
 
-    public IEnumerator Fade(bool fadeIn, float speed, Color color)
+    public IEnumerator Fade(bool fadeIn, float time, Color color)
     {
         image.sprite = null;
         image.material = null;
 
-        float alpha = (fadeIn) ? 1f : 0f;
+        float alpha = fadeIn ? 1f : 0f;
         image.color = new Color(color.r, color.g, color.b, alpha);
-
         
-        LeanTween.alpha(image.GetComponent<RectTransform>(), 1-alpha, 0.5f);
+        LeanTween.alpha(image.GetComponent<RectTransform>(), 1-alpha, time);
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(time);
     }
 
     public IEnumerator FadeCutout(bool fadeIn, float speed, Sprite cutout)
     {
         if (cutout == null)
-        {
             cutout = fadeCutouts[Random.Range(0, fadeCutouts.Length)];
-        }
 
         image.sprite = cutout;
         image.material = fadeMaterial;
@@ -63,9 +66,7 @@ public class ScreenFade : MonoBehaviour
         {
             increment += (1 / speed) * Time.deltaTime;
             if (increment > 1)
-            {
                 increment = 1;
-            }
 
             float alpha = (!fadeIn) ? 1f - increment : increment;
 

@@ -100,8 +100,8 @@ public class InteractPC : MonoBehaviour
                             {
                                 //access Move
                                 SfxHandler.Play(selectClip);
-                                StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
-                                yield return new WaitForSeconds(ScreenFade.defaultSpeed + 0.4f);
+                                StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
+                                yield return new WaitForSeconds(ScreenFade.DefaultSpeed + 0.4f);
                                 //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f) + 0.4f);
                                 SfxHandler.Play(openClip);
                                 //Set ScenePC to be active so that it appears

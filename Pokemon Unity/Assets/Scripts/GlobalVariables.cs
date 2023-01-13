@@ -135,7 +135,7 @@ public class GlobalVariables : MonoBehaviour
                 
                 if (global.fadeIn)
                 {
-                    StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
+                    StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.SlowedSpeed));
 
                     //if fading in to the scene.
                     Player.transform.position = global.playerPosition;

@@ -1022,7 +1022,7 @@ public class PCHandler : MonoBehaviour
     public IEnumerator control()
     {
         //sceneTransition.FadeIn();
-        StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.defaultSpeed));
+        StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));
         /*  0-2  = boxIndex				0 -d-> 3,   1 -d-> 5,   2 -d-> 8
          *  3-32 = boxContents			3 -u-> 0,   4-7 -u-> 1,   8 -u-> 2 
          * 								8/14 -r-> 33,   20 -r-> 35,   26/32 -r-> 37
@@ -2370,7 +2370,7 @@ public class PCHandler : MonoBehaviour
         }*/
         SfxHandler.Play(offClip);
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.defaultSpeed));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
         GlobalVariables.global.resetFollower();
         yield return new WaitForSeconds(0.4f);
         this.gameObject.SetActive(false);

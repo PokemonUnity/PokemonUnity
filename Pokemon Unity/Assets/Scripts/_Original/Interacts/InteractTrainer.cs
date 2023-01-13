@@ -658,7 +658,7 @@ public class InteractTrainer : MonoBehaviour
                 }
 
                 //custom cutouts not yet implemented
-                StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.slowedSpeed, null));
+                StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.SlowedSpeed, null));
 
                 //Automatic LoopStart usage not yet implemented
                 Scene.main.Battle.gameObject.SetActive(true);

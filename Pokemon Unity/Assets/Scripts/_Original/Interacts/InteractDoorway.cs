@@ -214,15 +214,15 @@ public class InteractDoorway : MonoBehaviour
                 
                 //float fadeTime = sceneTransition.FadeOut() + 0.4f;
                 WeatherHandler.fadeSound();
-                float fadeTime = ScreenFade.slowedSpeed + 0.4f;
+                float fadeTime = ScreenFade.SlowedSpeed + 0.4f;
                 //fadeCutouts for doorways not yet implemented
                 if (fadeSprite == null)
                 {
-                    StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.slowedSpeed));
+                    StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.SlowedSpeed));
                 }
                 else
                 {
-                    StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.defaultSpeed, fadeSprite));
+                    StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.DefaultSpeed, fadeSprite));
                 }
                 
                 if (!dontFadeMusic)
@@ -273,7 +273,7 @@ public class InteractDoorway : MonoBehaviour
 
                     GlobalVariables.global.fadeIn = true;
                     //SceneTransition.gameScene.FadeIn();
-                    StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.slowedSpeed));
+                    StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.SlowedSpeed));
 
                     yield return new WaitForSeconds(0.1f);
                     PlayerMovement.player.pauseInput();
