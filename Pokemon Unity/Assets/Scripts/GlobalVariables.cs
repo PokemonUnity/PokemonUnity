@@ -24,7 +24,7 @@ public class GlobalVariables : MonoBehaviour
 
     public Vector3 followerPosition;
     public int followerDirection;
-    public bool followerOut;
+    public bool followerOut = false;
     
     public bool playerExiting;
     public bool playerForwardOnLoad;

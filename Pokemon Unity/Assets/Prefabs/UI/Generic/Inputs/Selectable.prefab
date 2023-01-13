@@ -273,6 +273,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Text With Shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 7208164232049137270, guid: 16bdba99d1f3e6e4f97d03570866ff00,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208164232049137270, guid: 16bdba99d1f3e6e4f97d03570866ff00,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7842619675484943146, guid: 16bdba99d1f3e6e4f97d03570866ff00,
         type: 3}
       propertyPath: m_Pivot.x

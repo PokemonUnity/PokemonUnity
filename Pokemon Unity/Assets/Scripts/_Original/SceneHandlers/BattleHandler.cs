@@ -665,9 +665,10 @@ public partial class BattleHandler : MonoBehaviour
 
         //Setup Camera Display
         BattleDisplay = GameObject.Find("Global/MainCamera/BattleDisplay");
-        
+
         //Setup Camera Movements
-        BattleCamera = GameObject.Find("Global/BattleScene/Battle_Camera").GetComponent<BattleCameraHandler>();
+        // FIXME: There should be a Battle_Camera i guess? Where did Battle_Camera go?
+        //BattleCamera = GameObject.Find("Global/BattleScene/Battle_Camera").GetComponent<BattleCameraHandler>();
 
         Dialog = transform.GetComponent<DialogBoxHandlerNew>();
         

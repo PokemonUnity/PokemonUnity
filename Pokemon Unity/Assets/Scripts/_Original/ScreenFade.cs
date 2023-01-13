@@ -20,7 +20,7 @@ public class ScreenFade : MonoBehaviour
 
     void OnValidate() {
         if (image == null) image = GetComponent<Image>();
-        SetToFadedOut();
+        SetToFadedIn();
     }
 
     void Awake()
