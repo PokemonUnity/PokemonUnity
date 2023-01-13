@@ -23,16 +23,16 @@ using PokemonUnity.Combat;
 namespace PokemonUnity.UX
 {
 	#region Pokemon Battle
-	public interface IPokeBattle_SceneIE : PokemonEssentials.Interface.Screen.IPokeBattle_Scene//, IScene, IHasChatter
+	public interface IPokeBattle_SceneIE : PokemonEssentials.Interface.Screen.IPokeBattle_Scene, IScene, IHasDisplayMessageIE//, IHasChatter
 	{
-		IEnumerator pbDisplay(string msg, bool brief = false);
-		IEnumerator pbDisplayMessage(string msg, bool brief = false);
-		IEnumerator pbDisplayPausedMessage(string msg);
-		IEnumerator pbDisplayConfirmMessage(string msg);
-		//void pbShowCommands(string msg, string[] commands, int defaultValue);
-		IEnumerator pbShowCommands(string msg, string[] commands, bool canCancel);
-		IEnumerator pbShowOpponent(int index);
-		IEnumerator pbHideOpponent();
+		new IEnumerator pbDisplay(string msg, bool brief = false);
+		new IEnumerator pbDisplayMessage(string msg, bool brief = false);
+		new IEnumerator pbDisplayPausedMessage(string msg);
+		IEnumerator pbDisplayConfirmMessage(string msg, System.Action<bool> result);
+		IEnumerator pbShowCommands(string msg, string[] commands, int defaultValue, System.Action<int> result);
+		//IEnumerator pbShowCommands(string msg, string[] commands, bool canCancel, System.Action<int> result);
+		new IEnumerator pbShowOpponent(int index);
+		new IEnumerator pbHideOpponent();
 		IEnumerator pbTrainerSendOut(int battlerindex, Monster.Pokemon pkmn);
 		/// <summary>
 		/// Player sending out Pokémon

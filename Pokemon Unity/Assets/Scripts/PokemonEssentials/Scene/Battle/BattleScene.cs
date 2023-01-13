@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
+using PokemonUnity.UX;
 using PokemonUnity.Attack.Data;
 using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
@@ -21,7 +22,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 //using UnityEngine.UI;
 //using UnityEngine.Serialization;
 
-public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
+public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, IScene
 {
 	#region Variable Property
 	const int BLANK = 0;
@@ -406,21 +407,21 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		}
 	}
 
-	public void pbDisplay(string msg, bool brief)
+	public IEnumerator pbDisplay(string msg, bool brief)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		pbDisplayMessage(msg, brief);
+		return pbDisplayMessage(msg, brief);
 	}
 
-	public void pbDisplay(string v)
+	public IEnumerator pbDisplay(string v)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		pbDisplay(v, false);
+		return pbDisplay(v, false);
 	}
 
-	public void pbDisplayMessage(string msg, bool brief)
+	public IEnumerator pbDisplayMessage(string msg, bool brief)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -465,9 +466,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 				i++;
 			}
 		} while (true);*/
+		yield break;
 	}
 
-	public void pbDisplayPausedMessage(string msg)
+	public IEnumerator pbDisplayPausedMessage(string msg)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -505,16 +507,20 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			}
 			cw.update();
 		} while (true);*/
+		yield break;
 	}
 
-	public bool pbDisplayConfirmMessage(string msg)
+	public IEnumerator pbDisplayConfirmMessage(string msg, System.Action<bool> result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		return pbShowCommands(msg, new string[] { Game._INTL("Yes"), Game._INTL("No") }, 1) == 0;
+		int value = 0;
+		yield return pbShowCommands(msg, new string[] { Game._INTL("Yes"), Game._INTL("No") }, 1, result: r => value = r);
+		result?.Invoke(value == 0);
+		//yield return pbShowCommands(msg, new string[] { Game._INTL("Yes"), Game._INTL("No") }, 1) == 0;
 	}
 
-	public bool pbShowCommands(string msg, string[] commands, bool defaultValue)
+	public IEnumerator pbShowCommands(string msg, string[] commands, bool defaultValue)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -571,7 +577,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		return false;
 	}
 
-	public int pbShowCommands(string msg, string[] commands, int defaultValue)
+	public IEnumerator pbShowCommands(string msg, string[] commands, int defaultValue, System.Action<int> result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -1033,6 +1039,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	public void pbStartBattle(IBattle battle)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.Log("Start of the battle");
 
 		//  Called whenever the battle begins
 		this.battle = battle; //as Battle;
@@ -1408,6 +1415,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	public void pbEndBattle(BattleResults result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.Log($"End of the battle. Result: {result}");
 
 		@abortable = false;
 		pbShowWindow(BLANK);
@@ -1476,10 +1484,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		} while (true);*/
 	}
 
-	public void pbTrainerSendOut(int battlerindex, IPokemon pkmn)
+	public IEnumerator pbTrainerSendOut(int battlerindex, IPokemon pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-		/*
+		/*TODO show opponent's pokemon
 		IPokemon illusionpoke=@battle.battlers[battlerindex].effects.Illusion;
 		@briefmessage=false;
 		//ITrainerFadeAnimation fadeanim=null;
@@ -1525,15 +1533,17 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			}
 		}
 		pbRefresh();*/
+		yield break;
 	}
 
-	public void pbTrainerSendOut(IBattle battle, IPokemon pkmn)
+	public IEnumerator pbTrainerSendOut(IBattle battle, IPokemon pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-
+		
+		//TODO show opponent's pokemon
 		//foreach trainer in battle
 		//foreach(int i in battle.)
-			pbTrainerSendOut(0, pkmn);
+			yield return pbTrainerSendOut(0, pkmn);
 	}
 
 	/// <summary>
@@ -1541,10 +1551,11 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	/// </summary>
 	/// <param name="battlerindex"></param>
 	/// <param name="pkmn"></param>
-	public void pbSendOut(int battlerindex, IPokemon pkmn)
+	public IEnumerator pbSendOut(int battlerindex, IPokemon pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		
+		//TODO show player's pokemon
 		/*while (inPartyAnimation){ } //ToDo: Uncomment, and ensure that logic has an exit
 		IPokemon illusionpoke=@battle.battlers[battlerindex].effects.Illusion;
 		Items balltype=pkmn.ballUsed;
@@ -1626,6 +1637,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 			}
 		}*/
 		pbRefresh();
+		yield break;
 	}
 
 	/// <summary>
@@ -1634,35 +1646,42 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	/// <param name="battle"></param>
 	/// <param name="pkmn"></param>
 	/// Should be unused... i havent put together why this exist, or how to resolve the logic yet
-	public void pbSendOut(IBattle battle, IPokemon pkmn)
+	public IEnumerator pbSendOut(IBattle battle, IPokemon pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
+		//TODO show player's pokemon
 		//foreach trainer in battle
 		//foreach(int i in battle.)
-			pbSendOut(0, pkmn);
+			yield return pbSendOut(0, pkmn);
 
 	}
 
-	public void pbTrainerWithdraw(IBattle battle, IBattler pkmn)
+	public IEnumerator pbTrainerWithdraw(IBattle battle, IBattler pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
+		//TODO hide opponent's pokemon
 		pbRefresh();
+		yield break;
 	}
 
-	public void pbTrainerWithdraw(IBattle battle, IPokemon pkmn)
+	public IEnumerator pbTrainerWithdraw(IBattle battle, IPokemon pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
+		//TODO hide opponent's pokemon
 		pbRefresh();
+		yield break;
 	}
 
-	public void pbWithdraw(IBattle battle, IPokemon pkmn)
+	public IEnumerator pbWithdraw(IBattle battle, IPokemon pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
+		//TODO hide player's pokemon
 		pbRefresh();
+		yield break;
 	}
 
 	public string pbMoveString(IBattleMove move)
@@ -1709,6 +1728,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
+		//reset the frontend command indices to 0;
 		@lastcmd = new MenuCommands[] { 0, 0, 0, 0 };
 	}
 
@@ -1716,6 +1736,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
+		//reset the frontend move index to 0;
 		@lastmove[index] = 0;
 	}
 
@@ -1765,6 +1786,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	/// </param>
 	/// <returns></returns>
 	public int pbCommandMenuEx(int index, string[] texts, int mode)
+	//public IEnumerator pbCommandMenuEx(int index, string[] texts, int mode, System.Action<int> result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		pbShowWindow(COMMANDBOX);
