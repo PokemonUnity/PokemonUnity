@@ -131,7 +131,7 @@ public class GlobalVariables : MonoBehaviour
 
                     //if fading in to the scene.
                     Player.transform.position = Singleton.playerPosition;
-                    PlayerMovement.player.direction = Singleton.playerDirection;
+                    PlayerMovement.Singleton.direction = Singleton.playerDirection;
                     
                     if (playerExiting)
                     {
@@ -148,17 +148,17 @@ public class GlobalVariables : MonoBehaviour
 
                     if (!respawning)
                     {
-                        PlayerMovement.player.pauseInput(0.8f);
+                        PlayerMovement.Singleton.pauseInput(0.8f);
                     }
                     else
                     {
-                        PlayerMovement.player.followerScript.Hide();
-                        PlayerMovement.player.pauseInput(0.4f);
+                        PlayerMovement.Singleton.followerScript.Hide();
+                        PlayerMovement.Singleton.pauseInput(0.4f);
                     }
                     if (playerForwardOnLoad)
                     {
-                        PlayerMovement.player.followerScript.Hide();
-                        PlayerMovement.player.forceMoveForward();
+                        PlayerMovement.Singleton.followerScript.Hide();
+                        PlayerMovement.Singleton.forceMoveForward();
                         playerForwardOnLoad = false;
                     }
                 }

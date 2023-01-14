@@ -51,7 +51,7 @@ public class InteractItem : MonoBehaviour
 
     public IEnumerator interact()
     {
-        if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+        if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
         {
             AudioClip itemGetMFX = (TM)
                 ? Resources.Load<AudioClip>("Audio/mfx/GetGood")
@@ -122,7 +122,7 @@ public class InteractItem : MonoBehaviour
                 }
                 Dialog.UndrawDialogBox();
 
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);
                 gameObject.SetActive(false);
             }
             else
@@ -134,7 +134,7 @@ public class InteractItem : MonoBehaviour
                 }
                 Dialog.UndrawDialogBox();
 
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);
             }
         }
     }

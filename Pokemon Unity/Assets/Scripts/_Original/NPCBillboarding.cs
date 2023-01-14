@@ -31,7 +31,7 @@ public class NPCBillboarding : MonoBehaviour
 			(turnY ? transform.localRotation.eulerAngles.y : defaultRotationY),
 			(turnZ ? transform.localRotation.eulerAngles.z : defaultRotationZ)
 			);
-		if (PlayerMovement.player.transform.Find("Camera") == null)
+		if (PlayerMovement.Singleton.transform.Find("Camera") == null)
 			transform.localRotation = Quaternion.Euler(camera.transform.rotation.x-50, 180, 0);
 		
 		transform.Rotate( new Vector3(0, 180, 0), Space.Self );

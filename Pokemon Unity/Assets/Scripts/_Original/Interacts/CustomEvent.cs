@@ -137,7 +137,7 @@ public class CustomEvent : MonoBehaviour
 
     private IEnumerator bump()
     {
-        if (PlayerMovement.player.busyWith == null && !CVariablePredicate())
+        if (PlayerMovement.Singleton.busyWith == null && !CVariablePredicate())
             yield return StartCoroutine(runEventTrees(bumpEventTrees));
     }
 
@@ -146,7 +146,7 @@ public class CustomEvent : MonoBehaviour
         if (treesArray.Length > 0)
         {
             eventTreeIndex = 0;
-            if (PlayerMovement.player.setCheckBusyWith(gameObject))
+            if (PlayerMovement.Singleton.setCheckBusyWith(gameObject))
             {
                 setThisNPCHandlerBusy(true);
 
@@ -165,7 +165,7 @@ public class CustomEvent : MonoBehaviour
                 }
 
                 setThisNPCHandlerBusy(false);
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);
             }
             if (deactivateOnFinish)
             {
@@ -230,29 +230,29 @@ public class CustomEvent : MonoBehaviour
                     }
                     targetNPC.setFrameStill();
                 } //Move the player if set to player
-                if (currentEvent.object0 == PlayerMovement.player.gameObject)
+                if (currentEvent.object0 == PlayerMovement.Singleton.gameObject)
                 {
-                    int initialDirection = PlayerMovement.player.direction;
+                    int initialDirection = PlayerMovement.Singleton.direction;
 
-                    PlayerMovement.player.speed = (currentEvent.float0 > 0)
-                        ? PlayerMovement.player.walkSpeed / currentEvent.float0
-                        : PlayerMovement.player.walkSpeed;
+                    PlayerMovement.Singleton.speed = (currentEvent.float0 > 0)
+                        ? PlayerMovement.Singleton.walkSpeed / currentEvent.float0
+                        : PlayerMovement.Singleton.walkSpeed;
                     for (int i = 0; i < currentEvent.int0; i++)
                     {
-                        PlayerMovement.player.updateDirection((int) currentEvent.dir);
-                        Vector3 forwardsVector = PlayerMovement.player.getForwardVector();
+                        PlayerMovement.Singleton.updateDirection((int) currentEvent.dir);
+                        Vector3 forwardsVector = PlayerMovement.Singleton.getForwardVector();
                         if (currentEvent.bool0)
                         {
                             //if direction locked in
-                            PlayerMovement.player.updateDirection(initialDirection);
+                            PlayerMovement.Singleton.updateDirection(initialDirection);
                         }
 
-                        PlayerMovement.player.setOverrideAnimPause(true);
+                        PlayerMovement.Singleton.setOverrideAnimPause(true);
                         yield return
-                            StartCoroutine(PlayerMovement.player.move(forwardsVector, false, currentEvent.bool0));
-                        PlayerMovement.player.setOverrideAnimPause(false);
+                            StartCoroutine(PlayerMovement.Singleton.move(forwardsVector, false, currentEvent.bool0));
+                        PlayerMovement.Singleton.setOverrideAnimPause(false);
                     }
-                    PlayerMovement.player.speed = PlayerMovement.player.walkSpeed;
+                    PlayerMovement.Singleton.speed = PlayerMovement.Singleton.walkSpeed;
                 }
                 break;
 
@@ -795,7 +795,7 @@ public class CustomEvent : MonoBehaviour
                     {
                         deactivateOnFinish = true;
                     }
-                    else if (currentEvent.object0 != PlayerMovement.player.gameObject)
+                    else if (currentEvent.object0 != PlayerMovement.Singleton.gameObject)
                     {
                         //important to never deactivate the player
                         currentEvent.object0.SetActive(false);
@@ -891,7 +891,7 @@ public class CustomEvent : MonoBehaviour
                         passedCheck = SaveData.currentSave.isMale;
                         break;
                     case CustomEventDetails.Logic.Following:
-                        passedCheck = PlayerMovement.player.npcFollower == currentEvent.object0.GetComponent<NPCFollower>();
+                        passedCheck = PlayerMovement.Singleton.npcFollower == currentEvent.object0.GetComponent<NPCFollower>();
                         break;
                 }
 
@@ -972,7 +972,7 @@ public class CustomEvent : MonoBehaviour
                 break;
             
             case CustomEventDetails.CustomEventType.ResumeBGM:
-                BgmHandler.main.ForceResumeMain(0.4f, PlayerMovement.player.accessedMapSettings.mapBGMClip, PlayerMovement.player.accessedMapSettings.mapBGMLoopStartSamples);
+                BgmHandler.main.ForceResumeMain(0.4f, PlayerMovement.Singleton.accessedMapSettings.mapBGMClip, PlayerMovement.Singleton.accessedMapSettings.mapBGMLoopStartSamples);
                 break;
             
             case CustomEventDetails.CustomEventType.StopBGM:
@@ -989,7 +989,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 break;
             case CustomEventDetails.CustomEventType.ForcePauseInput:
-                PlayerMovement.player.canInput = false;
+                PlayerMovement.Singleton.canInput = false;
                 break;
             case CustomEventDetails.CustomEventType.Jump:
                 if (currentEvent.object0.GetComponent<NPCHandler>() != null)
@@ -1002,7 +1002,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 break;
             case CustomEventDetails.CustomEventType.ShakeCamera:
-                yield return StartCoroutine(PlayerMovement.player.shakeCamera(currentEvent.int0, currentEvent.float0));
+                yield return StartCoroutine(PlayerMovement.Singleton.shakeCamera(currentEvent.int0, currentEvent.float0));
                 break;
             case CustomEventDetails.CustomEventType.AlignHorizontal:
                 if (currentEvent.object0.GetComponent<NPCHandler>() != null)
@@ -1045,38 +1045,38 @@ public class CustomEvent : MonoBehaviour
                     }
                     targetNPC.setFrameStill();
                 } //Move the player if set to player
-                if (currentEvent.object0 == PlayerMovement.player.gameObject)
+                if (currentEvent.object0 == PlayerMovement.Singleton.gameObject)
                 {
-                    int initialDirection = PlayerMovement.player.direction;
+                    int initialDirection = PlayerMovement.Singleton.direction;
 
                     int dir = currentEvent.object0.transform.position.z < currentEvent.object1.transform.position.z
                         ? 0 : 2;
                     
-                    PlayerMovement.player.direction = dir;
+                    PlayerMovement.Singleton.direction = dir;
 
                     int iteration = (int) Math.Abs(Math.Round(currentEvent.object0.transform.position.z - currentEvent.object1.transform.position.z));
 
-                    PlayerMovement.player.speed = (currentEvent.float0 > 0)
-                        ? PlayerMovement.player.walkSpeed / currentEvent.float0
-                        : PlayerMovement.player.walkSpeed;
+                    PlayerMovement.Singleton.speed = (currentEvent.float0 > 0)
+                        ? PlayerMovement.Singleton.walkSpeed / currentEvent.float0
+                        : PlayerMovement.Singleton.walkSpeed;
                     
                     if (currentEvent.object0.transform.position.z != currentEvent.object1.transform.position.z)
                         for (int i = 0; i < iteration; i++)
                         {
-                            PlayerMovement.player.updateDirection(dir);
-                            Vector3 forwardsVector = PlayerMovement.player.getForwardVector();
+                            PlayerMovement.Singleton.updateDirection(dir);
+                            Vector3 forwardsVector = PlayerMovement.Singleton.getForwardVector();
                             if (currentEvent.bool0)
                             {
                                 //if direction locked in
-                                PlayerMovement.player.updateDirection(initialDirection);
+                                PlayerMovement.Singleton.updateDirection(initialDirection);
                             }
 
-                            PlayerMovement.player.setOverrideAnimPause(true);
+                            PlayerMovement.Singleton.setOverrideAnimPause(true);
                             yield return
-                                StartCoroutine(PlayerMovement.player.move(forwardsVector, false, currentEvent.bool0));
-                            PlayerMovement.player.setOverrideAnimPause(false);
+                                StartCoroutine(PlayerMovement.Singleton.move(forwardsVector, false, currentEvent.bool0));
+                            PlayerMovement.Singleton.setOverrideAnimPause(false);
                         }
-                    PlayerMovement.player.speed = PlayerMovement.player.walkSpeed;
+                    PlayerMovement.Singleton.speed = PlayerMovement.Singleton.walkSpeed;
                 }
                 break;
             case CustomEventDetails.CustomEventType.AlignVertical:
@@ -1120,50 +1120,50 @@ public class CustomEvent : MonoBehaviour
                     }
                     targetNPC.setFrameStill();
                 } //Move the player if set to player
-                if (currentEvent.object0 == PlayerMovement.player.gameObject)
+                if (currentEvent.object0 == PlayerMovement.Singleton.gameObject)
                 {
-                    int initialDirection = PlayerMovement.player.direction;
+                    int initialDirection = PlayerMovement.Singleton.direction;
 
                     int dir = currentEvent.object0.transform.position.x < currentEvent.object1.transform.position.x
                         ? 1 : 3;
                     
-                    PlayerMovement.player.direction = dir;
+                    PlayerMovement.Singleton.direction = dir;
 
                     int iteration = (int) Math.Abs(Math.Round(currentEvent.object0.transform.position.x - currentEvent.object1.transform.position.x));
 
-                    PlayerMovement.player.speed = (currentEvent.float0 > 0)
-                        ? PlayerMovement.player.walkSpeed / currentEvent.float0
-                        : PlayerMovement.player.walkSpeed;
+                    PlayerMovement.Singleton.speed = (currentEvent.float0 > 0)
+                        ? PlayerMovement.Singleton.walkSpeed / currentEvent.float0
+                        : PlayerMovement.Singleton.walkSpeed;
                     
                     if (currentEvent.object0.transform.position.x != currentEvent.object1.transform.position.x)
                         for (int i = 0; i < iteration; i++)
                         {
-                            PlayerMovement.player.updateDirection(dir);
-                            Vector3 forwardsVector = PlayerMovement.player.getForwardVector();
+                            PlayerMovement.Singleton.updateDirection(dir);
+                            Vector3 forwardsVector = PlayerMovement.Singleton.getForwardVector();
                             if (currentEvent.bool0)
                             {
                                 //if direction locked in
-                                PlayerMovement.player.updateDirection(initialDirection);
+                                PlayerMovement.Singleton.updateDirection(initialDirection);
                             }
 
-                            PlayerMovement.player.setOverrideAnimPause(true);
+                            PlayerMovement.Singleton.setOverrideAnimPause(true);
                             yield return
-                                StartCoroutine(PlayerMovement.player.move(forwardsVector, false, currentEvent.bool0));
-                            PlayerMovement.player.setOverrideAnimPause(false);
+                                StartCoroutine(PlayerMovement.Singleton.move(forwardsVector, false, currentEvent.bool0));
+                            PlayerMovement.Singleton.setOverrideAnimPause(false);
                         }
-                    PlayerMovement.player.speed = PlayerMovement.player.walkSpeed;
+                    PlayerMovement.Singleton.speed = PlayerMovement.Singleton.walkSpeed;
                 }
                 break;
             case CustomEventDetails.CustomEventType.MoveCamera:
                 yield return StartCoroutine(moveCamera(
-                        PlayerMovement.player.transform.Find("Camera") != null ? 
-                            PlayerMovement.player.transform.Find("Camera").transform : GameObject.Find("Camera").transform, 
+                        PlayerMovement.Singleton.transform.Find("Camera") != null ? 
+                            PlayerMovement.Singleton.transform.Find("Camera").transform : GameObject.Find("Camera").transform, 
                         new Vector3(currentEvent.ints[0], currentEvent.ints[1], currentEvent.ints[2]), currentEvent.float0));
                 break;
             case CustomEventDetails.CustomEventType.ResetCamera:
                 yield return StartCoroutine(resetCamera(
-                    PlayerMovement.player.transform.Find("Camera") != null ? 
-                        PlayerMovement.player.transform.Find("Camera").transform : GameObject.Find("Camera").transform, currentEvent.float0));
+                    PlayerMovement.Singleton.transform.Find("Camera") != null ? 
+                        PlayerMovement.Singleton.transform.Find("Camera").transform : GameObject.Find("Camera").transform, currentEvent.float0));
                 break;
             case CustomEventDetails.CustomEventType.AddPokemon:
                 /*if (SaveData.currentSave.PC.hasSpace(0))
@@ -1242,10 +1242,10 @@ public class CustomEvent : MonoBehaviour
                 }*/
                 break;
             case CustomEventDetails.CustomEventType.WithdrawPokemon:
-                yield return StartCoroutine(PlayerMovement.player.followerScript.withdrawToBall());
+                yield return StartCoroutine(PlayerMovement.Singleton.followerScript.withdrawToBall());
                 break;
             case CustomEventDetails.CustomEventType.ReleasePokemon:
-                yield return StartCoroutine(PlayerMovement.player.followerScript.releaseFromBall());
+                yield return StartCoroutine(PlayerMovement.Singleton.followerScript.releaseFromBall());
                 break;
             case CustomEventDetails.CustomEventType.SetRespawn:
                 SaveData.currentSave.respawnScenePosition = new PokemonUnity.Utility.SeriV3(new Vector3(currentEvent.ints[0], currentEvent.ints[1], currentEvent.ints[2]));
@@ -1272,8 +1272,8 @@ public class CustomEvent : MonoBehaviour
                 break;
             case CustomEventDetails.CustomEventType.SetCameraPosition:
                 yield return StartCoroutine(setCameraPosition(
-                    PlayerMovement.player.transform.Find("Camera") != null ? 
-                        PlayerMovement.player.transform.Find("Camera").transform : GameObject.Find("Camera").transform, 
+                    PlayerMovement.Singleton.transform.Find("Camera") != null ? 
+                        PlayerMovement.Singleton.transform.Find("Camera").transform : GameObject.Find("Camera").transform, 
                     new Vector3(currentEvent.ints[0], currentEvent.ints[1], currentEvent.ints[2]), currentEvent.float0));
                 break;
             case CustomEventDetails.CustomEventType.StartCoroutine:
@@ -1306,24 +1306,24 @@ public class CustomEvent : MonoBehaviour
             case CustomEventDetails.CustomEventType.SetNPCFollower:
                 if (GlobalVariables.Singleton.followerOut)
                 {
-                    yield return StartCoroutine(PlayerMovement.player.followerScript.withdrawToBall());
+                    yield return StartCoroutine(PlayerMovement.Singleton.followerScript.withdrawToBall());
                 }
 
-                if (PlayerMovement.player.npcFollower)
+                if (PlayerMovement.Singleton.npcFollower)
                 {
-                    PlayerMovement.player.npcFollower.hitBox.name = "NPC_Object";
-                    PlayerMovement.player.npcFollower.enabled = false;
-                    PlayerMovement.player.npcFollower = null;
+                    PlayerMovement.Singleton.npcFollower.hitBox.name = "NPC_Object";
+                    PlayerMovement.Singleton.npcFollower.enabled = false;
+                    PlayerMovement.Singleton.npcFollower = null;
                 }
                 
                 currentEvent.object0.GetComponent<NPCFollower>().enabled = true;
                 currentEvent.object0.GetComponent<NPCFollower>().hitBox.name = "NPC_Transparent";
-                PlayerMovement.player.npcFollower = currentEvent.object0.GetComponent<NPCFollower>();
+                PlayerMovement.Singleton.npcFollower = currentEvent.object0.GetComponent<NPCFollower>();
                 break;
             case CustomEventDetails.CustomEventType.RemoveNPCFollower:
-                PlayerMovement.player.npcFollower.hitBox.name = "NPC_Object";
-                PlayerMovement.player.npcFollower.enabled = false;
-                PlayerMovement.player.npcFollower = null;
+                PlayerMovement.Singleton.npcFollower.hitBox.name = "NPC_Object";
+                PlayerMovement.Singleton.npcFollower.enabled = false;
+                PlayerMovement.Singleton.npcFollower = null;
                 break;
         }
     }
@@ -1332,10 +1332,10 @@ public class CustomEvent : MonoBehaviour
     {
         Debug.Log(cameraDefaultPos.ToString());
 
-        LeanTween.move(camera.gameObject, cameraDefaultPos+PlayerMovement.player.transform.position, duration);
+        LeanTween.move(camera.gameObject, cameraDefaultPos+PlayerMovement.Singleton.transform.position, duration);
         yield return new WaitForSeconds(duration);
 
-        camera.parent = PlayerMovement.player.transform;
+        camera.parent = PlayerMovement.Singleton.transform;
         isCameraDefaultPos = true;
     }
 

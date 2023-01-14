@@ -19,12 +19,12 @@ public class InteractTrainerSight : MonoBehaviour
     {
         if (other.name == "Player_Transparent")
         {
-            if (PlayerMovement.player.busyWith != trainer.gameObject)
+            if (PlayerMovement.Singleton.busyWith != trainer.gameObject)
             {
                 int playerLocation = -1;
 
-                float playerX = Mathf.Round(PlayerMovement.player.hitBox.position.x);
-                float playerZ = Mathf.Round(PlayerMovement.player.hitBox.position.z);
+                float playerX = Mathf.Round(PlayerMovement.Singleton.hitBox.position.x);
+                float playerZ = Mathf.Round(PlayerMovement.Singleton.hitBox.position.z);
 
                 if (playerX == Mathf.Round(transform.position.x))
                 {
@@ -56,7 +56,7 @@ public class InteractTrainerSight : MonoBehaviour
                 }
 
                 //if running past a random turner
-                if (PlayerMovement.player.running && playerLocation != -1 &&
+                if (PlayerMovement.Singleton.running && playerLocation != -1 &&
                     trainer.trainerBehaviour == InteractTrainer.TrainerBehaviour.Turn && !trainer.defeated)
                 {
                     trainer.direction = playerLocation;

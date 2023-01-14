@@ -41,7 +41,7 @@ public class InteractPush : MonoBehaviour
 
     void Start()
     {
-        Player = PlayerMovement.player;
+        Player = PlayerMovement.Singleton;
     }
 
     public IEnumerator interact()

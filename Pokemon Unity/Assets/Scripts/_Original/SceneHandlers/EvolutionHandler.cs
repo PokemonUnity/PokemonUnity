@@ -264,7 +264,7 @@ public class EvolutionHandler : MonoBehaviour
         }
 
         StartCoroutine(ScreenFade.Singleton.Fade(false, 1f));
-        BgmHandler.main.ResumeMain(1.4f, PlayerMovement.player.accessedMapSettings.getBGM());
+        BgmHandler.main.ResumeMain(1.4f, PlayerMovement.Singleton.accessedMapSettings.getBGM());
         yield return new WaitForSeconds(1.2f);
 
         this.gameObject.SetActive(false);

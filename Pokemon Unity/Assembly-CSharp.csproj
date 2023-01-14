@@ -244,7 +244,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractPush.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\PacketType.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\Scene.cs" />
-    <Compile Include="Assets\Scripts\_Original\MapNameBoxHandler.cs" />
+    <Compile Include="Assets\Scripts\_Original\MapNameBoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Abilities\Turboblaze.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\RotatableGUIItem.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\MapTiles.cs" />

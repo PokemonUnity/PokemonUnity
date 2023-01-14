@@ -60,7 +60,7 @@ public class FollowerMovement : MonoBehaviour
 	{
         return; // FIXME
 		Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
-		Player = PlayerMovement.player;
+		Player = PlayerMovement.Singleton;
 
 		pawn = transform.Find("Pawn");
 		pawnLight = pawn.Find("PawnLight");
@@ -82,7 +82,7 @@ public class FollowerMovement : MonoBehaviour
 	void Start()
 	{
         return; // FIXME
-		Player = PlayerMovement.player;
+		Player = PlayerMovement.Singleton;
 		startPosition = transform.position;
 
 		if (PokemonUnity.Game.GameData.Trainer.party[0] == null)
@@ -138,11 +138,11 @@ public class FollowerMovement : MonoBehaviour
 		if (!hide) {
 			float scale;
 
-			Transform cam = PlayerMovement.player.transform.Find("Camera") != null
-				? PlayerMovement.player.transform.Find("Camera")
+			Transform cam = PlayerMovement.Singleton.transform.Find("Camera") != null
+				? PlayerMovement.Singleton.transform.Find("Camera")
 				: GameObject.Find("Camera").transform;
 
-			Vector3 position = cam.position - PlayerMovement.player.getCamOrigin();
+			Vector3 position = cam.position - PlayerMovement.Singleton.getCamOrigin();
 
 			if (transform.position.z > position.z)
 			{
@@ -161,8 +161,8 @@ public class FollowerMovement : MonoBehaviour
 		
 			pawn.transform.localScale = new Vector3(scale,scale,scale);
 		
-			Camera camera = PlayerMovement.player.transform.Find("Camera") != null
-				? PlayerMovement.player.transform.Find("Camera").GetComponent<Camera>()
+			Camera camera = PlayerMovement.Singleton.transform.Find("Camera") != null
+				? PlayerMovement.Singleton.transform.Find("Camera").GetComponent<Camera>()
 				: GameObject.Find("Camera").GetComponent<Camera>();
 		
 			pawn.transform.LookAt(camera.transform);
@@ -244,10 +244,10 @@ public class FollowerMovement : MonoBehaviour
 	{
 		if (PokemonUnity.Game.GameData.Trainer.party[0] != null)
 		{
-			if (PlayerMovement.player.npcFollower == null)
+			if (PlayerMovement.Singleton.npcFollower == null)
 			{
 				GameObject ball = sRenderer.transform.parent.Find("pokeball").gameObject;
-				Player = PlayerMovement.player;
+				Player = PlayerMovement.Singleton;
 				
 				canMove = false;
 				followerLight.enabled = false;
@@ -395,7 +395,7 @@ public class FollowerMovement : MonoBehaviour
 		sReflectionRenderer.sprite = null;
 		sLReflectionRenderer.sprite = null;
 		hide = true;
-		transform.position = PlayerMovement.player.transform.position;
+		transform.position = PlayerMovement.Singleton.transform.position;
 	}
 
 	public void ActivateMove()
@@ -495,7 +495,7 @@ public class FollowerMovement : MonoBehaviour
 
 				float time = 0.055f;
 				
-				yield return new WaitForSeconds((PlayerMovement.player.moving && PlayerMovement.player.running) ? time / 2 : time);
+				yield return new WaitForSeconds((PlayerMovement.Singleton.moving && PlayerMovement.Singleton.running) ? time / 2 : time);
 			}
 
 			frame++;
@@ -513,7 +513,7 @@ public class FollowerMovement : MonoBehaviour
 
 	private void playClip(AudioClip clip)
 	{
-		AudioSource PlayerAudio = PlayerMovement.player.getAudio();
+		AudioSource PlayerAudio = PlayerMovement.Singleton.getAudio();
 		
 		PlayerAudio.clip = clip;
 		PlayerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
@@ -532,11 +532,11 @@ public class FollowerMovement : MonoBehaviour
 		float height = 2.1f;
 		Vector3 startPosition = pawn.position;
 
-		playClip(PlayerMovement.player.jumpClip);
+		playClip(PlayerMovement.Singleton.jumpClip);
 
 		while (increment < 1)
 		{
-			increment += (1 / PlayerMovement.player.walkSpeed) * Time.deltaTime;
+			increment += (1 / PlayerMovement.Singleton.walkSpeed) * Time.deltaTime;
 			if (increment > 1)
 			{
 				increment = 1;
@@ -547,7 +547,7 @@ public class FollowerMovement : MonoBehaviour
 		}
 		pawn.position = new Vector3(pawn.position.x, startPosition.y, pawn.position.z);
 
-		playClip(PlayerMovement.player.landClip);
+		playClip(PlayerMovement.Singleton.landClip);
 	}
 
 	public IEnumerator interact()

@@ -10,37 +10,37 @@ public class BumpLedge : MonoBehaviour
 
     private IEnumerator bump()
     {
-        if (PlayerMovement.player.direction == movementDirection)
+        if (PlayerMovement.Singleton.direction == movementDirection)
         {
             if (!active)
             {
                 active = true;
             
-                PlayerMovement.player.pauseInput();
+                PlayerMovement.Singleton.pauseInput();
                 
-                PlayerMovement.player.followerScript.canMove = false;
-                PlayerMovement.player.forceMoveForward(2);
+                PlayerMovement.Singleton.followerScript.canMove = false;
+                PlayerMovement.Singleton.forceMoveForward(2);
                 
-                if (!PlayerMovement.player.running)
+                if (!PlayerMovement.Singleton.running)
                 {
-                    yield return new WaitForSeconds(PlayerMovement.player.speed * 0.5f);
-                    StartCoroutine(PlayerMovement.player.jump());
-                    yield return new WaitForSeconds(PlayerMovement.player.speed * 0.5f);
+                    yield return new WaitForSeconds(PlayerMovement.Singleton.speed * 0.5f);
+                    StartCoroutine(PlayerMovement.Singleton.jump());
+                    yield return new WaitForSeconds(PlayerMovement.Singleton.speed * 0.5f);
                 }
                 else
                 {
-                    StartCoroutine(PlayerMovement.player.jump());
-                    yield return new WaitForSeconds(PlayerMovement.player.speed);
+                    StartCoroutine(PlayerMovement.Singleton.jump());
+                    yield return new WaitForSeconds(PlayerMovement.Singleton.speed);
                 }
-                yield return new WaitForSeconds(PlayerMovement.player.speed);
+                yield return new WaitForSeconds(PlayerMovement.Singleton.speed);
 
                 if (GlobalVariables.Singleton.followerOut)
                 {
-                    PlayerMovement.player.followerScript.canMove = true;
+                    PlayerMovement.Singleton.followerScript.canMove = true;
                 }
-                if (!PlayerMovement.player.busyWith)
+                if (!PlayerMovement.Singleton.busyWith)
                 {
-                    PlayerMovement.player.unpauseInput();
+                    PlayerMovement.Singleton.unpauseInput();
                 }
                 active = false;
             }

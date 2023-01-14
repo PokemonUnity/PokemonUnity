@@ -25,10 +25,10 @@ using Random = System.Random;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public static PlayerMovement player;
+    public static PlayerMovement Singleton;
 
     private DialogBoxHandlerNew Dialog;
-    private MapNameBoxHandler MapName;
+    private MapNameBoxBehaviour MapName;
 
     //before a script runs, it'll check if the player is busy with another script's GameObject.
     public GameObject busyWith = null;
@@ -96,8 +96,8 @@ public class PlayerMovement : MonoBehaviour
     private bool animPause;
     private bool overrideAnimPause;
 
-    public int walkFPS = 7;
-    public int runFPS = 12;
+    public int WalkFPS = 7;
+    public int RunFPS = 12;
 
     private int mostRecentDirectionPressed = 0;
     private float directionChangeInputDelay = 0.08f;
@@ -106,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
 //	private SceneTransition sceneTransition;
 
-    private AudioSource PlayerAudio;
+    private AudioSource playerAudio;
 
     public AudioClip bumpClip;
     public AudioClip jumpClip;
@@ -115,14 +115,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        PlayerAudio = transform.GetComponent<AudioSource>();
+        playerAudio = transform.GetComponent<AudioSource>();
 
         //set up the reference to this script.
-        player = this;
+        Singleton = this;
 
         // FIXME
         //Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
-        MapName = GameObject.Find("GUI").GetComponent<MapNameBoxHandler>();
+        MapName = GameObject.Find("GUI").GetComponent<MapNameBoxBehaviour>();
 
         canInput = true;
         speed = walkSpeed;
@@ -155,14 +155,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        cam_origin = transform.Find("Camera").localPosition;
+        cam_origin = GameObject.FindGameObjectWithTag("MainCamera").transform.localPosition;
         
         if (!surfing)
         {
             updateMount(false);
         }
 
-        updateAnimation("walk", walkFPS);
+        updateAnimation("walk", WalkFPS);
         StartCoroutine("animateSprite");
         animPause = true;
 
@@ -221,7 +221,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (accessedMapSettings.mapNameAppears)
             {
-                MapName.display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
+                MapName.Display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
             }
 
             //Update Weather
@@ -437,18 +437,18 @@ public class PlayerMovement : MonoBehaviour
                         running = true;
                         if (moving)
                         {
-                            updateAnimation("run", runFPS);
+                            updateAnimation("run", RunFPS);
                         }
                         else
                         {
-                            updateAnimation("walk", walkFPS);
+                            updateAnimation("walk", WalkFPS);
                         }
                         speed = runSpeed;
                     }
                     else
                     {
                         running = false;
-                        updateAnimation("walk", walkFPS);
+                        updateAnimation("walk", WalkFPS);
                         speed = walkSpeed;
                     }
                 }
@@ -648,7 +648,7 @@ public class PlayerMovement : MonoBehaviour
     {
         frame = 0;
         frames = 4;
-        framesPerSec = walkFPS;
+        framesPerSec = WalkFPS;
         secPerFrame = 1f / (float) framesPerSec;
         while (true)
         {
@@ -684,15 +684,15 @@ public class PlayerMovement : MonoBehaviour
     ///Attempts to set player to be busy with "caller" and pauses input, returning true if the request worked.
     public bool setCheckBusyWith(GameObject caller)
     {
-        if (PlayerMovement.player.busyWith == null)
+        if (PlayerMovement.Singleton.busyWith == null)
         {
-            PlayerMovement.player.busyWith = caller;
+            PlayerMovement.Singleton.busyWith = caller;
         }
         //if the player is definitely busy with caller object
-        if (PlayerMovement.player.busyWith == caller)
+        if (PlayerMovement.Singleton.busyWith == caller)
         {
             pauseInput();
-            Debug.Log("Busy with " + PlayerMovement.player.busyWith);
+            Debug.Log("Busy with " + PlayerMovement.Singleton.busyWith);
             return true;
         }
         return false;
@@ -702,9 +702,9 @@ public class PlayerMovement : MonoBehaviour
     ///the player is still not busy 0.1 seconds after calling.
     public void unsetCheckBusyWith(GameObject caller)
     {
-        if (PlayerMovement.player.busyWith == caller)
+        if (PlayerMovement.Singleton.busyWith == caller)
         {
-            PlayerMovement.player.busyWith = null;
+            PlayerMovement.Singleton.busyWith = null;
         }
         StartCoroutine(checkBusinessBeforeUnpause(0.1f));
     }
@@ -719,13 +719,13 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         if (busyConstraint)
         {
-            if (PlayerMovement.player.busyWith == null)
+            if (PlayerMovement.Singleton.busyWith == null)
             {
                 unpauseInput();
             }
             else
             {
-                Debug.Log("Busy with " + PlayerMovement.player.busyWith);
+                Debug.Log("Busy with " + PlayerMovement.Singleton.busyWith);
             }
         }
     }
@@ -735,7 +735,7 @@ public class PlayerMovement : MonoBehaviour
         canInput = false;
         if (animationName == "run")
         {
-            updateAnimation("walk", walkFPS);
+            updateAnimation("walk", WalkFPS);
         }
         if (running || bike)
         {
@@ -802,7 +802,7 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioSource getAudio()
     {
-        return PlayerAudio;
+        return playerAudio;
     }
     
     public Vector3 getForwardVector()
@@ -940,7 +940,7 @@ public class PlayerMovement : MonoBehaviour
                         if (surfing && destinationTileTag != 2f)
                         {
                             //disable surfing if not headed to water tile
-                            updateAnimation("walk", walkFPS);
+                            updateAnimation("walk", WalkFPS);
                             speed = walkSpeed;
                             surfing = false;
                             StartCoroutine("dismount");
@@ -963,7 +963,7 @@ public class PlayerMovement : MonoBehaviour
                             
                             if (accessedMapSettings.mapNameAppears)
                             {
-                                MapName.display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
+                                MapName.Display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
                             }
                             
                             Debug.Log(destinationMap.name + "   " + accessedAudio.name);
@@ -1090,12 +1090,12 @@ public class PlayerMovement : MonoBehaviour
                     if (destinationTag == 2)
                     {
                         //surf tile
-                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Location.Surfing));
+                        StartCoroutine(PlayerMovement.Singleton.wildEncounter(WildPokemonInitialiser.Location.Surfing));
                     }
                     else
                     {
                         //land tile
-                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Location.Standard));
+                        StartCoroutine(PlayerMovement.Singleton.wildEncounter(WildPokemonInitialiser.Location.Standard));
                     }
                 }
             }
@@ -1339,7 +1339,7 @@ public class PlayerMovement : MonoBehaviour
                         forceMoveForward();
                         yield return StartCoroutine(jump());
 
-                        updateAnimation("surf", walkFPS);
+                        updateAnimation("surf", WalkFPS);
                         speed = surfSpeed;
                     }
                     Dialog.UndrawDialogBox();
@@ -1426,14 +1426,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void playClip(AudioClip clip)
     {
-        PlayerAudio.clip = clip;
-        PlayerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
-        PlayerAudio.Play();
+        playerAudio.clip = clip;
+        playerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
+        playerAudio.Play();
     }
 
     private void playBump()
     {
-        if (!PlayerAudio.isPlaying)
+        if (!playerAudio.isPlaying)
         {
             if (!moving && !overrideAnimPause)
             {
