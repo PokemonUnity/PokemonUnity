@@ -180,11 +180,11 @@ public class Pokemon
         }
 
         this.metLevel = level;
-        if (PlayerMovement.player != null)
+        if (PlayerMovement.Singleton != null)
         {
-            if (PlayerMovement.player.accessedMapSettings != null)
+            if (PlayerMovement.Singleton.accessedMapSettings != null)
             {
-                this.metMap = PlayerMovement.player.accessedMapSettings.mapName;
+                this.metMap = PlayerMovement.Singleton.accessedMapSettings.mapName;
             }
             else
             {
@@ -292,11 +292,11 @@ public class Pokemon
         this.heldItem = heldItem;
 
         this.metLevel = level;
-        if (PlayerMovement.player != null)
+        if (PlayerMovement.Singleton != null)
         {
-            if (PlayerMovement.player.accessedMapSettings != null)
+            if (PlayerMovement.Singleton.accessedMapSettings != null)
             {
-                this.metMap = PlayerMovement.player.accessedMapSettings.mapName;
+                this.metMap = PlayerMovement.Singleton.accessedMapSettings.mapName;
             }
             else
             {
@@ -403,9 +403,9 @@ public class Pokemon
         this.IDno = SaveData.currentSave.playerID;
 
         this.metLevel = level;
-        if (PlayerMovement.player.accessedMapSettings != null)
+        if (PlayerMovement.Singleton.accessedMapSettings != null)
         {
-            this.metMap = PlayerMovement.player.accessedMapSettings.mapName;
+            this.metMap = PlayerMovement.Singleton.accessedMapSettings.mapName;
         }
         else
         {
@@ -827,7 +827,7 @@ public class Pokemon
             else if (methods[i] == "Map")
             {
                 //if method contains a Map requirement
-                string mapName = PlayerMovement.player.currentMap.name;
+                string mapName = PlayerMovement.Singleton.currentMap.name;
                 if (mapName != parameters[i])
                 {
                     //and current map is not the required map to evolve,

@@ -58,7 +58,7 @@ public class InteractBreak : MonoBehaviour
         PokemonEssentials.Interface.PokeBattle.IPokemon targetPokemon = null; //SaveData.currentSave.PC.getFirstFEUserInParty(fieldEffect);
         if (targetPokemon != null)
         {
-            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+            if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
             {
                 Dialog.DrawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
@@ -106,12 +106,12 @@ public class InteractBreak : MonoBehaviour
                 }
                 Dialog.UndrawDialogBox();
                 yield return new WaitForSeconds(0.2f);
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);
             }
         }
         else
         {
-            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+            if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
             {
                 Dialog.DrawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
@@ -122,7 +122,7 @@ public class InteractBreak : MonoBehaviour
                 }
                 Dialog.UndrawDialogBox();
                 yield return new WaitForSeconds(0.2f);
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);
             }
         }
     }

@@ -25,7 +25,7 @@ using Random = System.Random;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public static PlayerMovement player;
+    public static PlayerMovement Singleton;
 
     private DialogBoxHandlerNew Dialog;
     private MapNameBoxHandler MapName;
@@ -115,10 +115,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        PlayerAudio = transform.GetComponent<AudioSource>();
+        // FIXME
+        //PlayerAudio = transform.GetComponent<AudioSource>();
 
         //set up the reference to this script.
-        player = this;
+        Singleton = this;
 
         // FIXME
         //Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
@@ -684,15 +685,15 @@ public class PlayerMovement : MonoBehaviour
     ///Attempts to set player to be busy with "caller" and pauses input, returning true if the request worked.
     public bool setCheckBusyWith(GameObject caller)
     {
-        if (PlayerMovement.player.busyWith == null)
+        if (PlayerMovement.Singleton.busyWith == null)
         {
-            PlayerMovement.player.busyWith = caller;
+            PlayerMovement.Singleton.busyWith = caller;
         }
         //if the player is definitely busy with caller object
-        if (PlayerMovement.player.busyWith == caller)
+        if (PlayerMovement.Singleton.busyWith == caller)
         {
             pauseInput();
-            Debug.Log("Busy with " + PlayerMovement.player.busyWith);
+            Debug.Log("Busy with " + PlayerMovement.Singleton.busyWith);
             return true;
         }
         return false;
@@ -702,9 +703,9 @@ public class PlayerMovement : MonoBehaviour
     ///the player is still not busy 0.1 seconds after calling.
     public void unsetCheckBusyWith(GameObject caller)
     {
-        if (PlayerMovement.player.busyWith == caller)
+        if (PlayerMovement.Singleton.busyWith == caller)
         {
-            PlayerMovement.player.busyWith = null;
+            PlayerMovement.Singleton.busyWith = null;
         }
         StartCoroutine(checkBusinessBeforeUnpause(0.1f));
     }
@@ -719,13 +720,13 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         if (busyConstraint)
         {
-            if (PlayerMovement.player.busyWith == null)
+            if (PlayerMovement.Singleton.busyWith == null)
             {
                 unpauseInput();
             }
             else
             {
-                Debug.Log("Busy with " + PlayerMovement.player.busyWith);
+                Debug.Log("Busy with " + PlayerMovement.Singleton.busyWith);
             }
         }
     }
@@ -1090,12 +1091,12 @@ public class PlayerMovement : MonoBehaviour
                     if (destinationTag == 2)
                     {
                         //surf tile
-                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Location.Surfing));
+                        StartCoroutine(PlayerMovement.Singleton.wildEncounter(WildPokemonInitialiser.Location.Surfing));
                     }
                     else
                     {
                         //land tile
-                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Location.Standard));
+                        StartCoroutine(PlayerMovement.Singleton.wildEncounter(WildPokemonInitialiser.Location.Standard));
                     }
                 }
             }

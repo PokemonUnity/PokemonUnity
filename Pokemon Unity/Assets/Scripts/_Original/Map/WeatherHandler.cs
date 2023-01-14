@@ -80,7 +80,7 @@ public class WeatherHandler : MonoBehaviour
 
         if (currentParticleSystem != null)
         {
-            currentParticleSystem.transform.position = PlayerMovement.player.transform.position;
+            currentParticleSystem.transform.position = PlayerMovement.Singleton.transform.position;
         }
     }
 

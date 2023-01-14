@@ -38,7 +38,7 @@ public class DynamicCameraHandler : MonoBehaviour
 	public void unfreeCamera()
 	{
 		isFree = false;
-		transform.parent = PlayerMovement.player.transform;
+		transform.parent = PlayerMovement.Singleton.transform;
 		resetPosition();
 	}
 	

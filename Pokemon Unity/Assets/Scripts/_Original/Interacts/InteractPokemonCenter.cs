@@ -65,7 +65,7 @@ public class InteractPokemonCenter : MonoBehaviour
 
     public IEnumerator interact()
     {
-        if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+        if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
         {
             bool followerOut = GlobalVariables.Singleton.followerOut;
             
@@ -131,7 +131,7 @@ public class InteractPokemonCenter : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
                 if (followerOut)
                 {
-                    StartCoroutine(PlayerMovement.player.followerScript.withdrawToBall());
+                    StartCoroutine(PlayerMovement.Singleton.followerScript.withdrawToBall());
                     yield return new WaitForSeconds(0.5f);
                 }
 
@@ -214,9 +214,9 @@ public class InteractPokemonCenter : MonoBehaviour
                 }
                 if (followerOut)
                 {
-                    StartCoroutine(PlayerMovement.player.followerScript.releaseFromBall());
+                    StartCoroutine(PlayerMovement.Singleton.followerScript.releaseFromBall());
                 }
-                PlayerMovement.player.followerScript.canMove = true;
+                PlayerMovement.Singleton.followerScript.canMove = true;
             }
 
             Dialog.DrawDialogBox();
@@ -236,13 +236,13 @@ public class InteractPokemonCenter : MonoBehaviour
 
             Dialog.UndrawDialogBox();
 
-            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+            PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);
         }
     }
 
     public IEnumerator respawnHeal()
     {
-        if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+        if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
         {
             bool followerOut = GlobalVariables.Singleton.followerOut;
             
@@ -363,7 +363,7 @@ public class InteractPokemonCenter : MonoBehaviour
                 yield return null;
             }
 
-            PlayerMovement.player.followerScript.canMove = true;
+            PlayerMovement.Singleton.followerScript.canMove = true;
 
             Dialog.DrawDialogBox();
             switch (Language.getLang())
@@ -387,10 +387,10 @@ public class InteractPokemonCenter : MonoBehaviour
 
             if (followerOut)
             {
-                yield return StartCoroutine(PlayerMovement.player.followerScript.releaseFromBall());
+                yield return StartCoroutine(PlayerMovement.Singleton.followerScript.releaseFromBall());
             }
 
-            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+            PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);
         }
     }
 }

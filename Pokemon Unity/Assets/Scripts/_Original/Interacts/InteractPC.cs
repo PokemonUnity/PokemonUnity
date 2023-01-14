@@ -47,9 +47,9 @@ public class InteractPC : MonoBehaviour
 
     public IEnumerator interact()
     {
-        if (PlayerMovement.player.direction == 0)
+        if (PlayerMovement.Singleton.direction == 0)
         {
-            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+            if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
             {
                 SfxHandler.Play(onClip);
                 yield return StartCoroutine("onAnim");
@@ -125,7 +125,7 @@ public class InteractPC : MonoBehaviour
                 PClight.enabled = false;
                 SfxHandler.Play(offClip);
                 yield return new WaitForSeconds(0.2f);
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);
             }
         }
     }
