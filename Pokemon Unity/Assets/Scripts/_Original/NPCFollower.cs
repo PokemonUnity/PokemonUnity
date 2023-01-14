@@ -41,7 +41,7 @@ public class NPCFollower : MonoBehaviour
     void Awake()
     {
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
-        Player = PlayerMovement.Singleton;
+        Player = PlayerMovement.player;
 
         pawn = transform.Find("Pawn");
         pawnReflection = transform.Find("PawnReflection");
@@ -58,7 +58,7 @@ public class NPCFollower : MonoBehaviour
 
     void Start()
     {
-        Player = PlayerMovement.Singleton;
+        Player = PlayerMovement.player;
         startPosition = transform.position;
         
         spriteSheet = Resources.LoadAll<Sprite>("OverworldNPCSprites/" + GetComponent<NPCHandler>().npcSpriteName);
@@ -71,11 +71,11 @@ public class NPCFollower : MonoBehaviour
         {
             float scale;
 
-            Transform cam = PlayerMovement.Singleton.transform.Find("Camera") != null
-                ? PlayerMovement.Singleton.transform.Find("Camera")
+            Transform cam = PlayerMovement.player.transform.Find("Camera") != null
+                ? PlayerMovement.player.transform.Find("Camera")
                 : GameObject.Find("Camera").transform;
 
-            Vector3 position = cam.position - PlayerMovement.Singleton.getCamOrigin();
+            Vector3 position = cam.position - PlayerMovement.player.getCamOrigin();
 
             if (transform.position.z > position.z)
             {
@@ -94,8 +94,8 @@ public class NPCFollower : MonoBehaviour
         
             pawn.transform.localScale = new Vector3(scale,scale,scale);
         
-            Camera camera = PlayerMovement.Singleton.transform.Find("Camera") != null
-                ? PlayerMovement.Singleton.transform.Find("Camera").GetComponent<Camera>()
+            Camera camera = PlayerMovement.player.transform.Find("Camera") != null
+                ? PlayerMovement.player.transform.Find("Camera").GetComponent<Camera>()
                 : GameObject.Find("Camera").GetComponent<Camera>();
         
             pawn.transform.LookAt(camera.transform);
@@ -184,7 +184,7 @@ public class NPCFollower : MonoBehaviour
         sRenderer.sprite = null;
         sReflectionRenderer.sprite = null;
         hide = true;
-        transform.position = PlayerMovement.Singleton.transform.position;
+        transform.position = PlayerMovement.player.transform.position;
     }
 
     public void ActivateMove()
@@ -200,7 +200,7 @@ public class NPCFollower : MonoBehaviour
 
     private void playClip(AudioClip clip)
     {
-        AudioSource PlayerAudio = PlayerMovement.Singleton.getAudio();
+        AudioSource PlayerAudio = PlayerMovement.player.getAudio();
         
         PlayerAudio.clip = clip;
         PlayerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
@@ -214,11 +214,11 @@ public class NPCFollower : MonoBehaviour
         float height = 2.1f;
         Vector3 startPosition = pawn.position;
 
-        playClip(PlayerMovement.Singleton.jumpClip);
+        playClip(PlayerMovement.player.jumpClip);
 
         while (increment < 1)
         {
-            increment += (1 / PlayerMovement.Singleton.walkSpeed) * Time.deltaTime;
+            increment += (1 / PlayerMovement.player.walkSpeed) * Time.deltaTime;
             if (increment > 1)
             {
                 increment = 1;
@@ -229,6 +229,6 @@ public class NPCFollower : MonoBehaviour
         }
         pawn.position = new Vector3(pawn.position.x, startPosition.y, pawn.position.z);
 
-        playClip(PlayerMovement.Singleton.landClip);
+        playClip(PlayerMovement.player.landClip);
     }
 }

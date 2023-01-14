@@ -5228,15 +5228,15 @@ public partial class BattleHandler : MonoBehaviour
         //}
 
         //GET BATTLE BACKGROUNDS
-        int currentTileTag = PlayerMovement.Singleton.currentMap.getTileTag(PlayerMovement.Singleton.transform.position);
+        int currentTileTag = PlayerMovement.player.currentMap.getTileTag(PlayerMovement.player.transform.position);
         Debug.Log(currentTileTag);
-        backgroundObject = Instantiate(PlayerMovement.Singleton.accessedMapSettings.getBattleBackground(currentTileTag),
+        backgroundObject = Instantiate(PlayerMovement.player.accessedMapSettings.getBattleBackground(currentTileTag),
             GameObject.Find("Global/BattleScene").transform);
         backgroundObject.name = "Scene";
         
         battleScenehandler = BattleScene.transform.Find("Scene").GetComponent<BattleSceneHandler>();
 
-        playerBase.sprite = PlayerMovement.Singleton.accessedMapSettings.getBattleBase(currentTileTag);
+        playerBase.sprite = PlayerMovement.player.accessedMapSettings.getBattleBase(currentTileTag);
         opponentBase.sprite = playerBase.sprite;
 
         //Set and pokemon Trainer Sprites
@@ -9137,7 +9137,7 @@ public partial class BattleHandler : MonoBehaviour
         {
             //if not defeated, the scene won't have faded out already
             StartCoroutine(ScreenFade.Singleton.Fade(false, 1f));
-            BgmHandler.main.ResumeMain(1.4f, PlayerMovement.Singleton.accessedMapSettings.getBGM());
+            BgmHandler.main.ResumeMain(1.4f, PlayerMovement.player.accessedMapSettings.getBGM());
         }
         yield return new WaitForSeconds(1.4f);
 
@@ -9185,7 +9185,7 @@ public partial class BattleHandler : MonoBehaviour
         if (statDisplayAnim != null)
             StopCoroutine(statDisplayAnim);
         GlobalVariables.Singleton.resetFollower();
-        PlayerMovement.Singleton.UpdateRPC();
+        PlayerMovement.player.UpdateRPC();
         //sceneWatch.SetActive(true);
         Destroy(backgroundObject);
         this.gameObject.SetActive(false);

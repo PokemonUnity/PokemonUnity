@@ -183,7 +183,7 @@ public class NPCHandler : MonoBehaviour
 
         if (hasLandClip)
         {
-            SfxHandler.Play(PlayerMovement.Singleton.landClip);
+            SfxHandler.Play(PlayerMovement.player.landClip);
         }
     }
 
@@ -227,7 +227,7 @@ public class NPCHandler : MonoBehaviour
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    while (PlayerMovement.Singleton.busyWith != null && PlayerMovement.Singleton.busyWith != this.gameObject &&
+                    while (PlayerMovement.player.busyWith != null && PlayerMovement.player.busyWith != this.gameObject &&
                            !overrideBusy)
                     {
                         yield return null;
@@ -284,11 +284,11 @@ public class NPCHandler : MonoBehaviour
         return; // FIXME
         float scale;
 
-        Transform cam = PlayerMovement.Singleton.transform.Find("Camera") != null
-            ? PlayerMovement.Singleton.transform.Find("Camera")
+        Transform cam = PlayerMovement.player.transform.Find("Camera") != null
+            ? PlayerMovement.player.transform.Find("Camera")
             : GameObject.Find("Camera").transform;
 
-        Vector3 position = cam.position - PlayerMovement.Singleton.getCamOrigin();
+        Vector3 position = cam.position - PlayerMovement.player.getCamOrigin();
 
         if (transform.position.z > position.z)
         {
@@ -307,8 +307,8 @@ public class NPCHandler : MonoBehaviour
         
         pawnSprite.transform.localScale = new Vector3(scale,scale,scale);
         
-        Camera camera = PlayerMovement.Singleton.transform.Find("Camera") != null
-            ? PlayerMovement.Singleton.transform.Find("Camera").GetComponent<Camera>()
+        Camera camera = PlayerMovement.player.transform.Find("Camera") != null
+            ? PlayerMovement.player.transform.Find("Camera").GetComponent<Camera>()
             : GameObject.Find("Camera").GetComponent<Camera>();
         
         pawnSprite.transform.LookAt(camera.transform);
@@ -604,7 +604,7 @@ public class NPCHandler : MonoBehaviour
         {
             speedMod = 1f;
         }
-        float speed = PlayerMovement.Singleton.walkSpeed / speedMod;
+        float speed = PlayerMovement.player.walkSpeed / speedMod;
         framesPerSec = Mathf.RoundToInt(7f * speedMod);
 
         Vector3 startPosition = transform.position;
@@ -614,7 +614,7 @@ public class NPCHandler : MonoBehaviour
         while (increment < 1f)
         {
             //increment increases slowly to 1 over the frames
-            if (PlayerMovement.Singleton.busyWith == null || PlayerMovement.Singleton.busyWith == this.gameObject ||
+            if (PlayerMovement.player.busyWith == null || PlayerMovement.player.busyWith == this.gameObject ||
                 overrideBusy)
             {
                 increment += (1f / speed) * Time.deltaTime;

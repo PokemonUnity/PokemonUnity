@@ -648,7 +648,7 @@ public class PauseHandler : MonoBehaviour
             }
         }
 
-        mapName.text = PlayerMovement.Singleton.accessedMapSettings.mapName;
+        mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
         date.text = SaveData.currentSave.playerName; //date not yet implemented
         hour.text = ""; //hour not yet implemented
         badges.text = ""+badgeTotal;
@@ -677,11 +677,11 @@ public class PauseHandler : MonoBehaviour
             
             // Saving the Scene and Positions of the player & follower
             SaveData.currentSave.levelName = Application.loadedLevelName;
-            SaveData.currentSave.playerPosition = new SeriV3(PlayerMovement.Singleton.transform.position);
-            SaveData.currentSave.playerDirection = PlayerMovement.Singleton.direction;
-            SaveData.currentSave.followerPosition = new SeriV3(PlayerMovement.Singleton.followerScript.transform.position);
-            SaveData.currentSave.followerdirection = PlayerMovement.Singleton.followerScript.direction;
-            SaveData.currentSave.mapName = PlayerMovement.Singleton.accessedMapSettings.mapName;
+            SaveData.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
+            SaveData.currentSave.playerDirection = PlayerMovement.player.direction;
+            SaveData.currentSave.followerPosition = new SeriV3(PlayerMovement.player.followerScript.transform.position);
+            SaveData.currentSave.followerdirection = PlayerMovement.player.followerScript.direction;
+            SaveData.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
             SaveData.currentSave.followerOut = GlobalVariables.Singleton.followerOut;
 
             // Saving the Non Resetting Events

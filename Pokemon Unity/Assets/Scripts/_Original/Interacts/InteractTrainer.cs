@@ -177,11 +177,11 @@ public class InteractTrainer : MonoBehaviour
         return; // FIXME
         float scale;
 
-        Transform cam = PlayerMovement.Singleton.transform.Find("Camera") != null
-            ? PlayerMovement.Singleton.transform.Find("Camera")
+        Transform cam = PlayerMovement.player.transform.Find("Camera") != null
+            ? PlayerMovement.player.transform.Find("Camera")
             : GameObject.Find("Camera").transform;
 
-        Vector3 position = cam.position - PlayerMovement.Singleton.getCamOrigin();
+        Vector3 position = cam.position - PlayerMovement.player.getCamOrigin();
 
         if (transform.position.z > position.z)
         {
@@ -200,8 +200,8 @@ public class InteractTrainer : MonoBehaviour
         
         pawnSprite.transform.localScale = new Vector3(scale,scale,scale);
         
-        Camera camera = PlayerMovement.Singleton.transform.Find("Camera") != null
-            ? PlayerMovement.Singleton.transform.Find("Camera").GetComponent<Camera>()
+        Camera camera = PlayerMovement.player.transform.Find("Camera") != null
+            ? PlayerMovement.player.transform.Find("Camera").GetComponent<Camera>()
             : GameObject.Find("Camera").GetComponent<Camera>();
         
         pawnSprite.transform.LookAt(camera.transform);
@@ -328,7 +328,7 @@ public class InteractTrainer : MonoBehaviour
         {
             for (int i = 0; i < 5; i++)
             {
-                while (PlayerMovement.Singleton.busyWith != null && PlayerMovement.Singleton.busyWith != this.gameObject)
+                while (PlayerMovement.player.busyWith != null && PlayerMovement.player.busyWith != this.gameObject)
                 {
                     yield return null;
                 }
@@ -561,7 +561,7 @@ public class InteractTrainer : MonoBehaviour
     private IEnumerator move(Vector3 movement)
     {
         float increment = 0f;
-        float speed = PlayerMovement.Singleton.walkSpeed;
+        float speed = PlayerMovement.player.walkSpeed;
         Vector3 startPosition = transform.position;
         Vector3 destinationPosition = startPosition + movement;
 
@@ -569,7 +569,7 @@ public class InteractTrainer : MonoBehaviour
         while (increment < 1f)
         {
             //increment increases slowly to 1 over the frames
-            if (PlayerMovement.Singleton.busyWith == null || PlayerMovement.Singleton.busyWith == this.gameObject)
+            if (PlayerMovement.player.busyWith == null || PlayerMovement.player.busyWith == this.gameObject)
             {
                 increment += (1f / speed) * Time.deltaTime;
                     //speed is determined by how many squares are crossed in one second
@@ -591,7 +591,7 @@ public class InteractTrainer : MonoBehaviour
         if (!defeated && !busy)
         {
             //if the player isn't busy with any other object
-            if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
+            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
             {
                 busy = true;
                 BgmHandler.main.PlayOverlay(introBGM, samplesLoopStart);
@@ -612,7 +612,7 @@ public class InteractTrainer : MonoBehaviour
                 {
                     flippedDirection -= 4;
                 }
-                PlayerMovement.Singleton.direction = flippedDirection;
+                PlayerMovement.player.direction = flippedDirection;
 
                 StartCoroutine(interact());
             }
@@ -622,13 +622,13 @@ public class InteractTrainer : MonoBehaviour
 
     private IEnumerator interact()
     {
-        if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
+        if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
         {
             busy = true;
 
             //calculate Player's position relative to target object's and set direction accordingly.
-            float xDistance = this.transform.position.x - PlayerMovement.Singleton.transform.position.x;
-            float zDistance = this.transform.position.z - PlayerMovement.Singleton.transform.position.z;
+            float xDistance = this.transform.position.x - PlayerMovement.player.transform.position.x;
+            float zDistance = this.transform.position.z - PlayerMovement.player.transform.position.z;
             if (xDistance >= Mathf.Abs(zDistance))
             {
                 //Mathf.Abs() converts zDistance to a positive always.
@@ -687,11 +687,11 @@ public class InteractTrainer : MonoBehaviour
 
                 Trainer player2 = null;
 
-                if (PlayerMovement.Singleton.npcFollower)
+                if (PlayerMovement.player.npcFollower)
                 {
-                    if (PlayerMovement.Singleton.npcFollower.GetComponent<Trainer>() != null)
+                    if (PlayerMovement.player.npcFollower.GetComponent<Trainer>() != null)
                     {
-                        player2 = PlayerMovement.Singleton.npcFollower.GetComponent<Trainer>();
+                        player2 = PlayerMovement.player.npcFollower.GetComponent<Trainer>();
                     }
                 }
 
@@ -739,7 +739,7 @@ public class InteractTrainer : MonoBehaviour
             }
 
             busy = false;
-            PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);
+            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
         }
     }
 }

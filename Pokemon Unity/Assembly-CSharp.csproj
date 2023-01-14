@@ -320,6 +320,7 @@
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\GameObjectExtensions.cs" />
     <Compile Include="Assets\Scripts\Behaviours\DontDestroy.cs" />
+    <Compile Include="Assets\Scripts\_Original\MapNameBoxHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

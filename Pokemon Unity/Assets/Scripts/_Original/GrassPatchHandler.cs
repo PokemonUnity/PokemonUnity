@@ -35,7 +35,7 @@ public class GrassPatchHandler : MonoBehaviour
             if (other.transform.parent.name == "Player")
             {
                 SfxHandler.Play(walkClip, Random.Range(0.85f, 1.1f));
-                StartCoroutine(PlayerMovement.Singleton.wildEncounter(location));
+                StartCoroutine(PlayerMovement.player.wildEncounter(location));
             }
         }
     }
