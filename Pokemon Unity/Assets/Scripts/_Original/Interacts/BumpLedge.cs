@@ -34,7 +34,7 @@ public class BumpLedge : MonoBehaviour
                 }
                 yield return new WaitForSeconds(PlayerMovement.player.speed);
 
-                if (GlobalVariables.global.followerOut)
+                if (GlobalVariables.Singleton.followerOut)
                 {
                     PlayerMovement.player.followerScript.canMove = true;
                 }

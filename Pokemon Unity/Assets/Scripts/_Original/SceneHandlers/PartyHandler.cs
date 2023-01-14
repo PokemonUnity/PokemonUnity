@@ -1098,7 +1098,7 @@ public class PartyHandler : MonoBehaviour
         StopCoroutine(animateIcons());
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
         yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
-        GlobalVariables.global.resetFollower();
+        GlobalVariables.Singleton.resetFollower();
         this.gameObject.SetActive(false);
     }
 }

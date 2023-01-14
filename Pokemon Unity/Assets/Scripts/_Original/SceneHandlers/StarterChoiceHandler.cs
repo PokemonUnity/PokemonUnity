@@ -41,8 +41,8 @@ public class StarterChoiceHandler : MonoBehaviour
     private void Start()
     {
         camera = transform.Find("StarterChoice_Camera").GetComponent<Camera>();
-        dialog = GlobalVariables.global.transform.Find("GUI").GetComponent<DialogBoxHandlerNew>();
-        display = GlobalVariables.global.transform.Find("MainCamera/MiscDisplay").gameObject;
+        dialog = GlobalVariables.Singleton.transform.Find("GUI").GetComponent<DialogBoxHandlerNew>();
+        display = GlobalVariables.Singleton.transform.Find("MainCamera/MiscDisplay").gameObject;
 
         foreach (SpriteRenderer sprite in starterSprites)
         {

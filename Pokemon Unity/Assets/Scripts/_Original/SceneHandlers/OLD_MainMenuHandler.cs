@@ -590,16 +590,16 @@ public class OLD_MainMenuHandler : MonoBehaviour {
                     Debug.Log(SaveLoad.savedGames[1]);
                     Debug.Log(SaveLoad.savedGames[2]);
 
-                    GlobalVariables.global.playerPosition = SaveData.currentSave.playerPosition.v3;
-                    GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
-                    GlobalVariables.global.followerOut = SaveData.currentSave.followerOut;
+                    GlobalVariables.Singleton.playerPosition = SaveData.currentSave.playerPosition.v3;
+                    GlobalVariables.Singleton.playerDirection = SaveData.currentSave.playerDirection;
+                    GlobalVariables.Singleton.followerOut = SaveData.currentSave.followerOut;
 
                     if (SaveData.currentSave.followerPosition != null && SaveData.currentSave.followerdirection != null) {
-                        GlobalVariables.global.followerPosition = SaveData.currentSave.followerPosition.Value.v3;
-                        GlobalVariables.global.followerDirection = SaveData.currentSave.followerdirection;
+                        GlobalVariables.Singleton.followerPosition = SaveData.currentSave.followerPosition.Value.v3;
+                        GlobalVariables.Singleton.followerDirection = SaveData.currentSave.followerdirection;
                     }
 
-                    GlobalVariables.global.fadeIn = true;
+                    GlobalVariables.Singleton.fadeIn = true;
 
                     Application.LoadLevel(SaveData.currentSave.levelName);
                 } else if (selectedButton == 1) {
@@ -612,10 +612,10 @@ public class OLD_MainMenuHandler : MonoBehaviour {
                     SaveData.currentSave = new SaveData(fileCount);
 
                     //GlobalVariables.global.SetDebugFileData();
-                    GlobalVariables.global.playerPosition = new Vector3(2, 0, -3);
+                    GlobalVariables.Singleton.playerPosition = new Vector3(2, 0, -3);
                     //GlobalVariables.global.playerPosition = new Vector3(32, 1, 5);
-                    GlobalVariables.global.playerDirection = 0;
-                    GlobalVariables.global.fadeIn = true;
+                    GlobalVariables.Singleton.playerDirection = 0;
+                    GlobalVariables.Singleton.fadeIn = true;
                     Application.LoadLevel("route_3");
                     //Application.LoadLevel("flowery_town_indoors");
                 } else if (selectedButton == 2) {

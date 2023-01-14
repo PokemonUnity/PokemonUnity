@@ -214,7 +214,7 @@ public class EvolutionHandler : MonoBehaviour
         {
             //ToDo: Uncomment...
             //selectedPokemon.evolve(evolutionMethod);
-            GlobalVariables.global.resetFollower();
+            GlobalVariables.Singleton.resetFollower();
 
             yield return new WaitForSeconds(3.2f);
 

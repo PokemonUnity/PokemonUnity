@@ -244,11 +244,11 @@ public class InteractDoorway : MonoBehaviour
                 {
                     NonResettingHandler.saveDataToGlobal();
 
-                    GlobalVariables.global.playerPosition = transferPosition;
-                    GlobalVariables.global.playerDirection = transferDirection;
-                    GlobalVariables.global.playerForwardOnLoad = movesForward;
-                    GlobalVariables.global.playerExiting = true;
-                    GlobalVariables.global.fadeIn = true;
+                    GlobalVariables.Singleton.playerPosition = transferPosition;
+                    GlobalVariables.Singleton.playerDirection = transferDirection;
+                    GlobalVariables.Singleton.playerForwardOnLoad = movesForward;
+                    GlobalVariables.Singleton.playerExiting = true;
+                    GlobalVariables.Singleton.fadeIn = true;
                     SceneManager.LoadScene(transferSceneName);
                 }
                 else
@@ -264,14 +264,14 @@ public class InteractDoorway : MonoBehaviour
                     PlayerMovement.player.updateDirection(transferDirection);
                     
                     
-                    PlayerMovement.player.followerScript.direction = GlobalVariables.global.playerDirection;
+                    PlayerMovement.player.followerScript.direction = GlobalVariables.Singleton.playerDirection;
                     PlayerMovement.player.followerScript.transform.localPosition = -Direction.Vectorize(transferDirection);
                     if (movesForward)
                     {
                         PlayerMovement.player.forceMoveForward();
                     }
 
-                    GlobalVariables.global.fadeIn = true;
+                    GlobalVariables.Singleton.fadeIn = true;
                     //SceneTransition.gameScene.FadeIn();
                     StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.SlowedSpeed));
 

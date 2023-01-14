@@ -929,8 +929,8 @@ public class CustomEvent : MonoBehaviour
                 //custom cutouts not yet implemented
                 if (trainer.trainerClass == Trainer.Class.Champion)
                 {
-                    GlobalVariables.global.transform.Find("GUI/VsScreen").gameObject.SetActive(true);
-                    yield return StartCoroutine(GlobalVariables.global.transform.Find("GUI/VsScreen")
+                    GlobalVariables.Singleton.transform.Find("GUI/VsScreen").gameObject.SetActive(true);
+                    yield return StartCoroutine(GlobalVariables.Singleton.transform.Find("GUI/VsScreen")
                         .GetComponent<DefaultTransition>().animate());
                 }
                 else
@@ -1302,7 +1302,7 @@ public class CustomEvent : MonoBehaviour
                 BgmHandler.main.PlayOverlay(null, 0);
                 break;
             case CustomEventDetails.CustomEventType.SetNPCFollower:
-                if (GlobalVariables.global.followerOut)
+                if (GlobalVariables.Singleton.followerOut)
                 {
                     yield return StartCoroutine(PlayerMovement.player.followerScript.withdrawToBall());
                 }

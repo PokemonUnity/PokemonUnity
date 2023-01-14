@@ -18,7 +18,7 @@ public class GlobalVariables : MonoBehaviour
     public static GameSetting<float> MusicVolumeSetting;
 
     #region Old - Property Variables
-    public static GlobalVariables global;
+    public static GlobalVariables Singleton;
 
     public Vector3 playerPosition;
     public int playerDirection;
@@ -68,59 +68,49 @@ public class GlobalVariables : MonoBehaviour
         SFXVolumeSetting = sfxVolumeSetting;
         MusicVolumeSetting = musicVolumeSetting;
 
-        return;
+        //SceneManager.sceneLoaded += CheckLevelLoaded;
 
-        #region old code
-
-        SceneManager.sceneLoaded += CheckLevelLoaded;
-        if (SaveData.currentSave == null)
-        {
+        if (SaveData.currentSave == null) {
             Debug.Log("save file created");
             SaveData.currentSave = new SaveData(-1);
         }
-        if (global == null)
-        {
-            global = this;
 
+        if (Singleton == null) {
+            Singleton = this;
+            #region old code
             //debugText = transform.Find("DEBUG").GetComponent<Text>();
             //debugTextShadow = debugText.transform.Find("DEBUGShadow").GetComponent<Text>();
 
-            DontDestroyOnLoad(gameObject);
+            //if (!PlayerPrefs.HasKey("textSpeed") || !PlayerPrefs.HasKey("musicVolume") ||
+            //    !PlayerPrefs.HasKey("sfxVolume") ||
+            //    !PlayerPrefs.HasKey("frameStyle") || !PlayerPrefs.HasKey("battleScene") ||
+            //    !PlayerPrefs.HasKey("battleStyle") ||
+            //    !PlayerPrefs.HasKey("screenSize") || !PlayerPrefs.HasKey("fullscreen"))
+            //{
+            //    //if a playerpref isn't set
 
-
-            if (!PlayerPrefs.HasKey("textSpeed") || !PlayerPrefs.HasKey("musicVolume") ||
-                !PlayerPrefs.HasKey("sfxVolume") ||
-                !PlayerPrefs.HasKey("frameStyle") || !PlayerPrefs.HasKey("battleScene") ||
-                !PlayerPrefs.HasKey("battleStyle") ||
-                !PlayerPrefs.HasKey("screenSize") || !PlayerPrefs.HasKey("fullscreen"))
-            {
-                //if a playerpref isn't set
-
-                PlayerPrefs.SetInt("textSpeed", 2);
-                float mVol = (7f / 20f) * (7f / 20f);
-                float sVol = (14f / 20f) * (14f / 20f);
-                PlayerPrefs.SetFloat("musicVolume", mVol);
-                PlayerPrefs.SetFloat("sfxVolume", sVol);
-                PlayerPrefs.SetInt("frameStyle", 1);
-                PlayerPrefs.SetInt("battleScene", 1);
-                PlayerPrefs.SetInt("battleStyle", 0);
-                PlayerPrefs.SetInt("screenSize", 1);
-                PlayerPrefs.SetInt("fullscreen", 0);
-                PlayerPrefs.Save();
-            }
+            //    PlayerPrefs.SetInt("textSpeed", 2);
+            //    float mVol = (7f / 20f) * (7f / 20f);
+            //    float sVol = (14f / 20f) * (14f / 20f);
+            //    PlayerPrefs.SetFloat("musicVolume", mVol);
+            //    PlayerPrefs.SetFloat("sfxVolume", sVol);
+            //    PlayerPrefs.SetInt("frameStyle", 1);
+            //    PlayerPrefs.SetInt("battleScene", 1);
+            //    PlayerPrefs.SetInt("battleStyle", 0);
+            //    PlayerPrefs.SetInt("screenSize", 1);
+            //    PlayerPrefs.SetInt("fullscreen", 0);
+            //    PlayerPrefs.Save();
+            //}
             //UpdateResolution();
 
-            RenderTexture.active = GUIDisplay;
-            GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
+            //RenderTexture.active = GUIDisplay;
+            //GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
 
-            SaveData.SetDebugFileData();
-        }
-        else if (global != this)
-        {
+            //SaveData.SetDebugFileData();
+            #endregion
+        } else if (Singleton != this) {
             Destroy(gameObject);
         }
-
-        #endregion
     }
 
 
@@ -128,32 +118,32 @@ public class GlobalVariables : MonoBehaviour
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "startup")
         {
-            if (global == this)
+            if (Singleton == this)
             {
                 Player = GameObject.Find("Player");
                 FollowerSettings = Player.GetComponentInChildren<FollowerMovement>();
 
                 Debug.Log("Test Scene Loading");
                 
-                if (global.fadeIn)
+                if (Singleton.fadeIn)
                 {
                     StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.SlowedSpeed));
 
                     //if fading in to the scene.
-                    Player.transform.position = global.playerPosition;
-                    PlayerMovement.player.direction = global.playerDirection;
+                    Player.transform.position = Singleton.playerPosition;
+                    PlayerMovement.player.direction = Singleton.playerDirection;
                     
                     if (playerExiting)
                     {
                         playerExiting = false;
 
-                        FollowerSettings.direction = global.playerDirection;
-                        FollowerSettings.transform.localPosition = -Direction.Vectorize(global.playerDirection);
+                        FollowerSettings.direction = Singleton.playerDirection;
+                        FollowerSettings.transform.localPosition = -Direction.Vectorize(Singleton.playerDirection);
                     }
                     else if (!respawning)
                     {
-                        FollowerSettings.direction = global.followerDirection;
-                        FollowerSettings.transform.localPosition = -Direction.Vectorize(global.followerDirection);
+                        FollowerSettings.direction = Singleton.followerDirection;
+                        FollowerSettings.transform.localPosition = -Direction.Vectorize(Singleton.followerDirection);
                     }
 
                     if (!respawning)

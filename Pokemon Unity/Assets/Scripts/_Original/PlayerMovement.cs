@@ -315,7 +315,7 @@ public class PlayerMovement : MonoBehaviour
         }
         //
 
-        GlobalVariables.global.resetFollower();
+        GlobalVariables.Singleton.resetFollower();
     }
 
     public void CheckHitRaycastDistance(RaycastHit[] hitRays, out int closestIndex, out float closestDistance)
@@ -1148,7 +1148,7 @@ public class PlayerMovement : MonoBehaviour
             yield return StartCoroutine(move(movement, false));
         }
         overrideAnimPause = false;
-        if (GlobalVariables.global.followerOut)
+        if (GlobalVariables.Singleton.followerOut)
         {
             followerScript.ActivateMove();
         }
@@ -1310,7 +1310,7 @@ public class PlayerMovement : MonoBehaviour
                         surfing = true;
                         updateMount(true, "surf");
 
-                        BgmHandler.main.PlayMain(GlobalVariables.global.surfBGM, GlobalVariables.global.surfBgmLoopStart);
+                        BgmHandler.main.PlayMain(GlobalVariables.Singleton.surfBGM, GlobalVariables.Singleton.surfBgmLoopStart);
 
                         //determine the vector for the space in front of the player by checking direction
                         Vector3 spaceInFront = new Vector3(0, 0, 0);

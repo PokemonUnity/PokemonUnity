@@ -14,6 +14,9 @@ using UnityEngine.SceneManagement;
 [AddComponentMenu("Pokemon Unity/UI/Menus/Main Menu")]
 public class MainMenuHandler : MonoBehaviour {
     // TODO: implement file selection and mystery gift menus
+    [Description("Make sure the scene is also in the build settings")]
+    public string NewGameScene = "overworldTest";
+
     #region Old Variables
 
     public AudioClip scrollClip;
@@ -112,13 +115,15 @@ public class MainMenuHandler : MonoBehaviour {
         yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
 
         SaveData.currentSave = new SaveData(SaveLoad.GetSavedGamesCount());
-        SaveData.SetDebugFileData();
+        //SaveData.SetDebugFileData();
 
-        GlobalVariables.global.playerPosition = new Vector3(2, 0, -3);
-        GlobalVariables.global.playerDirection = 0;
-        GlobalVariables.global.fadeIn = true;
+        GlobalVariables.Singleton.playerPosition = new Vector3(2, 0, -3);
+        GlobalVariables.Singleton.playerDirection = 0;
+        GlobalVariables.Singleton.fadeIn = true;
 
-        SceneManager.LoadScene("overworldTest");
+        SceneManager.LoadScene(NewGameScene);
+        
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));
     }
 
     public IEnumerator ContinueGameCoroutine() {
@@ -132,16 +137,16 @@ public class MainMenuHandler : MonoBehaviour {
         Debug.Log(SaveLoad.savedGames[1]);
         Debug.Log(SaveLoad.savedGames[2]);
 
-        GlobalVariables.global.playerPosition = SaveData.currentSave.playerPosition.v3;
-        GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
-        GlobalVariables.global.followerOut = SaveData.currentSave.followerOut;
+        GlobalVariables.Singleton.playerPosition = SaveData.currentSave.playerPosition.v3;
+        GlobalVariables.Singleton.playerDirection = SaveData.currentSave.playerDirection;
+        GlobalVariables.Singleton.followerOut = SaveData.currentSave.followerOut;
 
         if (SaveData.currentSave.followerPosition != null && SaveData.currentSave.followerdirection != null) {
-            GlobalVariables.global.followerPosition = SaveData.currentSave.followerPosition.Value.v3;
-            GlobalVariables.global.followerDirection = SaveData.currentSave.followerdirection;
+            GlobalVariables.Singleton.followerPosition = SaveData.currentSave.followerPosition.Value.v3;
+            GlobalVariables.Singleton.followerDirection = SaveData.currentSave.followerdirection;
         }
 
-        GlobalVariables.global.fadeIn = true;
+        GlobalVariables.Singleton.fadeIn = true;
 
         SceneManager.LoadScene(SaveData.currentSave.levelName);
     }

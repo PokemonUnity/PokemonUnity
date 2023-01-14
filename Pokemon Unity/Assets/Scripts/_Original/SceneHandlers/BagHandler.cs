@@ -1939,7 +1939,7 @@ public class BagHandler : MonoBehaviour
         selected = -1;
         inParty = false;
 
-        GlobalVariables.global.resetFollower();
+        GlobalVariables.Singleton.resetFollower();
         gameObject.SetActive(false);
     }
 

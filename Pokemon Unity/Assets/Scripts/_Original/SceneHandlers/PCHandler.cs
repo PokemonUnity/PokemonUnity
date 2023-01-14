@@ -2372,7 +2372,7 @@ public class PCHandler : MonoBehaviour
         SfxHandler.Play(offClip);
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
         yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
-        GlobalVariables.global.resetFollower();
+        GlobalVariables.Singleton.resetFollower();
         yield return new WaitForSeconds(0.4f);
         this.gameObject.SetActive(false);
     }

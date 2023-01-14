@@ -67,7 +67,7 @@ public class InteractPokemonCenter : MonoBehaviour
     {
         if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
         {
-            bool followerOut = GlobalVariables.global.followerOut;
+            bool followerOut = GlobalVariables.Singleton.followerOut;
             
             for (int i = 0; i < 6; i++)
             {
@@ -244,7 +244,7 @@ public class InteractPokemonCenter : MonoBehaviour
     {
         if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
         {
-            bool followerOut = GlobalVariables.global.followerOut;
+            bool followerOut = GlobalVariables.Singleton.followerOut;
             
             for (int i = 0; i < 6; i++)
             {

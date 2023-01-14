@@ -51,7 +51,7 @@ public class SceneTransition : MonoBehaviour
 
     void Start()
     {
-        if (!GlobalVariables.global.fadeIn)
+        if (!GlobalVariables.Singleton.fadeIn)
         {
             if (!fading)
             {
@@ -146,7 +146,7 @@ public class SceneTransition : MonoBehaviour
         }
         if (!fadingOut)
         {
-            GlobalVariables.global.fadeTex = defaultFadeTex;
+            GlobalVariables.Singleton.fadeTex = defaultFadeTex;
             if (!RotatableGUI)
             {
                 screenFader.enabled = false;
@@ -167,18 +167,18 @@ public class SceneTransition : MonoBehaviour
         if (!RotatableGUI)
         {
             screenFader.enabled = true;
-            screenFader.sprite = GlobalVariables.global.fadeTex;
+            screenFader.sprite = GlobalVariables.Singleton.fadeTex;
         }
         else
         {
             screenFaderOnGUI.enabled = true;
-            screenFaderOnGUI.sprite = GlobalVariables.global.fadeTex;
+            screenFaderOnGUI.sprite = GlobalVariables.Singleton.fadeTex;
         }
         increment = 0;
         fadingOut = false;
         fading = true;
         StartCoroutine("fade", speed);
-        GlobalVariables.global.fadeIn = false;
+        GlobalVariables.Singleton.fadeIn = false;
         return speed;
     }
 
@@ -190,18 +190,18 @@ public class SceneTransition : MonoBehaviour
         if (!RotatableGUI)
         {
             screenFader.enabled = true;
-            screenFader.sprite = GlobalVariables.global.fadeTex;
+            screenFader.sprite = GlobalVariables.Singleton.fadeTex;
         }
         else
         {
             screenFaderOnGUI.enabled = true;
-            screenFaderOnGUI.sprite = GlobalVariables.global.fadeTex;
+            screenFaderOnGUI.sprite = GlobalVariables.Singleton.fadeTex;
         }
         increment = 0;
         fadingOut = true;
         fading = true;
         StartCoroutine("fade", speed);
-        GlobalVariables.global.fadeIn = true;
+        GlobalVariables.Singleton.fadeIn = true;
         return speed;
     }
 }

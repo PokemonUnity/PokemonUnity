@@ -89,7 +89,7 @@ public class FollowerMovement : MonoBehaviour
 		}
 		else
 		{
-			if (GlobalVariables.global.followerOut)
+			if (GlobalVariables.Singleton.followerOut)
 			{
 				followerLight.color = lightColor;
 				if (hasLight)
@@ -305,7 +305,7 @@ public class FollowerMovement : MonoBehaviour
 				StartCoroutine("animateSprite");
 				canMove = true;
 				
-				GlobalVariables.global.followerOut = true;
+				GlobalVariables.Singleton.followerOut = true;
 			}
 			else
 			{
@@ -374,7 +374,7 @@ public class FollowerMovement : MonoBehaviour
 		ball.SetActive(false);
 		transform.position = Player.transform.position;
 
-		GlobalVariables.global.followerOut = false;
+		GlobalVariables.Singleton.followerOut = false;
 		//StartCoroutine("animateSprite");
 	}
 

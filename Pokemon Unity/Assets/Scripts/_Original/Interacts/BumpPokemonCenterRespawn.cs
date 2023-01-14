@@ -9,9 +9,9 @@ public class BumpPokemonCenterRespawn : MonoBehaviour
 
     private IEnumerator bump()
     {
-        if (GlobalVariables.global.respawning)
+        if (GlobalVariables.Singleton.respawning)
         {
-            GlobalVariables.global.respawning = false;
+            GlobalVariables.Singleton.respawning = false;
             StartCoroutine(pokemonCenter.respawnHeal());
         }
         yield return null;

@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Trainer))]
 public class InteractTrainer : MonoBehaviour
 {
+    #region Variables
+
     private Trainer trainer;
 
     public enum Gender
@@ -90,6 +92,8 @@ public class InteractTrainer : MonoBehaviour
 
     private DialogBoxHandlerNew Dialog;
     //private SceneTransition sceneTransition;
+
+    #endregion
 
     void Awake()
     {
