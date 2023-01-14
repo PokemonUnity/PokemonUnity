@@ -3421,6 +3421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuName: Settings
+  isFirstMenu: 0
 --- !u!1 &4728947622891498608
 GameObject:
   m_ObjectHideFlags: 0
@@ -6701,7 +6702,7 @@ PrefabInstance:
     - target: {fileID: 3627548736517019465, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
       propertyPath: m_text
-      value: 1360 x 768 @ 60Hz
+      value: 1920 x 1080 @ 60Hz
       objectReference: {fileID: 0}
     - target: {fileID: 4614949635437909369, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
@@ -6931,6 +6932,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
+    playerInput: {fileID: 0}
     Events: []
   Events:
     EventTrigger: {fileID: 0}
@@ -8147,6 +8149,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
+    playerInput: {fileID: 0}
     Events: []
   Events:
     EventTrigger: {fileID: 0}
@@ -9038,6 +9041,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
+    playerInput: {fileID: 0}
     Events: []
   Events:
     EventTrigger: {fileID: 0}
@@ -9128,7 +9132,7 @@ PrefabInstance:
     - target: {fileID: 3627548736517019465, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
       propertyPath: m_text
-      value: Frame 2
+      value: Frame 1
       objectReference: {fileID: 0}
     - target: {fileID: 4614949635437909369, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
@@ -9346,6 +9350,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
+    playerInput: {fileID: 0}
     Events: []
   Events:
     EventTrigger: {fileID: 0}
@@ -10332,6 +10337,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
+    playerInput: {fileID: 0}
     Events: []
   Events:
     EventTrigger: {fileID: 0}
@@ -10575,7 +10581,7 @@ PrefabInstance:
     - target: {fileID: 3627548736517019465, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
       propertyPath: m_text
-      value: Fullscreen Window
+      value: Fullscreen
       objectReference: {fileID: 0}
     - target: {fileID: 4614949635437909369, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
@@ -10889,6 +10895,7 @@ MonoBehaviour:
     SelectSound: {fileID: 8300000, guid: f24fd8f7a6e4f884291b60a731705148, type: 3}
     SelectAudioSource: {fileID: 0}
   Input:
+    playerInput: {fileID: 0}
     Events: []
   Events:
     EventTrigger: {fileID: 0}

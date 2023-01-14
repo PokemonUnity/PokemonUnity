@@ -28,9 +28,17 @@ public class MapNameBoxHandler : MonoBehaviour
         animator = mapName.GetComponent<Animator>();
     }
 
-    void Start()
-    {
-        //mapName.position = new Vector3(0, 0.17f, mapName.position.z);
+    //void Start()
+    //{
+    //    mapName.position = new Vector3(0, 0.17f, mapName.position.z);
+    //}
+
+    public void Appear() {
+
+    }
+
+    public void Disappear() {
+
     }
 
     public void display(string name, Color textColor) {

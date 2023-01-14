@@ -52,6 +52,7 @@ public class BgmHandler : MonoBehaviour
 
     void Update()
     {
+        return;
         baseVolume = PlayerPrefs.GetFloat("musicVolume");
         if (fading == null)
         {

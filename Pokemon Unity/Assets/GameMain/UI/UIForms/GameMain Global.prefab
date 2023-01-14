@@ -52445,7 +52445,7 @@ GameObject:
   - component: {fileID: 11403742}
   - component: {fileID: 11493540}
   m_Layer: 0
-  m_Name: Global
+  m_Name: GameMain Global
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

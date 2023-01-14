@@ -1,3 +1,4 @@
+using EasyButtons;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,17 +16,22 @@ If empty, defaults to the first childs Text Mesh Pro component (if it has one)")
     [Space()]
     public List<TMPro.TextMeshProUGUI> textsToSync;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (sourceText is null) sourceText = GetComponent<TMPro.TextMeshProUGUI>();
-        if (sourceText is null) Debug.LogError("No TextMeshProUGUI provided or found");
+    void OnValidate() {
+        Sync();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (sourceText is null) return;
+        Sync();
+        Debug.Log($"{sourceText.text} {textsToSync[0].text}", gameObject);
+    }
+
+    [Button]
+    public void Sync() {
+        if (sourceText == null) {
+            if (sourceText == null) sourceText = GetComponent<TMPro.TextMeshProUGUI>();
+            if (sourceText == null) Debug.LogError("No TextMeshProUGUI provided or found");
+        }
         foreach (TMPro.TextMeshProUGUI text in textsToSync) {
             if (syncText) text.text = sourceText.text;
             if (syncFontSize) text.fontSize = sourceText.fontSize;
