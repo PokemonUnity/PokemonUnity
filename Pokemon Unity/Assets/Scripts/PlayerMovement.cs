@@ -120,7 +120,8 @@ public class PlayerMovement : MonoBehaviour
         //set up the reference to this script.
         player = this;
 
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
+        // FIXME
+        //Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
         MapName = GameObject.Find("GUI").GetComponent<MapNameBoxHandler>();
 
         canInput = true;

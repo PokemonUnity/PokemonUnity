@@ -58,6 +58,7 @@ public class FollowerMovement : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
+        return; // FIXME
 		Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 		Player = PlayerMovement.player;
 
@@ -80,6 +81,7 @@ public class FollowerMovement : MonoBehaviour
 
 	void Start()
 	{
+        return; // FIXME
 		Player = PlayerMovement.player;
 		startPosition = transform.position;
 
@@ -132,8 +134,8 @@ public class FollowerMovement : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		if (!hide)
-		{
+        return; // FIXME
+		if (!hide) {
 			float scale;
 
 			Transform cam = PlayerMovement.player.transform.Find("Camera") != null

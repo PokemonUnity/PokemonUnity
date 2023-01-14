@@ -60,7 +60,7 @@
     <Compile Include="Assets\Scripts\_Original\Data\AbilityDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PC.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PokemonDatabase.cs" />
-    <Compile Include="Assets\Scripts\_Original\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\TransformExtensions.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\StartMenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Bag.cs" />

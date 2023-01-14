@@ -97,6 +97,7 @@ public class InteractTrainer : MonoBehaviour
 
     void Awake()
     {
+        return; // FIXME
         trainer = transform.GetComponent<Trainer>();
 
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
@@ -115,6 +116,7 @@ public class InteractTrainer : MonoBehaviour
 
     void Start()
     {
+        return; // FIXME
         hitBox.localPosition = new Vector3(0, 0, 0);
         sight.localPosition = new Vector3(0, 0, 0);
 
@@ -172,6 +174,7 @@ public class InteractTrainer : MonoBehaviour
 
     private void LateUpdate()
     {
+        return; // FIXME
         float scale;
 
         Transform cam = PlayerMovement.player.transform.Find("Camera") != null

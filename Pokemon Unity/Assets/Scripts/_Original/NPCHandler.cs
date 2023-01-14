@@ -62,6 +62,7 @@ public class NPCHandler : MonoBehaviour
 
     void Awake()
     {
+        return; // FIXME
         pawnSprite = transform.Find("Pawn").GetComponent<SpriteRenderer>();
         
         pawnReflectionSprite = transform.Find("PawnReflection").GetComponent<SpriteRenderer>();
@@ -102,6 +103,7 @@ public class NPCHandler : MonoBehaviour
 
     void Start()
     {
+        return; // FIXME
         initialPosition = hitBox.position;
 
         hitBox.localPosition = new Vector3(0, 0, 0);
@@ -279,6 +281,7 @@ public class NPCHandler : MonoBehaviour
 
     private void LateUpdate()
     {
+        return; // FIXME
         float scale;
 
         Transform cam = PlayerMovement.player.transform.Find("Camera") != null

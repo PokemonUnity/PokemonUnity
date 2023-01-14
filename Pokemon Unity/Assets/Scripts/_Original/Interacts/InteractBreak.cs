@@ -23,6 +23,7 @@ public class InteractBreak : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        return; // FIXME
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
         myAnimator = (Animator) this.GetComponentInChildren<Animator>();
@@ -37,6 +38,7 @@ public class InteractBreak : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        return; // FIXME
         if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("breakEnd"))
         {
             objectSprite.enabled = false;

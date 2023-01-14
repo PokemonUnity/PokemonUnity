@@ -21,6 +21,7 @@ public class InteractItem : MonoBehaviour
 
     void Awake()
     {
+        return;
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
         itemSprite = transform.Find("ItemSprite").GetComponent<SpriteRenderer>();
@@ -29,8 +30,8 @@ public class InteractItem : MonoBehaviour
 
     void Start()
     {
-        if (!hidden)
-        {
+        return; // FIXME
+        if (!hidden) {
             if (TM)
             {
                 itemSprite.sprite = tmBall;

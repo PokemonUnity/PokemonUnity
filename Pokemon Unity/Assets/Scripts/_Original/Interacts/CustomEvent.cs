@@ -30,6 +30,7 @@ public class CustomEvent : MonoBehaviour
 
     void Awake()
     {
+        return; // FIXME
         if (transform.GetComponent<NPCHandler>() != null)
         {
             thisNPCHandler = transform.GetComponent<NPCHandler>();
@@ -38,6 +39,7 @@ public class CustomEvent : MonoBehaviour
 
     private void Start()
     {
+        return; // FIXME
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
     }
 

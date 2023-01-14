@@ -53,6 +53,7 @@ public class InteractDoorway : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        return; // FIXME
         Player = PlayerMovement.player.gameObject;
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
@@ -78,6 +79,7 @@ public class InteractDoorway : MonoBehaviour
 
     void LateUpdate()
     {
+        return; // FIXME
         if (lockPlayerCamera)
         {
             PlayerMovement.player.mainCamera.transform.position = lockedPosition;

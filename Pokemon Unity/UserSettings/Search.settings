@@ -19,9 +19,9 @@ scopes = {
 	"last_search.AE24D059" = ""
 	"OpenInspectorPreview.AE24D059" = "0"
 	"currentGroup.AE24D059" = "all"
-	"last_search.7788661B" = ""
+	"last_search.7788661B" = "player"
 	"OpenInspectorPreview.7788661B" = "0"
-	"currentGroup.7788661B" = "asset"
+	"currentGroup.7788661B" = "_group_provider_Files"
 }
 providers = {
 	adb = {
@@ -68,6 +68,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"player"
 	"t:tmpro.tmp_fontasset "
 	"t:sprite menuButto"
 	"t:sprite mainButton"

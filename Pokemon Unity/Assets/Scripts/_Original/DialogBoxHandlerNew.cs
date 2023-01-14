@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class DialogBoxHandlerNew : MonoBehaviour
 {
+    #region Variables
+
     public enum PrintTextMethod
     {
         Typewriter,
@@ -48,6 +50,7 @@ public class DialogBoxHandlerNew : MonoBehaviour
 
     private float selectY;
 
+    #endregion
 
     void Awake()
     {
