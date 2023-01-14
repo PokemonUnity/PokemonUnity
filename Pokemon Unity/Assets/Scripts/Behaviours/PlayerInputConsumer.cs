@@ -6,28 +6,30 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputConsumer : MonoBehaviour
 {
+    
     public PlayerInputEvents Events;
 
     void Start() {
-        Events.Subscribe();
+        Events.Subscribe(gameObject);
     }
 
     void OnDestroy() {
-        Events.Unsubscribe();
+        Events.Unsubscribe(gameObject);
     }
 }
 
 [Serializable]
 public class PlayerInputEvents {
+    [Description("If null, tries to \n" +
+        "1. Grab a PlayerInput off of the attached GameObject\n" +
+        "2. Grab the PlayerInputSingleton\n\n" +
+        "Events only invoke when the PlayerInput's behaviour must be set to 'Invoke Unity Events'")]
+    [SerializeField] PlayerInput playerInput;
     public List<PlayerInputEvent> Events;
     bool hasSubscribed = false;
 
-    public void Unsubscribe() {
-        if (!hasSubscribed) return;
-        if (PlayerInputSingleton.Singleton == null)
-            throw new PlayerInputSingleton.PlayerInputNotFoundError();
-
-        PlayerInput playerInput = PlayerInputSingleton.Singleton;
+    public void Unsubscribe(GameObject gameObject) {
+        if (!hasSubscribed || playerInput == null || !Application.isPlaying) return;
 
         foreach (PlayerInputEvent inputEvent in Events) {
             UnityEvent<InputAction.CallbackContext> event_ = playerInput.GetEvent(inputEvent.ActionMap, inputEvent.Action);
@@ -36,15 +38,34 @@ public class PlayerInputEvents {
         hasSubscribed = false;
     }
 
-    public void Subscribe() {
-        hasSubscribed = true;
-        if (PlayerInputSingleton.Singleton == null)
-            throw new PlayerInputSingleton.PlayerInputNotFoundError();
-
-        PlayerInput playerInput = PlayerInputSingleton.Singleton;
+    public void Subscribe(GameObject gameObject) {
+        playerInput = GetPlayerInput(gameObject);
+        
         foreach (PlayerInputEvent inputEvent in Events) {
             UnityEvent<InputAction.CallbackContext> event_ = playerInput.GetEvent(inputEvent.ActionMap, inputEvent.Action);
             event_.AddListener(inputEvent.Callbacks.Invoke);
+        }
+        hasSubscribed = true;
+    }
+
+    public PlayerInput GetPlayerInput(GameObject gameObject) {
+        if (playerInput != null)
+            return playerInput;
+
+        playerInput = gameObject.GetComponent<PlayerInput>();
+
+        if (playerInput == null)
+            playerInput = PlayerInputSingleton.Singleton;
+
+        if (playerInput == null)
+            throw new NoPlayerInputFound(gameObject);
+
+        return playerInput;
+    }
+
+    class NoPlayerInputFound : Exception {
+        public NoPlayerInputFound(GameObject gameObject) {
+            Debug.LogError("Could not find a PlayerInput component to use", gameObject);
         }
     }
 }

@@ -27,7 +27,7 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
     }
 
     protected override void OnDestroy() {
-        Input.Unsubscribe();
+        Input.Unsubscribe(gameObject);
     }
 
     void SubscribeToPlayerInputEvents() {
@@ -35,7 +35,7 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
         PlayerInputEvent event_ = new PlayerInputEvent("UI", "Navigate");
         event_.Callbacks.AddListener(Navigate);
         Input.Events.Add(event_);
-        Input.Subscribe();
+        Input.Subscribe(gameObject);
     }
 
     public abstract GameSetting<T> GameSetting { get; }

@@ -120,6 +120,7 @@ public class PartyHandler : MonoBehaviour
 
     void Awake()
     {
+        return;
         Dialog = transform.GetComponent<DialogBoxHandlerNew>();
         //sceneTransition = transform.GetComponent<SceneTransition>();
         PartyAudio = transform.GetComponent<AudioSource>();
@@ -176,9 +177,9 @@ public class PartyHandler : MonoBehaviour
 
     void Start()
     {
-        updateParty();
         this.gameObject.SetActive(false);
-        
+        return;
+        updateParty();
     }
 
     private void updateParty()

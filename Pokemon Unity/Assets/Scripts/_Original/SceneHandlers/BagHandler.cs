@@ -144,68 +144,79 @@ public class BagHandler : MonoBehaviour
 
     void Awake()
     {
-        Dialog = transform.GetComponent<DialogBoxHandlerNew>();
-        BagAudio = transform.GetComponent<AudioSource>();
+        return;
+        Dialog = transform?.GetComponent<DialogBoxHandlerNew>();
+        BagAudio = transform?.GetComponent<AudioSource>();
         
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < pkmParty.Length; i++)
         {
-            pkmSlot[i] = pkmParty[i].transform.GetComponent<Image>();
-            pkmIcon[i] = pkmParty[i].transform.Find("icon").GetComponent<Image>();
-            pkmStatus[i] = pkmParty[i].transform.Find("status").GetComponent<Image>();
-            pkmHPbar[i] = pkmParty[i].transform.Find("advHPbar").Find("HPBar").GetComponent<Image>();
-            pkmItem[i] = pkmParty[i].transform.Find("item").GetComponent<Image>();
-            pkmLevel[i] = pkmParty[i].transform.Find("level").GetComponent<Text>();
-            pkmLevelShadow[i] = pkmParty[i].transform.Find("level shadow").GetComponent<Text>();
+            GameObject pokemonObj = pkmParty[i];
+            if (pokemonObj == null) continue;
+            pkmSlot[i] = pkmParty[i].transform?.GetComponent<Image>();
+            pkmIcon[i] = pkmParty[i].transform.Find("icon")?.GetComponent<Image>();
+            pkmStatus[i] = pkmParty[i].transform.Find("status")?.GetComponent<Image>();
+            pkmHPbar[i] = pkmParty[i].transform.Find("advHPbar")?.Find("HPBar").GetComponent<Image>();
+            pkmItem[i] = pkmParty[i].transform.Find("item")?.GetComponent<Image>();
+            pkmLevel[i] = pkmParty[i].transform.Find("level")?.GetComponent<Text>();
+            pkmLevelShadow[i] = pkmParty[i].transform.Find("level shadow")?.GetComponent<Text>();
         }
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < bagSlot.Length; i++)
         {
-            bagItemIcon[i] = bagSlot[i].transform.Find("Icon").GetComponent<Image>();
-            bagItemNameShadow[i] = bagSlot[i].transform.Find("Name shadow").GetComponent<Text>();
-            bagItemName[i] =bagItemNameShadow[i].transform.Find("Name").GetComponent<Text>();
+            Image bagSlotObj = bagSlot[i];
+            if (bagSlotObj == null) continue;
+            bagItemIcon[i] = bagSlot[i].transform.Find("Icon")?.GetComponent<Image>();
+            bagItemNameShadow[i] = bagSlot[i].transform.Find("Name shadow")?.GetComponent<Text>();
+            bagItemName[i] =bagItemNameShadow[i].transform.Find("Name")?.GetComponent<Text>();
         }
         
         //Informations de l'écran supérieur
-        bagItemDescriptionShadow = transform.Find("ItemDescriptionShadow").GetComponent<Text>();
-        bagItemDescription = bagItemDescriptionShadow.transform.Find("ItemDescription").GetComponent<Text>();
+        bagItemDescriptionShadow = transform.Find("ItemDescriptionShadow")?.GetComponent<Text>();
+        bagItemDescription = bagItemDescriptionShadow?.transform.Find("ItemDescription")?.GetComponent<Text>();
         
-        bagItemNameUpShadow = transform.Find("Item Name shadow").GetComponent<Text>();
-        bagItemNameUp = bagItemNameUpShadow.transform.Find("Item Name").GetComponent<Text>();
+        bagItemNameUpShadow = transform.Find("Item Name shadow")?.GetComponent<Text>();
+        bagItemNameUp = bagItemNameUpShadow?.transform.Find("Item Name")?.GetComponent<Text>();
         
-        bagItemAmountShadow = transform.Find("Item Amount Shadow").GetComponent<Text>();
-        bagItemAmount = bagItemAmountShadow.transform.Find("Item Amount").GetComponent<Text>();
+        bagItemAmountShadow = transform.Find("Item Amount Shadow")?.GetComponent<Text>();
+        bagItemAmount = bagItemAmountShadow?.transform.Find("Item Amount")?.GetComponent<Text>();
 
-        bagItemPreview = transform.Find("itempreview").GetComponent<Image>();
+        bagItemPreview = transform.Find("itempreview")?.GetComponent<Image>();
         
         //Informations du shop
-        shopDataText = shopInfos.transform.Find("DataText").GetComponent<Text>();
-        shopDataTextShadow = shopInfos.transform.Find("DataTextShadow").GetComponent<Text>();
-        shopData = shopInfos.transform.Find("Data").GetComponent<Text>();
-        shopDataShadow = shopInfos.transform.Find("DataShadow").GetComponent<Text>();
-        shopMoneyText = shopInfos.transform.Find("MoneyText").GetComponent<Text>();
-        shopMoneyTextShadow = shopInfos.transform.Find("MoneyTextShadow").GetComponent<Text>();
-        shopMoney = shopInfos.transform.Find("Money").GetComponent<Text>();
-        shopMoneyShadow = shopInfos.transform.Find("MoneyShadow").GetComponent<Text>();
-
-        shopNumberBox = transform.Find("NumberBox").gameObject;
-        shopNumberBoxText = shopNumberBox.transform.Find("BoxText").GetComponent<Text>();
-        shopNumberBoxTextShadow = shopNumberBox.transform.Find("BoxTextShadow").GetComponent<Text>();
-
-        for (int i = 1; i < 6; i++)
-        {
-            bagCategory[i] = transform.Find("bag" + i).gameObject;
-            shopCategory[i] = transform.Find("shop" + i).gameObject;
+        if (shopInfos != null) {
+            shopDataText = shopInfos.transform.Find("DataText")?.GetComponent<Text>();
+            shopDataTextShadow = shopInfos.transform.Find("DataTextShadow")?.GetComponent<Text>();
+            shopData = shopInfos.transform.Find("Data")?.GetComponent<Text>();
+            shopDataShadow = shopInfos.transform.Find("DataShadow")?.GetComponent<Text>();
+            shopMoneyText = shopInfos.transform.Find("MoneyText")?.GetComponent<Text>();
+            shopMoneyTextShadow = shopInfos.transform.Find("MoneyTextShadow")?.GetComponent<Text>();
+            shopMoney = shopInfos.transform.Find("Money")?.GetComponent<Text>();
+            shopMoneyShadow = shopInfos.transform.Find("MoneyShadow")?.GetComponent<Text>();
         }
 
+        shopNumberBox = transform.Find("NumberBox")?.gameObject;
+        if (shopNumberBox == null) {
+            shopNumberBoxText = shopNumberBox?.transform.Find("BoxText")?.GetComponent<Text>();
+            shopNumberBoxTextShadow = shopNumberBox?.transform.Find("BoxTextShadow")?.GetComponent<Text>();
+        }
+
+        for (int i = 1; i < bagCategory.Length; i++)
+            bagCategory[i] = transform.Find("bag" + i)?.gameObject;
+
+        for (int i = 1; i < shopCategory.Length; i++)
+            shopCategory[i] = transform.Find("shop" + i)?.gameObject;
+
         //Catégorie TM
-        bagItemType = bagCategory[4].transform.Find("TMtype").GetComponent<Image>();
-        bagItemCategory = bagCategory[4].transform.Find("TMcategory").GetComponent<Image>();
-        bagItemPowerShadow = bagCategory[4].transform.Find("TMpower").GetComponent<Text>();
-        bagItemPower = bagItemPowerShadow.transform.Find("text").GetComponent<Text>();
-        bagItemAccuracyShadow = bagCategory[4].transform.Find("TMaccuracy").GetComponent<Text>();
-        bagItemAccuracy = bagItemPowerShadow.transform.Find("text").GetComponent<Text>();
-        bagItemPPShadow = bagCategory[4].transform.Find("TMpp").GetComponent<Text>();
-        bagItemPP = bagItemPowerShadow.transform.Find("text").GetComponent<Text>();
+        if (bagCategory[4] != null && bagItemPowerShadow != null) {
+            bagItemType = bagCategory[4].transform.Find("TMtype")?.GetComponent<Image>();
+            bagItemCategory = bagCategory[4].transform.Find("TMcategory")?.GetComponent<Image>();
+            bagItemPowerShadow = bagCategory[4].transform.Find("TMpower")?.GetComponent<Text>();
+            bagItemPower = bagItemPowerShadow.transform.Find("text")?.GetComponent<Text>();
+            bagItemAccuracyShadow = bagCategory[4].transform.Find("TMaccuracy")?.GetComponent<Text>();
+            bagItemAccuracy = bagItemPowerShadow.transform.Find("text")?.GetComponent<Text>();
+            bagItemPPShadow = bagCategory[4].transform.Find("TMpp")?.GetComponent<Text>();
+            bagItemPP = bagItemPowerShadow.transform.Find("text")?.GetComponent<Text>();
+        }
     }
 
     void Start()

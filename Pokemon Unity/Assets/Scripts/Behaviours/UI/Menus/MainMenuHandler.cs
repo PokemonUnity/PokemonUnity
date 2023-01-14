@@ -12,7 +12,7 @@ using EasyButtons;
 using UnityEngine.SceneManagement;
 
 [AddComponentMenu("Pokemon Unity/UI/Menus/Main Menu")]
-public class MainMenuHandler : MenuHandlerBehaviour {
+public class MainMenuHandler : MonoBehaviour {
     // TODO: implement file selection and mystery gift menus
     #region Old Variables
 
@@ -70,8 +70,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
 
     #endregion
 
-    new void Start() {
-        base.Start();
+    void Start() {
         if (SaveLoad.GetSavedGamesCount() == 0)
             ShowContinueButton();
 
@@ -108,10 +107,9 @@ public class MainMenuHandler : MenuHandlerBehaviour {
     public void NewGame() => StartCoroutine(NewGameCoroutine());
     public void ContinueGame() => StartCoroutine(ContinueGameCoroutine());
     public void MysteryGift() => StartCoroutine(MysteryGiftCoroutine());
-    public void Settings() => ChangeMenu("Settings");
-
+    
     public IEnumerator NewGameCoroutine() {
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, MenuFadeTime));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
 
         SaveData.currentSave = new SaveData(SaveLoad.GetSavedGamesCount());
         SaveData.SetDebugFileData();
@@ -126,7 +124,7 @@ public class MainMenuHandler : MenuHandlerBehaviour {
     public IEnumerator ContinueGameCoroutine() {
         //CONTINUE
         SfxHandler.Play(decideClip);
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, MenuFadeTime));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
 
         SaveData.currentSave = SaveLoad.savedGames[selectedFile];
 
@@ -156,9 +154,9 @@ public class MainMenuHandler : MenuHandlerBehaviour {
         MGButtonImage[0].sprite = buttonSelectedSprite;
         MGButtonImage[1].sprite = buttonDimmedSprite;
 
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, MenuFadeTime));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
         mysteryGiftMenu.SetActive(true);
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, MenuFadeTime));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));
 
         BgmHandler.main.PlayMain(mysteryGiftBGM, loopSampleStart);
 
@@ -454,9 +452,9 @@ public class MainMenuHandler : MenuHandlerBehaviour {
         #endregion
 
         BgmHandler.main.PlayMain(null, 0);
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, MenuFadeTime));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
         mysteryGiftMenu.SetActive(false);
-        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, MenuFadeTime));
+        yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));
     }
 
     public void ShowContinueButton() {

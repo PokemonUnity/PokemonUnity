@@ -80,7 +80,7 @@
     <Compile Include="Assets\Scripts\_Original\LeanTween\LeanTweenExt.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV4.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Language.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MenuHandlerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MenuHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\TileShapes.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\NatureDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractItem.cs" />
@@ -130,6 +130,7 @@
     <Compile Include="Assets\GameMain\Scripts\Network\NetworkChannelHelper.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\BagHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Save\EventListener.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\PlayerInputConsumer.cs" />
     <Compile Include="Assets\Settings\Scripts\GameSettingResolution.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\Packet\CSHeartBeat.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\PacketBase.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Assets\GameMain\Scripts\Scene\ScrollableBackground.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\SCPacketBase.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\ParticleSoundEffect.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\PlayerInputExtensions.cs" />
     <Compile Include="Assets\Scripts\_Original\NPCBillboarding.cs" />
     <Compile Include="Assets\Scripts\_Original\ReflectiveWaterHandler.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleAudio.cs" />
@@ -286,6 +288,7 @@
     <Compile Include="Assets\GameMain\Scripts\UI\UIFormId.cs" />
     <Compile Include="Assets\Scripts\_Original\MapCollider.cs" />
     <Compile Include="Assets\Scripts\_Original\BattleSceneHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\ScreenFade.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\SurvivalGame.cs" />
     <Compile Include="Assets\Scripts\GlobalVariables.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\QuestLog.cs" />
@@ -315,9 +318,7 @@
     <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\ScreenFade.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\PlayerInputConsumer.cs" />
-    <Compile Include="Assets\Scripts\Library\Extensions\PlayerInputExtensions.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\GameObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -160,6 +160,7 @@ public class SummaryHandler : MonoBehaviour
 
     void Awake()
     {
+        return;
         Transform selectedInfo = transform.Find("SelectedInfo");
 
         selectedCaughtBall = selectedInfo.Find("SelectedCaughtBall").GetComponent<Image>();

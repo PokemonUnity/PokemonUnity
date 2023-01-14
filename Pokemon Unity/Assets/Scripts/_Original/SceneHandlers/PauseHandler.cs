@@ -162,6 +162,7 @@ public class PauseHandler : MonoBehaviour
 
     void Awake()
     {
+        return;
         phone = transform.Find("phone").GetComponent<RectTransform>();
         
         PauseAudio = transform.GetComponent<AudioSource>();
@@ -234,6 +235,8 @@ public class PauseHandler : MonoBehaviour
 
     void Start()
     {
+        this.gameObject.SetActive(false);
+        return;
         transform.Find("left_interface").gameObject.SetActive(false);
         
         party.type = App.Type.Menu;
@@ -299,7 +302,6 @@ public class PauseHandler : MonoBehaviour
             
         };
         
-        this.gameObject.SetActive(false);
     }
     
     /*

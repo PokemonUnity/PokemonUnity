@@ -112,6 +112,7 @@ public class PCHandler : MonoBehaviour
 
     void Awake()
     {
+        return;
         Dialog = gameObject.GetComponent<DialogBoxHandlerNew>();
 
         PCaudio = gameObject.GetComponent<AudioSource>();

@@ -13,7 +13,7 @@ public class Scene : MonoBehaviour
     public PartyHandler Party;
     public PauseHandler Pause;
     public PCHandler PC;
-    public OLD_SettingsHandler Settings;
+    public MenuBehaviour Settings;
     public SummaryHandler Summary;
     public TrainerHandler Trainer;
     public TypingHandler Typing;
@@ -37,6 +37,6 @@ public class Scene : MonoBehaviour
         Summary.gameObject.SetActive(true);
         Trainer.gameObject.SetActive(false); //TODO Trainer Handler
         Typing.gameObject.SetActive(true);
-        StarterChoice.gameObject.SetActive(true);
+        StarterChoice?.gameObject.SetActive(true);
     }
 }

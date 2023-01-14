@@ -630,7 +630,7 @@ public class OLD_MainMenuHandler : MonoBehaviour {
 
 
                     Scene.main.Settings.gameObject.SetActive(true);
-                    StartCoroutine(Scene.main.Settings.control());
+                    //StartCoroutine(Scene.main.Settings.control());
                     while (Scene.main.Settings.gameObject.activeSelf) {
                         yield return null;
                     }

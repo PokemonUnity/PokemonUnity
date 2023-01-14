@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(MenuHandler))]
 public class GlobalVariables : MonoBehaviour
 {
     [SerializeField] GameSetting<FullScreenMode> fullscreenSetting;
@@ -66,6 +67,7 @@ public class GlobalVariables : MonoBehaviour
         resolutionSetting.OnValueChange.AddListener(UpdateResolution);
         SFXVolumeSetting = sfxVolumeSetting;
         MusicVolumeSetting = musicVolumeSetting;
+
         return;
 
         #region old code

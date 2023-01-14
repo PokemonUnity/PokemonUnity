@@ -5,12 +5,19 @@ using UnityEngine.UI;
 public class MenuBehaviour : MonoBehaviour
 {
     [SerializeField] string menuName = "A menu";
-    [SerializeField] Canvas canvas;
+    public bool isFirstMenu = false;
+    Canvas canvas;
 
     public string MenuName { get => menuName; }
 
-    void Start() {
-        if (canvas == null) Debug.LogError("No canvas was provided");
+    protected void Start() {
+        MenuHandler.Singleton.Menus.Add(this);
+        if (isFirstMenu) MenuHandler.Singleton.ChangeMenuInstantly(menuName);
+        canvas = GetComponent<Canvas>();
+    }
+
+    protected void OnDestroy() {
+        MenuHandler.Singleton.Menus.Remove(this);
     }
 
     public virtual Selectable GetFirstSelectable() {
@@ -37,4 +44,6 @@ public class MenuBehaviour : MonoBehaviour
                 source.mute = !source.mute;
         }
     }
+
+    public void ChangeMenu(string name) => MenuHandler.Singleton.ChangeMenu(name);
 }

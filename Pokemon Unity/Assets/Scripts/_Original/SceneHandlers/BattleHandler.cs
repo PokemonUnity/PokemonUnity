@@ -366,7 +366,7 @@ public partial class BattleHandler : MonoBehaviour
         background;
     
     //SPRITES
-    private SpriteRenderer
+    private Image
         playerSpriteRenderer,
         opponentSpriteRenderer,
         playerShadowSpriteRenderer,
@@ -377,7 +377,7 @@ public partial class BattleHandler : MonoBehaviour
         playerBall,
         opponentBall;
     
-    private SpriteRenderer
+    private Image
         player2SpriteRenderer,
         opponent2SpriteRenderer,
         player2ShadowSpriteRenderer,
@@ -653,6 +653,7 @@ public partial class BattleHandler : MonoBehaviour
 
     void Awake()
     {
+        return;
         //GameDebug.OnLog += GameDebug_OnLog;
         //GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
         string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
@@ -661,11 +662,11 @@ public partial class BattleHandler : MonoBehaviour
         Game.LocalizationDictionary.Initialize(englishLocalization, (int)PokemonUnity.Languages.English);
 
         //Setup Battle Scene
-        BattleScene = GameObject.Find("Global/BattleScene");
+        BattleScene = GameObject.Find("Global/BattleSceneGen5");
 
         //Setup Camera Display
         BattleDisplay = GameObject.Find("Global/MainCamera/BattleDisplay");
-
+        
         //Setup Camera Movements
         // FIXME: There should be a Battle_Camera i guess? Where did Battle_Camera go?
         //BattleCamera = GameObject.Find("Global/BattleScene/Battle_Camera").GetComponent<BattleCameraHandler>();
@@ -680,110 +681,146 @@ public partial class BattleHandler : MonoBehaviour
         
         //Setup of sprite objects
         playerSpriteRenderer =
-            GameObject.Find("BattleScene/player0/Pokemon/Mask/Sprite").GetComponent<SpriteRenderer>();
+            GameObject.Find("BattleScene/player0/Pokemon/Mask/Sprite")?.GetComponent<Image>();
         opponentSpriteRenderer =
-            GameObject.Find("BattleScene/opponent0/Pokemon/Mask/Sprite").GetComponent<SpriteRenderer>();
+            GameObject.Find("BattleScene/opponent0/Pokemon/Mask/Sprite")?.GetComponent<Image>();
         playerShadowSpriteRenderer =
-            GameObject.Find("BattleScene/player0/Pokemon/Shadow").GetComponent<SpriteRenderer>();
+            GameObject.Find("BattleScene/player0/Pokemon/Shadow")?.GetComponent<Image>();
         opponentShadowSpriteRenderer  =
-            GameObject.Find("BattleScene/opponent0/Pokemon/Shadow").GetComponent<SpriteRenderer>();
+            GameObject.Find("BattleScene/opponent0/Pokemon/Shadow")?.GetComponent<Image>();
         
         player2SpriteRenderer =
-            GameObject.Find("BattleScene/player1/Pokemon/Mask/Sprite").GetComponent<SpriteRenderer>();
+            GameObject.Find("BattleScene/player1/Pokemon/Mask/Sprite")?.GetComponent<Image>();
         opponent2SpriteRenderer =
-            GameObject.Find("BattleScene/opponent1/Pokemon/Mask/Sprite").GetComponent<SpriteRenderer>();
+            GameObject.Find("BattleScene/opponent1/Pokemon/Mask/Sprite")?.GetComponent<Image>();
         player2ShadowSpriteRenderer =
-            GameObject.Find("BattleScene/player1/Pokemon/Shadow").GetComponent<SpriteRenderer>();
+            GameObject.Find("BattleScene/player1/Pokemon/Shadow")?.GetComponent<Image>();
         opponent2ShadowSpriteRenderer  =
-            GameObject.Find("BattleScene/opponent1/Pokemon/Shadow").GetComponent<SpriteRenderer>();
-        
+            GameObject.Find("BattleScene/opponent1/Pokemon/Shadow")?.GetComponent<Image>();
+
         //Setup of Sprite masks
-        playerSpriteMask = playerSpriteRenderer.gameObject.GetComponent<SpriteMask>();
-        opponentSpriteMask  = opponentSpriteRenderer.gameObject.GetComponent<SpriteMask>();
+        if (playerSpriteRenderer != null)
+            playerSpriteMask = playerSpriteRenderer.gameObject.GetComponent<SpriteMask>();
+        if (opponentSpriteRenderer != null)
+            opponentSpriteMask  = opponentSpriteRenderer.gameObject.GetComponent<SpriteMask>();
         
-        player2SpriteMask = player2SpriteRenderer.gameObject.GetComponent<SpriteMask>();
-        opponent2SpriteMask  = opponent2SpriteRenderer.gameObject.GetComponent<SpriteMask>();
-        
+        if (player2SpriteRenderer != null)
+            player2SpriteMask = player2SpriteRenderer.gameObject.GetComponent<SpriteMask>();
+        if (opponent2SpriteRenderer != null)
+            opponent2SpriteMask = opponent2SpriteRenderer.gameObject.GetComponent<SpriteMask>();
+
         //Setup opponent trainer sprite renderer
-        opponentTrainerSpriteRenderer = BattleScene.transform.Find("opponent_trainer").GetComponent<SpriteRenderer>();
-        opponentTrainerShadowSpriteRenderer = BattleScene.transform.Find("opponent_trainer_shadow").GetComponent<SpriteRenderer>();
+        if (BattleScene != null) {
+            opponentTrainerSpriteRenderer = BattleScene.transform.Find("opponent_trainer")?.GetComponent<Image>();
+            opponentTrainerShadowSpriteRenderer = BattleScene.transform.Find("opponent_trainer_shadow")?.GetComponent<Image>();
         
-        opponentTrainer2SpriteRenderer = BattleScene.transform.Find("opponent_trainer2").GetComponent<SpriteRenderer>();
-        opponentTrainer2ShadowSpriteRenderer = BattleScene.transform.Find("opponent_trainer2_shadow").GetComponent<SpriteRenderer>();
-        
-        //Setup pokeballs
-        playerBall = BattleScene.transform.Find("playerball").GetComponent<SpriteRenderer>();
-        playerBall2 = BattleScene.transform.Find("playerball_2").GetComponent<SpriteRenderer>();
-        allyBall = BattleScene.transform.Find("allyball").GetComponent<SpriteRenderer>();
-        opponentBall = BattleScene.transform.Find("opponentball").GetComponent<SpriteRenderer>();
-        opponentBall2 = BattleScene.transform.Find("opponentball_2").GetComponent<SpriteRenderer>();
-        
+            opponentTrainer2SpriteRenderer = BattleScene.transform.Find("opponent_trainer2")?.GetComponent<Image>();
+            opponentTrainer2ShadowSpriteRenderer = BattleScene.transform.Find("opponent_trainer2_shadow")?.GetComponent<Image>();
+
+            //Setup pokeballs
+            playerBall = BattleScene.transform.Find("playerball")?.GetComponent<Image>();
+            playerBall2 = BattleScene.transform.Find("playerball_2")?.GetComponent<Image>();
+            allyBall = BattleScene.transform.Find("allyball")?.GetComponent<Image>();
+            opponentBall = BattleScene.transform.Find("opponentball")?.GetComponent<Image>();
+            opponentBall2 = BattleScene.transform.Find("opponentball_2")?.GetComponent<Image>();
+        }
+
         //Setup pokeball particles
-        playerPokeballParticles = playerSpriteRenderer.transform.Find("Pokeball Flash").GetComponent<ParticleSystem>();
-        opponentPokeballParticles = opponentSpriteRenderer.transform.Find("Pokeball Flash").GetComponent<ParticleSystem>();
-        
-        player2PokeballParticles = player2SpriteRenderer.transform.Find("Pokeball Flash").GetComponent<ParticleSystem>();
-        opponent2PokeballParticles = opponent2SpriteRenderer.transform.Find("Pokeball Flash").GetComponent<ParticleSystem>();
+        if (playerSpriteRenderer != null)
+            playerPokeballParticles = playerSpriteRenderer.transform.Find("Pokeball Flash")?.GetComponent<ParticleSystem>();
+
+        if (opponentSpriteRenderer != null)
+            opponentPokeballParticles = opponentSpriteRenderer.transform.Find("Pokeball Flash")?.GetComponent<ParticleSystem>();
+
+        if (player2SpriteRenderer != null)
+            player2PokeballParticles = player2SpriteRenderer.transform.Find("Pokeball Flash")?.GetComponent<ParticleSystem>();
+
+        if (opponent2SpriteRenderer != null)
+            opponent2PokeballParticles = opponent2SpriteRenderer.transform.Find("Pokeball Flash")?.GetComponent<ParticleSystem>();
 
         //TODO Desactiver le visuel 2D de base
-        playerBase.gameObject.SetActive(false);
-        opponentBase.gameObject.SetActive(false);
+        playerBase?.gameObject.SetActive(false);
+        opponentBase?.gameObject.SetActive(false);
 
-        trainerSprite1 = opponentBase.transform.Find("Trainer").GetComponent<Image>();
-        playerTrainerSprite1 = playerBase.transform.Find("Trainer").GetComponent<Image>();
+        trainerSprite1 = opponentBase.transform.Find("Trainer")?.GetComponent<Image>();
+        playerTrainerSprite1 = playerBase.transform.Find("Trainer")?.GetComponent<Image>();
 
-        player1 = playerBase.transform.Find("Pokemon").Find("Mask").Find("Sprite").GetComponent<Image>();
-        opponent1 =
-            opponentBase.transform.Find("Pokemon").Find("Mask").Find("Sprite").GetComponent<Image>();
-        player1Overlay = player1.transform.Find("Overlay").GetComponent<RawImage>();
-        opponent1Overlay = opponent1.transform.Find("Overlay").GetComponent<RawImage>();
+        player1 = playerBase?.transform.Find("Pokemon").Find("Mask").Find("Sprite")?.GetComponent<Image>();
+        opponent1 = opponentBase?.transform.Find("Pokemon").Find("Mask").Find("Sprite").GetComponent<Image>();
+        player1Overlay = player1?.transform.Find("Overlay").GetComponent<RawImage>();
+        opponent1Overlay = opponent1?.transform.Find("Overlay").GetComponent<RawImage>();
 
-        Transform playerPartyBarTrn = transform.Find("playerParty");
-        Transform opponentPartyBarTrn = transform.Find("opponentParty");
-        playerPartyBar = playerPartyBarTrn.Find("bar").GetComponent<Image>();
-        opponentPartyBar = opponentPartyBarTrn.Find("bar").GetComponent<Image>();
+        if (transform.TryFind("playerParty", out Transform playerParty))
+            playerPartyBar = playerParty.Find("bar").GetComponent<Image>();
+
+        if (transform.TryFind("opponentParty", out Transform opponentParty))
+            if (opponentParty.TryFind("bar", out Transform opponentPartyBarTransform))
+                opponentPartyBar = opponentPartyBarTransform.GetComponent<Image>();
+
         for (int i = 0; i < 6; i++)
-        {
-            playerPartyBarSpace[i] = playerPartyBarTrn.Find("space" + i).GetComponent<Image>();
-        }
-        for (int i = 0; i < 6; i++)
-        {
-            opponentPartyBarSpace[i] = opponentPartyBarTrn.Find("space" + i).GetComponent<Image>();
-        }
+            if (playerParty.TryFind("space" + i, out Transform playerPartySpace))
+               playerPartyBarSpace[i] = playerPartySpace.GetComponent<Image>();
 
-        pokemonStatsDisplay[0] = transform.Find("playerStats0").GetComponent<Image>();
-        pokemonStatsDisplay[1] = transform.Find("playerStats1").GetComponent<Image>();
-        pokemonStatsDisplay[3] = transform.Find("opponentStats0").GetComponent<Image>();
-        pokemonStatsDisplay[4] = transform.Find("opponentStats1").GetComponent<Image>();
+        for (int i = 0; i < 6; i++)
+            if (opponentParty.TryFind("space" + i, out Transform opponentPartySpace))
+                opponentPartyBarSpace[i] = opponentPartySpace.GetComponent<Image>();
+
+        
+        if (opponentParty.TryFind("playerStats0", out Transform playerStats0))
+            pokemonStatsDisplay[0] = playerStats0.GetComponent<Image>();
+        if (opponentParty.TryFind("playerStats1", out Transform playerStats1))
+            pokemonStatsDisplay[1] = playerStats1.GetComponent<Image>();
+        if (opponentParty.TryFind("opponentStats0", out Transform opponentStats0))
+            pokemonStatsDisplay[3] = opponentStats0.GetComponent<Image>();
+        if (opponentParty.TryFind("opponentStats1", out Transform opponentStats1))
+            pokemonStatsDisplay[4] = opponentStats1.GetComponent<Image>();
+
         for (int i = 0; i < 2; ++i)
         {
-            Transform statname = pokemonStatsDisplay[i].transform.Find("Name").transform;
+            if (pokemonStatsDisplay[i] != null && pokemonStatsDisplay[i].transform.TryFind("Name", out Transform statname)) {
+                statsNameShadow[i] = statname.Find("outline").GetComponent<Text>();
+                statsNameShadow2[i] = statname.Find("outline2").GetComponent<Text>();
+                statsNameShadow3[i] = statname.Find("outline3").GetComponent<Text>();
+                statsNameShadow4[i] = statname.Find("outline4").GetComponent<Text>();
+                statsNameShadow5[i] = statname.Find("outline5").GetComponent<Text>();
+                statsNameShadow6[i] = statname.Find("outline6").GetComponent<Text>();
+                statsNameShadow7[i] = statname.Find("outline7").GetComponent<Text>();
+                statsNameShadow8[i] = statname.Find("outline8").GetComponent<Text>();
+
+                statsName[i] = statname.Find("Text").GetComponent<Text>();
+            }
             
-            statsNameShadow[i] = statname.Find("outline").GetComponent<Text>();
-            statsNameShadow2[i] = statname.Find("outline2").GetComponent<Text>();
-            statsNameShadow3[i] = statname.Find("outline3").GetComponent<Text>();
-            statsNameShadow4[i] = statname.Find("outline4").GetComponent<Text>();
-            statsNameShadow5[i] = statname.Find("outline5").GetComponent<Text>();
-            statsNameShadow6[i] = statname.Find("outline6").GetComponent<Text>();
-            statsNameShadow7[i] = statname.Find("outline7").GetComponent<Text>();
-            statsNameShadow8[i] = statname.Find("outline8").GetComponent<Text>();
-            
-            statsName[i] = statname.Find("Text").GetComponent<Text>();
-            
-            statsGenderShadow[i] = pokemonStatsDisplay[i].transform.Find("Gender").GetComponent<Text>();
-            statsGender[i] = statsGenderShadow[i].transform.Find("Text").GetComponent<Text>();
-            Transform statlevel = pokemonStatsDisplay[i].transform.Find("Level").transform;
-            statsLevelShadow[i] = statlevel.Find("outline").GetComponent<Text>();
-            statsLevelShadow2[i] = statlevel.Find("outline2").GetComponent<Text>();
-            statsLevelShadow3[i] = statlevel.Find("outline3").GetComponent<Text>();
-            statsLevelShadow4[i] = statlevel.Find("outline4").GetComponent<Text>();
-            statsLevelShadow5[i] = statlevel.Find("outline5").GetComponent<Text>();
-            statsLevelShadow6[i] = statlevel.Find("outline6").GetComponent<Text>();
-            statsLevelShadow7[i] = statlevel.Find("outline7").GetComponent<Text>();
-            statsLevelShadow8[i] = statlevel.Find("outline8").GetComponent<Text>();
-            
-            statsLevel[i] = statlevel.Find("Text").GetComponent<Text>();
-            
+            if (pokemonStatsDisplay[i] != null) {
+                if (pokemonStatsDisplay[i].transform.TryFind("Gender", out Transform genderText)) {
+                    statsGenderShadow[i] = genderText.GetComponent<Text>();
+                    if (genderText.TryFind("Text", out Transform genderTextShadow)) {
+                        statsGender[i] = genderTextShadow.GetComponent<Text>();
+                    }
+                }
+
+                if (pokemonStatsDisplay[i].transform.TryFind("Level", out Transform statlevel)) {
+                    if (transform.TryFind("outline", out Transform outline1))
+                        statsLevelShadow[i] = outline1.GetComponent<Text>();
+                    if (transform.TryFind("outline2", out Transform outline2))
+                        statsLevelShadow2[i] = outline2.GetComponent<Text>();
+                    if (transform.TryFind("outline3", out Transform outline3))
+                        statsLevelShadow3[i] = outline3.GetComponent<Text>();
+                    if (transform.TryFind("outline4", out Transform outline4))
+                        statsLevelShadow4[i] = outline4.GetComponent<Text>();
+                    if (transform.TryFind("outline5", out Transform outline5))
+                        statsLevelShadow5[i] = outline5.GetComponent<Text>();
+                    if (transform.TryFind("outline6", out Transform outline6))
+                        statsLevelShadow6[i] = outline6.GetComponent<Text>();
+                    if (transform.TryFind("outline7", out Transform outline7))
+                        statsLevelShadow7[i] = outline7.GetComponent<Text>();
+                    if (transform.TryFind("outline8", out Transform outline8))
+                        statsLevelShadow8[i] = outline8.GetComponent<Text>();
+                    
+                    if (transform.TryFind("outline8", out Transform statsLevelText))
+                        statsLevel[i] = statsLevelText.GetComponent<Text>();
+                }
+            }
+
             statsHPBar[i] = pokemonStatsDisplay[i].transform.Find("HPBar").GetComponent<Image>();
             statsStatus[i] = pokemonStatsDisplay[i].transform.Find("Status").GetComponent<Image>();
         }
@@ -1026,8 +1063,8 @@ public partial class BattleHandler : MonoBehaviour
     //
     private IEnumerator animateMegaEvolution(bool isOpponent)
     {
-        SpriteRenderer s = playerSpriteRenderer;
-        SpriteRenderer whiteOverlay = s.transform.Find("WhiteOverlay").GetComponent<SpriteRenderer>();
+        Image s = playerSpriteRenderer;
+        Image whiteOverlay = s.transform.Find("WhiteOverlay").GetComponent<Image>();
         GameObject vfx = s.transform.Find("Mega Evolution").gameObject;
         
         // Change camera focus to the mega evolving Pokémon
@@ -1203,7 +1240,7 @@ public partial class BattleHandler : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
     }
 
-    private IEnumerator animateOpponentTrainer(SpriteRenderer trainer, UnityEngine.Sprite[] animation)
+    private IEnumerator animateOpponentTrainer(Image trainer, UnityEngine.Sprite[] animation)
     {
         int frame = 0;
         while (frame < animation.Length)
@@ -1218,7 +1255,7 @@ public partial class BattleHandler : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator fadeopponentTrainer(SpriteRenderer trainer, bool isShadow)
+    private IEnumerator fadeopponentTrainer(Image trainer, bool isShadow)
     {
         Vector3 trainer_pos = trainer.transform.localPosition;
 
@@ -1410,7 +1447,7 @@ public partial class BattleHandler : MonoBehaviour
         }
     }
     
-    private IEnumerator animatePokemonSpriteRenderer(SpriteRenderer pokemon, UnityEngine.Sprite[] animation)
+    private IEnumerator animatePokemonSpriteRenderer(Image pokemon, UnityEngine.Sprite[] animation)
     {
         int frame = 0;
         while (animation != null)
@@ -1575,7 +1612,7 @@ public partial class BattleHandler : MonoBehaviour
         return Resources.LoadAll<UnityEngine.Sprite>("Balls/" + spriteName);
     }
 
-    private IEnumerator animateBall(SpriteRenderer ball, UnityEngine.Sprite[] animation)
+    private IEnumerator animateBall(Image ball, UnityEngine.Sprite[] animation)
     {
         int frame = 0;
         while (animation != null)
@@ -1601,7 +1638,7 @@ public partial class BattleHandler : MonoBehaviour
         Vector3 position;
         Vector3 distance;
         Vector3 target;
-        SpriteRenderer ball;
+        Image ball;
         float height = 4f;
 
         if (index == 0)
@@ -1645,7 +1682,7 @@ public partial class BattleHandler : MonoBehaviour
         Vector3 position;
         Vector3 distance;
         Vector3 target;
-        SpriteRenderer ball;
+        Image ball;
         float height = 4f;
 
         target = player2SpriteRenderer.transform.position;
@@ -1684,7 +1721,7 @@ public partial class BattleHandler : MonoBehaviour
 
         UnityEngine.Sprite[] animation = new UnityEngine.Sprite[0]; //getBallSprite(pokemon[index].getCaughtBall());
 
-        SpriteRenderer ball;
+        Image ball;
         if (index == 3)
         {
             ball = opponentBall;
@@ -1734,12 +1771,12 @@ public partial class BattleHandler : MonoBehaviour
         pokemon.color = new Color(0.5f, 0.5f, 0.5f, 1);
     }
     
-    private IEnumerator releasePokemon(SpriteRenderer sprite, bool doubleBattle)
+    private IEnumerator releasePokemon(Image sprite, bool doubleBattle)
     {
         RectTransform pokemonSprite = sprite.gameObject.GetComponent<RectTransform>();
         Transform mask = sprite.gameObject.transform.parent;
-            
-        SpriteRenderer overlay = sprite.transform.Find("WhiteOverlay").GetComponent<SpriteRenderer>();
+
+        Image overlay = sprite.transform.Find("WhiteOverlay").GetComponent<Image>();
 
         Vector3 normalSize = new Vector3();
         if (sprite.transform.parent.parent.parent.name.Contains("opponent"))
