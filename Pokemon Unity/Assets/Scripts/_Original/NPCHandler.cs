@@ -508,7 +508,7 @@ public class NPCHandler : MonoBehaviour
 
         //check for a bridge at the destination
         RaycastHit bridgeHit =
-            MapCollider.getBridgeHitOfPosition(transform.position + movement + new Vector3(0, 1.5f, 0));
+            MapCollider.GetBridgeHitOfPosition(transform.position + movement + new Vector3(0, 1.5f, 0));
         if (bridgeHit.collider != null)
         {
             //modify the forwards vector to align to the bridge.
@@ -522,9 +522,9 @@ public class NPCHandler : MonoBehaviour
         }
 
 
-        float currentSlope = Mathf.Abs(MapCollider.getSlopeOfPosition(transform.position, direction));
+        float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, direction));
         float destinationSlope =
-            Mathf.Abs(MapCollider.getSlopeOfPosition(transform.position + forwardsVector, direction));
+            Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + forwardsVector, direction));
         float yDistance = Mathf.Abs((transform.position.y + movement.y) - transform.position.y);
         yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
@@ -537,7 +537,7 @@ public class NPCHandler : MonoBehaviour
                 //check destination tileTag for impassibles unless NoClipping
                 if (!noClip)
                 {
-                    int destinationTileTag = destinationMap.getTileTag(transform.position + movement);
+                    int destinationTileTag = destinationMap.GetTileTag(transform.position + movement);
                     if (destinationTileTag == 1)
                     {
                         return Vector3.zero;

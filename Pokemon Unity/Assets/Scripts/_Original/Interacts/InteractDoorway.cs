@@ -82,7 +82,7 @@ public class InteractDoorway : MonoBehaviour
         return; // FIXME
         if (lockPlayerCamera)
         {
-            PlayerMovement.Singleton.mainCamera.transform.position = lockedPosition;
+            PlayerMovement.Singleton.playerCamera.transform.position = lockedPosition;
         }
     }
 
@@ -237,7 +237,7 @@ public class InteractDoorway : MonoBehaviour
                 //reset camera and doorway transforms
                 /*PlayerMovement.player.mainCamera.transform.localPosition =
                     PlayerMovement.player.mainCameraDefaultPosition;*/
-                PlayerMovement.Singleton.mainCamera.fieldOfView = PlayerMovement.Singleton.mainCameraDefaultFOV;
+                PlayerMovement.Singleton.playerCamera.fieldOfView = PlayerMovement.Singleton.mainCameraDefaultFOV;
                 transform.localPosition = initPosition;
                 transform.localRotation = initRotation;
                 transform.localScale = initScale;
@@ -266,8 +266,8 @@ public class InteractDoorway : MonoBehaviour
                     PlayerMovement.Singleton.updateDirection(transferDirection);
                     
                     
-                    PlayerMovement.Singleton.followerScript.direction = GlobalVariables.Singleton.playerDirection;
-                    PlayerMovement.Singleton.followerScript.transform.localPosition = -Direction.Vectorize(transferDirection);
+                    PlayerMovement.Singleton.Follower.direction = GlobalVariables.Singleton.playerDirection;
+                    PlayerMovement.Singleton.Follower.transform.localPosition = -Direction.Vectorize(transferDirection);
                     if (movesForward)
                     {
                         PlayerMovement.Singleton.forceMoveForward();
@@ -289,7 +289,7 @@ public class InteractDoorway : MonoBehaviour
     private IEnumerator lockCameraPosition()
     {
         lockPlayerCamera = true;
-        lockedPosition = PlayerMovement.Singleton.mainCamera.transform.position;
+        lockedPosition = PlayerMovement.Singleton.playerCamera.transform.position;
         yield return new WaitForSeconds(1f);
         lockPlayerCamera = false;
     }

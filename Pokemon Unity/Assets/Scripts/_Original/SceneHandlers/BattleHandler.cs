@@ -5228,7 +5228,7 @@ public partial class BattleHandler : MonoBehaviour
         //}
 
         //GET BATTLE BACKGROUNDS
-        int currentTileTag = PlayerMovement.Singleton.currentMap.getTileTag(PlayerMovement.Singleton.transform.position);
+        int currentTileTag = PlayerMovement.Singleton.currentMap.GetTileTag(PlayerMovement.Singleton.transform.position);
         Debug.Log(currentTileTag);
         backgroundObject = Instantiate(PlayerMovement.Singleton.accessedMapSettings.getBattleBackground(currentTileTag),
             GameObject.Find("Global/BattleScene").transform);

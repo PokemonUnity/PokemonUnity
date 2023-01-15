@@ -57,7 +57,6 @@ public class MapNameBoxBehaviour : MonoBehaviour
     void SetMapNameBox(MapNameBox newMapNameBox = null) {
         if (!enabled) return;
         if (mapNameBox != null) mapNameBox = newMapNameBox;
-        Debug.Log(mapNameBox);
         if (mapNameBox == null) {
             Debug.LogError("No MapNameBox provided", gameObject);
             return;

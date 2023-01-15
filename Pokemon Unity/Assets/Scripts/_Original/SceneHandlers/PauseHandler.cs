@@ -679,8 +679,8 @@ public class PauseHandler : MonoBehaviour
             SaveData.currentSave.levelName = Application.loadedLevelName;
             SaveData.currentSave.playerPosition = new SeriV3(PlayerMovement.Singleton.transform.position);
             SaveData.currentSave.playerDirection = PlayerMovement.Singleton.direction;
-            SaveData.currentSave.followerPosition = new SeriV3(PlayerMovement.Singleton.followerScript.transform.position);
-            SaveData.currentSave.followerdirection = PlayerMovement.Singleton.followerScript.direction;
+            SaveData.currentSave.followerPosition = new SeriV3(PlayerMovement.Singleton.Follower.transform.position);
+            SaveData.currentSave.followerdirection = PlayerMovement.Singleton.Follower.direction;
             SaveData.currentSave.mapName = PlayerMovement.Singleton.accessedMapSettings.mapName;
             SaveData.currentSave.followerOut = GlobalVariables.Singleton.followerOut;
 

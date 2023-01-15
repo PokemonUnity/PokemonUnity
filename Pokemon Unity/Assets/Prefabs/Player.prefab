@@ -272,8 +272,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4975417706449109250}
-  - component: {fileID: 4975417706449109251}
   - component: {fileID: 4975417706449109252}
+  - component: {fileID: 4975417706449109251}
+  - component: {fileID: 5961886964716992324}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -303,47 +304,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4975417706449109251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4975417706449109249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb46e7a9813a20c428cf41ea42f25f8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  busyWith: {fileID: 0}
-  moving: 0
-  still: 1
-  running: 0
-  surfing: 0
-  bike: 0
-  strength: 0
-  walkSpeed: 0.3
-  runSpeed: 0.15
-  surfSpeed: 0.2
-  speed: 0
-  direction: 2
-  canInput: 1
-  increment: 1
-  followerScript: {fileID: 0}
-  npcFollower: {fileID: 0}
-  hitBox: {fileID: 0}
-  currentMap: {fileID: 0}
-  destinationMap: {fileID: 0}
-  accessedMapSettings: {fileID: 0}
-  mainCamera: {fileID: 0}
-  mainCameraDefaultPosition: {x: 0, y: 0, z: 0}
-  mainCameraDefaultFOV: 0
-  framesPerSec: 0
-  walkFPS: 7
-  runFPS: 12
-  bumpClip: {fileID: 8300000, guid: 90055a0bb952fde4586a71609206b104, type: 3}
-  jumpClip: {fileID: 8300000, guid: cec26dd31c658c943a8d9510121865c2, type: 3}
-  landClip: {fileID: 8300000, guid: 27e072d1e67b2d94494745d555e51276, type: 3}
 --- !u!82 &4975417706449109252
 AudioSource:
   m_ObjectHideFlags: 0
@@ -440,6 +400,74 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4975417706449109251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975417706449109249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb46e7a9813a20c428cf41ea42f25f8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  busyWith: {fileID: 0}
+  canInput: 1
+  playerCamera: {fileID: 0}
+  mainCameraDefaultPosition: {x: 0, y: 0, z: 0}
+  mainCameraDefaultFOV: 0
+  moving: 0
+  still: 1
+  running: 0
+  surfing: 0
+  bike: 0
+  strength: 0
+  walkSpeed: 0.3
+  runSpeed: 0.15
+  surfSpeed: 0.2
+  speed: 0
+  direction: 2
+  increment: 1
+  walkFPS: 7
+  runFPS: 12
+  pawn: {fileID: 4975417707014361487}
+  pawnSprite: {fileID: 4975417707014361584}
+  eyeSprite: {fileID: 0}
+  hairSprite: {fileID: 0}
+  pawnReflectionSprite: {fileID: 4975417707132642942}
+  spriteSheet: []
+  Hitbox: {fileID: 4975417706657779531}
+  Follower: {fileID: 840571785}
+  npcFollower: {fileID: 0}
+  currentMap: {fileID: 0}
+  destinationMap: {fileID: 0}
+  accessedMapSettings: {fileID: 0}
+  bumpClip: {fileID: 8300000, guid: 90055a0bb952fde4586a71609206b104, type: 3}
+  jumpClip: {fileID: 8300000, guid: cec26dd31c658c943a8d9510121865c2, type: 3}
+  landClip: {fileID: 8300000, guid: 27e072d1e67b2d94494745d555e51276, type: 3}
+  mount: {fileID: 6761189241578414512}
+  framesPerSec: 0
+--- !u!114 &5961886964716992324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975417706449109249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38b9f0863ca5a342b781f41d59f8348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Events:
+    playerInput: {fileID: 0}
+    Events:
+    - ActionMap: Player
+      Action: 
+      Callbacks:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!1 &4975417706657779530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,21 +1036,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ffbf827ca3fa4449ef1f592b3fe005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  withdrawClip: {fileID: 0}
-  hasLight: 0
-  lightColor: {r: 0, g: 0, b: 0, a: 0}
-  lightIntensity: 0
-  moving: 0
-  speed: 0
-  direction: 2
   pokemonID: 6
-  pawn: {fileID: 0}
-  pawnReflection: {fileID: 0}
-  pawnLightReflection: {fileID: 0}
-  hitBox: {fileID: 0}
+  direction: 2
+  speed: 0
   hide: 0
+  moving: 0
   canMove: 1
-  pokeBall: {fileID: 21300000, guid: aef6460b10cef1c4b91fd8b35cf81e18, type: 3}
+  Pawn: {fileID: 4975417707014361487}
+  PawnLight: {fileID: 4975417706953077911}
+  PawnReflection: {fileID: 4975417706298323194}
+  PawnLightReflection: {fileID: 4975417706440232383}
+  Hitbox: {fileID: 4975417708300818537}
+  WithdrawClip: {fileID: 8300000, guid: ff1ff8776f2d587469cce2f1b881c44c, type: 3}
+  HasLight: 0
+  LightColor: {r: 0, g: 0, b: 0, a: 0}
+  LightIntensity: 0
+  pawnShadow: {fileID: 4975417706757941668}
+  PokeBall: {fileID: 21300000, guid: bfbae2e2da5b05943ba13b5c8444dfbd, type: 3}
 --- !u!1 &4975417707924282749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,6 +1063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4975417707924282750}
   - component: {fileID: 4975417707924282751}
+  - component: {fileID: 6761189241578414512}
   m_Layer: 0
   m_Name: Mount
   m_TagString: Untagged
@@ -1107,6 +1138,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6761189241578414512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975417707924282749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffc5c064fe817946a2381c7f1ac0318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sprites:
+  - {fileID: 21300000, guid: e0ac15a8f77540147aa2b330a7b04a52, type: 3}
+  - {fileID: 21300002, guid: e0ac15a8f77540147aa2b330a7b04a52, type: 3}
+  - {fileID: 21300004, guid: e0ac15a8f77540147aa2b330a7b04a52, type: 3}
+  - {fileID: 21300006, guid: e0ac15a8f77540147aa2b330a7b04a52, type: 3}
 --- !u!1 &4975417708171817625
 GameObject:
   m_ObjectHideFlags: 0

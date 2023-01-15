@@ -23,7 +23,6 @@ If empty, defaults to the first childs Text Mesh Pro component (if it has one)")
     void Update()
     {
         Sync();
-        Debug.Log($"{sourceText.text} {textsToSync[0].text}", gameObject);
     }
 
     [Button]

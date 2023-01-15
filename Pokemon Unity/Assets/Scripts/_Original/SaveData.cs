@@ -202,7 +202,7 @@ public class SaveData
         currentSave.playerEyeColor = new PokemonUnity.Utility.SeriColor(0.227f, 0.545f, 0.588f, 0);
 
 
-        currentSave.playerOutfit = "bw";
+        currentSave.playerOutfit = "hgss";
 
         #region PC test
 

@@ -249,7 +249,6 @@
     <Compile Include="Assets\Scripts\_Original\Data\Abilities\Turboblaze.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\RotatableGUIItem.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\MapTiles.cs" />
-    <Compile Include="Assets\Scripts\_Original\MapNameBoxHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Intro\IntroScene.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
     <Compile Include="Assets\Modules\DOTweenModulePhysics2D.cs" />
@@ -322,6 +321,7 @@
     <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\MountBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

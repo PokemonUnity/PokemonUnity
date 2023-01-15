@@ -27,12 +27,22 @@ public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Singleton;
 
-    private DialogBoxHandlerNew Dialog;
-    private MapNameBoxHandler MapName;
+    #region Variables
 
     //before a script runs, it'll check if the player is busy with another script's GameObject.
     public GameObject busyWith = null;
+    public bool canInput = true;
 
+    private DialogBoxHandlerNew Dialog;
+    private MapNameBoxBehaviour MapName;
+
+    [Header("Camera")]
+    public Camera playerCamera;
+    public Vector3 mainCameraDefaultPosition;
+    public float mainCameraDefaultFOV;
+    private Vector3 camOrigin;
+
+    [Header("Movement")]
     public bool moving = false;
     public bool still = true;
     public bool running = false;
@@ -44,51 +54,50 @@ public class PlayerMovement : MonoBehaviour
     public float surfSpeed = 0.2f;
     public float speed;
     public int direction = 2; //0 = up, 1 = right, 2 = down, 3 = left
-
     private bool jumping = false;
-
-    public bool canInput = true;
-
     public float increment = 1f;
+    public int walkFPS = 7;
+    public int runFPS = 12;
+    private int mostRecentDirectionPressed = 0;
+    private float directionChangeInputDelay = 0.08f;
 
-    private GameObject follower;
-    public FollowerMovement followerScript;
+    [Header("Player")]
+    //Player sprites
+    [SerializeField] Transform pawn;
+    [SerializeField] SpriteRenderer pawnSprite;
+    [SerializeField] SpriteRenderer eyeSprite;
+    [SerializeField] SpriteRenderer hairSprite;
+    [SerializeField] SpriteRenderer pawnReflectionSprite;
+    //private Material pawnReflectionSprite;
+    [SerializeField] UnityEngine.Sprite[] spriteSheet;
+    public Transform Hitbox;
 
+    [Header("Follower")]
+    public FollowerMovement Follower;
     public NPCFollower npcFollower;
 
-    private Transform pawn;
-    private Transform pawnReflection;
-    //private Material pawnReflectionSprite;
-    
-    //Player sprites
-    private SpriteRenderer pawnSprite;
-    private SpriteRenderer hairSprite;
-    private SpriteRenderer eyeSprite;
-    
-    private SpriteRenderer pawnReflectionSprite;
-
-    public Transform hitBox;
-
+    [Header("Map")]
     public MapCollider currentMap;
     public MapCollider destinationMap;
-
     public MapSettings accessedMapSettings;
+
+    [Header("Audio")]
     private AudioClip accessedAudio;
     private int accessedAudioLoopStartSamples;
+    private AudioSource PlayerAudio;
+    public AudioClip bumpClip;
+    public AudioClip jumpClip;
+    public AudioClip landClip;
 
-    public Camera mainCamera;
-    public Vector3 mainCameraDefaultPosition;
-    public float mainCameraDefaultFOV;
+    [Header("Mount")]
+    [SerializeField] MountBehaviour mount;
+    Vector3 mountPosition;
 
-    private SpriteRenderer mount;
-    private Vector3 mountPosition;
-
+    [Header("Animations")]
     private string animationName;
-    private UnityEngine.Sprite[] spriteSheet;
     private UnityEngine.Sprite[] haircutSpriteSheet;
     private UnityEngine.Sprite[] eyeSpriteSheet;
     private UnityEngine.Sprite[] mountSpriteSheet;
-
     private int frame;
     private int frames;
     public int framesPerSec;
@@ -96,22 +105,22 @@ public class PlayerMovement : MonoBehaviour
     private bool animPause;
     private bool overrideAnimPause;
 
-    public int walkFPS = 7;
-    public int runFPS = 12;
+    #endregion
 
-    private int mostRecentDirectionPressed = 0;
-    private float directionChangeInputDelay = 0.08f;
-
-    private Vector3 cam_origin;
-
-//	private SceneTransition sceneTransition;
-
-    private AudioSource PlayerAudio;
-
-    public AudioClip bumpClip;
-    public AudioClip jumpClip;
-    public AudioClip landClip;
-
+    void OnValidate() {
+        if (Follower == null) Debug.LogError("No FollowerMovement provided", gameObject);
+        // pawn stuff
+        if (pawn == null) Debug.LogError("No Pawn Transform provided", gameObject);
+        else {
+            if (pawnSprite == null) pawnSprite = pawn.GetComponent<SpriteRenderer>();
+        }
+        //if (hairSprite == null) Debug.LogError("Couldn't find the Pawns hair", gameObject);
+        //if (eyeSprite == null) Debug.LogError("Couldn't find the Pawns eyes", gameObject);
+        if (pawnReflectionSprite == null) Debug.LogError("No Pawn Reflection SpriteRenderer provided", gameObject);
+        //
+        if (Hitbox == null) Debug.LogError("No hitBox Tranform provided", gameObject);
+        if (mount == null) Debug.LogError("No mount sprite provided", gameObject);
+    }
 
     void Awake()
     {
@@ -123,93 +132,54 @@ public class PlayerMovement : MonoBehaviour
 
         // FIXME
         //Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
-        MapName = GameObject.Find("GUI").GetComponent<MapNameBoxHandler>();
+        //MapName = GameObject.Find("GUI").GetComponent<MapNameBoxBehaviour>();
 
         canInput = true;
         speed = walkSpeed;
 
-        follower = transform.Find("Follower").gameObject;
-        followerScript = follower.GetComponent<FollowerMovement>();
-
-        mainCamera = transform.Find("Camera").GetComponent<Camera>();
+        playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        if (playerCamera == null) Debug.LogError("Could not find a Camera tagged with 'MainCamera'");
 
         //mainCamera.fieldOfView = 35.6f;
 
-        mainCameraDefaultPosition = mainCamera.transform.localPosition;
-        mainCameraDefaultFOV = mainCamera.fieldOfView;
+        mainCameraDefaultPosition = playerCamera.transform.localPosition;
+        mainCameraDefaultFOV = playerCamera.fieldOfView;
 
-        pawn = transform.Find("Pawn");
-        pawnReflection = transform.Find("PawnReflection");
-        pawnSprite = pawn.GetComponent<SpriteRenderer>();
-        hairSprite = pawn.Find("hair").GetComponent<SpriteRenderer>();
-        eyeSprite = pawn.Find("eyes").GetComponent<SpriteRenderer>();
-        
-        pawnReflectionSprite = pawnReflection.GetComponent<SpriteRenderer>();
-
-        //pawnReflectionSprite = transform.FindChild("PawnReflection").GetComponent<MeshRenderer>().material;
-
-        hitBox = transform.Find("Player_Transparent");
-
-        mount = transform.Find("Mount").GetComponent<SpriteRenderer>();
+        // hmmm... delete me?
         mountPosition = mount.transform.localPosition;
     }
 
     void Start()
     {
-        cam_origin = transform.Find("Camera").localPosition;
-        
-        if (!surfing)
-        {
-            updateMount(false);
-        }
-
-        updateAnimation("walk", walkFPS);
-        StartCoroutine("animateSprite");
-        animPause = true;
-
-        reflect(false);
-        followerScript.reflect(false);
+        camOrigin = playerCamera.transform.localPosition;
 
         updateDirection(direction);
-        
         updateCosmetics();
+
+        // mount
+        if (!surfing)
+            mount.UpdateMount(false);
+
+        // animation
+        updateAnimation("walk", walkFPS);
+        StartCoroutine(animateSprite());
+        animPause = true;
+
+        // reflections
+        reflect(false);
+        Follower.reflect(false);
+
+        
 
         StartCoroutine(control());
 
 
         //Check current map
-        RaycastHit[] hitRays = Physics.RaycastAll(transform.position + Vector3.up, Vector3.down);
-        int closestIndex;
-        float closestDistance;
-
-        CheckHitRaycastDistance(hitRays, out closestIndex, out closestDistance);
-
-        if (closestIndex >= 0)
-        {
-            currentMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
-        }
-        else
-        {
-            //if no map found
-            //Check for map in front of player's direction
-            hitRays = Physics.RaycastAll(transform.position + Vector3.up + getForwardVectorRaw(), Vector3.down);
-
-            CheckHitRaycastDistance(hitRays, out closestIndex, out closestDistance);
-
-            if (closestIndex >= 0)
-            {
-                currentMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
-            }
-            else
-            {
-                Debug.Log("no map found");
-            }
-        }
-
+        currentMap = MapCollider.GetMap(transform, (EMovementDirection)direction);
 
         if (currentMap != null)
         {
-            accessedMapSettings = currentMap.gameObject.GetComponent<MapSettings>();
+            accessedMapSettings = currentMap.GetComponent<MapSettings>();
             AudioClip audioClip = accessedMapSettings.getBGM();
             int loopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
 
@@ -222,7 +192,9 @@ public class PlayerMovement : MonoBehaviour
             }
             if (accessedMapSettings.mapNameAppears)
             {
-                MapName.display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
+                // FIXME
+                //MapName.AppearAndDisappear(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
+                //MapName.AppearAndDisappear(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
             }
 
             //Update Weather
@@ -320,20 +292,9 @@ public class PlayerMovement : MonoBehaviour
         GlobalVariables.Singleton.resetFollower();
     }
 
-    public void CheckHitRaycastDistance(RaycastHit[] hitRays, out int closestIndex, out float closestDistance)
-    {
-        closestIndex = -1;
-        float closestDist = closestDistance = float.PositiveInfinity;
-        
-        foreach(RaycastHit hitRay in hitRays.Where(x => x.collider.gameObject.GetComponent<MapCollider>() != null && x.distance < closestDist))
-        {
-            closestDistance = hitRay.distance;
-            closestIndex = Array.IndexOf(hitRays, hitRay);
-        }
-    }
-
     void Update()
     {
+        return; //FIXME
         //check for new inputs, so that the new direction can be set accordingly
         if (UnityEngine.Input.GetButtonDown("Horizontal"))
         {
@@ -548,14 +509,14 @@ public class PlayerMovement : MonoBehaviour
                 else if (UnityEngine.Input.GetKeyDown("g"))
                 {
                     //DEBUG
-                    Debug.Log(currentMap.getTileTag(transform.position));
-                    if (followerScript.canMove)
+                    Debug.Log(currentMap.GetTileTag(transform.position));
+                    if (Follower.canMove)
                     {
-                        followerScript.StartCoroutine("withdrawToBall");
+                        Follower.StartCoroutine("withdrawToBall");
                     }
                     else
                     {
-                        followerScript.canMove = true;
+                        Follower.canMove = true;
                     }
                 }
             }
@@ -572,53 +533,38 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 getCamOrigin()
     {
-        return cam_origin;
+        return camOrigin;
     }
 
     public void updateDirection(int dir)
     {
         direction = dir;
 
+        return; //FIXME
         pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[direction * frames + frame];
         hairSprite.sprite = haircutSpriteSheet[direction * frames + frame];
         eyeSprite.sprite = eyeSpriteSheet[direction * frames + frame];
 
-        if (mount.enabled)
-        {
-            mount.sprite = mountSpriteSheet[direction];
-        }
-    }
-
-    private void updateMount(bool enabled, string spriteName = "")
-    {
-        mount.enabled = enabled;
-        if (!mount.enabled)
-        {
-            mountSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + spriteName);
-            mount.sprite = mountSpriteSheet[direction];
-        }
+        mount.UpdateDirection((EMovementDirection)dir);
     }
 
     public void updateAnimation(string newAnimationName, int fps)
     {
+        return; // FIXME
         if (animationName != newAnimationName)
         {
             animationName = newAnimationName;
-            spriteSheet =
-                Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() +
-                                          newAnimationName);
-            haircutSpriteSheet = 
-                Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/hairs/" + SaveData.currentSave.playerHaircut.getFileName() + '_' +
-                                                           newAnimationName);
-            eyeSpriteSheet = 
-                Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/eyes/" + SaveData.currentSave.getPlayerSpritePrefix() +
-                                          newAnimationName);
+            spriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
+            if (SaveData.currentSave.playerHaircut != null) {
+                haircutSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/hairs/" + SaveData.currentSave.playerHaircut.getFileName() + '_' + newAnimationName);
+            }
+            eyeSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/eyes/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
             //TODO Add eyes too
             
             //pawnReflectionSprite.SetTexture("_MainTex", Resources.Load<Texture>("PlayerSprites/"+SaveData.currentSave.getPlayerSpritePrefix()+newAnimationName));
             framesPerSec = fps;
-            secPerFrame = 1f / (float) framesPerSec;
-            frames = Mathf.RoundToInt((float) spriteSheet.Length / 4f);
+            secPerFrame = 1f / framesPerSec;
+            frames = Mathf.RoundToInt(spriteSheet.Length / 4f);
             if (frame >= frames)
             {
                 frame = 0;
@@ -628,12 +574,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void updateCosmetics()
     {
+        return; //FIXME
         hairSprite.color = SaveData.currentSave.playerHairColor.Color;
         eyeSprite.color = SaveData.currentSave.playerEyeColor.Color;
     }
 
     public void reflect(bool setState)
-    {
+    { //FIXME
+        return; //FIXME
         pawnReflectionSprite.enabled = setState;
     }
 
@@ -647,6 +595,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator animateSprite()
     {
+        yield break; //FIXME
         frame = 0;
         frames = 4;
         framesPerSec = walkFPS;
@@ -661,8 +610,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 pawnSprite.sprite = spriteSheet[direction * frames + frame];
                 pawnReflectionSprite.sprite = pawnSprite.sprite;
-                hairSprite.sprite = haircutSpriteSheet[direction * frames + frame];
-                eyeSprite.sprite = eyeSpriteSheet[direction * frames + frame];
+                if (hairSprite != null) hairSprite.sprite = haircutSpriteSheet[direction * frames + frame];
+                if (eyeSprite != null) eyeSprite.sprite = eyeSpriteSheet[direction * frames + frame];
                 //pawnReflectionSprite.SetTextureOffset("_MainTex", GetUVSpriteMap(direction*frames+frame));
                 yield return new WaitForSeconds(secPerFrame / 4f);
             }
@@ -773,33 +722,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     ///returns the vector relative to the player direction, without any modifications.
-    public Vector3 getForwardVectorRaw()
-    {
-        return getForwardVectorRaw(direction);
-    }
-
-    public Vector3 getForwardVectorRaw(int direction)
-    {
-        //set vector3 based off of direction
-        Vector3 forwardVector = new Vector3(0, 0, 0);
-        if (direction == 0)
-        {
-            forwardVector = new Vector3(0, 0, 1f);
-        }
-        else if (direction == 1)
-        {
-            forwardVector = new Vector3(1f, 0, 0);
-        }
-        else if (direction == 2)
-        {
-            forwardVector = new Vector3(0, 0, -1f);
-        }
-        else if (direction == 3)
-        {
-            forwardVector = new Vector3(-1f, 0, 0);
-        }
-        return forwardVector;
-    }
+    public Vector3 getForwardVectorRaw() => transform.GetForwardVectorRaw((EMovementDirection)direction);
 
     public AudioSource getAudio()
     {
@@ -819,7 +742,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 getForwardVector(int direction, bool checkForBridge)
     {
         //set initial vector3 based off of direction
-        Vector3 movement = getForwardVectorRaw(direction);
+        Vector3 movement = transform.GetForwardVectorRaw((EMovementDirection)direction);
 
         //Check destination map	and bridge																//0.5f to adjust for stair height
         //cast a ray directly downwards from the position directly in front of the player		//1f to check in line with player's head
@@ -869,9 +792,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        float currentSlope = Mathf.Abs(MapCollider.getSlopeOfPosition(transform.position, direction));
+        float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, direction));
         float destinationSlope =
-            Mathf.Abs(MapCollider.getSlopeOfPosition(transform.position + getForwardVectorRaw(), direction,
+            Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + getForwardVectorRaw(), direction,
                 checkForBridge));
         float yDistance = Mathf.Abs((transform.position.y + movement.y) - transform.position.y);
         yDistance = Mathf.Round(yDistance * 100f) / 100f;
@@ -924,10 +847,10 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 //if no objects are in the way
-                int destinationTileTag = destinationMap.getTileTag(transform.position + movement);
+                int destinationTileTag = destinationMap.GetTileTag(transform.position + movement);
 
                 RaycastHit bridgeHit =
-                    MapCollider.getBridgeHitOfPosition(transform.position + movement + new Vector3(0, 0.1f, 0));
+                    MapCollider.GetBridgeHitOfPosition(transform.position + movement + new Vector3(0, 0.1f, 0));
                 if (bridgeHit.collider != null || destinationTileTag != 1)
                 {
                     //wall tile tag
@@ -964,7 +887,8 @@ public class PlayerMovement : MonoBehaviour
                             
                             if (accessedMapSettings.mapNameAppears)
                             {
-                                MapName.display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
+                                // FIXME
+                                //MapName.display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
                             }
                             
                             Debug.Log(destinationMap.name + "   " + accessedAudio.name);
@@ -1052,13 +976,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (movement != Vector3.zero)
         {
-            Vector3 startPosition = hitBox.position;
+            Vector3 startPosition = Hitbox.position;
             moving = true;
             increment = 0;
 
             if (!lockFollower)
             {
-                StartCoroutine(followerScript.move(startPosition, speed));
+                StartCoroutine(Follower.move(startPosition, speed));
             }
 
             if (npcFollower != null)
@@ -1077,14 +1001,14 @@ public class PlayerMovement : MonoBehaviour
                     increment = 1;
                 }
                 transform.position = startPosition + (movement * increment);
-                hitBox.position = startPosition + movement;
+                Hitbox.position = startPosition + movement;
                 yield return null;
             }
 
             //check for encounters unless disabled
             if (encounter)
             {
-                int destinationTag = currentMap.getTileTag(transform.position);
+                int destinationTag = currentMap.GetTileTag(transform.position);
                 if (destinationTag != 1)
                 {
                     //not a wall
@@ -1107,10 +1031,10 @@ public class PlayerMovement : MonoBehaviour
     {
         targetPosition += mainCameraDefaultPosition;
 
-        LeanTween.move(mainCamera.gameObject, targetPosition, duration);
+        LeanTween.move(playerCamera.gameObject, targetPosition, duration);
         yield return new WaitForSeconds(duration);
 
-        mainCamera.transform.localPosition = targetPosition;
+        playerCamera.transform.localPosition = targetPosition;
     }
 
     public void forceMoveForward(int spaces = 1)
@@ -1152,7 +1076,7 @@ public class PlayerMovement : MonoBehaviour
         overrideAnimPause = false;
         if (GlobalVariables.Singleton.followerOut)
         {
-            followerScript.ActivateMove();
+            Follower.ActivateMove();
         }
     }
 
@@ -1193,7 +1117,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!surfing)
         {
-            if (currentMap.getTileTag(transform.position + spaceInFront) == 2)
+            if (currentMap.GetTileTag(transform.position + spaceInFront) == 2)
             {
                 //water tile tag
                 StartCoroutine(surfCheck());
@@ -1262,26 +1186,15 @@ public class PlayerMovement : MonoBehaviour
         jumping = false;
     }
 
-    private IEnumerator stillMount()
-    {
-        Vector3 holdPosition = mount.transform.position;
-        float hIncrement = 0f;
-        while (hIncrement < 1)
-        {
-            hIncrement += (1 / speed) * Time.deltaTime;
-            mount.transform.position = holdPosition;
-            yield return null;
-        }
-        mount.transform.position = holdPosition;
-    }
+    
 
     private IEnumerator dismount()
     {
-        StartCoroutine(stillMount());
+        StartCoroutine(mount.StillMount(speed));
         yield return StartCoroutine(jump());
-        followerScript.canMove = true;
+        Follower.canMove = true;
         mount.transform.localPosition = mountPosition;
-        updateMount(false);
+        mount.UpdateMount(false);
     }
 
     private IEnumerator surfCheck()
@@ -1310,7 +1223,7 @@ public class PlayerMovement : MonoBehaviour
                             yield return null;
                         }
                         surfing = true;
-                        updateMount(true, "surf");
+                        mount.UpdateMount(true, "surf");
 
                         BgmHandler.main.PlayMain(GlobalVariables.Singleton.surfBGM, GlobalVariables.Singleton.surfBgmLoopStart);
 
@@ -1335,8 +1248,8 @@ public class PlayerMovement : MonoBehaviour
 
                         mount.transform.position = mount.transform.position + spaceInFront;
 
-                        followerScript.StartCoroutine(followerScript.withdrawToBall());
-                        StartCoroutine(stillMount());
+                        Follower.StartCoroutine(Follower.withdrawToBall());
+                        StartCoroutine(mount.StillMount(speed));
                         forceMoveForward();
                         yield return StartCoroutine(jump());
 
@@ -1442,4 +1355,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+}
+
+public enum EMovementDirection {
+    Up,
+    Right,
+    Down,
+    Left
 }

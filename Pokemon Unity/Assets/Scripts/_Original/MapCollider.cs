@@ -2,7 +2,10 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Linq;
+using System;
 
+[RequireComponent(typeof(MapSettings))]
 public class MapCollider : MonoBehaviour
 {
     //Collision Map String provided by DeKay's Collision Map Compiler for Pokémon Essentials
@@ -30,7 +33,45 @@ public class MapCollider : MonoBehaviour
     //2 - Surf Water
     //3 - Environment 2
 
-    public int getTileTag(Vector3 position)
+    /// <summary>
+    /// Raycasts from the given GameObject to find the current map
+    /// </summary>
+    /// <returns></returns>
+    public static MapCollider GetMap(Transform callerTransform, EMovementDirection direction) {
+        RaycastHit[] hitRays = Physics.RaycastAll(callerTransform.position + Vector3.up, Vector3.down);
+
+        GetClosestMapCollider(hitRays, out int closestIndex, out float closestDistance);
+
+        if (closestIndex >= 0) return hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
+        
+        //if no map found
+        //Check for map in front of player's direction
+        hitRays = Physics.RaycastAll(callerTransform.position + Vector3.up + callerTransform.GetForwardVectorRaw(direction), Vector3.down);
+
+        GetClosestMapCollider(hitRays, out closestIndex, out closestDistance);
+
+        if (closestIndex >= 0)
+            return hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
+
+        Debug.Log("no map found");
+        return null;
+    }
+
+    public static void GetClosestMapCollider(RaycastHit[] hitRays, out int closestIndex, out float closestDistance) {
+        closestIndex = -1;
+        float closestDist = closestDistance = float.PositiveInfinity;
+
+        foreach (RaycastHit hitRay in hitRays.Where(GetValidMapCollisions)) {
+            closestDistance = hitRay.distance;
+            closestIndex = Array.IndexOf(hitRays, hitRay);
+        }
+
+        bool GetValidMapCollisions(RaycastHit hit) {
+            return hit.collider.gameObject.GetComponent<MapCollider>() != null && hit.distance < closestDist;
+        };
+    }
+
+    public int GetTileTag(Vector3 position)
     {
         int mapX =
             Mathf.RoundToInt(Mathf.Round(position.x) - Mathf.Round(transform.position.x) +
@@ -50,7 +91,7 @@ public class MapCollider : MonoBehaviour
         return tag;
     }
 
-    public void setCollisionMap()
+    public void SetCollisonMap()
     {
         collisionMap = new int[width, length];
 
@@ -67,11 +108,11 @@ public class MapCollider : MonoBehaviour
             // (breaks "0x10" into {"0", "10"} ready for processing)
             contains2 = contain.Split('x');
 
-            calculateCollisionMap(contains2.Length == 1 ? contains2.Length : int.Parse(contains2[1]), int.Parse(contains2[0]));
+            CalculateCollisionMap(contains2.Length == 1 ? contains2.Length : int.Parse(contains2[1]), int.Parse(contains2[0]));
         }
     }
 
-    public void calculateCollisionMap(int lenght, int tag)
+    public void CalculateCollisionMap(int lenght, int tag)
     {
         int x = 0;
         int z = 0;
@@ -90,7 +131,7 @@ public class MapCollider : MonoBehaviour
     }
 
     /// if bridge was found, returned RaycastHit will have a collider
-    public static RaycastHit getBridgeHitOfPosition(Vector3 position)
+    public static RaycastHit GetBridgeHitOfPosition(Vector3 position)
     {
         //Check for bridges below inputted position
         //cast a ray directly downwards from the position entered
@@ -111,7 +152,7 @@ public class MapCollider : MonoBehaviour
     }
 
     /// returns the slope of the map geometry on the tile of the given position (in the given direction) 
-    public static float getSlopeOfPosition(Vector3 position, int direction, bool checkForBridge = true)
+    public static float GetSlopeOfPosition(Vector3 position, int direction, bool checkForBridge = true)
     {
         //set vector3 based off of direction
         Vector3 movement = new Vector3(0, 0, 0);

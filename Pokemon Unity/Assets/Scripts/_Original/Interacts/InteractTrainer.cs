@@ -481,7 +481,7 @@ public class InteractTrainer : MonoBehaviour
         }
 
         //check for a bridge at the destination
-        RaycastHit bridgeHit = MapCollider.getBridgeHitOfPosition(position + movement + new Vector3(0, 1.5f, 0));
+        RaycastHit bridgeHit = MapCollider.GetBridgeHitOfPosition(position + movement + new Vector3(0, 1.5f, 0));
         if (bridgeHit.collider != null)
         {
             //modify the forwards vector to align to the bridge.
@@ -495,8 +495,8 @@ public class InteractTrainer : MonoBehaviour
         }
 
 
-        float currentSlope = Mathf.Abs(MapCollider.getSlopeOfPosition(position, direction));
-        float destinationSlope = Mathf.Abs(MapCollider.getSlopeOfPosition(position + forwardsVector, direction));
+        float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(position, direction));
+        float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(position + forwardsVector, direction));
         float yDistance = Mathf.Abs((position.y + movement.y) - position.y);
         yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
@@ -507,7 +507,7 @@ public class InteractTrainer : MonoBehaviour
             if (yDistance <= currentSlope || yDistance <= destinationSlope)
             {
                 //check destination tileTag for impassibles
-                int destinationTileTag = destinationMap.getTileTag(position + movement);
+                int destinationTileTag = destinationMap.GetTileTag(position + movement);
                 if (destinationTileTag == 1)
                 {
                     return Vector3.zero;

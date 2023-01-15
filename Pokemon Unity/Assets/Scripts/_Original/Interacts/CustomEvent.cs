@@ -319,8 +319,8 @@ public class CustomEvent : MonoBehaviour
                         if (currentEvent.object1 != null)
                         {
                             //calculate target objects's position relative to this objects's and set direction accordingly.
-                            xDistance = target.hitBox.position.x - currentEvent.object1.transform.position.x;
-                            zDistance = target.hitBox.position.z - currentEvent.object1.transform.position.z;
+                            xDistance = target.Hitbox.position.x - currentEvent.object1.transform.position.x;
+                            zDistance = target.Hitbox.position.z - currentEvent.object1.transform.position.z;
                             if (xDistance >= Mathf.Abs(zDistance))
                             {
                                 //Mathf.Abs() converts zDistance to a positive always.
@@ -1242,10 +1242,10 @@ public class CustomEvent : MonoBehaviour
                 }*/
                 break;
             case CustomEventDetails.CustomEventType.WithdrawPokemon:
-                yield return StartCoroutine(PlayerMovement.Singleton.followerScript.withdrawToBall());
+                yield return StartCoroutine(PlayerMovement.Singleton.Follower.withdrawToBall());
                 break;
             case CustomEventDetails.CustomEventType.ReleasePokemon:
-                yield return StartCoroutine(PlayerMovement.Singleton.followerScript.releaseFromBall());
+                yield return StartCoroutine(PlayerMovement.Singleton.Follower.releaseFromBall());
                 break;
             case CustomEventDetails.CustomEventType.SetRespawn:
                 SaveData.currentSave.respawnScenePosition = new PokemonUnity.Utility.SeriV3(new Vector3(currentEvent.ints[0], currentEvent.ints[1], currentEvent.ints[2]));
@@ -1306,7 +1306,7 @@ public class CustomEvent : MonoBehaviour
             case CustomEventDetails.CustomEventType.SetNPCFollower:
                 if (GlobalVariables.Singleton.followerOut)
                 {
-                    yield return StartCoroutine(PlayerMovement.Singleton.followerScript.withdrawToBall());
+                    yield return StartCoroutine(PlayerMovement.Singleton.Follower.withdrawToBall());
                 }
 
                 if (PlayerMovement.Singleton.npcFollower)

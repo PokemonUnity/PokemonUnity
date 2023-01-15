@@ -23,8 +23,8 @@ public class InteractTrainerSight : MonoBehaviour
             {
                 int playerLocation = -1;
 
-                float playerX = Mathf.Round(PlayerMovement.Singleton.hitBox.position.x);
-                float playerZ = Mathf.Round(PlayerMovement.Singleton.hitBox.position.z);
+                float playerX = Mathf.Round(PlayerMovement.Singleton.Hitbox.position.x);
+                float playerZ = Mathf.Round(PlayerMovement.Singleton.Hitbox.position.z);
 
                 if (playerX == Mathf.Round(transform.position.x))
                 {
@@ -218,7 +218,7 @@ public class InteractTrainerSight : MonoBehaviour
         }
 
         //check for a bridge at the destination
-        RaycastHit bridgeHit = MapCollider.getBridgeHitOfPosition(position + movement + new Vector3(0, 1.5f, 0));
+        RaycastHit bridgeHit = MapCollider.GetBridgeHitOfPosition(position + movement + new Vector3(0, 1.5f, 0));
         if (bridgeHit.collider != null)
         {
             //modify the forwards vector to align to the bridge.
@@ -232,8 +232,8 @@ public class InteractTrainerSight : MonoBehaviour
         }
 
 
-        float currentSlope = Mathf.Abs(MapCollider.getSlopeOfPosition(position, trainer.direction));
-        float destinationSlope = Mathf.Abs(MapCollider.getSlopeOfPosition(position + forwardsVector, trainer.direction));
+        float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(position, trainer.direction));
+        float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(position + forwardsVector, trainer.direction));
         float yDistance = Mathf.Abs((position.y + movement.y) - position.y);
         yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
@@ -244,7 +244,7 @@ public class InteractTrainerSight : MonoBehaviour
             if (yDistance <= currentSlope || yDistance <= destinationSlope)
             {
                 //check destination tileTag for impassibles
-                int destinationTileTag = destinationMap.getTileTag(position + movement);
+                int destinationTileTag = destinationMap.GetTileTag(position + movement);
                 if (destinationTileTag == 1)
                 {
                     positionIsBlocked = true;

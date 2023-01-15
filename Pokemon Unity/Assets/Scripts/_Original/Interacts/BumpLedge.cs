@@ -18,7 +18,7 @@ public class BumpLedge : MonoBehaviour
             
                 PlayerMovement.Singleton.pauseInput();
                 
-                PlayerMovement.Singleton.followerScript.canMove = false;
+                PlayerMovement.Singleton.Follower.canMove = false;
                 PlayerMovement.Singleton.forceMoveForward(2);
                 
                 if (!PlayerMovement.Singleton.running)
@@ -36,7 +36,7 @@ public class BumpLedge : MonoBehaviour
 
                 if (GlobalVariables.Singleton.followerOut)
                 {
-                    PlayerMovement.Singleton.followerScript.canMove = true;
+                    PlayerMovement.Singleton.Follower.canMove = true;
                 }
                 if (!PlayerMovement.Singleton.busyWith)
                 {

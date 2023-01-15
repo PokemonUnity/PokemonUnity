@@ -196,7 +196,7 @@ public class InteractPush : MonoBehaviour
 
         //Check current map
         RaycastHit[] hitRays =
-            Physics.RaycastAll(transform.position + Vector3.up + Player.getForwardVectorRaw(direction), Vector3.down, 3f);
+            Physics.RaycastAll(transform.position + Vector3.up + Player.transform.GetForwardVectorRaw((EMovementDirection)direction), Vector3.down, 3f);
         int closestIndex = -1;
         float closestDistance = float.PositiveInfinity;
         if (hitRays.Length > 0)
@@ -218,7 +218,7 @@ public class InteractPush : MonoBehaviour
             currentMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
 
             //Check destiantion map
-            hitRays = Physics.RaycastAll(transform.position + Vector3.up + Player.getForwardVectorRaw(direction),
+            hitRays = Physics.RaycastAll(transform.position + Vector3.up + Player.transform.GetForwardVectorRaw((EMovementDirection)direction),
                 Vector3.down, 3f);
             closestIndex = -1;
             closestDistance = float.PositiveInfinity;
@@ -279,8 +279,8 @@ public class InteractPush : MonoBehaviour
             {
                 //if both positions are free
                 //ensure the slopes of the destination are both 0
-                float slope1 = MapCollider.getSlopeOfPosition(destinationPosition1, direction);
-                float slope2 = MapCollider.getSlopeOfPosition(destinationPosition2, direction);
+                float slope1 = MapCollider.GetSlopeOfPosition(destinationPosition1, direction);
+                float slope2 = MapCollider.GetSlopeOfPosition(destinationPosition2, direction);
 
                 //Make sure that destination Position is at most a single square away from start.
                 //this way we can ensure that the movement of the object will be one square at most
@@ -292,10 +292,10 @@ public class InteractPush : MonoBehaviour
                 {
                     //if both squares in the destination are not impassable tiles
                     //Debug.Log (destinationPosition1);
-                    if (destinationMap.getTileTag(destinationPosition1) != 1 &&
-                        destinationMap.getTileTag(destinationPosition1) != 2 &&
-                        destinationMap.getTileTag(destinationPosition2) != 1 &&
-                        destinationMap.getTileTag(destinationPosition2) != 2)
+                    if (destinationMap.GetTileTag(destinationPosition1) != 1 &&
+                        destinationMap.GetTileTag(destinationPosition1) != 2 &&
+                        destinationMap.GetTileTag(destinationPosition2) != 1 &&
+                        destinationMap.GetTileTag(destinationPosition2) != 2)
                     {
                         return true;
                     }

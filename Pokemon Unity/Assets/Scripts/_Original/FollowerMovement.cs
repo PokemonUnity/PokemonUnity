@@ -7,46 +7,48 @@ using Random = System.Random;
 
 public class FollowerMovement : MonoBehaviour
 {
-	private DialogBoxHandlerNew Dialog;
-	private PlayerMovement Player;
-
-	private Vector3 startPosition;
-	private Vector3 destinationPosition;
-
-	private Vector3 position;
-
-	public AudioClip withdrawClip;
-
-	public bool hasLight;
-	public Color lightColor;
-	public float lightIntensity;
-
-	public bool moving = false;
-	public float speed;
-	public int direction = 2;
-
 	public int pokemonID = 6;
 	private int followerIndex = 0;
+	private DialogBoxHandlerNew Dialog;
 
-	public Transform pawn;
-	private Transform pawnLight;
-	public Transform pawnReflection;
-	public Transform pawnLightReflection;
-	public Transform hitBox;
+	[Header("Movement")]
+	public int direction = 2;
+	public float speed;
+	public bool hide;
+	public bool moving = false;
+	public bool canMove = true;
+	private PlayerMovement Player;
+	private Vector3 startPosition;
+	private Vector3 destinationPosition;
+	private Vector3 position;
 
+	[Header("Transforms")]
+	public Transform Pawn;
+	public Transform PawnLight;
+	public Transform PawnReflection;
+	public Transform PawnLightReflection;
+	public Transform Hitbox;
+
+	[Header("Audio")]
+	public AudioClip WithdrawClip;
+
+
+	[Header("Light")]
+	public bool HasLight;
+	public Color LightColor;
+	public float LightIntensity;
 	private Light followerLight;
+
+	[Header("Sprites")]
 	private SpriteRenderer sRenderer;
 	private SpriteRenderer sLRenderer;
 	private SpriteRenderer sReflectionRenderer;
 	private SpriteRenderer sLReflectionRenderer;
 	private Sprite[] spriteSheet;
 	private Sprite[] lightSheet;
-
-	private SpriteRenderer pawnShadow;
-
-	public bool hide;
-	public bool canMove = true;
-	public Sprite pokeBall;
+	[SerializeField] 
+	SpriteRenderer pawnShadow;
+	public Sprite PokeBall;
 
 	private enum Hapiness
 	{
@@ -55,26 +57,27 @@ public class FollowerMovement : MonoBehaviour
 		HAPPY
 	}
 
+	void OnValidate() {
+		// pawn stuff
+		if (Pawn == null) Debug.LogError("No Pawn Transform provided", gameObject);
+		if (PawnReflection == null) Debug.LogError("No Pawn Reflection Transform provided", gameObject);
+		if (PawnLight == null) Debug.LogError("No Pawn Light Transform provided", gameObject);
+		if (PawnLightReflection == null) Debug.LogError("No Pawn Light Reflection Transform provided", gameObject);
+		if (pawnShadow == null) Debug.LogError("No Pawn Shadow Transform provided", gameObject);
+
+		if (Hitbox == null) Debug.LogError("No hitBox Tranform provided", gameObject); // Follower_Transparent
+	}
+
 	// Use this for initialization
 	void Awake()
 	{
-        return; // FIXME
-		Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
+		//Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 		Player = PlayerMovement.Singleton;
 
-		pawn = transform.Find("Pawn");
-		pawnLight = pawn.Find("PawnLight");
-		pawnReflection = transform.Find("PawnReflection");
-		pawnLightReflection = pawnReflection.Find("PawnLightReflection");
-
-		hitBox = transform.Find("Follower_Transparent");
-
-		sRenderer = pawn.GetComponent<SpriteRenderer>();
-		sLRenderer = pawnLight.GetComponent<SpriteRenderer>();
-		sReflectionRenderer = pawnReflection.GetComponent<SpriteRenderer>();
-		sLReflectionRenderer = pawnLightReflection.GetComponent<SpriteRenderer>();
-
-		pawnShadow = transform.Find("PawnShadow").GetComponent<SpriteRenderer>();
+		sRenderer = Pawn.GetComponent<SpriteRenderer>();
+		sLRenderer = PawnLight.GetComponent<SpriteRenderer>();
+		sReflectionRenderer = PawnReflection.GetComponent<SpriteRenderer>();
+		sLReflectionRenderer = PawnLightReflection.GetComponent<SpriteRenderer>();
 
 		followerLight = GetComponentInChildren<Light>();
 	}
@@ -93,10 +96,10 @@ public class FollowerMovement : MonoBehaviour
 		{
 			if (GlobalVariables.Singleton.followerOut)
 			{
-				followerLight.color = lightColor;
-				if (hasLight)
+				followerLight.color = LightColor;
+				if (HasLight)
 				{
-					followerLight.intensity = lightIntensity;
+					followerLight.intensity = LightIntensity;
 				}
 				else
 				{
@@ -159,18 +162,18 @@ public class FollowerMovement : MonoBehaviour
 		
 			//scale = 0.0334f * (transform.position.z - PlayerMovement.player.transform.position.z)+0.9f;
 		
-			pawn.transform.localScale = new Vector3(scale,scale,scale);
+			Pawn.transform.localScale = new Vector3(scale,scale,scale);
 		
 			Camera camera = PlayerMovement.Singleton.transform.Find("Camera") != null
 				? PlayerMovement.Singleton.transform.Find("Camera").GetComponent<Camera>()
 				: GameObject.Find("Camera").GetComponent<Camera>();
 		
-			pawn.transform.LookAt(camera.transform);
+			Pawn.transform.LookAt(camera.transform);
 
 			//if (PlayerMovement.player.transform.Find("Camera") == null)
-			pawn.transform.localRotation = Quaternion.Euler(camera.transform.rotation.x-50, 180, 0);
+			Pawn.transform.localRotation = Quaternion.Euler(camera.transform.rotation.x-50, 180, 0);
 		
-			pawn.transform.Rotate( new Vector3(0, 180, 0), Space.Self );
+			Pawn.transform.Rotate( new Vector3(0, 180, 0), Space.Self );
 		
 			//pawnSprite.transform.rotation = PlayerMovement.player.transform.Find("Pawn").transform.rotation; 
 		}
@@ -207,18 +210,18 @@ public class FollowerMovement : MonoBehaviour
 			{
 				//because fak trying to use this thing's own increment. shit doesn't work for some reason.
 				transform.position = startPosition + (destinationPosition - startPosition) * Player.increment;
-				hitBox.position = destinationPosition;
+				Hitbox.position = destinationPosition;
 				yield return null;
 			}
 			transform.position = destinationPosition;
-			hitBox.position = destinationPosition;
+			Hitbox.position = destinationPosition;
 		}
 		else if (hide)
 		{
 			while (Player.increment < 1)
 			{
 				transform.position = Player.transform.position;
-				hitBox.position = Player.transform.position;
+				Hitbox.position = Player.transform.position;
 				yield return null;
 			}
 		}
@@ -228,7 +231,7 @@ public class FollowerMovement : MonoBehaviour
 			while (Player.increment < 1)
 			{
 				transform.position = startPosition;
-				hitBox.position = startPosition;
+				Hitbox.position = startPosition;
 				yield return null;
 			}
 		}
@@ -263,10 +266,10 @@ public class FollowerMovement : MonoBehaviour
 				hide = true;
 				ball.SetActive(false);
 				
-				followerLight.color = lightColor;
-				if (hasLight)
+				followerLight.color = LightColor;
+				if (HasLight)
 				{
-					followerLight.intensity = lightIntensity;
+					followerLight.intensity = LightIntensity;
 				}
 				else
 				{
@@ -298,7 +301,7 @@ public class FollowerMovement : MonoBehaviour
 				pawnShadow.enabled = true;
 				ball.SetActive(true);
 				yield return new WaitForSeconds(0.4f);
-				SfxHandler.Play(withdrawClip);
+				SfxHandler.Play(WithdrawClip);
 				
 				hide = false;
 				ball.SetActive(false);
@@ -353,7 +356,7 @@ public class FollowerMovement : MonoBehaviour
 		sReflectionRenderer.sprite = null;
 		sLReflectionRenderer.sprite = null;
 		ball.SetActive(true);
-		SfxHandler.Play(withdrawClip);
+		SfxHandler.Play(WithdrawClip);
 		float increment = 0f;
 		float time = 0.4f;
 		Vector3 lockedPosition = transform.position;
@@ -418,9 +421,9 @@ public class FollowerMovement : MonoBehaviour
 		pokemonID = (int)PokemonUnity.Game.GameData.Trainer.party[followerIndex].Species;
 		spriteSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetNewSprite(false);
 
-		hasLight = PokemonDatabase.getPokemon(pokemonID).hasLight();
-		lightIntensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
-		lightColor = PokemonDatabase.getPokemon(pokemonID).getLightColor();
+		HasLight = PokemonDatabase.getPokemon(pokemonID).hasLight();
+		LightIntensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
+		LightColor = PokemonDatabase.getPokemon(pokemonID).getLightColor();
 		lightSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetNewSprite(true);
 
 		if (lightSheet[0] == null)
@@ -429,8 +432,8 @@ public class FollowerMovement : MonoBehaviour
 			sLReflectionRenderer.sprite = null;
 		}
 
-		followerLight.color = lightColor;
-		followerLight.intensity = lightIntensity;
+		followerLight.color = LightColor;
+		followerLight.intensity = LightIntensity;
 	}
 
 	public void reflect(bool setState)
@@ -530,7 +533,7 @@ public class FollowerMovement : MonoBehaviour
 		float increment = 0f;
 		float parabola = 0;
 		float height = 2.1f;
-		Vector3 startPosition = pawn.position;
+		Vector3 startPosition = Pawn.position;
 
 		playClip(PlayerMovement.Singleton.jumpClip);
 
@@ -542,10 +545,10 @@ public class FollowerMovement : MonoBehaviour
 				increment = 1;
 			}
 			parabola = -height * (increment * increment) + (height * increment);
-			pawn.position = new Vector3(pawn.position.x, startPosition.y + parabola, pawn.position.z);
+			Pawn.position = new Vector3(Pawn.position.x, startPosition.y + parabola, Pawn.position.z);
 			yield return null;
 		}
-		pawn.position = new Vector3(pawn.position.x, startPosition.y, pawn.position.z);
+		Pawn.position = new Vector3(Pawn.position.x, startPosition.y, Pawn.position.z);
 
 		playClip(PlayerMovement.Singleton.landClip);
 	}

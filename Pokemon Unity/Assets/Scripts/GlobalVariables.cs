@@ -77,40 +77,42 @@ public class GlobalVariables : MonoBehaviour
 
         if (Singleton == null) {
             Singleton = this;
-            #region old code
-            //debugText = transform.Find("DEBUG").GetComponent<Text>();
-            //debugTextShadow = debugText.transform.Find("DEBUGShadow").GetComponent<Text>();
-
-            //if (!PlayerPrefs.HasKey("textSpeed") || !PlayerPrefs.HasKey("musicVolume") ||
-            //    !PlayerPrefs.HasKey("sfxVolume") ||
-            //    !PlayerPrefs.HasKey("frameStyle") || !PlayerPrefs.HasKey("battleScene") ||
-            //    !PlayerPrefs.HasKey("battleStyle") ||
-            //    !PlayerPrefs.HasKey("screenSize") || !PlayerPrefs.HasKey("fullscreen"))
-            //{
-            //    //if a playerpref isn't set
-
-            //    PlayerPrefs.SetInt("textSpeed", 2);
-            //    float mVol = (7f / 20f) * (7f / 20f);
-            //    float sVol = (14f / 20f) * (14f / 20f);
-            //    PlayerPrefs.SetFloat("musicVolume", mVol);
-            //    PlayerPrefs.SetFloat("sfxVolume", sVol);
-            //    PlayerPrefs.SetInt("frameStyle", 1);
-            //    PlayerPrefs.SetInt("battleScene", 1);
-            //    PlayerPrefs.SetInt("battleStyle", 0);
-            //    PlayerPrefs.SetInt("screenSize", 1);
-            //    PlayerPrefs.SetInt("fullscreen", 0);
-            //    PlayerPrefs.Save();
-            //}
-            //UpdateResolution();
-
-            //RenderTexture.active = GUIDisplay;
-            //GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
-
-            //SaveData.SetDebugFileData();
-            #endregion
         } else if (Singleton != this) {
             Destroy(gameObject);
+            return;
         }
+
+        #region old code
+        //debugText = transform.Find("DEBUG").GetComponent<Text>();
+        //debugTextShadow = debugText.transform.Find("DEBUGShadow").GetComponent<Text>();
+
+        //if (!PlayerPrefs.HasKey("textSpeed") || !PlayerPrefs.HasKey("musicVolume") ||
+        //    !PlayerPrefs.HasKey("sfxVolume") ||
+        //    !PlayerPrefs.HasKey("frameStyle") || !PlayerPrefs.HasKey("battleScene") ||
+        //    !PlayerPrefs.HasKey("battleStyle") ||
+        //    !PlayerPrefs.HasKey("screenSize") || !PlayerPrefs.HasKey("fullscreen"))
+        //{
+        //    //if a playerpref isn't set
+
+        //    PlayerPrefs.SetInt("textSpeed", 2);
+        //    float mVol = (7f / 20f) * (7f / 20f);
+        //    float sVol = (14f / 20f) * (14f / 20f);
+        //    PlayerPrefs.SetFloat("musicVolume", mVol);
+        //    PlayerPrefs.SetFloat("sfxVolume", sVol);
+        //    PlayerPrefs.SetInt("frameStyle", 1);
+        //    PlayerPrefs.SetInt("battleScene", 1);
+        //    PlayerPrefs.SetInt("battleStyle", 0);
+        //    PlayerPrefs.SetInt("screenSize", 1);
+        //    PlayerPrefs.SetInt("fullscreen", 0);
+        //    PlayerPrefs.Save();
+        //}
+        //UpdateResolution();
+
+        //RenderTexture.active = GUIDisplay;
+        //GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
+
+        #endregion
+        SaveData.SetDebugFileData();
     }
 
 
@@ -152,12 +154,12 @@ public class GlobalVariables : MonoBehaviour
                     }
                     else
                     {
-                        PlayerMovement.Singleton.followerScript.Hide();
+                        PlayerMovement.Singleton.Follower.Hide();
                         PlayerMovement.Singleton.pauseInput(0.4f);
                     }
                     if (playerForwardOnLoad)
                     {
-                        PlayerMovement.Singleton.followerScript.Hide();
+                        PlayerMovement.Singleton.Follower.Hide();
                         PlayerMovement.Singleton.forceMoveForward();
                         playerForwardOnLoad = false;
                     }
