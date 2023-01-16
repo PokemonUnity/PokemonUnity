@@ -64,17 +64,9 @@ public class PlayerMovement : MonoBehaviour
     public float Increment = 1f;
     public int WalkFPS = 7;
     public int RunFPS = 12;
-    private int mostRecentDirectionPressed = 0;
     public Vector3 FacingDirection = Vector3.forward;
     private Vector3 directionInput = Vector3.zero;
-    private float directionChangeInputDelay = 0.08f;
     public Transform DirectionSurrogate;
-
-    [SerializeField]
-    List<Type> WalkableSurfaces = new List<Type>() {
-        typeof(MapCollider),
-        typeof(BridgeHandler),
-    };
 
     [Header("Player")]
     //Player sprites
@@ -360,12 +352,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleInputMove(CallbackContext context) {
         var input = context.ReadValue<Vector2>();
-        if (context.action.phase == UnityEngine.InputSystem.InputActionPhase.Canceled)
-            shouldTryToMove = false;
-        else
-            shouldTryToMove = true;
+        Debug.Log("New Input: " + input.ToString());
+        directionInput = new Vector3(input.x, 0f, input.y);
+        this.shouldTryToMove = shouldTryToMove();
+        if (this.shouldTryToMove && !IsMoving)
+            StartCoroutine(move());
 
-        UpdateDirection(new Vector3(input.x, 0f, input.y));
+        bool shouldTryToMove() => context.action.phase != UnityEngine.InputSystem.InputActionPhase.Canceled;
     }
 
     #endregion
@@ -387,14 +380,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void UpdateDirection(Vector3 newDirection) {
-        directionInput = newDirection;
-
         if (shouldChangeDirection(directionInput)) {
+            Debug.Log("Changing Direction");
             // unless player has just moved, wait a small amount of time to ensure that they have time to let go before moving 
             // (allows only turning)
             //if (!IsMoving)
             //    yield return new WaitForSeconds(directionChangeInputDelay);
-            mostRecentDirectionPressed = (int)directionInput.ToMovementDirection();
             Direction = (int)newDirection.ToMovementDirection();
             FacingDirection = newDirection;
             mount.UpdateDirection(FacingDirection);
@@ -402,14 +393,11 @@ public class PlayerMovement : MonoBehaviour
             //pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[direction * frames + frame];
             //hairSprite.sprite = haircutSpriteSheet[direction * frames + frame];
             //eyeSprite.sprite = eyeSpriteSheet[direction * frames + frame];
-            //if (!IsMoving) StartCoroutine(move(directionInput));
-            Vector3 movement = GetMovementVector(FacingDirection, false);
-            if (!IsMoving) StartCoroutine(move(movement));
             return;
         }
         //Vector3.RotateTowards(DirectionSurrogate.forward, input.GetForwardVector(), Mathf.PI, 0f);
 
-        bool shouldChangeDirection(Vector3 newDirection) => newDirection.magnitude > 0 && newDirection != FacingDirection;
+        bool shouldChangeDirection(Vector3 newDirection) => !IsMoving && newDirection.magnitude > 0 && newDirection != FacingDirection;
     }
 
     ///returns the vector relative to the player direction, without any modifications.
@@ -491,37 +479,26 @@ public class PlayerMovement : MonoBehaviour
             //if yDistance is greater than both slopes there is a vertical wall between them
             return movement;
         }
+        Debug.Log($"Movement Vector: {movement}");
         return Vector3.zero;
     }
 
     #endregion
 
-    //IEnumerator move(Vector2 input) {
-    //    //if most recent direction pressed is held, but it isn't the current direction, set it to be
-    //    if (ShouldChangeDirection()) {
-    //        UpdateDirection(directionInput);
-    //        if (!IsMoving) {
-    //            // unless player has just moved, wait a small amount of time to ensure that they have time to
-    //            // let go before moving (allows only turning)
-    //            yield return new WaitForSeconds(directionChangeInputDelay);
-    //        }
-    //    } else {
-    //        IsMoving = true;
-    //    }
-
-    //    //if moving is true (including by momentum from the previous step) then attempt to move forward.
-    //    if (IsMoving) {
-    //        IsStanding = false;
-    //        yield return StartCoroutine(moveForward());
-    //    }
-
-    //    // helpers
-    //    //bool ShouldChangeDirection() => mostRecentDirectionPressed != direction && hasValidMovementDirection(mostRecentDirectionPressed);
-    //}
-
+    [Obsolete]
     public IEnumerator move(Vector3 movement, bool canEncounter = true, bool lockFollower = false) {
+        StartCoroutine(move(canEncounter, lockFollower));
+        yield return null;
+    }
+
+    public IEnumerator move(bool canEncounter = true, bool lockFollower = false) {
         while (shouldTryToMove) {
             if (!canInput) yield break;
+
+            UpdateDirection(directionInput);
+            Vector3 movement = GetMovementVector(FacingDirection, false);
+
+            Debug.Log("Moving");
 
             //yield return new WaitForSeconds(0.4f);
 
@@ -571,6 +548,7 @@ public class PlayerMovement : MonoBehaviour
             if (!IsMoving) playerIsUnableToMove(objectCollider);
 
             IsMoving = false;
+            animPause = true;
         }
 
         #region Helpers
@@ -882,7 +860,7 @@ public class PlayerMovement : MonoBehaviour
     #region Animations & Visuals
 
     public void updateAnimation(string newAnimationName, int fps) {
-        return; // FIXME
+        //return; // FIXME
         if (animationName != newAnimationName) {
             animationName = newAnimationName;
             spriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
@@ -920,16 +898,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private IEnumerator animateSprite() {
-        yield break; //FIXME
+        //yield break; //FIXME
         frame = 0;
         frames = 4;
         framesPerSec = WalkFPS;
-        secPerFrame = 1f / (float)framesPerSec;
+        secPerFrame = 1f / framesPerSec;
         while (true) {
             for (int i = 0; i < 4; i++) {
-                if (animPause && frame % 2 != 0 && !overrideAnimPause) {
+                if (animPause && frame % 2 != 0 && !overrideAnimPause)
                     frame -= 1;
-                }
+                
                 pawnSprite.sprite = spriteSheet[Direction * frames + frame];
                 pawnReflectionSprite.sprite = pawnSprite.sprite;
                 if (hairSprite != null) hairSprite.sprite = haircutSpriteSheet[Direction * frames + frame];

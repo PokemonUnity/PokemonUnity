@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4975417706298323194}
   - component: {fileID: 4975417706298323195}
   m_Layer: 0
-  m_Name: PawnReflection
+  m_Name: Follower PawnReflection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 4975417706440232383}
   - component: {fileID: 4975417706440232352}
   m_Layer: 0
-  m_Name: PawnLightReflection
+  m_Name: Follower PawnLightReflection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,35 +416,35 @@ MonoBehaviour:
   busyWith: {fileID: 0}
   canInput: 1
   DrawGizmos: 0
-  playerCamera: {fileID: 0}
-  mainCameraDefaultPosition: {x: 0, y: 0, z: 0}
-  mainCameraDefaultFOV: 0
-  isMoving: 0
-  isStanding: 1
-  running: 0
-  surfing: 0
-  bike: 0
+  PlayerCamera: {fileID: 0}
+  MainCameraDefaultPosition: {x: 0, y: 0, z: 0}
+  MainCameraDefaultFOV: 0
+  IsMoving: 0
+  IsStanding: 1
+  IsRunning: 0
+  IsSurfing: 0
+  IsBiking: 0
   strength: 0
-  walkSpeed: 0.3
-  runSpeed: 0.15
-  surfSpeed: 0.2
-  speed: 0
-  direction: 2
-  increment: 1
-  walkFPS: 7
-  runFPS: 12
+  WalkSpeed: 0.3
+  RunSpeed: 0.15
+  SurfSpeed: 0.2
+  Speed: 0
+  Direction: 2
+  Increment: 1
+  WalkFPS: 7
+  RunFPS: 12
+  FacingDirection: {x: 0, y: 0, z: 1}
   DirectionSurrogate: {fileID: 4975417706449109250}
-  pawn: {fileID: 4975417707014361487}
-  pawnSprite: {fileID: 4975417707014361584}
+  pawn: {fileID: 4975417708171817626}
+  pawnSprite: {fileID: 4975417708171817628}
   eyeSprite: {fileID: 0}
   hairSprite: {fileID: 0}
   pawnReflectionSprite: {fileID: 4975417707132642942}
   spriteSheet: []
   Hitbox: {fileID: 4975417706657779531}
   Follower: {fileID: 840571785}
-  npcFollower: {fileID: 0}
+  NpcFollower: {fileID: 0}
   currentMap: {fileID: 0}
-  destinationMap: {fileID: 0}
   accessedMapSettings: {fileID: 0}
   bumpClip: {fileID: 8300000, guid: 90055a0bb952fde4586a71609206b104, type: 3}
   jumpClip: {fileID: 8300000, guid: cec26dd31c658c943a8d9510121865c2, type: 3}
@@ -659,7 +659,7 @@ GameObject:
   - component: {fileID: 4975417706757941667}
   - component: {fileID: 4975417706757941668}
   m_Layer: 0
-  m_Name: PawnShadow
+  m_Name: Follower PawnShadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -743,7 +743,7 @@ GameObject:
   - component: {fileID: 4975417706953077911}
   - component: {fileID: 4975417706953077912}
   m_Layer: 0
-  m_Name: PawnLight
+  m_Name: Follower PawnLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -827,7 +827,7 @@ GameObject:
   - component: {fileID: 4975417707014361487}
   - component: {fileID: 4975417707014361584}
   m_Layer: 0
-  m_Name: Pawn
+  m_Name: Follower Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 4975417707132642943}
   - component: {fileID: 4975417707132642942}
   m_Layer: 0
-  m_Name: PawnReflection
+  m_Name: Player PawnReflection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -995,7 +995,7 @@ GameObject:
   - component: {fileID: 4975417707146510744}
   - component: {fileID: 4975417707146510745}
   m_Layer: 0
-  m_Name: PawnShadow
+  m_Name: Player PawnShadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1250,7 +1250,7 @@ GameObject:
   - component: {fileID: 4975417708171817628}
   - component: {fileID: 4975417708171817627}
   m_Layer: 0
-  m_Name: Pawn
+  m_Name: Player Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1264,7 +1264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4975417708171817625}
   m_LocalRotation: {x: 0.42261833, y: 0, z: 0, w: 0.9063078}
-  m_LocalPosition: {x: 0, y: 0.104, z: -0.46500015}
+  m_LocalPosition: {x: 0, y: 0.104, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1451,7 +1451,7 @@ GameObject:
   - component: {fileID: 4975417708308432904}
   - component: {fileID: 4975417708308432905}
   m_Layer: 0
-  m_Name: Point light
+  m_Name: Follower Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
