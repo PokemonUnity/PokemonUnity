@@ -232,19 +232,19 @@ public class CustomEvent : MonoBehaviour
                 } //Move the player if set to player
                 if (currentEvent.object0 == PlayerMovement.Singleton.gameObject)
                 {
-                    int initialDirection = PlayerMovement.Singleton.direction;
+                    int initialDirection = PlayerMovement.Singleton.Direction;
 
-                    PlayerMovement.Singleton.speed = (currentEvent.float0 > 0)
-                        ? PlayerMovement.Singleton.walkSpeed / currentEvent.float0
-                        : PlayerMovement.Singleton.walkSpeed;
+                    PlayerMovement.Singleton.Speed = (currentEvent.float0 > 0)
+                        ? PlayerMovement.Singleton.WalkSpeed / currentEvent.float0
+                        : PlayerMovement.Singleton.WalkSpeed;
                     for (int i = 0; i < currentEvent.int0; i++)
                     {
-                        PlayerMovement.Singleton.updateDirection((int) currentEvent.dir);
-                        Vector3 forwardsVector = PlayerMovement.Singleton.getForwardVector();
+                        PlayerMovement.Singleton.UpdateDirection((int) currentEvent.dir);
+                        Vector3 forwardsVector = PlayerMovement.Singleton.GetForwardVector();
                         if (currentEvent.bool0)
                         {
                             //if direction locked in
-                            PlayerMovement.Singleton.updateDirection(initialDirection);
+                            PlayerMovement.Singleton.UpdateDirection(initialDirection);
                         }
 
                         PlayerMovement.Singleton.setOverrideAnimPause(true);
@@ -252,7 +252,7 @@ public class CustomEvent : MonoBehaviour
                             StartCoroutine(PlayerMovement.Singleton.move(forwardsVector, false, currentEvent.bool0));
                         PlayerMovement.Singleton.setOverrideAnimPause(false);
                     }
-                    PlayerMovement.Singleton.speed = PlayerMovement.Singleton.walkSpeed;
+                    PlayerMovement.Singleton.Speed = PlayerMovement.Singleton.WalkSpeed;
                 }
                 break;
 
@@ -338,11 +338,11 @@ public class CustomEvent : MonoBehaviour
                             {
                                 direction = 0;
                             }
-                            target.updateDirection(direction);
+                            target.UpdateDirection(direction);
                         }
                         if (currentEvent.int0 != 0)
                         {
-                            direction = target.direction + currentEvent.int0;
+                            direction = target.Direction + currentEvent.int0;
                             while (direction > 3)
                             {
                                 direction -= 4;
@@ -351,7 +351,7 @@ public class CustomEvent : MonoBehaviour
                             {
                                 direction += 4;
                             }
-                            target.updateDirection(direction);
+                            target.UpdateDirection(direction);
                         }
                     }
                 }
@@ -891,7 +891,7 @@ public class CustomEvent : MonoBehaviour
                         passedCheck = SaveData.currentSave.isMale;
                         break;
                     case CustomEventDetails.Logic.Following:
-                        passedCheck = PlayerMovement.Singleton.npcFollower == currentEvent.object0.GetComponent<NPCFollower>();
+                        passedCheck = PlayerMovement.Singleton.NpcFollower == currentEvent.object0.GetComponent<NPCFollower>();
                         break;
                 }
 
@@ -1047,28 +1047,28 @@ public class CustomEvent : MonoBehaviour
                 } //Move the player if set to player
                 if (currentEvent.object0 == PlayerMovement.Singleton.gameObject)
                 {
-                    int initialDirection = PlayerMovement.Singleton.direction;
+                    int initialDirection = PlayerMovement.Singleton.Direction;
 
                     int dir = currentEvent.object0.transform.position.z < currentEvent.object1.transform.position.z
                         ? 0 : 2;
                     
-                    PlayerMovement.Singleton.direction = dir;
+                    PlayerMovement.Singleton.Direction = dir;
 
                     int iteration = (int) Math.Abs(Math.Round(currentEvent.object0.transform.position.z - currentEvent.object1.transform.position.z));
 
-                    PlayerMovement.Singleton.speed = (currentEvent.float0 > 0)
-                        ? PlayerMovement.Singleton.walkSpeed / currentEvent.float0
-                        : PlayerMovement.Singleton.walkSpeed;
+                    PlayerMovement.Singleton.Speed = (currentEvent.float0 > 0)
+                        ? PlayerMovement.Singleton.WalkSpeed / currentEvent.float0
+                        : PlayerMovement.Singleton.WalkSpeed;
                     
                     if (currentEvent.object0.transform.position.z != currentEvent.object1.transform.position.z)
                         for (int i = 0; i < iteration; i++)
                         {
-                            PlayerMovement.Singleton.updateDirection(dir);
-                            Vector3 forwardsVector = PlayerMovement.Singleton.getForwardVector();
+                            PlayerMovement.Singleton.UpdateDirection(dir);
+                            Vector3 forwardsVector = PlayerMovement.Singleton.GetForwardVector();
                             if (currentEvent.bool0)
                             {
                                 //if direction locked in
-                                PlayerMovement.Singleton.updateDirection(initialDirection);
+                                PlayerMovement.Singleton.UpdateDirection(initialDirection);
                             }
 
                             PlayerMovement.Singleton.setOverrideAnimPause(true);
@@ -1076,7 +1076,7 @@ public class CustomEvent : MonoBehaviour
                                 StartCoroutine(PlayerMovement.Singleton.move(forwardsVector, false, currentEvent.bool0));
                             PlayerMovement.Singleton.setOverrideAnimPause(false);
                         }
-                    PlayerMovement.Singleton.speed = PlayerMovement.Singleton.walkSpeed;
+                    PlayerMovement.Singleton.Speed = PlayerMovement.Singleton.WalkSpeed;
                 }
                 break;
             case CustomEventDetails.CustomEventType.AlignVertical:
@@ -1122,28 +1122,28 @@ public class CustomEvent : MonoBehaviour
                 } //Move the player if set to player
                 if (currentEvent.object0 == PlayerMovement.Singleton.gameObject)
                 {
-                    int initialDirection = PlayerMovement.Singleton.direction;
+                    int initialDirection = PlayerMovement.Singleton.Direction;
 
                     int dir = currentEvent.object0.transform.position.x < currentEvent.object1.transform.position.x
                         ? 1 : 3;
                     
-                    PlayerMovement.Singleton.direction = dir;
+                    PlayerMovement.Singleton.Direction = dir;
 
                     int iteration = (int) Math.Abs(Math.Round(currentEvent.object0.transform.position.x - currentEvent.object1.transform.position.x));
 
-                    PlayerMovement.Singleton.speed = (currentEvent.float0 > 0)
-                        ? PlayerMovement.Singleton.walkSpeed / currentEvent.float0
-                        : PlayerMovement.Singleton.walkSpeed;
+                    PlayerMovement.Singleton.Speed = (currentEvent.float0 > 0)
+                        ? PlayerMovement.Singleton.WalkSpeed / currentEvent.float0
+                        : PlayerMovement.Singleton.WalkSpeed;
                     
                     if (currentEvent.object0.transform.position.x != currentEvent.object1.transform.position.x)
                         for (int i = 0; i < iteration; i++)
                         {
-                            PlayerMovement.Singleton.updateDirection(dir);
-                            Vector3 forwardsVector = PlayerMovement.Singleton.getForwardVector();
+                            PlayerMovement.Singleton.UpdateDirection(dir);
+                            Vector3 forwardsVector = PlayerMovement.Singleton.GetForwardVector();
                             if (currentEvent.bool0)
                             {
                                 //if direction locked in
-                                PlayerMovement.Singleton.updateDirection(initialDirection);
+                                PlayerMovement.Singleton.UpdateDirection(initialDirection);
                             }
 
                             PlayerMovement.Singleton.setOverrideAnimPause(true);
@@ -1151,7 +1151,7 @@ public class CustomEvent : MonoBehaviour
                                 StartCoroutine(PlayerMovement.Singleton.move(forwardsVector, false, currentEvent.bool0));
                             PlayerMovement.Singleton.setOverrideAnimPause(false);
                         }
-                    PlayerMovement.Singleton.speed = PlayerMovement.Singleton.walkSpeed;
+                    PlayerMovement.Singleton.Speed = PlayerMovement.Singleton.WalkSpeed;
                 }
                 break;
             case CustomEventDetails.CustomEventType.MoveCamera:
@@ -1309,21 +1309,21 @@ public class CustomEvent : MonoBehaviour
                     yield return StartCoroutine(PlayerMovement.Singleton.Follower.withdrawToBall());
                 }
 
-                if (PlayerMovement.Singleton.npcFollower)
+                if (PlayerMovement.Singleton.NpcFollower)
                 {
-                    PlayerMovement.Singleton.npcFollower.hitBox.name = "NPC_Object";
-                    PlayerMovement.Singleton.npcFollower.enabled = false;
-                    PlayerMovement.Singleton.npcFollower = null;
+                    PlayerMovement.Singleton.NpcFollower.hitBox.name = "NPC_Object";
+                    PlayerMovement.Singleton.NpcFollower.enabled = false;
+                    PlayerMovement.Singleton.NpcFollower = null;
                 }
                 
                 currentEvent.object0.GetComponent<NPCFollower>().enabled = true;
                 currentEvent.object0.GetComponent<NPCFollower>().hitBox.name = "NPC_Transparent";
-                PlayerMovement.Singleton.npcFollower = currentEvent.object0.GetComponent<NPCFollower>();
+                PlayerMovement.Singleton.NpcFollower = currentEvent.object0.GetComponent<NPCFollower>();
                 break;
             case CustomEventDetails.CustomEventType.RemoveNPCFollower:
-                PlayerMovement.Singleton.npcFollower.hitBox.name = "NPC_Object";
-                PlayerMovement.Singleton.npcFollower.enabled = false;
-                PlayerMovement.Singleton.npcFollower = null;
+                PlayerMovement.Singleton.NpcFollower.hitBox.name = "NPC_Object";
+                PlayerMovement.Singleton.NpcFollower.enabled = false;
+                PlayerMovement.Singleton.NpcFollower = null;
                 break;
         }
     }

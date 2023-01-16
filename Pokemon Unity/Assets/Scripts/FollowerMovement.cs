@@ -72,7 +72,6 @@ public class FollowerMovement : MonoBehaviour
 	void Awake()
 	{
 		//Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
-		Player = PlayerMovement.Singleton;
 
 		sRenderer = Pawn.GetComponent<SpriteRenderer>();
 		sLRenderer = PawnLight.GetComponent<SpriteRenderer>();
@@ -84,25 +83,18 @@ public class FollowerMovement : MonoBehaviour
 
 	void Start()
 	{
-        return; // FIXME
 		Player = PlayerMovement.Singleton;
 		startPosition = transform.position;
+        return; // FIXME
 
-		if (PokemonUnity.Game.GameData.Trainer.party[0] == null)
-		{
+		if (PokemonUnity.Game.GameData.Trainer.party[0] == null) {
 			gameObject.SetActive(false);
-		}
-		else
-		{
-			if (GlobalVariables.Singleton.followerOut)
-			{
+		} else {
+			if (GlobalVariables.Singleton.followerOut) {
 				followerLight.color = LightColor;
-				if (HasLight)
-				{
+				if (HasLight) {
 					followerLight.intensity = LightIntensity;
-				}
-				else
-				{
+				} else {
 					followerLight.intensity = 0;
 				}
 			
@@ -127,9 +119,7 @@ public class FollowerMovement : MonoBehaviour
 				transform.position = startPosition;
 				changeFollower(followerIndex);
 				StartCoroutine("animateSprite");
-			}
-			else
-			{
+			} else {
 				Hide();
 			}
 		}
@@ -145,7 +135,7 @@ public class FollowerMovement : MonoBehaviour
 				? PlayerMovement.Singleton.transform.Find("Camera")
 				: GameObject.Find("Camera").transform;
 
-			Vector3 position = cam.position - PlayerMovement.Singleton.getCamOrigin();
+			Vector3 position = cam.position - PlayerMovement.Singleton.GetCamOrigin();
 
 			if (transform.position.z > position.z)
 			{
@@ -206,10 +196,10 @@ public class FollowerMovement : MonoBehaviour
 			{
 				direction = 2;
 			}
-			while (Player.increment < 1)
+			while (Player.Increment < 1)
 			{
 				//because fak trying to use this thing's own increment. shit doesn't work for some reason.
-				transform.position = startPosition + (destinationPosition - startPosition) * Player.increment;
+				transform.position = startPosition + (destinationPosition - startPosition) * Player.Increment;
 				Hitbox.position = destinationPosition;
 				yield return null;
 			}
@@ -218,7 +208,7 @@ public class FollowerMovement : MonoBehaviour
 		}
 		else if (hide)
 		{
-			while (Player.increment < 1)
+			while (Player.Increment < 1)
 			{
 				transform.position = Player.transform.position;
 				Hitbox.position = Player.transform.position;
@@ -228,7 +218,7 @@ public class FollowerMovement : MonoBehaviour
 		else
 		{
 			startPosition = transform.position;
-			while (Player.increment < 1)
+			while (Player.Increment < 1)
 			{
 				transform.position = startPosition;
 				Hitbox.position = startPosition;
@@ -247,7 +237,7 @@ public class FollowerMovement : MonoBehaviour
 	{
 		if (PokemonUnity.Game.GameData.Trainer.party[0] != null)
 		{
-			if (PlayerMovement.Singleton.npcFollower == null)
+			if (PlayerMovement.Singleton.NpcFollower == null)
 			{
 				GameObject ball = sRenderer.transform.parent.Find("pokeball").gameObject;
 				Player = PlayerMovement.Singleton;
@@ -276,7 +266,7 @@ public class FollowerMovement : MonoBehaviour
 					followerLight.intensity = 0;
 				}
 
-				switch (Player.direction)
+				switch (Player.Direction)
 				{
 					case 0:
 						transform.Translate(Vector3.back);
@@ -296,7 +286,7 @@ public class FollowerMovement : MonoBehaviour
 						break;
 				}
 
-				direction = Player.direction;
+				direction = Player.Direction;
 				
 				pawnShadow.enabled = true;
 				ball.SetActive(true);
@@ -498,7 +488,7 @@ public class FollowerMovement : MonoBehaviour
 
 				float time = 0.055f;
 				
-				yield return new WaitForSeconds((PlayerMovement.Singleton.moving && PlayerMovement.Singleton.running) ? time / 2 : time);
+				yield return new WaitForSeconds((PlayerMovement.Singleton.IsMoving && PlayerMovement.Singleton.IsRunning) ? time / 2 : time);
 			}
 
 			frame++;
@@ -516,7 +506,7 @@ public class FollowerMovement : MonoBehaviour
 
 	private void playClip(AudioClip clip)
 	{
-		AudioSource PlayerAudio = PlayerMovement.Singleton.getAudio();
+		AudioSource PlayerAudio = PlayerMovement.Singleton.GetAudio();
 		
 		PlayerAudio.clip = clip;
 		PlayerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
@@ -539,7 +529,7 @@ public class FollowerMovement : MonoBehaviour
 
 		while (increment < 1)
 		{
-			increment += (1 / PlayerMovement.Singleton.walkSpeed) * Time.deltaTime;
+			increment += (1 / PlayerMovement.Singleton.WalkSpeed) * Time.deltaTime;
 			if (increment > 1)
 			{
 				increment = 1;

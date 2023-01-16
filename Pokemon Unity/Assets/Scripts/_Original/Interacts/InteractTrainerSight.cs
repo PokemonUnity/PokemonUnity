@@ -56,7 +56,7 @@ public class InteractTrainerSight : MonoBehaviour
                 }
 
                 //if running past a random turner
-                if (PlayerMovement.Singleton.running && playerLocation != -1 &&
+                if (PlayerMovement.Singleton.IsRunning && playerLocation != -1 &&
                     trainer.trainerBehaviour == InteractTrainer.TrainerBehaviour.Turn && !trainer.defeated)
                 {
                     trainer.direction = playerLocation;

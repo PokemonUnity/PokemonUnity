@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Library\Extensions\TransformExtensions.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\StartMenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Bag.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\MountBehaviour.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Game_System.cs" />
     <Compile Include="Assets\Scripts\_Original\AudioHandler.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Assets\Scripts\_Original\SceneTransition.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractTrainerSight.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\TypingHandler.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\Vector2Extensions.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\BattleHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\_Original\Transition\DefaultTransition.cs" />
     <Compile Include="Assets\Scripts\_Original\NonResettingHandler.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Assets\GameMain\Scripts\UI\DialogParams.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyItemObject.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingVector2.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\Vector3Extensions.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingPlayerPrefArray.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\StarterChoiceHandler.cs" />
     <Compile Include="Assets\Modules\DOTweenModulePhysics.cs" />
@@ -218,7 +221,7 @@
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\Enums\GameSettingFullscreenMode.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\NatureData.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\DataStruct\BuildInfo.cs" />
-    <Compile Include="Assets\Scripts\_Original\FollowerMovement.cs" />
+    <Compile Include="Assets\Scripts\FollowerMovement.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\EnumExtensions.cs" />
     <Compile Include="Assets\Scripts\Library\ScriptableObjectSingleton.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokemon.cs" />
@@ -321,7 +324,6 @@
     <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\MountBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

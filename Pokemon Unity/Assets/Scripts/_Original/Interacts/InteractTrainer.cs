@@ -181,7 +181,7 @@ public class InteractTrainer : MonoBehaviour
             ? PlayerMovement.Singleton.transform.Find("Camera")
             : GameObject.Find("Camera").transform;
 
-        Vector3 position = cam.position - PlayerMovement.Singleton.getCamOrigin();
+        Vector3 position = cam.position - PlayerMovement.Singleton.GetCamOrigin();
 
         if (transform.position.z > position.z)
         {
@@ -561,7 +561,7 @@ public class InteractTrainer : MonoBehaviour
     private IEnumerator move(Vector3 movement)
     {
         float increment = 0f;
-        float speed = PlayerMovement.Singleton.walkSpeed;
+        float speed = PlayerMovement.Singleton.WalkSpeed;
         Vector3 startPosition = transform.position;
         Vector3 destinationPosition = startPosition + movement;
 
@@ -612,7 +612,7 @@ public class InteractTrainer : MonoBehaviour
                 {
                     flippedDirection -= 4;
                 }
-                PlayerMovement.Singleton.direction = flippedDirection;
+                PlayerMovement.Singleton.Direction = flippedDirection;
 
                 StartCoroutine(interact());
             }
@@ -687,11 +687,11 @@ public class InteractTrainer : MonoBehaviour
 
                 Trainer player2 = null;
 
-                if (PlayerMovement.Singleton.npcFollower)
+                if (PlayerMovement.Singleton.NpcFollower)
                 {
-                    if (PlayerMovement.Singleton.npcFollower.GetComponent<Trainer>() != null)
+                    if (PlayerMovement.Singleton.NpcFollower.GetComponent<Trainer>() != null)
                     {
-                        player2 = PlayerMovement.Singleton.npcFollower.GetComponent<Trainer>();
+                        player2 = PlayerMovement.Singleton.NpcFollower.GetComponent<Trainer>();
                     }
                 }
 

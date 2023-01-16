@@ -47,7 +47,7 @@ public class InteractPC : MonoBehaviour
 
     public IEnumerator interact()
     {
-        if (PlayerMovement.Singleton.direction == 0)
+        if (PlayerMovement.Singleton.Direction == 0)
         {
             if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
             {

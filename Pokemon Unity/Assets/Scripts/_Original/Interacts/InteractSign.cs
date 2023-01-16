@@ -62,7 +62,7 @@ public class InteractSign : MonoBehaviour
 
     public IEnumerator bump()
     {
-        if (PlayerMovement.Singleton.direction == 0)
+        if (PlayerMovement.Singleton.Direction == 0)
         {
             yield return StartCoroutine(interact());
         }

@@ -74,7 +74,7 @@ public class InteractPush : MonoBehaviour
                         Dialog.UndrawDialogBox();
 
                         //Activate strength
-                        Player.activateStrength();
+                        Player.ActivateStrength();
 
                         yield return new WaitForSeconds(0.5f);
                     }
@@ -122,19 +122,19 @@ public class InteractPush : MonoBehaviour
             {
                 Vector3 movement = new Vector3(0, 0, 0);
 
-                if (Player.direction == 0)
+                if (Player.Direction == 0)
                 {
                     movement = new Vector3(0, 0, 2);
                 }
-                else if (Player.direction == 1)
+                else if (Player.Direction == 1)
                 {
                     movement = new Vector3(2, 0, 0);
                 }
-                else if (Player.direction == 2)
+                else if (Player.Direction == 2)
                 {
                     movement = new Vector3(0, 0, -1);
                 }
-                else if (Player.direction == 3)
+                else if (Player.Direction == 3)
                 {
                     movement = new Vector3(-1, 0, 0);
                 }
@@ -196,7 +196,7 @@ public class InteractPush : MonoBehaviour
 
         //Check current map
         RaycastHit[] hitRays =
-            Physics.RaycastAll(transform.position + Vector3.up + Player.transform.GetForwardVectorRaw((EMovementDirection)direction), Vector3.down, 3f);
+            Physics.RaycastAll(transform.position + Vector3.up + Player.transform.GetForwardVector((EMovementDirection)direction), Vector3.down, 3f);
         int closestIndex = -1;
         float closestDistance = float.PositiveInfinity;
         if (hitRays.Length > 0)
@@ -218,7 +218,7 @@ public class InteractPush : MonoBehaviour
             currentMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
 
             //Check destiantion map
-            hitRays = Physics.RaycastAll(transform.position + Vector3.up + Player.transform.GetForwardVectorRaw((EMovementDirection)direction),
+            hitRays = Physics.RaycastAll(transform.position + Vector3.up + Player.transform.GetForwardVector((EMovementDirection)direction),
                 Vector3.down, 3f);
             closestIndex = -1;
             closestDistance = float.PositiveInfinity;

@@ -288,7 +288,7 @@ public class NPCHandler : MonoBehaviour
             ? PlayerMovement.Singleton.transform.Find("Camera")
             : GameObject.Find("Camera").transform;
 
-        Vector3 position = cam.position - PlayerMovement.Singleton.getCamOrigin();
+        Vector3 position = cam.position - PlayerMovement.Singleton.GetCamOrigin();
 
         if (transform.position.z > position.z)
         {
@@ -604,7 +604,7 @@ public class NPCHandler : MonoBehaviour
         {
             speedMod = 1f;
         }
-        float speed = PlayerMovement.Singleton.walkSpeed / speedMod;
+        float speed = PlayerMovement.Singleton.WalkSpeed / speedMod;
         framesPerSec = Mathf.RoundToInt(7f * speedMod);
 
         Vector3 startPosition = transform.position;

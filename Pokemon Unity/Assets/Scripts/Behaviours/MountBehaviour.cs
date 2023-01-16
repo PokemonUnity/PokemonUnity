@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,9 +23,17 @@ public class MountBehaviour : MonoBehaviour
         }
     }
 
+    [Obsolete("Moved from int based direction to Vector3", false)]
     public void UpdateDirection(EMovementDirection direction = EMovementDirection.Down) {
         if (spriteRenderer.enabled) {
             spriteRenderer.sprite = Sprites[(int)direction];
+        }
+    }
+
+    public void UpdateDirection(Vector3 direction) {
+        if (spriteRenderer.enabled) {
+            Debug.LogError("Need to convert Vector3 to int to parse sprite sheets");
+            //spriteRenderer.sprite = Sprites[(int)direction];
         }
     }
 

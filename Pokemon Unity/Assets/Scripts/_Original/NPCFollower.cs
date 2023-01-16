@@ -75,7 +75,7 @@ public class NPCFollower : MonoBehaviour
                 ? PlayerMovement.Singleton.transform.Find("Camera")
                 : GameObject.Find("Camera").transform;
 
-            Vector3 position = cam.position - PlayerMovement.Singleton.getCamOrigin();
+            Vector3 position = cam.position - PlayerMovement.Singleton.GetCamOrigin();
 
             if (transform.position.z > position.z)
             {
@@ -137,10 +137,10 @@ public class NPCFollower : MonoBehaviour
                 npcHandler.direction = 2;
             }
             npcHandler.animPause = false;
-            while (Player.increment < 1)
+            while (Player.Increment < 1)
             {
                 //because fak trying to use this thing's own increment. shit doesn't work for some reason.
-                transform.position = startPosition + (destinationPosition - startPosition) * Player.increment;
+                transform.position = startPosition + (destinationPosition - startPosition) * Player.Increment;
                 hitBox.position = destinationPosition;
                 yield return null;
             } 
@@ -150,7 +150,7 @@ public class NPCFollower : MonoBehaviour
         }
         else if (hide)
         {
-            while (Player.increment < 1)
+            while (Player.Increment < 1)
             {
                 transform.position = Player.transform.position;
                 hitBox.position = Player.transform.position;
@@ -160,7 +160,7 @@ public class NPCFollower : MonoBehaviour
         else
         {
             startPosition = transform.position;
-            while (Player.increment < 1)
+            while (Player.Increment < 1)
             {
                 transform.position = startPosition;
                 hitBox.position = startPosition;
@@ -200,7 +200,7 @@ public class NPCFollower : MonoBehaviour
 
     private void playClip(AudioClip clip)
     {
-        AudioSource PlayerAudio = PlayerMovement.Singleton.getAudio();
+        AudioSource PlayerAudio = PlayerMovement.Singleton.GetAudio();
         
         PlayerAudio.clip = clip;
         PlayerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
@@ -218,7 +218,7 @@ public class NPCFollower : MonoBehaviour
 
         while (increment < 1)
         {
-            increment += (1 / PlayerMovement.Singleton.walkSpeed) * Time.deltaTime;
+            increment += (1 / PlayerMovement.Singleton.WalkSpeed) * Time.deltaTime;
             if (increment > 1)
             {
                 increment = 1;

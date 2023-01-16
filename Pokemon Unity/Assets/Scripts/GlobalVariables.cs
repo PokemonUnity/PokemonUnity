@@ -133,7 +133,7 @@ public class GlobalVariables : MonoBehaviour
 
                     //if fading in to the scene.
                     Player.transform.position = Singleton.playerPosition;
-                    PlayerMovement.Singleton.direction = Singleton.playerDirection;
+                    PlayerMovement.Singleton.Direction = Singleton.playerDirection;
                     
                     if (playerExiting)
                     {
@@ -150,12 +150,12 @@ public class GlobalVariables : MonoBehaviour
 
                     if (!respawning)
                     {
-                        PlayerMovement.Singleton.pauseInput(0.8f);
+                        PlayerMovement.Singleton.PauseInput(0.8f);
                     }
                     else
                     {
                         PlayerMovement.Singleton.Follower.Hide();
-                        PlayerMovement.Singleton.pauseInput(0.4f);
+                        PlayerMovement.Singleton.PauseInput(0.4f);
                     }
                     if (playerForwardOnLoad)
                     {

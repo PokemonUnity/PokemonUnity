@@ -79,7 +79,7 @@ public static class GlobalSaveManager
         Bag PlayerBag = SaveData.currentSave.Bag;
 
         CustomSaveData DataToSave = new CustomSaveData(
-			(SeriV3)Player.transform.position, Player.GetComponent<PlayerMovement>().direction,
+			(SeriV3)Player.transform.position, Player.GetComponent<PlayerMovement>().Direction,
             (SeriV3)Player.transform.Find("Follower").transform.position, Player.GetComponentInChildren<FollowerMovement>().direction,
             SceneManager.GetActiveScene().buildIndex, //Party, 
                 PlayerBag, EventSaves, "");
@@ -157,7 +157,7 @@ public static class GlobalSaveManager
                     //Loading Player
                     UnityEngine.GameObject Player = UnityEngine.GameObject.FindGameObjectWithTag("Player");
                     Player.transform.position = DataToLoad.PlayerPosition;
-                    Player.GetComponent<PlayerMovement>().direction = DataToLoad.PlayerDirection;
+                    Player.GetComponent<PlayerMovement>().Direction = DataToLoad.PlayerDirection;
                     //Loading Follower
                     UnityEngine.GameObject Follower = Player.transform.Find("Follower").gameObject;
                     Follower.transform.position = DataToLoad.FollowerPosition;

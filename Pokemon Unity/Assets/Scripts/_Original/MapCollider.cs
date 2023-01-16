@@ -23,22 +23,14 @@ public class MapCollider : MonoBehaviour
 
     void Awake()
     {
-        //setCollisionMap();
+        SetCollisionMap();
     }
 
-
-    //Tile Tags:
-    //0 - Default Environment
-    //1 - Impassable
-    //2 - Surf Water
-    //3 - Environment 2
-
-    /// <summary>
-    /// Raycasts from the given GameObject to find the current map
-    /// </summary>
-    /// <returns></returns>
-    public static MapCollider GetMap(Transform callerTransform, EMovementDirection direction) {
-        RaycastHit[] hitRays = Physics.RaycastAll(callerTransform.position + Vector3.up, Vector3.down);
+    /// <summary>Raycasts from the given GameObject to find the current map</summary>
+    public static MapCollider GetMap(Vector3 position, Vector3 facingDirection, Vector3? up = null) {
+        up ??= Vector3.up;
+        // + callerTransform.up just for some wiggle room in the collision check
+        RaycastHit[] hitRays = Physics.RaycastAll(position + up.Value, Vector3.down);
 
         GetClosestMapCollider(hitRays, out int closestIndex, out float closestDistance);
 
@@ -46,7 +38,7 @@ public class MapCollider : MonoBehaviour
         
         //if no map found
         //Check for map in front of player's direction
-        hitRays = Physics.RaycastAll(callerTransform.position + Vector3.up + callerTransform.GetForwardVectorRaw(direction), Vector3.down);
+        hitRays = Physics.RaycastAll(position + up.Value + facingDirection, Vector3.down);
 
         GetClosestMapCollider(hitRays, out closestIndex, out closestDistance);
 
@@ -73,17 +65,10 @@ public class MapCollider : MonoBehaviour
 
     public int GetTileTag(Vector3 position)
     {
-        int mapX =
-            Mathf.RoundToInt(Mathf.Round(position.x) - Mathf.Round(transform.position.x) +
-                             Mathf.Floor((float) width / 2f) - xModifier);
-        int mapZ =
-            Mathf.RoundToInt(length -
-                             (Mathf.Round(position.z) - Mathf.Round(transform.position.z) +
-                              Mathf.Floor((float) length / 2f) - zModifier));
+        int mapX = Mathf.RoundToInt(Mathf.Round(position.x) - Mathf.Round(transform.position.x) + Mathf.Floor((float) width / 2f) - xModifier);
+        int mapZ = Mathf.RoundToInt(length - (Mathf.Round(position.z) - Mathf.Round(transform.position.z) + Mathf.Floor((float) length / 2f) - zModifier));
 
-        if (mapX < 0 || mapX >= width ||
-            mapZ < 0 || mapZ >= length)
-        {
+        if (mapX < 0 || mapX >= width || mapZ < 0 || mapZ >= length) {
             //Debug.Log (mapX +" "+ mapZ +", "+ width +" "+ length);
             return -1;
         }
@@ -91,7 +76,7 @@ public class MapCollider : MonoBehaviour
         return tag;
     }
 
-    public void SetCollisonMap()
+    public void SetCollisionMap()
     {
         collisionMap = new int[width, length];
 
@@ -288,4 +273,18 @@ public class MapCollider : MonoBehaviour
 
         return Mathf.Round(slope * 100f) / 100f;
     }
+}
+
+//Tile Tags:
+//0 - Default Environment
+//1 - Impassable
+//2 - Surf Water
+//3 - Environment 2
+
+public enum EMapTile {
+    /// <summary>Land tile</summary>
+    Default,
+    Impassable,
+    SurfableWater,
+    Environment2 // ??? what is this
 }

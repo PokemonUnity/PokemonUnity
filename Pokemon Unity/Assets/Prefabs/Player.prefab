@@ -294,6 +294,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4500498695520197742}
   - {fileID: 4975417708171817626}
   - {fileID: 4975417706311080646}
   - {fileID: 4975417707229743878}
@@ -414,11 +415,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   busyWith: {fileID: 0}
   canInput: 1
+  DrawGizmos: 0
   playerCamera: {fileID: 0}
   mainCameraDefaultPosition: {x: 0, y: 0, z: 0}
   mainCameraDefaultFOV: 0
-  moving: 0
-  still: 1
+  isMoving: 0
+  isStanding: 1
   running: 0
   surfing: 0
   bike: 0
@@ -431,6 +433,7 @@ MonoBehaviour:
   increment: 1
   walkFPS: 7
   runFPS: 12
+  DirectionSurrogate: {fileID: 4975417706449109250}
   pawn: {fileID: 4975417707014361487}
   pawnSprite: {fileID: 4975417707014361584}
   eyeSprite: {fileID: 0}
@@ -464,10 +467,90 @@ MonoBehaviour:
     playerInput: {fileID: 0}
     Events:
     - ActionMap: Player
-      Action: 
+      Action: Move
       Callbacks:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 4975417706449109251}
+            m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+            m_MethodName: HandleInputMove
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - ActionMap: Player
+      Action: Run
+      Callbacks:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4975417706449109251}
+            m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+            m_MethodName: HandleInputRun
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - ActionMap: Player
+      Action: Start
+      Callbacks:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4975417706449109251}
+            m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+            m_MethodName: HandleInputStart
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - ActionMap: Player
+      Action: Select
+      Callbacks:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4975417706449109251}
+            m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+            m_MethodName: HandleInputSelect
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - ActionMap: Player
+      Action: Debug
+      Callbacks:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4975417706449109251}
+            m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+            m_MethodName: HandleInputDebug
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
 --- !u!1 &4975417706657779530
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,3 +2496,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328d14320ca5ddf4cb9430c5b90c382a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7357609528636907237
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4500498695520197742}
+  m_Layer: 0
+  m_Name: Direction Surrogate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4500498695520197742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357609528636907237}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4975417706449109250}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -10,29 +10,29 @@ public class BumpLedge : MonoBehaviour
 
     private IEnumerator bump()
     {
-        if (PlayerMovement.Singleton.direction == movementDirection)
+        if (PlayerMovement.Singleton.Direction == movementDirection)
         {
             if (!active)
             {
                 active = true;
             
-                PlayerMovement.Singleton.pauseInput();
+                PlayerMovement.Singleton.PauseInput();
                 
                 PlayerMovement.Singleton.Follower.canMove = false;
                 PlayerMovement.Singleton.forceMoveForward(2);
                 
-                if (!PlayerMovement.Singleton.running)
+                if (!PlayerMovement.Singleton.IsRunning)
                 {
-                    yield return new WaitForSeconds(PlayerMovement.Singleton.speed * 0.5f);
+                    yield return new WaitForSeconds(PlayerMovement.Singleton.Speed * 0.5f);
                     StartCoroutine(PlayerMovement.Singleton.jump());
-                    yield return new WaitForSeconds(PlayerMovement.Singleton.speed * 0.5f);
+                    yield return new WaitForSeconds(PlayerMovement.Singleton.Speed * 0.5f);
                 }
                 else
                 {
                     StartCoroutine(PlayerMovement.Singleton.jump());
-                    yield return new WaitForSeconds(PlayerMovement.Singleton.speed);
+                    yield return new WaitForSeconds(PlayerMovement.Singleton.Speed);
                 }
-                yield return new WaitForSeconds(PlayerMovement.Singleton.speed);
+                yield return new WaitForSeconds(PlayerMovement.Singleton.Speed);
 
                 if (GlobalVariables.Singleton.followerOut)
                 {
@@ -40,7 +40,7 @@ public class BumpLedge : MonoBehaviour
                 }
                 if (!PlayerMovement.Singleton.busyWith)
                 {
-                    PlayerMovement.Singleton.unpauseInput();
+                    PlayerMovement.Singleton.UnpauseInput();
                 }
                 active = false;
             }

@@ -22,7 +22,10 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 using UnityEngine;
 //using DiscordPresence;
 using Random = System.Random;
+using static UnityEngine.InputSystem.InputAction;
+using System.Collections.Generic;
 
+[RequireComponent(typeof(AudioSource))]
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Singleton;
@@ -32,34 +35,46 @@ public class PlayerMovement : MonoBehaviour
     //before a script runs, it'll check if the player is busy with another script's GameObject.
     public GameObject busyWith = null;
     public bool canInput = true;
+    public bool DrawGizmos = false;
 
     private DialogBoxHandlerNew Dialog;
     private MapNameBoxBehaviour MapName;
 
     [Header("Camera")]
-    public Camera playerCamera;
-    public Vector3 mainCameraDefaultPosition;
-    public float mainCameraDefaultFOV;
+    public Camera PlayerCamera;
+    public Vector3 MainCameraDefaultPosition;
+    public float MainCameraDefaultFOV;
     private Vector3 camOrigin;
 
     [Header("Movement")]
-    public bool moving = false;
-    public bool still = true;
-    public bool running = false;
-    public bool surfing = false;
-    public bool bike = false;
+    public bool IsMoving = false;
+    bool shouldMove = false;
+    public bool IsStanding = true;
+    public bool IsRunning = false;
+    public bool IsSurfing = false;
+    public bool IsBiking = false;
     public bool strength = false;
-    public float walkSpeed = 0.3f; //time in seconds taken to walk 1 square.
-    public float runSpeed = 0.15f;
-    public float surfSpeed = 0.2f;
-    public float speed;
-    public int direction = 2; //0 = up, 1 = right, 2 = down, 3 = left
+    public float WalkSpeed = 0.3f; //time in seconds taken to walk 1 square.
+    public float RunSpeed = 0.15f;
+    public float SurfSpeed = 0.2f;
+    public float Speed;
+    [Obsolete("Moved from int based direction to Vector3. See FacingDirection", false)]
+    public int Direction = 2; //0 = up, 1 = right, 2 = down, 3 = left
     private bool jumping = false;
-    public float increment = 1f;
-    public int walkFPS = 7;
-    public int runFPS = 12;
+    public float Increment = 1f;
+    public int WalkFPS = 7;
+    public int RunFPS = 12;
     private int mostRecentDirectionPressed = 0;
+    public Vector3 FacingDirection = Vector3.forward;
+    private Vector3 directionInput = Vector3.zero;
     private float directionChangeInputDelay = 0.08f;
+    public Transform DirectionSurrogate;
+
+    [SerializeField]
+    List<Type> WalkableSurfaces = new List<Type>() {
+        typeof(MapCollider),
+        typeof(BridgeHandler),
+    };
 
     [Header("Player")]
     //Player sprites
@@ -74,17 +89,16 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Follower")]
     public FollowerMovement Follower;
-    public NPCFollower npcFollower;
+    public NPCFollower NpcFollower;
 
     [Header("Map")]
     public MapCollider currentMap;
-    public MapCollider destinationMap;
     public MapSettings accessedMapSettings;
 
     [Header("Audio")]
     private AudioClip accessedAudio;
     private int accessedAudioLoopStartSamples;
-    private AudioSource PlayerAudio;
+    private AudioSource playerAudio;
     public AudioClip bumpClip;
     public AudioClip jumpClip;
     public AudioClip landClip;
@@ -107,6 +121,13 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    #region MonoBehaviour Functions
+
+    void OnDrawGizmos() {
+        if (!DrawGizmos) return;
+        Gizmos.DrawLine(transform.position, transform.position + (directionInput * 2));
+    }
+
     void OnValidate() {
         if (Follower == null) Debug.LogError("No FollowerMovement provided", gameObject);
         // pawn stuff
@@ -124,8 +145,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        // FIXME
-        //PlayerAudio = transform.GetComponent<AudioSource>();
+        playerAudio = transform.GetComponent<AudioSource>();
 
         //set up the reference to this script.
         Singleton = this;
@@ -135,15 +155,15 @@ public class PlayerMovement : MonoBehaviour
         //MapName = GameObject.Find("GUI").GetComponent<MapNameBoxBehaviour>();
 
         canInput = true;
-        speed = walkSpeed;
+        Speed = WalkSpeed;
 
-        playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        if (playerCamera == null) Debug.LogError("Could not find a Camera tagged with 'MainCamera'");
+        PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        if (PlayerCamera == null) Debug.LogError("Could not find a Camera tagged with 'MainCamera'");
 
         //mainCamera.fieldOfView = 35.6f;
 
-        mainCameraDefaultPosition = playerCamera.transform.localPosition;
-        mainCameraDefaultFOV = playerCamera.fieldOfView;
+        MainCameraDefaultPosition = PlayerCamera.transform.localPosition;
+        MainCameraDefaultFOV = PlayerCamera.fieldOfView;
 
         // hmmm... delete me?
         mountPosition = mount.transform.localPosition;
@@ -151,31 +171,28 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        camOrigin = playerCamera.transform.localPosition;
+        camOrigin = PlayerCamera.transform.localPosition;
 
-        updateDirection(direction);
+        UpdateDirection(Direction);
         updateCosmetics();
 
         // mount
-        if (!surfing)
+        if (!IsSurfing)
             mount.UpdateMount(false);
 
         // animation
-        updateAnimation("walk", walkFPS);
+        updateAnimation("walk", WalkFPS);
         StartCoroutine(animateSprite());
         animPause = true;
 
         // reflections
-        reflect(false);
+        Reflect(false);
         Follower.reflect(false);
-
-        
 
         StartCoroutine(control());
 
-
         //Check current map
-        currentMap = MapCollider.GetMap(transform, (EMovementDirection)direction);
+        currentMap = MapCollider.GetMap(transform.position, FacingDirection);
 
         if (currentMap != null)
         {
@@ -292,67 +309,698 @@ public class PlayerMovement : MonoBehaviour
         GlobalVariables.Singleton.resetFollower();
     }
 
-    void Update()
-    {
+    #endregion
+
+    #region Input Handling
+
+    public void PauseInput(float secondsToWait = 0f) {
+        canInput = false;
+        if (animationName == "run")
+            updateAnimation("walk", WalkFPS);
+
+        if (IsRunning || IsBiking)
+            Speed = WalkSpeed;
+
+        IsRunning = false;
+
+        if (secondsToWait == 0f)
+            StartCoroutine(checkBusinessBeforeUnpause(secondsToWait, false));
+        else
+            StartCoroutine(checkBusinessBeforeUnpause(secondsToWait, true));
+    }
+
+    public void UnpauseInput() {
+        Debug.Log("unpaused");
+        canInput = true;
+    }
+
+    public bool IsInputPaused() => !canInput;
+
+    public void HandleInputRun(CallbackContext context) {
+        IsRunning = context.action.IsPressed();
+    }
+
+    public void HandleInputStart(CallbackContext context) {
+        canInput = false;
+        StartCoroutine(openPauseMenu());
+    }
+
+    public void HandleInputSelect(CallbackContext context) {
+        canInput = false;
+        interact();
+    }
+
+    public void HandleInputDebug(CallbackContext context) {
+        Debug.Log(currentMap.GetTileTag(transform.position));
+        if (Follower.canMove)
+            Follower.StartCoroutine("withdrawToBall");
+        else
+            Follower.canMove = true;
+    }
+
+    public void HandleInputMove(CallbackContext context) {
+        var input = context.ReadValue<Vector2>();
+        UpdateDirection(new Vector3(input.x, 0f, input.y));
+    }
+
+    #endregion
+
+    #region Movement
+
+    #region Direction
+
+    [Obsolete("Moved from int based direction to Vector3", false)]
+    public void UpdateDirection(int dir) {
+        Direction = dir;
+
         return; //FIXME
-        //check for new inputs, so that the new direction can be set accordingly
-        if (UnityEngine.Input.GetButtonDown("Horizontal"))
-        {
-            if (UnityEngine.Input.GetAxisRaw("Horizontal") > 0)
-            {
-                //	Debug.Log("NEW INPUT: Right");
-                mostRecentDirectionPressed = 1;
+        pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[Direction * frames + frame];
+        hairSprite.sprite = haircutSpriteSheet[Direction * frames + frame];
+        eyeSprite.sprite = eyeSpriteSheet[Direction * frames + frame];
+
+        mount.UpdateDirection((EMovementDirection)dir);
+    }
+
+    public void UpdateDirection(Vector3 newDirection) {
+        directionInput = newDirection;
+
+        if (shouldChangeDirection(directionInput)) {
+            // unless player has just moved, wait a small amount of time to ensure that they have time to let go before moving 
+            // (allows only turning)
+            //if (!IsMoving)
+            //    yield return new WaitForSeconds(directionChangeInputDelay);
+            mostRecentDirectionPressed = (int)directionInput.ToMovementDirection();
+            Direction = (int)newDirection.ToMovementDirection();
+            FacingDirection = newDirection;
+            mount.UpdateDirection(FacingDirection);
+            //FIXME
+            //pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[direction * frames + frame];
+            //hairSprite.sprite = haircutSpriteSheet[direction * frames + frame];
+            //eyeSprite.sprite = eyeSpriteSheet[direction * frames + frame];
+            shouldMove = true;
+            //if (!IsMoving) StartCoroutine(move(directionInput));
+            if (!IsMoving) StartCoroutine(move(GetMovementVector((EMovementDirection)Direction, false)));
+            return;
+        }
+        //Vector3.RotateTowards(DirectionSurrogate.forward, input.GetForwardVector(), Mathf.PI, 0f);
+            
+        shouldMove = false;
+
+        bool shouldChangeDirection(Vector3 newDirection) => newDirection.magnitude > 0 && newDirection != FacingDirection;
+    }
+
+    ///returns the vector relative to the player direction, without any modifications.
+    public Vector3 GetForwardVectorRaw() => transform.GetForwardVector((EMovementDirection)Direction);
+
+    public Vector3 GetForwardVector() => GetMovementVector((EMovementDirection)Direction, true);
+
+    public Vector3 GetForwardVector(EMovementDirection direction) => GetMovementVector(direction, true);
+
+    public Vector3 GetMovementVector(EMovementDirection direction, bool checkForBridge) {
+        //set initial vector3 based off of direction
+        Vector3 movement = transform.GetForwardVector(direction);
+
+        //Check destination map	and bridge																//0.5f to adjust for stair height
+        //cast a ray directly downwards from the position directly in front of the player		//1f to check in line with player's head
+        RaycastHit[] hitColliders = Physics.RaycastAll(transform.position + movement + new Vector3(0, 1.5f, 0), Vector3.down);
+
+        RaycastHit mapHit = Array.Find(hitColliders, (RaycastHit hit) => hit.collider.gameObject.GetComponent<MapCollider>() != null);
+        //if a collision's gameObject has a BridgeHandler, it is a bridge.
+        // !!!
+        // I removed the bridge collision checking here to decrease complexity. 
+        // I feel there is a better way to do it, but the game needs other repairs first
+        // !!! 
+        //RaycastHit bridgeHit = new RaycastHit();
+        //if (checkForBridge)
+        //    bridgeHit = Array.Find(hitColliders, (RaycastHit hit) => hit.collider.gameObject.GetComponent<BridgeHandler>() != null);
+
+        // modify the forwards vector to align to the colliding plane
+        RaycastHit higherPriorityHit = mapHit; // bridgeHit.collider == null ? mapHit : bridgeHit;
+        movement -= new Vector3(0, (transform.position.y - higherPriorityHit.point.y), 0);
+
+        float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, (int)direction));
+        float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + GetForwardVectorRaw(), (int)direction, checkForBridge));
+        float yDistance = Mathf.Abs((transform.position.y + movement.y) - transform.position.y);
+        yDistance = Mathf.Round(yDistance * 100f) / 100f;
+
+        //Debug.Log("currentSlope: "+currentSlope+", destinationSlope: "+destinationSlope+", yDistance: "+yDistance);
+
+        //if either slope is greater than 1 it is too steep.
+        if ((currentSlope <= 1 && destinationSlope <= 1) && (yDistance <= currentSlope || yDistance <= destinationSlope)) {
+            //if yDistance is greater than both slopes there is a vertical wall between them
+            return movement;
+        }
+        return Vector3.zero;
+    }
+
+    #endregion
+
+    // TODO: Update the name of this function
+    private IEnumerator control() {
+        bool isStill;
+
+        yield return new WaitForSeconds(0.4f);
+
+        //unpauseInput();
+        while (true) {
+            // the player is still, but if they've just finished moving a space, moving is still true for this frame (see end of coroutine)
+            isStill = true;
+            if (canInput) {
+                if (!IsSurfing && !IsBiking) {
+                    if (IsRunning) {
+                        if (IsMoving) {
+                            updateAnimation("run", RunFPS);
+                        } else {
+                            updateAnimation("walk", WalkFPS);
+                        }
+                        Speed = RunSpeed;
+                    } else {
+                        updateAnimation("walk", WalkFPS);
+                        Speed = WalkSpeed;
+                    }
+                }
+                //if pausing/interacting/etc. is not being called, then moving is possible.
+                //		(if any direction input is being entered)
+                if (!canInput) continue;
+
             }
-            else if (UnityEngine.Input.GetAxisRaw("Horizontal") < 0)
-            {
-                //	Debug.Log("NEW INPUT: Left");
-                mostRecentDirectionPressed = 3;
+            if (isStill) {
+                //if still is true by this point, then no move function has been called
+                animPause = true;
+                IsMoving = false;
+            } //set moving to false. The player loses their momentum.
+
+            yield return null;
+        }
+    }
+
+    //IEnumerator move(Vector2 input) {
+    //    //if most recent direction pressed is held, but it isn't the current direction, set it to be
+    //    if (ShouldChangeDirection()) {
+    //        UpdateDirection(directionInput);
+    //        if (!IsMoving) {
+    //            // unless player has just moved, wait a small amount of time to ensure that they have time to
+    //            // let go before moving (allows only turning)
+    //            yield return new WaitForSeconds(directionChangeInputDelay);
+    //        }
+    //    } else {
+    //        IsMoving = true;
+    //    }
+
+    //    //if moving is true (including by momentum from the previous step) then attempt to move forward.
+    //    if (IsMoving) {
+    //        IsStanding = false;
+    //        yield return StartCoroutine(moveForward());
+    //    }
+
+    //    // helpers
+    //    //bool ShouldChangeDirection() => mostRecentDirectionPressed != direction && hasValidMovementDirection(mostRecentDirectionPressed);
+    //}
+
+    public IEnumerator move(Vector3 movement, bool canEncounter = true, bool lockFollower = false) {
+        Collider objectCollider = null;
+
+        if (movement != Vector3.zero) {
+            objectCollider = checkForObjectCollision(movement);
+            //if no objects are in the way
+            if (objectCollider == null) {
+                MapCollider destinationMap = MapCollider.GetMap(transform.position, FacingDirection);
+                EMapTile destinationTileTag = (EMapTile)destinationMap.GetTileTag(transform.position + movement);
+                bool collidedWithBridge = checkForBridgeCollision(movement);
+
+                if (canMove(collidedWithBridge, destinationTileTag)) {
+                    if (canSurfAtDestination(collidedWithBridge, destinationTileTag)) {
+                        // TODO: destination is water tile
+                    } else {
+                        //disable surfing if not headed to water tile
+                        if (aboutToStopSurfing(destinationTileTag))
+                            stopSurfing();
+
+                        if (destinationMap != currentMap)
+                            changeMap(destinationMap);
+
+                        processTransparentCollision(movement);
+
+                        Vector3 startPosition = Hitbox.position;
+
+                        IsMoving = true;
+                        Increment = 0;
+
+                        if (!lockFollower) StartCoroutine(Follower.move(startPosition, Speed));
+                        if (NpcFollower != null) StartCoroutine(NpcFollower.move(startPosition, Speed));
+
+                        yield return move(startPosition);
+
+                        if (canEncounter)
+                            CheckForEncounters();
+
+                        yield break;
+                    }
+                }
             }
         }
-        else if (UnityEngine.Input.GetButtonDown("Vertical"))
-        {
-            if (UnityEngine.Input.GetAxisRaw("Vertical") > 0)
-            {
-                //	Debug.Log("NEW INPUT: Up");
-                mostRecentDirectionPressed = 0;
+
+        playerIsUnableToMove(objectCollider);
+
+        #region Helpers
+        IEnumerator move(Vector3 startPosition) {
+            animPause = false;
+            while (Increment < 1f) {
+                //increment increases slowly to 1 over the frames
+                Increment += (1f / Speed) * Time.deltaTime;
+                //speed is determined by how many squares are crossed in one second
+                if (Increment > 1f) {
+                    Increment = 1f;
+                }
+                transform.position = startPosition + (movement * Increment);
+                Hitbox.position = startPosition + movement;
+                yield return null;
             }
-            else if (UnityEngine.Input.GetAxisRaw("Vertical") < 0)
-            {
-                //	Debug.Log("NEW INPUT: Down");
-                mostRecentDirectionPressed = 2;
+        }
+        bool checkForBridgeCollision(Vector3 movement) => MapCollider.GetBridgeHitOfPosition(transform.position + movement + new Vector3(0, 0.1f, 0)).collider != null;
+        bool canMove(bool collidedWithBridge, EMapTile destinationTileTag) => collidedWithBridge || destinationTileTag != EMapTile.Impassable;
+        bool canSurfAtDestination(bool collidedWithBridge, EMapTile destinationTileTag) => !collidedWithBridge && !IsSurfing && destinationTileTag == EMapTile.SurfableWater;
+        bool aboutToStopSurfing(EMapTile destinationTileTag) => IsSurfing && destinationTileTag != EMapTile.SurfableWater;
+        void processTransparentCollision(Vector3 movement) {
+            Collider transparentCollider = checkForTransparentObjectCollision(movement);
+
+            //send bump message to the transparents's parent object
+            if (transparentCollider != null)
+                transparentCollider.transform.parent.gameObject.SendMessage("bump", SendMessageOptions.DontRequireReceiver);
+        }
+        void CheckForEncounters() {
+            EMapTile destinationTag = (EMapTile)currentMap.GetTileTag(transform.position);
+            if (destinationTag != EMapTile.Impassable)
+                if (destinationTag == EMapTile.SurfableWater)
+                    StartCoroutine(wildEncounter(WildPokemonInitialiser.Location.Surfing));
+                else if (destinationTag == EMapTile.Default)
+                    StartCoroutine(wildEncounter(WildPokemonInitialiser.Location.Standard));
+        }
+        void playerIsUnableToMove(Collider objectCollider) {
+            if (objectCollider == null ||
+                (objectCollider.transform.parent.TryGetComponent(out InteractDoorway doorway) && doorway.isLocked)) {
+                Invoke("playBump", 0.05f);
+            }
+            IsMoving = false;
+            animPause = true;
+        }
+        #endregion
+    }
+
+    void changeMap(MapCollider newMap) {
+        //if moving onto a new map
+        currentMap = newMap;
+        accessedMapSettings = newMap.gameObject.GetComponent<MapSettings>();
+        if (accessedAudio != accessedMapSettings.getBGM()) {
+            //if audio is not already playing
+            accessedAudio = accessedMapSettings.getBGM();
+            accessedAudioLoopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
+            BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
+        }
+        newMap.BroadcastMessage("repair", SendMessageOptions.DontRequireReceiver);
+
+        if (accessedMapSettings.mapNameAppears) {
+            // FIXME
+            //MapName.display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
+        }
+
+        Debug.Log(newMap.name + "   " + accessedAudio.name);
+
+        //Update Weather
+        if (accessedMapSettings.weathers.Length > 0) {
+            int probabilityTotal = accessedMapSettings.sunnyWeatherProbability;
+            int currentProba = 0;
+            Weather weather = null;
+
+            foreach (WeatherProbability w in accessedMapSettings.weathers) {
+                probabilityTotal += w.probability;
+            }
+
+            Debug.Log("Probability Total : " + probabilityTotal);
+
+            float randValue = UnityEngine.Random.Range(1, probabilityTotal);
+
+            Debug.Log("[Weather] Rand value = " + randValue);
+
+            if (accessedMapSettings.sunnyWeatherProbability > 0 && randValue > currentProba && randValue <= currentProba + accessedMapSettings.sunnyWeatherProbability) {
+                // Do nothing
+            } else {
+                Debug.Log("[Weather] Choosing random weather");
+                currentProba = accessedMapSettings.sunnyWeatherProbability;
+                for (int i = 0; i < accessedMapSettings.weathers.Length; ++i) {
+                    if (accessedMapSettings.weathers[i].probability == 0) continue;
+
+                    if (randValue > currentProba && randValue <= currentProba + accessedMapSettings.weathers[i].probability) {
+                        weather = accessedMapSettings.weathers[i].weather;
+                        Debug.Log("[Weather] Selected weather : " + weather.name);
+                        break;
+                    }
+
+                    currentProba += accessedMapSettings.weathers[i].probability;
+                }
+            }
+
+            GameObject.Find("Weather").GetComponent<WeatherHandler>().setWeather(weather);
+        } else {
+            Debug.Log("[Weather] Weather List empty");
+            GameObject.Find("Weather").GetComponent<WeatherHandler>().setWeather(null);
+        }
+
+        UpdateRPC();
+    }
+
+    public void forceMoveForward(int spaces = 1) {
+        StartCoroutine(forceMoveForwardIE(spaces));
+    }
+
+    IEnumerator forceMoveForwardIE(int spaces) {
+        overrideAnimPause = true;
+        for (int i = 0; i < spaces; i++) {
+            Vector3 movement = GetForwardVector();
+
+            //check destination for transparents
+            Collider objectCollider = null;
+            Collider transparentCollider = null;
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position + movement + new Vector3(0, 0.5f, 0),
+                0.4f);
+            if (hitColliders.Length > 0) {
+                for (int i2 = 0; i2 < hitColliders.Length; i2++) {
+                    if (hitColliders[i2].name.ToLowerInvariant().Contains("_transparent")) {
+                        transparentCollider = hitColliders[i2];
+                    }
+                }
+            }
+            if (transparentCollider != null) {
+                //send bump message to the transparents's parent object
+                transparentCollider.transform.parent.gameObject.SendMessage("bump",
+                    SendMessageOptions.DontRequireReceiver);
+            }
+
+            yield return StartCoroutine(move(movement, false));
+        }
+        overrideAnimPause = false;
+        if (GlobalVariables.Singleton.followerOut) {
+            Follower.ActivateMove();
+        }
+    }
+
+    #region Movement Actions
+
+    public void playerJump() {
+        if (!jumping)
+            StartCoroutine(jump());
+    }
+
+    public IEnumerator jump() {
+        jumping = true;
+        float increment = 0f;
+        float parabola = 0;
+        float height = 2.1f;
+        Vector3 startPosition = pawn.position;
+
+        playClip(jumpClip);
+
+        while (increment < 1) {
+            increment += (1 / WalkSpeed) * Time.deltaTime;
+            if (increment > 1)
+                increment = 1;
+
+            parabola = -height * (increment * increment) + (height * increment);
+            pawn.position = new Vector3(pawn.position.x, startPosition.y + parabola, pawn.position.z);
+            yield return null;
+        }
+        pawn.position = new Vector3(pawn.position.x, startPosition.y, pawn.position.z);
+
+        playClip(landClip);
+
+        jumping = false;
+    }
+
+    private IEnumerator dismount() {
+        StartCoroutine(mount.StillMount(Speed));
+        yield return StartCoroutine(jump());
+        Follower.canMove = true;
+        mount.transform.localPosition = mountPosition;
+        mount.UpdateMount(false);
+    }
+
+    private IEnumerator surfCheck() {
+        IPokemon targetPokemon = null; //SaveData.currentSave.PC.getFirstFEUserInParty("Surf");
+        if (targetPokemon != null) {
+            if (GetMovementVector((EMovementDirection)Direction, false) != Vector3.zero) {
+                if (setCheckBusyWith(this.gameObject)) {
+                    Dialog.DrawDialogBox();
+                    yield return
+                        Dialog.StartCoroutine(Dialog.DrawText("The water is dyed a deep blue. Would you \nlike to surf on it?"));
+                    yield return Dialog.StartCoroutine(Dialog.DrawChoiceBox());
+                    Dialog.UndrawChoiceBox();
+                    int chosenIndex = Dialog.chosenIndex;
+                    if (chosenIndex == 1) {
+                        Dialog.DrawDialogBox();
+                        yield return
+                            //Dialog.StartCoroutine(Dialog.DrawText(targetPokemon.Name + " used " + targetPokemon.getFirstFEInstance("Surf") + "!"));
+                            Dialog.StartCoroutine(Dialog.DrawText(targetPokemon.Name + " used " + "Surf" + "!"));
+                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
+                            yield return null;
+
+                        IsSurfing = true;
+                        mount.UpdateMount(true, "surf");
+
+                        BgmHandler.main.PlayMain(GlobalVariables.Singleton.surfBGM, GlobalVariables.Singleton.surfBgmLoopStart);
+
+                        //determine the vector for the space in front of the player by checking direction
+                        Vector3 spaceInFront = new Vector3(0, 0, 0);
+                        if (Direction == 0)
+                            spaceInFront = new Vector3(0, 0, 1);
+                        else if (Direction == 1)
+                            spaceInFront = new Vector3(1, 0, 0);
+                        else if (Direction == 2)
+                            spaceInFront = new Vector3(0, 0, -1);
+                        else if (Direction == 3)
+                            spaceInFront = new Vector3(-1, 0, 0);
+
+                        mount.transform.position = mount.transform.position + spaceInFront;
+
+                        Follower.StartCoroutine(Follower.withdrawToBall());
+                        StartCoroutine(mount.StillMount(Speed));
+                        forceMoveForward();
+                        yield return StartCoroutine(jump());
+
+                        updateAnimation("surf", WalkFPS);
+                        Speed = SurfSpeed;
+                    }
+                    Dialog.UndrawDialogBox();
+                    unsetCheckBusyWith(this.gameObject);
+                }
+            }
+        } else {
+            if (setCheckBusyWith(this.gameObject)) {
+                Dialog.DrawDialogBox();
+                yield return Dialog.StartCoroutine(Dialog.DrawText("The water is dyed a deep blue."));
+                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
+                    yield return null;
+
+                Dialog.UndrawDialogBox();
+                unsetCheckBusyWith(this.gameObject);
+            }
+        }
+        yield return new WaitForSeconds(0.2f);
+    }
+
+    void stopSurfing() {
+        updateAnimation("walk", WalkFPS);
+        Speed = WalkSpeed;
+        IsSurfing = false;
+        StartCoroutine(dismount());
+        BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Collisions
+
+    Collider[] collisionRaycast(Vector3 checkOffset) {
+        return Physics.OverlapSphere(transform.position + checkOffset + new Vector3(0, 0.5f, 0), 0.4f);
+    }
+
+    /// <summary>Returns the first collider hit</summary>
+    Collider checkForTransparentObjectCollision(Vector3 checkOffset) {
+        Collider[] hitColliders = collisionRaycast(checkOffset);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            Debug.Log("Collider: " + hitColliders[i].ToString());
+            if (hitColliders[i].name.ToLowerInvariant().Contains("_object")) {
+                return hitColliders[i];
+            }
+        }
+        return null;
+    }
+
+    /// <summary>Returns the first collider hit</summary>
+    Collider checkForObjectCollision(Vector3 checkOffset) {
+        Collider[] hitColliders = collisionRaycast(checkOffset);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            Debug.Log("Collider: " + hitColliders[i].ToString());
+            if (hitColliders[i].name.ToLowerInvariant().Contains("_transparent") && !hitColliders[i].name.ToLowerInvariant().Contains("follower")) {
+                hitColliders[i].transform.parent.gameObject.SendMessage("bump", SendMessageOptions.DontRequireReceiver);
+                return hitColliders[i];
+            }
+        }
+        return null;
+    }
+
+
+    #endregion
+
+    #region Animations & Visuals
+
+    public void updateAnimation(string newAnimationName, int fps) {
+        return; // FIXME
+        if (animationName != newAnimationName) {
+            animationName = newAnimationName;
+            spriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
+            if (SaveData.currentSave.playerHaircut != null)
+                haircutSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/hairs/" + SaveData.currentSave.playerHaircut.getFileName() + '_' + newAnimationName);
+
+            eyeSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/eyes/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
+            //TODO Add eyes too
+
+            //pawnReflectionSprite.SetTexture("_MainTex", Resources.Load<Texture>("PlayerSprites/"+SaveData.currentSave.getPlayerSpritePrefix()+newAnimationName));
+            framesPerSec = fps;
+            secPerFrame = 1f / framesPerSec;
+            frames = Mathf.RoundToInt(spriteSheet.Length / 4f);
+            if (frame >= frames)
+                frame = 0;
+        }
+    }
+
+    public void updateCosmetics() {
+        return; //FIXME
+        hairSprite.color = SaveData.currentSave.playerHairColor.Color;
+        eyeSprite.color = SaveData.currentSave.playerEyeColor.Color;
+    }
+
+    public void Reflect(bool setState) {
+        return; //FIXME
+        pawnReflectionSprite.enabled = setState;
+    }
+
+    private Vector2 GetUVSpriteMap(int index) {
+        int row = index / 4;
+        int column = index % 4;
+
+        return new Vector2(0.25f * column, 0.75f - (0.25f * row));
+    }
+
+    private IEnumerator animateSprite() {
+        yield break; //FIXME
+        frame = 0;
+        frames = 4;
+        framesPerSec = WalkFPS;
+        secPerFrame = 1f / (float)framesPerSec;
+        while (true) {
+            for (int i = 0; i < 4; i++) {
+                if (animPause && frame % 2 != 0 && !overrideAnimPause) {
+                    frame -= 1;
+                }
+                pawnSprite.sprite = spriteSheet[Direction * frames + frame];
+                pawnReflectionSprite.sprite = pawnSprite.sprite;
+                if (hairSprite != null) hairSprite.sprite = haircutSpriteSheet[Direction * frames + frame];
+                if (eyeSprite != null) eyeSprite.sprite = eyeSpriteSheet[Direction * frames + frame];
+                //pawnReflectionSprite.SetTextureOffset("_MainTex", GetUVSpriteMap(direction*frames+frame));
+                yield return new WaitForSeconds(secPerFrame / 4f);
+            }
+            if (!animPause || overrideAnimPause) {
+                frame += 1;
+                if (frame >= frames)
+                    frame = 0;
             }
         }
     }
 
-    public void UpdateRPC()
-    {
+    public void setOverrideAnimPause(bool set) {
+        overrideAnimPause = set;
+    }
+
+    #endregion
+
+    #region Camera
+
+    public Vector3 GetCamOrigin() => camOrigin;
+
+    public IEnumerator moveCameraTo(Vector3 targetPosition, float duration) {
+        targetPosition += MainCameraDefaultPosition;
+
+        LeanTween.move(PlayerCamera.gameObject, targetPosition, duration);
+        yield return new WaitForSeconds(duration);
+
+        PlayerCamera.transform.localPosition = targetPosition;
+    }
+
+    public IEnumerator shakeCamera(int iteration, float duration, AudioClip clip = null) {
+        Transform camera = transform.Find("Camera") != null ? transform.Find("Camera") : GameObject.Find("Camera").transform;
+
+        for (int i = 0; i < iteration; ++i) {
+            float increment = 0f;
+            float distance = 0.2f;
+            Vector3 startPosition = camera.position;
+
+            playClip(clip);
+
+            LeanTween.moveX(camera.gameObject, camera.position.x + distance, duration / 4);
+            yield return new WaitForSeconds(duration / 4);
+            LeanTween.moveX(camera.gameObject, camera.position.x - distance * 2, duration / 2);
+            yield return new WaitForSeconds(duration / 2);
+            LeanTween.moveX(camera.gameObject, camera.position.x + distance, duration / 4);
+            yield return new WaitForSeconds(duration / 4);
+
+            camera.position = startPosition;
+        }
+
+        yield return null;
+    }
+
+
+    #endregion
+
+    #region Audio
+
+    public AudioSource GetAudio() => playerAudio;
+
+    private void playClip(AudioClip clip) {
+        playerAudio.clip = clip;
+        playerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
+        playerAudio.Play();
+    }
+
+    private void playBump() {
+        if (!playerAudio.isPlaying)
+            if (!IsMoving && !overrideAnimPause)
+                playClip(bumpClip);
+    }
+
+    #endregion
+
+    #region Other
+
+    public void UpdateRPC() {
         //Update Discord RPC
         float hour = System.DateTime.Now.Hour;
 
         string dayTime;
 
-        if (hour < 6)
-        {
+        if (hour < 6) {
             dayTime = "Night";
-        }
-        else if (hour < 12)
-        {
+        } else if (hour < 12) {
             dayTime = "Morning";
-        }
-        else if (hour < 13)
-        {
+        } else if (hour < 13) {
             dayTime = "Midday";
-        }
-        else if (hour < 18)
-        {
+        } else if (hour < 18) {
             dayTime = "Afternoon";
-        }
-        else if (hour < 20)
-        {
+        } else if (hour < 20) {
             dayTime = "Evening";
-        }
-        else
-        {
+        } else {
             dayTime = "Night";
         }
 
@@ -367,281 +1015,31 @@ public class PlayerMovement : MonoBehaviour
         //);
     }
 
-    private bool isDirectionKeyHeld(int directionCheck)
-    {
-        if ((directionCheck == 0 && UnityEngine.Input.GetAxisRaw("Vertical") > 0) ||
-            (directionCheck == 1 && UnityEngine.Input.GetAxisRaw("Horizontal") > 0) ||
-            (directionCheck == 2 && UnityEngine.Input.GetAxisRaw("Vertical") < 0) ||
-            (directionCheck == 3 && UnityEngine.Input.GetAxisRaw("Horizontal") < 0))
+    IEnumerator openPauseMenu() {
+        if (IsMoving || UnityEngine.Input.GetButtonDown("Start")) //Start
         {
-            return true;
-        }
-        return false;
-    }
-
-    private IEnumerator control()
-    {
-        bool still;
-
-        yield return new WaitForSeconds(0.4f);
-        
-        //unpauseInput();
-        while (true)
-        {
-            still = true;
-                //the player is still, but if they've just finished moving a space, moving is still true for this frame (see end of coroutine)
-            if (canInput)
-            {
-                if (!surfing && !bike)
-                {
-                    if (UnityEngine.Input.GetButton("Run"))
-                    {
-                        running = true;
-                        if (moving)
-                        {
-                            updateAnimation("run", runFPS);
-                        }
-                        else
-                        {
-                            updateAnimation("walk", walkFPS);
-                        }
-                        speed = runSpeed;
-                    }
-                    else
-                    {
-                        running = false;
-                        updateAnimation("walk", walkFPS);
-                        speed = walkSpeed;
-                    }
-                }
-                if (UnityEngine.Input.GetButton("Start")) //Start
-                {
-                    //open Pause Menu
-                    if (moving || UnityEngine.Input.GetButtonDown("Start")) //Start
-                    {
-                        if (setCheckBusyWith(Scene.main.Pause.gameObject))
-                        {
-                            animPause = true;
-                            Scene.main.Pause.gameObject.SetActive(true);
-                            StartCoroutine(Scene.main.Pause.control());
-                            while (Scene.main.Pause.gameObject.activeSelf)
-                            {
-                                yield return null;
-                            }
-                            unsetCheckBusyWith(Scene.main.Pause.gameObject);
-                        }
-                    }
-                }
-                else if (UnityEngine.Input.GetButtonDown("Select"))
-                {
-                    interact();
-                }
-                //if pausing/interacting/etc. is not being called, then moving is possible.
-                //		(if any direction input is being entered)
-                else if (UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
-                {
-                    //if most recent direction pressed is held, but it isn't the current direction, set it to be
-                    if (mostRecentDirectionPressed != direction && isDirectionKeyHeld(mostRecentDirectionPressed))
-                    {
-                        updateDirection(mostRecentDirectionPressed);
-                        if (!moving)
-                        {
-                            // unless player has just moved, wait a small amount of time to ensure that they have time to
-                            yield return new WaitForSeconds(directionChangeInputDelay);
-                        } // let go before moving (allows only turning)
-                    }
-                    //if a new direction wasn't found, direction would have been set, thus ending the update
-                    else
-                    {
-                        //if current direction is not held down, check for the new direction to turn to
-                        if (!isDirectionKeyHeld(direction))
-                        {
-                            //it's least likely to have held the opposite direction by accident
-                            int directionCheck = (direction + 2 > 3) ? direction - 2 : direction + 2;
-                            if (isDirectionKeyHeld(directionCheck))
-                            {
-                                updateDirection(directionCheck);
-                                if (!moving)
-                                {
-                                    yield return new WaitForSeconds(directionChangeInputDelay);
-                                }
-                            }
-                            else
-                            {
-                                //it's either 90 degrees clockwise, counter, or none at this point. prioritise clockwise.
-                                directionCheck = (direction + 1 > 3) ? direction - 3 : direction + 1;
-                                if (isDirectionKeyHeld(directionCheck))
-                                {
-                                    updateDirection(directionCheck);
-                                    if (!moving)
-                                    {
-                                        yield return new WaitForSeconds(directionChangeInputDelay);
-                                    }
-                                }
-                                else
-                                {
-                                    directionCheck = (direction - 1 < 0) ? direction + 3 : direction - 1;
-                                    if (isDirectionKeyHeld(directionCheck))
-                                    {
-                                        updateDirection(directionCheck);
-                                        if (!moving)
-                                        {
-                                            yield return new WaitForSeconds(directionChangeInputDelay);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //if current direction was held, then we want to attempt to move forward.
-                        else
-                        {
-                            moving = true;
-                        }
-                    }
-
-                    //if moving is true (including by momentum from the previous step) then attempt to move forward.
-                    if (moving)
-                    {
-                        still = false;
-                        yield return StartCoroutine(moveForward());
-                    }
-                }
-                else if (UnityEngine.Input.GetKeyDown("g"))
-                {
-                    //DEBUG
-                    Debug.Log(currentMap.GetTileTag(transform.position));
-                    if (Follower.canMove)
-                    {
-                        Follower.StartCoroutine("withdrawToBall");
-                    }
-                    else
-                    {
-                        Follower.canMove = true;
-                    }
-                }
-            }
-            if (still)
-            {
-                //if still is true by this point, then no move function has been called
+            if (setCheckBusyWith(Scene.main.Pause.gameObject)) {
                 animPause = true;
-                moving = false;
-            } //set moving to false. The player loses their momentum.
-
-            yield return null;
-        }
-    }
-
-    public Vector3 getCamOrigin()
-    {
-        return camOrigin;
-    }
-
-    public void updateDirection(int dir)
-    {
-        direction = dir;
-
-        return; //FIXME
-        pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[direction * frames + frame];
-        hairSprite.sprite = haircutSpriteSheet[direction * frames + frame];
-        eyeSprite.sprite = eyeSpriteSheet[direction * frames + frame];
-
-        mount.UpdateDirection((EMovementDirection)dir);
-    }
-
-    public void updateAnimation(string newAnimationName, int fps)
-    {
-        return; // FIXME
-        if (animationName != newAnimationName)
-        {
-            animationName = newAnimationName;
-            spriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
-            if (SaveData.currentSave.playerHaircut != null) {
-                haircutSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/hairs/" + SaveData.currentSave.playerHaircut.getFileName() + '_' + newAnimationName);
-            }
-            eyeSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/eyes/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
-            //TODO Add eyes too
-            
-            //pawnReflectionSprite.SetTexture("_MainTex", Resources.Load<Texture>("PlayerSprites/"+SaveData.currentSave.getPlayerSpritePrefix()+newAnimationName));
-            framesPerSec = fps;
-            secPerFrame = 1f / framesPerSec;
-            frames = Mathf.RoundToInt(spriteSheet.Length / 4f);
-            if (frame >= frames)
-            {
-                frame = 0;
-            }
-        }
-    }
-
-    public void updateCosmetics()
-    {
-        return; //FIXME
-        hairSprite.color = SaveData.currentSave.playerHairColor.Color;
-        eyeSprite.color = SaveData.currentSave.playerEyeColor.Color;
-    }
-
-    public void reflect(bool setState)
-    { //FIXME
-        return; //FIXME
-        pawnReflectionSprite.enabled = setState;
-    }
-
-    private Vector2 GetUVSpriteMap(int index)
-    {
-        int row = index / 4;
-        int column = index % 4;
-
-        return new Vector2(0.25f * column, 0.75f - (0.25f * row));
-    }
-
-    private IEnumerator animateSprite()
-    {
-        yield break; //FIXME
-        frame = 0;
-        frames = 4;
-        framesPerSec = walkFPS;
-        secPerFrame = 1f / (float) framesPerSec;
-        while (true)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                if (animPause && frame % 2 != 0 && !overrideAnimPause)
-                {
-                    frame -= 1;
+                Scene.main.Pause.gameObject.SetActive(true);
+                StartCoroutine(Scene.main.Pause.control());
+                while (Scene.main.Pause.gameObject.activeSelf) {
+                    yield return null;
                 }
-                pawnSprite.sprite = spriteSheet[direction * frames + frame];
-                pawnReflectionSprite.sprite = pawnSprite.sprite;
-                if (hairSprite != null) hairSprite.sprite = haircutSpriteSheet[direction * frames + frame];
-                if (eyeSprite != null) eyeSprite.sprite = eyeSpriteSheet[direction * frames + frame];
-                //pawnReflectionSprite.SetTextureOffset("_MainTex", GetUVSpriteMap(direction*frames+frame));
-                yield return new WaitForSeconds(secPerFrame / 4f);
-            }
-            if (!animPause || overrideAnimPause)
-            {
-                frame += 1;
-                if (frame >= frames)
-                {
-                    frame = 0;
-                }
+                unsetCheckBusyWith(Scene.main.Pause.gameObject);
             }
         }
     }
 
-    public void setOverrideAnimPause(bool set)
-    {
-        overrideAnimPause = set;
-    }
+    public void ActivateStrength() => strength = true;
 
     ///Attempts to set player to be busy with "caller" and pauses input, returning true if the request worked.
-    public bool setCheckBusyWith(GameObject caller)
-    {
-        if (PlayerMovement.Singleton.busyWith == null)
-        {
-            PlayerMovement.Singleton.busyWith = caller;
-        }
+    public bool setCheckBusyWith(GameObject caller) {
+        if (Singleton.busyWith == null)
+            Singleton.busyWith = caller;
+
         //if the player is definitely busy with caller object
-        if (PlayerMovement.Singleton.busyWith == caller)
-        {
-            pauseInput();
+        if (Singleton.busyWith == caller) {
+            PauseInput();
             Debug.Log("Busy with " + PlayerMovement.Singleton.busyWith);
             return true;
         }
@@ -650,644 +1048,66 @@ public class PlayerMovement : MonoBehaviour
 
     ///Attempts to unset player to be busy with "caller". Will unpause input only if 
     ///the player is still not busy 0.1 seconds after calling.
-    public void unsetCheckBusyWith(GameObject caller)
-    {
-        if (PlayerMovement.Singleton.busyWith == caller)
-        {
-            PlayerMovement.Singleton.busyWith = null;
-        }
+    public void unsetCheckBusyWith(GameObject caller) {
+        if (Singleton.busyWith == caller)
+            Singleton.busyWith = null;
+
         StartCoroutine(checkBusinessBeforeUnpause(0.1f));
     }
 
-    public IEnumerator checkBusinessBeforeUnpause(float waitTime)
-    {
+    public IEnumerator checkBusinessBeforeUnpause(float waitTime) {
         yield return StartCoroutine(checkBusinessBeforeUnpause(waitTime, true));
     }
-    
-    public IEnumerator checkBusinessBeforeUnpause(float waitTime, bool busyConstraint)
-    {
+
+    public IEnumerator checkBusinessBeforeUnpause(float waitTime, bool busyConstraint) {
         yield return new WaitForSeconds(waitTime);
         if (busyConstraint)
-        {
             if (PlayerMovement.Singleton.busyWith == null)
-            {
-                unpauseInput();
-            }
+                UnpauseInput();
             else
-            {
                 Debug.Log("Busy with " + PlayerMovement.Singleton.busyWith);
-            }
-        }
     }
 
-    public void pauseInput(float secondsToWait = 0f)
-    {
-        canInput = false;
-        if (animationName == "run")
-        {
-            updateAnimation("walk", walkFPS);
-        }
-        if (running || bike)
-        {
-            speed = walkSpeed;
-        }
-        running = false;
-
-        if (secondsToWait == 0f)
-        {
-            StartCoroutine(checkBusinessBeforeUnpause(secondsToWait, false));
-        }
-        else
-        {
-            StartCoroutine(checkBusinessBeforeUnpause(secondsToWait, true));
-        }
-        
-    }
-
-    public void unpauseInput()
-    {
-        Debug.Log("unpaused");
-        canInput = true;
-    }
-
-    public bool isInputPaused()
-    {
-        return !canInput;
-    }
-
-    public void activateStrength()
-    {
-        strength = true;
-    }
-
-
-    ///returns the vector relative to the player direction, without any modifications.
-    public Vector3 getForwardVectorRaw() => transform.GetForwardVectorRaw((EMovementDirection)direction);
-
-    public AudioSource getAudio()
-    {
-        return PlayerAudio;
-    }
-    
-    public Vector3 getForwardVector()
-    {
-        return getForwardVector(direction, true);
-    }
-
-    public Vector3 getForwardVector(int direction)
-    {
-        return getForwardVector(direction, true);
-    }
-
-    public Vector3 getForwardVector(int direction, bool checkForBridge)
-    {
-        //set initial vector3 based off of direction
-        Vector3 movement = transform.GetForwardVectorRaw((EMovementDirection)direction);
-
-        //Check destination map	and bridge																//0.5f to adjust for stair height
-        //cast a ray directly downwards from the position directly in front of the player		//1f to check in line with player's head
-        RaycastHit[] hitColliders = Physics.RaycastAll(transform.position + movement + new Vector3(0, 1.5f, 0),
-            Vector3.down);
-        RaycastHit mapHit = new RaycastHit();
-        RaycastHit bridgeHit = new RaycastHit();
-        //cycle through each of the collisions
-        if (hitColliders.Length > 0)
-        {
-            foreach (RaycastHit hitCollider in hitColliders)
-            {
-                //if map has not been found yet
-                if (mapHit.collider == null)
-                {
-                    //if a collision's gameObject has a mapCollider, it is a map. set it to be the destination map.
-                    if (hitCollider.collider.gameObject.GetComponent<MapCollider>() != null)
-                    {
-                        mapHit = hitCollider;
-                        destinationMap = mapHit.collider.gameObject.GetComponent<MapCollider>();
-                    }
-                }
-                else if ((bridgeHit.collider != null && checkForBridge) || mapHit.collider != null)
-                {
-                    //if both have been found
-                    break; //stop searching
-                }
-                //if bridge has not been found yet
-                if (bridgeHit.collider == null && checkForBridge && hitCollider.collider.gameObject.GetComponent<BridgeHandler>() != null)
-                {
-                    //if a collision's gameObject has a BridgeHandler, it is a bridge.
-                    bridgeHit = hitCollider;
-                }
-            }
-        }
-
-        if (bridgeHit.collider != null)
-        {
-            //modify the forwards vector to align to the bridge.
-            movement -= new Vector3(0, (transform.position.y - bridgeHit.point.y), 0);
-        }
-        //if no bridge at destination
-        else if (mapHit.collider != null)
-        {
-            //modify the forwards vector to align to the mapHit.
-            movement -= new Vector3(0, (transform.position.y - mapHit.point.y), 0);
-        }
-
-
-        float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, direction));
-        float destinationSlope =
-            Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + getForwardVectorRaw(), direction,
-                checkForBridge));
-        float yDistance = Mathf.Abs((transform.position.y + movement.y) - transform.position.y);
-        yDistance = Mathf.Round(yDistance * 100f) / 100f;
-
-        //Debug.Log("currentSlope: "+currentSlope+", destinationSlope: "+destinationSlope+", yDistance: "+yDistance);
-
-        //if either slope is greater than 1 it is too steep.
-        if ((currentSlope <= 1 && destinationSlope <= 1) && (yDistance <= currentSlope || yDistance <= destinationSlope))
-        {
-            //if yDistance is greater than both slopes there is a vertical wall between them
-            return movement;
-        }
-        return Vector3.zero;
-    }
-
-    ///Make the player move one space in the direction they are facing
-    private IEnumerator moveForward()
-    {
-        Vector3 movement = getForwardVector();
-
-        bool ableToMove = false;
-
-        Collider objectCollider = null;
-
-        //without any movement, able to move should stay false
-        if (movement != Vector3.zero)
-        {
-            //check destination for objects/transparents
-            Collider transparentCollider = null;
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position + movement + new Vector3(0, 0.5f, 0), 0.4f);
-
-            for (int i = 0; i < hitColliders.Length; i++)
-            {
-                Debug.Log("Collider: "+hitColliders[i].ToString());
-                if (hitColliders[i].name.ToLowerInvariant().Contains("_object"))
-                {
-                    objectCollider = hitColliders[i];
-                }
-                else if (hitColliders[i].name.ToLowerInvariant().Contains("_transparent") && !hitColliders[i].name.ToLowerInvariant().Contains("follower"))
-                {
-                    transparentCollider = hitColliders[i];
-                }
-            }
-
-            if (objectCollider != null)
-            {
-                //send bump message to the object's parent object
-                objectCollider.transform.parent.gameObject.SendMessage("bump", SendMessageOptions.DontRequireReceiver);
-            }
-            else
-            {
-                //if no objects are in the way
-                int destinationTileTag = destinationMap.GetTileTag(transform.position + movement);
-
-                RaycastHit bridgeHit =
-                    MapCollider.GetBridgeHitOfPosition(transform.position + movement + new Vector3(0, 0.1f, 0));
-                if (bridgeHit.collider != null || destinationTileTag != 1)
-                {
-                    //wall tile tag
-
-                    if (bridgeHit.collider == null && !surfing && destinationTileTag == 2)
-                    {
-                        //(water tile tag)
-                    }
-                    else
-                    {
-                        if (surfing && destinationTileTag != 2f)
-                        {
-                            //disable surfing if not headed to water tile
-                            updateAnimation("walk", walkFPS);
-                            speed = walkSpeed;
-                            surfing = false;
-                            StartCoroutine("dismount");
-                            BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
-                        }
-
-                        if (destinationMap != currentMap)
-                        {
-                            //if moving onto a new map
-                            currentMap = destinationMap;
-                            accessedMapSettings = destinationMap.gameObject.GetComponent<MapSettings>();
-                            if (accessedAudio != accessedMapSettings.getBGM())
-                            {
-                                //if audio is not already playing
-                                accessedAudio = accessedMapSettings.getBGM();
-                                accessedAudioLoopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
-                                BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
-                            }
-                            destinationMap.BroadcastMessage("repair", SendMessageOptions.DontRequireReceiver);
-                            
-                            if (accessedMapSettings.mapNameAppears)
-                            {
-                                // FIXME
-                                //MapName.display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
-                            }
-                            
-                            Debug.Log(destinationMap.name + "   " + accessedAudio.name);
-                            
-                            //Update Weather
-                            if (accessedMapSettings.weathers.Length > 0)
-                            {
-                                int probabilityTotal = accessedMapSettings.sunnyWeatherProbability;
-                                int currentProba = 0;
-                                Weather weather = null;
-
-                                foreach (WeatherProbability w in accessedMapSettings.weathers)
-                                {
-                                    probabilityTotal += w.probability;
-                                }
-                                
-                                Debug.Log("Probability Total : "+probabilityTotal);
-
-                                float randValue = UnityEngine.Random.Range(1, probabilityTotal);
-                                
-                                Debug.Log("[Weather] Rand value = "+randValue);
-
-                                if (accessedMapSettings.sunnyWeatherProbability > 0 && randValue > currentProba && randValue <= currentProba + accessedMapSettings.sunnyWeatherProbability)
-                                {
-                                    // Do nothing
-                                }
-                                else
-                                {
-                                    Debug.Log("[Weather] Choosing random weather");
-                                    currentProba = accessedMapSettings.sunnyWeatherProbability;
-                                    for (int i = 0; i < accessedMapSettings.weathers.Length; ++i)
-                                    {
-                                        if (accessedMapSettings.weathers[i].probability == 0) continue;
-                                    
-                                        if (randValue > currentProba && randValue <= currentProba + accessedMapSettings.weathers[i].probability)
-                                        {
-                                            weather = accessedMapSettings.weathers[i].weather;
-                                            Debug.Log("[Weather] Selected weather : "+weather.name);
-                                            break;
-                                        }
-
-                                        currentProba += accessedMapSettings.weathers[i].probability;
-                                    }
-                                }
-                                
-                                GameObject.Find("Weather").GetComponent<WeatherHandler>().setWeather(weather);
-                            }
-                            else
-                            {
-                                Debug.Log("[Weather] Weather List empty");
-                                GameObject.Find("Weather").GetComponent<WeatherHandler>().setWeather(null);
-                            }
-                            
-                            this.UpdateRPC();
-                        }
-
-                        if (transparentCollider != null)
-                        {
-                            //send bump message to the transparents's parent object
-                            transparentCollider.transform.parent.gameObject.SendMessage("bump",
-                                SendMessageOptions.DontRequireReceiver);
-                        }
-
-                        ableToMove = true;
-                        yield return StartCoroutine(move(movement));
-                    }
-                }
-            }
-        }
-
-        //if unable to move anywhere, then set moving to false so that the player stops animating.
-        if (!ableToMove)
-        {
-            if (objectCollider == null || (objectCollider.transform.parent.GetComponent<InteractDoorway>() == null || 
-                                           objectCollider.transform.parent.GetComponent<InteractDoorway>() != null && objectCollider.transform.parent.GetComponent<InteractDoorway>().isLocked))
-            {
-                Invoke("playBump", 0.05f);
-            }
-            moving = false;
-            animPause = true;
-        }
-    }
-
-    public IEnumerator move(Vector3 movement, bool encounter = true, bool lockFollower = false)
-    {
-        if (movement != Vector3.zero)
-        {
-            Vector3 startPosition = Hitbox.position;
-            moving = true;
-            increment = 0;
-
-            if (!lockFollower)
-            {
-                StartCoroutine(Follower.move(startPosition, speed));
-            }
-
-            if (npcFollower != null)
-            {
-                StartCoroutine(npcFollower.move(startPosition, speed));
-            }
-            
-            animPause = false;
-            while (increment < 1f)
-            {
-                //increment increases slowly to 1 over the frames
-                increment += (1f / speed) * Time.deltaTime;
-                    //speed is determined by how many squares are crossed in one second
-                if (increment > 1)
-                {
-                    increment = 1;
-                }
-                transform.position = startPosition + (movement * increment);
-                Hitbox.position = startPosition + movement;
-                yield return null;
-            }
-
-            //check for encounters unless disabled
-            if (encounter)
-            {
-                int destinationTag = currentMap.GetTileTag(transform.position);
-                if (destinationTag != 1)
-                {
-                    //not a wall
-                    if (destinationTag == 2)
-                    {
-                        //surf tile
-                        StartCoroutine(PlayerMovement.Singleton.wildEncounter(WildPokemonInitialiser.Location.Surfing));
-                    }
-                    else
-                    {
-                        //land tile
-                        StartCoroutine(PlayerMovement.Singleton.wildEncounter(WildPokemonInitialiser.Location.Standard));
-                    }
-                }
-            }
-        }
-    }
-
-    public IEnumerator moveCameraTo(Vector3 targetPosition, float duration)
-    {
-        targetPosition += mainCameraDefaultPosition;
-
-        LeanTween.move(playerCamera.gameObject, targetPosition, duration);
-        yield return new WaitForSeconds(duration);
-
-        playerCamera.transform.localPosition = targetPosition;
-    }
-
-    public void forceMoveForward(int spaces = 1)
-    {
-        StartCoroutine(forceMoveForwardIE(spaces));
-    }
-
-    private IEnumerator forceMoveForwardIE(int spaces)
-    {
-        overrideAnimPause = true;
-        for (int i = 0; i < spaces; i++)
-        {
-            Vector3 movement = getForwardVector();
-
-            //check destination for transparents
-            Collider objectCollider = null;
-            Collider transparentCollider = null;
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position + movement + new Vector3(0, 0.5f, 0),
-                0.4f);
-            if (hitColliders.Length > 0)
-            {
-                for (int i2 = 0; i2 < hitColliders.Length; i2++)
-                {
-                    if (hitColliders[i2].name.ToLowerInvariant().Contains("_transparent"))
-                    {
-                        transparentCollider = hitColliders[i2];
-                    }
-                }
-            }
-            if (transparentCollider != null)
-            {
-                //send bump message to the transparents's parent object
-                transparentCollider.transform.parent.gameObject.SendMessage("bump",
-                    SendMessageOptions.DontRequireReceiver);
-            }
-
-            yield return StartCoroutine(move(movement, false));
-        }
-        overrideAnimPause = false;
-        if (GlobalVariables.Singleton.followerOut)
-        {
-            Follower.ActivateMove();
-        }
-    }
-
-    private void interact()
-    {
-        Vector3 spaceInFront = getForwardVector();
+    void interact() {
+        Vector3 spaceInFront = GetForwardVector();
 
         Collider[] hitColliders =
             Physics.OverlapSphere(
                 (new Vector3(transform.position.x, (transform.position.y + 0.5f), transform.position.z) + spaceInFront),
                 0.4f);
         Collider currentInteraction = null;
-        if (hitColliders.Length > 0)
-        {
-            for (int i = 0; i < hitColliders.Length; i++)
-            {
-                if (hitColliders[i].name.Contains("_Transparent"))
-                {
+        if (hitColliders.Length > 0) {
+            for (int i = 0; i < hitColliders.Length; i++) {
+                if (hitColliders[i].name.Contains("_Transparent")) {
                     //Prioritise a transparent over a solid object.
-                    if (hitColliders[i].name != ("Player_Transparent"))
-                    {
+                    if (hitColliders[i].name != ("Player_Transparent")) {
                         currentInteraction = hitColliders[i];
                         i = hitColliders.Length;
                     } //Stop checking for other interactable events if a transparent was found.
-                }
-                else if (hitColliders[i].name.Contains("_Object"))
-                {
+                } else if (hitColliders[i].name.Contains("_Object")) {
                     currentInteraction = hitColliders[i];
                 }
             }
         }
-        if (currentInteraction != null)
-        {
+        if (currentInteraction != null) {
             //sent interact message to the collider's object's parent object
             currentInteraction.transform.parent.gameObject.SendMessage("interact",
                 SendMessageOptions.DontRequireReceiver);
             currentInteraction = null;
-        }
-        else if (!surfing)
-        {
-            if (currentMap.GetTileTag(transform.position + spaceInFront) == 2)
-            {
+        } else if (!IsSurfing) {
+            if (currentMap.GetTileTag(transform.position + spaceInFront) == 2) {
                 //water tile tag
                 StartCoroutine(surfCheck());
             }
         }
     }
 
-    public IEnumerator shakeCamera(int iteration, float duration, AudioClip clip = null)
-    {
-        Transform camera = transform.Find("Camera") != null ? transform.Find("Camera") : GameObject.Find("Camera").transform;
-
-        for (int i = 0; i < iteration; ++i)
-        {
-            float increment = 0f;
-            float distance = 0.2f;
-            Vector3 startPosition = camera.position;
-
-            playClip(clip);
-
-            LeanTween.moveX(camera.gameObject, camera.position.x+distance, duration/4);
-            yield return new WaitForSeconds(duration/4);
-            LeanTween.moveX(camera.gameObject, camera.position.x-distance*2, duration/2);
-            yield return new WaitForSeconds(duration/2);
-            LeanTween.moveX(camera.gameObject, camera.position.x+distance, duration/4);
-            yield return new WaitForSeconds(duration/4);
-            
-            camera.position = startPosition;
-        }
-        
-        yield return null;
-    }
-    
-    public void playerJump()
-    {
-        if (!jumping)
-        {
-            StartCoroutine(jump());
-        }
-    }
-
-    public IEnumerator jump()
-    {
-        jumping = true;
-        float increment = 0f;
-        float parabola = 0;
-        float height = 2.1f;
-        Vector3 startPosition = pawn.position;
-
-        playClip(jumpClip);
-
-        while (increment < 1)
-        {
-            increment += (1 / walkSpeed) * Time.deltaTime;
-            if (increment > 1)
-            {
-                increment = 1;
-            }
-            parabola = -height * (increment * increment) + (height * increment);
-            pawn.position = new Vector3(pawn.position.x, startPosition.y + parabola, pawn.position.z);
-            yield return null;
-        }
-        pawn.position = new Vector3(pawn.position.x, startPosition.y, pawn.position.z);
-
-        playClip(landClip);
-        
-        jumping = false;
-    }
-
-    
-
-    private IEnumerator dismount()
-    {
-        StartCoroutine(mount.StillMount(speed));
-        yield return StartCoroutine(jump());
-        Follower.canMove = true;
-        mount.transform.localPosition = mountPosition;
-        mount.UpdateMount(false);
-    }
-
-    private IEnumerator surfCheck()
-    {
-        IPokemon targetPokemon = null; //SaveData.currentSave.PC.getFirstFEUserInParty("Surf");
-        if (targetPokemon != null)
-        {
-            if (getForwardVector(direction, false) != Vector3.zero)
-            {
-                if (setCheckBusyWith(this.gameObject))
-                {
-                    Dialog.DrawDialogBox();
-                    yield return
-                        Dialog.StartCoroutine(Dialog.DrawText("The water is dyed a deep blue. Would you \nlike to surf on it?"));
-                    yield return Dialog.StartCoroutine(Dialog.DrawChoiceBox());
-                    Dialog.UndrawChoiceBox();
-                    int chosenIndex = Dialog.chosenIndex;
-                    if (chosenIndex == 1)
-                    {
-                        Dialog.DrawDialogBox();
-                        yield return
-                            //Dialog.StartCoroutine(Dialog.DrawText(targetPokemon.Name + " used " + targetPokemon.getFirstFEInstance("Surf") + "!"));
-                            Dialog.StartCoroutine(Dialog.DrawText(targetPokemon.Name + " used " + "Surf" + "!"));
-                        while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
-                        {
-                            yield return null;
-                        }
-                        surfing = true;
-                        mount.UpdateMount(true, "surf");
-
-                        BgmHandler.main.PlayMain(GlobalVariables.Singleton.surfBGM, GlobalVariables.Singleton.surfBgmLoopStart);
-
-                        //determine the vector for the space in front of the player by checking direction
-                        Vector3 spaceInFront = new Vector3(0, 0, 0);
-                        if (direction == 0)
-                        {
-                            spaceInFront = new Vector3(0, 0, 1);
-                        }
-                        else if (direction == 1)
-                        {
-                            spaceInFront = new Vector3(1, 0, 0);
-                        }
-                        else if (direction == 2)
-                        {
-                            spaceInFront = new Vector3(0, 0, -1);
-                        }
-                        else if (direction == 3)
-                        {
-                            spaceInFront = new Vector3(-1, 0, 0);
-                        }
-
-                        mount.transform.position = mount.transform.position + spaceInFront;
-
-                        Follower.StartCoroutine(Follower.withdrawToBall());
-                        StartCoroutine(mount.StillMount(speed));
-                        forceMoveForward();
-                        yield return StartCoroutine(jump());
-
-                        updateAnimation("surf", walkFPS);
-                        speed = surfSpeed;
-                    }
-                    Dialog.UndrawDialogBox();
-                    unsetCheckBusyWith(this.gameObject);
-                }
-            }
-        }
-        else
-        {
-            if (setCheckBusyWith(this.gameObject))
-            {
-                Dialog.DrawDialogBox();
-                yield return Dialog.StartCoroutine(Dialog.DrawText("The water is dyed a deep blue."));
-                while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                Dialog.UndrawDialogBox();
-                unsetCheckBusyWith(this.gameObject);
-            }
-        }
-        yield return new WaitForSeconds(0.2f);
-    }
-
-    public IEnumerator wildEncounter(WildPokemonInitialiser.Location encounterLocation)
-    {
-        if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0)
-        {
-            if (UnityEngine.Random.value <= accessedMapSettings.getEncounterProbability())
-            {
-                if (setCheckBusyWith(Scene.main.Battle.gameObject))
-                {
+    public IEnumerator wildEncounter(WildPokemonInitialiser.Location encounterLocation) {
+        if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0) {
+            if (UnityEngine.Random.value <= accessedMapSettings.getEncounterProbability()) {
+                if (setCheckBusyWith(Scene.main.Battle.gameObject)) {
                     IPokemon wildpkm = accessedMapSettings.getRandomEncounter(encounterLocation);
-            
+
                     Scene.main.Battle.PlayWildBGM(wildpkm);
 
                     //SceneTransition sceneTransition = Dialog.transform.GetComponent<SceneTransition>();
@@ -1298,9 +1118,7 @@ public class PlayerMovement : MonoBehaviour
                     StartCoroutine(Scene.main.Battle.control(wildpkm));
 
                     while (Scene.main.Battle.gameObject.activeSelf)
-                    {
                         yield return null;
-                    }
 
                     //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
                     yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
@@ -1310,13 +1128,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    
-    public IEnumerator startWildBattle()
-    {
-        if (setCheckBusyWith(Scene.main.Battle.gameObject))
-        {
+
+    public IEnumerator startWildBattle() {
+        if (setCheckBusyWith(Scene.main.Battle.gameObject)) {
             IPokemon wildpkm = accessedMapSettings.getRandomEncounter(WildPokemonInitialiser.Location.Grass);
-            
+
             Scene.main.Battle.PlayWildBGM(wildpkm);
 
             //SceneTransition sceneTransition = Dialog.transform.GetComponent<SceneTransition>();
@@ -1327,9 +1143,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Scene.main.Battle.control(wildpkm));
 
             while (Scene.main.Battle.gameObject.activeSelf)
-            {
                 yield return null;
-            }
 
             //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
             yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
@@ -1338,28 +1152,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void playClip(AudioClip clip)
-    {
-        PlayerAudio.clip = clip;
-        PlayerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
-        PlayerAudio.Play();
-    }
-
-    private void playBump()
-    {
-        if (!PlayerAudio.isPlaying)
-        {
-            if (!moving && !overrideAnimPause)
-            {
-                playClip(bumpClip);
-            }
-        }
-    }
+    #endregion
 }
 
 public enum EMovementDirection {
     Up,
     Right,
     Down,
-    Left
+    Left,
+    Nowhere
 }

@@ -24483,11 +24483,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3506029752585764622, guid: dd9e9f3b55b217941be3b443cb07ed0b,
-        type: 3}
-      propertyPath: m_text
-      value: Overworld Test Map 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4826687952992664894, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -24512,6 +24507,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Global
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085223199837186403, guid: dd9e9f3b55b217941be3b443cb07ed0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085223199837507153, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
@@ -28487,6 +28487,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975417706449109251, guid: 83196453f96f35b49a1cbd1f23448a06,
+        type: 3}
+      propertyPath: DrawGizmos
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4975417707229743877, guid: 83196453f96f35b49a1cbd1f23448a06,
         type: 3}

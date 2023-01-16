@@ -102936,9 +102936,21 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5accf203-0a67-4587-9074-dfcc824715cb
+    m_ActionName: Player/Run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ef7553ff-42e5-4b17-a956-69233add8bda
+    m_ActionName: Player/Start[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eaf1b20e-41db-4bc6-900f-072a5696ab35
+    m_ActionName: Player/Select[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
-  m_DefaultActionMap: UI
+  m_DefaultActionMap: df70fa95-8a34-4494-b137-73ab6b9c7d37
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &2570748789301209548
@@ -102966,7 +102978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Events:
-    playerInput: {fileID: 0}
+    playerInput: {fileID: 6305635557092473046}
     Events:
     - ActionMap: UI
       Action: Cancel
@@ -110736,7 +110748,7 @@ PrefabInstance:
     - target: {fileID: 580350744058629621, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
         type: 3}
       propertyPath: m_text
-      value: Overworld Test Map 2
+      value: Overworld Test 2
       objectReference: {fileID: 0}
     - target: {fileID: 3520057836760400273, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
         type: 3}
@@ -110753,7 +110765,27 @@ PrefabInstance:
     - target: {fileID: 6975262152575075440, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
         type: 3}
       propertyPath: m_text
-      value: Overworld Test Map 2
+      value: Overworld Test 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975262152575075440, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975262152575075440, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975262152575075440, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975262152575075440, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7843358314857200896, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
         type: 3}

@@ -45,15 +45,6 @@ public class MapNameBoxBehaviour : MonoBehaviour
         AppearAndDisappear(mapNameBox);
     }
 
-    private void Update() {
-        Debug.Log($"{mapNameText.text} {mapNameBox.Text}", mapNameText);
-    }
-
-    //void Start()
-    //{
-    //mapName.position = new Vector3(0, 0.17f, mapName.position.z);
-    //}
-
     void SetMapNameBox(MapNameBox newMapNameBox = null) {
         if (!enabled) return;
         if (mapNameBox != null) mapNameBox = newMapNameBox;

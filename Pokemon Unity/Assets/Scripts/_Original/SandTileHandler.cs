@@ -63,7 +63,7 @@ public class SandTileHandler : MonoBehaviour
                 SpriteRenderer foot = foot_print.GetComponent<SpriteRenderer>();
                 if (other.transform.parent.GetComponent<PlayerMovement>() != null)
                 {
-                    switch (other.transform.parent.GetComponent<PlayerMovement>().direction)
+                    switch (other.transform.parent.GetComponent<PlayerMovement>().Direction)
                     {
                         //0 = up, 1 = right, 2 = down, 3 = left
                         case 0:
