@@ -14,7 +14,7 @@ public class MenuBehaviour : MonoBehaviour
         MenuHandler.Singleton.Menus.Add(this);
         if (isFirstMenu) MenuHandler.Singleton.ChangeMenuInstantly(menuName);
         canvas = GetComponent<Canvas>();
-        gameObject.SetActive(false);
+        if (!isFirstMenu) gameObject.SetActive(false);
     }
 
     protected void OnDestroy() {

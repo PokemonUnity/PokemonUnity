@@ -649,6 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56fbd0baffe6ed046b5719f68a714b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NewGameScene: overworldTest
   scrollClip: {fileID: 0}
   decideClip: {fileID: 0}
   cancelClip: {fileID: 0}
@@ -701,24 +702,6 @@ RectTransform:
   m_AnchoredPosition: {x: 40, y: -23}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1049872396 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6085223199837186403, guid: dd9e9f3b55b217941be3b443cb07ed0b,
-    type: 3}
-  m_PrefabInstance: {fileID: 6085223199825969547}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1049872404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049872396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4ea34e233dd204091778133779b5ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1125574263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2287,6 +2270,26 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4826687952992664894, guid: dd9e9f3b55b217941be3b443cb07ed0b,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826687952992664894, guid: dd9e9f3b55b217941be3b443cb07ed0b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5342897781809551458, guid: dd9e9f3b55b217941be3b443cb07ed0b,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5342897781809551458, guid: dd9e9f3b55b217941be3b443cb07ed0b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6085223199837186403, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
       propertyPath: m_Name
@@ -2367,7 +2370,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 342, y: 192}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

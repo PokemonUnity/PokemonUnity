@@ -76,7 +76,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] SpriteRenderer hairSprite;
     [SerializeField] SpriteRenderer pawnReflectionSprite;
     //private Material pawnReflectionSprite;
-    [SerializeField] UnityEngine.Sprite[] spriteSheet;
+    [SerializeField] SpriteAnimatorBehaviour animator;
+    //[SerializeField] UnityEngine.Sprite[] spriteSheet;
     public Transform Hitbox;
 
     [Header("Follower")]
@@ -107,8 +108,6 @@ public class PlayerMovement : MonoBehaviour
     private int frame;
     private int frames;
     public int framesPerSec;
-    private float secPerFrame;
-    private bool animPause;
     private bool overrideAnimPause;
 
     #endregion
@@ -133,6 +132,11 @@ public class PlayerMovement : MonoBehaviour
         //
         if (Hitbox == null) Debug.LogError("No hitBox Tranform provided", gameObject);
         if (mount == null) Debug.LogError("No mount sprite provided", gameObject);
+        if (animator == null) {
+            animator = GetComponent<SpriteAnimatorBehaviour>();
+            if (animator == null) 
+                Debug.LogError("No mount sprite found or provided", gameObject);
+        }
     }
 
     void Awake()
@@ -173,9 +177,7 @@ public class PlayerMovement : MonoBehaviour
             mount.UpdateMount(false);
 
         // animation
-        updateAnimation("walk", WalkFPS);
-        //StartCoroutine(animateSprite());
-        animPause = true;
+        SwitchAnimation("Idle");
 
         // reflections
         Reflect(false);
@@ -301,9 +303,9 @@ public class PlayerMovement : MonoBehaviour
         GlobalVariables.Singleton.resetFollower();
     }
 
-    void Update() {
-        animateSprite();
-    }
+    //void Update() {
+    //    animateSprite();
+    //}
 
     #endregion
 
@@ -312,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
     public void PauseInput(float secondsToWait = 0f) {
         canInput = false;
         if (animationName == "run")
-            updateAnimation("walk", WalkFPS);
+            SwitchAnimation("walk", WalkFPS);
 
         if (IsRunning || IsBiking)
             Speed = WalkSpeed;
@@ -376,7 +378,7 @@ public class PlayerMovement : MonoBehaviour
         Direction = dir;
 
         return; //FIXME
-        pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[Direction * frames + frame];
+        //pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[Direction * frames + frame];
         hairSprite.sprite = haircutSpriteSheet[Direction * frames + frame];
         eyeSprite.sprite = eyeSpriteSheet[Direction * frames + frame];
 
@@ -544,7 +546,7 @@ public class PlayerMovement : MonoBehaviour
                             if (shouldTryToMove)
                                 move();
                             else
-                                animPause = true;
+                                SwitchAnimation("Idle");
                         });
                         //Hitbox.position = startPosition + movement;
 
@@ -563,20 +565,20 @@ public class PlayerMovement : MonoBehaviour
         if (!IsMoving) playerIsUnableToMove(objectCollider);
 
         IsMoving = false;
-        animPause = true;
+        SwitchAnimation("Idle");
 
         #region Helpers
         void updateAnimation() {
             if (!IsSurfing && !IsBiking) {
                 if (IsRunning) {
                     if (IsMoving) {
-                        this.updateAnimation("run", RunFPS);
+                        this.SwitchAnimation("run", RunFPS);
                     } else {
-                        this.updateAnimation("walk", WalkFPS);
+                        this.SwitchAnimation("walk", WalkFPS);
                     }
                     Speed = RunSpeed;
                 } else {
-                    this.updateAnimation("walk", WalkFPS);
+                    this.SwitchAnimation("walk", WalkFPS);
                     Speed = WalkSpeed;
                 }
             }
@@ -617,7 +619,7 @@ public class PlayerMovement : MonoBehaviour
             if (objectCollider == null || collidingWithLockedDoor(objectCollider)) {
                 Invoke("playBump", 0.05f);
             }
-            animPause = true;
+            SwitchAnimation("Idle");
 
             bool collidingWithLockedDoor(Collider objectCollider) => objectCollider.transform.parent.TryGetComponent(out InteractDoorway doorway) && doorway.isLocked;
         }
@@ -803,7 +805,7 @@ public class PlayerMovement : MonoBehaviour
                         forceMoveForward();
                         yield return StartCoroutine(jump());
 
-                        updateAnimation("surf", WalkFPS);
+                        SwitchAnimation("surf", WalkFPS);
                         Speed = SurfSpeed;
                     }
                     Dialog.UndrawDialogBox();
@@ -825,7 +827,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void stopSurfing() {
-        updateAnimation("walk", WalkFPS);
+        SwitchAnimation("walk", WalkFPS);
         Speed = WalkSpeed;
         IsSurfing = false;
         StartCoroutine(dismount());
@@ -872,24 +874,8 @@ public class PlayerMovement : MonoBehaviour
 
     #region Animations & Visuals
 
-    public void updateAnimation(string newAnimationName, int fps) {
-        //return; // FIXME
-        if (animationName != newAnimationName) {
-            animationName = newAnimationName;
-            spriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
-            if (SaveData.currentSave.playerHaircut != null)
-                haircutSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/hairs/" + SaveData.currentSave.playerHaircut.getFileName() + '_' + newAnimationName);
-
-            eyeSpriteSheet = Resources.LoadAll<UnityEngine.Sprite>("PlayerSprites/eyes/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
-            //TODO Add eyes too
-
-            //pawnReflectionSprite.SetTexture("_MainTex", Resources.Load<Texture>("PlayerSprites/"+SaveData.currentSave.getPlayerSpritePrefix()+newAnimationName));
-            framesPerSec = fps;
-            secPerFrame = 1f / framesPerSec;
-            frames = Mathf.RoundToInt(spriteSheet.Length / 4f);
-            if (frame >= frames)
-                frame = 0;
-        }
+    public void SwitchAnimation(string newAnimationName, int? fps = null) {
+        animator.SwitchAnimation(newAnimationName + FacingDirection.ToDirectionString());
     }
 
     public void updateCosmetics() {
@@ -1036,7 +1022,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsMoving || UnityEngine.Input.GetButtonDown("Start")) //Start
         {
             if (setCheckBusyWith(Scene.main.Pause.gameObject)) {
-                animPause = true;
+                SwitchAnimation("Idle");
                 Scene.main.Pause.gameObject.SetActive(true);
                 StartCoroutine(Scene.main.Pause.control());
                 while (Scene.main.Pause.gameObject.activeSelf) {

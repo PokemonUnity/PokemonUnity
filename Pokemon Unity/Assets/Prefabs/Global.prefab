@@ -85103,7 +85103,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 342, y: 192}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -102824,6 +102824,7 @@ GameObject:
   - component: {fileID: 6085223199848511483}
   - component: {fileID: 6085223199848453761}
   - component: {fileID: 8960902590616918979}
+  - component: {fileID: 9015154066972786925}
   m_Layer: 0
   m_Name: Global
   m_TagString: Untagged
@@ -103067,6 +103068,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Menus: []
   menuFadeTime: 0.4
+--- !u!114 &9015154066972786925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6085223199837186403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4ea34e233dd204091778133779b5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6085223199837186465
 GameObject:
   m_ObjectHideFlags: 0
@@ -110748,7 +110761,7 @@ PrefabInstance:
     - target: {fileID: 580350744058629621, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
         type: 3}
       propertyPath: m_text
-      value: Overworld Test 2
+      value: Overworld Test
       objectReference: {fileID: 0}
     - target: {fileID: 3520057836760400273, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
         type: 3}
@@ -110765,7 +110778,7 @@ PrefabInstance:
     - target: {fileID: 6975262152575075440, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
         type: 3}
       propertyPath: m_text
-      value: Overworld Test 2
+      value: Overworld Test
       objectReference: {fileID: 0}
     - target: {fileID: 6975262152575075440, guid: 5d78cc5a40165b74d9bde7e6dd54c79c,
         type: 3}

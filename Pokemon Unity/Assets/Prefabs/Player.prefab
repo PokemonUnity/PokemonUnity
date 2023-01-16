@@ -441,7 +441,7 @@ MonoBehaviour:
   eyeSprite: {fileID: 0}
   hairSprite: {fileID: 0}
   pawnReflectionSprite: {fileID: 4975417707132642942}
-  spriteSheet: []
+  animator: {fileID: 570705013549638312}
   Hitbox: {fileID: 4975417706657779531}
   Follower: {fileID: 840571785}
   NpcFollower: {fileID: 0}
@@ -465,13 +465,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveAnimationIndex: 0
-  IdleAnimationIndex: 0
-  spriteRenderer: {fileID: 0}
-  Animations:
-  - {fileID: 11400000, guid: 07fd2b25a35ee7d4b89df3b09f953436, type: 2}
-  - {fileID: 11400000, guid: de5dd5b9414c2c6488820e31ca5b3c26, type: 2}
-  - {fileID: 11400000, guid: 99f977d1c8dfa9d44ad7db8231e67126, type: 2}
+  SpriteRenderer: {fileID: 4975417708171817628}
+  ReflectionSpriteRenderer: {fileID: 4975417707132642942}
   Paused: 0
+  Animations:
+  - {fileID: 11400000, guid: 02e966d7eb2e8044fa0b13d8db6e9a56, type: 2}
+  - {fileID: 11400000, guid: 48afa2cb4a412d44db784d40f3b9b7fe, type: 2}
+  - {fileID: 11400000, guid: bc8e2600b5b3fe749814080a67139a8d, type: 2}
+  - {fileID: 11400000, guid: 07fd2b25a35ee7d4b89df3b09f953436, type: 2}
+  - {fileID: 11400000, guid: efaa5711d4b1e6b4493568fbdde781e1, type: 2}
+  - {fileID: 11400000, guid: b54d113598bebd5429114bef23daa459, type: 2}
+  - {fileID: 11400000, guid: b935fd9856c2dbf47a50119a66ccd304, type: 2}
+  - {fileID: 11400000, guid: 99f977d1c8dfa9d44ad7db8231e67126, type: 2}
+  - {fileID: 11400000, guid: 7ac21ee93171e134fbb10ac17cd2051e, type: 2}
+  - {fileID: 11400000, guid: 6c2a9fbe450b19e4d8f6e325a6e67143, type: 2}
+  - {fileID: 11400000, guid: 62c8b7ba5c45c1d46b46b80f89804927, type: 2}
+  - {fileID: 11400000, guid: de5dd5b9414c2c6488820e31ca5b3c26, type: 2}
 --- !u!114 &5961886964716992324
 MonoBehaviour:
   m_ObjectHideFlags: 0

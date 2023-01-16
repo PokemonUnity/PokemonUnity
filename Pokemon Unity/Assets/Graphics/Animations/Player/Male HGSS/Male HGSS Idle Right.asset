@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c6b823bc6cb664b918c11d885169c6, type: 3}
-  m_Name: Overworld Test Map 2
+  m_Script: {fileID: 11500000, guid: 906e4e09c8bfd57429e9d2f681a2fb86, type: 3}
+  m_Name: Male HGSS Idle Right
   m_EditorClassIdentifier: 
-  Text: Overworld Test
-  TextColor: {r: 1, g: 1, b: 1, a: 1}
-  Sprite: {fileID: 21300000, guid: 61654a2e29025864b842ff96029635bf, type: 3}
+  Name: IdleRight
+  FPS: 0
+  StartingFrame: 0
+  Loop: 0
+  spriteSheet:
+  - {fileID: 21300008, guid: 14d6e1bfe158c734ba010eeca8f612fe, type: 3}

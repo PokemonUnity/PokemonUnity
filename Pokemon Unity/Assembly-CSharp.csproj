@@ -325,6 +325,7 @@
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\SpriteAnimation.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

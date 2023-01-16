@@ -27,7 +27,7 @@ public class SpriteAnimation : ScriptableObject {
 
         passedTime += deltaTime;
         if (shouldGoToNextFrame(passedTime)) {
-            if (frame == spriteSheet.Length - 1)
+            if (frame >= spriteSheet.Length - 1)
                 frame = 0;
             else
                 frame++;
