@@ -6,8 +6,7 @@ using System.Linq;
 using System;
 
 [RequireComponent(typeof(MapSettings))]
-public class MapCollider : MonoBehaviour
-{
+public class MapCollider : MonoBehaviour {
     //Collision Map String provided by DeKay's Collision Map Compiler for Pokémon Essentials
     //See TOOLS folder for details
 
@@ -21,8 +20,7 @@ public class MapCollider : MonoBehaviour
     private int[,] collisionMap;
 
 
-    void Awake()
-    {
+    void Awake() {
         SetCollisionMap();
     }
 
@@ -35,7 +33,7 @@ public class MapCollider : MonoBehaviour
         GetClosestMapCollider(hitRays, out int closestIndex, out float closestDistance);
 
         if (closestIndex >= 0) return hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
-        
+
         //if no map found
         //Check for map in front of player's direction
         hitRays = Physics.RaycastAll(position + up.Value + facingDirection, Vector3.down);
@@ -63,10 +61,9 @@ public class MapCollider : MonoBehaviour
         };
     }
 
-    public int GetTileTag(Vector3 position)
-    {
-        int mapX = Mathf.RoundToInt(Mathf.Round(position.x) - Mathf.Round(transform.position.x) + Mathf.Floor((float) width / 2f) - xModifier);
-        int mapZ = Mathf.RoundToInt(length - (Mathf.Round(position.z) - Mathf.Round(transform.position.z) + Mathf.Floor((float) length / 2f) - zModifier));
+    public int GetTileTag(Vector3 position) {
+        int mapX = Mathf.RoundToInt(Mathf.Round(position.x) - Mathf.Round(transform.position.x) + Mathf.Floor((float)width / 2f) - xModifier);
+        int mapZ = Mathf.RoundToInt(length - (Mathf.Round(position.z) - Mathf.Round(transform.position.z) + Mathf.Floor((float)length / 2f) - zModifier));
 
         if (mapX < 0 || mapX >= width || mapZ < 0 || mapZ >= length) {
             //Debug.Log (mapX +" "+ mapZ +", "+ width +" "+ length);
@@ -76,8 +73,7 @@ public class MapCollider : MonoBehaviour
         return tag;
     }
 
-    public void SetCollisionMap()
-    {
+    public void SetCollisionMap() {
         collisionMap = new int[width, length];
 
         int x = 0;
@@ -87,8 +83,7 @@ public class MapCollider : MonoBehaviour
         string[] contains = shorthandCollisionMap.Split(' ');
         string[] contains2;
 
-        foreach(string contain in contains)
-        {
+        foreach (string contain in contains) {
             //contains2 is an array of the tag and quantity in the selected segment of the shorthand
             // (breaks "0x10" into {"0", "10"} ready for processing)
             contains2 = contain.Split('x');
@@ -97,15 +92,12 @@ public class MapCollider : MonoBehaviour
         }
     }
 
-    public void CalculateCollisionMap(int lenght, int tag)
-    {
+    public void CalculateCollisionMap(int lenght, int tag) {
         int x = 0;
         int z = 0;
-        for (int i = 0; i < lenght; i++)
-        {
+        for (int i = 0; i < lenght; i++) {
             //repeat for multiplier amount of times
-            if (x >= this.width)
-            {
+            if (x >= this.width) {
                 //if x exceeds the map width,
                 x = 0;//move to the first x on the next line down
                 z += 1;
@@ -116,18 +108,15 @@ public class MapCollider : MonoBehaviour
     }
 
     /// if bridge was found, returned RaycastHit will have a collider
-    public static RaycastHit GetBridgeHitOfPosition(Vector3 position)
-    {
+    public static RaycastHit GetBridgeHitOfPosition(Vector3 position) {
         //Check for bridges below inputted position
         //cast a ray directly downwards from the position entered
         RaycastHit[] bridgeHitColliders = Physics.RaycastAll(position, Vector3.down, 3f);
         RaycastHit bridgeHit = new RaycastHit();
         //cycle through each of the collisions
-        for (int i = 0; i < bridgeHitColliders.Length; i++)
-        {
+        for (int i = 0; i < bridgeHitColliders.Length; i++) {
             //if a collision's gameObject has a bridgeHandler, it is a bridge.
-            if (bridgeHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null)
-            {
+            if (bridgeHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null) {
                 bridgeHit = bridgeHitColliders[i];
                 i = bridgeHitColliders.Length;
             }
@@ -136,31 +125,17 @@ public class MapCollider : MonoBehaviour
         return bridgeHit;
     }
 
+    public static float GetSlopeOfPosition(Vector3 position, int direction, bool checkForBridge = true) {
+        return GetSlopeOfPosition(position, ((EMovementDirection)direction).GetForwardVector(), checkForBridge);
+    }
+
     /// returns the slope of the map geometry on the tile of the given position (in the given direction) 
-    public static float GetSlopeOfPosition(Vector3 position, int direction, bool checkForBridge = true)
+    public static float GetSlopeOfPosition(Vector3 position, Vector3 direction, bool checkForBridge = true)
     {
-        //set vector3 based off of direction
-        Vector3 movement = new Vector3(0, 0, 0);
-        if (direction == 0)
-        {
-            movement = new Vector3(0, 0, 1f);
-        }
-        else if (direction == 1)
-        {
-            movement = new Vector3(1f, 0, 0);
-        }
-        else if (direction == 2)
-        {
-            movement = new Vector3(0, 0, -1f);
-        }
-        else if (direction == 3)
-        {
-            movement = new Vector3(-1f, 0, 0);
-        }
+        Vector3 movement = direction;
 
         //cast a ray directly downwards from the edge of the tile, closest to original position (1.5f height to account for stairs)
-        RaycastHit[] mapHitColliders = Physics.RaycastAll(position - (movement * 0.45f) + new Vector3(0, 1.5f, 0),
-            Vector3.down);
+        RaycastHit[] mapHitColliders = Physics.RaycastAll(position - (movement * 0.45f) + new Vector3(0, 1.5f, 0), Vector3.down);
         RaycastHit map1Hit = new RaycastHit();
 
         float shortestHit = Mathf.Infinity;

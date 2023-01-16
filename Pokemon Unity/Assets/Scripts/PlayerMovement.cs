@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public bool IsMoving = false;
-    bool shouldMove = false;
+    bool shouldTryToMove = false;
     public bool IsStanding = true;
     public bool IsRunning = false;
     public bool IsSurfing = false;
@@ -189,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
         Reflect(false);
         Follower.reflect(false);
 
-        StartCoroutine(control());
+        //StartCoroutine(control());
 
         //Check current map
         currentMap = MapCollider.GetMap(transform.position, FacingDirection);
@@ -360,6 +360,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleInputMove(CallbackContext context) {
         var input = context.ReadValue<Vector2>();
+        if (context.action.phase == UnityEngine.InputSystem.InputActionPhase.Canceled)
+            shouldTryToMove = false;
+        else
+            shouldTryToMove = true;
+
         UpdateDirection(new Vector3(input.x, 0f, input.y));
     }
 
@@ -397,28 +402,27 @@ public class PlayerMovement : MonoBehaviour
             //pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[direction * frames + frame];
             //hairSprite.sprite = haircutSpriteSheet[direction * frames + frame];
             //eyeSprite.sprite = eyeSpriteSheet[direction * frames + frame];
-            shouldMove = true;
             //if (!IsMoving) StartCoroutine(move(directionInput));
-            if (!IsMoving) StartCoroutine(move(GetMovementVector((EMovementDirection)Direction, false)));
+            Vector3 movement = GetMovementVector(FacingDirection, false);
+            if (!IsMoving) StartCoroutine(move(movement));
             return;
         }
         //Vector3.RotateTowards(DirectionSurrogate.forward, input.GetForwardVector(), Mathf.PI, 0f);
-            
-        shouldMove = false;
 
         bool shouldChangeDirection(Vector3 newDirection) => newDirection.magnitude > 0 && newDirection != FacingDirection;
     }
 
     ///returns the vector relative to the player direction, without any modifications.
-    public Vector3 GetForwardVectorRaw() => transform.GetForwardVector((EMovementDirection)Direction);
+    public Vector3 GetForwardVectorRaw() => ((EMovementDirection)Direction).GetForwardVector();
 
     public Vector3 GetForwardVector() => GetMovementVector((EMovementDirection)Direction, true);
 
     public Vector3 GetForwardVector(EMovementDirection direction) => GetMovementVector(direction, true);
 
+    [Obsolete]
     public Vector3 GetMovementVector(EMovementDirection direction, bool checkForBridge) {
         //set initial vector3 based off of direction
-        Vector3 movement = transform.GetForwardVector(direction);
+        Vector3 movement = ((EMovementDirection)Direction).GetForwardVector();
 
         //Check destination map	and bridge																//0.5f to adjust for stair height
         //cast a ray directly downwards from the position directly in front of the player		//1f to check in line with player's head
@@ -453,46 +457,44 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.zero;
     }
 
-    #endregion
+    public Vector3 GetMovementVector(Vector3 facingDirection, bool checkForBridge) {
+        //set initial vector3 based off of direction
+        Vector3 movement = facingDirection;
 
-    // TODO: Update the name of this function
-    private IEnumerator control() {
-        bool isStill;
+        //Check destination map	and bridge																//0.5f to adjust for stair height
+        //cast a ray directly downwards from the position directly in front of the player		//1f to check in line with player's head
+        RaycastHit[] hitColliders = Physics.RaycastAll(transform.position + movement + new Vector3(0, 1.5f, 0), Vector3.down);
 
-        yield return new WaitForSeconds(0.4f);
+        RaycastHit mapHit = Array.Find(hitColliders, (RaycastHit hit) => hit.collider.gameObject.GetComponent<MapCollider>() != null);
+        //if a collision's gameObject has a BridgeHandler, it is a bridge.
+        // !!!
+        // I removed the bridge collision checking here to decrease complexity. 
+        // I feel there is a better way to do it, but the game needs other repairs first
+        // !!! 
+        //RaycastHit bridgeHit = new RaycastHit();
+        //if (checkForBridge)
+        //    bridgeHit = Array.Find(hitColliders, (RaycastHit hit) => hit.collider.gameObject.GetComponent<BridgeHandler>() != null);
 
-        //unpauseInput();
-        while (true) {
-            // the player is still, but if they've just finished moving a space, moving is still true for this frame (see end of coroutine)
-            isStill = true;
-            if (canInput) {
-                if (!IsSurfing && !IsBiking) {
-                    if (IsRunning) {
-                        if (IsMoving) {
-                            updateAnimation("run", RunFPS);
-                        } else {
-                            updateAnimation("walk", WalkFPS);
-                        }
-                        Speed = RunSpeed;
-                    } else {
-                        updateAnimation("walk", WalkFPS);
-                        Speed = WalkSpeed;
-                    }
-                }
-                //if pausing/interacting/etc. is not being called, then moving is possible.
-                //		(if any direction input is being entered)
-                if (!canInput) continue;
+        // modify the forwards vector to align to the colliding plane
+        RaycastHit higherPriorityHit = mapHit; // bridgeHit.collider == null ? mapHit : bridgeHit;
+        movement -= new Vector3(0, (transform.position.y - higherPriorityHit.point.y), 0);
 
-            }
-            if (isStill) {
-                //if still is true by this point, then no move function has been called
-                animPause = true;
-                IsMoving = false;
-            } //set moving to false. The player loses their momentum.
+        float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, facingDirection));
+        float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + GetForwardVectorRaw(), facingDirection, checkForBridge));
+        float yDistance = Mathf.Abs((transform.position.y + movement.y) - transform.position.y);
+        yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
-            yield return null;
+        //Debug.Log("currentSlope: "+currentSlope+", destinationSlope: "+destinationSlope+", yDistance: "+yDistance);
+
+        //if either slope is greater than 1 it is too steep.
+        if ((currentSlope <= 1 && destinationSlope <= 1) && (yDistance <= currentSlope || yDistance <= destinationSlope)) {
+            //if yDistance is greater than both slopes there is a vertical wall between them
+            return movement;
         }
+        return Vector3.zero;
     }
+
+    #endregion
 
     //IEnumerator move(Vector2 input) {
     //    //if most recent direction pressed is held, but it isn't the current direction, set it to be
@@ -518,52 +520,76 @@ public class PlayerMovement : MonoBehaviour
     //}
 
     public IEnumerator move(Vector3 movement, bool canEncounter = true, bool lockFollower = false) {
-        Collider objectCollider = null;
+        while (shouldTryToMove) {
+            if (!canInput) yield break;
 
-        if (movement != Vector3.zero) {
-            objectCollider = checkForObjectCollision(movement);
-            //if no objects are in the way
-            if (objectCollider == null) {
-                MapCollider destinationMap = MapCollider.GetMap(transform.position, FacingDirection);
-                EMapTile destinationTileTag = (EMapTile)destinationMap.GetTileTag(transform.position + movement);
-                bool collidedWithBridge = checkForBridgeCollision(movement);
+            //yield return new WaitForSeconds(0.4f);
 
-                if (canMove(collidedWithBridge, destinationTileTag)) {
-                    if (canSurfAtDestination(collidedWithBridge, destinationTileTag)) {
-                        // TODO: destination is water tile
-                    } else {
-                        //disable surfing if not headed to water tile
-                        if (aboutToStopSurfing(destinationTileTag))
-                            stopSurfing();
+            Collider objectCollider = null;
 
-                        if (destinationMap != currentMap)
-                            changeMap(destinationMap);
+            if (movement != Vector3.zero) {
+                objectCollider = checkForObjectCollision(movement);
+                //if no objects are in the way
+                if (objectCollider == null) {
+                    MapCollider destinationMap = MapCollider.GetMap(transform.position, FacingDirection);
+                    EMapTile destinationTileTag = (EMapTile)destinationMap.GetTileTag(transform.position + movement);
+                    bool collidedWithBridge = checkForBridgeCollision(movement);
 
-                        processTransparentCollision(movement);
+                    if (canMove(collidedWithBridge, destinationTileTag)) {
+                        if (canSurfAtDestination(collidedWithBridge, destinationTileTag)) {
+                            // TODO: destination is water tile
+                        } else {
+                            //disable surfing if not headed to water tile
+                            if (aboutToStopSurfing(destinationTileTag))
+                                stopSurfing();
 
-                        Vector3 startPosition = Hitbox.position;
+                            if (destinationMap != currentMap)
+                                changeMap(destinationMap);
 
-                        IsMoving = true;
-                        Increment = 0;
+                            processTransparentCollision(movement);
 
-                        if (!lockFollower) StartCoroutine(Follower.move(startPosition, Speed));
-                        if (NpcFollower != null) StartCoroutine(NpcFollower.move(startPosition, Speed));
+                            Vector3 startPosition = Hitbox.position;
 
-                        yield return move(startPosition);
+                            IsMoving = true;
+                            Increment = 0;
 
-                        if (canEncounter)
-                            CheckForEncounters();
+                            if (!lockFollower) StartCoroutine(Follower.move(startPosition, Speed));
+                            if (NpcFollower != null) StartCoroutine(NpcFollower.move(startPosition, Speed));
 
-                        yield break;
+                            updateAnimation();
+                            yield return move(startPosition, movement);
+
+                            if (canEncounter)
+                                CheckForEncounters();
+
+                        }
                     }
                 }
             }
+
+            // We never moved, for whatever reason :(
+            if (!IsMoving) playerIsUnableToMove(objectCollider);
+
+            IsMoving = false;
         }
 
-        playerIsUnableToMove(objectCollider);
-
         #region Helpers
-        IEnumerator move(Vector3 startPosition) {
+        void updateAnimation() {
+            if (!IsSurfing && !IsBiking) {
+                if (IsRunning) {
+                    if (IsMoving) {
+                        this.updateAnimation("run", RunFPS);
+                    } else {
+                        this.updateAnimation("walk", WalkFPS);
+                    }
+                    Speed = RunSpeed;
+                } else {
+                    this.updateAnimation("walk", WalkFPS);
+                    Speed = WalkSpeed;
+                }
+            }
+        }
+        IEnumerator move(Vector3 startPosition, Vector3 movement) {
             animPause = false;
             while (Increment < 1f) {
                 //increment increases slowly to 1 over the frames
@@ -597,12 +623,12 @@ public class PlayerMovement : MonoBehaviour
                     StartCoroutine(wildEncounter(WildPokemonInitialiser.Location.Standard));
         }
         void playerIsUnableToMove(Collider objectCollider) {
-            if (objectCollider == null ||
-                (objectCollider.transform.parent.TryGetComponent(out InteractDoorway doorway) && doorway.isLocked)) {
+            if (objectCollider == null || collidingWithLockedDoor(objectCollider)) {
                 Invoke("playBump", 0.05f);
             }
-            IsMoving = false;
             animPause = true;
+
+            bool collidingWithLockedDoor(Collider objectCollider) => objectCollider.transform.parent.TryGetComponent(out InteractDoorway doorway) && doorway.isLocked;
         }
         #endregion
     }
@@ -1161,4 +1187,21 @@ public enum EMovementDirection {
     Down,
     Left,
     Nowhere
+}
+
+public static class EMovementDirectionExtensions {
+    public static Vector3 GetForwardVector(this EMovementDirection direction) {
+        //set vector3 based off of direction
+        Vector3 forwardVector = new Vector3(0, 0, 0);
+        if (direction == EMovementDirection.Up) {
+            forwardVector = new Vector3(0, 0, 1f);
+        } else if (direction == EMovementDirection.Right) {
+            forwardVector = new Vector3(1f, 0, 0);
+        } else if (direction == EMovementDirection.Down) {
+            forwardVector = new Vector3(0, 0, -1f);
+        } else if (direction == EMovementDirection.Left) {
+            forwardVector = new Vector3(-1f, 0, 0);
+        }
+        return forwardVector;
+    }
 }
