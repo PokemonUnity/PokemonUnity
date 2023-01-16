@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 4975417706449109250}
   - component: {fileID: 4975417706449109252}
   - component: {fileID: 4975417706449109251}
+  - component: {fileID: 570705013549638312}
   - component: {fileID: 5961886964716992324}
   m_Layer: 0
   m_Name: Player
@@ -415,7 +416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   busyWith: {fileID: 0}
   canInput: 1
-  DrawGizmos: 0
+  DrawGizmos: 1
   PlayerCamera: {fileID: 0}
   MainCameraDefaultPosition: {x: 0, y: 0, z: 0}
   MainCameraDefaultFOV: 0
@@ -451,6 +452,26 @@ MonoBehaviour:
   landClip: {fileID: 8300000, guid: 27e072d1e67b2d94494745d555e51276, type: 3}
   mount: {fileID: 6761189241578414512}
   framesPerSec: 0
+--- !u!114 &570705013549638312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975417706449109249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActiveAnimationIndex: 0
+  IdleAnimationIndex: 0
+  spriteRenderer: {fileID: 0}
+  Animations:
+  - {fileID: 11400000, guid: 07fd2b25a35ee7d4b89df3b09f953436, type: 2}
+  - {fileID: 11400000, guid: de5dd5b9414c2c6488820e31ca5b3c26, type: 2}
+  - {fileID: 11400000, guid: 99f977d1c8dfa9d44ad7db8231e67126, type: 2}
+  Paused: 0
 --- !u!114 &5961886964716992324
 MonoBehaviour:
   m_ObjectHideFlags: 0

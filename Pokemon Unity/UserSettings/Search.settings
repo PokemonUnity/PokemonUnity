@@ -10,7 +10,7 @@ scopes = {
 	"last_search.BDE7F5D3" = "t:spriterenderer "
 	"OpenInspectorPreview.BDE7F5D3" = "0"
 	"currentGroup.BDE7F5D3" = "all"
-	"last_search.982FBD6D" = "t:monoscript single"
+	"last_search.982FBD6D" = "m_hgss_walk t:sprite t:texture2d t:folder"
 	"OpenInspectorPreview.982FBD6D" = "0"
 	"currentGroup.982FBD6D" = "all"
 	"last_search.8BEC98E7" = ""
@@ -68,6 +68,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"t:sprite t:texture2d t:folder"
 	"player"
 	"t:tmpro.tmp_fontasset "
 	"t:sprite menuButto"

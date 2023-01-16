@@ -60,7 +60,7 @@
     <Compile Include="Assets\Scripts\_Original\Data\AbilityDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PC.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PokemonDatabase.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\TransformExtensions.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\StartMenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Bag.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\Carousel.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\TrainerHandler.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleUtils.cs" />
-    <Compile Include="Assets\Scripts\_Original\SpriteAnimation.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\SpriteAnimatorBehaviour.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\TypingForm.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Abilities\Teravolt.cs" />
     <Compile Include="Assets\Scripts\_Original\LeanTween\LTDescr.cs" />
@@ -221,7 +221,7 @@
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\Enums\GameSettingFullscreenMode.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\NatureData.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\DataStruct\BuildInfo.cs" />
-    <Compile Include="Assets\Scripts\FollowerMovement.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\FollowerMovement.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\EnumExtensions.cs" />
     <Compile Include="Assets\Scripts\Library\ScriptableObjectSingleton.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokemon.cs" />
@@ -295,7 +295,7 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\ScreenFade.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\SurvivalGame.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\MapNameBox.cs" />
-    <Compile Include="Assets\Scripts\GlobalVariables.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\GlobalVariables.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\QuestLog.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractPC.cs" />
     <Compile Include="Assets\Scripts\_Original\MapSettings.cs" />
@@ -324,6 +324,7 @@
     <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\SpriteAnimation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

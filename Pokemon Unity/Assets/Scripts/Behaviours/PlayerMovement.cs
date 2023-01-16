@@ -174,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
 
         // animation
         updateAnimation("walk", WalkFPS);
-        StartCoroutine(animateSprite());
+        //StartCoroutine(animateSprite());
         animPause = true;
 
         // reflections
@@ -301,6 +301,10 @@ public class PlayerMovement : MonoBehaviour
         GlobalVariables.Singleton.resetFollower();
     }
 
+    void Update() {
+        animateSprite();
+    }
+
     #endregion
 
     #region Input Handling
@@ -356,7 +360,7 @@ public class PlayerMovement : MonoBehaviour
         directionInput = new Vector3(input.x, 0f, input.y);
         this.shouldTryToMove = shouldTryToMove();
         if (this.shouldTryToMove && !IsMoving)
-            StartCoroutine(move());
+            move();
 
         bool shouldTryToMove() => context.action.phase != UnityEngine.InputSystem.InputActionPhase.Canceled;
     }
@@ -487,69 +491,79 @@ public class PlayerMovement : MonoBehaviour
 
     [Obsolete]
     public IEnumerator move(Vector3 movement, bool canEncounter = true, bool lockFollower = false) {
-        StartCoroutine(move(canEncounter, lockFollower));
+        move(canEncounter, lockFollower);
         yield return null;
     }
 
-    public IEnumerator move(bool canEncounter = true, bool lockFollower = false) {
-        while (shouldTryToMove) {
-            if (!canInput) yield break;
+    public void move(bool canEncounter = true, bool lockFollower = false) {
+        if (!canInput) return;
 
-            UpdateDirection(directionInput);
-            Vector3 movement = GetMovementVector(FacingDirection, false);
+        UpdateDirection(directionInput);
+        Vector3 movement = GetMovementVector(FacingDirection, false);
 
-            Debug.Log("Moving");
+        Debug.Log("Moving");
 
-            //yield return new WaitForSeconds(0.4f);
+        //yield return new WaitForSeconds(0.4f);
 
-            Collider objectCollider = null;
+        Collider objectCollider = null;
 
-            if (movement != Vector3.zero) {
-                objectCollider = checkForObjectCollision(movement);
-                //if no objects are in the way
-                if (objectCollider == null) {
-                    MapCollider destinationMap = MapCollider.GetMap(transform.position, FacingDirection);
-                    EMapTile destinationTileTag = (EMapTile)destinationMap.GetTileTag(transform.position + movement);
-                    bool collidedWithBridge = checkForBridgeCollision(movement);
+        if (movement != Vector3.zero) {
+            objectCollider = checkForObjectCollision(movement);
+            //if no objects are in the way
+            if (objectCollider == null) {
+                MapCollider destinationMap = MapCollider.GetMap(transform.position, FacingDirection);
+                EMapTile destinationTileTag = (EMapTile)destinationMap.GetTileTag(transform.position + movement);
+                bool collidedWithBridge = checkForBridgeCollision(movement);
 
-                    if (canMove(collidedWithBridge, destinationTileTag)) {
-                        if (canSurfAtDestination(collidedWithBridge, destinationTileTag)) {
-                            // TODO: destination is water tile
-                        } else {
-                            //disable surfing if not headed to water tile
-                            if (aboutToStopSurfing(destinationTileTag))
-                                stopSurfing();
+                if (canMove(collidedWithBridge, destinationTileTag)) {
+                    if (canSurfAtDestination(collidedWithBridge, destinationTileTag)) {
+                        // TODO: destination is water tile
+                    } else {
+                        //disable surfing if not headed to water tile
+                        if (aboutToStopSurfing(destinationTileTag))
+                            stopSurfing();
 
-                            if (destinationMap != currentMap)
-                                changeMap(destinationMap);
+                        if (destinationMap != currentMap)
+                            changeMap(destinationMap);
 
-                            processTransparentCollision(movement);
+                        Vector3 startPosition = transform.position;
 
-                            Vector3 startPosition = Hitbox.position;
+                        processTransparentCollision(movement);
 
-                            IsMoving = true;
-                            Increment = 0;
+                        IsMoving = true;
+                        Increment = 0;
 
-                            if (!lockFollower) StartCoroutine(Follower.move(startPosition, Speed));
-                            if (NpcFollower != null) StartCoroutine(NpcFollower.move(startPosition, Speed));
+                        if (!lockFollower) StartCoroutine(Follower.move(startPosition, Speed));
+                        if (NpcFollower != null) StartCoroutine(NpcFollower.move(startPosition, Speed));
 
-                            updateAnimation();
-                            yield return move(startPosition, movement);
+                        updateAnimation();
+                        LTDescr tween = LeanTween.move(gameObject, startPosition + movement, Speed);
+                        tween.setOnComplete(() => {
+                            IsMoving = false;
+                            // move again if input is still being provided
+                            if (shouldTryToMove)
+                                move();
+                            else
+                                animPause = true;
+                        });
+                        //Hitbox.position = startPosition + movement;
 
-                            if (canEncounter)
-                                CheckForEncounters();
+                        //yield return move(startPosition, movement);
 
-                        }
+                        if (canEncounter)
+                            CheckForEncounters();
+
+                        return;
                     }
                 }
             }
-
-            // We never moved, for whatever reason :(
-            if (!IsMoving) playerIsUnableToMove(objectCollider);
-
-            IsMoving = false;
-            animPause = true;
         }
+
+        // We never moved, for whatever reason
+        if (!IsMoving) playerIsUnableToMove(objectCollider);
+
+        IsMoving = false;
+        animPause = true;
 
         #region Helpers
         void updateAnimation() {
@@ -567,20 +581,19 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        IEnumerator move(Vector3 startPosition, Vector3 movement) {
-            animPause = false;
-            while (Increment < 1f) {
-                //increment increases slowly to 1 over the frames
-                Increment += (1f / Speed) * Time.deltaTime;
-                //speed is determined by how many squares are crossed in one second
-                if (Increment > 1f) {
-                    Increment = 1f;
-                }
-                transform.position = startPosition + (movement * Increment);
-                Hitbox.position = startPosition + movement;
-                yield return null;
-            }
-        }
+        //IEnumerator move(Vector3 startPosition, Vector3 movement) {
+        //    animPause = false;
+        //    while (Increment < 1f) {
+        //        //increment increases slowly to 1 over the frames
+        //        Increment += (1f / Speed) * Time.deltaTime;
+        //        //speed is determined by how many squares are crossed in one second
+        //        if (Increment > 1f) {
+        //            Increment = 1f;
+        //        }
+        //        transform.position = startPosition + (movement * Increment);
+        //        yield return null;
+        //    }
+        //}
         bool checkForBridgeCollision(Vector3 movement) => MapCollider.GetBridgeHitOfPosition(transform.position + movement + new Vector3(0, 0.1f, 0)).collider != null;
         bool canMove(bool collidedWithBridge, EMapTile destinationTileTag) => collidedWithBridge || destinationTileTag != EMapTile.Impassable;
         bool canSurfAtDestination(bool collidedWithBridge, EMapTile destinationTileTag) => !collidedWithBridge && !IsSurfing && destinationTileTag == EMapTile.SurfableWater;
@@ -897,31 +910,31 @@ public class PlayerMovement : MonoBehaviour
         return new Vector2(0.25f * column, 0.75f - (0.25f * row));
     }
 
-    private IEnumerator animateSprite() {
-        //yield break; //FIXME
-        frame = 0;
-        frames = 4;
-        framesPerSec = WalkFPS;
-        secPerFrame = 1f / framesPerSec;
-        while (true) {
-            for (int i = 0; i < 4; i++) {
-                if (animPause && frame % 2 != 0 && !overrideAnimPause)
-                    frame -= 1;
-                
-                pawnSprite.sprite = spriteSheet[Direction * frames + frame];
-                pawnReflectionSprite.sprite = pawnSprite.sprite;
-                if (hairSprite != null) hairSprite.sprite = haircutSpriteSheet[Direction * frames + frame];
-                if (eyeSprite != null) eyeSprite.sprite = eyeSpriteSheet[Direction * frames + frame];
-                //pawnReflectionSprite.SetTextureOffset("_MainTex", GetUVSpriteMap(direction*frames+frame));
-                yield return new WaitForSeconds(secPerFrame / 4f);
-            }
-            if (!animPause || overrideAnimPause) {
-                frame += 1;
-                if (frame >= frames)
-                    frame = 0;
-            }
-        }
-    }
+    //private void animateSprite() {
+    //    //yield break; //FIXME
+    //    frame = 0;
+    //    frames = 4;
+    //    framesPerSec = WalkFPS;
+    //    secPerFrame = 1f / framesPerSec;
+    //    while (true) {
+    //        for (int i = 0; i < 4; i++) {
+    //            if (animPause && frame % 2 != 0 && !overrideAnimPause)
+    //                frame -= 1;
+
+    //            pawnSprite.sprite = spriteSheet[Direction * frames + frame];
+    //            pawnReflectionSprite.sprite = pawnSprite.sprite;
+    //            if (hairSprite != null) hairSprite.sprite = haircutSpriteSheet[Direction * frames + frame];
+    //            if (eyeSprite != null) eyeSprite.sprite = eyeSpriteSheet[Direction * frames + frame];
+    //            //pawnReflectionSprite.SetTextureOffset("_MainTex", GetUVSpriteMap(direction*frames+frame));
+    //            yield return new WaitForSeconds(secPerFrame / 4f);
+    //        }
+    //        if (!animPause || overrideAnimPause) {
+    //            frame += 1;
+    //            if (frame >= frames)
+    //                frame = 0;
+    //        }
+    //    }
+    //}
 
     public void setOverrideAnimPause(bool set) {
         overrideAnimPause = set;
