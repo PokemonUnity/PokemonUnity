@@ -560,6 +560,8 @@ public class PlayerMovement : MonoBehaviour
                         return;
                     }
                 }
+            } else {
+                Debug.Log($"Collided with {objectCollider.gameObject.name}");
             }
         }
 
@@ -671,7 +673,8 @@ public class PlayerMovement : MonoBehaviour
             GameObject.Find("Weather").GetComponent<WeatherHandler>().setWeather(weather);
         } else {
             Debug.Log("[Weather] Weather List empty");
-            GameObject.Find("Weather").GetComponent<WeatherHandler>().setWeather(null);
+            GameObject weather = GameObject.Find("Weather");
+            if (weather != null) weather.GetComponent<WeatherHandler>().setWeather(null);
         }
 
         UpdateRPC();
@@ -837,8 +840,11 @@ public class PlayerMovement : MonoBehaviour
     Collider checkForTransparentObjectCollision(Vector3 checkOffset) {
         Collider[] hitColliders = collisionRaycast(checkOffset);
         for (int i = 0; i < hitColliders.Length; i++) {
-            Debug.Log("Collider: " + hitColliders[i].ToString());
-            if (hitColliders[i].name.ToLowerInvariant().Contains("_object")) {
+            //Debug.Log("Collider: " + hitColliders[i].ToString());
+            if (hitColliders[i].name.ToLowerInvariant().Contains("_transparent") &&
+                !hitColliders[i].name.ToLowerInvariant().Contains("player") &&
+                !hitColliders[i].name.ToLowerInvariant().Contains("follower")) {
+                hitColliders[i].transform.parent.gameObject.SendMessage("bump", SendMessageOptions.DontRequireReceiver);
                 return hitColliders[i];
             }
         }
@@ -849,9 +855,8 @@ public class PlayerMovement : MonoBehaviour
     Collider checkForObjectCollision(Vector3 checkOffset) {
         Collider[] hitColliders = collisionRaycast(checkOffset);
         for (int i = 0; i < hitColliders.Length; i++) {
-            Debug.Log("Collider: " + hitColliders[i].ToString());
-            if (hitColliders[i].name.ToLowerInvariant().Contains("_transparent") && !hitColliders[i].name.ToLowerInvariant().Contains("follower")) {
-                hitColliders[i].transform.parent.gameObject.SendMessage("bump", SendMessageOptions.DontRequireReceiver);
+            //Debug.Log("Collider: " + hitColliders[i].ToString());
+            if (hitColliders[i].name.ToLowerInvariant().Contains("_object")) {
                 return hitColliders[i];
             }
         }

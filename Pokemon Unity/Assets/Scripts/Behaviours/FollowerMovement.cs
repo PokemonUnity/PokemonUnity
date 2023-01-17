@@ -166,7 +166,6 @@ public class FollowerMovement : MonoBehaviour
 
 	public void SwitchAnimation(string newAnimationName) {
 		string animationName = newAnimationName + facingDirection.ToDirectionString(Vector3.forward, Vector3.up);
-        Debug.Log(animationName);
         animator.SwitchAnimation(animationName);
 	}
 

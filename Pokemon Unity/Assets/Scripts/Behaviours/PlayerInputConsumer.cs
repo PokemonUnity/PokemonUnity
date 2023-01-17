@@ -43,7 +43,7 @@ public class PlayerInputEvents {
         
         foreach (PlayerInputEvent inputEvent in Events) {
             UnityEvent<InputAction.CallbackContext> event_ = playerInput.GetEvent(inputEvent.ActionMap, inputEvent.Action);
-            event_.AddListener(inputEvent.Callbacks.Invoke);
+            if (event_ != null) event_.AddListener(inputEvent.Callbacks.Invoke);
         }
         hasSubscribed = true;
     }

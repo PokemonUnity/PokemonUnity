@@ -16,6 +16,7 @@ public class MountBehaviour : MonoBehaviour
     }
 
     public void UpdateMount(bool enabled, string spriteName = "", EMovementDirection direction = EMovementDirection.Down) {
+        if (spriteRenderer == null) return;
         spriteRenderer.enabled = enabled;
         if (!spriteRenderer.enabled) {
             Sprites = Resources.LoadAll<Sprite>("PlayerSprites/" + spriteName);
