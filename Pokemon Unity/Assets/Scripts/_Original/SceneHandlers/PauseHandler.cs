@@ -682,7 +682,7 @@ public class PauseHandler : MonoBehaviour
             SaveData.currentSave.followerPosition = new SeriV3(PlayerMovement.Singleton.Follower.transform.position);
             SaveData.currentSave.followerdirection = PlayerMovement.Singleton.Follower.direction;
             SaveData.currentSave.mapName = PlayerMovement.Singleton.accessedMapSettings.mapName;
-            SaveData.currentSave.followerOut = GlobalVariables.Singleton.followerOut;
+            SaveData.currentSave.followerOut = GlobalVariables.Singleton.isFollowerOut;
 
             // Saving the Non Resetting Events
             NonResettingHandler.saveDataToGlobal();

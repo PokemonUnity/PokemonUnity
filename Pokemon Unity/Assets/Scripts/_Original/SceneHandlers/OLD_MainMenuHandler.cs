@@ -592,7 +592,7 @@ public class OLD_MainMenuHandler : MonoBehaviour {
 
                     GlobalVariables.Singleton.playerPosition = SaveData.currentSave.playerPosition.v3;
                     GlobalVariables.Singleton.playerDirection = SaveData.currentSave.playerDirection;
-                    GlobalVariables.Singleton.followerOut = SaveData.currentSave.followerOut;
+                    GlobalVariables.Singleton.isFollowerOut = SaveData.currentSave.followerOut;
 
                     if (SaveData.currentSave.followerPosition != null && SaveData.currentSave.followerdirection != null) {
                         GlobalVariables.Singleton.followerPosition = SaveData.currentSave.followerPosition.Value.v3;

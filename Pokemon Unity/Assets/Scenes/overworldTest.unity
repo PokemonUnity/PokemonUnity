@@ -24486,22 +24486,22 @@ PrefabInstance:
     - target: {fileID: 4826687952992664894, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 70.83
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4826687952992664894, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 10.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5342897781809551458, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 70.83
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5342897781809551458, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 10.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085223199837186403, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
@@ -24511,7 +24511,7 @@ PrefabInstance:
     - target: {fileID: 6085223199837186403, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085223199837507153, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
@@ -28408,26 +28408,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 840571785, guid: 83196453f96f35b49a1cbd1f23448a06, type: 3}
-      propertyPath: hasLight
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 840571785, guid: 83196453f96f35b49a1cbd1f23448a06, type: 3}
-      propertyPath: pokemonID
-      value: 197
-      objectReference: {fileID: 0}
-    - target: {fileID: 840571785, guid: 83196453f96f35b49a1cbd1f23448a06, type: 3}
-      propertyPath: lightColor.g
-      value: 0.50980395
-      objectReference: {fileID: 0}
-    - target: {fileID: 840571785, guid: 83196453f96f35b49a1cbd1f23448a06, type: 3}
-      propertyPath: lightColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 840571785, guid: 83196453f96f35b49a1cbd1f23448a06, type: 3}
-      propertyPath: lightIntensity
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 4975417706449109249, guid: 83196453f96f35b49a1cbd1f23448a06,
         type: 3}
       propertyPath: m_Name
@@ -28487,21 +28467,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4975417706449109251, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: DrawGizmos
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4975417707229743877, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4975417708171817626, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

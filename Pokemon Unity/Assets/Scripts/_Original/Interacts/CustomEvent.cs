@@ -1304,7 +1304,7 @@ public class CustomEvent : MonoBehaviour
                 BgmHandler.main.PlayOverlay(null, 0);
                 break;
             case CustomEventDetails.CustomEventType.SetNPCFollower:
-                if (GlobalVariables.Singleton.followerOut)
+                if (GlobalVariables.Singleton.isFollowerOut)
                 {
                     yield return StartCoroutine(PlayerMovement.Singleton.Follower.withdrawToBall());
                 }

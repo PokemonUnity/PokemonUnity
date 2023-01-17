@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\Editor Attributes\DescriptionAttribute.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameBase.cs" />
     <Compile Include="Assets\Scripts\_Original\CameraTrigger.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\StringExtensions.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingTexture2DArray.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneTransition.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractTrainerSight.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\Entity.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\ItemData.cs" />
     <Compile Include="Assets\Scripts\_Original\LeanTween\LeanSmooth.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\SpriteAnimation.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\ResolutionExtensions.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Constant\Constant.Setting.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\NetworkChannelHelper.cs" />
@@ -223,7 +225,7 @@
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\DataStruct\BuildInfo.cs" />
     <Compile Include="Assets\Scripts\Behaviours\FollowerMovement.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\EnumExtensions.cs" />
-    <Compile Include="Assets\Scripts\Library\ScriptableObjectSingleton.cs" />
+    <Compile Include="Assets\Scripts\Library\Deprecated\ScriptableObjectSingleton.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokemon.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\PartyHandler.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingArray.cs" />
@@ -324,8 +326,8 @@
     <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\SpriteAnimation.cs" />
-    <Compile Include="Assets\Scripts\Library\Extensions\StringExtensions.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\PokemonSO.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

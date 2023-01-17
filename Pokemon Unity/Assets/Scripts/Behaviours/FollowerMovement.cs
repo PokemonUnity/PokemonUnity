@@ -7,26 +7,28 @@ using Random = System.Random;
 
 public class FollowerMovement : MonoBehaviour
 {
+	#region Variables
+
+	public PokemonSO Pokemon;
+	public bool DrawGizmos = false;
+
 	public int pokemonID = 6;
-	private int followerIndex = 0;
+	private int partyIndex = 0;
 	private DialogBoxHandlerNew Dialog;
 
 	[Header("Movement")]
 	public int direction = 2;
+	Vector3 facingDirection;
 	public float speed;
-	public bool hide;
+	public bool IsHidden;
 	public bool moving = false;
-	public bool canMove = true;
-	private PlayerMovement Player;
-	private Vector3 startPosition;
+	public bool CanMove = true;
+	PlayerMovement playerMovement;
 	private Vector3 destinationPosition;
 	private Vector3 position;
 
 	[Header("Transforms")]
 	public Transform Pawn;
-	public Transform PawnLight;
-	public Transform PawnReflection;
-	public Transform PawnLightReflection;
 	public Transform Hitbox;
 
 	[Header("Audio")]
@@ -40,486 +42,103 @@ public class FollowerMovement : MonoBehaviour
 	private Light followerLight;
 
 	[Header("Sprites")]
-	private SpriteRenderer sRenderer;
-	private SpriteRenderer sLRenderer;
-	private SpriteRenderer sReflectionRenderer;
-	private SpriteRenderer sLReflectionRenderer;
+	private SpriteRenderer spriteRenderer;
+	[SerializeField] SpriteRenderer spriteLightRenderer;
+	[SerializeField] SpriteRenderer spriteReflectionRenderer;
+	[SerializeField] SpriteRenderer spriteLightReflectionRenderer;
 	private Sprite[] spriteSheet;
 	private Sprite[] lightSheet;
 	[SerializeField] 
 	SpriteRenderer pawnShadow;
 	public Sprite PokeBall;
 
-	private enum Hapiness
-	{
-		SAD,
-		NORMAL,
-		HAPPY
+	[SerializeField] SpriteAnimatorBehaviour animator;
+
+	#endregion
+
+	#region Unity Functions
+
+	void OnDrawGizmos() {
+		if (!DrawGizmos) return;
+		// direction
+		Gizmos.color = Color.white;
+		Gizmos.DrawLine(Pawn.position, Pawn.position + (facingDirection.normalized));
 	}
 
 	void OnValidate() {
-		// pawn stuff
 		if (Pawn == null) Debug.LogError("No Pawn Transform provided", gameObject);
-		if (PawnReflection == null) Debug.LogError("No Pawn Reflection Transform provided", gameObject);
-		if (PawnLight == null) Debug.LogError("No Pawn Light Transform provided", gameObject);
-		if (PawnLightReflection == null) Debug.LogError("No Pawn Light Reflection Transform provided", gameObject);
 		if (pawnShadow == null) Debug.LogError("No Pawn Shadow Transform provided", gameObject);
-
+		if (spriteReflectionRenderer == null) Debug.LogError("No Pawn Reflection Sprite Renderer provided", gameObject);
+		if (spriteLightRenderer == null) Debug.LogError("No Pawn Light Sprite Renderer provided", gameObject);
+		if (spriteLightReflectionRenderer == null) Debug.LogError("No Pawn Light Reflection Sprite Renderer provided", gameObject);
 		if (Hitbox == null) Debug.LogError("No hitBox Tranform provided", gameObject); // Follower_Transparent
+		if (animator == null) Debug.LogError("No Sprite Animator provided", gameObject);
+		else {
+			animator.Animations = Pokemon.Animations;
+		}
 	}
 
-	// Use this for initialization
-	void Awake()
-	{
+	void Awake() {
 		//Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
-
-		sRenderer = Pawn.GetComponent<SpriteRenderer>();
-		sLRenderer = PawnLight.GetComponent<SpriteRenderer>();
-		sReflectionRenderer = PawnReflection.GetComponent<SpriteRenderer>();
-		sLReflectionRenderer = PawnLightReflection.GetComponent<SpriteRenderer>();
-
+		spriteRenderer = Pawn.GetComponent<SpriteRenderer>();
 		followerLight = GetComponentInChildren<Light>();
 	}
 
-	void Start()
-	{
-		Player = PlayerMovement.Singleton;
-		startPosition = transform.position;
-        return; // FIXME
+	void Start() {
+		playerMovement = PlayerMovement.Singleton;
 
-		if (PokemonUnity.Game.GameData.Trainer.party[0] == null) {
-			gameObject.SetActive(false);
-		} else {
-			if (GlobalVariables.Singleton.followerOut) {
-				followerLight.color = LightColor;
-				if (HasLight) {
-					followerLight.intensity = LightIntensity;
-				} else {
-					followerLight.intensity = 0;
-				}
-			
-				/*
-				if (direction == 0)
-				{
-					transform.Translate(Vector3.back);
-				}
-				else if (direction == 1)
-				{
-					transform.Translate(Vector3.left);
-				}
-				else if (direction == 2)
-				{
-					transform.Translate(Vector3.forward);
-				}
-				else if (direction == 3)
-				{
-					transform.Translate(Vector3.right);
-				}
-				*/
-				transform.position = startPosition;
-				changeFollower(followerIndex);
-				StartCoroutine("animateSprite");
-			} else {
-				Hide();
-			}
-		}
+        // FIXME: This is temporarily commented for debugging purposes
+        //if (PokemonUnity.Game.GameData.Trainer.party[0] == null) {
+        //    gameObject.SetActive(false);
+        //    return;
+        //}
+		//if (!GlobalVariables.Singleton.isFollowerOut) {
+		//	Hide();
+		//	return;
+		//}
+
+		adjustLightColorAndIntensity();
+		changeFollower(partyIndex);
+		//StartCoroutine(animateSprite());
 	}
 
-	private void LateUpdate()
-	{
-        return; // FIXME
-		if (!hide) {
-			float scale;
-
-			Transform cam = PlayerMovement.Singleton.transform.Find("Camera") != null
-				? PlayerMovement.Singleton.transform.Find("Camera")
-				: GameObject.Find("Camera").transform;
-
-			Vector3 position = cam.position - PlayerMovement.Singleton.GetCamOrigin();
-
-			if (transform.position.z > position.z)
-			{
-				scale = 0.0334f * (Math.Abs(transform.position.z - position.z))+0.9f;
-				if (transform.position.z > position.z + 3)
-				{
-					scale = 1;
-				}
-			}
-			else
-			{
-				scale = 0.9f;
-			}
-		
-			//scale = 0.0334f * (transform.position.z - PlayerMovement.player.transform.position.z)+0.9f;
-		
-			Pawn.transform.localScale = new Vector3(scale,scale,scale);
-		
-			Camera camera = PlayerMovement.Singleton.transform.Find("Camera") != null
-				? PlayerMovement.Singleton.transform.Find("Camera").GetComponent<Camera>()
-				: GameObject.Find("Camera").GetComponent<Camera>();
-		
-			Pawn.transform.LookAt(camera.transform);
-
-			//if (PlayerMovement.player.transform.Find("Camera") == null)
-			Pawn.transform.localRotation = Quaternion.Euler(camera.transform.rotation.x-50, 180, 0);
-		
-			Pawn.transform.Rotate( new Vector3(0, 180, 0), Space.Self );
-		
-			//pawnSprite.transform.rotation = PlayerMovement.player.transform.Find("Pawn").transform.rotation; 
-		}
+	void LateUpdate() {
+		if (IsHidden) return;
+		Camera camera = PlayerMovement.Singleton.PlayerCamera;
+		adjustScaleBasedOnCamera(camera);
+		updateRotation(camera);
+		//pawnSprite.transform.rotation = PlayerMovement.player.transform.Find("Pawn").transform.rotation; 
 	}
 
-	public IEnumerator move(Vector3 destination, float sentSpeed)
-	{
-		if (canMove)
-		{
-			hide = false;
+    #endregion
+
+	#region Movement
+
+	public void move(Vector3 destination, float sentSpeed) {
+		Vector3 startPosition = transform.position; // add follower's position offset
+		if (CanMove) {
+			IsHidden = false;
 			followerLight.enabled = true;
 			pawnShadow.enabled = true;
 			speed = sentSpeed;
-			startPosition = transform.position; //add follower's position offset
-			destinationPosition = destination;
-			Vector3 movement = destinationPosition - startPosition;
-			if (Mathf.Round(movement.x) > 0)
-			{
-				direction = 1;
-			}
-			else if (Mathf.Round(movement.x) < 0)
-			{
-				direction = 3;
-			}
-			else if (Mathf.Round(movement.z) > 0)
-			{
-				direction = 0;
-			}
-			else if (Mathf.Round(movement.z) < 0)
-			{
-				direction = 2;
-			}
-			while (Player.Increment < 1)
-			{
-				//because fak trying to use this thing's own increment. shit doesn't work for some reason.
-				transform.position = startPosition + (destinationPosition - startPosition) * Player.Increment;
-				Hitbox.position = destinationPosition;
-				yield return null;
-			}
-			transform.position = destinationPosition;
-			Hitbox.position = destinationPosition;
-		}
-		else if (hide)
-		{
-			while (Player.Increment < 1)
-			{
-				transform.position = Player.transform.position;
-				Hitbox.position = Player.transform.position;
-				yield return null;
-			}
-		}
-		else
-		{
-			startPosition = transform.position;
-			while (Player.Increment < 1)
-			{
-				transform.position = startPosition;
-				Hitbox.position = startPosition;
-				yield return null;
-			}
+			facingDirection = destination - startPosition;
+			direction = (int)facingDirection.ToMovementDirection(Vector3.forward, Vector3.up);
+			LeanTween.move(gameObject, destination, sentSpeed);
 		}
 	}
 
-	public void hideFollower()
-	{
-		hide = true;
-		transform.position = Player.transform.position;
+	void updateRotation(Camera camera) {
+		Pawn.transform.LookAt(camera.transform);
+		Pawn.transform.localRotation = Quaternion.Euler(camera.transform.rotation.x - 50, 180, 0);
+		Pawn.transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+		SwitchAnimation("Walk");
 	}
 
-	public IEnumerator releaseFromBall()
-	{
-		if (PokemonUnity.Game.GameData.Trainer.party[0] != null)
-		{
-			if (PlayerMovement.Singleton.NpcFollower == null)
-			{
-				GameObject ball = sRenderer.transform.parent.Find("pokeball").gameObject;
-				Player = PlayerMovement.Singleton;
-				
-				canMove = false;
-				followerLight.enabled = false;
-				sRenderer.sprite = null;
-				sLRenderer.sprite = null;
-				sReflectionRenderer.sprite = null;
-				sLReflectionRenderer.sprite = null;
-				pawnShadow.enabled = false;
-				sRenderer.sprite = null;
-				sLRenderer.sprite = null;
-				sReflectionRenderer.sprite = null;
-				sLReflectionRenderer.sprite = null;
-				hide = true;
-				ball.SetActive(false);
-				
-				followerLight.color = LightColor;
-				if (HasLight)
-				{
-					followerLight.intensity = LightIntensity;
-				}
-				else
-				{
-					followerLight.intensity = 0;
-				}
+	public void ActivateMove() => CanMove = true;
 
-				switch (Player.Direction)
-				{
-					case 0:
-						transform.Translate(Vector3.back);
-						transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, Player.transform.position.z-1);
-						break;
-					case 1:
-						transform.Translate(Vector3.left);
-						transform.position = new Vector3(Player.transform.position.x-1, Player.transform.position.y, Player.transform.position.z);
-						break;
-					case 2:
-						transform.Translate(Vector3.forward);
-						transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, Player.transform.position.z+1);
-						break;
-					case 3:
-						transform.Translate(Vector3.right);
-						transform.position = new Vector3(Player.transform.position.x+1, Player.transform.position.y, Player.transform.position.z);
-						break;
-				}
+	public void updateFollower() => changeFollower(0);
 
-				direction = Player.Direction;
-				
-				pawnShadow.enabled = true;
-				ball.SetActive(true);
-				yield return new WaitForSeconds(0.4f);
-				SfxHandler.Play(WithdrawClip);
-				
-				hide = false;
-				ball.SetActive(false);
-				followerLight.enabled = true;
-				changeFollower(followerIndex);
-				StartCoroutine("animateSprite");
-				canMove = true;
-				
-				GlobalVariables.Singleton.followerOut = true;
-			}
-			else
-			{
-				if (Player.setCheckBusyWith(this.gameObject))
-				{
-					Dialog.DrawBlackFrame();
-
-					if (Language.getLang() == Language.Country.FRANCAIS)
-					{
-						Dialog.StartCoroutine(Dialog.DrawText("Vous ne pouvez pas appeler " +
-															  PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
-															  " pour le moment."));
-					}
-					else
-					{
-						Dialog.StartCoroutine(Dialog.DrawText("You can't release " +
-															  PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
-															  " for now."));
-					}
-				
-					while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
-					{
-						yield return null;
-					}
-					Dialog.UndrawDialogBox();
-
-					Player.unsetCheckBusyWith(this.gameObject);
-				}
-			}
-		}
-
-		yield return null;
-	}
-
-	public IEnumerator withdrawToBall()
-	{
-		GameObject ball = sRenderer.transform.parent.Find("pokeball").gameObject;
-		StopCoroutine("animateSprite");
-		canMove = false;
-		followerLight.enabled = false;
-		sRenderer.sprite = null;
-		sLRenderer.sprite = null;
-		sReflectionRenderer.sprite = null;
-		sLReflectionRenderer.sprite = null;
-		ball.SetActive(true);
-		SfxHandler.Play(WithdrawClip);
-		float increment = 0f;
-		float time = 0.4f;
-		Vector3 lockedPosition = transform.position;
-		while (increment < 1)
-		{
-			increment += (1 / time) * Time.deltaTime;
-			if (increment > 1)
-			{
-				increment = 1;
-			}
-			transform.position = lockedPosition;
-			yield return null;
-		}
-		pawnShadow.enabled = false;
-		sRenderer.sprite = null;
-		sLRenderer.sprite = null;
-		sReflectionRenderer.sprite = null;
-		sLReflectionRenderer.sprite = null;
-		hide = true;
-		ball.SetActive(false);
-		transform.position = Player.transform.position;
-
-		GlobalVariables.Singleton.followerOut = false;
-		//StartCoroutine("animateSprite");
-	}
-
-	public void Hide()
-	{
-		StopCoroutine("animateSprite");
-		canMove = false;
-		followerLight.enabled = false;
-		sRenderer.sprite = null;
-		sLRenderer.sprite = null;
-		sReflectionRenderer.sprite = null;
-		sLReflectionRenderer.sprite = null;
-		pawnShadow.enabled = false;
-		sRenderer.sprite = null;
-		sLRenderer.sprite = null;
-		sReflectionRenderer.sprite = null;
-		sLReflectionRenderer.sprite = null;
-		hide = true;
-		transform.position = PlayerMovement.Singleton.transform.position;
-	}
-
-	public void ActivateMove()
-	{
-		canMove = true;
-	}
-
-	public void updateFollower()
-	{
-		changeFollower(0);
-	}
-
-	public void changeFollower(int index)
-	{
-		if (followerLight == null)
-		{
-			followerLight = GetComponentInChildren<Light>();
-		}
-		followerIndex = index;
-		pokemonID = (int)PokemonUnity.Game.GameData.Trainer.party[followerIndex].Species;
-		spriteSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetNewSprite(false);
-
-		HasLight = PokemonDatabase.getPokemon(pokemonID).hasLight();
-		LightIntensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
-		LightColor = PokemonDatabase.getPokemon(pokemonID).getLightColor();
-		lightSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetNewSprite(true);
-
-		if (lightSheet[0] == null)
-		{
-			sLRenderer.sprite = null;
-			sLReflectionRenderer.sprite = null;
-		}
-
-		followerLight.color = LightColor;
-		followerLight.intensity = LightIntensity;
-	}
-
-	public void reflect(bool setState)
-	{
-		//Debug.Log ("F Reflect");
-		sReflectionRenderer.enabled = setState;
-		sLReflectionRenderer.enabled = setState;
-	}
-
-	private IEnumerator animateSprite()
-	{
-		int frame = 0;
-		int light_frame = 0;
-		while (true)
-		{
-			for (int i = 0; i < 6; i++)
-			{
-				if (!hide)
-				{
-					int newDirection;
-					switch (direction)
-					{
-						case 0:
-							newDirection = 3;
-							break;
-						case 1:
-							newDirection = 2;
-							break;
-						case 2:
-							newDirection = 0;
-							break;
-						case 3:
-							newDirection = 1;
-							break;
-						default:
-							newDirection = 0;
-							break;
-					}
-					sRenderer.sprite = spriteSheet[newDirection * 4 + frame];
-					if (lightSheet.Length >= 16)
-						sLRenderer.sprite = lightSheet[newDirection * 4 + frame];
-					pawnShadow.enabled = true;
-				}
-				else
-				{
-					sRenderer.sprite = null;
-					sLRenderer.sprite = null;
-					pawnShadow.enabled = false;
-				}
-				sReflectionRenderer.sprite = sRenderer.sprite;
-				sLReflectionRenderer.sprite = sLRenderer.sprite;
-				if (i > 2)
-				{
-					//pawn.localPosition = new Vector3(-0.016f, 0.808f, -0.4f);
-					//pawnLight.localPosition = new Vector3(0, 0.171f, -0.36f);
-				}
-				else
-				{
-					//pawn.localPosition = new Vector3(-0.016f, 0.808f, -0.4f);
-					//pawnLight.localPosition = new Vector3(0, 0.201f, -0.305f);
-				}
-
-				float time = 0.055f;
-				
-				yield return new WaitForSeconds((PlayerMovement.Singleton.IsMoving && PlayerMovement.Singleton.IsRunning) ? time / 2 : time);
-			}
-
-			frame++;
-			if (frame > 3) frame = 0;
-			light_frame = (light_frame == 0) ? 1 : 0;
-		}
-	}
-	
-	private float PlayCry(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-	{
-		//SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
-		//return pokemon.GetCry().length / pokemon.GetCryPitch();
-		return 0;
-	}
-
-	private void playClip(AudioClip clip)
-	{
-		AudioSource PlayerAudio = PlayerMovement.Singleton.GetAudio();
-		
-		PlayerAudio.clip = clip;
-		PlayerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
-		PlayerAudio.Play();
-	}
-
-	private IEnumerator PlayCryAndWait(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
-	{
-		yield return new WaitForSeconds(PlayCry(pokemon));
-	}
-	
-	public IEnumerator jump()
-	{
+	public IEnumerator jump() {
 		float increment = 0f;
 		float parabola = 0;
 		float height = 2.1f;
@@ -527,11 +146,9 @@ public class FollowerMovement : MonoBehaviour
 
 		playClip(PlayerMovement.Singleton.jumpClip);
 
-		while (increment < 1)
-		{
+		while (increment < 1) {
 			increment += (1 / PlayerMovement.Singleton.WalkSpeed) * Time.deltaTime;
-			if (increment > 1)
-			{
+			if (increment > 1) {
 				increment = 1;
 			}
 			parabola = -height * (increment * increment) + (height * increment);
@@ -543,15 +160,115 @@ public class FollowerMovement : MonoBehaviour
 		playClip(PlayerMovement.Singleton.landClip);
 	}
 
-	public IEnumerator interact()
-	{
-		if (!hide)
+	#endregion
+
+	#region Animation
+
+	public void SwitchAnimation(string newAnimationName) {
+		string animationName = newAnimationName + facingDirection.ToDirectionString(Vector3.forward, Vector3.up);
+        Debug.Log(animationName);
+        animator.SwitchAnimation(animationName);
+	}
+
+	//private IEnumerator animateSprite() {
+	//	int frame = 0;
+	//	int light_frame = 0;
+	//	while (true) {
+	//		for (int i = 0; i < 6; i++) {
+	//			if (!IsHidden) {
+	//				int newDirection;
+	//				switch (direction) {
+	//					case 0:
+	//						newDirection = 3;
+	//						break;
+	//					case 1:
+	//						newDirection = 2;
+	//						break;
+	//					case 2:
+	//						newDirection = 0;
+	//						break;
+	//					case 3:
+	//						newDirection = 1;
+	//						break;
+	//					default:
+	//						newDirection = 0;
+	//						break;
+	//				}
+	//				spriteRenderer.sprite = spriteSheet[newDirection * 4 + frame];
+	//				if (lightSheet.Length >= 16)
+	//					spriteLightRenderer.sprite = lightSheet[newDirection * 4 + frame];
+	//				pawnShadow.enabled = true;
+	//			}
+	//			else
+	//			{
+	//				spriteRenderer.sprite = null;
+	//				spriteLightRenderer.sprite = null;
+	//				pawnShadow.enabled = false;
+	//			}
+	//			spriteReflectionRenderer.sprite = spriteRenderer.sprite;
+	//			spriteLightReflectionRenderer.sprite = spriteLightRenderer.sprite;
+	//			if (i > 2)
+	//			{
+	//				//pawn.localPosition = new Vector3(-0.016f, 0.808f, -0.4f);
+	//				//pawnLight.localPosition = new Vector3(0, 0.171f, -0.36f);
+	//			}
+	//			else
+	//			{
+	//				//pawn.localPosition = new Vector3(-0.016f, 0.808f, -0.4f);
+	//				//pawnLight.localPosition = new Vector3(0, 0.201f, -0.305f);
+	//			}
+
+	//			float time = 0.055f;
+				
+	//			yield return new WaitForSeconds((PlayerMovement.Singleton.IsMoving && PlayerMovement.Singleton.IsRunning) ? time / 2 : time);
+	//		}
+
+	//		frame++;
+	//		if (frame > 3) frame = 0;
+	//		light_frame = (light_frame == 0) ? 1 : 0;
+	//	}
+	//}
+
+	#endregion
+
+	#region Audio 
+
+	private float PlayCry(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
+		//SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
+		//return pokemon.GetCry().length / pokemon.GetCryPitch();
+		return 0;
+	}
+
+	private void playClip(AudioClip clip) {
+		AudioSource PlayerAudio = PlayerMovement.Singleton.GetAudio();
+
+		PlayerAudio.clip = clip;
+		PlayerAudio.volume = PlayerPrefs.GetFloat("sfxVolume");
+		PlayerAudio.Play();
+	}
+
+	private IEnumerator PlayCryAndWait(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
+		yield return new WaitForSeconds(PlayCry(pokemon));
+	}
+
+	#endregion
+
+	#region Player Interactions
+
+	private enum Happiness {
+		SAD,
+		NORMAL,
+		HAPPY
+	}
+
+	public IEnumerator interact() {
+		if (!IsHidden)
 		{
-			if (Player.setCheckBusyWith(this.gameObject))
+			if (playerMovement.setCheckBusyWith(this.gameObject))
 			{
 				//calculate Player's position relative to target object's and set direction accordingly. (Face the player)
-				float xDistance = this.transform.position.x - Player.gameObject.transform.position.x;
-				float zDistance = this.transform.position.z - Player.gameObject.transform.position.z;
+				float xDistance = this.transform.position.x - playerMovement.gameObject.transform.position.x;
+				float zDistance = this.transform.position.z - playerMovement.gameObject.transform.position.z;
 				if (xDistance >= Mathf.Abs(zDistance))
 				{
 					//Mathf.Abs() converts zDistance to a positive always.
@@ -571,22 +288,22 @@ public class FollowerMovement : MonoBehaviour
 				}
 
 				// Interaction
-				if (SaveData.currentSave.PC.boxes[0][followerIndex].getPercentHP() < 0.25f) // Low HP
+				if (SaveData.currentSave.PC.boxes[0][partyIndex].getPercentHP() < 0.25f) // Low HP
 				{
 					yield return StartCoroutine(interaction_tired());
 				}
 				else  // Casual Interaction
 				{
-					Hapiness h = getFollowerWeatherHappiness();
+					Happiness h = getFollowerWeatherHappiness();
 					float val = UnityEngine.Random.value;
 
 
-					if (h == Hapiness.SAD)
+					if (h == Happiness.SAD)
 					{
 						// Weather Interaction
 						yield return StartCoroutine(interaction_weather_sad());
 					}
-					else if (h == Hapiness.HAPPY)
+					else if (h == Happiness.HAPPY)
 					{
 						if (val < 0.25f)
 						{
@@ -618,14 +335,13 @@ public class FollowerMovement : MonoBehaviour
 				
 				// End
 				
-				Player.unsetCheckBusyWith(this.gameObject);
+				playerMovement.unsetCheckBusyWith(this.gameObject);
 			}
 		}
 	}
 
-	private Hapiness getFollowerWeatherHappiness()
-	{
-		if (WeatherHandler.currentWeather == null) return Hapiness.NORMAL;
+	private Happiness getFollowerWeatherHappiness() {
+		if (WeatherHandler.currentWeather == null) return Happiness.NORMAL;
 		/*if (WeatherHandler.currentWeather.type == Weather.WeatherType.Rain)
 		{
 			if (PokemonUnity.Game.GameData.Trainer.party[followerIndex].Type1 == PokemonUnity.Types.WATER ||
@@ -709,14 +425,13 @@ public class FollowerMovement : MonoBehaviour
 			}
 		}*/
 		
-		return Hapiness.NORMAL;
+		return Happiness.NORMAL;
 	}
 	
-	public IEnumerator interaction_weather_happy()
-	{
+	public IEnumerator interaction_weather_happy() {
 		yield return StartCoroutine(jump());
 		yield return StartCoroutine(jump());
-		yield return StartCoroutine(PlayCryAndWait(PokemonUnity.Game.GameData.Trainer.party[followerIndex]));
+		yield return StartCoroutine(PlayCryAndWait(PokemonUnity.Game.GameData.Trainer.party[partyIndex]));
 		yield return new WaitForSeconds(0.2f);
 		Dialog.DrawBlackFrame();
 		switch (Language.getLang())
@@ -726,14 +441,14 @@ public class FollowerMovement : MonoBehaviour
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" is enjoying the rain."));
 				}
 				else
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" is enjoying the weather."));
 				}
 				
@@ -743,14 +458,14 @@ public class FollowerMovement : MonoBehaviour
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" apprécie être sous la pluie."));
 				}
 				else
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" apprécie la météo."));
 				}
 				
@@ -764,8 +479,7 @@ public class FollowerMovement : MonoBehaviour
 		Dialog.UndrawDialogBox();
 	}
 	
-	public IEnumerator interaction_weather_sad()
-	{
+	public IEnumerator interaction_weather_sad() {
 		yield return new WaitForSeconds(0.2f);
 		Dialog.DrawBlackFrame();
 		switch (Language.getLang())
@@ -775,21 +489,21 @@ public class FollowerMovement : MonoBehaviour
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" seems to hate being soaked."));
 				}
 				else if (WeatherHandler.currentWeather.name == "Sandstorm")
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" gets sand in the eyes."));
 				}
 				else
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" seems to complain about the weather."));
 				}
 				
@@ -799,21 +513,21 @@ public class FollowerMovement : MonoBehaviour
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" semble détester être trempé."));
 				}
 				else if (WeatherHandler.currentWeather.type == Weather.WeatherType.Sand)
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" a du sable dans les yeux."));
 				}
 				else
 				{
 					yield return
 						Dialog.StartCoroutine(Dialog.DrawText(
-							PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+							PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 							" semble se plaindre de la météo."));
 				}
 				
@@ -827,11 +541,10 @@ public class FollowerMovement : MonoBehaviour
 		Dialog.UndrawDialogBox();
 	}
 
-	public IEnumerator interaction_1()
-	{
+	public IEnumerator interaction_1() {
 		yield return StartCoroutine(jump());
 		yield return StartCoroutine(jump());
-		yield return StartCoroutine(PlayCryAndWait(PokemonUnity.Game.GameData.Trainer.party[followerIndex]));
+		yield return StartCoroutine(PlayCryAndWait(PokemonUnity.Game.GameData.Trainer.party[partyIndex]));
 		yield return new WaitForSeconds(0.2f);
 		Dialog.DrawBlackFrame();
 		switch (Language.getLang())
@@ -839,13 +552,13 @@ public class FollowerMovement : MonoBehaviour
 			default:
 				yield return
 					Dialog.StartCoroutine(Dialog.DrawText(
-						PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+						PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 						" seems very happy."));
 				break;
 			case (Language.Country.FRANCAIS):
 				yield return
 					Dialog.StartCoroutine(Dialog.DrawText(
-						PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+						PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 						" semble très heureux."));
 				break;
 		}
@@ -857,8 +570,7 @@ public class FollowerMovement : MonoBehaviour
 		Dialog.UndrawDialogBox();
 	}
 	
-	public IEnumerator interaction_2()
-	{
+	public IEnumerator interaction_2() {
 		direction = (direction + 1) % 4;
 		yield return new WaitForSeconds(0.5f);
 		direction = (direction + 1) % 4;
@@ -883,13 +595,12 @@ public class FollowerMovement : MonoBehaviour
 		yield return new WaitForSeconds(0.1f);
 		direction = (direction + 1) % 4;
 		yield return StartCoroutine(jump());
-		yield return StartCoroutine(PlayCryAndWait(PokemonUnity.Game.GameData.Trainer.party[followerIndex]));
+		yield return StartCoroutine(PlayCryAndWait(PokemonUnity.Game.GameData.Trainer.party[partyIndex]));
 		yield return new WaitForSeconds(0.2f);
 	}
 	
-	public IEnumerator interaction_tired()
-	{
-		yield return StartCoroutine(PlayCryAndWait(PokemonUnity.Game.GameData.Trainer.party[followerIndex]));
+	public IEnumerator interaction_tired() {
+		yield return StartCoroutine(PlayCryAndWait(PokemonUnity.Game.GameData.Trainer.party[partyIndex]));
 		yield return new WaitForSeconds(0.2f);
 		Dialog.DrawBlackFrame();
 		switch (Language.getLang())
@@ -897,13 +608,13 @@ public class FollowerMovement : MonoBehaviour
 			default:
 				yield return
 					Dialog.StartCoroutine(Dialog.DrawText(
-						PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+						PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 						" is tired."));
 				break;
 			case (Language.Country.FRANCAIS):
 				yield return
 					Dialog.StartCoroutine(Dialog.DrawText(
-						PokemonUnity.Game.GameData.Trainer.party[followerIndex].Name +
+						PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
 						" est fatigué."));
 				break;
 		}
@@ -914,4 +625,213 @@ public class FollowerMovement : MonoBehaviour
 		}
 		Dialog.UndrawDialogBox();
 	}
+
+	#endregion
+
+	#region Other
+
+	void adjustLightColorAndIntensity() {
+		followerLight.color = LightColor;
+		if (HasLight)
+			followerLight.intensity = LightIntensity;
+		else
+			followerLight.intensity = 0;
+	}
+
+	void adjustScaleBasedOnCamera(Camera camera) {
+		float scale;
+
+		Vector3 camPosition = camera.transform.position - PlayerMovement.Singleton.GetCamOrigin();
+
+		if (transform.position.z > camPosition.z) {
+			scale = 0.0334f * (Math.Abs(transform.position.z - camPosition.z)) + 0.9f;
+			if (transform.position.z > camPosition.z + 3)
+				scale = 1;
+		} else
+			scale = 0.9f;
+
+		//scale = 0.0334f * (transform.position.z - PlayerMovement.player.transform.position.z)+0.9f;
+
+		Pawn.transform.localScale = new Vector3(scale, scale, scale);
+	}
+
+	public IEnumerator withdrawToBall() {
+		GameObject ball = spriteRenderer.transform.parent.Find("pokeball").gameObject;
+		StopCoroutine("animateSprite");
+		CanMove = false;
+		followerLight.enabled = false;
+		spriteRenderer.sprite = null;
+		spriteLightRenderer.sprite = null;
+		spriteReflectionRenderer.sprite = null;
+		spriteLightReflectionRenderer.sprite = null;
+		ball.SetActive(true);
+		SfxHandler.Play(WithdrawClip);
+		float increment = 0f;
+		float time = 0.4f;
+		Vector3 lockedPosition = transform.position;
+		while (increment < 1) {
+			increment += (1 / time) * Time.deltaTime;
+			if (increment > 1) {
+				increment = 1;
+			}
+			transform.position = lockedPosition;
+			yield return null;
+		}
+		pawnShadow.enabled = false;
+		spriteRenderer.sprite = null;
+		spriteLightRenderer.sprite = null;
+		spriteReflectionRenderer.sprite = null;
+		spriteLightReflectionRenderer.sprite = null;
+		IsHidden = true;
+		ball.SetActive(false);
+		transform.position = playerMovement.transform.position;
+
+		GlobalVariables.Singleton.isFollowerOut = false;
+		//StartCoroutine("animateSprite");
+	}
+
+	public void Hide() {
+		StopCoroutine("animateSprite");
+		CanMove = false;
+		followerLight.enabled = false;
+		spriteRenderer.sprite = null;
+		spriteLightRenderer.sprite = null;
+		spriteReflectionRenderer.sprite = null;
+		spriteLightReflectionRenderer.sprite = null;
+		pawnShadow.enabled = false;
+		spriteRenderer.sprite = null;
+		spriteLightRenderer.sprite = null;
+		spriteReflectionRenderer.sprite = null;
+		spriteLightReflectionRenderer.sprite = null;
+		IsHidden = true;
+		transform.position = PlayerMovement.Singleton.transform.position;
+	}
+
+	public void changeFollower(int partyIndex) {
+		if (followerLight == null) {
+			followerLight = GetComponentInChildren<Light>();
+		}
+		this.partyIndex = partyIndex;
+        //pokemonID = (int)PokemonUnity.Game.GameData.Trainer.party[followerIndex].Species;
+        PokemonSO pokemon = (PokemonSO)playerMovement.Trainer.party[this.partyIndex];
+		pokemonID = (int)pokemon.Species;
+		//spriteSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetNewSprite(false);
+		animator.Animations = pokemon.Animations;
+		return; // FIXME: need to merge where pokemon data is being grabbed between the PokemonDatabase class and Flaks current methods
+        HasLight = PokemonDatabase.getPokemon(pokemonID).hasLight();
+        LightIntensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
+        LightColor = PokemonDatabase.getPokemon(pokemonID).getLightColor();
+        lightSheet = SaveData.currentSave.PC.boxes[0][this.partyIndex].GetNewSprite(true);
+
+        if (lightSheet[0] == null) {
+			spriteLightRenderer.sprite = null;
+			spriteLightReflectionRenderer.sprite = null;
+		}
+
+		followerLight.color = LightColor;
+		followerLight.intensity = LightIntensity;
+	}
+
+	public void reflect(bool setState) {
+		//Debug.Log ("F Reflect");
+		spriteReflectionRenderer.enabled = setState;
+		spriteLightReflectionRenderer.enabled = setState;
+	}
+
+
+	public void hideFollower() {
+		IsHidden = true;
+		transform.position = playerMovement.transform.position;
+	}
+
+	public IEnumerator releaseFromBall() {
+		if (PokemonUnity.Game.GameData.Trainer.party[0] != null) {
+			if (PlayerMovement.Singleton.NpcFollower == null) {
+				GameObject ball = spriteRenderer.transform.parent.Find("pokeball").gameObject;
+				playerMovement = PlayerMovement.Singleton;
+
+				CanMove = false;
+				followerLight.enabled = false;
+				spriteRenderer.sprite = null;
+				spriteLightRenderer.sprite = null;
+				spriteReflectionRenderer.sprite = null;
+				spriteLightReflectionRenderer.sprite = null;
+				pawnShadow.enabled = false;
+				spriteRenderer.sprite = null;
+				spriteLightRenderer.sprite = null;
+				spriteReflectionRenderer.sprite = null;
+				spriteLightReflectionRenderer.sprite = null;
+				IsHidden = true;
+				ball.SetActive(false);
+
+				followerLight.color = LightColor;
+				if (HasLight) {
+					followerLight.intensity = LightIntensity;
+				} else {
+					followerLight.intensity = 0;
+				}
+
+				switch (playerMovement.Direction) {
+					case 0:
+						transform.Translate(Vector3.back);
+						transform.position = new Vector3(playerMovement.transform.position.x, playerMovement.transform.position.y, playerMovement.transform.position.z - 1);
+						break;
+					case 1:
+						transform.Translate(Vector3.left);
+						transform.position = new Vector3(playerMovement.transform.position.x - 1, playerMovement.transform.position.y, playerMovement.transform.position.z);
+						break;
+					case 2:
+						transform.Translate(Vector3.forward);
+						transform.position = new Vector3(playerMovement.transform.position.x, playerMovement.transform.position.y, playerMovement.transform.position.z + 1);
+						break;
+					case 3:
+						transform.Translate(Vector3.right);
+						transform.position = new Vector3(playerMovement.transform.position.x + 1, playerMovement.transform.position.y, playerMovement.transform.position.z);
+						break;
+				}
+
+				direction = playerMovement.Direction;
+
+				pawnShadow.enabled = true;
+				ball.SetActive(true);
+				yield return new WaitForSeconds(0.4f);
+				SfxHandler.Play(WithdrawClip);
+
+				IsHidden = false;
+				ball.SetActive(false);
+				followerLight.enabled = true;
+				changeFollower(partyIndex);
+				StartCoroutine("animateSprite");
+				CanMove = true;
+
+				GlobalVariables.Singleton.isFollowerOut = true;
+			} else {
+				if (playerMovement.setCheckBusyWith(this.gameObject)) {
+					Dialog.DrawBlackFrame();
+
+					if (Language.getLang() == Language.Country.FRANCAIS) {
+						Dialog.StartCoroutine(Dialog.DrawText("Vous ne pouvez pas appeler " +
+															  PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
+															  " pour le moment."));
+					} else {
+						Dialog.StartCoroutine(Dialog.DrawText("You can't release " +
+															  PokemonUnity.Game.GameData.Trainer.party[partyIndex].Name +
+															  " for now."));
+					}
+
+					while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back")) {
+						yield return null;
+					}
+					Dialog.UndrawDialogBox();
+
+					playerMovement.unsetCheckBusyWith(this.gameObject);
+				}
+			}
+		}
+
+		yield return null;
+	}
+
+	#endregion
+
 }

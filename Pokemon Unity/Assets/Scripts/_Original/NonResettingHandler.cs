@@ -108,7 +108,7 @@ public class NonResettingHandler : MonoBehaviour
                             events[i].GetComponent<NPCHandler>().direction = sceneNonResettingList.sceneFollowerEvents[i].direction;
 
                             PlayerMovement.Singleton.NpcFollower = events[i].GetComponent<NPCFollower>();
-                            GlobalVariables.Singleton.followerOut = false;
+                            GlobalVariables.Singleton.isFollowerOut = false;
                         }
                     }
                 }

@@ -184,7 +184,7 @@ public class SaveData
 
         currentSave.playerID = 29482;
 
-        GlobalVariables.Singleton.followerOut = currentSave.followerOut;
+        GlobalVariables.Singleton.isFollowerOut = currentSave.followerOut;
 
         currentSave.playerHaircut = CosmeticDatabase.getHaircut("default", SaveData.currentSave.isMale);
 

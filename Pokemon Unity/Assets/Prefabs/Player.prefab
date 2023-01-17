@@ -304,7 +304,7 @@ Transform:
   - {fileID: 4975417707132642943}
   - {fileID: 4975417707146510744}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &4975417706449109252
 AudioSource:
@@ -414,6 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb46e7a9813a20c428cf41ea42f25f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Trainer: {fileID: 11400000, guid: 7dac1cdb0fc39ae46b498a8bab835939, type: 2}
   busyWith: {fileID: 0}
   canInput: 1
   DrawGizmos: 1
@@ -1108,13 +1109,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4975417707229743878}
   - component: {fileID: 840571785}
+  - component: {fileID: 4482851812422651238}
   m_Layer: 0
   m_Name: Follower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4975417707229743878
 Transform:
   m_ObjectHideFlags: 0
@@ -1149,23 +1151,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ffbf827ca3fa4449ef1f592b3fe005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pokemonID: 6
+  Pokemon: {fileID: 11400000, guid: 895611169deee6947b56b4bf963157da, type: 2}
+  DrawGizmos: 1
+  pokemonID: 197
   direction: 2
   speed: 0
-  hide: 0
+  IsHidden: 0
   moving: 0
-  canMove: 1
+  CanMove: 1
   Pawn: {fileID: 4975417707014361487}
-  PawnLight: {fileID: 4975417706953077911}
-  PawnReflection: {fileID: 4975417706298323194}
-  PawnLightReflection: {fileID: 4975417706440232383}
   Hitbox: {fileID: 4975417708300818537}
   WithdrawClip: {fileID: 8300000, guid: ff1ff8776f2d587469cce2f1b881c44c, type: 3}
   HasLight: 0
   LightColor: {r: 0, g: 0, b: 0, a: 0}
   LightIntensity: 0
+  spriteLightRenderer: {fileID: 4975417706953077912}
+  spriteReflectionRenderer: {fileID: 4975417706298323195}
+  spriteLightReflectionRenderer: {fileID: 4975417706440232352}
   pawnShadow: {fileID: 4975417706757941668}
   PokeBall: {fileID: 21300000, guid: bfbae2e2da5b05943ba13b5c8444dfbd, type: 3}
+  animator: {fileID: 4482851812422651238}
+--- !u!114 &4482851812422651238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975417707229743877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActiveAnimationIndex: 0
+  SpriteRenderer: {fileID: 4975417707014361584}
+  ReflectionSpriteRenderer: {fileID: 4975417706298323195}
+  Paused: 0
+  Animations:
+  - {fileID: 11400000, guid: c36a91850f8bf7f45a8c0cc091404f06, type: 2}
+  - {fileID: 11400000, guid: fc375e76f7dce4e40ad5b264cf5d9971, type: 2}
+  - {fileID: 11400000, guid: 58d5ce6aa497c834491e8a9607cdf54b, type: 2}
+  - {fileID: 11400000, guid: 281e7695d5c5238468293075ceda9cb3, type: 2}
 --- !u!1 &4975417707924282749
 GameObject:
   m_ObjectHideFlags: 0

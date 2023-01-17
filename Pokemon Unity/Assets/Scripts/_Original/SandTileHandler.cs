@@ -82,7 +82,7 @@ public class SandTileHandler : MonoBehaviour
                 }
                 else if (other.transform.parent.GetComponent<FollowerMovement>() != null)
                 {
-                    if (!other.transform.parent.GetComponent<FollowerMovement>().hide)
+                    if (!other.transform.parent.GetComponent<FollowerMovement>().IsHidden)
                     {
                         switch (other.transform.parent.GetComponent<FollowerMovement>().direction)
                         {

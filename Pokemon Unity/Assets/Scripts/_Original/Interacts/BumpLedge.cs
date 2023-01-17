@@ -18,7 +18,7 @@ public class BumpLedge : MonoBehaviour
             
                 PlayerMovement.Singleton.PauseInput();
                 
-                PlayerMovement.Singleton.Follower.canMove = false;
+                PlayerMovement.Singleton.Follower.CanMove = false;
                 PlayerMovement.Singleton.forceMoveForward(2);
                 
                 if (!PlayerMovement.Singleton.IsRunning)
@@ -34,9 +34,9 @@ public class BumpLedge : MonoBehaviour
                 }
                 yield return new WaitForSeconds(PlayerMovement.Singleton.Speed);
 
-                if (GlobalVariables.Singleton.followerOut)
+                if (GlobalVariables.Singleton.isFollowerOut)
                 {
-                    PlayerMovement.Singleton.Follower.canMove = true;
+                    PlayerMovement.Singleton.Follower.CanMove = true;
                 }
                 if (!PlayerMovement.Singleton.busyWith)
                 {

@@ -5446,7 +5446,7 @@ public partial class BattleHandler : MonoBehaviour
 //		Debug.Log(pokemon[0].Name+": HP: "+pokemon[0].TotalHP+"ATK: "+pokemon[0].ATK+"DEF: "+pokemon[0].DEF+"SPA: "+pokemon[0].SPA+"SPD: "+pokemon[0].SPD+"SPE:"+pokemon[0].SPE);
 //		Debug.Log(pokemon[3].Name+": HP: "+pokemon[3].TotalHP+"ATK: "+pokemon[3].ATK+"DEF: "+pokemon[3].DEF+"SPA: "+pokemon[3].SPA+"SPD: "+pokemon[3].SPD+"SPE:"+pokemon[3].SPE);
 
-        if (GlobalVariables.Singleton.followerOut)
+        if (GlobalVariables.Singleton.isFollowerOut)
         {
             Animator trainerAnim = BattleScene.transform.Find("player_trainer").GetComponent<Animator>();
             
@@ -5549,7 +5549,7 @@ public partial class BattleHandler : MonoBehaviour
                 StartCoroutine(Dialog.DrawTextSilent(opponentName + " sent out " + pokemon[3].Name + "!\n" + opponent2Name + " sent out " + pokemon[4].Name + "!"));
             }
             StartCoroutine(dismissPartyBar(true));
-            if (GlobalVariables.Singleton.followerOut)
+            if (GlobalVariables.Singleton.isFollowerOut)
             {
                 StartCoroutine(dismissPartyBar(false));
             }
@@ -5564,7 +5564,7 @@ public partial class BattleHandler : MonoBehaviour
             //yield return new WaitForSeconds(0.3f);
             //yield return StartCoroutine(slidePokemonStats(3, false));
             yield return new WaitForSeconds(0.9f);
-            if (!GlobalVariables.Singleton.followerOut)
+            if (!GlobalVariables.Singleton.isFollowerOut)
             {
                 SfxHandler.Play(partyBallsClip, 1f, 0.95f);
                 //StartCoroutine(displayPartyBar(false, Game.GameData.Trainer.party));
@@ -5634,7 +5634,7 @@ public partial class BattleHandler : MonoBehaviour
             */
         }
 
-        if (!GlobalVariables.Singleton.followerOut)
+        if (!GlobalVariables.Singleton.isFollowerOut)
         {
             yield return playerLaunchingBall(trainerBattle, doubleBattle, ally);
         }
@@ -5693,7 +5693,7 @@ public partial class BattleHandler : MonoBehaviour
             }
         }*/
 
-        if (GlobalVariables.Singleton.followerOut)
+        if (GlobalVariables.Singleton.isFollowerOut)
         {
             yield return StartCoroutine(slidePokemonStatsFast(0, false));
         }

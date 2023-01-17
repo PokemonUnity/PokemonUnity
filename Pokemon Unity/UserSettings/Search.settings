@@ -18,7 +18,7 @@ scopes = {
 	"currentGroup.8BEC98E7" = "scene"
 	"last_search.AE24D059" = ""
 	"OpenInspectorPreview.AE24D059" = "0"
-	"currentGroup.AE24D059" = "all"
+	"currentGroup.AE24D059" = "asset"
 	"last_search.7788661B" = "player"
 	"OpenInspectorPreview.7788661B" = "0"
 	"currentGroup.7788661B" = "_group_provider_Files"
@@ -68,8 +68,10 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
-	"t:sprite t:texture2d t:folder"
+	"t:"
+	"t"
 	"player"
+	"t:sprite t:texture2d t:folder"
 	"t:tmpro.tmp_fontasset "
 	"t:sprite menuButto"
 	"t:sprite mainButton"

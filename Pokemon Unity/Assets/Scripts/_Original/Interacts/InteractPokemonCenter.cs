@@ -67,7 +67,7 @@ public class InteractPokemonCenter : MonoBehaviour
     {
         if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
         {
-            bool followerOut = GlobalVariables.Singleton.followerOut;
+            bool followerOut = GlobalVariables.Singleton.isFollowerOut;
             
             for (int i = 0; i < 6; i++)
             {
@@ -216,7 +216,7 @@ public class InteractPokemonCenter : MonoBehaviour
                 {
                     StartCoroutine(PlayerMovement.Singleton.Follower.releaseFromBall());
                 }
-                PlayerMovement.Singleton.Follower.canMove = true;
+                PlayerMovement.Singleton.Follower.CanMove = true;
             }
 
             Dialog.DrawDialogBox();
@@ -244,7 +244,7 @@ public class InteractPokemonCenter : MonoBehaviour
     {
         if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
         {
-            bool followerOut = GlobalVariables.Singleton.followerOut;
+            bool followerOut = GlobalVariables.Singleton.isFollowerOut;
             
             for (int i = 0; i < 6; i++)
             {
@@ -363,7 +363,7 @@ public class InteractPokemonCenter : MonoBehaviour
                 yield return null;
             }
 
-            PlayerMovement.Singleton.Follower.canMove = true;
+            PlayerMovement.Singleton.Follower.CanMove = true;
 
             Dialog.DrawDialogBox();
             switch (Language.getLang())

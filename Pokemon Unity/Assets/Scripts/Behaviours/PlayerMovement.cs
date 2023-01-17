@@ -29,6 +29,7 @@ using System.Collections.Generic;
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Singleton;
+    public TrainerSO Trainer;
 
     #region Variables
 
@@ -80,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] UnityEngine.Sprite[] spriteSheet;
     public Transform Hitbox;
 
-    [Header("Follower")]
+    [Header("Followers")]
     public FollowerMovement Follower;
     public NPCFollower NpcFollower;
 
@@ -116,7 +117,12 @@ public class PlayerMovement : MonoBehaviour
 
     void OnDrawGizmos() {
         if (!DrawGizmos) return;
-        Gizmos.DrawLine(transform.position, transform.position + (directionInput * 2));
+        // inputted direction
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + (directionInput.normalized));
+        // direction
+        Gizmos.color = Color.white;
+        Gizmos.DrawLine(transform.position, transform.position + (FacingDirection.normalized));
     }
 
     void OnValidate() {
@@ -136,11 +142,12 @@ public class PlayerMovement : MonoBehaviour
             animator = GetComponent<SpriteAnimatorBehaviour>();
             if (animator == null) 
                 Debug.LogError("No mount sprite found or provided", gameObject);
+        } else {
+            animator.Animations = Trainer.Animations;
         }
     }
 
-    void Awake()
-    {
+    void Awake() {
         playerAudio = transform.GetComponent<AudioSource>();
 
         //set up the reference to this script.
@@ -350,15 +357,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleInputDebug(CallbackContext context) {
         Debug.Log(currentMap.GetTileTag(transform.position));
-        if (Follower.canMove)
-            Follower.StartCoroutine("withdrawToBall");
+        if (Follower.CanMove)
+            Follower.StartCoroutine(Follower.withdrawToBall());
         else
-            Follower.canMove = true;
+            Follower.CanMove = true;
     }
 
     public void HandleInputMove(CallbackContext context) {
         var input = context.ReadValue<Vector2>();
-        Debug.Log("New Input: " + input.ToString());
         directionInput = new Vector3(input.x, 0f, input.y);
         this.shouldTryToMove = shouldTryToMove();
         if (this.shouldTryToMove && !IsMoving)
@@ -387,12 +393,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void UpdateDirection(Vector3 newDirection) {
         if (shouldChangeDirection(directionInput)) {
-            Debug.Log("Changing Direction");
             // unless player has just moved, wait a small amount of time to ensure that they have time to let go before moving 
             // (allows only turning)
             //if (!IsMoving)
             //    yield return new WaitForSeconds(directionChangeInputDelay);
-            Direction = (int)newDirection.ToMovementDirection();
+            Direction = (int)newDirection.ToMovementDirection(PlayerCamera.transform.forward, transform.up);
             FacingDirection = newDirection;
             mount.UpdateDirection(FacingDirection);
             //FIXME
@@ -485,7 +490,6 @@ public class PlayerMovement : MonoBehaviour
             //if yDistance is greater than both slopes there is a vertical wall between them
             return movement;
         }
-        Debug.Log($"Movement Vector: {movement}");
         return Vector3.zero;
     }
 
@@ -494,7 +498,7 @@ public class PlayerMovement : MonoBehaviour
     [Obsolete]
     public IEnumerator move(Vector3 movement, bool canEncounter = true, bool lockFollower = false) {
         move(canEncounter, lockFollower);
-        yield return null;
+        yield break;
     }
 
     public void move(bool canEncounter = true, bool lockFollower = false) {
@@ -502,8 +506,6 @@ public class PlayerMovement : MonoBehaviour
 
         UpdateDirection(directionInput);
         Vector3 movement = GetMovementVector(FacingDirection, false);
-
-        Debug.Log("Moving");
 
         //yield return new WaitForSeconds(0.4f);
 
@@ -535,7 +537,7 @@ public class PlayerMovement : MonoBehaviour
                         IsMoving = true;
                         Increment = 0;
 
-                        if (!lockFollower) StartCoroutine(Follower.move(startPosition, Speed));
+                        if (!lockFollower) Follower.move(startPosition, Speed);
                         if (NpcFollower != null) StartCoroutine(NpcFollower.move(startPosition, Speed));
 
                         updateAnimation();
@@ -583,19 +585,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        //IEnumerator move(Vector3 startPosition, Vector3 movement) {
-        //    animPause = false;
-        //    while (Increment < 1f) {
-        //        //increment increases slowly to 1 over the frames
-        //        Increment += (1f / Speed) * Time.deltaTime;
-        //        //speed is determined by how many squares are crossed in one second
-        //        if (Increment > 1f) {
-        //            Increment = 1f;
-        //        }
-        //        transform.position = startPosition + (movement * Increment);
-        //        yield return null;
-        //    }
-        //}
         bool checkForBridgeCollision(Vector3 movement) => MapCollider.GetBridgeHitOfPosition(transform.position + movement + new Vector3(0, 0.1f, 0)).collider != null;
         bool canMove(bool collidedWithBridge, EMapTile destinationTileTag) => collidedWithBridge || destinationTileTag != EMapTile.Impassable;
         bool canSurfAtDestination(bool collidedWithBridge, EMapTile destinationTileTag) => !collidedWithBridge && !IsSurfing && destinationTileTag == EMapTile.SurfableWater;
@@ -718,7 +707,7 @@ public class PlayerMovement : MonoBehaviour
             yield return StartCoroutine(move(movement, false));
         }
         overrideAnimPause = false;
-        if (GlobalVariables.Singleton.followerOut) {
+        if (GlobalVariables.Singleton.isFollowerOut) {
             Follower.ActivateMove();
         }
     }
@@ -758,7 +747,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator dismount() {
         StartCoroutine(mount.StillMount(Speed));
         yield return StartCoroutine(jump());
-        Follower.canMove = true;
+        Follower.CanMove = true;
         mount.transform.localPosition = mountPosition;
         mount.UpdateMount(false);
     }
@@ -875,7 +864,8 @@ public class PlayerMovement : MonoBehaviour
     #region Animations & Visuals
 
     public void SwitchAnimation(string newAnimationName, int? fps = null) {
-        animator.SwitchAnimation(newAnimationName + FacingDirection.ToDirectionString());
+        string animationName = newAnimationName + FacingDirection.ToDirectionString(Vector3.forward, Vector3.up);
+        animator.SwitchAnimation(animationName);
     }
 
     public void updateCosmetics() {
