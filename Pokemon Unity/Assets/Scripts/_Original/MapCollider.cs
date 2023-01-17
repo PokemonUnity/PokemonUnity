@@ -125,11 +125,13 @@ public class MapCollider : MonoBehaviour {
         return bridgeHit;
     }
 
+    [Obsolete]
     public static float GetSlopeOfPosition(Vector3 position, int direction, bool checkForBridge = true) {
         return GetSlopeOfPosition(position, ((EMovementDirection)direction).GetForwardVector(), checkForBridge);
     }
 
     /// returns the slope of the map geometry on the tile of the given position (in the given direction) 
+    [Obsolete]
     public static float GetSlopeOfPosition(Vector3 position, Vector3 direction, bool checkForBridge = true)
     {
         Vector3 movement = direction;

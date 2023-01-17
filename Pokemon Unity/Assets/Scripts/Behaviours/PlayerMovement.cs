@@ -36,7 +36,24 @@ public class PlayerMovement : MonoBehaviour
     //before a script runs, it'll check if the player is busy with another script's GameObject.
     public GameObject busyWith = null;
     public bool canInput = true;
-    public bool DrawGizmos = false;
+
+    #region Gizmo Variables
+
+    public PlayerMovementGizmos Gizmos = new();
+    
+    [Serializable]
+    public class PlayerMovementGizmos {
+        public bool DrawGizmos = false;
+        public bool DrawDirectionGizmos = false;
+        public bool DrawMovementGizmos = false;
+        [HideInInspector] public Ray PositionCheckRay;
+        [HideInInspector] public Ray CollisionCheckRay;
+        [HideInInspector] public Vector3 MovementRay;
+        [HideInInspector] public bool MovementCheckIsValid = false;
+        [HideInInspector] public Vector3 PossibleMovement;
+    }
+
+    #endregion
 
     private DialogBoxHandlerNew Dialog;
     private MapNameBoxBehaviour MapName;
@@ -116,13 +133,26 @@ public class PlayerMovement : MonoBehaviour
     #region MonoBehaviour Functions
 
     void OnDrawGizmos() {
-        if (!DrawGizmos) return;
-        // inputted direction
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + (directionInput.normalized));
-        // direction
-        Gizmos.color = Color.white;
-        Gizmos.DrawLine(transform.position, transform.position + (FacingDirection.normalized));
+        if (!Gizmos.DrawGizmos) return;
+        if (Gizmos.DrawDirectionGizmos) {
+            // inputted direction
+            UnityEngine.Gizmos.color = Color.green;
+            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (directionInput.normalized));
+            // direction
+            UnityEngine.Gizmos.color = Color.white;
+            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (FacingDirection.normalized));
+        }
+        if (Gizmos.DrawMovementGizmos) {
+            // position check ray
+            UnityEngine.Gizmos.color = Color.yellow;
+            UnityEngine.Gizmos.DrawLine(Gizmos.PositionCheckRay.origin, Gizmos.PositionCheckRay.origin + (Gizmos.PositionCheckRay.direction * 3f));
+            // movement collision checker
+            UnityEngine.Gizmos.color = Color.yellow;
+            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + Gizmos.PossibleMovement);
+            // possible movement
+            UnityEngine.Gizmos.color = Gizmos.MovementCheckIsValid ? Color.green : Color.red;
+            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + Gizmos.PossibleMovement);
+        }
     }
 
     void OnValidate() {
@@ -462,40 +492,62 @@ public class PlayerMovement : MonoBehaviour
 
         //Check destination map	and bridge																//0.5f to adjust for stair height
         //cast a ray directly downwards from the position directly in front of the player		//1f to check in line with player's head
-        RaycastHit[] hitColliders = Physics.RaycastAll(transform.position + movement + new Vector3(0, 1.5f, 0), Vector3.down);
 
-        RaycastHit mapHit = Array.Find(hitColliders, (RaycastHit hit) => hit.collider.gameObject.GetComponent<MapCollider>() != null);
+        Ray positionCheckRay = new Ray(transform.position + movement + new Vector3(0, 1.5f, 0), Vector3.down);
+        RaycastHit[] hitColliders = Physics.RaycastAll(positionCheckRay, 3f);
+        Gizmos.PositionCheckRay = positionCheckRay;
+
+        // TODO: Theres definitely a better way to do this, I just know it
+        RaycastHit mapHit = getMapHit(hitColliders);
         //if a collision's gameObject has a BridgeHandler, it is a bridge.
-        // !!!
-        // I removed the bridge collision checking here to decrease complexity. 
-        // I feel there is a better way to do it, but the game needs other repairs first
-        // !!! 
-        //RaycastHit bridgeHit = new RaycastHit();
-        //if (checkForBridge)
-        //    bridgeHit = Array.Find(hitColliders, (RaycastHit hit) => hit.collider.gameObject.GetComponent<BridgeHandler>() != null);
+        RaycastHit bridgeHit = new RaycastHit();
+        if (checkForBridge)
+            bridgeHit = getBridgeHit(hitColliders);
 
         // modify the forwards vector to align to the colliding plane
-        RaycastHit higherPriorityHit = mapHit; // bridgeHit.collider == null ? mapHit : bridgeHit;
-        movement -= new Vector3(0, (transform.position.y - higherPriorityHit.point.y), 0);
+        RaycastHit higherPriorityHit = bridgeHit.collider == null ? mapHit : bridgeHit;
+        if (higherPriorityHit.collider == null) return Vector3.zero; // Hit nothing
 
-        float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, facingDirection));
-        float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + GetForwardVectorRaw(), facingDirection, checkForBridge));
-        float yDistance = Mathf.Abs((transform.position.y + movement.y) - transform.position.y);
-        yDistance = Mathf.Round(yDistance * 100f) / 100f;
+        movement -= new Vector3(0, (transform.position.y - higherPriorityHit.point.y), 0);
+        if (Gizmos.DrawGizmos) Gizmos.PossibleMovement = movement;
+
+        Vector3 positionTranslatedUpwards = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+        Ray collisionCheckRay = new Ray(positionTranslatedUpwards, movement.normalized);
+        Gizmos.CollisionCheckRay = positionCheckRay;
+        hitColliders = Physics.RaycastAll(collisionCheckRay, movement.magnitude);
+
+        //float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, facingDirection));
+        //float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + GetForwardVectorRaw(), facingDirection, checkForBridge));
+        //Debug.Log(destinationSlope);
+        //float yDistance = Mathf.Abs(transform.position.y - movement.y);
+
+        //yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
         //Debug.Log("currentSlope: "+currentSlope+", destinationSlope: "+destinationSlope+", yDistance: "+yDistance);
 
-        //if either slope is greater than 1 it is too steep.
-        if ((currentSlope <= 1 && destinationSlope <= 1) && (yDistance <= currentSlope || yDistance <= destinationSlope)) {
-            //if yDistance is greater than both slopes there is a vertical wall between them
+        // did not collide with anything moving from our position to our destination
+        mapHit = getMapHit(hitColliders);
+        bridgeHit = getBridgeHit(hitColliders);
+        if (mapHit.collider == null && bridgeHit.collider == null) {
+            Gizmos.MovementCheckIsValid = true;
             return movement;
         }
+
+        Gizmos.MovementCheckIsValid = false;
         return Vector3.zero;
+
+        //bool movementIsNotTooSteep() {
+        //    //if yDistance is greater than both slopes there is a vertical wall between them
+        //    return (currentSlope <= 1 && destinationSlope <= 1) && (yDistance <= currentSlope || yDistance <= destinationSlope);
+        //}
+
+        RaycastHit getMapHit(RaycastHit[] hits) => Array.Find(hits, (RaycastHit hit) => hit.collider.gameObject.GetComponent<MapCollider>() != null);
+        RaycastHit getBridgeHit(RaycastHit[] hits) => Array.Find(hits, (RaycastHit hit) => hit.collider.gameObject.GetComponent<BridgeHandler>() != null);
     }
 
-    #endregion
+        #endregion
 
-    [Obsolete]
+        [Obsolete]
     public IEnumerator move(Vector3 movement, bool canEncounter = true, bool lockFollower = false) {
         move(canEncounter, lockFollower);
         yield break;
@@ -505,7 +557,7 @@ public class PlayerMovement : MonoBehaviour
         if (!canInput) return;
 
         UpdateDirection(directionInput);
-        Vector3 movement = GetMovementVector(FacingDirection, false);
+        Vector3 movement = GetMovementVector(FacingDirection, true);
 
         //yield return new WaitForSeconds(0.4f);
 
@@ -518,7 +570,6 @@ public class PlayerMovement : MonoBehaviour
                 MapCollider destinationMap = MapCollider.GetMap(transform.position, FacingDirection);
                 EMapTile destinationTileTag = (EMapTile)destinationMap.GetTileTag(transform.position + movement);
                 bool collidedWithBridge = checkForBridgeCollision(movement);
-
                 if (canMove(collidedWithBridge, destinationTileTag)) {
                     if (canSurfAtDestination(collidedWithBridge, destinationTileTag)) {
                         // TODO: destination is water tile
