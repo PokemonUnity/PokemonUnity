@@ -196,7 +196,7 @@ public class InteractPush : MonoBehaviour
 
         //Check current map
         RaycastHit[] hitRays =
-            Physics.RaycastAll(transform.position + Vector3.up + ((EMovementDirection)direction).GetForwardVector(), Vector3.down, 3f);
+            Physics.RaycastAll(transform.position + Vector3.up + ((EMovementDirection)direction).ToVector(), Vector3.down, 3f);
         int closestIndex = -1;
         float closestDistance = float.PositiveInfinity;
         if (hitRays.Length > 0)
@@ -218,7 +218,7 @@ public class InteractPush : MonoBehaviour
             currentMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
 
             //Check destiantion map
-            hitRays = Physics.RaycastAll(transform.position + Vector3.up + ((EMovementDirection)direction).GetForwardVector(),
+            hitRays = Physics.RaycastAll(transform.position + Vector3.up + ((EMovementDirection)direction).ToVector(),
                 Vector3.down, 3f);
             closestIndex = -1;
             closestDistance = float.PositiveInfinity;

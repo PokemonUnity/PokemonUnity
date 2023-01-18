@@ -427,8 +427,8 @@ public class PlayerMovement : MonoBehaviour
             // (allows only turning)
             //if (!IsMoving)
             //    yield return new WaitForSeconds(directionChangeInputDelay);
-            Direction = (int)newDirection.ToMovementDirection(PlayerCamera.transform.forward, transform.up);
-            FacingDirection = newDirection;
+            Direction = (int)newDirection.ToMovementDirection(Vector3.forward, Vector3.up);
+            FacingDirection = ((EMovementDirection)Direction).ToVector(); //newDirection;
             mount.UpdateDirection(FacingDirection);
             //FIXME
             //pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[direction * frames + frame];
@@ -442,7 +442,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     ///returns the vector relative to the player direction, without any modifications.
-    public Vector3 GetForwardVectorRaw() => ((EMovementDirection)Direction).GetForwardVector();
+    public Vector3 GetForwardVectorRaw() => ((EMovementDirection)Direction).ToVector();
 
     public Vector3 GetForwardVector() => GetMovementVector((EMovementDirection)Direction, true);
 
@@ -451,7 +451,7 @@ public class PlayerMovement : MonoBehaviour
     [Obsolete]
     public Vector3 GetMovementVector(EMovementDirection direction, bool checkForBridge) {
         //set initial vector3 based off of direction
-        Vector3 movement = ((EMovementDirection)Direction).GetForwardVector();
+        Vector3 movement = ((EMovementDirection)Direction).ToVector();
 
         //Check destination map	and bridge																//0.5f to adjust for stair height
         //cast a ray directly downwards from the position directly in front of the player		//1f to check in line with player's head
@@ -1213,7 +1213,7 @@ public enum EMovementDirection {
 }
 
 public static class EMovementDirectionExtensions {
-    public static Vector3 GetForwardVector(this EMovementDirection direction) {
+    public static Vector3 ToVector(this EMovementDirection direction) {
         //set vector3 based off of direction
         Vector3 forwardVector = new Vector3(0, 0, 0);
         if (direction == EMovementDirection.Up) {

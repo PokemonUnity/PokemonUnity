@@ -158,6 +158,7 @@
     <Compile Include="Assets\GameMain\Scripts\Utility\WebUtility.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractDoorway.cs" />
     <Compile Include="Assets\Scripts\_Original\SfxHandler.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\PokemonSO.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\BumpLedge.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\OLD_SettingsHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractTrainer.cs" />
@@ -304,6 +305,7 @@
     <Compile Include="Assets\GameMain\Scripts\Debugger\DebuggerWindow.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingBool.cs" />
     <Compile Include="Assets\Scripts\Behaviours\DontDestroy.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerSO.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\AudioHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\PokeBattle_SceneConstants.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Constant\Constant.Layer.cs" />
@@ -326,8 +328,6 @@
     <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\PokemonSO.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
