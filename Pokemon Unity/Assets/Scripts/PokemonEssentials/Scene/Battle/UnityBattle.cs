@@ -6541,7 +6541,7 @@ label_41:;
           if (!this.pbIsOpposing(index) && this.battlers[index].pokemonIndex == pkmnIndex)
             battler = this.battlers[index];
         }
-        flag = UnityItemHandlers.triggerBattleUseOnPokemon(item, pokemon, battler, scene);
+        flag = ItemHandlers.triggerBattleUseOnPokemon(item, pokemon, battler, scene);
       }
       if (!flag && this.pbBelongsToPlayer(userPkmn.Index))
       {
@@ -6560,7 +6560,7 @@ label_41:;
       IHasDisplayMessage scene)
     {
       GameDebug.Log("[Use item] Player used #" + Game._INTL(item.ToString(TextScripts.Name)) + " on #" + this.battlers[index].ToString(true));
-      bool flag = UnityItemHandlers.triggerBattleUseOnBattler(item, this.battlers[index], scene);
+      bool flag = ItemHandlers.triggerBattleUseOnBattler(item, this.battlers[index], scene);
       if (!flag && this.pbBelongsToPlayer(userPkmn.Index))
       {
         if (Game.GameData.Bag.pbCanStore(item))
@@ -6591,13 +6591,13 @@ label_41:;
           }
         }
       }
-      if (UnityItemHandlers.hasUseInBattle(idxItem))
+      if (ItemHandlers.hasUseInBattle(idxItem))
       {
         if (idxPokemon == 0)
         {
-          if (UnityItemHandlers.triggerBattleUseOnBattler(idxItem, this.battlers[idxPokemon], (IHasDisplayMessage) this))
+          if (ItemHandlers.triggerBattleUseOnBattler(idxItem, this.battlers[idxPokemon], (IHasDisplayMessage) this))
           {
-            UnityItemHandlers.triggerUseInBattle(idxItem, this.battlers[idxPokemon], this);
+            ItemHandlers.triggerUseInBattle(idxItem, this.battlers[idxPokemon], this);
             if (this.doublebattle)
               this.battlers[idxPokemon + 2].effects.SkipTurn = true;
           }
@@ -6612,7 +6612,7 @@ label_41:;
         }
         else
         {
-          if (UnityItemHandlers.triggerBattleUseOnBattler(idxItem, this.battlers[idxPokemon], (IHasDisplayMessage) this))
+          if (ItemHandlers.triggerBattleUseOnBattler(idxItem, this.battlers[idxPokemon], (IHasDisplayMessage) this))
             this.pbDisplay(Game._INTL("It's impossible to aim without being focused!"));
           return false;
         }
@@ -8313,7 +8313,7 @@ label_75:;
                 if (this.choices[battler.Index].Target >= 0)
                   this.pbUseItemOnPokemon(index, this.choices[battler.Index].Target, battler, (IHasDisplayMessage) this.scene);
               }
-              else if ((num == 2 || num == 4) && !UnityItemHandlers.hasUseInBattle(index))
+              else if ((num == 2 || num == 4) && !ItemHandlers.hasUseInBattle(index))
                 this.pbUseItemOnBattler(index, this.choices[battler.Index].Target, battler, (IHasDisplayMessage) this.scene);
             }
           }
