@@ -134,7 +134,7 @@
     <Compile Include="Assets\GameMain\Scripts\Network\NetworkChannelHelper.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\BagHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Save\EventListener.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\PlayerInputConsumer.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Input\PlayerInputConsumer.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingResolution.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\Packet\CSHeartBeat.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\PacketBase.cs" />
@@ -242,7 +242,6 @@
     <Compile Include="Assets\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\Scripts\_Original\Save\CustomSaveEvent.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectBool.cs" />
-    <Compile Include="Assets\Scripts\_Original\BgmHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MainMenuHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectText.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\MoveDatabase.cs" />
@@ -301,10 +300,9 @@
     <Compile Include="Assets\Scripts\Behaviours\GlobalVariables.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\QuestLog.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractPC.cs" />
-    <Compile Include="Assets\Scripts\_Original\MapSettings.cs" />
     <Compile Include="Assets\GameMain\Scripts\Debugger\DebuggerWindow.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingBool.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\DontDestroy.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Utility\DontDestroy.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\TrainerSO.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\AudioHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\PokeBattle_SceneConstants.cs" />
@@ -325,9 +323,12 @@
     <Compile Include="Assets\Scripts\_Original\NPCHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItemObject.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractRedirect.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\PlayerInputSingleton.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Input\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\PokemonMap.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\PokemonMapBehaviour.cs" />
+    <Compile Include="Assets\Scripts\_Original\BackgroundMusicHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

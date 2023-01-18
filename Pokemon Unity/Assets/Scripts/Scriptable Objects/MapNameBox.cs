@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Map Name Box", menuName = "Pokemon Unity/Map/Map Name Box")]
-public class MapNameBox : ScriptableObject
+[Serializable]
+public class MapNameBox
 {
-    public string Text = "Map";
+    [ReadOnly] public string Text;
     public Color TextColor = new Color(16f/255f, 16f / 255f, 16f / 255f, 1f);
     public Sprite Sprite;
 }

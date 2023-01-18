@@ -163,7 +163,7 @@ public class MainMenuHandler : MonoBehaviour {
         mysteryGiftMenu.SetActive(true);
         yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));
 
-        BgmHandler.main.PlayMain(mysteryGiftBGM, loopSampleStart);
+        BackgroundMusicHandler.Singleton.PlayMain(mysteryGiftBGM, loopSampleStart);
 
         bool leave = false;
         int selectedButton = 1;
@@ -456,7 +456,7 @@ public class MainMenuHandler : MonoBehaviour {
 
         #endregion
 
-        BgmHandler.main.PlayMain(null, 0);
+        BackgroundMusicHandler.Singleton.PlayMain(null, 0);
         yield return StartCoroutine(ScreenFade.Singleton.Fade(false, ScreenFade.DefaultSpeed));
         mysteryGiftMenu.SetActive(false);
         yield return StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.DefaultSpeed));

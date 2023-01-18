@@ -249,7 +249,7 @@ public class OLD_MainMenuHandler : MonoBehaviour {
         mysteryGiftMenu.SetActive(true);
         yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));
 
-        BgmHandler.main.PlayMain(mysteryGiftBGM, loopSampleStart);
+        BackgroundMusicHandler.Singleton.PlayMain(mysteryGiftBGM, loopSampleStart);
 
         bool leave = false;
         int selectedButton = 1;
@@ -538,7 +538,7 @@ public class OLD_MainMenuHandler : MonoBehaviour {
         if (giftList.Length > 0)
             SfxHandler.Play(cancelClip);*/
 
-        BgmHandler.main.PlayMain(null, 0);
+        BackgroundMusicHandler.Singleton.PlayMain(null, 0);
         yield return StartCoroutine(ScreenFade.Singleton.Fade(false, 0.4f));
         mysteryGiftMenu.SetActive(false);
         yield return StartCoroutine(ScreenFade.Singleton.Fade(true, 0.4f));

@@ -167,7 +167,7 @@ public class EvolutionHandler : MonoBehaviour
         //SfxHandler.Play(cry);
         //yield return new WaitForSeconds(cry.length);
 
-        BgmHandler.main.PlayOverlay(evolutionBGM, 753100);
+        BackgroundMusicHandler.Singleton.PlayOverlay(evolutionBGM, 753100);
         yield return new WaitForSeconds(0.4f);
 
         c_animateEvolution = StartCoroutine(animateEvolution());
@@ -223,7 +223,7 @@ public class EvolutionHandler : MonoBehaviour
             //BgmHandler.main.PlayMFX(cry);
             //yield return new WaitForSeconds(cry.length);
             AudioClip evoMFX = Resources.Load<AudioClip>("Audio/mfx/GetGreat");
-            BgmHandler.main.PlayMFXConsecutive(evoMFX);
+            BackgroundMusicHandler.Singleton.PlayMFXConsecutive(evoMFX);
 
             dialog.DrawDialogBox();
             yield return StartCoroutine(dialog.DrawTextSilent("Congratulations!"));
@@ -264,7 +264,7 @@ public class EvolutionHandler : MonoBehaviour
         }
 
         StartCoroutine(ScreenFade.Singleton.Fade(false, 1f));
-        BgmHandler.main.ResumeMain(1.4f, PlayerMovement.Singleton.accessedMapSettings.getBGM());
+        BackgroundMusicHandler.Singleton.ResumeMain(1.4f, PlayerMovement.Singleton.newMap.GetBackgroundMusic().Clip);
         yield return new WaitForSeconds(1.2f);
 
         this.gameObject.SetActive(false);
@@ -300,7 +300,7 @@ public class EvolutionHandler : MonoBehaviour
         evolutionSprite.rectTransform.sizeDelta = new Vector2(0, 0);
         pokemonSprite.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 
-        BgmHandler.main.PlayOverlay(null, 0, 0.5f);
+        BackgroundMusicHandler.Singleton.PlayOverlay(null, 0, 0.5f);
     }
 
     private IEnumerator animateEvolution()
@@ -730,7 +730,7 @@ public class EvolutionHandler : MonoBehaviour
 
                             dialog.DrawDialogBox();
                             AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
-                            BgmHandler.main.PlayMFX(mfx);
+                            BackgroundMusicHandler.Singleton.PlayMFX(mfx);
                             StartCoroutine(dialog.DrawTextSilent(selectedPokemon.Name + " learned \n" + move + "!"));
                             yield return new WaitForSeconds(mfx.length);
                             while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
@@ -770,7 +770,7 @@ public class EvolutionHandler : MonoBehaviour
 
                     dialog.DrawDialogBox();
                     AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
-                    BgmHandler.main.PlayMFX(mfx);
+                    BackgroundMusicHandler.Singleton.PlayMFX(mfx);
                     StartCoroutine(dialog.DrawTextSilent(selectedPokemon.Name + " learned \n" + move + "!"));
                     yield return new WaitForSeconds(mfx.length);
                     while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))

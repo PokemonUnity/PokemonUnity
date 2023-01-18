@@ -4,11 +4,14 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using EasyButtons;
 
 [AddComponentMenu("Pokemon Unity/UI/World/Map Name Box")]
 [RequireComponent(typeof(Image))]
 public class MapNameBoxBehaviour : MonoBehaviour
 {
+    public static MapNameBoxBehaviour Singleton;
+
     [SerializeField] MapNameBox mapNameBox;
     [SerializeField] TextMeshProUGUI mapNameText;
 
@@ -30,20 +33,25 @@ public class MapNameBoxBehaviour : MonoBehaviour
         SetMapNameBox(mapNameBox);
     }
 
-    void Awake()
-    {
+    void Awake() {
         rectTransform = (RectTransform)transform;
         if (HoverPosition == Vector3.zero) HoverPosition = rectTransform.anchoredPosition;
     }
 
     void Start() {
-        StartCoroutine(startUp());
+        if (Singleton == null) Singleton = this;
+        else {
+            Destroy(this);
+            return;
+        }
+
+        //StartCoroutine(startUp());
     }
 
-    IEnumerator startUp() {
-        yield return StartCoroutine(disappear(0f));
-        AppearAndDisappear(mapNameBox);
-    }
+    //IEnumerator startUp() {
+    //    yield return StartCoroutine(disappear(0f));
+    //    AppearAndDisappear(mapNameBox);
+    //}
 
     void SetMapNameBox(MapNameBox newMapNameBox = null) {
         if (!enabled) return;
@@ -62,7 +70,8 @@ public class MapNameBoxBehaviour : MonoBehaviour
         mapNameText.color = mapNameBox.TextColor;
     }
 
-    public void AppearAndDisappear() => AppearAndDisappear();
+    [Button]
+    public void AppearAndDisappear() => AppearAndDisappear(mapNameBox);
 
     public void AppearAndDisappear(MapNameBox mapNameBox = null) {
         SetMapNameBox(mapNameBox);

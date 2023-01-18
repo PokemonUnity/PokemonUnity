@@ -5,7 +5,7 @@ using System.Collections;
 using System.Linq;
 using System;
 
-[RequireComponent(typeof(MapSettings))]
+[RequireComponent(typeof(PokemonMapBehaviour))]
 public class MapCollider : MonoBehaviour {
     //Collision Map String provided by DeKay's Collision Map Compiler for Pokémon Essentials
     //See TOOLS folder for details

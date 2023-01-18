@@ -31,7 +31,7 @@ public class WeatherHandler : MonoBehaviour
         {
             audioSource.volume = Mathf.MoveTowards(audioSource.volume, 0, Time.deltaTime);
         }
-        else if (Scene.main.Battle.gameObject.activeSelf || BgmHandler.main.PlayingOverlay() || disable)
+        else if (Scene.main.Battle.gameObject.activeSelf || BackgroundMusicHandler.Singleton.PlayingOverlay() || disable)
         {
             audioSource.volume = 0;
         }

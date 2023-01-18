@@ -648,7 +648,7 @@ public class PauseHandler : MonoBehaviour
             }
         }
 
-        mapName.text = PlayerMovement.Singleton.accessedMapSettings.mapName;
+        mapName.text = PlayerMovement.Singleton.newMap.Map.Name;
         date.text = SaveData.currentSave.playerName; //date not yet implemented
         hour.text = ""; //hour not yet implemented
         badges.text = ""+badgeTotal;
@@ -681,7 +681,7 @@ public class PauseHandler : MonoBehaviour
             SaveData.currentSave.playerDirection = PlayerMovement.Singleton.Direction;
             SaveData.currentSave.followerPosition = new SeriV3(PlayerMovement.Singleton.Follower.transform.position);
             SaveData.currentSave.followerdirection = PlayerMovement.Singleton.Follower.direction;
-            SaveData.currentSave.mapName = PlayerMovement.Singleton.accessedMapSettings.mapName;
+            SaveData.currentSave.mapName = PlayerMovement.Singleton.newMap.Map.Name;
             SaveData.currentSave.followerOut = GlobalVariables.Singleton.isFollowerOut;
 
             // Saving the Non Resetting Events

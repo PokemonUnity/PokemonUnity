@@ -152,7 +152,7 @@ public class InteractPokemonCenter : MonoBehaviour
                 }
                 yield return new WaitForSeconds(0.25f);
 
-                BgmHandler.main.PlayMFX(healMFX);
+                BackgroundMusicHandler.Singleton.PlayMFX(healMFX);
                 //animate the balls to glow 4 times
                 for (int r = 0; r < 4; r++)
                 {
@@ -282,7 +282,7 @@ public class InteractPokemonCenter : MonoBehaviour
             }
             yield return new WaitForSeconds(0.25f);
 
-            BgmHandler.main.PlayMFX(healMFX);
+            BackgroundMusicHandler.Singleton.PlayMFX(healMFX);
             //animate the balls to glow 4 times
             for (int r = 0; r < 4; r++)
             {

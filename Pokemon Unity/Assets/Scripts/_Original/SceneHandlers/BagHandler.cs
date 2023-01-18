@@ -2617,7 +2617,7 @@ public class BagHandler : MonoBehaviour
 
                             Dialog.DrawDialogBox(2);
                             AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
-                            BgmHandler.main.PlayMFX(mfx);
+                            BackgroundMusicHandler.Singleton.PlayMFX(mfx);
                             StartCoroutine(Dialog.DrawTextSilent(selectedPokemon.Name + " learned \n" + move + "!"));
                             yield return new WaitForSeconds(mfx.length);
                             while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
@@ -2655,7 +2655,7 @@ public class BagHandler : MonoBehaviour
 
                     Dialog.DrawDialogBox(2);
                     AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
-                    BgmHandler.main.PlayMFX(mfx);
+                    BackgroundMusicHandler.Singleton.PlayMFX(mfx);
                     StartCoroutine(Dialog.DrawTextSilent(selectedPokemon.Name + " learned \n" + move + "!"));
                     yield return new WaitForSeconds(mfx.length);
                     while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))

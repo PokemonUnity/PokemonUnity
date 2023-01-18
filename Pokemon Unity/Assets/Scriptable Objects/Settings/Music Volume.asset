@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Music Volume
   m_EditorClassIdentifier: 
   Key: Music Volume
-  defaultValue: 0
+  defaultValue: 0.5
   OnValueChange:
     m_PersistentCalls:
       m_Calls: []
+  value: 0.25

@@ -93,7 +93,7 @@ public class Trainer : MonoBehaviour
     public int lowHpBGMSamplesLoopStart;
 
     [Header("Environment")]
-    public MapSettings.Environment environment;
+    public PokemonMapBehaviour.Environment environment;
 
     
     [Space]

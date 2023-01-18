@@ -594,7 +594,7 @@ public class InteractTrainer : MonoBehaviour
             if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
             {
                 busy = true;
-                BgmHandler.main.PlayOverlay(introBGM, samplesLoopStart);
+                BackgroundMusicHandler.Singleton.PlayOverlay(introBGM, samplesLoopStart);
                 //DISPLAY "!"
                 yield return StartCoroutine(exclaimAnimation());
                 yield return new WaitForSeconds(0.6f);
@@ -650,7 +650,7 @@ public class InteractTrainer : MonoBehaviour
             if (!defeated)
             {
                 //Play INTRO BGM
-                BgmHandler.main.PlayOverlay(introBGM, samplesLoopStart);
+                BackgroundMusicHandler.Singleton.PlayOverlay(introBGM, samplesLoopStart);
 
                 //Display all of the confrontation Dialog.
                 for (int i = 0; i < en_trainerConfrontDialog.Length; i++)
@@ -673,13 +673,13 @@ public class InteractTrainer : MonoBehaviour
                 {
                     Scene.main.Battle.battleBGM = trainer.battleBGM;
                     Scene.main.Battle.battleBGMLoopStart = trainer.samplesLoopStart;
-                    BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
+                    BackgroundMusicHandler.Singleton.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
                 }
                 else
                 {
                     Scene.main.Battle.battleBGM = Scene.main.Battle.defaultTrainerBGM;
                     Scene.main.Battle.battleBGMLoopStart = Scene.main.Battle.defaultTrainerBGMLoopStart;
-                    BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
+                    BackgroundMusicHandler.Singleton.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
                         Scene.main.Battle.defaultTrainerBGMLoopStart);
                 }
                 Scene.main.Battle.gameObject.SetActive(false);

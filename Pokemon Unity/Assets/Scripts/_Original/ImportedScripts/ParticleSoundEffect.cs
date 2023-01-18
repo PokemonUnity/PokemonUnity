@@ -32,7 +32,7 @@ public class ParticleSoundEffect : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        if (!Scene.main.Battle.gameObject.activeSelf && !BgmHandler.main.PlayingOverlay())
+        if (!Scene.main.Battle.gameObject.activeSelf && !BackgroundMusicHandler.Singleton.PlayingOverlay())
         {
             source.Play();
         }

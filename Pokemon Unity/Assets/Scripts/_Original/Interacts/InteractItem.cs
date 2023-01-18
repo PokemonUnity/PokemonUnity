@@ -56,7 +56,7 @@ public class InteractItem : MonoBehaviour
             AudioClip itemGetMFX = (TM)
                 ? Resources.Load<AudioClip>("Audio/mfx/GetGood")
                 : Resources.Load<AudioClip>("Audio/mfx/GetDecent");
-            BgmHandler.main.PlayMFX(itemGetMFX);
+            BackgroundMusicHandler.Singleton.PlayMFX(itemGetMFX);
 
             string firstLetter = item.Substring(0, 1).ToLowerInvariant();
             Dialog.DrawDialogBox();

@@ -11997,6 +11997,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 100000, guid: 46c45d7ef6d9cda489811a5170525abe, type: 3}
+      propertyPath: m_Name
+      value: Map Test 1 (Route 201)
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 46c45d7ef6d9cda489811a5170525abe, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -13311,15 +13315,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapName: Map Test 3
+  MapNameBox:
+    Text: Map
+    TextColor:
+      r: 0.0627451
+      g: 0.0627451
+      b: 0.0627451
+      a: 1
+    Sprite: {fileID: 0}
   RPCImageKey: 
   mapBGMClip: {fileID: 8300000, guid: 3763f59403cfb8d498c8ae966e45e4a5, type: 3}
   mapBGMLoopStartSamples: 0
   mapBGMNightClip: {fileID: 0}
   mapBGMNightLoopStartSamples: 0
-  mapName: Map Test 3
-  mapNameBoxTexture: {fileID: 2800000, guid: 6b62eac1aa8cf524fb175af27ac03509, type: 3}
   mapNameAppears: 1
-  mapNameColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
+  mapNameColor:
+    r: 0.0627451
+    g: 0.0627451
+    b: 0.0627451
+    a: 1
   environment: 0
   environment2: 0
   pokemonRarity: 2
@@ -13374,6 +13389,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 778911608}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &873282574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873282565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec12d0bc96182cb4994486e96ccfad50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Map: {fileID: 11400000, guid: a86b63229c7402c40b0a41386a6f5a8f, type: 2}
+  ShouldMapNameBoxAppear: 1
+  environment: 0
+  environment2: 0
+  pokemonRarity: 2
+  encounters: []
+  sunnyWeatherProbability: 1
+  weathers: []
 --- !u!1001 &876196521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18914,15 +18949,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapName: Map Test 1
+  MapNameBox:
+    Text: Map
+    TextColor:
+      r: 0.0627451
+      g: 0.0627451
+      b: 0.0627451
+      a: 1
+    Sprite: {fileID: 0}
   RPCImageKey: 
   mapBGMClip: {fileID: 8300000, guid: 3763f59403cfb8d498c8ae966e45e4a5, type: 3}
   mapBGMLoopStartSamples: 0
   mapBGMNightClip: {fileID: 0}
   mapBGMNightLoopStartSamples: 0
-  mapName: Map Test 1
-  mapNameBoxTexture: {fileID: 2800000, guid: 6b62eac1aa8cf524fb175af27ac03509, type: 3}
   mapNameAppears: 1
-  mapNameColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
+  mapNameColor:
+    r: 0.0627451
+    g: 0.0627451
+    b: 0.0627451
+    a: 1
   environment: 0
   environment2: 0
   pokemonRarity: 2
@@ -18971,6 +19017,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 801543767}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1245646810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245646803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec12d0bc96182cb4994486e96ccfad50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Map: {fileID: 11400000, guid: a86b63229c7402c40b0a41386a6f5a8f, type: 2}
+  ShouldMapNameBoxAppear: 1
+  environment: 0
+  environment2: 0
+  pokemonRarity: 2
+  encounters: []
+  sunnyWeatherProbability: 1
+  weathers: []
 --- !u!1001 &1247056906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21094,15 +21160,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapName: Map Test 1
+  MapNameBox:
+    Text: Map
+    TextColor:
+      r: 0.0627451
+      g: 0.0627451
+      b: 0.0627451
+      a: 1
+    Sprite: {fileID: 0}
   RPCImageKey: 
   mapBGMClip: {fileID: 8300000, guid: 3763f59403cfb8d498c8ae966e45e4a5, type: 3}
   mapBGMLoopStartSamples: 0
   mapBGMNightClip: {fileID: 0}
   mapBGMNightLoopStartSamples: 0
-  mapName: Map Test 1
-  mapNameBoxTexture: {fileID: 2800000, guid: 6b62eac1aa8cf524fb175af27ac03509, type: 3}
   mapNameAppears: 1
-  mapNameColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
+  mapNameColor:
+    r: 0.0627451
+    g: 0.0627451
+    b: 0.0627451
+    a: 1
   environment: 0
   environment2: 0
   pokemonRarity: 2
@@ -21129,6 +21206,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1406796496}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1406796504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406796497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec12d0bc96182cb4994486e96ccfad50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Map: {fileID: 0}
+  ShouldMapNameBoxAppear: 1
+  environment: 0
+  environment2: 0
+  pokemonRarity: 2
+  encounters: []
+  sunnyWeatherProbability: 1
+  weathers: []
 --- !u!4 &1407077787 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b45e3c8958de20045adcb5d2acb36017,
@@ -21661,15 +21758,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapName: Map Test 2
+  MapNameBox:
+    Text: Map
+    TextColor:
+      r: 0.0627451
+      g: 0.0627451
+      b: 0.0627451
+      a: 1
+    Sprite: {fileID: 0}
   RPCImageKey: 
   mapBGMClip: {fileID: 8300000, guid: 0162f84268ff10041ada26c9a4299ac8, type: 3}
   mapBGMLoopStartSamples: 0
   mapBGMNightClip: {fileID: 0}
   mapBGMNightLoopStartSamples: 0
-  mapName: Map Test 2
-  mapNameBoxTexture: {fileID: 2800000, guid: ab060ed267d472646b30b4a04b8355f8, type: 3}
   mapNameAppears: 1
-  mapNameColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
+  mapNameColor:
+    r: 0.0627451
+    g: 0.0627451
+    b: 0.0627451
+    a: 1
   environment: 0
   environment2: 0
   pokemonRarity: 2
@@ -21723,6 +21831,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1774667798}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1435121686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435121678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec12d0bc96182cb4994486e96ccfad50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Map: {fileID: 11400000, guid: 9a51a86947372c4489a3baef98af953f, type: 2}
+  ShouldMapNameBoxAppear: 1
+  environment: 0
+  environment2: 0
+  pokemonRarity: 2
+  encounters: []
+  sunnyWeatherProbability: 1
+  weathers: []
 --- !u!1 &1445187546
 GameObject:
   m_ObjectHideFlags: 0
@@ -30619,15 +30747,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapName: Map Test 3
+  MapNameBox:
+    Text: Map
+    TextColor:
+      r: 0.0627451
+      g: 0.0627451
+      b: 0.0627451
+      a: 1
+    Sprite: {fileID: 0}
   RPCImageKey: 
   mapBGMClip: {fileID: 8300000, guid: 3763f59403cfb8d498c8ae966e45e4a5, type: 3}
   mapBGMLoopStartSamples: 0
   mapBGMNightClip: {fileID: 0}
   mapBGMNightLoopStartSamples: 0
-  mapName: Map Test 3
-  mapNameBoxTexture: {fileID: 2800000, guid: 6b62eac1aa8cf524fb175af27ac03509, type: 3}
   mapNameAppears: 1
-  mapNameColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
+  mapNameColor:
+    r: 0.0627451
+    g: 0.0627451
+    b: 0.0627451
+    a: 1
   environment: 0
   environment2: 0
   pokemonRarity: 2
@@ -30654,6 +30793,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2001379202}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2001379210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001379203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec12d0bc96182cb4994486e96ccfad50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Map: {fileID: 0}
+  ShouldMapNameBoxAppear: 1
+  environment: 0
+  environment2: 0
+  pokemonRarity: 2
+  encounters: []
+  sunnyWeatherProbability: 1
+  weathers: []
 --- !u!1 &2003195976
 GameObject:
   m_ObjectHideFlags: 0

@@ -503,7 +503,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 else if (currentEvent.bool0)
                 {
-                    BgmHandler.main.PlayMFX(currentEvent.sound);
+                    BackgroundMusicHandler.Singleton.PlayMFX(currentEvent.sound);
                 }
                 else
                 {
@@ -516,7 +516,7 @@ public class CustomEvent : MonoBehaviour
                 AudioClip itemGetMFX = (currentEvent.bool0)
                     ? Resources.Load<AudioClip>("Audio/mfx/GetGood")
                     : Resources.Load<AudioClip>("Audio/mfx/GetDecent");
-                BgmHandler.main.PlayMFX(itemGetMFX);
+                BackgroundMusicHandler.Singleton.PlayMFX(itemGetMFX);
 
                 string firstLetter = currentEvent.string0.Substring(0, 1).ToLowerInvariant();
                 Dialog.DrawDialogBox();
@@ -917,13 +917,13 @@ public class CustomEvent : MonoBehaviour
                     Debug.Log(trainer.battleBGM.name);
                     Scene.main.Battle.battleBGM = trainer.battleBGM;
                     Scene.main.Battle.battleBGMLoopStart = trainer.samplesLoopStart;
-                    BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
+                    BackgroundMusicHandler.Singleton.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
                 }
                 else
                 {
                     Scene.main.Battle.battleBGM = Scene.main.Battle.defaultTrainerBGM;
                     Scene.main.Battle.battleBGMLoopStart = Scene.main.Battle.defaultTrainerBGMLoopStart;
-                    BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
+                    BackgroundMusicHandler.Singleton.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
                         Scene.main.Battle.defaultTrainerBGMLoopStart);
                 }
                 Scene.main.Battle.gameObject.SetActive(false);
@@ -968,15 +968,15 @@ public class CustomEvent : MonoBehaviour
 
                 break;
             case CustomEventDetails.CustomEventType.PlayMusicTheme:
-                BgmHandler.main.PlayOverlay(currentEvent.sound, currentEvent.sampleLoopStart);
+                BackgroundMusicHandler.Singleton.PlayOverlay(currentEvent.sound, currentEvent.sampleLoopStart);
                 break;
             
             case CustomEventDetails.CustomEventType.ResumeBGM:
-                BgmHandler.main.ForceResumeMain(0.4f, PlayerMovement.Singleton.accessedMapSettings.mapBGMClip, PlayerMovement.Singleton.accessedMapSettings.mapBGMLoopStartSamples);
+                BackgroundMusicHandler.Singleton.ForceResumeMain(0.4f, PlayerMovement.Singleton.newMap.Map.DayBackgroundMusic.Clip, PlayerMovement.Singleton.newMap.Map.DayBackgroundMusic.LoopStartSamples);
                 break;
             
             case CustomEventDetails.CustomEventType.StopBGM:
-                BgmHandler.main.PlayMain(null, 0);
+                BackgroundMusicHandler.Singleton.PlayMain(null, 0);
                 //BgmHandler.main.PlayOverlay(null, 0);
                 break;
             case CustomEventDetails.CustomEventType.Emote:
@@ -1287,7 +1287,7 @@ public class CustomEvent : MonoBehaviour
                     SaveData.currentSave.gymsBeatTime[currentEvent.int0] = DateTime.Now.ToString(CultureInfo.InvariantCulture);
                 }
 
-                BgmHandler.main.PlayMFX(Resources.Load<AudioClip>("Audio/mfx/getBadge"));
+                BackgroundMusicHandler.Singleton.PlayMFX(Resources.Load<AudioClip>("Audio/mfx/getBadge"));
                 
                 Dialog.DrawBlackFrame();
                 StartCoroutine(Dialog.DrawTextSilent("You receive the badge number " + (currentEvent.int0) + "!"));
@@ -1301,7 +1301,7 @@ public class CustomEvent : MonoBehaviour
                 Dialog.UndrawDialogBox();
                 break;
             case CustomEventDetails.CustomEventType.StopOverlayBGM:
-                BgmHandler.main.PlayOverlay(null, 0);
+                BackgroundMusicHandler.Singleton.PlayOverlay(null, 0);
                 break;
             case CustomEventDetails.CustomEventType.SetNPCFollower:
                 if (GlobalVariables.Singleton.isFollowerOut)

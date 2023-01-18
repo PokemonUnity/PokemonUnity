@@ -56,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     private DialogBoxHandlerNew Dialog;
-    private MapNameBoxBehaviour MapName;
 
     [Header("Camera")]
     public Camera PlayerCamera;
@@ -103,12 +102,11 @@ public class PlayerMovement : MonoBehaviour
     public NPCFollower NpcFollower;
 
     [Header("Map")]
-    public MapCollider currentMap;
-    public MapSettings accessedMapSettings;
+    public MapCollider currentMapCollider;
+    public PokemonMapBehaviour newMap;
 
     [Header("Audio")]
-    private AudioClip accessedAudio;
-    private int accessedAudioLoopStartSamples;
+    private Audio backgroundMusic;
     private AudioSource playerAudio;
     public AudioClip bumpClip;
     public AudioClip jumpClip;
@@ -202,8 +200,7 @@ public class PlayerMovement : MonoBehaviour
         mountPosition = mount.transform.localPosition;
     }
 
-    void Start()
-    {
+    void Start() {
         camOrigin = PlayerCamera.transform.localPosition;
 
         UpdateDirection(Direction);
@@ -223,85 +220,11 @@ public class PlayerMovement : MonoBehaviour
         //StartCoroutine(control());
 
         //Check current map
-        currentMap = MapCollider.GetMap(transform.position, FacingDirection);
+        currentMapCollider = MapCollider.GetMap(transform.position, FacingDirection);
 
-        if (currentMap != null)
-        {
-            accessedMapSettings = currentMap.GetComponent<MapSettings>();
-            AudioClip audioClip = accessedMapSettings.getBGM();
-            int loopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
-
-            if (accessedAudio != audioClip)
-            {
-                //if audio is not already playing
-                accessedAudio = audioClip;
-                accessedAudioLoopStartSamples = loopStartSamples;
-                BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
-            }
-            if (accessedMapSettings.mapNameAppears)
-            {
-                // FIXME
-                //MapName.AppearAndDisappear(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
-                //MapName.AppearAndDisappear(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
-            }
-
-            //Update Weather
-            if (GameObject.Find("Weather") != null)
-            {
-                if (accessedMapSettings.weathers.Length > 0)
-                {
-                    int probabilityTotal = accessedMapSettings.sunnyWeatherProbability;
-                    int currentProba = 0;
-                    Weather weather = null;
-
-                    foreach (WeatherProbability w in accessedMapSettings.weathers)
-                    {
-                        probabilityTotal += w.probability;
-                    }
-                    
-                    Debug.Log("Probability Total : "+probabilityTotal);
-
-                    float randValue = UnityEngine.Random.Range(1, probabilityTotal);
-                    
-                    Debug.Log("[Weather] Rand value = "+randValue);
-
-                    if (accessedMapSettings.sunnyWeatherProbability > 0 && randValue > currentProba && randValue <= currentProba + accessedMapSettings.sunnyWeatherProbability)
-                    {
-                        // Do nothing
-                    }
-                    else
-                    {
-                        Debug.Log("[Weather] Choosing random weather");
-                        currentProba = accessedMapSettings.sunnyWeatherProbability;
-                        for (int i = 0; i < accessedMapSettings.weathers.Length; ++i)
-                        {
-                            if (accessedMapSettings.weathers[i].probability == 0) continue;
-                        
-                            if (randValue > currentProba && randValue <= currentProba + accessedMapSettings.weathers[i].probability)
-                            {
-                                weather = accessedMapSettings.weathers[i].weather;
-                                Debug.Log("[Weather] Selected weather : "+weather.name);
-                                break;
-                            }
-
-                            currentProba += accessedMapSettings.weathers[i].probability;
-                        }
-                    }
-
-                    if (GameObject.Find("Weather") != null)
-                    {
-                        GameObject.Find("Weather").GetComponent<WeatherHandler>().setWeatherValue(weather);
-                    }
-                }
-                else
-                {
-                    Debug.Log("[Weather] Weather List empty");
-                    GameObject.Find("Weather").GetComponent<WeatherHandler>().setWeatherValue(null);
-                }
-            }
-
-            //Update Discord Rich Presence
-            UpdateRPC();
+        if (currentMapCollider != null) {
+            newMap = currentMapCollider.GetComponent<PokemonMapBehaviour>();
+            PokemonMapBehaviour.UpdateMap(newMap);
         }
 
         //NonResettingHandler Run
@@ -326,23 +249,19 @@ public class PlayerMovement : MonoBehaviour
         
 
         //DEBUG
-        if (accessedMapSettings != null)
+        if (newMap != null)
         {
             string pkmnNames = "";
-            foreach(var encounter in accessedMapSettings.getEncounterList(WildPokemonInitialiser.Location.Standard))
+            foreach(var encounter in newMap.getEncounterList(WildPokemonInitialiser.Location.Standard))
             {
                 pkmnNames += PokemonDatabase.getPokemon(encounter.ID).getName() + ", ";
             }
-            Debug.Log("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + pkmnNames);
+            Debug.Log("Wild Pokemon for map \"" + newMap.Map.Name + "\": " + pkmnNames);
         }
         //
 
         GlobalVariables.Singleton.resetFollower();
     }
-
-    //void Update() {
-    //    animateSprite();
-    //}
 
     #endregion
 
@@ -386,7 +305,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void HandleInputDebug(CallbackContext context) {
-        Debug.Log(currentMap.GetTileTag(transform.position));
+        Debug.Log(currentMapCollider.GetTileTag(transform.position));
         if (Follower.CanMove)
             Follower.StartCoroutine(Follower.withdrawToBall());
         else
@@ -441,11 +360,12 @@ public class PlayerMovement : MonoBehaviour
         bool shouldChangeDirection(Vector3 newDirection) => !IsMoving && newDirection.magnitude > 0 && newDirection != FacingDirection;
     }
 
-    ///returns the vector relative to the player direction, without any modifications.
-    public Vector3 GetForwardVectorRaw() => ((EMovementDirection)Direction).ToVector();
+    public Vector3 GetFacingDirection() => FacingDirection;
 
+    [Obsolete]
     public Vector3 GetForwardVector() => GetMovementVector((EMovementDirection)Direction, true);
 
+    [Obsolete]
     public Vector3 GetForwardVector(EMovementDirection direction) => GetMovementVector(direction, true);
 
     [Obsolete]
@@ -472,7 +392,7 @@ public class PlayerMovement : MonoBehaviour
         movement -= new Vector3(0, (transform.position.y - higherPriorityHit.point.y), 0);
 
         float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, (int)direction));
-        float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + GetForwardVectorRaw(), (int)direction, checkForBridge));
+        float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + GetFacingDirection(), (int)direction, checkForBridge));
         float yDistance = Mathf.Abs((transform.position.y + movement.y) - transform.position.y);
         yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
@@ -516,15 +436,6 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.CollisionCheckRay = positionCheckRay;
         hitColliders = Physics.RaycastAll(collisionCheckRay, movement.magnitude);
 
-        //float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, facingDirection));
-        //float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + GetForwardVectorRaw(), facingDirection, checkForBridge));
-        //Debug.Log(destinationSlope);
-        //float yDistance = Mathf.Abs(transform.position.y - movement.y);
-
-        //yDistance = Mathf.Round(yDistance * 100f) / 100f;
-
-        //Debug.Log("currentSlope: "+currentSlope+", destinationSlope: "+destinationSlope+", yDistance: "+yDistance);
-
         // did not collide with anything moving from our position to our destination
         mapHit = getMapHit(hitColliders);
         bridgeHit = getBridgeHit(hitColliders);
@@ -536,18 +447,13 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.MovementCheckIsValid = false;
         return Vector3.zero;
 
-        //bool movementIsNotTooSteep() {
-        //    //if yDistance is greater than both slopes there is a vertical wall between them
-        //    return (currentSlope <= 1 && destinationSlope <= 1) && (yDistance <= currentSlope || yDistance <= destinationSlope);
-        //}
-
         RaycastHit getMapHit(RaycastHit[] hits) => Array.Find(hits, (RaycastHit hit) => hit.collider.gameObject.GetComponent<MapCollider>() != null);
         RaycastHit getBridgeHit(RaycastHit[] hits) => Array.Find(hits, (RaycastHit hit) => hit.collider.gameObject.GetComponent<BridgeHandler>() != null);
     }
 
-        #endregion
+    #endregion
 
-        [Obsolete]
+    [Obsolete]
     public IEnumerator move(Vector3 movement, bool canEncounter = true, bool lockFollower = false) {
         move(canEncounter, lockFollower);
         yield break;
@@ -578,8 +484,10 @@ public class PlayerMovement : MonoBehaviour
                         if (aboutToStopSurfing(destinationTileTag))
                             stopSurfing();
 
-                        if (destinationMap != currentMap)
-                            changeMap(destinationMap);
+                        if (destinationMap != currentMapCollider) {
+                            currentMapCollider = destinationMap;
+                            PokemonMapBehaviour.UpdateMap(destinationMap.GetComponent<PokemonMapBehaviour>());
+                        }
 
                         Vector3 startPosition = transform.position;
 
@@ -650,7 +558,7 @@ public class PlayerMovement : MonoBehaviour
                 transparentCollider.transform.parent.gameObject.SendMessage("bump", SendMessageOptions.DontRequireReceiver);
         }
         void CheckForEncounters() {
-            EMapTile destinationTag = (EMapTile)currentMap.GetTileTag(transform.position);
+            EMapTile destinationTag = (EMapTile)currentMapCollider.GetTileTag(transform.position);
             if (destinationTag != EMapTile.Impassable)
                 if (destinationTag == EMapTile.SurfableWater)
                     StartCoroutine(wildEncounter(WildPokemonInitialiser.Location.Surfing));
@@ -666,69 +574,6 @@ public class PlayerMovement : MonoBehaviour
             bool collidingWithLockedDoor(Collider objectCollider) => objectCollider.transform.parent.TryGetComponent(out InteractDoorway doorway) && doorway.isLocked;
         }
         #endregion
-    }
-
-    void changeMap(MapCollider newMap) {
-        //if moving onto a new map
-        currentMap = newMap;
-        accessedMapSettings = newMap.gameObject.GetComponent<MapSettings>();
-        if (accessedAudio != accessedMapSettings.getBGM()) {
-            //if audio is not already playing
-            accessedAudio = accessedMapSettings.getBGM();
-            accessedAudioLoopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
-            BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
-        }
-        newMap.BroadcastMessage("repair", SendMessageOptions.DontRequireReceiver);
-
-        if (accessedMapSettings.mapNameAppears) {
-            // FIXME
-            //MapName.display(accessedMapSettings.mapName, accessedMapSettings.mapNameColor);
-        }
-
-        Debug.Log(newMap.name + "   " + accessedAudio.name);
-
-        //Update Weather
-        if (accessedMapSettings.weathers.Length > 0) {
-            int probabilityTotal = accessedMapSettings.sunnyWeatherProbability;
-            int currentProba = 0;
-            Weather weather = null;
-
-            foreach (WeatherProbability w in accessedMapSettings.weathers) {
-                probabilityTotal += w.probability;
-            }
-
-            Debug.Log("Probability Total : " + probabilityTotal);
-
-            float randValue = UnityEngine.Random.Range(1, probabilityTotal);
-
-            Debug.Log("[Weather] Rand value = " + randValue);
-
-            if (accessedMapSettings.sunnyWeatherProbability > 0 && randValue > currentProba && randValue <= currentProba + accessedMapSettings.sunnyWeatherProbability) {
-                // Do nothing
-            } else {
-                Debug.Log("[Weather] Choosing random weather");
-                currentProba = accessedMapSettings.sunnyWeatherProbability;
-                for (int i = 0; i < accessedMapSettings.weathers.Length; ++i) {
-                    if (accessedMapSettings.weathers[i].probability == 0) continue;
-
-                    if (randValue > currentProba && randValue <= currentProba + accessedMapSettings.weathers[i].probability) {
-                        weather = accessedMapSettings.weathers[i].weather;
-                        Debug.Log("[Weather] Selected weather : " + weather.name);
-                        break;
-                    }
-
-                    currentProba += accessedMapSettings.weathers[i].probability;
-                }
-            }
-
-            GameObject.Find("Weather").GetComponent<WeatherHandler>().setWeather(weather);
-        } else {
-            Debug.Log("[Weather] Weather List empty");
-            GameObject weather = GameObject.Find("Weather");
-            if (weather != null) weather.GetComponent<WeatherHandler>().setWeather(null);
-        }
-
-        UpdateRPC();
     }
 
     public void forceMoveForward(int spaces = 1) {
@@ -828,7 +673,7 @@ public class PlayerMovement : MonoBehaviour
                         IsSurfing = true;
                         mount.UpdateMount(true, "surf");
 
-                        BgmHandler.main.PlayMain(GlobalVariables.Singleton.surfBGM, GlobalVariables.Singleton.surfBgmLoopStart);
+                        BackgroundMusicHandler.Singleton.PlayMain(GlobalVariables.Singleton.surfBGM, GlobalVariables.Singleton.surfBgmLoopStart);
 
                         //determine the vector for the space in front of the player by checking direction
                         Vector3 spaceInFront = new Vector3(0, 0, 0);
@@ -874,7 +719,8 @@ public class PlayerMovement : MonoBehaviour
         Speed = WalkSpeed;
         IsSurfing = false;
         StartCoroutine(dismount());
-        BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
+        // FIXME
+        //BgmHandler.main.PlayMain(backgroundMusic, accessedAudioLoopStartSamples);
     }
 
     #endregion
@@ -941,32 +787,6 @@ public class PlayerMovement : MonoBehaviour
 
         return new Vector2(0.25f * column, 0.75f - (0.25f * row));
     }
-
-    //private void animateSprite() {
-    //    //yield break; //FIXME
-    //    frame = 0;
-    //    frames = 4;
-    //    framesPerSec = WalkFPS;
-    //    secPerFrame = 1f / framesPerSec;
-    //    while (true) {
-    //        for (int i = 0; i < 4; i++) {
-    //            if (animPause && frame % 2 != 0 && !overrideAnimPause)
-    //                frame -= 1;
-
-    //            pawnSprite.sprite = spriteSheet[Direction * frames + frame];
-    //            pawnReflectionSprite.sprite = pawnSprite.sprite;
-    //            if (hairSprite != null) hairSprite.sprite = haircutSpriteSheet[Direction * frames + frame];
-    //            if (eyeSprite != null) eyeSprite.sprite = eyeSpriteSheet[Direction * frames + frame];
-    //            //pawnReflectionSprite.SetTextureOffset("_MainTex", GetUVSpriteMap(direction*frames+frame));
-    //            yield return new WaitForSeconds(secPerFrame / 4f);
-    //        }
-    //        if (!animPause || overrideAnimPause) {
-    //            frame += 1;
-    //            if (frame >= frames)
-    //                frame = 0;
-    //        }
-    //    }
-    //}
 
     public void setOverrideAnimPause(bool set) {
         overrideAnimPause = set;
@@ -1144,7 +964,7 @@ public class PlayerMovement : MonoBehaviour
                 SendMessageOptions.DontRequireReceiver);
             currentInteraction = null;
         } else if (!IsSurfing) {
-            if (currentMap.GetTileTag(transform.position + spaceInFront) == 2) {
+            if (currentMapCollider.GetTileTag(transform.position + spaceInFront) == 2) {
                 //water tile tag
                 StartCoroutine(surfCheck());
             }
@@ -1152,10 +972,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public IEnumerator wildEncounter(WildPokemonInitialiser.Location encounterLocation) {
-        if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0) {
-            if (UnityEngine.Random.value <= accessedMapSettings.getEncounterProbability()) {
+        if (newMap.getEncounterList(encounterLocation).Length > 0) {
+            if (UnityEngine.Random.value <= newMap.getEncounterProbability()) {
                 if (setCheckBusyWith(Scene.main.Battle.gameObject)) {
-                    IPokemon wildpkm = accessedMapSettings.getRandomEncounter(encounterLocation);
+                    IPokemon wildpkm = newMap.getRandomEncounter(encounterLocation);
 
                     Scene.main.Battle.PlayWildBGM(wildpkm);
 
@@ -1180,7 +1000,7 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator startWildBattle() {
         if (setCheckBusyWith(Scene.main.Battle.gameObject)) {
-            IPokemon wildpkm = accessedMapSettings.getRandomEncounter(WildPokemonInitialiser.Location.Grass);
+            IPokemon wildpkm = newMap.getRandomEncounter(WildPokemonInitialiser.Location.Grass);
 
             Scene.main.Battle.PlayWildBGM(wildpkm);
 

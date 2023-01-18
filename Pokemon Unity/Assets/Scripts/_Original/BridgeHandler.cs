@@ -9,5 +9,5 @@ public class BridgeHandler : MonoBehaviour
 
     //This is used in collision detection to differentiate between terrain and overlaying structures.
 
-    public MapSettings.Environment bridgeEnvironment = MapSettings.Environment.IndoorB;
+    public PokemonMapBehaviour.Environment bridgeEnvironment = PokemonMapBehaviour.Environment.IndoorB;
 }

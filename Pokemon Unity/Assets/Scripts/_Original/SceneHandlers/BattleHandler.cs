@@ -1044,7 +1044,7 @@ public partial class BattleHandler : MonoBehaviour
             battleBGM = unovaLegendaryBattleBGM;
             battleBGMLoopStart = unovaLegendaryBattleBGMLoopStart;
             
-            BgmHandler.main.PlayOverlay(unovaLegendaryBattleBGM,
+            BackgroundMusicHandler.Singleton.PlayOverlay(unovaLegendaryBattleBGM,
                 unovaLegendaryBattleBGMLoopStart);
         }
         else
@@ -1052,7 +1052,7 @@ public partial class BattleHandler : MonoBehaviour
             battleBGM = defaultWildBGM;
             battleBGMLoopStart = defaultWildBGMLoopStart;
             
-            BgmHandler.main.PlayOverlay(defaultWildBGM,
+            BackgroundMusicHandler.Singleton.PlayOverlay(defaultWildBGM,
                 defaultWildBGMLoopStart);
         }
     }
@@ -4252,7 +4252,7 @@ public partial class BattleHandler : MonoBehaviour
                     SaveData.currentSave.PC.boxes[0][position].addExp(expToNextLevel);
                     expPool -= expToNextLevel;
 
-                    BgmHandler.main.PlayMFX(Resources.Load<AudioClip>("Audio/mfx/GetAverage"));
+                    BackgroundMusicHandler.Singleton.PlayMFX(Resources.Load<AudioClip>("Audio/mfx/GetAverage"));
                     yield return
                         StartCoroutine(
                             drawTextAndWait(
@@ -4357,7 +4357,7 @@ public partial class BattleHandler : MonoBehaviour
 
                             Dialog.DrawBlackFrame();
                             AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
-                            BgmHandler.main.PlayMFX(mfx);
+                            BackgroundMusicHandler.Singleton.PlayMFX(mfx);
                             StartCoroutine(Dialog.DrawTextSilent(selectedPokemon.Name + " learned \n" + move + "!"));
                             yield return new WaitForSeconds(mfx.length);
                             while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
@@ -4396,7 +4396,7 @@ public partial class BattleHandler : MonoBehaviour
 
                     Dialog.DrawBlackFrame();
                     AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
-                    BgmHandler.main.PlayMFX(mfx);
+                    BackgroundMusicHandler.Singleton.PlayMFX(mfx);
                     StartCoroutine(Dialog.DrawTextSilent(selectedPokemon.Name + " learned \n" + move + "!"));
                     yield return new WaitForSeconds(mfx.length);
                     while (!UnityEngine.Input.GetButtonDown("Select") && !UnityEngine.Input.GetButtonDown("Back"))
@@ -5228,15 +5228,15 @@ public partial class BattleHandler : MonoBehaviour
         //}
 
         //GET BATTLE BACKGROUNDS
-        int currentTileTag = PlayerMovement.Singleton.currentMap.GetTileTag(PlayerMovement.Singleton.transform.position);
+        int currentTileTag = PlayerMovement.Singleton.currentMapCollider.GetTileTag(PlayerMovement.Singleton.transform.position);
         Debug.Log(currentTileTag);
-        backgroundObject = Instantiate(PlayerMovement.Singleton.accessedMapSettings.getBattleBackground(currentTileTag),
+        backgroundObject = Instantiate(PlayerMovement.Singleton.newMap.getBattleBackground(currentTileTag),
             GameObject.Find("Global/BattleScene").transform);
         backgroundObject.name = "Scene";
         
         battleScenehandler = BattleScene.transform.Find("Scene").GetComponent<BattleSceneHandler>();
 
-        playerBase.sprite = PlayerMovement.Singleton.accessedMapSettings.getBattleBase(currentTileTag);
+        playerBase.sprite = PlayerMovement.Singleton.newMap.getBattleBase(currentTileTag);
         opponentBase.sprite = playerBase.sprite;
 
         //Set and pokemon Trainer Sprites
@@ -9131,13 +9131,13 @@ public partial class BattleHandler : MonoBehaviour
         if (victor == 1)
         {
             //empty the paused clip, as the paused audio won't be resumed upon respawning
-            BgmHandler.main.ResumeMain(1.4f, null, 0);
+            BackgroundMusicHandler.Singleton.ResumeMain(1.4f, null, 0);
         }
         else
         {
             //if not defeated, the scene won't have faded out already
             StartCoroutine(ScreenFade.Singleton.Fade(false, 1f));
-            BgmHandler.main.ResumeMain(1.4f, PlayerMovement.Singleton.accessedMapSettings.getBGM());
+            BackgroundMusicHandler.Singleton.ResumeMain(1.4f, PlayerMovement.Singleton.newMap.GetBackgroundMusic().Clip);
         }
         yield return new WaitForSeconds(1.4f);
 
@@ -9154,7 +9154,7 @@ public partial class BattleHandler : MonoBehaviour
                         //if can evolve
                         if (SaveData.currentSave.PC.boxes[0][i].canEvolve("Level"))
                         {
-                            BgmHandler.main.PlayOverlay(null, 0, 0);
+                            BackgroundMusicHandler.Singleton.PlayOverlay(null, 0, 0);
 
                             //Set SceneEvolution to be active so that it appears
                             Scene.main.Evolution.gameObject.SetActive(true);

@@ -229,7 +229,7 @@ public class InteractDoorway : MonoBehaviour
                 
                 if (!dontFadeMusic)
                 {
-                    BgmHandler.main.PlayMain(null, 0);
+                    BackgroundMusicHandler.Singleton.PlayMain(null, 0);
                 }
                 yield return new WaitForSeconds(fadeTime);
 
