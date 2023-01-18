@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectFloat.cs" />
+    <Compile Include="Assets\Scripts\_Original\BackgroundMusicHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\AbilityDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PC.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PokemonDatabase.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Assets\Scripts\_Original\ActivateTimeBased.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\WebUtility.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractDoorway.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\PokemonMapBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\SfxHandler.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\PokemonSO.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\BumpLedge.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\CheckDisable.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\CommandMenuButtons.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\BumpPokemonCenterRespawn.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\PokemonMap.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselTexture2D.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV3.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractBreak.cs" />
@@ -326,9 +329,6 @@
     <Compile Include="Assets\Scripts\Behaviours\Input\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\PokemonMap.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\PokemonMapBehaviour.cs" />
-    <Compile Include="Assets\Scripts\_Original\BackgroundMusicHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

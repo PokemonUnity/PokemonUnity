@@ -34,19 +34,19 @@ public class MapNameBoxBehaviour : MonoBehaviour
     }
 
     void Awake() {
-        rectTransform = (RectTransform)transform;
-        if (HoverPosition == Vector3.zero) HoverPosition = rectTransform.anchoredPosition;
-    }
-
-    void Start() {
         if (Singleton == null) Singleton = this;
         else {
             Destroy(this);
             return;
         }
 
-        //StartCoroutine(startUp());
+        rectTransform = (RectTransform)transform;
+        if (HoverPosition == Vector3.zero) HoverPosition = rectTransform.anchoredPosition;
     }
+
+    //void Start() {
+    //    //StartCoroutine(startUp());
+    //}
 
     //IEnumerator startUp() {
     //    yield return StartCoroutine(disappear(0f));

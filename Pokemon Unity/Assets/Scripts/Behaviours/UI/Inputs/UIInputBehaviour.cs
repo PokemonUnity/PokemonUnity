@@ -23,11 +23,19 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
         Events.EventTrigger = eventTrigger;
         Events.EventTrigger.triggers = Events.Triggers;
         // Audio
-        Audio.Initialize(gameObject);        
+        Audio.Initialize(gameObject);
+        // 
+        if (GameSetting != null) {
+            GameSetting.OnValueChange.AddListener(UpdateValue);
+            UpdateValue(GameSetting.Get(), false);
+        }
     }
 
     protected override void OnDestroy() {
         Input.Unsubscribe(gameObject);
+        if (GameSetting != null) {
+            GameSetting.OnValueChange.RemoveListener(UpdateValue);
+        }
     }
 
     void SubscribeToPlayerInputEvents() {
@@ -60,13 +68,15 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
         UpdateValue(context.ReadValue<Vector2>());
     }
 
-    public virtual void UpdateValue(T value) {
+    public virtual void UpdateValue(T value, bool playSound) {
         if (!Application.isPlaying) return;
-        Audio.Play();
-        GameSetting?.Set(value);
+        if (playSound) Audio.Play();
+        if (GameSetting != null) GameSetting.Set(value);
         currentValue = value;
         Events.OnValueChanged.Invoke(value);
     }
+
+    public virtual void UpdateValue(T value) => UpdateValue(value, true);
 
     public abstract void UpdateValue(Vector2 navigationDirection);
 }

@@ -35,7 +35,18 @@ public class VolumeBar : UIInputBehaviour<float> {
         if (textUnitPrefab == null || textUnitPrefab == null) return;
         SpawnUnits();
         base.Start();
-        if (GameSetting != null) UpdateValue(GameSetting.Get());
+        if (GameSetting != null) {
+            //UpdateValue(GameSetting.Get());
+            GameSetting.OnValueChange.AddListener(SyncColorChangers);
+        }
+        SyncColorChangers(currentValue);
+    }
+
+    protected override void OnDestroy() {
+        base.OnDestroy();
+        if (GameSetting != null) {
+            GameSetting.OnValueChange.RemoveListener(SyncColorChangers);
+        }
     }
 
     void Update() {
@@ -74,15 +85,16 @@ public class VolumeBar : UIInputBehaviour<float> {
     }
 
     public float ToUnit(float value) => value / step;
+    
     public float FromUnit(float value) => value * step;
 
     public float GetUnitCount() => (upperBound - lowerBound) / step;
 
     public override GameSetting<float> GameSetting => gameSetting;
 
-    public void SyncColorChangers() {
+    public void SyncColorChangers(float value) {
         for (int i = 0; i < colorChangers.Count; i++) {
-            if (i < ToUnit(currentValue)) 
+            if (i < ToUnit(value)) 
                 colorChangers[i].ChangeColor();
             else
                 colorChangers[i].ChangeToOriginalColor();
@@ -124,7 +136,7 @@ public class VolumeBar : UIInputBehaviour<float> {
     public override void UpdateValue(float value) {
         float newValue = Mathf.Clamp(value, lowerBound, upperBound);
         base.UpdateValue(newValue);
-        SyncColorChangers();
+        SyncColorChangers(newValue);
     }
 
     public override void OnDeselect(BaseEventData data) {

@@ -24,6 +24,7 @@ public abstract class GameSetting<T> : GameSetting {
     public virtual T Get() => HasValue(Key) ? Getter() : DefaultValue;
 
     public virtual void Set(T value) {
+        if (Compare(value, Get())) return;
         Setter(value);
         OnValueChange.Invoke(value);
     }
