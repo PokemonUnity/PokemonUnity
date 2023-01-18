@@ -17,4 +17,4 @@ MonoBehaviour:
   OnValueChange:
     m_PersistentCalls:
       m_Calls: []
-  value: 0.25
+  value: 0.1

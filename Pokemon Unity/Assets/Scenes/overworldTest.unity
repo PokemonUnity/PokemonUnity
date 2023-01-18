@@ -13401,7 +13401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec12d0bc96182cb4994486e96ccfad50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Map: {fileID: 11400000, guid: a86b63229c7402c40b0a41386a6f5a8f, type: 2}
+  Map: {fileID: 11400000, guid: ace94a455251dff4ca1cb9095fa75332, type: 2}
   ShouldMapNameBoxAppear: 1
   environment: 0
   environment2: 0
@@ -19637,7 +19637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b45e3c8958de20045adcb5d2acb36017, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.00000668
+      value: -7.0000067
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b45e3c8958de20045adcb5d2acb36017, type: 3}
       propertyPath: m_LocalPosition.y
