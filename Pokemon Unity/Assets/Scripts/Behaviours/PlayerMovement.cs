@@ -24,6 +24,7 @@ using UnityEngine;
 using Random = System.Random;
 using static UnityEngine.InputSystem.InputAction;
 using System.Collections.Generic;
+using MarkupAttributes;
 
 [RequireComponent(typeof(AudioSource))]
 public class PlayerMovement : MonoBehaviour
@@ -36,35 +37,33 @@ public class PlayerMovement : MonoBehaviour
     //before a script runs, it'll check if the player is busy with another script's GameObject.
     public GameObject busyWith = null;
     public bool canInput = true;
+    private DialogBoxHandlerNew Dialog;
 
     #region Gizmo Variables
 
-    public PlayerMovementGizmos Gizmos = new();
-    
-    [Serializable]
-    public class PlayerMovementGizmos {
-        public bool DrawGizmos = false;
-        public bool DrawDirectionGizmos = false;
-        public bool DrawMovementGizmos = false;
-        [HideInInspector] public Ray PositionCheckRay;
-        [HideInInspector] public Ray CollisionCheckRay;
-        [HideInInspector] public Vector3 MovementRay;
-        [HideInInspector] public bool MovementCheckIsValid = false;
-        [HideInInspector] public Vector3 PossibleMovement;
-    }
+    [Foldout("Gizmos")]
+    public bool DrawGizmos = false;
+    public bool DrawDirectionGizmos = false;
+    public bool DrawMovementGizmos = false;
+    public bool DrawInteractBox = false;
+    [HideInInspector] public Ray PositionCheckRay;
+    [HideInInspector] public Ray CollisionCheckRay;
+    [HideInInspector] public Vector3 MovementRay;
+    [HideInInspector] public bool MovementCheckIsValid = false;
+    [HideInInspector] public Vector3 InteractPosition;
+    [HideInInspector] public float InteractRadius;
 
     #endregion
 
-    private DialogBoxHandlerNew Dialog;
-
-    [Header("Camera")]
+    [Foldout("Camera")]
     public Camera PlayerCamera;
     public Vector3 MainCameraDefaultPosition;
     public float MainCameraDefaultFOV;
     private Vector3 camOrigin;
 
-    [Header("Movement")]
+    [Foldout("Movement")]
     public bool IsMoving = false;
+    Vector3 possibleMovement;
     bool shouldTryToMove = false;
     public bool IsStanding = true;
     public bool IsRunning = false;
@@ -83,9 +82,8 @@ public class PlayerMovement : MonoBehaviour
     public int RunFPS = 12;
     public Vector3 FacingDirection = Vector3.forward;
     private Vector3 directionInput = Vector3.zero;
-    public Transform DirectionSurrogate;
 
-    [Header("Player")]
+    [Foldout("Player")]
     //Player sprites
     [SerializeField] Transform pawn;
     [SerializeField] SpriteRenderer pawnSprite;
@@ -97,26 +95,26 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] UnityEngine.Sprite[] spriteSheet;
     public Transform Hitbox;
 
-    [Header("Followers")]
+    [Foldout("Followers")]
     public FollowerMovement Follower;
     public NPCFollower NpcFollower;
 
-    [Header("Map")]
+    [Foldout("Map")]
     public MapCollider currentMapCollider;
     public PokemonMapBehaviour newMap;
 
-    [Header("Audio")]
+    [Foldout("Audio")]
     private Audio backgroundMusic;
     private AudioSource playerAudio;
     public AudioClip bumpClip;
     public AudioClip jumpClip;
     public AudioClip landClip;
 
-    [Header("Mount")]
+    [Foldout("Mount")]
     [SerializeField] MountBehaviour mount;
     Vector3 mountPosition;
 
-    [Header("Animations")]
+    [Foldout("Animations")]
     private string animationName;
     private UnityEngine.Sprite[] haircutSpriteSheet;
     private UnityEngine.Sprite[] eyeSpriteSheet;
@@ -131,25 +129,28 @@ public class PlayerMovement : MonoBehaviour
     #region MonoBehaviour Functions
 
     void OnDrawGizmos() {
-        if (!Gizmos.DrawGizmos) return;
-        if (Gizmos.DrawDirectionGizmos) {
+        if (!DrawGizmos) return;
+        if (DrawDirectionGizmos) {
             // inputted direction
-            UnityEngine.Gizmos.color = Color.green;
-            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (directionInput.normalized));
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, transform.position + (directionInput.normalized));
             // direction
-            UnityEngine.Gizmos.color = Color.white;
-            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (FacingDirection.normalized));
+            Gizmos.color = Color.white;
+            Gizmos.DrawLine(transform.position, transform.position + (FacingDirection.normalized));
         }
-        if (Gizmos.DrawMovementGizmos) {
+        if (DrawMovementGizmos) {
             // position check ray
-            UnityEngine.Gizmos.color = Color.yellow;
-            UnityEngine.Gizmos.DrawLine(Gizmos.PositionCheckRay.origin, Gizmos.PositionCheckRay.origin + (Gizmos.PositionCheckRay.direction * 3f));
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(PositionCheckRay.origin, PositionCheckRay.origin + (PositionCheckRay.direction * 3f));
             // movement collision checker
-            UnityEngine.Gizmos.color = Color.yellow;
-            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + Gizmos.PossibleMovement);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, transform.position + possibleMovement);
             // possible movement
-            UnityEngine.Gizmos.color = Gizmos.MovementCheckIsValid ? Color.green : Color.red;
-            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + Gizmos.PossibleMovement);
+            Gizmos.color = MovementCheckIsValid ? Color.green : Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + possibleMovement);
+        }
+        if (DrawInteractBox) {
+            Gizmos.DrawSphere(InteractPosition, InteractRadius);
         }
     }
 
@@ -363,48 +364,14 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GetFacingDirection() => FacingDirection;
 
     [Obsolete]
-    public Vector3 GetForwardVector() => GetMovementVector((EMovementDirection)Direction, true);
-
-    [Obsolete]
-    public Vector3 GetForwardVector(EMovementDirection direction) => GetMovementVector(direction, true);
+    public Vector3 GetMovementVector(EMovementDirection direction) => GetMovementVector(direction, true);
 
     [Obsolete]
     public Vector3 GetMovementVector(EMovementDirection direction, bool checkForBridge) {
-        //set initial vector3 based off of direction
-        Vector3 movement = ((EMovementDirection)Direction).ToVector();
-
-        //Check destination map	and bridge																//0.5f to adjust for stair height
-        //cast a ray directly downwards from the position directly in front of the player		//1f to check in line with player's head
-        RaycastHit[] hitColliders = Physics.RaycastAll(transform.position + movement + new Vector3(0, 1.5f, 0), Vector3.down);
-
-        RaycastHit mapHit = Array.Find(hitColliders, (RaycastHit hit) => hit.collider.gameObject.GetComponent<MapCollider>() != null);
-        //if a collision's gameObject has a BridgeHandler, it is a bridge.
-        // !!!
-        // I removed the bridge collision checking here to decrease complexity. 
-        // I feel there is a better way to do it, but the game needs other repairs first
-        // !!! 
-        //RaycastHit bridgeHit = new RaycastHit();
-        //if (checkForBridge)
-        //    bridgeHit = Array.Find(hitColliders, (RaycastHit hit) => hit.collider.gameObject.GetComponent<BridgeHandler>() != null);
-
-        // modify the forwards vector to align to the colliding plane
-        RaycastHit higherPriorityHit = mapHit; // bridgeHit.collider == null ? mapHit : bridgeHit;
-        movement -= new Vector3(0, (transform.position.y - higherPriorityHit.point.y), 0);
-
-        float currentSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position, (int)direction));
-        float destinationSlope = Mathf.Abs(MapCollider.GetSlopeOfPosition(transform.position + GetFacingDirection(), (int)direction, checkForBridge));
-        float yDistance = Mathf.Abs((transform.position.y + movement.y) - transform.position.y);
-        yDistance = Mathf.Round(yDistance * 100f) / 100f;
-
-        //Debug.Log("currentSlope: "+currentSlope+", destinationSlope: "+destinationSlope+", yDistance: "+yDistance);
-
-        //if either slope is greater than 1 it is too steep.
-        if ((currentSlope <= 1 && destinationSlope <= 1) && (yDistance <= currentSlope || yDistance <= destinationSlope)) {
-            //if yDistance is greater than both slopes there is a vertical wall between them
-            return movement;
-        }
-        return Vector3.zero;
+        return GetMovementVector(direction.ToVector(), checkForBridge);
     }
+
+    public Vector3 GetMovementVector() => GetMovementVector(FacingDirection, true);
 
     public Vector3 GetMovementVector(Vector3 facingDirection, bool checkForBridge) {
         //set initial vector3 based off of direction
@@ -415,7 +382,7 @@ public class PlayerMovement : MonoBehaviour
 
         Ray positionCheckRay = new Ray(transform.position + movement + new Vector3(0, 1.5f, 0), Vector3.down);
         RaycastHit[] hitColliders = Physics.RaycastAll(positionCheckRay, 3f);
-        Gizmos.PositionCheckRay = positionCheckRay;
+        PositionCheckRay = positionCheckRay;
 
         // TODO: Theres definitely a better way to do this, I just know it
         RaycastHit mapHit = getMapHit(hitColliders);
@@ -429,22 +396,22 @@ public class PlayerMovement : MonoBehaviour
         if (higherPriorityHit.collider == null) return Vector3.zero; // Hit nothing
 
         movement -= new Vector3(0, (transform.position.y - higherPriorityHit.point.y), 0);
-        if (Gizmos.DrawGizmos) Gizmos.PossibleMovement = movement;
+        possibleMovement = movement;
 
         Vector3 positionTranslatedUpwards = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
         Ray collisionCheckRay = new Ray(positionTranslatedUpwards, movement.normalized);
-        Gizmos.CollisionCheckRay = positionCheckRay;
+        CollisionCheckRay = positionCheckRay;
         hitColliders = Physics.RaycastAll(collisionCheckRay, movement.magnitude);
 
         // did not collide with anything moving from our position to our destination
         mapHit = getMapHit(hitColliders);
         bridgeHit = getBridgeHit(hitColliders);
         if (mapHit.collider == null && bridgeHit.collider == null) {
-            Gizmos.MovementCheckIsValid = true;
+            MovementCheckIsValid = true;
             return movement;
         }
 
-        Gizmos.MovementCheckIsValid = false;
+        MovementCheckIsValid = false;
         return Vector3.zero;
 
         RaycastHit getMapHit(RaycastHit[] hits) => Array.Find(hits, (RaycastHit hit) => hit.collider.gameObject.GetComponent<MapCollider>() != null);
@@ -583,7 +550,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator forceMoveForwardIE(int spaces) {
         overrideAnimPause = true;
         for (int i = 0; i < spaces; i++) {
-            Vector3 movement = GetForwardVector();
+            Vector3 movement = GetMovementVector();
 
             //check destination for transparents
             Collider objectCollider = null;
@@ -938,36 +905,35 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void interact() {
-        Vector3 spaceInFront = GetForwardVector();
+        InteractPosition = new Vector3(transform.position.x, (transform.position.y + 0.5f), transform.position.z) + possibleMovement;
+        InteractRadius = 0.4f;
+        Collider[] hitColliders = Physics.OverlapSphere(InteractPosition, InteractRadius);
+        Collider currentInteraction = GetInteractedObject();
 
-        Collider[] hitColliders =
-            Physics.OverlapSphere(
-                (new Vector3(transform.position.x, (transform.position.y + 0.5f), transform.position.z) + spaceInFront),
-                0.4f);
-        Collider currentInteraction = null;
-        if (hitColliders.Length > 0) {
-            for (int i = 0; i < hitColliders.Length; i++) {
-                if (hitColliders[i].name.Contains("_Transparent")) {
-                    //Prioritise a transparent over a solid object.
-                    if (hitColliders[i].name != ("Player_Transparent")) {
-                        currentInteraction = hitColliders[i];
-                        i = hitColliders.Length;
-                    } //Stop checking for other interactable events if a transparent was found.
-                } else if (hitColliders[i].name.Contains("_Object")) {
-                    currentInteraction = hitColliders[i];
-                }
-            }
-        }
         if (currentInteraction != null) {
             //sent interact message to the collider's object's parent object
             currentInteraction.transform.parent.gameObject.SendMessage("interact",
                 SendMessageOptions.DontRequireReceiver);
             currentInteraction = null;
         } else if (!IsSurfing) {
-            if (currentMapCollider.GetTileTag(transform.position + spaceInFront) == 2) {
+            if (currentMapCollider.GetTileTag(transform.position + possibleMovement) == 2) {
                 //water tile tag
                 StartCoroutine(surfCheck());
             }
+        }
+
+        Collider GetInteractedObject() {
+            if (hitColliders.Length > 0) {
+                for (int i = 0; i < hitColliders.Length; i++) {
+                    if (hitColliders[i].name.Contains("_Transparent"))
+                        //Prioritise a transparent over a solid object.
+                        if (hitColliders[i].name != ("Player_Transparent"))
+                            return hitColliders[i];
+                    else if (hitColliders[i].name.Contains("_Object"))
+                        return hitColliders[i];
+                }
+            }
+            return null;
         }
     }
 

@@ -240,7 +240,7 @@ public class CustomEvent : MonoBehaviour
                     for (int i = 0; i < currentEvent.int0; i++)
                     {
                         PlayerMovement.Singleton.UpdateDirection((int) currentEvent.dir);
-                        Vector3 forwardsVector = PlayerMovement.Singleton.GetForwardVector();
+                        Vector3 forwardsVector = PlayerMovement.Singleton.GetMovementVector();
                         if (currentEvent.bool0)
                         {
                             //if direction locked in
@@ -1064,7 +1064,7 @@ public class CustomEvent : MonoBehaviour
                         for (int i = 0; i < iteration; i++)
                         {
                             PlayerMovement.Singleton.UpdateDirection(dir);
-                            Vector3 forwardsVector = PlayerMovement.Singleton.GetForwardVector();
+                            Vector3 forwardsVector = PlayerMovement.Singleton.GetMovementVector();
                             if (currentEvent.bool0)
                             {
                                 //if direction locked in
@@ -1139,7 +1139,7 @@ public class CustomEvent : MonoBehaviour
                         for (int i = 0; i < iteration; i++)
                         {
                             PlayerMovement.Singleton.UpdateDirection(dir);
-                            Vector3 forwardsVector = PlayerMovement.Singleton.GetForwardVector();
+                            Vector3 forwardsVector = PlayerMovement.Singleton.GetMovementVector();
                             if (currentEvent.bool0)
                             {
                                 //if direction locked in

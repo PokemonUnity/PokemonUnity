@@ -2,8 +2,8 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
-[CustomPropertyDrawer(typeof(FoldoutAttribute))]
-public class FoldoutDrawer : PropertyDrawer {
+[CustomPropertyDrawer(typeof(ScriptableObjectFieldsAttribute))]
+public class ScriptableObjectFieldsDrawer : PropertyDrawer {
     bool showContent = false;
     //bool showLongDescription = false;
     static float margin = 4f;
@@ -12,7 +12,7 @@ public class FoldoutDrawer : PropertyDrawer {
     private GUIStyle style;
     private GUIStyle styleFoldout;
 
-    public FoldoutDrawer() {
+    public ScriptableObjectFieldsDrawer() {
         style = new GUIStyle();
         style.normal.textColor = new Color(0.67f, 0.67f, 0.67f);
         style.wordWrap = true;

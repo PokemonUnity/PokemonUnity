@@ -117,8 +117,8 @@
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingPlayerPref.cs" />
     <Compile Include="Assets\Scripts\_Original\BattleCameraHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\GUIParticleHandler.cs" />
-    <Compile Include="Assets\Scripts\_Original\BattleDebug.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PokemonData.cs" />
+    <Compile Include="Assets\Scripts\_Original\BattleDebug.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\FightMenuButtons.cs" />
     <Compile Include="Assets\Scripts\_Original\SO\Weather.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\UIMoveTo.cs" />
@@ -163,7 +163,7 @@
     <Compile Include="Assets\Scripts\Scriptable Objects\PokemonSO.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\BumpLedge.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\OLD_SettingsHandler.cs" />
-    <Compile Include="Assets\Scripts\_Original\Interacts\InteractTrainer.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Interactions\InteractTrainer.cs" />
     <Compile Include="Assets\Scripts\_Original\WindowLight.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\SCPacketHeader.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\Enums\GameSettingBattleStyle.cs" />
@@ -278,7 +278,7 @@
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\EvolutionHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractShop.cs" />
     <Compile Include="Assets\Scripts\_Original\Map\ScrollingText.cs" />
-    <Compile Include="Assets\Scripts\Editor Attributes\FoldoutAttribute.cs" />
+    <Compile Include="Assets\Scripts\Editor Attributes\ScriptableObjectFieldsAttribute.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingText.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarComponent.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\CSPacketBase.cs" />
@@ -1045,8 +1045,14 @@
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
       <HintPath>Library\ScriptAssemblies\UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="MarkupAttributes.Runtime">
+      <HintPath>Library\ScriptAssemblies\MarkupAttributes.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkupAttributes.Editor">
+      <HintPath>Library\ScriptAssemblies\MarkupAttributes.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>

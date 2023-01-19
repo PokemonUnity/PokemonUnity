@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.gasgiant.markupattributes": "https://github.com/gasgiant/Markup-Attributes.git#upm",
     "com.madsbangh.easybuttons": "https://github.com/madsbangh/EasyButtons.git#upm",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",

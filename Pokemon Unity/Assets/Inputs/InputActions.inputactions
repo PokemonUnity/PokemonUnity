@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Select",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "eaf1b20e-41db-4bc6-900f-072a5696ab35",
                     "expectedControlType": "Button",
@@ -209,22 +209,22 @@
                 {
                     "name": "",
                     "id": "62fd972a-ebf5-40ea-842f-8116809ff8f8",
-                    "path": "<Keyboard>/tab",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Select",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "bc625c3b-cfc3-41ec-a7df-d4025c76c5c6",
-                    "path": "<Gamepad>/select",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Select",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

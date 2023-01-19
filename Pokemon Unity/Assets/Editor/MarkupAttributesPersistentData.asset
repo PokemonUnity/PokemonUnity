@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df934b69ee8b0624ba55678c438afb84, type: 3}
-  m_Name: Music Volume
+  m_Script: {fileID: 11500000, guid: da0d25574c33ac64d98db1c615ce7ff9, type: 3}
+  m_Name: MarkupAttributesPersistentData
   m_EditorClassIdentifier: 
-  Key: Music Volume
-  defaultValue: 0.5
-  OnValueChange:
-    m_PersistentCalls:
-      m_Calls: []
-  value: 0.22
+  serializedBoolEntries: []
+  serializedIntEntries: []

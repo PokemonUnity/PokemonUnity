@@ -59,11 +59,12 @@
     <Compile Include="Assets\Scripts\Editor\_Original\NewEditModeTest.cs" />
     <Compile Include="Assets\Scripts\Editor\DescriptionAttributeDrawer.cs" />
     <Compile Include="Assets\Scripts\Editor\_Original\TMP_AnimatedEditor.cs" />
-    <Compile Include="Assets\Scripts\Editor\FoldoutDrawer.cs" />
+    <Compile Include="Assets\Scripts\Editor\ScriptableObjectFieldsDrawer.cs" />
     <Compile Include="Assets\Scripts\_Original\Editor\BillboardingEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\_Original\CustomEventEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\_Original\EventHandlerTest.cs" />
     <Compile Include="Assets\Scripts\Editor\ReadOnlyDrawer.cs" />
+    <Compile Include="Assets\Scripts\Editor\MarkedUpEditors.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Editor\_Original\DOTweenEditor.dll" />
@@ -775,8 +776,14 @@
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
       <HintPath>Library\ScriptAssemblies\UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="MarkupAttributes.Runtime">
+      <HintPath>Library\ScriptAssemblies\MarkupAttributes.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkupAttributes.Editor">
+      <HintPath>Library\ScriptAssemblies\MarkupAttributes.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
