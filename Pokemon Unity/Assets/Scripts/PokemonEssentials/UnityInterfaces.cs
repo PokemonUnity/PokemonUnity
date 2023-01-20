@@ -25,52 +25,150 @@ namespace PokemonUnity.UX
 	#region Pokemon Battle
 	public interface IPokeBattle_SceneIE : PokemonEssentials.Interface.Screen.IPokeBattle_Scene, IScene, IHasDisplayMessageIE//, IHasChatter
 	{
-		new IEnumerator pbDisplay(string msg, bool brief = false);
-		new IEnumerator pbDisplayMessage(string msg, bool brief = false);
-		new IEnumerator pbDisplayPausedMessage(string msg);
-		IEnumerator pbDisplayConfirmMessage(string msg, System.Action<bool> result);
 		IEnumerator pbShowCommands(string msg, string[] commands, int defaultValue, System.Action<int> result);
 		//IEnumerator pbShowCommands(string msg, string[] commands, bool canCancel, System.Action<int> result);
-		new IEnumerator pbShowOpponent(int index);
-		new IEnumerator pbHideOpponent();
-		new IEnumerator pbTrainerSendOut(int battlerindex, IPokemon pkmn);
-		/// <summary>
-		/// Player sending out Pokémon
-		/// </summary>
-		/// <param name="battlerindex"></param>
-		/// <param name="pkmn"></param>
-		new IEnumerator pbSendOut(int battlerindex, IPokemon pkmn);
-		new IEnumerator pbTrainerWithdraw(IBattle battle, IBattler pkmn);
-		new IEnumerator pbWithdraw(IBattle battle, IBattler pkmn);
-		/// <summary>
-		/// Use this method to display the list of commands.
-		/// </summary>
-		/// <param name="index"></param>
-		/// <returns>Return values: 0=Fight, 1=Bag, 2=Pokémon, 3=Run, 4=Call</returns>
-		IEnumerator pbCommandMenu(int index, System.Action<int> result);
 		/// <summary>
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name="texts"></param>
 		/// <param name="mode">0 - regular battle, 1 - Shadow Pokémon battle, 2 - Safari Zone, 3 - Bug Catching Contest</param>
 		IEnumerator pbCommandMenuEx(int index, string[] texts, int mode, System.Action<int> result);
+		new IEnumerator pbDisplay(string msg, bool brief = false);
+		#region Override NoGraphics with Unity API and Coroutines
+		//new void pbDisplayMessage(string msg,bool brief= false);
+		new IEnumerator pbDisplayMessage(string msg, bool brief = false);
+		//new void pbDisplayPausedMessage(string msg);
+		new IEnumerator pbDisplayPausedMessage(string msg);
+		//new void pbDisplayConfirmMessage(string msg);
+		IEnumerator pbDisplayConfirmMessage(string msg, System.Action<bool> result);
+		new IEnumerator pbFrameUpdate(IViewport cw);
+		//void pbRefresh();
+		/// <summary>
+		/// Called whenever a new round begins.
+		/// </summary>
+		//new void pbBeginCommandPhase();
+		/// <summary>
+		/// Called whenever the battle begins
+		/// </summary>
+		/// <remarks>
+		/// This is used to animate the battle intro 
+		/// (trainer appearing in frame, the challenge dialog, 
+		/// pokemons appearing, and HUD setup)
+		/// </remarks>
+		/// <param name="battle"></param>
+		//new void pbStartBattle(IBattle battle);
+		IEnumerator pbStartBattle(IBattleIE battle);
+		//new void pbEndBattle(PokemonUnity.Combat.BattleResults result);
+		//new void pbTrainerSendOut(IBattle battle,IPokemon pkmn);
+		new IEnumerator pbTrainerSendOut(int battlerindex, IPokemon pkmn);
+		/// <summary>
+		/// Player sending out Pokémon
+		/// </summary>
+		/// <param name="battlerindex"></param>
+		/// <param name="pkmn"></param>
+		//new void pbSendOut(IBattle battle,IPokemon pkmn);
+		new IEnumerator pbSendOut(int battlerindex, IPokemon pkmn);
+		//new void pbTrainerWithdraw(IBattle battle,IPokemon pkmn);
+		new IEnumerator pbTrainerWithdraw(IBattle battle, IBattler pkmn);
+		//new void pbWithdraw(IBattle battle,IPokemon pkmn);
+		new IEnumerator pbWithdraw(IBattle battle, IBattler pkmn);
+		/// <summary>
+		/// Called whenever a Pokémon should forget a move. It should return -1 if the
+		/// selection is canceled, or 0 to 3 to indicate the move to forget.
+		/// The function should not allow HM moves to be forgotten.
+		/// </summary>
+		/// <param name="pkmn"></param>
+		/// <param name="move"></param>
+		//new void pbForgetMove(IPokemon pkmn,Moves move);
+		//new void pbBeginAttackPhase();
+		/// <summary>
+		/// Use this method to display the list of commands.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns>Return values: 0=Fight, 1=Bag, 2=Pokémon, 3=Run, 4=Call</returns>
+		//new void pbCommandMenu(int index);
+		IEnumerator pbCommandMenu(int index, System.Action<int> result);
+		/// <summary>
+		/// </summary>
+		/// <param name="pkmn"></param>
+		//void pbPokemonString(IPokemon pkmn);
 		/// <summary>
 		/// Update selected command
 		/// Use this method to display the list of moves for a Pokémon
 		/// </summary>
 		/// <param name="index"></param>
+		//new void pbFightMenu(int index);
 		IEnumerator pbFightMenu(int index, System.Action<int> result);
-		IEnumerator pbChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype, System.Action<int> result);
 		/// <summary>
-		/// This method is called whenever a Pokémon faints.
+		/// Use this method to display the inventory
+		/// The return value is the item chosen, or 0 if the choice was canceled.
 		/// </summary>
+		/// <param name="index"></param>
+		//new void pbItemMenu(int index);
+		/// <summary>
+		/// </summary>
+		/// <param name="index"></param>
+		/// <param name="targettype"></param>
+		void pbFirstTarget(int index, int targettype);
+		void pbNextTarget(int cur, int index);
+		void pbPrevTarget(int cur, int index);
+		/// <summary>
+		/// Use this method to make the player choose a target 
+		/// for certain moves in double battles.
+		/// </summary>
+		/// <param name="index"></param>
 		/// <param name=""></param>
+		//new void pbChooseTarget(int index,int targettype);
+		IEnumerator pbChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype, System.Action<int> result);
+		//new void pbSwitch(int index,bool lax,bool cancancel);
+		/// <summary>
+		/// This method is called whenever a Pokémon's HP changes.
+		/// Used to animate the HP bar.
+		/// </summary>
+		/// <param name="pkmn"></param>
+		/// <param name="oldhp"></param>
+		/// <param name="anim"></param>
+		//new void pbHPChanged(IPokemon pkmn,int oldhp,bool anim= false);
+		/// <summary>
+		/// This method is called whenever a Pokémon faints
+		/// </summary>
+		/// <param name="pkmn"></param>
+		//new void pbFainted(IPokemon pkmn);
 		new IEnumerator pbFainted(IBattler pkmn);
 		/// <summary>
 		/// Use this method to choose a command for the enemy.
 		/// </summary>
 		/// <param name="index"></param>
-		//new IEnumerator pbChooseEnemyCommand(int index);
+		//new void pbChooseEnemyCommand(int index);
+		new IEnumerator pbChooseEnemyCommand(int index);
+		/// <summary>
+		/// Use this method to choose a new Pokémon for the enemy
+		/// The enemy's party is guaranteed to have at least one choosable member.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <param name="party"></param>
+		//new void pbChooseNewEnemy(int index,IPokemon[] party);
+		/// <summary>
+		/// This method is called when the player wins a wild Pokémon battle.
+		/// This method can change the battle's music for example.
+		/// </summary>
+		//new void pbWildBattleSuccess();
+		/// <summary>
+		/// This method is called when the player wins a Trainer battle.
+		/// This method can change the battle's music for example.
+		/// </summary>
+		new void pbTrainerBattleSuccess();
+		new void pbEXPBar(IBattler battler,IPokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
+		new void pbLevelUp(IBattler battler,IPokemon thispoke,int oldtotalhp,int oldattack,
+			int olddefense,int oldspeed,int oldspatk,int oldspdef);
+		//new void pbShowOpponent(int opp);
+		new IEnumerator pbShowOpponent(int index);
+		//new void pbHideOpponent();
+		new IEnumerator pbHideOpponent();
+		new void pbRecall(int battlerindex);
+		void pbDamageAnimation(IPokemon pkmn,TypeEffective effectiveness);
+		new void pbAnimation(Moves moveid,IBattler attacker,IBattler opponent,int hitnum= 0);
+		#endregion
 	}
 
 	/// <summary>
@@ -288,26 +386,26 @@ namespace PokemonUnity.UX
 		//bool pbAllFainted(IPokemon[] party);
 		//int pbMaxLevel(IPokemon[] party);
 		//int pbMaxLevelFromIndex(int index);
-		/// <summary>
-		/// Gets player party of selected battler
-		/// </summary>
-		/// <param name="index"></param>
-		/// <returns>Returns the trainer party of pokemon at this index?</returns>
-		IPokemon[] pbParty(int index);
-		IPokemon[] pbOpposingParty(int index);
-		int pbSecondPartyBegin(int battlerIndex);
-		int pbPartyLength(int battlerIndex);
-		int pbFindNextUnfainted(IPokemon[] party, int start, int finish = -1);
-		int pbGetLastPokeInTeam(int index);
-		IBattler pbFindPlayerBattler(int pkmnIndex);
-		bool pbIsOwner(int battlerIndex, int partyIndex);
-		ITrainer pbGetOwner(int battlerIndex);
-		ITrainer pbGetOwnerPartner(int battlerIndex);
-		int pbGetOwnerIndex(int battlerIndex);
-		bool pbBelongsToPlayer(int battlerIndex);
-		ITrainer pbPartyGetOwner(int battlerIndex, int partyIndex);
-		void pbAddToPlayerParty(IPokemon pokemon);
-		void pbRemoveFromParty(int battlerIndex, int partyIndex);
+		///// <summary>
+		///// Gets player party of selected battler
+		///// </summary>
+		///// <param name="index"></param>
+		///// <returns>Returns the trainer party of pokemon at this index?</returns>
+		//IPokemon[] pbParty(int index);
+		//IPokemon[] pbOpposingParty(int index);
+		//int pbSecondPartyBegin(int battlerIndex);
+		//int pbPartyLength(int battlerIndex);
+		//int pbFindNextUnfainted(IPokemon[] party, int start, int finish = -1);
+		//int pbGetLastPokeInTeam(int index);
+		//IBattler pbFindPlayerBattler(int pkmnIndex);
+		//bool pbIsOwner(int battlerIndex, int partyIndex);
+		//ITrainer pbGetOwner(int battlerIndex);
+		//ITrainer pbGetOwnerPartner(int battlerIndex);
+		//int pbGetOwnerIndex(int battlerIndex);
+		//bool pbBelongsToPlayer(int battlerIndex);
+		//ITrainer pbPartyGetOwner(int battlerIndex, int partyIndex);
+		//void pbAddToPlayerParty(IPokemon pokemon);
+		//void pbRemoveFromParty(int battlerIndex, int partyIndex);
 		#endregion
 
 		#region Check whether actions can be taken.
@@ -418,15 +516,16 @@ namespace PokemonUnity.UX
 		new IEnumerator pbDisplay(string msg);
 		new IEnumerator pbDisplayPaused(string msg);
 		new IEnumerator pbDisplayBrief(string msg);
-		bool pbDisplayConfirm(string msg);
-		void pbShowCommands(string msg, string[] commands, bool cancancel = true);
-		void pbAnimation(Moves move, IBattler attacker, IBattler opponent, int hitnum = 0);
-		void pbCommonAnimation(string name, IBattler attacker, IBattler opponent, int hitnum = 0);
+		IEnumerator pbDisplayConfirm(string msg, System.Action<bool> result);
+		new IEnumerator pbShowCommands(string msg, string[] commands, bool cancancel = true);
+		new IEnumerator pbAnimation(Moves move, IBattler attacker, IBattler opponent, int hitnum = 0);
+		new IEnumerator pbCommonAnimation(string name, IBattler attacker, IBattler opponent, int hitnum = 0);
 		#endregion
 
 		#region Battle core.
-		BattleResults pbStartBattle(bool canlose= false);
-		void pbStartBattleCore(bool canlose);
+		//new IEnumerator pbStartBattle(bool canlose= false, System.Action<BattleResults> result = null);
+		new IEnumerator pbStartBattle(bool canlose= false);
+		new IEnumerator pbStartBattleCore(bool canlose);
 		#endregion
 
 		#region Command phase.
