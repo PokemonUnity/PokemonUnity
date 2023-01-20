@@ -27,10 +27,9 @@ using System.Collections.Generic;
 using MarkupAttributes;
 
 [RequireComponent(typeof(AudioSource))]
-public class PlayerMovement : MonoBehaviour
-{
+public class PlayerMovement : MonoBehaviour, INeedDirection {
     public static PlayerMovement Singleton;
-    public TrainerSO Trainer;
+    public PlayerSO Player;
 
     #region Variables
 
@@ -43,17 +42,18 @@ public class PlayerMovement : MonoBehaviour
 
     [Foldout("Gizmos")]
     public bool DrawGizmos = false;
-    public bool DrawDirectionGizmos = false;
     public bool DrawMovementGizmos = false;
     public bool DrawInteractBox = false;
     [HideInInspector] public Ray PositionCheckRay;
     [HideInInspector] public Ray CollisionCheckRay;
     [HideInInspector] public Vector3 MovementRay;
     [HideInInspector] public bool MovementCheckIsValid = false;
-    [HideInInspector] public Vector3 InteractPosition;
-    [HideInInspector] public float InteractRadius;
 
     #endregion
+
+    [Foldout("Interactions")]
+    Vector3 interactPosition;
+    public float InteractRadius = 0.4f;
 
     [Foldout("Camera")]
     public Camera PlayerCamera;
@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 camOrigin;
 
     [Foldout("Movement")]
+    [SerializeField] DirectionSurrogate directionSurrogate;
     public bool IsMoving = false;
     Vector3 possibleMovement;
     bool shouldTryToMove = false;
@@ -80,7 +81,6 @@ public class PlayerMovement : MonoBehaviour
     public float Increment = 1f;
     public int WalkFPS = 7;
     public int RunFPS = 12;
-    public Vector3 FacingDirection = Vector3.forward;
     private Vector3 directionInput = Vector3.zero;
 
     [Foldout("Player")]
@@ -104,7 +104,6 @@ public class PlayerMovement : MonoBehaviour
     public PokemonMapBehaviour newMap;
 
     [Foldout("Audio")]
-    private Audio backgroundMusic;
     private AudioSource playerAudio;
     public AudioClip bumpClip;
     public AudioClip jumpClip;
@@ -124,20 +123,16 @@ public class PlayerMovement : MonoBehaviour
     public int framesPerSec;
     private bool overrideAnimPause;
 
+    public DirectionSurrogate DirectionSurrogate { get => directionSurrogate; }
+    
+    public Vector3 FacingDirection { get => directionSurrogate.FacingDirection; }
+
     #endregion
 
     #region MonoBehaviour Functions
 
     void OnDrawGizmos() {
         if (!DrawGizmos) return;
-        if (DrawDirectionGizmos) {
-            // inputted direction
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, transform.position + (directionInput.normalized));
-            // direction
-            Gizmos.color = Color.white;
-            Gizmos.DrawLine(transform.position, transform.position + (FacingDirection.normalized));
-        }
         if (DrawMovementGizmos) {
             // position check ray
             Gizmos.color = Color.yellow;
@@ -150,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.DrawLine(transform.position, transform.position + possibleMovement);
         }
         if (DrawInteractBox) {
-            Gizmos.DrawSphere(InteractPosition, InteractRadius);
+            Gizmos.DrawSphere(interactPosition, InteractRadius);
         }
     }
 
@@ -167,12 +162,16 @@ public class PlayerMovement : MonoBehaviour
         //
         if (Hitbox == null) Debug.LogError("No hitBox Tranform provided", gameObject);
         if (mount == null) Debug.LogError("No mount sprite provided", gameObject);
+        if (Player == null) Debug.LogError("No Player Scriptable Object provided", gameObject);
         if (animator == null) {
             animator = GetComponent<SpriteAnimatorBehaviour>();
             if (animator == null) 
                 Debug.LogError("No mount sprite found or provided", gameObject);
-        } else {
-            animator.Animations = Trainer.Animations;
+        }
+        if (animator != null && Player != null) {
+            animator.Animations = Player.Animations;
+            SwitchAnimation("Idle");
+            DirectionSurrogate.OnDirectionUpdated.AddListener(SwitchAnimation);
         }
     }
 
@@ -264,6 +263,10 @@ public class PlayerMovement : MonoBehaviour
         GlobalVariables.Singleton.resetFollower();
     }
 
+    void Update() {
+        interactPosition = new Vector3(transform.position.x, (transform.position.y + 0.5f), transform.position.z) + possibleMovement;
+    }
+
     #endregion
 
     #region Input Handling
@@ -271,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
     public void PauseInput(float secondsToWait = 0f) {
         canInput = false;
         if (animationName == "run")
-            SwitchAnimation("walk", WalkFPS);
+            SwitchAnimation("walk");
 
         if (IsRunning || IsBiking)
             Speed = WalkSpeed;
@@ -300,8 +303,7 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(openPauseMenu());
     }
 
-    public void HandleInputSelect(CallbackContext context) {
-        canInput = false;
+    public void HandleInputInteract(CallbackContext context) {
         interact();
     }
 
@@ -343,12 +345,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void UpdateDirection(Vector3 newDirection) {
         if (shouldChangeDirection(directionInput)) {
-            // unless player has just moved, wait a small amount of time to ensure that they have time to let go before moving 
-            // (allows only turning)
-            //if (!IsMoving)
-            //    yield return new WaitForSeconds(directionChangeInputDelay);
             Direction = (int)newDirection.ToMovementDirection(Vector3.forward, Vector3.up);
-            FacingDirection = ((EMovementDirection)Direction).ToVector(); //newDirection;
+            directionSurrogate.UpdateDirection(newDirection);
             mount.UpdateDirection(FacingDirection);
             //FIXME
             //pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[direction * frames + frame];
@@ -502,13 +500,13 @@ public class PlayerMovement : MonoBehaviour
             if (!IsSurfing && !IsBiking) {
                 if (IsRunning) {
                     if (IsMoving) {
-                        this.SwitchAnimation("run", RunFPS);
+                        SwitchAnimation("run");
                     } else {
-                        this.SwitchAnimation("walk", WalkFPS);
+                        SwitchAnimation("walk");
                     }
                     Speed = RunSpeed;
                 } else {
-                    this.SwitchAnimation("walk", WalkFPS);
+                    SwitchAnimation("walk");
                     Speed = WalkSpeed;
                 }
             }
@@ -660,7 +658,7 @@ public class PlayerMovement : MonoBehaviour
                         forceMoveForward();
                         yield return StartCoroutine(jump());
 
-                        SwitchAnimation("surf", WalkFPS);
+                        SwitchAnimation("surf");
                         Speed = SurfSpeed;
                     }
                     Dialog.UndrawDialogBox();
@@ -682,7 +680,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void stopSurfing() {
-        SwitchAnimation("walk", WalkFPS);
+        SwitchAnimation("walk");
         Speed = WalkSpeed;
         IsSurfing = false;
         StartCoroutine(dismount());
@@ -732,10 +730,11 @@ public class PlayerMovement : MonoBehaviour
 
     #region Animations & Visuals
 
-    public void SwitchAnimation(string newAnimationName, int? fps = null) {
-        string animationName = newAnimationName + FacingDirection.ToDirectionString(Vector3.forward, Vector3.up);
-        animator.SwitchAnimation(animationName);
-    }
+    // This exposure was created for the Direction Surrogate
+    public void SwitchAnimation(Vector3 direction) => animator.SwitchAnimation(direction);
+    
+    // Expose so outside sources can update this objects animation
+    public void SwitchAnimation(string animationName) => animator.SwitchAnimation(FacingDirection, animationName);
 
     public void updateCosmetics() {
         return; //FIXME
@@ -905,30 +904,25 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void interact() {
-        InteractPosition = new Vector3(transform.position.x, (transform.position.y + 0.5f), transform.position.z) + possibleMovement;
-        InteractRadius = 0.4f;
-        Collider[] hitColliders = Physics.OverlapSphere(InteractPosition, InteractRadius);
         Collider currentInteraction = GetInteractedObject();
 
         if (currentInteraction != null) {
+            Debug.Log($"Interacting with {currentInteraction.name}");
             //sent interact message to the collider's object's parent object
-            currentInteraction.transform.parent.gameObject.SendMessage("interact",
-                SendMessageOptions.DontRequireReceiver);
-            currentInteraction = null;
+            currentInteraction.transform.parent.gameObject.SendMessage("interact", SendMessageOptions.DontRequireReceiver);
+            canInput = false;
         } else if (!IsSurfing) {
-            if (currentMapCollider.GetTileTag(transform.position + possibleMovement) == 2) {
-                //water tile tag
+            if (currentMapCollider.GetTileTag(transform.position + possibleMovement) == (int)EMapTile.SurfableWater)
                 StartCoroutine(surfCheck());
-            }
         }
 
         Collider GetInteractedObject() {
+            Collider[] hitColliders = Physics.OverlapSphere(interactPosition, InteractRadius);
             if (hitColliders.Length > 0) {
                 for (int i = 0; i < hitColliders.Length; i++) {
-                    if (hitColliders[i].name.Contains("_Transparent"))
-                        //Prioritise a transparent over a solid object.
-                        if (hitColliders[i].name != ("Player_Transparent"))
-                            return hitColliders[i];
+                    //Prioritise a transparent over a solid object.
+                    if (hitColliders[i].name.Contains("_Transparent") && hitColliders[i].name != ("Player_Transparent"))
+                        return hitColliders[i];
                     else if (hitColliders[i].name.Contains("_Object"))
                         return hitColliders[i];
                 }

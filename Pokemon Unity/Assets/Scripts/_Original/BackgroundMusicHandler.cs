@@ -34,10 +34,10 @@ public class BackgroundMusicHandler : MonoBehaviour
     private Track currentTrack;
 
     private AudioTrack
-        mainTrack = new AudioTrack(),
-        mainTrackNext = new AudioTrack(),
-        overlayTrack = new AudioTrack(),
-        mfxTrack = new AudioTrack();
+        mainTrack,
+        mainTrackNext,
+        overlayTrack,
+        mfxTrack;
 
     private bool loop = true;
     LTDescr fadingTween;
@@ -193,8 +193,10 @@ public class BackgroundMusicHandler : MonoBehaviour
     public void PlayMain(AudioTrack backgroundMusic) => StartCoroutine(PlayMainIE(backgroundMusic));
 
     public void PlayMain(AudioClip bgm, int loopStartSamples) {
-        AudioTrack track = new AudioTrack(bgm, loopStartSamples);
-        PlayMain(track);
+        // FIXME;
+        throw new Exception("Need to refactor this method to use AudioTrack");
+        //AudioTrack track = new AudioTrack(bgm, loopStartSamples);
+        //PlayMain(track);
     }
 
     public IEnumerator PlayMainIE(AudioTrack backgroundMusic) {
@@ -220,11 +222,15 @@ public class BackgroundMusicHandler : MonoBehaviour
     }
 
     public void ResumeMain(float time = -1f, AudioClip clip = null, int loopStartSamples = 0) {
-        ResumeMain(time == -1f ? defaultFadeSpeed : time, new AudioTrack(clip, loopStartSamples));
+        // FIXME;
+        throw new Exception("Need to refactor this method to use AudioTrack");
+        //ResumeMain(time == -1f ? defaultFadeSpeed : time, new AudioTrack(clip, loopStartSamples));
     }
 
     public void ForceResumeMain(float time = -1f, AudioClip clip = null, int loopStartSamples = 0) {
-        ResumeMain(time == -1f ? defaultFadeSpeed : time, new AudioTrack(clip, loopStartSamples), true);
+        // FIXME;
+        throw new Exception("Need to refactor this method to use AudioTrack");
+        //ResumeMain(time == -1f ? defaultFadeSpeed : time, new AudioTrack(clip, loopStartSamples), true);
     }
 
     public void ResumeMain(float time, AudioTrack track, bool forceResume = false) {
@@ -243,7 +249,6 @@ public class BackgroundMusicHandler : MonoBehaviour
                 Debug.Log("Fade Coroutine");
                 yield return StartCoroutine(FadeOutIE(time));
                 Debug.Log("Playing: " + track.ToString());
-                Play(Track.Main);
             }
         } else
             Debug.Log("Not Overlay when resume");
@@ -277,7 +282,9 @@ public class BackgroundMusicHandler : MonoBehaviour
             yield return StartCoroutine(FadeOutIE(fadeTime));
 
         //if MFX is playing:   ONLY set overlay track to new track, don't play
-        overlayTrack = new AudioTrack(bgm, loopStartSamples);
+        // FIXME;
+        throw new Exception("Need to refactor this method to use AudioTrack");
+        //overlayTrack = new AudioTrack(bgm, loopStartSamples);
         if (startSample > 0)
             overlayTrack.SamplesPosition = startSample;
 
@@ -313,7 +320,9 @@ public class BackgroundMusicHandler : MonoBehaviour
         Pause();
 
         loop = false;
-        mfxTrack = new AudioTrack(mfx, 0);
+        // FIXME;
+        throw new Exception("Need to refactor this method to use AudioTrack");
+        //mfxTrack = new AudioTrack(mfx, 0);
         Play(Track.MFX);
         while (source.isPlaying)
             yield return null;
@@ -340,40 +349,3 @@ public class BackgroundMusicHandler : MonoBehaviour
     #endregion
 }
 
-[Serializable]
-public class AudioTrack : PokemonEssentials.Interface.IAudioObject
-{
-    //[SerializeField] string Name;
-    //[SerializeField] int volume;
-    //[SerializeField] float pitch;
-
-    public string name { get; set; }
-	public int volume { get; set; }
-	public float pitch { get; set; }
-
-    public AudioClip Clip;
-    public int LoopStartSamples;
-    public int SamplesPosition;
-
-    public AudioTrack() {
-        this.Clip = null;
-        this.LoopStartSamples = 0;
-        this.SamplesPosition = 0;
-    }
-
-    public AudioTrack(AudioClip clip, int loopStartSamples) {
-        this.Clip = clip;
-        this.LoopStartSamples = loopStartSamples;
-        this.SamplesPosition = 0;
-    }
-
-    public PokemonEssentials.Interface.IAudioObject initialize(string name, float volume = 100, float pitch = 100)
-	{
-        this.name = name;
-        this.volume = (int)volume;
-        this.pitch = pitch;
-        return this;
-	}
-
-    public static AudioTrack NullTrack => new AudioTrack(null, 0);
-}

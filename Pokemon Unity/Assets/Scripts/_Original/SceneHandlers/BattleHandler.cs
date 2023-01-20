@@ -1312,7 +1312,7 @@ public partial class BattleHandler : MonoBehaviour
         yield return null;
     }
     
-    private IEnumerator playerLaunchingBall(bool isTrainerBattle, bool doubleBattle, Trainer ally)
+    private IEnumerator playerLaunchingBall(bool isTrainerBattle, bool doubleBattle, TrainerBehaviour ally)
     {
         Animator trainer = BattleScene.transform.Find("player_trainer").GetComponent<Animator>();
         Animator trainer2 = null;
@@ -4969,7 +4969,7 @@ public partial class BattleHandler : MonoBehaviour
         yield return null;
     }
 
-    private void UpdateLowHpPlay(int target, Trainer ally)
+    private void UpdateLowHpPlay(int target, TrainerBehaviour ally)
     {
         /*if (ally == null && target <= 2 || ally != null && target == 0)
         {
@@ -5020,7 +5020,7 @@ public partial class BattleHandler : MonoBehaviour
         }*/
     }
 
-    public int GetUsablePokemon(Trainer ally, bool doubleBattle)
+    public int GetUsablePokemon(TrainerBehaviour ally, bool doubleBattle)
     {
         IPokemon[] party = Game.GameData.Trainer.party;
         int usablePokemon = 0;
@@ -5065,12 +5065,12 @@ public partial class BattleHandler : MonoBehaviour
     }
 
     /// Basic Trainer Battle
-    public IEnumerator control(Trainer trainer, bool doubleBattle = false, Trainer trainer2 = null, Trainer ally = null)
+    public IEnumerator control(TrainerBehaviour trainer, bool doubleBattle = false, TrainerBehaviour trainer2 = null, TrainerBehaviour ally = null)
     {
         yield return StartCoroutine(control(true, trainer, false, doubleBattle, trainer2, ally));
     }
 
-    public IEnumerator control(bool isTrainerBattle, Trainer trainer, bool healedOnDefeat, bool doubleBattle = false, Trainer trainer2 = null, Trainer ally = null)
+    public IEnumerator control(bool isTrainerBattle, TrainerBehaviour trainer, bool healedOnDefeat, bool doubleBattle = false, TrainerBehaviour trainer2 = null, TrainerBehaviour ally = null)
     {
         pokemon = new IPokemon[6];
 
@@ -5208,7 +5208,7 @@ public partial class BattleHandler : MonoBehaviour
 
         trainerBattle = isTrainerBattle;
         IPokemon[] opponentParty = new IPokemon[0]; //trainer.Party;
-        string opponentName = trainer.GetName();
+        string opponentName = trainer.Trainer.Name;
         IPokemon[] opponent2Party = new IPokemon[0];
         string opponent2Name = "";
 
@@ -5243,7 +5243,7 @@ public partial class BattleHandler : MonoBehaviour
         trainer1Animation = new UnityEngine.Sprite[] {Resources.Load<UnityEngine.Sprite>("null")};
         if (trainerBattle)
         {
-            trainer1Animation = trainer.GetSprites();
+            trainer1Animation = null; // trainer.GetSprites(); FIXME
             opponentSpriteRenderer.transform.localScale = new Vector3(0, 0, 0);
             opponentShadowSpriteRenderer.transform.localScale = new Vector3(0, 0, 0);
             opponentTrainerSpriteRenderer.transform.localScale = new Vector3(-1, 1, 1);
@@ -5253,7 +5253,7 @@ public partial class BattleHandler : MonoBehaviour
 
             if (doubleBattle && trainer2 != null)
             {
-                trainer2Animation = trainer2.GetSprites();
+                trainer2Animation = null; // trainer2.GetSprites(); FIXME
                 opponent2SpriteRenderer.transform.localScale = new Vector3(0, 0, 0);
                 opponent2ShadowSpriteRenderer.transform.localScale = new Vector3(0, 0, 0);
                 opponentTrainer2SpriteRenderer.transform.localScale = new Vector3(-1, 1, 1);
@@ -9193,7 +9193,7 @@ public partial class BattleHandler : MonoBehaviour
         BattleScene.SetActive(false);
     }
     
-    public void UpdateRPC(bool isTrainer, Trainer trainer)
+    public void UpdateRPC(bool isTrainer, TrainerBehaviour trainer)
     {
         //Update Discord RPC
         float hour = System.DateTime.Now.Hour;

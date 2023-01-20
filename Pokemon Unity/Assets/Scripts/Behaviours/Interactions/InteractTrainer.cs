@@ -6,19 +6,12 @@ using System.Collections;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(Trainer))]
+[RequireComponent(typeof(global::TrainerBehaviour))]
 public class InteractTrainer : MonoBehaviour
 {
     #region Variables
 
-    private Trainer trainer;
-
-    public enum Gender
-    {
-        Unimportant,
-        Male,
-        Female
-    }
+    private global::TrainerBehaviour trainer;
 
     public enum TrainerBehaviour
     {
@@ -28,9 +21,8 @@ public class InteractTrainer : MonoBehaviour
     }
 
     public bool doubleBattle;
-    public Trainer ally;
+    public global::TrainerBehaviour ally;
 
-    public Gender trainerGender;
     public TrainerBehaviour trainerBehaviour;
 
     public string trainerSpriteName;
@@ -98,7 +90,7 @@ public class InteractTrainer : MonoBehaviour
     void Awake()
     {
         return; // FIXME
-        trainer = transform.GetComponent<Trainer>();
+        trainer = transform.GetComponent<global::TrainerBehaviour>();
 
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
 
@@ -620,54 +612,42 @@ public class InteractTrainer : MonoBehaviour
     }
 
 
-    private IEnumerator interact()
-    {
-        if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject))
-        {
+    private IEnumerator interact() {
+        if (PlayerMovement.Singleton.setCheckBusyWith(this.gameObject)) {
             busy = true;
 
             //calculate Player's position relative to target object's and set direction accordingly.
-            float xDistance = this.transform.position.x - PlayerMovement.Singleton.transform.position.x;
-            float zDistance = this.transform.position.z - PlayerMovement.Singleton.transform.position.z;
+            float xDistance = transform.position.x - PlayerMovement.Singleton.transform.position.x;
+            float zDistance = transform.position.z - PlayerMovement.Singleton.transform.position.z;
+            //Mathf.Abs() converts zDistance to a positive always.
             if (xDistance >= Mathf.Abs(zDistance))
-            {
-                //Mathf.Abs() converts zDistance to a positive always.
                 updateDirection(3);
-            } //this allows for better accuracy when checking orientation.
+            //this allows for better accuracy when checking orientation.
             else if (xDistance <= Mathf.Abs(zDistance) * -1)
-            {
                 updateDirection(1);
-            }
             else if (zDistance >= Mathf.Abs(xDistance))
-            {
                 updateDirection(2);
-            }
             else
-            {
                 updateDirection(0);
-            }
 
-            if (!defeated)
-            {
-                //Play INTRO BGM
+            if (!defeated) {
+                // Play INTRO BGM
                 BackgroundMusicHandler.Singleton.PlayOverlay(introBGM, samplesLoopStart);
 
-                //Display all of the confrontation Dialog.
-                for (int i = 0; i < en_trainerConfrontDialog.Length; i++)
-                {
+                // Display all of the confrontation Dialog.
+                for (int i = 0; i < en_trainerConfrontDialog.Length; i++) {
                     Dialog.DrawDialogBox();
                     yield return Dialog.StartCoroutine(Dialog.DrawText( en_trainerConfrontDialog[i]));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
                         yield return null;
-                    }
+
                     Dialog.UndrawDialogBox();
                 }
 
-                //custom cutouts not yet implemented
+                // custom cutouts not yet implemented
                 StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.SlowedSpeed, null));
 
-                //Automatic LoopStart usage not yet implemented
+                // Automatic LoopStart usage not yet implemented
                 Scene.main.Battle.gameObject.SetActive(true);
                 if (trainer.battleBGM != null)
                 {
@@ -685,13 +665,13 @@ public class InteractTrainer : MonoBehaviour
                 Scene.main.Battle.gameObject.SetActive(false);
                 yield return new WaitForSeconds(1.6f);
 
-                Trainer player2 = null;
+                global::TrainerBehaviour player2 = null;
 
                 if (PlayerMovement.Singleton.NpcFollower)
                 {
-                    if (PlayerMovement.Singleton.NpcFollower.GetComponent<Trainer>() != null)
+                    if (PlayerMovement.Singleton.NpcFollower.GetComponent<global::TrainerBehaviour>() != null)
                     {
-                        player2 = PlayerMovement.Singleton.NpcFollower.GetComponent<Trainer>();
+                        player2 = PlayerMovement.Singleton.NpcFollower.GetComponent<global::TrainerBehaviour>();
                     }
                 }
 
@@ -723,11 +703,8 @@ public class InteractTrainer : MonoBehaviour
                     }
                 }
             }
-            else
-            {
-                //Display all of the post defeat Dialog.
-                for (int i = 0; i < en_trainerPostDefeatDialog.Length; i++)
-                {
+            else //Display all of the post defeat Dialog.
+                for (int i = 0; i < en_trainerPostDefeatDialog.Length; i++) {
                     Dialog.DrawDialogBox();
                     yield return Dialog.StartCoroutine(Dialog.DrawText( en_trainerPostDefeatDialog[i]));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
@@ -736,7 +713,6 @@ public class InteractTrainer : MonoBehaviour
                     }
                     Dialog.UndrawDialogBox();
                 }
-            }
 
             busy = false;
             PlayerMovement.Singleton.unsetCheckBusyWith(this.gameObject);

@@ -1,5 +1,105 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &899354453576958431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8852678922311159125}
+  - component: {fileID: 6876805117954618330}
+  m_Layer: 0
+  m_Name: Direction Surrogate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8852678922311159125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899354453576958431}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.00000004371139}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4975417707229743878}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &6876805117954618330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899354453576958431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b7f678b2fec7e49ac72cf30385532f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GizmoColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  GizmoDrawLength: 1
+  Direction: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  OnDirectionUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &1915754612330182599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2387489380545613680}
+  - component: {fileID: 2229309331129814399}
+  m_Layer: 0
+  m_Name: Direction Surrogate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2387489380545613680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915754612330182599}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.00000004371139}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4975417706449109250}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &2229309331129814399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915754612330182599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b7f678b2fec7e49ac72cf30385532f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GizmoColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  GizmoDrawLength: 1
+  Direction: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  OnDirectionUpdated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4975417706298323193
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +394,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2387489380545613680}
   - {fileID: 4975417708171817626}
   - {fileID: 4975417706311080646}
   - {fileID: 4975417707229743878}
@@ -324,7 +425,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.2040834
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -412,19 +513,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb46e7a9813a20c428cf41ea42f25f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Trainer: {fileID: 11400000, guid: 7dac1cdb0fc39ae46b498a8bab835939, type: 2}
+  Player: {fileID: 11400000, guid: 7dac1cdb0fc39ae46b498a8bab835939, type: 2}
   busyWith: {fileID: 0}
   canInput: 1
-  Gizmos:
-    DrawGizmos: 0
-    DrawDirectionGizmos: 0
-    DrawMovementGizmos: 0
-    MovementRay: {x: 0, y: 0, z: 0}
-    MovementCheckIsValid: 0
-    PossibleMovement: {x: 0, y: 0, z: 0}
+  DrawGizmos: 1
+  DrawMovementGizmos: 0
+  DrawInteractBox: 1
+  MovementRay: {x: 0, y: 0, z: 0}
+  MovementCheckIsValid: 0
+  InteractRadius: 0.4
   PlayerCamera: {fileID: 0}
   MainCameraDefaultPosition: {x: 0, y: 0, z: 0}
   MainCameraDefaultFOV: 0
+  directionSurrogate: {fileID: 2229309331129814399}
   IsMoving: 0
   IsStanding: 1
   IsRunning: 0
@@ -439,8 +540,6 @@ MonoBehaviour:
   Increment: 1
   WalkFPS: 7
   RunFPS: 12
-  FacingDirection: {x: 0, y: 0, z: 1}
-  DirectionSurrogate: {fileID: 4975417706449109250}
   pawn: {fileID: 4975417708171817626}
   pawnSprite: {fileID: 4975417708171817628}
   eyeSprite: {fileID: 0}
@@ -469,7 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActiveAnimationIndex: 0
+  DefaultAnimationAction: Idle
   SpriteRenderer: {fileID: 4975417708171817628}
   ReflectionSpriteRenderer: {fileID: 4975417707132642942}
   Paused: 0
@@ -553,13 +652,13 @@ MonoBehaviour:
               m_BoolArgument: 0
             m_CallState: 2
     - ActionMap: Player
-      Action: Select
+      Action: Interact
       Callbacks:
         m_PersistentCalls:
           m_Calls:
           - m_Target: {fileID: 4975417706449109251}
             m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-            m_MethodName: HandleInputSelect
+            m_MethodName: HandleInputInteract
             m_Mode: 0
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -1133,6 +1232,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8852678922311159125}
   - {fileID: 4975417707014361487}
   - {fileID: 4975417708308432904}
   - {fileID: 4975417706953077911}
@@ -1158,6 +1258,7 @@ MonoBehaviour:
   Pokemon: {fileID: 11400000, guid: 895611169deee6947b56b4bf963157da, type: 2}
   DrawGizmos: 1
   pokemonID: 197
+  directionSurrogate: {fileID: 6876805117954618330}
   direction: 2
   speed: 0
   IsHidden: 0
@@ -1187,7 +1288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActiveAnimationIndex: 0
+  DefaultAnimationAction: Walk
   SpriteRenderer: {fileID: 4975417707014361584}
   ReflectionSpriteRenderer: {fileID: 4975417706298323195}
   Paused: 0
@@ -1372,7 +1473,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300016, guid: fa1c95b2735ed5843b5b8bba647b894b, type: 3}
+  m_Sprite: {fileID: 21300016, guid: 14d6e1bfe158c734ba010eeca8f612fe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

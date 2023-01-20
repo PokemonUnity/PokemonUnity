@@ -63,8 +63,8 @@
     <Compile Include="Assets\Scripts\_Original\Editor\BillboardingEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\_Original\CustomEventEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\_Original\EventHandlerTest.cs" />
-    <Compile Include="Assets\Scripts\Editor\ReadOnlyDrawer.cs" />
     <Compile Include="Assets\Scripts\Editor\MarkedUpEditors.cs" />
+    <Compile Include="Assets\Scripts\Editor\ReadOnlyDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Editor\_Original\DOTweenEditor.dll" />

@@ -158,7 +158,7 @@ public class InteractDoorway : MonoBehaviour
                 {
                     PlayerMovement.Singleton.IsRunning = false;
                     PlayerMovement.Singleton.Speed = PlayerMovement.Singleton.WalkSpeed;
-                    PlayerMovement.Singleton.SwitchAnimation("walk", PlayerMovement.Singleton.WalkFPS);
+                    PlayerMovement.Singleton.SwitchAnimation("walk");
 
                     float increment = 0f;
                     float speed = 0.25f;
@@ -184,7 +184,7 @@ public class InteractDoorway : MonoBehaviour
                 {
                     PlayerMovement.Singleton.IsRunning = false;
                     PlayerMovement.Singleton.Speed = PlayerMovement.Singleton.WalkSpeed;
-                    PlayerMovement.Singleton.SwitchAnimation("walk", PlayerMovement.Singleton.WalkFPS);
+                    PlayerMovement.Singleton.SwitchAnimation("walk");
 
                     float increment = 0f;
                     float speed = 0.25f;
@@ -259,7 +259,7 @@ public class InteractDoorway : MonoBehaviour
                     PlayerMovement.Singleton.unsetCheckBusyWith(gameObject);
 
                     //transfer to current scene, no saving/loading nessecary
-                    PlayerMovement.Singleton.SwitchAnimation("walk", PlayerMovement.Singleton.WalkFPS);
+                    PlayerMovement.Singleton.SwitchAnimation("walk");
                     PlayerMovement.Singleton.Speed = PlayerMovement.Singleton.WalkSpeed;
 
                     PlayerMovement.Singleton.transform.position = transferPosition;

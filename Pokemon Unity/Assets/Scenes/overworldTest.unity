@@ -840,6 +840,8 @@ GameObject:
   - component: {fileID: 37104785}
   - component: {fileID: 37104784}
   - component: {fileID: 37104786}
+  - component: {fileID: 37104787}
+  - component: {fileID: 37104788}
   m_Layer: 0
   m_Name: TrainerBrooke
   m_TagString: Untagged
@@ -861,7 +863,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doubleBattle: 0
   ally: {fileID: 0}
-  trainerGender: 2
   trainerBehaviour: 0
   trainerSpriteName: npcBrooke
   introBGM: {fileID: 8300000, guid: 5ee913ad1fe34df4899831ec57d6f59a, type: 3}
@@ -891,11 +892,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37104783}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5, y: 0, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 785013545}
   - {fileID: 723427515}
   - {fileID: 250393602}
   - {fileID: 2003287684}
@@ -903,7 +905,7 @@ Transform:
   - {fileID: 137280930}
   - {fileID: 1070602953}
   m_Father: {fileID: 352847467}
-  m_RootOrder: 2
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &37104786
 MonoBehaviour:
@@ -917,17 +919,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2765a15fb277bb4893b838316b8f307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueSprites: 
-  trainerClass: 1
-  trainerName: Brooke
-  customPrizeMoney: 0
-  isFemale: 1
-  trainerParty:
-  - ID: 197
-    level: 12
-    heldItem: 
-    ability: 0
-    moveset: []
+--- !u!114 &37104787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37104783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 557336396e0db994f8f281306d97b86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trainer: {fileID: 11400000, guid: 721305b3a6f23e442a676c33661c2097, type: 2}
+  SightDistance: 1
+  directionSurrogate: {fileID: 785013546}
+  trainerParty: []
   battleBGM: {fileID: 0}
   samplesLoopStart: 0
   victoryBGM: {fileID: 0}
@@ -936,12 +943,36 @@ MonoBehaviour:
   lowHpBGMSamplesLoopStart: 0
   environment: 0
   en_tightSpotDialog: []
-  en_playerVictoryDialog:
-  - All I can smell is defeat.
+  en_playerVictoryDialog: []
   en_playerLossDialog: []
   fr_tightSpotDialog: []
   fr_playerVictoryDialog: []
   fr_playerLossDialog: []
+--- !u!114 &37104788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37104783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultAnimationAction: Idle
+  SpriteRenderer: {fileID: 723427516}
+  ReflectionSpriteRenderer: {fileID: 342983762}
+  Paused: 0
+  Animations:
+  - {fileID: 11400000, guid: 24b3c45d7e4ca3a44ad6434eb413fe90, type: 2}
+  - {fileID: 11400000, guid: c2e4f47580a3b8646965405f7e059c2c, type: 2}
+  - {fileID: 11400000, guid: 4ada33463d30bf7408ad7a4aadb317ae, type: 2}
+  - {fileID: 11400000, guid: 5ec57cd6190b65e46bf72b70da571ffa, type: 2}
+  - {fileID: 11400000, guid: 478dac260180efb41856fc8afdec0245, type: 2}
+  - {fileID: 11400000, guid: 93e58b015d4527b40952bd214a86e490, type: 2}
+  - {fileID: 11400000, guid: 4f333e29c6df8824a9355cbad6ba0c9b, type: 2}
+  - {fileID: 11400000, guid: c65f55715932de1428ece3f0f4887d4d, type: 2}
 --- !u!1001 &40273829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3462,6 +3493,8 @@ GameObject:
   - component: {fileID: 244924760}
   - component: {fileID: 244924761}
   - component: {fileID: 244924762}
+  - component: {fileID: 244924763}
+  - component: {fileID: 244924764}
   m_Layer: 0
   m_Name: TrainerLinda
   m_TagString: Untagged
@@ -3481,6 +3514,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1754647417}
   - {fileID: 415409598}
   - {fileID: 1080470231}
   - {fileID: 786725372}
@@ -3504,7 +3538,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doubleBattle: 0
   ally: {fileID: 0}
-  trainerGender: 2
   trainerBehaviour: 2
   trainerSpriteName: npcLinda
   introBGM: {fileID: 8300000, guid: 5ee913ad1fe34df4899831ec57d6f59a, type: 3}
@@ -3551,22 +3584,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2765a15fb277bb4893b838316b8f307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueSprites: 
-  trainerClass: 1
-  trainerName: Linda
-  customPrizeMoney: 0
-  isFemale: 1
-  trainerParty:
-  - ID: 300
-    level: 31
-    heldItem: 
-    ability: 0
-    moveset: []
-  - ID: 301
-    level: 42
-    heldItem: 
-    ability: 0
-    moveset: []
+--- !u!114 &244924763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244924759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 557336396e0db994f8f281306d97b86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trainer: {fileID: 11400000, guid: ba97fa012eef6fe45be212f474bf46d0, type: 2}
+  SightDistance: 1
+  directionSurrogate: {fileID: 1754647418}
+  trainerParty: []
   battleBGM: {fileID: 0}
   samplesLoopStart: 0
   victoryBGM: {fileID: 0}
@@ -3575,12 +3608,36 @@ MonoBehaviour:
   lowHpBGMSamplesLoopStart: 0
   environment: 0
   en_tightSpotDialog: []
-  en_playerVictoryDialog:
-  - That was the opposite of what I wanted.
+  en_playerVictoryDialog: []
   en_playerLossDialog: []
   fr_tightSpotDialog: []
   fr_playerVictoryDialog: []
   fr_playerLossDialog: []
+--- !u!114 &244924764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244924759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultAnimationAction: Idle
+  SpriteRenderer: {fileID: 415409600}
+  ReflectionSpriteRenderer: {fileID: 1989107240}
+  Paused: 0
+  Animations:
+  - {fileID: 11400000, guid: 24b3c45d7e4ca3a44ad6434eb413fe90, type: 2}
+  - {fileID: 11400000, guid: c2e4f47580a3b8646965405f7e059c2c, type: 2}
+  - {fileID: 11400000, guid: 4ada33463d30bf7408ad7a4aadb317ae, type: 2}
+  - {fileID: 11400000, guid: 5ec57cd6190b65e46bf72b70da571ffa, type: 2}
+  - {fileID: 11400000, guid: 478dac260180efb41856fc8afdec0245, type: 2}
+  - {fileID: 11400000, guid: 93e58b015d4527b40952bd214a86e490, type: 2}
+  - {fileID: 11400000, guid: 4f333e29c6df8824a9355cbad6ba0c9b, type: 2}
+  - {fileID: 11400000, guid: c65f55715932de1428ece3f0f4887d4d, type: 2}
 --- !u!4 &248762013 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 461654, guid: 9ab08e704ca19ed419b1be28a660d240,
@@ -5143,8 +5200,8 @@ Transform:
   m_Children:
   - {fileID: 1585241438}
   - {fileID: 244924760}
-  - {fileID: 37104785}
   - {fileID: 1040741904}
+  - {fileID: 37104785}
   m_Father: {fileID: 890122039}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8034,6 +8091,56 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ab08e704ca19ed419b1be28a660d240, type: 3}
+--- !u!1 &529332882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 529332883}
+  - component: {fileID: 529332884}
+  m_Layer: 0
+  m_Name: Direction Surrogate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &529332883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529332882}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1585241438}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: -47.45, z: 0}
+--- !u!114 &529332884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529332882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b7f678b2fec7e49ac72cf30385532f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GizmoColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  GizmoDrawLength: 1
+  Direction: {x: 0, y: -0.70710677, z: 0, w: 0.70710677}
+  OnDirectionUpdated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &529828818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11850,6 +11957,56 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 776356727}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &785013544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785013545}
+  - component: {fileID: 785013546}
+  m_Layer: 0
+  m_Name: Direction Surrogate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &785013545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785013544}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 37104785}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &785013546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785013544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b7f678b2fec7e49ac72cf30385532f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GizmoColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  GizmoDrawLength: 1
+  Direction: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  OnDirectionUpdated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &785412689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b45e3c8958de20045adcb5d2acb36017,
@@ -13315,42 +13472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: Map Test 3
-  MapNameBox:
-    Text: Map
-    TextColor:
-      r: 0.0627451
-      g: 0.0627451
-      b: 0.0627451
-      a: 1
-    Sprite: {fileID: 0}
-  RPCImageKey: 
-  mapBGMClip: {fileID: 8300000, guid: 3763f59403cfb8d498c8ae966e45e4a5, type: 3}
-  mapBGMLoopStartSamples: 0
-  mapBGMNightClip: {fileID: 0}
-  mapBGMNightLoopStartSamples: 0
-  mapNameAppears: 1
-  mapNameColor:
-    r: 0.0627451
-    g: 0.0627451
-    b: 0.0627451
-    a: 1
-  environment: 0
-  environment2: 0
-  pokemonRarity: 2
-  encounters:
-  - ID: 393
-    minLevel: 8
-    maxLevel: 14
-    encounterLikelihood: 1
-    encounterLocation: 2
-    encounterMorning: 1
-    encounterDay: 1
-    encounterNight: 1
-    encounterSunny: 1
-    encounterWeather: 1
-  sunnyWeatherProbability: 1
-  weathers: []
 --- !u!64 &873282568
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -15319,6 +15440,8 @@ GameObject:
   - component: {fileID: 1040741904}
   - component: {fileID: 1040741905}
   - component: {fileID: 1040741906}
+  - component: {fileID: 1040741907}
+  - component: {fileID: 1040741908}
   m_Layer: 0
   m_Name: TrainerBrooke2
   m_TagString: Untagged
@@ -15338,6 +15461,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1875870481}
   - {fileID: 680184626}
   - {fileID: 958122327}
   - {fileID: 1245270221}
@@ -15361,7 +15485,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doubleBattle: 0
   ally: {fileID: 0}
-  trainerGender: 2
   trainerBehaviour: 0
   trainerSpriteName: npcBrooke
   introBGM: {fileID: 8300000, guid: 5ee913ad1fe34df4899831ec57d6f59a, type: 3}
@@ -15396,17 +15519,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2765a15fb277bb4893b838316b8f307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueSprites: 
-  trainerClass: 1
-  trainerName: Brooke
-  customPrizeMoney: 0
-  isFemale: 1
-  trainerParty:
-  - ID: 197
-    level: 12
-    heldItem: 
-    ability: 0
-    moveset: []
+--- !u!114 &1040741907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040741903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 557336396e0db994f8f281306d97b86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trainer: {fileID: 11400000, guid: 721305b3a6f23e442a676c33661c2097, type: 2}
+  SightDistance: 1
+  directionSurrogate: {fileID: 1875870482}
+  trainerParty: []
   battleBGM: {fileID: 0}
   samplesLoopStart: 0
   victoryBGM: {fileID: 0}
@@ -15415,12 +15543,36 @@ MonoBehaviour:
   lowHpBGMSamplesLoopStart: 0
   environment: 0
   en_tightSpotDialog: []
-  en_playerVictoryDialog:
-  - All I can smell is defeat.
+  en_playerVictoryDialog: []
   en_playerLossDialog: []
   fr_tightSpotDialog: []
   fr_playerVictoryDialog: []
   fr_playerLossDialog: []
+--- !u!114 &1040741908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040741903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultAnimationAction: Idle
+  SpriteRenderer: {fileID: 680184625}
+  ReflectionSpriteRenderer: {fileID: 673858043}
+  Paused: 0
+  Animations:
+  - {fileID: 11400000, guid: 24b3c45d7e4ca3a44ad6434eb413fe90, type: 2}
+  - {fileID: 11400000, guid: c2e4f47580a3b8646965405f7e059c2c, type: 2}
+  - {fileID: 11400000, guid: 4ada33463d30bf7408ad7a4aadb317ae, type: 2}
+  - {fileID: 11400000, guid: 5ec57cd6190b65e46bf72b70da571ffa, type: 2}
+  - {fileID: 11400000, guid: 478dac260180efb41856fc8afdec0245, type: 2}
+  - {fileID: 11400000, guid: 93e58b015d4527b40952bd214a86e490, type: 2}
+  - {fileID: 11400000, guid: 4f333e29c6df8824a9355cbad6ba0c9b, type: 2}
+  - {fileID: 11400000, guid: c65f55715932de1428ece3f0f4887d4d, type: 2}
 --- !u!4 &1041895069 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 461654, guid: 9ab08e704ca19ed419b1be28a660d240,
@@ -18949,32 +19101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: Map Test 1
-  MapNameBox:
-    Text: Map
-    TextColor:
-      r: 0.0627451
-      g: 0.0627451
-      b: 0.0627451
-      a: 1
-    Sprite: {fileID: 0}
-  RPCImageKey: 
-  mapBGMClip: {fileID: 8300000, guid: 3763f59403cfb8d498c8ae966e45e4a5, type: 3}
-  mapBGMLoopStartSamples: 0
-  mapBGMNightClip: {fileID: 0}
-  mapBGMNightLoopStartSamples: 0
-  mapNameAppears: 1
-  mapNameColor:
-    r: 0.0627451
-    g: 0.0627451
-    b: 0.0627451
-    a: 1
-  environment: 0
-  environment2: 0
-  pokemonRarity: 2
-  encounters: []
-  sunnyWeatherProbability: 1
-  weathers: []
 --- !u!64 &1245646805
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -21160,32 +21286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: Map Test 1
-  MapNameBox:
-    Text: Map
-    TextColor:
-      r: 0.0627451
-      g: 0.0627451
-      b: 0.0627451
-      a: 1
-    Sprite: {fileID: 0}
-  RPCImageKey: 
-  mapBGMClip: {fileID: 8300000, guid: 3763f59403cfb8d498c8ae966e45e4a5, type: 3}
-  mapBGMLoopStartSamples: 0
-  mapBGMNightClip: {fileID: 0}
-  mapBGMNightLoopStartSamples: 0
-  mapNameAppears: 1
-  mapNameColor:
-    r: 0.0627451
-    g: 0.0627451
-    b: 0.0627451
-    a: 1
-  environment: 0
-  environment2: 0
-  pokemonRarity: 2
-  encounters: []
-  sunnyWeatherProbability: 1
-  weathers: []
 --- !u!64 &1406796500
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -21758,32 +21858,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: Map Test 2
-  MapNameBox:
-    Text: Map
-    TextColor:
-      r: 0.0627451
-      g: 0.0627451
-      b: 0.0627451
-      a: 1
-    Sprite: {fileID: 0}
-  RPCImageKey: 
-  mapBGMClip: {fileID: 8300000, guid: 0162f84268ff10041ada26c9a4299ac8, type: 3}
-  mapBGMLoopStartSamples: 0
-  mapBGMNightClip: {fileID: 0}
-  mapBGMNightLoopStartSamples: 0
-  mapNameAppears: 1
-  mapNameColor:
-    r: 0.0627451
-    g: 0.0627451
-    b: 0.0627451
-    a: 1
-  environment: 0
-  environment2: 0
-  pokemonRarity: 2
-  encounters: []
-  sunnyWeatherProbability: 1
-  weathers: []
 --- !u!64 &1435121681
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -24155,6 +24229,8 @@ GameObject:
   - component: {fileID: 1585241438}
   - component: {fileID: 1585241439}
   - component: {fileID: 1585241440}
+  - component: {fileID: 1585241441}
+  - component: {fileID: 1585241442}
   m_Layer: 0
   m_Name: TrainerCole
   m_TagString: Untagged
@@ -24174,6 +24250,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 529332883}
   - {fileID: 203747181}
   - {fileID: 744132037}
   - {fileID: 251689441}
@@ -24197,7 +24274,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doubleBattle: 0
   ally: {fileID: 0}
-  trainerGender: 1
   trainerBehaviour: 1
   trainerSpriteName: npcCole
   introBGM: {fileID: 8300000, guid: 5ee913ad1fe34df4899831ec57d6f59a, type: 3}
@@ -24237,17 +24313,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2765a15fb277bb4893b838316b8f307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueSprites: 
-  trainerClass: 1
-  trainerName: Cole
-  customPrizeMoney: 0
-  isFemale: 0
-  trainerParty:
-  - ID: 448
-    level: 62
-    heldItem: 
-    ability: 0
-    moveset: []
+--- !u!114 &1585241441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585241437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 557336396e0db994f8f281306d97b86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trainer: {fileID: 11400000, guid: b40145a5488dac74a98cec50b688eecb, type: 2}
+  SightDistance: 1
+  directionSurrogate: {fileID: 529332884}
+  trainerParty: []
   battleBGM: {fileID: 0}
   samplesLoopStart: 0
   victoryBGM: {fileID: 0}
@@ -24256,12 +24337,36 @@ MonoBehaviour:
   lowHpBGMSamplesLoopStart: 0
   environment: 0
   en_tightSpotDialog: []
-  en_playerVictoryDialog:
-  - Oi you cheeky bloke, how did you do that?
+  en_playerVictoryDialog: []
   en_playerLossDialog: []
   fr_tightSpotDialog: []
   fr_playerVictoryDialog: []
   fr_playerLossDialog: []
+--- !u!114 &1585241442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585241437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultAnimationAction: Idle
+  SpriteRenderer: {fileID: 203747183}
+  ReflectionSpriteRenderer: {fileID: 251689442}
+  Paused: 0
+  Animations:
+  - {fileID: 11400000, guid: 6c63eb676bff370489c583c4b7172f55, type: 2}
+  - {fileID: 11400000, guid: bddd8d9859957414bb1297d49ea826cc, type: 2}
+  - {fileID: 11400000, guid: 1ecf7b4721629cd499c59820a3af31f6, type: 2}
+  - {fileID: 11400000, guid: 6cde36da236c3754e946d8fdae47466a, type: 2}
+  - {fileID: 11400000, guid: 3272d010987ca7143be7a234f08dae46, type: 2}
+  - {fileID: 11400000, guid: 47eca10916fcfa543b98cda078310ba8, type: 2}
+  - {fileID: 11400000, guid: 868b345d6aff22e4285d44558b5c33e1, type: 2}
+  - {fileID: 11400000, guid: 6cb2502431edbdf4185dbe047e2ddb7e, type: 2}
 --- !u!1001 &1588195777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26877,6 +26982,56 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 704847987}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1754647416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1754647417}
+  - component: {fileID: 1754647418}
+  m_Layer: 0
+  m_Name: Direction Surrogate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1754647417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754647416}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 244924760}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1754647418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754647416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b7f678b2fec7e49ac72cf30385532f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GizmoColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  GizmoDrawLength: 1
+  Direction: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  OnDirectionUpdated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1756457904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28436,6 +28591,56 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1836872923}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1875870480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1875870481}
+  - component: {fileID: 1875870482}
+  m_Layer: 0
+  m_Name: Direction Surrogate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1875870481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875870480}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1040741904}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1875870482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875870480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b7f678b2fec7e49ac72cf30385532f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GizmoColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  GizmoDrawLength: 1
+  Direction: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  OnDirectionUpdated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1877088057
 GameObject:
   m_ObjectHideFlags: 0
@@ -28536,6 +28741,36 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2229309331129814399, guid: 83196453f96f35b49a1cbd1f23448a06,
+        type: 3}
+      propertyPath: Direction.w
+      value: -0.00000004371139
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229309331129814399, guid: 83196453f96f35b49a1cbd1f23448a06,
+        type: 3}
+      propertyPath: Direction.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2387489380545613680, guid: 83196453f96f35b49a1cbd1f23448a06,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.00000004371139
+      objectReference: {fileID: 0}
+    - target: {fileID: 2387489380545613680, guid: 83196453f96f35b49a1cbd1f23448a06,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2387489380545613680, guid: 83196453f96f35b49a1cbd1f23448a06,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2387489380545613680, guid: 83196453f96f35b49a1cbd1f23448a06,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 4975417706449109249, guid: 83196453f96f35b49a1cbd1f23448a06,
         type: 3}
       propertyPath: m_Name
@@ -28596,11 +28831,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4975417707924282751, guid: 83196453f96f35b49a1cbd1f23448a06,
+    - target: {fileID: 4975417708171817628, guid: 83196453f96f35b49a1cbd1f23448a06,
         type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300016, guid: 14d6e1bfe158c734ba010eeca8f612fe,
+        type: 3}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 83196453f96f35b49a1cbd1f23448a06, type: 3}
@@ -30747,32 +30983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb23452707a90a545b4775ab15c8364f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: Map Test 3
-  MapNameBox:
-    Text: Map
-    TextColor:
-      r: 0.0627451
-      g: 0.0627451
-      b: 0.0627451
-      a: 1
-    Sprite: {fileID: 0}
-  RPCImageKey: 
-  mapBGMClip: {fileID: 8300000, guid: 3763f59403cfb8d498c8ae966e45e4a5, type: 3}
-  mapBGMLoopStartSamples: 0
-  mapBGMNightClip: {fileID: 0}
-  mapBGMNightLoopStartSamples: 0
-  mapNameAppears: 1
-  mapNameColor:
-    r: 0.0627451
-    g: 0.0627451
-    b: 0.0627451
-    a: 1
-  environment: 0
-  environment2: 0
-  pokemonRarity: 2
-  encounters: []
-  sunnyWeatherProbability: 1
-  weathers: []
 --- !u!64 &2001379206
 MeshCollider:
   m_ObjectHideFlags: 0

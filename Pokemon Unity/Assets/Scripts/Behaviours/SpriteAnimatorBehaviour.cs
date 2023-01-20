@@ -5,8 +5,8 @@ using EasyButtons;
 
 public class SpriteAnimatorBehaviour : MonoBehaviour
 {
-    public int ActiveAnimationIndex = 0;
     [Description("If null, attemps to grab a SpriteRenderer from this GameObject")]
+    public string DefaultAnimationAction = "Idle";
     public SpriteRenderer SpriteRenderer;
     public SpriteRenderer ReflectionSpriteRenderer;
     public bool Paused = false;
@@ -17,8 +17,6 @@ public class SpriteAnimatorBehaviour : MonoBehaviour
     void Awake() {
         if (SpriteRenderer == null) 
             SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-
-        SwitchAnimation(ActiveAnimationIndex);
     }
 
     void Update() {
@@ -28,21 +26,27 @@ public class SpriteAnimatorBehaviour : MonoBehaviour
             ReflectionSpriteRenderer.sprite = SpriteRenderer.sprite;
     }
 
-    public void SwitchAnimation(int index) => SwitchAnimation(index, null);
-    public void SwitchAnimation(string name) => SwitchAnimation(name, null);
-
-    public void SwitchAnimation(int index, float? fps = null) {
-        ActiveAnimationIndex = index;
+    public void SwitchAnimation(int index) {
+        if (Animations.Count == 0) Debug.LogWarning($"No animations provided for {name}");
         animation = Animations[index];
-        if (fps.HasValue) animation.FPS = fps.Value;
+        SpriteRenderer.sprite = animation.spriteSheet[0];
     }
 
-    public void SwitchAnimation(string name, float? fps = null) {
+    public void SwitchAnimation(Vector3 facingDirection) {
+        SwitchAnimation(facingDirection, DefaultAnimationAction);
+    }
+
+    public void SwitchAnimation(Vector3 facingDirection, string newAnimationName) {
+        string animationName = newAnimationName + facingDirection.ToDirectionString(Vector3.forward, Vector3.up);
+        SwitchAnimation(animationName);
+    }
+
+    public void SwitchAnimation(string name) {
         int index = Animations.FindIndex((SpriteAnimation animation) => animation.Name.ToLowerAndTrim() == name.ToLowerAndTrim());
         if (index == -1)
             throw new AnimationDoesntExist(name, gameObject);
 
-        SwitchAnimation(index, fps);
+        SwitchAnimation(index);
     }
 
     public class AnimationDoesntExist : Exception {

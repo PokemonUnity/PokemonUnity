@@ -12,5 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0d25574c33ac64d98db1c615ce7ff9, type: 3}
   m_Name: MarkupAttributesPersistentData
   m_EditorClassIdentifier: 
-  serializedBoolEntries: []
+  serializedBoolEntries:
+  - key: PlayerMovement/Camera
+    value: 0
+  - key: PlayerMovement/Player
+    value: 0
+  - key: PlayerMovement/Followers
+    value: 0
+  - key: PlayerMovement/Map
+    value: 0
+  - key: PlayerMovement/Mount
+    value: 0
+  - key: PlayerMovement/Gizmos
+    value: 0
+  - key: PlayerMovement/Movementssss
+    value: 0
+  - key: PlayerMovement/Movement
+    value: 1
+  - key: PlayerMovement/Interactions
+    value: 1
+  - key: TrainerBehaviour/Dialogs
+    value: 0
+  - key: TrainerBehaviour/Deprecated
+    value: 0
+  - key: TrainerSO/Audio
+    value: 0
+  - key: TrainerClassSO/Audio
+    value: 1
   serializedIntEntries: []

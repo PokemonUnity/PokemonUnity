@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine;
 using Random = System.Random;
 
-public class FollowerMovement : MonoBehaviour
+public class FollowerMovement : MonoBehaviour, INeedDirection
 {
 	#region Variables
 
@@ -17,8 +17,8 @@ public class FollowerMovement : MonoBehaviour
 	private DialogBoxHandlerNew Dialog;
 
 	[Header("Movement")]
+	public DirectionSurrogate directionSurrogate;
 	public int direction = 2;
-	Vector3 facingDirection;
 	public float speed;
 	public bool IsHidden;
 	public bool moving = false;
@@ -56,13 +56,17 @@ public class FollowerMovement : MonoBehaviour
 
 	#endregion
 
+	public DirectionSurrogate DirectionSurrogate { get => directionSurrogate; }
+	
+	public Vector3 FacingDirection { get => directionSurrogate.FacingDirection; }
+
 	#region Unity Functions
 
 	void OnDrawGizmos() {
 		if (!DrawGizmos) return;
 		// direction
 		Gizmos.color = Color.white;
-		Gizmos.DrawLine(Pawn.position, Pawn.position + (facingDirection.normalized));
+		Gizmos.DrawLine(Pawn.position, Pawn.position + (FacingDirection.normalized));
 	}
 
 	void OnValidate() {
@@ -73,9 +77,10 @@ public class FollowerMovement : MonoBehaviour
 		if (spriteLightReflectionRenderer == null) Debug.LogError("No Pawn Light Reflection Sprite Renderer provided", gameObject);
 		if (Hitbox == null) Debug.LogError("No hitBox Tranform provided", gameObject); // Follower_Transparent
 		if (animator == null) Debug.LogError("No Sprite Animator provided", gameObject);
-		else {
-			animator.Animations = Pokemon.Animations;
-		}
+        if (DirectionSurrogate == null) Debug.LogError("No Direction Surrogate provided", gameObject);
+
+        animator.Animations = Pokemon.Animations;
+		DirectionSurrogate.OnDirectionUpdated.AddListener(SwitchAnimation);
 	}
 
 	void Awake() {
@@ -121,8 +126,8 @@ public class FollowerMovement : MonoBehaviour
 			followerLight.enabled = true;
 			pawnShadow.enabled = true;
 			speed = sentSpeed;
-			facingDirection = destination - startPosition;
-			direction = (int)facingDirection.ToMovementDirection(Vector3.forward, Vector3.up);
+			directionSurrogate.UpdateDirection(destination - startPosition);
+			direction = (int)FacingDirection.ToMovementDirection(Vector3.forward, Vector3.up);
 			LeanTween.move(gameObject, destination, sentSpeed);
 		}
 	}
@@ -164,9 +169,12 @@ public class FollowerMovement : MonoBehaviour
 
 	#region Animation
 
+	public void SwitchAnimation(Vector3 facingDirection) {
+		animator.SwitchAnimation(facingDirection);
+	}
+
 	public void SwitchAnimation(string newAnimationName) {
-		string animationName = newAnimationName + facingDirection.ToDirectionString(Vector3.forward, Vector3.up);
-        animator.SwitchAnimation(animationName);
+        animator.SwitchAnimation(FacingDirection, newAnimationName);
 	}
 
 	//private IEnumerator animateSprite() {
@@ -261,82 +269,50 @@ public class FollowerMovement : MonoBehaviour
 	}
 
 	public IEnumerator interact() {
-		if (!IsHidden)
-		{
-			if (playerMovement.setCheckBusyWith(this.gameObject))
-			{
-				//calculate Player's position relative to target object's and set direction accordingly. (Face the player)
-				float xDistance = this.transform.position.x - playerMovement.gameObject.transform.position.x;
-				float zDistance = this.transform.position.z - playerMovement.gameObject.transform.position.z;
-				if (xDistance >= Mathf.Abs(zDistance))
-				{
-					//Mathf.Abs() converts zDistance to a positive always.
-					direction = 3; //this allows for better accuracy when checking orientation.
-				}
-				else if (xDistance <= Mathf.Abs(zDistance) * -1)
-				{
-					direction = 1;
-				}
-				else if (zDistance >= Mathf.Abs(xDistance))
-				{
-					direction = 2;
-				}
+		if (IsHidden) yield break;
+		if (!playerMovement.setCheckBusyWith(gameObject)) yield break;
+
+		//calculate Player's position relative to target object's and set direction accordingly. (Face the player)
+		float xDistance = this.transform.position.x - playerMovement.gameObject.transform.position.x;
+		float zDistance = this.transform.position.z - playerMovement.gameObject.transform.position.z;
+		if (xDistance >= Mathf.Abs(zDistance))
+			//Mathf.Abs() converts zDistance to a positive always.
+			direction = 3; //this allows for better accuracy when checking orientation.
+		else if (xDistance <= Mathf.Abs(zDistance) * -1)
+			direction = 1;
+		else if (zDistance >= Mathf.Abs(xDistance))
+			direction = 2;
+		else
+			direction = 0;
+
+		// Interaction
+		if (SaveData.currentSave.PC.boxes[0][partyIndex].getPercentHP() < 0.25f) // Low HP
+			yield return StartCoroutine(interaction_tired());
+		else { // Casual Interaction
+			Happiness h = getFollowerWeatherHappiness();
+			float val = UnityEngine.Random.value;
+			if (h == Happiness.SAD)
+				// Weather Interaction
+				yield return StartCoroutine(interaction_weather_sad());
+			else if (h == Happiness.HAPPY)
+				if (val < 0.25f)
+					yield return StartCoroutine(interaction_1());
+				else if (val < 0.5f)
+					yield return StartCoroutine(interaction_2());
+				else // Weather Interaction
+					yield return StartCoroutine(interaction_weather_happy());
+			else
+				if (val < 0.50f)
+					yield return StartCoroutine(interaction_1());
 				else
-				{
-					direction = 0;
-				}
-
-				// Interaction
-				if (SaveData.currentSave.PC.boxes[0][partyIndex].getPercentHP() < 0.25f) // Low HP
-				{
-					yield return StartCoroutine(interaction_tired());
-				}
-				else  // Casual Interaction
-				{
-					Happiness h = getFollowerWeatherHappiness();
-					float val = UnityEngine.Random.value;
-
-
-					if (h == Happiness.SAD)
-					{
-						// Weather Interaction
-						yield return StartCoroutine(interaction_weather_sad());
-					}
-					else if (h == Happiness.HAPPY)
-					{
-						if (val < 0.25f)
-						{
-							yield return StartCoroutine(interaction_1());
-						}
-						else if (val < 0.5f)
-						{
-							yield return StartCoroutine(interaction_2());
-						}
-						else // Weather Interaction
-						{
-							yield return StartCoroutine(interaction_weather_happy());
-						}
-					}
-					else
-					{
-						if (val < 0.50f)
-						{
-							yield return StartCoroutine(interaction_1());
-						}
-						else
-						{
-							yield return StartCoroutine(interaction_2());
-						}
-					}
-				}
-
-				yield return new WaitForSeconds(0.2f);
-				
-				// End
-				
-				playerMovement.unsetCheckBusyWith(this.gameObject);
-			}
+					yield return StartCoroutine(interaction_2());
 		}
+
+		yield return new WaitForSeconds(0.2f);
+				
+		// End
+				
+		playerMovement.unsetCheckBusyWith(this.gameObject);
 	}
 
 	private Happiness getFollowerWeatherHappiness() {
@@ -712,7 +688,7 @@ public class FollowerMovement : MonoBehaviour
 		}
 		this.partyIndex = partyIndex;
         //pokemonID = (int)PokemonUnity.Game.GameData.Trainer.party[followerIndex].Species;
-        PokemonSO pokemon = (PokemonSO)playerMovement.Trainer.party[this.partyIndex];
+        PokemonSO pokemon = (PokemonSO)playerMovement.Player.party[this.partyIndex];
 		pokemonID = (int)pokemon.Species;
 		//spriteSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetNewSprite(false);
 		animator.Animations = pokemon.Animations;

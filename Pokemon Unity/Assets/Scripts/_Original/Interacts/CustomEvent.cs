@@ -907,7 +907,7 @@ public class CustomEvent : MonoBehaviour
                 break;
 
             case CustomEventDetails.CustomEventType.TrainerBattle:
-                Trainer trainer = currentEvent.object0.GetComponent<Trainer>();
+                TrainerBehaviour trainer = currentEvent.object0.GetComponent<TrainerBehaviour>();
                 
                 //Automatic LoopStart usage not yet implemented
                 Scene.main.Battle.gameObject.SetActive(true);
@@ -929,14 +929,11 @@ public class CustomEvent : MonoBehaviour
                 Scene.main.Battle.gameObject.SetActive(false);
                 
                 //custom cutouts not yet implemented
-                if (trainer.trainerClass == Trainer.Class.Champion)
-                {
+                if (trainer.Trainer.Class.ClassName == "Champion") {
                     GlobalVariables.Singleton.transform.Find("GUI/VsScreen").gameObject.SetActive(true);
                     yield return StartCoroutine(GlobalVariables.Singleton.transform.Find("GUI/VsScreen")
                         .GetComponent<DefaultTransition>().animate());
-                }
-                else
-                {
+                } else {
                     StartCoroutine(ScreenFade.Singleton.FadeCutout(false, ScreenFade.SlowedSpeed, null));
                     yield return new WaitForSeconds(1.6f);
                 }

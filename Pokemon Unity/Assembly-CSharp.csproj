@@ -218,6 +218,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\BumpPokemonCenterRespawn.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\PokemonMap.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselTexture2D.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerSO.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV3.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractBreak.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingInt.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectBool.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MainMenuHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectText.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\AudioTrack.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\MoveDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\ActivateOnCVariable.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\AIUtility.cs" />
@@ -281,6 +283,7 @@
     <Compile Include="Assets\Scripts\Editor Attributes\ScriptableObjectFieldsAttribute.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingText.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarComponent.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\TrainerBehaviour.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\CSPacketBase.cs" />
     <Compile Include="Assets\Scripts\_Original\LeanTween\LeanAudio.cs" />
     <Compile Include="Assets\Scripts\_Original\LeanTween\LTDescrOptional.cs" />
@@ -298,6 +301,7 @@
     <Compile Include="Assets\Scripts\_Original\MapCollider.cs" />
     <Compile Include="Assets\Scripts\_Original\BattleSceneHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\ScreenFade.cs" />
+    <Compile Include="Assets\Scripts\Library\Dialogue.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\SurvivalGame.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\MapNameBox.cs" />
     <Compile Include="Assets\Scripts\Behaviours\GlobalVariables.cs" />
@@ -306,7 +310,7 @@
     <Compile Include="Assets\GameMain\Scripts\Debugger\DebuggerWindow.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingBool.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Utility\DontDestroy.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerSO.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\PlayerSO.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\AudioHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\PokeBattle_SceneConstants.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Constant\Constant.Layer.cs" />
@@ -322,13 +326,15 @@
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingVector2Array.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\Enums\CarouselFullscreenMode.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\CampType.cs" />
-    <Compile Include="Assets\Scripts\_Original\Data\Trainer.cs" />
     <Compile Include="Assets\Scripts\_Original\NPCHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItemObject.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractRedirect.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Input\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerClassSO.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\DirectionSurrogate.cs" />
+    <Compile Include="Assets\Scripts\Library\DrawArrow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
