@@ -33,15 +33,21 @@ namespace PokemonUnity.UX
 		//IEnumerator pbShowCommands(string msg, string[] commands, bool canCancel, System.Action<int> result);
 		new IEnumerator pbShowOpponent(int index);
 		new IEnumerator pbHideOpponent();
-		IEnumerator pbTrainerSendOut(int battlerindex, Monster.Pokemon pkmn);
+		new IEnumerator pbTrainerSendOut(int battlerindex, IPokemon pkmn);
 		/// <summary>
 		/// Player sending out Pokémon
 		/// </summary>
 		/// <param name="battlerindex"></param>
 		/// <param name="pkmn"></param>
-		IEnumerator pbSendOut(int battlerindex, Monster.Pokemon pkmn);
-		IEnumerator pbTrainerWithdraw(Combat.Battle battle, Combat.Pokemon pkmn);
-		IEnumerator pbWithdraw(Combat.Battle battle, Combat.Pokemon pkmn);
+		new IEnumerator pbSendOut(int battlerindex, IPokemon pkmn);
+		new IEnumerator pbTrainerWithdraw(IBattle battle, IBattler pkmn);
+		new IEnumerator pbWithdraw(IBattle battle, IBattler pkmn);
+		/// <summary>
+		/// Use this method to display the list of commands.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns>Return values: 0=Fight, 1=Bag, 2=Pokémon, 3=Run, 4=Call</returns>
+		IEnumerator pbCommandMenu(int index, System.Action<int> result);
 		/// <summary>
 		/// </summary>
 		/// <param name="index"></param>
@@ -54,16 +60,17 @@ namespace PokemonUnity.UX
 		/// </summary>
 		/// <param name="index"></param>
 		IEnumerator pbFightMenu(int index, System.Action<int> result);
+		IEnumerator pbChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype, System.Action<int> result);
 		/// <summary>
 		/// This method is called whenever a Pokémon faints.
 		/// </summary>
 		/// <param name=""></param>
-		IEnumerator pbFainted(int pkmn);
+		new IEnumerator pbFainted(IBattler pkmn);
 		/// <summary>
 		/// Use this method to choose a command for the enemy.
 		/// </summary>
 		/// <param name="index"></param>
-		IEnumerator pbChooseEnemyCommand(int index);
+		//new IEnumerator pbChooseEnemyCommand(int index);
 	}
 
 	/// <summary>
@@ -231,24 +238,24 @@ namespace PokemonUnity.UX
 
 		void pbAbort();
 		IEnumerator pbDebugUpdate();
-		int pbRandom(int x);
-		int pbAIRandom(int x);
+		//int pbRandom(int x);
+		//int pbAIRandom(int x);
 
 		#region Initialize battle class.
-		IBattleIE initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent);
-		IBattleIE initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
+		new IBattleIE initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent);
+		new IBattleIE initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
 		//IBattle initialize(IScene scene, IList<IPokemon> p1, IList<IPokemon> p2, IList<ITrainer> player, IList<ITrainer> opponent);
 		#endregion
 
 		#region Info about battle.
-		bool pbDoubleBattleAllowed();
-		Weather pbWeather { get; }
+		//bool pbDoubleBattleAllowed();
+		//Weather pbWeather { get; }
 		#endregion
 
 		#region Get battler info.
-		bool pbIsOpposing(int index);
-		bool pbOwnedByPlayer(int index);
-		bool pbIsDoubleBattler(int index);
+		//bool pbIsOpposing(int index);
+		//bool pbOwnedByPlayer(int index);
+		//bool pbIsDoubleBattler(int index);
 		/// <summary>
 		/// Only used for Wish
 		/// </summary>
@@ -256,7 +263,7 @@ namespace PokemonUnity.UX
 		/// <param name="pokemonindex"></param>
 		/// <returns></returns>
 		//string pbThisEx(battlerindex, pokemonindex);
-		string ToString(int battlerindex, int pokemonindex);
+		//string ToString(int battlerindex, int pokemonindex);
 		/// <summary>
 		/// Checks whether an item can be removed from a Pokémon.
 		/// </summary>
@@ -269,18 +276,18 @@ namespace PokemonUnity.UX
 		#endregion
 
 		#region Player-related info.
-		ITrainer pbPlayer();
-		Items[] pbGetOwnerItems(int battlerIndex);
-		void pbSetSeen(IPokemon pokemon);
-		string pbGetMegaRingName(int battlerIndex);
-		bool pbHasMegaRing(int battlerIndex);
+		//ITrainer pbPlayer();
+		//Items[] pbGetOwnerItems(int battlerIndex);
+		//void pbSetSeen(IPokemon pokemon);
+		//string pbGetMegaRingName(int battlerIndex);
+		//bool pbHasMegaRing(int battlerIndex);
 		#endregion
 
 		#region Get party info, manipulate parties.
-		int pbPokemonCount(IPokemon[] party);
-		bool pbAllFainted(IPokemon[] party);
-		int pbMaxLevel(IPokemon[] party);
-		int pbMaxLevelFromIndex(int index);
+		//int pbPokemonCount(IPokemon[] party);
+		//bool pbAllFainted(IPokemon[] party);
+		//int pbMaxLevel(IPokemon[] party);
+		//int pbMaxLevelFromIndex(int index);
 		/// <summary>
 		/// Gets player party of selected battler
 		/// </summary>
@@ -426,15 +433,15 @@ namespace PokemonUnity.UX
 		MenuCommands pbCommandMenu(int i);
 		KeyValuePair<Items, int?> pbItemMenu(int i);
 		bool pbAutoFightMenu(int i);
-		void pbCommandPhase();
+		new IEnumerator pbCommandPhase();
 		#endregion
 
 		#region Attack phase.
-		void pbAttackPhase();
+		new IEnumerator pbAttackPhase();
 		#endregion
 
 		#region End of round.
-		void pbEndOfRoundPhase();
+		new IEnumerator pbEndOfRoundPhase();
 		#endregion
 
 		#region End of battle.

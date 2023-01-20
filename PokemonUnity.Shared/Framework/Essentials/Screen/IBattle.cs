@@ -123,7 +123,7 @@ namespace PokemonEssentials.Interface.Screen
 	{
 		IBattler battler		{ get; }
 		new int selected		{ get; set; }
-		bool appearing			{ get; }
+		//bool appearing			{ get; }
 		bool animatingHP		{ get; }
 		bool animatingEXP		{ get; }
 
@@ -143,7 +143,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		//void appear();
 
-		void refresh();
+		//void refresh();
 
 		//void update();
 	}
@@ -319,7 +319,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="battlerindex"></param>
 		/// <param name="pkmn"></param>
 		void pbSendOut(int battlerindex, IPokemon pkmn);
-		void pbTrainerWithdraw(IBattle battle, IBattler pkmn);
+		//void pbTrainerWithdraw(IBattle battle, IBattler pkmn);
 		//void pbWithdraw(IBattle battle, IBattler pkmn);
 		//new string pbMoveString(string move);
 		//new void pbBeginAttackPhase();
@@ -628,10 +628,10 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="battle"></param>
 		void pbStartBattle(IBattle battle);
 		void pbEndBattle(BattleResults result);
-		void pbTrainerSendOut(IBattle battle, IPokemon pkmn);
-		void pbSendOut(IBattle battle, IPokemon pkmn);
-		void pbTrainerWithdraw(IBattle battle, IPokemon pkmn);
-		void pbWithdraw(IBattle battle, IPokemon pkmn);
+		//void pbTrainerSendOut(IBattle battle, IPokemon pkmn);
+		//void pbSendOut(IBattle battle, IPokemon pkmn);
+		void pbTrainerWithdraw(IBattle battle, IBattler pkmn);
+		void pbWithdraw(IBattle battle, IBattler pkmn);
 		/// <summary>
 		/// Called whenever a Pokémon should forget a move.  It should return -1 if the
 		/// selection is canceled, or 0 to 3 to indicate the move to forget.
