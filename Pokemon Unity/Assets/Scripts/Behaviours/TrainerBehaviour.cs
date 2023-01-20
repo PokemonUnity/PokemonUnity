@@ -92,9 +92,9 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
 
     public Vector3 FacingDirection => directionSurrogate.FacingDirection;
 
-
     public void SwitchAnimation(string animationName) {
-        animator.SwitchAnimation(FacingDirection, animationName);
+        //animator.SwitchAnimation(FacingDirection, animationName);
+        animator.SwitchAnimation(animationName);
     }
 
     public void SwitchAnimation(Vector3 facingDirection) {

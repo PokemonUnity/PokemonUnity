@@ -960,7 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultAnimationAction: Idle
+  AnimationAction: Idle
   SpriteRenderer: {fileID: 723427516}
   ReflectionSpriteRenderer: {fileID: 342983762}
   Paused: 0
@@ -3202,7 +3202,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300024, guid: f6f8470ac8c0c2b4ea7ee30dbca41c4c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f6f8470ac8c0c2b4ea7ee30dbca41c4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3625,7 +3625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultAnimationAction: Idle
+  AnimationAction: Idle
   SpriteRenderer: {fileID: 415409600}
   ReflectionSpriteRenderer: {fileID: 1989107240}
   Paused: 0
@@ -15560,7 +15560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultAnimationAction: Idle
+  AnimationAction: Idle
   SpriteRenderer: {fileID: 680184625}
   ReflectionSpriteRenderer: {fileID: 673858043}
   Paused: 0
@@ -24354,7 +24354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultAnimationAction: Idle
+  AnimationAction: Idle
   SpriteRenderer: {fileID: 203747183}
   ReflectionSpriteRenderer: {fileID: 251689442}
   Paused: 0
@@ -28741,36 +28741,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2229309331129814399, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: Direction.w
-      value: -0.00000004371139
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229309331129814399, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: Direction.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2387489380545613680, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.00000004371139
-      objectReference: {fileID: 0}
-    - target: {fileID: 2387489380545613680, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2387489380545613680, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2387489380545613680, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
     - target: {fileID: 4975417706449109249, guid: 83196453f96f35b49a1cbd1f23448a06,
         type: 3}
       propertyPath: m_Name
@@ -28829,6 +28799,11 @@ PrefabInstance:
     - target: {fileID: 4975417706449109250, guid: 83196453f96f35b49a1cbd1f23448a06,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975417706449109251, guid: 83196453f96f35b49a1cbd1f23448a06,
+        type: 3}
+      propertyPath: DrawInteractBox
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4975417708171817628, guid: 83196453f96f35b49a1cbd1f23448a06,

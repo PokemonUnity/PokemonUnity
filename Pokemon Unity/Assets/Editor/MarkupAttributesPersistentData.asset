@@ -24,7 +24,7 @@ MonoBehaviour:
   - key: PlayerMovement/Mount
     value: 0
   - key: PlayerMovement/Gizmos
-    value: 0
+    value: 1
   - key: PlayerMovement/Movementssss
     value: 0
   - key: PlayerMovement/Movement

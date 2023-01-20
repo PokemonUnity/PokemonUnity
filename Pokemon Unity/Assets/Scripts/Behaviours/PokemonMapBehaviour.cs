@@ -173,7 +173,7 @@ public class PokemonMapBehaviour : MonoBehaviour
     #region Audio
 
     public AudioTrack GetBackgroundMusic() {
-        if (Map.NightBackgroundMusic.Clip != null) {
+        if (Map.NightBackgroundMusic != null && Map.NightBackgroundMusic.Clip != null) {
             float time = System.DateTime.Now.Hour + ((float)System.DateTime.Now.Minute / 60f);
             if (time >= 20 || time < 3.5f) {
                 //night

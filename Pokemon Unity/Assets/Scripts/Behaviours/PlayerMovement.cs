@@ -337,10 +337,10 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
 
         return; //FIXME
         //pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[Direction * frames + frame];
-        hairSprite.sprite = haircutSpriteSheet[Direction * frames + frame];
-        eyeSprite.sprite = eyeSpriteSheet[Direction * frames + frame];
+        //hairSprite.sprite = haircutSpriteSheet[Direction * frames + frame];
+        //eyeSprite.sprite = eyeSpriteSheet[Direction * frames + frame];
 
-        mount.UpdateDirection((EMovementDirection)dir);
+        //mount.UpdateDirection((EMovementDirection)dir);
     }
 
     public void UpdateDirection(Vector3 newDirection) {
@@ -734,7 +734,7 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
     public void SwitchAnimation(Vector3 direction) => animator.SwitchAnimation(direction);
     
     // Expose so outside sources can update this objects animation
-    public void SwitchAnimation(string animationName) => animator.SwitchAnimation(FacingDirection, animationName);
+    public void SwitchAnimation(string animationName) => animator.SwitchAnimation(animationName);
 
     public void updateCosmetics() {
         return; //FIXME

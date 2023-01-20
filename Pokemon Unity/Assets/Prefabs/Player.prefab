@@ -403,7 +403,7 @@ Transform:
   - {fileID: 4975417707132642943}
   - {fileID: 4975417707146510744}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &4975417706449109252
 AudioSource:
@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultAnimationAction: Idle
+  AnimationAction: Idle
   SpriteRenderer: {fileID: 4975417708171817628}
   ReflectionSpriteRenderer: {fileID: 4975417707132642942}
   Paused: 0
@@ -1256,7 +1256,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pokemon: {fileID: 11400000, guid: 895611169deee6947b56b4bf963157da, type: 2}
-  DrawGizmos: 1
   pokemonID: 197
   directionSurrogate: {fileID: 6876805117954618330}
   direction: 2
@@ -1288,7 +1287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45f573f7ef3aa04cb37e12a6dcc3144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultAnimationAction: Walk
+  AnimationAction: Walk
   SpriteRenderer: {fileID: 4975417707014361584}
   ReflectionSpriteRenderer: {fileID: 4975417706298323195}
   Paused: 0

@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectFloat.cs" />
     <Compile Include="Assets\Scripts\_Original\BackgroundMusicHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\AbilityDatabase.cs" />
+    <Compile Include="Assets\Scripts\Library\DrawArrow.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PC.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\PokemonDatabase.cs" />
     <Compile Include="Assets\Scripts\Behaviours\PlayerMovement.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Assets\Scripts\_Original\flycameraDebug.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarItem.cs" />
     <Compile Include="Assets\Scripts\_Original\BridgeHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\DirectionSurrogate.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\DialogPopups.cs" />
     <Compile Include="Assets\Scripts\_Original\SetResolution.cs" />
     <Compile Include="Assets\Scripts\_Original\GrassPatchHandler.cs" />
@@ -189,6 +191,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\CustomEvent.cs" />
     <Compile Include="Assets\GameMain\Scripts\Scene\ClickSelect.cs" />
     <Compile Include="Assets\GameMain\Scripts\Scene\ScrollableBackground.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerClassSO.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\SCPacketBase.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\ParticleSoundEffect.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\PlayerInputExtensions.cs" />
@@ -332,9 +335,6 @@
     <Compile Include="Assets\Scripts\Behaviours\Input\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerClassSO.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\DirectionSurrogate.cs" />
-    <Compile Include="Assets\Scripts\Library\DrawArrow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

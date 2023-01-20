@@ -17,12 +17,6 @@ MonoBehaviour:
     Text: Route 201
     TextColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
     Sprite: {fileID: 21300000, guid: 6b62eac1aa8cf524fb175af27ac03509, type: 3}
-  DayBackgroundMusic:
-    Clip: {fileID: 8300000, guid: 3763f59403cfb8d498c8ae966e45e4a5, type: 3}
-    LoopStartSamples: 0
-    SamplesPosition: 0
-  NightBackgroundMusic:
-    Clip: {fileID: 0}
-    LoopStartSamples: 0
-    SamplesPosition: 0
+  DayBackgroundMusic: {fileID: 11400000, guid: 0153a3562f3e34c42acad35a8cc8903e, type: 2}
+  NightBackgroundMusic: {fileID: 0}
   RPCImageKey: 

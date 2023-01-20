@@ -17,12 +17,7 @@ MonoBehaviour:
     Text: Route 203
     TextColor: {r: 1, g: 1, b: 1, a: 1}
     Sprite: {fileID: 21300000, guid: 6a6f6de188666aa4e92680d278ffe75f, type: 3}
-  DayBackgroundMusic:
-    Clip: {fileID: 8300000, guid: 1c0db72da0059ab449800c03335f2d5c, type: 3}
-    LoopStartSamples: 0
-    SamplesPosition: 0
-  NightBackgroundMusic:
-    Clip: {fileID: 8300000, guid: 0a9d7bfd3b9148847aa77e6a18c757e9, type: 3}
-    LoopStartSamples: 0
-    SamplesPosition: 0
+  DayBackgroundMusic: {fileID: 11400000, guid: b8a665784358b514494f7337d9ac81d1, type: 2}
+  NightBackgroundMusic: {fileID: 11400000, guid: ea27d5e6bcb741848b757e73dacc9100,
+    type: 2}
   RPCImageKey: 

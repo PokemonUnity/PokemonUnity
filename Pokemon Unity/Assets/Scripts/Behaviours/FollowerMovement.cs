@@ -10,8 +10,6 @@ public class FollowerMovement : MonoBehaviour, INeedDirection
 	#region Variables
 
 	public PokemonSO Pokemon;
-	public bool DrawGizmos = false;
-
 	public int pokemonID = 6;
 	private int partyIndex = 0;
 	private DialogBoxHandlerNew Dialog;
@@ -62,13 +60,6 @@ public class FollowerMovement : MonoBehaviour, INeedDirection
 
 	#region Unity Functions
 
-	void OnDrawGizmos() {
-		if (!DrawGizmos) return;
-		// direction
-		Gizmos.color = Color.white;
-		Gizmos.DrawLine(Pawn.position, Pawn.position + (FacingDirection.normalized));
-	}
-
 	void OnValidate() {
 		if (Pawn == null) Debug.LogError("No Pawn Transform provided", gameObject);
 		if (pawnShadow == null) Debug.LogError("No Pawn Shadow Transform provided", gameObject);
@@ -111,7 +102,7 @@ public class FollowerMovement : MonoBehaviour, INeedDirection
 		if (IsHidden) return;
 		Camera camera = PlayerMovement.Singleton.PlayerCamera;
 		adjustScaleBasedOnCamera(camera);
-		updateRotation(camera);
+		//updateRotation(camera);
 		//pawnSprite.transform.rotation = PlayerMovement.player.transform.Find("Pawn").transform.rotation; 
 	}
 
@@ -133,10 +124,9 @@ public class FollowerMovement : MonoBehaviour, INeedDirection
 	}
 
 	void updateRotation(Camera camera) {
-		Pawn.transform.LookAt(camera.transform);
-		Pawn.transform.localRotation = Quaternion.Euler(camera.transform.rotation.x - 50, 180, 0);
-		Pawn.transform.Rotate(new Vector3(0, 180, 0), Space.Self);
-		SwitchAnimation("Walk");
+		//Pawn.transform.LookAt(camera.transform);
+		//Pawn.transform.localRotation = Quaternion.Euler(camera.transform.rotation.x - 50, 180, 0);
+		//Pawn.transform.Rotate(new Vector3(0, 180, 0), Space.Self);
 	}
 
 	public void ActivateMove() => CanMove = true;
@@ -174,67 +164,9 @@ public class FollowerMovement : MonoBehaviour, INeedDirection
 	}
 
 	public void SwitchAnimation(string newAnimationName) {
-        animator.SwitchAnimation(FacingDirection, newAnimationName);
+        Debug.Log(newAnimationName);
+        animator.SwitchAnimation(newAnimationName);
 	}
-
-	//private IEnumerator animateSprite() {
-	//	int frame = 0;
-	//	int light_frame = 0;
-	//	while (true) {
-	//		for (int i = 0; i < 6; i++) {
-	//			if (!IsHidden) {
-	//				int newDirection;
-	//				switch (direction) {
-	//					case 0:
-	//						newDirection = 3;
-	//						break;
-	//					case 1:
-	//						newDirection = 2;
-	//						break;
-	//					case 2:
-	//						newDirection = 0;
-	//						break;
-	//					case 3:
-	//						newDirection = 1;
-	//						break;
-	//					default:
-	//						newDirection = 0;
-	//						break;
-	//				}
-	//				spriteRenderer.sprite = spriteSheet[newDirection * 4 + frame];
-	//				if (lightSheet.Length >= 16)
-	//					spriteLightRenderer.sprite = lightSheet[newDirection * 4 + frame];
-	//				pawnShadow.enabled = true;
-	//			}
-	//			else
-	//			{
-	//				spriteRenderer.sprite = null;
-	//				spriteLightRenderer.sprite = null;
-	//				pawnShadow.enabled = false;
-	//			}
-	//			spriteReflectionRenderer.sprite = spriteRenderer.sprite;
-	//			spriteLightReflectionRenderer.sprite = spriteLightRenderer.sprite;
-	//			if (i > 2)
-	//			{
-	//				//pawn.localPosition = new Vector3(-0.016f, 0.808f, -0.4f);
-	//				//pawnLight.localPosition = new Vector3(0, 0.171f, -0.36f);
-	//			}
-	//			else
-	//			{
-	//				//pawn.localPosition = new Vector3(-0.016f, 0.808f, -0.4f);
-	//				//pawnLight.localPosition = new Vector3(0, 0.201f, -0.305f);
-	//			}
-
-	//			float time = 0.055f;
-				
-	//			yield return new WaitForSeconds((PlayerMovement.Singleton.IsMoving && PlayerMovement.Singleton.IsRunning) ? time / 2 : time);
-	//		}
-
-	//		frame++;
-	//		if (frame > 3) frame = 0;
-	//		light_frame = (light_frame == 0) ? 1 : 0;
-	//	}
-	//}
 
 	#endregion
 

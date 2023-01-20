@@ -18,7 +18,7 @@ public class DirectionSurrogate : MonoBehaviour {
 
     void Start() {
         ResetPosition();
-        OnDirectionUpdated.Invoke(FacingDirection);
+        UpdateDirection(FacingDirection);
     }
 
     void OnDrawGizmos() {
@@ -32,7 +32,8 @@ public class DirectionSurrogate : MonoBehaviour {
     }
 
     public void UpdateDirection(Vector3 newDirection) {
-        UpdateDirection(Quaternion.Euler(newDirection));
+        transform.forward = newDirection;
+        OnDirectionUpdated.Invoke(FacingDirection);
     }
 
     void ResetPosition() {

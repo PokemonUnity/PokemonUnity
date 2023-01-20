@@ -85,7 +85,7 @@ public class BackgroundMusicHandler : MonoBehaviour
             }
         }
 
-        Debug.Log($"Volume: {source.volume} Clip: {source.clip}");
+        //Debug.Log($"Volume: {source.volume} Clip: {source.clip}");
     }
 
     #endregion
@@ -203,11 +203,11 @@ public class BackgroundMusicHandler : MonoBehaviour
         loop = true;
         //if main is playing:   Fade out current main track (if any/not fading), THEN play new track
         if (currentTrack == Track.Main)
-            if (backgroundMusic.Clip != mainTrack.Clip) {
+            if (backgroundMusic != mainTrack) {
                 //if current track is not already playing
                 mainTrackNext = backgroundMusic;
                 //Fade out current main track (if any/not fading), THEN play new track
-                if (mainTrack.Clip == null)
+                if (mainTrack == null)
                     Play(Track.Main);
                 else if (!IsFading()) {
                     yield return StartCoroutine(FadeOutIE(defaultFadeSpeed));
