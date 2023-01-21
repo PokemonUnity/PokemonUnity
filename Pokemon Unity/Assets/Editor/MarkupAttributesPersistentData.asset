@@ -24,11 +24,11 @@ MonoBehaviour:
   - key: PlayerMovement/Mount
     value: 0
   - key: PlayerMovement/Gizmos
-    value: 1
+    value: 0
   - key: PlayerMovement/Movementssss
     value: 0
   - key: PlayerMovement/Movement
-    value: 1
+    value: 0
   - key: PlayerMovement/Interactions
     value: 1
   - key: TrainerBehaviour/Dialogs
@@ -39,4 +39,6 @@ MonoBehaviour:
     value: 0
   - key: TrainerClassSO/Audio
     value: 1
+  - key: TrainerBehaviour/Interaction
+    value: 0
   serializedIntEntries: []

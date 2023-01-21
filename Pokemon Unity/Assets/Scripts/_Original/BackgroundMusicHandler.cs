@@ -257,6 +257,10 @@ public class BackgroundMusicHandler : MonoBehaviour
     #endregion
 
     #region Overlay Music
+    
+    public void PlayOverlay(AudioTrack audioTrack, float fadeTime = 0.1f) {
+        StartCoroutine(PlayOverlayIE(audioTrack.Clip, audioTrack.LoopStartSamples, audioTrack.LoopStartSamples, fadeTime));
+    }
 
     public void PlayOverlay(AudioClip bgm, int loopStartSamples, float fadeTime = 0.1f) {
         StartCoroutine(PlayOverlayIE(bgm, loopStartSamples, loopStartSamples, fadeTime));

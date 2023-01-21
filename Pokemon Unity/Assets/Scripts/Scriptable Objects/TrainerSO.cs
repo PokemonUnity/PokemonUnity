@@ -9,6 +9,7 @@ using UnityEngine;
 public class TrainerSO : ScriptableObject {
     [SerializeField] string trainerName = "Trainer";
     public TrainerClassSO Class;
+    public bool Defeated = false;
     // TODO: figure out what a PokemonInitialiser is and how it should work with PokemonSO
     public PokemonInitialiser[] trainerParty = new PokemonInitialiser[1];
     public PokemonSO[] Party;

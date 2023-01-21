@@ -16,7 +16,7 @@ public class BumpLedge : MonoBehaviour
             {
                 active = true;
             
-                PlayerMovement.Singleton.PauseInput();
+                PlayerMovement.Singleton.PauseMovement();
                 
                 PlayerMovement.Singleton.Follower.CanMove = false;
                 PlayerMovement.Singleton.forceMoveForward(2);
@@ -40,7 +40,7 @@ public class BumpLedge : MonoBehaviour
                 }
                 if (!PlayerMovement.Singleton.busyWith)
                 {
-                    PlayerMovement.Singleton.UnpauseInput();
+                    PlayerMovement.Singleton.UnpauseMovement();
                 }
                 active = false;
             }

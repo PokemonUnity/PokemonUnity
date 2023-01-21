@@ -278,9 +278,9 @@ public class InteractDoorway : MonoBehaviour
                     StartCoroutine(ScreenFade.Singleton.Fade(true, ScreenFade.SlowedSpeed));
 
                     yield return new WaitForSeconds(0.1f);
-                    PlayerMovement.Singleton.PauseInput();
+                    PlayerMovement.Singleton.PauseMovement();
                     yield return new WaitForSeconds(0.8f);
-                    PlayerMovement.Singleton.UnpauseInput();
+                    PlayerMovement.Singleton.UnpauseMovement();
                 }
             }
         }

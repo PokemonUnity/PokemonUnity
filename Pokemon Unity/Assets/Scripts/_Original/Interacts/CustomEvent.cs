@@ -986,7 +986,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 break;
             case CustomEventDetails.CustomEventType.ForcePauseInput:
-                PlayerMovement.Singleton.canInput = false;
+                PlayerMovement.Singleton.canMove = false;
                 break;
             case CustomEventDetails.CustomEventType.Jump:
                 if (currentEvent.object0.GetComponent<NPCHandler>() != null)

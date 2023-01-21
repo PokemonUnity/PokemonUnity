@@ -13,9 +13,11 @@ public class GlobalVariables : MonoBehaviour
     [SerializeField] GameSetting<Resolution> resolutionSetting;
     [SerializeField] GameSetting<float> sfxVolumeSetting;
     [SerializeField] GameSetting<float> musicVolumeSetting;
+    [SerializeField] GameSetting<Vector3> unitVectorSetting;
 
     public static GameSetting<float> SFXVolumeSetting;
     public static GameSetting<float> MusicVolumeSetting;
+    public static GameSetting<Vector3> UnitVectorSetting;
 
     #region Old - Property Variables
     public static GlobalVariables Singleton;
@@ -67,6 +69,7 @@ public class GlobalVariables : MonoBehaviour
         resolutionSetting.OnValueChange.AddListener(UpdateResolution);
         SFXVolumeSetting = sfxVolumeSetting;
         MusicVolumeSetting = musicVolumeSetting;
+        UnitVectorSetting = unitVectorSetting;
 
         //SceneManager.sceneLoaded += CheckLevelLoaded;
 
@@ -150,12 +153,12 @@ public class GlobalVariables : MonoBehaviour
 
                     if (!respawning)
                     {
-                        PlayerMovement.Singleton.PauseInput(0.8f);
+                        PlayerMovement.Singleton.PauseMovement(0.8f);
                     }
                     else
                     {
                         PlayerMovement.Singleton.Follower.Hide();
-                        PlayerMovement.Singleton.PauseInput(0.4f);
+                        PlayerMovement.Singleton.PauseMovement(0.4f);
                     }
                     if (playerForwardOnLoad)
                     {

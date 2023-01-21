@@ -26,16 +26,19 @@ using static UnityEngine.InputSystem.InputAction;
 using System.Collections.Generic;
 using MarkupAttributes;
 
+[AddComponentMenu("Pokemon Unity/Movement/Player Movement")]
 [RequireComponent(typeof(AudioSource))]
 public class PlayerMovement : MonoBehaviour, INeedDirection {
     public static PlayerMovement Singleton;
-    public PlayerSO Player;
 
     #region Variables
 
+    public PlayerSO Player;
+    public Collider HitboxCollider;
     //before a script runs, it'll check if the player is busy with another script's GameObject.
+    [SerializeField] Interactor interactor;
     public GameObject busyWith = null;
-    public bool canInput = true;
+    public bool canMove = true;
     private DialogBoxHandlerNew Dialog;
 
     #region Gizmo Variables
@@ -50,10 +53,6 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
     [HideInInspector] public bool MovementCheckIsValid = false;
 
     #endregion
-
-    [Foldout("Interactions")]
-    Vector3 interactPosition;
-    public float InteractRadius = 0.4f;
 
     [Foldout("Camera")]
     public Camera PlayerCamera;
@@ -123,10 +122,6 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
     public int framesPerSec;
     private bool overrideAnimPause;
 
-    public DirectionSurrogate DirectionSurrogate { get => directionSurrogate; }
-    
-    public Vector3 FacingDirection { get => directionSurrogate.FacingDirection; }
-
     #endregion
 
     #region MonoBehaviour Functions
@@ -143,9 +138,6 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
             // possible movement
             Gizmos.color = MovementCheckIsValid ? Color.green : Color.red;
             Gizmos.DrawLine(transform.position, transform.position + possibleMovement);
-        }
-        if (DrawInteractBox) {
-            Gizmos.DrawSphere(interactPosition, InteractRadius);
         }
     }
 
@@ -173,11 +165,16 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
             SwitchAnimation("Idle");
             DirectionSurrogate.OnDirectionUpdated.AddListener(SwitchAnimation);
         }
+        if (interactor == null) Debug.LogError("No Interactor provided", gameObject);
+
+        interactor.DrawGizmos = DrawInteractBox;
+        DirectionSurrogate.OnDirectionUpdated.AddListener(updateInteractorOffset);
     }
 
     void Awake() {
-        playerAudio = transform.GetComponent<AudioSource>();
-
+        playerAudio = GetComponent<AudioSource>();
+        interactor.OnPreInteract.AddListener(PauseMovement);
+        interactor.OnPostInteract.AddListener(UnpauseMovement);
         //set up the reference to this script.
         Singleton = this;
 
@@ -185,7 +182,7 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
         //Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandlerNew>();
         //MapName = GameObject.Find("GUI").GetComponent<MapNameBoxBehaviour>();
 
-        canInput = true;
+        canMove = true;
         Speed = WalkSpeed;
 
         PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -245,8 +242,8 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
             transparentCollider.transform.parent.gameObject.SendMessage("bump", SendMessageOptions.DontRequireReceiver);
             Debug.Log("Bumping collider at start");
         }
-        
-        
+
+        HitboxCollider.transform.position = transform.position;
 
         //DEBUG
         if (newMap != null)
@@ -263,48 +260,51 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
         GlobalVariables.Singleton.resetFollower();
     }
 
-    void Update() {
-        interactPosition = new Vector3(transform.position.x, (transform.position.y + 0.5f), transform.position.z) + possibleMovement;
-    }
-
     #endregion
 
     #region Input Handling
 
-    public void PauseInput(float secondsToWait = 0f) {
-        canInput = false;
-        if (animationName == "run")
-            SwitchAnimation("walk");
+    public void PauseMovement(Interactable interactable) => PauseMovement();
+
+    public void PauseMovement(float secondsToWait = 0f) {
+        canMove = false;
 
         if (IsRunning || IsBiking)
             Speed = WalkSpeed;
 
         IsRunning = false;
 
-        if (secondsToWait == 0f)
-            StartCoroutine(checkBusinessBeforeUnpause(secondsToWait, false));
-        else
-            StartCoroutine(checkBusinessBeforeUnpause(secondsToWait, true));
+        //if (secondsToWait == 0f)
+        //    StartCoroutine(checkBusinessBeforeUnpause(secondsToWait, false));
+        //else
+        //    StartCoroutine(checkBusinessBeforeUnpause(secondsToWait, true));
+    }
+    
+    public void UnpauseMovement(Interactable interactable) => UnpauseMovement();
+
+    public void UnpauseMovement() {
+        //Debug.Log("unpaused");
+        canMove = true;
     }
 
-    public void UnpauseInput() {
-        Debug.Log("unpaused");
-        canInput = true;
-    }
-
-    public bool IsInputPaused() => !canInput;
+    public bool IsInputPaused() => !canMove;
 
     public void HandleInputRun(CallbackContext context) {
         IsRunning = context.action.IsPressed();
     }
 
     public void HandleInputStart(CallbackContext context) {
-        canInput = false;
+        canMove = false;
         StartCoroutine(openPauseMenu());
     }
 
     public void HandleInputInteract(CallbackContext context) {
-        interact();
+        if (context.action.phase == UnityEngine.InputSystem.InputActionPhase.Performed) {
+            bool hadAnInteraction = interactor.TryInteract();
+
+            if (!hadAnInteraction)
+                tryAndSurf();
+        }
     }
 
     public void HandleInputDebug(CallbackContext context) {
@@ -322,7 +322,10 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
         if (this.shouldTryToMove && !IsMoving)
             move();
 
-        bool shouldTryToMove() => context.action.phase != UnityEngine.InputSystem.InputActionPhase.Canceled;
+        bool shouldTryToMove() {
+            bool buttonIsPressed = context.action.phase != UnityEngine.InputSystem.InputActionPhase.Canceled;
+            return buttonIsPressed && canMove;
+        }
     }
 
     #endregion
@@ -330,6 +333,12 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
     #region Movement
 
     #region Direction
+
+    public DirectionSurrogate DirectionSurrogate { get => directionSurrogate; }
+
+    public Vector3 FacingDirection { get => directionSurrogate.FacingDirection; }
+
+    public void LookAt(Transform target) => directionSurrogate.transform.LookAt(target);
 
     [Obsolete("Moved from int based direction to Vector3", false)]
     public void UpdateDirection(int dir) {
@@ -345,8 +354,9 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
 
     public void UpdateDirection(Vector3 newDirection) {
         if (shouldChangeDirection(directionInput)) {
-            Direction = (int)newDirection.ToMovementDirection(Vector3.forward, Vector3.up);
-            directionSurrogate.UpdateDirection(newDirection);
+            EMovementDirection directionEnum = newDirection.ToDirectionEnum(Vector3.forward, Vector3.up);
+            Direction = (int)directionEnum;
+            directionSurrogate.UpdateDirection(directionEnum.ToVector());
             mount.UpdateDirection(FacingDirection);
             //FIXME
             //pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[direction * frames + frame];
@@ -425,7 +435,7 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
     }
 
     public void move(bool canEncounter = true, bool lockFollower = false) {
-        if (!canInput) return;
+        if (!this.canMove) return;
 
         UpdateDirection(directionInput);
         Vector3 movement = GetMovementVector(FacingDirection, true);
@@ -465,11 +475,12 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
                         if (NpcFollower != null) StartCoroutine(NpcFollower.move(startPosition, Speed));
 
                         updateAnimation();
+                        HitboxCollider.transform.position = startPosition + movement;
                         LTDescr tween = LeanTween.move(gameObject, startPosition + movement, Speed);
                         tween.setOnComplete(() => {
                             IsMoving = false;
                             // move again if input is still being provided
-                            if (shouldTryToMove)
+                            if (shouldTryToMove && this.canMove)
                                 move();
                             else
                                 SwitchAnimation("Idle");
@@ -817,6 +828,21 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
 
     #endregion
 
+    #region Interaction Handling
+
+    void updateInteractorOffset(Vector3 newDirection) {
+        interactor.InteractOffset = newDirection.ToDirectionEnum().ToVector();
+    }
+
+    void tryAndSurf() {
+        if (!IsSurfing) {
+            if (currentMapCollider.GetTileTag(transform.position) == (int)EMapTile.SurfableWater)
+                StartCoroutine(surfCheck());
+        }
+    }
+
+    #endregion
+
     #region Other
 
     public void UpdateRPC() {
@@ -874,7 +900,7 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
 
         //if the player is definitely busy with caller object
         if (Singleton.busyWith == caller) {
-            PauseInput();
+            PauseMovement();
             Debug.Log("Busy with " + PlayerMovement.Singleton.busyWith);
             return true;
         }
@@ -898,38 +924,12 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
         yield return new WaitForSeconds(waitTime);
         if (busyConstraint)
             if (PlayerMovement.Singleton.busyWith == null)
-                UnpauseInput();
+                UnpauseMovement();
             else
                 Debug.Log("Busy with " + PlayerMovement.Singleton.busyWith);
     }
 
-    void interact() {
-        Collider currentInteraction = GetInteractedObject();
-
-        if (currentInteraction != null) {
-            Debug.Log($"Interacting with {currentInteraction.name}");
-            //sent interact message to the collider's object's parent object
-            currentInteraction.transform.parent.gameObject.SendMessage("interact", SendMessageOptions.DontRequireReceiver);
-            canInput = false;
-        } else if (!IsSurfing) {
-            if (currentMapCollider.GetTileTag(transform.position + possibleMovement) == (int)EMapTile.SurfableWater)
-                StartCoroutine(surfCheck());
-        }
-
-        Collider GetInteractedObject() {
-            Collider[] hitColliders = Physics.OverlapSphere(interactPosition, InteractRadius);
-            if (hitColliders.Length > 0) {
-                for (int i = 0; i < hitColliders.Length; i++) {
-                    //Prioritise a transparent over a solid object.
-                    if (hitColliders[i].name.Contains("_Transparent") && hitColliders[i].name != ("Player_Transparent"))
-                        return hitColliders[i];
-                    else if (hitColliders[i].name.Contains("_Object"))
-                        return hitColliders[i];
-                }
-            }
-            return null;
-        }
-    }
+    
 
     public IEnumerator wildEncounter(WildPokemonInitialiser.Location encounterLocation) {
         if (newMap.getEncounterList(encounterLocation).Length > 0) {

@@ -57,6 +57,8 @@ public class FollowerMovement : MonoBehaviour, INeedDirection
 	public DirectionSurrogate DirectionSurrogate { get => directionSurrogate; }
 	
 	public Vector3 FacingDirection { get => directionSurrogate.FacingDirection; }
+	
+	public void LookAt(Transform target) => directionSurrogate.transform.LookAt(target);
 
 	#region Unity Functions
 
@@ -118,7 +120,7 @@ public class FollowerMovement : MonoBehaviour, INeedDirection
 			pawnShadow.enabled = true;
 			speed = sentSpeed;
 			directionSurrogate.UpdateDirection(destination - startPosition);
-			direction = (int)FacingDirection.ToMovementDirection(Vector3.forward, Vector3.up);
+			direction = (int)FacingDirection.ToDirectionEnum(Vector3.forward, Vector3.up);
 			LeanTween.move(gameObject, destination, sentSpeed);
 		}
 	}

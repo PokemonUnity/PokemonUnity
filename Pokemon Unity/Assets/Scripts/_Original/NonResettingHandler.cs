@@ -11,7 +11,7 @@ public class NonResettingHandler : MonoBehaviour
 
     private NonResettingList listOfNonResetters;
 
-    private InteractTrainer[] trainers;
+    private TrainerBehaviour[] trainers;
     private InteractItem[] items;
     private GameObject[] events;
 
@@ -30,13 +30,13 @@ public class NonResettingHandler : MonoBehaviour
         Transform itemsList = transform.Find("Items");
         Transform eventsList = transform.Find("Events");
 
-        trainers = new InteractTrainer[trainersList.childCount];
+        trainers = new TrainerBehaviour[trainersList.childCount];
         items = new InteractItem[itemsList.childCount];
         events = new GameObject[eventsList.childCount];
 
         for (int i = 0; i < trainers.Length; i++)
         {
-            trainers[i] = trainersList.GetChild(i).GetComponent<InteractTrainer>();
+            trainers[i] = trainersList.GetChild(i).GetComponent<TrainerBehaviour>();
         }
         for (int i = 0; i < items.Length; i++)
         {
@@ -63,7 +63,7 @@ public class NonResettingHandler : MonoBehaviour
             {
                 if (i < sceneNonResettingList.sceneTrainers.Length)
                 {
-                    trainers[i].defeated = sceneNonResettingList.sceneTrainers[i];
+                    trainers[i].Trainer.Defeated = sceneNonResettingList.sceneTrainers[i];
                     trainers[i].gameObject.SetActive(sceneNonResettingList.sceneTrainersActive[i]);
                 }
                 else
@@ -133,7 +133,7 @@ public class NonResettingHandler : MonoBehaviour
         for (int i = 0; i < trainers.Length; i++)
         {
             Debug.Log(trainers[i].name);
-            sceneTrainers[i] = trainers[i].defeated;
+            sceneTrainers[i] = trainers[i].Trainer.Defeated;
             sceneTrainersActive[i] = trainers[i].gameObject.activeSelf;
         }
         for (int i = 0; i < items.Length; i++)
