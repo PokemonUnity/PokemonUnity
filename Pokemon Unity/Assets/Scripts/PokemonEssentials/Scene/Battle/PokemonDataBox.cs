@@ -182,8 +182,6 @@ namespace PokemonUnity
 					@explevel = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Total;
 					sliderExp.minValue = startexp;
 					sliderExp.maxValue = endexp;
-					StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(@explevel));
-					StartCoroutine(AnimateSliderExp(@explevel)); //sliderExp.value = @explevel;
 				}
 			}
 		}
@@ -197,9 +195,10 @@ namespace PokemonUnity
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			@starthp = oldhp;
-			@currenthp = oldhp;
-			@endhp = newhp;
+			@currenthp = newhp; //@endhp = newhp;
 			@animatingHP = true;
+			StopCoroutine("AnimateSliderHP"); //(AnimateSliderExp(@explevel));
+			StartCoroutine(AnimateSliderHP(HP)); //sliderExp.value = @explevel;
 		}
 				
 		/// <summary>
@@ -210,9 +209,11 @@ namespace PokemonUnity
 		public void animateEXP(int oldexp, int newexp)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			@currentexp = oldexp;
-			@endexp = newexp;
+			@currentexp = newexp;
+			@explevel = oldexp; //@endexp = newexp;
 			@animatingEXP = true;
+			StopCoroutine("AnimateSliderExp"); //(AnimateSliderExp(@explevel));
+			StartCoroutine(AnimateSliderExp(Exp)); //sliderExp.value = @explevel;
 		}
 		 
 		/// <summary>
@@ -572,6 +573,7 @@ namespace PokemonUnity
 				sliderHP.value = Mathf.Lerp(sliderHP.value + amount, sliderHP.value, 1f * Time.deltaTime);
 				yield return null;
 			}
+			animatingHP = false; //should disable after the values stop moving the slider...
 			//new WaitForSeconds(1f);
 			//fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
 			//yield return null;
@@ -584,11 +586,12 @@ namespace PokemonUnity
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//Debug.Log(amount);
-			while (sliderExp.value != amount)
+			while (sliderExp.value != amount) //ToDo: While != this.Exp, lerp(value + amount)?
 			{
 				sliderExp.value = Mathf.Lerp(sliderExp.value + amount, sliderExp.value, 1f * Time.deltaTime);
-				yield return null;
+				yield return null; //each frame tick will/should call the update function, and perform flash animation if necessary.
 			}
+			animatingEXP = false; //should disable after the values stop moving the slider...
 			//new WaitForSeconds(1f);
 			//fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
 			//yield return null;
