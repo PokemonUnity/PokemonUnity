@@ -222,6 +222,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		void update();
 	}
+	#endregion
 	
 	/// <summary>
 	/// Shows the player's Poké Ball being thrown to capture a Pokémon.
@@ -236,8 +237,6 @@ namespace PokemonEssentials.Interface.Screen
 	/// <param name="showplayer"></param>
 	//void pokeballThrow(Items ball, int shakes, bool critical, IBattler targetBattler, IScene scene, IBattler battler, int burst = -1, bool showplayer = false);
 
-	#endregion
-
 	#region Pokemon Battle
 	/// <summary>
 	/// 
@@ -246,6 +245,7 @@ namespace PokemonEssentials.Interface.Screen
 	{
 		void pbChatter(IBattler attacker,IBattler opponent);
 	}
+
 	public interface IPokeBattle_Scene : IScene, ISceneHasChatter, IPokeBattle_DebugScene
 	{
 		//event EventHandler<PokeballThrowTargetArgs> OnPokeballThrown;
@@ -371,7 +371,7 @@ namespace PokemonEssentials.Interface.Screen
 		string pbNameEntry(string helptext, IPokemon pokemon);
 		void pbSelectBattler(int index, int selectmode = 1);
 		//int pbFirstTarget(int index, int targettype);
-		int pbFirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		//int pbFirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
 		void pbUpdateSelected(int index);
 		/// <summary>
 		/// Use this method to make the player choose a target 
@@ -421,14 +421,14 @@ namespace PokemonEssentials.Interface.Screen
 		//new void pbTrainerBattleSuccess();
 		//new void pbEXPBar(IBattler battler, IPokemon pokemon, int startexp, int endexp, int tempexp1, int tempexp2);
 		void pbShowPokedex(Pokemons species, int form = 0);
-		//void pbChangePokemon(IBattler attacker, IPokemon pokemon);
-		void pbChangePokemon(IBattler attacker, PokemonUnity.Monster.Forms pokemon);
+		void pbChangePokemon(IBattler attacker, IPokemon pokemon);
+		//void pbChangePokemon(IBattler attacker, PokemonUnity.Monster.Forms pokemon);
 		void pbSaveShadows(Action action = null);
 		void pbFindAnimation(Moves moveid, int userIndex, int hitnum);
 		void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum = 0);
 		//new void pbAnimation(Moves moveid, IBattler user, IBattler target, int hitnum = 0);
 		void pbAnimationCore(string animation, IBattler user, IBattler target, bool oppmove = false);
-		void pbLevelUp(IPokemon pokemon, IBattler battler, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef);
+		//void pbLevelUp(IBattler battler, IPokemon pokemon, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef);
 		void pbThrowAndDeflect(Items ball, int targetBattler);
 		void pbThrow(Items ball, int shakes, bool critical, int targetBattler, bool showplayer = false);
 		void pbThrowSuccess();
@@ -497,11 +497,16 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		/// <param name="index"></param>
 		//new void pbItemMenu(int index);
+
+		//void pbFirstTarget(int index,int targettype);
 		/// <summary>
+		/// Returns the first selectable target of attack type 
+		/// from pool of pokemons active in battle scene
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name="targettype"></param>
-		void pbFirstTarget(int index,int targettype);
+		/// <returns>retuns the index slot of battler</returns>
+		int pbFirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
 		void pbNextTarget(int cur,int index);
 		void pbPrevTarget(int cur,int index);
 		/// <summary>
@@ -519,7 +524,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="pkmn"></param>
 		/// <param name="oldhp"></param>
 		/// <param name="anim"></param>
-		//new void pbHPChanged(IPokemon pkmn,int oldhp,bool anim= false);
+		//new void pbHPChanged(IBattler pkmn,int oldhp,bool anim= false);
 		/// <summary>
 		/// This method is called whenever a Pokémon faints
 		/// </summary>
@@ -590,7 +595,7 @@ namespace PokemonEssentials.Interface.Screen
 		//new int pbChooseTarget(int index,int targettype);
 		//void pbRefresh();
 		//new int pbSwitch(int index,bool lax,bool cancancel);
-		//new void pbHPChanged(IPokemon pkmn,int oldhp,bool anim= false);
+		//new void pbHPChanged(IBattler pkmn,int oldhp,bool anim= false);
 		//new void pbFainted(IPokemon pkmn);
 		//new void pbChooseEnemyCommand(int index);
 		//new void pbChooseNewEnemy(int index,IPokemon[] party);
