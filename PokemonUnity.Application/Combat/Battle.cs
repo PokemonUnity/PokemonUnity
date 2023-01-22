@@ -2160,7 +2160,7 @@ namespace PokemonUnity.Combat
 			if (@battlers[index].pokemon is IPokemonMegaEvolution p) p.makeMega();
 			@battlers[index].form=@battlers[index].pokemon is IPokemonMultipleForms f ? f.form : 0;
 			@battlers[index].pbUpdate(true);
-			if (@scene is IPokeBattle_Scene s0) s0.pbChangePokemon(@battlers[index],(@battlers[index] as Pokemon).Form.Id);
+			if (@scene is IPokeBattle_Scene s0) s0.pbChangePokemon(@battlers[index],@battlers[index].pokemon);
 			pbCommonAnimation("MegaEvolution2",@battlers[index],null);
 			string meganame=@battlers[index].pokemon.Name; //megaName rescue null
 			if (string.IsNullOrEmpty(meganame)) {
@@ -2190,7 +2190,7 @@ namespace PokemonUnity.Combat
 			if (@battlers[index].pokemon is IPokemonMegaEvolution p) p.makePrimal();
 			@battlers[index].form=@battlers[index].pokemon is IPokemonMultipleForms f ? f.form : 0;
 			@battlers[index].pbUpdate(true);
-			if (@scene is IPokeBattle_Scene s0) s0.pbChangePokemon(@battlers[index],(@battlers[index] as Pokemon).Form.Id);
+			if (@scene is IPokeBattle_Scene s0) s0.pbChangePokemon(@battlers[index],@battlers[index].pokemon);
 			if (@battlers[index].pokemon.Species == Pokemons.KYOGRE) {
 				pbCommonAnimation("PrimalKyogre2",@battlers[index],null);
 			}
@@ -2722,7 +2722,7 @@ namespace PokemonUnity.Combat
 
 		#region Judging
 		//protected void _pbJudgeCheckpoint(IBattler attacker,IBattleMove move=null) {
-		void IBattle.pbJudgeCheckpoint(IBattler attacker,IBattleMove move=null) {
+		void IBattle.pbJudgeCheckpoint(IBattler attacker,IBattleMove move) {
 		}
 
 		public BattleResults pbDecisionOnTime() {
