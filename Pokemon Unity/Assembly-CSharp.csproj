@@ -102,7 +102,6 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelectBattleStyle.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\MenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\CommandMenuDisplay.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\TyperBehaviour.cs" />
     <Compile Include="Assets\Scripts\Editor Attributes\DescriptionAttribute.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameBase.cs" />
     <Compile Include="Assets\Scripts\_Original\CameraTrigger.cs" />
@@ -208,6 +207,7 @@
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\BattleHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\DynamicCameraHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIExtension.cs" />
+    <Compile Include="Assets\Scripts\Library\Extensions\FloatExtensions.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarItemObject.cs" />
     <Compile Include="Assets\Scripts\_Original\TextureTileToScale.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\PacketHeaderBase.cs" />
@@ -268,13 +268,13 @@
     <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
     <Compile Include="Assets\Modules\DOTweenModulePhysics2D.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\CSVReader.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\Consumers\FrameStyleConsumer.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\DialogueBoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\LevelLoader.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\Depreciated\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\TextColorChanger.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarItemObject.cs" />
-    <Compile Include="Assets\Scripts\_Original\DialogBoxHandlerNew.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\DialogBoxHandlerNew.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\JsonHelper.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\UnityObjects\SpriteComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\SandTileHandler.cs" />
@@ -337,7 +337,9 @@
     <Compile Include="Assets\Scripts\Behaviours\Input\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Library\Extensions\FloatExtensions.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\DialogBoxFactory.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\TypewriterBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\DialogBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -28,10 +28,7 @@ public class Interactor : MonoBehaviour
         Interactable interactable = GetInteractedObject();
 
         if (interactable != null) {
-            Debug.Log($"Interacting with {interactable.name}");
-            this.interactable = interactable;
-            OnPreInteract.Invoke(interactable);
-            interactable.Interact(this);
+            Interact(interactable);
             return true;
         }
         return false;
@@ -46,6 +43,14 @@ public class Interactor : MonoBehaviour
             }
             return null;
         }
+    }
+
+    public bool Interact(Interactable interactable) {
+        Debug.Log($"Interacting with {interactable.name}");
+        this.interactable = interactable;
+        OnPreInteract.Invoke(interactable);
+        interactable.Interact(this);
+        return true;
     }
 
     public void FinishInteract() {

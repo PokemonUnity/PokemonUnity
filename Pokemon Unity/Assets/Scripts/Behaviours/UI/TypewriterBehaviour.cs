@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[AddComponentMenu("Pokemon Unity/UI/Typer")]
+[AddComponentMenu("Pokemon Unity/UI/Typewriter")]
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class TyperBehaviour : MonoBehaviour
+public class TypewriterBehaviour : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
     public GameSetting<float> TypingSpeed;

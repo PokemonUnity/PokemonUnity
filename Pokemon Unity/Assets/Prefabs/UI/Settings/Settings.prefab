@@ -5245,7 +5245,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280427263
+    rgba: 4279242768
   m_fontColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 255}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -6541,7 +6541,17 @@ PrefabInstance:
         type: 3}
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 3099711119181914236}
+      objectReference: {fileID: 5268019964268902976}
+    - target: {fileID: 3275286876354957003, guid: 645114301366f1540860f7637c21af03,
+        type: 3}
+      propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: TypeHelpText
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275286876354957003, guid: 645114301366f1540860f7637c21af03,
+        type: 3}
+      propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TypewriterBehaviour, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3275286876354957003, guid: 645114301366f1540860f7637c21af03,
         type: 3}
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
@@ -6702,7 +6712,7 @@ PrefabInstance:
     - target: {fileID: 3627548736517019465, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
       propertyPath: m_text
-      value: 1920 x 1080 @ 170Hz
+      value: 1920 x 1080 @ 59Hz
       objectReference: {fileID: 0}
     - target: {fileID: 4614949635437909369, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
@@ -6837,7 +6847,7 @@ PrefabInstance:
     - target: {fileID: 6527807469912776396, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
       propertyPath: m_text
-      value: 1920 x 1080 @ 170Hz
+      value: 1920 x 1080 @ 59Hz
       objectReference: {fileID: 0}
     - target: {fileID: 7041379933933556936, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
@@ -6958,8 +6968,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 3099711119181914236}
-            m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
+          - m_Target: {fileID: 5268019964268902976}
+            m_TargetAssemblyTypeName: TypewriterBehaviour, Assembly-CSharp
             m_MethodName: TypeHelpText
             m_Mode: 0
             m_Arguments:
@@ -6976,14 +6986,13 @@ MonoBehaviour:
   defaultChoiceIndex: 0
   gameSetting: {fileID: 11400000, guid: f805ec5eaa9c49146ad1f305d85661b9, type: 2}
   Choices:
-  - DisplayText: 1176 x 664 @ 170Hz
-  - DisplayText: 1280 x 720 @ 170Hz
-  - DisplayText: 1360 x 768 @ 170Hz
-  - DisplayText: 1366 x 768 @ 170Hz
-  - DisplayText: 1600 x 900 @ 170Hz
-  - DisplayText: 1768 x 992 @ 170Hz
-  - DisplayText: 1920 x 1080 @ 170Hz
-  - DisplayText: 2560 x 1440 @ 170Hz
+  - DisplayText: 1176 x 664 @ 59Hz
+  - DisplayText: 1280 x 720 @ 59Hz
+  - DisplayText: 1360 x 768 @ 59Hz
+  - DisplayText: 1366 x 768 @ 59Hz
+  - DisplayText: 1600 x 900 @ 59Hz
+  - DisplayText: 1768 x 992 @ 59Hz
+  - DisplayText: 1920 x 1080 @ 59Hz
   TargetText: {fileID: 2471026193589469219}
 --- !u!224 &6513412086815094992 stripped
 RectTransform:
@@ -7505,7 +7514,7 @@ PrefabInstance:
     - target: {fileID: 7786422626250999140, guid: 4244addd8d0092544997db2791e6ae70,
         type: 3}
       propertyPath: m_Name
-      value: Description Frame
+      value: Basic Dialog Box
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -7516,16 +7525,16 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1664628770637150491}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3099711119181914236 stripped
+--- !u!114 &5268019964268902976 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4331778786813172071, guid: 4244addd8d0092544997db2791e6ae70,
+  m_CorrespondingSourceObject: {fileID: 6774037482025583451, guid: 4244addd8d0092544997db2791e6ae70,
     type: 3}
   m_PrefabInstance: {fileID: 1664628770637150491}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50bfc7e28e1d1b7409819d672e5919f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 48a47cfe3b9597e46bd023a088be74de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4405157774801584967
@@ -7943,11 +7952,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8993792596331368851, guid: def53ee552b869f4faad97e5b5934f2c,
         type: 3}
-      propertyPath: Events.OnValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3099711119181914236}
-    - target: {fileID: 8993792596331368851, guid: def53ee552b869f4faad97e5b5934f2c,
-        type: 3}
       propertyPath: uiInput.OnSelect.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: MoveTo
       objectReference: {fileID: 0}
@@ -8011,11 +8015,6 @@ PrefabInstance:
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1474390215927679690}
-    - target: {fileID: 8993792596331368851, guid: def53ee552b869f4faad97e5b5934f2c,
-        type: 3}
-      propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 3099711119181914236}
     - target: {fileID: 8993792596331368851, guid: def53ee552b869f4faad97e5b5934f2c,
         type: 3}
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -8176,8 +8175,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 3099711119181914236}
-            m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
+          - m_Target: {fileID: 5268019964268902976}
+            m_TargetAssemblyTypeName: TypewriterBehaviour, Assembly-CSharp
             m_MethodName: TypeHelpText
             m_Mode: 0
             m_Arguments:
@@ -8191,13 +8190,13 @@ MonoBehaviour:
     OnValueChanged:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3099711119181914236}
-          m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
-          m_MethodName: TypeAgain
-          m_Mode: 1
+        - m_Target: {fileID: 5268019964268902976}
+          m_TargetAssemblyTypeName: TypewriterBehaviour, Assembly-CSharp
+          m_MethodName: TypeHelpText
+          m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_ObjectArgument: {fileID: 7334603829859208276}
+            m_ObjectArgumentAssemblyTypeName: UIInputBehaviour, Assembly-CSharp
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -8930,11 +8929,6 @@ PrefabInstance:
       objectReference: {fileID: 1474390215927679690}
     - target: {fileID: 8993792596331368851, guid: def53ee552b869f4faad97e5b5934f2c,
         type: 3}
-      propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 3099711119181914236}
-    - target: {fileID: 8993792596331368851, guid: def53ee552b869f4faad97e5b5934f2c,
-        type: 3}
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -9068,8 +9062,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 3099711119181914236}
-            m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
+          - m_Target: {fileID: 5268019964268902976}
+            m_TargetAssemblyTypeName: TypewriterBehaviour, Assembly-CSharp
             m_MethodName: TypeHelpText
             m_Mode: 0
             m_Arguments:
@@ -9382,8 +9376,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 3099711119181914236}
-            m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
+          - m_Target: {fileID: 5268019964268902976}
+            m_TargetAssemblyTypeName: TypewriterBehaviour, Assembly-CSharp
             m_MethodName: TypeHelpText
             m_Mode: 0
             m_Arguments:
@@ -10226,11 +10220,6 @@ PrefabInstance:
       objectReference: {fileID: 1474390215927679690}
     - target: {fileID: 8993792596331368851, guid: def53ee552b869f4faad97e5b5934f2c,
         type: 3}
-      propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 3099711119181914236}
-    - target: {fileID: 8993792596331368851, guid: def53ee552b869f4faad97e5b5934f2c,
-        type: 3}
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -10369,8 +10358,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 3099711119181914236}
-            m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
+          - m_Target: {fileID: 5268019964268902976}
+            m_TargetAssemblyTypeName: TypewriterBehaviour, Assembly-CSharp
             m_MethodName: TypeHelpText
             m_Mode: 0
             m_Arguments:
@@ -10431,7 +10420,17 @@ PrefabInstance:
         type: 3}
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 3099711119181914236}
+      objectReference: {fileID: 5268019964268902976}
+    - target: {fileID: 3275286876354957003, guid: 645114301366f1540860f7637c21af03,
+        type: 3}
+      propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: TypeHelpText
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275286876354957003, guid: 645114301366f1540860f7637c21af03,
+        type: 3}
+      propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TypewriterBehaviour, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3275286876354957003, guid: 645114301366f1540860f7637c21af03,
         type: 3}
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
@@ -10644,11 +10643,6 @@ PrefabInstance:
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1474390215927679690}
-    - target: {fileID: 4650693747317973101, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
-        type: 3}
-      propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 3099711119181914236}
     - target: {fileID: 4650693747317973101, guid: a85f273f2dc9c1c4e9a6d3e352fbbd6b,
         type: 3}
       propertyPath: Events.Triggers.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -10932,8 +10926,8 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 3099711119181914236}
-            m_TargetAssemblyTypeName: TyperBehaviour, Assembly-CSharp
+          - m_Target: {fileID: 5268019964268902976}
+            m_TargetAssemblyTypeName: TypewriterBehaviour, Assembly-CSharp
             m_MethodName: TypeHelpText
             m_Mode: 0
             m_Arguments:

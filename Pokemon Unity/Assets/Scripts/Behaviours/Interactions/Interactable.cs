@@ -12,7 +12,7 @@ public class Interactable : MonoBehaviour
     public GameObject PassthroughGameObject;
     public int Priority = 0;
     public UnityEvent<Interactor> OnPreInteraction;
-    public UnityEvent<Interactor> Interaction;
+    public UnityEvent<Interactor> OnInteraction;
     public UnityEvent<Interactor> OnPostInteraction;
     public bool Interacting = false;
     Interactor interactor;
@@ -20,7 +20,7 @@ public class Interactable : MonoBehaviour
     public Interactor Interactor { get => interactor; }
 
     public void Interact(Interactor interactor) {
-        if (Interaction == null) {
+        if (OnInteraction == null) {
             Debug.LogError("No Interaction delegate was set. Can't interact", gameObject);
             return;
         }
@@ -28,7 +28,7 @@ public class Interactable : MonoBehaviour
         if (interactor.Interactable == this) {
             Interacting = true;
             OnPreInteraction.Invoke(interactor);
-            Interaction.Invoke(interactor);
+            OnInteraction.Invoke(interactor);
             this.interactor = interactor;
         } else {
             Debug.LogError($"Tried to interact with {gameObject.name} but the Interactor is already interacting with {interactor.Interactable.name}", interactor);

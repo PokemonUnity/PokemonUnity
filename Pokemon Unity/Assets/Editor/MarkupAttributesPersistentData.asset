@@ -41,4 +41,16 @@ MonoBehaviour:
     value: 1
   - key: TrainerBehaviour/Interaction
     value: 0
+  - key: DialogBox/Group
+    value: 1
+  - key: DialogBox/Frame Sprite
+    value: 1
+  - key: DialogBox/Text
+    value: 1
+  - key: DialogBox/Dialog Box
+    value: 1
+  - key: DialogBox/
+    value: 1
+  - key: DialogBox/General
+    value: 1
   serializedIntEntries: []

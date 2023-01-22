@@ -18,7 +18,7 @@ public class DescriptionAttributeDrawer : PropertyDrawer {
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
         var descAttribute = (DescriptionAttribute)attribute;
-        var content = new GUIContent(descAttribute.description);
+        var content = new GUIContent(descAttribute.Description);
         return style.CalcHeight(label, EditorGUIUtility.currentViewWidth) + style.CalcHeight(content, EditorGUIUtility.currentViewWidth);
     }
 
@@ -27,12 +27,13 @@ public class DescriptionAttributeDrawer : PropertyDrawer {
         Rect fieldPos = new Rect(position.x, position.y, position.width, 16f);
         Rect labelPos = new Rect(position.x, position.y + fieldPos.height, position.width, 16f);
         
-        if (descAttribute.position == DescriptionAttribute.EPosition.Above) 
-            EditorGUI.LabelField(labelPos, descAttribute.description, style);
+        if (descAttribute.Position == DescriptionAttribute.EPosition.Above) 
+            EditorGUI.LabelField(labelPos, descAttribute.Description, style);
         EditorGUI.PropertyField(fieldPos, property);
-        if (descAttribute.position == DescriptionAttribute.EPosition.Below)
-            EditorGUI.LabelField(labelPos, descAttribute.description, style);
+        if (descAttribute.Position == DescriptionAttribute.EPosition.Below)
+            EditorGUI.LabelField(labelPos, descAttribute.Description, style);
 
-        EditorGUILayout.Space();
+        if (descAttribute.HasSpace)
+            EditorGUILayout.Space();
     }
 }

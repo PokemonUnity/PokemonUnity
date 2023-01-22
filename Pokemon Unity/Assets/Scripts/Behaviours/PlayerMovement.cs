@@ -31,7 +31,7 @@ using MarkupAttributes;
 public class PlayerMovement : MonoBehaviour, INeedDirection {
     public static PlayerMovement Singleton;
 
-    #region Variables
+    #region Variables & Properties
 
     public PlayerSO Player;
     public Collider HitboxCollider;
@@ -121,6 +121,8 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
     private int frames;
     public int framesPerSec;
     private bool overrideAnimPause;
+
+    public Interactor Interactor { get => interactor; }
 
     #endregion
 

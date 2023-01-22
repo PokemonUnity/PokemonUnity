@@ -91,7 +91,6 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
     public string[] fr_tightSpotDialog;
 
     public string[] fr_playerVictoryDialog;
-    [EndGroup("Deprecated")]
     public string[] fr_playerLossDialog;
 
     #endregion
@@ -126,6 +125,7 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
 
         if (Interactable == null) Debug.LogError("No Interactable provided", gameObject);
         Interactable.OnPreInteraction.AddListener(lookAtInteractor);
+        Interactable.OnInteraction.AddListener(InteractWithPlayer);
         Interactable.OnPreInteraction.AddListener(lookToPreviousDirection);
     }
 
@@ -189,16 +189,13 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
         playerDetectRay.origin = transform.position + (Vector3.up * 0.5f);
         RaycastHit[] hits = Physics.RaycastAll(playerDetectRay, SightDistance); //, LayerMask.NameToLayer("Player"));
         if (hits.Length == 0) return;
-        Interactor interactor = null;
         PlayerMovement playerMovement = collidedWithAPlayer(hits);
         if (playerMovement == null) return;
-        interactor.OnPreInteract.Invoke(Interactable);
-        Interactable.Interacting = true;
-        StartCoroutine(BattlePlayer(interactor));
-
+        playerMovement.Interactor.Interact(Interactable);
+        
         PlayerMovement collidedWithAPlayer(RaycastHit[] hits) {
             foreach (RaycastHit hit in hits) {
-                if (hit.collider.TryGetComponent(out interactor)) {
+                if (hit.collider.TryGetComponent(out Interactor interactor)) {
                     if (interactor.PassthroughGameObject == null) continue;
                     PlayerMovement playerMovement = interactor.PassthroughGameObject.GetComponent<PlayerMovement>();
                     if (playerMovement != null) return playerMovement;
@@ -208,11 +205,25 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
         }
     }
 
-    public IEnumerator BattlePlayer(Interactor interactor) {
-        yield return ApproachPlayer(interactor);
+    public void InteractWithPlayer(Interactor interactor) {
+        StartCoroutine(InteractWithPlayerIE(interactor));
     }
 
-    public IEnumerator ApproachPlayer(Interactor interactor) {
+    public IEnumerator InteractWithPlayerIE(Interactor interactor) {
+        yield return StartCoroutine(ApproachInteractorWithStyle(interactor));
+        // Display all of the confrontation Dialog.
+        //for (int i = 0; i < Trainer.Dialogue.Count; i++) {
+        //    Dialog.DrawDialogBox();
+        //    yield return Dialog.StartCoroutine(Dialog.DrawText(en_trainerConfrontDialog[i]));
+        //    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        //        yield return null;
+
+        //    Dialog.UndrawDialogBox();
+        //}
+    }
+
+    /// <summary>Walk towards the interactable (1 dimensional) assuming they are in the Trainers line of sight</summary>
+    public IEnumerator ApproachInteractorWithStyle(Interactor interactor) {
         //if the player isn't busy with any other object
         if (Trainer.Class.BattleBackgroundMusic != null)
             BackgroundMusicHandler.Singleton.PlayOverlay(Trainer.Class.BattleBackgroundMusic);
@@ -222,18 +233,21 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
         yield return new WaitForSeconds(0.6f);
 
         Vector3 oneUnitForward = Vector3.Scale(directionSurrogate.FacingDirection, GlobalVariables.UnitVectorSetting.Get());
-        Vector3 finalDestination = interactor.transform.position - transform.position - oneUnitForward;
-        
+        Vector3 finalDestination = interactor.transform.position - oneUnitForward;
+
+        if (transform.position == finalDestination) yield break;
+
         SwitchAnimation("Walk");
         
-        moveOneUnitForward().setOnComplete(interactWithPlayer);
+        moveOneUnitForward().setOnComplete(() => interactWithPlayer(transform, finalDestination));
 
-        void interactWithPlayer() {
-            if (transform.position.IsBasicallyEqualTo(finalDestination)) {
+        void interactWithPlayer(Transform trainer, Vector3 finalDestination) {
+            bool isAtDestination = trainer.position.IsBasicallyEqualTo(finalDestination);
+            if (isAtDestination) {
                 SwitchAnimation("Idle");
                 Interactable.Interact(interactor);
             } else
-                moveOneUnitForward().setOnComplete(interactWithPlayer);
+                moveOneUnitForward().setOnComplete(() => interactWithPlayer(trainer, finalDestination));
         }
         LTDescr moveOneUnitForward() {
             return LeanTween.move(gameObject, transform.position + oneUnitForward, Speed);

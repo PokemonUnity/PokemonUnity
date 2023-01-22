@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8241c41f846245e478c9893c2cdc3cb0, type: 3}
+  m_Name: Basic Dialog Box
+  m_EditorClassIdentifier: 
+  name: Basic
+  Prefab: {fileID: 1749020485919409441, guid: 4244addd8d0092544997db2791e6ae70, type: 3}
+  Frame: {fileID: 0}
+  FrameSetting: {fileID: 0}
+  useSettingFrame: 0
+  TextColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 0}
+  ShadowColor: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 0}
