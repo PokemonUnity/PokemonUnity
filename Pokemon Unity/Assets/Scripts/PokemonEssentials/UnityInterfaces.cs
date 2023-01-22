@@ -131,7 +131,7 @@ namespace PokemonUnity.UX
 		IEnumerator pbChooseMove(IPokemon pokemon, string message, System.Action<int> result);
 		//string pbNameEntry(string helptext, IPokemon pokemon);
 		IEnumerator pbNameEntry(string helptext, IPokemon pokemon, System.Action<string> result);
-		new IEnumerator pbSelectBattler(int index, int selectmode = 1);
+		//new IEnumerator pbSelectBattler(int index, int selectmode = 1);
 		//int pbFirstTarget(int index, int targettype);
 		//int pbFirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
 		//void pbUpdateSelected(int index);
@@ -183,7 +183,7 @@ namespace PokemonUnity.UX
 		//new IEnumerator pbTrainerBattleSuccess();
 		//new void pbEXPBar(IBattler battler, IPokemon pokemon, int startexp, int endexp, int tempexp1, int tempexp2);
 		new IEnumerator pbShowPokedex(Pokemons species, int form = 0);
-		new IEnumerator pbChangePokemon(IBattler attacker, IPokemon pokemon);
+		//new IEnumerator pbChangePokemon(IBattler attacker, IPokemon pokemon);
 		//new IEnumerator pbChangePokemon(IBattler attacker, PokemonUnity.Monster.Forms pokemon);
 		//void pbSaveShadows(Action action = null);
 		//IEnumerator pbFindAnimation(Moves moveid, int userIndex, int hitnum);
@@ -309,7 +309,7 @@ namespace PokemonUnity.UX
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name="party"></param>
-		new IEnumerator pbChooseNewEnemy(int index,IPokemon[] party);
+		//new IEnumerator pbChooseNewEnemy(int index,IPokemon[] party);
 		/// <summary>
 		/// This method is called when the player wins a wild Pokémon battle.
 		/// This method can change the battle's music for example.
