@@ -251,7 +251,7 @@ namespace PokemonUnity.UX
 		/// <param name="index"></param>
 		/// <returns>Return values: 0=Fight, 1=Bag, 2=Pokémon, 3=Run, 4=Call</returns>
 		//new void pbCommandMenu(int index);
-		IEnumerator pbCommandMenu(int index, System.Action<int> result);
+		IEnumerator pbCommandMenu(int index, System.Action<MenuCommands> result);
 		/// <summary>
 		/// </summary>
 		/// <param name="pkmn"></param>
@@ -559,7 +559,7 @@ namespace PokemonUnity.UX
 		//int pbPartyLength(int battlerIndex);
 		//int pbFindNextUnfainted(IPokemon[] party, int start, int finish = -1);
 		//int pbGetLastPokeInTeam(int index);
-		//IBattler pbFindPlayerBattler(int pkmnIndex);
+		new IBattlerIE pbFindPlayerBattler(int pkmnIndex);
 		//bool pbIsOwner(int battlerIndex, int partyIndex);
 		//ITrainer pbGetOwner(int battlerIndex);
 		//ITrainer pbGetOwnerPartner(int battlerIndex);
@@ -594,10 +594,10 @@ namespace PokemonUnity.UX
 		bool pbCanSwitchLax(int idxPokemon, int pkmnidxTo, bool showMessages);
 		bool pbCanSwitch(int idxPokemon, int pkmnidxTo, bool showMessages, bool ignoremeanlook = false);
 		bool pbRegisterSwitch(int idxPokemon, int idxOther);
-		bool pbCanChooseNonActive(int index);
-		void pbSwitch(bool favorDraws= false);
-		void pbSendOut(int index, IPokemon pokemon);
-		void pbReplace(int index, int newpoke, bool batonpass = false);
+		//bool pbCanChooseNonActive(int index);
+		new IEnumerator pbSwitch(bool favorDraws= false);
+		new IEnumerator pbSendOut(int index, IPokemon pokemon);
+		new IEnumerator pbReplace(int index, int newpoke, bool batonpass = false);
 		bool pbRecallAndReplace(int index, int newpoke, int newpokename = -1, bool batonpass = false, bool moldbreaker = false);
 		void pbMessagesOnReplace(int index, int newpoke, int newpokename= -1);
 		int pbSwitchInBetween(int index, bool lax, bool cancancel);
@@ -629,7 +629,7 @@ namespace PokemonUnity.UX
 		#endregion
 
 		#region Fleeing from battle.
-		bool pbCanRun(int idxPokemon);
+		//bool pbCanRun(int idxPokemon);
 		/// <summary>
 		/// </summary>
 		/// <param name="idxPokemon"></param>
@@ -686,15 +686,15 @@ namespace PokemonUnity.UX
 		#endregion
 
 		#region Battle core.
-		//new IEnumerator pbStartBattle(bool canlose= false, System.Action<BattleResults> result = null);
-		new IEnumerator pbStartBattle(bool canlose= false);
+		new IEnumerator pbStartBattle(bool canlose= false, System.Action<BattleResults> result = null);
+		//new IEnumerator pbStartBattle(bool canlose= false);
 		new IEnumerator pbStartBattleCore(bool canlose);
 		#endregion
 
 		#region Command phase.
-		MenuCommands pbCommandMenu(int i);
-		KeyValuePair<Items, int?> pbItemMenu(int i);
-		bool pbAutoFightMenu(int i);
+		IEnumerator pbCommandMenu(int i, System.Action<MenuCommands> result);
+		IEnumerator pbItemMenu(int i, System.Action<KeyValuePair<Items, int?>> result);
+		//bool pbAutoFightMenu(int i);
 		new IEnumerator pbCommandPhase();
 		#endregion
 
