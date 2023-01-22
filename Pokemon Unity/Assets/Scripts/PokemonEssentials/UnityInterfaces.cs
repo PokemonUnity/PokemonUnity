@@ -56,9 +56,9 @@ namespace PokemonUnity.UX
 		//new void pbBeginCommandPhase();
 		//new IEnumerator pbShowOpponent(int index);
 		//new IEnumerator pbHideOpponent();
-		new IEnumerator pbShowHelp(string text);
-		new IEnumerator pbHideHelp();
-		new IEnumerator pbBackdrop();
+		//new IEnumerator pbShowHelp(string text);
+		//new IEnumerator pbHideHelp();
+		//new IEnumerator pbBackdrop();
 		/// <summary>
 		/// Returns whether the party line-ups are currently appearing on-screen
 		/// </summary>
@@ -130,6 +130,7 @@ namespace PokemonUnity.UX
 		//int pbChooseMove(IPokemon pokemon, string message);
 		IEnumerator pbChooseMove(IPokemon pokemon, string message, System.Action<int> result);
 		//string pbNameEntry(string helptext, IPokemon pokemon);
+		IEnumerator pbNameEntry(string helptext, IPokemon pokemon, System.Action<string> result);
 		new IEnumerator pbSelectBattler(int index, int selectmode = 1);
 		//int pbFirstTarget(int index, int targettype);
 		//int pbFirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
@@ -204,12 +205,12 @@ namespace PokemonUnity.UX
 		new IEnumerator pbDisplayPausedMessage(string msg);
 		//new void pbDisplayConfirmMessage(string msg);
 		IEnumerator pbDisplayConfirmMessage(string msg, System.Action<bool> result);
-		new IEnumerator pbFrameUpdate(IViewport cw);
+		//new IEnumerator pbFrameUpdate(IViewport cw);
 		//void pbRefresh();
 		/// <summary>
 		/// Called whenever a new round begins.
 		/// </summary>
-		new IEnumerator pbBeginCommandPhase();
+		//new IEnumerator pbBeginCommandPhase();
 		/// <summary>
 		/// Called whenever the battle begins
 		/// </summary>
@@ -242,7 +243,7 @@ namespace PokemonUnity.UX
 		/// </summary>
 		/// <param name="pkmn"></param>
 		/// <param name="move"></param>
-		new IEnumerator pbForgetMove(IPokemon pkmn,Moves move);
+		IEnumerator pbForgetMove(IPokemon pkmn,Moves move, System.Action<int> result);
 		new IEnumerator pbBeginAttackPhase();
 		/// <summary>
 		/// Use this method to display the list of commands.
@@ -268,12 +269,8 @@ namespace PokemonUnity.UX
 		/// </summary>
 		/// <param name="index"></param>
 		//new void pbItemMenu(int index);
-		IEnumerator pbItemMenu(int index, System.Action<int> result);
-		/// <summary>
-		/// </summary>
-		/// <param name="index"></param>
-		/// <param name="targettype"></param>
-		new IEnumerator pbFirstTarget(int index, int targettype);
+		IEnumerator pbItemMenu(int index, System.Action<Items> result);
+		//new IEnumerator pbFirstTarget(int index, int targettype);
 		new IEnumerator pbNextTarget(int cur, int index);
 		new IEnumerator pbPrevTarget(int cur, int index);
 		/// <summary>
@@ -284,7 +281,8 @@ namespace PokemonUnity.UX
 		/// <param name=""></param>
 		//new void pbChooseTarget(int index,int targettype);
 		IEnumerator pbChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype, System.Action<int> result);
-		new IEnumerator pbSwitch(int index,bool lax,bool cancancel);
+		//new IEnumerator pbSwitch(int index,bool lax,bool cancancel);
+		IEnumerator pbSwitch(int index,bool lax,bool cancancel, System.Action<int> result);
 		/// <summary>
 		/// This method is called whenever a Pokémon's HP changes.
 		/// Used to animate the HP bar.
@@ -304,7 +302,7 @@ namespace PokemonUnity.UX
 		/// </summary>
 		/// <param name="index"></param>
 		//new void pbChooseEnemyCommand(int index);
-		new IEnumerator pbChooseEnemyCommand(int index);
+		//new IEnumerator pbChooseEnemyCommand(int index);
 		/// <summary>
 		/// Use this method to choose a new Pokémon for the enemy
 		/// The enemy's party is guaranteed to have at least one choosable member.
@@ -330,7 +328,7 @@ namespace PokemonUnity.UX
 		//new void pbHideOpponent();
 		new IEnumerator pbHideOpponent();
 		new IEnumerator pbRecall(int battlerindex);
-		IEnumerator pbDamageAnimation(IPokemon pkmn,TypeEffective effectiveness);
+		new IEnumerator pbDamageAnimation(IBattler pkmn,TypeEffective effectiveness);
 		new IEnumerator pbAnimation(Moves moveid,IBattler attacker,IBattler opponent,int hitnum= 0);
 		#endregion
 	}
@@ -603,7 +601,8 @@ namespace PokemonUnity.UX
 		bool pbRecallAndReplace(int index, int newpoke, int newpokename = -1, bool batonpass = false, bool moldbreaker = false);
 		void pbMessagesOnReplace(int index, int newpoke, int newpokename= -1);
 		int pbSwitchInBetween(int index, bool lax, bool cancancel);
-		int pbSwitchPlayer(int index, bool lax, bool cancancel);
+		//int pbSwitchPlayer(int index, bool lax, bool cancancel);
+		IEnumerator pbSwitchPlayer(int index, bool lax, bool cancancel, System.Action<int> result = null);
 		#endregion
 
 		#region Using an item.
