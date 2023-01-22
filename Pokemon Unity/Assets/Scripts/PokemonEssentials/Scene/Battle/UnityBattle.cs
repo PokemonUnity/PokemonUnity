@@ -6984,8 +6984,7 @@ label_41:;
       if (this.scene is IPokeBattle_Scene scene)
       {
         IBattler battler = this.battlers[index];
-        int id = (int) (this.battlers[index] as Pokemon).Form.Id;
-        scene.pbChangePokemon(battler, (Forms) id);
+        scene.pbChangePokemon(battler, this.battlers[index].pokemon);
       }
       this.pbCommonAnimation("MegaEvolution2", this.battlers[index], (IBattler) null, 0);
       string str = this.battlers[index].pokemon.Name;
@@ -7011,8 +7010,7 @@ label_41:;
       if (this.scene is IPokeBattle_Scene scene)
       {
         IBattler battler = this.battlers[index];
-        int id = (int) (this.battlers[index] as Pokemon).Form.Id;
-        scene.pbChangePokemon(battler, (Forms) id);
+        scene.pbChangePokemon(battler, this.battlers[index].pokemon);
       }
       if (this.battlers[index].pokemon.Species == Pokemons.KYOGRE)
         this.pbCommonAnimation("PrimalKyogre2", this.battlers[index], (IBattler) null, 0);
