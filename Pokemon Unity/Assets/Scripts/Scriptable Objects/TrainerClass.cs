@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Trainer Class", menuName = "Pokemon Unity/Trainer Class")]
-public class TrainerClassSO : ScriptableObject
-{
+public class TrainerClass : ScriptableObject {
     public string ClassName;
     public Sprite VsScreen;
     public int BasePrizeMoney;

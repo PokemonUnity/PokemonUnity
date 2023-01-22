@@ -884,6 +884,8 @@ MonoBehaviour:
   Trainer: {fileID: 11400000, guid: 721305b3a6f23e442a676c33661c2097, type: 2}
   directionSurrogate: {fileID: 785013546}
   SightDistance: 1
+  dialogSeries: {fileID: 0}
+  dialogTrigger: {fileID: 0}
   ShouldTurnRandomly: 0
   ShouldTurnOnInteraction: 1
   ShouldTurnBack: 0
@@ -895,20 +897,6 @@ MonoBehaviour:
   MaxWaitBeforeTurn: 5
   MinWaitBeforeTurn: 1
   Speed: 0.3
-  trainerParty: []
-  battleBGM: {fileID: 0}
-  samplesLoopStart: 0
-  victoryBGM: {fileID: 0}
-  victorySamplesLoopStart: 0
-  lowHpBGM: {fileID: 0}
-  lowHpBGMSamplesLoopStart: 0
-  environment: 0
-  en_tightSpotDialog: []
-  en_playerVictoryDialog: []
-  en_playerLossDialog: []
-  fr_tightSpotDialog: []
-  fr_playerVictoryDialog: []
-  fr_playerLossDialog: []
 --- !u!114 &37104788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,14 +914,14 @@ MonoBehaviour:
   ReflectionSpriteRenderer: {fileID: 342983762}
   Paused: 0
   Animations:
-  - {fileID: 11400000, guid: 24b3c45d7e4ca3a44ad6434eb413fe90, type: 2}
-  - {fileID: 11400000, guid: c2e4f47580a3b8646965405f7e059c2c, type: 2}
-  - {fileID: 11400000, guid: 4ada33463d30bf7408ad7a4aadb317ae, type: 2}
-  - {fileID: 11400000, guid: 5ec57cd6190b65e46bf72b70da571ffa, type: 2}
-  - {fileID: 11400000, guid: 478dac260180efb41856fc8afdec0245, type: 2}
-  - {fileID: 11400000, guid: 93e58b015d4527b40952bd214a86e490, type: 2}
-  - {fileID: 11400000, guid: 4f333e29c6df8824a9355cbad6ba0c9b, type: 2}
-  - {fileID: 11400000, guid: c65f55715932de1428ece3f0f4887d4d, type: 2}
+  - {fileID: 11400000, guid: 378e30df705224f4e95505db4eec4294, type: 2}
+  - {fileID: 11400000, guid: 1d30bbbf10d713345bd47d5e8cda8999, type: 2}
+  - {fileID: 11400000, guid: ff56e930b0ef3484a8394822a947327c, type: 2}
+  - {fileID: 11400000, guid: 594c57e6d44e21f4e9e14db2ee5a3993, type: 2}
+  - {fileID: 11400000, guid: d8529281d77488048a9c78f06ef92d4d, type: 2}
+  - {fileID: 11400000, guid: adfffa997f5707e42b1b1631a3a60de2, type: 2}
+  - {fileID: 11400000, guid: 1ef461e3e2faa43488aec5729bfb71e6, type: 2}
+  - {fileID: 11400000, guid: 1fad33213608dfd42a975f93c5e67124, type: 2}
 --- !u!1001 &40273829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3498,6 +3486,8 @@ MonoBehaviour:
   Trainer: {fileID: 11400000, guid: ba97fa012eef6fe45be212f474bf46d0, type: 2}
   directionSurrogate: {fileID: 1754647418}
   SightDistance: 1
+  dialogSeries: {fileID: 0}
+  dialogTrigger: {fileID: 0}
   ShouldTurnRandomly: 0
   ShouldTurnOnInteraction: 1
   ShouldTurnBack: 0
@@ -3509,20 +3499,6 @@ MonoBehaviour:
   MaxWaitBeforeTurn: 5
   MinWaitBeforeTurn: 1
   Speed: 0.3
-  trainerParty: []
-  battleBGM: {fileID: 0}
-  samplesLoopStart: 0
-  victoryBGM: {fileID: 0}
-  victorySamplesLoopStart: 0
-  lowHpBGM: {fileID: 0}
-  lowHpBGMSamplesLoopStart: 0
-  environment: 0
-  en_tightSpotDialog: []
-  en_playerVictoryDialog: []
-  en_playerLossDialog: []
-  fr_tightSpotDialog: []
-  fr_playerVictoryDialog: []
-  fr_playerLossDialog: []
 --- !u!114 &244924764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3712,7 +3688,7 @@ MonoBehaviour:
   OnPreInteraction:
     m_PersistentCalls:
       m_Calls: []
-  Interaction:
+  OnInteraction:
     m_PersistentCalls:
       m_Calls: []
   OnPostInteraction:
@@ -10177,7 +10153,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300008, guid: 3e19c56673c5ce04c86797cc6dcbc4d5, type: 3}
+  m_Sprite: {fileID: 21300008, guid: eed5a7592b335f64997c5c9f6517aaa9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -10818,7 +10794,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300008, guid: 3e19c56673c5ce04c86797cc6dcbc4d5, type: 3}
+  m_Sprite: {fileID: 21300008, guid: eed5a7592b335f64997c5c9f6517aaa9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -11387,7 +11363,7 @@ MonoBehaviour:
   OnPreInteraction:
     m_PersistentCalls:
       m_Calls: []
-  Interaction:
+  OnInteraction:
     m_PersistentCalls:
       m_Calls: []
   OnPostInteraction:
@@ -14491,7 +14467,7 @@ MonoBehaviour:
   OnPreInteraction:
     m_PersistentCalls:
       m_Calls: []
-  Interaction:
+  OnInteraction:
     m_PersistentCalls:
       m_Calls: []
   OnPostInteraction:
@@ -15469,6 +15445,8 @@ MonoBehaviour:
   Trainer: {fileID: 11400000, guid: 721305b3a6f23e442a676c33661c2097, type: 2}
   directionSurrogate: {fileID: 1875870482}
   SightDistance: 1
+  dialogSeries: {fileID: 0}
+  dialogTrigger: {fileID: 0}
   ShouldTurnRandomly: 0
   ShouldTurnOnInteraction: 1
   ShouldTurnBack: 0
@@ -15480,20 +15458,6 @@ MonoBehaviour:
   MaxWaitBeforeTurn: 5
   MinWaitBeforeTurn: 1
   Speed: 0.3
-  trainerParty: []
-  battleBGM: {fileID: 0}
-  samplesLoopStart: 0
-  victoryBGM: {fileID: 0}
-  victorySamplesLoopStart: 0
-  lowHpBGM: {fileID: 0}
-  lowHpBGMSamplesLoopStart: 0
-  environment: 0
-  en_tightSpotDialog: []
-  en_playerVictoryDialog: []
-  en_playerLossDialog: []
-  fr_tightSpotDialog: []
-  fr_playerVictoryDialog: []
-  fr_playerLossDialog: []
 --- !u!114 &1040741908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15511,14 +15475,14 @@ MonoBehaviour:
   ReflectionSpriteRenderer: {fileID: 673858043}
   Paused: 0
   Animations:
-  - {fileID: 11400000, guid: 24b3c45d7e4ca3a44ad6434eb413fe90, type: 2}
-  - {fileID: 11400000, guid: c2e4f47580a3b8646965405f7e059c2c, type: 2}
-  - {fileID: 11400000, guid: 4ada33463d30bf7408ad7a4aadb317ae, type: 2}
-  - {fileID: 11400000, guid: 5ec57cd6190b65e46bf72b70da571ffa, type: 2}
-  - {fileID: 11400000, guid: 478dac260180efb41856fc8afdec0245, type: 2}
-  - {fileID: 11400000, guid: 93e58b015d4527b40952bd214a86e490, type: 2}
-  - {fileID: 11400000, guid: 4f333e29c6df8824a9355cbad6ba0c9b, type: 2}
-  - {fileID: 11400000, guid: c65f55715932de1428ece3f0f4887d4d, type: 2}
+  - {fileID: 11400000, guid: 378e30df705224f4e95505db4eec4294, type: 2}
+  - {fileID: 11400000, guid: 1d30bbbf10d713345bd47d5e8cda8999, type: 2}
+  - {fileID: 11400000, guid: ff56e930b0ef3484a8394822a947327c, type: 2}
+  - {fileID: 11400000, guid: 594c57e6d44e21f4e9e14db2ee5a3993, type: 2}
+  - {fileID: 11400000, guid: d8529281d77488048a9c78f06ef92d4d, type: 2}
+  - {fileID: 11400000, guid: adfffa997f5707e42b1b1631a3a60de2, type: 2}
+  - {fileID: 11400000, guid: 1ef461e3e2faa43488aec5729bfb71e6, type: 2}
+  - {fileID: 11400000, guid: 1fad33213608dfd42a975f93c5e67124, type: 2}
 --- !u!4 &1041895069 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 461654, guid: 9ab08e704ca19ed419b1be28a660d240,
@@ -16514,7 +16478,7 @@ MonoBehaviour:
   OnPreInteraction:
     m_PersistentCalls:
       m_Calls: []
-  Interaction:
+  OnInteraction:
     m_PersistentCalls:
       m_Calls: []
   OnPostInteraction:
@@ -24200,6 +24164,7 @@ GameObject:
   - component: {fileID: 1585241438}
   - component: {fileID: 1585241441}
   - component: {fileID: 1585241442}
+  - component: {fileID: 1585241443}
   m_Layer: 0
   m_Name: TrainerCole
   m_TagString: Untagged
@@ -24244,6 +24209,8 @@ MonoBehaviour:
   Trainer: {fileID: 11400000, guid: b40145a5488dac74a98cec50b688eecb, type: 2}
   directionSurrogate: {fileID: 529332884}
   SightDistance: 10
+  dialogSeries: {fileID: 0}
+  dialogTrigger: {fileID: 0}
   ShouldTurnRandomly: 0
   ShouldTurnOnInteraction: 1
   ShouldTurnBack: 0
@@ -24255,20 +24222,6 @@ MonoBehaviour:
   MaxWaitBeforeTurn: 5
   MinWaitBeforeTurn: 1
   Speed: 0.3
-  trainerParty: []
-  battleBGM: {fileID: 0}
-  samplesLoopStart: 0
-  victoryBGM: {fileID: 0}
-  victorySamplesLoopStart: 0
-  lowHpBGM: {fileID: 0}
-  lowHpBGMSamplesLoopStart: 0
-  environment: 0
-  en_tightSpotDialog: []
-  en_playerVictoryDialog: []
-  en_playerLossDialog: []
-  fr_tightSpotDialog: []
-  fr_playerVictoryDialog: []
-  fr_playerLossDialog: []
 --- !u!114 &1585241442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24294,6 +24247,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47eca10916fcfa543b98cda078310ba8, type: 2}
   - {fileID: 11400000, guid: 868b345d6aff22e4285d44558b5c33e1, type: 2}
   - {fileID: 11400000, guid: 6cb2502431edbdf4185dbe047e2ddb7e, type: 2}
+--- !u!114 &1585241443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585241437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a7ca66f85513842b89093ab1519b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DialogTriggers: []
 --- !u!1001 &1588195777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24667,11 +24633,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Global
-      objectReference: {fileID: 0}
-    - target: {fileID: 6085223199837186403, guid: dd9e9f3b55b217941be3b443cb07ed0b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085223199837507153, guid: dd9e9f3b55b217941be3b443cb07ed0b,
         type: 3}
@@ -28668,11 +28629,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2387489380545613680, guid: 83196453f96f35b49a1cbd1f23448a06,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4975417706449109249, guid: 83196453f96f35b49a1cbd1f23448a06,
         type: 3}
       propertyPath: m_Name
@@ -28733,16 +28689,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4975417706657779533, guid: 83196453f96f35b49a1cbd1f23448a06,
+    - target: {fileID: 4975417708171817628, guid: 83196453f96f35b49a1cbd1f23448a06,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8852678922311159125, guid: 83196453f96f35b49a1cbd1f23448a06,
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300016, guid: 14d6e1bfe158c734ba010eeca8f612fe,
         type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 83196453f96f35b49a1cbd1f23448a06, type: 3}

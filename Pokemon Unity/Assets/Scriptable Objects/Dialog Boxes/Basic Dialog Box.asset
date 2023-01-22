@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Basic
   Prefab: {fileID: 1749020485919409441, guid: 4244addd8d0092544997db2791e6ae70, type: 3}
   Frame: {fileID: 0}
-  FrameSetting: {fileID: 0}
-  useSettingFrame: 0
-  TextColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 0}
-  ShadowColor: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 0}
+  FrameSetting: {fileID: 11400000, guid: 5331c92cfbaa3be42b7aab866a5fe315, type: 2}
+  useSettingFrame: 1
+  TextColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
+  TextShadowColor: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}

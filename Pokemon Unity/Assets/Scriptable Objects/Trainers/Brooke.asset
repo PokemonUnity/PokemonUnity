@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Brooke
   m_EditorClassIdentifier: 
   trainerName: Brooke
-  Class: {fileID: 11400000, guid: 1c0a3c0e9f05a464eb0ef7794a18a944, type: 2}
+  Class: {fileID: 11400000, guid: d29a5644d29fcaf46917a10f3ad3cbf1, type: 2}
+  Defeated: 0
   trainerParty:
   - ID: 0
     level: 0
@@ -21,10 +22,3 @@ MonoBehaviour:
     ability: 0
     moveset: []
   Party: []
-  Dialogue:
-  - conversation: Confront
-    dialogue:
-    - "Don't you just love the smell of a heated \\Pok\xE9mon battle?"
-  - conversation: Post Defeat
-    dialogue:
-    - Whenever I come out to battle, I have to \prepare to have my senses overload.

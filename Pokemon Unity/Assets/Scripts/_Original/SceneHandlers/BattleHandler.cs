@@ -5072,6 +5072,8 @@ public partial class BattleHandler : MonoBehaviour
 
     public IEnumerator control(bool isTrainerBattle, TrainerBehaviour trainer, bool healedOnDefeat, bool doubleBattle = false, TrainerBehaviour trainer2 = null, TrainerBehaviour ally = null)
     {
+        Debug.LogError("FIXME");
+        yield break; // FIXME
         pokemon = new IPokemon[6];
 
         ItemData tmpItem = null;
@@ -5084,18 +5086,19 @@ public partial class BattleHandler : MonoBehaviour
 
         if (isTrainerBattle)
         {
-            if (trainer.lowHpBGM == null)
-            {
-                lowHpBGM = defaultLowHpBGM;
-                lowHpBGMLoopStart = defaultLowHpBGMLoopStart;
-            }
-            else
-            {
-                lowHpBGM = trainer.lowHpBGM;
-                lowHpBGMLoopStart = trainer.lowHpBGMSamplesLoopStart;
-            }
-        }
-        else
+            Debug.LogError("FIXME");
+            // FIXME
+            //if (trainer.lowHpBGM == null)
+            //{
+            //    lowHpBGM = defaultLowHpBGM;
+            //    lowHpBGMLoopStart = defaultLowHpBGMLoopStart;
+            //}
+            //else
+            //{
+            //    lowHpBGM = trainer.lowHpBGM;
+            //    lowHpBGMLoopStart = trainer.lowHpBGMSamplesLoopStart;
+            //}
+        } else
         {
             lowHpBGM = defaultLowHpBGM;
             lowHpBGMLoopStart = defaultLowHpBGMLoopStart;

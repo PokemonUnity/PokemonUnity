@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\Menus\StartMenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Bag.cs" />
     <Compile Include="Assets\Scripts\Behaviours\MountBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\DialogBoxFactory.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Game_System.cs" />
     <Compile Include="Assets\Scripts\_Original\AudioHandler.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Assets\Scripts\_Original\BattleDebug.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\FightMenuButtons.cs" />
     <Compile Include="Assets\Scripts\_Original\SO\Weather.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\DialogTriggerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\UIMoveTo.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselVector2.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingFloatArray.cs" />
     <Compile Include="Assets\Scripts\_Original\Save\GlobalSaveManager.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\CommonButton.cs" />
+    <Compile Include="Assets\Scripts\Library\Dialog.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselResolution.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Abilities\Pressure.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Single Select\SingleSelect.cs" />
@@ -192,7 +195,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\CustomEvent.cs" />
     <Compile Include="Assets\GameMain\Scripts\Scene\ClickSelect.cs" />
     <Compile Include="Assets\GameMain\Scripts\Scene\ScrollableBackground.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerClassSO.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\DialogSeries.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\SCPacketBase.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\ParticleSoundEffect.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\PlayerInputExtensions.cs" />
@@ -223,11 +226,12 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\BumpPokemonCenterRespawn.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\PokemonMap.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselTexture2D.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerSO.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\Trainer.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV3.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractBreak.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingInt.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityData.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\TrainerClass.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\BattleScene.cs" />
     <Compile Include="Assets\Scripts\_Original\Billboarding.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\Enums\GameSettingFullscreenMode.cs" />
@@ -274,10 +278,11 @@
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\Depreciated\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\TextColorChanger.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\HPBar\HPBarItemObject.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\DialogBoxHandlerNew.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\DialogBoxHandlerNew.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\JsonHelper.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\UnityObjects\SpriteComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\SandTileHandler.cs" />
+    <Compile Include="Assets\Scripts\Library\DialogEpisode.cs" />
     <Compile Include="Assets\GameMain\Scripts\Debugger\ChangeLanguageDebuggerWindow.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV2.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingTextArray.cs" />
@@ -302,14 +307,15 @@
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Constant\Constant.ProcedureData.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\QuestData.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\PCHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\TypewriterBehaviour.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIFormId.cs" />
     <Compile Include="Assets\Scripts\_Original\MapCollider.cs" />
     <Compile Include="Assets\Scripts\_Original\BattleSceneHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\ScreenFade.cs" />
-    <Compile Include="Assets\Scripts\Library\Dialogue.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\SurvivalGame.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\MapNameBox.cs" />
     <Compile Include="Assets\Scripts\Behaviours\GlobalVariables.cs" />
+    <Compile Include="Assets\Scripts\Library\DialogTrigger.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\QuestLog.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractPC.cs" />
     <Compile Include="Assets\GameMain\Scripts\Debugger\DebuggerWindow.cs" />
@@ -332,14 +338,13 @@
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\Enums\CarouselFullscreenMode.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\CampType.cs" />
     <Compile Include="Assets\Scripts\_Original\NPCHandler.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\DialogBox.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharEntry\CharEntryItemObject.cs" />
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractRedirect.cs" />
+    <Compile Include="Assets\Scripts\Library\Interfaces\IDialog.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Input\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\DialogBoxFactory.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\TypewriterBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\DialogBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

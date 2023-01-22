@@ -7,14 +7,12 @@ using UnityEngine.Events;
 public class Interactor : MonoBehaviour
 {
     public GameObject PassthroughGameObject;
-    Interactable interactable = null;
+    public Interactable Interactable = null;
     public UnityEvent<Interactable> OnPreInteract;
     public UnityEvent<Interactable> OnPostInteract;
     public Vector3 InteractOffset = Vector3.zero;
     public float InteractRadius = 0.4f;
     public bool DrawGizmos = false;
-
-    public Interactable Interactable { get => interactable; }
 
     void OnDrawGizmos() {
         if (!DrawGizmos) return;
@@ -47,15 +45,15 @@ public class Interactor : MonoBehaviour
 
     public bool Interact(Interactable interactable) {
         Debug.Log($"Interacting with {interactable.name}");
-        this.interactable = interactable;
+        this.Interactable = interactable;
         OnPreInteract.Invoke(interactable);
         interactable.Interact(this);
         return true;
     }
 
     public void FinishInteract() {
-        OnPostInteract.Invoke(interactable);
-        interactable = null;
+        OnPostInteract.Invoke(Interactable);
+        Interactable = null;
     }
 
     public bool TryInteractLegacy() {

@@ -60,7 +60,10 @@ public class SpriteAnimatorBehaviour : MonoBehaviour
 
     void switchAnimation() {
         string fullAnimationName = AnimationAction + lastFacingDirection.ToDirectionString();
-        //Debug.Log(fullAnimationName, gameObject);
+        if (Animations == null) {
+            Debug.LogError("No Animations provided", gameObject);
+            return;
+        }
 
         fullAnimationName = fullAnimationName.ToLowerAndTrim();
         int index = Animations.FindIndex((SpriteAnimation animation) => animation.Name.ToLowerAndTrim() == fullAnimationName);

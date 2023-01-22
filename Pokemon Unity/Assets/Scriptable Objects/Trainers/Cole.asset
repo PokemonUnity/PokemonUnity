@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Cole
   m_EditorClassIdentifier: 
   trainerName: Cole
-  Class: {fileID: 11400000, guid: 46cc76125f162f34ca21a18b68ccd7f8, type: 2}
+  Class: {fileID: 11400000, guid: 0f863e1997303af4e83132364d9784df, type: 2}
+  Defeated: 0
   trainerParty:
   - ID: 0
     level: 0
@@ -21,14 +22,3 @@ MonoBehaviour:
     ability: 0
     moveset: []
   Party: []
-  Dialogue:
-  - conversation: Confront
-    dialogue:
-    - Bro you best not even try to win. \Mate I'm too cool for school.
-    - Now, get ready to lose buddy!
-  - conversation: Defeat
-    dialogue: []
-  - conversation: Post Defeat
-    dialogue:
-    - Want a pro tip mate?
-    - Stop cheating you dirty cheat. That's how \you won! No other explanation!

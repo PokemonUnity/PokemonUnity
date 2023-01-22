@@ -911,21 +911,23 @@ public class CustomEvent : MonoBehaviour
                 
                 //Automatic LoopStart usage not yet implemented
                 Scene.main.Battle.gameObject.SetActive(true);
-                
-                if (trainer.battleBGM != null)
-                {
-                    Debug.Log(trainer.battleBGM.name);
-                    Scene.main.Battle.battleBGM = trainer.battleBGM;
-                    Scene.main.Battle.battleBGMLoopStart = trainer.samplesLoopStart;
-                    BackgroundMusicHandler.Singleton.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
-                }
-                else
-                {
-                    Scene.main.Battle.battleBGM = Scene.main.Battle.defaultTrainerBGM;
-                    Scene.main.Battle.battleBGMLoopStart = Scene.main.Battle.defaultTrainerBGMLoopStart;
-                    BackgroundMusicHandler.Singleton.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
-                        Scene.main.Battle.defaultTrainerBGMLoopStart);
-                }
+
+                Debug.LogError("FIXME");
+                // FIXME
+                //if (trainer.battleBGM != null)
+                //{
+                //    Debug.Log(trainer.battleBGM.name);
+                //    Scene.main.Battle.battleBGM = trainer.battleBGM;
+                //    Scene.main.Battle.battleBGMLoopStart = trainer.samplesLoopStart;
+                //    BackgroundMusicHandler.Singleton.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
+                //}
+                //else
+                //{
+                //    Scene.main.Battle.battleBGM = Scene.main.Battle.defaultTrainerBGM;
+                //    Scene.main.Battle.battleBGMLoopStart = Scene.main.Battle.defaultTrainerBGMLoopStart;
+                //    BackgroundMusicHandler.Singleton.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
+                //        Scene.main.Battle.defaultTrainerBGMLoopStart);
+                //}
                 Scene.main.Battle.gameObject.SetActive(false);
                 
                 //custom cutouts not yet implemented

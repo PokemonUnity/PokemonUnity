@@ -17,7 +17,7 @@ public enum Emotion { happy, sad, suprised, angry };
 
 [System.Serializable] public class TextRevealEvent : UnityEngine.Events.UnityEvent<char> { }
 
-[System.Serializable] public class DialogueEvent : UnityEngine.Events.UnityEvent { }
+[System.Serializable] public class OLD_DialogueEvent : UnityEngine.Events.UnityEvent { }
 
 public class TMP_Animated //: TextMeshProUGUI
 {

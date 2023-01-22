@@ -22,14 +22,23 @@ using UnityEngine.Serialization;
 using System.Collections.Generic;
 using MarkupAttributes;
 using System.Linq;
+using System;
+
+//namespace PokemonUnity.Unity {
 
 [AddComponentMenu("Pokemon Unity/Trainer")]
 [RequireComponent(typeof(SpriteAnimatorBehaviour))]
-public class TrainerBehaviour : MonoBehaviour, INeedDirection
-{
-    public TrainerSO Trainer;
+public class TrainerBehaviour : MonoBehaviour, INeedDirection, IDialog {
+    public Trainer Trainer;
+    [Foldout("Direction")]
     [SerializeField] DirectionSurrogate directionSurrogate;
     public float SightDistance;
+    [Foldout("Dialog")]
+    [SerializeField] DialogSeries dialogSeries;
+    [SerializeField] DialogTriggerBehaviour dialogTrigger;
+
+    public DialogSeries DialogSeries { get; set; }
+    public DialogTrigger DialogTrigger { get; }
 
     [Foldout("Interaction")]
     public bool ShouldTurnRandomly = false;
@@ -48,52 +57,13 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
     SpriteAnimatorBehaviour animator;
     Quaternion previousRotation;
 
+    [Foldout("Need to review")]
     public WalkCommand[] patrol = new WalkCommand[1];
     public float MaxWaitBeforeTurn = 5f;
     public float MinWaitBeforeTurn = 1f;
 
     private GameObject exclaim;
     public float Speed = 0.3f;
-
-    #region Old variables
-
-    [Foldout("Deprecated")]
-
-    [Header("Trainer Settings")]
-    
-    public PokemonInitialiser[] trainerParty = new PokemonInitialiser[1];
-    private IPokemon[] party;
-
-    [Header("Music")]
-    
-    public AudioClip battleBGM;
-    public int samplesLoopStart;
-
-    public AudioClip victoryBGM;
-    public int victorySamplesLoopStart;
-
-    public AudioClip lowHpBGM;
-    public int lowHpBGMSamplesLoopStart;
-
-    [Header("Environment")]
-    public PokemonMapBehaviour.Environment environment;
-
-    [Header("English Dialogs")]
-    [FormerlySerializedAs("tightSpotDialog")]
-    public string[] en_tightSpotDialog;
-
-    [FormerlySerializedAs("playerVictoryDialog")] 
-    public string[] en_playerVictoryDialog;
-    [FormerlySerializedAs("playerLossDialog")] 
-    public string[] en_playerLossDialog;
-    
-    [Header("French Dialogs")]
-    public string[] fr_tightSpotDialog;
-
-    public string[] fr_playerVictoryDialog;
-    public string[] fr_playerLossDialog;
-
-    #endregion
 
     #region MonoBehaviour Functions
 
@@ -120,12 +90,12 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
 
         if (Trainer.Defeated)
             DirectionSurrogate.GizmoColor = Color.red;
-        else 
+        else
             DirectionSurrogate.GizmoColor = Color.green;
 
         if (Interactable == null) Debug.LogError("No Interactable provided", gameObject);
         Interactable.OnPreInteraction.AddListener(lookAtInteractor);
-        Interactable.OnInteraction.AddListener(InteractWithPlayer);
+        Interactable.OnInteraction.AddListener((Interactor interactor) => TalkToInteractor(interactor, "Confronted"));
         Interactable.OnPreInteraction.AddListener(lookToPreviousDirection);
     }
 
@@ -143,7 +113,7 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
     public DirectionSurrogate DirectionSurrogate => directionSurrogate;
 
     public Vector3 FacingDirection => directionSurrogate.FacingDirection;
-    
+
     public void LookAt(Transform target) => directionSurrogate.transform.LookAt(target);
 
     public void SwitchAnimation(string animationName) {
@@ -173,13 +143,15 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
 
     #endregion
 
+    #region Interactions
+
     private IEnumerator turnAtRandom() {
         while (!Interactable.Interacting) {
             if (recentlyDefeated)
                 yield break;
 
             directionSurrogate.RotateRandom();
-            float waitTime = Random.Range(MinWaitBeforeTurn, MaxWaitBeforeTurn);
+            float waitTime = UnityEngine.Random.Range(MinWaitBeforeTurn, MaxWaitBeforeTurn);
             yield return new WaitForSeconds(waitTime);
         }
     }
@@ -189,28 +161,37 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
         playerDetectRay.origin = transform.position + (Vector3.up * 0.5f);
         RaycastHit[] hits = Physics.RaycastAll(playerDetectRay, SightDistance); //, LayerMask.NameToLayer("Player"));
         if (hits.Length == 0) return;
-        PlayerMovement playerMovement = collidedWithAPlayer(hits);
+        (var interactor, var playerMovement) = collidedWithAPlayer(hits);
         if (playerMovement == null) return;
-        playerMovement.Interactor.Interact(Interactable);
-        
-        PlayerMovement collidedWithAPlayer(RaycastHit[] hits) {
+        interactor.Interactable = Interactable;
+        Interactable.Interacting = true;
+        playerMovement.PauseMovement();
+        ApproachInteractor(interactor);
+
+        (Interactor, PlayerMovement) collidedWithAPlayer(RaycastHit[] hits) {
             foreach (RaycastHit hit in hits) {
                 if (hit.collider.TryGetComponent(out Interactor interactor)) {
                     if (interactor.PassthroughGameObject == null) continue;
                     PlayerMovement playerMovement = interactor.PassthroughGameObject.GetComponent<PlayerMovement>();
-                    if (playerMovement != null) return playerMovement;
+                    if (playerMovement != null) return (interactor, playerMovement);
                 }
             }
-            return null;
+            return (null, null);
         }
     }
 
-    public void InteractWithPlayer(Interactor interactor) {
-        StartCoroutine(InteractWithPlayerIE(interactor));
+    public void ApproachInteractor(Interactor interactor) {
+        StartCoroutine(ApproachAndTalkToInteractorWithStyle(interactor, () => {
+            Interactable.Interact(interactor);
+        }));
     }
 
-    public IEnumerator InteractWithPlayerIE(Interactor interactor) {
-        yield return StartCoroutine(ApproachInteractorWithStyle(interactor));
+    public void TalkToInteractor(Interactor interactor, string dialogueEpisodeName) {
+        DialogueBoxBehaviour dialogBox = DialogBoxFactory.OpenDialog("Basic");
+
+        //DialogueEpisode dialogueEvent = Trainer.D
+        //dialogBox.Write("Hello World");
+        //dialogBox.
         // Display all of the confrontation Dialog.
         //for (int i = 0; i < Trainer.Dialogue.Count; i++) {
         //    Dialog.DrawDialogBox();
@@ -223,7 +204,7 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
     }
 
     /// <summary>Walk towards the interactable (1 dimensional) assuming they are in the Trainers line of sight</summary>
-    public IEnumerator ApproachInteractorWithStyle(Interactor interactor) {
+    public IEnumerator ApproachAndTalkToInteractorWithStyle(Interactor interactor, Action onComplete) {
         //if the player isn't busy with any other object
         if (Trainer.Class.BattleBackgroundMusic != null)
             BackgroundMusicHandler.Singleton.PlayOverlay(Trainer.Class.BattleBackgroundMusic);
@@ -234,20 +215,23 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
 
         Vector3 oneUnitForward = Vector3.Scale(directionSurrogate.FacingDirection, GlobalVariables.UnitVectorSetting.Get());
         Vector3 finalDestination = interactor.transform.position - oneUnitForward;
+        Vector3 startingPosition = transform.position;
 
         if (transform.position == finalDestination) yield break;
 
         SwitchAnimation("Walk");
-        
-        moveOneUnitForward().setOnComplete(() => interactWithPlayer(transform, finalDestination));
 
-        void interactWithPlayer(Transform trainer, Vector3 finalDestination) {
-            bool isAtDestination = trainer.position.IsBasicallyEqualTo(finalDestination);
-            if (isAtDestination) {
-                SwitchAnimation("Idle");
-                Interactable.Interact(interactor);
-            } else
-                moveOneUnitForward().setOnComplete(() => interactWithPlayer(trainer, finalDestination));
+        moveToInteractor(() => {
+            SwitchAnimation("Idle");
+            onComplete();
+        });
+
+        bool isAtDestination() => transform.position.IsBasicallyEqualTo(finalDestination);
+        void moveToInteractor(Action onComplete) {
+            if (isAtDestination())
+                onComplete();
+            else
+                moveOneUnitForward().setOnComplete(() => moveToInteractor(onComplete));
         }
         LTDescr moveOneUnitForward() {
             return LeanTween.move(gameObject, transform.position + oneUnitForward, Speed);
@@ -338,12 +322,13 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection
     //    }
     //}
 
+    #endregion
+
 }
 
 
 [System.Serializable]
-public class PokemonInitialiser
-{
+public class PokemonInitialiser {
     public int ID;
     public int level;
     public bool? gender;
@@ -351,3 +336,4 @@ public class PokemonInitialiser
     public int ability;
     public string[] moveset;
 }
+//}

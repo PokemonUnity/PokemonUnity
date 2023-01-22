@@ -21,8 +21,6 @@ public class TypewriterBehaviour : MonoBehaviour
         TypingSpeed.OnValueChange.AddListener(UpdateTypingSpeed);
     }
 
-    void UpdateTypingSpeed(float value) => typingSpeed = value;
-
     void Update() {
         if (typingSpeed == 0f) {
             text.text = message;
@@ -32,7 +30,17 @@ public class TypewriterBehaviour : MonoBehaviour
         if (passedTime > typingSpeed) UpdateText();
     }
 
-    public void TypeMessage(string message) {
+    void UpdateTypingSpeed(float value) => typingSpeed = value;
+
+    void UpdateText() {
+        passedTime = 0f;
+        if (currentLength < message.Length) {
+            currentLength++;
+            text.text = message.Substring(0, currentLength);
+        }
+    }
+
+    public void Write(string message) {
         if (this.message == message) return;
         this.message = message;
         text.text = "";
@@ -45,19 +53,11 @@ public class TypewriterBehaviour : MonoBehaviour
     }
 
     public void TypeHelpText(UIInputBehaviour input) {
-        TypeMessage(input.HelpText);
+        Write(input.HelpText);
     }
 
     public void TypeHelpText(BaseEventData eventData) {
         UIInputBehaviour input = eventData.selectedObject.GetComponent<UIInputBehaviour>();
         TypeHelpText(input);
-    }
-
-    public void UpdateText() {
-        passedTime = 0f;
-        if (currentLength < message.Length) {
-            currentLength++;
-            text.text = message.Substring(0, currentLength);
-        }
     }
 }

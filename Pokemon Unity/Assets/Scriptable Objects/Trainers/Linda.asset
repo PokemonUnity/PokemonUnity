@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Linda
   m_EditorClassIdentifier: 
   trainerName: Linda
-  Class: {fileID: 11400000, guid: 1c0a3c0e9f05a464eb0ef7794a18a944, type: 2}
+  Class: {fileID: 11400000, guid: f65f561882355e64db33a58e69f6803c, type: 2}
+  Defeated: 0
   trainerParty:
   - ID: 0
     level: 0
@@ -21,10 +22,3 @@ MonoBehaviour:
     ability: 0
     moveset: []
   Party: []
-  Dialogue:
-  - conversation: Confront
-    dialogue:
-    - Have you got a Wailord? Let me see!
-  - conversation: Post Defeat
-    dialogue:
-    - "Life as a lover of Pok\xE9mon is truly a test \\of even your emotions."

@@ -6,15 +6,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Trainer", menuName = "Pokemon Unity/Trainer")]
-public class TrainerSO : ScriptableObject {
+public class Trainer : ScriptableObject {
     [SerializeField] string trainerName = "Trainer";
-    public TrainerClassSO Class;
+    public TrainerClass Class;
     public bool Defeated = false;
     // TODO: figure out what a PokemonInitialiser is and how it should work with PokemonSO
     public PokemonInitialiser[] trainerParty = new PokemonInitialiser[1];
     public PokemonSO[] Party;
     //
-    public List<Dialogue> Dialogue;
 
     public string FullName { get => Class.ClassName + " " + trainerName; }
 

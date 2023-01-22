@@ -14,6 +14,8 @@ public class GlobalVariables : MonoBehaviour
     [SerializeField] GameSetting<float> sfxVolumeSetting;
     [SerializeField] GameSetting<float> musicVolumeSetting;
     [SerializeField] GameSetting<Vector3> unitVectorSetting;
+    [SerializeField] DialogBoxFactory dialogBoxFactory;
+    [SerializeField] GameObject dialogBoxParent;
 
     public static GameSetting<float> SFXVolumeSetting;
     public static GameSetting<float> MusicVolumeSetting;
@@ -56,20 +58,25 @@ public class GlobalVariables : MonoBehaviour
 
     //Important gameplay data
     public bool respawning = false;
-	#endregion
+    #endregion
 
-    void OnDestroy()
-    {
+    void OnDestroy() {
         SceneManager.sceneLoaded -= CheckLevelLoaded;
     }
     
-    void Awake()
-    {
+    void Awake() {
         fullscreenSetting.OnValueChange.AddListener(UpdateResolution);
         resolutionSetting.OnValueChange.AddListener(UpdateResolution);
         SFXVolumeSetting = sfxVolumeSetting;
         MusicVolumeSetting = musicVolumeSetting;
         UnitVectorSetting = unitVectorSetting;
+
+        if (dialogBoxFactory == null) Debug.LogError("No DialogBoxFactory provided", gameObject);
+        else {
+            DialogBoxFactory.InitializeQuickBoxes(dialogBoxFactory.DialogBoxes);
+            if (dialogBoxParent == null) Debug.LogError("No DialogBox Parent GameObject provided", gameObject);
+            DialogBoxFactory.DialogBoxesParent = dialogBoxParent;
+        } 
 
         //SceneManager.sceneLoaded += CheckLevelLoaded;
 
@@ -117,7 +124,6 @@ public class GlobalVariables : MonoBehaviour
         #endregion
         SaveData.SetDebugFileData();
     }
-
 
     void CheckLevelLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {

@@ -393,7 +393,7 @@ Transform:
   - {fileID: 4087209368164609942}
   - {fileID: 4975417706657779531}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4975417706657779530
 GameObject:
@@ -506,6 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PassthroughGameObject: {fileID: 7715808488888084649}
+  Interactable: {fileID: 0}
   OnPreInteract:
     m_PersistentCalls:
       m_Calls: []
@@ -514,7 +515,7 @@ MonoBehaviour:
       m_Calls: []
   InteractOffset: {x: 0, y: 0, z: -1}
   InteractRadius: 0.4
-  DrawGizmos: 1
+  DrawGizmos: 0
 --- !u!1 &4975417706757941666
 GameObject:
   m_ObjectHideFlags: 0
@@ -2405,7 +2406,7 @@ MonoBehaviour:
   canMove: 1
   DrawGizmos: 1
   DrawMovementGizmos: 0
-  DrawInteractBox: 1
+  DrawInteractBox: 0
   MovementRay: {x: 0, y: 0, z: 0}
   MovementCheckIsValid: 0
   PlayerCamera: {fileID: 0}

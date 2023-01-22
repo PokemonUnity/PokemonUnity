@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4734612057773246889}
   - component: {fileID: 1749020485919409441}
   m_Layer: 0
-  m_Name: Basic Dialog Box
+  m_Name: Basic Dialog Box Uninteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
