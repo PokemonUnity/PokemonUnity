@@ -1742,15 +1742,6 @@ namespace PokemonUnity.UX
 			if (move.thismove.IsNotNullOrNone() && move.id==move.thismove.id && !@effects.Transform)
 				move.thismove.PP=pp;
 		}
-		//public void pbSetPP(Attack.Move move,byte pp) {
-		//	move.PP=pp;
-		//	// Not effects.Mimic, since Mimic can't copy Mimic
-		//	if (move.IsNotNullOrNone() &&
-		//		//move.id==move.id && //For-loop, on Pokemon.Moves[int].id == move.id
-		//		!@effects.Transform)
-		//	  //move.thismove.PP=pp;
-		//	  pokemon.moves[0].PP=pp;
-		//}
 		public bool pbReducePP(IBattleMove move) {
 			if (@effects.TwoTurnAttack>0 ||
 				@effects.Bide>0 ||

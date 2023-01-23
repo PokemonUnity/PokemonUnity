@@ -183,13 +183,12 @@ namespace PokemonUnity.UX
 		//new IEnumerator pbTrainerBattleSuccess();
 		//new void pbEXPBar(IBattler battler, IPokemon pokemon, int startexp, int endexp, int tempexp1, int tempexp2);
 		new IEnumerator pbShowPokedex(Pokemons species, int form = 0);
-		//new IEnumerator pbChangePokemon(IBattler attacker, IPokemon pokemon);
-		//new IEnumerator pbChangePokemon(IBattler attacker, PokemonUnity.Monster.Forms pokemon);
+		//IEnumerator pbChangePokemon(IBattlerIE attacker, IPokemon pokemon);
 		//void pbSaveShadows(Action action = null);
 		//IEnumerator pbFindAnimation(Moves moveid, int userIndex, int hitnum);
-		new IEnumerator pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum = 0);
+		IEnumerator pbCommonAnimation(string animname, IBattlerIE user, IBattlerIE target, int hitnum = 0);
 		//new IEnumerator pbAnimation(Moves moveid, IBattler user, IBattler target, int hitnum = 0);
-		new IEnumerator pbAnimationCore(string animation, IBattler user, IBattler target, bool oppmove = false);
+		IEnumerator pbAnimationCore(string animation, IBattlerIE user, IBattlerIE target, bool oppmove = false);
 		//new IEnumerator pbLevelUp(IBattler battler, IPokemon pokemon, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef);
 		new IEnumerator pbThrowAndDeflect(Items ball, int targetBattler);
 		new IEnumerator pbThrow(Items ball, int shakes, bool critical, int targetBattler, bool showplayer = false);
@@ -223,6 +222,7 @@ namespace PokemonUnity.UX
 		//new void pbStartBattle(IBattle battle);
 		IEnumerator pbStartBattle(IBattleIE battle);
 		//new void pbEndBattle(PokemonUnity.Combat.BattleResults result);
+		new IEnumerator pbEndBattle(PokemonUnity.Combat.BattleResults result);
 		//new void pbTrainerSendOut(IBattle battle,IPokemon pkmn);
 		new IEnumerator pbTrainerSendOut(int battlerindex, IPokemon pkmn);
 		/// <summary>
@@ -233,9 +233,9 @@ namespace PokemonUnity.UX
 		//new void pbSendOut(IBattle battle,IPokemon pkmn);
 		new IEnumerator pbSendOut(int battlerindex, IPokemon pkmn);
 		//new void pbTrainerWithdraw(IBattle battle,IPokemon pkmn);
-		new IEnumerator pbTrainerWithdraw(IBattle battle, IBattler pkmn);
+		IEnumerator pbTrainerWithdraw(IBattle battle, IBattlerIE pkmn);
 		//new void pbWithdraw(IBattle battle,IPokemon pkmn);
-		new IEnumerator pbWithdraw(IBattle battle, IBattler pkmn);
+		IEnumerator pbWithdraw(IBattle battle, IBattlerIE pkmn);
 		/// <summary>
 		/// Called whenever a Pokémon should forget a move. It should return -1 if the
 		/// selection is canceled, or 0 to 3 to indicate the move to forget.
@@ -290,13 +290,13 @@ namespace PokemonUnity.UX
 		/// <param name="pkmn"></param>
 		/// <param name="oldhp"></param>
 		/// <param name="anim"></param>
-		new IEnumerator pbHPChanged(IBattler pkmn,int oldhp,bool anim= false);
+		IEnumerator pbHPChanged(IBattlerIE pkmn,int oldhp,bool anim= false);
 		/// <summary>
 		/// This method is called whenever a Pokémon faints
 		/// </summary>
 		/// <param name="pkmn"></param>
 		//new void pbFainted(IPokemon pkmn);
-		new IEnumerator pbFainted(IBattler pkmn);
+		IEnumerator pbFainted(IBattlerIE pkmn);
 		/// <summary>
 		/// Use this method to choose a command for the enemy.
 		/// </summary>
@@ -320,16 +320,16 @@ namespace PokemonUnity.UX
 		/// This method can change the battle's music for example.
 		/// </summary>
 		new IEnumerator pbTrainerBattleSuccess();
-		new IEnumerator pbEXPBar(IBattler battler,IPokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
-		new IEnumerator pbLevelUp(IBattler battler,IPokemon thispoke,int oldtotalhp,int oldattack,
+		IEnumerator pbEXPBar(IBattlerIE battler,IPokemon thispoke,int startexp,int endexp,int tempexp1,int tempexp2);
+		IEnumerator pbLevelUp(IBattlerIE battler,IPokemon thispoke,int oldtotalhp,int oldattack,
 			int olddefense,int oldspeed,int oldspatk,int oldspdef);
 		//new void pbShowOpponent(int opp);
 		new IEnumerator pbShowOpponent(int index);
 		//new void pbHideOpponent();
 		new IEnumerator pbHideOpponent();
 		new IEnumerator pbRecall(int battlerindex);
-		new IEnumerator pbDamageAnimation(IBattler pkmn,TypeEffective effectiveness);
-		new IEnumerator pbAnimation(Moves moveid,IBattler attacker,IBattler opponent,int hitnum= 0);
+		IEnumerator pbDamageAnimation(IBattlerIE pkmn,TypeEffective effectiveness);
+		IEnumerator pbAnimation(Moves moveid,IBattlerIE attacker,IBattlerIE opponent,int hitnum= 0);
 		#endregion
 	}
 
@@ -497,7 +497,7 @@ namespace PokemonUnity.UX
 		#endregion
 
 		//void pbAbort();
-		IEnumerator pbDebugUpdate();
+		//IEnumerator pbDebugUpdate();
 		//int pbRandom(int x);
 		//int pbAIRandom(int x);
 
@@ -530,9 +530,9 @@ namespace PokemonUnity.UX
 		/// <param name="pkmn"></param>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		bool pbIsUnlosableItem(IBattler pkmn, Items item);
-		IBattler pbCheckGlobalAbility(Abilities a);
-		int nextPickupUse { get; }
+		//bool pbIsUnlosableItem(IBattlerIE pkmn, Items item);
+		//IBattlerIE pbCheckGlobalAbility(Abilities a);
+		//int nextPickupUse { get; }
 		#endregion
 
 		#region Player-related info.
@@ -559,6 +559,11 @@ namespace PokemonUnity.UX
 		//int pbPartyLength(int battlerIndex);
 		//int pbFindNextUnfainted(IPokemon[] party, int start, int finish = -1);
 		//int pbGetLastPokeInTeam(int index);
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="pkmnIndex"></param>
+		/// <returns></returns>
 		new IBattlerIE pbFindPlayerBattler(int pkmnIndex);
 		//bool pbIsOwner(int battlerIndex, int partyIndex);
 		//ITrainer pbGetOwner(int battlerIndex);
@@ -576,32 +581,36 @@ namespace PokemonUnity.UX
 		/// </summary>
 		/// <param name="idxPokemon"></param>
 		/// <returns></returns>
-		bool pbCanShowCommands(int idxPokemon);
+		//bool pbCanShowCommands(int idxPokemon);
 		#endregion
 
 		#region Attacking.
-		bool pbCanShowFightMenu(int idxPokemon);
+		/// <summary>
+		/// Check whether the fight selection prompt can be shown for pokemon.
+		/// </summary>
+		/// <param name="idxPokemon"></param>
+		/// <returns></returns>
+		IEnumerator pbCanShowFightMenu(int idxPokemon, Action<bool> result = null);
 		IEnumerator pbCanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false, System.Action<bool> result = null);
-		void pbAutoChooseMove(int idxPokemon, bool showMessages = true);
-		bool pbRegisterMove(int idxPokemon, int idxMove, bool showMessages = true);
-		bool pbChoseMove(int i, Moves move);
-		bool pbChoseMoveFunctionCode(int i, PokemonUnity.Attack.Data.Effects code);
-		bool pbRegisterTarget(int idxPokemon, int idxTarget);
+		new IEnumerator pbAutoChooseMove(int idxPokemon, bool showMessages = true);
+		IEnumerator pbRegisterMove(int idxPokemon, int idxMove, bool showMessages = true, System.Action<bool> result = null);
+		//bool pbChoseMove(int i, Moves move);
+		//bool pbChoseMoveFunctionCode(int i, PokemonUnity.Attack.Data.Effects code);
+		//bool pbRegisterTarget(int idxPokemon, int idxTarget);
 		new IBattlerIE[] pbPriority(bool ignorequickclaw = false, bool log = false);
 		#endregion
 
 		#region Switching Pokémon.
-		bool pbCanSwitchLax(int idxPokemon, int pkmnidxTo, bool showMessages);
-		bool pbCanSwitch(int idxPokemon, int pkmnidxTo, bool showMessages, bool ignoremeanlook = false);
-		bool pbRegisterSwitch(int idxPokemon, int idxOther);
+		IEnumerator pbCanSwitchLax(int idxPokemon, int pkmnidxTo, bool showMessages, System.Action<bool> result = null);
+		IEnumerator pbCanSwitch(int idxPokemon, int pkmnidxTo, bool showMessages, bool ignoremeanlook = false, System.Action<bool> result = null);
+		IEnumerator pbRegisterSwitch(int idxPokemon, int idxOther, System.Action<bool> result = null);
 		//bool pbCanChooseNonActive(int index);
 		new IEnumerator pbSwitch(bool favorDraws= false);
 		new IEnumerator pbSendOut(int index, IPokemon pokemon);
 		new IEnumerator pbReplace(int index, int newpoke, bool batonpass = false);
-		bool pbRecallAndReplace(int index, int newpoke, int newpokename = -1, bool batonpass = false, bool moldbreaker = false);
-		void pbMessagesOnReplace(int index, int newpoke, int newpokename= -1);
-		int pbSwitchInBetween(int index, bool lax, bool cancancel);
-		//int pbSwitchPlayer(int index, bool lax, bool cancancel);
+		IEnumerator pbRecallAndReplace(int index, int newpoke, int newpokename = -1, bool batonpass = false, bool moldbreaker = false, System.Action<bool> result = null);
+		new IEnumerator pbMessagesOnReplace(int index, int newpoke, int newpokename= -1);
+		IEnumerator pbSwitchInBetween(int index, bool lax, bool cancancel, System.Action<int> result = null);
 		IEnumerator pbSwitchPlayer(int index, bool lax, bool cancancel, System.Action<int> result = null);
 		#endregion
 
@@ -623,9 +632,9 @@ namespace PokemonUnity.UX
 		/// <param name="userPkmn"></param>
 		/// <param name="scene"></param>
 		/// <returns></returns>
-		bool pbUseItemOnBattler(Items item, int index, IBattler userPkmn, IHasDisplayMessage scene);
-		bool pbRegisterItem(int idxPokemon, Items idxItem, int? idxTarget = null);
-		void pbEnemyUseItem(Items item, IBattler battler);
+		bool pbUseItemOnBattler(Items item, int index, IBattlerIE userPkmn, IHasDisplayMessageIE scene);
+		IEnumerator pbRegisterItem(int idxPokemon, Items idxItem, int? idxTarget = null, System.Action<bool> result = null);
+		void pbEnemyUseItem(Items item, IBattlerIE battler);
 		#endregion
 
 		#region Fleeing from battle.
@@ -635,44 +644,44 @@ namespace PokemonUnity.UX
 		/// <param name="idxPokemon"></param>
 		/// <param name="duringBattle"></param>
 		/// <returns>1 = success; -1 = failed</returns>
-		int pbRun(int idxPokemon, bool duringBattle= false);
+		IEnumerator pbRun(int idxPokemon, bool duringBattle=false, System.Action<int> result = null);
 		#endregion
 
 		#region Mega Evolve battler.
-		bool pbCanMegaEvolve(int index);
-		void pbRegisterMegaEvolution(int index);
-		void pbMegaEvolve(int index);
+		//bool pbCanMegaEvolve(int index);
+		//void pbRegisterMegaEvolution(int index);
+		new IEnumerator pbMegaEvolve(int index);
 		#endregion
 
 		#region Primal Revert battler.
-		void pbPrimalReversion(int index);
+		new IEnumerator pbPrimalReversion(int index);
 		#endregion
 
 		#region Call battler.
-		void pbCall(int index);
+		new IEnumerator pbCall(int index);
 		#endregion
 
 		#region Gaining Experience.
-		void pbGainEXP();
-		void pbGainExpOne(int index, IBattler defeated, int partic, int expshare, bool haveexpall, bool showmessages = true);
+		new IEnumerator pbGainEXP();
+		IEnumerator pbGainExpOne(int index, IBattlerIE defeated, int partic, int expshare, bool haveexpall, bool showmessages = true);
 		#endregion
 
 		#region Learning a move.
-		void pbLearnMove(int pkmnIndex, Moves move);
+		new IEnumerator pbLearnMove(int pkmnIndex, Moves move);
 		#endregion
 
 		#region Abilities.
-		void pbOnActiveAll();
-		bool pbOnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
-		IEnumerator pbPrimordialWeather();
+		new IEnumerator pbOnActiveAll();
+		bool pbOnActiveOne(IBattlerIE pkmn, bool onlyabilities = false, bool moldbreaker = false);
+		new IEnumerator pbPrimordialWeather();
 		#endregion
 
 		#region Judging.
-		void pbJudgeCheckpoint(IBattler attacker, IBattleMove move = null);
-		BattleResults pbDecisionOnTime();
-		BattleResults pbDecisionOnTime2();
-		BattleResults pbDecisionOnDraw();
-		void pbJudge();
+		//void pbJudgeCheckpoint(IBattlerIE attacker, IBattleMove move = null);
+		//BattleResults pbDecisionOnTime();
+		//BattleResults pbDecisionOnTime2();
+		//BattleResults pbDecisionOnDraw();
+		//void pbJudge();
 		#endregion
 
 		#region Messages and animations.
@@ -681,12 +690,12 @@ namespace PokemonUnity.UX
 		new IEnumerator pbDisplayBrief(string msg);
 		IEnumerator pbDisplayConfirm(string msg, System.Action<bool> result);
 		new IEnumerator pbShowCommands(string msg, string[] commands, bool cancancel = true);
-		new IEnumerator pbAnimation(Moves move, IBattler attacker, IBattler opponent, int hitnum = 0);
-		new IEnumerator pbCommonAnimation(string name, IBattler attacker, IBattler opponent, int hitnum = 0);
+		IEnumerator pbAnimation(Moves move, IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0);
+		IEnumerator pbCommonAnimation(string name, IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0);
 		#endregion
 
 		#region Battle core.
-		new IEnumerator pbStartBattle(bool canlose= false, System.Action<BattleResults> result = null);
+		IEnumerator pbStartBattle(bool canlose= false, System.Action<BattleResults> result = null);
 		//new IEnumerator pbStartBattle(bool canlose= false);
 		new IEnumerator pbStartBattleCore(bool canlose);
 		#endregion
@@ -707,7 +716,7 @@ namespace PokemonUnity.UX
 		#endregion
 
 		#region End of battle.
-		BattleResults pbEndOfBattle(bool canlose = false);
+		//BattleResults pbEndOfBattle(bool canlose = false);
 		#endregion
 	}
 	#endregion
@@ -869,7 +878,7 @@ namespace PokemonUnity.UX
 		/// <param name="battler"></param>
 		/// <param name="burst"></param>
 		/// <param name="showplayer"></param>
-		IEnumerator pokeballThrow(Items ball, int shakes, bool critical, IBattler targetBattler, IScene scene, IBattler battler, int burst = -1, bool showplayer = false);
+		IEnumerator pokeballThrow(Items ball, int shakes, bool critical, IBattlerIE targetBattler, IScene scene, IBattlerIE battler, int burst = -1, bool showplayer = false);
 	}
 	#endregion
 }

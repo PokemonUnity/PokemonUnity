@@ -1439,7 +1439,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 
 	void IPokeBattle_DebugSceneNoGraphics.pbStartBattle(IBattle battle) { }
 
-	public void pbEndBattle(BattleResults result)
+	public IEnumerator pbEndBattle(BattleResults result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		GameDebug.Log($"End of the battle. Result: {result}");
@@ -1450,7 +1450,10 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		(AudioHandler as IGameAudioPlay).pbBGMFade(1.0f);
 		//pbFadeOutAndHide(@sprites);
 		pbDisposeSprites();
+		yield break;
 	}
+
+	void IPokeBattle_DebugSceneNoGraphics.pbEndBattle(BattleResults result) { }
 
 	/// <summary>
 	/// Animates the pokemon leaving the battle and returning back to party/pokeball
@@ -1669,7 +1672,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 	{
 	}
 
-	public IEnumerator pbTrainerWithdraw(IBattle battle, IBattler pkmn)
+	public IEnumerator pbTrainerWithdraw(IBattle battle, IBattlerIE pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -1686,7 +1689,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 	//{
 	//}
 
-	public IEnumerator pbWithdraw(IBattle battle, IBattler pkmn)
+	public IEnumerator pbWithdraw(IBattle battle, IBattlerIE pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -1793,7 +1796,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 	/// </summary>
 	/// <param name="index"></param>
 	/// <returns>Return values: 0=Fight, 1=Bag, 2=Pokémon, 3=Run, 4=Call</returns>
-	public IEnumerator pbCommandMenu(int index, System.Action<int> result)
+	public IEnumerator pbCommandMenu(int index, System.Action<MenuCommands> result)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -1801,13 +1804,13 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		int ret = -1;
 		yield return pbCommandMenuEx(index,new string[] {
 			Game._INTL("What will\n{1} do?", @battle.battlers[index].Name),
-			Game._INTL("Fight"),
-			Game._INTL("Bag"),
-			Game._INTL("Pokémon"),
-			shadowTrainer ? Game._INTL("Call") : Game._INTL("Run")
+			Game._INTL("Fight"),//MenuCommands.FIGHT=0
+			Game._INTL("Bag"),//MenuCommands.BAG=1
+			Game._INTL("Pokémon"),//MenuCommands.POKEMON=2
+			shadowTrainer ? Game._INTL("Call") : Game._INTL("Run") //MenuCommands.CALL=4|MenuCommands.RUN=3
 		},shadowTrainer ? 1 : 0, result: value => ret = value);
 		if (ret == 3 && shadowTrainer) ret = 4; // Convert "Run" to "Call"
-		result?.Invoke(ret);
+		result?.Invoke((MenuCommands)ret);
 	}
 
 	int IPokeBattle_SceneNonInteractive.pbCommandMenu(int index)
@@ -2033,7 +2036,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 
 		pbShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
-		IBattler battler = @battle.battlers[index];
+		IBattlerIE battler = @battle.battlers[index];
 		cw.battler = battler;
 		int lastIndex = @lastmove[index];
 		if (battler.moves[lastIndex].id != 0)
@@ -2106,7 +2109,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 
 		pbShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
-		IBattler battler = @battle.battlers[index];
+		IBattlerIE battler = @battle.battlers[index];
 		cw.battler = battler;
 		int lastIndex = @lastmove[index];
 		if (battler.moves[lastIndex].id != 0)
@@ -2669,7 +2672,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		
 		pbShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
-		IBattler battler = @battle.battlers[index];
+		IBattlerIE battler = @battle.battlers[index];
 		cw.battler = battler;
 		int lastIndex = @lastmove[index];
 		if (battler.moves[lastIndex].id != 0)
@@ -2785,7 +2788,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		
 		pbShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
-		IBattler battler = @battle.battlers[index];
+		IBattlerIE battler = @battle.battlers[index];
 		cw.battler = battler;
 		int lastIndex = @lastmove[index];
 		if (battler.moves[lastIndex].id != 0)
@@ -2901,7 +2904,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		
 		pbShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
-		IBattler battler = @battle.battlers[index];
+		IBattlerIE battler = @battle.battlers[index];
 		cw.battler = battler;
 		int lastIndex = @lastmove[index];
 		if (battler.moves[lastIndex].id != 0)
@@ -3186,7 +3189,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		yield return null;
 	}
 
-	public IEnumerator pbDamageAnimation(IBattler pkmn, TypeEffective effectiveness)
+	public IEnumerator pbDamageAnimation(IBattlerIE pkmn, TypeEffective effectiveness)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -3246,7 +3249,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 	/// <param name="pkmn"></param>
 	/// <param name="oldhp"></param>
 	/// <param name="anim"></param>
-	public IEnumerator pbHPChanged(IBattler pkmn, int oldhp, bool anim)
+	public IEnumerator pbHPChanged(IBattlerIE pkmn, int oldhp, bool anim)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -3290,7 +3293,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 	/// This method is called whenever a Pokémon faints.
 	/// </summary>
 	/// <param name="pkmn"></param>
-	public IEnumerator pbFainted(IBattler pkmn)
+	public IEnumerator pbFainted(IBattlerIE pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		
@@ -3398,7 +3401,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 
 	void IPokeBattle_DebugSceneNoGraphics.pbTrainerBattleSuccess() { }
 
-	public IEnumerator pbEXPBar(IBattler battler, IPokemon thispoke, int startexp, int endexp, int tempexp1, int tempexp2)
+	public IEnumerator pbEXPBar(IBattlerIE battler, IPokemon thispoke, int startexp, int endexp, int tempexp1, int tempexp2)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -3444,7 +3447,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 
 	void IPokeBattle_Scene.pbShowPokedex(Pokemons species, int form) { }
 
-	/*public void pbChangeSpecies(IBattler attacker, Pokemons species)
+	/*public void pbChangeSpecies(IBattlerIE attacker, Pokemons species)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -3639,7 +3642,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		return null;*/
 	}
 
-	public IEnumerator pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum = 0)
+	public IEnumerator pbCommonAnimation(string animname, IBattlerIE user, IBattlerIE target, int hitnum = 0)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -3655,9 +3658,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		yield break;
 	}
 
-	void IPokeBattle_Scene.pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum) { }
-
-	public void pbCommonAnimation(Moves moveid, IBattler attacker, IBattler opponent, int hitnum)
+	public void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -3672,7 +3673,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		}*/
 	}
 
-	public IEnumerator pbAnimation(Moves moveid, IBattler user, IBattler target, int hitnum)
+	void IPokeBattle_DebugSceneNoGraphics.pbCommonAnimation(Moves moveid, IBattler attacker, IBattler opponent, int hitnum) { }
+
+	public IEnumerator pbAnimation(Moves moveid, IBattlerIE user, IBattlerIE target, int hitnum)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -3725,7 +3728,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		}*/
 	}
 
-	public IEnumerator pbAnimationCore(string animation, IBattler user, IBattler target, bool oppmove)
+	public IEnumerator pbAnimationCore(string animation, IBattlerIE user, IBattlerIE target, bool oppmove)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -3785,7 +3788,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 
 	void IPokeBattle_Scene.pbAnimationCore(string animation, IBattler user, IBattler target, bool oppmove) { }
 
-	public IEnumerator pbLevelUp(IBattler battler, IPokemon pokemon, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef)
+	public IEnumerator pbLevelUp(IBattlerIE battler, IPokemon pokemon, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		
