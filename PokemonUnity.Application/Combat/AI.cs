@@ -4422,7 +4422,7 @@ namespace PokemonUnity.Combat
 			bool wildbattle=(@opponent==null || @opponent.Length == 0) && pbIsOpposing(index);
 			if (wildbattle) {		// If wild battle
 				for (int i = 0; i < 4; i++) {
-					if (CanChooseMove(index,i,false)) {
+					if (pbCanChooseMove(index,i,false)) {
 						scores[i]=100;
 						myChoices.Add(i);
 						totalscore+=100;
@@ -4438,7 +4438,7 @@ namespace PokemonUnity.Combat
 					List<int[]> scoresAndTargets=new List<int[]>();
 					targets=new int[] { -1, -1, -1, -1 };
 					for (int i = 0; i < 4; i++) {
-						if (CanChooseMove(index,i,false)) {
+						if (pbCanChooseMove(index,i,false)) {
 							int score1=pbGetMoveScore(attacker.moves[i],attacker,opponent,skill);
 							int score2=pbGetMoveScore(attacker.moves[i],attacker,otheropp,skill);
 							//if ((attacker.moves[i].Targets&(Attack.Data.Targets)0x20)!=0) {		    // Target's user's side
@@ -4504,7 +4504,7 @@ namespace PokemonUnity.Combat
 						opponent=opponent.pbPartner;
 					}
 					for (int i = 0; i < 4; i++) {
-						if (CanChooseMove(index,i,false)) {
+						if (pbCanChooseMove(index,i,false)) {
 							scores[i]=pbGetMoveScore(attacker.moves[i],attacker,opponent,skill);
 							myChoices.Add(i);
 						}
@@ -4752,10 +4752,10 @@ namespace PokemonUnity.Combat
 					}
 				}
 			}
-			if (!CanChooseMove(index,0,false) &&
-				!CanChooseMove(index,1,false) &&
-				!CanChooseMove(index,2,false) &&
-				!CanChooseMove(index,3,false) &&
+			if (!pbCanChooseMove(index,0,false) &&
+				!pbCanChooseMove(index,1,false) &&
+				!pbCanChooseMove(index,2,false) &&
+				!pbCanChooseMove(index,3,false) &&
 				//@battlers[index].turncount != null &&
 				@battlers[index].turncount>5) {
 				shouldswitch=true;
@@ -4763,7 +4763,7 @@ namespace PokemonUnity.Combat
 			if (skill>=PBTrainerAI.highSkill && @battlers[index].effects.PerishSong!=1) {
 				for (int i = 0; i < 4; i++) {
 					IBattleMove move=@battlers[index].moves[i];
-					if (move.id!=0 && CanChooseMove(index,i,false) &&
+					if (move.id!=0 && pbCanChooseMove(index,i,false) &&
 						move.Effect==Attack.Data.Effects.x080) { // Baton Pass
 						batonpass=i;
 						break;
@@ -4937,7 +4937,7 @@ namespace PokemonUnity.Combat
 		/// </summary>
 		/// <param name="index"></param>
 		public void pbDefaultChooseEnemyCommand(int index) {
-			if (!CanShowFightMenu(index)) {
+			if (!pbCanShowFightMenu(index)) {
 				if (pbEnemyShouldUseItem(index)) return;
 				if (pbEnemyShouldWithdraw(index)) return;
 				pbAutoChooseMove(index);

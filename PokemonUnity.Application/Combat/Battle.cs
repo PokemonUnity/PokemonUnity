@@ -1158,7 +1158,7 @@ namespace PokemonUnity.Combat
 		/// </summary>
 		/// <param name="idxPokemon"></param>
 		/// <returns></returns>
-		public bool CanShowCommands(int idxPokemon)
+		public bool pbCanShowCommands(int idxPokemon)
 		{
 			IBattler thispkmn = @battlers[idxPokemon];
 			if (thispkmn.isFainted()) return false;
@@ -1172,16 +1172,16 @@ namespace PokemonUnity.Combat
 		}
 
 		#region Attacking
-		public bool CanShowFightMenu(int idxPokemon)
+		public bool pbCanShowFightMenu(int idxPokemon)
 		{
 			IBattler thispkmn = @battlers[idxPokemon];
-			if (!CanShowCommands(idxPokemon)) return false;
+			if (!pbCanShowCommands(idxPokemon)) return false;
 
 			// No moves that can be chosen
-			if (!CanChooseMove(idxPokemon, 0, false) &&
-			   !CanChooseMove(idxPokemon, 1, false) &&
-			   !CanChooseMove(idxPokemon, 2, false) &&
-			   !CanChooseMove(idxPokemon, 3, false))
+			if (!pbCanChooseMove(idxPokemon, 0, false) &&
+			   !pbCanChooseMove(idxPokemon, 1, false) &&
+			   !pbCanChooseMove(idxPokemon, 2, false) &&
+			   !pbCanChooseMove(idxPokemon, 3, false))
 				return false;
 
 			// Encore
@@ -1189,7 +1189,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
+		public bool pbCanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
 		{
 			IBattler thispkmn = @battlers[idxPokemon];
 			IBattleMove thismove = thispkmn.moves[idxMove];
@@ -1283,7 +1283,7 @@ namespace PokemonUnity.Combat
 				return;
 			}
 			if (thispkmn.effects.Encore>0 &&
-				CanChooseMove(idxPokemon,thispkmn.effects.EncoreIndex,false)) {
+				pbCanChooseMove(idxPokemon,thispkmn.effects.EncoreIndex,false)) {
 				GameDebug.Log($"[Auto choosing Encore move] #{Game._INTL(thispkmn.moves[thispkmn.effects.EncoreIndex].id.ToString(TextScripts.Name))}");
 				//@choices[idxPokemon][0]=1;    // "Use move"
 				//@choices[idxPokemon][1]=thispkmn.effects.EncoreIndex; // Index of move
@@ -1318,7 +1318,7 @@ namespace PokemonUnity.Combat
 		public virtual bool pbRegisterMove(int idxPokemon, int idxMove, bool showMessages=true) {
 			IBattler thispkmn=@battlers[idxPokemon];
 			IBattleMove thismove=thispkmn.moves[idxMove];
-			if (!CanChooseMove(idxPokemon,idxMove,showMessages)) return false;
+			if (!pbCanChooseMove(idxPokemon,idxMove,showMessages)) return false;
 			//@choices[idxPokemon][0]=1;         // "Use move"
 			//@choices[idxPokemon][1]=idxMove;   // Index of move to be used
 			//@choices[idxPokemon][2]=thismove;  // PokeBattle_Move object of the move
@@ -2532,9 +2532,9 @@ namespace PokemonUnity.Combat
 						return;
 					}
 					else if (pbDisplayConfirm(Game._INTL("Should {1} stop learning {2}?",pkmnname,movename))) {
-					pbDisplayPaused(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
-					return;
-				}
+						pbDisplayPaused(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
+						return;
+					}
 				}
 				else if (pbDisplayConfirm(Game._INTL("Should {1} stop learning {2}?",pkmnname,movename))) {
 					pbDisplayPaused(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
@@ -2763,19 +2763,19 @@ namespace PokemonUnity.Combat
 			foreach (var i in @party1) {
 				if (!i.IsNotNullOrNone()) continue;
 				if (i.HP>0 && !i.isEgg) {
-				count1+=1;
-				hptotal1+=(i.HP*100/i.TotalHP);
+					count1+=1;
+					hptotal1+=(i.HP*100/i.TotalHP); //the difference between the first and second function is this line...
 				}
 			}
 			if (count1>0) hptotal1/=count1;
 			foreach (var i in @party2) {
 				if (!i.IsNotNullOrNone()) continue;
 				if (i.HP>0 && !i.isEgg) {
-				count2+=1;
-				hptotal2+=(i.HP*100/i.TotalHP);
+					count2+=1;
+					hptotal2+=(i.HP*100/i.TotalHP);
 				}
 			}
-			if (count2>0) hptotal2/=count2;
+			if (count2>0) hptotal2/=count2; //and this line...
 			if (count1>count2    ) return BattleResults.WON;	// win
 			if (count1<count2    ) return BattleResults.LOST;	// loss
 			if (hptotal1>hptotal2) return BattleResults.WON;	// win
@@ -3143,7 +3143,7 @@ namespace PokemonUnity.Combat
 			if (@scene is IPokeBattle_Scene s1) s1.pbResetCommandIndices();
 			for (int i = 0; i < battlers.Length; i++) {   // Reset choices if commands can be shown
 				@battlers[i].effects.SkipTurn=false;
-				if (CanShowCommands(i) || @battlers[i].isFainted()) {
+				if (pbCanShowCommands(i) || @battlers[i].isFainted()) {
 					//@choices[i][0]=0;
 					//@choices[i][1]=0;
 					//@choices[i][2]=null;
@@ -3166,18 +3166,18 @@ namespace PokemonUnity.Combat
 				if (@decision==0) break;
 				if (@choices[i].Action!=0) continue; //@choices[i][0]!=0
 				if (!pbOwnedByPlayer(i) || @controlPlayer) {
-					if (!@battlers[i].isFainted() && CanShowCommands(i)) {
+					if (!@battlers[i].isFainted() && pbCanShowCommands(i)) {
 						(@scene as IPokeBattle_SceneNonInteractive).pbChooseEnemyCommand(i);
 					}
 				}
 				else {
 					bool commandDone=false;
 					//bool commandEnd=false;
-					if (CanShowCommands(i)) {
+					if (pbCanShowCommands(i)) {
 						do { //loop
 							MenuCommands cmd=pbCommandMenu(i);
 							if (cmd==MenuCommands.FIGHT) { // Fight
-								if (CanShowFightMenu(i)) {
+								if (pbCanShowFightMenu(i)) {
 									if (pbAutoFightMenu(i)) commandDone=true;
 									do {
 										int index=(@scene as IPokeBattle_SceneNonInteractive).pbFightMenu(i);
@@ -4696,21 +4696,6 @@ namespace PokemonUnity.Combat
 		int IBattle.pbAIRandom(int x)
 		{
 			return pbRandom(x);
-		}
-
-		bool IBattle.pbCanShowCommands(int idxPokemon)
-		{
-			return CanShowCommands(idxPokemon);
-		}
-
-		bool IBattle.pbCanShowFightMenu(int idxPokemon)
-		{
-			return CanShowFightMenu(idxPokemon);
-		}
-
-		bool IBattle.pbCanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk)
-		{
-			return CanChooseMove(idxPokemon, idxMove, showMessages, sleeptalk);
 		}
 		#endregion
 #pragma warning restore 0162

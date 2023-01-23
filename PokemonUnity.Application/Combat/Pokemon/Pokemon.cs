@@ -1053,7 +1053,7 @@ namespace PokemonUnity.Combat
 				pbUpdate(true);
 				if (@battle.scene is IPokeBattle_Scene s0)
 					//s0.ChangePokemon();
-					s0.pbChangePokemon(this, Form.Id);
+					s0.pbChangePokemon(this, pokemon);
 				battle.pbDisplay(Game._INTL("{1} transformed!", ToString()));
 				//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "Transformed", ToString()).Value);
 				GameDebug.Log(string.Format("[Form changed] {0} changed to form {1}", ToString(), Game._INTL(Form.Id.ToString(TextScripts.Name))));
@@ -2860,7 +2860,7 @@ namespace PokemonUnity.Combat
 					damage>0 && !target.damagestate.Substitute) {
 					GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Illusion ended");
 					target.effects.Illusion=null;
-					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(target,(target as Pokemon).Form.Id);//target.pokemon.Species);
+					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(target,target.pokemon);
 					@battle.pbDisplay(Game._INTL("{1}'s {2} wore off!",target.ToString(),
 						Game._INTL(target.Ability.ToString(TextScripts.Name))));
 				}
@@ -3052,14 +3052,14 @@ namespace PokemonUnity.Combat
 				if (thismove.pbIsDamaging() && this.form!=1) {
 					this.form=1;
 					pbUpdate(true);
-					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(this,Form.Id);//@pokemon.Species
+					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(this,@pokemon);
 					@battle.pbDisplay(Game._INTL("{1} changed to Blade Forme!",ToString()));
 					GameDebug.Log($"[Form changed] #{ToString()} changed to Blade Forme");
 				}
 				else if (thismove.id == Moves.KINGS_SHIELD && this.form!=0) {
 					this.form=0;
 					pbUpdate(true);
-					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(this,Form.Id);//@pokemon);
+					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(this,@pokemon);
 					@battle.pbDisplay(Game._INTL("{1} changed to Shield Forme!",ToString()));
 					GameDebug.Log($"[Form changed] #{ToString()} changed to Shield Forme");
 				}
