@@ -2905,20 +2905,24 @@ namespace PokemonUnity.UX
 		#endregion
 
 		#region Battle Core.
-		public IEnumerator pbStartBattle(bool canlose=false, System.Action<BattleResults> result=null) {
+		public override BattleResults pbStartBattle(bool canlose=false) {
+		//public IEnumerator pbStartBattle(bool canlose=false, System.Action<BattleResults> result=null) {
 			GameDebug.Log($"");
 			GameDebug.Log($"******************************************");
 			@decision = BattleResults.InProgress;
 			try {
-				yield return pbStartBattleCore(canlose);
+				//yield return pbStartBattleCore(canlose);
+				GameEvents.current.StartCoroutine(pbStartBattleCore(canlose));
 			} catch (BattleAbortedException e) { //rescue BattleAbortedException;
 				GameDebug.LogError(e.Message);
 				GameDebug.LogError(e.StackTrace);
 
 				@decision = BattleResults.ABORTED;
-				if (@scene is IPokeBattle_SceneIE s0) yield return s0.pbEndBattle(@decision);
+				if (@scene is IPokeBattle_SceneIE s0)
+					//yield return s0.pbEndBattle(@decision);
+					GameEvents.current.StartCoroutine(s0.pbEndBattle(@decision));
 			}
-			result?.Invoke(@decision);
+			return @decision; //result?.Invoke(@decision);
 		}
 
 		new public IEnumerator pbStartBattleCore(bool canlose) {
@@ -3531,7 +3535,7 @@ namespace PokemonUnity.UX
 
 		#region End of round.
 		//protected void _pbEndOfRoundPhase() {
-		IEnumerator IBattleIE.pbEndOfRoundPhase() {
+		new public IEnumerator pbEndOfRoundPhase() {
 			GameDebug.Log($"[End of round]");
 			for (int i = 0; i < battlers.Length; i++) {
 				@battlers[i].effects.Electrify=false;
@@ -4628,6 +4632,7 @@ namespace PokemonUnity.UX
 			if (@field.FairyLock>0) @field.FairyLock-=1;
 			// invalidate stored priority
 			@usepriority=false;
+			(this as IBattleClause).pbEndOfRoundPhase();
 		}
 		#endregion
 

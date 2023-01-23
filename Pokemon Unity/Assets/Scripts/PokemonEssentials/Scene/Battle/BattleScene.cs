@@ -265,7 +265,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 
 		battle.weather = PokemonUnity.Combat.Weather.SUNNYDAY;
 
-		StartCoroutine(battle.pbStartBattle(true));
+		battle.pbStartBattle(true);
 	}
 
 	public IPokeBattle_SceneIE initialize()
