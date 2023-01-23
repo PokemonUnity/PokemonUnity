@@ -26,7 +26,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 namespace PokemonUnity.UX
 {
 	[Serializable]
-	public class UnityBattleTest : PokemonUnity.Combat.Battle, IBattleIE, IHasDisplayMessage//, ISerializable
+	public partial class UnityBattleTest : PokemonUnity.Combat.Battle, IBattleIE, IHasDisplayMessageIE, ISerializable
 	{
 #pragma warning disable 0162 //Warning CS0162  Unreachable code detected
 		#region Variables
@@ -403,6 +403,63 @@ namespace PokemonUnity.UX
 				i.belch = false;
 			}
 			return this;
+		}
+		protected UnityBattleTest(SerializationInfo info, StreamingContext context) 
+			: this((IScene)info.GetValue(nameof(scene), typeof(IScene))
+				  ,(IPokemon[])info.GetValue(nameof(party1), typeof(IPokemon[]))
+				  ,(IPokemon[])info.GetValue(nameof(party2), typeof(IPokemon[]))
+				  ,(ITrainer[])info.GetValue(nameof(player), typeof(ITrainer[]))
+				  ,(ITrainer[])info.GetValue(nameof(opponent), typeof(ITrainer[])))
+		{
+			//this.scene = (IScene)info.GetValue(nameof(scene), typeof(IScene));
+			this.decision = (BattleResults)info.GetValue(nameof(decision), typeof(BattleResults));
+			this.internalbattle = (bool)info.GetValue(nameof(internalbattle), typeof(bool));
+			this.doublebattle = (bool)info.GetValue(nameof(doublebattle), typeof(bool));
+			this.cantescape = (bool)info.GetValue(nameof(cantescape), typeof(bool));
+			this.canLose = (bool)info.GetValue(nameof(canLose), typeof(bool));
+			this.shiftStyle = (bool)info.GetValue(nameof(shiftStyle), typeof(bool));
+			this.battlescene = (bool)info.GetValue(nameof(battlescene), typeof(bool));
+			this.debug = (bool)info.GetValue(nameof(debug), typeof(bool));
+			this.debugupdate = (int)info.GetValue(nameof(debugupdate), typeof(int));
+			//this.player = (ITrainer[])info.GetValue(nameof(player), typeof(ITrainer[]));
+			//this.opponent = (ITrainer[])info.GetValue(nameof(opponent), typeof(ITrainer[]));
+			//this.party1 = (IPokemon[])info.GetValue(nameof(party1), typeof(IPokemon[]));
+			//this.party2 = (IPokemon[])info.GetValue(nameof(party2), typeof(IPokemon[]));
+			this.party1order = (IList<int>)info.GetValue(nameof(party1order), typeof(IList<int>));
+			this.party2order = (IList<int>)info.GetValue(nameof(party2order), typeof(IList<int>));
+			this.fullparty1 = (bool)info.GetValue(nameof(fullparty1), typeof(bool));
+			this.fullparty2 = (bool)info.GetValue(nameof(fullparty2), typeof(bool));
+			this.battlers = (IBattlerIE[])info.GetValue(nameof(battlers), typeof(IBattlerIE[]));
+			this.items = (Items[][])info.GetValue(nameof(items), typeof(Items[][]));
+			this.sides = (IEffectsSide[])info.GetValue(nameof(sides), typeof(IEffectsSide[]));
+			this.field = (IEffectsField)info.GetValue(nameof(field), typeof(IEffectsField));
+			this.environment = (Environments)info.GetValue(nameof(environment), typeof(Environments));
+			this.weather = (Weather)info.GetValue(nameof(weather), typeof(Weather));
+			this.weatherduration = (int)info.GetValue(nameof(weatherduration), typeof(int));
+			this.switching = (bool)info.GetValue(nameof(switching), typeof(bool));
+			this.futuresight = (bool)info.GetValue(nameof(futuresight), typeof(bool));
+			this.struggle = (IBattleMove)info.GetValue(nameof(struggle), typeof(IBattleMove));
+			this.choices = (IBattleChoice[])info.GetValue(nameof(choices), typeof(IBattleChoice[]));
+			this.successStates = (ISuccessState[])info.GetValue(nameof(successStates), typeof(ISuccessState[]));
+			this.lastMoveUsed = (Moves)info.GetValue(nameof(lastMoveUsed), typeof(Moves));
+			this.lastMoveUser = (int)info.GetValue(nameof(lastMoveUser), typeof(int));
+			this.megaEvolution = (int[][])info.GetValue(nameof(megaEvolution), typeof(int[][]));
+			this.amuletcoin = (bool)info.GetValue(nameof(amuletcoin), typeof(bool));
+			this.extramoney = (int)info.GetValue(nameof(extramoney), typeof(int));
+			this.doublemoney = (bool)info.GetValue(nameof(doublemoney), typeof(bool));
+			this.endspeech = (string)info.GetValue(nameof(endspeech), typeof(string));
+			this.endspeech2 = (string)info.GetValue(nameof(endspeech2), typeof(string));
+			this.endspeechwin = (string)info.GetValue(nameof(endspeechwin), typeof(string));
+			this.endspeechwin2 = (string)info.GetValue(nameof(endspeechwin2), typeof(string));
+			this.rules = (IDictionary<string, bool>)info.GetValue(nameof(rules), typeof(IDictionary<string, bool>));
+			this.turncount = (int)info.GetValue(nameof(turncount), typeof(int));
+			this.priority = (IBattlerIE[])info.GetValue(nameof(priority), typeof(IBattlerIE[]));
+			this.snaggedpokemon = (List<int>)info.GetValue(nameof(snaggedpokemon), typeof(List<int>));
+			this.runCommand = (int)info.GetValue(nameof(runCommand), typeof(int));
+			this.pickupUse = (int)info.GetValue(nameof(pickupUse), typeof(int));
+			this.controlPlayer = (bool)info.GetValue(nameof(controlPlayer), typeof(bool));
+			this.usepriority = (bool)info.GetValue(nameof(usepriority), typeof(bool));
+			this.peer = (IBattlePeer)info.GetValue(nameof(peer), typeof(IBattlePeer));
 		}
 		#endregion
 
@@ -4794,6 +4851,59 @@ namespace PokemonUnity.UX
 			result?.Invoke(@decision);
 		}
 		#endregion
+
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("scene", (object)this.scene, typeof(IScene));
+			info.AddValue("decision", (object)this.decision, typeof(BattleResults));
+			info.AddValue("internalbattle", (object)this.internalbattle, typeof(bool));
+			info.AddValue("doublebattle", (object)this.doublebattle, typeof(bool));
+			info.AddValue("cantescape", (object)this.cantescape, typeof(bool));
+			info.AddValue("canLose", (object)this.canLose, typeof(bool));
+			info.AddValue("shiftStyle", (object)this.shiftStyle, typeof(bool));
+			info.AddValue("battlescene", (object)this.battlescene, typeof(bool));
+			info.AddValue("debug", (object)this.debug, typeof(bool));
+			info.AddValue("debugupdate", (object)this.debugupdate, typeof(int));
+			info.AddValue("player", (object)this.player, typeof(ITrainer[]));
+			info.AddValue("opponent", (object)this.opponent, typeof(ITrainer[]));
+			info.AddValue("party1", (object)this.party1, typeof(IPokemon[]));
+			info.AddValue("party2", (object)this.party2, typeof(IPokemon[]));
+			info.AddValue("party1order", (object)this.party1order, typeof(IList<int>));
+			info.AddValue("party2order", (object)this.party2order, typeof(IList<int>));
+			info.AddValue("fullparty1", (object)this.fullparty1, typeof(bool));
+			info.AddValue("fullparty2", (object)this.fullparty2, typeof(bool));
+			info.AddValue("battlers", (object)this.battlers, typeof(IBattlerIE[]));
+			info.AddValue("items", (object)this.items, typeof(Items[][]));
+			info.AddValue("sides", (object)this.sides, typeof(IEffectsSide[]));
+			info.AddValue("field", (object)this.field, typeof(IEffectsField));
+			info.AddValue("environment", (object)this.environment, typeof(Environments));
+			info.AddValue("weather", (object)this.weather, typeof(Weather));
+			info.AddValue("weatherduration", (object)this.weatherduration, typeof(int));
+			info.AddValue("switching", (object)this.switching, typeof(bool));
+			info.AddValue("futuresight", (object)this.futuresight, typeof(bool));
+			info.AddValue("struggle", (object)this.struggle, typeof(IBattleMove));
+			info.AddValue("choices", (object)this.choices, typeof(IBattleChoice[]));
+			info.AddValue("successStates", (object)this.successStates, typeof(ISuccessState[]));
+			info.AddValue("lastMoveUsed", (object)this.lastMoveUsed, typeof(Moves));
+			info.AddValue("lastMoveUser", (object)this.lastMoveUser, typeof(int));
+			info.AddValue("megaEvolution", (object)this.megaEvolution, typeof(int[][]));
+			info.AddValue("amuletcoin", (object)this.amuletcoin, typeof(bool));
+			info.AddValue("extramoney", (object)this.extramoney, typeof(int));
+			info.AddValue("doublemoney", (object)this.doublemoney, typeof(bool));
+			info.AddValue("endspeech", (object)this.endspeech, typeof(string));
+			info.AddValue("endspeech2", (object)this.endspeech2, typeof(string));
+			info.AddValue("endspeechwin", (object)this.endspeechwin, typeof(string));
+			info.AddValue("endspeechwin2", (object)this.endspeechwin2, typeof(string));
+			info.AddValue("rules", (object)this.rules, typeof(IDictionary<string, bool>));
+			info.AddValue("turncount", (object)this.turncount, typeof(int));
+			info.AddValue("priority", (object)this.priority, typeof(IBattlerIE[]));
+			info.AddValue("snaggedpokemon", (object)this.snaggedpokemon, typeof(List<int>));
+			info.AddValue("runCommand", (object)this.runCommand, typeof(int));
+			info.AddValue("pickupUse", (object)this.pickupUse, typeof(int));
+			info.AddValue("controlPlayer", (object)this.controlPlayer, typeof(bool));
+			info.AddValue("usepriority", (object)this.usepriority, typeof(bool));
+			info.AddValue("peer", (object)this.peer, typeof(IBattlePeer));
+		}
 		#endregion
 #pragma warning restore 0162
 	}

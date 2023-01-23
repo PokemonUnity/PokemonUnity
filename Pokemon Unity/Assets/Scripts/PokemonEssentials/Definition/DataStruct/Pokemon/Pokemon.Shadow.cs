@@ -118,7 +118,35 @@ namespace PokemonUnity.UX
 		//void Events_OnEndBattle(object sender, IOnEndBattleEventArgs e);
 	}
 
-	public partial class UnityBattle : PokemonUnity.Combat.Battle, IBattleShadowPokemonIE
+	//public partial class UnityBattle : PokemonUnity.Combat.Battle, IBattleShadowPokemonIE
+	//{
+	//	/// <summary>
+	//	/// Uses an item on a Pokémon in the player's party.
+	//	/// </summary>
+	//	/// <param name="item"></param>
+	//	/// <param name="pkmnIndex"></param>
+	//	/// <param name="userPkmn"></param>
+	//	/// <param name="scene"></param>
+	//	/// <returns></returns>
+	//	/// <remarks>Specifically for Shadow Pokemon Usage</remarks>
+	//	public IEnumerator pbUseItemOnPokemon(Items item, int pkmnIndex, IBattlerIE userPkmn, IHasDisplayMessageIE scene, System.Action<bool> result) 
+	//	{ return (this as IBattleShadowPokemonIE).pbUseItemOnPokemon(item, pkmnIndex, userPkmn, scene, result: value => result(value)); }
+	//	IEnumerator IBattleShadowPokemonIE.pbUseItemOnPokemon(Items item, int pkmnIndex, IBattlerIE userPkmn, IHasDisplayMessageIE scene, System.Action<bool> result)
+	//	{
+	//		IPokemon pokemon = this.party1[pkmnIndex];
+	//		if (pokemon is IPokemonShadowPokemon p && p.hypermode) { //&&
+	//			//item != Items.JOY_SCENT &&
+	//			//item != Items.EXCITE_SCENT &&
+	//			//item != Items.VIVID_SCENT) {
+	//			yield return scene.pbDisplay(Game._INTL("This item can't be used on that Pokemon."));
+	//			result(false); yield break;
+	//		}
+	//		//return _pbUseItemOnPokemon(item,pkmnIndex,userPkmn,scene);
+	//		yield return (this as IBattleIE).pbUseItemOnPokemon(item, pkmnIndex, (IBattlerIE)userPkmn, scene, result: value => result(value));
+	//	}
+	//}
+
+	public partial class UnityBattleTest :  IBattleShadowPokemonIE
 	{
 		/// <summary>
 		/// Uses an item on a Pokémon in the player's party.

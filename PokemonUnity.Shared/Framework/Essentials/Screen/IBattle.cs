@@ -424,7 +424,7 @@ namespace PokemonEssentials.Interface.Screen
 		void pbChangePokemon(IBattler attacker, IPokemon pokemon);
 		//void pbChangePokemon(IBattler attacker, PokemonUnity.Monster.Forms pokemon);
 		void pbSaveShadows(Action action = null);
-		void pbFindAnimation(Moves moveid, int userIndex, int hitnum);
+		KeyValuePair<string, bool>? pbFindAnimation(Moves moveid, int userIndex, int hitnum);
 		void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum = 0);
 		//new void pbAnimation(Moves moveid, IBattler user, IBattler target, int hitnum = 0);
 		void pbAnimationCore(string animation, IBattler user, IBattler target, bool oppmove = false);

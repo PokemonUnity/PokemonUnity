@@ -22,7 +22,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 //using UnityEngine.UI;
 //using UnityEngine.Serialization;
 
-public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, IScene
+public partial class BattleScene : UnityEngine.MonoBehaviour//, IPokeBattle_SceneIE//, IScene
 {
 	#region Variable Property
 	const int BLANK = 0;
@@ -3563,7 +3563,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		}
 	}
 
-	public void pbFindAnimation(Moves moveid, int userIndex, int hitnum)
+	public KeyValuePair<string, bool>? pbFindAnimation(Moves moveid, int userIndex, int hitnum)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		/*
@@ -3638,8 +3638,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 		catch (Exception) //rescue;
 		{
 			return null;
-		}
-		return null;*/
+		}*/
+		return null;
 	}
 
 	public IEnumerator pbCommonAnimation(string animname, IBattlerIE user, IBattlerIE target, int hitnum = 0)
@@ -3679,13 +3679,13 @@ public class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, ISc
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		/*int animid = pbFindAnimation(moveid, user.Index, hitnum);
-		if (!animid) return;
-		anim = animid[0];
-		animations = load_data("Data/PkmnAnimations.rxdata");
+		/*KeyValuePair<string,bool>? animid = pbFindAnimation(moveid, user.Index, hitnum);
+		if (animid==null) yield break;
+		string anim = animid.Value.Key;
+		IDictionary<string,string> animations = load_data("Data/PkmnAnimations.rxdata");
 		pbSaveShadows(() =>
 		{
-			if (animid[1])       // On opposing side and using OppMove animation
+			if (animid.Value.Value)       // On opposing side and using OppMove animation
 			{
 				yield return pbAnimationCore(animations[anim], target, user, true);
 			}

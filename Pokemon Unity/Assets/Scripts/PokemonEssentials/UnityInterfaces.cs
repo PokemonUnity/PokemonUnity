@@ -695,7 +695,7 @@ namespace PokemonUnity.UX
 		#endregion
 
 		#region Battle core.
-		IEnumerator pbStartBattle(bool canlose= false, System.Action<BattleResults> result = null);
+		//IEnumerator pbStartBattle(bool canlose= false, System.Action<BattleResults> result = null);
 		//new IEnumerator pbStartBattle(bool canlose= false);
 		new IEnumerator pbStartBattleCore(bool canlose);
 		#endregion
@@ -839,8 +839,8 @@ namespace PokemonUnity.UX
 		#region Effects
 		void pbEffectMessages(IBattlerIE attacker, IBattlerIE opponent, bool ignoretype = false, int[] alltargets = null);
 		int pbEffectFixedDamage(int damage, IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
-		int pbEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
-		void pbEffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects);
+		IEnumerator pbEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result = null);
+		IEnumerator pbEffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects);
 		#endregion
 
 		#region Using the move
@@ -848,7 +848,7 @@ namespace PokemonUnity.UX
 		void pbAddTarget(IList<IBattlerIE> targets, IBattlerIE attacker);
 		void pbAddTarget(ref IList<IBattlerIE> targets, IBattlerIE attacker);
 		int pbDisplayUseMessage(IBattlerIE attacker);
-		void pbShowAnimation(Moves id, IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
+		IEnumerator pbShowAnimation(Moves id, IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
 		void pbOnDamageLost(int damage, IBattlerIE attacker, IBattlerIE opponent);
 		bool pbMoveFailed(IBattlerIE attacker, IBattlerIE opponent);
 		#endregion

@@ -3280,28 +3280,28 @@ namespace PokemonUnity.Combat
 			if (!user.isFainted()) {
 				switched= new List<int>();
 				for (int i = 0; i < battle.battlers.Length; i++)
-				if (@battle.battlers[i].effects.Roar) {
-					@battle.battlers[i].effects.Roar=false;
-					@battle.battlers[i].effects.Uturn=false;
-					if (@battle.battlers[i].isFainted()) continue;
-					if (!@battle.pbCanSwitch(i,-1,false)) continue;
-					List<int> choices= new List<int>();
-					PokemonEssentials.Interface.PokeBattle.IPokemon[] party=@battle.pbParty(i);
-					for (int j = 0; j< party.Length; j++)
-					if (@battle.pbCanSwitchLax(i,j,false)) choices.Add(j);
-					if (choices.Count>0) {
-						int newpoke=choices[@battle.pbRandom(choices.Count)];
-						int newpokename=newpoke;
-						if (party[newpoke].Ability == Abilities.ILLUSION)
-							newpokename=@battle.pbGetLastPokeInTeam(i);
-						switched.Add(i);
-						@battle.battlers[i].pbResetForm();
-						@battle.pbRecallAndReplace(i,newpoke,newpokename,false,user.hasMoldBreaker());
-						@battle.pbDisplay(Game._INTL("{1} was dragged out!",@battle.battlers[i].ToString()));
-						//@battle.choices[i]=[0,0,null,-1];		// Replacement Pokémon does nothing this round
-						@battle.choices[i]=new Choice();		// Replacement Pokémon does nothing this round
+					if (@battle.battlers[i].effects.Roar) {
+						@battle.battlers[i].effects.Roar=false;
+						@battle.battlers[i].effects.Uturn=false;
+						if (@battle.battlers[i].isFainted()) continue;
+						if (!@battle.pbCanSwitch(i,-1,false)) continue;
+						List<int> choices= new List<int>();
+						PokemonEssentials.Interface.PokeBattle.IPokemon[] party=@battle.pbParty(i);
+						for (int j = 0; j< party.Length; j++)
+							if (@battle.pbCanSwitchLax(i,j,false)) choices.Add(j);
+						if (choices.Count>0) {
+							int newpoke=choices[@battle.pbRandom(choices.Count)];
+							int newpokename=newpoke;
+							if (party[newpoke].Ability == Abilities.ILLUSION)
+								newpokename=@battle.pbGetLastPokeInTeam(i);
+							switched.Add(i);
+							@battle.battlers[i].pbResetForm();
+							@battle.pbRecallAndReplace(i,newpoke,newpokename,false,user.hasMoldBreaker());
+							@battle.pbDisplay(Game._INTL("{1} was dragged out!",@battle.battlers[i].ToString()));
+							//@battle.choices[i]=[0,0,null,-1];		// Replacement Pokémon does nothing this round
+							@battle.choices[i]=new Choice();		// Replacement Pokémon does nothing this round
+						}
 					}
-				}
 				foreach(IBattler i in @battle.pbPriority()) {
 					if (!switched.Contains(i.Index)) continue;
 					i.pbAbilitiesOnSwitchIn(true);
@@ -3329,7 +3329,10 @@ namespace PokemonUnity.Combat
 						@battle.choices[i]= new Choice();		// Replacement Pokémon does nothing this round
 					}
 				}
-			foreach(IBattler i in @battle.pbPriority())
+			foreach(IBattler i in @battle.pbPriority()) { 
+				if (!switched.Contains(i.Index)) continue;
+				i.pbAbilitiesOnSwitchIn(true);
+			}
 			// Baton Pass
 			if (user.effects.BatonPass) {
 				user.effects.BatonPass=false;
@@ -3348,11 +3351,11 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Record move as having been used
-			(user as Pokemon).lastMoveUsed=thismove.id;
+			user.lastMoveUsed=thismove.id;
 			//user.lastMoveUsedType=thismove.pbType(thismove.Type,user,null);
 			if (!turneffects.SpecialUsage) {
-				if (user.effects.TwoTurnAttack==0) (user as Pokemon).lastMoveUsedSketch=thismove.id;
-				(user as Pokemon).lastRegularMoveUsed=thismove.id;
+				if (user.effects.TwoTurnAttack==0) user.lastMoveUsedSketch=thismove.id;
+				user.lastRegularMoveUsed=thismove.id;
 				if (!user.movesUsed.Contains(thismove.id)) user.movesUsed.Add(thismove.id); // For Last Resort
 			}
 			@battle.lastMoveUsed=thismove.id;

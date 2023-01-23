@@ -5074,7 +5074,7 @@ label_41:;
 
     public IBattlePeer peer { get; set; }
 
-    public UnityBattle(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent) => ((IBattle) this).initialize(scene, p1, p2, player, opponent);
+    public UnityBattle(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent) { ((IBattle) this).initialize(scene, p1, p2, player, opponent); }
 
     public UnityBattle(
       IScene scene,

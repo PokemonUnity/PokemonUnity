@@ -1003,9 +1003,11 @@ namespace PokemonUnity.UX
 		public IEnumerator pbEffectsAfterHit(IBattlerIE user,IBattlerIE target,IBattleMove thismove,IEffectsMove turneffects) {
 			if (turneffects.TotalDamage==0) yield break;
 			if (!(user.hasWorkingAbility(Abilities.SHEER_FORCE) && thismove.AddlEffect>0)) {
+				bool canSwitch = false;
+				yield return @battle.pbCanSwitch(user.Index,-1,false,result:value=>canSwitch=value);
 				// Target's held items:
 				// Red Card
-				if (target.hasWorkingItem(Items.RED_CARD) && @battle.pbCanSwitch(user.Index,-1,false)) {
+				if (target.hasWorkingItem(Items.RED_CARD) && canSwitch) {
 					user.effects.Roar=true;
 					yield return @battle.pbDisplay(Game._INTL("{1} held up its {2} against the {3}!",
 						target.ToString(),Game._INTL(target.Item.ToString(TextScripts.Name)),user.ToString(true)));
@@ -1800,7 +1802,9 @@ namespace PokemonUnity.UX
 					}
 					int b=(int)Math.Floor((Level+badgelevel)*@battle.pbRandom(256)/255d);
 					if (b<badgelevel) {
-						if (!@battle.pbCanShowFightMenu(@Index))
+						bool canShowFightMenu = false;
+						yield return @battle.pbCanShowFightMenu(@Index,result:value=>canShowFightMenu=value);
+						if (!canShowFightMenu)
 						{
 							result(false);
 							yield break;
@@ -2760,33 +2764,38 @@ namespace PokemonUnity.UX
 					i+=1;
 				} while (i<targets.Count);
 			}
-			List<int> switched= new List<int>();
+			List<int> switched=new List<int>();
 			// Pokémon switching caused by Roar, Whirlwind, Circle Throw, Dragon Tail, Red Card
 			if (!user.isFainted()) {
-				switched= new List<int>();
+				switched=new List<int>();
 				for (int i = 0; i < battle.battlers.Length; i++)
-				if (@battle.battlers[i].effects.Roar) {
-					@battle.battlers[i].effects.Roar=false;
-					@battle.battlers[i].effects.Uturn=false;
-					if (@battle.battlers[i].isFainted()) continue;
-					if (!@battle.pbCanSwitch(i,-1,false)) continue;
-					List<int> choices= new List<int>();
-					PokemonEssentials.Interface.PokeBattle.IPokemon[] party=@battle.pbParty(i);
-					for (int j = 0; j< party.Length; j++)
-					if (@battle.pbCanSwitchLax(i,j,false)) choices.Add(j);
-					if (choices.Count>0) {
-						int newpoke=choices[@battle.pbRandom(choices.Count)];
-						int newpokename=newpoke;
-						if (party[newpoke].Ability == Abilities.ILLUSION)
-							newpokename=@battle.pbGetLastPokeInTeam(i);
-						switched.Add(i);
-						@battle.battlers[i].pbResetForm();
-						yield return @battle.pbRecallAndReplace(i,newpoke,newpokename,false,user.hasMoldBreaker());
-						yield return @battle.pbDisplay(Game._INTL("{1} was dragged out!",@battle.battlers[i].ToString()));
-						//@battle.choices[i]=[0,0,null,-1];		// Replacement Pokémon does nothing this round
-						@battle.choices[i]=new Choice();		// Replacement Pokémon does nothing this round
+					if (@battle.battlers[i].effects.Roar) {
+						@battle.battlers[i].effects.Roar=false;
+						@battle.battlers[i].effects.Uturn=false;
+						if (@battle.battlers[i].isFainted()) continue;
+						bool canSwitch = false;
+						yield return @battle.pbCanSwitch(i,-1,false,result:value=>canSwitch=value);
+						if (!canSwitch) continue;
+						List<int> choices= new List<int>();
+						PokemonEssentials.Interface.PokeBattle.IPokemon[] party=@battle.pbParty(i);
+						for (int j = 0; j< party.Length; j++) {
+							bool canSwitchLax = false;
+							yield return @battle.pbCanSwitchLax(i,j,false,result:value=>canSwitchLax=value);
+							if (canSwitchLax) choices.Add(j);
+						}
+						if (choices.Count>0) {
+							int newpoke=choices[@battle.pbRandom(choices.Count)];
+							int newpokename=newpoke;
+							if (party[newpoke].Ability == Abilities.ILLUSION)
+								newpokename=@battle.pbGetLastPokeInTeam(i);
+							switched.Add(i);
+							@battle.battlers[i].pbResetForm();
+							yield return @battle.pbRecallAndReplace(i,newpoke,newpokename,false,user.hasMoldBreaker());
+							yield return @battle.pbDisplay(Game._INTL("{1} was dragged out!",@battle.battlers[i].ToString()));
+							//@battle.choices[i]=[0,0,null,-1];		// Replacement Pokémon does nothing this round
+							@battle.choices[i]=new Choice();		// Replacement Pokémon does nothing this round
+						}
 					}
-				}
 				foreach(IBattlerIE i in @battle.pbPriority()) {
 					if (!switched.Contains(i.Index)) continue;
 					yield return i.pbAbilitiesOnSwitchIn(true);
@@ -2803,7 +2812,7 @@ namespace PokemonUnity.UX
 						// TODO: Pursuit should go here, and negate this effect if it KO's attacker
 						yield return @battle.pbDisplay(Game._INTL("{1} went back to {2}!",@battle.battlers[i].ToString(),@battle.pbGetOwner(i).name));
 						int newpoke=0;
-						newpoke=@battle.pbSwitchInBetween(i,true,false);
+						@battle.pbSwitchInBetween(i,true,false,result:value=>newpoke=value);
 						int newpokename=newpoke;
 						if (@battle.pbParty(i)[newpoke].Ability == Abilities.ILLUSION)
 							newpokename=@battle.pbGetLastPokeInTeam(i);
@@ -2814,14 +2823,17 @@ namespace PokemonUnity.UX
 						@battle.choices[i]= new Choice();		// Replacement Pokémon does nothing this round
 					}
 				}
-			foreach(IBattlerIE i in @battle.pbPriority())
+			foreach(IBattlerIE i in @battle.pbPriority()) {
+				if (!switched.Contains(i.Index)) continue;
+				yield return i.pbAbilitiesOnSwitchIn(true);
+			}
 			// Baton Pass
 			if (user.effects.BatonPass) {
 				user.effects.BatonPass=false;
 				if (!user.isFainted() && @battle.pbCanChooseNonActive(user.Index) &&
 					!@battle.pbAllFainted(@battle.pbParty(user.Index))) {
 					int newpoke=0;
-					newpoke=@battle.pbSwitchInBetween(user.Index,true,false);
+					@battle.pbSwitchInBetween(user.Index,true,false,result:value=>newpoke=value);
 					int newpokename=newpoke;
 					if (@battle.pbParty(user.Index)[newpoke].Ability == Abilities.ILLUSION)
 						newpokename=@battle.pbGetLastPokeInTeam(user.Index);
@@ -2833,11 +2845,11 @@ namespace PokemonUnity.UX
 				}
 			}
 			// Record move as having been used
-			(user as Pokemon).lastMoveUsed=thismove.id;
+			user.lastMoveUsed=thismove.id;
 			//user.lastMoveUsedType=thismove.pbType(thismove.Type,user,null);
 			if (!turneffects.SpecialUsage) {
-				if (user.effects.TwoTurnAttack==0) (user as Pokemon).lastMoveUsedSketch=thismove.id;
-				(user as Pokemon).lastRegularMoveUsed=thismove.id;
+				if (user.effects.TwoTurnAttack==0) user.lastMoveUsedSketch=thismove.id;
+				user.lastRegularMoveUsed=thismove.id;
 				if (!user.movesUsed.Contains(thismove.id)) user.movesUsed.Add(thismove.id); // For Last Resort
 			}
 			@battle.lastMoveUsed=thismove.id;

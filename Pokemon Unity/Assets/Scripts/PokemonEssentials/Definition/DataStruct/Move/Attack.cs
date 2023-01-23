@@ -96,12 +96,12 @@ namespace PokemonUnity.UX
 			throw new NotImplementedException();
 		}
 
-		int IBattleMoveIE.pbEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum, int[] alltargets, bool showanimation)
+		public virtual IEnumerator pbEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum, int[] alltargets, bool showanimation, System.Action<int> result = null)
 		{
 			throw new NotImplementedException();
 		}
 
-		void IBattleMoveIE.pbEffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
+		public virtual IEnumerator pbEffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
 		{
 			throw new NotImplementedException();
 		}
@@ -166,7 +166,7 @@ namespace PokemonUnity.UX
 			throw new NotImplementedException();
 		}
 
-		void IBattleMoveIE.pbShowAnimation(Moves id, IBattlerIE attacker, IBattlerIE opponent, int hitnum, int[] alltargets, bool showanimation)
+		public virtual IEnumerator pbShowAnimation(Moves id, IBattlerIE attacker, IBattlerIE opponent, int hitnum, int[] alltargets, bool showanimation)
 		{
 			throw new NotImplementedException();
 		}
@@ -425,7 +425,7 @@ namespace PokemonUnity.UX
 				{
 					attacker.form = (attacker.form + 1) % 2;
 					attacker.pbUpdate(true);
-					if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//.Species);
+					if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, attacker.pokemon);
 					battle.pbDisplay(Game._INTL("{1} transformed!", attacker.ToString()));
 					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{Game._INTL((attacker as Pokemon).Form.Pokemon.ToString(TextScripts.Name))}");
 				}
@@ -3648,7 +3648,7 @@ namespace PokemonUnity.UX
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, opponent.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
@@ -3689,7 +3689,7 @@ namespace PokemonUnity.UX
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, opponent.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
@@ -3739,7 +3739,7 @@ namespace PokemonUnity.UX
 			{
 				GameDebug.Log($"[Ability triggered] #{attacker.ToString()}'s Illusion ended");
 				attacker.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, attacker.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", attacker.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
@@ -3798,7 +3798,7 @@ namespace PokemonUnity.UX
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, opponent.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
@@ -3875,7 +3875,7 @@ namespace PokemonUnity.UX
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, opponent.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
@@ -6155,12 +6155,12 @@ namespace PokemonUnity.UX
 			return true;
 		}
 
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override IEnumerator pbEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result = null)
 		{
 			if (attacker.Status != Status.SLEEP)
 			{
-				battle.pbDisplay(Game._INTL("But it failed!"));
-				return -1;
+				yield return battle.pbDisplay(Game._INTL("But it failed!"));
+				result?.Invoke(-1); yield break;
 			}
 			List<Attack.Data.Effects> blacklist = new List<Attack.Data.Effects> {
 				Attack.Data.Effects.x0FF,		// Struggle
@@ -6208,14 +6208,14 @@ namespace PokemonUnity.UX
 			}
 			if (choices.Count == 0)
 			{
-				battle.pbDisplay(Game._INTL("But it failed!"));
-				return -1;
+				yield return battle.pbDisplay(Game._INTL("But it failed!"));
+				result?.Invoke(-1); yield break;
 			}
 			pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
 			int choice = choices[this.battle.pbRandom(choices.Count)];
 			attacker.pbUseMoveSimple(attacker.moves[choice].id, -1, attacker.pbOppositeOpposing.Index);
-			return 0;
+			result?.Invoke(0);
 		}
 	}
 
@@ -8355,29 +8355,29 @@ namespace PokemonUnity.UX
 	{
 		public PokeBattle_Move_0EB() : base() { }
 		//public PokeBattle_Move_0EB(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override IEnumerator pbEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result = null)
 		{
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.SUCTION_CUPS))
 			{
-				battle.pbDisplay(Game._INTL("{1} anchored itself with {2}!", opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
-				return -1;
+				yield return battle.pbDisplay(Game._INTL("{1} anchored itself with {2}!", opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
+				result?.Invoke(-1); yield break;
 			}
 			if (opponent.effects.Ingrain)
 			{
-				battle.pbDisplay(Game._INTL("{1} anchored itself with its roots!", opponent.ToString()));
-				return -1;
+				yield return battle.pbDisplay(Game._INTL("{1} anchored itself with its roots!", opponent.ToString()));
+				result?.Invoke(-1); yield break;
 			}
 			if (this.battle.opponent.Length == 0)
 			{
 				if (opponent.Level > attacker.Level)
 				{
-					battle.pbDisplay(Game._INTL("But it failed!"));
-					return -1;
+					yield return battle.pbDisplay(Game._INTL("But it failed!"));
+					result?.Invoke(-1); yield break;
 				}
-				pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
+				yield return pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 				this.battle.decision = (BattleResults)3; // Set decision to escaped;
-				return 0;
+				result?.Invoke(0); yield break;
 			}
 			else
 			{
@@ -8385,7 +8385,9 @@ namespace PokemonUnity.UX
 				IPokemon[] party = this.battle.pbParty(opponent.Index);
 				for (int i = 0; i < party.Length; i++)
 				{
-					if (this.battle.pbCanSwitch(opponent.Index, i, false, true))
+					bool canSwitch = false;
+					yield return this.battle.pbCanSwitch(opponent.Index, i, false, true, result: value => canSwitch = value);
+					if (canSwitch)
 					{
 						choices = true;
 						break;
@@ -8393,13 +8395,13 @@ namespace PokemonUnity.UX
 				}
 				if (!choices)
 				{
-					battle.pbDisplay(Game._INTL("But it failed!"));
-					return -1;
+					yield return battle.pbDisplay(Game._INTL("But it failed!"));
+					result?.Invoke(-1); yield break;
 				}
-				pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
+				yield return pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 				opponent.effects.Roar = true;
-				return 0;
+				result?.Invoke(0);
 			}
 		}
 	}
@@ -8414,7 +8416,7 @@ namespace PokemonUnity.UX
 	{
 		public PokeBattle_Move_0EC() : base() { }
 		//public PokeBattle_Move_0EC(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override void pbEffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects)
+		public override IEnumerator pbEffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() &&
 			   opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
@@ -8434,7 +8436,9 @@ namespace PokemonUnity.UX
 					IPokemon[] party = this.battle.pbParty(opponent.Index);
 					for (int i = 0; i < party.Length - 1; i++)	//ToDo: Double check this
 					{
-						if (this.battle.pbCanSwitch(opponent.Index, i, false))
+						bool canSwitch = false;
+						yield return this.battle.pbCanSwitch(opponent.Index, i, false, result: value => canSwitch = value);
+						if (canSwitch)
 						{
 							opponent.effects.Roar = true;
 							break;
