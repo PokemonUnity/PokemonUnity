@@ -22,7 +22,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 //using UnityEngine.UI;
 //using UnityEngine.Serialization;
 
-public partial class BattleScene : UnityEngine.MonoBehaviour//, IPokeBattle_SceneIE//, IScene
+public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneIE//, IScene
 {
 	#region Variable Property
 	const int BLANK = 0;
