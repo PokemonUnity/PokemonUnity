@@ -129,7 +129,7 @@ public class BackgroundMusicHandler : MonoBehaviour
 
         switch (trackType) {
             case Track.Main:
-                mainTrack = mainTrackNext;
+                //mainTrack = mainTrackNext; // FIXME: refactor to not use mainTrackNext
                 track = mainTrack;
                 break;
             case Track.Overlay:
@@ -152,7 +152,7 @@ public class BackgroundMusicHandler : MonoBehaviour
     }
 
     [Button]
-    private void Pause() {
+    void Pause() {
         if (currentTrack == Track.Main)
             mainTrack.SamplesPosition = source.timeSamples;
         else if (currentTrack == Track.Overlay)
@@ -205,17 +205,16 @@ public class BackgroundMusicHandler : MonoBehaviour
         if (currentTrack == Track.Main)
             if (backgroundMusic != mainTrack) {
                 //if current track is not already playing
-                mainTrackNext = backgroundMusic;
-                //Fade out current main track (if any/not fading), THEN play new track
-                if (mainTrack == null)
+                if (mainTrack == null) {
+                    mainTrack = backgroundMusic;
                     Play(Track.Main);
-                else if (!IsFading()) {
+                } else if (!IsFading()) {
+                    //Fade out current main track (if any/not fading), THEN play new track
                     yield return StartCoroutine(FadeOutIE(defaultFadeSpeed));
+                    mainTrack = backgroundMusic;
                     Play(Track.Main);
                 }
-            } else
-                //but if it is, set the next track to main, in case of fading
-                mainTrackNext = backgroundMusic;
+            }
         else
             //if overlay/MFX is playing:   Set main track to the new track
             mainTrack = backgroundMusic;
@@ -247,17 +246,18 @@ public class BackgroundMusicHandler : MonoBehaviour
         StartCoroutine(ResumeMainIE(time, track, forceResume));
     }
 
-    private IEnumerator ResumeMainIE(float time, AudioTrack track, bool forceResume = false) {
+    IEnumerator ResumeMainIE(float time, AudioTrack track, bool forceResume = false) {
         loop = true;
         //if overlay is playing, fade out and play main
         if (forceResume || currentTrack == Track.Overlay) {
             Debug.Log("Overlay when resume");
-            mainTrackNext = track;
+            //mainTrackNext = track;
             //Fade out current track, THEN resume main track
             Debug.Log("fading variable null: " + (!IsFading()));
             if (!IsFading()) {
                 Debug.Log("Fade Coroutine");
                 yield return StartCoroutine(FadeOutIE(time));
+                Play(Track.Main);
                 Debug.Log("Playing: " + track.ToString());
             }
         } else
