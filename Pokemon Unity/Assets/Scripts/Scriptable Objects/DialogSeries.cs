@@ -6,10 +6,22 @@ using UnityEngine;
 public class DialogSeries : ScriptableObject {
     public List<DialogEpisode> Dialogue;
 
-    Dictionary<string, DialogEpisode> dialogueEpisodes;
+    Dictionary<string, DialogEpisode> dialogueEpisodes = new();
+
+    public Dictionary<string, DialogEpisode> DialogueEpisodes { 
+        get {
+            initEpisodes();
+            return dialogueEpisodes;
+        }
+    }
 
     void Awake() {
-        foreach (DialogEpisode dialogueEvent in Dialogue)
-            dialogueEpisodes.Add(dialogueEvent.Name, dialogueEvent);
+        initEpisodes();
+    }
+
+    void initEpisodes() {
+        if (dialogueEpisodes.Count > 0) return;
+        foreach (DialogEpisode dialogueEpisode in Dialogue)
+            dialogueEpisodes.Add(dialogueEpisode.Name, dialogueEpisode);
     }
 }

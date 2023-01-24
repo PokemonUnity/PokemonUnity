@@ -24,7 +24,7 @@ MonoBehaviour:
   - key: PlayerMovement/Mount
     value: 0
   - key: PlayerMovement/Gizmos
-    value: 1
+    value: 0
   - key: PlayerMovement/Movementssss
     value: 0
   - key: PlayerMovement/Movement
@@ -40,7 +40,7 @@ MonoBehaviour:
   - key: TrainerClassSO/Audio
     value: 1
   - key: TrainerBehaviour/Interaction
-    value: 0
+    value: 1
   - key: DialogBox/Group
     value: 1
   - key: DialogBox/Frame Sprite
@@ -58,9 +58,13 @@ MonoBehaviour:
   - key: TrainerBehaviour/Need to review
     value: 0
   - key: TrainerBehaviour/Direction
-    value: 1
+    value: 0
   - key: TrainerBehaviour/Dialog
     value: 1
   - key: TrainerClass/Audio
+    value: 1
+  - key: DialogBoxBehaviour/Dialog Box Components
+    value: 1
+  - key: TypewriterBehaviour/Events
     value: 1
   serializedIntEntries: []

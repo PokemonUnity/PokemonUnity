@@ -2,9 +2,9 @@ using EasyButtons;
 using System.Collections.Generic;
 using UnityEngine;
 
+[AddComponentMenu("Pokemon Unity/UI/Text Sync")]
 [RequireComponent(typeof(TMPro.TextMeshProUGUI))]
-public class TextSync : MonoBehaviour
-{
+public class TextSync : MonoBehaviour {
     [Description("Defaults to this GameObjects TextMeshPro (if available)")]
     public TMPro.TextMeshProUGUI sourceText;
     public bool syncText = true;
@@ -20,8 +20,7 @@ If empty, defaults to the first childs Text Mesh Pro component (if it has one)")
         Sync();
     }
 
-    void Update()
-    {
+    void Update() {
         Sync();
     }
 

@@ -886,6 +886,7 @@ MonoBehaviour:
   SightDistance: 1
   dialogSeries: {fileID: 0}
   dialogTrigger: {fileID: 0}
+  CurrentDialogEpisodeName: 
   ShouldTurnRandomly: 0
   ShouldTurnOnInteraction: 1
   ShouldTurnBack: 0
@@ -3151,7 +3152,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f6f8470ac8c0c2b4ea7ee30dbca41c4c, type: 3}
+  m_Sprite: {fileID: 21300024, guid: f6f8470ac8c0c2b4ea7ee30dbca41c4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3488,6 +3489,7 @@ MonoBehaviour:
   SightDistance: 1
   dialogSeries: {fileID: 0}
   dialogTrigger: {fileID: 0}
+  CurrentDialogEpisodeName: 
   ShouldTurnRandomly: 0
   ShouldTurnOnInteraction: 1
   ShouldTurnBack: 0
@@ -15447,6 +15449,7 @@ MonoBehaviour:
   SightDistance: 1
   dialogSeries: {fileID: 0}
   dialogTrigger: {fileID: 0}
+  CurrentDialogEpisodeName: 
   ShouldTurnRandomly: 0
   ShouldTurnOnInteraction: 1
   ShouldTurnBack: 0
@@ -24209,8 +24212,9 @@ MonoBehaviour:
   Trainer: {fileID: 11400000, guid: b40145a5488dac74a98cec50b688eecb, type: 2}
   directionSurrogate: {fileID: 529332884}
   SightDistance: 10
-  dialogSeries: {fileID: 0}
-  dialogTrigger: {fileID: 0}
+  dialogSeries: {fileID: 11400000, guid: 51c73ea414bfba04597d1766014f8ab4, type: 2}
+  dialogTrigger: {fileID: 1585241443}
+  CurrentDialogEpisodeName: Confronted
   ShouldTurnRandomly: 0
   ShouldTurnOnInteraction: 1
   ShouldTurnBack: 0
@@ -24259,7 +24263,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a7ca66f85513842b89093ab1519b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogTriggers: []
+  dialogSeries: {fileID: 11400000, guid: 51c73ea414bfba04597d1766014f8ab4, type: 2}
+  DialogTriggers:
+  - Name: Confronted
+    OnEpisodeStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnDialogueFinished:
+      m_PersistentCalls:
+        m_Calls: []
+    OnEpisodeEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - Name: Defeated
+    OnEpisodeStart:
+      m_PersistentCalls:
+        m_Calls: []
+    OnDialogueFinished:
+      m_PersistentCalls:
+        m_Calls: []
+    OnEpisodeEnd:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1001 &1588195777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28629,6 +28654,11 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 354354526301011237, guid: 83196453f96f35b49a1cbd1f23448a06,
+        type: 3}
+      propertyPath: playerInputActionMapName
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4975417706449109249, guid: 83196453f96f35b49a1cbd1f23448a06,
         type: 3}
       propertyPath: m_Name

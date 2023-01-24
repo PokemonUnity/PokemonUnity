@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4544798221294068912}
   - component: {fileID: 7927144744422072764}
   - component: {fileID: 4734612057773246889}
-  - component: {fileID: 1749020485919409441}
+  - component: {fileID: 1918050367958315255}
   m_Layer: 0
   m_Name: Basic Dialog Box Uninteractable
   m_TagString: Untagged
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 4}
-  m_SizeDelta: {x: -40, y: 26}
+  m_SizeDelta: {x: -40, y: 27}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7927144744422072764
 CanvasRenderer:
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1749020485919409441
+--- !u!114 &1918050367958315255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,9 +87,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7786422626250999140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a063848977a0f9441bbb97cc2adff466, type: 3}
+  m_Script: {fileID: 11500000, guid: a43d6dd3dee7a8e4f8860574189b3408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heightWithoutText: 15
+  linesToShow: 1
+  DialogTriggers: []
   frame: {fileID: 4734612057773246889}
   text: {fileID: 3407445639540448659}
   textShadow: {fileID: 5154765411208287254}

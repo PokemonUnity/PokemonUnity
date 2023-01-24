@@ -222,15 +222,25 @@ public class BackgroundMusicHandler : MonoBehaviour
     }
 
     public void ResumeMain(float time = -1f, AudioClip clip = null, int loopStartSamples = 0) {
-        // FIXME;
-        throw new Exception("Need to refactor this method to use AudioTrack");
-        //ResumeMain(time == -1f ? defaultFadeSpeed : time, new AudioTrack(clip, loopStartSamples));
+        AudioTrack audioTrack = null;
+        if (clip == null)
+            audioTrack = AudioTrack.NullTrack;
+        else {
+            audioTrack = ScriptableObject.CreateInstance<AudioTrack>();
+            audioTrack.initialize(clip.name, loopStartSamples: loopStartSamples);
+        }
+        ResumeMain(time == -1f ? defaultFadeSpeed : time, audioTrack);
     }
 
     public void ForceResumeMain(float time = -1f, AudioClip clip = null, int loopStartSamples = 0) {
-        // FIXME;
-        throw new Exception("Need to refactor this method to use AudioTrack");
-        //ResumeMain(time == -1f ? defaultFadeSpeed : time, new AudioTrack(clip, loopStartSamples), true);
+        AudioTrack audioTrack = null;
+        if (clip == null)
+            audioTrack = AudioTrack.NullTrack;
+        else {
+            audioTrack = ScriptableObject.CreateInstance<AudioTrack>();
+            audioTrack.initialize(clip.name, loopStartSamples: loopStartSamples);
+        }
+        ResumeMain(time == -1f ? defaultFadeSpeed : time, audioTrack, true);
     }
 
     public void ResumeMain(float time, AudioTrack track, bool forceResume = false) {
@@ -259,7 +269,7 @@ public class BackgroundMusicHandler : MonoBehaviour
     #region Overlay Music
     
     public void PlayOverlay(AudioTrack audioTrack, float fadeTime = 0.1f) {
-        StartCoroutine(PlayOverlayIE(audioTrack.Clip, audioTrack.LoopStartSamples, audioTrack.LoopStartSamples, fadeTime));
+        StartCoroutine(PlayOverlayIE(audioTrack, fadeTime));
     }
 
     public void PlayOverlay(AudioClip bgm, int loopStartSamples, float fadeTime = 0.1f) {
@@ -267,8 +277,13 @@ public class BackgroundMusicHandler : MonoBehaviour
     }
 
     public IEnumerator PlayOverlayIE(AudioClip bgm, int loopStartSamples, int startSample, float fadeTime = 0.1f) {
+        // FIXME;
+        throw new Exception("Need to refactor this method to use AudioTrack");
+    }
+
+    public IEnumerator PlayOverlayIE(AudioTrack audioTrack, float fadeTime = 0.1f) {
         //if overlay track is already playing the bgm, do not continue
-        if (overlayTrack.Clip == bgm && currentTrack == Track.Overlay) 
+        if (overlayTrack != null && overlayTrack.Clip == audioTrack.Clip && currentTrack == Track.Overlay) 
             yield break;
 
         loop = true;
@@ -285,13 +300,7 @@ public class BackgroundMusicHandler : MonoBehaviour
             //if Overlay is playing, fade at given time
             yield return StartCoroutine(FadeOutIE(fadeTime));
 
-        //if MFX is playing:   ONLY set overlay track to new track, don't play
-        // FIXME;
-        throw new Exception("Need to refactor this method to use AudioTrack");
-        //overlayTrack = new AudioTrack(bgm, loopStartSamples);
-        if (startSample > 0)
-            overlayTrack.SamplesPosition = startSample;
-
+        overlayTrack = audioTrack;
         if (currentTrack != Track.MFX)
             Play(Track.Overlay);
     }

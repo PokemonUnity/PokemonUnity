@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using MarkupAttributes;
 using System.Linq;
 using System;
+using UnityEngine.Events;
 
 //namespace PokemonUnity.Unity {
 
@@ -36,9 +37,10 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection, IDialog {
     [Foldout("Dialog")]
     [SerializeField] DialogSeries dialogSeries;
     [SerializeField] DialogTriggerBehaviour dialogTrigger;
+    public string CurrentDialogEpisodeName;
 
     public DialogSeries DialogSeries { get; set; }
-    public DialogTrigger DialogTrigger { get; }
+    public DialogTriggerBehaviour DialogTriggers { get; }
 
     [Foldout("Interaction")]
     public bool ShouldTurnRandomly = false;
@@ -95,7 +97,7 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection, IDialog {
 
         if (Interactable == null) Debug.LogError("No Interactable provided", gameObject);
         Interactable.OnPreInteraction.AddListener(lookAtInteractor);
-        Interactable.OnInteraction.AddListener((Interactor interactor) => TalkToInteractor(interactor, "Confronted"));
+        Interactable.OnInteraction.AddListener((Interactor interactor) => TalkToInteractor(interactor, CurrentDialogEpisodeName));
         Interactable.OnPreInteraction.AddListener(lookToPreviousDirection);
     }
 
@@ -186,21 +188,23 @@ public class TrainerBehaviour : MonoBehaviour, INeedDirection, IDialog {
         }));
     }
 
-    public void TalkToInteractor(Interactor interactor, string dialogueEpisodeName) {
-        DialogueBoxBehaviour dialogBox = DialogBoxFactory.OpenDialog("Basic");
+    public void TalkToInteractor(Interactor interactor, string dialogEpisodeName) {
+        if (!dialogSeries.DialogueEpisodes.ContainsKey(dialogEpisodeName)) {
+            Debug.LogError($"Dialog Series '{dialogSeries.name}' does not contain the Episode '{dialogEpisodeName}'");
+            return;
+        }
+        TalkToInteractor(interactor, dialogSeries.DialogueEpisodes[dialogEpisodeName]);
+    }
 
-        //DialogueEpisode dialogueEvent = Trainer.D
-        //dialogBox.Write("Hello World");
-        //dialogBox.
-        // Display all of the confrontation Dialog.
-        //for (int i = 0; i < Trainer.Dialogue.Count; i++) {
-        //    Dialog.DrawDialogBox();
-        //    yield return Dialog.StartCoroutine(Dialog.DrawText(en_trainerConfrontDialog[i]));
-        //    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-        //        yield return null;
-
-        //    Dialog.UndrawDialogBox();
-        //}
+    public void TalkToInteractor(Interactor interactor, DialogEpisode dialogEpisode) {
+        DialogBoxBehaviour dialogBox = DialogBoxFactory.OpenDialog("Basic");
+        if (!dialogTrigger.DialogEpisodeTriggers.ContainsKey(dialogEpisode.Name)) {
+            Debug.LogError($"DialogTrigger doesn't exist with name '{dialogEpisode.Name}' in this Dialog Trigger", dialogTrigger);
+            return;
+        }
+        DialogTrigger trigger = dialogTrigger.DialogEpisodeTriggers[dialogEpisode.Name];
+        trigger.OnEpisodeEnd.AddListener((DialogEpisode episode) => interactor.FinishInteract());
+        dialogBox.Dialog(dialogEpisode, trigger);
     }
 
     /// <summary>Walk towards the interactable (1 dimensional) assuming they are in the Trainers line of sight</summary>

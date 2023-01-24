@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Behaviours\MountBehaviour.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\DialogBoxFactory.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleUnityVersion.cs" />
+    <Compile Include="Assets\Scripts\Library\Interfaces\IUseADialogBox.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Game_System.cs" />
     <Compile Include="Assets\Scripts\_Original\AudioHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselText.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Assets\Scripts\_Original\Interacts\InteractItem.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\CustomCanvasScaler.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Definition\Enum\QualityLevelType.cs" />
+    <Compile Include="Assets\Scripts\Library\DialogEpisode.cs" />
     <Compile Include="Assets\Scripts\_Original\DayNightCycle.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\_Original\ScreenFade.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\SummaryHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\flycameraDebug.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\ExpBar\ExpBarItem.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\UI\DialogBoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\BridgeHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\DirectionSurrogate.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\DialogPopups.cs" />
@@ -272,7 +275,6 @@
     <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
     <Compile Include="Assets\Modules\DOTweenModulePhysics2D.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\CSVReader.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\UI\DialogueBoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\_Original\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\LevelLoader.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\Depreciated\GameSettings.cs" />
@@ -282,7 +284,6 @@
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\JsonHelper.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\UnityObjects\SpriteComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\SandTileHandler.cs" />
-    <Compile Include="Assets\Scripts\Library\DialogEpisode.cs" />
     <Compile Include="Assets\GameMain\Scripts\Debugger\ChangeLanguageDebuggerWindow.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV2.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\GameSettingTextArray.cs" />

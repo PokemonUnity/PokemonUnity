@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\Editor\_Original\NewEditModeTest.cs" />
     <Compile Include="Assets\Scripts\Editor\DescriptionAttributeDrawer.cs" />
     <Compile Include="Assets\Scripts\Editor\_Original\TMP_AnimatedEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\DialogTriggerEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\ScriptableObjectFieldsDrawer.cs" />
     <Compile Include="Assets\Scripts\_Original\Editor\BillboardingEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\_Original\CustomEventEditor.cs" />

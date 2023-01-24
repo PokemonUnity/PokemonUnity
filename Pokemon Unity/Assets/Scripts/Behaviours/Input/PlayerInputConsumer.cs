@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputConsumer : MonoBehaviour
 {
-    
     public PlayerInputEvents Events;
 
     void Start() {
@@ -14,7 +13,16 @@ public class PlayerInputConsumer : MonoBehaviour
     }
 
     void OnDestroy() {
-        Events.Unsubscribe(gameObject);
+        Events.Unsubscribe();
+    }
+
+    public void SwitchActionMap(string actionMapName) {
+        int index = Events.PlayerInput.actions.actionMaps.IndexOf((InputActionMap actionMap) => actionMap.name == actionMapName);
+        if (index == -1) {
+            Debug.LogError($"PlayerInput does not have the Action Map named '{actionMapName}'");
+            return;
+        }
+        Events.PlayerInput.SwitchCurrentActionMap(actionMapName);
     }
 }
 
@@ -24,11 +32,13 @@ public class PlayerInputEvents {
         "1. Grab a PlayerInput off of the attached GameObject\n" +
         "2. Grab the PlayerInputSingleton\n\n" +
         "Events only invoke when the PlayerInput's behaviour must be set to 'Invoke Unity Events'")]
-    [SerializeField] PlayerInput playerInput;
+    PlayerInput playerInput;
     public List<PlayerInputEvent> Events;
     bool hasSubscribed = false;
 
-    public void Unsubscribe(GameObject gameObject) {
+    public PlayerInput PlayerInput => GetPlayerInput();
+
+    public void Unsubscribe() {
         if (!hasSubscribed || playerInput == null || !Application.isPlaying) return;
 
         foreach (PlayerInputEvent inputEvent in Events) {
@@ -49,7 +59,7 @@ public class PlayerInputEvents {
         hasSubscribed = true;
     }
 
-    public PlayerInput GetPlayerInput(GameObject gameObject) {
+    PlayerInput GetPlayerInput(GameObject gameObject) {
         if (playerInput != null)
             return playerInput;
 
@@ -64,9 +74,26 @@ public class PlayerInputEvents {
         return playerInput;
     }
 
+    PlayerInput GetPlayerInput() {
+        if (playerInput != null)
+            return playerInput;
+
+        if (playerInput == null)
+            playerInput = PlayerInputSingleton.Singleton;
+
+        if (playerInput == null)
+            throw new NoPlayerInputFound();
+
+        return playerInput;
+    }
+
     class NoPlayerInputFound : Exception {
         public NoPlayerInputFound(GameObject gameObject) {
             Debug.LogError("Could not find a PlayerInput component to use", gameObject);
+        }
+
+        public NoPlayerInputFound() {
+            Debug.LogError("Could not find a PlayerInput component to use");
         }
     }
 }

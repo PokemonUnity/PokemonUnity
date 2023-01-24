@@ -14,18 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Dialogue:
   - name: Confronted
-    Dialogue:
-    - Phrase: Bro you best not even try to win. \Mate I'm too cool for school.
+    Dialogs:
+    - Phrase: Bro you best not even try to win. Mate I'm too cool for school.
       PossibleReplies: []
-      hasReplies: 0
+      Reply: 
     - Phrase: Now, get ready to lose buddy!
       PossibleReplies: []
-      hasReplies: 0
+      Reply: 
   - name: Defeated
-    Dialogue:
-    - Phrase: Want a pro tip mate?
+    Dialogs:
+    - Phrase: 
       PossibleReplies: []
-      hasReplies: 0
-    - Phrase: Stop cheating you dirty cheat. That's how \you won! No other explanation!
-      PossibleReplies: []
-      hasReplies: 0
+      Reply: 

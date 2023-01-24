@@ -32,7 +32,7 @@ public abstract class UIInputBehaviour<T> : UIInputBehaviour {
     }
 
     protected override void OnDestroy() {
-        Input.Unsubscribe(gameObject);
+        Input.Unsubscribe();
         if (GameSetting != null) {
             GameSetting.OnValueChange.RemoveListener(UpdateValue);
         }

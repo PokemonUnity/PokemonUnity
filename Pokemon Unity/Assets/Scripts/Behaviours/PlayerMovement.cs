@@ -28,6 +28,7 @@ using MarkupAttributes;
 
 [AddComponentMenu("Pokemon Unity/Movement/Player Movement")]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(PlayerInputConsumer))]
 public class PlayerMovement : MonoBehaviour, INeedDirection {
     public static PlayerMovement Singleton;
 
@@ -39,7 +40,9 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
     [SerializeField] Interactor interactor;
     public GameObject busyWith = null;
     public bool canMove = true;
-    private DialogBoxHandlerNew Dialog;
+    DialogBoxHandlerNew Dialog; // FIXME: refactor functions that used this to new DialogBoxFactory system
+    [SerializeField] string playerInputActionMapName = "Player";
+    PlayerInputConsumer playerInputConsumer;
 
     #region Gizmo Variables
 
@@ -175,8 +178,11 @@ public class PlayerMovement : MonoBehaviour, INeedDirection {
 
     void Awake() {
         playerAudio = GetComponent<AudioSource>();
+        playerInputConsumer = GetComponent<PlayerInputConsumer>();
         interactor.OnPreInteract.AddListener(PauseMovement);
         interactor.OnPostInteract.AddListener(UnpauseMovement);
+        interactor.OnPostInteract.AddListener((Interactable interactable) => playerInputConsumer.SwitchActionMap(playerInputActionMapName));
+        interactor.OnPostInteract.AddListener((Interactable interactable) => BackgroundMusicHandler.Singleton.ResumeMain());
         //set up the reference to this script.
         Singleton = this;
 

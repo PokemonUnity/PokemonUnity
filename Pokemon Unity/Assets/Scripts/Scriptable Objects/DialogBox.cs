@@ -12,7 +12,7 @@ public class DialogBox : ScriptableObject {
     [SerializeField] 
     new string name;
     [Description("The root GameObject of the prefab should have a DialogBoxBehaviour component")]
-    public DialogueBoxBehaviour Prefab;
+    public DialogBoxBehaviour Prefab;
     [TitleGroup("Frame Sprite", contentBox: true)]
     [HideIf("useSettingFrame")]
     public Sprite Frame;

@@ -570,6 +570,28 @@
                 },
                 {
                     "name": "",
+                    "id": "d867dff5-932b-4dd5-b74e-dc246d98be82",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "015756b7-211b-47b0-8392-7ec1eed0dca0",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "82627dcc-3b13-4ba9-841d-e4b746d6553e",
                     "path": "*/{Cancel}",
                     "interactions": "",

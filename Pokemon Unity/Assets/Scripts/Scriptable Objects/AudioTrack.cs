@@ -12,11 +12,11 @@ public class AudioTrack : ScriptableObject, PokemonEssentials.Interface.IAudioOb
     public int volume { get; set; }
     public float pitch { get; set; }
 
-    public AudioClip Clip;
-    public int LoopStartSamples;
-    public int SamplesPosition;
+    public AudioClip Clip = null;
+    public int LoopStartSamples = 0;
+    public int SamplesPosition = 0;
 
-    public PokemonEssentials.Interface.IAudioObject initialize(string name, float volume = 100, float pitch = 100) {
+    public PokemonEssentials.Interface.IAudioObject initialize(string name, float volume = 100, float pitch = 100, AudioClip clip = null, int loopStartSamples = 0, int samplesPosition = 0) {
         this.name = name;
         this.volume = (int)volume;
         this.pitch = pitch;
