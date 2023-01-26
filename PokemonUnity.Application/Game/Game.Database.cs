@@ -75,7 +75,7 @@ namespace PokemonUnity
 				return;
 			}
 
-			if (!databasePath.StartsWith("Data Source"))
+			if (!databasePath.StartsWith("Data Source", StringComparison.InvariantCultureIgnoreCase))
 				databasePath = "Data Source =" + databasePath;
 			DatabasePath = databasePath;
 			if (con.State == System.Data.ConnectionState.Open)
@@ -3400,24 +3400,40 @@ namespace PokemonUnity
 						if (!e.ContainsKey((Method)int.Parse((string)reader["encounter_method_id"].ToString())))
 							e.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), new List<int>());
 						e[(Method)int.Parse((string)reader["encounter_method_id"].ToString())]
-							.Add(int.Parse((string)reader["id"].ToString())
-						);
-						Kernal.EncounterData.Add(int.Parse((string)reader["id"].ToString()),
-							new EncounterData(
-								id: int.Parse((string)reader["id"].ToString())
-								,mapId: int.Parse((string)reader["location_area_id"].ToString())
-								,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
-								,slotId: int.Parse((string)reader["slot"].ToString())
-								//,pokemon: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
-								,pokemon: reader["pokemon_group"].ToString().Split(',').Select(x => (Pokemons)int.Parse(x)).ToArray()
-								,conditions: reader["encounter_condition_value_group"].ToString().Split(',').Select(x => (ConditionValue)int.Parse(x)).ToArray()
-								,generation: int.Parse((string)reader["generation_id"].ToString())
-								,minLevel: int.Parse((string)reader["min_level"].ToString())
-								,maxLevel: int.Parse((string)reader["max_level"].ToString())
-								,rarity: int.Parse((string)reader["rarity"].ToString())
-								,versions: reader["encounter_slot_version_group"].ToString().Split(',').Select(x => (Versions)int.Parse(x)).ToArray()
-							)
-						);
+							.Add(int.Parse((string)reader["id"].ToString()));
+						if (!Kernal.EncounterData.ContainsKey(int.Parse((string)reader["id"].ToString())))
+							Kernal.EncounterData.Add(int.Parse((string)reader["id"].ToString()),
+								new EncounterData(
+									id: int.Parse((string)reader["id"].ToString())
+									,mapId: int.Parse((string)reader["location_area_id"].ToString())
+									,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
+									,slotId: int.Parse((string)reader["slot"].ToString())
+									//,pokemon: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
+									,pokemon: reader["pokemon_group"].ToString().Split(',').Select(x => (Pokemons)int.Parse(x)).ToArray()
+									,conditions: reader["encounter_condition_value_group"].ToString().Split(',').Select(x => (ConditionValue)int.Parse(x)).ToArray()
+									,generation: int.Parse((string)reader["generation_id"].ToString())
+									,minLevel: int.Parse((string)reader["min_level"].ToString())
+									,maxLevel: int.Parse((string)reader["max_level"].ToString())
+									,rarity: int.Parse((string)reader["rarity"].ToString())
+									,versions: reader["encounter_slot_version_group"].ToString().Split(',').Select(x => (Versions)int.Parse(x)).ToArray()
+								)
+							);
+						//else
+						//	Kernal.EncounterData[int.Parse((string)reader["id"].ToString())] =
+						//		new EncounterData(
+						//			id: int.Parse((string)reader["id"].ToString())
+						//			,mapId: int.Parse((string)reader["location_area_id"].ToString())
+						//			,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
+						//			,slotId: int.Parse((string)reader["slot"].ToString())
+						//			//,pokemon: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
+						//			,pokemon: reader["pokemon_group"].ToString().Split(',').Select(x => (Pokemons)int.Parse(x)).ToArray()
+						//			,conditions: reader["encounter_condition_value_group"].ToString().Split(',').Select(x => (ConditionValue)int.Parse(x)).ToArray()
+						//			,generation: int.Parse((string)reader["generation_id"].ToString())
+						//			,minLevel: int.Parse((string)reader["min_level"].ToString())
+						//			,maxLevel: int.Parse((string)reader["max_level"].ToString())
+						//			,rarity: int.Parse((string)reader["rarity"].ToString())
+						//			,versions: reader["encounter_slot_version_group"].ToString().Split(',').Select(x => (Versions)int.Parse(x)).ToArray()
+						//		);
 					}
 					//Step 5: Closing up
 					reader.Close();

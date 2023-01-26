@@ -1053,7 +1053,7 @@ namespace PokemonUnity.Combat
 				pbUpdate(true);
 				if (@battle.scene is IPokeBattle_Scene s0)
 					//s0.ChangePokemon();
-					s0.pbChangePokemon(this, Form.Id);
+					s0.pbChangePokemon(this, pokemon);
 				battle.pbDisplay(Game._INTL("{1} transformed!", ToString()));
 				//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "Transformed", ToString()).Value);
 				GameDebug.Log(string.Format("[Form changed] {0} changed to form {1}", ToString(), Game._INTL(Form.Id.ToString(TextScripts.Name))));
@@ -2860,7 +2860,7 @@ namespace PokemonUnity.Combat
 					damage>0 && !target.damagestate.Substitute) {
 					GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Illusion ended");
 					target.effects.Illusion=null;
-					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(target,(target as Pokemon).Form.Id);//target.pokemon.Species);
+					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(target,target.pokemon);
 					@battle.pbDisplay(Game._INTL("{1}'s {2} wore off!",target.ToString(),
 						Game._INTL(target.Ability.ToString(TextScripts.Name))));
 				}
@@ -3052,14 +3052,14 @@ namespace PokemonUnity.Combat
 				if (thismove.pbIsDamaging() && this.form!=1) {
 					this.form=1;
 					pbUpdate(true);
-					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(this,Form.Id);//@pokemon.Species
+					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(this,@pokemon);
 					@battle.pbDisplay(Game._INTL("{1} changed to Blade Forme!",ToString()));
 					GameDebug.Log($"[Form changed] #{ToString()} changed to Blade Forme");
 				}
 				else if (thismove.id == Moves.KINGS_SHIELD && this.form!=0) {
 					this.form=0;
 					pbUpdate(true);
-					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(this,Form.Id);//@pokemon);
+					if (@battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(this,@pokemon);
 					@battle.pbDisplay(Game._INTL("{1} changed to Shield Forme!",ToString()));
 					GameDebug.Log($"[Form changed] #{ToString()} changed to Shield Forme");
 				}
@@ -3279,27 +3279,28 @@ namespace PokemonUnity.Combat
 			// Pokémon switching caused by Roar, Whirlwind, Circle Throw, Dragon Tail, Red Card
 			if (!user.isFainted()) {
 				switched= new List<int>();
-				for (int i = 0; i < battle.battlers.Length; i++)
-				if (@battle.battlers[i].effects.Roar) {
-					@battle.battlers[i].effects.Roar=false;
-					@battle.battlers[i].effects.Uturn=false;
-					if (@battle.battlers[i].isFainted()) continue;
-					if (!@battle.pbCanSwitch(i,-1,false)) continue;
-					List<int> choices= new List<int>();
-					PokemonEssentials.Interface.PokeBattle.IPokemon[] party=@battle.pbParty(i);
-					for (int j = 0; j< party.Length; j++)
-					if (@battle.pbCanSwitchLax(i,j,false)) choices.Add(j);
-					if (choices.Count>0) {
-						int newpoke=choices[@battle.pbRandom(choices.Count)];
-						int newpokename=newpoke;
-						if (party[newpoke].Ability == Abilities.ILLUSION)
-							newpokename=@battle.pbGetLastPokeInTeam(i);
-						switched.Add(i);
-						@battle.battlers[i].pbResetForm();
-						@battle.pbRecallAndReplace(i,newpoke,newpokename,false,user.hasMoldBreaker());
-						@battle.pbDisplay(Game._INTL("{1} was dragged out!",@battle.battlers[i].ToString()));
-						//@battle.choices[i]=[0,0,null,-1];		// Replacement Pokémon does nothing this round
-						@battle.choices[i]=new Choice();		// Replacement Pokémon does nothing this round
+				for (int i = 0; i < battle.battlers.Length; i++) {
+					if (@battle.battlers[i].effects.Roar) {
+						@battle.battlers[i].effects.Roar=false;
+						@battle.battlers[i].effects.Uturn=false;
+						if (@battle.battlers[i].isFainted()) continue;
+						if (!@battle.pbCanSwitch(i,-1,false)) continue;
+						List<int> choices= new List<int>();
+						PokemonEssentials.Interface.PokeBattle.IPokemon[] party=@battle.pbParty(i);
+						for (int j = 0; j< party.Length; j++)
+							if (@battle.pbCanSwitchLax(i,j,false)) choices.Add(j);
+						if (choices.Count>0) {
+							int newpoke=choices[@battle.pbRandom(choices.Count)];
+							int newpokename=newpoke;
+							if (party[newpoke].Ability == Abilities.ILLUSION)
+								newpokename=@battle.pbGetLastPokeInTeam(i);
+							switched.Add(i);
+							@battle.battlers[i].pbResetForm();
+							@battle.pbRecallAndReplace(i,newpoke,newpokename,false,user.hasMoldBreaker());
+							@battle.pbDisplay(Game._INTL("{1} was dragged out!",@battle.battlers[i].ToString()));
+							//@battle.choices[i]=[0,0,null,-1];		// Replacement Pokémon does nothing this round
+							@battle.choices[i]=new Choice();		// Replacement Pokémon does nothing this round
+						}
 					}
 				}
 				foreach(IBattler i in @battle.pbPriority()) {
@@ -3329,7 +3330,10 @@ namespace PokemonUnity.Combat
 						@battle.choices[i]= new Choice();		// Replacement Pokémon does nothing this round
 					}
 				}
-			foreach(IBattler i in @battle.pbPriority())
+			foreach(IBattler i in @battle.pbPriority()) { 
+				if (!switched.Contains(i.Index)) continue;
+				i.pbAbilitiesOnSwitchIn(true);
+			}
 			// Baton Pass
 			if (user.effects.BatonPass) {
 				user.effects.BatonPass=false;
@@ -3348,11 +3352,11 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Record move as having been used
-			(user as Pokemon).lastMoveUsed=thismove.id;
+			user.lastMoveUsed=thismove.id;
 			//user.lastMoveUsedType=thismove.pbType(thismove.Type,user,null);
 			if (!turneffects.SpecialUsage) {
-				if (user.effects.TwoTurnAttack==0) (user as Pokemon).lastMoveUsedSketch=thismove.id;
-				(user as Pokemon).lastRegularMoveUsed=thismove.id;
+				if (user.effects.TwoTurnAttack==0) user.lastMoveUsedSketch=thismove.id;
+				user.lastRegularMoveUsed=thismove.id;
 				if (!user.movesUsed.Contains(thismove.id)) user.movesUsed.Add(thismove.id); // For Last Resort
 			}
 			@battle.lastMoveUsed=thismove.id;

@@ -5053,7 +5053,8 @@ label_41:;
 
     public int turncount { get; set; }
 
-    public IBattler[] priority { get; protected set; }
+    public IBattler[] Priority { get { return priority; } }
+    protected IBattler[] priority;
 
     public List<int> snaggedpokemon { get; private set; }
 
@@ -5074,7 +5075,7 @@ label_41:;
 
     public IBattlePeer peer { get; set; }
 
-    public UnityBattle(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent) => ((IBattle) this).initialize(scene, p1, p2, player, opponent);
+    public UnityBattle(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent) { ((IBattle) this).initialize(scene, p1, p2, player, opponent); }
 
     public UnityBattle(
       IScene scene,
@@ -6541,7 +6542,7 @@ label_41:;
           if (!this.pbIsOpposing(index) && this.battlers[index].pokemonIndex == pkmnIndex)
             battler = this.battlers[index];
         }
-        flag = UnityItemHandlers.triggerBattleUseOnPokemon(item, pokemon, battler, scene);
+        flag = ItemHandlers.triggerBattleUseOnPokemon(item, pokemon, battler, scene);
       }
       if (!flag && this.pbBelongsToPlayer(userPkmn.Index))
       {
@@ -6560,7 +6561,7 @@ label_41:;
       IHasDisplayMessage scene)
     {
       GameDebug.Log("[Use item] Player used #" + Game._INTL(item.ToString(TextScripts.Name)) + " on #" + this.battlers[index].ToString(true));
-      bool flag = UnityItemHandlers.triggerBattleUseOnBattler(item, this.battlers[index], scene);
+      bool flag = ItemHandlers.triggerBattleUseOnBattler(item, this.battlers[index], scene);
       if (!flag && this.pbBelongsToPlayer(userPkmn.Index))
       {
         if (Game.GameData.Bag.pbCanStore(item))
@@ -6591,13 +6592,13 @@ label_41:;
           }
         }
       }
-      if (UnityItemHandlers.hasUseInBattle(idxItem))
+      if (ItemHandlers.hasUseInBattle(idxItem))
       {
         if (idxPokemon == 0)
         {
-          if (UnityItemHandlers.triggerBattleUseOnBattler(idxItem, this.battlers[idxPokemon], (IHasDisplayMessage) this))
+          if (ItemHandlers.triggerBattleUseOnBattler(idxItem, this.battlers[idxPokemon], (IHasDisplayMessage) this))
           {
-            UnityItemHandlers.triggerUseInBattle(idxItem, this.battlers[idxPokemon], this);
+            ItemHandlers.triggerUseInBattle(idxItem, this.battlers[idxPokemon], this);
             if (this.doublebattle)
               this.battlers[idxPokemon + 2].effects.SkipTurn = true;
           }
@@ -6612,7 +6613,7 @@ label_41:;
         }
         else
         {
-          if (UnityItemHandlers.triggerBattleUseOnBattler(idxItem, this.battlers[idxPokemon], (IHasDisplayMessage) this))
+          if (ItemHandlers.triggerBattleUseOnBattler(idxItem, this.battlers[idxPokemon], (IHasDisplayMessage) this))
             this.pbDisplay(Game._INTL("It's impossible to aim without being focused!"));
           return false;
         }
@@ -6984,8 +6985,7 @@ label_41:;
       if (this.scene is IPokeBattle_Scene scene)
       {
         IBattler battler = this.battlers[index];
-        int id = (int) (this.battlers[index] as Pokemon).Form.Id;
-        scene.pbChangePokemon(battler, (Forms) id);
+        scene.pbChangePokemon(battler, this.battlers[index].pokemon);
       }
       this.pbCommonAnimation("MegaEvolution2", this.battlers[index], (IBattler) null, 0);
       string str = this.battlers[index].pokemon.Name;
@@ -7011,8 +7011,7 @@ label_41:;
       if (this.scene is IPokeBattle_Scene scene)
       {
         IBattler battler = this.battlers[index];
-        int id = (int) (this.battlers[index] as Pokemon).Form.Id;
-        scene.pbChangePokemon(battler, (Forms) id);
+        scene.pbChangePokemon(battler, this.battlers[index].pokemon);
       }
       if (this.battlers[index].pokemon.Species == Pokemons.KYOGRE)
         this.pbCommonAnimation("PrimalKyogre2", this.battlers[index], (IBattler) null, 0);
@@ -8313,7 +8312,7 @@ label_75:;
                 if (this.choices[battler.Index].Target >= 0)
                   this.pbUseItemOnPokemon(index, this.choices[battler.Index].Target, battler, (IHasDisplayMessage) this.scene);
               }
-              else if ((num == 2 || num == 4) && !UnityItemHandlers.hasUseInBattle(index))
+              else if ((num == 2 || num == 4) && !ItemHandlers.hasUseInBattle(index))
                 this.pbUseItemOnBattler(index, this.choices[battler.Index].Target, battler, (IHasDisplayMessage) this.scene);
             }
           }

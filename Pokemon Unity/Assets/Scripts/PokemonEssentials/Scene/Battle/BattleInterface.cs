@@ -1,54 +1,59 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PokemonUnity;
+using PokemonUnity.Combat;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
 
 public class BattleInterface : MonoBehaviour
 {
     public static BattleInterface main;
-    
+
     #region Assets
-    
+
     // Interface Sprites
     [Header("Pokemon Panel Sprites")]
-    public Sprite genderMale;
-    public Sprite  genderFemale;
-    public Sprite  poisonned;
-    public Sprite  paralyzed;
-    public Sprite  frozen;
-    public Sprite  burned;
-    public Sprite  caught;
+    public UnityEngine.Sprite genderMale;
+    public UnityEngine.Sprite genderFemale;
+    public UnityEngine.Sprite poisonned;
+    public UnityEngine.Sprite paralyzed;
+    public UnityEngine.Sprite frozen;
+    public UnityEngine.Sprite burned;
+    public UnityEngine.Sprite caught;
 
-    [Space] [Header("Pokemon Party Sprites")]
-    public Sprite partyEmpty;
-    public Sprite party;
-    public Sprite partyStatus;
-    public Sprite partyKO;
+    [Space]
+    [Header("Pokemon Party Sprites")]
+    public UnityEngine.Sprite partyEmpty;
+    public UnityEngine.Sprite party;
+    public UnityEngine.Sprite partyStatus;
+    public UnityEngine.Sprite partyKO;
 
-    [Space] [Header("Command Menu Sprites")]
-    public Sprite CMButton;
-    public Sprite  CMButtonSelected;
-    public Sprite  battleLogo;
-    public Sprite  pokemonLogo;
-    public Sprite  bagLogo;
-    public Sprite  runLogo;
+    [Space]
+    [Header("Command Menu Sprites")]
+    public UnityEngine.Sprite CMButton;
+    public UnityEngine.Sprite CMButtonSelected;
+    public UnityEngine.Sprite battleLogo;
+    public UnityEngine.Sprite pokemonLogo;
+    public UnityEngine.Sprite bagLogo;
+    public UnityEngine.Sprite runLogo;
 
     public Color CMButtonTextColor;
     public Color CMButtonTextSelectedColor;
-    
+
     #endregion
-    
+
     #region Private Properties
 
-    private RectTransform cursor;
-    private GameObject commandMenu;
-    private GameObject fightMenu;
-    
+    [SerializeField] private RectTransform cursor;
+    [SerializeField] private GameObject commandMenu;
+    [SerializeField] private GameObject fightMenu;
+
     private int commandMenuIndex = 0;
     private int fightMenuIndex = 0;
-    
+
     #endregion
 
     private void Awake()
@@ -71,6 +76,7 @@ public class BattleInterface : MonoBehaviour
         
         // Hide interface
         commandMenu.SetActive(false);
+        fightMenu.SetActive(false);
     }
 
     public void Initialize()
@@ -78,7 +84,7 @@ public class BattleInterface : MonoBehaviour
         commandMenuIndex = 0;
         fightMenuIndex = 0;
     }
-    
+
     // General Front-end Methods
 
     // Command Menu Frond-end Methods
@@ -93,7 +99,7 @@ public class BattleInterface : MonoBehaviour
             button.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = texts[i++];
         }
     }
-    
+
     private void refreshCommandMenu()
     {
         int i = 0;
@@ -127,7 +133,7 @@ public class BattleInterface : MonoBehaviour
         do
         {
             refreshCommandMenu();
-            
+
             if (UnityEngine.Input.GetKeyDown(KeyCode.UpArrow))
             {
                 if (commandMenuIndex > 0)
@@ -148,13 +154,14 @@ public class BattleInterface : MonoBehaviour
             {
                 Debug.Log("[CommandMenu] Select !");
                 result(commandMenuIndex);
+                yield return null;
                 break;
             }
             
             yield return null;
-        } while(true);
-        
-        // TODO Interface Disappearing Animation        
+        } while (true);
+
+        commandMenu.SetActive(false);
     }
 
     public IEnumerator CommandMenu(int index, string[] texts, int mode, PokemonUnity.Combat.MenuCommands[] lastcmd, PokemonEssentials.Interface.Screen.ICommandMenuDisplay cw, System.Action<int, PokemonUnity.Combat.MenuCommands[]> result)
@@ -204,6 +211,92 @@ public class BattleInterface : MonoBehaviour
                 result(-1, lastcmd); yield break;
             }
             yield return new WaitForEndOfFrame(); //WaitForFixedUpdate(); //null;
-        } while(true);  
+        } while (true);
+    }
+
+    // Fight Menu Frond-end Methods
+
+    private void setFightMenuText(PokemonUnity.Combat.Pokemon battler)
+    {
+        int i = 0;
+        foreach (Transform child in fightMenu.transform)
+        {
+            if (battler.moves[i].IsNotNullOrNone())
+            {
+                child.GetComponent<Image>().color = Color.white;
+                child.Find("MoveName").GetComponent<TextMeshProUGUI>().text = battler.moves[i].Name;
+                child.Find("EffectivenessText").GetComponent<TextMeshProUGUI>().text = "Effective";
+                child.Find("PP").GetComponent<TextMeshProUGUI>().text = $"{battler.moves[i].PP}/{battler.moves[i].TotalPP}";
+
+                child.Find("TypeLogo").gameObject.SetActive(true);
+                child.Find("EffectivenessLogo").gameObject.SetActive(true);
+            }
+            else
+            {
+                child.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+                child.Find("MoveName").GetComponent<TextMeshProUGUI>().text = String.Empty;
+                child.Find("EffectivenessText").GetComponent<TextMeshProUGUI>().text = String.Empty;
+                child.Find("PP").GetComponent<TextMeshProUGUI>().text = String.Empty;
+
+                child.Find("TypeLogo").gameObject.SetActive(false);
+                child.Find("EffectivenessLogo").gameObject.SetActive(false);
+            }
+
+            i++;
+        }
+    }
+
+    private void refreshFightMenu()
+    {
+        int i = 0;
+        foreach (Transform child in fightMenu.transform)
+        {
+            if (fightMenuIndex == i)
+            {
+                cursor.position = child.GetComponent<RectTransform>().position;
+            }
+
+            i++;
+        }
+    }
+
+    public IEnumerator FightMenu(Pokemon battler, Action<int> result)
+    {
+        // TODO Interface Appearing Animation
+        fightMenu.SetActive(true);
+        setFightMenuText(battler);
+
+        do
+        {
+            refreshFightMenu();
+
+            if (UnityEngine.Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (fightMenuIndex > 0)
+                {
+                    //Debug.Log("[CommandMenu] Going Up !");
+                    fightMenuIndex--;
+                }
+            }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                if (fightMenuIndex < battler.moves.Length - 1 && battler.moves[fightMenuIndex + 1] != null && battler.moves[fightMenuIndex + 1].id != Moves.NONE)
+                {
+                    //Debug.Log("[CommandMenu] Going Down !");
+                    fightMenuIndex++;
+                }
+            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+            {
+                //Debug.Log("[CommandMenu] Select !");
+                result(fightMenuIndex);
+                yield return null;
+                break;
+            }
+
+            yield return null;
+        } while (true);
+
+        fightMenu.SetActive(false);
     }
 }

@@ -16,7 +16,7 @@ namespace PokemonUnity
 	/// <summary>
 	/// </summary>
 	/// <remarks>
-	/// This one class is used as parent gameobject for menu buttons, to manipulate children gaomeobjects (fight, party, bag, run)
+	/// This one class is used as parent gameobject for menu buttons, to manipulate children gameobjects (fight, party, bag, run)
 	/// </remarks>
 	public class CommandMenuButtons : SpriteWrapper, ICommandMenuButtons //BitmapSprite
 	{
