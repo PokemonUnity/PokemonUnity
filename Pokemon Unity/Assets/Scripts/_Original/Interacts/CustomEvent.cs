@@ -942,7 +942,7 @@ public class CustomEvent : MonoBehaviour
 
 
                 Scene.main.Battle.gameObject.SetActive(true);
-                StartCoroutine(Scene.main.Battle.control(true, trainer, currentEvent.bool0));
+                //StartCoroutine(Scene.main.Battle.control(true, trainer, currentEvent.bool0));
 
                 while (Scene.main.Battle.gameObject.activeSelf)
                 {

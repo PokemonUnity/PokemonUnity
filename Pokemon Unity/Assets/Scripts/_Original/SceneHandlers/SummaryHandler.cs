@@ -19,6 +19,7 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 using UnityEngine;
 using UnityEngine.UI;
+using PokemonUnity.Legacy;
 
 public class SummaryHandler : MonoBehaviour
 {
@@ -573,7 +574,7 @@ public class SummaryHandler : MonoBehaviour
 
     private void updateMoveToLearn(string moveName)
     {
-        MoveData move = MoveDatabase.getMove(moveName);
+        PokemonUnity.Legacy.MoveData move = MoveDatabase.getMove(moveName);
         moveNewName.text = moveName;
         moveNewNameShadow.text = moveNewName.text;
         moveNewType.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + move.getType().ToString());
@@ -597,7 +598,7 @@ public class SummaryHandler : MonoBehaviour
         }
         else
         {
-            MoveData selectedMove = MoveDatabase.getMove(moveName);
+            PokemonUnity.Legacy.MoveData selectedMove = MoveDatabase.getMove(moveName);
             selectedCategory.sprite =
                 Resources.Load<UnityEngine.Sprite>("PCSprites/category" + selectedMove.getCategory().ToString());
             selectedPower.text = "" + selectedMove.getPower();

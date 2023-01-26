@@ -19,6 +19,7 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 using UnityEngine;
 using UnityEngine.UI;
+using PokemonUnity.Legacy;
 
 public class BagHandler : MonoBehaviour
 {
@@ -409,7 +410,7 @@ public class BagHandler : MonoBehaviour
                                 + (ItemDatabase.getItem(selectedItem).getTMNo() < 10 ? "0" : "")
                                 + ItemDatabase.getItem(selectedItem).getTMNo()
                                 + " " + selectedItem;
-                MoveData selectedTM = MoveDatabase.getMove(selectedItem);
+                PokemonUnity.Legacy.MoveData selectedTM = MoveDatabase.getMove(selectedItem);
 
                 //Update descriptions of TM
                 bagItemType.sprite = Resources.Load<UnityEngine.Sprite>("PCSprites/type" + selectedTM.getType().ToString());

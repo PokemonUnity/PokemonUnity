@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PokemonUnity.Legacy;
+using System.Collections;
 using System.Diagnostics;
 
 namespace Data.Abilities

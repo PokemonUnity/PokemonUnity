@@ -3,6 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using Data;
+using PokemonUnity.Legacy;
 
 [System.Serializable]
 public class PC

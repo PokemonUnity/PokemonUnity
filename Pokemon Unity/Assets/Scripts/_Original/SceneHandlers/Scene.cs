@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity.Legacy;
 
 public class Scene : MonoBehaviour
 {

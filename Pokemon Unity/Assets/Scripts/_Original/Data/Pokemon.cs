@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 using Random = UnityEngine.Random;
+using PokemonUnity.Legacy;
 
 [System.Serializable]
 public class Pokemon

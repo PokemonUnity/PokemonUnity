@@ -157,7 +157,7 @@ namespace PokemonUnity
 			return this;
 		}
 
-		public override void Dispose()
+		public new void Dispose()
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//@statuses.Dispose();

@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Editor\_Original\CustomEventEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\_Original\EventHandlerTest.cs" />
     <Compile Include="Assets\Scripts\Editor\MarkedUpEditors.cs" />
+    <Compile Include="Assets\Editor\TypeConstraint.cs" />
     <Compile Include="Assets\Scripts\Editor\ReadOnlyDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
