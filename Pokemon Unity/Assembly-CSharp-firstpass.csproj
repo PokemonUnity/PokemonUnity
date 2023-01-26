@@ -54,7 +54,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="C:\Users\kenne\Desktop\Projects\Pokemon Unity\PokemonUnity-master\Pokemon Unity\Assets\Scripts\Editor\_Original\DOTweenEditor.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Plugins\Pixelplacement\iTween\Sample\MoveSample.cs" />

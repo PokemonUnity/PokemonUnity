@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Pokemon Unity/Assets/Scripts/SpriteAnimation.cs.meta
 guid: d3b706f5f550dfc449000d4a9f573468
+========
+guid: e4bb8a5303c0644429446dd3101e055d
+>>>>>>>> 54c839fb1863815663ee5f377f78fa14e4031384:Pokemon Unity/Assets/Scripts/_Original/PokemonEssentials/GameSystem.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
