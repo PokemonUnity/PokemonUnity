@@ -71,7 +71,6 @@
     <Compile Include="Assets\Scripts\Scriptable Objects\DialogBoxFactory.cs" />
     <Compile Include="Assets\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\Library\Interfaces\IUseADialogBox.cs" />
-    <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Game_System.cs" />
     <Compile Include="Assets\Scripts\_Original\AudioHandler.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Inputs\Carousel\CarouselText.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\AbilityData.cs" />
@@ -241,7 +240,7 @@
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityData.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\TrainerClass.cs" />
     <Compile Include="Assets\Scripts\_Original\PokemonEssentials\Scene\Battle\BattleScene.cs" />
-    <Compile Include="Assets\Scripts\_Original\SO\Weather.cs" />
+    <Compile Include="Assets\Scripts\_Original\ScriptableObjects\Weather.cs" />
     <Compile Include="Assets\Scripts\_Original\Billboarding.cs" />
     <Compile Include="Assets\Scriptable Objects\Settings\Scripts\Enums\GameSettingFullscreenMode.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\NatureData.cs" />
@@ -353,6 +352,7 @@
     <Compile Include="Assets\Scripts\Behaviours\Input\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
+    <Compile Include="Assets\Scripts\_Original\PokemonEssentials\GameSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

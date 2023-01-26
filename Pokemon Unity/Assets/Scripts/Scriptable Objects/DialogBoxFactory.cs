@@ -47,8 +47,11 @@ public class DialogBoxFactory : ScriptableObject {
             return null;
         }
 
-        if (pool.ContainsKey(dialogBox))
-            return pool[dialogBox];
+        if (pool.ContainsKey(dialogBox)) {
+            DialogBoxBehaviour box = pool[dialogBox];
+            box.gameObject.SetActive(true);
+            return box;
+        }
         
         DialogBoxBehaviour dialogBoxObject = Instantiate(dialogBox.Prefab);
         pool[dialogBox] = dialogBoxObject;

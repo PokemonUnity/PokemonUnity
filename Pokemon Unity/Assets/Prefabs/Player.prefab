@@ -2404,6 +2404,7 @@ MonoBehaviour:
   interactor: {fileID: 610109770}
   busyWith: {fileID: 0}
   canMove: 1
+  playerInputActionMapName: Player
   DrawGizmos: 1
   DrawMovementGizmos: 0
   DrawInteractBox: 0
@@ -2485,7 +2486,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Events:
-    playerInput: {fileID: 0}
     Events:
     - ActionMap: Player
       Action: Move
