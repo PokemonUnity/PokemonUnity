@@ -102,9 +102,9 @@ namespace PokemonUnity
 			get { return @window.visible; }
 			set
 			{
-				@window.visible = value;
-				@msgbox.visible = value;
-				if (@display != null) @display.visible = value;
+				//@window.visible = value;
+				//@msgbox.visible = value;
+				//if (@display != null) @display.visible = value;
 				if (@buttons != null) @buttons.visible = value;
 				//gameObject.SetActive(value); //set this unity go IsActive status to value 
 			}
@@ -124,8 +124,10 @@ namespace PokemonUnity
 
 		public int index
 		{
-			get { return @window.index; }
-			set { @window.index = value; }
+			//get { return @window.index; }
+			//set { @window.index = value; }
+			get { return Index; }
+			set { Index = value; }
 		}
 
 		public bool disposed 
@@ -177,6 +179,7 @@ namespace PokemonUnity
 
 		public void setTexts(params string[] value)
 		{
+			return; //ToDo: remove this line from class...
 			@msgbox.text = value[0];
 			//if using sprites/images as menu option, may need to change logic below
 			IList<string> commands = new List<string>();
@@ -191,15 +194,15 @@ namespace PokemonUnity
 
 		public void refresh()
 		{
-			@msgbox.refresh();
-			@window.refresh();
+			@msgbox?.refresh();
+			@window?.refresh();
 			if (@buttons != null) @buttons.refresh(this.index, this.mode);
 		}
 
 		public void update()
 		{
-			@msgbox.update();
-			@window.update();
+			@msgbox?.update();
+			@window?.update();
 			if (@display != null) @display.update();
 			if (@buttons != null) @buttons.update(this.index, this.mode);
 		}

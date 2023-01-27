@@ -1681,9 +1681,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		yield break;
 	}
 
-	void IPokeBattle_DebugSceneNoGraphics.pbTrainerWithdraw(IBattle battle, IBattler pkmn)
-	{
-	}
+	void IPokeBattle_DebugSceneNoGraphics.pbTrainerWithdraw(IBattle battle, IBattler pkmn) { }
 
 	//void IPokeBattle_Scene.pbTrainerWithdraw(IBattle battle, IBattler pkmn)
 	//{
@@ -4106,7 +4104,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	void IPokeBattle_Scene.pbThrowRock() { }
 
-	public void pbChatter(IBattler attacker, IBattler opponent)
+	public void pbChatter(IBattler attacker, IBattler opponent) //ToDo: Make IEnumerator...
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -4120,7 +4118,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		//{
 		//	(Game.GameData as Game).Graphics.update();
 		//	PokemonUnity.Input.update(); i++;
-		//} while (i < (Game.GameData as Game).Graphics.frame_rate); //;(Game.GameData as Game).Graphics.frame_rate.times 
+		//} while (i < (Game.GameData as Game).Graphics.frame_rate); //Graphics.frame_rate.times 
 	}
 
 	private IEnumerator ForceFrameRefresh()

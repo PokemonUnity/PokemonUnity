@@ -40,6 +40,7 @@ namespace PokemonUnity
 		public UnityEngine.UI.Slider sliderExp;
 		public UnityEngine.UI.Image spriteItem, spriteStatus, spriteCaught, spriteFillHP, spriteFillExp;
 		public UnityEngine.UI.Text currentHP, maxHP, Name, level, gender;
+		//public TMPro.TextMeshProUGUI name, HPValue, level;
 		//private UnityEngine.Color colorFillExp;
 		//private UnityEngine.UI.Image panelbg;
 		//private UnityEngine.Sprite databox; //AnimatedBitmap
@@ -158,7 +159,7 @@ namespace PokemonUnity
 			refresh();
 			return this;
 		}
-				
+
 		public void refreshExpLevel()
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -242,7 +243,7 @@ namespace PokemonUnity
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//this.bitmap.clear();
-			if (!@battler.pokemon.IsNotNullOrNone()) return;
+			if (!@battler.IsNotNullOrNone() || !@battler.pokemon.IsNotNullOrNone()) return;
 			//this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
 			//IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
 			//IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
@@ -252,6 +253,7 @@ namespace PokemonUnity
 			//	new TextPosition (pokename,@spritebaseX+8,6,false,base_,shadow)
 			//};
 			Name.text = pokename;
+			//name.SetText(pokename);
 			//Set gender toggle on/off; change color based on gender
 			//float genderX = this.bitmap.text_size(pokename).width;
 			//genderX += @spritebaseX + 14;
@@ -270,12 +272,14 @@ namespace PokemonUnity
 				if (@battler.displayGender == 1)
 				{
 					gender.text = "♂"; // Male
-					gender.color = new Color32(255, 34, 34, 255);   // Red
+					gender.color = new Color32(255, 34, 34, 255);   // Blue
+					//gender.sprite = BattleInterface.main.genderMale; // Male
 				}
 				else
 				{
 					gender.text = "♀"; // Female
 					gender.color = new Color32(255, 34, 34, 255);   // Red
+					//gender.sprite = BattleInterface.main.genderFemale; // Female
 				}
 			}
 			else
@@ -289,6 +293,7 @@ namespace PokemonUnity
 			//	new TextPosition (Game._INTL("Lv{1}",@battler.Level),@spritebaseX+202,8,true,base_,shadow)
 			//};
 			level.text = Game._INTL("{0}", @battler.Level);
+			//level.SetText($"Lv. {@battler.Level}");
 			if (@showhp)
 			{
 				//string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
@@ -298,6 +303,7 @@ namespace PokemonUnity
 				sliderHP.maxValue = @battler.TotalHP;
 				maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
 				currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
+				//HPValue.SetText($"{sliderHP.value}/{sliderHP.maxValue}");
 			}
 			//pbDrawTextPositions(this.bitmap,textpos);
 			//IList<ITextPosition> imagepos = new List<ITextPosition>();

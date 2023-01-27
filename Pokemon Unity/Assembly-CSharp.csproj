@@ -96,9 +96,6 @@
     <Compile Include="Assets\GameMain\Scripts\UI\UIExtension.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIFormId.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\BattlePokemonHandler.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Utility\AIUtility.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Utility\LitJsonHelper.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriColor.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV2.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV3.cs" />
@@ -193,12 +190,8 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Constant\Constant.ProcedureData.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Constant\Constant.Setting.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\BuildInfo.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\ImpactData.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\VersionInfo.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\CampType.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\MapTiles.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\QualityLevelType.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\RelationType.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\TileShapes.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\SpriteComponent.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\FileTest.cs" />
@@ -216,7 +209,6 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokeBattle_SceneConstants.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokemonDataBox.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\UnityBattle.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\UnityItemHandlers.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\EventScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\InputManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Intro\IntroScene.cs" />
@@ -248,7 +240,7 @@
     <Compile Include="Assets\Scripts\SetMatTint.cs" />
     <Compile Include="Assets\Scripts\SetSortingOrder.cs" />
     <Compile Include="Assets\Scripts\SfxHandler.cs" />
-    <Compile Include="Assets\Scripts\SO\Weather.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\Weather.cs" />
     <Compile Include="Assets\Scripts\SpriteAnimation.cs" />
     <Compile Include="Assets\Scripts\TextureTileAnimation.cs" />
     <Compile Include="Assets\Scripts\TextureTileToScale.cs" />

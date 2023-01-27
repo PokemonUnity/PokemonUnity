@@ -3279,7 +3279,7 @@ namespace PokemonUnity.Combat
 			// Pokémon switching caused by Roar, Whirlwind, Circle Throw, Dragon Tail, Red Card
 			if (!user.isFainted()) {
 				switched= new List<int>();
-				for (int i = 0; i < battle.battlers.Length; i++)
+				for (int i = 0; i < battle.battlers.Length; i++) {
 					if (@battle.battlers[i].effects.Roar) {
 						@battle.battlers[i].effects.Roar=false;
 						@battle.battlers[i].effects.Uturn=false;
@@ -3302,6 +3302,7 @@ namespace PokemonUnity.Combat
 							@battle.choices[i]=new Choice();		// Replacement Pokémon does nothing this round
 						}
 					}
+				}
 				foreach(IBattler i in @battle.pbPriority()) {
 					if (!switched.Contains(i.Index)) continue;
 					i.pbAbilitiesOnSwitchIn(true);

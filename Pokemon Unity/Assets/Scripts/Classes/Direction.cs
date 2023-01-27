@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Classes
+namespace PokemonUnity.Legacy
 {
     public static class Direction
     {

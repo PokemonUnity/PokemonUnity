@@ -2,7 +2,6 @@
 
 using UnityEngine;
 using System.Collections;
-using Classes;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 

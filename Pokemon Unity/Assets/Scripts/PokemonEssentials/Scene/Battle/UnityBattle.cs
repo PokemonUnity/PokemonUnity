@@ -5053,7 +5053,8 @@ label_41:;
 
     public int turncount { get; set; }
 
-    public IBattler[] priority { get; protected set; }
+    public IBattler[] Priority { get { return priority; } }
+    protected IBattler[] priority;
 
     public List<int> snaggedpokemon { get; private set; }
 

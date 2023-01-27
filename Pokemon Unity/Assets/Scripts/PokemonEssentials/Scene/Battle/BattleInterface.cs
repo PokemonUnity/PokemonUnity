@@ -134,7 +134,7 @@ public class BattleInterface : MonoBehaviour
             {
                 if (commandMenuIndex > 0)
                 {
-                    //Debug.Log("[CommandMenu] Going Up !");
+                    Debug.Log("[CommandMenu] Going Up !");
                     commandMenuIndex--;
                 }
             }
@@ -142,14 +142,15 @@ public class BattleInterface : MonoBehaviour
             {
                 if (commandMenuIndex < 3)
                 {
-                    //Debug.Log("[CommandMenu] Going Down !");
+                    Debug.Log("[CommandMenu] Going Down !");
                     commandMenuIndex++;
                 }
             }
             if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
-                //Debug.Log("[CommandMenu] Select !");
+                Debug.Log("[CommandMenu] Select !");
                 result(commandMenuIndex);
+                yield return null;
                 break;
             }
 
@@ -285,6 +286,7 @@ public class BattleInterface : MonoBehaviour
             {
                 //Debug.Log("[CommandMenu] Select !");
                 result(fightMenuIndex);
+                yield return null;
                 break;
             }
 

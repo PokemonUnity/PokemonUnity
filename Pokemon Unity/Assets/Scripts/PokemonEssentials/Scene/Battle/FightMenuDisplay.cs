@@ -24,7 +24,7 @@ namespace PokemonUnity
 		[SerializeField] private int _megaButton;
 		[SerializeField] private IBattler _battler;
 		private IWindow_CommandPokemon window;
-		private IWindow_AdvancedTextPokemon info;
+		private IWindow_AdvancedTextPokemon info; //Move PP & Type?...
 		private IIconSprite display;
 		private bool disposedValue;
 		private string ctag;
@@ -147,7 +147,7 @@ namespace PokemonUnity
 
 		public IFightMenuDisplay initialize(IBattler battler, IViewport viewport= null)
 		{
-			@display = null;
+			//@display = null;
 			/*if (PokeBattle_SceneConstants.USEFIGHTBOX)
 			{
 				//@display = new IconSprite().initialize(0, (Game.GameData as Game).Graphics.height - 96, viewport);
@@ -188,7 +188,7 @@ namespace PokemonUnity
 			if (@battler != null && @battler.moves[value].id != 0)
 			{
 				@index = value;
-				@window.index = value;
+				if (@window != null) @window.index = value;
 				refresh();
 				return true;
 			}
@@ -204,18 +204,18 @@ namespace PokemonUnity
 				if (@battler.moves[i].id == 0) break;
 				commands.Add(@battler.moves[i].Name);
 			}
-			@window.commands = commands.ToArray();
+			if (@window != null) @window.commands = commands.ToArray();
 			IBattleMove selmove = @battler.moves[@index];
-			string movetype = selmove.Type.ToString(TextScripts.Name);
-			if (selmove.TotalPP == 0)
-			{
-				@info.text = string.Format("{0}PP: ---<br>TYPE/{1}", @ctag, movetype);
-			}
-			else
-			{
-				@info.text = string.Format("{0}PP: {1}/{2}<br>TYPE/{3}",
-				   @ctag, selmove.PP, selmove.TotalPP, movetype);
-			}
+			//string movetype = selmove.Type.ToString(TextScripts.Name);
+			//if (selmove.TotalPP == 0)
+			//{
+			//	@info.text = string.Format("{0}PP: ---<br>TYPE/{1}", @ctag, movetype);
+			//}
+			//else
+			//{
+			//	@info.text = string.Format("{0}PP: {1}/{2}<br>TYPE/{3}",
+			//	   @ctag, selmove.PP, selmove.TotalPP, movetype);
+			//}
 			if (@buttons != null) @buttons.refresh(this.index, @battler != null ? @battler.moves : null, @megaButton);
 		}
 

@@ -1,7 +1,6 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using System.Collections;
-using Classes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
