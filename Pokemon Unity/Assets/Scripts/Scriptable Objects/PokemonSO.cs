@@ -330,10 +330,4 @@ public class PokemonSO : ScriptableObject, IPokemon {
     }
 
     #endregion
-
-    public class PokemonBattleSprites {
-        public SpriteAnimation Front;
-        public SpriteAnimation Back;
-    }
-
 }

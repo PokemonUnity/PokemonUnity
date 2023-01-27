@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 906e4e09c8bfd57429e9d2f681a2fb86, type: 3}
-  m_Name: Battle Front
+  m_Script: {fileID: 11500000, guid: 2c8d2649cf640e74bb248fe00c08d5f2, type: 3}
+  m_Name: BW Grassy Battle Environment
   m_EditorClassIdentifier: 
-  Name: 
-  FPS: 1
-  StartingFrame: 0
-  Loop: 1
-  spriteSheet: []
+  BattleBase: {fileID: 21300000, guid: e1c89e2133f189247a8a51caf9447d10, type: 3}
+  Background: {fileID: 21300000, guid: 9476bea7f43027e4793eb9a36a5fc145, type: 3}

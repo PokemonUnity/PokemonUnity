@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28d43fb47cb240d43a6aa551a600f09c, type: 3}
-  m_Name: Charizard
+  m_Script: {fileID: 11500000, guid: 2c8d2649cf640e74bb248fe00c08d5f2, type: 3}
+  m_Name: DP Grassy Battle Environment
   m_EditorClassIdentifier: 
-  species: 6
-  OverworldAnimations: []
-  Front: {fileID: 11400000, guid: 5af0827d9e0cac240b9868dd1e8f5c0c, type: 2}
-  Back: {fileID: 0}
+  BattleBase: {fileID: 21300000, guid: 71726d8d1715f104c95944e22d979313, type: 3}
+  Background: {fileID: 21300000, guid: 4dfc3fbe0d3d3f74c8148a1f3916b658, type: 3}
