@@ -29,7 +29,7 @@ public class Scene : MonoBehaviour
         }
 
         Bag.gameObject.SetActive(true);
-        Battle.gameObject.SetActive(true);
+        //Battle.gameObject.SetActive(true);
         Evolution.gameObject.SetActive(true);
         Party.gameObject.SetActive(true);
         Pause.gameObject.SetActive(true);

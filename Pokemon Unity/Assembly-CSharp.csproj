@@ -202,6 +202,7 @@
     <Compile Include="Assets\GameMain\Scripts\Scene\ClickSelect.cs" />
     <Compile Include="Assets\GameMain\Scripts\Scene\ScrollableBackground.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\DialogSeries.cs" />
+    <Compile Include="Assets\Scripts\_Original\PokemonEssentials\GameSystem.cs" />
     <Compile Include="Assets\GameMain\Scripts\Network\SCPacketBase.cs" />
     <Compile Include="Assets\Scripts\_Original\ImportedScripts\ParticleSoundEffect.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\PlayerInputExtensions.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Assets\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Scripts\Behaviours\UI\Audio\SFX.cs" />
     <Compile Include="Assets\Scripts\_Original\SceneHandlers\OLD_BattleHandler.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Battle\BattleHandler.cs" />
     <Compile Include="Assets\Scripts\_Original\DynamicCameraHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIExtension.cs" />
     <Compile Include="Assets\Scripts\Library\Extensions\FloatExtensions.cs" />
@@ -352,8 +354,6 @@
     <Compile Include="Assets\Scripts\Behaviours\Input\PlayerInputSingleton.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Typing\CharKey\CharKeyComponent.cs" />
     <Compile Include="Assets\Scripts\_Original\Data\Pokedex.cs" />
-    <Compile Include="Assets\Scripts\_Original\PokemonEssentials\GameSystem.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Battle\BattleHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -25,18 +25,18 @@ using MarkupAttributes;
 
 namespace PokemonUnity.Legacy {
 	public partial class BattleHandler : MonoBehaviour {
-        #region Property Variables
+		#region Property Variables
 
-        #region UI Variables
+		public int victor = -1; //0 = player, 1 = opponent, 2 = tie
+		private bool trainerBattle;
+		private bool isLowHP;
+
+		#region UI Variables
 
 		private DialogBoxHandlerNew Dialog;
 		private bool fog;
 
         #endregion
-
-        public int victor = -1; //0 = player, 1 = opponent, 2 = tie
-		private bool trainerBattle;
-		private bool isLowHP;
 
 		#region Music Variables
 		[Foldout("Battle Musics")]
@@ -175,10 +175,14 @@ namespace PokemonUnity.Legacy {
 			buttonSwitch,
 			buttonCheck;
 
-		private Text
-			buttonCheckText,
-			buttonCheckTextShadow;
-
+		private UnityEngine.Sprite[][] pokemonIconAnim = new UnityEngine.Sprite[][] {
+			new UnityEngine.Sprite[2],
+			new UnityEngine.Sprite[2],
+			new UnityEngine.Sprite[2],
+			new UnityEngine.Sprite[2],
+			new UnityEngine.Sprite[2],
+			new UnityEngine.Sprite[2]
+		};
 
 		//MOVE BUTTON DETAILS
 		private Image[] buttonMoveType = new Image[4];
@@ -194,6 +198,10 @@ namespace PokemonUnity.Legacy {
 		#endregion
 
 		#region Texts
+
+		private Text
+			buttonCheckText,
+			buttonCheckTextShadow;
 
 		private Text[]
 			buttonMoveName = new Text[4],
@@ -249,16 +257,6 @@ namespace PokemonUnity.Legacy {
 		private GameObject pokemonPartyObject;
 
         #endregion
-
-        private UnityEngine.Sprite[][] pokemonIconAnim = new UnityEngine.Sprite[][]
-		{
-			new UnityEngine.Sprite[2],
-			new UnityEngine.Sprite[2],
-			new UnityEngine.Sprite[2],
-			new UnityEngine.Sprite[2],
-			new UnityEngine.Sprite[2],
-			new UnityEngine.Sprite[2]
-		};
 
 		//POKE SELECTED DETAILS
 		private GameObject pokemonSelectedPokemon;
@@ -675,13 +673,9 @@ namespace PokemonUnity.Legacy {
 			return; // FIXME
 			//GameDebug.OnLog += GameDebug_OnLog;
 			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
-			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
-			Game.LocalizationDictionary = new PokemonUnity.Localization.XmlStringRes(null); //new Debugger());
-			Game.LocalizationDictionary.Initialize(englishLocalization, (int)PokemonUnity.Languages.English);
-
+			
 			//Setup Battle Scene
-			BattleScene = GameObject.Find("Global/BattleScene");
+			//BattleScene = GameObject.Find("Global/BattleScene");
 
 			//Setup Camera Display
 			BattleDisplay = GameObject.Find("Global/MainCamera/BattleDisplay");

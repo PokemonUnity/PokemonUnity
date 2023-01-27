@@ -72,7 +72,7 @@ public class FollowerMovement : MonoBehaviour, INeedDirection
 		if (animator == null) Debug.LogError("No Sprite Animator provided", gameObject);
         if (DirectionSurrogate == null) Debug.LogError("No Direction Surrogate provided", gameObject);
 
-        animator.Animations = Pokemon.Animations;
+        animator.Animations = Pokemon.OverworldAnimations;
 		DirectionSurrogate.OnDirectionUpdated.AddListener(SwitchAnimation);
 	}
 
@@ -625,7 +625,7 @@ public class FollowerMovement : MonoBehaviour, INeedDirection
         PokemonSO pokemon = (PokemonSO)playerMovement.Player.party[this.partyIndex];
 		pokemonID = (int)pokemon.Species;
 		//spriteSheet = SaveData.currentSave.PC.boxes[0][followerIndex].GetNewSprite(false);
-		animator.Animations = pokemon.Animations;
+		animator.Animations = pokemon.OverworldAnimations;
 		return; // FIXME: need to merge where pokemon data is being grabbed between the PokemonDatabase class and Flaks current methods
         HasLight = PokemonDatabase.getPokemon(pokemonID).hasLight();
         LightIntensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();

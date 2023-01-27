@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-[CreateAssetMenu(fileName = "Sprite Animation", menuName = "Pokemon Unity/Animation/Sprite Animation")]
+[CreateAssetMenu(fileName = "New Sprite Animation", menuName = "Pokemon Unity/Sprite Animation")]
 public class SpriteAnimation : ScriptableObject {
     public string Name = "";
     [Description("Set to 0 to stop animation")]

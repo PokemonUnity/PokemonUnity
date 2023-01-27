@@ -67,4 +67,8 @@ MonoBehaviour:
     value: 1
   - key: TypewriterBehaviour/Events
     value: 1
+  - key: PokemonSO/Overworld Graphics
+    value: 1
+  - key: PokemonSO/Battle Graphics
+    value: 1
   serializedIntEntries: []

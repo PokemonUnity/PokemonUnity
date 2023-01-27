@@ -1,3 +1,4 @@
+using MarkupAttributes;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Item;
 using PokemonEssentials.Interface.PokeBattle;
@@ -12,7 +13,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Pokemon", menuName = "Pokemon Unity/Pokemon")]
 public class PokemonSO : ScriptableObject, IPokemon {
     [SerializeField] Pokemons species;
-    public List<SpriteAnimation> Animations;
+    [TitleGroup("Overworld Graphics", contentBox: true)]
+    public List<SpriteAnimation> OverworldAnimations;
+    [TitleGroup("Battle Graphics", contentBox: true)]
+    public SpriteAnimation Front;
+    public SpriteAnimation Back;
 
     #region IPokemon Properties
 
@@ -325,5 +330,10 @@ public class PokemonSO : ScriptableObject, IPokemon {
     }
 
     #endregion
+
+    public class PokemonBattleSprites {
+        public SpriteAnimation Front;
+        public SpriteAnimation Back;
+    }
 
 }
