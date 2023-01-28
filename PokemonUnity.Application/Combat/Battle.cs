@@ -210,8 +210,8 @@ namespace PokemonUnity.Combat
 		/// Counter to track number of turns for battle
 		/// </summary>
 		public int turncount { get; set; }
-		public IBattler[] Priority { get { return priority; } }
-		protected IBattler[] priority;
+		protected IBattler[] priority { get { return _priority; } }
+		protected IBattler[] _priority;
 		protected List<int> snaggedpokemon;
 		/// <summary>
 		/// Each time you use the option to flee, the counter goes up.
@@ -362,7 +362,7 @@ namespace PokemonUnity.Combat
 			peer = PokemonUnity.Monster.PokeBattle_BattlePeer.create();
 			//peer = new PokeBattle_BattlePeer();
 
-			priority = new Pokemon[battlers.Length];
+			_priority = new Pokemon[battlers.Length];
 
 			//usepriority = false; //False is already default value; redundant.
 
@@ -1361,8 +1361,8 @@ namespace PokemonUnity.Combat
 		}
 
 		public IBattler[] pbPriority(bool ignorequickclaw=false, bool log=false) {
-			if (@usepriority) return Priority;	// use stored priority if round isn't over yet
-			@priority = new Pokemon[battlers.Length]; //.Clear();
+			if (@usepriority) return priority;	// use stored priority if round isn't over yet
+			_priority = new Pokemon[battlers.Length]; //.Clear();
 			int[] speeds=new int[battlers.Length];
 			int[] priorities=new int[battlers.Length];
 			bool[] quickclaw=new bool[battlers.Length]; bool[] lagging=new bool[battlers.Length];
@@ -1435,7 +1435,7 @@ namespace PokemonUnity.Combat
 				}
 				// Sort by speed
 				if (temp.Count==1) {
-					@priority[@priority.Length]=@battlers[temp[0]]; //ToDo: Redo this, maybe use Math.Min to sort..
+					_priority[_priority.Length]=@battlers[temp[0]]; //ToDo: Redo this, maybe use Math.Min to sort..
 				}
 				else if (temp.Count>1) {
 					int n=temp.Count - 1;
@@ -1491,7 +1491,7 @@ namespace PokemonUnity.Combat
 					// Battlers in this bracket are properly sorted, so add them to @priority
 					int x = 0; foreach (int i in temp) {
 						//@priority[@priority.Length - 1]=@battlers[i];
-						@priority[x]=@battlers[i]; x++;
+						_priority[x]=@battlers[i]; x++;
 					}
 				}
 				curpri-=1;
@@ -1501,15 +1501,15 @@ namespace PokemonUnity.Combat
 			if (log) {
 				string d="[Priority] "; bool comma=false;
 				for (int i = 0; i < battlers.Length; i++) {
-					if (Priority[i].IsNotNullOrNone() && !Priority[i].isFainted()) {
+					if (_priority[i].IsNotNullOrNone() && !_priority[i].isFainted()) {
 						if (comma) d+=", ";
-						d+=$"#{Priority[i].ToString(comma)} (#{Priority[i].Index})"; comma=true;
+						d+=$"#{_priority[i].ToString(comma)} (#{_priority[i].Index})"; comma=true;
 					}
 				}
 				GameDebug.Log(d);
 			}
 			@usepriority=true;
-			return Priority;
+			return priority;
 		}
 		#endregion
 
@@ -1698,8 +1698,8 @@ namespace PokemonUnity.Combat
 				}
 			}
 			if (switched.Count>0) {
-				priority=pbPriority();
-				foreach (var i in Priority) {
+				_priority=pbPriority();
+				foreach (var i in priority) {
 					if (switched.Contains(i.Index)) i.pbAbilitiesOnSwitchIn(true);
 				}
 			}
@@ -2570,7 +2570,7 @@ namespace PokemonUnity.Combat
 			// Weather-inducing abilities, Trace, Imposter, etc.
 			@usepriority=false;
 			IBattler[] priority=pbPriority();
-			foreach (var i in Priority) {
+			foreach (var i in this.priority) {
 				i?.pbAbilitiesOnSwitchIn(true);
 			}
 			// Check forms are correct
@@ -3309,10 +3309,10 @@ namespace PokemonUnity.Combat
 			}
 			// Calculate priority at this time
 			@usepriority=false;
-			priority=pbPriority(false,true);
+			_priority=pbPriority(false,true);
 			// Mega Evolution
 			List<int> megaevolved=new List<int>();
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (@choices[i.Index].Action==ChoiceAction.UseMove && !i.effects.SkipTurn) {
 					int side=(pbIsOpposing(i.Index)) ? 1 : 0;
 					int owner=pbGetOwnerIndex(i.Index);
@@ -3323,12 +3323,12 @@ namespace PokemonUnity.Combat
 				}
 			}
 			if (megaevolved.Count>0) {
-				foreach (var i in Priority) {
+				foreach (var i in priority) {
 					if (megaevolved.Contains(i.Index)) i.pbAbilitiesOnSwitchIn(true);
 				}
 			}
 			// Call at Pokémon
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (@choices[i.Index].Action==ChoiceAction.CallPokemon && !i.effects.SkipTurn) {
 					pbCall(i.Index);
 				}
@@ -3336,7 +3336,7 @@ namespace PokemonUnity.Combat
 			// Switch out Pokémon
 			@switching=true;
 			List<int> switched=new List<int>();
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (@choices[i.Index].Action==ChoiceAction.SwitchPokemon && !i.effects.SkipTurn) {
 					int index=@choices[i.Index].Index; // party position of Pokémon to switch to
 					int newpokename=index;
@@ -3353,7 +3353,7 @@ namespace PokemonUnity.Combat
 						pbDisplayBrief(Game._INTL("{1}, that's enough!\r\nCome back!",i.Name));
 						GameDebug.Log($"[Withdrew Pokémon] Player withdrew #{i.ToString(true)}");
 					}
-					foreach (var j in Priority) {
+					foreach (var j in priority) {
 						if (!i.pbIsOpposing(j.Index)) continue;
 						// if Pursuit and this target ("i") was chosen
 						if (pbChoseMoveFunctionCode(j.Index,Attack.Data.Effects.x081) && // Pursuit
@@ -3385,13 +3385,13 @@ namespace PokemonUnity.Combat
 				}
 			}
 			if (switched.Count>0) {
-				foreach (var i in Priority) {
+				foreach (var i in priority) {
 					if (switched.Contains(i.Index)) i.pbAbilitiesOnSwitchIn(true);
 				}
 			}
 			@switching=false;
 			// Use items
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (@choices[i.Index].Action== ChoiceAction.UseItem && !i.effects.SkipTurn) {
 					if (pbIsOpposing(i.Index)) {
 						// Opponent use item
@@ -3418,7 +3418,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Use attacks
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.effects.SkipTurn) continue;
 				if (pbChoseMoveFunctionCode(i.Index,Attack.Data.Effects.x0AB)) { // Focus Punch
 					pbCommonAnimation("FocusPunch",i,null);
@@ -3428,7 +3428,7 @@ namespace PokemonUnity.Combat
 			int n = 0; do { //10.times
 				// Forced to go next
 				bool advance=false;
-				foreach (var i in Priority) {
+				foreach (var i in priority) {
 					if (!i.effects.MoveNext) continue;
 					if (i.hasMovedThisRound() || i.effects.SkipTurn) continue;
 					advance=i.pbProcessTurn(@choices[i.Index]);
@@ -3437,7 +3437,7 @@ namespace PokemonUnity.Combat
 				if (@decision>0) return;
 				if (advance) continue;
 				// Regular priority order
-				foreach (var i in Priority) {
+				foreach (var i in priority) {
 					if (i.effects.Quash) continue;
 					if (i.hasMovedThisRound() || i.effects.SkipTurn) continue;
 					advance=i.pbProcessTurn(@choices[i.Index]);
@@ -3446,7 +3446,7 @@ namespace PokemonUnity.Combat
 				if (@decision>0) return;
 				if (advance) continue;
 				// Quashed
-				foreach (var i in Priority) {
+				foreach (var i in priority) {
 					if (!i.effects.Quash) continue;
 					if (i.hasMovedThisRound() || i.effects.SkipTurn) continue;
 					advance=i.pbProcessTurn(@choices[i.Index]);
@@ -3455,7 +3455,7 @@ namespace PokemonUnity.Combat
 				if (@decision>0) return;
 				if (advance) continue;
 				// Check for all done
-				foreach (var i in Priority) {
+				foreach (var i in priority) {
 					if (@choices[i.Index].Action== ChoiceAction.UseMove && !i.hasMovedThisRound() &&
 						!i.effects.SkipTurn) advance=true;
 					if (advance) break;
@@ -3487,7 +3487,7 @@ namespace PokemonUnity.Combat
 				@battlers[i].effects.SpikyShield=false;
 			}
 			@usepriority=false;  // recalculate priority
-			priority=pbPriority(true); // Ignoring Quick Claw here
+			_priority=pbPriority(true); // Ignoring Quick Claw here
 			// Weather
 			switch (@weather) {
 				case Weather.SUNNYDAY:
@@ -3501,7 +3501,7 @@ namespace PokemonUnity.Combat
 						pbCommonAnimation("Sunny",null,null);
 						pbDisplay(Game._INTL("The sunlight is strong."));
 						if (pbWeather==Weather.SUNNYDAY) {
-							foreach (var i in Priority) {
+							foreach (var i in priority) {
 								if (i.hasWorkingAbility(Abilities.SOLAR_POWER)) {
 									GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Solar Power");
 									(@scene as IPokeBattle_DebugSceneNoGraphics).pbDamageAnimation(i,0);
@@ -3539,7 +3539,7 @@ namespace PokemonUnity.Combat
 						pbDisplay(Game._INTL("The sandstorm rages."));
 						if (pbWeather==Weather.SANDSTORM) {
 							GameDebug.Log($"[Lingering effect triggered] Sandstorm weather damage");
-							foreach (var i in Priority) {
+							foreach (var i in priority) {
 								if (i.isFainted()) continue;
 								if (!i.pbHasType(Types.GROUND) && !i.pbHasType(Types.ROCK) && !i.pbHasType(Types.STEEL) &&
 									!i.hasWorkingAbility(Abilities.SAND_VEIL) &&
@@ -3575,7 +3575,7 @@ namespace PokemonUnity.Combat
 						pbDisplay(Game._INTL("Hail continues to fall."));
 						if (pbWeather==Weather.HAIL) {
 							GameDebug.Log($"[Lingering effect triggered] Hail weather damage");
-							foreach (var i in Priority) {
+							foreach (var i in priority) {
 								if (i.isFainted()) continue;
 								if (!i.pbHasType(Types.ICE) &&
 									!i.hasWorkingAbility(Abilities.ICE_BODY) &&
@@ -3630,7 +3630,7 @@ namespace PokemonUnity.Combat
 						pbCommonAnimation("HarshSun",null,null);
 						pbDisplay(Game._INTL("The sunlight is extremely harsh."));
 						if (pbWeather==Weather.HARSHSUN) {
-							foreach (var i in Priority) {
+							foreach (var i in priority) {
 								if (i.hasWorkingAbility(Abilities.SOLAR_POWER)) {
 									GameDebug.Log($"[Ability triggered] #{i.ToString()}'s Solar Power");
 									(@scene as IPokeBattle_DebugSceneNoGraphics).pbDamageAnimation(i,0);
@@ -3676,7 +3676,7 @@ namespace PokemonUnity.Combat
 					pbDisplay(Game._INTL("The shadow sky continues."));
 					if (pbWeather == Weather.SHADOWSKY) {
 						GameDebug.Log($"[Lingering effect triggered] Shadow Sky weather damage");
-						foreach (var i in Priority) {
+						foreach (var i in priority) {
 							if (i.isFainted()) continue;
 							if (i is IBattlerShadowPokemon s && !s.isShadow()) {
 								(@scene as IPokeBattle_DebugSceneNoGraphics).pbDamageAnimation(i,0);
@@ -3733,7 +3733,7 @@ namespace PokemonUnity.Combat
 					}
 				}
 			}
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				// Rain Dish
 				if (i.hasWorkingAbility(Abilities.RAIN_DISH) &&
@@ -3770,7 +3770,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Wish
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Wish>0) {
 					i.effects.Wish-=1;
@@ -3791,7 +3791,7 @@ namespace PokemonUnity.Combat
 					pbWeather!=Weather.HEAVYRAIN) {
 					if (i==0) pbCommonAnimation("SeaOfFire",null,null);     //@battle.
 					if (i==1) pbCommonAnimation("SeaOfFireOpp",null,null);  //@battle.
-					foreach (var j in Priority) {
+					foreach (var j in priority) {
 						if ((j.Index&1)!=i) continue;
 						if (j.pbHasType(Types.FIRE) || j.hasWorkingAbility(Abilities.MAGIC_GUARD)) continue;
 						(@scene as IPokeBattle_DebugSceneNoGraphics).pbDamageAnimation(j,0);
@@ -3803,7 +3803,7 @@ namespace PokemonUnity.Combat
 					}
 				}
 			}
-			foreach (IBattler i in Priority) {
+			foreach (IBattler i in priority) {
 				if (i.isFainted()) continue;
 				// Shed Skin, Hydration
 				if ((i.hasWorkingAbility(Abilities.SHED_SKIN) && pbRandom(10)<3) ||
@@ -3859,7 +3859,7 @@ namespace PokemonUnity.Combat
 					}
 				}
 			}
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				// Grassy Terrain (healing)
 				if (@field.GrassyTerrain>0 && !i.isAirborne()) {
@@ -3873,7 +3873,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Aqua Ring
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.AquaRing) {
 					GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Aqua Ring");
@@ -3884,7 +3884,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Ingrain
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Ingrain) {
 					GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s Ingrain");
@@ -3895,7 +3895,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Leech Seed
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.LeechSeed>=0 && !i.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
 					IBattler recipient=@battlers[i.effects.LeechSeed];
@@ -3923,7 +3923,7 @@ namespace PokemonUnity.Combat
 					}
 				}
 			}
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				// Poison/Bad poison
 				if (i.Status==Status.POISON) {
@@ -3985,7 +3985,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Curse
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Curse && !i.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
 					GameDebug.Log($"[Lingering effect triggered] #{i.ToString()}'s curse");
@@ -3998,7 +3998,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Multi-turn attacks (Bind/Clamp/Fire Spin/Magma Storm/Sand Tomb/Whirlpool/Wrap)
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.MultiTurn>0) {
 					i.effects.MultiTurn-=1;
@@ -4049,7 +4049,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Taunt
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Taunt>0) {
 					i.effects.Taunt-=1;
@@ -4060,7 +4060,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Encore
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Encore>0) {
 					if (i.moves[i.effects.EncoreIndex].id!=i.effects.EncoreMove) {
@@ -4080,7 +4080,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Disable/Cursed Body
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Disable>0) {
 					i.effects.Disable-=1;
@@ -4092,7 +4092,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Magnet Rise
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.MagnetRise>0) {
 					i.effects.MagnetRise-=1;
@@ -4103,7 +4103,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Telekinesis
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Telekinesis>0) {
 					i.effects.Telekinesis-=1;
@@ -4114,7 +4114,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Heal Block
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.HealBlock>0) {
 					i.effects.HealBlock-=1;
@@ -4125,7 +4125,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Embargo
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Embargo>0) {
 					i.effects.Embargo-=1;
@@ -4136,7 +4136,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Yawn
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Yawn>0) {
 					i.effects.Yawn-=1;
@@ -4148,7 +4148,7 @@ namespace PokemonUnity.Combat
 			}
 			// Perish Song
 			List<int> perishSongUsers=new List<int>();
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.PerishSong>0) {
 					i.effects.PerishSong-=1;
@@ -4349,10 +4349,10 @@ namespace PokemonUnity.Combat
 				}
 			}
 			// Uproar
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				if (i.effects.Uproar>0) {
-					foreach (var j in Priority) {
+					foreach (var j in priority) {
 						if (!j.isFainted() && j.Status==Status.SLEEP && !j.hasWorkingAbility(Abilities.SOUNDPROOF)) {
 							GameDebug.Log($"[Lingering effect triggered] Uproar woke up #{j.ToString(true)}");
 							if (j is IBattlerEffect b) b.pbCureStatus(false);
@@ -4369,7 +4369,7 @@ namespace PokemonUnity.Combat
 					}
 				}
 			}
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				// Speed Boost
 				// A Pokémon's turncount is 0 if it became active after the beginning of a round
@@ -4456,7 +4456,7 @@ namespace PokemonUnity.Combat
 					}
 				}
 			}
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				// Toxic Orb
 				if (i.hasWorkingItem(Items.TOXIC_ORB) && i.Status==0 && i is IBattlerEffect b0 && b0.pbCanPoison(null,false)) {
@@ -4488,7 +4488,7 @@ namespace PokemonUnity.Combat
 			pbGainEXP();
 			pbSwitch();
 			if (@decision>0) return;
-			foreach (var i in Priority) {
+			foreach (var i in priority) {
 				if (i.isFainted()) continue;
 				i.pbAbilitiesOnSwitchIn(false);
 			}
