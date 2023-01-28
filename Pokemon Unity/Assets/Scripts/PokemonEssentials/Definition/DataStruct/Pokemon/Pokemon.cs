@@ -33,7 +33,7 @@ namespace PokemonUnity.UX
 		#endregion
 
 		#region Constructors
-		public Battler(IBattle btl, int idx) : base(btl, idx)
+		public Battler(IBattleIE btl, int idx) : base(btl, idx)
 		{
 		}
 		#endregion
