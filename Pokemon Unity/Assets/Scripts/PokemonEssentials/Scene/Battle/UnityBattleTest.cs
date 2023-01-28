@@ -238,12 +238,13 @@ namespace PokemonUnity.UX
 		/// <summary>
 		/// </summary>
 		public UnityBattleTest(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent)
-			: base (scene, p1, p2, player, opponent)
+			//: base (scene, p1, p2, player, opponent)
+			: this (scene, p1, p2, player == null ? null : new ITrainer[] { player }, opponent == null ? null : new ITrainer[] { opponent })
 		{
-			(this as IBattleIE).initialize(scene, p1, p2, player, opponent);
+			//(this as IBattleIE).initialize(scene, p1, p2, player, opponent);
 		}
 		public UnityBattleTest(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
-			: base (scene, p1, p2, player, opponent)
+			//: base (scene, p1, p2, player, opponent)
 		{
 			(this as IBattleIE).initialize(scene, p1, p2, player, opponent);
 		}
