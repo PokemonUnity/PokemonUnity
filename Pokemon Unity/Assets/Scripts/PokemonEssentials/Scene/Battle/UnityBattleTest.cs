@@ -216,7 +216,9 @@ namespace PokemonUnity.UX
 		///// Counter to track number of turns for battle
 		///// </summary>
 		//public int turncount { get; set; }
-		new public IBattlerIE[] priority { get; protected set; }
+		new public IBattlerIE[] priority { get { return (IBattlerIE[])_priority; } }
+		//	get { IBattlerIE[] p = new IBattlerIE[_priority.Length]; for (int i = 0; i < p.Length; i++) p[i] = (IBattlerIE)_priority[i]; return p; } 
+		//	protected set { _priority = new IBattler[value.Length]; for (int i = 0; i < _priority.Length; i++) _priority[i] = value[i]; } }
 		//public List<int> snaggedpokemon { get; protected set; }
 		///// <summary>
 		///// Each time you use the option to flee, the counter goes up.
@@ -366,7 +368,7 @@ namespace PokemonUnity.UX
 			peer = PokemonUnity.Monster.PokeBattle_BattlePeer.create();
 			//peer = new PokeBattle_BattlePeer();
 
-			priority = new PokemonUnity.UX.Battler[battlers.Length];
+			_priority = new PokemonUnity.UX.Battler[battlers.Length];
 
 			//usepriority = false; //False is already default value; redundant.
 
@@ -453,7 +455,7 @@ namespace PokemonUnity.UX
 			this.endspeechwin2 = (string)info.GetValue(nameof(endspeechwin2), typeof(string));
 			this.rules = (IDictionary<string, bool>)info.GetValue(nameof(rules), typeof(IDictionary<string, bool>));
 			this.turncount = (int)info.GetValue(nameof(turncount), typeof(int));
-			this.priority = (IBattlerIE[])info.GetValue(nameof(priority), typeof(IBattlerIE[]));
+			this._priority = (IBattlerIE[])info.GetValue(nameof(priority), typeof(IBattlerIE[]));
 			this.snaggedpokemon = (List<int>)info.GetValue(nameof(snaggedpokemon), typeof(List<int>));
 			this.runCommand = (int)info.GetValue(nameof(runCommand), typeof(int));
 			this.pickupUse = (int)info.GetValue(nameof(pickupUse), typeof(int));
@@ -1439,8 +1441,8 @@ namespace PokemonUnity.UX
 		//}
 
 		new public IBattlerIE[] pbPriority(bool ignorequickclaw=false, bool log=false) {
-			if (@usepriority) return @priority;	// use stored priority if round isn't over yet
-			@priority = new PokemonUnity.UX.Battler[battlers.Length]; //.Clear();
+			if (@usepriority) return priority;	// use stored priority if round isn't over yet
+			_priority = new PokemonUnity.UX.Battler[battlers.Length]; //.Clear();
 			int[] speeds=new int[battlers.Length];
 			int[] priorities=new int[battlers.Length];
 			bool[] quickclaw=new bool[battlers.Length]; bool[] lagging=new bool[battlers.Length];
@@ -1513,7 +1515,7 @@ namespace PokemonUnity.UX
 				}
 				// Sort by speed
 				if (temp.Count==1) {
-					@priority[@priority.Length]=@battlers[temp[0]]; //ToDo: Redo this, maybe use Math.Min to sort..
+					_priority[_priority.Length]=@battlers[temp[0]]; //ToDo: Redo this, maybe use Math.Min to sort..
 				}
 				else if (temp.Count>1) {
 					int n=temp.Count - 1;
@@ -1566,10 +1568,10 @@ namespace PokemonUnity.UX
 							}
 						}
 					}
-					// Battlers in this bracket are properly sorted, so add them to @priority
+					// Battlers in this bracket are properly sorted, so add them to _priority
 					int x = 0; foreach (int i in temp) {
-						//@priority[@priority.Length - 1]=@battlers[i];
-						@priority[x]=@battlers[i]; x++;
+						//_priority[_priority.Length - 1]=@battlers[i];
+						_priority[x]=@battlers[i]; x++;
 					}
 				}
 				curpri-=1;
@@ -1579,15 +1581,15 @@ namespace PokemonUnity.UX
 			if (log) {
 				string d="[Priority] "; bool comma=false;
 				for (int i = 0; i < battlers.Length; i++) {
-					if (@priority[i].IsNotNullOrNone() && !@priority[i].isFainted()) {
+					if (_priority[i].IsNotNullOrNone() && !_priority[i].isFainted()) {
 						if (comma) d+=", ";
-						d+=$"#{@priority[i].ToString(comma)} (#{@priority[i].Index})"; comma=true;
+						d+=$"#{_priority[i].ToString(comma)} (#{_priority[i].Index})"; comma=true;
 					}
 				}
 				GameDebug.Log(d);
 			}
 			@usepriority=true;
-			return @priority;
+			return priority;
 		}
 		#endregion
 
@@ -1783,7 +1785,7 @@ namespace PokemonUnity.UX
 				}
 			}
 			if (switched.Count>0) {
-				priority=pbPriority();
+				_priority=pbPriority();
 				foreach (var i in priority) {
 					if (switched.Contains(i.Index)) yield return i.pbAbilitiesOnSwitchIn(true);
 				}
@@ -2675,8 +2677,8 @@ namespace PokemonUnity.UX
 			}
 			// Weather-inducing abilities, Trace, Imposter, etc.
 			@usepriority=false;
-			IBattlerIE[] priority=pbPriority();
-			foreach (var i in priority) {
+			IBattlerIE[] priority_=pbPriority();
+			foreach (var i in priority_) {
 				yield return i?.pbAbilitiesOnSwitchIn(true);
 			}
 			// Check forms are correct
@@ -3430,7 +3432,7 @@ namespace PokemonUnity.UX
 			}
 			// Calculate priority at this time
 			@usepriority=false;
-			priority=pbPriority(false,true);
+			_priority=pbPriority(false,true);
 			// Mega Evolution
 			List<int> megaevolved=new List<int>();
 			foreach (var i in priority) {
@@ -3610,7 +3612,7 @@ namespace PokemonUnity.UX
 				@battlers[i].effects.SpikyShield=false;
 			}
 			@usepriority=false;  // recalculate priority
-			priority=pbPriority(true); // Ignoring Quick Claw here
+			_priority=pbPriority(true); // Ignoring Quick Claw here
 			// Weather
 			switch (@weather) {
 				case Weather.SUNNYDAY:
