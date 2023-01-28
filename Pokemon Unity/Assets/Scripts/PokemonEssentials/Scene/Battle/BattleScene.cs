@@ -665,6 +665,14 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		pbFrameUpdate();
 	}
 
+	public void pbFrameUpdate(IViewport cw)
+	{
+		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+		if (cw != null) cw.update();
+		pbFrameUpdate();
+	}
+
 	public void pbFrameUpdate()
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -1650,14 +1658,6 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		pbRefresh();
 	}
 
-	public void pbTrainerWithdraw(IBattle battle, IBattler pkmn)
-	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-
-		//TODO hide player's pokemon
-		pbRefresh();
-	}
-
 	public void pbWithdraw(IBattle battle, IBattler pkmn)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -2426,9 +2426,9 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		
-		int newcurwindow = -1;
+		/*int newcurwindow = -1;
 		//All of this below should be a coroutine that returns the value selected in UI
-		/*do //;loop
+		do //;loop
 		{
 			pbGraphicsUpdate();
 			pbInputUpdate();
@@ -3021,8 +3021,8 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		catch (Exception) //rescue;
 		{
 			return null;
-		}
-		return null;*/
+		}*/
+		return null;
 	}
 
 	public void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum = 0)
@@ -3040,7 +3040,7 @@ public class BattleScene : UnityEngine.MonoBehaviour, IScene, IPokeBattle_Scene
 		}*/
 	}
 
-	public void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum)
+	void IPokeBattle_DebugSceneNoGraphics.pbCommonAnimation(Moves moveid, IBattler user, IBattler target, int hitnum)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
