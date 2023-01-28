@@ -190,6 +190,11 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Constant\Constant.ProcedureData.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Constant\Constant.Setting.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\BuildInfo.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Move\Attack.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Move\Attack.Shadow.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Pokemon\Pokemon.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Pokemon\Pokemon.Effect.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Pokemon\Pokemon.Shadow.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\VersionInfo.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\MapTiles.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\Enum\TileShapes.cs" />
@@ -209,12 +214,14 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokeBattle_SceneConstants.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokemonDataBox.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\UnityBattle.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\UnityBattleTest.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\EventScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\InputManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Intro\IntroScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\LevelLoader.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\LevelLoader.SceneManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Typing\TypingForm.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\UnityInterfaces.cs" />
     <Compile Include="Assets\Scripts\ReflectiveWaterHandler.cs" />
     <Compile Include="Assets\Scripts\SandTileHandler.cs" />
     <Compile Include="Assets\Scripts\Save\CustomSaveEvent.cs" />
