@@ -34,7 +34,7 @@ namespace PokemonUnity.Combat
 			base.party2=party;
 			@peer=Monster.PokeBattle_BattlePeer.create();
 			base.player=new ITrainer[] { player };
-			@battlers=new IBattler[] {
+			_battlers=new IBattler[] {
 			   new Pokemon(this,0), //PokeBattle_FakeBattler(party[0],0),
 			   new Pokemon(this,1), //PokeBattle_FakeBattler(party[0],1),
 			   new Pokemon(this,2), //PokeBattle_FakeBattler(party[0],2),
