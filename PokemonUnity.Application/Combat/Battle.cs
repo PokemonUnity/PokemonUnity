@@ -365,7 +365,7 @@ namespace PokemonUnity.Combat
 
 			_priority = new Pokemon[battlers.Length];
 
-			//usepriority = false; //False is already default value; redundant.
+			usepriority = false; 
 
 			snaggedpokemon = new List<int>();
 

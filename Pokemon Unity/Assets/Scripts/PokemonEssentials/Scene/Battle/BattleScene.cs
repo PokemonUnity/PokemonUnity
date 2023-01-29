@@ -668,7 +668,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		pbFrameUpdate();
 	}
 
-	void IPokeBattle_DebugScene.pbFrameUpdate(IViewport cw)
+	public void pbFrameUpdate(IViewport cw)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -1683,9 +1683,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	void IPokeBattle_DebugSceneNoGraphics.pbTrainerWithdraw(IBattle battle, IBattler pkmn) { }
 
-	//void IPokeBattle_Scene.pbTrainerWithdraw(IBattle battle, IBattler pkmn)
-	//{
-	//}
+	//void IPokeBattle_Scene.pbTrainerWithdraw(IBattle battle, IBattler pkmn) { }
 
 	public IEnumerator pbWithdraw(IBattle battle, IBattlerIE pkmn)
 	{
@@ -1696,10 +1694,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		yield break;
 	}
 
-	void IPokeBattle_DebugSceneNoGraphics.pbWithdraw(IBattle battle, IBattler pkmn)
-	{
-		throw new NotImplementedException();
-	}
+	void IPokeBattle_DebugSceneNoGraphics.pbWithdraw(IBattle battle, IBattler pkmn) { }
 
 	public string pbMoveString(IBattleMove move)
 	{
@@ -3656,7 +3651,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		yield break;
 	}
 
-	public void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum)
+	void IPokeBattle_Scene.pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 

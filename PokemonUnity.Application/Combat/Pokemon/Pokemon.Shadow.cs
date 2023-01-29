@@ -12,7 +12,7 @@ namespace PokemonUnity.Combat
 	public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IBattlerShadowPokemon
 	{
 		public void pbInitPokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn, int pkmnIndex) { //, params object[] placeholder
-			if (pokemonIndex>0 && pkmn is IPokemonShadowPokemon p && inHyperMode() && !isFainted()) { //ToDo: Should move this to an Event Listener based on Battle Menu Selection
+			if (pokemonIndex>=0 && pkmn is IPokemonShadowPokemon p && inHyperMode() && !isFainted()) { //ToDo: Should move this to an Event Listener based on Battle Menu Selection
 				// Called out of hypermode
 				p.hypermode=false;
 				//p.isHyperMode=false;

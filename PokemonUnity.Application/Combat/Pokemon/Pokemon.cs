@@ -31,7 +31,6 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// Returns the position of this pkmn in battle lineup
 		/// </summary>
-		/// ToDo: Where this.pkmn.index == battle.Party[this.pkmn.index]
 		public int Index						{ get; protected set; }
 		/// <summary>
 		/// Index list of all pokemons who attacked this battler on this/previous turn
@@ -63,7 +62,7 @@ namespace PokemonUnity.Combat
 		public bool captured					{ get; set; }
 		#endregion
 		#region Inherit Base Pokemon Data
-		public int HP							{ get { return hp; } set { if (value > 0) { hp = value; if (status == Status.FAINT) Status = Status.NONE; } else Status = Status.FAINT; } }
+		public int HP							{ get { return hp; } set { if (value > 0) { hp = value; if (status == Status.FAINT) { Status = Status.NONE; fainted = false; } } else Status = Status.FAINT;} }
 		private int hp;
 		public int TotalHP						{ get; protected set; }
 		public int ATK							{ get { return effects.PowerTrick ? DEF : attack; } set { attack = value; } }
@@ -170,7 +169,7 @@ namespace PokemonUnity.Combat
 				if (pokemon.IsNotNullOrNone()) return pokemon.IsShiny;
 				return false; }
 		}
-		public Pokemons Species					{ get { return pokemon == null ? Pokemons.NONE : Kernal.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
+		public Pokemons Species					{ get { return pokemon == null ? Pokemons.NONE : (effects.Illusion != null ? effects.Illusion.Species : Kernal.PokemonFormsData[pokemon.Species][form].Base); } }
 		public int StatusCount					{ get { return statusCount; } set { statusCount = value; } }
 		private int statusCount;
 		public Status Status
@@ -187,9 +186,9 @@ namespace PokemonUnity.Combat
 				if (value != Status.POISON)
 					effects.Toxic = 0;
 				if (value != Status.POISON && value != Status.SLEEP)
-					StatusCount = 0;
-				if (value != Status.FAINT)
-					hp = 0;
+					statusCount = 0;
+				if (value == Status.FAINT)
+				{ hp = 0; fainted = true; }
 			}
 		}
 		private Status status;
@@ -312,7 +311,7 @@ namespace PokemonUnity.Combat
 		{
 			(this as IBattler).initialize(btl, idx);
 		}
-		IBattler IBattler.initialize(IBattle btl, int idx)
+		IBattler IBattler.initialize(IBattle btl, int idx) //because it's meant to be protected...
 		{
 			battle			= btl;
 			Index			= idx;
@@ -320,7 +319,7 @@ namespace PokemonUnity.Combat
 			TotalHP			= 0;
 			fainted			= true;
 			captured		= false;
-			stages			= new int[Enum.GetValues(typeof(PokemonUnity.Combat.Stats)).Length];
+			stages			= new int[7]; //int[Enum.GetValues(typeof(PokemonUnity.Combat.Stats)).Length];
 			effects			= new Effects.Battler(false);
 			damagestate		= new DamageState();
 			pbInitBlank();
@@ -348,24 +347,44 @@ namespace PokemonUnity.Combat
 		}
 		public void pbInitBlank()
 		{
-			//Pokemon blank = new Pokemon();
-			//Level = 0;
-			pokemonIndex = -1;
-			participants = new List<int>();
+			@name			= "";
+			//@Species		= 0;
+			@level			= 0;
+			@HP				= 0;
+			@TotalHP		= 0;
+			@gender			= null; //0;
+			@ability		= 0;
+			@Type1			= 0;
+			@Type2			= 0;
+			@form			= 0;
+			@attack			= 0;
+			@defense		= 0;
+			@speed			= 0;
+			@spatk			= 0;
+			@spdef			= 0;
+			@status			= 0;
+			@statusCount	= 0;
+			@pokemon		= null;
+			pokemonIndex	= -1;
+			participants	= new List<int>();
+			@moves			= new IBattleMove[]{ null,null,null,null };
+			@IV				= new int[]{ 0,0,0,0,0,0 };
+			@item			= 0;
+			//@weight			= null;
 		}
 		public void pbInitEffects(bool batonpass)
 		{
 			if (!batonpass)
 			{
 				//These effects are retained if Baton Pass is used
-				//stages[0]	= 0; // [ATTACK]
-				//stages[1]	= 0; // [DEFENSE]
-				//stages[2]	= 0; // [SPEED]
-				//stages[3]	= 0; // [SPATK]
-				//stages[4]	= 0; // [SPDEF]
-				//stages[5]	= 0; // [EVASION]
-				//stages[6]	= 0; // [ACCURACY]
-				stages = new int[7];//Enum.GetValues(typeof(PokemonUnity.Battle.Stats)).Length
+				//stages[0]			= 0; // [ATTACK]
+				//stages[1]			= 0; // [DEFENSE]
+				//stages[2]			= 0; // [SPEED]
+				//stages[3]			= 0; // [SPATK]
+				//stages[4]			= 0; // [SPDEF]
+				//stages[5]			= 0; // [EVASION]
+				//stages[6]			= 0; // [ACCURACY]
+				stages				= new int[7]; //int[Enum.GetValues(typeof(PokemonUnity.Combat.Stats)).Length];
 				lastMoveUsedSketch 	= Moves.NONE; //-1;
 				effects.AquaRing	= false;
 				effects.Confusion	= 0;
@@ -509,6 +528,7 @@ namespace PokemonUnity.Combat
 			{
 				//if (battle.battlers[i].Species == Pokemons.NONE) continue;
 				if (!battle.battlers[i].IsNotNullOrNone()) continue;
+				if (battle.battlers[i].effects == null) continue; //ToDo: Initialize on all battlers before here?...
 				if (battle.battlers[i].effects.Attract == Index)
 				{
 					battle.battlers[i].effects.Attract = -1;
@@ -557,7 +577,7 @@ namespace PokemonUnity.Combat
 				name			= pkmn.Name;
 				//Species		= pkmn.Species;
 				level			= pkmn.Level;
-				hp				= pkmn.HP;
+				HP				= pkmn.HP;
 				TotalHP			= pkmn.TotalHP;
 				gender			= pkmn.Gender;
 				ability			= pkmn.Ability;
@@ -626,9 +646,10 @@ namespace PokemonUnity.Combat
 			Index		= -1;
 			pbInitEffects(false);
 			//reset status
-			Status		= Status.NONE; //ToDo: Status.FAINT?
-			StatusCount	= 0;
+			status		= Status.NONE; //ToDo: Status.FAINT?
+			statusCount	= 0;
 			fainted		= true;
+			//captured	= false; //ToDo: null=default,false=snagged,true=captured?
 			//reset choice
 			battle.choices[Index] = new Choice(ChoiceAction.NoAction);
 			return this;
@@ -846,8 +867,8 @@ namespace PokemonUnity.Combat
 			if (@battle.scene is IPokeBattle_DebugSceneNoGraphics s0) s0.pbFainted(this);
 			pbInitEffects(false);
 			// Reset status
-			//Status = 0;
-			StatusCount = 0;
+			//status = 0;
+			statusCount = 0;
 			if (pokemon != null && battle.internalbattle)
 				(pokemon as Monster.Pokemon).ChangeHappiness(HappinessMethods.FAINT);
 			if (isMega) {
@@ -860,9 +881,9 @@ namespace PokemonUnity.Combat
 				if (pokemon is IPokemonMegaEvolution m) m.makeUnprimal();
 				form = pokemon is IPokemonMultipleForms f ? f.form : 0;
 			}
-			HP = 0;
+			hp = 0;
 			fainted = true;
-			Status = Status.FAINT;
+			status = Status.FAINT;
 			//reset choice
 			battle.choices[Index] = new Choice(ChoiceAction.NoAction);
 			OwnSide.LastRoundFainted = battle.turncount;
