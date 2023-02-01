@@ -108,3 +108,5 @@ git-journal.fish
 /Set-AssemblyVersion.ps1
 /packages
 *.DoxyFile
+* - Copy.cs
+* - Copy.cs.meta

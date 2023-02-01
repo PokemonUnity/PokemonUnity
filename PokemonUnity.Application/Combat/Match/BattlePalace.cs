@@ -180,10 +180,10 @@ namespace PokemonUnity.Combat
 			bool shouldswitch=false;
 			if (@battlers[index].effects.PerishSong==1) {
 				shouldswitch=true;
-			} else if (!CanChooseMove(index,0,false) &&
-				!CanChooseMove(index,1,false) &&
-				!CanChooseMove(index,2,false) &&
-				!CanChooseMove(index,3,false) &&
+			} else if (!pbCanChooseMove(index,0,false) &&
+				!pbCanChooseMove(index,1,false) &&
+				!pbCanChooseMove(index,2,false) &&
+				!pbCanChooseMove(index,3,false) &&
 				@battlers[index].turncount>=0 &&
 				@battlers[index].turncount>5) {
 				shouldswitch=true;
