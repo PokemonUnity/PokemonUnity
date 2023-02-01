@@ -11,20 +11,20 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 using UnityEngine;
 
-namespace PokemonUnity
+namespace PokemonUnity.UX
 {
 	/// <summary>
 	/// Fight menu (choose a move)
 	/// </summary>
 	[RequireComponent(typeof(FightMenuButtons))]
-	public partial class FightMenuDisplay : MonoBehaviour, IFightMenuDisplay, IViewport
+	public partial class FightMenuDisplay : MonoBehaviour, IFightMenuDisplay, IViewport, IGameObject
 	{
 		[SerializeField] private FightMenuButtons buttons;
 		[SerializeField] private int _index;
 		[SerializeField] private int _megaButton;
 		[SerializeField] private IBattler _battler;
 		private IWindow_CommandPokemon window;
-		private IWindow_AdvancedTextPokemon info; //Move PP & Type?...
+		private IWindow_AdvancedTextPokemon info;
 		private IIconSprite display;
 		private bool disposedValue;
 		private string ctag;

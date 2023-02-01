@@ -3198,14 +3198,14 @@ namespace PokemonUnity.UX
 	{
 		public PokeBattle_Move_05A() : base() { }
 		//public PokeBattle_Move_05A(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override IEnumerator pbEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result = null)
 		{
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
-				battle.pbDisplay(Game._INTL("But it failed!"));
-				return -1;
+				yield return battle.pbDisplay(Game._INTL("But it failed!"));
+				result?.Invoke(-1); yield break;
 			}
-			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
+			yield return pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			int olda = attacker.HP;
 			int oldo = opponent.HP;
@@ -3214,10 +3214,10 @@ namespace PokemonUnity.UX
 			attacker.HP = Math.Min(avhp, attacker.TotalHP);
 			opponent.HP = Math.Min(avhp, opponent.TotalHP);
 
-			if (this.battle.scene is IPokeBattle_Scene s0) s0.pbHPChanged(attacker, olda);
-			if (this.battle.scene is IPokeBattle_Scene s1) s1.pbHPChanged(opponent, oldo);
-			battle.pbDisplay(Game._INTL("The battlers shared their pain!"));
-			return 0;
+			if (this.battle.scene is IPokeBattle_SceneIE s0) yield return s0.pbHPChanged(attacker, olda);
+			if (this.battle.scene is IPokeBattle_SceneIE s1) yield return s1.pbHPChanged(opponent, oldo);
+			yield return battle.pbDisplay(Game._INTL("The battlers shared their pain!"));
+			result?.Invoke(0);
 		}
 	}
 

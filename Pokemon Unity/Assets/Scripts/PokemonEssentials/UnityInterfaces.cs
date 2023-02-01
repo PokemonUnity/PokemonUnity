@@ -22,6 +22,15 @@ using PokemonUnity.Combat;
 
 namespace PokemonUnity.UX
 {
+	public interface IGameObject
+	{
+		bool visible { get; set; }
+		float x { get; set; }
+		float y { get; set; }
+		float z { get; set; }
+		void update();
+	}
+
 	#region Pokemon Battle
 	public interface IPokeBattle_SceneIE : PokemonEssentials.Interface.Screen.IPokeBattle_Scene, IScene, IHasDisplayMessageIE//, IHasChatter
 	{
@@ -48,7 +57,7 @@ namespace PokemonUnity.UX
 		IEnumerator pbShowCommands(string msg, string[] commands, int defaultValue, System.Action<int> result);
 		//new void pbShowCommands(string msg, string[] commands, bool canCancel);
 		//IEnumerator pbShowCommands(string msg, string[] commands, bool canCancel, System.Action<int> result);
-		//new void pbFrameUpdate(object cw = null);
+		void pbFrameUpdate(IGameObject cw);
 		//void pbRefresh();
 		//IIconSprite pbAddSprite(string id, float x, float y, string filename, IViewport viewport);
 		//void pbAddPlane(string id, string filename, IViewport viewport);
@@ -220,7 +229,7 @@ namespace PokemonUnity.UX
 		/// </remarks>
 		/// <param name="battle"></param>
 		//new void pbStartBattle(IBattle battle);
-		IEnumerator pbStartBattle(IBattleIE battle);
+		IEnumerator pbStartBattle(IBattleIE battle); //ToDo: Can be void, if using StartCoroutine...
 		//new void pbEndBattle(PokemonUnity.Combat.BattleResults result);
 		new IEnumerator pbEndBattle(PokemonUnity.Combat.BattleResults result);
 		//new void pbTrainerSendOut(IBattle battle,IPokemon pkmn);
@@ -598,6 +607,7 @@ namespace PokemonUnity.UX
 		//bool pbChoseMoveFunctionCode(int i, PokemonUnity.Attack.Data.Effects code);
 		//bool pbRegisterTarget(int idxPokemon, int idxTarget);
 		new IBattlerIE[] pbPriority(bool ignorequickclaw = false, bool log = false);
+		//IEnumerator pbPriority(bool ignorequickclaw = false, bool log = false, System.Action<IBattlerIE[]> result = null);
 		#endregion
 
 		#region Switching Pokémon.
@@ -634,7 +644,7 @@ namespace PokemonUnity.UX
 		/// <returns></returns>
 		bool pbUseItemOnBattler(Items item, int index, IBattlerIE userPkmn, IHasDisplayMessageIE scene);
 		IEnumerator pbRegisterItem(int idxPokemon, Items idxItem, int? idxTarget = null, System.Action<bool> result = null);
-		void pbEnemyUseItem(Items item, IBattlerIE battler);
+		IEnumerator pbEnemyUseItem(Items item, IBattlerIE battler);
 		#endregion
 
 		#region Fleeing from battle.
@@ -672,7 +682,7 @@ namespace PokemonUnity.UX
 
 		#region Abilities.
 		new IEnumerator pbOnActiveAll();
-		bool pbOnActiveOne(IBattlerIE pkmn, bool onlyabilities = false, bool moldbreaker = false);
+		IEnumerator pbOnActiveOne(IBattlerIE pkmn, bool onlyabilities = false, bool moldbreaker = false, System.Action<bool> result = null);
 		new IEnumerator pbPrimordialWeather();
 		#endregion
 

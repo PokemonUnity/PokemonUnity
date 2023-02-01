@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using PokemonUnity;
+using PokemonUnity.UX;
 using PokemonUnity.Character;
 using PokemonUnity.Monster;
 using PokemonUnity.Localization;
@@ -54,13 +55,15 @@ namespace PokemonUnity
 				//GameDebug.Log("2-" + System.IO.Path.GetFullPath("..\\..\\..\\veekun-pokedex.sqlite"));
 				//GameDebug.Log("3-" + System.IO.Path.GetFullPath("..\\..\\..\\..\\veekun-pokedex.sqlite"));
 				Game.DatabasePath = "Data Source=..\\veekun-pokedex.sqlite";
+				Game.DatabasePath = "Data Source =" + UnityEngine.Application.dataPath + "/Data/veekun-pokedex.sqlite";
 				GameDebug.Log("ConnectionString Database Path: " + Game.DatabasePath);
 				//Game.DatabasePath = "Data Source =" + UnityEngine.Application.dataPath + "/Data/veekun-pokedex.sqlite";
 				Game.con = (System.Data.IDbConnection)new System.Data.SQLite.SQLiteConnection(Game.DatabasePath);
-				//Game.con = new Mono.Data.Sqlite.SqliteConnection(Game.DatabasePath);
+				//Game.con = (System.Data.IDbConnection)new Mono.Data.Sqlite.SqliteConnection(Game.DatabasePath);
 				Game.ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
 				GameDebug.Log("Framework Connected to Database...");
 				GameDebug.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
+				//GameDebug.Log("Path to DB: " + ((Mono.Data.Sqlite.SqliteConnection)Game.con).DataSource);
 				game = new Game();
 				GameDebug.Log("New Game Entity Successfully Instantiated!~");
 			}
@@ -113,7 +116,7 @@ namespace PokemonUnity
 			//}
 			GameDebug.Log("Is Trainer Null? " + (Game.GameData.Trainer == null).ToString());
 
-			ConfigureScenes();
+			//ConfigureScenes();
 		}
 		void Start()
 		{
@@ -146,7 +149,7 @@ namespace PokemonUnity
 			//ToDo: Load all the different game scenes into an array, from unity inspector, and pass them as an input parameter below
 			//game.Scenes.initialize((IScene[])(object[])sceneList);
 			//game.Scenes.initialize((IPokeBattle_Scene)battle.GetComponent<BattleScene>());
-			(game as Game).SetScenes((IPokeBattle_Scene)battle.GetComponent<BattleScene>());
+			(game as Game).SetScenes((IPokeBattle_SceneIE)battle.GetComponent<BattleScene>());
 		}
 		#endregion
 

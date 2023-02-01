@@ -61,15 +61,15 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// </summary>
 	public IWindow_AdvancedTextPokemon messageBox;
 	public IPartyDisplayScreen @switchscreen;
-	public ISpriteWrapper player;
-	public ISpriteWrapper playerB;
-	public ISpriteWrapper trainer;
-	public ISpriteWrapper trainer2;
-	public ISpriteWrapper battlebg;
-	public ISpriteWrapper enemybase;
-	public ISpriteWrapper playerbase;
-	public ISpriteWrapper partybarfoe;
-	public ISpriteWrapper partybarplayer;
+	public IGameObject player;
+	public IGameObject playerB;
+	public IGameObject trainer;
+	public IGameObject trainer2;
+	public IGameObject battlebg;
+	public IGameObject enemybase;
+	public IGameObject playerbase;
+	public IGameObject partybarfoe;
+	public IGameObject partybarplayer;
 	/// <summary>
 	/// HP, Exp, and other status of battling pokemon; Player side slot 1
 	/// </summary>
@@ -188,33 +188,33 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	private void Awake()
 	{
-		//messageBox = _messageBox.GetComponent<>() as ISpriteWrapper;
-		//fightWindow = _fightWindow.GetComponent<FightMenuDisplay>() as ISpriteWrapper;
-		//commandWindow = _commandWindow.GetComponent<>() as ISpriteWrapper;
-		//messageWindow = _messageWindow.GetComponent<>() as ISpriteWrapper;
-		//helpWindow = _helpwindow.GetComponent<>() as ISpriteWrapper;
-		//battlebg = _battlebg.GetComponent<>() as ISpriteWrapper;
-		//player = _player.GetComponent<>() as ISpriteWrapper;
-		//playerB = _playerB.GetComponent<>() as ISpriteWrapper;
-		//trainer = _trainer.GetComponent<>() as ISpriteWrapper;
-		//trainer2 = _trainer2.GetComponent<>() as ISpriteWrapper;
-		//playerbase = _playerbase.GetComponent<>() as ISpriteWrapper;
-		//enemybase = _enemybase.GetComponent<>() as ISpriteWrapper;
-		//partybarplayer = _partybarplayer.GetComponent<>() as ISpriteWrapper;
-		//partybarfoe = _partybarfoe.GetComponent<>() as ISpriteWrapper;
-		//spriteBall = _capture.GetComponent<>() as ISpriteWrapper;
-		//battlebox0 = _battlebox0.GetComponent<>() as ISpriteWrapper;
-		//battlebox1 = _battlebox1.GetComponent<>() as ISpriteWrapper;
-		//battlebox2 = _battlebox2.GetComponent<>() as ISpriteWrapper;
-		//battlebox3 = _battlebox3.GetComponent<>() as ISpriteWrapper;
-		//pokemon0 = _pokemon0.GetComponent<>() as ISpriteWrapper;
-		//pokemon1 = _pokemon1.GetComponent<>() as ISpriteWrapper;
-		//pokemon2 = _pokemon2.GetComponent<>() as ISpriteWrapper;
-		//pokemon3 = _pokemon3.GetComponent<>() as ISpriteWrapper;
-		//shadow0 = _shadow0.GetComponent<>() as ISpriteWrapper;
-		//shadow1 = _shadow1.GetComponent<>() as ISpriteWrapper;
-		//shadow2 = _shadow2.GetComponent<>() as ISpriteWrapper;
-		//shadow3 = _shadow3.GetComponent<>() as ISpriteWrapper;
+		//messageBox = _messageBox.GetComponent<>() as IGameObject;
+		//fightWindow = _fightWindow.GetComponent<FightMenuDisplay>() as IGameObject;
+		//commandWindow = _commandWindow.GetComponent<>() as IGameObject;
+		//messageWindow = _messageWindow.GetComponent<>() as IGameObject;
+		//helpWindow = _helpwindow.GetComponent<>() as IGameObject;
+		//battlebg = _battlebg.GetComponent<>() as IGameObject;
+		//player = _player.GetComponent<>() as IGameObject;
+		//playerB = _playerB.GetComponent<>() as IGameObject;
+		//trainer = _trainer.GetComponent<>() as IGameObject;
+		//trainer2 = _trainer2.GetComponent<>() as IGameObject;
+		//playerbase = _playerbase.GetComponent<>() as IGameObject;
+		//enemybase = _enemybase.GetComponent<>() as IGameObject;
+		//partybarplayer = _partybarplayer.GetComponent<>() as IGameObject;
+		//partybarfoe = _partybarfoe.GetComponent<>() as IGameObject;
+		//spriteBall = _capture.GetComponent<>() as IGameObject;
+		//battlebox0 = _battlebox0.GetComponent<>() as IGameObject;
+		//battlebox1 = _battlebox1.GetComponent<>() as IGameObject;
+		//battlebox2 = _battlebox2.GetComponent<>() as IGameObject;
+		//battlebox3 = _battlebox3.GetComponent<>() as IGameObject;
+		//pokemon0 = _pokemon0.GetComponent<>() as IGameObject;
+		//pokemon1 = _pokemon1.GetComponent<>() as IGameObject;
+		//pokemon2 = _pokemon2.GetComponent<>() as IGameObject;
+		//pokemon3 = _pokemon3.GetComponent<>() as IGameObject;
+		//shadow0 = _shadow0.GetComponent<>() as IGameObject;
+		//shadow1 = _shadow1.GetComponent<>() as IGameObject;
+		//shadow2 = _shadow2.GetComponent<>() as IGameObject;
+		//shadow3 = _shadow3.GetComponent<>() as IGameObject;
 
 		//ToDo: Remove scene assign from here, and move to a consolidated monobehaviour game object
 		//GameEvents.game.Scenes.BattleScene = this;
@@ -277,33 +277,33 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		lastmove = new int[] { 0, 0, 0, 0 };
 		pkmnwindows = new IWindow[] { null, null, null, null };
 		sprites = new Dictionary<string, object>() {
-			{ "messagebox",		messageBox			as ISpriteWrapper },
-			{ "fightwindow",	fightWindow			as ISpriteWrapper },
-			{ "commandwindow",	commandWindow		as ISpriteWrapper },
-			{ "messagewindow",	messageWindow		as ISpriteWrapper },
-			{ "helpwindow",		helpWindow			as ISpriteWrapper },
-			{ "battlebg",		battlebg			as ISpriteWrapper },
-			{ "player",			player				as ISpriteWrapper },
-			{ "playerB",		playerB				as ISpriteWrapper },
-			{ "trainer",		trainer				as ISpriteWrapper },
-			{ "trainer2",		trainer2			as ISpriteWrapper },
-			{ "playerbase",		playerbase			as ISpriteWrapper },
-			{ "enemybase",		enemybase			as ISpriteWrapper },
-			{ "partybarplayer",	partybarplayer		as ISpriteWrapper },
-			{ "partybarfoe",	partybarfoe			as ISpriteWrapper },
-			{ "capture",		spriteBall			as ISpriteWrapper },
-			{ "battlebox0",		battlebox0			as ISpriteWrapper },
-			{ "battlebox1",		battlebox1			as ISpriteWrapper },
-			{ "battlebox2",		battlebox2			as ISpriteWrapper },
-			{ "battlebox3",		battlebox3			as ISpriteWrapper },
-			{ "pokemon0",		pokemon0			as ISpriteWrapper },
-			{ "pokemon1",		pokemon1			as ISpriteWrapper },
-			{ "pokemon2",		pokemon2			as ISpriteWrapper },
-			{ "pokemon3",		pokemon3			as ISpriteWrapper },
-			{ "shadow0",		shadow0				as ISpriteWrapper },
-			{ "shadow1",		shadow1				as ISpriteWrapper },
-			{ "shadow2",		shadow2				as ISpriteWrapper },
-			{ "shadow3",		shadow3             as ISpriteWrapper }
+			{ "messagebox",		messageBox			as IGameObject },
+			{ "fightwindow",	fightWindow			as IGameObject },
+			{ "commandwindow",	commandWindow		as IGameObject },
+			{ "messagewindow",	messageWindow		as IGameObject },
+			{ "helpwindow",		helpWindow			as IGameObject },
+			{ "battlebg",		battlebg			as IGameObject },
+			{ "player",			player				as IGameObject },
+			{ "playerB",		playerB				as IGameObject },
+			{ "trainer",		trainer				as IGameObject },
+			{ "trainer2",		trainer2			as IGameObject },
+			{ "playerbase",		playerbase			as IGameObject },
+			{ "enemybase",		enemybase			as IGameObject },
+			{ "partybarplayer",	partybarplayer		as IGameObject },
+			{ "partybarfoe",	partybarfoe			as IGameObject },
+			{ "capture",		spriteBall			as IGameObject },
+			{ "battlebox0",		battlebox0			as IGameObject },
+			{ "battlebox1",		battlebox1			as IGameObject },
+			{ "battlebox2",		battlebox2			as IGameObject },
+			{ "battlebox3",		battlebox3			as IGameObject },
+			{ "pokemon0",		pokemon0			as IGameObject },
+			{ "pokemon1",		pokemon1			as IGameObject },
+			{ "pokemon2",		pokemon2			as IGameObject },
+			{ "pokemon3",		pokemon3			as IGameObject },
+			{ "shadow0",		shadow0				as IGameObject },
+			{ "shadow1",		shadow1				as IGameObject },
+			{ "shadow2",		shadow2				as IGameObject },
+			{ "shadow3",		shadow3             as IGameObject }
 		};
 		battlestart = true;
 		messagemode = false;
@@ -362,7 +362,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		//								  windowtype == COMMANDBOX ||
 		//								  windowtype == FIGHTBOX ||
 		//								  windowtype == BLANK);
-		(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).visible = (windowtype == MESSAGEBOX);
+		//(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).visible = (windowtype == MESSAGEBOX);
 		(@sprites["commandwindow"] as ICommandMenuDisplay).visible = (windowtype == COMMANDBOX);
 		(@sprites["fightwindow"] as IFightMenuDisplay).visible = (windowtype == FIGHTBOX);
 	}
@@ -410,7 +410,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 			{
 				pbGraphicsUpdate();
 				pbInputUpdate();
-				pbFrameUpdate(cw);
+				pbFrameUpdate(cw as IGameObject);
 				i++;
 				yield return null;
 			} while (i < 60);
@@ -599,7 +599,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 			cw.visible = !dw.busy;
 			pbGraphicsUpdate();
 			pbInputUpdate();
-			pbFrameUpdate(cw);
+			pbFrameUpdate(cw as IGameObject);
 			dw.update();
 			if (PokemonUnity.Input.trigger(PokemonUnity.Input.B) && defaultValue >= 0)
 			{
@@ -636,39 +636,47 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		//return 0;
 	}
 
-	public void pbFrameUpdate(IFightMenuDisplay cw)
+	//public void pbFrameUpdate(IFightMenuDisplay cw)
+	//{
+	//	GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+	//
+	//	if (cw != null) cw.update();
+	//	pbFrameUpdate();
+	//}
+	//
+	//public void pbFrameUpdate(ICommandMenuDisplay cw)
+	//{
+	//	GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+	//
+	//	if (cw != null) cw.update();
+	//	pbFrameUpdate();
+	//}
+	//
+	//public void pbFrameUpdate(IWindow_CommandPokemon cw)
+	//{
+	//	GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+	//
+	//	if (cw != null) cw.update();
+	//	pbFrameUpdate();
+	//}
+	//
+	//public void pbFrameUpdate(IWindow_AdvancedTextPokemon cw)
+	//{
+	//	GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+	//
+	//	if (cw != null) cw.update();
+	//	pbFrameUpdate();
+	//}
+
+	public void pbFrameUpdate(IGameObject cw)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if (cw != null) cw.update();
 		pbFrameUpdate();
 	}
 
-	public void pbFrameUpdate(ICommandMenuDisplay cw)
-	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-
-		if (cw != null) cw.update();
-		pbFrameUpdate();
-	}
-
-	public void pbFrameUpdate(IWindow_CommandPokemon cw)
-	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-
-		if (cw != null) cw.update();
-		pbFrameUpdate();
-	}
-
-	public void pbFrameUpdate(IWindow_AdvancedTextPokemon cw)
-	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-
-		if (cw != null) cw.update();
-		pbFrameUpdate();
-	}
-
-	public void pbFrameUpdate(IViewport cw)
+	void IPokeBattle_DebugScene.pbFrameUpdate(IViewport cw)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -678,7 +686,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void pbFrameUpdate()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//if (cw != null) cw.update();
 		for (int i = 0; i < 4; i++)
@@ -696,7 +704,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void pbRefresh()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		for (int i = 0; i < 4; i++)
 		{
@@ -796,7 +804,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 			pbGraphicsUpdate();
 			pbInputUpdate();
 			pbFrameUpdate();
-			(@sprites["trainer"] as ISpriteWrapper).x -= 6;
+			(@sprites["trainer"] as IGameObject).x -= 6;
 			i++;
 			yield return null;
 		} while (i < 20);
@@ -817,7 +825,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 			pbGraphicsUpdate();
 			pbInputUpdate();
 			pbFrameUpdate();
-			(@sprites["trainer"] as ISpriteWrapper).x += 6;
+			(@sprites["trainer"] as IGameObject).x += 6;
 			i++;
 			yield return null;
 		} while (i < 20);
@@ -1215,7 +1223,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		//@sprites["battlebox0"] = new PokemonDataBox(battle.battlers[0], battle.doublebattle, @viewport);
 		//@sprites["battlebox1"] = new PokemonDataBox(battle.battlers[1], battle.doublebattle, @viewport);
 		(@sprites["battlebox0"] as IPokemonDataBox).initialize(battle.battlers[0], battle.doublebattle, @viewport);
-		/*(@sprites["battlebox1"] as IPokemonDataBox).initialize(battle.battlers[1], battle.doublebattle, @viewport);
+		(@sprites["battlebox1"] as IPokemonDataBox).initialize(battle.battlers[1], battle.doublebattle, @viewport);
 		if (battle.doublebattle)
 		{
 			//@sprites["battlebox2"] = new PokemonDataBox(battle.battlers[2], battle.doublebattle, @viewport);
@@ -1223,7 +1231,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 			(@sprites["battlebox2"] as IPokemonDataBox).initialize(battle.battlers[2], battle.doublebattle, @viewport);
 			(@sprites["battlebox3"] as IPokemonDataBox).initialize(battle.battlers[3], battle.doublebattle, @viewport);
 		}
-		pbAddSprite("messagebox", 0, (Game.GameData as Game).Graphics.height - 96, "Graphics/Pictures/battleMessage", @viewport);
+		/*pbAddSprite("messagebox", 0, (Game.GameData as Game).Graphics.height - 96, "Graphics/Pictures/battleMessage", @viewport);
 		@sprites["messagebox"].z = 90;
 		//@sprites["helpwindow"] = new Window_UnformattedTextPokemon().WithSize("", 0, 0, 32, 32, @viewport);
 		(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).initialize().WithSize("", 0, 0, 32, 32, @viewport);
@@ -1681,9 +1689,9 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		yield break;
 	}
 
-	void IPokeBattle_DebugSceneNoGraphics.pbTrainerWithdraw(IBattle battle, IBattler pkmn) { }
-
-	//void IPokeBattle_Scene.pbTrainerWithdraw(IBattle battle, IBattler pkmn) { }
+	void IPokeBattle_DebugSceneNoGraphics.pbTrainerWithdraw(IBattle battle, IBattler pkmn)
+	{
+	}
 
 	public IEnumerator pbWithdraw(IBattle battle, IBattlerIE pkmn)
 	{
@@ -1694,7 +1702,10 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		yield break;
 	}
 
-	void IPokeBattle_DebugSceneNoGraphics.pbWithdraw(IBattle battle, IBattler pkmn) { }
+	void IPokeBattle_DebugSceneNoGraphics.pbWithdraw(IBattle battle, IBattler pkmn)
+	{
+		throw new NotImplementedException();
+	}
 
 	public string pbMoveString(IBattleMove move)
 	{
@@ -1978,38 +1989,50 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		{
 			//pbGraphicsUpdate();
 			//pbInputUpdate();
-			//pbFrameUpdate(cw);
+			pbFrameUpdate(cw as IGameObject);
 			//  Update selected command
-			if (PokemonUnity.Input.trigger(PokemonUnity.Input.LEFT) && (cw.index & 1) == 1)
+			//if (PokemonUnity.Input.trigger(PokemonUnity.Input.LEFT) && (cw.index & 1) == 1)
+			if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftArrow) && (cw.index & 1) == 1)
 			{
+				GameDebug.Log("[CommandMenu] Going Left !");
 				//(AudioHandler as IGameAudioPlay).pbPlayCursorSE();
 				cw.index -= 1;
 			}
-			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
+			//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
+			else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.RightArrow) && (cw.index & 1) == 0)
 			{
+				GameDebug.Log("[CommandMenu] Going Right !");
 				//(AudioHandler as IGameAudioPlay).pbPlayCursorSE();
 				cw.index += 1;
 			}
-			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
+			//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
+			else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.UpArrow) && (cw.index & 2) == 2)
 			{
+				GameDebug.Log("[CommandMenu] Going Up !");
 				//(AudioHandler as IGameAudioPlay).pbPlayCursorSE();
 				cw.index -= 2;
 			}
-			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
+			//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
+			else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.DownArrow) && (cw.index & 2) == 0)
 			{
+				GameDebug.Log("[CommandMenu] Going Down !");
 				//(AudioHandler as IGameAudioPlay).pbPlayCursorSE();
 				cw.index += 2;
 			}
-			if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))   // Confirm choice
+			//if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))   // Confirm choice
+			if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space))   // Confirm choice
 			{
+				GameDebug.Log("[CommandMenu] Select !");
 				//(AudioHandler as IGameAudioPlay).pbPlayDecisionSE();
 				int ret = cw.index;
 				@lastcmd[index] = (MenuCommands)ret;
 				//return ret;
 				result(ret); break;
 			}
-			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B) && index == 2 && @lastcmd[0] != (MenuCommands)2)  // Cancel
+			//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B) && index == 2 && @lastcmd[0] != (MenuCommands)2)  // Cancel
+			else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape) && index == 2 && @lastcmd[0] != (MenuCommands)2)  // Cancel
 			{
+				GameDebug.Log("[CommandMenu] Cancel !");
 				//(AudioHandler as IGameAudioPlay).pbPlayDecisionSE();
 				//return -1;
 				result(-1); break;
@@ -2183,34 +2206,50 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		{
 			//pbGraphicsUpdate();
 			//pbInputUpdate();
-			//pbFrameUpdate(cw);
+			pbFrameUpdate(cw as IGameObject);
 			//  Update selected command
-			if (PokemonUnity.Input.trigger(PokemonUnity.Input.LEFT) && (cw.index & 1) == 1)
+			//if (PokemonUnity.Input.trigger(PokemonUnity.Input.LEFT) && (cw.index & 1) == 1)
+			if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftArrow) && (cw.index & 1) == 1)
 			{
-				// if (cw.setIndex(cw.index - 1)) (audioHandler as IGameAudioPlay).pbPlayCursorSE();
+				GameDebug.Log("[CommandMenu] Going Left !");
+				cw.setIndex(cw.index - 1);
+				//if (cw.setIndex(cw.index - 1)) (audioHandler as IGameAudioPlay).pbPlayCursorSE();
 			}
-			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
+			//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
+			else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.RightArrow) && (cw.index & 1) == 0)
 			{
-				// if (cw.setIndex(cw.index + 1)) (audioHandler as IGameAudioPlay).pbPlayCursorSE();
+				GameDebug.Log("[CommandMenu] Going Right !");
+				cw.setIndex(cw.index + 1);
+				//if (cw.setIndex(cw.index + 1)) (audioHandler as IGameAudioPlay).pbPlayCursorSE();
 			}
-			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
+			//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
+			else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.UpArrow) && (cw.index & 2) == 2)
 			{
-				// if (cw.setIndex(cw.index - 2)) (audioHandler as IGameAudioPlay).pbPlayCursorSE();
+				GameDebug.Log("[CommandMenu] Going Up !");
+				cw.setIndex(cw.index - 2);
+				//if (cw.setIndex(cw.index - 2)) (audioHandler as IGameAudioPlay).pbPlayCursorSE();
 			}
-			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
+			//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
+			else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.DownArrow) && (cw.index & 2) == 0)
 			{
-				// if (cw.setIndex(cw.index + 2)) (audioHandler as IGameAudioPlay).pbPlayCursorSE();
+				GameDebug.Log("[CommandMenu] Going Down !");
+				cw.setIndex(cw.index + 2);
+				//if (cw.setIndex(cw.index + 2)) (audioHandler as IGameAudioPlay).pbPlayCursorSE();
 			}
-			if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space))       // Confirm choice
+			//if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))				// Confirm choice
+			if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space))		// Confirm choice
 			{
+				GameDebug.Log("[CommandMenu] Select !");
 				int ret = cw.index;
 				// (audioHandler as IGameAudioPlay).pbPlayDecisionSE();
 				@lastmove[index] = ret;
 				result(ret);
 				break;
 			}
-			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.CTRL))       // Use Mega Evolution
+			//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.CTRL))		// Use Mega Evolution
+			else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.RightControl))
 			{
+				GameDebug.Log("[CommandMenu] Mega !");
 				if (@battle.pbCanMegaEvolve(index))
 				{
 					@battle.pbRegisterMegaEvolution(index);
@@ -2218,8 +2257,10 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 					// (audioHandler as IGameAudioPlay).pbPlayDecisionSE();
 				}
 			}
-			else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B))       // Cancel fight menu
+			//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B))			// Cancel fight menu
+			else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape))       
 			{
+				GameDebug.Log("[CommandMenu] Cancel !");
 				@lastmove[index] = cw.index;
 				// (audioHandler as IGameAudioPlay).pbPlayCancelSE();
 				result(-1);
@@ -3651,7 +3692,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		yield break;
 	}
 
-	void IPokeBattle_Scene.pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum)
+	public void pbCommonAnimation(string animname, IBattler user, IBattler target, int hitnum)
 	{
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -4113,13 +4154,14 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		//{
 		//	(Game.GameData as Game).Graphics.update();
 		//	PokemonUnity.Input.update(); i++;
+		//	yield return null;
 		//} while (i < (Game.GameData as Game).Graphics.frame_rate); //Graphics.frame_rate.times 
 	}
 
 	private IEnumerator ForceFrameRefresh()
 	{
 		//UnityEngine.Canvas.ForceUpdateCanvases();
-		yield return new UnityEngine.WaitForEndOfFrame();
+		yield return null; //new UnityEngine.WaitForEndOfFrame();
 	}
 
 	IPokeBattle_DebugSceneNoGraphics IPokeBattle_DebugSceneNoGraphics.initialize()

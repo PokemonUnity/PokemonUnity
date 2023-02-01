@@ -1,7 +1,7 @@
 ﻿using System;
 using PokemonEssentials.Interface;
 
-namespace PokemonUnity
+namespace PokemonUnity.UX
 {
 	public partial class GameSystem : IGameSystem
 	{
