@@ -1338,7 +1338,7 @@ namespace PokemonUnity.Combat
 		public bool pbChoseMove (int i, Moves move) {
 			if (_battlers[i].isFainted()) return false;
 			//if (@choices[i][0]==1 && @choices[i][1]>=0) {
-			if (@choices[i].Action==ChoiceAction.UseMove && @choices[i].Index>=0) {
+			if (@choices[i]?.Action==ChoiceAction.UseMove && @choices[i]?.Index>=0) {
 				int choice=@choices[i].Index; //@choices[i][1];
 				return _battlers[i].moves[choice].id == move;
 			}
@@ -1348,7 +1348,7 @@ namespace PokemonUnity.Combat
 		public bool pbChoseMoveFunctionCode (int i,Attack.Data.Effects code) {
 			if (_battlers[i].isFainted()) return false;
 			//if (@choices[i][0]==1 && @choices[i][1]>=0) {
-			if (@choices[i].Action==ChoiceAction.UseMove && @choices[i].Index>=0) {
+			if (@choices[i]?.Action==ChoiceAction.UseMove && @choices[i]?.Index>=0) {
 				int choice=@choices[i].Index; //@choices[i][1];
 				return _battlers[i].moves[choice].Effect==code;
 			}
@@ -1556,7 +1556,7 @@ namespace PokemonUnity.Combat
 			IPokemon[] party=pbParty(idxPokemon);
 			for (int i = 0; i < battlers.Length; i++) {
 				if (isOppose!=pbIsOpposing(i)) continue;
-				if (choices[i].Action==ChoiceAction.SwitchPokemon && choices[i].Index==pkmnidxTo) {
+				if (choices[i]?.Action==ChoiceAction.SwitchPokemon && choices[i]?.Index==pkmnidxTo) {
 					if (showMessages) pbDisplayPaused(Game._INTL("{1} has already been selected.",party[pkmnidxTo].Name));
 					return false;
 				}
@@ -3172,7 +3172,7 @@ namespace PokemonUnity.Combat
 			}
 			for (int i = 0; i < battlers.Length; i++) {
 				if (@decision==0) break;
-				if (@choices[i].Action!=0) continue; //@choices[i][0]!=0
+				if (@choices[i]?.Action!=0) continue; //@choices[i][0]!=0
 				if (!pbOwnedByPlayer(i) || @controlPlayer) {
 					if (!_battlers[i].isFainted() && pbCanShowCommands(i)) {
 						(@scene as IPokeBattle_SceneNonInteractive).pbChooseEnemyCommand(i);
@@ -3301,7 +3301,7 @@ namespace PokemonUnity.Combat
 			if (@scene is IPokeBattle_DebugSceneNoGraphics s0) s0.pbBeginAttackPhase();
 			for (int i = 0; i < battlers.Length; i++) {
 				@successStates[i].Clear();
-				if (@choices[i].Action!= ChoiceAction.UseMove && @choices[i].Action!=ChoiceAction.SwitchPokemon) {
+				if (@choices[i]?.Action!= ChoiceAction.UseMove && @choices[i]?.Action!=ChoiceAction.SwitchPokemon) {
 					_battlers[i].effects.DestinyBond=false;
 					_battlers[i].effects.Grudge=false;
 				}
@@ -3314,7 +3314,7 @@ namespace PokemonUnity.Combat
 			// Mega Evolution
 			List<int> megaevolved=new List<int>();
 			foreach (var i in priority) {
-				if (@choices[i.Index].Action==ChoiceAction.UseMove && !i.effects.SkipTurn) {
+				if (@choices[i.Index]?.Action==ChoiceAction.UseMove && !i.effects.SkipTurn) {
 					int side=(pbIsOpposing(i.Index)) ? 1 : 0;
 					int owner=pbGetOwnerIndex(i.Index);
 					if (@megaEvolution[side][owner]==i.Index) { //@megaEvolution[side][owner]
@@ -3330,7 +3330,7 @@ namespace PokemonUnity.Combat
 			}
 			// Call at Pokémon
 			foreach (var i in priority) {
-				if (@choices[i.Index].Action==ChoiceAction.CallPokemon && !i.effects.SkipTurn) {
+				if (@choices[i.Index]?.Action==ChoiceAction.CallPokemon && !i.effects.SkipTurn) {
 					pbCall(i.Index);
 				}
 			}
@@ -3338,7 +3338,7 @@ namespace PokemonUnity.Combat
 			@switching=true;
 			List<int> switched=new List<int>();
 			foreach (var i in priority) {
-				if (@choices[i.Index].Action==ChoiceAction.SwitchPokemon && !i.effects.SkipTurn) {
+				if (@choices[i.Index]?.Action==ChoiceAction.SwitchPokemon && !i.effects.SkipTurn) {
 					int index=@choices[i.Index].Index; // party position of Pokémon to switch to
 					int newpokename=index;
 					if (pbParty(i.Index)[index].Ability == Abilities.ILLUSION) {
@@ -3393,7 +3393,7 @@ namespace PokemonUnity.Combat
 			@switching=false;
 			// Use items
 			foreach (var i in priority) {
-				if (@choices[i.Index].Action== ChoiceAction.UseItem && !i.effects.SkipTurn) {
+				if (@choices[i.Index]?.Action==ChoiceAction.UseItem && !i.effects.SkipTurn) {
 					if (pbIsOpposing(i.Index)) {
 						// Opponent use item
 						pbEnemyUseItem((Items)@choices[i.Index].Index,i);
@@ -3457,7 +3457,7 @@ namespace PokemonUnity.Combat
 				if (advance) continue;
 				// Check for all done
 				foreach (var i in priority) {
-					if (@choices[i.Index].Action== ChoiceAction.UseMove && !i.hasMovedThisRound() &&
+					if (@choices[i.Index]?.Action==ChoiceAction.UseMove && !i.hasMovedThisRound() &&
 						!i.effects.SkipTurn) advance=true;
 					if (advance) break;
 				}
