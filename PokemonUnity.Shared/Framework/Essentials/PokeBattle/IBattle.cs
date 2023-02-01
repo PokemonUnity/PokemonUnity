@@ -178,7 +178,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		string endspeechwin2 { get; set; }
 		IDictionary<string, bool> rules { get; }
 		int turncount { get; set; }
-		IBattler[] Priority { get; }
+		//IBattler[] Priority { get; }
 		//bool controlPlayer { get; set; }
 		#endregion
 

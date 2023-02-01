@@ -307,6 +307,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Constructors
+		protected Pokemon() { }
 		public Pokemon(IBattle btl, int idx) //: base()
 		{
 			(this as IBattler).initialize(btl, idx);
@@ -315,7 +316,7 @@ namespace PokemonUnity.Combat
 		{
 			battle			= btl;
 			Index			= idx;
-			HP				= 0;
+			hp				= 0;
 			TotalHP			= 0;
 			fainted			= true;
 			captured		= false;
@@ -334,7 +335,7 @@ namespace PokemonUnity.Combat
 		/// <param name="index"></param>
 		/// <param name="batonpass"></param>
 		/// <returns></returns>
-		public IBattler pbInitialize(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn, int index, bool batonpass = false) //: base(pkmn)
+		public virtual IBattler pbInitialize(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn, int index, bool batonpass = false) //: base(pkmn)
 		{
 			//Cure status of previous Pokemon with Natural Cure
 			if (this.hasWorkingAbility(Abilities.NATURAL_CURE))
@@ -345,7 +346,7 @@ namespace PokemonUnity.Combat
 			pbInitEffects(batonpass);
 			return this;
 		}
-		public void pbInitBlank()
+		public virtual void pbInitBlank()
 		{
 			@name			= "";
 			//@Species		= 0;
@@ -372,7 +373,7 @@ namespace PokemonUnity.Combat
 			@item			= 0;
 			//@weight			= null;
 		}
-		public void pbInitEffects(bool batonpass)
+		public virtual void pbInitEffects(bool batonpass)
 		{
 			if (!batonpass)
 			{
@@ -551,7 +552,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 		}
-		public void pbInitPermanentEffects()
+		public virtual void pbInitPermanentEffects()
 		{
 			// These effects are always retained even if a Pokémon is replaced
 			effects.FutureSight        = 0	  ;
@@ -617,7 +618,7 @@ namespace PokemonUnity.Combat
 			{
 				pokemon.calcStats(); //Not needed since fetching stats from base ( Pokemon => Battler )
 				level		= pokemon.Level;
-				hp			= pokemon.HP;
+				HP			= pokemon.HP;
 				TotalHP		= pokemon.TotalHP;
 				//Pokemon	= Pokemon; //so not all stats need to be handpicked
 				if (!effects.Transform) //Changed forms but did not transform?
@@ -3167,11 +3168,11 @@ namespace PokemonUnity.Combat
 			// Check whether Selfdestruct works
 			if (!thismove.pbOnStartUse(user)) { // Selfdestruct, Natural Gift, Beat Up can return false here
 				GameDebug.Log(string.Format("[Move failed] Failed pbOnStartUse (function code %02X)",thismove.Effect));
-				(user as Pokemon).lastMoveUsed=thismove.id;
+				user.lastMoveUsed=thismove.id;
 				//user.lastMoveUsedType=thismove.pbType(thismove.Type,user,null);
 				if (!turneffects.SpecialUsage) {
-					if (user.effects.TwoTurnAttack==0) (user as Pokemon).lastMoveUsedSketch=thismove.id;
-					(user as Pokemon).lastRegularMoveUsed=thismove.id;
+					if (user.effects.TwoTurnAttack==0) user.lastMoveUsedSketch=thismove.id;
+					user.lastRegularMoveUsed=thismove.id;
 				}
 				@battle.lastMoveUsed=thismove.id;
 				@battle.lastMoveUser=user.Index;
@@ -3184,11 +3185,11 @@ namespace PokemonUnity.Combat
 						if (thismove.pbType(thismove.Type,user,null) == Types.FIRE) {
 							GameDebug.Log($"[Move failed] Primordial Sea's rain cancelled the Fire-type #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
 							@battle.pbDisplay(Game._INTL("The Fire-type attack fizzled out in the heavy rain!"));
-							(user as Pokemon).lastMoveUsed=thismove.id;
+							user.lastMoveUsed=thismove.id;
 							//user.lastMoveUsedType=thismove.pbType(thismove.Type,user,null);
 							if (!turneffects.SpecialUsage) {
-								if (user.effects.TwoTurnAttack==0) (user as Pokemon).lastMoveUsedSketch=thismove.id;
-								(user as Pokemon).lastRegularMoveUsed=thismove.id;
+								if (user.effects.TwoTurnAttack==0) user.lastMoveUsedSketch=thismove.id;
+								user.lastRegularMoveUsed=thismove.id;
 							}
 							@battle.lastMoveUsed=thismove.id;
 							@battle.lastMoveUser=user.Index;
@@ -3199,11 +3200,11 @@ namespace PokemonUnity.Combat
 						if (thismove.pbType(thismove.Type,user,null) == Types.WATER) {
 							GameDebug.Log($"[Move failed] Desolate Land's sun cancelled the Water-type #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
 							@battle.pbDisplay(Game._INTL("The Water-type attack evaporated in the harsh sunlight!"));
-							(user as Pokemon).lastMoveUsed=thismove.id;
+							user.lastMoveUsed=thismove.id;
 							//user.lastMoveUsedType=thismove.pbType(thismove.Type,user,null);
 							if (!turneffects.SpecialUsage) {
-								if (user.effects.TwoTurnAttack==0) (user as Pokemon).lastMoveUsedSketch=thismove.id;
-								(user as Pokemon).lastRegularMoveUsed=thismove.id;
+								if (user.effects.TwoTurnAttack==0) user.lastMoveUsedSketch=thismove.id;
+								user.lastRegularMoveUsed=thismove.id;
 							}
 							@battle.lastMoveUsed=thismove.id;
 							@battle.lastMoveUser=user.Index;
@@ -3217,11 +3218,11 @@ namespace PokemonUnity.Combat
 				@battle.pbCommonAnimation("Powder",user,null);
 				@battle.pbDisplay(Game._INTL("When the flame touched the powder on the Pokémon, it exploded!"));
 				if (!user.hasWorkingAbility(Abilities.MAGIC_GUARD)) user.pbReduceHP(1+(int)Math.Floor(user.TotalHP/4d));
-				(user as Pokemon).lastMoveUsed=thismove.id;
+				user.lastMoveUsed=thismove.id;
 				//user.lastMoveUsedType=thismove.pbType(thismove.Type,user,null);
 				if (!turneffects.SpecialUsage) {
-					if (user.effects.TwoTurnAttack==0) (user as Pokemon).lastMoveUsedSketch=thismove.id;
-					(user as Pokemon).lastRegularMoveUsed=thismove.id;
+					if (user.effects.TwoTurnAttack==0) user.lastMoveUsedSketch=thismove.id;
+					user.lastRegularMoveUsed=thismove.id;
 				}
 				@battle.lastMoveUsed=thismove.id;
 				@battle.lastMoveUser=user.Index;
@@ -3245,7 +3246,7 @@ namespace PokemonUnity.Combat
 					user.Type1=movetype;
 					user.Type2=movetype;
 					user.effects.Type3=Types.NONE;
-					@battle.pbDisplay(Game._INTL("{1} transformed into the {2} type!",user.ToString(),typename))  ;
+					@battle.pbDisplay(Game._INTL("{1} transformed into the {2} type!",user.ToString(),typename));
 				}
 			}
 			// Try to use move against user if there aren't any targets
