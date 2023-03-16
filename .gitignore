@@ -110,3 +110,4 @@ git-journal.fish
 *.DoxyFile
 * - Copy.cs
 * - Copy.cs.meta
+/PokemonUnity.WinForm/Resources
