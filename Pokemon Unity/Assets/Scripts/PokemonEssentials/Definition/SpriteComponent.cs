@@ -138,7 +138,7 @@ namespace PokemonUnity
 		}
 	}
 
-	//[RequireComponent(typeof(UnityEngine.RectTransform),typeof(UnityEngine.UI.Image))]
+	//[RequireComponent(typeof(UnityEngine.RectTransform))]//,typeof(UnityEngine.UI.Image)
 	public abstract class RPGSprite : MonoBehaviour, IRPGSprite
 	{
 		//[SerializeField] private UnityEngine.RectTransform rect = null;
@@ -148,7 +148,7 @@ namespace PokemonUnity
 		//private void Awake()
 		//{
 		//	rect = GetComponent<UnityEngine.RectTransform>();
-		//	image = GetComponent<UnityEngine.UI.Image>();
+		//	//image = GetComponent<UnityEngine.UI.Image>();
 		//}
 
 		private void Start()
@@ -227,15 +227,15 @@ namespace PokemonUnity
 		/// <summary>
 		/// The sprite's X-coordinate.
 		/// </summary>
-		public float x { get; set; }
+		public virtual float x { get; set; }
 		/// <summary>
 		/// The sprite's Y-coordinate.
 		/// </summary>
-		public float y { get; set; }
+		public virtual float y { get; set; }
 		/// <summary>
 		/// The sprite's Z-coordinate. The larger this value, the closer to the player the sprite will be displayed.
 		/// </summary>
-		public float z { get; set; }
+		public virtual float z { get; set; }
 		/// <summary>
 		/// The sprite's X-axis zoom level. 1.0 denotes actual pixel size.
 		/// </summary>
@@ -247,11 +247,11 @@ namespace PokemonUnity
 		/// <summary>
 		/// Gets the width of the sprite. Equivalent to src_rect.width.
 		/// </summary>
-		public float width { get; set; }
+		public virtual float width { get; set; }
 		/// <summary>
 		/// Gets the height of the sprite. Equivalent to src_rect.height.
 		/// </summary>
-		public float height { get; set; }
+		public virtual float height { get; set; }
 		/// <summary>
 		/// If a flash or wave is not needed, it is not necessary to call this.
 		/// </summary>
@@ -283,7 +283,7 @@ namespace PokemonUnity
 
 		}
 
-		public IRPGSprite initialize(IViewport viewport = null)
+		public virtual IRPGSprite initialize(IViewport viewport = null)
 		{
 			return this;
 		}

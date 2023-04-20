@@ -11,7 +11,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 using UnityEngine;
 using PokemonUnity.Utility;
 
-namespace PokemonUnity
+namespace PokemonUnity.UX
 {
 	/// <summary>
 	/// </summary>
@@ -21,9 +21,10 @@ namespace PokemonUnity
 	//ToDo: SafariDataBox has different Update/Refresh values when overriding...
 	[RequireComponent(typeof(UnityEngine.UI.Image))]
 	[ExecuteInEditMode]
-	public class PokemonDataBox : SafariDataBox, IPokemonDataBox
+	public class PokemonDataBox : SafariDataBox, IPokemonDataBox, IGameObject
 	{
-		public IBattler battler { get; private set; }
+		public IBattlerIE battler { get; private set; }
+		IBattler IPokemonDataBox.battler { get; }
 		//public int selected { get; set; }
 		//public bool appearing { get; }
 		public bool animatingHP { get; private set; }
@@ -38,9 +39,9 @@ namespace PokemonUnity
 		/// Reference to the UI's experience bar.
 		/// </summary>
 		public UnityEngine.UI.Slider sliderExp;
-		public UnityEngine.UI.Image spriteItem, spriteStatus, spriteCaught, spriteFillHP, spriteFillExp;
-		public UnityEngine.UI.Text currentHP, maxHP, Name, level, gender;
-		//public TMPro.TextMeshProUGUI name, HPValue, level;
+		public UnityEngine.UI.Image spriteItem, spriteStatus, spriteCaught, spriteFillHP, spriteFillExp, gender, shiny, primal;
+		//public UnityEngine.UI.Text currentHP, slash, maxHP, Name, level, gender;
+		new public TMPro.TextMeshProUGUI name, HPValue, level;
 		//private UnityEngine.Color colorFillExp;
 		//private UnityEngine.UI.Image panelbg;
 		//private UnityEngine.Sprite databox; //AnimatedBitmap
@@ -52,7 +53,13 @@ namespace PokemonUnity
 		public int endhp;
 		public int endexp;
 		public int expflash;
+		/// <summary>
+		/// Only show exp for player's pokemon (not ally, or enemy)
+		/// </summary>
 		public bool showexp;
+		/// <summary>
+		/// Only show hp for player's pokemon (not ally, or enemy)
+		/// </summary>
 		public bool showhp;
 		private int frame;
 		private float spritebaseX;
@@ -79,13 +86,13 @@ namespace PokemonUnity
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			base.initialize(viewport);
-			this.battler = battler;
+			this.battler = battler as IBattlerIE;
 			GameDebug.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
 			@explevel = 0;
 			@selected = 0;
 			@frame = 0;
-			@showhp = true; //false;
-			@showexp = true; //false;
+			@showhp = false;
+			@showexp = false;
 			@appearing = false;
 			@animatingHP = false;
 			@starthp = 0;
@@ -100,29 +107,31 @@ namespace PokemonUnity
 			//{
 			//	@spritebaseX = 16;
 			//}
-			/*if (doublebattle)
+			if (doublebattle)
 			{
 				switch (@battler.Index)
 				{
 					case 0:
-						@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxD");
-						@spriteX = PokeBattle_SceneConstants.PLAYERBOXD1_X;
-						@spriteY = PokeBattle_SceneConstants.PLAYERBOXD1_Y;
+						//if playing or watching an npc? 
+						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxD");
+						//@spriteX = PokeBattle_SceneConstants.PLAYERBOXD1_X;
+						//@spriteY = PokeBattle_SceneConstants.PLAYERBOXD1_Y;
 						break;
 					case 1:
-						@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxD");
-						@spriteX = PokeBattle_SceneConstants.FOEBOXD1_X;
-						@spriteY = PokeBattle_SceneConstants.FOEBOXD1_Y;
+						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxD");
+						//@spriteX = PokeBattle_SceneConstants.FOEBOXD1_X;
+						//@spriteY = PokeBattle_SceneConstants.FOEBOXD1_Y;
 						break;
 					case 2:
-						@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxD");
-						@spriteX = PokeBattle_SceneConstants.PLAYERBOXD2_X;
-						@spriteY = PokeBattle_SceneConstants.PLAYERBOXD2_Y;
+						//if player or ally?...
+						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxD");
+						//@spriteX = PokeBattle_SceneConstants.PLAYERBOXD2_X;
+						//@spriteY = PokeBattle_SceneConstants.PLAYERBOXD2_Y;
 						break;
 					case 3:
-						@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxD");
-						@spriteX = PokeBattle_SceneConstants.FOEBOXD2_X;
-						@spriteY = PokeBattle_SceneConstants.FOEBOXD2_Y;
+						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxD");
+						//@spriteX = PokeBattle_SceneConstants.FOEBOXD2_X;
+						//@spriteY = PokeBattle_SceneConstants.FOEBOXD2_Y;
 						break;
 				}
 			}
@@ -131,13 +140,11 @@ namespace PokemonUnity
 				switch (@battler.Index)
 				{
 					case 0:
-						@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxS");
-						@spriteX = PokeBattle_SceneConstants.PLAYERBOX_X;
-						@spriteY = PokeBattle_SceneConstants.PLAYERBOX_Y;
+						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxS");
+						//@spriteX = PokeBattle_SceneConstants.PLAYERBOX_X;
+						//@spriteY = PokeBattle_SceneConstants.PLAYERBOX_Y;
 						@showhp = true;
 						@showexp = true;
-						currentHP.gameObject.SetActive(true);
-						maxHP.gameObject.SetActive(true);
 						break;
 					case 1:
 						@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxS");
@@ -146,13 +153,18 @@ namespace PokemonUnity
 						break;
 				}
 			}
-			panelbg.sprite = databox;
+			//maxHP.gameObject.SetActive(@showhp);
+			//currentHP.gameObject.SetActive(@showhp);
+			HPValue.gameObject.SetActive(@showhp);
+			/*panelbg.sprite = databox;
 			//@statuses = Resources.Load<UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses")); //if image is localized, grab the current region
 			@spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses"));
 			//@contents = new BitmapWrapper(@databox.width, @databox.height);
 			//this.bitmap = @contents;
 			this.visible = false;
 			this.z = 50;*/
+			//primal = Resources.Load<UnityEngine.Sprite>("null");
+			shiny?.gameObject.SetActive(battler.IsShiny);
 			spriteCaught?.gameObject.SetActive(false);
 			spriteItem?.gameObject.SetActive(false);
 			refreshExpLevel();
@@ -183,8 +195,6 @@ namespace PokemonUnity
 					@explevel = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.Total;
 					sliderExp.minValue = startexp;
 					sliderExp.maxValue = endexp;
-					StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(@explevel));
-					StartCoroutine(AnimateSliderExp(@explevel)); //sliderExp.value = @explevel;
 				}
 			}
 		}
@@ -198,9 +208,10 @@ namespace PokemonUnity
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			@starthp = oldhp;
-			@currenthp = oldhp;
-			@endhp = newhp;
+			@currenthp = newhp; //@endhp = newhp;
 			@animatingHP = true;
+			StopCoroutine("AnimateSliderHP"); //(AnimateSliderExp(@explevel));
+			StartCoroutine(AnimateSliderHP(HP)); //sliderExp.value = @explevel;
 		}
 				
 		/// <summary>
@@ -211,9 +222,11 @@ namespace PokemonUnity
 		public void animateEXP(int oldexp, int newexp)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			@currentexp = oldexp;
-			@endexp = newexp;
+			@currentexp = newexp;
+			@explevel = oldexp; //@endexp = newexp;
 			@animatingEXP = true;
+			StopCoroutine("AnimateSliderExp"); //(AnimateSliderExp(@explevel));
+			StartCoroutine(AnimateSliderExp(Exp)); //sliderExp.value = @explevel;
 		}
 		 
 		/// <summary>
@@ -240,9 +253,10 @@ namespace PokemonUnity
 				
 		public override void refresh()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			
 			//this.bitmap.clear();
-			if (!@battler.IsNotNullOrNone() || !@battler.pokemon.IsNotNullOrNone()) return;
+			if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
 			//this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
 			//IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
 			//IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
@@ -251,83 +265,77 @@ namespace PokemonUnity
 			//IList<ITextPosition> textpos = new List<ITextPosition>() {
 			//	new TextPosition (pokename,@spritebaseX+8,6,false,base_,shadow)
 			//};
-			Name.text = pokename;
-			//name.SetText(pokename);
+			//Name.text = pokename;
+			name.SetText(pokename);
 			//Set gender toggle on/off; change color based on gender
 			//float genderX = this.bitmap.text_size(pokename).width;
 			//genderX += @spritebaseX + 14;
-			//switch (@battler.displayGender)
-			//{
-			//	case 0: // Male
-			//		textpos.Add(new TextPosition(Game._INTL("♂"), genderX, 6, false, new Color(48, 96, 216), shadow));
-			//		break;
-			//	case 1: // Female
-			//		textpos.Add(new TextPosition(Game._INTL("♀"), genderX, 6, false, new Color(248, 88, 40), shadow));
-			//		break;
-			//}
-			if (@battler.displayGender > 0)
+			if (@battler.displayGender > 0) //switch (@battler.displayGender)
 			{
 				gender.gameObject.SetActive(true);
-				if (@battler.displayGender == 1)
+				if (@battler.displayGender == 1) //	case 0: // Male
 				{
-					gender.text = "♂"; // Male
-					gender.color = new Color32(255, 34, 34, 255);   // Blue
-					//gender.sprite = BattleInterface.main.genderMale; // Male
+					//textpos.Add(new TextPosition(Game._INTL("♂"), genderX, 6, false, new Color(48, 96, 216), shadow));
+					//break;
+					gender.sprite = BattleInterface.main.genderMale; // Male
 				}
-				else
+				else //	case 1: // Female
 				{
-					gender.text = "♀"; // Female
-					gender.color = new Color32(255, 34, 34, 255);   // Red
-					//gender.sprite = BattleInterface.main.genderFemale; // Female
+					//textpos.Add(new TextPosition(Game._INTL("♀"), genderX, 6, false, new Color(248, 88, 40), shadow));
+					//break;
+					gender.sprite = BattleInterface.main.genderFemale; // Female
 				}
 			}
 			else
 			{
 				gender.gameObject.SetActive(false);
-				gender.text = string.Empty;
+				//gender.text = string.Empty;
 			}
 			//pbDrawTextPositions(this.bitmap,textpos);
 			//pbSetSmallFont(this.bitmap);
 			//textpos = new List<ITextPosition>() {
 			//	new TextPosition (Game._INTL("Lv{1}",@battler.Level),@spritebaseX+202,8,true,base_,shadow)
 			//};
-			level.text = Game._INTL("{0}", @battler.Level);
-			//level.SetText($"Lv. {@battler.Level}");
+			//level.text = Game._INTL("{0}", @battler.Level);
+			level.SetText($"Lv. {@battler.Level}");
+			GameDebug.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
 			if (@showhp)
 			{
 				//string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
 				//textpos.Add(new TextPosition(hpstring, @spritebaseX + 188, 48, true, base_, shadow));
-				// Text changes automatically when slider value is set...
-				GameDebug.Log(string.Format("Pokemon HP: `{0}/{1}`", this.HP, @battler.TotalHP));
-				sliderHP.maxValue = @battler.TotalHP;
-				maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
-				currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
-				//HPValue.SetText($"{sliderHP.value}/{sliderHP.maxValue}");
+				//maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
+				//currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
+				HPValue.SetText($"{this.HP}/{@battler.TotalHP}"); //($"{sliderHP.value}/{sliderHP.maxValue}");
 			}
 			//pbDrawTextPositions(this.bitmap,textpos);
 			//IList<ITextPosition> imagepos = new List<ITextPosition>();
 			//ToDo: Uncomment below if UI is setup for generation features/gimmick
 			//if (@battler.IsShiny)
 			//{
-			//	float shinyX = 206;
-			//	if ((@battler.Index & 1) == 0) shinyX = -6; // If player's Pokémon
-			//	imagepos.Add(new TextPosition("Graphics/Pictures/shiny.png", @spritebaseX + shinyX, 36, 0, 0, -1, -1));
+			//	//float shinyX = 206;
+			//	//if ((@battler.Index & 1) == 0) shinyX = -6; // If player's Pokémon
+			//	//imagepos.Add(new TextPosition("Graphics/Pictures/shiny.png", @spritebaseX + shinyX, 36, 0, 0, -1, -1));
 			//}
+			shiny?.gameObject.SetActive(battler.IsShiny);
 			//if (@battler.isMega)
 			//{
 			//	imagepos.Add(new TextPosition("Graphics/Pictures/battleMegaEvoBox.png", @spritebaseX + 8, 34, 0, 0, -1, -1));
 			//}
+			//mega?.gameObject.SetActive(battler.isMega);
 			//else if (@battler.isPrimal)
 			//{
 			//	if (@battler.pokemon.Species == Pokemons.KYOGRE)
 			//	{
 			//		imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalKyogreBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
+			//		primal = Resources.Load<UnityEngine.Sprite>("null");
 			//	}
 			//	else if (@battler.pokemon.Species == Pokemons.GROUDON)
 			//	{
 			//		imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalGroudonBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
+			//		primal = Resources.Load<UnityEngine.Sprite>("null");
 			//	}
 			//}
+			primal?.gameObject.SetActive(battler.isPrimal);
 			if ((@battler.Index & 1) == 0) //if pokemon is on player side
 			{
 				spriteItem?.gameObject.SetActive(battler.Item != Inventory.Items.NONE);
@@ -348,7 +356,7 @@ namespace PokemonUnity
 			//	case PokemonUnity.Status.PARALYSIS:
 			//	case PokemonUnity.Status.BURN:
 			//	case PokemonUnity.Status.FROZEN:
-			//		StatusIcon.sprite = Resources.Load<Sprite>(string.Format("PCSprites/status{0}" + @battler.Status.ToString()));
+			//		StatusIcon.sprite = Resources.Load<Sprite>(Game._INTL("PCSprites/status{0}", @battler.Status.ToString()));
 			//		break;
 			//	case PokemonUnity.Status.NONE:
 			//	default:
@@ -360,7 +368,7 @@ namespace PokemonUnity
 				//Enable the sprite that represents this status on the pokemon's HUD panel
 				//this.bitmap.blt(@spritebaseX + 24, 36, @statuses.bitmap,
 				//   new Rect(0, (@battler.Status - 1) * 16, 44, 16));
-				spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>(string.Format("PCSprites/status{0}" + @battler.Status.ToString()));
+				spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>(Game._INTL("PCSprites/status{0}", @battler.Status.ToString()));
 			}
 			else spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>("null");
 			//int hpGaugeSize = (int)PokeBattle_SceneConstants.HPGAUGESIZE;
@@ -389,8 +397,11 @@ namespace PokemonUnity
 			//  fill with HP color
 			//this.bitmap.fill_rect(@spritebaseX + hpGaugeX, hpGaugeY, hpgauge, 2, hpcolors[hpzone * 2]);
 			//this.bitmap.fill_rect(@spritebaseX + hpGaugeX, hpGaugeY + 2, hpgauge, 4, hpcolors[hpzone * 2 + 1]);
-			StopCoroutine("AnimateSliderHP"); //(AnimateSliderHP(this.HP));
-			StartCoroutine(AnimateSliderHP(this.HP)); //sliderHP.value = this.HP;
+			// Text changes automatically when slider value is set...
+			sliderHP.maxValue = @battler.TotalHP;
+			sliderHP.value = this.HP;
+			//StopCoroutine("AnimateSliderHP"); //(AnimateSliderHP(this.HP));
+			//StartCoroutine(AnimateSliderHP(this.HP)); //sliderHP.value = this.HP;
 			if (@showexp)
 			{
 				//  fill with EXP color
@@ -402,14 +413,16 @@ namespace PokemonUnity
 				//   PokeBattle_SceneConstants.EXPCOLORBASE); //Same X value, just 2 Y values lower
 				sliderExp.minValue = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.ExperienceNeeded(battler.Level);
 				sliderExp.maxValue = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.NextLevel;
-				StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(this.Exp));
-				StartCoroutine(AnimateSliderExp(this.Exp)); //sliderExp.value = this.Exp;
+				sliderExp.value = this.Exp;
+				//StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(this.Exp));
+				//StartCoroutine(AnimateSliderExp(this.Exp)); //sliderExp.value = this.Exp;
 			}
 		}
 				
 		public override void update()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			
 			base.update();
 			@frame += 1;
 			if (@animatingHP)
@@ -564,8 +577,9 @@ namespace PokemonUnity
 			else
 				spriteFillHP.color = Color.green; //(SeriColor)PokeBattle_SceneConstants.HPCOLORGREEN;
 			//each time the slider's value is changed, write to text displaying the hp
-			maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
-			currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
+			//maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
+			//currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
+			HPValue.SetText($"{sliderHP.value}/{sliderHP.maxValue}");
 		}
 
 		private System.Collections.IEnumerator AnimateSliderHP(int amount) //Slider as input?
@@ -628,6 +642,7 @@ namespace PokemonUnity
 		public ISafariDataBox initialize(IBattle battle, IViewport viewport = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			
 			base.initialize(viewport);
 			@selected = 0;
 			this.battle = battle;
@@ -650,7 +665,8 @@ namespace PokemonUnity
 		/// </summary>
 		public override void appear()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			
 			refresh();
 			this.visible = true;
 			this.opacity = 255;
@@ -661,7 +677,8 @@ namespace PokemonUnity
 				
 		public virtual void refresh()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			
 			//this.bitmap.clear();
 			//this.bitmap.blt(0, 0, @databox.bitmap, new Rect(0, 0, @databox.width, @databox.height));
 			//pbSetSystemFont(this.bitmap);
@@ -675,7 +692,8 @@ namespace PokemonUnity
 				
 		public override void update()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			
 			base.update();
 			if (@appearing)
 			{

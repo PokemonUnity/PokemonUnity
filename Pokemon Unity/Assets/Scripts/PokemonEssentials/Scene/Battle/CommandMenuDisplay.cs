@@ -11,13 +11,13 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 
-namespace PokemonUnity
+namespace PokemonUnity.UX
 {
 	/// <summary>
 	/// Command menu (Fight/Pokémon/Bag/Run)
 	/// </summary>
 	//[RequireComponent(typeof())]
-	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay, IViewport
+	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay, IViewport, IGameObject
 	{
 		[SerializeField] private CommandMenuButtons buttons;
 		private bool disposedValue;

@@ -11,20 +11,20 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 
-namespace PokemonUnity
+namespace PokemonUnity.UX
 {
 	/// <summary>
 	/// </summary>
 	/// <remarks>
 	/// This one class is used as parent gameobject for menu buttons, to manipulate children gameobjects (fight, party, bag, run)
 	/// </remarks>
-	public class CommandMenuButtons : SpriteWrapper, ICommandMenuButtons //BitmapSprite
+	public class CommandMenuButtons : SpriteWrapper, ICommandMenuButtons, IGameObject //BitmapSprite
 	{
 		//public int Mode;
 		private IAnimatedBitmap buttonbitmap;
 		private CommandMenuDisplay commandMenuDisplay;
-		private UnityEngine.Color buttonTextDefaultColor;
-		private UnityEngine.Color buttonTextSelectedColor;
+		private UnityEngine.Color buttonTextDefaultColor = UnityEngine.Color.white;
+		private UnityEngine.Color buttonTextSelectedColor = new UnityEngine.Color(0.04313726f, 0.07058824f, 0.1843137f); //HEX=>0B122F
 		[SerializeField] private UnityEngine.RectTransform cursor;
 		[SerializeField] private UnityEngine.Sprite buttonDefault;
 		[SerializeField] private UnityEngine.Sprite buttonSelected;
@@ -88,27 +88,27 @@ namespace PokemonUnity
 				//Change non-selected sprite image/text/cursor to default
 				if (i == 0)
 				{
-					button1.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
-					//button1.GetComponent<UnityEngine.UI.Image>().sprite = buttonDefault;
-					//button1.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextDefaultColor;
+					//button1.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
+					button1.GetComponent<UnityEngine.UI.Image>().sprite = buttonDefault;
+					button1.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextDefaultColor;
 				}
 				else if (i == 1)
 				{
-					button2.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
-					//button2.GetComponent<UnityEngine.UI.Image>().sprite = buttonDefault;
-					//button2.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextDefaultColor;
+					//button2.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
+					button2.GetComponent<UnityEngine.UI.Image>().sprite = buttonDefault;
+					button2.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextDefaultColor;
 				}
 				else if (i == 2)
 				{
-					button3.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
-					//button3.GetComponent<UnityEngine.UI.Image>().sprite = buttonDefault;
-					//button3.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextDefaultColor;
+					//button3.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
+					button3.GetComponent<UnityEngine.UI.Image>().sprite = buttonDefault;
+					button3.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextDefaultColor;
 				}
 				else if (i == 3)
 				{
-					button4.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
-					//button4.GetComponent<UnityEngine.UI.Image>().sprite = buttonDefault;
-					//button4.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextDefaultColor;
+					//button4.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
+					button4.GetComponent<UnityEngine.UI.Image>().sprite = buttonDefault;
+					button4.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextDefaultColor;
 				}
 			}
 			for (int i = 0; i < 4; i++)
@@ -121,30 +121,30 @@ namespace PokemonUnity
 				//Change selected sprite image/text/cursor to alternative design
 				if (i == 0)
 				{
-					button1.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
-					//button1.GetComponent<UnityEngine.UI.Image>().sprite = buttonSelected;
-					//button1.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
+					//button1.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
+					button1.GetComponent<UnityEngine.UI.Image>().sprite = buttonSelected;
+					button1.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
 					cursor.position = button1.GetComponent<RectTransform>().position;
 				}
 				else if (i == 1) 
 				{
-					button2.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
-					//button2.GetComponent<UnityEngine.UI.Image>().sprite = buttonSelected;
-					//button2.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
+					//button2.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
+					button2.GetComponent<UnityEngine.UI.Image>().sprite = buttonSelected;
+					button2.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
 					cursor.position = button2.GetComponent<RectTransform>().position;
 				}
 				else if (i == 2)
 				{
-					button3.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
-					//button3.GetComponent<UnityEngine.UI.Image>().sprite = buttonSelected;
-					//button3.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
+					//button3.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
+					button3.GetComponent<UnityEngine.UI.Image>().sprite = buttonSelected;
+					button3.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
 					cursor.position = button3.GetComponent<RectTransform>().position;
 				}
 				else if (i == 3)
 				{
-					button4.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
-					//button4.GetComponent<UnityEngine.UI.Image>().sprite = buttonSelected;
-					//button4.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
+					//button4.GetComponent<UnityEngine.UI.Image>().sprite = commandMenuDisplay.commandSpriteArray[i];
+					button4.GetComponent<UnityEngine.UI.Image>().sprite = buttonSelected;
+					button4.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
 					cursor.position = button4.GetComponent<RectTransform>().position;
 				}
 			}

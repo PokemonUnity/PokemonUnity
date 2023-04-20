@@ -7979,9 +7979,9 @@ label_51:
 
     public virtual IEnumerator pbCommandPhaseIE(MonoBehaviour owner)
     {
-      if (this.scene is IPokeBattle_DebugSceneNoGraphics scene1)
+      if (this.scene is PokemonUnity.UX.IPokeBattle_SceneIE scene1)
         scene1.pbBeginCommandPhase();
-      if (this.scene is IPokeBattle_Scene scene2)
+      if (this.scene is PokemonUnity.UX.IPokeBattle_SceneIE scene2)
         scene2.pbResetCommandIndices();
       for (int index = 0; index < this.battlers.Length; ++index)
       {
@@ -8006,7 +8006,7 @@ label_51:
           if (!this.pbOwnedByPlayer(index3) || this.controlPlayer)
           {
             if (!this.battlers[index3].isFainted() && this.CanShowCommands(index3))
-              (this.scene as IPokeBattle_SceneNonInteractive).pbChooseEnemyCommand(index3);
+              (this.scene as PokemonUnity.UX.IPokeBattle_SceneIE).pbChooseEnemyCommand(index3);
           }
           else
           {
@@ -8024,7 +8024,8 @@ label_51:
                 //    Game._INTL("Pokémon"),
                 //    Game._INTL("Run") //shadowTrainer ? Game._INTL("Call") :
                 //}, 0, value => menuCommands = (MenuCommands) value));
-                menuCommands = (MenuCommands)(this.scene as BattleScene).pbCommandMenu(index3);
+                //menuCommands = (MenuCommands)(this.scene as BattleScene).pbCommandMenu(index3);
+                yield return (this.scene as PokemonUnity.UX.IPokeBattle_SceneIE).pbCommandMenu(index3, value => menuCommands = (MenuCommands)value);
                 
                 Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name + " - menuCommands = " + menuCommands);
 
@@ -8040,7 +8041,8 @@ label_51:
                       // Fight Menu Selection
                       int idxMove = 0;
                       //yield return owner.StartCoroutine((this.scene as BattleScene).pbFightMenuIE(index3, value => idxMove = value));
-                      idxMove = (this.scene as BattleScene).pbFightMenu(index3);
+                      //idxMove = (this.scene as BattleScene).pbFightMenu(index3);
+                      yield return (this.scene as PokemonUnity.UX.IPokeBattle_SceneIE).pbFightMenu(index3, value => idxMove = value);
                       
                       // Fight Menu Result Check
                       if (idxMove < 0)
@@ -8066,7 +8068,8 @@ label_51:
                             // Target Selection
                             int idxTarget = -1;
                             //owner.StartCoroutine((this.scene as BattleScene).pbChooseTargetIE(index3, targettype, value => idxTarget = value));
-                            idxTarget = (this.scene as BattleScene).pbChooseTarget(index3, targettype);
+                            //idxTarget = (this.scene as BattleScene).pbChooseTarget(index3, targettype);
+                            yield return (this.scene as PokemonUnity.UX.IPokeBattle_SceneIE).pbChooseTarget(index3, targettype, value => idxTarget = value);
                             
                             // Target Selection Result Check
                             if (idxTarget >= 0)
@@ -8079,7 +8082,8 @@ label_51:
                             // Target Selection
                             int idxTarget = -1;
                             //owner.StartCoroutine((this.scene as BattleScene).pbChooseTargetIE(index3, targettype, value => idxTarget = value));
-                            idxTarget = (this.scene as BattleScene).pbChooseTarget(index3, targettype);
+                            //idxTarget = (this.scene as BattleScene).pbChooseTarget(index3, targettype);
+                            yield return (this.scene as PokemonUnity.UX.IPokeBattle_SceneIE).pbChooseTarget(index3, targettype, value => idxTarget = value);
                             
                             // Target Selection Result Check
                             if (idxTarget >= 0 && idxTarget % 2 != 1)

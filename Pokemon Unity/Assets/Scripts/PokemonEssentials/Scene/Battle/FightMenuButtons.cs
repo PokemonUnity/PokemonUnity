@@ -11,16 +11,14 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 
-namespace PokemonUnity
+namespace PokemonUnity.UX
 {
 	/// <summary>
-	/// Parent Empty GameObject for Fight Menu; Children elements are <see cref="FightMoveButton"/>
 	/// </summary>
 	/// <remarks>
 	/// This one class is used as parent gameobject for menu buttons, to manipulate children gameobjects (move1, move2, move3, move4)
 	/// </remarks>
-	//[RequireComponent(typeof(Image))]
-	public class FightMenuButtons : SpriteWrapper, IFightMenuButtons //BitmapSprite
+	public class FightMenuButtons : SpriteWrapper, IFightMenuButtons, IGameObject //BitmapSprite
 	{
 		const int UPPERGAP=46;
 		public IAnimatedBitmap buttonbitmap;
@@ -95,10 +93,8 @@ namespace PokemonUnity
 					{
 						button1.Type.sprite = spriteNull;
 						//button1.ButtonBG.sprite = spriteNull;
-						button1.Move.text = Game._INTL("------");
-						button1.PP.text = Game._INTL("PP: --/--");
-						//button1.Move.SetText(Game._INTL("------"));
-						//button1.PP.SetText(Game._INTL("PP: --/--"));
+						button1.Move.SetText(Game._INTL("------"));
+						button1.PP.SetText(Game._INTL("PP: --/--"));
 						continue; 
 					}
 					//button1.GetComponent<UnityEngine.UI.Image>().sprite = spriteTypes[i];		//Assign Move-Type Sprite
@@ -106,17 +102,16 @@ namespace PokemonUnity
 					//button1.GetComponentInChildren<TMPro.TextMeshProUGUI>().SetText(Game._INTL("{1}", moves[i].Name));
 					//button1.Type.sprite = spriteTypes[(int)moves[i].Type];			//Assign Move-Type Sprite
 					//button1.ButtonBG.sprite = spriteButtons[(int)moves[i].Type];		//Assign Move-Type Color to Button BG?
+					//button1.Move.text = Game._INTL("{1}", moves[i].Name);
+					//button1.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
 					button1.Move.color = buttonTextDefaultColor;
-					button1.Move.text = Game._INTL("{1}", moves[i].Name);
-					button1.PP.text = Game._INTL("PP: --/--");
-					//button1.Move.SetText(Game._INTL("{1}", moves[i].Name));
-					//button1.PP.SetText(Game._INTL("PP: --/--"));
+					button1.Move.SetText(Game._INTL("{1}", moves[i].Name));
+					button1.PP.SetText(Game._INTL("PP: --/--"));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button1.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button1.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-						//button1.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button1.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 1)
@@ -125,10 +120,8 @@ namespace PokemonUnity
 					{
 						button2.Type.sprite = spriteNull;
 						//button2.ButtonBG.sprite = spriteNull;
-						button2.Move.text = Game._INTL("------");
-						button2.PP.text = Game._INTL("PP: --/--");
-						//button2.Move.SetText(Game._INTL("------"));
-						//button2.PP.SetText(Game._INTL("PP: --/--"));
+						button2.Move.SetText(Game._INTL("------"));
+						button2.PP.SetText(Game._INTL("PP: --/--"));
 						continue; 
 					}
 					//button2.GetComponent<UnityEngine.UI.Image>().sprite = spriteTypes[i];		//Assign Move-Type Sprite
@@ -136,17 +129,16 @@ namespace PokemonUnity
 					//button2.GetComponentInChildren<TMPro.TextMeshProUGUI>().SetText(Game._INTL("{1}", moves[i].Name));
 					//button2.Type.sprite = spriteTypes[i];			//Assign Move-Type Sprite
 					//button2.ButtonBG.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
+					//button2.Move.text = Game._INTL("{1}", moves[i].Name);
+					//button2.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
 					button2.Move.color = buttonTextDefaultColor;
-					button2.Move.text = Game._INTL("{1}", moves[i].Name);
-					button2.PP.text = Game._INTL("PP: --/--");
-					//button2.Move.SetText(Game._INTL("{1}", moves[i].Name));
-					//button2.PP.SetText(Game._INTL("PP: --/--"));
+					button2.Move.SetText(Game._INTL("{1}", moves[i].Name));
+					button2.PP.SetText(Game._INTL("PP: --/--"));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button2.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button2.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-						//button2.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button2.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 2)
@@ -155,10 +147,8 @@ namespace PokemonUnity
 					{
 						button3.Type.sprite = spriteNull;
 						//button3.ButtonBG.sprite = spriteNull;
-						button3.Move.text = Game._INTL("------");
-						button3.PP.text = Game._INTL("PP: --/--");
-						//button3.Move.SetText(Game._INTL("------"));
-						//button3.PP.SetText(Game._INTL("PP: --/--"));
+						button3.Move.SetText(Game._INTL("------"));
+						button3.PP.SetText(Game._INTL("PP: --/--"));
 						continue; 
 					}
 					//button3.GetComponent<UnityEngine.UI.Image>().sprite = spriteTypes[i];		//Assign Move-Type Sprite
@@ -166,17 +156,16 @@ namespace PokemonUnity
 					//button3.GetComponentInChildren<TMPro.TextMeshProUGUI>().SetText(Game._INTL("{1}", moves[i].Name));
 					//button3.Type.sprite = spriteTypes[i];			//Assign Move-Type Sprite
 					//button3.ButtonBG.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
+					//button3.Move.text = Game._INTL("{1}", moves[i].Name);
+					//button3.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
 					button3.Move.color = buttonTextDefaultColor;
-					button3.Move.text = Game._INTL("{1}", moves[i].Name);
-					button3.PP.text = Game._INTL("PP: --/--");
-					//button3.Move.SetText(Game._INTL("{1}", moves[i].Name));
-					//button3.PP.SetText(Game._INTL("PP: --/--"));
+					button3.Move.SetText(Game._INTL("{1}", moves[i].Name));
+					button3.PP.SetText(Game._INTL("PP: --/--"));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button3.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button3.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-						//button3.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button3.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 3)
@@ -185,10 +174,8 @@ namespace PokemonUnity
 					{
 						button4.Type.sprite = spriteNull;
 						//button4.ButtonBG.sprite = spriteNull;
-						button4.Move.text = Game._INTL("------");
-						button4.PP.text = Game._INTL("PP: --/--");
-						//button4.Move.SetText(Game._INTL("------"));
-						//button4.PP.SetText(Game._INTL("PP: --/--"));
+						button4.Move.SetText(Game._INTL("------"));
+						button4.PP.SetText(Game._INTL("PP: --/--"));
 						continue; 
 					}
 					//button4.GetComponent<UnityEngine.UI.Image>().sprite = spriteTypes[i];		//Assign Move-Type Sprite
@@ -196,17 +183,16 @@ namespace PokemonUnity
 					//button4.GetComponentInChildren<TMPro.TextMeshProUGUI>().SetText(Game._INTL("{1}", moves[i].Name));
 					//button4.Type.sprite = spriteTypes[i];			//Assign Move-Type Sprite
 					//button4.ButtonBG.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
+					//button4.Move.text = Game._INTL("{1}", moves[i].Name);
+					//button4.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
 					button4.Move.color = buttonTextDefaultColor;
-					button4.Move.text = Game._INTL("{1}", moves[i].Name);
-					button4.PP.text = Game._INTL("PP: --/--");
-					//button4.Move.SetText(Game._INTL("{1}", moves[i].Name));
-					//button4.PP.SetText(Game._INTL("PP: --/--"));
+					button4.Move.SetText(Game._INTL("{1}", moves[i].Name));
+					button4.PP.SetText(Game._INTL("PP: --/--"));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button4.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button4.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-						//button4.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button4.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 			}
@@ -230,15 +216,15 @@ namespace PokemonUnity
 					cursor.position = button1.GetComponent<RectTransform>().position;
 					//button1.Type.sprite = spriteTypes[i];			//Assign Move-Type Sprite
 					//button1.ButtonBG.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
+					//button1.Move.text = Game._INTL("{1}", moves[i].Name);
+					//button1.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
 					button1.Move.color = buttonTextSelectedColor;
-					button1.Move.text = Game._INTL("{1}", moves[i].Name);
-					//button1.Move.SetText(Game._INTL("{1}", moves[i].Name));	//TextMeshPro
+					button1.Move.SetText(Game._INTL("{1}", moves[i].Name));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button1.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button1.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-						//button1.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));	//TextMeshPro
+						button1.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 1)
@@ -250,15 +236,15 @@ namespace PokemonUnity
 					cursor.position = button2.GetComponent<RectTransform>().position;
 					//button2.Type.sprite = spriteTypes[i];			//Assign Move-Type Sprite
 					//button2.ButtonBG.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
+					//button2.Move.text = Game._INTL("{1}", moves[i].Name);
+					//button2.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
 					button2.Move.color = buttonTextSelectedColor;
-					button2.Move.text = Game._INTL("{1}", moves[i].Name);
-					//button2.Move.SetText(Game._INTL("{1}", moves[i].Name));	//TextMeshPro
+					button2.Move.SetText(Game._INTL("{1}", moves[i].Name));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button2.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button2.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-						//button2.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));	//TextMeshPro
+						button2.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 2)
@@ -270,15 +256,15 @@ namespace PokemonUnity
 					cursor.position = button3.GetComponent<RectTransform>().position;
 					//button3.Type.sprite = spriteTypes[i];			//Assign Move-Type Sprite
 					//button3.ButtonBG.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
+					//button3.Move.text = Game._INTL("{1}", moves[i].Name);
+					//button3.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
 					button3.Move.color = buttonTextSelectedColor;
-					button3.Move.text = Game._INTL("{1}", moves[i].Name);
-					//button3.Move.SetText(Game._INTL("{1}", moves[i].Name));	//TextMeshPro
+					button3.Move.SetText(Game._INTL("{1}", moves[i].Name));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button3.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button3.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-						//button3.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));	//TextMeshPro
+						button3.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 3)
@@ -290,14 +276,14 @@ namespace PokemonUnity
 					cursor.position = button4.GetComponent<RectTransform>().position;
 					//button4.Type.sprite = spriteTypes[i];			//Assign Move-Type Sprite
 					//button4.ButtonBG.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
+					//button4.Move.text = Game._INTL("{1}", moves[i].Name);
+					//button4.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
 					button4.Move.color = buttonTextSelectedColor;
-					button4.Move.text = Game._INTL("{1}", moves[i].Name);
-					//button4.Move.SetText(Game._INTL("{1}", moves[i].Name));	//TextMeshPro
+					button4.Move.SetText(Game._INTL("{1}", moves[i].Name));
 					if (moves[i].TotalPP>0) {
 						int ppfraction=(int)Math.Ceiling(4.0*moves[i].PP/moves[i].TotalPP);
 						button4.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button4.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-						//button4.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));	//TextMeshPro
+						button4.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				//if (moves[i].TotalPP>0) {
@@ -308,15 +294,16 @@ namespace PokemonUnity
 				//	selected.GetComponentInChildren<TMPro.TextMeshProUGUI>().SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 				//}
 			}
-			//pbDrawTextPositions(this.bitmap, textpos); //foreach text in array, add as child to gameobject with sprite as background image
-			if (megaButton > 0) //0=don't show, 1=show, 2=pressed
-			{
-				//this.bitmap.blt(146, 0, @megaevobitmap.bitmap, new Rect(0, (megaButton - 1) * 46, 96, 46));
-				buttonMega.image.sprite = spriteMegaEvolve[megaButton];
-				//buttonMega.isOn = megaButton==2; //Set Button to Enable/Disable...
-			}
-			else
-				buttonMega.image.sprite = spriteNull;
+			//pbDrawTextPositions(this.bitmap, textpos); //foreach text in array, add as child to gameobject with sprite as background image		
+			if (buttonMega != null)
+				if (megaButton > 0) //0=don't show, 1=show, 2=pressed
+				{
+					//this.bitmap.blt(146, 0, @megaevobitmap.bitmap, new Rect(0, (megaButton - 1) * 46, 96, 46));
+					buttonMega.image.sprite = spriteMegaEvolve[megaButton];
+					buttonMega.isOn = megaButton==2;
+				}
+				else
+					buttonMega.image.sprite = spriteNull;
 		}
 
 		protected override void Dispose(bool disposing)
