@@ -108,6 +108,7 @@ git-journal.fish
 /Set-AssemblyVersion.ps1
 /packages
 *.DoxyFile
+*.meta
 * - Copy.cs
 * - Copy.cs.meta
 /PokemonUnity.WinForm/Resources
