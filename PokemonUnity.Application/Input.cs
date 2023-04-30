@@ -45,6 +45,7 @@ namespace PokemonUnity
 		private static readonly Dictionary<int, bool> triggerstate  = new Dictionary<int, bool>();
 		private static readonly Dictionary<int, bool> releasestate  = new Dictionary<int, bool>();
 		private static readonly Dictionary<int, bool> keyIsDown     = new Dictionary<int, bool>();
+		private static readonly Hashtable m_KeyTable				= new Hashtable();
 
 		//  GetAsyncKeyState or GetKeyState will work here
 		//private static bool @GetKeyState=new Win32API("user32", "GetAsyncKeyState", "i", "i");
@@ -98,6 +99,7 @@ namespace PokemonUnity
 		public static void ButtonStateChange(PokemonEssentials.Interface.EventArg.IButtonEventArgs e)
 		{
 			keyIsDown[e.Button] = e.IsDown;
+			ChangeState(e.Button, e.IsDown);
 		}
 
 		//private static Input() { OnButtonStateChange += ButtonStateChange(); }
@@ -331,6 +333,21 @@ namespace PokemonUnity
 
 		public static bool pressex(int key) {
 			return Input.repeatcount(key)>0;
+		}
+
+		public static bool KeyPressed(int i_Key) //System.Windows.Forms.Keys
+		{
+			if (m_KeyTable[i_Key] == null)
+			{
+				return false;
+			}
+
+			return (bool)m_KeyTable[i_Key];
+		}
+
+		public static void ChangeState(int key, bool state) //System.Windows.Forms.Keys
+		{
+			m_KeyTable[key] = state;
 		}
 		#endregion
 

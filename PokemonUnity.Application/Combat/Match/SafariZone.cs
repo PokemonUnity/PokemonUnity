@@ -5,10 +5,12 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Combat.Data;
 using PokemonUnity.Character;
 using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.Screen;
 
 namespace PokemonUnity.Combat
 {
-	public class PokeBattle_SafariZone : Battle, PokemonEssentials.Interface.PokeBattle.ISafariZone 
+	//ToDo: Remove `Battle` inheritance?... Maybe this class and battle scene should be refactored...
+	public class PokeBattle_SafariZone : Battle, PokemonEssentials.Interface.Screen.ISafariZone_Scene
 	{
 		//public Environment environment { get; private set; }
 		//public Pokemon[] party1 { get; private set; }
@@ -17,24 +19,29 @@ namespace PokemonUnity.Combat
 		//public bool battlescene { get; private set; }
 		//public int debugupdate { get; private set; }
 		//include PokeBattle_BattleCommon;
+		/// <summary>
+		/// Scene Id; Match against unity's scene loader management, and use this value as input parameter
+		/// </summary>
+		public virtual int Id { get { return 0; } }
+
 		public PokeBattle_SafariZone(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,PokemonEssentials.Interface.PokeBattle.ITrainer player,PokemonEssentials.Interface.PokeBattle.IPokemon[] p1,PokemonEssentials.Interface.PokeBattle.IPokemon[] p2) : base(scene, p1, p2, player, null)
-        {
+		{
 			initialize(scene, player, p2);
-        }
-		public PokemonEssentials.Interface.PokeBattle.ISafariZone initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,ITrainer player,IPokemon[] party) 
+		}
+		public PokemonEssentials.Interface.Screen.ISafariZone_Scene initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene,ITrainer player,IPokemon[] party)
 		{
 			base.scene=scene;
 			base.party2=party;
 			@peer=Monster.PokeBattle_BattlePeer.create();
 			base.player=new ITrainer[] { player };
-			@battlers=new IBattler[] {
+			_battlers=new IBattler[] {
 			   new Pokemon(this,0), //PokeBattle_FakeBattler(party[0],0),
 			   new Pokemon(this,1), //PokeBattle_FakeBattler(party[0],1),
 			   new Pokemon(this,2), //PokeBattle_FakeBattler(party[0],2),
 			   new Pokemon(this,3)  //PokeBattle_FakeBattler(party[0],3)
 			};
 			@environment=Overworld.Environments.None;
-			@battlescene=true; 
+			@battlescene=true;
 			@decision=BattleResults.InProgress;
 			@ballcount=0;
 			return this;
@@ -216,5 +223,7 @@ namespace PokemonUnity.Combat
 
 		public override void pbGainEXP() {
 		}
+
+		void IScene.pbRefresh() { }
 	}
 }

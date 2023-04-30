@@ -13,6 +13,15 @@ using PokemonUnity.UX;
 
 namespace PokemonEssentials.Interface
 {
+	public interface ISpritePicture : IDisposable
+	{
+		ISpritePicture initialize(IViewport viewport, ISprite picture);
+
+		void dispose();
+
+		IEnumerator update();
+	}
+
 	/// <summary>
 	/// Pokémon sprite (used out of battle)
 	/// </summary>

@@ -2907,7 +2907,6 @@ namespace PokemonUnity//.Inventory
 			#endregion
 		}*/
 
-
 		//Events.onStepTaken+=proc {
 		private void OnStepTakenEventHandler(object sender, EventArgs e)
 		{

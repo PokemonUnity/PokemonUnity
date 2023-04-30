@@ -19,7 +19,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int Index					{ get; }
 		int pokemonIndex			{ get; set; }
 		int TotalHP					{ get; }
-		bool Fainted				{ get; }
+		//bool Fainted				{ get; }
 		IList<int> lastAttacker		{ get; }
 		int turncount				{ get; set; }
 		IEffectsBattler effects		{ get; }
@@ -39,10 +39,10 @@ namespace PokemonEssentials.Interface.PokeBattle
 		IList<int> participants		{ get; set; }
 		bool tookDamage				{ get; set; }
 		int lastHPLost				{ get; set; }
-		Moves lastMoveUsed			{ get; }
+		Moves lastMoveUsed			{ get; set; }
 		Types lastMoveUsedType		{ get; }
-		Moves lastMoveUsedSketch	{ get; }
-		Moves lastRegularMoveUsed	{ get; }
+		Moves lastMoveUsedSketch	{ get; set; }
+		Moves lastRegularMoveUsed	{ get; set; }
 		int? lastRoundMoved			{ get; }
 		IList<Moves> movesUsed		{ get; }
 		Moves currentMove			{ get; set; }

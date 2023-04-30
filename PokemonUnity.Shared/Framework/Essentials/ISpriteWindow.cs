@@ -154,9 +154,9 @@ namespace PokemonEssentials.Interface
 		//      Otherwise, the text is left aligned.
 		//  4 - Base color
 		//  5 - Shadow color
-		void pbDrawTextPositions(IBitmap bitmap, object[] textpos);
+		void pbDrawTextPositions(IBitmap bitmap, IList<ITextPosition> textpos);
 
-		void pbDrawImagePositions(IBitmap bitmap, object[] textpos);
+		void pbDrawImagePositions(IBitmap bitmap, IList<ITextPosition> textpos);
 
 
 
@@ -332,9 +332,9 @@ namespace PokemonEssentials.Interface
 		//}
 
 		IBitmap this[int index] { get; } //{ @bitmap[index]; }
-		int width(); //{ @bitmap.bitmap.width; }
-		int height(); //{ @bitmap.bitmap.height; }
-		int length(); //{ @bitmap.Length; }
+		int width { get; } //{ @bitmap.bitmap.width; }
+		int height { get; } //{ @bitmap.bitmap.height; }
+		int length { get; } //{ @bitmap.Length; }
 		IEnumerable<IBitmap> each(); //{ @bitmap.each {|item| yield item }; }
 		IBitmap bitmap(); //{ @bitmap.bitmap; }
 		int currentIndex(); //{ @bitmap.currentIndex; }
@@ -342,7 +342,7 @@ namespace PokemonEssentials.Interface
 		int totalFrames(); //{ @bitmap.totalFrames; }
 		bool disposed { get; } //{ @bitmap.disposed(); }
 		void update(); //{ @bitmap.update(); }
-		void dispose(); //{ @bitmap.dispose(); }
+		//void dispose(); //{ @bitmap.dispose(); }
 		IBitmap deanimate(); //{ @bitmap.deanimate; }
 		IAnimatedBitmap copy(); //{ @bitmap.copy; }
 	}
@@ -645,7 +645,7 @@ namespace PokemonEssentials.Interface
 
 // ##########
 
-	public interface IPngAnimatedBitmap { // :nodoc:
+	public interface IPngAnimatedBitmap : IDisposable { // :nodoc:
 		//  Creates an animated bitmap from a PNG file.  
 		IPngAnimatedBitmap initialize(string file, int hue = 0);
 
@@ -673,7 +673,7 @@ namespace PokemonEssentials.Interface
 
 		void update();
 
-		void dispose();
+		//void dispose();
 
 		int frames				{ get; } // internal
 
@@ -890,9 +890,9 @@ namespace PokemonEssentials.Interface
 		float zoom_y { get; set; }
 
 		ISpriteWrapper initialize(IViewport viewport= null);
-		void dispose();
+		//void Dispose();
 		void flash(IColor color, int duration);
-		void update();
+		//void update();
 	}
 
 // ########################################################################
@@ -1065,7 +1065,7 @@ namespace PokemonEssentials.Interface
 
 		ISpriteWindow initialize(IViewport viewport=null);
 
-		void dispose();
+		//void dispose();
 
 		//  void stretch=(value) {
 		//	@stretch=value;
@@ -1394,7 +1394,7 @@ namespace PokemonEssentials.Interface
 
 		void update();
 
-		void dispose();
+		//void dispose();
 	}
 
 	public interface ISpriteWindow_Selectable : ISpriteWindow_Base {
@@ -1457,10 +1457,10 @@ namespace PokemonEssentials.Interface
 		void refresh();
 	}
 
-	public interface IUpDownArrowMixin {
+	public interface IUpDownArrowMixin : IDisposable {
 		void initUpDownArrow();
 
-		void dispose();
+		//void dispose();
 
 		IViewport viewport { set; }
 
@@ -1492,7 +1492,7 @@ namespace PokemonEssentials.Interface
 
 		IRect drawCursor(int index, IRect rect);
 
-		void dispose();
+		//void dispose();
 
 		// to be implemented by derived classes
 		int itemCount();
@@ -1725,7 +1725,7 @@ namespace PokemonEssentials.Interface
 
 		IAnimatedSprite create(string animname, int framecount, int frameskip, IViewport viewport = null);
 
-		void dispose();
+		//void dispose();
 
 		bool playing();
 
@@ -1760,7 +1760,7 @@ namespace PokemonEssentials.Interface
 		//IIconSprite initialize(*args);
 		IIconSprite initialize(float x, float y, IViewport viewport);
 
-		void dispose();
+		//void dispose();
 
 		void update();
 
@@ -1786,7 +1786,7 @@ namespace PokemonEssentials.Interface
 
 		IBitmap bitmap { set; }
 
-		void dispose();
+		//void Dispose();
 	}
 
 	/// <summary>
@@ -2021,7 +2021,7 @@ namespace PokemonEssentials.Interface
 
 		IIconWindow initialize(float x, float y, int width, int height, IViewport viewport= null);
 
-		void dispose();
+		//void dispose();
 
 		void update();
 
@@ -2036,7 +2036,7 @@ namespace PokemonEssentials.Interface
 	public interface IPictureWindow : ISpriteWindow_Base {
 		IPictureWindow initialize(string pathOrBitmap);
 
-		void dispose();
+		//void dispose();
 
 		void update();
 

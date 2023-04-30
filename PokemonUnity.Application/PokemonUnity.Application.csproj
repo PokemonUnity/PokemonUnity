@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PokemonUnity.Application</RootNamespace>
     <AssemblyName>PokemonUnity.Application</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,6 +57,9 @@
     <Compile Include="Combat\Effects\Field.cs" />
     <Compile Include="Combat\Effects\Move.cs" />
     <Compile Include="Combat\Effects\Side.cs" />
+    <Compile Include="Combat\Match\BattleArena.cs" />
+    <Compile Include="Combat\Match\BattlePalace.cs" />
+    <Compile Include="Combat\Match\Recorder.cs" />
     <Compile Include="Combat\Match\Regulated\OrgBattleRules.cs" />
     <Compile Include="Combat\Match\SafariZone.cs" />
     <Compile Include="Combat\Move.cs" />

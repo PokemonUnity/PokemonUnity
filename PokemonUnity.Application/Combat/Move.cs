@@ -109,8 +109,11 @@ namespace PokemonUnity.Combat
 			//	//return (className).new (battle, move);
 			//	return Activitor.CreateInstance(className, battle, move);
 			if (Kernal.MoveEffectData.ContainsKey(effect)) //move.Effect
-				return Kernal.MoveEffectData[effect].initialize(battle, move);
+			{
+				IBattleMove battleMove = (IBattleMove)((PokeBattle_Move)Kernal.MoveEffectData[effect]).Clone();
+				return battleMove.initialize(battle, move);
 				//return move.Effect.ToBattleMove().Initialize(battle, move);
+			}
 			else if (effect.ToBattleMove() is IBattleMove m && m != null) //move.Effect
 				return m.initialize(battle, move);
 			else
@@ -1241,6 +1244,11 @@ namespace PokemonUnity.Combat
 		public virtual bool pbMoveFailed(IBattler attacker, IBattler opponent){
 			// Called to determine whether the move failed
 			return false;
+		}
+
+		public object Clone()
+		{
+			return this.MemberwiseClone();
 		}
 		#endregion
 #pragma warning restore 0162 //Warning CS0162  Unreachable code detected 

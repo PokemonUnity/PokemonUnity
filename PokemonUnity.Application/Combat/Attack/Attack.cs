@@ -21,7 +21,7 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses current battle and manipulates the data then return the current battle with updated values.
 	/// </summary>
-	public abstract class PokeBattle_Move : Move, IBattleMove
+	public abstract class PokeBattle_Move : Move, IBattleMove, ICloneable
 	{
 		protected int[] astage { get; set; }
 		protected int[] ostage { get; set; }
@@ -75,82 +75,82 @@ namespace PokemonUnity.Combat
 		#region Interface Implementation
 		int IBattleMove.ToInt()
 		{
-			throw new NotImplementedException();
+			return (int)id;
 		}
 
 		bool IBattleMove.unusableInGravity()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isContactMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canProtectAgainst()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canMagicCoat()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canSnatch()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canMirrorMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canKingsRock()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.canThawUser()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.hasHighCriticalRate()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isBitingMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isPunchingMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isSoundBased()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isPowderMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isPulseMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IBattleMove.isBombMove()
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 		#endregion
 	}
@@ -372,7 +372,7 @@ namespace PokemonUnity.Combat
 				{
 					attacker.form = (attacker.form + 1) % 2;
 					attacker.pbUpdate(true);
-					if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//.Species);
+					if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, attacker.pokemon);
 					battle.pbDisplay(Game._INTL("{1} transformed!", attacker.ToString()));
 					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{Game._INTL((attacker as Pokemon).Form.Pokemon.ToString(TextScripts.Name))}");
 				}
@@ -843,7 +843,7 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_014() : base() { }
 		//public PokeBattle_Move_014(Battle battle, Attack.Move move) : base(battle, move) { }
-		private IBattler attacker; //ToDo: use pbAdditionalEffect(IBattler attacker, IBattler opponent) to assign?
+		private IBattler attacker = null;
 		public override int AddlEffect
 		{
 			get
@@ -858,6 +858,7 @@ namespace PokemonUnity.Combat
 
 		public override void pbAdditionalEffect(IBattler attacker, IBattler opponent)
 		{
+			this.attacker = attacker;
 			if (opponent.damagestate.Substitute) return;
 			if (opponent is IBattlerEffect b && b.pbCanConfuse(attacker, false, this))
 			{
@@ -3595,7 +3596,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, opponent.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
@@ -3636,7 +3637,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, opponent.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
@@ -3686,7 +3687,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{attacker.ToString()}'s Illusion ended");
 				attacker.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, (attacker as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(attacker, attacker.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", attacker.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
@@ -3745,7 +3746,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, opponent.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}
@@ -3822,7 +3823,7 @@ namespace PokemonUnity.Combat
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, (opponent as Pokemon).Form.Id);//Species);
+				if (this.battle.scene is IPokeBattle_Scene s0) s0.pbChangePokemon(opponent, opponent.pokemon);
 
 				battle.pbDisplay(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name))));
 			}

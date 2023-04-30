@@ -706,7 +706,7 @@ namespace PokemonUnity.Inventory
 					break;
 				}
 			} while (true);
-			window.dispose();
+			window.Dispose();
 		}
 		#endregion
 	}
@@ -885,7 +885,7 @@ namespace PokemonUnity.Inventory
 			}
 		}
 
-		public static void triggerUseInBattle(Items item,IBattler battler,PokemonUnity.Combat.Battle battle) {
+		public static void triggerUseInBattle(Items item,IBattler battler,IBattle battle) {
 			// Returns whether item was used
 			if (!UseInBattle.ContainsKey(item) || UseInBattle[item] == null) {
 			//if (!Kernal.ItemData[item].Flags.Useable_In_Battle) {

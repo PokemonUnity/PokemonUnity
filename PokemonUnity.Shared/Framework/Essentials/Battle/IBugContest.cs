@@ -76,31 +76,51 @@ namespace PokemonEssentials.Interface.Battle
 	/// </summary>
 	public interface IGameBugContest
 	{
-		// Returns a score for this Pokemon in the Bug Catching Contest.
-		// Not exactly the HGSS calculation, but it should be decent enough.
+		/// <summary>
+		/// Returns a score for this Pokemon in the Bug Catching Contest.
+		/// Not exactly the HGSS calculation, but it should be decent enough.
+		/// </summary>
+		/// <param name="pokemon"></param>
+		/// <returns></returns>
 		int pbBugContestScore(IPokemon pokemon);
 
 		IBugContestState pbBugContestState { get; }
 
-		// Returns true if the Bug Catching Contest in progress
+		/// <summary>
+		/// Returns true if the Bug Catching Contest in progress
+		/// </summary>
 		bool pbInBugContest { get; }
 
-		// Returns true if the Bug Catching Contest in progress and has not yet been judged
+		/// <summary>
+		/// Returns true if the Bug Catching Contest in progress and has not yet been judged
+		/// </summary>
 		bool pbBugContestUndecided { get; }
 
-		// Returns true if the Bug Catching Contest in progress and is being judged
+		/// <summary>
+		/// Returns true if the Bug Catching Contest in progress and is being judged
+		/// </summary>
 		bool pbBugContestDecided { get; }
-
 
 
 		void pbBugContestStartOver();
 
 		BattleResults pbBugContestBattle(Pokemons species, int level);
 
+		/// <summary>
+		/// Fires whenever the player moves to a new map. Event handler receives the old
+		/// map ID or 0 if none.  Also fires when the first map of the game is loaded
+		/// </summary>
+		event EventHandler OnMapChange;
 		//Events.onMapChange+=delegate(object sender, EventArgs e) {
 		//   pbBugContestState.pbClearIfEnded;
 		//}
 
+		/// <summary>
+		/// Fires whenever the map scene is regenerated and soon after the player moves
+		/// to a new map.
+		/// </summary>
+		//event EventHandler<IOnMapSceneChangeEventArgs> OnMapSceneChange;
+		event Action<object, EventArg.IOnMapSceneChangeEventArgs> OnMapSceneChange;
 		//Events.onMapSceneChange+=delegate(object sender, EventArgs e) {
 		//   scene=e[0];
 		//   mapChanged=e[1];
@@ -111,6 +131,10 @@ namespace PokemonEssentials.Interface.Battle
 		//   }
 		//}
 
+		/// <summary>
+		/// Fires each frame during a map update.
+		/// </summary>
+		event EventHandler OnMapUpdate;
 		//Events.onMapUpdate+=delegate(object sender, EventArgs e) {
 		//   if (!Game.GameData.Trainer || !Game.GameData.Global || !Game.GameData.GamePlayer || !Game.GameData.GameMap) {
 		//    //  do nothing
@@ -124,6 +148,12 @@ namespace PokemonEssentials.Interface.Battle
 		//   }
 		//}
 
+		/// <summary>
+		/// Fires whenever one map is about to change to a different one. Event handler
+		/// receives the new map ID and the Game_Map object representing the new map.
+		/// When the event handler is called, Game.GameData.GameMap still refers to the old map.
+		/// </summary>
+		event EventHandler OnMapChanging;
 		//Events.onMapChanging+=delegate(object sender, EventArgs e) {
 		//   newmapID=e[0];
 		//   newmap=e[1];
@@ -135,6 +165,12 @@ namespace PokemonEssentials.Interface.Battle
 		//   }
 		//}
 
+		/// <summary>
+		/// Triggers at the start of a wild battle.  Event handlers can provide their own
+		/// wild battle routines to override the default behavior.
+		/// </summary>
+		//event EventHandler<IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
+		event Action<object, EventArg.IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
 		//Events.onWildBattleOverride+= delegate(object sender, EventArgs e) {
 		//   species=e[0];
 		//   level=e[1];
@@ -161,7 +197,7 @@ namespace PokemonEssentials.Interface.Battle
 		new void pbEndOfRoundPhase();
 	}
 
-	// :nodoc:
+	/// <inheritdoc/>
 	public interface ITimerDisplay : IDisposable
 	{
 		void initialize(int start, int maxtime);

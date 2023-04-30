@@ -178,6 +178,11 @@ namespace PokemonEssentials.Interface.Field
 		//IPoint is supposed to be an int array of x and y (`[int x,int y]`)
 		PokemonUnity.Utility.IPoint pbRandomRoomTile(IDungeon dungeon, ref IList<PokemonUnity.Utility.IPoint> tiles);
 
+		/// <summary>
+		/// Fires whenever a map is created. Event handler receives two parameters: the
+		/// map (RPG.Map) and the tileset (RPG.Tileset)
+		/// </summary>
+		event EventHandler OnMapCreate;
 		//Events.onMapCreate+=delegate(object sender, EventArgs e)
 		//void Events_OnMapCreate(object sender, EventArg.OnMapCreateEventArgs e);
 	}

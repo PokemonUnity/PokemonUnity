@@ -106,3 +106,9 @@ git-journal.fish
 /Pokemon Unity/Assets/GameFramework
 /PokemonUnity.Offline
 /Set-AssemblyVersion.ps1
+/packages
+*.DoxyFile
+*.meta
+* - Copy.cs
+* - Copy.cs.meta
+/PokemonUnity.WinForm/Resources

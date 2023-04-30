@@ -39,7 +39,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// Extensions of <seealso cref="ITempMetadata"/>
 	/// </summary>
 	public interface ITempMetadataPokemonShadow {
-		int[] heartgauges				{ get; }
+		int?[] heartgauges				{ get; set; }
 	}
 
 	/// <summary>
@@ -66,6 +66,129 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		void pbReadyToPurify(IPokemonShadowPokemon pokemon);
+
+		event EventHandler OnStartBattle;
+		//Events.onStartBattle+=delegate(object sender, EventArgs e) {
+		//   Game.GameData.PokemonTemp.heartgauges=[];
+		//   for (int i = 0; i < Game.GameData.Trainer.party.Length; i++) {
+		//     Game.GameData.PokemonTemp.heartgauges[i]=Game.GameData.Trainer.party[i].heartgauge;
+		//   }
+		//}
+
+		//event EventHandler OnEndBattle;
+		event Action<object, IOnEndBattleEventArgs> OnEndBattle;
+		//Events.onEndBattle+=delegate(object sender, EventArgs e) {
+		//   decision=e[0];
+		//   canlose=e[1];
+		//   for (int i = 0; i < Game.GameData.PokemonTemp.heartgauges.Length; i++) {
+		//     pokemon=Game.GameData.Trainer.party[i];
+		//     if (pokemon && (Game.GameData.PokemonTemp.heartgauges[i] &&
+		//        Game.GameData.PokemonTemp.heartgauges[i]!=0 && pokemon.heartgauge==0)) {
+		//       pbReadyToPurify(pokemon);
+		//     }
+		//   }
+		//}
+
+		//ItemHandlers.UseOnPokemon.add(:JOYSCENT,proc{|item,pokemon,scene|
+		//   pbRaiseHappinessAndReduceHeart(pokemon,scene,500);
+		//});
+
+		//ItemHandlers.UseOnPokemon.add(:EXCITESCENT,proc{|item,pokemon,scene|
+		//   pbRaiseHappinessAndReduceHeart(pokemon,scene,1000);
+		//});
+
+		//ItemHandlers.UseOnPokemon.add(:VIVIDSCENT,proc{|item,pokemon,scene|
+		//   pbRaiseHappinessAndReduceHeart(pokemon,scene,2000);
+		//});
+
+		//ItemHandlers.UseOnPokemon.add(:TIMEFLUTE,proc{|item,pokemon,scene|
+		//   if (!pokemon.isShadow?) {
+		//     scene.pbDisplay(_INTL("It won't have any effect."));
+		//     next false;
+		//   }
+		//   pokemon.heartgauge=0;
+		//   pbReadyToPurify(pokemon);
+		//   next true;
+		//});
+
+		//ItemHandlers.BattleUseOnBattler.add(:JOYSCENT,proc{|item,battler,scene|
+		//   if (!battler.isShadow?) {
+		//     scene.pbDisplay(_INTL("It won't have any effect."));
+		//     return false;
+		//   }
+		//   if (battler.inHyperMode?) {
+		//     battler.pokemon.hypermode=false;
+		//     battler.pokemon.adjustHeart(-300);
+		//     scene.pbDisplay(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
+		////     if battler.happiness!=255 || battler.pokemon.heartgauge!=0
+		////       pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,500)
+		////     }
+		//     return true;
+		//   }
+		////   return pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,500)
+		//   scene.pbDisplay(_INTL("It won't have any effect."));
+		//   return false;
+		//});
+
+		//ItemHandlers.BattleUseOnBattler.add(:EXCITESCENT,proc{|item,battler,scene|
+		//   if (!battler.isShadow?) {
+		//     scene.pbDisplay(_INTL("It won't have any effect."));
+		//     return false;
+		//   }
+		//   if (battler.inHyperMode?) {
+		//     battler.pokemon.hypermode=false;
+		//     battler.pokemon.adjustHeart(-300);
+		//     scene.pbDisplay(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
+		////     if battler.happiness!=255 || battler.pokemon.heartgauge!=0
+		////       pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,1000)
+		////     }
+		//     return true;
+		//   }
+		////   return pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,1000)
+		//   scene.pbDisplay(_INTL("It won't have any effect."));
+		//   return false;
+		//});
+
+		//ItemHandlers.BattleUseOnBattler.add(:VIVIDSCENT,proc{|item,battler,scene|
+		//   if (!battler.isShadow?) {
+		//     scene.pbDisplay(_INTL("It won't have any effect."));
+		//     return false;
+		//   }
+		//   if (battler.inHyperMode?) {
+		//     battler.pokemon.hypermode=false;
+		//     battler.pokemon.adjustHeart(-300);
+		//     scene.pbDisplay(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
+		////     if battler.happiness!=255 || battler.pokemon.heartgauge!=0
+		////       pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,2000)
+		////     }
+		//     return true;
+		//   }
+		////   return pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,2000)
+		//   scene.pbDisplay(_INTL("It won't have any effect."));
+		//   return false;
+		//});
+
+		/// <summary>
+		/// Fires whenever the player takes a step.
+		/// </summary>
+		event EventHandler OnStepTaken;
+		//Events.onStepTaken+=proc{
+		//   foreach (var pkmn in Game.GameData.Trainer.party) {
+		//     if (pkmn.HP>0 && !pkmn.isEgg? && pkmn.heartgauge>0) {
+		//       pkmn.adjustHeart(-1);
+		//       if (pkmn.heartgauge==0) pbReadyToPurify(pkmn);
+		//     }
+		//   }
+		//   if ((Game.GameData.Global.purifyChamber rescue null)) {
+		//     Game.GameData.Global.purifyChamber.update();
+		//   }
+		//   for (int i = 0; i < 2; i++) {
+		//     pkmn=Game.GameData.Global.daycare[i][0];
+		//     if (!pkmn) continue;
+		//     pkmn.adjustHeart(-1);
+		//     pkmn.pbUpdateShadowMoves();
+		//   }
+		//}
 	}
 
 	/// <summary>
@@ -142,119 +265,4 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		bool pbHyperModeObedience(IBattleMove move);
 	}
-
-	//Events.onStartBattle+=delegate(object sender, EventArgs e) {
-	//   Game.GameData.PokemonTemp.heartgauges=[];
-	//   for (int i = 0; i < Game.GameData.Trainer.party.Length; i++) {
-	//     Game.GameData.PokemonTemp.heartgauges[i]=Game.GameData.Trainer.party[i].heartgauge;
-	//   }
-	//}
-
-	//Events.onEndBattle+=delegate(object sender, EventArgs e) {
-	//   decision=e[0];
-	//   canlose=e[1];
-	//   for (int i = 0; i < Game.GameData.PokemonTemp.heartgauges.Length; i++) {
-	//     pokemon=Game.GameData.Trainer.party[i];
-	//     if (pokemon && (Game.GameData.PokemonTemp.heartgauges[i] &&
-	//        Game.GameData.PokemonTemp.heartgauges[i]!=0 && pokemon.heartgauge==0)) {
-	//       pbReadyToPurify(pokemon);
-	//     }
-	//   }
-	//}
-	//ItemHandlers.UseOnPokemon.add(:JOYSCENT,proc{|item,pokemon,scene|
-	//   pbRaiseHappinessAndReduceHeart(pokemon,scene,500);
-	//});
-
-	//ItemHandlers.UseOnPokemon.add(:EXCITESCENT,proc{|item,pokemon,scene|
-	//   pbRaiseHappinessAndReduceHeart(pokemon,scene,1000);
-	//});
-
-	//ItemHandlers.UseOnPokemon.add(:VIVIDSCENT,proc{|item,pokemon,scene|
-	//   pbRaiseHappinessAndReduceHeart(pokemon,scene,2000);
-	//});
-
-	//ItemHandlers.UseOnPokemon.add(:TIMEFLUTE,proc{|item,pokemon,scene|
-	//   if (!pokemon.isShadow?) {
-	//     scene.pbDisplay(_INTL("It won't have any effect."));
-	//     next false;
-	//   }
-	//   pokemon.heartgauge=0;
-	//   pbReadyToPurify(pokemon);
-	//   next true;
-	//});
-
-	//ItemHandlers.BattleUseOnBattler.add(:JOYSCENT,proc{|item,battler,scene|
-	//   if (!battler.isShadow?) {
-	//     scene.pbDisplay(_INTL("It won't have any effect."));
-	//     return false;
-	//   }
-	//   if (battler.inHyperMode?) {
-	//     battler.pokemon.hypermode=false;
-	//     battler.pokemon.adjustHeart(-300);
-	//     scene.pbDisplay(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
-	////     if battler.happiness!=255 || battler.pokemon.heartgauge!=0
-	////       pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,500)
-	////     }
-	//     return true;
-	//   }
-	////   return pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,500)
-	//   scene.pbDisplay(_INTL("It won't have any effect."));
-	//   return false;
-	//});
-
-	//ItemHandlers.BattleUseOnBattler.add(:EXCITESCENT,proc{|item,battler,scene|
-	//   if (!battler.isShadow?) {
-	//     scene.pbDisplay(_INTL("It won't have any effect."));
-	//     return false;
-	//   }
-	//   if (battler.inHyperMode?) {
-	//     battler.pokemon.hypermode=false;
-	//     battler.pokemon.adjustHeart(-300);
-	//     scene.pbDisplay(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
-	////     if battler.happiness!=255 || battler.pokemon.heartgauge!=0
-	////       pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,1000)
-	////     }
-	//     return true;
-	//   }
-	////   return pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,1000)
-	//   scene.pbDisplay(_INTL("It won't have any effect."));
-	//   return false;
-	//});
-
-	//ItemHandlers.BattleUseOnBattler.add(:VIVIDSCENT,proc{|item,battler,scene|
-	//   if (!battler.isShadow?) {
-	//     scene.pbDisplay(_INTL("It won't have any effect."));
-	//     return false;
-	//   }
-	//   if (battler.inHyperMode?) {
-	//     battler.pokemon.hypermode=false;
-	//     battler.pokemon.adjustHeart(-300);
-	//     scene.pbDisplay(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
-	////     if battler.happiness!=255 || battler.pokemon.heartgauge!=0
-	////       pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,2000)
-	////     }
-	//     return true;
-	//   }
-	////   return pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,2000)
-	//   scene.pbDisplay(_INTL("It won't have any effect."));
-	//   return false;
-	//});
-
-//Events.onStepTaken+=proc{
-//   foreach (var pkmn in Game.GameData.Trainer.party) {
-//     if (pkmn.HP>0 && !pkmn.isEgg? && pkmn.heartgauge>0) {
-//       pkmn.adjustHeart(-1);
-//       if (pkmn.heartgauge==0) pbReadyToPurify(pkmn);
-//     }
-//   }
-//   if ((Game.GameData.Global.purifyChamber rescue null)) {
-//     Game.GameData.Global.purifyChamber.update();
-//   }
-//   for (int i = 0; i < 2; i++) {
-//     pkmn=Game.GameData.Global.daycare[i][0];
-//     if (!pkmn) continue;
-//     pkmn.adjustHeart(-1);
-//     pkmn.pbUpdateShadowMoves();
-//   }
-//}
 }

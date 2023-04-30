@@ -183,6 +183,13 @@ namespace PokemonUnity.ConsoleApp
 			return result;
 		}
 
+		bool IHasDisplayMessage.pbDisplayConfirm(string v)
+		{
+			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+			return (this as IPokeBattle_DebugSceneNoGraphics).pbDisplayConfirmMessage(v);
+		}
+
 		bool IPokeBattle_DebugSceneNoGraphics.pbShowCommands(string msg, string[] commands, bool defaultValue)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -254,22 +261,17 @@ namespace PokemonUnity.ConsoleApp
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
-		void IPokeBattle_DebugSceneNoGraphics.pbTrainerSendOut(IBattle battle, IPokemon pkmn)
+		//void IPokeBattle_DebugSceneNoGraphics.pbTrainerSendOut(IBattle battle, IPokemon pkmn)
+		//{
+		//	GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		//}
+
+		void IPokeBattle_DebugSceneNoGraphics.pbTrainerWithdraw(IBattle battle, IBattler pkmn)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
-		void IPokeBattle_DebugSceneNoGraphics.pbSendOut(IBattle battle, IPokemon pkmn)
-		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-		}
-
-		void IPokeBattle_DebugSceneNoGraphics.pbTrainerWithdraw(IBattle battle, IPokemon pkmn)
-		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-		}
-
-		void IPokeBattle_DebugSceneNoGraphics.pbWithdraw(IBattle battle, IPokemon pkmn)
+		void IPokeBattle_DebugSceneNoGraphics.pbWithdraw(IBattle battle, IBattler pkmn)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}

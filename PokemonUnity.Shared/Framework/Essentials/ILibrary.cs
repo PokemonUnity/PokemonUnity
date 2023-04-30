@@ -37,7 +37,7 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.Field.IMapMetadata PokemonMap			{ get; }
 		PokemonEssentials.Interface.Field.IMapMetadata MapData				{ get; }
 		PokemonEssentials.Interface.Screen.IPokemonSystemOption PokemonSystem { get; }
-		PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp				{ get; set; }
+		PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp			{ get; set; }
 		PokemonEssentials.Interface.Field.IEncounters PokemonEncounters		{ get; }
 		PokemonEssentials.Interface.Screen.IPokemonStorage PokemonStorage	{ get; }
 		PokemonEssentials.Interface.Screen.IBag Bag							{ get; }
@@ -57,8 +57,8 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.IGameMap GameMap						{ get; set; }
 		//PokemonEssentials.Interface.IGameMessage GameMessage				{ get; set; }
 		//int SpeechFrame													{ get; }
-		PokemonEssentials.Interface.Screen.IGameScenesUI Scenes			{ get; }
-		PokemonEssentials.Interface.Screen.IGameScreensUI Screens		{ get; }
+		PokemonEssentials.Interface.Screen.IGameScenesUI Scenes				{ get; set; }
+		PokemonEssentials.Interface.Screen.IGameScreensUI Screens			{ get; set; }
 	}
 	public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }
 	//public interface ITempMetadata : Field.ITempMetadata, ITempMetadataBerryPlants, ITempMetadataDependantEvents, ITempMetadataField, ITempMetadataPokeRadar, ITempMetadataRoaming, ITempMetadataPokemonShadow { }
