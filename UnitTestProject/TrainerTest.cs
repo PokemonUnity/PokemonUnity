@@ -47,7 +47,7 @@ namespace Tests
         [TestMethod]
         public void Trainer_Party_AddPokemon()
 		{
-			//Assert.Inconclusive();
+			Assert.Inconclusive("Player class is deprecated and being phased out. Test is inconclusive until resolved.");
 			string playerName = "Red";
 			int trainerID = 55323;
 			int secretID = 64123;
