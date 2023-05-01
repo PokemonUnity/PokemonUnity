@@ -149,7 +149,7 @@ namespace Tests
 		}
         #endregion
 
-        #region TrainerItemsBags&&PC
+        #region Trainer Items, Bags, & PC
         [TestMethod]
         public void Trainer_RideBike_Fail_If_Item_NotInInventory()
         {
