@@ -267,17 +267,20 @@ namespace PokemonUnity.Character
 				return -1; //true
 			}
 			else
+			{
+				//Could not be stored in PC because all boxes full
+				KeyValuePair<int,int>? slot = null;
 				//attempt to add to the earliest available PC box. 
 				for (int numOfBoxes = 0, curBox = PC.ActiveBox; numOfBoxes < PC.AllBoxes.Length; numOfBoxes++, curBox++)
 				{
-					bool added = PC[(byte)(curBox % Core.STORAGEBOXES)].addPokemon(pokemon);
-					if (added)
+					slot = PC[(byte)(curBox % Core.STORAGEBOXES)].addPokemon(pokemon);
+					if (slot != null)
 						//Returns the box pokemon was stored to
 						return curBox; //true
 					if (!Game.GameData.Features.OverflowPokemonsIntoNextBox) break; //else PC.ActiveBox = curBox; //change active box too?
 				}
-			//Could not be stored in PC because all boxes full
-			return null;
+				return slot?.Key;
+			}
 		}
 
 		/// <summary>

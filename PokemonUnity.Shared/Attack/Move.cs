@@ -107,52 +107,5 @@ namespace PokemonUnity.Attack
 			PPups = ppUp;
 			PP = pp;
 		}
-
-		#region Methods
-		public bool hasMultipleTargets()
-		{
-			return this.Targets == Targets.OPPONENTS_FIELD//.AllOpposing 
-				|| this.Targets == Targets.ALL_OPPONENTS;//.AllNonUsers;
-		}
-		public bool targetsOneOpponent()
-		{
-			return this.Targets == Targets.SELECTED_POKEMON_ME_FIRST//.SingleNonUser 
-				|| this.Targets == Targets.RANDOM_OPPONENT//.RandomOpposing
-				|| this.Targets == Targets.SELECTED_POKEMON;//.SingleOpposing 
-															//|| this.Targets == Targets//.OppositeOpposing;
-		}
-
-		public virtual bool pbIsPhysical(Types type)
-		{
-			if (Core.USEMOVECATEGORY)
-				return Category == Attack.Category.PHYSICAL;
-			else
-				return Game.TypeData[type].Category == Attack.Category.PHYSICAL;
-		}
-
-		public virtual bool pbIsSpecial(Types type)
-		{
-			if (Core.USEMOVECATEGORY)
-				return Category == Attack.Category.SPECIAL;
-			else
-				return Game.TypeData[type].Category == Attack.Category.SPECIAL;
-		}
-
-		public virtual bool pbIsStatus
-		{
-			get
-			{
-				return Category == Attack.Category.STATUS;
-			}
-		}
-
-		public virtual bool pbIsDamaging
-		{
-			get 
-			{
-				return !pbIsStatus;
-			}
-		}
-		#endregion
 	}
 }

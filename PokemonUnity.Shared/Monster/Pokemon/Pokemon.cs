@@ -11,7 +11,7 @@ using PokemonUnity.Monster.Data;
 
 namespace PokemonUnity.Monster
 {
-	public partial class Pokemon : IPokemon
+	public partial class Pokemon : IPokemon, IEquatable<Pokemon>, IEqualityComparer<Pokemon>
 	{
 		#region Variables
 		private Pokemons pokemons { get; set; }
@@ -112,7 +112,7 @@ namespace PokemonUnity.Monster
 		/// Where Pokemon can use Belch (used in battle only)
 		/// </summary>
 		public bool belch { get; set; }
-		public Experience Experience { get; set; }
+		public Experience Experience { get; private set; }
 		/// <summary>
 		/// Current happiness
 		/// </summary>
@@ -355,7 +355,7 @@ namespace PokemonUnity.Monster
 		/// <remarks>
 		/// I think this is only need for tested, not sure of purpose inside framework
 		/// </remarks>
-		public Pokemon(Pokemons pkmn, TrainerData original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
+		public Pokemon(Pokemons pkmn, TrainerData? original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
 
 		[System.Obsolete("Sample code for inspiration")]
 		public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
@@ -456,7 +456,7 @@ namespace PokemonUnity.Monster
 		/// <param name="timeEggHatched"></param>
 		/// ToDo: Maybe make this private? Move implicit convert to Pokemon class
 		public Pokemon(Pokemons species,
-			TrainerData original,
+			TrainerData? original,
 			string nickName, int form,
 			Abilities ability, Natures nature,
 			bool isShiny, bool? gender,
@@ -497,9 +497,6 @@ namespace PokemonUnity.Monster
 			HeartGuageSize = heartSize;
 			ShadowLevel = shadowLevel;
 
-			HP = currentHp;
-			Item = item;
-
 			IV = iv;
 			EV = ev;
 
@@ -507,6 +504,11 @@ namespace PokemonUnity.Monster
 			//Level = currentLevel;
 			//Experience.AddExperience(currentExp - Experience.Current);
 			Exp = currentExp;
+
+			//Current Hp cant be greater than Max hp, 
+			//Level up pokemon first using exp points
+			HP = currentHp; 
+			Item = item;
 
 			Happiness = happiness;
 
@@ -612,7 +614,7 @@ namespace PokemonUnity.Monster
 		/// <remarks>
 		/// ToDo: PlayerTrainer's hash value instead of class; maybe GUID?
 		/// </remarks>
-		public TrainerData OT { get; private set; }
+		public TrainerData? OT { get; private set; }
 		/// <summary>
 		/// Personal/Pokemon ID
 		/// </summary>
@@ -639,7 +641,7 @@ namespace PokemonUnity.Monster
 		/// <returns></returns>
 		public string TrainerId
 		{
-			get { return OT.PlayerID; }
+			get { return OT != null ? OT.Value.PlayerID : "00000"; }
 		}
 
 		/// <summary>
@@ -1391,8 +1393,8 @@ namespace PokemonUnity.Monster
 				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//int d = (Game.GameData.Player.Trainer.TrainerID ^ Game.GameData.Player.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
-				int d = ((!OT.Equals((object)null) ? OT.TrainerID : Game.GameData.Player.Trainer.TrainerID)
-					^ (!OT.Equals((object)null) ? OT.SecretID : Game.GameData.Player.Trainer.SecretID))
+				int d = ((!OT.Equals((object)null) ? OT.Value.TrainerID : Game.GameData.Player.Trainer.TrainerID)
+					^ (!OT.Equals((object)null) ? OT.Value.SecretID : Game.GameData.Player.Trainer.SecretID))
 					//^ ((Game.GameData.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Core.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Core.SHINYPOKEMONCHANCE) / 65536)
 					^ ((Game.GameData.Player.Party[0].Item == Items.SHINY_CHARM ? Core.SHINYPOKEMONCHANCE * 3 : Core.SHINYPOKEMONCHANCE) / 65536)
 					^ (PersonalId % 65536);
@@ -1405,6 +1407,14 @@ namespace PokemonUnity.Monster
 		/// Forces the shininess
 		/// </summary>
 		private bool? shinyFlag { get; set; }
+
+		/// <summary>
+		/// Randomize Personal Id of pokemon, which will affect shiny flag
+		/// </summary>
+		public void shuffleShiny()
+		{
+			PersonalId = Core.Rand.Next(65536) | (Core.Rand.Next(65536) << 16);
+		}
 
 		/// <summary>
 		/// Makes this Pokemon shiny.
@@ -1740,7 +1750,6 @@ namespace PokemonUnity.Monster
 		/// <param name="move"></param>
 		/// <param name="silently">Forces move to be learned by pokemon by overriding fourth regardless of player's choice</param>
 		/// <returns></returns>
-		/// Silently learns the given move. Will erase the first known move if it has to.
 		//ToDo: Change void to string, return errors as in-game prompts; 
 		//remove `out bool success` or replace with `out string error`
 		public void LearnMove(Moves move, out bool success, bool silently = false)
@@ -1791,6 +1800,44 @@ namespace PokemonUnity.Monster
 				moves[3] = new Move(move);
 				success = true;
 			}
+		}
+
+		/// <summary>
+		/// Silently learns the given move. Will erase the first known move if it has to.
+		/// </summary>
+		/// <param name="move"></param>
+		/// <returns></returns>
+		public void pbLearnMove(Moves move)
+		{
+			//if (move is String || move is Symbol)
+			//{
+			//	move = getID(PBMoves, move);
+			//}
+			if (move <= 0) return;
+			for (int i = 0; i < 4; i++)
+			{
+				if (moves[i].MoveId == move)
+				{
+					int j = i + 1; while (j < 4) { 
+						if (@moves[j].MoveId == 0) break;
+						PokemonUnity.Attack.Move tmp = @moves[j];
+						@moves[j] = @moves[j - 1];
+						@moves[j - 1] = tmp;
+						j += 1;
+					}
+					return;
+				}
+			}
+			for (int i = 0; i< 4; i++) {
+				if (@moves[i].MoveId==0) {
+					@moves[i]=new PokemonUnity.Attack.Move(move);
+					return;
+				}
+			}
+			@moves[0] = @moves[1];
+			@moves[1] = @moves[2];
+			@moves[2] = @moves[3];
+			@moves[3] = new PokemonUnity.Attack.Move(move);
 		}
 
 		/// <summary>
@@ -2911,6 +2958,56 @@ namespace PokemonUnity.Monster
 				totalEVgain += gainEVSpeed;
 			}
 			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPEED.ToString()}  EV gain: #{gainEVSpeed}  EVs: #{EV.ToString()}");
+		}
+		#endregion
+
+		#region Explicit Operators
+		public static bool operator ==(Pokemon x, Pokemon y)
+		{
+			if ((object)x == null && (object)y == null) return true;
+			if ((object)x == null || (object)y == null) return false;
+			return ((x.PersonalId == y.PersonalId) && (x.TrainerId == y.TrainerId) && (x.OT == y.OT)) & (x.Name == y.Name); //ToDo: If Gender is different, are pokemons the same? Check Date/Age of Pokemon?
+		}
+		public static bool operator !=(Pokemon x, Pokemon y)
+		{
+			if ((object)x == null && (object)y == null) return false;
+			if ((object)x == null || (object)y == null) return true;
+			return ((x.PersonalId != y.PersonalId) || (x.TrainerId != y.TrainerId) || (x.OT != y.OT)) | (x.Name == y.Name);
+		}
+		public bool Equals(Pokemon obj)
+		{
+			if (obj == null) return false;
+			return this == obj;
+		}
+		public bool Equals(PokemonUnity.Saving.SerializableClasses.SeriPokemon obj)
+		{
+			//if (obj == null) return false;
+			return this == obj; 
+		}
+		public override bool Equals(object obj)
+		{
+			if (obj == null) return false;
+			if (obj.GetType() == typeof(Pokemon))
+				return Equals((Pokemon)obj);
+			if (obj.GetType() == typeof(PokemonUnity.Saving.SerializableClasses.SeriPokemon))
+				return Equals((PokemonUnity.Saving.SerializableClasses.SeriPokemon)obj);
+			return base.Equals(obj);
+		}
+		public override int GetHashCode()
+		{
+			return PersonalId.GetHashCode();
+		}
+		bool IEquatable<Pokemon>.Equals(Pokemon other)
+		{
+			return Equals(obj: (object)other);
+		}
+		bool IEqualityComparer<Pokemon>.Equals(Pokemon x, Pokemon y)
+		{
+			return x == y;
+		}
+		int IEqualityComparer<Pokemon>.GetHashCode(Pokemon obj)
+		{
+			return obj.GetHashCode();
 		}
 		#endregion
 

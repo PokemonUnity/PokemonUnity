@@ -24,6 +24,14 @@ namespace PokemonUnity
 	public interface IScene : IHasDisplayMessage
 	{
 		/// <summary>
+		/// Represents the unique id for given scene.
+		/// Used for loading scenes in unity.
+		/// </summary>
+		int Id { get; }
+
+		void pbRefresh();
+
+		/// <summary>
 		/// Shows the player's Poké Ball being thrown to capture a Pokémon.
 		/// </summary>
 		//void pokeballThrow(Items ball, int shakes,bool critical,Combat.Pokemon targetBattler,IScene scene,Combat.Pokemon battler, int burst = -1, bool showplayer = false);
@@ -227,12 +235,12 @@ namespace PokemonUnity
 	public interface IButtonEventScene : IEventScene {
 		void pbOnScreen1();
 	}
-	public interface IPokeBattle_DebugScene {
+	public interface IPokeBattle_DebugScene : IScene {
 		void pbDisplayMessage(string msg,bool brief= false);
 		void pbDisplayPausedMessage(string msg);
 		void pbDisplayConfirmMessage(string msg);
 		void pbFrameUpdate(object cw);
-		void pbRefresh();
+		//void pbRefresh();
 		/// <summary>
 		/// Called whenever a new round begins.
 		/// </summary>

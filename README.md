@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">Pokémon Framework by Herbert Milhomme</h1>
+  <h1 align="center">Pokémon Framework with Unity by Herbert Milhomme</h1>
   <p align="center">
     <a href="https://opensource.org/licenses/BSD-3-Clause"><img alt="License" src="https://img.shields.io/badge/license-New%20BSD-blue.svg"/></a>
     <a href="https://herbertmilhomme.github.io/PokemonUnity/"><img alt="GitBook" src="https://img.shields.io/badge/view%20docs%20on-gitbook-blue.svg"/></a>
@@ -48,4 +48,5 @@ Anything that ends in an "S" is most likely an `Enum`. `PokemonUnity.Pokemons` i
 * Database: [Veekun's Pokedex Github](https://github.com/veekun/pokedex)
 * Web-Server: TBD
 * PKUnity Author: [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
-* Unity Framework: [GameFramework](https://github.com/EllanJiang/GameFramework)
+* Unity Framework: [GameFramework UnityEngine C# Assets](https://github.com/EllanJiang/UnityGameFramework)
+* Unity Framework: [GameFramework Vanilla C# Library](https://github.com/EllanJiang/GameFramework)

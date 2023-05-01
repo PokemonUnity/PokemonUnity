@@ -279,7 +279,7 @@ namespace Tests
 		[TestMethod]
 		public void Compare_Save_Files()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
 
 			//SaveManager.Overwrite(newSave, 1);
@@ -446,7 +446,7 @@ namespace Tests
 		[TestMethod]
 		public void SaveData_Load_Party()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;
@@ -482,7 +482,7 @@ namespace Tests
 		[TestMethod]
 		public void Player_Load_Party()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;

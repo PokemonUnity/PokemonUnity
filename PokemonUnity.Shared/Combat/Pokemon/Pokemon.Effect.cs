@@ -11,7 +11,7 @@ namespace PokemonUnity.Combat
     public partial class Pokemon 
     {
 #region Sleep
-  public bool pbCanSleep(Pokemon attacker, bool showMessages, Move move=null, bool ignorestatus=false) {
+  private bool _pbCanSleep(Pokemon attacker, bool showMessages, IMove move=null, bool ignorestatus=false) {
     if (isFainted()) return false;
     bool selfsleep=(attacker.IsNotNullOrNone() && attacker.Index==this.Index);
     if (!ignorestatus && status==Status.SLEEP) {
@@ -66,7 +66,7 @@ namespace PokemonUnity.Combat
     return true;
   }
 
-  public bool pbCanSleepYawn() {
+  private bool _pbCanSleepYawn() {
     if (status!=0) return false;
     if (!hasWorkingAbility(Abilities.SOUNDPROOF))
       for (int i = 0; i < 4; i++)
@@ -396,7 +396,7 @@ namespace PokemonUnity.Combat
 #endregion
 
 #region Freeze
-  public bool pbCanFreeze(Pokemon attacker,bool showMessages,Move move=null) {
+  private bool _pbCanFreeze(Pokemon attacker,bool showMessages,Move move=null) {
     if (isFainted()) return false;
     if (status==Status.FROZEN) {
       if (showMessages) @battle.pbDisplay(Game._INTL("{1} is already frozen solid!",ToString()));

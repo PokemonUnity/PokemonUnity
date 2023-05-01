@@ -15,6 +15,6 @@ namespace PokemonUnity.Combat
 		bool isShadow();
 		bool inHyperMode();
 		void pbHyperMode();
-		bool pbHyperModeObedience(Move move);
+		bool pbHyperModeObedience(Combat.IMove move);
 	}
 }

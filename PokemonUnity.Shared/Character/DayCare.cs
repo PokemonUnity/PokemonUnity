@@ -12,19 +12,19 @@ namespace PokemonUnity.Character
 {
 	/// <summary>
 	/// </summary>
+	//Daycare Data
+	//(Slot 1) Occupied Flag 
+	//(Slot 1) Steps Taken Since Depositing 
+	//(Slot 1) Box EK6 1 
+	//(Slot 2) Occupied Flag 
+	//(Slot 2) Steps Taken Since Depositing2 
+	//(Slot 2) Box EK6 2 
+	//Flag (egg available) 
+	//RNG Seed
+    //ToDo: Also need to record the number of levels gained...
 	public class DayCare
 	{
 		#region Variables
-		//Daycare Data
-		//(Slot 1) Occupied Flag 
-		//(Slot 1) Steps Taken Since Depositing 
-		//(Slot 1) Box EK6 1 
-		//(Slot 2) Occupied Flag 
-		//(Slot 2) Steps Taken Since Depositing2 
-		//(Slot 2) Box EK6 2 
-		//Flag (egg available) 
-		//RNG Seed
-        //ToDo: Also need to record the number of levels gained...
 		/// <summary>
 		/// </summary>
 		// KeyValuePair<Pokemon,steps>[]
@@ -48,7 +48,7 @@ namespace PokemonUnity.Character
 		#region Methods
 public static bool pbEggGenerated() {
   if (pbDayCareDeposited()!=2) return false;
-  return Game.GameData.Global.daycareEgg==1;
+  return Game.GameData.Global.daycareEgg;//==1;
 }
 
 public static int pbDayCareDeposited() {
@@ -68,7 +68,7 @@ public static void pbDayCareDeposit(int index) {
       Game.GameData.Player.Party[index]=null;
       //Game.GameData.Player.Party.compact()!;
       Game.GameData.Player.Party.PackParty();
-      Game.GameData.Global.daycareEgg=0;
+      Game.GameData.Global.daycareEgg=false;//0;
       Game.GameData.Global.daycareEggSteps=0;
       return;
     }
@@ -173,7 +173,7 @@ public static void pbDayCareWithdraw(int index) {
     Game.GameData.Player.Party[Game.GameData.Player.Party.Length]=Game.GameData.Global.daycare[index];//[0];
     Game.GameData.Global.daycare[index]=null;//[0]
     //Game.GameData.Global.daycare[index][1]=0;
-    Game.GameData.Global.daycareEgg=0;
+    Game.GameData.Global.daycareEgg=false;//0;
   }
 }
 
@@ -197,7 +197,7 @@ public static void pbDayCareChoose(string text,int variable) {
       }
     }
     choices.Add(Game._INTL("CANCEL"));
-    int command=Game.pbMessage(text,choices,choices.Count);
+    int command=Game.pbMessage(text,choices.ToArray(),choices.Count);
     Game.GameData.GameVariables[variable]=(command==2) ? -1 : command;
   }
 }
@@ -225,7 +225,7 @@ public static void pbDayCareGenerateEgg() {
     mother=pokemon1;
     father=pokemon0;
   }
-  babyspecies=pbGetBabySpecies(babyspecies,mother.Item,father.Item);
+  babyspecies= PokemonUnity.Monster.Evolution.pbGetBabySpecies(babyspecies,mother.Item,father.Item);
   if (babyspecies == Pokemons.MANAPHY) { //&& hasConst?(PBSpecies,:PHIONE)
     babyspecies=Pokemons.PHIONE;
   } else if ((babyspecies == Pokemons.NIDORAN_F) || //&& hasConst?(PBSpecies,:NIDORANmA)
@@ -239,7 +239,7 @@ public static void pbDayCareGenerateEgg() {
   }
   //Generate egg
   //Combat.Pokemon egg=new PokeBattle_Pokemon(babyspecies,Core.EGGINITIALLEVEL,Game.GameData.Player);
-  Pokemon egg=new Pokemon(babyspecies,Core.EGGINITIALLEVEL,Game.GameData.Player);
+  Pokemon egg=new Pokemon(babyspecies,Core.EGGINITIALLEVEL,isEgg: true);//,Game.GameData.Player
   //Randomise personal ID
   int pid=Core.Rand.Next(65536);
   pid|=(Core.Rand.Next(65536)<<16);
@@ -398,11 +398,12 @@ public static void pbDayCareGenerateEgg() {
   int shinyretries=0;
   //if (father.language!=mother.language) shinyretries+=5;
   if (//hasConst?(PBItems,:SHINYCHARM) &&
-                     Game.GameData.Bag.pbQuantity(Items.SHINY_CHARM)>0) shinyretries+=2;
+    Game.GameData.Bag.pbQuantity(Items.SHINY_CHARM)>0) shinyretries+=2;
   if (shinyretries>0) {
     for (int i = 0; i < shinyretries; i++) {
       if (egg.IsShiny) break;
       //egg.PersonalId=Core.Rand.Next(65536)|(Core.Rand.Next(65536)<<16);
+      egg.shuffleShiny();
     }
   }
 //  Inheriting ability from the mother
@@ -452,42 +453,44 @@ public static void pbDayCareGenerateEgg() {
   Game.GameData.Player.Party[Game.GameData.Player.Party.Length]=egg;
 }
 
-/*Events.onStepTaken+=delegate(object sender, EventArgs e) {
+//Events.onStepTaken+=delegate(object sender, EventArgs e) {
+public void OnStepTakenEventHandler(object sender, Events.OnStepTakenFieldMovementEventArgs e) {
    if (Game.GameData.Player == null) return;
    int deposited=DayCare.pbDayCareDeposited();
-   if (deposited==2 && Game.GameData.Global.daycareEgg==0) {
+   if (deposited==2 && !Game.GameData.Global.daycareEgg) {//==0
      if (Game.GameData.Global.daycareEggSteps == null) Game.GameData.Global.daycareEggSteps=0;
      Game.GameData.Global.daycareEggSteps+=1;
      if (Game.GameData.Global.daycareEggSteps==256) {
        Game.GameData.Global.daycareEggSteps=0;
        int compatval=new int[] {0,20,50,70}[DayCare.pbDayCareGetCompat()];
-       if (Game.GameData.Bag.pbQuantity(Items.OVALCHARM)>0) { //hasConst?(PBItems,:OVALCHARM) &&
+       if (Game.GameData.Bag.pbQuantity(Items.OVAL_CHARM)>0) { //hasConst?(PBItems,:OVALCHARM) &&
          compatval=new int[] {0,40,80,88}[DayCare.pbDayCareGetCompat()];
        }
        int rnd=Core.Rand.Next(100);
        if (rnd<compatval) {
          //  Egg is generated
-         Game.GameData.Global.daycareEgg=1;
+         Game.GameData.Global.daycareEgg=true; //+=1; try adding one instead of setting to one?
        }
      }
    }
    for (int i = 0; i < 2; i++) {
-     Pokemon pkmn=Game.GameData.Global.daycare[i][0];
+     Pokemon pkmn=Game.GameData.Global.daycare.Slot[i].Key;
      if (!pkmn.IsNotNullOrNone()) return;
-     int maxexp=PBExperience.pbGetMaxExperience(pkmn.growthrate);
-     if (pkmn.exp<maxexp) {
+     int maxexp=Monster.Data.Experience.GetMaxExperience(pkmn.GrowthRate);
+     if (pkmn.Exp<maxexp) {
        int oldlevel=pkmn.Level;
        pkmn.Exp+=1;
        if (pkmn.Level!=oldlevel) {
-         //pkmn.calcStats();
+         pkmn.calcStats();
          //Moves[] movelist=pkmn.getMoveList();
-         foreach (var i in movelist) {
-           if (i[0]==pkmn.Level) pkmn.pbLearnMove(i[1]);	// Learned a new move
+         var movelist=Game.PokemonMovesData[pkmn.Species].LevelUp;
+         foreach (KeyValuePair<Moves,int> j in movelist) {
+           if (j.Value==pkmn.Level) pkmn.pbLearnMove(j.Key);	// Learned a new move
          }       
        }     
       }   
     }
-  }*/
+  }
 		#endregion
 
 		#region Explicit Operators

@@ -2,3 +2,12 @@
 
 # CS0162: Unreachable code detected
 dotnet_diagnostic.CS0162.severity = silent
+# CS0219: The variable is assigned but its value is never used
+dotnet_diagnostic.CS0219.severity = silent
+dotnet_diagnostic.CS0414.severity = silent
+dotnet_diagnostic.CS0067.severity = silent
+# CS0472: The result of the expression is always 'true'
+dotnet_diagnostic.CS0472.severity = silent
+# CS0618: Entity used is obsolete
+#dotnet_diagnostic.CS0618.severity = silent
+#dotnet_diagnostic.CS0612.severity = silent

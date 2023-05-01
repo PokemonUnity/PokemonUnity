@@ -60,7 +60,7 @@ namespace PokemonUnity.Combat
       }
   }
 
-  public bool pbHyperModeObedience(Move move) { 
+  public bool pbHyperModeObedience(Combat.IMove move) { 
     if (!move.IsNotNullOrNone()) return true;
     if (this.inHyperMode() && move.Type!=Types.SHADOW)
       return @battle.pbRandom(10)<8 ? false : true;
