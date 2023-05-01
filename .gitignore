@@ -38,12 +38,14 @@ ExportedObj/
 *.booproj
 *.svd
 *.pdb
+*.vsconfig
 
 # Unity3D generated meta files
 *.pidb.meta
 UnityVS.meta
 
 # Unity3D Generated File On Crash Reports
+*.log
 sysinfo.txt
 
 # Builds
@@ -106,6 +108,5 @@ git-journal.fish
 /Pokemon Unity/Assets/GameFramework
 /PokemonUnity.Offline
 /Set-AssemblyVersion.ps1
-*.meta
 * - Copy.cs
 * - Copy.cs.meta
