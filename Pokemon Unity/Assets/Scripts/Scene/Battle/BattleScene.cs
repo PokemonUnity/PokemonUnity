@@ -39,7 +39,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	//private PokemonEssentials.Interface.PokeBattle.IBattle battle;
 	//public PokemonUnity.Combat.Battle battle;
 	private PokemonUnity.UX.IBattleIE battle;
-	public GameAudioPlay AudioHandler;
+	public IGameAudioPlay AudioHandler;
 	public ITrainerFadeAnimation fadeanim;
 	public IPokeballSendOutAnimation sendout;
 	public IWindow_CommandPokemon commandPokemon;

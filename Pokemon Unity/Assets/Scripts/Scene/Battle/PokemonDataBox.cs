@@ -277,13 +277,13 @@ namespace PokemonUnity.UX
 				{
 					//textpos.Add(new TextPosition(Game._INTL("♂"), genderX, 6, false, new Color(48, 96, 216), shadow));
 					//break;
-					gender.sprite = BattleInterface.main.genderMale; // Male
+					//gender.sprite = BattleInterface.main.genderMale; // Male
 				}
 				else //	case 1: // Female
 				{
 					//textpos.Add(new TextPosition(Game._INTL("♀"), genderX, 6, false, new Color(248, 88, 40), shadow));
 					//break;
-					gender.sprite = BattleInterface.main.genderFemale; // Female
+					//gender.sprite = BattleInterface.main.genderFemale; // Female
 				}
 			}
 			else
