@@ -503,8 +503,177 @@ namespace PokemonUnity
 			return genwildpoke;
 		}
 
-		public Combat.BattleResults pbWildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
+		public bool pbControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
+						Natures? nature = null, bool? gender = null, Items? item = null, bool? shiny = null,
+						int outcomeVar = 1, bool canRun = true, bool canLose = false) {
+			// Create an instance
+			//species = getConst(PBSpecies, species)
+			IPokemon pkmn = new Pokemon(species, level: (byte)level);
+
+			// Give moves.
+			// Should be a list of moves:
+			if (moves != null) {
+				for (int i = 0; i < 4; i++) {
+					if (moves.Length > i) //moves[i] != null)
+						pkmn.moves[i] = new Attack.Move(moves[i]);
+					else //set to none...
+						pkmn.moves[i] = new Attack.Move();
+				}
+			}
+
+			// Give ability
+			// NOTE that the ability should be 0, 1 or 2.
+			if (ability != null && (new List<int>() { 0, 1, 2 }).Contains(ability.Value)) pkmn.setAbility(ability.Value);
+
+			// Give nature
+			if (nature != null) pkmn.setNature(nature.Value);
+
+			// Give gender
+			// 1 if male, 0 if female.
+			if (gender != null) //pkmn.setGender(gender.Value ? 1 : 0);
+				if (gender.Value) pkmn.makeMale(); else pkmn.makeFemale();
+
+			// Give item
+			if (item != null) pkmn.setItem(item.Value);
+
+			// Shiny or not.
+			if (shiny != null) pkmn.makeShiny();
+
+			// Start the battle.
+			// This is copied from pbWildBattle.
+
+			// Potentially call a different pbWildBattle-type method instead (for roaming
+			// Pokémon, Safari battles, Bug Contest battles)
+			bool?[] handled= new bool?[]{ null };
+			//Events.onWildBattleOverride.trigger(null,species,level,handled);
+			PokemonEssentials.Interface.EventArg.IOnWildBattleOverrideEventArgs e1 = new PokemonUnity.EventArg.OnWildBattleOverrideEventArgs()
+			{
+				Species = species,
+				Level = level
+				//,Result = handled
+			};
+			if (handled[0]!=null) {
+				return handled[0].Value;
+				//return handled[0].Value ? Combat.BattleResults.WON : Combat.BattleResults.ABORTED;
+			}
+			// Set some battle rules
+			//if (outcomeVar != 1) battle.rules["outcomeVar"] = outcomeVar; //setBattleRule("outcomeVar", outcomeVar);
+			//if (!canRun) setBattleRule("cannotRun");
+			//if (canLose) setBattleRule("canLose");
+			// Perform the battle
+			Combat.BattleResults decision = pbWildBattleCore(pkmn,outcomeVar,canRun,canLose);
+			// Used by the Poké Radar to update/break the chain
+			//Events.onWildBattleEnd.trigger(null,species,level,decision);
+			PokemonEssentials.Interface.EventArg.IOnWildBattleEndEventArgs e3 = new PokemonUnity.EventArg.OnWildBattleEndEventArgs()
+			{
+				Species = species,
+				Level = level
+				//,Result = decision
+			};
+			Events.OnWildBattleEnd?.Invoke(null,e3);
+			// Return false if the player lost or drew the battle, and true if any other result
+			return (decision != Combat.BattleResults.LOST && decision != Combat.BattleResults.DRAW);
+		}
+
+		public Combat.BattleResults pbWildBattleCore(IPokemon pkmn,int? variable=null,bool canescape=true,bool canlose=false) {
 			if ((Input.press(Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
+				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
+					m.pbMessage(Game._INTL("SKIPPING BATTLE..."));
+				}
+				pbSet(variable,1);
+				Global.nextBattleBGM=null;
+				Global.nextBattleME=null;
+				Global.nextBattleBack=null;
+				return Combat.BattleResults.WON; //true;
+			}
+			//if (species is String || species is Symbol) {
+			//  species=getID(PBSpecies,species);
+			//}
+			bool?[] handled= new bool?[]{ null };
+			//Events.onWildBattleOverride.trigger(null,species,level,handled);
+			PokemonEssentials.Interface.EventArg.IOnWildBattleOverrideEventArgs e1 = new PokemonUnity.EventArg.OnWildBattleOverrideEventArgs()
+			{
+				Species = pkmn.Species,
+				Level = pkmn.Level
+				//,Result = handled
+			};
+			//Events.OnWildBattleOverride?.Invoke(null, e1);
+			Events.OnWildBattleOverrideTrigger(null, e1);
+			//handled[0] = eventArgs.Result;
+			if (handled[0]!=null) {
+				//return handled[0].Value;
+				return handled[0].Value ? Combat.BattleResults.WON : Combat.BattleResults.ABORTED;
+			}
+			List<int> currentlevels=new List<int>();
+			foreach (var i in Trainer.party) {
+				currentlevels.Add(i.Level);
+			}
+			//IPokemon genwildpoke=pbGenerateWildPokemon(species,level);
+			//Events.onStartBattle.trigger(null,genwildpoke);
+			//PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs eventArgs = new PokemonUnity.EventArg.OnWildPokemonCreateEventArgs()
+			//{
+			//	Pokemon = genwildpoke
+			//};
+			//Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
+			Events.OnStartBattleTrigger(this);
+			IPokeBattle_Scene scene=pbNewBattleScene();
+			IBattle battle=new Combat.Battle(scene,Trainer.party,new IPokemon[] { pkmn },new ITrainer[] { Trainer },null);
+			battle.internalbattle=true;
+			battle.cantescape=!canescape;
+			pbPrepareBattle(battle);
+			Combat.BattleResults decision=0;
+			pbBattleAnimation(pbGetWildBattleBGM(pkmn.Species), block: () => {
+				pbSceneStandby(() => {
+					decision=battle.pbStartBattle(canlose);
+				});
+				foreach (var i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
+				if (Global.partner != null) {
+					pbHealAll();
+					foreach (IPokemon i in Global.partner.party) { //partner[3]
+						i.Heal();
+						if (i is IPokemonMegaEvolution f) f.makeUnmega(); //rescue null
+					}
+				}
+				if (decision==Combat.BattleResults.LOST || decision==Combat.BattleResults.DRAW) {		// If loss or draw
+					if (canlose) {
+						foreach (var i in Trainer.party) { i.Heal(); }
+						for (int i = 0; i < 10; i++) {
+							Graphics?.update();
+						}
+//					} else {
+//						if (Game.GameData.GameSystem != null && Game.GameData.GameSystem is IGameSystem s) {
+//							s.bgm_pause();
+//							s.bgs_pause();
+//						}
+//						Game.GameData.pbStartOver();
+					}
+				}
+				//Events.onEndBattle.trigger(null,decision,canlose);
+				PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e2 = new PokemonUnity.EventArg.OnEndBattleEventArgs()
+				{
+					Decision = decision,
+					CanLose = canlose
+				};
+				//Events.OnBattleEnd?.Invoke(null,e2);
+				Events.OnEndBattleTrigger(this, e2);
+			});
+			Input.update();
+			pbSet(variable,decision);
+			//Events.onWildBattleEnd.trigger(null,species,level,decision);
+			PokemonEssentials.Interface.EventArg.IOnWildBattleEndEventArgs e3 = new PokemonUnity.EventArg.OnWildBattleEndEventArgs()
+			{
+				Species = pkmn.Species,
+				Level = pkmn.Level
+				//,Result = decision
+			};
+			Events.OnWildBattleEnd?.Invoke(null,e3);
+			return decision; //!=Combat.BattleResults.LOST;
+		}
+
+		public Combat.BattleResults pbWildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
+			IPokemon genwildpoke=pbGenerateWildPokemon(species,level);
+			return pbWildBattleCore(genwildpoke, variable, canescape, canlose);
+			/*if ((Input.press(Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
 				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
 					m.pbMessage(Game._INTL("SKIPPING BATTLE..."));
 				}
@@ -569,9 +738,11 @@ namespace PokemonUnity
 							Graphics?.update();
 						}
 //					} else {
-//						GameSystem.bgm_unpause();
-//						GameSystem.bgs_unpause();
-//						Game.pbStartOver();
+//						if (Game.GameData.GameSystem != null && Game.GameData.GameSystem is IGameSystem s) {
+//							s.bgm_pause();
+//							s.bgs_pause();
+//						}
+//						Game.GameData.pbStartOver();
 					}
 				}
 				//Events.onEndBattle.trigger(null,decision,canlose);
@@ -593,7 +764,7 @@ namespace PokemonUnity
 				//,Result = decision
 			};
 			Events.OnWildBattleEnd?.Invoke(null,e3);
-			return decision; //!=Combat.BattleResults.LOST;
+			return decision; //!=Combat.BattleResults.LOST;*/
 		}
 
 		public Combat.BattleResults pbDoubleWildBattle(Pokemons species1,int level1,Pokemons species2,int level2,int? variable=null,bool canescape=true,bool canlose=false) {
@@ -668,9 +839,11 @@ namespace PokemonUnity
 							Graphics?.update();
 						}
 //					} else {
-//						GameSystem.bgm_unpause();
-//						GameSystem.bgs_unpause();
-//						Game.pbStartOver();
+//						if (Game.GameData.GameSystem != null && Game.GameData.GameSystem is IGameSystem s) {
+//							s.bgm_pause();
+//							s.bgs_pause();
+//						}
+//						Game.GameData.pbStartOver();
 					}
 				}
 				//Events.onEndBattle.trigger(null,decision,canlose);
