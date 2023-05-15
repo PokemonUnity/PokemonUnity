@@ -60,6 +60,8 @@
     <Compile Include="Combat\Match\BattleArena.cs" />
     <Compile Include="Combat\Match\BattlePalace.cs" />
     <Compile Include="Combat\Match\Recorder.cs" />
+    <Compile Include="Combat\Match\Regulated\OrgBattleGenerator.cs" />
+    <Compile Include="Combat\Match\Regulated\OrgBattle.cs" />
     <Compile Include="Combat\Match\Regulated\OrgBattleRules.cs" />
     <Compile Include="Combat\Match\SafariZone.cs" />
     <Compile Include="Combat\Move.cs" />
