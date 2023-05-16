@@ -61,10 +61,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PokemonUnity.Application\PokemonUnity.Application.csproj">
+      <Project>{37dd2ed4-81dc-4647-9652-d914f1a1607d}</Project>
+      <Name>PokemonUnity.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PokemonUnity.Shared\PokemonUnity.Shared.csproj">
       <Project>{c4bd7ac0-1333-4d62-a6cd-881a1806ffad}</Project>
       <Name>PokemonUnity.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Readme.md" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
