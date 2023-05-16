@@ -117,7 +117,6 @@
       <Name>PokemonUnity.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include=".editorconfig" />
   </ItemGroup>
