@@ -26,8 +26,8 @@ namespace PokemonUnity
 
 	public partial class PokemonTemp : ITempMetadataField
 	{
-		public Method? encounterType	{ get; set; } 
-		public int[] evolutionLevels			    { get; set; }
+		public Method? encounterType			{ get; set; }
+		public int[] evolutionLevels			{ get; set; }
 
 
 		public bool batterywarning				{ get; protected set; }
@@ -151,7 +151,7 @@ namespace PokemonUnity
 				//		sprite.wave_speed+=30;
 				//		do {
 				//			Graphics?.update();
-				//		} while (); //2.times 
+				//		} while (); //2.times
 				//	}
 				//	bitmap.Dispose();
 				//	bm.Dispose();
@@ -168,12 +168,12 @@ namespace PokemonUnity
 				//		sprite.opacity-=15;
 				//		do {
 				//			Graphics?.update();
-				//		} while ();//2.times 
+				//		} while ();//2.times
 				//	}
 				//	bitmap.Dispose();
 				//	bm.Dispose();
 				//	sprite.Dispose();
-				//} else 
+				//} else
 				if (Core.Rand.Next(10)==0) {		// Custom transition method
 					string[] scroll=new string[] {"ScrollDown","ScrollLeft","ScrollRight","ScrollUp",
 							"ScrollDownRight","ScrollDownLeft","ScrollUpRight","ScrollUpLeft" };
@@ -234,12 +234,12 @@ namespace PokemonUnity
 		public virtual bool pbBattleAnimationOverride(IViewport viewport,int trainerid=-1,string trainername="") {
 			//  The following example runs a common event that ought to do a custom
 			//  animation if some condition is true:
-			// 
+			//
 			//  if (GameMap != null && GameMap.map_id==20) {   // If on map 20
 			//		pbCommonEvent(20);
 			//		return true;                          // Note that the battle animation is done
 			//  }
-			// 
+			//
 			// #### VS. animation, by Luka S.J. #####
 			// #### Tweaked by Maruno           #####
 			/*if (trainerid>=0) {
@@ -471,7 +471,7 @@ namespace PokemonUnity
 			} else if (itemrnd<(chances[0]+chances[1]+chances[2])) {
 				genwildpoke.setItem(items[2]);
 			}
-			if (Bag.pbQuantity(Items.SHINY_CHARM)>0) { //hasConst(PBItems,:SHINYCHARM) && 
+			if (Bag.pbQuantity(Items.SHINY_CHARM)>0) { //hasConst(PBItems,:SHINYCHARM) &&
 				for (int i = 0; i < 2; i++) {	// 3 times as likely
 					if (genwildpoke.IsShiny) break;
 					//genwildpoke.PersonalId=Core.Rand.Next(65536)|(Core.Rand.Next(65536)<<16);
@@ -500,6 +500,8 @@ namespace PokemonUnity
 				Pokemon = genwildpoke
 			};
 			Events.OnWildPokemonCreate?.Invoke(null,eventArgs);
+			//if (PokemonEncounters != null)
+			//	PokemonEncounters.OnWildPokemonCreate?.Invoke(null, eventArgs);
 			return genwildpoke;
 		}
 
@@ -529,7 +531,7 @@ namespace PokemonUnity
 			if (nature != null) pkmn.setNature(nature.Value);
 
 			// Give gender
-			// 1 if male, 0 if female.
+			// 0 if male, 1 if female.
 			if (gender != null) //pkmn.setGender(gender.Value ? 1 : 0);
 				if (gender.Value) pkmn.makeMale(); else pkmn.makeFemale();
 
@@ -719,9 +721,9 @@ namespace PokemonUnity
 			battle.cantescape=!canescape;
 			pbPrepareBattle(battle);
 			Combat.BattleResults decision=0;
-			pbBattleAnimation(pbGetWildBattleBGM(species), block: () => { 
+			pbBattleAnimation(pbGetWildBattleBGM(species), block: () => {
 				pbSceneStandby(() => {
-				decision=battle.pbStartBattle(canlose);
+					decision=battle.pbStartBattle(canlose);
 				});
 				foreach (var i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
 				if (Global.partner != null) {
@@ -811,16 +813,16 @@ namespace PokemonUnity
 				new ITrainer[] { Trainer,othertrainer },null);
 			battle.fullparty1=true;
 			} else {
-			battle=new Combat.Battle(scene,Trainer.party,new IPokemon[] { genwildpoke, genwildpoke2 },
-				new ITrainer[] { Trainer },null);
-			battle.fullparty1=false;
+				battle=new Combat.Battle(scene,Trainer.party,new IPokemon[] { genwildpoke, genwildpoke2 },
+					new ITrainer[] { Trainer },null);
+				battle.fullparty1=false;
 			}
 			battle.internalbattle=true;
 			battle.doublebattle=battle.pbDoubleBattleAllowed();
 			battle.cantescape=!canescape;
 			pbPrepareBattle(battle);
 			Combat.BattleResults decision=0;
-			pbBattleAnimation(pbGetWildBattleBGM(species1), block: () => { 
+			pbBattleAnimation(pbGetWildBattleBGM(species1), block: () => {
 				pbSceneStandby(() => {
 					decision=battle.pbStartBattle(canlose);
 				});
@@ -998,7 +1000,7 @@ namespace PokemonUnity
 				}
 			}
 		}
-		
+
 		//Events.onEndBattle+=delegate(object sender, EventArgs e) {
 		//Events.OnEndBattle+=delegate(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
 		protected virtual void Events_OnEndBattle(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
@@ -1158,7 +1160,7 @@ namespace PokemonUnity
 				}
 			}
 		}
-		
+
 		//Events.onStepTaken+=proc{
 		protected virtual void Events_OnStepTaken(object sender, EventArgs e) {
 			//if (Global.happinessSteps == null) Global.happinessSteps=0;
@@ -1166,15 +1168,15 @@ namespace PokemonUnity
 			if (Global.happinessSteps==128) {
 				foreach (var pkmn in Trainer.party) {
 					if (pkmn.HP>0 && !pkmn.isEgg) {
-						if (Core.Rand.Next(2)==0) 
+						if (Core.Rand.Next(2)==0)
 							//pkmn.changeHappiness("walking");
-							pkmn.changeHappiness(HappinessMethods.WALKING);
+							pkmn.ChangeHappiness(HappinessMethods.WALKING);
 					}
 				}
 				Global.happinessSteps=0;
 			}
 		}
-		
+
 		//Events.onStepTakenFieldMovement+=delegate(object sender, EventArgs e) {
 		protected virtual void Events_OnStepTakenFieldMovement(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenFieldMovementEventArgs e) {
 			//IGamePlayer @event=e[0]; // Get the event affected by field movement
@@ -1358,7 +1360,7 @@ namespace PokemonUnity
 					string charset=pbGetPlayerCharset(meta,num);
 					int pattern = 0; do { //4.times |pattern|
 						if (GamePlayer is IGamePlayerRunMovement p) p.setDefaultCharName(charset,patternb-pattern);
-						int i = 0; do { //;2.times 
+						int i = 0; do { //;2.times
 							Graphics?.update();
 							Input.update();
 							if (this is IGameMessage a) a.pbUpdateSceneMap(); i++;
@@ -1379,7 +1381,7 @@ namespace PokemonUnity
 					string charset=pbGetPlayerCharset(meta,num);
 					int pattern = 0; do { //4.times |pattern|
 						if (GamePlayer is IGamePlayerRunMovement p) p.setDefaultCharName(charset,patternb+pattern);
-						int i = 0; do { //;2.times 
+						int i = 0; do { //;2.times
 							Graphics?.update();
 							Input.update();
 							if (this is IGameMessage a) a.pbUpdateSceneMap(); i++;
@@ -1404,7 +1406,7 @@ namespace PokemonUnity
 				int time=2+Core.Rand.Next(10);
 				if (speedup) time=Math.Min(time,2+Core.Rand.Next(10));
 				string message="";
-				int i = 0; do { //;time.times 
+				int i = 0; do { //;time.times
 					message+=". "; i++;
 				} while (i < time);
 				if (pbWaitMessage(msgwindow,time)) {
@@ -1447,7 +1449,7 @@ namespace PokemonUnity
 		public virtual bool pbWaitForInput(IWindow msgwindow,string message,int frames) {
 			if (Core.FISHINGAUTOHOOK) return true;
 			if (this is IGameMessage m0) m0.pbMessageDisplay(msgwindow,message,false);
-			int i = 0; do { //;frames.times 
+			int i = 0; do { //;frames.times
 				Graphics?.update();
 				Input.update();
 				if (this is IGameMessage m1) m1.pbUpdateSceneMap();
@@ -1498,7 +1500,7 @@ namespace PokemonUnity
 				}
 			}
 		}
-		
+
 		//Events.onMapChanging+=delegate(object sender, EventArgs e) {
 		protected virtual void Events_OnMapChanging(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangingEventArgs e) {
 			int newmapID = e.MapId; //[0];
@@ -1515,7 +1517,7 @@ namespace PokemonUnity
 				}
 			}
 		}
-		
+
 		//Events.onMapSceneChange+=delegate(object sender, EventArgs e) {
 		protected virtual void Events_OnMapSceneChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapSceneChangeEventArgs e) {
 			ISceneMap scene = e.Object; //[0];
@@ -1567,7 +1569,7 @@ namespace PokemonUnity
 						string oldmapname=mapinfos[Global.mapTrail[1]]; //mapinfos[Global.mapTrail[1]].name
 						if (GameMap.name==oldmapname) nosignpost=true;
 					}
-					if (!nosignpost) 
+					if (!nosignpost)
 						if (scene.spriteset is PokemonEssentials.Interface.ISpritesetMapAnimation s2)
 						{
 							//s2.addUserSprite(new LocationWindow(GameMap.name));
@@ -1819,7 +1821,7 @@ namespace PokemonUnity
 
 
 		/// <summary>
-		/// Connects to User's OS and checks if laptop battery 
+		/// Connects to User's OS and checks if laptop battery
 		/// life alert should be displayed on screen
 		/// </summary>
 		/// <returns></returns>
@@ -1866,7 +1868,7 @@ namespace PokemonUnity
 			//	pbBGMPlay(bgm);
 			//}
 		}
-		
+
 		public void pbCueBGM(IAudioBGM bgm, float seconds, int? volume = null, float? pitch = null) {
 			if (bgm == null) return;
 			if (this is IGameAudioPlay a)
@@ -1921,7 +1923,7 @@ namespace PokemonUnity
 			int i = 0; do { //delay.times |i|
 				if (this is IGameMessage m) m.pbMessageDisplay(msgwindow,
 					string.Format("Recording in {0} second(s)...\nPress ESC to cancel.",delay-i),false);
-				int n = 0; do { //;Graphics.frame_rate.times 
+				int n = 0; do { //;Graphics.frame_rate.times
 					Graphics?.update();
 					Input.update();
 					textwindow.update();
@@ -1932,13 +1934,13 @@ namespace PokemonUnity
 						textwindow.Dispose();
 						return null;
 					} n++;
-				} while(n < Graphics.frame_rate); i++; 
+				} while(n < Graphics.frame_rate); i++;
 			} while(i < delay);
 			(this as IGameMessage).pbMessageDisplay(msgwindow,
 				Game._INTL("NOW RECORDING\nPress ESC to stop recording."),false);
 			if (beginRecordUI()) {
 				int frames=(int)(maxtime*Graphics.frame_rate);
-				i = 0; do { //;frames.times 
+				i = 0; do { //;frames.times
 					Graphics?.update();
 					Input.update();
 					textwindow.update();
@@ -1957,7 +1959,7 @@ namespace PokemonUnity
 					Graphics?.update();
 					Input.update();
 					wave.play();
-					i = 0; do { //(Graphics.frame_rate*wave.time).to_i.times 
+					i = 0; do { //(Graphics.frame_rate*wave.time).to_i.times
 						Graphics?.update();
 						Input.update();
 						textwindow.update();
@@ -2164,7 +2166,7 @@ namespace PokemonUnity
 
 		public bool pbFacingEachOther(IGameCharacter event1,IGameCharacter event2) {
 			if (event1 == null || event2 == null) return false; ITilePosition tile1, tile2;
-			if (MapFactory != null) {             
+			if (MapFactory != null) {
 				tile1=MapFactory.getFacingTile(null,event1);
 				tile2=MapFactory.getFacingTile(null,event2);
 				if (tile1 == null || tile2 == null) return false;
@@ -2285,7 +2287,7 @@ namespace PokemonUnity
 		//ToDo: One solid coroutine function...
 		public void pbWait(int numframes) {
 			if (Core.INTERNAL) return; //if there's no ui connected...
-			int i = 0; do { //;numframes.times 
+			int i = 0; do { //;numframes.times
 				Graphics?.update();
 				Input.update();
 				if (this is IGameMessage m) m.pbUpdateSceneMap();
@@ -2298,7 +2300,7 @@ namespace PokemonUnity
 			//route.skippable=true;
 			//route.list.Clear();
 			//route.list.Add(new RPG.MoveCommand(MoveRoutes.ThroughOn));
-			//int i=0; while (i<commands.Length) { 
+			//int i=0; while (i<commands.Length) {
 			//	switch (commands[i]) {
 			//		case MoveRoutes.Wait: case MoveRoutes.SwitchOn: case MoveRoutes.SwitchOff: case
 			//			MoveRoutes.ChangeSpeed: case MoveRoutes.ChangeFreq: case MoveRoutes.Opacity: case
@@ -2425,8 +2427,8 @@ namespace PokemonUnity
 			@event=(Game.GameData as Game).Interpreter.get_character(0);
 			float oldx=@event.x;
 			float oldy=@event.y;
-		//  Apply strict version of passable, which makes impassable
-		//  tiles that are passable only from certain directions
+			//  Apply strict version of passable, which makes impassable
+			//  tiles that are passable only from certain directions
 			if (!@event.passableStrict(@event.x,@event.y,Game.GameData.GamePlayer.direction)) {
 				return;
 			}

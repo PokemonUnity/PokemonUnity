@@ -202,7 +202,7 @@ namespace PokemonUnity.Combat
 				else {
 					ratings2[2]=2;
 				}
-				((IPokeBattleArena_Scene)@scene).pbBattleArenaJudgment(@battlers[0],@battlers[1],ratings1,ratings2);
+				((IPokeBattleArena_Scene)@scene).pbBattleArenaJudgment(@battlers[0],@battlers[1],(int[])ratings1.Clone(),(int[])ratings2.Clone());
 				points=new int[] { 0, 0 };
 				for (int i = 0; i < 3; i++) {
 					points[0]+=ratings1[i];
@@ -235,125 +235,125 @@ namespace PokemonUnity.Combat
 
 	/*public partial class PokeBattle_Scene : IPokeBattleArena_Scene {
 		public void updateJudgment(window,int phase,IBattler battler1,IBattler battler2,int[] ratings1,int[] ratings2) {
-		int total1=0;
-		int total2=0;
-		for (int i = 0; i < phase; i++) {
-			total1+=ratings1[i];
-			total2+=ratings2[i];
-		}
-		window.contents.clear();
-		pbSetSystemFont(window.contents);
-		textpos=new {
-			//[battler1.Name,64,0,2,new Color(248,0,0),new Color(208,208,200)],
-			//[Game._INTL("VS"),144,0,2,new Color(72,72,72),new Color(208,208,200)],
-			//[battler2.Name,224,0,2,new Color(72,72,72),new Color(208,208,200)],
-			//[Game._INTL("Mind"),144,48,2,new Color(72,72,72),new Color(208,208,200)],
-			//[Game._INTL("Skill"),144,80,2,new Color(72,72,72),new Color(208,208,200)],
-			//[Game._INTL("Body"),144,112,2,new Color(72,72,72),new Color(208,208,200)],
-			//[string.Format("{0}",total1),64,160,2,new Color(72,72,72),new Color(208,208,200)],
-			//[Game._INTL("Judgment"),144,160,2,new Color(72,72,72),new Color(208,208,200)],
-			//[string.Format("{0}",total2),224,160,2,new Color(72,72,72),new Color(208,208,200)]
-		};
-		pbDrawTextPositions(window.contents,textpos);
-		List<> images=new List<>();
-		for (int i = 0; i < phase; i++) {
-			float y=[48,80,112][i];
-			float x=(ratings1[i]==ratings2[i]) ? 64 : ((ratings1[i]>ratings2[i]) ? 0 : 32);
-			images.Add(new { "Graphics/Pictures/judgment", 64 - 16, y, x, 0, 32, 32 });
-			x=(ratings1[i]==ratings2[i]) ? 64 : ((ratings1[i]<ratings2[i]) ? 0 : 32);
-			images.Add(new { "Graphics/Pictures/judgment", 224 - 16, y, x, 0, 32, 32 });
-		}
-		pbDrawImagePositions(window.contents,images);
-		window.contents.fill_rect(16,150,256,4,new Color(80,80,80));
+			int total1=0;
+			int total2=0;
+			for (int i = 0; i < phase; i++) {
+				total1+=ratings1[i];
+				total2+=ratings2[i];
+			}
+			window.contents.clear();
+			pbSetSystemFont(window.contents);
+			textpos=new {
+				//[battler1.Name,64,0,2,new Color(248,0,0),new Color(208,208,200)],
+				//[Game._INTL("VS"),144,0,2,new Color(72,72,72),new Color(208,208,200)],
+				//[battler2.Name,224,0,2,new Color(72,72,72),new Color(208,208,200)],
+				//[Game._INTL("Mind"),144,48,2,new Color(72,72,72),new Color(208,208,200)],
+				//[Game._INTL("Skill"),144,80,2,new Color(72,72,72),new Color(208,208,200)],
+				//[Game._INTL("Body"),144,112,2,new Color(72,72,72),new Color(208,208,200)],
+				//[string.Format("{0}",total1),64,160,2,new Color(72,72,72),new Color(208,208,200)],
+				//[Game._INTL("Judgment"),144,160,2,new Color(72,72,72),new Color(208,208,200)],
+				//[string.Format("{0}",total2),224,160,2,new Color(72,72,72),new Color(208,208,200)]
+			};
+			pbDrawTextPositions(window.contents,textpos);
+			List<> images=new List<>();
+			for (int i = 0; i < phase; i++) {
+				float y=[48,80,112][i];
+				float x=(ratings1[i]==ratings2[i]) ? 64 : ((ratings1[i]>ratings2[i]) ? 0 : 32);
+				images.Add(new { "Graphics/Pictures/judgment", 64 - 16, y, x, 0, 32, 32 });
+				x=(ratings1[i]==ratings2[i]) ? 64 : ((ratings1[i]<ratings2[i]) ? 0 : 32);
+				images.Add(new { "Graphics/Pictures/judgment", 224 - 16, y, x, 0, 32, 32 });
+			}
+			pbDrawImagePositions(window.contents,images);
+			window.contents.fill_rect(16,150,256,4,new Color(80,80,80));
 		}
 
 		public void pbBattleArenaBattlers(IBattler battler1,IBattler battler2) {
-		Game.pbMessage(Game._INTL("REFEREE: {1} VS {2}!\nCommence battling!\\wtnp[20]",
-			battler1.Name,battler2.Name)); { pbUpdate(); }
+			Game.pbMessage(Game._INTL("REFEREE: {1} VS {2}!\nCommence battling!\\wtnp[20]",
+				battler1.Name,battler2.Name)); { pbUpdate(); }
 		}
 
 		public void pbBattleArenaJudgment(IBattler battler1,IBattler battler2,int[] ratings1,int[] ratings2) {
-		msgwindow=null;
-		dimmingvp=null;
-		infowindow=null;
-		try { //begin;
-			msgwindow=Game.pbCreateMessageWindow();
-			dimmingvp=new Viewport(0,0,Graphics.width,Graphics.height-msgwindow.height);
-			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: That's it! We will now go to judging to determine the winner!\\wtnp[20]")); {
-				pbUpdate(); dimmingvp.update(); }
-			dimmingvp.z=99999;
-			infowindow=new SpriteWindow_Base(80,0,320,224);
-			infowindow.contents=new Bitmap(
-				infowindow.width-infowindow.borderX,
-				infowindow.height-infowindow.borderY);
-			infowindow.z=99999;
-			infowindow.visible=false;
-			for (int i = 0; i < 10; i++) {
-			pbGraphicsUpdate();
-			pbInputUpdate();
-			msgwindow.update();
-			dimmingvp.update();
-			dimmingvp.color=new Color(0,0,0,i*128/10);
+			msgwindow=null;
+			dimmingvp=null;
+			infowindow=null;
+			try { //begin;
+				msgwindow=Game.pbCreateMessageWindow();
+				dimmingvp=new Viewport(0,0,Graphics.width,Graphics.height-msgwindow.height);
+				Game.pbMessageDisplay(msgwindow,
+					Game._INTL("REFEREE: That's it! We will now go to judging to determine the winner!\\wtnp[20]")); {
+						pbUpdate(); dimmingvp.update(); }
+				dimmingvp.z=99999;
+				infowindow=new SpriteWindow_Base(80,0,320,224);
+				infowindow.contents=new Bitmap(
+					infowindow.width-infowindow.borderX,
+					infowindow.height-infowindow.borderY);
+				infowindow.z=99999;
+				infowindow.visible=false;
+				for (int i = 0; i < 10; i++) {
+					pbGraphicsUpdate();
+					pbInputUpdate();
+					msgwindow.update();
+					dimmingvp.update();
+					dimmingvp.color=new Color(0,0,0,i*128/10);
+				}
+				updateJudgment(infowindow,0,battler1,battler2,ratings1,ratings2);
+				infowindow.visible=true;
+				for (int i = 0; i < 10; i++) {
+					pbGraphicsUpdate();
+					pbInputUpdate();
+					msgwindow.update();
+					dimmingvp.update();
+					infowindow.update();
+				}
+				updateJudgment(infowindow,1,battler1,battler2,ratings1,ratings2);
+				Game.pbMessageDisplay(msgwindow,
+					Game._INTL("REFEREE: Judging category 1, Mind!\nThe Pokemon showing the most guts!\\wtnp[40]")); {
+					pbUpdate(); dimmingvp.update(); infowindow.update(); }
+				updateJudgment(infowindow,2,battler1,battler2,ratings1,ratings2);
+				Game.pbMessageDisplay(msgwindow,
+					Game._INTL("REFEREE: Judging category 2, Skill!\nThe Pokemon using moves the best!\\wtnp[40]")); {
+					pbUpdate(); dimmingvp.update(); infowindow.update(); }
+				updateJudgment(infowindow,3,battler1,battler2,ratings1,ratings2);
+				Game.pbMessageDisplay(msgwindow,
+					Game._INTL("REFEREE: Judging category 3, Body!\nThe Pokemon with the most vitality!\\wtnp[40]")); {
+					pbUpdate(); dimmingvp.update(); infowindow.update(); }
+				int total1=0;
+				int total2=0;
+				for (int i = 0; i < 3; i++) {
+					total1+=ratings1[i];
+					total2+=ratings2[i];
+				}
+				if (total1==total2) {
+					Game.pbMessageDisplay(msgwindow,
+						Game._INTL("REFEREE: Judgment: {1} to {2}!\nWe have a draw!\\wtnp[40]",total1,total2)); {
+							pbUpdate(); dimmingvp.update(); infowindow.update(); }
+				} else if (total1>total2) {
+					Game.pbMessageDisplay(msgwindow,
+						Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}'s {4}!\\wtnp[40]",
+						total1,total2,@battle.pbGetOwner(battler1.index).Name,battler1.Name)); {
+							pbUpdate(); dimmingvp.update(); infowindow.update(); }
+				}
+				else {
+					Game.pbMessageDisplay(msgwindow,
+						Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}!\\wtnp[40]",
+						total1,total2,battler2.Name)); {
+							pbUpdate(); dimmingvp.update(); infowindow.update(); }
+				}
+				infowindow.visible=false;
+				msgwindow.visible=false;
+				for (int i = 0; i < 10; i++) {
+					pbGraphicsUpdate();
+					pbInputUpdate();
+					msgwindow.update();
+					dimmingvp.update();
+					dimmingvp.color=new Color(0,0,0,(10-i)*128/10);
+				}
+			} finally { //ensure;
+				Game.pbDisposeMessageWindow(msgwindow);
+				dimmingvp.dispose();
+				infowindow.contents.dispose();
+				infowindow.dispose();
 			}
-			updateJudgment(infowindow,0,battler1,battler2,ratings1,ratings2);
-			infowindow.visible=true;
-			for (int i = 0; i < 10; i++) {
-			pbGraphicsUpdate();
-			pbInputUpdate();
-			msgwindow.update();
-			dimmingvp.update();
-			infowindow.update();
-			}
-			updateJudgment(infowindow,1,battler1,battler2,ratings1,ratings2);
-			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judging category 1, Mind!\nThe Pokemon showing the most guts!\\wtnp[40]")); {
-				pbUpdate(); dimmingvp.update(); infowindow.update(); }
-			updateJudgment(infowindow,2,battler1,battler2,ratings1,ratings2);
-			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judging category 2, Skill!\nThe Pokemon using moves the best!\\wtnp[40]")); {
-				pbUpdate(); dimmingvp.update(); infowindow.update(); }
-			updateJudgment(infowindow,3,battler1,battler2,ratings1,ratings2);
-			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judging category 3, Body!\nThe Pokemon with the most vitality!\\wtnp[40]")); {
-				pbUpdate(); dimmingvp.update(); infowindow.update(); }
-			int total1=0;
-			int total2=0;
-			for (int i = 0; i < 3; i++) {
-			total1+=ratings1[i];
-			total2+=ratings2[i];
-			}
-			if (total1==total2) {
-			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judgment: {1} to {2}!\nWe have a draw!\\wtnp[40]",total1,total2)); {
-				pbUpdate(); dimmingvp.update(); infowindow.update(); }
-			} else if (total1>total2) {
-			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}'s {4}!\\wtnp[40]",
-				total1,total2,@battle.pbGetOwner(battler1.index).Name,battler1.Name)); {
-				pbUpdate(); dimmingvp.update(); infowindow.update(); }
-			}
-			else {
-			Game.pbMessageDisplay(msgwindow,
-				Game._INTL("REFEREE: Judgment: {1} to {2}!\nThe winner is {3}!\\wtnp[40]",
-				total1,total2,battler2.Name)); {
-				pbUpdate(); dimmingvp.update(); infowindow.update(); }
-			}
-			infowindow.visible=false;
-			msgwindow.visible=false;
-			for (int i = 0; i < 10; i++) {
-			pbGraphicsUpdate();
-			pbInputUpdate();
-			msgwindow.update();
-			dimmingvp.update();
-			dimmingvp.color=new Color(0,0,0,(10-i)*128/10);
-			}
-		} finally { //ensure;
-			Game.pbDisposeMessageWindow(msgwindow);
-			dimmingvp.dispose();
-			infowindow.contents.dispose();
-			infowindow.dispose();
-		}
 		}
 	}*/
 }

@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Application;
 using PokemonUnity.Utility;
 using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Saving
 {
@@ -15,7 +22,7 @@ namespace PokemonUnity.Saving
 		#region ImportantInfo
 		//public string BuildVersion { get; private set; } //SaveManager.GetBuildVersion();
 		/// <summary>
-		/// Creation date of this save file; The UTC DateTime this save file was created 
+		/// Creation date of this save file; The UTC DateTime this save file was created
 		/// </summary>
 		public DateTime TimeCreated { get; private set; }
 		public Feature Features { get; private set; }
@@ -42,8 +49,8 @@ namespace PokemonUnity.Saving
 		//			, secretid: SecretID
 		//		);
 		//	}
-		//}	
-		public string PlayerName { get; private set; }	
+		//}
+		public string PlayerName { get; private set; }
 		public int TrainerID { get; private set; }
 		public int SecretID { get; private set; }
 		public bool IsMale { get; private set; }
@@ -93,11 +100,11 @@ namespace PokemonUnity.Saving
 		#endregion
 
 		#region Constructors
-		//public GameState (Player player, int? money = null, int? coin = null, byte[,] pokedex = null, 
-		//	TimeSpan? time = null, Vector position = new Vector(), float? direction = null, int? scene = null, 
-		//	int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null, Items[] bag = null, 
+		//public GameState (Player player, int? money = null, int? coin = null, byte[,] pokedex = null,
+		//	TimeSpan? time = null, Vector position = new Vector(), float? direction = null, int? scene = null,
+		//	int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null, Items[] bag = null,
 		//	SeriPC pc = null
-		//	) 
+		//	)
 		//		: this(name: player.Name, money: money, coin: coin, trainer: player.Trainer.TrainerID,
 		//				secret: player.Trainer.SecretID, gender: player.Trainer.Gender, pokedex: pokedex,
 		//				time: time, position: position, direction: direction, map: scene, pokecenter: pokecenter,
@@ -106,9 +113,9 @@ namespace PokemonUnity.Saving
 		//{
 		//}
 
-		//public GameState (string name, Challenges? challenge = null, Feature? features = null, int? money = null, int? coin = null, int? trainer = null, int? secret = null, 
+		//public GameState (string name, Challenges? challenge = null, Feature? features = null, int? money = null, int? coin = null, int? trainer = null, int? secret = null,
 		//	bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, Vector? position = null, float? direction = null, byte? follower = null,
-		//	bool? creator = null, int? map = null, byte? box = null, int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null, Items[] bag = null, 
+		//	bool? creator = null, int? map = null, byte? box = null, int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null, Items[] bag = null,
 		//	SeriPokemon[] party = null, Character.PC pc = null
 		//	)
 		//{
@@ -154,17 +161,17 @@ namespace PokemonUnity.Saving
 		//			Pokedex[i][j] = (byte)dex2[i, j];
 		//		}
 		//	}
-		//		
-		//	PlayerPC = pc != null 
-		//		? new SeriPC(pc) 
+		//
+		//	PlayerPC = pc != null
+		//		? new SeriPC(pc)
 		//		: new SeriPC(new Monster.Pokemon[Core.STORAGEBOXES, 30], new string[Core.STORAGEBOXES], new int[Core.STORAGEBOXES], new List<Items>());
 		//}
 
 		public GameState (IGamePlayer player, Challenges? challenge = null, Feature? features = null,
 			string overworld = null, string daycare = null, string berry = null, string apricon = null, string npc = null
-			//, string name, int? money = null, int? coin = null, int? trainer = null, int? secret = null, 
+			//, string name, int? money = null, int? coin = null, int? trainer = null, int? secret = null,
 			//bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, Vector? position = null, float? direction = null, byte? follower = null,
-			//bool? creator = null, int? map = null, byte? box = null, int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null, Items[] bag = null, 
+			//bool? creator = null, int? map = null, byte? box = null, int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null, Items[] bag = null,
 			//SeriPokemon[] party = null, Character.PC pc = null
 			)
 		{
@@ -213,15 +220,15 @@ namespace PokemonUnity.Saving
 					Pokedex[i][j] = (byte)player.Pokedex[i, j];
 				}
 			}
-				
-			PlayerPC = player.PC != null 
-				? new SeriPC(player.PC) 
+
+			PlayerPC = player.PC != null
+				? new SeriPC(player.PC)
 				: new SeriPC(new Monster.Pokemon[Core.STORAGEBOXES, 30], new string[Core.STORAGEBOXES], new int[Core.STORAGEBOXES], new List<Items>());
 		}
 		#endregion
 
 		#region Methods
-		public IGamePlayer GetPlayer()
+		public ITrainer GetPlayer()
 		{
 			//return new Character.Player(
 			//	name: PlayerName
@@ -245,7 +252,7 @@ namespace PokemonUnity.Saving
 			//	//, direction: PlayerDirection
 			//	, follower: FollowerPokemon
 			//	, creator: IsCreator
-			//	//, map: 
+			//	//, map:
 			//	, pokecenter: PokeCenterId
 			//	, gym: GymsChallenged
 			//	//, daycare: PlayerDayCare
@@ -266,10 +273,10 @@ namespace PokemonUnity.Saving
 			return state;
 		}
 		/// <summary>
-		/// Two games are the same, 
-		/// if the same player character exist both games 
+		/// Two games are the same,
+		/// if the same player character exist both games
 		/// (regardless of when files were created, or progress made)
-		/// with identical settings and configurations. 
+		/// with identical settings and configurations.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>

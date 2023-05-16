@@ -158,7 +158,7 @@ namespace PokemonUnity.Combat
 	// <summary>
 	// During battle, the moves used are modified by these classes before calculations are applied
 	// </summary>
-#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected
 	// ToDo: Rename from PokemonEssential's Function to Veekun's Attack.Data.Effects
 	// https://essentialsdocs.fandom.com/wiki/Function_codes
 	#region Battle Class Functions
@@ -1155,7 +1155,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_01B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker.Status == 0 || (opponent is IBattlerEffect b && 
+			if (attacker.Status == 0 || (opponent is IBattlerEffect b &&
 				(
 				  (attacker.Status == Status.PARALYSIS && !b.pbCanParalyze(attacker, false, this)) ||
 				  (attacker.Status == Status.POISON && !b.pbCanPoison(attacker, false, this)) ||
@@ -1433,7 +1433,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_024(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 			{
@@ -1466,7 +1466,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_025(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
@@ -1505,7 +1505,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_026(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
@@ -1538,7 +1538,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_027(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
@@ -1572,7 +1572,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_028(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this))
 			{
@@ -1612,7 +1612,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_029(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.ACCURACY, attacker, false, this))
 			{
@@ -1645,7 +1645,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_02A(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
@@ -1678,7 +1678,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_02B(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
@@ -1717,7 +1717,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_02C(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this))
 			{
@@ -1974,7 +1974,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_035(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
@@ -2024,7 +2024,7 @@ namespace PokemonUnity.Combat
 		//public PokeBattle_Move_036(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
 			{
@@ -2082,7 +2082,7 @@ namespace PokemonUnity.Combat
 
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			if (opponent is IBattlerEffect o) o.pbIncreaseStat(stat, 2, attacker, false, this); //int ret = 
+			if (opponent is IBattlerEffect o) o.pbIncreaseStat(stat, 2, attacker, false, this); //int ret =
 			return 0;
 		}
 	}
@@ -3218,7 +3218,7 @@ namespace PokemonUnity.Combat
 			};
 			if (attacker.effects.Transform ||
 			   opponent.lastMoveUsed <= 0 ||
-			   Kernal.MoveData[(Moves)opponent.lastMoveUsed].Type == Types.SHADOW || 
+			   Kernal.MoveData[(Moves)opponent.lastMoveUsed].Type == Types.SHADOW ||
 			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Effect))
 			{
 				battle.pbDisplay(Game._INTL("But it failed!"));
@@ -3378,7 +3378,7 @@ namespace PokemonUnity.Combat
 				battle.pbDisplay(Game._INTL("But it failed!"));
 				return -1;
 			}
-			if (opponent.lastMoveUsed <= 0 
+			if (opponent.lastMoveUsed <= 0
 				//|| PBTypes.isPseudoType(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Type)
 			   )
 			{
@@ -4776,8 +4776,8 @@ namespace PokemonUnity.Combat
 			List<Types> types = new List<Types>();
 			for (int i = 0; i < Kernal.TypeData.Count; i++)
 			{
-				if (//!PBTypes.isPseudoType((Types)i) && 
-					(Types)i != Types.NORMAL && (Types)i != Types.SHADOW) types.Add((Types)i); 
+				if (//!PBTypes.isPseudoType((Types)i) &&
+					(Types)i != Types.NORMAL && (Types)i != Types.SHADOW) types.Add((Types)i);
 			}
 			//Types[] types = Kernal.TypeData.Keys.ToArray();
 			type |= (iv[(int)Stats.HP] & 1);
@@ -4974,20 +4974,20 @@ namespace PokemonUnity.Combat
 		{
 
 			Dictionary<Items, byte> damagearray = new Dictionary<Items, byte>{
-			//60 => [	
+			//60 => [
 					{ Items.CHERI_BERRY, 60 },  { Items.CHESTO_BERRY, 60 }, { Items.PECHA_BERRY, 60 },  { Items.RAWST_BERRY, 60 },  { Items.ASPEAR_BERRY, 60 },
 					{ Items.LEPPA_BERRY, 60 },  { Items.ORAN_BERRY, 60 },   { Items.PERSIM_BERRY, 60 }, { Items.LUM_BERRY, 60 },    { Items.SITRUS_BERRY, 60 },
 					{ Items.FIGY_BERRY, 60 },   { Items.WIKI_BERRY, 60 },   { Items.MAGO_BERRY, 60 },   { Items.AGUAV_BERRY, 60 },  { Items.IAPAPA_BERRY, 60 },
 					{ Items.RAZZ_BERRY, 60 },   { Items.OCCA_BERRY, 60 },   { Items.PASSHO_BERRY, 60 }, { Items.WACAN_BERRY, 60 },  { Items.RINDO_BERRY, 60 },
 					{ Items.YACHE_BERRY, 60 },  { Items.CHOPLE_BERRY, 60 }, { Items.KEBIA_BERRY, 60 },  { Items.SHUCA_BERRY, 60 },  { Items.COBA_BERRY, 60 },
 					{ Items.PAYAPA_BERRY, 60 }, { Items.TANGA_BERRY, 60 },  { Items.CHARTI_BERRY, 60 }, { Items.KASIB_BERRY, 60 },  { Items.HABAN_BERRY, 60 },
-					{ Items.COLBUR_BERRY, 60 }, { Items.BABIRI_BERRY, 60 }, { Items.CHILAN_BERRY, 60 }, { Items.ROSELI_BERRY, 60 },	
-			//70 => [	
+					{ Items.COLBUR_BERRY, 60 }, { Items.BABIRI_BERRY, 60 }, { Items.CHILAN_BERRY, 60 }, { Items.ROSELI_BERRY, 60 },
+			//70 => [
 					{ Items.BLUK_BERRY, 70 },   { Items.NANAB_BERRY, 70 },  { Items.WEPEAR_BERRY, 70 }, { Items.PINAP_BERRY, 70 },  { Items.POMEG_BERRY, 70 },
 					{ Items.KELPSY_BERRY, 70 }, { Items.QUALOT_BERRY, 70 }, { Items.HONDEW_BERRY, 70 }, { Items.GREPA_BERRY, 70 },  { Items.TAMATO_BERRY, 70 },
 					{ Items.CORNN_BERRY, 70 },  { Items.MAGOST_BERRY, 70 }, { Items.RABUTA_BERRY, 70 }, { Items.NOMEL_BERRY, 70 },  { Items.SPELON_BERRY, 70 },
-					{ Items.PAMTRE_BERRY, 70 },	
-			//80 => [	
+					{ Items.PAMTRE_BERRY, 70 },
+			//80 => [
 					{ Items.WATMEL_BERRY, 80 }, { Items.DURIN_BERRY, 80 },  { Items.BELUE_BERRY, 80 },  { Items.LIECHI_BERRY, 80 }, { Items.GANLON_BERRY, 80 },
 					{ Items.SALAC_BERRY, 80 },  { Items.PETAYA_BERRY, 80 }, { Items.APICOT_BERRY, 80 }, { Items.LANSAT_BERRY, 80 }, { Items.STARF_BERRY, 80 },
 					{ Items.ENIGMA_BERRY, 80 }, { Items.MICLE_BERRY, 80 },  { Items.CUSTAP_BERRY, 80 }, { Items.JABOCA_BERRY, 80 }, { Items.ROWAP_BERRY, 80 },
@@ -4997,7 +4997,7 @@ namespace PokemonUnity.Combat
 			{
 				//byte data = damagearray[i];
 				//if (data != null){
-				//	foreach (var j in data){ 
+				//	foreach (var j in data){
 						if (this.berry == i)
 						{
 							int ret = damagearray[i];
@@ -5016,48 +5016,48 @@ namespace PokemonUnity.Combat
 
 			type = Types.NORMAL;
 			Dictionary<Items, Types> typearray = new Dictionary<Items, Types> {
-			   //:NORMAL =>	
-							{ Items.CHILAN_BERRY, Types.NORMAL },	
-			   //:FIRE	 =>	
-							{ Items.CHERI_BERRY, Types.FIRE },  { Items.BLUK_BERRY, Types.FIRE },   { Items.WATMEL_BERRY, Types.FIRE }, { Items.OCCA_BERRY, Types.FIRE },	
-			   //:WATER	 =>	
-							{ Items.CHESTO_BERRY, Types.WATER },    { Items.NANAB_BERRY, Types.WATER }, { Items.DURIN_BERRY, Types.WATER }, { Items.PASSHO_BERRY, Types.WATER },	
-			   //:ELECTRIC =>	
-							{ Items.PECHA_BERRY, Types.ELECTRIC },  { Items.WEPEAR_BERRY, Types.ELECTRIC }, { Items.BELUE_BERRY, Types.ELECTRIC },  { Items.WACAN_BERRY, Types.ELECTRIC },	
-			   //:GRASS	 =>	
-							{ Items.RAWST_BERRY, Types.GRASS }, { Items.PINAP_BERRY, Types.GRASS }, { Items.RINDO_BERRY, Types.GRASS }, { Items.LIECHI_BERRY, Types.GRASS },	
-			   //:ICE	 =>	
-							{ Items.ASPEAR_BERRY, Types.ICE },  { Items.POMEG_BERRY, Types.ICE },   { Items.YACHE_BERRY, Types.ICE },   { Items.GANLON_BERRY, Types.ICE },	
-			   //:FIGHTING =>	
-							{ Items.LEPPA_BERRY, Types.FIGHTING },  { Items.KELPSY_BERRY, Types.FIGHTING }, { Items.CHOPLE_BERRY, Types.FIGHTING }, { Items.SALAC_BERRY, Types.FIGHTING },	
-			   //:POISON =>	
-							{ Items.ORAN_BERRY, Types.POISON }, { Items.QUALOT_BERRY, Types.POISON },   { Items.KEBIA_BERRY, Types.POISON },    { Items.PETAYA_BERRY, Types.POISON },	
-			   //:GROUND =>	
-							{ Items.PERSIM_BERRY, Types.GROUND },   { Items.HONDEW_BERRY, Types.GROUND },   { Items.SHUCA_BERRY, Types.GROUND },    { Items.APICOT_BERRY, Types.GROUND },	
-			   //:FLYING =>	
-							{ Items.LUM_BERRY, Types.FLYING },  { Items.GREPA_BERRY, Types.FLYING },    { Items.COBA_BERRY, Types.FLYING }, { Items.LANSAT_BERRY, Types.FLYING },	
-			   //:PSYCHIC=>	
-							{ Items.SITRUS_BERRY, Types.PSYCHIC },  { Items.TAMATO_BERRY, Types.PSYCHIC },  { Items.PAYAPA_BERRY, Types.PSYCHIC },  { Items.STARF_BERRY, Types.PSYCHIC },	
-			   //:BUG	 =>	
-							{ Items.FIGY_BERRY, Types.BUG },    { Items.CORNN_BERRY, Types.BUG },   { Items.TANGA_BERRY, Types.BUG },   { Items.ENIGMA_BERRY, Types.BUG },	
-			   //:ROCK	 =>	
-							{ Items.WIKI_BERRY, Types.ROCK },   { Items.MAGOST_BERRY, Types.ROCK }, { Items.CHARTI_BERRY, Types.ROCK }, { Items.MICLE_BERRY, Types.ROCK },	
-			   //:GHOST	 =>	
-							{ Items.MAGO_BERRY, Types.GHOST },  { Items.RABUTA_BERRY, Types.GHOST },    { Items.KASIB_BERRY, Types.GHOST }, { Items.CUSTAP_BERRY, Types.GHOST },	
-			   //:DRAGON =>	
-							{ Items.AGUAV_BERRY, Types.DRAGON },    { Items.NOMEL_BERRY, Types.DRAGON },    { Items.HABAN_BERRY, Types.DRAGON },    { Items.JABOCA_BERRY, Types.DRAGON },	
-			   //:DARK	 =>	
-							{ Items.IAPAPA_BERRY, Types.DARK }, { Items.SPELON_BERRY, Types.DARK }, { Items.COLBUR_BERRY, Types.DARK }, { Items.ROWAP_BERRY, Types.DARK },  { Items.MARANGA_BERRY, Types.DARK },	
-			   //:STEEL	 =>	
-							{ Items.RAZZ_BERRY, Types.STEEL },  { Items.PAMTRE_BERRY, Types.STEEL },    { Items.BABIRI_BERRY, Types.STEEL },	
-			   //:FAIRY	 =>	
+			   //:NORMAL =>
+							{ Items.CHILAN_BERRY, Types.NORMAL },
+			   //:FIRE	 =>
+							{ Items.CHERI_BERRY, Types.FIRE },  { Items.BLUK_BERRY, Types.FIRE },   { Items.WATMEL_BERRY, Types.FIRE }, { Items.OCCA_BERRY, Types.FIRE },
+			   //:WATER	 =>
+							{ Items.CHESTO_BERRY, Types.WATER },    { Items.NANAB_BERRY, Types.WATER }, { Items.DURIN_BERRY, Types.WATER }, { Items.PASSHO_BERRY, Types.WATER },
+			   //:ELECTRIC =>
+							{ Items.PECHA_BERRY, Types.ELECTRIC },  { Items.WEPEAR_BERRY, Types.ELECTRIC }, { Items.BELUE_BERRY, Types.ELECTRIC },  { Items.WACAN_BERRY, Types.ELECTRIC },
+			   //:GRASS	 =>
+							{ Items.RAWST_BERRY, Types.GRASS }, { Items.PINAP_BERRY, Types.GRASS }, { Items.RINDO_BERRY, Types.GRASS }, { Items.LIECHI_BERRY, Types.GRASS },
+			   //:ICE	 =>
+							{ Items.ASPEAR_BERRY, Types.ICE },  { Items.POMEG_BERRY, Types.ICE },   { Items.YACHE_BERRY, Types.ICE },   { Items.GANLON_BERRY, Types.ICE },
+			   //:FIGHTING =>
+							{ Items.LEPPA_BERRY, Types.FIGHTING },  { Items.KELPSY_BERRY, Types.FIGHTING }, { Items.CHOPLE_BERRY, Types.FIGHTING }, { Items.SALAC_BERRY, Types.FIGHTING },
+			   //:POISON =>
+							{ Items.ORAN_BERRY, Types.POISON }, { Items.QUALOT_BERRY, Types.POISON },   { Items.KEBIA_BERRY, Types.POISON },    { Items.PETAYA_BERRY, Types.POISON },
+			   //:GROUND =>
+							{ Items.PERSIM_BERRY, Types.GROUND },   { Items.HONDEW_BERRY, Types.GROUND },   { Items.SHUCA_BERRY, Types.GROUND },    { Items.APICOT_BERRY, Types.GROUND },
+			   //:FLYING =>
+							{ Items.LUM_BERRY, Types.FLYING },  { Items.GREPA_BERRY, Types.FLYING },    { Items.COBA_BERRY, Types.FLYING }, { Items.LANSAT_BERRY, Types.FLYING },
+			   //:PSYCHIC=>
+							{ Items.SITRUS_BERRY, Types.PSYCHIC },  { Items.TAMATO_BERRY, Types.PSYCHIC },  { Items.PAYAPA_BERRY, Types.PSYCHIC },  { Items.STARF_BERRY, Types.PSYCHIC },
+			   //:BUG	 =>
+							{ Items.FIGY_BERRY, Types.BUG },    { Items.CORNN_BERRY, Types.BUG },   { Items.TANGA_BERRY, Types.BUG },   { Items.ENIGMA_BERRY, Types.BUG },
+			   //:ROCK	 =>
+							{ Items.WIKI_BERRY, Types.ROCK },   { Items.MAGOST_BERRY, Types.ROCK }, { Items.CHARTI_BERRY, Types.ROCK }, { Items.MICLE_BERRY, Types.ROCK },
+			   //:GHOST	 =>
+							{ Items.MAGO_BERRY, Types.GHOST },  { Items.RABUTA_BERRY, Types.GHOST },    { Items.KASIB_BERRY, Types.GHOST }, { Items.CUSTAP_BERRY, Types.GHOST },
+			   //:DRAGON =>
+							{ Items.AGUAV_BERRY, Types.DRAGON },    { Items.NOMEL_BERRY, Types.DRAGON },    { Items.HABAN_BERRY, Types.DRAGON },    { Items.JABOCA_BERRY, Types.DRAGON },
+			   //:DARK	 =>
+							{ Items.IAPAPA_BERRY, Types.DARK }, { Items.SPELON_BERRY, Types.DARK }, { Items.COLBUR_BERRY, Types.DARK }, { Items.ROWAP_BERRY, Types.DARK },  { Items.MARANGA_BERRY, Types.DARK },
+			   //:STEEL	 =>
+							{ Items.RAZZ_BERRY, Types.STEEL },  { Items.PAMTRE_BERRY, Types.STEEL },    { Items.BABIRI_BERRY, Types.STEEL },
+			   //:FAIRY	 =>
 							{ Items.ROSELI_BERRY, Types.FAIRY },    { Items.KEE_BERRY, Types.FAIRY }
 			};
 			foreach (Items i in typearray.Keys)
 			{
 				//data = typearray[i];;
 				//if (data != null){
-				//	foreach (var j in data){ 
+				//	foreach (var j in data){
 						if (this.berry == i)
 						{
 							type = typearray[i];//i;
@@ -8792,34 +8792,34 @@ namespace PokemonUnity.Combat
 		{
 			get
 			{
-				return new Dictionary<Items, byte> { 
-		   //130 => 
+				return new Dictionary<Items, byte> {
+		   //130 =>
 					{ Items.IRON_BALL, 130 },
-		   //100 => 
+		   //100 =>
 					{ Items.ARMOR_FOSSIL, 100 },    { Items.CLAW_FOSSIL, 100 }, { Items.COVER_FOSSIL, 100 },    { Items.DOME_FOSSIL, 100 }, { Items.HARD_STONE, 100 },
 					{ Items.HELIX_FOSSIL, 100 },    { Items.JAW_FOSSIL, 100 },  { Items.OLD_AMBER, 100 },   { Items.PLUME_FOSSIL, 100 },    { Items.RARE_BONE, 100 },
-					{ Items.ROOT_FOSSIL, 100 }, { Items.SAIL_FOSSIL, 100 }, { Items.SKULL_FOSSIL, 100 },	
-			//90 => 
+					{ Items.ROOT_FOSSIL, 100 }, { Items.SAIL_FOSSIL, 100 }, { Items.SKULL_FOSSIL, 100 },
+			//90 =>
 					{ Items.DEEP_SEA_TOOTH, 90 },   { Items.DRACO_PLATE, 90 },  { Items.DREAD_PLATE, 90 },  { Items.EARTH_PLATE, 90 },  { Items.FIST_PLATE, 90 },
 					{ Items.FLAME_PLATE, 90 },  { Items.GRIP_CLAW, 90 },        { Items.ICICLE_PLATE, 90 }, { Items.INSECT_PLATE, 90 }, { Items.IRON_PLATE, 90 },
 					{ Items.MEADOW_PLATE, 90 }, { Items.MIND_PLATE, 90 },   { Items.PIXIE_PLATE, 90 },  { Items.SKY_PLATE, 90 },        { Items.SPLASH_PLATE, 90 },
-					{ Items.SPOOKY_PLATE, 90 }, { Items.STONE_PLATE, 90 },  { Items.THICK_CLUB, 90 },   { Items.TOXIC_PLATE, 90 },  { Items.ZAP_PLATE, 90 },	
-			//80 => 
+					{ Items.SPOOKY_PLATE, 90 }, { Items.STONE_PLATE, 90 },  { Items.THICK_CLUB, 90 },   { Items.TOXIC_PLATE, 90 },  { Items.ZAP_PLATE, 90 },
+			//80 =>
 					{ Items.ASSAULT_VEST, 80 }, { Items.DAWN_STONE, 80 },   { Items.DUSK_STONE, 80 },   { Items.ELECTIRIZER, 80 },  { Items.MAGMARIZER, 80 },
 					{ Items.ODD_KEYSTONE, 80 }, { Items.OVAL_STONE, 80 },   { Items.PROTECTOR, 80 },    { Items.QUICK_CLAW, 80 },   { Items.RAZOR_CLAW, 80 },
-					{ Items.SAFETY_GOGGLES, 80 },   { Items.SHINY_STONE, 80 },  { Items.STICKY_BARB, 80 },  { Items.WEAKNESS_POLICY, 80 },	
-			//70 => 
+					{ Items.SAFETY_GOGGLES, 80 },   { Items.SHINY_STONE, 80 },  { Items.STICKY_BARB, 80 },  { Items.WEAKNESS_POLICY, 80 },
+			//70 =>
 					{ Items.BURN_DRIVE, 70 },       { Items.CHILL_DRIVE, 70 },  { Items.DOUSE_DRIVE, 70 },  { Items.DRAGON_FANG, 70 },  { Items.POISON_BARB, 70 },
 					{ Items.POWER_ANKLET, 70 }, { Items.POWER_BAND, 70 },   { Items.POWER_BELT, 70 },   { Items.POWER_BRACER, 70 }, { Items.POWER_LENS, 70 },
-					{ Items.POWER_WEIGHT, 70 }, { Items.SHOCK_DRIVE, 70 },	
-			//60 => 
+					{ Items.POWER_WEIGHT, 70 }, { Items.SHOCK_DRIVE, 70 },
+			//60 =>
 					{ Items.ADAMANT_ORB, 60 },  { Items.DAMP_ROCK, 60 },    { Items.GRISEOUS_ORB, 60 }, { Items.HEAT_ROCK, 60 },    { Items.LUSTROUS_ORB, 60 },
-					{ Items.MACHO_BRACE, 60 },  { Items.ROCKY_HELMET, 60 }, { Items.STICK, 60 },	
-			//50 => 
-					{ Items.DUBIOUS_DISC, 50 }, { Items.SHARP_BEAK, 50 },	
-			//40 => 
-					{ Items.EVIOLITE, 40 }, { Items.ICY_ROCK, 40 }, { Items.LUCKY_PUNCH, 40 },	
-			//30 => 
+					{ Items.MACHO_BRACE, 60 },  { Items.ROCKY_HELMET, 60 }, { Items.STICK, 60 },
+			//50 =>
+					{ Items.DUBIOUS_DISC, 50 }, { Items.SHARP_BEAK, 50 },
+			//40 =>
+					{ Items.EVIOLITE, 40 }, { Items.ICY_ROCK, 40 }, { Items.LUCKY_PUNCH, 40 },
+			//30 =>
 					{ Items.ABILITY_CAPSULE, 30 },  { Items.ABILITY_URGE, 30 }, { Items.ABSORB_BULB, 30 },  { Items.AMAZE_MULCH, 30 },  { Items.AMULET_COIN, 30 },
 					{ Items.ANTIDOTE, 30 }, { Items.AWAKENING, 30 },    { Items.BALM_MUSHROOM, 30 },    { Items.BERRY_JUICE, 30 },  { Items.BIG_MUSHROOM, 30 },
 					{ Items.BIG_NUGGET, 30 },   { Items.BIG_PEARL, 30 },    { Items.BINDING_BAND, 30 }, { Items.BLACK_BELT, 30 },   { Items.BLACK_FLUTE, 30 },
@@ -8853,12 +8853,12 @@ namespace PokemonUnity.Combat
 					{ Items.X_ATTACK_3, 30 },   { Items.X_ATTACK_6, 30 },   { Items.X_DEFENSE, 30 },    { Items.X_DEFENSE_2, 30 },  { Items.X_DEFENSE_3, 30 },
 					{ Items.X_DEFENSE_6, 30 },  { Items.X_SP_DEF, 30 }, { Items.X_SP_DEF_2, 30 },   { Items.X_SP_DEF_3, 30 },   { Items.X_SP_DEF_6, 30 },
 					{ Items.X_SP_ATK, 30 },     { Items.X_SP_ATK_2, 30 },   { Items.X_SP_ATK_3, 30 },   { Items.X_SP_ATK_6, 30 },   { Items.X_SPEED, 30 },
-					{ Items.X_SPEED_2, 30 },    { Items.X_SPEED_3, 30 },    { Items.X_SPEED_6, 30 },    { Items.YELLOW_FLUTE, 30 }, { Items.YELLOW_SHARD, 30 }, { Items.ZINC, 30 },	
+					{ Items.X_SPEED_2, 30 },    { Items.X_SPEED_3, 30 },    { Items.X_SPEED_6, 30 },    { Items.YELLOW_FLUTE, 30 }, { Items.YELLOW_SHARD, 30 }, { Items.ZINC, 30 },
 					//{ Items.X_SPECIAL, 30 },	{ Items.X_SPECIAL2, 30 },	{ Items.X_SPECIAL_3, 30 },	{ Items.X_SPECIAL_6, 30 },	//ToDo: Is X-Special a thing?
-			//20 => 
+			//20 =>
 					{ Items.CLEVER_WING, 20 },  { Items.GENIUS_WING, 20 },  { Items.HEALTH_WING, 20 },  { Items.MUSCLE_WING, 20 },  { Items.PRETTY_WING, 20 },
-					{ Items.RESIST_WING, 20 },  { Items.SWIFT_WING, 20 },	
-			//10 => 
+					{ Items.RESIST_WING, 20 },  { Items.SWIFT_WING, 20 },
+			//10 =>
 					{ Items.AIR_BALLOON, 10 },  { Items.BIG_ROOT, 10 }, { Items.BLUE_SCARF, 10 },   { Items.BRIGHT_POWDER, 10 },    { Items.CHOICE_BAND, 10 },
 					{ Items.CHOICE_SCARF, 10 }, { Items.CHOICE_SPECS, 10 }, { Items.DESTINY_KNOT, 10 }, { Items.EXPERT_BELT, 10 },  { Items.FOCUS_BAND, 10 },
 					{ Items.FOCUS_SASH, 10 },   { Items.FULL_INCENSE, 10 }, { Items.GREEN_SCARF, 10 },  { Items.LAGGING_TAIL, 10 }, { Items.LAX_INCENSE, 10 },
@@ -8883,7 +8883,7 @@ namespace PokemonUnity.Combat
 			foreach (Items i in flingarray.Keys)
 			{
 				//if (flingarray[i] != null){
-				//	foreach (var j in flingarray[i]){ 
+				//	foreach (var j in flingarray[i]){
 						if (attacker.Item == i) return false;
 				//	}
 				//}
@@ -8901,7 +8901,7 @@ namespace PokemonUnity.Combat
 			foreach (Items i in flingarray.Keys)
 			{
 				//if (flingarray[i] != null){
-				//	foreach (var j in flingarray[i]){ 
+				//	foreach (var j in flingarray[i]){
 						if (attacker.Item == i) return flingarray[i]; //Kernal.ItemData[i].FlingPower.Value;
 				//	}
 				//}
@@ -9703,7 +9703,7 @@ namespace PokemonUnity.Combat
 				if (!attacker.pbPartner.hasMovedThisRound())
 				{
 					Moves move = this.battle.choices[attacker.pbPartner.Index].Move.id;
-					if (move > 0)	//move && 
+					if (move > 0)	//move &&
 					{
 						partnermove = this.battle.choices[attacker.pbPartner.Index].Move.Effect;
 					}
@@ -9835,7 +9835,7 @@ namespace PokemonUnity.Combat
 				if (!attacker.pbPartner.hasMovedThisRound())
 				{
 					Moves move = this.battle.choices[attacker.pbPartner.Index].Move.id;
-					if (move > 0)	//move != null && 
+					if (move > 0)	//move != null &&
 					{
 						partnermove = this.battle.choices[attacker.pbPartner.Index].Move.Effect;
 					}
@@ -10691,7 +10691,7 @@ namespace PokemonUnity.Combat
 	/// User switches places with its ally. (Ally Switch)
 	/// <summary>
 	/// <remarks>
-	/// Code below might not need to be complicated since Battle.Pokemon rewrite 
+	/// Code below might not need to be complicated since Battle.Pokemon rewrite
 	/// stores values in Battle.Battler (position) instead of in Pokemon variable
 	/// </remarks>
 	public partial class PokeBattle_Move_120 : PokeBattle_Move
@@ -10726,180 +10726,180 @@ namespace PokemonUnity.Combat
 			//foreach (BattlerEffects i in effectstoswap)
 			{
 				//a.effects[i], b.effects[i]= b.effects[i], a.effects[i];
-				IEffectsBattler atemp = a.effects;
-				IEffectsBattler btemp = b.effects;
-				//a.effects.Attract          = btemp.Attract         ;
-				//a.effects.BatonPass        = btemp.BatonPass       ;
-				//a.effects.Bide             = btemp.Bide            ;
-				//a.effects.BideDamage       = btemp.BideDamage      ;
-				a.effects.BideTarget       = btemp.BideTarget      ;
-				//a.effects.Charge           = btemp.Charge          ;
-				//a.effects.ChoiceBand       = btemp.ChoiceBand      ;
-				//a.effects.Counter          = btemp.Counter         ;
-				a.effects.CounterTarget    = btemp.CounterTarget   ;
-				//a.effects.DefenseCurl      = btemp.DefenseCurl     ;
-				//a.effects.DestinyBond      = btemp.DestinyBond     ;
-				//a.effects.Disable          = btemp.Disable         ;
-				//a.effects.DisableMove      = btemp.DisableMove     ;
-				//a.effects.Electrify        = btemp.Electrify       ;
-				//a.effects.Encore           = btemp.Encore          ;
-				//a.effects.EncoreIndex      = btemp.EncoreIndex     ;
-				//a.effects.EncoreMove       = btemp.EncoreMove      ;
-				//a.effects.Endure           = btemp.Endure          ;
-				//a.effects.FirstPledge      = btemp.FirstPledge     ;
-				//a.effects.FlashFire        = btemp.FlashFire       ;
-				//a.effects.Flinch           = btemp.Flinch          ;
-				//a.effects.FollowMe         = btemp.FollowMe        ;
-				//a.effects.Foresight        = btemp.Foresight       ;
-				//a.effects.FuryCutter       = btemp.FuryCutter      ;
-				//a.effects.Grudge           = btemp.Grudge          ;
-				//a.effects.HelpingHand      = btemp.HelpingHand     ;
-				//a.effects.HyperBeam        = btemp.HyperBeam       ;
-				//a.effects.Illusion         = btemp.Illusion        ;
-				//a.effects.Imprison         = btemp.Imprison        ;
-				//a.effects.KingsShield      = btemp.KingsShield     ;
-				a.effects.LeechSeed          = btemp.LeechSeed         ;
-				//a.effects.LifeOrb          = btemp.LifeOrb         ;
-				//a.effects.LockOn          = btemp.LockOn			 ;
-				a.effects.LockOnPos          = btemp.LockOnPos         ;
-				//a.effects.MagicCoat        = btemp.MagicCoat       ;
-				a.effects.MeanLook         = btemp.MeanLook        ;
-				//a.effects.MeFirst          = btemp.MeFirst         ;
-				//a.effects.Metronome        = btemp.Metronome       ;
-				//a.effects.MicleBerry       = btemp.MicleBerry      ;
-				//a.effects.Minimize         = btemp.Minimize        ;
-				//a.effects.MiracleEye       = btemp.MiracleEye      ;
-				//a.effects.MirrorCoat       = btemp.MirrorCoat      ;
-				a.effects.MirrorCoatTarget = btemp.MirrorCoatTarget;
-				//a.effects.MoveNext         = btemp.MoveNext        ;
-				//a.effects.MudSport         = btemp.MudSport        ;
-				//a.effects.MultiTurn        = btemp.MultiTurn       ;
-				//a.effects.MultiTurnAttack  = btemp.MultiTurnAttack ;
-				//a.effects.MultiTurnUser    = btemp.MultiTurnUser   ;
-				//a.effects.Nightmare        = btemp.Nightmare       ;
-				//a.effects.Outrage          = btemp.Outrage         ;
-				//a.effects.ParentalBond     = btemp.ParentalBond    ;
-				//a.effects.PickupItem       = btemp.PickupItem      ;
-				//a.effects.PickupUse        = btemp.PickupUse       ;
-				//a.effects.Pinch            = btemp.Pinch           ;
-				//a.effects.Powder           = btemp.Powder          ;
-				//a.effects.Protect          = btemp.Protect         ;
-				//a.effects.ProtectNegation  = btemp.ProtectNegation ;
-				//a.effects.ProtectRate      = btemp.ProtectRate     ;
-				//a.effects.Pursuit          = btemp.Pursuit         ;
-				//a.effects.Quash            = btemp.Quash           ;
-				//a.effects.Rage             = btemp.Rage            ;
-				//a.effects.Revenge          = btemp.Revenge         ;
-				//a.effects.Roar             = btemp.Roar            ;
-				//a.effects.Rollout          = btemp.Rollout         ;
-				//a.effects.Roost            = btemp.Roost           ;
-				//a.effects.SkipTurn         = btemp.SkipTurn        ;
-				//a.effects.SkyDrop          = btemp.SkyDrop         ;
-				//a.effects.SmackDown        = btemp.SmackDown       ;
-				//a.effects.Snatch           = btemp.Snatch          ;
-				//a.effects.SpikyShield      = btemp.SpikyShield     ;
-				//a.effects.Stockpile        = btemp.Stockpile       ;
-				//a.effects.StockpileDef     = btemp.StockpileDef    ;
-				//a.effects.StockpileSpDef   = btemp.StockpileSpDef  ;
-				//a.effects.Taunt            = btemp.Taunt           ;
-				//a.effects.Torment          = btemp.Torment         ;
-				//a.effects.Toxic            = btemp.Toxic           ;
-				//a.effects.Transform        = btemp.Transform       ;
-				//a.effects.Truant           = btemp.Truant          ;
-				//a.effects.TwoTurnAttack    = btemp.TwoTurnAttack   ;
-				//a.effects.Type3            = btemp.Type3           ;
-				//a.effects.Unburden         = btemp.Unburden        ;
-				//a.effects.Uproar           = btemp.Uproar          ;
-				//a.effects.Uturn            = btemp.Uturn           ;
-				//a.effects.WaterSport       = btemp.WaterSport      ;
-				//a.effects.WeightChange     = btemp.WeightChange    ;
-				//a.effects.Yawn             = btemp.Yawn            ;
-				//b.effects.Attract          = atemp.Attract         ;
-				//b.effects.BatonPass        = atemp.BatonPass       ;
-				//b.effects.Bide             = atemp.Bide            ;
-				//b.effects.BideDamage       = atemp.BideDamage      ;
-				b.effects.BideTarget       = atemp.BideTarget      ;
-				//b.effects.Charge           = atemp.Charge          ;
-				//b.effects.ChoiceBand       = atemp.ChoiceBand      ;
-				//b.effects.Counter          = atemp.Counter         ;
-				b.effects.CounterTarget    = atemp.CounterTarget   ;
-				//b.effects.DefenseCurl      = atemp.DefenseCurl     ;
-				//b.effects.DestinyBond      = atemp.DestinyBond     ;
-				//b.effects.Disable          = atemp.Disable         ;
-				//b.effects.DisableMove      = atemp.DisableMove     ;
-				//b.effects.Electrify        = atemp.Electrify       ;
-				//b.effects.Encore           = atemp.Encore          ;
-				//b.effects.EncoreIndex      = atemp.EncoreIndex     ;
-				//b.effects.EncoreMove       = atemp.EncoreMove      ;
-				//b.effects.Endure           = atemp.Endure          ;
-				//b.effects.FirstPledge      = atemp.FirstPledge     ;
-				//b.effects.FlashFire        = atemp.FlashFire       ;
-				//b.effects.Flinch           = atemp.Flinch          ;
-				//b.effects.FollowMe         = atemp.FollowMe        ;
-				//b.effects.Foresight        = atemp.Foresight       ;
-				//b.effects.FuryCutter       = atemp.FuryCutter      ;
-				//b.effects.Grudge           = atemp.Grudge          ;
-				//b.effects.HelpingHand      = atemp.HelpingHand     ;
-				//b.effects.HyperBeam        = atemp.HyperBeam       ;
-				//b.effects.Illusion         = atemp.Illusion        ;
-				//b.effects.Imprison         = atemp.Imprison        ;
-				//b.effects.KingsShield      = atemp.KingsShield     ;
-				b.effects.LeechSeed          = atemp.LeechSeed         ;
-				//b.effects.LifeOrb          = atemp.LifeOrb         ;
-				//b.effects.LockOn          = atemp.LockOn         ;
-				b.effects.LockOnPos          = atemp.LockOnPos         ;
-				//b.effects.MagicCoat        = atemp.MagicCoat       ;
-				b.effects.MeanLook         = atemp.MeanLook        ;
-				//b.effects.MeFirst          = atemp.MeFirst         ;
-				//b.effects.Metronome        = atemp.Metronome       ;
-				//b.effects.MicleBerry       = atemp.MicleBerry      ;
-				//b.effects.Minimize         = atemp.Minimize        ;
-				//b.effects.MiracleEye       = atemp.MiracleEye      ;
-				//b.effects.MirrorCoat       = atemp.MirrorCoat      ;
-				b.effects.MirrorCoatTarget = atemp.MirrorCoatTarget;
-				//b.effects.MoveNext         = atemp.MoveNext        ;
-				//b.effects.MudSport         = atemp.MudSport        ;
-				//b.effects.MultiTurn        = atemp.MultiTurn       ;
-				//b.effects.MultiTurnAttack  = atemp.MultiTurnAttack ;
-				//b.effects.MultiTurnUser    = atemp.MultiTurnUser   ;
-				//b.effects.Nightmare        = atemp.Nightmare       ;
-				//b.effects.Outrage          = atemp.Outrage         ;
-				//b.effects.ParentalBond     = atemp.ParentalBond    ;
-				//b.effects.PickupItem       = atemp.PickupItem      ;
-				//b.effects.PickupUse        = atemp.PickupUse       ;
-				//b.effects.Pinch            = atemp.Pinch           ;
-				//b.effects.Powder           = atemp.Powder          ;
-				//b.effects.Protect          = atemp.Protect         ;
-				//b.effects.ProtectNegation  = atemp.ProtectNegation ;
-				//b.effects.ProtectRate      = atemp.ProtectRate     ;
-				//b.effects.Pursuit          = atemp.Pursuit         ;
-				//b.effects.Quash            = atemp.Quash           ;
-				//b.effects.Rage             = atemp.Rage            ;
-				//b.effects.Revenge          = atemp.Revenge         ;
-				//b.effects.Roar             = atemp.Roar            ;
-				//b.effects.Rollout          = atemp.Rollout         ;
-				//b.effects.Roost            = atemp.Roost           ;
-				//b.effects.SkipTurn         = atemp.SkipTurn        ;
-				//b.effects.SkyDrop          = atemp.SkyDrop         ;
-				//b.effects.SmackDown        = atemp.SmackDown       ;
-				//b.effects.Snatch           = atemp.Snatch          ;
-				//b.effects.SpikyShield      = atemp.SpikyShield     ;
-				//b.effects.Stockpile        = atemp.Stockpile       ;
-				//b.effects.StockpileDef     = atemp.StockpileDef    ;
-				//b.effects.StockpileSpDef   = atemp.StockpileSpDef  ;
-				//b.effects.Taunt            = atemp.Taunt           ;
-				//b.effects.Torment          = atemp.Torment         ;
-				//b.effects.Toxic            = atemp.Toxic           ;
-				//b.effects.Transform        = atemp.Transform       ;
-				//b.effects.Truant           = atemp.Truant          ;
-				//b.effects.TwoTurnAttack    = atemp.TwoTurnAttack   ;
-				//b.effects.Type3            = atemp.Type3           ;
-				//b.effects.Unburden         = atemp.Unburden        ;
-				//b.effects.Uproar           = atemp.Uproar          ;
-				//b.effects.Uturn            = atemp.Uturn           ;
-				//b.effects.WaterSport       = atemp.WaterSport      ;
-				//b.effects.WeightChange     = atemp.WeightChange    ;
-				//b.effects.Yawn             = atemp.Yawn            ;
+				IEffectsBattler atemp		= a.effects				;
+				IEffectsBattler btemp		= b.effects				;
+				//a.effects.Attract			= btemp.Attract			;
+				//a.effects.BatonPass		= btemp.BatonPass		;
+				//a.effects.Bide			= btemp.Bide			;
+				//a.effects.BideDamage		= btemp.BideDamage		;
+				a.effects.BideTarget		= btemp.BideTarget		;
+				//a.effects.Charge			= btemp.Charge			;
+				//a.effects.ChoiceBand		= btemp.ChoiceBand		;
+				//a.effects.Counter			= btemp.Counter			;
+				a.effects.CounterTarget		= btemp.CounterTarget	;
+				//a.effects.DefenseCurl		= btemp.DefenseCurl		;
+				//a.effects.DestinyBond		= btemp.DestinyBond		;
+				//a.effects.Disable			= btemp.Disable			;
+				//a.effects.DisableMove		= btemp.DisableMove		;
+				//a.effects.Electrify		= btemp.Electrify		;
+				//a.effects.Encore			= btemp.Encore			;
+				//a.effects.EncoreIndex		= btemp.EncoreIndex		;
+				//a.effects.EncoreMove		= btemp.EncoreMove		;
+				//a.effects.Endure			= btemp.Endure			;
+				//a.effects.FirstPledge		= btemp.FirstPledge		;
+				//a.effects.FlashFire		= btemp.FlashFire		;
+				//a.effects.Flinch			= btemp.Flinch			;
+				//a.effects.FollowMe		= btemp.FollowMe		;
+				//a.effects.Foresight		= btemp.Foresight		;
+				//a.effects.FuryCutter		= btemp.FuryCutter		;
+				//a.effects.Grudge			= btemp.Grudge			;
+				//a.effects.HelpingHand		= btemp.HelpingHand		;
+				//a.effects.HyperBeam		= btemp.HyperBeam		;
+				//a.effects.Illusion		= btemp.Illusion		;
+				//a.effects.Imprison		= btemp.Imprison		;
+				//a.effects.KingsShield		= btemp.KingsShield		;
+				a.effects.LeechSeed			= btemp.LeechSeed		;
+				//a.effects.LifeOrb			= btemp.LifeOrb			;
+				//a.effects.LockOn			= btemp.LockOn			;
+				a.effects.LockOnPos			= btemp.LockOnPos		;
+				//a.effects.MagicCoat		= btemp.MagicCoat		;
+				a.effects.MeanLook			= btemp.MeanLook		;
+				//a.effects.MeFirst			= btemp.MeFirst			;
+				//a.effects.Metronome		= btemp.Metronome		;
+				//a.effects.MicleBerry		= btemp.MicleBerry		;
+				//a.effects.Minimize		= btemp.Minimize		;
+				//a.effects.MiracleEye		= btemp.MiracleEye		;
+				//a.effects.MirrorCoat		= btemp.MirrorCoat		;
+				a.effects.MirrorCoatTarget	= btemp.MirrorCoatTarget;
+				//a.effects.MoveNext		= btemp.MoveNext		;
+				//a.effects.MudSport		= btemp.MudSport		;
+				//a.effects.MultiTurn		= btemp.MultiTurn		;
+				//a.effects.MultiTurnAttack	= btemp.MultiTurnAttack	;
+				//a.effects.MultiTurnUser	= btemp.MultiTurnUser	;
+				//a.effects.Nightmare		= btemp.Nightmare		;
+				//a.effects.Outrage			= btemp.Outrage			;
+				//a.effects.ParentalBond	= btemp.ParentalBond	;
+				//a.effects.PickupItem		= btemp.PickupItem		;
+				//a.effects.PickupUse		= btemp.PickupUse		;
+				//a.effects.Pinch			= btemp.Pinch			;
+				//a.effects.Powder			= btemp.Powder			;
+				//a.effects.Protect			= btemp.Protect			;
+				//a.effects.ProtectNegation	= btemp.ProtectNegation	;
+				//a.effects.ProtectRate		= btemp.ProtectRate		;
+				//a.effects.Pursuit			= btemp.Pursuit			;
+				//a.effects.Quash			= btemp.Quash			;
+				//a.effects.Rage			= btemp.Rage			;
+				//a.effects.Revenge			= btemp.Revenge			;
+				//a.effects.Roar			= btemp.Roar			;
+				//a.effects.Rollout			= btemp.Rollout			;
+				//a.effects.Roost			= btemp.Roost			;
+				//a.effects.SkipTurn		= btemp.SkipTurn		;
+				//a.effects.SkyDrop			= btemp.SkyDrop			;
+				//a.effects.SmackDown		= btemp.SmackDown		;
+				//a.effects.Snatch			= btemp.Snatch			;
+				//a.effects.SpikyShield		= btemp.SpikyShield		;
+				//a.effects.Stockpile		= btemp.Stockpile		;
+				//a.effects.StockpileDef	= btemp.StockpileDef	;
+				//a.effects.StockpileSpDef	= btemp.StockpileSpDef	;
+				//a.effects.Taunt			= btemp.Taunt			;
+				//a.effects.Torment			= btemp.Torment			;
+				//a.effects.Toxic			= btemp.Toxic			;
+				//a.effects.Transform		= btemp.Transform		;
+				//a.effects.Truant			= btemp.Truant			;
+				//a.effects.TwoTurnAttack	= btemp.TwoTurnAttack	;
+				//a.effects.Type3			= btemp.Type3			;
+				//a.effects.Unburden		= btemp.Unburden		;
+				//a.effects.Uproar			= btemp.Uproar			;
+				//a.effects.Uturn			= btemp.Uturn			;
+				//a.effects.WaterSport		= btemp.WaterSport		;
+				//a.effects.WeightChange	= btemp.WeightChange	;
+				//a.effects.Yawn			= btemp.Yawn			;
+				//b.effects.Attract			= atemp.Attract			;
+				//b.effects.BatonPass		= atemp.BatonPass		;
+				//b.effects.Bide			= atemp.Bide			;
+				//b.effects.BideDamage		= atemp.BideDamage		;
+				b.effects.BideTarget		= atemp.BideTarget		;
+				//b.effects.Charge			= atemp.Charge			;
+				//b.effects.ChoiceBand		= atemp.ChoiceBand		;
+				//b.effects.Counter			= atemp.Counter			;
+				b.effects.CounterTarget		= atemp.CounterTarget	;
+				//b.effects.DefenseCurl		= atemp.DefenseCurl		;
+				//b.effects.DestinyBond		= atemp.DestinyBond		;
+				//b.effects.Disable			= atemp.Disable			;
+				//b.effects.DisableMove		= atemp.DisableMove		;
+				//b.effects.Electrify		= atemp.Electrify		;
+				//b.effects.Encore			= atemp.Encore			;
+				//b.effects.EncoreIndex		= atemp.EncoreIndex		;
+				//b.effects.EncoreMove		= atemp.EncoreMove		;
+				//b.effects.Endure			= atemp.Endure			;
+				//b.effects.FirstPledge		= atemp.FirstPledge		;
+				//b.effects.FlashFire		= atemp.FlashFire		;
+				//b.effects.Flinch			= atemp.Flinch			;
+				//b.effects.FollowMe		= atemp.FollowMe		;
+				//b.effects.Foresight		= atemp.Foresight		;
+				//b.effects.FuryCutter		= atemp.FuryCutter		;
+				//b.effects.Grudge			= atemp.Grudge			;
+				//b.effects.HelpingHand		= atemp.HelpingHand		;
+				//b.effects.HyperBeam		= atemp.HyperBeam		;
+				//b.effects.Illusion		= atemp.Illusion		;
+				//b.effects.Imprison		= atemp.Imprison		;
+				//b.effects.KingsShield		= atemp.KingsShield		;
+				b.effects.LeechSeed			= atemp.LeechSeed		;
+				//b.effects.LifeOrb			= atemp.LifeOrb			;
+				//b.effects.LockOn          = atemp.LockOn			;
+				b.effects.LockOnPos			= atemp.LockOnPos		;
+				//b.effects.MagicCoat		= atemp.MagicCoat		;
+				b.effects.MeanLook			= atemp.MeanLook		;
+				//b.effects.MeFirst			= atemp.MeFirst			;
+				//b.effects.Metronome		= atemp.Metronome		;
+				//b.effects.MicleBerry		= atemp.MicleBerry		;
+				//b.effects.Minimize		= atemp.Minimize		;
+				//b.effects.MiracleEye		= atemp.MiracleEye		;
+				//b.effects.MirrorCoat		= atemp.MirrorCoat		;
+				b.effects.MirrorCoatTarget	= atemp.MirrorCoatTarget;
+				//b.effects.MoveNext		= atemp.MoveNext		;
+				//b.effects.MudSport		= atemp.MudSport		;
+				//b.effects.MultiTurn		= atemp.MultiTurn		;
+				//b.effects.MultiTurnAttack	= atemp.MultiTurnAttack	;
+				//b.effects.MultiTurnUser	= atemp.MultiTurnUser	;
+				//b.effects.Nightmare		= atemp.Nightmare		;
+				//b.effects.Outrage			= atemp.Outrage			;
+				//b.effects.ParentalBond	= atemp.ParentalBond	;
+				//b.effects.PickupItem		= atemp.PickupItem		;
+				//b.effects.PickupUse		= atemp.PickupUse		;
+				//b.effects.Pinch			= atemp.Pinch			;
+				//b.effects.Powder			= atemp.Powder			;
+				//b.effects.Protect			= atemp.Protect			;
+				//b.effects.ProtectNegation	= atemp.ProtectNegation	;
+				//b.effects.ProtectRate		= atemp.ProtectRate		;
+				//b.effects.Pursuit			= atemp.Pursuit			;
+				//b.effects.Quash			= atemp.Quash			;
+				//b.effects.Rage			= atemp.Rage			;
+				//b.effects.Revenge			= atemp.Revenge			;
+				//b.effects.Roar			= atemp.Roar			;
+				//b.effects.Rollout			= atemp.Rollout			;
+				//b.effects.Roost			= atemp.Roost			;
+				//b.effects.SkipTurn		= atemp.SkipTurn		;
+				//b.effects.SkyDrop			= atemp.SkyDrop			;
+				//b.effects.SmackDown		= atemp.SmackDown		;
+				//b.effects.Snatch			= atemp.Snatch			;
+				//b.effects.SpikyShield		= atemp.SpikyShield		;
+				//b.effects.Stockpile		= atemp.Stockpile		;
+				//b.effects.StockpileDef	= atemp.StockpileDef	;
+				//b.effects.StockpileSpDef	= atemp.StockpileSpDef	;
+				//b.effects.Taunt			= atemp.Taunt			;
+				//b.effects.Torment			= atemp.Torment			;
+				//b.effects.Toxic			= atemp.Toxic			;
+				//b.effects.Transform		= atemp.Transform		;
+				//b.effects.Truant			= atemp.Truant			;
+				//b.effects.TwoTurnAttack	= atemp.TwoTurnAttack	;
+				//b.effects.Type3			= atemp.Type3			;
+				//b.effects.Unburden		= atemp.Unburden		;
+				//b.effects.Uproar			= atemp.Uproar			;
+				//b.effects.Uturn			= atemp.Uturn			;
+				//b.effects.WaterSport		= atemp.WaterSport		;
+				//b.effects.WeightChange	= atemp.WeightChange	;
+				//b.effects.Yawn			= atemp.Yawn			;
 			}
 
 			attacker.pbUpdate(true);
@@ -11082,10 +11082,10 @@ namespace PokemonUnity.Combat
 			foreach (IBattler i in new IBattler[] { attacker, attacker.pbPartner })
 			{
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
-				if (!i.hasWorkingAbility(Abilities.PLUS) && !i.hasWorkingAbility(Abilities.MINUS)) continue; //next 
-				if (i is IBattlerEffect b && 
+				if (!i.hasWorkingAbility(Abilities.PLUS) && !i.hasWorkingAbility(Abilities.MINUS)) continue; //next
+				if (i is IBattlerEffect b &&
 					!b.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this) &&
-					!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this)) continue; //next 
+					!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this)) continue; //next
 				if (!didsomething) pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 				didsomething = true;
 
@@ -11308,7 +11308,7 @@ namespace PokemonUnity.Combat
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 				if (!i.pbHasType(Types.GRASS)) continue; //next
 				if (i.isAirborne(attacker.hasMoldBreaker())) continue; //next
-				if (i is IBattlerEffect b && 
+				if (i is IBattlerEffect b &&
 					!b.pbCanIncreaseStatStage(Stats.ATTACK, attacker, false, this) &&
 						!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this)) continue;//next
 				if (!didsomething) pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
@@ -11385,7 +11385,7 @@ namespace PokemonUnity.Combat
 			{
 				if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 				if (i.Status != Status.POISON) continue; //next
-				if (i is IBattlerEffect b && 
+				if (i is IBattlerEffect b &&
 					!b.pbCanReduceStatStage(Stats.ATTACK, attacker, false, this) &&
 					!b.pbCanReduceStatStage(Stats.SPATK, attacker, false, this) &&
 					!b.pbCanReduceStatStage(Stats.SPEED, attacker, false, this)) continue; //next
@@ -11905,7 +11905,7 @@ namespace PokemonUnity.Combat
 				attacker.pbConsumeItem();
 			}
 			if (attacker.effects.TwoTurnAttack > 0) return 0;
-			if (attacker is IBattlerEffect b && 
+			if (attacker is IBattlerEffect b &&
 				!b.pbCanIncreaseStatStage(Stats.SPATK, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPDEF, attacker, false, this) &&
 				!b.pbCanIncreaseStatStage(Stats.SPEED, attacker, false, this))
@@ -12193,7 +12193,7 @@ namespace PokemonUnity.Combat
 		}
 	}
 	#endregion
-#pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
+#pragma warning restore 0162 //Warning CS0162  Unreachable code detected
 	//===============================================================================
 	// NOTE: If you're inventing new move effects, use function code 159 and onwards.
 	//===============================================================================

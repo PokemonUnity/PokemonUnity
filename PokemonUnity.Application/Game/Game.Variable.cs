@@ -45,7 +45,7 @@ namespace PokemonUnity
 		//public PokemonEssentials.Interface.IGameMessage GameMessage { get; set; }
 
 		//public static PokemonUnity.UX.IFrontEnd UI { get; private set; }
-		
+
 		/// <summary>
 		/// Singleton Instance of Game class to store current/active play state.
 		/// </summary>
@@ -91,7 +91,7 @@ namespace PokemonUnity
 		//public Pokemon[,] PC_Poke { get; set; }
 		//public string[] PC_boxNames { get; set; }
 		//public int[] PC_boxTexture { get; set; }
-		//public List<Items> PC_Items { get; set; } 
+		//public List<Items> PC_Items { get; set; }
 		//public List<Items> Bag_Items { get; set; }
 		//public Character.PC PC { get; private set; }
 		//public Character.Bag Bag { get; private set; }

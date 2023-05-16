@@ -92,7 +92,7 @@ namespace PokemonUnity
 			pbFadeOutIn(99999, block: () => {
 				IRelicStoneScene scene = Scenes.RelicStone; //new RelicStoneScene();
 				IRelicStoneScreen screen = Screens.RelicStone.initialize(scene); //new RelicStoneScreen(scene);
-				screen.pbStartScreen(pkmn); //retval = 
+				screen.pbStartScreen(pkmn); //retval =
 				screen.pbStartScreen(pkmn);
 			});
 			//return retval;
@@ -121,7 +121,7 @@ namespace PokemonUnity
 				(this as IGameMessage).pbMessage(Game._INTL("There's a Pokemon that may open the door to its heart!"));
 				//  Choose a purifiable Pokemon
 				//pbChoosePokemon(1, 2, proc {| poke |
-				pbChoosePokemon(1, 2, ableProc: poke => //Trainer.party.Select(poke => 
+				pbChoosePokemon(1, 2, ableProc: poke => //Trainer.party.Select(poke =>
 					!poke.isEgg && poke.HP > 0 && poke is IPokemonShadowPokemon p && p.isShadow && p.heartgauge == 0
 				);
 				if ((int)GameVariables[1] >= 0)
@@ -283,7 +283,7 @@ namespace PokemonUnity
 				{
 					return this.Experience.Current;
 				}
-				set 
+				set
 				{
 					if (this is IPokemonShadowPokemon s && s.isShadow)
 					{
@@ -308,19 +308,19 @@ namespace PokemonUnity
 				{
 					this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
 					//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
-					if (isFainted()) 
-					{ 
-						this.Status = Status.FAINT; 
-						StatusCount = 0; 
+					if (isFainted())
+					{
+						this.Status = Status.FAINT;
+						StatusCount = 0;
 						ChangeHappiness(HappinessMethods.FAINT);
-						@hypermode = false; 
+						@hypermode = false;
 					}
 				}
 			}
 
 			public const int HEARTGAUGESIZE = 3840;
-			int IPokemonShadowPokemon.exp { get; set; }
-			int IPokemonShadowPokemon.hp { get; set; }
+			int IPokemonShadowPokemon.exp { get { return Exp; } set { Exp = value; } }
+			int IPokemonShadowPokemon.hp { get { return this.hp; } set { HP = value; } }
 			#endregion
 
 			#region Shadow
@@ -338,9 +338,9 @@ namespace PokemonUnity
 			public bool IsAbleToPurify { get { return ShadowLevel.HasValue && ShadowLevel.Value == 0 && HeartGuageSize != 0; } }
 			public bool IsPurified { get { return (ShadowLevel.HasValue && ShadowLevel.Value == -1) || HeartGuageSize == 0; } }
 			/// <summary>
-			/// Shadow Pokémon don't have a set Nature or a set gender, but once encountered, the personality value, 
-			/// Nature and IVs are saved to the memory for the Shadow Monitor to be able to keep track of their exact status and location. 
-			/// This means that once a Shadow Pokémon is encountered for the first time, its Nature, IVs and gender will remain the same for the rest of the game, 
+			/// Shadow Pokémon don't have a set Nature or a set gender, but once encountered, the personality value,
+			/// Nature and IVs are saved to the memory for the Shadow Monitor to be able to keep track of their exact status and location.
+			/// This means that once a Shadow Pokémon is encountered for the first time, its Nature, IVs and gender will remain the same for the rest of the game,
 			/// even if the player fails to capture it or is forced to re-battle it later.
 			/// </summary>
 			public bool isShadow

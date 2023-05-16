@@ -297,12 +297,12 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		public interface ITempMetadataField
 		{
-			#region 
+			#region
 			Method? encounterType	{ get; set; }
 			int[] evolutionLevels				{ get; set; }
 			#endregion
 
-			#region 
+			#region
 			bool batterywarning { get; }
 			IAudioBGM cueBGM { get; set; }
 			float? cueFrames { get; set; }

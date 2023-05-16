@@ -46,10 +46,7 @@ namespace PokemonEssentials.Interface
 
 		void setTempSwitchOff(string c);
 
-		object variable
-		{
-			get;
-		}
+		object variable { get; }
 
 		void setVariable(int variable);
 

@@ -21,7 +21,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int? metaID { get; set; }
 		TrainerTypes trainertype { get; set; }
 		int? outfit { get; set; }
-		bool[] badges { get; }
+		bool[] badges { get; set; }
 		int Money { get; set; }
 		IDictionary<Pokemons, bool> seen { get; }
 		IDictionary<Pokemons,bool> owned { get; }
@@ -39,7 +39,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		bool pokegear { get; set; }
 		Languages? language { get; }
 		/// <summary>
-		/// Name of this trainer type (localized) 
+		/// Name of this trainer type (localized)
 		/// </summary>
 		string trainerTypeName { get; }
 

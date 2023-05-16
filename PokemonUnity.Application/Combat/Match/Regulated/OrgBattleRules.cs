@@ -6,10 +6,10 @@ using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonUnity.Utility;
+using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
-using PokemonEssentials.Interface;
 
 namespace PokemonUnity
 {
@@ -702,7 +702,7 @@ namespace PokemonUnity
 		private Pokemons[] specieslist;
 		public SpeciesRestriction(params Pokemons[] specieslist)
 		{
-			this.specieslist = specieslist;
+			this.specieslist = (Pokemons[])specieslist.Clone();
 		}
 
 		public bool isSpecies(Pokemons species, Pokemons[] specieslist)
@@ -730,7 +730,7 @@ namespace PokemonUnity
 		private Pokemons[] specieslist;
 		public BannedSpeciesRestriction(params Pokemons[] specieslist)
 		{
-			this.specieslist = specieslist;
+			this.specieslist = (Pokemons[])specieslist.Clone();
 		}
 
 		public bool isSpecies(Pokemons species, Pokemons[] specieslist)
@@ -758,7 +758,7 @@ namespace PokemonUnity
 		private Items[] specieslist;
 		public BannedItemRestriction(params Items[] specieslist)
 		{
-			this.specieslist = specieslist;
+			this.specieslist = (Items[])specieslist.Clone();
 		}
 
 		//public bool isSpecies (Pokemons species,Pokemons[] specieslist) {
@@ -789,7 +789,7 @@ namespace PokemonUnity
 		private Pokemons[] specieslist;
 		public RestrictedSpeciesRestriction(int maxValue, params Pokemons[] specieslist)
 		{
-			this.specieslist = specieslist;
+			this.specieslist = (Pokemons[])specieslist.Clone();
 			this.maxValue = maxValue;
 		}
 
@@ -1272,7 +1272,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <returns></returns>
 		public int suggestedLevel
-		{ get {  
+		{ get {
 			int minLevel = 1;
 			int maxLevel = Core.MAXIMUMLEVEL;
 			int num = this.suggestedNumber;
@@ -1325,7 +1325,7 @@ namespace PokemonUnity
 
 		/// <summary>
 		///  This rule checks
-		///  - the entire team to determine whether a subset of the team meets the rule, or 
+		///  - the entire team to determine whether a subset of the team meets the rule, or
 		///  - a list of Pokemon whose length is equal to the suggested number. For an
 		///    entire team, the condition must hold for at least one possible subset of
 		///    the team, but not necessarily for the entire team.

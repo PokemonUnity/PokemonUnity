@@ -29,7 +29,7 @@ namespace PokemonEssentials.Interface.Field
 	//    int[] EnctypeCompileDens  { get; }
 	//}
 
-	public interface IEncounter 
+	public interface IEncounter
 	{
 		Pokemons Pokemon    { get; }
 		int Level           { get; }
@@ -88,7 +88,7 @@ namespace PokemonEssentials.Interface.Field
 		/// Triggers whenever a wild Pokémon is created
 		/// </summary>
 		//event EventHandler<IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
-		event Action<object, EventArg.IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
+		//event Action<object, EventArg.IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		//Events.onWildPokemonCreate+=proc {|sender,e|
 		//private void onWildPokemonCreate(object sender, EventArg.OnWildPokemonCreateEventArgs e) {
 		//   // Make all wild Pokémon shiny while a certain Switch is ON (see Settings).
@@ -124,9 +124,9 @@ namespace PokemonEssentials.Interface.Field
 		/// themselves nor their items this way, as those are generated from scratch
 		/// before each battle.
 		/// </summary>
-		/// This is the basis of a trainer modifier.  
+		/// This is the basis of a trainer modifier.
 		//event EventHandler<IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
-		event Action<object, EventArg.IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
+		//event Action<object, EventArg.IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		//Events.onTrainerPartyLoad+=proc {|sender,e|
 		//private void onTrainerPartyLoad(object sender, EventArgs e) {
 		//   if (e[0]) { // Game.GameData.Trainer data should exist to be loaded, but may not exist somehow

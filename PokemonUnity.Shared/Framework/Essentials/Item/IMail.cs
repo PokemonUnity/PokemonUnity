@@ -12,8 +12,8 @@ namespace PokemonEssentials.Interface.Item
 	/// Data structure representing mail that the Pokémon can hold
 	/// </summary>
 	public interface IMail {
-		Items item				{ get; }
-		string message			{ get; }
+		Items item				{ get; set; }
+		string message			{ get; set; }
 		string sender			{ get; }
 		int poke1				{ get; }
 		int poke2				{ get; }
