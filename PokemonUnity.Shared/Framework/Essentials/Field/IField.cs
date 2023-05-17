@@ -87,6 +87,12 @@ namespace PokemonEssentials.Interface
 
 			IPokemon pbGenerateWildPokemon(Pokemons species, int level, bool isroamer = false);
 
+			bool pbControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
+						PokemonUnity.Monster.Natures? nature = null, bool? gender = null, Items? item = null, bool? shiny = null,
+						int outcomeVar = 1, bool canRun = true, bool canLose = false);
+
+			PokemonUnity.Combat.BattleResults pbWildBattleCore(IPokemon pkmn, int? variable = null, bool canescape = true, bool canlose = false);
+
 			PokemonUnity.Combat.BattleResults pbWildBattle(Pokemons species, int level, int? variable = null, bool canescape = true, bool canlose = false);
 
 			PokemonUnity.Combat.BattleResults pbDoubleWildBattle(Pokemons species1, int level1, Pokemons species2, int level2, int? variable = null, bool canescape = true, bool canlose = false);
@@ -291,12 +297,12 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		public interface ITempMetadataField
 		{
-			#region 
+			#region
 			Method? encounterType	{ get; set; }
 			int[] evolutionLevels				{ get; set; }
 			#endregion
 
-			#region 
+			#region
 			bool batterywarning { get; }
 			IAudioBGM cueBGM { get; set; }
 			float? cueFrames { get; set; }
@@ -304,11 +310,11 @@ namespace PokemonEssentials.Interface
 		}
 
 		#region Scene_Map and Spriteset_Map
-		//public interface ISceneMap
-		//{
-		//	void createSingleSpriteset(map);
-		//}
-		//
+		public interface ISceneMapField
+		{
+			void createSingleSpriteset(int map);
+		}
+
 		//public interface ISpritesetMap
 		//{
 		//	void getAnimations();

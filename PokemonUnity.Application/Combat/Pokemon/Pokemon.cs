@@ -22,7 +22,7 @@ namespace PokemonUnity.Combat
 	/// This class is called once during battle and persist until end.
 	/// Values and variables are overwritten using <see cref="IBattler.pbInitPokemon(PokemonEssentials.Interface.PokeBattle.IPokemon, int)"/>
 	/// </remarks>
-	public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IBattler
+	public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IBattler, IEquatable<Pokemon>, IEqualityComparer<Pokemon>, IEquatable<IBattler>, IEqualityComparer<IBattler>, ICloneable
 	{
 #pragma warning disable 0162 //Warning CS0162  Unreachable code detected
 		#region Variables
@@ -3352,7 +3352,7 @@ namespace PokemonUnity.Combat
 						@battle.choices[i]= new Choice();		// Replacement Pokémon does nothing this round
 					}
 				}
-			foreach(IBattler i in @battle.pbPriority()) { 
+			foreach(IBattler i in @battle.pbPriority()) {
 				if (!switched.Contains(i.Index)) continue;
 				i.pbAbilitiesOnSwitchIn(true);
 			}
@@ -3510,7 +3510,66 @@ namespace PokemonUnity.Combat
 		}
 		#endregion
 
-		#region
+		#region Explicit Operators
+		public static bool operator ==(Pokemon x, Pokemon y)
+		{
+			if ((object)x == null && (object)y == null) return true;
+			if ((object)x == null || (object)y == null) return false;
+			return ((x.pokemon.PersonalId == y.pokemon.PersonalId) && ((x.pokemon as PokemonUnity.Monster.Pokemon).TrainerId == (y.pokemon as PokemonUnity.Monster.Pokemon).TrainerId) && ((x.pokemon as PokemonUnity.Monster.Pokemon).OT == (y.pokemon as PokemonUnity.Monster.Pokemon).OT)) & (x.pokemon.Name == y.pokemon.Name); //ToDo: If Gender is different, are pokemons the same? Check Date/Age of Pokemon?
+		}
+		public static bool operator !=(Pokemon x, Pokemon y)
+		{
+			if ((object)x == null && (object)y == null) return false;
+			if ((object)x == null || (object)y == null) return true;
+			return ((x.pokemon.PersonalId != y.pokemon.PersonalId) || ((x.pokemon as PokemonUnity.Monster.Pokemon).TrainerId != (y.pokemon as PokemonUnity.Monster.Pokemon).TrainerId) || ((x.pokemon as PokemonUnity.Monster.Pokemon).OT != (y.pokemon as PokemonUnity.Monster.Pokemon).OT)) | (x.pokemon.Name == y.pokemon.Name);
+		}
+		public bool Equals(Pokemon obj)
+		{
+			if (obj == null) return false;
+			return this == obj;
+		}
+		public override bool Equals(object obj)
+		{
+			if (obj == null) return false;
+			if (obj.GetType() == typeof(IBattler) || obj.GetType() == typeof(Pokemon))
+				return Equals(obj as Pokemon);
+			if (obj.GetType() == typeof(IPokemon) || obj.GetType() == typeof(Monster.Pokemon))
+				return pokemon.Equals(obj as Monster.Pokemon);
+			return base.Equals(obj);
+		}
+		public override int GetHashCode()
+		{
+			return pokemon.PersonalId.GetHashCode();
+		}
+		bool IEquatable<IBattler>.Equals(IBattler other)
+		{
+			return Equals(obj: (object)other);
+		}
+		bool IEquatable<Pokemon>.Equals(Pokemon other)
+		{
+			return Equals(obj: (object)other);
+		}
+		bool IEqualityComparer<IBattler>.Equals(IBattler x, IBattler y)
+		{
+			return x == y;
+		}
+		bool IEqualityComparer<Pokemon>.Equals(Pokemon x, Pokemon y)
+		{
+			return x == y;
+		}
+		int IEqualityComparer<IBattler>.GetHashCode(IBattler obj)
+		{
+			return obj.GetHashCode();
+		}
+		int IEqualityComparer<Pokemon>.GetHashCode(Pokemon obj)
+		{
+			return obj.GetHashCode();
+		}
+		object ICloneable.Clone()
+		{
+			return MemberwiseClone();
+		}
+
 		public static IBattler[] GetBattlers(PokemonEssentials.Interface.PokeBattle.IPokemon[] input, Battle btl)
 		{
 			IBattler[] battlers = new IBattler[input.Length];

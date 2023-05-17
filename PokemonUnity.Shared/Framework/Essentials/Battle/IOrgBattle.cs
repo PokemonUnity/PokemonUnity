@@ -30,7 +30,7 @@ namespace PokemonEssentials.Interface.Battle
 	{
 		bool pbHasEligible(params object[] args);
 
-		ITrainer[] pbGetBTTrainers(int challengeID);
+		PokemonUnity.Character.TrainerMetaData[] pbGetBTTrainers(int challengeID);
 		IPokemon pbGetBTPokemon(int challengeID);
 
 
@@ -46,9 +46,10 @@ namespace PokemonEssentials.Interface.Battle
 
 
 
-		IBattleChallenge pbBattleChallenge();
+		IBattleChallenge pbBattleChallenge { get; }
 
-		int pbBattleChallengeTrainer(int numwins, ITrainer[] bttrainers);
+		//ITrainer pbBattleChallengeTrainer(int numwins, ITrainer[] bttrainers);
+		int pbBattleChallengeTrainer(int numwins, PokemonUnity.Character.TrainerMetaData[] bttrainers);
 
 		void pbBattleChallengeGraphic(IEntity @event);
 
@@ -124,42 +125,43 @@ namespace PokemonEssentials.Interface.Battle
 		int map_id { get; set; }
 	}
 
-	//public interface IGamePlayer
-	//{
-	//    int direction { get; set; }
-	//
-	//    void moveto2(float x, float y);
-	//}
-
-	public interface IBattleChallengeType
+	public interface IGamePlayerOrgBattle //: IGamePlayer
 	{
-		int currentWins { get; set; }
-		int previousWins { get; set; }
-		int maxWins { get; set; }
-		int currentSwaps { get; set; }
-		int previousSwaps { get; set; }
-		int maxSwaps { get; set; }
-		int doublebattle { get; set; }
-		int numPokemon { get; set; }
-		int battletype { get; set; }
-		int mode { get; set; }
+	    int direction { get; }
+
+	    void moveto2(float x, float y);
+	}
+
+	public interface IBattleChallengeType : ICloneable
+	{
+		int currentWins		{ get; }
+		int previousWins	{ get; }
+		int maxWins			{ get; }
+		int currentSwaps	{ get; }
+		int previousSwaps	{ get; }
+		int maxSwaps		{ get; }
+		bool doublebattle	{ get; }
+		int numPokemon		{ get; }
+		int battletype		{ get; }
+		int mode			{ get; }
+		int numRounds			{ get; set; }
 
 		IBattleChallengeType initialize();
 
-		void saveWins(IBattleChallenge challenge);
+		void saveWins(IBattleChallengeData challenge);
 	}
 
 	public interface IBattleChallengeData
 	{
-		int resting { get; set; }
-		int wins { get; set; }
-		int swaps { get; set; }
-		int inProgress { get; set; }
-		int battleNumber { get; set; }
-		int numRounds { get; set; }
-		int decision { get; set; }
-		IPokemon[] party { get; set; }
-		IBattleFactoryData extraData { get; set; }
+		bool resting					{ get; }
+		int wins						{ get; }
+		int swaps						{ get; }
+		bool inProgress					{ get; }
+		int battleNumber				{ get; }
+		int numRounds					{ get; }
+		BattleResults decision			{ get; set; }
+		IPokemon[] party				{ get; }
+		IBattleFactoryData extraData	{ get; }
 
 		IBattleChallengeData initialize();
 
@@ -171,7 +173,8 @@ namespace PokemonEssentials.Interface.Battle
 
 		bool pbMatchOver();
 
-		ITrainer nextTrainer();
+		//ITrainer nextTrainer();
+		int nextTrainer { get; }
 
 		void pbGoToStart();
 
@@ -191,15 +194,22 @@ namespace PokemonEssentials.Interface.Battle
 	public interface IBattleChallenge
 	{
 		int currentChallenge { get; }
-		int BattleTower   { get; } //= 0;
-		int BattlePalace  { get; } //= 1;
-		int BattleArena   { get; } //= 2;
-		int BattleFactory { get; } //= 3;
+		//int BattleTower   { get; } //= 0;
+		//int BattlePalace  { get; } //= 1;
+		//int BattleArena   { get; } //= 2;
+		//int BattleFactory { get; } //= 3;
 
 		IBattleChallenge initialize();
 
 		IPokemonChallengeRules rules { get; }
 
+		/// <summary>
+		/// </summary>
+		/// <param name="doublebattle"></param>
+		/// <param name="numPokemon"></param>
+		/// <param name="battletype">0=>BattleTower; 1=>BattlePalace; 2=>BattleArena; 3=>BattleFactory</param>
+		/// <param name="mode">1=>Open Level; 2=>Battle Tent</param>
+		/// <returns></returns>
 		IPokemonChallengeRules modeToRules(bool doublebattle, int numPokemon, int battletype, int mode);
 
 		void set(int id, int numrounds, IPokemonChallengeRules rules);
@@ -245,7 +255,7 @@ namespace PokemonEssentials.Interface.Battle
 		int wins                { get; }
 		int swaps               { get; }
 		int battleNumber        { get; }
-		ITrainer nextTrainer    { get; }
+		int nextTrainer    { get; }
 		void pbGoOn         ();
 		void pbAddWin       ();
 		void pbCancel       ();
@@ -270,7 +280,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		void pbChooseRentals();
 
-			//ToDo: returns pbOrganizedBattleEx
+		//ToDo: returns pbOrganizedBattleEx
 		BattleResults pbBattle(IBattleChallenge challenge);
 
 		void pbPrepareSwaps();

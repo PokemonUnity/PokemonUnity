@@ -21,7 +21,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// <summary>
 	/// The PC item storage object, which actually contains all the items
 	/// </summary>
-	public interface IPCItemStorage {
+	public interface IPCItemStorage : IList<Items>, ICollection<Items> {
 		//int MAXSIZE       { get; } //= 50;    // Number of different slots in storage
 		//int MAXPERSLOT    { get; } //= 999;   // Max. number of items per slot
 
@@ -31,7 +31,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		int length();
 
-		Items this[int i] { get; }
+		//Items this[int i] { get; }
 
 		Items getItem(int index);
 
@@ -45,11 +45,11 @@ namespace PokemonEssentials.Interface.Screen
 
 		bool pbStoreItem(Items item,int qty=1);
 	}
-	
+
 	// ===============================================================================
 	// PC item storage screen
 	// ===============================================================================
-	public interface IWindow_PokemonItemStorage //: IWindow_DrawableCommand 
+	public interface IWindow_PokemonItemStorage //: IWindow_DrawableCommand
 	{
 		IBag bag				{ get; set; }
 		int pocket				{ get; set; }
@@ -87,7 +87,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		//void pbRefresh();
 
-		//ToDo: Might need to split into two functions, 
+		//ToDo: Might need to split into two functions,
 		//one for returning item selected
 		//the other to handle selection mechanic
 		//IEnumerator<Items> pbChooseItem();

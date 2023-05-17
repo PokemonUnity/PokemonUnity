@@ -39,7 +39,7 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.Screen.IPokemonSystemOption PokemonSystem { get; }
 		PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp			{ get; set; }
 		PokemonEssentials.Interface.Field.IEncounters PokemonEncounters		{ get; }
-		PokemonEssentials.Interface.Screen.IPokemonStorage PokemonStorage	{ get; }
+		PokemonEssentials.Interface.Screen.IPCPokemonStorage PokemonStorage	{ get; }
 		PokemonEssentials.Interface.Screen.IBag Bag							{ get; }
 		PokemonEssentials.Interface.ISceneMap Scene							{ get; set; }
 		PokemonEssentials.Interface.IGameTemp GameTemp						{ get; }

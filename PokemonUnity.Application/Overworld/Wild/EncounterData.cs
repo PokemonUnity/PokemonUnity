@@ -7,8 +7,8 @@ using PokemonUnity.Monster;
 namespace PokemonUnity.Overworld
 {
 	/// <summary>
-	/// Data records of pokemon profiles used for pooling together 
-	/// a random chance enounter for a battle against wild pokemons
+	/// Data records of pokemon profiles used for pooling together
+	/// a random chance encounter for a battle against wild pokemons
 	/// </summary>
 	public struct EncounterData : IEncounterData
 	{
@@ -67,7 +67,7 @@ namespace PokemonUnity.Overworld
 		/// </summary>
 		/// <param name="method"></param>
 		/// <returns></returns>
-		/// ToDo: Consider increasing chance on rarity as encounter increases 
+		/// ToDo: Consider increasing chance on rarity as encounter increases
 		//static PokemonEssentials.Interface.PokeBattle.IPokemon GetWildPokemon(Method method);
 
 		//static Pokemon WildPokemonRNG(Method method); //conditions

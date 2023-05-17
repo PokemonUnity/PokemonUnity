@@ -19,7 +19,7 @@ namespace PokemonUnity
 		public int? metaID { get; set; }
 		public TrainerTypes trainertype { get; set; }
 		public int? outfit { get; set; }
-		public bool[] badges { get; private set; }
+		public bool[] badges { get; set; }
 		public int money { get; private set; }
 		//public bool[] seen { get; private set; }
 		//ToDo: list<forms>?
@@ -36,16 +36,16 @@ namespace PokemonUnity
 		/// <summary>
 		/// Whether the Pokédex was obtained
 		/// </summary>
-		public bool pokedex { get;  set; }   
+		public bool pokedex { get;  set; }
 		/// <summary>
 		/// Whether the Pokégear was obtained
 		/// </summary>
-		public bool pokegear { get; set; }  
+		public bool pokegear { get; set; }
 		public Languages? language { get; private set; }
 		/// <summary>
 		/// Name of this trainer type (localized)
 		/// </summary>
-		public string trainerTypeName { get { 
+		public string trainerTypeName { get {
 			return @trainertype.ToString() ?? "PkMn Trainer"; }
 		}
 		/// <summary>
@@ -130,7 +130,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public int publicID(int? id=null) {   
+		public int publicID(int? id=null) {
 			return id.HasValue ? (int)id.Value&0xFFFF : this.id&0xFFFF;
 		}
 
@@ -139,7 +139,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public int secretID(int? id=null) {   
+		public int secretID(int? id=null) {
 			return id.HasValue ? (int)id.Value>>16 : this.id>>16;
 		}
 
@@ -147,7 +147,7 @@ namespace PokemonUnity
 		/// Random ID other than this Trainer's ID
 		/// </summary>
 		/// <returns></returns>
-		public int getForeignID() {   
+		public int getForeignID() {
 			int fid=0;
 			do { //loop;
 				fid=Core.Rand.Next(256);
@@ -187,7 +187,7 @@ namespace PokemonUnity
 		/// Money won when trainer is defeated
 		/// </summary>
 		/// <returns></returns>
-		public int moneyEarned { get {   
+		public int moneyEarned { get {
 			int ret=0;
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
 			//   trainertypes=Marshal.load(f);
@@ -231,7 +231,7 @@ namespace PokemonUnity
 		/// Number of badges
 		/// </summary>
 		/// <returns></returns>
-		public int numbadges { get {   
+		public int numbadges { get {
 			int ret=0;
 			for (int i = 0; i < @badges.Length; i++) {
 				if (@badges[i]) ret+=1;
@@ -240,7 +240,7 @@ namespace PokemonUnity
 		} }
 
 		int ITrainer.gender { get { return gender == true ? 1 : (gender == false ? 0 : 2); } }
-		public bool? gender { get { 
+		public bool? gender { get {
 			bool? ret=null;   // 2 = gender unknown
 			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
 			//   trainertypes=Marshal.load(f);
@@ -255,9 +255,9 @@ namespace PokemonUnity
 			return ret;
 		} }
 
-		public bool isMale { get { 
+		public bool isMale { get {
 			return this.gender==true; } }
-		public bool isFemale { get { 
+		public bool isFemale { get {
 			return this.gender==false; } }
 
 		public IEnumerable<PokemonEssentials.Interface.PokeBattle.IPokemon> pokemonParty { get {
@@ -327,7 +327,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="region"></param>
 		/// <returns></returns>
-		public int pokedexSeen(Regions? region=null) {   
+		public int pokedexSeen(Regions? region=null) {
 			int ret=0;
 			if (region==null) {
 				//for (int i = 0; i < Kernal.PokemonData.Count; i++) {
@@ -350,7 +350,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="region"></param>
 		/// <returns></returns>
-		public int pokedexOwned(Regions? region=null) {   
+		public int pokedexOwned(Regions? region=null) {
 			int ret=0;
 			if (region==null) {
 				//for (int i = 0; i < Kernal.PokemonData.Count; i++) {

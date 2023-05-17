@@ -46,8 +46,8 @@
     <Compile Include="Attack\Move.cs" />
     <Compile Include="Character\Bag.cs" />
     <Compile Include="Character\DayCare.cs" />
-    <Compile Include="Character\Party.cs" />
     <Compile Include="Character\PC.cs" />
+    <Compile Include="Character\ItemStorage.cs" />
     <Compile Include="Character\PokemonStorage.cs" />
     <Compile Include="Combat\AI.cs" />
     <Compile Include="Combat\Attack\Attack.cs" />
@@ -60,6 +60,8 @@
     <Compile Include="Combat\Match\BattleArena.cs" />
     <Compile Include="Combat\Match\BattlePalace.cs" />
     <Compile Include="Combat\Match\Recorder.cs" />
+    <Compile Include="Combat\Match\Regulated\OrgBattleGenerator.cs" />
+    <Compile Include="Combat\Match\Regulated\OrgBattle.cs" />
     <Compile Include="Combat\Match\Regulated\OrgBattleRules.cs" />
     <Compile Include="Combat\Match\SafariZone.cs" />
     <Compile Include="Combat\Move.cs" />
@@ -115,6 +117,8 @@
       <Name>PokemonUnity.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include=".editorconfig" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

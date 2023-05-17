@@ -24,11 +24,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 	{
 		IList<int> randomnumbers { get; }
 		//IList<int[][]> rounds { get; }
-		IList<KeyValuePair<MenuCommands,int>[]> rounds { get; }
+		IList<KeyValuePair<MenuCommands,int>?[]> rounds { get; }
 		//int battletype { get; }
-		//object properties { get; }
+		IBattleMetaData properties { get; }
 		//int roundindex { get; }
-		//IList<int> switches { get; }
+		IList<int> switches { get; }
 
 		#region Methods
 		IBattle initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
@@ -68,7 +68,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		//int switchindex { get; }
 
 		//IBattle should be a recorded battle data...
-		TBattle initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IBattle battle); 
+		IBattlePlayerModule<TBattle> initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IBattle battle);
 		BattleResults pbStartBattle(bool canlose = false);
 		int pbSwitchInBetween(int i1, int i2, bool i3);
 		int pbRandom(int num);
@@ -98,37 +98,37 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// Represents a json object that can be saved/loaded to re-play a recorded pokemon battle
 	/// </summary>
 	//ToDo: maybe add <out IBattle> to interface?
-	public interface IBattleRecordData 
+	public interface IBattleRecordData
 	{
-		int pbGetBattleType(); //{ get; }
+		int battletype { get; }
 		//ToDo: this should be replaced with json object class
-		//IDictionary<string, IBattleMetaData> properties { get; }
+		//IDictionary properties { get; }
 		IBattleMetaData properties { get; }
 		//IList<int[][]> rounds { get; }
-		IList<KeyValuePair<MenuCommands, int>[]> rounds { get; }
+		IList<KeyValuePair<MenuCommands, int>?[]> rounds { get; }
 		IList<int> randomnumbers { get; }
 		IList<int> switches { get; }
 	}
 	/// <summary>
 	/// </summary>
-	public interface IBattleMetaData 
+	public interface IBattleMetaData
 	{
 		bool internalbattle { get; set; }
-		//SeriTrainer player { get; set; }
-		//SeriTrainer opponent { get; set; }
+		TrainerData[] player { get; set; }
+		TrainerData[] opponent { get; set; }
 		SeriPokemon[] party1 { get; set; }
 		SeriPokemon[] party2 { get; set; }
 		string endspeech { get; set; }
 		string endspeech2 { get; set; }
 		string endspeechwin { get; set; }
 		string endspeechwin2 { get; set; }
-		string doublebattle { get; set; }
+		bool doublebattle { get; set; }
 		int weather { get; set; }
 		int weatherduration { get; set; }
 		bool cantescape { get; set; }
 		bool shiftStyle { get; set; }
-		int battlescene { get; set; }
-		Items[] items { get; set; }
+		bool battlescene { get; set; }
+		Items[][] items { get; set; }
 		int environment { get; set; }
 		IDictionary<string,bool> rules { get; set; }
 	}

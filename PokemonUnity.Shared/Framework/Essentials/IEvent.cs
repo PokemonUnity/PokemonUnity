@@ -143,11 +143,13 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Triggers whenever a wild Pokémon is created
 		/// </summary>
+		/// <remarks><seealso cref="IEncounters"/></remarks>
 		//event EventHandler<IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		event Action<object, IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		/// <summary>
 		/// Triggers whenever an NPC trainer's Pokémon party is loaded
 		/// </summary>
+		/// <remarks><seealso cref="IEncounters"/></remarks>
 		//event EventHandler<IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		event Action<object, IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		/// <summary>
@@ -183,7 +185,7 @@ namespace PokemonEssentials.Interface
 		/// e[3] - Y-coordinate of the tile
 		/// </summary>
 		//void OnLeaveTileTrigger(object @event, int mapId, IVector tile);
-		void OnLeaveTileTrigger(object @event, int mapId, float x, float y, float z);
+		void OnLeaveTileTrigger(IGameEvent @event, int mapId, float x, float y, float z);
 		/// <summary>
 		/// Parameters:
 		/// e[0] - Event that just entered a tile.
@@ -197,30 +199,32 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		void OnStepTakenTransferPossibleTrigger();
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon species
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 		/// </summary>
 		//void OnWildBattleOverrideTrigger(Pokemons species,int level,BattleResults handled); //object @event,
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon species
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 		/// </summary>
 		void OnWildBattleEndTrigger();
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon being created
 		/// </summary>
+		/// <remarks><seealso cref="OnWildPokemonCreate"/></remarks>
 		void OnWildPokemonCreateTrigger();
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Trainer
 		/// e[1] - Items possessed by the trainer
 		/// e[2] - Party
 		/// </summary>
+		/// <remarks><seealso cref="OnTrainerPartyLoad"/></remarks>
 		void OnTrainerPartyLoadTrigger();
 		/// <summary>
 		/// Parameters:
@@ -249,7 +253,7 @@ namespace PokemonEssentials.Interface
 		{
 			int Id { get; }
 		}
-		
+
 		#region Global Overworld EventArgs
 		public interface IOnMapCreateEventArgs : IEventArgs
 		{
@@ -258,7 +262,7 @@ namespace PokemonEssentials.Interface
 			//int Id { get { return EventId; } }
 			//int Id { get { return Pokemon.GetHashCode(); } } //EventId;
 			int Map { get; set; }
-			int Tileset { get; set; }
+			ITileset Tileset { get; set; }
 		}
 		public interface IOnMapChangeEventArgs : IEventArgs
 		{
@@ -342,7 +346,7 @@ namespace PokemonEssentials.Interface
 			bool Index { get; set; }
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon species
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
@@ -360,7 +364,7 @@ namespace PokemonEssentials.Interface
 			BattleResults Result { get; set; }
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon species
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
@@ -378,7 +382,7 @@ namespace PokemonEssentials.Interface
 			BattleResults Result { get; set; }
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon being created
 		/// </summary>
 		public interface IOnWildPokemonCreateEventArgs : IEventArgs
@@ -408,7 +412,7 @@ namespace PokemonEssentials.Interface
 			BattleResults Decision { get; set; }
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Trainer
 		/// e[1] - Items possessed by the trainer
 		/// e[2] - Party
@@ -422,8 +426,8 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// Items possessed by the trainer
 			/// </summary>
-			Items[] Items { get; set; }
-			IPokemon[] Party { get; set; }
+			IList<Items> Items { get; set; }
+			IList<IPokemon> Party { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -460,7 +464,7 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// Spriteset being created
 			/// </summary>
-			int SpritesetId { get; set; }
+			ISpritesetMap SpritesetId { get; set; }
 			/// <summary>
 			/// Viewport used for tilemap and characters
 			/// </summary>

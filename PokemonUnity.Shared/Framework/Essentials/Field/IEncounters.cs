@@ -29,7 +29,7 @@ namespace PokemonEssentials.Interface.Field
 	//    int[] EnctypeCompileDens  { get; }
 	//}
 
-	public interface IEncounter 
+	public interface IEncounter
 	{
 		Pokemons Pokemon    { get; }
 		int Level           { get; }
@@ -124,7 +124,7 @@ namespace PokemonEssentials.Interface.Field
 		/// themselves nor their items this way, as those are generated from scratch
 		/// before each battle.
 		/// </summary>
-		/// This is the basis of a trainer modifier.  
+		/// This is the basis of a trainer modifier.
 		//event EventHandler<IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		event Action<object, EventArg.IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		//Events.onTrainerPartyLoad+=proc {|sender,e|
