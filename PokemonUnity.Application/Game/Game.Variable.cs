@@ -26,7 +26,7 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.Screen.IPokemonSystemOption PokemonSystem { get; private set; }
 		public PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp { get; set; }
 		public PokemonEssentials.Interface.Field.IEncounters PokemonEncounters { get; private set; }
-		public PokemonEssentials.Interface.Screen.IPokemonStorage PokemonStorage { get; private set; }
+		public PokemonEssentials.Interface.Screen.IPCPokemonStorage PokemonStorage { get; private set; }
 		public PokemonEssentials.Interface.Screen.IBag Bag { get; private set; }
 		public PokemonEssentials.Interface.ISceneMap Scene { get; set; }
 		public PokemonEssentials.Interface.IGameTemp GameTemp { get; private set; }

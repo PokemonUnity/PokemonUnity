@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using PokemonUnity;
 using PokemonUnity.Utility;
@@ -31,7 +32,7 @@ namespace PokemonUnity
 			}
 
 			public IPokemonBox initialize (string name,int maxPokemon=30) {
-				@pokemon=new List<PokemonEssentials.Interface.PokeBattle.IPokemon>();
+				@pokemon=new List<PokemonEssentials.Interface.PokeBattle.IPokemon>(capacity: maxPokemon);
 				this.name=name;
 				@background=null;
 				for (int i = 0; i < maxPokemon; i++) {
@@ -46,7 +47,7 @@ namespace PokemonUnity
 			} }
 
 			public int nitems { get { //item count
-				return @pokemon.Count;
+				return @pokemon.Count<IPokemon>(p=>p.IsNotNullOrNone());
 			} }
 
 			public int length { get { //capacity
@@ -71,9 +72,11 @@ namespace PokemonUnity
 				int i = 0;
 				foreach(PokemonEssentials.Interface.PokeBattle.IPokemon p in party)
 				{
-					if(p.IsNotNullOrNone())
-						box[i] = p;
-					i++;
+					if (p.IsNotNullOrNone() && i != box.length)
+					{
+						box[i] = p;	//Add
+						i++;		//Move to next slot
+					}
 				}
 				return (PokemonBox)box;
 			}
@@ -83,7 +86,7 @@ namespace PokemonUnity
 			//}
 		}
 
-		public partial class PokemonStorage : PokemonEssentials.Interface.Screen.IPokemonStorage {
+		public partial class PokemonStorage : PokemonEssentials.Interface.Screen.IPCPokemonStorage {
 			public IPokemonBox[] boxes				{ get; protected set; }
 			//public IPokemon party					{ get; }
 			public int currentBox					{ get; set; }
@@ -96,9 +99,10 @@ namespace PokemonUnity
 			public virtual PokemonEssentials.Interface.PokeBattle.IPokemon[] party{ get {
 					return Game.GameData.Trainer.party;
 				}
-				set {
+				protected set {
 					//throw new Exception("Not supported");
-					GameDebug.LogError("Not supported");
+					//GameDebug.LogError("Not supported");
+					Game.GameData.Trainer.party = value;
 			} }
 
 			/// <summary>
@@ -107,7 +111,7 @@ namespace PokemonUnity
 			public static string[] MARKINGCHARS=new string[] { "●", "▲", "■", "♥", "★", "♦︎" };
 
 			public PokemonStorage(int maxBoxes = Core.STORAGEBOXES, int maxPokemon = 30) { initialize(maxBoxes, maxPokemon); }
-			public PokemonEssentials.Interface.Screen.IPokemonStorage initialize (int maxBoxes=Core.STORAGEBOXES,int maxPokemon=30) {
+			public PokemonEssentials.Interface.Screen.IPCPokemonStorage initialize (int maxBoxes=Core.STORAGEBOXES,int maxPokemon=30) {
 				@boxes=new PokemonBox[maxBoxes];
 				for (int i = 0; i < maxBoxes; i++) {
 					int ip1=i+1;
@@ -134,7 +138,8 @@ namespace PokemonUnity
 					//	return (x==-1) ? (IList<IPokemon)this.party : (IList<IPokemon)@boxes[x];
 					//} else {
 					//	foreach (var i in @boxes) {
-					//		if (i is PokemonEssentials.Interface.PokeBattle.IPokemon) raise "Box is a Pokémon, not a box";
+					//		if (i is PokemonEssentials.Interface.PokeBattle.IPokemon) //throw new Exception ("Box is a Pokémon, not a box");
+					//			GameDebug.LogError("Box is a Pokémon, not a box");
 					//	}
 						return (x == -1) ? this.party[y] : @boxes[x][y];
 					//}
@@ -189,7 +194,7 @@ namespace PokemonUnity
 					this.party.PackParty();
 				} else {
 					if (!this[boxSrc,indexSrc].IsNotNullOrNone()) {
-						//throw new Exception("Trying to copy null to storage"); 
+						//throw new Exception("Trying to copy null to storage");
 						GameDebug.LogWarning("Trying to copy null to storage"); // not localized
 					}
 					this[boxSrc,indexSrc].Heal();
@@ -219,7 +224,7 @@ namespace PokemonUnity
 					if (this[box,i]==null) {
 						if (box>=0) {
 							pkmn.Heal();
-							if (pkmn is IPokemonMultipleForms p && //pkmn.respond_to("formTime") && 
+							if (pkmn is IPokemonMultipleForms p && //pkmn.respond_to("formTime") &&
 								p.formTime != null) p.formTime=null;
 						}
 						this[box,i]=pkmn;
@@ -259,20 +264,20 @@ namespace PokemonUnity
 		}
 
 		public partial class PokemonStorageWithParty : PokemonStorage, PokemonEssentials.Interface.Screen.IPokemonStorageWithParty {
-			public override PokemonEssentials.Interface.PokeBattle.IPokemon[] party { get {
-					return base.party;
-				}
-				set {
-					base.party=party;
-			} }
+			//public override PokemonEssentials.Interface.PokeBattle.IPokemon[] party { get {
+			//		return base.party;
+			//	}
+			//	protected set {
+			//		base.party=party;
+			//} }
 
-			public PokemonStorageWithParty(int maxBoxes = 24, int maxPokemon = 30, PokemonEssentials.Interface.PokeBattle.IPokemon[] party = null) //: base (maxBoxes,maxPokemon)
+			public PokemonStorageWithParty(int maxBoxes = 24, int maxPokemon = 30, PokemonEssentials.Interface.PokeBattle.IPokemon[] party = null) : base (maxBoxes,maxPokemon)
 			{ initialize(maxBoxes, maxPokemon, party); }
-			public IPokemonStorageWithParty initialize(int maxBoxes=24,int maxPokemon=30,PokemonEssentials.Interface.PokeBattle.IPokemon[] party=null) 
+			public IPokemonStorageWithParty initialize(int maxBoxes=24,int maxPokemon=30,PokemonEssentials.Interface.PokeBattle.IPokemon[] party=null)
 			{
-				base.initialize(maxBoxes,maxPokemon);
+				//base.initialize(maxBoxes,maxPokemon);
 				if (party != null) {
-					//ToDo: Feature not setup... 
+					//ToDo: Feature not setup...
 					this.party=party;
 				} else {
 					@party=new Pokemon[(Game.GameData as Game).Features.LimitPokemonPartySize];
@@ -285,18 +290,18 @@ namespace PokemonUnity
 		// Regional Storage scripts
 		// ###############################################################################
 		public partial class RegionalStorage : IRegionalStorage {
-			protected IList<IPokemonStorage> storages { get; set; }
+			protected IList<IPCPokemonStorage> storages { get; set; }
 			protected int lastmap { get; set; }
 			protected int rgnmap { get; set; }
 
 			public IRegionalStorage initialize() {
-				@storages=new List<IPokemonStorage>();
+				@storages=new List<IPCPokemonStorage>();
 				@lastmap=-1;
 				@rgnmap=-1;
 				return this;
 			}
 
-			public IPokemonStorage getCurrentStorage { get {
+			public IPCPokemonStorage getCurrentStorage { get {
 				if (Game.GameData.GameMap == null) {
 					//throw Exception(Game._INTL("The player is not on a map, so the region could not be determined."));
 					GameDebug.LogError(Game._INTL("The player is not on a map, so the region could not be determined."));
@@ -325,7 +330,7 @@ namespace PokemonUnity
 
 			public int currentBox { get {
 					return getCurrentStorage.currentBox;
-				} 
+				}
 				set {
 					getCurrentStorage.currentBox=value;
 			} }
@@ -447,7 +452,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public static class PokemonPCList //: IPokemonPCList 
+		public static class PokemonPCList //: IPokemonPCList
 		{
 			//PokemonPCList.registerPC(new StorageSystemPC());
 			//PokemonPCList.registerPC(new TrainerPC());
@@ -487,7 +492,7 @@ namespace PokemonUnity
 		}
 	}
 
-	public partial class Game : PokemonEssentials.Interface.Screen.IGamePCStorage { 
+	public partial class Game : PokemonEssentials.Interface.Screen.IGamePCStorage {
 		// ###############################################################################
 		// PC menus
 		// ###############################################################################
@@ -497,7 +502,7 @@ namespace PokemonUnity
 			if (string.IsNullOrEmpty(creator)) creator=Game._INTL("Bill");
 			return creator;
 		}
-		
+
 		public virtual void pbPCItemStorage() {
 			//Items ret = Items.NONE;
 			do { //;loop
