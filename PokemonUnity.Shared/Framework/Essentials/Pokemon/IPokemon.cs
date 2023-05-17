@@ -15,7 +15,7 @@ using PokemonEssentials.Interface.Item;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
-	public interface IPokemon : ICloneable
+	public interface IPokemon : ICloneable, IEquatable<IPokemon>, IEqualityComparer<IPokemon>
 	{
 		/// <summary>
 		/// Current Total HP

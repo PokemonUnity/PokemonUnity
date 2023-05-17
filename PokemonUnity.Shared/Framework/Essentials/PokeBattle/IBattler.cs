@@ -11,7 +11,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
-	public interface IBattler
+	public interface IBattler : IEquatable<IBattler>, IEqualityComparer<IBattler>
 	{
 		IBattle battle				{ get; }
 		IPokemon pokemon			{ get; }

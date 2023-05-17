@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace PokemonUnity
 {
 	namespace Character
 	{
-		public partial class PokemonBox : PokemonEssentials.Interface.Screen.IPokemonBox {
+		public partial class PokemonBox : PokemonEssentials.Interface.Screen.IPokemonBox,  IList<PokemonEssentials.Interface.PokeBattle.IPokemon>, ICollection<PokemonEssentials.Interface.PokeBattle.IPokemon> {
 			public IList<PokemonEssentials.Interface.PokeBattle.IPokemon> pokemon				{ get; protected set; }
 			public string name						{ get; set; }
 			public string background				{ get; set; }
@@ -54,6 +55,10 @@ namespace PokemonUnity
 				return (@pokemon as List<Pokemon>).Capacity;
 			} }
 
+			int ICollection<IPokemon>.Count { get { return nitems; } }
+
+			bool ICollection<IPokemon>.IsReadOnly { get { return pokemon.IsReadOnly; } }
+
 			public IEnumerable<PokemonEssentials.Interface.PokeBattle.IPokemon> each() {
 				foreach (PokemonEssentials.Interface.PokeBattle.IPokemon item in @pokemon) { yield return item; }
 			}
@@ -65,6 +70,77 @@ namespace PokemonUnity
 				get {
 					return @pokemon[i];
 			} }
+
+			#region Interface Methods
+			void ICollection<IPokemon>.Add(IPokemon item)
+			{
+				//if there is space add to box
+				if (!full)
+				{
+					if (!pokemon.Contains(item)
+							&& item.IsNotNullOrNone())
+						pokemon.Add(item);
+				}
+				//move to next box, if full? or send player message to remove?
+			}
+
+			void ICollection<IPokemon>.Clear()
+			{
+				string bg = background;
+				//pokemon.Clear();
+				initialize(name, pokemon.Count);
+				background = bg;
+			}
+
+			bool ICollection<IPokemon>.Contains(IPokemon item)
+			{
+				//should return false for both null and none
+				if (!item.IsNotNullOrNone()) return false;
+				return pokemon.Contains(item);
+			}
+
+			void ICollection<IPokemon>.CopyTo(IPokemon[] array, int arrayIndex)
+			{
+				pokemon.CopyTo(array, arrayIndex);
+			}
+
+			bool ICollection<IPokemon>.Remove(IPokemon item)
+			{
+				if (!item.IsNotNullOrNone()) return true;
+				//if object is removed, it will remove nulls and empty space
+				return pokemon.Remove(item);
+			}
+
+			IEnumerator<IPokemon> IEnumerable<IPokemon>.GetEnumerator()
+			{
+				return pokemon.GetEnumerator();
+			}
+
+			IEnumerator IEnumerable.GetEnumerator()
+			{
+				return pokemon.GetEnumerator();
+			}
+
+			int IList<IPokemon>.IndexOf(IPokemon item)
+			{
+				if (!item.IsNotNullOrNone()) return -1;
+				//return ((IList<PokemonEssentials.Interface.PokeBattle.IPokemon>)pokemon).IndexOf(item);
+				return pokemon.IndexOf(item);
+			}
+
+			void IList<IPokemon>.Insert(int index, IPokemon item)
+			{
+				if (!item.IsNotNullOrNone()) return;
+				//return ((IList<PokemonEssentials.Interface.PokeBattle.IPokemon>)pokemon).Insert(index, item);
+				pokemon.Insert(index, item);
+			}
+
+			void IList<IPokemon>.RemoveAt(int index)
+			{
+				//((IList<PokemonEssentials.Interface.PokeBattle.IPokemon>)pokemon).RemoveAt(index);
+				pokemon.RemoveAt(index);
+			}
+			#endregion
 
 			public static implicit operator PokemonBox (PokemonEssentials.Interface.PokeBattle.IPokemon[] party)
 			{

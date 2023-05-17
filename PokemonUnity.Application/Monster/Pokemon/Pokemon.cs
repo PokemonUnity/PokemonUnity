@@ -16,7 +16,7 @@ using PokemonEssentials.Interface.Item;
 
 namespace PokemonUnity.Monster
 {
-	public partial class Pokemon : IPokemon, IEquatable<Pokemon>, IEqualityComparer<Pokemon> //ToDo: ICloneable?
+	public partial class Pokemon : IPokemon, IEquatable<Pokemon>, IEqualityComparer<Pokemon>, ICloneable
 	{
 		#region Variables
 		private Pokemons pokemons;
@@ -2963,21 +2963,20 @@ namespace PokemonUnity.Monster
 #pragma warning restore 0162 //Warning CS0162  Unreachable code detected
 
 		//ToDo: Finish migrating interface implementation
-		#region Explicit Interface Implemenation
-		int IPokemon.trainerID	{ get { return OT.publicID(); }	set { OT.publicID(value); } }
-		IMail IPokemon.mail { get; set; }
-		int IPokemon.obtainMode	{ get { return (int)ObtainedMode; }	set { ObtainedMode = (ObtainedMethod)value; } }
-		int IPokemon.obtainMap	{ get { return (int)ObtainMap; }	set { ObtainMap = (Locations)value; } }
-		string IPokemon.obtainText	{ get { return obtainString; }	set { obtainString = value; } }
-		int IPokemon.obtainLevel	{ get { return ObtainLevel; }	set { ObtainLevel = value; } }
-		int IPokemon.hatchedMap	{ get { return (int)HatchedMap; }	set { HatchedMap = (Locations)value; } }
-		int IPokemon.language { get { return (int?)OT.language??9; } }
-		string IPokemon.ot	{ get { return OT.name; }	set { OT.name = value; } }
-		int IPokemon.otgender	{ get { return OT.gender; }	set { } } //OT.gender = value;
+		#region Explicit Interface Implementation
+		int IPokemon.trainerID		{ get { return OT.publicID(); }		set { OT.publicID(value); } }
+		int IPokemon.obtainMode		{ get { return (int)ObtainedMode; }	set { ObtainedMode = (ObtainedMethod)value; } }
+		int IPokemon.obtainMap		{ get { return (int)ObtainMap; }	set { ObtainMap = (Locations)value; } }
+		string IPokemon.obtainText	{ get { return obtainString; }		set { obtainString = value; } }
+		int IPokemon.obtainLevel	{ get { return ObtainLevel; }		set { ObtainLevel = value; } }
+		int IPokemon.hatchedMap		{ get { return (int)HatchedMap; }	set { HatchedMap = (Locations)value; } }
+		int IPokemon.language		{ get { return (int?)OT.language??9; } }
+		string IPokemon.ot			{ get { return OT.name; }	set { OT.name = value; } }
+		int IPokemon.otgender		{ get { return OT.gender; }	set { } } //OT.gender = value;
 		int IPokemon.abilityflag	{ set { abilityFlag = (Abilities)value; } }
 		bool IPokemon.genderflag	{ set { genderFlag = value; } }
-		int IPokemon.natureflag	{ set { natureFlag = (Natures)value; } }
-		bool IPokemon.shinyflag	{ set { shinyFlag = value; } }
+		int IPokemon.natureflag		{ set { natureFlag = (Natures)value; } }
+		bool IPokemon.shinyflag		{ set { shinyFlag = value; } }
 		IList<Ribbons> IPokemon.ribbons	{ get { return ribbons.ToArray(); }	set { ribbons = new HashSet<Ribbons>(value); } }
 		int IPokemon.cool	{ get { return Cool; }		set { Cool = value; } }
 		int IPokemon.beauty	{ get { return Beauty; }	set { Beauty = value; } }
@@ -3070,8 +3069,8 @@ namespace PokemonUnity.Monster
 		public override bool Equals(object obj)
 		{
 			if (obj == null) return false;
-			if (obj.GetType() == typeof(Pokemon))
-				return Equals((Pokemon)obj);
+			if (obj.GetType() == typeof(IPokemon) || obj.GetType() == typeof(Pokemon))
+				return Equals(obj as Pokemon);
 			//if (obj.GetType() == typeof(PokemonUnity.Saving.SerializableClasses.SeriPokemon))
 			//	return Equals((PokemonUnity.Saving.SerializableClasses.SeriPokemon)obj);
 			return base.Equals(obj);
@@ -3080,13 +3079,25 @@ namespace PokemonUnity.Monster
 		{
 			return PersonalId.GetHashCode();
 		}
+		bool IEquatable<IPokemon>.Equals(IPokemon other)
+		{
+			return Equals(obj: (object)other);
+		}
 		bool IEquatable<Pokemon>.Equals(Pokemon other)
 		{
 			return Equals(obj: (object)other);
 		}
+		bool IEqualityComparer<IPokemon>.Equals(IPokemon x, IPokemon y)
+		{
+			return x == y;
+		}
 		bool IEqualityComparer<Pokemon>.Equals(Pokemon x, Pokemon y)
 		{
 			return x == y;
+		}
+		int IEqualityComparer<IPokemon>.GetHashCode(IPokemon obj)
+		{
+			return obj.GetHashCode();
 		}
 		int IEqualityComparer<Pokemon>.GetHashCode(Pokemon obj)
 		{

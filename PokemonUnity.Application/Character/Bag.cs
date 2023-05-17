@@ -10,19 +10,19 @@ using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Character;
 
 namespace PokemonUnity.Character
-{	
+{
 	/// <summary>
 	/// Collection of KeyValuePairs grouped by Items.
-	/// Used in combination with quantity[], 
-	/// one holds the itemId (Key) and the other 
+	/// Used in combination with quantity[],
+	/// one holds the itemId (Key) and the other
 	/// has amount (value).
 	/// </summary>
 	/// I'd feel more comfortable if instead of {get;set;}
 	/// it was a {get;} only, that returned an iqueryable
 	/// ToDo: remove static <see cref="GameVariables.Bag_Items"/>
 	/// so trainerbag can load multiple players (for netplay)
-	/*[System.Obsolete("Something i plan to transistion to; not yet ready for full integration")]
-	public class Bag_Refactor
+	[System.Obsolete("Something i plan to transition to; not yet ready for full integration")]
+	/*public class Bag : PokemonEssentials.Interface.Screen.IBag
 	{
 		#region Variables
 		private List<Items> items { get; set; }
@@ -246,7 +246,7 @@ namespace PokemonUnity.Character
 			}
 			return items.ToArray();
 		}
-		 
+
 		/// <summary>
 		/// If the player has the <see cref="Items.MEGA_BRACELET"/> in their inventory.
 		/// </summary>
@@ -269,7 +269,7 @@ namespace PokemonUnity.Character
 		/// newer gens automatically give at start, so default is true...
 		public bool HasRunningShoes()
 		{
-			//if (!items.Contains(Items.RUNNING_SHOES)) 
+			//if (!items.Contains(Items.RUNNING_SHOES))
 			//	return false;
 
 			return true;
@@ -340,7 +340,7 @@ namespace PokemonUnity.Character
 			//Check if item has storage limit
 			//Check if storage limit is met
 			//ToDo: If pocket is full, cannot hold any more items.
-			//ToDo: if individual item capicity is reached, reject add
+			//ToDo: if individual item capacity is reached, reject add
 			if (Kernal.ItemData[item].Pocket == ItemPockets.MISC)
 			{
 				if (Core.MAXPOCKETSIZE[(int)ItemPockets.MISC] == -1) return true;
@@ -374,7 +374,7 @@ namespace PokemonUnity.Character
 		public enum Order
 		{
 			Alphabet,
-			Quantity, 
+			Quantity,
 			Category,
 			Price
 		}
@@ -556,19 +556,19 @@ namespace PokemonUnity.Character
 		}
 
 		public bool pbStoreAllOrNone(Items item,int qty=1) {
-		  //if (item is String || item is Symbol) {
-		  //  item=getID(PBItems,item);
-		  //}
-		  //if (item == null || item<1) {
-		  //  //throw new Exception(Game._INTL("The item number is invalid."));
-		  //  return false;
-		  //}
-		  //ItemPockets pocket=pbGetPocket(item);
-		  int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
-		  int maxsize=maxPocketSize(pocket);
-		  if (maxsize<0) maxsize=@pockets[pocket].Length+1;
-		  return ItemStorageHelper.pbStoreItem(ref
-		     @pockets[pocket],maxsize,Core.BAGMAXPERSLOT,item,qty);
+			//if (item is String || item is Symbol) {
+			//  item=getID(PBItems,item);
+			//}
+			//if (item == null || item<1) {
+			//  //throw new Exception(Game._INTL("The item number is invalid."));
+			//  return false;
+			//}
+			//ItemPockets pocket=pbGetPocket(item);
+			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
+			int maxsize=maxPocketSize(pocket);
+			if (maxsize<0) maxsize=@pockets[pocket].Length+1;
+			return ItemStorageHelper.pbStoreItem(ref
+				@pockets[pocket],maxsize,Core.BAGMAXPERSLOT,item,qty);
 		}
 
 		public bool pbStoreItem(Items item,int qty=1) {

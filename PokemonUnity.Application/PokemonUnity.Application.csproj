@@ -46,7 +46,6 @@
     <Compile Include="Attack\Move.cs" />
     <Compile Include="Character\Bag.cs" />
     <Compile Include="Character\DayCare.cs" />
-    <Compile Include="Character\Party.cs" />
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\ItemStorage.cs" />
     <Compile Include="Character\PokemonStorage.cs" />

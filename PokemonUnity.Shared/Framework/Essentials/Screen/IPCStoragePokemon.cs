@@ -18,7 +18,7 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
-	public interface IPokemonBox { //: IList<PokemonEssentials.Interface.PokeBattle.IPokemon>, ICollection<PokemonEssentials.Interface.PokeBattle.IPokemon>
+	public interface IPokemonBox : IList<PokemonEssentials.Interface.PokeBattle.IPokemon>, ICollection<PokemonEssentials.Interface.PokeBattle.IPokemon> {
 		IList<IPokemon> pokemon				{ get; }
 		string name							{ get; set; }
 		string background					{ get; set; }
@@ -39,7 +39,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		IEnumerable<IPokemon> each();
 
-		IPokemon this[int i] { get; set; }
+		//IPokemon this[int i] { get; set; }
 	}
 
 	public interface IPCPokemonStorage {

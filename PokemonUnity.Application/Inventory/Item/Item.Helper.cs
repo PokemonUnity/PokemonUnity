@@ -170,26 +170,26 @@ namespace PokemonUnity.Inventory
 				qty = 0; return false;
 			}
 			if (qty==0) return true;
-			List<Items> list = items.ToList();
+			//List<Items> list = items.ToList();
 			for (int i = 0, count = 0; i < items.Length && count < maxsize * maxPerSlot; i++) {
 				Items itemslot=items[i];
-				if (itemslot == Items.NONE) {
-					//items[i]=new KeyValuePair<Items, int> (item, Math.Min(qty, maxPerSlot));
-					//qty-=items[i].Value;
+				//if (itemslot == Items.NONE) {
+					((IList<Items>)items).Insert(i, item);//, Math.Min(qty, maxPerSlot));
+					qty--;//qty-=items[i].Value;
 					if (sorting) {
 						//if (Core.POCKETAUTOSORT[ItemData[item][ITEMPOCKET]]) items.Sort();
 						if (Core.POCKETAUTOSORT[(int)(Kernal.ItemData[item].Pocket??0)]) items.OrderBy(x => x);
 					}
 					if (qty==0) return true;
-				} else if (itemslot==item && count<maxPerSlot) {
-					//int newamt=itemslot.Value.Value;
-					//newamt=Math.Min(newamt+qty,maxPerSlot);
-					//qty-=(newamt-itemslot.Value.Value);
-					count++;
-					//itemslot.Value.Value=newamt;
-					//itemslot=new KeyValuePair<Items,int>(itemslot.Value.Key,newamt);
-					if (qty==0) return true;
-				}
+				//} else if (itemslot==item && count<maxPerSlot) {
+				//	//int newamt=itemslot.Value.Value;
+				//	//newamt=Math.Min(newamt+qty,maxPerSlot);
+				//	//qty-=(newamt-itemslot.Value.Value);
+				//	count++;
+				//	//itemslot.Value.Value=newamt;
+				//	//itemslot=new KeyValuePair<Items,int>(itemslot.Value.Key,newamt);
+				//	if (qty==0) return true;
+				//}
 			}
 			return false;
 		}
