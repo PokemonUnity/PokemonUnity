@@ -499,7 +499,8 @@ namespace PokemonUnity
 			{
 				Pokemon = genwildpoke
 			};
-			Events.OnWildPokemonCreate?.Invoke(null,eventArgs);
+			//Events.OnWildPokemonCreate?.Invoke(this,eventArgs);
+			Events.OnWildPokemonCreateTrigger(this,genwildpoke);
 			//if (PokemonEncounters != null)
 			//	PokemonEncounters.OnWildPokemonCreate?.Invoke(null, eventArgs);
 			return genwildpoke;
@@ -554,6 +555,8 @@ namespace PokemonUnity
 				Level = level
 				//,Result = handled
 			};
+			Events.OnWildBattleOverrideTrigger(this,e1);
+			//Events.OnWildBattleOverrideTrigger(this,species,level,handled);
 			if (handled[0]!=null) {
 				return handled[0].Value;
 				//return handled[0].Value ? Combat.BattleResults.WON : Combat.BattleResults.ABORTED;
@@ -572,7 +575,8 @@ namespace PokemonUnity
 				Level = level
 				//,Result = decision
 			};
-			Events.OnWildBattleEnd?.Invoke(null,e3);
+			//Events.OnWildBattleEnd?.Invoke(null,e3);
+			Events.OnWildBattleEndTrigger(this,species, level, decision);
 			// Return false if the player lost or drew the battle, and true if any other result
 			return (decision != Combat.BattleResults.LOST && decision != Combat.BattleResults.DRAW);
 		}
@@ -612,12 +616,12 @@ namespace PokemonUnity
 			}
 			//IPokemon genwildpoke=pbGenerateWildPokemon(species,level);
 			//Events.onStartBattle.trigger(null,genwildpoke);
-			//PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs eventArgs = new PokemonUnity.EventArg.OnWildPokemonCreateEventArgs()
-			//{
-			//	Pokemon = genwildpoke
-			//};
-			//Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
-			Events.OnStartBattleTrigger(this);
+			PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs eventArgs = new PokemonUnity.EventArg.OnWildPokemonCreateEventArgs()
+			{
+				Pokemon = pkmn//genwildpoke
+			};
+			//Events.OnStartBattle?.Invoke(this, eventArgs);
+			Events.OnStartBattleTrigger(this, pkmn);
 			IPokeBattle_Scene scene=pbNewBattleScene();
 			IBattle battle=new Combat.Battle(scene,Trainer.party,new IPokemon[] { pkmn },new ITrainer[] { Trainer },null);
 			battle.internalbattle=true;
@@ -657,7 +661,7 @@ namespace PokemonUnity
 					CanLose = canlose
 				};
 				//Events.OnBattleEnd?.Invoke(null,e2);
-				Events.OnEndBattleTrigger(this, e2);
+				Events.OnEndBattleTrigger(this, decision, canlose);
 			});
 			Input.update();
 			pbSet(variable,decision);
@@ -668,7 +672,8 @@ namespace PokemonUnity
 				Level = pkmn.Level
 				//,Result = decision
 			};
-			Events.OnWildBattleEnd?.Invoke(null,e3);
+			//Events.OnWildBattleEnd?.Invoke(null,e3);
+			Events.OnWildBattleEndTrigger(this, pkmn.Species, pkmn.Level, decision);
 			return decision; //!=Combat.BattleResults.LOST;
 		}
 
@@ -792,9 +797,13 @@ namespace PokemonUnity
 			}
 			IPokemon genwildpoke=pbGenerateWildPokemon(species1,level1);
 			IPokemon genwildpoke2=pbGenerateWildPokemon(species2,level2);
+			PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs eventArgs = new PokemonUnity.EventArg.OnWildPokemonCreateEventArgs()
+			{
+				Pokemon = genwildpoke
+			};
 			//Events.onStartBattle.trigger(null,genwildpoke);
-			//Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
-			Events.OnStartBattleTrigger(this);
+			//Events.OnStartBattle?.Invoke(this, eventArgs);
+			Events.OnStartBattleTrigger(this, genwildpoke);
 			IPokeBattle_Scene scene=pbNewBattleScene();
 			Combat.Battle battle;
 			if (Global.partner != null) {
@@ -855,7 +864,7 @@ namespace PokemonUnity
 					CanLose = canlose
 				};
 				//Events.OnBattleEnd?.Invoke(null,e2);
-				Events.OnEndBattleTrigger(this,e2);
+				Events.OnEndBattleTrigger(this,decision,canlose);
 			});
 			Input.update();
 			pbSet(variable,decision);
@@ -988,7 +997,7 @@ namespace PokemonUnity
 
 		//Events.onStartBattle+=delegate(object sender, EventArgs e) {
 		//Events.OnStartBattle+=delegate(object sender, PokemonEssentials.Interface.EventArg.IOnStartBattleEventArgs e) {
-		protected virtual void Events_OnStartBattle(object sender, EventArgs e) {
+		protected virtual void Events_OnStartBattle(object sender, PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs e) {
 			if (PokemonTemp is ITempMetadataField m)
 			{
 				//PokemonTemp.evolutionLevels = new int[6];
@@ -1033,7 +1042,7 @@ namespace PokemonUnity
 		}
 
 		#region Scene_Map and Spriteset_Map
-		public partial class Scene_Map {
+		public partial class Scene_Map : ISceneMapField {
 			public virtual void createSingleSpriteset(int map) {
 				//temp=Game.GameData.Scene.spriteset().getAnimations();
 				//@spritesets[map]=new Spriteset_Map(MapFactory.maps[map]);
@@ -1055,11 +1064,11 @@ namespace PokemonUnity
 		}
 
 		//Events.onSpritesetCreate+=delegate(object sender, EventArgs e) {
-		protected virtual void Events_OnSpritesetCreate(object sender, EventArgs e) {
-			//ISpritesetMap spriteset=e[0]; // Spriteset being created
-			//IViewport viewport=e[1]; // Viewport used for tilemap and characters
+		protected virtual void Events_OnSpritesetCreate(object sender, PokemonEssentials.Interface.EventArg.IOnSpritesetCreateEventArgs e) {
+			//ISpritesetMap spriteset = e.SpritesetId;//e[0]; // Spriteset being created
+			//IViewport viewport = e.Viewport; //e[1]; // Viewport used for tilemap and characters
 			//IGameMap map=spriteset.map; // Map associated with the spriteset (not necessarily the current map).
-			//foreach (var i in map.events.keys) {
+			//foreach (IGameEvent i in map.events.Keys) {
 			//	if (map.events[i].name[/^OutdoorLight\((\w+)\)$/]) {
 			//		string filename=$~[1].ToString();
 			//		spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map,filename));
@@ -1078,6 +1087,7 @@ namespace PokemonUnity
 		public void pbOnSpritesetCreate(ISpritesetMap spriteset,IViewport viewport) {
 			//Events.onSpritesetCreate.trigger(null,spriteset,viewport);
 			//Events.OnSpritesetCreate.Invoke(null,spriteset,viewport);
+			Events.OnSpritesetCreateTrigger(null,spriteset,viewport);
 		}
 		#endregion
 
@@ -1184,7 +1194,7 @@ namespace PokemonUnity
 			ITilePosition thistile=MapFactory.getRealTilePos(@event.map.map_id,@event.x,@event.y);
 			IGameMap map=MapFactory.getMap(thistile.MapId); //thistile[0]
 			int sootlevel=-1;
-			foreach (int i in new int[] { 2, 1, 0 }) {
+			foreach (int i in new int[] { 2, 1, 0 }) { //elevation/layer
 				//int? tile_id = map.data[thistile[1],thistile[2],i];
 				int? tile_id = map.data[(int)thistile.X,(int)thistile.Y,i];
 				if (tile_id == null) continue;
@@ -1197,11 +1207,11 @@ namespace PokemonUnity
 			if (sootlevel>=0) { //&& hasConst(PBItems,:SOOTSACK)
 				//if (Global.sootsack == null) Global.sootsack=0;
 				//map.data[thistile[1],thistile[2],sootlevel]=0
-				//map.data[(int)thistile.X,(int)thistile.Y,sootlevel]=0;
+				map.data[(int)thistile.X,(int)thistile.Y,sootlevel]=0;
 				if (@event==GamePlayer && Bag.pbQuantity(Items.SOOT_SACK)>0) {
 					Global.sootsack+=1;
 				}
-				//Scene.createSingleSpriteset(map.map_id)
+				if (Scene is ISceneMapField m) m.createSingleSpriteset(map.map_id);
 			}
 		//}
 		//
@@ -1212,10 +1222,10 @@ namespace PokemonUnity
 			if (Scene is ISceneMap) {
 				Terrains currentTag=pbGetTerrainTag(@event);
 				if (Terrain.isJustGrass(pbGetTerrainTag(@event,true))) {		// Won't show if under bridge
-					//Scene.spriteset.addUserAnimation(Core.GRASS_ANIMATION_ID,@event.x,@event.y,true);
+					if (Scene.spriteset is ISpritesetMapAnimation sma) sma.addUserAnimation(Core.GRASS_ANIMATION_ID,@event.x,@event.y,true);
 				} else if (@event==GamePlayer && currentTag==Terrains.WaterfallCrest) {
 					//Descend waterfall, but only if this event is the player
-					//if (this is IGameField f0) f0.pbDescendWaterfall(@event);
+					if (this is IGameHiddenMoves f0) f0.pbDescendWaterfall(@event);
 				} else if (@event==GamePlayer && Terrain.isIce(currentTag) && !Global.sliding) {
 					if (this is IGameField f1) f1.pbSlideOnIce(@event);
 				}
@@ -1261,7 +1271,8 @@ namespace PokemonUnity
 			//Events.onStepTaken.trigger(null);
 			//Events.OnStepTaken?.Invoke(null,EventArgs.Empty);
 			Events.OnStepTakenTrigger(this);
-			//Events.onStepTakenFieldMovement.trigger(null,GamePlayer)
+			//Events.onStepTakenFieldMovement.trigger(null,GamePlayer);
+			//Events.OnStepTakenFieldMovementTrigger(null,GamePlayer); //Was commented out in essentials
 			bool?[] handled= new bool?[]{ null };
 			//Events.OnStepTakenTransferPossible.trigger(null,handled);
 			PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs e1 = new PokemonUnity.EventArg.OnStepTakenTransferPossibleEventArgs();
@@ -1749,6 +1760,7 @@ namespace PokemonUnity
 			pbCancelVehicles();
 			ITrainer trainer = null; //Trainer.pbLoadTrainer(trainerid,trainername,partyid); //ToDo: Uncomment
 			//Events.OnTrainerPartyLoad.trigger(null,trainer);
+			Events.OnTrainerPartyLoadTrigger(null,trainer);
 			ITrainer trainerobject=new Trainer(Game._INTL(trainer.name),trainerid);
 			trainerobject.setForeignID(Trainer);
 			foreach (IPokemon i in trainer.party) {

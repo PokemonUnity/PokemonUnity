@@ -5,6 +5,7 @@ using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.EventArg;
+using PokemonUnity.EventArg;
 
 namespace PokemonUnity
 {
@@ -17,9 +18,9 @@ namespace PokemonUnity
 
 		public SafariState() {
 			initialize();
-				
-			Events.OnMapChange+=Events_OnMapChange;    
-			Events.OnStepTakenTransferPossible+=Events_OnStepTakenTransferPossible;    
+
+			Events.OnMapChange+=Events_OnMapChange;
+			Events.OnStepTakenTransferPossible+=Events_OnStepTakenTransferPossible;
 			Events.OnWildBattleOverride+=Events_OnWildBattleOverride;
 		}
 
@@ -77,7 +78,7 @@ namespace PokemonUnity
 			@inProgress=false;
 			@steps=0;
 			@decision=0;
-				
+
 			return this;
 		}
 		protected virtual void Events_OnMapChange(object sender, IOnMapChangeEventArgs e)
@@ -112,7 +113,7 @@ namespace PokemonUnity
 		}
 	}
 
-	public partial class Game : IGameSafari { 
+	public partial class Game : IGameSafari {
 		//event EventHandler IGameSafari.OnMapChange { add { OnMapChange += value; } remove { OnMapChange -= value; } }
 		//event Action<object, IOnStepTakenTransferPossibleEventArgs> IGameSafari.OnStepTakenTransferPossible { add { OnStepTakenTransferPossible += value; } remove { OnStepTakenTransferPossible += value; } }
 		//event Action<object, IOnWildBattleOverrideEventArgs> IGameSafari.OnWildBattleOverride { add { OnWildBattleOverride += value; } remove { OnWildBattleOverride += value; } }
@@ -145,7 +146,7 @@ namespace PokemonUnity
 			battle.ballCount=pbSafariState.ballcount;
 			if (this is IGameField f0) battle.environment=f0.pbGetEnvironment();
 			Combat.BattleResults decision=Combat.BattleResults.ABORTED; //0
-			if (this is IGameField f1) f1.pbBattleAnimation(pbGetWildBattleBGM(species), block: () => { 
+			if (this is IGameField f1) f1.pbBattleAnimation(pbGetWildBattleBGM(species), block: () => {
 				f1.pbSceneStandby(block: () => {
 					decision=battle.pbStartBattle();
 				});
@@ -159,8 +160,15 @@ namespace PokemonUnity
 				pbSafariState.decision=Combat.BattleResults.WON; //1
 				pbSafariState.pbGoToStart();
 			}
+			IOnWildBattleEndEventArgs e = new OnWildBattleEndEventArgs
+			{
+				Level = level,
+				Species = species,
+				Result = decision
+			};
 			//Events.onWildBattleEnd.trigger(null,species,level,decision);
-			//Events.OnWildBattleEndTrigger(null,species,level,decision);
+			Events.OnWildBattleEndTrigger(null,species,level,decision);
+			//Events.OnWildBattleEnd?.Invoke(this, e);
 			return decision;
 		}
 	}

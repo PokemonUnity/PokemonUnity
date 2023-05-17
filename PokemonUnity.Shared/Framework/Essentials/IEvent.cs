@@ -262,7 +262,7 @@ namespace PokemonEssentials.Interface
 			//int Id { get { return EventId; } }
 			//int Id { get { return Pokemon.GetHashCode(); } } //EventId;
 			int Map { get; set; }
-			int Tileset { get; set; }
+			ITileset Tileset { get; set; }
 		}
 		public interface IOnMapChangeEventArgs : IEventArgs
 		{
@@ -426,8 +426,8 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// Items possessed by the trainer
 			/// </summary>
-			Items[] Items { get; set; }
-			IPokemon[] Party { get; set; }
+			IList<Items> Items { get; set; }
+			IList<IPokemon> Party { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -464,7 +464,7 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// Spriteset being created
 			/// </summary>
-			int SpritesetId { get; set; }
+			ISpritesetMap SpritesetId { get; set; }
 			/// <summary>
 			/// Viewport used for tilemap and characters
 			/// </summary>

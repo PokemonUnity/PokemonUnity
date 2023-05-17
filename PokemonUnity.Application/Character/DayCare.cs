@@ -26,7 +26,7 @@ namespace PokemonUnity.Character
 		public bool HasEgg	{ get; }
 		public int Egg	{ get; }
 		public IPokemon this[int index]
-		{ 
+		{
 			get { return Slot[index].Key; }
 			set { Slot[index] = new KeyValuePair<IPokemon, int>(value, 0); } //ToDo: Add if/else null?
 		}
@@ -240,9 +240,9 @@ namespace PokemonUnity.Character
 			//Generate egg
 			//IPokemon egg=new PokeBattle_Pokemon(babyspecies,Core.EGGINITIALLEVEL,Game.GameData.Player);
 			IPokemon egg=new Pokemon(babyspecies,Core.EGGINITIALLEVEL,isEgg: true);//,Game.GameData.Player
-			//Randomise personal ID
-			int pid=Core.Rand.Next(65536);
-			pid|=(Core.Rand.Next(65536)<<16);
+			//Randomize personal ID
+			//int pid=Core.Rand.Next(65536);
+			//pid|=(Core.Rand.Next(65536)<<16);
 			//egg.PersonalId=pid;
 			//Inheriting form
 			if ((egg is IPokemonMultipleForms e && mother is IPokemonMultipleForms m) && (
@@ -262,7 +262,7 @@ namespace PokemonUnity.Character
 			//Initial Moves
 			Moves[] initialmoves=egg.getMoveList(); //Level|Moves
 			//foreach (Moves k in initialmoves) { //Key: Level | Value: Move
-			foreach (KeyValuePair<Moves,int> k in Kernal.PokemonMovesData[egg.Species].LevelUp) { 
+			foreach (KeyValuePair<Moves,int> k in Kernal.PokemonMovesData[egg.Species].LevelUp) {
 				if (k.Value<=Core.EGGINITIALLEVEL) {
 					moves.Add(k.Key);
 				} else {
@@ -321,13 +321,13 @@ namespace PokemonUnity.Character
 			}
 			//  Volt Tackle
 			bool lightball=false;
-			if ((father.Species == Pokemons.PIKACHU || 
-				father.Species == Pokemons.RAICHU) && 
+			if ((father.Species == Pokemons.PIKACHU ||
+				father.Species == Pokemons.RAICHU) &&
 				father.Item == Items.LIGHT_BALL) {
 				lightball=true;
 			}
-			if ((mother.Species == Pokemons.PIKACHU || 
-				mother.Species == Pokemons.RAICHU) && 
+			if ((mother.Species == Pokemons.PIKACHU ||
+				mother.Species == Pokemons.RAICHU) &&
 				mother.Item == Items.LIGHT_BALL) {
 				lightball=true;
 			}
@@ -506,12 +506,12 @@ namespace PokemonUnity.Character
 		public bool Equals(DayCare obj)
 		{
 			if (obj == null) return false;
-			return this == obj; 
+			return this == obj;
 		}
 		public bool Equals(Character.Player obj)
 		{
 			if (obj == null) return false;
-			return this == obj; 
+			return this == obj;
 		}
 		public override bool Equals(object obj)
 		{

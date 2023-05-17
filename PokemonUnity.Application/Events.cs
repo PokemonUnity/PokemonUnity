@@ -81,30 +81,32 @@ namespace PokemonUnity
 		/// Triggers whenever a wild Pokémon battle ends
 		/// </summary>
 		//public static event EventHandler<OnWildBattleEndEventArgs> OnWildBattleEnd;
-		public static Action<object, IOnWildBattleEndEventArgs> OnWildBattleEnd;
+		public static event Action<object, IOnWildBattleEndEventArgs> OnWildBattleEnd;
 		/// <summary>
 		/// Triggers whenever a wild Pokémon is created
 		/// </summary>
 		//public static event EventHandler<OnWildPokemonCreateEventArgs> OnWildPokemonCreate;
-		public static Action<object, IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
+		public static event Action<object, IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		/// <summary>
 		/// Triggers whenever an NPC trainer's Pokémon party is loaded
 		/// </summary>
 		//public static event EventHandler<OnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
-		public static Action<object, IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
+		public static event Action<object, IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		/// <summary>
 		/// Fires whenever a spriteset is created.
 		/// </summary>
 		//public static event EventHandler<OnSpritesetCreateEventArgs> OnSpritesetCreate;
-		public static Action<object, IOnSpritesetCreateEventArgs> OnSpritesetCreate;
-		public static event EventHandler OnStartBattle;
+		public static event Action<object, IOnSpritesetCreateEventArgs> OnSpritesetCreate;
+		//public static event EventHandler OnStartBattle;
+		public static event Action<object, IOnWildPokemonCreateEventArgs> OnStartBattle;
 		//public static event EventHandler OnEndBattle;
 		public static event Action<object, IOnEndBattleEventArgs> OnEndBattle;
 		/// <summary>
 		/// Fires whenever a map is created. Event handler receives two parameters: the
 		/// map (RPG.Map) and the tileset (RPG.Tileset)
 		/// </summary>
-		public static event EventHandler OnMapCreate;
+		//public static event EventHandler OnMapCreate;
+		public static event Action<object, IOnMapCreateEventArgs> OnMapCreate;
 		/// <summary>
 		/// Triggers when the player presses the Action button on the map.
 		/// </summary>
@@ -112,19 +114,23 @@ namespace PokemonUnity
 		#endregion
 
 		#region Event Sender / Raise Events
-		public static void OnMapCreateTrigger()
+		public static void OnMapCreateTrigger(object sender, int map_id, MapData @map, ITileset tileset)
 		{
-			//OnMapCreateEventArgs e = new OnMapCreateEventArgs();
-			if (OnMapCreate != null) OnMapCreate.Invoke(null, new OnMapCreateEventArgs());
+			IOnMapCreateEventArgs e = new OnMapCreateEventArgs()
+			{
+				Map = map_id,
+				Tileset = tileset
+			};
+			if (OnMapCreate != null) OnMapCreate.Invoke(sender, e);
 		}
 		public static void OnMapChangeTrigger()
 		{
-			IOnMapChangeEventArgs e = new OnMapChangeEventArgs(); 
+			IOnMapChangeEventArgs e = new OnMapChangeEventArgs();
 			if(OnMapChange != null) OnMapChange.Invoke(null, e);
 		}
 		public static void OnMapChangingTrigger()
 		{
-			IOnMapChangingEventArgs e = new OnMapChangingEventArgs(); 
+			IOnMapChangingEventArgs e = new OnMapChangingEventArgs();
 			if(OnMapChanging != null) OnMapChanging.Invoke(null, e);
 		}
 		/// <summary>
@@ -142,7 +148,7 @@ namespace PokemonUnity
 			IOnLeaveTileEventArgs e = new OnLeaveTileEventArgs();
 			//EventHandler<OnLeaveTileEventArgs> handler = OnLeaveTile;
 			//if (handler != null) handler.Invoke(null, e);
-			if (OnLeaveTile != null) OnLeaveTile.Invoke(null, e);
+			if (OnLeaveTile != null) OnLeaveTile.Invoke(@event, e);
 		}
 		/// <summary>
 		/// Parameters:
@@ -161,11 +167,11 @@ namespace PokemonUnity
 		/// </summary>
 		public static void OnStepTakenTransferPossibleTrigger(object sender, IOnStepTakenTransferPossibleEventArgs e)
 		{
-			//IOnStepTakenTransferPossibleEventArgs e = new OnStepTakenTransferPossibleEventArgs(); 
-			if(OnStepTakenTransferPossible != null) OnStepTakenTransferPossible.Invoke(null, e);
+			//IOnStepTakenTransferPossibleEventArgs e = new OnStepTakenTransferPossibleEventArgs();
+			if(OnStepTakenTransferPossible != null) OnStepTakenTransferPossible.Invoke(sender, e);
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon species
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
@@ -174,10 +180,10 @@ namespace PokemonUnity
 		public static void OnWildBattleOverrideTrigger(object sender, IOnWildBattleOverrideEventArgs e)
 		{
 			//IOnWildBattleOverrideEventArgs e = new OnWildBattleOverrideEventArgs();
-			if(OnWildBattleOverride != null) OnWildBattleOverride.Invoke(null, e);
+			if(OnWildBattleOverride != null) OnWildBattleOverride.Invoke(sender, e);
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon species
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
@@ -193,24 +199,32 @@ namespace PokemonUnity
 			if(OnWildBattleEnd != null) OnWildBattleEnd.Invoke(@event, e);
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon being created
 		/// </summary>
-		public static void OnWildPokemonCreateTrigger()
+		public static void OnWildPokemonCreateTrigger(object sender, IPokemon pkmn)
 		{
-			IOnWildPokemonCreateEventArgs e = new OnWildPokemonCreateEventArgs(); 
-			if(OnWildPokemonCreate != null) OnWildPokemonCreate.Invoke(null, e);
+			IOnWildPokemonCreateEventArgs e = new OnWildPokemonCreateEventArgs()
+			{
+				Pokemon = pkmn
+			};
+			if(OnWildPokemonCreate != null) OnWildPokemonCreate.Invoke(sender, e);
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Trainer
 		/// e[1] - Items possessed by the trainer
 		/// e[2] - Party
 		/// </summary>
-		public static void OnTrainerPartyLoadTrigger()
+		public static void OnTrainerPartyLoadTrigger(object sender, ITrainer trainer, IList<Items> items = null, IList<IPokemon> party = null)
 		{
-			IOnTrainerPartyLoadEventArgs e = new OnTrainerPartyLoadEventArgs(); 
-			if(OnTrainerPartyLoad != null) OnTrainerPartyLoad.Invoke(null, e);
+			IOnTrainerPartyLoadEventArgs e = new OnTrainerPartyLoadEventArgs()
+			{
+				Trainer = trainer,
+				Items = items,
+				Party = party
+			};
+			if(OnTrainerPartyLoad != null) OnTrainerPartyLoad.Invoke(sender, e);
 		}
 		/// <summary>
 		/// Parameters:
@@ -221,7 +235,7 @@ namespace PokemonUnity
 		/// </summary>
 		public static void OnMapSceneChangeTrigger()
 		{
-			IOnMapSceneChangeEventArgs e = new OnMapSceneChangeEventArgs(); 
+			IOnMapSceneChangeEventArgs e = new OnMapSceneChangeEventArgs();
 			if(OnMapSceneChange != null) OnMapSceneChange.Invoke(null, e);
 		}
 		/// <summary>
@@ -230,21 +244,34 @@ namespace PokemonUnity
 		/// e[1] = Viewport used for tilemap and characters
 		/// e[0].map = Map associated with the spriteset (not necessarily the current map).
 		/// </summary>
-		public static void OnSpritesetCreateTrigger()
+		public static void OnSpritesetCreateTrigger(object sender, ISpritesetMap spriteset, IViewport viewport)
 		{
-			IOnSpritesetCreateEventArgs e = new OnSpritesetCreateEventArgs(); 
-			if(OnSpritesetCreate != null) OnSpritesetCreate.Invoke(null, e);
+			IOnSpritesetCreateEventArgs e = new OnSpritesetCreateEventArgs()
+			{
+				SpritesetId = spriteset,
+				Viewport = viewport
+			};
+			if(OnSpritesetCreate != null) OnSpritesetCreate.Invoke(sender, e);
 		}
 		public static void OnStepTakenTrigger(object sender)
 		{
 			if (OnStepTaken != null) OnStepTaken.Invoke(sender, EventArgs.Empty);
 		}
-		public static void OnStartBattleTrigger(object sender)
+		public static void OnStartBattleTrigger(object sender, IPokemon pkmn)
 		{
-			if (OnStartBattle != null) OnStartBattle.Invoke(sender, EventArgs.Empty);
+			IOnWildPokemonCreateEventArgs e = new OnWildPokemonCreateEventArgs()
+			{
+				Pokemon = pkmn
+			};
+			if (OnStartBattle != null) OnStartBattle.Invoke(sender, e);
 		}
-		public static void OnEndBattleTrigger(object sender, IOnEndBattleEventArgs e)
+		public static void OnEndBattleTrigger(object sender, BattleResults decision, bool canLose)
 		{
+			IOnEndBattleEventArgs e = new OnEndBattleEventArgs()
+			{
+				CanLose = canLose,
+				Decision = decision
+			};
 			if (OnEndBattle != null) OnEndBattle.Invoke(sender, e);
 		}
 		#endregion
@@ -259,7 +286,7 @@ namespace PokemonUnity
 			public int Id { get { return EventId; } }
 			//public int Id { get { return Pokemon.GetHashCode(); } } //EventId;
 			public int Map { get; set; }
-			public int Tileset { get; set; }
+			public ITileset Tileset { get; set; }
 		}
 		public class OnMapChangeEventArgs : EventArgs, IOnMapChangeEventArgs
 		{
@@ -342,7 +369,7 @@ namespace PokemonUnity
 			public bool Index { get; set; }
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon species
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
@@ -360,7 +387,7 @@ namespace PokemonUnity
 			public BattleResults Result { get; set; }
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon species
 		/// e[1] - Pokémon level
 		/// e[2] - Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
@@ -378,7 +405,7 @@ namespace PokemonUnity
 			public BattleResults Result { get; set; }
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Pokémon being created
 		/// </summary>
 		public class OnWildPokemonCreateEventArgs : EventArgs, IOnWildPokemonCreateEventArgs
@@ -392,7 +419,7 @@ namespace PokemonUnity
 			public IPokemon Pokemon { get; set; }
 		}
 		/// <summary>
-		/// Parameters: 
+		/// Parameters:
 		/// e[0] - Trainer
 		/// e[1] - Items possessed by the trainer
 		/// e[2] - Party
@@ -406,8 +433,8 @@ namespace PokemonUnity
 			/// <summary>
 			/// Items possessed by the trainer
 			/// </summary>
-			public Items[] Items { get; set; }
-			public IPokemon[] Party { get; set; }
+			public IList<Items> Items { get; set; }
+			public IList<IPokemon> Party { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -444,7 +471,7 @@ namespace PokemonUnity
 			/// <summary>
 			/// Spriteset being created
 			/// </summary>
-			public int SpritesetId { get; set; }
+			public ISpritesetMap SpritesetId { get; set; }
 			/// <summary>
 			/// Viewport used for tilemap and characters
 			/// </summary>

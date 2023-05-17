@@ -310,11 +310,11 @@ namespace PokemonEssentials.Interface
 		}
 
 		#region Scene_Map and Spriteset_Map
-		//public interface ISceneMap
-		//{
-		//	void createSingleSpriteset(map);
-		//}
-		//
+		public interface ISceneMapField
+		{
+			void createSingleSpriteset(int map);
+		}
+
 		//public interface ISpritesetMap
 		//{
 		//	void getAnimations();
