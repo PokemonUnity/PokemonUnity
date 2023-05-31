@@ -94,7 +94,7 @@ namespace PokemonEssentials.Interface.Field
 		/// </summary>
 		public string FishingSurf { get; set; }
 	}
-	[Serializable] public struct MetadataPosition
+	[Serializable] public struct MetadataPosition : ITilePosition
 	{
 		/// <summary>
 		/// Map ID
@@ -108,6 +108,7 @@ namespace PokemonEssentials.Interface.Field
 		/// Y coordinate on that map
 		/// </summary>
 		public float Y { get; set; }
+		public float Z { get; set; }
 		/// <summary>
 		/// Direction the player should face 
 		/// (2=down, 4=left, 6=right, 8=up, 0=retain direction)

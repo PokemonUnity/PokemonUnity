@@ -73,7 +73,8 @@ namespace PokemonEssentials.Interface.Field
 		/// </summary>
 		int pokedexMode { get; set; } 
 		ITilePosition healingSpot { get; set; }
-		float[] escapePoint { get; set; }
+		//float[] escapePoint { get; set; }
+		MetadataPosition? escapePoint { get; set; }
 		int pokecenterMapId { get; set; }
 		float pokecenterX { get; set; }
 		float pokecenterY { get; set; }

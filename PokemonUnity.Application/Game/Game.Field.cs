@@ -1639,7 +1639,7 @@ namespace PokemonUnity
 				if (homedata != null) {
 					pbCancelVehicles();
 					if (this is IGameDependantEvents d) d.pbRemoveDependencies();
-					//GameSwitches[STARTING_OVER_SWITCH]=true;
+					GameSwitches[Core.STARTING_OVER_SWITCH]=true;
 					Features.StartingOver();
 					GameTemp.player_new_map_id=homedata.Value.MapId; //homedata[0]
 					GameTemp.player_new_x=homedata.Value.X; //homedata[1]
@@ -1729,10 +1729,10 @@ namespace PokemonUnity
 		}
 
 		public void pbSetEscapePoint() {
-			if (Global.escapePoint == null) Global.escapePoint=new float[0];
+			if (Global.escapePoint == null) Global.escapePoint=new MetadataPosition(); //float[0];
 			float xco=GamePlayer.x;
 			float yco=GamePlayer.y;
-			float dir = 0;
+			int dir = 0;
 			switch (GamePlayer.direction) {
 				case 2:   // Down
 					yco-=1; dir=8;
@@ -1747,11 +1747,12 @@ namespace PokemonUnity
 					yco+=1; dir=2;
 					break;
 			}
-			Global.escapePoint=new float[] { GameMap.map_id, xco, yco, dir };
+			//Global.escapePoint=new float[] { GameMap.map_id, xco, yco, dir };
+			Global.escapePoint=new MetadataPosition { MapId = GameMap.map_id, X = xco, Y = yco, Direction = dir };
 		}
 
 		public void pbEraseEscapePoint() {
-			Global.escapePoint=new float[0];
+			Global.escapePoint=new MetadataPosition(); //float[0];
 		}
 		#endregion
 
@@ -1764,9 +1765,9 @@ namespace PokemonUnity
 			ITrainer trainerobject=new Trainer(Game._INTL(trainer.name),trainerid);
 			trainerobject.setForeignID(Trainer);
 			foreach (IPokemon i in trainer.party) {
+				(i as Pokemon).SetCatchInfos(trainer:trainerobject);
 				i.trainerID=trainerobject.id;
 				i.ot=trainerobject.name;
-				//i.SetCatchInfos(trainer:trainerobject);
 				i.calcStats();
 			}
 			//Global.partner=new Trainer(trainerid,trainerobject.name,trainerobject.id,trainer.party);

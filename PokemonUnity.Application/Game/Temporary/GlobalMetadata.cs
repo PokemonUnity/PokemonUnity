@@ -108,7 +108,7 @@ namespace PokemonUnity
 		public int[] pokedexIndex				            { get; set; } // Last species viewed per Dex
 		public int pokedexMode								{ get; set; } // Search mode
 		public ITilePosition healingSpot					{ get; set; }
-		public float[] escapePoint							{ get; set; }
+		public MetadataPosition? escapePoint				{ get; set; }
 		public int pokecenterMapId							{ get; set; }
 		public float pokecenterX				            { get; set; }
 		public float pokecenterY				            { get; set; }
@@ -180,7 +180,7 @@ namespace PokemonUnity
 				@pokedexUnlocked[i] = (i==0);
 			}
 			@healingSpot          = null;
-			@escapePoint          = new float[0];
+			@escapePoint          = new MetadataPosition();//float[0];
 			@pokecenterMapId      = -1;
 			@pokecenterX          = -1;
 			@pokecenterY          = -1;
