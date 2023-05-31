@@ -233,19 +233,19 @@ namespace PokemonUnity.Monster
 			ballUsed = Items.NONE;
 			Item = Items.NONE;
 			ribbons = new HashSet<Ribbons>();
-			//calcStats();
-			//if (Game.GameData.GameMap != null)
-			//{
-			//	@ObtainMap = (Locations)Game.GameData.GameMap.map_id;
-			//	//@ObtainText = null;
-			//	@ObtainLevel = Level;
-			//}
-			//else
-			//{
-			//	@ObtainMap = 0;
-			//	//@ObtainText = null;
-			//	@ObtainLevel = Level;
-			//}
+			calcStats();
+			if (Game.GameData.GameMap != null)
+			{
+				@ObtainMap = (Locations)Game.GameData.GameMap.map_id;
+				//@ObtainText = null;
+				@ObtainLevel = Level;
+			}
+			else
+			{
+				@ObtainMap = 0;
+				//@ObtainText = null;
+				@ObtainLevel = Level;
+			}
 			@ObtainedMode = ObtainedMethod.MET;   // Met
 			//if (Game.GameData.GameSwitches != null && Game.GameData.GameSwitches[Core.FATEFUL_ENCOUNTER_SWITCH])
 			if (Core.FATEFUL_ENCOUNTER_SWITCH)
@@ -287,7 +287,7 @@ namespace PokemonUnity.Monster
 		}
 
 		/// <summary>
-		/// Instializes a new Pokemon, with values at default.
+		/// Initializes a new Pokemon, with values at default.
 		/// Pokemon is created at the lowest possible level,
 		/// with all stats randomly generated/assigned (new roll)
 		/// </summary>
@@ -297,7 +297,7 @@ namespace PokemonUnity.Monster
 		public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (isEgg) eggSteps = _base.HatchTime; }
 
 		/// <summary>
-		/// Instializes a new Pokemon, with values at default.
+		/// Initializes a new Pokemon, with values at default.
 		/// Pokemon is created at the level assigned in parameter,
 		/// with all stats randomly generated/assigned (new roll)
 		/// </summary>
@@ -726,18 +726,22 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="Ball">The Pokéball this Pokémon got captured in.</param>
 		/// <param name="Method">The capture method.</param>
-		public Pokemon SetCatchInfos(ITrainer Trainer, Items Ball = Items.POKE_BALL, ObtainedMethod Method = ObtainedMethod.MET)
+		public Pokemon SetCatchInfos(ITrainer trainer, Items ball = Items.POKE_BALL, ObtainedMethod method = ObtainedMethod.MET)
 		{
 			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
-			//this.obtainMap = Game.GameData.Level.MapName;
+			//if not npc?
+			if(Game.GameData.GameMap != null)
+				this.ObtainMap = (Locations)Game.GameData.GameMap.map_id; //todo: remove locations enum from code?
+			else
+				this.ObtainMap = 0;
 			//this.CatchTrainerName = Game.GameData.Player.Name;
 			//this.OT = Game.GameData.Player.Trainer;
-			this.OT = Trainer;
+			this.OT = trainer;
 			this.ObtainLevel = Level;
-			this.ObtainedMode = Method;
+			this.ObtainedMode = method;
 			this.obtainWhen = DateTimeOffset.UtcNow;
-			if (Kernal.ItemData[Ball].Pocket == ItemPockets.POKEBALL)
-				this.ballUsed = Ball;
+			if (Kernal.ItemData[ball].Pocket == ItemPockets.POKEBALL)
+				this.ballUsed = ball;
 			else this.ballUsed = Items.POKE_BALL;
 
 			pbRecordFirstMoves();
@@ -2439,7 +2443,8 @@ namespace PokemonUnity.Monster
 					gain += Happiness < 200 ? 1 : 0;
 					//ToDo: if trainer is on map pkmn was captured on, add more happiness on walk
 					//gain += this.metMap.Id == currentMap.Id ? 1 : 0; //change to "obtainMap"?
-					//if ((int)this.ObtainMap == Game.GameData.GameMap.map_id) gain += 1;
+					if ((int)this.ObtainMap == Game.GameData.GameMap.map_id) gain += 1;
+					luxury = true;
 					break;
 				case HappinessMethods.LEVELUP:
 					gain = 2;
@@ -2581,11 +2586,11 @@ namespace PokemonUnity.Monster
 					stats[i] = calcStat(orig, level, @IV[i], @EV[i], pvalues[i - 1]);
 				}
 			}
-			int diff = @TotalHP - @HP;
+			int diff = @TotalHP - @hp;
 			//@TotalHP = stats[0];
-			@HP = @TotalHP - diff;
-			if (@HP <= 0) @HP = 0;
-			if (@HP > @TotalHP) @HP = @TotalHP;
+			@hp = @TotalHP - diff;
+			if (@hp <= 0) @hp = 0;
+			if (@hp > @TotalHP) @hp = @TotalHP;
 			//@attack = stats[1];
 			//@defense = stats[2];
 			//@speed = stats[3];

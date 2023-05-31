@@ -26,7 +26,7 @@ namespace PokemonEssentials.Interface.Field
 		bool runtoggle { get; set; }
 		/// <summary>
 		/// </summary>
-		/// Should not stack (encourage users to deplete excessive money); 
+		/// Should not stack (encourage users to deplete excessive money);
 		/// reset count based on repel used.
 		///ToDo: Missing Variables for RepelType, Swarm
 		int repel { get; set; }
@@ -55,25 +55,26 @@ namespace PokemonEssentials.Interface.Field
 		/// <summary>
 		/// Array storing which Dexes are unlocked
 		/// </summary>
-		bool[] pokedexUnlocked { get; set; } 
+		bool[] pokedexUnlocked { get; set; }
 		/// <summary>
 		/// All Dexes of non-zero length and unlocked
 		/// </summary>
-		IList<int> pokedexViable { get; set; } 
+		IList<int> pokedexViable { get; set; }
 		/// <summary>
 		/// Dex currently looking at (-1 is National Dex)
 		/// </summary>
-		int pokedexDex { get; set; } 
+		int pokedexDex { get; set; }
 		/// <summary>
 		/// Last species viewed per Dex
 		/// </summary>
-		int[] pokedexIndex { get; set; } 
+		int[] pokedexIndex { get; set; }
 		/// <summary>
 		/// Search mode
 		/// </summary>
-		int pokedexMode { get; set; } 
+		int pokedexMode { get; set; }
 		ITilePosition healingSpot { get; set; }
-		float[] escapePoint { get; set; }
+		//float[] escapePoint { get; set; }
+		MetadataPosition? escapePoint { get; set; }
 		int pokecenterMapId { get; set; }
 		float pokecenterX { get; set; }
 		float pokecenterY { get; set; }
@@ -91,8 +92,8 @@ namespace PokemonEssentials.Interface.Field
 		IBattleRecordData lastbattle { get; set; }
 		IList<IPhoneContact> phoneNumbers { get; set; }
 		/// <summary>
-		/// The time between successive received phone calls is set to a random amount of time between 20 and 40 minutes, 
-		/// and is counted down except when messages are being displayed or the player is being forced to move by a move route. 
+		/// The time between successive received phone calls is set to a random amount of time between 20 and 40 minutes,
+		/// and is counted down except when messages are being displayed or the player is being forced to move by a move route.
 		/// When this time hits 0, a call from a trainer will be generated.
 		/// </summary>
 		int phoneTime { get; set; }

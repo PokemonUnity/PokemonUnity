@@ -6,11 +6,12 @@ namespace PokemonUnity
 	/// <summary>
 	/// Static and unchanging rules for game to function off of.<para></para>
 	/// <see cref="Kernal"/> is a singleton
-	/// that persist throughout the game and inbetween scene levels.
+	/// that persist throughout the game and in-between scene levels.
 	/// <see cref="Core"/> is not an <see cref="object"/>
-	/// but a series of const variables that will be used as rules 
+	/// but a series of const variables that will be used as rules
 	/// for the game mechanics or structure.
 	/// </summary>
+	/// ToDo: Make a private static class for const int switches
 	public static class Core
 	{
 		#region Constant Values and Game Rules
@@ -36,9 +37,9 @@ namespace PokemonUnity
 
 		public const sbyte pokemonGeneration = (sbyte)Generation.All;
 
-#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
-		public static int pokemonGenerationCount { 
-			get { 
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected
+		public static int pokemonGenerationCount {
+			get {
 				int MaxPoke = 0;
 				int Gen1 = 151;
 				int Gen2 = 251;
@@ -79,13 +80,13 @@ namespace PokemonUnity
 				#endregion
 				return MaxPoke; }
 		}
-#pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
+#pragma warning restore 0162 //Warning CS0162  Unreachable code detected
 		#endregion
 
 		#region Variables
 		private static object _locker = new object();
 		/// <summary>
-		/// Constantly revolving random, that won't repeat the same seed number twice, 
+		/// Constantly revolving random, that won't repeat the same seed number twice,
 		/// until it cycles thru all possible seed values
 		/// </summary>
 		public static Random Rand { get { return new Random(Seed()); } }
@@ -101,13 +102,13 @@ namespace PokemonUnity
 			{
 				if (!seed.HasValue) {
 					//seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
-					seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue); 
+					seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue);
 					seed ^= (UInt16)System.DateTime.Now.Ticks;
 					seed &= UInt16.MaxValue;
 				}
-				if (!useFixedSeed) { 
+				if (!useFixedSeed) {
 					seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
-				} 
+				}
 				return seed.Value;
 			}
 		}
@@ -352,7 +353,7 @@ namespace PokemonUnity
 		/// </summary>
 		public const int STORAGEBOXES = 24;
 		#endregion
-		
+
 		#region Pokedex
 		/// <summary>
 		/// Whether the Pokédex list shown is the one for the player's current region

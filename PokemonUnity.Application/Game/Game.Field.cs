@@ -1290,7 +1290,7 @@ namespace PokemonUnity
 			int outfit=trainer != null ? trainer.outfit.Value : 0;
 			string ret=meta[charset];
 			if (ret == null || ret=="") ret=meta[1];
-		//  if FileTest.image_exist("Graphics/Characters/"+ret+"_"+outfit.ToString())
+			//  if FileTest.image_exist("Graphics/Characters/"+ret+"_"+outfit.ToString())
 			if (pbResolveBitmap("Graphics/Characters/"+ret+"_"+outfit.ToString()) != null) {
 			ret=ret+"_"+outfit.ToString();
 			}
@@ -1516,7 +1516,7 @@ namespace PokemonUnity
 		protected virtual void Events_OnMapChanging(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangingEventArgs e) {
 			int newmapID = e.MapId; //[0];
 			IGameMap newmap = e.GameMap; //[1];
-		//  Undo the weather (GameMap still refers to the old map)
+			//  Undo the weather (GameMap still refers to the old map)
 			IDictionary<int, string> mapinfos = new Dictionary<int, string>(); //$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
 			if (newmapID>0) {
 				MetadataWeather? oldweather=pbGetMetadata(GameMap.map_id).Map.Weather;
@@ -1639,7 +1639,7 @@ namespace PokemonUnity
 				if (homedata != null) {
 					pbCancelVehicles();
 					if (this is IGameDependantEvents d) d.pbRemoveDependencies();
-					//GameSwitches[STARTING_OVER_SWITCH]=true;
+					GameSwitches[Core.STARTING_OVER_SWITCH]=true;
 					Features.StartingOver();
 					GameTemp.player_new_map_id=homedata.Value.MapId; //homedata[0]
 					GameTemp.player_new_x=homedata.Value.X; //homedata[1]
@@ -1729,10 +1729,10 @@ namespace PokemonUnity
 		}
 
 		public void pbSetEscapePoint() {
-			if (Global.escapePoint == null) Global.escapePoint=new float[0];
+			if (Global.escapePoint == null) Global.escapePoint=new MetadataPosition(); //float[0];
 			float xco=GamePlayer.x;
 			float yco=GamePlayer.y;
-			float dir = 0;
+			int dir = 0;
 			switch (GamePlayer.direction) {
 				case 2:   // Down
 					yco-=1; dir=8;
@@ -1747,11 +1747,12 @@ namespace PokemonUnity
 					yco+=1; dir=2;
 					break;
 			}
-			Global.escapePoint=new float[] { GameMap.map_id, xco, yco, dir };
+			//Global.escapePoint=new float[] { GameMap.map_id, xco, yco, dir };
+			Global.escapePoint=new MetadataPosition { MapId = GameMap.map_id, X = xco, Y = yco, Direction = dir };
 		}
 
 		public void pbEraseEscapePoint() {
-			Global.escapePoint=new float[0];
+			Global.escapePoint=new MetadataPosition(); //float[0];
 		}
 		#endregion
 
@@ -1764,9 +1765,9 @@ namespace PokemonUnity
 			ITrainer trainerobject=new Trainer(Game._INTL(trainer.name),trainerid);
 			trainerobject.setForeignID(Trainer);
 			foreach (IPokemon i in trainer.party) {
+				(i as Pokemon).SetCatchInfos(trainer:trainerobject);
 				i.trainerID=trainerobject.id;
 				i.ot=trainerobject.name;
-				//i.SetCatchInfos(trainer:trainerobject);
 				i.calcStats();
 			}
 			//Global.partner=new Trainer(trainerid,trainerobject.name,trainerobject.id,trainer.party);
@@ -2080,11 +2081,11 @@ namespace PokemonUnity
 		#region Event locations, terrain tags
 		public bool pbEventFacesPlayer (IGameCharacter @event,IGamePlayer player,float distance) {
 			if (distance<=0) return false;
-		//  Event can't reach player if no coordinates coincide
+			//  Event can't reach player if no coordinates coincide
 			if (@event.x!=player.x && @event.y!=player.y) return false;
 			float deltaX = (@event.direction == 6 ? 1 : @event.direction == 4 ? -1 : 0);
 			float deltaY = (@event.direction == 2 ? 1 : @event.direction == 8 ? -1 : 0);
-		//  Check for existence of player
+			//  Check for existence of player
 			float curx=@event.x;
 			float cury=@event.y;
 			bool found=false;
@@ -2101,11 +2102,11 @@ namespace PokemonUnity
 
 		public bool pbEventCanReachPlayer (IGameCharacter @event,IGamePlayer player,float distance) {
 			if (distance<=0) return false;
-		//  Event can't reach player if no coordinates coincide
+			//  Event can't reach player if no coordinates coincide
 			if (@event.x!=player.x && @event.y!=player.y) return false;
 			float deltaX = (@event.direction == 6 ? 1 : @event.direction == 4 ? -1 : 0);
 			float deltaY =  (@event.direction == 2 ? 1 : @event.direction == 8 ? -1 : 0);
-		//  Check for existence of player
+			//  Check for existence of player
 			float curx=@event.x;
 			float cury=@event.y;
 			bool found=false;
@@ -2120,7 +2121,7 @@ namespace PokemonUnity
 				realdist+=1;
 			}
 			if (!found) return false;
-		//  Check passibility
+			//  Check passibility
 			curx=@event.x;
 			cury=@event.y;
 			for (int i = 0; i < realdist; i++) {
