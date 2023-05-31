@@ -1290,7 +1290,7 @@ namespace PokemonUnity
 			int outfit=trainer != null ? trainer.outfit.Value : 0;
 			string ret=meta[charset];
 			if (ret == null || ret=="") ret=meta[1];
-		//  if FileTest.image_exist("Graphics/Characters/"+ret+"_"+outfit.ToString())
+			//  if FileTest.image_exist("Graphics/Characters/"+ret+"_"+outfit.ToString())
 			if (pbResolveBitmap("Graphics/Characters/"+ret+"_"+outfit.ToString()) != null) {
 			ret=ret+"_"+outfit.ToString();
 			}
@@ -1516,7 +1516,7 @@ namespace PokemonUnity
 		protected virtual void Events_OnMapChanging(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangingEventArgs e) {
 			int newmapID = e.MapId; //[0];
 			IGameMap newmap = e.GameMap; //[1];
-		//  Undo the weather (GameMap still refers to the old map)
+			//  Undo the weather (GameMap still refers to the old map)
 			IDictionary<int, string> mapinfos = new Dictionary<int, string>(); //$RPGVX ? load_data("Data/MapInfos.rvdata") : load_data("Data/MapInfos.rxdata");
 			if (newmapID>0) {
 				MetadataWeather? oldweather=pbGetMetadata(GameMap.map_id).Map.Weather;
@@ -2081,11 +2081,11 @@ namespace PokemonUnity
 		#region Event locations, terrain tags
 		public bool pbEventFacesPlayer (IGameCharacter @event,IGamePlayer player,float distance) {
 			if (distance<=0) return false;
-		//  Event can't reach player if no coordinates coincide
+			//  Event can't reach player if no coordinates coincide
 			if (@event.x!=player.x && @event.y!=player.y) return false;
 			float deltaX = (@event.direction == 6 ? 1 : @event.direction == 4 ? -1 : 0);
 			float deltaY = (@event.direction == 2 ? 1 : @event.direction == 8 ? -1 : 0);
-		//  Check for existence of player
+			//  Check for existence of player
 			float curx=@event.x;
 			float cury=@event.y;
 			bool found=false;
@@ -2102,11 +2102,11 @@ namespace PokemonUnity
 
 		public bool pbEventCanReachPlayer (IGameCharacter @event,IGamePlayer player,float distance) {
 			if (distance<=0) return false;
-		//  Event can't reach player if no coordinates coincide
+			//  Event can't reach player if no coordinates coincide
 			if (@event.x!=player.x && @event.y!=player.y) return false;
 			float deltaX = (@event.direction == 6 ? 1 : @event.direction == 4 ? -1 : 0);
 			float deltaY =  (@event.direction == 2 ? 1 : @event.direction == 8 ? -1 : 0);
-		//  Check for existence of player
+			//  Check for existence of player
 			float curx=@event.x;
 			float cury=@event.y;
 			bool found=false;
@@ -2121,7 +2121,7 @@ namespace PokemonUnity
 				realdist+=1;
 			}
 			if (!found) return false;
-		//  Check passibility
+			//  Check passibility
 			curx=@event.x;
 			cury=@event.y;
 			for (int i = 0; i < realdist; i++) {

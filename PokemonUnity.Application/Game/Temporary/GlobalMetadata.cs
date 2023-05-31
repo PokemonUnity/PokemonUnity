@@ -43,7 +43,7 @@ namespace PokemonUnity
 				}
 			}
 		}
-		
+
 		public void pbConvertItemToPokemon(int? variable,object[] array) {
 			Pokemons item=(Pokemons)pbGet(variable);
 			pbSet(variable,0);
@@ -76,7 +76,7 @@ namespace PokemonUnity
 		public bool runtoggle				{ get; set; }
 		/// <summary>
 		/// </summary>
-		/// Should not stack (encourage users to deplete excessive money); 
+		/// Should not stack (encourage users to deplete excessive money);
 		/// reset count based on repel used.
 		///ToDo: Missing Variables for RepelType, Swarm
 		public int repel				    { get; set; }
