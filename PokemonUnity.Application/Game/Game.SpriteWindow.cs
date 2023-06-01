@@ -12,7 +12,7 @@ namespace PokemonUnity
 {
 	public partial class Game : IGameSpriteWindow
 	{
-		// pbFadeOutIn(z) { block }
+		// FadeOutIn(z) { block }
 		/// <summary>
 		/// Fades out the screen before a <paramref name="block"/> is run and fades it back in after the
 		/// block exits.
@@ -20,7 +20,7 @@ namespace PokemonUnity
 		/// <param name="z">indicates the z-coordinate of the viewport used for this effect</param>
 		/// <param name="nofadeout"></param>
 		/// <param name="block"></param>
-		public void pbFadeOutIn(int z, bool nofadeout= false, Action block = null)
+		public void FadeOutIn(int z, bool nofadeout= false, Action block = null)
 		{
             IColor col = null; //new Color(0, 0, 0, 0);
             IViewport viewport = null; //new Viewport(0, 0, Graphics.width, Graphics.height);
@@ -32,11 +32,11 @@ namespace PokemonUnity
 				Graphics?.update();
 				Input.update();
 			}
-			pbPushFade();
+			PushFade();
 			try { //begin;
 				if (block != null) block.Invoke(); //(block_given ?) yield;
 			} finally { //ensure;
-				pbPopFade();
+				PopFade();
 				if (!nofadeout)
 				{
 					for (int j = 0; j < 17; j++)
@@ -51,7 +51,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbPushFade()
+		public void PushFade()
 		{
 			if (GameTemp != null)
 			{
@@ -59,7 +59,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbPopFade()
+		public void PopFade()
 		{
 			if (GameTemp != null)
 			{
@@ -82,57 +82,57 @@ namespace PokemonUnity
             throw new NotImplementedException();
         }
 
-        public IBitmap pbGetTileBitmap(string filename, int tile_id, int hue)
+        public IBitmap GetTileBitmap(string filename, int tile_id, int hue)
         {
             throw new NotImplementedException();
         }
 
-        public IBitmap[] pbGetAnimation(string name, int hue = 0)
+        public IBitmap[] GetAnimation(string name, int hue = 0)
         {
             throw new NotImplementedException();
         }
 
-        public IBitmap[] pbGetTileset(string name, int hue = 0)
+        public IBitmap[] GetTileset(string name, int hue = 0)
         {
             throw new NotImplementedException();
         }
 
-        public IBitmap[] pbGetAutotile(string name, int hue = 0)
+        public IBitmap[] GetAutotile(string name, int hue = 0)
         {
             throw new NotImplementedException();
         }
 
-        public void pbDrawShadow(IBitmap bitmap, float x, float y, int width, int height, string text)
+        public void DrawShadow(IBitmap bitmap, float x, float y, int width, int height, string text)
         {
             throw new NotImplementedException();
         }
 
-        public void pbDrawShadowText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0)
+        public void DrawShadowText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0)
         {
             throw new NotImplementedException();
         }
 
-        public void pbDrawOutlineText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0)
+        public void DrawOutlineText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0)
         {
             throw new NotImplementedException();
         }
 
-        public void pbBottomRight(IWindow window)
+        public void BottomRight(IWindow window)
         {
             throw new NotImplementedException();
         }
 
-        public void pbBottomLeft(IWindow window)
+        public void BottomLeft(IWindow window)
         {
             throw new NotImplementedException();
         }
 
-        public void pbBottomLeftLines(IWindow window, int lines, int? width = null)
+        public void BottomLeftLines(IWindow window, int lines, int? width = null)
         {
             throw new NotImplementedException();
         }
 
-        public bool pbDisposed(IViewport x)
+        public bool Disposed(IViewport x)
         {
             throw new NotImplementedException();
         }
@@ -152,87 +152,87 @@ namespace PokemonUnity
             throw new NotImplementedException();
         }
 
-        public IBitmap pbDoEnsureBitmap(IBitmap bitmap, int dwidth, int dheight)
+        public IBitmap DoEnsureBitmap(IBitmap bitmap, int dwidth, int dheight)
         {
             throw new NotImplementedException();
         }
 
-        public void pbUpdateSpriteHash(IWindow[] windows)
+        public void UpdateSpriteHash(IWindow[] windows)
         {
             throw new NotImplementedException();
         }
 
-        public void pbDisposeSpriteHash(ISprite[] sprites)
+        public void DisposeSpriteHash(ISprite[] sprites)
         {
             throw new NotImplementedException();
         }
 
-        public void pbDisposeSprite(ISprite[] sprites, int id)
+        public void DisposeSprite(ISprite[] sprites, int id)
         {
             throw new NotImplementedException();
         }
 
-        public void pbDrawTextPositions(IBitmap bitmap, IList<ITextPosition> textpos)
+        public void DrawTextPositions(IBitmap bitmap, IList<ITextPosition> textpos)
         {
             throw new NotImplementedException();
         }
 
-        public void pbDrawImagePositions(IBitmap bitmap, IList<ITextPosition> textpos)
+        public void DrawImagePositions(IBitmap bitmap, IList<ITextPosition> textpos)
         {
             throw new NotImplementedException();
         }
 
-        public void pbFadeOutAndHide(ISprite[] sprites)
+        public void FadeOutAndHide(ISprite[] sprites)
         {
             throw new NotImplementedException();
         }
 
-        public void pbFadeInAndShow(ISprite[] sprites, IList<ISprite> visiblesprites = null, Action block = null)
+        public void FadeInAndShow(ISprite[] sprites, IList<ISprite> visiblesprites = null, Action block = null)
         {
             throw new NotImplementedException();
         }
 
-        public void pbRestoreActivations(ISprite[] sprites, object activeStatuses)
+        public void RestoreActivations(ISprite[] sprites, object activeStatuses)
         {
             throw new NotImplementedException();
         }
 
-        public void pbDeactivateWindows(IWindow[] sprites, Action action = null)
+        public void DeactivateWindows(IWindow[] sprites, Action action = null)
         {
             throw new NotImplementedException();
         }
 
-        public void pbActivateWindow(IWindow[] sprites, int key, Action action = null)
+        public void ActivateWindow(IWindow[] sprites, int key, Action action = null)
         {
             throw new NotImplementedException();
         }
 
-        public IColor pbAlphaBlend(IColor dstColor, IColor srcColor)
+        public IColor AlphaBlend(IColor dstColor, IColor srcColor)
         {
             throw new NotImplementedException();
         }
 
-        public IColor pbSrcOver(IColor dstColor, IColor srcColor)
+        public IColor SrcOver(IColor dstColor, IColor srcColor)
         {
             throw new NotImplementedException();
         }
 
-        public void pbSetSpritesToColor(ISprite[] sprites, IColor color)
+        public void SetSpritesToColor(ISprite[] sprites, IColor color)
         {
             throw new NotImplementedException();
         }
 
-        public string pbTryString(string x)
+        public string TryString(string x)
         {
             throw new NotImplementedException();
         }
 
-        public string pbBitmapName(string x)
+        public string BitmapName(string x)
         {
             throw new NotImplementedException();
         }
 
-        public string pbResolveBitmap(string x)
+        public string ResolveBitmap(string x)
         {
             throw new NotImplementedException();
         }
@@ -247,52 +247,52 @@ namespace PokemonUnity
             throw new NotImplementedException();
         }
 
-        public void pbSetSystemFont(IBitmap bitmap)
+        public void SetSystemFont(IBitmap bitmap)
         {
             throw new NotImplementedException();
         }
 
-        public string pbSmallFontName()
+        public string SmallFontName()
         {
             throw new NotImplementedException();
         }
 
-        public string pbNarrowFontName()
+        public string NarrowFontName()
         {
             throw new NotImplementedException();
         }
 
-        public void pbSetSmallFont(IBitmap bitmap)
+        public void SetSmallFont(IBitmap bitmap)
         {
             throw new NotImplementedException();
         }
 
-        public void pbSetNarrowFont(IBitmap bitmap)
+        public void SetNarrowFont(IBitmap bitmap)
         {
             throw new NotImplementedException();
         }
 
-        public bool pbRgssExists(string filename)
+        public bool RgssExists(string filename)
         {
             throw new NotImplementedException();
         }
 
-        public IDisposable pbRgssOpen(string file, int? mode = null, Action action = null)
+        public IDisposable RgssOpen(string file, int? mode = null, Action action = null)
         {
             throw new NotImplementedException();
         }
 
-        public string pbGetFileChar(string file)
+        public string GetFileChar(string file)
         {
             throw new NotImplementedException();
         }
 
-        public string pbGetFileString(string file)
+        public string GetFileString(string file)
         {
             throw new NotImplementedException();
         }
 
-        public bool pbIsFaded
+        public bool IsFaded
 		{
 			get
 			{

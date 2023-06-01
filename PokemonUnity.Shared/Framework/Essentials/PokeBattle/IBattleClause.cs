@@ -15,15 +15,15 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// </summary>
 	public interface IBattleClause
 	{
-		//alias __clauses__pbDecisionOnDraw pbDecisionOnDraw;
-		//alias __clauses__pbEndOfRoundPhase pbEndOfRoundPhase;
+		//alias __clauses__DecisionOnDraw DecisionOnDraw;
+		//alias __clauses__EndOfRoundPhase EndOfRoundPhase;
 		//@__clauses__aliased = true;
 
-		BattleResults pbDecisionOnDraw();
+		BattleResults DecisionOnDraw();
 
-		void pbJudgeCheckpoint(IBattler attacker, IBattleMove move= null);
+		void JudgeCheckpoint(IBattler attacker, IBattleMove move= null);
 
-		void pbEndOfRoundPhase();
+		void EndOfRoundPhase();
 	}
 
 	/// <summary>
@@ -31,19 +31,19 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// </summary>
 	public interface IBattlerClause
 	{
-		//alias __clauses__pbCanSleep? pbCanSleep ?;
-		//alias __clauses__pbCanSleepYawn? pbCanSleepYawn ?;
-		//alias __clauses__pbCanFreeze? pbCanFreeze ?;
-		//alias __clauses__pbUseMove pbUseMove;
+		//alias __clauses__CanSleep? CanSleep ?;
+		//alias __clauses__CanSleepYawn? CanSleepYawn ?;
+		//alias __clauses__CanFreeze? CanFreeze ?;
+		//alias __clauses__UseMove UseMove;
 		//@__clauses__aliased = true;
 
-		bool pbHasStatusPokemon(Status status);
+		bool HasStatusPokemon(Status status);
 
-		bool pbCanSleepYawn();
+		bool CanSleepYawn();
 
-		bool pbCanFreeze(IBattler attacker, bool showMessages, IBattleMove move = null);
+		bool CanFreeze(IBattler attacker, bool showMessages, IBattleMove move = null);
 
-		bool pbCanSleep(IBattler attacker, bool showMessages, IBattleMove move= null, bool ignorestatus= false);
+		bool CanSleep(IBattler attacker, bool showMessages, IBattleMove move= null, bool ignorestatus= false);
 	}
 
 	public interface IBattleMove_MoveFailed
@@ -53,7 +53,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="attacker"></param>
 		/// <param name="opponent"></param>
 		/// <returns></returns>
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}
 
 	/*public interface IPokeBattle_Move_022
@@ -64,7 +64,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="attacker"></param>
 		/// <param name="opponent"></param>
 		/// <returns></returns>
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}
 
 	public interface IPokeBattle_Move_034
@@ -75,7 +75,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="attacker"></param>
 		/// <param name="opponent"></param>
 		/// <returns></returns>
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}
 
 	public interface IPokeBattle_Move_067
@@ -86,7 +86,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="attacker"></param>
 		/// <param name="opponent"></param>
 		/// <returns></returns>
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}
 
 	public interface IPokeBattle_Move_06A
@@ -97,7 +97,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="attacker"></param>
 		/// <param name="opponent"></param>
 		/// <returns></returns>
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}
 
 	public interface IPokeBattle_Move_06B
@@ -108,7 +108,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="attacker"></param>
 		/// <param name="opponent"></param>
 		/// <returns></returns>
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}
 
 	public interface IPokeBattle_Move_070
@@ -119,27 +119,27 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="attacker"></param>
 		/// <param name="opponent"></param>
 		/// <returns></returns>
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}
 
 	public interface IPokeBattle_Move_0E0
 	{ 
-		//alias __clauses__pbOnStartUse pbOnStartUse;
+		//alias __clauses__OnStartUse OnStartUse;
 		//@__clauses__aliased = true;
 		// Selfdestruct
 
-		bool pbOnStartUse(IBattler attacker);
+		bool OnStartUse(IBattler attacker);
 	}
 
 	public interface IPokeBattle_Move_0E5
 	{ 
 		// Perish Song
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}
 
 	public interface IPokeBattle_Move_0E7
 	{ 
 		// Destiny Bond
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}*/
 }

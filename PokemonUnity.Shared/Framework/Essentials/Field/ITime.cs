@@ -12,9 +12,9 @@ namespace PokemonEssentials.Interface.Field
 	public interface IGameTime
 	{
 		#region Day and night system
-		DateTime pbGetTimeNow();
+		DateTime GetTimeNow();
 
-		void pbDayNightTint(object obj);
+		void DayNightTint(object obj);
 		#endregion
 
 		#region Moon phases and Zodiac
@@ -67,47 +67,47 @@ namespace PokemonEssentials.Interface.Field
 		#endregion
 
 		#region Days of the week
-		bool pbIsWeekday(int wdayVariable, params int[] arg);
+		bool IsWeekday(int wdayVariable, params int[] arg);
 		#endregion
 
 		#region Months
-		bool pbIsMonth(int monVariable, params int[] arg);
+		bool IsMonth(int monVariable, params int[] arg);
 
-		string pbGetAbbrevMonthName(int month);
+		string GetAbbrevMonthName(int month);
 		#endregion
 
 		#region Seasons
-		int pbGetSeason();
+		int GetSeason();
 
-		bool pbIsSeason(int seasonVariable, params int[] arg);
+		bool IsSeason(int seasonVariable, params int[] arg);
 
 		/// <summary>
 		/// Jan, May, Sep
 		/// </summary>
 		/// <returns></returns>
-		bool pbIsSpring();
+		bool IsSpring();
 		/// <summary>
 		/// Feb, Jun, Oct
 		/// </summary>
 		/// <returns></returns>
-		bool pbIsSummer();
+		bool IsSummer();
 		/// <summary>
 		/// Mar, Jul, Nov
 		/// </summary>
 		/// <returns></returns>
-		bool pbIsAutumn();
+		bool IsAutumn();
 		/// <summary>
-		/// <seealso cref="pbIsAutumn"/>
+		/// <seealso cref="IsAutumn"/>
 		/// </summary>
 		/// <returns></returns>
-		bool pbIsFall();
+		bool IsFall();
 		/// <summary>
 		/// Apr, Aug, Dec
 		/// </summary>
 		/// <returns></returns>
-		bool pbIsWinter();
+		bool IsWinter();
 
-		string pbGetSeasonName(int season);
+		string GetSeasonName(int season);
 		#endregion
 	}
 
@@ -165,6 +165,6 @@ namespace PokemonEssentials.Interface.Field
 		/// </summary>
 		ITone getTone();
 
-		int pbGetDayNightMinutes();
+		int GetDayNightMinutes();
 	}
 }

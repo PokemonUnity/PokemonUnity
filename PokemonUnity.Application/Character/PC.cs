@@ -357,38 +357,38 @@ namespace PokemonUnity.Character
 			throw new NotImplementedException();
 		}
 
-		int IPCPokemonStorage.pbFirstFreePos(int box)
+		int IPCPokemonStorage.FirstFreePos(int box)
 		{
 			throw new NotImplementedException();
 		}
 
-		bool IPCPokemonStorage.pbCopy(int boxDst, int indexDst, int boxSrc, int indexSrc)
+		bool IPCPokemonStorage.Copy(int boxDst, int indexDst, int boxSrc, int indexSrc)
 		{
 			throw new NotImplementedException();
 		}
 
-		bool IPCPokemonStorage.pbMove(int boxDst, int indexDst, int boxSrc, int indexSrc)
+		bool IPCPokemonStorage.Move(int boxDst, int indexDst, int boxSrc, int indexSrc)
 		{
 			throw new NotImplementedException();
 		}
 
-		void IPCPokemonStorage.pbMoveCaughtToParty(IPokemon pkmn)
+		void IPCPokemonStorage.MoveCaughtToParty(IPokemon pkmn)
 		{
 			throw new NotImplementedException();
 		}
 
-		bool IPCPokemonStorage.pbMoveCaughtToBox(IPokemon pkmn, int box)
+		bool IPCPokemonStorage.MoveCaughtToBox(IPokemon pkmn, int box)
 		{
 			throw new NotImplementedException();
 		}
 
-		int IPCPokemonStorage.pbStoreCaught(IPokemon pkmn)
+		int IPCPokemonStorage.StoreCaught(IPokemon pkmn)
 		{
 			KeyValuePair<int, int>? kv = addPokemon(pkmn);
 			return kv == null ? -1 : kv.Value.Key; //return the box
 		}
 
-		void IPCPokemonStorage.pbDelete(int box, int index)
+		void IPCPokemonStorage.Delete(int box, int index)
 		{
 			removePokemon(box, index);
 		}

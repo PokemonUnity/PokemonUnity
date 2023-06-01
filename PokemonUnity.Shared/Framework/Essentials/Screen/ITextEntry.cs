@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IPokemonEntryScreen : IScreen
 	{
 		void initialize(IPokemonEntryScene scene);
-		string pbStartScreen(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.UX.TextEntryTypes mode = 0, IPokemon pokemon = null);
+		string StartScreen(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.UX.TextEntryTypes mode = 0, IPokemon pokemon = null);
 	}
 
 	/// <summary>
@@ -28,11 +28,11 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPokemonEntryScene : IScene
 	{
-		void pbStartScene(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.UX.TextEntryTypes subject = 0, IPokemon pokemon = null);
-		void pbEndScene();
-		string pbEntry();
-		//string pbEntry1();
-		//string pbEntry2();
+		void StartScene(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.UX.TextEntryTypes subject = 0, IPokemon pokemon = null);
+		void EndScene();
+		string Entry();
+		//string Entry1();
+		//string Entry2();
 	}
 
 	/// <summary>
@@ -40,29 +40,29 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPokemonEntryScene2 : IScene, IPokemonEntryScene
 	{
-		//void pbStartScene(string helptext, int minlength, int maxlength, string initialText, int subject = 0, Pokemon pokemon = null);
-		//void pbEndScene();
-		//string pbEntry();
-		void pbUpdate();
-		void pbChangeTab(int newtab = 0);
-		bool pbColumnEmpty(int m);
-		void pbUpdateOverlay();
-		void pbDoUpdateOverlay();
-		void pbDoUpdateOverlay2();
-		bool pbMoveCursor();
+		//void StartScene(string helptext, int minlength, int maxlength, string initialText, int subject = 0, Pokemon pokemon = null);
+		//void EndScene();
+		//string Entry();
+		void Update();
+		void ChangeTab(int newtab = 0);
+		bool ColumnEmpty(int m);
+		void UpdateOverlay();
+		void DoUpdateOverlay();
+		void DoUpdateOverlay2();
+		bool MoveCursor();
 		int wrapmod(int x, int y);
 	}
 
 	public interface IGameTextEntry
 	{
-		string pbEnterText(string helptext, int minlength, int maxlength, string initialText = "", int mode = 0, IPokemon pokemon = null, bool nofadeout = false);
+		string EnterText(string helptext, int minlength, int maxlength, string initialText = "", int mode = 0, IPokemon pokemon = null, bool nofadeout = false);
 
-		string pbEnterPlayerName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
+		string EnterPlayerName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
 
-		string pbEnterPokemonName(string helptext, int minlength, int maxlength, string initialText = "", IPokemon pokemon = null, bool nofadeout = false);
+		string EnterPokemonName(string helptext, int minlength, int maxlength, string initialText = "", IPokemon pokemon = null, bool nofadeout = false);
 
-		string pbEnterBoxName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
+		string EnterBoxName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
 
-		string pbEnterNPCName(string helptext, int minlength, int maxlength, string initialText = "", int id = 0, bool nofadeout = false);
+		string EnterNPCName(string helptext, int minlength, int maxlength, string initialText = "", int id = 0, bool nofadeout = false);
 	}
 }

@@ -94,7 +94,7 @@ namespace PokemonUnity
 					return (int)Math.Floor(catchRate*3/2f);
 				}
 				else if (ball == Items.NET_BALL) {
-					if (battler.pbHasType(Types.BUG) || battler.pbHasType(Types.WATER)) catchRate*=3;
+					if (battler.HasType(Types.BUG) || battler.HasType(Types.WATER)) catchRate*=3;
 					return catchRate;
 				}
 				else if (ball == Items.DIVE_BALL) {
@@ -108,8 +108,8 @@ namespace PokemonUnity
 					return catchRate;
 				}
 				else if (ball == Items.REPEAT_BALL) {
-					if (battle.pbPlayer().owned[battler.Species]) catchRate*=3;
-					//if (battle.pbPlayer().Pokedex[(int)battler.Species,1] == 1) catchRate*=3;
+					if (battle.Player().owned[battler.Species]) catchRate*=3;
+					//if (battle.Player().Pokedex[(int)battler.Species,1] == 1) catchRate*=3;
 					return catchRate;
 				}
 				else if (ball == Items.TIMER_BALL) {
@@ -118,7 +118,7 @@ namespace PokemonUnity
 					return catchRate;
 				}
 				else if (ball == Items.DUSK_BALL) {
-					//if (PBDayNight.isNight()) catchRate*=7/2;
+					//if (DayNight.isNight()) catchRate*=7/2;
 					if (Game.GetTime == Overworld.DayTime.Night) catchRate*=7/2;
 					return catchRate;
 				}
@@ -127,8 +127,8 @@ namespace PokemonUnity
 					return catchRate;
 				}
 				else if (ball == Items.FAST_BALL) {
-					//dexdata=pbOpenDexData;
-					//pbDexDataOffset(dexdata,battler.Species,13);
+					//dexdata=OpenDexData;
+					//DexDataOffset(dexdata,battler.Species,13);
 					//basespeed=dexdata.fgetb;
 					//dexdata.close;
 					int basespeed=Kernal.PokemonData[battler.Species].BaseStatsSPE;
@@ -136,14 +136,14 @@ namespace PokemonUnity
 					return (int)Math.Min(catchRate,255);
 				}
 				else if (ball == Items.LEVEL_BALL) {
-					int pbattler=battle.battlers[0].Level;
+					int attler=battle.battlers[0].Level;
 					if (battle.battlers[2].IsNotNullOrNone() &&
-						battle.battlers[2].Level>pbattler) pbattler=battle.battlers[2].Level;
-					if (pbattler>=battler.Level*4) {
+						battle.battlers[2].Level>attler) attler=battle.battlers[2].Level;
+					if (attler>=battler.Level*4) {
 						catchRate*=8;
-					} else if (pbattler>=battler.Level*2) {
+					} else if (attler>=battler.Level*2) {
 						catchRate*=4;
-					} else if (pbattler>battler.Level) {
+					} else if (attler>battler.Level) {
 						catchRate*=2;
 					}
 					return (int)Math.Min(catchRate,255);
@@ -172,16 +172,16 @@ namespace PokemonUnity
 					return (int)Math.Min(catchRate,255);
 				}
 				else if (ball == Items.LOVE_BALL) {
-					IBattler pbattler=battle.battlers[0];
-					IBattler pbattler2=null;
-					if (battle.battlers[2].IsNotNullOrNone()) pbattler2=battle.battlers[2];
-					if (pbattler.Species==battler.Species &&
-						((battler.Gender==false && pbattler.Gender==true) ||
-						(battler.Gender==true && pbattler.Gender==false))) {
+					IBattler attler=battle.battlers[0];
+					IBattler attler2=null;
+					if (battle.battlers[2].IsNotNullOrNone()) attler2=battle.battlers[2];
+					if (attler.Species==battler.Species &&
+						((battler.Gender==false && attler.Gender==true) ||
+						(battler.Gender==true && attler.Gender==false))) {
 						catchRate*=8;
-					} else if (pbattler2.IsNotNullOrNone() && pbattler2.Species==battler.Species &&
-						((battler.Gender==false && pbattler2.Gender==true) ||
-						(battler.Gender==true && pbattler2.Gender==false))) {
+					} else if (attler2.IsNotNullOrNone() && attler2.Species==battler.Species &&
+						((battler.Gender==false && attler2.Gender==true) ||
+						(battler.Gender==true && attler2.Gender==false))) {
 						catchRate*=8;
 					}
 					return (int)Math.Min(catchRate,255);
@@ -254,7 +254,7 @@ namespace PokemonUnity
 				return;
 			}
 
-			public static Items pbBallTypeToBall(int balltype) {
+			public static Items BallTypeToBall(int balltype) {
 				Items ret = Items.POKE_BALL;
 				//if (BallTypes[balltype]) {
 				if (balltype > 0 && balltype < BallTypes.Length) {
@@ -268,8 +268,8 @@ namespace PokemonUnity
 				return ret; //Items.POKEBALL;
 			}
 
-			public static int pbGetBallType(Items ball) {
-				//ball=getID(PBItems,ball);
+			public static int GetBallType(Items ball) {
+				//ball=getID(Items,ball);
 				//foreach (var key in BallTypes) {
 				for (int key = 0; key < BallTypes.Length; key++) {
 					if (ball==BallTypes[key]) return key;

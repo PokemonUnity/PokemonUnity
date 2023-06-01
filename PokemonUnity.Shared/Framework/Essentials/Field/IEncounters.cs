@@ -57,24 +57,24 @@ namespace PokemonEssentials.Interface.Field
 
 		bool isWater();
 
-		Method? pbEncounterType();
+		Method? EncounterType();
 
 		bool isEncounterPossibleHere();
 
 		void setup(int mapID);
 
-		bool pbMapHasEncounter(int mapID, Method enctype);
+		bool MapHasEncounter(int mapID, Method enctype);
 
-		IEncounter pbMapEncounter(int mapID, Method enctype);
-		//IPokemon pbMapEncounter(int mapID, EncounterTypes enctype);
+		IEncounter MapEncounter(int mapID, Method enctype);
+		//IPokemon MapEncounter(int mapID, EncounterTypes enctype);
 
-		IEncounter pbEncounteredPokemon(Method enctype, int tries = 1);
-		//IPokemon pbEncounteredPokemon(EncounterTypes enctype, int tries = 1);
+		IEncounter EncounteredPokemon(Method enctype, int tries = 1);
+		//IPokemon EncounteredPokemon(EncounterTypes enctype, int tries = 1);
 
-		bool pbCanEncounter(IEncounter encounter);
+		bool CanEncounter(IEncounter encounter);
 
-		IEncounter pbGenerateEncounter(Method enctype);
-		//IPokemon pbGenerateEncounter(EncounterTypes enctype);
+		IEncounter GenerateEncounter(Method enctype);
+		//IPokemon GenerateEncounter(EncounterTypes enctype);
 
 		#region Encounter Modifiers
 		//###############################################################################
@@ -107,7 +107,7 @@ namespace PokemonEssentials.Interface.Field
 		//private void onWildPokemonCreate(object sender, EventArg.OnWildPokemonCreateEventArgs e) {
 		//   Monster.Pokemon pokemon = e[0];
 		//   if (Game.GameData.GameMap.map_id==51) {
-		//     int newlevel=(int)Math.Round(Game.pbBalancedLevel(Game.GameData.Player.Party) - 4 + Core.Rand.Next(5));   // For variety
+		//     int newlevel=(int)Math.Round(Game.BalancedLevel(Game.GameData.Player.Party) - 4 + Core.Rand.Next(5));   // For variety
 		//     if (newlevel < 1) newlevel=1;
 		//     if (newlevel > Core.MAXIMUMLEVEL) newlevel = Core.MAXIMUMLEVEL;
 		//     pokemon.Level=newlevel;

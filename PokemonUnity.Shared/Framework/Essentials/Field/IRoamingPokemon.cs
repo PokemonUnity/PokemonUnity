@@ -31,24 +31,24 @@ namespace PokemonEssentials.Interface.Field
 		/// <summary>
 		/// Resets all roaming Pokemon that were defeated without having been caught.
 		/// </summary>
-		void pbResetAllRoamers();
+		void ResetAllRoamers();
 
 		/// <summary>
 		/// Gets the roaming areas for a particular Pokémon.
 		/// </summary>
-		int[] pbRoamingAreas(int index);
+		int[] RoamingAreas(int index);
 
 		/// <summary>
 		/// Puts a roamer in a completely random map available to it.
 		/// </summary>
 		/// <param name="index"></param>
-		void pbRandomRoam(int index);
+		void RandomRoam(int index);
 
 		/// <summary>
 		/// Roams all roamers, if their Switch is on.
 		/// </summary>
 		/// <param name="ignoretrail"></param>
-		void pbRoamPokemon(bool ignoretrail = false);
+		void RoamPokemon(bool ignoretrail = false);
 
 		/// <summary>
 		/// Fires whenever the player moves to a new map. Event handler receives the old
@@ -65,7 +65,7 @@ namespace PokemonEssentials.Interface.Field
 		event Action<object, EventArg.IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
 		//Events.OnWildBattleOverride+=proc { |sender,e|
 
-		PokemonUnity.Combat.BattleResults pbRoamingPokemonBattle(Pokemons species, int level);
+		PokemonUnity.Combat.BattleResults RoamingPokemonBattle(Pokemons species, int level);
 
 		//EncounterModifier.register(proc {|encounter|});
 		//void register(Func<IEncounter, IEncounter> p);
@@ -89,6 +89,6 @@ namespace PokemonEssentials.Interface.Field
 		/// Water-based only
 		/// </param>
 		/// <returns></returns>
-		bool pbRoamingMethodAllowed(Method enctype);
+		bool RoamingMethodAllowed(Method enctype);
 	}
 }

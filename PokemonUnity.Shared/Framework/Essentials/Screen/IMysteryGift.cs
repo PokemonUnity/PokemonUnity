@@ -57,9 +57,9 @@ namespace PokemonEssentials.Interface.Screen
 		// ###############################################################################
 		// type: 0=Pokémon; 1 or higher=item (is the item's quantity).
 		// item: The thing being turned into a Mystery Gift (Pokémon object or item ID).
-		IMysteryGiftData pbEditMysteryGift(int type, Items item, int id = 0, string giftname = "");
+		IMysteryGiftData EditMysteryGift(int type, Items item, int id = 0, string giftname = "");
 
-		void pbCreateMysteryGift(int type, Items item);
+		void CreateMysteryGift(int type, Items item);
 
 
 
@@ -67,9 +67,9 @@ namespace PokemonEssentials.Interface.Screen
 		// Debug option for managing gifts in the Master file and exporting them to a
 		// file to be uploaded.
 		// ###############################################################################
-		void pbManageMysteryGifts();
+		void ManageMysteryGifts();
 
-		void pbRefreshMGCommands(IMysteryGiftData[] master, int[] online);
+		void RefreshMGCommands(IMysteryGiftData[] master, int[] online);
 
 
 
@@ -77,24 +77,24 @@ namespace PokemonEssentials.Interface.Screen
 		// Downloads all available Mystery Gifts that haven't been downloaded yet.
 		// ###############################################################################
 		// Called from the Continue/New Game screen.
-		ITrainer pbDownloadMysteryGift(ITrainer trainer);
+		ITrainer DownloadMysteryGift(ITrainer trainer);
 
 
 
 		// ###############################################################################
 		// Converts an array of gifts into a string and back.
 		// ###############################################################################
-		string pbMysteryGiftEncrypt(IMysteryGiftData gift);
+		string MysteryGiftEncrypt(IMysteryGiftData gift);
 
-		IMysteryGiftData pbMysteryGiftDecrypt(string gift);
+		IMysteryGiftData MysteryGiftDecrypt(string gift);
 
 
 
 		// ###############################################################################
 		// Collecting a Mystery Gift from the deliveryman.
 		// ###############################################################################
-		int pbNextMysteryGiftID();
+		int NextMysteryGiftID();
 
-		bool pbReceiveMysteryGift(int id);
+		bool ReceiveMysteryGift(int id);
 	}
 }

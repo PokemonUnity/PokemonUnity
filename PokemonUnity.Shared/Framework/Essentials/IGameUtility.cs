@@ -25,7 +25,7 @@ namespace PokemonEssentials.Interface
 		//static string _INTL(string message, params object[] param);
 
 		#region General purpose utilities
-		bool _pbNextComb(int[] comb, int length);
+		bool _NextComb(int[] comb, int length);
 
 		/// <summary>
 		/// Iterates through the array and yields each combination of <paramref name="num"/> 
@@ -34,25 +34,25 @@ namespace PokemonEssentials.Interface
 		/// <param name="array"></param>
 		/// <param name="num"></param>
 		/// <returns></returns>
-		//IEnumerator<T[]> pbEachCombination<T>(T[] array, int num);
-		IEnumerable<T[]> pbEachCombination<T>(T[] array, int num);
+		//IEnumerator<T[]> EachCombination<T>(T[] array, int num);
+		IEnumerable<T[]> EachCombination<T>(T[] array, int num);
 
 		/// <summary>
 		/// Gets the path of the user's "My Documents" folder.
 		/// </summary>
 		/// <returns></returns>
-		string pbGetMyDocumentsFolder();
+		string GetMyDocumentsFolder();
 
 		/// <summary>
 		/// Returns a country ID
 		/// </summary>
 		/// http://msdn.microsoft.com/en-us/library/dd374073%28VS.85%29.aspx?
-		int pbGetCountry();
+		int GetCountry();
 
 		/// <summary>
 		/// Returns a language ID
 		/// </summary>
-		int pbGetLanguage();
+		int GetLanguage();
 
 		/// <summary>
 		/// Converts a Celsius temperature to Fahrenheit.
@@ -70,21 +70,21 @@ namespace PokemonEssentials.Interface
 		#endregion
 
 		#region Player-related utilities, random name generator
-		//bool pbChangePlayer(int id);
-		void pbChangePlayer(int id);
+		//bool ChangePlayer(int id);
+		void ChangePlayer(int id);
 
-		string pbGetPlayerGraphic();
+		string GetPlayerGraphic();
 
-		TrainerTypes pbGetPlayerTrainerType();
+		TrainerTypes GetPlayerTrainerType();
 
-		int pbGetTrainerTypeGender(TrainerTypes trainertype);
-		//bool? pbGetTrainerTypeGender(TrainerTypes trainertype);
+		int GetTrainerTypeGender(TrainerTypes trainertype);
+		//bool? GetTrainerTypeGender(TrainerTypes trainertype);
 
-		void pbTrainerName(string name = null, int outfit = 0);
+		void TrainerName(string name = null, int outfit = 0);
 
-		string pbSuggestTrainerName(int gender);
+		string SuggestTrainerName(int gender);
 
-		string pbGetUserName();
+		string GetUserName();
 
 		string getRandomNameEx(int type, int? variable, int? upper, int maxLength = 100);
 
@@ -92,20 +92,20 @@ namespace PokemonEssentials.Interface
 		#endregion
 
 		#region Event timing utilities
-		void pbTimeEvent(int? variableNumber, int secs = 86400);
+		void TimeEvent(int? variableNumber, int secs = 86400);
 
-		void pbTimeEventDays(int? variableNumber, int days = 0);
+		void TimeEventDays(int? variableNumber, int days = 0);
 
-		bool pbTimeEventValid(int? variableNumber);
+		bool TimeEventValid(int? variableNumber);
 		#endregion
 
 		#region General-purpose utilities with dependencies
 		/// <summary>
-		/// Similar to pbFadeOutIn, but pauses the music as it fades out.
-		/// Requires scripts "Audio" (for bgm_pause) and "SpriteWindow" (for pbFadeOutIn).
+		/// Similar to FadeOutIn, but pauses the music as it fades out.
+		/// Requires scripts "Audio" (for bgm_pause) and "SpriteWindow" (for FadeOutIn).
 		/// </summary>
 		/// <param name="zViewport"></param>
-		void pbFadeOutInWithMusic(int zViewport, Action block = null);
+		void FadeOutInWithMusic(int zViewport, Action block = null);
 
 		/// <summary>
 		/// Gets the wave data from a file and displays an message if an error occurs.
@@ -127,25 +127,25 @@ namespace PokemonEssentials.Interface
 		/// Requires the script "PokemonMessages"
 		bool beginRecordUI();
 
-		IList<object> pbHideVisibleObjects();
+		IList<object> HideVisibleObjects();
 
-		void pbShowObjects(IList<object> visibleObjects);
+		void ShowObjects(IList<object> visibleObjects);
 
-		void pbLoadRpgxpScene(ISceneMap scene);
+		void LoadRpgxpScene(ISceneMap scene);
 
 		/// <summary>
 		/// Gets the value of a variable.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		object pbGet(int? id);
+		object Get(int? id);
 
 		/// <summary>
 		/// Sets the value of a variable.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="value"></param>
-		void pbSet(int? id, object value);
+		void Set(int? id, object value);
 
 		/// <summary>
 		/// Runs a common event and waits until the common event is finished.
@@ -153,131 +153,131 @@ namespace PokemonEssentials.Interface
 		/// Requires the script "PokemonMessages"
 		/// <param name="id"></param>
 		/// <returns></returns>
-		bool pbCommonEvent(int id);
+		bool CommonEvent(int id);
 
-		void pbExclaim(IGameCharacter[] @event, int id = Core.EXCLAMATION_ANIMATION_ID, bool tinting = false);
+		void Exclaim(IGameCharacter[] @event, int id = Core.EXCLAMATION_ANIMATION_ID, bool tinting = false);
 
-		void pbNoticePlayer(IGameCharacter @event);
+		void NoticePlayer(IGameCharacter @event);
 		#endregion
 
 		#region Loads Pokémon/item/trainer graphics
-		[System.Obsolete("Unused")] string pbPokemonBitmapFile(Pokemons species, bool shiny, bool back = false);
+		[System.Obsolete("Unused")] string PokemonBitmapFile(Pokemons species, bool shiny, bool back = false);
 
-		//IAnimatedBitmap pbLoadPokemonBitmap(IPokemon pokemon, bool back = false);
-
-		// Note: Returns an AnimatedBitmap, not a Bitmap
-		//IAnimatedBitmap pbLoadPokemonBitmapSpecies(IPokemon pokemon, Pokemons species, bool back= false);
+		//IAnimatedBitmap LoadPokemonBitmap(IPokemon pokemon, bool back = false);
 
 		// Note: Returns an AnimatedBitmap, not a Bitmap
-		//IAnimatedBitmap pbLoadSpeciesBitmap(Pokemons species, bool female = false, int form = 0, bool shiny = false, bool shadow = false, bool back = false, bool egg = false);
+		//IAnimatedBitmap LoadPokemonBitmapSpecies(IPokemon pokemon, Pokemons species, bool back= false);
 
-		//IBitmap pbCheckPokemonBitmapFiles(Pokemons species, bool female = false, int form = 0, bool shiny = false, bool shadow = false, bool back = false, bool egg = false);
-		string pbCheckPokemonBitmapFiles(params object[] arg);
+		// Note: Returns an AnimatedBitmap, not a Bitmap
+		//IAnimatedBitmap LoadSpeciesBitmap(Pokemons species, bool female = false, int form = 0, bool shiny = false, bool shadow = false, bool back = false, bool egg = false);
 
-		//IAnimatedBitmap pbLoadPokemonIcon(IPokemon pokemon);
+		//IBitmap CheckPokemonBitmapFiles(Pokemons species, bool female = false, int form = 0, bool shiny = false, bool shadow = false, bool back = false, bool egg = false);
+		string CheckPokemonBitmapFiles(params object[] arg);
 
-		string pbPokemonIconFile(IPokemon pokemon);
+		//IAnimatedBitmap LoadPokemonIcon(IPokemon pokemon);
 
-		string pbCheckPokemonIconFiles(object[] param, bool egg = false);
+		string PokemonIconFile(IPokemon pokemon);
+
+		string CheckPokemonIconFiles(object[] param, bool egg = false);
 
 		// Used by the Pokédex
-		string pbPokemonFootprintFile(Pokemons pokemon);
-		string pbPokemonFootprintFile(IPokemon pokemon);
+		string PokemonFootprintFile(Pokemons pokemon);
+		string PokemonFootprintFile(IPokemon pokemon);
 
-		string pbItemIconFile(Items item);
+		string ItemIconFile(Items item);
 
-		string pbMailBackFile(Items item);
+		string MailBackFile(Items item);
 
-		string pbTrainerCharFile(TrainerTypes type);
+		string TrainerCharFile(TrainerTypes type);
 
-		string pbTrainerCharNameFile(TrainerTypes type);
+		string TrainerCharNameFile(TrainerTypes type);
 
-		string pbTrainerHeadFile(TrainerTypes type);
+		string TrainerHeadFile(TrainerTypes type);
 
-		string pbPlayerHeadFile(TrainerTypes type);
+		string PlayerHeadFile(TrainerTypes type);
 
-		string pbTrainerSpriteFile(TrainerTypes type);
+		string TrainerSpriteFile(TrainerTypes type);
 
-		string pbTrainerSpriteBackFile(TrainerTypes type);
+		string TrainerSpriteBackFile(TrainerTypes type);
 
-		string pbPlayerSpriteFile(TrainerTypes type);
+		string PlayerSpriteFile(TrainerTypes type);
 
-		string pbPlayerSpriteBackFile(TrainerTypes type);
+		string PlayerSpriteBackFile(TrainerTypes type);
 		#endregion
 
 		#region Loads music and sound effects
-		string pbResolveAudioSE(string file);
+		string ResolveAudioSE(string file);
 
-		int pbCryFrameLength(IPokemon pokemon, float? pitch = null);
+		int CryFrameLength(IPokemon pokemon, float? pitch = null);
 
-		void pbPlayCry(Pokemons pokemon, int volume = 90, float? pitch = null);
+		void PlayCry(Pokemons pokemon, int volume = 90, float? pitch = null);
 
-		void pbPlayCry(IPokemon pokemon, int volume = 90, float? pitch = null);
+		void PlayCry(IPokemon pokemon, int volume = 90, float? pitch = null);
 
-		string pbCryFile(Pokemons pokemon);
+		string CryFile(Pokemons pokemon);
 
-		string pbCryFile(IPokemon pokemon);
+		string CryFile(IPokemon pokemon);
 
-		IAudioBGM pbGetWildBattleBGM(Pokemons species);
+		IAudioBGM GetWildBattleBGM(Pokemons species);
 
-		IAudioME pbGetWildVictoryME();
+		IAudioME GetWildVictoryME();
 
-		void pbPlayTrainerIntroME(TrainerTypes trainertype);
-
-		// can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
-		IAudioBGM pbGetTrainerBattleBGM(params ITrainer[] trainer);
-
-		IAudioBGM pbGetTrainerBattleBGMFromType(TrainerTypes trainertype);
+		void PlayTrainerIntroME(TrainerTypes trainertype);
 
 		// can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
-		IAudioME pbGetTrainerVictoryME(params ITrainer[] trainer);
+		IAudioBGM GetTrainerBattleBGM(params ITrainer[] trainer);
+
+		IAudioBGM GetTrainerBattleBGMFromType(TrainerTypes trainertype);
+
+		// can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
+		IAudioME GetTrainerVictoryME(params ITrainer[] trainer);
 		#endregion
 
 		#region Creating and storing Pokémon
-		bool pbBoxesFull();
+		bool BoxesFull();
 
-		void pbNickname(IPokemon pokemon);
+		void Nickname(IPokemon pokemon);
 
-		void pbStorePokemon(IPokemon pokemon);
+		void StorePokemon(IPokemon pokemon);
 
-		void pbNicknameAndStore(IPokemon pokemon);
+		void NicknameAndStore(IPokemon pokemon);
 
-		bool pbAddPokemon(Pokemons pokemon, int? level = null, bool seeform = true);
-		bool pbAddPokemon(IPokemon pokemon, int? level = null, bool seeform = true);
+		bool AddPokemon(Pokemons pokemon, int? level = null, bool seeform = true);
+		bool AddPokemon(IPokemon pokemon, int? level = null, bool seeform = true);
 
-		bool pbAddPokemonSilent(Pokemons pokemon, int? level = null, bool seeform = true);
-		bool pbAddPokemonSilent(IPokemon pokemon, int? level = null, bool seeform = true);
+		bool AddPokemonSilent(Pokemons pokemon, int? level = null, bool seeform = true);
+		bool AddPokemonSilent(IPokemon pokemon, int? level = null, bool seeform = true);
 
-		bool pbAddToParty(Pokemons pokemon, int? level = null, bool seeform = true);
-		bool pbAddToParty(IPokemon pokemon, int? level = null, bool seeform = true);
+		bool AddToParty(Pokemons pokemon, int? level = null, bool seeform = true);
+		bool AddToParty(IPokemon pokemon, int? level = null, bool seeform = true);
 
-		bool pbAddToPartySilent(Pokemons pokemon, int? level = null, bool seeform = true);
-		bool pbAddToPartySilent(IPokemon pokemon, int? level = null, bool seeform = true);
+		bool AddToPartySilent(Pokemons pokemon, int? level = null, bool seeform = true);
+		bool AddToPartySilent(IPokemon pokemon, int? level = null, bool seeform = true);
 
-		bool pbAddForeignPokemon(Pokemons pokemon,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true);
-		bool pbAddForeignPokemon(IPokemon pokemon,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true);
+		bool AddForeignPokemon(Pokemons pokemon,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true);
+		bool AddForeignPokemon(IPokemon pokemon,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true);
 
-		bool pbGenerateEgg(Pokemons pokemon, string text = "");
-		bool pbGenerateEgg(IPokemon pokemon, string text = "");
+		bool GenerateEgg(Pokemons pokemon, string text = "");
+		bool GenerateEgg(IPokemon pokemon, string text = "");
 
-		bool pbRemovePokemonAt(int index);
+		bool RemovePokemonAt(int index);
 
-		void pbSeenForm(Pokemons poke, int gender = 0, int form = 0);
-		void pbSeenForm(IPokemon poke);//, int gender = 0, int form = 0
+		void SeenForm(Pokemons poke, int gender = 0, int form = 0);
+		void SeenForm(IPokemon poke);//, int gender = 0, int form = 0
 		#endregion
 
 		#region Analysing Pokémon
 		/// <summary>
 		/// Heals all Pokémon in the party.
 		/// </summary>
-		void pbHealAll();
+		void HealAll();
 
 		/// <summary>
 		/// Returns the first unfainted, non-egg Pokémon in the player's party.
 		/// </summary>
 		/// <param name="variableNumber"></param>
 		/// <returns></returns>
-		IPokemon pbFirstAblePokemon(int variableNumber);
+		IPokemon FirstAblePokemon(int variableNumber);
 
 		/// <summary>
 		/// Checks whether the player would still have an unfainted Pokémon if the
@@ -285,29 +285,29 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="pokemonIndex"></param>
 		/// <returns></returns>
-		bool pbCheckAble(int pokemonIndex);
+		bool CheckAble(int pokemonIndex);
 
 		/// <summary>
 		/// Returns true if there are no usable Pokémon in the player's party.
 		/// </summary>
 		/// <returns></returns>
-		bool pbAllFainted();
+		bool AllFainted();
 
-		double pbBalancedLevel(IPokemon[] party);
+		double BalancedLevel(IPokemon[] party);
 
 		/// <summary>
 		/// Returns the Pokémon's size in millimeters.
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <returns></returns>
-		int pbSize(IPokemon pokemon);
+		int Size(IPokemon pokemon);
 
 		/// <summary>
 		/// Returns true if the given species can be legitimately obtained as an egg.
 		/// </summary>
 		/// <param name="species"></param>
 		/// <returns></returns>
-		bool pbHasEgg(Pokemons species);
+		bool HasEgg(Pokemons species);
 		#endregion
 
 		#region Look through Pokémon in storage, choose a Pokémon in the party
@@ -315,13 +315,13 @@ namespace PokemonEssentials.Interface
 		/// Yields every Pokémon/egg in storage in turn.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerable<KeyValuePair<IPokemon, int>> pbEachPokemon();
+		IEnumerable<KeyValuePair<IPokemon, int>> EachPokemon();
 
 		/// <summary>
 		/// Yields every Pokémon in storage in turn.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerable<KeyValuePair<IPokemon, int>> pbEachNonEggPokemon();
+		IEnumerable<KeyValuePair<IPokemon, int>> EachNonEggPokemon();
 
 		/// <summary>
 		/// Choose a Pokémon/egg from the party.
@@ -334,21 +334,21 @@ namespace PokemonEssentials.Interface
 		/// <param name="allowIneligible"></param>
 		/// Supposed to return a value of pokemon chosen by player... as an int...
 		/// ToDo: Instead of assigning value to variable, change void to return int
-		void pbChoosePokemon(int variableNumber, int nameVarNumber, Predicate<IPokemon> ableProc = null, bool allowIneligible = false);
+		void ChoosePokemon(int variableNumber, int nameVarNumber, Predicate<IPokemon> ableProc = null, bool allowIneligible = false);
 
-		void pbChooseNonEggPokemon(int variableNumber, int nameVarNumber);
+		void ChooseNonEggPokemon(int variableNumber, int nameVarNumber);
 
-		void pbChooseAblePokemon(int variableNumber, int nameVarNumber);
+		void ChooseAblePokemon(int variableNumber, int nameVarNumber);
 
-		void pbChoosePokemonForTrade(int variableNumber, int nameVarNumber, Pokemons wanted);
+		void ChoosePokemonForTrade(int variableNumber, int nameVarNumber, Pokemons wanted);
 		#endregion
 
 		#region Checks through the party for something
-		bool pbHasSpecies(Pokemons species);
+		bool HasSpecies(Pokemons species);
 
-		bool pbHasFatefulSpecies(Pokemons species);
+		bool HasFatefulSpecies(Pokemons species);
 
-		bool pbHasType(Types type);
+		bool HasType(Types type);
 
 		/// <summary>
 		/// Checks whether any Pokémon in the party knows the given move, and returns
@@ -356,7 +356,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="move"></param>
 		/// <returns></returns>
-		IPokemon pbCheckMove(Moves move);
+		IPokemon CheckMove(Moves move);
 		#endregion
 
 		#region Regional and National Pokédexes
@@ -368,7 +368,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="region"></param>
 		/// <param name="nationalSpecies"></param>
 		/// <returns></returns>
-		int pbGetRegionalNumber(int region, Pokemons nationalSpecies);
+		int GetRegionalNumber(int region, Pokemons nationalSpecies);
 
 		/// <summary>
 		/// Gets the National Pokédex number of the specified species and region. The
@@ -378,7 +378,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="region"></param>
 		/// <param name="regionalSpecies"></param>
 		/// <returns></returns>
-		int pbGetNationalNumber(int region, Pokemons regionalSpecies);
+		int GetNationalNumber(int region, Pokemons regionalSpecies);
 
 		/// <summary>
 		/// Gets an array of all national species within the given Regional Dex, sorted by
@@ -389,7 +389,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="region"></param>
 		/// <returns></returns>
-		Pokemons[] pbAllRegionalSpecies(int region);
+		Pokemons[] AllRegionalSpecies(int region);
 
 		/// <summary>
 		/// Gets the ID number for the current region based on the player's current
@@ -403,7 +403,7 @@ namespace PokemonEssentials.Interface
 		/// The ID numbers returned by
 		/// this function depend on the current map's position metadata.
 		/// </returns>
-		int pbGetCurrentRegion(int defaultRegion = -1);
+		int GetCurrentRegion(int defaultRegion = -1);
 
 		/// <summary>
 		/// Decides which Dex lists are able to be viewed (i.e. they are unlocked and have
@@ -413,29 +413,29 @@ namespace PokemonEssentials.Interface
 		/// a species in the current region has been seen - doesn't look at other regions.</para>
 		/// Here, just used to decide whether to show the Pokédex in the Pause menu.
 		/// </summary>
-		void pbSetViableDexes();
+		void SetViableDexes();
 
 		/// <summary>
 		/// Unlocks a Dex list. The National Dex is -1 here (or null argument).
 		/// </summary>
 		/// <param name="dex"></param>
-		void pbUnlockDex(int dex = -1);
+		void UnlockDex(int dex = -1);
 
 		/// <summary>
 		/// Locks a Dex list. The National Dex is -1 here (or null argument).
 		/// </summary>
 		/// <param name="dex"></param>
-		void pbLockDex(int dex = -1);
+		void LockDex(int dex = -1);
 		#endregion
 
 		#region Other utilities
-		void pbTextEntry(string helptext, int minlength, int maxlength, int variableNumber);
+		void TextEntry(string helptext, int minlength, int maxlength, int variableNumber);
 
-		string[] pbMoveTutorAnnotations(Moves move, Pokemons[] movelist = null);
+		string[] MoveTutorAnnotations(Moves move, Pokemons[] movelist = null);
 
-		bool pbMoveTutorChoose(Moves move, Pokemons[] movelist = null, bool bymachine = false);
+		bool MoveTutorChoose(Moves move, Pokemons[] movelist = null, bool bymachine = false);
 
-		void pbChooseMove(IPokemon pokemon, int variableNumber, int nameVarNumber);
+		void ChooseMove(IPokemon pokemon, int variableNumber, int nameVarNumber);
 		#endregion
 	}
 }

@@ -18,45 +18,45 @@ namespace PokemonUnity
 		/// <summary>
 		/// Opens the Pokémon screen
 		/// </summary>
-		public void pbPokemonScreen() {
+		public void PokemonScreen() {
 			if (Trainer == null) return;
 			IPartyDisplayScene sscene = Scenes.Party; //new PokemonScreen_Scene();
 			IPartyDisplayScreen sscreen = Screens.Party.initialize(sscene, Trainer.party); //new PokemonScreen(sscene,GameData.Trainer.party);
-			pbFadeOutIn(99999, block: () => { sscreen.pbPokemonScreen(); });
+			FadeOutIn(99999, block: () => { sscreen.PokemonScreen(); });
 		}
 
-		public bool pbSaveScreen() {
+		public bool SaveScreen() {
 			bool ret=false;
 			ISaveScene scene = Scenes.Save; //new PokemonSaveScene();
 			ISaveScreen screen = Screens.Save.initialize(scene); //new PokemonSave(scene);
-			ret=screen.pbSaveScreen();
+			ret=screen.SaveScreen();
 			return ret;
 		}
 
-		public void pbConvertItemToItem(int? variable, object[] array) {
-			Items item=(Items)pbGet(variable);
-			pbSet(variable,0);
+		public void ConvertItemToItem(int? variable, object[] array) {
+			Items item=(Items)Get(variable);
+			Set(variable,0);
 			for (int i = 0; i < (array.Length/2); i++) {
-				if (array[2*i] is Items) { //isConst(item,PBItems,array[2*i])
-					pbSet(variable,array[2*i+1] as Items?); //getID(PBItems,array[2*i+1])
+				if (array[2*i] is Items) { //isConst(item,Items,array[2*i])
+					Set(variable,array[2*i+1] as Items?); //getID(Items,array[2*i+1])
 					return;
 				}
 			}
 		}
 
-		public void pbConvertItemToPokemon(int? variable,object[] array) {
-			Pokemons item=(Pokemons)pbGet(variable);
-			pbSet(variable,0);
+		public void ConvertItemToPokemon(int? variable,object[] array) {
+			Pokemons item=(Pokemons)Get(variable);
+			Set(variable,0);
 			for (int i = 0; i < (array.Length/2); i++) {
-				if (array[2*i] is Pokemons) { //isConst(item,PBItems,array[2*i])
-					pbSet(variable,array[2*i+1]); //getID(PBSpecies,array[2*i+1])
+				if (array[2*i] is Pokemons) { //isConst(item,Items,array[2*i])
+					Set(variable,array[2*i+1]); //getID(Species,array[2*i+1])
 					return;
 				}
 			}
 		}
 
-		public bool pbRecordTrainer() {
-			IWaveData wave = this is IGameField f ? f.pbRecord(null,10) : null;
+		public bool RecordTrainer() {
+			IWaveData wave = this is IGameField f ? f.Record(null,10) : null;
 			if (wave != null) {
 				Global.trainerRecording=wave;
 				return true;
@@ -169,7 +169,7 @@ namespace PokemonUnity
 			@daycareEgg           = false;//0;
 			@daycareEggSteps      = 0;
 			int numRegions        = 0;
-			//pbRgssOpen("Data/regionals.dat","rb"){|f| numRegions = f.fgetw }
+			//RgssOpen("Data/regionals.dat","rb"){|f| numRegions = f.fgetw }
 			@pokedexUnlocked      = new bool[numRegions];
 			@pokedexViable        = new List<int>();
 			@pokedexDex           = (numRegions==0) ? -1 : 0;

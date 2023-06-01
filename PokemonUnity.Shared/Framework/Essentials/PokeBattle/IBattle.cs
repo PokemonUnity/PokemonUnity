@@ -13,9 +13,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IBattleCommon
 	{
-		void pbStorePokemon(IPokemon pokemon);
+		void StorePokemon(IPokemon pokemon);
 
-		void pbThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false);
+		void ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false);
 	}
 
 	/// <summary>
@@ -109,7 +109,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		PokemonUnity.Overworld.Environments environment { get; set; }
 		/// <summary>
-		/// Current weather, custom methods should use <see cref="pbWeather"/> instead
+		/// Current weather, custom methods should use <see cref="Weather"/> instead
 		/// </summary>
 		Weather weather { get; set; }
 		/// <summary>
@@ -182,13 +182,13 @@ namespace PokemonEssentials.Interface.PokeBattle
 		//bool controlPlayer { get; set; }
 		#endregion
 
-		void pbAbort();
+		void Abort();
 
-		IEnumerator pbDebugUpdate();
+		IEnumerator DebugUpdate();
 
-		int pbRandom(int x);
+		int Random(int x);
 
-		int pbAIRandom(int x);
+		int AIRandom(int x);
 
 		#region Initialize battle class.
 		IBattle initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer player, ITrainer opponent);
@@ -197,17 +197,17 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		#region Info about battle.
-		bool pbDoubleBattleAllowed();
+		bool DoubleBattleAllowed();
 
-		Weather pbWeather { get; }
+		Weather Weather { get; }
 		#endregion
 
 		#region Get battler info.
-		bool pbIsOpposing(int index);
+		bool IsOpposing(int index);
 
-		bool pbOwnedByPlayer(int index);
+		bool OwnedByPlayer(int index);
 
-		bool pbIsDoubleBattler(int index);
+		bool IsDoubleBattler(int index);
 
 		/// <summary>
 		/// Only used for Wish
@@ -215,7 +215,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="battlerindex"></param>
 		/// <param name="pokemonindex"></param>
 		/// <returns></returns>
-		//string pbThisEx(battlerindex, pokemonindex);
+		//string ThisEx(battlerindex, pokemonindex);
 		string ToString(int battlerindex, int pokemonindex);
 
 		/// <summary>
@@ -224,68 +224,68 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="pkmn"></param>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		bool pbIsUnlosableItem(IBattler pkmn, Items item);
+		bool IsUnlosableItem(IBattler pkmn, Items item);
 
-		IBattler pbCheckGlobalAbility(Abilities a);
+		IBattler CheckGlobalAbility(Abilities a);
 
 		int nextPickupUse { get; }
 		#endregion
 
 		#region Player-related info.
-		ITrainer pbPlayer();
+		ITrainer Player();
 
-		Items[] pbGetOwnerItems(int battlerIndex);
+		Items[] GetOwnerItems(int battlerIndex);
 
-		void pbSetSeen(IPokemon pokemon);
+		void SetSeen(IPokemon pokemon);
 
-		string pbGetMegaRingName(int battlerIndex);
+		string GetMegaRingName(int battlerIndex);
 
-		bool pbHasMegaRing(int battlerIndex);
+		bool HasMegaRing(int battlerIndex);
 		#endregion
 
 		#region Get party info, manipulate parties.
-		int pbPokemonCount(IPokemon[] party);
+		int PokemonCount(IPokemon[] party);
 
-		bool pbAllFainted(IPokemon[] party);
+		bool AllFainted(IPokemon[] party);
 
-		int pbMaxLevel(IPokemon[] party);
+		int MaxLevel(IPokemon[] party);
 
-		int pbMaxLevelFromIndex(int index);
+		int MaxLevelFromIndex(int index);
 
 		/// <summary>
 		/// Gets player party of selected battler
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns>Returns the trainer party of pokemon at this index?</returns>
-		IPokemon[] pbParty(int index);
+		IPokemon[] Party(int index);
 
-		IPokemon[] pbOpposingParty(int index);
+		IPokemon[] OpposingParty(int index);
 
-		int pbSecondPartyBegin(int battlerIndex);
+		int SecondPartyBegin(int battlerIndex);
 
-		int pbPartyLength(int battlerIndex);
+		int PartyLength(int battlerIndex);
 
-		int pbFindNextUnfainted(IPokemon[] party, int start, int finish = -1);
+		int FindNextUnfainted(IPokemon[] party, int start, int finish = -1);
 
-		int pbGetLastPokeInTeam(int index);
+		int GetLastPokeInTeam(int index);
 
-		IBattler pbFindPlayerBattler(int pkmnIndex);
+		IBattler FindPlayerBattler(int pkmnIndex);
 
-		bool pbIsOwner(int battlerIndex, int partyIndex);
+		bool IsOwner(int battlerIndex, int partyIndex);
 
-		ITrainer pbGetOwner(int battlerIndex);
+		ITrainer GetOwner(int battlerIndex);
 
-		ITrainer pbGetOwnerPartner(int battlerIndex);
+		ITrainer GetOwnerPartner(int battlerIndex);
 
-		int pbGetOwnerIndex(int battlerIndex);
+		int GetOwnerIndex(int battlerIndex);
 
-		bool pbBelongsToPlayer(int battlerIndex);
+		bool BelongsToPlayer(int battlerIndex);
 
-		ITrainer pbPartyGetOwner(int battlerIndex, int partyIndex);
+		ITrainer PartyGetOwner(int battlerIndex, int partyIndex);
 
-		void pbAddToPlayerParty(IPokemon pokemon);
+		void AddToPlayerParty(IPokemon pokemon);
 
-		void pbRemoveFromParty(int battlerIndex, int partyIndex);
+		void RemoveFromParty(int battlerIndex, int partyIndex);
 		#endregion
 
 		#region Check whether actions can be taken.
@@ -294,49 +294,49 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		/// <param name="idxPokemon"></param>
 		/// <returns></returns>
-		bool pbCanShowCommands(int idxPokemon);
+		bool CanShowCommands(int idxPokemon);
 		#endregion
 
 		#region Attacking.
-		bool pbCanShowFightMenu(int idxPokemon);
+		bool CanShowFightMenu(int idxPokemon);
 
-		bool pbCanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false);
+		bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false);
 
-		void pbAutoChooseMove(int idxPokemon, bool showMessages = true);
+		void AutoChooseMove(int idxPokemon, bool showMessages = true);
 
-		bool pbRegisterMove(int idxPokemon, int idxMove, bool showMessages = true);
+		bool RegisterMove(int idxPokemon, int idxMove, bool showMessages = true);
 
-		bool pbChoseMove(int i, Moves move);
+		bool ChoseMove(int i, Moves move);
 
-		bool pbChoseMoveFunctionCode(int i, PokemonUnity.Attack.Data.Effects code);
+		bool ChoseMoveFunctionCode(int i, PokemonUnity.Attack.Data.Effects code);
 
-		bool pbRegisterTarget(int idxPokemon, int idxTarget);
+		bool RegisterTarget(int idxPokemon, int idxTarget);
 
-		IBattler[] pbPriority(bool ignorequickclaw = false, bool log = false);
+		IBattler[] Priority(bool ignorequickclaw = false, bool log = false);
 		#endregion
 
 		#region Switching Pokémon.
-		bool pbCanSwitchLax(int idxPokemon, int pkmnidxTo, bool showMessages);
+		bool CanSwitchLax(int idxPokemon, int pkmnidxTo, bool showMessages);
 
-		bool pbCanSwitch(int idxPokemon, int pkmnidxTo, bool showMessages, bool ignoremeanlook = false);
+		bool CanSwitch(int idxPokemon, int pkmnidxTo, bool showMessages, bool ignoremeanlook = false);
 
-		bool pbRegisterSwitch(int idxPokemon, int idxOther);
+		bool RegisterSwitch(int idxPokemon, int idxOther);
 
-		bool pbCanChooseNonActive(int index);
+		bool CanChooseNonActive(int index);
 
-		void pbSwitch(bool favorDraws= false);
+		void Switch(bool favorDraws= false);
 
-		void pbSendOut(int index, IPokemon pokemon);
+		void SendOut(int index, IPokemon pokemon);
 
-		void pbReplace(int index, int newpoke, bool batonpass = false);
+		void Replace(int index, int newpoke, bool batonpass = false);
 
-		bool pbRecallAndReplace(int index, int newpoke, int newpokename = -1, bool batonpass = false, bool moldbreaker = false);
+		bool RecallAndReplace(int index, int newpoke, int newpokename = -1, bool batonpass = false, bool moldbreaker = false);
 
-		void pbMessagesOnReplace(int index, int newpoke, int newpokename= -1);
+		void MessagesOnReplace(int index, int newpoke, int newpokename= -1);
 
-		int pbSwitchInBetween(int index, bool lax, bool cancancel);
+		int SwitchInBetween(int index, bool lax, bool cancancel);
 
-		int pbSwitchPlayer(int index, bool lax, bool cancancel);
+		int SwitchPlayer(int index, bool lax, bool cancancel);
 		#endregion
 
 		#region Using an item.
@@ -348,7 +348,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="userPkmn"></param>
 		/// <param name="scene"></param>
 		/// <returns></returns>
-		bool pbUseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene);
+		bool UseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene);
 
 		/// <summary>
 		/// Uses an item on an active Pokémon.
@@ -358,112 +358,112 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="userPkmn"></param>
 		/// <param name="scene"></param>
 		/// <returns></returns>
-		bool pbUseItemOnBattler(Items item, int index, IBattler userPkmn, IHasDisplayMessage scene);
+		bool UseItemOnBattler(Items item, int index, IBattler userPkmn, IHasDisplayMessage scene);
 
-		bool pbRegisterItem(int idxPokemon, Items idxItem, int? idxTarget = null);
+		bool RegisterItem(int idxPokemon, Items idxItem, int? idxTarget = null);
 
-		void pbEnemyUseItem(Items item, IBattler battler);
+		void EnemyUseItem(Items item, IBattler battler);
 		#endregion
 
 		#region Fleeing from battle.
-		bool pbCanRun(int idxPokemon);
+		bool CanRun(int idxPokemon);
 
 		/// <summary>
 		/// </summary>
 		/// <param name="idxPokemon"></param>
 		/// <param name="duringBattle"></param>
 		/// <returns>1 = success; -1 = failed</returns>
-		int pbRun(int idxPokemon, bool duringBattle= false);
+		int Run(int idxPokemon, bool duringBattle= false);
 		#endregion
 
 		#region Mega Evolve battler.
-		bool pbCanMegaEvolve(int index);
+		bool CanMegaEvolve(int index);
 
-		void pbRegisterMegaEvolution(int index);
+		void RegisterMegaEvolution(int index);
 
-		void pbMegaEvolve(int index);
+		void MegaEvolve(int index);
 		#endregion
 
 		#region Primal Revert battler.
-		void pbPrimalReversion(int index);
+		void PrimalReversion(int index);
 		#endregion
 
 		#region Call battler.
-		void pbCall(int index);
+		void Call(int index);
 		#endregion
 
 		#region Gaining Experience.
-		void pbGainEXP();
+		void GainEXP();
 
-		void pbGainExpOne(int index, IBattler defeated, int partic, int expshare, bool haveexpall, bool showmessages = true);
+		void GainExpOne(int index, IBattler defeated, int partic, int expshare, bool haveexpall, bool showmessages = true);
 		#endregion
 
 		#region Learning a move.
-		void pbLearnMove(int pkmnIndex, Moves move);
+		void LearnMove(int pkmnIndex, Moves move);
 		#endregion
 
 		#region Abilities.
-		void pbOnActiveAll();
+		void OnActiveAll();
 
-		bool pbOnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
+		bool OnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
 
-		void pbPrimordialWeather();
+		void PrimordialWeather();
 		#endregion
 
 		#region Judging.
-		void pbJudgeCheckpoint(IBattler attacker, IBattleMove move = null);
+		void JudgeCheckpoint(IBattler attacker, IBattleMove move = null);
 
-		BattleResults pbDecisionOnTime();
+		BattleResults DecisionOnTime();
 
-		BattleResults pbDecisionOnTime2();
+		BattleResults DecisionOnTime2();
 
-		BattleResults pbDecisionOnDraw();
+		BattleResults DecisionOnDraw();
 
-		void pbJudge();
+		void Judge();
 		#endregion
 
 		#region Messages and animations.
-		void pbDisplay(string msg);
+		void Display(string msg);
 
-		void pbDisplayPaused(string msg);
+		void DisplayPaused(string msg);
 
-		void pbDisplayBrief(string msg);
+		void DisplayBrief(string msg);
 
-		bool pbDisplayConfirm(string msg);
+		bool DisplayConfirm(string msg);
 
-		void pbShowCommands(string msg, string[] commands, bool cancancel = true);
+		void ShowCommands(string msg, string[] commands, bool cancancel = true);
 
-		void pbAnimation(Moves move, IBattler attacker, IBattler opponent, int hitnum = 0);
+		void Animation(Moves move, IBattler attacker, IBattler opponent, int hitnum = 0);
 
-		void pbCommonAnimation(string name, IBattler attacker, IBattler opponent, int hitnum = 0);
+		void CommonAnimation(string name, IBattler attacker, IBattler opponent, int hitnum = 0);
 		#endregion
 
 		#region Battle core.
-		BattleResults pbStartBattle(bool canlose= false);
+		BattleResults StartBattle(bool canlose= false);
 
-		void pbStartBattleCore(bool canlose);
+		void StartBattleCore(bool canlose);
 		#endregion
 
 		#region Command phase.
-		MenuCommands pbCommandMenu(int i);
+		MenuCommands CommandMenu(int i);
 
-		KeyValuePair<Items, int?> pbItemMenu(int i);
+		KeyValuePair<Items, int?> ItemMenu(int i);
 
-		bool pbAutoFightMenu(int i);
+		bool AutoFightMenu(int i);
 
-		void pbCommandPhase();
+		void CommandPhase();
 		#endregion
 
 		#region Attack phase.
-		void pbAttackPhase();
+		void AttackPhase();
 		#endregion
 
 		#region End of round.
-		void pbEndOfRoundPhase();
+		void EndOfRoundPhase();
 		#endregion
 
 		#region End of battle.
-		BattleResults pbEndOfBattle(bool canlose = false);
+		BattleResults EndOfBattle(bool canlose = false);
 		#endregion
 	}
 }

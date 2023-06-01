@@ -32,29 +32,29 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		#region Methods
 		IBattle initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
-		int pbGetBattleType();
-		ITrainer[] pbGetTrainerInfo(ITrainer[] trainer);
-		BattleResults pbStartBattle(bool canlose = false);
-		string pbDumpRecord();
-		int pbSwitchInBetween(int i1, bool i2, bool i3);
-		bool pbRegisterMove(int i1, int i2, bool showMessages = true);
-		int pbRun(int i1, bool duringBattle = false);
-		bool pbRegisterTarget(int i1, int i2);
-		void pbAutoChooseMove(int i1, bool showMessages = true);
-		bool pbRegisterSwitch(int i1, int i2);
-		bool pbRegisterItem(int i1, Items i2);
-		void pbCommandPhase();
-		void pbStorePokemon(IPokemon pkmn);
-		int pbRandom(int num);
+		int GetBattleType();
+		ITrainer[] GetTrainerInfo(ITrainer[] trainer);
+		BattleResults StartBattle(bool canlose = false);
+		string DumpRecord();
+		int SwitchInBetween(int i1, bool i2, bool i3);
+		bool RegisterMove(int i1, int i2, bool showMessages = true);
+		int Run(int i1, bool duringBattle = false);
+		bool RegisterTarget(int i1, int i2);
+		void AutoChooseMove(int i1, bool showMessages = true);
+		bool RegisterSwitch(int i1, int i2);
+		bool RegisterItem(int i1, Items i2);
+		void CommandPhase();
+		void StorePokemon(IPokemon pkmn);
+		int Random(int num);
 		#endregion
 	}
 
 	public interface IBattlePlayerHelper{
-		ITrainer[] pbGetOpponent(IBattle battle);
+		ITrainer[] GetOpponent(IBattle battle);
 
-		IAudioBGM pbGetBattleBGM(IBattle battle);
+		IAudioBGM GetBattleBGM(IBattle battle);
 
-		ITrainer[] pbCreateTrainerInfo(ITrainer[] trainer);
+		ITrainer[] CreateTrainerInfo(ITrainer[] trainer);
 	}
 
 	/// <summary>
@@ -69,24 +69,24 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		//IBattle should be a recorded battle data...
 		IBattlePlayerModule<TBattle> initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IBattle battle);
-		BattleResults pbStartBattle(bool canlose = false);
-		int pbSwitchInBetween(int i1, int i2, bool i3);
-		int pbRandom(int num);
-		void pbDisplayPaused(string str);
-		void pbCommandPhaseCore();
+		BattleResults StartBattle(bool canlose = false);
+		int SwitchInBetween(int i1, int i2, bool i3);
+		int Random(int num);
+		void DisplayPaused(string str);
+		void CommandPhaseCore();
 	}
 
 	public interface IRecordedBattle : IBattle, IRecordedBattleModule<IBattle>, IBattleRecordData
 	{
-		//int pbGetBattleType();
+		//int GetBattleType();
 	}
 	public interface IRecordedBattlePalace : IBattlePalace, IRecordedBattleModule<IBattlePalace>, IBattleRecordData
 	{
-		//int pbGetBattleType();
+		//int GetBattleType();
 	}
 	public interface IRecordedBattleArena : IBattleArena, IRecordedBattleModule<IBattleArena>, IBattleRecordData
 	{
-		//int pbGetBattleType();
+		//int GetBattleType();
 	}
 
 	public interface IBattlePlayer : IBattle, IBattlePlayerModule<IBattle> { }

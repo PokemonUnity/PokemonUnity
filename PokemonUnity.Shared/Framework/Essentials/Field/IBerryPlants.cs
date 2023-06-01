@@ -23,8 +23,8 @@ namespace PokemonEssentials.Interface.Field
 	public interface ITempMetadataBerryPlants {
 		int berryPlantData				{ get; }
 
-		//int[] pbGetBerryPlantData(Items item);
-		BerryData pbGetBerryPlantData(Items item);
+		//int[] GetBerryPlantData(Items item);
+		BerryData GetBerryPlantData(Items item);
 	}
 
 	public interface IBerryPlantMoistureSprite : IDisposable {
@@ -61,9 +61,9 @@ namespace PokemonEssentials.Interface.Field
 
 	public interface IGameBerryPlants
 	{
-		void pbBerryPlant();
+		void BerryPlant();
 
-		void pbPickBerry(Items berry, int qty = 1);
+		void PickBerry(Items berry, int qty = 1);
 
 		/// <summary>
 		/// Fires whenever a spriteset is created.

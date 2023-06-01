@@ -22,7 +22,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		IBugContestState initialize();
 
-		bool pbContestHeld();
+		bool ContestHeld();
 
 		bool expired();
 
@@ -33,42 +33,42 @@ namespace PokemonEssentials.Interface.Battle
 		bool undecided { get; }
 
 		bool decided { get; }
-		void pbSetPokemon(IPokemon chosenpoke);
+		void SetPokemon(IPokemon chosenpoke);
 
 		/// <summary>
 		/// Reception map is handled separately from contest map since the reception map
 		/// can be outdoors, with its own grassy patches.
 		/// </summary>
 		/// <param name="arg"></param>
-		void pbSetReception(params int[] arg);
+		void SetReception(params int[] arg);
 
-		bool pbOffLimits(int map);
+		bool OffLimits(int map);
 
-		void pbSetJudgingPoint(int startMap, float startX, float startY, int dir = 8);
+		void SetJudgingPoint(int startMap, float startX, float startY, int dir = 8);
 
-		void pbSetContestMap(int map);
+		void SetContestMap(int map);
 
-		void pbJudge();
+		void Judge();
 
 		//[trainer type, pokemon, level?]
-		void pbGetPlaceInfo(int place);
+		void GetPlaceInfo(int place);
 
-		void pbClearIfEnded();
+		void ClearIfEnded();
 
-		void pbStartJudging();
+		void StartJudging();
 
 		/// <summary>
 		/// Linq through a list of trainers, to confirm if id is present
 		/// </summary>
 		/// <param name="i">Trainer Types?</param>
 		/// <returns></returns>
-		bool pbIsContestant(int i);
+		bool IsContestant(int i);
 
-		void pbStart(int ballcount);
+		void Start(int ballcount);
 
 		int place { get; }
 
-		void pbEnd(bool interrupted = false);
+		void End(bool interrupted = false);
 	}
 
 	/// <summary>
@@ -82,29 +82,29 @@ namespace PokemonEssentials.Interface.Battle
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <returns></returns>
-		int pbBugContestScore(IPokemon pokemon);
+		int BugContestScore(IPokemon pokemon);
 
-		IBugContestState pbBugContestState { get; }
+		IBugContestState BugContestState { get; }
 
 		/// <summary>
 		/// Returns true if the Bug Catching Contest in progress
 		/// </summary>
-		bool pbInBugContest { get; }
+		bool InBugContest { get; }
 
 		/// <summary>
 		/// Returns true if the Bug Catching Contest in progress and has not yet been judged
 		/// </summary>
-		bool pbBugContestUndecided { get; }
+		bool BugContestUndecided { get; }
 
 		/// <summary>
 		/// Returns true if the Bug Catching Contest in progress and is being judged
 		/// </summary>
-		bool pbBugContestDecided { get; }
+		bool BugContestDecided { get; }
 
 
-		void pbBugContestStartOver();
+		void BugContestStartOver();
 
-		BattleResults pbBugContestBattle(Pokemons species, int level);
+		BattleResults BugContestBattle(Pokemons species, int level);
 
 		/// <summary>
 		/// Fires whenever the player moves to a new map. Event handler receives the old
@@ -112,7 +112,7 @@ namespace PokemonEssentials.Interface.Battle
 		/// </summary>
 		event EventHandler OnMapChange;
 		//Events.onMapChange+=delegate(object sender, EventArgs e) {
-		//   pbBugContestState.pbClearIfEnded;
+		//   BugContestState.ClearIfEnded;
 		//}
 
 		/// <summary>
@@ -124,9 +124,9 @@ namespace PokemonEssentials.Interface.Battle
 		//Events.onMapSceneChange+=delegate(object sender, EventArgs e) {
 		//   scene=e[0];
 		//   mapChanged=e[1];
-		//   if (pbInBugContest? && pbBugContestState.decision==0 && BugContestState.eimerSeconds>0) {
+		//   if (InBugContest? && BugContestState.decision==0 && BugContestState.eimerSeconds>0) {
 		//     scene.spriteset.addUserSprite(new TimerDisplay(
-		//        pbBugContestState.timer,
+		//        BugContestState.timer,
 		//        BugContestState.eimerSeconds*Graphics.frame_rate));
 		//   }
 		//}
@@ -138,12 +138,12 @@ namespace PokemonEssentials.Interface.Battle
 		//Events.onMapUpdate+=delegate(object sender, EventArgs e) {
 		//   if (!Game.GameData.Trainer || !Game.GameData.Global || !Game.GameData.GamePlayer || !Game.GameData.GameMap) {
 		//    //  do nothing
-		//   } else if (!Game.GameData.GamePlayer.move_route_forcing && !pbMapInterpreterRunning? &&
+		//   } else if (!Game.GameData.GamePlayer.move_route_forcing && !MapInterpreterRunning? &&
 		//         !Game.GameData.GameTemp.message_window_showing) {
-		//     if (pbBugContestState.expired?) {
-		//       Kernel.pbMessage(_INTL("ANNOUNCER:  BEEEEEP!"));
-		//       Kernel.pbMessage(_INTL("Time's up!"));
-		//       pbBugContestState.pbStartJudging;
+		//     if (BugContestState.expired?) {
+		//       Kernel.Message(_INTL("ANNOUNCER:  BEEEEEP!"));
+		//       Kernel.Message(_INTL("Time's up!"));
+		//       BugContestState.StartJudging;
 		//     }
 		//   }
 		//}
@@ -157,10 +157,10 @@ namespace PokemonEssentials.Interface.Battle
 		//Events.onMapChanging+=delegate(object sender, EventArgs e) {
 		//   newmapID=e[0];
 		//   newmap=e[1];
-		//   if (pbInBugContest?) {
-		//     if (pbBugContestState.pbOffLimits(newmapID)) {
+		//   if (InBugContest?) {
+		//     if (BugContestState.OffLimits(newmapID)) {
 		//       //  Clear bug contest if player flies/warps/teleports out of the contest
-		//       pbBugContestState.pbEnd(true);
+		//       BugContestState.End(true);
 		//     }
 		//   }
 		//}
@@ -176,8 +176,8 @@ namespace PokemonEssentials.Interface.Battle
 		//   level=e[1];
 		//   handled=e[2];
 		//   if (handled[0]!=null) continue;
-		//   if (!pbInBugContest?) continue;
-		//   handled[0]=pbBugContestBattle(species,level);
+		//   if (!InBugContest?) continue;
+		//   handled[0]=BugContestBattle(species,level);
 		//}
 	}
 
@@ -187,14 +187,14 @@ namespace PokemonEssentials.Interface.Battle
 
 		//IBattle_BugContestBattle initialize(IPokeBattle_Scene scene, Monster.Pokemon[] p1, Monster.Pokemon[] p2, Combat.Trainer[] player, Combat.Trainer[] opponent, int maxBattlers = 4);
 
-		new Items pbItemMenu(int index);
-		//KeyValuePair<Items, int> pbItemMenu(int index);
+		new Items ItemMenu(int index);
+		//KeyValuePair<Items, int> ItemMenu(int index);
 
-		new MenuCommands pbCommandMenu(int i);
+		new MenuCommands CommandMenu(int i);
 
-		new void pbStorePokemon(IPokemon pokemon);
+		new void StorePokemon(IPokemon pokemon);
 
-		new void pbEndOfRoundPhase();
+		new void EndOfRoundPhase();
 	}
 
 	/// <inheritdoc/>

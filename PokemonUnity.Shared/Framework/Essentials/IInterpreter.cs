@@ -48,7 +48,7 @@ namespace PokemonEssentials.Interface
 
 		bool command_dummy();
 
-		bool pbExecuteScript(string script);
+		bool ExecuteScript(string script);
 		/// <summary>
 		/// Event Command Execution
 		/// </summary>

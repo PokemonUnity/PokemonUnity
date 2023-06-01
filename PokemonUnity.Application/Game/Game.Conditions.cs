@@ -181,7 +181,7 @@ namespace PokemonUnity
 					return DateTime.UtcNow.Hour * 3600 + DateTime.UtcNow.Minute * 60 + DateTime.UtcNow.Second;
 			}
 		}
-		public static DateTime GetTimeNow { get { return DateTime.UtcNow; } }
+		public static DateTime GetTimeNow { get { return DateTime.Now; } }
 
 		#region Time
 		/// <summary>
@@ -207,7 +207,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Is ON if the current day is Tuesday, Thursday or Saturday, and OFF otherwise.
 		/// </summary>
-		public static bool IsWeekday	{ get { return GetTime == DayTime.Day; } }
+		//public static bool IsWeekday	{ get { return GetTime == DayTime.Day; } }
 		#endregion
 
 		//public void DefaultConditions()
@@ -219,6 +219,9 @@ namespace PokemonUnity
 		//	Radio = (byte)ConditionValue.RADIO_OFF;
 		//	//Season = Season.Spring;
 		//}
+		/// <summary>
+		/// </summary>
+		/// <param name="condition"></param>
 		public void SetCondition(ConditionValue condition)
 		{
 			switch (condition)
@@ -401,11 +404,11 @@ namespace PokemonUnity
 		}
 
 		#region Day and night system
-		public static DateTime pbGetTimeNow() {
-			return DateTime.Now;
-		}
+		//public static DateTime GetTimeNow() {
+		//	return DateTime.Now;
+		//}
 
-		public static partial class PBDayNight {
+		public static partial class DayNight {
 			public static float oneOverSixty=1/60.0f;
 			public static ITone[] HourlyTones=new ITone[] {
 				//new Tone(-142.5,-142.5,-22.5,68),     // Midnight
@@ -443,7 +446,7 @@ namespace PokemonUnity
 			/// <param name="time"></param>
 			/// <returns></returns>
 			public static bool isDay(DateTime? @time=null) {
-				if (@time == null) @time=pbGetTimeNow();
+				if (@time == null) @time=GetTimeNow;
 				return (@time.Value.Hour>=6 && @time.Value.Hour<20);
 			}
 
@@ -453,7 +456,7 @@ namespace PokemonUnity
 			/// <param name="time"></param>
 			/// <returns></returns>
 			public static bool isNight(DateTime? @time=null) {
-				if (@time == null) @time=pbGetTimeNow();
+				if (@time == null) @time=GetTimeNow;
 				return (@time.Value.Hour>=20 || @time.Value.Hour<6);
 			}
 
@@ -463,7 +466,7 @@ namespace PokemonUnity
 			/// <param name="time"></param>
 			/// <returns></returns>
 			public static bool isMorning(DateTime? @time=null) {
-				if (@time == null) @time=pbGetTimeNow();
+				if (@time == null) @time=GetTimeNow;
 				return (@time.Value.Hour>=6 && @time.Value.Hour<12);
 			}
 
@@ -473,7 +476,7 @@ namespace PokemonUnity
 			/// <param name="time"></param>
 			/// <returns></returns>
 			public static bool isAfternoon(DateTime? @time=null) {
-				if (@time == null) @time=pbGetTimeNow();
+				if (@time == null) @time=GetTimeNow;
 				return (@time.Value.Hour>=12 && @time.Value.Hour<20);
 			}
 
@@ -483,12 +486,12 @@ namespace PokemonUnity
 			/// <param name="time"></param>
 			/// <returns></returns>
 			public static bool isEvening(DateTime? @time=null) {
-				if (@time == null) @time=pbGetTimeNow();
+				if (@time == null) @time=GetTimeNow;
 				return (@time.Value.Hour>=17 && @time.Value.Hour<20);
 			}
 
-			public static int pbGetDayNightMinutes() {
-				DateTime now=pbGetTimeNow();   // Get the current in-game time
+			public static int GetDayNightMinutes() {
+				DateTime now=GetTimeNow;   // Get the current in-game time
 				return (now.Hour*60)+now.Minute;
 			}
 
@@ -497,7 +500,7 @@ namespace PokemonUnity
 			/// </summary>
 			/// <returns></returns>
 			public static int getShade() {
-				int @time=pbGetDayNightMinutes();
+				int @time=GetDayNightMinutes();
 				if (@time>(12*60)) @time=(24*60)-@time;
 				int shade=255*@time/(12*60);
 				return shade;
@@ -519,7 +522,7 @@ namespace PokemonUnity
 
 			public static void getToneInternal() {
 				//Calculates the tone for the current frame, used for day/night effects
-				int realMinutes=pbGetDayNightMinutes();
+				int realMinutes=GetDayNightMinutes();
 				int hour=realMinutes/60;
 				int minute=realMinutes%60;
 				ITone tone=HourlyTones[hour];
@@ -533,12 +536,12 @@ namespace PokemonUnity
 			}
 		}
 
-		//public void pbDayNightTint(object obj) {
+		//public void DayNightTint(object obj) {
 		//  if (!(Game.GameData.Scene is ISceneMap)) {
 		//    return;
 		//  } else {
-		//    if (Core.ENABLESHADING && Game.GameData.GameMap != null && pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-		//      ITone tone=PBDayNight.getTone();
+		//    if (Core.ENABLESHADING && Game.GameData.GameMap != null && GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+		//      ITone tone=DayNight.getTone();
 		//      obj.tone.set(tone.red,tone.green,tone.blue,tone.gray);
 		//    } else {
 		//      obj.tone.set(0,0,0,0);
@@ -563,7 +566,7 @@ namespace PokemonUnity
 		/// 7 - Waning Crescent
 		/// </returns>
 		public static int moonphase(DateTime? @time=null) { // in UTC
-			if (@time == null) time=pbGetTimeNow();
+			if (@time == null) time=GetTimeNow;
 			double[] transitions=new double[] {
 				1.8456618033125,
 				5.5369854099375,
@@ -645,8 +648,8 @@ namespace PokemonUnity
 		#endregion
 
 		#region Days of the week
-		public static bool pbIsWeekday(int wdayVariable,params int[] arg) {
-			DateTime timenow=pbGetTimeNow();
+		public static bool IsWeekday(int wdayVariable,params int[] arg) {
+			DateTime timenow=GetTimeNow;
 			int wday=(int)timenow.DayOfWeek;//.wday;
 			bool ret=false;
 			foreach (int wd in arg) {
@@ -668,8 +671,8 @@ namespace PokemonUnity
 		#endregion
 
 		#region Months
-		public static bool pbIsMonth(int monVariable,params int[] arg) {
-			DateTime timenow=pbGetTimeNow();
+		public static bool IsMonth(int monVariable,params int[] arg) {
+			DateTime timenow=GetTimeNow;
 			int thismon=timenow.Month;
 			bool ret=false;
 			foreach (int wd in arg) {
@@ -694,7 +697,7 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public static string pbGetAbbrevMonthName(int month) {
+		public static string GetAbbrevMonthName(int month) {
 			return new string[] {"",
 					Game._INTL("Jan."),
 					Game._INTL("Feb."),
@@ -712,12 +715,12 @@ namespace PokemonUnity
 		#endregion
 
 		#region Seasons
-		public static int pbGetSeason() {
-			return (pbGetTimeNow().Month-1)%4;
+		public static int GetSeason() {
+			return (GetTimeNow.Month-1)%4;
 		}
 
-		public static bool pbIsSeason(int seasonVariable,params int[] arg) {
-			int thisseason=pbGetSeason();
+		public static bool IsSeason(int seasonVariable,params int[] arg) {
+			int thisseason=GetSeason();
 			bool ret=false;
 			foreach (int wd in arg) {
 				if (wd==thisseason) ret=true;
@@ -733,13 +736,13 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public static bool pbIsSpring() { return pbIsSeason(0,0); } // Jan, May, Sep
-		public static bool pbIsSummer() { return pbIsSeason(0,1); } // Feb, Jun, Oct
-		public static bool pbIsAutumn() { return pbIsSeason(0,2); } // Mar, Jul, Nov
-		public static bool pbIsFall() { return pbIsAutumn(); }
-		public static bool pbIsWinter() { return pbIsSeason(0,3); } // Apr, Aug, Dec
+		public static bool IsSpring() { return IsSeason(0,0); } // Jan, May, Sep
+		public static bool IsSummer() { return IsSeason(0,1); } // Feb, Jun, Oct
+		public static bool IsAutumn() { return IsSeason(0,2); } // Mar, Jul, Nov
+		public static bool IsFall() { return IsAutumn(); }
+		public static bool IsWinter() { return IsSeason(0,3); } // Apr, Aug, Dec
 
-		public static string pbGetSeasonName(int season) {
+		public static string GetSeasonName(int season) {
 			return new string[] { Game._INTL("Spring"),
 					Game._INTL("Summer"),
 					Game._INTL("Autumn"),

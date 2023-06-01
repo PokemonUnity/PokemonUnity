@@ -22,7 +22,7 @@ namespace PokemonUnity.Inventory
 		/// <param name="maxsize"></param>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public static int pbQuantity(Items[] items,int maxsize,Items item) {
+		public static int Quantity(Items[] items,int maxsize,Items item) {
 			int ret=0;
 			for (int i = 0; i < maxsize; i++) {
 				if (items[i]==item) {
@@ -39,7 +39,7 @@ namespace PokemonUnity.Inventory
 		/// <param name="maxsize"></param>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public static int pbQuantity(KeyValuePair<Items, int>[] items,int maxsize,Items item) {
+		public static int Quantity(KeyValuePair<Items, int>[] items,int maxsize,Items item) {
 			int ret=0;
 			for (int i = 0; i < maxsize; i++) {
 				KeyValuePair<Items, int>? itemslot=items[i];
@@ -58,7 +58,7 @@ namespace PokemonUnity.Inventory
 		/// <param name="item"></param>
 		/// <param name="qty"></param>
 		/// <returns></returns>
-		public static bool pbDeleteItem(ref Items[] items,int maxsize,Items item,int qty) {
+		public static bool DeleteItem(ref Items[] items,int maxsize,Items item,int qty) {
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
@@ -89,7 +89,7 @@ namespace PokemonUnity.Inventory
 		/// <param name="item"></param>
 		/// <param name="qty"></param>
 		/// <returns></returns>
-		public static bool pbDeleteItem(ref KeyValuePair<Items, int>[] items,int maxsize,Items item,int qty) {
+		public static bool DeleteItem(ref KeyValuePair<Items, int>[] items,int maxsize,Items item,int qty) {
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
@@ -117,7 +117,7 @@ namespace PokemonUnity.Inventory
 			return ret;
 		}
 
-		public static bool pbCanStore(Items[] items,int maxsize,int maxPerSlot,Items item,int qty) {
+		public static bool CanStore(Items[] items,int maxsize,int maxPerSlot,Items item,int qty) {
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
@@ -138,7 +138,7 @@ namespace PokemonUnity.Inventory
 			return false;
 		}
 
-		public static bool pbCanStore(KeyValuePair<Items, int>[] items,int maxsize,int maxPerSlot,Items item,int qty) {
+		public static bool CanStore(KeyValuePair<Items, int>[] items,int maxsize,int maxPerSlot,Items item,int qty) {
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
@@ -162,7 +162,7 @@ namespace PokemonUnity.Inventory
 		}
 
 		[System.Obsolete("Use keyvaluepair array as input param for array")] //ToDo: Refactor and Finish below...
-		public static bool pbStoreItem(ref Items[] items,int maxsize,int maxPerSlot,Items item,int qty,bool sorting=false) {
+		public static bool StoreItem(ref Items[] items,int maxsize,int maxPerSlot,Items item,int qty,bool sorting=false) {
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
@@ -194,7 +194,7 @@ namespace PokemonUnity.Inventory
 			return false;
 		}
 
-		public static bool pbStoreItem(ref KeyValuePair<Items, int>[] items,int maxsize,int maxPerSlot,Items item,int qty,bool sorting=false) {
+		public static bool StoreItem(ref KeyValuePair<Items, int>[] items,int maxsize,int maxPerSlot,Items item,int qty,bool sorting=false) {
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");

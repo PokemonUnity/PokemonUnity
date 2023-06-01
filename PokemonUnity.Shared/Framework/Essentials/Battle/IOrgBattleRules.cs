@@ -16,34 +16,34 @@ namespace PokemonEssentials.Interface.Battle
 	/// </summary>
 	public interface IGameOrgBattleRules
 	{
-		int pbBaseStatTotal(Pokemons species);
+		int BaseStatTotal(Pokemons species);
 
-		int pbBalancedLevelFromBST(Pokemons species);
+		int BalancedLevelFromBST(Pokemons species);
 
-		bool pbTooTall(IPokemon pokemon, double maxHeightInMeters);
+		bool TooTall(IPokemon pokemon, double maxHeightInMeters);
 
-		bool pbTooHeavy(IPokemon pokemon, double maxWeightInKg);
+		bool TooHeavy(IPokemon pokemon, double maxWeightInKg);
 
 		#region Stadium Cups
 		// ##########################################
 		//  Stadium Cups
 		// ##########################################
-		IPokemonChallengeRules pbPikaCupRules(bool @double);
-		IPokemonChallengeRules pbPokeCupRules(bool @double);
-		IPokemonChallengeRules pbPrimeCupRules(bool @double);
-		IPokemonChallengeRules pbFancyCupRules(bool @double);
-		IPokemonChallengeRules pbLittleCupRules(bool @double);
-		IPokemonChallengeRules pbStrictLittleCupRules(bool @double);
+		IPokemonChallengeRules PikaCupRules(bool @double);
+		IPokemonChallengeRules PokeCupRules(bool @double);
+		IPokemonChallengeRules PrimeCupRules(bool @double);
+		IPokemonChallengeRules FancyCupRules(bool @double);
+		IPokemonChallengeRules LittleCupRules(bool @double);
+		IPokemonChallengeRules StrictLittleCupRules(bool @double);
 		#endregion
 
 		#region Battle Frontier Rules
 		// ##########################################
 		//  Battle Frontier Rules
 		// ##########################################
-		IPokemonChallengeRules pbBattleTowerRules(bool @double, bool openlevel);
-		IPokemonChallengeRules pbBattlePalaceRules(bool @double, bool openlevel);
-		IPokemonChallengeRules pbBattleArenaRules(bool openlevel);
-		IPokemonChallengeRules pbBattleFactoryRules(bool @double, bool openlevel);
+		IPokemonChallengeRules BattleTowerRules(bool @double, bool openlevel);
+		IPokemonChallengeRules BattlePalaceRules(bool @double, bool openlevel);
+		IPokemonChallengeRules BattleArenaRules(bool openlevel);
+		IPokemonChallengeRules BattleFactoryRules(bool @double, bool openlevel);
 		#endregion
 	}
 
@@ -380,22 +380,22 @@ namespace PokemonEssentials.Interface.Battle
 
 	public interface IBattleType //: IBattleType
 	{
-		IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2);
+		IBattle CreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2);
 	}
 
 	public interface IBattleTower : IBattleType
 	{
-		//IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2);
+		//IBattle CreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2);
 	}
 
 	public interface IBattlePalace : IBattleType
 	{
-		//IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2);
+		//IBattle CreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2);
 	}
 
 	public interface IBattleArena : IBattleType
 	{
-		//IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2);
+		//IBattle CreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2);
 	}
 
 	public interface IBattleRule //: IBattleRule

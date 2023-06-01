@@ -60,9 +60,9 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface IGameMessage
 	{
-		bool pbMapInterpreterRunning();
+		bool MapInterpreterRunning();
 
-		IInterpreter pbMapInterpreter();
+		IInterpreter MapInterpreter();
 		//	if (Game.GameData.GameMap && Game.GameData.GameMap.respond_to("interpreter")) {
 		//	return Game.GameData.GameMap.interpreter;
 		//	} else if (Game.GameData.GameSystem) {
@@ -71,53 +71,53 @@ namespace PokemonEssentials.Interface
 		//	return null;
 		//}
 
-		void pbRefreshSceneMap();
+		void RefreshSceneMap();
 
-		void pbUpdateSceneMap();
+		void UpdateSceneMap();
 		// ########
 
-		string pbCsvField(string str);
+		string CsvField(string str);
 
-		int pbCsvPosInt(string str);
+		int CsvPosInt(string str);
 
-		int? pbEventCommentInput(IGameCharacter @event, int elements, string trigger);
+		int? EventCommentInput(IGameCharacter @event, int elements, string trigger);
 
-		int? pbCurrentEventCommentInput(int elements, string trigger);
-
-
-
-		int pbButtonInputProcessing(int variableNumber = 0, int timeoutFrames = 0);
+		int? CurrentEventCommentInput(int elements, string trigger);
 
 
 
-		int pbChooseNumber(IWindow msgwindow, IChooseNumberParams param, Action block = null);
+		int ButtonInputProcessing(int variableNumber = 0, int timeoutFrames = 0);
 
-		int pbShowCommandsWithHelp(IWindow msgwindow,string[] commands,string[] help,int cmdIfCancel=0,int defaultCmd=0, Action block = null);
 
-		int pbShowCommands(IWindow msgwindow,string[] commands=null,int cmdIfCancel=0,int defaultCmd=0, Action block = null);
 
-		void pbPositionFaceWindow(IWindow facewindow,IWindow msgwindow);
+		int ChooseNumber(IWindow msgwindow, IChooseNumberParams param, Action block = null);
 
-		void pbPositionNearMsgWindow(IWindow cmdwindow,IWindow msgwindow,bool side);
+		int ShowCommandsWithHelp(IWindow msgwindow,string[] commands,string[] help,int cmdIfCancel=0,int defaultCmd=0, Action block = null);
 
-		string pbGetBasicMapNameFromId(int id);
+		int ShowCommands(IWindow msgwindow,string[] commands=null,int cmdIfCancel=0,int defaultCmd=0, Action block = null);
 
-		string pbGetMapNameFromId(int id);
+		void PositionFaceWindow(IWindow facewindow,IWindow msgwindow);
 
-		int pbMessage(string message,string[] commands=null,int cmdIfCancel=0,int? skin=null,int defaultCmd=0, Action block = null); //ref Action block
+		void PositionNearMsgWindow(IWindow cmdwindow,IWindow msgwindow,bool side);
 
-		int pbMessageChooseNumber(string message,string[] param, ref Action block); //Action block = null
+		string GetBasicMapNameFromId(int id);
 
-		bool pbConfirmMessage(string message,Action block = null);
+		string GetMapNameFromId(int id);
 
-		bool pbConfirmMessageSerious(string message,Action block = null);
+		int Message(string message,string[] commands=null,int cmdIfCancel=0,int? skin=null,int defaultCmd=0, Action block = null); //ref Action block
 
-		IWindow_AdvancedTextPokemon pbCreateStatusWindow(IViewport viewport=null);
+		int MessageChooseNumber(string message,string[] param, ref Action block); //Action block = null
 
-		IWindow_AdvancedTextPokemon pbCreateMessageWindow(IViewport viewport=null,int? skin=null);
+		bool ConfirmMessage(string message,Action block = null);
+
+		bool ConfirmMessageSerious(string message,Action block = null);
+
+		IWindow_AdvancedTextPokemon CreateStatusWindow(IViewport viewport=null);
+
+		IWindow_AdvancedTextPokemon CreateMessageWindow(IViewport viewport=null,int? skin=null);
 
 		//ToDo: Return IDisposable?...
-		void pbDisposeMessageWindow(IWindow msgwindow);
+		void DisposeMessageWindow(IWindow msgwindow);
 
 
 
@@ -126,39 +126,39 @@ namespace PokemonEssentials.Interface
 		IColor getSkinColor(IWindow windowskin,IColor color,bool isDarkSkin);
 
 		// internal function
-		void pbRepositionMessageWindow(IWindow msgwindow, int linecount=2);
+		void RepositionMessageWindow(IWindow msgwindow, int linecount=2);
 
 		// internal function
-		void pbUpdateMsgWindowPos(IWindow msgwindow,IGameEvent @event,bool eventChanged=false);
+		void UpdateMsgWindowPos(IWindow msgwindow,IGameEvent @event,bool eventChanged=false);
 
 		// internal function
-		string pbGetGoldString();
+		string GetGoldString();
 
-		IWindow_AdvancedTextPokemon pbDisplayGoldWindow(IWindow msgwindow);
+		IWindow_AdvancedTextPokemon DisplayGoldWindow(IWindow msgwindow);
 
-		IWindow_AdvancedTextPokemon pbDisplayCoinsWindow(IWindow msgwindow,IWindow goldwindow);
+		IWindow_AdvancedTextPokemon DisplayCoinsWindow(IWindow msgwindow,IWindow goldwindow);
 
-		void pbMessageWaitForInput(IWindow msgwindow,int frames,bool showPause=false);
+		void MessageWaitForInput(IWindow msgwindow,int frames,bool showPause=false);
 
-		void pbMessageDisplay(IWindow msgwindow,string message,bool letterbyletter=true,Action commandProc=null);
+		void MessageDisplay(IWindow msgwindow,string message,bool letterbyletter=true,Action commandProc=null);
 	}
 
 	public interface IInterpreterMixinMessage { //static
 		/// <summary>
 		/// Freezes all events on the map (for use at the beginning of common events)
 		/// </summary>
-		void pbGlobalLock();
+		void GlobalLock();
 
 		/// <summary>
 		/// Unfreezes all events on the map (for use at the end of common events)
 		/// </summary>
-		void pbGlobalUnlock();
+		void GlobalUnlock();
 
-		int pbRepeatAbove(int index);
+		int RepeatAbove(int index);
 
-		int pbBreakLoop(int index);
+		int BreakLoop(int index);
 
-		void pbJumpToLabel(int index, string label_name);
+		void JumpToLabel(int index, string label_name);
 
 		/// <summary>
 		/// Gets the next index in the interpreter, ignoring
@@ -166,7 +166,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns></returns>
-		int pbNextIndex(int index);
+		int NextIndex(int index);
 
 		/// <summary>
 		/// Helper function that shows a picture in a script.  To be used in
@@ -181,7 +181,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="zoomY"></param>
 		/// <param name="opacity"></param>
 		/// <param name="blendType"></param>
-		void pbShowPicture(int number, string name, float origin, float x, float y, int zoomX = 100, int zoomY = 100, byte opacity = 255, int blendType = 0);
+		void ShowPicture(int number, string name, float origin, float x, float y, int zoomX = 100, int zoomY = 100, byte opacity = 255, int blendType = 0);
 
 		/// <summary>
 		/// Erases an event and adds it to the list of erased events so that
@@ -189,22 +189,22 @@ namespace PokemonEssentials.Interface
 		/// a script event command.
 		/// </summary>
 		/// <returns></returns>
-		bool pbEraseThisEvent();
+		bool EraseThisEvent();
 
 		/// <summary>
 		/// Runs a common event.  To be used in a script event command.
 		/// </summary>
 		/// <param name="id"></param>
-		void pbCommonEvent(int id);
+		void CommonEvent(int id);
 
 		/// <summary>
-		/// Sets another event's self switch (eg. pbSetSelfSwitch(20,"A",true) ).
+		/// Sets another event's self switch (eg. SetSelfSwitch(20,"A",true) ).
 		/// To be used in a script event command.
 		/// </summary>
 		/// <param name="event"></param>
 		/// <param name="swtch"></param>
 		/// <param name="value"></param>
-		void pbSetSelfSwitch(int @event, string swtch, bool value);
+		void SetSelfSwitch(int @event, string swtch, bool value);
 
 		// Must use this approach to share the methods because the methods already
 		// defined in a class override those defined in an included module
@@ -229,7 +229,7 @@ namespace PokemonEssentials.Interface
 		//@@immediateDisplayAfterWait=false;
 		//@buttonInput=false;
 
-		//void pbParams() {
+		//void Params() {
 		//	return @params;
 		//}
 
@@ -250,7 +250,7 @@ namespace PokemonEssentials.Interface
 		//@@immediateDisplayAfterWait=false;
 		//@buttonInput=false;
 
-		//void pbParams() {
+		//void Params() {
 		//	return @parameters;
 		//}
 

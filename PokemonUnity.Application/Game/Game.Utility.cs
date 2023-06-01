@@ -50,7 +50,7 @@ namespace PokemonUnity
 		}
 			
 		#region General purpose utilities
-		public bool _pbNextComb(int[] comb,int length) {
+		public bool _NextComb(int[] comb,int length) {
 			int i=comb.Length-1;
 			do {
 				bool valid=true;
@@ -78,8 +78,8 @@ namespace PokemonUnity
 		/// <param name="array"></param>
 		/// <param name="num"></param>
 		/// <returns></returns>
-		//public IEnumerator<T[]> pbEachCombination<T>(T[] array,int num) {
-		public IEnumerable<T[]> pbEachCombination<T>(T[] array,int num) {
+		//public IEnumerator<T[]> EachCombination<T>(T[] array,int num) {
+		public IEnumerable<T[]> EachCombination<T>(T[] array,int num) {
 			if (array.Length<num || num<=0) yield break; //return;
 			if (array.Length==num) {
 				yield return array;
@@ -100,7 +100,7 @@ namespace PokemonUnity
 					arr[i]=array[currentComb[i]];
 				}
 				yield return arr;
-			} while (_pbNextComb(currentComb,array.Length));
+			} while (_NextComb(currentComb,array.Length));
 		}
 
 		/// <summary>
@@ -108,19 +108,19 @@ namespace PokemonUnity
 		/// </summary>
 		/// <returns></returns>
 		//ToDo?...
-		public string pbGetMyDocumentsFolder() { return ""; }
+		public string GetMyDocumentsFolder() { return ""; }
 
 		/// <summary>
 		/// Returns a country ID
 		/// </summary>
 		/// http://msdn.microsoft.com/en-us/library/dd374073%28VS.85%29.aspx?
 		//ToDo?...
-		public int pbGetCountry() { return 0; }
+		public int GetCountry() { return 0; }
 
 		/// <summary>
 		/// Returns a language ID
 		/// </summary>
-		public int pbGetLanguage() {
+		public int GetLanguage() {
 			//getUserDefaultLangID=new Win32API("kernel32","GetUserDefaultLangID","","i"); //rescue null
 			int ret=0;
 			//if (getUserDefaultLangID) {
@@ -164,11 +164,11 @@ namespace PokemonUnity
 		#endregion
 
 		#region Player-related utilities, random name generator
-		//public bool pbChangePlayer(int id) {
-		public void pbChangePlayer(int id) {
+		//public bool ChangePlayer(int id) {
+		public void ChangePlayer(int id) {
 			if (id < 0 || id >= 8) return; //false;
-			//IPokemonMetadata meta=pbGetMetadata(0,MetadataPlayerA+id);
-			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[id];
+			//IPokemonMetadata meta=GetMetadata(0,MetadataPlayerA+id);
+			MetadataPlayer? meta=GetMetadata(0).Global.Players[id];
 			if (meta == null) return; //false;
 			if (Trainer != null) Trainer.trainertype=(TrainerTypes)meta?.Type; //meta[0];
 			GamePlayer.character_name=meta?.Name; //meta[1];
@@ -177,28 +177,28 @@ namespace PokemonUnity
 			if (Trainer != null) Trainer.metaID=id;
 		}
 
-		public string pbGetPlayerGraphic() {
+		public string GetPlayerGraphic() {
 			int id=Global.playerID;
 			if (id<0 || id>=8) return "";
-			//IPokemonMetadata meta=pbGetMetadata(0,MetadataPlayerA+id);
-			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[id];
+			//IPokemonMetadata meta=GetMetadata(0,MetadataPlayerA+id);
+			MetadataPlayer? meta=GetMetadata(0).Global.Players[id];
 			if (meta == null) return "";
-			return pbPlayerSpriteFile((TrainerTypes)meta?.Type); //meta[0]
+			return PlayerSpriteFile((TrainerTypes)meta?.Type); //meta[0]
 		}
 
-		public TrainerTypes pbGetPlayerTrainerType() {
+		public TrainerTypes GetPlayerTrainerType() {
 			int id=Global.playerID;
 			if (id<0 || id>=8) return 0;
-			//IPokemonMetadata meta=pbGetMetadata(0,MetadataPlayerA+id);
-			MetadataPlayer? meta=pbGetMetadata(0).Global.Players[id];
+			//IPokemonMetadata meta=GetMetadata(0,MetadataPlayerA+id);
+			MetadataPlayer? meta=GetMetadata(0).Global.Players[id];
 			if (meta == null) return 0;
 			return (TrainerTypes)meta?.Type; //meta[0];
 		}
 
-		public int pbGetTrainerTypeGender(TrainerTypes trainertype) {
-		//public bool? pbGetTrainerTypeGender(TrainerTypes trainertype) {
+		public int GetTrainerTypeGender(TrainerTypes trainertype) {
+		//public bool? GetTrainerTypeGender(TrainerTypes trainertype) {
 			int? ret=2; // 2 = gender unknown
-			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
+			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//	trainertypes=Marshal.load(f);
 			//	if (!trainertypes[trainertype]) {
 				if (!Kernal.TrainerMetaData.ContainsKey(trainertype)) {
@@ -212,19 +212,19 @@ namespace PokemonUnity
 			return ret.Value;
 		}
 
-		public void pbTrainerName(string name=null,int outfit=0) {
+		public void TrainerName(string name=null,int outfit=0) {
 			if (Global.playerID<0) {
-				pbChangePlayer(0);
+				ChangePlayer(0);
 			}
-			TrainerTypes trainertype=pbGetPlayerTrainerType();
+			TrainerTypes trainertype=GetPlayerTrainerType();
 			string trname=name;
 			Trainer=new Trainer(trname,trainertype);
 			Trainer.outfit=outfit;
 			if (trname==null && this is IGameTextEntry t) {
-				trname=t.pbEnterPlayerName(Game._INTL("Your name?"),0,7);
+				trname=t.EnterPlayerName(Game._INTL("Your name?"),0,7);
 				if (trname=="") {
-					int gender=pbGetTrainerTypeGender(trainertype);
-					trname=pbSuggestTrainerName(gender);
+					int gender=GetTrainerTypeGender(trainertype);
+					trname=SuggestTrainerName(gender);
 				}
 			}
 			Trainer.name=trname;
@@ -232,8 +232,8 @@ namespace PokemonUnity
 			PokemonTemp.begunNewGame=true; //new game because you changed your name?
 		}
 
-		public string pbSuggestTrainerName(int gender) {
-			string userName=pbGetUserName();
+		public string SuggestTrainerName(int gender) {
+			string userName=GetUserName();
 			//userName=userName.gsub(/\s+.*$/,""); // trim space
 			if (userName.Length>0 && userName.Length<7) {
 				//userName[0,1]=userName[0,1].upcase; //make first two characters cap
@@ -265,7 +265,7 @@ namespace PokemonUnity
 			return getRandomNameEx(gender,null,1,7);
 		}
 
-		public string pbGetUserName() {
+		public string GetUserName() {
 			int buffersize=100;
 			string getUserName=""; //new Win32API('advapi32.dll','GetUserName','pp','i');
 			int i = 0; do { //10.times;
@@ -391,22 +391,22 @@ namespace PokemonUnity
 		#endregion
 
 		#region Event timing utilities
-		public void pbTimeEvent(int? variableNumber,int secs=86400) {
+		public void TimeEvent(int? variableNumber,int secs=86400) {
 			if (variableNumber != null && variableNumber.Value>=0) {
 				if (GameVariables != null) {
 					if (secs<0) secs=0;
-					DateTime timenow=Game.pbGetTimeNow();
+					DateTime timenow=Game.GetTimeNow;
 					GameVariables[variableNumber.Value]=new float[] {timenow.Ticks,secs};
 					if (GameMap != null) GameMap.refresh();
 				}
 			}
 		}
 
-		public void pbTimeEventDays(int? variableNumber,int days=0) {
+		public void TimeEventDays(int? variableNumber,int days=0) {
 			if (variableNumber != null && variableNumber>=0) {
 				if (GameVariables != null) {
 					if (days<0) days=0;
-					DateTime timenow=Game.pbGetTimeNow();
+					DateTime timenow=Game.GetTimeNow;
 					float time=timenow.Ticks;
 					float expiry=(time%86400.0f)+(days*86400.0f);
 					GameVariables[variableNumber.Value]= new []{ time,expiry-time };
@@ -415,12 +415,12 @@ namespace PokemonUnity
 			}
 		}
 
-		public bool pbTimeEventValid(int? variableNumber) {
+		public bool TimeEventValid(int? variableNumber) {
 			bool retval=false;
 			if (variableNumber != null && variableNumber>=0 && GameVariables != null) {
 				object value=GameVariables[variableNumber.Value];
 				if (value is float[] v && v.Length > 0) { //is Array
-					DateTime timenow=Game.pbGetTimeNow();
+					DateTime timenow=Game.GetTimeNow;
 					retval=(timenow.Ticks - v[0] > v[1]); // value[1] is age in seconds
 					if (v[1]<=0) retval=false;	// zero age
 				}
@@ -435,20 +435,20 @@ namespace PokemonUnity
    
 		#region General-purpose utilities with dependencies
 		/// <summary>
-		/// Similar to <see cref="pbFadeOutIn"/>, but pauses the music as it fades out.
+		/// Similar to <see cref="FadeOutIn"/>, but pauses the music as it fades out.
 		/// </summary>
 		/// <remarks>
 		/// Requires scripts "Audio" (for <seealso cref="IGameSystem.bgm_pause"/>) 
-		/// and "SpriteWindow" (for <seealso cref="pbFadeOutIn"/>).
+		/// and "SpriteWindow" (for <seealso cref="FadeOutIn"/>).
 		/// </remarks>
 		/// <param name="zViewport"></param>
-		public void pbFadeOutInWithMusic(int zViewport, Action block = null) {
+		public void FadeOutInWithMusic(int zViewport, Action block = null) {
 			PokemonEssentials.Interface.IAudioBGS playingBGS=GameSystem.getPlayingBGS();
 			PokemonEssentials.Interface.IAudioBGM playingBGM=GameSystem.getPlayingBGM();
 			GameSystem.bgm_pause(1.0f);
 			GameSystem.bgs_pause(1.0f);
 			int pos=GameSystem.bgm_position;
-			pbFadeOutIn(zViewport, block: () => {
+			FadeOutIn(zViewport, block: () => {
 				if (block != null) block.Invoke(); //(block_given ?) yield;
 				GameSystem.bgm_position=pos;
 				GameSystem.bgm_resume(playingBGM);
@@ -475,16 +475,16 @@ namespace PokemonUnity
 			}
 			//switch (error) {
 			//	if (error == 1) //case 1:
-			//		(this as IGameMessage).pbMessage(Game._INTL("The recorded data could not be found or saved."));
+			//		(this as IGameMessage).Message(Game._INTL("The recorded data could not be found or saved."));
 			//		break;
 			//	else if (error == 2) //case 2:
-			//		(this as IGameMessage).pbMessage(Game._INTL("The recorded data was in an invalid format."));
+			//		(this as IGameMessage).Message(Game._INTL("The recorded data was in an invalid format."));
 			//		break;
 			//	else if (error == 3) //case 3:
-			//		(this as IGameMessage).pbMessage(Game._INTL("The recorded data's format is not supported."));
+			//		(this as IGameMessage).Message(Game._INTL("The recorded data's format is not supported."));
 			//		break;
 			//	else if (error == 4) //case 4:
-			//		(this as IGameMessage).pbMessage(Game._INTL("There was no sound in the recording. Please ensure that a microphone is attached to the computer /and/ is ready."));
+			//		(this as IGameMessage).Message(Game._INTL("There was no sound in the recording. Please ensure that a microphone is attached to the computer /and/ is ready."));
 			//		break;
 			//	else //default:
 			//		return error;
@@ -504,20 +504,20 @@ namespace PokemonUnity
 				case 0:
 					return true;
 				case 256+66:
-					(this as IGameMessage).pbMessage(Game._INTL("All recording devices are in use. Recording is not possible now."));
+					(this as IGameMessage).Message(Game._INTL("All recording devices are in use. Recording is not possible now."));
 					return false;
 				case 256+72:
-					(this as IGameMessage).pbMessage(Game._INTL("No supported recording device was found. Recording is not possible."));
+					(this as IGameMessage).Message(Game._INTL("No supported recording device was found. Recording is not possible."));
 					return false;
 				default:
 					string buffer=new int[256].ToString(); //"\0"*256;
 					//MciErrorString.call(code,buffer,256);
-					(this as IGameMessage).pbMessage(Game._INTL("Recording failed: {1}",buffer));//.gsub(/\x00/,"")
+					(this as IGameMessage).Message(Game._INTL("Recording failed: {1}",buffer));//.gsub(/\x00/,"")
 					return false;
 			}
 		}
 
-		public virtual IList<object> pbHideVisibleObjects() 
+		public virtual IList<object> HideVisibleObjects() 
 		{
 			IList<object> visibleObjects= new List<object>(); //ToDo: ISpriteWindow?
 			////ObjectSpace.each_object(Sprite){|o|
@@ -529,7 +529,7 @@ namespace PokemonUnity
 			//}
 			////ObjectSpace.each_object(Viewport){|o|
 			//ObjectSpace.each_object(Viewport){|o|
-			//	if (!pbDisposed(o) && o.visible) {
+			//	if (!Disposed(o) && o.visible) {
 			//		visibleObjects.Add(o);
 			//		o.visible=false;
 			//	}
@@ -555,21 +555,21 @@ namespace PokemonUnity
 			return visibleObjects;
 		}
 
-		public void pbShowObjects(IList<object> visibleObjects) {
+		public void ShowObjects(IList<object> visibleObjects) {
 			foreach (IViewport o in visibleObjects) {
-				if (this is IGameSpriteWindow s && !s.pbDisposed(o)) {
+				if (this is IGameSpriteWindow s && !s.Disposed(o)) {
 					o.visible=true;
 				}
 			}
 		}
 
-		public void pbLoadRpgxpScene(ISceneMap scene) {
+		public void LoadRpgxpScene(ISceneMap scene) {
 			if (!(Scene is ISceneMap)) return;
 			ISceneMap oldscene=Scene;
 			Scene=scene;
 			Graphics.freeze();
 			oldscene.disposeSpritesets();
-			IList<object> visibleObjects=pbHideVisibleObjects();
+			IList<object> visibleObjects=HideVisibleObjects();
 			Graphics.transition(15,null,0); //ToDo: revisit this again...
 			Graphics.freeze();
 			while (Scene != null && !(Scene is ISceneMap)) {
@@ -578,7 +578,7 @@ namespace PokemonUnity
 			Graphics.transition(15,null,0); //ToDo: revisit this again...
 			Graphics.freeze();
 			oldscene.createSpritesets();
-			pbShowObjects(visibleObjects);
+			ShowObjects(visibleObjects);
 			Graphics.transition(20,null,0); //ToDo: revisit this again...
 			Scene=oldscene;
 		}
@@ -588,7 +588,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public object pbGet(int? id) {
+		public object Get(int? id) {
 			if (id == null || GameVariables == null) return 0;
 			return GameVariables[id.Value];
 		}
@@ -598,7 +598,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="value"></param>
-		public void pbSet(int? id,object value) {
+		public void Set(int? id,object value) {
 			if (id != null && id>=0) {
 				if (GameVariables != null) GameVariables[id.Value]=value;
 				if (GameMap != null) GameMap.need_refresh = true;
@@ -611,7 +611,7 @@ namespace PokemonUnity
 		/// Requires the script "PokemonMessages"
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public bool pbCommonEvent(int id) {
+		public bool CommonEvent(int id) {
 			if (id<0) return false;
 			IGameCommonEvent ce=DataCommonEvents[id];
 			if (ce==null) return false;
@@ -622,12 +622,12 @@ namespace PokemonUnity
 				Graphics?.update();
 				Input.update();
 				interp.update();
-				if (this is IGameMessage m) m.pbUpdateSceneMap();
+				if (this is IGameMessage m) m.UpdateSceneMap();
 			} while (interp.running);
 			return true;
 		}
 
-		public void pbExclaim(IGameCharacter[] @event,int id=Core.EXCLAMATION_ANIMATION_ID,bool tinting=false) {
+		public void Exclaim(IGameCharacter[] @event,int id=Core.EXCLAMATION_ANIMATION_ID,bool tinting=false) {
 			ISprite sprite=null;
 			if (@event?.Length > 0) { //is Array
 				//List<IGameCharacter> done=new List<IGameCharacter>();
@@ -644,61 +644,61 @@ namespace PokemonUnity
 			while (!sprite.disposed) {
 				Graphics?.update();
 				Input.update();
-				if (this is IGameMessage m) m.pbUpdateSceneMap();
+				if (this is IGameMessage m) m.UpdateSceneMap();
 			}
 		}
 
-		public void pbNoticePlayer(IGameCharacter @event) {
+		public void NoticePlayer(IGameCharacter @event) {
 			if (this is IGameField f) {
-				if (!f.pbFacingEachOther(@event,GamePlayer)) {
-					pbExclaim(new IGameCharacter[] { @event });
+				if (!f.FacingEachOther(@event,GamePlayer)) {
+					Exclaim(new IGameCharacter[] { @event });
 				}
-				f.pbTurnTowardEvent(GamePlayer,@event);
-				f.pbMoveTowardPlayer(@event);
+				f.TurnTowardEvent(GamePlayer,@event);
+				f.MoveTowardPlayer(@event);
 			}
 		}
 		#endregion
 
 		#region Loads Pokémon/item/trainer graphics
 		[System.Obsolete("Unused")] 
-		public string pbPokemonBitmapFile(Pokemons species,bool shiny,bool back=false) {   
+		public string PokemonBitmapFile(Pokemons species,bool shiny,bool back=false) {   
 			if (shiny) {
 				//  Load shiny bitmap
 				string ret=string.Format("Graphics/Battlers/{0}s{1}",species.ToString(),back ? "b" : ""); //rescue null
-				if ((this is IGameSpriteWindow g0) && g0.pbResolveBitmap(ret) == null) {
+				if ((this is IGameSpriteWindow g0) && g0.ResolveBitmap(ret) == null) {
 					ret=string.Format("Graphics/Battlers/{0}s{1}",species,back ? "b" : "");
 				}
 				return ret;
 			} else {
 				//  Load normal bitmap
 				string ret=string.Format("Graphics/Battlers/{0}{1}",species.ToString(),back ? "b" : ""); //rescue null
-				if ((this is IGameSpriteWindow g1) && g1.pbResolveBitmap(ret) == null) {
+				if ((this is IGameSpriteWindow g1) && g1.ResolveBitmap(ret) == null) {
 					ret=string.Format("Graphics/Battlers/{0}{1}",species,back ? "b" : "");
 				}
 				return ret;
 			}
 		}
 
-		public IAnimatedBitmap pbLoadPokemonBitmap(IPokemon pokemon, bool back = false)
+		public IAnimatedBitmap LoadPokemonBitmap(IPokemon pokemon, bool back = false)
 		{
-			return pbLoadPokemonBitmapSpecies(pokemon, pokemon.Species, back);
+			return LoadPokemonBitmapSpecies(pokemon, pokemon.Species, back);
 		}
 
 		//Note: Returns an AnimatedBitmap, not a Bitmap
-		public virtual IAnimatedBitmap pbLoadPokemonBitmapSpecies(IPokemon pokemon, Pokemons species, bool back = false)
+		public virtual IAnimatedBitmap LoadPokemonBitmapSpecies(IPokemon pokemon, Pokemons species, bool back = false)
 		{
 			IAnimatedBitmap ret = null;
 			//if (pokemon.isEgg?) {
 			//	bitmapFileName=string.Format("Graphics/Battlers/%segg",species.ToString()); //rescue null
-			//	if (!pbResolveBitmap(bitmapFileName)) {
+			//	if (!ResolveBitmap(bitmapFileName)) {
 			//		bitmapFileName=string.Format("Graphics/Battlers/%03degg",species);
-			//		if (!pbResolveBitmap(bitmapFileName)) {
+			//		if (!ResolveBitmap(bitmapFileName)) {
 			//			bitmapFileName=string.Format("Graphics/Battlers/egg");
 			//		}
 			//	}
-			//	bitmapFileName=pbResolveBitmap(bitmapFileName);
+			//	bitmapFileName=ResolveBitmap(bitmapFileName);
 			//} else {
-			//	bitmapFileName=pbCheckPokemonBitmapFiles([species,back,
+			//	bitmapFileName=CheckPokemonBitmapFiles([species,back,
 			//												(pokemon.isFemale?),
 			//												pokemon.isShiny?,
 			//												(pokemon.form rescue 0),
@@ -721,20 +721,20 @@ namespace PokemonUnity
 		}
 
 		//Note: Returns an AnimatedBitmap, not a Bitmap
-		public virtual IAnimatedBitmap pbLoadSpeciesBitmap(Pokemons species, bool female = false, int form = 0, bool shiny = false, bool shadow = false, bool back = false, bool egg = false)
+		public virtual IAnimatedBitmap LoadSpeciesBitmap(Pokemons species, bool female = false, int form = 0, bool shiny = false, bool shadow = false, bool back = false, bool egg = false)
 		{
 			IAnimatedBitmap ret = null;
 			//if (egg) {
-			//	bitmapFileName=string.Format("Graphics/Battlers/%segg",getConstantName(PBSpecies,species)) rescue null;
-			//	if (!pbResolveBitmap(bitmapFileName)) {
+			//	bitmapFileName=string.Format("Graphics/Battlers/%segg",getConstantName(Species,species)) rescue null;
+			//	if (!ResolveBitmap(bitmapFileName)) {
 			//		bitmapFileName=string.Format("Graphics/Battlers/%03degg",species);
-			//		if (!pbResolveBitmap(bitmapFileName)) {
+			//		if (!ResolveBitmap(bitmapFileName)) {
 			//			bitmapFileName=string.Format("Graphics/Battlers/egg");
 			//		}
 			//	}
-			//	bitmapFileName=pbResolveBitmap(bitmapFileName);
+			//	bitmapFileName=ResolveBitmap(bitmapFileName);
 			//} else {
-			//	bitmapFileName=pbCheckPokemonBitmapFiles([species,back,female,shiny,form,shadow]);
+			//	bitmapFileName=CheckPokemonBitmapFiles([species,back,female,shiny,form,shadow]);
 			//}
 			//if (bitmapFileName) {
 			//	ret=new AnimatedBitmap(bitmapFileName);
@@ -742,7 +742,7 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public virtual string pbCheckPokemonBitmapFiles(params object[] args) {
+		public virtual string CheckPokemonBitmapFiles(params object[] args) {
 			//Pokemons species=params[0];
 			//bool back=params[1];
 			//List<> factors=[];
@@ -773,13 +773,13 @@ namespace PokemonUnity
 			//		}
 			//	}
 			//	string bitmapFileName=string.Format("Graphics/Battlers/%s%s%s%s%s%s",
-			//		getConstantName(PBSpecies,species),
+			//		getConstantName(Species,species),
 			//		tgender ? "f" : "",
 			//		tshiny ? "s" : "",
 			//		back ? "b" : "",
 			//		(tform!="" ? "_"+tform : ""),
 			//		tshadow ? "_shadow" : ""); //rescue null
-			//	string ret=pbResolveBitmap(bitmapFileName);
+			//	string ret=ResolveBitmap(bitmapFileName);
 			//	if (ret) return ret;
 			//	bitmapFileName=string.Format("Graphics/Battlers/%03d%s%s%s%s%s",
 			//		species,
@@ -788,19 +788,19 @@ namespace PokemonUnity
 			//		back ? "b" : "",
 			//		(tform!="" ? "_"+tform : ""),
 			//		tshadow ? "_shadow" : "");
-			//	ret=pbResolveBitmap(bitmapFileName);
+			//	ret=ResolveBitmap(bitmapFileName);
 			//	if (ret != null) return ret;
 			//}
 			return null;
 		}
 
-		public string pbLoadPokemonIcon(IPokemon pokemon) {
-			return null; //new AnimatedBitmap(pbPokemonIconFile(pokemon)).deanimate;
+		public string LoadPokemonIcon(IPokemon pokemon) {
+			return null; //new AnimatedBitmap(PokemonIconFile(pokemon)).deanimate;
 		}
 
-		public virtual string pbPokemonIconFile(IPokemon pokemon) {
+		public virtual string PokemonIconFile(IPokemon pokemon) {
 			string bitmapFileName=null;
-			//bitmapFileName=pbCheckPokemonIconFiles([pokemon.Species,
+			//bitmapFileName=CheckPokemonIconFiles([pokemon.Species,
 			//										(pokemon.isFemale?),
 			//										pokemon.isShiny?,
 			//										(pokemon.form rescue 0),
@@ -809,17 +809,17 @@ namespace PokemonUnity
 			return bitmapFileName;
 		}
 
-		public virtual string pbCheckPokemonIconFiles(object[] param,bool egg=false) {
+		public virtual string CheckPokemonIconFiles(object[] param,bool egg=false) {
 			//Pokemons species=params[0];
 			//if (egg) {
-			//	bitmapFileName=string.Format("Graphics/Icons/icon%segg",getConstantName(PBSpecies,species)); //rescue null
-			//	if (!pbResolveBitmap(bitmapFileName)) {
+			//	bitmapFileName=string.Format("Graphics/Icons/icon%segg",getConstantName(Species,species)); //rescue null
+			//	if (!ResolveBitmap(bitmapFileName)) {
 			//		bitmapFileName=string.Format("Graphics/Icons/icon%03degg",species) ;
-			//		if (!pbResolveBitmap(bitmapFileName)) {
+			//		if (!ResolveBitmap(bitmapFileName)) {
 			//			bitmapFileName=string.Format("Graphics/Icons/iconEgg");
 			//		}
 			//	}
-			//	return pbResolveBitmap(bitmapFileName);
+			//	return ResolveBitmap(bitmapFileName);
 			//} else {
 			//	List<> factors=[];
 			//	if (params[4] && params[4]!=false    ) factors.Add([4,params[4],false]);	// shadow
@@ -849,12 +849,12 @@ namespace PokemonUnity
 			//			}
 			//		}
 			//		bitmapFileName=string.Format("Graphics/Icons/icon%s%s%s%s%s",
-			//			getConstantName(PBSpecies,species),
+			//			getConstantName(Species,species),
 			//			tgender ? "f" : "",
 			//			tshiny ? "s" : "",
 			//			(tform!="" ? "_"+tform : ""),
 			//			tshadow ? "_shadow" : "") rescue null;
-			//		string ret=pbResolveBitmap(bitmapFileName);
+			//		string ret=ResolveBitmap(bitmapFileName);
 			//		if (ret != null) return ret;
 			//		bitmapFileName=string.Format("Graphics/Icons/icon%03d%s%s%s%s",
 			//			species,
@@ -862,7 +862,7 @@ namespace PokemonUnity
 			//			tshiny ? "s" : "",
 			//			(tform!="" ? "_"+tform : ""),
 			//			tshadow ? "_shadow" : "");
-			//		ret=pbResolveBitmap(bitmapFileName);
+			//		ret=ResolveBitmap(bitmapFileName);
 			//		if (ret != null) return ret;
 			//	}
 			//}
@@ -874,148 +874,148 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <returns></returns>
-		public virtual string pbPokemonFootprintFile(Pokemons pokemon) {   
+		public virtual string PokemonFootprintFile(Pokemons pokemon) {   
 			//if (!pokemon) return null;
 			string bitmapFileName = null;
 			//if (pokemon is Numeric) {
-				//bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%s",getConstantName(PBSpecies,pokemon)) rescue null;
-				//if (!pbResolveBitmap(bitmapFileName)) bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%03d",pokemon);
+				//bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%s",getConstantName(Species,pokemon)) rescue null;
+				//if (!ResolveBitmap(bitmapFileName)) bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%03d",pokemon);
 			//}
-			//return pbResolveBitmap(bitmapFileName);
+			//return ResolveBitmap(bitmapFileName);
 			return null;
 		}
-		public virtual string pbPokemonFootprintFile(IPokemon pokemon) {   
+		public virtual string PokemonFootprintFile(IPokemon pokemon) {   
 			if (pokemon == null) return null;
 			string bitmapFileName = null;
 			//{
-			//	bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%s_%d",getConstantName(PBSpecies,pokemon.Species),(pokemon.form rescue 0)); //rescue null
-			//	if (!pbResolveBitmap(bitmapFileName)) {
+			//	bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%s_%d",getConstantName(Species,pokemon.Species),(pokemon.form rescue 0)); //rescue null
+			//	if (!ResolveBitmap(bitmapFileName)) {
 			//		bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%03d_%d",pokemon.Species,(pokemon.form rescue 0)); //rescue null
-			//		if (!pbResolveBitmap(bitmapFileName)) {
-			//			bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%s",getConstantName(PBSpecies,pokemon.Species)); //rescue null
-			//			if (!pbResolveBitmap(bitmapFileName)) {
+			//		if (!ResolveBitmap(bitmapFileName)) {
+			//			bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%s",getConstantName(Species,pokemon.Species)); //rescue null
+			//			if (!ResolveBitmap(bitmapFileName)) {
 			//				bitmapFileName=string.Format("Graphics/Icons/Footprints/footprint%03d",pokemon.Species);
 			//			}
 			//		}
 			//	}
 			//}
-			//return pbResolveBitmap(bitmapFileName);
+			//return ResolveBitmap(bitmapFileName);
 			return null;
 		}
 
-		public virtual string pbItemIconFile(Items item) {
+		public virtual string ItemIconFile(Items item) {
 			//if (!item) return null;
 			string bitmapFileName=null;
 			//if (item==0) {
 			//	bitmapFileName=string.Format("Graphics/Icons/itemBack");
 			//} else {
-			//	bitmapFileName=string.Format("Graphics/Icons/item%s",getConstantName(PBItems,item)); //rescue null
-			//	if (!pbResolveBitmap(bitmapFileName)) {
+			//	bitmapFileName=string.Format("Graphics/Icons/item%s",getConstantName(Items,item)); //rescue null
+			//	if (!ResolveBitmap(bitmapFileName)) {
 			//		bitmapFileName=string.Format("Graphics/Icons/item%03d",item);
 			//	}
 			//}
 			return bitmapFileName;
 		}
 
-		public virtual string pbMailBackFile(Items item) {
+		public virtual string MailBackFile(Items item) {
 			//if (!item) return null;
-			//string bitmapFileName=string.Format("Graphics/Pictures/mail%s",getConstantName(PBItems,item)); //rescue null
-			//if (!pbResolveBitmap(bitmapFileName)) {
+			//string bitmapFileName=string.Format("Graphics/Pictures/mail%s",getConstantName(Items,item)); //rescue null
+			//if (!ResolveBitmap(bitmapFileName)) {
 			//	bitmapFileName=string.Format("Graphics/Pictures/mail%03d",item);
 			//}
 			//return bitmapFileName;
 			return null;
 		}
 
-		public virtual string pbTrainerCharFile(TrainerTypes type) {
+		public virtual string TrainerCharFile(TrainerTypes type) {
 			//if (!type) return null;
-			//bitmapFileName=string.Format("Graphics/Characters/trchar%s",getConstantName(PBTrainers,type)) rescue null;
-			//if (!pbResolveBitmap(bitmapFileName)) {
+			//bitmapFileName=string.Format("Graphics/Characters/trchar%s",getConstantName(Trainers,type)) rescue null;
+			//if (!ResolveBitmap(bitmapFileName)) {
 			//	bitmapFileName=string.Format("Graphics/Characters/trchar%03d",type);
 			//}
 			//return bitmapFileName;
 			return null;
 		}
 
-		public virtual string pbTrainerCharNameFile(TrainerTypes type) {
+		public virtual string TrainerCharNameFile(TrainerTypes type) {
 			//if (!type) return null;
-			//bitmapFileName=string.Format("trchar%s",getConstantName(PBTrainers,type)) rescue null;
-			//if (!pbResolveBitmap(string.Format("Graphics/Characters/"+bitmapFileName))) {
+			//bitmapFileName=string.Format("trchar%s",getConstantName(Trainers,type)) rescue null;
+			//if (!ResolveBitmap(string.Format("Graphics/Characters/"+bitmapFileName))) {
 			//	bitmapFileName=string.Format("trchar%03d",type);
 			//}
 			//return bitmapFileName;
 			return null;
 		}
 
-		public virtual string pbTrainerHeadFile(TrainerTypes type) {
+		public virtual string TrainerHeadFile(TrainerTypes type) {
 			//if (!type) return null;
-			//bitmapFileName=string.Format("Graphics/Pictures/mapPlayer%s",getConstantName(PBTrainers,type)) rescue null;
-			//if (!pbResolveBitmap(bitmapFileName)) {
+			//bitmapFileName=string.Format("Graphics/Pictures/mapPlayer%s",getConstantName(Trainers,type)) rescue null;
+			//if (!ResolveBitmap(bitmapFileName)) {
 			//	bitmapFileName=string.Format("Graphics/Pictures/mapPlayer%03d",type);
 			//}
 			//return bitmapFileName;
 			return null;
 		}
 
-		public virtual string pbPlayerHeadFile(TrainerTypes type) {
+		public virtual string PlayerHeadFile(TrainerTypes type) {
 			//if (!type) return null;
 			//int outfit=Game.GameData.Trainer ? Game.GameData.Trainer.outfit : 0;
 			//string bitmapFileName=string.Format("Graphics/Pictures/mapPlayer%s_%d",
-			//	getConstantName(PBTrainers,type),outfit); //rescue null
-			//if (!pbResolveBitmap(bitmapFileName)) {
+			//	getConstantName(Trainers,type),outfit); //rescue null
+			//if (!ResolveBitmap(bitmapFileName)) {
 			//	bitmapFileName=string.Format("Graphics/Pictures/mapPlayer%03d_%d",type,outfit);
-			//	if (!pbResolveBitmap(bitmapFileName)) {
-			//		bitmapFileName=pbTrainerHeadFile(type);
+			//	if (!ResolveBitmap(bitmapFileName)) {
+			//		bitmapFileName=TrainerHeadFile(type);
 			//	}
 			//}
 			//return bitmapFileName;
 			return null;
 		}
 
-		public virtual string pbTrainerSpriteFile(TrainerTypes type) {
+		public virtual string TrainerSpriteFile(TrainerTypes type) {
 			//if (!type) return null;
-			//string bitmapFileName=string.Format("Graphics/Characters/trainer%s",getConstantName(PBTrainers,type)) rescue null;
-			//if (!pbResolveBitmap(bitmapFileName)) {
+			//string bitmapFileName=string.Format("Graphics/Characters/trainer%s",getConstantName(Trainers,type)) rescue null;
+			//if (!ResolveBitmap(bitmapFileName)) {
 			//	bitmapFileName=string.Format("Graphics/Characters/trainer%03d",type);
 			//}
 			//return bitmapFileName;
 			return null;
 		}
 
-		public virtual string pbTrainerSpriteBackFile(TrainerTypes type) {
+		public virtual string TrainerSpriteBackFile(TrainerTypes type) {
 			//if (!type) return null;
-			//bitmapFileName=string.Format("Graphics/Characters/trback%s",getConstantName(PBTrainers,type)) rescue null;
-			//if (!pbResolveBitmap(bitmapFileName)) {
+			//bitmapFileName=string.Format("Graphics/Characters/trback%s",getConstantName(Trainers,type)) rescue null;
+			//if (!ResolveBitmap(bitmapFileName)) {
 			//	bitmapFileName=string.Format("Graphics/Characters/trback%03d",type);
 			//}
 			//return bitmapFileName;
 			return null;
 		}
 
-		public virtual string pbPlayerSpriteFile(TrainerTypes type) {
+		public virtual string PlayerSpriteFile(TrainerTypes type) {
 			//if (!type) return null;
 			//int outfit=Game.GameData.Trainer ? Game.GameData.Trainer.outfit : 0;
 			//string bitmapFileName=string.Format("Graphics/Characters/trainer%s_%d",
-			//	getConstantName(PBTrainers,type),outfit); //rescue null
-			//if (!pbResolveBitmap(bitmapFileName)) {
+			//	getConstantName(Trainers,type),outfit); //rescue null
+			//if (!ResolveBitmap(bitmapFileName)) {
 			//	bitmapFileName=string.Format("Graphics/Characters/trainer%03d_%d",type,outfit);
-			//	if (!pbResolveBitmap(bitmapFileName)) {
-			//		bitmapFileName=pbTrainerSpriteFile(type);
+			//	if (!ResolveBitmap(bitmapFileName)) {
+			//		bitmapFileName=TrainerSpriteFile(type);
 			//	}
 			//}
 			//return bitmapFileName;
 			return null;
 		}
 
-		public virtual string pbPlayerSpriteBackFile(TrainerTypes type) {
+		public virtual string PlayerSpriteBackFile(TrainerTypes type) {
 			//if (!type) return null;
 			//int outfit=Game.GameData.Trainer ? Game.GameData.Trainer.outfit : 0;
 			//string bitmapFileName=string.Format("Graphics/Characters/trback%s_%d",
-			//	getConstantName(PBTrainers,type),outfit); //rescue null
-			//if (!pbResolveBitmap(bitmapFileName)) {
+			//	getConstantName(Trainers,type),outfit); //rescue null
+			//if (!ResolveBitmap(bitmapFileName)) {
 			//	bitmapFileName=string.Format("Graphics/Characters/trback%03d_%d",type,outfit);
-			//	if (!pbResolveBitmap(bitmapFileName)) {
-			//		bitmapFileName=pbTrainerSpriteBackFile(type);
+			//	if (!ResolveBitmap(bitmapFileName)) {
+			//		bitmapFileName=TrainerSpriteBackFile(type);
 			//	}
 			//}
 			//return bitmapFileName;
@@ -1024,7 +1024,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region Loads music and sound effects
-		public string pbResolveAudioSE(string file) {
+		public string ResolveAudioSE(string file) {
 			if (file == null) return null;
 			//if (RTP.exists("Audio/SE/"+file,new string[] { "", ".wav", ".mp3", ".ogg" })) {
 			//	return RTP.getPath("Audio/SE/"+file,new string[] { "", ".wav", ".mp3", ".ogg" });
@@ -1032,21 +1032,21 @@ namespace PokemonUnity
 			return null;
 		}
 		
-		public int pbCryFrameLength(Pokemons pokemon,float? pitch=null) {
+		public int CryFrameLength(Pokemons pokemon,float? pitch=null) {
 			if (pokemon == Pokemons.NONE) return 0;
 			if (pitch == null) pitch=100;
 			pitch=pitch/100;
 			if (pitch<=0) return 0;
 			float playtime=0.0f;
 			//if (pokemon is Numeric) {
-				string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
+				string pkmnwav=ResolveAudioSE(CryFile(pokemon));
 				if (pkmnwav != null) playtime = 0; //getPlayTime(pkmnwav); //ToDo: uncomment and finish...
 			//} else if (!pokemon.isEgg) {
 			//	if (pokemon is IPokemonChatter p && p.chatter != null) { //pokemon.respond_to("chatter")
 			//		playtime=p.chatter.time;
 			//		pitch=1.0f;
 			//	} else {
-			//		string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
+			//		string pkmnwav=ResolveAudioSE(CryFile(pokemon));
 			//		if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
 			//	}
 			//}
@@ -1055,14 +1055,14 @@ namespace PokemonUnity
 			return (int)Math.Ceiling(playtime*Graphics.frame_rate)+4;
 		}
 		
-		public int pbCryFrameLength(IPokemon pokemon,float? pitch=null) {
+		public int CryFrameLength(IPokemon pokemon,float? pitch=null) {
 			if (!pokemon.IsNotNullOrNone()) return 0;
 			if (pitch == null) pitch=100;
 			pitch=pitch/100;
 			if (pitch<=0) return 0;
 			float playtime=0.0f;
 			//if (pokemon is Numeric) {
-			//	string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
+			//	string pkmnwav=ResolveAudioSE(CryFile(pokemon));
 			//	if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
 			//} else 
 			if (!pokemon.isEgg) {
@@ -1070,7 +1070,7 @@ namespace PokemonUnity
 					playtime=p.chatter.time();
 					pitch=1.0f;
 				} else {
-					string pkmnwav=pbResolveAudioSE(pbCryFile(pokemon));
+					string pkmnwav=ResolveAudioSE(CryFile(pokemon));
 					if (pkmnwav != null) playtime = 0; //getPlayTime(pkmnwav); //ToDo: uncomment and finish...
 				}
 			}
@@ -1079,114 +1079,114 @@ namespace PokemonUnity
 			return (int)Math.Ceiling(playtime*Graphics.frame_rate)+4;
 		}
 		
-		public void pbPlayCry(IPokemon pokemon,int volume=90,float? pitch=null) {
+		public void PlayCry(IPokemon pokemon,int volume=90,float? pitch=null) {
 			if (pokemon == null) return;
 			if (!pokemon.isEgg) {
 				if (pokemon is IPokemonChatter p && p.chatter != null) { //pokemon.respond_to("chatter")
 					p.chatter.play();
 				} else {
-					string pkmnwav=pbCryFile(pokemon);
+					string pkmnwav=CryFile(pokemon);
 					if (pkmnwav != null) {
-						//pbSEPlay(new AudioTrack().initialize(pkmnwav,volume,
+						//SEPlay(new AudioTrack().initialize(pkmnwav,volume,
 						//	pitch != null ? pitch : (pokemon.HP*25/pokemon.TotalHP)+75)); //rescue null
 					}
 				}
 			}
 		}
 		
-		public void pbPlayCry(Pokemons pokemon,int volume=90,float? pitch=null) {
+		public void PlayCry(Pokemons pokemon,int volume=90,float? pitch=null) {
 			if (pokemon == Pokemons.NONE) return;
 			//if (pokemon is Numeric) {
-				string pkmnwav=pbCryFile(pokemon);
+				string pkmnwav=CryFile(pokemon);
 				if (pkmnwav != null) {
-					//pbSEPlay(new AudioTrack().initialize(pkmnwav,volume,pitch != null ? pitch : 100)); //rescue null
+					//SEPlay(new AudioTrack().initialize(pkmnwav,volume,pitch != null ? pitch : 100)); //rescue null
 				}
 			//}
 		}
 		
-		public string pbCryFile(Pokemons pokemon) {
+		public string CryFile(Pokemons pokemon) {
 			if (pokemon == Pokemons.NONE) return null;
 			//if (pokemon is Numeric) {
 				string filename=string.Format("Cries/{0}Cry",pokemon.ToString()); //rescue null
-				if (pbResolveAudioSE(filename) == null) filename=string.Format("Cries/%03dCry",pokemon);
-				if (pbResolveAudioSE(filename) != null) return filename;
+				if (ResolveAudioSE(filename) == null) filename=string.Format("Cries/%03dCry",pokemon);
+				if (ResolveAudioSE(filename) != null) return filename;
 			//}
 			return null;
 		}
 		
-		public string pbCryFile(IPokemon pokemon) {
+		public string CryFile(IPokemon pokemon) {
 			if (pokemon == null) return null;
 			if (!pokemon.isEgg) {
 				string filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species.ToString(),pokemon is IPokemonMultipleForms f0 ? f0.form : 0); //rescue 0 rescue null
-				if (pbResolveAudioSE(filename) == null) filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species,pokemon is IPokemonMultipleForms f1 ? f1.form : 0); //rescue 0
-				if (pbResolveAudioSE(filename) == null) {
+				if (ResolveAudioSE(filename) == null) filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species,pokemon is IPokemonMultipleForms f1 ? f1.form : 0); //rescue 0
+				if (ResolveAudioSE(filename) == null) {
 					filename=string.Format("Cries/{0}Cry",pokemon.Species.ToString()); //rescue null;
 				}
-				if (pbResolveAudioSE(filename) == null) filename=string.Format("Cries/{0}Cry",pokemon.Species);
-				if (pbResolveAudioSE(filename) != null) return filename;
+				if (ResolveAudioSE(filename) == null) filename=string.Format("Cries/{0}Cry",pokemon.Species);
+				if (ResolveAudioSE(filename) != null) return filename;
 			}
 			return null;
 		}
 		
-		public IAudioBGM pbGetWildBattleBGM(Pokemons species) {
+		public IAudioBGM GetWildBattleBGM(Pokemons species) {
 			if (Global.nextBattleBGM != null) {
 				return Global.nextBattleBGM.clone();
 			}
 			IAudioBGM ret=null;
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
-				//IPokemonMetadata music=pbGetMetadata(GameMap.map_id,MetadataMapWildBattleBGM);
-				string music=pbGetMetadata(GameMap.map_id).Map.WildBattleBGM;
+				//IPokemonMetadata music=GetMetadata(GameMap.map_id,MetadataMapWildBattleBGM);
+				string music=GetMetadata(GameMap.map_id).Map.WildBattleBGM;
 				if (music != null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
-				//IPokemonMetadata music=pbGetMetadata(0,MetadataWildBattleBGM);
-				string music=pbGetMetadata(0).Map.WildBattleBGM;
+				//IPokemonMetadata music=GetMetadata(0,MetadataWildBattleBGM);
+				string music=GetMetadata(0).Map.WildBattleBGM;
 				if (music != null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile("002-Battle02");
+			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("002-Battle02");
 			return ret;
 		}
 		
-		public IAudioME pbGetWildVictoryME() {
+		public IAudioME GetWildVictoryME() {
 			if (Global.nextBattleME != null) {
 				return Global.nextBattleME.clone();
 			}
 			IAudioME ret=null;
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
-				//string music=pbGetMetadata(GameMap.map_id,MetadataMapWildVictoryME);
-				string music=pbGetMetadata(GameMap.map_id).Map.WildVictoryME;
+				//string music=GetMetadata(GameMap.map_id,MetadataMapWildVictoryME);
+				string music=GetMetadata(GameMap.map_id).Map.WildVictoryME;
 				if (music != null && music!="") {
-					ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
-				//string music=pbGetMetadata(0,MetadataWildVictoryME);
-				string music=pbGetMetadata(GameMap.map_id).Map.WildVictoryME;
+				//string music=GetMetadata(0,MetadataWildVictoryME);
+				string music=GetMetadata(GameMap.map_id).Map.WildVictoryME;
 				if (music != null && music!="") {
-					ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile("001-Victory01");
+			if (ret == null) ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile("001-Victory01");
 			ret.name="../../Audio/ME/"+ret.name;
 			return ret;
 		}
 		
-		public void pbPlayTrainerIntroME(TrainerTypes trainertype) {
-			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
+		public void PlayTrainerIntroME(TrainerTypes trainertype) {
+			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//	trainertypes=Marshal.load(f);
 				if (Kernal.TrainerMetaData.ContainsKey(trainertype)) { //Kernal.TrainerMetaData[trainertype] != null
 					string bgm=Kernal.TrainerMetaData[trainertype].IntroME; //trainertypes[trainertype][6];
 					if (!string.IsNullOrEmpty(bgm)) { //!=null && bgm!=""
-						IAudioME bgm_=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(bgm);
-						(this as IGameAudioPlay).pbMEPlay(bgm_);
+						IAudioME bgm_=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(bgm);
+						(this as IGameAudioPlay).MEPlay(bgm_);
 						return;
 					}
 				}
@@ -1194,12 +1194,12 @@ namespace PokemonUnity
 		}
 		
 		// can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
-		public IAudioBGM pbGetTrainerBattleBGM(params ITrainer[] trainer) { 
+		public IAudioBGM GetTrainerBattleBGM(params ITrainer[] trainer) { 
 			if (Global.nextBattleBGM != null) {
 				return Global.nextBattleBGM.clone();
 			}
 			string music=null;
-			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
+			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//	trainertypes=Marshal.load(f);
 				ITrainer[] trainerarray=new ITrainer[0];
 				if (trainer == null) { //is Array && trainer.Length > 1
@@ -1216,34 +1216,34 @@ namespace PokemonUnity
 			//}
 			IAudioBGM ret=null;
 			if (music != null && music!="") {
-				ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
+				ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
 			}
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
-				//music=pbGetMetadata(GameMap.map_id,MetadataMapTrainerBattleBGM);
-				music=pbGetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
+				//music=GetMetadata(GameMap.map_id,MetadataMapTrainerBattleBGM);
+				music=GetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
 				if (music!=null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
-				//music=pbGetMetadata(0,MetadataTrainerBattleBGM);
-				music=pbGetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
+				//music=GetMetadata(0,MetadataTrainerBattleBGM);
+				music=GetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
 				if (music!=null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile("005-Boss01");
+			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("005-Boss01");
 			return ret;
 		}
 		
-		public IAudioBGM pbGetTrainerBattleBGMFromType(TrainerTypes trainertype) {
+		public IAudioBGM GetTrainerBattleBGMFromType(TrainerTypes trainertype) {
 			if (Global.nextBattleBGM != null) {
 				return Global.nextBattleBGM.clone();
 			}
 			string music=null;
-			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
+			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//	trainertypes=Marshal.load(f);
 				if (Kernal.TrainerMetaData.ContainsKey(trainertype)) { //trainertypes[trainertype] != null
 					music=Kernal.TrainerMetaData[trainertype].BattleBGM; //trainertypes[trainertype][4];
@@ -1251,35 +1251,35 @@ namespace PokemonUnity
 			//}
 			IAudioBGM ret=null;
 			if (music!=null && music!="") {
-				ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
+				ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
 			}
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
-				//music=pbGetMetadata(GameMap.map_id,MetadataMapTrainerBattleBGM);
-				music=pbGetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
+				//music=GetMetadata(GameMap.map_id,MetadataMapTrainerBattleBGM);
+				music=GetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
 				if (music!=null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
-				//music=pbGetMetadata(0,MetadataTrainerBattleBGM);
-				music=pbGetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
+				//music=GetMetadata(0,MetadataTrainerBattleBGM);
+				music=GetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
 				if (music!=null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).pbStringToAudioFile("005-Boss01");
+			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("005-Boss01");
 			return ret;
 		}
 		
 		// can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
-		public IAudioME pbGetTrainerVictoryME(params ITrainer[] trainer) { 
+		public IAudioME GetTrainerVictoryME(params ITrainer[] trainer) { 
 			if (Global.nextBattleME != null) {
 				return Global.nextBattleME.clone();
 			}
 			string music=null;
-			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
+			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//	trainertypes=Marshal.load(f);
 				//if (!trainer is Array) {
 				//	trainerarray= new []{ trainer };
@@ -1295,222 +1295,222 @@ namespace PokemonUnity
 			//}
 			IAudioME ret=null;
 			if (music!=null && music!="") {
-				ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
+				ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
 			}
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
-				//music=pbGetMetadata(GameMap.map_id,MetadataMapTrainerVictoryME);
-				music=pbGetMetadata(GameMap.map_id).Map.TrainerVictoryME;
+				//music=GetMetadata(GameMap.map_id,MetadataMapTrainerVictoryME);
+				music=GetMetadata(GameMap.map_id).Map.TrainerVictoryME;
 				if (music!=null && music!="") {
-					ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
-				//music=pbGetMetadata(0,MetadataTrainerVictoryME);
-				music=pbGetMetadata(GameMap.map_id).Map.TrainerVictoryME;
+				//music=GetMetadata(0,MetadataTrainerVictoryME);
+				music=GetMetadata(GameMap.map_id).Map.TrainerVictoryME;
 				if (music!=null && music!="") {
-					ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile(music);
+					ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioME)(this as IGameAudioPlay).pbStringToAudioFile("001-Victory01");
+			if (ret == null) ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile("001-Victory01");
 			ret.name="../../Audio/ME/"+ret.name;
 			return ret;
 		}
 		#endregion
 
 		#region Creating and storing Pokémon
-		public bool pbBoxesFull() {
+		public bool BoxesFull() {
 			return Trainer == null || (Trainer.party.Length==Features.LimitPokemonPartySize && PokemonStorage.full);
 		}
 
-		public void pbNickname(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
+		public void Nickname(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
 			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
-			if ((this as IGameMessage).pbConfirmMessage(Game._INTL("Would you like to give a nickname to {1}?",speciesname))) {
+			if ((this as IGameMessage).ConfirmMessage(Game._INTL("Would you like to give a nickname to {1}?",speciesname))) {
 				string helptext=Game._INTL("{1}'s nickname?",speciesname);
-				string newname=this is IGameTextEntry t ? t.pbEnterPokemonName(helptext,0,Pokemon.NAMELIMIT,"",pokemon) : speciesname;
+				string newname=this is IGameTextEntry t ? t.EnterPokemonName(helptext,0,Pokemon.NAMELIMIT,"",pokemon) : speciesname;
 				//if (newname!="") pokemon.Name=newname;
 				if (newname!="") (pokemon as Pokemon).SetNickname(newname);
 			}
 		}
 
-		public void pbStorePokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
-			if (pbBoxesFull()) {
-				(this as IGameMessage).pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
-				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
+		public void StorePokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
+			if (BoxesFull()) {
+				(this as IGameMessage).Message(Game._INTL(@"There's no more room for Pokémon!\1"));
+				(this as IGameMessage).Message(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return;
 			}
-			pokemon.pbRecordFirstMoves();
+			pokemon.RecordFirstMoves();
 			if (Trainer.party.Length < Features.LimitPokemonPartySize) {
 				//ToDo: Change to `.Add(Pokemon)`?
 				Trainer.party[Trainer.party.Length]=pokemon;
 			} else {
 				int oldcurbox=PokemonStorage.currentBox;
-				int storedbox=PokemonStorage.pbStoreCaught(pokemon);
+				int storedbox=PokemonStorage.StoreCaught(pokemon);
 				string curboxname=PokemonStorage[oldcurbox].name;
 				string boxname=PokemonStorage[storedbox].name;
 				string creator=null;
-				if (Global.seenStorageCreator) creator=pbGetStorageCreator();
+				if (Global.seenStorageCreator) creator=GetStorageCreator();
 				if (storedbox!=oldcurbox) {
 					if (!string.IsNullOrEmpty(creator)) {
-						(this as IGameMessage).pbMessage(Game._INTL(@"Box ""{1}"" on {2}'s PC was full.\1",curboxname,creator));
+						(this as IGameMessage).Message(Game._INTL(@"Box ""{1}"" on {2}'s PC was full.\1",curboxname,creator));
 					} else {
-						(this as IGameMessage).pbMessage(Game._INTL(@"Box ""{1}"" on someone's PC was full.\1",curboxname));
+						(this as IGameMessage).Message(Game._INTL(@"Box ""{1}"" on someone's PC was full.\1",curboxname));
 					}
-					(this as IGameMessage).pbMessage(Game._INTL("{1} was transferred to box \"{2}.\"",pokemon.Name,boxname));
+					(this as IGameMessage).Message(Game._INTL("{1} was transferred to box \"{2}.\"",pokemon.Name,boxname));
 				} else {
 					if (!string.IsNullOrEmpty(creator)) {
-						(this as IGameMessage).pbMessage(Game._INTL(@"{1} was transferred to {2}'s PC.\1",pokemon.Name,creator));
+						(this as IGameMessage).Message(Game._INTL(@"{1} was transferred to {2}'s PC.\1",pokemon.Name,creator));
 					} else {
-						(this as IGameMessage).pbMessage(Game._INTL(@"{1} was transferred to someone's PC.\1",pokemon.Name));
+						(this as IGameMessage).Message(Game._INTL(@"{1} was transferred to someone's PC.\1",pokemon.Name));
 					}
-					(this as IGameMessage).pbMessage(Game._INTL("It was stored in box \"{1}.\"",boxname));
+					(this as IGameMessage).Message(Game._INTL("It was stored in box \"{1}.\"",boxname));
 				}
 			}
 		}
 
-		public void pbNicknameAndStore(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
-			if (pbBoxesFull()) {
-				(this as IGameMessage).pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
-				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
+		public void NicknameAndStore(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
+			if (BoxesFull()) {
+				(this as IGameMessage).Message(Game._INTL(@"There's no more room for Pokémon!\1"));
+				(this as IGameMessage).Message(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return;
 			}
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
-			pbNickname(pokemon);
-			pbStorePokemon(pokemon);
+			Nickname(pokemon);
+			StorePokemon(pokemon);
 		}
 
-		public bool pbAddPokemon(Pokemons pkmn,int? level=null,bool seeform=true) {
+		public bool AddPokemon(Pokemons pkmn,int? level=null,bool seeform=true) {
 			if (pkmn == Pokemons.NONE || Trainer == null) return false;
 			IPokemon pokemon = null;
-			if (pbBoxesFull()) {
-				(this as IGameMessage).pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
-				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
+			if (BoxesFull()) {
+				(this as IGameMessage).Message(Game._INTL(@"There's no more room for Pokémon!\1"));
+				(this as IGameMessage).Message(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return false;
 			}
 			//if (pokemon is String || pokemon is Symbol) {
-			//  pokemon=getID(PBSpecies,pokemon);
+			//  pokemon=getID(Species,pokemon);
 			//}
 			if (level != null) { //pokemon is Pokemons && level is int
 				//pokemon=new Pokemon(pokemon.Species,level:(byte)level.Value,original:Trainer);
 				pokemon=new Monster.Pokemon(pkmn,level:(byte)level.Value,original:Trainer);
 			}
 			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
-			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
-			pbNicknameAndStore(pokemon);
-			if (seeform) pbSeenForm(pokemon);
+			(this as IGameMessage).Message(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
+			NicknameAndStore(pokemon);
+			if (seeform) SeenForm(pokemon);
 			return true;
 		}
 
-		public bool pbAddPokemon(IPokemon pokemon,int? level=null,bool seeform=true) {
+		public bool AddPokemon(IPokemon pokemon,int? level=null,bool seeform=true) {
 			if (!pokemon.IsNotNullOrNone() || Trainer == null) return false;
-			if (pbBoxesFull()) {
-				(this as IGameMessage).pbMessage(Game._INTL(@"There's no more room for Pokémon!\1"));
-				(this as IGameMessage).pbMessage(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
+			if (BoxesFull()) {
+				(this as IGameMessage).Message(Game._INTL(@"There's no more room for Pokémon!\1"));
+				(this as IGameMessage).Message(Game._INTL("The Pokémon Boxes are full and can't accept any more!"));
 				return false;
 			}
 			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
-			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
-			pbNicknameAndStore(pokemon);
-			if (seeform) pbSeenForm(pokemon);
+			(this as IGameMessage).Message(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
+			NicknameAndStore(pokemon);
+			if (seeform) SeenForm(pokemon);
 			return true;
 		}
 
-		public bool pbAddPokemonSilent(Pokemons pkmn,int? level=null,bool seeform=true) {
-			if (pkmn == Pokemons.NONE || pbBoxesFull() || Trainer == null) return false;
+		public bool AddPokemonSilent(Pokemons pkmn,int? level=null,bool seeform=true) {
+			if (pkmn == Pokemons.NONE || BoxesFull() || Trainer == null) return false;
 			IPokemon pokemon = null;
 			//if (pokemon is String || pokemon is Symbol) {
-			//  pokemon=getID(PBSpecies,pokemon);
+			//  pokemon=getID(Species,pokemon);
 			//}
 			if (level != null) { //pokemon is Integer && level is int
 				pokemon=new Pokemon(pkmn,level:(byte)level.Value,original:Trainer);
 			}
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
-			if (seeform) pbSeenForm(pokemon);
-			pokemon.pbRecordFirstMoves();
+			if (seeform) SeenForm(pokemon);
+			pokemon.RecordFirstMoves();
 			if (Trainer.party.Length<Features.LimitPokemonPartySize) {
 				//ToDo: Change to `.Add(Pokemon)`?
 				Trainer.party[Trainer.party.Length]=pokemon;
 			} else {
-				PokemonStorage.pbStoreCaught(pokemon);
+				PokemonStorage.StoreCaught(pokemon);
 			}
 			return true;
 		}
 
-		public bool pbAddPokemonSilent(IPokemon pokemon,int? level=null,bool seeform=true) {
-			if (!pokemon.IsNotNullOrNone() || pbBoxesFull() || Trainer == null) return false;
+		public bool AddPokemonSilent(IPokemon pokemon,int? level=null,bool seeform=true) {
+			if (!pokemon.IsNotNullOrNone() || BoxesFull() || Trainer == null) return false;
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
-			if (seeform) pbSeenForm(pokemon);
-			pokemon.pbRecordFirstMoves();
+			if (seeform) SeenForm(pokemon);
+			pokemon.RecordFirstMoves();
 			if (Trainer.party.Length<Features.LimitPokemonPartySize) {
 				//ToDo: Change to `.Add(Pokemon)`?
 				Trainer.party[Trainer.party.Length]=pokemon;
 			} else {
-				PokemonStorage.pbStoreCaught(pokemon);
+				PokemonStorage.StoreCaught(pokemon);
 			}
 			return true;
 		}
 
-		public bool pbAddToParty(Pokemons pkmn,int? level=null,bool seeform=true) {
+		public bool AddToParty(Pokemons pkmn,int? level=null,bool seeform=true) {
 			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
 			IPokemon pokemon = null;
 			//if (pokemon is String || pokemon is Symbol) {
-			//  pokemon=getID(PBSpecies,pokemon);
+			//  pokemon=getID(Species,pokemon);
 			//}
 			if (level != null) { //pokemon is Integer && level is int
 				pokemon=new Pokemon(pkmn,level:(byte)level.Value,original:Trainer);
 			}
 			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
-			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
-			pbNicknameAndStore(pokemon);
-			if (seeform) pbSeenForm(pokemon);
+			(this as IGameMessage).Message(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
+			NicknameAndStore(pokemon);
+			if (seeform) SeenForm(pokemon);
 			return true;
 		}
 
-		public bool pbAddToParty(IPokemon pokemon,int? level=null,bool seeform=true) {
+		public bool AddToParty(IPokemon pokemon,int? level=null,bool seeform=true) {
 			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
 			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
-			(this as IGameMessage).pbMessage(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
-			pbNicknameAndStore(pokemon);
-			if (seeform) pbSeenForm(pokemon);
+			(this as IGameMessage).Message(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
+			NicknameAndStore(pokemon);
+			if (seeform) SeenForm(pokemon);
 			return true;
 		}
 
-		public bool pbAddToPartySilent(Pokemons pkmn,int? level=null,bool seeform=true) {
+		public bool AddToPartySilent(Pokemons pkmn,int? level=null,bool seeform=true) {
 			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
 			IPokemon pokemon = null;
 			//if (pokemon is String || pokemon is Symbol) {
-			//  pokemon=getID(PBSpecies,pokemon);
+			//  pokemon=getID(Species,pokemon);
 			//}
 			if (level != null) { //pokemon is Integer && level is int
 				pokemon=new Pokemon(pkmn,level:(byte)level.Value,original:Trainer);
 			}
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
-			if (seeform) pbSeenForm(pokemon);
-			pokemon.pbRecordFirstMoves();
+			if (seeform) SeenForm(pokemon);
+			pokemon.RecordFirstMoves();
 			Trainer.party[Trainer.party.Length]=pokemon;
 			return true;
 		}
 
-		public bool pbAddToPartySilent(IPokemon pokemon,int? level=null,bool seeform=true) {
+		public bool AddToPartySilent(IPokemon pokemon,int? level=null,bool seeform=true) {
 			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
-			if (seeform) pbSeenForm(pokemon);
-			pokemon.pbRecordFirstMoves();
+			if (seeform) SeenForm(pokemon);
+			pokemon.RecordFirstMoves();
 			Trainer.party[Trainer.party.Length]=pokemon;
 			return true;
 		}
 
-		public bool pbAddForeignPokemon(Pokemons pkmn,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true) {
+		public bool AddForeignPokemon(Pokemons pkmn,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true) {
 			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
 			IPokemon pokemon = null;
 			//if (pokemon is String || pokemon is Symbol) {
-			//  pokemon=getID(PBSpecies,pokemon);
+			//  pokemon=getID(Species,pokemon);
 			//}
 			if (level != null) { //pokemon is Integer && level is int
 				pokemon=new Pokemon(pkmn,level:(byte)level.Value,original:Trainer);
@@ -1527,18 +1527,18 @@ namespace PokemonUnity
 			//Recalculate stats
 			pokemon.calcStats();
 			if (ownerName != null) {
-				(this as IGameMessage).pbMessage(Game._INTL("{1} received a Pokémon from {2}.\\se[PokemonGet]\\1",Trainer.name,ownerName));
+				(this as IGameMessage).Message(Game._INTL("{1} received a Pokémon from {2}.\\se[PokemonGet]\\1",Trainer.name,ownerName));
 			} else {
-				(this as IGameMessage).pbMessage(Game._INTL("{1} received a Pokémon.\\se[PokemonGet]\\1",Trainer.name));
+				(this as IGameMessage).Message(Game._INTL("{1} received a Pokémon.\\se[PokemonGet]\\1",Trainer.name));
 			}
-			pbStorePokemon(pokemon);
+			StorePokemon(pokemon);
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
-			if (seeform) pbSeenForm(pokemon);
+			if (seeform) SeenForm(pokemon);
 			return true;
 		}
 
-		public bool pbAddForeignPokemon(IPokemon pokemon,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true) {
+		public bool AddForeignPokemon(IPokemon pokemon,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true) {
 			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
 			//Set original trainer to a foreign one (if ID isn't already foreign)
 			if (pokemon.trainerID==Trainer.id) {
@@ -1552,30 +1552,30 @@ namespace PokemonUnity
 			//Recalculate stats
 			pokemon.calcStats();
 			if (ownerName != null) {
-				(this as IGameMessage).pbMessage(Game._INTL("{1} received a Pokémon from {2}.\\se[PokemonGet]\\1",Trainer.name,ownerName));
+				(this as IGameMessage).Message(Game._INTL("{1} received a Pokémon from {2}.\\se[PokemonGet]\\1",Trainer.name,ownerName));
 			} else {
-				(this as IGameMessage).pbMessage(Game._INTL("{1} received a Pokémon.\\se[PokemonGet]\\1",Trainer.name));
+				(this as IGameMessage).Message(Game._INTL("{1} received a Pokémon.\\se[PokemonGet]\\1",Trainer.name));
 			}
-			pbStorePokemon(pokemon);
+			StorePokemon(pokemon);
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
-			if (seeform) pbSeenForm(pokemon);
+			if (seeform) SeenForm(pokemon);
 			return true;
 		}
 
-		public bool pbGenerateEgg(Pokemons pkmn,string text="") {
+		public bool GenerateEgg(Pokemons pkmn,string text="") {
 			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
 			IPokemon pokemon = null;
 			//if (pokemon is String || pokemon is Symbol) {
-			//  pokemon=getID(PBSpecies,pokemon);
+			//  pokemon=getID(Species,pokemon);
 			//}
 			//if (pokemon is int) {
 				//pokemon=new Pokemon(pokemon.Species,level:Core.EGGINITIALLEVEL,orignal:Trainer);
 				pokemon=new Pokemon(pokemon.Species,isEgg:true);
 			//}
 			// Get egg steps
-			//dexdata=pbOpenDexData();
-			//pbDexDataOffset(dexdata,pokemon.Species,21);
+			//dexdata=OpenDexData();
+			//DexDataOffset(dexdata,pokemon.Species,21);
 			int eggsteps=0; //dexdata.fgetw();
 			//dexdata.close();
 			// Set egg's details
@@ -1588,11 +1588,11 @@ namespace PokemonUnity
 			return true;
 		}
 
-		public bool pbGenerateEgg(IPokemon pokemon,string text="") {
+		public bool GenerateEgg(IPokemon pokemon,string text="") {
 			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
 			// Get egg steps
-			//dexdata=pbOpenDexData();
-			//pbDexDataOffset(dexdata,pokemon.Species,21);
+			//dexdata=OpenDexData();
+			//DexDataOffset(dexdata,pokemon.Species,21);
 			int eggsteps=0; //dexdata.fgetw();
 			//dexdata.close();
 			// Set egg's details
@@ -1605,7 +1605,7 @@ namespace PokemonUnity
 			return true;
 		}
 
-		public bool pbRemovePokemonAt(int index) {
+		public bool RemovePokemonAt(int index) {
 			if (index<0 || Trainer == null || index>=Trainer.party.Length) return false;
 			bool haveAble=false;
 			for (int i = 0; i < Trainer.party.Length; i++) {
@@ -1618,11 +1618,11 @@ namespace PokemonUnity
 			return true;
 		}
 
-		public void pbSeenForm(IPokemon poke) {//, int gender = 0, int form = 0
+		public void SeenForm(IPokemon poke) {//, int gender = 0, int form = 0
 			//if (Trainer.formseen==null) Trainer.formseen=new[];
 			//if (Trainer.formlastseen==null) Trainer.formlastseen=new[];
 			//if (poke is String || poke is Symbol) {
-			//  poke=getID(PBSpecies,poke);
+			//  poke=getID(Species,poke);
 			//}
 			Pokemons species = Pokemons.NONE;
 			//if (poke is IPokemon) {
@@ -1630,14 +1630,14 @@ namespace PokemonUnity
 				int form = poke is IPokemonMultipleForms f ? f.form : 0; //rescue 0
 				species = poke.Species;
 			//}
-			pbSeenForm(species, gender, form);
+			SeenForm(species, gender, form);
 		}
 
-		public void pbSeenForm(Pokemons poke,int gender=0,int form=0) { //ToDo: redo this function...
+		public void SeenForm(Pokemons poke,int gender=0,int form=0) { //ToDo: redo this function...
 			if (Trainer.formseen==null) Trainer.formseen=new int?[0][] { };
 			if (Trainer.formlastseen==null) Trainer.formlastseen=new KeyValuePair<int, int?>[0]; //int?[0];
 			//if (poke is String || poke is Symbol) {
-			//  poke=getID(PBSpecies,poke);
+			//  poke=getID(Species,poke);
 			//}
 			Pokemons species = Pokemons.NONE;
 			//if (poke is IPokemon) {
@@ -1649,7 +1649,7 @@ namespace PokemonUnity
 			//}
 			if (species<=0) return; //!species || 
 			if (gender>1) gender=0;
-			string formnames = ""; //pbGetMessage(MessageTypes.FormNames,species);
+			string formnames = ""; //GetMessage(MessageTypes.FormNames,species);
 			if (string.IsNullOrEmpty(formnames)) form=0; //ToDo: Rework pokedex logic below...
 			//if (Trainer.formseen[(int)species] == null) Trainer.formseen[(int)species] = new int?[0];
 			//Trainer.formseen[(int)species][gender][form]=true;
@@ -1663,7 +1663,7 @@ namespace PokemonUnity
 
 		#region Analysing Pokémon
 		// Heals all Pokémon in the party.
-		public void pbHealAll() {
+		public void HealAll() {
 			if (Trainer == null) return;
 			foreach (IPokemon i in Trainer.party) {
 				i.Heal();
@@ -1671,21 +1671,21 @@ namespace PokemonUnity
 		}
 
 		// Returns the first unfainted, non-egg Pokémon in the player's party.
-		public IPokemon pbFirstAblePokemon(int variableNumber) {
+		public IPokemon FirstAblePokemon(int variableNumber) {
 			for (int i = 0; i < Trainer.party.Length; i++) {
 				IPokemon p=Trainer.party[i];
 				if (p != null && !p.isEgg && p.HP>0) {
-					pbSet(variableNumber,i);
+					Set(variableNumber,i);
 					return Trainer.party[i];
 				}
 			}
-			pbSet(variableNumber,-1);
+			Set(variableNumber,-1);
 			return null;
 		}
 
 		// Checks whether the player would still have an unfainted Pokémon if the
 		// Pokémon given by _pokemonIndex_ were removed from the party.
-		public bool pbCheckAble(int pokemonIndex) {
+		public bool CheckAble(int pokemonIndex) {
 			for (int i = 0; i < Trainer.party.Length; i++) {
 				IPokemon p=Trainer.party[i];
 				if (i==pokemonIndex) continue;
@@ -1695,14 +1695,14 @@ namespace PokemonUnity
 		}
 
 		// Returns true if there are no usable Pokémon in the player's party.
-		public bool pbAllFainted() {
+		public bool AllFainted() {
 			foreach (var i in Trainer.party) {
 				if (!i.isEgg && i.HP>0) return false;
 			}
 			return true;
 		}
 
-		public double pbBalancedLevel(IPokemon[] party) {
+		public double BalancedLevel(IPokemon[] party) {
 			if (party.Length==0) return 1;
 			//  Calculate the mean of all levels
 			int sum=0;
@@ -1756,9 +1756,9 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <returns></returns>
-		public int pbSize(IPokemon pokemon) {
-			//dexdata=pbOpenDexData();
-			//pbDexDataOffset(dexdata,pokemon.Species,33);
+		public int Size(IPokemon pokemon) {
+			//dexdata=OpenDexData();
+			//DexDataOffset(dexdata,pokemon.Species,33);
 			//int baseheight=dexdata.fgetw(); // Gets the base height in tenths of a meter
 			float baseheight=Kernal.PokemonData[pokemon.Species].Height;
 			//dexdata.close();
@@ -1811,15 +1811,15 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="species"></param>
 		/// <returns></returns>
-		public bool pbHasEgg (Pokemons species) {
+		public bool HasEgg (Pokemons species) {
 			//if (species is String || species is Symbol) {
-			//  species=getID(PBSpecies,species);
+			//  species=getID(Species,species);
 			//}
-			//Pokemons[][] evospecies=pbGetEvolvedFormData(species); //Kernal.PokemonEvolutionsData[species][0].
+			//Pokemons[][] evospecies=GetEvolvedFormData(species); //Kernal.PokemonEvolutionsData[species][0].
 			//Kernal.PokemonData[species].IsBaby
 			//Pokemons compatspecies=(evospecies != null && evospecies[0] != null) ? evospecies[0][2] : species;
-			//dexdata=pbOpenDexData();
-			//pbDexDataOffset(dexdata,compatspecies,31);
+			//dexdata=OpenDexData();
+			//DexDataOffset(dexdata,compatspecies,31);
 			EggGroups compat1=Kernal.PokemonData[species].EggGroup[0]; //dexdata.fgetb();   // Get egg group 1 of this species
 			EggGroups compat2=Kernal.PokemonData[species].EggGroup[1]; //dexdata.fgetb();   // Get egg group 2 of this species
 			//dexdata.close();
@@ -1827,9 +1827,9 @@ namespace PokemonUnity
 				compat1 == EggGroups.UNDISCOVERED ||
 				compat2 == EggGroups.DITTO ||
 				compat2 == EggGroups.UNDISCOVERED) return false;
-			Pokemons baby=EvolutionHelper.pbGetBabySpecies(species);
+			Pokemons baby=EvolutionHelper.GetBabySpecies(species);
 			if (species==baby) return true;	// Is a basic species
-			baby=EvolutionHelper.pbGetBabySpecies(species,0,0);
+			baby=EvolutionHelper.GetBabySpecies(species,0,0);
 			if (species==baby) return true;	// Is an egg species without incense
 			return false;
 		}
@@ -1840,7 +1840,7 @@ namespace PokemonUnity
 		/// Yields every Pokémon/egg in storage in turn.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<KeyValuePair<IPokemon,int>> pbEachPokemon() {
+		public IEnumerable<KeyValuePair<IPokemon,int>> EachPokemon() {
 			for (int i = -1; i < PokemonStorage.maxBoxes; i++) {
 				for (int j = 0; j < PokemonStorage.maxPokemon(i); j++) {
 					IPokemon poke=PokemonStorage[i][j];
@@ -1853,9 +1853,9 @@ namespace PokemonUnity
 		/// Yields every Pokémon in storage in turn.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<KeyValuePair<IPokemon,int>> pbEachNonEggPokemon() {
-			//pbEachPokemon(){|pokemon,box|
-			foreach(KeyValuePair<IPokemon,int> pokemon in pbEachPokemon()) {
+		public IEnumerable<KeyValuePair<IPokemon,int>> EachNonEggPokemon() {
+			//EachPokemon(){|pokemon,box|
+			foreach(KeyValuePair<IPokemon,int> pokemon in EachPokemon()) {
 				//if (!pokemon.isEgg) yield return (pokemon,box);
 				if (!pokemon.Key.isEgg) yield return pokemon; //(pokemon.Key,pokemon.Value);
 			}
@@ -1872,46 +1872,46 @@ namespace PokemonUnity
 		/// <param name="allowIneligible"></param>
 		/// Supposed to return a value of pokemon chosen by player... as an int...
 		/// ToDo: Instead of assigning value to variable, change void to return int
-		public void pbChoosePokemon(int variableNumber,int nameVarNumber,Predicate<IPokemon> ableProc=null,bool allowIneligible=false) {
+		public void ChoosePokemon(int variableNumber,int nameVarNumber,Predicate<IPokemon> ableProc=null,bool allowIneligible=false) {
 			int chosen=0;
-			pbFadeOutIn(99999, block: () => {
+			FadeOutIn(99999, block: () => {
 				IPartyDisplayScene scene=Scenes.Party; //new PokemonScreen_Scene();
 				IPartyDisplayScreen screen=Screens.Party.initialize(scene,Trainer.party); //new PokemonScreen(scene,Trainer.party);
 				if (ableProc != null) {
-					chosen=screen.pbChooseAblePokemon(ableProc,allowIneligible);
+					chosen=screen.ChooseAblePokemon(ableProc,allowIneligible);
 				} else {
-					screen.pbStartScene(Game._INTL("Choose a Pokémon."),false);
-					chosen=screen.pbChoosePokemon();
-					screen.pbEndScene();
+					screen.StartScene(Game._INTL("Choose a Pokémon."),false);
+					chosen=screen.ChoosePokemon();
+					screen.EndScene();
 				}
 			});
-			pbSet(variableNumber,chosen);
+			Set(variableNumber,chosen);
 			if (chosen>=0) {
-				pbSet(nameVarNumber,Trainer.party[chosen].Name);
+				Set(nameVarNumber,Trainer.party[chosen].Name);
 			} else {
-				pbSet(nameVarNumber,"");
+				Set(nameVarNumber,"");
 			}
 		}
 
-		public void pbChooseNonEggPokemon(int variableNumber,int nameVarNumber) {
-			//pbChoosePokemon(variableNumber,nameVarNumber,proc {|poke|
-			pbChoosePokemon(variableNumber,nameVarNumber, poke => 
+		public void ChooseNonEggPokemon(int variableNumber,int nameVarNumber) {
+			//ChoosePokemon(variableNumber,nameVarNumber,proc {|poke|
+			ChoosePokemon(variableNumber,nameVarNumber, poke => 
 				!poke.isEgg
 			);
 		}
 
-		public void pbChooseAblePokemon(int variableNumber,int nameVarNumber) {
-			//pbChoosePokemon(variableNumber,nameVarNumber,proc {|poke|
-			pbChoosePokemon(variableNumber,nameVarNumber, poke =>
+		public void ChooseAblePokemon(int variableNumber,int nameVarNumber) {
+			//ChoosePokemon(variableNumber,nameVarNumber,proc {|poke|
+			ChoosePokemon(variableNumber,nameVarNumber, poke =>
 				!poke.isEgg && poke.HP>0
 			);
 		}
 
-		public void pbChoosePokemonForTrade(int variableNumber,int nameVarNumber,Pokemons wanted) {
-			//pbChoosePokemon(variableNumber,nameVarNumber,proc {|poke|
-			pbChoosePokemon(variableNumber, nameVarNumber, poke =>
+		public void ChoosePokemonForTrade(int variableNumber,int nameVarNumber,Pokemons wanted) {
+			//ChoosePokemon(variableNumber,nameVarNumber,proc {|poke|
+			ChoosePokemon(variableNumber, nameVarNumber, poke =>
 				//if (wanted is String || wanted is Symbol) {
-				//  wanted=getID(PBSpecies,wanted);
+				//  wanted=getID(Species,wanted);
 				//}
 				!poke.isEgg && !((IPokemonShadowPokemon)poke).isShadow && poke.Species==wanted ///rescue false
 			);
@@ -1919,9 +1919,9 @@ namespace PokemonUnity
 		#endregion
 
 		#region Checks through the party for something
-		public bool pbHasSpecies (Pokemons species) {
+		public bool HasSpecies (Pokemons species) {
 			//if (species is String || species is Symbol) {
-			//  species=getID(PBSpecies,species);
+			//  species=getID(Species,species);
 			//}
 			foreach (var pokemon in Trainer.party) {
 				if (pokemon.isEgg) continue;
@@ -1930,9 +1930,9 @@ namespace PokemonUnity
 			return false;
 		}
 
-		public bool pbHasFatefulSpecies (Pokemons species) {
+		public bool HasFatefulSpecies (Pokemons species) {
 			//if (species is String || species is Symbol) {
-			//  species=getID(PBSpecies,species);
+			//  species=getID(Species,species);
 			//}
 			foreach (Pokemon pokemon in Trainer.party) {
 				if (pokemon.isEgg) continue;
@@ -1941,9 +1941,9 @@ namespace PokemonUnity
 			return false;
 		}
 
-		public bool pbHasType (Types type) {
+		public bool HasType (Types type) {
 			//if (type is String || type is Symbol) {
-			//  type=getID(PBTypes,type);
+			//  type=getID(Types,type);
 			//}
 			foreach (var pokemon in Trainer.party) {
 				if (pokemon.isEgg) continue;
@@ -1954,8 +1954,8 @@ namespace PokemonUnity
 
 		// Checks whether any Pokémon in the party knows the given move, and returns
 		// the index of that Pokémon, or null if no Pokémon has that move.
-		public IPokemon pbCheckMove(Moves move) {
-			//move=getID(PBMoves,move);
+		public IPokemon CheckMove(Moves move) {
+			//move=getID(Moves,move);
 			if (move<=0) return null; //!move ||
 			foreach (IPokemon i in Trainer.party) {
 				if (i.isEgg) continue;
@@ -1971,12 +1971,12 @@ namespace PokemonUnity
 		// Gets the Regional Pokédex number of the national species for the specified
 		// Regional Dex.  The parameter "region" is zero-based.  For example, if two
 		// regions are defined, they would each be specified as 0 and 1.
-		public int pbGetRegionalNumber(int region,Pokemons nationalSpecies) {
+		public int GetRegionalNumber(int region,Pokemons nationalSpecies) {
 			if (nationalSpecies<=0 || (int)nationalSpecies>Kernal.PokemonData.Count) {
 				//  Return 0 if national species is outside range
 				return 0;
 			}
-			//pbRgssOpen("Data/regionals.dat","rb"){|f|
+			//RgssOpen("Data/regionals.dat","rb"){|f|
 			//   int numRegions=f.fgetw;
 			//   int numDexDatas=f.fgetw;
 			//   if (region>=0 && region<numRegions) {
@@ -1991,8 +1991,8 @@ namespace PokemonUnity
 		// Gets the National Pokédex number of the specified species and region.  The
 		// parameter "region" is zero-based.  For example, if two regions are defined,
 		// they would each be specified as 0 and 1.
-		public int pbGetNationalNumber(int region,Pokemons regionalSpecies) {
-			//pbRgssOpen("Data/regionals.dat","rb"){|f|
+		public int GetNationalNumber(int region,Pokemons regionalSpecies) {
+			//RgssOpen("Data/regionals.dat","rb"){|f|
 			//   int numRegions=f.fgetw;
 			//   int numDexDatas=f.fgetw;
 			//   if (region>=0 && region<numRegions) {
@@ -2012,9 +2012,9 @@ namespace PokemonUnity
 		// number of species in the Regional Dex plus 1, since index 0 is considered
 		// to be empty.  The parameter "region" is zero-based.  For example, if two
 		// regions are defined, they would each be specified as 0 and 1.
-		public Pokemons[] pbAllRegionalSpecies(int region) {
+		public Pokemons[] AllRegionalSpecies(int region) {
 			Pokemons[] ret= new Pokemons[]{ 0 };
-			//pbRgssOpen("Data/regionals.dat","rb"){|f|
+			//RgssOpen("Data/regionals.dat","rb"){|f|
 			//   int numRegions=f.fgetw;
 			//   int numDexDatas=f.fgetw;
 			//   if (region>=0 && region<numRegions) {
@@ -2046,9 +2046,9 @@ namespace PokemonUnity
 		/// The ID numbers returned by
 		/// this function depend on the current map's position metadata.
 		/// </returns>
-		public int pbGetCurrentRegion(int defaultRegion=-1) {
-			//int[] mappos=GameMap == null ? null : (int[])pbGetMetadata(GameMap.map_id,MapMetadatas.MetadataMapPosition);
-			ITilePosition mappos=GameMap == null ? null : pbGetMetadata(GameMap.map_id).Map.MapPosition;
+		public int GetCurrentRegion(int defaultRegion=-1) {
+			//int[] mappos=GameMap == null ? null : (int[])GetMetadata(GameMap.map_id,MapMetadatas.MetadataMapPosition);
+			ITilePosition mappos=GameMap == null ? null : GetMetadata(GameMap.map_id).Map.MapPosition;
 			if (mappos == null) {
 				return defaultRegion; // No region defined
 			} else {
@@ -2064,10 +2064,10 @@ namespace PokemonUnity
 		/// a species in the current region has been seen - doesn't look at other regions.</para>
 		/// Here, just used to decide whether to show the Pokédex in the Pause menu.
 		/// </summary>
-		public void pbSetViableDexes() {
+		public void SetViableDexes() {
 			Global.pokedexViable=new List<int>();
 			if (Core.DEXDEPENDSONLOCATION) {
-				int region=pbGetCurrentRegion();
+				int region=GetCurrentRegion();
 				if (region>=Global.pokedexUnlocked.Length-1) region=-1;
 				if (Trainer.pokedexSeen((Regions)region)>0) {
 					Global.pokedexViable.Add(region); //[0]=region;
@@ -2101,7 +2101,7 @@ namespace PokemonUnity
 		/// Unlocks a Dex list.  The National Dex is -1 here (or null argument).
 		/// </summary>
 		/// <param name="dex"></param>
-		public void pbUnlockDex(int dex=-1) {
+		public void UnlockDex(int dex=-1) {
 			int index=dex;
 			if (index<0) index=Global.pokedexUnlocked.Length-1;
 			if (index>Global.pokedexUnlocked.Length-1) index=Global.pokedexUnlocked.Length-1;
@@ -2112,7 +2112,7 @@ namespace PokemonUnity
 		/// Locks a Dex list.  The National Dex is -1 here (or null argument).
 		/// </summary>
 		/// <param name="dex"></param>
-		public void pbLockDex(int dex=-1) {
+		public void LockDex(int dex=-1) {
 			int index=dex;
 			if (index<0) index=Global.pokedexUnlocked.Length-1;
 			if (index>Global.pokedexUnlocked.Length-1) index=Global.pokedexUnlocked.Length-1;
@@ -2121,12 +2121,12 @@ namespace PokemonUnity
 		#endregion
 
 		#region Other utilities
-		public void pbTextEntry(string helptext,int minlength,int maxlength,int variableNumber) {
-			if (this is IGameTextEntry t) GameVariables[variableNumber]=t.pbEnterText(helptext,minlength,maxlength);
+		public void TextEntry(string helptext,int minlength,int maxlength,int variableNumber) {
+			if (this is IGameTextEntry t) GameVariables[variableNumber]=t.EnterText(helptext,minlength,maxlength);
 			if (GameMap != null) GameMap.need_refresh = true;
 		}
 
-		public string[] pbMoveTutorAnnotations(Moves move,Pokemons[] movelist=null) {
+		public string[] MoveTutorAnnotations(Moves move,Pokemons[] movelist=null) {
 			string[] ret=new string[Core.MAXPARTYSIZE];
 			for (int i = 0; i < Core.MAXPARTYSIZE; i++) {
 				ret[i]=null;
@@ -2144,7 +2144,7 @@ namespace PokemonUnity
 					//  Checked data from movelist
 					ret[i]=Game._INTL("ABLE");
 				} else if (!Trainer.party[i].isEgg && Trainer.party[i].isCompatibleWithMove(move)) {
-					//  Checked data from PBS/tm.txt
+					//  Checked data from S/tm.txt
 					ret[i]=Game._INTL("ABLE");
 				} else {
 					ret[i]=Game._INTL("NOT ABLE");
@@ -2153,40 +2153,40 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public bool pbMoveTutorChoose(Moves move,Pokemons[] movelist=null,bool bymachine=false) {
+		public bool MoveTutorChoose(Moves move,Pokemons[] movelist=null,bool bymachine=false) {
 			bool ret=false;
 			//if (move is String || move is Symbol) {
-			//  move=getID(PBMoves,move);
+			//  move=getID(Moves,move);
 			//}
 			if (movelist!=null && movelist.Length>0) { //&& movelist is Array
 				for (int i = 0; i < movelist.Length; i++) {
 					//if (movelist[i] is String || movelist[i] is Symbol) {
-					//  movelist[i]=getID(PBSpecies,movelist[i]);
+					//  movelist[i]=getID(Species,movelist[i]);
 					//}
 				}
 			}
-			pbFadeOutIn(99999, block: () => {
+			FadeOutIn(99999, block: () => {
 				IPartyDisplayScene scene=Scenes.Party; //new PokemonScreen_Scene();
 				string movename=Game._INTL(move.ToString(TextScripts.Name));
 				IPartyDisplayScreen screen=Screens.Party.initialize(scene,Trainer.party); //new PokemonScreen(scene,Trainer.party);
-				string[] annot=pbMoveTutorAnnotations(move,movelist);
-				screen.pbStartScene(Game._INTL("Teach which Pokémon?"),false,annot);
+				string[] annot=MoveTutorAnnotations(move,movelist);
+				screen.StartScene(Game._INTL("Teach which Pokémon?"),false,annot);
 				do { //;loop
-					int chosen=screen.pbChoosePokemon();
+					int chosen=screen.ChoosePokemon();
 					if (chosen>=0) {
 						IPokemon pokemon=Trainer.party[chosen];
 						if (pokemon.isEgg) {
-							(this as IGameMessage).pbMessage(Game._INTL("{1} can't be taught to an Egg.",movename));
+							(this as IGameMessage).Message(Game._INTL("{1} can't be taught to an Egg.",movename));
 						} else if (pokemon is IPokemonShadowPokemon p && p.isShadow) { //rescue false
-							(this as IGameMessage).pbMessage(Game._INTL("Shadow Pokémon can't be taught any moves."));
+							(this as IGameMessage).Message(Game._INTL("Shadow Pokémon can't be taught any moves."));
 						} else if (movelist != null && !movelist.Any(j => j==pokemon.Species )) {
-							(this as IGameMessage).pbMessage(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
-							(this as IGameMessage).pbMessage(Game._INTL("{1} can't be learned.",movename));
+							(this as IGameMessage).Message(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
+							(this as IGameMessage).Message(Game._INTL("{1} can't be learned.",movename));
 						} else if (!pokemon.isCompatibleWithMove(move)) {
-							(this as IGameMessage).pbMessage(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
-							(this as IGameMessage).pbMessage(Game._INTL("{1} can't be learned.",movename));
+							(this as IGameMessage).Message(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
+							(this as IGameMessage).Message(Game._INTL("{1} can't be learned.",movename));
 						} else {
-							if (pbLearnMove(pokemon,move,false,bymachine)) {
+							if (LearnMove(pokemon,move,false,bymachine)) {
 								ret=true;
 								break;
 							}
@@ -2195,18 +2195,18 @@ namespace PokemonUnity
 						break;
 					}
 				} while (true);
-				screen.pbEndScene();
+				screen.EndScene();
 			});
 			return ret; // Returns whether the move was learned by a Pokemon
 		}
 
-		public void pbChooseMove(IPokemon pokemon,int variableNumber,int nameVarNumber) {
+		public void ChooseMove(IPokemon pokemon,int variableNumber,int nameVarNumber) {
 			if (!pokemon.IsNotNullOrNone()) return;
 			int ret=-1;
-			pbFadeOutIn(99999, block: () => {
+			FadeOutIn(99999, block: () => {
 				IPokemonSummaryScene scene=Scenes.Summary; //new PokemonSummaryScene();
 				IPokemonSummaryScreen screen=Screens.Summary.initialize(scene); //new PokemonSummary(scene);
-				ret=screen.pbStartForgetScreen(pokemon,0,0);
+				ret=screen.StartForgetScreen(pokemon,0,0);
 			});
 			GameVariables[variableNumber]=ret;
 			if (ret>=0) {

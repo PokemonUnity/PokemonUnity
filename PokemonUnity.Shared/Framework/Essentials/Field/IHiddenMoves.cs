@@ -97,18 +97,18 @@ namespace PokemonEssentials.Interface
 			/// </summary>
 			event EventHandler OnAction;
 
-			bool pbCanUseHiddenMove(IPokemon pkmn, Moves move);
+			bool CanUseHiddenMove(IPokemon pkmn, Moves move);
 
-			bool pbUseHiddenMove(IPokemon pokemon, Moves move);
+			bool UseHiddenMove(IPokemon pokemon, Moves move);
 
-			void pbHiddenMoveEvent();
+			void HiddenMoveEvent();
 
 			#region Hidden move animation
-			void pbHiddenMoveAnimation(IPokemon pokemon);
+			void HiddenMoveAnimation(IPokemon pokemon);
 			#endregion
 
 			#region Cut
-			bool pbCut();
+			bool Cut();
 
 			//HiddenMoveHandlers.CanUseMove.add(:CUT,proc{|move,pkmn|
 
@@ -116,9 +116,9 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region Headbutt
-			void pbHeadbuttEffect(IGameCharacter @event);
+			void HeadbuttEffect(IGameCharacter @event);
 
-			void pbHeadbutt(IGameCharacter @event);
+			void Headbutt(IGameCharacter @event);
 
 			//HiddenMoveHandlers.CanUseMove.add(:HEADBUTT, proc{| move,pkmn |
 
@@ -126,9 +126,9 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region Rock Smash
-			void pbRockSmashRandomEncounter();
+			void RockSmashRandomEncounter();
 
-			bool pbRockSmash();
+			bool RockSmash();
 
 			//HiddenMoveHandlers.CanUseMove.add(:ROCKSMASH, proc{| move,pkmn |
 
@@ -136,7 +136,7 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region Strength
-			bool pbStrength();
+			bool Strength();
 
 			//Events.onAction += proc{| sender,e |
 
@@ -146,13 +146,13 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region Surf
-			bool pbSurf();
+			bool Surf();
 
-			void pbStartSurfing();
+			void StartSurfing();
 
-			bool pbEndSurf(float xOffset, float yOffset);
+			bool EndSurf(float xOffset, float yOffset);
 
-			void pbTransferSurfing(int mapid, float xcoord, float ycoord, float direction); //= Game.GameData.GamePlayer.direction
+			void TransferSurfing(int mapid, float xcoord, float ycoord, float direction); //= Game.GameData.GamePlayer.direction
 
 			//Events.onAction += proc{| sender,e |
 
@@ -162,11 +162,11 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region Waterfall
-			void pbAscendWaterfall(IGameCharacter @event = null);
+			void AscendWaterfall(IGameCharacter @event = null);
 
-			void pbDescendWaterfall(IGameCharacter @event = null);
+			void DescendWaterfall(IGameCharacter @event = null);
 
-			bool pbWaterfall();
+			bool Waterfall();
 
 			//Events.onAction += proc{| sender,e |
 
@@ -176,11 +176,11 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region Dive
-			bool pbDive();
+			bool Dive();
 
-			bool pbSurfacing();
+			bool Surfacing();
 
-			void pbTransferUnderwater(int mapid, float xcoord, float ycoord, float direction); //= Game.GameData.GamePlayer.direction
+			void TransferUnderwater(int mapid, float xcoord, float ycoord, float direction); //= Game.GameData.GamePlayer.direction
 
 			//Events.onAction += proc{| sender,e |
 
@@ -214,7 +214,7 @@ namespace PokemonEssentials.Interface
 			#endregion
 
 			#region Sweet Scent
-			void pbSweetScent();
+			void SweetScent();
 
 			//HiddenMoveHandlers.CanUseMove.add(:SWEETSCENT,proc{|move,pkmn|
 

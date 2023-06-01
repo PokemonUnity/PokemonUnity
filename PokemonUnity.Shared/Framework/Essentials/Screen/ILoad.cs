@@ -19,32 +19,32 @@ using PokemonEssentials.Interface.EventArg;
 namespace PokemonEssentials.Interface.Screen
 {
 	public interface ILoadScene : IScene {
-		IEnumerator pbUpdate();
+		IEnumerator Update();
 
-		void pbStartScene(string[] commands, bool showContinue, ITrainer trainer, int framecount, int mapid);
+		void StartScene(string[] commands, bool showContinue, ITrainer trainer, int framecount, int mapid);
 
-		void pbStartScene2();
+		void StartScene2();
 
-		void pbStartDeleteScene();
+		void StartDeleteScene();
 
-		void pbSetParty(ITrainer trainer);
+		void SetParty(ITrainer trainer);
 
-		void pbChoose(string[] commands);
+		void Choose(string[] commands);
 
-		void pbEndScene();
+		void EndScene();
 
-		void pbCloseScene();
+		void CloseScene();
 	}
 
 	public interface ILoadScreen : IScreen {
 		ILoadScreen initialize(ILoadScene scene);
 
 		//return [trainer,framecount,game_system,pokemonSystem,mapid]
-		object pbTryLoadFile(string savefile);
+		object TryLoadFile(string savefile);
 
-		void pbStartDeleteScreen();
+		void StartDeleteScreen();
 
-		void pbStartLoadScreen();
+		void StartLoadScreen();
 	}
 
 	#region UI Elements
@@ -63,7 +63,7 @@ namespace PokemonEssentials.Interface.Screen
 		//  }
 		//}
 
-		void pbRefresh();
+		void Refresh();
 
 		void refresh();
 	}

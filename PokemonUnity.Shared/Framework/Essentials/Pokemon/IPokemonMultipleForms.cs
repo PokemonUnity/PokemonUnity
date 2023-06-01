@@ -94,15 +94,15 @@ namespace PokemonEssentials.Interface
 		/// Extension of <see cref="IBattlePeer"/>
 		/// </summary>
 		public interface IBattlePeerMultipleForms {
-			void pbOnEnteringBattle(IBattle battle, IPokemon pokemon);
-			//int pbStorePokemon(ITrainer player, IPokemonMultipleForms pokemon);
-			//string pbGetStorageCreator();
-			//int pbCurrentBox();
-			//string pbBoxName(int box);
+			void OnEnteringBattle(IBattle battle, IPokemon pokemon);
+			//int StorePokemon(ITrainer player, IPokemonMultipleForms pokemon);
+			//string GetStorageCreator();
+			//int CurrentBox();
+			//string BoxName(int box);
 		}
 
 		//public interface IMultipleForms {
-		//  @@formSpecies=new HandlerHash(:PBSpecies);
+		//  @@formSpecies=new HandlerHash(:Species);
 
 		//  static void copy(sym,*syms) {
 		//    @@formSpecies.copy(sym,*syms);
@@ -139,7 +139,7 @@ namespace PokemonEssentials.Interface
 		{
 			void drawSpot(IBitmap bitmap,int[][] spotpattern, int x, int y, sbyte red, sbyte green, sbyte blue);
 
-			int[][] pbSpindaSpots(IPokemonMultipleForms pokemon, IBitmap bitmap);
+			int[][] SpindaSpots(IPokemonMultipleForms pokemon, IBitmap bitmap);
 		}
 	}
 }

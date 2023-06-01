@@ -30,26 +30,26 @@ namespace PokemonEssentials.Interface.Screen
 		void drawPageFive(IPokemon pokemon);
 		void drawMoveSelection(IPokemon pokemon, Moves moveToLearn);
 		void drawSelectedMove(IPokemon pokemon, Moves moveToLearn, Moves moveid);
-		void pbChooseMoveToForget(Moves moveToLearn);
-		void pbEndScene();
-		void pbGoToNext();
-		void pbGoToPrevious();
-		void pbMoveSelection();
-		void pbPokerus(IPokemon pkmn);
-		void pbScene();
-		void pbStartForgetScene(IPokemon party, int partyindex, Moves moveToLearn);
-		void pbStartScene(IPokemon party, int partyindex);
-		void pbUpdate();
+		void ChooseMoveToForget(Moves moveToLearn);
+		void EndScene();
+		void GoToNext();
+		void GoToPrevious();
+		void MoveSelection();
+		void Pokerus(IPokemon pkmn);
+		void Scene();
+		void StartForgetScene(IPokemon party, int partyindex, Moves moveToLearn);
+		void StartScene(IPokemon party, int partyindex);
+		void Update();
 	}
 
 	public interface IPokemonSummaryScreen : IScreen
 	{
 		IPokemonSummaryScreen initialize(IPokemonSummaryScene scene);
-		void pbStartScreen(IPokemon[] party, int partyindex);
-		//int pbStartForgetScreen(IPokemon[] party, int partyindex, Moves moveToLearn);
-		int pbStartForgetScreen(IPokemon party, int partyindex, Moves moveToLearn);
-		void pbStartChooseMoveScreen(IPokemon[] party, int partyindex, string message);
-		int pbStartChooseMoveScreen(IPokemon party, int partyindex, string message);
+		void StartScreen(IPokemon[] party, int partyindex);
+		//int StartForgetScreen(IPokemon[] party, int partyindex, Moves moveToLearn);
+		int StartForgetScreen(IPokemon party, int partyindex, Moves moveToLearn);
+		void StartChooseMoveScreen(IPokemon[] party, int partyindex, string message);
+		int StartChooseMoveScreen(IPokemon party, int partyindex, string message);
 	}
 
 	public interface IMoveSelectionSprite : ISpriteWrapper, IDisposable 

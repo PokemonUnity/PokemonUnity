@@ -227,7 +227,7 @@ namespace PokemonEssentials.Interface.Screen
 	// Pokémon Mart
 	// ===============================================================================
 	public interface IGameMart {
-		void pbPokemonMart(Items[] stock, string speech = null, bool cantsell = false); 
+		void PokemonMart(Items[] stock, string speech = null, bool cantsell = false); 
 	}
 
 	public interface IGameTempMart {
@@ -241,51 +241,51 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IMartScene : IScene {
 		void update();
 
-		//void pbRefresh();
+		//void Refresh();
 
-		void pbStartBuyOrSellScene(bool buying, Items[] stock, IMartAdapter adapter);
+		void StartBuyOrSellScene(bool buying, Items[] stock, IMartAdapter adapter);
 
-		void pbStartBuyScene(Items[] stock, IMartAdapter adapter);
+		void StartBuyScene(Items[] stock, IMartAdapter adapter);
 
-		void pbStartSellScene(IBag bag, IMartAdapter adapter);
+		void StartSellScene(IBag bag, IMartAdapter adapter);
 
-		void pbStartSellScene2(IBag bag, IMartAdapter adapter);
+		void StartSellScene2(IBag bag, IMartAdapter adapter);
 
-		void pbEndBuyScene();
+		void EndBuyScene();
 
-		void pbEndSellScene();
+		void EndSellScene();
 
-		void pbPrepareWindow(IWindow window);
+		void PrepareWindow(IWindow window);
 
-		void pbShowMoney();
+		void ShowMoney();
 
-		void pbHideMoney();
+		void HideMoney();
 
-		void pbDisplay(string msg, bool brief = false);
+		void Display(string msg, bool brief = false);
 
-		void pbDisplayPaused(string msg);
+		void DisplayPaused(string msg);
 
-		bool pbConfirm(string msg);
+		bool Confirm(string msg);
 
-		int pbChooseNumber(string helptext, Items item, int maximum);
+		int ChooseNumber(string helptext, Items item, int maximum);
 
-		int pbChooseBuyItem();
+		int ChooseBuyItem();
 
-		int pbChooseSellItem();
+		int ChooseSellItem();
 	}
 
 	public interface IMartScreen : IScreen {
 		IMartScreen initialize(IMartScene scene, Items[] stock);
 
-		bool pbConfirm(string msg);
+		bool Confirm(string msg);
 
-		void pbDisplay(string msg);
+		void Display(string msg);
 
-		void pbDisplayPaused(string msg);
+		void DisplayPaused(string msg);
 
-		IEnumerator pbBuyScreen();
+		IEnumerator BuyScreen();
 
-		IEnumerator pbSellScreen();
+		IEnumerator SellScreen();
 	}
 	#endregion
 

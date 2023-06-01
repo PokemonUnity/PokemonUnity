@@ -78,41 +78,41 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#region Creating a battler
 		IBattler initialize(IBattle btl, int index);
 
-		void pbInitPokemon(IPokemon pkmn, int pkmnIndex);
+		void InitPokemon(IPokemon pkmn, int pkmnIndex);
 
-		void pbInitDummyPokemon(IPokemon pkmn, int pkmnIndex);
+		void InitDummyPokemon(IPokemon pkmn, int pkmnIndex);
 
-		void pbInitBlank();
+		void InitBlank();
 
-		void pbInitPermanentEffects();
+		void InitPermanentEffects();
 
-		void pbInitEffects(bool batonpass);
+		void InitEffects(bool batonpass);
 
-		void pbUpdate(bool fullchange = false);
+		void Update(bool fullchange = false);
 
-		IBattler pbInitialize(IPokemon pkmn, int index, bool batonpass);
+		IBattler Initialize(IPokemon pkmn, int index, bool batonpass);
 
 		/// <summary>
 		/// Used only to erase the battler of a Shadow Pokémon that has been snagged.
 		/// </summary>
-		IBattler pbReset();
+		IBattler Reset();
 
 		/// <summary>
 		/// Update Pokémon who will gain EXP if this battler is defeated
 		/// </summary>
-		void pbUpdateParticipants();
+		void UpdateParticipants();
 		#endregion
 
 		#region About this battler
 		string ToString(bool lowercase = false);
 
-		bool pbHasType(Types type);
+		bool HasType(Types type);
 
-		bool pbHasMove(Moves id);
+		bool HasMove(Moves id);
 
-		bool pbHasMoveType(Types type);
+		bool HasMoveType(Types type);
 
-		bool pbHasMoveFunction(int code);
+		bool HasMoveFunction(int code);
 
 		bool hasMovedThisRound();
 
@@ -126,15 +126,15 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		bool isAirborne(bool ignoreability = false);
 
-		int pbSpeed { get; }
+		int Speed { get; }
 		#endregion
 
 		#region Change HP
-		int pbReduceHP(int amt, bool anim = false, bool registerDamage = true);
+		int ReduceHP(int amt, bool anim = false, bool registerDamage = true);
 
-		int pbRecoverHP(int amt, bool anim = false);
+		int RecoverHP(int amt, bool anim = false);
 
-		bool pbFaint(bool showMessage = true);
+		bool Faint(bool showMessage = true);
 		#endregion
 
 		#region Find other battlers/sides in relation to this battler
@@ -142,122 +142,122 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns the data structure for this battler's side
 		/// </summary>
 		/// <returns>Player: 0 and 2; Foe: 1 and 3</returns>
-		IEffectsSide pbOwnSide { get; }
+		IEffectsSide OwnSide { get; }
 
 		/// <summary>
 		/// Returns the data structure for the opposing Pokémon's side
 		/// </summary>
 		/// <returns>Player: 1 and 3; Foe: 0 and 2</returns>
-		IEffectsSide pbOpposingSide { get; }
+		IEffectsSide OpposingSide { get; }
 
 		/// <summary>
 		/// Returns whether the position belongs to the opposing Pokémon's side
 		/// </summary>
 		/// <param name="i"></param>
 		/// <returns></returns>
-		bool pbIsOpposing(int i);
+		bool IsOpposing(int i);
 
 		/// <summary>
 		/// Returns the battler's partner
 		/// </summary>
 		/// <returns></returns>
-		IBattler pbPartner { get; }
+		IBattler Partner { get; }
 
 		/// <summary>
 		/// Returns the battler's first opposing Pokémon
 		/// </summary>
 		/// <returns></returns>
-		IBattler pbOpposing1 { get; }
+		IBattler Opposing1 { get; }
 
 		/// <summary>
 		/// Returns the battler's second opposing Pokémon
 		/// </summary>
 		/// <returns></returns>
-		IBattler pbOpposing2 { get; }
+		IBattler Opposing2 { get; }
 
-		IBattler pbOppositeOpposing { get; }
+		IBattler OppositeOpposing { get; }
 
-		IBattler pbOppositeOpposing2 { get; }
+		IBattler OppositeOpposing2 { get; }
 
-		int pbNonActivePokemonCount { get; }
+		int NonActivePokemonCount { get; }
 		#endregion
 
 		#region Forms
-		void pbCheckForm();
+		void CheckForm();
 
-		void pbResetForm();
+		void ResetForm();
 		#endregion
 
 		#region Ability effects
-		void pbAbilitiesOnSwitchIn(bool onactive);
+		void AbilitiesOnSwitchIn(bool onactive);
 
-		void pbEffectsOnDealingDamage(IBattleMove move, IBattler user, IBattler target, int damage);
+		void EffectsOnDealingDamage(IBattleMove move, IBattler user, IBattler target, int damage);
 
-		void pbEffectsAfterHit(IBattler user, IBattler target, IBattleMove thismove, IEffectsMove turneffects);
+		void EffectsAfterHit(IBattler user, IBattler target, IBattleMove thismove, IEffectsMove turneffects);
 
-		void pbAbilityCureCheck();
+		void AbilityCureCheck();
 		#endregion
 
 		#region Held item effects
-		void pbConsumeItem(bool recycle = true, bool pickup = true);
+		void ConsumeItem(bool recycle = true, bool pickup = true);
 
-		bool pbConfusionBerry(PokemonUnity.Inventory.Plants.Flavours flavor, string message1, string message2);
+		bool ConfusionBerry(PokemonUnity.Inventory.Plants.Flavours flavor, string message1, string message2);
 
-		bool pbStatIncreasingBerry(PokemonUnity.Combat.Stats stat, string berryname);
+		bool StatIncreasingBerry(PokemonUnity.Combat.Stats stat, string berryname);
 
-		void pbActivateBerryEffect(Items berry = Items.NONE, bool consume = true);
+		void ActivateBerryEffect(Items berry = Items.NONE, bool consume = true);
 
-		void pbBerryCureCheck(bool hpcure = false);
+		void BerryCureCheck(bool hpcure = false);
 		#endregion
 
 		#region Move user and targets
-		IBattler pbFindUser(IBattleChoice choice, IList<IBattler> targets);
+		IBattler FindUser(IBattleChoice choice, IList<IBattler> targets);
 
-		IBattler pbChangeUser(IBattleMove thismove, IBattler user);
+		IBattler ChangeUser(IBattleMove thismove, IBattler user);
 
-		PokemonUnity.Attack.Data.Targets pbTarget(IBattleMove move);
+		PokemonUnity.Attack.Data.Targets Target(IBattleMove move);
 
-		bool pbAddTarget(ref IList<IBattler> targets, IBattler target);
+		bool AddTarget(ref IList<IBattler> targets, IBattler target);
 
-		void pbRandomTarget(IList<IBattler> targets);
+		void RandomTarget(IList<IBattler> targets);
 
-		bool pbChangeTarget(IBattleMove thismove, IBattler[] userandtarget, IBattler[] targets);
+		bool ChangeTarget(IBattleMove thismove, IBattler[] userandtarget, IBattler[] targets);
 		#endregion
 
 		#region Move PP
-		void pbSetPP(IBattleMove move, int pp);
+		void SetPP(IBattleMove move, int pp);
 
-		bool pbReducePP(IBattleMove move);
+		bool ReducePP(IBattleMove move);
 
-		void pbReducePPOther(IBattleMove move);
+		void ReducePPOther(IBattleMove move);
 		#endregion
 
 		#region Using a move
-		bool pbObedienceCheck(IBattleChoice choice);
+		bool ObedienceCheck(IBattleChoice choice);
 
-		bool pbSuccessCheck(IBattleMove thismove, IBattler user, IBattler target, IEffectsMove turneffects, bool accuracy = true);
+		bool SuccessCheck(IBattleMove thismove, IBattler user, IBattler target, IEffectsMove turneffects, bool accuracy = true);
 
-		bool pbTryUseMove(IBattleChoice choice, IBattleMove thismove, IEffectsMove turneffects);
+		bool TryUseMove(IBattleChoice choice, IBattleMove thismove, IEffectsMove turneffects);
 
-		void pbConfusionDamage();
+		void ConfusionDamage();
 
-		void pbUpdateTargetedMove(IBattleMove thismove, IBattler user);
+		void UpdateTargetedMove(IBattleMove thismove, IBattler user);
 
-		void pbProcessMoveAgainstTarget(IBattleMove thismove, IBattler user, IBattler target, int numhits, IEffectsMove turneffects, bool nocheck = false, int[] alltargets = null, bool showanimation = true);
+		void ProcessMoveAgainstTarget(IBattleMove thismove, IBattler user, IBattler target, int numhits, IEffectsMove turneffects, bool nocheck = false, int[] alltargets = null, bool showanimation = true);
 
-		void pbUseMoveSimple(Moves moveid, int index = -1, int target = -1);
+		void UseMoveSimple(Moves moveid, int index = -1, int target = -1);
 
-		void pbUseMove(IBattleChoice choice, bool specialusage = false);
+		void UseMove(IBattleChoice choice, bool specialusage = false);
 
-		void pbCancelMoves();
+		void CancelMoves();
 		#endregion
 
 		#region Turn processing
-		void pbBeginTurn(IBattleChoice choice);
+		void BeginTurn(IBattleChoice choice);
 
-		void pbEndTurn(IBattleChoice choice);
+		void EndTurn(IBattleChoice choice);
 
-		bool pbProcessTurn(IBattleChoice choice);
+		bool ProcessTurn(IBattleChoice choice);
 		#endregion
 	}
 }

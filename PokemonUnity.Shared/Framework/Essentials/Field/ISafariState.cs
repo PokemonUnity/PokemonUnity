@@ -11,15 +11,15 @@ namespace PokemonEssentials.Interface.Field
 
 		ISafariState initialize();
 
-		int pbReceptionMap { get; }
+		int ReceptionMap { get; }
 
 		bool InProgress { get; }
 
-		void pbGoToStart();
+		void GoToStart();
 
-		void pbStart(int ballcount);
+		void Start(int ballcount);
 
-		void pbEnd();
+		void End();
 	}
 
 	/// <summary>
@@ -27,11 +27,11 @@ namespace PokemonEssentials.Interface.Field
 	/// </summary>
 	public interface IGameSafari
 	{
-		bool pbInSafari { get; }
+		bool InSafari { get; }
 
-		ISafariState pbSafariState { get; }
+		ISafariState SafariState { get; }
 
-		BattleResults pbSafariBattle(Pokemons species, int level);
+		BattleResults SafariBattle(Pokemons species, int level);
 
 		/// <summary>
 		/// Fires whenever the player moves to a new map. Event handler receives the old
@@ -39,8 +39,8 @@ namespace PokemonEssentials.Interface.Field
 		/// </summary>
 		event System.EventHandler OnMapChange;
 		//Events.onMapChange+=proc{|sender,args|
-		//   if (!pbInSafari?) {
-		//     pbSafariState.pbEnd;
+		//   if (!InSafari?) {
+		//     SafariState.End;
 		//   }
 		//}
 
@@ -53,13 +53,13 @@ namespace PokemonEssentials.Interface.Field
 		//Events.onStepTakenTransferPossible+=delegate(object sender, EventArgs e) {
 		//   handled=e[0];
 		//   if (handled[0]) continue;
-		//   if (pbInSafari? && pbSafariState.decision==0 && SAFARISTEPS>0) {
-		//     pbSafariState.steps-=1;
-		//     if (pbSafariState.steps<=0) {
-		//       Kernel.pbMessage(_INTL("PA:  Ding-dong!\1")) ;
-		//       Kernel.pbMessage(_INTL("PA:  Your safari game is over!"));
-		//       pbSafariState.decision=1;
-		//       pbSafariState.pbGoToStart;
+		//   if (InSafari? && SafariState.decision==0 && SAFARISTEPS>0) {
+		//     SafariState.steps-=1;
+		//     if (SafariState.steps<=0) {
+		//       Kernel.Message(_INTL("PA:  Ding-dong!\1")) ;
+		//       Kernel.Message(_INTL("PA:  Your safari game is over!"));
+		//       SafariState.decision=1;
+		//       SafariState.GoToStart;
 		//       handled[0]=true;
 		//     }
 		//   }
@@ -76,8 +76,8 @@ namespace PokemonEssentials.Interface.Field
 		//   level=e[1];
 		//   handled=e[2];
 		//   if (handled[0]!=null) continue;
-		//   if (!pbInSafari?) continue;
-		//   handled[0]=pbSafariBattle(species,level);
+		//   if (!InSafari?) continue;
+		//   handled[0]=SafariBattle(species,level);
 		//}
 	}
 }

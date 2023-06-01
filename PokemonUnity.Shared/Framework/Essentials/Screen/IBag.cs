@@ -61,23 +61,23 @@ namespace PokemonEssentials.Interface.Screen
 		/// Registers the item as a key item.  Can be retrieved with Game.GameData.Bag.registeredItem
 		/// </summary>
 		/// <param name="item"></param>
-		void pbRegisterKeyItem(Items item);
+		void RegisterKeyItem(Items item);
 
 		int maxPocketSize(int pocket);
 
-		int pbQuantity(Items item);
+		int Quantity(Items item);
 
-		bool pbHasItem(Items item);
+		bool HasItem(Items item);
 
-		bool pbDeleteItem(Items item, int qty = 1);
+		bool DeleteItem(Items item, int qty = 1);
 
-		bool pbCanStore(Items item, int qty = 1);
+		bool CanStore(Items item, int qty = 1);
 
-		bool pbStoreAllOrNone(Items item, int qty = 1);
+		bool StoreAllOrNone(Items item, int qty = 1);
 
-		bool pbStoreItem(Items item, int qty = 1);
+		bool StoreItem(Items item, int qty = 1);
 
-		bool pbChangeItem(Items olditem, Items newitem);
+		bool ChangeItem(Items olditem, Items newitem);
 	}
 
 	#region Bag Scene
@@ -85,20 +85,20 @@ namespace PokemonEssentials.Interface.Screen
 	{
 		IBagScene initialize();
 		void update();
-		void pbStartScene(IBag bag);
-		void pbEndScene();
-		int pbChooseNumber(string helptext, int maximum);
-		void pbDisplay(string msg, bool brief = false);
-		void pbConfirm(string msg);
-		int pbShowCommands(string helptext, IList<string> commands);
-		//void pbRefresh();
+		void StartScene(IBag bag);
+		void EndScene();
+		int ChooseNumber(string helptext, int maximum);
+		void Display(string msg, bool brief = false);
+		void Confirm(string msg);
+		int ShowCommands(string helptext, IList<string> commands);
+		//void Refresh();
 
 		/// <summary>
 		/// Called when the item screen wants an item to be chosen from the screen
 		/// </summary>
 		/// <param name="lockpocket"></param>
 		/// <returns></returns>
-		Items pbChooseItem(bool lockpocket = false);
+		Items ChooseItem(bool lockpocket = false);
 	}
 
 	/// <summary>
@@ -108,49 +108,49 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IBagScreen : IScreen
 	{
 		IBagScreen initialize(IBagScene scene, IBag bag);
-		void pbDisplay(string text);
-		void pbConfirm(string text);
+		void Display(string text);
+		void Confirm(string text);
 
 		/// <summary>
 		/// UI logic for the item screen when an item is to be held by a Pokémon.
 		/// </summary>
 		/// <returns></returns>
-		Items pbGiveItemScreen();
+		Items GiveItemScreen();
 
 		/// <summary>
 		/// UI logic for the item screen when an item is used on a Pokémon from the party screen.
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <returns></returns>
-		Items pbUseItemScreen(Pokemons pokemon);
+		Items UseItemScreen(Pokemons pokemon);
 
 		/// <summary>
 		/// UI logic for the item screen for choosing an item
 		/// </summary>
 		/// <returns></returns>
-		Items pbChooseItemScreen();
+		Items ChooseItemScreen();
 
 		/// <summary>
 		/// UI logic for the item screen for choosing a Berry
 		/// </summary>
 		/// <returns></returns>
-		Items pbChooseBerryScreen();
+		Items ChooseBerryScreen();
 
 		/// <summary>
 		/// UI logic for tossing an item in the item screen.
 		/// </summary>
-		void pbTossItemScreen();
+		void TossItemScreen();
 
 		/// <summary>
 		/// UI logic for withdrawing an item in the item screen.
 		/// </summary>
-		void pbWithdrawItemScreen();
+		void WithdrawItemScreen();
 
 		/// <summary>
 		/// UI logic for depositing an item in the item screen.
 		/// </summary>
-		void pbDepositItemScreen();
-		Items pbStartScreen();
+		void DepositItemScreen();
+		Items StartScreen();
 	}
 	#endregion
 

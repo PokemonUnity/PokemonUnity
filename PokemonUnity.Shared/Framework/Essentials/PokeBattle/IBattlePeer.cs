@@ -16,12 +16,12 @@ namespace PokemonEssentials.Interface.PokeBattle
 {
 	public interface IBattlePeer
 	{
-		int pbStorePokemon(ITrainer player, IPokemon pokemon);
+		int StorePokemon(ITrainer player, IPokemon pokemon);
 
-		string pbGetStorageCreator();
+		string GetStorageCreator();
 
-		int pbCurrentBox();
+		int CurrentBox();
 
-		string pbBoxName(int box);
+		string BoxName(int box);
 	}
 }

@@ -24,7 +24,7 @@ namespace PokemonUnity
 			Events.OnWildBattleOverride+=Events_OnWildBattleOverride;
 		}
 
-		public int pbReceptionMap { get {
+		public int ReceptionMap { get {
 			//return @inProgress ? @start[0] : 0; //returns mapId
 			return @inProgress ? @start?.MapId??0 : 0;
 		} }
@@ -35,9 +35,9 @@ namespace PokemonUnity
 
 		//bool ISafariState.inprogress { get { return inProgress; } }
 
-		public void pbGoToStart() {
+		public void GoToStart() {
 			if (Game.GameData.Scene is ISceneMap s && Game.GameData is IGameSpriteWindow g) {
-				g.pbFadeOutIn(99999, block: () => {
+				g.FadeOutIn(99999, block: () => {
 					Game.GameData.GameTemp.player_transferring = true;
 					Game.GameData.GameTemp.transition_processing = true;
 					Game.GameData.GameTemp.player_new_map_id = @start?.MapId??0; //@start[0];
@@ -49,14 +49,14 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbStart(int ballcount_) {
+		public void Start(int ballcount_) {
 			@start=new MetadataPosition() { MapId = Game.GameData.GameMap.map_id, X = Game.GameData.GamePlayer.x, Y = Game.GameData.GamePlayer.y, Direction = Game.GameData.GamePlayer.direction };
 			@ballcount=ballcount_;
 			@inProgress=true;
 			@steps=Core.SAFARISTEPS;
 		}
 
-		public void pbEnd() {
+		public void End() {
 			@start=null;
 			@ballcount=0;
 			@inProgress=false;
@@ -83,21 +83,21 @@ namespace PokemonUnity
 		}
 		protected virtual void Events_OnMapChange(object sender, IOnMapChangeEventArgs e)
 		{
-			if (Game.GameData is IGameSafari s && !s.pbInSafari) {
-				s.pbSafariState.pbEnd();
+			if (Game.GameData is IGameSafari s && !s.InSafari) {
+				s.SafariState.End();
 			}
 		}
 		protected virtual void Events_OnStepTakenTransferPossible(object sender, IOnStepTakenTransferPossibleEventArgs e)
 		{
 			bool handled=e.Index;
 			if (!handled) return; //(handled) continue;
-			if (Game.GameData is IGameSafari s && s.pbInSafari && s.pbSafariState.decision==0 && Core.SAFARISTEPS>0) {
-				s.pbSafariState.steps-=1;
-				if (s.pbSafariState.steps<=0) {
-					if (Game.GameData is IGameMessage m0) m0.pbMessage(Game._INTL("PA:  Ding-dong!\\1"));
-					if (Game.GameData is IGameMessage m1) m1.pbMessage(Game._INTL("PA:  Your safari game is over!"));
-					s.pbSafariState.decision=Combat.BattleResults.WON; //1;
-					s.pbSafariState.pbGoToStart();
+			if (Game.GameData is IGameSafari s && s.InSafari && s.SafariState.decision==0 && Core.SAFARISTEPS>0) {
+				s.SafariState.steps-=1;
+				if (s.SafariState.steps<=0) {
+					if (Game.GameData is IGameMessage m0) m0.Message(Game._INTL("PA:  Ding-dong!\\1"));
+					if (Game.GameData is IGameMessage m1) m1.Message(Game._INTL("PA:  Your safari game is over!"));
+					s.SafariState.decision=Combat.BattleResults.WON; //1;
+					s.SafariState.GoToStart();
 					handled=true;
 				}
 			}
@@ -108,8 +108,8 @@ namespace PokemonUnity
 			int level=e.Level;
 			Combat.BattleResults? handled=e.Result;
 			if (handled==null) return; //(handled!=null) continue;
-			if (Game.GameData is IGameSafari s && s.pbInSafari) return; //(!GameData.pbInSafari) continue;
-			handled=Game.GameData is IGameSafari s0 ? s0.pbSafariBattle(species,level) : (Combat.BattleResults?)null;
+			if (Game.GameData is IGameSafari s && s.InSafari) return; //(!GameData.InSafari) continue;
+			handled=Game.GameData is IGameSafari s0 ? s0.SafariBattle(species,level) : (Combat.BattleResults?)null;
 		}
 	}
 
@@ -118,47 +118,47 @@ namespace PokemonUnity
 		//event Action<object, IOnStepTakenTransferPossibleEventArgs> IGameSafari.OnStepTakenTransferPossible { add { OnStepTakenTransferPossible += value; } remove { OnStepTakenTransferPossible += value; } }
 		//event Action<object, IOnWildBattleOverrideEventArgs> IGameSafari.OnWildBattleOverride { add { OnWildBattleOverride += value; } remove { OnWildBattleOverride += value; } }
 
-		public bool pbInSafari { get {
-			if (pbSafariState.InProgress) {
+		public bool InSafari { get {
+			if (SafariState.InProgress) {
 				//  Reception map is handled separately from safari map since the reception
 				//  map can be outdoors, with its own grassy patches.
-				int reception=pbSafariState.pbReceptionMap;
+				int reception=SafariState.ReceptionMap;
 				if (GameMap.map_id==reception) return true;
-				//if (pbGetMetadata(GameMap.map_id,MetadataSafariMap)) {
-				if (pbGetMetadata(GameMap.map_id).Map.SafariMap) {
+				//if (GetMetadata(GameMap.map_id,MetadataSafariMap)) {
+				if (GetMetadata(GameMap.map_id).Map.SafariMap) {
 					return true;
 				}
 			}
 			return false;
 		} }
 
-		public ISafariState pbSafariState { get {
+		public ISafariState SafariState { get {
 			if (Global.safariState == null) {
 				Global.safariState=new SafariState();
 			}
 			return Global.safariState;
 		} }
 
-		public Combat.BattleResults pbSafariBattle(Pokemons species,int level) {
-			IPokemon genwildpoke=(this as IGameField).pbGenerateWildPokemon(species,level);
-			IPokeBattle_Scene scene=(this as IGameField).pbNewBattleScene();
+		public Combat.BattleResults SafariBattle(Pokemons species,int level) {
+			IPokemon genwildpoke=(this as IGameField).GenerateWildPokemon(species,level);
+			IPokeBattle_Scene scene=(this as IGameField).NewBattleScene();
 			ISafariZone_Scene battle=new Combat.PokeBattle_SafariZone(scene,Trainer,null,new IPokemon[] { genwildpoke });
-			battle.ballCount=pbSafariState.ballcount;
-			if (this is IGameField f0) battle.environment=f0.pbGetEnvironment();
+			battle.ballCount=SafariState.ballcount;
+			if (this is IGameField f0) battle.environment=f0.GetEnvironment();
 			Combat.BattleResults decision=Combat.BattleResults.ABORTED; //0
-			if (this is IGameField f1) f1.pbBattleAnimation(pbGetWildBattleBGM(species), block: () => {
-				f1.pbSceneStandby(block: () => {
-					decision=battle.pbStartBattle();
+			if (this is IGameField f1) f1.BattleAnimation(GetWildBattleBGM(species), block: () => {
+				f1.SceneStandby(block: () => {
+					decision=battle.StartBattle();
 				});
 			});
-			pbSafariState.ballcount=battle.ballCount;
+			SafariState.ballcount=battle.ballCount;
 			Input.update();
-			if (pbSafariState.ballcount<=0) {
+			if (SafariState.ballcount<=0) {
 				if (decision!=Combat.BattleResults.LOST && decision!=Combat.BattleResults.DRAW) { //!=2 && !=5
-					if (Game.GameData is IGameMessage m) m.pbMessage(_INTL("Announcer:  You're out of Safari Balls! Game over!"));
+					if (Game.GameData is IGameMessage m) m.Message(_INTL("Announcer:  You're out of Safari Balls! Game over!"));
 				}
-				pbSafariState.decision=Combat.BattleResults.WON; //1
-				pbSafariState.pbGoToStart();
+				SafariState.decision=Combat.BattleResults.WON; //1
+				SafariState.GoToStart();
 			}
 			IOnWildBattleEndEventArgs e = new OnWildBattleEndEventArgs
 			{

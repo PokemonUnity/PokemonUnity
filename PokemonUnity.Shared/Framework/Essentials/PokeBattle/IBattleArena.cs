@@ -20,22 +20,22 @@ namespace PokemonEssentials.Interface.PokeBattle
 		//new IBattleArena initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
 		IBattleArena initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
 
-		new bool pbDoubleBattleAllowed();
+		new bool DoubleBattleAllowed();
 
-		bool pbEnemyShouldWithdraw(int index);
+		bool EnemyShouldWithdraw(int index);
 
-		new bool pbCanSwitchLax(int idxPokemon, int pkmnidxTo, bool showMessages);
+		new bool CanSwitchLax(int idxPokemon, int pkmnidxTo, bool showMessages);
 		 
-		new void pbSwitch(bool favorDraws= false);
+		new void Switch(bool favorDraws= false);
 		 
-		new void pbOnActiveAll();
+		new void OnActiveAll();
 
-		new bool pbOnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
+		new bool OnActiveOne(IBattler pkmn, bool onlyabilities = false, bool moldbreaker = false);
 
-		int pbMindScore(IBattleMove move);
+		int MindScore(IBattleMove move);
 
-		new void pbCommandPhase();
+		new void CommandPhase();
 		 
-		new void pbEndOfRoundPhase();
+		new void EndOfRoundPhase();
 	}
 }

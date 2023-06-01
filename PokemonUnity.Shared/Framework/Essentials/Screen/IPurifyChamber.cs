@@ -136,54 +136,54 @@ namespace PokemonEssentials.Interface.Screen
 
 	public interface IGamePurifyChamber
 	{
-		void pbDrawGauge(IBitmap bitmap, IRect rect, IColor color, int value, int maxValue);
+		void DrawGauge(IBitmap bitmap, IRect rect, IColor color, int value, int maxValue);
 
 		// angle in degrees
 		IPoint calcPoint(float x, float y, int distance, float angle);
 
-		void pbPurifyChamber();
+		void PurifyChamber();
 	}
 
 // ####################
 
 	public interface IPurifyChamberHelper  //static
 	{
-		IPokemonShadowPokemon pbGetPokemon2(IPurifyChamberSet chamber, int set, int position);
+		IPokemonShadowPokemon GetPokemon2(IPurifyChamberSet chamber, int set, int position);
 
-		IPokemonShadowPokemon pbGetPokemon(IPurifyChamberSet chamber, int position);
+		IPokemonShadowPokemon GetPokemon(IPurifyChamberSet chamber, int position);
 
 		int adjustOnInsert(int position);
 
-		void pbSetPokemon(IPurifyChamberSet chamber, int position, int value);
+		void SetPokemon(IPurifyChamberSet chamber, int position, int value);
 	}
 
 	public interface IPurifyChamberScreen : IScreen {
 		IPurifyChamberScreen initialize(IPurifyChamberScene scene);
 
-		bool pbPlace(IPokemon pkmn, int position);
+		bool Place(IPokemon pkmn, int position);
 
 		/// <summary>
 		/// </summary>
 		/// <param name="pos">x: storage box, y: box index</param>
 		/// <param name="position"></param>
 		/// <returns></returns>
-		bool pbPlacePokemon(int[] pos, int position);
+		bool PlacePokemon(int[] pos, int position);
 
-		void pbOnPlace(IPokemon pkmn);
+		void OnPlace(IPokemon pkmn);
 
-		bool pbOpenSetDetail();
+		bool OpenSetDetail();
 
-		void pbDisplay(string msg);
+		void Display(string msg);
 
-		void pbConfirm(string msg);
+		void Confirm(string msg);
 
-		void pbRefresh();
+		void Refresh();
 
-		bool pbCheckPurify();
+		bool CheckPurify();
 
-		void pbDoPurify();
+		void DoPurify();
 
-		void pbStartPurify();
+		void StartPurify();
 	}
 
 // ###############################################
@@ -289,54 +289,54 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	public interface IPurifyChamberScene : IScene {
-		void pbUpdate();
+		void Update();
 
-		//void pbRefresh();
+		//void Refresh();
 
-		void pbStart(IPurifyChamber chamber);
+		void Start(IPurifyChamber chamber);
 
-		void pbEnd();
+		void End();
 
-		void pbOpenSet(IPurifyChamberSet set);
+		void OpenSet(IPurifyChamberSet set);
 
-		void pbCloseSet();
+		void CloseSet();
 
-		void pbOpenSetDetail(IPurifyChamberSet set);
+		void OpenSetDetail(IPurifyChamberSet set);
 
-		void pbCloseSetDetail();
+		void CloseSetDetail();
 
-		void pbPurify();
+		void Purify();
 
-		void pbMove(int pos);
+		void Move(int pos);
 
-		void pbShift(int pos, IPokemon heldpoke);
+		void Shift(int pos, IPokemon heldpoke);
 
-		void pbPlace(int pos, IPokemon heldpoke);
+		void Place(int pos, IPokemon heldpoke);
 
-		void pbReplace(int pos, int storagePos);
+		void Replace(int pos, int storagePos);
 
-		void pbRotate(int facing);
+		void Rotate(int facing);
 
-		void pbWithdraw(int pos, IPokemon heldpoke);
+		void Withdraw(int pos, IPokemon heldpoke);
 
-		//void pbDisplay(string msg);
+		//void Display(string msg);
 
-		bool pbConfirm(string msg);
+		bool Confirm(string msg);
 
-		void pbShowCommands(string msg, string[] commands);
+		void ShowCommands(string msg, string[] commands);
 
-		int[] pbSetScreen();
+		int[] SetScreen();
 
-		int pbChooseSet();
+		int ChooseSet();
 
-		int pbSwitch(int set);
+		int Switch(int set);
 
-		void pbSummary(int pos, IPokemon heldpkmn);
+		void Summary(int pos, IPokemon heldpkmn);
 
-		void pbPositionHint(int pos);
+		void PositionHint(int pos);
 
-		void pbChangeSet(int set);
+		void ChangeSet(int set);
 
-		int pbChoosePokemon();
+		int ChoosePokemon();
 	}
 }

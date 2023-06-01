@@ -176,7 +176,7 @@ namespace PokemonEssentials.Interface.Field
 	public interface IGameDungeon
 	{
 		//IPoint is supposed to be an int array of x and y (`[int x,int y]`)
-		PokemonUnity.Utility.IPoint pbRandomRoomTile(IDungeon dungeon, ref IList<PokemonUnity.Utility.IPoint> tiles);
+		PokemonUnity.Utility.IPoint RandomRoomTile(IDungeon dungeon, ref IList<PokemonUnity.Utility.IPoint> tiles);
 
 		/// <summary>
 		/// Fires whenever a map is created. Event handler receives two parameters: the

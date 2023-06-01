@@ -24,10 +24,10 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_126() : base() { }
 		//public PokeBattle_Move_126(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret;
 		}
 	}
@@ -39,10 +39,10 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_127() : base() { }
 		//public PokeBattle_Move_127(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret;
 		}
 	}
@@ -54,10 +54,10 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_128() : base() { }
 		//public PokeBattle_Move_128(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret;
 		}
 	}
@@ -69,10 +69,10 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_129() : base() { }
 		//public PokeBattle_Move_129(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret;
 		}
 	}
@@ -84,10 +84,10 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_12A() : base() { }
 		//public PokeBattle_Move_12A(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret;
 		}
 	}
@@ -99,10 +99,10 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_12B() : base() { }
 		//public PokeBattle_Move_12B(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret;
 		}
 	}
@@ -114,12 +114,12 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_12C() : base() { }
 		//public PokeBattle_Move_12C(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			if (opponent is IBattlerEffect b && !b.pbCanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
-			pbShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
-			bool ret = opponent is IBattlerEffect b0 && b0.pbReduceStat(Stats.EVASION, increment: 2, attacker: attacker, showMessages: false);
-			if (ret && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			if (opponent is IBattlerEffect b && !b.CanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
+			ShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
+			bool ret = opponent is IBattlerEffect b0 && b0.ReduceStat(Stats.EVASION, increment: 2, attacker: attacker, showMessages: false);
+			if (ret && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret ? 0 : -1;
 		}
 	}
@@ -131,10 +131,10 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_12D() : base() { }
 		//public PokeBattle_Move_12D(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret;
 		}
 	}
@@ -147,7 +147,7 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_12E() : base() { }
 		//public PokeBattle_Move_12E(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			List<int> affected = new List<int>();
 			for (int i = 0; i < 4; i++)
@@ -156,15 +156,15 @@ namespace PokemonUnity.Combat
 			}
 			if (affected.Count == 0)
 			{
-				this.battle.pbDisplay(Game._INTL("But it failed!"));
+				this.battle.Display(Game._INTL("But it failed!"));
 				return -1;
 			}
-			pbShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
+			ShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
 			for (int i = 0; i < affected.Count; i++)
 			{
-				this.battle.battlers[i].pbReduceHP((int)Math.Floor(this.battle.battlers[i].HP / 2d));
+				this.battle.battlers[i].ReduceHP((int)Math.Floor(this.battle.battlers[i].HP / 2d));
 			}
-			this.battle.pbDisplay(Game._INTL("Each Pokemon's HP was halved!"));
+			this.battle.Display(Game._INTL("Each Pokemon's HP was halved!"));
 			attacker.effects.HyperBeam = 2;
 			attacker.currentMove = MoveId;
 			return 0;
@@ -179,10 +179,10 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_12F() : base() { }
 		//public PokeBattle_Move_12F(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret;
 		}
 	}
@@ -194,19 +194,19 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_130() : base() { }
 		//public PokeBattle_Move_130(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
-			int ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.pbHyperMode();
+			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
 			return ret;
 		}
 
-		public override void pbEffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects)
+		public override void EffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
-				attacker.pbReduceHP((int)Math.Round(attacker.HP / 2.0));
-				this.battle.pbDisplay(Game._INTL("{1} is damaged by recoil!", attacker.ToString()));
+				attacker.ReduceHP((int)Math.Round(attacker.HP / 2.0));
+				this.battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString()));
 			}
 		}
 	}
@@ -218,25 +218,25 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_131() : base() { }
 		//public PokeBattle_Move_131(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			switch (this.battle.weather)
 			{
 				case Weather.HEAVYRAIN:
-					this.battle.pbDisplay(Game._INTL("There is no relief from this heavy rain!"));
+					this.battle.Display(Game._INTL("There is no relief from this heavy rain!"));
 					return -1;
 				case Weather.HARSHSUN:
-					this.battle.pbDisplay(Game._INTL("The extremely harsh sunlight was not lessened at all!"));
+					this.battle.Display(Game._INTL("The extremely harsh sunlight was not lessened at all!"));
 					return -1;
 				case Weather.SHADOWSKY:
-					this.battle.pbDisplay(Game._INTL("But it failed!"));
+					this.battle.Display(Game._INTL("But it failed!"));
 					return -1;
 			}
-			pbShowAnimation(MoveId, attacker, null, hitnum, alltargets, showanimation);
+			ShowAnimation(MoveId, attacker, null, hitnum, alltargets, showanimation);
 			this.battle.weather = Weather.SHADOWSKY;
 			this.battle.weatherduration = 5;
-			this.battle.pbCommonAnimation("ShadowSky", null, null);
-			this.battle.pbDisplay(Game._INTL("A shadow sky appeared!"));
+			this.battle.CommonAnimation("ShadowSky", null, null);
+			this.battle.Display(Game._INTL("A shadow sky appeared!"));
 			return 0;
 		}
 	}
@@ -249,7 +249,7 @@ namespace PokemonUnity.Combat
 	{
 		public PokeBattle_Move_132() : base() { }
 		//public PokeBattle_Move_132(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if ((this.battle.sides[0].Reflect > 0 ||
 			   this.battle.sides[1].Reflect > 0 ||
@@ -258,20 +258,20 @@ namespace PokemonUnity.Combat
 			   this.battle.sides[0].Safeguard > 0 ||
 			   this.battle.sides[1].Safeguard > 0) && attacker is IBattlerShadowPokemon a)
 			{
-				pbShowAnimation(MoveId, attacker, null, hitnum, alltargets, showanimation);
+				ShowAnimation(MoveId, attacker, null, hitnum, alltargets, showanimation);
 				this.battle.sides[0].Reflect = 0;
 				this.battle.sides[1].Reflect = 0;
 				this.battle.sides[0].LightScreen = 0;
 				this.battle.sides[1].LightScreen = 0;
 				this.battle.sides[0].Safeguard = 0;
 				this.battle.sides[1].Safeguard = 0;
-				this.battle.pbDisplay(Game._INTL("It broke all barriers!"));
-				a.pbHyperMode();
+				this.battle.Display(Game._INTL("It broke all barriers!"));
+				a.HyperMode();
 				return 0;
 			}
 			else
 			{
-				this.battle.pbDisplay(Game._INTL("But it failed!"));
+				this.battle.Display(Game._INTL("But it failed!"));
 				return -1;
 			}
 		}

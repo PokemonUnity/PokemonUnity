@@ -16,13 +16,13 @@ namespace PokemonUnity
 {
 	/*public partial class Game : PokemonEssentials.Interface.Battle.IGameOrgBattleGenerator
 	{
-		public Moves pbRandomMove() {
+		public Moves RandomMove() {
 			do { //;loop
 				Moves move = Moves.NONE;
 				if (false) {
 					move=(Moves)Core.Rand.Next(0xA6)+1;
 				} else {
-					//move=(Moves)Core.Rand.Next(PBMoves.maxValue)+1;
+					//move=(Moves)Core.Rand.Next(Moves.maxValue)+1;
 					move=(Moves)Core.Rand.Next(Kernal.MoveData.Keys.Count)+1;
 					if (move>384 || move == Moves.SKETCH || move == Moves.STRUGGLE) continue;
 				}
@@ -91,10 +91,10 @@ namespace PokemonUnity
 		//private static IDictionary evolutions      = [];
 		//private static IDictionary tmMoves         = null;
 
-		public IList<Moves> pbGetLegalMoves2(Pokemons species,int maxlevel) {
+		public IList<Moves> GetLegalMoves2(Pokemons species,int maxlevel) {
 			IList<Moves> moves=new List<Moves>();
 			if (species==null || species<=0) return moves;
-			//pbRgssOpen("Data/attacksRS.dat","rb") {|atkdata|
+			//RgssOpen("Data/attacksRS.dat","rb") {|atkdata|
 			//	offset=atkdata.getOffset(species-1);
 			//	length=atkdata.getLength(species-1)>>1;
 			//	atkdata.pos=offset;
@@ -124,7 +124,7 @@ namespace PokemonUnity
 				}
 			}
 			babyspecies=babySpecies(species);
-			pbRgssOpen("Data/eggEmerald.dat","rb"){|f|
+			RgssOpen("Data/eggEmerald.dat","rb"){|f|
 				f.pos=(babyspecies-1)*8;
 				offset=f.fgetdw;
 				length=f.fgetdw;
@@ -174,35 +174,35 @@ namespace PokemonUnity
 
 		public void baseStatTotal(move) {
 			if (baseStatTotal[move]==null) {
-				baseStatTotal[move]=pbBaseStatTotal(move);
+				baseStatTotal[move]=BaseStatTotal(move);
 			}
 			return baseStatTotal[move];
 		}
 
 		public void babySpecies(move) {
 			if (babySpecies[move]==null) {
-				babySpecies[move]=pbGetBabySpecies(move);
+				babySpecies[move]=GetBabySpecies(move);
 			}
 			return babySpecies[move];
 		}
 
 		public void minimumLevel(move) {
 			if (minimumLevel[move]==null) {
-				minimumLevel[move]=pbGetMinimumLevel(move);
+				minimumLevel[move]=GetMinimumLevel(move);
 			}
 			return minimumLevel[move];
 		}
 
 		public void evolutions(move) {
 			if (evolutions[move]==null) {
-				evolutions[move]=pbGetEvolvedFormData(move);
+				evolutions[move]=GetEvolvedFormData(move);
 			}
 			return evolutions[move];
 		}
 
 		public void moveData(Moves move) {
 			if (moveData[move]==null) {
-				moveData[move]=new PBMoveData(move);
+				moveData[move]=new MoveData(move);
 			}
 			return moveData[move];
 		}
@@ -234,7 +234,7 @@ namespace PokemonUnity
 		}
 
 		// The Pokemon list is already roughly arranged by rank from weakest to strongest
-		public void pbArrangeByTier(pokemonlist,rule) {
+		public void ArrangeByTier(pokemonlist,rule) {
 			tiers=[
 					withRestr(rule,0,500,0),
 					withRestr(rule,380,500,0),
@@ -294,7 +294,7 @@ namespace PokemonUnity
 			return false;
 		}
 
-		public void pbRandomPokemonFromRule(rule,trainer) {
+		public void RandomPokemonFromRule(rule,trainer) {
 			pkmn=null;
 			i=0;
 			iteration=-1;
@@ -305,8 +305,8 @@ namespace PokemonUnity
 			do { //;loop
 				species=0;
 				do { //;loop
-				species=Core.Rand.Next(PBSpecies.maxValue)+1;
-				cname=getConstantName(PBSpecies,species) rescue null;
+				species=Core.Rand.Next(Species.maxValue)+1;
+				cname=getConstantName(Species,species) rescue null;
 				if (cname) break;
 				}
 				r=Core.Rand.Next(20);
@@ -361,7 +361,7 @@ namespace PokemonUnity
 				$legalMoves=[];
 			}
 			if (!$legalMoves[species]) {
-				$legalMoves[species]=pbGetLegalMoves2(species,level);
+				$legalMoves[species]=GetLegalMoves2(species,level);
 			}
 			itemlist=[
 				:ORANBERRY,:SITRUSBERRY,:ADAMANTORB,:BABIRIBERRY,
@@ -381,7 +381,7 @@ namespace PokemonUnity
 				break;
 				}
 				itemsym=itemlist[Core.Rand.Next(itemlist.Length)];
-				item=getID(PBItems,itemsym);
+				item=getID(Items,itemsym);
 				if (item==0) continue;
 				if (itemsym==:LIGHTBALL) {
 				if (!species == Pokemons.PIKACHU) continue;
@@ -465,10 +465,10 @@ namespace PokemonUnity
 			sketch=false;
 			if (moves[0] == Moves.SKETCH) {
 				sketch=true;
-				moves[0]=pbRandomMove;
-				moves[1]=pbRandomMove;
-				moves[2]=pbRandomMove;
-				moves[3]=pbRandomMove;
+				moves[0]=RandomMove;
+				moves[1]=RandomMove;
+				moves[2]=RandomMove;
+				moves[3]=RandomMove;
 			}
 			if (moves.Length==0) continue;
 			if ((moves|[]).Length<4) {
@@ -558,8 +558,8 @@ namespace PokemonUnity
 				item=Items.LEFTOVERS;
 			}
 			if (item == Items.BLACKSLUDGE) {
-				dexdata=pbOpenDexData;
-				pbDexDataOffset(dexdata,species,8);
+				dexdata=OpenDexData;
+				DexDataOffset(dexdata,species,8);
 				type1=dexdata.fgetb;
 				type2=dexdata.fgetb;
 				dexdata.close;
@@ -579,14 +579,14 @@ namespace PokemonUnity
 				if (Core.Rand.Next(3)==0) item=Items.LUMBERRY;
 				if (Core.Rand.Next(4)==0) item=Items.CHESTOBERRY;
 			}
-			pk=new PBPokemon(species,item,nature,moves[0],moves[1],moves[2],moves[3],ev);
+			pk=new Pokemon(species,item,nature,moves[0],moves[1],moves[2],moves[3],ev);
 			pkmn=pk.createPokemon(level,31,trainer);
 			i+=1;
 			} while (!rule.ruleset.isPokemonValid(pkmn));
 			return pkmn;
 		}
 
-		public void pbDecideWinnerEffectiveness(move,otype1,otype2,ability,scores) {
+		public void DecideWinnerEffectiveness(move,otype1,otype2,ability,scores) {
 			data=moveData(move);
 			if (data.basedamage==0) return 0;
 			atype=data.type;
@@ -594,8 +594,8 @@ namespace PokemonUnity
 			if (ability == Abilities.LEVITATE && data.type == Types.GROUND) {
 			typemod=4;
 			} else {
-			mod1=PBTypes.getEffectiveness(atype,otype1);
-			mod2=(otype1==otype2) ? 2 : PBTypes.getEffectiveness(atype,otype2);
+			mod1=Types.getEffectiveness(atype,otype1);
+			mod2=(otype1==otype2) ? 2 : Types.getEffectiveness(atype,otype2);
 			if (ability == Abilities.WONDERGUARD) {
 				if (mod1!=4) mod1=2;
 				if (mod2!=4) mod2=2;
@@ -611,7 +611,7 @@ namespace PokemonUnity
 			return 0;
 		}
 
-		public void pbDecideWinnerScore(party0,party1,rating) {
+		public void DecideWinnerScore(party0,party1,rating) {
 			score=0;
 			types1=[];
 			types2=[];
@@ -625,7 +625,7 @@ namespace PokemonUnity
 			foreach (var move in party0[i].moves) {
 				if (move.id==0) continue;
 				for (int j = 0; j < party1.Length; j++) {
-				score+=pbDecideWinnerEffectiveness(move.id,
+				score+=DecideWinnerEffectiveness(move.id,
 					types1[j],types2[j],abilities[j],[-16,-8,0,4,12,20]);
 				}
 			}
@@ -637,11 +637,11 @@ namespace PokemonUnity
 			return score;
 		}
 
-		public void pbDecideWinner(party0,party1,rating0,rating1) {
+		public void DecideWinner(party0,party1,rating0,rating1) {
 			rating0=(rating0*15.0/100).round;
 			rating1=(rating1*15.0/100).round;
-			score0=pbDecideWinnerScore(party0,party1,rating0);
-			score1=pbDecideWinnerScore(party1,party0,rating1);
+			score0=DecideWinnerScore(party0,party1,rating0);
+			score1=DecideWinnerScore(party1,party0,rating1);
 			if (score0==score1) {
 			if (rating0==rating1) return 5;
 			return (rating0>rating1) ? 1 : 2;
@@ -650,14 +650,14 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbRuledBattle(team1,team2,rule) {
+		public void RuledBattle(team1,team2,rule) {
 			decision=0;
 			if (Core.Rand.Next(100)!=0) {
 			party1=[];
 			party2=[];
 			team1.Length.times {|i| party1.Add(team1[i]) }
 			team2.Length.times {|i| party2.Add(team2[i]) }
-			decision=pbDecideWinner(party1,party2,team1.rating,team2.rating);
+			decision=DecideWinner(party1,party2,team1.rating,team2.rating);
 			} else {
 			scene=new PokeBattle_DebugSceneNoLogging();
 			trainer1=new PokeBattle_Trainer("PLAYER1",1);
@@ -688,7 +688,7 @@ namespace PokemonUnity
 			battle.controlPlayer=true;
 			battle.endspeech="...";
 			battle.internalbattle=false;
-			decision=battle.pbStartBattle;
+			decision=battle.StartBattle;
 			// p [items1,items2]
 			team1.Length.times {|i|
 				p=team1[i];
@@ -714,17 +714,17 @@ namespace PokemonUnity
 		}
 
 		public void getTypes(species) {
-			dexdata=pbOpenDexData;
-			pbDexDataOffset(dexdata,species,8);
+			dexdata=OpenDexData;
+			DexDataOffset(dexdata,species,8);
 			type1=dexdata.fgetb;
 			type2=dexdata.fgetb;
 			dexdata.close;
 			return type1==type2 ? [type1] : [type1,type2];
 		}
 
-		public void pbTrainerInfo(pokemonlist,trfile,rules) {
-			bttrainers=pbGetBTTrainers(trfile);
-			btpokemon=pbGetBTPokemon(trfile);
+		public void TrainerInfo(pokemonlist,trfile,rules) {
+			bttrainers=GetBTTrainers(trfile);
+			btpokemon=GetBTPokemon(trfile);
 			trainertypes=load_data("Data/trainertypes.dat");
 			if (bttrainers.Length==0) {
 			for (int i = 0; i < 200; i++) {
@@ -732,8 +732,8 @@ namespace PokemonUnity
 				trainerid=0;
 				money=30;
 				do { //;loop
-				trainerid=Core.Rand.Next(PBTrainers.maxValue)+1;
-				if (Core.Rand.Next(30)==0) trainerid=getID(PBTrainers,:YOUNGSTER);
+				trainerid=Core.Rand.Next(Trainers.maxValue)+1;
+				if (Core.Rand.Next(30)==0) trainerid=getID(Trainers,:YOUNGSTER);
 				if (trainerid.ToString(TextScripts.Name)=="") continue;
 				money=(!trainertypes[trainerid] ||
 						!trainertypes[trainerid][3]) ? 30 : trainertypes[trainerid][3];
@@ -774,7 +774,7 @@ namespace PokemonUnity
 			species=[];
 			types=[];
 			// p trainerdata[1]
-			(PBTypes.maxValue+1).times {|typ| types[typ]=0 }
+			(Types.maxValue+1).times {|typ| types[typ]=0 }
 			foreach (var pn in pokemonnumbers) {
 				pkmn=btpokemon[pn];
 				species.Add(pkmn.Species);
@@ -785,7 +785,7 @@ namespace PokemonUnity
 			}
 			species|=[]; // remove duplicates
 			count=0;
-			(PBTypes.maxValue+1).times {|typ|
+			(Types.maxValue+1).times {|typ|
 				if (types[typ]>=5) {
 					types[typ]/=4;
 					if (types[typ]>10) types[typ]=10;
@@ -798,7 +798,7 @@ namespace PokemonUnity
 			if (pokemonnumbers.Length==0) {
 				int typ = 0; do {|typ|
 					types[typ]=1;
-				} while (typ < ); //(PBTypes.maxValue+1).times
+				} while (typ < ); //(Types.maxValue+1).times
 			}
 			numbers=[];
 			if (pokemonlist) {
@@ -865,9 +865,9 @@ namespace PokemonUnity
 								trainerdata[3],trainerdata[4],numbers])  ;
 			}
 			if (block_given?) yield(null);
-			pbpokemonlist=[];
+			pokemonlist=[];
 			foreach (var pkmn in pokemonlist) {
-				pbpokemonlist.Add(PBPokemon.fromPokemon(pkmn));
+				pokemonlist.Add(Pokemon.fromPokemon(pkmn));
 			}
 			trlists=(load_data("Data/trainerlists.dat") rescue []);
 			hasDefault=false;
@@ -879,27 +879,27 @@ namespace PokemonUnity
 				if (trlists[i][2].Contains(trfile)) {
 					trIndex=i;
 					trlists[i][0]=newbttrainers;
-					trlists[i][1]=pbpokemonlist;
+					trlists[i][1]=pokemonlist;
 					trlists[i][5]=!hasDefault;
 				}
 			}
 			if (block_given?) yield(null);
 			if (trIndex<0) {
-				info=[newbttrainers,pbpokemonlist,[trfile],
+				info=[newbttrainers,pokemonlist,[trfile],
 						trfile+"tr.txt",trfile+"pm.txt",!hasDefault];
 				trlists.Add(info);
 			}
 			if (block_given?) yield(null);
 			save_data(trlists,"Data/trainerlists.dat");
 			if (block_given?) yield(null);
-			pbSaveTrainerLists();
+			SaveTrainerLists();
 			if (block_given?) yield(null);
 		}
 
 
 
 		//if $FAKERGSS;
-		//	public void Kernel.pbMessageDisplay(mw,txt,lbl) {
+		//	public void Kernel.MessageDisplay(mw,txt,lbl) {
 		//		puts txt;
 		//	}
 		//
@@ -943,7 +943,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbRemoveDuplicates(party) {
+		public void RemoveDuplicates(party) {
 		// p "before: #{party.Length}"
 			ret=[];
 			foreach (var pk in party) {
@@ -970,9 +970,9 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public void pbReplenishBattlePokemon(party,rule) {
+		public void ReplenishBattlePokemon(party,rule) {
 			while (party.Length<20) {
-			pkmn=pbRandomPokemonFromRule(rule,null);
+			pkmn=RandomPokemonFromRule(rule,null);
 			found=false;
 			foreach (var pk in party) {
 				if (isBattlePokemonDuplicate(pkmn,pk)) {
@@ -983,7 +983,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbGenerateChallenge(rule,tag) {
+		public void GenerateChallenge(rule,tag) {
 			oldrule=rule;
 			yield(_INTL("Preparing to generate teams"));
 			rule=rule.copy.setNumber(2);
@@ -991,7 +991,7 @@ namespace PokemonUnity
 			party=load_data(tag+".rxdata") rescue [];
 			teams=load_data(tag+"teams.rxdata") rescue [];
 			if (teams.Length<10) {
-			btpokemon=pbGetBTPokemon(tag);
+			btpokemon=GetBTPokemon(tag);
 			if (btpokemon && btpokemon.Length!=0) {
 				suggestedLevel=rule.ruleset.suggestedLevel;
 				foreach (var pk in btpokemon) {
@@ -1001,7 +1001,7 @@ namespace PokemonUnity
 			}
 			}
 			yield(null);
-			party=pbRemoveDuplicates(party);
+			party=RemoveDuplicates(party);
 			yield(null);
 			maxteams=600;
 			cutoffrating=65;
@@ -1012,7 +1012,7 @@ namespace PokemonUnity
 			yield(_INTL("Generating teams ({1} of {2})",iter+1,iterations));
 			i=0;while i<teams.Length;
 				if (i%10==0) yield(null);
-				pbReplenishBattlePokemon(party,rule);
+				ReplenishBattlePokemon(party,rule);
 				if (teams[i].rating<cutoffrating && teams[i].totalGames>=80) {
 				teams[i]=new RuledTeam(party,rule);
 				} else if (teams[i].Length<2) {
@@ -1035,7 +1035,7 @@ namespace PokemonUnity
 			yield(null);
 			while (teams.Length<maxteams) {
 				if (teams.Length%10==0) yield(null);
-				pbReplenishBattlePokemon(party,rule);
+				ReplenishBattlePokemon(party,rule);
 				teams.Add(new RuledTeam(party,rule));
 			}
 			save_data(party,tag+".rxdata");
@@ -1051,7 +1051,7 @@ namespace PokemonUnity
 					}
 					if (other==j) continue;
 					changed=true;
-					pbRuledBattle(teams[j],teams[other],rule);
+					RuledBattle(teams[j],teams[other],rule);
 				}
 		//  i+=1;break if i>=5
 				i+=1;
@@ -1087,15 +1087,15 @@ namespace PokemonUnity
 			}
 			rule=oldrule;
 			yield(null);
-			party=pbRemoveDuplicates(party);
+			party=RemoveDuplicates(party);
 			yield(_INTL("Writing results"));
-			party=pbArrangeByTier(party,rule);
+			party=ArrangeByTier(party,rule);
 			yield(null);
-			pbTrainerInfo(party,tag,rule) { yield(null) }
+			TrainerInfo(party,tag,rule) { yield(null) }
 			yield(null);
 		}
 
-		public void pbWriteCup(id,rules) {
+		public void WriteCup(id,rules) {
 			if (!Core.DEBUG) return;
 			bttrainers=[];
 			trlists=(load_data("Data/trainerlists.dat") rescue []);
@@ -1110,10 +1110,10 @@ namespace PokemonUnity
 			}
 			cmd=0;
 			if (trlists.Length!=0) {
-			cmd=Kernel.pbMessage(_INTL("Generate Pokemon teams for this challenge?"),
+			cmd=Kernel.Message(_INTL("Generate Pokemon teams for this challenge?"),
 				[_INTL("NO"),_INTL("YES, USE EXISTING"),_INTL("YES, USE NEW")],1);
 			} else {
-			cmd=Kernel.pbMessage(_INTL("Generate Pokemon teams for this challenge?"),
+			cmd=Kernel.Message(_INTL("Generate Pokemon teams for this challenge?"),
 				[_INTL("YES"),_INTL("NO")],2);
 			if (cmd==0) {
 				cmd=2;
@@ -1123,9 +1123,9 @@ namespace PokemonUnity
 			}
 			if (cmd==0  ) return;	// No
 			if (cmd==1  ) {		// Yes, use existing
-			cmd=Kernel.pbMessage(_INTL("Choose a challenge."),list,-1);
+			cmd=Kernel.Message(_INTL("Choose a challenge."),list,-1);
 			if (cmd>=0) {
-				Kernel.pbMessage(_INTL("This challenge will use the Pokemon list from {1}.",list[cmd]));
+				Kernel.Message(_INTL("This challenge will use the Pokemon list from {1}.",list[cmd]));
 				for (int i = 0; i < trlists.Length; i++) {
 				tr=trlists[i];
 				while (!tr[5] && tr[2].Contains(id)) {
@@ -1137,29 +1137,29 @@ namespace PokemonUnity
 				}
 				save_data(trlists,"Data/trainerlists.dat");
 				Graphics.update();
-				pbSaveTrainerLists();
+				SaveTrainerLists();
 				Graphics.update();
 				return;
 			} else {
 				return;
 			}
 			//  Yes, use new
-			} else if (cmd==2 && !Kernel.pbConfirmMessage(_INTL("This may take a long time. Are you sure?"))) {
+			} else if (cmd==2 && !Kernel.ConfirmMessage(_INTL("This may take a long time. Are you sure?"))) {
 			return;
 			}
-			mw=Kernel.pbCreateMessageWindow;
+			mw=Kernel.CreateMessageWindow;
 			t=Time.now;
-			pbGenerateChallenge(rules,id){|message|
+			GenerateChallenge(rules,id){|message|
 				if ((Time.now-t)>=5) {
 				Graphics.update(); t=Time.now;
 				}
 				if (message) {
-				Kernel.pbMessageDisplay(mw,message,false);
+				Kernel.MessageDisplay(mw,message,false);
 				Graphics.update(); t=Time.now;
 				}
 			}
-			Kernel.pbDisposeMessageWindow(mw);
-			Kernel.pbMessage(_INTL("Team generation complete."));
+			Kernel.DisposeMessageWindow(mw);
+			Kernel.Message(_INTL("Team generation complete."));
 		}
 	}*/
 
@@ -1185,12 +1185,12 @@ namespace PokemonUnity
 
 	public partial class NonlegendaryRestriction : PokemonEssentials.Interface.Battle.INonlegendaryRestriction {
 		public bool isValid (IPokemon pkmn) {
-			//dexdata=pbOpenDexData();
-			//pbDexDataOffset(dexdata,pkmn.Species,31);
+			//dexdata=OpenDexData();
+			//DexDataOffset(dexdata,pkmn.Species,31);
 			PokemonUnity.Monster.Data.PokemonData dexdata = Kernal.PokemonData[pkmn.Species];
 			EggGroups compat10=dexdata.EggGroup[0]; //dexdata.fgetb;
 			EggGroups compat11=dexdata.EggGroup[1]; //dexdata.fgetb;
-			//pbDexDataOffset(dexdata,pkmn.Species,18);
+			//DexDataOffset(dexdata,pkmn.Species,18);
 			//int genderbyte=dexdata.fgetb;
 			GenderRatio genderbyte=dexdata.GenderEnum;
 			//dexdata.close;

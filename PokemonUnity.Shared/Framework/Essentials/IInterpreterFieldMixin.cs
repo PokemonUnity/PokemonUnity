@@ -10,21 +10,21 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface IInterpreterFieldMixin
 	{
-		//object[] pbParams { get; }
+		//object[] Params { get; }
 
 		object getVariable(params int[] arg);
-		PokemonEssentials.Interface.PokeBattle.IPokemon pbGetPokemon(int id);
-		bool pbHeadbutt();
-		bool pbPushThisBoulder();
-		void pbPushThisEvent();
-		void pbSetEventTime(params int[] arg);
+		PokemonEssentials.Interface.PokeBattle.IPokemon GetPokemon(int id);
+		bool Headbutt();
+		bool PushThisBoulder();
+		void PushThisEvent();
+		void SetEventTime(params int[] arg);
 		/// <summary>
 		/// Used when player encounters a trainer, and battle logic get triggered
 		/// </summary>
 		/// <param name="symbol"></param>
 		/// <returns>Plays TrainerType Audio Theme and returns true</returns>
-		bool pbTrainerIntro(TrainerTypes symbol);
-		void pbTrainerEnd();
+		bool TrainerIntro(TrainerTypes symbol);
+		void TrainerEnd();
 		void setTempSwitchOff(string c);
 		void setTempSwitchOn(string c);
 		void setVariable(params int[] arg);

@@ -61,7 +61,7 @@ namespace PokemonUnity.Monster
 				//MultipleForms.call("onSetForm",this,value);
 				MultipleForms.onSetForm(this,value);
 				this.calcStats();
-				if(Game.GameData is PokemonEssentials.Interface.IGameUtility g) g.pbSeenForm(this);
+				if(Game.GameData is PokemonEssentials.Interface.IGameUtility g) g.SeenForm(this);
 			} }
 		// Maybe a method, where when a form is changed
 		// checks pokemon value and overwrites name and stats
@@ -94,7 +94,7 @@ namespace PokemonUnity.Monster
 				//MultipleForms.call("onSetForm",this,value);
 				MultipleForms.onSetForm(this,value);
 				this.calcStats();
-				if(Game.GameData is PokemonEssentials.Interface.IGameUtility g) g.pbSeenForm(this);
+				if(Game.GameData is PokemonEssentials.Interface.IGameUtility g) g.SeenForm(this);
 			} }
 
 		public int formNoCall { set {
@@ -233,7 +233,7 @@ namespace PokemonUnity.Monster
 	}
 
 	public partial class PokeBattle_RealBattlePeer : PokemonEssentials.Interface.PokeBattle.IBattlePeerMultipleForms { 
-		public void pbOnEnteringBattle(PokemonEssentials.Interface.PokeBattle.IBattle battle,PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
+		public void OnEnteringBattle(PokemonEssentials.Interface.PokeBattle.IBattle battle,PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
 			if (pokemon is PokemonEssentials.Interface.PokeBattle.IPokemonMultipleForms p) {
 				//int? f=MultipleForms.call("getFormOnEnteringBattle",pokemon);
 				int? f=MultipleForms.getFormOnEnteringBattle(pokemon);
@@ -271,7 +271,7 @@ namespace PokemonUnity.Monster
 		}
 	}
 
-	public void pbSpindaSpots(pokemon,bitmap) {
+	public void SpindaSpots(pokemon,bitmap) {
 		spot1=[
 			[0,0,1,1,1,1,0,0],
 			[0,1,1,1,1,1,1,0],
@@ -388,7 +388,7 @@ namespace PokemonUnity.Monster
 			}
 			else if (pokemon.Species == Pokemons.DEERLING || pokemon.Species == Pokemons.SAWSBUCK)
 			{
-				return (int)Game.Season;//pbGetSeason();
+				return (int)Game.Season;//GetSeason();
 			}
 			else if (pokemon.Species == Pokemons.KELDEO)
 			{
@@ -424,9 +424,9 @@ namespace PokemonUnity.Monster
 		{
 			if (pokemon.Species == Pokemons.BURMY)
 			{
-				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
-				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
+				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand ||
@@ -466,20 +466,20 @@ namespace PokemonUnity.Monster
 				}
 				if (form>0) {
 					Moves newmove=moves[form-1];
-					if (newmove!=Moves.NONE) { //&& hasConst(PBMoves,newmove)
+					if (newmove!=Moves.NONE) { //&& hasConst(Moves,newmove)
 						if (hasoldmove>=0 && Game.GameData is PokemonEssentials.Interface.IGameMessage m) {
 							// Automatically replace the old form's special move with the new one's
 							string oldmovename=Game._INTL(pokemon.moves[hasoldmove].id.ToString(TextScripts.Name));
 							string newmovename=Game._INTL(newmove.ToString(TextScripts.Name));
 							pokemon.moves[hasoldmove]=new Attack.Move(newmove);
-							m.pbMessage(Game._INTL("\\se[]1,\\wt[4] 2,\\wt[4] and...\\wt[8] ...\\wt[8] ...\\wt[8] Poof!\\se[balldrop]\\1"));
-							m.pbMessage(Game._INTL("{1} forgot how to\r\nuse {2}.\\1",pokemon.Name,oldmovename));
-							m.pbMessage(Game._INTL("And...\\1"));
-							m.pbMessage(Game._INTL("\\se[]{1} learned {2}!\\se[MoveLearnt]",pokemon.Name,newmovename));
+							m.Message(Game._INTL("\\se[]1,\\wt[4] 2,\\wt[4] and...\\wt[8] ...\\wt[8] ...\\wt[8] Poof!\\se[balldrop]\\1"));
+							m.Message(Game._INTL("{1} forgot how to\r\nuse {2}.\\1",pokemon.Name,oldmovename));
+							m.Message(Game._INTL("And...\\1"));
+							m.Message(Game._INTL("\\se[]{1} learned {2}!\\se[MoveLearnt]",pokemon.Name,newmovename));
 						}
 						else {
 							// Try to learn the new form's special move
-							if (Game.GameData is PokemonEssentials.Interface.Item.IGameItem i) i.pbLearnMove(pokemon,newmove,true);
+							if (Game.GameData is PokemonEssentials.Interface.Item.IGameItem i) i.LearnMove(pokemon,newmove,true);
 							//pokemon.LearnMove(newmove, out bool s);
 						}
 					}
@@ -488,10 +488,10 @@ namespace PokemonUnity.Monster
 					if (hasoldmove>=0) {
 						// Forget the old form's special move
 						string oldmovename=Game._INTL(pokemon.moves[hasoldmove].id.ToString(TextScripts.Name));
-						pokemon.pbDeleteMoveAtIndex(hasoldmove);
-						if (Game.GameData is PokemonEssentials.Interface.IGameMessage m) m.pbMessage(Game._INTL("{1} forgot {2}...",pokemon.Name,oldmovename));
+						pokemon.DeleteMoveAtIndex(hasoldmove);
+						if (Game.GameData is PokemonEssentials.Interface.IGameMessage m) m.Message(Game._INTL("{1} forgot {2}...",pokemon.Name,oldmovename));
 						if (pokemon.moves.Count(i => i.id!=0)==0) {
-							if (Game.GameData is PokemonEssentials.Interface.Item.IGameItem i) i.pbLearnMove(pokemon,Moves.THUNDER_SHOCK);
+							if (Game.GameData is PokemonEssentials.Interface.Item.IGameItem i) i.LearnMove(pokemon,Moves.THUNDER_SHOCK);
 							//pokemon.LearnMove(Moves.THUNDER_SHOCK, out bool s);
 						}
 					}
@@ -511,9 +511,9 @@ namespace PokemonUnity.Monster
 			}
 			else if (pokemon.Species == Pokemons.BURMY)
 			{
-				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
-				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
+				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand ||
@@ -527,9 +527,9 @@ namespace PokemonUnity.Monster
 			}
 			else if (pokemon.Species == Pokemons.WORMADAM)
 			{
-				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
-				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
+				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand || env==Environments.Rock ||
@@ -610,9 +610,9 @@ namespace PokemonUnity.Monster
 			}
 			else if (pokemon == Pokemons.BURMY)
 			{
-				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
-				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
+				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return Forms.BURMY_TRASH; //2; // Trash Cloak
 				} else if (env==Environments.Sand ||
@@ -626,9 +626,9 @@ namespace PokemonUnity.Monster
 			}
 			else if (pokemon == Pokemons.WORMADAM)
 			{
-				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.pbGetEnvironment() : Environments.None;
-				//if (!Game.GameData.pbGetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.pbGetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
+				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return Forms.WORMADAM_TRASH; //2; // Trash Cloak
 				} else if (env==Environments.Sand || env==Environments.Rock ||

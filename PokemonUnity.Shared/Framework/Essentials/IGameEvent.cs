@@ -36,7 +36,7 @@ namespace PokemonEssentials.Interface
 
 		//int id { get; }
 
-		void pbCheckEventTriggerAfterTurning();
+		void CheckEventTriggerAfterTurning();
 
 		bool tsOn(string c);
 

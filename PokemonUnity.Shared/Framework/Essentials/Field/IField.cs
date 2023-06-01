@@ -59,11 +59,11 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		public interface IGameField
 		{
-			IPokeBattle_Scene pbNewBattleScene();
+			IPokeBattle_Scene NewBattleScene();
 
-			IEnumerator pbSceneStandby(Action block = null);
+			IEnumerator SceneStandby(Action block = null);
 
-			void pbBattleAnimation(IAudioBGM bgm = null, int trainerid = -1, string trainername = "", Action block = null);
+			void BattleAnimation(IAudioBGM bgm = null, int trainerid = -1, string trainername = "", Action block = null);
 
 			/// <summary>
 			/// Override and use this method if you want to add a custom battle intro animation
@@ -79,37 +79,37 @@ namespace PokemonEssentials.Interface
 			/// <param name="trainerid"></param>
 			/// <param name="trainername"></param>
 			/// <returns></returns>
-			bool pbBattleAnimationOverride(IViewport viewport, int trainerid = -1, string trainername = "");
+			bool BattleAnimationOverride(IViewport viewport, int trainerid = -1, string trainername = "");
 
-			void pbPrepareBattle(IBattle battle);
+			void PrepareBattle(IBattle battle);
 
-			Environments pbGetEnvironment();
+			Environments GetEnvironment();
 
-			IPokemon pbGenerateWildPokemon(Pokemons species, int level, bool isroamer = false);
+			IPokemon GenerateWildPokemon(Pokemons species, int level, bool isroamer = false);
 
-			bool pbControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
+			bool ControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
 						PokemonUnity.Monster.Natures? nature = null, bool? gender = null, Items? item = null, bool? shiny = null,
 						int outcomeVar = 1, bool canRun = true, bool canLose = false);
 
-			PokemonUnity.Combat.BattleResults pbWildBattleCore(IPokemon pkmn, int? variable = null, bool canescape = true, bool canlose = false);
+			PokemonUnity.Combat.BattleResults WildBattleCore(IPokemon pkmn, int? variable = null, bool canescape = true, bool canlose = false);
 
-			PokemonUnity.Combat.BattleResults pbWildBattle(Pokemons species, int level, int? variable = null, bool canescape = true, bool canlose = false);
+			PokemonUnity.Combat.BattleResults WildBattle(Pokemons species, int level, int? variable = null, bool canescape = true, bool canlose = false);
 
-			PokemonUnity.Combat.BattleResults pbDoubleWildBattle(Pokemons species1, int level1, Pokemons species2, int level2, int? variable = null, bool canescape = true, bool canlose = false);
+			PokemonUnity.Combat.BattleResults DoubleWildBattle(Pokemons species1, int level1, Pokemons species2, int level2, int? variable = null, bool canescape = true, bool canlose = false);
 
-			void pbCheckAllFainted();
+			void CheckAllFainted();
 
-			void pbEvolutionCheck(int[] currentlevels);
+			void EvolutionCheck(int[] currentlevels);
 
-			Items[] pbDynamicItemList(params Items[] args);
+			Items[] DynamicItemList(params Items[] args);
 
 			/// <summary>
 			/// Runs the Pickup event after a battle if a Pokemon has the ability Pickup.
 			/// </summary>
 			/// <param name="pokemon"></param>
-			void pbPickup(IPokemon pokemon);
+			void Pickup(IPokemon pokemon);
 
-			bool pbEncounter(Method enctype);
+			bool Encounter(Method enctype);
 
 			event EventHandler OnStartBattle;
 			//Events.onStartBattle+=delegate(object sender, EventArgs e) {
@@ -126,15 +126,15 @@ namespace PokemonEssentials.Interface
 			//  canlose=e[1];
 			//  if (USENEWBATTLEMECHANICS || (decision!=2 && decision!=5)) {		// not a loss or a draw
 			//	if (Game.GameData.PokemonTemp.evolutionLevels) {
-			//	  pbEvolutionCheck(Game.GameData.PokemonTemp.evolutionLevels);
+			//	  EvolutionCheck(Game.GameData.PokemonTemp.evolutionLevels);
 			//	  Game.GameData.PokemonTemp.evolutionLevels=null;
 			//	}
 			//  }
 			//  if (decision==1) {
 			//	foreach (var pkmn in Game.GameData.Trainer.party) {
-			//	  Kernel.pbPickup(pkmn);
+			//	  Kernel.Pickup(pkmn);
 			//	  if (pkmn.ability == Abilities.HONEYGATHER && !pkmn.isEgg? && !pkmn.hasItem?) {
-			//		if (hasConst(PBItems,:HONEY)) {
+			//		if (hasConst(Items,:HONEY)) {
 			//		  chance = 5 + ((pkmn.level-1)/10).floor*5;
 			//		  if (Core.Rand.Next(100)<chance) pkmn.setItem(Items.HONEY);
 			//		}
@@ -144,70 +144,70 @@ namespace PokemonEssentials.Interface
 			//  if ((decision==2 || decision==5) && !canlose) {
 			//	Game.GameData.GameSystem.bgm_unpause;
 			//	Game.GameData.GameSystem.bgs_unpause;
-			//	Kernel.pbStartOver;
+			//	Kernel.StartOver;
 			//  }
 			//}
 
-			void pbOnSpritesetCreate(ISpritesetMap spriteset, IViewport viewport);
+			void OnSpritesetCreate(ISpritesetMap spriteset, IViewport viewport);
 
 			#region Field movement
-			bool pbLedge(float xOffset, float yOffset);
+			bool Ledge(float xOffset, float yOffset);
 
-			void pbSlideOnIce(IGamePlayer _event = null);
+			void SlideOnIce(IGamePlayer _event = null);
 
-			void pbBattleOnStepTaken();
+			void BattleOnStepTaken();
 
-			void pbOnStepTaken(bool eventTriggered);
+			void OnStepTaken(bool eventTriggered);
 
 			// This method causes a lot of lag when the game is encrypted
-			//ICharset pbGetPlayerCharset(meta, charset, trainer= null);
+			//ICharset GetPlayerCharset(meta, charset, trainer= null);
 
-			void pbUpdateVehicle();
+			void UpdateVehicle();
 
 			/// <summary>
 			/// </summary>
 			/// <param name="destination">Map location id</param>
-			void pbCancelVehicles(int? destination = null);
+			void CancelVehicles(int? destination = null);
 
-			bool pbCanUseBike(int mapid);
+			bool CanUseBike(int mapid);
 
-			void pbMountBike();
+			void MountBike();
 
-			void pbDismountBike();
+			void DismountBike();
 
-			void pbSetPokemonCenter();
+			void SetPokemonCenter();
 			#endregion
 
 			#region Fishing
-			void pbFishingBegin();
+			void FishingBegin();
 
-			void pbFishingEnd();
+			void FishingEnd();
 
-			bool pbFishing(bool hasencounter, int rodtype = 1);
+			bool Fishing(bool hasencounter, int rodtype = 1);
 
-			bool pbWaitForInput(IWindow msgwindow, string message, int frames);
+			bool WaitForInput(IWindow msgwindow, string message, int frames);
 
-			bool pbWaitMessage(IWindow msgwindow, int time);
+			bool WaitMessage(IWindow msgwindow, int time);
 			#endregion
 
 			#region Moving between maps
-			void pbStartOver(bool gameover = false);
+			void StartOver(bool gameover = false);
 
-			void pbCaveEntranceEx(bool exiting);
+			void CaveEntranceEx(bool exiting);
 
-			void pbCaveEntrance();
+			void CaveEntrance();
 
-			void pbCaveExit();
+			void CaveExit();
 
-			void pbSetEscapePoint();
+			void SetEscapePoint();
 
-			void pbEraseEscapePoint();
+			void EraseEscapePoint();
 			#endregion
 
 			#region Partner trainer
-			void pbRegisterPartner(TrainerTypes trainerid, string trainername, int partyid = 0);
+			void RegisterPartner(TrainerTypes trainerid, string trainername, int partyid = 0);
 
-			void pbDeregisterPartner();
+			void DeregisterPartner();
 			#endregion
 
 			#region Constant checks
@@ -216,79 +216,79 @@ namespace PokemonEssentials.Interface
 			/// healed Pokémon has it.
 			/// </summary>
 			/// <returns></returns>
-			bool pbPokerus();
+			bool Pokerus();
 			#endregion
 
-			//bool pbBatteryLow();
+			//bool BatteryLow();
 
 			#region Audio playing
-			void pbCueBGM(string bgm, float seconds, int? volume = null, float? pitch = null);
-			void pbCueBGM(IAudioBGM bgm, float seconds, int? volume = null, float? pitch = null);
+			void CueBGM(string bgm, float seconds, int? volume = null, float? pitch = null);
+			void CueBGM(IAudioBGM bgm, float seconds, int? volume = null, float? pitch = null);
 
-			void pbAutoplayOnTransition();
+			void AutoplayOnTransition();
 
-			void pbAutoplayOnSave();
+			void AutoplayOnSave();
 			#endregion
 
 			#region Voice recorder
 			/// <summary>
 			/// </summary>
 			/// BGM audio file?
-			IWaveData pbRecord(string text, float maxtime = 30.0f);
+			IWaveData Record(string text, float maxtime = 30.0f);
 
-			bool pbRxdataExists(string file);
+			bool RxdataExists(string file);
 			#endregion
 
 			#region Gaining items
-			bool pbItemBall(Items item, int quantity = 1);
+			bool ItemBall(Items item, int quantity = 1);
 
-			bool pbReceiveItem(Items item, int quantity = 1);
+			bool ReceiveItem(Items item, int quantity = 1);
 
-			void pbUseKeyItem();
+			void UseKeyItem();
 			#endregion
 
 			#region Bridges
-			void pbBridgeOn(float height = 2);
+			void BridgeOn(float height = 2);
 
-			void pbBridgeOff();
+			void BridgeOff();
 			#endregion
 
 			#region Event locations, terrain tags
-			bool pbEventFacesPlayer(IGameCharacter _event, IGamePlayer player, float distance);
+			bool EventFacesPlayer(IGameCharacter _event, IGamePlayer player, float distance);
 
-			bool pbEventCanReachPlayer(IGameCharacter _event, IGamePlayer player, float distance);
+			bool EventCanReachPlayer(IGameCharacter _event, IGamePlayer player, float distance);
 
-			ITilePosition pbFacingTileRegular(float? direction = null, IGameCharacter _event = null);
+			ITilePosition FacingTileRegular(float? direction = null, IGameCharacter _event = null);
 
-			ITilePosition pbFacingTile(float? direction = null, IGameCharacter _event = null);
+			ITilePosition FacingTile(float? direction = null, IGameCharacter _event = null);
 
-			bool pbFacingEachOther(IGameCharacter event1, IGameCharacter event2);
+			bool FacingEachOther(IGameCharacter event1, IGameCharacter event2);
 
-			Terrains pbGetTerrainTag(IGameCharacter _event = null, bool countBridge = false);
+			Terrains GetTerrainTag(IGameCharacter _event = null, bool countBridge = false);
 
-			Terrains? pbFacingTerrainTag(IGameCharacter _event = null, float? dir = null);
+			Terrains? FacingTerrainTag(IGameCharacter _event = null, float? dir = null);
 			#endregion
 
 			#region Event movement
-			void pbTurnTowardEvent(IGameCharacter _event, IGameCharacter otherEvent);
+			void TurnTowardEvent(IGameCharacter _event, IGameCharacter otherEvent);
 
-			void pbMoveTowardPlayer(IGameCharacter _event);
+			void MoveTowardPlayer(IGameCharacter _event);
 
-			bool pbJumpToward(int dist = 1, bool playSound = false, bool cancelSurf = false);
+			bool JumpToward(int dist = 1, bool playSound = false, bool cancelSurf = false);
 
-			void pbWait(int numframes);
+			void Wait(int numframes);
 			#endregion
 
-			//IMoveRoute pbMoveRoute(IEntity _event, string[] commands, bool waitComplete= false);
+			//IMoveRoute MoveRoute(IEntity _event, string[] commands, bool waitComplete= false);
 
 			#region Screen effects
-			void pbToneChangeAll(ITone tone, float duration);
+			void ToneChangeAll(ITone tone, float duration);
 
-			void pbShake(int power, int speed, int frames);
+			void Shake(int power, int speed, int frames);
 
-			void pbFlash(IColor color, int frames);
+			void Flash(IColor color, int frames);
 
-			void pbScrollMap(int direction, int distance, float speed);
+			void ScrollMap(int direction, int distance, float speed);
 			#endregion
 		}
 
@@ -389,21 +389,21 @@ namespace PokemonEssentials.Interface
 			/// Used in boulder events. Allows an event to be pushed. To be used in
 			/// a script event command.
 			/// </summary>
-			void pbPushThisEvent();
+			void PushThisEvent();
 
-			void pbPushThisBoulder();
+			void PushThisBoulder();
 
-			void pbHeadbutt();
+			void Headbutt();
 
-			void pbTrainerIntro(TrainerTypes symbol);
+			void TrainerIntro(TrainerTypes symbol);
 
-			void pbTrainerEnd();
+			void TrainerEnd();
 
-			object pbParams { get; }
+			object Params { get; }
 
-			void pbGetPokemon(Pokemons id);
+			void GetPokemon(Pokemons id);
 
-			void pbSetEventTime(params int[] arg);
+			void SetEventTime(params int[] arg);
 
 			object getVariable(params int[] arg);
 

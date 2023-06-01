@@ -102,19 +102,19 @@ namespace PokemonEssentials.Interface.Screen
 		//string[] TextFrames;
 		//string[][] VersionStyles;
 
-		int pbSettingToTextSpeed(int speed);
+		int SettingToTextSpeed(int speed);
 	}
 
 	//public interface IMessageConfig {
-	//	public static IBitmap pbDefaultSystemFrame();
+	//	public static IBitmap DefaultSystemFrame();
 	//
-	//	public static IBitmap pbDefaultSpeechFrame();
+	//	public static IBitmap DefaultSpeechFrame();
 	//
-	//	public static string pbDefaultSystemFontName();
+	//	public static string DefaultSystemFontName();
 	//
-	//	public static int pbDefaultTextSpeed();
+	//	public static int DefaultTextSpeed();
 	//
-	//	public int pbGetSystemTextSpeed();
+	//	public int GetSystemTextSpeed();
 	//}
 
 	public interface IPokemonSystemOption {
@@ -137,16 +137,16 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	public interface IOptionScene : IScene {
-		void pbUpdate();
-		void pbStartScene(bool inloadscreen = false);
-		object pbAddOnOptions(object options);
-		void pbOptions();
-		void pbEndScene();
+		void Update();
+		void StartScene(bool inloadscreen = false);
+		object AddOnOptions(object options);
+		void Options();
+		void EndScene();
 	}
 
 	public interface IOptionScreen : IScreen {
 		IOptionScreen initialize(IOptionScene scene);
-		void pbStartScreen(bool inloadscreen = false);
+		void StartScreen(bool inloadscreen = false);
 	}
 
 	public interface IOptionValue

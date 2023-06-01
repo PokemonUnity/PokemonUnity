@@ -101,56 +101,56 @@ namespace PokemonEssentials.Interface.Screen
 		void endRecord(string path);
 		IAudioObject getWaveDataUI(string path, bool n);
 
-		IAudioObject pbGetWildBattleBGM(Pokemons species);
-		IAudioObject pbGetTrainerBattleBGM(Trainer[] trainer);
-		IAudioObject pbGetTrainerBattleBGM(TrainerData[] trainer);
+		IAudioObject GetWildBattleBGM(Pokemons species);
+		IAudioObject GetTrainerBattleBGM(Trainer[] trainer);
+		IAudioObject GetTrainerBattleBGM(TrainerData[] trainer);
 
-		void pbBGMFade(float duration);
-		void pbBGSFade(float duration);
-		void pbFadeOutIn(int value, Action action);
-		void pbFadeOutInWithMusic(int value, Action action);
-		void pbCueBGM(IAudioObject bgm, float value);
-		void pbCueBGM(string bgm, float value, float vol, float pitch);
+		void BGMFade(float duration);
+		void BGSFade(float duration);
+		void FadeOutIn(int value, Action action);
+		void FadeOutInWithMusic(int value, Action action);
+		void CueBGM(IAudioObject bgm, float value);
+		void CueBGM(string bgm, float value, float vol, float pitch);
 		float Audio_bgm_get_volume();
 		void Audio_bgm_set_volume(float n);
 		void me_stop();
-		void pbSEStop();
-		void pbPlayDecisionSE();
-		void pbPlayBuzzerSE();
-		void pbSEPlay(string name);
-		void pbBGMPlay(IAudioObject name);
-		void pbBGMPlay(string name, float vol, float pitch);
-		void pbBGSPlay(IAudioObject name);
-		void pbMEPlay(string name);
-		void pbPlayTrainerIntroME(TrainerTypes trainertype);
+		void SEStop();
+		void PlayDecisionSE();
+		void PlayBuzzerSE();
+		void SEPlay(string name);
+		void BGMPlay(IAudioObject name);
+		void BGMPlay(string name, float vol, float pitch);
+		void BGSPlay(IAudioObject name);
+		void MEPlay(string name);
+		void PlayTrainerIntroME(TrainerTypes trainertype);
 
-		IWindow pbCreateMessageWindow();
-		IEnumerator pbMessageDisplay(IWindow display, string msg, bool value = true);
-		void pbDisposeMessageWindow(IWindow display);
+		IWindow CreateMessageWindow();
+		IEnumerator MessageDisplay(IWindow display, string msg, bool value = true);
+		void DisposeMessageWindow(IWindow display);
 
-		void pbMessage(string message);
-		bool pbConfirmMessage(string message);
-		//int pbMessageChooseNumber(string message, ChooseNumberParams arg);
+		void Message(string message);
+		bool ConfirmMessage(string message);
+		//int MessageChooseNumber(string message, ChooseNumberParams arg);
 
-		bool pbResolveBitmap(string path);
-		bool pbIsFaded { get; }
+		bool ResolveBitmap(string path);
+		bool IsFaded { get; }
 
-		void pbUpdateSceneMap();
-		void pbSceneStandby(Action action);
-		IPokeBattle_Scene pbNewBattleScene();
-		void pbBattleAnimation(IAudioObject bgm, Action action);
-		void pbBattleAnimation(IAudioObject bgm, TrainerTypes trainer, string name, Action action);
+		void UpdateSceneMap();
+		void SceneStandby(Action action);
+		IPokeBattle_Scene NewBattleScene();
+		void BattleAnimation(IAudioObject bgm, Action action);
+		void BattleAnimation(IAudioObject bgm, TrainerTypes trainer, string name, Action action);
 
 		#region TextEntry
-		string pbEnterText(string helptext, int minlength, int maxlength, string initialText = "", int mode = 0, Monster.Pokemon pokemon = null, bool nofadeout = false);
+		string EnterText(string helptext, int minlength, int maxlength, string initialText = "", int mode = 0, Monster.Pokemon pokemon = null, bool nofadeout = false);
 
-		string pbEnterPlayerName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
+		string EnterPlayerName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
 
-		string pbEnterPokemonName(string helptext, int minlength, int maxlength, string initialText = "", Monster.Pokemon pokemon = null, bool nofadeout = false);
+		string EnterPokemonName(string helptext, int minlength, int maxlength, string initialText = "", Monster.Pokemon pokemon = null, bool nofadeout = false);
 
-		string pbEnterBoxName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
+		string EnterBoxName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
 
-		string pbEnterNPCName(string helptext, int minlength, int maxlength, string initialText = "", int id = 0, bool nofadeout = false);
+		string EnterNPCName(string helptext, int minlength, int maxlength, string initialText = "", int id = 0, bool nofadeout = false);
 		#endregion
 
 		#region Replace Static Graphic

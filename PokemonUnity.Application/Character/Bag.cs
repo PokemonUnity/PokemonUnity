@@ -21,8 +21,8 @@ namespace PokemonUnity.Character
 	/// it was a {get;} only, that returned an iqueryable
 	/// ToDo: remove static <see cref="GameVariables.Bag_Items"/>
 	/// so trainerbag can load multiple players (for netplay)
-	[System.Obsolete("Something i plan to transition to; not yet ready for full integration")]
-	/*public class Bag : PokemonEssentials.Interface.Screen.IBag
+	/*[System.Obsolete("Something i plan to transition to; not yet ready for full integration")]
+	public class Bag : PokemonEssentials.Interface.Screen.IBag
 	{
 		#region Variables
 		private List<Items> items { get; set; }
@@ -368,7 +368,7 @@ namespace PokemonUnity.Character
 				Message = Game.GameData.Player.Name + " stored it in the~" + Kernal.ItemData[item].Pocket.ToString() + " pocket.";
 			else
 				Message = Game.GameData.Player.Name + " stored them~in the " + Kernal.ItemData[item].Pocket.ToString() + " pocket.";
-			//scene.pbDisplayMessage(Message);
+			//scene.DisplayMessage(Message);
 		}
 
 		public enum Order
@@ -393,7 +393,7 @@ namespace PokemonUnity.Character
 		private Dictionary<ItemPockets, int> choices;
 
 		public string[] pocketNames { get {
-		  return null; //Game.GameData.pbPocketNames();
+		  return null; //Game.GameData.PocketNames();
 		} }
 		//public ItemPockets pockets { get {
 		//  rearrange();
@@ -429,7 +429,7 @@ namespace PokemonUnity.Character
 				int nump=numPockets;
 				for (int i = 0; i < @pockets.Length; i++) {
 					foreach (Items item in @pockets[i]) {
-						//ItemPockets p=pbGetPocket(item[0]);
+						//ItemPockets p=GetPocket(item[0]);
 						ItemPockets p=Kernal.ItemData[item].Pocket??ItemPockets.MISC;
 						if ((int)p<=nump) newpockets[(int)p].Add(item);
 					}
@@ -484,9 +484,9 @@ namespace PokemonUnity.Character
 		/// Can be retrieved with <see cref="Game.GameData.Bag.registeredItem"/>
 		/// </summary>
 		/// <param name="item"></param>
-		public void pbRegisterKeyItem(Items item) {
+		public void RegisterKeyItem(Items item) {
 			//if (item is String || item is Symbol) {
-			//  item=getID(PBItems,item);
+			//  item=getID(Items,item);
 			//}
 			//if (item == null || item<1) {
 			//  //throw new Exception(Game._INTL("The item number is invalid."));
@@ -501,105 +501,105 @@ namespace PokemonUnity.Character
 			return maxsize.Value;
 		}
 
-		public int pbQuantity(Items item) {
+		public int Quantity(Items item) {
 			//if (item is String || item is Symbol) {
-			//  item=getID(PBItems,item);
+			//  item=getID(Items,item);
 			//}
 			//if (item == null || item<1) {
 			//  //throw new Exception(Game._INTL("The item number is invalid."));
 			//  return 0;
 			//}
-			//ItemPockets pocket=pbGetPocket(item);
+			//ItemPockets pocket=GetPocket(item);
 			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[(int)pocket].Length;
-			return ItemStorageHelper.pbQuantity(@pockets[pocket],maxsize,item);
+			return ItemStorageHelper.Quantity(@pockets[pocket],maxsize,item);
 		}
 
-		public bool pbHasItem (Items item) {
-			return pbQuantity(item)>0;
+		public bool HasItem (Items item) {
+			return Quantity(item)>0;
 		}
 
-		public bool pbDeleteItem(Items item,int qty=1) {
+		public bool DeleteItem(Items item,int qty=1) {
 			//if (item is String || item is Symbol) {
-			//  item=getID(PBItems,item);
+			//  item=getID(Items,item);
 			//}
 			//if (item == null || item<1) {
 			//  //throw new Exception(Game._INTL("The item number is invalid."));
 			//  return false;
 			//}
-			//ItemPockets pocket=pbGetPocket(item);
+			//ItemPockets pocket=GetPocket(item);
 			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length;
-			bool ret=ItemStorageHelper.pbDeleteItem(ref @pockets[pocket],maxsize,item,qty);
+			bool ret=ItemStorageHelper.DeleteItem(ref @pockets[pocket],maxsize,item,qty);
 			if (ret) {
-				if (@registeredItem==item && !pbHasItem(item)) @registeredItem=0;
+				if (@registeredItem==item && !HasItem(item)) @registeredItem=0;
 			}
 			return ret;
 		}
 
-		public bool pbCanStore (Items item,int qty=1) {
+		public bool CanStore (Items item,int qty=1) {
 			//if (item is String || item is Symbol) {
-			//  item=getID(PBItems,item);
+			//  item=getID(Items,item);
 			//}
 			//if (!item || item<1) {
 			//  //throw new Exception(Game._INTL("The item number is invalid."));
 			//  return false;
 			//}
-			//ItemPockets pocket=pbGetPocket(item);
+			//ItemPockets pocket=GetPocket(item);
 			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length+1;
-			return ItemStorageHelper.pbCanStore(
+			return ItemStorageHelper.CanStore(
 				@pockets[pocket],maxsize,Core.BAGMAXPERSLOT,item,qty);
 		}
 
-		public bool pbStoreAllOrNone(Items item,int qty=1) {
+		public bool StoreAllOrNone(Items item,int qty=1) {
 			//if (item is String || item is Symbol) {
-			//  item=getID(PBItems,item);
+			//  item=getID(Items,item);
 			//}
 			//if (item == null || item<1) {
 			//  //throw new Exception(Game._INTL("The item number is invalid."));
 			//  return false;
 			//}
-			//ItemPockets pocket=pbGetPocket(item);
+			//ItemPockets pocket=GetPocket(item);
 			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length+1;
-			return ItemStorageHelper.pbStoreItem(ref
+			return ItemStorageHelper.StoreItem(ref
 				@pockets[pocket],maxsize,Core.BAGMAXPERSLOT,item,qty);
 		}
 
-		public bool pbStoreItem(Items item,int qty=1) {
+		public bool StoreItem(Items item,int qty=1) {
 			//if (item is String || item is Symbol) {
-			//  item=getID(PBItems,item);
+			//  item=getID(Items,item);
 			//}
 			//if (item == null || item<1) {
 			//  //throw new Exception(Game._INTL("The item number is invalid."));
 			//  return false;
 			//}
-			//ItemPockets pocket=pbGetPocket(item);
+			//ItemPockets pocket=GetPocket(item);
 			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length+1;
-			return ItemStorageHelper.pbStoreItem(ref
+			return ItemStorageHelper.StoreItem(ref
 				@pockets[pocket],maxsize,Core.BAGMAXPERSLOT,item,qty,true);
 		}
 
-		public bool pbChangeItem(Items olditem,Items newitem) {
+		public bool ChangeItem(Items olditem,Items newitem) {
 			//if (olditem is String || olditem is Symbol) {
-			//  olditem=getID(PBItems,olditem);
+			//  olditem=getID(Items,olditem);
 			//}
 			//if (newitem is String || newitem is Symbol) {
-			//  newitem=getID(PBItems,newitem);
+			//  newitem=getID(Items,newitem);
 			//}
 			//if (olditem == null || olditem<1 || newitem == null || newitem<1) {
 			if ((int)olditem<1 || (int)newitem<1) {
 				//throw new Exception(Game._INTL("The item number is invalid."));
 				return false;
 			}
-			//ItemPockets pocket=pbGetPocket(olditem);
+			//ItemPockets pocket=GetPocket(olditem);
 			int pocket=(int)(Kernal.ItemData[olditem].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length;

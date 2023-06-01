@@ -20,27 +20,27 @@ namespace PokemonEssentials.Interface.Field
 
 	public interface IGameDependantEvents
 	{
-		void pbRemoveDependencies();
+		void RemoveDependencies();
 
-		void pbAddDependency(IGameEvent @event);
+		void AddDependency(IGameEvent @event);
 
-		void pbRemoveDependency(IGameEvent @event);
+		void RemoveDependency(IGameEvent @event);
 
-		void pbAddDependency2(int eventID, string eventName, object commonEvent);
+		void AddDependency2(int eventID, string eventName, object commonEvent);
 
 		/// <summary>
 		/// Gets the Game_Character object associated with a dependent event.
 		/// </summary>
 		/// <param name="eventName"></param>
-		//void pbGetDependency(string eventName) {
+		//void GetDependency(string eventName) {
 		//  return Game.GameData.PokemonTemp.dependentEvents.getEventByName(eventName);
 		//}
 
-		void pbRemoveDependency2(string eventName);
+		void RemoveDependency2(string eventName);
 
 
 
-		bool pbTestPass(IGameCharacter follower, float x, float y, int? direction = null);
+		bool TestPass(IGameCharacter follower, float x, float y, int? direction = null);
 
 		/// <summary>
 		/// Same map only
@@ -63,7 +63,7 @@ namespace PokemonEssentials.Interface.Field
 		/// <param name="direction"></param>
 		void jumpFancy(IGameCharacter follower, int direction);
 
-		void pbFancyMoveTo(IGameCharacter follower, float newX, float newY);
+		void FancyMoveTo(IGameCharacter follower, float newX, float newY);
 
 		/// <summary>
 		/// Fires whenever a spriteset is created.
@@ -87,7 +87,7 @@ namespace PokemonEssentials.Interface.Field
 		//   scene=e[0];
 		//   mapChanged=e[1];
 		//   if (mapChanged) {
-		//	 Game.GameData.PokemonTemp.dependentEvents.pbMapChangeMoveDependentEvents;
+		//	 Game.GameData.PokemonTemp.dependentEvents.MapChangeMoveDependentEvents;
 		//   }}
 	}
 
@@ -116,17 +116,17 @@ namespace PokemonEssentials.Interface.Field
 
 		IDependentEvents initialize();
 
-		int pbEnsureEvent(IGameEvent @event, int newMapID);
+		int EnsureEvent(IGameEvent @event, int newMapID);
 
-		void pbFollowEventAcrossMaps(IGameCharacter leader, IGameCharacter follower, bool instant = false, bool leaderIsTrueLeader = true);
+		void FollowEventAcrossMaps(IGameCharacter leader, IGameCharacter follower, bool instant = false, bool leaderIsTrueLeader = true);
 
 		void debugEcho();
 
-		void pbMapChangeMoveDependentEvents();
+		void MapChangeMoveDependentEvents();
 
-		void pbMoveDependentEvents();
+		void MoveDependentEvents();
 
-		void pbTurnDependentEvents();
+		void TurnDependentEvents();
 
 		//ToDo: Review Return Datatypes
 		IEnumerator<KeyValuePair<IGameEvent, IGameEvent>> eachEvent();

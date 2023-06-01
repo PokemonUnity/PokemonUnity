@@ -44,7 +44,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <returns></returns>
 		/// The object generated is a subclass of this one which depends on the move's
 		/// function code (found in the script section PokeBattle_MoveEffect).
-		IBattleMove pbFromPBMove(IBattle battle, IMove move);
+		IBattleMove FromMove(IBattle battle, IMove move);
 		#endregion
 
 		#region About the move
@@ -53,31 +53,31 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		int ToInt();
 
-		Types pbModifyType(Types type, IBattler attacker, IBattler opponent);
+		Types ModifyType(Types type, IBattler attacker, IBattler opponent);
 
-		Types pbType(Types type, IBattler attacker, IBattler opponent);
+		Types GetType(Types type, IBattler attacker, IBattler opponent);
 
-		bool pbIsPhysical(Types type);
+		bool IsPhysical(Types type);
 
-		bool pbIsSpecial(Types type);
+		bool IsSpecial(Types type);
 
-		bool pbIsStatus { get; }
+		bool IsStatus { get; }
 
-		bool pbIsDamaging();
+		bool IsDamaging();
 
-		bool pbTargetsMultiple(IBattler attacker);
+		bool TargetsMultiple(IBattler attacker);
 
-		int pbPriority(IBattler attacker);
+		int GetPriority(IBattler attacker);
 
-		int pbNumHits(IBattler attacker);
+		int NumHits(IBattler attacker);
 
-		bool pbIsMultiHit();
+		bool IsMultiHit();
 
-		bool pbTwoTurnAttack(IBattler attacker);
+		bool TwoTurnAttack(IBattler attacker);
 
-		void pbAdditionalEffect(IBattler attacker, IBattler opponent);
+		void AdditionalEffect(IBattler attacker, IBattler opponent);
 
-		bool pbCanUseWhileAsleep();
+		bool CanUseWhileAsleep();
 
 		bool isHealingMove();
 
@@ -121,57 +121,57 @@ namespace PokemonEssentials.Interface.PokeBattle
 		#endregion
 
 		#region This move's type effectiveness
-		bool pbTypeImmunityByAbility(Types type, IBattler attacker, IBattler opponent);
+		bool TypeImmunityByAbility(Types type, IBattler attacker, IBattler opponent);
 
-		float pbTypeModifier(Types type, IBattler attacker, IBattler opponent);
+		float TypeModifier(Types type, IBattler attacker, IBattler opponent);
 
-		double pbTypeModMessages(Types type, IBattler attacker, IBattler opponent);
+		double TypeModMessages(Types type, IBattler attacker, IBattler opponent);
 		#endregion
 
 		#region This move's accuracy check
-		int pbModifyBaseAccuracy(int baseaccuracy, IBattler attacker, IBattler opponent);
+		int ModifyBaseAccuracy(int baseaccuracy, IBattler attacker, IBattler opponent);
 
-		bool pbAccuracyCheck(IBattler attacker, IBattler opponent);
+		bool AccuracyCheck(IBattler attacker, IBattler opponent);
 		#endregion
 
 		#region Damage calculation and modifiers
-		bool pbCritialOverride(IBattler attacker, IBattler opponent);
+		bool CritialOverride(IBattler attacker, IBattler opponent);
 
-		bool pbIsCritical(IBattler attacker, IBattler opponent);
+		bool IsCritical(IBattler attacker, IBattler opponent);
 
-		int pbBaseDamage(int basedmg, IBattler attacker, IBattler opponent);
+		int BaseDamage(int basedmg, IBattler attacker, IBattler opponent);
 
-		double pbBaseDamageMultiplier(double damagemult, IBattler attacker, IBattler opponent);
+		double BaseDamageMultiplier(double damagemult, IBattler attacker, IBattler opponent);
 
-		double pbModifyDamage(double damagemult, IBattler attacker, IBattler opponent);
+		double ModifyDamage(double damagemult, IBattler attacker, IBattler opponent);
 
-		int pbCalcDamage(IBattler attacker, IBattler opponent, params byte[] options); //= new int[] { 0 }
+		int CalcDamage(IBattler attacker, IBattler opponent, params byte[] options); //= new int[] { 0 }
 
-		int pbReduceHPDamage(int damage, IBattler attacker, IBattler opponent);
+		int ReduceHPDamage(int damage, IBattler attacker, IBattler opponent);
 		#endregion
 
 		#region Effects
-		void pbEffectMessages(IBattler attacker, IBattler opponent, bool ignoretype = false, int[] alltargets = null);
+		void EffectMessages(IBattler attacker, IBattler opponent, bool ignoretype = false, int[] alltargets = null);
 
-		int pbEffectFixedDamage(int damage, IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
+		int EffectFixedDamage(int damage, IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
 
-		int pbEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
+		int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
 
-		void pbEffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects);
+		void EffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects);
 		#endregion
 
 		#region Using the move
-		bool pbOnStartUse(IBattler attacker);
+		bool OnStartUse(IBattler attacker);
 
-		void pbAddTarget(IList<IBattler> targets, IBattler attacker);
+		void AddTarget(IList<IBattler> targets, IBattler attacker);
 
-		int pbDisplayUseMessage(IBattler attacker);
+		int DisplayUseMessage(IBattler attacker);
 
-		void pbShowAnimation(Moves id, IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
+		void ShowAnimation(Moves id, IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true);
 
-		void pbOnDamageLost(int damage, IBattler attacker, IBattler opponent);
+		void OnDamageLost(int damage, IBattler attacker, IBattler opponent);
 
-		bool pbMoveFailed(IBattler attacker, IBattler opponent);
+		bool MoveFailed(IBattler attacker, IBattler opponent);
 		#endregion
 	}
 }

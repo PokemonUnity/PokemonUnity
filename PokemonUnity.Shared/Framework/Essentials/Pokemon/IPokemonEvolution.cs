@@ -15,7 +15,7 @@ using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface
 {
-	//	public static partial class PBEvolution {
+	//	public static partial class Evolution {
 	//  Unknown           = 0; // Do not use
 	//  Happiness         = 1;
 	//  HappinessDay      = 2;
@@ -88,24 +88,24 @@ namespace PokemonEssentials.Interface
 		// ===============================================================================
 		// Evolution helper functions
 		// ===============================================================================
-		PokemonUnity.Monster.Data.PokemonEvolution[] pbGetEvolvedFormData(Pokemons species);
+		PokemonUnity.Monster.Data.PokemonEvolution[] GetEvolvedFormData(Pokemons species);
 
 		//Loops through each pokemon in db with evolution, 
 		//every 5 pokemons, log in debug output pokemon evolution
-		void pbEvoDebug();
+		void EvoDebug();
 
-		Pokemons pbGetPreviousForm(Pokemons species);
+		Pokemons GetPreviousForm(Pokemons species);
 
-		int pbGetMinimumLevel(Pokemons species);
+		int GetMinimumLevel(Pokemons species);
 
-		Pokemons pbGetBabySpecies(Pokemons species, Items item1 = Items.NONE, Items item2 = Items.NONE);
+		Pokemons GetBabySpecies(Pokemons species, Items item1 = Items.NONE, Items item2 = Items.NONE);
 
 		// ===============================================================================
 		// Evolution methods
 		// ===============================================================================
-		Pokemons pbMiniCheckEvolution(IPokemon pokemon, EvolutionMethod evonib, int level, Pokemons poke);
+		Pokemons MiniCheckEvolution(IPokemon pokemon, EvolutionMethod evonib, int level, Pokemons poke);
 
-		Pokemons pbMiniCheckEvolutionItem(IPokemon pokemon, EvolutionMethod evonib, Items level, Pokemons poke, Items item);
+		Pokemons MiniCheckEvolutionItem(IPokemon pokemon, EvolutionMethod evonib, Items level, Pokemons poke, Items item);
 
 		/// <summary>
 		/// Checks whether a Pokemon can evolve now. If a block is given, calls the block
@@ -113,7 +113,7 @@ namespace PokemonEssentials.Interface
 		/// Pokemon to check; evolution type; level or other parameter; ID of the new Pokemon species
 		/// </summary>
 		/// <param name="pokemon"></param>
-		Pokemons pbCheckEvolutionEx(IPokemon pokemon);
+		Pokemons CheckEvolutionEx(IPokemon pokemon);
 
 		/// <summary>
 		/// Checks whether a Pokemon can evolve now. If an item is used on the Pokémon,
@@ -121,12 +121,12 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <param name="item"></param>
-		Pokemons[] pbCheckEvolution(IPokemon pokemon, Items item = 0);
+		Pokemons[] CheckEvolution(IPokemon pokemon, Items item = 0);
 
 		// ===============================================================================
 		// Evolution animation
 		// ===============================================================================
-		/*public void pbSaveSpriteState(ISprite sprite) {
+		/*public void SaveSpriteState(ISprite sprite) {
 		  state=[];
 		  if (!sprite || sprite.disposed?) return state;
 		  state[SpriteMetafile.BITMAP]     = sprite.x;
@@ -149,7 +149,7 @@ namespace PokemonEssentials.Interface
 		  return state;
 		}
 
-		public void pbRestoreSpriteState(ISprite sprite,state) {
+		public void RestoreSpriteState(ISprite sprite,state) {
 		  if (!state || !sprite || sprite.disposed?) return;
 		  sprite.x          = state[SpriteMetafile.X];
 		  sprite.y          = state[SpriteMetafile.Y];
@@ -169,17 +169,17 @@ namespace PokemonEssentials.Interface
 		  sprite.tone       = state[SpriteMetafile.TONE];
 		}
 
-		public void pbSaveSpriteStateAndBitmap(sprite) {
+		public void SaveSpriteStateAndBitmap(sprite) {
 		  if (!sprite || sprite.disposed?) return [];
-		  state=pbSaveSpriteState(sprite);
+		  state=SaveSpriteState(sprite);
 		  state[SpriteMetafile.eITMAP]=sprite.bitmap;
 		  return state;
 		}
 
-		public void pbRestoreSpriteStateAndBitmap(sprite,state) {
+		public void RestoreSpriteStateAndBitmap(sprite,state) {
 		  if (!state || !sprite || sprite.disposed?) return;
 		  sprite.bitmap=state[SpriteMetafile.eITMAP];
-		  pbRestoreSpriteState(sprite,state);
+		  RestoreSpriteState(sprite,state);
 		  return state;
 		}*/
 	}

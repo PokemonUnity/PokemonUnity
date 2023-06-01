@@ -43,7 +43,7 @@ namespace PokemonUnity.Inventory
 
 		public Mail(Items letter)
 		{
-			Background = Kernal.ItemData[letter].IsLetter ? letter : Items.NONE;
+			Background = ItemData.IsLetter(letter) ? letter : Items.NONE;
 		}
 
 		/// <summary>

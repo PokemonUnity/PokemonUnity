@@ -126,7 +126,7 @@ namespace PokemonUnity.Monster
 		/// </remarks>
 		public int Happiness { get; private set; }
 		/// <summary>
-		/// Status problem (PBStatuses)
+		/// Status problem (Statuses)
 		/// </summary>
 		public Status Status { get; set; }
 		/// <summary>
@@ -171,7 +171,7 @@ namespace PokemonUnity.Monster
 		}
 		private int eggSteps;
 		/// <summary>
-		/// Moves (PBMove)
+		/// Moves (Move)
 		/// </summary>
 		public IMove[] moves { get; private set; }
 		/// <summary>
@@ -523,7 +523,7 @@ namespace PokemonUnity.Monster
 			EggSteps = eggSteps;
 
 			this.ballUsed = ballUsed;
-			if (Kernal.ItemData[item].IsLetter)
+			if (ItemData.IsLetter(item))
 			{
 				this.mail = new Inventory.Mail((Items)item);
 				this.mail.message = mail;
@@ -744,7 +744,7 @@ namespace PokemonUnity.Monster
 				this.ballUsed = ball;
 			else this.ballUsed = Items.POKE_BALL;
 
-			pbRecordFirstMoves();
+			RecordFirstMoves();
 			return this;
 		}
 		#endregion
@@ -1115,10 +1115,10 @@ namespace PokemonUnity.Monster
 		//	if(scene != null)
 		//	{
 		//		calcStats(); //Refresh HP
-		//		scene.pbRefresh();
+		//		scene.Refresh();
 		//		//ToDo: sort out issues here
-		//		Game.GameData.pbDisplayPaused(Game._INTL("{1} evolved to {2}!", Name, Game._INTL(Species.ToString(TextScripts.Name))));
-		//		scene.pbLevelUp(this, null,//battler,
+		//		Game.GameData.DisplayPaused(Game._INTL("{1} evolved to {2}!", Name, Game._INTL(Species.ToString(TextScripts.Name))));
+		//		scene.LevelUp(this, null,//battler,
 		//			oldtotalhp, oldattack, olddefense, oldspeed, oldspatk, oldspdef);
 		//	}
 		//}
@@ -1186,8 +1186,8 @@ namespace PokemonUnity.Monster
 		/// <param name="value"></param>
 		public void setGender(bool value)
 		{
-			//dexdata = pbOpenDexData;
-			//pbDexDataOffset(dexdata, @species, 18);
+			//dexdata = OpenDexData;
+			//DexDataOffset(dexdata, @species, 18);
 			//genderbyte = dexdata.fgetb;
 			//dexdata.close();
 			//if (genderbyte != 255 && genderbyte != 0 && genderbyte != 254)
@@ -1691,7 +1691,7 @@ namespace PokemonUnity.Monster
 					}
 					break;
 			}
-			pbRecordFirstMoves();
+			RecordFirstMoves();
 		}
 
 		/// <summary>
@@ -1774,11 +1774,11 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="move"></param>
 		/// <returns></returns>
-		public void pbLearnMove(Moves move)
+		public void LearnMove(Moves move)
 		{
 			//if (move is String || move is Symbol)
 			//{
-			//	move = getID(PBMoves, move);
+			//	move = getID(Moves, move);
 			//}
 			if (move <= 0) return;
 			for (int i = 0; i < 4; i++)
@@ -1905,7 +1905,7 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// Copies currently known moves into a separate array, for Move Relearner.
 		/// </summary>
-		public void pbRecordFirstMoves()
+		public void RecordFirstMoves()
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -1932,7 +1932,7 @@ namespace PokemonUnity.Monster
 
 		public bool isCompatibleWithMove(Moves move)
 		{
-			//return pbSpeciesCompatible(this.Species, move);
+			//return SpeciesCompatible(this.Species, move);
 			return getMoveList().Contains(move);
 		}
 		#endregion
@@ -2097,7 +2097,7 @@ namespace PokemonUnity.Monster
 			if (!Kernal.PokemonItemsData.ContainsKey(pokemons)) return new Items[0];
 			//_base.HeldItem
 			PokemonWildItems[] dexdata = Kernal.PokemonItemsData[pokemons];
-			//pbDexDataOffset(dexdata, @species, 48);
+			//DexDataOffset(dexdata, @species, 48);
 			Items itemcommon	= Items.NONE; //dexdata.fgetw;
 			Items itemuncommon	= Items.NONE; //dexdata.fgetw;
 			Items itemrare		= Items.NONE; //dexdata.fgetw;
@@ -2149,7 +2149,7 @@ namespace PokemonUnity.Monster
 		{
 			get
 			{
-				if (this.mail == null || !Kernal.ItemData[this.Item].IsLetter) return null; //If empty return null
+				if (this.mail == null || !ItemData.IsLetter(this.Item)) return null; //If empty return null
 				//if (mail.Message.Length == 0 || this.Inventory == 0)//|| this.item.Category != Items.Category.Mail )
 				//{
 				//    //mail = null;
@@ -2159,7 +2159,7 @@ namespace PokemonUnity.Monster
 			}
 			//set { mail = value; }
 		}
-		/*public bool pbMoveToMailbox()
+		/*public bool MoveToMailbox()
 		{
 			//if (PC.MailBox == null) PC.MailBox = [];
 			if (PC.MailBox.Length>=10) return false;
@@ -2170,7 +2170,7 @@ namespace PokemonUnity.Monster
 			return true;
 		}
 
-		public void pbStoreMail(string message, TrainerId sender)//pkmn, item, message, poke1= nil, poke2= nil, poke3= nil)
+		public void StoreMail(string message, TrainerId sender)//pkmn, item, message, poke1= nil, poke2= nil, poke3= nil)
 		{
 			//raise Game._INTL("Pokémon already has mail") if pkmn.mail
 			if (Mail == null) GameDebug.LogError("Pokémon already has mail");
@@ -2178,97 +2178,97 @@ namespace PokemonUnity.Monster
 			mail = new Mail(Item, message, sender);
 		}
 
-		public void pbTakeMail()
+		public void TakeMail()
 		{
 			if (Item == Items.NONE)
 			{
-				pbDisplay(Game._INTL("{1} isn't holding anything.", Name));
+				Display(Game._INTL("{1} isn't holding anything.", Name));
 			}
-			else if (!Game.GameData.Player.Bag.pbCanStore(Item))
+			else if (!Game.GameData.Player.Bag.CanStore(Item))
 			{
-				pbDisplay(Game._INTL("The Bag is full.  The Pokémon's item could not be removed."));
+				Display(Game._INTL("The Bag is full.  The Pokémon's item could not be removed."));
 			}
 			else if (mail != null)
 			{
 			}
 
-			if (pbConfirm(Game._INTL("Send the removed mail to your PC?")))
+			if (Confirm(Game._INTL("Send the removed mail to your PC?")))
 			{
-				if (!pbMoveToMailbox())
-					pbDisplay(Game._INTL("Your PC's Mailbox is full."));
+				if (!MoveToMailbox())
+					Display(Game._INTL("Your PC's Mailbox is full."));
 
 				else
-					pbDisplay(Game._INTL("The mail was sent to your PC."));
+					Display(Game._INTL("The mail was sent to your PC."));
 
 				//setItem(0);
 				Item = Items.NONE;
 			}
-			else if (pbConfirm(Game._INTL("If the mail is removed, the message will be lost.  OK?")))
+			else if (Confirm(Game._INTL("If the mail is removed, the message will be lost.  OK?")))
 			{
-				pbDisplay(Game._INTL("Mail was taken from the Pokémon."));
-				Game.GameData.Player.Bag.pbStoreItem(Item);
+				Display(Game._INTL("Mail was taken from the Pokémon."));
+				Game.GameData.Player.Bag.StoreItem(Item);
 				//setItem(0);
 				Item = Items.NONE;
 				mail = null;
 			}
 			else
 			{
-				Game.GameData.Player.Bag.pbStoreItem(Item);
+				Game.GameData.Player.Bag.StoreItem(Item);
 				string itemname = Game._INTL(Item.ToString(TextScripts.Name));
 
-				pbDisplay(Game._INTL("Received the {1} from {2}.", itemname, Name));
+				Display(Game._INTL("Received the {1} from {2}.", itemname, Name));
 				//setItem(0);
 				Item = Items.NONE;
 			}
 		}
 
-		public bool pbGiveMail(Items item)//, pkmn, pkmnid= 0)
+		public bool GiveMail(Items item)//, pkmn, pkmnid= 0)
 		{
 			string thisitemname = Game._INTL(item.ToString(TextScripts.Name));
 			if (isEgg)
 			{
-				pbDisplay(Game._INTL("Eggs can't hold items."));
+				Display(Game._INTL("Eggs can't hold items."));
 				return false;
 			}
 			if (mail != null)
 			{
-				pbDisplay(Game._INTL("Mail must be removed before holding an item."));
+				Display(Game._INTL("Mail must be removed before holding an item."));
 				return false;
 			}
 			if (item!=Items.NONE)
 			{
 				string itemname = Game._INTL(Item.ToString(TextScripts.Name));
 
-				pbDisplay(Game._INTL("{1} is already holding one {2}.\1", name, itemname));
-				if (pbConfirm(Game._INTL("Would you like to switch the two items?")))
+				Display(Game._INTL("{1} is already holding one {2}.\1", name, itemname));
+				if (Confirm(Game._INTL("Would you like to switch the two items?")))
 				{
-					Game.GameData.Player.Bag.pbDeleteItem(item);
-					if (!Game.GameData.Player.Bag.pbStoreItem(item))
+					Game.GameData.Player.Bag.DeleteItem(item);
+					if (!Game.GameData.Player.Bag.StoreItem(item))
 					{
-						if (!Game.GameData.Player.Bag.pbStoreItem(item)) // Compensate
+						if (!Game.GameData.Player.Bag.StoreItem(item)) // Compensate
 						{
 							//raise Game._INTL("Can't re-store deleted item in bag");
 							GameDebug.LogError(Game._INTL("Can't re-store deleted item in bag"));
 						}
 
-						pbDisplay(Game._INTL("The Bag is full.  The Pokémon's item could not be removed."));
+						Display(Game._INTL("The Bag is full.  The Pokémon's item could not be removed."));
 					}
 					else
 					{
-						if (Kernal.ItemData[Item].IsLetter)//(pbIsMail(item))
+						if (Kernal.ItemData[Item].IsLetter)//(IsMail(item))
 						{
-							//if (pbMailScreen(item, pkmn, pkmnid))
-							if (pbMailScreen(item, this))
+							//if (MailScreen(item, pkmn, pkmnid))
+							if (MailScreen(item, this))
 							{
 								//setItem(item);
 								Item = item;
 
-								pbDisplay(Game._INTL("The {1} was taken and replaced with the {2}.", itemname, thisitemname));
+								Display(Game._INTL("The {1} was taken and replaced with the {2}.", itemname, thisitemname));
 								return true;
 							}
 							else
 							{
-								if (!Game.GameData.Player.Bag.pbStoreItem(item)) { // Compensate
+								if (!Game.GameData.Player.Bag.StoreItem(item)) { // Compensate
 									//raise Game._INTL("Can't re-store deleted item in bag");
 									GameDebug.LogError(Game._INTL("Can't re-store deleted item in bag"));
 								}
@@ -2279,7 +2279,7 @@ namespace PokemonUnity.Monster
 							//setItem(item);
 							Item=item;
 
-							pbDisplay(Game._INTL("The {1} was taken and replaced with the {2}.", itemname, thisitemname));
+							Display(Game._INTL("The {1} was taken and replaced with the {2}.", itemname, thisitemname));
 							return true;
 						}
 					}
@@ -2287,14 +2287,14 @@ namespace PokemonUnity.Monster
 			}
 			else
 			{
-				if (!pbIsMail(item) || pbMailScreen(item, pkmn, pkmnid)) // Open the mail screen if necessary
-				if (!Kernal.ItemData[Item].IsLetter || pbMailScreen(item, this)) // Open the mail screen if necessary
+				if (!IsMail(item) || MailScreen(item, pkmn, pkmnid)) // Open the mail screen if necessary
+				if (!Kernal.ItemData[Item].IsLetter || MailScreen(item, this)) // Open the mail screen if necessary
 				{
-					Game.GameData.Player.Bag.pbDeleteItem(item);
+					Game.GameData.Player.Bag.DeleteItem(item);
 					//setItem(item);
 					Item=item;
 
-					pbDisplay(Game._INTL("{1} was given the {2} to hold.", name, thisitemname));
+					Display(Game._INTL("{1} was given the {2} to hold.", name, thisitemname));
 					return true;
 				}
 			}
@@ -2483,7 +2483,7 @@ namespace PokemonUnity.Monster
 					if (Happiness < 200) gain = -15;
 					break;
 				default:
-					if (Game.GameData is IGameMessage m) m.pbMessage(Game._INTL("Unknown happiness-changing method."));
+					if (Game.GameData is IGameMessage m) m.Message(Game._INTL("Unknown happiness-changing method."));
 					//break;
 					//If not listed above, then stop
 					//Otherwise rest of code will add points
@@ -2512,8 +2512,8 @@ namespace PokemonUnity.Monster
 		{
 			get
 			{
-				//dexdata = pbOpenDexData;
-				//pbDexDataOffset(dexdata, @species, 10);
+				//dexdata = OpenDexData;
+				//DexDataOffset(dexdata, @species, 10);
 				int[] ret = new int[] {
 				   _base.BaseStatsHP,	//dexdata.fgetb, // HP
 				   _base.BaseStatsATK,	//dexdata.fgetb, // Attack
@@ -3022,17 +3022,17 @@ namespace PokemonUnity.Monster
 			LowerPokerusCount();
 		}
 
-		void IPokemon.pbDeleteMove(Moves move)
+		void IPokemon.DeleteMove(Moves move)
 		{
 			DeleteMove(move);
 		}
 
-		void IPokemon.pbDeleteMoveAtIndex(int index)
+		void IPokemon.DeleteMoveAtIndex(int index)
 		{
 			DeleteMoveAtIndex(index);
 		}
 
-		void IPokemon.pbDeleteAllMoves()
+		void IPokemon.DeleteAllMoves()
 		{
 			DeleteAllMoves();
 		}

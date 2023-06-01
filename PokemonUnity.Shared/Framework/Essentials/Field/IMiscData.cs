@@ -231,9 +231,9 @@ namespace PokemonEssentials.Interface.Field
 		/// </summary>
 		/// <remarks>
 		/// Note that the only thing this metadata affects is the Teleport destination.
-		/// It does not determine Fly destinations (those are set on the region map in the PBS file "townmap.txt"),
+		/// It does not determine Fly destinations (those are set on the region map in the S file "townmap.txt"),
 		/// nor does it determine where the player goes to after blacking out
-		/// (this is either set by the script <see cref="IGameField.pbSetPokemonCenter"/> which is part of the Poké Center nurse event,
+		/// (this is either set by the script <see cref="IGameField.SetPokemonCenter"/> which is part of the Poké Center nurse event,
 		/// or the <see cref="GlobalMetadata.Home"/> global metadata).
 		/// </remarks>
 		public ITilePosition HealingSpot	{ get; set; } //map id, x, y
@@ -445,22 +445,22 @@ namespace PokemonEssentials.Interface.Field
 
 	public interface IGameMetadataMisc {
 		#region Manipulation methods for metadata, phone data and Pokémon species data
-		IDictionary<int, IPokemonMetadata> pbLoadMetadata();
+		IDictionary<int, IPokemonMetadata> LoadMetadata();
 
-		//object pbGetMetadata(int mapid,int metadataType);
-		IPokemonMetadata pbGetMetadata(int mapid); //,int metadataType
-		//object pbGetMetadata(int mapid, GlobalMetadatas metadataType);
-		//object pbGetMetadata(int mapid, MapMetadatas metadataType);
+		//object GetMetadata(int mapid,int metadataType);
+		IPokemonMetadata GetMetadata(int mapid); //,int metadataType
+		//object GetMetadata(int mapid, GlobalMetadatas metadataType);
+		//object GetMetadata(int mapid, MapMetadatas metadataType);
 
-		IList<int> pbLoadPhoneData();
+		IList<int> LoadPhoneData();
 
-		IList<string> pbOpenDexData(Func<IList<string>, IList<string>> block = null);
+		IList<string> OpenDexData(Func<IList<string>, IList<string>> block = null);
 
-		//void pbDexDataOffset(ref IList<string> dexdata,Pokemons species,int offset) {
+		//void DexDataOffset(ref IList<string> dexdata,Pokemons species,int offset) {
 		//  dexdata.pos=76*(species-1)+offset;
 		//}
 
-		void pbClearData();
+		void ClearData();
 		#endregion
 	}
 }

@@ -31,7 +31,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	 If (user is in Hyper Mode, this attack has a good chance for a critical hit.
 	=end;*/
 
-	//public partial class PBWeather {
+	//public partial class Weather {
 	//    public const int SHADOWSKY = 8;
 	//}
 
@@ -47,25 +47,25 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// </summary>
 	public interface IGameShadowPokemon
 	{
-		void pbPurify(IPokemonShadowPokemon pokemon, IPurifyChamberScene scene);
+		void Purify(IPokemonShadowPokemon pokemon, IPurifyChamberScene scene);
 
 		#region Relic Stone Logic
-		void pbRelicStoneScreen(IPokemonShadowPokemon pkmn);
+		void RelicStoneScreen(IPokemonShadowPokemon pkmn);
 
-		bool pbIsPurifiable(IPokemonShadowPokemon pkmn);
+		bool IsPurifiable(IPokemonShadowPokemon pkmn);
 
-		bool pbHasPurifiableInParty();
+		bool HasPurifiableInParty();
 
-		void pbRelicStone();
+		void RelicStone();
 
-		bool pbRaiseHappinessAndReduceHeart(IPokemonShadowPokemon pokemon, IScene scene, int amount);
+		bool RaiseHappinessAndReduceHeart(IPokemonShadowPokemon pokemon, IScene scene, int amount);
 
-		void pbApplyEVGain(IPokemon pokemon, Stats ev, int evgain);
+		void ApplyEVGain(IPokemon pokemon, Stats ev, int evgain);
 
-		void pbReplaceMoves(IPokemon pokemon, Moves move1, Moves move2 = 0, Moves move3 = 0, Moves move4 = 0);
+		void ReplaceMoves(IPokemon pokemon, Moves move1, Moves move2 = 0, Moves move3 = 0, Moves move4 = 0);
 		#endregion
 
-		void pbReadyToPurify(IPokemonShadowPokemon pokemon);
+		void ReadyToPurify(IPokemonShadowPokemon pokemon);
 
 		event EventHandler OnStartBattle;
 		//Events.onStartBattle+=delegate(object sender, EventArgs e) {
@@ -84,99 +84,99 @@ namespace PokemonEssentials.Interface.PokeBattle
 		//     pokemon=Game.GameData.Trainer.party[i];
 		//     if (pokemon && (Game.GameData.PokemonTemp.heartgauges[i] &&
 		//        Game.GameData.PokemonTemp.heartgauges[i]!=0 && pokemon.heartgauge==0)) {
-		//       pbReadyToPurify(pokemon);
+		//       ReadyToPurify(pokemon);
 		//     }
 		//   }
 		//}
 
 		//ItemHandlers.UseOnPokemon.add(:JOYSCENT,proc{|item,pokemon,scene|
-		//   pbRaiseHappinessAndReduceHeart(pokemon,scene,500);
+		//   RaiseHappinessAndReduceHeart(pokemon,scene,500);
 		//});
 
 		//ItemHandlers.UseOnPokemon.add(:EXCITESCENT,proc{|item,pokemon,scene|
-		//   pbRaiseHappinessAndReduceHeart(pokemon,scene,1000);
+		//   RaiseHappinessAndReduceHeart(pokemon,scene,1000);
 		//});
 
 		//ItemHandlers.UseOnPokemon.add(:VIVIDSCENT,proc{|item,pokemon,scene|
-		//   pbRaiseHappinessAndReduceHeart(pokemon,scene,2000);
+		//   RaiseHappinessAndReduceHeart(pokemon,scene,2000);
 		//});
 
 		//ItemHandlers.UseOnPokemon.add(:TIMEFLUTE,proc{|item,pokemon,scene|
 		//   if (!pokemon.isShadow?) {
-		//     scene.pbDisplay(_INTL("It won't have any effect."));
+		//     scene.Display(_INTL("It won't have any effect."));
 		//     next false;
 		//   }
 		//   pokemon.heartgauge=0;
-		//   pbReadyToPurify(pokemon);
+		//   ReadyToPurify(pokemon);
 		//   next true;
 		//});
 
 		//ItemHandlers.BattleUseOnBattler.add(:JOYSCENT,proc{|item,battler,scene|
 		//   if (!battler.isShadow?) {
-		//     scene.pbDisplay(_INTL("It won't have any effect."));
+		//     scene.Display(_INTL("It won't have any effect."));
 		//     return false;
 		//   }
 		//   if (battler.inHyperMode?) {
 		//     battler.pokemon.hypermode=false;
 		//     battler.pokemon.adjustHeart(-300);
-		//     scene.pbDisplay(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
+		//     scene.Display(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
 		////     if battler.happiness!=255 || battler.pokemon.heartgauge!=0
-		////       pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,500)
+		////       RaiseHappinessAndReduceHeart(battler.pokemon,scene,500)
 		////     }
 		//     return true;
 		//   }
-		////   return pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,500)
-		//   scene.pbDisplay(_INTL("It won't have any effect."));
+		////   return RaiseHappinessAndReduceHeart(battler.pokemon,scene,500)
+		//   scene.Display(_INTL("It won't have any effect."));
 		//   return false;
 		//});
 
 		//ItemHandlers.BattleUseOnBattler.add(:EXCITESCENT,proc{|item,battler,scene|
 		//   if (!battler.isShadow?) {
-		//     scene.pbDisplay(_INTL("It won't have any effect."));
+		//     scene.Display(_INTL("It won't have any effect."));
 		//     return false;
 		//   }
 		//   if (battler.inHyperMode?) {
 		//     battler.pokemon.hypermode=false;
 		//     battler.pokemon.adjustHeart(-300);
-		//     scene.pbDisplay(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
+		//     scene.Display(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
 		////     if battler.happiness!=255 || battler.pokemon.heartgauge!=0
-		////       pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,1000)
+		////       RaiseHappinessAndReduceHeart(battler.pokemon,scene,1000)
 		////     }
 		//     return true;
 		//   }
-		////   return pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,1000)
-		//   scene.pbDisplay(_INTL("It won't have any effect."));
+		////   return RaiseHappinessAndReduceHeart(battler.pokemon,scene,1000)
+		//   scene.Display(_INTL("It won't have any effect."));
 		//   return false;
 		//});
 
 		//ItemHandlers.BattleUseOnBattler.add(:VIVIDSCENT,proc{|item,battler,scene|
 		//   if (!battler.isShadow?) {
-		//     scene.pbDisplay(_INTL("It won't have any effect."));
+		//     scene.Display(_INTL("It won't have any effect."));
 		//     return false;
 		//   }
 		//   if (battler.inHyperMode?) {
 		//     battler.pokemon.hypermode=false;
 		//     battler.pokemon.adjustHeart(-300);
-		//     scene.pbDisplay(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
+		//     scene.Display(_INTL("{1} came to its senses from the {2}!",battler.ToString(),item.ToString(TextScripts.Name)));
 		////     if battler.happiness!=255 || battler.pokemon.heartgauge!=0
-		////       pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,2000)
+		////       RaiseHappinessAndReduceHeart(battler.pokemon,scene,2000)
 		////     }
 		//     return true;
 		//   }
-		////   return pbRaiseHappinessAndReduceHeart(battler.pokemon,scene,2000)
-		//   scene.pbDisplay(_INTL("It won't have any effect."));
+		////   return RaiseHappinessAndReduceHeart(battler.pokemon,scene,2000)
+		//   scene.Display(_INTL("It won't have any effect."));
 		//   return false;
 		//});
 
 		/// <summary>
 		/// Fires whenever the player takes a step.
 		/// </summary>
-		event EventHandler OnStepTaken;
+		event EventHandler OnStepTakenEvent;
 		//Events.onStepTaken+=proc{
 		//   foreach (var pkmn in Game.GameData.Trainer.party) {
 		//     if (pkmn.HP>0 && !pkmn.isEgg? && pkmn.heartgauge>0) {
 		//       pkmn.adjustHeart(-1);
-		//       if (pkmn.heartgauge==0) pbReadyToPurify(pkmn);
+		//       if (pkmn.heartgauge==0) ReadyToPurify(pkmn);
 		//     }
 		//   }
 		//   if ((Game.GameData.Global.purifyChamber rescue null)) {
@@ -186,7 +186,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		//     pkmn=Game.GameData.Global.daycare[i][0];
 		//     if (!pkmn) continue;
 		//     pkmn.adjustHeart(-1);
-		//     pkmn.pbUpdateShadowMoves();
+		//     pkmn.UpdateShadowMoves();
 		//   }
 		//}
 	}
@@ -213,7 +213,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		void makeShadow();
 
-		void pbUpdateShadowMoves(bool allmoves = false);
+		void UpdateShadowMoves(bool allmoves = false);
 
 		//alias :__shadow_expeq :exp=;
 
@@ -241,28 +241,28 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// Extensions of <seealso cref="IBattle"/>
 	/// </summary>
 	public interface IBattleShadowPokemon {
-		//alias __shadow_pbUseItemOnPokemon pbUseItemOnPokemon;
+		//alias __shadow_UseItemOnPokemon UseItemOnPokemon;
 
-		bool pbUseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene);
+		bool UseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene);
 	}
 
 	/// <summary>
 	/// Extensions of <seealso cref="IBattler"/>
 	/// </summary>
 	public interface IBattlerShadowPokemon {
-		//alias __shadow_pbInitPokemon pbInitPokemon;
-		//alias __shadow_pbEndTurn pbEndTurn;
+		//alias __shadow_InitPokemon InitPokemon;
+		//alias __shadow_EndTurn EndTurn;
 
-		void pbInitPokemon(IPokemon pkmn, int pkmnIndex);
+		void InitPokemon(IPokemon pkmn, int pkmnIndex);
 
-		void pbEndTurn(IBattleChoice choice);
+		void EndTurn(IBattleChoice choice);
 
 		bool isShadow();
 
 		bool inHyperMode();
 
-		void pbHyperMode();
+		void HyperMode();
 
-		bool pbHyperModeObedience(IBattleMove move);
+		bool HyperModeObedience(IBattleMove move);
 	}
 }

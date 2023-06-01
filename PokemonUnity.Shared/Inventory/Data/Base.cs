@@ -90,48 +90,48 @@ namespace PokemonUnity.Inventory
 		public int? FlingPower { get; private set; }
 		public int[] Generations { get; private set; }
 
-		public bool IsLetter 
-		{ 
-			get 
-			{
-				return pbIsLetter(Id);
-			} 
-		}
-		public bool IsPokeBall
-		{ 
-			get 
-			{
-				return pbIsPokeBall(Id);
-			} 
-		}
-		public bool IsBerry 
-		{ 
-			get 
-			{
-				return pbIsBerry(Id);
-			} 
-		}
-		public bool IsApricon 
-		{ 
-			get 
-			{
-				return pbIsApricon(Id);
-			}
-		}
-		public bool IsMegaStone
-		{
-			get
-			{
-				return pbIsMegaStone(Id);
-			}
-		}
-		public bool IsGem
-		{
-			get
-			{
-				return pbIsGem(Id);
-			}
-		}
+		//public bool IsLetter 
+		//{ 
+		//	get 
+		//	{
+		//		return IsLetter(Id);
+		//	} 
+		//}
+		//public bool IsPokeBall
+		//{ 
+		//	get 
+		//	{
+		//		return IsPokeBall(Id);
+		//	} 
+		//}
+		//public bool IsBerry 
+		//{ 
+		//	get 
+		//	{
+		//		return IsBerry(Id);
+		//	} 
+		//}
+		//public bool IsApricon 
+		//{ 
+		//	get 
+		//	{
+		//		return IsApricon(Id);
+		//	}
+		//}
+		//public bool IsMegaStone
+		//{
+		//	get
+		//	{
+		//		return IsMegaStone(Id);
+		//	}
+		//}
+		//public bool IsGem
+		//{
+		//	get
+		//	{
+		//		return IsGem(Id);
+		//	}
+		//}
 
 		public string Name { get { return ToString(TextScripts.Name); } }
 		public string Description { get { return ToString(TextScripts.Description); } }
@@ -176,7 +176,7 @@ namespace PokemonUnity.Inventory
 		#endregion
 
 		#region Methods
-		public static bool pbIsPokeBall(Items item)
+		public static bool IsPokeBall(Items item)
 		{
 			return item == Items.BEAST_BALL
 				|| item == Items.CHERISH_BALL
@@ -209,7 +209,7 @@ namespace PokemonUnity.Inventory
 				|| item == Items.TIMER_BALL
 				|| item == Items.ULTRA_BALL;
 		}
-		public static bool pbIsLetter(Items item)
+		public static bool IsLetter(Items item)
 		{
 			return item == Items.AIR_MAIL
 				|| item == Items.BEAD_MAIL
@@ -248,7 +248,7 @@ namespace PokemonUnity.Inventory
 				|| item == Items.WAVE_MAIL
 				|| item == Items.WOOD_MAIL;
 		}
-		public static bool pbIsApricon(Items item)
+		public static bool IsApricon(Items item)
 		{
 			return item == Items.BLACK_APRICORN
 				|| item == Items.BLUE_APRICORN
@@ -258,7 +258,7 @@ namespace PokemonUnity.Inventory
 				|| item == Items.WHITE_APRICORN
 				|| item == Items.YELLOW_APRICORN;
 		}
-		public static bool pbIsBerry(Items item)
+		public static bool IsBerry(Items item)
 		{
 			return item == Items.AGUAV_BERRY
 				|| item == Items.APICOT_BERRY
@@ -328,7 +328,7 @@ namespace PokemonUnity.Inventory
 				|| item == Items.WIKI_BERRY
 				|| item == Items.YACHE_BERRY;
 		}
-		public static bool pbIsGem(Items item)
+		public static bool IsGem(Items item)
 		{
 			return item == Items.FIRE_GEM
 				|| item == Items.WATER_GEM
@@ -349,7 +349,7 @@ namespace PokemonUnity.Inventory
 				|| item == Items.NORMAL_GEM
 				|| item == Items.FAIRY_GEM;
 		}
-		public static bool pbIsMegaStone(Items item)
+		public static bool IsMegaStone(Items item)
 		{
 			return item == Items.ABOMASITE
 				|| item == Items.ABSOLITE
@@ -401,5 +401,9 @@ namespace PokemonUnity.Inventory
 		{
 			return Id.ToString(text);
 		}
+	}
+
+	public static class Item
+	{
 	}
 }

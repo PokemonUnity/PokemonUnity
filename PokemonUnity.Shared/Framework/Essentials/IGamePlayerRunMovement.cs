@@ -16,9 +16,9 @@ namespace PokemonEssentials.Interface
 
 		void setDefaultCharName(string chname, int pattern);
 
-		bool pbCanRun();
+		bool CanRun();
 
-		bool pbIsRunning();
+		bool IsRunning();
 
 		string character_name { get; }
 

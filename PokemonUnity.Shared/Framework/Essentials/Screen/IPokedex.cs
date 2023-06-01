@@ -23,31 +23,31 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IPokemonPokedexScreen : IScreen
 	{
 		IPokemonPokedexScreen initialize(IPokemonPokedexScene scene);
-		void pbDexEntry(Pokemons species);
-		void pbStartScreen();
+		void DexEntry(Pokemons species);
+		void StartScreen();
 	}
 	public interface IPokemonPokedexScene : IScene
 	{
 		IPokemonPokedexScene initialize();
-		void pbUpdate();
-		void pbEndScene();
-		void pbStartScene();
-		void pbStartDexEntryScene(Pokemons species);
-		void pbPokedex();
-		void pbDexEntry(int index);
-		int pbDexSearch();
-		void pbCloseSearch();
-		IEnumerable<PokemonUnity.Monster.Data.PokemonData> pbSearchDexList(params object[] param);
-		List<PokemonUnity.Monster.Data.PokemonData> pbGetDexList();
-		void pbRefreshDexList(int index = 0);
-		void pbRefreshDexSearch(params string[] param);
-		bool pbCanAddForModeList(int mode, Pokemons nationalSpecies);
-		bool pbCanAddForModeSearch(int mode, Pokemons nationalSpecies);
-		void pbChangeToDexEntry(Pokemons species);
-		int pbDexSearchCommands(string[] commands, int selitem, string[] helptexts = null);
-		int pbGetPokedexRegion();
-		int pbGetSavePositionIndex();
-		void pbMiddleDexEntryScene();
+		void Update();
+		void EndScene();
+		void StartScene();
+		void StartDexEntryScene(Pokemons species);
+		void Pokedex();
+		void DexEntry(int index);
+		int DexSearch();
+		void CloseSearch();
+		IEnumerable<PokemonUnity.Monster.Data.PokemonData> SearchDexList(params object[] param);
+		List<PokemonUnity.Monster.Data.PokemonData> GetDexList();
+		void RefreshDexList(int index = 0);
+		void RefreshDexSearch(params string[] param);
+		bool CanAddForModeList(int mode, Pokemons nationalSpecies);
+		bool CanAddForModeSearch(int mode, Pokemons nationalSpecies);
+		void ChangeToDexEntry(Pokemons species);
+		int DexSearchCommands(string[] commands, int selitem, string[] helptexts = null);
+		int GetPokedexRegion();
+		int GetSavePositionIndex();
+		void MiddleDexEntryScene();
 		void setIconBitmap(Pokemons species);
 	}
 

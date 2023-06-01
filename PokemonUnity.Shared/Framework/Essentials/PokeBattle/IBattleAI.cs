@@ -23,20 +23,20 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="opponent"></param>
 		/// <param name="skill"></param>
 		/// <returns></returns>
-		int pbGetMoveScore(IBattleMove move, IBattler attacker, IBattler opponent, int skill = 100);
+		int GetMoveScore(IBattleMove move, IBattler attacker, IBattler opponent, int skill = 100);
 
 		#region Get type effectiveness and approximate stats.
-		float pbTypeModifier(Types type, IBattler attacker, IBattler opponent);
+		float TypeModifier(Types type, IBattler attacker, IBattler opponent);
 
-		float pbTypeModifier2(IBattler battlerThis, IBattler battlerOther);
+		float TypeModifier2(IBattler battlerThis, IBattler battlerOther);
 
-		int pbRoughStat(IBattler battler, Stats stat, int skill);
+		int RoughStat(IBattler battler, Stats stat, int skill);
 
-		int pbBetterBaseDamage(IBattleMove move, IBattler attacker, IBattler opponent, int skill, int basedamage);
+		int BetterBaseDamage(IBattleMove move, IBattler attacker, IBattler opponent, int skill, int basedamage);
 
-		int pbRoughDamage(IBattleMove move, IBattler attacker, IBattler opponent, int skill, double basedamage);
+		int RoughDamage(IBattleMove move, IBattler attacker, IBattler opponent, int skill, double basedamage);
 
-		int pbRoughAccuracy(IBattleMove move, IBattler attacker, IBattler opponent, int skill);
+		int RoughAccuracy(IBattleMove move, IBattler attacker, IBattler opponent, int skill);
 		#endregion
 
 		#region Choose a move to use.
@@ -44,7 +44,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Choose a move to use.
 		/// </summary>
 		/// <param name="index"></param>
-		void pbChooseMoves(int index);
+		void ChooseMoves(int index);
 		#endregion
 
 		#region Decide whether the opponent should Mega Evolve their Pokémon.
@@ -53,25 +53,25 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns></returns>
-		bool pbEnemyShouldMegaEvolve(int index);
+		bool EnemyShouldMegaEvolve(int index);
 		#endregion
 
 		#region Decide whether the opponent should use an item on the Pokémon.
-		bool pbEnemyShouldUseItem(int index);
+		bool EnemyShouldUseItem(int index);
 
-		bool pbEnemyItemAlreadyUsed(int index, Items item, Items[] items);
+		bool EnemyItemAlreadyUsed(int index, Items item, Items[] items);
 
-		Items pbEnemyItemToUse(int index);
+		Items EnemyItemToUse(int index);
 		#endregion
 
 		#region Decide whether the opponent should switch Pokémon.
-		bool pbEnemyShouldWithdraw(int index);
+		bool EnemyShouldWithdraw(int index);
 
-		bool pbEnemyShouldWithdrawEx(int index, bool alwaysSwitch);
+		bool EnemyShouldWithdrawEx(int index, bool alwaysSwitch);
 
-		int pbDefaultChooseNewEnemy(int index, IPokemon[] party);
+		int DefaultChooseNewEnemy(int index, IPokemon[] party);
 
-		int pbChooseBestNewEnemy(int index, IPokemon[] party, int[] enemies);
+		int ChooseBestNewEnemy(int index, IPokemon[] party, int[] enemies);
 		#endregion
 
 		#region Choose an action.
@@ -79,13 +79,13 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Choose an action.
 		/// </summary>
 		/// <param name="index"></param>
-		void pbDefaultChooseEnemyCommand(int index);
+		void DefaultChooseEnemyCommand(int index);
 		#endregion
 
 		#region Other functions.
-		bool pbDbgPlayerOnly(int idx);
+		bool DbgPlayerOnly(int idx);
 
-		int pbStdDev(int[] scores);
+		int StdDev(int[] scores);
 		#endregion
 	}
 }

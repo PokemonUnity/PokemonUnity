@@ -12,13 +12,13 @@ namespace PokemonEssentials.Interface
 		bool ResizeFactorSet	{ get; set; }
 		bool HaveResizeBorder	{ get; set; }
 
-		void pbSetResizeFactor(float factor = 1, bool norecalc = false);
+		void SetResizeFactor(float factor = 1, bool norecalc = false);
 
-		void pbSetResizeFactor2(float factor, bool force = false);
+		void SetResizeFactor2(float factor, bool force = false);
 
-		void pbConfigureFullScreen();
+		void ConfigureFullScreen();
 
-		void pbConfigureWindowedScreen(float value);
+		void ConfigureWindowedScreen(float value);
 
 		void setScreenBorderName(string border);
 	}

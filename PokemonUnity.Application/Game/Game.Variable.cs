@@ -127,7 +127,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Fires whenever the player takes a step.
 		/// </summary>
-		public event EventHandler OnStepTaken;
+		public event EventHandler OnStepTakenEvent;
 		/// <summary>
 		/// Fires whenever the player takes a step. The event handler may possibly move
 		/// the player elsewhere.
@@ -164,7 +164,7 @@ namespace PokemonUnity
 		/// Fires whenever a spriteset is created.
 		/// </summary>
 		//event EventHandler<IOnSpritesetCreateEventArgs> OnSpritesetCreate;
-		public event Action<object, PokemonEssentials.Interface.EventArg.IOnSpritesetCreateEventArgs> OnSpritesetCreate;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnSpritesetCreateEventArgs> OnSpritesetCreateEvent;
 		public event EventHandler OnStartBattle;
 		//event EventHandler OnEndBattle;
 		public event Action<object, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs> OnEndBattle;

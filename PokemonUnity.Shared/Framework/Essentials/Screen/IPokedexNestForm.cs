@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IGamePokedexNest
 	{
-		bool pbFindEncounter(IEncounter encounter, Pokemons species);
+		bool FindEncounter(IEncounter encounter, Pokemons species);
 	}
 
 	/// <summary>
@@ -28,19 +28,19 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPokemonNestMapScene : IScene
 	{
-		void pbUpdate();
-		void pbEndScene();
-		void pbStartScene(Pokemons species,int regionmap= -1);
+		void Update();
+		void EndScene();
+		void StartScene(Pokemons species,int regionmap= -1);
 		/// <summary>
 		/// </summary>
 		/// <param name="listlimits">an enum that represents end of list</param>
 		/// <returns></returns>
-		int pbMapScene(int listlimits);
+		int MapScene(int listlimits);
 	}
 	public interface IPokemonNestMapScreen : IScreen
 	{
 		IPokemonNestMapScreen initialize(IPokemonNestMapScene scene);
-		void pbStartScreen(Pokemons species,int region,int listlimits);
+		void StartScreen(Pokemons species,int region,int listlimits);
 	}
 
 	/// <summary>
@@ -48,18 +48,18 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPokemonFormScene : IScene
 	{
-		void pbUpdate();
-		//void pbRefresh();
-		List<PokemonUnity.Monster.Forms> pbGetAvailable(); //returns [Name, Gender, Form] 
-		List<string> pbGetCommands();
-		void pbChooseForm();
-		void pbEndScene();
-		void pbStartScene(Pokemons species);
-		int pbControls(int listlimits);
+		void Update();
+		//void Refresh();
+		List<PokemonUnity.Monster.Forms> GetAvailable(); //returns [Name, Gender, Form] 
+		List<string> GetCommands();
+		void ChooseForm();
+		void EndScene();
+		void StartScene(Pokemons species);
+		int Controls(int listlimits);
 	}
 	public interface IPokemonFormScreen : IScreen
 	{
 		IPokemonFormScreen initialize(IPokemonFormScene scene);
-		void pbStartScreen(Pokemons species,int listlimits);
+		void StartScreen(Pokemons species,int listlimits);
 	}
 }
