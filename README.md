@@ -2,6 +2,7 @@
   <img alt="Pokémon Unity Logo" src="https://styles.redditmedia.com/t5_39moy/styles/bannerPositionedImage_6is405sk53j01.png" />
   <h1 align="center">Pokémon Unity by IIcolour Spectrum</h1>
   <h2 align="center">Created with Pokémon Framework</h2>
+  <h3 align="center">Based on Pokémon Essentials</h3>
   <p align="center">
     <a href="https://opensource.org/licenses/BSD-3-Clause"><img alt="License" src="https://img.shields.io/badge/license-New%20BSD-blue.svg"/></a>
     <a href="https://discord.gg/CCF2YVP"><img alt="Discord Server" src="https://img.shields.io/badge/join%20us%20on-discord-7289DA.svg"/></a>
