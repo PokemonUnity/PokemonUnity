@@ -41,10 +41,10 @@ For now, we advise against using this project as a foundation for building a gam
   - Navigate to and open `sampleScene.unity`, then play it.
 
 **To build and run the project on Windows:**
+  - You will need to move database to `/Pokemon Unity/Assets/Data`. (Found in `..\ ..\ ..\\veekun-pokedex.sqlite` or the repository's [root folder](https://github.com/PokemonUnity/PokemonUnity/blob/master/veekun-pokedex.sqlite))
+    - And uncomment [line 58](https://github.com/PokemonUnity/PokemonUnity/blob/be6672c41bbea75364b1efe342b8662070806dad/Pokemon%20Unity/Assets/Scripts/Scene/GameEvents.cs#L58) from `Assets/Scripts/Scene/GameEvents.cs`
   - Build the project.
   - In the Build folder, copy `SQLite.Interop.dll` from `YourAppName/YourAppName_Data/Plugins` to `YourAppName/YourAppName_Data/Managed`.
-  - You will need to move database to `/Pokemon Unity/Assets/Data`. (Found in `..\ ..\ ..\\veekun-pokedex.sqlite` or the repository's [root folder](https://github.com/PokemonUnity/PokemonUnity/blob/master/veekun-pokedex.sqlite))
-  - - And uncomment [line 58](https://github.com/PokemonUnity/PokemonUnity/blob/be6672c41bbea75364b1efe342b8662070806dad/Pokemon%20Unity/Assets/Scripts/Scene/GameEvents.cs#L58) from `Assets/Scripts/Scene/GameEvents.cs`
   - Finally, run `YourAppName.exe
 
 **To download the project and play it without using unity** 
