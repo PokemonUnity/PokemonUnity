@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TextureAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 2
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 256
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 550bac9a97e2abf4198bd9cbf01e3402, type: 3}
+    - {fileID: 2800000, guid: b66e10ec21423d64bad10ce08b56e1b4, type: 3}
+    - {fileID: 2800000, guid: 5efae942431d40d48b7af13f97183e15, type: 3}
+    - {fileID: 2800000, guid: 26eb1a5b7832bb547bb6c3a7370e6459, type: 3}
+    - {fileID: 2800000, guid: 56971fcb9e103df49aa950f25b27d59f, type: 3}
+    - {fileID: 2800000, guid: e2d1ba287d5c66c45afb7b759829fcd3, type: 3}
+    - {fileID: 2800000, guid: 5967a3e2b1a180343a7010ea53c89c6d, type: 3}
+    - {fileID: 2800000, guid: e2cbc7fc80804114db28a8582f965c14, type: 3}
+    totalSpriteSurfaceArea: 32768
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 5efae942431d40d48b7af13f97183e15, type: 3}
+  - {fileID: 21300000, guid: 5967a3e2b1a180343a7010ea53c89c6d, type: 3}
+  - {fileID: 21300000, guid: e2d1ba287d5c66c45afb7b759829fcd3, type: 3}
+  - {fileID: 21300000, guid: 550bac9a97e2abf4198bd9cbf01e3402, type: 3}
+  - {fileID: 21300000, guid: 26eb1a5b7832bb547bb6c3a7370e6459, type: 3}
+  - {fileID: 21300000, guid: 56971fcb9e103df49aa950f25b27d59f, type: 3}
+  - {fileID: 21300000, guid: b66e10ec21423d64bad10ce08b56e1b4, type: 3}
+  - {fileID: 21300000, guid: e2cbc7fc80804114db28a8582f965c14, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - col_grass
+  - col_water
+  - col_wall
+  - col_floor
+  - col_sea
+  - col_tile
+  - col_zone
+  - col_sky
+  m_Tag: TextureAtlas
+  m_IsVariant: 0
