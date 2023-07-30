@@ -28,7 +28,7 @@ namespace PokemonUnity
 	/// <summary>
 	/// </summary>
 	/// https://www.youtube.com/watch?v=64NblGkAabk
-	[RequireComponent(typeof(MeshFilter)), RequireComponent(typeof(MeshRenderer))]//, RequireComponent(typeof(MeshCollider))
+	[RequireComponent(typeof(MeshFilter)), RequireComponent(typeof(MeshRenderer)), RequireComponent(typeof(MeshCollider))]
 	public partial class TileMapGenerator : MonoBehaviour
 	{
 		public int uvId = 0;
@@ -87,8 +87,8 @@ namespace PokemonUnity
 			mesh.name = "LevelMapTiles";
 			meshFilter = GetComponent<MeshFilter>();
 			meshRenderer = GetComponent<MeshRenderer>();
-			//meshCollider = GetComponent<MeshCollider>();
-			meshCollider = gameObject.AddComponent<MeshCollider>();
+			meshCollider = GetComponent<MeshCollider>();
+			//meshCollider = gameObject.AddComponent<MeshCollider>();
 			meshCollider.sharedMesh = null;
 			Material material = new Material(Shader.Find("Diffuse"));
 			//material.mainTexture = spriteAtlas.GetSprite("col_tile").texture;
@@ -102,8 +102,8 @@ namespace PokemonUnity
 
 			meshFilter.mesh = mesh;
 			meshFilter.sharedMesh = mesh;
-			//meshCollider.sharedMesh = mesh;
-			meshCollider.sharedMesh = meshFilter.sharedMesh;
+			meshCollider.sharedMesh = mesh;
+			//meshCollider.sharedMesh = meshFilter.sharedMesh;
 		}
 
 		private void LoadMapData()
