@@ -73,12 +73,7 @@ namespace PokemonUnity
 					int key = i + j * 4;
 					uvMap.Add(key, uvCoordinates);
 				}
-			}
-			//prefab = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			//GameObject.Destroy(prefab);
-			//prefab.AddComponent<BoxCollider>();
-			//prefab.AddComponent<MeshFilter>();
-			//prefab.AddComponent<MeshRenderer>();
+			};
 		}
 
 		private void Start()
