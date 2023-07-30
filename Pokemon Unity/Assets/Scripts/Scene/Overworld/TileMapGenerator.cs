@@ -25,14 +25,19 @@ using UnityEngine.U2D;
 
 namespace PokemonUnity
 {
-
+	/// <summary>
+	/// </summary>
+	/// https://www.youtube.com/watch?v=64NblGkAabk
 	[RequireComponent(typeof(MeshFilter)), RequireComponent(typeof(MeshRenderer))]
 	public partial class TileMapGenerator : MonoBehaviour
 	{
-		private Mesh mesh;
-		private MeshFilter meshFilter;
-		private MeshRenderer meshRenderer;
+		public GameObject prefab;
+		public int uvId = 0;
+		public Texture texture;
 		public SpriteAtlas spriteAtlas;
+		private MeshRenderer meshRenderer;
+		private MeshFilter meshFilter;
+		private Mesh mesh;
 		private List<Vector3> vertices = new List<Vector3>();
 		private List<int> triangles = new List<int>();
 		private List<Vector2> uvs = new List<Vector2>();
@@ -45,7 +50,6 @@ namespace PokemonUnity
 		//public TextAsset jsonFile; // Drag and drop your JSON file here in the inspector
 		//public Vector2[][] uvMap; // Set your UV map here
 		private Dictionary<int, Vector2[]> uvMap;
-		public int uvId = 0;
 
 		private void Awake()
 		{
@@ -69,6 +73,10 @@ namespace PokemonUnity
 					uvMap.Add(key, uvCoordinates);
 				}
 			}
+			prefab = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			//prefab.AddComponent<BoxCollider>();
+			//prefab.AddComponent<MeshFilter>();
+			//prefab.AddComponent<MeshRenderer>();
 		}
 
 		private void Start()
@@ -78,7 +86,8 @@ namespace PokemonUnity
 			meshFilter = GetComponent<MeshFilter>();
 			meshRenderer = GetComponent<MeshRenderer>();
 			Material material = new Material(Shader.Find("Diffuse"));
-			material.mainTexture = spriteAtlas.GetSprite("col_tile").texture;
+			//material.mainTexture = spriteAtlas.GetSprite("col_tile").texture;
+			material.mainTexture = texture;
 			meshRenderer.material = material;
 			meshFilter.mesh = mesh;
 
@@ -102,44 +111,45 @@ namespace PokemonUnity
 			Width = jsonMap.width; Height = jsonMap.height;
 			//mapData = new Dictionary<int, MapTileNode>();
 			mapData = new MapTileNode[Width][];
+			for (int n = 0; n < Width; n++)
+				mapData[n] = new MapTileNode[Height];
 
 			//for each tile in json
 			foreach (JsonTile tile in jsonMap.tiles)
 			{
 				// Convert the rotation from Euler angles to a quaternion
 				Quaternion rotation = Quaternion.Euler(tile.rotation[0],tile.rotation[1],tile.rotation[2]);
-			
+
 				// Calculate tile position from object position
-				int x = Mathf.RoundToInt(tile.vector[0]);
-				int y = Mathf.RoundToInt(tile.vector[1]);
-			
+				int x = Mathf.FloorToInt(tile.vector[0]);
+				int y = Mathf.FloorToInt(tile.vector[1]);
+
 				// Calculate size from object scale
 				int width = 1;
 				int height = 1;
 				Terrains terrains = Terrains.Neutral;
-				
+
 				// if-statement based on mesh shape...
 				//width = Mathf.RoundToInt(obj.transform.localScale.x);
 				//height = Mathf.RoundToInt(obj.transform.localScale.y);
 				//Terrains terrains = Terrains.Neutral;
-				
+
 				// Update tiles covered by object
 				for (int i = x; i < x + width; i++)
 				{
-					mapData[x] = new MapTileNode[Height];
 					for (int j = y; j < y + height; j++)
 					{
 						//int key = i * 10000 + j; // generate unique key from x,y
 						MapTileNode t = new MapTileNode()
 						{
 							tileRotation = rotation,
-							tileLocation = new Vector3(x, y),
+							tileLocation = new Vector3(i, j),
 							tileShape = terrains,
 							tileTexture = tile.material,
 							tileCollision = tile.mesh
 						};
 						//mapData.Add(key, t);
-						mapData[x][y] = t;
+						mapData[i][j] = t;
 					}
 				}
 			}
@@ -171,33 +181,33 @@ namespace PokemonUnity
 						triangles.Add(vertices.Count - 2);
 						triangles.Add(vertices.Count - 1);
 					}
-					//else if (tile.tileTexture == "WallMat")
-					//{
-					//	triangles.Add(vertices.Count - 4);
-					//	triangles.Add(vertices.Count - 3);
-					//	triangles.Add(vertices.Count - 1);
-					//	triangles.Add(vertices.Count - 3);
-					//	triangles.Add(vertices.Count - 2);
-					//	triangles.Add(vertices.Count - 1);
-					//
-					//	Vector3 position = new Vector3(x + .5f, y + .5f, -0.5f);
-					//	Vector3 pivotOffset = new Vector3(-.5f, -.5f, 0); // bottom left origin and pivot point
-					//	
-					//	// Rotate the pivot offset
-					//	Vector3 rotatedOffset = tile.tileRotation * pivotOffset;
-					//	// Calculate the differences caused by the rotation
-					//	Vector3 offsetDifference = rotatedOffset - pivotOffset;
-					//	// Adjust the position of the object considering the rotation offset
-					//	Vector3 adjustedPosition = position - offsetDifference;
-					//	GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-					//	//cube.AddComponent<BoxCollider>();
-					//	//cube.AddComponent<MeshFilter>();
-					//	//cube.AddComponent<MeshRenderer>();
-					//	Material material = new Material(Shader.Find("Diffuse"));
-					//	material.mainTexture = spriteAtlas.GetSprite("col_tile").texture;
-					//	cube.GetComponent<MeshRenderer>().material = material;
-					//	Instantiate(cube, adjustedPosition, tile.tileRotation, transform);
-					//}
+					else if (tile.tileTexture == "WallMat")
+					{
+						triangles.Add(vertices.Count - 4);
+						triangles.Add(vertices.Count - 3);
+						triangles.Add(vertices.Count - 1);
+						triangles.Add(vertices.Count - 3);
+						triangles.Add(vertices.Count - 2);
+						triangles.Add(vertices.Count - 1);
+
+						Vector3 position = new Vector3(x + .5f, y + .5f, -0.5f);
+						Vector3 pivotOffset = new Vector3(-.5f, -.5f, 0); // bottom left origin and pivot point
+
+						// Rotate the pivot offset
+						Vector3 rotatedOffset = tile.tileRotation * pivotOffset;
+						// Calculate the differences caused by the rotation
+						Vector3 offsetDifference = rotatedOffset - pivotOffset;
+						// Adjust the position of the object considering the rotation offset
+						Vector3 adjustedPosition = position - offsetDifference;
+						Material material = new Material(Shader.Find("Diffuse"));
+						//material.mainTexture = spriteAtlas.GetSprite("col_tile").texture;
+						material.mainTexture = texture;
+						//Vector4 uv = new Vector4(x: uvMap[4][0].x, y: uvMap[4][0].y, z: uvMap[4][1].x, w: uvMap[4][1].y); //new Vector4(1, 1, 0, 0)
+						Vector4 uv = new Vector4(x: .25f, y: .25f, z: 0, w: .25f); //WallMat
+						material.SetVector("_MainTex_ST", uv);
+						prefab.GetComponent<MeshRenderer>().material = material;
+						Instantiate(prefab, adjustedPosition, Quaternion.Euler(tile.tileRotation.eulerAngles - new Vector3(90,0,0)), transform);
+					}
 					else
 					{
 						triangles.Add(vertices.Count - 4);
@@ -210,11 +220,11 @@ namespace PokemonUnity
 
 					// Add UVs
 					if (tile.tileTexture == "WallMat")
-						uvs.AddRange(uvMap[1]); 
+						uvs.AddRange(uvMap[4]);
 					else if (tile.tileTexture == "GrassMat")
-						uvs.AddRange(uvMap[2]); 
+						uvs.AddRange(uvMap[1]);
 					else if (tile.tileTexture == "FloorMat")
-						uvs.AddRange(uvMap[3]); 
+						uvs.AddRange(uvMap[0]);
 					else
 						uvs.AddRange(uvMap[uvId]); //tile.type
 				}
@@ -231,14 +241,14 @@ namespace PokemonUnity
 			mesh.RecalculateNormals();
 		}
 
-		private void OnDrawGizmos()
-		{
-			if (vertices == null) return;
-			for (int i = 0; i < vertices.Count; i++)
-			{
-				Gizmos.DrawSphere(vertices[i], .1f);
-			}
-		}
+		//private void OnDrawGizmos()
+		//{
+		//	if (vertices == null) return;
+		//	for (int i = 0; i < vertices.Count; i++)
+		//	{
+		//		Gizmos.DrawSphere(vertices[i], .1f);
+		//	}
+		//}
 
 		private struct MapTileNode
 		{
