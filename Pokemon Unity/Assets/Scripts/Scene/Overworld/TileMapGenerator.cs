@@ -28,7 +28,7 @@ namespace PokemonUnity
 	/// <summary>
 	/// </summary>
 	/// https://www.youtube.com/watch?v=64NblGkAabk
-	[RequireComponent(typeof(MeshFilter)), RequireComponent(typeof(MeshRenderer)), RequireComponent(typeof(MeshCollider))]
+	[RequireComponent(typeof(MeshFilter)), RequireComponent(typeof(MeshRenderer))]//, RequireComponent(typeof(MeshCollider))
 	public partial class TileMapGenerator : MonoBehaviour
 	{
 		public int uvId = 0;
@@ -87,17 +87,23 @@ namespace PokemonUnity
 			mesh.name = "LevelMapTiles";
 			meshFilter = GetComponent<MeshFilter>();
 			meshRenderer = GetComponent<MeshRenderer>();
-			meshCollider = GetComponent<MeshCollider>();
+			//meshCollider = GetComponent<MeshCollider>();
+			meshCollider = gameObject.AddComponent<MeshCollider>();
+			meshCollider.sharedMesh = null;
 			Material material = new Material(Shader.Find("Diffuse"));
 			//material.mainTexture = spriteAtlas.GetSprite("col_tile").texture;
 			material.mainTexture = texture;
 			meshRenderer.material = material;
-			meshFilter.mesh = mesh;
-			meshCollider.sharedMesh = mesh;
 
 			LoadMapData();
 			CreateMap();
 			UpdateMesh();
+
+
+			meshFilter.mesh = mesh;
+			meshFilter.sharedMesh = mesh;
+			//meshCollider.sharedMesh = mesh;
+			meshCollider.sharedMesh = meshFilter.sharedMesh;
 		}
 
 		private void LoadMapData()
@@ -188,10 +194,10 @@ namespace PokemonUnity
 					else if (tile.tileTexture == "WallMat")
 					{
 						triangles.Add(vertices.Count - 4);
-						triangles.Add(vertices.Count - 3);
 						triangles.Add(vertices.Count - 1);
 						triangles.Add(vertices.Count - 3);
 						triangles.Add(vertices.Count - 2);
+						triangles.Add(vertices.Count - 3);
 						triangles.Add(vertices.Count - 1);
 
 						Vector3 position = new Vector3(x + .5f, 0.5f, y + .5f);
@@ -247,6 +253,7 @@ namespace PokemonUnity
 			mesh.triangles = triangles.ToArray();
 			mesh.uv = uvs.ToArray();
 			mesh.RecalculateNormals();
+			mesh.RecalculateBounds();
 		}
 
 		//private void OnDrawGizmos()
