@@ -28,19 +28,20 @@ namespace PokemonUnity
 	/// <summary>
 	/// </summary>
 	/// https://www.youtube.com/watch?v=64NblGkAabk
-	[RequireComponent(typeof(MeshFilter)), RequireComponent(typeof(MeshRenderer))]
+	[RequireComponent(typeof(MeshFilter)), RequireComponent(typeof(MeshRenderer)), RequireComponent(typeof(MeshCollider))]
 	public partial class TileMapGenerator : MonoBehaviour
 	{
-		public GameObject prefab;
 		public int uvId = 0;
 		public Texture texture;
 		public SpriteAtlas spriteAtlas;
 		private MeshRenderer meshRenderer;
 		private MeshFilter meshFilter;
+		private MeshCollider meshCollider;
 		private Mesh mesh;
 		private List<Vector3> vertices = new List<Vector3>();
 		private List<int> triangles = new List<int>();
 		private List<Vector2> uvs = new List<Vector2>();
+		private GameObject prefab;
 		private int Width;
 		private int Height;
 		private MapTileNode[][] mapData;
@@ -73,7 +74,8 @@ namespace PokemonUnity
 					uvMap.Add(key, uvCoordinates);
 				}
 			}
-			prefab = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			//prefab = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			//GameObject.Destroy(prefab);
 			//prefab.AddComponent<BoxCollider>();
 			//prefab.AddComponent<MeshFilter>();
 			//prefab.AddComponent<MeshRenderer>();
@@ -85,11 +87,13 @@ namespace PokemonUnity
 			mesh.name = "LevelMapTiles";
 			meshFilter = GetComponent<MeshFilter>();
 			meshRenderer = GetComponent<MeshRenderer>();
+			meshCollider = GetComponent<MeshCollider>();
 			Material material = new Material(Shader.Find("Diffuse"));
 			//material.mainTexture = spriteAtlas.GetSprite("col_tile").texture;
 			material.mainTexture = texture;
 			meshRenderer.material = material;
 			meshFilter.mesh = mesh;
+			meshCollider.sharedMesh = mesh;
 
 			LoadMapData();
 			CreateMap();
@@ -164,10 +168,10 @@ namespace PokemonUnity
 					MapTileNode tile = mapData[x][y];
 
 					// Add vertices
-					vertices.Add(new Vector3(x, y, 0));
-					vertices.Add(new Vector3(x, y + 1, 0));
-					vertices.Add(new Vector3(x + 1, y + 1, 0));
-					vertices.Add(new Vector3(x + 1, y, 0));
+					vertices.Add(new Vector3(x, 0, y));
+					vertices.Add(new Vector3(x, 0, y + 1));
+					vertices.Add(new Vector3(x + 1, 0, y + 1));
+					vertices.Add(new Vector3(x + 1, 0, y));
 
 					// Add triangles
 					if (tile.tileShape == Terrains.Rock ||
@@ -190,8 +194,8 @@ namespace PokemonUnity
 						triangles.Add(vertices.Count - 2);
 						triangles.Add(vertices.Count - 1);
 
-						Vector3 position = new Vector3(x + .5f, y + .5f, -0.5f);
-						Vector3 pivotOffset = new Vector3(-.5f, -.5f, 0); // bottom left origin and pivot point
+						Vector3 position = new Vector3(x + .5f, 0.5f, y + .5f);
+						Vector3 pivotOffset = new Vector3(-.5f, 0, -.5f); // bottom left origin and pivot point
 
 						// Rotate the pivot offset
 						Vector3 rotatedOffset = tile.tileRotation * pivotOffset;
@@ -205,8 +209,12 @@ namespace PokemonUnity
 						//Vector4 uv = new Vector4(x: uvMap[4][0].x, y: uvMap[4][0].y, z: uvMap[4][1].x, w: uvMap[4][1].y); //new Vector4(1, 1, 0, 0)
 						Vector4 uv = new Vector4(x: .25f, y: .25f, z: 0, w: .25f); //WallMat
 						material.SetVector("_MainTex_ST", uv);
+						prefab = GameObject.CreatePrimitive(PrimitiveType.Cube);
 						prefab.GetComponent<MeshRenderer>().material = material;
-						Instantiate(prefab, adjustedPosition, Quaternion.Euler(tile.tileRotation.eulerAngles - new Vector3(90,0,0)), transform);
+						prefab.transform.position = adjustedPosition;
+						prefab.transform.rotation = Quaternion.Euler(tile.tileRotation.eulerAngles - new Vector3(90, 0, 0));
+						prefab.transform.SetParent(transform);
+						//Instantiate(prefab, adjustedPosition, Quaternion.Euler(tile.tileRotation.eulerAngles - new Vector3(90,0,0)), transform);
 					}
 					else
 					{
