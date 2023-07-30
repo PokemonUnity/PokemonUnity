@@ -2,6 +2,7 @@
   "dependencies": {
     "com.unity.ads": "2.0.8",
     "com.unity.analytics": "3.2.3",
+    "com.unity.cinemachine": "2.7.9",
     "com.unity.collab-proxy": "1.2.15",
     "com.unity.package-manager-ui": "2.0.13",
     "com.unity.purchasing": "2.2.1",
