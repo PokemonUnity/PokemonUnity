@@ -162,17 +162,32 @@ namespace PokemonUnity
 
 		private void CreateMap()
 		{
+			float upperLeftTile		= 0;
+			float upperRightTile	= 0;
 			for (int x = 0; x < Width; x++)
 			{
 				for (int y = 0; y < Height; y++)
 				{
 					MapTileNode tile = mapData[x][y];
+					//if (tile.tileLocation.x != x || tile.tileLocation.y != x) continue; //this would create gaps in the map if tiles are not found in array
+					upperLeftTile	= mapData[x][y].tileLocation.z; // Make last row of triangle vectors leveled
+					upperRightTile	= mapData[x][y].tileLocation.z; // Make last row of triangle vectors leveled
+					//build map from bottom left to top right
+					//if not the last row of tiles at top of map
+					//then match tile's bottom edge to next tile's top edge
+					if (y < Height - 1)
+					{
+						//this should be a boolean to check if not missing tile in map array sequence
+						//should replace expected tile with a default tile
+						upperLeftTile	= mapData[x][y + 1].tileLocation.z;
+						upperRightTile	= mapData[x][y + 1].tileLocation.z;
+					}
 
 					// Add vertices
-					vertices.Add(new Vector3(x, 0, y));
-					vertices.Add(new Vector3(x, 0, y + 1));
-					vertices.Add(new Vector3(x + 1, 0, y + 1));
-					vertices.Add(new Vector3(x + 1, 0, y));
+					vertices.Add(new Vector3(x,		tile.tileLocation.z,	y));
+					vertices.Add(new Vector3(x,		upperLeftTile,			y + 1));
+					vertices.Add(new Vector3(x + 1,	upperRightTile,			y + 1));
+					vertices.Add(new Vector3(x + 1,	tile.tileLocation.z,	y));
 
 					// Add triangles
 					if (tile.tileShape == Terrains.Rock ||
