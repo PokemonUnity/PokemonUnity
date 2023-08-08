@@ -51,21 +51,9 @@ namespace PokemonEssentials.Interface.Field
 
 	public interface ITilePosition
 	{
-		/// <summary>
-		/// Map ID
-		/// </summary>
 		int MapId { get; }
-		/// <summary>
-		/// X coordinate on that map
-		/// </summary>
 		float X { get; }
-		/// <summary>
-		/// Y coordinate on that map
-		/// </summary>
 		float Y { get; }
-		/// <summary>
-		/// Z coordinate on that map
-		/// </summary>
 		float Z { get; }
 		//IVector Vector { get; }
 		//Terrains Terrain { get; }

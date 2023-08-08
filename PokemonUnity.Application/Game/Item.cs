@@ -57,7 +57,7 @@ namespace PokemonUnity//.Inventory
 				Moves.ROCK_CLIMB,
 				Moves.ROCK_SMASH,
 				Moves.HEADBUTT,
-				Moves.DEFOG }; 
+				Moves.DEFOG };
 			//return false;
 			return hidden.Contains(move);
 		}
@@ -112,7 +112,7 @@ namespace PokemonUnity//.Inventory
 		}
 
 		public bool IsBerry (Items item) {
-			return Kernal.ItemData.ContainsKey(item) && ItemData.IsBerry(item); //[ITEMTYPE]==5 
+			return Kernal.ItemData.ContainsKey(item) && ItemData.IsBerry(item); //[ITEMTYPE]==5
 		}
 
 		public bool IsKeyItem (Items item) {
@@ -185,7 +185,7 @@ namespace PokemonUnity//.Inventory
 				//pokemon.Exp=Experience.GetStartExperience(pokemon.GrowthRate, newlevel);
 				pokemon.calcStats();
 				scene.Refresh();
-				(this as IGameMessage).Message(Game._INTL("{1} was downgraded to Level {2}!",pokemon.Name,pokemon.Level));
+				GameMessage.Message(Game._INTL("{1} was downgraded to Level {2}!",pokemon.Name,pokemon.Level));
 				attackdiff=pokemon.ATK-attackdiff;
 				defensediff=pokemon.DEF-defensediff;
 				speeddiff=pokemon.SPE-speeddiff;
@@ -197,7 +197,7 @@ namespace PokemonUnity//.Inventory
 				TopRightWindow(Game._INTL("Max. HP<r>{1}\r\nAttack<r>{2}\r\nDefense<r>{3}\r\nSp. Atk<r>{4}\r\nSp. Def<r>{5}\r\nSpeed<r>{6}",
 					pokemon.TotalHP,pokemon.ATK,pokemon.DEF,pokemon.SPA,pokemon.SPD,pokemon.SPE));
 			} else if (pokemon.Level==newlevel) {
-				(this as IGameMessage).Message(Game._INTL("{1}'s level remained unchanged.",pokemon.Name));
+				GameMessage.Message(Game._INTL("{1}'s level remained unchanged.",pokemon.Name));
 			} else {
 				int attackdiff=pokemon.ATK;
 				int defensediff=pokemon.DEF;
@@ -209,10 +209,10 @@ namespace PokemonUnity//.Inventory
 				//pokemon.Level=newlevel;
 				(pokemon as Pokemon).SetLevel((byte)newlevel);
 				//pokemon.Exp = Experience.GetStartExperience(pokemon.GrowthRate, newlevel);
-				(pokemon as Pokemon).ChangeHappiness(HappinessMethods.LEVELUP);
+				pokemon.ChangeHappiness(HappinessMethods.LEVELUP);
 				pokemon.calcStats();
 				scene.Refresh();
-				(this as IGameMessage).Message(Game._INTL("{1} was elevated to Level {2}!",pokemon.Name,pokemon.Level));
+				GameMessage.Message(Game._INTL("{1} was elevated to Level {2}!",pokemon.Name,pokemon.Level));
 				attackdiff=pokemon.ATK-attackdiff;
 				defensediff=pokemon.DEF-defensediff;
 				speeddiff=pokemon.SPE-speeddiff;
@@ -225,7 +225,7 @@ namespace PokemonUnity//.Inventory
 					pokemon.TotalHP,pokemon.ATK,pokemon.DEF,pokemon.SPA,pokemon.SPD,pokemon.SPE));
 				//Moves[] movelist=pokemon.getMoveList();
 				//foreach (Moves i in pokemon.getMoveList(LearnMethod.levelup)) { //movelist
-				foreach (KeyValuePair<Moves,int> i in Kernal.PokemonMovesData[pokemon.Species].LevelUp) { 
+				foreach (KeyValuePair<Moves,int> i in Kernal.PokemonMovesData[pokemon.Species].LevelUp) {
 					if (i.Value==pokemon.Level) {		// Learned a new move
 						LearnMove(pokemon,i.Key,true);
 					}
@@ -329,7 +329,7 @@ namespace PokemonUnity//.Inventory
 				return false;
 			}
 			if (h) {
-				(pokemon as Pokemon).ChangeHappiness(HappinessMethods.EVBERRY);
+				pokemon.ChangeHappiness(HappinessMethods.EVBERRY);
 			}
 			if (e) {
 				pokemon.EV[(int)ev]-=10;
@@ -364,17 +364,17 @@ namespace PokemonUnity//.Inventory
 		public bool BikeCheck() {
 			if (Global.surfing ||
 				(!Global.bicycle && Terrain.onlyWalk((this as PokemonEssentials.Interface.Field.IGameField).GetTerrainTag()))) {
-				(this as IGameMessage).Message(Game._INTL("Can't use that here."));
+				GameMessage.Message(Game._INTL("Can't use that here."));
 				return false;
 			}
 			if (GamePlayer.HasDependentEvents()) {
-				(this as IGameMessage).Message(Game._INTL("It can't be used when you have someone with you."));
+				GameMessage.Message(Game._INTL("It can't be used when you have someone with you."));
 				return false;
 			}
 			if (Global.bicycle) {
 				//if (GetMetadata(GameMap.map_id,MetadataBicycleAlways)) {
 				if (GetMetadata(GameMap.map_id).Map.BicycleAlways) {
-					(this as IGameMessage).Message(Game._INTL("You can't dismount your Bike here."));
+					GameMessage.Message(Game._INTL("You can't dismount your Bike here."));
 					return false;
 				}
 				return true;
@@ -384,7 +384,7 @@ namespace PokemonUnity//.Inventory
 				//if (val == null) val=GetMetadata(GameMap.map_id,MetadataOutdoor);
 				if (val == null) val=GetMetadata(GameMap.map_id).Map.Outdoor;
 				if (val == null) {
-					(this as IGameMessage).Message(Game._INTL("Can't use that here."));
+					GameMessage.Message(Game._INTL("Can't use that here."));
 					return false;
 				}
 				return true;
@@ -392,10 +392,10 @@ namespace PokemonUnity//.Inventory
 		}
 
 		public IGameCharacter ClosestHiddenItem() {
-			List<IGameEvent> result = new List<IGameEvent>();
+			IList<IGameCharacter> result = new List<IGameCharacter>();
 			float playerX=GamePlayer.x;
 			float playerY=GamePlayer.y;
-			foreach (IGameEvent @event in GameMap.events.Values) {
+			foreach (IGameCharacter @event in GameMap.events.Values) {
 				if (@event.name!="HiddenItem") continue;
 				if (Math.Abs(playerX-@event.x)>=8) continue;
 				if (Math.Abs(playerY-@event.y)>=6) continue;
@@ -405,7 +405,7 @@ namespace PokemonUnity//.Inventory
 			if (result.Count==0) return null;
 			IGameCharacter ret=null;
 			float retmin=0;
-			foreach (IGameEvent @event in result) {
+			foreach (IGameCharacter @event in result) {
 				float dist=Math.Abs(playerX-@event.x)+Math.Abs(playerY-@event.y);
 				if (ret == null || retmin>dist) {
 					ret=@event;
@@ -417,7 +417,7 @@ namespace PokemonUnity//.Inventory
 
 		public void UseKeyItemInField(Items item) {
 			if (!ItemHandlers.triggerUseInField(item)) {
-				(this as IGameMessage).Message(Game._INTL("Can't use that here."));
+				GameMessage.Message(Game._INTL("Can't use that here."));
 			}
 		}
 
@@ -444,45 +444,45 @@ namespace PokemonUnity//.Inventory
 			if (!pokemon.IsNotNullOrNone()) return false;
 			string movename=Game._INTL(move.ToString(TextScripts.Name));
 			if (pokemon.isEgg && !Core.DEBUG) {
-				(this as IGameMessage).Message(Game._INTL("{1} can't be taught to an Egg.",movename));
+				GameMessage.Message(Game._INTL("{1} can't be taught to an Egg.",movename));
 				return false;
 			}
 			if (pokemon is IPokemonShadowPokemon p && p.isShadow) {
-				(this as IGameMessage).Message(Game._INTL("{1} can't be taught to this Pokémon.",movename));
+				GameMessage.Message(Game._INTL("{1} can't be taught to this Pokémon.",movename));
 				return false;
 			}
 			string pkmnname=pokemon.Name;
 			for (int i = 0; i < 4; i++) {
 				if (pokemon.moves[i].id==move) {
-					if (!ignoreifknown) (this as IGameMessage).Message(Game._INTL("{1} already knows {2}.",pkmnname,movename));
+					if (!ignoreifknown) GameMessage.Message(Game._INTL("{1} already knows {2}.",pkmnname,movename));
 					return false;
 				}
 				if (pokemon.moves[i].id==0) {
 					pokemon.moves[i]=new Attack.Move(move);
-					(this as IGameMessage).Message(Game._INTL("\\se[]{1} learned {2}!\\se[MoveLearnt]",pkmnname,movename));
+					GameMessage.Message(Game._INTL("\\se[]{1} learned {2}!\\se[MoveLearnt]",pkmnname,movename));
 					return true;
 				}
 			}
 			do { //;loop
-				(this as IGameMessage).Message(Game._INTL("{1} wants to learn the move {2}.",pkmnname,movename));
-				(this as IGameMessage).Message(Game._INTL("However, {1} already knows four moves.",pkmnname));
-				if ((this as IGameMessage).ConfirmMessage(Game._INTL("Should a move be deleted and replaced with {1}?",movename))) {
-					(this as IGameMessage).Message(Game._INTL("Which move should be forgotten?"));
+				GameMessage.Message(Game._INTL("{1} wants to learn the move {2}.",pkmnname,movename));
+				GameMessage.Message(Game._INTL("However, {1} already knows four moves.",pkmnname));
+				if (GameMessage.ConfirmMessage(Game._INTL("Should a move be deleted and replaced with {1}?",movename))) {
+					GameMessage.Message(Game._INTL("Which move should be forgotten?"));
 					int forgetmove=ForgetMove(pokemon,move);
 					if (forgetmove>=0) {
 						string oldmovename=Game._INTL(pokemon.moves[forgetmove].id.ToString(TextScripts.Name));
 						int oldmovepp=pokemon.moves[forgetmove].PP;
 						pokemon.moves[forgetmove]=new Attack.Move(move); // Replaces current/total PP
 						if (bymachine) pokemon.moves[forgetmove].PP=Math.Min(oldmovepp,pokemon.moves[forgetmove].TotalPP);
-						(this as IGameMessage).Message(Game._INTL("\\se[]1,\\wt[16] 2, and\\wt[16]...\\wt[16] ...\\wt[16] ... Ta-da!\\se[balldrop]"));
-						(this as IGameMessage).Message(Game._INTL("\\se[]{1} forgot how to use {2}. And... {1} learned {3}!\\se[MoveLearnt]",pkmnname,oldmovename,movename));
+						GameMessage.Message(Game._INTL("\\se[]1,\\wt[16] 2, and\\wt[16]...\\wt[16] ...\\wt[16] ... Ta-da!\\se[balldrop]"));
+						GameMessage.Message(Game._INTL("\\se[]{1} forgot how to use {2}. And... {1} learned {3}!\\se[MoveLearnt]",pkmnname,oldmovename,movename));
 						return true;
-					} else if ((this as IGameMessage).ConfirmMessage(Game._INTL("Give up on learning the move {1}?",movename))) {
-						(this as IGameMessage).Message(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
+					} else if (GameMessage.ConfirmMessage(Game._INTL("Give up on learning the move {1}?",movename))) {
+						GameMessage.Message(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
 						return false;
 					}
-				} else if ((this as IGameMessage).ConfirmMessage(Game._INTL("Give up on learning the move {1}?",movename))) {
-					(this as IGameMessage).Message(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
+				} else if (GameMessage.ConfirmMessage(Game._INTL("Give up on learning the move {1}?",movename))) {
+					GameMessage.Message(Game._INTL("{1} did not learn {2}.",pkmnname,movename));
 					return false;
 				}
 			} while (true);
@@ -517,19 +517,19 @@ namespace PokemonUnity//.Inventory
 				if (machine==Moves.NONE) return false;
 				string movename=Game._INTL(machine.ToString(TextScripts.Name));
 				if (pokemon is IPokemonShadowPokemon p && p.isShadow) { //? rescue false
-					(this as IGameMessage).Message(Game._INTL("Shadow Pokémon can't be taught any moves."));
+					GameMessage.Message(Game._INTL("Shadow Pokémon can't be taught any moves."));
 				} else if (!pokemon.isCompatibleWithMove(machine)) {
-					(this as IGameMessage).Message(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
-					(this as IGameMessage).Message(Game._INTL("{1} can't be learned.",movename));
+					GameMessage.Message(Game._INTL("{1} and {2} are not compatible.",pokemon.Name,movename));
+					GameMessage.Message(Game._INTL("{1} can't be learned.",movename));
 				} else {
 					if (IsHiddenMachine(item)) {
-						(this as IGameMessage).Message(Game._INTL("\\se[accesspc]Booted up an HM."));
-						(this as IGameMessage).Message(Game._INTL(@"It contained {1}.\1",movename));
+						GameMessage.Message(Game._INTL("\\se[accesspc]Booted up an HM."));
+						GameMessage.Message(Game._INTL(@"It contained {1}.\1",movename));
 					} else {
-						(this as IGameMessage).Message(Game._INTL("\\se[accesspc]Booted up a TM."));
-						(this as IGameMessage).Message(Game._INTL(@"It contained {1}.\1",movename));
+						GameMessage.Message(Game._INTL("\\se[accesspc]Booted up a TM."));
+						GameMessage.Message(Game._INTL(@"It contained {1}.\1",movename));
 					}
-					if ((this as IGameMessage).ConfirmMessage(Game._INTL("Teach {1} to {2}?",movename,pokemon.Name))) {
+					if (GameMessage.ConfirmMessage(Game._INTL("Teach {1} to {2}?",movename,pokemon.Name))) {
 						if (LearnMove(pokemon,machine,false,true)) {
 							if (IsTechnicalMachine(item) && !Core.INFINITETMS) Bag.DeleteItem(item);
 							return true;
@@ -545,11 +545,11 @@ namespace PokemonUnity//.Inventory
 					Bag.DeleteItem(item);
 				}
 				if (Bag.Quantity(item)<=0) {
-					(this as IGameMessage).Message(Game._INTL("You used your last {1}.",Game._INTL(item.ToString(TextScripts.Name))));
+					GameMessage.Message(Game._INTL("You used your last {1}.",Game._INTL(item.ToString(TextScripts.Name))));
 				}
 				return ret;
 			}
-			(this as IGameMessage).Message(Game._INTL("Can't use that on {1}.",pokemon.Name));
+			GameMessage.Message(Game._INTL("Can't use that on {1}.",pokemon.Name));
 			return false;
 		}
 
@@ -560,18 +560,18 @@ namespace PokemonUnity//.Inventory
 				Moves machine=Kernal.MachineData[(int)item].Move;
 				if (machine==Moves.NONE) return 0;
 				if (Trainer.pokemonCount==0) {
-					(this as IGameMessage).Message(Game._INTL("There is no Pokémon."));
+					GameMessage.Message(Game._INTL("There is no Pokémon."));
 					return 0;
 				}
 				string movename=Game._INTL(machine.ToString(TextScripts.Name));
 				if (IsHiddenMachine(item)) {
-					(this as IGameMessage).Message(Game._INTL("\\se[accesspc]Booted up an HM."));
-					(this as IGameMessage).Message(Game._INTL(@"It contained {1}.\1",movename));
+					GameMessage.Message(Game._INTL("\\se[accesspc]Booted up an HM."));
+					GameMessage.Message(Game._INTL(@"It contained {1}.\1",movename));
 				} else {
-					(this as IGameMessage).Message(Game._INTL("\\se[accesspc]Booted up a TM."));
-					(this as IGameMessage).Message(Game._INTL(@"It contained {1}.\1",movename));
+					GameMessage.Message(Game._INTL("\\se[accesspc]Booted up a TM."));
+					GameMessage.Message(Game._INTL(@"It contained {1}.\1",movename));
 				}
-				if (!(this as IGameMessage).ConfirmMessage(Game._INTL("Teach {1} to a Pokémon?",movename))) {
+				if (!GameMessage.ConfirmMessage(Game._INTL("Teach {1} to a Pokémon?",movename))) {
 					return 0;
 				} else if (MoveTutorChoose(machine,null,true)) {
 					if (IsTechnicalMachine(item) && !Core.INFINITETMS) bag.DeleteItem(item);
@@ -581,7 +581,7 @@ namespace PokemonUnity//.Inventory
 				}
 			} else if (Kernal.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1|[ITEMUSE]==5 Item is usable on a Pokémon
 				if (Trainer.pokemonCount==0) {
-					(this as IGameMessage).Message(Game._INTL("There is no Pokémon."));
+					GameMessage.Message(Game._INTL("There is no Pokémon."));
 					return 0;
 				}
 				bool ret=false;
@@ -610,7 +610,7 @@ namespace PokemonUnity//.Inventory
 									bag.DeleteItem(item);
 								}
 								if (bag.Quantity(item)<=0) {
-									(this as IGameMessage).Message(Game._INTL("You used your last {1}.",Game._INTL(item.ToString(TextScripts.Name))));
+									GameMessage.Message(Game._INTL("You used your last {1}.",Game._INTL(item.ToString(TextScripts.Name))));
 									break;
 								}
 							}
@@ -639,11 +639,11 @@ namespace PokemonUnity//.Inventory
 						bag.DeleteItem(item);
 						return 2;
 					default:
-						(this as IGameMessage).Message(Game._INTL("Can't use that here."));
+						GameMessage.Message(Game._INTL("Can't use that here."));
 						return 0;
 				}
 			} else {
-				(this as IGameMessage).Message(Game._INTL("Can't use that here."));
+				GameMessage.Message(Game._INTL("Can't use that here."));
 				return 0;
 			}
 		}
@@ -652,7 +652,7 @@ namespace PokemonUnity//.Inventory
 			Items ret=0; //int?
 			IBagScene scene=Scenes.Bag; //new PokemonBag_Scene();
 			IBagScreen screen=Screens.Bag.initialize(scene,Bag); //new PokemonBagScreen(scene,Bag);
-			FadeOutIn(99999, block: () => { 
+			FadeOutIn(99999, block: () => {
 				ret=screen.ChooseItemScreen();
 			});
 			if (var>0) GameVariables[var]=ret;
@@ -685,7 +685,7 @@ namespace PokemonUnity//.Inventory
 			}
 			commands.Add(Game._INTL("Cancel"));
 			itemid.Add(0);
-			int ret=(this as IGameMessage).Message(message,commands.ToArray(),-1);
+			int ret=GameMessage.Message(message,commands.ToArray(),-1);
 			if (ret<0 || ret>=commands.Count-1) {
 				GameVariables[variable]=-1;
 				return Items.NONE;
@@ -703,12 +703,12 @@ namespace PokemonUnity//.Inventory
 			window.x=Graphics.width-window.width;
 			(this as IGameAudioPlay).PlayDecisionSE();
 			do { //;loop
-			  Graphics?.update();
-			  Input.update();
-			  window.update();
-			  if (Input.trigger(Input.A)) {
-			    break;
-			  }
+				Graphics?.update();
+				Input.update();
+				window.update();
+				if (Input.trigger(PokemonUnity.Input.A)) {
+					break;
+				}
 			} while (true);
 			window.Dispose();
 		}

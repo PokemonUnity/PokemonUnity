@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity;
+using PokemonUnity.Character;
 using PokemonUnity.Overworld;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
@@ -11,7 +12,7 @@ using PokemonEssentials.Interface.EventArg;
 namespace PokemonUnity
 {
 	public partial class Game : IGameMetadataMisc
-	{		
+	{
 		#region Manipulation methods for metadata, phone data and Pokémon species data
 		public IDictionary<int,IPokemonMetadata> LoadMetadata() {
 			if (PokemonTemp == null) PokemonTemp=new PokemonTemp();
@@ -33,19 +34,19 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public PokemonEssentials.Interface.Field.GlobalMetadata? GetMetadata(int mapid,GlobalMetadatas metadataType) {
-			IDictionary<int,IPokemonMetadata> meta=LoadMetadata();
-			if (meta[mapid] != null) return meta[mapid].Global; //[metadataType]
-			return null;
-		}
+		//public PokemonEssentials.Interface.Field.GlobalMetadata? GetMetadata(int mapid,GlobalMetadatas metadataType) {
+		//	IDictionary<int,IPokemonMetadata> meta=LoadMetadata();
+		//	if (meta[mapid] != null) return meta[mapid].Global; //[metadataType]
+		//	return null;
+		//}
 
-		public MapMetadata? GetMetadata(int mapid,MapMetadatas metadataType) {
-			IDictionary<int,IPokemonMetadata> meta=LoadMetadata();
-			if (meta[mapid] != null) return meta[mapid].Map; //[metadataType]
-			return null;
-		}
+		//public MapMetadata? GetMetadata(int mapid,MapMetadatas metadataType) {
+		//	IDictionary<int,IPokemonMetadata> meta=LoadMetadata();
+		//	if (meta[mapid] != null) return meta[mapid].Map; //[metadataType]
+		//	return null;
+		//}
 
-		public IList<int> LoadPhoneData() {
+		public IList<IPhoneMessageData> LoadPhoneData() {
 			if (PokemonTemp == null) PokemonTemp=new PokemonTemp();
 			if (PokemonTemp.pokemonPhoneData == null) {
 				//RgssOpen("Data/phone.dat","rb"){|f|

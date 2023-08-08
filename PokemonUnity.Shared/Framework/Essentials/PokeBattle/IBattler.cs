@@ -11,7 +11,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
-	public interface IBattler : IEquatable<IBattler>, IEqualityComparer<IBattler>
+	public interface IBattler
 	{
 		IBattle battle				{ get; }
 		IPokemon pokemon			{ get; }
@@ -217,7 +217,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		PokemonUnity.Attack.Data.Targets Target(IBattleMove move);
 
-		bool AddTarget(ref IList<IBattler> targets, IBattler target);
+		bool AddTarget(IList<IBattler> targets, IBattler target);
 
 		void RandomTarget(IList<IBattler> targets);
 

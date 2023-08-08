@@ -15,14 +15,14 @@ namespace PokemonEssentials.Interface
 	namespace EventArg
 	{
 		#region Encounter Modifier EventArgs
-		public interface IEncounterModifierEventArgs : IEventArgs
+		public interface IEncounterModifierEventArgs : IEventArgs, IEncounterPokemon
 		{
 			//readonly int EventId = typeof(EncounterModifierEventArgs).GetHashCode();
 
 			//int Id { get; }
 			//ToDo: Either it's the encounter logic or the pokemon itself...
-			//[species,min/max]; i dont think there's 3 parameters...
-			IEncounter Encounter { get; set; }
+			//[species,min/max]
+			//IEncounterPokemon Encounter { get; set; }
 		}
 		#endregion
 	}
@@ -37,19 +37,20 @@ namespace PokemonEssentials.Interface
 		public interface IEncounterModifier
 		{
 			//ToDo: Either it's the encounter logic or the pokemon itself...
-			//List<Action<IEncounter>> procs { get; }
+			//List<Action<IEncounterPokemon>> procs { get; }
 			//List<Action> procsEnd { get; }
 
 			//event EventHandler<IEncounterModifierEventArgs> OnEncounter;
 			event Action<object, IEncounterModifierEventArgs> OnEncounter;
 			event EventHandler OnEncounterEnd;
 
-			//void register(Action<IEncounter> p);
+			//void register(Action<IEncounterPokemon> p);
 
-			//void registerEncounterEnd(Action<IEncounter> p);
+			//void registerEncounterEnd(Action<IEncounterPokemon> p);
 			//void registerEncounterEnd(Action p);
 
-			//IEncounter trigger(IEncounter encounter);
+			//IEncounterPokemon trigger(IEncounterPokemon encounter);
+			void triggerEncounter(IEncounterPokemon encounter);
 
 			void triggerEncounterEnd();
 		}
@@ -87,15 +88,17 @@ namespace PokemonEssentials.Interface
 
 			IPokemon GenerateWildPokemon(Pokemons species, int level, bool isroamer = false);
 
-			bool ControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
-						PokemonUnity.Monster.Natures? nature = null, bool? gender = null, Items? item = null, bool? shiny = null,
-						int outcomeVar = 1, bool canRun = true, bool canLose = false);
+			//bool ControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
+			//			PokemonUnity.Monster.Natures? nature = null, bool? gender = null, Items? item = null, bool? shiny = null,
+			//			int outcomeVar = 1, bool canRun = true, bool canLose = false);
 
-			PokemonUnity.Combat.BattleResults WildBattleCore(IPokemon pkmn, int? variable = null, bool canescape = true, bool canlose = false);
+			//PokemonUnity.Combat.BattleResults WildBattleCore(IPokemon pkmn, int? variable = null, bool canescape = true, bool canlose = false);
 
-			PokemonUnity.Combat.BattleResults WildBattle(Pokemons species, int level, int? variable = null, bool canescape = true, bool canlose = false);
+			bool WildBattle(Pokemons species, int level, int? variable = null, bool canescape = true, bool canlose = false);
+			//PokemonUnity.Combat.BattleResults WildBattle(Pokemons species, int level, int? variable = null, bool canescape = true, bool canlose = false);
 
-			PokemonUnity.Combat.BattleResults DoubleWildBattle(Pokemons species1, int level1, Pokemons species2, int level2, int? variable = null, bool canescape = true, bool canlose = false);
+			bool DoubleWildBattle(Pokemons species1, int level1, Pokemons species2, int level2, int? variable = null, bool canescape = true, bool canlose = false);
+			//PokemonUnity.Combat.BattleResults DoubleWildBattle(Pokemons species1, int level1, Pokemons species2, int level2, int? variable = null, bool canescape = true, bool canlose = false);
 
 			void CheckAllFainted();
 
@@ -109,7 +112,8 @@ namespace PokemonEssentials.Interface
 			/// <param name="pokemon"></param>
 			void Pickup(IPokemon pokemon);
 
-			bool Encounter(Method enctype);
+			bool Encounter(EncounterOptions enctype);
+			//bool Encounter(Method enctype);
 
 			event EventHandler OnStartBattle;
 			//Events.onStartBattle+=delegate(object sender, EventArgs e) {
@@ -376,6 +380,9 @@ namespace PokemonEssentials.Interface
 		// ===============================================================================
 		// Events
 		// ===============================================================================
+		/// <summary>
+		/// Extension of <see cref="IGame"/>
+		/// </summary>
 		public interface IGameEventField
 		{
 			bool cooledDown(int seconds);
@@ -383,7 +390,10 @@ namespace PokemonEssentials.Interface
 			bool cooledDownDays(int days);
 		}
 
-		public interface IInterpreterFieldMixinField
+		/// <summary>
+		/// Extension of <see cref="IInterpreter"/>
+		/// </summary>
+		public interface IInterpreterFieldMixinField : IInterpreterFieldMixin
 		{
 			/// <summary>
 			/// Used in boulder events. Allows an event to be pushed. To be used in

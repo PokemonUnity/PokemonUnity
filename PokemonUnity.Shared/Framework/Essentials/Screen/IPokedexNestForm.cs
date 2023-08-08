@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IGamePokedexNest
 	{
-		bool FindEncounter(IEncounter encounter, Pokemons species);
+		bool FindEncounter(IEncounterPokemon encounter, Pokemons species);
 	}
 
 	/// <summary>
@@ -50,7 +50,7 @@ namespace PokemonEssentials.Interface.Screen
 	{
 		void Update();
 		//void Refresh();
-		List<PokemonUnity.Monster.Forms> GetAvailable(); //returns [Name, Gender, Form] 
+		List<PokemonUnity.Monster.Forms> GetAvailable(); //returns [Name, Gender, Form]
 		List<string> GetCommands();
 		void ChooseForm();
 		void EndScene();

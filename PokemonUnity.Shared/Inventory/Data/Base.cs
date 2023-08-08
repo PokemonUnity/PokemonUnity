@@ -90,30 +90,30 @@ namespace PokemonUnity.Inventory
 		public int? FlingPower { get; private set; }
 		public int[] Generations { get; private set; }
 
-		//public bool IsLetter 
-		//{ 
-		//	get 
+		//public bool IsLetter
+		//{
+		//	get
 		//	{
 		//		return IsLetter(Id);
-		//	} 
+		//	}
 		//}
 		//public bool IsPokeBall
-		//{ 
-		//	get 
+		//{
+		//	get
 		//	{
 		//		return IsPokeBall(Id);
-		//	} 
+		//	}
 		//}
-		//public bool IsBerry 
-		//{ 
-		//	get 
+		//public bool IsBerry
+		//{
+		//	get
 		//	{
 		//		return IsBerry(Id);
-		//	} 
+		//	}
 		//}
-		//public bool IsApricon 
-		//{ 
-		//	get 
+		//public bool IsApricon
+		//{
+		//	get
 		//	{
 		//		return IsApricon(Id);
 		//	}
@@ -401,9 +401,5 @@ namespace PokemonUnity.Inventory
 		{
 			return Id.ToString(text);
 		}
-	}
-
-	public static class Item
-	{
 	}
 }

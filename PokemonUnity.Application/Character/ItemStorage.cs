@@ -36,8 +36,8 @@ namespace PokemonUnity.Character
 			@items = new Items[0]; //[];
 			//  Start storage with a Potion
 			//if (hasConst(Items,:POTION)) {
-				//ItemStorageHelper.StoreItem(ref
-				//   @items.ToArray(), MAXSIZE, MAXPERSLOT, Items.POTION, 1);
+				ItemStorageHelper.StoreItem(
+				   @items, MAXSIZE, MAXPERSLOT, Items.POTION, 1);
 			//}
 			return this;
 		}
@@ -89,27 +89,26 @@ namespace PokemonUnity.Character
 
 		public int Quantity(Items item)
 		{
-			return ItemStorageHelper.Quantity(@items.ToArray(), MAXSIZE, item);
+			return ItemStorageHelper.Quantity(@items, MAXSIZE, item);
 		}
 
 		public bool DeleteItem(Items item, int qty = 1)
 		{
-			Items[] i = @items.ToArray();
-			//return ItemStorageHelper.DeleteItem(ref @items.ToArray(), MAXSIZE, item, qty);
-			return ItemStorageHelper.DeleteItem(ref i, MAXSIZE, item, qty);
+			return ItemStorageHelper.DeleteItem(@items, MAXSIZE, item, qty);
+			//Items[] i = @items.ToArray();
+			//return ItemStorageHelper.DeleteItem(i, MAXSIZE, item, qty);
 		}
 
 		public bool CanStore(Items item, int qty = 1)
 		{
-			return ItemStorageHelper.CanStore(@items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
+			return ItemStorageHelper.CanStore(@items, MAXSIZE, MAXPERSLOT, item, qty);
 		}
 
 		public bool StoreItem(Items item, int qty = 1)
 		{
+			return ItemStorageHelper.StoreItem(@items, MAXSIZE, MAXPERSLOT, item, qty);
 			//Items[] i = @items.ToArray();
-			//return ItemStorageHelper.StoreItem(@items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
 			//return ItemStorageHelper.StoreItem(ref items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
-			return false; //ToDo: Uncomment and Finish
 		}
 
 		#region Interface Methods

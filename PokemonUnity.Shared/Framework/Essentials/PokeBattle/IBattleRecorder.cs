@@ -100,8 +100,8 @@ namespace PokemonEssentials.Interface.PokeBattle
 	//ToDo: maybe add <out IBattle> to interface?
 	public interface IBattleRecordData
 	{
+		//int GetBattleType(); //{ get; }
 		int battletype { get; }
-		//ToDo: this should be replaced with json object class
 		//IDictionary properties { get; }
 		IBattleMetaData properties { get; }
 		//IList<int[][]> rounds { get; }

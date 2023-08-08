@@ -64,14 +64,14 @@ namespace PokemonUnity
 			@decision=0;
 			Game.GameData.GameMap.need_refresh=true;
 		}
-        ~SafariState()
-        {
-            Events.OnMapChange -= Events_OnMapChange;
-            Events.OnStepTakenTransferPossible -= Events_OnStepTakenTransferPossible;
-            Events.OnWildBattleOverride -= Events_OnWildBattleOverride;
-        }
+		~SafariState()
+		{
+			Events.OnMapChange -= Events_OnMapChange;
+			Events.OnStepTakenTransferPossible -= Events_OnStepTakenTransferPossible;
+			Events.OnWildBattleOverride -= Events_OnWildBattleOverride;
+		}
 
-        public ISafariState initialize()
+		public ISafariState initialize()
 		{
 			@start=null;
 			@ballcount=0;

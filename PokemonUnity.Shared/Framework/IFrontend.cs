@@ -46,7 +46,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		IGameScreensUI initialize(params PokemonEssentials.Interface.Screen.IScreen[] screens);
 	}
-		
+
 	public interface IGameScenesUI
 	{
 		PokemonEssentials.Interface.Screen.IPokemonEntryScene TextEntryScene { get; }
@@ -62,7 +62,7 @@ namespace PokemonEssentials.Interface.Screen
 		PokemonEssentials.Interface.Screen.IWithdrawItemScene Bag_ItemWithdraw { get; }
 		PokemonEssentials.Interface.Screen.ITossItemScene Bag_ItemToss { get; }
 		//PokemonEssentials.Interface.Screen. RegionMap { get; }
-		//PokemonEssentials.Interface.Screen. Phone { get; }
+		PokemonEssentials.Interface.Screen.IPokemonPhoneScene Phone { get; }
 		PokemonEssentials.Interface.Screen.IPokegearScene PokeGear { get; }
 		PokemonEssentials.Interface.Screen.ITrainerCardScene TrainerCard { get; }
 		PokemonEssentials.Interface.Screen.IPokemonStorageScene PokemonStorageScene { get; }
@@ -92,70 +92,3 @@ namespace PokemonEssentials.Interface.Screen
 		IGameScenesUI initialize(params PokemonEssentials.Interface.Screen.IScene[] scenes);
 	}
 }
-
-/*namespace PokemonUnity.UX
-{
-	public interface IFrontEnd
-	{
-		void beginRecordUI();
-		void endRecord(string path);
-		IAudioObject getWaveDataUI(string path, bool n);
-
-		IAudioObject GetWildBattleBGM(Pokemons species);
-		IAudioObject GetTrainerBattleBGM(Trainer[] trainer);
-		IAudioObject GetTrainerBattleBGM(TrainerData[] trainer);
-
-		void BGMFade(float duration);
-		void BGSFade(float duration);
-		void FadeOutIn(int value, Action action);
-		void FadeOutInWithMusic(int value, Action action);
-		void CueBGM(IAudioObject bgm, float value);
-		void CueBGM(string bgm, float value, float vol, float pitch);
-		float Audio_bgm_get_volume();
-		void Audio_bgm_set_volume(float n);
-		void me_stop();
-		void SEStop();
-		void PlayDecisionSE();
-		void PlayBuzzerSE();
-		void SEPlay(string name);
-		void BGMPlay(IAudioObject name);
-		void BGMPlay(string name, float vol, float pitch);
-		void BGSPlay(IAudioObject name);
-		void MEPlay(string name);
-		void PlayTrainerIntroME(TrainerTypes trainertype);
-
-		IWindow CreateMessageWindow();
-		IEnumerator MessageDisplay(IWindow display, string msg, bool value = true);
-		void DisposeMessageWindow(IWindow display);
-
-		void Message(string message);
-		bool ConfirmMessage(string message);
-		//int MessageChooseNumber(string message, ChooseNumberParams arg);
-
-		bool ResolveBitmap(string path);
-		bool IsFaded { get; }
-
-		void UpdateSceneMap();
-		void SceneStandby(Action action);
-		IPokeBattle_Scene NewBattleScene();
-		void BattleAnimation(IAudioObject bgm, Action action);
-		void BattleAnimation(IAudioObject bgm, TrainerTypes trainer, string name, Action action);
-
-		#region TextEntry
-		string EnterText(string helptext, int minlength, int maxlength, string initialText = "", int mode = 0, Monster.Pokemon pokemon = null, bool nofadeout = false);
-
-		string EnterPlayerName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
-
-		string EnterPokemonName(string helptext, int minlength, int maxlength, string initialText = "", Monster.Pokemon pokemon = null, bool nofadeout = false);
-
-		string EnterBoxName(string helptext, int minlength, int maxlength, string initialText = "", bool nofadeout = false);
-
-		string EnterNPCName(string helptext, int minlength, int maxlength, string initialText = "", int id = 0, bool nofadeout = false);
-		#endregion
-
-		#region Replace Static Graphic
-		void update();
-		void frame_reset();
-		#endregion
-	}
-}*/

@@ -35,13 +35,13 @@ namespace PokemonUnity
 
 		public Game()
 		{
-			Rival = new string[0];
+			//Rival = new string[0];
 			Features = new Feature();
 			#region Public Constructor
 			//	Game boots up
 			//		* Game engine calls private constructor to begin process
-			//		* private constructor creates public constructor as default/placeholder 
-			//	Check files/database 
+			//		* private constructor creates public constructor as default/placeholder
+			//	Check files/database
 			//		* Issue update patch if files are outdated
 			//		* Redownload if files are corrupt or broken
 			//	Load data one by one, ensure validity
@@ -69,17 +69,14 @@ namespace PokemonUnity
 			#endregion
 		}
 
-		public Game(PokemonEssentials.Interface.IGamePlayer player, Feature? features = null, Challenges challenge = Challenges.Classic, Locations checkpoint = Locations.PALLET_TOWN, int area = 0, int repelSteps = 0, string[] rival = null, 
+		public Game(PokemonEssentials.Interface.IGamePlayer player, Feature? features = null, Challenges challenge = Challenges.Classic, //string[] rival = null,
 			string playerItemData = null, string playerDayCareData = null, string playerBerryData = null, string playerNPCData = null, string playerApricornData = null)
 		{
 			Features = features ?? new Feature();
 			Challenge = challenge;
 			//Player = player ?? new Player();
 			//Trainer = trainer ?? new Combat.Trainer();
-			Checkpoint = checkpoint;
-			Area = area;
-			RepelSteps = repelSteps;
-			Rival = rival							?? new string[0];//throw new ArgumentNullException(nameof(rival));
+			//Rival = rival							?? new string[0];//throw new ArgumentNullException(nameof(rival));
 			PlayerItemData = playerItemData			?? string.Empty;//throw new ArgumentNullException(nameof(playerItemData));
 			PlayerDayCareData = playerDayCareData	?? string.Empty;//throw new ArgumentNullException(nameof(playerDayCareData));
 			PlayerBerryData = playerBerryData		?? string.Empty;//throw new ArgumentNullException(nameof(playerBerryData));
@@ -89,105 +86,6 @@ namespace PokemonUnity
 			//Bag = bag ?? throw new ArgumentNullException(nameof(bag));
 		}
 		#endregion
-
-		/*private bool InitPlayerCharacter()
-		{
-			try
-			{
-				//PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
-				//PC_boxNames = new string[Core.STORAGEBOXES];
-				//PC_boxTexture = new int[Core.STORAGEBOXES];
-				//for (int i = 0; i < Core.STORAGEBOXES; i++)
-				//{
-				//	//Initialize the PC storage so pokemons arent null (in value)
-				//	for (int j = 0; j < PC_Poke.GetLength(1); j++)
-				//	{
-				//		//All default values must be `NONE`
-				//		PC_Poke[i, j] = new Pokemon(Pokemons.NONE);//pokemons[i, j];
-				//	}
-				//	//ToDo: Using string from translator here
-				//	PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
-				//	//ToDo: Make sure there's enough texture in library for array size
-				//	//PC_boxTexture[i] = i; 
-				//}
-				//PC_Items = new List<Items>();
-				//Bag_Items = new List<Items>();
-				//PC = new Character.PC();
-				//Bag = new Character.Bag();
-
-				//Overworld Experience
-				//Region = Regions.NOT_IN_OVERWORLD;
-				//Location = Locations.NOT_IN_OVERWORLD;
-				//Area = 0;
-				//<X,Y,Z> Position
-				//<X,Y,Z> Rotation
-				Player = new Player();
-			}
-			catch (Exception)
-			{
-				//throw;
-				return false;
-			}
-			return true;
-		}
-		private static bool LoadInitFile()
-		{
-			//Load User Saved Preferences and then apply it to start-up variable below
-			//Or create new User Preference file
-			//UserLanguage  = Languages.English;
-			//Load Localization
-			//Then Import Databases
-			//if (SaveFileFound)
-			//LoadPokemonDatabase();
-			return true;
-		}
-		/// <summary>
-		/// </summary>
-		/// <param name="sql"></param>
-		/// <returns></returns>
-		/// <remarks>
-		/// Call this method each time, to read from file, and load saved data
-		/// </remarks>
-		//public static bool InitLoadFile(bool sql = false)
-		public static GameState[] InitLoadFile(bool sql = false)
-		{
-			//Initialize DEFAULT global/game variables (User Settings)
-			//Load SaveData variable from File (and/or CloudStorage)
-			if (sql) //using (con)
-			{
-				//return false;
-				return new GameState[0];
-			}
-			else //return GetPokemonsFromXML();
-			{
-				System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-				if (System.IO.File.Exists(Saving.SaveManager.playerSave))
-				{
-#if DEBUG
-					using (System.IO.FileStream fs = System.IO.File.Open(Saving.SaveManager.playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
-						using (System.IO.StreamReader sr = new System.IO.StreamReader(fs, System.Text.Encoding.UTF8))
-						{
-							SaveData data = Newtonsoft.Json.JsonConvert.DeserializeObject<SaveData>(sr.ReadToEnd());
-							UserLanguage	= 	(Languages)data.Language;
-							WindowSkin		= 	data.WindowBorder;
-							DialogSkin		= 	data.DialogBorder;
-							textSpeed		= 	data.TextSpeed	 ;
-							mVol			= 	data.mVol		 ;
-							sVol			= 	data.sVol		 ;
-							//return true;
-							return data.GameStates;
-						}
-#else
-					using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
-					{
-						return (SaveData)bf.Deserialize(fs);
-					}
-#endif
-				}
-				//else return false;
-				else return null;
-			}
-		}*/
 
 		public Game SetScenes(params PokemonEssentials.Interface.Screen.IScene[] scenes)
 		{

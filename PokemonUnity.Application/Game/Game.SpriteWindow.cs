@@ -162,7 +162,7 @@ namespace PokemonUnity
             throw new NotImplementedException();
         }
 
-        public void DisposeSpriteHash(ISprite[] sprites)
+        public void DisposeSpriteHash(IDictionary<string,ISprite> sprites)
         {
             throw new NotImplementedException();
         }
@@ -182,12 +182,12 @@ namespace PokemonUnity
             throw new NotImplementedException();
         }
 
-        public void FadeOutAndHide(ISprite[] sprites)
+        public void FadeOutAndHide(IDictionary<string,ISprite> sprites)
         {
             throw new NotImplementedException();
         }
 
-        public void FadeInAndShow(ISprite[] sprites, IList<ISprite> visiblesprites = null, Action block = null)
+        public void FadeInAndShow(IDictionary<string,ISprite> sprites, IList<ISprite> visiblesprites = null, Action block = null)
         {
             throw new NotImplementedException();
         }

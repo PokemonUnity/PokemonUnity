@@ -129,7 +129,7 @@ namespace PokemonUnity
 						uniEncoding.GetChars(
 						readText, 0, readText.Length));
 				}
-				// Catch the IOException generated if the 
+				// Catch the IOException generated if the
 				// specified part of the file is locked.
 				//catch (IOException e)
 				//{
@@ -246,7 +246,7 @@ namespace PokemonUnity
 		public static bool InitEncounters(bool sql = true)
 		{
 			//MethodData = new Dictionary<Method, int[]>();
-			//EncounterData = new Dictionary<int, IEncounterData>();
+			//EncounterData = new Dictionary<int, IMapEncounterMetadata>();
 			if (sql) //using (con)
 				return GetEncountersFromSQL(con);
 			else return false;
@@ -1562,7 +1562,7 @@ namespace PokemonUnity
 							break;
 						case Effects.x711:
 							//126	No effect.	Shadow Blast, Shadow Blitz, Shadow Break, Shadow Rave, Shadow Rush, Shadow Wave
-							//Effect x711 is only used by Shadow Rush... the others just deal regular damage, with no additional effects 
+							//Effect x711 is only used by Shadow Rush... the others just deal regular damage, with no additional effects
 							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_126());
 							break;
 						case Effects.x712:
@@ -2118,6 +2118,7 @@ namespace PokemonUnity
 			}
 		}*/
 		#endregion
+
 		#region From SQL
 		static bool GetPokemonsFromSQL(IDbConnection con)
 		{

@@ -73,12 +73,12 @@ namespace PokemonEssentials.Interface
 
 			//int baseStats { get; }
 			//[System.Obsolete("DEPRECATED - do not use")]
-			//int ability { get; }		
+			//int ability { get; }
 			//int getAbilityList { get; }
-			//int type1 { get; }		
-			//int type2 { get; }		
-			//int height { get; }		
-			//int weight { get; }		
+			//int type1 { get; }
+			//int type2 { get; }
+			//int height { get; }
+			//int weight { get; }
 			//int getMoveList { get; }
 			//bool isCompatibleWithMove(Moves move);
 			//int wildHoldItems { get; }

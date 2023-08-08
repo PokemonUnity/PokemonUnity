@@ -15,7 +15,7 @@ namespace PokemonUnity.Monster
 	public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IPokemonMultipleForms
 	{
 		/// <summary>
-		///	Used only for a few pokemon to specify what form it's in. 
+		///	Used only for a few pokemon to specify what form it's in.
 		/// </summary>
 		/// <remarks>
 		///	<see cref="Pokemons.UNOWN"/> = letter of the alphabet.
@@ -36,10 +36,10 @@ namespace PokemonUnity.Monster
 		///	<see cref="Pokemons.VIVILLON"/> = different Patterns.
 		///	<see cref="Pokemons.FLABEBE"/>/<see cref="Pokemons.FLOETTE"/>/<see cref="Pokemons.FLORGES"/> = Flower colour.
 		///	<see cref="Pokemons.FURFROU"/> = haircut.
-		///	<see cref="Pokemons.PUMPKABOO"/>/<see cref="Pokemons.GOURGEIST"/> = small/average/large/super sizes. 
+		///	<see cref="Pokemons.PUMPKABOO"/>/<see cref="Pokemons.GOURGEIST"/> = small/average/large/super sizes.
 		///	<see cref="Pokemons.HOOPA"/> = Confined/Unbound forms.
 		///	<see cref="Pokemons.CASTFORM"/>? = different weather forms
-		///	<see cref="Pokemons.PIKACHU"/>, 
+		///	<see cref="Pokemons.PIKACHU"/>,
 		/// and MegaEvolutions?
 		/// </remarks>
 		//public Forms Form { get { return form.Id; } } //set { foreach(Form f in Kernal.PokemonFormsData[pokemons]) if (value == f.Id) formId = f.Order; } }
@@ -56,7 +56,7 @@ namespace PokemonUnity.Monster
 				return @formId; //|| 0
 			}
 			set {
-				//if (value >= 0 && value <= Kernal.PokemonFormsData[pokemons].Length) 
+				if (value >= 0 && value < Kernal.PokemonFormsData[pokemons].Length)
 					@formId=value;
 				//MultipleForms.call("onSetForm",this,value);
 				MultipleForms.onSetForm(this,value);
@@ -133,7 +133,7 @@ namespace PokemonUnity.Monster
 		}
 
 		[System.Obsolete("DEPRECATED - do not use")]
-		public Abilities ability() {   
+		public Abilities ability() {
 			Abilities v=MultipleForms.ability(this);
 			if (v!=null) return v;
 			return this.__mf_ability;
@@ -232,7 +232,7 @@ namespace PokemonUnity.Monster
 		}
 	}
 
-	public partial class PokeBattle_RealBattlePeer : PokemonEssentials.Interface.PokeBattle.IBattlePeerMultipleForms { 
+	public partial class PokeBattle_RealBattlePeer : PokemonEssentials.Interface.PokeBattle.IBattlePeerMultipleForms {
 		public void OnEnteringBattle(PokemonEssentials.Interface.PokeBattle.IBattle battle,PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
 			if (pokemon is PokemonEssentials.Interface.PokeBattle.IPokemonMultipleForms p) {
 				//int? f=MultipleForms.call("getFormOnEnteringBattle",pokemon);
@@ -266,7 +266,7 @@ namespace PokemonUnity.Monster
 				bitmap.set_pixel(xOrg+1,yOrg,color);
 				bitmap.set_pixel(xOrg,yOrg+1,color);
 				bitmap.set_pixel(xOrg+1,yOrg+1,color);
-				}   
+				}
 			}
 		}
 	}
@@ -417,7 +417,7 @@ namespace PokemonUnity.Monster
 				}
 				//continue;
 			}
-			//else 
+			//else
 				return pkmn.form; //0;
 		}
 		public static int? getFormOnEnteringBattle(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
@@ -579,32 +579,32 @@ namespace PokemonUnity.Monster
 			{
 				//return Core.Rand.Next(28);
 				//return Core.Rand.Next(Kernal.PokemonFormsData[pokemon].Length);
-				return new Forms[] { Forms.UNOWN_A	
-					,Forms.UNOWN_B		
-					,Forms.UNOWN_C		
-					,Forms.UNOWN_D		
-					,Forms.UNOWN_E		
-					,Forms.UNOWN_F		
-					,Forms.UNOWN_G		
-					,Forms.UNOWN_H		
-					,Forms.UNOWN_I		
-					,Forms.UNOWN_J		
-					,Forms.UNOWN_K		
-					,Forms.UNOWN_L		
-					,Forms.UNOWN_M		
-					,Forms.UNOWN_N		
-					,Forms.UNOWN_O		
-					,Forms.UNOWN_P		
-					,Forms.UNOWN_Q		
-					,Forms.UNOWN_R		
-					,Forms.UNOWN_S		
-					,Forms.UNOWN_T		
-					,Forms.UNOWN_U		
-					,Forms.UNOWN_V		
-					,Forms.UNOWN_W		
-					,Forms.UNOWN_X		
-					,Forms.UNOWN_Y		
-					,Forms.UNOWN_Z		
+				return new Forms[] { Forms.UNOWN_A
+					,Forms.UNOWN_B
+					,Forms.UNOWN_C
+					,Forms.UNOWN_D
+					,Forms.UNOWN_E
+					,Forms.UNOWN_F
+					,Forms.UNOWN_G
+					,Forms.UNOWN_H
+					,Forms.UNOWN_I
+					,Forms.UNOWN_J
+					,Forms.UNOWN_K
+					,Forms.UNOWN_L
+					,Forms.UNOWN_M
+					,Forms.UNOWN_N
+					,Forms.UNOWN_O
+					,Forms.UNOWN_P
+					,Forms.UNOWN_Q
+					,Forms.UNOWN_R
+					,Forms.UNOWN_S
+					,Forms.UNOWN_T
+					,Forms.UNOWN_U
+					,Forms.UNOWN_V
+					,Forms.UNOWN_W
+					,Forms.UNOWN_X
+					,Forms.UNOWN_Y
+					,Forms.UNOWN_Z
 					,Forms.UNOWN_EXCLAMATION
 					,Forms.UNOWN_QUESTION	}[Core.Rand.Next(Kernal.PokemonFormsData[pokemon].Length)];
 			}
@@ -670,70 +670,70 @@ namespace PokemonUnity.Monster
 			{
 				//return Game.GameData.Player.Trainer.SecretID%18;
 				return new Forms[] { Forms.SCATTERBUG_ICY_SNOW
-					,Forms.SCATTERBUG_POLAR			
-					,Forms.SCATTERBUG_TUNDRA			
-					,Forms.SCATTERBUG_CONTINENTAL		
-					,Forms.SCATTERBUG_GARDEN			
-					,Forms.SCATTERBUG_ELEGANT			
-					,Forms.SCATTERBUG_MEADOW			
-					,Forms.SCATTERBUG_MODERN			
-					,Forms.SCATTERBUG_MARINE			
-					,Forms.SCATTERBUG_ARCHIPELAGO		
-					,Forms.SCATTERBUG_HIGH_PLAINS		
-					,Forms.SCATTERBUG_SANDSTORM		
-					,Forms.SCATTERBUG_RIVER			
-					,Forms.SCATTERBUG_MONSOON			
-					,Forms.SCATTERBUG_SAVANNA			
-					,Forms.SCATTERBUG_SUN			
-					,Forms.SCATTERBUG_OCEAN			
-					,Forms.SCATTERBUG_JUNGLE			
-					,Forms.SCATTERBUG_FANCY			
+					,Forms.SCATTERBUG_POLAR
+					,Forms.SCATTERBUG_TUNDRA
+					,Forms.SCATTERBUG_CONTINENTAL
+					,Forms.SCATTERBUG_GARDEN
+					,Forms.SCATTERBUG_ELEGANT
+					,Forms.SCATTERBUG_MEADOW
+					,Forms.SCATTERBUG_MODERN
+					,Forms.SCATTERBUG_MARINE
+					,Forms.SCATTERBUG_ARCHIPELAGO
+					,Forms.SCATTERBUG_HIGH_PLAINS
+					,Forms.SCATTERBUG_SANDSTORM
+					,Forms.SCATTERBUG_RIVER
+					,Forms.SCATTERBUG_MONSOON
+					,Forms.SCATTERBUG_SAVANNA
+					,Forms.SCATTERBUG_SUN
+					,Forms.SCATTERBUG_OCEAN
+					,Forms.SCATTERBUG_JUNGLE
+					,Forms.SCATTERBUG_FANCY
 					,Forms.SCATTERBUG_POKE_BALL		}[(int)Game.GameData.Trainer.secretID()%18];
 			}
 			else if (pokemon == Pokemons.SPEWPA)
 			{
 				//return Game.GameData.Player.Trainer.SecretID%18;
 				return new Forms[] { Forms.SPEWPA_ICY_SNOW
-					,Forms.SPEWPA_POLAR			
-					,Forms.SPEWPA_TUNDRA			
-					,Forms.SPEWPA_CONTINENTAL		
-					,Forms.SPEWPA_GARDEN			
-					,Forms.SPEWPA_ELEGANT			
-					,Forms.SPEWPA_MEADOW			
-					,Forms.SPEWPA_MODERN			
-					,Forms.SPEWPA_MARINE			
-					,Forms.SPEWPA_ARCHIPELAGO		
-					,Forms.SPEWPA_HIGH_PLAINS		
-					,Forms.SPEWPA_SANDSTORM		
-					,Forms.SPEWPA_RIVER			
-					,Forms.SPEWPA_MONSOON			
-					,Forms.SPEWPA_SAVANNA			
-					,Forms.SPEWPA_SUN			
-					,Forms.SPEWPA_OCEAN			
-					,Forms.SPEWPA_JUNGLE			
-					,Forms.SPEWPA_FANCY			
+					,Forms.SPEWPA_POLAR
+					,Forms.SPEWPA_TUNDRA
+					,Forms.SPEWPA_CONTINENTAL
+					,Forms.SPEWPA_GARDEN
+					,Forms.SPEWPA_ELEGANT
+					,Forms.SPEWPA_MEADOW
+					,Forms.SPEWPA_MODERN
+					,Forms.SPEWPA_MARINE
+					,Forms.SPEWPA_ARCHIPELAGO
+					,Forms.SPEWPA_HIGH_PLAINS
+					,Forms.SPEWPA_SANDSTORM
+					,Forms.SPEWPA_RIVER
+					,Forms.SPEWPA_MONSOON
+					,Forms.SPEWPA_SAVANNA
+					,Forms.SPEWPA_SUN
+					,Forms.SPEWPA_OCEAN
+					,Forms.SPEWPA_JUNGLE
+					,Forms.SPEWPA_FANCY
 					,Forms.SPEWPA_POKE_BALL		}[(int)Game.GameData.Trainer.secretID()%18];
 			}
 			else if (pokemon == Pokemons.VIVILLON)
 			{
 				//return Game.GameData.Player.Trainer.SecretID%18;
 				return new Forms[] { Forms.VIVILLON_MEADOW
-					,Forms.VIVILLON_ICY_SNOW		
-					,Forms.VIVILLON_POLAR			
-					,Forms.VIVILLON_TUNDRA		
-					,Forms.VIVILLON_CONTINENTAL	
-					,Forms.VIVILLON_GARDEN		
-					,Forms.VIVILLON_ELEGANT		
-					,Forms.VIVILLON_MODERN		
-					,Forms.VIVILLON_MARINE		
-					,Forms.VIVILLON_ARCHIPELAGO	
-					,Forms.VIVILLON_HIGH_PLAINS	
-					,Forms.VIVILLON_SANDSTORM		
-					,Forms.VIVILLON_RIVER			
-					,Forms.VIVILLON_MONSOON		
-					,Forms.VIVILLON_SAVANNA		
-					,Forms.VIVILLON_SUN			
-					,Forms.VIVILLON_OCEAN			
+					,Forms.VIVILLON_ICY_SNOW
+					,Forms.VIVILLON_POLAR
+					,Forms.VIVILLON_TUNDRA
+					,Forms.VIVILLON_CONTINENTAL
+					,Forms.VIVILLON_GARDEN
+					,Forms.VIVILLON_ELEGANT
+					,Forms.VIVILLON_MODERN
+					,Forms.VIVILLON_MARINE
+					,Forms.VIVILLON_ARCHIPELAGO
+					,Forms.VIVILLON_HIGH_PLAINS
+					,Forms.VIVILLON_SANDSTORM
+					,Forms.VIVILLON_RIVER
+					,Forms.VIVILLON_MONSOON
+					,Forms.VIVILLON_SAVANNA
+					,Forms.VIVILLON_SUN
+					,Forms.VIVILLON_OCEAN
 					,Forms.VIVILLON_JUNGLE		}[(int)Game.GameData.Trainer.secretID()%18];
 			}
 			else if (pokemon == Pokemons.FLABEBE)
@@ -742,7 +742,7 @@ namespace PokemonUnity.Monster
 				return new Forms[] { Forms.FLABEBE_RED
 					,Forms.FLABEBE_YELLOW
 					,Forms.FLABEBE_ORANGE
-					,Forms.FLABEBE_BLUE  
+					,Forms.FLABEBE_BLUE
 					,Forms.FLABEBE_WHITE }[Core.Rand.Next(5)];
 			}
 			else if (pokemon == Pokemons.FLOETTE)
@@ -751,7 +751,7 @@ namespace PokemonUnity.Monster
 				return new Forms[] { Forms.FLOETTE_RED
 					,Forms.FLOETTE_YELLOW
 					,Forms.FLOETTE_ORANGE
-					,Forms.FLOETTE_BLUE  
+					,Forms.FLOETTE_BLUE
 					,Forms.FLOETTE_WHITE }[Core.Rand.Next(5)];
 			}
 			else if (pokemon == Pokemons.FLORGES)
@@ -760,23 +760,23 @@ namespace PokemonUnity.Monster
 				return new Forms[] { Forms.FLORGES_RED
 					,Forms.FLORGES_YELLOW
 					,Forms.FLORGES_ORANGE
-					,Forms.FLORGES_BLUE  
+					,Forms.FLORGES_BLUE
 					,Forms.FLORGES_WHITE }[Core.Rand.Next(5)];
 			}
 			else if (pokemon == Pokemons.PUMPKABOO)
 			{
 				//return (int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4));
 				return new Forms[] { Forms.PUMPKABOO_AVERAGE
-					,Forms.PUMPKABOO_SMALL 
-					,Forms.PUMPKABOO_LARGE 
+					,Forms.PUMPKABOO_SMALL
+					,Forms.PUMPKABOO_LARGE
 					,Forms.PUMPKABOO_SUPER }[(int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4))];
 			}
 			else if (pokemon == Pokemons.GOURGEIST)
 			{
 				//return (int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4));
 				return new Forms[] { Forms.GOURGEIST_AVERAGE
-					,Forms.GOURGEIST_SMALL 
-					,Forms.GOURGEIST_LARGE 
+					,Forms.GOURGEIST_SMALL
+					,Forms.GOURGEIST_LARGE
 					,Forms.GOURGEIST_SUPER }[(int)Math.Min(Core.Rand.Next(4),Core.Rand.Next(4))];
 			}
 			else if (pokemon == Pokemons.DEOXYS_ATTACK)

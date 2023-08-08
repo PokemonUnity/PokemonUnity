@@ -787,7 +787,8 @@ namespace PokemonUnity.Combat
 			if (effects.Embargo > 0) return false;
 			if (battle.field.MagicRoom > 0) return false;
 			if (this.hasWorkingAbility(Abilities.KLUTZ, ignorefainted)) return false;
-			return ItemData.IsBerry(this.Item);//.Pocket == ItemPockets.BERRY;//IsBerry?(@item)
+			//return Kernal.ItemData[this.Item].IsBerry;//.Pocket == ItemPockets.BERRY;//IsBerry?(@item)
+			return ItemData.IsBerry(this.Item);
 		}
 
 		public bool isAirborne(bool ignoreability=false){
@@ -2126,7 +2127,7 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Move user and targets
-		public IBattler FindUser(IBattleChoice choice,IList<IBattler> targets) {//ToDo: ref IList<IBattler> targets) {
+		public IBattler FindUser(IBattleChoice choice,IList<IBattler> targets) {
 			IBattleMove move=choice.Move;
 			int target=choice.Target;
 			IBattler user = this;   // Normally, the user is this
@@ -2137,10 +2138,10 @@ namespace PokemonUnity.Combat
 					if (target>=0) {
 						IBattler targetBattler=@battle.battlers[target];
 						if (!IsOpposing(targetBattler.Index))
-							if (!AddTarget(ref targets,targetBattler))
-								if (!AddTarget(ref targets,Opposing1)) AddTarget(ref targets,Opposing2);
+							if (!AddTarget(targets,targetBattler))
+								if (!AddTarget(targets,Opposing1)) AddTarget(targets,Opposing2);
 						else
-							if (!AddTarget(ref targets,targetBattler)) AddTarget(ref targets,targetBattler.Partner);
+							if (!AddTarget(targets,targetBattler)) AddTarget(targets,targetBattler.Partner);
 					}
 					else
 						RandomTarget(targets);
@@ -2159,29 +2160,29 @@ namespace PokemonUnity.Combat
 				//		RandomTarget(targets);
 				//	break;
 				case Attack.Data.Targets.OPPONENTS_FIELD: //Attack.Target.OppositeOpposing:
-					if (!AddTarget(ref targets,OppositeOpposing2)) AddTarget(ref targets,OppositeOpposing);
+					if (!AddTarget(targets,OppositeOpposing2)) AddTarget(targets,OppositeOpposing);
 					break;
 				case Attack.Data.Targets.RANDOM_OPPONENT: //Attack.Target.RandomOpposing:
 					RandomTarget(targets);
 					break;
 				case Attack.Data.Targets.ALL_OPPONENTS: //Attack.Target.AllOpposing:
 					// Just Opposing1 because partner is determined late
-					if (!AddTarget(ref targets,Opposing1)) AddTarget(ref targets,Opposing2);
+					if (!AddTarget(targets,Opposing1)) AddTarget(targets,Opposing2);
 					break;
 				case Attack.Data.Targets.ALL_OTHER_POKEMON: //Attack.Target.AllNonUsers:
 					for (int i = 0; i < 4; i++) // not ordered by priority
-					if (i!=@Index) AddTarget(ref targets,@battle.battlers[i]);
+					if (i!=@Index) AddTarget(targets,@battle.battlers[i]);
 					break;
 				case Attack.Data.Targets.USER_OR_ALLY: //Attack.Target.UserOrPartner:
 					if (target>=0) { // Pre-chosen target
 						IBattler targetBattler=@battle.battlers[target];
-						if (!AddTarget(ref targets,targetBattler)) AddTarget(ref targets,targetBattler.Partner);
+						if (!AddTarget(targets,targetBattler)) AddTarget(targets,targetBattler.Partner);
 					}
 					else
-						AddTarget(ref targets,this);
+						AddTarget(targets,this);
 					break;
 				case Attack.Data.Targets.ALLY: //Attack.TargetPartner:
-					AddTarget(ref targets,Partner);
+					AddTarget(targets,Partner);
 					break;
 				default:
 					move.AddTarget(targets,this);
@@ -2225,7 +2226,7 @@ namespace PokemonUnity.Combat
 		//	}
 		//	return false;
 		//}
-		public bool AddTarget(ref IList<IBattler> targets,IBattler target) {
+		public bool AddTarget(IList<IBattler> targets,IBattler target) {
 			if (!target.isFainted()) {
 				targets.Add(target);
 				return true;
@@ -2234,11 +2235,11 @@ namespace PokemonUnity.Combat
 		}
 		public void RandomTarget(IList<IBattler> targets) {
 			IList<IBattler> choices= new List<IBattler>();
-			AddTarget(ref choices,Opposing1);
+			AddTarget(choices,Opposing1);
 			//if (battle.doublebattle) //Added a null conditional to below function
-				AddTarget(ref choices,Opposing2);
+				AddTarget(choices,Opposing2);
 			if (choices.Count>0)
-				AddTarget(ref targets,choices[@battle.Random(choices.Count)]);
+				AddTarget(targets,choices[@battle.Random(choices.Count)]);
 		}
 		public bool ChangeTarget(IBattleMove thismove,IBattler[] userandtarget,IBattler[] targets) {
 			IBattler[] priority=@battle.Priority();
@@ -3279,7 +3280,7 @@ namespace PokemonUnity.Combat
 					IBattler target=userandtarget[1];
 					if (battle.doublebattle && i==0 && thismove.Target==Attack.Data.Targets.ALL_OPPONENTS) //thismove.Targets==Attack.Target.AllOpposing
 						// Add target's partner to list of targets
-						AddTarget(ref targets,target.Partner);
+						AddTarget(targets,target.Partner);
 					// If couldn't get the next target
 					if (!success) {
 						i+=1;

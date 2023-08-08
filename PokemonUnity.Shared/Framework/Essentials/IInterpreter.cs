@@ -9,11 +9,10 @@ namespace PokemonEssentials.Interface
 {
 	/// <summary>
 	/// This interpreter runs event commands. This class is used within the
-	/// Game_System class and the Game_Event class.
+	/// <see cref="IGameSystem"/> class and the <see cref="IGameEvent"/> class.
 	/// </summary>
 	public interface IInterpreter {
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="depth">nest depth</param>
 		/// <param name="main">main flag</param>
@@ -71,7 +70,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="parameter">parameter</param>
 		/// <returns></returns>
-		IGameEvent get_character(int parameter);
+		IGameCharacter get_character(int parameter);
 		/// <summary>
 		/// Calculate Operated Value
 		/// </summary>
@@ -131,53 +130,65 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <returns></returns>
 		bool command_411();
-		// -----------------------------------------------------------------------------
-		//  * Loop
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Loop
+		/// </summary>
+		/// <returns></returns>
 		bool command_112();
-		// -----------------------------------------------------------------------------
-		//  * Repeat Above
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Repeat Above
+		/// </summary>
+		/// <returns></returns>
 		bool command_413();
-		// -----------------------------------------------------------------------------
-		//  * Break Loop
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Break Loop
+		/// </summary>
+		/// <returns></returns>
 		bool command_113();
-		// -----------------------------------------------------------------------------
-		//  * Exit Event Processing
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Exit Event Processing
+		/// </summary>
+		/// <returns></returns>
 		bool command_115();
-		// -----------------------------------------------------------------------------
-		//  * Erase Event
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Erase Event
+		/// </summary>
+		/// <returns></returns>
 		bool command_116();
-		// -----------------------------------------------------------------------------
-		//  * Call Common Event
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Call Common Event
+		/// </summary>
+		/// <returns></returns>
 		bool command_117();
-		// -----------------------------------------------------------------------------
-		//  * Label
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Label
+		/// </summary>
+		/// <returns></returns>
 		bool command_118();
-		// -----------------------------------------------------------------------------
-		//  * Jump to Label
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Jump to Label
+		/// </summary>
+		/// <returns></returns>
 		bool command_119();
-		// -----------------------------------------------------------------------------
-		//  * Control Switches
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Control Switches
+		/// </summary>
+		/// <returns></returns>
 		bool command_121();
-		// -----------------------------------------------------------------------------
-		//  * Control Variables
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Control Variables
+		/// </summary>
+		/// <returns></returns>
 		bool command_122();
-		// -----------------------------------------------------------------------------
-		//  * Control Self Switch
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Control Self Switch
+		/// </summary>
+		/// <returns></returns>
 		bool command_123();
-		// -----------------------------------------------------------------------------
-		//  * Control Timer
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Control Timer
+		/// </summary>
+		/// <returns></returns>
 		bool command_124();
 		/*
 		/// <summary>
@@ -190,139 +201,167 @@ namespace PokemonEssentials.Interface
 		/// Change Items
 		/// </summary>
 		/// <returns></returns>
-		bool command_126(); 
+		bool command_126();
 
 		/// <summary>
 		/// Change Weapons
 		/// </summary>
 		/// <returns></returns>
-		bool command_127(); 
+		bool command_127();
 
 		/// <summary>
 		/// Change Armor
 		/// </summary>
 		/// <returns></returns>
-		bool command_128(); 
+		bool command_128();
 
 		/// <summary>
 		/// Change Party Member
 		/// </summary>
 		/// <returns></returns>
-		bool command_129(); 
+		bool command_129();
 		*/
-		// -----------------------------------------------------------------------------
-		//  * Change Windowskin
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Windowskin
+		/// </summary>
+		/// <returns></returns>
 		bool command_131();
-		// -----------------------------------------------------------------------------
-		//  * Change Battle BGM
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Battle BGM
+		/// </summary>
+		/// <returns></returns>
 		bool command_132();
-		// -----------------------------------------------------------------------------
-		//  * Change Battle End ME
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Battle End ME
+		/// </summary>
+		/// <returns></returns>
 		bool command_133();
-		// -----------------------------------------------------------------------------
-		//  * Change Save Access
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Save Access
+		/// </summary>
+		/// <returns></returns>
 		bool command_134();
-		// -----------------------------------------------------------------------------
-		//  * Change Menu Access
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Menu Access
+		/// </summary>
+		/// <returns></returns>
 		bool command_135();
-		// -----------------------------------------------------------------------------
-		//  * Change Encounter
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Encounter
+		/// </summary>
+		/// <returns></returns>
 		bool command_136();
-		// -----------------------------------------------------------------------------
-		//  * Transfer Player
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Transfer Player
+		/// </summary>
+		/// <returns></returns>
 		bool command_201();
-		// -----------------------------------------------------------------------------
-		//  * Set Event Location
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Set Event Location
+		/// </summary>
+		/// <returns></returns>
 		bool command_202();
-		// -----------------------------------------------------------------------------
-		//  * Scroll Map
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Scroll Map
+		/// </summary>
+		/// <returns></returns>
 		bool command_203();
-		// -----------------------------------------------------------------------------
-		//  * Change Map Settings
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Map Settings
+		/// </summary>
+		/// <returns></returns>
 		bool command_204();
-		// -----------------------------------------------------------------------------
-		//  * Change Fog Color Tone
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Fog Color Tone
+		/// </summary>
+		/// <returns></returns>
 		bool command_205();
-		// -----------------------------------------------------------------------------
-		//  * Change Fog Opacity
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Fog Opacity
+		/// </summary>
+		/// <returns></returns>
 		bool command_206();
-		// -----------------------------------------------------------------------------
-		//  * Show Animation
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Show Animation
+		/// </summary>
+		/// <returns></returns>
 		bool command_207();
-		// -----------------------------------------------------------------------------
-		//  * Change Transparent Flag
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Transparent Flag
+		/// </summary>
+		/// <returns></returns>
 		bool command_208();
-		// -----------------------------------------------------------------------------
-		//  * Set Move Route
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Set Move Route
+		/// </summary>
+		/// <returns></returns>
 		bool command_209();
-		// -----------------------------------------------------------------------------
-		//  * Wait for Move's Completion
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Wait for Move's Completion
+		/// </summary>
+		/// <returns></returns>
 		bool command_210();
-		// -----------------------------------------------------------------------------
-		//  * Prepare for Transition
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Prepare for Transition
+		/// </summary>
+		/// <returns></returns>
 		bool command_221();
-		// -----------------------------------------------------------------------------
-		//  * Execute Transition
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Execute Transition
+		/// </summary>
+		/// <returns></returns>
 		bool command_222();
-		// -----------------------------------------------------------------------------
-		//  * Change Screen Color Tone
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Screen Color Tone
+		/// </summary>
+		/// <returns></returns>
 		bool command_223();
-		// -----------------------------------------------------------------------------
-		//  * Screen Flash
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Screen Flash
+		/// </summary>
+		/// <returns></returns>
 		bool command_224();
-		// -----------------------------------------------------------------------------
-		//  * Screen Shake
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Screen Shake
+		/// </summary>
+		/// <returns></returns>
 		bool command_225();
-		// -----------------------------------------------------------------------------
-		//  * Show Picture
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Show Picture
+		/// </summary>
+		/// <returns></returns>
 		bool command_231();
-		// -----------------------------------------------------------------------------
-		//  * Move Picture
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Move Picture
+		/// </summary>
+		/// <returns></returns>
 		bool command_232();
-		// -----------------------------------------------------------------------------
-		//  * Rotate Picture
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Rotate Picture
+		/// </summary>
+		/// <returns></returns>
 		bool command_233();
-		// -----------------------------------------------------------------------------
-		//  * Change Picture Color Tone
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Change Picture Color Tone
+		/// </summary>
+		/// <returns></returns>
 		bool command_234();
-		// -----------------------------------------------------------------------------
-		//  * Erase Picture
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Erase Picture
+		/// </summary>
+		/// <returns></returns>
 		bool command_235();
-		// -----------------------------------------------------------------------------
-		//  * Set Weather Effects
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Set Weather Effects
+		/// </summary>
+		/// <returns></returns>
 		bool command_236();
 
 		bool command_247();
-		// -----------------------------------------------------------------------------
-		//  * Restore BGM/BGS
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Restore BGM/BGS
+		/// </summary>
+		/// <returns></returns>
 		bool command_248();
 
 		bool command_if(int value);

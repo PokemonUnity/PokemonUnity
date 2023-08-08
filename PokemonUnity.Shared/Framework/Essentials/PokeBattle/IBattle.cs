@@ -83,7 +83,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// True if player's party's max size is 6 instead of 3
 		/// </summary>
-		bool fullparty1 { get; }
+		bool fullparty1 { get; set; }
 		/// <summary>
 		/// True if opponent's party's max size is 6 instead of 3
 		/// </summary>

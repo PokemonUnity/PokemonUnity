@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// <see cref="IGameTemp"/>
 	/// </summary>
-	public interface IGameTempMessage 
+	public interface IGameTempMessage
 	{
 		int background							{ get; set; }
 		bool message_window_showing			    { get; }
@@ -56,7 +56,7 @@ namespace PokemonEssentials.Interface
 	}
 
 	/// <summary>
-	/// <see cref="IGame"/>
+	/// Extension of <see cref="IGame"/>
 	/// </summary>
 	public interface IGameMessage
 	{
@@ -104,9 +104,10 @@ namespace PokemonEssentials.Interface
 
 		string GetMapNameFromId(int id);
 
-		int Message(string message,string[] commands=null,int cmdIfCancel=0,int? skin=null,int defaultCmd=0, Action block = null); //ref Action block
+		int Message(string message,string[] commands=null,int cmdIfCancel=0,int? skin=null,int defaultCmd=0,Action block = null);
 
-		int MessageChooseNumber(string message,string[] param, ref Action block); //Action block = null
+		//int MessageChooseNumber(string message,string[] param,Action block = null);
+		int MessageChooseNumber(string message,IChooseNumberParams param,Action block = null);
 
 		bool ConfirmMessage(string message,Action block = null);
 
@@ -244,7 +245,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Used by RMXP
 	/// </summary>
-	public interface IInterpreterMessage {   
+	public interface IInterpreterMessage {
 		//include InterpreterMixin;
 		//eval(InterpreterMixin.CustomEventCommands);
 		//@@immediateDisplayAfterWait=false;
@@ -305,7 +306,7 @@ namespace PokemonEssentials.Interface
 		//int numDigits(int number);
 	}
 
-	public interface IFaceWindowVX : ISpriteWindow_Base  
+	public interface IFaceWindowVX : ISpriteWindow_Base
 	{
 		IFaceWindowVX initialize(string face);
 

@@ -209,7 +209,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		Moves RandomMove();
 
-		void addMove(ref List<Moves> moves, Moves move, int @base);
+		void addMove(List<Moves> moves, Moves move, int @base);
 
 		List<Moves> GetLegalMoves2(Pokemons species, int maxlevel);
 
@@ -271,7 +271,7 @@ namespace PokemonEssentials.Interface.Battle
 		//List<IPokemon> RemoveDuplicates(List<IPokemon> party);
 		IPokemon[] RemoveDuplicates(IPokemon[] party);
 
-		void ReplenishBattlePokemon(ref List<IPokemon> party, IPokemonChallengeRules rule);
+		void ReplenishBattlePokemon(List<IPokemon> party, IPokemonChallengeRules rule);
 
 		IEnumerator<string> GenerateChallenge(IPokemonChallengeRules rule, string tag);
 

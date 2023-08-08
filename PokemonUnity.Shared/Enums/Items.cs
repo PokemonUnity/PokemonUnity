@@ -1,10 +1,10 @@
 ﻿namespace PokemonUnity.Inventory
 {
 	/// <summary>
-	/// Item ids are connected to XML file. 
+	/// Item ids are connected to XML file.
 	/// </summary>
 	/// <remarks>
-	/// Running off of genVI. 
+	/// Running off of genVI.
 	/// Be sure to overwrite both if modifying.
 	/// Replace "[HP]{mechanic:hp}" in summary-tags with
 	/// "<see cref="Pokemon.HP"/>" or "<see cref="Pokemon.TotalHP"/>"

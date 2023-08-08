@@ -83,7 +83,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// events
 		/// </summary>
-		IDictionary<int, IGameEvent> events { get; set; }
+		IDictionary<int, IGameCharacter> events { get; set; }
 		/// <summary>
 		/// fog x-coordinate starting point
 		/// </summary>
@@ -104,7 +104,7 @@ namespace PokemonEssentials.Interface
 		int?[,,] data { get; }
 		string name { get; }
 
-		//IGameMap initialize();
+		IGameMap initialize();
 		void setup(int map_id);
 		/// <summary>
 		/// Autoplays background music.

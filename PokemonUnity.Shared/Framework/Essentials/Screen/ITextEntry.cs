@@ -53,6 +53,9 @@ namespace PokemonEssentials.Interface.Screen
 		int wrapmod(int x, int y);
 	}
 
+	/// <summary>
+	/// Extension of <see cref="IGame"/>
+	/// </summary>
 	public interface IGameTextEntry
 	{
 		string EnterText(string helptext, int minlength, int maxlength, string initialText = "", int mode = 0, IPokemon pokemon = null, bool nofadeout = false);

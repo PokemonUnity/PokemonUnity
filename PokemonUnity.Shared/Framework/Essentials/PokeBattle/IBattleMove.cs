@@ -37,7 +37,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		IBattleMove initialize(IBattle battle, IMove move);
 
 		/// <summary>
-		/// This is the code actually used to generate a <see cref="IBattleMove"/> object.  
+		/// This is the code actually used to generate a <see cref="IBattleMove"/> object.
 		/// </summary>
 		/// <param name=""></param>
 		/// <param name=""></param>

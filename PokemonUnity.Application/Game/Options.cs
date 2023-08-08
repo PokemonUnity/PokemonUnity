@@ -9,10 +9,10 @@ using PokemonUnity.Inventory;
 namespace PokemonUnity
 {
 	// ####################
-	// 
+	//
 	// Stores game options
 	// Default options are at the top of script section SpriteWindow.
-	public partial class Game { 
+	public partial class Game {
 		/// <summary>
 		/// Folder Directory: Dialog Skin
 		/// </summary>
@@ -258,7 +258,7 @@ namespace PokemonUnity
 		/// </summary>
 		public int battlestyle				{ get; set; }
 		/// <summary>
-		/// Default window frame (see also <seealso cref="TextFrames"/>)
+		/// Default window frame (see also <seealso cref="Game.TextFrames"/>)
 		/// </summary>
 		public int frame				    { get; set; }
 		/// <summary>
@@ -266,7 +266,7 @@ namespace PokemonUnity
 		/// </summary>
 		public int textskin					{ get; set; }
 		/// <summary>
-		/// Font (see also <seealso cref="VersionStyles"/>)
+		/// Font (see also <seealso cref="Game.VersionStyles"/>)
 		/// </summary>
 		public int font						{ get; set; }
 		/// <summary>

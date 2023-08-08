@@ -2,7 +2,7 @@
 
 namespace PokemonUnity
 {
-	public static class PokemonExtension
+	public static partial class PokemonExtension
 	{
 		/// <summary>
 		/// </summary>

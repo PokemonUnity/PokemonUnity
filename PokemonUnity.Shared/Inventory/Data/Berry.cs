@@ -4,7 +4,7 @@ using PokemonUnity.Inventory.Plants;
 
 namespace PokemonUnity.Inventory
 {
-	public struct BerryData 
+	public struct BerryData
 	{
 		#region Variables
 		public Items Id					{ get; private set; }
@@ -17,23 +17,23 @@ namespace PokemonUnity.Inventory
 		public int Smooth				{ get; private set; }
 		//public int minBerries			{ get; private set; }
 		/// <summary>
-		/// The berry yield is set to the maximum berry yield whenever a new Berry is planted 
+		/// The berry yield is set to the maximum berry yield whenever a new Berry is planted
 		/// or whenever a new plant grows where the old plant used to be.
 		/// </summary>
 		public int maxBerries			{ get; private set; }
 
 		/// <summary>
-		/// The soil moisture is reduced by X times the moisture intake value, rounded down, 
-		/// but not to less than 0, where X is 0.5 if planted with Damp Mulch, 
+		/// The soil moisture is reduced by X times the moisture intake value, rounded down,
+		/// but not to less than 0, where X is 0.5 if planted with Damp Mulch,
 		/// 1.5 if planted with Growth Mulch, and 1 otherwise.
 		/// </summary>
 		/// <remarks>
-		/// Every 60 minutes after that point or after a new plant grows where the old plant used to be 
-		/// (whichever occurs last), if the plant hasn't reached its final growth stage 
+		/// Every 60 minutes after that point or after a new plant grows where the old plant used to be
+		/// (whichever occurs last), if the plant hasn't reached its final growth stage
 		/// (no berries can be picked yet)
 		/// </remarks>
 		/// <example>
-		/// If the soil moisture is 0, the berry yield for that plant is reduced 
+		/// If the soil moisture is 0, the berry yield for that plant is reduced
 		/// by the maximum berry yield divided by 5, but not to less than 2.
 		/// </example>
 		public int moistIntake			{ get; private set; }
@@ -119,7 +119,7 @@ namespace PokemonUnity.Inventory
 		#endregion
 
 		#region Constructors
-		public BerryData(Items berry, FirmnessLevel firmness, int power = 0, Types type = Types.NONE, float size = 0, int max = 0, int growth = 0, int soil = 0, int smooth = 0, int cool = 0, int beauty = 0, int cute = 0, int smart = 0, int tough = 0, int spicy = 0, int dry = 0, int sweet = 0, int bitter = 0, int sour = 0, bool @default = true) 
+		public BerryData(Items berry, FirmnessLevel firmness, int power = 0, Types type = Types.NONE, float size = 0, int max = 0, int growth = 0, int soil = 0, int smooth = 0, int cool = 0, int beauty = 0, int cute = 0, int smart = 0, int tough = 0, int spicy = 0, int dry = 0, int sweet = 0, int bitter = 0, int sour = 0, bool @default = true)
 		{
 			Id = berry;
 
@@ -174,13 +174,13 @@ namespace PokemonUnity.Inventory
 				case Items.CHARTI_BERRY:
 					growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 20;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.YELLOW;	break;	//Charti
 				case Items.CHERI_BERRY:
-					growthRate = 3;		moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Cheri
+					growthRate = 3;		moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;		break;	//Cheri
 				case Items.CHESTO_BERRY:
 					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Chesto
 				case Items.CHILAN_BERRY:
 					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 25;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.YELLOW;	break;	//Chilan
 				case Items.CHOPLE_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Colors.RED;	break;	//Chople
+					growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Colors.RED;		break;	//Chople
 				case Items.COBA_BERRY:
 					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 15;	Sour = 0;	Color = Colors.BLUE;	break;	//Coba
 				case Items.COLBUR_BERRY:
@@ -188,19 +188,19 @@ namespace PokemonUnity.Inventory
 				case Items.CORNN_BERRY:
 					growthRate = 6;		moistIntake = 10;	Spicy = 0;	Dry = 20;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Cornn
 				case Items.CUSTAP_BERRY:
-					growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 0;	Sweet = 40;	Bitter = 10;	Sour = 0;	Color = Colors.RED;	break;	//Custap
+					growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 0;	Sweet = 40;	Bitter = 10;	Sour = 0;	Color = Colors.RED;		break;	//Custap
 				case Items.DURIN_BERRY:
 					growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 30;	Sour = 10;	Color = Colors.GREEN;	break;	//Durin
 				case Items.ENIGMA_BERRY:
 					growthRate = 24;	moistIntake = 7;	Spicy = 40;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.PURPLE;	break;	//Enigma
 				case Items.FIGY_BERRY:
-					growthRate = 5;		moistIntake = 10;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Figy
+					growthRate = 5;		moistIntake = 10;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;		break;	//Figy
 				case Items.GANLON_BERRY:
 					growthRate = 24;	moistIntake = 4;	Spicy = 0;	Dry = 30;	Sweet = 10;	Bitter = 30;	Sour = 0;	Color = Colors.PURPLE;	break;	//Ganlon
 				case Items.GREPA_BERRY:
 					growthRate = 8;		moistIntake = 8;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 0;		Sour = 10;	Color = Colors.YELLOW;	break;	//Grepa
 				case Items.HABAN_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 20;	Sour = 0;	Color = Colors.RED;	break;	//Haban
+					growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 20;	Sour = 0;	Color = Colors.RED;		break;	//Haban
 				case Items.HONDEW_BERRY:
 					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Colors.GREEN;	break;	//Hondew
 				case Items.IAPAPA_BERRY:
@@ -216,11 +216,11 @@ namespace PokemonUnity.Inventory
 				case Items.KELPSY_BERRY:
 					growthRate = 8;		moistIntake = 8;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 10;	Color = Colors.BLUE;	break;	//Kelpsy
 				case Items.LANSAT_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 10;	Sour = 30;	Color = Colors.RED;	break;	//Lansat
+					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 10;	Sour = 30;	Color = Colors.RED;		break;	//Lansat
 				case Items.LEPPA_BERRY:
-					growthRate = 4;		moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 10;	Color = Colors.RED;	break;	//Leppa
+					growthRate = 4;		moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 10;	Color = Colors.RED;		break;	//Leppa
 				case Items.LIECHI_BERRY:
-					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Liechi
+					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 0;		Sour = 0;	Color = Colors.RED;		break;	//Liechi
 				case Items.LUM_BERRY:
 					growthRate = 12;	moistIntake = 8;	Spicy = 10;	Dry = 10;	Sweet = 10;	Bitter = 10;	Sour = 0;	Color = Colors.GREEN;	break;	//Lum
 				case Items.MAGO_BERRY:
@@ -236,7 +236,7 @@ namespace PokemonUnity.Inventory
 				case Items.NOMEL_BERRY:
 					growthRate = 6;		moistIntake = 10;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 20;	Color = Colors.YELLOW;	break;	//Nomel
 				case Items.OCCA_BERRY:
-					growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Occa
+					growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 0;	Color = Colors.RED;		break;	//Occa
 				case Items.ORAN_BERRY:
 					growthRate = 4;		moistIntake = 15;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 10;	Color = Colors.BLUE;	break;	//Oran
 				case Items.PAMTRE_BERRY:
@@ -254,7 +254,7 @@ namespace PokemonUnity.Inventory
 				case Items.PINAP_BERRY:
 					growthRate = 2;		moistIntake = 35;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Colors.YELLOW;	break;	//Pinap
 				case Items.POMEG_BERRY:
-					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 0;	Color = Colors.RED;	break;	//Pomeg
+					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 0;	Color = Colors.RED;		break;	//Pomeg
 				case Items.QUALOT_BERRY:
 					growthRate = 8;		moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 0;		Sour = 10;	Color = Colors.YELLOW;	break;	//Qualot
 				case Items.RABUTA_BERRY:
@@ -262,7 +262,7 @@ namespace PokemonUnity.Inventory
 				case Items.RAWST_BERRY:
 					growthRate = 3;		moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 0;	Color = Colors.GREEN;	break;	//Rawst
 				case Items.RAZZ_BERRY:
-					growthRate = 2;		moistIntake = 35;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Razz
+					growthRate = 2;		moistIntake = 35;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;		break;	//Razz
 				case Items.RINDO_BERRY:
 					growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 15;	Sour = 0;	Color = Colors.GREEN;	break;	//Rindo
 				case Items.ROSELI_BERRY:
@@ -276,11 +276,11 @@ namespace PokemonUnity.Inventory
 				case Items.SITRUS_BERRY:
 					growthRate = 8;		moistIntake = 7;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 10;	Sour = 10;	Color = Colors.YELLOW;	break;	//Sitrus
 				case Items.SPELON_BERRY:
-					growthRate = 15;	moistIntake = 8;	Spicy = 30;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Spelon
+					growthRate = 15;	moistIntake = 8;	Spicy = 30;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;		break;	//Spelon
 				case Items.STARF_BERRY:
 					growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 10;	Sour = 30;	Color = Colors.GREEN;	break;	//Starf
 				case Items.TAMATO_BERRY:
-					growthRate = 8;		moistIntake = 8;	Spicy = 20;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;	break;	//Tamato
+					growthRate = 8;		moistIntake = 8;	Spicy = 20;	Dry = 10;	Sweet = 0;	Bitter = 0;		Sour = 0;	Color = Colors.RED;		break;	//Tamato
 				case Items.TANGA_BERRY:
 					growthRate = 18;	moistIntake = 6;	Spicy = 20;	Dry = 0;	Sweet = 0;	Bitter = 0;		Sour = 10;	Color = Colors.GREEN;	break;	//Tanga
 				case Items.WACAN_BERRY:
@@ -297,7 +297,7 @@ namespace PokemonUnity.Inventory
 					break;
 			}
 		}
-		#endregion			
+		#endregion
 
 		#region Methods
 		/// <summary>
@@ -478,12 +478,12 @@ namespace PokemonUnity.Inventory
 
 		public bool ConfusionBerry()
 		{
-			return	Id == Items.AGUAV_BERRY		|| 
+			return	Id == Items.AGUAV_BERRY		||
 					Id == Items.FIGY_BERRY		||
 					Id == Items.IAPAPA_BERRY	||
 					Id == Items.MAGO_BERRY		||
 					Id == Items.WIKI_BERRY;
 		}
-		#endregion		
+		#endregion
 	}
 }

@@ -27,6 +27,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		IDictionary<Pokemons,bool> owned { get; }
 		int?[][] formseen { get; set; }
 		KeyValuePair<int,int?>[] formlastseen { get; set; }
+		//IDictionary<Pokemons,int?> formlastseen { get; set; }
 		IList<Pokemons> shadowcaught { get; set; }
 		IPokemon[] party { get; set; }
 		/// <summary>
@@ -109,5 +110,32 @@ namespace PokemonEssentials.Interface.PokeBattle
 		void clearPokedex();
 
 		ITrainer initialize(string name, TrainerTypes trainertype);
+	}
+
+	/// <summary>
+	/// Extension of <see cref="IGame"/>
+	/// </summary>
+	public interface IGameTrainer
+	{
+		ITrainer LoadTrainer(TrainerTypes trainerid, string trainername, int partyid = 0);
+
+		void ConvertTrainerData();
+
+		void NewTrainer(TrainerTypes trainerid, string trainername, IPokemon[] trainerparty);
+
+		bool TrainerTypeCheck(TrainerTypes symbol);
+
+		int GetFreeTrainerParty(TrainerTypes trainerid, string trainername);
+
+		bool TrainerCheck(TrainerTypes trainerid, string trainername, int maxbattles, int startBattleId = 0);
+
+		int MissingTrainer(TrainerTypes trainerid, string trainername, int trainerparty);
+
+		bool TrainerBattle(TrainerTypes trainerid, string trainername, string endspeech,
+					bool doublebattle = false, int trainerparty = 0, bool canlose = false, object variable= null);
+
+		bool DoubleTrainerBattle(TrainerTypes trainerid1, string trainername1, int trainerparty1, string endspeech1,
+									TrainerTypes trainerid2, string trainername2, int trainerparty2, string endspeech2,
+									bool canlose = false, object variable= null);
 	}
 }

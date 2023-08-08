@@ -532,7 +532,7 @@ namespace PokemonUnity.Character
 			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length;
-			bool ret=ItemStorageHelper.DeleteItem(ref @pockets[pocket],maxsize,item,qty);
+			bool ret=ItemStorageHelper.DeleteItem(@pockets[pocket],maxsize,item,qty);
 			if (ret) {
 				if (@registeredItem==item && !HasItem(item)) @registeredItem=0;
 			}
@@ -567,7 +567,7 @@ namespace PokemonUnity.Character
 			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length+1;
-			return ItemStorageHelper.StoreItem(ref
+			return ItemStorageHelper.StoreItem(
 				@pockets[pocket],maxsize,Core.BAGMAXPERSLOT,item,qty);
 		}
 
@@ -583,7 +583,7 @@ namespace PokemonUnity.Character
 			int pocket=(int)(Kernal.ItemData[item].Pocket??ItemPockets.MISC);
 			int maxsize=maxPocketSize(pocket);
 			if (maxsize<0) maxsize=@pockets[pocket].Length+1;
-			return ItemStorageHelper.StoreItem(ref
+			return ItemStorageHelper.StoreItem(
 				@pockets[pocket],maxsize,Core.BAGMAXPERSLOT,item,qty,true);
 		}
 

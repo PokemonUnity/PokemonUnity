@@ -11,9 +11,9 @@ using PokemonUnity.Character;
 using PokemonUnity.Utility;
 
 namespace PokemonUnity.Character
-{	
-	[Serializable, Obsolete("Use `Combat.Trainer` for Trainer class, everything else is being moved to `Game` class")] 
-	public class Player
+{
+	[Serializable, Obsolete("Use `Combat.Trainer` for Trainer class, everything else is being moved to `Game` class")]
+	public class Player : PokemonEssentials.Interface.IGamePlayer
 	{
 		#region Variables
 		/// <summary>
@@ -27,7 +27,7 @@ namespace PokemonUnity.Character
 		public string Name { get; private set; }
 		public bool IsMale { get; private set; }
 		/// <summary>
-		/// Player's Pokemon Party is stored in Player class, 
+		/// Player's Pokemon Party is stored in Player class,
 		/// and then reflected in Trainer, to match what occurs
 		/// </summary>
 		/// Didn't think about it it till now but the player should
@@ -40,7 +40,7 @@ namespace PokemonUnity.Character
 		/// </summary>
 		public Bag Bag { get; private set; }//{ get { return new Bag(this.Items); } }
 		public PC PC { get; private set; }//{ get { return new Game.TrainerPC(this, ActivePcBox); } }
-				
+
 		#region Player and Overworld Data
 		public Regions Region { get; private set; }
 		public Locations Location { get; private set; }
@@ -74,7 +74,7 @@ namespace PokemonUnity.Character
 		//ToDo: Honey Tree, smearing honey on tree will spawn pokemon in 6hrs, for 24hrs (21 trees)
 		//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
 		//ToDo: a bool variable for PC background (if texture is unlocked) `bool[]`
-		//public static string PlayerDayCareData { get; set; } 
+		//public static string PlayerDayCareData { get; set; }
 		public static string PlayerItemData { get; set; }
 		public static string PlayerBerryData { get; set; }
 		public static string PlayerNPCData { get; set; }
@@ -114,9 +114,9 @@ namespace PokemonUnity.Character
 			{
 				int x = 0;
 				for (int i = 0; i < Pokedex.GetUpperBound(0); i++)
-					if (Pokedex[i, 1] == 1) x += 1; 
+					if (Pokedex[i, 1] == 1) x += 1;
 				return x; //Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 1] == 1).ToArray().Length; } }//.Select( y => Pokedex[y, 1])
-			} 
+			}
 		}
 		public int PokedexSeen
 		{
@@ -192,7 +192,7 @@ namespace PokemonUnity.Character
 			Checkpoint		= Locations.PALLET_TOWN;
 		}
 
-		public Player(string name, bool gender, Pokemon[] party = null, Items[] bag = null, Pokemon[][] pc_poke = null, KeyValuePair<Items,int>[] pc_items = null, 
+		public Player(string name, bool gender, Pokemon[] party = null, Items[] bag = null, Pokemon[][] pc_poke = null, KeyValuePair<Items,int>[] pc_items = null,
 			byte? pc_box = null, string[] pc_names = null, int[] pc_textures = null, int? trainerid = null, int? secretid = null,
 			int? money = null, int? coin = null, int? bank = null, int? repel = null, string rival = null,
 			byte[][] dex = null, TimeSpan? time = null, IVector position = null, byte? follower = null,
@@ -223,7 +223,7 @@ namespace PokemonUnity.Character
 					if (!GymsBeatTime.ContainsKey(g.Key))
 						GymsBeatTime.Add(g.Key,g.Value);
 
-			//byte[][] dex		= pokedex		?? new byte[Game.PokemonData.Where(x => x.Value.IsDefault).Count()][]; 
+			//byte[][] dex		= pokedex		?? new byte[Game.PokemonData.Where(x => x.Value.IsDefault).Count()][];
 			//Pokedex = new byte[dex.Length,3];
 			if(dex != null)
 				for (int i = 0; i < dex.Length; i++)
@@ -236,16 +236,16 @@ namespace PokemonUnity.Character
 			int? money = null, int? coin = null, int? bank = null, int? repel = null, string rival = null,
 			byte[][] dex = null, TimeSpan? time = null, IVector position = null, byte? follower = null,
 			bool? creator = null, int? map = null, int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null)
-			: this (name: name, gender: gender, party: party, bag: bag != null ? bag.Contents : null, 
-				  pc_poke: pc != null ? pc.AllBoxes : null, pc_items: pc != null ? pc.Items : null, 
-				  pc_names: pc != null ? pc.BoxNames : null, pc_textures: pc != null ? pc.BoxTextures : null, 
+			: this (name: name, gender: gender, party: party, bag: bag != null ? bag.Contents : null,
+				  pc_poke: pc != null ? pc.AllBoxes : null, pc_items: pc != null ? pc.Items : null,
+				  pc_names: pc != null ? pc.BoxNames : null, pc_textures: pc != null ? pc.BoxTextures : null,
 				  pc_box: pc != null ? pc.ActiveBox : (byte?)null, trainerid: trainerid, secretid: secretid,
 				  money:money, coin:coin, bank:bank,repel:repel, rival:rival, dex: dex, time:time, position:position, follower:follower,
 				  creator:creator, map:map, pokecenter:pokecenter, gym:gym)
 		{
 		}
 
-		public Player(TrainerData trainer, Pokemon[] party = null) 
+		public Player(TrainerData trainer, Pokemon[] party = null)
 			: this (name: trainer.Name, gender: trainer.Gender == true, party: party, pc: null, trainerid: trainer.TrainerID, secretid: trainer.SecretID)
 		{
 		}
@@ -271,7 +271,7 @@ namespace PokemonUnity.Character
 			{
 				//Could not be stored in PC because all boxes full
 				KeyValuePair<int,int>? slot = null;
-				//attempt to add to the earliest available PC box. 
+				//attempt to add to the earliest available PC box.
 				for (int numOfBoxes = 0, curBox = PC.ActiveBox; numOfBoxes < PC.AllBoxes.Length; numOfBoxes++, curBox++)
 				{
 					slot = PC[(byte)(curBox % Core.STORAGEBOXES)].addPokemon(pokemon);

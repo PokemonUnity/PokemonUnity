@@ -36,8 +36,8 @@ namespace PokemonUnity
 		#endregion
 	}
 
-	namespace Combat { 
-		public static class BallHandlers //: PokemonEssentials.Interface.BallHandlers 
+	namespace Combat {
+		public static class BallHandlers //: PokemonEssentials.Interface.BallHandlers
 		{
 			//IsUnconditional = new ItemHandlerHash;
 			//ModifyCatchRate = new ItemHandlerHash;
@@ -223,7 +223,7 @@ namespace PokemonUnity
 				}
 				else if (ball == Items.FRIEND_BALL) {
 					//pokemon.Happiness=200;
-					//pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
+					pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
 				}
 				else return;
 			}
@@ -236,7 +236,7 @@ namespace PokemonUnity
 				}
 				else if (e.Ball == Items.FRIEND_BALL) {
 					//e.Pokemon.Happiness=200;
-					//e.Pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
+					e.Pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
 				}
 				else return;
 			}
@@ -244,13 +244,14 @@ namespace PokemonUnity
 			public static void OnFailCatch(Items ball,IBattle battle,IBattler battler) {
 				//if (!OnFailCatch[ball]) return;
 				//OnFailCatch.trigger(ball,battle,battler);
-				//if (OnFailCatch != null) OnFailCatch.Invoke(ball,battle,battler);
+				//if (BallHandlers.OnFailCatch != null) BallHandlers.OnFailCatch.Invoke(ball,battle,battler);
 				return;
 			}
 
 			public static void OnFailCatch(object sender, IOnFailCatchEventArgs e) {
 				//if (!OnFailCatch[ball]) return;
 				//OnFailCatch.trigger(ball,battle,battler);
+				//BallHandlers.OnFailCatch(ball,battle,battler);
 				return;
 			}
 

@@ -31,7 +31,7 @@ namespace PokemonUnity
 			} while (true);
 		}
 
-		public void addMove(ref List<Moves> moves, Moves move, int @base) {
+		public void addMove(List<Moves> moves, Moves move, int @base) {
 			data=moveData(move);
 			int count=@base+1;
 			if (data.function==0 && data.basedamage<=40) {

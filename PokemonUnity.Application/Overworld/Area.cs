@@ -40,7 +40,7 @@ namespace PokemonUnity.Overworld
 		}
 		/// <summary>
 		/// </summary>
-		public int[] Encounters (Method method) //{ get 
+		public int[] Encounters (Method method) //ToDo: Refactor this?...
 		{ return Kernal.MethodData[method]; } //}//{ get { return Kernal.EncounterData[Id]; } }
 	}
 }

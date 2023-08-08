@@ -23,7 +23,7 @@ namespace PokemonUnity
 
 	public partial class Game : IGameShadowPokemon
 	{
-		//event EventHandler IGameShadowPokemon.OnStepTaken { add { OnStepTaken += value; } remove { OnStepTaken -= value; } }
+		event EventHandler IGameShadowPokemon.OnStepTaken { add { OnStepTakenEvent += value; } remove { OnStepTakenEvent -= value; } }
 		//event EventHandler IGameShadowPokemon.OnStartBattle { add { OnStartBattle += value; } remove { OnStartBattle -= value; } }
 		//event Action<object, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs> IGameShadowPokemon.OnEndBattle { add { OnEndBattle += value; } remove { OnEndBattle -= value; } }
 
@@ -118,7 +118,7 @@ namespace PokemonUnity
 		{
 			if (HasPurifiableInParty())
 			{
-				(this as IGameMessage).Message(Game._INTL("There's a Pokemon that may open the door to its heart!"));
+				GameMessage.Message(Game._INTL("There's a Pokemon that may open the door to its heart!"));
 				//  Choose a purifiable Pokemon
 				//ChoosePokemon(1, 2, proc {| poke |
 				ChoosePokemon(1, 2, ableProc: poke => //Trainer.party.Select(poke =>
@@ -131,7 +131,7 @@ namespace PokemonUnity
 			}
 			else
 			{
-				(this as IGameMessage).Message(_INTL("You have no Pokemon that can be purified."));
+				GameMessage.Message(_INTL("You have no Pokemon that can be purified."));
 			}
 		}
 
@@ -233,27 +233,30 @@ namespace PokemonUnity
 			pokemon.UpdateShadowMoves();
 			if (pokemon.heartgauge == 0)
 			{
-				(this as IGameMessage).Message(Game._INTL("{1} can now be purified!", (pokemon as IPokemon).Name));
+				GameMessage.Message(Game._INTL("{1} can now be purified!", (pokemon as IPokemon).Name));
 			}
 		}
 
-		/*Events.onStepTaken+=proc{
-			foreach (Pokemon pkmn in Trainer.party) {
-				if (pkmn.HP>0 && !pkmn.isEgg && pkmn.heartgauge>0) {
+		//Events.onStepTaken+=proc{
+		protected virtual void Events_OnStepTakenPokemonShadow(object sender, EventArgs e) {
+			foreach (IPokemon pokemon in Trainer.party) {
+				if (pokemon.HP>0 && !pokemon.isEgg && pokemon is IPokemonShadowPokemon pkmn && pkmn.heartgauge>0) {
 					pkmn.adjustHeart(-1);
 					if (pkmn.heartgauge==0) ReadyToPurify(pkmn);
 				}
 			}
-			if ((Global.purifyChamber!- null)) { //rescue null
-				Global.purifyChamber.update();
+			if (Global is IGlobalMetadataPurifyChamber gp && gp.purifyChamber!= null) { //rescue null
+				gp.purifyChamber.update();
 			}
 			for (int i = 0; i< 2; i++) {
-				Pokemon pkmn=Global.daycare[i][0];
-				if (!pkmn) continue;
-				pkmn.adjustHeart(-1);
-				pkmn.UpdateShadowMoves();
+				IPokemon pokemon=Global.daycare[i];//[0]
+				if (!pokemon.IsNotNullOrNone()) continue;
+				if (pokemon is IPokemonShadowPokemon pkmn) {
+					pkmn.adjustHeart(-1);
+					pkmn.UpdateShadowMoves();
+				}
 			}
-		}*/
+		}
 	}
 
 	namespace Monster

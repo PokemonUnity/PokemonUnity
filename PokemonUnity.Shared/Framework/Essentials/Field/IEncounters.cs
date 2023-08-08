@@ -29,17 +29,30 @@ namespace PokemonEssentials.Interface.Field
 	//    int[] EnctypeCompileDens  { get; }
 	//}
 
-	public interface IEncounter
+	public interface IEncounterPokemon
 	{
 		Pokemons Pokemon    { get; }
-		int Level           { get; }
+		int MinLevel		{ get; }
+		int MaxLevel		{ get; }
 	}
 
-	public interface IEncounters //Rename WildEncounters?
+	public interface IEncounters //: PokemonEssentials.Interface.Field.IEncounterModifier //ToDo: Rename to WildEncounters or EncounterData?
 	{
-		int[][] EnctypeChances    { get; }
-		int[] EnctypeDensities    { get; }
-		int[] EnctypeCompileDens  { get; }
+		/// <summary>
+		/// Chances of pokemon encounter equal up to 100%
+		/// </summary>
+		/// Technically all land encounters share the same odds
+		//int[][] EnctypeChances    { get; }
+		IDictionary<EncounterOptions, int[]> EnctypeChances    { get; }
+		/// <summary>
+		/// Density is rate encounter;
+		/// How often player is to encounter a pokemon
+		/// </summary>
+		//int[] EnctypeDensities    { get; }
+		IDictionary<EncounterOptions, int> EnctypeDensities    { get; }
+		//IDictionary<EncounterOptions, int> EnctypeDensities    { get; }
+		//int[] EnctypeCompileDens  { get; } //Not sure what this is for, but may not be needed with enough data from database
+		IDictionary<EncounterOptions, IList<IEncounterPokemon>> EnctypeEncounters { get; }
 
 		//IEncounters initialize();
 
@@ -47,34 +60,37 @@ namespace PokemonEssentials.Interface.Field
 
 		void clearStepCount();
 
-		bool hasEncounter(Method enc);
+		bool hasEncounter(EncounterOptions enc);
+		//bool hasEncounter(Method enc);
 
-		bool isCave();
+		bool IsCave { get; }
 
-		bool isGrass();
+		bool IsGrass { get; }
 
-		bool isRegularGrass();
+		bool IsRegularGrass { get; }
 
-		bool isWater();
+		bool IsWater { get; }
 
-		Method? EncounterType();
+		EncounterOptions? EncounterType();
+		//Method? EncounterType();
 
-		bool isEncounterPossibleHere();
+		bool IsEncounterPossibleHere { get; }
 
 		void setup(int mapID);
 
-		bool MapHasEncounter(int mapID, Method enctype);
+		bool MapHasEncounter(int mapID, EncounterOptions enctype);
+		//bool MapHasEncounter(int mapID, Method enctype);
 
-		IEncounter MapEncounter(int mapID, Method enctype);
-		//IPokemon MapEncounter(int mapID, EncounterTypes enctype);
+		IPokemon MapEncounter(int mapID, EncounterOptions enctype);
+		//IEncounterPokemon MapEncounter(int mapID, Method enctype);
 
-		IEncounter EncounteredPokemon(Method enctype, int tries = 1);
-		//IPokemon EncounteredPokemon(EncounterTypes enctype, int tries = 1);
+		IPokemon EncounteredPokemon(EncounterOptions enctype, int tries = 1);
+		//IEncounterPokemon EncounteredPokemon(Method enctype, int tries = 1);
 
-		bool CanEncounter(IEncounter encounter);
+		bool CanEncounter(IPokemon encounter);
 
-		IEncounter GenerateEncounter(Method enctype);
-		//IPokemon GenerateEncounter(EncounterTypes enctype);
+		IPokemon GenerateEncounter(EncounterOptions enctype);
+		//IEncounterPokemon GenerateEncounter(Method enctype);
 
 		#region Encounter Modifiers
 		//###############################################################################

@@ -17,73 +17,6 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonEssentials.Interface
 {
-	namespace EventArg
-	{
-		#region Application EventArgs
-		public interface IButtonEventArgs : IEventArgs
-		{
-			//ButtonEventArgs(int button, bool isDown) { Button = button; IsDown = isDown; }
-			int Button { get; } // readonly
-			bool IsDown { get; } // readonly
-		}
-		#endregion
-	}
-
-	public interface IGame //: IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime, IGameMessage, IGameAudioPlay, IGameMetadataMisc
-	{
-		PokemonEssentials.Interface.IGlobalMetadata Global					{ get; }
-		//PokemonEssentials.Interface.Field.IPokemonMapFactory MapFactory	{ get; }
-		PokemonEssentials.Interface.Field.IMapFactory MapFactory			{ get; }
-		PokemonEssentials.Interface.Field.IMapMetadata PokemonMap			{ get; }
-		PokemonEssentials.Interface.Field.IMapMetadata MapData				{ get; }
-		PokemonEssentials.Interface.Screen.IPokemonSystemOption PokemonSystem { get; }
-		PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp			{ get; set; }
-		PokemonEssentials.Interface.Field.IEncounters PokemonEncounters		{ get; }
-		PokemonEssentials.Interface.Screen.IPCPokemonStorage PokemonStorage	{ get; }
-		PokemonEssentials.Interface.Screen.IBag Bag							{ get; }
-		PokemonEssentials.Interface.ISceneMap Scene							{ get; set; }
-		PokemonEssentials.Interface.IGameTemp GameTemp						{ get; }
-		PokemonEssentials.Interface.IGamePlayer Player						{ get; set; }
-		PokemonEssentials.Interface.PokeBattle.ITrainer Trainer				{ get; set; }
-		PokemonEssentials.Interface.RPGMaker.Kernal.ISystem DataSystem		{ get; set; }
-		PokemonEssentials.Interface.ITileset[] DataTilesets					{ get; set; }
-		PokemonEssentials.Interface.IGameCommonEvent[] DataCommonEvents		{ get; set; }
-		PokemonEssentials.Interface.IGameSystem GameSystem					{ get; set; }
-		PokemonEssentials.Interface.IGameSwitches GameSwitches				{ get; set; }
-		PokemonEssentials.Interface.IGameSelfSwitches GameSelfSwitches		{ get; set; }
-		PokemonEssentials.Interface.IGameVariable GameVariables				{ get; set; }
-		PokemonEssentials.Interface.IGameScreen GameScreen					{ get; set; }
-		PokemonEssentials.Interface.IGamePlayer GamePlayer					{ get; set; }
-		PokemonEssentials.Interface.IGameMap GameMap						{ get; set; }
-		//PokemonEssentials.Interface.IGameMessage GameMessage				{ get; set; }
-		//int SpeechFrame													{ get; }
-		PokemonEssentials.Interface.Screen.IGameScenesUI Scenes				{ get; set; }
-		PokemonEssentials.Interface.Screen.IGameScreensUI Screens			{ get; set; }
-	}
-	public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }
-	//public interface ITempMetadata : Field.ITempMetadata, ITempMetadataBerryPlants, ITempMetadataDependantEvents, ITempMetadataField, ITempMetadataPokeRadar, ITempMetadataRoaming, ITempMetadataPokemonShadow { }
-
-	public interface ITileset
-	{
-		int id { get; set; }
-		string name { get; set; }
-		string tileset_name { get; set; }
-		string[] autotile_names { get; set; }
-		string panorama_name { get; set; }
-		int panorama_hue { get; set; }
-		string fog_name { get; set; }
-		int fog_hue { get; set; }
-		int fog_opacity { get; set; }
-		int fog_blend_type { get; set; }
-		int fog_zoom { get; set; }
-		int fog_sx { get; set; }
-		int fog_sy { get; set; }
-		string battleback_name { get; set; }
-		int[] passages { get; set; }
-		int[] priorities { get; set; }
-        PokemonUnity.Overworld.Terrains[] terrain_tags { get; set; }
-	}
-
 	namespace RPGMaker.Kernal
 	{
 		#region Ignored this...
@@ -126,15 +59,15 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// Element list. Text array using element IDs as subscripts, with the element in the 0 position being null.
 			/// </summary>
-			Dictionary<int, string> elements { get; set; }
+			IDictionary<int, string> elements { get; set; }
 			/// <summary>
 			/// Switch list. Text array using switch IDs as subscripts, with the element in the 0 position being null.
 			/// </summary>
-			Dictionary<int, string> switches { get; set; }
+			IDictionary<int, string> switches { get; set; }
 			/// <summary>
 			/// Variable list. Text array using variable IDs as subscripts, with the element in the 0 position being null.
 			/// </summary>
-			Dictionary<int, string> variables { get; set; }
+			IDictionary<int, string> variables { get; set; }
 			string windowskin_name { get; set; }
 			/// <summary>
 			/// The game title.
@@ -213,9 +146,9 @@ namespace PokemonEssentials.Interface
 			/// </summary>
 			int switch_id { get; set; }
 			/// <summary>
-			/// List of event commands. 
+			/// List of event commands.
 			/// </summary>
-			List<IEventCommand> list { get; set; }
+			IList<IEventCommand> list { get; set; }
 		}
 
 		public interface IMap
@@ -258,7 +191,7 @@ namespace PokemonEssentials.Interface
 			/// </summary>
 			int encounter_step { get; set; }
 			/// <summary>
-			/// The map data. A 3-dimensional tile ID array 
+			/// The map data. A 3-dimensional tile ID array
 			/// </summary>
 			int[,,] data { get; set; }
 			/// <summary>
@@ -301,7 +234,7 @@ namespace PokemonEssentials.Interface
 			string name { get; set; }
 			int x { get; set; }
 			int y { get; set; }
-			List<IEventPage> pages { get; set; }
+			IList<IEventPage> pages { get; set; }
 		}
 
 		public interface IEventPage
@@ -311,7 +244,7 @@ namespace PokemonEssentials.Interface
 			/// </summary>
 			IEventPageCondition condition { get; set; }
 			/// <summary>
-			/// The event graphic 
+			/// The event graphic
 			/// </summary>
 			IEventPageGraphic graphic { get; set; }
 			/// <summary>
@@ -347,9 +280,9 @@ namespace PokemonEssentials.Interface
 			/// </summary>
 			int trigger { get; set; }
 			/// <summary>
-			/// List of event commands. 
+			/// List of event commands.
 			/// </summary>
-			List<IEventCommand> list { get; set; }
+			IList<IEventCommand> list { get; set; }
 		}
 
 		public interface IEventPageCondition
@@ -438,7 +371,7 @@ namespace PokemonEssentials.Interface
 			/// Array containing the Move command arguments. The contents vary for each command.
 			/// </summary>
 			//List<IMoveCommand> parameters { get; set; }
-			List<object> parameters { get; set; }
+			IList<object> parameters { get; set; }
 		}
 
 		public interface IMoveRoute
@@ -456,9 +389,9 @@ namespace PokemonEssentials.Interface
 			/// </summary>
 			bool wait { get; set; }
 			/// <summary>
-			/// Program contents. 
+			/// Program contents.
 			/// </summary>
-			List<IMoveCommand> list { get; set; }
+			IList<IMoveCommand> list { get; set; }
 		}
 
 		public interface IMoveCommand
@@ -470,7 +403,8 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// Array containing the Move command arguments. The contents vary for each command.
 			/// </summary>
-			List<IMoveParameters> parameters { get; set; }
+			//IList<IMoveParameters> parameters { get; set; }
+			IMoveParameters parameters { get; set; }
 		}
 
 		public interface IMoveParameters { }

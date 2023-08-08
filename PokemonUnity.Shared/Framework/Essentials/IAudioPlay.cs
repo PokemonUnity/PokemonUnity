@@ -13,12 +13,15 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonEssentials.Interface
 {
+	/// <summary>
+	/// Extension of <see cref="IGame"/>
+	/// </summary>
 	public interface IGameAudioPlay
 	{
 		IAudioObject StringToAudioFile(string str);
 
 		/// <summary>
-		/// Converts an object to an audio file. 
+		/// Converts an object to an audio file.
 		/// </summary>
 		/// <param name="str">a string showing the filename.
 		/// Possible formats for <paramref name="str"/>:<para>
@@ -31,7 +34,7 @@ namespace PokemonEssentials.Interface
 		/// <returns></returns>
 		IAudioObject ResolveAudioFile(string str, int? volume = null, float? pitch = null);
 		/// <summary>
-		/// Converts an object to an audio file. 
+		/// Converts an object to an audio file.
 		/// </summary>
 		/// <param name="str">an <seealso cref="IAudioObject"/> object.</param>
 		/// <param name="volume">Volume of the file, up to 100</param>
@@ -75,13 +78,13 @@ namespace PokemonEssentials.Interface
 		void BGMPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		/// <summary>
-		/// Fades out or stops BGM playback. 
+		/// Fades out or stops BGM playback.
 		/// </summary>
 		/// <param name="x">'x' is the time in seconds to fade out.</param>
 		void BGMFade(float x = 0);
 
 		/// <summary>
-		/// Fades out or stops BGM playback. 
+		/// Fades out or stops BGM playback.
 		/// </summary>
 		/// <param name="timeInSeconds">'x' is the time in seconds to fade out.</param>
 		void BGMStop(float timeInSeconds = 0);
@@ -116,13 +119,13 @@ namespace PokemonEssentials.Interface
 		void MEPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		/// <summary>
-		/// Fades out or stops ME playback. 
+		/// Fades out or stops ME playback.
 		/// </summary>
 		/// <param name="x">'x' is the time in seconds to fade out.</param>
 		void MEFade(float x = 0);
 
 		/// <summary>
-		/// Fades out or stops ME playback. 
+		/// Fades out or stops ME playback.
 		/// </summary>
 		/// <param name="timeInSeconds">'x' is the time in seconds to fade out.</param>
 		void MEStop(float timeInSeconds = 0);
@@ -157,13 +160,13 @@ namespace PokemonEssentials.Interface
 		void BGSPlay(IAudioObject param, int? volume = null, float? pitch = null);
 
 		/// <summary>
-		/// Fades out or stops BGS playback. 
+		/// Fades out or stops BGS playback.
 		/// </summary>
 		/// <param name="x">'x' is the time in seconds to fade out.</param>
 		void BGSFade(float x = 0);
 
 		/// <summary>
-		/// Fades out or stops BGS playback. 
+		/// Fades out or stops BGS playback.
 		/// </summary>
 		/// <param name="timeInSeconds">'x' is the time in seconds to fade out.</param>
 		void BGSStop(float timeInSeconds = 0);

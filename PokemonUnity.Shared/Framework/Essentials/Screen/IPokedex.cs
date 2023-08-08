@@ -38,7 +38,7 @@ namespace PokemonEssentials.Interface.Screen
 		int DexSearch();
 		void CloseSearch();
 		IEnumerable<PokemonUnity.Monster.Data.PokemonData> SearchDexList(params object[] param);
-		List<PokemonUnity.Monster.Data.PokemonData> GetDexList();
+		IList<PokemonUnity.Monster.Data.PokemonData> GetDexList();
 		void RefreshDexList(int index = 0);
 		void RefreshDexSearch(params string[] param);
 		bool CanAddForModeList(int mode, Pokemons nationalSpecies);
@@ -65,7 +65,7 @@ namespace PokemonEssentials.Interface.Screen
 		//void drawItem(int index, int count, IRect rect);
 	}
 
-	public interface IScene_PokedexMenu 
+	public interface IScene_PokedexMenu
 	{
 		IScene_PokedexMenu initialize(int menu_index = 0);
 
@@ -75,16 +75,16 @@ namespace PokemonEssentials.Interface.Screen
 
 		void update_command();
 	}
-	
+
 	// ===============================================================================
 	// Pokédex main screen
 	// ===============================================================================
-	public interface IWindow_CommandPokemonWhiteArrow : IWindow_CommandPokemon 
+	public interface IWindow_CommandPokemonWhiteArrow : IWindow_CommandPokemon
 	{
 		//void drawCursor(int index, IRect rect);
 	}
 
-	public interface IWindow_Pokedex : IWindow_DrawableCommand, IDisposable 
+	public interface IWindow_Pokedex : IWindow_DrawableCommand, IDisposable
 	{
 		string[] commands { set; }
 
@@ -101,10 +101,10 @@ namespace PokemonEssentials.Interface.Screen
 		//void drawItem(int index, int count, IRect rect);
 	}
 
-	public interface IWindow_ComplexCommandPokemon : IWindow_DrawableCommand 
+	public interface IWindow_ComplexCommandPokemon : IWindow_DrawableCommand
 	{
 		string[] commands				{ get; set; }
-		
+
 		//float width { set; }
 		//
 		//float height { set; }

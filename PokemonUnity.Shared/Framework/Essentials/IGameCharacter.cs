@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.UX;
+using PokemonEssentials.Interface.RPGMaker.Kernal;
 
 namespace PokemonEssentials.Interface
 {
-	public interface IGameCharacter : PokemonEssentials.Interface.Screen.IEntity
+	public interface IGameCharacter : IGameEvent
 	{
 		int id { get; set; }
-		int x { get; set; }
-		int y { get; set; }
-		int real_x { get; set; }
-		int real_y { get; set; }
+		float x { get; set; }
+		float y { get; set; }
+		float real_x { get; set; }
+		float real_y { get; set; }
 		int tile_id { get; set; }
 		string character_name { get; set; }
 		int character_hue { get; set; }
@@ -42,8 +43,8 @@ namespace PokemonEssentials.Interface
 		float? oldX { get; set; }
 		float? oldY { get; set; }
 		int? oldMap { get; set; }
-		//IMoveRoute move_route { get; set; }
-		int? original_move_route { get; set; }
+		IMoveRoute move_route { get; set; }
+		IMoveRoute original_move_route { get; set; }
 		int? original_move_route_index { get; set; }
 		int prelock_direction { get; set; }
 
@@ -61,7 +62,7 @@ namespace PokemonEssentials.Interface
 
 		void straighten();
 
-		void force_move_route(int move_route);
+		void force_move_route(IMoveRoute move_route);
 
 		bool passableEx(float x, float y, int d, bool strict = false);
 
@@ -92,7 +93,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="x">x-coordinate</param>
 		/// <param name="y">y-coordinate</param>
-		void moveto(int x, int y);
+		void moveto(float x, float y);
 
 		int screen_x
 		{

@@ -20,11 +20,25 @@ namespace PokemonUnity.Monster.Data
 		public PokemonUnity.Attack.Category? Category { get; private set; }
 		public float this[Types target]
 		{
+			// 0 = takes no damage
+			// 1 = takes reduced damage (half)
+			// 2 = takes normal damage (1x)
+			// 4 = takes extra damage (doubled)
 			get { return Table[target] * 0.01f; }
 		}
 		#endregion
 
 		#region Methods
+		/// <summary>
+		/// </summary>
+		/// <param name="atk"></param>
+		/// <param name="target"></param>
+		/// <returns>
+		/// 0 = takes no damage
+		/// 1 = takes reduced damage (half)
+		/// 2 = takes normal damage (1x)
+		/// 4 = takes extra damage (doubled)
+		/// </returns>
 		public static float GetEffectiveness(PokemonUnity.Types atk, PokemonUnity.Types target)
 		{
 			if (target == Types.NONE)
@@ -45,7 +59,7 @@ namespace PokemonUnity.Monster.Data
 		public static Combat.TypeEffective GetCombinedEffectiveness(PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
 		{
 			float e = GetCombinedEffectivenessModifier(atk, target1, target2, target3);
-			if (e == 0)
+			if (e <= 0) //Equal to zero, but would be considered a bug if negative number
 				return Combat.TypeEffective.Ineffective;
 			else if (e > 0 && e < 8)
 				return Combat.TypeEffective.NotVeryEffective;
@@ -53,7 +67,7 @@ namespace PokemonUnity.Monster.Data
 				return Combat.TypeEffective.NormalEffective;
 			else //if (e > 8)
 				return Combat.TypeEffective.SuperEffective;
-			//return TypeEffective.Broken;
+			//return TypeEffective.Broken; //Less than 0...
 		}
 		public string ToString(TextScripts text)
 		{
@@ -61,6 +75,17 @@ namespace PokemonUnity.Monster.Data
 		}
 		#endregion
 
+		/// <summary>
+		/// </summary>
+		/// <param name="atk">attacking type used</param>
+		/// <param name="table">
+		/// recipient type damage before multiplied by 0.01f<para>
+		/// 0 = takes no damage</para>
+		/// 100 = takes reduced damage (half)<para>
+		/// 200 = takes normal damage (1x)</para>
+		/// 400 = takes extra damage (doubled)
+		/// </param>
+		/// <param name="category"></param>
 		public Type(Types atk, IDictionary<Types,byte> table, PokemonUnity.Attack.Category? category = null)//Types target, int factor
 		{
 			Base = atk;

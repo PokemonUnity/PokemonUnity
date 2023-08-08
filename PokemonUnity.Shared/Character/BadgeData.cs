@@ -11,14 +11,14 @@ namespace PokemonUnity.Character
 		/// <summary>
 		/// Id of Trainer Badge
 		/// </summary>
-		public GymBadges Id { get; private set; } 
+		public GymBadges Id { get; private set; }
 		//public string Name { get; private set; }
 		/// <summary>
 		/// Pokemons with level under this int, become less disobedient
 		/// </summary>
 		public byte LevelCap { get; private set; }
-		//public Moves[] HMs { get; private set; } 
-		//public HiddenMoves[] HMs { get; private set; } 
+		//public Moves[] HMs { get; private set; }
+		//public HiddenMoves[] HMs { get; private set; }
 		//public string TexturePath { get; private set; } //= @"GUI\Badges";
 		public Regions Region { get; private set; } //= "Johto";
 

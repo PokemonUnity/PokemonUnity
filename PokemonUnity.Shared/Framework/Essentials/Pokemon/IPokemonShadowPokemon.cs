@@ -171,7 +171,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Fires whenever the player takes a step.
 		/// </summary>
-		event EventHandler OnStepTakenEvent;
+		event EventHandler OnStepTaken;
 		//Events.onStepTaken+=proc{
 		//   foreach (var pkmn in Game.GameData.Trainer.party) {
 		//     if (pkmn.HP>0 && !pkmn.isEgg? && pkmn.heartgauge>0) {

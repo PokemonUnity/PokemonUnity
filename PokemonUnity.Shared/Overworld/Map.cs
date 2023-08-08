@@ -5,10 +5,11 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Overworld;
 using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Field;
 
 namespace PokemonUnity
 {
-	public struct MapData
+	public struct MapData : IMapData
 	{
 		public int tileset_id                   { get; private set; }
 		public int width                        { get; private set; }
@@ -18,7 +19,7 @@ namespace PokemonUnity
 		public bool autoplay_bgs                { get; private set; }
 		public IAudioBGS bgs					{ get; private set; }
 		public IList<Pokemons> encounter_list	{ get; private set; }
-		//public IList<IEncounterData> encounter_list	{ get; private set; }
+		//public IList<IMapEncounterMetadata> encounter_list	{ get; private set; }
 		public int encounter_step               { get; private set; }
 		public int?[,,] data                    { get; private set; }
 		public IDictionary<int,int> events		{ get; private set; }

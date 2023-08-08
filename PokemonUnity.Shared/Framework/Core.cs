@@ -11,7 +11,6 @@ namespace PokemonUnity
 	/// but a series of const variables that will be used as rules
 	/// for the game mechanics or structure.
 	/// </summary>
-	/// ToDo: Make a private static class for const int switches
 	public static class Core
 	{
 		#region Constant Values and Game Rules

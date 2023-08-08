@@ -77,13 +77,13 @@ namespace PokemonUnity//.Inventory
 	public partial class Game : IGameItemEffect
 	{
 		public ItemUseResults Repel(Items item,int steps) {
-			if (RepelSteps>0) {
+			if (Global.repel>0) {
 				(this as IGameMessage).Message(Game._INTL("But the effects of a Repel lingered from earlier."));
 				//return 0;
 				return ItemUseResults.NotUsed;
 			} else {
 				(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Trainer.name,Game._INTL(item.ToString(TextScripts.Name))));
-				RepelSteps=steps;
+				Global.repel=steps;
 				//return 3;
 				return ItemUseResults.UsedItemConsumed;
 			}
@@ -214,29 +214,29 @@ namespace PokemonUnity//.Inventory
 			UseFromBag.Add(Items.TOWN_MAP, () => {
 				ShowMap(-1,false);
 				//next 1; // Continue
-				return ItemUseResults.UsedNotConsumed; 
+				return ItemUseResults.UsedNotConsumed;
 			});
 			UseFromBag.Add(Items.COIN_CASE, () => {
 				(this as IGameMessage).Message(Game._INTL("Coins: {1}",Player.Coins));
 				//next 1; // Continue
-				return ItemUseResults.UsedNotConsumed; 
+				return ItemUseResults.UsedNotConsumed;
 			});
 			UseFromBag.Add(Items.EXP_ALL, () => {
 				Bag.ChangeItem(Items.EXP_ALL, Items.EXP_ALL_OFF);
 				(this as IGameMessage).Message(Game._INTL("The Exp Share was turned off."));
 				//next 1; // Continue
-				return ItemUseResults.UsedNotConsumed; 
+				return ItemUseResults.UsedNotConsumed;
 			});
 			UseFromBag.Add(Items.EXP_ALL_OFF, () => {
 				Bag.ChangeItem(Items.EXP_ALL_OFF, Items.EXP_ALL);
 				(this as IGameMessage).Message(Game._INTL("The Exp Share was turned on."));
 				//next 1; // Continue
-				return ItemUseResults.UsedNotConsumed; 
+				return ItemUseResults.UsedNotConsumed;
 			});
 			#endregion
 
 			#region UseInField handlers
-			UseInField.Add(Items.HONEY, () => {  
+			UseInField.Add(Items.HONEY, () => {
 				(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Player.Name,Game._INTL(Items.HONEY.ToString(TextScripts.Name))));
 				SweetScent();
 			});
@@ -336,7 +336,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			UseInField.Add(Items.DOWSING_MACHINE, () => {//item == Items.ITEM_FINDER || item == Items.DOWSING_MCHN || 
+			UseInField.Add(Items.DOWSING_MACHINE, () => {//item == Items.ITEM_FINDER || item == Items.DOWSING_MCHN ||
 				@event=Item.ClosestHiddenItem();
 				if (@event == null) {
 					(this as IGameMessage).Message(Game._INTL("... ... ... ...Nope!\r\nThere's no response."));
@@ -813,7 +813,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			UseOnPokemon.Add(Items.PARALYZE_HEAL, (item, pokemon, scene) => {//item == Items.PARLYZHEAL || 
+			UseOnPokemon.Add(Items.PARALYZE_HEAL, (item, pokemon, scene) => {//item == Items.PARLYZHEAL ||
 				if (pokemon.HP<=0 || pokemon.Status!=Status.PARALYSIS) {
 					scene.Display(Game._INTL("It won't have any effect."));
 					//next false;
@@ -1421,7 +1421,7 @@ namespace PokemonUnity//.Inventory
 									if (poke2.Species == Pokemons.ZEKROM) pokemon.SetForm(2);
 									pokemon.fused=new Pokemon[] { pokemon, poke2 }; //poke2;
 									//ToDo: Combine stats and divide down the middle? (IV/EV)
-									RemovePokemonAt(chosen); 
+									RemovePokemonAt(chosen);
 									scene.HardRefresh();
 									scene.Display(Game._INTL("{1} changed Forme!",pokemon.Name));
 									return true;
@@ -1645,7 +1645,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			BattleUseOnPokemon.Add(Items.PARALYZE_HEAL, (pokemon, battler, scene) => {//item == Items.PARLYZHEAL || 
+			BattleUseOnPokemon.Add(Items.PARALYZE_HEAL, (pokemon, battler, scene) => {//item == Items.PARLYZHEAL ||
 				if (pokemon.HP<=0 || pokemon.Status!=Status.PARALYSIS) {
 					scene.Display(Game._INTL("It won't have any effect."));
 					return false;
@@ -2061,7 +2061,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			BattleUseOnBattler.Add(Items.X_DEFENSE_2, (item, battler, scene) => { //item == Items.XDEFEND2 || 
+			BattleUseOnBattler.Add(Items.X_DEFENSE_2, (item, battler, scene) => { //item == Items.XDEFEND2 ||
 				string playername=battler.battle.Player().name;
 				scene.Display(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.CanIncreaseStatStage(Combat.Stats.DEFENSE,battler,false)) {
@@ -2073,7 +2073,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			BattleUseOnBattler.Add(Items.X_DEFENSE_3, (item, battler, scene) => { //item == Items.XDEFEND3 || 
+			BattleUseOnBattler.Add(Items.X_DEFENSE_3, (item, battler, scene) => { //item == Items.XDEFEND3 ||
 				string playername=battler.battle.Player().name;
 				scene.Display(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.CanIncreaseStatStage(Combat.Stats.DEFENSE,battler,false)) {
@@ -2085,7 +2085,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			BattleUseOnBattler.Add(Items.X_DEFENSE_6, (item, battler, scene) => { //item == Items.XDEFEND6 || 
+			BattleUseOnBattler.Add(Items.X_DEFENSE_6, (item, battler, scene) => { //item == Items.XDEFEND6 ||
 				string playername=battler.battle.Player().name;
 				scene.Display(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.IncreaseStatWithCause(Combat.Stats.DEFENSE,6,battler,Game._INTL(item.ToString(TextScripts.Name)))) {
@@ -2096,7 +2096,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			BattleUseOnBattler.Add(Items.X_SP_ATK, (item, battler, scene) => { //item == Items.X_SPECIAL || 
+			BattleUseOnBattler.Add(Items.X_SP_ATK, (item, battler, scene) => { //item == Items.X_SPECIAL ||
 				string playername=battler.battle.Player().name;
 				scene.Display(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.CanIncreaseStatStage(Combat.Stats.SPATK,battler,false)) {
@@ -2108,7 +2108,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			BattleUseOnBattler.Add(Items.X_SP_ATK_2, (item, battler, scene) => { //item == Items.XSPECIAL2 || 
+			BattleUseOnBattler.Add(Items.X_SP_ATK_2, (item, battler, scene) => { //item == Items.XSPECIAL2 ||
 				string playername=battler.battle.Player().name;
 				scene.Display(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.CanIncreaseStatStage(Combat.Stats.SPATK,battler,false)) {
@@ -2120,7 +2120,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			BattleUseOnBattler.Add(Items.X_SP_ATK_3, (item, battler, scene) => { //item == Items.XSPECIAL3 || 
+			BattleUseOnBattler.Add(Items.X_SP_ATK_3, (item, battler, scene) => { //item == Items.XSPECIAL3 ||
 				string playername=battler.battle.Player().name;
 				scene.Display(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.CanIncreaseStatStage(Combat.Stats.SPATK,battler,false)) {
@@ -2132,7 +2132,7 @@ namespace PokemonUnity//.Inventory
 				}
 			});
 
-			BattleUseOnBattler.Add(Items.X_SP_ATK_6, (item, battler, scene) => { //item == Items.XSPECIAL6 || 
+			BattleUseOnBattler.Add(Items.X_SP_ATK_6, (item, battler, scene) => { //item == Items.XSPECIAL6 ||
 				string playername=battler.battle.Player().name;
 				scene.Display(Game._INTL("{1} used the {2}.",playername,Game._INTL(item.ToString(TextScripts.Name))));
 				if (battler.IncreaseStatWithCause(Combat.Stats.SPATK,6,battler,Game._INTL(item.ToString(TextScripts.Name)))) {
@@ -2329,7 +2329,7 @@ namespace PokemonUnity//.Inventory
 				if (battler.OwnSide.Mist>0) {
 					scene.Display(Game._INTL("But it had no effect!"));
 					return false;
-				} else { 
+				} else {
 					battler.OwnSide.Mist=5;
 					if (!scene.IsOpposing(battler.Index)) { //Create new Delegate for attacker?
 					//if (!scene.IsOpposing(battler.Index)) { //if player's pokemon...
@@ -2813,7 +2813,7 @@ namespace PokemonUnity//.Inventory
 				battle.DisplayPaused(Game._INTL("Got away safely!"));
 			});
 
-			//if (Item.IsPokeBall(item))// Any Poké Ball 
+			//if (Item.IsPokeBall(item))// Any Poké Ball
 			UseInBattle.Add(Items.POKE_BALL, (item, battler, battle) => {
 				battle.ThrowPokeball(battler.Index, item);
 			});
@@ -2911,10 +2911,10 @@ namespace PokemonUnity//.Inventory
 		private void OnStepTakenEventHandler(object sender, EventArgs e)
 		{
 			if (!Terrain.isIce(Player.terrain_tag)) {		// Shouldn't count down if on ice
-				if (RepelSteps>0) {
-					RepelSteps-=1;
-					if (RepelSteps<=0) {
-						(this as IGameMessage).Message(Game._INTL("Repel's effect wore off..."));
+				if (Global.repel>0) {
+					Global.repel-=1;
+					if (Global.repel<=0) {
+						if (this is IGameMessage gm) gm.Message(Game._INTL("Repel's effect wore off..."));
 						Items ret=this is IGameItem g ? g.ChooseItemFromList(Game._INTL("Do you want to use another Repel?"),1,
 							Items.REPEL, Items.SUPER_REPEL, Items.MAX_REPEL) : Items.NONE;
 						if (ret>0) UseItem(Bag,ret); //Item.UseItem(Bag,ret);

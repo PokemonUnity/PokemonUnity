@@ -195,17 +195,17 @@ namespace PokemonUnity.Combat
 			if (trainer.Length>1) {
 				ITrainer[] ret=new Trainer[2];
 				ret[0]=new Trainer(trainer[0].Name, trainer[0].ID); //trainer[0][1],trainer[0][0]
-				ret[0].id=trainer[0].TrainerID; //trainer[0][2];
+				ret[0].id=trainer[0].NpcId; //trainer[0][2];
 				//ret[0].badges=trainer[0].badges; //trainer[0][3];
 				//ToDo: for-loop, foreach badge in array, assign same value to second variable
 				ret[1]=new Trainer(trainer[1].Name, trainer[1].ID); //trainer[1][1],trainer[1][0]
-				ret[1].id=trainer[1].TrainerID; //trainer[1][2];
+				ret[1].id=trainer[1].NpcId; //trainer[1][2];
 				//ret[1].badges=trainer[1].badges; //trainer[1][3];
 				return ret;
 			}
 			else {
 				ITrainer[] ret=new Trainer[] { new Trainer(trainer[0].Name, trainer[0].ID) };//(trainer[0][1], trainer[0][0])
-				ret[0].id=trainer[0].TrainerID; //trainer[0][2];
+				ret[0].id=trainer[0].NpcId; //trainer[0][2];
 				//ret[0].badges=trainer[0].badges; //trainer[0][3];
 				return ret;
 			}

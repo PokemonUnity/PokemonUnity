@@ -39,6 +39,16 @@ namespace PokemonUnity.Overworld
 				   tag == Terrains.SootGrass;
 		}
 
+		//public static bool isFlower(Terrains? tag) {
+		//	return tag == Terrains.FlowerRed ||
+		//		   tag == Terrains.FlowerOrange ||
+		//		   tag == Terrains.FlowerYellow ||
+		//		   tag == Terrains.FlowerBlue ||
+		//		   tag == Terrains.FlowerWhite ||
+		//		   tag == Terrains.FlowerPink ||
+		//		   tag == Terrains.FlowerPurple;
+		//}
+
 		/// <summary>
 		/// The Poké Radar only works in these tiles
 		/// </summary>

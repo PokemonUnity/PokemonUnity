@@ -123,7 +123,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	}
 
 	public interface IPokeBattle_Move_0E0
-	{ 
+	{
 		//alias __clauses__OnStartUse OnStartUse;
 		//@__clauses__aliased = true;
 		// Selfdestruct
@@ -132,13 +132,13 @@ namespace PokemonEssentials.Interface.PokeBattle
 	}
 
 	public interface IPokeBattle_Move_0E5
-	{ 
+	{
 		// Perish Song
 		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}
 
 	public interface IPokeBattle_Move_0E7
-	{ 
+	{
 		// Destiny Bond
 		bool MoveFailed(IBattler attacker, IBattler opponent);
 	}*/

@@ -10,14 +10,14 @@ using PokemonEssentials.Interface;
 
 namespace PokemonUnity
 {
-	namespace Monster { 
+	namespace Monster {
 		public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IPokemonChatter {
 			public PokemonEssentials.Interface.IWaveData chatter				{ get; set; }
 		}
 	}
-	public partial class Game : PokemonEssentials.Interface.IGameChatter { 
+	public partial class Game : PokemonEssentials.Interface.IGameChatter {
 		public void Chatter(PokemonEssentials.Interface.PokeBattle.IPokemonChatter pokemon) {
-			//using (PokemonEssentials.Interface.IPictureWindow iconwindow = null) { 
+			//using (PokemonEssentials.Interface.IPictureWindow iconwindow = null) {
 				IPictureWindow iconwindow=null; //new PictureWindow(UI.LoadPokemonBitmap(pokemon));
 				iconwindow.x=(Graphics.width/2)-(iconwindow.width/2);
 				iconwindow.y=((Graphics.height-96)/2)-(iconwindow.height/2);
@@ -57,7 +57,7 @@ namespace PokemonUnity
 	//    //if (attacker.pokemon.IsNotNullOrNone()) {
 	//    //  PlayCry(attacker.pokemon,90,100);
 	//    //}
-	//    //int i = 0; do { //;Graphics.frame_rate.times 
+	//    //int i = 0; do { //;Graphics.frame_rate.times
 	//    //  Graphics?.update();
 	//    //  Input.update(); i++;
 	//    //} while (i < Graphics.frame_rate);

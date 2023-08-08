@@ -29,7 +29,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		void SetParty(ITrainer trainer);
 
-		void Choose(string[] commands);
+		int Choose(string[] commands);
 
 		void EndScene();
 

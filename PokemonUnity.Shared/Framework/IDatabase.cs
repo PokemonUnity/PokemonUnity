@@ -64,8 +64,8 @@ namespace PokemonUnity
 		/// <summary>
 		/// Key: <seealso cref="IEncounterData.Id"/> | Value: <seealso cref="Overworld.IEncounterData"/>
 		/// </summary>
-		IDictionary<int,IEncounterData> EncounterData { get; }
-		//IDictionary<Method,IEncounterData> EncounterMethodData { get; }
+		IDictionary<int,IMapEncounterMetadata> EncounterData { get; }
+		//IDictionary<Method,IMapEncounterMetadata> EncounterMethodData { get; }
 		IDictionary<TrainerTypes,TrainerMetaData> TrainerMetaData { get; }
 		IDictionary<GymBadges,Character.BadgeData> BadgeData { get; }
 		IDictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; }

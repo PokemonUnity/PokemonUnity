@@ -22,17 +22,17 @@ namespace PokemonEssentials.Interface.Field
 	{
 		void RemoveDependencies();
 
-		void AddDependency(IGameEvent @event);
+		void AddDependency(IGameCharacter @event);
 
-		void RemoveDependency(IGameEvent @event);
+		void RemoveDependency(IGameCharacter @event);
 
 		void AddDependency2(int eventID, string eventName, object commonEvent);
 
 		/// <summary>
-		/// Gets the Game_Character object associated with a dependent event.
+		/// Gets the <see cref="IGameCharacter"/> object associated with a dependent event.
 		/// </summary>
 		/// <param name="eventName"></param>
-		//void GetDependency(string eventName) {
+		IGameCharacter GetDependency(string eventName);
 		//  return Game.GameData.PokemonTemp.dependentEvents.getEventByName(eventName);
 		//}
 
@@ -92,7 +92,8 @@ namespace PokemonEssentials.Interface.Field
 	}
 
 	public interface IGlobalMetadataDependantEvents {
-		IDependentEvents dependentEvents				{ get; }
+		//IList<IDependentEvents> dependentEvents				{ get; }
+		IList<IGameEvent> dependentEvents				{ get; }
 
 		//public void dependentEvents() {
 		//	if (!@dependentEvents) @dependentEvents=[];
@@ -104,6 +105,7 @@ namespace PokemonEssentials.Interface.Field
 		void set_starting();
 	}
 
+	//ToDo: replace IGameEvents to IGameCharacters?
 	public interface IDependentEvents {
 		// eventData input parameter:
 		//  [Original map ID, original event ID, current map ID,
@@ -129,13 +131,13 @@ namespace PokemonEssentials.Interface.Field
 		void TurnDependentEvents();
 
 		//ToDo: Review Return Datatypes
-		IEnumerator<KeyValuePair<IGameEvent, IGameEvent>> eachEvent();
+		IEnumerable<KeyValuePair<IGameEvent, IGameEvent>> eachEvent();
 
 		void updateDependentEvents();
 
 		void removeEvent(IGameEvent @event);
 
-		IGameEvent getEventByName(string name);
+		IGameCharacter getEventByName(string name);
 
 		void removeAllEvents();
 

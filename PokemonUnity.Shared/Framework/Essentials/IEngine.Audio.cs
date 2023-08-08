@@ -6,6 +6,12 @@ using System.Text;
 
 namespace PokemonEssentials.Interface
 {
+	/// <summary>
+	/// Extension of <see cref="IGame"/>
+	/// </summary>
+	/// <remarks>
+	/// Use this to fetch and control the Audio Player Volume, and Pitch. This should connect to the audio stream output/input feed
+	/// </remarks>
 	public interface IGameAudio
 	{
 		void getPlayMusic();
@@ -57,32 +63,32 @@ namespace PokemonEssentials.Interface
 		void dispose();
 	}
 
-	/*
-	// ####################################
-	// Needed because RGSS doesn't call at_exit procs on exit
-	// Exit is not called when game is reset (using F12)
-	if (!$AtExitProcs) $AtExitProcs=[];
 
-	void exit(int code=0) {
-	  foreach (var p in $AtExitProcs) {
-		p.call;
-	  }
-	  raise new SystemExit(code);
-	}
+	///// ####################################
+	///// Needed because RGSS doesn't call at_exit procs on exit
+	///// Exit is not called when game is reset (using F12)
+	//if (!$AtExitProcs) $AtExitProcs=[];
+	//
+	//void exit(int code=0) {
+	//  foreach (var p in $AtExitProcs) {
+	//	p.call;
+	//  }
+	//  raise new SystemExit(code);
+	//}
+	//
+	//void at_exit(&block) {
+	//  $AtExitProcs.Add(new Proc(&block));
+	//}
+	//
+	///// ####################################
+	///// Works around a problem with FileTest.exist
+	///// if directory contains accent marks
+	//bool safeExists (f) {
+	//  ret=false;
+	//  File.open(f,"rb") { ret=true } rescue null;
+	//  return ret;
+	//}
 
-	void at_exit(&block) {
-	  $AtExitProcs.Add(new Proc(&block));
-	}
-
-	// ####################################
-	// Works around a problem with FileTest.exist
-	// if directory contains accent marks
-	bool safeExists (f) {
-	  ret=false;
-	  File.open(f,"rb") { ret=true } rescue null;
-	  return ret;
-	}
-	*/
 
 	public interface IAudioState
 	{
@@ -119,8 +125,8 @@ namespace PokemonEssentials.Interface
 	//}
 
 
-
-	//public interface IAudio 
+	//Custom logic from Essentials to handle Audio
+	//public interface IAudio
 	//{
 	//	//musicstate=null;
 	//	//soundstate=null;
@@ -133,7 +139,7 @@ namespace PokemonEssentials.Interface
 	//
 	//	void bgm_stop();
 	//
-	//	int bgm_position();
+	//	int bgm_position { get; }
 	//
 	//	void me_play(string name, int volume = 80, float pitch = 100);
 	//

@@ -10,7 +10,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Combat
 {
-#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected
 	#region Shadow Moves
 	//===============================================================================
 	// NOTE: Shadow moves use function codes 126-132 inclusive.
@@ -277,7 +277,7 @@ namespace PokemonUnity.Combat
 		}
 	}
 	#endregion
-#pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
+#pragma warning restore 0162 //Warning CS0162  Unreachable code detected
 	//===============================================================================
 	// NOTE: If you're inventing new move effects, use function code 159 and onwards.
 	//===============================================================================

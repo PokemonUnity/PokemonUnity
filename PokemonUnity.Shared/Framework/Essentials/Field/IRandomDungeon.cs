@@ -65,8 +65,12 @@ namespace PokemonEssentials.Interface.Field
 		//	int Visited=16;
 		//}
 
-	// Dungeon generation algorithm found at:
-	// http://members.gamedev.net/potentialwell/ProceduralDungeonGeneration-JTippets.pdf
+	/// <summary>
+	/// </summary>
+	/// <remarks>
+	/// Dungeon generation algorithm found at:
+	/// http://members.gamedev.net/potentialwell/ProceduralDungeonGeneration-JTippets.pdf
+	/// </remarks>
 	public interface IMazeNode {
 		IMazeNode initialize();
 
@@ -132,10 +136,10 @@ namespace PokemonEssentials.Interface.Field
 
 	public interface IDungeonTable {
 		IDungeonTable initialize(IDungeon dungeon);
-  
+
 		int xsize { get; }
 		int ysize { get; }
-	
+
 		int this[int x, int y] { get; }
 	}
 	public interface IDungeon {
@@ -176,7 +180,7 @@ namespace PokemonEssentials.Interface.Field
 	public interface IGameDungeon
 	{
 		//IPoint is supposed to be an int array of x and y (`[int x,int y]`)
-		PokemonUnity.Utility.IPoint RandomRoomTile(IDungeon dungeon, ref IList<PokemonUnity.Utility.IPoint> tiles);
+		PokemonUnity.Utility.IPoint RandomRoomTile(IDungeon dungeon, IList<PokemonUnity.Utility.IPoint> tiles);
 
 		/// <summary>
 		/// Fires whenever a map is created. Event handler receives two parameters: the

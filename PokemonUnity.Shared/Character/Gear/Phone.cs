@@ -9,9 +9,9 @@ using PokemonEssentials.Interface.PokeBattle;
 namespace PokemonUnity.Character
 {
 	/// <summary>
-	/// The phone allows the player to store the phone numbers of various trainers and other important people, 
+	/// The phone allows the player to store the phone numbers of various trainers and other important people,
 	/// and to call them and receive calls from them at any time.
-	/// The numbers in the phone are stored in the array <see cref="IGlobalMetadata.phoneNumbers"/>. 
+	/// The numbers in the phone are stored in the array <see cref="IGlobalMetadata.phoneNumbers"/>.
 	/// </summary>
 	public class Phone
 	{
@@ -45,16 +45,16 @@ namespace PokemonUnity.Character
 	/// <summary>
 	/// </summary>
 	/// <remarks>
-	/// When the player receives a phone call from a trainer, 
-	/// it is from a randomly-chosen trainer out of all the ones that can call the player. 
-	/// Possible callers are those that are on a different map to the one the player is currently on, 
+	/// When the player receives a phone call from a trainer,
+	/// it is from a randomly-chosen trainer out of all the ones that can call the player.
+	/// Possible callers are those that are on a different map to the one the player is currently on,
 	/// but are in the same region as the player.
 	/// You cannot be called by someone if you are on the same map as them.
 	/// </remarks>
 	public interface IPhoneMessageData
 	{
 		/// <summary>
-		/// The first part of all phone calls. 
+		/// The first part of all phone calls.
 		/// </summary>
 		/// <remarks>
 		/// The rest of a phone call is one of the below three options (body, generic, request).
@@ -84,14 +84,14 @@ namespace PokemonUnity.Character
 	}
 	/// <summary>
 	/// For non-trainer contacts ("special" contacts).
-	/// Each special contact in your phone can be called at any time by choosing them from the phone. 
+	/// Each special contact in your phone can be called at any time by choosing them from the phone.
 	/// They will never call the player, though.
 	/// </summary>
 	public interface IPhoneContact
 	{
 		/// <summary>
 		/// A number unique to each contact.
-		/// It is used to determine which charset to show in the contact list, 
+		/// It is used to determine which charset to show in the contact list,
 		/// and which Common Event contains the phone messages for this contact.
 		/// </summary>
 		int Id { get; }
@@ -109,8 +109,8 @@ namespace PokemonUnity.Character
 		/// It is only used to show the contact's location in the contact list.
 		/// </summary>
 		/// <remarks>
-		/// The contact can always be called regardless of location, 
-		/// and you may want to add in appropriate messages to the contact's Common Event depending on the player's location 
+		/// The contact can always be called regardless of location,
+		/// and you may want to add in appropriate messages to the contact's Common Event depending on the player's location
 		/// (i.e.the NPC telling the player to just go up and talk to them instead of calling them).
 		/// </remarks>
 		int MapId { get; }
@@ -129,8 +129,8 @@ namespace PokemonUnity.Character
 		/// </remarks>
 		TrainerTypes Type { get; }
 		/// <summary>
-		/// When the trainer is registered, and each time the player defeats them in a rematch, this value is set to 2000+rand(2000), 
-		/// and reduces by 1 every 1/4 second (except when messages are being displayed or the player is being forced to move by a move route). 
+		/// When the trainer is registered, and each time the player defeats them in a rematch, this value is set to 2000+rand(2000),
+		/// and reduces by 1 every 1/4 second (except when messages are being displayed or the player is being forced to move by a move route).
 		/// When it reaches 0, the <see cref="CanBattle"/> value is changed from 1 to 2.
 		/// </summary>
 		/// <remarks>
@@ -138,37 +138,37 @@ namespace PokemonUnity.Character
 		/// </remarks>
 		int NextBattleTime { get; }
 		/// <summary>
-		/// This value is reset to 0 after the player defeats the trainer and then to 1 once its <see cref="NextBattleTime"/> has been set to a value. 
-		/// It is set to 2 when the <see cref="NextBattleTime"/> hits zero. 
+		/// This value is reset to 0 after the player defeats the trainer and then to 1 once its <see cref="NextBattleTime"/> has been set to a value.
+		/// It is set to 2 when the <see cref="NextBattleTime"/> hits zero.
 		/// It is changed from 2 to 3 after the contact calls the player to tell them they are ready for a rematch.
 		/// <para></para>
-		/// If this value is 2, when the contact calls the player (or vice versa), 
-		/// they will tell the player they are ready for a rematch. 
-		/// If this value is 3, when the contact calls the player (or vice versa), 
-		/// there is only a 50% chance they will remind the player they are ready for a rematch 
+		/// If this value is 2, when the contact calls the player (or vice versa),
+		/// they will tell the player they are ready for a rematch.
+		/// If this value is 3, when the contact calls the player (or vice versa),
+		/// there is only a 50% chance they will remind the player they are ready for a rematch
 		/// - the other 50% of the time they will say the usual random dialogue.
 		/// </summary>
 		/// <remarks>
-		/// Note that the contact does not need to have called the player before they can be rebattled, 
+		/// Note that the contact does not need to have called the player before they can be rebattled,
 		/// as the rematch is set up as soon as its <see cref="NextBattleTime"/> hits zero.
 		/// </remarks>
-		PhoneBattleStatuses CanBattle { get; }
+		PhoneBattleStatuses CanBattle { get; set; }
 		/// <summary>
-		/// This number is the version of the trainer that the player will battle next 
-		/// (0 is the original battle, 1 is the first rematch, etc.). 
+		/// This number is the version of the trainer that the player will battle next
+		/// (0 is the original battle, 1 is the first rematch, etc.).
 		/// This is increased by 1 after each time the player defeats the trainer.
 		/// </summary>
 		/// <remarks>
-		/// This value cannot be increased beyond a maximum number, 
-		/// which is the number of "Battle" comments in the event. 
-		/// Once all the different versions of the trainer have been battled, 
+		/// This value cannot be increased beyond a maximum number,
+		/// which is the number of "Battle" comments in the event.
+		/// Once all the different versions of the trainer have been battled,
 		/// all subsequent rematches with that trainer will be with the final version of that trainer.
 		/// </remarks>
 		int? RematchId { get; }
 		/// <summary>
 		/// The ID of the trainer's event on the map mentioned above.
-		/// If this is defined along with the map ID, and if the <see cref="IsVisible"/> value is TRUE, 
-		/// then their event's Self Switches will be altered to allow rematches when they become available. 
+		/// If this is defined along with the map ID, and if the <see cref="IsVisible"/> value is TRUE,
+		/// then their event's Self Switches will be altered to allow rematches when they become available.
 		/// This value has no other effect.
 		/// </summary>
 		int? EventId { get; }

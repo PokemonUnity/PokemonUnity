@@ -108,7 +108,7 @@ namespace PokemonUnity
 		public int[] pokedexIndex				            { get; set; } // Last species viewed per Dex
 		public int pokedexMode								{ get; set; } // Search mode
 		public ITilePosition healingSpot					{ get; set; }
-		public MetadataPosition? escapePoint				{ get; set; }
+		public ITilePosition escapePoint					{ get; set; }
 		public int pokecenterMapId							{ get; set; }
 		public float pokecenterX				            { get; set; }
 		public float pokecenterY				            { get; set; }
@@ -133,14 +133,6 @@ namespace PokemonUnity
 		//  if (@bridge == null) @bridge=0;
 		//  return @bridge;
 		//} }
-
-		public Pokemons[] roamPokemonCaught { get {
-			if (_roamPokemonCaught == null) {
-				_roamPokemonCaught= new List<Pokemons>();
-			}
-			return _roamPokemonCaught.ToArray();
-		} }
-		private IList<Pokemons> _roamPokemonCaught;
 
 		public GlobalMetadata() {
 			@bicycle              = false;

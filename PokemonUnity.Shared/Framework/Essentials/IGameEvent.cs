@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.UX;
+using PokemonEssentials.Interface.RPGMaker.Kernal;
 
 namespace PokemonEssentials.Interface
 {
-	public interface IGameEvent : IGameCharacter
+	public interface IGameEvent //: IGameCharacter
 	{
 		int? trigger { get; set; }
-		List<int> list { get; set; }
-		//bool starting { get; set; }
+		IList<IEventCommand> list { get; set; }
+		bool starting { get; set; }
 		/// <summary>
 		/// Temporary self-switches
 		/// </summary>

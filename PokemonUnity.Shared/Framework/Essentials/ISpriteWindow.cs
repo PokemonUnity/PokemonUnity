@@ -134,7 +134,7 @@ namespace PokemonEssentials.Interface
 		/// Disposes all objects in the specified hash.
 		/// </summary>
 		/// <param name="sprites"></param>
-		void DisposeSpriteHash(ISprite[] sprites);
+		void DisposeSpriteHash(IDictionary<string,ISprite> sprites);
 
 		/// <summary>
 		/// Disposes the specified graphics object within the specified hash. Basically like:
@@ -176,9 +176,9 @@ namespace PokemonEssentials.Interface
 		/// <param name="block"></param>
 		void FadeOutIn(int z, bool nofadeout = false, Action block = null);
 
-		void FadeOutAndHide(ISprite[] sprites);
+		void FadeOutAndHide(IDictionary<string,ISprite> sprites);
 
-		void FadeInAndShow(ISprite[] sprites, IList<ISprite> visiblesprites = null, Action block = null);
+		void FadeInAndShow(IDictionary<string,ISprite> sprites, IList<ISprite> visiblesprites = null, Action block = null);
 
 		// Restores which windows are active for the given sprite hash.
 		// _activeStatuses_ is the result of a previous call to ActivateWindows
@@ -206,7 +206,7 @@ namespace PokemonEssentials.Interface
 		string BitmapName(string x);
 
 		/// <summary>
-		/// Finds the real path for an image file. This includes paths in encrypted archives.  
+		/// Finds the real path for an image file. This includes paths in encrypted archives.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <returns>Returns null if the path can't be found.</returns>
@@ -272,7 +272,7 @@ namespace PokemonEssentials.Interface
 		IDisposable RgssOpen(string file, int? mode = null, Action action = null);
 
 		/// <summary>
-		/// Gets at least the first byte of a file. 
+		/// Gets at least the first byte of a file.
 		/// </summary>
 		/// <param name="file"></param>
 		/// <returns></returns>
@@ -280,7 +280,7 @@ namespace PokemonEssentials.Interface
 		string GetFileChar(string file);
 
 		/// <summary>
-		/// Gets the contents of a file. 
+		/// Gets the contents of a file.
 		/// </summary>
 		/// <param name="file"></param>
 		/// <returns></returns>
@@ -348,12 +348,12 @@ namespace PokemonEssentials.Interface
 	}
 
 //// ########################
-//// 
+////
 //// Message support
-//// 
+////
 //// ########################
 //if !defined(_INTL);
-//  void _INTL(*args) { 
+//  void _INTL(*args) {
 //	string=args[0].clone();
 //	for (int i = 1; i < args.Length; i++) {
 //	  string.gsub!(/\{#{i}\}/,"#{args[i]}");
@@ -429,7 +429,7 @@ namespace PokemonEssentials.Interface
 //  void close(hkey) { if (hkey) check(RegCloseKey.call(hkey)); }
 
 //  void get(hkey,subkey,name,defaultValue=null,bit64=false) {
-//	this.open(hkey,subkey,bit64){|key| 
+//	this.open(hkey,subkey,bit64){|key|
 //	   return this.read(key,name) rescue defaultValue;
 //	}
 //	return defaultValue;
@@ -588,7 +588,7 @@ namespace PokemonEssentials.Interface
 //	  yield filename;
 //	} else {
 ////  relative path
-//	  RTP.eachPath {|path| 
+//	  RTP.eachPath {|path|
 //		 if (path=="./") {
 //		   yield filename;
 //		 } else {
@@ -646,7 +646,7 @@ namespace PokemonEssentials.Interface
 // ##########
 
 	public interface IPngAnimatedBitmap : IDisposable { // :nodoc:
-		//  Creates an animated bitmap from a PNG file.  
+		//  Creates an animated bitmap from a PNG file.
 		IPngAnimatedBitmap initialize(string file, int hue = 0);
 
 		IBitmap this[int index] { get; } //return @frames[index];
@@ -897,7 +897,7 @@ namespace PokemonEssentials.Interface
 
 // ########################################################################
 
-	public interface IStringInput //: IEnumerable 
+	public interface IStringInput //: IEnumerable
 	{
 		//include Enumerable;
 
@@ -940,7 +940,7 @@ namespace PokemonEssentials.Interface
 
 		bool eof();
 
-		IEnumerable<string> each(ref string[] block);
+		IEnumerable<string> each(IList<string> block);
 
 		string gets();
 
@@ -1018,7 +1018,7 @@ namespace PokemonEssentials.Interface
 		ITone tone				{ get; set; }
 		//IColor color				{ get; set; }
 		//IViewport viewport		{ get; set; }
-		int contents				{ get; set; }
+		IBitmap contents				{ get; set; }
 		//int ox					{ get; set; }
 		//int oy					{ get; set; }
 		//int x						{ get; set; }
@@ -1412,7 +1412,7 @@ namespace PokemonEssentials.Interface
 
 		ISpriteWindow_Selectable initialize(float x, float y, float width, float height);
 
-		bool ignore_input { set; } 
+		bool ignore_input { set; }
 		//
 		//void count() {
 		//return @item_max;
@@ -1465,7 +1465,7 @@ namespace PokemonEssentials.Interface
 		IViewport viewport { set; }
 
 		IColor color { set; }
-  
+
 		void adjustForZoom(ISprite sprite);
 
 		void update();
@@ -1481,12 +1481,13 @@ namespace PokemonEssentials.Interface
 	}
 
 	public interface IWindow_DrawableCommand : ISpriteWindow_SelectableEx {
+		bool doubleclick			{ get; }
 		int baseColor				{ get; set; }
 		int shadowColor			{ get; set; }
 
 		float textWidth(IBitmap bitmap, string text);
 
-		void getAutoDims(string[] commands, ref int[] dims, float? width = null);
+		void getAutoDims(string[] commands, int[] dims, float? width = null);
 
 		void initialize(float x, float y, float width, float height, IViewport viewport = null);
 
@@ -1557,7 +1558,7 @@ namespace PokemonEssentials.Interface
 	// Represents a window with no formatting capabilities.  Its text color can be set,
 	// though, and line breaks are supported, but the text is generally unformatted.
 	public interface IWindow_UnformattedTextPokemon : ISpriteWindow_Base {
-		string text				{ get; set; }
+		string text						{ get; set; }
 		IColor baseColor				{ get; set; }
 		IColor shadowColor				{ get; set; }
 		//  Letter-by-letter mode.  This mode is not supported in this class.
@@ -1833,14 +1834,14 @@ namespace PokemonEssentials.Interface
 
 		void ox() { @__ox; }
 		void oy() { @__oy; }
-  
-		void ox=(value) { 
+
+		void ox=(value) {
 		if (@__ox!=value) {
 			@__ox=value; refresh();
 		}
 		}
 
-		void oy=(value) { 
+		void oy=(value) {
 		if (@__oy!=value) {
 			@__oy=value; refresh();
 		}
@@ -1877,13 +1878,13 @@ namespace PokemonEssentials.Interface
 		void color() { @__sprite.color; }
 		void tone() { @__sprite.tone; }
 
-		void zoom_x=(v) { 
+		void zoom_x=(v) {
 		if (@__sprite.zoom_x!=v) {
 			@__sprite.zoom_x=v; refresh();
 		}
 		}
 
-		void zoom_y=(v) { 
+		void zoom_y=(v) {
 		if (@__sprite.zoom_y!=v) {
 			@__sprite.zoom_y=v; refresh();
 		}

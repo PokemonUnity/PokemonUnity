@@ -18,31 +18,31 @@ namespace PokemonUnity
 		public partial class Game_Map : PokemonEssentials.Interface.IGameMap, IGameMapOrgBattle
 		{
 			#region Variables
-			public MapData map				            { get; set; }
-			public int map_id				            { get; set; }
-			public string tileset_name			        { get; set; }     // tileset file name
-			public string[] autotile_names			    { get; set; }     // autotile file name
-			public string panorama_name			        { get; set; }     // panorama file name
-			public int panorama_hue				        { get; set; }     // panorama hue
-			public string fog_name				        { get; set; }     // fog file name
-			public int fog_hue				            { get; set; }     // fog hue
-			public float fog_opacity				    { get; set; }     // fog opacity level
-			public int fog_blend_type				    { get; set; }     // fog blending method
-			public int fog_zoom							{ get; set; }     // fog zoom rate
-			public float fog_sx				            { get; set; }     // fog sx
-			public float fog_sy				            { get; set; }     // fog sy
-			public string battleback_name			    { get; set; }     // battleback file name
-			public int display_x				        { get; set; }     // display x-coordinate * 128
-			public int display_y				        { get; set; }     // display y-coordinate * 128
-			public bool need_refresh				    { get; set; }     // refresh request flag
-			public int[] passages				        { get; set; }     // passage table
-			public int[] priorities				        { get; set; }     // prioroty table
-			public Terrains[] terrain_tags				{ get; set; }     // terrain tag table
-			public IDictionary<int,IGameEvent> events	{ get; set; }     // events
-			public float fog_ox				            { get; set; }     // fog x-coordinate starting point
-			public float fog_oy				            { get; set; }     // fog y-coordinate starting point
-			public ITone fog_tone				        { get; set; }     // fog color tone
-			public int mapsInRange				        { get; set; }
+			public MapData map								{ get; set; }
+			public int map_id								{ get; set; }
+			public string tileset_name						{ get; set; }     // tileset file name
+			public string[] autotile_names					{ get; set; }     // autotile file name
+			public string panorama_name						{ get; set; }     // panorama file name
+			public int panorama_hue							{ get; set; }     // panorama hue
+			public string fog_name							{ get; set; }     // fog file name
+			public int fog_hue								{ get; set; }     // fog hue
+			public float fog_opacity						{ get; set; }     // fog opacity level
+			public int fog_blend_type						{ get; set; }     // fog blending method
+			public int fog_zoom								{ get; set; }     // fog zoom rate
+			public float fog_sx								{ get; set; }     // fog sx
+			public float fog_sy								{ get; set; }     // fog sy
+			public string battleback_name					{ get; set; }     // battleback file name
+			public int display_x							{ get; set; }     // display x-coordinate * 128
+			public int display_y							{ get; set; }     // display y-coordinate * 128
+			public bool need_refresh						{ get; set; }     // refresh request flag
+			public int[] passages							{ get; set; }     // passage table
+			public int[] priorities							{ get; set; }     // prioroty table
+			public Terrains[] terrain_tags					{ get; set; }     // terrain tag table
+			public IDictionary<int,IGameCharacter> events	{ get; set; }     // events
+			public float fog_ox								{ get; set; }     // fog x-coordinate starting point
+			public float fog_oy								{ get; set; }     // fog y-coordinate starting point
+			public ITone fog_tone							{ get; set; }     // fog color tone
+			public int mapsInRange							{ get; set; }
 			private ITone @fog_tone_target;
 			private int fog_tone_duration;
 			private int fog_opacity_duration;
@@ -55,9 +55,13 @@ namespace PokemonUnity
 
 			#region Constructor
 			public Game_Map() {
+				initialize();
+			}
+			public IGameMap initialize() {
 				@map_id = 0;
 				@display_x = 0;
 				@display_y = 0;
+				return this;
 			}
 			#endregion
 
@@ -86,8 +90,7 @@ namespace PokemonUnity
 				@need_refresh = false;
 				//Events.onMapCreate.trigger(this,map_id, @map, tileset);
 				//Events.OnMapCreate.Invoke(this,map_id, @map, tileset);
-				Events.OnMapCreateTrigger(this,map_id, @map, tileset);
-				@events = new Dictionary<int, IGameEvent>();
+				@events = new Dictionary<int, IGameCharacter>();
 				foreach (int i in @map.events.Keys) {
 					//@events[i] = new Game_Event(@map_id, @map.events[i],this);
 				}
@@ -202,7 +205,7 @@ namespace PokemonUnity
 			public bool passable (float x,float y,int d,IGameCharacter self_event = null) {
 				if (!valid(x, y)) return false;
 				int bit = (1 << (d / 2 - 1)) & 0x0f;
-				foreach (var @event in events.Values) {
+				foreach (IGameCharacter @event in events.Values) {
 					if (@event.tile_id >= 0 && @event != self_event &&
 						@event.x == x && @event.y == y && !@event.through) {
 //						if @terrain_tags[@event.tile_id]!=Terrains.Neutral
@@ -338,7 +341,7 @@ namespace PokemonUnity
 
 			public bool passableStrict (float x,float y,int d,IGameCharacter self_event = null) {
 				if (!valid(x, y)) return false;
-				foreach (IGameEvent @event in events.Values) {
+				foreach (IGameCharacter @event in events.Values) {
 					if (@event.tile_id >= 0 && @event != self_event &&
 						@event.x == x && @event.y == y && !@event.through) {
 //						if @terrain_tags[@event.tile_id]!=Terrains.Neutral
@@ -427,7 +430,7 @@ namespace PokemonUnity
 			}
 
 			public int? check_event(float x,float y) {
-				foreach (var @event in this.events.Values) {
+				foreach (IGameCharacter @event in this.events.Values) {
 					if (@event.x == x && @event.y == y) return @event.id;
 				}
 				return null;
@@ -444,10 +447,10 @@ namespace PokemonUnity
 			} }
 
 			public void start_fog_tone_change(ITone tone,int duration) {
-				@fog_tone_target = tone.clone();
+				@fog_tone_target = (ITone)tone.Clone();
 				@fog_tone_duration = duration;
 				if (@fog_tone_duration == 0) {
-					@fog_tone = @fog_tone_target.clone();
+					@fog_tone = (ITone)@fog_tone_target.Clone();
 				}
 			}
 
@@ -497,7 +500,7 @@ namespace PokemonUnity
 					}
 					@scroll_rest -= distance;
 				}
-				foreach (var @event in @events.Values) {
+				foreach (IGameCharacter @event in @events.Values) {
 					if (in_range(@event) || @event.trigger == 3 || @event.trigger == 4) {
 						@event.update();
 					}

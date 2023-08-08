@@ -40,11 +40,13 @@ namespace PokemonUnity
 	/// A procedure can subscribe to an event by adding itself to the event.  It will
 	/// then be called whenever the event occurs.
 	/// </summary>
-	public static partial class EncounterModifier {
-		public static List<Func<IEncounter,IEncounter>> @procs=new List<Func<IEncounter,IEncounter>>();
+	public static partial class EncounterModifier { //: PokemonEssentials.Interface.Field.IEncounterModifier
+		//public static List<Func<IEncounterPokemon,IEncounterPokemon>> @procs=new List<Func<IEncounterPokemon,IEncounterPokemon>>();
+		public static List<Func<IPokemon,IPokemon>> @procs=new List<Func<IPokemon,IPokemon>>();
 		public static List<Action> @procsEnd=new List<Action>();
 
-		public static void register(Func<IEncounter,IEncounter> p) {
+		//public static void register(Func<IEncounterPokemon,IEncounterPokemon> p) {
+		public static void register(Func<IPokemon,IPokemon> p) {
 			@procs.Add(p);
 		}
 
@@ -52,7 +54,8 @@ namespace PokemonUnity
 			@procsEnd.Add(p);
 		}
 
-		public static IEncounter trigger(IEncounter encounter) {
+		//public static IEncounterPokemon trigger(IEncounterPokemon encounter) {
+		public static IPokemon trigger(IPokemon encounter) {
 			foreach (var prc in @procs) {
 				//encounter=prc.call(encounter);
 				encounter=prc.Invoke(encounter);
@@ -424,9 +427,10 @@ namespace PokemonUnity
 			if (GameMap == null) return Environments.None;
 			if (Global != null && Global.diving) {
 				return Environments.Underwater;
-			} else if (PokemonEncounters != null && PokemonEncounters.isCave()) {
+			} else if (PokemonEncounters != null && PokemonEncounters.IsCave) {
 				return Environments.Cave;
-			} else if (GetMetadata(GameMap.map_id,MapMetadatas.MetadataOutdoor) == null) {
+			//} else if (GetMetadata(GameMap.map_id,MapMetadatas.MetadataOutdoor) == null) {
+			} else if (!GetMetadata(GameMap.map_id).Map.Outdoor) {
 				return Environments.None;
 			} else {
 				switch (GamePlayer.terrain_tag) {
@@ -454,15 +458,15 @@ namespace PokemonUnity
 		}
 
 		public IPokemon GenerateWildPokemon(Pokemons species,int level,bool isroamer=false) {
-			IPokemon genwildpoke=new Monster.Pokemon(species,level: (byte)level);//,Trainer
+			Pokemon genwildpoke=new Monster.Pokemon(species,level: (byte)level);//,Trainer
 			//Items items=genwildpoke.wildHoldItems;
 			Items[] items=Kernal.PokemonItemsData[species] //ToDo: Return Items[3];
 						.OrderByDescending(x => x.Rarirty)
 						.Select(x => x.ItemId).ToArray();
 			IPokemon firstpoke=Trainer.firstParty;
-			int[] chances= new int[]{ 50,5,1 };
+			int[] chances=new int[]{ 50,5,1 };
 			if (firstpoke != null && !firstpoke.isEgg &&
-				firstpoke.Ability == Abilities.COMPOUND_EYES) chances= new int[]{ 60,20,5 };
+				firstpoke.Ability == Abilities.COMPOUND_EYES) chances=new int[]{ 60,20,5 };
 			int itemrnd=Core.Rand.Next(100);
 			if (itemrnd<chances[0] || (items[0]==items[1] && items[1]==items[2])) {
 				genwildpoke.setItem(items[0]);
@@ -475,7 +479,7 @@ namespace PokemonUnity
 				for (int i = 0; i < 2; i++) {	// 3 times as likely
 					if (genwildpoke.IsShiny) break;
 					//genwildpoke.PersonalId=Core.Rand.Next(65536)|(Core.Rand.Next(65536)<<16);
-					(genwildpoke as Pokemon).shuffleShiny();
+					genwildpoke.shuffleShiny();
 				}
 			}
 			if (Core.Rand.Next(65536)<Core.POKERUSCHANCE) {
@@ -483,7 +487,7 @@ namespace PokemonUnity
 			}
 			if (firstpoke != null && !firstpoke.isEgg) {
 				if (firstpoke.Ability == Abilities.CUTE_CHARM &&
-					!(genwildpoke as Pokemon).IsSingleGendered) {
+					!genwildpoke.IsSingleGendered) {
 					if (firstpoke.IsMale) {
 						if (Core.Rand.Next(3)<2) genwildpoke.makeFemale(); else genwildpoke.makeMale();
 					} else if (firstpoke.IsFemale) {
@@ -506,7 +510,22 @@ namespace PokemonUnity
 			return genwildpoke;
 		}
 
-		public bool ControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
+		/// <summary>
+		/// </summary>
+		/// https://www.pokecommunity.com/showthread.php?p=10308001#post10308001
+		/// <param name="species"></param>
+		/// <param name="level"></param>
+		/// <param name="moves"></param>
+		/// <param name="ability"></param>
+		/// <param name="nature"></param>
+		/// <param name="gender"></param>
+		/// <param name="item"></param>
+		/// <param name="shiny"></param>
+		/// <param name="outcomeVar"></param>
+		/// <param name="canRun"></param>
+		/// <param name="canLose"></param>
+		/// <returns></returns>
+		/*public bool ControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
 						Natures? nature = null, bool? gender = null, Items? item = null, bool? shiny = null,
 						int outcomeVar = 1, bool canRun = true, bool canLose = false) {
 			// Create an instance
@@ -547,7 +566,7 @@ namespace PokemonUnity
 
 			// Potentially call a different WildBattle-type method instead (for roaming
 			// Pokémon, Safari battles, Bug Contest battles)
-			bool?[] handled= new bool?[]{ null };
+			bool?[] handled=new bool?[]{ null };
 			//Events.onWildBattleOverride.trigger(null,species,level,handled);
 			PokemonEssentials.Interface.EventArg.IOnWildBattleOverrideEventArgs e1 = new PokemonUnity.EventArg.OnWildBattleOverrideEventArgs()
 			{
@@ -579,10 +598,19 @@ namespace PokemonUnity
 			Events.OnWildBattleEndTrigger(this,species, level, decision);
 			// Return false if the player lost or drew the battle, and true if any other result
 			return (decision != Combat.BattleResults.LOST && decision != Combat.BattleResults.DRAW);
-		}
+		}*/
 
-		public Combat.BattleResults WildBattleCore(IPokemon pkmn,int? variable=null,bool canescape=true,bool canlose=false) {
-			if ((Input.press(Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
+		/// <summary>
+		/// </summary>
+		/// <param name="species"></param>
+		/// <param name="level"></param>
+		/// <param name="variable"></param>
+		/// <param name="canescape"></param>
+		/// <param name="canlose"></param>
+		/// <returns></returns>
+		public bool WildBattleCore(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
+		//public Combat.BattleResults WildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
+			if ((Input.press(PokemonUnity.Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
 				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
 					m.Message(Game._INTL("SKIPPING BATTLE..."));
 				}
@@ -590,49 +618,49 @@ namespace PokemonUnity
 				Global.nextBattleBGM=null;
 				Global.nextBattleME=null;
 				Global.nextBattleBack=null;
-				return Combat.BattleResults.WON; //true;
+				return true; //Combat.BattleResults.WON;
 			}
 			//if (species is String || species is Symbol) {
 			//  species=getID(Species,species);
 			//}
-			bool?[] handled= new bool?[]{ null };
+			bool?[] handled=new bool?[]{ null };
 			//Events.onWildBattleOverride.trigger(null,species,level,handled);
 			PokemonEssentials.Interface.EventArg.IOnWildBattleOverrideEventArgs e1 = new PokemonUnity.EventArg.OnWildBattleOverrideEventArgs()
 			{
-				Species = pkmn.Species,
-				Level = pkmn.Level
+				Species = species,
+				Level = level
 				//,Result = handled
 			};
 			//Events.OnWildBattleOverride?.Invoke(null, e1);
-			Events.OnWildBattleOverrideTrigger(null, e1);
-			//handled[0] = eventArgs.Result;
+			Events.OnWildBattleOverrideTrigger(null, e1); //if using listener to skip battles
+			handled[0] = e1.Result.HasValue ? e1.Result==Combat.BattleResults.WON || e1.Result==Combat.BattleResults.CAPTURED : false; //ToDo: Convert Results to a nullable bool?
 			if (handled[0]!=null) {
-				//return handled[0].Value;
-				return handled[0].Value ? Combat.BattleResults.WON : Combat.BattleResults.ABORTED;
+				return handled[0].Value;
+				//return handled[0].Value ? Combat.BattleResults.WON : Combat.BattleResults.ABORTED;
 			}
 			List<int> currentlevels=new List<int>();
-			foreach (var i in Trainer.party) {
+			foreach (IPokemon i in Trainer.party) {
 				currentlevels.Add(i.Level);
 			}
-			//IPokemon genwildpoke=GenerateWildPokemon(species,level);
+			IPokemon genwildpoke=GenerateWildPokemon(species,level);
 			//Events.onStartBattle.trigger(null,genwildpoke);
-			PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs eventArgs = new PokemonUnity.EventArg.OnWildPokemonCreateEventArgs()
-			{
-				Pokemon = pkmn//genwildpoke
-			};
-			//Events.OnStartBattle?.Invoke(this, eventArgs);
-			Events.OnStartBattleTrigger(this, pkmn);
+			//PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs eventArgs = new PokemonUnity.EventArg.OnWildPokemonCreateEventArgs()
+			//{
+			//	Pokemon = genwildpoke
+			//};
+			//Events.OnStartBattle?.Invoke(null, EventArgs.Empty);
+			Events.OnStartBattleTrigger(this);
 			IPokeBattle_Scene scene=NewBattleScene();
-			IBattle battle=new Combat.Battle(scene,Trainer.party,new IPokemon[] { pkmn },new ITrainer[] { Trainer },null);
+			IBattle battle=new Combat.Battle(scene,Trainer.party,new IPokemon[] { genwildpoke },new ITrainer[] { Trainer },null);
 			battle.internalbattle=true;
 			battle.cantescape=!canescape;
 			PrepareBattle(battle);
 			Combat.BattleResults decision=0;
-			BattleAnimation(GetWildBattleBGM(pkmn.Species), block: () => {
+			BattleAnimation(GetWildBattleBGM(species), block: () => {
 				SceneStandby(() => {
 					decision=battle.StartBattle(canlose);
 				});
-				foreach (var i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
+				foreach (IPokemon i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
 				if (Global.partner != null) {
 					HealAll();
 					foreach (IPokemon i in Global.partner.party) { //partner[3]
@@ -661,6 +689,7 @@ namespace PokemonUnity
 					CanLose = canlose
 				};
 				//Events.OnBattleEnd?.Invoke(null,e2);
+				//Events.OnEndBattleTrigger(this, e2);
 				Events.OnEndBattleTrigger(this, decision, canlose);
 			});
 			Input.update();
@@ -668,19 +697,20 @@ namespace PokemonUnity
 			//Events.onWildBattleEnd.trigger(null,species,level,decision);
 			PokemonEssentials.Interface.EventArg.IOnWildBattleEndEventArgs e3 = new PokemonUnity.EventArg.OnWildBattleEndEventArgs()
 			{
-				Species = pkmn.Species,
-				Level = pkmn.Level
-				//,Result = decision
+				Species = species,
+				Level = level
+				,Result = decision
 			};
-			//Events.OnWildBattleEnd?.Invoke(null,e3);
-			Events.OnWildBattleEndTrigger(this, pkmn.Species, pkmn.Level, decision);
-			return decision; //!=Combat.BattleResults.LOST;
+			//Events.OnWildBattleEnd?.Invoke(this,e3);
+			Events.OnWildBattleEndTrigger(this,species,level,decision);
+			return decision!=Combat.BattleResults.LOST;
 		}
 
-		public Combat.BattleResults WildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
+		public bool WildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
+		//public Combat.BattleResults WildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
 			IPokemon genwildpoke=GenerateWildPokemon(species,level);
-			return WildBattleCore(genwildpoke, variable, canescape, canlose);
-			/*if ((Input.press(Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
+			return WildBattleCore(genwildpoke.Species, genwildpoke.Level, variable, canescape, canlose);
+			/*if ((Input.press(PokemonUnity.Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
 				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
 					m.Message(Game._INTL("SKIPPING BATTLE..."));
 				}
@@ -688,12 +718,12 @@ namespace PokemonUnity
 				Global.nextBattleBGM=null;
 				Global.nextBattleME=null;
 				Global.nextBattleBack=null;
-				return Combat.BattleResults.WON; //true;
+				return true; //Combat.BattleResults.WON;
 			}
 			//if (species is String || species is Symbol) {
 			//  species=getID(Species,species);
 			//}
-			bool?[] handled= new bool?[]{ null };
+			bool?[] handled=new bool?[]{ null };
 			//Events.onWildBattleOverride.trigger(null,species,level,handled);
 			PokemonEssentials.Interface.EventArg.IOnWildBattleOverrideEventArgs e1 = new PokemonUnity.EventArg.OnWildBattleOverrideEventArgs()
 			{
@@ -702,14 +732,14 @@ namespace PokemonUnity
 				//,Result = handled
 			};
 			//Events.OnWildBattleOverride?.Invoke(null, e1);
-			Events.OnWildBattleOverrideTrigger(null, e1);
-			//handled[0] = eventArgs.Result;
+			Events.OnWildBattleOverrideTrigger(null, e1); //if using listener to skip battles
+			handled[0] = e1.Result.HasValue ? e1.Result==Combat.BattleResults.WON || e1.Result==Combat.BattleResults.CAPTURED : false; //ToDo: Convert Results to a nullable bool?
 			if (handled[0]!=null) {
-				//return handled[0].Value;
-				return handled[0].Value ? Combat.BattleResults.WON : Combat.BattleResults.ABORTED;
+				return handled[0].Value;
+				//return handled[0].Value ? Combat.BattleResults.WON : Combat.BattleResults.ABORTED;
 			}
 			List<int> currentlevels=new List<int>();
-			foreach (var i in Trainer.party) {
+			foreach (IPokemon i in Trainer.party) {
 				currentlevels.Add(i.Level);
 			}
 			IPokemon genwildpoke=GenerateWildPokemon(species,level);
@@ -730,7 +760,7 @@ namespace PokemonUnity
 				SceneStandby(() => {
 					decision=battle.StartBattle(canlose);
 				});
-				foreach (var i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
+				foreach (IPokemon i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
 				if (Global.partner != null) {
 					HealAll();
 					foreach (IPokemon i in Global.partner.party) { //partner[3]
@@ -768,14 +798,16 @@ namespace PokemonUnity
 			{
 				Species = species,
 				Level = level
-				//,Result = decision
+				,Result = decision
 			};
-			Events.OnWildBattleEnd?.Invoke(null,e3);
-			return decision; //!=Combat.BattleResults.LOST;*/
+			//Events.OnWildBattleEnd?.Invoke(this,e3);
+			Events.OnWildBattleEndTrigger(this,species,level,decision);
+			return decision!=Combat.BattleResults.LOST;*/
 		}
 
-		public Combat.BattleResults DoubleWildBattle(Pokemons species1,int level1,Pokemons species2,int level2,int? variable=null,bool canescape=true,bool canlose=false) {
-			if ((Input.press(Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
+		public bool DoubleWildBattle(Pokemons species1,int level1,Pokemons species2,int level2,int? variable=null,bool canescape=true,bool canlose=false) {
+		//public Combat.BattleResults DoubleWildBattle(Pokemons species1,int level1,Pokemons species2,int level2,int? variable=null,bool canescape=true,bool canlose=false) {
+			if ((Input.press(PokemonUnity.Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
 				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
 					m.Message(Game._INTL("SKIPPING BATTLE..."));
 				}
@@ -783,7 +815,7 @@ namespace PokemonUnity
 				Global.nextBattleBGM=null;
 				Global.nextBattleME=null;
 				Global.nextBattleBack=null;
-				return Combat.BattleResults.WON; //true;
+				return true; //Combat.BattleResults.WON;
 			}
 			//if (species1 is String || species1 is Symbol) {
 			//  species1=getID(Species,species1);
@@ -792,7 +824,7 @@ namespace PokemonUnity
 			//  species2=getID(Species,species2);
 			//}
 			List<int> currentlevels=new List<int>();
-			foreach (var i in Trainer.party) {
+			foreach (IPokemon i in Trainer.party) {
 				currentlevels.Add(i.Level);
 			}
 			IPokemon genwildpoke=GenerateWildPokemon(species1,level1);
@@ -803,24 +835,24 @@ namespace PokemonUnity
 			};
 			//Events.onStartBattle.trigger(null,genwildpoke);
 			//Events.OnStartBattle?.Invoke(this, eventArgs);
-			Events.OnStartBattleTrigger(this, genwildpoke);
+			Events.OnStartBattleTrigger(this);//, genwildpoke
 			IPokeBattle_Scene scene=NewBattleScene();
-			Combat.Battle battle;
+			IBattle battle;
 			if (Global.partner != null) {
-			ITrainer othertrainer=new Trainer(
-				Global.partner.trainerTypeName,Global.partner.trainertype);//[1]|[0]
-			othertrainer.id=Global.partner.id;//[2]
-			othertrainer.party=Global.partner.party;//[3]
-			IList<IPokemon> combinedParty=new List<IPokemon>();
-			for (int i = 0; i < Trainer.party.Length; i++) {
-				combinedParty[i]=Trainer.party[i];
-			}
-			for (int i = 0; i < othertrainer.party.Length; i++) {
-				combinedParty[6+i]=othertrainer.party[i];
-			}
-			battle=new Combat.Battle(scene,combinedParty.ToArray(),new IPokemon[] { genwildpoke, genwildpoke2 },
-				new ITrainer[] { Trainer,othertrainer },null);
-			battle.fullparty1=true;
+				ITrainer othertrainer=new Trainer(
+					Global.partner.trainerTypeName,Global.partner.trainertype);//[1]|[0]
+				othertrainer.id=Global.partner.id;//[2]
+				othertrainer.party=Global.partner.party;//[3]
+				IList<IPokemon> combinedParty=new List<IPokemon>();
+				for (int i = 0; i < Trainer.party.Length; i++) {
+					combinedParty[i]=Trainer.party[i];
+				}
+				for (int i = 0; i < othertrainer.party.Length; i++) {
+					combinedParty[6+i]=othertrainer.party[i];
+				}
+				battle=new Combat.Battle(scene,combinedParty.ToArray(),new IPokemon[] { genwildpoke, genwildpoke2 },
+					new ITrainer[] { Trainer,othertrainer },null);
+				battle.fullparty1=true;
 			} else {
 				battle=new Combat.Battle(scene,Trainer.party,new IPokemon[] { genwildpoke, genwildpoke2 },
 					new ITrainer[] { Trainer },null);
@@ -835,12 +867,12 @@ namespace PokemonUnity
 				SceneStandby(() => {
 					decision=battle.StartBattle(canlose);
 				});
-				foreach (var i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
+				foreach (IPokemon i in Trainer.party) { if (i is IPokemonMegaEvolution f) f.makeUnmega(); } //rescue null
 				if (Global.partner != null) {
 					HealAll();
-					foreach (Monster.Pokemon i in Global.partner.party) {//[3]
+					foreach (IPokemon i in Global.partner.party) {//[3]
 						i.Heal();
-						i.makeUnmega(); //rescue null
+						if (i is IPokemonMegaEvolution m) m.makeUnmega(); //rescue null
 					}
 				}
 				if (decision==Combat.BattleResults.LOST || decision==Combat.BattleResults.DRAW) {
@@ -864,11 +896,12 @@ namespace PokemonUnity
 					CanLose = canlose
 				};
 				//Events.OnBattleEnd?.Invoke(null,e2);
-				Events.OnEndBattleTrigger(this,decision,canlose);
+				//Events.OnEndBattleTrigger(this,e2);
+				Events.OnEndBattleTrigger(this, decision, canlose);
 			});
 			Input.update();
 			Set(variable,decision);
-			return decision; //!=Combat.BattleResults.LOST && decision!=Combat.BattleResults.DRAW;
+			return decision!=Combat.BattleResults.LOST && decision!=Combat.BattleResults.DRAW;
 		}
 
 		public void CheckAllFainted() {
@@ -975,21 +1008,22 @@ namespace PokemonUnity
 			}
 		}
 
-		public bool Encounter(Method enctype) {
+		public bool Encounter(EncounterOptions enctype) {
+		//public bool Encounter(Method enctype) {
 			if (Global.partner != null) {
-				IEncounter encounter1=PokemonEncounters.EncounteredPokemon(enctype);
+				IPokemon encounter1=PokemonEncounters.EncounteredPokemon(enctype);
 				if (!encounter1.IsNotNullOrNone()) return false;
-				IEncounter encounter2=PokemonEncounters.EncounteredPokemon(enctype);
+				IPokemon encounter2=PokemonEncounters.EncounteredPokemon(enctype);
 				if (!encounter2.IsNotNullOrNone()) return false;
-				if (PokemonTemp is ITempMetadataField f0) f0.encounterType=enctype;
-				DoubleWildBattle(encounter1.Pokemon,encounter1.Level,encounter2.Pokemon,encounter2.Level); //[0]|[1]
+				if (PokemonTemp is ITempMetadataField f0) f0.encounterType=(Method)enctype;
+				DoubleWildBattle(encounter1.Species,encounter1.Level,encounter2.Species,encounter2.Level); //[0]|[1]
 				if (PokemonTemp is ITempMetadataField f1) f1.encounterType=null;
 				return true;
 			} else {
-				IEncounter encounter=PokemonEncounters.EncounteredPokemon(enctype);
+				IPokemon encounter=PokemonEncounters.EncounteredPokemon(enctype);
 				if (!encounter.IsNotNullOrNone()) return false;
-				if (PokemonTemp is ITempMetadataField f0) f0.encounterType=enctype;
-				WildBattle(encounter.Pokemon,encounter.Level); //[0]|[1]
+				if (PokemonTemp is ITempMetadataField f0) f0.encounterType=(Method)enctype;
+				WildBattle(encounter.Species,encounter.Level); //[0]|[1]
 				if (PokemonTemp is ITempMetadataField f1) f1.encounterType=null;
 				return true;
 			}
@@ -997,7 +1031,7 @@ namespace PokemonUnity
 
 		//Events.onStartBattle+=delegate(object sender, EventArgs e) {
 		//Events.OnStartBattle+=delegate(object sender, PokemonEssentials.Interface.EventArg.IOnStartBattleEventArgs e) {
-		protected virtual void Events_OnStartBattle(object sender, PokemonEssentials.Interface.EventArg.IOnWildPokemonCreateEventArgs e) {
+		protected virtual void Events_OnStartBattle(object sender, EventArgs e) {
 			if (PokemonTemp is ITempMetadataField m)
 			{
 				//PokemonTemp.evolutionLevels = new int[6];
@@ -1027,7 +1061,7 @@ namespace PokemonUnity
 				foreach (IPokemon pkmn in Trainer.party) {
 					Pickup(pkmn);
 					if (pkmn.Ability == Abilities.HONEY_GATHER && !pkmn.isEgg && !pkmn.hasItem()) {
-						//if (hasConst(Items,:HONEY)) {
+						//if (hasConst(PBItems,:HONEY)) {
 							int chance = 5 + (int)Math.Floor((pkmn.Level-1)/10d)*5;
 							if (Core.Rand.Next(100)<chance) pkmn.setItem(Items.HONEY);
 						//}
@@ -1042,7 +1076,7 @@ namespace PokemonUnity
 		}
 
 		#region Scene_Map and Spriteset_Map
-		public partial class Scene_Map : ISceneMapField {
+		public partial class Scene_Map {
 			public virtual void createSingleSpriteset(int map) {
 				//temp=Game.GameData.Scene.spriteset().getAnimations();
 				//@spritesets[map]=new Spriteset_Map(MapFactory.maps[map]);
@@ -1064,11 +1098,11 @@ namespace PokemonUnity
 		}
 
 		//Events.onSpritesetCreate+=delegate(object sender, EventArgs e) {
-		protected virtual void Events_OnSpritesetCreate(object sender, PokemonEssentials.Interface.EventArg.IOnSpritesetCreateEventArgs e) {
-			//ISpritesetMap spriteset = e.SpritesetId;//e[0]; // Spriteset being created
-			//IViewport viewport = e.Viewport; //e[1]; // Viewport used for tilemap and characters
+		protected virtual void Events_OnSpritesetCreate(object sender, EventArgs e) {
+			//ISpritesetMap spriteset=e[0]; // Spriteset being created
+			//IViewport viewport=e[1]; // Viewport used for tilemap and characters
 			//IGameMap map=spriteset.map; // Map associated with the spriteset (not necessarily the current map).
-			//foreach (IGameEvent i in map.events.Keys) {
+			//foreach (var i in map.events.keys) {
 			//	if (map.events[i].name[/^OutdoorLight\((\w+)\)$/]) {
 			//		string filename=$~[1].ToString();
 			//		spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map,filename));
@@ -1087,7 +1121,6 @@ namespace PokemonUnity
 		public void OnSpritesetCreate(ISpritesetMap spriteset,IViewport viewport) {
 			//Events.onSpritesetCreate.trigger(null,spriteset,viewport);
 			//Events.OnSpritesetCreate.Invoke(null,spriteset,viewport);
-			Events.OnSpritesetCreateTrigger(null,spriteset,viewport);
 		}
 		#endregion
 
@@ -1141,7 +1174,7 @@ namespace PokemonUnity
 			if (handled[0]) return; //continue;
 			if (Global.stepcount % 4 == 0 && Core.POISONINFIELD) {
 				bool flashed=false;
-				foreach (IPokemon i in Trainer.party) {
+				foreach (Pokemon i in Trainer.party) {
 					if (i.Status==Status.POISON && i.HP>0 && !i.isEgg &&
 						i.Ability != Abilities.IMMUNITY) {
 						if (!flashed) {
@@ -1234,17 +1267,17 @@ namespace PokemonUnity
 
 		public void BattleOnStepTaken() {
 			if (Trainer.party.Length>0) {
-				Method? encounterType=PokemonEncounters.EncounterType();
+				EncounterOptions? encounterType=PokemonEncounters.EncounterType();
 				if (encounterType>=0) {
-					if (PokemonEncounters.isEncounterPossibleHere()) {
-						IEncounter encounter=PokemonEncounters.GenerateEncounter(encounterType.Value);
+					if (PokemonEncounters.IsEncounterPossibleHere) {
+						IPokemon encounter=PokemonEncounters.GenerateEncounter(encounterType.Value);
 						encounter=EncounterModifier.trigger(encounter);
 						if (PokemonEncounters.CanEncounter(encounter)) {
 							if (Global.partner != null) {
-							IEncounter encounter2=PokemonEncounters.EncounteredPokemon(encounterType.Value);
-								DoubleWildBattle(encounter.Pokemon,encounter.Level,encounter2.Pokemon,encounter2.Level);
+								IPokemon encounter2=PokemonEncounters.EncounteredPokemon(encounterType.Value);
+								DoubleWildBattle(encounter.Species,encounter.Level,encounter2.Species,encounter2.Level);
 							} else {
-								WildBattle(encounter.Pokemon,encounter.Level);
+								WildBattle(encounter.Species,encounter.Level);
 							}
 						}
 						EncounterModifier.triggerEncounterEnd();
@@ -1271,13 +1304,14 @@ namespace PokemonUnity
 			//Events.onStepTaken.trigger(null);
 			//Events.OnStepTaken?.Invoke(null,EventArgs.Empty);
 			Events.OnStepTakenTrigger(this);
-			//Events.onStepTakenFieldMovement.trigger(null,GamePlayer);
+			//Events.onStepTakenFieldMovement.trigger(null,GamePlayer)
 			//Events.OnStepTakenFieldMovementTrigger(null,GamePlayer); //Was commented out in essentials
 			bool?[] handled= new bool?[]{ null };
 			//Events.OnStepTakenTransferPossible.trigger(null,handled);
 			PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs e1 = new PokemonUnity.EventArg.OnStepTakenTransferPossibleEventArgs();
-			//Events.OnStepTakenTransferPossible?.Invoke(null,e1); //handled[0]=e1.
+			//Events.OnStepTakenTransferPossible?.Invoke(null,e1);
 			Events.OnStepTakenTransferPossibleTrigger(this, e1);
+			handled[0]=e1.Index;
 			if (handled[0]==true) return;
 			if (!eventTriggered) {
 				BattleOnStepTaken();
@@ -1290,9 +1324,9 @@ namespace PokemonUnity
 			int outfit=trainer != null ? trainer.outfit.Value : 0;
 			string ret=meta[charset];
 			if (ret == null || ret=="") ret=meta[1];
-			//  if FileTest.image_exist("Graphics/Characters/"+ret+"_"+outfit.ToString())
+//			if FileTest.image_exist("Graphics/Characters/"+ret+"_"+outfit.ToString())
 			if (ResolveBitmap("Graphics/Characters/"+ret+"_"+outfit.ToString()) != null) {
-			ret=ret+"_"+outfit.ToString();
+				ret=ret+"_"+outfit.ToString();
 			}
 			return ret;
 		}
@@ -1443,8 +1477,8 @@ namespace PokemonUnity
 					if (GamePlayer is IGamePlayerRunMovement p0) p0.setDefaultCharName(null,oldpattern);
 						return true;
 					}
-			//      bitechance+=15
-			//      hookchance+=15
+//					bitechance+=15
+//					hookchance+=15
 				} else {
 					FishingEnd();
 					if (GamePlayer is IGamePlayerRunMovement p0) p0.setDefaultCharName(null,oldpattern);
@@ -1464,7 +1498,7 @@ namespace PokemonUnity
 				Graphics?.update();
 				Input.update();
 				if (this is IGameMessage m1) m1.UpdateSceneMap();
-				if (Input.trigger((int)Input.C) || Input.trigger((int)Input.B)) {
+				if (Input.trigger((int)PokemonUnity.Input.C) || Input.trigger((int)PokemonUnity.Input.B)) {
 					return true;
 				} i++;
 			} while (i < frames);
@@ -1480,7 +1514,7 @@ namespace PokemonUnity
 					Graphics?.update();
 					Input.update();
 					if (this is IGameMessage m1) m1.UpdateSceneMap();
-					if (Input.trigger((int)Input.C) || Input.trigger((int)Input.B)) {
+					if (Input.trigger((int)PokemonUnity.Input.C) || Input.trigger((int)PokemonUnity.Input.B)) {
 						return true;
 					} j++;
 				} while (j < 20); i++;
@@ -1622,8 +1656,8 @@ namespace PokemonUnity
 				GameMap.refresh();
 			} else {
 				//int[] homedata=(int[])GetMetadata(0,GlobalMetadatas.MetadataHome);
-				MetadataPosition? homedata=GetMetadata(0).Global.Home;
 				//ITilePosition homedata=Game.GetMetadata(0,GlobalMetadatas.MetadataHome);
+				MetadataPosition? homedata=GetMetadata(0).Global.Home;
 				if (homedata != null && !RxdataExists(string.Format("Data/Map%03d",homedata.Value.MapId))) { //homedata[0]
 					if (Core.DEBUG && this is IGameMessage m) {
 						m.Message(string.Format("Can't find the map 'Map{0}' in the Data folder. The game will resume at the player's position.",homedata.Value.MapId)); //homedata[0]
@@ -1759,15 +1793,16 @@ namespace PokemonUnity
 		#region Partner trainer
 		public void RegisterPartner(TrainerTypes trainerid,string trainername,int partyid=0) {
 			CancelVehicles();
-			ITrainer trainer = null; //Trainer.LoadTrainer(trainerid,trainername,partyid); //ToDo: Uncomment
+			ITrainer trainer = null; //Trainer.LoadTrainer(trainerid,trainername,partyid);
+			if (Game.GameData is IGameTrainer gt) trainer = gt.LoadTrainer(trainerid,trainername,partyid);
 			//Events.OnTrainerPartyLoad.trigger(null,trainer);
-			Events.OnTrainerPartyLoadTrigger(null,trainer);
+			Events.OnTrainerPartyLoadTrigger(this,trainer);
 			ITrainer trainerobject=new Trainer(Game._INTL(trainer.name),trainerid);
 			trainerobject.setForeignID(Trainer);
 			foreach (IPokemon i in trainer.party) {
-				(i as Pokemon).SetCatchInfos(trainer:trainerobject);
 				i.trainerID=trainerobject.id;
 				i.ot=trainerobject.name;
+				//i.SetCatchInfos(trainer:trainerobject);
 				i.calcStats();
 			}
 			//Global.partner=new Trainer(trainerid,trainerobject.name,trainerobject.id,trainer.party);
@@ -1941,7 +1976,7 @@ namespace PokemonUnity
 					Input.update();
 					textwindow.update();
 					msgwindow.update();
-					if (Input.trigger(Input.B)) {
+					if (Input.trigger(PokemonUnity.Input.B)) {
 						if (this is IGameAudio a2) a2.Audio_bgm_set_volume(oldvolume);
 						(this as IGameMessage).DisposeMessageWindow(msgwindow);
 						textwindow.Dispose();
@@ -1958,7 +1993,7 @@ namespace PokemonUnity
 					Input.update();
 					textwindow.update();
 					msgwindow.update();
-					if (Input.trigger(Input.B)) {
+					if (Input.trigger(PokemonUnity.Input.B)) {
 						break;
 					}
 				} while(i < frames);
@@ -2297,14 +2332,14 @@ namespace PokemonUnity
 			return false;
 		}
 
-		//ToDo: One solid coroutine function...
-		public void Wait(int numframes) {
+		//ToDo: One solid coroutine function... change to IEnumerator, and add yield return frame
+		public virtual void Wait(int numframes) {
 			if (Core.INTERNAL) return; //if there's no ui connected...
-			int i = 0; do { //;numframes.times
+			int i = 0; do {
 				Graphics?.update();
 				Input.update();
-				if (this is IGameMessage m) m.UpdateSceneMap();
-			} while (i < numframes);
+				if (this is IGameMessage m) m.UpdateSceneMap(); i++;
+			} while (i < numframes); //;numframes.times
 		}
 
 		public virtual IMoveRoute MoveRoute(IGameCharacter @event,int[] commands,bool waitComplete=false) {
@@ -2434,10 +2469,14 @@ namespace PokemonUnity
 		private int @event_id;
 		private int @map_id;
 		private IGameCharacter @event;
-		//  Used in boulder events. Allows an event to be pushed. To be used in
-		//  a script event command.
+		/// <summary>
+		/// Used in boulder events. Allows an event to be pushed.
+		/// </summary>
+		/// <remarks>
+		/// To be used in a script event command.
+		/// </remarks>
 		public void PushThisEvent() {
-			@event=(Game.GameData as Game).Interpreter.get_character(0);
+			@event=Game.GameData.Interpreter.get_character(0);
 			float oldx=@event.x;
 			float oldy=@event.y;
 			//  Apply strict version of passable, which makes impassable
@@ -2461,14 +2500,14 @@ namespace PokemonUnity
 			}
 			if (Game.GameData.PokemonMap != null) Game.GameData.PokemonMap.addMovedEvent(@event_id);
 			if (oldx!=@event.x || oldy!=@event.y) {
-					Game.GameData.GamePlayer._lock();
-					do {
-						(Game.GameData as Game).Graphics?.update();
-						Input.update();
-						if (Game.GameData is IGameMessage m) m.UpdateSceneMap();
-					} while (@event.moving);
-					Game.GameData.GamePlayer.unlock();
-				}
+				Game.GameData.GamePlayer._lock();
+				do {
+					Game.GameData.Graphics?.update();
+					Input.update();
+					if (Game.GameData is IGameMessage m) m.UpdateSceneMap();
+				} while (@event.moving);
+				Game.GameData.GamePlayer.unlock();
+			}
 		}
 
 		public bool PushThisBoulder() {
@@ -2479,7 +2518,7 @@ namespace PokemonUnity
 		}
 
 		public bool Headbutt() {
-			if (Game.GameData is IGameHiddenMoves f) f.Headbutt((Game.GameData as Game).Interpreter.get_character(0));
+			if (Game.GameData is IGameHiddenMoves f) f.Headbutt(Game.GameData.Interpreter.get_character(0));
 			return true;
 		}
 
@@ -2495,7 +2534,7 @@ namespace PokemonUnity
 
 		public void TrainerEnd() {
 			if (this is IInterpreterMixinMessage m) m.GlobalUnlock();
-			IGameEvent e=(Game.GameData as Game).Interpreter.get_character(0);
+			IGameCharacter e=Game.GameData.Interpreter.get_character(0);
 			if (e != null) e.erase_route();
 		}
 
@@ -2507,54 +2546,54 @@ namespace PokemonUnity
 			return Game.GameData.Trainer.party[Game.GameData is IGameUtility g ? (int)g.Get(id) : id];
 		}
 
-		public void SetEventTime(params int[] arg) {
+		public void SetEventTime(object arg) { //params int[]
 			if (Game.GameData.Global.eventvars == null) Game.GameData.Global.eventvars=new Dictionary<KeyValuePair<int, int>, long>();
 			long time=Game.GetTimeNow.Ticks;
 			//time=time.to_i;
 			if (Game.GameData is IInterpreterMixinMessage i) i.SetSelfSwitch(@event_id,"A",true);
 			Game.GameData.Global.eventvars[new KeyValuePair<int, int>(@map_id,@event_id)]=time;
-			foreach (var otherevt in arg) {
+			foreach (int otherevt in (int[])arg) {
 				if (Game.GameData is IInterpreterMixinMessage i0) i0.SetSelfSwitch(otherevt,"A",true);
 				Game.GameData.Global.eventvars[new KeyValuePair<int, int>(@map_id,otherevt)]=time;
 			}
 		}
 
-		public object getVariable(params int[] arg) {
-			if (arg.Length==0) {
+		public object getVariable(object arg) { //params int[]
+			//if (arg.Length==0) {
 				if (Game.GameData.Global.eventvars == null) return null;
 				return Game.GameData.Global.eventvars[new KeyValuePair<int, int>(@map_id,@event_id)];
-			} else {
-				return Game.GameData.GameVariables[arg[0]];
-			}
+			//} else {
+			//	return Game.GameData.GameVariables[arg[0]];
+			//}
 		}
 
-		public void setVariable(params int[] arg) {
-			if (arg.Length==1) {
+		public void setVariable(object arg) { //params int[]
+			//if (arg.Length==1) {
 				if (Game.GameData.Global.eventvars == null) Game.GameData.Global.eventvars=new Dictionary<KeyValuePair<int, int>, long>();
-				Game.GameData.Global.eventvars[new KeyValuePair<int, int>(@map_id,@event_id)]=arg[0];
-			} else {
-				Game.GameData.GameVariables[arg[0]]=arg[1];
-				Game.GameData.GameMap.need_refresh=true;
-			}
+				Game.GameData.Global.eventvars[new KeyValuePair<int, int>(@map_id,@event_id)]=((int[])arg)[0]; //arg[0]
+			//} else {
+			//	Game.GameData.GameVariables[arg[0]]=arg[1];
+			//	Game.GameData.GameMap.need_refresh=true;
+			//}
 		}
 
 		public bool tsOff (string c) {
-			return (Game.GameData as Game).Interpreter.get_character(0).tsOff(c);
+			return Game.GameData.Interpreter.get_character(0).tsOff(c);
 		}
 
 		public bool tsOn (string c) {
-			return (Game.GameData as Game).Interpreter.get_character(0).tsOn(c);
+			return Game.GameData.Interpreter.get_character(0).tsOn(c);
 		}
 
 		//alias isTempSwitchOn? tsOn?;
 		//alias isTempSwitchOff? tsOff?;
 
 		public void setTempSwitchOn(string c) {
-			(Game.GameData as Game).Interpreter.get_character(0).setTempSwitchOn(c);
+			Game.GameData.Interpreter.get_character(0).setTempSwitchOn(c);
 		}
 
 		public void setTempSwitchOff(string c) {
-			(Game.GameData as Game).Interpreter.get_character(0).setTempSwitchOff(c);
+			Game.GameData.Interpreter.get_character(0).setTempSwitchOff(c);
 		}
 
 		// Must use this approach to share the methods because the methods already
@@ -2562,9 +2601,9 @@ namespace PokemonUnity
 		/*CustomEventCommands=<<_END_;
 
 		public void command_352() {
-			scene=new PokemonSaveScene();
-			screen=new PokemonSave(scene);
-			screen.SaveScreen;
+			ISaveScene scene=new PokemonSaveScene();
+			ISaveScreen screen=new PokemonSave(scene);
+			screen.SaveScreen();
 			return true;
 		}
 
@@ -2587,11 +2626,11 @@ namespace PokemonUnity
 		public void command_353() {
 			BGMFade(1.0);
 			BGSFade(1.0);
-			FadeOutIn(99999){ Game.StartOver(true) }
+			FadeOutIn(99999, () => { Game.StartOver(true); });
 		}
 
 		public void command_314() {
-			if (Params[0] == 0 && Game.GameData.Trainer && Game.GameData.Trainer.party) {
+			if (Params[0] == 0 && Game.GameData.Trainer!=null && Game.GameData.Trainer.party) {
 				HealAll();
 			}
 			return true;

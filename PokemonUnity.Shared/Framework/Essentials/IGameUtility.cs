@@ -19,6 +19,7 @@ using PokemonEssentials.Interface.PokeBattle;
 namespace PokemonEssentials.Interface
 {
 	/// <summary>
+	/// Extension of <see cref="IGame"/>
 	/// </summary>
 	public interface IGameUtility
 	{
@@ -28,7 +29,7 @@ namespace PokemonEssentials.Interface
 		bool _NextComb(int[] comb, int length);
 
 		/// <summary>
-		/// Iterates through the array and yields each combination of <paramref name="num"/> 
+		/// Iterates through the array and yields each combination of <paramref name="num"/>
 		/// elements in the array.
 		/// </summary>
 		/// <param name="array"></param>
@@ -234,6 +235,11 @@ namespace PokemonEssentials.Interface
 		#endregion
 
 		#region Creating and storing Pokémon
+		/// <summary>
+		/// For demonstration purposes only, not to be used in a real game.
+		/// </summary>
+		void CreatePokemon();
+
 		bool BoxesFull();
 
 		void Nickname(IPokemon pokemon);
@@ -393,7 +399,7 @@ namespace PokemonEssentials.Interface
 
 		/// <summary>
 		/// Gets the ID number for the current region based on the player's current
-		/// position. 
+		/// position.
 		/// </summary>
 		/// <param name="defaultRegion">
 		/// Returns the value of "defaultRegion" (optional, default is -1) if

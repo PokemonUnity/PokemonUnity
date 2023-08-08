@@ -15,7 +15,7 @@ using PokemonEssentials.Interface;
 
 namespace PokemonUnity
 {
-	public partial class Game 
+	public partial class Game
 	{
 		public static bool Swarm { get; private set; }
 		public static byte Time { get; private set; }
@@ -24,7 +24,7 @@ namespace PokemonUnity
 		public static byte Radio { get; private set; }
 		public static bool IsAurora { get; private set; }
 		//public static Environments Environment { get; set; }
-		public static Overworld.FieldWeathers Weather { get; set; }
+		//public static Overworld.FieldWeathers Weather { get; set; } //this should come from global data
 		public static Season Season { get; private set; }
 		public static Season CurrentSeason
 		{
@@ -603,7 +603,7 @@ namespace PokemonUnity
 				5,21,6,20,   // Gemini
 				6,21,7,20,   // Cancer
 				7,23,8,22,   // Leo
-				8,23,9,22,   // Virgo 
+				8,23,9,22,   // Virgo
 				9,23,10,22,  // Libra
 				10,23,11,21, // Scorpio
 				11,22,12,21, // Sagittarius
@@ -617,7 +617,7 @@ namespace PokemonUnity
 			}
 			return 0;
 		}
- 
+
 		/// <summary>
 		/// Returns the opposite of the given zodiac sign.
 		/// 0 is Aries, 11 is Pisces.

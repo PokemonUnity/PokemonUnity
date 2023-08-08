@@ -4037,7 +4037,7 @@ namespace PokemonUnity.Combat
 			if (attacker.effects.CounterTarget >= 0 &&
 			   attacker.IsOpposing(attacker.effects.CounterTarget))
 			{
-				if (!attacker.AddTarget(ref targets, this.battle.battlers[attacker.effects.CounterTarget]))
+				if (!attacker.AddTarget(targets, this.battle.battlers[attacker.effects.CounterTarget]))
 				{
 					attacker.RandomTarget(targets);
 				}
@@ -4068,7 +4068,7 @@ namespace PokemonUnity.Combat
 			if (attacker.effects.MirrorCoatTarget >= 0 &&
 			   attacker.IsOpposing(attacker.effects.MirrorCoatTarget))
 			{
-				if (!attacker.AddTarget(ref targets, this.battle.battlers[attacker.effects.MirrorCoatTarget]))
+				if (!attacker.AddTarget(targets, this.battle.battlers[attacker.effects.MirrorCoatTarget]))
 				{
 					attacker.RandomTarget(targets);
 				}
@@ -4102,7 +4102,7 @@ namespace PokemonUnity.Combat
 				int lastattacker = attacker.lastAttacker[attacker.lastAttacker.Count - 1];
 				if (lastattacker >= 0 && attacker.IsOpposing(lastattacker))
 				{
-					if (!attacker.AddTarget(ref targets, this.battle.battlers[lastattacker]))
+					if (!attacker.AddTarget(targets, this.battle.battlers[lastattacker]))
 					{
 						attacker.RandomTarget(targets);
 					}
@@ -7574,7 +7574,7 @@ namespace PokemonUnity.Combat
 		{
 			if (attacker.effects.BideTarget >= 0)
 			{
-				if (!attacker.AddTarget(ref targets, this.battle.battlers[attacker.effects.BideTarget]))
+				if (!attacker.AddTarget(targets, this.battle.battlers[attacker.effects.BideTarget]))
 				{
 					attacker.RandomTarget(targets);
 				}

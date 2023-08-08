@@ -48,7 +48,7 @@ namespace PokemonUnity
 					msg = msg.Replace($"{{{i}}}", $"{{{i - 1}}}");
 			return string.Format(msg, param);
 		}
-			
+
 		#region General purpose utilities
 		public bool _NextComb(int[] comb,int length) {
 			int i=comb.Length-1;
@@ -72,7 +72,7 @@ namespace PokemonUnity
 		}
 
 		/// <summary>
-		/// Iterates through the array and yields each combination of <paramref name="num"/> 
+		/// Iterates through the array and yields each combination of <paramref name="num"/>
 		/// elements in the array.
 		/// </summary>
 		/// <param name="array"></param>
@@ -152,7 +152,7 @@ namespace PokemonUnity
 		public double toFahrenheit(float celsius) {
 			return Math.Round(celsius*9.0f/5.0f)+32;
 		}
- 
+
 		/// <summary>
 		/// Converts a Fahrenheit temperature to Celsius.
 		/// </summary>
@@ -270,8 +270,8 @@ namespace PokemonUnity
 			string getUserName=""; //new Win32API('advapi32.dll','GetUserName','pp','i');
 			int i = 0; do { //10.times;
 				int[] size= new int[buffersize];//.pack("V")
-				//string buffer="\0"*buffersize; //"0000..." x100 
-				//if (getUserName.call(buffer,size)!=0) { 
+				//string buffer="\0"*buffersize; //"0000..." x100
+				//if (getUserName.call(buffer,size)!=0) {
 				//	return buffer.gsub(/\0/,""); //replace all 0s with "", using regex
 				//}
 				buffersize+=200; i++;
@@ -311,7 +311,7 @@ namespace PokemonUnity
 							name+=set[Core.Rand.Next(set.Length)];
 							break;
 						case "W": // beginning vowel
-							set=new string[] { "a", "a", "a", "e", "e", "e", "i", "i", "i", "o", "o", "o", "u", "u", "u", "au", "au", "ay", "ay", 
+							set=new string[] { "a", "a", "a", "e", "e", "e", "i", "i", "i", "o", "o", "o", "u", "u", "u", "au", "au", "ay", "ay",
 							"ea", "ea", "ee", "ee", "oo", "oo", "ou", "ou" };
 							name+=set[Core.Rand.Next(set.Length)];
 							break;
@@ -432,13 +432,13 @@ namespace PokemonUnity
 			return retval;
 		}
 		#endregion
-   
+
 		#region General-purpose utilities with dependencies
 		/// <summary>
 		/// Similar to <see cref="FadeOutIn"/>, but pauses the music as it fades out.
 		/// </summary>
 		/// <remarks>
-		/// Requires scripts "Audio" (for <seealso cref="IGameSystem.bgm_pause"/>) 
+		/// Requires scripts "Audio" (for <seealso cref="IGameSystem.bgm_pause"/>)
 		/// and "SpriteWindow" (for <seealso cref="FadeOutIn"/>).
 		/// </remarks>
 		/// <param name="zViewport"></param>
@@ -517,7 +517,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public virtual IList<object> HideVisibleObjects() 
+		public virtual IList<object> HideVisibleObjects()
 		{
 			IList<object> visibleObjects= new List<object>(); //ToDo: ISpriteWindow?
 			////ObjectSpace.each_object(Sprite){|o|
@@ -660,8 +660,8 @@ namespace PokemonUnity
 		#endregion
 
 		#region Loads Pokémon/item/trainer graphics
-		[System.Obsolete("Unused")] 
-		public string PokemonBitmapFile(Pokemons species,bool shiny,bool back=false) {   
+		[System.Obsolete("Unused")]
+		public string PokemonBitmapFile(Pokemons species,bool shiny,bool back=false) {
 			if (shiny) {
 				//  Load shiny bitmap
 				string ret=string.Format("Graphics/Battlers/{0}s{1}",species.ToString(),back ? "b" : ""); //rescue null
@@ -874,7 +874,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <returns></returns>
-		public virtual string PokemonFootprintFile(Pokemons pokemon) {   
+		public virtual string PokemonFootprintFile(Pokemons pokemon) {
 			//if (!pokemon) return null;
 			string bitmapFileName = null;
 			//if (pokemon is Numeric) {
@@ -884,7 +884,7 @@ namespace PokemonUnity
 			//return ResolveBitmap(bitmapFileName);
 			return null;
 		}
-		public virtual string PokemonFootprintFile(IPokemon pokemon) {   
+		public virtual string PokemonFootprintFile(IPokemon pokemon) {
 			if (pokemon == null) return null;
 			string bitmapFileName = null;
 			//{
@@ -1031,7 +1031,7 @@ namespace PokemonUnity
 			//}
 			return null;
 		}
-		
+
 		public int CryFrameLength(Pokemons pokemon,float? pitch=null) {
 			if (pokemon == Pokemons.NONE) return 0;
 			if (pitch == null) pitch=100;
@@ -1054,7 +1054,7 @@ namespace PokemonUnity
 			//  4 is added to provide a buffer between sounds
 			return (int)Math.Ceiling(playtime*Graphics.frame_rate)+4;
 		}
-		
+
 		public int CryFrameLength(IPokemon pokemon,float? pitch=null) {
 			if (!pokemon.IsNotNullOrNone()) return 0;
 			if (pitch == null) pitch=100;
@@ -1064,7 +1064,7 @@ namespace PokemonUnity
 			//if (pokemon is Numeric) {
 			//	string pkmnwav=ResolveAudioSE(CryFile(pokemon));
 			//	if (pkmnwav != null) playtime=getPlayTime(pkmnwav);
-			//} else 
+			//} else
 			if (!pokemon.isEgg) {
 				if (pokemon is IPokemonChatter p && p.chatter != null) { //pokemon.respond_to("chatter")
 					playtime=p.chatter.time();
@@ -1078,7 +1078,7 @@ namespace PokemonUnity
 			//  4 is added to provide a buffer between sounds
 			return (int)Math.Ceiling(playtime*Graphics.frame_rate)+4;
 		}
-		
+
 		public void PlayCry(IPokemon pokemon,int volume=90,float? pitch=null) {
 			if (pokemon == null) return;
 			if (!pokemon.isEgg) {
@@ -1093,7 +1093,7 @@ namespace PokemonUnity
 				}
 			}
 		}
-		
+
 		public void PlayCry(Pokemons pokemon,int volume=90,float? pitch=null) {
 			if (pokemon == Pokemons.NONE) return;
 			//if (pokemon is Numeric) {
@@ -1103,7 +1103,7 @@ namespace PokemonUnity
 				}
 			//}
 		}
-		
+
 		public string CryFile(Pokemons pokemon) {
 			if (pokemon == Pokemons.NONE) return null;
 			//if (pokemon is Numeric) {
@@ -1113,7 +1113,7 @@ namespace PokemonUnity
 			//}
 			return null;
 		}
-		
+
 		public string CryFile(IPokemon pokemon) {
 			if (pokemon == null) return null;
 			if (!pokemon.isEgg) {
@@ -1127,10 +1127,10 @@ namespace PokemonUnity
 			}
 			return null;
 		}
-		
+
 		public IAudioBGM GetWildBattleBGM(Pokemons species) {
 			if (Global.nextBattleBGM != null) {
-				return Global.nextBattleBGM.clone();
+				return (IAudioBGM)Global.nextBattleBGM.Clone();
 			}
 			IAudioBGM ret=null;
 			if (ret == null && GameMap != null) {
@@ -1152,10 +1152,10 @@ namespace PokemonUnity
 			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("002-Battle02");
 			return ret;
 		}
-		
+
 		public IAudioME GetWildVictoryME() {
 			if (Global.nextBattleME != null) {
-				return Global.nextBattleME.clone();
+				return (IAudioME)Global.nextBattleME.Clone();
 			}
 			IAudioME ret=null;
 			if (ret == null && GameMap != null) {
@@ -1178,7 +1178,7 @@ namespace PokemonUnity
 			ret.name="../../Audio/ME/"+ret.name;
 			return ret;
 		}
-		
+
 		public void PlayTrainerIntroME(TrainerTypes trainertype) {
 			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//	trainertypes=Marshal.load(f);
@@ -1192,11 +1192,11 @@ namespace PokemonUnity
 				}
 			//}
 		}
-		
+
 		// can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
-		public IAudioBGM GetTrainerBattleBGM(params ITrainer[] trainer) { 
+		public IAudioBGM GetTrainerBattleBGM(params ITrainer[] trainer) {
 			if (Global.nextBattleBGM != null) {
-				return Global.nextBattleBGM.clone();
+				return (IAudioBGM)Global.nextBattleBGM.Clone();
 			}
 			string music=null;
 			//RgssOpen("Data/trainertypes.dat","rb"){|f|
@@ -1237,10 +1237,10 @@ namespace PokemonUnity
 			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("005-Boss01");
 			return ret;
 		}
-		
+
 		public IAudioBGM GetTrainerBattleBGMFromType(TrainerTypes trainertype) {
 			if (Global.nextBattleBGM != null) {
-				return Global.nextBattleBGM.clone();
+				return (IAudioBGM)Global.nextBattleBGM.Clone();
 			}
 			string music=null;
 			//RgssOpen("Data/trainertypes.dat","rb"){|f|
@@ -1272,11 +1272,11 @@ namespace PokemonUnity
 			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("005-Boss01");
 			return ret;
 		}
-		
+
 		// can be a PokeBattle_Trainer or an array of PokeBattle_Trainer
-		public IAudioME GetTrainerVictoryME(params ITrainer[] trainer) { 
+		public IAudioME GetTrainerVictoryME(params ITrainer[] trainer) {
 			if (Global.nextBattleME != null) {
-				return Global.nextBattleME.clone();
+				return (IAudioME)Global.nextBattleME.Clone();
 			}
 			string music=null;
 			//RgssOpen("Data/trainertypes.dat","rb"){|f|
@@ -1320,6 +1320,11 @@ namespace PokemonUnity
 		#endregion
 
 		#region Creating and storing Pokémon
+		/// <summary>
+		/// For demonstration purposes only, not to be used in a real game.
+		/// </summary>
+		public void CreatePokemon() { }
+
 		public bool BoxesFull() {
 			return Trainer == null || (Trainer.party.Length==Features.LimitPokemonPartySize && PokemonStorage.full);
 		}
@@ -1647,7 +1652,7 @@ namespace PokemonUnity
 			//} else {
 				species=poke;
 			//}
-			if (species<=0) return; //!species || 
+			if (species<=0) return; //!species ||
 			if (gender>1) gender=0;
 			string formnames = ""; //GetMessage(MessageTypes.FormNames,species);
 			if (string.IsNullOrEmpty(formnames)) form=0; //ToDo: Rework pokedex logic below...
@@ -1657,7 +1662,7 @@ namespace PokemonUnity
 			//if (Trainer.formlastseen[species] == []) Trainer.formlastseen[species]= new []{ gender,form };
 			//if (Trainer.formlastseen[(int)species].Value == null) Trainer.formlastseen[(int)species] = new KeyValuePair<int, int?>(gender,form);
 			//if(Player.Pokedex[(int)species, 2] < 0)
-			//Player.Pokedex[(int)species,2] = (byte)form; 
+			//Player.Pokedex[(int)species,2] = (byte)form;
 		}
 		#endregion
 
@@ -1895,7 +1900,7 @@ namespace PokemonUnity
 
 		public void ChooseNonEggPokemon(int variableNumber,int nameVarNumber) {
 			//ChoosePokemon(variableNumber,nameVarNumber,proc {|poke|
-			ChoosePokemon(variableNumber,nameVarNumber, poke => 
+			ChoosePokemon(variableNumber,nameVarNumber, poke =>
 				!poke.isEgg
 			);
 		}
@@ -2036,7 +2041,7 @@ namespace PokemonUnity
 
 		/// <summary>
 		/// Gets the ID number for the current region based on the player's current
-		/// position. 
+		/// position.
 		/// </summary>
 		/// <param name="defaultRegion">
 		/// Returns the value of "defaultRegion" (optional, default is -1) if

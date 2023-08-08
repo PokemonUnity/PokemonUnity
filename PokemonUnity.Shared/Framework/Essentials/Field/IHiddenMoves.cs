@@ -90,6 +90,9 @@ namespace PokemonEssentials.Interface
 			bool triggerUseMove(Moves item, IPokemon pokemon);
 		}
 
+		/// <summary>
+		/// Extension of <see cref="IGame"/>
+		/// </summary>
 		public interface IGameHiddenMoves
 		{
 			/// <summary>

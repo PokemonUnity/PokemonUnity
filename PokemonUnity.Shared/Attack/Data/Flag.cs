@@ -22,14 +22,14 @@ namespace PokemonUnity.Attack.Data
 		public bool Protectable;
 		/// <summary>
 		/// This move may be reflected back at the user with <see cref="Moves.MAGIC_COAT"/> or <see cref="Abilities.MAGIC_BOUNCE"/>.
-		/// The target can use <see cref="Moves.MAGIC_COAT"/> to redirect the effect of the move. 
+		/// The target can use <see cref="Moves.MAGIC_COAT"/> to redirect the effect of the move.
 		/// Use this flag if the move deals no damage but causes a negative effect on the target.
 		/// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
 		/// </summary>
 		public bool Reflectable;
 		/// <summary>
 		/// This move will be stolen if another Pokémon has used <see cref="Moves.SNATCH"/> this turn.
-		/// The target can use <see cref="Moves.SNATCH"/> to steal the effect of the move. 
+		/// The target can use <see cref="Moves.SNATCH"/> to steal the effect of the move.
 		/// Use this flag for most moves that target the user.
 		/// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
 		/// </summary>
@@ -127,7 +127,7 @@ namespace PokemonUnity.Attack.Data
 			this.Gravity = gravity; //10
 			this.Heal = heal; //13
 			this.Mirror = mirror;
-			this.Mental = mental; 
+			this.Mental = mental;
 			this.NonSky = nonsky; //20
 			this.PowderBased = powder;
 			this.Protectable = protect;
