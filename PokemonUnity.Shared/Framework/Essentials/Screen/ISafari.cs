@@ -21,9 +21,9 @@ namespace PokemonEssentials.Interface.Screen
 
 		ISafariZone_Scene initialize(IPokeBattle_Scene scene, ITrainer player, IPokemon[] party2);
 
-		bool pbIsOpposing(int index);
+		bool IsOpposing(int index);
 
-		bool pbIsDoubleBattler(int index);
+		bool IsDoubleBattler(int index);
 
 		IBattler[] battlers { get; }
 		ITrainer[] opponent { get; }
@@ -31,29 +31,29 @@ namespace PokemonEssentials.Interface.Screen
 
 		int ballCount { get; set; }
 
-		ITrainer pbPlayer();
+		ITrainer Player();
 
-		void pbAbort();
+		void Abort();
 
-		int pbEscapeRate(int rareness);
+		int EscapeRate(int rareness);
 
-		BattleResults pbStartBattle();
+		BattleResults StartBattle();
 
 		// ############
-		void pbDebugUpdate();
+		void DebugUpdate();
 
-		void pbDisplayPaused(string msg);
+		void DisplayPaused(string msg);
 
-		//void pbDisplay(string msg);
+		//void Display(string msg);
 
-		void pbDisplayBrief(string msg);
+		void DisplayBrief(string msg);
 
-		//bool pbDisplayConfirm(string msg);
+		//bool DisplayConfirm(string msg);
 
-		//int pbAIRandom(int x);
+		//int AIRandom(int x);
 
-		int pbRandom(int x);
+		int Random(int x);
 
-		void pbGainEXP();
+		void GainEXP();
 	}
 }

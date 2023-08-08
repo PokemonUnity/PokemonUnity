@@ -10,8 +10,10 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// The module that carries out music and sound processing.
 	/// </summary>
-	public interface IAudio : IAudioObject
+	public interface IAudio //: IAudioObject
 	{
+		//Carried over from Essentials; not native to RPGMaker Engine
+		int bgm_position { get; set; }
 		/// <summary>
 		/// Starts BGM playback. Sets the file name, volume, and pitch in turn.
 		/// </summary>
@@ -24,10 +26,10 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		void bgm_stop();
 		/// <summary>
-		/// Starts BGM fadeout. 
+		/// Starts BGM fadeout.
 		/// </summary>
 		/// <param name="time">time is the length of the fadeout in milliseconds.</param>
-		void bgm_fade(int time);
+		void bgm_fade(float time);
 		/// <summary>
 		/// Starts BGS playback. Sets the file name, volume, and pitch in turn.
 		/// </summary>
@@ -40,10 +42,10 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		void bgs_stop();
 		/// <summary>
-		/// Starts BGS fadeout. 
+		/// Starts BGS fadeout.
 		/// </summary>
 		/// <param name="time">time is the length of the fadeout in milliseconds.</param>
-		void bgs_fade(int time);
+		void bgs_fade(float time);
 		/// <summary>
 		/// Starts ME playback. Sets the file name, volume, and pitch in turn.
 		/// When ME is playing, the BGM will temporarily stop.
@@ -57,10 +59,10 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		void me_stop();
 		/// <summary>
-		/// Starts ME fadeout. 
+		/// Starts ME fadeout.
 		/// </summary>
 		/// <param name="time">time is the length of the fadeout in milliseconds.</param>
-		void me_fade(int time);
+		void me_fade(float time);
 		/// <summary>
 		/// Starts SE playback. Sets the file name, volume, and pitch in turn.
 		/// When attempting to play the same SE more than once in a very short period, they will automatically be filtered to prevent choppy playback.
@@ -80,7 +82,7 @@ namespace PokemonEssentials.Interface
 		int volume { get; set; }
 		float pitch { get; set; }
 	}
-	public interface IAudioBGM : IAudioObject
+	public interface IAudioBGM : IAudioObject, ICloneable
 	{
 		/// <summary>
 		/// Returns BGM (<seealso cref="IAudioBGM"/>) that playing now. If no playing BGM, returns null.
@@ -92,7 +94,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		void stop();
 		/// <summary>
-		/// Starts BGM fadeout. 
+		/// Starts BGM fadeout.
 		/// </summary>
 		/// <param name="time">time is the length of the fadeout in milliseconds.</param>
 		void fade(int time);
@@ -100,9 +102,9 @@ namespace PokemonEssentials.Interface
 		/// Starts the BGM playback.
 		/// </summary>
 		void play();
-		IAudioBGM clone();
+		//IAudioBGM Clone();
 	}
-	public interface IAudioBGS : IAudio
+	public interface IAudioBGS : IAudioObject, ICloneable
 	{
 		/// <summary>
 		/// Returns BGS (<seealso cref="IAudioBGS"/>) that playing now. If no playing BGS, returns null.
@@ -114,7 +116,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		void stop();
 		/// <summary>
-		/// Starts BGS fadeout. 
+		/// Starts BGS fadeout.
 		/// </summary>
 		/// <param name="time">time is the length of the fadeout in milliseconds.</param>
 		void fade(int time);
@@ -122,16 +124,16 @@ namespace PokemonEssentials.Interface
 		/// Starts the BGS playback.
 		/// </summary>
 		void play();
-		IAudioBGS clone();
+		//IAudioBGS Clone();
 	}
-	public interface IAudioME : IAudio
+	public interface IAudioME : IAudioObject, ICloneable
 	{
 		/// <summary>
 		/// Stops ME playback.
 		/// </summary>
 		void stop();
 		/// <summary>
-		/// Starts ME fadeout. 
+		/// Starts ME fadeout.
 		/// </summary>
 		/// <param name="time">time is the length of the fadeout in milliseconds.</param>
 		void fade(int time);
@@ -139,9 +141,9 @@ namespace PokemonEssentials.Interface
 		/// Starts the ME playback.
 		/// </summary>
 		void play();
-		IAudioME clone();
+		//IAudioME Clone();
 	}
-	public interface IAudioSE : IAudio
+	public interface IAudioSE : IAudioObject, ICloneable
 	{
 		/// <summary>
 		/// Stops SE playback.
@@ -151,7 +153,7 @@ namespace PokemonEssentials.Interface
 		/// Starts the SE playback.
 		/// </summary>
 		void play();
-		IAudioSE clone();
+		//IAudioSE Clone();
 	}
 	public interface IWaveData
 	{
@@ -188,7 +190,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// The color tone class. Each component is handled with a floating point value (Float).
 	/// </summary>
-	public interface ITone
+	public interface ITone : ICloneable
 	{
 		float red { get; set; }
 		float green { get; set; }
@@ -202,7 +204,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="blue"></param>
 		/// <param name="gray">only 0-255</param>
 		void set(float red, float green, float blue, float gray = 0);
-		ITone clone();
+		//ITone Clone();
 	}
 	/// <summary>
 	/// The rectangle class.
@@ -276,7 +278,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		float height { get; set; }
 		/// <summary>
-		/// The window's Z-coordinate. The larger this value, the closer to the player the plane will be displayed. 
+		/// The window's Z-coordinate. The larger this value, the closer to the player the plane will be displayed.
 		/// </summary>
 		float z { get; set; }
 		/// <summary>
@@ -288,21 +290,21 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		float oy { get; set; }
 		/// <summary>
-		/// The window's opacity (0-255). 
+		/// The window's opacity (0-255).
 		/// </summary>
 		byte opacity { get; set; }
 		/// <summary>
-		/// The window background's opacity (0-255). 
+		/// The window background's opacity (0-255).
 		/// </summary>
 		byte back_opacity { get; set; }
 		/// <summary>
-		/// The opacity of the window's contents (0-255). 
+		/// The opacity of the window's contents (0-255).
 		/// </summary>
 		byte contents_opacity { get; set; }
 		/// <summary>
-		/// By changing this value from 0 (completely closed) to 255 (completely open), 
-		/// it is possible to create an animation of the window opening and closing. 
-		/// If the openness is less than 255, the contents of the window will not be displayed. 
+		/// By changing this value from 0 (completely closed) to 255 (completely open),
+		/// it is possible to create an animation of the window opening and closing.
+		/// If the openness is less than 255, the contents of the window will not be displayed.
 		/// The default value is 255.
 		/// </summary>
 		byte openness { get; set; }
@@ -322,8 +324,8 @@ namespace PokemonEssentials.Interface
 	}
 
 	/// <summary>
-	/// The viewport class. 
-	/// Used when displaying sprites in one portion of the screen, 
+	/// The viewport class.
+	/// Used when displaying sprites in one portion of the screen,
 	/// with no overflow into other regions.
 	/// </summary>
 	public interface IViewport : IDisposable
@@ -386,21 +388,24 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE.If not, returns FALSE.</returns>
-		bool press(PokemonUnity.UX.InputKeys num);
+		//bool press(PokemonUnity.UX.InputKeys num);
+		bool press(int num);
 		/// <summary>
 		/// Determines whether the button number is being pressed again.
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>"Pressed again" is seen as time having passed between the button being not pressed and being pressed.</remarks>
-		bool trigger(PokemonUnity.UX.InputKeys num);
+		//bool trigger(PokemonUnity.UX.InputKeys num);
+		bool trigger(int num);
 		/// <summary>
 		/// Determines whether the button number is being pressed again.
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>Unlike <see cref="trigger"/>, takes into account the repeat input of a button being held down continuously.</remarks>
-		bool repeat(PokemonUnity.UX.InputKeys num);
+		//bool repeat(PokemonUnity.UX.InputKeys num);
+		bool repeat(int num);
 
 		//bool KeyPressed(int i_Key); //System.Windows.Forms.Keys
 		//void ChangeState(int key, bool state); //System.Windows.Forms.Keys
@@ -545,20 +550,20 @@ namespace PokemonEssentials.Interface
 	{
 		/// <summary>
 		/// The number of times the screen is refreshed per second. The larger the value, the more CPU power is required. Normally set at 60.
-		/// Changing this property is not recommended; however, it can be set anywhere from 10 to 120. 
+		/// Changing this property is not recommended; however, it can be set anywhere from 10 to 120.
 		/// </summary>
 		int frame_rate { get; set; }
 		/// <summary>
-		/// The screen's refresh rate count. Set this property to 0 at game start and the game play time (in seconds) 
+		/// The screen's refresh rate count. Set this property to 0 at game start and the game play time (in seconds)
 		/// can be calculated by dividing this value by the frame_rate property value.
 		/// </summary>
 		int frame_count { get; set; }
 		/// <summary>
-		/// The brightness of the screen. Takes a value from 0 to 255. 
+		/// The brightness of the screen. Takes a value from 0 to 255.
 		/// The fadeout, fade-in, and transition methods change this value internally, as required.
 		/// </summary>
 		/// ToDO: Takes a value from -126 to 126. Negative use black overlay, positive use white.
-		byte brightness { get; set; }
+		sbyte brightness { get; set; }
 		/// <summary>
 		/// Gets the width of the game screen.
 		/// </summary>
@@ -608,5 +613,25 @@ namespace PokemonEssentials.Interface
 		/// <param name="filename">filename specifies the transition graphic file name. When not specified, a standard fade will be used.</param>
 		/// <param name="vague">vague sets the ambiguity of the borderline between the graphic's starting and ending points. The larger the value, the greater the ambiguity. When omitted, this value is set to 40.</param>
 		void transition(float duration, string filename, int vague = 40);
+	}
+	public interface ITileset
+	{
+		int id { get; set; }
+		string name { get; set; }
+		string tileset_name { get; set; }
+		string[] autotile_names { get; set; }
+		string panorama_name { get; set; }
+		int panorama_hue { get; set; }
+		string fog_name { get; set; }
+		int fog_hue { get; set; }
+		int fog_opacity { get; set; }
+		int fog_blend_type { get; set; }
+		int fog_zoom { get; set; }
+		int fog_sx { get; set; }
+		int fog_sy { get; set; }
+		string battleback_name { get; set; }
+		int[] passages { get; set; }
+		int[] priorities { get; set; }
+		PokemonUnity.Overworld.Terrains[] terrain_tags { get; set; }
 	}
 }

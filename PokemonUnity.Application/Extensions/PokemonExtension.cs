@@ -8,17 +8,17 @@ namespace PokemonUnity
 {
 	public static class PokemonExtension
 	{
-		public static bool IsNotNullOrNone(this IEncounter pokemon)
+		public static bool IsNotNullOrNone(this IEncounterPokemon pokemon)
 		{
-			return pokemon != null && pokemon.Pokemon != Pokemons.NONE; 
+			return pokemon != null && pokemon.Pokemon != Pokemons.NONE;
 		}
 		public static bool IsNotNullOrNone(this IPokemon pokemon)
 		{
-			return pokemon != null && pokemon.Species != Pokemons.NONE; 
+			return pokemon != null && pokemon.Species != Pokemons.NONE;
 		}
 		public static bool IsNotNullOrNone(this IBattler pokemon)
 		{
-			return pokemon != null && pokemon.Species != Pokemons.NONE; 
+			return pokemon != null && pokemon.Species != Pokemons.NONE;
 		}
 		//public static string ToString(this PokemonUnity.Monster.Stats stat, TextScripts text)
 		//{

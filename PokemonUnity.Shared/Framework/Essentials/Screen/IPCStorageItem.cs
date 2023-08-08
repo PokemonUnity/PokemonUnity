@@ -37,13 +37,13 @@ namespace PokemonEssentials.Interface.Screen
 
 		int getCount(int index);
 
-		int pbQuantity(Items item);
+		int Quantity(Items item);
 
-		bool pbDeleteItem(Items item, int qty = 1);
+		bool DeleteItem(Items item, int qty = 1);
 
-		bool pbCanStore(Items item, int qty = 1);
+		bool CanStore(Items item, int qty = 1);
 
-		bool pbStoreItem(Items item,int qty=1);
+		bool StoreItem(Items item,int qty=1);
 	}
 
 	// ===============================================================================
@@ -81,25 +81,25 @@ namespace PokemonEssentials.Interface.Screen
 
 		void update();
 
-		void pbStartScene(IBag bag);
+		void StartScene(IBag bag);
 
-		void pbEndScene();
+		void EndScene();
 
-		//void pbRefresh();
+		//void Refresh();
 
 		//ToDo: Might need to split into two functions,
 		//one for returning item selected
 		//the other to handle selection mechanic
-		//IEnumerator<Items> pbChooseItem();
-		Items pbChooseItem();
+		//IEnumerator<Items> ChooseItem();
+		Items ChooseItem();
 
-		int pbChooseNumber(string helptext, int maximum);
+		int ChooseNumber(string helptext, int maximum);
 
-		void pbDisplay(string msg, bool brief = false);
+		void Display(string msg, bool brief = false);
 
-		bool pbConfirm(string msg);
+		bool Confirm(string msg);
 
-		int pbShowCommands(string helptext, string[] commands);
+		int ShowCommands(string helptext, string[] commands);
 	}
 
 	public interface IWithdrawItemScene : IItemStorageScene {

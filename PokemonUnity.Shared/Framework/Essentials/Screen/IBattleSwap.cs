@@ -26,37 +26,37 @@ namespace PokemonEssentials.Interface.Screen
 		/// Processes the scene
 		/// </summary>
 		/// <param name="canCancel"></param>
-		void pbChoosePokemon(bool canCancel);
+		void ChoosePokemon(bool canCancel);
 
-		void pbShowCommands(string[] commands);
+		void ShowCommands(string[] commands);
 
-		bool pbConfirm(string message);
+		bool Confirm(string message);
 
-		string[] pbGetCommands(IPokemon[] list, int[] choices);
+		string[] GetCommands(IPokemon[] list, int[] choices);
 
-		void pbUpdateChoices(int[] choices);
+		void UpdateChoices(int[] choices);
 
-		void pbSwapChosen(int pkmnindex);
+		void SwapChosen(int pkmnindex);
 
-		void pbInitSwapScreen();
+		void InitSwapScreen();
 
-		void pbSwapCanceled();
+		void SwapCanceled();
 
-		void pbSummary(IPokemon[] list, int index);
+		void Summary(IPokemon[] list, int index);
 
 		/// <summary>
 		/// Update the scene here, this is called once each frame
 		/// </summary>
-		void pbUpdate();
+		void Update();
 
 		/// <summary>
 		/// End the scene here
 		/// </summary>
-		void pbEndScene();
+		void EndScene();
 
-		void pbStartSwapScene(IPokemon currentPokemon, IPokemon newPokemon);
+		void StartSwapScene(IPokemon currentPokemon, IPokemon newPokemon);
 
-		void pbStartRentScene(IPokemon[] rentals);
+		void StartRentScene(IPokemon[] rentals);
 	}
 
 	/// <summary>
@@ -65,8 +65,8 @@ namespace PokemonEssentials.Interface.Screen
 	{
 		IBattleSwapScreen initialize(IBattleSwapScene scene);
 
-		IPokemon[] pbStartRent(IPokemon[] rentals);
+		IPokemon[] StartRent(IPokemon[] rentals);
 
-		bool pbStartSwap(IPokemon[] currentPokemon, IPokemon[] newPokemon);
+		bool StartSwap(IPokemon[] currentPokemon, IPokemon[] newPokemon);
 	}
 }

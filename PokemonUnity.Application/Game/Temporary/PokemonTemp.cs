@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
+using PokemonUnity.Character;
 using PokemonUnity.Inventory;
 using PokemonUnity.UX;
 using PokemonEssentials.Interface;
@@ -24,7 +25,7 @@ namespace PokemonUnity
 		public ISprite darknessSprite { get; set; }
 		public IList<string> pokemonDexData { get; }
 		public IDictionary<int, IPokemonMetadata> pokemonMetadata { get; set; }
-		public IList<int> pokemonPhoneData { get; }
+		public IList<IPhoneMessageData> pokemonPhoneData { get; }
 		public int lastbattle { get; set; }
 		public int flydata { get; set; }
 

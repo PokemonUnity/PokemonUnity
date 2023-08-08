@@ -9,10 +9,10 @@ using PokemonUnity.Inventory;
 namespace PokemonUnity
 {
 	// ####################
-	// 
+	//
 	// Stores game options
 	// Default options are at the top of script section SpriteWindow.
-	public partial class Game { 
+	public partial class Game {
 		/// <summary>
 		/// Folder Directory: Dialog Skin
 		/// </summary>
@@ -200,7 +200,7 @@ namespace PokemonUnity
 			new string[] { "Power Clear" }
 		};
 
-		public int pbSettingToTextSpeed(int speed) {
+		public int SettingToTextSpeed(int speed) {
 			if (speed==0) return 2;
 			if (speed==1) return 1;
 			if (speed==2) return -2;
@@ -211,35 +211,35 @@ namespace PokemonUnity
 	}
 
 /*public static partial class MessageConfig {
-  public static string pbDefaultSystemFrame { get {
+  public static string DefaultSystemFrame { get {
 	if (Game.GameData.PokemonSystem == null) {
-	  return pbResolveBitmap("Graphics/Windowskins/"+MessageConfig.ChoiceSkinName)??"";
+	  return ResolveBitmap("Graphics/Windowskins/"+MessageConfig.ChoiceSkinName)??"";
 	} else {
-	  return pbResolveBitmap(TextFrames[Game.GameData.PokemonSystem.frame])??"";
+	  return ResolveBitmap(TextFrames[Game.GameData.PokemonSystem.frame])??"";
 	}
   } }
 
-  public static string pbDefaultSpeechFrame { get {
+  public static string DefaultSpeechFrame { get {
 	if (Game.GameData.PokemonSystem == null) {
-	  return pbResolveBitmap("Graphics/Windowskins/"+MessageConfig.TextSkinName)??"";
+	  return ResolveBitmap("Graphics/Windowskins/"+MessageConfig.TextSkinName)??"";
 	} else {
-	  return pbResolveBitmap("Graphics/Windowskins/"+SpeechFrames[Game.GameData.PokemonSystem.textskin])??"";
+	  return ResolveBitmap("Graphics/Windowskins/"+SpeechFrames[Game.GameData.PokemonSystem.textskin])??"";
 	}
   } }
 
-  public static string pbDefaultSystemFontName { get {
+  public static string DefaultSystemFontName { get {
 	if (Game.GameData.PokemonSystem == null) {
-	  return MessageConfig.pbTryFonts(MessageConfig.FontName,"Arial Narrow","Arial");
+	  return MessageConfig.TryFonts(MessageConfig.FontName,"Arial Narrow","Arial");
 	} else {
-	  return MessageConfig.pbTryFonts(VersionStyles[Game.GameData.PokemonSystem.font][0],"Arial Narrow","Arial");
+	  return MessageConfig.TryFonts(VersionStyles[Game.GameData.PokemonSystem.font][0],"Arial Narrow","Arial");
 	}
   } }
 
-  public static int? pbDefaultTextSpeed { get {
-	return pbSettingToTextSpeed(Game.GameData.PokemonSystem != null ? Game.GameData.PokemonSystem.textspeed : null);
+  public static int? DefaultTextSpeed { get {
+	return SettingToTextSpeed(Game.GameData.PokemonSystem != null ? Game.GameData.PokemonSystem.textspeed : null);
   } }
 
-  public static int pbGetSystemTextSpeed { get {
+  public static int GetSystemTextSpeed { get {
 	return Game.GameData.PokemonSystem != null ? Game.GameData.PokemonSystem.textspeed : ((Graphics.frame_rate>40) ? 2 :  3);
   } }
 }*/
@@ -258,7 +258,7 @@ namespace PokemonUnity
 		/// </summary>
 		public int battlestyle				{ get; set; }
 		/// <summary>
-		/// Default window frame (see also <seealso cref="TextFrames"/>)
+		/// Default window frame (see also <seealso cref="Game.TextFrames"/>)
 		/// </summary>
 		public int frame				    { get; set; }
 		/// <summary>
@@ -266,7 +266,7 @@ namespace PokemonUnity
 		/// </summary>
 		public int textskin					{ get; set; }
 		/// <summary>
-		/// Font (see also <seealso cref="VersionStyles"/>)
+		/// Font (see also <seealso cref="Game.VersionStyles"/>)
 		/// </summary>
 		public int font						{ get; set; }
 		/// <summary>

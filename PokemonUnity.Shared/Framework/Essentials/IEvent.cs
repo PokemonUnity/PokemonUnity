@@ -143,13 +143,13 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Triggers whenever a wild Pokémon is created
 		/// </summary>
-		/// <remarks><seealso cref="IEncounters"/></remarks>
+		/// <remarks><seealso cref="IEncounters.OnWildPokemonCreate"/></remarks>
 		//event EventHandler<IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		event Action<object, IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		/// <summary>
 		/// Triggers whenever an NPC trainer's Pokémon party is loaded
 		/// </summary>
-		/// <remarks><seealso cref="IEncounters"/></remarks>
+		/// <remarks><seealso cref="IEncounters.OnTrainerPartyLoad"/></remarks>
 		//event EventHandler<IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		event Action<object, IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		/// <summary>
@@ -185,7 +185,7 @@ namespace PokemonEssentials.Interface
 		/// e[3] - Y-coordinate of the tile
 		/// </summary>
 		//void OnLeaveTileTrigger(object @event, int mapId, IVector tile);
-		void OnLeaveTileTrigger(IGameEvent @event, int mapId, float x, float y, float z);
+		void OnLeaveTileTrigger(IGameCharacter @event, int mapId, float x, float y, float z);
 		/// <summary>
 		/// Parameters:
 		/// e[0] - Event that just entered a tile.
@@ -254,6 +254,24 @@ namespace PokemonEssentials.Interface
 			int Id { get; }
 		}
 
+		#region Application EventArgs
+		public interface IButtonEventArgs : IEventArgs
+		{
+			//ButtonEventArgs(int button, bool isDown) { Button = button; IsDown = isDown; }
+			int Button { get; } // readonly
+			bool IsDown { get; } // readonly
+		}
+		public interface IOnLoadLevelEventArgs : IEventArgs
+		{
+			//readonly int EventId = typeof(OnMapCreateEventArgs).GetHashCode();
+
+			//int Id { get { return EventId; } }
+			//int Id { get { return Pokemon.GetHashCode(); } } //EventId;
+			IScene Scene { get; set; }
+			//ToDo: Make an Enum for Transition Animation Type?
+		}
+		#endregion
+
 		#region Global Overworld EventArgs
 		public interface IOnMapCreateEventArgs : IEventArgs
 		{
@@ -284,12 +302,16 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Parameters:
 		/// e[0] - Event that just left the tile.
-		/// e[1] - Map ID where the tile is located (not necessarily
-		///  the current map). Use "Game.GameData.MapFactory.getMap(e[1])" to
-		///  get the Game_Map object corresponding to that map.
+		/// e[1] - Map ID where the tile is located (not necessarily the current map).
+		///  Use <see cref="IMapFactory.getMap(int)"/> with <see cref="IGame.MapFactory"/>
+		///  to get the <see cref="IGameMap"/> corresponding to that map.
 		/// e[2] - X-coordinate of the tile
 		/// e[3] - Y-coordinate of the tile
 		/// </summary>
+		/// <remarks>
+		/// Use "Game.GameData.MapFactory.getMap(e[1])" to
+		/// get the Game_Map object corresponding to that map.
+		/// </remarks>
 		public interface IOnLeaveTileEventArgs : IEventArgs
 		{
 			//readonly int EventId = typeof(OnLeaveTileEventArgs).GetHashCode();
@@ -302,7 +324,7 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// Map ID where the tile is located (not necessarily
 			///  the current map). Use "Game.GameData.MapFactory.getMap(e[1])" to
-			///  get the Game_Map object corresponding to that map.
+			///  get the <see cref="IGameMap"/> object corresponding to that map.
 			/// </summary>
 			int MapId { get; set; }
 			/// <summary>
@@ -361,7 +383,7 @@ namespace PokemonEssentials.Interface
 			/// <summary>
 			/// Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 			/// </summary>
-			BattleResults Result { get; set; }
+			BattleResults? Result { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -431,9 +453,9 @@ namespace PokemonEssentials.Interface
 		}
 		/// <summary>
 		/// Parameters:
-		/// e[0] = Scene_Map object.
-		/// e[1] = Whether the player just moved to a new map (either true or false). If
-		///   false, some other code had called <see cref="Game.GameData.Scene.createSpritesets"/>
+		/// e[0] = <see cref="ISceneMap"/> object.
+		/// e[1] = Whether the player just moved to a new map (either true or false). If false,
+		///   some other code had called <see cref="ISceneMap.createSpritesets"/> with <see cref="IGame.Scene"/>
 		///   to regenerate the map scene without transferring the player elsewhere
 		/// </summary>
 		public interface IOnMapSceneChangeEventArgs : IEventArgs
@@ -476,15 +498,5 @@ namespace PokemonEssentials.Interface
 			//ISpritesetMap Map { get; set; }
 		}
 		#endregion
-
-		public interface IOnLoadLevelEventArgs : IEventArgs
-		{
-			//readonly int EventId = typeof(OnMapCreateEventArgs).GetHashCode();
-
-			//int Id { get { return EventId; } }
-			//int Id { get { return Pokemon.GetHashCode(); } } //EventId;
-			IScene Scene { get; set; }
-			//ToDo: Make an Enum for Transition Animation Type?
-		}
 	}
 }

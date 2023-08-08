@@ -35,9 +35,9 @@ namespace PokemonUnity.Character
 		{
 			@items = new Items[0]; //[];
 			//  Start storage with a Potion
-			//if (hasConst(PBItems,:POTION)) {
-				//ItemStorageHelper.pbStoreItem(ref
-				//   @items.ToArray(), MAXSIZE, MAXPERSLOT, Items.POTION, 1);
+			//if (hasConst(Items,:POTION)) {
+				ItemStorageHelper.StoreItem(
+				   @items, MAXSIZE, MAXPERSLOT, Items.POTION, 1);
 			//}
 			return this;
 		}
@@ -87,29 +87,28 @@ namespace PokemonUnity.Character
 			}
 		}
 
-		public int pbQuantity(Items item)
+		public int Quantity(Items item)
 		{
-			return ItemStorageHelper.pbQuantity(@items.ToArray(), MAXSIZE, item);
+			return ItemStorageHelper.Quantity(@items, MAXSIZE, item);
 		}
 
-		public bool pbDeleteItem(Items item, int qty = 1)
+		public bool DeleteItem(Items item, int qty = 1)
 		{
-			Items[] i = @items.ToArray();
-			//return ItemStorageHelper.pbDeleteItem(ref @items.ToArray(), MAXSIZE, item, qty);
-			return ItemStorageHelper.pbDeleteItem(ref i, MAXSIZE, item, qty);
-		}
-
-		public bool pbCanStore(Items item, int qty = 1)
-		{
-			return ItemStorageHelper.pbCanStore(@items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
-		}
-
-		public bool pbStoreItem(Items item, int qty = 1)
-		{
+			return ItemStorageHelper.DeleteItem(@items, MAXSIZE, item, qty);
 			//Items[] i = @items.ToArray();
-			//return ItemStorageHelper.pbStoreItem(@items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
-			//return ItemStorageHelper.pbStoreItem(ref items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
-			return false; //ToDo: Uncomment and Finish
+			//return ItemStorageHelper.DeleteItem(i, MAXSIZE, item, qty);
+		}
+
+		public bool CanStore(Items item, int qty = 1)
+		{
+			return ItemStorageHelper.CanStore(@items, MAXSIZE, MAXPERSLOT, item, qty);
+		}
+
+		public bool StoreItem(Items item, int qty = 1)
+		{
+			return ItemStorageHelper.StoreItem(@items, MAXSIZE, MAXPERSLOT, item, qty);
+			//Items[] i = @items.ToArray();
+			//return ItemStorageHelper.StoreItem(ref items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
 		}
 
 		#region Interface Methods
@@ -118,7 +117,7 @@ namespace PokemonUnity.Character
 			//if there is space add to box
 			//if (!items.Contains(item) && item != Items.NONE)
 			//	//items.Add(item);
-			//	ItemStorageHelper.pbStoreItem(ref items.ToArray(), MAXSIZE, MAXPERSLOT, item, 1);
+			//	ItemStorageHelper.StoreItem(ref items.ToArray(), MAXSIZE, MAXPERSLOT, item, 1);
 		}
 
 		void ICollection<Items>.Clear()

@@ -28,49 +28,49 @@ namespace PokemonEssentials.Interface.Battle
 	/// </summary>
 	public interface IGameOrgBattle
 	{
-		bool pbHasEligible(params object[] args);
+		bool HasEligible(params object[] args);
 
-		PokemonUnity.Character.TrainerMetaData[] pbGetBTTrainers(int challengeID);
-		IPokemon pbGetBTPokemon(int challengeID);
-
-
-		void pbRecordLastBattle();
-
-		void pbPlayBattle(IBattleRecordData battledata);
-
-		void pbDebugPlayBattle();
-
-		void pbPlayLastBattle();
-
-		void pbPlayBattleFromFile(string filename);
+		PokemonUnity.Character.TrainerMetaData[] GetBTTrainers(int challengeID);
+		IPokemon GetBTPokemon(int challengeID);
 
 
+		void RecordLastBattle();
 
-		IBattleChallenge pbBattleChallenge { get; }
+		void PlayBattle(IBattleRecordData battledata);
 
-		//ITrainer pbBattleChallengeTrainer(int numwins, ITrainer[] bttrainers);
-		int pbBattleChallengeTrainer(int numwins, PokemonUnity.Character.TrainerMetaData[] bttrainers);
+		void DebugPlayBattle();
 
-		void pbBattleChallengeGraphic(IEntity @event);
+		void PlayLastBattle();
 
-		string pbBattleChallengeBeginSpeech();
-
-		bool pbEntryScreen(params object[] arg);
-
-		IBattle pbBattleChallengeBattle();
+		void PlayBattleFromFile(string filename);
 
 
 
+		IBattleChallenge BattleChallenge { get; }
+
+		//ITrainer BattleChallengeTrainer(int numwins, ITrainer[] bttrainers);
+		int BattleChallengeTrainer(int numwins, PokemonUnity.Character.TrainerMetaData[] bttrainers);
+
+		void BattleChallengeGraphic(IEntity @event);
+
+		string BattleChallengeBeginSpeech();
+
+		bool EntryScreen(params object[] arg);
+
+		IBattle BattleChallengeBattle();
 
 
-		IPokemon[] pbBattleFactoryPokemon(IPokemonChallengeRules rule, int numwins, int numswaps, IPokemon[] rentals);
 
-		ITrainer pbGenerateBattleTrainer(int trainerid, IPokemonChallengeRules rule);
+
+
+		IPokemon[] BattleFactoryPokemon(IPokemonChallengeRules rule, int numwins, int numswaps, IPokemon[] rentals);
+
+		ITrainer GenerateBattleTrainer(int trainerid, IPokemonChallengeRules rule);
 
 		//ToDo: return bool?
-		BattleResults pbOrganizedBattleEx(ITrainer opponent, IPokemonChallengeRules challengedata, string endspeech, string endspeechwin);
+		BattleResults OrganizedBattleEx(ITrainer opponent, IPokemonChallengeRules challengedata, string endspeech, string endspeechwin);
 
-		bool pbIsBanned(IPokemon pokemon);
+		bool IsBanned(IPokemon pokemon);
 	}
 
 	public interface IPokemonSerialized
@@ -167,28 +167,28 @@ namespace PokemonEssentials.Interface.Battle
 
 		void setExtraData(IBattleFactoryData value);
 
-		void pbAddWin();
+		void AddWin();
 
-		void pbAddSwap();
+		void AddSwap();
 
-		bool pbMatchOver();
+		bool MatchOver();
 
 		//ITrainer nextTrainer();
 		int nextTrainer { get; }
 
-		void pbGoToStart();
+		void GoToStart();
 
 		void setParty(IPokemon[] value);
 
-		void pbStart(IBattleChallengeType t, int numRounds);
+		void Start(IBattleChallengeType t, int numRounds);
 
-		void pbCancel();
+		void Cancel();
 
-		void pbEnd();
+		void End();
 
-		void pbGoOn();
+		void GoOn();
 
-		void pbRest();
+		void Rest();
 	}
 
 	public interface IBattleChallenge
@@ -218,7 +218,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		void register(int id, bool doublebattle, int numrounds, int numPokemon, int battletype, int mode= 1);
 
-		bool pbInChallenge { get; }
+		bool InChallenge { get; }
 
 		//IBattleChallengeData data { get; }
 		IBattleChallengeType data { get; }
@@ -235,16 +235,16 @@ namespace PokemonEssentials.Interface.Battle
 
 		int getMaxSwaps(int challenge);
 
-		void pbStart(int challenge);
+		void Start(int challenge);
 
-		void pbEnd();
+		void End();
 
-		//ToDo: returns pbOrganizedBattleEx
-		BattleResults pbBattle();
+		//ToDo: returns OrganizedBattleEx
+		BattleResults Battle();
 
-		bool pbInProgress { get; }
+		bool InProgress { get; }
 
-		bool pbResting();
+		bool Resting();
 
 		void setDecision(BattleResults value);
 
@@ -256,12 +256,12 @@ namespace PokemonEssentials.Interface.Battle
 		int swaps               { get; }
 		int battleNumber        { get; }
 		int nextTrainer    { get; }
-		void pbGoOn         ();
-		void pbAddWin       ();
-		void pbCancel       ();
-		void pbRest         ();
-		bool pbMatchOver    ();
-		void pbGoToStart    ();
+		void GoOn         ();
+		void AddWin       ();
+		void Cancel       ();
+		void Rest         ();
+		bool MatchOver    ();
+		void GoToStart    ();
 	}
 
 	/// <summary>
@@ -269,22 +269,22 @@ namespace PokemonEssentials.Interface.Battle
 	/// </summary>
 	public interface IGameEventOrgBattle
 	{
-		bool pbInChallenge { get; }
+		bool InChallenge { get; }
 	}
 
 	public interface IBattleFactoryData
 	{
 		IBattleFactoryData initialize(IBattleChallengeData bcdata);
 
-		void pbPrepareRentals();
+		void PrepareRentals();
 
-		void pbChooseRentals();
+		void ChooseRentals();
 
-		//ToDo: returns pbOrganizedBattleEx
-		BattleResults pbBattle(IBattleChallenge challenge);
+		//ToDo: returns OrganizedBattleEx
+		BattleResults Battle(IBattleChallenge challenge);
 
-		void pbPrepareSwaps();
+		void PrepareSwaps();
 
-		bool pbChooseSwaps();
+		bool ChooseSwaps();
 	}
 }

@@ -20,26 +20,26 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IGameSave {
 
-		void pbEmergencySave();
+		void EmergencySave();
 
-		bool pbSave(bool safesave = false);
+		bool Save(bool safesave = false);
 	}
 
 	public interface ISaveScene : IScene {
-		void pbStartScreen();
+		void StartScreen();
 
-		void pbEndScreen();
+		void EndScreen();
 	}
 
 	public interface ISaveScreen : IScreen {
 		ISaveScreen initialize(ISaveScene scene);
 
-		void pbDisplay(string text, bool brief = false);
+		void Display(string text, bool brief = false);
 
-		void pbDisplayPaused(string text);
+		void DisplayPaused(string text);
 
-		bool pbConfirm(string text);
+		bool Confirm(string text);
 
-		bool pbSaveScreen();
+		bool SaveScreen();
 	}
 }

@@ -47,10 +47,10 @@ namespace PokemonUnity.Combat
 			return this;
 		}
 
-		//public override bool pbIsOpposing (int index) {
+		//public override bool IsOpposing (int index) {
 		//  return (index%2)==1;
 		//}
-		//public override bool pbIsDoubleBattler (int index) {
+		//public override bool IsDoubleBattler (int index) {
 		//  return (index>=2);
 		//}
 		//public override IBattler[] battlers { get; private set; }
@@ -67,19 +67,19 @@ namespace PokemonUnity.Combat
 				@ballcount=(value<0) ? 0 : value;
 		} }
 
-		//public Player pbPlayer() {
+		//public Player Player() {
 		//	return @player;
 		//}
 
 		//public class BattleAbortedException : Exception{
 		//}
 
-		//public override void pbAbort() {
+		//public override void Abort() {
 		//	//throw new BattleAbortedException("Battle aborted");
 		//	GameDebug.LogError("Battle aborted");
 		//}
 
-		public int pbEscapeRate(int rareness) {
+		public int EscapeRate(int rareness) {
 			int ret=25;
 			if (rareness<200) ret=50;
 			if (rareness<150) ret=75;
@@ -88,45 +88,45 @@ namespace PokemonUnity.Combat
 			return ret;
 		}
 
-		public BattleResults pbStartBattle() {
+		public BattleResults StartBattle() {
 			try { //begin
 				PokemonEssentials.Interface.PokeBattle.IPokemon wildpoke=@party2[0];
-				this.pbPlayer().seen[wildpoke.Species]=true;
+				this.Player().seen[wildpoke.Species]=true;
 				//Game.GameData.Player.Pokedex[(int)wildpoke.Species,0]=(byte)1;
-				//Game.pbSeenForm(wildpoke);
-				base.pbSetSeen(wildpoke);
-				if (@scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics s0) s0.pbStartBattle(this);
-				pbDisplayPaused(Game._INTL("Wild {1} appeared!",wildpoke.Name));
-				if (@scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s1) s1.pbSafariStart();
-				//dexdata=pbOpenDexData;
-				//pbDexDataOffset(dexdata,wildpoke.Species,16);
+				//Game.SeenForm(wildpoke);
+				base.SetSeen(wildpoke);
+				if (@scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics s0) s0.StartBattle(this);
+				DisplayPaused(Game._INTL("Wild {1} appeared!",wildpoke.Name));
+				if (@scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s1) s1.SafariStart();
+				//dexdata=OpenDexData;
+				//DexDataOffset(dexdata,wildpoke.Species,16);
 				//rareness=dexdata.fgetb; // Get rareness from dexdata file
 				//dexdata.close;
 				int rareness = (int)Kernal.PokemonData[wildpoke.Species].Rarity;
 				int g=(rareness*100)/1275;
-				int e=(pbEscapeRate(rareness)*100)/1275;
+				int e=(EscapeRate(rareness)*100)/1275;
 				g=(int)Math.Min((int)Math.Max(g,3),20);
 				e=(int)Math.Min((int)Math.Max(e,3),20);
 				int lastCommand=0;
 				do { //begin;
-					int cmd=(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_Scene).pbSafariCommandMenu(0);
+					int cmd=(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_Scene).SafariCommandMenu(0);
 					switch (cmd) {
 						case 0: // Ball
-							if (Game.GameData is PokemonEssentials.Interface.IGameUtility pc && pc.pbBoxesFull()) {
+							if (Game.GameData is PokemonEssentials.Interface.IGameUtility pc && pc.BoxesFull()) {
 							//if (Game.GameData.Player.PC.hasSpace()) {
-								pbDisplay(Game._INTL("The boxes are full! You can't catch any more Pokémon!"));
+								Display(Game._INTL("The boxes are full! You can't catch any more Pokémon!"));
 								continue;
 							}
 							@ballCount-=1;
 							int rare=(g*1275)/100;
 							Items safariBall=Items.SAFARI_BALL;
 							if (safariBall != Items.NONE) {
-								base.pbThrowPokeball(1,safariBall,rare,true);
+								base.ThrowPokeball(1,safariBall,rare,true);
 							}
 							break;
 						case 1: // Bait
-							pbDisplayBrief(Game._INTL("{1} threw some bait at the {2}!",this.pbPlayer().name,wildpoke.Name));
-							(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_Scene).pbThrowBait();
+							DisplayBrief(Game._INTL("{1} threw some bait at the {2}!",this.Player().name,wildpoke.Name));
+							(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_Scene).ThrowBait();
 							g/=2; // Harder to catch
 							e/=2; // Less likely to escape
 							g=(int)Math.Min((int)Math.Max(g,3),20);
@@ -134,8 +134,8 @@ namespace PokemonUnity.Combat
 							lastCommand=1;
 							break;
 						case 2: // Rock
-							pbDisplayBrief(Game._INTL("{1} threw a rock at the {2}!",this.pbPlayer().name,wildpoke.Name));
-							(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_Scene).pbThrowRock();
+							DisplayBrief(Game._INTL("{1} threw a rock at the {2}!",this.Player().name,wildpoke.Name));
+							(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_Scene).ThrowRock();
 							g*=2; // Easier to catch
 							e*=2; // More likely to escape
 							g=(int)Math.Min((int)Math.Max(g,3),20);
@@ -143,36 +143,36 @@ namespace PokemonUnity.Combat
 							lastCommand=2;
 							break;
 						case 3: // Run
-							pbDisplayPaused(Game._INTL("Got away safely!"));
+							DisplayPaused(Game._INTL("Got away safely!"));
 							@decision=BattleResults.FORFEIT;
 							break;
 					}
 					if (@decision==0) {
 						if (@ballCount<=0) {
-							pbDisplay(Game._INTL("PA:  You have no Safari Balls left! Game over!"));
+							Display(Game._INTL("PA:  You have no Safari Balls left! Game over!"));
 							@decision=BattleResults.LOST;
-						} else if (pbRandom(100)<5*e) {
-							pbDisplay(Game._INTL("{1} fled!",wildpoke.Name));
+						} else if (Random(100)<5*e) {
+							Display(Game._INTL("{1} fled!",wildpoke.Name));
 							@decision=BattleResults.FORFEIT;
 						} else if (lastCommand==1) {
-							pbDisplay(Game._INTL("{1} is eating!",wildpoke.Name));
+							Display(Game._INTL("{1} is eating!",wildpoke.Name));
 						} else if (lastCommand==2) {
-							pbDisplay(Game._INTL("{1} is angry!",wildpoke.Name));
+							Display(Game._INTL("{1} is angry!",wildpoke.Name));
 						} else {
-							pbDisplay(Game._INTL("{1} is watching carefully!",wildpoke.Name));
+							Display(Game._INTL("{1} is watching carefully!",wildpoke.Name));
 						}
 					}
 				} while (@decision==0);
-				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbEndBattle(@decision);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).EndBattle(@decision);
 			} catch { //rescue BattleAbortedException;
 				@decision=0;
-				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbEndBattle(@decision);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).EndBattle(@decision);
 			}
 			return @decision;
 		}
 
 		// ############
-		public void pbDebugUpdate() {
+		public void DebugUpdate() {
 			@debugupdate+=1;
 			if (@debugupdate==30) {
 				//Graphics?.update();
@@ -180,50 +180,50 @@ namespace PokemonUnity.Combat
 			}
 		}
 
-		public override void pbDisplayPaused(string msg) {
+		public override void DisplayPaused(string msg) {
 			if (@debug) {
-				pbDebugUpdate();
+				DebugUpdate();
 				GameDebug.Log(msg);
 			}
 			else {
-				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbDisplayPausedMessage(msg);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).DisplayPausedMessage(msg);
 			}
 		}
 
-		public override void pbDisplay(string msg) {
+		public override void Display(string msg) {
 			if (@debug) {
-				pbDebugUpdate();
+				DebugUpdate();
 				GameDebug.Log(msg);
 			}
 			else {
-				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbDisplayMessage(msg);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).DisplayMessage(msg);
 			}
 		}
 
-		public override void pbDisplayBrief(string msg) {
+		public override void DisplayBrief(string msg) {
 			if (@debug) {
-				pbDebugUpdate();
+				DebugUpdate();
 				GameDebug.Log(msg);
 			}
 			else {
-				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbDisplayMessage(msg,true);
+				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).DisplayMessage(msg,true);
 			}
 		}
 
-		public override bool pbDisplayConfirm(string msg) {
+		public override bool DisplayConfirm(string msg) {
 			if (@debug) {
-				pbDebugUpdate();
+				DebugUpdate();
 				GameDebug.Log(msg);
 				return true;
 			}
 			else {
-				return (@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).pbDisplayConfirmMessage(msg);
+				return (@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).DisplayConfirmMessage(msg);
 			}
 		}
 
-		public override void pbGainEXP() {
+		public override void GainEXP() {
 		}
 
-		void IScene.pbRefresh() { }
+		void IScene.Refresh() { }
 	}
 }

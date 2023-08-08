@@ -70,6 +70,7 @@
     <Compile Include="Combat\Pokemon\Pokemon.Shadow.cs" />
     <Compile Include="Combat\Rules.cs" />
     <Compile Include="Combat\Trainer\Trainer.cs" />
+    <Compile Include="Editor.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Extensions\AbilityExtension.cs" />
     <Compile Include="Extensions\MoveExtension.cs" />
@@ -102,6 +103,9 @@
     <Compile Include="Monster\Pokemon\Pokemon.MegaEvolution.cs" />
     <Compile Include="Monster\Pokemon\Pokemon.Shadow.cs" />
     <Compile Include="Overworld\Area.cs" />
+    <Compile Include="Overworld\Field\BerryPlant.cs" />
+    <Compile Include="Overworld\Field\DependentEvents.cs" />
+    <Compile Include="Overworld\Field\RoamingPokemon.cs" />
     <Compile Include="Overworld\Map.cs" />
     <Compile Include="Overworld\Safari.cs" />
     <Compile Include="Overworld\Terrain.cs" />
@@ -109,6 +113,8 @@
     <Compile Include="Overworld\Wild\Encounter.cs" />
     <Compile Include="Extensions\PokemonExtension.cs" />
     <Compile Include="Overworld\Wild\EncounterData.cs" />
+    <Compile Include="Overworld\Wild\EncounterRate.cs" />
+    <Compile Include="Overworld\Wild\PokemonEncounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -73,9 +73,9 @@ namespace PokemonEssentials.Interface
 		{
 			Items[] BallTypes { get; }
 
-			Items pbBallTypeToBall(int balltype);
+			Items BallTypeToBall(int balltype);
 
-			int pbGetBallType(Items ball);
+			int GetBallType(Items ball);
 		}
 	}
 }

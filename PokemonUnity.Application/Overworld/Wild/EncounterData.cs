@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity.Monster;
+using PokemonEssentials.Interface.Field;
 
 namespace PokemonUnity.Overworld
 {
@@ -10,7 +11,7 @@ namespace PokemonUnity.Overworld
 	/// Data records of pokemon profiles used for pooling together
 	/// a random chance encounter for a battle against wild pokemons
 	/// </summary>
-	public struct EncounterData : IEncounterData
+	public struct EncounterData : IMapEncounterMetadata
 	{
 		#region Variables
 		/// <summary>
@@ -46,6 +47,7 @@ namespace PokemonUnity.Overworld
 		/// <summary>
 		/// </summary>
 		public int Rarity { get; }
+		Pokemons IEncounterPokemon.Pokemon { get { return Pokemon[0]; } }
 		#endregion
 
 		public EncounterData(int id, int mapId, Method method, int slotId, Pokemons[] pokemon = null, ConditionValue[] conditions = null, int generation = 0, int minLevel = 1, int maxLevel = 1, int rarity = 0, Versions[] versions = null)

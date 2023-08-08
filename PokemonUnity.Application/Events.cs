@@ -6,6 +6,7 @@ using PokemonUnity.EventArg;
 using PokemonUnity.Inventory;
 using PokemonUnity.Combat;
 using PokemonUnity.Monster;
+using PokemonUnity.Overworld;
 using PokemonUnity.Utility;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
@@ -16,8 +17,8 @@ using PokemonEssentials.Interface.PokeBattle;
 namespace PokemonUnity
 {
 	/// <summary>
-	/// This module stores events that can happen during the game.  A procedure can
-	/// subscribe to an event by adding itself to the event.  It will then be called
+	/// This module stores events that can happen during the game. A procedure can
+	/// subscribe to an event by adding itself to the event. It will then be called
 	/// whenever the event occurs.
 	/// </summary>
 	public static partial class Events //: IEvents
@@ -30,7 +31,7 @@ namespace PokemonUnity
 		//public event EventHandler<OnDisplayEventArgs> OnDisplay;
 		/// <summary>
 		/// Fires whenever the player moves to a new map. Event handler receives the old
-		/// map ID or 0 if none.  Also fires when the first map of the game is loaded
+		/// map ID or 0 if none. Also fires when the first map of the game is loaded
 		/// </summary>
 		//public static event EventHandler<OnMapChangeEventArgs> OnMapChange;
 		public static event Action<object, IOnMapChangeEventArgs> OnMapChange;
@@ -46,7 +47,7 @@ namespace PokemonUnity
 		public static event EventHandler OnMapUpdate;
 		/// <summary>
 		/// Fires whenever one map is about to change to a different one. Event handler
-		/// receives the new map ID and the Game_Map object representing the new map.
+		/// receives the new map ID and the <see cref="IGameMap"/> object representing the new map.
 		/// When the event handler is called, Game.GameData.GameMap still refers to the old map.
 		/// </summary>
 		//public static event EventHandler<OnMapChangingEventArgs> OnMapChanging;
@@ -72,7 +73,7 @@ namespace PokemonUnity
 		//public static event EventHandler<OnStepTakenFieldMovementEventArgs> OnStepTakenFieldMovement;
 		public static event Action<object, IOnStepTakenFieldMovementEventArgs> OnStepTakenFieldMovement;
 		/// <summary>
-		/// Triggers at the start of a wild battle.  Event handlers can provide their own
+		/// Triggers at the start of a wild battle. Event handlers can provide their own
 		/// wild battle routines to override the default behavior.
 		/// </summary>
 		//public static event EventHandler<OnWildBattleOverrideEventArgs> OnWildBattleOverride;
@@ -97,13 +98,13 @@ namespace PokemonUnity
 		/// </summary>
 		//public static event EventHandler<OnSpritesetCreateEventArgs> OnSpritesetCreate;
 		public static event Action<object, IOnSpritesetCreateEventArgs> OnSpritesetCreate;
-		//public static event EventHandler OnStartBattle;
-		public static event Action<object, IOnWildPokemonCreateEventArgs> OnStartBattle;
+		public static event EventHandler OnStartBattle;
+		//public static event Action<object, IOnWildPokemonCreateEventArgs> OnStartBattle;
 		//public static event EventHandler OnEndBattle;
 		public static event Action<object, IOnEndBattleEventArgs> OnEndBattle;
 		/// <summary>
 		/// Fires whenever a map is created. Event handler receives two parameters: the
-		/// map (RPG.Map) and the tileset (RPG.Tileset)
+		/// map (RPG.Map) and the tileset (<seealso cref="ITileset"/>)
 		/// </summary>
 		//public static event EventHandler OnMapCreate;
 		public static event Action<object, IOnMapCreateEventArgs> OnMapCreate;
@@ -136,12 +137,16 @@ namespace PokemonUnity
 		/// <summary>
 		/// Parameters:
 		/// e[0] - Event that just left the tile.
-		/// e[1] - Map ID where the tile is located (not necessarily
-		///  the current map). Use "Game.GameData.MapFactory.getMap(e[1])" to
-		///  get the Game_Map object corresponding to that map.
+		/// e[1] - Map ID where the tile is located (not necessarily the current map).
+		///  Use <see cref="IMapFactory.getMap(int)"/> with <see cref="IGame.MapFactory"/> to
+		///  get the <see cref="IGameMap"/> object corresponding to that map.
 		/// e[2] - X-coordinate of the tile
 		/// e[3] - Y-coordinate of the tile
 		/// </summary>
+		/// <remarks>
+		/// Use "Game.GameData.MapFactory.getMap(e[1])" to
+		/// get the Game_Map object corresponding to that map.
+		/// </remarks>
 		//public static void OnLeaveTileTrigger(object @event, int mapId, float x, float y, float z) { OnLeaveTileTrigger(@event, mapId, new Vector(x, y, z)); }
 		public static void OnLeaveTileTrigger(IGameCharacter @event, ITilePosition tile)
 		{
@@ -228,9 +233,9 @@ namespace PokemonUnity
 		}
 		/// <summary>
 		/// Parameters:
-		/// e[0] = Scene_Map object.
-		/// e[1] = Whether the player just moved to a new map (either true or false). If
-		///   false, some other code had called <see cref="Game.GameData.Scene.createSpritesets"/>
+		/// e[0] = <see cref="ISceneMap"/> object.
+		/// e[1] = Whether the player just moved to a new map (either true or false). If false,
+		///   some other code had called <see cref="ISceneMap.createSpritesets"/> with <see cref="IGame.Scene"/>
 		///   to regenerate the map scene without transferring the player elsewhere
 		/// </summary>
 		public static void OnMapSceneChangeTrigger()
@@ -257,14 +262,18 @@ namespace PokemonUnity
 		{
 			if (OnStepTaken != null) OnStepTaken.Invoke(sender, EventArgs.Empty);
 		}
-		public static void OnStartBattleTrigger(object sender, IPokemon pkmn)
+		public static void OnStartBattleTrigger(object sender)
 		{
-			IOnWildPokemonCreateEventArgs e = new OnWildPokemonCreateEventArgs()
-			{
-				Pokemon = pkmn
-			};
-			if (OnStartBattle != null) OnStartBattle.Invoke(sender, e);
+			if (OnStartBattle != null) OnStartBattle.Invoke(sender, EventArgs.Empty);
 		}
+		//public static void OnStartBattleTrigger(object sender, IPokemon pkmn)
+		//{
+		//	IOnWildPokemonCreateEventArgs e = new OnWildPokemonCreateEventArgs()
+		//	{
+		//		Pokemon = pkmn
+		//	};
+		//	if (OnStartBattle != null) OnStartBattle.Invoke(sender, e);
+		//}
 		public static void OnEndBattleTrigger(object sender, BattleResults decision, bool canLose)
 		{
 			IOnEndBattleEventArgs e = new OnEndBattleEventArgs()
@@ -272,6 +281,10 @@ namespace PokemonUnity
 				CanLose = canLose,
 				Decision = decision
 			};
+			if (OnEndBattle != null) OnEndBattle.Invoke(sender, e);
+		}
+		public static void OnEndBattleTrigger(object sender, IOnEndBattleEventArgs e)
+		{
 			if (OnEndBattle != null) OnEndBattle.Invoke(sender, e);
 		}
 		#endregion
@@ -308,13 +321,17 @@ namespace PokemonUnity
 		/// <summary>
 		/// Parameters:
 		/// e[0] - Event that just left the tile.
-		/// e[1] - Map ID where the tile is located (not necessarily
-		///  the current map). Use "Game.GameData.MapFactory.getMap(e[1])" to
-		///  get the Game_Map object corresponding to that map.
+		/// e[1] - Map ID where the tile is located (not necessarily the current map).
+		///  Use <see cref="IMapFactory.getMap(int)"/> with <see cref="IGame.MapFactory"/> to
+		///  get the <see cref="IGameMap"/> object corresponding to that map.
 		/// e[2] - X-coordinate of the tile
 		/// e[3] - Y-coordinate of the tile
 		/// </summary>
-		public class OnLeaveTileEventArgs : EventArgs, IOnLeaveTileEventArgs
+		/// <remarks>
+		/// Use "Game.GameData.MapFactory.getMap(e[1])" to
+		/// get the Game_Map object corresponding to that map.
+		/// </remarks>
+		public class OnLeaveTileEventArgs : EventArgs, IOnLeaveTileEventArgs, ITilePosition
 		{
 			public static readonly int EventId = typeof(OnLeaveTileEventArgs).GetHashCode();
 
@@ -324,10 +341,14 @@ namespace PokemonUnity
 			/// </summary>
 			public IGameEvent Event { get; set; }
 			/// <summary>
-			/// Map ID where the tile is located (not necessarily
-			///  the current map). Use "Game.GameData.MapFactory.getMap(e[1])" to
-			///  get the Game_Map object corresponding to that map.
+			/// Map ID where the tile is located (not necessarily the current map).
+			///  Use <see cref="IMapFactory.getMap(int)"/> with <see cref="IGame.MapFactory"/> to
+			///  get the <see cref="IGameMap"/> object corresponding to that map.
 			/// </summary>
+			/// <remarks>
+			/// Use "Game.GameData.MapFactory.getMap(e[1])" to
+			/// get the Game_Map object corresponding to that map.
+			/// </remarks>
 			public int MapId { get; set; }
 			/// <summary>
 			/// X-coordinate of the tile
@@ -337,6 +358,10 @@ namespace PokemonUnity
 			/// Y-coordinate of the tile
 			/// </summary>
 			public float Y { get; set; }
+			/// <summary>
+			/// Z-coordinate of the tile
+			/// </summary>
+			public float Z { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -384,7 +409,7 @@ namespace PokemonUnity
 			/// <summary>
 			/// Battle result (1-win, 2-loss, 3-escaped, 4-caught, 5-draw)
 			/// </summary>
-			public BattleResults Result { get; set; }
+			public BattleResults? Result { get; set; }
 		}
 		/// <summary>
 		/// Parameters:
@@ -438,7 +463,7 @@ namespace PokemonUnity
 		}
 		/// <summary>
 		/// Parameters:
-		/// e[0] = Scene_Map object.
+		/// e[0] = <see cref="ISceneMap"/> object.
 		/// e[1] = Whether the player just moved to a new map (either true or false). If
 		///   false, some other code had called <see cref="Game.GameData.Scene.createSpritesets"/>
 		///   to regenerate the map scene without transferring the player elsewhere

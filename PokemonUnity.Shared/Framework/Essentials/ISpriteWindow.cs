@@ -40,33 +40,33 @@ namespace PokemonEssentials.Interface
 		//systemFont      = null;
 		//textSpeed       = null;
 
-		//string pbTryFonts(*args);
+		//string TryFonts(*args);
 
-		int pbDefaultTextSpeed();
+		int DefaultTextSpeed();
 
-		string pbDefaultSystemFrame();
+		string DefaultSystemFrame();
 
-		string pbDefaultSpeechFrame();
+		string DefaultSpeechFrame();
 
-		string pbDefaultSystemFontName();
+		string DefaultSystemFontName();
 
-		string pbDefaultWindowskin();
+		string DefaultWindowskin();
 
-		string pbGetSpeechFrame();
+		string GetSpeechFrame();
 
-		int pbGetTextSpeed();
+		int GetTextSpeed();
 
-		string pbGetSystemFontName();
+		string GetSystemFontName();
 
-		string pbGetSystemFrame();
+		string GetSystemFrame();
 
-		void pbSetSystemFrame(string value);
+		void SetSystemFrame(string value);
 
-		void pbSetSpeechFrame(string value);
+		void SetSpeechFrame(string value);
 
-		void pbSetSystemFontName(string value);
+		void SetSystemFontName(string value);
 
-		void pbSetTextSpeed(int value);
+		void SetTextSpeed(int value);
 	}
 
 	// ############################
@@ -86,25 +86,25 @@ namespace PokemonEssentials.Interface
 
 
 
-		IBitmap pbGetTileBitmap(string filename, int tile_id, int hue);
+		IBitmap GetTileBitmap(string filename, int tile_id, int hue);
 
-		IBitmap[] pbGetAnimation(string name, int hue = 0);
+		IBitmap[] GetAnimation(string name, int hue = 0);
 
-		IBitmap[] pbGetTileset(string name, int hue = 0);
+		IBitmap[] GetTileset(string name, int hue = 0);
 
-		IBitmap[] pbGetAutotile(string name, int hue = 0);
+		IBitmap[] GetAutotile(string name, int hue = 0);
 
 
 		// ########################
 
 
-		void pbDrawShadow(IBitmap bitmap, float x, float y, int width, int height, string text);
+		void DrawShadow(IBitmap bitmap, float x, float y, int width, int height, string text);
 
-		void pbDrawShadowText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0);
+		void DrawShadowText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0);
 
-		void pbDrawOutlineText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0);
+		void DrawOutlineText(IBitmap bitmap, float x, float y, int width, int height, string text, IColor baseColor, IColor shadowColor = null, int align = 0);
 
-		//void pbCopyBitmap(dstbm,srcbm,float x,float y,int opacity=255) {
+		//void CopyBitmap(dstbm,srcbm,float x,float y,int opacity=255) {
 		//	rc=new Rect(0,0,srcbm.width,srcbm.height);
 		//	dstbm.blt(x,y,srcbm,rc,opacity);
 		//}
@@ -112,13 +112,13 @@ namespace PokemonEssentials.Interface
 		//void using(window)
 		//IDisposable (IWindow window, Action action)
 
-		void pbBottomRight(IWindow window);
+		void BottomRight(IWindow window);
 
-		void pbBottomLeft(IWindow window);
+		void BottomLeft(IWindow window);
 
-		void pbBottomLeftLines(IWindow window, int lines, int? width = null);
+		void BottomLeftLines(IWindow window, int lines, int? width = null);
 
-		bool pbDisposed(IViewport x);
+		bool Disposed(IViewport x);
 
 		bool isDarkBackground(int background, IRect rect = null);
 
@@ -126,15 +126,15 @@ namespace PokemonEssentials.Interface
 
 		IColor getDefaultTextColors(int windowskin);
 
-		IBitmap pbDoEnsureBitmap(IBitmap bitmap, int dwidth, int dheight);
+		IBitmap DoEnsureBitmap(IBitmap bitmap, int dwidth, int dheight);
 
-		void pbUpdateSpriteHash(IWindow[] windows);
+		void UpdateSpriteHash(IWindow[] windows);
 
 		/// <summary>
 		/// Disposes all objects in the specified hash.
 		/// </summary>
 		/// <param name="sprites"></param>
-		void pbDisposeSpriteHash(ISprite[] sprites);
+		void DisposeSpriteHash(IDictionary<string,ISprite> sprites);
 
 		/// <summary>
 		/// Disposes the specified graphics object within the specified hash. Basically like:
@@ -142,7 +142,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="sprites"></param>
 		/// <param name="id"></param>
-		void pbDisposeSprite(ISprite[] sprites, int id);
+		void DisposeSprite(ISprite[] sprites, int id);
 
 		// Draws text on a bitmap. _textpos_ is an array
 		// of text commands. Each text command is an array
@@ -154,19 +154,19 @@ namespace PokemonEssentials.Interface
 		//      Otherwise, the text is left aligned.
 		//  4 - Base color
 		//  5 - Shadow color
-		void pbDrawTextPositions(IBitmap bitmap, IList<ITextPosition> textpos);
+		void DrawTextPositions(IBitmap bitmap, IList<ITextPosition> textpos);
 
-		void pbDrawImagePositions(IBitmap bitmap, IList<ITextPosition> textpos);
+		void DrawImagePositions(IBitmap bitmap, IList<ITextPosition> textpos);
 
 
 
-		void pbPushFade();
+		void PushFade();
 
-		void pbPopFade();
+		void PopFade();
 
-		bool pbIsFaded { get; }
+		bool IsFaded { get; }
 
-		// pbFadeOutIn(z) { block }
+		// FadeOutIn(z) { block }
 		/// <summary>
 		/// Fades out the screen before a <paramref name="block"/> is run
 		/// and fades it back in after the <paramref name="block"/> exits.
@@ -174,43 +174,43 @@ namespace PokemonEssentials.Interface
 		/// <param name="z">z indicates the z-coordinate of the viewport used for this effect</param>
 		/// <param name="nofadeout"></param>
 		/// <param name="block"></param>
-		void pbFadeOutIn(int z, bool nofadeout = false, Action block = null);
+		void FadeOutIn(int z, bool nofadeout = false, Action block = null);
 
-		void pbFadeOutAndHide(ISprite[] sprites);
+		void FadeOutAndHide(IDictionary<string,ISprite> sprites);
 
-		void pbFadeInAndShow(ISprite[] sprites, IList<ISprite> visiblesprites = null, Action block = null);
+		void FadeInAndShow(IDictionary<string,ISprite> sprites, IList<ISprite> visiblesprites = null, Action block = null);
 
 		// Restores which windows are active for the given sprite hash.
-		// _activeStatuses_ is the result of a previous call to pbActivateWindows
-		void pbRestoreActivations(ISprite[] sprites, object activeStatuses);
+		// _activeStatuses_ is the result of a previous call to ActivateWindows
+		void RestoreActivations(ISprite[] sprites, object activeStatuses);
 
 		// Deactivates all windows. If a code block is given, deactivates all windows,
 		// runs the code in the block, and reactivates them.
-		void pbDeactivateWindows(IWindow[] sprites, Action action = null);
+		void DeactivateWindows(IWindow[] sprites, Action action = null);
 
 		// Activates a specific window of a sprite hash. _key_ is the key of the window
 		// in the sprite hash. If a code block is given, deactivates all windows except
 		// the specified window, runs the code in the block, and reactivates them.
-		void pbActivateWindow(IWindow[] sprites, int key, Action action = null);
+		void ActivateWindow(IWindow[] sprites, int key, Action action = null);
 
-		IColor pbAlphaBlend(IColor dstColor, IColor srcColor);
+		IColor AlphaBlend(IColor dstColor, IColor srcColor);
 
-		IColor pbSrcOver(IColor dstColor, IColor srcColor);
+		IColor SrcOver(IColor dstColor, IColor srcColor);
 
-		void pbSetSpritesToColor(ISprite[] sprites, IColor color);
+		void SetSpritesToColor(ISprite[] sprites, IColor color);
 
-		string pbTryString(string x);
+		string TryString(string x);
 
 		// Finds the real path for an image file.  This includes paths in encrypted
 		// archives.  Returns _x_ if the path can't be found.
-		string pbBitmapName(string x);
+		string BitmapName(string x);
 
 		/// <summary>
-		/// Finds the real path for an image file. This includes paths in encrypted archives.  
+		/// Finds the real path for an image file. This includes paths in encrypted archives.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <returns>Returns null if the path can't be found.</returns>
-		string pbResolveBitmap(string x);
+		string ResolveBitmap(string x);
 
 		// Adds a background to the sprite hash.
 		// _planename_ is the hash key of the background.
@@ -231,35 +231,35 @@ namespace PokemonEssentials.Interface
 		/// Sets a bitmap's font to the system font.
 		/// </summary>
 		/// <param name="bitmap"></param>
-		void pbSetSystemFont(IBitmap bitmap);
+		void SetSystemFont(IBitmap bitmap);
 
 		/// <summary>
 		/// Gets the name of the system small font.
 		/// </summary>
 		/// <returns></returns>
-		string pbSmallFontName();
+		string SmallFontName();
 
 		/// <summary>
 		/// Gets the name of the system narrow font.
 		/// </summary>
 		/// <returns></returns>
-		string pbNarrowFontName();
+		string NarrowFontName();
 
 		/// <summary>
 		/// Sets a bitmap's font to the system small font.
 		/// </summary>
 		/// <param name="bitmap"></param>
-		void pbSetSmallFont(IBitmap bitmap);
+		void SetSmallFont(IBitmap bitmap);
 
 		/// <summary>
 		/// Sets a bitmap's font to the system narrow font.
 		/// </summary>
 		/// <param name="bitmap"></param>
-		void pbSetNarrowFont(IBitmap bitmap);
+		void SetNarrowFont(IBitmap bitmap);
 
 		// Used to determine whether a data file exists (rather than a graphics or
 		// audio file). Doesn't check RTP, but does check encrypted archives.
-		bool pbRgssExists(string filename);
+		bool RgssExists(string filename);
 
 		/// <summary>
 		/// Opens an IO, even if the file is in an encrypted archive.
@@ -269,23 +269,23 @@ namespace PokemonEssentials.Interface
 		/// <param name="mode"></param>
 		/// <param name="action">logic to perform on file</param>
 		/// <returns></returns>
-		IDisposable pbRgssOpen(string file, int? mode = null, Action action = null);
+		IDisposable RgssOpen(string file, int? mode = null, Action action = null);
 
 		/// <summary>
-		/// Gets at least the first byte of a file. 
+		/// Gets at least the first byte of a file.
 		/// </summary>
 		/// <param name="file"></param>
 		/// <returns></returns>
 		/// Doesn't check RTP, but does check encrypted archives.
-		string pbGetFileChar(string file);
+		string GetFileChar(string file);
 
 		/// <summary>
-		/// Gets the contents of a file. 
+		/// Gets the contents of a file.
 		/// </summary>
 		/// <param name="file"></param>
 		/// <returns></returns>
 		/// Doesn't check RTP, but does check encrypted archives.
-		string pbGetFileString(string file);
+		string GetFileString(string file);
 	}
 
 // ############################
@@ -348,12 +348,12 @@ namespace PokemonEssentials.Interface
 	}
 
 //// ########################
-//// 
+////
 //// Message support
-//// 
+////
 //// ########################
 //if !defined(_INTL);
-//  void _INTL(*args) { 
+//  void _INTL(*args) {
 //	string=args[0].clone();
 //	for (int i = 1; i < args.Length; i++) {
 //	  string.gsub!(/\{#{i}\}/,"#{args[i]}");
@@ -429,7 +429,7 @@ namespace PokemonEssentials.Interface
 //  void close(hkey) { if (hkey) check(RegCloseKey.call(hkey)); }
 
 //  void get(hkey,subkey,name,defaultValue=null,bit64=false) {
-//	this.open(hkey,subkey,bit64){|key| 
+//	this.open(hkey,subkey,bit64){|key|
 //	   return this.read(key,name) rescue defaultValue;
 //	}
 //	return defaultValue;
@@ -588,7 +588,7 @@ namespace PokemonEssentials.Interface
 //	  yield filename;
 //	} else {
 ////  relative path
-//	  RTP.eachPath {|path| 
+//	  RTP.eachPath {|path|
 //		 if (path=="./") {
 //		   yield filename;
 //		 } else {
@@ -646,7 +646,7 @@ namespace PokemonEssentials.Interface
 // ##########
 
 	public interface IPngAnimatedBitmap : IDisposable { // :nodoc:
-		//  Creates an animated bitmap from a PNG file.  
+		//  Creates an animated bitmap from a PNG file.
 		IPngAnimatedBitmap initialize(string file, int hue = 0);
 
 		IBitmap this[int index] { get; } //return @frames[index];
@@ -703,15 +703,15 @@ namespace PokemonEssentials.Interface
 	}
 	if (!bitmap || (bitmap.width==32 && bitmap.height==32)) {
 	  if (!file || file.Length<1 || file[file.Length-1]!=0x2F) {
-		if ((filestring=pbGetFileChar(file))) {
+		if ((filestring=GetFileChar(file))) {
 		  filestrName=file;
-		} else if ((filestring=pbGetFileChar(file+".gif"))) {
+		} else if ((filestring=GetFileChar(file+".gif"))) {
 		  filestrName=file+".gif";
-		} else if ((filestring=pbGetFileChar(file+".png"))) {
+		} else if ((filestring=GetFileChar(file+".png"))) {
 		  filestrName=file+".png";
-		} else if ((filestring=pbGetFileChar(file+".jpg"))) {
+		} else if ((filestring=GetFileChar(file+".jpg"))) {
 		  filestrName=file+".jpg";
-		} else if ((filestring=pbGetFileChar(file+".bmp"))) {
+		} else if ((filestring=GetFileChar(file+".bmp"))) {
 		  filestrName=file+".bmp";
 		}
 	  }
@@ -731,7 +731,7 @@ namespace PokemonEssentials.Interface
 	  @gifdelays= new []{ 1 };
 	} else {
 	  tmpBase=File.basename(file)+"_tmp_";
-	  if (filestring) filestring=pbGetFileString(filestrName);
+	  if (filestring) filestring=GetFileString(filestrName);
 	  Dir.chdir(ENV["TEMP"]){ // navigate to temp folder since game might be on a CD-ROM
 		 if (filestring && filestring[0]==0x47 && GifLibrary.yngDll) {
 		   result=GifLibrary.yifToPngFilesInMemory.call(filestring,
@@ -897,7 +897,7 @@ namespace PokemonEssentials.Interface
 
 // ########################################################################
 
-	public interface IStringInput //: IEnumerable 
+	public interface IStringInput //: IEnumerable
 	{
 		//include Enumerable;
 
@@ -940,7 +940,7 @@ namespace PokemonEssentials.Interface
 
 		bool eof();
 
-		IEnumerable<string> each(ref string[] block);
+		IEnumerable<string> each(IList<string> block);
 
 		string gets();
 
@@ -1018,7 +1018,7 @@ namespace PokemonEssentials.Interface
 		ITone tone				{ get; set; }
 		//IColor color				{ get; set; }
 		//IViewport viewport		{ get; set; }
-		int contents				{ get; set; }
+		IBitmap contents				{ get; set; }
 		//int ox					{ get; set; }
 		//int oy					{ get; set; }
 		//int x						{ get; set; }
@@ -1412,7 +1412,7 @@ namespace PokemonEssentials.Interface
 
 		ISpriteWindow_Selectable initialize(float x, float y, float width, float height);
 
-		bool ignore_input { set; } 
+		bool ignore_input { set; }
 		//
 		//void count() {
 		//return @item_max;
@@ -1465,7 +1465,7 @@ namespace PokemonEssentials.Interface
 		IViewport viewport { set; }
 
 		IColor color { set; }
-  
+
 		void adjustForZoom(ISprite sprite);
 
 		void update();
@@ -1481,12 +1481,13 @@ namespace PokemonEssentials.Interface
 	}
 
 	public interface IWindow_DrawableCommand : ISpriteWindow_SelectableEx {
+		bool doubleclick			{ get; }
 		int baseColor				{ get; set; }
 		int shadowColor			{ get; set; }
 
 		float textWidth(IBitmap bitmap, string text);
 
-		void getAutoDims(string[] commands, ref int[] dims, float? width = null);
+		void getAutoDims(string[] commands, int[] dims, float? width = null);
 
 		void initialize(float x, float y, float width, float height, IViewport viewport = null);
 
@@ -1557,7 +1558,7 @@ namespace PokemonEssentials.Interface
 	// Represents a window with no formatting capabilities.  Its text color can be set,
 	// though, and line breaks are supported, but the text is generally unformatted.
 	public interface IWindow_UnformattedTextPokemon : ISpriteWindow_Base {
-		string text				{ get; set; }
+		string text						{ get; set; }
 		IColor baseColor				{ get; set; }
 		IColor shadowColor				{ get; set; }
 		//  Letter-by-letter mode.  This mode is not supported in this class.
@@ -1833,14 +1834,14 @@ namespace PokemonEssentials.Interface
 
 		void ox() { @__ox; }
 		void oy() { @__oy; }
-  
-		void ox=(value) { 
+
+		void ox=(value) {
 		if (@__ox!=value) {
 			@__ox=value; refresh();
 		}
 		}
 
-		void oy=(value) { 
+		void oy=(value) {
 		if (@__oy!=value) {
 			@__oy=value; refresh();
 		}
@@ -1877,13 +1878,13 @@ namespace PokemonEssentials.Interface
 		void color() { @__sprite.color; }
 		void tone() { @__sprite.tone; }
 
-		void zoom_x=(v) { 
+		void zoom_x=(v) {
 		if (@__sprite.zoom_x!=v) {
 			@__sprite.zoom_x=v; refresh();
 		}
 		}
 
-		void zoom_y=(v) { 
+		void zoom_y=(v) {
 		if (@__sprite.zoom_y!=v) {
 			@__sprite.zoom_y=v; refresh();
 		}

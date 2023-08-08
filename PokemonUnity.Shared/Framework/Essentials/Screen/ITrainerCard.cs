@@ -21,18 +21,18 @@ namespace PokemonEssentials.Interface.Screen
 	public interface ITrainerCardScene : IScene {
 		void update();
 
-		void pbStartScene();
+		void StartScene();
 
-		void pbDrawTrainerCardFront();
+		void DrawTrainerCardFront();
 
-		IEnumerator pbTrainerCard();
+		IEnumerator TrainerCard();
 
-		void pbEndScene();
+		void EndScene();
 	}
 
 	public interface ITrainerCardScreen : IScreen {
 		ITrainerCardScreen initialize(ITrainerCardScene scene);
 
-		void pbStartScreen();
+		void StartScreen();
 	}
 }

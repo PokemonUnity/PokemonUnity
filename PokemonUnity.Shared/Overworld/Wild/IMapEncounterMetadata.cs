@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity.Monster;
+using PokemonEssentials.Interface.Field;
 
 namespace PokemonUnity.Overworld
 {
 	/// <summary>
-	/// Data records of pokemon profiles used for pooling together 
-	/// a random chance enounter for a battle against wild pokemons
+	/// Data records of pokemon profiles used for pooling together
+	/// a random chance encounter for a battle against wild pokemons
 	/// </summary>
-	public interface IEncounterData
+	public interface IMapEncounterMetadata : IEncounterPokemon
 	{
 		#region Variables
 		/// <summary>
@@ -27,7 +28,7 @@ namespace PokemonUnity.Overworld
 		/// <summary>
 		/// </summary>
 		//Pokemons Pokemon { get; }
-		Pokemons[] Pokemon { get; }
+		new Pokemons[] Pokemon { get; }
 		/// <summary>
 		/// </summary>
 		ConditionValue[] Conditions { get; }
@@ -39,10 +40,10 @@ namespace PokemonUnity.Overworld
 		int Generation { get; }
 		/// <summary>
 		/// </summary>
-		int MinLevel { get; }
+		//int MinLevel { get; }
 		/// <summary>
 		/// </summary>
-		int MaxLevel { get; }
+		//int MaxLevel { get; }
 		/// <summary>
 		/// </summary>
 		int Rarity { get; }
@@ -67,7 +68,7 @@ namespace PokemonUnity.Overworld
 		/// </summary>
 		/// <param name="method"></param>
 		/// <returns></returns>
-		/// ToDo: Consider increasing chance on rarity as encounter increases 
+		/// ToDo: Consider increasing chance on rarity as encounter increases
 		//static PokemonEssentials.Interface.PokeBattle.IPokemon GetWildPokemon(Method method);
 
 		//static Pokemon WildPokemonRNG(Method method); //conditions

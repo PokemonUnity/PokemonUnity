@@ -33,10 +33,10 @@ namespace PokemonEssentials.Interface.Item
 
 	public interface IGameMail
 	{
-		bool pbMoveToMailbox(IPokemon pokemon);
+		bool MoveToMailbox(IPokemon pokemon);
 
-		void pbStoreMail(IPokemon pkmn, Items item, string message, IPokemon poke1 = null, IPokemon poke2 = null, IPokemon poke3 = null);
+		void StoreMail(IPokemon pkmn, Items item, string message, IPokemon poke1 = null, IPokemon poke2 = null, IPokemon poke3 = null);
 
-		void pbDisplayMail(IMail mail, string bearer = null);
+		void DisplayMail(IMail mail, string bearer = null);
 	}
 }

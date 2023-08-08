@@ -31,9 +31,9 @@ namespace PokemonEssentials.Interface.Screen
 	/// display the _helptext_.
 	/// </summary>
 	public interface UIHelper {
-		int pbChooseNumber(IWindow helpwindow, string helptext, int maximum);
+		int ChooseNumber(IWindow helpwindow, string helptext, int maximum);
 
-		void pbDisplayStatic(IWindow msgwindow, string message);
+		void DisplayStatic(IWindow msgwindow, string message);
 
 		/// <summary>
 		/// Letter by letter display of the message <paramref name="msg"/> by the window <paramref name="helpwindow"/>.
@@ -42,7 +42,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="msg"></param>
 		/// <param name="brief"></param>
 		/// <returns></returns>
-		IEnumerator pbDisplay(IWindow helpwindow, string msg, bool brief);
+		IEnumerator Display(IWindow helpwindow, string msg, bool brief);
 
 		/// <summary>
 		/// Letter by letter display of the message <paramref name="msg"/> by the window <paramref name="helpwindow"/>,
@@ -51,9 +51,9 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="helpwindow"></param>
 		/// <param name="msg"></param>
 		/// <returns>Returns true if the user chose yes, false if no.</returns>
-		bool pbConfirm(IWindow helpwindow, string msg);
+		bool Confirm(IWindow helpwindow, string msg);
 
-		int pbShowCommands(IWindow helpwindow, string helptext, string[] commands);
+		int ShowCommands(IWindow helpwindow, string helptext, string[] commands);
 	}
 
 	public interface IEntity
@@ -61,10 +61,10 @@ namespace PokemonEssentials.Interface.Screen
 	}
 	public interface IHasDisplayMessage
 	{
-		void pbDisplay(string v);
-		//bool pbConfirm(string v);
-		//ToDo: rename to "pbDisplayConfirmMessage"?
-		bool pbDisplayConfirm(string v);
+		void Display(string v);
+		//bool Confirm(string v);
+		//ToDo: rename to "DisplayConfirmMessage"?
+		bool DisplayConfirm(string v);
 	}
 	/// <summary>
 	/// A scene basically represents unity (or any frontend) where code pauses 
@@ -83,13 +83,13 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		int Id { get; }
 
-		void pbRefresh();
+		void Refresh();
 
 		/// <summary>
 		/// Shows the player's Poké Ball being thrown to capture a Pokémon.
 		/// </summary>
 		//void pokeballThrow(Items ball, int shakes,bool critical,IBattler targetBattler,IScene scene,IBattler battler, int burst = -1, bool showplayer = false);
-		//void pbDisplay(string v);
-		//bool pbConfirm(string v);
+		//void Display(string v);
+		//bool Confirm(string v);
 	}
 }

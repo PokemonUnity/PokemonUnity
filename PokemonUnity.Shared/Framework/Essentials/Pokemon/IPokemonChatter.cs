@@ -33,14 +33,14 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface IGameChatter
 	{
-		void pbChatter(PokemonEssentials.Interface.PokeBattle.IPokemonChatter pokemon);
+		void Chatter(PokemonEssentials.Interface.PokeBattle.IPokemonChatter pokemon);
 
 		//HiddenMoveHandlers.addCanUseMove(:CHATTER,proc {|item,pokemon|
 		//   return true;
 		//});
 
 		//HiddenMoveHandlers.addUseMove(:CHATTER,proc {|item,pokemon|
-		//   pbChatter(pokemon);
+		//   Chatter(pokemon);
 		//   return true;
 		//});
 	}
@@ -50,6 +50,6 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface IPokeBattle_SceneChatter //: IPokeBattle_Scene 
 	{
-		void pbChatter(IBattler attacker, IBattler opponent);
+		void Chatter(IBattler attacker, IBattler opponent);
 	}
 }

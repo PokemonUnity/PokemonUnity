@@ -19,10 +19,9 @@ namespace PokemonUnity
 	public partial class Game : PokemonEssentials.Interface.IGame
 	{
 		public PokemonEssentials.Interface.IGlobalMetadata Global { get; private set; }
-		//public PokemonEssentials.Interface.Field.IPokemonMapFactory MapFactory { get; private set; }
 		public PokemonEssentials.Interface.Field.IMapFactory MapFactory { get; private set; }
 		public PokemonEssentials.Interface.Field.IMapMetadata PokemonMap { get; private set; }
-		public PokemonEssentials.Interface.Field.IMapMetadata MapData { get; private set; }
+		//public PokemonEssentials.Interface.Field.IMapMetadata MapData { get; private set; }
 		public PokemonEssentials.Interface.Screen.IPokemonSystemOption PokemonSystem { get; private set; }
 		public PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp { get; set; }
 		public PokemonEssentials.Interface.Field.IEncounters PokemonEncounters { get; private set; }
@@ -42,16 +41,20 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.IGameScreen GameScreen { get; set; }
 		public PokemonEssentials.Interface.IGamePlayer GamePlayer { get; set; }
 		public PokemonEssentials.Interface.IGameMap GameMap { get; set; }
-		//public PokemonEssentials.Interface.IGameMessage GameMessage { get; set; }
+		public PokemonEssentials.Interface.IGameMessage GameMessage { get; set; }
+		public PokemonEssentials.Interface.IGameAudioPlay Audio { get; set; }
 
 		//public static PokemonUnity.UX.IFrontEnd UI { get; private set; }
+		public PokemonEssentials.Interface.IChooseNumberParams ChooseNumberParams { get; set; }
+		public PokemonEssentials.Interface.Field.IEncounters MapEncounterData { get; set; }
 
 		/// <summary>
 		/// Singleton Instance of Game class to store current/active play state.
 		/// </summary>
 		public static PokemonEssentials.Interface.IGame GameData { get; set; }
-		public static PokemonEssentials.Interface.IGameAudioPlay Audio { get; set; }
+		//public PokemonEssentials.Interface.IAudio Audio { get; set; }
 		public PokemonEssentials.Interface.IGraphics Graphics { get; set; }
+		public PokemonEssentials.Interface.IInput Input { get; set; }
 		public PokemonEssentials.Interface.IInterpreter Interpreter { get; set; }
 		public PokemonEssentials.Interface.Screen.IGameScenesUI Scenes { get; set; }
 		public PokemonEssentials.Interface.Screen.IGameScreensUI Screens { get; set; }
@@ -61,22 +64,7 @@ namespace PokemonUnity
 
 		#region Player and Overworld Data
 		//public Regions Region { get; private set; }
-		//public Locations Location { get; private set; }
-		/// <summary>
-		/// Last town or Pokemon Center visited, that's used as Respawn Point upon a Player's Defeat
-		/// </summary>
-		///public SeriV3 respawnScenePosition;
-		///public Locations respawnCenterId { get; set; }
-		public Locations Checkpoint { get; set; }
-		/// <summary>
-		/// </summary>
-		// <see cref="Character.Player.mapName"/>
-		public int Area { get; private set; }
-		//ToDo: Missing Variables for RepelType, Swarm
-		public int RepelSteps { get; set; } // Should not stack (encourage users to deplete excessive money); reset count based on repel used.
-		//public static int RepelType { get; set; } // Maybe instead of this, use Encounter.Rate or... Different repel only changes number of steps, not potency
-		public string[] Rival { get; set; }
-		private byte slotIndex { get; set; }
+		//private byte slotIndex { get; set; }
 		#endregion
 
 		#region Private Records of Player Storage Data
@@ -127,7 +115,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Fires whenever the player takes a step.
 		/// </summary>
-		public event EventHandler OnStepTaken;
+		public event EventHandler OnStepTakenEvent;
 		/// <summary>
 		/// Fires whenever the player takes a step. The event handler may possibly move
 		/// the player elsewhere.
@@ -164,7 +152,7 @@ namespace PokemonUnity
 		/// Fires whenever a spriteset is created.
 		/// </summary>
 		//event EventHandler<IOnSpritesetCreateEventArgs> OnSpritesetCreate;
-		public event Action<object, PokemonEssentials.Interface.EventArg.IOnSpritesetCreateEventArgs> OnSpritesetCreate;
+		public event Action<object, PokemonEssentials.Interface.EventArg.IOnSpritesetCreateEventArgs> OnSpritesetCreateEvent;
 		public event EventHandler OnStartBattle;
 		//event EventHandler OnEndBattle;
 		public event Action<object, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs> OnEndBattle;

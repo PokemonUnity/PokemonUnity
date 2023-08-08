@@ -22,9 +22,9 @@ namespace PokemonEssentials.Interface
 
 		int groundY { get; }
 
-		IBitmap pbBushDepthBitmap(IBitmap bitmap, int depth);
+		IBitmap BushDepthBitmap(IBitmap bitmap, int depth);
 
-		IBitmap pbBushDepthTile(IBitmap bitmap, int depth);
+		IBitmap BushDepthTile(IBitmap bitmap, int depth);
 
 		//void dispose();
 

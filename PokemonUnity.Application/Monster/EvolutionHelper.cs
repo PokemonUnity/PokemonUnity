@@ -36,12 +36,12 @@ namespace PokemonUnity.Monster
 		};
 
 		#region Evolution helper functions
-		public static Data.PokemonEvolution[] pbGetEvolvedFormData(Pokemons species) {
+		public static Data.PokemonEvolution[] GetEvolvedFormData(Pokemons species) {
 			System.Collections.Generic.List<Data.PokemonEvolution> ret=new System.Collections.Generic.List<Data.PokemonEvolution>();
 			//int _EVOTYPEMASK=0x3F;
 			//int _EVODATAMASK=0xC0;
 			//int _EVONEXTFORM=0x00;
-			{  //pbRgssOpen("Data/evolutions.dat","rb"){|f|
+			{  //RgssOpen("Data/evolutions.dat","rb"){|f|
 				//f.pos=(species-1)*8;
 				//offset=f.fgetdw();
 				int length=Kernal.PokemonEvolutionsData[species].Length; //f.fgetdw();
@@ -65,11 +65,11 @@ namespace PokemonUnity.Monster
 
 		//Loops through each pokemon in db with evolution, 
 		//every 5 pokemons, log in debug output pokemon evolution
-		//public static void pbEvoDebug() {
+		//public static void EvoDebug() {
 		//  int _EVOTYPEMASK=0x3F;
 		//  int _EVODATAMASK=0xC0;
-		//  {  //pbRgssOpen("Data/evolutions.dat","rb"){|f|
-		//     for (int species = 1; species < PBSpecies.maxValue; species++) {
+		//  {  //RgssOpen("Data/evolutions.dat","rb"){|f|
+		//     for (int species = 1; species < Species.maxValue; species++) {
 		//       //f.pos=(species-1)*8;
 		//       //offset=f.fgetdw;
 		//       int length=f.fgetdw;
@@ -94,11 +94,11 @@ namespace PokemonUnity.Monster
 		//  }
 		//}
 
-		public static Pokemons pbGetPreviousForm(Pokemons species) {
+		public static Pokemons GetPreviousForm(Pokemons species) {
 			//int _EVOTYPEMASK=0x3F;
 			//int _EVODATAMASK=0xC0;
 			//int _EVOPREVFORM=0x40;
-			{ //pbRgssOpen("Data/evolutions.dat","rb"){|f|
+			{ //RgssOpen("Data/evolutions.dat","rb"){|f|
 				//f.pos=(species-1)*8;
 				//offset=f.fgetdw();
 				int length=Kernal.PokemonData[species].EvoChainId; //f.fgetdw();
@@ -120,12 +120,12 @@ namespace PokemonUnity.Monster
 			return species;
 		}
 
-		public static int pbGetMinimumLevel(Pokemons species) {
+		public static int GetMinimumLevel(Pokemons species) {
 			int ret=-1;
 			//int _EVOTYPEMASK=0x3F;
 			//int _EVODATAMASK=0xC0;
 			//int _EVOPREVFORM=0x40;
-			{ //pbRgssOpen("Data/evolutions.dat","rb"){|f|
+			{ //RgssOpen("Data/evolutions.dat","rb"){|f|
 				//f.pos=(species-1)*8;
 				//offset=f.fgetdw();
 				int length=Kernal.PokemonEvolutionsData[species].Length; //f.fgetdw();
@@ -136,7 +136,7 @@ namespace PokemonUnity.Monster
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw();
 						//Pokemons poke=evo.Species; //f.fgetw();
-						if (//poke<=Kernal.PokemonData.Count && //PBSpecies.maxValue
+						if (//poke<=Kernal.PokemonData.Count && //Species.maxValue
 							//(evo&_EVODATAMASK)==_EVOPREVFORM && // evolved from
 							new EvolutionMethod[] {EvolutionMethod.Level,EvolutionMethod.LevelMale,
 							EvolutionMethod.LevelFemale,EvolutionMethod.AttackGreater,
@@ -155,12 +155,12 @@ namespace PokemonUnity.Monster
 			return (ret==-1) ? 1 : ret;
 		}
 
-		public static Pokemons pbGetBabySpecies(Pokemons species,Items item1=Items.NONE,Items item2=Items.NONE) {
+		public static Pokemons GetBabySpecies(Pokemons species,Items item1=Items.NONE,Items item2=Items.NONE) {
 			Pokemons ret=species;
 			//int _EVOTYPEMASK=0x3F;
 			//int _EVODATAMASK=0xC0;
 			//int _EVOPREVFORM=0x40;
-			{ //pbRgssOpen("Data/evolutions.dat","rb"){ |f|
+			{ //RgssOpen("Data/evolutions.dat","rb"){ |f|
 				//f.pos=(species-1)*8;
 				//offset=f.fgetdw();
 				int length=Kernal.PokemonEvolutionsData[species].Length; //f.fgetdw();
@@ -171,12 +171,12 @@ namespace PokemonUnity.Monster
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw();
 						Pokemons poke=evo.Species; //f.fgetw();
-						//if (poke<=PBSpecies.maxValue && (evo&_EVODATAMASK)==_EVOPREVFORM) {		// evolved from
+						//if (poke<=Species.maxValue && (evo&_EVODATAMASK)==_EVOPREVFORM) {		// evolved from
 						if (//poke<=Kernal.PokemonData.Keys.Count && 
 							Kernal.PokemonData[poke].IsBaby) {		// evolved from
 							if (item1>=0 && item2>=0) {
-								//dexdata=pbOpenDexData();
-								//pbDexDataOffset(dexdata,poke,54);
+								//dexdata=OpenDexData();
+								//DexDataOffset(dexdata,poke,54);
 								Items incense=Kernal.PokemonData[poke].Incense; //dexdata.fgetw();
 								//dexdata.close();
 								if (item1==incense || item2==incense) ret=poke;
@@ -190,14 +190,14 @@ namespace PokemonUnity.Monster
 				}
 			}
 			if (ret!=species) {
-				ret=pbGetBabySpecies(ret);
+				ret=GetBabySpecies(ret);
 			}
 			return ret;
 		}
 		#endregion
 
 		#region Evolution methods
-		public static Pokemons pbMiniCheckEvolution(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,EvolutionMethod evonib,int level,Pokemons poke) {
+		public static Pokemons MiniCheckEvolution(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,EvolutionMethod evonib,int level,Pokemons poke) {
 			switch (evonib) {
 				case EvolutionMethod.Happiness:
 					if (pokemon.Happiness>=220) return poke;
@@ -312,7 +312,7 @@ namespace PokemonUnity.Monster
 			return Pokemons.NONE; //-1;
 		}
 
-		public static Pokemons pbMiniCheckEvolutionItem(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,EvolutionMethod evonib,Items level,Pokemons poke,Items item) {
+		public static Pokemons MiniCheckEvolutionItem(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,EvolutionMethod evonib,Items level,Pokemons poke,Items item) {
 			//  Checks for when an item is used on the Pokémon (e.g. an evolution stone)
 			switch (evonib) {
 				case EvolutionMethod.Item:
@@ -334,13 +334,13 @@ namespace PokemonUnity.Monster
 		/// Pokemon to check; evolution type; level or other parameter; ID of the new Pokemon species
 		/// </summary>
 		/// <param name="pokemon"></param>
-		public static Pokemons pbCheckEvolutionEx(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
+		public static Pokemons CheckEvolutionEx(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
 			if (pokemon.Species<=0 || pokemon.isEgg) return 0;
 			if (pokemon.Species == Pokemons.PICHU && pokemon is PokemonEssentials.Interface.PokeBattle.IPokemonMultipleForms f && f.form==1) return 0;
 			if (pokemon.Item == Items.EVERSTONE &&
 				pokemon.Species != Pokemons.KADABRA) return 0;
 			Pokemons ret=0;
-			//foreach (var form in pbGetEvolvedFormData(pokemon.Species)) {
+			//foreach (var form in GetEvolvedFormData(pokemon.Species)) {
 			foreach (Data.PokemonEvolution form in Kernal.PokemonEvolutionsData[pokemon.Species]) {
 				//ret=yield pokemon,form[0],form[1],form[2]; //EvolveMethod evonib,int level,poke
 				ret=form.Species;
@@ -355,24 +355,24 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <param name="item"></param>
-		public static Pokemons[] pbCheckEvolution(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,Items item=0) {
+		public static Pokemons[] CheckEvolution(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,Items item=0) {
 			if (pokemon.Species<=0 || pokemon.isEgg) return new Pokemons[0];
 			if (pokemon.Species == Pokemons.PICHU && pokemon is PokemonEssentials.Interface.PokeBattle.IPokemonMultipleForms f && f.form==1) return new Pokemons[0];
 			if (pokemon.Item == Items.EVERSTONE &&
 				pokemon.Species != Pokemons.KADABRA) return new Pokemons[0];
 			if (item==0) {
-				//return pbCheckEvolutionEx(pokemon) { //|pokemon,evonib,level,poke|
-				//   next pbMiniCheckEvolution(pokemon,evonib,level,poke);
+				//return CheckEvolutionEx(pokemon) { //|pokemon,evonib,level,poke|
+				//   next MiniCheckEvolution(pokemon,evonib,level,poke);
 				//}
 				return Kernal.PokemonEvolutionsData[pokemon.Species].Where(a =>
-						pbMiniCheckEvolution(pokemon,a.EvolveMethod,(int)a.EvolveValue,a.Species) != Pokemons.NONE
+						MiniCheckEvolution(pokemon,a.EvolveMethod,(int)a.EvolveValue,a.Species) != Pokemons.NONE
 					).Select(b => b.Species).ToArray();
 			} else {
-				//return pbCheckEvolutionEx(pokemon) { //|pokemon,evonib,level,poke|
-				//   next pbMiniCheckEvolutionItem(pokemon,evonib,level,poke,item);
+				//return CheckEvolutionEx(pokemon) { //|pokemon,evonib,level,poke|
+				//   next MiniCheckEvolutionItem(pokemon,evonib,level,poke,item);
 				//}
 				return Kernal.PokemonEvolutionsData[pokemon.Species].Where(a =>
-						pbMiniCheckEvolutionItem(pokemon,a.EvolveMethod,(Items)a.EvolveValue,a.Species, item) != Pokemons.NONE
+						MiniCheckEvolutionItem(pokemon,a.EvolveMethod,(Items)a.EvolveValue,a.Species, item) != Pokemons.NONE
 					).Select(b => b.Species).ToArray();
 			}
 		}

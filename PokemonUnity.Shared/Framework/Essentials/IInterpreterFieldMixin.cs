@@ -8,26 +8,29 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Logic that's used by Game while player is in `Overworld_Field`
 	/// </summary>
-	public interface IInterpreterFieldMixin
+	public interface IInterpreterFieldMixin //: IInterpreter
 	{
-		//object[] pbParams { get; }
+		//object[] Params { get; }
 
-		object getVariable(params int[] arg);
-		PokemonEssentials.Interface.PokeBattle.IPokemon pbGetPokemon(int id);
-		bool pbHeadbutt();
-		bool pbPushThisBoulder();
-		void pbPushThisEvent();
-		void pbSetEventTime(params int[] arg);
+		//object getVariable(params int[] arg);
+		object getVariable(object arg = null);
+		PokemonEssentials.Interface.PokeBattle.IPokemon GetPokemon(int id);
+		bool Headbutt();
+		bool PushThisBoulder();
+		void PushThisEvent();
+		//void SetEventTime(params int[] arg);
+		void SetEventTime(object arg);
 		/// <summary>
 		/// Used when player encounters a trainer, and battle logic get triggered
 		/// </summary>
 		/// <param name="symbol"></param>
 		/// <returns>Plays TrainerType Audio Theme and returns true</returns>
-		bool pbTrainerIntro(TrainerTypes symbol);
-		void pbTrainerEnd();
+		bool TrainerIntro(TrainerTypes symbol);
+		void TrainerEnd();
 		void setTempSwitchOff(string c);
 		void setTempSwitchOn(string c);
-		void setVariable(params int[] arg);
+		//void setVariable(params int[] arg);
+		void setVariable(object arg);
 		bool tsOff(string c);
 		bool tsOn(string c);
 	}

@@ -107,7 +107,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		int Happiness { get; }
 		/// <summary>
-		/// Status problem (PBStatuses)
+		/// Status problem (Statuses)
 		/// </summary>
 		Status Status { get; set; }
 		/// <summary>
@@ -119,7 +119,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		int EggSteps { get; set; }
 		/// <summary>
-		/// Moves (PBMove)
+		/// Moves (Move)
 		/// </summary>
 		IMove[] moves { get; }
 		/// <summary>
@@ -473,29 +473,29 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Silently learns the given move. Will erase the first known move if it has to.
 		/// </summary>
 		/// <param name="move"></param>
-		void pbLearnMove(Moves move);
+		void LearnMove(Moves move);
 
 		/// <summary>
 		/// Deletes the given move from the Pokémon.
 		/// </summary>
 		/// <param name="move"></param>
-		void pbDeleteMove(Moves move);
+		void DeleteMove(Moves move);
 
 		/// <summary>
 		/// Deletes the move at the given index from the Pokémon.
 		/// </summary>
 		/// <param name="index"></param>
-		void pbDeleteMoveAtIndex(int index);
+		void DeleteMoveAtIndex(int index);
 
 		/// <summary>
 		/// Deletes all moves from the Pokémon.
 		/// </summary>
-		void pbDeleteAllMoves();
+		void DeleteAllMoves();
 
 		/// <summary>
 		/// Copies currently known moves into a separate array, for Move Relearner.
 		/// </summary>
-		void pbRecordFirstMoves();
+		void RecordFirstMoves();
 
 		bool isCompatibleWithMove(Moves move);
 

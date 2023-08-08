@@ -14,29 +14,29 @@ namespace PokemonEssentials.Interface.Field
 		KeyValuePair<IPokemon, int>[] Slot { get; }
 		IPokemon this[int index] { get; }
 
-		bool pbEggGenerated();
+		bool EggGenerated();
 
-		int pbDayCareDeposited();
+		int DayCareDeposited();
 
-		void pbDayCareDeposit(int index);
+		void DayCareDeposit(int index);
 
-		bool pbDayCareGetLevelGain(int index, int nameVariable, int levelVariable);
+		bool DayCareGetLevelGain(int index, int nameVariable, int levelVariable);
 
-		void pbDayCareGetDeposited(int index, int nameVariable, int costVariable);
+		void DayCareGetDeposited(int index, int nameVariable, int costVariable);
 
-		bool pbIsDitto(IPokemon pokemon);
+		bool IsDitto(IPokemon pokemon);
 
-		bool pbDayCareCompatibleGender(IPokemon pokemon1, IPokemon pokemon2);
+		bool DayCareCompatibleGender(IPokemon pokemon1, IPokemon pokemon2);
 
-		int pbDayCareGetCompat();
+		int DayCareGetCompat();
 
-		void pbDayCareGetCompatibility(int variable);
+		void DayCareGetCompatibility(int variable);
 
-		void pbDayCareWithdraw(int index);
+		void DayCareWithdraw(int index);
 
-		void pbDayCareChoose(string text, int variable);
+		void DayCareChoose(string text, int variable);
 
-		void pbDayCareGenerateEgg();
+		void DayCareGenerateEgg();
 
 		//void Events_OnStepTaken (object sender, EventArgs e);
 		//void Events_OnStepTaken(object sender, EventArg.OnStepTakenFieldMovementEventArgs e);

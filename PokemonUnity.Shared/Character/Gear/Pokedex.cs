@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace PokemonUnity.Character
 {
@@ -15,7 +17,7 @@ namespace PokemonUnity.Character
 	///    an array with a region number, therefore its area map is whichever region
 	///    the player is currently in.
 	/// </summary>
-	public struct Pokedex
+	public struct Pokedex : IEquatable<Pokedex>, IEqualityComparer<Pokedex>
 	{
 		//[_INTL("Kanto Pokédex"),0],
 		//[_INTL("Johto Pokédex"),1],
@@ -27,7 +29,7 @@ namespace PokemonUnity.Character
 		/// Name of the Pokedex
 		/// </summary>
 		/// Translated from DB
-		public string Name { get { return null; } }
+		public string Name { get { return Region.ToString(); } } //TextScripts.Name
 		/// <summary>
 		/// Map Region this Pokedex covers
 		/// </summary>
@@ -48,5 +50,53 @@ namespace PokemonUnity.Character
 		/// Easier to program what you want it to do, when it's just a list of pokemoon Ids
 		public PokemonUnity.Pokemons[] PokemonIndex { get; private set; }
 		//int DEXINDEXOFFSETS;//    = []
+
+		public Pokedex(PokemonUnity.Regions region
+			//, string name
+			, params PokemonUnity.Pokemons[] pkmns)
+		{
+			Region = region;
+			//Name = name;
+			PokemonIndex = pkmns ?? new Pokemons[0];
+		}
+
+		#region Explicit Operators
+		public static bool operator ==(Pokedex x, Pokedex y)
+		{
+			return x.Region==y.Region;
+		}
+		public static bool operator !=(Pokedex x, Pokedex y)
+		{
+			return x.Region!=y.Region;
+		}
+		public bool Equals(Pokedex obj)
+		{
+			if (obj == null) return false;
+			return this == obj;
+		}
+		public override bool Equals(object obj)
+		{
+			if (obj == null) return false;
+			if (typeof(Pokedex) == obj.GetType())
+				return Equals((Pokedex)obj);
+			return base.Equals(obj);
+		}
+		bool IEquatable<Pokedex>.Equals(Pokedex other)
+		{
+			return Equals(obj: (object)other);
+		}
+		public override int GetHashCode()
+		{
+			return Region.GetHashCode();
+		}
+		bool IEqualityComparer<Pokedex>.Equals(Pokedex x, Pokedex y)
+		{
+			return x == y;
+		}
+		int IEqualityComparer<Pokedex>.GetHashCode(Pokedex obj)
+		{
+			return obj.GetHashCode();
+		}
+		#endregion
 	}
 }

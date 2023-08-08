@@ -91,7 +91,7 @@ namespace PokemonUnity
 		ITrainer ITrainer.initialize(string name, TrainerTypes trainertype)
 		{
 			this.name=name;
-			@language=(Languages)(Game.GameData as PokemonEssentials.Interface.IGameUtility).pbGetLanguage();
+			@language=(Languages)(Game.GameData as PokemonEssentials.Interface.IGameUtility).GetLanguage();
 			this.trainertype=trainertype;
 			@id=Core.Rand.Next(256);
 			@id|=Core.Rand.Next(256)<<8;
@@ -175,7 +175,7 @@ namespace PokemonUnity
 		} }
 
 		public Languages Language { get {
-			if (!@language.HasValue) @language=(Languages)(Game.GameData as PokemonEssentials.Interface.IGameUtility).pbGetLanguage();
+			if (!@language.HasValue) @language=(Languages)(Game.GameData as PokemonEssentials.Interface.IGameUtility).GetLanguage();
 			return @language.Value;
 		} }
 
@@ -189,7 +189,7 @@ namespace PokemonUnity
 		/// <returns></returns>
 		public int moneyEarned { get {
 			int ret=0;
-			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
+			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//   trainertypes=Marshal.load(f);
 			//   if (!Kernal.TrainerMetaData[@trainertype]) return 30;
 				ret=Kernal.TrainerMetaData[@trainertype].BaseMoney;
@@ -203,7 +203,7 @@ namespace PokemonUnity
 		/// <returns></returns>
 		public int skill { get {
 			int ret=0;
-			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
+			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//   trainertypes=Marshal.load(f);
 			//   if (!trainertypes[@trainertype]) return 30;
 				ret= Kernal.TrainerMetaData[@trainertype].SkillLevel;
@@ -213,7 +213,7 @@ namespace PokemonUnity
 
 		public string skillCode { get {
 			string ret="";
-			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
+			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//   trainertypes=Marshal.load(f);
 			//   if (!trainertypes[@trainertype]) return "";
 				ret= Kernal.TrainerMetaData[@trainertype].SkillCodes.Value.ToString();
@@ -242,7 +242,7 @@ namespace PokemonUnity
 		int ITrainer.gender { get { return gender == true ? 1 : (gender == false ? 0 : 2); } }
 		public bool? gender { get {
 			bool? ret=null;   // 2 = gender unknown
-			//pbRgssOpen("Data/trainertypes.dat","rb"){|f|
+			//RgssOpen("Data/trainertypes.dat","rb"){|f|
 			//   trainertypes=Marshal.load(f);
 			//	if (!trainertypes || !trainertypes[trainertype]) {
 			//	  ret=null;
@@ -336,7 +336,7 @@ namespace PokemonUnity
 				return seen.Count;
 			}
 			else {
-				//int[] regionlist=Game.pbAllRegionalSpecies(region);
+				//int[] regionlist=Game.AllRegionalSpecies(region);
 				Pokemons[] regionlist=new Pokemons[0];
 				foreach (Pokemons i in regionlist) {
 				if (@seen[i]) ret+=1;
@@ -359,7 +359,7 @@ namespace PokemonUnity
 				return owned.Count;
 			}
 			else {
-				//int[] regionlist=Game.GameData.pbAllRegionalSpecies(region);
+				//int[] regionlist=Game.GameData.AllRegionalSpecies(region);
 				Pokemons[] regionlist=new Pokemons[0];
 				foreach (Pokemons i in regionlist) {
 				if (@owned[i]) ret+=1;
@@ -380,28 +380,28 @@ namespace PokemonUnity
 
 		public bool hasSeen (Pokemons species) {
 			//if (Pokemons.is_a(String) || Pokemons.is_a(Symbol)) {
-			//  species=getID(PBSpecies,species);
+			//  species=getID(Species,species);
 			//}
 			return species>0 ? @seen[species] : false;
 		}
 
 		public bool hasOwned (Pokemons species) {
 			//if (species.is_a(String) || species.is_a(Symbol)) {
-			//  species=getID(PBSpecies,species);
+			//  species=getID(Species,species);
 			//}
 			return species>0 ? @owned[species] : false;
 		}
 
 		public void setSeen(Pokemons species) {
 			//if (species.is_a(String) || species.is_a(Symbol)) {
-			//  species=getID(PBSpecies,species);
+			//  species=getID(Species,species);
 			//}
 			if (species>0) @seen[species]=true;
 		}
 
 		public void setOwned(Pokemons species) {
 			//if (species.is_a(String) || species.is_a(Symbol)) {
-			//  species=getID(PBSpecies,species);
+			//  species=getID(Species,species);
 			//}
 			if (species>0) @owned[species]=true;
 		}

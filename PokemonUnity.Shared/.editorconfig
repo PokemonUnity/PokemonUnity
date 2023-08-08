@@ -11,3 +11,6 @@ dotnet_diagnostic.CS0472.severity = silent
 # CS0618: Entity used is obsolete
 #dotnet_diagnostic.CS0618.severity = silent
 #dotnet_diagnostic.CS0612.severity = silent
+
+# Default severity for analyzer diagnostics with category 'Naming'
+dotnet_analyzer_diagnostic.category-Naming.severity = none

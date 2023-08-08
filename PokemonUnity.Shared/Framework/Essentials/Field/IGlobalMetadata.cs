@@ -26,10 +26,12 @@ namespace PokemonEssentials.Interface.Field
 		bool runtoggle { get; set; }
 		/// <summary>
 		/// </summary>
+		///ToDo: Missing Variables for RepelType, Swarm
 		/// Should not stack (encourage users to deplete excessive money);
 		/// reset count based on repel used.
-		///ToDo: Missing Variables for RepelType, Swarm
 		int repel { get; set; }
+
+		//int RepelType { get; set; } // Different repel changes potency (min level) and not only number of steps?
 		bool flashUsed { get; set; }
 		float bridge { get; set; }
 		bool runningShoes { get; set; }
@@ -43,6 +45,7 @@ namespace PokemonEssentials.Interface.Field
 		bool creditsPlayed { get; set; }
 		int playerID { get; set; }
 		int coins { get; set; }
+		///ToDo: if null; player is unable to collect soot?
 		int sootsack { get; set; }
 		IList<IMail> mailbox { get; set; }
 		IPCItemStorage pcItemStorage	{ get; set; }
@@ -74,7 +77,7 @@ namespace PokemonEssentials.Interface.Field
 		int pokedexMode { get; set; }
 		ITilePosition healingSpot { get; set; }
 		//float[] escapePoint { get; set; }
-		MetadataPosition? escapePoint { get; set; }
+		ITilePosition escapePoint { get; set; }
 		int pokecenterMapId { get; set; }
 		float pokecenterX { get; set; }
 		float pokecenterY { get; set; }
@@ -102,6 +105,5 @@ namespace PokemonEssentials.Interface.Field
 
 
 		//IGlobalMetadata initialize();
-		Pokemons[] roamPokemonCaught { get; }
 	}
 }

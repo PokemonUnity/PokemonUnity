@@ -54,7 +54,7 @@ namespace PokemonUnity.Combat
 		//public bool IsPhysical			{ get; set; }// { return Category == Attack.Category.PHYSICAL; } }
 		//public bool IsSpecial				{ get; set; }// { return Category == Attack.Category.SPECIAL; } }
 		public bool PowerBoost				{ get; set; }
-		//public bool pbIsStatus()			{ return false; }
+		//public bool IsStatus()			{ return false; }
 		public string Name					{ get { return Game._INTL(Kernal.MoveData[MoveId].Name); } }
 		//public string EffectString		{ get; set; }
 		//public Battle Battle				{ get { return this.battle ?? Game.battle; } }
@@ -99,7 +99,7 @@ namespace PokemonUnity.Combat
 		/// <param name="battle"></param>
 		/// <param name="move"></param>
 		/// <returns></returns>
-		public static IBattleMove pbFromPBMove(IBattle battle, IMove move)
+		public static IBattleMove FromMove(IBattle battle, IMove move)
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
 			//Attack.Data.MoveData movedata = Kernal.MoveData[move.id];
@@ -137,7 +137,7 @@ namespace PokemonUnity.Combat
 		//  return MoveId
 		//}
 
-		public virtual Types pbModifyType(Types type, IBattler attacker, IBattler opponent){
+		public virtual Types ModifyType(Types type, IBattler attacker, IBattler opponent){
 			if (type>=0){
 				if (attacker.hasWorkingAbility(Abilities.NORMALIZE)) //&& hasConst? (Types.NORMAL)
 				type=Types.NORMAL;
@@ -156,9 +156,9 @@ namespace PokemonUnity.Combat
 			return type;
 		}
 
-		public virtual Types pbType(Types type, IBattler attacker, IBattler opponent) {
+		public virtual Types GetType(Types type, IBattler attacker, IBattler opponent) {
 			PowerBoost = false;
-			type = pbModifyType(type, attacker, opponent);
+			type = ModifyType(type, attacker, opponent);
 			if (type>=0){ //&& hasConst? (Types.ELECTRIC)
 				if (battle.field.IonDeluge && type == Types.NORMAL) {
 					type = Types.ELECTRIC;
@@ -172,57 +172,57 @@ namespace PokemonUnity.Combat
 			return type;
 		}
 
-		public virtual bool pbIsPhysical(Types type){
+		public virtual bool IsPhysical(Types type){
 			if (Core.USEMOVECATEGORY)
 				return Category == Attack.Category.PHYSICAL;
 			else
 				return Kernal.TypeData[type].Category == Attack.Category.PHYSICAL;     
 		}
 
-		public virtual bool pbIsSpecial(Types type){
+		public virtual bool IsSpecial(Types type){
 			if (Core.USEMOVECATEGORY)
 				return Category == Attack.Category.SPECIAL;
 			else
 				return Kernal.TypeData[type].Category == Attack.Category.SPECIAL;     
 		}
 
-		public virtual bool pbIsStatus{ get{
+		public virtual bool IsStatus{ get{
 			return Category == Attack.Category.STATUS;}
 		}
 
-		public virtual bool pbIsDamaging() { //get{
-			return !pbIsStatus;//}
+		public virtual bool IsDamaging() { //get{
+			return !IsStatus;//}
 		}
 
-		public virtual bool pbTargetsMultiple(IBattler attacker){
+		public virtual bool TargetsMultiple(IBattler attacker){
 			int numtargets = 0;
 			//if (Targets == Attack.Target.AllOpposing) {
 			if (Target == Attack.Data.Targets.ALL_OPPONENTS) {
 				// TODO: should apply even if partner faints during an attack
-				if (!attacker.pbOpposing1.isFainted())numtargets+=1; 
-				if (!attacker.pbOpposing2.isFainted())numtargets+=1; 
+				if (!attacker.Opposing1.isFainted())numtargets+=1; 
+				if (!attacker.Opposing2.isFainted())numtargets+=1; 
 				return numtargets>1;
 			//} else if (Targets == Attack.Target.AllNonUsers) {
 			} else if (Target == Attack.Data.Targets.ALL_OTHER_POKEMON) {
 				// TODO: should apply even if partner faints during an attack
-				if (!attacker.pbOpposing1.isFainted())numtargets+=1; 
-				if (!attacker.pbOpposing2.isFainted())numtargets+=1; 
-				if (!attacker.pbPartner.isFainted())numtargets+=1; 
+				if (!attacker.Opposing1.isFainted())numtargets+=1; 
+				if (!attacker.Opposing2.isFainted())numtargets+=1; 
+				if (!attacker.Partner.isFainted())numtargets+=1; 
 				return numtargets>1;
 			} //ToDo: All pokemons (including user) and entire field (pokemons not off screen)?
 			return false;
 		}
 
-		public virtual int pbPriority(IBattler attacker){
+		public virtual int GetPriority(IBattler attacker){
 			int ret=Priority;
 			return ret;
 		}
 
-		public virtual int pbNumHits(IBattler attacker){
+		public virtual int NumHits(IBattler attacker){
 			// Parental Bond goes here (for single target moves only)
 			if (attacker.hasWorkingAbility(Abilities.PARENTAL_BOND))
-				if (pbIsDamaging() && !pbTargetsMultiple(attacker) &&
-				!pbIsMultiHit() && !pbTwoTurnAttack(attacker)){
+				if (IsDamaging() && !TargetsMultiple(attacker) &&
+				!IsMultiHit() && !TwoTurnAttack(attacker)){
 					List<Attack.Data.Effects> exceptions= new List<Attack.Data.Effects>(){
 						Attack.Data.Effects.x0BE,	// Endeavor
 						Attack.Data.Effects.x008,	// Selfdestruct/Explosion
@@ -234,7 +234,7 @@ namespace PokemonUnity.Combat
 						return 2;
 					}
 				}
-			if (pbIsMultiHit()) 
+			if (IsMultiHit()) 
 				return Core.Rand.Next(Kernal.MoveMetaData[MoveId].MinHits.Value, Kernal.MoveMetaData[MoveId].MaxHits.Value);
 				//ToDo: Need to record that Parental Bond applies, to weaken the second attack
 				//attacker.effects.ParentalBondApplied = true; 
@@ -242,20 +242,20 @@ namespace PokemonUnity.Combat
 		}
 
 		/// <summary>
-		/// not the same as pbNumHits>1
+		/// not the same as NumHits>1
 		/// </summary>
-		public virtual bool pbIsMultiHit() { //get {   
+		public virtual bool IsMultiHit() { //get {   
 			return (Kernal.MoveMetaData[MoveId].MinHits.HasValue || 
 					Kernal.MoveMetaData[MoveId].MaxHits.HasValue);//}
 		}
 
-		public virtual bool pbTwoTurnAttack(IBattler attacker){
+		public virtual bool TwoTurnAttack(IBattler attacker){
 			return false;
 		}
 
-		public virtual void pbAdditionalEffect(IBattler attacker, IBattler opponent){ }
+		public virtual void AdditionalEffect(IBattler attacker, IBattler opponent){ }
  
-		public virtual bool pbCanUseWhileAsleep() { //get {
+		public virtual bool CanUseWhileAsleep() { //get {
 			return false;//}
 		}
 
@@ -305,34 +305,34 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region This move's type effectiveness
-		public virtual bool pbTypeImmunityByAbility(Types type, IBattler attacker, IBattler opponent){
+		public virtual bool TypeImmunityByAbility(Types type, IBattler attacker, IBattler opponent){
 			if (attacker.Index==opponent.Index)return false; 
 			if (attacker.hasMoldBreaker())return false; 
 			if (opponent.hasWorkingAbility(Abilities.SAP_SIPPER) && type == Types.GRASS){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sap Sipper (made #{Kernal.MoveData[MoveId].Name} ineffective)");
-				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.ATTACK, opponent))
-					b.pbIncreaseStatWithCause(Stats.ATTACK,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
+				if (opponent is IBattlerEffect b && b.CanIncreaseStatStage(Stats.ATTACK, opponent))
+					b.IncreaseStatWithCause(Stats.ATTACK,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
-					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
+					battle.Display(Game._INTL("{1}'s {2} made {3} ineffective!",
 						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if ((opponent.hasWorkingAbility(Abilities.STORM_DRAIN) && type == Types.WATER) ||
 				(opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD) && type == Types.ELECTRIC)){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{Kernal.MoveData[MoveId].Name} ineffective)");
-				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage(Stats.SPATK, opponent))
-					b.pbIncreaseStatWithCause(Stats.SPATK,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
+				if (opponent is IBattlerEffect b && b.CanIncreaseStatStage(Stats.SPATK, opponent))
+					b.IncreaseStatWithCause(Stats.SPATK,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
-					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
+					battle.Display(Game._INTL("{1}'s {2} made {3} ineffective!",
 						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			if (opponent.hasWorkingAbility(Abilities.MOTOR_DRIVE) && type == Types.ELECTRIC){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Motor Drive (made #{Kernal.MoveData[MoveId].Name} ineffective)");
-				if (opponent is IBattlerEffect b && b.pbCanIncreaseStatStage (Stats.SPEED, opponent))
-					b.pbIncreaseStatWithCause(Stats.SPEED,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
+				if (opponent is IBattlerEffect b && b.CanIncreaseStatStage (Stats.SPEED, opponent))
+					b.IncreaseStatWithCause(Stats.SPEED,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
-					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
+					battle.Display(Game._INTL("{1}'s {2} made {3} ineffective!",
 						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
@@ -341,11 +341,11 @@ namespace PokemonUnity.Combat
 				(opponent.hasWorkingAbility(Abilities.WATER_ABSORB) && type == Types.WATER)){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{@Name} ineffective)");
 				if (opponent.effects.HealBlock==0){
-					if (opponent.pbRecoverHP((int)Math.Floor(opponent.TotalHP/4d),true)>0)
-						battle.pbDisplay(Game._INTL("{1}'s {2} restored its HP!",
+					if (opponent.RecoverHP((int)Math.Floor(opponent.TotalHP/4d),true)>0)
+						battle.Display(Game._INTL("{1}'s {2} restored its HP!",
 							opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name))));
 					else
-						battle.pbDisplay(Game._INTL("{1}'s {2} made {3} useless!",
+						battle.Display(Game._INTL("{1}'s {2} made {3} useless!",
 							opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 					return true;
 				}
@@ -354,31 +354,31 @@ namespace PokemonUnity.Combat
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Flash Fire (made #{@Name} ineffective)");
 				if (!opponent.effects.FlashFire) {
 					opponent.effects.FlashFire= true;
-					battle.pbDisplay(Game._INTL("{1}'s {2} raised its Fire power!",
+					battle.Display(Game._INTL("{1}'s {2} raised its Fire power!",
 						opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name)))); }
 				else
-					battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
+					battle.Display(Game._INTL("{1}'s {2} made {3} ineffective!",
 						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
-			if (opponent.hasWorkingAbility(Abilities.TELEPATHY) && pbIsDamaging() &&
-				!opponent.pbIsOpposing(attacker.Index)){
+			if (opponent.hasWorkingAbility(Abilities.TELEPATHY) && IsDamaging() &&
+				!opponent.IsOpposing(attacker.Index)){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Telepathy (made #{@Name} ineffective)");
-				battle.pbDisplay(Game._INTL("{1} avoids attacks by its ally Pokémon!",opponent.ToString()));
+				battle.Display(Game._INTL("{1} avoids attacks by its ally Pokémon!",opponent.ToString()));
 				return true;
 			}
 			if (opponent.hasWorkingAbility(Abilities.BULLETPROOF) && Flags.Ballistics){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Bulletproof (made #{@Name} ineffective)");
-				battle.pbDisplay(Game._INTL("{1}'s {2} made {3} ineffective!",
+				battle.Display(Game._INTL("{1}'s {2} made {3} ineffective!",
 					opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
 			}
 			return false;
 		}
 
-		public virtual float pbTypeModifier(Types type, IBattler attacker, IBattler opponent){
+		public virtual float TypeModifier(Types type, IBattler attacker, IBattler opponent){
 			if (type<0) return 8; 
-			if (opponent.pbHasType(Types.FLYING) && type == Types.GROUND && 
+			if (opponent.HasType(Types.FLYING) && type == Types.GROUND && 
 				opponent.hasWorkingItem(Items.IRON_BALL) && !Core.USENEWBATTLEMECHANICS) return 8; 
 			Types atype = type; //# attack type
 			Types otype1= opponent.Type1;
@@ -416,7 +416,7 @@ namespace PokemonUnity.Combat
 						if (otype3 == Types.DARK && atype.GetCombinedEffectiveness(otype3) == TypeEffective.Ineffective)mod3 = 2; //
 			}
 			// Delta Stream's weather
-			if (battle.pbWeather==Weather.STRONGWINDS) { 
+			if (battle.Weather==Weather.STRONGWINDS) { 
 				if (otype1 == Types.FLYING && atype.GetCombinedEffectiveness(otype1) == TypeEffective.SuperEffective)mod1 = 2; //
 					if (otype2 == Types.FLYING && atype.GetCombinedEffectiveness(otype2) == TypeEffective.SuperEffective)mod2 = 2; //
 						if (otype3 == Types.FLYING && atype.GetCombinedEffectiveness(otype3) == TypeEffective.SuperEffective)mod3 = 2; //
@@ -439,34 +439,34 @@ namespace PokemonUnity.Combat
 			return mod1* mod2*mod3;
 		}
 
-		public virtual double pbTypeModMessages(Types type, IBattler attacker, IBattler opponent){
+		public virtual double TypeModMessages(Types type, IBattler attacker, IBattler opponent){
 			if (type<0) return 8;
-			double typemod=pbTypeModifier(type, attacker, opponent);
+			double typemod=TypeModifier(type, attacker, opponent);
 			if (typemod==0)
-				battle.pbDisplay(Game._INTL("It doesn't affect {1}...",opponent.ToString(true)));
+				battle.Display(Game._INTL("It doesn't affect {1}...",opponent.ToString(true)));
 			else
-				if (pbTypeImmunityByAbility(type, attacker, opponent)) return 0; 
+				if (TypeImmunityByAbility(type, attacker, opponent)) return 0; 
 			return typemod;
 		}
 		#endregion
 
 		#region This move's accuracy check
-		public virtual int pbModifyBaseAccuracy(int baseaccuracy, IBattler attacker, IBattler opponent){
+		public virtual int ModifyBaseAccuracy(int baseaccuracy, IBattler attacker, IBattler opponent){
 			return baseaccuracy;
 		}
 
-		public virtual bool pbAccuracyCheck(IBattler attacker, IBattler opponent){
+		public virtual bool AccuracyCheck(IBattler attacker, IBattler opponent){
 			int baseaccuracy=Accuracy;
-			baseaccuracy = pbModifyBaseAccuracy(baseaccuracy, attacker, opponent);
+			baseaccuracy = ModifyBaseAccuracy(baseaccuracy, attacker, opponent);
 			if (opponent.effects.Minimize && tramplesMinimize(1)) baseaccuracy=0;
 			if (baseaccuracy==0) return true;
 			if (attacker.hasWorkingAbility(Abilities.NO_GUARD) ||
 				opponent.hasWorkingAbility(Abilities.NO_GUARD)) return true;            
 			if (opponent.hasWorkingAbility(Abilities.STORM_DRAIN)
-				&& pbType(this.Type, attacker, opponent) == Types.WATER) 
+				&& GetType(this.Type, attacker, opponent) == Types.WATER) 
 				return true;           
 			if (opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD) 
-				&& pbType(this.Type, attacker, opponent) == Types.ELECTRIC) 
+				&& GetType(this.Type, attacker, opponent) == Types.ELECTRIC) 
 				return true;          
 			if (opponent.effects.Telekinesis>0) return true; 
 			// One-hit KO accuracy handled elsewhere
@@ -485,12 +485,12 @@ namespace PokemonUnity.Combat
 			double evasion=(evastage>=0) ? (evastage+3)*100.0/3 : 300.0/(3-evastage);
 			if (attacker.hasWorkingAbility(Abilities.COMPOUND_EYES))
 				accuracy*=1.3;
-			if (attacker.hasWorkingAbility(Abilities.HUSTLE) && pbIsDamaging() &&
-				pbIsPhysical(pbType(this.Type, attacker, opponent)))
+			if (attacker.hasWorkingAbility(Abilities.HUSTLE) && IsDamaging() &&
+				IsPhysical(GetType(this.Type, attacker, opponent)))
 				accuracy*=0.8;
 			if (attacker.hasWorkingAbility(Abilities.VICTORY_STAR))
 				accuracy*=1.1;
-			IBattler partner = !battle.doublebattle ? null : attacker.pbPartner;
+			IBattler partner = !battle.doublebattle ? null : attacker.Partner;
 			if (partner.IsNotNullOrNone() && partner.hasWorkingAbility(Abilities.VICTORY_STAR))
 				accuracy*=1.1;
 			if (attacker.effects.MicleBerry){
@@ -504,39 +504,39 @@ namespace PokemonUnity.Combat
 				opponent.hasMovedThisRound())) // Used a move already
 				accuracy*=1.2;
 			if (!attacker.hasMoldBreaker()){
-				if (opponent.hasWorkingAbility(Abilities.WONDER_SKIN) && pbIsStatus &&
-					attacker.pbIsOpposing(opponent.Index))
+				if (opponent.hasWorkingAbility(Abilities.WONDER_SKIN) && IsStatus &&
+					attacker.IsOpposing(opponent.Index))
 					if (accuracy>50) accuracy = 50;
 				if (opponent.hasWorkingAbility(Abilities.TANGLED_FEET) &&
 					opponent.effects.Confusion>0)
 					evasion*=1.2;
 				if (opponent.hasWorkingAbility(Abilities.SAND_VEIL) &&
-					battle.pbWeather==Weather.SANDSTORM)
+					battle.Weather==Weather.SANDSTORM)
 					evasion*=1.25;
 				if (opponent.hasWorkingAbility(Abilities.SNOW_CLOAK) &&
-					battle.pbWeather==Weather.HAIL)
+					battle.Weather==Weather.HAIL)
 					evasion*=1.25;
 			}
 			if (opponent.hasWorkingItem(Items.BRIGHT_POWDER))
 				evasion*=1.1;
 			if (opponent.hasWorkingItem(Items.LAX_INCENSE))
 				evasion*=1.1;
-			return battle.pbRandom(100)<(baseaccuracy* accuracy/evasion);
+			return battle.Random(100)<(baseaccuracy* accuracy/evasion);
 		}
 		#endregion
 
 		#region Damage calculation and modifiers
-		public virtual bool pbCritialOverride(IBattler attacker, IBattler opponent){
+		public virtual bool CritialOverride(IBattler attacker, IBattler opponent){
 			return false;
 		}
 
-		public virtual bool pbIsCritical (IBattler attacker, IBattler opponent){
+		public virtual bool IsCritical (IBattler attacker, IBattler opponent){
 			if (!attacker.hasMoldBreaker())
 				if (opponent.hasWorkingAbility(Abilities.BATTLE_ARMOR) ||
 					opponent.hasWorkingAbility(Abilities.SHELL_ARMOR))
 				return false;
-			if (opponent.pbOwnSide.LuckyChant>0) return false;
-			if (pbCritialOverride(attacker, opponent)) return true;
+			if (opponent.OwnSide.LuckyChant>0) return false;
+			if (CritialOverride(attacker, opponent)) return true;
 			int c=0;
 			int[] ratios=Core.USENEWBATTLEMECHANICS?new int[] { 16, 8, 2, 1, 1 } : new int[] { 16, 8, 4, 3, 2 };
 				c+=attacker.effects.FocusEnergy;
@@ -553,23 +553,23 @@ namespace PokemonUnity.Combat
 			if (attacker.hasWorkingItem(Items.RAZOR_CLAW))c+=1;
 			if (attacker.hasWorkingItem(Items.SCOPE_LENS))c+=1;
 			if (c>4)c=4;
-			return battle.pbRandom(ratios[c])==0;
+			return battle.Random(ratios[c])==0;
 		}
 
-		public virtual int pbBaseDamage(int basedmg, IBattler attacker, IBattler opponent){
+		public virtual int BaseDamage(int basedmg, IBattler attacker, IBattler opponent){
 			return basedmg;
 		}
 
-		public virtual double pbBaseDamageMultiplier(double damagemult, IBattler attacker, IBattler opponent){
+		public virtual double BaseDamageMultiplier(double damagemult, IBattler attacker, IBattler opponent){
 			return damagemult;
 		}
 
-		public virtual double pbModifyDamage(double damagemult, IBattler attacker, IBattler opponent){
+		public virtual double ModifyDamage(double damagemult, IBattler attacker, IBattler opponent){
 			return damagemult;
 		}
 
 		//ToDo: Do single round at end of calculation and not during...
-		public virtual int pbCalcDamage(IBattler attacker,IBattler opponent, params byte[] options){ //options= 0 should be param instead
+		public virtual int CalcDamage(IBattler attacker,IBattler opponent, params byte[] options){ //options= 0 should be param instead
 			opponent.damagestate.Critical=false;
 			opponent.damagestate.TypeMod=0;
 			opponent.damagestate.CalcDamage=0;
@@ -579,14 +579,14 @@ namespace PokemonUnity.Combat
 			List<int> stagediv= new List<int>() { 40,35,30,25,20,15,10,10,10,10,10,10,10 };
 			Types type = Types.NONE;
 			if (options.Contains(Core.NOTYPE)) 
-				type=pbType(Type, attacker, opponent);
+				type=GetType(Type, attacker, opponent);
 			else
 				type=Types.NONE; // Will be treated as physical
 			if (options.Contains(Core.NOCRITICAL))
-				opponent.damagestate.Critical=pbIsCritical (attacker, opponent);
+				opponent.damagestate.Critical=IsCritical (attacker, opponent);
 			#region ##### Calcuate base power of move #####
-			int basedmg = Power; // From PBS file
-			basedmg = pbBaseDamage(basedmg, attacker, opponent); // Some function codes alter base power
+			int basedmg = Power; // From S file
+			basedmg = BaseDamage(basedmg, attacker, opponent); // Some function codes alter base power
 			double damagemult=0x1000;
 			if (attacker.hasWorkingAbility(Abilities.TECHNICIAN) && basedmg<=60 && MoveId>0)
 				damagemult=Math.Round(damagemult*1.5);
@@ -599,10 +599,10 @@ namespace PokemonUnity.Combat
 			if (attacker.hasWorkingAbility(Abilities.RECKLESS) && isRecoilMove())
 				damagemult = Math.Round(damagemult * 1.2);
 			if (attacker.hasWorkingAbility(Abilities.FLARE_BOOST) &&
-				attacker.Status==Status.BURN && pbIsSpecial(type))
+				attacker.Status==Status.BURN && IsSpecial(type))
 				damagemult = Math.Round(damagemult * 1.5);
 			if (attacker.hasWorkingAbility(Abilities.TOXIC_BOOST) &&
-				attacker.Status==Status.POISON && pbIsPhysical(type))
+				attacker.Status==Status.POISON && IsPhysical(type))
 				damagemult = Math.Round(damagemult * 1.5);
 			if (attacker.hasWorkingAbility(Abilities.ANALYTIC) &&
 				(battle.choices[opponent.Index].Action != ChoiceAction.UseMove || // Didn't choose a move
@@ -616,7 +616,7 @@ namespace PokemonUnity.Combat
 					damagemult=Math.Round(damagemult*0.75);
 			}
 			if (attacker.hasWorkingAbility(Abilities.SAND_FORCE) &&
-				battle.pbWeather==Weather.SANDSTORM 
+				battle.Weather==Weather.SANDSTORM 
 				&& (type == Types.ROCK ||
 				type == Types.GROUND ||
 				type == Types.STEEL))
@@ -629,9 +629,9 @@ namespace PokemonUnity.Combat
 				attacker.hasWorkingAbility(Abilities.REFRIGERATE) ||
 				attacker.hasWorkingAbility(Abilities.PIXILATE) && PowerBoost)
 				damagemult = Math.Round(damagemult * 1.3);
-			if ((battle.pbCheckGlobalAbility(Abilities.DARK_AURA).IsNotNullOrNone() && type == Types.DARK) 
-				|| (battle.pbCheckGlobalAbility(Abilities.FAIRY_AURA).IsNotNullOrNone() && type == Types.FAIRY)){
-				if (battle.pbCheckGlobalAbility(Abilities.AURA_BREAK).IsNotNullOrNone())
+			if ((battle.CheckGlobalAbility(Abilities.DARK_AURA).IsNotNullOrNone() && type == Types.DARK) 
+				|| (battle.CheckGlobalAbility(Abilities.FAIRY_AURA).IsNotNullOrNone() && type == Types.FAIRY)){
+				if (battle.CheckGlobalAbility(Abilities.AURA_BREAK).IsNotNullOrNone())
 					damagemult=Math.Round(damagemult*2/3);
 				else
 					damagemult=Math.Round(damagemult*4/3);
@@ -643,7 +643,7 @@ namespace PokemonUnity.Combat
 					&& (type == Types.ICE || type == Types.FIRE))
 					damagemult=Math.Round(damagemult*0.5);
 				if (opponent.hasWorkingAbility(Abilities.FUR_COAT) &&
-					(pbIsPhysical(type) || Effect==Attack.Data.Effects.x11B)) // Psyshock
+					(IsPhysical(type) || Effect==Attack.Data.Effects.x11B)) // Psyshock
 					damagemult=Math.Round(damagemult*0.5);
 				if (opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.FIRE)
 					damagemult=Math.Round(damagemult*1.25);
@@ -670,10 +670,10 @@ namespace PokemonUnity.Combat
 					(attacker.hasWorkingItem(Items.DARK_GEM)     && type == Types.DARK) ||
 					(attacker.hasWorkingItem(Items.FAIRY_GEM)    && type == Types.FAIRY)){
 					damagemult=(Core.USENEWBATTLEMECHANICS)? Math.Round(damagemult*1.3) : Math.Round(damagemult * 1.5);
-					battle.pbCommonAnimation("UseItem", attacker, null);
-					battle.pbDisplayBrief(Game._INTL("The {1} strengthened {2}'s power!",
+					battle.CommonAnimation("UseItem", attacker, null);
+					battle.DisplayBrief(Game._INTL("The {1} strengthened {2}'s power!",
 						Kernal.ItemData[attacker.Item].ToString(), Kernal.MoveData[MoveId].Name));
-					attacker.pbConsumeItem();
+					attacker.ConsumeItem();
 				}
 			}
 			if ((attacker.hasWorkingItem(Items.SILK_SCARF)    && type == Types.NORMAL) ||
@@ -722,9 +722,9 @@ namespace PokemonUnity.Combat
 				damagemult=Math.Round(damagemult*1.2);
 			if (attacker.hasWorkingItem(Items.ODD_INCENSE)    && type == Types.PSYCHIC)
 				damagemult=Math.Round(damagemult*1.2);
-			if (attacker.hasWorkingItem(Items.MUSCLE_BAND)    && pbIsPhysical(type))
+			if (attacker.hasWorkingItem(Items.MUSCLE_BAND)    && IsPhysical(type))
 				damagemult = Math.Round(damagemult * 1.1);
-			if (attacker.hasWorkingItem(Items.WISE_GLASSES)   && pbIsSpecial (type))
+			if (attacker.hasWorkingItem(Items.WISE_GLASSES)   && IsSpecial (type))
 				damagemult = Math.Round(damagemult * 1.1);
 			if (attacker.hasWorkingItem(Items.LUSTROUS_ORB)
 				&& attacker.Species == Pokemons.PALKIA &&
@@ -738,7 +738,7 @@ namespace PokemonUnity.Combat
 				&& attacker.Species == Pokemons.GIRATINA &&
 				(type == Types.DRAGON || type == Types.GHOST))
 				damagemult=Math.Round(damagemult*1.2);
-			damagemult=pbBaseDamageMultiplier(damagemult, attacker, opponent);
+			damagemult=BaseDamageMultiplier(damagemult, attacker, opponent);
 			if (attacker.effects.MeFirst)
 				damagemult = Math.Round(damagemult * 1.5);
 			if (attacker.effects.HelpingHand && options.Contains(Core.SELFCONFUSE))
@@ -783,7 +783,7 @@ namespace PokemonUnity.Combat
 				atk=opponent.ATK;
 				atkstage = opponent.stages[(int)Stats.ATTACK] + 6;
 			}
-			if (type>=0 && pbIsSpecial (type)){
+			if (type>=0 && IsSpecial (type)){
 				atk = attacker.SPA;
 				atkstage=attacker.stages[(int)Stats.SPATK]+6;
 				if (Effect==Attack.Data.Effects.x12A){ // Foul Play
@@ -795,15 +795,15 @@ namespace PokemonUnity.Combat
 				if (opponent.damagestate.Critical && atkstage<6) atkstage=6; 
 				atk=(int)Math.Floor(atk*1.0*stagemul[atkstage]/stagediv[atkstage]);
 			}
-			if (attacker.hasWorkingAbility(Abilities.HUSTLE) && pbIsPhysical (type))
+			if (attacker.hasWorkingAbility(Abilities.HUSTLE) && IsPhysical (type))
 				atk = (int)Math.Round(atk * 1.5);
 			double atkmult = 0x1000;
 			if (battle.internalbattle){
-				if (battle.pbOwnedByPlayer(attacker.Index) && pbIsPhysical (type) &&
-					battle.pbPlayer().badges.Count(b => b == true) >=Core.BADGESBOOSTATTACK)
+				if (battle.OwnedByPlayer(attacker.Index) && IsPhysical (type) &&
+					battle.Player().badges.Count(b => b == true) >=Core.BADGESBOOSTATTACK)
 					atkmult = Math.Round(atkmult * 1.1);
-				if (battle.pbOwnedByPlayer(attacker.Index) && pbIsSpecial (type) &&
-					battle.pbPlayer().badges.Count(b => b == true) >= Core.BADGESBOOSTSPATK)
+				if (battle.OwnedByPlayer(attacker.Index) && IsSpecial (type) &&
+					battle.Player().badges.Count(b => b == true) >= Core.BADGESBOOSTSPATK)
 					atkmult = Math.Round(atkmult * 1.1);
 			}
 			if (attacker.HP<=Math.Floor(attacker.TotalHP/3d))
@@ -813,11 +813,11 @@ namespace PokemonUnity.Combat
 					(attacker.hasWorkingAbility(Abilities.SWARM)     && type == Types.BUG))
 				atkmult=Math.Round(atkmult*1.5);
 			if (attacker.hasWorkingAbility(Abilities.GUTS) &&
-				attacker.Status!=0 && pbIsPhysical (type))
+				attacker.Status!=0 && IsPhysical (type))
 				atkmult = Math.Round(atkmult * 1.5);
 			if ((attacker.hasWorkingAbility(Abilities.PLUS) || attacker.hasWorkingAbility(Abilities.MINUS)) &&
-				pbIsSpecial (type)){
-				IBattler partner = !battle.doublebattle ? null : attacker.pbPartner;
+				IsSpecial (type)){
+				IBattler partner = !battle.doublebattle ? null : attacker.Partner;
 				if (partner.hasWorkingAbility(Abilities.PLUS) || partner.hasWorkingAbility(Abilities.MINUS))
 					atkmult=Math.Round(atkmult*1.5);
 			}
@@ -825,31 +825,31 @@ namespace PokemonUnity.Combat
 				attacker.HP<=Math.Floor(attacker.TotalHP/2d))
 				atkmult = Math.Round(atkmult * 0.5);
 			if ((attacker.hasWorkingAbility(Abilities.PURE_POWER) ||
-				attacker.hasWorkingAbility(Abilities.HUGE_POWER)) && pbIsPhysical(type))
+				attacker.hasWorkingAbility(Abilities.HUGE_POWER)) && IsPhysical(type))
 				atkmult = Math.Round(atkmult * 2.0);
-			if (attacker.hasWorkingAbility(Abilities.SOLAR_POWER) && pbIsSpecial(type) &&
-				(battle.pbWeather==Weather.SUNNYDAY ||
-				battle.pbWeather==Weather.HARSHSUN))
+			if (attacker.hasWorkingAbility(Abilities.SOLAR_POWER) && IsSpecial(type) &&
+				(battle.Weather==Weather.SUNNYDAY ||
+				battle.Weather==Weather.HARSHSUN))
 				atkmult=Math.Round(atkmult*1.5);
 			if (attacker.hasWorkingAbility(Abilities.FLASH_FIRE) &&
 				attacker.effects.FlashFire && type == Types.FIRE)
 				atkmult=Math.Round(atkmult*1.5);
 			if (attacker.hasWorkingAbility(Abilities.SLOW_START) &&
-				attacker.turncount<=5 && pbIsPhysical(type))
+				attacker.turncount<=5 && IsPhysical(type))
 				atkmult = Math.Round(atkmult * 0.5);
-			if ((battle.pbWeather==Weather.SUNNYDAY ||
-				battle.pbWeather==Weather.HARSHSUN) && pbIsPhysical(type))
+			if ((battle.Weather==Weather.SUNNYDAY ||
+				battle.Weather==Weather.HARSHSUN) && IsPhysical(type))
 				if (attacker.hasWorkingAbility(Abilities.FLOWER_GIFT) ||
-					(battle.doublebattle && attacker.pbPartner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
+					(battle.doublebattle && attacker.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
 				atkmult=Math.Round(atkmult*1.5);
 			if (attacker.hasWorkingItem(Items.THICK_CLUB) &&
 				(attacker.Species == Pokemons.CUBONE ||
 				attacker.Species == Pokemons.MAROWAK) && 
-				pbIsPhysical(type))
+				IsPhysical(type))
 					atkmult = Math.Round(atkmult * 2.0);
 			if (attacker.hasWorkingItem(Items.DEEP_SEA_TOOTH) &&
 				attacker.Species == Pokemons.CLAMPERL && 
-				pbIsSpecial(type))
+				IsSpecial(type))
 					atkmult = Math.Round(atkmult * 2.0);
 			if (attacker.hasWorkingItem(Items.LIGHT_BALL)
 				&& attacker.Species == Pokemons.PIKACHU)
@@ -857,12 +857,12 @@ namespace PokemonUnity.Combat
 			if (attacker.hasWorkingItem(Items.SOUL_DEW) &&
 				(attacker.Species == Pokemons.LATIAS ||
 				attacker.Species == Pokemons.LATIOS) && 
-				pbIsSpecial(type) &&
+				IsSpecial(type) &&
 				!battle.rules[BattleRule.SOULDEWCLAUSE])
 				atkmult = Math.Round(atkmult * 1.5);
-			if (attacker.hasWorkingItem(Items.CHOICE_BAND) && pbIsPhysical(type))
+			if (attacker.hasWorkingItem(Items.CHOICE_BAND) && IsPhysical(type))
 				atkmult = Math.Round(atkmult * 1.5);
-			if (attacker.hasWorkingItem(Items.CHOICE_SPECS) && pbIsSpecial(type))
+			if (attacker.hasWorkingItem(Items.CHOICE_SPECS) && IsSpecial(type))
 				atkmult = Math.Round(atkmult * 1.5);
 			atk = (int)Math.Round(atk * atkmult * 1.0 / 0x1000);
 			#endregion
@@ -871,7 +871,7 @@ namespace PokemonUnity.Combat
 			int defstage = opponent.stages[(int)Stats.DEFENSE] + 6;
 			// TODO: Wonder Room should apply around here
 			bool applysandstorm=false;
-			if (type>=0 && pbIsSpecial(type) && Effect!=Attack.Data.Effects.x11B){ // Psyshock
+			if (type>=0 && IsSpecial(type) && Effect!=Attack.Data.Effects.x11B){ // Psyshock
 				defense=opponent.SPD;
 				defstage = opponent.stages[(int)Stats.SPDEF] + 6;
 				applysandstorm=true;
@@ -881,41 +881,41 @@ namespace PokemonUnity.Combat
 				if (opponent.damagestate.Critical && defstage>6)defstage=6; 
 				defense=(int)Math.Floor(defense*1.0*stagemul[defstage]/stagediv[defstage]);
 			}
-			if (battle.pbWeather==Weather.SANDSTORM &&
-				opponent.pbHasType(Types.ROCK) && applysandstorm)
+			if (battle.Weather==Weather.SANDSTORM &&
+				opponent.HasType(Types.ROCK) && applysandstorm)
 				defense = (int)Math.Round(defense * 1.5);
 			double defmult = 0x1000;
 			if (battle.internalbattle){
-				if (battle.pbOwnedByPlayer(opponent.Index) && pbIsPhysical(type) &&
-					battle.pbPlayer().badges.Count(b => b == true) >= Core.BADGESBOOSTDEFENSE)
+				if (battle.OwnedByPlayer(opponent.Index) && IsPhysical(type) &&
+					battle.Player().badges.Count(b => b == true) >= Core.BADGESBOOSTDEFENSE)
 					defmult = Math.Round(defmult * 1.1);
-				if (battle.pbOwnedByPlayer(opponent.Index) && pbIsSpecial(type) &&
-					battle.pbPlayer().badges.Count(b => b == true) >= Core.BADGESBOOSTSPDEF)
+				if (battle.OwnedByPlayer(opponent.Index) && IsSpecial(type) &&
+					battle.Player().badges.Count(b => b == true) >= Core.BADGESBOOSTSPDEF)
 					defmult = Math.Round(defmult * 1.1);
 			}
 			if (battle.field.GrassyTerrain>0)
 				defmult=Math.Round(defmult*1.5);
 			if (!attacker.hasMoldBreaker()){
 				if (opponent.hasWorkingAbility(Abilities.MARVEL_SCALE) &&
-					opponent.Status>0 && pbIsPhysical(type))
+					opponent.Status>0 && IsPhysical(type))
 					defmult = Math.Round(defmult * 1.5);
-				if ((battle.pbWeather==Weather.SUNNYDAY ||
-					battle.pbWeather==Weather.HARSHSUN) && pbIsSpecial(type))
+				if ((battle.Weather==Weather.SUNNYDAY ||
+					battle.Weather==Weather.HARSHSUN) && IsSpecial(type))
 				if (opponent.hasWorkingAbility(Abilities.FLOWER_GIFT) ||
-					(battle.doublebattle && opponent.pbPartner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
+					(battle.doublebattle && opponent.Partner.hasWorkingAbility(Abilities.FLOWER_GIFT)))
 					defmult=Math.Round(defmult*1.5);
 			}
-			if (opponent.hasWorkingItem(Items.ASSAULT_VEST) && pbIsSpecial(type))
+			if (opponent.hasWorkingItem(Items.ASSAULT_VEST) && IsSpecial(type))
 				defmult = Math.Round(defmult * 1.5);
 			if (opponent.hasWorkingItem(Items.EVIOLITE)){
-				//Data.PokemonEvolution[] evos=Evolution.pbGetEvolvedFormData(opponent.Species);
+				//Data.PokemonEvolution[] evos=Evolution.GetEvolvedFormData(opponent.Species);
 				//if (evos != null && evos.Length>0)      
 				if (Kernal.PokemonEvolutionsData[opponent.Species].Length>0)
 					defmult=Math.Round(defmult*1.5);
 			}
 			if (opponent.hasWorkingItem(Items.DEEP_SEA_SCALE) &&
 				opponent.Species == Pokemons.CLAMPERL && 
-				pbIsSpecial(type))
+				IsSpecial(type))
 				defmult = Math.Round(defmult * 2.0);
 			if (opponent.hasWorkingItem(Items.METAL_POWDER) &&
 				opponent.Species == Pokemons.DITTO &&
@@ -924,7 +924,7 @@ namespace PokemonUnity.Combat
 			if (opponent.hasWorkingItem(Items.SOUL_DEW) &&
 				(opponent.Species == Pokemons.LATIAS ||
 				opponent.Species == Pokemons.LATIOS) && 
-				pbIsSpecial(type) &&
+				IsSpecial(type) &&
 				!battle.rules[BattleRule.SOULDEWCLAUSE]) 
 				defmult = Math.Round(defmult * 1.5);
 			defense = (int)Math.Round(defense * defmult * 1.0 / 0x1000);
@@ -932,10 +932,10 @@ namespace PokemonUnity.Combat
 			#region ##### Main damage calculation #####
 			int damage=(int)Math.Floor(Math.Floor(Math.Floor(2.0*attacker.Level/5+2)* basedmg*atk/defense)/50)+2;
 			// Multi-targeting attacks
-			if (pbTargetsMultiple(attacker))
+			if (TargetsMultiple(attacker))
 				damage = (int)Math.Round(damage * 0.75);
 			// Weather
-			switch (battle.pbWeather) { 
+			switch (battle.Weather) { 
 				case Weather.SUNNYDAY: case Weather.HARSHSUN:
 					if (type == Types.FIRE)
 					damage=(int)Math.Round(damage*1.5);
@@ -954,18 +954,18 @@ namespace PokemonUnity.Combat
 				damage = (Core.USENEWBATTLEMECHANICS) ? (int)Math.Round(damage * 1.5) : (int)Math.Round(damage * 2.0);
 			// Random variance
 			if (options.Contains(Core.NOWEIGHTING)){ //If RNG affects damage
-				int random=85+battle.pbRandom(16);
+				int random=85+battle.Random(16);
 				damage=(int)Math.Floor(damage* random/100.0);
 			}
 			// STAB
-			if (attacker.pbHasType(type) && options.Contains(Core.IGNOREPKMNTYPES))
+			if (attacker.HasType(type) && options.Contains(Core.IGNOREPKMNTYPES))
 				if (attacker.hasWorkingAbility(Abilities.ADAPTABILITY))
 					damage= (int)Math.Round(damage*2d);
 				else
 					damage= (int)Math.Round(damage*1.5);
 			// Type effectiveness
 			if (options.Contains(Core.IGNOREPKMNTYPES)){
-				double typemod=pbTypeModMessages(type, attacker, opponent);
+				double typemod=TypeModMessages(type, attacker, opponent);
 				damage= (int)Math.Round(damage* typemod/8.0);
 				opponent.damagestate.TypeMod=typemod;
 				if (typemod==0){
@@ -976,7 +976,7 @@ namespace PokemonUnity.Combat
 			} else
 				opponent.damagestate.TypeMod= 8;
 				// Burn
-			if (attacker.Status==Status.BURN && pbIsPhysical(type) &&
+			if (attacker.Status==Status.BURN && IsPhysical(type) &&
 				!attacker.hasWorkingAbility(Abilities.GUTS) &&
 				!(Core.USENEWBATTLEMECHANICS && Effect==Attack.Data.Effects.x0AA)) // Facade
 				damage=(int)Math.Round(damage*0.5);
@@ -987,13 +987,13 @@ namespace PokemonUnity.Combat
 			if (!opponent.damagestate.Critical && options.Contains(Core.NOREFLECT) &&
 				!attacker.hasWorkingAbility(Abilities.INFILTRATOR)){
 				// Reflect
-				if (opponent.pbOwnSide.Reflect>0 && pbIsPhysical(type))
+				if (opponent.OwnSide.Reflect>0 && IsPhysical(type))
 					if (battle.doublebattle)
 						finaldamagemult = Math.Round(finaldamagemult * 0.66);
 					else
 						finaldamagemult=Math.Round(finaldamagemult*0.5);
 				// Light Screen
-				if (opponent.pbOwnSide.LightScreen>0 && pbIsSpecial(type))
+				if (opponent.OwnSide.LightScreen>0 && IsSpecial(type))
 					if (battle.doublebattle)
 						finaldamagemult = Math.Round(finaldamagemult * 0.66);
 					else
@@ -1012,7 +1012,7 @@ namespace PokemonUnity.Combat
 					opponent.hasWorkingAbility(Abilities.FILTER)) &&
 					opponent.damagestate.TypeMod>8)
 					finaldamagemult=Math.Round(finaldamagemult*0.75);
-				if (battle.doublebattle && opponent.pbPartner.hasWorkingAbility(Abilities.FRIEND_GUARD))
+				if (battle.doublebattle && opponent.Partner.hasWorkingAbility(Abilities.FRIEND_GUARD))
 					finaldamagemult=Math.Round(finaldamagemult*0.75);
 			}
 			if (attacker.hasWorkingItem(Items.METRONOME)){
@@ -1046,23 +1046,23 @@ namespace PokemonUnity.Combat
 					(opponent.hasWorkingItem(Items.ROSELI_BERRY)  && type == Types.FAIRY)) { 
 					finaldamagemult=Math.Round(finaldamagemult*0.5);
 					opponent.damagestate.BerryWeakened=true;
-					battle.pbCommonAnimation("UseItem", opponent, null);
+					battle.CommonAnimation("UseItem", opponent, null);
 				}
 			if (opponent.hasWorkingItem(Items.CHILAN_BERRY) && type == Types.NORMAL &&
 				options.Contains(Core.IGNOREPKMNTYPES)){
 				finaldamagemult=Math.Round(finaldamagemult*0.5);
 				opponent.damagestate.BerryWeakened=true;
-				battle.pbCommonAnimation("UseItem", opponent, null);
+				battle.CommonAnimation("UseItem", opponent, null);
 			}
 			#endregion
-			finaldamagemult = pbModifyDamage(finaldamagemult, attacker, opponent);
+			finaldamagemult = ModifyDamage(finaldamagemult, attacker, opponent);
 			damage= (int)Math.Round(damage* finaldamagemult*1.0/0x1000);
 				opponent.damagestate.CalcDamage=damage;
 				GameDebug.Log($"Move's damage calculated to be #{damage}");
 			return damage;
 		}
 
-		public virtual int pbReduceHPDamage(int damage, IBattler attacker, IBattler opponent){
+		public virtual int ReduceHPDamage(int damage, IBattler attacker, IBattler opponent){
 			//bool endure=false;
 			if (opponent.effects.Substitute>0 && !ignoresSubstitute(attacker) &&
 				(attacker.Species == Pokemons.NONE || attacker.Index!=opponent.Index)){
@@ -1070,11 +1070,11 @@ namespace PokemonUnity.Combat
 				if (damage>opponent.effects.Substitute)damage=opponent.effects.Substitute;
 				opponent.effects.Substitute-=damage;
 				opponent.damagestate.Substitute= true;
-				if (battle.scene is IPokeBattle_DebugSceneNoGraphics s0) s0.pbDamageAnimation(opponent,0);
-				battle.pbDisplayPaused(Game._INTL("The substitute took damage for {1}!",opponent.Name));
+				if (battle.scene is IPokeBattle_DebugSceneNoGraphics s0) s0.DamageAnimation(opponent,0);
+				battle.DisplayPaused(Game._INTL("The substitute took damage for {1}!",opponent.Name));
 				if (opponent.effects.Substitute<=0){
 				opponent.effects.Substitute=0;
-				battle.pbDisplayPaused(Game._INTL("{1}'s substitute faded!",opponent.Name));
+				battle.DisplayPaused(Game._INTL("{1}'s substitute faded!",opponent.Name));
 				GameDebug.Log($"[End of effect] #{opponent.ToString()}'s Substitute faded");
 				}
 				opponent.damagestate.HPLost=damage;
@@ -1098,7 +1098,7 @@ namespace PokemonUnity.Combat
 							opponent.damagestate.FocusSash=true;
 							damage= damage - 1;
 							GameDebug.Log($"[Item triggered] #{opponent.ToString()}'s Focus Sash"); }
-						else if (opponent.hasWorkingItem(Items.FOCUS_BAND) && battle.pbRandom(10)==0){
+						else if (opponent.hasWorkingItem(Items.FOCUS_BAND) && battle.Random(10)==0){
 							opponent.damagestate.FocusBand=true;
 							damage=damage-1;
 							GameDebug.Log($"[Item triggered] #{opponent.ToString()}'s Focus Band");
@@ -1114,8 +1114,8 @@ namespace PokemonUnity.Combat
 				else if (opponent.damagestate.TypeMod>8)
 					effectiveness=2;   // "Super effective"
 				if (opponent.damagestate.TypeMod!=0)
-					if (battle.scene is IPokeBattle_DebugSceneNoGraphics s1) s1.pbDamageAnimation(opponent, (TypeEffective)effectiveness);
-				if (battle.scene is IPokeBattle_DebugSceneNoGraphics s2) s2.pbHPChanged(opponent, oldhp);
+					if (battle.scene is IPokeBattle_DebugSceneNoGraphics s1) s1.DamageAnimation(opponent, (TypeEffective)effectiveness);
+				if (battle.scene is IPokeBattle_DebugSceneNoGraphics s2) s2.HPChanged(opponent, oldhp);
 				opponent.damagestate.HPLost=damage;
 			}
 			return damage;
@@ -1123,38 +1123,38 @@ namespace PokemonUnity.Combat
 		#endregion
 
 		#region Effects
-		public virtual void pbEffectMessages(IBattler attacker, IBattler opponent, bool ignoretype= false, int[] alltargets= null){
+		public virtual void EffectMessages(IBattler attacker, IBattler opponent, bool ignoretype= false, int[] alltargets= null){
 			if (opponent.damagestate.Critical)
 				if (alltargets != null && alltargets.Length>1)
-					battle.pbDisplay(Game._INTL("A critical hit on {1}!",opponent.ToString(true)));
+					battle.Display(Game._INTL("A critical hit on {1}!",opponent.ToString(true)));
 				else
-					battle.pbDisplay(Game._INTL("A critical hit!"));
-			if (!pbIsMultiHit() && attacker.effects.ParentalBond==0){
+					battle.Display(Game._INTL("A critical hit!"));
+			if (!IsMultiHit() && attacker.effects.ParentalBond==0){
 				if (opponent.damagestate.TypeMod>8)
 					if (alltargets != null && alltargets.Length>1)
-						battle.pbDisplay(Game._INTL("It's super effective on {1}!",opponent.ToString(true)));
+						battle.Display(Game._INTL("It's super effective on {1}!",opponent.ToString(true)));
 					else
-						battle.pbDisplay(Game._INTL("It's super effective!"));
+						battle.Display(Game._INTL("It's super effective!"));
 					else if (opponent.damagestate.TypeMod>=1 && opponent.damagestate.TypeMod<8)
 				if (alltargets != null && alltargets.Length>1)
-					battle.pbDisplay(Game._INTL("It's not very effective on {1}...",opponent.ToString(true)));
+					battle.Display(Game._INTL("It's not very effective on {1}...",opponent.ToString(true)));
 				else
-					battle.pbDisplay(Game._INTL("It's not very effective..."));
+					battle.Display(Game._INTL("It's not very effective..."));
 			}
 			if (opponent.damagestate.Endured)
-				battle.pbDisplay(Game._INTL("{1} endured the hit!", opponent.ToString()));
+				battle.Display(Game._INTL("{1} endured the hit!", opponent.ToString()));
 			else if (opponent.damagestate.Sturdy)
-				battle.pbDisplay(Game._INTL("{1} hung on with Sturdy!", opponent.ToString()));
+				battle.Display(Game._INTL("{1} hung on with Sturdy!", opponent.ToString()));
 			else if (opponent.damagestate.FocusSash){
-				battle.pbDisplay(Game._INTL("{1} hung on using its Focus Sash!", opponent.ToString()));
-				opponent.pbConsumeItem(); }
+				battle.Display(Game._INTL("{1} hung on using its Focus Sash!", opponent.ToString()));
+				opponent.ConsumeItem(); }
 			else if (opponent.damagestate.FocusBand)
-				battle.pbDisplay(Game._INTL("{1} hung on using its Focus Band!", opponent.ToString()));
+				battle.Display(Game._INTL("{1} hung on using its Focus Band!", opponent.ToString()));
 		}
 
-		public virtual int pbEffectFixedDamage(int damage, IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
-			Types type=pbType(this.Type, attacker, opponent);
-			double typemod=pbTypeModMessages(type, attacker, opponent);
+		public virtual int EffectFixedDamage(int damage, IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
+			Types type=GetType(this.Type, attacker, opponent);
+			double typemod=TypeModMessages(type, attacker, opponent);
 			opponent.damagestate.Critical=false;
 			opponent.damagestate.TypeMod=0;
 			opponent.damagestate.CalcDamage=0;
@@ -1162,37 +1162,37 @@ namespace PokemonUnity.Combat
 			if (typemod!=0){
 				opponent.damagestate.CalcDamage=damage;
 				opponent.damagestate.TypeMod=8;
-				pbShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
+				ShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
 				if (damage<1)damage = 1;  // HP reduced can't be less than 1
-				damage=pbReduceHPDamage(damage, attacker, opponent);
-				pbEffectMessages(attacker, opponent, alltargets: alltargets);
-				pbOnDamageLost(damage, attacker, opponent);
+				damage=ReduceHPDamage(damage, attacker, opponent);
+				EffectMessages(attacker, opponent, alltargets: alltargets);
+				OnDamageLost(damage, attacker, opponent);
 				return damage;
 			}
 			return 0;
 		}
 
-		public virtual int pbEffect(IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
+		public virtual int GetEffect(IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
 			if (!opponent.IsNotNullOrNone()) return 0; //.Species == Pokemons.NONE
-			int damage = pbCalcDamage(attacker, opponent);
+			int damage = CalcDamage(attacker, opponent);
 			if (opponent.damagestate.TypeMod!=0)
-				pbShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
-			damage = pbReduceHPDamage(damage, attacker, opponent);
-			pbEffectMessages(attacker, opponent);
-			pbOnDamageLost(damage, attacker, opponent);
+				ShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
+			damage = ReduceHPDamage(damage, attacker, opponent);
+			EffectMessages(attacker, opponent);
+			OnDamageLost(damage, attacker, opponent);
 			return damage;   // The HP lost by the opponent due to this attack
 		}
 
-		public virtual void pbEffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects){
+		public virtual void EffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects){
 		}
 		#endregion
 
 		#region Using the move
-		public virtual bool pbOnStartUse(IBattler attacker){
+		public virtual bool OnStartUse(IBattler attacker){
 			return true;
 		}
 
-		public virtual void pbAddTarget(IList<IBattler> targets, IBattler attacker){
+		public virtual void AddTarget(IList<IBattler> targets, IBattler attacker){
 		}
 
 		/// <summary>
@@ -1205,34 +1205,34 @@ namespace PokemonUnity.Combat
 		/// 1 if the attack should exit as a success
 		/// 2 if Bide is storing energy
 		/// </returns>
-		public virtual int pbDisplayUseMessage(IBattler attacker){
-			battle.pbDisplayBrief(Game._INTL("{1} used\r\n{2}!",attacker.ToString(), Kernal.MoveData[MoveId].Name));
+		public virtual int DisplayUseMessage(IBattler attacker){
+			battle.DisplayBrief(Game._INTL("{1} used\r\n{2}!",attacker.ToString(), Kernal.MoveData[MoveId].Name));
 			return 0;
 		}
 
-		public virtual void pbShowAnimation(Moves id, IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
+		public virtual void ShowAnimation(Moves id, IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
 			if (!showanimation)return;
 			if (attacker.effects.ParentalBond == 1) { 
-				battle.pbCommonAnimation("ParentalBond",attacker,opponent);
+				battle.CommonAnimation("ParentalBond",attacker,opponent);
 				return;
 			}
-			battle.pbAnimation(id, attacker, opponent, hitnum);
+			battle.Animation(id, attacker, opponent, hitnum);
 		}
 
-		public virtual void pbOnDamageLost(int damage, IBattler attacker, IBattler opponent){
+		public virtual void OnDamageLost(int damage, IBattler attacker, IBattler opponent){
 			// Used by Counter/Mirror Coat/Revenge/Focus Punch/Bide
 			Types type= this.Type;
-			type = pbType(type, attacker, opponent);
+			type = GetType(type, attacker, opponent);
 			if (opponent.effects.Bide>0){
 				opponent.effects.BideDamage+=damage;
 				opponent.effects.BideTarget= attacker.Index;
 			}
 			if (Effect==Attack.Data.Effects.x088) // Hidden Power
 				type=Types.NORMAL; //getConst(Types.NORMAL) || 0;
-			if (pbIsPhysical(type)){
+			if (IsPhysical(type)){
 				opponent.effects.Counter= damage;
 				opponent.effects.CounterTarget= attacker.Index;
-			} else if (pbIsSpecial(type)){
+			} else if (IsSpecial(type)){
 				opponent.effects.MirrorCoat= damage;
 				opponent.effects.MirrorCoatTarget= attacker.Index;
 			}
@@ -1241,7 +1241,7 @@ namespace PokemonUnity.Combat
 			opponent.lastAttacker.Add(attacker.Index); // for Revenge/Metal Burst
 		}
 
-		public virtual bool pbMoveFailed(IBattler attacker, IBattler opponent){
+		public virtual bool MoveFailed(IBattler attacker, IBattler opponent){
 			// Called to determine whether the move failed
 			return false;
 		}

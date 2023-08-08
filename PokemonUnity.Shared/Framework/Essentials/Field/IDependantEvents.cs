@@ -20,27 +20,27 @@ namespace PokemonEssentials.Interface.Field
 
 	public interface IGameDependantEvents
 	{
-		void pbRemoveDependencies();
+		void RemoveDependencies();
 
-		void pbAddDependency(IGameEvent @event);
+		void AddDependency(IGameCharacter @event);
 
-		void pbRemoveDependency(IGameEvent @event);
+		void RemoveDependency(IGameCharacter @event);
 
-		void pbAddDependency2(int eventID, string eventName, object commonEvent);
+		void AddDependency2(int eventID, string eventName, object commonEvent);
 
 		/// <summary>
-		/// Gets the Game_Character object associated with a dependent event.
+		/// Gets the <see cref="IGameCharacter"/> object associated with a dependent event.
 		/// </summary>
 		/// <param name="eventName"></param>
-		//void pbGetDependency(string eventName) {
+		IGameCharacter GetDependency(string eventName);
 		//  return Game.GameData.PokemonTemp.dependentEvents.getEventByName(eventName);
 		//}
 
-		void pbRemoveDependency2(string eventName);
+		void RemoveDependency2(string eventName);
 
 
 
-		bool pbTestPass(IGameCharacter follower, float x, float y, int? direction = null);
+		bool TestPass(IGameCharacter follower, float x, float y, int? direction = null);
 
 		/// <summary>
 		/// Same map only
@@ -63,7 +63,7 @@ namespace PokemonEssentials.Interface.Field
 		/// <param name="direction"></param>
 		void jumpFancy(IGameCharacter follower, int direction);
 
-		void pbFancyMoveTo(IGameCharacter follower, float newX, float newY);
+		void FancyMoveTo(IGameCharacter follower, float newX, float newY);
 
 		/// <summary>
 		/// Fires whenever a spriteset is created.
@@ -87,12 +87,13 @@ namespace PokemonEssentials.Interface.Field
 		//   scene=e[0];
 		//   mapChanged=e[1];
 		//   if (mapChanged) {
-		//	 Game.GameData.PokemonTemp.dependentEvents.pbMapChangeMoveDependentEvents;
+		//	 Game.GameData.PokemonTemp.dependentEvents.MapChangeMoveDependentEvents;
 		//   }}
 	}
 
 	public interface IGlobalMetadataDependantEvents {
-		IDependentEvents dependentEvents				{ get; }
+		//IList<IDependentEvents> dependentEvents				{ get; }
+		IList<IGameEvent> dependentEvents				{ get; }
 
 		//public void dependentEvents() {
 		//	if (!@dependentEvents) @dependentEvents=[];
@@ -104,6 +105,7 @@ namespace PokemonEssentials.Interface.Field
 		void set_starting();
 	}
 
+	//ToDo: replace IGameEvents to IGameCharacters?
 	public interface IDependentEvents {
 		// eventData input parameter:
 		//  [Original map ID, original event ID, current map ID,
@@ -116,26 +118,26 @@ namespace PokemonEssentials.Interface.Field
 
 		IDependentEvents initialize();
 
-		int pbEnsureEvent(IGameEvent @event, int newMapID);
+		int EnsureEvent(IGameEvent @event, int newMapID);
 
-		void pbFollowEventAcrossMaps(IGameCharacter leader, IGameCharacter follower, bool instant = false, bool leaderIsTrueLeader = true);
+		void FollowEventAcrossMaps(IGameCharacter leader, IGameCharacter follower, bool instant = false, bool leaderIsTrueLeader = true);
 
 		void debugEcho();
 
-		void pbMapChangeMoveDependentEvents();
+		void MapChangeMoveDependentEvents();
 
-		void pbMoveDependentEvents();
+		void MoveDependentEvents();
 
-		void pbTurnDependentEvents();
+		void TurnDependentEvents();
 
 		//ToDo: Review Return Datatypes
-		IEnumerator<KeyValuePair<IGameEvent, IGameEvent>> eachEvent();
+		IEnumerable<KeyValuePair<IGameEvent, IGameEvent>> eachEvent();
 
 		void updateDependentEvents();
 
 		void removeEvent(IGameEvent @event);
 
-		IGameEvent getEventByName(string name);
+		IGameCharacter getEventByName(string name);
 
 		void removeAllEvents();
 

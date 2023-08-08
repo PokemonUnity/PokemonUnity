@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity.Monster;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonUnity.Overworld
 {
@@ -11,15 +14,16 @@ namespace PokemonUnity.Overworld
 	{
 		#region Variables
 		//protected virtual List<Pokemon> PokemonPool { get; private set; }
-		public virtual IEncounterData[] Encounters { get; protected set; }
+		public virtual IMapEncounterMetadata[] Encounters { get; protected set; }
 		//public ConditionValue[] Conditions { get; private set; }
 		/// <summary>
 		/// Key: SlotId | Value: Pokemon Array
 		/// </summary>
-		public virtual IDictionary<int, IList<Pokemons>> Slot { get; protected set; }
+		//public virtual IDictionary<int, IList<Pokemons>> Slot { get; protected set; }
+		public virtual IDictionary<int, IList<IEncounterPokemon>> Slot { get; protected set; }
 
 		/// <summary>
-		/// This array of numbers total up to 100%, 
+		/// This array of numbers total up to 100%,
 		/// and represents a pool of pokemon that has chance to appear
 		/// </summary>
 		public virtual int[] Chances { get; protected set; }
@@ -36,18 +40,20 @@ namespace PokemonUnity.Overworld
 		public Encounter()
 		{
 			//PokemonPool = new List<Pokemon>();
-			Encounters = new IEncounterData[0];
+			Encounters = new IMapEncounterMetadata[0];
 			//Conditions = new ConditionValue[0];
-			Slot = new Dictionary<int, IList<Pokemons>>();
+			//Slot = new Dictionary<int, IList<Pokemons>>();
+			Slot = new Dictionary<int, IList<IEncounterPokemon>>();
 		}
 
-		public Encounter(int[] slots, IEncounterData[] data) : this()
+		public Encounter(int[] slots, IMapEncounterMetadata[] data) : this()
 		{
 			Chances = slots;
 			int i = 0;
 			foreach (int slot in Chances)
 			{
-				Slot.Add(i, new List<Pokemons>()); i++;
+				//Slot.Add(i, new List<Pokemons>()); i++;
+				Slot.Add(i, new List<IEncounterPokemon>()); i++;
 			}
 			Encounters = data;
 		}
@@ -66,14 +72,14 @@ namespace PokemonUnity.Overworld
 			Rate = density;
 			List<int> chance = new List<int>();
 			List<EncounterSlotData> encounters = new List<EncounterSlotData>();
-			for (int i = 100, n = 0; i >= 0; i--)
+			for (int i = 100, n = 0; i > 0; i--)
 			{
 				for (; n < slots.Length; n++)
 				{
 					if(slots[n].Frequency == 0)
 						continue;
 					if(i - slots[n].Frequency >= 0)
-					{ 
+					{
 						encounters.Add(slots[n]);
 						chance.Add(slots[n].Frequency);
 						i = i - slots[n].Frequency;
@@ -99,6 +105,7 @@ namespace PokemonUnity.Overworld
 					encounters.Add(new EncounterSlotData());
 			}
 			//Encounters = encounters.ToArray();
+			//Slot = encounters;
 		}
 
 		public static bool EncounterConditionsMet(ConditionValue[] encounter)
@@ -112,8 +119,8 @@ namespace PokemonUnity.Overworld
 			if (//g.Radio == (byte)ConditionValue.RADIO_OFF && (
 				(encounter.Contains(ConditionValue.RADIO_HOENN) ||
 				encounter.Contains(ConditionValue.RADIO_SINNOH))
-				//encounter.Contains((ConditionValue)Game.Radio) 
-				&& Game.Radio == (byte)ConditionValue.RADIO_OFF 
+				//encounter.Contains((ConditionValue)Game.Radio)
+				&& Game.Radio == (byte)ConditionValue.RADIO_OFF
 			)
 				return false;
 			if (encounter.Contains((ConditionValue)Game.Slot))

@@ -85,14 +85,14 @@ namespace PokemonUnity.Combat
 			return this;
 		}
 
-		public IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		public IBattle CreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
 			//return new PokeBattle_RecordedBattlePalace(scene, trainer1[0].party, trainer2[0].party, trainer1, trainer2);
 			//ToDo: Uncomment above and remove below...
 			return new PokeBattle_BattlePalace(scene, trainer1[0].party, trainer2[0].party, trainer1, trainer2);
 		}
 
-		public int pbMoveCategory(IBattleMove move) {
+		public int MoveCategory(IBattleMove move) {
 			if (//Game.MoveData[move.id].Target==Attack.Data.Targets. 0x10 ||			//ToDo: Finish Convert from Essentials to Veekun
 				move.Effect==Attack.Data.Effects.x01B) {								// Bide
 				return 1;
@@ -106,12 +106,12 @@ namespace PokemonUnity.Combat
 		}
 
 		/// <summary>
-		/// Different implementation of pbCanChooseMove, ignores Imprison/Torment/Taunt/Disable/Encore
+		/// Different implementation of CanChooseMove, ignores Imprison/Torment/Taunt/Disable/Encore
 		/// </summary>
 		/// <param name="idxPokemon"></param>
 		/// <param name="idxMove"></param>
 		/// <returns></returns>
-		public bool pbCanChooseMovePartial (int idxPokemon,int idxMove) {
+		public bool CanChooseMovePartial (int idxPokemon,int idxMove) {
 			PokemonEssentials.Interface.PokeBattle.IBattler thispkmn=@battlers[idxPokemon];
 			IBattleMove thismove=thispkmn.moves[idxMove];
 			if (!thismove.IsNotNullOrNone()||thismove.id==0) {
@@ -134,7 +134,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public void pbPinchChange(int idxPokemon) {
+		public void PinchChange(int idxPokemon) {
 			PokemonEssentials.Interface.PokeBattle.IBattler thispkmn=@battlers[idxPokemon];
 			if (!thispkmn.effects.Pinch && thispkmn.Status!=Status.SLEEP &&
 				thispkmn.HP<=(int)Math.Floor(thispkmn.TotalHP/2f)) {
@@ -147,7 +147,7 @@ namespace PokemonUnity.Combat
 					nature==Natures.HARDY||
 					nature==Natures.DOCILE||
 					nature==Natures.SERIOUS) {
-					pbDisplay(Game._INTL("{1} is eager for more!",thispkmn.ToString()));
+					Display(Game._INTL("{1} is eager for more!",thispkmn.ToString()));
 				}
 				if (nature==Natures.CAREFUL||
 					nature==Natures.RASH||
@@ -155,7 +155,7 @@ namespace PokemonUnity.Combat
 					nature==Natures.SASSY||
 					nature==Natures.MILD||
 					nature==Natures.TIMID) {
-					pbDisplay(Game._INTL("{1} began growling deeply!",thispkmn.ToString()));
+					Display(Game._INTL("{1} began growling deeply!",thispkmn.ToString()));
 				}
 				if (nature==Natures.GENTLE||
 					nature==Natures.ADAMANT||
@@ -163,7 +163,7 @@ namespace PokemonUnity.Combat
 					nature==Natures.LONELY||
 					nature==Natures.RELAXED||
 					nature==Natures.NAUGHTY) {
-					pbDisplay(Game._INTL("A glint appears in {1}'s eyes!",thispkmn.ToString(true)));
+					Display(Game._INTL("A glint appears in {1}'s eyes!",thispkmn.ToString(true)));
 				}
 				if (nature==Natures.JOLLY||
 					nature==Natures.BOLD||
@@ -171,19 +171,19 @@ namespace PokemonUnity.Combat
 					nature==Natures.CALM||
 					nature==Natures.IMPISH||
 					nature==Natures.MODEST) {
-					pbDisplay(Game._INTL("{1} is getting into position!",thispkmn.ToString()));
+					Display(Game._INTL("{1} is getting into position!",thispkmn.ToString()));
 				}
 			}
 		}
 
-		public override bool pbEnemyShouldWithdraw (int index) {
+		public override bool EnemyShouldWithdraw (int index) {
 			bool shouldswitch=false;
 			if (@battlers[index].effects.PerishSong==1) {
 				shouldswitch=true;
-			} else if (!pbCanChooseMove(index,0,false) &&
-				!pbCanChooseMove(index,1,false) &&
-				!pbCanChooseMove(index,2,false) &&
-				!pbCanChooseMove(index,3,false) &&
+			} else if (!CanChooseMove(index,0,false) &&
+				!CanChooseMove(index,1,false) &&
+				!CanChooseMove(index,2,false) &&
+				!CanChooseMove(index,3,false) &&
 				@battlers[index].turncount>=0 &&
 				@battlers[index].turncount>5) {
 				shouldswitch=true;
@@ -194,9 +194,9 @@ namespace PokemonUnity.Combat
 				int maxindex=-1;
 				int maxpercent=0;
 				int factor=0;
-				PokemonEssentials.Interface.PokeBattle.IPokemon[] party=pbParty(index);
+				PokemonEssentials.Interface.PokeBattle.IPokemon[] party=Party(index);
 				for (int i = 0; i < party.Length; i++) {
-					if (pbCanSwitch(index,i,false)) {
+					if (CanSwitch(index,i,false)) {
 						percents[i]=party[i].HP*100/party[i].TotalHP;
 						if (percents[i]>maxpercent) {
 							maxindex=i;
@@ -230,16 +230,16 @@ namespace PokemonUnity.Combat
 				}
 				shouldswitch=(Core.Rand.Next(100)<factor);
 				if (shouldswitch && maxindex>=0) {
-					pbRegisterSwitch(index,maxindex);
+					RegisterSwitch(index,maxindex);
 					return true;
 				}
 			}
 			@justswitched[index]=shouldswitch;
 			if (shouldswitch) {
-				PokemonEssentials.Interface.PokeBattle.IPokemon[] party=pbParty(index);
+				PokemonEssentials.Interface.PokeBattle.IPokemon[] party=Party(index);
 				for (int i = 0; i < party.Length; i++) {
-					if (pbCanSwitch(index,i,false)) {
-						pbRegisterSwitch(index,i);
+					if (CanSwitch(index,i,false)) {
+						RegisterSwitch(index,i);
 						return true;
 					}
 				}
@@ -247,7 +247,7 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public override bool pbRegisterMove(int idxPokemon,int idxMove,bool showMessages=true) {
+		public override bool RegisterMove(int idxPokemon,int idxMove,bool showMessages=true) {
 			PokemonEssentials.Interface.PokeBattle.IBattler thispkmn=@battlers[idxPokemon];
 			if (idxMove==-2) {
 				//@choices[idxPokemon][0]=1; // Move
@@ -266,7 +266,7 @@ namespace PokemonUnity.Combat
 			return true;
 		}
 
-		public override bool pbAutoFightMenu(int idxPokemon) {
+		public override bool AutoFightMenu(int idxPokemon) {
 			PokemonEssentials.Interface.PokeBattle.IBattler thispkmn=@battlers[idxPokemon];
 			Natures nature=thispkmn.pokemon.Nature;
 			int randnum=Core.Rand.Next(100);
@@ -291,28 +291,28 @@ namespace PokemonUnity.Combat
 			}
 			int[] moves=new int[4];
 			for (int i = 0; i < thispkmn.moves.Length; i++) {
-				if (!pbCanChooseMovePartial(idxPokemon,i)) continue;
-				if (pbMoveCategory(thispkmn.moves[i])==category) {
+				if (!CanChooseMovePartial(idxPokemon,i)) continue;
+				if (MoveCategory(thispkmn.moves[i])==category) {
 					moves[moves.Length]=i;
 				}
 			}
 			if (moves.Length==0) {
 				// No moves of selected category
-				pbRegisterMove(idxPokemon,-2);
+				RegisterMove(idxPokemon,-2);
 			}
 			else {
 				int chosenmove=moves[Core.Rand.Next(moves.Length)];
-				pbRegisterMove(idxPokemon,chosenmove);
+				RegisterMove(idxPokemon,chosenmove);
 			}
 			return true;
 		}
 
-		public override void pbEndOfRoundPhase() {
-			base.pbEndOfRoundPhase();
+		public override void EndOfRoundPhase() {
+			base.EndOfRoundPhase();
 			if (@decision!=0) return;
 			for (int i = 0; i < 4; i++) {
 				if (!@battlers[i].isFainted()) {
-					pbPinchChange(i);
+					PinchChange(i);
 				}
 			}
 		}

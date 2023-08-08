@@ -11,7 +11,7 @@ namespace PokemonUnity.Combat
 	//ToDo: Rename class to Battler
 	public partial class Pokemon : PokemonEssentials.Interface.PokeBattle.IBattlerShadowPokemon
 	{
-		public void pbInitPokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn, int pkmnIndex) { //, params object[] placeholder
+		public void InitPokemon(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn, int pkmnIndex) { //, params object[] placeholder
 			if (pokemonIndex>=0 && pkmn is IPokemonShadowPokemon p && inHyperMode() && !isFainted()) { //ToDo: Should move this to an Event Listener based on Battle Menu Selection
 				// Called out of hypermode
 				p.hypermode=false;
@@ -19,25 +19,25 @@ namespace PokemonUnity.Combat
 				//p.adjustHeart(-50);
 				p.decreaseShadowLevel(Monster.PokemonActions.CallTo);
 			}
-			(this as IBattler).pbInitPokemon((IPokemon)pkmn, pkmnIndex); //this._InitPokemon(pkmn, pkmnIndex);
+			(this as IBattler).InitPokemon((IPokemon)pkmn, pkmnIndex); //this._InitPokemon(pkmn, pkmnIndex);
 			// Called into battle
 			if (isShadow()) {
 				//if (hasConst(Types.SHADOW))
 					Type1=Types.SHADOW;
 					Type2=Types.SHADOW;
 				//}
-				//if (@battle.pbOwnedByPlayer(@Index)) this.pokemon.adjustHeart(-30);
-				if (@battle.pbOwnedByPlayer(@Index)) (this.pokemon as IPokemonShadowPokemon).decreaseShadowLevel(Monster.PokemonActions.Battle);
+				//if (@battle.OwnedByPlayer(@Index)) this.pokemon.adjustHeart(-30);
+				if (@battle.OwnedByPlayer(@Index)) (this.pokemon as IPokemonShadowPokemon).decreaseShadowLevel(Monster.PokemonActions.Battle);
 			}
 		}
 
-		public virtual void pbEndTurn(IBattleChoice choice) { (this as IBattlerShadowPokemon).pbEndTurn(choice); }
-		void IBattlerShadowPokemon.pbEndTurn(IBattleChoice choice) { //, params object[] placeholder
-			(this as IBattler).pbEndTurn(choice); //this._pbEndTurn(choice);
-			if (inHyperMode() && !this.battle.pbAllFainted(this.battle.party1) &&
-				!this.battle.pbAllFainted(this.battle.party2)) {
-				this.battle.pbDisplay(Game._INTL("Its hyper mode attack hurt {1}!",this.ToString(true)));
-				pbConfusionDamage();
+		public virtual void EndTurn(IBattleChoice choice) { (this as IBattlerShadowPokemon).EndTurn(choice); }
+		void IBattlerShadowPokemon.EndTurn(IBattleChoice choice) { //, params object[] placeholder
+			(this as IBattler).EndTurn(choice); //this._EndTurn(choice);
+			if (inHyperMode() && !this.battle.AllFainted(this.battle.party1) &&
+				!this.battle.AllFainted(this.battle.party2)) {
+				this.battle.Display(Game._INTL("Its hyper mode attack hurt {1}!",this.ToString(true)));
+				ConfusionDamage();
 			}
 		}
 
@@ -56,19 +56,19 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public void pbHyperMode() {
+		public void HyperMode() {
 			PokemonEssentials.Interface.PokeBattle.IPokemon pkmn=this.pokemon;
 			if (pkmn is IPokemonShadowPokemon p && isShadow() && !IsHyperMode)
-				if (@battle.pbRandom(p.ShadowLevel.Value)<=Monster.Pokemon.HEARTGAUGESIZE/4) { //p.heartgauge
+				if (@battle.Random(p.ShadowLevel.Value)<=Monster.Pokemon.HEARTGAUGESIZE/4) { //p.heartgauge
 					isHyperMode=true;
-					@battle.pbDisplay(Game._INTL("{1}'s emotions rose to a fever pitch!\nIt entered Hyper Mode!",this.ToString()));
+					@battle.Display(Game._INTL("{1}'s emotions rose to a fever pitch!\nIt entered Hyper Mode!",this.ToString()));
 				}
 		}
 
-		public bool pbHyperModeObedience(IBattleMove move) {
+		public bool HyperModeObedience(IBattleMove move) {
 			if (!move.IsNotNullOrNone()) return true;
 			if (this.inHyperMode() && move.Type!=Types.SHADOW)
-				return @battle.pbRandom(10)<8 ? false : true;
+				return @battle.Random(10)<8 ? false : true;
 			return true;
 		}
 
@@ -95,7 +95,7 @@ namespace PokemonUnity.Combat
 					IPokemon pokemon = Game.GameData.Trainer.party[i];
 					if (pokemon is IPokemonShadowPokemon p && (t.heartgauges[i].HasValue &&
 						t.heartgauges[i]!=0 && p.heartgauge==0)) {
-						if (Game.GameData is IGameShadowPokemon g) g.pbReadyToPurify(p);
+						if (Game.GameData is IGameShadowPokemon g) g.ReadyToPurify(p);
 					}
 				}
 		}
@@ -112,20 +112,20 @@ namespace PokemonUnity.Combat
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		/// <remarks>Specifically for Shadow Pokemon Usage</remarks>
-		public bool pbUseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene)
-		{ return (this as IBattleShadowPokemon).pbUseItemOnPokemon(item, pkmnIndex, userPkmn, scene); }
-		bool IBattleShadowPokemon.pbUseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene)
+		public bool UseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene)
+		{ return (this as IBattleShadowPokemon).UseItemOnPokemon(item, pkmnIndex, userPkmn, scene); }
+		bool IBattleShadowPokemon.UseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene)
 		{
 			IPokemon pokemon = this.party1[pkmnIndex];
 			if (pokemon is IPokemonShadowPokemon p && p.hypermode) { //&&
 				//item != Items.JOY_SCENT &&
 				//item != Items.EXCITE_SCENT &&
 				//item != Items.VIVID_SCENT) {
-				scene.pbDisplay(Game._INTL("This item can't be used on that Pokemon."));
+				scene.Display(Game._INTL("This item can't be used on that Pokemon."));
 				return false;
 			}
-			//return _pbUseItemOnPokemon(item,pkmnIndex,userPkmn,scene);
-			return (this as IBattle).pbUseItemOnPokemon(item, pkmnIndex, (IBattler)userPkmn, scene);
+			//return _UseItemOnPokemon(item,pkmnIndex,userPkmn,scene);
+			return (this as IBattle).UseItemOnPokemon(item, pkmnIndex, (IBattler)userPkmn, scene);
 		}
 	}
 }

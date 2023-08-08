@@ -20,14 +20,25 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IMysteryGiftData {
 		int id				{ get; }
+		/// <summary>
+		/// 0=Pokémon; 1 or higher=item (is the item's quantity).
+		/// </summary>
+		/// ToDo: bool, or enum?
 		int type			{ get; }
 		Items item			{ get; }
+		Pokemons species	{ get; }
 		string giftname		{ get; }
 	}
 
 	public interface ITrainerMysteryGift {
-		bool mysterygiftaccess				{ get; set; }		// Whether MG can be used from load screen
-		IMysteryGiftData mysterygift		{ get; set; }		// Variable that stores downloaded MG data
+		/// <summary>
+		/// Whether <see cref="IGameMysteryGift"/> can be used from load screen
+		/// </summary>
+		bool mysterygiftaccess				{ get; set; }
+		/// <summary>
+		/// Variable that stores downloaded <see cref="IGameMysteryGift"/> data
+		/// </summary>
+		IMysteryGiftData mysterygift		{ get; set; }
 
 		//bool mysterygiftaccess() {
 		//	if (!@mysterygiftaccess) @mysterygiftaccess=false;
@@ -40,26 +51,38 @@ namespace PokemonEssentials.Interface.Screen
 		//}
 	}
 
+	/// <summary>
+	/// Extension of <see cref="IGame"/>
+	/// </summary>
 	public interface IGameMysteryGift
 	{
-		// ###############################################################################
-		// Mystery Gift system
-		// By Maruno
-		// ###############################################################################
-		// This url is the location of an example Mystery Gift file.
-		// You should change it to your file's url once you upload it.
-		// ###############################################################################
+		/// <summary>
+		/// This url is the location of an example Mystery Gift file.
+		/// </summary>
+		/// <remarks>
+		/// You should change it to your file's url once you upload it.
+		/// </remarks>
+		/// Mystery Gift system
+		/// By Maruno
 		string MYSTERYGIFTURL { get; } //= "http://images1.wikia.nocookie.net/pokemonessentials/images/e/e7/MysteryGift.txt"
 
 
-		// ###############################################################################
-		// Creating a new Mystery Gift for the Master file, and editing an existing one.
-		// ###############################################################################
-		// type: 0=Pokémon; 1 or higher=item (is the item's quantity).
-		// item: The thing being turned into a Mystery Gift (Pokémon object or item ID).
-		IMysteryGiftData pbEditMysteryGift(int type, Items item, int id = 0, string giftname = "");
+		/// <summary>
+		/// Creating a new Mystery Gift for the Master file, and editing an existing one.
+		///
+		/// </summary>
+		/// <param name="type">0=Pokémon; 1 or higher=item (is the item's quantity).</param>
+		/// <param name="item">The thing being turned into a Mystery Gift (Pokémon object or item ID).</param>
+		/// <param name="id"></param>
+		/// <param name="giftname"></param>
+		/// <returns></returns>
+		//IMysteryGiftData EditMysteryGift(int type, Items item, int id = 0, string giftname = "");
+		IMysteryGiftData EditMysteryGift(Items item, int id = 0, string giftname = "");
+		IMysteryGiftData EditMysteryGift(Pokemons pkmn, int id = 0, string giftname = "");
 
-		void pbCreateMysteryGift(int type, Items item);
+		//void CreateMysteryGift(int type, Items item);
+		void CreateMysteryGift(Items item);
+		void CreateMysteryGift(Pokemons pkmn);
 
 
 
@@ -67,9 +90,9 @@ namespace PokemonEssentials.Interface.Screen
 		// Debug option for managing gifts in the Master file and exporting them to a
 		// file to be uploaded.
 		// ###############################################################################
-		void pbManageMysteryGifts();
+		void ManageMysteryGifts();
 
-		void pbRefreshMGCommands(IMysteryGiftData[] master, int[] online);
+		void RefreshMGCommands(IMysteryGiftData[] master, int[] online);
 
 
 
@@ -77,24 +100,24 @@ namespace PokemonEssentials.Interface.Screen
 		// Downloads all available Mystery Gifts that haven't been downloaded yet.
 		// ###############################################################################
 		// Called from the Continue/New Game screen.
-		ITrainer pbDownloadMysteryGift(ITrainer trainer);
+		ITrainer DownloadMysteryGift(ITrainer trainer);
 
 
 
 		// ###############################################################################
 		// Converts an array of gifts into a string and back.
 		// ###############################################################################
-		string pbMysteryGiftEncrypt(IMysteryGiftData gift);
+		string MysteryGiftEncrypt(IMysteryGiftData gift);
 
-		IMysteryGiftData pbMysteryGiftDecrypt(string gift);
+		IMysteryGiftData MysteryGiftDecrypt(string gift);
 
 
 
 		// ###############################################################################
 		// Collecting a Mystery Gift from the deliveryman.
 		// ###############################################################################
-		int pbNextMysteryGiftID();
+		int NextMysteryGiftID();
 
-		bool pbReceiveMysteryGift(int id);
+		bool ReceiveMysteryGift(int id);
 	}
 }

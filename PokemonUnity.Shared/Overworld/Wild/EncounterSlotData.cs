@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity.Monster;
-//using PokemonUnity.Overworld.EncounterData;
+using PokemonEssentials.Interface.Field;
 
 namespace PokemonUnity.Overworld
 {
 	[Serializable]
-	public struct EncounterSlotData
+	public struct EncounterSlotData : IEncounterPokemon
 	{
 		#region Variables
 		/// <summary>
@@ -22,8 +22,8 @@ namespace PokemonUnity.Overworld
 		//public int SlotId { get; private set; }
 		/// <summary>
 		/// </summary>
-		public Pokemons Pokemon { get; private set; }
-		//public Pokemons[] Pokemon { get; private set; }
+		public Pokemons[] Pokemon { get; private set; }
+		Pokemons IEncounterPokemon.Pokemon { get { return Pokemon.Length>1? Pokemon[Core.Rand.Next(Pokemon.Length)] : Pokemon[0]; } }
 		/// <summary>
 		/// </summary>
 		//public ConditionValue[] Conditions { get; private set; }
@@ -40,7 +40,7 @@ namespace PokemonUnity.Overworld
 		/// </summary>
 		public int MaxLevel { get; private set; }
 		/// <summary>
-		/// Frequency means high likely to see the same pokemon again (in a random shuffle)
+		/// Frequency means how likely to see the same pokemon again (in a random shuffle)
 		/// </summary>
 		//public int Rarity { get; private set; }
 		public int Frequency { get; private set; }
@@ -51,7 +51,24 @@ namespace PokemonUnity.Overworld
 		{
 			//Id = id;
 			//Area = area;
-			Pokemon = pokemon;// ?? new Pokemons[] { Pokemons.NONE };
+			//Pokemon = pokemon;// ?? new Pokemons[] { Pokemons.NONE };
+			Pokemon = new Pokemons[] { pokemon };
+			//Conditions = conditions;// ?? throw new ArgumentNullException(nameof(conditions));
+			//Generation = generation;
+			MinLevel = Math.Min(minLevel, maxLevel);
+			MaxLevel = Math.Max(minLevel, maxLevel);
+			//Method = method;
+			//Rarity = rarity;
+			Frequency = frequency;
+			//SlotId = slotId;//versions.Contains(x => (int)x == 15) ? slotId : slotId - 1; //if 15, first slot is 0
+			//Versions = versions;
+		}
+
+		public EncounterSlotData(int minLevel = 1, int maxLevel = 1, int frequency = 0, params Pokemons[] pokemon)
+		{
+			//Id = id;
+			//Area = area;
+			Pokemon = pokemon ?? new Pokemons[] { Pokemons.NONE };
 			//Conditions = conditions;// ?? throw new ArgumentNullException(nameof(conditions));
 			//Generation = generation;
 			MinLevel = Math.Min(minLevel, maxLevel);

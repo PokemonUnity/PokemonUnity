@@ -23,22 +23,22 @@ namespace PokemonEssentials.Interface
 		//IGamePlayer(Game_Map map);
 		//IGamePlayer initialize(IGameMap map);
 
-		bool pbHasDependentEvents();
+		bool HasDependentEvents();
 
 		//void move_down(bool turn_enabled = true);
 		//void move_left(bool turn_enabled = true);
 		//void move_right(bool turn_enabled = true);
 		//void move_up(bool turn_enabled = true);
 
-		List<IGameEvent> pbTriggeredTrainerEvents(int[] triggers, bool checkIfRunning = true);
+		List<IGameEvent> TriggeredTrainerEvents(int[] triggers, bool checkIfRunning = true);
 
-		List<IGameEvent> pbTriggeredCounterEvents(int[] triggers, bool checkIfRunning = true);
+		List<IGameEvent> TriggeredCounterEvents(int[] triggers, bool checkIfRunning = true);
 
-		void pbCheckEventTriggerAfterTurning();
+		void CheckEventTriggerAfterTurning();
 
-		bool pbCheckEventTriggerFromDistance(int[] triggers);
+		bool CheckEventTriggerFromDistance(int[] triggers);
 
-		IEntity pbFacingEvent();
+		IEntity FacingEvent();
 		/// <summary>
 		/// Passable Determinants
 		/// </summary>

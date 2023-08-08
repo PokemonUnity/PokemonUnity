@@ -87,6 +87,6 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IButtonEventScene : IEventScene
 	{
-		void pbOnScreen1();
+		void OnScreen1();
 	}
 }

@@ -26,24 +26,24 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		/// <param name="move"></param>
 		/// <returns>Returns Category?</returns>
-		int pbMoveCategory(IBattleMove move);
+		int MoveCategory(IBattleMove move);
 
 		/// <summary>
-		/// Different implementation of pbCanChooseMove, ignores Imprison/Torment/Taunt/Disable/Encore
+		/// Different implementation of CanChooseMove, ignores Imprison/Torment/Taunt/Disable/Encore
 		/// </summary>
 		/// <param name="idxPokemon"></param>
 		/// <param name="idxMove"></param>
 		/// <returns></returns>
-		bool pbCanChooseMovePartial(int idxPokemon, int idxMove);
+		bool CanChooseMovePartial(int idxPokemon, int idxMove);
 
-		void pbPinchChange(int idxPokemon);
+		void PinchChange(int idxPokemon);
 
-		bool pbEnemyShouldWithdraw(int index);
+		bool EnemyShouldWithdraw(int index);
 
-		new bool pbRegisterMove(int idxPokemon, int idxMove, bool showMessages = true);
+		new bool RegisterMove(int idxPokemon, int idxMove, bool showMessages = true);
 
-		new bool pbAutoFightMenu(int idxPokemon);
+		new bool AutoFightMenu(int idxPokemon);
 
-		new void pbEndOfRoundPhase();
+		new void EndOfRoundPhase();
 	}
 }

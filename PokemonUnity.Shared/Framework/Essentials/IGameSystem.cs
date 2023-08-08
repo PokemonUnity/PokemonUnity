@@ -1,20 +1,26 @@
 ﻿namespace PokemonEssentials.Interface
 {
-	public interface IGameSystem
+	/// <summary>
+	/// This class handles data surrounding the system. Backround music, etc. is managed here as well.
+	/// </summary>
+	/// <remarks>
+	/// Refer to <see cref="IGame.GameSystem"/> for the instance of this class.
+	/// </remarks>
+	public interface IGameSystem : IAudio
 	{
 		/// <summary>
 		/// map event interpreter
 		/// </summary>
-		//InterpreterMixin map_interpreter { get; set; }
+		IInterpreterFieldMixin map_interpreter { get; set; }
 		/// <summary>
 		/// battle event interpreter
 		/// </summary>
-		//InterpreterMixin battle_interpreter { get; set; }
+		IInterpreterFieldMixin battle_interpreter { get; set; }
 		int autoscroll_x_speed { get; set; }
 		int autoscroll_y_speed { get; set; }
 		IAudioBGM battle_bgm { get; set; }
 		IAudioME battle_end_me { get; set; }
-		int bgm_position { get; set; }
+		//int bgm_position { get; set; }
 		/// <summary>
 		/// encounter forbidden
 		/// </summary>
@@ -55,7 +61,7 @@
 		bool save_disabled { get; set; }
 		string windowskin_name { get; set; }
 
-		void bgm_fade(float time);
+		//void bgm_fade(float time);
 		/// <summary>
 		/// Saves the currently playing background music for later playback.
 		/// </summary>
@@ -69,15 +75,15 @@
 		/// </summary>
 		void bgm_restore();
 		void bgm_resume(IAudioBGM bgm);
-		void bgm_stop();
+		//void bgm_stop();
 		void bgm_unpause();
-		void bgs_fade(float time);
+		//void bgs_fade(float time);
 		void bgs_memorize();
 		void bgs_pause(float fadetime = 0);
 		void bgs_play(IAudioBGS bgs);
 		void bgs_restore();
 		void bgs_resume(IAudioBGS bgs);
-		void bgs_stop();
+		//void bgs_stop();
 		void bgs_unpause();
 		/// <summary>
 		/// Returns an AudioFile object for the currently playing background music
@@ -86,11 +92,11 @@
 		IAudioBGM getPlayingBGM();
 		IAudioBGS getPlayingBGS();
 		void me_play(IAudioME me);
-		void me_fade(float time);
-		void me_stop();
+		//void me_fade(float time);
+		//void me_stop();
 		void setDefaultBGM(IAudioBGM bgm, float volume = 80, float pitch = 100);
 		void se_play(IAudioSE se);
-		void se_stop();
+		//void se_stop();
 		void update();
 	}
 }

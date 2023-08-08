@@ -60,6 +60,7 @@
     <Compile Include="Attack\Data\Flag.cs" />
     <Compile Include="Character\BadgeData.cs" />
     <Compile Include="Character\DayCareData.cs" />
+    <Compile Include="Character\Entity.cs" />
     <Compile Include="Character\Gear\Phone.cs" />
     <Compile Include="Character\Gear\Pokedex.cs" />
     <Compile Include="Character\Gear\PokeRadar.cs" />
@@ -81,6 +82,9 @@
     <Compile Include="Framework\Essentials\Field\IMiscData.cs" />
     <Compile Include="Framework\Essentials\IAnimationSprite.cs" />
     <Compile Include="Framework\Essentials\IAudioPlay.cs" />
+    <Compile Include="Framework\Essentials\IDebug.cs" />
+    <Compile Include="Framework\Essentials\IEditor.cs" />
+    <Compile Include="Framework\Essentials\IEngine.System.cs" />
     <Compile Include="Framework\Essentials\IGameUtility.cs" />
     <Compile Include="Framework\Essentials\IMessage.cs" />
     <Compile Include="Framework\Essentials\ISceneMap.cs" />
@@ -101,6 +105,7 @@
     <Compile Include="Framework\Essentials\Screen\IBattleSwap.cs" />
     <Compile Include="Framework\Essentials\Screen\IEvolution.cs" />
     <Compile Include="Framework\Essentials\Screen\IIntro.cs" />
+    <Compile Include="Framework\Essentials\Screen\IPhone.cs" />
     <Compile Include="Framework\Essentials\Screen\ISafari.cs" />
     <Compile Include="Framework\Essentials\Screen\ITextEntry.cs" />
     <Compile Include="Framework\Essentials\Screen\IMysteryGift.cs" />
@@ -119,7 +124,6 @@
     <Compile Include="Framework\Essentials\Screen\IPokedexNestForm.cs" />
     <Compile Include="Framework\Essentials\Screen\IPokedex.cs" />
     <Compile Include="Framework\Essentials\Screen\IPauseMenu.cs" />
-    <Compile Include="Framework\Essentials\Screen\IFrontend.cs" />
     <Compile Include="Framework\Essentials\Screen\IScene.cs" />
     <Compile Include="Framework\Essentials\Screen\IRelicStone.cs" />
     <Compile Include="Framework\Essentials\Field\IDayCare.cs" />
@@ -150,7 +154,6 @@
     <Compile Include="Framework\Essentials\IGameVariable.cs" />
     <Compile Include="Framework\Essentials\IInterpreter.cs" />
     <Compile Include="Framework\Essentials\IInterpreterFieldMixin.cs" />
-    <Compile Include="Framework\Essentials\ILibrary.cs" />
     <Compile Include="Framework\Essentials\PokeBattle\IMove.cs" />
     <Compile Include="Framework\Essentials\Pokemon\IPokemon.cs" />
     <Compile Include="Framework\Essentials\IResourceObjects.cs" />
@@ -200,6 +203,8 @@
     <Compile Include="Combat\Data\Choice.cs" />
     <Compile Include="Combat\Data\DamageState.cs" />
     <Compile Include="Combat\Data\SuccessState.cs" />
+    <Compile Include="Framework\IFrontend.cs" />
+    <Compile Include="Framework\IGame.cs" />
     <Compile Include="Inventory\Data\Machine.cs" />
     <Compile Include="Inventory\Data\Base.cs" />
     <Compile Include="Inventory\Data\Berry.cs" />
@@ -217,8 +222,9 @@
     <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
     <Compile Include="Overworld\Map.cs" />
     <Compile Include="Overworld\Wild\EncounterSlotData.cs" />
-    <Compile Include="Overworld\Wild\IEncounterData.cs" />
     <Compile Include="Overworld\IArea.cs" />
+    <Compile Include="Overworld\Wild\IMapEncounterMetadata.cs" />
+    <Compile Include="Overworld\Wild\RoamingData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saving\SerializableClasses\SeriMail.cs" />
     <Compile Include="Saving\SerializableClasses\SeriMove.cs" />
