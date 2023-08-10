@@ -9,8 +9,9 @@ using PokemonUnity.Combat;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
 using PokemonEssentials.Interface;
-using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
@@ -43,7 +44,7 @@ namespace PokemonEssentials.Interface.Screen
 		void Annotate(string[] annot);
 		void Summary(int pkmnid);
 		void ChooseItem(Items[] bag);
-		void UseItem(Items[] bag,IPokemon pokemon); 
+		void UseItem(Items[] bag,IPokemon pokemon);
 		void MessageFreeText(string text,string startMsg,int maxlength);
 	}
 
@@ -75,7 +76,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		/// <param name=""></param>
 		void CheckItems(Items[] array);
-		void PokemonMultipleEntryScreenEx(string[] ruleset);
+		IPokemon[] PokemonMultipleEntryScreenEx(IPokemonRuleSet ruleset);
 		int ChooseAblePokemon(Predicate<IPokemon> ableProc,bool allowIneligible= false);
 		void RefreshAnnotations(bool ableProc);
 		void ClearAnnotations();
@@ -84,7 +85,7 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	#region UI Elements
-	public interface IPokeSelectionPlaceholderSprite : ISpriteWrapper 
+	public interface IPokeSelectionPlaceholderSprite : ISpriteWrapper
 	{
 		string text				{ get; set; }
 

@@ -99,10 +99,10 @@ namespace PokemonUnity.Combat
 			return base.StartBattle(canlose);
 		}
 
-		public string DumpRecord() {
+		public IBattleRecordData DumpRecord() {
 			//return Marshal.dump([GetBattleType,@properties,@rounds,@randomnumbers,@switches]);
 			//return new { GetBattleType(), @properties, @rounds, randomnumbers, @switches }.ToString();
-			return new { @battletype, @properties, @rounds, randomnumbers, @switches }.ToString();
+			return null; //new IBattleRecordData(@battletype, @properties, @rounds, randomnumbers, @switches);
 		}
 
 		public override int SwitchInBetween(int i1,bool i2,bool i3) {

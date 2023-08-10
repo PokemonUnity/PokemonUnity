@@ -565,7 +565,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns the items this species can be found holding in the wild.
 		/// </summary>
 		/// <returns>[itemcommon,itemuncommon,itemrare]</returns>
-		Items[] wildHoldItems();
+		Items[] wildHoldItems { get; }
 
 		/// <summary>
 		/// Returns this Pokémon's mail.

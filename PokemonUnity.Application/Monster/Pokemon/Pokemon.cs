@@ -8,6 +8,7 @@ using PokemonUnity.Utility;
 using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 using PokemonUnity.Character;
+using PokemonUnity.Overworld;
 using PokemonUnity.Monster.Data;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonEssentials.Interface;
@@ -16,7 +17,7 @@ using PokemonEssentials.Interface.Item;
 
 namespace PokemonUnity.Monster
 {
-	public partial class Pokemon : IPokemon, IEquatable<Pokemon>, IEqualityComparer<Pokemon>, ICloneable
+	public partial class Pokemon : IPokemon, IEquatable<IPokemon>, IEqualityComparer<IPokemon>, IEquatable<Pokemon>, IEqualityComparer<Pokemon>, ICloneable
 	{
 		#region Variables
 		private Pokemons pokemons;
@@ -577,22 +578,6 @@ namespace PokemonUnity.Monster
 		/// Manner Obtained:
 		/// </summary>
 		public ObtainedMethod ObtainedMode { get; private set; }
-		//ToDo: Change to EncounterType
-		public enum ObtainedMethod
-		{
-			/// <summary>
-			/// Stole from another trainer, during battle
-			/// </summary>
-			SNAGGED = -1,
-			MET = 0,
-			EGG = 1,
-			//If EncounterType == Gift, then it's Traded
-			TRADED = 2,
-			/// <summary>
-			/// NPC-Event?
-			/// </summary>
-			FATEFUL_ENCOUNTER = 4
-		}
 		//ToDo: Nintendo has variable for location where egg hatched
 		public Locations HatchedMap { get; private set; }
 		/// <summary>
@@ -2092,49 +2077,49 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <returns></returns>
 		/// Not sure how i feel about this one... might consider removing
-		public Items[] wildHoldItems()
+		public Items[] wildHoldItems { get
 		{
-			if (!Kernal.PokemonItemsData.ContainsKey(pokemons)) return new Items[0];
+			if (!Kernal.PokemonItemsData.ContainsKey(pokemons) && Kernal.PokemonItemsData[pokemons].Length==0) return new Items[3];
 			//_base.HeldItem
 			PokemonWildItems[] dexdata = Kernal.PokemonItemsData[pokemons];
 			//DexDataOffset(dexdata, @species, 48);
-			Items itemcommon	= Items.NONE; //dexdata.fgetw;
+			Items itemcommon	= dexdata[0].ItemId[0]; //dexdata.fgetw;
 			Items itemuncommon	= Items.NONE; //dexdata.fgetw;
 			Items itemrare		= Items.NONE; //dexdata.fgetw;
 			//dexdata.close();
-			if (itemcommon == null) itemcommon = 0;
-			if (itemuncommon == null) itemuncommon = 0;
-			if (itemrare == null) itemrare = 0;
+			if (dexdata[0].ItemId.Count > 1) itemcommon =														dexdata[0].ItemId[Core.Rand.Next(dexdata[0].ItemId.Count)];
+			if (dexdata.Length > 1) itemuncommon		= dexdata[1].ItemId.Count == 1 ? dexdata[1].ItemId[0] : dexdata[1].ItemId[Core.Rand.Next(dexdata[1].ItemId.Count)];
+			if (dexdata.Length > 2) itemrare			= dexdata[2].ItemId.Count == 1 ? dexdata[2].ItemId[0] : dexdata[2].ItemId[Core.Rand.Next(dexdata[2].ItemId.Count)];
 			return new Items[] { itemcommon, itemuncommon, itemrare };
-		}
+		} }
 
 		/// <summary>
 		/// Pools all the values into a 100% encounter chance, and selects from those results
 		/// </summary>
 		/// RNG Bagging Technique using Dice Roll, without fallback (no matter rng, wont artificially modify results)
-		public void SetWildHoldItem()
-		{
-			List<Items> list = new List<Items>();
-
-			//loop through each position of list
-			foreach (PokemonWildItems item in Kernal.PokemonItemsData[pokemons])
-			{
-				//add encounter once for every Likelihood
-				for (int i = 0; i < item.Rarirty; i++)
-				{
-					list.Add(item.ItemId);
-				}
-			}
-
-			//Get list of 100 pokemons for given (specific to this) encounter...
-			for (int n = list.Count; n < 100; n++)
-			{
-				list.Add(Items.NONE);
-			}
-
-			//From list of 100 pokemons, select 1.
-			Item = list[Core.Rand.Next(list.Count)];
-		}
+		//public void SetWildHoldItem()
+		//{
+		//	IList<Items> list = new List<Items>();
+		//
+		//	//loop through each position of list
+		//	foreach (PokemonWildItems item in Kernal.PokemonItemsData[pokemons])
+		//	{
+		//		//add encounter once for every likelihood
+		//		for (int i = 0; i < item.Rarirty; i++)
+		//		{
+		//			list.Add(item.ItemId);
+		//		}
+		//	}
+		//
+		//	//Get list of 100 pokemons for given (specific to this) encounter...
+		//	for (int n = list.Count; n < 100; n++)
+		//	{
+		//		list.Add(Items.NONE);
+		//	}
+		//
+		//	//From list of 100 pokemons, select 1.
+		//	Item = list[Core.Rand.Next(list.Count)];
+		//}
 
 		#region Mail
 		/// <summary>
@@ -3273,7 +3258,7 @@ namespace PokemonUnity.Monster
 					pokemon.Happiness, (Status)pokemon.Status, pokemon.StatusCount,
 					pokemon.EggSteps, (Items)pokemon.BallUsed, pokemon.Mail.Message,
 					moves, history, ribbons, pokemon.Markings, pokemon.PersonalId,
-					(Pokemon.ObtainedMethod)pokemon.ObtainedMethod,
+					(ObtainedMethod)pokemon.ObtainedMethod,
 					pokemon.TimeReceived, pokemon.TimeEggHatched
 				);
 			return normalPokemon;

@@ -24,7 +24,7 @@ namespace PokemonEssentials.Interface.Field
 		IList<string> pokemonDexData						{ get; }
 		IDictionary<int, IPokemonMetadata> pokemonMetadata	{ get; set; }
 		IList<IPhoneMessageData> pokemonPhoneData			{ get; }
-		int lastbattle										{ get; set; }
+		IBattleRecordData lastbattle						{ get; set; }
 		int flydata											{ get; set; }
 
 		//ITempMetadata initialize();

@@ -459,10 +459,10 @@ namespace PokemonUnity
 
 		public IPokemon GenerateWildPokemon(Pokemons species,int level,bool isroamer=false) {
 			Pokemon genwildpoke=new Monster.Pokemon(species,level: (byte)level);//,Trainer
-			//Items items=genwildpoke.wildHoldItems;
-			Items[] items=Kernal.PokemonItemsData[species] //ToDo: Return Items[3];
-						.OrderByDescending(x => x.Rarirty)
-						.Select(x => x.ItemId).ToArray();
+			Items[] items=genwildpoke.wildHoldItems;
+			//Items[] items=Kernal.PokemonItemsData[species] //ToDo: Return Items[3];
+			//			.OrderByDescending(x => x.Rarirty)
+			//			.Select(x => x.ItemId).ToArray();
 			IPokemon firstpoke=Trainer.firstParty;
 			int[] chances=new int[]{ 50,5,1 };
 			if (firstpoke != null && !firstpoke.isEgg &&
@@ -598,7 +598,7 @@ namespace PokemonUnity
 			Events.OnWildBattleEndTrigger(this,species, level, decision);
 			// Return false if the player lost or drew the battle, and true if any other result
 			return (decision != Combat.BattleResults.LOST && decision != Combat.BattleResults.DRAW);
-		}*/
+		}
 
 		/// <summary>
 		/// </summary>
@@ -704,13 +704,21 @@ namespace PokemonUnity
 			//Events.OnWildBattleEnd?.Invoke(this,e3);
 			Events.OnWildBattleEndTrigger(this,species,level,decision);
 			return decision!=Combat.BattleResults.LOST;
-		}
+		}*/
 
+		/// <summary>
+		/// </summary>
+		/// <param name="species"></param>
+		/// <param name="level"></param>
+		/// <param name="variable"></param>
+		/// <param name="canescape"></param>
+		/// <param name="canlose"></param>
+		/// <returns></returns>
 		public bool WildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
 		//public Combat.BattleResults WildBattle(Pokemons species,int level,int? variable=null,bool canescape=true,bool canlose=false) {
-			IPokemon genwildpoke=GenerateWildPokemon(species,level);
-			return WildBattleCore(genwildpoke.Species, genwildpoke.Level, variable, canescape, canlose);
-			/*if ((Input.press(PokemonUnity.Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
+			//IPokemon genwildpoke=GenerateWildPokemon(species,level);
+			//return WildBattleCore(genwildpoke.Species, genwildpoke.Level, variable, canescape, canlose);
+			if ((Input.press(PokemonUnity.Input.CTRL) && Core.DEBUG) || Trainer.pokemonCount==0) {
 				if (Trainer.pokemonCount>0 && this is IGameMessage m) {
 					m.Message(Game._INTL("SKIPPING BATTLE..."));
 				}
@@ -802,7 +810,7 @@ namespace PokemonUnity
 			};
 			//Events.OnWildBattleEnd?.Invoke(this,e3);
 			Events.OnWildBattleEndTrigger(this,species,level,decision);
-			return decision!=Combat.BattleResults.LOST;*/
+			return decision!=Combat.BattleResults.LOST;
 		}
 
 		public bool DoubleWildBattle(Pokemons species1,int level1,Pokemons species2,int level2,int? variable=null,bool canescape=true,bool canlose=false) {
@@ -844,11 +852,13 @@ namespace PokemonUnity
 				othertrainer.id=Global.partner.id;//[2]
 				othertrainer.party=Global.partner.party;//[3]
 				IList<IPokemon> combinedParty=new List<IPokemon>();
-				for (int i = 0; i < Trainer.party.Length; i++) {
-					combinedParty[i]=Trainer.party[i];
+				for (int i = 0; i < Trainer.party.Length; i++) { //length should equal 6?
+					//combinedParty[i]=Trainer.party[i];
+					combinedParty.Add(Trainer.party[i]);
 				}
 				for (int i = 0; i < othertrainer.party.Length; i++) {
-					combinedParty[6+i]=othertrainer.party[i];
+					//combinedParty[6+i]=othertrainer.party[i];
+					combinedParty.Add(othertrainer.party[i]);
 				}
 				battle=new Combat.Battle(scene,combinedParty.ToArray(),new IPokemon[] { genwildpoke, genwildpoke2 },
 					new ITrainer[] { Trainer,othertrainer },null);

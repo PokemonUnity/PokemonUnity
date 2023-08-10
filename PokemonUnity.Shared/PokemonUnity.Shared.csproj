@@ -220,7 +220,7 @@
     <Compile Include="Monster\Pokemon\Data\Form.cs" />
     <Compile Include="Monster\Pokemon\Data\Moveset.cs" />
     <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
-    <Compile Include="Overworld\Map.cs" />
+    <Compile Include="Overworld\MapData.cs" />
     <Compile Include="Overworld\Wild\EncounterSlotData.cs" />
     <Compile Include="Overworld\IArea.cs" />
     <Compile Include="Overworld\Wild\IMapEncounterMetadata.cs" />

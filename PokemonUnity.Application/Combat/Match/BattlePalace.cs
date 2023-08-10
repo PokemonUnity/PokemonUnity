@@ -93,11 +93,11 @@ namespace PokemonUnity.Combat
 		}
 
 		public int MoveCategory(IBattleMove move) {
-			if (//Game.MoveData[move.id].Target==Attack.Data.Targets. 0x10 ||			//ToDo: Finish Convert from Essentials to Veekun
-				move.Effect==Attack.Data.Effects.x01B) {								// Bide
+			if (//Game.MoveData[move.id].Target==Attack.Targets. 0x10 ||			//ToDo: Finish Convert from Essentials to Veekun
+				move.Effect==Attack.Effects.x01B) {								// Bide
 				return 1;
-			} else if (move.basedamage==0 || move.Effect==Attack.Data.Effects.x054 ||	// Counter
-				move.Effect==Attack.Data.Effects.x091) {								// Mirror Coat
+			} else if (move.basedamage==0 || move.Effect==Attack.Effects.x054 ||	// Counter
+				move.Effect==Attack.Effects.x091) {								// Mirror Coat
 				return 2;
 			}
 			else {

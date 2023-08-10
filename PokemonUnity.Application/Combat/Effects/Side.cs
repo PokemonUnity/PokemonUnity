@@ -8,15 +8,15 @@ using System.Text;
 namespace PokemonUnity.Combat
 {
 	public partial class Effects
-	{	   
+	{
 		/// <summary>
 		/// These effects apply to a side
 		/// </summary>
-		public class Side : PokemonEssentials.Interface.PokeBattle.Effects.IEffectsSide { 
+		public class Side : PokemonEssentials.Interface.PokeBattle.Effects.IEffectsSide {
 			public bool CraftyShield		{ get; set; }
 			public byte EchoedVoiceCounter	{ get; set; }
 			public bool EchoedVoiceUsed		{ get; set; }
-			public int LastRoundFainted	{ get; set; }
+			public int LastRoundFainted		{ get; set; }
 			public byte LightScreen			{ get; set; }
 			public byte LuckyChant			{ get; set; }
 			public bool MatBlock			{ get; set; }

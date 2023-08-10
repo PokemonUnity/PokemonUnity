@@ -308,7 +308,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		bool ChoseMove(int i, Moves move);
 
-		bool ChoseMoveFunctionCode(int i, PokemonUnity.Attack.Data.Effects code);
+		bool ChoseMoveFunctionCode(int i, PokemonUnity.Attack.Effects code);
 
 		bool RegisterTarget(int idxPokemon, int idxTarget);
 

@@ -456,7 +456,7 @@ namespace PokemonUnity.ConsoleApp
 			return Items.NONE;
 		}
 
-		int IPokeBattle_DebugSceneNoGraphics.ChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype)
+		int IPokeBattle_DebugSceneNoGraphics.ChooseTarget(int index, PokemonUnity.Attack.Targets targettype)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -852,7 +852,7 @@ namespace PokemonUnity.ConsoleApp
 			return (this as IPokeBattle_DebugSceneNoGraphics).ItemMenu(index);
 		}
 
-		int IPokeBattle_SceneNonInteractive.ChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype)
+		int IPokeBattle_SceneNonInteractive.ChooseTarget(int index, PokemonUnity.Attack.Targets targettype)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 

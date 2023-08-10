@@ -41,7 +41,7 @@ namespace PokemonUnity
 		public static IDictionary<Types,PokemonUnity.Monster.Data.Type> TypeData { get; private set; }
 		public static IDictionary<Moves,Attack.Data.MoveData> MoveData { get; private set; }
 		public static IDictionary<Moves,Attack.Data.MetaData> MoveMetaData { get; private set; }
-		public static IDictionary<Attack.Data.Effects, PokemonEssentials.Interface.PokeBattle.IBattleMove> MoveEffectData { get; private set; } //ToDo: Replace with Func<Attack.Data.Effects,Combat.Move> instead?
+		public static IDictionary<Attack.Effects, PokemonEssentials.Interface.PokeBattle.IBattleMove> MoveEffectData { get; private set; } //ToDo: Replace with Func<Attack.Effects,Combat.Move> instead?
 		public static IDictionary<Items,ItemData> ItemData { get; private set; }
 		public static IDictionary<Items,BerryData> BerryData { get; private set; }
 		public static IDictionary<Regions,Locations[]> RegionData { get; private set; }
@@ -151,8 +151,8 @@ namespace PokemonUnity
 			TypeData = new Dictionary<Types, PokemonUnity.Monster.Data.Type>();
 			MoveData = new Dictionary<Moves, Attack.Data.MoveData>();
 			MoveMetaData = new Dictionary<Moves, Attack.Data.MetaData>();
-			//MoveEffectData = new Dictionary<Attack.Data.Effects, Combat.Move>(); //Below
-			MoveEffectData = new Dictionary<Attack.Data.Effects, PokemonEssentials.Interface.PokeBattle.IBattleMove>();
+			//MoveEffectData = new Dictionary<Attack.Effects, Combat.Move>(); //Below
+			MoveEffectData = new Dictionary<Attack.Effects, PokemonEssentials.Interface.PokeBattle.IBattleMove>();
 			ItemData = new Dictionary<Items, ItemData>();
 			BerryData = new Dictionary<Items, BerryData>();
 			RegionData = new Dictionary<Regions, Locations[]>();

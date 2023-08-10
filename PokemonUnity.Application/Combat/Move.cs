@@ -17,7 +17,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 namespace PokemonUnity.Combat
 {
 	/// <summary>
-	/// A Move placeholder class to be used while in-Battle, 
+	/// A Move placeholder class to be used while in-Battle,
 	/// to prevent temp changes from being permanent to original pokemon profile
 	/// </summary>
 	// ToDo: Rename to `MoveFactory`
@@ -28,23 +28,23 @@ namespace PokemonUnity.Combat
 		public Attack.Category Category		{ get; set; }
 		public Moves MoveId					{ get; set; }
 		//public Attack.Target Targets		{ get; set; }
-		public Attack.Data.Targets Target	{ get; set; }
+		public Attack.Targets Target	{ get; set; }
 		public Types Type					{ get; set; }
 		//public Attack.MoveFlags Flag		{ get; set; }
 		public Attack.Data.Flag Flags		{ get; set; }
 		public int PP						{ get; set; }
 		/// <summary>
-		/// The probability that the move's additional effect occurs, as a percentage. 
+		/// The probability that the move's additional effect occurs, as a percentage.
 		/// If the move has no additional effect (e.g. all status moves), this value is 0.
-		/// Note that some moves have an additional effect chance of 100 (e.g.Acid Spray), 
-		/// which is not the same thing as having an effect that will always occur. 
+		/// Note that some moves have an additional effect chance of 100 (e.g.Acid Spray),
+		/// which is not the same thing as having an effect that will always occur.
 		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
 		/// </summary>
 		public virtual int AddlEffect		{ get { return Kernal.MoveData[MoveId].EffectChance??0; } }
-		public Attack.Data.Effects Effect	{ get { return Kernal.MoveData[MoveId].Effect; } }
+		public Attack.Effects Effect	{ get { return Kernal.MoveData[MoveId].Effect; } }
 		/// <summary>
-		/// The move's accuracy, as a percentage. 
-		/// An accuracy of 0 means the move doesn't perform an accuracy check 
+		/// The move's accuracy, as a percentage.
+		/// An accuracy of 0 means the move doesn't perform an accuracy check
 		/// (i.e. it cannot be evaded).
 		/// </summary>
 		public int Accuracy					{ get; set; }
@@ -66,7 +66,7 @@ namespace PokemonUnity.Combat
 		public Move() { }
 		public Move(IBattle battle, IMove move) { Initialize(battle, move); }
 
-		public virtual IBattleMove Initialize(IBattle battle, IMove move) 
+		public virtual IBattleMove Initialize(IBattle battle, IMove move)
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
 			Attack.Data.MoveData movedata    = Kernal.MoveData[move.id];
@@ -103,7 +103,7 @@ namespace PokemonUnity.Combat
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
 			//Attack.Data.MoveData movedata = Kernal.MoveData[move.id];
-			Attack.Data.Effects effect = Kernal.MoveData[move.id].Effect;
+			Attack.Effects effect = Kernal.MoveData[move.id].Effect;
 			//Type className = Type.GetType(string.Format("PokeBattle_Move_{0}X", movedata.Effect));
 			////if Object.const_defined(className)
 			//	//return (className).new (battle, move);
@@ -120,10 +120,10 @@ namespace PokemonUnity.Combat
 				return new PokeBattle_UnimplementedMove().Initialize(battle, move);
 		}
 
-#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected
 		#region About the move
 		public virtual int TotalPP { get {
-				if (totalpp>0) return totalpp; //totalpp != null && 
+				if (totalpp>0) return totalpp; //totalpp != null &&
 				if (Kernal.MoveData.ContainsKey(MoveId)) return Kernal.MoveData[MoveId].PP;
 				return 0; }
 			set { totalpp = value; }
@@ -176,14 +176,14 @@ namespace PokemonUnity.Combat
 			if (Core.USEMOVECATEGORY)
 				return Category == Attack.Category.PHYSICAL;
 			else
-				return Kernal.TypeData[type].Category == Attack.Category.PHYSICAL;     
+				return Kernal.TypeData[type].Category == Attack.Category.PHYSICAL;
 		}
 
 		public virtual bool IsSpecial(Types type){
 			if (Core.USEMOVECATEGORY)
 				return Category == Attack.Category.SPECIAL;
 			else
-				return Kernal.TypeData[type].Category == Attack.Category.SPECIAL;     
+				return Kernal.TypeData[type].Category == Attack.Category.SPECIAL;
 		}
 
 		public virtual bool IsStatus{ get{
@@ -197,17 +197,17 @@ namespace PokemonUnity.Combat
 		public virtual bool TargetsMultiple(IBattler attacker){
 			int numtargets = 0;
 			//if (Targets == Attack.Target.AllOpposing) {
-			if (Target == Attack.Data.Targets.ALL_OPPONENTS) {
+			if (Target == Attack.Targets.ALL_OPPONENTS) {
 				// TODO: should apply even if partner faints during an attack
-				if (!attacker.Opposing1.isFainted())numtargets+=1; 
-				if (!attacker.Opposing2.isFainted())numtargets+=1; 
+				if (!attacker.Opposing1.isFainted())numtargets+=1;
+				if (!attacker.Opposing2.isFainted())numtargets+=1;
 				return numtargets>1;
 			//} else if (Targets == Attack.Target.AllNonUsers) {
-			} else if (Target == Attack.Data.Targets.ALL_OTHER_POKEMON) {
+			} else if (Target == Attack.Targets.ALL_OTHER_POKEMON) {
 				// TODO: should apply even if partner faints during an attack
-				if (!attacker.Opposing1.isFainted())numtargets+=1; 
-				if (!attacker.Opposing2.isFainted())numtargets+=1; 
-				if (!attacker.Partner.isFainted())numtargets+=1; 
+				if (!attacker.Opposing1.isFainted())numtargets+=1;
+				if (!attacker.Opposing2.isFainted())numtargets+=1;
+				if (!attacker.Partner.isFainted())numtargets+=1;
 				return numtargets>1;
 			} //ToDo: All pokemons (including user) and entire field (pokemons not off screen)?
 			return false;
@@ -223,29 +223,29 @@ namespace PokemonUnity.Combat
 			if (attacker.hasWorkingAbility(Abilities.PARENTAL_BOND))
 				if (IsDamaging() && !TargetsMultiple(attacker) &&
 				!IsMultiHit() && !TwoTurnAttack(attacker)){
-					List<Attack.Data.Effects> exceptions= new List<Attack.Data.Effects>(){
-						Attack.Data.Effects.x0BE,	// Endeavor
-						Attack.Data.Effects.x008,	// Selfdestruct/Explosion
-						Attack.Data.Effects.x141,	// Final Gambit
-						Attack.Data.Effects.x0EA	// Fling
+					List<Attack.Effects> exceptions= new List<Attack.Effects>(){
+						Attack.Effects.x0BE,	// Endeavor
+						Attack.Effects.x008,	// Selfdestruct/Explosion
+						Attack.Effects.x141,	// Final Gambit
+						Attack.Effects.x0EA	// Fling
 					};
 					if (!exceptions.Contains(Effect)){
 						attacker.effects.ParentalBond= 3;
 						return 2;
 					}
 				}
-			if (IsMultiHit()) 
+			if (IsMultiHit())
 				return Core.Rand.Next(Kernal.MoveMetaData[MoveId].MinHits.Value, Kernal.MoveMetaData[MoveId].MaxHits.Value);
 				//ToDo: Need to record that Parental Bond applies, to weaken the second attack
-				//attacker.effects.ParentalBondApplied = true; 
+				//attacker.effects.ParentalBondApplied = true;
 			return 1;
 		}
 
 		/// <summary>
 		/// not the same as NumHits>1
 		/// </summary>
-		public virtual bool IsMultiHit() { //get {   
-			return (Kernal.MoveMetaData[MoveId].MinHits.HasValue || 
+		public virtual bool IsMultiHit() { //get {
+			return (Kernal.MoveMetaData[MoveId].MinHits.HasValue ||
 					Kernal.MoveMetaData[MoveId].MaxHits.HasValue);//}
 		}
 
@@ -254,7 +254,7 @@ namespace PokemonUnity.Combat
 		}
 
 		public virtual void AdditionalEffect(IBattler attacker, IBattler opponent){ }
- 
+
 		public virtual bool CanUseWhileAsleep() { //get {
 			return false;//}
 		}
@@ -271,19 +271,19 @@ namespace PokemonUnity.Combat
 		public virtual bool UnusableInGravity() { //get; set;// {
 			return false;
 		}
-				
+
 		/// <summary>
 		///# flag h: Has high critical hit rate
 		/// </summary>
 		public virtual bool hasHighCriticalRate { get{
 			//return (@flags&0x80)!=0;} //# flag h: Has high critical hit rate
-			return Kernal.MoveMetaData[MoveId].CritRate > 0;} 
+			return Kernal.MoveMetaData[MoveId].CritRate > 0;}
 		}
 
 		/// <summary>
 		/// Causes perfect accuracy and double damage
 		/// </summary>
-		public virtual bool tramplesMinimize (int param=1){ 
+		public virtual bool tramplesMinimize (int param=1){
 			if (!Core.USENEWBATTLEMECHANICS) return false;
 			return MoveId == Moves.BODY_SLAM ||
 					MoveId == Moves.FLYING_PRESS ||
@@ -297,8 +297,8 @@ namespace PokemonUnity.Combat
 
 		public virtual bool ignoresSubstitute (IBattler attacker){
 			if (Core.USENEWBATTLEMECHANICS){
-				if (Flags.SoundBased) return true; 
-				if (attacker != null && attacker.hasWorkingAbility(Abilities.INFILTRATOR)) return true; 
+				if (Flags.SoundBased) return true;
+				if (attacker != null && attacker.hasWorkingAbility(Abilities.INFILTRATOR)) return true;
 			}
 			return false;
 		}
@@ -306,8 +306,8 @@ namespace PokemonUnity.Combat
 
 		#region This move's type effectiveness
 		public virtual bool TypeImmunityByAbility(Types type, IBattler attacker, IBattler opponent){
-			if (attacker.Index==opponent.Index)return false; 
-			if (attacker.hasMoldBreaker())return false; 
+			if (attacker.Index==opponent.Index)return false;
+			if (attacker.hasMoldBreaker())return false;
 			if (opponent.hasWorkingAbility(Abilities.SAP_SIPPER) && type == Types.GRASS){
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sap Sipper (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.CanIncreaseStatStage(Stats.ATTACK, opponent))
@@ -377,9 +377,9 @@ namespace PokemonUnity.Combat
 		}
 
 		public virtual float TypeModifier(Types type, IBattler attacker, IBattler opponent){
-			if (type<0) return 8; 
-			if (opponent.HasType(Types.FLYING) && type == Types.GROUND && 
-				opponent.hasWorkingItem(Items.IRON_BALL) && !Core.USENEWBATTLEMECHANICS) return 8; 
+			if (type<0) return 8;
+			if (opponent.HasType(Types.FLYING) && type == Types.GROUND &&
+				opponent.hasWorkingItem(Items.IRON_BALL) && !Core.USENEWBATTLEMECHANICS) return 8;
 			Types atype = type; //# attack type
 			Types otype1= opponent.Type1;
 			Types otype2= opponent.Type2;
@@ -395,40 +395,40 @@ namespace PokemonUnity.Combat
 				otype2 = otype1;
 			}
 			// Get effectivenesses
-			float mod1 = atype.GetEffectiveness(otype1); 
+			float mod1 = atype.GetEffectiveness(otype1);
 			float mod2=(otype1==otype2) ? 2 : atype.GetEffectiveness(otype2);
 			float mod3 = (otype3 < 0 || otype1 == otype3 || otype2 == otype3) ? 2 : atype.GetEffectiveness(otype3);
 			if (opponent.hasWorkingItem(Items.RING_TARGET)){
-				if (mod1==0)mod1=2; 
-				if (mod2==0)mod2=2; 
-				if (mod3==0)mod3=2; 
+				if (mod1==0)mod1=2;
+				if (mod2==0)mod2=2;
+				if (mod3==0)mod3=2;
 			}
 			// Foresight
-			if (attacker.hasWorkingAbility(Abilities.SCRAPPY) || opponent.effects.Foresight) { 
+			if (attacker.hasWorkingAbility(Abilities.SCRAPPY) || opponent.effects.Foresight) {
 				if (otype1 == Types.GHOST && atype.GetCombinedEffectiveness(otype1) == TypeEffective.Ineffective)mod1 = 2; //
 					if (otype2 == Types.GHOST && atype.GetCombinedEffectiveness(otype2) == TypeEffective.Ineffective)mod2 = 2; //
 						if (otype3 == Types.GHOST && atype.GetCombinedEffectiveness(otype3) == TypeEffective.Ineffective)mod3 = 2; //
 			}
 			// Miracle Eye
-			if (opponent.effects.MiracleEye) { 
+			if (opponent.effects.MiracleEye) {
 				if (otype1 == Types.DARK && atype.GetCombinedEffectiveness(otype1) == TypeEffective.Ineffective)mod1 = 2; //
 					if (otype2 == Types.DARK && atype.GetCombinedEffectiveness(otype2) == TypeEffective.Ineffective)mod2 = 2; //
 						if (otype3 == Types.DARK && atype.GetCombinedEffectiveness(otype3) == TypeEffective.Ineffective)mod3 = 2; //
 			}
 			// Delta Stream's weather
-			if (battle.Weather==Weather.STRONGWINDS) { 
+			if (battle.Weather==Weather.STRONGWINDS) {
 				if (otype1 == Types.FLYING && atype.GetCombinedEffectiveness(otype1) == TypeEffective.SuperEffective)mod1 = 2; //
 					if (otype2 == Types.FLYING && atype.GetCombinedEffectiveness(otype2) == TypeEffective.SuperEffective)mod2 = 2; //
 						if (otype3 == Types.FLYING && atype.GetCombinedEffectiveness(otype3) == TypeEffective.SuperEffective)mod3 = 2; //
 			}
 			// Smack Down makes Ground moves work against fliers
-			if (!opponent.isAirborne(attacker.hasMoldBreaker()) || Effect==Attack.Data.Effects.x120 // Smack Down
+			if (!opponent.isAirborne(attacker.hasMoldBreaker()) || Effect==Attack.Effects.x120 // Smack Down
 				&& atype == Types.GROUND){
-				if (otype1 == Types.FLYING)mod1=2; 
-				if (otype2 == Types.FLYING)mod2=2; 
+				if (otype1 == Types.FLYING)mod1=2;
+				if (otype2 == Types.FLYING)mod2=2;
 				if (otype3 == Types.FLYING)mod3=2;
 			}
-			if (Effect==Attack.Data.Effects.x17C && !attacker.effects.Electrify){ // Freeze-Dry
+			if (Effect==Attack.Effects.x17C && !attacker.effects.Electrify){ // Freeze-Dry
 				if (otype1 == Types.WATER)
 				mod1 = 4;
 				if (otype2 == Types.WATER)
@@ -445,7 +445,7 @@ namespace PokemonUnity.Combat
 			if (typemod==0)
 				battle.Display(Game._INTL("It doesn't affect {1}...",opponent.ToString(true)));
 			else
-				if (TypeImmunityByAbility(type, attacker, opponent)) return 0; 
+				if (TypeImmunityByAbility(type, attacker, opponent)) return 0;
 			return typemod;
 		}
 		#endregion
@@ -461,14 +461,14 @@ namespace PokemonUnity.Combat
 			if (opponent.effects.Minimize && tramplesMinimize(1)) baseaccuracy=0;
 			if (baseaccuracy==0) return true;
 			if (attacker.hasWorkingAbility(Abilities.NO_GUARD) ||
-				opponent.hasWorkingAbility(Abilities.NO_GUARD)) return true;            
+				opponent.hasWorkingAbility(Abilities.NO_GUARD)) return true;
 			if (opponent.hasWorkingAbility(Abilities.STORM_DRAIN)
-				&& GetType(this.Type, attacker, opponent) == Types.WATER) 
-				return true;           
-			if (opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD) 
-				&& GetType(this.Type, attacker, opponent) == Types.ELECTRIC) 
-				return true;          
-			if (opponent.effects.Telekinesis>0) return true; 
+				&& GetType(this.Type, attacker, opponent) == Types.WATER)
+				return true;
+			if (opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD)
+				&& GetType(this.Type, attacker, opponent) == Types.ELECTRIC)
+				return true;
+			if (opponent.effects.Telekinesis>0) return true;
 			// One-hit KO accuracy handled elsewhere
 			int accstage=attacker.stages[(int)Stats.ACCURACY]; //ToDo: minus one here too?
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.UNAWARE)) accstage = 0;
@@ -477,11 +477,11 @@ namespace PokemonUnity.Combat
 			if (battle.field.Gravity>0) evastage-=2;
 			if (evastage<-6) evastage=-6;
 			if (evastage>0 && Core.USENEWBATTLEMECHANICS &&
-				attacker.hasWorkingAbility(Abilities.KEEN_EYE)) evastage=0;            
-			if (opponent.effects.Foresight || 
-				opponent.effects.MiracleEye ||            
-				Effect==Attack.Data.Effects.x130 || // Chip Away            
-				attacker.hasWorkingAbility(Abilities.UNAWARE)) evastage=0;          
+				attacker.hasWorkingAbility(Abilities.KEEN_EYE)) evastage=0;
+			if (opponent.effects.Foresight ||
+				opponent.effects.MiracleEye ||
+				Effect==Attack.Effects.x130 || // Chip Away
+				attacker.hasWorkingAbility(Abilities.UNAWARE)) evastage=0;
 			double evasion=(evastage>=0) ? (evastage+3)*100.0/3 : 300.0/(3-evastage);
 			if (attacker.hasWorkingAbility(Abilities.COMPOUND_EYES))
 				accuracy*=1.3;
@@ -544,10 +544,10 @@ namespace PokemonUnity.Combat
 			if (attacker is IBattlerShadowPokemon p && p.inHyperMode() && Type == Types.SHADOW)
 				c+=1;
 			if (attacker.hasWorkingAbility(Abilities.SUPER_LUCK)) c+=1;
-			if (attacker.hasWorkingItem(Items.STICK) 
+			if (attacker.hasWorkingItem(Items.STICK)
 				&& attacker.Species == Pokemons.FARFETCHD)
 				c+=2;
-			if (attacker.hasWorkingItem(Items.LUCKY_PUNCH) 
+			if (attacker.hasWorkingItem(Items.LUCKY_PUNCH)
 				&& attacker.Species == Pokemons.CHANSEY)
 				c+=2;
 			if (attacker.hasWorkingItem(Items.RAZOR_CLAW))c+=1;
@@ -574,11 +574,11 @@ namespace PokemonUnity.Combat
 			opponent.damagestate.TypeMod=0;
 			opponent.damagestate.CalcDamage=0;
 			opponent.damagestate.HPLost=0;
-			if (Power==0) return 0; 
+			if (Power==0) return 0;
 			List<int> stagemul= new List<int>() { 10,10,10,10,10,10,10,15,20,25,30,35,40 };
 			List<int> stagediv= new List<int>() { 40,35,30,25,20,15,10,10,10,10,10,10,10 };
 			Types type = Types.NONE;
-			if (options.Contains(Core.NOTYPE)) 
+			if (options.Contains(Core.NOTYPE))
 				type=GetType(Type, attacker, opponent);
 			else
 				type=Types.NONE; // Will be treated as physical
@@ -616,7 +616,7 @@ namespace PokemonUnity.Combat
 					damagemult=Math.Round(damagemult*0.75);
 			}
 			if (attacker.hasWorkingAbility(Abilities.SAND_FORCE) &&
-				battle.Weather==Weather.SANDSTORM 
+				battle.Weather==Weather.SANDSTORM
 				&& (type == Types.ROCK ||
 				type == Types.GROUND ||
 				type == Types.STEEL))
@@ -629,7 +629,7 @@ namespace PokemonUnity.Combat
 				attacker.hasWorkingAbility(Abilities.REFRIGERATE) ||
 				attacker.hasWorkingAbility(Abilities.PIXILATE) && PowerBoost)
 				damagemult = Math.Round(damagemult * 1.3);
-			if ((battle.CheckGlobalAbility(Abilities.DARK_AURA).IsNotNullOrNone() && type == Types.DARK) 
+			if ((battle.CheckGlobalAbility(Abilities.DARK_AURA).IsNotNullOrNone() && type == Types.DARK)
 				|| (battle.CheckGlobalAbility(Abilities.FAIRY_AURA).IsNotNullOrNone() && type == Types.FAIRY)){
 				if (battle.CheckGlobalAbility(Abilities.AURA_BREAK).IsNotNullOrNone())
 					damagemult=Math.Round(damagemult*2/3);
@@ -639,18 +639,18 @@ namespace PokemonUnity.Combat
 			if (!attacker.hasMoldBreaker()){
 				if (opponent.hasWorkingAbility(Abilities.HEATPROOF) && type == Types.FIRE)
 					damagemult=Math.Round(damagemult*0.5);
-				if (opponent.hasWorkingAbility(Abilities.THICK_FAT) 
+				if (opponent.hasWorkingAbility(Abilities.THICK_FAT)
 					&& (type == Types.ICE || type == Types.FIRE))
 					damagemult=Math.Round(damagemult*0.5);
 				if (opponent.hasWorkingAbility(Abilities.FUR_COAT) &&
-					(IsPhysical(type) || Effect==Attack.Data.Effects.x11B)) // Psyshock
+					(IsPhysical(type) || Effect==Attack.Effects.x11B)) // Psyshock
 					damagemult=Math.Round(damagemult*0.5);
 				if (opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.FIRE)
 					damagemult=Math.Round(damagemult*1.25);
 			}
 			// Gems are the first items to be considered, as Symbiosis can replace a
 			// consumed Gem and the replacement item should work immediately.
-			if (Effect!=Attack.Data.Effects.x145 && Effect!=Attack.Data.Effects.x146 && Effect!=Attack.Data.Effects.x147) { // Pledge moves
+			if (Effect!=Attack.Effects.x145 && Effect!=Attack.Effects.x146 && Effect!=Attack.Effects.x147) { // Pledge moves
 				if ((attacker.hasWorkingItem(Items.NORMAL_GEM)   && type == Types.NORMAL) ||
 					(attacker.hasWorkingItem(Items.FIGHTING_GEM) && type == Types.FIGHTING) ||
 					(attacker.hasWorkingItem(Items.FLYING_GEM)   && type == Types.FLYING) ||
@@ -730,11 +730,11 @@ namespace PokemonUnity.Combat
 				&& attacker.Species == Pokemons.PALKIA &&
 				(type == Types.DRAGON || type == Types.WATER))
 				damagemult=Math.Round(damagemult*1.2);
-			if (attacker.hasWorkingItem(Items.ADAMANT_ORB) 
+			if (attacker.hasWorkingItem(Items.ADAMANT_ORB)
 				&& attacker.Species == Pokemons.DIALGA &&
 				(type == Types.DRAGON || type == Types.STEEL))
 				damagemult=Math.Round(damagemult*1.2);
-			if (attacker.hasWorkingItem(Items.GRISEOUS_ORB) 
+			if (attacker.hasWorkingItem(Items.GRISEOUS_ORB)
 				&& attacker.Species == Pokemons.GIRATINA &&
 				(type == Types.DRAGON || type == Types.GHOST))
 				damagemult=Math.Round(damagemult*1.2);
@@ -779,20 +779,20 @@ namespace PokemonUnity.Combat
 			#region ##### Calculate attacker's attack stat #####
 			int atk = attacker.ATK;
 			int atkstage=attacker.stages[(int)Stats.ATTACK]+6;
-			if (Effect==Attack.Data.Effects.x12A){ // Foul Play
+			if (Effect==Attack.Effects.x12A){ // Foul Play
 				atk=opponent.ATK;
 				atkstage = opponent.stages[(int)Stats.ATTACK] + 6;
 			}
 			if (type>=0 && IsSpecial (type)){
 				atk = attacker.SPA;
 				atkstage=attacker.stages[(int)Stats.SPATK]+6;
-				if (Effect==Attack.Data.Effects.x12A){ // Foul Play
+				if (Effect==Attack.Effects.x12A){ // Foul Play
 					atk=opponent.SPA;
 					atkstage = opponent.stages[(int)Stats.SPATK] + 6;
 				}
 			}
 			if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.UNAWARE)){
-				if (opponent.damagestate.Critical && atkstage<6) atkstage=6; 
+				if (opponent.damagestate.Critical && atkstage<6) atkstage=6;
 				atk=(int)Math.Floor(atk*1.0*stagemul[atkstage]/stagediv[atkstage]);
 			}
 			if (attacker.hasWorkingAbility(Abilities.HUSTLE) && IsPhysical (type))
@@ -844,11 +844,11 @@ namespace PokemonUnity.Combat
 				atkmult=Math.Round(atkmult*1.5);
 			if (attacker.hasWorkingItem(Items.THICK_CLUB) &&
 				(attacker.Species == Pokemons.CUBONE ||
-				attacker.Species == Pokemons.MAROWAK) && 
+				attacker.Species == Pokemons.MAROWAK) &&
 				IsPhysical(type))
 					atkmult = Math.Round(atkmult * 2.0);
 			if (attacker.hasWorkingItem(Items.DEEP_SEA_TOOTH) &&
-				attacker.Species == Pokemons.CLAMPERL && 
+				attacker.Species == Pokemons.CLAMPERL &&
 				IsSpecial(type))
 					atkmult = Math.Round(atkmult * 2.0);
 			if (attacker.hasWorkingItem(Items.LIGHT_BALL)
@@ -856,7 +856,7 @@ namespace PokemonUnity.Combat
 				atkmult=Math.Round(atkmult*2.0);
 			if (attacker.hasWorkingItem(Items.SOUL_DEW) &&
 				(attacker.Species == Pokemons.LATIAS ||
-				attacker.Species == Pokemons.LATIOS) && 
+				attacker.Species == Pokemons.LATIOS) &&
 				IsSpecial(type) &&
 				!battle.rules[BattleRule.SOULDEWCLAUSE])
 				atkmult = Math.Round(atkmult * 1.5);
@@ -871,14 +871,14 @@ namespace PokemonUnity.Combat
 			int defstage = opponent.stages[(int)Stats.DEFENSE] + 6;
 			// TODO: Wonder Room should apply around here
 			bool applysandstorm=false;
-			if (type>=0 && IsSpecial(type) && Effect!=Attack.Data.Effects.x11B){ // Psyshock
+			if (type>=0 && IsSpecial(type) && Effect!=Attack.Effects.x11B){ // Psyshock
 				defense=opponent.SPD;
 				defstage = opponent.stages[(int)Stats.SPDEF] + 6;
 				applysandstorm=true;
 			}
 			if (!attacker.hasWorkingAbility(Abilities.UNAWARE)){
-				if (Effect==Attack.Data.Effects.x130) defstage=6;  // Chip Away (ignore stat stages)
-				if (opponent.damagestate.Critical && defstage>6)defstage=6; 
+				if (Effect==Attack.Effects.x130) defstage=6;  // Chip Away (ignore stat stages)
+				if (opponent.damagestate.Critical && defstage>6)defstage=6;
 				defense=(int)Math.Floor(defense*1.0*stagemul[defstage]/stagediv[defstage]);
 			}
 			if (battle.Weather==Weather.SANDSTORM &&
@@ -909,12 +909,12 @@ namespace PokemonUnity.Combat
 				defmult = Math.Round(defmult * 1.5);
 			if (opponent.hasWorkingItem(Items.EVIOLITE)){
 				//Data.PokemonEvolution[] evos=Evolution.GetEvolvedFormData(opponent.Species);
-				//if (evos != null && evos.Length>0)      
+				//if (evos != null && evos.Length>0)
 				if (Kernal.PokemonEvolutionsData[opponent.Species].Length>0)
 					defmult=Math.Round(defmult*1.5);
 			}
 			if (opponent.hasWorkingItem(Items.DEEP_SEA_SCALE) &&
-				opponent.Species == Pokemons.CLAMPERL && 
+				opponent.Species == Pokemons.CLAMPERL &&
 				IsSpecial(type))
 				defmult = Math.Round(defmult * 2.0);
 			if (opponent.hasWorkingItem(Items.METAL_POWDER) &&
@@ -923,9 +923,9 @@ namespace PokemonUnity.Combat
 				defmult = Math.Round(defmult * 1.5);
 			if (opponent.hasWorkingItem(Items.SOUL_DEW) &&
 				(opponent.Species == Pokemons.LATIAS ||
-				opponent.Species == Pokemons.LATIOS) && 
+				opponent.Species == Pokemons.LATIOS) &&
 				IsSpecial(type) &&
-				!battle.rules[BattleRule.SOULDEWCLAUSE]) 
+				!battle.rules[BattleRule.SOULDEWCLAUSE])
 				defmult = Math.Round(defmult * 1.5);
 			defense = (int)Math.Round(defense * defmult * 1.0 / 0x1000);
 			#endregion
@@ -935,7 +935,7 @@ namespace PokemonUnity.Combat
 			if (TargetsMultiple(attacker))
 				damage = (int)Math.Round(damage * 0.75);
 			// Weather
-			switch (battle.Weather) { 
+			switch (battle.Weather) {
 				case Weather.SUNNYDAY: case Weather.HARSHSUN:
 					if (type == Types.FIRE)
 					damage=(int)Math.Round(damage*1.5);
@@ -969,7 +969,7 @@ namespace PokemonUnity.Combat
 				damage= (int)Math.Round(damage* typemod/8.0);
 				opponent.damagestate.TypeMod=typemod;
 				if (typemod==0){
-					opponent.damagestate.CalcDamage= 0; 
+					opponent.damagestate.CalcDamage= 0;
 					opponent.damagestate.Critical= false;
 					return 0;
 				}
@@ -978,7 +978,7 @@ namespace PokemonUnity.Combat
 				// Burn
 			if (attacker.Status==Status.BURN && IsPhysical(type) &&
 				!attacker.hasWorkingAbility(Abilities.GUTS) &&
-				!(Core.USENEWBATTLEMECHANICS && Effect==Attack.Data.Effects.x0AA)) // Facade
+				!(Core.USENEWBATTLEMECHANICS && Effect==Attack.Effects.x0AA)) // Facade
 				damage=(int)Math.Round(damage*0.5);
 			// Make sure damage is at least 1
 			if (damage<1)damage=1;
@@ -1043,7 +1043,7 @@ namespace PokemonUnity.Combat
 					(opponent.hasWorkingItem(Items.YACHE_BERRY)   && type == Types.ICE) ||
 					(opponent.hasWorkingItem(Items.HABAN_BERRY)   && type == Types.DRAGON) ||
 					(opponent.hasWorkingItem(Items.COLBUR_BERRY)  && type == Types.DARK) ||
-					(opponent.hasWorkingItem(Items.ROSELI_BERRY)  && type == Types.FAIRY)) { 
+					(opponent.hasWorkingItem(Items.ROSELI_BERRY)  && type == Types.FAIRY)) {
 					finaldamagemult=Math.Round(finaldamagemult*0.5);
 					opponent.damagestate.BerryWeakened=true;
 					battle.CommonAnimation("UseItem", opponent, null);
@@ -1083,7 +1083,7 @@ namespace PokemonUnity.Combat
 				opponent.damagestate.Substitute= false;
 				if (damage>=opponent.HP){
 					damage = opponent.HP;
-					if (Effect==Attack.Data.Effects.x066) // False Swipe
+					if (Effect==Attack.Effects.x066) // False Swipe
 						damage= damage - 1;
 					else if (opponent.effects.Endure){
 						damage = damage - 1;
@@ -1212,7 +1212,7 @@ namespace PokemonUnity.Combat
 
 		public virtual void ShowAnimation(Moves id, IBattler attacker, IBattler opponent, int hitnum= 0, int[] alltargets= null, bool showanimation= true){
 			if (!showanimation)return;
-			if (attacker.effects.ParentalBond == 1) { 
+			if (attacker.effects.ParentalBond == 1) {
 				battle.CommonAnimation("ParentalBond",attacker,opponent);
 				return;
 			}
@@ -1227,7 +1227,7 @@ namespace PokemonUnity.Combat
 				opponent.effects.BideDamage+=damage;
 				opponent.effects.BideTarget= attacker.Index;
 			}
-			if (Effect==Attack.Data.Effects.x088) // Hidden Power
+			if (Effect==Attack.Effects.x088) // Hidden Power
 				type=Types.NORMAL; //getConst(Types.NORMAL) || 0;
 			if (IsPhysical(type)){
 				opponent.effects.Counter= damage;
@@ -1251,6 +1251,6 @@ namespace PokemonUnity.Combat
 			return this.MemberwiseClone();
 		}
 		#endregion
-#pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
+#pragma warning restore 0162 //Warning CS0162  Unreachable code detected
 	}
 }

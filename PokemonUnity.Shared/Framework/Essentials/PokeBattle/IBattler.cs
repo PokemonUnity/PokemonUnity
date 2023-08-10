@@ -215,7 +215,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		IBattler ChangeUser(IBattleMove thismove, IBattler user);
 
-		PokemonUnity.Attack.Data.Targets Target(IBattleMove move);
+		PokemonUnity.Attack.Targets Target(IBattleMove move);
 
 		bool AddTarget(IList<IBattler> targets, IBattler target);
 

@@ -91,7 +91,7 @@ namespace PokemonEssentials.Interface.Field
 		ISafariState safariState { get; set; }
 		IBugContestState bugContestState			{ get; set; }
 		ITrainer partner { get; set; }
-		int? challenge { get; set; }
+		IBattleChallenge challenge { get; set; }
 		IBattleRecordData lastbattle { get; set; }
 		IList<IPhoneContact> phoneNumbers { get; set; }
 		/// <summary>

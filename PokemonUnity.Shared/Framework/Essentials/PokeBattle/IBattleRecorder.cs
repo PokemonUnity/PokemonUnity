@@ -35,7 +35,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int GetBattleType();
 		ITrainer[] GetTrainerInfo(ITrainer[] trainer);
 		BattleResults StartBattle(bool canlose = false);
-		string DumpRecord();
+		IBattleRecordData DumpRecord();
 		int SwitchInBetween(int i1, bool i2, bool i3);
 		bool RegisterMove(int i1, int i2, bool showMessages = true);
 		int Run(int i1, bool duringBattle = false);

@@ -26,7 +26,7 @@ namespace PokemonUnity
 		public IList<string> pokemonDexData { get; }
 		public IDictionary<int, IPokemonMetadata> pokemonMetadata { get; set; }
 		public IList<IPhoneMessageData> pokemonPhoneData { get; }
-		public int lastbattle { get; set; }
+		public IBattleRecordData lastbattle { get; set; }
 		public int flydata { get; set; }
 
 		public PokemonTemp() { initialize(); }

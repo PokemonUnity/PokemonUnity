@@ -223,7 +223,7 @@ namespace PokemonEssentials.Interface.Screen
 		void update();
 	}
 	#endregion
-	
+
 	/// <summary>
 	/// Shows the player's Poké Ball being thrown to capture a Pokémon.
 	/// </summary>
@@ -239,7 +239,7 @@ namespace PokemonEssentials.Interface.Screen
 
 	#region Pokemon Battle
 	/// <summary>
-	/// 
+	///
 	/// </summary>
 	public interface ISceneHasChatter
 	{
@@ -252,9 +252,9 @@ namespace PokemonEssentials.Interface.Screen
 		/*
 		-  def ChooseNewEnemy(int index,party)
 		Use this method to choose a new Pokémon for the enemy
-		The enemy's party is guaranteed to have at least one 
+		The enemy's party is guaranteed to have at least one
 		choosable member.
-		index - Index to the battler to be replaced (use e.g. @battle.battlers[index] to 
+		index - Index to the battler to be replaced (use e.g. @battle.battlers[index] to
 		access the battler)
 		party - Enemy's party
 
@@ -272,7 +272,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		- def ChooseEnemyCommand(int index)
 		Use this method to choose a command for the enemy.
-		index - Index of enemy battler (use e.g. @battle.battlers[index] to 
+		index - Index of enemy battler (use e.g. @battle.battlers[index] to
 		access the battler)
 		*/
 
@@ -332,7 +332,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// a command for the player.
 		/// </summary>
 		/// 0 - Fight, 1 - Pokémon, 2 - Bag, 3 - Run
-		/// <param name="index">Index of battler (use e.g. @battle.battlers[index] to 
+		/// <param name="index">Index of battler (use e.g. @battle.battlers[index] to
 		/// access the battler)</param>
 		/// <returns> Return values: 0=Fight, 1=Bag, 2=Pokémon, 3=Run, 4=Call</returns>
 		//new int CommandMenu(int index);
@@ -371,15 +371,15 @@ namespace PokemonEssentials.Interface.Screen
 		string NameEntry(string helptext, IPokemon pokemon);
 		void SelectBattler(int index, int selectmode = 1);
 		//int FirstTarget(int index, int targettype);
-		//int FirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		//int FirstTarget(int index, PokemonUnity.Attack.Targets targettype);
 		void UpdateSelected(int index);
 		/// <summary>
-		/// Use this method to make the player choose a target 
+		/// Use this method to make the player choose a target
 		/// for certain moves in double battles.
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name="targettype">Which targets are selectable as option</param>
-		//new int ChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		//new int ChooseTarget(int index, PokemonUnity.Attack.Targets targettype);
 		//new int Switch(int index, bool lax, bool cancancel);
 		//void DamageAnimation(IBattler pkmn, float effectiveness);
 		/// <summary>
@@ -500,17 +500,17 @@ namespace PokemonEssentials.Interface.Screen
 
 		//void FirstTarget(int index,int targettype);
 		/// <summary>
-		/// Returns the first selectable target of attack type 
+		/// Returns the first selectable target of attack type
 		/// from pool of pokemons active in battle scene
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name="targettype"></param>
 		/// <returns>retuns the index slot of battler</returns>
-		int FirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		int FirstTarget(int index, PokemonUnity.Attack.Targets targettype);
 		void NextTarget(int cur,int index);
 		void PrevTarget(int cur,int index);
 		/// <summary>
-		/// Use this method to make the player choose a target 
+		/// Use this method to make the player choose a target
 		/// for certain moves in double battles.
 		/// </summary>
 		/// <param name="index"></param>
@@ -563,7 +563,7 @@ namespace PokemonEssentials.Interface.Screen
 		int FightMenu(int index);
 		Items ItemMenu(int index);
 		//int ChooseTarget(int index, int targettype);
-		int ChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		int ChooseTarget(int index, PokemonUnity.Attack.Targets targettype);
 		int Switch(int index,bool lax,bool cancancel);
 		void ChooseEnemyCommand(int index);
 		/// <summary>
@@ -650,7 +650,7 @@ namespace PokemonEssentials.Interface.Screen
 		new int FightMenu(int index);
 		new Items ItemMenu(int index);
 		//new int ChooseTarget(int index, int targettype);
-		new int ChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		new int ChooseTarget(int index, PokemonUnity.Attack.Targets targettype);
 		//void Refresh();
 		//new int Switch(int index, bool lax, bool cancancel);
 		/// <summary>
