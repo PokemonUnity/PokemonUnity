@@ -1939,9 +1939,10 @@ namespace PokemonUnity
 			//if (species is String || species is Symbol) {
 			//  species=getID(Species,species);
 			//}
-			foreach (Pokemon pokemon in Trainer.party) {
+			foreach (IPokemon pokemon in Trainer.party) {
 				if (pokemon.isEgg) continue;
-				if (pokemon.Species==species && pokemon.ObtainedMode==Overworld.ObtainedMethod.FATEFUL_ENCOUNTER) return true;
+				//if (pokemon.Species==species && pokemon.ObtainedMode==Overworld.ObtainedMethod.FATEFUL_ENCOUNTER) return true;
+				if (pokemon.Species==species && pokemon.obtainMode==(int)Overworld.ObtainedMethod.FATEFUL_ENCOUNTER) return true;
 			}
 			return false;
 		}
