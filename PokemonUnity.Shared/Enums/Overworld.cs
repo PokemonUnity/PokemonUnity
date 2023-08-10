@@ -134,7 +134,22 @@
 			//Great_Marsh, //(Safari Zone)					//= 0xA
 			//Starter, Fossil, Gift, //(Eevee)				//= 0xC
 		}
-
+		//ToDo: Change to EncounterType?
+		public enum ObtainedMethod
+		{
+			/// <summary>
+			/// Stole from another trainer, during battle
+			/// </summary>
+			SNAGGED = -1,
+			MET = 0,
+			EGG = 1,
+			//If EncounterType == Gift, then it's Traded
+			TRADED = 2,
+			/// <summary>
+			/// NPC-Event?
+			/// </summary>
+			FATEFUL_ENCOUNTER = 4
+		}
 		/// <summary>
 		/// Encounter method
 		/// </summary>

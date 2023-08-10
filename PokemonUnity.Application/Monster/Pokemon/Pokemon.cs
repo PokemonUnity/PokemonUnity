@@ -8,6 +8,7 @@ using PokemonUnity.Utility;
 using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 using PokemonUnity.Character;
+using PokemonUnity.Overworld;
 using PokemonUnity.Monster.Data;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonEssentials.Interface;
@@ -577,22 +578,6 @@ namespace PokemonUnity.Monster
 		/// Manner Obtained:
 		/// </summary>
 		public ObtainedMethod ObtainedMode { get; private set; }
-		//ToDo: Change to EncounterType
-		public enum ObtainedMethod
-		{
-			/// <summary>
-			/// Stole from another trainer, during battle
-			/// </summary>
-			SNAGGED = -1,
-			MET = 0,
-			EGG = 1,
-			//If EncounterType == Gift, then it's Traded
-			TRADED = 2,
-			/// <summary>
-			/// NPC-Event?
-			/// </summary>
-			FATEFUL_ENCOUNTER = 4
-		}
 		//ToDo: Nintendo has variable for location where egg hatched
 		public Locations HatchedMap { get; private set; }
 		/// <summary>
@@ -3273,7 +3258,7 @@ namespace PokemonUnity.Monster
 					pokemon.Happiness, (Status)pokemon.Status, pokemon.StatusCount,
 					pokemon.EggSteps, (Items)pokemon.BallUsed, pokemon.Mail.Message,
 					moves, history, ribbons, pokemon.Markings, pokemon.PersonalId,
-					(Pokemon.ObtainedMethod)pokemon.ObtainedMethod,
+					(ObtainedMethod)pokemon.ObtainedMethod,
 					pokemon.TimeReceived, pokemon.TimeEggHatched
 				);
 			return normalPokemon;
