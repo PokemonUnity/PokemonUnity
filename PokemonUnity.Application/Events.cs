@@ -115,7 +115,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region Event Sender / Raise Events
-		public static void OnMapCreateTrigger(object sender, int map_id, MapData @map, ITileset tileset)
+		public static void OnMapCreateTrigger(object sender, int map_id, IMapData @map, ITileset tileset)
 		{
 			IOnMapCreateEventArgs e = new OnMapCreateEventArgs()
 			{
