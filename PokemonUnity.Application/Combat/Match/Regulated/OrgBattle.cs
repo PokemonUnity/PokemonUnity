@@ -270,7 +270,7 @@ namespace PokemonUnity
 					int indvalue=(party.Count<ivgroups[0]) ? ivs[0] : ivs[1];
 					party.Add(rndpoke.createPokemon(rule.ruleset.suggestedLevel,indvalue,null));
 				}
-			} while (rule.ruleset.isValid(party)); //end until rule.ruleset.isValid(party);
+			} while (!rule.ruleset.isValid(party)); //end until rule.ruleset.isValid(party);
 			return party.ToArray();
 		}
 
@@ -310,7 +310,7 @@ namespace PokemonUnity
 			//			rule.ruleset.suggestedLevel,indvalues,opponent);
 			//		opponent.party.Add(pkmn);
 			//	}
-			//} while (rule.ruleset.isValid(opponent.party)); //end until rule.ruleset.isValid(opponent.party);
+			//} while (!rule.ruleset.isValid(opponent.party)); //end until rule.ruleset.isValid(opponent.party);
 			return opponent;
 		}
 
