@@ -312,7 +312,7 @@ namespace PokemonEssentials.Interface.Battle
 		IPokemonRuleSet addPokemonRule(IBattleRestriction rule);
 
 		//  This rule checks
-		//  - the entire team to determine whether a subset of the team meets the rule, or 
+		//  - the entire team to determine whether a subset of the team meets the rule, or
 		//  - a list of Pokemon whose length is equal to the suggested number. For an
 		//    entire team, the condition must hold for at least one possible subset of
 		//    the team, but not necessarily for the entire team.
@@ -346,7 +346,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		bool isPokemonValid(IPokemon pokemon);
 
-		bool hasRegistrableTeam(IPokemon[] list);
+		bool hasRegistrableTeam(IList<IPokemon> list);
 
 		/// <summary>
 		///  Returns true if the team's length is greater or equal to the suggested number
@@ -356,7 +356,7 @@ namespace PokemonEssentials.Interface.Battle
 		/// </summary>
 		/// <param name="team"></param>
 		/// <returns></returns>
-		bool canRegisterTeam(IPokemon[] team);
+		bool canRegisterTeam(IList<IPokemon> team);
 
 		/// <summary>
 		///  Returns true if the team's length is greater or equal to the suggested number
@@ -365,7 +365,7 @@ namespace PokemonEssentials.Interface.Battle
 		/// </summary>
 		/// <param name="team"></param>
 		/// <returns></returns>
-		bool hasValidTeam(IPokemon[] team);
+		bool hasValidTeam(IList<IPokemon> team);
 
 		/// <summary>
 		///  Returns true if the team's length meets the subset length range requirements
@@ -375,7 +375,7 @@ namespace PokemonEssentials.Interface.Battle
 		/// <param name="team"></param>
 		/// <param name="error"></param>
 		/// <returns></returns>
-		bool isValid(IPokemon[] team, IList<string> error = null);
+		bool isValid(IList<IPokemon> team, IList<string> error = null);
 	}
 
 	public interface IBattleType //: IBattleType
@@ -562,7 +562,7 @@ namespace PokemonEssentials.Interface.Battle
 		//ILightCup();
 		string name { get; }
 	}
-	#endregion	
+	#endregion
 
 	public interface IBattleRestriction
 	{
@@ -572,6 +572,6 @@ namespace PokemonEssentials.Interface.Battle
 	public interface IBattleTeamRestriction
 	{
 		string errorMessage { get; }
-		bool isValid(IPokemon[] team);
+		bool isValid(IList<IPokemon> team);
 	}
 }

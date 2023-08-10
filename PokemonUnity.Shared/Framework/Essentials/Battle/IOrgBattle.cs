@@ -28,10 +28,10 @@ namespace PokemonEssentials.Interface.Battle
 	/// </summary>
 	public interface IGameOrgBattle
 	{
-		bool HasEligible(params object[] args);
+		bool HasEligible(); //params object[] args
 
 		PokemonUnity.Character.TrainerMetaData[] GetBTTrainers(int challengeID);
-		IPokemon GetBTPokemon(int challengeID);
+		IPokemonSerialized[] GetBTPokemon(int challengeID);
 
 
 		void RecordLastBattle();
@@ -51,13 +51,14 @@ namespace PokemonEssentials.Interface.Battle
 		//ITrainer BattleChallengeTrainer(int numwins, ITrainer[] bttrainers);
 		int BattleChallengeTrainer(int numwins, PokemonUnity.Character.TrainerMetaData[] bttrainers);
 
-		void BattleChallengeGraphic(IEntity @event);
+		void BattleChallengeGraphic(IGameCharacter @event);
 
 		string BattleChallengeBeginSpeech();
 
-		bool EntryScreen(params object[] arg);
+		bool EntryScreen(); //params object[] arg
 
-		IBattle BattleChallengeBattle();
+		bool BattleChallengeBattle { get; }
+		//IBattle BattleChallengeBattle { get; }
 
 
 
@@ -68,7 +69,8 @@ namespace PokemonEssentials.Interface.Battle
 		ITrainer GenerateBattleTrainer(int trainerid, IPokemonChallengeRules rule);
 
 		//ToDo: return bool?
-		BattleResults OrganizedBattleEx(ITrainer opponent, IPokemonChallengeRules challengedata, string endspeech, string endspeechwin);
+		bool OrganizedBattleEx(ITrainer opponent, IPokemonChallengeRules challengedata, string endspeech, string endspeechwin);
+		//BattleResults OrganizedBattleEx(ITrainer opponent, IPokemonChallengeRules challengedata, string endspeech, string endspeechwin);
 
 		bool IsBanned(IPokemon pokemon);
 	}
@@ -117,7 +119,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		Moves convertMove(Moves move);
 
-		IPokemon createPokemon(int level, int[] iv, ITrainer trainer);
+		IPokemon createPokemon(int level, int iv, ITrainer trainer);
 	}
 
 	public interface IGameMapOrgBattle //: PokemonEssentials.Interface.IGameMap
@@ -240,7 +242,8 @@ namespace PokemonEssentials.Interface.Battle
 		void End();
 
 		//ToDo: returns OrganizedBattleEx
-		BattleResults Battle();
+		bool Battle { get; }
+		//BattleResults Battle { get; }
 
 		bool InProgress { get; }
 
@@ -281,7 +284,8 @@ namespace PokemonEssentials.Interface.Battle
 		void ChooseRentals();
 
 		//ToDo: returns OrganizedBattleEx
-		BattleResults Battle(IBattleChallenge challenge);
+		bool Battle(IBattleChallenge challenge);
+		//BattleResults Battle(IBattleChallenge challenge);
 
 		void PrepareSwaps();
 

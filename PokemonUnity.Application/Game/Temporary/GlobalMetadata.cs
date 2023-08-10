@@ -122,7 +122,7 @@ namespace PokemonUnity
 		public ISafariState safariState						{ get; set; }
 		public IBugContestState bugContestState				{ get; set; }
 		public ITrainer partner								{ get; set; }
-		public int? challenge				                { get; set; }
+		public IBattleChallenge challenge				   { get; set; }
 		public IBattleRecordData lastbattle					{ get; set; }
 		public IList<IPhoneContact> phoneNumbers			{ get; set; }
 		public int phoneTime				                { get; set; }

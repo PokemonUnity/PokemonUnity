@@ -802,10 +802,10 @@ namespace PokemonUnity
 			return false;
 		}
 
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
 			int count = 0;
-			for (int i = 0; i < team.Length; i++)
+			for (int i = 0; i < team.Count; i++)
 			{
 				if (isSpecies(team[i].Species, @specieslist))
 				{
@@ -974,10 +974,10 @@ namespace PokemonUnity
 			this.level = level;
 		}
 
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
 			int totalLevel = 0;
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
 				if (team[i].Species == 0) continue;
 				totalLevel += team[i].Level;
@@ -996,10 +996,10 @@ namespace PokemonUnity
 
 	public partial class SameSpeciesClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ISameSpeciesClause
 	{
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
 			Pokemons species = 0;
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
 				if (team[i].Species == 0) continue;
 				if (species == 0)
@@ -1025,12 +1025,12 @@ namespace PokemonUnity
 
 	public partial class SpeciesClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ISpeciesClause
 	{
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
 				if (team[i].Species == 0) continue;
-				for (int j = i + 1; j < team.Length; j++)
+				for (int j = i + 1; j < team.Count; j++)
 				{
 					if (team[i].Species == team[j].Species) return false;
 				}
@@ -1097,12 +1097,12 @@ namespace PokemonUnity
 
 	public partial class ItemClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.IItemClause
 	{
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
 				if (!team[i].hasItem()) continue;
-				for (int j = i + 1; j < team.Length; j++)
+				for (int j = i + 1; j < team.Count; j++)
 				{
 					if (team[i].Item == team[j].Item) return false;
 				}
@@ -1160,11 +1160,11 @@ namespace PokemonUnity
 	/// </summary>
 	public partial class NicknameClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.INicknameClause
 	{
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
-				for (int j = i + 1; j < team.Length; j++)
+				for (int j = i + 1; j < team.Count; j++)
 				{
 					if (team[i].Name == team[j].Name) return false;
 					if (!NicknameChecker.check(team[i].Name, team[i].Species)) return false;
@@ -1276,7 +1276,7 @@ namespace PokemonUnity
 			int minLevel = 1;
 			int maxLevel = Core.MAXIMUMLEVEL;
 			int num = this.suggestedNumber;
-			foreach (var rule in @pokemonRules)
+			foreach (IBattleRestriction rule in @pokemonRules)
 			{
 				if (rule is IMinimumLevelRestriction r1)
 				{
@@ -1288,7 +1288,7 @@ namespace PokemonUnity
 				}
 			}
 			int totalLevel = maxLevel * num;
-			foreach (var rule in @subsetRules)
+			foreach (IBattleTeamRestriction rule in @subsetRules)
 			{
 				if (rule is ITotalLevelRestriction r)
 				{
@@ -1396,12 +1396,12 @@ namespace PokemonUnity
 			return true;
 		}
 
-		public bool hasRegistrableTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] list)
+		public bool hasRegistrableTeam(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> list)
 		{
-			if (list == null || list.Length < this.minTeamLength) return false;
+			if (list == null || list.Count < this.minTeamLength) return false;
 			//Array.ForEach<PokemonEssentials.Interface.PokeBattle.IPokemon[]>( //PokemonEssentials.Interface.PokeBattle.IPokemon[] |comb|
 			//	(Game.GameData as IGameUtility).EachCombination(list, this.maxTeamLength), (comb) => {
-			foreach ( PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in
+			foreach (PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in
 				(Game.GameData as IGameUtility).EachCombination(list, this.maxTeamLength)) {
 				if (canRegisterTeam(comb)) return true;
 			};
@@ -1416,25 +1416,25 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="team"></param>
 		/// <returns></returns>
-		public bool canRegisterTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool canRegisterTeam(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			if (team == null || team.Length < this.minTeamLength)
+			if (team == null || team.Count < this.minTeamLength)
 			{
 				return false;
 			}
-			if (team.Length > this.maxTeamLength)
+			if (team.Count > this.maxTeamLength)
 			{
 				return false;
 			}
-			int teamNumber = Math.Min(this.maxLength, team.Length);
-			foreach (var pokemon in team)
+			int teamNumber = Math.Min(this.maxLength, team.Count);
+			foreach (IPokemon pokemon in team)
 			{
 				if (!isPokemonValid(pokemon))
 				{
 					return false;
 				}
 			}
-			foreach (var rule in @teamRules)
+			foreach (IBattleTeamRestriction rule in @teamRules)
 			{
 				if (!rule.isValid(team))
 				{
@@ -1443,16 +1443,17 @@ namespace PokemonUnity
 			}
 			if (@subsetRules.Count > 0)
 			{
-				//EachCombination(team,teamNumber){|comb|
-				//   bool isValid=true;
-				//   foreach (var rule in @subsetRules) {
-				//     if (!rule.isValid(comb)) {
-				//       isValid=false;
-				//       break;
-				//     }
-				//   }
-				//   if (isValid) return true;
-				//}
+				//EachCombination(team,teamNumber,comb => {
+				foreach (PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in (Game.GameData as IGameUtility).EachCombination(team, teamNumber)) {
+					bool isValid=true;
+					foreach (var rule in @subsetRules) {
+						if (!rule.isValid(comb)) {
+							isValid=false;
+							break;
+						}
+					}
+				   if (isValid) return true;
+				}
 				return false;
 			}
 			return true;
@@ -1465,13 +1466,13 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="team"></param>
 		/// <returns></returns>
-		public bool hasValidTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool hasValidTeam(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			if (team == null || team.Length < this.minTeamLength)
+			if (team == null || team.Count < this.minTeamLength)
 			{
 				return false;
 			}
-			int teamNumber = Math.Min(this.maxLength, team.Length);
+			int teamNumber = Math.Min(this.maxLength, team.Count);
 			IList<PokemonEssentials.Interface.PokeBattle.IPokemon> validPokemon = new List<PokemonEssentials.Interface.PokeBattle.IPokemon>();
 			foreach (var pokemon in team)
 			{
@@ -1486,11 +1487,12 @@ namespace PokemonUnity
 			}
 			if (@teamRules.Count > 0)
 			{
-				//EachCombination(team,teamNumber){|comb|
-				//   if (isValid(comb)) {
-				//     return true;
-				//   }
-				//}
+				//EachCombination(team,teamNumber,comb=>{
+				foreach (PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in (Game.GameData as IGameUtility).EachCombination(team, teamNumber)) {
+					if (isValid(comb)) {
+						return true;
+					}
+				};
 				return false;
 			}
 			return true;
@@ -1504,15 +1506,15 @@ namespace PokemonUnity
 		/// <param name="team"></param>
 		/// <param name="error"></param>
 		/// <returns></returns>
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team, IList<string> error = null)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team, IList<string> error = null)
 		{
-			if (team.Length < this.minLength)
+			if (team.Count < this.minLength)
 			{
 				if (error != null && this.minLength == 1) error.Add(Game._INTL("Choose a Pokémon."));
 				if (error != null && this.minLength > 1) error.Add(Game._INTL("{1} Pokémon are needed.", this.minLength));
 				return false;
 			}
-			else if (team.Length > this.maxLength)
+			else if (team.Count > this.maxLength)
 			{
 				if (error != null) error.Add(Game._INTL("No more than {1} Pokémon may enter.", this.maxLength));
 				return false;

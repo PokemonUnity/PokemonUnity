@@ -1,58 +1,60 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
+using PokemonUnity.Combat;
 using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonUnity.Utility;
 using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
-using PokemonUnity.Combat;
 
 namespace PokemonUnity
 {
-	/*public partial class Game : PokemonEssentials.Interface.Battle.IGameOrgBattle
+	public partial class Game : PokemonEssentials.Interface.Battle.IGameOrgBattle
 	{
 		// ===============================================================================
 		// Pokémon Organized Battle
 		// ===============================================================================
-		public bool HasEligible (*arg) {
+		public bool HasEligible () {
 			return BattleChallenge.rules.ruleset.hasValidTeam(Game.GameData.Trainer.party);
 		}
 
-		public void GetBTTrainers(challengeID) {
-			trlists=(load_data("Data/trainerlists.dat") rescue []);
-			for (int i = 0; i < trlists.Length; i++) {
-				tr=trlists[i];
-				if (!tr[5] && tr[2].Contains(challengeID)) {
-					return tr[0];
-				}
-			}
-			for (int i = 0; i < trlists.Length; i++) {
-				tr=trlists[i];
-				if (tr[5]) {		// is default list
-					return tr[0];
-				}
-			}
-			return [];
+		public PokemonUnity.Character.TrainerMetaData[] GetBTTrainers(int challengeID) {
+			//PokemonUnity.Character.TrainerMetaData[] trlists=null;//load_data("Data/trainerlists.dat"); //rescue []
+			//for (int i = 0; i < trlists.Length; i++) {
+			//	PokemonUnity.Character.TrainerMetaData tr=trlists[i];
+			//	if (!tr[5] && tr[2].Contains(challengeID)) {
+			//		return tr[0];
+			//	}
+			//}
+			//for (int i = 0; i < trlists.Length; i++) {
+			//	PokemonUnity.Character.TrainerMetaData tr=trlists[i];
+			//	if (tr[5]) {		// is default list
+			//		return tr[0];
+			//	}
+			//}
+			return new PokemonUnity.Character.TrainerMetaData[0];
 		}
 
-		public void GetBTPokemon(challengeID) {
-			trlists=(load_data("Data/trainerlists.dat") rescue []);
-			foreach (var tr in trlists) {
-				if (!tr[5] && tr[2].Contains(challengeID)) {
-					return tr[1];
-				}
-			}
-			foreach (var tr in trlists) {
-				if (tr[5]) {		// is default list
-					return tr[1];
-				}
-			}
-			return [];
+		public IPokemonSerialized[] GetBTPokemon(int challengeID) {
+			//PokemonUnity.Character.TrainerData[] trlists=null;//load_data("Data/trainerlists.dat"); //rescue []
+			//foreach (PokemonUnity.Character.TrainerData tr in trlists) {
+			//	if (!tr[5] && tr[2].Contains(challengeID)) {
+			//		return tr.Party;//[1]
+			//	}
+			//}
+			//foreach (PokemonUnity.Character.TrainerData tr in trlists) {
+			//	if (tr[5]) {		// is default list
+			//		return tr.Party;//[1]
+			//	}
+			//}
+			return new IPokemonSerialized[0];
 		}
 
 		public void RecordLastBattle() {
@@ -60,37 +62,39 @@ namespace PokemonUnity
 			Game.GameData.PokemonTemp.lastbattle=null;
 		}
 
-		public void PlayBattle(battledata) {
-			if (battledata) {
-			scene=NewBattleScene;
-			scene.abortable=true;
-			lastbattle=Marshal.restore(new StringInput(battledata));
-			switch (lastbattle[0]) {
-				case BattleChallenge.eattleTower:
-					battleplayer=new PokeBattle_BattlePlayer(scene,lastbattle);
-					break;
-				case BattleChallenge.eattlePalace:
-					battleplayer=new PokeBattle_BattlePalacePlayer(scene,lastbattle);
-					break;
-				case BattleChallenge.eattleArena:
-					battleplayer=new PokeBattle_BattleArenaPlayer(scene,lastbattle);
-					break;
-				}
-				bgm=BattlePlayerHelper.GetBattleBGM(lastbattle);
-				BattleAnimation(bgm) {
-					SceneStandby {
-						decision=battleplayer.StartBattle;
-					}
-				}
+		public void PlayBattle(IBattleRecordData battledata) {
+			if (battledata!=null) {
+				//IPokeBattle_Scene scene=NewBattleScene();
+				//scene.abortable=true;
+				//IBattle lastbattle=null;//Marshal.restore(new StringInput(battledata));
+				//IBattlePlayerModule<IBattle> battleplayer =null;
+				//switch (lastbattle[0]) {
+				//	case BattleChallenge.BattleTower:
+				//		battleplayer=new PokeBattle_BattlePlayer(scene,lastbattle);
+				//		break;
+				//	case BattleChallenge.BattlePalace:
+				//		battleplayer=new PokeBattle_BattlePalacePlayer(scene,lastbattle);
+				//		break;
+				//	case BattleChallenge.BattleArena:
+				//		battleplayer=new PokeBattle_BattleArenaPlayer(scene,lastbattle);
+				//		break;
+				//}
+				//IAudioBGM bgm=BattlePlayerHelper.GetBattleBGM(lastbattle);
+				//BattleAnimation(bgm, block: () => {
+				//	SceneStandby(() => {
+				//		BattleResults decision=battleplayer.StartBattle();
+				//	});
+				//});
 			}
 		}
 
 		public void DebugPlayBattle() {
-			params=new ChooseNumberParams();
-			params.setRange(0,500);
-			params.setInitialValue(0);
-			params.setCancelValue(-1);
-			num=Kernel.MessageChooseNumber(_INTL("Choose a battle."),params);
+			//IChooseNumberParams param=new ChooseNumberParams();
+			IChooseNumberParams param=ChooseNumberParams.initialize();
+			param.setRange(0,500);
+			param.setInitialValue(0);
+			param.setCancelValue(-1);
+			int num=GameMessage.MessageChooseNumber(_INTL("Choose a battle."),param);
 			if (num>=0) {
 				PlayBattleFromFile(string.Format("Battles/Battle%03d.dat",num));
 			}
@@ -100,21 +104,21 @@ namespace PokemonUnity
 			PlayBattle(Game.GameData.Global.lastbattle);
 		}
 
-		public void PlayBattleFromFile(filename) {
-			RgssOpen(filename,"rb"){|f|
-				PlayBattle(f.read);
-			}
+		public void PlayBattleFromFile(string filename) {
+			//RgssOpen(filename,"rb"){|f|
+			//	PlayBattle(f.read);
+			//}
 		}
 
-		public void BattleChallenge() {
-			if (!Game.GameData.Global.challenge) {
+		public IBattleChallenge BattleChallenge { get {
+			if (Game.GameData.Global.challenge==null) {
 				Game.GameData.Global.challenge=new BattleChallenge();
 			}
 			return Game.GameData.Global.challenge;
-		}
+		} }
 
-		public void BattleChallengeTrainer(numwins,bttrainers) {
-			table=new int[]
+		public int BattleChallengeTrainer(int numwins,PokemonUnity.Character.TrainerMetaData[] bttrainers) {
+			int[] table=new int[] {
 				0,5,0,100,
 				6,6,80,40,
 				7,12,80,40,
@@ -134,60 +138,63 @@ namespace PokemonUnity
 			for (int i = 0; i < table.Length/4; i++) {
 				if (table[i*4]<=numwins) {
 					if ((table[i*4+1]<0 || table[i*4+1]>=numwins)) {
-						offset=((table[i*4+2]*bttrainers.Length).floor/300).floor;
-						length=((table[i*4+3]*bttrainers.Length).floor/300).floor;
-						return (offset+Core.Rand.Next(length)).floor;
+						int offset=(int)Math.Floor(Math.Floor((float)table[i*4+2]*bttrainers.Length)/300);
+						int length=(int)Math.Floor(Math.Floor((float)table[i*4+3]*bttrainers.Length)/300);
+						return (int)Math.Floor((float)offset+Core.Rand.Next(length));
 					}
 				}
 			}
 			return 0;
 		}
 
-		public void BattleChallengeGraphic(event) {
-			nextTrainer=BattleChallenge.nextTrainer;
-			bttrainers=GetBTTrainers(BattleChallenge.currentChallenge);
-			filename=TrainerCharNameFile((bttrainers[nextTrainer][0] rescue 0));
-			begin;
-				bitmap=new AnimatedBitmap("Graphics/Characters/"+filename);
-				bitmap.dispose();
-				event.character_name=filename;
-			rescue;
-				event.character_name="NPC 01";
+		public void BattleChallengeGraphic(IGameCharacter @event) {
+			int nextTrainer=BattleChallenge.nextTrainer;
+			PokemonUnity.Character.TrainerMetaData[] bttrainers=GetBTTrainers(BattleChallenge.currentChallenge);
+			string filename=TrainerCharNameFile(bttrainers[nextTrainer].ID); //[0] rescue 0
+			try { //begin;
+				//IAnimatedBitmap bitmap=new AnimatedBitmap("Graphics/Characters/"+filename);
+				//bitmap.Dispose();
+				@event.character_name=filename;
+			} catch { //rescue;
+				@event.character_name="NPC 01";
 			}
 		}
 
-		public void BattleChallengeBeginSpeech() {
-			if (!BattleChallenge.InProgress?) {
+		public string BattleChallengeBeginSpeech() {
+			if (!BattleChallenge.InProgress) {
 				return "...";
 			} else {
-				bttrainers=GetBTTrainers(BattleChallenge.currentChallenge);
-				tr=bttrainers[BattleChallenge.nextTrainer];
-				return tr ? GetMessageFromHash(MessageTypes.seginSpeech,tr[2]) : "...";
+				PokemonUnity.Character.TrainerMetaData[] bttrainers=GetBTTrainers(BattleChallenge.currentChallenge);
+				PokemonUnity.Character.TrainerMetaData tr=bttrainers[BattleChallenge.nextTrainer];
+				return tr.ScriptBattleIntro??"...";  //? GetMessageFromHash(MessageTypes.BeginSpeech,tr[2]) : "...";
 			}
 		}
 
-		public void EntryScreen(*arg) {
-			retval=false;
-			FadeOutIn(99999){
-				scene=new PokemonScreen_Scene();
-				screen=new PokemonScreen(scene,Game.GameData.Trainer.party);
-				ret=screen.PokemonMultipleEntryScreenEx(BattleChallenge.rules.ruleset);
+		public bool EntryScreen() {
+			bool retval=false;
+			FadeOutIn(99999, block: () => {
+				//IPartyDisplayScene scene=new PokemonScreen_Scene();
+				//IPartyDisplayScreen screen=new PokemonScreen(scene,Game.GameData.Trainer.party);
+				IPartyDisplayScene scene=Game.GameData.Scenes.Party;
+				IPartyDisplayScreen screen=Game.GameData.Screens.Party.initialize(scene,Game.GameData.Trainer.party);
+				IPokemon[] ret=screen.PokemonMultipleEntryScreenEx(BattleChallenge.rules.ruleset);
 				//  Set party
-				if (ret) BattleChallenge.setParty(ret);
+				if (ret!=null) BattleChallenge.setParty(ret);
 				//  Continue (return true) if Pokémon were chosen
 				retval=(ret!=null && ret.Length>0);
-			}
+			});
 			return retval;
 		}
 
-		public void BattleChallengeBattle() {
+		public bool BattleChallengeBattle{ get {
+		//public IBattle BattleChallengeBattle{ get {
 			return BattleChallenge.Battle;
-		}
+		} }
 
-		public void BattleFactoryPokemon(rule,numwins,numswaps,rentals) {
-			table=null;
-			btpokemon=GetBTPokemon(BattleChallenge.currentChallenge);
-			ivtable=new int[] {
+		public IPokemon[] BattleFactoryPokemon(IPokemonChallengeRules rule,int numwins,int numswaps,IPokemon[] rentals) {
+			int[] table=null;
+			IPokemonSerialized[] btpokemon=GetBTPokemon(BattleChallenge.currentChallenge);
+			int[] ivtable=new int[] {
 				0,6,3,6,
 				7,13,6,9,
 				14,20,9,12,
@@ -196,7 +203,7 @@ namespace PokemonUnity
 				35,41,21,31,
 				42,-1,31,31
 			};
-			groups=new int[]
+			int[] groups=new int[] {
 				1,14,6,0,
 				15,21,5,1,
 				22,28,4,2,
@@ -227,9 +234,9 @@ namespace PokemonUnity
 					49,-1,372,881
 				};
 			}
-			pokemonNumbers= new []{ 0,0 };
-			ivs= new []{ 0,0 };
-			ivgroups= new []{ 6,0 };
+			int[] pokemonNumbers= new int[]{ 0,0 };
+			int[] ivs= new int[]{ 0,0 };
+			int[] ivgroups= new int[]{ 6,0 };
 			for (int i = 0; i < table.Length/4; i++) {
 				if (table[i*4]<=numwins) {
 					if ((table[i*4+1]<0 || table[i*4+1]>=numwins)) {
@@ -243,122 +250,124 @@ namespace PokemonUnity
 			for (int i = 0; i < ivtable.Length/4; i++) {
 				if (ivtable[i*4]<=numwins) {
 					if ((ivtable[i*4+1]<0 || ivtable[i*4+1]>=numwins)) {
-						ivs=[ivtable[i*4+2],ivtable[i*4+3]];
+						ivs=new int[] {ivtable[i*4+2],ivtable[i*4+3]};
 					}
 				}
 			}
 			for (int i = 0; i < groups.Length/4; i++) {
 				if (groups[i*4]<=numswaps) {
 					if ((groups[i*4+1]<0 || groups[i*4+1]>=numswaps)) {
-						ivgroups=[groups[i*4+2],groups[i*4+3]];
+						ivgroups=new int[] {groups[i*4+2],groups[i*4+3]};
 					}
 				}
 			}
-			party=new List<>();
+			IList<IPokemon> party=new List<IPokemon>();
 			do {
-				party.clear();
-				while (party.Length<6) {
-					rnd=pokemonNumbers[0]+Core.Rand.Next(pokemonNumbers[1]-pokemonNumbers[0]+1);
-					rndpoke=btpokemon[rnd];
-					indvalue=(party.Length<ivgroups[0]) ? ivs[0] : ivs[1];
+				party.Clear();
+				while (party.Count<Core.MAXPARTYSIZE) {
+					int rnd=pokemonNumbers[0]+Core.Rand.Next(pokemonNumbers[1]-pokemonNumbers[0]+1);
+					IPokemonSerialized rndpoke=btpokemon[rnd];
+					int indvalue=(party.Count<ivgroups[0]) ? ivs[0] : ivs[1];
 					party.Add(rndpoke.createPokemon(rule.ruleset.suggestedLevel,indvalue,null));
 				}
 			} while (rule.ruleset.isValid(party)); //end until rule.ruleset.isValid(party);
-			return party;
+			return party.ToArray();
 		}
 
-		public void GenerateBattleTrainer(trainerid,rule) {
-			bttrainers=GetBTTrainers(BattleChallenge.currentChallenge);
-			trainerdata=bttrainers[trainerid];
-			opponent=new PokeBattle_Trainer(
-				GetMessageFromHash(MessageTypes.TrainerNames,trainerdata[1]),
-				trainerdata[0]);
-			btpokemon=GetBTPokemon(BattleChallenge.currentChallenge);
-			//  Individual Values
-			indvalues=31;
-			if (trainerid<220) indvalues=21;
-			if (trainerid<200) indvalues=18;
-			if (trainerid<180) indvalues=15;
-			if (trainerid<160) indvalues=12;
-			if (trainerid<140) indvalues=9;
-			if (trainerid<120) indvalues=6;
-			if (trainerid<100) indvalues=3;
-			pokemonnumbers=trainerdata[5];
-			// p trainerdata
-			if (pokemonnumbers.Length<rule.ruleset.suggestedNumber) {
-				foreach (var n in pokemonnumbers) {
-					rndpoke=btpokemon[n];
-					pkmn=rndpoke.createPokemon(
-						rule.ruleset.suggestedLevel,indvalues,opponent);
-					opponent.party.Add(pkmn);
-				}
-				return opponent;
-			}
-			begin;
-				opponent.party.clear();
-				while (opponent.party.Length<rule.ruleset.suggestedNumber) {
-					rnd=pokemonnumbers[Core.Rand.Next(pokemonnumbers.Length)];
-					rndpoke=btpokemon[rnd];
-					pkmn=rndpoke.createPokemon(
-						rule.ruleset.suggestedLevel,indvalues,opponent);
-					opponent.party.Add(pkmn);
-				}
-			end until rule.ruleset.isValid(opponent.party);
+		public ITrainer GenerateBattleTrainer(int trainerid,IPokemonChallengeRules rule) {
+			PokemonUnity.Character.TrainerMetaData[] bttrainers=GetBTTrainers(BattleChallenge.currentChallenge);
+			PokemonUnity.Character.TrainerMetaData trainerdata=bttrainers[trainerid];
+			ITrainer opponent=new Trainer(//PokeBattle_Trainer
+				trainerdata.ID.ToString(),//GetMessageFromHash(MessageTypes.TrainerNames,trainerdata[1]),
+				trainerdata.ID);//[0]
+			//IPokemonSerialized[] btpokemon=GetBTPokemon(BattleChallenge.currentChallenge);
+			////  Individual Values
+			//int indvalues=31;
+			//if (trainerid<220) indvalues=21;
+			//if (trainerid<200) indvalues=18;
+			//if (trainerid<180) indvalues=15;
+			//if (trainerid<160) indvalues=12;
+			//if (trainerid<140) indvalues=9;
+			//if (trainerid<120) indvalues=6;
+			//if (trainerid<100) indvalues=3;
+			//int[] pokemonnumbers=trainerdata[5];
+			//// p trainerdata
+			//if (pokemonnumbers.Length<rule.ruleset.suggestedNumber) {
+			//	foreach (int n in pokemonnumbers) {
+			//		IPokemonSerialized rndpoke=btpokemon[n];
+			//		IPokemon pkmn=rndpoke.createPokemon(
+			//			rule.ruleset.suggestedLevel,indvalues,opponent);
+			//		opponent.party.Add(pkmn);
+			//	}
+			//	return opponent;
+			//}
+			//do { //begin;
+			//	opponent.party.Clear();
+			//	while (opponent.party.Length<rule.ruleset.suggestedNumber) {
+			//		int rnd=pokemonnumbers[Core.Rand.Next(pokemonnumbers.Length)];
+			//		IPokemonSerialized rndpoke=btpokemon[rnd];
+			//		IPokemon pkmn=rndpoke.createPokemon(
+			//			rule.ruleset.suggestedLevel,indvalues,opponent);
+			//		opponent.party.Add(pkmn);
+			//	}
+			//} while (rule.ruleset.isValid(opponent.party)); //end until rule.ruleset.isValid(opponent.party);
 			return opponent;
 		}
 
-		public void OrganizedBattleEx(opponent,challengedata,endspeech,endspeechwin) {
-			if (!challengedata) {
+		public bool OrganizedBattleEx(ITrainer opponent,IPokemonChallengeRules challengedata,string endspeech,string endspeechwin) {
+			if (challengedata==null) {
 				challengedata=new PokemonChallengeRules();
 			}
-			scene=NewBattleScene;
+			IPokeBattle_Scene scene=NewBattleScene();
 			for (int i = 0; i < Game.GameData.Trainer.party.Length; i++) {
-				Game.GameData.Trainer.party[i].heal;
+				Game.GameData.Trainer.party[i].Heal();
 			}
-			olditems=Game.GameData.Trainer.party.transform{|p| p.Item }
-			olditems2=Game.GameData.Trainer.party.transform{|p| p.Item }
-			battle=challengedata.createBattle(scene,Game.GameData.Trainer,opponent);
+			Items[] olditems=Game.GameData.Trainer.party.Select(p=>p.Item).ToArray();	//.transform{|p| p.Item }
+			Items[] olditems2=Game.GameData.Trainer.party.Select(p=>p.Item).ToArray();  //.transform{|p| p.Item }
+			IBattle battle=challengedata.createBattle(scene,new ITrainer[] { Game.GameData.Trainer },new ITrainer[] { opponent });
 			battle.internalbattle=false;
 			battle.endspeech=endspeech;
 			battle.endspeechwin=endspeechwin;
-			if (Input.press(Input.CTRL) && Core.DEBUG) {
-				Kernel.Message(_INTL("SKIPPING BATTLE..."));
-				Kernel.Message(_INTL("AFTER LOSING..."));
-				Kernel.Message(battle.endspeech);
-				Game.GameData.PokemonTemp.lastbattle=null;
+			if (Input.press(PokemonUnity.Input.CTRL) && Core.DEBUG) {
+				GameMessage.Message(_INTL("SKIPPING BATTLE..."));
+				GameMessage.Message(_INTL("AFTER LOSING..."));
+				GameMessage.Message(battle.endspeech);
+				PokemonTemp.lastbattle=null;
 				return true;
 			}
-			oldlevels=challengedata.adjustLevels(Game.GameData.Trainer.party,opponent.party);
+			int?[][] oldlevels=challengedata.adjustLevels(Game.GameData.Trainer.party,opponent.party);
 			PrepareBattle(battle);
-			decision=0;
-			trainerbgm=GetTrainerBattleBGM(opponent);
-			BattleAnimation(trainerbgm) {
-				SceneStandby {
-					decision=battle.StartBattle;
-				}
-			}
+			BattleResults decision=0;
+			IAudioBGM trainerbgm=GetTrainerBattleBGM(opponent);
+			BattleAnimation(trainerbgm, block: () => {
+				SceneStandby(block: () => {
+					decision=((IRecordedBattleModule<IBattle>)battle).StartBattle();
+				});
+			});
 			challengedata.unadjustLevels(Game.GameData.Trainer.party,opponent.party,oldlevels);
 			for (int i = 0; i < Game.GameData.Trainer.party.Length; i++) {
-				Game.GameData.Trainer.party[i].heal;
+				Game.GameData.Trainer.party[i].Heal();
 				Game.GameData.Trainer.party[i].setItem(olditems[i]);
 			}
 			for (int i = 0; i < opponent.party.Length; i++) {
-				opponent.party[i].heal;
+				opponent.party[i].Heal();
 				opponent.party[i].setItem(olditems2[i]);
 			}
 			Input.update();
-			if (decision==1||decision==2||decision==5) {
-				Game.GameData.PokemonTemp.lastbattle=battle.DumpRecord;
+			if (decision==BattleResults.WON||decision==BattleResults.LOST||decision==BattleResults.DRAW) { //(decision==1||decision==2||decision==5)
+				Game.GameData.PokemonTemp.lastbattle=((IRecordedBattleModule<IBattle>)battle).DumpRecord();
 			} else {
 				Game.GameData.PokemonTemp.lastbattle=null;
 			}
-			return (decision==1);
+			return decision==BattleResults.WON;//(decision==1)
 		}
 
-		public bool IsBanned (pokemon) {
-			return new StandardSpeciesRestriction().isValid(pokemon);
+		public bool IsBanned (IPokemon pokemon) {
+			//return new StandardSpeciesRestriction().isValid(pokemon); //Doesnt work...
+			return new StandardRestriction().isValid(pokemon) //Could be either or...
+				|| new SpeciesRestriction().isValid(pokemon);
 		}
-	}*/
+	}
 
 	// ===============================================================================
 	// General purpose utilities
@@ -398,15 +407,16 @@ namespace PokemonUnity
 	//	}
 	//}
 
-	public partial class PBPokemon {
+	public partial class PBPokemon //: IPokemonSerialized
+	{
 		public int species				{ get; protected set; }
-		public int item				{ get; protected set; }
+		public int item					{ get; protected set; }
 		public int nature				{ get; protected set; }
 		public int move1				{ get; protected set; }
 		public int move2				{ get; protected set; }
 		public int move3				{ get; protected set; }
 		public int move4				{ get; protected set; }
-		public int ev				{ get; protected set; }
+		public int ev					{ get; protected set; }
 
 		//public Pokemon(species,item,nature,move1,move2,move3,move4,ev) {
 		//	@species=species;
@@ -655,7 +665,7 @@ namespace PokemonUnity
 		public BattleResults decision					{ get; set; }
 		public IPokemon[] party							{ get; protected set; }
 		public IBattleFactoryData extraData				{ get; protected set; }
-		protected TilePosition start;//					{ get; protected set; }
+		protected ITilePosition start;//				{ get; protected set; }
 		protected IPokemon[] oldParty;//				{ get; protected set; }
 		protected IList<int> trainers;//				{ get; protected set; }
 
@@ -726,13 +736,13 @@ namespace PokemonUnity
 			//if (numRounds<=0) throw new Exception (Game._INTL("Number of rounds is 0 or less."));
 			if (numRounds<=0) { GameDebug.LogError(Game._INTL("Number of rounds is 0 or less.")); numRounds = 1; }
 			this.numRounds=numRounds;
-			Character.TrainerMetaData[] btTrainers=null;//GetBTTrainers(BattleChallenge.currentChallenge);
+			Character.TrainerMetaData[] btTrainers=new Character.TrainerMetaData[0];//GetBTTrainers(BattleChallenge.currentChallenge);
 			if (Game.GameData is IGameOrgBattle gob) btTrainers=gob.GetBTTrainers(gob.BattleChallenge.currentChallenge);
 			while (@trainers.Count<this.numRounds) {
 				int? newtrainer = null;//BattleChallengeTrainer(@wins+@trainers.Count,btTrainers);
 				if (Game.GameData is IGameOrgBattle gob2) newtrainer=gob2.BattleChallengeTrainer(@wins+@trainers.Count,btTrainers);
 				bool found=false;
-				foreach (var tr in @trainers) {
+				foreach (int tr in @trainers) {
 					if (tr==newtrainer) found=true;
 				}
 				if (!found) @trainers.Add(newtrainer.Value);
@@ -930,19 +940,20 @@ namespace PokemonUnity
 			@bc.End();
 		}
 
-		public BattleResults Battle() {
+		public bool Battle { get {
+		//public BattleResults Battle { get {
 			if (@bc.extraData != null) return @bc.extraData.Battle(this);
 			ITrainer opponent=null;//GenerateBattleTrainer(this.nextTrainer,this.rules);
 			if (Game.GameData is IGameOrgBattle gob) opponent=gob.GenerateBattleTrainer(this.nextTrainer,this.rules);
 			Character.TrainerMetaData[] bttrainers=null; //GetBTTrainers(@id);
 			if (Game.GameData is IGameOrgBattle gob1) bttrainers = gob1.GetBTTrainers(@id);
 			Character.TrainerMetaData trainerdata=bttrainers[this.nextTrainer];
-			BattleResults ret=BattleResults.InProgress;//OrganizedBattleEx(opponent,this.rules,
+			bool ret=false;//BattleResults.InProgress
 			if (Game.GameData is IGameOrgBattle gob2) ret=gob2.OrganizedBattleEx(opponent,this.rules,
 				trainerdata.ScriptBattleEnd[0],		//GetMessageFromHash(MessageTypes.EndSpeechLose,trainerdata[4]),
 				trainerdata.ScriptBattleEnd[1]);	//GetMessageFromHash(MessageTypes.EndSpeechWin,trainerdata[3]));
 			return ret;
-		}
+		} }
 
 		public bool InProgress { get {
 			return @bc.inProgress;
@@ -1001,6 +1012,7 @@ namespace PokemonUnity
 
 	public partial class BattleFactoryData : PokemonEssentials.Interface.Battle.IBattleFactoryData {
 		protected IBattleChallengeData bcdata;
+		//protected IBattleChallenge bcdata;
 		protected ITrainer opponent;
 		protected IPokemon[] rentals;
 		protected IPokemon[] oldopponent;
@@ -1016,17 +1028,18 @@ namespace PokemonUnity
 		}
 
 		public void PrepareRentals() {
-			//if (Game.GameData is IGameOrgBattle gob) @rentals=gob.BattleFactoryPokemon(1,@bcdata.wins,@bcdata.swaps,new IPokemon[0]);
-			//@trainerid=@bcdata.nextTrainer;
-			//Character.TrainerMetaData[] bttrainers=null;//GetBTTrainers(@bcdata.currentChallenge);
-			//if (Game.GameData is IGameOrgBattle gob2) bttrainers=gob2.GetBTTrainers(@bcdata.currentChallenge);
-			//Character.TrainerMetaData trainerdata=bttrainers[@trainerid];
-			//@opponent=new Trainer( //PokeBattle_Trainer(
-			//	trainerdata.ID.ToString(),	//GetMessageFromHash(MessageTypes.TrainerNames,trainerdata[1]),
-			//	trainerdata.ID);			//trainerdata[0]);
-			//IPokemon[] opponentPkmn=null;//BattleFactoryPokemon(1,@bcdata.wins,@bcdata.swaps,@rentals);
-			//if (Game.GameData is IGameOrgBattle gob3) opponentPkmn=gob3.BattleFactoryPokemon(1,@bcdata.wins,@bcdata.swaps,@rentals);
-			//@opponent.party=opponentPkmn.Shuffle(0,3);//.shuffle[0,3];
+			//if (Game.GameData is IGameOrgBattle gob) @rentals=gob.BattleFactoryPokemon(1,@bcdata.wins,@bcdata.swaps,new IPokemon[0]); //ToDo: Uncomment
+			@trainerid=@bcdata.nextTrainer;
+			Character.TrainerMetaData[] bttrainers=null;//GetBTTrainers(@bcdata.currentChallenge); //bcdata == IBattleChallenge
+			//if (Game.GameData is IGameOrgBattle gob2) bttrainers=gob2.GetBTTrainers(@bcdata.currentChallenge); //ToDo: Uncomment
+			Character.TrainerMetaData trainerdata=bttrainers[@trainerid];
+			@opponent=new Trainer( //PokeBattle_Trainer(
+				trainerdata.ID.ToString(),	//GetMessageFromHash(MessageTypes.TrainerNames,trainerdata[1]),
+				trainerdata.ID);			//trainerdata[0]);
+			IPokemon[] opponentPkmn=null;//BattleFactoryPokemon(1,@bcdata.wins,@bcdata.swaps,@rentals);
+			//if (Game.GameData is IGameOrgBattle gob3) opponentPkmn=gob3.BattleFactoryPokemon(1,@bcdata.wins,@bcdata.swaps,@rentals); //ToDo: Uncomment
+			//ToDo: Uncomment and randomize the positions in the slots
+			@opponent.party=opponentPkmn;//.Shuffle(0,3);//.shuffle[0,3];
 		}
 
 		public void ChooseRentals() {
@@ -1039,32 +1052,34 @@ namespace PokemonUnity
 			});
 		}
 
-		public PokemonUnity.Combat.BattleResults Battle(IBattleChallenge challenge) {
-			//Character.TrainerMetaData[] bttrainers=null;//GetBTTrainers(@bcdata.currentChallenge);
-			//if (Game.GameData is IGameOrgBattle gob) bttrainers=gob.GetBTTrainers(@bcdata.currentChallenge);
-			//Character.TrainerMetaData trainerdata=bttrainers[@trainerid];//Kernal.TrainerMetaData
-			//if (Game.GameData is IGameOrgBattle gob1) return gob1.OrganizedBattleEx(@opponent, challenge.rules,
-			//	trainerdata.ScriptBattleEnd[0],		//GetMessageFromHash(MessageTypes.EndSpeechLose,trainerdata[4]),
-			//	trainerdata.ScriptBattleEnd[1]);    //GetMessageFromHash(MessageTypes.EndSpeechWin,trainerdata[3]));
-			return BattleResults.InProgress;
+		public bool Battle(IBattleChallenge challenge) {
+		//public PokemonUnity.Combat.BattleResults Battle(IBattleChallenge challenge) {
+			Character.TrainerMetaData[] bttrainers=null;//GetBTTrainers(@bcdata.currentChallenge); //bcdata == IBattleChallenge
+			//if (Game.GameData is IGameOrgBattle gob) bttrainers=gob.GetBTTrainers(@bcdata.currentChallenge); //ToDo: Uncomment
+			Character.TrainerMetaData trainerdata=bttrainers[@trainerid];//Kernal.TrainerMetaData
+			if (Game.GameData is IGameOrgBattle gob1) return gob1.OrganizedBattleEx(@opponent, challenge.rules,
+				trainerdata.ScriptBattleEnd[0],		//GetMessageFromHash(MessageTypes.EndSpeechLose,trainerdata[4]),
+				trainerdata.ScriptBattleEnd[1]);    //GetMessageFromHash(MessageTypes.EndSpeechWin,trainerdata[3]));
+			return false; //BattleResults.InProgress;
 		}
 
 		public void PrepareSwaps() {
-			//@oldopponent=@opponent.party;
-			//int trainerid=@bcdata.nextTrainer;
-			//Character.TrainerMetaData[] bttrainers=null; //GetBTTrainers(@bcdata.currentChallenge);
-			//if (Game.GameData is IGameOrgBattle gob) bttrainers=gob.GetBTTrainers(@bcdata.currentChallenge);
-			//Character.TrainerMetaData trainerdata=bttrainers[trainerid];
-			//@opponent=new Trainer( //PokeBattle_Trainer(
-			//	trainerdata.ID.ToString(),	//GetMessageFromHash(MessageTypes.TrainerNames,trainerdata[1]),
-			//	trainerdata.ID);			//trainerdata[0]);
-			//List<IPokemon> pool=new List<IPokemon>();pool.AddRange(@rentals);pool.AddRange(@oldopponent);
-			//IBattleChallenge challenge = null; //ToDo: Not sure how this is assigned... bcdata creates challenge somehow.
-			//IPokemon[] opponentPkmn=null;//BattleFactoryPokemon(
-			//if (Game.GameData is IGameOrgBattle gob2) opponentPkmn=gob2.BattleFactoryPokemon(
-			//	challenge.rules,@bcdata.wins,@bcdata.swaps,
-			//	pool.ToArray()); //new IPokemon[0].concat(@rentals).concat(@oldopponent));
-			//@opponent.party=opponentPkmn.Shuffle(0,3);//.shuffle[0,3];
+			@oldopponent=@opponent.party;
+			int trainerid=@bcdata.nextTrainer;
+			Character.TrainerMetaData[] bttrainers=null; //GetBTTrainers(@bcdata.currentChallenge);
+			//if (Game.GameData is IGameOrgBattle gob) bttrainers=gob.GetBTTrainers(@bcdata.currentChallenge); //ToDo: Uncomment...
+			Character.TrainerMetaData trainerdata=bttrainers[trainerid];
+			@opponent=new Trainer( //PokeBattle_Trainer(
+				trainerdata.ID.ToString(),	//GetMessageFromHash(MessageTypes.TrainerNames,trainerdata[1]),
+				trainerdata.ID);			//trainerdata[0]);
+			List<IPokemon> pool=new List<IPokemon>();pool.AddRange(@rentals);pool.AddRange(@oldopponent);
+			IBattleChallenge challenge = null; //ToDo: Not sure how this is assigned... bcdata creates challenge somehow.
+			IPokemon[] opponentPkmn=null;//BattleFactoryPokemon(
+			if (Game.GameData is IGameOrgBattle gob2) opponentPkmn=gob2.BattleFactoryPokemon(
+				challenge.rules,@bcdata.wins,@bcdata.swaps,
+				pool.ToArray()); //new IPokemon[0].concat(@rentals).concat(@oldopponent));
+			//ToDo: Uncomment and randomize the positions in the slots
+			@opponent.party=opponentPkmn;//.Shuffle(0,3);//.shuffle[0,3];
 		}
 
 		public bool ChooseSwaps() {

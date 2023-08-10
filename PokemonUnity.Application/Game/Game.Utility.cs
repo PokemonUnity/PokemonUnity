@@ -79,10 +79,10 @@ namespace PokemonUnity
 		/// <param name="num"></param>
 		/// <returns></returns>
 		//public IEnumerator<T[]> EachCombination<T>(T[] array,int num) {
-		public IEnumerable<T[]> EachCombination<T>(T[] array,int num) {
-			if (array.Length<num || num<=0) yield break; //return;
-			if (array.Length==num) {
-				yield return array;
+		public IEnumerable<T[]> EachCombination<T>(IList<T> array,int num) {
+			if (array.Count<num || num<=0) yield break; //return;
+			if (array.Count==num) {
+				yield return array.ToArray();
 				yield break; //return;
 			} else if (num==1) {
 				foreach (T x in array) {
@@ -100,7 +100,7 @@ namespace PokemonUnity
 					arr[i]=array[currentComb[i]];
 				}
 				yield return arr;
-			} while (_NextComb(currentComb,array.Length));
+			} while (_NextComb(currentComb,array.Count));
 		}
 
 		/// <summary>
@@ -1941,7 +1941,7 @@ namespace PokemonUnity
 			//}
 			foreach (Pokemon pokemon in Trainer.party) {
 				if (pokemon.isEgg) continue;
-				if (pokemon.Species==species && pokemon.ObtainedMode==Pokemon.ObtainedMethod.FATEFUL_ENCOUNTER) return true;
+				if (pokemon.Species==species && pokemon.ObtainedMode==Overworld.ObtainedMethod.FATEFUL_ENCOUNTER) return true;
 			}
 			return false;
 		}

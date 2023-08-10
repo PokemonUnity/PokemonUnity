@@ -36,7 +36,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="num"></param>
 		/// <returns></returns>
 		//IEnumerator<T[]> EachCombination<T>(T[] array, int num);
-		IEnumerable<T[]> EachCombination<T>(T[] array, int num);
+		IEnumerable<T[]> EachCombination<T>(IList<T> array, int num);
 
 		/// <summary>
 		/// Gets the path of the user's "My Documents" folder.
