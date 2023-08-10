@@ -44,7 +44,7 @@ namespace PokemonUnity.UX
 			//(this as IBitmapSprite).initialize((Game.GameData as Game).Graphics.width, 96 + UPPERGAP, viewport);
 			/*this.x = 0;
 			this.y = (Game.GameData as Game).Graphics.height - 96 - UPPERGAP;
-			pbSetNarrowFont(this.bitmap);*/
+			SetNarrowFont(this.bitmap);*/
 			//@buttonbitmap = new AnimatedBitmap(Game._INTL("Graphics/Pictures/battleFightButtons"));
 			//@typebitmap = new AnimatedBitmap(Game._INTL("Graphics/Pictures/types"));
 			//@megaevobitmap = new AnimatedBitmap(Game._INTL("Graphics/Pictures/battleMegaEvo"));
@@ -294,7 +294,7 @@ namespace PokemonUnity.UX
 				//	selected.GetComponentInChildren<TMPro.TextMeshProUGUI>().SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
 				//}
 			}
-			//pbDrawTextPositions(this.bitmap, textpos); //foreach text in array, add as child to gameobject with sprite as background image		
+			//DrawTextPositions(this.bitmap, textpos); //foreach text in array, add as child to gameobject with sprite as background image		
 			if (buttonMega != null)
 				if (megaButton > 0) //0=don't show, 1=show, 2=pressed
 				{

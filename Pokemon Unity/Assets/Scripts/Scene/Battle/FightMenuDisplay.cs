@@ -159,11 +159,11 @@ namespace PokemonUnity.UX
 			@window.columns = 2;
 			@window.columnSpacing = 4;
 			@window.ignore_input = true;
-			pbSetNarrowFont(@window.contents);
+			SetNarrowFont(@window.contents);
 			//@info = new Window_AdvancedTextPokemon().WithSize(
 			//	 "", 320, (Game.GameData as Game).Graphics.height - 96, (Game.GameData as Game).Graphics.width - 320, 96, viewport);
 			@info.WithSize("", 320, (Game.GameData as Game).Graphics.height - 96, (Game.GameData as Game).Graphics.width - 320, 96, viewport);
-			pbSetNarrowFont(@info.contents);
+			SetNarrowFont(@info.contents);
 			@ctag = shadowctag(PokeBattle_SceneConstants.MENUBASECOLOR,
 							 PokeBattle_SceneConstants.MENUSHADOWCOLOR);*/
 			@buttons = null;

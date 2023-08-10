@@ -42,7 +42,7 @@ namespace PokemonUnity
 		[SerializeField] private PokemonEssentials.Interface.Screen.IWithdrawItemScene bag_ItemWithdraw;
 		[SerializeField] private PokemonEssentials.Interface.Screen.ITossItemScene bag_ItemToss;
 		//[SerializeField] private PokemonEssentials.Interface.Screen. regionMap;
-		//[SerializeField] private PokemonEssentials.Interface.Screen. phone;
+		[SerializeField] private PokemonEssentials.Interface.Screen.IPokemonPhoneScene phone;
 		[SerializeField] private PokemonEssentials.Interface.Screen.IPokegearScene pokeGear;
 		[SerializeField] private PokemonEssentials.Interface.Screen.ITrainerCardScene trainerCard;
 		[SerializeField] private PokemonEssentials.Interface.Screen.IPokemonStorageScene pokemonStorageScene;
@@ -84,7 +84,7 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.Screen.IWithdrawItemScene Bag_ItemWithdraw	{ get { return bag_ItemWithdraw; } set { bag_ItemWithdraw = value; } }
 		public PokemonEssentials.Interface.Screen.ITossItemScene Bag_ItemToss	{ get { return bag_ItemToss; } set { bag_ItemToss = value; } }
 		//public PokemonEssentials.Interface.Screen. RegionMap	{ get { return regionMap; } set { regionMap = value; } }
-		//public PokemonEssentials.Interface.Screen. Phone	{ get { return phone; } set { phone = value; } }
+		public PokemonEssentials.Interface.Screen.IPokemonPhoneScene Phone	{ get { return phone; } set { phone = value; } }
 		public PokemonEssentials.Interface.Screen.IPokegearScene PokeGear	{ get { return pokeGear; } set { pokeGear = value; } }
 		public PokemonEssentials.Interface.Screen.ITrainerCardScene TrainerCard	{ get { return trainerCard; } set { trainerCard = value; } }
 		public PokemonEssentials.Interface.Screen.IPokemonStorageScene PokemonStorageScene	{ get { return pokemonStorageScene; } set { pokemonStorageScene = value; } }
@@ -111,7 +111,7 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging BattleSceneDebugWithoutLog	{ get { return battleSceneDebugWithoutLog; } set { battleSceneDebugWithoutLog = value; } }
 		public PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics BattleSceneDebugWithoutGfx	{ get { return battleSceneDebugWithoutGfx; } set { battleSceneDebugWithoutGfx = value; } }
 		#endregion
-				
+
 
 		public IGameScenesUI initialize (params PokemonEssentials.Interface.Screen.IScene[] scenes)
 		{
