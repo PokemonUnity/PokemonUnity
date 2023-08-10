@@ -16,7 +16,7 @@ using PokemonEssentials.Interface.Item;
 
 namespace PokemonUnity.Monster
 {
-	public partial class Pokemon : IPokemon, IEquatable<Pokemon>, IEqualityComparer<Pokemon>, ICloneable
+	public partial class Pokemon : IPokemon, IEquatable<IPokemon>, IEqualityComparer<IPokemon>, IEquatable<Pokemon>, IEqualityComparer<Pokemon>, ICloneable
 	{
 		#region Variables
 		private Pokemons pokemons;

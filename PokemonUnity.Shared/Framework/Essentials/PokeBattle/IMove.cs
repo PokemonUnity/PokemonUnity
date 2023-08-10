@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,7 @@ namespace PokemonEssentials.Interface
 		IMoveData initialize(Moves moveid);
 	}
 
-	public interface IMove
+	public interface IMove : IEquatable<IMove>, IEqualityComparer<IMove>
 	{
 		PokemonUnity.Attack.Data.Effects Effect { get; }
 		/// <summary>
