@@ -43,157 +43,160 @@ namespace PokemonUnity.UX
 		#region Interface Implementation
 		bool IBattleMoveIE.AccuracyCheck(IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return AccuracyCheck(attacker, opponent);
 		}
 
 		void IBattleMoveIE.AdditionalEffect(IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			AdditionalEffect(attacker, opponent);
 		}
 
 		void IBattleMoveIE.AddTarget(IList<IBattlerIE> targets, IBattlerIE attacker)
 		{
-			throw new NotImplementedException();
+			AddTarget((IList<IBattler>)targets, attacker);
 		}
 
 		int IBattleMoveIE.BaseDamage(int basedmg, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return BaseDamage(basedmg, attacker, opponent);
 		}
 
 		double IBattleMoveIE.BaseDamageMultiplier(double damagemult, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return BaseDamageMultiplier(damagemult, attacker, opponent);
 		}
 
 		int IBattleMoveIE.CalcDamage(IBattlerIE attacker, IBattlerIE opponent, params byte[] options)
 		{
-			throw new NotImplementedException();
+			return CalcDamage(attacker, opponent, options);
 		}
 
 		bool IBattleMoveIE.CritialOverride(IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return CritialOverride(attacker, opponent);
 		}
 
 		int IBattleMoveIE.DisplayUseMessage(IBattlerIE attacker)
 		{
-			throw new NotImplementedException();
+			return DisplayUseMessage(attacker);
 		}
 
 		int IBattleMove.GetEffect(IBattler attacker, IBattler opponent, int hitnum, int[] alltargets, bool showanimation)
 		{
-			throw new NotImplementedException();
+			return GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 
 		public virtual IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum, int[] alltargets, bool showanimation, System.Action<int> result = null)
 		{
-			throw new NotImplementedException();
+			yield return null;
+			//throw new NotImplementedException();
 		}
 
 		public virtual IEnumerator EffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
 		{
-			throw new NotImplementedException();
+			yield return null;
+			//throw new NotImplementedException();
 		}
 
 		int IBattleMoveIE.EffectFixedDamage(int damage, IBattlerIE attacker, IBattlerIE opponent, int hitnum, int[] alltargets, bool showanimation)
 		{
-			throw new NotImplementedException();
+			return EffectFixedDamage(damage, attacker, opponent, hitnum, alltargets, showanimation);
 		}
 
 		void IBattleMoveIE.EffectMessages(IBattlerIE attacker, IBattlerIE opponent, bool ignoretype, int[] alltargets)
 		{
-			throw new NotImplementedException();
+			EffectMessages(attacker, opponent, ignoretype, alltargets);
 		}
 
 		bool IBattleMoveIE.IsCritical(IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return IsCritical(attacker, opponent);
 		}
 
 		int IBattleMoveIE.ModifyBaseAccuracy(int baseaccuracy, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return ModifyBaseAccuracy(baseaccuracy, attacker, opponent);
 		}
 
 		double IBattleMoveIE.ModifyDamage(double damagemult, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return ModifyDamage(damagemult, attacker, opponent);
 		}
 
 		Types IBattleMoveIE.ModifyType(Types type, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return ModifyType(type, attacker, opponent);
 		}
 
 		bool IBattleMoveIE.MoveFailed(IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return MoveFailed(attacker, opponent);
 		}
 
 		int IBattleMoveIE.NumHits(IBattlerIE attacker)
 		{
-			throw new NotImplementedException();
+			return NumHits(attacker);
 		}
 
 		void IBattleMoveIE.OnDamageLost(int damage, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			OnDamageLost(damage, attacker, opponent);
 		}
 
 		bool IBattleMoveIE.OnStartUse(IBattlerIE attacker)
 		{
-			throw new NotImplementedException();
+			return OnStartUse(attacker);
 		}
 
 		int IBattleMoveIE.GetPriority(IBattlerIE attacker)
 		{
-			throw new NotImplementedException();
+			return GetPriority(attacker);
 		}
 
 		int IBattleMoveIE.ReduceHPDamage(int damage, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return ReduceHPDamage(damage, attacker, opponent);
 		}
 
 		public virtual IEnumerator ShowAnimation(Moves id, IBattlerIE attacker, IBattlerIE opponent, int hitnum, int[] alltargets, bool showanimation)
 		{
-			throw new NotImplementedException();
+			yield return null;
+			//throw new NotImplementedException();
 		}
 
 		bool IBattleMoveIE.TargetsMultiple(IBattlerIE attacker)
 		{
-			throw new NotImplementedException();
+			return TargetsMultiple(attacker);
 		}
 
 		bool IBattleMoveIE.TwoTurnAttack(IBattlerIE attacker)
 		{
-			throw new NotImplementedException();
+			return TwoTurnAttack(attacker);
 		}
 
 		Types IBattleMoveIE.GetType(Types type, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return GetType(type, attacker, opponent);
 		}
 
 		bool IBattleMoveIE.TypeImmunityByAbility(Types type, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return TypeImmunityByAbility(type, attacker, opponent);
 		}
 
 		float IBattleMoveIE.TypeModifier(Types type, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return TypeModifier(type, attacker, opponent);
 		}
 
 		double IBattleMoveIE.TypeModMessages(Types type, IBattlerIE attacker, IBattlerIE opponent)
 		{
-			throw new NotImplementedException();
+			return TypeModMessages(type, attacker, opponent);
 		}
 
 		bool IBattleMoveIE.ignoresSubstitute(IBattlerIE attacker)
 		{
-			throw new NotImplementedException();
+			return ignoresSubstitute(attacker);
 		}
 		#endregion
 	}
