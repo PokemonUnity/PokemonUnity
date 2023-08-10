@@ -2716,8 +2716,8 @@ namespace PokemonUnity
 				IDbCommand stmt = con.CreateCommand();
 
 				#region DataReader
-				stmt.CommandText = "select * from pokemon_items group by pokemon_id, item_id";
-				//	@"select *
+				stmt.CommandText = "select *, group_concat(DISTINCT item_id) as item_group from pokemon_items group by pokemon_id, rarity order by pokemon_id asc, rarity desc";
+				//	@"select *, group_concat(DISTINCT rarity) as rarity_group
 				//from pokemon_items
 				//group by pokemon_id, item_id";
 				IDataReader reader = stmt.ExecuteReader();
@@ -2732,9 +2732,11 @@ namespace PokemonUnity
 						//		new List<Monster.Data.PokemonWildItems>());
 						p[(Pokemons)int.Parse((string)reader["pokemon_id"].ToString())].Add(
 							new PokemonUnity.Monster.Data.PokemonWildItems(
-								itemId: (Items)int.Parse((string)reader["item_id"].ToString())
+								pkmn: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
+								//itemId: (Items)int.Parse((string)reader["item_id"].ToString())
 								,generation: int.Parse((string)reader["version_id"].ToString())
 								,rarity: int.Parse((string)reader["rarity"].ToString())
+								,itemId: ((string)reader["item_group"].ToString()).Split(',').Select(i => (Items)int.Parse(i)).ToArray()
 							)
 						);
 					}
@@ -3368,7 +3370,7 @@ namespace PokemonUnity
 					select id, version_group_id, rarity, encounter_method_id,
 					case when (slot is not null) AND version_group_id = 15 then slot + 1 else slot end as slot
 					from encounter_slots
-				) 
+				)
 				as s on s.id = e.encounter_slot_id
 				--left join encounter_condition_value_map_view as i on e.id = i.encounter_id;
 				--left join (

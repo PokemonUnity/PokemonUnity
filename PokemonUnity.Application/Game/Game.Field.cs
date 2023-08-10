@@ -459,10 +459,10 @@ namespace PokemonUnity
 
 		public IPokemon GenerateWildPokemon(Pokemons species,int level,bool isroamer=false) {
 			Pokemon genwildpoke=new Monster.Pokemon(species,level: (byte)level);//,Trainer
-			//Items items=genwildpoke.wildHoldItems;
-			Items[] items=Kernal.PokemonItemsData[species] //ToDo: Return Items[3];
-						.OrderByDescending(x => x.Rarirty)
-						.Select(x => x.ItemId).ToArray();
+			Items[] items=genwildpoke.wildHoldItems;
+			//Items[] items=Kernal.PokemonItemsData[species] //ToDo: Return Items[3];
+			//			.OrderByDescending(x => x.Rarirty)
+			//			.Select(x => x.ItemId).ToArray();
 			IPokemon firstpoke=Trainer.firstParty;
 			int[] chances=new int[]{ 50,5,1 };
 			if (firstpoke != null && !firstpoke.isEgg &&

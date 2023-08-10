@@ -865,7 +865,8 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		[TestMethod]
 		public void Pokemon_WildPokemon_With_Item()
 		{
-			Pokemon pkmn = new Pokemon(Pokemons.RATICATE);//Pokemons.BUTTERFREE
+			//Pokemon pkmn = new Pokemon(Pokemons.RATICATE);//Pokemons.BUTTERFREE
+			IPokemon pkmn = (Game.GameData as IGameField).GenerateWildPokemon(Pokemons.RATICATE,5);//Pokemons.BUTTERFREE
 			if (Kernal.PokemonItemsData[pkmn.Species].Length == 0)
 				Assert.Fail("Pokemon does not contain any held items in wild");
 
@@ -874,7 +875,8 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			{
 				//check to see if wild pokemon is created with held item
 				//pkmn.SwapItem(PokemonWildItems.GetWildHoldItem(pkmn.Species));
-				pkmn.SetWildHoldItem();
+				//pkmn.SetWildHoldItem();
+				pkmn = (Game.GameData as IGameField).GenerateWildPokemon(Pokemons.RATICATE, 5);
 				//pass if held item is true
 				if (pkmn.Item != Items.NONE)
 					//Assert.AreNotEqual()
