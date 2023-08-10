@@ -17,13 +17,13 @@ namespace PokemonEssentials.Interface
 	//public interface IMoveData
 	//{
 	//	//int function { get; set; }
-	//	PokemonUnity.Attack.Data.Effects Effect { get; }
+	//	PokemonUnity.Attack.Effects Effect { get; }
 	//	int basedamage { get; set; }
 	//	Types type { get; set; }
 	//	int accuracy { get; set; }
 	//	int totalpp { get; set; }
 	//	int addlEffect { get; set; }
-	//	PokemonUnity.Attack.Data.Targets target { get; set; }
+	//	PokemonUnity.Attack.Targets target { get; set; }
 	//	int priority { get; set; }
 	//	PokemonUnity.Attack.Data.Flag flags { get; set; }
 	//	PokemonUnity.Attack.Category category { get; set; }
@@ -34,7 +34,7 @@ namespace PokemonEssentials.Interface
 
 	public interface IMove : IEquatable<IMove>, IEqualityComparer<IMove>
 	{
-		PokemonUnity.Attack.Data.Effects Effect { get; }
+		PokemonUnity.Attack.Effects Effect { get; }
 		/// <summary>
 		/// This move's ID
 		/// </summary>

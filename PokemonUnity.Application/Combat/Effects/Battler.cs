@@ -12,7 +12,7 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// These effects apply to a battler
 		/// </summary>
-		public class Battler : PokemonEssentials.Interface.PokeBattle.Effects.IEffectsBattler { 
+		public class Battler : PokemonEssentials.Interface.PokeBattle.Effects.IEffectsBattler {
 			public bool AquaRing			{ get; set; }
 			public int Attract				{ get; set; }
 			public bool BatonPass			{ get; set; }
@@ -35,7 +35,7 @@ namespace PokemonUnity.Combat
 			public int EncoreIndex			{ get; set; }
 			public Moves EncoreMove			{ get; set; }
 			public bool Endure				{ get; set; }
-			public PokemonUnity.Attack.Data.Effects FirstPledge	{ get; set; }
+			public PokemonUnity.Attack.Effects FirstPledge	{ get; set; }
 			public bool FlashFire			{ get; set; }
 			public bool Flinch				{ get; set; }
 			public int FocusEnergy			{ get; set; }
@@ -79,7 +79,7 @@ namespace PokemonUnity.Combat
 			/// <summary>
 			/// Trapping move
 			/// </summary>
-			public int MultiTurn			{ get; set; } 
+			public int MultiTurn			{ get; set; }
 			public Moves MultiTurnAttack	{ get; set; }
 			public int MultiTurnUser		{ get; set; }
 			public bool Nightmare			{ get; set; }

@@ -42,7 +42,7 @@ namespace PokemonUnity
 		IDictionary<Types,PokemonUnity.Monster.Data.Type> TypeData { get; }
 		IDictionary<Moves,Attack.Data.MoveData> MoveData { get; }
 		IDictionary<Moves,Attack.Data.MetaData> MoveMetaData { get; }
-		IDictionary<Attack.Data.Effects,PokemonEssentials.Interface.PokeBattle.IBattleMove> MoveEffectData { get; } //ToDo: Replace with Func<Attack.Data.Effects,Combat.Move> instead?
+		IDictionary<Attack.Effects,PokemonEssentials.Interface.PokeBattle.IBattleMove> MoveEffectData { get; } //ToDo: Replace with Func<Attack.Effects,Combat.Move> instead?
 		IDictionary<Items,ItemData> ItemData { get; }
 		IDictionary<Items,BerryData> BerryData { get; }
 		IDictionary<Regions,Locations[]> RegionData { get; }

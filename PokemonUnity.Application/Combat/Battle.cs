@@ -1265,7 +1265,7 @@ namespace PokemonUnity.Combat
 				if (showMessages) DisplayPaused(Game._INTL("{1}'s {2} is disabled!", thispkmn.ToString(), Game._INTL(thismove.id.ToString(TextScripts.Name))));
 				return false;
 			}
-			if (thismove.Effect==Attack.Data.Effects.x153 && // ToDo: Belch
+			if (thismove.Effect==Attack.Effects.x153 && // ToDo: Belch
 			   (thispkmn.Species != Pokemons.NONE || !thispkmn.pokemon.belch)) {
 				if (showMessages) DisplayPaused(Game._INTL("{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn.ToString()));
 				return false;
@@ -1295,12 +1295,12 @@ namespace PokemonUnity.Combat
 				@choices[idxPokemon]=new Choice(ChoiceAction.UseMove, thispkmn.effects.EncoreIndex, thispkmn.moves[thispkmn.effects.EncoreIndex]);
 				if (@doublebattle) {
 					IBattleMove thismove=thispkmn.moves[thispkmn.effects.EncoreIndex];
-					Attack.Data.Targets targets=thispkmn.Target(thismove);
-					if (targets==Attack.Data.Targets.SELECTED_POKEMON || targets==Attack.Data.Targets.SELECTED_POKEMON_ME_FIRST) { //Targets.SingleNonUser
+					Attack.Targets targets=thispkmn.Target(thismove);
+					if (targets==Attack.Targets.SELECTED_POKEMON || targets==Attack.Targets.SELECTED_POKEMON_ME_FIRST) { //Targets.SingleNonUser
 						int target=(@scene as IPokeBattle_SceneNonInteractive).ChooseTarget(idxPokemon,targets);
 						if (target>=0) RegisterTarget(idxPokemon,target);
 					}
-					else if (targets==Attack.Data.Targets.USER_OR_ALLY) { //Targets.UserOrPartner
+					else if (targets==Attack.Targets.USER_OR_ALLY) { //Targets.UserOrPartner
 						int target=(@scene as IPokeBattle_SceneNonInteractive).ChooseTarget(idxPokemon,targets);
 						if (target>=0 && (target&1)==(idxPokemon&1)) RegisterTarget(idxPokemon,target); //both integers are Even (ally) and Identical (selected)
 					}
@@ -1340,7 +1340,7 @@ namespace PokemonUnity.Combat
 			return false;
 		}
 
-		public bool ChoseMoveFunctionCode (int i,Attack.Data.Effects code) {
+		public bool ChoseMoveFunctionCode (int i,Attack.Effects code) {
 			if (_battlers[i].isFainted()) return false;
 			//if (@choices[i][0]==1 && @choices[i][1]>=0) {
 			if (@choices[i]?.Action==ChoiceAction.UseMove && @choices[i]?.Index>=0) {
@@ -3196,16 +3196,16 @@ namespace PokemonUnity.Combat
 										if (@doublebattle) {
 											IBattleMove thismove=_battlers[i].moves[index];
 											//Attack.Target target=_battlers[i].Target(thismove);
-											Attack.Data.Targets targets=_battlers[i].Target(thismove);
+											Attack.Targets targets=_battlers[i].Target(thismove);
 											//if (target==Attack.Target.SingleNonUser) {            // single non-user
-											if (targets==Attack.Data.Targets.SELECTED_POKEMON ||	// single non-user
-												targets==Attack.Data.Targets.SELECTED_POKEMON_ME_FIRST) {
+											if (targets==Attack.Targets.SELECTED_POKEMON ||	// single non-user
+												targets==Attack.Targets.SELECTED_POKEMON_ME_FIRST) {
 												int target=(@scene as IPokeBattle_SceneNonInteractive).ChooseTarget(i,targets);
 												if (target<0) continue;
 												RegisterTarget(i,target);
 											}
 											//else if (target==Attack.Target.UserOrPartner) {       // Acupressure
-											else if (targets==Attack.Data.Targets.USER_OR_ALLY) {   // Acupressure
+											else if (targets==Attack.Targets.USER_OR_ALLY) {   // Acupressure
 												int target=(@scene as IPokeBattle_SceneNonInteractive).ChooseTarget(i,targets);
 												if (target<0 || (target%2)==1) continue; //no choice or enemy
 												RegisterTarget(i,target);
@@ -3352,7 +3352,7 @@ namespace PokemonUnity.Combat
 					foreach (var j in priority) {
 						if (!i.IsOpposing(j.Index)) continue;
 						// if Pursuit and this target ("i") was chosen
-						if (ChoseMoveFunctionCode(j.Index,Attack.Data.Effects.x081) && // Pursuit
+						if (ChoseMoveFunctionCode(j.Index,Attack.Effects.x081) && // Pursuit
 							!j.hasMovedThisRound()) {
 							if (j.Status!=Status.SLEEP && j.Status!=Status.FROZEN &&
 								!j.effects.SkyDrop &&
@@ -3416,7 +3416,7 @@ namespace PokemonUnity.Combat
 			// Use attacks
 			foreach (var i in priority) {
 				if (i.effects.SkipTurn) continue;
-				if (ChoseMoveFunctionCode(i.Index,Attack.Data.Effects.x0AB)) { // Focus Punch
+				if (ChoseMoveFunctionCode(i.Index,Attack.Effects.x0AB)) { // Focus Punch
 					CommonAnimation("FocusPunch",i,null);
 					Display(Game._INTL("{1} is tightening its focus!",i.ToString()));
 				}
@@ -3544,9 +3544,9 @@ namespace PokemonUnity.Combat
 									!i.hasWorkingAbility(Abilities.MAGIC_GUARD) &&
 									!i.hasWorkingAbility(Abilities.OVERCOAT) &&
 									!i.hasWorkingItem(Items.SAFETY_GOGGLES) &&
-									!new Attack.Data.Effects[] {
-										Attack.Data.Effects.x101, // Dig
-										Attack.Data.Effects.x100  // Dive
+									!new Attack.Effects[] {
+										Attack.Effects.x101, // Dig
+										Attack.Effects.x100  // Dive
 									}.Contains(Kernal.MoveData[i.effects.TwoTurnAttack].Effect)) {
 									(@scene as IPokeBattle_DebugSceneNoGraphics).DamageAnimation(i,0);
 									i.ReduceHP((int)Math.Floor(i.TotalHP/16f));

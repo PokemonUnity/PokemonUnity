@@ -20,13 +20,13 @@ namespace PokemonEssentials.Interface.PokeBattle
 		IBattle battle { get; set; }
 		string Name { get; }
 		//int function { get; set; }
-		PokemonUnity.Attack.Data.Effects Effect { get; }
+		PokemonUnity.Attack.Effects Effect { get; }
 		int basedamage { get; set; }
 		Types Type { get; set; }
 		int Accuracy { get; set; }
 		int AddlEffect { get; }
 		PokemonUnity.Attack.Category Category { get; } //ToDo: Move to application layer
-		PokemonUnity.Attack.Data.Targets Target { get; set; }
+		PokemonUnity.Attack.Targets Target { get; set; }
 		int Priority { get; set; }
 		PokemonUnity.Attack.Data.Flag Flags { get; set; }
 		IMove thismove { get; }

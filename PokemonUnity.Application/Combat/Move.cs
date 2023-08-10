@@ -28,7 +28,7 @@ namespace PokemonUnity.Combat
 		public Attack.Category Category		{ get; set; }
 		public Moves MoveId					{ get; set; }
 		//public Attack.Target Targets		{ get; set; }
-		public Attack.Data.Targets Target	{ get; set; }
+		public Attack.Targets Target	{ get; set; }
 		public Types Type					{ get; set; }
 		//public Attack.MoveFlags Flag		{ get; set; }
 		public Attack.Data.Flag Flags		{ get; set; }
@@ -41,7 +41,7 @@ namespace PokemonUnity.Combat
 		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
 		/// </summary>
 		public virtual int AddlEffect		{ get { return Kernal.MoveData[MoveId].EffectChance??0; } }
-		public Attack.Data.Effects Effect	{ get { return Kernal.MoveData[MoveId].Effect; } }
+		public Attack.Effects Effect	{ get { return Kernal.MoveData[MoveId].Effect; } }
 		/// <summary>
 		/// The move's accuracy, as a percentage.
 		/// An accuracy of 0 means the move doesn't perform an accuracy check
@@ -103,7 +103,7 @@ namespace PokemonUnity.Combat
 		{
 			if (move == null) move = new Attack.Move(Moves.NONE);
 			//Attack.Data.MoveData movedata = Kernal.MoveData[move.id];
-			Attack.Data.Effects effect = Kernal.MoveData[move.id].Effect;
+			Attack.Effects effect = Kernal.MoveData[move.id].Effect;
 			//Type className = Type.GetType(string.Format("PokeBattle_Move_{0}X", movedata.Effect));
 			////if Object.const_defined(className)
 			//	//return (className).new (battle, move);
@@ -197,13 +197,13 @@ namespace PokemonUnity.Combat
 		public virtual bool TargetsMultiple(IBattler attacker){
 			int numtargets = 0;
 			//if (Targets == Attack.Target.AllOpposing) {
-			if (Target == Attack.Data.Targets.ALL_OPPONENTS) {
+			if (Target == Attack.Targets.ALL_OPPONENTS) {
 				// TODO: should apply even if partner faints during an attack
 				if (!attacker.Opposing1.isFainted())numtargets+=1;
 				if (!attacker.Opposing2.isFainted())numtargets+=1;
 				return numtargets>1;
 			//} else if (Targets == Attack.Target.AllNonUsers) {
-			} else if (Target == Attack.Data.Targets.ALL_OTHER_POKEMON) {
+			} else if (Target == Attack.Targets.ALL_OTHER_POKEMON) {
 				// TODO: should apply even if partner faints during an attack
 				if (!attacker.Opposing1.isFainted())numtargets+=1;
 				if (!attacker.Opposing2.isFainted())numtargets+=1;
@@ -223,11 +223,11 @@ namespace PokemonUnity.Combat
 			if (attacker.hasWorkingAbility(Abilities.PARENTAL_BOND))
 				if (IsDamaging() && !TargetsMultiple(attacker) &&
 				!IsMultiHit() && !TwoTurnAttack(attacker)){
-					List<Attack.Data.Effects> exceptions= new List<Attack.Data.Effects>(){
-						Attack.Data.Effects.x0BE,	// Endeavor
-						Attack.Data.Effects.x008,	// Selfdestruct/Explosion
-						Attack.Data.Effects.x141,	// Final Gambit
-						Attack.Data.Effects.x0EA	// Fling
+					List<Attack.Effects> exceptions= new List<Attack.Effects>(){
+						Attack.Effects.x0BE,	// Endeavor
+						Attack.Effects.x008,	// Selfdestruct/Explosion
+						Attack.Effects.x141,	// Final Gambit
+						Attack.Effects.x0EA	// Fling
 					};
 					if (!exceptions.Contains(Effect)){
 						attacker.effects.ParentalBond= 3;
@@ -422,13 +422,13 @@ namespace PokemonUnity.Combat
 						if (otype3 == Types.FLYING && atype.GetCombinedEffectiveness(otype3) == TypeEffective.SuperEffective)mod3 = 2; //
 			}
 			// Smack Down makes Ground moves work against fliers
-			if (!opponent.isAirborne(attacker.hasMoldBreaker()) || Effect==Attack.Data.Effects.x120 // Smack Down
+			if (!opponent.isAirborne(attacker.hasMoldBreaker()) || Effect==Attack.Effects.x120 // Smack Down
 				&& atype == Types.GROUND){
 				if (otype1 == Types.FLYING)mod1=2;
 				if (otype2 == Types.FLYING)mod2=2;
 				if (otype3 == Types.FLYING)mod3=2;
 			}
-			if (Effect==Attack.Data.Effects.x17C && !attacker.effects.Electrify){ // Freeze-Dry
+			if (Effect==Attack.Effects.x17C && !attacker.effects.Electrify){ // Freeze-Dry
 				if (otype1 == Types.WATER)
 				mod1 = 4;
 				if (otype2 == Types.WATER)
@@ -480,7 +480,7 @@ namespace PokemonUnity.Combat
 				attacker.hasWorkingAbility(Abilities.KEEN_EYE)) evastage=0;
 			if (opponent.effects.Foresight ||
 				opponent.effects.MiracleEye ||
-				Effect==Attack.Data.Effects.x130 || // Chip Away
+				Effect==Attack.Effects.x130 || // Chip Away
 				attacker.hasWorkingAbility(Abilities.UNAWARE)) evastage=0;
 			double evasion=(evastage>=0) ? (evastage+3)*100.0/3 : 300.0/(3-evastage);
 			if (attacker.hasWorkingAbility(Abilities.COMPOUND_EYES))
@@ -643,14 +643,14 @@ namespace PokemonUnity.Combat
 					&& (type == Types.ICE || type == Types.FIRE))
 					damagemult=Math.Round(damagemult*0.5);
 				if (opponent.hasWorkingAbility(Abilities.FUR_COAT) &&
-					(IsPhysical(type) || Effect==Attack.Data.Effects.x11B)) // Psyshock
+					(IsPhysical(type) || Effect==Attack.Effects.x11B)) // Psyshock
 					damagemult=Math.Round(damagemult*0.5);
 				if (opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.FIRE)
 					damagemult=Math.Round(damagemult*1.25);
 			}
 			// Gems are the first items to be considered, as Symbiosis can replace a
 			// consumed Gem and the replacement item should work immediately.
-			if (Effect!=Attack.Data.Effects.x145 && Effect!=Attack.Data.Effects.x146 && Effect!=Attack.Data.Effects.x147) { // Pledge moves
+			if (Effect!=Attack.Effects.x145 && Effect!=Attack.Effects.x146 && Effect!=Attack.Effects.x147) { // Pledge moves
 				if ((attacker.hasWorkingItem(Items.NORMAL_GEM)   && type == Types.NORMAL) ||
 					(attacker.hasWorkingItem(Items.FIGHTING_GEM) && type == Types.FIGHTING) ||
 					(attacker.hasWorkingItem(Items.FLYING_GEM)   && type == Types.FLYING) ||
@@ -779,14 +779,14 @@ namespace PokemonUnity.Combat
 			#region ##### Calculate attacker's attack stat #####
 			int atk = attacker.ATK;
 			int atkstage=attacker.stages[(int)Stats.ATTACK]+6;
-			if (Effect==Attack.Data.Effects.x12A){ // Foul Play
+			if (Effect==Attack.Effects.x12A){ // Foul Play
 				atk=opponent.ATK;
 				atkstage = opponent.stages[(int)Stats.ATTACK] + 6;
 			}
 			if (type>=0 && IsSpecial (type)){
 				atk = attacker.SPA;
 				atkstage=attacker.stages[(int)Stats.SPATK]+6;
-				if (Effect==Attack.Data.Effects.x12A){ // Foul Play
+				if (Effect==Attack.Effects.x12A){ // Foul Play
 					atk=opponent.SPA;
 					atkstage = opponent.stages[(int)Stats.SPATK] + 6;
 				}
@@ -871,13 +871,13 @@ namespace PokemonUnity.Combat
 			int defstage = opponent.stages[(int)Stats.DEFENSE] + 6;
 			// TODO: Wonder Room should apply around here
 			bool applysandstorm=false;
-			if (type>=0 && IsSpecial(type) && Effect!=Attack.Data.Effects.x11B){ // Psyshock
+			if (type>=0 && IsSpecial(type) && Effect!=Attack.Effects.x11B){ // Psyshock
 				defense=opponent.SPD;
 				defstage = opponent.stages[(int)Stats.SPDEF] + 6;
 				applysandstorm=true;
 			}
 			if (!attacker.hasWorkingAbility(Abilities.UNAWARE)){
-				if (Effect==Attack.Data.Effects.x130) defstage=6;  // Chip Away (ignore stat stages)
+				if (Effect==Attack.Effects.x130) defstage=6;  // Chip Away (ignore stat stages)
 				if (opponent.damagestate.Critical && defstage>6)defstage=6;
 				defense=(int)Math.Floor(defense*1.0*stagemul[defstage]/stagediv[defstage]);
 			}
@@ -978,7 +978,7 @@ namespace PokemonUnity.Combat
 				// Burn
 			if (attacker.Status==Status.BURN && IsPhysical(type) &&
 				!attacker.hasWorkingAbility(Abilities.GUTS) &&
-				!(Core.USENEWBATTLEMECHANICS && Effect==Attack.Data.Effects.x0AA)) // Facade
+				!(Core.USENEWBATTLEMECHANICS && Effect==Attack.Effects.x0AA)) // Facade
 				damage=(int)Math.Round(damage*0.5);
 			// Make sure damage is at least 1
 			if (damage<1)damage=1;
@@ -1083,7 +1083,7 @@ namespace PokemonUnity.Combat
 				opponent.damagestate.Substitute= false;
 				if (damage>=opponent.HP){
 					damage = opponent.HP;
-					if (Effect==Attack.Data.Effects.x066) // False Swipe
+					if (Effect==Attack.Effects.x066) // False Swipe
 						damage= damage - 1;
 					else if (opponent.effects.Endure){
 						damage = damage - 1;
@@ -1227,7 +1227,7 @@ namespace PokemonUnity.Combat
 				opponent.effects.BideDamage+=damage;
 				opponent.effects.BideTarget= attacker.Index;
 			}
-			if (Effect==Attack.Data.Effects.x088) // Hidden Power
+			if (Effect==Attack.Effects.x088) // Hidden Power
 				type=Types.NORMAL; //getConst(Types.NORMAL) || 0;
 			if (IsPhysical(type)){
 				opponent.effects.Counter= damage;

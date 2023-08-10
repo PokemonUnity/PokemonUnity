@@ -371,7 +371,7 @@ namespace PokemonEssentials.Interface.Screen
 		string NameEntry(string helptext, IPokemon pokemon);
 		void SelectBattler(int index, int selectmode = 1);
 		//int FirstTarget(int index, int targettype);
-		//int FirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		//int FirstTarget(int index, PokemonUnity.Attack.Targets targettype);
 		void UpdateSelected(int index);
 		/// <summary>
 		/// Use this method to make the player choose a target
@@ -379,7 +379,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name="targettype">Which targets are selectable as option</param>
-		//new int ChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		//new int ChooseTarget(int index, PokemonUnity.Attack.Targets targettype);
 		//new int Switch(int index, bool lax, bool cancancel);
 		//void DamageAnimation(IBattler pkmn, float effectiveness);
 		/// <summary>
@@ -506,7 +506,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// <param name="index"></param>
 		/// <param name="targettype"></param>
 		/// <returns>retuns the index slot of battler</returns>
-		int FirstTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		int FirstTarget(int index, PokemonUnity.Attack.Targets targettype);
 		void NextTarget(int cur,int index);
 		void PrevTarget(int cur,int index);
 		/// <summary>
@@ -563,7 +563,7 @@ namespace PokemonEssentials.Interface.Screen
 		int FightMenu(int index);
 		Items ItemMenu(int index);
 		//int ChooseTarget(int index, int targettype);
-		int ChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		int ChooseTarget(int index, PokemonUnity.Attack.Targets targettype);
 		int Switch(int index,bool lax,bool cancancel);
 		void ChooseEnemyCommand(int index);
 		/// <summary>
@@ -650,7 +650,7 @@ namespace PokemonEssentials.Interface.Screen
 		new int FightMenu(int index);
 		new Items ItemMenu(int index);
 		//new int ChooseTarget(int index, int targettype);
-		new int ChooseTarget(int index, PokemonUnity.Attack.Data.Targets targettype);
+		new int ChooseTarget(int index, PokemonUnity.Attack.Targets targettype);
 		//void Refresh();
 		//new int Switch(int index, bool lax, bool cancancel);
 		/// <summary>

@@ -122,14 +122,14 @@ namespace PokemonUnity.Combat
 		}
 
 		public int MindScore(IBattleMove move) {
-			if (move.Effect==Attack.Data.Effects.x070 ||	// Detect/Protect
-				move.Effect==Attack.Data.Effects.x075 ||	// Endure
-				move.Effect==Attack.Data.Effects.x09F) {	// Fake Out
+			if (move.Effect==Attack.Effects.x070 ||	// Detect/Protect
+				move.Effect==Attack.Effects.x075 ||	// Endure
+				move.Effect==Attack.Effects.x09F) {	// Fake Out
 				return -1;
 			}
-			if (move.Effect==Attack.Data.Effects.x054 ||	// Counter
-				move.Effect==Attack.Data.Effects.x091 ||	// Mirror Coat
-				move.Effect==Attack.Data.Effects.x01B) {	// Bide
+			if (move.Effect==Attack.Effects.x054 ||	// Counter
+				move.Effect==Attack.Effects.x091 ||	// Mirror Coat
+				move.Effect==Attack.Effects.x01B) {	// Bide
 				return 0;
 			}
 			if (move.basedamage==0) {

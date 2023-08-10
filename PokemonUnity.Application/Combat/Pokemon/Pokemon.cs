@@ -1307,7 +1307,7 @@ namespace PokemonUnity.Combat
 						Attack.Data.MoveData movedata=Kernal.MoveData[j.id];
 						TypeEffective eff=movedata.Type.GetCombinedEffectiveness(Type1,Type2,@effects.Type3);
 						if ((movedata.Power>0 && eff == TypeEffective.SuperEffective) ||
-							(movedata.Effect== Attack.Data.Effects.x027 && eff != TypeEffective.Ineffective)) { // OHKO
+							(movedata.Effect== Attack.Effects.x027 && eff != TypeEffective.Ineffective)) { // OHKO
 							found=true;
 							break;
 						}
@@ -1327,25 +1327,25 @@ namespace PokemonUnity.Combat
 					foreach (var j in foe.moves) {
 						Attack.Data.MoveData movedata=Kernal.MoveData[j.id];
 						int power=movedata.Power??0;
-						if (movedata.Effect == Attack.Data.Effects.x027) power=160;    // OHKO
-						if (movedata.Effect == Attack.Data.Effects.x0BF) power=150;    // Eruption
-						if (movedata.Effect == Attack.Data.Effects.x05A || // Counter
-									movedata.Effect == Attack.Data.Effects.x091 || // Mirror Coat
-									movedata.Effect == Attack.Data.Effects.x0E4) power=120;// || // Metal Burst
-						if (movedata.Effect == Attack.Data.Effects.x083 ||  // SonicBoom
-									movedata.Effect == Attack.Data.Effects.x02A ||  // Dragon Rage
-									movedata.Effect == Attack.Data.Effects.x058 ||  // Night Shade
-									movedata.Effect == Attack.Data.Effects.x0BE ||  // Endeavor
-									movedata.Effect == Attack.Data.Effects.x059 ||  // Psywave
-									movedata.Effect == Attack.Data.Effects.x07A ||  // Return
-									movedata.Effect == Attack.Data.Effects.x07C ||  // Frustration
-									movedata.Effect == Attack.Data.Effects.x0EE ||  // Crush Grip
-									movedata.Effect == Attack.Data.Effects.x0DC ||  // Gyro Ball
-									movedata.Effect == Attack.Data.Effects.x088 ||  // Hidden Power
-									movedata.Effect == Attack.Data.Effects.x0DF ||  // Natural Gift
-									movedata.Effect == Attack.Data.Effects.x0EC ||  // Trump Card
-									movedata.Effect == Attack.Data.Effects.x064 ||  // Flail
-									movedata.Effect == Attack.Data.Effects.x0C5) power=80;     // Grass Knot
+						if (movedata.Effect == Attack.Effects.x027) power=160;    // OHKO
+						if (movedata.Effect == Attack.Effects.x0BF) power=150;    // Eruption
+						if (movedata.Effect == Attack.Effects.x05A || // Counter
+									movedata.Effect == Attack.Effects.x091 || // Mirror Coat
+									movedata.Effect == Attack.Effects.x0E4) power=120;// || // Metal Burst
+						if (movedata.Effect == Attack.Effects.x083 ||  // SonicBoom
+									movedata.Effect == Attack.Effects.x02A ||  // Dragon Rage
+									movedata.Effect == Attack.Effects.x058 ||  // Night Shade
+									movedata.Effect == Attack.Effects.x0BE ||  // Endeavor
+									movedata.Effect == Attack.Effects.x059 ||  // Psywave
+									movedata.Effect == Attack.Effects.x07A ||  // Return
+									movedata.Effect == Attack.Effects.x07C ||  // Frustration
+									movedata.Effect == Attack.Effects.x0EE ||  // Crush Grip
+									movedata.Effect == Attack.Effects.x0DC ||  // Gyro Ball
+									movedata.Effect == Attack.Effects.x088 ||  // Hidden Power
+									movedata.Effect == Attack.Effects.x0DF ||  // Natural Gift
+									movedata.Effect == Attack.Effects.x0EC ||  // Trump Card
+									movedata.Effect == Attack.Effects.x064 ||  // Flail
+									movedata.Effect == Attack.Effects.x0C5) power=80;     // Grass Knot
 						if (power > highpower) {
 							fwmoves=new List<Moves>() { j.id }; highpower=power;
 						} else if (power==highpower)
@@ -1383,14 +1383,14 @@ namespace PokemonUnity.Combat
 			// Imposter
 			if (this.hasWorkingAbility(Abilities.IMPOSTER) && !@effects.Transform && onactive) {
 				IBattler choice=OppositeOpposing;
-				List<Attack.Data.Effects> blacklist=new List<Attack.Data.Effects>() {
-					Attack.Data.Effects.x09C,	// Fly
-					Attack.Data.Effects.x101,	// Dig
-					Attack.Data.Effects.x100,	// Dive
-					Attack.Data.Effects.x108,	// Bounce
-					Attack.Data.Effects.x138,	// Sky Drop
-					//Attack.Data.Effects.x111,	// Shadow Force
-					Attack.Data.Effects.x111	// Phantom Force
+				List<Attack.Effects> blacklist=new List<Attack.Effects>() {
+					Attack.Effects.x09C,	// Fly
+					Attack.Effects.x101,	// Dig
+					Attack.Effects.x100,	// Dive
+					Attack.Effects.x108,	// Bounce
+					Attack.Effects.x138,	// Sky Drop
+					//Attack.Effects.x111,	// Shadow Force
+					Attack.Effects.x111	// Phantom Force
 				};
 				if (choice.effects.Transform ||
 					choice.effects.Illusion.IsNotNullOrNone() ||
@@ -2133,8 +2133,8 @@ namespace PokemonUnity.Combat
 			IBattler user = this;   // Normally, the user is this
 			// Targets in normal cases
 			switch (Target(move)) { //ToDo: Missing `Select everyone` (including user)
-				case Attack.Data.Targets.SELECTED_POKEMON: //Attack.Target.SingleNonUser:
-				case Attack.Data.Targets.SELECTED_POKEMON_ME_FIRST:
+				case Attack.Targets.SELECTED_POKEMON: //Attack.Target.SingleNonUser:
+				case Attack.Targets.SELECTED_POKEMON_ME_FIRST:
 					if (target>=0) {
 						IBattler targetBattler=@battle.battlers[target];
 						if (!IsOpposing(targetBattler.Index))
@@ -2146,8 +2146,8 @@ namespace PokemonUnity.Combat
 					else
 						RandomTarget(targets);
 					break;
-				//case Attack.Data.Targets.SELECTED_POKEMON: //Attack.Target.SingleOpposing:
-				//case Attack.Data.Targets.SELECTED_POKEMON_ME_FIRST:
+				//case Attack.Targets.SELECTED_POKEMON: //Attack.Target.SingleOpposing:
+				//case Attack.Targets.SELECTED_POKEMON_ME_FIRST:
 				//	if (target>=0) {
 				//		IBattler targetBattler=@battle.battlers[target];
 				//		if (!IsOpposing(targetBattler.Index))
@@ -2159,21 +2159,21 @@ namespace PokemonUnity.Combat
 				//	else
 				//		RandomTarget(targets);
 				//	break;
-				case Attack.Data.Targets.OPPONENTS_FIELD: //Attack.Target.OppositeOpposing:
+				case Attack.Targets.OPPONENTS_FIELD: //Attack.Target.OppositeOpposing:
 					if (!AddTarget(targets,OppositeOpposing2)) AddTarget(targets,OppositeOpposing);
 					break;
-				case Attack.Data.Targets.RANDOM_OPPONENT: //Attack.Target.RandomOpposing:
+				case Attack.Targets.RANDOM_OPPONENT: //Attack.Target.RandomOpposing:
 					RandomTarget(targets);
 					break;
-				case Attack.Data.Targets.ALL_OPPONENTS: //Attack.Target.AllOpposing:
+				case Attack.Targets.ALL_OPPONENTS: //Attack.Target.AllOpposing:
 					// Just Opposing1 because partner is determined late
 					if (!AddTarget(targets,Opposing1)) AddTarget(targets,Opposing2);
 					break;
-				case Attack.Data.Targets.ALL_OTHER_POKEMON: //Attack.Target.AllNonUsers:
+				case Attack.Targets.ALL_OTHER_POKEMON: //Attack.Target.AllNonUsers:
 					for (int i = 0; i < 4; i++) // not ordered by priority
 					if (i!=@Index) AddTarget(targets,@battle.battlers[i]);
 					break;
-				case Attack.Data.Targets.USER_OR_ALLY: //Attack.Target.UserOrPartner:
+				case Attack.Targets.USER_OR_ALLY: //Attack.Target.UserOrPartner:
 					if (target>=0) { // Pre-chosen target
 						IBattler targetBattler=@battle.battlers[target];
 						if (!AddTarget(targets,targetBattler)) AddTarget(targets,targetBattler.Partner);
@@ -2181,7 +2181,7 @@ namespace PokemonUnity.Combat
 					else
 						AddTarget(targets,this);
 					break;
-				case Attack.Data.Targets.ALLY: //Attack.TargetPartner:
+				case Attack.Targets.ALLY: //Attack.TargetPartner:
 					AddTarget(targets,Partner);
 					break;
 				default:
@@ -2211,12 +2211,12 @@ namespace PokemonUnity.Combat
 					}
 			return user;
 		}
-		public Attack.Data.Targets Target(IBattleMove move) {
+		public Attack.Targets Target(IBattleMove move) {
 			//Attack.Target target=move.Targets;
-			Attack.Data.Targets target=move.Target;
-			if (move.Effect == Attack.Data.Effects.x06E && HasType(Types.GHOST)) // Curse
+			Attack.Targets target=move.Target;
+			if (move.Effect == Attack.Effects.x06E && HasType(Types.GHOST)) // Curse
 				//target=Attack.Target.OppositeOpposing;
-				target=Attack.Data.Targets.OPPONENTS_FIELD;
+				target=Attack.Targets.OPPONENTS_FIELD;
 			return target;
 		}
 		//public bool AddTarget(IList<IBattler> targets,IBattler target) {
@@ -2338,8 +2338,8 @@ namespace PokemonUnity.Combat
 			userandtarget[1]=target;
 			if (!user.hasMoldBreaker() && target.hasWorkingAbility(Abilities.SOUNDPROOF) &&
 				thismove.Flags.SoundBased && //isSoundBased()
-				thismove.Effect != Attack.Data.Effects.x073 &&	// Perish Song handled elsewhere
-				thismove.Effect != Attack.Data.Effects.x15B) {	// Parting Shot handled elsewhere
+				thismove.Effect != Attack.Effects.x073 &&	// Perish Song handled elsewhere
+				thismove.Effect != Attack.Effects.x15B) {	// Parting Shot handled elsewhere
 				GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Soundproof blocked #{user.ToString(true)}'s #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
 				@battle.Display(Game._INTL("{1}'s {2} blocks {3}!",target.ToString(),
 					Game._INTL(target.Ability.ToString(TextScripts.Name)),Game._INTL(thismove.id.ToString(TextScripts.Name))));
@@ -2412,7 +2412,7 @@ namespace PokemonUnity.Combat
 					GameDebug.Log($"[Disobedience] #{ToString()} disobeyed");
 					@effects.Rage=false;
 					if (this.status==Status.SLEEP &&
-						(move.Effect == Attack.Data.Effects.x05D || move.Effect == Attack.Data.Effects.x062)) { // Snore, Sleep Talk
+						(move.Effect == Attack.Effects.x05D || move.Effect == Attack.Effects.x062)) { // Snore, Sleep Talk
 						@battle.Display(Game._INTL("{1} ignored orders while asleep!",ToString()));
 						return false;
 					}
@@ -2466,12 +2466,12 @@ namespace PokemonUnity.Combat
 			if (user.effects.TwoTurnAttack>0)
 				return true;
 			// TODO: "Before Protect" applies to Counter/Mirror Coat
-			if (thismove.Effect == Attack.Data.Effects.x009 && target.Status!=Status.SLEEP) { // Dream Eater
+			if (thismove.Effect == Attack.Effects.x009 && target.Status!=Status.SLEEP) { // Dream Eater
 				@battle.Display(Game._INTL("{1} wasn't affected!",target.ToString()));
 				GameDebug.Log($"[Move failed] #{user.ToString()}'s Dream Eater's target isn't asleep");
 				return false;
 			}
-			if (thismove.Effect == Attack.Data.Effects.x0A2 && user.effects.Stockpile==0) { // Spit Up
+			if (thismove.Effect == Attack.Effects.x0A2 && user.effects.Stockpile==0) { // Spit Up
 				@battle.Display(Game._INTL("But it failed to spit up a thing!"));
 				GameDebug.Log($"[Move failed] #{user.ToString()}'s Spit Up did nothing as Stockpile's count is 0");
 				return false;
@@ -2502,7 +2502,7 @@ namespace PokemonUnity.Combat
 				return false;
 			}
 			if (target.OwnSide.CraftyShield && thismove.Category == Attack.Category.STATUS &&
-				thismove.Effect != Attack.Data.Effects.x073) { // Perish Song
+				thismove.Effect != Attack.Effects.x073) { // Perish Song
 				@battle.Display(Game._INTL("Crafty Shield protected {1}!",target.ToString(true)));
 				GameDebug.Log($"[Move failed] The opposing side's Crafty Shield stopped the attack");
 				return false;
@@ -2552,13 +2552,13 @@ namespace PokemonUnity.Combat
 				GameDebug.Log($"[Move failed] #{target.ToString()} is immune to powder-based moves somehow");
 				return false;
 			}
-			if (thismove.basedamage>0 && thismove.Effect != Attack.Data.Effects.x0FF && // Struggle
-				thismove.Effect != Attack.Data.Effects.x095) { // Future Sight
+			if (thismove.basedamage>0 && thismove.Effect != Attack.Effects.x0FF && // Struggle
+				thismove.Effect != Attack.Effects.x095) { // Future Sight
 				Types type=thismove.GetType(thismove.Type,user,target);
 				float typemod=thismove.TypeModifier(type,user,target);
 				// Airborne-based immunity to Ground moves
 				if (type == Types.GROUND && target.isAirborne(user.hasMoldBreaker()) &&
-					!target.hasWorkingItem(Items.RING_TARGET) && thismove.Effect != Attack.Data.Effects.x120) { // Smack Down
+					!target.hasWorkingItem(Items.RING_TARGET) && thismove.Effect != Attack.Effects.x120) { // Smack Down
 					if (!user.hasMoldBreaker() && target.hasWorkingAbility(Abilities.LEVITATE)) {
 						@battle.Display(Game._INTL("{1} makes Ground moves miss with Levitate!",target.ToString()));
 						GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Levitate made the Ground-type move miss");
@@ -2598,67 +2598,67 @@ namespace PokemonUnity.Combat
 					return true;
 				}
 				bool miss=false; bool _override=false;
-				Attack.Data.Effects invulmove=Kernal.MoveData[target.effects.TwoTurnAttack].Effect;
+				Attack.Effects invulmove=Kernal.MoveData[target.effects.TwoTurnAttack].Effect;
 				switch (invulmove) {
-					case Attack.Data.Effects.x09C: case Attack.Data.Effects.x108:	// Fly, Bounce
-						if (thismove.Effect != Attack.Data.Effects.x099 ||			// Thunder
-							thismove.Effect != Attack.Data.Effects.x14E ||			// Hurricane
-							thismove.Effect != Attack.Data.Effects.x096 ||			// Gust
-							thismove.Effect != Attack.Data.Effects.x093 ||			// Twister
-							thismove.Effect != Attack.Data.Effects.x0D0 ||			// Sky Uppercut
-							thismove.Effect != Attack.Data.Effects.x120 ||			// Smack Down
+					case Attack.Effects.x09C: case Attack.Effects.x108:	// Fly, Bounce
+						if (thismove.Effect != Attack.Effects.x099 ||			// Thunder
+							thismove.Effect != Attack.Effects.x14E ||			// Hurricane
+							thismove.Effect != Attack.Effects.x096 ||			// Gust
+							thismove.Effect != Attack.Effects.x093 ||			// Twister
+							thismove.Effect != Attack.Effects.x0D0 ||			// Sky Uppercut
+							thismove.Effect != Attack.Effects.x120 ||			// Smack Down
 							thismove.id != Moves.WHIRLWIND)miss=true;
 						break;
-					case Attack.Data.Effects.x101:									// Dig
-						if (thismove.Effect != Attack.Data.Effects.x094 ||			// Earthquake
-							thismove.Effect != Attack.Data.Effects.x07F)			// Magnitude
+					case Attack.Effects.x101:									// Dig
+						if (thismove.Effect != Attack.Effects.x094 ||			// Earthquake
+							thismove.Effect != Attack.Effects.x07F)			// Magnitude
 							miss=true;
 						break;
-					case Attack.Data.Effects.x100:									// Dive
-						if (thismove.Effect != Attack.Data.Effects.x102 ||			// Surf
-							thismove.Effect != Attack.Data.Effects.x106)			// Whirlpool
+					case Attack.Effects.x100:									// Dive
+						if (thismove.Effect != Attack.Effects.x102 ||			// Surf
+							thismove.Effect != Attack.Effects.x106)			// Whirlpool
 							miss=true;
 						break;
-					//case Attack.Data.Effects.x111:								// Shadow Force
-					case Attack.Data.Effects.x111:									// Phantom Force
+					//case Attack.Effects.x111:								// Shadow Force
+					case Attack.Effects.x111:									// Phantom Force
 						miss=true;
 						break;
-					case Attack.Data.Effects.x138:									// Sky Drop
-						if (thismove.Effect != Attack.Data.Effects.x099 ||			// Thunder
-							thismove.Effect != Attack.Data.Effects.x14E ||			// Hurricane
-							thismove.Effect != Attack.Data.Effects.x096 ||			// Gust
-							thismove.Effect != Attack.Data.Effects.x093 ||			// Twister
-							thismove.Effect != Attack.Data.Effects.x0D0 ||			// Sky Uppercut
-							thismove.Effect != Attack.Data.Effects.x120)			// Smack Down
+					case Attack.Effects.x138:									// Sky Drop
+						if (thismove.Effect != Attack.Effects.x099 ||			// Thunder
+							thismove.Effect != Attack.Effects.x14E ||			// Hurricane
+							thismove.Effect != Attack.Effects.x096 ||			// Gust
+							thismove.Effect != Attack.Effects.x093 ||			// Twister
+							thismove.Effect != Attack.Effects.x0D0 ||			// Sky Uppercut
+							thismove.Effect != Attack.Effects.x120)			// Smack Down
 							miss=true;
 						break;
 				}
 				if (target.effects.SkyDrop)
-				if (thismove.Effect != Attack.Data.Effects.x099 ||					// Thunder
-					thismove.Effect != Attack.Data.Effects.x14E ||					// Hurricane
-					thismove.Effect != Attack.Data.Effects.x096 ||					// Gust
-					thismove.Effect != Attack.Data.Effects.x093 ||					// Twister
-					thismove.Effect != Attack.Data.Effects.x138 ||					// Sky Drop
-					thismove.Effect != Attack.Data.Effects.x0D0 ||					// Sky Uppercut
-					thismove.Effect != Attack.Data.Effects.x120)					// Smack Down
+				if (thismove.Effect != Attack.Effects.x099 ||					// Thunder
+					thismove.Effect != Attack.Effects.x14E ||					// Hurricane
+					thismove.Effect != Attack.Effects.x096 ||					// Gust
+					thismove.Effect != Attack.Effects.x093 ||					// Twister
+					thismove.Effect != Attack.Effects.x138 ||					// Sky Drop
+					thismove.Effect != Attack.Effects.x0D0 ||					// Sky Uppercut
+					thismove.Effect != Attack.Effects.x120)					// Smack Down
 					miss=true;
 				if (user.hasWorkingAbility(Abilities.NO_GUARD) ||
 							target.hasWorkingAbility(Abilities.NO_GUARD) ||
 							@battle.futuresight) miss=false;
-				if (Core.USENEWBATTLEMECHANICS && thismove.Effect == Attack.Data.Effects.x022 && // Toxic
+				if (Core.USENEWBATTLEMECHANICS && thismove.Effect == Attack.Effects.x022 && // Toxic
 							thismove.basedamage==0 && user.HasType(Types.POISON)) _override=true;
 				if (!miss && turneffects.SkipAccuracyCheck) _override=true; // Called by another move
 				if (!_override && (miss || !thismove.AccuracyCheck(user,target))) { // Includes Counter/Mirror Coat
 					GameDebug.Log(string.Format("[Move failed] Failed AccuracyCheck (Effect Id: {0}) or target is semi-invulnerable",thismove.Effect));
-					if (thismove.Target==Attack.Data.Targets.ALL_OPPONENTS && //thismove.Targets==Attack.Target.AllOpposing
+					if (thismove.Target==Attack.Targets.ALL_OPPONENTS && //thismove.Targets==Attack.Target.AllOpposing
 						(!user.Opposing1.isFainted() ? 1 : 0) + (!user.Opposing2.isFainted() ? 1 : 0) > 1)
 						@battle.Display(Game._INTL("{1} avoided the attack!",target.ToString()));
-					else if (thismove.Target==Attack.Data.Targets.ALL_OTHER_POKEMON && //thismove.Targets==Attack.Target.AllNonUsers
+					else if (thismove.Target==Attack.Targets.ALL_OTHER_POKEMON && //thismove.Targets==Attack.Target.AllNonUsers
 						(!user.Opposing1.isFainted() ? 1 : 0) + (!user.Opposing2.isFainted() ? 1 : 0) + (!user.Partner.isFainted() ? 1 : 0) > 1)
 						@battle.Display(Game._INTL("{1} avoided the attack!",target.ToString()));
 					else if (target.effects.TwoTurnAttack>0)
 						@battle.Display(Game._INTL("{1} avoided the attack!",target.ToString()));
-					else if (thismove.Effect == Attack.Data.Effects.x055) // Leech Seed
+					else if (thismove.Effect == Attack.Effects.x055) // Leech Seed
 						@battle.Display(Game._INTL("{1} evaded the attack!",target.ToString()));
 					else
 						@battle.Display(Game._INTL("{1}'s attack missed!",user.ToString()));
@@ -2832,9 +2832,9 @@ namespace PokemonUnity.Combat
 				// Check success (accuracy/evasion calculation)
 				if (!nocheck &&
 					!SuccessCheck(thismove,user,target,turneffects,i==0 || thismove.successCheckPerHit())) {
-					if (thismove.Effect == Attack.Data.Effects.x069 && realnumhits>0)   // Triple Kick
+					if (thismove.Effect == Attack.Effects.x069 && realnumhits>0)   // Triple Kick
 						break;   // Considered a success if Triple Kick hits at least once
-					else if (thismove.Effect == Attack.Data.Effects.x02E)  // Hi Jump Kick, Jump Kick
+					else if (thismove.Effect == Attack.Effects.x02E)  // Hi Jump Kick, Jump Kick
 						if (!user.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
 							GameDebug.Log($"[Move effect triggered] #{user.ToString()} took crash damage");
 							//TODO: Not shown if message is "It doesn't affect XXX..."
@@ -2846,18 +2846,18 @@ namespace PokemonUnity.Combat
 							}
 							if (user.isFainted()) user.Faint();
 						}
-					if (thismove.Effect == Attack.Data.Effects.x01C) user.effects.Outrage=0;    // Outrage
-					if (thismove.Effect == Attack.Data.Effects.x076) user.effects.Rollout=0;    // Rollout
-					if (thismove.Effect == Attack.Data.Effects.x078) user.effects.FuryCutter=0; // Fury Cutter
-					if (thismove.Effect == Attack.Data.Effects.x0A2) user.effects.Stockpile=0;  // Spit Up
+					if (thismove.Effect == Attack.Effects.x01C) user.effects.Outrage=0;    // Outrage
+					if (thismove.Effect == Attack.Effects.x076) user.effects.Rollout=0;    // Rollout
+					if (thismove.Effect == Attack.Effects.x078) user.effects.FuryCutter=0; // Fury Cutter
+					if (thismove.Effect == Attack.Effects.x0A2) user.effects.Stockpile=0;  // Spit Up
 					return;
 				}
 				// Add to counters for moves which increase them when used in succession
-				if (thismove.Effect == Attack.Data.Effects.x078) // Fury Cutter
+				if (thismove.Effect == Attack.Effects.x078) // Fury Cutter
 					if (user.effects.FuryCutter<4) user.effects.FuryCutter+=1;
 				else
 					user.effects.FuryCutter=0;
-				if (thismove.Effect == Attack.Data.Effects.x12F) { // Echoed Voice
+				if (thismove.Effect == Attack.Effects.x12F) { // Echoed Voice
 					if (!user.OwnSide.EchoedVoiceUsed &&
 						user.OwnSide.EchoedVoiceCounter<5)
 						user.OwnSide.EchoedVoiceCounter+=1;
@@ -2896,7 +2896,7 @@ namespace PokemonUnity.Combat
 					int addleffect=thismove.AddlEffect;
 					if ((user.hasWorkingAbility(Abilities.SERENE_GRACE) ||
 						user.OwnSide.Rainbow>0) &&
-						thismove.Effect != Attack.Data.Effects.x0C6) addleffect*=2; // Secret Power
+						thismove.Effect != Attack.Effects.x0C6) addleffect*=2; // Secret Power
 					if (Core.DEBUG && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) addleffect=100;
 					if (@battle.Random(100)<addleffect) {
 						GameDebug.Log($"[Move effect triggered] #{Game._INTL(thismove.id.ToString(TextScripts.Name))}'s added effect");
@@ -2926,15 +2926,15 @@ namespace PokemonUnity.Combat
 						&& thismove.canKingsRock())
 					canflinch=true;
 					if (user.hasWorkingAbility(Abilities.STENCH) &&
-						thismove.Effect != Attack.Data.Effects.x114 &&		// Thunder Fang
-						thismove.Effect != Attack.Data.Effects.x112 &&		// Fire Fang
-						thismove.Effect != Attack.Data.Effects.x113 &&		// Ice Fang
-						thismove.Effect != Attack.Data.Effects.x097 &&		// Stomp
-						thismove.Effect != Attack.Data.Effects.x05D &&		// Snore
-						thismove.Effect != Attack.Data.Effects.x09F &&		// Fake Out
-						thismove.Effect != Attack.Data.Effects.x093 &&		// Twister
-						thismove.Effect != Attack.Data.Effects.x04C &&		// Sky Attack
-						//thismove.Effect != Attack.Data.Effects.   &&		// flinch-inducing moves
+						thismove.Effect != Attack.Effects.x114 &&		// Thunder Fang
+						thismove.Effect != Attack.Effects.x112 &&		// Fire Fang
+						thismove.Effect != Attack.Effects.x113 &&		// Ice Fang
+						thismove.Effect != Attack.Effects.x097 &&		// Stomp
+						thismove.Effect != Attack.Effects.x05D &&		// Snore
+						thismove.Effect != Attack.Effects.x09F &&		// Fake Out
+						thismove.Effect != Attack.Effects.x093 &&		// Twister
+						thismove.Effect != Attack.Effects.x04C &&		// Sky Attack
+						//thismove.Effect != Attack.Effects.   &&		// flinch-inducing moves
 						Kernal.MoveMetaData[thismove.id].FlinchChance == 0)	// flinch-inducing moves
 						canflinch=true;
 					if (canflinch && @battle.Random(10)==0) {
@@ -3231,13 +3231,13 @@ namespace PokemonUnity.Combat
 			}
 			// Protean
 			if (user.hasWorkingAbility(Abilities.PROTEAN) &&
-				thismove.Effect != Attack.Data.Effects.x00A &&   // Mirror Move
-				thismove.Effect != Attack.Data.Effects.x0F3 &&   // Copycat
-				thismove.Effect != Attack.Data.Effects.x073 &&   // Me First
-				thismove.Effect != Attack.Data.Effects.x0AE &&   // Nature Power
-				thismove.Effect != Attack.Data.Effects.x062 &&   // Sleep Talk
-				thismove.Effect != Attack.Data.Effects.x0B5 &&   // Assist
-				thismove.Effect != Attack.Data.Effects.x054) {   // Metronome
+				thismove.Effect != Attack.Effects.x00A &&   // Mirror Move
+				thismove.Effect != Attack.Effects.x0F3 &&   // Copycat
+				thismove.Effect != Attack.Effects.x073 &&   // Me First
+				thismove.Effect != Attack.Effects.x0AE &&   // Nature Power
+				thismove.Effect != Attack.Effects.x062 &&   // Sleep Talk
+				thismove.Effect != Attack.Effects.x0B5 &&   // Assist
+				thismove.Effect != Attack.Effects.x054) {   // Metronome
 				Types movetype=thismove.GetType(thismove.Type,user,null);
 				if (!user.HasType(movetype)) {
 					string typename=Game._INTL(movetype.ToString(TextScripts.Name));
@@ -3251,14 +3251,14 @@ namespace PokemonUnity.Combat
 			// Try to use move against user if there aren't any targets
 			if (targets.Count==0) {
 				user=ChangeUser(thismove,user);
-				if(thismove.Target==Attack.Data.Targets.SELECTED_POKEMON ||		//.Targets==Attack.Target.SingleNonUser ||
-					thismove.Target==Attack.Data.Targets.RANDOM_OPPONENT ||		//.Targets==Attack.Target.RandomOpposing ||
-					thismove.Target==Attack.Data.Targets.ALL_OPPONENTS ||		//.Targets==Attack.Target.AllOpposing ||
-					thismove.Target==Attack.Data.Targets.ALL_OTHER_POKEMON ||	//.Targets==Attack.Target.AllNonUsers ||
-					thismove.Target==Attack.Data.Targets.ALLY ||				//.Targets==Attack.TargetPartner ||
-					thismove.Target==Attack.Data.Targets.USER_OR_ALLY ||		//.Targets==Attack.Target.UserOrPartner ||
-					//thismove.Target==Attack.Data.Targets.SingleOpposing ||	//.Targets==Attack.Target.SingleOpposing ||
-					thismove.Target==Attack.Data.Targets.OPPONENTS_FIELD)		//.Targets==Attack.Target.OppositeOpposing)
+				if(thismove.Target==Attack.Targets.SELECTED_POKEMON ||		//.Targets==Attack.Target.SingleNonUser ||
+					thismove.Target==Attack.Targets.RANDOM_OPPONENT ||		//.Targets==Attack.Target.RandomOpposing ||
+					thismove.Target==Attack.Targets.ALL_OPPONENTS ||		//.Targets==Attack.Target.AllOpposing ||
+					thismove.Target==Attack.Targets.ALL_OTHER_POKEMON ||	//.Targets==Attack.Target.AllNonUsers ||
+					thismove.Target==Attack.Targets.ALLY ||				//.Targets==Attack.TargetPartner ||
+					thismove.Target==Attack.Targets.USER_OR_ALLY ||		//.Targets==Attack.Target.UserOrPartner ||
+					//thismove.Target==Attack.Targets.SingleOpposing ||	//.Targets==Attack.Target.SingleOpposing ||
+					thismove.Target==Attack.Targets.OPPONENTS_FIELD)		//.Targets==Attack.Target.OppositeOpposing)
 					@battle.Display(Game._INTL("But there was no target..."));
 				else
 					//GameDebug.logonerr(thismove.Effect(user,null));
@@ -3278,7 +3278,7 @@ namespace PokemonUnity.Combat
 					bool success=ChangeTarget(thismove,userandtarget,targets.ToArray());
 					user=userandtarget[0];
 					IBattler target=userandtarget[1];
-					if (battle.doublebattle && i==0 && thismove.Target==Attack.Data.Targets.ALL_OPPONENTS) //thismove.Targets==Attack.Target.AllOpposing
+					if (battle.doublebattle && i==0 && thismove.Target==Attack.Targets.ALL_OPPONENTS) //thismove.Targets==Attack.Target.AllOpposing
 						// Add target's partner to list of targets
 						AddTarget(targets,target.Partner);
 					// If couldn't get the next target

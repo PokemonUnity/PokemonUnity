@@ -201,14 +201,14 @@ namespace PokemonUnity
 		{
 			//MoveData = new Dictionary<Moves, Attack.Data.MoveData>();
 			//MoveMetaData = new Dictionary<Moves, Attack.Data.MetaData>();
-			//MoveEffectData = new Dictionary<Attack.Data.Effects, Combat.Move>(); //Below
+			//MoveEffectData = new Dictionary<Attack.Effects, Combat.Move>(); //Below
 			if (sql) //using (con)
 				return GetMovesFromSQL(con);
 			else return false;
 		}
 		public static bool InitMoveEffects(bool sql = false)
 		{
-			//MoveEffectData = new Dictionary<Attack.Data.Effects, Combat.Move>();
+			//MoveEffectData = new Dictionary<Attack.Effects, Combat.Move>();
 			if (sql) //using (con)
 				return false;
 			else return GetMoveEffectFromXML();
@@ -389,7 +389,7 @@ namespace PokemonUnity
 		{
 			try
 			{
-				foreach (Attack.Data.Effects effect in Enum.GetValues(typeof(Attack.Data.Effects)))
+				foreach (Attack.Effects effect in Enum.GetValues(typeof(Attack.Effects)))
 				{
 					switch (effect)
 					{

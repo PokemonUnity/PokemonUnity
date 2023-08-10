@@ -40,13 +40,13 @@ namespace PokemonUnity.Combat
 
 		public virtual void JudgeCheckpoint(IBattler attacker,IBattleMove move=null) {
 			if (@rules["drawclause"]) {															// Note: Also includes Life Orb (not implemented)
-				if (!(move.IsNotNullOrNone() && move.Effect==Attack.Data.Effects.x15A)) {		// Not a draw if fainting occurred due to Liquid Ooze
+				if (!(move.IsNotNullOrNone() && move.Effect==Attack.Effects.x15A)) {		// Not a draw if fainting occurred due to Liquid Ooze
 					if (AllFainted(@party1) && AllFainted(@party2)) {
 						@decision=IsOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
 					}
 				}
 			} else if (@rules[BattleRule.MODIFIEDSELFDESTRUCTCLAUSE] && move.IsNotNullOrNone() && 
-				move.Effect==Attack.Data.Effects.x008) { // Selfdestruct
+				move.Effect==Attack.Effects.x008) { // Selfdestruct
 				if (AllFainted(@party1) && AllFainted(@party2)) {
 					@decision=IsOpposing(@attacker.Index) ? BattleResults.WON : BattleResults.LOST;
 				}
