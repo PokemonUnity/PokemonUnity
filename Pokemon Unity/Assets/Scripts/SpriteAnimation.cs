@@ -3,44 +3,47 @@
 using UnityEngine;
 using System.Collections;
 
-public class SpriteAnimation : MonoBehaviour
+namespace PokemonUnity.Legacy
 {
-    public float FPS = 8;
-    private float secPerFrame;
+	public class SpriteAnimation : MonoBehaviour
+	{
+		public float FPS = 8;
+		private float secPerFrame;
 
-    public Sprite[] spriteSheet;
+		public UnityEngine.Sprite[] spriteSheet;
 
-    private SpriteRenderer sprite;
+		private SpriteRenderer sprite;
 
-    void Awake()
-    {
-        sprite = gameObject.GetComponent<SpriteRenderer>();
-    }
+		void Awake()
+		{
+			sprite = gameObject.GetComponent<SpriteRenderer>();
+		}
 
-    void Start()
-    {
-        StartCoroutine(animate());
-    }
+		void Start()
+		{
+			StartCoroutine(animate());
+		}
 
-    void Update()
-    {
-        secPerFrame = 1f / FPS;
-    }
+		void Update()
+		{
+			secPerFrame = 1f / FPS;
+		}
 
-    private IEnumerator animate()
-    {
-        int frame = 0;
-        while (true)
-        {
-            frame += 1;
-            if (frame >= spriteSheet.Length)
-            {
-                frame = 0;
-            }
+		private IEnumerator animate()
+		{
+			int frame = 0;
+			while (true)
+			{
+				frame += 1;
+				if (frame >= spriteSheet.Length)
+				{
+					frame = 0;
+				}
 
-            sprite.sprite = spriteSheet[frame];
+				sprite.sprite = spriteSheet[frame];
 
-            yield return new WaitForSeconds(secPerFrame);
-        }
-    }
+				yield return new WaitForSeconds(secPerFrame);
+			}
+		}
+	}
 }

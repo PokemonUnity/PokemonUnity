@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: f45f573f7ef3aa04cb37e12a6dcc3144
-timeCreated: 1448787057
-licenseType: Free
+<<<<<<<< HEAD:Pokemon Unity/Assets/Scripts/SpriteAnimation.cs.meta
+guid: d3b706f5f550dfc449000d4a9f573468
+========
+guid: e4bb8a5303c0644429446dd3101e055d
+>>>>>>>> 54c839fb1863815663ee5f377f78fa14e4031384:Pokemon Unity/Assets/Scripts/_Original/PokemonEssentials/GameSystem.cs.meta
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
