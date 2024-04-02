@@ -18,9 +18,9 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Combat
 {
-	//public class PokeBattle_RecordedBattleModule<IBattle> : Battle, IRecordedBattleModule<Battle>, IBattle, IBattleRecordData
-	public class PokeBattle_RecordedBattleModule<TBattle> : Battle, IRecordedBattleModule<TBattle>, IBattle, IBattleRecordData
-		where TBattle : IBattle, IBattleRecordData
+	//public class PokeBattle_RecordedBattleModule<IBattle> : Battle, IRecordedBattleModule<Battle>, IBattleRecordData, IBattle
+	public class PokeBattle_RecordedBattleModule<TBattle> : Battle, IRecordedBattleModule<TBattle>, IBattleRecordData, IBattle
+		where TBattle : IBattle//, IBattleRecordData
 	{
 		#region Variables
 		protected TBattle Instance;
@@ -241,7 +241,7 @@ namespace PokemonUnity.Combat
 	//public class PokeBattle_BattlePlayerModule<T> : PokeBattle_RecordedBattleModule<IBattle>, IBattlePlayerModule<IBattle> where T : IRecordedBattleModule<IBattle>
 	//public class PokeBattle_BattlePlayerModule<IPokeBattle_RecordedBattleModule> : PokeBattle_RecordedBattleModule<IBattle>, IBattlePlayerModule<IPokeBattle_RecordedBattleModule>
 	//		//where TBattle : PokeBattle_RecordedBattleModule<TBattle>, IRecordedBattleModule<TBattle>, IBattle, IBattleRecordData
-	public class PokeBattle_BattlePlayerModule<T> : PokeBattle_RecordedBattleModule<T>, IBattlePlayerModule<T> where T : IRecordedBattleModule<T>, IBattle, IBattleRecordData
+	public class PokeBattle_BattlePlayerModule<T> : PokeBattle_RecordedBattleModule<T>, IBattlePlayerModule<T>, IRecordedBattleModule<T>, IBattleRecordData where T : IBattle
 	{
 		#region Variables
 		public int randomindex { get; protected set; }
@@ -369,8 +369,8 @@ namespace PokemonUnity.Combat
 		#endregion
 	}
 
-	//public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle>, IRecordedBattle {
-	/*public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle>, IRecordedBattle {
+	#region Record Match Battles (Netplay: Server Side)
+	public class PokeBattle_RecordedBattle : PokeBattle_RecordedBattleModule<Battle>, IRecordedBattle {
 		//include PokeBattle_RecordedBattleModule;
 		public PokeBattle_RecordedBattle(IPokeBattle_Scene scene, PokemonEssentials.Interface.PokeBattle.IPokemon[] p1, PokemonEssentials.Interface.PokeBattle.IPokemon[] p2, ITrainer[] player, ITrainer[] opponent) : base(scene, p1, p2, player, opponent)
 		{
@@ -435,7 +435,10 @@ namespace PokemonUnity.Combat
 			throw new NotImplementedException();
 		}
 	}
+	#endregion
 
+
+	#region Playback Match Battles (Netplay: Client Side)
 	public class PokeBattle_BattlePlayer : PokeBattle_BattlePlayerModule<PokeBattle_RecordedBattleModule<Battle>>, IBattlePlayerModule<Battle>, IBattlePlayer {
 		//include PokeBattle_BattlePlayerModule;
 		public PokeBattle_BattlePlayer(IPokeBattle_Scene scene, PokeBattle_RecordedBattleModule<Battle> battle) : base(scene, battle)
@@ -509,9 +512,31 @@ namespace PokemonUnity.Combat
 		public PokeBattle_BattleArenaPlayer(IPokeBattle_Scene scene, PokeBattle_RecordedBattleModule<PokeBattle_BattleArena> battle) : base(scene, battle)
 		{
 		}
+
+		IBattlePlayerModule<PokeBattle_BattleArena> IBattlePlayerModule<PokeBattle_BattleArena>.initialize(IPokeBattle_Scene scene, IBattle battle)
+		{
+			throw new NotImplementedException();
+		}
+
+		PokemonEssentials.Interface.PokeBattle.IBattleArena PokemonEssentials.Interface.PokeBattle.IBattleArena.initialize(IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent)
+		{
+			throw new NotImplementedException();
+		}
+
+		IBattlePlayerModule<PokemonEssentials.Interface.PokeBattle.IBattleArena> IBattlePlayerModule<PokemonEssentials.Interface.PokeBattle.IBattleArena>.initialize(IPokeBattle_Scene scene, IBattle battle)
+		{
+			throw new NotImplementedException();
+		}
+
 		public IBattle initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IBattle battle)
 		{
 			throw new NotImplementedException();
 		}
-	}*/
+
+		public int MindScore(IBattleMove move)
+		{
+			throw new NotImplementedException();
+		}
+	}
+	#endregion
 }

@@ -213,7 +213,7 @@ namespace PokemonUnity.Combat
 		public int turncount { get; set; }
 		protected IBattler[] priority { get { return _priority; } }
 		protected IBattler[] _priority;
-		protected List<int> snaggedpokemon;
+		protected IList<int> snaggedpokemon;
 		/// <summary>
 		/// Each time you use the option to flee, the counter goes up.
 		/// </summary>
@@ -365,7 +365,7 @@ namespace PokemonUnity.Combat
 
 			_priority = new Pokemon[battlers.Length];
 
-			usepriority = false; 
+			usepriority = false;
 
 			snaggedpokemon = new List<int>();
 

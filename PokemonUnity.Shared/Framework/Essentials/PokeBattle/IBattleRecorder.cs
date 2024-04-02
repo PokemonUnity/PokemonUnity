@@ -19,16 +19,16 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// </summary>
 	/// <typeparam name="TBattle">any <see cref="IBattle"/> entity</typeparam>
 	//Should be both Recorded Data and the Battle logic itself...
-	public interface IRecordedBattleModule<out TBattle> //: IBattleRecordData
+	public interface IRecordedBattleModule<out TBattle> : IBattleRecordData
 		where TBattle : IBattle//, IBattleRecordData
 	{
-		IList<int> randomnumbers { get; }
+		//IList<int> randomnumbers { get; }
 		//IList<int[][]> rounds { get; }
-		IList<KeyValuePair<MenuCommands,int>?[]> rounds { get; }
+		//IList<KeyValuePair<MenuCommands,int>?[]> rounds { get; }
 		//int battletype { get; }
-		IBattleMetaData properties { get; }
-		//int roundindex { get; }
-		IList<int> switches { get; }
+		//IBattleMetaData properties { get; }
+		int roundindex { get; }
+		//IList<int> switches { get; }
 
 		#region Methods
 		IBattle initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
@@ -97,7 +97,6 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// <summary>
 	/// Represents a json object that can be saved/loaded to re-play a recorded pokemon battle
 	/// </summary>
-	//ToDo: maybe add <out IBattle> to interface?
 	public interface IBattleRecordData
 	{
 		//int GetBattleType(); //{ get; }
@@ -110,6 +109,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		IList<int> switches { get; }
 	}
 	/// <summary>
+	/// Serialize-able object of all the meta data that represents a pokemon battle
 	/// </summary>
 	public interface IBattleMetaData
 	{
