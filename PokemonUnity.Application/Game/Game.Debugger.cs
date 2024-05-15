@@ -3,6 +3,60 @@
 namespace PokemonUnity
 {
 	/// <summary>
+	/// Static class for logging messages to console and file
+	/// </summary>
+	/// <remarks>
+	/// Singleton for <see cref="IDebugger"/>
+	/// </remarks>
+	public static class GameDebug //: IDebugger
+	{
+		private static Debugger debugger = new Debugger();
+
+		public static void Init(string logfilePath, string logBaseName)
+		{
+			debugger.Init(logfilePath, logBaseName);
+		}
+
+		public static void Shutdown()
+		{
+			debugger.Shutdown();
+		}
+
+		public static void Log(object sender, string message)
+		{
+			if (Core.DEBUG) debugger.OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = null });
+		}
+		public static void Log(string message)
+		{
+			Log(sender: null, message);
+		}
+
+		public static void Log(string message, params object[] param)
+		{
+			Log(string.Format(message, param));
+		}
+
+		public static void LogWarning(object sender, string message)
+		{
+			debugger.OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = false });
+		}
+		public static void LogWarning(string message)
+		{
+			LogWarning(sender: null, message);
+		}
+
+		public static void LogError(object sender, string message)
+		{
+			debugger.OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = true });
+		}
+
+		public static void LogError(string message)
+		{
+			LogError(sender: null, message);
+		}
+	}
+
+	/// <summary>
 	/// Logging of messages
 	/// <para>
 	/// There are three different types of messages:
@@ -18,159 +72,15 @@ namespace PokemonUnity
 	///    Only used for things that should not be logged. Typically responses to user commands. Only shown on Console.
 	/// </para>
 	/// </summary>
-	public static class GameDebug //: IDebugger
-	{
-		public static event EventHandler<OnDebugEventArgs> OnLog;
-		private static string Debug
-		{
-			set
-			{
-				if (Core.DEBUG && OnLog != null) OnLog.Invoke(null, new OnDebugEventArgs { Message = value, Error = null });
-			}
-		}
-		private static string DebugWarning
-		{
-			set
-			{
-				if (Core.DEBUG && OnLog != null) OnLog.Invoke(null, new OnDebugEventArgs { Message = value, Error = false });
-			}
-		}
-		//ToDo: Errors should be known whether in debug or production?
-		private static string DebugError
-		{
-			set
-			{
-				if (OnLog != null) OnLog.Invoke(null, new OnDebugEventArgs { Message = value, Error = true });
-			}
-		}
-		//private static System.IO.StreamWriter logFile = null;
-		private static string logFile = null;
-		/// <summary>
-		/// Determines whether or not to store Debug Log to a file, or display only
-		/// </summary>
-		private static bool DebugToFile { get { return logFile != null; } }
-		//private static readonly string filename = GetTempPath() + "TranslationLog.txt";
-		//private static string GetTempPath()
-		//{
-		//	string path = System.Environment.GetEnvironmentVariable("TEMP");
-		//	if (!path.EndsWith("\\")) path += "\\";
-		//	return path;
-		//}
-
-		public static void Init(string logfilePath, string logBaseName)
-		{
-			// Try creating logName; attempt a number of suffixes
-			string name = "";
-			for (int i = 0; ; i++)
-			{
-				name = logBaseName + (i == 0 ? "" : "_" + i) + ".log";
-				//try
-				//{
-					//logFile = System.IO.File.CreateText(logfilePath + "/" + name);
-					//logFile = System.IO.File.OpenWrite(logfilePath + "/" + name);
-					//logFile.AutoFlush = true;
-					logFile = logfilePath + "/" + name;
-					break;
-				//}
-				//catch
-				//{
-				//	name = "<none>";
-				//}
-			}
-			Log("GameDebug initialized. Logging to " + logfilePath + "/" + name);
-		}
-
-		//public static void Shutdown()
-		//{
-		//	if (DebugToFile)
-		//		logFile.Close();
-		//	logFile = null;
-		//}
-
-		public static void Log(string message)
-		{
-			Debug = message;
-			//Console.WriteLine("Log: " + message);
-			if (DebugToFile)
-				_Log(message);
-		}
-
-		public static void Log(string message, params object[] param)
-		{
-			//Debug = message;
-			//Log(Game._INTL(message, param));
-			Log(string.Format(message, param));
-		}
-
-		static void _Log(string message)
-		{
-			//Console.Write(message); //UnityEngine.Time.frameCount + ": " + 
-			//if (logFile != null)
-			//	logFile.WriteLine("[LOG] " + message + "\n");
-				LogMessageToFile("[LOG] " + message + "\n"); 
-		}
-
-		public static void LogWarning(string message)
-		{
-			DebugWarning = message;
-			if (DebugToFile)
-				_LogWarning(message);
-		}
-
-		static void _LogWarning(string message)
-		{
-			//Console.Write("[WARN] " + message); //UnityEngine.Time.frameCount + 
-			//if (logFile != null)
-			//	logFile.WriteLine("[WARN] " + message + "\n");
-				LogMessageToFile("[WARN] " + message + "\n");
-		}
-
-		public static void LogError(string message)
-		{
-			DebugError = message;
-			//Console.WriteLine("Log Error: " + message);
-			if (DebugToFile)
-				_LogError(message);
-		}
-
-		static void _LogError(string message)
-		{
-			//Console.Write("[ERR] " + message); //UnityEngine.Time.frameCount + 
-			//if (logFile != null)
-			//	logFile.WriteLine("[ERR] " + message + "\n");
-				LogMessageToFile("[ERR] " + message + "\n");
-		}
-
-		public static void LogMessageToFile(string msg)
-		{
-			using (System.IO.StreamWriter sw = System.IO.File.AppendText(logFile))
-				try
-				{
-					msg = System.String.Format("{0:G}: {1}", System.DateTime.Now, msg);
-					sw.WriteLine(msg);
-				}
-				catch(Exception ex)
-				{
-					DebugError = ex.Message;
-				}
-				//finally
-				//{
-				//	sw.Close();
-				//}
-		}
-
-		public static void LogMessageFile(string msg)
-		{
-			msg = System.String.Format("{0:G}: {1}{2}", System.DateTime.Now, msg, System.Environment.NewLine);
-			System.IO.File.AppendAllText(logFile, msg);
-		}
-	}
-
 	public class Debugger : IDebugger
 	{
 		public event EventHandler<OnDebugEventArgs> OnLog;
 		//private System.IO.StreamWriter logFile = null;
 		private string logFile = null;
+		/// <summary>
+		/// Determines whether or not to store Debug Log to a file, or display only
+		/// </summary>
+		private bool DebugToFile { get { return logFile != null; } }
 		//private readonly string filename = GetTempPath() + "TranslationLog.txt";
 		//private string GetTempPath()
 		//{
@@ -188,11 +98,11 @@ namespace PokemonUnity
 				name = logBaseName + (i == 0 ? "" : "_" + i) + ".log";
 				//try
 				//{
-					//logFile = System.IO.File.CreateText(logfilePath + "/" + name);
-					//logFile = System.IO.File.OpenWrite(logfilePath + "/" + name);
-					//logFile.AutoFlush = true;
-					logFile = logfilePath + "/" + name;
-					break;
+				//logFile = System.IO.File.CreateText(logfilePath + "/" + name);
+				//logFile = System.IO.File.OpenWrite(logfilePath + "/" + name);
+				//logFile.AutoFlush = true;
+				logFile = logfilePath + "/" + name;
+				break;
 				//}
 				//catch
 				//{
@@ -209,9 +119,12 @@ namespace PokemonUnity
 			logFile = null;
 		}
 
-		public void Log(string message)
+		public void Log(object sender, string message)
 		{
-			GameDebug.Log(message);
+			if (Core.DEBUG) OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = null });
+			//Console.WriteLine("Log: " + message);
+			if (DebugToFile)
+				_Log(message);
 		}
 
 		public void Log(string message, params object[] param)
@@ -219,17 +132,46 @@ namespace PokemonUnity
 			Log(string.Format(message, param));
 		}
 
-		public void LogWarning(string message)
+		private void _Log(string message)
 		{
-			GameDebug.LogWarning(message);
+			//Console.Write(message); //UnityEngine.Time.frameCount + ": " +
+			//if (logFile != null)
+			//	logFile.WriteLine("[LOG] " + message + "\n");
+				LogMessageToFile("[LOG] " + message + "\n");
 		}
 
-		public void LogError(string message)
+		public void LogWarning(object sender, string message)
 		{
-			GameDebug.LogError(message);
+			OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = false });
+			if (DebugToFile)
+				_LogWarning(message);
 		}
 
-		public void LogMessageToFile(string msg)
+		private void _LogWarning(string message)
+		{
+			//Console.Write("[WARN] " + message); //UnityEngine.Time.frameCount +
+			//if (logFile != null)
+			//	logFile.WriteLine("[WARN] " + message + "\n");
+				LogMessageToFile("[WARN] " + message + "\n");
+		}
+
+		public void LogError(object sender, string message)
+		{
+			OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = true });
+			//Console.WriteLine("Log Error: " + message);
+			if (DebugToFile)
+				_LogError(message);
+		}
+
+		private void _LogError(string message)
+		{
+			//Console.Write("[ERR] " + message); //UnityEngine.Time.frameCount +
+			//if (logFile != null)
+			//	logFile.WriteLine("[ERR] " + message + "\n");
+				LogMessageToFile("[ERR] " + message + "\n");
+		}
+
+		private void LogMessageToFile(string msg)
 		{
 			using (System.IO.StreamWriter sw = System.IO.File.AppendText(logFile))
 				try
@@ -237,14 +179,29 @@ namespace PokemonUnity
 					msg = System.String.Format("{0:G}: {1}", System.DateTime.Now, msg);
 					sw.WriteLine(msg);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
-					LogError(ex.Message);
+					//ToDo: May be recursive loop, if error is thrown while trying to log error
+					LogError(this, ex.Message);
 				}
-				//finally
-				//{
-				//	sw.Close();
-				//}
+			//finally
+			//{
+			//	sw.Close();
+			//}
+		}
+
+		public void OnLogMessageDelegate(object sender, OnDebugEventArgs args) {
+			if (OnLog != null) OnLog.Invoke(sender, args);
+		}
+
+		void IDebugger.LogWarning(string message)
+		{
+			LogWarning(null, message);
+		}
+
+		void IDebugger.LogError(string message)
+		{
+			LogError(null, message);
 		}
 	}
 }
