@@ -82,20 +82,23 @@ namespace PokemonUnity
 #pragma warning restore 0162 //Warning CS0162  Unreachable code detected
 		#endregion
 
-		#region Variables
+		#region Pokemon RNG
 		private static object _locker = new object();
 		/// <summary>
 		/// Constantly revolving random, that won't repeat the same seed number twice,
 		/// until it cycles thru all possible seed values
 		/// </summary>
-		public static Random Rand { get { return new Random(Seed()); } }
+		public static Random Rand { get {
+				SetSeed();
+				return new Random(Seed); } }
 		//public static System.Collections.Generic.KeyValuePair<UInt16, Random> Rand { get { Random r = new Random(Seed()); return new System.Collections.Generic.KeyValuePair<UInt16, Random>(seed.Value, r); } }
 		/// <summary>
 		/// Constantly revolving random, that uses the same seed number that was previously used
 		/// </summary>
-		public static Random RandWithSetSeed { get { return new Random(Seed(true)); } }
+		public static Random RandWithSetSeed { get { return new Random(SetSeed(true)); } }
+		public static System.UInt16 Seed { get { if (seed == null) SetSeed(); return seed.Value; } internal set { seed = value; } }
 		private static System.UInt16? seed; // = 0x0000;
-		public static UInt16 Seed(bool useFixedSeed = false)
+		public static UInt16 SetSeed(bool useFixedSeed = false)
 		{
 			lock (_locker) //(Rand)
 			{
