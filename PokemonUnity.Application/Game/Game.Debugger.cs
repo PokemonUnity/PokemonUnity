@@ -165,6 +165,7 @@ namespace PokemonUnity
 			System.IO.File.AppendAllText(logFile, msg);
 		}
 	}
+
 	public class Debugger : IDebugger
 	{
 		public event EventHandler<OnDebugEventArgs> OnLog;

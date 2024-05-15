@@ -82,6 +82,11 @@ namespace PokemonUnity
 #pragma warning restore 0162 //Warning CS0162  Unreachable code detected
 		#endregion
 
+		#region Logging
+		private static IDebugger _logger;
+		public static IDebugger Logger { get { return _logger; } set { _logger = value; } }
+		#endregion
+
 		#region Pokemon RNG
 		private static object _locker = new object();
 		/// <summary>
@@ -90,6 +95,7 @@ namespace PokemonUnity
 		/// </summary>
 		public static Random Rand { get {
 				SetSeed();
+				Logger?.Log("Random Number Generated Seed: " + Seed);
 				return new Random(Seed); } }
 		//public static System.Collections.Generic.KeyValuePair<UInt16, Random> Rand { get { Random r = new Random(Seed()); return new System.Collections.Generic.KeyValuePair<UInt16, Random>(seed.Value, r); } }
 		/// <summary>
