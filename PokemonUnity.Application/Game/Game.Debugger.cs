@@ -36,6 +36,16 @@ namespace PokemonUnity
 			Log(string.Format(message, param));
 		}
 
+		public static void LogDebug(string message)
+		{
+			debugger.LogDebug(sender: null, message);
+		}
+
+		public static void LogDebug(string message, params object[] param)
+		{
+			LogDebug(string.Format(message, param));
+		}
+
 		public static void LogWarning(object sender, string message)
 		{
 			debugger.OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = false });
@@ -121,6 +131,18 @@ namespace PokemonUnity
 			}
 		}
 
+		public void LogDebug(object sender, string message)
+		{
+			//if (useSerilog && serilogLogger != null)
+			//{
+			//	serilogLogger.Information(message);
+			//}
+			if (logFilePath != null)//else
+			{
+				LogMessageToFile("[DBG] " + message);
+			}
+		}
+
 		public void LogWarning(object sender, string message)
 		{
 			if (OnLog != null)
@@ -162,7 +184,6 @@ namespace PokemonUnity
 				{
 					LogError(this, "Failed to log to file: " + ex.Message);
 				}
-			//{
 			}
 		}
 
