@@ -10,7 +10,7 @@ namespace PokemonUnity
 	/// </remarks>
 	public static class GameDebug //: IDebugger
 	{
-		private static Debugger debugger = new Debugger();
+		private static Debugger debugger = Debugger.Instance;
 
 		public static void Init(string logfilePath, string logBaseName)
 		{
@@ -72,126 +72,112 @@ namespace PokemonUnity
 	///    Only used for things that should not be logged. Typically responses to user commands. Only shown on Console.
 	/// </para>
 	/// </summary>
+	/// ToDo: Introduce Serilog.Dll Library to project
 	public class Debugger : IDebugger
 	{
 		public event EventHandler<OnDebugEventArgs> OnLog;
-		//private System.IO.StreamWriter logFile = null;
-		private string logFile = null;
-		/// <summary>
-		/// Determines whether or not to store Debug Log to a file, or display only
-		/// </summary>
-		private bool DebugToFile { get { return logFile != null; } }
-		//private readonly string filename = GetTempPath() + "TranslationLog.txt";
-		//private string GetTempPath()
-		//{
-		//	string path = System.Environment.GetEnvironmentVariable("TEMP");
-		//	if (!path.EndsWith("\\")) path += "\\";
-		//	return path;
-		//}
+		public static Debugger Instance { get { return instance; } }
+		private static readonly Debugger instance = new Debugger();
 
-		public void Init(string logfilePath, string logBaseName)
+		//private Serilog.ILogger serilogLogger;
+		private bool useSerilog = false;
+		private string logFilePath;
+
+		private Debugger() { Core.Logger = this; }
+
+		public void Init(string logFilePath, string logBaseName, bool useSerilog = false)
 		{
-			// Try creating logName; attempt a number of suffixes
-			string name = "";
-			for (int i = 0; ; i++)
+			this.logFilePath = System.IO.Path.Combine(logFilePath, logBaseName + ".log");
+			this.useSerilog = useSerilog;
+			if (useSerilog)
 			{
-				name = logBaseName + (i == 0 ? "" : "_" + i) + ".log";
-				//try
-				//{
-				//logFile = System.IO.File.CreateText(logfilePath + "/" + name);
-				//logFile = System.IO.File.OpenWrite(logfilePath + "/" + name);
-				//logFile.AutoFlush = true;
-				logFile = logfilePath + "/" + name;
-				break;
-				//}
-				//catch
-				//{
-				//	name = "<none>";
-				//}
+				//serilogLogger = new LoggerConfiguration()
+				//	.WriteTo.File(this.logFilePath)
+				//	.CreateLogger();
 			}
-			Log("GameDebug initialized. Logging to " + logfilePath + "/" + name);
+			Log(this, "Debugger initialized. Logging to " + this.logFilePath);
 		}
 
 		public void Shutdown()
 		{
-			//if (DebugToFile)
-			//	logFile.Close();
-			logFile = null;
+			if (useSerilog)
+			{
+				//serilogLogger = null;
+			}
+			logFilePath = null;
 		}
 
 		public void Log(object sender, string message)
 		{
-			if (Core.DEBUG) OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = null });
-			//Console.WriteLine("Log: " + message);
-			if (DebugToFile)
-				_Log(message);
-		}
-
-		public void Log(string message, params object[] param)
-		{
-			Log(string.Format(message, param));
-		}
-
-		private void _Log(string message)
-		{
-			//Console.Write(message); //UnityEngine.Time.frameCount + ": " +
-			//if (logFile != null)
-			//	logFile.WriteLine("[LOG] " + message + "\n");
-				LogMessageToFile("[LOG] " + message + "\n");
+			if (OnLog != null)
+				OnLog(sender, new OnDebugEventArgs { Message = message, Error = null });
+			//if (useSerilog && serilogLogger != null)
+			//{
+			//	serilogLogger.Information(message);
+			//}
+			if (logFilePath != null)//else
+			{
+				LogMessageToFile("[LOG] " + message);
+			}
 		}
 
 		public void LogWarning(object sender, string message)
 		{
-			OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = false });
-			if (DebugToFile)
-				_LogWarning(message);
-		}
-
-		private void _LogWarning(string message)
-		{
-			//Console.Write("[WARN] " + message); //UnityEngine.Time.frameCount +
-			//if (logFile != null)
-			//	logFile.WriteLine("[WARN] " + message + "\n");
-				LogMessageToFile("[WARN] " + message + "\n");
+			if (OnLog != null)
+				OnLog(sender, new OnDebugEventArgs { Message = message, Error = false });
+			//if (useSerilog && serilogLogger != null)
+			//{
+			//	serilogLogger.Warning(message);
+			//}
+			if (logFilePath != null)//else
+			{
+				LogMessageToFile("[WRN] " + message);
+			}
 		}
 
 		public void LogError(object sender, string message)
 		{
-			OnLogMessageDelegate(sender, new OnDebugEventArgs { Message = message, Error = true });
-			//Console.WriteLine("Log Error: " + message);
-			if (DebugToFile)
-				_LogError(message);
+			if (OnLog != null)
+				OnLog(sender, new OnDebugEventArgs { Message = message, Error = true });
+			//if (useSerilog && serilogLogger != null)
+			//{
+			//	serilogLogger.Error(message);
+			//}
+			if (logFilePath != null)//else
+			{
+				LogMessageToFile("[ERR] " + message);
+			}
 		}
 
-		private void _LogError(string message)
+		private void LogMessageToFile(string message)
 		{
-			//Console.Write("[ERR] " + message); //UnityEngine.Time.frameCount +
-			//if (logFile != null)
-			//	logFile.WriteLine("[ERR] " + message + "\n");
-				LogMessageToFile("[ERR] " + message + "\n");
-		}
-
-		private void LogMessageToFile(string msg)
-		{
-			using (System.IO.StreamWriter sw = System.IO.File.AppendText(logFile))
+			using (System.IO.StreamWriter sw = System.IO.File.AppendText(logFilePath))
+			{
 				try
 				{
-					msg = System.String.Format("{0:G}: {1}", System.DateTime.Now, msg);
-					sw.WriteLine(msg);
+					string timestampedMessage = $"{DateTime.Now:G}: {message}";
+					sw.WriteLine(timestampedMessage);
 				}
 				catch (Exception ex)
 				{
-					//ToDo: May be recursive loop, if error is thrown while trying to log error
-					LogError(this, ex.Message);
+					LogError(this, "Failed to log to file: " + ex.Message);
 				}
-			//finally
 			//{
-			//	sw.Close();
-			//}
+			}
 		}
 
 		public void OnLogMessageDelegate(object sender, OnDebugEventArgs args) {
 			if (OnLog != null) OnLog.Invoke(sender, args);
+		}
+
+		void IDebugger.Init(string logfilePath, string logBaseName)
+		{
+			Init(logfilePath, logBaseName);
+		}
+
+		void IDebugger.Log(string message, params object[] param)
+		{
+			Log(null, string.Format(message, param));
 		}
 
 		void IDebugger.LogWarning(string message)
