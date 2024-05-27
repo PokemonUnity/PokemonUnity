@@ -6,11 +6,11 @@ EditorSettings:
   serializedVersion: 7
   m_ExternalVersionControlSupport: Hidden Meta Files
   m_SerializationMode: 2
-  m_LineEndingsForNewScripts: 1
+  m_LineEndingsForNewScripts: 0
   m_DefaultBehaviorMode: 0
   m_PrefabRegularEnvironment: {fileID: 0}
   m_PrefabUIEnvironment: {fileID: 0}
-  m_SpritePackerMode: 0
+  m_SpritePackerMode: 4
   m_SpritePackerPaddingPower: 1
   m_EtcTextureCompressorBehavior: 0
   m_EtcTextureFastCompressor: 2

@@ -11,7 +11,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -73,28 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GameMain\Scripts\Debugger\ChangeLanguageDebuggerWindow.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Debugger\DebuggerWindow.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityData.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Entity.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\CSPacketBase.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\CSPacketHeader.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\NetworkChannelHelper.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\Packet\CSHeartBeat.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\Packet\SCHeartBeat.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\PacketBase.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\PacketHandler\SCHeartBeatHandler.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\PacketHandlerBase.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\PacketHeaderBase.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\PacketType.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\SCPacketBase.cs" />
-    <Compile Include="Assets\GameMain\Scripts\Network\SCPacketHeader.cs" />
     <Compile Include="Assets\GameMain\Scripts\Sound\SoundExtension.cs" />
-    <Compile Include="Assets\GameMain\Scripts\UI\CommonButton.cs" />
-    <Compile Include="Assets\GameMain\Scripts\UI\DialogParams.cs" />
-    <Compile Include="Assets\GameMain\Scripts\UI\DialogPopups.cs" />
-    <Compile Include="Assets\GameMain\Scripts\UI\UIExtension.cs" />
-    <Compile Include="Assets\GameMain\Scripts\UI\UIFormId.cs" />
     <Compile Include="Assets\GameMain\Scripts\UnityMonoHandlers\Battle\PokemonStatus\BattlePokemonHandler.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriColor.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\SeriV2.cs" />

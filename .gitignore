@@ -38,12 +38,14 @@ ExportedObj/
 *.booproj
 *.svd
 *.pdb
+*.vsconfig
 
 # Unity3D generated meta files
 *.pidb.meta
 UnityVS.meta
 
 # Unity3D Generated File On Crash Reports
+*.log
 sysinfo.txt
 
 # Builds
