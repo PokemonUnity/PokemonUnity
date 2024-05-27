@@ -20,20 +20,20 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IPokemonMenuScene : IScene
 	{
-		void pbEndScene();
-		void pbHideMenu();
-		//void pbRefresh();
-		void pbShowCommands(string[] commands);
-		void pbShowHelp(string text);
-		void pbShowInfo(string text);
-		void pbShowMenu();
-		void pbStartScene();
+		void EndScene();
+		void HideMenu();
+		//void Refresh();
+		void ShowCommands(string[] commands);
+		void ShowHelp(string text);
+		void ShowInfo(string text);
+		void ShowMenu();
+		void StartScene();
 	}
 
 	public interface IPokemonMenuScreen : IScreen
 	{
 		void initialize(IPokemonMenuScene scene);
-		void pbShowMenu();
-		void pbStartPokemonMenu();
+		void ShowMenu();
+		void StartPokemonMenu();
 	}
 }

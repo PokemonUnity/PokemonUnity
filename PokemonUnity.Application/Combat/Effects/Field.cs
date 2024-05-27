@@ -8,11 +8,11 @@ using System.Text;
 namespace PokemonUnity.Combat
 {
 	public partial class Effects
-	{		   
+	{
 		/// <summary>
 		/// These effects apply to the battle (i.e. both sides)
 		/// </summary>
-		public class Field : PokemonEssentials.Interface.PokeBattle.Effects.IEffectsField { 
+		public class Field : PokemonEssentials.Interface.PokeBattle.Effects.IEffectsField {
 			public byte ElectricTerrain	{ get; set; }
 			public byte FairyLock		{ get; set; }
 			public bool FusionBolt		{ get; set; }

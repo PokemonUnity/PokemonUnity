@@ -22,7 +22,7 @@ namespace PokemonUnity.Inventory
 		/// <param name="maxsize"></param>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public static int pbQuantity(Items[] items,int maxsize,Items item) {
+		public static int Quantity(IList<Items> items,int maxsize,Items item) {
 			int ret=0;
 			for (int i = 0; i < maxsize; i++) {
 				if (items[i]==item) {
@@ -39,7 +39,7 @@ namespace PokemonUnity.Inventory
 		/// <param name="maxsize"></param>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public static int pbQuantity(KeyValuePair<Items, int>[] items,int maxsize,Items item) {
+		public static int Quantity(IList<KeyValuePair<Items, int>> items,int maxsize,Items item) {
 			int ret=0;
 			for (int i = 0; i < maxsize; i++) {
 				KeyValuePair<Items, int>? itemslot=items[i];
@@ -58,16 +58,20 @@ namespace PokemonUnity.Inventory
 		/// <param name="item"></param>
 		/// <param name="qty"></param>
 		/// <returns></returns>
-		public static bool pbDeleteItem(ref Items[] items,int maxsize,Items item,int qty) {
-			if (qty<0)
+		public static bool DeleteItem(IList<Items> items,int maxsize,Items item,int qty) {
+			if (qty < 0)
+			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
 				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				qty = 0; return false;
+			}
 			if (qty==0) return true;
 			bool ret=false;
 			for (int i = 0; i < maxsize; i++, qty--) {
 				if (items != null && items[i]==item) {
 					//if (items[i]==0) //items[i]=null;
-					{ var _ = items.ToList(); _.RemoveAt(i); items = _.ToArray(); }
+					//{ var _ = items.ToList(); _.RemoveAt(i); items = _.ToArray(); }
+					items.RemoveAt(i);
 					if (qty==0) {
 						ret=true;
 						break;
@@ -86,10 +90,13 @@ namespace PokemonUnity.Inventory
 		/// <param name="item"></param>
 		/// <param name="qty"></param>
 		/// <returns></returns>
-		public static bool pbDeleteItem(ref KeyValuePair<Items, int>[] items,int maxsize,Items item,int qty) {
-			if (qty<0)
+		public static bool DeleteItem(IList<KeyValuePair<Items, int>> items,int maxsize,Items item,int qty) {
+			if (qty < 0)
+			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
 				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				qty = 0; return false;
+			}
 			if (qty==0) return true;
 			bool ret=false;
 			for (int i = 0; i < maxsize; i++) {
@@ -111,12 +118,15 @@ namespace PokemonUnity.Inventory
 			return ret;
 		}
 
-		public static bool pbCanStore(Items[] items,int maxsize,int maxPerSlot,Items item,int qty) {
-			if (qty<0) 
+		public static bool CanStore(IList<Items> items,int maxsize,int maxPerSlot,Items item,int qty) {
+			if (qty < 0)
+			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
 				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				qty = 0; return false;
+			}
 			if (qty==0) return true;
-			for (int i = 0, count = 0; i < items.Length && count<maxsize * maxPerSlot; i++) {
+			for (int i = 0, count = 0; i < items.Count && count<maxsize * maxPerSlot; i++) {
 				Items itemslot=items[i];
 				if (itemslot == Items.NONE) {
 					qty--;
@@ -129,10 +139,13 @@ namespace PokemonUnity.Inventory
 			return false;
 		}
 
-		public static bool pbCanStore(KeyValuePair<Items, int>[] items,int maxsize,int maxPerSlot,Items item,int qty) {
-			if (qty<0)
+		public static bool CanStore(IList<KeyValuePair<Items, int>> items,int maxsize,int maxPerSlot,Items item,int qty) {
+			if (qty < 0)
+			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
 				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				qty = 0; return false;
+			}
 			if (qty==0) return true;
 			for (int i = 0; i < maxsize; i++) {
 				KeyValuePair<Items, int>? itemslot=items[i];
@@ -149,24 +162,27 @@ namespace PokemonUnity.Inventory
 			return false;
 		}
 
-		[System.Obsolete("Use keyvaluepair array as input param for array")] //ToDo: Refactor and Finish below...
-		public static bool pbStoreItem(ref Items[] items,int maxsize,int maxPerSlot,Items item,int qty,bool sorting=false) {
-			if (qty<0)
+		[System.Obsolete("Use keyvaluepair array as input param for array")]
+		public static bool StoreItem(IList<Items> items,int maxsize,int maxPerSlot,Items item,int qty,bool sorting=false) {
+			if (qty < 0)
+			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
 				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				qty = 0; return false;
+			}
 			if (qty==0) return true;
-			List<Items> list = items.ToList();
-			for (int i = 0, count = 0; i < items.Length && count < maxsize * maxPerSlot; i++) {
+			//List<Items> list = items.ToList();
+			for (int i = 0, count = 0; i < items.Count && count < maxsize * maxPerSlot; i++) {
 				Items itemslot=items[i];
 				if (itemslot == Items.NONE) {
-					//items[i]=new KeyValuePair<Items, int> (item, Math.Min(qty, maxPerSlot));
-					//qty-=items[i].Value;
+					items.Insert(i, item);//, Math.Min(qty, maxPerSlot));
+					qty--;//qty-=items[i].Value;
 					if (sorting) {
 						//if (Core.POCKETAUTOSORT[ItemData[item][ITEMPOCKET]]) items.Sort();
 						if (Core.POCKETAUTOSORT[(int)(Kernal.ItemData[item].Pocket??0)]) items.OrderBy(x => x);
 					}
 					if (qty==0) return true;
-				} else if (itemslot==item && count<maxPerSlot) {
+				} else if (itemslot==item && count<maxPerSlot) { //ToDo: Refactor and Finish below...
 					//int newamt=itemslot.Value.Value;
 					//newamt=Math.Min(newamt+qty,maxPerSlot);
 					//qty-=(newamt-itemslot.Value.Value);
@@ -179,10 +195,13 @@ namespace PokemonUnity.Inventory
 			return false;
 		}
 
-		public static bool pbStoreItem(ref KeyValuePair<Items, int>[] items,int maxsize,int maxPerSlot,Items item,int qty,bool sorting=false) {
-			if (qty<0)
+		public static bool StoreItem(IList<KeyValuePair<Items, int>> items,int maxsize,int maxPerSlot,Items item,int qty,bool sorting=false) {
+			if (qty < 0)
+			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
 				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				qty = 0; return false;
+			}
 			if (qty==0) return true;
 			for (int i = 0; i < maxsize; i++) {
 				KeyValuePair<Items, int>? itemslot=items[i];

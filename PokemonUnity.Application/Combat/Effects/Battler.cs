@@ -12,7 +12,7 @@ namespace PokemonUnity.Combat
 		/// <summary>
 		/// These effects apply to a battler
 		/// </summary>
-		public class Battler : PokemonEssentials.Interface.PokeBattle.Effects.IEffectsBattler { 
+		public class Battler : PokemonEssentials.Interface.PokeBattle.Effects.IEffectsBattler {
 			public bool AquaRing			{ get; set; }
 			public int Attract				{ get; set; }
 			public bool BatonPass			{ get; set; }
@@ -35,7 +35,7 @@ namespace PokemonUnity.Combat
 			public int EncoreIndex			{ get; set; }
 			public Moves EncoreMove			{ get; set; }
 			public bool Endure				{ get; set; }
-			public PokemonUnity.Attack.Data.Effects FirstPledge	{ get; set; }
+			public PokemonUnity.Attack.Effects FirstPledge	{ get; set; }
 			public bool FlashFire			{ get; set; }
 			public bool Flinch				{ get; set; }
 			public int FocusEnergy			{ get; set; }
@@ -79,7 +79,7 @@ namespace PokemonUnity.Combat
 			/// <summary>
 			/// Trapping move
 			/// </summary>
-			public int MultiTurn			{ get; set; } 
+			public int MultiTurn			{ get; set; }
 			public Moves MultiTurnAttack	{ get; set; }
 			public int MultiTurnUser		{ get; set; }
 			public bool Nightmare			{ get; set; }
@@ -143,13 +143,13 @@ namespace PokemonUnity.Combat
 				if (!batonpass)
 				{
 				//  # These effects are retained if Baton Pass is used
-				//  @stages[PBStats::ATTACK]   = 0
-				//  @stages[PBStats::DEFENSE]  = 0
-				//  @stages[PBStats::SPEED]    = 0
-				//  @stages[PBStats::SPATK]    = 0
-				//  @stages[PBStats::SPDEF]    = 0
-				//  @stages[PBStats::EVASION]  = 0
-				//  @stages[PBStats::ACCURACY] = 0
+				//  @stages[Stats::ATTACK]   = 0
+				//  @stages[Stats::DEFENSE]  = 0
+				//  @stages[Stats::SPEED]    = 0
+				//  @stages[Stats::SPATK]    = 0
+				//  @stages[Stats::SPDEF]    = 0
+				//  @stages[Stats::EVASION]  = 0
+				//  @stages[Stats::ACCURACY] = 0
 				//  @lastMoveUsedSketch        = -1
 					this.AquaRing    = false;
 					this.Confusion   = 0;
@@ -235,9 +235,9 @@ namespace PokemonUnity.Combat
 				this.HyperBeam        = 0;
 				this.Illusion         = null;
 				//if self.hasWorkingAbility(:ILLUSION)
-				//  lastpoke=@battle.pbGetLastPokeInTeam(@index)
+				//  lastpoke=@battle.GetLastPokeInTeam(@index)
 				//  if lastpoke!=@pokemonIndex
-				//    this.Illusion     = @battle.pbParty(@index)[lastpoke]
+				//    this.Illusion     = @battle.Party(@index)[lastpoke]
 				//  end
 				//end
 				this.Imprison         = false;

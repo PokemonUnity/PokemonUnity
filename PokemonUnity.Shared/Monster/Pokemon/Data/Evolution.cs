@@ -34,9 +34,9 @@ namespace PokemonUnity.Monster.Data
 		public bool OverworldRain { get; private set; }
 		public bool TurnUpsideDown { get; private set; }
 
-		public EvolutionTrigger(Pokemons species = Pokemons.NONE, EvoTrigger evo = EvoTrigger.level_up, Items trigger = Items.NONE, int? minLevel = null, bool? gender = null, int? location = null, 
-			Items held = Items.NONE, int? time = null, Moves knownMove = Moves.NONE, Types knownType = Types.NONE, int? happiness = null, 
-			int? beauty = null, int? affection = null, int? physicalStat = null, Pokemons partySpecies = Pokemons.NONE, Types partyType = Types.NONE, 
+		public EvolutionTrigger(Pokemons species = Pokemons.NONE, EvoTrigger evo = EvoTrigger.level_up, Items trigger = Items.NONE, int? minLevel = null, bool? gender = null, int? location = null,
+			Items held = Items.NONE, int? time = null, Moves knownMove = Moves.NONE, Types knownType = Types.NONE, int? happiness = null,
+			int? beauty = null, int? affection = null, int? physicalStat = null, Pokemons partySpecies = Pokemons.NONE, Types partyType = Types.NONE,
 			Pokemons tradeSpecies = Pokemons.NONE, bool overworldRain = false, bool turnUpsideDown = true)
 		{
 			Species = species;
@@ -68,8 +68,8 @@ namespace PokemonUnity.Monster.Data
 		shed	=4
 	}
 	/// <summary>
-	/// The evolution paths this species can take. 
-	/// For each possible evolution of this species, 
+	/// The evolution paths this species can take.
+	/// For each possible evolution of this species,
 	/// there are three parts
 	/// </summary>
 	public struct PokemonEvolution //: IPokemonEvolution
@@ -87,11 +87,11 @@ namespace PokemonUnity.Monster.Data
 		/// The value-parameter to <see cref="EvolveMethod"/> as mentioned KEY.
 		/// </summary>
 		public object EvolveValue { get; private set; }
-		//public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, Type ValueType, object ObjectValue) 
+		//public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, Type ValueType, object ObjectValue)
 		//{
 		//    PokemonEvolution<ValueType>(EvolveTo, EvolveHow, ObjectValue);
 		//}
-		public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, object Value = null) 
+		public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, object Value = null)
 		{
 			this.Species = EvolveTo;
 			this.EvolveMethod = EvolveHow;
@@ -188,7 +188,7 @@ namespace PokemonUnity.Monster.Data
 					if (!typeof(T).Equals(typeof(int)))
 					{
 						//throw new Exception("Type not acceptable for Method-Value pair.");
-						//Instead of throwing an exception, i'll correct the problem instead?
+						//Instead of throwing an exception, I'll correct the problem instead?
 						//int.TryParse(Value.ToString, out EvolveValue);
 						//Convert.ChangeType(EvolveValue, typeof(int));
 						//Convert.ChangeType(Value, typeof(int));
@@ -267,16 +267,16 @@ namespace PokemonUnity.Monster.Data
 			return this;
 		}*/
 	}
-	public interface IPokemonEvolution<out T> : IPokemonEvolution
-	{
-		//Pokemons Species { get; }
-		//EvolutionMethod EvolveMethod { get; }
-		T EvolveValue { get; }
-	}
-	public interface IPokemonEvolution
-	{
-		Pokemons Species { get; }
-
-		EvolutionMethod EvolveMethod { get; }
-	}
+	//public interface IPokemonEvolution<out T> : IPokemonEvolution
+	//{
+	//	//Pokemons Species { get; }
+	//	//EvolutionMethod EvolveMethod { get; }
+	//	T EvolveValue { get; }
+	//}
+	//public interface IPokemonEvolution
+	//{
+	//	Pokemons Species { get; }
+	//
+	//	EvolutionMethod EvolveMethod { get; }
+	//}
 }

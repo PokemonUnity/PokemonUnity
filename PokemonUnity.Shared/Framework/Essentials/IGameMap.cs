@@ -3,9 +3,18 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Overworld;
 using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.Field;
 
 namespace PokemonEssentials.Interface
 {
+	/// <summary>
+	/// This interface handles the map. It includes scrolling and passable determining
+	/// functions. Refer to <see cref="IGame.GameMap"/> for the instance of this class.
+	/// </summary>
+	/// <remarks>
+	/// Not an Extension of <see cref="IGame"/>
+	/// </remarks>
+	/// ToDo: Rename?
 	public interface IGameMap : Battle.IGameMapOrgBattle
 	{
 		/// <summary>
@@ -73,7 +82,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		int[] passages { get; set; }
 		/// <summary>
-		/// prioroty table
+		/// priority table
 		/// </summary>
 		int[] priorities { get; set; }
 		/// <summary>
@@ -83,7 +92,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// events
 		/// </summary>
-		IDictionary<int, IGameEvent> events { get; set; }
+		IDictionary<int, IGameCharacter> events { get; set; }
 		/// <summary>
 		/// fog x-coordinate starting point
 		/// </summary>
@@ -99,12 +108,12 @@ namespace PokemonEssentials.Interface
 		int mapsInRange { get; set; }
 		int width { get; }
 		int height { get; }
-		IList<Pokemons> encounter_list { get; }
+		IList<IEncounterPokemon> encounter_list { get; }
 		int encounter_step { get; }
 		int?[,,] data { get; }
 		string name { get; }
 
-		//IGameMap initialize();
+		IGameMap initialize();
 		void setup(int map_id);
 		/// <summary>
 		/// Autoplays background music.

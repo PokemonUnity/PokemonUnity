@@ -17,8 +17,8 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
-{	
-	public interface IPokemonBox {
+{
+	public interface IPokemonBox : IList<PokemonEssentials.Interface.PokeBattle.IPokemon>, ICollection<PokemonEssentials.Interface.PokeBattle.IPokemon>, IEnumerable<PokemonEssentials.Interface.PokeBattle.IPokemon> {
 		IList<IPokemon> pokemon				{ get; }
 		string name							{ get; set; }
 		string background					{ get; set; }
@@ -27,16 +27,22 @@ namespace PokemonEssentials.Interface.Screen
 
 		bool full { get; }
 
+		/// <summary>
+		/// number of pokemons stored...
+		/// </summary>
 		int nitems { get; } //item count
 
+		/// <summary>
+		/// size of the storage box...
+		/// </summary>
 		int length { get; } //capacity
 
 		IEnumerable<IPokemon> each();
 
-		IPokemon this[int i] { get; set; }
+		//IPokemon this[int i] { get; set; }
 	}
 
-	public interface IPokemonStorage {
+	public interface IPCPokemonStorage {
 		IPokemonBox[] boxes				{ get; }
 		//IPokemon[] party				{ get; }
 		int currentBox					{ get; set; }
@@ -49,45 +55,51 @@ namespace PokemonEssentials.Interface.Screen
 
 		//string[] MARKINGCHARS { get; } //= new string[] { "●", "■", "▲", "♥" };
 
-		IPokemonStorage initialize(int maxBoxes = Core.STORAGEBOXES, int maxPokemon = 30);
+		IPCPokemonStorage initialize(int maxBoxes = Core.STORAGEBOXES, int maxPokemon = 30);
 
 		int maxPokemon(int box);
 
 		IPokemonBox this[int x] { get; }
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="x">-1 to access player's party, box index begins at 0</param>
+		/// <param name="y">slot id</param>
+		/// <returns></returns>
 		IPokemon this[int x,int y] { get; set; }
 
 		bool full { get; }
 
-		int pbFirstFreePos(int box);
+		int FirstFreePos(int box);
 
-		bool pbCopy(int boxDst, int indexDst, int boxSrc, int indexSrc);
+		bool Copy(int boxDst, int indexDst, int boxSrc, int indexSrc);
 
-		bool pbMove(int boxDst, int indexDst, int boxSrc, int indexSrc);
+		bool Move(int boxDst, int indexDst, int boxSrc, int indexSrc);
 
-		void pbMoveCaughtToParty(IPokemon pkmn);
+		void MoveCaughtToParty(IPokemon pkmn);
 
-		bool pbMoveCaughtToBox(IPokemon pkmn,int box);
+		bool MoveCaughtToBox(IPokemon pkmn,int box);
 
-		int pbStoreCaught(IPokemon pkmn);
+		int StoreCaught(IPokemon pkmn);
 
-		void pbDelete(int box, int index);
+		void Delete(int box, int index);
 	}
 
-	public interface IPokemonStorageWithParty : IPokemonStorage {
-		new IPokemon[] party { get; set; }
+	public interface IPokemonStorageWithParty : IPCPokemonStorage {
+		//new IPokemon[] party { get; set; }
 		//IPokemon[] party { set; }
-		
-		//IPokemonStorageWithParty initialize(int maxBoxes = 24, int maxPokemon = 30, IPokemon[] party = null); //: base (maxBoxes,maxPokemon)
+
+		IPokemonStorageWithParty initialize(int maxBoxes = 24, int maxPokemon = 30, IPokemon[] party = null); //: base (maxBoxes,maxPokemon)
 	}
-	
+
 	// ###############################################################################
 	// Regional Storage scripts
 	// ###############################################################################
 	public interface IRegionalStorage {
 		IRegionalStorage initialize();
 
-		IPokemonStorage getCurrentStorage { get; }
+		IPCPokemonStorage getCurrentStorage { get; }
 
 		IPokemonBox[] boxes { get; }
 
@@ -104,19 +116,19 @@ namespace PokemonEssentials.Interface.Screen
 
 		bool full { get; }
 
-		void pbFirstFreePos(int box);
+		void FirstFreePos(int box);
 
-		void pbCopy(int boxDst, int indexDst, int boxSrc, int indexSrc);
+		void Copy(int boxDst, int indexDst, int boxSrc, int indexSrc);
 
-		void pbMove(int boxDst, int indexDst, int boxSrc, int indexSrc);
+		void Move(int boxDst, int indexDst, int boxSrc, int indexSrc);
 
-		void pbMoveCaughtToParty(IPokemon pkmn);
+		void MoveCaughtToParty(IPokemon pkmn);
 
-		void pbMoveCaughtToBox(IPokemon pkmn, int box);
+		void MoveCaughtToBox(IPokemon pkmn, int box);
 
-		void pbStoreCaught(IPokemon pkmn);
+		void StoreCaught(IPokemon pkmn);
 
-		void pbDelete(int box, int index);
+		void Delete(int box, int index);
 	}
 
 
@@ -133,23 +145,23 @@ namespace PokemonEssentials.Interface.Screen
 		/// Maybe check region accessing pc from, and associate region prof with creator
 		/// ...until maybe the player encounter's the prof and exchanges pokedex (or however it works)
 		/// </remarks>
-		string pbGetStorageCreator();
+		string GetStorageCreator();
 
-		//Items pbPCItemStorage();
-		void pbPCItemStorage();
+		//Items PCItemStorage();
+		void PCItemStorage();
 
-		void pbPCMailbox();
+		void PCMailbox();
 
-		void pbTrainerPCMenu();
+		void TrainerPCMenu();
 
 
 
-		void pbTrainerPC();
+		void TrainerPC();
 
-		void pbPokeCenterPC();
+		void PokeCenterPC();
 	}
 
-	
+
 	public interface IPCMenuUser {
 		bool shouldShow { get; }
 
@@ -176,66 +188,66 @@ namespace PokemonEssentials.Interface.Screen
 		//void drawMarkings(bool[] markings);
 		string[] getMarkingCommands(bool[] markings);
 		IPokemonStorageScene initialize();
-		void pbBoxName(string helptext, int minchars, int maxchars);
-		void pbChangeBackground(int wp);
-		int pbChangeSelection(int key, int selection);
-		void pbChooseBox(string msg);
-		Items pbChooseItem(IBattler bag);
-		void pbCloseBox();
-		//void pbDisplay(string message);
-		void pbDropDownPartyTab();
-		void pbHardRefresh();
-		void pbHidePartyTab();
-		void pbHold(KeyValuePair<int, int> selected);
-		void pbJumpToBox(int newbox);
-		void pbMark(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		int pbPartyChangeSelection(int key, int selection);
-		void pbPartySetArrow(int selection);//arrow , 
-		void pbPlace(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		//void pbRefresh();
-		void pbRelease(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		int[] pbSelectBox(IPokemon[] party);
-		int[] pbSelectBoxInternal(IPokemon[] party);
-		int pbSelectParty(IPokemon[] party);
-		int pbSelectPartyInternal(IPokemon[] party, bool depositing);
-		void pbSetArrow(int selection);//arrow , 
-		void pbSetMosaic(int selection);
-		int pbShowCommands(string message, string[] commands, int index = 0);
-		void pbStartBox(IPokemonStorageScreen screen, int command);
-		void pbStore(KeyValuePair<int, int> selected, IPokemon heldpoke, int destbox, int firstfree);
-		void pbSummary(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		void pbSwap(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		void pbSwitchBoxToLeft(int newbox);
-		void pbSwitchBoxToRight(int newbox);
-		void pbUpdateOverlay(int selection, IPokemon[] party = null);
-		void pbWithdraw(KeyValuePair<int, int> selected, IPokemon heldpoke, int partyindex);
+		void BoxName(string helptext, int minchars, int maxchars);
+		void ChangeBackground(int wp);
+		int ChangeSelection(int key, int selection);
+		void ChooseBox(string msg);
+		Items ChooseItem(IBattler bag);
+		void CloseBox();
+		//void Display(string message);
+		void DropDownPartyTab();
+		void HardRefresh();
+		void HidePartyTab();
+		void Hold(KeyValuePair<int, int> selected);
+		void JumpToBox(int newbox);
+		void Mark(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		int PartyChangeSelection(int key, int selection);
+		void PartySetArrow(int selection);//arrow ,
+		void Place(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		//void Refresh();
+		void Release(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		int[] SelectBox(IPokemon[] party);
+		int[] SelectBoxInternal(IPokemon[] party);
+		int SelectParty(IPokemon[] party);
+		int SelectPartyInternal(IPokemon[] party, bool depositing);
+		void SetArrow(int selection);//arrow ,
+		void SetMosaic(int selection);
+		int ShowCommands(string message, string[] commands, int index = 0);
+		void StartBox(IPokemonStorageScreen screen, int command);
+		void Store(KeyValuePair<int, int> selected, IPokemon heldpoke, int destbox, int firstfree);
+		void Summary(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		void Swap(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		void SwitchBoxToLeft(int newbox);
+		void SwitchBoxToRight(int newbox);
+		void UpdateOverlay(int selection, IPokemon[] party = null);
+		void Withdraw(KeyValuePair<int, int> selected, IPokemon heldpoke, int partyindex);
 	}
 
 	public interface IPokemonStorageScreen : IScreen
 	{
-		int pbAbleCount { get; }
-		IPokemon pbHeldPokemon { get; }
+		int AbleCount { get; }
+		IPokemon HeldPokemon { get; }
 		IPokemonStorageScene scene { get; }
-		IPokemonStorage storage { get; }
+		IPCPokemonStorage storage { get; }
 
 		void debugMenu(KeyValuePair<int, int> selected, IPokemon pkmn, IPokemon heldpoke);
-		IPokemonStorageScreen initialize(IPokemonStorageScene scene, IPokemonStorage storage);
-		bool pbAble(IPokemon pokemon);
-		void pbBoxCommands();
-		int? pbChoosePokemon(IPokemon[] party = null);
-		bool pbConfirm(string str);
-		void pbDisplay(string message);
-		void pbHold(KeyValuePair<int, int> selected);
-		void pbItem(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		void pbMark(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		void pbPlace(KeyValuePair<int, int> selected);
-		void pbRelease(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		int pbShowCommands(string msg, string[] commands);
-		void pbStartScreen(int command);
-		void pbStore(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		void pbSummary(KeyValuePair<int, int> selected, IPokemon heldpoke);
-		bool pbSwap(KeyValuePair<int, int> selected);
-		bool pbWithdraw(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		IPokemonStorageScreen initialize(IPokemonStorageScene scene, IPCPokemonStorage storage);
+		bool Able(IPokemon pokemon);
+		void BoxCommands();
+		int? ChoosePokemon(IPokemon[] party = null);
+		bool Confirm(string str);
+		void Display(string message);
+		void Hold(KeyValuePair<int, int> selected);
+		void Item(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		void Mark(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		void Place(KeyValuePair<int, int> selected);
+		void Release(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		int ShowCommands(string msg, string[] commands);
+		void StartScreen(int command);
+		void Store(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		void Summary(KeyValuePair<int, int> selected, IPokemon heldpoke);
+		bool Swap(KeyValuePair<int, int> selected);
+		bool Withdraw(KeyValuePair<int, int> selected, IPokemon heldpoke);
 		void selectPokemon(int index);
 	}
 	#endregion
@@ -259,7 +271,7 @@ namespace PokemonEssentials.Interface.Screen
 		void update();
 	}
 
-	public interface IPokemonBoxIcon //: IIconSprite 
+	public interface IPokemonBoxIcon //: IIconSprite
 	{
 		IPokemonBoxIcon initialize(IPokemon pokemon, IViewport viewport = null);
 
@@ -322,7 +334,7 @@ namespace PokemonEssentials.Interface.Screen
 		//void update();
 	}
 
-	public interface IMosaicPokemonSprite //: IPokemonSprite 
+	public interface IMosaicPokemonSprite //: IPokemonSprite
 	{
 		//void initialize(*args);
 
@@ -362,7 +374,7 @@ namespace PokemonEssentials.Interface.Screen
 
 		void getBoxBitmap();
 
-		IPokemonBoxSprite initialize(IPokemonStorage storage, int boxnumber, IViewport viewport = null);
+		IPokemonBoxSprite initialize(IPCPokemonStorage storage, int boxnumber, IViewport viewport = null);
 
 		//void dispose();
 

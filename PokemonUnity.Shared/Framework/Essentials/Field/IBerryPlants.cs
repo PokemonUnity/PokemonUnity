@@ -11,20 +11,20 @@ using PokemonEssentials.Interface.PokeBattle;
 namespace PokemonEssentials.Interface.Field
 {
 	/// <summary>
-	/// Used to track individual entity status for berry plants. 
+	/// Used to track individual entity status for berry plants.
 	/// This is what gets saved and loaded to game memory
 	/// </summary>
 	//ToDo: Berry Field Data (0x18 per tree, 36 trees)
-	public interface IBerryMetadata 
+	public interface IBerryMetadata
 	{
 		// Hours/stage, drying/hour, min yield, max yield
 	}
 
 	public interface ITempMetadataBerryPlants {
-		int berryPlantData				{ get; }
+		IDictionary<int, BerryData> berryPlantData				{ get; }
 
-		//int[] pbGetBerryPlantData(Items item);
-		BerryData pbGetBerryPlantData(Items item);
+		//int[] GetBerryPlantData(Items item);
+		BerryData GetBerryPlantData(Items item);
 	}
 
 	public interface IBerryPlantMoistureSprite : IDisposable {
@@ -56,14 +56,14 @@ namespace PokemonEssentials.Interface.Field
 
 		BerryData updatePlantDetails(BerryData berryData);
 
-		void setGraphic(BerryData berryData, bool fullcheck = false);    
+		void setGraphic(BerryData berryData, bool fullcheck = false);
 	}
 
 	public interface IGameBerryPlants
 	{
-		void pbBerryPlant();
+		void BerryPlant();
 
-		void pbPickBerry(Items berry, int qty = 1);
+		void PickBerry(Items berry, int qty = 1);
 
 		/// <summary>
 		/// Fires whenever a spriteset is created.

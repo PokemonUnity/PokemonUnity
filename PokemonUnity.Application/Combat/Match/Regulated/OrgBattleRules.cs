@@ -6,19 +6,19 @@ using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonUnity.Utility;
+using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
-using PokemonEssentials.Interface;
 
 namespace PokemonUnity
 {
 	public partial class Game : PokemonEssentials.Interface.Battle.IGameOrgBattleRules
 	{
-		public int pbBaseStatTotal(Pokemons species)
+		public int BaseStatTotal(Pokemons species)
 		{
-			//dexdata=pbOpenDexData();
-			//pbDexDataOffset(dexdata,species,10);
+			//dexdata=OpenDexData();
+			//DexDataOffset(dexdata,species,10);
 			//int bst=dexdata.fgetb;
 			int bst = Kernal.PokemonData[species].BaseStatsHP; //dexdata.fgetb;
 			bst += Kernal.PokemonData[species].BaseStatsATK; //dexdata.fgetb;
@@ -30,15 +30,15 @@ namespace PokemonUnity
 			return bst;
 		}
 
-		public int pbBalancedLevelFromBST(Pokemons species)
+		public int BalancedLevelFromBST(Pokemons species)
 		{
-			return (int)Math.Round(113 - (pbBaseStatTotal(species) * 0.072));
+			return (int)Math.Round(113 - (BaseStatTotal(species) * 0.072));
 		}
 
-		public bool pbTooTall(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon, double maxHeightInMeters)
+		public bool TooTall(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon, double maxHeightInMeters)
 		{
-			//dexdata=pbOpenDexData();
-			//pbDexDataOffset(dexdata,pokemon is Numeric ? pokemon : pokemon.Species,33);
+			//dexdata=OpenDexData();
+			//DexDataOffset(dexdata,pokemon is Numeric ? pokemon : pokemon.Species,33);
 			float height = Kernal.PokemonData[pokemon.Species].Height; //dexdata.fgetw;
 			float weight = Kernal.PokemonData[pokemon.Species].Weight; //dexdata.fgetw;
 			maxHeightInMeters = Math.Round(maxHeightInMeters * 10);
@@ -46,10 +46,10 @@ namespace PokemonUnity
 			return height > maxHeightInMeters;
 		}
 
-		public bool pbTooHeavy(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon, double maxWeightInKg)
+		public bool TooHeavy(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon, double maxWeightInKg)
 		{
-			//dexdata=pbOpenDexData();
-			//pbDexDataOffset(dexdata,pokemon is Numeric ? pokemon : pokemon.Species,33);
+			//dexdata=OpenDexData();
+			//DexDataOffset(dexdata,pokemon is Numeric ? pokemon : pokemon.Species,33);
 			float height = Kernal.PokemonData[pokemon.Species].Height; //dexdata.fgetw;
 			float weight = Kernal.PokemonData[pokemon.Species].Weight; //dexdata.fgetw;
 			maxWeightInKg = Math.Round(maxWeightInKg * 10f);
@@ -61,7 +61,7 @@ namespace PokemonUnity
 		// ##########################################
 		//  Stadium Cups
 		// ##########################################
-		public IPokemonChallengeRules pbPikaCupRules(bool @double)
+		public IPokemonChallengeRules PikaCupRules(bool @double)
 		{
 			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
@@ -75,7 +75,7 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public IPokemonChallengeRules pbPokeCupRules(bool @double)
+		public IPokemonChallengeRules PokeCupRules(bool @double)
 		{
 			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
@@ -89,7 +89,7 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public IPokemonChallengeRules pbPrimeCupRules(bool @double)
+		public IPokemonChallengeRules PrimeCupRules(bool @double)
 		{
 			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.setLevelAdjustment(new OpenLevelAdjustment(Core.MAXIMUMLEVEL));
@@ -102,7 +102,7 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public IPokemonChallengeRules pbFancyCupRules(bool @double)
+		public IPokemonChallengeRules FancyCupRules(bool @double)
 		{
 			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
@@ -120,7 +120,7 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public IPokemonChallengeRules pbLittleCupRules(bool @double)
+		public IPokemonChallengeRules LittleCupRules(bool @double)
 		{
 			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
@@ -138,7 +138,7 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public IPokemonChallengeRules pbStrictLittleCupRules(bool @double)
+		public IPokemonChallengeRules StrictLittleCupRules(bool @double)
 		{
 			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			ret.addPokemonRule(new StandardRestriction());
@@ -160,7 +160,7 @@ namespace PokemonUnity
 		// ##########################################
 		//  Battle Frontier Rules
 		// ##########################################
-		public IPokemonChallengeRules pbBattleTowerRules(bool @double, bool openlevel)
+		public IPokemonChallengeRules BattleTowerRules(bool @double, bool openlevel)
 		{
 			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			if (openlevel)
@@ -179,17 +179,17 @@ namespace PokemonUnity
 			return ret;
 		}
 
-		public IPokemonChallengeRules pbBattlePalaceRules(bool @double, bool openlevel)
+		public IPokemonChallengeRules BattlePalaceRules(bool @double, bool openlevel)
 		{
-			return pbBattleTowerRules(@double, openlevel).setBattleType(new BattlePalace());
+			return BattleTowerRules(@double, openlevel).setBattleType(new BattlePalace());
 		}
 
-		public IPokemonChallengeRules pbBattleArenaRules(bool openlevel)
+		public IPokemonChallengeRules BattleArenaRules(bool openlevel)
 		{
-			return pbBattleTowerRules(false, openlevel).setBattleType(new BattleArena());
+			return BattleTowerRules(false, openlevel).setBattleType(new BattleArena());
 		}
 
-		public IPokemonChallengeRules pbBattleFactoryRules(bool @double, bool openlevel)
+		public IPokemonChallengeRules BattleFactoryRules(bool @double, bool openlevel)
 		{
 			IPokemonChallengeRules ret = new PokemonChallengeRules();
 			if (openlevel)
@@ -515,7 +515,7 @@ namespace PokemonUnity
 			int[] ret = new int[6];
 			for (int i = 0; i < thisTeam.Length; i++)
 			{
-				ret[i] = (Game.GameData as IGameOrgBattleRules).pbBalancedLevelFromBST(thisTeam[i].Species);
+				ret[i] = (Game.GameData as IGameOrgBattleRules).BalancedLevelFromBST(thisTeam[i].Species);
 			}
 			return ret;
 		}
@@ -702,7 +702,7 @@ namespace PokemonUnity
 		private Pokemons[] specieslist;
 		public SpeciesRestriction(params Pokemons[] specieslist)
 		{
-			this.specieslist = specieslist;
+			this.specieslist = (Pokemons[])specieslist.Clone();
 		}
 
 		public bool isSpecies(Pokemons species, Pokemons[] specieslist)
@@ -730,7 +730,7 @@ namespace PokemonUnity
 		private Pokemons[] specieslist;
 		public BannedSpeciesRestriction(params Pokemons[] specieslist)
 		{
-			this.specieslist = specieslist;
+			this.specieslist = (Pokemons[])specieslist.Clone();
 		}
 
 		public bool isSpecies(Pokemons species, Pokemons[] specieslist)
@@ -758,7 +758,7 @@ namespace PokemonUnity
 		private Items[] specieslist;
 		public BannedItemRestriction(params Items[] specieslist)
 		{
-			this.specieslist = specieslist;
+			this.specieslist = (Items[])specieslist.Clone();
 		}
 
 		//public bool isSpecies (Pokemons species,Pokemons[] specieslist) {
@@ -789,7 +789,7 @@ namespace PokemonUnity
 		private Pokemons[] specieslist;
 		public RestrictedSpeciesRestriction(int maxValue, params Pokemons[] specieslist)
 		{
-			this.specieslist = specieslist;
+			this.specieslist = (Pokemons[])specieslist.Clone();
 			this.maxValue = maxValue;
 		}
 
@@ -802,10 +802,10 @@ namespace PokemonUnity
 			return false;
 		}
 
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
 			int count = 0;
-			for (int i = 0; i < team.Length; i++)
+			for (int i = 0; i < team.Count; i++)
 			{
 				if (isSpecies(team[i].Species, @specieslist))
 				{
@@ -837,15 +837,15 @@ namespace PokemonUnity
 		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
 		{
 			if (pokemon == null || pokemon.isEgg) return false;
-			//dexdata=pbOpenDexData();
-			//pbDexDataOffset(dexdata,pokemon.Species,10);
+			//dexdata=OpenDexData();
+			//DexDataOffset(dexdata,pokemon.Species,10);
 			int basestatsum = Kernal.PokemonData[pokemon.Species].BaseStatsHP; //dexdata.fgetb;
 			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsATK; //dexdata.fgetb;
 			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsDEF; //dexdata.fgetb;
 			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsSPE; //dexdata.fgetb;
 			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsSPD; //dexdata.fgetb;
 			basestatsum += Kernal.PokemonData[pokemon.Species].BaseStatsSPA; //dexdata.fgetb;
-			//pbDexDataOffset(dexdata,pokemon.Species,2);
+			//DexDataOffset(dexdata,pokemon.Species,2);
 			Abilities ability1 = Kernal.PokemonData[pokemon.Species].Ability[0]; //dexdata.fgetw;
 			Abilities ability2 = Kernal.PokemonData[pokemon.Species].Ability[1]; //dexdata.fgetw;
 			//dexdata.close();
@@ -918,7 +918,7 @@ namespace PokemonUnity
 
 		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
 		{
-			return !(Game.GameData as IGameOrgBattleRules).pbTooTall(pokemon, @level);
+			return !(Game.GameData as IGameOrgBattleRules).TooTall(pokemon, @level);
 		}
 	}
 
@@ -932,7 +932,7 @@ namespace PokemonUnity
 
 		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
 		{
-			return !(Game.GameData as IGameOrgBattleRules).pbTooHeavy(pokemon, @level);
+			return !(Game.GameData as IGameOrgBattleRules).TooHeavy(pokemon, @level);
 		}
 	}
 
@@ -974,10 +974,10 @@ namespace PokemonUnity
 			this.level = level;
 		}
 
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
 			int totalLevel = 0;
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
 				if (team[i].Species == 0) continue;
 				totalLevel += team[i].Level;
@@ -996,10 +996,10 @@ namespace PokemonUnity
 
 	public partial class SameSpeciesClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ISameSpeciesClause
 	{
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
 			Pokemons species = 0;
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
 				if (team[i].Species == 0) continue;
 				if (species == 0)
@@ -1025,12 +1025,12 @@ namespace PokemonUnity
 
 	public partial class SpeciesClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.ISpeciesClause
 	{
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
 				if (team[i].Species == 0) continue;
-				for (int j = i + 1; j < team.Length; j++)
+				for (int j = i + 1; j < team.Count; j++)
 				{
 					if (team[i].Species == team[j].Species) return false;
 				}
@@ -1055,7 +1055,7 @@ namespace PokemonUnity
 		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
 		{
 			//baby=babySpeciesData[pokemon.Species] != null ? babySpeciesData[pokemon.Species] :
-			//   (babySpeciesData[pokemon.Species]=pbGetBabySpecies(pokemon.Species));
+			//   (babySpeciesData[pokemon.Species]=GetBabySpecies(pokemon.Species));
 			//return baby==pokemon.Species;
 			return Kernal.PokemonData[pokemon.Species].IsBaby;
 		}
@@ -1066,11 +1066,11 @@ namespace PokemonUnity
 		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
 		{
 			//baby=$babySpeciesData[pokemon.Species] ? $babySpeciesData[pokemon.Species] :
-			//   ($babySpeciesData[pokemon.Species]=pbGetBabySpecies(pokemon.Species))
+			//   ($babySpeciesData[pokemon.Species]=GetBabySpecies(pokemon.Species))
 			//if (baby!=pokemon.Species) return false;
 			if (!Kernal.PokemonData[pokemon.Species].IsBaby) return false;
 			//bool canEvolve=(canEvolve[pokemon.Species]!=null) ? canEvolve[pokemon.Species] :
-			//   (canEvolve[pokemon.Species]=(pbGetEvolvedFormData(pokemon.Species).Length!=0));
+			//   (canEvolve[pokemon.Species]=(GetEvolvedFormData(pokemon.Species).Length!=0));
 			bool canEvolve = Kernal.PokemonEvolutionsData[pokemon.Species].Length != 0;
 			if (!canEvolve) return false;
 			return true;
@@ -1097,12 +1097,12 @@ namespace PokemonUnity
 
 	public partial class ItemClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.IItemClause
 	{
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
 				if (!team[i].hasItem()) continue;
-				for (int j = i + 1; j < team.Length; j++)
+				for (int j = i + 1; j < team.Count; j++)
 				{
 					if (team[i].Item == team[j].Item) return false;
 				}
@@ -1141,7 +1141,7 @@ namespace PokemonUnity
 			{
 				return false;
 			}
-			//foreach (var i in @@namesMaxValue..PBSpecies.maxValue) {
+			//foreach (var i in @@namesMaxValue..Species.maxValue) {
 			foreach (Pokemons i in Kernal.PokemonData.Keys)
 			{
 				if (i != species)
@@ -1160,11 +1160,11 @@ namespace PokemonUnity
 	/// </summary>
 	public partial class NicknameClause : IBattleTeamRestriction, PokemonEssentials.Interface.Battle.INicknameClause
 	{
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			for (int i = 0; i < team.Length - 1; i++)
+			for (int i = 0; i < team.Count - 1; i++)
 			{
-				for (int j = i + 1; j < team.Length; j++)
+				for (int j = i + 1; j < team.Count; j++)
 				{
 					if (team[i].Name == team[j].Name) return false;
 					if (!NicknameChecker.check(team[i].Name, team[i].Species)) return false;
@@ -1272,11 +1272,11 @@ namespace PokemonUnity
 		/// </summary>
 		/// <returns></returns>
 		public int suggestedLevel
-		{ get {  
+		{ get {
 			int minLevel = 1;
 			int maxLevel = Core.MAXIMUMLEVEL;
 			int num = this.suggestedNumber;
-			foreach (var rule in @pokemonRules)
+			foreach (IBattleRestriction rule in @pokemonRules)
 			{
 				if (rule is IMinimumLevelRestriction r1)
 				{
@@ -1288,7 +1288,7 @@ namespace PokemonUnity
 				}
 			}
 			int totalLevel = maxLevel * num;
-			foreach (var rule in @subsetRules)
+			foreach (IBattleTeamRestriction rule in @subsetRules)
 			{
 				if (rule is ITotalLevelRestriction r)
 				{
@@ -1325,7 +1325,7 @@ namespace PokemonUnity
 
 		/// <summary>
 		///  This rule checks
-		///  - the entire team to determine whether a subset of the team meets the rule, or 
+		///  - the entire team to determine whether a subset of the team meets the rule, or
 		///  - a list of Pokemon whose length is equal to the suggested number. For an
 		///    entire team, the condition must hold for at least one possible subset of
 		///    the team, but not necessarily for the entire team.
@@ -1396,13 +1396,13 @@ namespace PokemonUnity
 			return true;
 		}
 
-		public bool hasRegistrableTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] list)
+		public bool hasRegistrableTeam(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> list)
 		{
-			if (list == null || list.Length < this.minTeamLength) return false;
+			if (list == null || list.Count < this.minTeamLength) return false;
 			//Array.ForEach<PokemonEssentials.Interface.PokeBattle.IPokemon[]>( //PokemonEssentials.Interface.PokeBattle.IPokemon[] |comb|
-			//	(Game.GameData as IGameUtility).pbEachCombination(list, this.maxTeamLength), (comb) => {
-			foreach ( PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in
-				(Game.GameData as IGameUtility).pbEachCombination(list, this.maxTeamLength)) {
+			//	(Game.GameData as IGameUtility).EachCombination(list, this.maxTeamLength), (comb) => {
+			foreach (PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in
+				(Game.GameData as IGameUtility).EachCombination(list, this.maxTeamLength)) {
 				if (canRegisterTeam(comb)) return true;
 			};
 			return false;
@@ -1416,25 +1416,25 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="team"></param>
 		/// <returns></returns>
-		public bool canRegisterTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool canRegisterTeam(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			if (team == null || team.Length < this.minTeamLength)
+			if (team == null || team.Count < this.minTeamLength)
 			{
 				return false;
 			}
-			if (team.Length > this.maxTeamLength)
+			if (team.Count > this.maxTeamLength)
 			{
 				return false;
 			}
-			int teamNumber = Math.Min(this.maxLength, team.Length);
-			foreach (var pokemon in team)
+			int teamNumber = Math.Min(this.maxLength, team.Count);
+			foreach (IPokemon pokemon in team)
 			{
 				if (!isPokemonValid(pokemon))
 				{
 					return false;
 				}
 			}
-			foreach (var rule in @teamRules)
+			foreach (IBattleTeamRestriction rule in @teamRules)
 			{
 				if (!rule.isValid(team))
 				{
@@ -1443,16 +1443,17 @@ namespace PokemonUnity
 			}
 			if (@subsetRules.Count > 0)
 			{
-				//pbEachCombination(team,teamNumber){|comb|
-				//   bool isValid=true;
-				//   foreach (var rule in @subsetRules) {
-				//     if (!rule.isValid(comb)) {
-				//       isValid=false;
-				//       break;
-				//     }
-				//   }
-				//   if (isValid) return true;
-				//}
+				//EachCombination(team,teamNumber,comb => {
+				foreach (PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in (Game.GameData as IGameUtility).EachCombination(team, teamNumber)) {
+					bool isValid=true;
+					foreach (var rule in @subsetRules) {
+						if (!rule.isValid(comb)) {
+							isValid=false;
+							break;
+						}
+					}
+				   if (isValid) return true;
+				}
 				return false;
 			}
 			return true;
@@ -1465,13 +1466,13 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="team"></param>
 		/// <returns></returns>
-		public bool hasValidTeam(PokemonEssentials.Interface.PokeBattle.IPokemon[] team)
+		public bool hasValidTeam(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team)
 		{
-			if (team == null || team.Length < this.minTeamLength)
+			if (team == null || team.Count < this.minTeamLength)
 			{
 				return false;
 			}
-			int teamNumber = Math.Min(this.maxLength, team.Length);
+			int teamNumber = Math.Min(this.maxLength, team.Count);
 			IList<PokemonEssentials.Interface.PokeBattle.IPokemon> validPokemon = new List<PokemonEssentials.Interface.PokeBattle.IPokemon>();
 			foreach (var pokemon in team)
 			{
@@ -1486,11 +1487,12 @@ namespace PokemonUnity
 			}
 			if (@teamRules.Count > 0)
 			{
-				//pbEachCombination(team,teamNumber){|comb|
-				//   if (isValid(comb)) {
-				//     return true;
-				//   }
-				//}
+				//EachCombination(team,teamNumber,comb=>{
+				foreach (PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in (Game.GameData as IGameUtility).EachCombination(team, teamNumber)) {
+					if (isValid(comb)) {
+						return true;
+					}
+				};
 				return false;
 			}
 			return true;
@@ -1504,15 +1506,15 @@ namespace PokemonUnity
 		/// <param name="team"></param>
 		/// <param name="error"></param>
 		/// <returns></returns>
-		public bool isValid(PokemonEssentials.Interface.PokeBattle.IPokemon[] team, IList<string> error = null)
+		public bool isValid(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> team, IList<string> error = null)
 		{
-			if (team.Length < this.minLength)
+			if (team.Count < this.minLength)
 			{
 				if (error != null && this.minLength == 1) error.Add(Game._INTL("Choose a Pokémon."));
 				if (error != null && this.minLength > 1) error.Add(Game._INTL("{1} Pokémon are needed.", this.minLength));
 				return false;
 			}
-			else if (team.Length > this.maxLength)
+			else if (team.Count > this.maxLength)
 			{
 				if (error != null) error.Add(Game._INTL("No more than {1} Pokémon may enter.", this.maxLength));
 				return false;
@@ -1554,7 +1556,7 @@ namespace PokemonUnity
 
 	public partial class BattleType : IBattleType
 	{
-		public virtual PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		public virtual PokemonEssentials.Interface.PokeBattle.IBattle CreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
 			return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.Battle(scene,
 				trainer1[0].party, trainer2[0].party, trainer1, trainer2);
@@ -1563,7 +1565,7 @@ namespace PokemonUnity
 
 	public partial class BattleTower : BattleType, PokemonEssentials.Interface.Battle.IBattleTower
 	{
-		public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		public override PokemonEssentials.Interface.PokeBattle.IBattle CreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
 			//ToDo: Uncomment... After adding recorded battles classes
 			//return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattle(scene,
@@ -1574,7 +1576,7 @@ namespace PokemonUnity
 
 	public partial class BattlePalace : BattleType, PokemonEssentials.Interface.Battle.IBattlePalace
 	{
-		public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		public override PokemonEssentials.Interface.PokeBattle.IBattle CreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
 			//ToDo: Uncomment... After adding recorded battles classes
 			//return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattlePalace(scene,
@@ -1585,7 +1587,7 @@ namespace PokemonUnity
 
 	public partial class BattleArena : BattleType, PokemonEssentials.Interface.Battle.IBattleArena
 	{
-		public override PokemonEssentials.Interface.PokeBattle.IBattle pbCreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
+		public override PokemonEssentials.Interface.PokeBattle.IBattle CreateBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
 			//ToDo: Uncomment... After adding recorded battles classes
 			//return (PokemonEssentials.Interface.PokeBattle.IBattle)new Combat.PokeBattle_RecordedBattleArena(scene,
@@ -1617,7 +1619,7 @@ namespace PokemonUnity
 	{
 		public override void setRule(PokemonEssentials.Interface.PokeBattle.IBattle battle)
 		{
-			battle.doublebattle = battle.pbDoubleBattleAllowed();
+			battle.doublebattle = battle.DoubleBattleAllowed();
 		}
 	}
 
@@ -1815,7 +1817,7 @@ namespace PokemonUnity
 
 		public PokemonEssentials.Interface.PokeBattle.IBattle createBattle(IPokeBattle_Scene scene, ITrainer[] trainer1, ITrainer[] trainer2)
 		{
-			PokemonEssentials.Interface.PokeBattle.IBattle battle = @battletype.pbCreateBattle(scene, trainer1, trainer2);
+			PokemonEssentials.Interface.PokeBattle.IBattle battle = @battletype.CreateBattle(scene, trainer1, trainer2);
 			foreach (var p in @battlerules)
 			{
 				p.setRule(battle);

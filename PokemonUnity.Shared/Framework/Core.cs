@@ -6,9 +6,9 @@ namespace PokemonUnity
 	/// <summary>
 	/// Static and unchanging rules for game to function off of.<para></para>
 	/// <see cref="Kernal"/> is a singleton
-	/// that persist throughout the game and inbetween scene levels.
+	/// that persist throughout the game and in-between scene levels.
 	/// <see cref="Core"/> is not an <see cref="object"/>
-	/// but a series of const variables that will be used as rules 
+	/// but a series of const variables that will be used as rules
 	/// for the game mechanics or structure.
 	/// </summary>
 	public static class Core
@@ -36,9 +36,9 @@ namespace PokemonUnity
 
 		public const sbyte pokemonGeneration = (sbyte)Generation.All;
 
-#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
-		public static int pokemonGenerationCount { 
-			get { 
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected
+		public static int pokemonGenerationCount {
+			get {
 				int MaxPoke = 0;
 				int Gen1 = 151;
 				int Gen2 = 251;
@@ -79,35 +79,44 @@ namespace PokemonUnity
 				#endregion
 				return MaxPoke; }
 		}
-#pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
+#pragma warning restore 0162 //Warning CS0162  Unreachable code detected
 		#endregion
 
-		#region Variables
+		#region Logging
+		private static IDebugger _logger;
+		public static IDebugger Logger { get { return _logger; } set { _logger = value; } }
+		#endregion
+
+		#region Pokemon RNG
 		private static object _locker = new object();
 		/// <summary>
-		/// Constantly revolving random, that won't repeat the same seed number twice, 
+		/// Constantly revolving random, that won't repeat the same seed number twice,
 		/// until it cycles thru all possible seed values
 		/// </summary>
-		public static Random Rand { get { return new Random(Seed()); } }
+		public static Random Rand { get {
+				SetSeed();
+				Logger?.Log("Random Number Generated Seed: " + Seed);
+				return new Random(Seed); } }
 		//public static System.Collections.Generic.KeyValuePair<UInt16, Random> Rand { get { Random r = new Random(Seed()); return new System.Collections.Generic.KeyValuePair<UInt16, Random>(seed.Value, r); } }
 		/// <summary>
 		/// Constantly revolving random, that uses the same seed number that was previously used
 		/// </summary>
-		public static Random RandWithSetSeed { get { return new Random(Seed(true)); } }
+		public static Random RandWithSetSeed { get { return new Random(SetSeed(true)); } }
+		public static System.UInt16 Seed { get { if (seed == null) SetSeed(); return seed.Value; } internal set { seed = value; } }
 		private static System.UInt16? seed; // = 0x0000;
-		public static UInt16 Seed(bool useFixedSeed = false)
+		public static UInt16 SetSeed(bool useFixedSeed = false)
 		{
 			lock (_locker) //(Rand)
 			{
 				if (!seed.HasValue) {
 					//seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
-					seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue); 
+					seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue);
 					seed ^= (UInt16)System.DateTime.Now.Ticks;
 					seed &= UInt16.MaxValue;
 				}
-				if (!useFixedSeed) { 
+				if (!useFixedSeed) {
 					seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
-				} 
+				}
 				return seed.Value;
 			}
 		}
@@ -352,7 +361,7 @@ namespace PokemonUnity
 		/// </summary>
 		public const int STORAGEBOXES = 24;
 		#endregion
-		
+
 		#region Pokedex
 		/// <summary>
 		/// Whether the Pokédex list shown is the one for the player's current region

@@ -129,7 +129,7 @@ namespace PokemonUnity
 						uniEncoding.GetChars(
 						readText, 0, readText.Length));
 				}
-				// Catch the IOException generated if the 
+				// Catch the IOException generated if the
 				// specified part of the file is locked.
 				//catch (IOException e)
 				//{
@@ -201,14 +201,14 @@ namespace PokemonUnity
 		{
 			//MoveData = new Dictionary<Moves, Attack.Data.MoveData>();
 			//MoveMetaData = new Dictionary<Moves, Attack.Data.MetaData>();
-			//MoveEffectData = new Dictionary<Attack.Data.Effects, Combat.Move>(); //Below
+			//MoveEffectData = new Dictionary<Attack.Effects, Combat.Move>(); //Below
 			if (sql) //using (con)
 				return GetMovesFromSQL(con);
 			else return false;
 		}
 		public static bool InitMoveEffects(bool sql = false)
 		{
-			//MoveEffectData = new Dictionary<Attack.Data.Effects, Combat.Move>();
+			//MoveEffectData = new Dictionary<Attack.Effects, Combat.Move>();
 			if (sql) //using (con)
 				return false;
 			else return GetMoveEffectFromXML();
@@ -246,7 +246,7 @@ namespace PokemonUnity
 		public static bool InitEncounters(bool sql = true)
 		{
 			//MethodData = new Dictionary<Method, int[]>();
-			//EncounterData = new Dictionary<int, IEncounterData>();
+			//EncounterData = new Dictionary<int, IMapEncounterMetadata>();
 			if (sql) //using (con)
 				return GetEncountersFromSQL(con);
 			else return false;
@@ -389,7 +389,7 @@ namespace PokemonUnity
 		{
 			try
 			{
-				foreach (Attack.Data.Effects effect in Enum.GetValues(typeof(Attack.Data.Effects)))
+				foreach (Attack.Effects effect in Enum.GetValues(typeof(Attack.Effects)))
 				{
 					switch (effect)
 					{
@@ -1562,7 +1562,7 @@ namespace PokemonUnity
 							break;
 						case Effects.x711:
 							//126	No effect.	Shadow Blast, Shadow Blitz, Shadow Break, Shadow Rave, Shadow Rush, Shadow Wave
-							//Effect x711 is only used by Shadow Rush... the others just deal regular damage, with no additional effects 
+							//Effect x711 is only used by Shadow Rush... the others just deal regular damage, with no additional effects
 							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_126());
 							break;
 						case Effects.x712:
@@ -2118,6 +2118,7 @@ namespace PokemonUnity
 			}
 		}*/
 		#endregion
+
 		#region From SQL
 		static bool GetPokemonsFromSQL(IDbConnection con)
 		{
@@ -2715,8 +2716,8 @@ namespace PokemonUnity
 				IDbCommand stmt = con.CreateCommand();
 
 				#region DataReader
-				stmt.CommandText = "select * from pokemon_items group by pokemon_id, item_id";
-				//	@"select *
+				stmt.CommandText = "select *, group_concat(DISTINCT item_id) as item_group from pokemon_items group by pokemon_id, rarity order by pokemon_id asc, rarity desc";
+				//	@"select *, group_concat(DISTINCT rarity) as rarity_group
 				//from pokemon_items
 				//group by pokemon_id, item_id";
 				IDataReader reader = stmt.ExecuteReader();
@@ -2731,9 +2732,11 @@ namespace PokemonUnity
 						//		new List<Monster.Data.PokemonWildItems>());
 						p[(Pokemons)int.Parse((string)reader["pokemon_id"].ToString())].Add(
 							new PokemonUnity.Monster.Data.PokemonWildItems(
-								itemId: (Items)int.Parse((string)reader["item_id"].ToString())
+								pkmn: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
+								//itemId: (Items)int.Parse((string)reader["item_id"].ToString())
 								,generation: int.Parse((string)reader["version_id"].ToString())
 								,rarity: int.Parse((string)reader["rarity"].ToString())
+								,itemId: ((string)reader["item_group"].ToString()).Split(',').Select(i => (Items)int.Parse(i)).ToArray()
 							)
 						);
 					}
@@ -3367,7 +3370,7 @@ namespace PokemonUnity
 					select id, version_group_id, rarity, encounter_method_id,
 					case when (slot is not null) AND version_group_id = 15 then slot + 1 else slot end as slot
 					from encounter_slots
-				) 
+				)
 				as s on s.id = e.encounter_slot_id
 				--left join encounter_condition_value_map_view as i on e.id = i.encounter_id;
 				--left join (
@@ -3409,7 +3412,7 @@ namespace PokemonUnity
 									,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
 									,slotId: int.Parse((string)reader["slot"].ToString())
 									//,pokemon: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
-									,pokemon: reader["pokemon_group"].ToString().Split(',').Select(x => (Pokemons)int.Parse(x)).ToArray()
+									,pokemon: reader["pokemon_group"].ToString().Split(',').Select(x => (Pokemons)int.Parse(x)).ToArray() //ToDo: foreach pokemon in group, make one encounter?
 									,conditions: reader["encounter_condition_value_group"].ToString().Split(',').Select(x => (ConditionValue)int.Parse(x)).ToArray()
 									,generation: int.Parse((string)reader["generation_id"].ToString())
 									,minLevel: int.Parse((string)reader["min_level"].ToString())
@@ -3440,7 +3443,7 @@ namespace PokemonUnity
 					reader.Dispose();
 					#endregion
 					//EncounterData.Add(Method.NONE, new List<Encounter>() { }.ToArray());
-					foreach (var en in e)
+					foreach (KeyValuePair<Method, List<int>> en in e)
 					{
 						Kernal.MethodData.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), en.Value.ToArray());
 					}

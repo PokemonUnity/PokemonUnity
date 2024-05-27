@@ -182,47 +182,47 @@ namespace PokemonEssentials.Interface
 			/// <param name="move"></param>
 			/// <returns></returns>
 			/// <seealso cref="HiddenMoves"/>
-			bool pbIsHiddenMove(Moves move);
+			bool IsHiddenMove(Moves move);
 
-			int pbGetPrice(Items item);
+			int GetPrice(Items item);
 
-			ItemPockets? pbGetPocket(Items item);
+			ItemPockets? GetPocket(Items item);
 
 			/// <summary>
 			/// Important items can't be sold, given to hold, or tossed.
 			/// </summary>
 			/// <param name="item"></param>
 			/// <returns></returns>
-			bool pbIsImportantItem(Items item);
+			bool IsImportantItem(Items item);
 
-			bool pbIsMachine(Items item);
+			bool IsMachine(Items item);
 
-			bool pbIsTechnicalMachine(Items item);
+			bool IsTechnicalMachine(Items item);
 
-			bool pbIsHiddenMachine(Items item);
+			bool IsHiddenMachine(Items item);
 
-			bool pbIsMail(Items item);
+			bool IsMail(Items item);
 
-			bool pbIsSnagBall(Items item);
+			bool IsSnagBall(Items item);
 
-			bool pbIsPokeBall(Items item);
+			bool IsPokeBall(Items item);
 
-			bool pbIsBerry(Items item);
+			bool IsBerry(Items item);
 
-			bool pbIsKeyItem(Items item);
+			bool IsKeyItem(Items item);
 
-			bool pbIsGem(Items item);
+			bool IsGem(Items item);
 
-			bool pbIsEvolutionStone(Items item);
+			bool IsEvolutionStone(Items item);
 
 			/// <summary>
 			/// Does NOT include Red Orb/Blue Orb
 			/// </summary>
 			/// <param name="item"></param>
 			/// <returns></returns>
-			bool pbIsMegaStone(Items item);
+			bool IsMegaStone(Items item);
 
-			bool pbIsMulch(Items item);
+			bool IsMulch(Items item);
 		}
 
 		/// <summary>
@@ -230,7 +230,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		public interface IGameItemEffect
 		{
-			ItemUseResults pbRepel(Items item, int steps);
+			ItemUseResults Repel(Items item, int steps);
 		}
 
 		/// <summary>
@@ -238,49 +238,49 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		public interface IGameItem 
 		{
-			void pbTopRightWindow(string text);
+			void TopRightWindow(string text);
 
-			void pbChangeLevel(IPokemon pokemon, int newlevel, PokemonEssentials.Interface.Screen.IScene scene);
+			void ChangeLevel(IPokemon pokemon, int newlevel, PokemonEssentials.Interface.Screen.IScene scene);
 
-			int pbItemRestoreHP(IPokemon pokemon, int restorehp);
+			int ItemRestoreHP(IPokemon pokemon, int restorehp);
 
-			bool pbHPItem(IPokemon pokemon, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
+			bool HPItem(IPokemon pokemon, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
 
-			bool pbBattleHPItem(IPokemon pokemon, IBattler battler, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
+			bool BattleHPItem(IPokemon pokemon, IBattler battler, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
 
-			int pbJustRaiseEffortValues(IPokemon pokemon, PokemonUnity.Monster.Stats ev, int evgain);
+			int JustRaiseEffortValues(IPokemon pokemon, PokemonUnity.Monster.Stats ev, int evgain);
 
-			int pbRaiseEffortValues(IPokemon pokemon, PokemonUnity.Monster.Stats ev, int evgain = 10, bool evlimit = true);
+			int RaiseEffortValues(IPokemon pokemon, PokemonUnity.Monster.Stats ev, int evgain = 10, bool evlimit = true);
 
-			bool pbRaiseHappinessAndLowerEV(IPokemon pokemon, PokemonEssentials.Interface.Screen.IScene scene, PokemonUnity.Monster.Stats ev, string[] messages);
+			bool RaiseHappinessAndLowerEV(IPokemon pokemon, PokemonEssentials.Interface.Screen.IScene scene, PokemonUnity.Monster.Stats ev, string[] messages);
 
-			int pbRestorePP(IPokemon pokemon, int move, int pp);
+			int RestorePP(IPokemon pokemon, int move, int pp);
 
-			int pbBattleRestorePP(IPokemon pokemon, IBattler battler, int move, int pp);
+			int BattleRestorePP(IPokemon pokemon, IBattler battler, int move, int pp);
 
-			bool pbBikeCheck();
+			bool BikeCheck();
 
-			IGameCharacter pbClosestHiddenItem();
+			IGameCharacter ClosestHiddenItem();
 
-			void pbUseKeyItemInField(Items item);
+			void UseKeyItemInField(Items item);
 
-			bool pbSpeciesCompatible(Pokemons species, Moves move);
+			bool SpeciesCompatible(Pokemons species, Moves move);
 
-			int pbForgetMove(IPokemon pokemon, Moves moveToLearn);
+			int ForgetMove(IPokemon pokemon, Moves moveToLearn);
 
-			bool pbLearnMove(IPokemon pokemon, Moves move, bool ignoreifknown = false, bool bymachine = false);
+			bool LearnMove(IPokemon pokemon, Moves move, bool ignoreifknown = false, bool bymachine = false);
 
-			bool pbCheckUseOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IScreen screen);
+			bool CheckUseOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IScreen screen);
 
-			bool pbConsumeItemInBattle(IBag bag, Items item);
+			bool ConsumeItemInBattle(IBag bag, Items item);
 
 			// Only called when in the party screen and having chosen an item to be used on
 			// the selected Pokémon
-			bool pbUseItemOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IPartyDisplayScreen scene);
+			bool UseItemOnPokemon(Items item, IPokemon pokemon, PokemonEssentials.Interface.Screen.IPartyDisplayScreen scene);
 
-			int pbUseItem(IBag bag, Items item, PokemonEssentials.Interface.Screen.IScene bagscene = null);
+			int UseItem(IBag bag, Items item, PokemonEssentials.Interface.Screen.IScene bagscene = null);
 
-			Items pbChooseItem(int var = 0, params Items[] args);
+			Items ChooseItem(int var = 0, params Items[] args);
 
 			/// <summary>
 			/// Shows a list of items to choose from, with the chosen item's ID being stored
@@ -290,7 +290,7 @@ namespace PokemonEssentials.Interface
 			/// <param name="variable"></param>
 			/// <param name="args"></param>
 			/// <returns></returns>
-			Items pbChooseItemFromList(string message, int variable, params Items[] args);
+			Items ChooseItemFromList(string message, int variable, params Items[] args);
 		}
 	}
 }

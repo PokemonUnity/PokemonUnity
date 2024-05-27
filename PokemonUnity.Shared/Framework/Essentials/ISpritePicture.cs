@@ -25,7 +25,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Pokémon sprite (used out of battle)
 	/// </summary>
-	public interface IPokemonSprite : ISpriteWrapper 
+	public interface IPokemonSprite : ISpriteWrapper
 	{
 		new IPokemonSprite initialize(IViewport viewport = null);
 
@@ -45,7 +45,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Pokémon sprite (used in battle)
 	/// </summary>
-	public interface IPokemonBattlerSprite //: RPG.ISprite 
+	public interface IPokemonBattlerSprite //: RPG.ISprite
 	{
 		int selected				{ get; set; }
 
@@ -84,8 +84,8 @@ namespace PokemonEssentials.Interface
 	/// </summary>
 	public interface IPokemonIconSprite : ISpriteWrapper {
 		int selected				{ get; set; }
-		int active				{ get; set; }
-		IPokemon pokemon				{ get; set; }
+		int active					{ get; set; }
+		IPokemon pokemon			{ get; set; }
 
 		IPokemonIconSprite initialize(IPokemon pokemon, IViewport viewport = null);
 
@@ -114,7 +114,7 @@ namespace PokemonEssentials.Interface
 
 		IPokemonSpeciesIconSprite initialize(Pokemons species, IViewport viewport = null);
 
-		void pbSetParams(Pokemons species, int gender, int form);
+		void SetParams(Pokemons species, int gender, int form);
 
 		//void dispose();
 
@@ -132,9 +132,9 @@ namespace PokemonEssentials.Interface
 
 		int adjustBattleSpriteY(ISprite sprite, Pokemons species, int index, int[] metrics = null);
 
-		void pbPositionPokemonSprite(ISprite sprite, float left, float top);
+		void PositionPokemonSprite(ISprite sprite, float left, float top);
 
-		void pbSpriteSetCenter(ISprite sprite, float cx, float cy);
+		void SpriteSetCenter(ISprite sprite, float cx, float cy);
 
 		bool showShadow(Pokemons species);
 	}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,33 +10,31 @@ using PokemonUnity.Combat;
 using PokemonUnity.Inventory;
 using PokemonUnity.Combat.Data;
 using PokemonUnity.Character;
-using PokemonUnity.Saving;
-using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Utility;
 
 namespace PokemonEssentials.Interface
 {
-	public interface IMoveData
-	{
-		//int function { get; set; }
-		PokemonUnity.Attack.Data.Effects Effect { get; }
-		int basedamage { get; set; }
-		Types type { get; set; }
-		int accuracy { get; set; }
-		int totalpp { get; set; }
-		int addlEffect { get; set; }
-		PokemonUnity.Attack.Data.Targets target { get; set; }
-		int priority { get; set; }
-		PokemonUnity.Attack.Data.Flag flags { get; set; }
-		PokemonUnity.Attack.Category category { get; set; }
+	//public interface IMoveData
+	//{
+	//	//int function { get; set; }
+	//	PokemonUnity.Attack.Effects Effect { get; }
+	//	int basedamage { get; set; }
+	//	Types type { get; set; }
+	//	int accuracy { get; set; }
+	//	int totalpp { get; set; }
+	//	int addlEffect { get; set; }
+	//	PokemonUnity.Attack.Targets target { get; set; }
+	//	int priority { get; set; }
+	//	PokemonUnity.Attack.Data.Flag flags { get; set; }
+	//	PokemonUnity.Attack.Category category { get; set; }
+	//
+	//	//IMoveData initializeOld(Moves moveid);
+	//	IMoveData initialize(Moves moveid);
+	//}
 
-		//IMoveData initializeOld(Moves moveid);
-		IMoveData initialize(Moves moveid);
-	}
-
-	public interface IMove
+	public interface IMove : IEquatable<IMove>, IEqualityComparer<IMove>
 	{
-		PokemonUnity.Attack.Data.Effects Effect { get; }
+		PokemonUnity.Attack.Effects Effect { get; }
 		/// <summary>
 		/// This move's ID
 		/// </summary>

@@ -1,17 +1,18 @@
-﻿using PokemonUnity.Monster;
+﻿using System;
+using PokemonUnity;
+using PokemonUnity.Monster;
 using PokemonUnity.Attack;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
-using PokemonUnity;
-using System;
+using PokemonEssentials.Interface.Battle;
 
 namespace PokemonUnity.Saving.SerializableClasses
 {
 	/// <summary>
 	/// Serializable version of Pokemon Unity's Pokemon class
 	/// </summary>
-	[System.Serializable]
-	public struct SeriPokemon
+	[Serializable]
+	public struct SeriPokemon //: IPokemonSerialized
 	{
 		#region Sample of Serialized Pokemon Profile
 		//This is an *IDEA* of what it should look like in save file...
@@ -24,7 +25,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		TPMOVE4		,
 		TPABILITY	,
 		TPGENDER	,
-		TPFORM		, 
+		TPFORM		,
 		TPSHINY		,
 		TPNATURE	,
 		TPIV		,
@@ -163,7 +164,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		//
 		//		//seriPokemon.Nature = pokemon.getNature();
 		//		seriPokemon.Nature				= (int)pokemon.Nature;
-		//		seriPokemon.IsShiny				= pokemon.IsShiny; 
+		//		seriPokemon.IsShiny				= pokemon.IsShiny;
 		//		seriPokemon.Gender				= pokemon.Gender;
 		//
 		//		//seriPokemon.PokerusStage		= pokemon.PokerusStage;
@@ -265,9 +266,9 @@ namespace PokemonUnity.Saving.SerializableClasses
 		//	PokemonEssentials.Interface.PokeBattle.IPokemon normalPokemon =
 		//		new Pokemon
 		//		(
-		//			(Pokemons)pokemon.Species, (pokemon.TrainerName == null && 
+		//			(Pokemons)pokemon.Species, (pokemon.TrainerName == null &&
 		//			pokemon.TrainerTrainerId == 0 && pokemon.TrainerSecretId == 0) ? (TrainerData?)null :
-		//			new TrainerData(pokemon.TrainerName, pokemon.TrainerIsMale, 
+		//			new TrainerData(pokemon.TrainerName, pokemon.TrainerIsMale,
 		//			tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
 		//			pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
 		//			(Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,

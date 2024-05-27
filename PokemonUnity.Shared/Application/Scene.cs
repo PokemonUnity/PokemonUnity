@@ -28,7 +28,7 @@ namespace PokemonUnity.UX
 		public PokemonEssentials.Interface.Screen.IWithdrawItemScene Bag_ItemWithdraw { get; set; }
 		public PokemonEssentials.Interface.Screen.ITossItemScene Bag_ItemToss { get; set; }
 		//public PokemonEssentials.Interface.Screen. RegionMap { get; set; }
-		//public PokemonEssentials.Interface.Screen. Phone { get; set; }
+		public PokemonEssentials.Interface.Screen.IPokemonPhoneScene Phone { get; set; }
 		public PokemonEssentials.Interface.Screen.IPokegearScene PokeGear { get; set; }
 		public PokemonEssentials.Interface.Screen.ITrainerCardScene TrainerCard { get; set; }
 		public PokemonEssentials.Interface.Screen.IPokemonStorageScene PokemonStorageScene { get; set; }
@@ -56,7 +56,7 @@ namespace PokemonUnity.UX
 		public PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics BattleSceneDebugWithoutGfx { get; set; }
 
 		public Scene() { }
-		
+
 		//public Scene(params PokemonEssentials.Interface.Screen.IScene[] scenes)
 		//{
 		//	initialize(scenes);
@@ -66,7 +66,7 @@ namespace PokemonUnity.UX
 		{
 			foreach (PokemonEssentials.Interface.Screen.IScene scene in scenes)
 			{
-				if (scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) TextEntryScene = s0;
+				if		(scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) TextEntryScene = s0;
 				else if (scene is PokemonEssentials.Interface.Screen.IIntroEventScene s1) IntroScene = s1;
 				else if (scene is PokemonEssentials.Interface.Screen.ILoadScene s2) Load = s2;
 				else if (scene is PokemonEssentials.Interface.Screen.ISaveScene s3) Save = s3;
@@ -78,6 +78,7 @@ namespace PokemonUnity.UX
 				else if (scene is PokemonEssentials.Interface.Screen.IItemStorageScene s9) Bag_ItemStore = s9;
 				else if (scene is PokemonEssentials.Interface.Screen.IWithdrawItemScene s10) Bag_ItemWithdraw = s10;
 				else if (scene is PokemonEssentials.Interface.Screen.ITossItemScene s11) Bag_ItemToss = s11;
+				else if (scene is PokemonEssentials.Interface.Screen.IPokemonPhoneScene s30) Phone = s30;
 				else if (scene is PokemonEssentials.Interface.Screen.IPokegearScene s12) PokeGear = s12;
 				else if (scene is PokemonEssentials.Interface.Screen.ITrainerCardScene s13) TrainerCard = s13;
 				else if (scene is PokemonEssentials.Interface.Screen.IPokemonStorageScene s14) PokemonStorageScene = s14;

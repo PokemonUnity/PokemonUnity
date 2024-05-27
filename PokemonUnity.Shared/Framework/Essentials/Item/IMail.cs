@@ -12,8 +12,8 @@ namespace PokemonEssentials.Interface.Item
 	/// Data structure representing mail that the Pokémon can hold
 	/// </summary>
 	public interface IMail {
-		Items item				{ get; }
-		string message			{ get; }
+		Items item				{ get; set; }
+		string message			{ get; set; }
 		string sender			{ get; }
 		int poke1				{ get; }
 		int poke2				{ get; }
@@ -33,10 +33,10 @@ namespace PokemonEssentials.Interface.Item
 
 	public interface IGameMail
 	{
-		bool pbMoveToMailbox(IPokemon pokemon);
+		bool MoveToMailbox(IPokemon pokemon);
 
-		void pbStoreMail(IPokemon pkmn, Items item, string message, IPokemon poke1 = null, IPokemon poke2 = null, IPokemon poke3 = null);
+		void StoreMail(IPokemon pkmn, Items item, string message, IPokemon poke1 = null, IPokemon poke2 = null, IPokemon poke3 = null);
 
-		void pbDisplayMail(IMail mail, string bearer = null);
+		void DisplayMail(IMail mail, string bearer = null);
 	}
 }

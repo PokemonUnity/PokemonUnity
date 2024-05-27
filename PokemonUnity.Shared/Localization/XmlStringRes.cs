@@ -15,14 +15,12 @@ namespace PokemonUnity.Localization
 		private IDictionary<string, string> stringMap;
 		private string nodeElement;
 		private string nodeAttribute;
-		private IDebugger _logger;
 
-		public XmlStringRes(IDebugger logger, string element = "STR", string attribute = "id")
+		public XmlStringRes(string element = "STR", string attribute = "id")
 		{
 			stringMap = new Dictionary<string, string>();
 			nodeElement = element;
 			nodeAttribute = attribute;
-			_logger = logger;
 		}
 
 		public bool Initialize(string fileName, int languageId = 0)
@@ -32,11 +30,11 @@ namespace PokemonUnity.Localization
 			//var fileNames = System.IO.Directory.GetFiles(_directoryPath, "*.xml", SearchOption.TopDirectoryOnly);
 			if (!System.IO.File.Exists(fileName)) return false;
 
-			_logger?.Log("Load XML to memory : {0} ({1})", fileName, languageId);
+			Core.Logger?.Log("Load XML to memory : {0} ({1})", fileName, languageId);
 			string xmlString = System.IO.File.ReadAllText(fileName);
 			XmlDocument xmlDocument = new XmlDocument();
 			xmlDocument.LoadXml(xmlString);
-			_logger?.Log("SUCCESS");
+			Core.Logger?.Log("SUCCESS");
 
 			var dublicateNames = new List<string>();
 
@@ -84,7 +82,7 @@ namespace PokemonUnity.Localization
 									//Skipping first 4 values will save processing
 									//if (node.Attributes[i].LocalName.Contains("form")) //Name vs LocalName?
 									//{
-									//	//translation.Forms[i-4] = node.Attributes[i].Value; //limits xml to only 4 set values 
+									//	//translation.Forms[i-4] = node.Attributes[i].Value; //limits xml to only 4 set values
 									//	stringMap.FieldNames[n] = node.Attributes[i].Value; n++;
 									//}
 									//stringMap[name].FieldNames[i] = node.Attributes[i].Value; //n++;
@@ -105,7 +103,7 @@ namespace PokemonUnity.Localization
 			if (dublicateNames.Count > 0)
 			{
 				//throw new Exception("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
-				_logger.LogWarning("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));
+				Core.Logger.LogWarning("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));
 			}
 
 			return true;
@@ -120,7 +118,7 @@ namespace PokemonUnity.Localization
 		{
 			if (stringMap.ContainsKey(code))
 				return stringMap[code];
-			_logger?.Log("Identifier `{0}` was not found in Localization dictionary", code);
+			Core.Logger?.Log("Identifier `{0}` was not found in Localization dictionary", code);
 			return code;
 		}
 	}

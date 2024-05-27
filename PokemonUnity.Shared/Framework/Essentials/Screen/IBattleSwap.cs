@@ -20,46 +20,53 @@ namespace PokemonEssentials.Interface.Screen
 {
 	/// <summary>
 	/// </summary>
-	public interface IBattleSwapScene : IScene 
+	public interface IBattleSwapScene : IScene
 	{
-		//  Processes the scene
-		void pbChoosePokemon(bool canCancel);
+		/// <summary>
+		/// Processes the scene
+		/// </summary>
+		/// <param name="canCancel"></param>
+		void ChoosePokemon(bool canCancel);
 
-		void pbShowCommands(string[] commands);
+		void ShowCommands(string[] commands);
 
-		bool pbConfirm(string message);
+		bool Confirm(string message);
 
-		string[] pbGetCommands(IPokemon[] list, int[] choices);
+		string[] GetCommands(IPokemon[] list, int[] choices);
 
-		void pbUpdateChoices(int[] choices);
+		void UpdateChoices(int[] choices);
 
-		void pbSwapChosen(int pkmnindex);
+		void SwapChosen(int pkmnindex);
 
-		void pbInitSwapScreen();
+		void InitSwapScreen();
 
-		void pbSwapCanceled();
+		void SwapCanceled();
 
-		void pbSummary(IPokemon[] list, int index);
+		void Summary(IPokemon[] list, int index);
 
-		//  Update the scene here, this is called once each frame
-		void pbUpdate();
+		/// <summary>
+		/// Update the scene here, this is called once each frame
+		/// </summary>
+		void Update();
 
-		//  End the scene here
-		void pbEndScene();
+		/// <summary>
+		/// End the scene here
+		/// </summary>
+		void EndScene();
 
-		void pbStartSwapScene(IPokemon currentPokemon, IPokemon newPokemon);
+		void StartSwapScene(IPokemon currentPokemon, IPokemon newPokemon);
 
-		void pbStartRentScene(IPokemon[] rentals);
+		void StartRentScene(IPokemon[] rentals);
 	}
 
 	/// <summary>
 	/// </summary>
-	public interface IBattleSwapScreen : IScreen 
+	public interface IBattleSwapScreen : IScreen
 	{
 		IBattleSwapScreen initialize(IBattleSwapScene scene);
 
-		void pbStartRent(IPokemon[] rentals);
+		IPokemon[] StartRent(IPokemon[] rentals);
 
-		bool pbStartSwap(IPokemon[] currentPokemon, IPokemon[] newPokemon);
+		bool StartSwap(IPokemon[] currentPokemon, IPokemon[] newPokemon);
 	}
 }

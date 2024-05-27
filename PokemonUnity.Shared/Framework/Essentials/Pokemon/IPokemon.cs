@@ -15,7 +15,7 @@ using PokemonEssentials.Interface.Item;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
-	public interface IPokemon
+	public interface IPokemon : ICloneable, IEquatable<IPokemon>, IEqualityComparer<IPokemon>
 	{
 		/// <summary>
 		/// Current Total HP
@@ -48,7 +48,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		int[] IV { get; }
 		/// <summary>
 		/// Effort Values
-		/// </summary>  
+		/// </summary>
 		byte[] EV { get; }
 		/// <summary>
 		/// Species (National Pokedex number)
@@ -107,7 +107,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		int Happiness { get; }
 		/// <summary>
-		/// Status problem (PBStatuses) 
+		/// Status problem (Statuses)
 		/// </summary>
 		Status Status { get; set; }
 		/// <summary>
@@ -119,7 +119,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		int EggSteps { get; set; }
 		/// <summary>
-		/// Moves (PBMove)
+		/// Moves (Move)
 		/// </summary>
 		IMove[] moves { get; }
 		/// <summary>
@@ -161,7 +161,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		//int language { get; set; }
 		/// <summary>
-		/// Original Trainer's name 
+		/// Original Trainer's name
 		/// </summary>
 		string ot { get; set; }
 		/// <summary>
@@ -176,19 +176,19 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Forces the first/second/hidden (0/1/2) ability
 		/// </summary>
-		int abilityflag { get; set; }
+		int abilityflag { set; }
 		/// <summary>
 		/// Forces male (0) or female (1)
 		/// </summary>
-		bool genderflag { get; set; }
+		bool genderflag { set; }
 		/// <summary>
 		/// Forces a particular nature
 		/// </summary>
-		int natureflag { get; set; }
+		int natureflag { set; }
 		/// <summary>
 		/// Forces the shininess (true/false)
 		/// </summary>
-		bool shinyflag { get; set; }
+		bool shinyflag { set; }
 		/// <summary>
 		/// Array of ribbons
 		/// </summary>
@@ -368,7 +368,8 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		bool hasNature(Natures? value = null); //-1
+		//bool hasNature(Natures? value = null); //-1
+		bool hasNature(Natures value); //-1
 
 		/// <summary>
 		/// Sets this Pokémon's nature to a particular nature.
@@ -472,29 +473,29 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Silently learns the given move. Will erase the first known move if it has to.
 		/// </summary>
 		/// <param name="move"></param>
-		void pbLearnMove(Moves move);
+		void LearnMove(Moves move);
 
 		/// <summary>
 		/// Deletes the given move from the Pokémon.
 		/// </summary>
 		/// <param name="move"></param>
-		void pbDeleteMove(Moves move);
+		void DeleteMove(Moves move);
 
 		/// <summary>
 		/// Deletes the move at the given index from the Pokémon.
 		/// </summary>
 		/// <param name="index"></param>
-		void pbDeleteMoveAtIndex(int index);
+		void DeleteMoveAtIndex(int index);
 
 		/// <summary>
 		/// Deletes all moves from the Pokémon.
 		/// </summary>
-		void pbDeleteAllMoves();
+		void DeleteAllMoves();
 
 		/// <summary>
 		/// Copies currently known moves into a separate array, for Move Relearner.
 		/// </summary>
-		void pbRecordFirstMoves();
+		void RecordFirstMoves();
 
 		bool isCompatibleWithMove(Moves move);
 
@@ -512,7 +513,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns the number of ribbons this Pokemon has.
 		/// </summary>
 		/// <returns></returns>
-		int ribbonCount();
+		int ribbonCount { get; }
 
 		/// <summary>
 		/// Returns whether this Pokémon has the specified ribbon.
@@ -564,7 +565,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// Returns the items this species can be found holding in the wild.
 		/// </summary>
 		/// <returns>[itemcommon,itemuncommon,itemrare]</returns>
-		Items[] wildHoldItems();
+		Items[] wildHoldItems { get; }
 
 		/// <summary>
 		/// Returns this Pokémon's mail.
@@ -632,7 +633,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		bool Heal();
 
 		// Changes the happiness of this Pokémon depending on what happened to change it.
-		void changeHappiness(HappinessMethods method);
+		void ChangeHappiness(HappinessMethods method);
 
 		// ###############################################################################
 		// Stat calculations, Pokémon creation
@@ -661,7 +662,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <param name="iv"></param>
 		/// <param name="ev"></param>
 		/// <param name="pv"></param>
-		void calcStat(int _base, int level, int iv, int ev, int pv);
+		int calcStat(int _base, int level, int iv, int ev, int pv);
 
 		/// <summary>
 		/// Recalculates this Pokémon's stats.

@@ -36,8 +36,8 @@ namespace PokemonUnity
 		#endregion
 	}
 
-	namespace Combat { 
-		public static class BallHandlers //: PokemonEssentials.Interface.BallHandlers 
+	namespace Combat {
+		public static class BallHandlers //: PokemonEssentials.Interface.BallHandlers
 		{
 			//IsUnconditional = new ItemHandlerHash;
 			//ModifyCatchRate = new ItemHandlerHash;
@@ -94,7 +94,7 @@ namespace PokemonUnity
 					return (int)Math.Floor(catchRate*3/2f);
 				}
 				else if (ball == Items.NET_BALL) {
-					if (battler.pbHasType(Types.BUG) || battler.pbHasType(Types.WATER)) catchRate*=3;
+					if (battler.HasType(Types.BUG) || battler.HasType(Types.WATER)) catchRate*=3;
 					return catchRate;
 				}
 				else if (ball == Items.DIVE_BALL) {
@@ -108,8 +108,8 @@ namespace PokemonUnity
 					return catchRate;
 				}
 				else if (ball == Items.REPEAT_BALL) {
-					if (battle.pbPlayer().owned[battler.Species]) catchRate*=3;
-					//if (battle.pbPlayer().Pokedex[(int)battler.Species,1] == 1) catchRate*=3;
+					if (battle.Player().owned[battler.Species]) catchRate*=3;
+					//if (battle.Player().Pokedex[(int)battler.Species,1] == 1) catchRate*=3;
 					return catchRate;
 				}
 				else if (ball == Items.TIMER_BALL) {
@@ -118,7 +118,7 @@ namespace PokemonUnity
 					return catchRate;
 				}
 				else if (ball == Items.DUSK_BALL) {
-					//if (PBDayNight.isNight()) catchRate*=7/2;
+					//if (DayNight.isNight()) catchRate*=7/2;
 					if (Game.GetTime == Overworld.DayTime.Night) catchRate*=7/2;
 					return catchRate;
 				}
@@ -127,8 +127,8 @@ namespace PokemonUnity
 					return catchRate;
 				}
 				else if (ball == Items.FAST_BALL) {
-					//dexdata=pbOpenDexData;
-					//pbDexDataOffset(dexdata,battler.Species,13);
+					//dexdata=OpenDexData;
+					//DexDataOffset(dexdata,battler.Species,13);
 					//basespeed=dexdata.fgetb;
 					//dexdata.close;
 					int basespeed=Kernal.PokemonData[battler.Species].BaseStatsSPE;
@@ -223,7 +223,7 @@ namespace PokemonUnity
 				}
 				else if (ball == Items.FRIEND_BALL) {
 					//pokemon.Happiness=200;
-					//pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
+					pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
 				}
 				else return;
 			}
@@ -236,7 +236,7 @@ namespace PokemonUnity
 				}
 				else if (e.Ball == Items.FRIEND_BALL) {
 					//e.Pokemon.Happiness=200;
-					//e.Pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
+					e.Pokemon.ChangeHappiness(HappinessMethods.FRIENDBALL);
 				}
 				else return;
 			}
@@ -244,17 +244,18 @@ namespace PokemonUnity
 			public static void OnFailCatch(Items ball,IBattle battle,IBattler battler) {
 				//if (!OnFailCatch[ball]) return;
 				//OnFailCatch.trigger(ball,battle,battler);
-				//if (OnFailCatch != null) OnFailCatch.Invoke(ball,battle,battler);
+				//if (BallHandlers.OnFailCatch != null) BallHandlers.OnFailCatch.Invoke(ball,battle,battler);
 				return;
 			}
 
 			public static void OnFailCatch(object sender, IOnFailCatchEventArgs e) {
 				//if (!OnFailCatch[ball]) return;
 				//OnFailCatch.trigger(ball,battle,battler);
+				//BallHandlers.OnFailCatch(ball,battle,battler);
 				return;
 			}
 
-			public static Items pbBallTypeToBall(int balltype) {
+			public static Items BallTypeToBall(int balltype) {
 				Items ret = Items.POKE_BALL;
 				//if (BallTypes[balltype]) {
 				if (balltype > 0 && balltype < BallTypes.Length) {
@@ -268,8 +269,8 @@ namespace PokemonUnity
 				return ret; //Items.POKEBALL;
 			}
 
-			public static int pbGetBallType(Items ball) {
-				//ball=getID(PBItems,ball);
+			public static int GetBallType(Items ball) {
+				//ball=getID(Items,ball);
 				//foreach (var key in BallTypes) {
 				for (int key = 0; key < BallTypes.Length; key++) {
 					if (ball==BallTypes[key]) return key;

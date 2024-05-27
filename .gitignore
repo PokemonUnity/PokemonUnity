@@ -39,6 +39,7 @@ ExportedObj/
 *.svd
 *.pdb
 *.vsconfig
+**/.vsconfig
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -66,8 +67,6 @@ Thumbs.db.meta
 _git-journal
 git-journal.bash-completion
 git-journal.fish
-# Pokemon Unity/Pokemon Unity.sln
-# */Pokemon Unity.sln
 # UnitTestProject\bin\*
 [Uu]nit[Tt]est[Pp]roject/bin/*
 [Uu]nit[Tt]est[Pp]roject/bin/[Dd]ebug/*
@@ -76,9 +75,14 @@ git-journal.fish
 [Uu]nit[Tt]est[Pp]roject/*.dll
 [Uu]nit[Tt]est[Pp]roject/*.xml
 */bin/*
+# Pokemon Unity/Pokemon Unity.sln
+# */Pokemon Unity.sln
 /Pokemon Unity/*.sln
 /Pokemon Unity/*.csproj
+/PokemonUnity.Offline #Work in Progress, may not make it into the master branch
 /Pokemon Unity/Assets/Libraries/*
+/Pokemon Unity/Assets/GameFramework
+/Pokemon Unity/Assets/GameFramework/*
 /Pokemon Unity/Assets/GameMain/Libraries/*
 !/Pokemon Unity/Assets/Libraries/*.dll
 !/Pokemon Unity/Assets/Libraries/*.dll.meta
@@ -88,6 +92,7 @@ git-journal.fish
 # NuGet Packages
 *.nupkg
 # The packages folder can be ignored because of Package Restore
+/[Pp]ackages
 */[Pp]ackages/*
 # except build/, which is used as an MSBuild target.
 !**/packages/build/
@@ -100,13 +105,17 @@ git-journal.fish
 # but keep track of directories ending in .cache
 !*.[Cc]ache/
 
+# Rider is a cross-platform .NET coding IDE
+**/.idea
+**/.idea/*
+
 # ReSharper is a .NET coding add-in
 **/_ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
-/GameFramework
-/Pokemon Unity/Assets/GameFramework
-/PokemonUnity.Offline
+
+# Other...
+**/GameFramework
 /Set-AssemblyVersion.ps1
 *.meta
 * - Copy.cs

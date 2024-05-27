@@ -317,14 +317,14 @@ namespace PokemonUnity.Monster.Data
 		/// <param name="expgain">Exp. Points to add</param>
 		/// <param name="growth">Growth rate.</param>
 		/// <returns></returns>
-		public static int pbAddExperience(int currexp,int expgain,LevelingRate growth)
+		public static int AddExperience(int currexp,int expgain,LevelingRate growth)
 		{
 			//if (growth >= 6 || growth < 0)
 			//{
 			//	return GameDebug.LogError("The growth rate is invalid.");
 			//}
 			int exp = currexp + expgain;
-			//int maxexp = pbGetExpInternal(Core.MAXIMUMLEVEL, growth);
+			//int maxexp = GetExpInternal(Core.MAXIMUMLEVEL, growth);
 			int maxexp = GetMaxExperience(growth);
 			if (exp > maxexp) exp = maxexp;
 			return exp;

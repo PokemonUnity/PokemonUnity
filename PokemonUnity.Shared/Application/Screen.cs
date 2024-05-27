@@ -54,13 +54,10 @@
 				else if (screen is PokemonEssentials.Interface.Screen.IPokemonNestMapScreen	s12) PokedexNestScreen		= s12;
 				else if (screen is PokemonEssentials.Interface.Screen.IPokemonFormScreen	s13) PokedexFormScreen		= s13;
 				else if (screen is PokemonEssentials.Interface.Screen.IMartScreen			s14) Mart					= s14;
-				else if (screen is PokemonEssentials.Interface.Screen.IRelicStoneScreen		s15) RelicStone				= s15; 
+				else if (screen is PokemonEssentials.Interface.Screen.IRelicStoneScreen		s15) RelicStone				= s15;
 				else if (screen is PokemonEssentials.Interface.Screen.IBattleSwapScreen		s16) BattleSwapScreen		= s16;
 			}
 			return this;
-		}																					 
-	}																						 
-}																							 
-																							 
-																							 
-																							 
+		}
+	}
+}

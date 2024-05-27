@@ -37,7 +37,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		bool? displayGender { get; }
 		bool captured { get; set; }
 
-		//string pbThis(bool lowercase= false);
+		//string This(bool lowercase= false);
 		string ToString(bool lowercase = false);
 	}
 }

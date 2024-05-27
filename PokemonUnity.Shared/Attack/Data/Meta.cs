@@ -9,7 +9,8 @@ using PokemonUnity.Attack;
 
 namespace PokemonUnity.Attack.Data
 {
-	public struct MetaData
+	[Serializable]
+	public struct MetaData //ToDo: Rename to MoveMetaData?
 	{
 		public Moves Move { get; private set; }
 		public MetaCategory Category { get; private set; }
@@ -40,65 +41,5 @@ namespace PokemonUnity.Attack.Data
 			FlinchChance = flinchChance;
 			StatChance = statChance;
 		}
-	}
-
-	public enum Targets
-	{
-		/// <summary>
-		/// One specific move.  How this move is chosen depends upon on the move being used.
-		/// </summary>
-		SPECIFIC_MOVE = 1,
-		/// <summary>
-		/// One other Pokémon on the field, selected by the trainer.  Stolen moves reuse the same target.
-		/// </summary>
-		SELECTED_POKEMON_ME_FIRST = 2,
-		/// <summary>
-		/// The user's ally (if any).
-		/// </summary>
-		ALLY = 3,
-		/// <summary>
-		/// The user's side of the field.  Affects the user and its ally (if any).
-		/// </summary>
-		USERS_FIELD = 4,
-		/// <summary>
-		/// Either the user or its ally, selected by the trainer.
-		/// </summary>
-		USER_OR_ALLY = 5,
-		/// <summary>
-		/// The opposing side of the field.  Affects opposing Pokémon.
-		/// </summary>
-		OPPONENTS_FIELD = 6,
-		/// <summary>
-		/// The user.
-		/// </summary>
-		USER = 7,
-		/// <summary>
-		/// One opposing Pokémon, selected at random.
-		/// </summary>
-		RANDOM_OPPONENT = 8,
-		/// <summary>
-		/// Every other Pokémon on the field.
-		/// </summary>
-		ALL_OTHER_POKEMON = 9,
-		/// <summary>
-		/// One other Pokémon on the field, selected by the trainer.
-		/// </summary>
-		SELECTED_POKEMON = 10,
-		/// <summary>
-		/// All opposing Pokémon.
-		/// </summary>
-		ALL_OPPONENTS = 11,
-		/// <summary>
-		/// The entire field.  Affects all Pokémon.
-		/// </summary>
-		ENTIRE_FIELD = 12,
-		/// <summary>
-		/// The user and its allies.
-		/// </summary>
-		USER_AND_ALLIES = 13,
-		/// <summary>
-		/// Every Pokémon on the field.
-		/// </summary>
-		ALL_POKEMON = 14,
 	}
 }

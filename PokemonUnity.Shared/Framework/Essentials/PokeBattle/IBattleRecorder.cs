@@ -19,42 +19,42 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// </summary>
 	/// <typeparam name="TBattle">any <see cref="IBattle"/> entity</typeparam>
 	//Should be both Recorded Data and the Battle logic itself...
-	public interface IRecordedBattleModule<out TBattle> //: IBattleRecordData
+	public interface IRecordedBattleModule<out TBattle> : IBattleRecordData
 		where TBattle : IBattle//, IBattleRecordData
 	{
-		IList<int> randomnumbers { get; }
+		//IList<int> randomnumbers { get; }
 		//IList<int[][]> rounds { get; }
-		IList<KeyValuePair<MenuCommands,int>[]> rounds { get; }
+		//IList<KeyValuePair<MenuCommands,int>?[]> rounds { get; }
 		//int battletype { get; }
-		//object properties { get; }
-		//int roundindex { get; }
+		//IBattleMetaData properties { get; }
+		int roundindex { get; }
 		//IList<int> switches { get; }
 
 		#region Methods
 		IBattle initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent);
-		int pbGetBattleType();
-		ITrainer[] pbGetTrainerInfo(ITrainer[] trainer);
-		BattleResults pbStartBattle(bool canlose = false);
-		string pbDumpRecord();
-		int pbSwitchInBetween(int i1, bool i2, bool i3);
-		bool pbRegisterMove(int i1, int i2, bool showMessages = true);
-		int pbRun(int i1, bool duringBattle = false);
-		bool pbRegisterTarget(int i1, int i2);
-		void pbAutoChooseMove(int i1, bool showMessages = true);
-		bool pbRegisterSwitch(int i1, int i2);
-		bool pbRegisterItem(int i1, Items i2);
-		void pbCommandPhase();
-		void pbStorePokemon(IPokemon pkmn);
-		int pbRandom(int num);
+		int GetBattleType();
+		ITrainer[] GetTrainerInfo(ITrainer[] trainer);
+		BattleResults StartBattle(bool canlose = false);
+		IBattleRecordData DumpRecord();
+		int SwitchInBetween(int i1, bool i2, bool i3);
+		bool RegisterMove(int i1, int i2, bool showMessages = true);
+		int Run(int i1, bool duringBattle = false);
+		bool RegisterTarget(int i1, int i2);
+		void AutoChooseMove(int i1, bool showMessages = true);
+		bool RegisterSwitch(int i1, int i2);
+		bool RegisterItem(int i1, Items i2);
+		void CommandPhase();
+		void StorePokemon(IPokemon pkmn);
+		int Random(int num);
 		#endregion
 	}
 
 	public interface IBattlePlayerHelper{
-		ITrainer[] pbGetOpponent(IBattle battle);
+		ITrainer[] GetOpponent(IBattle battle);
 
-		IAudioBGM pbGetBattleBGM(IBattle battle);
+		IAudioBGM GetBattleBGM(IBattle battle);
 
-		ITrainer[] pbCreateTrainerInfo(ITrainer[] trainer);
+		ITrainer[] CreateTrainerInfo(ITrainer[] trainer);
 	}
 
 	/// <summary>
@@ -68,25 +68,25 @@ namespace PokemonEssentials.Interface.PokeBattle
 		//int switchindex { get; }
 
 		//IBattle should be a recorded battle data...
-		TBattle initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IBattle battle); 
-		BattleResults pbStartBattle(bool canlose = false);
-		int pbSwitchInBetween(int i1, int i2, bool i3);
-		int pbRandom(int num);
-		void pbDisplayPaused(string str);
-		void pbCommandPhaseCore();
+		IBattlePlayerModule<TBattle> initialize(PokemonEssentials.Interface.Screen.IPokeBattle_Scene scene, IBattle battle);
+		BattleResults StartBattle(bool canlose = false);
+		int SwitchInBetween(int i1, int i2, bool i3);
+		int Random(int num);
+		void DisplayPaused(string str);
+		void CommandPhaseCore();
 	}
 
 	public interface IRecordedBattle : IBattle, IRecordedBattleModule<IBattle>, IBattleRecordData
 	{
-		//int pbGetBattleType();
+		//int GetBattleType();
 	}
 	public interface IRecordedBattlePalace : IBattlePalace, IRecordedBattleModule<IBattlePalace>, IBattleRecordData
 	{
-		//int pbGetBattleType();
+		//int GetBattleType();
 	}
 	public interface IRecordedBattleArena : IBattleArena, IRecordedBattleModule<IBattleArena>, IBattleRecordData
 	{
-		//int pbGetBattleType();
+		//int GetBattleType();
 	}
 
 	public interface IBattlePlayer : IBattle, IBattlePlayerModule<IBattle> { }
@@ -97,38 +97,38 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// <summary>
 	/// Represents a json object that can be saved/loaded to re-play a recorded pokemon battle
 	/// </summary>
-	//ToDo: maybe add <out IBattle> to interface?
-	public interface IBattleRecordData 
+	public interface IBattleRecordData
 	{
-		int pbGetBattleType(); //{ get; }
-		//ToDo: this should be replaced with json object class
-		//IDictionary<string, IBattleMetaData> properties { get; }
+		//int GetBattleType(); //{ get; }
+		int battletype { get; }
+		//IDictionary properties { get; }
 		IBattleMetaData properties { get; }
 		//IList<int[][]> rounds { get; }
-		IList<KeyValuePair<MenuCommands, int>[]> rounds { get; }
+		IList<KeyValuePair<MenuCommands, int>?[]> rounds { get; }
 		IList<int> randomnumbers { get; }
 		IList<int> switches { get; }
 	}
 	/// <summary>
+	/// Serialize-able object of all the meta data that represents a pokemon battle
 	/// </summary>
-	public interface IBattleMetaData 
+	public interface IBattleMetaData
 	{
 		bool internalbattle { get; set; }
-		//SeriTrainer player { get; set; }
-		//SeriTrainer opponent { get; set; }
+		TrainerData[] player { get; set; }
+		TrainerData[] opponent { get; set; }
 		SeriPokemon[] party1 { get; set; }
 		SeriPokemon[] party2 { get; set; }
 		string endspeech { get; set; }
 		string endspeech2 { get; set; }
 		string endspeechwin { get; set; }
 		string endspeechwin2 { get; set; }
-		string doublebattle { get; set; }
+		bool doublebattle { get; set; }
 		int weather { get; set; }
 		int weatherduration { get; set; }
 		bool cantescape { get; set; }
 		bool shiftStyle { get; set; }
-		int battlescene { get; set; }
-		Items[] items { get; set; }
+		bool battlescene { get; set; }
+		Items[][] items { get; set; }
 		int environment { get; set; }
 		IDictionary<string,bool> rules { get; set; }
 	}

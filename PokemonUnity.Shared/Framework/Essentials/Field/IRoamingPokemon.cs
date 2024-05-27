@@ -21,34 +21,48 @@ namespace PokemonEssentials.Interface.Field
 	/// Extension on <see cref="IGlobalMetadata"/>
 	/// </summary>
 	public interface IGlobalMetadataRoaming {
-		int[] roamPosition			{ get; }
-		int roamHistory				{ get; }
-		int roamedAlready			{ get; }
-		int roamEncounter			{ get; }
-		bool?[] roamPokemon			{ get; }
-		bool[] roamPokemonCaught	{ get; }
+		//ToDo: nullable int array?...
+		int[] roamPosition				{ get; set; }
+		Queue<int> roamHistory			{ get; set; }
+		bool roamedAlready				{ get; set; }
+		bool roamEncounter				{ get; }
+		/// <summary>
+		/// Boolean array representing if pokemon is roaming;
+		/// <see cref="Kernal.RoamingSpecies"/> as Index/Key
+		/// </summary>
+		IList<IPokemon> roamPokemon		{ get; set; }
+		/// <summary>
+		/// Boolean array representing if pokemon is captured;
+		/// <see cref="Kernal.RoamingSpecies"/> as Index/Key
+		/// </summary>
+		Pokemons[] roamPokemonCaught	{ get; }
+	}
 
+	/// <summary>
+	/// Extension on <see cref="IGame"/>
+	/// </summary>
+	public interface IGameRoaming {
 		/// <summary>
 		/// Resets all roaming Pokemon that were defeated without having been caught.
 		/// </summary>
-		void pbResetAllRoamers();
+		void ResetAllRoamers();
 
 		/// <summary>
 		/// Gets the roaming areas for a particular Pokémon.
 		/// </summary>
-		int[] pbRoamingAreas(int index);
+		IDictionary<int,int[]> RoamingAreas(int index);
 
 		/// <summary>
 		/// Puts a roamer in a completely random map available to it.
 		/// </summary>
 		/// <param name="index"></param>
-		void pbRandomRoam(int index);
+		void RandomRoam(int index);
 
 		/// <summary>
 		/// Roams all roamers, if their Switch is on.
 		/// </summary>
 		/// <param name="ignoretrail"></param>
-		void pbRoamPokemon(bool ignoretrail = false);
+		void RoamPokemon(bool ignoretrail = false);
 
 		/// <summary>
 		/// Fires whenever the player moves to a new map. Event handler receives the old
@@ -65,10 +79,11 @@ namespace PokemonEssentials.Interface.Field
 		event Action<object, EventArg.IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
 		//Events.OnWildBattleOverride+=proc { |sender,e|
 
-		PokemonUnity.Combat.BattleResults pbRoamingPokemonBattle(Pokemons species, int level);
+		//PokemonUnity.Combat.BattleResults RoamingPokemonBattle(Pokemons species, int level);
+		bool RoamingPokemonBattle(Pokemons species, int level);
 
 		//EncounterModifier.register(proc {|encounter|});
-		//void register(Func<IEncounter, IEncounter> p);
+		//void register(Func<IEncounterPokemon, IEncounterPokemon> p);
 
 		//EncounterModifier.registerEncounterEnd(proc {});
 		//EncounterModifier.registerEncounterEnd(Action);
@@ -89,6 +104,7 @@ namespace PokemonEssentials.Interface.Field
 		/// Water-based only
 		/// </param>
 		/// <returns></returns>
-		bool pbRoamingMethodAllowed(Method enctype);
+		bool RoamingMethodAllowed(EncounterTypes enctype);
+		//bool RoamingMethodAllowed(Method enctype);
 	}
 }

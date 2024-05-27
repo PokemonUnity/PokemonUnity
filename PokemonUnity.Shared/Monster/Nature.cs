@@ -1,8 +1,11 @@
-﻿using PokemonUnity.Inventory.Plants;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using PokemonUnity.Inventory.Plants;
 
 namespace PokemonUnity.Monster
 {
-	public struct Nature
+	public struct Nature : IEquatable<Nature>, IEqualityComparer<Nature>
 	{
 		public Natures Natures { get; private set; }
 		public Stats Increases { get; private set; }
@@ -69,7 +72,7 @@ namespace PokemonUnity.Monster
 			Decreases = decrease;
 			Likes = like;
 			Dislikes = dislike;
-			
+
 			this.Stat_mod = new float[6];
 			this.Stat_mod[(int)Stats.ATTACK]	 = 1;
 			this.Stat_mod[(int)Stats.DEFENSE]	 = 1;
@@ -79,5 +82,50 @@ namespace PokemonUnity.Monster
 			this.Stat_mod[(int)increase]		+= .1f;
 			this.Stat_mod[(int)decrease]		-= .1f;
 		}
+
+		#region Explicit Operators
+		public static bool operator ==(Nature x, Nature y)
+		{
+			return x.Natures == y.Natures;
+		}
+		public static bool operator !=(Nature x, Nature y)
+		{
+			return x.Natures != y.Natures;
+		}
+		public bool Equals(Natures obj)
+		{
+			return this.Natures == obj;
+		}
+		public override bool Equals(object obj)
+		{
+			if (obj == null) return false;
+			//if (obj.GetType() == typeof(Nature))
+			//	return Equals(obj as Nature);
+			return base.Equals(obj);
+		}
+		public override int GetHashCode()
+		{
+			return (int)this.Natures.GetHashCode();
+			//unchecked
+			//{
+			//	int hash = 17;
+			//	hash = hash * 23 + ((int)this.Natures).GetHashCode();
+			//	hash = hash * 23 + this.Generation.GetHashCode();
+			//	return hash;
+			//}
+		}
+		bool IEquatable<Nature>.Equals(Nature other)
+		{
+			return Equals(obj: (object)other);
+		}
+		bool IEqualityComparer<Nature>.Equals(Nature x, Nature y)
+		{
+			return x == y;
+		}
+		int IEqualityComparer<Nature>.GetHashCode(Nature obj)
+		{
+			return obj.GetHashCode();
+		}
+		#endregion
 	}
 }

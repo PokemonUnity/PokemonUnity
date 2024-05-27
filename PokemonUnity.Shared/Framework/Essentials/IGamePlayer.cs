@@ -10,7 +10,7 @@ namespace PokemonEssentials.Interface
 {
 	/// <summary>
 	/// This class handles the player. Its functions include event starting
-	/// determinants and map scrolling. 
+	/// determinants and map scrolling.
 	/// </summary>
 	/// Refer to "Game.GameData.GamePlayer" for the one instance of this class.
 	public interface IGamePlayer : IGameCharacter
@@ -23,22 +23,22 @@ namespace PokemonEssentials.Interface
 		//IGamePlayer(Game_Map map);
 		//IGamePlayer initialize(IGameMap map);
 
-		bool pbHasDependentEvents();
+		bool HasDependentEvents();
 
 		//void move_down(bool turn_enabled = true);
 		//void move_left(bool turn_enabled = true);
 		//void move_right(bool turn_enabled = true);
 		//void move_up(bool turn_enabled = true);
 
-		List<IGameEvent> pbTriggeredTrainerEvents(int[] triggers, bool checkIfRunning = true);
+		List<IGameEvent> TriggeredTrainerEvents(int[] triggers, bool checkIfRunning = true);
 
-		List<IGameEvent> pbTriggeredCounterEvents(int[] triggers, bool checkIfRunning = true);
+		List<IGameEvent> TriggeredCounterEvents(int[] triggers, bool checkIfRunning = true);
 
-		void pbCheckEventTriggerAfterTurning();
+		void CheckEventTriggerAfterTurning();
 
-		bool pbCheckEventTriggerFromDistance(int[] triggers);
+		bool CheckEventTriggerFromDistance(int[] triggers);
 
-		IEntity pbFacingEvent();
+		IEntity FacingEvent();
 		/// <summary>
 		/// Passable Determinants
 		/// </summary>
@@ -71,7 +71,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Refresh
 		/// </summary>
-		void refresh();
+		//void refresh();
 		/// <summary>
 		/// Same Position Starting Determinant
 		/// </summary>
@@ -90,6 +90,6 @@ namespace PokemonEssentials.Interface
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <returns></returns>
-		bool check_event_trigger_touch(float x, float y);
+		//bool check_event_trigger_touch(float x, float y);
 	}
 }

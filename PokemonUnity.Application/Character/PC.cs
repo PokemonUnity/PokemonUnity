@@ -8,114 +8,19 @@ using PokemonUnity.Attack;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Character;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonUnity.Character
 {
-	/// <summary>
-	/// The PC item storage object, which actually contains all the items
-	/// </summary>
-	public partial class PCItemStorage : PokemonEssentials.Interface.Screen.IPCItemStorage
-	{
-		/// <summary>
-        /// Number of different slots in storage
-        /// </summary>
-		public const int MAXSIZE = 50;
-		/// <summary>
-        /// Max. number of items per slot
-        /// </summary>
-		public const int MAXPERSLOT = 999;
-		private IList<Items> items;
-
-
-		public PCItemStorage() { initialize(); }
-		public PokemonEssentials.Interface.Screen.IPCItemStorage initialize()
-		{
-			@items = new Items[0]; //[];
-			//  Start storage with a Potion
-			//if (hasConst(PBItems,:POTION)) {
-				//ItemStorageHelper.pbStoreItem(ref
-				//   @items.ToArray(), MAXSIZE, MAXPERSLOT, Items.POTION, 1);
-			//}
-			return this;
-		}
-
-		public bool empty()
-		{
-			return @items.Count == 0;
-		}
-
-		public int length()
-		{
-			return @items.Count;
-		}
-
-		public Items this[int i]
-		{
-			get
-			{
-				return @items[i];
-			}
-		}
-
-		public Items getItem(int index)
-		{
-			if (index < 0 || index >= @items.Count)
-			{
-				return 0;
-			}
-			else
-			{
-				return @items[index];//[0];
-				//return @items[index].Key;//[0];
-			}
-		}
-
-		public int getCount(int index)
-		{
-			if (index < 0 || index >= @items.Count)
-			{
-				return 0;
-			}
-			else
-			{
-				//return @items[index].Value;//[1];
-				return @items.Count;
-			}
-		}
-
-		public int pbQuantity(Items item)
-		{
-			return ItemStorageHelper.pbQuantity(@items.ToArray(), MAXSIZE, item);
-		}
-
-		public bool pbDeleteItem(Items item, int qty = 1)
-		{
-			Items[] i = @items.ToArray();
-			//return ItemStorageHelper.pbDeleteItem(ref @items.ToArray(), MAXSIZE, item, qty);
-			return ItemStorageHelper.pbDeleteItem(ref i, MAXSIZE, item, qty);
-		}
-
-		public bool pbCanStore(Items item, int qty = 1)
-		{
-			return ItemStorageHelper.pbCanStore(@items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
-		}
-
-		public bool pbStoreItem(Items item, int qty = 1)
-		{
-			Items[] i = @items.ToArray();
-			//return ItemStorageHelper.pbStoreItem(@items.ToArray(), MAXSIZE, MAXPERSLOT, item, qty);
-			return ItemStorageHelper.pbStoreItem(ref i, MAXSIZE, MAXPERSLOT, item, qty);
-		}
-	}
-
 	//ToDo: Add Function to add more boxes to player pc
 	// OR! A function to disable boxes until they're "unlocked"
 	// Max # of boxes would be hard-capped if option 2
 	//Add Game.GameData.Feature where player unlocks more boxes
-	[System.Obsolete("Something i plan to transistion to; not yet ready for full integration")]
-	public class PC_Refactor
+	[System.Obsolete("Something i plan to transition to; not yet ready for full integration")]
+	public class PC : PokemonEssentials.Interface.Screen.IPCPokemonStorage
 	{
-		#region Variables		
+		#region Variables
 		//private List<Mail> mails { get; set; } //ToDo: Add Mail to PC class
 		/// <summary>
 		/// </summary>
@@ -124,13 +29,13 @@ namespace PokemonUnity.Character
 		/// </remarks>
 		//private List<Items> items { get; set; }
 		private Dictionary<Items, int> items { get; set; }
-		private Pokemon[,] pokemons { get; set; }
+		private IPokemon[,] pokemons { get; set; }
 		//public Pokemon[,] AllBoxes { get { return pokemons; } }
-		public Pokemon[][] AllBoxes
+		public IPokemon[][] AllBoxes
 		{
 			get
 			{
-				Pokemon[][] pkmns = new Pokemon[pokemons.GetLength(0)][];
+				IPokemon[][] pkmns = new Pokemon[pokemons.GetLength(0)][];
 				for (int i = 0; i < pkmns.GetLength(0); i++)
 				{
 					pkmns[i] = new Pokemon[pokemons.GetLength(1)];
@@ -147,12 +52,12 @@ namespace PokemonUnity.Character
 		public int[] BoxTextures { get; private set; }
 		public string Name { get { return BoxNames[ActiveBox] ?? "Box " + (ActiveBox + 1).ToString(); } }
 		public int Texture { get { return BoxTextures[ActiveBox]; } }
-		public Pokemon[] Pokemons
+		public IPokemon[] Pokemons
 		{
 			get
 			{
-				Pokemon[] p = new Pokemon[30];
-				for (int t = 0; t < 30; t++)
+				IPokemon[] p = new Pokemon[pokemons.GetLength(1)];
+				for (int t = 0; t < p.Length; t++)
 				{
 					p[t] = pokemons[ActiveBox, t];
 				}
@@ -181,7 +86,7 @@ namespace PokemonUnity.Character
 						//int count = items.Where(x => x == item).Count();
 						int count = item.Value;
 						int groups = (int)Math.Floor(total / 99d);
-						//Max number of items in an individual slot is capped 
+						//Max number of items in an individual slot is capped
 						for (int i = 0; i < (int)Math.Floor(count / 99d); i++)
 						{
 			//				pairs[index] = new KeyValuePair<Items, int>(item.Key, 99);
@@ -199,28 +104,82 @@ namespace PokemonUnity.Character
 				return l.ToArray();
 			}
 		}
-		//ToDo: return pokemon box, without changing activebox
-		public PC_Refactor this[byte i]
+
+		#region Interface
+		IPokemonBox[] IPCPokemonStorage.boxes
 		{
 			get
 			{
-				i = (byte)(i % Core.STORAGEBOXES);
+				IPokemonBox[] boxes = new PokemonBox[pokemons.GetLength(0)];
+				for (int i = 0; i < boxes.Length; i++)
+				{
+					//int ip1 = i + 1;
+					@boxes[i] = new PokemonBox(BoxNames[i] ?? "Box " + (i + 1).ToString(), //string.Format("Box {0}", ip1),
+						pokemons.GetLength(1));
+					//int backid = i % 24;
+					@boxes[i].background = BoxTextures[i].ToString(); //$"box{backid}";
+				}
+				return boxes;
+			}
+		}
+
+		int IPCPokemonStorage.currentBox { get { return ActiveBox; } set { ActiveBox = (byte)value; } }
+
+		int IPCPokemonStorage.maxBoxes { get { return pokemons.GetLength(0); } }
+
+		IPokemon[] IPCPokemonStorage.party { get { return Game.GameData.Trainer.party; } }
+
+		bool IPCPokemonStorage.full
+		{
+			get
+			{
+				for(int i = 0; i < pokemons.GetLength(1);i++)
+				{
+					if (!pokemons[ActiveBox, i].IsNotNullOrNone())
+						return false;
+				}
+				return true; //pokemons.Count<IPokemon>(p => p.IsNotNullOrNone());
+			}
+		}
+
+		IPokemon IPCPokemonStorage.this[int x, int y] { get { return pokemons[x,y]; } set { pokemons[x, y] = value; } }
+
+		IPokemonBox IPCPokemonStorage.this[int x]
+		{
+			get
+			{
+				x = (byte)(x % pokemons.GetLength(0)); //Core.STORAGEBOXES);
+				return this[(byte)x];
+			}
+		}
+
+		//ToDo: return pokemon box, without changing activebox?
+		public IPokemonBox this[byte i]
+		{
+			get
+			{
+				i = (byte)(i % pokemons.GetLength(0)); //Core.STORAGEBOXES);
 				this.ActiveBox = i;
-				//Pokemon[] p = new Pokemon[30];
-				//for (int t = 0; t < 30; t++)
-				//{
-				//	p[t] = Game.GameData.PC_Poke[i, t];
-				//}
-				//this.Pokemons = p;
-				//this.Texture = Game.GameData.PC_boxTexture[i];
-				//this.Name = Game.GameData.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
-				return this;
+				IPokemonBox box = new PokemonBox(BoxNames[i] ?? "Box " + (i + 1).ToString(), //string.Format("Box {0}", ip1),
+					pokemons.GetLength(1));
+				box.background = BoxTextures[i].ToString(); //$"box{backid}";
+				for (int t = 0; t < box.length; t++)
+				{
+					IPokemon p = pokemons[i, t];
+					if (p.IsNotNullOrNone())
+					{
+						//box[t] = pokemons[x, t];
+						box[t] = p;	//Add
+					}
+				}
+				return box;
 			}
 		}
 		#endregion
+		#endregion
 
 		#region Constructors
-		public PC_Refactor()
+		public PC()
 		{
 			//PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
 			pokemons = new Pokemon[Core.STORAGEBOXES, 30];
@@ -239,13 +198,13 @@ namespace PokemonUnity.Character
 				//ToDo: Using string from translator here
 				BoxNames[i] = string.Format("Box {0}", (i + 1).ToString());
 				//PC_boxTexture[i] = i;
-				BoxTextures[i] = i; 
+				BoxTextures[i] = i;
 			}
 			//PC_Items = new List<Items>();
 			items = new Dictionary<Items, int>() { { Inventory.Items.POTION, 1 } };
 		}
 
-		public PC_Refactor(Pokemon[][] pkmns = null, KeyValuePair<Items,int>[] items = null, byte? box = null, string[] names = null, int[] textures = null) : this()
+		public PC(IPokemon[][] pkmns = null, KeyValuePair<Items,int>[] items = null, byte? box = null, string[] names = null, int[] textures = null) : this()
 		{
 			if (names != null)
 				BoxNames = names;
@@ -270,6 +229,11 @@ namespace PokemonUnity.Character
 							pokemons[x, y] = pkmns[x][y];
 		}
 		//public PC(Pokemon[] pokemons = null, Items[] items = null, byte? box = null, string[] names = null, int[] textures = null) : this()
+
+		IPCPokemonStorage IPCPokemonStorage.initialize(int maxBoxes, int maxPokemon)
+		{
+			throw new NotImplementedException();
+		}
 		#endregion
 
 		#region Methods
@@ -318,13 +282,14 @@ namespace PokemonUnity.Character
 			return result;
 		}
 
-
 		public bool removePokemon(int boxID, int pkmnID)
 		{
-			if (this[Convert.ToByte(boxID)].Pokemons[pkmnID].IsNotNullOrNone())
+			byte x = (byte)(boxID % pokemons.GetLength(0));		//Core.STORAGEBOXES);
+			byte y = (byte)(pkmnID % pokemons.GetLength(1));
+			if (pokemons[x,y].IsNotNullOrNone())
 			{
 				Pokemons[pkmnID] = new Pokemon();
-				pokemons[boxID, pkmnID] = new Pokemon();
+				pokemons[x, y] = new Pokemon();
 				return true;
 			}
 			return false;
@@ -333,7 +298,7 @@ namespace PokemonUnity.Character
 		//{
 		//	try
 		//	{
-        //        PokemonEssentials.Interface.PokeBattle.IPokemon PartyHolder = player.party[PartyID];
+		//      PokemonEssentials.Interface.PokeBattle.IPokemon PartyHolder = player.party[PartyID];
 		//		player.party[PartyID] = player.PC.Pokemons[PCBoxID];
 		//		Pokemons[PCBoxID] = PartyHolder;
 		//		pokemons[ActiveBox, PCBoxID] = PartyHolder;
@@ -345,7 +310,7 @@ namespace PokemonUnity.Character
 		//		return false;
 		//	}
 		//}
-		public bool addPokemon(int box, int position, Pokemon pokemon)
+		public bool addPokemon(int box, int position, IPokemon pokemon)
 		{
 			try
 			{
@@ -359,14 +324,14 @@ namespace PokemonUnity.Character
 		}
 
 		/// <summary>
-		/// Add a new pokemon directly to active box. 
+		/// Add a new pokemon directly to active box.
 		/// </summary>
 		/// <param name="acquiredPokemon"></param>
 		/// <returns>
 		/// Returns position of stored pokemon.
 		/// If pokemon could not be added return null.
 		/// </returns>
-		public KeyValuePair<int,int>? addPokemon(Pokemon acquiredPokemon)
+		public KeyValuePair<int,int>? addPokemon(IPokemon acquiredPokemon)
 		{
 			//attempt to add to the earliest available opening in active box. no array packing needed.
 			if (hasSpace())
@@ -382,9 +347,50 @@ namespace PokemonUnity.Character
 
 		public void swapPokemon(int box1, int pos1, int box2, int pos2)
 		{
-			Pokemon temp = pokemons[box1, pos1];
+			IPokemon temp = pokemons[box1, pos1];
 			pokemons[box1, pos1] = pokemons[box2, pos2];
 			pokemons[box2, pos2] = temp;
+		}
+
+		int IPCPokemonStorage.maxPokemon(int box)
+		{
+			throw new NotImplementedException();
+		}
+
+		int IPCPokemonStorage.FirstFreePos(int box)
+		{
+			throw new NotImplementedException();
+		}
+
+		bool IPCPokemonStorage.Copy(int boxDst, int indexDst, int boxSrc, int indexSrc)
+		{
+			throw new NotImplementedException();
+		}
+
+		bool IPCPokemonStorage.Move(int boxDst, int indexDst, int boxSrc, int indexSrc)
+		{
+			throw new NotImplementedException();
+		}
+
+		void IPCPokemonStorage.MoveCaughtToParty(IPokemon pkmn)
+		{
+			throw new NotImplementedException();
+		}
+
+		bool IPCPokemonStorage.MoveCaughtToBox(IPokemon pkmn, int box)
+		{
+			throw new NotImplementedException();
+		}
+
+		int IPCPokemonStorage.StoreCaught(IPokemon pkmn)
+		{
+			KeyValuePair<int, int>? kv = addPokemon(pkmn);
+			return kv == null ? -1 : kv.Value.Key; //return the box
+		}
+
+		void IPCPokemonStorage.Delete(int box, int index)
+		{
+			removePokemon(box, index);
 		}
 		#endregion
 	}
@@ -497,7 +503,7 @@ namespace PokemonUnity.Character
 			}* /
 
 			/// <summary>
-			/// Add a new pokemon directly to active box. 
+			/// Add a new pokemon directly to active box.
 			/// If pokemon could not be added return false.
 			/// </summary>
 			/// <param name="acquiredPokemon"></param>

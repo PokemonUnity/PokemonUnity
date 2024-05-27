@@ -1,12 +1,18 @@
-﻿namespace PokemonUnity.Inventory
+﻿using PokemonUnity.Attack;
+using PokemonUnity.Combat;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
+
+namespace PokemonUnity.Inventory
 {
 	/// <summary>
-	/// Item ids are connected to XML file. 
+	/// Item ids are connected to XML file.
 	/// </summary>
 	/// <remarks>
-	/// Running off of genVI. 
+	/// Running off of genVI.
 	/// Be sure to overwrite both if modifying.
-	/// Replace "[HP]{mechanic:hp}" in summary-tags with
+	/// Replace "<see cref="Stats.HP"/>" in summary-tags with
 	/// "<see cref="Pokemon.HP"/>" or "<see cref="Pokemon.TotalHP"/>"
 	/// </remarks>
 	/// Custom Values are in negative?
@@ -24,9 +30,9 @@
 		GREAT_BALL = 3,
 		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1×.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		POKE_BALL = 4,
-		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1.5×.  This item can only be used in the []{location:great-marsh} or []{location:kanto-safari-zone}.</summary>
+		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1.5×.  This item can only be used in the <see cref="Locations.GREAT_MARSH"/> or <see cref="Locations.KANTO_SAFARI_ZONE"/>.</summary>
 		SAFARI_BALL = 5,
-		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If the wild Pokémon is []{type:water}- or []{type:bug}-type, this ball has a catch rate of 3×.  Otherwise, it has a catch rate of 1×.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
+		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If the wild Pokémon is <see cref="Types.WATER"/>- or <see cref="Types.BUG"/>-type, this ball has a catch rate of 3×.  Otherwise, it has a catch rate of 1×.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		NET_BALL = 6,
 		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If the wild Pokémon was encountered by surfing or fishing, this ball has a catch rate of 3.5×.  Otherwise, it has a catch rate of 1×.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		DIVE_BALL = 7,
@@ -36,117 +42,117 @@
 		REPEAT_BALL = 9,
 		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  Has a catch rate of 1.1× on the first turn of the battle and increases by 0.1× every turn, to a maximum of 4× on turn 30.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		TIMER_BALL = 10,
-		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1×.  Whenever the caught Pokémon's [happiness]{mechanic:happiness} increases, it increases by one extra point.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
+		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1×.  Whenever the caught Pokémon's <see cref="IPokemon.Happiness"/> increases, it increases by one extra point.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		LUXURY_BALL = 11,
 		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1×.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		PREMIER_BALL = 12,
 		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If it's currently nighttime or the wild Pokémon was encountered while walking in a cave, this ball has a catch rate of 3.5×.  Otherwise, it has a catch rate of 1×.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		DUSK_BALL = 13,
-		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1×.  The caught Pokémon's [HP]{mechanic:hp} is immediately restored, [PP]{mechanic:pp} for all its moves is restored, and any [status ailment]{mechanic:status-ailment} is cured.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
+		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1×.  The caught Pokémon's <see cref="Stats.HP"/> is immediately restored, <see cref="IMove.PP"/> for all its moves is restored, and any <see cref="IBattler.Status"/> is cured.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		HEAL_BALL = 14,
 		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 4× on the first turn of a battle, but 1× any other time.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		QUICK_BALL = 15,
 		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1×.      If used in a trainer battle, nothing happens and the ball is lost.</summary>
 		CHERISH_BALL = 16,
-		/// <summary>Used on a friendly Pokémon :   Restores 20 [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a friendly Pokémon :   Restores 20 <see cref="Stats.HP"/>.</summary>
 		POTION = 17,
-		/// <summary>Used on a party Pokémon :   Cures [poison]{mechanic:poison}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures <see cref="Status.POISON"/>.</summary>
 		ANTIDOTE = 18,
-		/// <summary>Used on a party Pokémon :   Cures a [burn]{mechanic:burn}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures a <see cref="Status.BURN"/>.</summary>
 		BURN_HEAL = 19,
-		/// <summary>Used on a party Pokémon :   Cures [freezing]{mechanic:freezing}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures <see cref="Status.FROZEN"/>.</summary>
 		ICE_HEAL = 20,
-		/// <summary>Used on a party Pokémon :   Cures [sleep]{mechanic:sleep}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures <see cref="Status.SLEEP"/>.</summary>
 		AWAKENING = 21,
-		/// <summary>Used on a party Pokémon :   Cures [paralysis]{mechanic:paralysis}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures <see cref="Status.PARALYSIS"/>.</summary>
 		PARALYZE_HEAL = 22,
-		/// <summary>Used on a party Pokémon :   Restores [HP]{mechanic:hp} to full and cures any [status ailment]{mechanic:status-ailment} and [confusion]{mechanic:confusion}.</summary>
+		/// <summary>Used on a party Pokémon :   Restores <see cref="Stats.HP"/> to full and cures any <see cref="IBattler.Status"/> and <see cref="IEffectsBattler.Confusion"/>.</summary>
 		FULL_RESTORE = 23,
-		/// <summary>Used on a party Pokémon :   Restores [HP]{mechanic:hp} to full.</summary>
+		/// <summary>Used on a party Pokémon :   Restores <see cref="Stats.HP"/> to full.</summary>
 		MAX_POTION = 24,
-		/// <summary>Used on a party Pokémon :   Restores 200 [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 200 <see cref="Stats.HP"/>.</summary>
 		HYPER_POTION = 25,
-		/// <summary>Used on a party Pokémon :   Restores 50 [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 50 <see cref="Stats.HP"/>.</summary>
 		SUPER_POTION = 26,
-		/// <summary>Used on a party Pokémon :   Cures any [status ailment]{mechanic:status-ailment} and [confusion]{mechanic:confusion}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures any <see cref="IBattler.Status"/> and <see cref="IEffectsBattler.Confusion"/>.</summary>
 		FULL_HEAL = 27,
-		/// <summary>Used on a party Pokémon :   Revives the Pokémon and restores half its [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a party Pokémon :   Revives the Pokémon and restores half its <see cref="Stats.HP"/>.</summary>
 		REVIVE = 28,
-		/// <summary>Used on a party Pokémon :   Revives the Pokémon and restores its [HP]{mechanic:hp} to full.</summary>
+		/// <summary>Used on a party Pokémon :   Revives the Pokémon and restores its <see cref="Stats.HP"/> to full.</summary>
 		MAX_REVIVE = 29,
-		/// <summary>Used on a party Pokémon :   Restores 50 [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 50 <see cref="Stats.HP"/>.</summary>
 		FRESH_WATER = 30,
-		/// <summary>Used on a party Pokémon :   Restores 60 [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 60 <see cref="Stats.HP"/>.</summary>
 		SODA_POP = 31,
-		/// <summary>Used on a party Pokémon :   Restores 80 [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 80 <see cref="Stats.HP"/>.</summary>
 		LEMONADE = 32,
-		/// <summary>Used on a party Pokémon :   Restores 100 [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 100 <see cref="Stats.HP"/>.</summary>
 		MOOMOO_MILK = 33,
-		/// <summary>Used on a party Pokémon :   Restores 50 [HP]{mechanic:hp}.  Decreases [happiness]{mechanic:happiness} by 5/5/10.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 50 <see cref="Stats.HP"/>.  Decreases <see cref="IPokemon.Happiness"/> by 5/5/10.</summary>
 		ENERGY_POWDER = 34,
-		/// <summary>Used on a party Pokémon :   Restores 200 [HP]{mechanic:hp}.  Decreases [happiness]{mechanic:happiness} by 10/10/15.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 200 <see cref="Stats.HP"/>.  Decreases <see cref="IPokemon.Happiness"/> by 10/10/15.</summary>
 		ENERGY_ROOT = 35,
-		/// <summary>Used on a party Pokémon :   Cures any [status ailment]{mechanic:status-ailment}.  Decreases [happiness]{mechanic:happiness} by 5/5/10.</summary>
+		/// <summary>Used on a party Pokémon :   Cures any <see cref="IBattler.Status"/>.  Decreases <see cref="IPokemon.Happiness"/> by 5/5/10.</summary>
 		HEAL_POWDER = 36,
-		/// <summary>Used on a party Pokémon :   Revives a [fainted]{mechanic:faint} Pokémon and restores its [HP]{mechanic:hp} to full.  Decreases [happiness]{mechanic:happiness} by 10/10/15.</summary>
+		/// <summary>Used on a party Pokémon :   Revives a <see cref="Status.FAINT"/> Pokémon and restores its <see cref="Stats.HP"/> to full.  Decreases <see cref="IPokemon.Happiness"/> by 10/10/15.</summary>
 		REVIVAL_HERB = 37,
-		/// <summary>Used on a party Pokémon :   Restores 10 [PP]{mechanic:pp} for a selected move.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 10 <see cref="IMove.PP"/> for a selected move.</summary>
 		ETHER = 38,
-		/// <summary>Used on a party Pokémon :   Restores [PP]{mechanic:pp} to full for a selected move.</summary>
+		/// <summary>Used on a party Pokémon :   Restores <see cref="IMove.PP"/> to full for a selected move.</summary>
 		MAX_ETHER = 39,
-		/// <summary>Used on a party Pokémon :   Restores 10 [PP]{mechanic:pp} for each move.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 10 <see cref="IMove.PP"/> for each move.</summary>
 		ELIXIR = 40,
-		/// <summary>Used on a party Pokémon :   Restores [PP]{mechanic:pp} to full for each move.</summary>
+		/// <summary>Used on a party Pokémon :   Restores <see cref="IMove.PP"/> to full for each move.</summary>
 		MAX_ELIXIR = 41,
-		/// <summary>Used on a party Pokémon :   Cures any [status ailment]{mechanic:status-ailment} and [confusion]{mechanic:confusion}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures any <see cref="IBattler.Status"/> and <see cref="IEffectsBattler.Confusion"/>.</summary>
 		LAVA_COOKIE = 42,
-		/// <summary>Used on a party Pokémon :   Restores 20 [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a party Pokémon :   Restores 20 <see cref="Stats.HP"/>.</summary>
 		BERRY_JUICE = 43,
-		/// <summary>Used :   Revives all [fainted]{mechanic:faint} Pokémon in the party and restores their [HP]{mechanic:hp} to full.</summary>
+		/// <summary>Used :   Revives all <see cref="Status.FAINT"/> Pokémon in the party and restores their <see cref="Stats.HP"/> to full.</summary>
 		SACRED_ASH = 44,
-		/// <summary>Used on a party Pokémon :   Increases [HP]{mechanic:hp} [effort]{mechanic:effort} by 10, but won't increase it beyond 100.  Increases [happiness]{mechanic:happiness} by 5/3/2.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="Stats.HP"/> <see cref="IPokemon.EV"/> by 10, but won't increase it beyond 100.  Increases <see cref="IPokemon.Happiness"/> by 5/3/2.</summary>
 		HP_UP = 45,
-		/// <summary>Used on a party Pokémon :   Increases [Attack]{mechanic:attack} [effort]{mechanic:effort} by 10, but won't increase it beyond 100.  Increases [happiness]{mechanic:happiness} by 5/3/2.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="Stats.ATTACK"/> <see cref="IPokemon.EV"/> by 10, but won't increase it beyond 100.  Increases <see cref="IPokemon.Happiness"/> by 5/3/2.</summary>
 		PROTEIN = 46,
-		/// <summary>Used on a party Pokémon :   Increases [Defense]{mechanic:defense} [effort]{mechanic:effort} by 10, but won't increase it beyond 100.  Increases [happiness]{mechanic:happiness} by 5/3/2.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="Stats.DEFENSE"/> <see cref="IPokemon.EV"/> by 10, but won't increase it beyond 100.  Increases <see cref="IPokemon.Happiness"/> by 5/3/2.</summary>
 		IRON = 47,
-		/// <summary>Used on a party Pokémon :   Increases [Speed]{mechanic:speed} [effort]{mechanic:effort} by 10, but won't increase it beyond 100.  Increases [happiness]{mechanic:happiness} by 5/3/2.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="Stats.SPEED"/> <see cref="IPokemon.EV"/> by 10, but won't increase it beyond 100.  Increases <see cref="IPokemon.Happiness"/> by 5/3/2.</summary>
 		CARBOS = 48,
-		/// <summary>Used on a party Pokémon :   Increases [Special Attack]{mechanic:special-attack} [effort]{mechanic:effort} by 10, but won't increase it beyond 100.  Increases [happiness]{mechanic:happiness} by 5/3/2.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="Stats.SPATK"/> <see cref="IPokemon.EV"/> by 10, but won't increase it beyond 100.  Increases <see cref="IPokemon.Happiness"/> by 5/3/2.</summary>
 		CALCIUM = 49,
-		/// <summary>Used on a party Pokémon :   Increases level by 1.  Increases [happiness]{mechanic:happiness} by 5/3/2.</summary>
+		/// <summary>Used on a party Pokémon :   Increases level by 1.  Increases <see cref="IPokemon.Happiness"/> by 5/3/2.</summary>
 		RARE_CANDY = 50,
-		/// <summary>Used on a party Pokémon :   Increases a selected move's max [PP]{mechanic:pp} by 20% its original max PP, to a maximum of 1.6×.  Increases [happiness]{mechanic:happiness} by 5/3/2.</summary>
+		/// <summary>Used on a party Pokémon :   Increases a selected move's max <see cref="IMove.PP"/> by 20% its original max PP, to a maximum of 1.6×.  Increases <see cref="IPokemon.Happiness"/> by 5/3/2.</summary>
 		PP_UP = 51,
-		/// <summary>Used on a party Pokémon :   Increases [Special Defense]{mechanic:special-defense} [effort]{mechanic:effort} by 10, but won't increase it beyond 100.  Increases [happiness]{mechanic:happiness} by 5/3/2.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="Stats.SPDEF"/> <see cref="IPokemon.EV"/> by 10, but won't increase it beyond 100.  Increases <see cref="IPokemon.Happiness"/> by 5/3/2.</summary>
 		ZINC = 52,
-		/// <summary>Used on a party Pokémon :   Increases a selected move's max [PP]{mechanic:pp} to 1.6× its original max PP.  Increases [happiness]{mechanic:happiness} by 5/3/2.</summary>
+		/// <summary>Used on a party Pokémon :   Increases a selected move's max <see cref="IMove.PP"/> to 1.6× its original max PP.  Increases <see cref="IPokemon.Happiness"/> by 5/3/2.</summary>
 		PP_MAX = 53,
-		/// <summary>Used on a party Pokémon :   Cures any [status ailment]{mechanic:status-ailment} and [confusion]{mechanic:confusion}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures any <see cref="IBattler.Status"/> and <see cref="IEffectsBattler.Confusion"/>.</summary>
 		OLD_GATEAU = 54,
 		/// <summary>Used on a party Pokémon in battle :   Protects the target's stats from being [lowered]{mechanic:lower} for the next five turns.  Increases happiness by 1/1/0.</summary>
 		GUARD_SPEC = 55,
-		/// <summary>Used on a party Pokémon in battle :   Increases the target's [critical hit chance]{mechanic:critical-hit-chance} by one stage until it leaves the field.  Increases happiness by 1/1/0.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Increases the target's [critical hit chance]{mechanic:critical_hit_chance} by one stage until it leaves the field.  Increases happiness by 1/1/0.</summary>
 		DIRE_HIT = 56,
-		/// <summary>Used on a party Pokémon in battle :   [Raises]{mechanic:raise} the target's [Attack]{mechanic:attack} by one stage.  Increases happiness by 1/1/0.</summary>
+		/// <summary>Used on a party Pokémon in battle :   <see cref="MetaCategory.NET_GOOD_STATS"/> the target's <see cref="Stats.ATTACK"/> by one stage.  Increases happiness by 1/1/0.</summary>
 		X_ATTACK = 57,
-		/// <summary>Used on a party Pokémon in battle :   [Raises]{mechanic:raise} the target's [Defense]{mechanic:defense} by one stage.  Increases happiness by 1/1/0.</summary>
+		/// <summary>Used on a party Pokémon in battle :   <see cref="MetaCategory.NET_GOOD_STATS"/> the target's <see cref="Stats.DEFENSE"/> by one stage.  Increases happiness by 1/1/0.</summary>
 		X_DEFENSE = 58,
-		/// <summary>Used on a party Pokémon in battle :   [Raises]{mechanic:raise} the target's [Speed]{mechanic:speed} by one stage.  Increases happiness by 1/1/0.</summary>
+		/// <summary>Used on a party Pokémon in battle :   <see cref="MetaCategory.NET_GOOD_STATS"/> the target's <see cref="Stats.SPEED"/> by one stage.  Increases happiness by 1/1/0.</summary>
 		X_SPEED = 59,
-		/// <summary>Used on a party Pokémon in battle :   [Raises]{mechanic:raise} the target's [accuracy]{mechanic:accuracy} by one stage.  Increases happiness by 1/1/0.</summary>
+		/// <summary>Used on a party Pokémon in battle :   <see cref="MetaCategory.NET_GOOD_STATS"/> the target's <see cref="Stats.ACCURACY"/> by one stage.  Increases happiness by 1/1/0.</summary>
 		X_ACCURACY = 60,
-		/// <summary>Used on a party Pokémon in battle :   [Raises]{mechanic:raise} the target's [Special Attack]{mechanic:special-attack} by one stage.  Increases happiness by 1/1/0.</summary>
+		/// <summary>Used on a party Pokémon in battle :   <see cref="MetaCategory.NET_GOOD_STATS"/> the target's <see cref="Stats.SPATK"/> by one stage.  Increases happiness by 1/1/0.</summary>
 		X_SP_ATK = 61,
-		/// <summary>Used on a party Pokémon in battle :   [Raises]{mechanic:raise} the target's [Special Defense]{mechanic:special-defense} by one stage.  Increases happiness by 1/1/0.</summary>
+		/// <summary>Used on a party Pokémon in battle :   <see cref="MetaCategory.NET_GOOD_STATS"/> the target's <see cref="Stats.SPDEF"/> by one stage.  Increases happiness by 1/1/0.</summary>
 		X_SP_DEF = 62,
 		/// <summary>Used in battle :   Ends a wild battle.  Cannot be used in trainer battles.</summary>
 		POKE_DOLL = 63,
 		/// <summary>Used in battle :   Ends a wild battle.  Cannot be used in trainer battles.</summary>
 		FLUFFY_TAIL = 64,
-		/// <summary>Used on a party Pokémon :   Cures [sleep]{mechanic:sleep}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures <see cref="Status.SLEEP"/>.</summary>
 		BLUE_FLUTE = 65,
-		/// <summary>Used on a party Pokémon in battle :   Cures [confusion]{mechanic:confusion}.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Cures <see cref="IEffectsBattler.Confusion"/>.</summary>
 		YELLOW_FLUTE = 66,
 		/// <summary>Used on a party Pokémon in battle :   Cures [attraction]{mechanic:attraction}.</summary>
 		RED_FLUTE = 67,
@@ -158,33 +164,33 @@
 		SHOAL_SALT = 70,
 		/// <summary>No effect.</summary>
 		SHOAL_SHELL = 71,
-		/// <summary>No effect.  In Diamond and Pearl, trade ten for a []{move:sunny-day} [TM]{item:tm11} in the house midway along the southern section of []{location:sinnoh-route-212}.  In Platinum, trade to [move tutors]{mechanic:move-tutor} on []{location:sinnoh-route-212}, in []{location:snowpoint-city}, and in the []{location:survival-area}.  Eight shards total are required per tutelage, but the particular combination of colors varies by move.  In HeartGold and SoulSilver, trade one for a []{item:cheri-berry}, a []{item:leppa-berry}, and a []{item:pecha-berry} with the Juggler near the Pokémon Center in []{location:violet-city}.  In HeartGold and SoulSilver, trade one for a []{item:persim-berry}, a []{item:pomeg-berry}, and a []{item:razz-berry} with the Juggler near the []{location:pal-park} entrance in []{location:fuchsia-city}.</summary>
+		/// <summary>No effect.  In Diamond and Pearl, trade ten for a <see cref="Moves.SUNNY_DAY"/> <see cref="Items.TM11"/> in the house midway along the southern section of <see cref="Locations.SINNOH_ROUTE_212"/>.  In Platinum, trade to [move tutors]{mechanic:move_tutor} on <see cref="Locations.SINNOH_ROUTE_212"/>, in <see cref="Locations.SNOWPOINT_CITY"/>, and in the <see cref="Locations.SURVIVAL_AREA"/>.  Eight shards total are required per tutelage, but the particular combination of colors varies by move.  In HeartGold and SoulSilver, trade one for a <see cref="Items.CHERI_BERRY"/>, a <see cref="Items.LEPPA_BERRY"/>, and a <see cref="Items.PECHA_BERRY"/> with the Juggler near the Pokémon Center in <see cref="Locations.VIOLET_CITY"/>.  In HeartGold and SoulSilver, trade one for a <see cref="Items.PERSIM_BERRY"/>, a <see cref="Items.POMEG_BERRY"/>, and a <see cref="Items.RAZZ_BERRY"/> with the Juggler near the <see cref="Locations.PAL_PARK"/> entrance in <see cref="Locations.FUCHSIA_CITY"/>.</summary>
 		RED_SHARD = 72,
-		/// <summary>No effect.  In Diamond and Pearl, trade ten for a []{move:rain-dance} [TM]{item:tm18} in the house midway along the southern section of []{location:sinnoh-route-212}.  In Platinum, trade to [move tutors]{mechanic:move-tutor} on []{location:sinnoh-route-212}, in []{location:snowpoint-city}, and in the []{location:survival-area}.  Eight shards total are required per tutelage, but the particular combination of colors varies by move.  In HeartGold and SoulSilver, trade one for a []{item:chesto-berry}, an []{item:oran-berry}, and a []{item:wiki-berry} with the Juggler near the Pokémon Center in []{location:violet-city}.  In HeartGold and SoulSilver, trade one for a []{item:bluk-berry}, a []{item:cornn-berry}, and a []{item:kelpsy-berry} with the Juggler near the []{location:pal-park} entrance in []{location:fuchsia-city}.</summary>
+		/// <summary>No effect.  In Diamond and Pearl, trade ten for a <see cref="Moves.RAIN_DANCE"/> <see cref="Items.TM18"/> in the house midway along the southern section of <see cref="Locations.SINNOH_ROUTE_212"/>.  In Platinum, trade to [move tutors]{mechanic:move_tutor} on <see cref="Locations.SINNOH_ROUTE_212"/>, in <see cref="Locations.SNOWPOINT_CITY"/>, and in the <see cref="Locations.SURVIVAL_AREA"/>.  Eight shards total are required per tutelage, but the particular combination of colors varies by move.  In HeartGold and SoulSilver, trade one for a <see cref="Items.CHESTO_BERRY"/>, an <see cref="Items.ORAN_BERRY"/>, and a <see cref="Items.WIKI_BERRY"/> with the Juggler near the Pokémon Center in <see cref="Locations.VIOLET_CITY"/>.  In HeartGold and SoulSilver, trade one for a <see cref="Items.BLUK_BERRY"/>, a <see cref="Items.CORNN_BERRY"/>, and a <see cref="Items.KELPSY_BERRY"/> with the Juggler near the <see cref="Locations.PAL_PARK"/> entrance in <see cref="Locations.FUCHSIA_CITY"/>.</summary>
 		BLUE_SHARD = 73,
-		/// <summary>No effect.  In Diamond and Pearl, trade ten for a []{move:sandstorm} [TM]{item:tm37} in the house midway along the southern section of []{location:sinnoh-route-212}.  In Platinum, trade to [move tutors]{mechanic:move-tutor} on []{location:sinnoh-route-212}, in []{location:snowpoint-city}, and in the []{location:survival-area}.  Eight shards total are required per tutelage, but the particular combination of colors varies by move.  In HeartGold and SoulSilver, trade one for an []{item:aspear-berry}, a []{item:iapapa-berry}, and a []{item:sitrus-berry} with the Juggler near the Pokémon Center in []{location:violet-city}.  In HeartGold and SoulSilver, trade one for a []{item:grepa-berry}, a []{item:nomel-berry}, and a []{item:pinap-berry} with the Juggler near the []{location:pal-park} entrance in []{location:fuchsia-city}.</summary>
+		/// <summary>No effect.  In Diamond and Pearl, trade ten for a <see cref="Moves.SANDSTORM"/> <see cref="Items.TM37"/> in the house midway along the southern section of <see cref="Locations.SINNOH_ROUTE_212"/>.  In Platinum, trade to [move tutors]{mechanic:move_tutor} on <see cref="Locations.SINNOH_ROUTE_212"/>, in <see cref="Locations.SNOWPOINT_CITY"/>, and in the <see cref="Locations.SURVIVAL_AREA"/>.  Eight shards total are required per tutelage, but the particular combination of colors varies by move.  In HeartGold and SoulSilver, trade one for an <see cref="Items.ASPEAR_BERRY"/>, a <see cref="Items.IAPAPA_BERRY"/>, and a <see cref="Items.SITRUS_BERRY"/> with the Juggler near the Pokémon Center in <see cref="Locations.VIOLET_CITY"/>.  In HeartGold and SoulSilver, trade one for a <see cref="Items.GREPA_BERRY"/>, a <see cref="Items.NOMEL_BERRY"/>, and a <see cref="Items.PINAP_BERRY"/> with the Juggler near the <see cref="Locations.PAL_PARK"/> entrance in <see cref="Locations.FUCHSIA_CITY"/>.</summary>
 		YELLOW_SHARD = 74,
-		/// <summary>No effect.  In Diamond and Pearl, trade ten for a []{move:hail} [TM]{item:tm07} in the house midway along the southern section of []{location:sinnoh-route-212}.  In Platinum, trade to [move tutors]{mechanic:move-tutor} on []{location:sinnoh-route-212}, in []{location:snowpoint-city}, and in the []{location:survival-area}.  Eight shards total are required per tutelage, but the particular combination of colors varies by move.  In HeartGold and SoulSilver, trade one for an []{item:aguav-berry}, a []{item:lum-berry}, and a []{item:rawst-berry} with the Juggler near the Pokémon Center in []{location:violet-city}.  In HeartGold and SoulSilver, trade one for a []{item:durin-berry}, a []{item:hondew-berry}, and a []{item:wepear-berry} with the Juggler near the []{location:pal-park} entrance in []{location:fuchsia-city}.</summary>
+		/// <summary>No effect.  In Diamond and Pearl, trade ten for a <see cref="Moves.HAIL"/> <see cref="Items.TM07"/> in the house midway along the southern section of <see cref="Locations.SINNOH_ROUTE_212"/>.  In Platinum, trade to [move tutors]{mechanic:move_tutor} on <see cref="Locations.SINNOH_ROUTE_212"/>, in <see cref="Locations.SNOWPOINT_CITY"/>, and in the <see cref="Locations.SURVIVAL_AREA"/>.  Eight shards total are required per tutelage, but the particular combination of colors varies by move.  In HeartGold and SoulSilver, trade one for an <see cref="Items.AGUAV_BERRY"/>, a <see cref="Items.LUM_BERRY"/>, and a <see cref="Items.RAWST_BERRY"/> with the Juggler near the Pokémon Center in <see cref="Locations.VIOLET_CITY"/>.  In HeartGold and SoulSilver, trade one for a <see cref="Items.DURIN_BERRY"/>, a <see cref="Items.HONDEW_BERRY"/>, and a <see cref="Items.WEPEAR_BERRY"/> with the Juggler near the <see cref="Locations.PAL_PARK"/> entrance in <see cref="Locations.FUCHSIA_CITY"/>.</summary>
 		GREEN_SHARD = 75,
 		/// <summary>Used outside of battle :   Trainer will skip encounters with wild Pokémon of a lower level than the lead party Pokémon.  This effect wears off after the trainer takes 200 steps.</summary>
 		SUPER_REPEL = 76,
 		/// <summary>Used outside of battle :   Trainer will skip encounters with wild Pokémon of a lower level than the lead party Pokémon.  This effect wears off after the trainer takes 250 steps.</summary>
 		MAX_REPEL = 77,
-		/// <summary>Used outside of battle :   Transports the trainer to the last-entered dungeon entrance.  Cannot be used outside, in buildings, or in []{location:distortion-world}, []{location:sinnoh-hall-of-origin-1}, []{location:spear-pillar}, or []{location:turnback-cave}.</summary>
+		/// <summary>Used outside of battle :   Transports the trainer to the last-entered dungeon entrance.  Cannot be used outside, in buildings, or in <see cref="Locations.DISTORTION_WORLD"/>, <see cref="Locations.SINNOH_HALL_OF_ORIGIN_1"/>, <see cref="Locations.SPEAR_PILLAR"/>, or <see cref="Locations.TURNBACK_CAVE"/>.</summary>
 		ESCAPE_ROPE = 78,
 		/// <summary>Used outside of battle :   Trainer will skip encounters with wild Pokémon of a lower level than the lead party Pokémon.  This effect wears off after the trainer takes 100 steps.</summary>
 		REPEL = 79,
-		/// <summary>Used on a party Pokémon :   Evolves a []{pokemon:cottonee} into []{pokemon:whimsicott}, a []{pokemon:gloom} into []{pokemon:bellossom}, a []{pokemon:petilil} into []{pokemon:lilligant}, or a []{pokemon:sunkern} into []{pokemon:sunflora}.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves a <see cref="Pokemons.COTTONEE"/> into <see cref="Pokemons.WHIMSICOTT"/>, a <see cref="Pokemons.GLOOM"/> into <see cref="Pokemons.BELLOSSOM"/>, a <see cref="Pokemons.PETILIL"/> into <see cref="Pokemons.LILLIGANT"/>, or a <see cref="Pokemons.SUNKERN"/> into <see cref="Pokemons.SUNFLORA"/>.</summary>
 		SUN_STONE = 80,
-		/// <summary>Used on a party Pokémon :   Evolves a []{pokemon:clefairy} into []{pokemon:clefable}, a []{pokemon:jigglypuff} into []{pokemon:wigglytuff}, a []{pokemon:munna} into []{pokemon:musharna}, a []{pokemon:nidorina} into []{pokemon:nidoqueen}, a []{pokemon:nidorino} into []{pokemon:nidoking}, or a []{pokemon:skitty} into []{pokemon:delcatty}.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves a <see cref="Pokemons.CLEFAIRY"/> into <see cref="Pokemons.CLEFABLE"/>, a <see cref="Pokemons.JIGGLYPUFF"/> into <see cref="Pokemons.WIGGLYTUFF"/>, a <see cref="Pokemons.MUNNA"/> into <see cref="Pokemons.MUSHARNA"/>, a <see cref="Pokemons.NIDORINA"/> into <see cref="Pokemons.NIDOQUEEN"/>, a <see cref="Pokemons.NIDORINO"/> into <see cref="Pokemons.NIDOKING"/>, or a <see cref="Pokemons.SKITTY"/> into <see cref="Pokemons.DELCATTY"/>.</summary>
 		MOON_STONE = 81,
-		/// <summary>Used on a party Pokémon :   Evolves an []{pokemon:eevee} into []{pokemon:flareon}, a []{pokemon:growlithe} into []{pokemon:arcanine}, a []{pokemon:pansear} into []{pokemon:simisear}, or a []{pokemon:vulpix} into []{pokemon:ninetales}.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves an <see cref="Pokemons.EEVEE"/> into <see cref="Pokemons.FLAREON"/>, a <see cref="Pokemons.GROWLITHE"/> into <see cref="Pokemons.ARCANINE"/>, a <see cref="Pokemons.PANSEAR"/> into <see cref="Pokemons.SIMISEAR"/>, or a <see cref="Pokemons.VULPIX"/> into <see cref="Pokemons.NINETALES"/>.</summary>
 		FIRE_STONE = 82,
-		/// <summary>Used on a party Pokémon :   Evolves an []{pokemon:eelektrik} into []{pokemon:eelektross}, an []{pokemon:eevee} into []{pokemon:jolteon}, or a []{pokemon:pikachu} into []{pokemon:raichu}.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves an <see cref="Pokemons.EELEKTRIK"/> into <see cref="Pokemons.EELEKTROSS"/>, an <see cref="Pokemons.EEVEE"/> into <see cref="Pokemons.JOLTEON"/>, or a <see cref="Pokemons.PIKACHU"/> into <see cref="Pokemons.RAICHU"/>.</summary>
 		THUNDER_STONE = 83,
-		/// <summary>Used on a party Pokémon :   Evolves an []{pokemon:eevee} into []{pokemon:vaporeon}, a []{pokemon:lombre} into []{pokemon:ludicolo}, a []{pokemon:panpour} into []{pokemon:simipour}, a []{pokemon:poliwhirl} into []{pokemon:poliwrath}, a []{pokemon:shellder} into []{pokemon:cloyster}, or a []{pokemon:staryu} into []{pokemon:starmie}.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves an <see cref="Pokemons.EEVEE"/> into <see cref="Pokemons.VAPOREON"/>, a <see cref="Pokemons.LOMBRE"/> into <see cref="Pokemons.LUDICOLO"/>, a <see cref="Pokemons.PANPOUR"/> into <see cref="Pokemons.SIMIPOUR"/>, a <see cref="Pokemons.POLIWHIRL"/> into <see cref="Pokemons.POLIWRATH"/>, a <see cref="Pokemons.SHELLDER"/> into <see cref="Pokemons.CLOYSTER"/>, or a <see cref="Pokemons.STARYU"/> into <see cref="Pokemons.STARMIE"/>.</summary>
 		WATER_STONE = 84,
-		/// <summary>Used on a party Pokémon :   Evolves an []{pokemon:exeggcute} into []{pokemon:exeggutor}, a []{pokemon:gloom} into []{pokemon:vileplume}, a []{pokemon:nuzleaf} into []{pokemon:shiftry}, a []{pokemon:pansage} into []{pokemon:simisage}, or a []{pokemon:weepinbell} into []{pokemon:victreebel}.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves an <see cref="Pokemons.EXEGGCUTE"/> into <see cref="Pokemons.EXEGGUTOR"/>, a <see cref="Pokemons.GLOOM"/> into <see cref="Pokemons.VILEPLUME"/>, a <see cref="Pokemons.NUZLEAF"/> into <see cref="Pokemons.SHIFTRY"/>, a <see cref="Pokemons.PANSAGE"/> into <see cref="Pokemons.SIMISAGE"/>, or a <see cref="Pokemons.WEEPINBELL"/> into <see cref="Pokemons.VICTREEBEL"/>.</summary>
 		LEAF_STONE = 85,
 		/// <summary>Vendor trash.</summary>
 		TINY_MUSHROOM = 86,
@@ -200,7 +206,7 @@
 		STAR_PIECE = 91,
 		/// <summary>Vendor trash.</summary>
 		NUGGET = 92,
-		/// <summary>Trade one to the Move Relearner near the shore in []{location:pastoria-city} or with the Move Deleter in []{location:blackthorn-city} to teach one party Pokémon a prior level-up move.</summary>
+		/// <summary>Trade one to the Move Relearner near the shore in <see cref="Locations.PASTORIA_CITY"/> or with the Move Deleter in <see cref="Locations.BLACKTHORN_CITY"/> to teach one party Pokémon a prior level-up move.</summary>
 		HEART_SCALE = 93,
 		/// <summary>Used outside of battle :   Immediately triggers a wild Pokémon battle, as long as the trainer is somewhere with wild Pokémon—i.e., in tall grass, in a cave, or surfing.  Can be smeared on sweet-smelling trees to attract tree-dwelling Pokémon after six hours.</summary>
 		HONEY = 94,
@@ -212,35 +218,35 @@
 		STABLE_MULCH = 97,
 		/// <summary>Used on a path of soil :   Plant will regrow after dying 25% more times.</summary>
 		GOOEY_MULCH = 98,
-		/// <summary>Give to a scientist in the []{location:mining-museum} in []{location:oreburgh-city} or the Museum of Science in []{location:pewter-city} to receive a []{pokemon:lileep}.</summary>
+		/// <summary>Give to a scientist in the <see cref="Locations.MINING_MUSEUM"/> in <see cref="Locations.OREBURGH_CITY"/> or the Museum of Science in <see cref="Locations.PEWTER_CITY"/> to receive a <see cref="Pokemons.LILEEP"/>.</summary>
 		ROOT_FOSSIL = 99,
-		/// <summary>Give to a scientist in the []{location:mining-museum} in []{location:oreburgh-city} or the Museum of Science in []{location:pewter-city} to receive a []{pokemon:anorith}.</summary>
+		/// <summary>Give to a scientist in the <see cref="Locations.MINING_MUSEUM"/> in <see cref="Locations.OREBURGH_CITY"/> or the Museum of Science in <see cref="Locations.PEWTER_CITY"/> to receive a <see cref="Pokemons.ANORITH"/>.</summary>
 		CLAW_FOSSIL = 100,
-		/// <summary>Give to a scientist in the []{location:mining-museum} in []{location:oreburgh-city} or the Museum of Science in []{location:pewter-city} to receive a []{pokemon:omanyte}.</summary>
+		/// <summary>Give to a scientist in the <see cref="Locations.MINING_MUSEUM"/> in <see cref="Locations.OREBURGH_CITY"/> or the Museum of Science in <see cref="Locations.PEWTER_CITY"/> to receive a <see cref="Pokemons.OMANYTE"/>.</summary>
 		HELIX_FOSSIL = 101,
-		/// <summary>Give to a scientist in the []{location:mining-museum} in []{location:oreburgh-city} or the Museum of Science in []{location:pewter-city} to receive a []{pokemon:kabuto}.</summary>
+		/// <summary>Give to a scientist in the <see cref="Locations.MINING_MUSEUM"/> in <see cref="Locations.OREBURGH_CITY"/> or the Museum of Science in <see cref="Locations.PEWTER_CITY"/> to receive a <see cref="Pokemons.KABUTO"/>.</summary>
 		DOME_FOSSIL = 102,
-		/// <summary>Give to a scientist in the []{location:mining-museum} in []{location:oreburgh-city} or the Museum of Science in []{location:pewter-city} to receive a []{pokemon:aerodactyl}.</summary>
+		/// <summary>Give to a scientist in the <see cref="Locations.MINING_MUSEUM"/> in <see cref="Locations.OREBURGH_CITY"/> or the Museum of Science in <see cref="Locations.PEWTER_CITY"/> to receive a <see cref="Pokemons.AERODACTYL"/>.</summary>
 		OLD_AMBER = 103,
-		/// <summary>Give to a scientist in the []{location:mining-museum} in []{location:oreburgh-city} or the Museum of Science in []{location:pewter-city} to receive a []{pokemon:shieldon}.</summary>
+		/// <summary>Give to a scientist in the <see cref="Locations.MINING_MUSEUM"/> in <see cref="Locations.OREBURGH_CITY"/> or the Museum of Science in <see cref="Locations.PEWTER_CITY"/> to receive a <see cref="Pokemons.SHIELDON"/>.</summary>
 		ARMOR_FOSSIL = 104,
-		/// <summary>Give to a scientist in the []{location:mining-museum} in []{location:oreburgh-city} or the Museum of Science in []{location:pewter-city} to receive a []{pokemon:cranidos}.</summary>
+		/// <summary>Give to a scientist in the <see cref="Locations.MINING_MUSEUM"/> in <see cref="Locations.OREBURGH_CITY"/> or the Museum of Science in <see cref="Locations.PEWTER_CITY"/> to receive a <see cref="Pokemons.CRANIDOS"/>.</summary>
 		SKULL_FOSSIL = 105,
 		/// <summary>Vendor trash.</summary>
 		RARE_BONE = 106,
-		/// <summary>Used on a party Pokémon :   Evolves a []{pokemon:minccino} into []{pokemon:cinccino}, a []{pokemon:roselia} into []{pokemon:roserade}, or a []{pokemon:togetic} into []{pokemon:togekiss}.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves a <see cref="Pokemons.MINCCINO"/> into <see cref="Pokemons.CINCCINO"/>, a <see cref="Pokemons.ROSELIA"/> into <see cref="Pokemons.ROSERADE"/>, or a <see cref="Pokemons.TOGETIC"/> into <see cref="Pokemons.TOGEKISS"/>.</summary>
 		SHINY_STONE = 107,
-		/// <summary>Used on a party Pokémon :   Evolves a []{pokemon:lampent} into []{pokemon:chandelure}, a []{pokemon:misdreavus} into []{pokemon:mismagius}, or a []{pokemon:murkrow} into []{pokemon:honchkrow}.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves a <see cref="Pokemons.LAMPENT"/> into <see cref="Pokemons.CHANDELURE"/>, a <see cref="Pokemons.MISDREAVUS"/> into <see cref="Pokemons.MISMAGIUS"/>, or a <see cref="Pokemons.MURKROW"/> into <see cref="Pokemons.HONCHKROW"/>.</summary>
 		DUSK_STONE = 108,
-		/// <summary>Used on a party Pokémon :   Evolves a male []{pokemon:kirlia} into []{pokemon:gallade} or a female []{pokemon:snorunt} into []{pokemon:froslass}.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves a male <see cref="Pokemons.KIRLIA"/> into <see cref="Pokemons.GALLADE"/> or a female <see cref="Pokemons.SNORUNT"/> into <see cref="Pokemons.FROSLASS"/>.</summary>
 		DAWN_STONE = 109,
-		/// <summary>Held by []{pokemon:happiny} :   Holder evolves into []{pokemon:chansey} when it levels up during the daytime.</summary>
+		/// <summary>Held by <see cref="Pokemons.HAPPINY"/> :   Holder evolves into <see cref="Pokemons.CHANSEY"/> when it levels up during the daytime.</summary>
 		OVAL_STONE = 110,
-		/// <summary>Place in the tower on []{location:sinnoh-route-209}.  Check the stone to encounter a []{pokemon:spiritomb}, as long as the trainer's Underground status card counts at least 32 greetings.</summary>
+		/// <summary>Place in the tower on <see cref="Locations.SINNOH_ROUTE_209"/>.  Check the stone to encounter a <see cref="Pokemons.SPIRITOMB"/>, as long as the trainer's Underground status card counts at least 32 greetings.</summary>
 		ODD_KEYSTONE = 111,
-		/// <summary>Held by []{pokemon:dialga} :   Holder's []{type:dragon}- and []{type:steel}-type moves have 1.2× their usual power.</summary>
+		/// <summary>Held by <see cref="Pokemons.DIALGA"/> :   Holder's <see cref="Types.DRAGON"/>- and <see cref="Types.STEEL"/>-type moves have 1.2× their usual power.</summary>
 		ADAMANT_ORB = 112,
-		/// <summary>Held by []{pokemon:palkia} :   Holder's []{type:dragon}- and []{type:water}-type moves have 1.2× their usual power.</summary>
+		/// <summary>Held by <see cref="Pokemons.PALKIA"/> :   Holder's <see cref="Types.DRAGON"/>- and <see cref="Types.WATER"/>-type moves have 1.2× their usual power.</summary>
 		LUSTROUS_ORB = 113,
 		/// <summary>Used to send short messages to other players via Pokémon trading.  Trainer may compose a message from a finite list of words when giving this item to a Pokémon.  Once taken and read, a message may be erased and this item can be reused, or the message may be stored in the trainer's PC.  Held :   Holder cannot be placed in the PC.  Any move attempting to remove this item from the holder will fail.</summary>
 		GRASS_MAIL = 114,
@@ -266,35 +272,35 @@
 		MOSAIC_MAIL = 124,
 		/// <summary>Used to send short messages to other players via Pokémon trading.  Trainer may compose a message from a finite list of words when giving this item to a Pokémon.  Once taken and read, a message may be erased and this item can be reused, or the message may be stored in the trainer's PC.  Held :   Holder cannot be placed in the PC.  Any move attempting to remove this item from the holder will fail.</summary>
 		BRICK_MAIL = 125,
-		/// <summary>Held in battle :   When the holder is [paralyzed]{mechanic:paralysis}, it consumes this item to cure the paralysis.  Used on a party Pokémon :   Cures [paralysis]{mechanic:paralysis}.</summary>
+		/// <summary>Held in battle :   When the holder is <see cref="Status.PARALYSIS"/>, it consumes this item to cure the paralysis.  Used on a party Pokémon :   Cures <see cref="Status.PARALYSIS"/>.</summary>
 		CHERI_BERRY = 126,
-		/// <summary>Held in battle :   When the holder is [asleep]{mechanic:sleep}, it consumes this item to wake up.  Used on a party Pokémon :   Cures [sleep]{mechanic:sleep}.</summary>
+		/// <summary>Held in battle :   When the holder is <see cref="Status.SLEEP"/>, it consumes this item to wake up.  Used on a party Pokémon :   Cures <see cref="Status.SLEEP"/>.</summary>
 		CHESTO_BERRY = 127,
-		/// <summary>Held in battle :   When the holder is [poisoned]{mechanic:poison}, it consumes this item to cure the poison.  Used on a party Pokémon :   Cures [poison]{mechanic:poison}.</summary>
+		/// <summary>Held in battle :   When the holder is <see cref="Status.POISON"/>, it consumes this item to cure the poison.  Used on a party Pokémon :   Cures <see cref="Status.POISON"/>.</summary>
 		PECHA_BERRY = 128,
-		/// <summary>Held in battle :   When the holder is [burned]{mechanic:burn}, it consumes this item to cure the burn.  Used on a party Pokémon :   Cures a [burn]{mechanic:burn}.</summary>
+		/// <summary>Held in battle :   When the holder is <see cref="Status.BURN"/>, it consumes this item to cure the burn.  Used on a party Pokémon :   Cures a <see cref="Status.BURN"/>.</summary>
 		RAWST_BERRY = 129,
-		/// <summary>Held in battle :   When the holder is [frozen]{mechanic:freezing}, it consumes this item to thaw itself.  Used on a party Pokémon :   Cures [freezing]{mechanic:freezing}.</summary>
+		/// <summary>Held in battle :   When the holder is <see cref="Status.FROZEN"/>, it consumes this item to thaw itself.  Used on a party Pokémon :   Cures <see cref="Status.FROZEN"/>.</summary>
 		ASPEAR_BERRY = 130,
-		/// <summary>Held in battle :   When the holder is out of [PP]{mechanic:pp} for one of its moves, it consumes this item to restore 10 of that move's PP.  Used on a party Pokémon :   Restores 10 [PP]{mechanic:pp} for a selected move.</summary>
+		/// <summary>Held in battle :   When the holder is out of <see cref="IMove.PP"/> for one of its moves, it consumes this item to restore 10 of that move's PP.  Used on a party Pokémon :   Restores 10 <see cref="IMove.PP"/> for a selected move.</summary>
 		LEPPA_BERRY = 131,
-		/// <summary>Held in battle :   When the holder has 1/2 its max [HP]{mechanic:hp} remaining or less, it consumes this item to restore 10 HP.  Used on a party Pokémon :   Restores 10 [HP]{mechanic:hp}.</summary>
+		/// <summary>Held in battle :   When the holder has 1/2 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to restore 10 HP.  Used on a party Pokémon :   Restores 10 <see cref="Stats.HP"/>.</summary>
 		ORAN_BERRY = 132,
-		/// <summary>Held in battle :   When the holder is [confused]{mechanic:confusion}, it consumes this item to cure the confusion.  Used on a party Pokémon :   Cures [confusion]{mechanic:confusion}.</summary>
+		/// <summary>Held in battle :   When the holder is <see cref="IEffectsBattler.Confusion"/>, it consumes this item to cure the confusion.  Used on a party Pokémon :   Cures <see cref="IEffectsBattler.Confusion"/>.</summary>
 		PERSIM_BERRY = 133,
-		/// <summary>Held in battle :   When the holder is afflicted with a [major status ailment]{mechanic:major-status-ailment}, it consumes this item to cure the ailment.  Used on a party Pokémon :   Cures any [major status ailment]{mechanic:major-status-ailment}.</summary>
+		/// <summary>Held in battle :   When the holder is afflicted with a [major status ailment]{mechanic:major_status_ailment}, it consumes this item to cure the ailment.  Used on a party Pokémon :   Cures any [major status ailment]{mechanic:major_status_ailment}.</summary>
 		LUM_BERRY = 134,
-		/// <summary>Held in battle :   When the holder has 1/2 its max [HP]{mechanic:hp} remaining or less, it consumes this item to restore 1/4 its max HP.  Used on a party Pokémon :   Restores 1/4 the Pokémon's max [HP]{mechanic:hp}.</summary>
+		/// <summary>Held in battle :   When the holder has 1/2 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to restore 1/4 its max HP.  Used on a party Pokémon :   Restores 1/4 the Pokémon's max <see cref="Stats.HP"/>.</summary>
 		SITRUS_BERRY = 135,
-		/// <summary>Held in battle :   When the holder has 1/2 its max [HP]{mechanic:hp} remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes spicy flavors (i.e., has a nature that lowers [Attack]{mechanic:attack}), it will also become [confused]{mechanic:confusion}.</summary>
+		/// <summary>Held in battle :   When the holder has 1/2 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes spicy flavors (i.e., has a nature that lowers <see cref="Stats.ATTACK"/>), it will also become <see cref="IEffectsBattler.Confusion"/>.</summary>
 		FIGY_BERRY = 136,
-		/// <summary>Held in battle :   When the holder has 1/2 its max [HP]{mechanic:hp} remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes dry flavors (i.e., has a nature that lowers [Special Attack]{mechanic:special-attack}), it will also become [confused]{mechanic:confusion}.</summary>
+		/// <summary>Held in battle :   When the holder has 1/2 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes dry flavors (i.e., has a nature that lowers <see cref="Stats.SPATK"/>), it will also become <see cref="IEffectsBattler.Confusion"/>.</summary>
 		WIKI_BERRY = 137,
-		/// <summary>Held in battle :   When the holder has 1/2 its max [HP]{mechanic:hp} remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes sweet flavors (i.e., has a nature that lowers [Speed]{mechanic:speed}), it will also become [confused]{mechanic:confusion}.</summary>
+		/// <summary>Held in battle :   When the holder has 1/2 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes sweet flavors (i.e., has a nature that lowers <see cref="Stats.SPEED"/>), it will also become <see cref="IEffectsBattler.Confusion"/>.</summary>
 		MAGO_BERRY = 138,
-		/// <summary>Held in battle :   When the holder has 1/2 its max [HP]{mechanic:hp} remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes bitter flavors (i.e., has a nature that lowers [Special Defense]{mechanic:special-defense}), it will also become [confused]{mechanic:confusion}.</summary>
+		/// <summary>Held in battle :   When the holder has 1/2 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes bitter flavors (i.e., has a nature that lowers <see cref="Stats.SPDEF"/>), it will also become <see cref="IEffectsBattler.Confusion"/>.</summary>
 		AGUAV_BERRY = 139,
-		/// <summary>Held in battle :   When the holder has 1/2 its max [HP]{mechanic:hp} remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes sour flavors (i.e., has a nature that lowers [Defense]{mechanic:defense}), it will also become [confused]{mechanic:confusion}.</summary>
+		/// <summary>Held in battle :   When the holder has 1/2 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to restore 1/8 its max HP.  If the holder dislikes sour flavors (i.e., has a nature that lowers <see cref="Stats.DEFENSE"/>), it will also become <see cref="IEffectsBattler.Confusion"/>.</summary>
 		IAPAPA_BERRY = 140,
 		/// <summary>No effect; only useful for planting and cooking.</summary>
 		RAZZ_BERRY = 141,
@@ -306,17 +312,17 @@
 		WEPEAR_BERRY = 144,
 		/// <summary>No effect; only useful for planting and cooking.</summary>
 		PINAP_BERRY = 145,
-		/// <summary>Used on a party Pokémon :   Increases [happiness]{mechanic:happiness} by 10/5/2.  Lowers [HP]{mechanic:hp} [effort]{mechanic:effort} by 10.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="IPokemon.Happiness"/> by 10/5/2.  Lowers <see cref="Stats.HP"/> <see cref="IPokemon.EV"/> by 10.</summary>
 		POMEG_BERRY = 146,
-		/// <summary>Used on a party Pokémon :   Increases [happiness]{mechanic:happiness} by 10/5/2.  Lowers [Attack]{mechanic:attack} [effort]{mechanic:effort} by 10.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="IPokemon.Happiness"/> by 10/5/2.  Lowers <see cref="Stats.ATTACK"/> <see cref="IPokemon.EV"/> by 10.</summary>
 		KELPSY_BERRY = 147,
-		/// <summary>Used on a party Pokémon :   Increases [happiness]{mechanic:happiness} by 10/5/2.  Lowers [Defense]{mechanic:defense} [effort]{mechanic:effort} by 10.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="IPokemon.Happiness"/> by 10/5/2.  Lowers <see cref="Stats.DEFENSE"/> <see cref="IPokemon.EV"/> by 10.</summary>
 		QUALOT_BERRY = 148,
-		/// <summary>Used on a party Pokémon :   Increases [happiness]{mechanic:happiness} by 10/5/2.  Lowers [Special Attack]{mechanic:special-attack} [effort]{mechanic:effort} by 10.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="IPokemon.Happiness"/> by 10/5/2.  Lowers <see cref="Stats.SPATK"/> <see cref="IPokemon.EV"/> by 10.</summary>
 		HONDEW_BERRY = 149,
-		/// <summary>Used on a party Pokémon :   Increases [happiness]{mechanic:happiness} by 10/5/2.  Lowers [Special Defense]{mechanic:special-defense} [effort]{mechanic:effort} by 10.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="IPokemon.Happiness"/> by 10/5/2.  Lowers <see cref="Stats.SPDEF"/> <see cref="IPokemon.EV"/> by 10.</summary>
 		GREPA_BERRY = 150,
-		/// <summary>Used on a party Pokémon :   Increases [happiness]{mechanic:happiness} by 10/5/2.  Lowers [Speed]{mechanic:speed} [effort]{mechanic:effort} by 10.</summary>
+		/// <summary>Used on a party Pokémon :   Increases <see cref="IPokemon.Happiness"/> by 10/5/2.  Lowers <see cref="Stats.SPEED"/> <see cref="IPokemon.EV"/> by 10.</summary>
 		TAMATO_BERRY = 151,
 		/// <summary>No effect; only useful for planting and cooking.</summary>
 		CORNN_BERRY = 152,
@@ -336,83 +342,83 @@
 		DURIN_BERRY = 159,
 		/// <summary>No effect; only useful for planting and cooking.</summary>
 		BELUE_BERRY = 160,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:fire}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.FIRE"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		OCCA_BERRY = 161,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:water}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.WATER"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		PASSHO_BERRY = 162,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:electric}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.ELECTRIC"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		WACAN_BERRY = 163,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:grass}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.GRASS"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		RINDO_BERRY = 164,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:ice}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.ICE"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		YACHE_BERRY = 165,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:fighting}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.FIGHTING"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		CHOPLE_BERRY = 166,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:poison}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.POISON"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		KEBIA_BERRY = 167,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:ground}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.GROUND"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		SHUCA_BERRY = 168,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:flying}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.FLYING"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		COBA_BERRY = 169,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:psychic}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.PSYCHIC"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		PAYAPA_BERRY = 170,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:bug}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.BUG"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		TANGA_BERRY = 171,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:rock}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.ROCK"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		CHARTI_BERRY = 172,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:ghost}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.GHOST"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		KASIB_BERRY = 173,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:dragon}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.DRAGON"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		HABAN_BERRY = 174,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:dark}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.DARK"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		COLBUR_BERRY = 175,
-		/// <summary>Held in battle :   When the holder would take [super-effective]{mechanic:super-effective} []{type:steel}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="TypeEffective.SuperEffective"/> <see cref="Types.STEEL"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		BABIRI_BERRY = 176,
-		/// <summary>Held in battle :   When the holder would take []{type:normal}-type damage, it consumes this item to halve the amount of damage taken.</summary>
+		/// <summary>Held in battle :   When the holder would take <see cref="Types.NORMAL"/>-type damage, it consumes this item to halve the amount of damage taken.</summary>
 		CHILAN_BERRY = 177,
-		/// <summary>Held in battle :   When the holder has 1/4 its max [HP]{mechanic:hp} remaining or less, it consumes this item to [raise]{mechanic:raise} its [Attack]{mechanic:attack} by one stage.</summary>
+		/// <summary>Held in battle :   When the holder has 1/4 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to [raise]{mechanic:raise} its <see cref="Stats.ATTACK"/> by one stage.</summary>
 		LIECHI_BERRY = 178,
-		/// <summary>Held in battle :   When the holder has 1/4 its max [HP]{mechanic:hp} remaining or less, it consumes this item to [raise]{mechanic:raise} its [Defense]{mechanic:defense} by one stage.</summary>
+		/// <summary>Held in battle :   When the holder has 1/4 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to [raise]{mechanic:raise} its <see cref="Stats.DEFENSE"/> by one stage.</summary>
 		GANLON_BERRY = 179,
-		/// <summary>Held in battle :   When the holder has 1/4 its max [HP]{mechanic:hp} remaining or less, it consumes this item to [raise]{mechanic:raise} its [Speed]{mechanic:speed} by one stage.</summary>
+		/// <summary>Held in battle :   When the holder has 1/4 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to [raise]{mechanic:raise} its <see cref="Stats.SPEED"/> by one stage.</summary>
 		SALAC_BERRY = 180,
-		/// <summary>Held in battle :   When the holder has 1/4 its max [HP]{mechanic:hp} remaining or less, it consumes this item to [raise]{mechanic:raise} its [Special Attack]{mechanic:special-attack} by one stage.</summary>
+		/// <summary>Held in battle :   When the holder has 1/4 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to [raise]{mechanic:raise} its <see cref="Stats.SPATK"/> by one stage.</summary>
 		PETAYA_BERRY = 181,
-		/// <summary>Held in battle :   When the holder has 1/4 its max [HP]{mechanic:hp} remaining or less, it consumes this item to [raise]{mechanic:raise} its [Special Defense]{mechanic:special-defense} by one stage.</summary>
+		/// <summary>Held in battle :   When the holder has 1/4 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to [raise]{mechanic:raise} its <see cref="Stats.SPDEF"/> by one stage.</summary>
 		APICOT_BERRY = 182,
-		/// <summary>Held in battle :   When the holder has 1/4 its max [HP]{mechanic:hp} remaining or less, it consumes this item to [raise]{mechanic:raise} its [critical hit chance]{mechanic:critical-hit-chance} by one stage.</summary>
+		/// <summary>Held in battle :   When the holder has 1/4 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to [raise]{mechanic:raise} its [critical hit chance]{mechanic:critical_hit_chance} by one stage.</summary>
 		LANSAT_BERRY = 183,
-		/// <summary>Held in battle :   When the holder has 1/4 its max [HP]{mechanic:hp} remaining or less, it consumes this item to [raise]{mechanic:raise} a random stat by two stages.</summary>
+		/// <summary>Held in battle :   When the holder has 1/4 its max <see cref="Stats.HP"/> remaining or less, it consumes this item to [raise]{mechanic:raise} a random stat by two stages.</summary>
 		STARF_BERRY = 184,
-		/// <summary>Held in battle :   When the holder takes [super-effective]{mechanic:super-effective} damage, it consumes this item to restore 1/4 its max [HP]{mechanic:hp}.</summary>
+		/// <summary>Held in battle :   When the holder takes <see cref="TypeEffective.SuperEffective"/> damage, it consumes this item to restore 1/4 its max <see cref="Stats.HP"/>.</summary>
 		ENIGMA_BERRY = 185,
-		/// <summary>Held in battle :   When the holder has 1/4 its max [HP]{mechanic:hp} remaining or less, it consumes this item, and its next used move has 1.2× its normal accuracy.</summary>
+		/// <summary>Held in battle :   When the holder has 1/4 its max <see cref="Stats.HP"/> remaining or less, it consumes this item, and its next used move has 1.2× its normal accuracy.</summary>
 		MICLE_BERRY = 186,
-		/// <summary>Held in battle :   When the holder has 1/4 its max [HP]{mechanic:hp} remaining or less, it consumes this item.  On the following turn, the holder will act first among moves with the same [priority]{mechanic:priority}, regardless of [Speed]{mechanic:speed}.</summary>
+		/// <summary>Held in battle :   When the holder has 1/4 its max <see cref="Stats.HP"/> remaining or less, it consumes this item.  On the following turn, the holder will act first among moves with the same [priority]{mechanic:priority}, regardless of <see cref="Stats.SPEED"/>.</summary>
 		CUSTAP_BERRY = 187,
-		/// <summary>Held in battle :   When the holder takes [physical]{mechanic:physical} damage, it consumes this item to damage the attacking Pokémon for 1/8 its max [HP]{mechanic:hp}.</summary>
+		/// <summary>Held in battle :   When the holder takes [physical]{mechanic:physical} damage, it consumes this item to damage the attacking Pokémon for 1/8 its max <see cref="Stats.HP"/>.</summary>
 		JABOCA_BERRY = 188,
-		/// <summary>Held in battle :   When the holder takes [special]{mechanic:special} damage, it consumes this item to damage the attacking Pokémon for 1/8 its max [HP]{mechanic:hp}.</summary>
+		/// <summary>Held in battle :   When the holder takes [special]{mechanic:special} damage, it consumes this item to damage the attacking Pokémon for 1/8 its max <see cref="Stats.HP"/>.</summary>
 		ROWAP_BERRY = 189,
-		/// <summary>Held in battle :   Moves targeting the holder have 0.9× [chance to hit]{mechanic:chance-to-hit}.</summary>
+		/// <summary>Held in battle :   Moves targeting the holder have 0.9× [chance to hit]{mechanic:chance_to_hit}.</summary>
 		BRIGHT_POWDER = 190,
-		/// <summary>Held in battle :   At the end of each turn, if any of the holder's stats have a negative [stat modifier]{mechanic:stat-modifier}, the holder consumes this item to remove the modifiers from those stats.</summary>
+		/// <summary>Held in battle :   At the end of each turn, if any of the holder's stats have a negative [stat modifier]{mechanic:stat_modifier}, the holder consumes this item to remove the modifiers from those stats.</summary>
 		WHITE_HERB = 191,
-		/// <summary>Held :   When the holder would gain [effort]{mechanic:effort} due to battle, it gains double that effort instead.  Held in battle :   Holder has half its [Speed]{mechanic:speed}.</summary>
+		/// <summary>Held :   When the holder would gain <see cref="IPokemon.EV"/> due to battle, it gains double that effort instead.  Held in battle :   Holder has half its <see cref="Stats.SPEED"/>.</summary>
 		MACHO_BRACE = 192,
-		/// <summary>Held :   [Experience]{mechanic:experience} is split across two groups: Pokémon who participated in battle, and Pokémon holding this item.  Each Pokémon earns experience as though it had battled alone, divided by the number of Pokémon in its group, then divided by the number of groups. Pokémon holding this item who also participated in battle effectively earn experience twice.      [Fainted]{mechanic:fainted} Pokémon never earn experience, and empty groups are ignored; thus, if a single Pokémon is holding this item and the only Pokémon who battled faints from []{move:explosion}, the holder will gain full experience.</summary>
+		/// <summary>Held :   [Experience]{mechanic:experience} is split across two groups: Pokémon who participated in battle, and Pokémon holding this item.  Each Pokémon earns experience as though it had battled alone, divided by the number of Pokémon in its group, then divided by the number of groups. Pokémon holding this item who also participated in battle effectively earn experience twice.      [Fainted]{mechanic:fainted} Pokémon never earn experience, and empty groups are ignored; thus, if a single Pokémon is holding this item and the only Pokémon who battled faints from <see cref="Moves.EXPLOSION"/>, the holder will gain full experience.</summary>
 		EXP_SHARE = 193,
-		/// <summary>Held in battle :   Whenever the holder attempts to use a move, it has a 3/16 chance to act first among moves with the same [priority]{mechanic:priority}.  If multiple Pokémon have this effect at the same time, [Speed]{mechanic:speed} is the tie-breaker as normal, but the effect of []{move:trick-room} is ignored.</summary>
+		/// <summary>Held in battle :   Whenever the holder attempts to use a move, it has a 3/16 chance to act first among moves with the same [priority]{mechanic:priority}.  If multiple Pokémon have this effect at the same time, <see cref="Stats.SPEED"/> is the tie-breaker as normal, but the effect of <see cref="Moves.TRICK_ROOM"/> is ignored.</summary>
 		QUICK_CLAW = 194,
-		/// <summary>Held :   When the holder would earn [happiness]{mechanic:happiness} for any reason, it earns twice that amount instead.</summary>
+		/// <summary>Held :   When the holder would earn <see cref="IPokemon.Happiness"/> for any reason, it earns twice that amount instead.</summary>
 		SOOTHE_BELL = 195,
 		/// <summary>Held in battle :   When the holder is [attracted]{move:attract}, it consumes this item to cure the attraction.</summary>
 		MENTAL_HERB = 196,
-		/// <summary>Held in battle :   Holder has 1.5× its [Attack]{mechanic:attack}.  When the holder attempts to use a move, all its other moves are disabled until it leaves battle or loses this item.      The restriction ends even if this item is swapped for another Choice item via []{move:trick} or []{move:switcheroo}.</summary>
+		/// <summary>Held in battle :   Holder has 1.5× its <see cref="Stats.ATTACK"/>.  When the holder attempts to use a move, all its other moves are disabled until it leaves battle or loses this item.      The restriction ends even if this item is swapped for another Choice item via <see cref="Moves.TRICK"/> or <see cref="Moves.SWITCHEROO"/>.</summary>
 		CHOICE_BAND = 197,
-		/// <summary>Held in battle :   Holder's damaging moves have a 10% chance to make their target [flinch]{mechanic:flinch}.  This chance applies independently to each hit of a multi-hit move.      This item's chance is rolled independently of any other move effects; e.g., a move with a 30% chance to flinch normally will have a 37% total chance to flinch when used with this item, because 3% of the time, both effects activate.  Held by []{pokemon:poliwhirl} or []{pokemon:slowbro} :   Holder evolves into []{pokemon:politoed} or []{pokemon:slowking}, respectively, when traded.</summary>
+		/// <summary>Held in battle :   Holder's damaging moves have a 10% chance to make their target [flinch]{mechanic:flinch}.  This chance applies independently to each hit of a multi-hit move.      This item's chance is rolled independently of any other move effects; e.g., a move with a 30% chance to flinch normally will have a 37% total chance to flinch when used with this item, because 3% of the time, both effects activate.  Held by <see cref="Pokemons.POLIWHIRL"/> or <see cref="Pokemons.SLOWBRO"/> :   Holder evolves into <see cref="Pokemons.POLITOED"/> or <see cref="Pokemons.SLOWKING"/>, respectively, when traded.</summary>
 		KINGS_ROCK = 198,
-		/// <summary>Held in battle :   Holder's []{type:bug}-type moves have 1.2× their power. </summary>
+		/// <summary>Held in battle :   Holder's <see cref="Types.BUG"/>-type moves have 1.2× their power. </summary>
 		SILVER_POWDER = 199,
 		/// <summary>Held :   If the holder participated in a trainer battle, the trainer earns twice the usual prize money.  This effect applies even if the holder [fainted]{mechanic:fainted}.      This effect does not stack with any other similar effect.</summary>
 		AMULET_COIN = 200,
@@ -520,7 +526,7 @@
 		QUICK_POWDER = 251,
 		/// <summary>Held: If the holder has full HP and is attacked for regular damage that would faint it, this item is consumed and prevents the holder's HP from lowering below 1.  This effect works against multi-hit attacks, but does not work against the effects of Doom Desire or Future Sight.</summary>
 		FOCUS_SASH = 252,
-		/// <summary>Held: Raises the holder's Accuracy by 20% when it goes last. Ingame description is incorrect.</summary>
+		/// <summary>Held: Raises the holder's Accuracy by 20% when it goes last. In-game description is incorrect.</summary>
 		ZOOM_LENS = 253,
 		/// <summary>Held: Each time the holder uses the same move consecutively, its power is increased by another 10% of its original, to a maximum of 100%.</summary>
 		METRONOME = 254,
@@ -564,37 +570,37 @@
 		BIG_ROOT = 273,
 		/// <summary>Held: Increases the holder's Special Attack by 50%, but restricts it to the first move it uses until it leaves battle or loses this item.  If this item is swapped for another Choice item via Trick or Switcheroo, the holder's restriction is still lifted, but it will again be restricted to the next move it uses. (Quirk: If the holder is switched in by U-Turn and it also knows U-Turn, U-Turn becomes its restricted move.)</summary>
 		CHOICE_SPECS = 274,
-		/// <summary>Held: Increases the power of the holder's Fire moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Fire.</summary>
+		/// <summary>Held: Increases the power of the holder's Fire moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Fire.</summary>
 		FLAME_PLATE = 275,
-		/// <summary>Held: Increases the power of the holder's Water moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Water.</summary>
+		/// <summary>Held: Increases the power of the holder's Water moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Water.</summary>
 		SPLASH_PLATE = 276,
-		/// <summary>Held: Increases the power of the holder's Electric moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Electric.</summary>
+		/// <summary>Held: Increases the power of the holder's Electric moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Electric.</summary>
 		ZAP_PLATE = 277,
-		/// <summary>Held: Increases the power of the holder's Grass moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Grass.</summary>
+		/// <summary>Held: Increases the power of the holder's Grass moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Grass.</summary>
 		MEADOW_PLATE = 278,
-		/// <summary>Held: Increases the power of the holder's Ice moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Ice.</summary>
+		/// <summary>Held: Increases the power of the holder's Ice moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Ice.</summary>
 		ICICLE_PLATE = 279,
-		/// <summary>Held: Increases the power of the holder's Fighting moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Fighting.</summary>
+		/// <summary>Held: Increases the power of the holder's Fighting moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Fighting.</summary>
 		FIST_PLATE = 280,
-		/// <summary>Held: Increases the power of the holder's Poison moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Poison.</summary>
+		/// <summary>Held: Increases the power of the holder's Poison moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Poison.</summary>
 		TOXIC_PLATE = 281,
-		/// <summary>Held: Increases the power of the holder's Ground moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Ground.</summary>
+		/// <summary>Held: Increases the power of the holder's Ground moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Ground.</summary>
 		EARTH_PLATE = 282,
-		/// <summary>Held: Increases the power of the holder's Flying moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Flying.</summary>
+		/// <summary>Held: Increases the power of the holder's Flying moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Flying.</summary>
 		SKY_PLATE = 283,
-		/// <summary>Held: Increases the power of the holder's Psychic moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Psychic.</summary>
+		/// <summary>Held: Increases the power of the holder's Psychic moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Psychic.</summary>
 		MIND_PLATE = 284,
-		/// <summary>Held: Increases the power of the holder's Bug moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Bug.</summary>
+		/// <summary>Held: Increases the power of the holder's Bug moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Bug.</summary>
 		INSECT_PLATE = 285,
-		/// <summary>Held: Increases the power of the holder's Rock moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Rock.</summary>
+		/// <summary>Held: Increases the power of the holder's Rock moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Rock.</summary>
 		STONE_PLATE = 286,
-		/// <summary>Held: Increases the power of the holder's Ghost moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Ghost.</summary>
+		/// <summary>Held: Increases the power of the holder's Ghost moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Ghost.</summary>
 		SPOOKY_PLATE = 287,
-		/// <summary>Held: Increases the power of the holder's Dragon moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Dragon.</summary>
+		/// <summary>Held: Increases the power of the holder's Dragon moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Dragon.</summary>
 		DRACO_PLATE = 288,
-		/// <summary>Held: Increases the power of the holder's Dark moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Dark.</summary>
+		/// <summary>Held: Increases the power of the holder's Dark moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Dark.</summary>
 		DREAD_PLATE = 289,
-		/// <summary>Held: Increases the power of the holder's Steel moves by 20%. Held by a Multitype Pokémon: Holder's type becomes Steel.</summary>
+		/// <summary>Held: Increases the power of the holder's Steel moves by 20%. Held by a Multi-type Pokémon: Holder's type becomes Steel.</summary>
 		IRON_PLATE = 290,
 		/// <summary>Held: Increases the power of the holder's Psychic moves by 20%.</summary>
 		ODD_INCENSE = 291,
@@ -900,93 +906,93 @@
 		STORAGE_KEY = 440,
 		/// <summary>Required to cure the Psyducks blocking Route 210 of their chronic headaches.</summary>
 		SECRET_POTION = 441,
-		/// <summary>Held by []{pokemon:giratina} :   Holder's []{type:dragon} and []{type:ghost} moves have 1.2× their base power.      Holder is in Origin Forme.  This item cannot be held by any Pokémon but Giratina.  When you enter the Union Room or connect to Wi-Fi, this item returns to your bag.</summary>
+		/// <summary>Held by <see cref="Pokemons.GIRATINA"/> :   Holder's <see cref="Types.DRAGON"/> and <see cref="Types.GHOST"/> moves have 1.2× their base power.      Holder is in Origin Forme.  This item cannot be held by any Pokémon but Giratina.  When you enter the Union Room or connect to Wi-Fi, this item returns to your bag.</summary>
 		GRISEOUS_ORB = 442,
-		/// <summary>Optionally records wireless, Wi-Fi, and Battle Frontier battles.  Tracks Battle Points earned in the Battle Frontier, and stores commemorative prints.</summary>
+		/// <summary>Optionally records wireless, WiFi, and Battle Frontier battles.  Tracks Battle Points earned in the Battle Frontier, and stores commemorative prints.</summary>
 		VS_RECORDER = 443,
-		/// <summary>Used by trainer on a []{pokemon:shaymin} :   Changes the target Shaymin from Land Forme to Sky Forme.      This item cannot be used on a [frozen]{mechanic:freezing} Shaymin or at night.  Sky Forme Shaymin will revert to Land Forme overnight, when frozen, and upon entering a link battle.  This item must be used again to change it back.</summary>
+		/// <summary>Used by trainer on a <see cref="Pokemons.SHAYMIN"/> :   Changes the target Shaymin from Land Forme to Sky Forme.      This item cannot be used on a <see cref="Status.FROZEN"/> Shaymin or at night.  Sky Forme Shaymin will revert to Land Forme overnight, when frozen, and upon entering a link battle.  This item must be used again to change it back.</summary>
 		GRACIDEA = 444,
-		/// <summary>Used by trainer in the Galactic Eterna Building, on the ground floor, to the left of the TV :   Unlocks the secret []{pokemon:rotom} room, in which there are five appliances which can change Rotom's form.</summary>
+		/// <summary>Used by trainer in the Galactic Eterna Building, on the ground floor, to the left of the TV :   Unlocks the secret <see cref="Pokemons.ROTOM"/> room, in which there are five appliances which can change Rotom's form.</summary>
 		SECRET_KEY = 445,
 		/// <summary>Stores Apricorns.</summary>
 		APRICORN_BOX = 446,
 		/// <summary>Contains four portable pots of soil suitable for growing berries.</summary>
 		BERRY_POTS = 447,
-		/// <summary>Required to water berries within the []{item:berry-pots}.  Required to battle the []{pokemon:sudowoodo} on []{location:johto-route-36}.  This item cannot be directly used from the bag.</summary>
+		/// <summary>Required to water berries within the <see cref="Items.BERRY_POTS"/>.  Required to battle the <see cref="Pokemons.SUDOWOODO"/> on <see cref="Locations.JOHTO_ROUTE_36"/>.  This item cannot be directly used from the bag.</summary>
 		SQUIRT_BOTTLE = 448,
 		/// <summary>Used by trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.      If the wild Pokémon was encountered by fishing, the wild Pokémon's catch rate is 3× normal.</summary>
 		LURE_BALL = 449,
 		/// <summary>Used by trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.      If the trainer's Pokémon's level is higher than:      * four times the wild Pokémon's, the wild Pokémon's catch rate is 8× normal.     * than twice the wild Pokémon's, the wild Pokémon's catch rate is 4× normal.     * the wild Pokémon's, the wild Pokémon's catch rate is 2× normal.</summary>
 		LEVEL_BALL = 450,
-		/// <summary>Used by trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.      If the wild Pokémon is a []{pokemon:clefairy}, []{pokemon:nidoran-m}, []{pokemon:nidoran-f}, []{pokemon:jigglypuff}, []{pokemon:skitty}, or any evolution thereof, the wild Pokémon has 4× its catch rate.</summary>
+		/// <summary>Used by trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.      If the wild Pokémon is a <see cref="Pokemons.CLEFAIRY"/>, <see cref="Pokemons.NIDORAN_M"/>, <see cref="Pokemons.NIDORAN_F"/>, <see cref="Pokemons.JIGGLYPUFF"/>, <see cref="Pokemons.SKITTY"/>, or any evolution thereof, the wild Pokémon has 4× its catch rate.</summary>
 		MOON_BALL = 451,
 		/// <summary>Used by a trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.      If the wild Pokémon weighs:      * 409.6 kg (903.0 lb) or more, its catch rate is 40 more than normal.     * 307.2 kg (677.3 lb) or more, its catch rate is 30 more than normal.     * 204.8 kg (451.5 lb) or more, its catch rate is 20 more than normal.     * less than 204.8 kg (451.5 lb), its catch rate is 20 less than normal.</summary>
 		HEAVY_BALL = 452,
-		/// <summary>Used by a trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.  :   If the wild Pokémon's base [speed]{mechanic:speed} is 100 or more, its catch rate is 4× normal.</summary>
+		/// <summary>Used by a trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.  :   If the wild Pokémon's base <see cref="Stats.SPEED"/> is 100 or more, its catch rate is 4× normal.</summary>
 		FAST_BALL = 453,
-		/// <summary>Used by a trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.      If caught, the wild Pokémon's [happiness]{mechanic:happiness} starts at 200.</summary>
+		/// <summary>Used by a trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.      If caught, the wild Pokémon's <see cref="IPokemon.Happiness"/> starts at 200.</summary>
 		FRIEND_BALL = 454,
 		/// <summary>Used by a trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.  If used in a trainer battle, nothing happens and the ball is lost.      If the trainer's Pokémon and wild Pokémon are of the same species but opposite genders, the wild Pokémon's catch rate is 8× normal.</summary>
 		LOVE_BALL = 455,
-		/// <summary>Used by a trainer in battle :   [Catches]{mechanic:catch} a wild Pokémon.  This item can only be used in []{location:pal-park}.</summary>
+		/// <summary>Used by a trainer in battle :   [Catches]{mechanic:catch} a wild Pokémon.  This item can only be used in <see cref="Locations.PAL_PARK"/>.</summary>
 		PARK_BALL = 456,
 		/// <summary>Used by a trainer in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.      The wild Pokémon's catch rate is 1.5× normal.</summary>
 		SPORT_BALL = 457,
-		/// <summary>May be given to Kurt in []{location:azalea-town} to produce a []{item:level-ball}.</summary>
+		/// <summary>May be given to Kurt in <see cref="Locations.AZALEA_TOWN"/> to produce a <see cref="Items.LEVEL_BALL"/>.</summary>
 		RED_APRICORN = 458,
-		/// <summary>May be given to Kurt in []{location:azalea-town} to produce a []{item:lure-ball}.</summary>
+		/// <summary>May be given to Kurt in <see cref="Locations.AZALEA_TOWN"/> to produce a <see cref="Items.LURE_BALL"/>.</summary>
 		BLUE_APRICORN = 459,
-		/// <summary>May be given to Kurt in []{location:azalea-town} to produce a []{item:moon-ball}.</summary>
+		/// <summary>May be given to Kurt in <see cref="Locations.AZALEA_TOWN"/> to produce a <see cref="Items.MOON_BALL"/>.</summary>
 		YELLOW_APRICORN = 460,
-		/// <summary>May be given to Kurt in []{location:azalea-town} to produce a []{item:friend-ball}.</summary>
+		/// <summary>May be given to Kurt in <see cref="Locations.AZALEA_TOWN"/> to produce a <see cref="Items.FRIEND_BALL"/>.</summary>
 		GREEN_APRICORN = 461,
-		/// <summary>May be given to Kurt in []{location:azalea-town} to produce a []{item:love-ball}.</summary>
+		/// <summary>May be given to Kurt in <see cref="Locations.AZALEA_TOWN"/> to produce a <see cref="Items.LOVE_BALL"/>.</summary>
 		PINK_APRICORN = 462,
-		/// <summary>May be given to Kurt in []{location:azalea-town} to produce a []{item:fast-ball}.</summary>
+		/// <summary>May be given to Kurt in <see cref="Locations.AZALEA_TOWN"/> to produce a <see cref="Items.FAST_BALL"/>.</summary>
 		WHITE_APRICORN = 463,
-		/// <summary>May be given to Kurt in []{location:azalea-town} to produce a []{item:heavy-ball}.</summary>
+		/// <summary>May be given to Kurt in <see cref="Locations.AZALEA_TOWN"/> to produce a <see cref="Items.HEAVY_BALL"/>.</summary>
 		BLACK_APRICORN = 464,
 		/// <summary>Used by trainer outside of battle :   Searches for hidden items.</summary>
 		DOWSING_MACHINE = 465,
-		/// <summary>May be traded for a []{item:tm64} in the vertical Underground Path.</summary>
+		/// <summary>May be traded for a <see cref="Items.TM64"/> in the vertical Underground Path.</summary>
 		RAGE_CANDY_BAR = 466,
-		/// <summary>Causes []{pokemon:groudon} to appear in the []{location:embedded-tower}.</summary>
+		/// <summary>Causes <see cref="Pokemons.GROUDON"/> to appear in the <see cref="Locations.EMBEDDED_TOWER"/>.</summary>
 		RED_ORB = 467,
-		/// <summary>Causes []{pokemon:kyogre} to appear in the []{location:embedded-tower}.</summary>
+		/// <summary>Causes <see cref="Pokemons.KYOGRE"/> to appear in the <see cref="Locations.EMBEDDED_TOWER"/>.</summary>
 		BLUE_ORB = 468,
-		/// <summary>Causes []{pokemon:rayquaza} to appear in the []{location:embedded-tower}.</summary>
+		/// <summary>Causes <see cref="Pokemons.RAYQUAZA"/> to appear in the <see cref="Locations.EMBEDDED_TOWER"/>.</summary>
 		JADE_ORB = 469,
-		/// <summary>When taken to the []{location:pewter-city} museum, causes []{pokemon:latias} or []{pokemon:latios} to attack the trainer.  The Pokémon to appear will be whicher can't be encountered roaming in the wild.</summary>
+		/// <summary>When taken to the <see cref="Locations.PEWTER_CITY"/> museum, causes <see cref="Pokemons.LATIAS"/> or <see cref="Pokemons.LATIOS"/> to attack the trainer.  The Pokémon to appear will be whicher can't be encountered roaming in the wild.</summary>
 		ENIGMA_STONE = 470,
-		/// <summary>Lists which []{pokemon:unown} forms the trainer has caught.</summary>
+		/// <summary>Lists which <see cref="Pokemons.UNOWN"/> forms the trainer has caught.</summary>
 		UNOWN_REPORT = 471,
 		/// <summary>Allows the trainer to answer the daily question on Buena's radio show.  Records the points earned for correct answers.</summary>
 		BLUE_CARD = 472,
 		/// <summary>Does nothing.</summary>
 		SLOWPOKE_TAIL = 473,
-		/// <summary>May be given to the Kimono Girls to summon []{pokemon:ho-oh} to the top of the []{location:bell-tower}.</summary>
+		/// <summary>May be given to the Kimono Girls to summon <see cref="Pokemons.HO_OH"/> to the top of the <see cref="Locations.BELL_TOWER"/>.</summary>
 		CLEAR_BELL = 474,
-		/// <summary>Used by trainer outside of battle :   Opens doors in the []{location:goldenrod-city} Radio Tower.</summary>
+		/// <summary>Used by trainer outside of battle :   Opens doors in the <see cref="Locations.GOLDENROD_CITY"/> Radio Tower.</summary>
 		CARD_KEY = 475,
-		/// <summary>Used by trainer outside of battle :   Opens the door to the basement tunnel under []{location:goldenrod-city}.</summary>
+		/// <summary>Used by trainer outside of battle :   Opens the door to the basement tunnel under <see cref="Locations.GOLDENROD_CITY"/>.</summary>
 		BASEMENT_KEY = 476,
-		/// <summary>May be traded to Mr. Pokémon for an []{item:exp-share}.</summary>
+		/// <summary>May be traded to Mr. Pokémon for an <see cref="Items.EXP_SHARE"/>.</summary>
 		RED_SCALE = 477,
-		/// <summary>May be traded to the Copycat for a []{item:pass}.</summary>
+		/// <summary>May be traded to the Copycat for a <see cref="Items.PASS"/>.</summary>
 		LOST_ITEM = 478,
-		/// <summary>Allows the trainer to ride the Magnet Train between []{location:goldenrod-city} and []{location:saffron-city}.</summary>
+		/// <summary>Allows the trainer to ride the Magnet Train between <see cref="Locations.GOLDENROD_CITY"/> and <see cref="Locations.SAFFRON_CITY"/>.</summary>
 		PASS = 479,
-		/// <summary>Must be replaced in the []{location:power-plant} to power the Magnet Train.</summary>
+		/// <summary>Must be replaced in the <see cref="Locations.POWER_PLANT"/> to power the Magnet Train.</summary>
 		MACHINE_PART = 480,
-		/// <summary>Causes []{pokemon:lugia} to appear in the []{location:whirl-islands}.</summary>
+		/// <summary>Causes <see cref="Pokemons.LUGIA"/> to appear in the <see cref="Locations.WHIRL_ISLANDS"/>.</summary>
 		SILVER_WING = 481,
-		/// <summary>Causes []{pokemon:ho-oh} to appear at the top of []{location:bell-tower}.</summary>
+		/// <summary>Causes <see cref="Pokemons.HO_OH"/> to appear at the top of <see cref="Locations.BELL_TOWER"/>.</summary>
 		RAINBOW_WING = 482,
-		/// <summary>Must be obtained to trigger the break-in at Professor Elm's lab, the first rival battle, and access to []{location:johto-route-31}.</summary>
+		/// <summary>Must be obtained to trigger the break-in at Professor Elm's lab, the first rival battle, and access to <see cref="Locations.JOHTO_ROUTE_31"/>.</summary>
 		MYSTERY_EGG = 483,
 		/// <summary>Used by trainer outside of battle :   Changes the background music to the equivalent 8-bit music.</summary>
 		GB_SOUNDS = 484,
-		/// <summary>May be given to the Kimono Girls to summon []{pokemon:lugia} to the top of the []{location:bell-tower}.</summary>
+		/// <summary>May be given to the Kimono Girls to summon <see cref="Pokemons.LUGIA"/> to the top of the <see cref="Locations.BELL_TOWER"/>.</summary>
 		TIDAL_BELL = 485,
 		/// <summary>Records the number of times the trainer has come in first place overall in the Pokéathlon.</summary>
 		DATA_CARD_01 = 486,
@@ -1070,49 +1076,49 @@
 		FAB_MAIL = 525,
 		/// <summary>Used to send short messages to other players via Pokémon trading.  Trainer may compose a message from a finite list of words when giving this item to a Pokémon.  Once taken and read, a message may be erased and this item can be reused, or the message may be stored in the trainer's PC.  Held :   Holder cannot be placed in the PC.  Any move attempting to remove this item from the holder will fail.</summary>
 		RETRO_MAIL = 526,
-		/// <summary>Increases movement speed outside or in caves.  Faster than the []{item:acro-bike}.  Allows the trainer to ascend muddy slopes.</summary>
+		/// <summary>Increases movement speed outside or in caves.  Faster than the <see cref="Items.ACRO_BIKE"/>.  Allows the trainer to ascend muddy slopes.</summary>
 		MACH_BIKE = 527,
-		/// <summary>Increases movement speed outside or in caves.  Slower than the []{item:mach-bike}.  Can perform various tricks, allowing the trainer to reach certain special areas.</summary>
+		/// <summary>Increases movement speed outside or in caves.  Slower than the <see cref="Items.MACH_BIKE"/>.  Can perform various tricks, allowing the trainer to reach certain special areas.</summary>
 		ACRO_BIKE = 528,
 		/// <summary>Waters Berry plants.</summary>
 		WAILMER_PAIL = 529,
 		/// <summary>Contains a machine part to be delivered to Captain Stern.</summary>
 		DEVON_GOODS = 530,
-		/// <summary>Collects soot when walking through tall grass on []{location:hoenn-route-113}.</summary>
+		/// <summary>Collects soot when walking through tall grass on <see cref="Locations.HOENN_ROUTE_113"/>.</summary>
 		SOOT_SACK = 531,
 		/// <summary>Stores Pokéblocks.</summary>
 		POKEBLOCK_CASE = 532,
 		/// <summary>Contains a letter to be delivered to Steven.</summary>
 		LETTER = 533,
-		/// <summary>Provides access to []{location:southern-island} and either []{pokemon:latias} or []{pokemon:latios}, whichever is not available roaming around Hoenn.</summary>
+		/// <summary>Provides access to <see cref="Locations.SOUTHERN_ISLAND"/> and either <see cref="Pokemons.LATIAS"/> or <see cref="Pokemons.LATIOS"/>, whichever is not available roaming around Hoenn.</summary>
 		EON_TICKET = 534,
-		/// <summary>May be traded to Captain Stern for a []{item:deep-sea-tooth} or a []{item:deep-sea-scale}.</summary>
+		/// <summary>May be traded to Captain Stern for a <see cref="Items.DEEP_SEA_TOOTH"/> or a <see cref="Items.DEEP_SEA_SCALE"/>.</summary>
 		SCANNER = 535,
-		/// <summary>Allows the trainer to enter the desert on []{location:hoenn-route-111}.</summary>
+		/// <summary>Allows the trainer to enter the desert on <see cref="Locations.HOENN_ROUTE_111"/>.</summary>
 		GO_GOGGLES = 536,
-		/// <summary>RSE: May be traded to Professor Cozmo for []{item:tm27}.  FRLG: A meteorite to be delivered to Lostelle's father.</summary>
+		/// <summary>RSE: May be traded to Professor Cozmo for <see cref="Items.TM27"/>.  FRLG: A meteorite to be delivered to Lostelle's father.</summary>
 		METEORITE = 537,
-		/// <summary>Unlocks room 1 on the []{location:abandoned-ship}.</summary>
+		/// <summary>Unlocks room 1 on the <see cref="Locations.ABANDONED_SHIP"/>.</summary>
 		RM_1_KEY = 538,
-		/// <summary>Unlocks room 2 on the []{location:abandoned-ship}.</summary>
+		/// <summary>Unlocks room 2 on the <see cref="Locations.ABANDONED_SHIP"/>.</summary>
 		RM_2_KEY = 539,
-		/// <summary>Unlocks room 4 on the []{location:abandoned-ship}.</summary>
+		/// <summary>Unlocks room 4 on the <see cref="Locations.ABANDONED_SHIP"/>.</summary>
 		RM_4_KEY = 540,
-		/// <summary>Unlocks room 6 on the []{location:abandoned-ship}.</summary>
+		/// <summary>Unlocks room 6 on the <see cref="Locations.ABANDONED_SHIP"/>.</summary>
 		RM_6_KEY = 541,
-		/// <summary>Reveals invisble []{pokemon:kecleon} on the overworld.</summary>
+		/// <summary>Reveals invisible <see cref="Pokemons.KECLEON"/> on the overworld.</summary>
 		DEVON_SCOPE = 542,
 		/// <summary>A parcel to be delivered to Professor Oak for a Pokédex.</summary>
 		OAKS_PARCEL = 543,
-		/// <summary>Wakes up [sleeping]{mechanic:sleep} Pokémon.  Required to wake up sleeping []{pokemon:snorlax} on the overworld.</summary>
+		/// <summary>Wakes up <see cref="Status.SLEEP"/> Pokémon.  Required to wake up sleeping <see cref="Pokemons.SNORLAX"/> on the overworld.</summary>
 		POKE_FLUTE = 544,
-		/// <summary>May be traded for a []{item:bicycle}.</summary>
+		/// <summary>May be traded for a <see cref="Items.BICYCLE"/>.</summary>
 		BIKE_VOUCHER = 545,
-		/// <summary>The Safari Zone warden's teeth, to be returned to him for []{item:hm04}.</summary>
+		/// <summary>The Safari Zone warden's teeth, to be returned to him for <see cref="Items.HM04"/>.</summary>
 		GOLD_TEETH = 546,
 		/// <summary>Operates the elevator in the Celadon Rocket Hideout.</summary>
 		LIFT_KEY = 547,
-		/// <summary>Identifies ghosts in []{location:pokemon-tower}.</summary>
+		/// <summary>Identifies ghosts in <see cref="Locations.POKEMON_TOWER"/>.</summary>
 		SILPH_SCOPE = 548,
 		/// <summary>Records information on various famous people.</summary>
 		FAME_CHECKER = 549,
@@ -1126,11 +1132,11 @@
 		TRI_PASS = 553,
 		/// <summary>Provides access to the Sevii Islands.</summary>
 		RAINBOW_PASS = 554,
-		/// <summary>Used to bribe the []{location:saffron-city} guards for entry to the city.</summary>
+		/// <summary>Used to bribe the <see cref="Locations.SAFFRON_CITY"/> guards for entry to the city.</summary>
 		TEA = 555,
-		/// <summary>Provides access to Navel Rock, []{pokemon:ho-oh}, and []{pokemon:lugia}.</summary>
+		/// <summary>Provides access to Navel Rock, <see cref="Pokemons.HO_OH"/>, and <see cref="Pokemons.LUGIA"/>.</summary>
 		MYSTICTICKET = 556,
-		/// <summary>Provides access to Birth Island and []{pokemon:deoxys}.</summary>
+		/// <summary>Provides access to Birth Island and <see cref="Pokemons.DEOXYS"/>.</summary>
 		AURORATICKET = 557,
 		/// <summary>Holds Berry Powder from Berry Crushing.</summary>
 		POWDER_JAR = 558,
@@ -1138,19 +1144,19 @@
 		RUBY = 559,
 		/// <summary>Deliver to Celio for use in the Network Machine.</summary>
 		SAPPHIRE = 560,
-		/// <summary>Provides access to the []{location:magma-hideout} in the []{location:jagged-pass}.</summary>
+		/// <summary>Provides access to the <see cref="Locations.MAGMA_HIDEOUT"/> in the <see cref="Locations.JAGGED_PASS"/>.</summary>
 		MAGMA_EMBLEM = 561,
-		/// <summary>Provides access to Faraway Island and []{pokemon:mew}.</summary>
+		/// <summary>Provides access to Faraway Island and <see cref="Pokemons.MEW"/>.</summary>
 		OLD_SEA_MAP = 562,
-		/// <summary>Held by []{pokemon:genesect} :   Holder's buster is blue, and its []{move:techno-blast} is []{type:water}-type.</summary>
+		/// <summary>Held by <see cref="Pokemons.GENESECT"/> :   Holder's buster is blue, and its <see cref="Moves.TECHNO_BLAST"/> is <see cref="Types.WATER"/>-type.</summary>
 		DOUSE_DRIVE = 563,
-		/// <summary>Held by []{pokemon:genesect} :   Holder's buster is yellow, and its []{move:techno-blast} is []{type:electric}-type.</summary>
+		/// <summary>Held by <see cref="Pokemons.GENESECT"/> :   Holder's buster is yellow, and its <see cref="Moves.TECHNO_BLAST"/> is <see cref="Types.ELECTRIC"/>-type.</summary>
 		SHOCK_DRIVE = 564,
-		/// <summary>Held by []{pokemon:genesect} :   Holder's buster is red, and its []{move:techno-blast} is []{type:fire}-type.</summary>
+		/// <summary>Held by <see cref="Pokemons.GENESECT"/> :   Holder's buster is red, and its <see cref="Moves.TECHNO_BLAST"/> is <see cref="Types.FIRE"/>-type.</summary>
 		BURN_DRIVE = 565,
-		/// <summary>Held by []{pokemon:genesect} :   Holder's buster is white, and its []{move:techno-blast} becomes []{type:ice}-type.</summary>
+		/// <summary>Held by <see cref="Pokemons.GENESECT"/> :   Holder's buster is white, and its <see cref="Moves.TECHNO_BLAST"/> becomes <see cref="Types.ICE"/>-type.</summary>
 		CHILL_DRIVE = 566,
-		/// <summary>Used on a friendly Pokémon :   Restores 20 [HP]{mechanic:hp}.</summary>
+		/// <summary>Used on a friendly Pokémon :   Restores 20 <see cref="Stats.HP"/>.</summary>
 		SWEET_HEART = 567,
 		/// <summary>Used to send short messages to other players via Pokémon trading.  Trainer may compose a message from a finite list of words when giving this item to a Pokémon.  Once taken and read, a message may be erased and this item can be reused, or the message may be stored in the trainer's PC.  Held :   Holder cannot be placed in the PC.  Any move attempting to remove this item from the holder will fail.</summary>
 		GREET_MAIL = 568,
@@ -1176,77 +1182,77 @@
 		BRIDGE_MAIL_V = 578,
 		/// <summary>Used to send short messages to other players via Pokémon trading.  Trainer may compose a message from a finite list of words when giving this item to a Pokémon.  Once taken and read, a message may be erased and this item can be reused, or the message may be stored in the trainer's PC.  Held :   Holder cannot be placed in the PC.  Any move attempting to remove this item from the holder will fail.</summary>
 		BRIDGE_MAIL_M = 579,
-		/// <summary>Held by []{pokemon:feebas} :   Holder evolves into []{pokemon:milotic} when traded.</summary>
+		/// <summary>Held by <see cref="Pokemons.FEEBAS"/> :   Holder evolves into <see cref="Pokemons.MILOTIC"/> when traded.</summary>
 		PRISM_SCALE = 580,
-		/// <summary>Held by a Pokémon that is not fully evolved :   Holder has 1.5× [Defense]{mechanic:defense} and [Special Defense]{mechanic:special-defense}.</summary>
+		/// <summary>Held by a Pokémon that is not fully evolved :   Holder has 1.5× <see cref="Stats.DEFENSE"/> and <see cref="Stats.SPDEF"/>.</summary>
 		EVIOLITE = 581,
 		/// <summary>Held :   Holder has 0.5× weight.</summary>
 		FLOAT_STONE = 582,
-		/// <summary>Held :   When the holder is hit by a [contact]{mechanic:contact} move, the attacking Pokémon takes 1/6 its max [HP]{mechanic:hp} in damage.</summary>
+		/// <summary>Held :   When the holder is hit by a [contact]{mechanic:contact} move, the attacking Pokémon takes 1/6 its max <see cref="Stats.HP"/> in damage.</summary>
 		ROCKY_HELMET = 583,
-		/// <summary>Held :   Holder is immune to []{type:ground}-type moves, []{move:spikes}, []{move:toxic-spikes}, and []{ability:arena-trap}.      This effect does not apply during []{move:gravity} or []{move:ingrain}.      When the holder takes damage from a move, this item is consumed.</summary>
+		/// <summary>Held :   Holder is immune to <see cref="Types.GROUND"/>-type moves, <see cref="Moves.SPIKES"/>, <see cref="Moves.TOXIC_SPIKES"/>, and <see cref="Abilities.ARENA_TRAP"/>.      This effect does not apply during <see cref="Moves.GRAVITY"/> or <see cref="Moves.INGRAIN"/>.      When the holder takes damage from a move, this item is consumed.</summary>
 		AIR_BALLOON = 584,
-		/// <summary>Held :   When the holder takes damage directly from a move and does not faint, it [switches out]{mechanic:switching-out} for another random, non-fainted Pokémon in its party. This effect does not activate if another effect prevents the holder from switching out.</summary>
+		/// <summary>Held :   When the holder takes damage directly from a move and does not faint, it [switches out]{mechanic:switching_out} for another random, non-fainted Pokémon in its party. This effect does not activate if another effect prevents the holder from switching out.</summary>
 		RED_CARD = 585,
 		/// <summary>Held :   When one of the user's types would render it immune to damage, that type is ignored for damage calculation.</summary>
 		RING_TARGET = 586,
-		/// <summary>Held :   Moves used by the holder that trap and damage a target for multiple turns (e.g. []{move:bind}, []{move:fire-spin}) inflict twice their usual per-turn damage.</summary>
+		/// <summary>Held :   Moves used by the holder that trap and damage a target for multiple turns (e.g. <see cref="Moves.BIND"/>, <see cref="Moves.FIRE_SPIN"/>) inflict twice their usual per-turn damage.</summary>
 		BINDING_BAND = 587,
-		/// <summary>Held :   When the holder takes []{type:water}-type damage from a move, its [Special Attack]{mechanic:special-attack} rises by one [stage]{mechanic:stage} and this item is consumed.</summary>
+		/// <summary>Held :   When the holder takes <see cref="Types.WATER"/>-type damage from a move, its <see cref="Stats.SPATK"/> rises by one <see cref="IBattler.stages"/> and this item is consumed.</summary>
 		ABSORB_BULB = 588,
-		/// <summary>Held :   When the holder takes []{type:electric}-type damage from a move, its [Attack]{mechanic:attack} rises by one [stage]{mechanic:stage} and this item is consumed.</summary>
+		/// <summary>Held :   When the holder takes <see cref="Types.ELECTRIC"/>-type damage from a move, its <see cref="Stats.ATTACK"/> rises by one <see cref="IBattler.stages"/> and this item is consumed.</summary>
 		CELL_BATTERY = 589,
-		/// <summary>Held :   When the holder takes damage directly from a move and does not faint, it [switches out]{mechanic:switching-out} for another non-fainted Pokémon in its party, as chosen by the Trainer. This effect does not activate if another effect prevents the holder from switching out.</summary>
+		/// <summary>Held :   When the holder takes damage directly from a move and does not faint, it [switches out]{mechanic:switching_out} for another non-fainted Pokémon in its party, as chosen by the Trainer. This effect does not activate if another effect prevents the holder from switching out.</summary>
 		EJECT_BUTTON = 590,
-		/// <summary>Held :   When the holder uses a damaging []{type:fire}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.FIRE"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		FIRE_GEM = 591,
-		/// <summary>Held :   When the holder uses a damaging []{type:water}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.WATER"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		WATER_GEM = 592,
-		/// <summary>Held :   When the holder uses a damaging []{type:electric}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.ELECTRIC"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		ELECTRIC_GEM = 593,
-		/// <summary>Held :   When the holder uses a damaging []{type:grass}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.GRASS"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		GRASS_GEM = 594,
-		/// <summary>Held :   When the holder uses a damaging []{type:ice}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.ICE"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		ICE_GEM = 595,
-		/// <summary>Held :   When the holder uses a damaging []{type:fighting}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.FIGHTING"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		FIGHTING_GEM = 596,
-		/// <summary>Held :   When the holder uses a damaging []{type:poison}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.POISON"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		POISON_GEM = 597,
-		/// <summary>Held :   When the holder uses a damaging []{type:ground}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.GROUND"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		GROUND_GEM = 598,
-		/// <summary>Held :   When the holder uses a damaging []{type:flying}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.FLYING"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		FLYING_GEM = 599,
-		/// <summary>Held :   When the holder uses a damaging []{type:psychic}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.PSYCHIC"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		PSYCHIC_GEM = 600,
-		/// <summary>Held :   When the holder uses a damaging []{type:bug}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.BUG"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		BUG_GEM = 601,
-		/// <summary>Held :   When the holder uses a damaging []{type:rock}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.ROCK"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		ROCK_GEM = 602,
-		/// <summary>Held :   When the holder uses a damaging []{type:ghost}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.GHOST"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		GHOST_GEM = 603,
-		/// <summary>Held :   When the holder uses a damaging []{type:dark}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.DARK"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		DARK_GEM = 604,
-		/// <summary>Held :   When the holder uses a damaging []{type:steel}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.STEEL"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		STEEL_GEM = 605,
-		/// <summary>Used on a party Pokémon :   Increases the target's [HP]{mechanic:hp} [effort]{mechanic:effort} by 1.</summary>
+		/// <summary>Used on a party Pokémon :   Increases the target's <see cref="Stats.HP"/> <see cref="IPokemon.EV"/> by 1.</summary>
 		HEALTH_WING = 606,
-		/// <summary>Used on a party Pokémon :   Increases the target's [Attack]{mechanic:attack} [effort]{mechanic:effort} by 1.</summary>
+		/// <summary>Used on a party Pokémon :   Increases the target's <see cref="Stats.ATTACK"/> <see cref="IPokemon.EV"/> by 1.</summary>
 		MUSCLE_WING = 607,
-		/// <summary>Used on a party Pokémon :   Increases the target's [Defense]{mechanic:defense} [effort]{mechanic:effort} by 1.</summary>
+		/// <summary>Used on a party Pokémon :   Increases the target's <see cref="Stats.DEFENSE"/> <see cref="IPokemon.EV"/> by 1.</summary>
 		RESIST_WING = 608,
-		/// <summary>Used on a party Pokémon :   Increases the target's [Special Attack]{mechanic:special-attack} [effort]{mechanic:effort} by 1.</summary>
+		/// <summary>Used on a party Pokémon :   Increases the target's <see cref="Stats.SPATK"/> <see cref="IPokemon.EV"/> by 1.</summary>
 		GENIUS_WING = 609,
-		/// <summary>Used on a party Pokémon :   Increases the target's [Special Defense]{mechanic:special-defense} [effort]{mechanic:effort} by 1.</summary>
+		/// <summary>Used on a party Pokémon :   Increases the target's <see cref="Stats.SPDEF"/> <see cref="IPokemon.EV"/> by 1.</summary>
 		CLEVER_WING = 610,
-		/// <summary>Used on a party Pokémon :   Increases the target's [Speed]{mechanic:speed} [effort]{mechanic:effort} by 1.</summary>
+		/// <summary>Used on a party Pokémon :   Increases the target's <see cref="Stats.SPEED"/> <see cref="IPokemon.EV"/> by 1.</summary>
 		SWIFT_WING = 611,
 		/// <summary>Vendor trash.</summary>
 		PRETTY_WING = 612,
-		/// <summary>Give to a scientist in a museum to receive a []{pokemon:tirtouga}.</summary>
+		/// <summary>Give to a scientist in a museum to receive a <see cref="Pokemons.TIRTOUGA"/>.</summary>
 		COVER_FOSSIL = 613,
-		/// <summary>Give to a scientist in a museum to receive a []{pokemon:archen}.</summary>
+		/// <summary>Give to a scientist in a museum to receive a <see cref="Pokemons.ARCHEN"/>.</summary>
 		PLUME_FOSSIL = 614,
-		/// <summary>Allows passage on the []{location:castelia-city} ship, which leads to []{location:liberty-garden} and []{pokemon:victini}.</summary>
+		/// <summary>Allows passage on the <see cref="Locations.CASTELIA_CITY"/> ship, which leads to <see cref="Locations.LIBERTY_GARDEN"/> and <see cref="Pokemons.VICTINI"/>.</summary>
 		LIBERTY_PASS = 615,
 		/// <summary>Acts as currency to activate Pass Powers in the Entralink.</summary>
 		PASS_ORB = 616,
@@ -1280,45 +1286,45 @@
 		RELIC_STATUE = 630,
 		/// <summary>Cult vendor trash.</summary>
 		RELIC_CROWN = 631,
-		/// <summary>Used on a party Pokémon :   Cures any [status ailment]{mechanic:status-ailment} and [confusion]{mechanic:confusion}.</summary>
+		/// <summary>Used on a party Pokémon :   Cures any <see cref="IBattler.Status"/> and <see cref="IEffectsBattler.Confusion"/>.</summary>
 		CASTELIACONE = 632,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [critical hit]{mechanic:critical-hit} rate by two [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's [critical hit]{mechanic:critical_hit} rate by two <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		DIRE_HIT_2 = 633,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Speed]{mechanic:speed} by two [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.SPEED"/> by two <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_SPEED_2 = 634,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Special Attack]{mechanic:special-attack} by two [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.SPATK"/> by two <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_SP_ATK_2 = 635,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Special Defense]{mechanic:special-defense} by two [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.SPDEF"/> by two <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_SP_DEF_2 = 636,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Defense]{mechanic:defense} by two [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.DEFENSE"/> by two <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_DEFENSE_2 = 637,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Attack]{mechanic:attack} by two [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.ATTACK"/> by two <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_ATTACK_2 = 638,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [accuracy]{mechanic:accuracy} by two [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.ACCURACY"/> by two <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_ACCURACY_2 = 639,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Speed]{mechanic:speed} by three [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.SPEED"/> by three <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_SPEED_3 = 640,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Special Attack]{mechanic:special-attack} by three [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.SPATK"/> by three <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_SP_ATK_3 = 641,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Special Defense]{mechanic:special-defense} by three [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.SPDEF"/> by three <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_SP_DEF_3 = 642,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Defense]{mechanic:defense} by three [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.DEFENSE"/> by three <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_DEFENSE_3 = 643,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Attack]{mechanic:attack} by three [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.ATTACK"/> by three <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_ATTACK_3 = 644,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [accuracy]{mechanic:accuracy} by three [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.ACCURACY"/> by three <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_ACCURACY_3 = 645,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Speed]{mechanic:speed} by six [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.SPEED"/> by six <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_SPEED_6 = 646,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Special Attack]{mechanic:special-attack} by six [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.SPATK"/> by six <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_SP_ATK_6 = 647,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Special Defense]{mechanic:special-defense} by six [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.SPDEF"/> by six <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_SP_DEF_6 = 648,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Defense]{mechanic:defense} by six [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.DEFENSE"/> by six <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_DEFENSE_6 = 649,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [Attack]{mechanic:attack} by six [stages]{mechanic:stage}.  This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.ATTACK"/> by six <see cref="IBattler.stages"/>.  This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_ATTACK_6 = 650,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [accuracy]{mechanic:accuracy} by six [stages]{mechanic:stage}.  This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's <see cref="Stats.ACCURACY"/> by six <see cref="IBattler.stages"/>.  This item can only be obtained or used via the Wonder Launcher.</summary>
 		X_ACCURACY_6 = 651,
 		/// <summary>Used on a party Pokémon in battle :   Selects another friendly Pokémon at random.  If that Pokémon's ability is normally activated by some condition—i.e., is not continuous and passive—its effect is forcibly activated.  This item can only be obtained or used via the Wonder Launcher.</summary>
 		ABILITY_URGE = 652,
@@ -1328,33 +1334,33 @@
 		ITEM_URGE = 654,
 		/// <summary>Used on a party Pokémon in battle :   Selects another friendly Pokémon at random.  Removes all of that Pokémon's stat changes.  This item can only be obtained or used via the Wonder Launcher.</summary>
 		RESET_URGE = 655,
-		/// <summary>Used on a party Pokémon in battle :   Raises the target's [critical hit]{mechanic:critical-hit} rate by three [stages]{mechanic:stage}. This item can only be obtained or used via the Wonder Launcher.</summary>
+		/// <summary>Used on a party Pokémon in battle :   Raises the target's [critical hit]{mechanic:critical_hit} rate by three <see cref="IBattler.stages"/>. This item can only be obtained or used via the Wonder Launcher.</summary>
 		DIRE_HIT_3 = 656,
-		/// <summary>Summons []{pokemon:reshiram} for the final battle against N.</summary>
+		/// <summary>Summons <see cref="Pokemons.RESHIRAM"/> for the final battle against N.</summary>
 		LIGHT_STONE = 657,
-		/// <summary>Summons []{pokemon:zekrom} for the final battle against N.</summary>
+		/// <summary>Summons <see cref="Pokemons.ZEKROM"/> for the final battle against N.</summary>
 		DARK_STONE = 658,
-		/*// <summary>Teaches []{move:wild-charge} to a compatible Pokémon.</summary>
+		/*// <summary>Teaches <see cref="Moves.WILD_CHARGE"/> to a compatible Pokémon.</summary>
 		TM93 = 659,
-		/// <summary>Teaches []{move:rock-smash} to a compatible Pokémon.</summary>
+		/// <summary>Teaches <see cref="Moves.ROCK_SMASH"/> to a compatible Pokémon.</summary>
 		TM94 = 660,
-		/// <summary>Teaches []{move:snarl} to a compatible Pokémon.</summary>
+		/// <summary>Teaches <see cref="Moves.SNARL"/> to a compatible Pokémon.</summary>
 		TM95 = 661,*/
 		/// <summary>Makes four-way video calls.  Used for plot advancement in-game, but also works with other players via the C-Gear.</summary>
 		XTRANSCEIVER = 662,
 		/// <summary>Unknown.  Currently unused.</summary>
 		GOD_STONE = 663,
-		/// <summary>Give to the []{pokemon:wingull} on []{location:unova-route-13}, along with []{item:gram-2} and []{item:gram-3}, to receive []{item:tm89}.</summary>
+		/// <summary>Give to the <see cref="Pokemons.WINGULL"/> on <see cref="Locations.UNOVA_ROUTE_13"/>, along with <see cref="Items.GRAM_2"/> and <see cref="Items.GRAM_3"/>, to receive <see cref="Items.TM89"/>.</summary>
 		GRAM_1 = 664,
-		/// <summary>Give to the []{pokemon:wingull} on []{location:unova-route-13}, along with []{item:gram-1} and []{item:gram-3}, to receive []{item:tm89}.</summary>
+		/// <summary>Give to the <see cref="Pokemons.WINGULL"/> on <see cref="Locations.UNOVA_ROUTE_13"/>, along with <see cref="Items.GRAM_1"/> and <see cref="Items.GRAM_3"/>, to receive <see cref="Items.TM89"/>.</summary>
 		GRAM_2 = 665,
-		/// <summary>Give to the []{pokemon:wingull} on []{location:unova-route-13}, along with []{item:gram-1} and []{item:gram-2}, to receive []{item:tm89}.</summary>
+		/// <summary>Give to the <see cref="Pokemons.WINGULL"/> on <see cref="Locations.UNOVA_ROUTE_13"/>, along with <see cref="Items.GRAM_1"/> and <see cref="Items.GRAM_2"/>, to receive <see cref="Items.TM89"/>.</summary>
 		GRAM_3 = 666,
-		/// <summary>Held :   When the holder uses a damaging []{type:dragon}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.DRAGON"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		DRAGON_GEM = 668,
-		/// <summary>Held :   When the holder uses a damaging []{type:normal}-type move, the move has 1.5× power and this item is consumed.</summary>
+		/// <summary>Held :   When the holder uses a damaging <see cref="Types.NORMAL"/>-type move, the move has 1.5× power and this item is consumed.</summary>
 		NORMAL_GEM = 669,
-		/// <summary>Holds medals recieved in the medal rally.</summary>
+		/// <summary>Holds medals received in the medal rally.</summary>
 		MEDAL_BOX = 670,
 		/// <summary>Fuses Kyurem with Reshiram or Zekrom, or splits them apart again.</summary>
 		DNA_SPLICERS = 671,
@@ -1642,7 +1648,7 @@
 		STEELIUM_Z__HELD = 833,
 		/// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Fairy moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Fairy moves.</summary>
 		FAIRIUM_Z__HELD = 834,
-		/// <summary>Held: Allows []{pokemon:pikachu} to upgrade []{move:volt-tackle} into []{move:catastropika}. : 	Held: Allows Pikachu to upgrade Volt Tackle into Catastropika.</summary>
+		/// <summary>Held: Allows <see cref="Pokemons.PIKACHU"/> to upgrade <see cref="Moves.VOLT_TACKLE"/> into <see cref="Moves.CATASTROPIKA"/>. : 	Held: Allows Pikachu to upgrade Volt Tackle into Catastropika.</summary>
 		PIKANIUM_Z__HELD = 835,
 		/// <summary>Trade to Mr. Hyper to set one of a Pokémon's genes to 31. : 	Trade to Mr. Hyper to maximize one of a Pokémon's genes.</summary>
 		BOTTLE_CAP = 836,
@@ -1650,25 +1656,25 @@
 		GOLD_BOTTLE_CAP = 837,
 		/// <summary>Allows the player's Pokémon to use Z-moves. : 	Allows the player's Pokémon to use Z-moves.</summary>
 		Z_RING = 838,
-		/// <summary>Held: Allows []{pokemon:decidueye} to upgrade []{move:spirit-shackle} into []{move:sinister-arrow-raid}. : 	Held: Allows Decidueye to upgrade Spirit Shackle into Sinister Arrow Raid.</summary>
+		/// <summary>Held: Allows <see cref="Pokemons.DECIDUEYE"/> to upgrade <see cref="Moves.SPIRIT_SHACKLE"/> into <see cref="Moves.SINISTER_ARROW_RAID"/>. : 	Held: Allows Decidueye to upgrade Spirit Shackle into Sinister Arrow Raid.</summary>
 		DECIDIUM_Z__HELD = 839,
-		/// <summary>Held: Allows []{pokemon:incineroar} to upgrade []{move:darkest-lariat} into []{move:malicious-moonsault}. : 	Held: Allows Incineroar to upgrade Darkest Lariat into Malicious Moonsault.</summary>
+		/// <summary>Held: Allows <see cref="Pokemons.INCINEROAR"/> to upgrade <see cref="Moves.DARKEST_LARIAT"/> into <see cref="Moves.MALICIOUS_MOONSAULT"/>. : 	Held: Allows Incineroar to upgrade Darkest Lariat into Malicious Moonsault.</summary>
 		INCINIUM_Z__HELD = 840,
-		/// <summary>Held: Allows []{pokemon:primarina} to upgrade []{move:sparkling-aria} into []{move:oceanic-operetta}. : 	Held: Allows Primarina to upgrade Sparkling Aria into Oceanic Operetta.</summary>
+		/// <summary>Held: Allows <see cref="Pokemons.PRIMARINA"/> to upgrade <see cref="Moves.SPARKLING_ARIA"/> into <see cref="Moves.OCEANIC_OPERETTA"/>. : 	Held: Allows Primarina to upgrade Sparkling Aria into Oceanic Operetta.</summary>
 		PRIMARIUM_Z__HELD = 841,
-		/// <summary>Held: Allows []{pokemon:tapu-koko}, []{pokemon:tapu-lele}, []{pokemon:tapu-bulu}, and []{pokemon:tapu-fini} to upgrade []{move:natures-madness} into []{move:guardian-of-alola}. : 	Held: Allows the Tapus to upgrade Nature's Madness into Guardian of Alola.</summary>
+		/// <summary>Held: Allows <see cref="Pokemons.TAPU_KOKO"/>, <see cref="Pokemons.TAPU_LELE"/>, <see cref="Pokemons.TAPU_BULU"/>, and <see cref="Pokemons.TAPU_FINI"/> to upgrade <see cref="Moves.NATURES_MADNESS"/> into <see cref="Moves.GUARDIAN_OF_ALOLA"/>. : 	Held: Allows the Tapus to upgrade Nature's Madness into Guardian of Alola.</summary>
 		TAPUNIUM_Z__HELD = 842,
-		/// <summary>Held: Allows []{pokemon:marshadow} to upgrade []{move:spectral-thief} into []{move:soul-stealing-7-star-strike}. : 	Held: Allows Marshadow to upgrade Spectral Thief into Soul-Stealing 7 Star Strike.</summary>
+		/// <summary>Held: Allows <see cref="Pokemons.MARSHADOW"/> to upgrade <see cref="Moves.SPECTRAL_THIEF"/> into []{move:soul-stealing-7-star-strike}. : 	Held: Allows Marshadow to upgrade Spectral Thief into Soul-Stealing 7 Star Strike.</summary>
 		MARSHADIUM_Z__HELD = 843,
-		/// <summary>Held: Allows Alola []{pokemon:raichu} to upgrade []{move:thunderbolt} into []{move:stoked-sparksurfer}. : 	Held: Allows Alola Raichu to upgrade Thunderbolt into Stoked Sparksurfer.</summary>
+		/// <summary>Held: Allows Alola <see cref="Pokemons.RAICHU"/> to upgrade <see cref="Moves.THUNDERBOLT"/> into <see cref="Moves.STOKED_SPARKSURFER"/>. : 	Held: Allows Alola Raichu to upgrade Thunderbolt into Stoked Sparksurfer.</summary>
 		ALORAICHIUM_Z__HELD = 844,
-		/// <summary>Held: Allows []{pokemon:snorlax} to upgrade []{move:giga-impact} into []{move:pulverizing-pancake}. : 	Held: Allows Snorlax to upgrade Giga Impact into Pulverizing Pancake.</summary>
+		/// <summary>Held: Allows <see cref="Pokemons.SNORLAX"/> to upgrade <see cref="Moves.GIGA_IMPACT"/> into <see cref="Moves.PULVERIZING_PANCAKE"/>. : 	Held: Allows Snorlax to upgrade Giga Impact into Pulverizing Pancake.</summary>
 		SNORLIUM_Z__HELD = 845,
-		/// <summary>Held: Allows []{pokemon:eevee} to upgrade []{move:last-resort} into []{move:extreme-evoboost}. : 	Held: Allows Eevee to upgrade Last Resort into Extreme Evoboost.</summary>
+		/// <summary>Held: Allows <see cref="Pokemons.EEVEE"/> to upgrade <see cref="Moves.LAST_RESORT"/> into <see cref="Moves.EXTREME_EVOBOOST"/>. : 	Held: Allows Eevee to upgrade Last Resort into Extreme Evoboost.</summary>
 		EEVIUM_Z__HELD = 846,
-		/// <summary>Held: Allows []{pokemon:mew} to upgrade []{move:psychic} into []{move:genesis-supernova}. : 	Held: Allows Mew to upgrade Psychic into Genesis Supernova.</summary>
+		/// <summary>Held: Allows <see cref="Pokemons.MEW"/> to upgrade <see cref="Moves.PSYCHIC"/> into <see cref="Moves.GENESIS_SUPERNOVA"/>. : 	Held: Allows Mew to upgrade Psychic into Genesis Supernova.</summary>
 		MEWNIUM_Z__HELD = 847,
-		/// <summary>Held: Allows cap-wearing []{pokemon:pikachu} to upgrade []{move:thunderbolt} into []{move:10-000-000-volt-thunderbolt}. : 	Held: Allows cap-wearing Pikachu to upgrade Thunderbolt into 10,000,000 Volt Thunderbolt.</summary>
+		/// <summary>Held: Allows cap-wearing <see cref="Pokemons.PIKACHU"/> to upgrade <see cref="Moves.THUNDERBOLT"/> into <see cref="Moves.10_000_000_VOLT_THUNDERBOLT"/>. : 	Held: Allows cap-wearing Pikachu to upgrade Thunderbolt into 10,000,000 Volt Thunderbolt.</summary>
 		PIKASHUNIUM_Z__HELD = 877,
 		/// <summary>Holds ingredients during Mallow's trial. : 	Holds ingredients during Mallow's trial.</summary>
 		FORAGE_BAG = 878,
@@ -1684,11 +1690,11 @@
 		ADRENALINE_ORB = 883,
 		/// <summary>Contains collected Zygarde cells/cores.  Can teach Zygarde moves. : 	Contains collected Zygarde cells/cores.  Can teach Zygarde moves.</summary>
 		ZYGARDE_CUBE = 884,
-		/// <summary>Used on a party Pokémon :   Evolves an Alola []{pokemon:sandshrew} into Alola[]{pokemon:sandslash} or an Alola[]{pokemon:vulpix} into Alola[]{pokemon:ninetales}. : 	Evolves an Alola Sandshrew into Alola Sandslash or an Alola Vulpix into Alola Ninetales.</summary>
+		/// <summary>Used on a party Pokémon :   Evolves an Alola <see cref="Pokemons.SANDSHREW"/> into Alola<see cref="Pokemons.SANDSLASH"/> or an Alola<see cref="Pokemons.VULPIX"/> into Alola<see cref="Pokemons.NINETALES"/>. : 	Evolves an Alola Sandshrew into Alola Sandslash or an Alola Vulpix into Alola Ninetales.</summary>
 		ICE_STONE = 885,
 		/// <summary>Allows the player to summon a Ride Pokémon.  Unused, as this can be done simply by pressing Y. : 	Allows the player to summon a Ride Pokémon.</summary>
 		RIDE_PAGER = 886,
-		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.If the wild Pokémon is an Ultra Beast, this ball has a catch rate of 5Ã—.  Otherwise, it has a catch rate of 0.1Ã—. If used in a trainer battle, nothing happens and the ball is lost. : 	Tries to catch a wild Pokémon.Success rate is 5Ã— for Ultra Beasts and 0.1Ã— for all other Pokémon.</ summary >
+		/// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon. If the wild Pokémon is an Ultra Beast, this ball has a catch rate of 5Ã—.  Otherwise, it has a catch rate of 0.1Ã—. If used in a trainer battle, nothing happens and the ball is lost. : 	Tries to catch a wild Pokémon.Success rate is 5Ã— for Ultra Beasts and 0.1Ã— for all other Pokémon.</ summary >
 		BEAST_BALL = 887,
 		/// <summary>Cures major status ailments and confusion. : 	Cures major status ailments and confusion.</summary>
 		BIG_MALASADA = 888,

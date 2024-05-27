@@ -42,7 +42,7 @@ namespace PokemonUnity
 		IDictionary<Types,PokemonUnity.Monster.Data.Type> TypeData { get; }
 		IDictionary<Moves,Attack.Data.MoveData> MoveData { get; }
 		IDictionary<Moves,Attack.Data.MetaData> MoveMetaData { get; }
-		IDictionary<Attack.Data.Effects,PokemonEssentials.Interface.PokeBattle.IBattleMove> MoveEffectData { get; } //ToDo: Replace with Func<Attack.Data.Effects,Combat.Move> instead?
+		IDictionary<Attack.Effects,PokemonEssentials.Interface.PokeBattle.IBattleMove> MoveEffectData { get; } //ToDo: Replace with Func<Attack.Effects,Combat.Move> instead?
 		IDictionary<Items,ItemData> ItemData { get; }
 		IDictionary<Items,BerryData> BerryData { get; }
 		IDictionary<Regions,Locations[]> RegionData { get; }
@@ -64,8 +64,8 @@ namespace PokemonUnity
 		/// <summary>
 		/// Key: <seealso cref="IEncounterData.Id"/> | Value: <seealso cref="Overworld.IEncounterData"/>
 		/// </summary>
-		IDictionary<int,IEncounterData> EncounterData { get; }
-		//IDictionary<Method,IEncounterData> EncounterMethodData { get; }
+		IDictionary<int,IMapEncounterMetadata> EncounterData { get; }
+		//IDictionary<Method,IMapEncounterMetadata> EncounterMethodData { get; }
 		IDictionary<TrainerTypes,TrainerMetaData> TrainerMetaData { get; }
 		IDictionary<GymBadges,Character.BadgeData> BadgeData { get; }
 		IDictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; }

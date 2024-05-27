@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace PokemonUnity
 {
-	//public bool pbSameThread(wnd) {
+	//public bool SameThread(wnd) {
 	//  if (wnd==0) return false;
 	//  processid= new int[]{ 0 }; //.pack('l')
 	//  getCurrentThreadId=new Win32API('kernel32','GetCurrentThreadId', '%w()','l');
@@ -118,7 +118,7 @@ namespace PokemonUnity
 		}
 
 		public static void updateKeyState(int i) {
-			//bool gfw=pbSameThread(@GetForegroundWindow.call());
+			//bool gfw=SameThread(@GetForegroundWindow.call());
 			if (!@stateUpdated[i]) {
 				bool newstate=Input.getstate(i); //&& gfw
 				@triggerstate[i]=(newstate&&@keystate[i]==0);

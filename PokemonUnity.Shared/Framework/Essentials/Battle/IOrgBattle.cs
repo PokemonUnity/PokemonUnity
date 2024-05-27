@@ -28,48 +28,51 @@ namespace PokemonEssentials.Interface.Battle
 	/// </summary>
 	public interface IGameOrgBattle
 	{
-		bool pbHasEligible(params object[] args);
+		bool HasEligible(); //params object[] args
 
-		ITrainer[] pbGetBTTrainers(int challengeID);
-		IPokemon pbGetBTPokemon(int challengeID);
-
-
-		void pbRecordLastBattle();
-
-		void pbPlayBattle(IBattleRecordData battledata);
-
-		void pbDebugPlayBattle();
-
-		void pbPlayLastBattle();
-
-		void pbPlayBattleFromFile(string filename);
+		PokemonUnity.Character.TrainerMetaData[] GetBTTrainers(int challengeID);
+		IPokemonSerialized[] GetBTPokemon(int challengeID);
 
 
+		void RecordLastBattle();
 
-		IBattleChallenge pbBattleChallenge();
+		void PlayBattle(IBattleRecordData battledata);
 
-		int pbBattleChallengeTrainer(int numwins, ITrainer[] bttrainers);
+		void DebugPlayBattle();
 
-		void pbBattleChallengeGraphic(IEntity @event);
+		void PlayLastBattle();
 
-		string pbBattleChallengeBeginSpeech();
-
-		bool pbEntryScreen(params object[] arg);
-
-		IBattle pbBattleChallengeBattle();
+		void PlayBattleFromFile(string filename);
 
 
 
+		IBattleChallenge BattleChallenge { get; }
+
+		//ITrainer BattleChallengeTrainer(int numwins, ITrainer[] bttrainers);
+		int BattleChallengeTrainer(int numwins, PokemonUnity.Character.TrainerMetaData[] bttrainers);
+
+		void BattleChallengeGraphic(IGameCharacter @event);
+
+		string BattleChallengeBeginSpeech();
+
+		bool EntryScreen(); //params object[] arg
+
+		bool BattleChallengeBattle { get; }
+		//IBattle BattleChallengeBattle { get; }
 
 
-		IPokemon[] pbBattleFactoryPokemon(IPokemonChallengeRules rule, int numwins, int numswaps, IPokemon[] rentals);
 
-		ITrainer pbGenerateBattleTrainer(int trainerid, IPokemonChallengeRules rule);
+
+
+		IPokemon[] BattleFactoryPokemon(IPokemonChallengeRules rule, int numwins, int numswaps, IPokemon[] rentals);
+
+		ITrainer GenerateBattleTrainer(int trainerid, IPokemonChallengeRules rule);
 
 		//ToDo: return bool?
-		BattleResults pbOrganizedBattleEx(ITrainer opponent, IPokemonChallengeRules challengedata, string endspeech, string endspeechwin);
+		bool OrganizedBattleEx(ITrainer opponent, IPokemonChallengeRules challengedata, string endspeech, string endspeechwin);
+		//BattleResults OrganizedBattleEx(ITrainer opponent, IPokemonChallengeRules challengedata, string endspeech, string endspeechwin);
 
-		bool pbIsBanned(IPokemon pokemon);
+		bool IsBanned(IPokemon pokemon);
 	}
 
 	public interface IPokemonSerialized
@@ -116,7 +119,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		Moves convertMove(Moves move);
 
-		IPokemon createPokemon(int level, int[] iv, ITrainer trainer);
+		IPokemon createPokemon(int level, int iv, ITrainer trainer);
 	}
 
 	public interface IGameMapOrgBattle //: PokemonEssentials.Interface.IGameMap
@@ -124,82 +127,91 @@ namespace PokemonEssentials.Interface.Battle
 		int map_id { get; set; }
 	}
 
-	//public interface IGamePlayer
-	//{
-	//    int direction { get; set; }
-	//
-	//    void moveto2(float x, float y);
-	//}
-
-	public interface IBattleChallengeType
+	public interface IGamePlayerOrgBattle //: IGamePlayer
 	{
-		int currentWins { get; set; }
-		int previousWins { get; set; }
-		int maxWins { get; set; }
-		int currentSwaps { get; set; }
-		int previousSwaps { get; set; }
-		int maxSwaps { get; set; }
-		int doublebattle { get; set; }
-		int numPokemon { get; set; }
-		int battletype { get; set; }
-		int mode { get; set; }
+	    int direction { get; }
+
+	    void moveto2(float x, float y);
+	}
+
+	public interface IBattleChallengeType : ICloneable
+	{
+		int currentWins		{ get; }
+		int previousWins	{ get; }
+		int maxWins			{ get; }
+		int currentSwaps	{ get; }
+		int previousSwaps	{ get; }
+		int maxSwaps		{ get; }
+		bool doublebattle	{ get; }
+		int numPokemon		{ get; }
+		int battletype		{ get; }
+		int mode			{ get; }
+		int numRounds			{ get; set; }
 
 		IBattleChallengeType initialize();
 
-		void saveWins(IBattleChallenge challenge);
+		void saveWins(IBattleChallengeData challenge);
 	}
 
 	public interface IBattleChallengeData
 	{
-		int resting { get; set; }
-		int wins { get; set; }
-		int swaps { get; set; }
-		int inProgress { get; set; }
-		int battleNumber { get; set; }
-		int numRounds { get; set; }
-		int decision { get; set; }
-		IPokemon[] party { get; set; }
-		IBattleFactoryData extraData { get; set; }
+		bool resting					{ get; }
+		int wins						{ get; }
+		int swaps						{ get; }
+		bool inProgress					{ get; }
+		int battleNumber				{ get; }
+		int numRounds					{ get; }
+		BattleResults decision			{ get; set; }
+		IPokemon[] party				{ get; }
+		IBattleFactoryData extraData	{ get; }
 
 		IBattleChallengeData initialize();
 
 		void setExtraData(IBattleFactoryData value);
 
-		void pbAddWin();
+		void AddWin();
 
-		void pbAddSwap();
+		void AddSwap();
 
-		bool pbMatchOver();
+		bool MatchOver();
 
-		ITrainer nextTrainer();
+		//ITrainer nextTrainer();
+		int nextTrainer { get; }
 
-		void pbGoToStart();
+		void GoToStart();
 
 		void setParty(IPokemon[] value);
 
-		void pbStart(IBattleChallengeType t, int numRounds);
+		void Start(IBattleChallengeType t, int numRounds);
 
-		void pbCancel();
+		void Cancel();
 
-		void pbEnd();
+		void End();
 
-		void pbGoOn();
+		void GoOn();
 
-		void pbRest();
+		void Rest();
 	}
 
 	public interface IBattleChallenge
 	{
 		int currentChallenge { get; }
-		int BattleTower   { get; } //= 0;
-		int BattlePalace  { get; } //= 1;
-		int BattleArena   { get; } //= 2;
-		int BattleFactory { get; } //= 3;
+		//int BattleTower   { get; } //= 0;
+		//int BattlePalace  { get; } //= 1;
+		//int BattleArena   { get; } //= 2;
+		//int BattleFactory { get; } //= 3;
 
 		IBattleChallenge initialize();
 
 		IPokemonChallengeRules rules { get; }
 
+		/// <summary>
+		/// </summary>
+		/// <param name="doublebattle"></param>
+		/// <param name="numPokemon"></param>
+		/// <param name="battletype">0=>BattleTower; 1=>BattlePalace; 2=>BattleArena; 3=>BattleFactory</param>
+		/// <param name="mode">1=>Open Level; 2=>Battle Tent</param>
+		/// <returns></returns>
 		IPokemonChallengeRules modeToRules(bool doublebattle, int numPokemon, int battletype, int mode);
 
 		void set(int id, int numrounds, IPokemonChallengeRules rules);
@@ -208,7 +220,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		void register(int id, bool doublebattle, int numrounds, int numPokemon, int battletype, int mode= 1);
 
-		bool pbInChallenge { get; }
+		bool InChallenge { get; }
 
 		//IBattleChallengeData data { get; }
 		IBattleChallengeType data { get; }
@@ -225,16 +237,17 @@ namespace PokemonEssentials.Interface.Battle
 
 		int getMaxSwaps(int challenge);
 
-		void pbStart(int challenge);
+		void Start(int challenge);
 
-		void pbEnd();
+		void End();
 
-		//ToDo: returns pbOrganizedBattleEx
-		BattleResults pbBattle();
+		//ToDo: returns OrganizedBattleEx
+		bool Battle { get; }
+		//BattleResults Battle { get; }
 
-		bool pbInProgress { get; }
+		bool InProgress { get; }
 
-		bool pbResting();
+		bool Resting();
 
 		void setDecision(BattleResults value);
 
@@ -245,13 +258,13 @@ namespace PokemonEssentials.Interface.Battle
 		int wins                { get; }
 		int swaps               { get; }
 		int battleNumber        { get; }
-		ITrainer nextTrainer    { get; }
-		void pbGoOn         ();
-		void pbAddWin       ();
-		void pbCancel       ();
-		void pbRest         ();
-		bool pbMatchOver    ();
-		void pbGoToStart    ();
+		int nextTrainer    { get; }
+		void GoOn         ();
+		void AddWin       ();
+		void Cancel       ();
+		void Rest         ();
+		bool MatchOver    ();
+		void GoToStart    ();
 	}
 
 	/// <summary>
@@ -259,22 +272,23 @@ namespace PokemonEssentials.Interface.Battle
 	/// </summary>
 	public interface IGameEventOrgBattle
 	{
-		bool pbInChallenge { get; }
+		bool InChallenge { get; }
 	}
 
 	public interface IBattleFactoryData
 	{
 		IBattleFactoryData initialize(IBattleChallengeData bcdata);
 
-		void pbPrepareRentals();
+		void PrepareRentals();
 
-		void pbChooseRentals();
+		void ChooseRentals();
 
-			//ToDo: returns pbOrganizedBattleEx
-		BattleResults pbBattle(IBattleChallenge challenge);
+		//ToDo: returns OrganizedBattleEx
+		bool Battle(IBattleChallenge challenge);
+		//BattleResults Battle(IBattleChallenge challenge);
 
-		void pbPrepareSwaps();
+		void PrepareSwaps();
 
-		bool pbChooseSwaps();
+		bool ChooseSwaps();
 	}
 }

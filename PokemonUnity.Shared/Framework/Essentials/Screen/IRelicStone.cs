@@ -24,13 +24,13 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IRelicStoneScene : IScene
 	{
 		IRelicStoneScene initialize(IScene scene);
-		void pbUpdate();
-		//void pbRefresh();
-		void pbPurify();
-		//void pbConfirm(string msg);
-		void pbDisplay(string msg, bool brief = false);
-		void pbStartScene(IPokemonShadowPokemon pokemon);
-		void pbEndScene();
+		void Update();
+		//void Refresh();
+		void Purify();
+		//void Confirm(string msg);
+		void Display(string msg, bool brief = false);
+		void StartScene(IPokemonShadowPokemon pokemon);
+		void EndScene();
 	}
 
 	/// <summary>
@@ -39,9 +39,9 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IRelicStoneScreen : IScreen
 	{
 		IRelicStoneScreen initialize(IRelicStoneScene scene);
-		void pbRefresh();
-		void pbConfirm(string x);
-		void pbDisplay(string x);
-		void pbStartScreen(IPokemonShadowPokemon pokemon);
+		void Refresh();
+		void Confirm(string x);
+		void Display(string x);
+		void StartScreen(IPokemonShadowPokemon pokemon);
 	}
 }

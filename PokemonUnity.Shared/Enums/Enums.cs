@@ -1,4 +1,7 @@
-﻿namespace PokemonUnity
+﻿using PokemonUnity.Combat;
+using PokemonUnity.Inventory;
+
+namespace PokemonUnity
 {
 	#region Player
 	/// <summary>
@@ -125,260 +128,260 @@
 		NONE = 0,
 		/// <summary>
 		/// Has a 10% chance of making target Pokémon [flinch]{mechanic:flinch} with each hit.<para></para> This Pokémon's damaging moves have a 10% chance to make the target [flinch]{mechanic:flinch} with each hit if they do not already cause flinching as a secondary effect.
-		/// 
+		///
 		/// This ability does not stack with a held item.
-		/// 
+		///
 		/// Overworld: The wild encounter rate is halved while this Pokémon is first in the party.
 		/// </summary>
 		STENCH = 1,
 		/// <summary>
 		/// Summons [rain]{mechanic:rain} that lasts indefinitely upon entering battle.<para></para> The [weather]{mechanic:weather} changes to [rain]{mechanic:rain} when this Pokémon enters battle and does not end unless replaced by another weather condition.
-		/// 
-		/// If multiple Pokémon with this ability, []{ability:drought}, []{ability:sand-stream}, or []{ability:snow-warning} are sent out at the same time, the abilities will activate in order of [Speed]{mechanic:speed}, respecting []{move:trick-room}.  Each ability's weather will cancel the previous weather, and only the weather summoned by the slowest of the Pokémon will stay.
+		///
+		/// If multiple Pokémon with this ability, <see cref="Abilities.DROUGHT"/>, <see cref="Abilities.SAND_STREAM"/>, or <see cref="Abilities.SNOW_WARNING"/> are sent out at the same time, the abilities will activate in order of <see cref="Stats.SPEED"/>, respecting <see cref="Moves.TRICK_ROOM"/>. Each ability's weather will cancel the previous weather, and only the weather summoned by the slowest of the Pokémon will stay.
 		/// </summary>
 		DRIZZLE = 2,
 		/// <summary>
-		/// Raises [Speed]{mechanic:speed} one [stage]{mechanic:stat-modifier} after each turn.<para></para> This Pokémon's [Speed]{mechanic:speed} rises one [stage]{mechanic:stat-modifier} after each turn.
+		/// Raises <see cref="Stats.SPEED"/> one [stage]{mechanic:stat_modifier} after each turn.<para></para> This Pokémon's <see cref="Stats.SPEED"/> rises one [stage]{mechanic:stat_modifier} after each turn.
 		/// </summary>
 		SPEED_BOOST = 3,
 		/// <summary>
-		/// Protects against [critical hits]{mechanic:critical-hit}.<para></para> Moves cannot score [critical hits]{mechanic:critical-hit} against this Pokémon.
-		/// 
-		/// This ability functions identically to []{ability:shell-armor}.
+		/// Protects against [critical hits]{mechanic:critical_hit}.<para></para> Moves cannot score [critical hits]{mechanic:critical_hit} against this Pokémon.
+		///
+		/// This ability functions identically to <see cref="Abilities.SHELL_ARMOR"/>.
 		/// </summary>
 		BATTLE_ARMOR = 4,
 		/// <summary>
-		/// Prevents being KOed from full [HP]{mechanic:hp}, leaving 1 HP instead.  Protects against the one-hit KO moves regardless of HP.<para></para> When this Pokémon is at full [HP]{mechanic:hp}, any hit that would knock it out will instead leave it with 1 HP.  Regardless of its current HP, it is also immune to the one-hit KO moves: []{move:fissure}, []{move:guillotine}, []{move:horn-drill}, and []{move:sheer-cold}.
-		/// 
-		/// If this Pokémon is holding a []{item:focus-sash}, this ability takes precedence and the item will not be consumed.
+		/// Prevents being KOed from full <see cref="Stats.HP"/>, leaving 1 HP instead. Protects against the one-hit KO moves regardless of HP.<para></para> When this Pokémon is at full <see cref="Stats.HP"/>, any hit that would knock it out will instead leave it with 1 HP. Regardless of its current HP, it is also immune to the one-hit KO moves: <see cref="Moves.FISSURE"/>, <see cref="Moves.GUILLOTINE"/>, <see cref="Moves.HORN_DRILL"/>, and <see cref="Moves.SHEER_COLD"/>.
+		///
+		/// If this Pokémon is holding a <see cref="Items.FOCUS_SASH"/>, this ability takes precedence and the item will not be consumed.
 		/// </summary>
 		STURDY = 5,
 		/// <summary>
-		/// Prevents []{move:self-destruct}, []{move:explosion}, and []{ability:aftermath} from working while the Pokémon is in battle.<para></para> While this Pokémon is in battle, []{move:self-destruct} and []{move:explosion} will fail and []{ability:aftermath} will not take effect.
+		/// Prevents <see cref="Moves.SELF_DESTRUCT"/>, <see cref="Moves.EXPLOSION"/>, and <see cref="Abilities.AFTERMATH"/> from working while the Pokémon is in battle.<para></para> While this Pokémon is in battle, <see cref="Moves.SELF_DESTRUCT"/> and <see cref="Moves.EXPLOSION"/> will fail and <see cref="Abilities.AFTERMATH"/> will not take effect.
 		/// </summary>
 		DAMP = 6,
 		/// <summary>
-		/// Prevents [paralysis]{mechanic:paralysis}.<para></para> This Pokémon cannot be [paralyzed]{mechanic:paralysis}.
-		/// 
+		/// Prevents <see cref="Status.PARALYSIS"/>.<para></para> This Pokémon cannot be <see cref="Status.PARALYSIS"/>.
+		///
 		/// If a Pokémon is paralyzed and acquires this ability, its paralysis is healed; this includes when regaining a lost ability upon leaving battle.
 		/// </summary>
 		LIMBER = 7,
 		/// <summary>
-		/// Increases [evasion]{mechanic:evasion} to 1.25× during a [sandstorm]{mechanic:sandstorm}.  Protects against sandstorm damage.<para></para> During a [sandstorm]{mechanic:sandstorm}, this Pokémon has 1.25× its [evasion]{mechanic:evasion}, and it does not take sandstorm damage regardless of type.
-		/// 
-		/// The evasion bonus does not count as a [stat modifier]{mechanic:stat-modifier}.
-		/// 
+		/// Increases <see cref="Stats.EVASION"/> to 1.25× during a <see cref="Weather.SANDSTORM"/>. Protects against sandstorm damage.<para></para> During a <see cref="Weather.SANDSTORM"/>, this Pokémon has 1.25× its <see cref="Stats.EVASION"/>, and it does not take sandstorm damage regardless of type.
+		///
+		/// The evasion bonus does not count as a [stat modifier]{mechanic:stat_modifier}.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the wild encounter rate is halved in a sandstorm.
 		/// </summary>
 		SAND_VEIL = 8,
 		/// <summary>
-		/// Has a 30% chance of [paralyzing]{mechanic:paralysis} attacking Pokémon on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user has a 30% chance of being [paralyzed]{mechanic:paralysis}.
-		/// 
-		/// Pokémon that are immune to []{type:electric}-type moves can still be paralyzed by this ability.
-		/// 
-		/// Overworld: If the lead Pokémon has this ability, there is a 50% chance that encounters will be with an []{type:electric} Pokémon, if applicable.
+		/// Has a 30% chance of <see cref="Status.PARALYSIS"/> attacking Pokémon on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user has a 30% chance of being <see cref="Status.PARALYSIS"/>.
+		///
+		/// Pokémon that are immune to <see cref="Types.ELECTRIC"/>-type moves can still be paralyzed by this ability.
+		///
+		/// Overworld: If the lead Pokémon has this ability, there is a 50% chance that encounters will be with an <see cref="Types.ELECTRIC"/> Pokémon, if applicable.
 		/// </summary>
 		STATIC = 9,
 		/// <summary>
-		/// Absorbs []{type:electric} moves, healing for 1/4 max [HP]{mechanic:hp}.<para></para> Whenever an []{type:electric}-type move hits this Pokémon, it heals for 1/4 of its maximum [HP]{mechanic:hp}, negating any other effect on it.
-		/// 
-		/// This ability will not take effect if this Pokémon is []{type:ground}-type and thus immune to Electric moves.  Electric moves will ignore this Pokémon's []{move:substitute}.
-		/// 
-		/// This effect includes non-damaging moves, i.e. []{move:thunder-wave}.
+		/// Absorbs <see cref="Types.ELECTRIC"/> moves, healing for 1/4 max <see cref="Stats.HP"/>.<para></para> Whenever an <see cref="Types.ELECTRIC"/>-type move hits this Pokémon, it heals for 1/4 of its maximum <see cref="Stats.HP"/>, negating any other effect on it.
+		///
+		/// This ability will not take effect if this Pokémon is <see cref="Types.GROUND"/>-type and thus immune to Electric moves. Electric moves will ignore this Pokémon's <see cref="Moves.SUBSTITUTE"/>.
+		///
+		/// This effect includes non-damaging moves, i.e. <see cref="Moves.THUNDER_WAVE"/>.
 		/// </summary>
 		VOLT_ABSORB = 10,
 		/// <summary>
-		/// Absorbs []{type:water} moves, healing for 1/4 max [HP]{mechanic:hp}.<para></para> Whenever a []{type:water}-type move hits this Pokémon, it heals for 1/4 of its maximum [HP]{mechanic:hp}, negating any other effect on it.
-		/// 
-		/// Water moves will ignore this Pokémon's []{move:substitute}.
+		/// Absorbs <see cref="Types.WATER"/> moves, healing for 1/4 max <see cref="Stats.HP"/>.<para></para> Whenever a <see cref="Types.WATER"/>-type move hits this Pokémon, it heals for 1/4 of its maximum <see cref="Stats.HP"/>, negating any other effect on it.
+		///
+		/// Water moves will ignore this Pokémon's <see cref="Moves.SUBSTITUTE"/>.
 		/// </summary>
 		WATER_ABSORB = 11,
 		/// <summary>
-		/// Prevents [infatuation]{mechanic:infatuation} and protects against []{move:captivate}.<para></para> This Pokémon cannot be [infatuated]{mechanic:infatuation} and is immune to []{move:captivate}.
-		/// 
+		/// Prevents [infatuation]{mechanic:infatuation} and protects against <see cref="Moves.CAPTIVATE"/>.<para></para> This Pokémon cannot be [infatuated]{mechanic:infatuation} and is immune to <see cref="Moves.CAPTIVATE"/>.
+		///
 		/// If a Pokémon is infatuated and acquires this ability, its infatuation is cleared.
 		/// </summary>
 		OBLIVIOUS = 12,
 		/// <summary>
 		/// Negates all effects of [weather]{mechanic:weather}, but does not prevent the weather itself.<para></para> While this Pokémon is in battle, [weather]{mechanic:weather} can still be in play, but will not have any of its effects.
-		/// 
-		/// This ability functions identically to []{ability:air-lock}.
+		///
+		/// This ability functions identically to <see cref="Abilities.AIR_LOCK"/>.
 		/// </summary>
 		CLOUD_NINE = 13,
 		/// <summary>
-		/// Increases moves' [accuracy]{mechanic:accuracy} to 1.3×.<para></para> This Pokémon's moves have 1.3× their [accuracy]{mechanic:accuracy}.
-		/// 
-		/// This ability has no effect on the one-hit KO moves ([]{move:fissure}, []{move:guillotine}, []{move:horn-drill}, and []{move:sheer-cold}).
-		/// 
+		/// Increases moves' <see cref="Stats.ACCURACY"/> to 1.3×.<para></para> This Pokémon's moves have 1.3× their <see cref="Stats.ACCURACY"/>.
+		///
+		/// This ability has no effect on the one-hit KO moves (<see cref="Moves.FISSURE"/>, <see cref="Moves.GUILLOTINE"/>, <see cref="Moves.HORN_DRILL"/>, and <see cref="Moves.SHEER_COLD"/>).
+		///
 		/// Overworld: If the first Pokémon in the party has this ability, the chance of a wild Pokémon holding a particular item is raised from 50%, 5%, or 1% to 60%, 20%, or 5%, respectively.
 		/// </summary>
 		COMPOUND_EYES = 14,
 		/// <summary>
-		/// Prevents [sleep]{mechanic:sleep}.<para></para> This Pokémon cannot be [asleep]{mechanic:sleep}.
-		/// 
-		/// This causes []{move:rest} to fail altogether.  If a Pokémon is asleep and acquires this ability, it will immediately wake up; this includes when regaining a lost ability upon leaving battle.
-		/// 
-		/// This ability functions identically to []{ability:vital-spirit} in battle.
+		/// Prevents <see cref="Status.SLEEP"/>.<para></para> This Pokémon cannot be <see cref="Status.SLEEP"/>.
+		///
+		/// This causes <see cref="Moves.REST"/> to fail altogether. If a Pokémon is asleep and acquires this ability, it will immediately wake up; this includes when regaining a lost ability upon leaving battle.
+		///
+		/// This ability functions identically to <see cref="Abilities.VITAL_SPIRIT"/> in battle.
 		/// </summary>
 		INSOMNIA = 15,
 		/// <summary>
 		/// Changes type to match when hit by a damaging move.<para></para> Whenever this Pokémon takes damage from a move, the Pokémon's type changes to match the move.
-		/// 
-		/// If the Pokémon has two types, both are overridden.  The Pokémon must directly take damage; for example, moves blocked by a []{move:substitute} will not trigger this ability, nor will moves that deal damage indirectly, such as []{move:spikes}.
-		/// 
+		///
+		/// If the Pokémon has two types, both are overridden. The Pokémon must directly take damage; for example, moves blocked by a <see cref="Moves.SUBSTITUTE"/> will not trigger this ability, nor will moves that deal damage indirectly, such as <see cref="Moves.SPIKES"/>.
+		///
 		/// This ability takes effect on only the last hit of a multiple-hit attack.
-		/// 
+		///
 		/// In Pokémon Colosseum and XD: Gale of Darkness, this ability does not take effect on Shadow-type moves.
 		/// </summary>
 		COLOR_CHANGE = 16,
 		/// <summary>
-		/// Prevents [poison]{mechanic:poison}.<para></para> This Pokémon cannot be [poisoned]{mechanic:poison}.  This includes bad poison.
-		/// 
+		/// Prevents <see cref="Status.POISON"/>.<para></para> This Pokémon cannot be <see cref="Status.POISON"/>. This includes bad poison.
+		///
 		/// If a Pokémon is poisoned and acquires this ability, its poison is healed; this includes when regaining a lost ability upon leaving battle.
 		/// </summary>
 		IMMUNITY = 17,
 		/// <summary>
-		/// Protects against []{type:fire} moves.  Once one has been blocked, the Pokémon's own Fire moves inflict 1.5× damage until it leaves battle.<para></para> This Pokémon is immune to []{type:fire}-type moves.  Once this Pokémon has been hit by a Fire move, its own Fire moves will inflict 1.5× as much damage until it leaves battle.
-		/// 
-		/// This ability has no effect while the Pokémon is [frozen]{mechanic:freezing}.  The Fire damage bonus is retained even if the Pokémon is frozen and thawed or the ability is lost or disabled.  Fire moves will ignore this Pokémon's []{move:substitute}.  This ability takes effect even on non-damaging moves, i.e. []{move:will-o-wisp}.
+		/// Protects against <see cref="Types.FIRE"/> moves. Once one has been blocked, the Pokémon's own Fire moves inflict 1.5× damage until it leaves battle.<para></para> This Pokémon is immune to <see cref="Types.FIRE"/>-type moves. Once this Pokémon has been hit by a Fire move, its own Fire moves will inflict 1.5× as much damage until it leaves battle.
+		///
+		/// This ability has no effect while the Pokémon is <see cref="Status.FROZEN"/>. The Fire damage bonus is retained even if the Pokémon is frozen and thawed or the ability is lost or disabled. Fire moves will ignore this Pokémon's <see cref="Moves.SUBSTITUTE"/>. This ability takes effect even on non-damaging moves, i.e. <see cref="Moves.WILL_O_WISP"/>.
 		/// </summary>
 		FLASH_FIRE = 18,
 		/// <summary>
 		/// Protects against incoming moves' extra effects.<para></para> This Pokémon is immune to the extra effects of moves used against it.
-		/// 
-		/// An extra effect is a move's chance, listed as an "effect chance", to inflict a [status ailment]{mechanic:status-ailment}, cause a [stat change]{mechanic:stat-modifier}, or make the target [flinch]{mechanic:flinching} in addition to the move's main effect.  For example, []{move:thunder-shock}'s [paralysis]{mechanic:paralysis} is an extra effect, but []{move:thunder-wave}'s is not, nor are []{move:knock-off}'s item removal and []{move:air-cutter}'s increased [critical hit]{mechanic:critial-hit} rate.
+		///
+		/// An extra effect is a move's chance, listed as an "effect chance", to inflict a <see cref="IBattler.Status"/>, cause a [stat change]{mechanic:stat_modifier}, or make the target [flinch]{mechanic:flinching} in addition to the move's main effect. For example, <see cref="Moves.THUNDER_SHOCK"/>'s <see cref="Status.PARALYSIS"/> is an extra effect, but <see cref="Moves.THUNDER_WAVE"/>'s is not, nor are <see cref="Moves.KNOCK_OFF"/>'s item removal and <see cref="Moves.AIR_CUTTER"/>'s increased [critical hit]{mechanic:critial_hit} rate.
 		/// </summary>
 		SHIELD_DUST = 19,
 		/// <summary>
-		/// Prevents [confusion]{mechanic:confusion}.<para></para> This Pokémon cannot be [confused]{mechanic:confusion}.
-		/// 
+		/// Prevents <see cref="IEffectsBattler.Confusion"/>.<para></para> This Pokémon cannot be <see cref="IEffectsBattler.Confusion"/>.
+		///
 		/// If a Pokémon is confused and acquires this ability, its confusion will immediately be healed.
 		/// </summary>
 		OWN_TEMPO = 20,
 		/// <summary>
-		/// Prevents being forced out of battle by other Pokémon's moves.<para></para> This Pokémon cannot be forced out of battle by moves such as []{move:whirlwind}.
-		/// 
-		/// []{move:dragon-tail} and []{move:circle-throw} still inflict damage against this Pokémon.
-		/// 
+		/// Prevents being forced out of battle by other Pokémon's moves.<para></para> This Pokémon cannot be forced out of battle by moves such as <see cref="Moves.WHIRLWIND"/>.
+		///
+		/// <see cref="Moves.DRAGON_TAIL"/> and <see cref="Moves.CIRCLE_THROW"/> still inflict damage against this Pokémon.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the success rate while fishing is increased.
 		/// </summary>
 		SUCTION_CUPS = 21,
 		/// <summary>
-		/// Lowers opponents' [Attack]{mechanic:attack} one [stage]{mechanic:stat-modifier} upon entering battle.<para></para> When this Pokémon enters battle, the opponent's [Attack]{mechanic:attack} is lowered by one [stage]{mechanic:stat-modifier}.  In a double battle, both opponents are affected.
-		/// 
+		/// Lowers opponents' <see cref="Stats.ATTACK"/> one [stage]{mechanic:stat_modifier} upon entering battle.<para></para> When this Pokémon enters battle, the opponent's <see cref="Stats.ATTACK"/> is lowered by one [stage]{mechanic:stat_modifier}. In a double battle, both opponents are affected.
+		///
 		/// This ability also takes effect when acquired during a battle, but will not take effect again if lost and reobtained without leaving battle.
-		/// 
-		/// This ability has no effect on an opponent that has a []{move:substitute}.
-		/// 
+		///
+		/// This ability has no effect on an opponent that has a <see cref="Moves.SUBSTITUTE"/>.
+		///
 		/// Overworld: If the first Pokémon in the party has this ability, any random encounter with a Pokémon five or more levels lower than it has a 50% chance of being skipped.
 		/// </summary>
 		INTIMIDATE = 22,
 		/// <summary>
 		/// Prevents opponents from fleeing or switching out.<para></para> While this Pokémon is in battle, opposing Pokémon cannot flee or switch out.
-		/// 
-		/// Other Pokémon with this ability are unaffected.  Pokémon with []{ability:run-away} can still flee.  Pokémon can still switch out with the use of a move or item.
+		///
+		/// Other Pokémon with this ability are unaffected. Pokémon with <see cref="Abilities.RUN_AWAY"/> can still flee. Pokémon can still switch out with the use of a move or item.
 		/// </summary>
 		SHADOW_TAG = 23,
 		/// <summary>
-		/// Damages attacking Pokémon for 1/8 their max [HP]{mechanic:hp} on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user takes 1/8 of its maximum [HP]{mechanic:hp} in damage.
-		/// 
-		/// This ability functions identically to []{ability:iron-barbs}.
+		/// Damages attacking Pokémon for 1/8 their max <see cref="Stats.HP"/> on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user takes 1/8 of its maximum <see cref="Stats.HP"/> in damage.
+		///
+		/// This ability functions identically to <see cref="Abilities.IRON_BARBS"/>.
 		/// </summary>
 		ROUGH_SKIN = 24,
 		/// <summary>
-		/// Protects against damaging moves that are not [super effective]{mechanic:super-effective}.<para></para> This Pokémon is immune to damaging moves that are not [super effective]{mechanic:super-effective} against it.
-		/// 
-		/// Moves that inflict fixed damage, such as []{move:night-shade} or []{move:seismic-toss}, are considered super effective if their types are.  Damage not directly dealt by moves, such as damage from [weather]{mechanic:weather}, a [status ailment]{mechanic:status-ailment}, or []{move:spikes}, is not prevented.
-		/// 
-		/// This ability cannot be copied with []{move:role-play} or traded away with []{move:skill-swap}, but it can be copied with []{ability:trace}, disabled with []{move:gastro-acid}, or changed with []{move:worry-seed}.  This Pokémon can still use Role Play itself to lose this ability, but not Skill Swap.
-		/// 
-		/// If this Pokémon has a []{move:substitute}, this ability will block moves as usual and any moves not blocked will react to the Substitute as usual.
+		/// Protects against damaging moves that are not <see cref="TypeEffective.SuperEffective"/>.<para></para> This Pokémon is immune to damaging moves that are not <see cref="TypeEffective.SuperEffective"/> against it.
+		///
+		/// Moves that inflict fixed damage, such as <see cref="Moves.NIGHT_SHADE"/> or <see cref="Moves.SEISMIC_TOSS"/>, are considered super effective if their types are. Damage not directly dealt by moves, such as damage from [weather]{mechanic:weather}, a <see cref="IBattler.Status"/>, or <see cref="Moves.SPIKES"/>, is not prevented.
+		///
+		/// This ability cannot be copied with <see cref="Moves.ROLE_PLAY"/> or traded away with <see cref="Moves.SKILL_SWAP"/>, but it can be copied with <see cref="Abilities.TRACE"/>, disabled with <see cref="Moves.GASTRO_ACID"/>, or changed with <see cref="Moves.WORRY_SEED"/>. This Pokémon can still use Role Play itself to lose this ability, but not Skill Swap.
+		///
+		/// If this Pokémon has a <see cref="Moves.SUBSTITUTE"/>, this ability will block moves as usual and any moves not blocked will react to the Substitute as usual.
 		/// </summary>
 		WONDER_GUARD = 25,
 		/// <summary>
-		/// Evades []{type:ground} moves.<para></para> This Pokémon is immune to []{type:ground}-type moves, []{move:spikes}, []{move:toxic-spikes}, and []{ability:arena-trap}.
-		/// 
-		/// This ability is disabled during []{move:gravity} or []{move:ingrain}, or while holding an []{item:iron-ball}.  This ability is not disabled during []{move:roost}.
+		/// Evades <see cref="Types.GROUND"/> moves.<para></para> This Pokémon is immune to <see cref="Types.GROUND"/>-type moves, <see cref="Moves.SPIKES"/>, <see cref="Moves.TOXIC_SPIKES"/>, and <see cref="Abilities.ARENA_TRAP"/>.
+		///
+		/// This ability is disabled during <see cref="Moves.GRAVITY"/> or <see cref="Moves.INGRAIN"/>, or while holding an <see cref="Items.IRON_BALL"/>. This ability is not disabled during <see cref="Moves.ROOST"/>.
 		/// </summary>
 		LEVITATE = 26,
 		/// <summary>
-		/// Has a 30% chance of inflcting either [paralysis]{mechanic:paralysis}, [poison]{mechanic:poison}, or [sleep]{mechanic:sleep} on attacking Pokémon on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user has a 30% chance of being [paralyzed]{mechanic:paralysis}, [poisoned]{mechanic:poison}, or put to [sleep]{mechanic:sleep}, chosen at random.
-		/// 
+		/// Has a 30% chance of inflicting either <see cref="Status.PARALYSIS"/>, <see cref="Status.POISON"/>, or <see cref="Status.SLEEP"/> on attacking Pokémon on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user has a 30% chance of being <see cref="Status.PARALYSIS"/>, <see cref="Status.POISON"/>, or put to <see cref="Status.SLEEP"/>, chosen at random.
+		///
 		/// Nothing is done to compensate if the move's user is immune to one of these ailments; there is simply a lower chance that the move's user will be affected.
 		/// </summary>
 		EFFECT_SPORE = 27,
 		/// <summary>
-		/// Copies [burns]{mechanic:burn}, [paralysis]{mechanic:paralysis}, and [poison]{mechanic:poison} received onto the Pokémon that inflicted them.<para></para> Whenever this Pokémon is [burned]{mechanic:burn}, [paralyzed]{mechanic:paralysis}, or [poisoned]{mechanic:poison}, the Pokémon who gave this Pokémon that ailment is also given the ailment.
-		/// 
-		/// This ability passes back bad poison when this Pokémon is badly poisoned.  This ability cannot pass on a status ailment that the Pokémon did not directly receive from another Pokémon, such as the poison from []{move:toxic-spikes} or the burn from a []{item:flame-orb}.
-		/// 
-		/// Overworld: If the lead Pokémon has this ability, wild Pokémon have a 50% chance of having the lead Pokémon's nature, and a 50% chance of being given a random nature as usual, including the lead Pokémon's nature.  This does not work on Pokémon received outside of battle or roaming legendaries.
+		/// Copies <see cref="Status.BURN"/>, <see cref="Status.PARALYSIS"/>, and <see cref="Status.POISON"/> received onto the Pokémon that inflicted them.<para></para> Whenever this Pokémon is <see cref="Status.BURN"/>, <see cref="Status.PARALYSIS"/>, or <see cref="Status.POISON"/>, the Pokémon who gave this Pokémon that ailment is also given the ailment.
+		///
+		/// This ability passes back bad poison when this Pokémon is badly poisoned. This ability cannot pass on a status ailment that the Pokémon did not directly receive from another Pokémon, such as the poison from <see cref="Moves.TOXIC_SPIKES"/> or the burn from a <see cref="Items.FLAME_ORB"/>.
+		///
+		/// Overworld: If the lead Pokémon has this ability, wild Pokémon have a 50% chance of having the lead Pokémon's nature, and a 50% chance of being given a random nature as usual, including the lead Pokémon's nature. This does not work on Pokémon received outside of battle or roaming legendaries.
 		/// </summary>
 		SYNCHRONIZE = 28,
 		/// <summary>
-		/// Prevents stats from being [lowered]{mechanic:stat-modifier} by other Pokémon.<para></para> This Pokémon cannot have its stats [lowered]{mechanic:stat-modifier} by other Pokémon.
-		/// 
-		/// This ability does not prevent any stat losses other than [stat modifiers]{mechanic:stat-modifiers}, such as the [Speed]{mechanic:speed} cut from [paralysis]{mechanic:paralysis}.  This Pokémon can still be passed negative stat modifiers through []{move:guard-swap}, []{move:heart-swap}, or []{move:power-swap}.
-		/// 
-		/// This ability functions identically to []{ability:white-smoke} in battle.
+		/// Prevents stats from being [lowered]{mechanic:stat_modifier} by other Pokémon.<para></para> This Pokémon cannot have its stats [lowered]{mechanic:stat_modifier} by other Pokémon.
+		///
+		/// This ability does not prevent any stat losses other than [stat modifiers]{mechanic:stat_modifiers}, such as the <see cref="Stats.SPEED"/> cut from <see cref="Status.PARALYSIS"/>. This Pokémon can still be passed negative stat modifiers through <see cref="Moves.GUARD_SWAP"/>, <see cref="Moves.HEART_SWAP"/>, or <see cref="Moves.POWER_SWAP"/>.
+		///
+		/// This ability functions identically to <see cref="Abilities.WHITE_SMOKE"/> in battle.
 		/// </summary>
 		CLEAR_BODY = 29,
 		/// <summary>
-		/// Cures any [major status ailment]{mechanic:major-status-ailment} upon switching out.<para></para> This Pokémon is cured of any [major status ailment]{mechanic:major-status-ailment} when it is switched out for another Pokémon.
-		/// 
+		/// Cures any [major status ailment]{mechanic:major_status_ailment} upon switching out.<para></para> This Pokémon is cured of any [major status ailment]{mechanic:major_status_ailment} when it is switched out for another Pokémon.
+		///
 		/// If this ability is acquired during battle, the Pokémon is cured upon leaving battle before losing the temporary ability.
 		/// </summary>
 		NATURAL_CURE = 30,
 		/// <summary>
-		/// Redirects single-target []{type:electric} moves to this Pokémon where possible.  Absorbs Electric moves, raising [Special Attack]{mechanic:special-attack} one [stage]{mechanic:stat-modifier}.<para></para> All other Pokémon's single-target []{type:electric}-type moves are redirected to this Pokémon if it is an eligible target.  Other Pokémon's Electric moves raise this Pokémon's [Special Attack]{mechanic:special-attack} one [stage]{mechanic:stat-modifier}, negating any other effect on it, and cannot miss it.
-		/// 
-		/// If the move's intended target also has this ability, the move is not redirected.  When multiple Pokémon with this ability are possible targets for redirection, the move is redirected to the one with the highest [Speed]{mechanic:speed} stat, or, in the case of a tie, to a random tied Pokémon.  []{move:follow-me} takes precedence over this ability.
-		/// 
-		/// If the Pokémon is a []{type:ground}-type and thus immune to Electric moves, its immunity prevents the Special Attack boost.
+		/// Redirects single-target <see cref="Types.ELECTRIC"/> moves to this Pokémon where possible. Absorbs Electric moves, raising <see cref="Stats.SPATK"/> one [stage]{mechanic:stat_modifier}.<para></para> All other Pokémon's single-target <see cref="Types.ELECTRIC"/>-type moves are redirected to this Pokémon if it is an eligible target. Other Pokémon's Electric moves raise this Pokémon's <see cref="Stats.SPATK"/> one [stage]{mechanic:stat_modifier}, negating any other effect on it, and cannot miss it.
+		///
+		/// If the move's intended target also has this ability, the move is not redirected. When multiple Pokémon with this ability are possible targets for redirection, the move is redirected to the one with the highest <see cref="Stats.SPEED"/> stat, or, in the case of a tie, to a random tied Pokémon.  <see cref="Moves.FOLLOW_ME"/> takes precedence over this ability.
+		///
+		/// If the Pokémon is a <see cref="Types.GROUND"/>-type and thus immune to Electric moves, its immunity prevents the Special Attack boost.
 		/// </summary>
 		LIGHTNING_ROD = 31,
 		/// <summary>
 		/// Doubles the chance of moves' extra effects occurring.<para></para> This Pokémon's moves have twice their usual effect chance.
-		/// 
-		/// An effect chance is a move's chance to inflict a [status ailment]{mechanic:status-ailment}, cause a [stat change]{mechanic:stat-modifier}, or make the target [flinch]{mechanic:flinching} in addition to the move's main effect.  For example, []{move:flamethrower}'s chance of [burning]{mechanic:burn} the target is doubled, but []{move:protect}'s chance of success and []{move:air-cutter}'s increased [critical hit]{mechanic:critical-hit} rate are unaffected.
-		/// 
-		/// []{move:secret-power} is unaffected.
+		///
+		/// An effect chance is a move's chance to inflict a <see cref="IBattler.Status"/>, cause a [stat change]{mechanic:stat_modifier}, or make the target [flinch]{mechanic:flinching} in addition to the move's main effect. For example, <see cref="Moves.FLAMETHROWER"/>'s chance of <see cref="Status.BURN"/> the target is doubled, but <see cref="Moves.PROTECT"/>'s chance of success and <see cref="Moves.AIR_CUTTER"/>'s increased [critical hit]{mechanic:critical_hit} rate are unaffected.
+		///
+		/// <see cref="Moves.SECRET_POWER"/> is unaffected.
 		/// </summary>
 		SERENE_GRACE = 32,
 		/// <summary>
-		/// Doubles [Speed]{mechanic:speed} during [rain]{mechanic:rain}.<para></para> This Pokémon's [Speed]{mechanic:speed} is doubled during [rain]{mechanic:rain}.
-		/// 
-		/// This bonus does not count as a [stat modifier]{mechanic:stat-modifier}.
+		/// Doubles <see cref="Stats.SPEED"/> during [rain]{mechanic:rain}.<para></para> This Pokémon's <see cref="Stats.SPEED"/> is doubled during [rain]{mechanic:rain}.
+		///
+		/// This bonus does not count as a [stat modifier]{mechanic:stat_modifier}.
 		/// </summary>
 		SWIFT_SWIM = 33,
 		/// <summary>
-		/// Doubles [Speed]{mechanic:speed} during [strong sunlight]{mechanic:strong-sunlight}.<para></para> This Pokémon's [Speed]{mechanic:speed} is doubled during [strong sunlight]{mechanic:strong-sunlight}.
-		/// 
-		/// This bonus does not count as a [stat modifier]{mechanic:stat-modifier}.
+		/// Doubles <see cref="Stats.SPEED"/> during [strong sunlight]{mechanic:strong_sunlight}.<para></para> This Pokémon's <see cref="Stats.SPEED"/> is doubled during [strong sunlight]{mechanic:strong_sunlight}.
+		///
+		/// This bonus does not count as a [stat modifier]{mechanic:stat_modifier}.
 		/// </summary>
 		CHLOROPHYLL = 34,
 		/// <summary>
 		/// Doubles the wild encounter rate.<para></para> Overworld: If the lead Pokémon has this ability, the wild encounter rate is doubled.
-		/// 
+		///
 		/// This ability has no effect in battle.
 		/// </summary>
 		ILLUMINATE = 35,
 		/// <summary>
 		/// Copies an opponent's ability upon entering battle.<para></para> When this Pokémon enters battle, it copies a random opponent's ability.
-		/// 
-		/// This ability cannot copy []{ability:flower-gift}, []{ability:forecast}, []{ability:illusion}, []{ability:imposter}, []{ability:multitype}, []{ability:trace}, []{ability:wonder-guard}, or []{ability:zen-mode}.
+		///
+		/// This ability cannot copy <see cref="Abilities.FLOWER_GIFT"/>, <see cref="Abilities.FORECAST"/>, <see cref="Abilities.ILLUSION"/>, <see cref="Abilities.IMPOSTER"/>, <see cref="Abilities.MULTITYPE"/>, <see cref="Abilities.TRACE"/>, <see cref="Abilities.WONDER_GUARD"/>, or <see cref="Abilities.ZEN_MODE"/>.
 		/// </summary>
 		TRACE = 36,
 		/// <summary>
-		/// Doubles [Attack]{mechanic:attack} in battle.<para></para> This Pokémon's [Attack]{mechanic:attack} is doubled while in battle.
-		/// 
-		/// This bonus does not count as a [stat modifier]{mechanic:stat-modifier}.
-		/// 
-		/// This ability functions identically to []{ability:pure-power}.
+		/// Doubles <see cref="Stats.ATTACK"/> in battle.<para></para> This Pokémon's <see cref="Stats.ATTACK"/> is doubled while in battle.
+		///
+		/// This bonus does not count as a [stat modifier]{mechanic:stat_modifier}.
+		///
+		/// This ability functions identically to <see cref="Abilities.PURE_POWER"/>.
 		/// </summary>
 		HUGE_POWER = 37,
 		/// <summary>
-		/// Has a 30% chance of [poisoning]{mechanic:poison} attacking Pokémon on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user has a 30% chance of being [poisoned]{mechanic:poison}.
+		/// Has a 30% chance of <see cref="Status.POISON"/> attacking Pokémon on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user has a 30% chance of being <see cref="Status.POISON"/>.
 		/// </summary>
 		POISON_POINT = 38,
 		/// <summary>
@@ -386,71 +389,71 @@
 		/// </summary>
 		INNER_FOCUS = 39,
 		/// <summary>
-		/// Prevents [freezing]{mechanic:freezing}.<para></para> This Pokémon cannot be [frozen]{mechanic:freezing}.
-		/// 
+		/// Prevents <see cref="Status.FROZEN"/>.<para></para> This Pokémon cannot be <see cref="Status.FROZEN"/>.
+		///
 		/// If a Pokémon is frozen and acquires this ability, it will immediately thaw out; this includes when regaining a lost ability upon leaving battle.
-		/// 
-		/// Overworld: If any Pokémon in the party has this ability, each egg in the party has its [hatch counter]{mechanic:hatch-counter} decreased by 2 (rather than 1) each [step cycle]{mechanic:step-cycle}, making eggs hatch roughly twice as quickly.  This effect does not stack if multiple Pokémon have this ability or []{ability:flame-body}.
+		///
+		/// Overworld: If any Pokémon in the party has this ability, each egg in the party has its [hatch counter]{mechanic:hatch_counter} decreased by 2 (rather than 1) each [step cycle]{mechanic:step_cycle}, making eggs hatch roughly twice as quickly. This effect does not stack if multiple Pokémon have this ability or <see cref="Abilities.FLAME_BODY"/>.
 		/// </summary>
 		MAGMA_ARMOR = 40,
 		/// <summary>
-		/// Prevents [burns]{mechanic:burn}.<para></para> This Pokémon cannot be [burned]{mechanic:burn}.
-		/// 
+		/// Prevents <see cref="Status.BURN"/>.<para></para> This Pokémon cannot be <see cref="Status.BURN"/>.
+		///
 		/// If a Pokémon is burned and acquires this ability, its burn is healed; this includes when regaining a lost ability upon leaving battle.
 		/// </summary>
 		WATER_VEIL = 41,
 		/// <summary>
-		/// Prevents []{type:steel} opponents from fleeing or switching out.<para></para> While this Pokémon is in battle, opposing []{type:steel}-type Pokémon cannot flee or switch out.
-		/// 
-		/// Pokémon with []{ability:run-away} can still flee.  Pokémon can still switch out with the use of a move or item.
-		/// 
+		/// Prevents <see cref="Types.STEEL"/> opponents from fleeing or switching out.<para></para> While this Pokémon is in battle, opposing <see cref="Types.STEEL"/>-type Pokémon cannot flee or switch out.
+		///
+		/// Pokémon with <see cref="Abilities.RUN_AWAY"/> can still flee. Pokémon can still switch out with the use of a move or item.
+		///
 		/// Overworld: If the lead Pokémon has this ability, Steel-type Pokémon have a higher encounter rate.
 		/// </summary>
 		MAGNET_PULL = 42,
 		/// <summary>
 		/// Protects against sound-based moves.<para></para> This Pokémon is immune to moves flagged as being sound-based.
-		/// 
-		/// []{move:heal-bell} is unaffected.  []{move:uproar} still prevents this Pokémon from [sleeping]{mechanic:sleep}.  This Pokémon can still receive a Perish Song counter through []{move:baton-pass}, and will retain a Perish Song counter if it acquires this ability after Perish Song is used.
-		/// 
-		/// []{move:howl}, []{move:roar-of-time}, []{move:sonic-boom}, and []{move:yawn} are not flagged as sound-based.
+		///
+		/// <see cref="Moves.HEAL_BELL"/> is unaffected.  <see cref="Moves.UPROAR"/> still prevents this Pokémon from <see cref="Status.SLEEP"/>. This Pokémon can still receive a Perish Song counter through <see cref="Moves.BATON_PASS"/>, and will retain a Perish Song counter if it acquires this ability after Perish Song is used.
+		///
+		/// <see cref="Moves.HOWL"/>, <see cref="Moves.ROAR_OF_TIME"/>, <see cref="Moves.SONIC_BOOM"/>, and <see cref="Moves.YAWN"/> are not flagged as sound-based.
 		/// </summary>
 		SOUNDPROOF = 43,
 		/// <summary>
-		/// Heals for 1/16 max [HP]{mechanic:hp} after each turn during [rain]{mechanic:rain}.<para></para> This Pokémon heals for 1/16 of its maximum [HP]{mechanic:hp} after each turn during [rain]{mechanic:rain}.
+		/// Heals for 1/16 max <see cref="Stats.HP"/> after each turn during [rain]{mechanic:rain}.<para></para> This Pokémon heals for 1/16 of its maximum <see cref="Stats.HP"/> after each turn during [rain]{mechanic:rain}.
 		/// </summary>
 		RAIN_DISH = 44,
 		/// <summary>
-		/// Summons a [sandstorm]{mechanic:sandstorm} that lasts indefinitely upon entering battle.<para></para> The [weather]{mechanic:weather} changes to a [sandstorm]{mechanic:sandstorm} when this Pokémon enters battle and does not end unless cancelled by another weather condition.
-		/// 
-		/// If multiple Pokémon with this ability, []{ability:drizzle}, []{ability:drought}, or []{ability:snow-warning} are sent out at the same time, the abilities will activate in order of [Speed]{mechanic:speed}, respecting []{move:trick-room}.  Each ability's weather will cancel the previous weather, and only the weather summoned by the slowest of the Pokémon will stay.
-		/// 
+		/// Summons a <see cref="Weather.SANDSTORM"/> that lasts indefinitely upon entering battle.<para></para> The [weather]{mechanic:weather} changes to a <see cref="Weather.SANDSTORM"/> when this Pokémon enters battle and does not end unless cancelled by another weather condition.
+		///
+		/// If multiple Pokémon with this ability, <see cref="Abilities.DRIZZLE"/>, <see cref="Abilities.DROUGHT"/>, or <see cref="Abilities.SNOW_WARNING"/> are sent out at the same time, the abilities will activate in order of <see cref="Stats.SPEED"/>, respecting <see cref="Moves.TRICK_ROOM"/>. Each ability's weather will cancel the previous weather, and only the weather summoned by the slowest of the Pokémon will stay.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the wild encounter rate is halved in a sandstorm.
 		/// </summary>
 		SAND_STREAM = 45,
 		/// <summary>
-		/// Increases the [PP]{mechanic:pp} cost of moves targetting the Pokémon by one.<para></para> Moves targetting this Pokémon use one extra [PP]{mechanic:pp}.
-		/// 
-		/// This ability stacks if multiple targets have it.  This ability still affects moves that fail or miss.  This ability does not affect ally moves that target either the entire field or just its side, nor this Pokémon's self-targetted moves; it does, however, affect single-targetted ally moves aimed at this Pokémon, ally moves that target all other Pokémon, and opponents' moves that target the entire field.  If this ability raises a move's PP cost above its remaining PP, it will use all remaining PP.
-		/// 
+		/// Increases the <see cref="IMove.PP"/> cost of moves targeting the Pokémon by one.<para></para> Moves targeting this Pokémon use one extra <see cref="IMove.PP"/>.
+		///
+		/// This ability stacks if multiple targets have it. This ability still affects moves that fail or miss. This ability does not affect ally moves that target either the entire field or just its side, nor this Pokémon's self-targetted moves; it does, however, affect single-targetted ally moves aimed at this Pokémon, ally moves that target all other Pokémon, and opponents' moves that target the entire field. If this ability raises a move's PP cost above its remaining PP, it will use all remaining PP.
+		///
 		/// When this Pokémon enters battle, all participating trainers are notified that it has this ability.
-		/// 
-		/// Overworld: If the lead Pokémon has this ability, higher-levelled Pokémon have their encounter rate increased.
+		///
+		/// Overworld: If the lead Pokémon has this ability, higher-leveled Pokémon have their encounter rate increased.
 		/// </summary>
 		PRESSURE = 46,
 		/// <summary>
-		/// Halves damage from []{type:fire} and []{type:ice} moves.<para></para> This Pokémon takes half as much damage from []{type:fire}- and []{type:ice}-type moves.
+		/// Halves damage from <see cref="Types.FIRE"/> and <see cref="Types.ICE"/> moves.<para></para> This Pokémon takes half as much damage from <see cref="Types.FIRE"/>- and <see cref="Types.ICE"/>-type moves.
 		/// </summary>
 		THICK_FAT = 47,
 		/// <summary>
-		/// Makes [sleep]{mechanic:sleep} pass twice as quickly.<para></para> This Pokémon's remaining sleep turn count falls by 2 rather than 1.
-		/// 
+		/// Makes <see cref="Status.SLEEP"/> pass twice as quickly.<para></para> This Pokémon's remaining sleep turn count falls by 2 rather than 1.
+		///
 		/// If this Pokémon's sleep counter is at 1, it will fall to 0 and then the Pokémon will wake up.
 		/// </summary>
 		EARLY_BIRD = 48,
 		/// <summary>
-		/// Has a 30% chance of [burning]{mechanic:burn} attacking Pokémon on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user has a 30% chance of being [burned]{mechanic:burn}.
-		/// 
-		/// Overworld: If any Pokémon in the party has this ability, each egg in the party has its [hatch counter]{mechanic:hatch-counter} decreased by 2 (rather than 1) each [step cycle]{mechanic:step-cycle}, making eggs hatch roughly twice as quickly.  This effect does not stack if multiple Pokémon have this ability or []{ability:magma-armor}.
+		/// Has a 30% chance of <see cref="Status.BURN"/> attacking Pokémon on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user has a 30% chance of being <see cref="Status.BURN"/>.
+		///
+		/// Overworld: If any Pokémon in the party has this ability, each egg in the party has its [hatch counter]{mechanic:hatch_counter} decreased by 2 (rather than 1) each [step cycle]{mechanic:step_cycle}, making eggs hatch roughly twice as quickly. This effect does not stack if multiple Pokémon have this ability or <see cref="Abilities.MAGMA_ARMOR"/>.
 		/// </summary>
 		FLAME_BODY = 49,
 		/// <summary>
@@ -458,255 +461,255 @@
 		/// </summary>
 		RUN_AWAY = 50,
 		/// <summary>
-		/// Prevents [accuracy]{mechanic:accuracy} from being [lowered]{mechanic:stat-modifier}.<para></para> This Pokémon cannot have its [accuracy]{mechanic:accuracy} [lowered]{mechanic:stat-modifier}.
-		/// 
-		/// This ability does not prevent any accuracy losses other than [stat modifiers]{mechanic:stat-modifiers}, such as the accuracy cut from [fog]{mechanic:fog}; nor does it prevent other Pokémon's [evasion]{mechanic:evasion} from making this Pokémon's moves less accurate.  This Pokémon can still be passed negative accuracy modifiers through []{move:heart-swap}.
-		/// 
+		/// Prevents <see cref="Stats.ACCURACY"/> from being [lowered]{mechanic:stat_modifier}.<para></para> This Pokémon cannot have its <see cref="Stats.ACCURACY"/> [lowered]{mechanic:stat_modifier}.
+		///
+		/// This ability does not prevent any accuracy losses other than [stat modifiers]{mechanic:stat_modifiers}, such as the accuracy cut from [fog]{mechanic:fog}; nor does it prevent other Pokémon's <see cref="Stats.EVASION"/> from making this Pokémon's moves less accurate. This Pokémon can still be passed negative accuracy modifiers through <see cref="Moves.HEART_SWAP"/>.
+		///
 		/// Overworld: If the first Pokémon in the party has this ability, any random encounter with a Pokémon five or more levels lower than it has a 50% chance of being skipped.
 		/// </summary>
 		KEEN_EYE = 51,
 		/// <summary>
-		/// Prevents [Attack]{mechanic:attack} from being [lowered]{mechanic:stat-modifiers} by other Pokémon.<para></para> This Pokémon's [Attack]{mechanic:attack} cannot be [lowered]{mechanic:stat-modifier} by other Pokémon.
-		/// 
-		/// This ability does not prevent any Attack losses other than [stat modifiers]{mechanic:stat-modifiers}, such as the Attack cut from a [burn]{mechanic:burn}.  This Pokémon can still be passed negative Attack modifiers through []{move:heart-swap} or []{move:power-swap}.
+		/// Prevents <see cref="Stats.ATTACK"/> from being [lowered]{mechanic:stat_modifiers} by other Pokémon.<para></para> This Pokémon's <see cref="Stats.ATTACK"/> cannot be [lowered]{mechanic:stat_modifier} by other Pokémon.
+		///
+		/// This ability does not prevent any Attack losses other than [stat modifiers]{mechanic:stat_modifiers}, such as the Attack cut from a <see cref="Status.BURN"/>. This Pokémon can still be passed negative Attack modifiers through <see cref="Moves.HEART_SWAP"/> or <see cref="Moves.POWER_SWAP"/>.
 		/// </summary>
 		HYPER_CUTTER = 52,
 		/// <summary>
-		/// Picks up other Pokémon's used and [Flung]{move:fling} held items.  May also pick up an item after battle.<para></para> At the end of each turn, if another Pokémon consumed or [Flung]{move:fling} a held item that turn, this Pokémon picks up the item if it is not already holding one.  After each battle, this Pokémon has a 10% chance of picking up an item if it is not already holding one.
-		/// 
-		/// The []{item:air-balloon} and []{item:eject-button} cannot be picked up.
-		/// 
-		/// The items that may be found vary by game, and, since Pokémon Emerald, by the Pokémon's level.  This ability is checked after the battle ends, at which point any temporary ability changes have worn off.
+		/// Picks up other Pokémon's used and [Flung]{move:fling} held items. May also pick up an item after battle.<para></para> At the end of each turn, if another Pokémon consumed or [Flung]{move:fling} a held item that turn, this Pokémon picks up the item if it is not already holding one. After each battle, this Pokémon has a 10% chance of picking up an item if it is not already holding one.
+		///
+		/// The <see cref="Items.AIR_BALLOON"/> and <see cref="Items.EJECT_BUTTON"/> cannot be picked up.
+		///
+		/// The items that may be found vary by game, and, since Pokémon Emerald, by the Pokémon's level. This ability is checked after the battle ends, at which point any temporary ability changes have worn off.
 		/// </summary>
 		PICKUP = 53,
 		/// <summary>
 		/// Skips every second turn.<para></para> Every second turn on which this Pokémon should attempt to use a move, it will instead do nothing ("loaf around").
-		/// 
-		/// Loafing around interrupts moves that take multiple turns the same way [paralysis]{mechanic:paralysis}, [flinching]{mechanic:flinching}, etc do.  Most such moves, for example []{move:bide} or []{move:rollout}, are simply cut off upon loafing around.  Attacks with a recharge turn, such as []{move:hyper-beam}, do not have to recharge; attacks with a preparation turn, such as []{move:fly}, do not end up being used.  Moves that are forced over multiple turns and keep going through failure, such as []{move:outrage}, []{move:uproar}, or any move forced by []{move:encore}, keep going as usual.
-		/// 
-		/// If this Pokémon is [confused]{mechanic:confusion}, its confusion is not checked when loafing around; the Pokémon cannot hurt itself, and its confusion does not end or come closer to ending.
-		/// 
-		/// If this Pokémon attempts to move but fails, e.g. because of [paralysis]{mechanic:paralysis} or []{move:gravity}, it still counts as having moved and will loaf around the next turn.  If it does not attempt to move, e.g. because it is [asleep]{mechanic:sleep} or [frozen]{mechanic:freezing}, whatever it would have done will be postponed until its next attempt; that is, it will either loaf around or move as usual, depending on what it last did.
-		/// 
-		/// This ability cannot be changed with []{move:worry-seed}, but it can be disabled with []{move:gastro-acid}, changed with []{move:role-play}, or traded away with []{move:skill-swap}.
+		///
+		/// Loafing around interrupts moves that take multiple turns the same way <see cref="Status.PARALYSIS"/>, [flinching]{mechanic:flinching}, etc do. Most such moves, for example <see cref="Moves.BIDE"/> or <see cref="Moves.ROLLOUT"/>, are simply cut off upon loafing around. Attacks with a recharge turn, such as <see cref="Moves.HYPER_BEAM"/>, do not have to recharge; attacks with a preparation turn, such as <see cref="Moves.FLY"/>, do not end up being used. Moves that are forced over multiple turns and keep going through failure, such as <see cref="Moves.OUTRAGE"/>, <see cref="Moves.UPROAR"/>, or any move forced by <see cref="Moves.ENCORE"/>, keep going as usual.
+		///
+		/// If this Pokémon is <see cref="IEffectsBattler.Confusion"/>, its confusion is not checked when loafing around; the Pokémon cannot hurt itself, and its confusion does not end or come closer to ending.
+		///
+		/// If this Pokémon attempts to move but fails, e.g. because of <see cref="Status.PARALYSIS"/> or <see cref="Moves.GRAVITY"/>, it still counts as having moved and will loaf around the next turn. If it does not attempt to move, e.g. because it is <see cref="Status.SLEEP"/> or <see cref="Status.FROZEN"/>, whatever it would have done will be postponed until its next attempt; that is, it will either loaf around or move as usual, depending on what it last did.
+		///
+		/// This ability cannot be changed with <see cref="Moves.WORRY_SEED"/>, but it can be disabled with <see cref="Moves.GASTRO_ACID"/>, changed with <see cref="Moves.ROLE_PLAY"/>, or traded away with <see cref="Moves.SKILL_SWAP"/>.
 		/// </summary>
 		TRUANT = 54,
 		/// <summary>
-		/// Strengthens physical moves to inflict 1.5× damage, but decreases their [accuracy]{mechanic:accuracy} to 0.8×.<para></para> This Pokémon's physical moves do 1.5× as much [regular damage]{mechanic:regular-damage}, but have 0.8× their usual [accuracy]{mechanic:accuracy}.
-		/// 
-		/// Special moves are unaffected.  Moves that do set damage, such as []{move:seismic-toss}, have their accuracy affected, but not their damage.
-		/// 
-		/// Overworld: If the lead Pokémon has this ability, higher-levelled Pokémon have their encounter rate increased.
+		/// Strengthens physical moves to inflict 1.5× damage, but decreases their <see cref="Stats.ACCURACY"/> to 0.8×.<para></para> This Pokémon's physical moves do 1.5× as much [regular damage]{mechanic:regular_damage}, but have 0.8× their usual <see cref="Stats.ACCURACY"/>.
+		///
+		/// Special moves are unaffected. Moves that do set damage, such as <see cref="Moves.SEISMIC_TOSS"/>, have their accuracy affected, but not their damage.
+		///
+		/// Overworld: If the lead Pokémon has this ability, higher-leveled Pokémon have their encounter rate increased.
 		/// </summary>
 		HUSTLE = 55,
 		/// <summary>
 		/// Has a 30% chance of [infatuating]{mechanic:infatuation} attacking Pokémon on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user has a 30% chance of being [infatuated]{mechanic:infatuation}.
-		/// 
+		///
 		/// Overworld: If the first Pokémon in the party has this ability, any wild Pokémon whose species can be either gender has a 2/3 chance of being set to the opposite gender, and a 1/3 chance of having a random gender as usual.
 		/// </summary>
 		CUTE_CHARM = 56,
 		/// <summary>
-		/// Increases [Special Attack]{mechanic:special-attack} to 1.5× when a friendly Pokémon has []{ability:plus} or []{ability:minus}.<para></para> This Pokémon has 1.5× its [Special Attack]{mechanic:special-attack} if any friendly Pokémon has []{ability:plus} or []{ability:minus}.
-		/// 
-		/// This bonus does not count as a [stat modifier]{mechanic:stat-modifier}.  If either ability is disabled by []{move:gastro-acid}, both lose their effect.
+		/// Increases <see cref="Stats.SPATK"/> to 1.5× when a friendly Pokémon has <see cref="Abilities.PLUS"/> or <see cref="Abilities.MINUS"/>.<para></para> This Pokémon has 1.5× its <see cref="Stats.SPATK"/> if any friendly Pokémon has <see cref="Abilities.PLUS"/> or <see cref="Abilities.MINUS"/>.
+		///
+		/// This bonus does not count as a [stat modifier]{mechanic:stat_modifier}. If either ability is disabled by <see cref="Moves.GASTRO_ACID"/>, both lose their effect.
 		/// </summary>
 		PLUS = 57,
 		/// <summary>
-		/// Increases [Special Attack]{mechanic:special-attack} to 1.5× when a friendly Pokémon has []{ability:plus} or []{ability:minus}.<para></para> This Pokémon has 1.5× its [Special Attack]{mechanic:special-attack} if any friendly Pokémon has []{ability:plus} or []{ability:minus}.
-		/// 
-		/// This bonus does not count as a [stat modifier]{mechanic:stat-modifier}.  If either ability is disabled by []{move:gastro-acid}, both lose their effect.
+		/// Increases <see cref="Stats.SPATK"/> to 1.5× when a friendly Pokémon has <see cref="Abilities.PLUS"/> or <see cref="Abilities.MINUS"/>.<para></para> This Pokémon has 1.5× its <see cref="Stats.SPATK"/> if any friendly Pokémon has <see cref="Abilities.PLUS"/> or <see cref="Abilities.MINUS"/>.
+		///
+		/// This bonus does not count as a [stat modifier]{mechanic:stat_modifier}. If either ability is disabled by <see cref="Moves.GASTRO_ACID"/>, both lose their effect.
 		/// </summary>
 		MINUS = 58,
 		/// <summary>
-		/// Changes []{pokemon:castform}'s type and form to match the [weather]{mechanic:weather}.<para></para> During [rain]{mechanic:rain}, [strong sunlight]{mechanic:strong-sunlight}, or [hail]{mechanic:hail}, this Pokémon's type changes to []{type:water}, []{type:fire}, or []{type:ice}, respectively, and its form changes to match.
-		/// 
-		/// This ability has no effect for any Pokémon other than []{pokemon:castform}.
-		/// 
-		/// If the [weather]{mechanic:weather} ends or becomes anything that does not trigger this ability, or a Pokémon with []{ability:air-lock} or []{ability:cloud-nine} enters battle, this Pokémon's type and form revert to their default.  If this ability is lost or disabled, this Pokémon cannot change its current type and form until it regains its ability.
+		/// Changes <see cref="Pokemons.CASTFORM"/>'s type and form to match the [weather]{mechanic:weather}.<para></para> During [rain]{mechanic:rain}, [strong sunlight]{mechanic:strong_sunlight}, or <see cref="Weather.HAIL"/>, this Pokémon's type changes to <see cref="Types.WATER"/>, <see cref="Types.FIRE"/>, or <see cref="Types.ICE"/>, respectively, and its form changes to match.
+		///
+		/// This ability has no effect for any Pokémon other than <see cref="Pokemons.CASTFORM"/>.
+		///
+		/// If the [weather]{mechanic:weather} ends or becomes anything that does not trigger this ability, or a Pokémon with <see cref="Abilities.AIR_LOCK"/> or <see cref="Abilities.CLOUD_NINE"/> enters battle, this Pokémon's type and form revert to their default. If this ability is lost or disabled, this Pokémon cannot change its current type and form until it regains its ability.
 		/// </summary>
 		FORECAST = 59,
 		/// <summary>
 		/// Prevents a held item from being removed by other Pokémon.<para></para> This Pokémon's hold item cannot be removed by other Pokémon.
-		/// 
-		/// Damaging moves that would remove this Pokémon's item can still inflict damage against this Pokémon, e.g. []{move:knock-off} or []{move:pluck}.  This Pokémon can still use moves that involve the loss of its own item, e.g. []{move:fling} or []{move:trick}.
-		/// 
+		///
+		/// Damaging moves that would remove this Pokémon's item can still inflict damage against this Pokémon, e.g. <see cref="Moves.KNOCK_OFF"/> or <see cref="Moves.PLUCK"/>. This Pokémon can still use moves that involve the loss of its own item, e.g. <see cref="Moves.FLING"/> or <see cref="Moves.TRICK"/>.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the encounter rate while fishing is increased.
 		/// </summary>
 		STICKY_HOLD = 60,
 		/// <summary>
-		/// Has a 33% chance of curing any [major status ailment]{mechanic:major-status-ailment} after each turn.<para></para> After each turn, this Pokémon has a 33% of being cured of any [major status ailment]{mechanic:major-status-ailment}.
+		/// Has a 33% chance of curing any [major status ailment]{mechanic:major_status_ailment} after each turn.<para></para> After each turn, this Pokémon has a 33% of being cured of any [major status ailment]{mechanic:major_status_ailment}.
 		/// </summary>
 		SHED_SKIN = 61,
 		/// <summary>
-		/// Increases [Attack]{mechanic:attack} to 1.5× with a [major status ailment]{mechanic:major-status-ailment}.<para></para> Whenever this Pokémon is [asleep]{mechanic:sleep}, [burned]{mechanic:burn}, [paralyzed]{mechanic:paralysis}, or [poisoned]{mechanic:poison}, it has 1.5× its [Attack]{mechanic:attack}.  This Pokémon is not affected by the usual Attack cut from a burn.
-		/// 
-		/// This bonus does not count as a [stat modifier]{mechanic:stat-modifier}.
+		/// Increases <see cref="Stats.ATTACK"/> to 1.5× with a [major status ailment]{mechanic:major_status_ailment}.<para></para> Whenever this Pokémon is <see cref="Status.SLEEP"/>, <see cref="Status.BURN"/>, <see cref="Status.PARALYSIS"/>, or <see cref="Status.POISON"/>, it has 1.5× its <see cref="Stats.ATTACK"/>. This Pokémon is not affected by the usual Attack cut from a burn.
+		///
+		/// This bonus does not count as a [stat modifier]{mechanic:stat_modifier}.
 		/// </summary>
 		GUTS = 62,
 		/// <summary>
-		/// Increases [Defense]{mechanic:defense} to 1.5× with a [major status ailment]{mechanic:major-status-ailment}.<para></para> Whenever this Pokémon has a [major status ailment]{mechanic:major-status-ailment}, it has 1.5× its [Defense]{mechanic:defense}.
-		/// 
-		/// This bonus does not count as a [stat modifier]{mechanic:stat-modifier}.
+		/// Increases <see cref="Stats.DEFENSE"/> to 1.5× with a [major status ailment]{mechanic:major_status_ailment}.<para></para> Whenever this Pokémon has a [major status ailment]{mechanic:major_status_ailment}, it has 1.5× its <see cref="Stats.DEFENSE"/>.
+		///
+		/// This bonus does not count as a [stat modifier]{mechanic:stat_modifier}.
 		/// </summary>
 		MARVEL_SCALE = 63,
 		/// <summary>
-		/// Damages opponents using leeching moves for as much as they would heal.<para></para> Whenever a Pokémon would heal after hitting this Pokémon with a leeching move like []{move:absorb}, it instead loses as many [HP]{mechanic:hp} as it would usually gain.
-		/// 
-		/// []{move:dream-eater} is unaffected.
+		/// Damages opponents using leeching moves for as much as they would heal.<para></para> Whenever a Pokémon would heal after hitting this Pokémon with a leeching move like <see cref="Moves.ABSORB"/>, it instead loses as many <see cref="Stats.HP"/> as it would usually gain.
+		///
+		/// <see cref="Moves.DREAM_EATER"/> is unaffected.
 		/// </summary>
 		LIQUID_OOZE = 64,
 		/// <summary>
-		/// Strengthens []{type:grass} moves to inflict 1.5× damage at 1/3 max [HP]{mechanic:hp} or less.<para></para> When this Pokémon has 1/3 or less of its [HP]{mechanic:hp} remaining, its []{type:grass}-type moves inflict 1.5× as much [regular damage]{mechanic:regular-damage}.
+		/// Strengthens <see cref="Types.GRASS"/> moves to inflict 1.5× damage at 1/3 max <see cref="Stats.HP"/> or less.<para></para> When this Pokémon has 1/3 or less of its <see cref="Stats.HP"/> remaining, its <see cref="Types.GRASS"/>-type moves inflict 1.5× as much [regular damage]{mechanic:regular_damage}.
 		/// </summary>
 		OVERGROW = 65,
 		/// <summary>
-		/// Strengthens []{type:fire} moves to inflict 1.5× damage at 1/3 max [HP]{mechanic:hp} or less.<para></para> When this Pokémon has 1/3 or less of its [HP]{mechanic:hp} remaining, its []{type:fire}-type moves inflict 1.5× as much [regular damage]{mechanic:regular-damage}.
+		/// Strengthens <see cref="Types.FIRE"/> moves to inflict 1.5× damage at 1/3 max <see cref="Stats.HP"/> or less.<para></para> When this Pokémon has 1/3 or less of its <see cref="Stats.HP"/> remaining, its <see cref="Types.FIRE"/>-type moves inflict 1.5× as much [regular damage]{mechanic:regular_damage}.
 		/// </summary>
 		BLAZE = 66,
 		/// <summary>
-		/// Strengthens []{type:water} moves to inflict 1.5× damage at 1/3 max [HP]{mechanic:hp} or less.<para></para> When this Pokémon has 1/3 or less of its [HP]{mechanic:hp} remaining, its []{type:water}-type moves inflict 1.5× as much [regular damage]{mechanic:regular-damage}.
+		/// Strengthens <see cref="Types.WATER"/> moves to inflict 1.5× damage at 1/3 max <see cref="Stats.HP"/> or less.<para></para> When this Pokémon has 1/3 or less of its <see cref="Stats.HP"/> remaining, its <see cref="Types.WATER"/>-type moves inflict 1.5× as much [regular damage]{mechanic:regular_damage}.
 		/// </summary>
 		TORRENT = 67,
 		/// <summary>
-		/// Strengthens []{type:bug} moves to inflict 1.5× damage at 1/3 max [HP]{mechanic:hp} or less.<para></para> When this Pokémon has 1/3 or less of its [HP]{mechanic:hp} remaining, its []{type:bug}-type moves inflict 1.5× as much [regular damage]{mechanic:regular-damage}.
-		/// 
+		/// Strengthens <see cref="Types.BUG"/> moves to inflict 1.5× damage at 1/3 max <see cref="Stats.HP"/> or less.<para></para> When this Pokémon has 1/3 or less of its <see cref="Stats.HP"/> remaining, its <see cref="Types.BUG"/>-type moves inflict 1.5× as much [regular damage]{mechanic:regular_damage}.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the wild encounter rate is increased.
 		/// </summary>
 		SWARM = 68,
 		/// <summary>
 		/// Protects against recoil damage.<para></para> This Pokémon does not receive recoil damage from its recoil moves.
-		/// 
-		/// []{move:struggle}'s recoil is unaffected.  This ability does not prevent crash damage from missing with []{move:jump-kick} or []{move:high-jump-kick}.
+		///
+		/// <see cref="Moves.STRUGGLE"/>'s recoil is unaffected. This ability does not prevent crash damage from missing with <see cref="Moves.JUMP_KICK"/> or <see cref="Moves.HIGH_JUMP_KICK"/>.
 		/// </summary>
 		ROCK_HEAD = 69,
 		/// <summary>
-		/// Summons [strong sunlight]{mechanic:strong-sunlight} that lasts indefinitely upon entering battle.<para></para> The [weather]{mechanic:weather} changes to [strong sunlight]{mechanic:strong-sunlight} when this Pokémon enters battle and does not end unless cancelled by another weather condition.
-		/// 
-		/// If multiple Pokémon with this ability, []{ability:drizzle}, []{ability:sand-stream}, or []{ability:snow-warning} are sent out at the same time, the abilities will activate in order of [Speed]{mechanic:speed}, respecting []{move:trick-room}.  Each ability's weather will cancel the previous weather, and only the weather summoned by the slowest of the Pokémon will stay.
+		/// Summons [strong sunlight]{mechanic:strong_sunlight} that lasts indefinitely upon entering battle.<para></para> The [weather]{mechanic:weather} changes to [strong sunlight]{mechanic:strong_sunlight} when this Pokémon enters battle and does not end unless cancelled by another weather condition.
+		///
+		/// If multiple Pokémon with this ability, <see cref="Abilities.DRIZZLE"/>, <see cref="Abilities.SAND_STREAM"/>, or <see cref="Abilities.SNOW_WARNING"/> are sent out at the same time, the abilities will activate in order of <see cref="Stats.SPEED"/>, respecting <see cref="Moves.TRICK_ROOM"/>. Each ability's weather will cancel the previous weather, and only the weather summoned by the slowest of the Pokémon will stay.
 		/// </summary>
 		DROUGHT = 70,
 		/// <summary>
-		/// Prevents opponents from fleeing or switching out.  Eluded by []{type:flying}-types and Pokémon in the air.<para></para> While this Pokémon is in battle, opposing Pokémon cannot flee or switch out.  []{type:flying}-type Pokémon and Pokémon in the air, e.g. due to []{ability:levitate} or []{move:magnet-rise}, are unaffected.
-		/// 
-		/// Pokémon with []{ability:run-away} can still flee.  Pokémon can still switch out with the use of a move or item.
-		/// 
+		/// Prevents opponents from fleeing or switching out. Eluded by <see cref="Types.FLYING"/>-types and Pokémon in the air.<para></para> While this Pokémon is in battle, opposing Pokémon cannot flee or switch out.  <see cref="Types.FLYING"/>-type Pokémon and Pokémon in the air, e.g. due to <see cref="Abilities.LEVITATE"/> or <see cref="Moves.MAGNET_RISE"/>, are unaffected.
+		///
+		/// Pokémon with <see cref="Abilities.RUN_AWAY"/> can still flee. Pokémon can still switch out with the use of a move or item.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the wild encounter rate is doubled.
 		/// </summary>
 		ARENA_TRAP = 71,
 		/// <summary>
-		/// Prevents [sleep]{mechanic:sleep}.<para></para> This Pokémon cannot be [asleep]{mechanic:sleep}.
-		/// 
-		/// This causes []{move:rest} to fail altogether.  If a Pokémon is asleep and acquires this ability, it will immediately wake up; this includes when regaining a lost ability upon leaving battle.
-		/// 
-		/// This ability functions identically to []{ability:insomnia} in battle.
-		/// 
-		/// Overworld: If the lead Pokémon has this ability, higher-levelled Pokémon have their encounter rate increased.
+		/// Prevents <see cref="Status.SLEEP"/>.<para></para> This Pokémon cannot be <see cref="Status.SLEEP"/>.
+		///
+		/// This causes <see cref="Moves.REST"/> to fail altogether. If a Pokémon is asleep and acquires this ability, it will immediately wake up; this includes when regaining a lost ability upon leaving battle.
+		///
+		/// This ability functions identically to <see cref="Abilities.INSOMNIA"/> in battle.
+		///
+		/// Overworld: If the lead Pokémon has this ability, higher-leveled Pokémon have their encounter rate increased.
 		/// </summary>
 		VITAL_SPIRIT = 72,
 		/// <summary>
-		/// Prevents stats from being [lowered]{mechanic:stat-modifier} by other Pokémon.<para></para> This Pokémon cannot have its stats [lowered]{mechanic:stat-modifier} by other Pokémon.
-		/// 
-		/// This ability does not prevent any stat losses other than [stat modifiers]{mechanic:stat-modifiers}, such as the [Speed]{mechanic:speed} cut from [paralysis]{mechanic:paralysis}; nor self-inflicted stat drops, such as the [Special Attack]{mechanic:special-attack} drop from []{move:overheat}; nor opponent-triggered stat boosts, such as the [Attack]{mechanic:attack} boost from []{move:swagger}.  This Pokémon can still be passed negative stat modifiers through []{move:guard-swap}, []{move:heart-swap}, or []{move:power-swap}.
-		/// 
-		/// This ability functions identically to []{ability:clear-body} in battle.
-		/// 
+		/// Prevents stats from being [lowered]{mechanic:stat_modifier} by other Pokémon.<para></para> This Pokémon cannot have its stats [lowered]{mechanic:stat_modifier} by other Pokémon.
+		///
+		/// This ability does not prevent any stat losses other than [stat modifiers]{mechanic:stat_modifiers}, such as the <see cref="Stats.SPEED"/> cut from <see cref="Status.PARALYSIS"/>; nor self-inflicted stat drops, such as the <see cref="Stats.SPATK"/> drop from <see cref="Moves.OVERHEAT"/>; nor opponent-triggered stat boosts, such as the <see cref="Stats.ATTACK"/> boost from <see cref="Moves.SWAGGER"/>. This Pokémon can still be passed negative stat modifiers through <see cref="Moves.GUARD_SWAP"/>, <see cref="Moves.HEART_SWAP"/>, or <see cref="Moves.POWER_SWAP"/>.
+		///
+		/// This ability functions identically to <see cref="Abilities.CLEAR_BODY"/> in battle.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the wild encounter rate is halved.
 		/// </summary>
 		WHITE_SMOKE = 73,
 		/// <summary>
-		/// Doubles [Attack]{mechanic:attack} in battle.<para></para> This Pokémon's [Attack]{mechanic:attack} is doubled in battle.
-		/// 
-		/// This bonus does not count as a [stat modifier]{mechanic:stat-modifier}.
-		/// 
-		/// This ability functions identically to []{ability:huge-power}.
+		/// Doubles <see cref="Stats.ATTACK"/> in battle.<para></para> This Pokémon's <see cref="Stats.ATTACK"/> is doubled in battle.
+		///
+		/// This bonus does not count as a [stat modifier]{mechanic:stat_modifier}.
+		///
+		/// This ability functions identically to <see cref="Abilities.HUGE_POWER"/>.
 		/// </summary>
 		PURE_POWER = 74,
 		/// <summary>
-		/// Protects against [critical hits]{mechanic:critical-hit}.<para></para> Moves cannot score [critical hits]{mechanic:critical-hit} against this Pokémon.
-		/// 
-		/// This ability functions identically to []{ability:battle-armor}.
+		/// Protects against [critical hits]{mechanic:critical_hit}.<para></para> Moves cannot score [critical hits]{mechanic:critical_hit} against this Pokémon.
+		///
+		/// This ability functions identically to <see cref="Abilities.BATTLE_ARMOR"/>.
 		/// </summary>
 		SHELL_ARMOR = 75,
 		/// <summary>
 		/// Negates all effects of [weather]{mechanic:weather}, but does not prevent the weather itself.<para></para> While this Pokémon is in battle, [weather]{mechanic:weather} can still be in play, but will not have any of its effects.
-		/// 
-		/// This ability functions identically to []{ability:cloud-nine}.
+		///
+		/// This ability functions identically to <see cref="Abilities.CLOUD_NINE"/>.
 		/// </summary>
 		AIR_LOCK = 76,
 		/// <summary>
-		/// Doubles [evasion]{mechanic:evasion} when [confused]{mechanic:confusion}.<para></para> When this Pokémon is [confused]{mechanic:confusion}, it has twice its [evasion]{mechanic:evasion}.
+		/// Doubles <see cref="Stats.EVASION"/> when <see cref="IEffectsBattler.Confusion"/>.<para></para> When this Pokémon is <see cref="IEffectsBattler.Confusion"/>, it has twice its <see cref="Stats.EVASION"/>.
 		/// </summary>
 		TANGLED_FEET = 77,
 		/// <summary>
-		/// Absorbs []{type:electric} moves, raising [Speed]{mechanic:speed} one [stage]{mechanic:stat-modifier}.<para></para> Whenever an []{type:electric}-type move hits this Pokémon, its [Speed]{mechanic:speed} rises one [stage]{mechanic:stat-modifier}, negating any other effect on it.
-		/// 
-		/// This ability will not take effect if this Pokémon is immune to Electric moves.  Electric moves will ignore this Pokémon's []{move:substitute}.
-		/// 
-		/// This effect includes non-damaging moves, i.e. []{move:thunder-wave}.
+		/// Absorbs <see cref="Types.ELECTRIC"/> moves, raising <see cref="Stats.SPEED"/> one [stage]{mechanic:stat_modifier}.<para></para> Whenever an <see cref="Types.ELECTRIC"/>-type move hits this Pokémon, its <see cref="Stats.SPEED"/> rises one [stage]{mechanic:stat_modifier}, negating any other effect on it.
+		///
+		/// This ability will not take effect if this Pokémon is immune to Electric moves. Electric moves will ignore this Pokémon's <see cref="Moves.SUBSTITUTE"/>.
+		///
+		/// This effect includes non-damaging moves, i.e. <see cref="Moves.THUNDER_WAVE"/>.
 		/// </summary>
 		MOTOR_DRIVE = 78,
 		/// <summary>
-		/// Increases damage inflicted to 1.25× against Pokémon of the same gender, but decreases damage to 0.75× against the opposite gender.<para></para> This Pokémon inflicts 1.25× as much [regular damage]{mechanic:regular-damage} against Pokémon of the same gender and 0.75× as much regular damage against Pokémon of the opposite gender.
-		/// 
+		/// Increases damage inflicted to 1.25× against Pokémon of the same gender, but decreases damage to 0.75× against the opposite gender.<para></para> This Pokémon inflicts 1.25× as much [regular damage]{mechanic:regular_damage} against Pokémon of the same gender and 0.75× as much regular damage against Pokémon of the opposite gender.
+		///
 		/// If either Pokémon is genderless, damage is unaffected.
 		/// </summary>
 		RIVALRY = 79,
 		/// <summary>
-		/// Raises [Speed]{mechanic:speed} one [stage]{mechanic:stat-modifier} upon [flinching]{mechanic:flinching}.<para></para> Whenever this Pokémon [flinches]{mechanic:flinching}, its [Speed]{mechanic:speed} rises one [stage]{mechanic:stat-modifier}.
+		/// Raises <see cref="Stats.SPEED"/> one [stage]{mechanic:stat_modifier} upon [flinching]{mechanic:flinching}.<para></para> Whenever this Pokémon [flinches]{mechanic:flinching}, its <see cref="Stats.SPEED"/> rises one [stage]{mechanic:stat_modifier}.
 		/// </summary>
 		STEADFAST = 80,
 		/// <summary>
-		/// Increases evasion to 1.25× during [hail]{mechanic:hail}.  Protects against hail damage.<para></para> During [hail]{mechanic:hail}, this Pokémon has 1.25× its [evasion]{mechanic:evasion}, and it does not take hail damage regardless of type.
-		/// 
-		/// The evasion bonus does not count as a [stat modifier]{mechanic:stat-modifier}.
-		/// 
+		/// Increases evasion to 1.25× during <see cref="Weather.HAIL"/>. Protects against hail damage.<para></para> During <see cref="Weather.HAIL"/>, this Pokémon has 1.25× its <see cref="Stats.EVASION"/>, and it does not take hail damage regardless of type.
+		///
+		/// The evasion bonus does not count as a [stat modifier]{mechanic:stat_modifier}.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the wild encounter rate is halved in snow.
 		/// </summary>
 		SNOW_CLOAK = 81,
 		/// <summary>
-		/// Makes the Pokémon eat any held Berry triggered by low [HP]{mechanic:hp} below 1/2 its max HP.<para></para> This Pokémon eats any held Berry triggered by low [HP]{mechanic:hp} when it falls below 50% of its HP, regardless of the Berry's usual threshold.
+		/// Makes the Pokémon eat any held Berry triggered by low <see cref="Stats.HP"/> below 1/2 its max HP.<para></para> This Pokémon eats any held Berry triggered by low <see cref="Stats.HP"/> when it falls below 50% of its HP, regardless of the Berry's usual threshold.
 		/// </summary>
 		GLUTTONY = 82,
 		/// <summary>
-		/// Raises [Attack]{mechanic:attack} to the maximum of six [stages]{mechanic:stat-modifier} upon receiving a [critical hit]{mechanic:critical-hit}.<para></para> Whenever this Pokémon receives a [critical hit]{mechanic:critical-hit}, its [Attack]{mechanic:attack} rises to the maximum of 6 [stages]{mechanic:stat-modifier}.
-		/// 
-		/// This ability will still take effect if the critical hit is received by a []{move:substitute}.
+		/// Raises <see cref="Stats.ATTACK"/> to the maximum of six [stages]{mechanic:stat_modifier} upon receiving a [critical hit]{mechanic:critical_hit}.<para></para> Whenever this Pokémon receives a [critical hit]{mechanic:critical_hit}, its <see cref="Stats.ATTACK"/> rises to the maximum of 6 [stages]{mechanic:stat_modifier}.
+		///
+		/// This ability will still take effect if the critical hit is received by a <see cref="Moves.SUBSTITUTE"/>.
 		/// </summary>
 		ANGER_POINT = 83,
 		/// <summary>
-		/// Doubles [Speed]{mechanic:speed} upon using or losing a held item.<para></para> When this Pokémon uses or loses its held item, its [Speed]{mechanic:speed} is doubled.  If it gains another item or leaves battle, this bonus is lost.
-		/// 
-		/// This includes when the Pokémon drops its item because of []{move:knock-off}.  This bonus does not count as a [stat modifier]{mechanic:stat-modifier}.  There is no notification when this ability takes effect.
+		/// Doubles <see cref="Stats.SPEED"/> upon using or losing a held item.<para></para> When this Pokémon uses or loses its held item, its <see cref="Stats.SPEED"/> is doubled. If it gains another item or leaves battle, this bonus is lost.
+		///
+		/// This includes when the Pokémon drops its item because of <see cref="Moves.KNOCK_OFF"/>. This bonus does not count as a [stat modifier]{mechanic:stat_modifier}. There is no notification when this ability takes effect.
 		/// </summary>
 		UNBURDEN = 84,
 		/// <summary>
-		/// Halves damage from []{type:fire} moves and [burns]{mechanic:burn}.<para></para> This Pokémon takes half as much damage from []{type:fire}-type moves and [burns]{mechanic:burn}.
+		/// Halves damage from <see cref="Types.FIRE"/> moves and <see cref="Status.BURN"/>.<para></para> This Pokémon takes half as much damage from <see cref="Types.FIRE"/>-type moves and <see cref="Status.BURN"/>.
 		/// </summary>
 		HEATPROOF = 85,
 		/// <summary>
-		/// Doubles the Pokémon's [stat modifiers]{mechanic:stat-modifiers}.  These doubled modifiers are still capped at -6 or 6 stages.<para></para> Each stage of this Pokémon's [stat modifiers]{mechanic:stat-modifiers} acts as two stages.  These doubled stages are still limited to a minimum of -6 and a maximum of 6.
-		/// 
+		/// Doubles the Pokémon's [stat modifiers]{mechanic:stat_modifiers}. These doubled modifiers are still capped at -6 or 6 stages.<para></para> Each stage of this Pokémon's [stat modifiers]{mechanic:stat_modifiers} acts as two stages. These doubled stages are still limited to a minimum of -6 and a maximum of 6.
+		///
 		/// This Pokémon can still accumulate less than -3 or more than 3 stages of stat modifiers, even though the extra ones have no effect after doubling.
 		/// </summary>
 		SIMPLE = 86,
 		/// <summary>
-		/// Causes 1/8 max [HP]{mechanic:hp} in damage each turn during [strong sunlight]{mechanic:strong-sunlight}, but heals for 1/8 max HP during [rain]{mechanic:rain}.  Increases damage from []{type:fire} moves to 1.25×, but absorbs []{type:water} moves, healing for 1/4 max HP.<para></para> This Pokémon takes 1/8 of its maximum HP in damage after each turn during [strong sunlight]{mechanic:strong-sunlight}, but it heals for 1/8 of its HP each turn during [rain]{mechanic:rain}.  This Pokémon takes 1.25× as much damage from []{type:fire}-type moves, but whenever a []{type:water} move hits it, it heals for 1/4 its maximum HP instead.
+		/// Causes 1/8 max <see cref="Stats.HP"/> in damage each turn during [strong sunlight]{mechanic:strong_sunlight}, but heals for 1/8 max HP during [rain]{mechanic:rain}. Increases damage from <see cref="Types.FIRE"/> moves to 1.25×, but absorbs <see cref="Types.WATER"/> moves, healing for 1/4 max HP.<para></para> This Pokémon takes 1/8 of its maximum HP in damage after each turn during [strong sunlight]{mechanic:strong_sunlight}, but it heals for 1/8 of its HP each turn during [rain]{mechanic:rain}. This Pokémon takes 1.25× as much damage from <see cref="Types.FIRE"/>-type moves, but whenever a <see cref="Types.WATER"/> move hits it, it heals for 1/4 its maximum HP instead.
 		/// </summary>
 		DRY_SKIN = 87,
 		/// <summary>
-		/// Raises the attack stat corresponding to the opponents' weaker defense one [stage]{mechanic:stat-modifier} upon entering battle.<para></para> When this Pokémon enters battle, its [Attack]{mechanic:attack} or [Special Attack]{mechanic:special-attack}, whichever corresponds to its opponents' weaker total defensive stat, rises one [stage]{mechanic:stat-modifier}.  In the event of a tie, Special Attack is raised.
-		/// 
+		/// Raises the attack stat corresponding to the opponents' weaker defense one [stage]{mechanic:stat_modifier} upon entering battle.<para></para> When this Pokémon enters battle, its <see cref="Stats.ATTACK"/> or <see cref="Stats.SPATK"/>, whichever corresponds to its opponents' weaker total defensive stat, rises one [stage]{mechanic:stat_modifier}. In the event of a tie, Special Attack is raised.
+		///
 		/// This ability also takes effect when acquired during a battle.
 		/// </summary>
 		DOWNLOAD = 88,
 		/// <summary>
 		/// Strengthens punch-based moves to 1.2× their power.<para></para> Moves flagged as being punch-based have 1.2× their base power for this Pokémon.
-		/// 
-		/// []{move:sucker-punch} is not flagged as punch-based; its original, Japanese name only means "surprise attack".
+		///
+		/// <see cref="Moves.SUCKER_PUNCH"/> is not flagged as punch-based; its original, Japanese name only means "surprise attack".
 		/// </summary>
 		IRON_FIST = 89,
 		/// <summary>
-		/// Heals for 1/8 max [HP]{mechanic:hp} after each turn when [poisoned]{mechanic:poison} in place of damage.<para></para> If this Pokémon is [poisoned]{mechanic:poison}, it will heal for 1/8 of its maximum [HP]{mechanic:hp} after each turn rather than taking damage.  This includes bad poison.
+		/// Heals for 1/8 max <see cref="Stats.HP"/> after each turn when <see cref="Status.POISON"/> in place of damage.<para></para> If this Pokémon is <see cref="Status.POISON"/>, it will heal for 1/8 of its maximum <see cref="Stats.HP"/> after each turn rather than taking damage. This includes bad poison.
 		/// </summary>
 		POISON_HEAL = 90,
 		/// <summary>
@@ -714,252 +717,252 @@
 		/// </summary>
 		ADAPTABILITY = 91,
 		/// <summary>
-		/// Extends two-to-five-hit moves and []{move:triple-kick} to their full length every time.<para></para> This Pokémon always hits five times with two-to-five-hit moves, such as []{move:icicle-spear}.  It also bypasses the accuracy checks on []{move:triple-kick}'s second and third hits.
+		/// Extends two-to-five-hit moves and <see cref="Moves.TRIPLE_KICK"/> to their full length every time.<para></para> This Pokémon always hits five times with two-to-five-hit moves, such as <see cref="Moves.ICICLE_SPEAR"/>. It also bypasses the accuracy checks on <see cref="Moves.TRIPLE_KICK"/>'s second and third hits.
 		/// </summary>
 		SKILL_LINK = 92,
 		/// <summary>
-		/// Cures any [major status ailment]{mechanic:major-status-ailment} after each turn during [rain]{mechanic:rain}.<para></para> This Pokémon is cured of any [major status ailment]{mechanic:major-status-ailment} after each turn during [rain]{mechanic:rain}.
+		/// Cures any [major status ailment]{mechanic:major_status_ailment} after each turn during [rain]{mechanic:rain}.<para></para> This Pokémon is cured of any [major status ailment]{mechanic:major_status_ailment} after each turn during [rain]{mechanic:rain}.
 		/// </summary>
 		HYDRATION = 93,
 		/// <summary>
-		/// Increases [Special Attack]{mechanic:special-attack} to 1.5× but costs 1/8 max [HP]{mechanic:hp} after each turn during [strong sunlight]{mechanic:strong-sunlight}.<para></para> During [strong sunlight]{mechanic:strong-sunlight}, this Pokémon has 1.5× its [Special Attack]{mechanic:special-attack} but takes 1/8 of its maximum [HP]{mechanic:hp} in damage after each turn.
+		/// Increases <see cref="Stats.SPATK"/> to 1.5× but costs 1/8 max <see cref="Stats.HP"/> after each turn during [strong sunlight]{mechanic:strong_sunlight}.<para></para> During [strong sunlight]{mechanic:strong_sunlight}, this Pokémon has 1.5× its <see cref="Stats.SPATK"/> but takes 1/8 of its maximum <see cref="Stats.HP"/> in damage after each turn.
 		/// </summary>
 		SOLAR_POWER = 94,
 		/// <summary>
-		/// Increases [Speed]{mechanic:speed} to 1.5× with a [major status ailment]{mechanic:major-status-ailment}.<para></para> Whenever this Pokémon has a [major status ailment]{mechanic:major-status-ailment}, it has 1.5× its [Speed]{mechanic:speed}.  This Pokémon is not affected by the usual Speed cut from [paralysis]{mechanic:paralysis}.
-		/// 
+		/// Increases <see cref="Stats.SPEED"/> to 1.5× with a [major status ailment]{mechanic:major_status_ailment}.<para></para> Whenever this Pokémon has a [major status ailment]{mechanic:major_status_ailment}, it has 1.5× its <see cref="Stats.SPEED"/>. This Pokémon is not affected by the usual Speed cut from <see cref="Status.PARALYSIS"/>.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the wild encounter rate is halved.
 		/// </summary>
 		QUICK_FEET = 95,
 		/// <summary>
-		/// Makes the Pokémon's moves all act []{type:normal}-type.<para></para> This Pokémon's moves all act as if they were []{type:normal}-type.
-		/// 
-		/// Moves that inflict [typeless damage]{mechanic:typeless-damage} do so as usual.  Moves of variable type, such as []{move:hidden-power}, are affected.  They otherwise work as usual, however; []{move:weather-ball}, for example, is always forced to be Normal, but it still has doubled power and looks different during [weather]{mechanic:weather}.
-		/// 
-		/// As []{move:thunder-wave} is prevented by immunities, unlike most non-damaging moves, it does not affect []{type:ghost}-type Pokémon under the effect of this ability.
+		/// Makes the Pokémon's moves all act <see cref="Types.NORMAL"/>-type.<para></para> This Pokémon's moves all act as if they were <see cref="Types.NORMAL"/>-type.
+		///
+		/// Moves that inflict [typeless damage]{mechanic:typeless_damage} do so as usual. Moves of variable type, such as <see cref="Moves.HIDDEN_POWER"/>, are affected. They otherwise work as usual, however; <see cref="Moves.WEATHER_BALL"/>, for example, is always forced to be Normal, but it still has doubled power and looks different during [weather]{mechanic:weather}.
+		///
+		/// As <see cref="Moves.THUNDER_WAVE"/> is prevented by immunities, unlike most non-damaging moves, it does not affect <see cref="Types.GHOST"/>-type Pokémon under the effect of this ability.
 		/// </summary>
 		NORMALIZE = 96,
 		/// <summary>
-		/// Strengthens [critical hits]{mechanic:critical-hit} to inflict 3× damage rather than 2×.<para></para> This Pokémon inflicts triple damage with [critical hits]{mechanic:critical-hit}, rather than the usual double damage.
+		/// Strengthens [critical hits]{mechanic:critical_hit} to inflict 3× damage rather than 2×.<para></para> This Pokémon inflicts triple damage with [critical hits]{mechanic:critical_hit}, rather than the usual double damage.
 		/// </summary>
 		SNIPER = 97,
 		/// <summary>
 		/// Protects against damage not directly caused by a move.<para></para> This Pokémon is immune to damage not directly caused by a move.
-		/// 
-		/// For example, this Pokémon takes no damage from from [weather]{mechanic:weather}, recoil, [status ailments]{mechanic:status-ailments}, or []{move:spikes}, but it still suffers from the [Attack]{mechanic:attack} cut when [burned]{mechanic:burn}, and a []{item:life-orb} will still power up this Pokémon's moves without damaging it.  Anything that directly depends on such damage will also not happen; for example, []{move:leech-seed} will neither hurt this Pokémon nor heal the opponent, and Pokémon with a []{item:jaboca-berry} or []{item:rowap-berry} will not consume the berry when hit by this Pokémon.
-		/// 
-		/// The following are unaffected: []{move:struggle}, []{move:pain-split} (whether used by or against this Pokémon), []{move:belly-drum}, []{move:substitute}, []{move:curse}, moves that knock the user out, and damage from [confusion]{mechanic:confusion}.
-		/// 
-		/// This Pokémon will neither lose nor regain [HP]{mechanic:hp} if it drains HP from a Pokémon with []{ability:liquid-ooze}.
-		/// 
-		/// If this Pokémon is [badly poisoned]{mechanic:poison}, the poison counter is still increased each turn; if the Pokémon loses this ability, it will begin taking as much damage as it would be if it had been taking increasing damage each turn.
+		///
+		/// For example, this Pokémon takes no damage from from [weather]{mechanic:weather}, recoil, [status ailments]{mechanic:status_ailments}, or <see cref="Moves.SPIKES"/>, but it still suffers from the <see cref="Stats.ATTACK"/> cut when <see cref="Status.BURN"/>, and a <see cref="Items.LIFE_ORB"/> will still power up this Pokémon's moves without damaging it. Anything that directly depends on such damage will also not happen; for example, <see cref="Moves.LEECH_SEED"/> will neither hurt this Pokémon nor heal the opponent, and Pokémon with a <see cref="Items.JABOCA_BERRY"/> or <see cref="Items.ROWAP_BERRY"/> will not consume the berry when hit by this Pokémon.
+		///
+		/// The following are unaffected: <see cref="Moves.STRUGGLE"/>, <see cref="Moves.PAIN_SPLIT"/> (whether used by or against this Pokémon), <see cref="Moves.BELLY_DRUM"/>, <see cref="Moves.SUBSTITUTE"/>, <see cref="Moves.CURSE"/>, moves that knock the user out, and damage from <see cref="IEffectsBattler.Confusion"/>.
+		///
+		/// This Pokémon will neither lose nor regain <see cref="Stats.HP"/> if it drains HP from a Pokémon with <see cref="Abilities.LIQUID_OOZE"/>.
+		///
+		/// If this Pokémon is <see cref="Status.POISON"/>, the poison counter is still increased each turn; if the Pokémon loses this ability, it will begin taking as much damage as it would be if it had been taking increasing damage each turn.
 		/// </summary>
 		MAGIC_GUARD = 98,
 		/// <summary>
 		/// Ensures all moves used by and against the Pokémon hit.<para></para> Moves used by or against this Pokémon never miss.
-		/// 
-		/// One-hit KO moves are unaffected.  Moves affected by this ability can hit Pokémon during the preparation turn of moves like []{move:dig} or []{move:fly}.
-		/// 
+		///
+		/// One-hit KO moves are unaffected. Moves affected by this ability can hit Pokémon during the preparation turn of moves like <see cref="Moves.DIG"/> or <see cref="Moves.FLY"/>.
+		///
 		/// Overworld: If the lead Pokémon has this ability, the wild encounter rate is doubled.
 		/// </summary>
 		NO_GUARD = 99,
 		/// <summary>
 		/// Makes the Pokémon move last within its move's priority bracket.<para></para> This Pokémon moves last within its priority bracket.
-		/// 
-		/// Multiple Pokémon with this ability move in order of [Speed]{mechanic:speed} amongst themselves.
-		/// 
-		/// The []{item:full-incense} and []{item:lagging-tail} take precedence over this ability; that is, Pokémon with these items move after Pokémon with this ability.  Pokémon with both this ability and one of these items are delayed as much as if they had only the item.
-		/// 
-		/// This ability works as usual during []{move:trick-room}: Pokémon with this ability will move in reverse order of Speed after Pokémon without it.
+		///
+		/// Multiple Pokémon with this ability move in order of <see cref="Stats.SPEED"/> amongst themselves.
+		///
+		/// The <see cref="Items.FULL_INCENSE"/> and <see cref="Items.LAGGING_TAIL"/> take precedence over this ability; that is, Pokémon with these items move after Pokémon with this ability. Pokémon with both this ability and one of these items are delayed as much as if they had only the item.
+		///
+		/// This ability works as usual during <see cref="Moves.TRICK_ROOM"/>: Pokémon with this ability will move in reverse order of Speed after Pokémon without it.
 		/// </summary>
 		STALL = 100,
 		/// <summary>
 		/// Strengthens moves of 60 base power or less to 1.5× their power.<para></para> This Pokémon's moves have 1.5× their power if their base power is 60 or less.
-		/// 
-		/// This includes moves of variable power, such as []{move:hidden-power} and []{move:magnitude}, when their power is 60 or less.  []{move:helping-hand}'s power boost is taken into account for any move, as is []{move:defense-curl}'s power boost for []{move:rollout}.
+		///
+		/// This includes moves of variable power, such as <see cref="Moves.HIDDEN_POWER"/> and <see cref="Moves.MAGNITUDE"/>, when their power is 60 or less.  <see cref="Moves.HELPING_HAND"/>'s power boost is taken into account for any move, as is <see cref="Moves.DEFENSE_CURL"/>'s power boost for <see cref="Moves.ROLLOUT"/>.
 		/// </summary>
 		TECHNICIAN = 101,
 		/// <summary>
-		/// Protects against [major status ailments]{mechanic:major-status-ailments} during [strong sunlight]{mechanic:strong-sunlight}.<para></para> This Pokémon cannot be given a [major status ailment]{mechanic:major-status-ailment} during [strong sunlight]{mechanic:strong-sunlight}.
-		/// 
-		/// This ability does not heal prior status ailments.  []{move:rest} will fail altogether with this ability in effect.  []{move:yawn} will immediately fail if used on this Pokémon during strong sunlight, and an already-used Yawn will fail if the weather turns to strong sunlight in the meantime.
+		/// Protects against [major status ailments]{mechanic:major_status_ailments} during [strong sunlight]{mechanic:strong_sunlight}.<para></para> This Pokémon cannot be given a [major status ailment]{mechanic:major_status_ailment} during [strong sunlight]{mechanic:strong_sunlight}.
+		///
+		/// This ability does not heal prior status ailments.  <see cref="Moves.REST"/> will fail altogether with this ability in effect.  <see cref="Moves.YAWN"/> will immediately fail if used on this Pokémon during strong sunlight, and an already-used Yawn will fail if the weather turns to strong sunlight in the meantime.
 		/// </summary>
 		LEAF_GUARD = 102,
 		/// <summary>
-		/// Prevents the Pokémon from using its held item in battle.<para></para> In battle, this Pokémon cannot use its held item, nor will the item have any passive effect on the battle, positive or negative.  This Pokémon also cannot use []{move:fling}.
-		/// 
-		/// The [Speed]{mechanic:speed} cut from the []{item:iron-ball} and the effort items (the []{item:macho-brace}, []{item:power-weight}, []{item:power-bracer}, []{item:power-belt}, []{item:power-lens}, []{item:power-band}, and []{item:power-anklet}) is unaffected.  Items that do not directly affect the battle, such as the []{item:exp-share}, the []{item:amulet-coin}, or the []{item:soothe-bell}, work as usual.  All held items work as usual out of battle.
-		/// 
-		/// Other moves that use the held item, such as []{move:natural-gift} and []{move:switcheroo}, work as usual.
+		/// Prevents the Pokémon from using its held item in battle.<para></para> In battle, this Pokémon cannot use its held item, nor will the item have any passive effect on the battle, positive or negative. This Pokémon also cannot use <see cref="Moves.FLING"/>.
+		///
+		/// The <see cref="Stats.SPEED"/> cut from the <see cref="Items.IRON_BALL"/> and the effort items (the <see cref="Items.MACHO_BRACE"/>, <see cref="Items.POWER_WEIGHT"/>, <see cref="Items.POWER_BRACER"/>, <see cref="Items.POWER_BELT"/>, <see cref="Items.POWER_LENS"/>, <see cref="Items.POWER_BAND"/>, and <see cref="Items.POWER_ANKLET"/>) is unaffected. Items that do not directly affect the battle, such as the <see cref="Items.EXP_SHARE"/>, the <see cref="Items.AMULET_COIN"/>, or the <see cref="Items.SOOTHE_BELL"/>, work as usual. All held items work as usual out of battle.
+		///
+		/// Other moves that use the held item, such as <see cref="Moves.NATURAL_GIFT"/> and <see cref="Moves.SWITCHEROO"/>, work as usual.
 		/// </summary>
 		KLUTZ = 103,
 		/// <summary>
 		/// Bypasses targets' abilities if they could hinder or prevent a move.<para></para> This Pokémon's moves completely ignore abilities that could hinder or prevent their effect on the target.
-		/// 
-		/// For example, this Pokémon's moves ignore abilities that would fully negate them, such as []{ability:water-absorb}; abilities that would prevent any of their effects, such as []{ability:clear-body}, []{ability:shell-armor}, or []{ability:sticky-hold}; and abilities that grant any general protective benefit, such as []{ability:simple}, []{ability:snow-cloak}, or []{ability:thick-fat}.  If an ability could either hinder or help this Pokémon's moves, e.g. []{ability:dry-skin} or []{ability:unaware}, the ability is ignored either way.
-		/// 
-		/// Abilities that do not fit this description, even if they could hinder moves in some other way, are not affected.  For example, []{ability:cursed-body} only affects potential future uses of the move, while []{ability:liquid-ooze} and []{ability:shadow-tag} can only hinder a move's effect on the user.  This ablity cannot ignore type or form changes granted by abilities, for example []{ability:color-change} or []{ability:forecast}; nor effects that were caused by abilities but are no longer tied to an ability, such as the rain from []{ability:drizzle}.  This ability cannot ignore []{ability:multitype} at all.
-		/// 
-		/// An ability ignored by this ability is only nullified while the move is being used.  For example, this Pokémon's moves can [paralyze]{mechanic:paralysis} a Pokémon with []{ability:limber}, but Limber will activate and heal the paralysis immediately thereafter, and this Pokémon's []{move:spikes} are not affected by this ability after they have been placed.
-		/// 
+		///
+		/// For example, this Pokémon's moves ignore abilities that would fully negate them, such as <see cref="Abilities.WATER_ABSORB"/>; abilities that would prevent any of their effects, such as <see cref="Abilities.CLEAR_BODY"/>, <see cref="Abilities.SHELL_ARMOR"/>, or <see cref="Abilities.STICKY_HOLD"/>; and abilities that grant any general protective benefit, such as <see cref="Abilities.SIMPLE"/>, <see cref="Abilities.SNOW_CLOAK"/>, or <see cref="Abilities.THICK_FAT"/>. If an ability could either hinder or help this Pokémon's moves, e.g. <see cref="Abilities.DRY_SKIN"/> or <see cref="Abilities.UNAWARE"/>, the ability is ignored either way.
+		///
+		/// Abilities that do not fit this description, even if they could hinder moves in some other way, are not affected. For example, <see cref="Abilities.CURSED_BODY"/> only affects potential future uses of the move, while <see cref="Abilities.LIQUID_OOZE"/> and <see cref="Abilities.SHADOW_TAG"/> can only hinder a move's effect on the user. This ablity cannot ignore type or form changes granted by abilities, for example <see cref="Abilities.COLOR_CHANGE"/> or <see cref="Abilities.FORECAST"/>; nor effects that were caused by abilities but are no longer tied to an ability, such as the rain from <see cref="Abilities.DRIZZLE"/>. This ability cannot ignore <see cref="Abilities.MULTITYPE"/> at all.
+		///
+		/// An ability ignored by this ability is only nullified while the move is being used. For example, this Pokémon's moves can <see cref="Status.PARALYSIS"/> a Pokémon with <see cref="Abilities.LIMBER"/>, but Limber will activate and heal the paralysis immediately thereafter, and this Pokémon's <see cref="Moves.SPIKES"/> are not affected by this ability after they have been placed.
+		///
 		/// When this Pokémon enters battle, all participating trainers are notified that it has this ability.
-		/// 
-		/// This ability functions identically to []{ability:teravolt} and []{ability:turboblaze}.
+		///
+		/// This ability functions identically to <see cref="Abilities.TERAVOLT"/> and <see cref="Abilities.TURBOBLAZE"/>.
 		/// </summary>
 		MOLD_BREAKER = 104,
 		/// <summary>
-		/// Raises moves' [critical hit]{mechanic:critical-hit} rates one stage.<para></para> This Pokémon's moves have [critical hit]{mechanic:critical-hit} rates one stage higher than normal.
+		/// Raises moves' [critical hit]{mechanic:critical_hit} rates one stage.<para></para> This Pokémon's moves have [critical hit]{mechanic:critical_hit} rates one stage higher than normal.
 		/// </summary>
 		SUPER_LUCK = 105,
 		/// <summary>
-		/// Damages the attacker for 1/4 its max [HP]{mechanic:hp} when knocked out by a contact move.<para></para> When this Pokémon is knocked out by a move that makes contact, the move's user takes 1/4 its maximum [HP]{mechanic:hp} in damage.
+		/// Damages the attacker for 1/4 its max <see cref="Stats.HP"/> when knocked out by a contact move.<para></para> When this Pokémon is knocked out by a move that makes contact, the move's user takes 1/4 its maximum <see cref="Stats.HP"/> in damage.
 		/// </summary>
 		AFTERMATH = 106,
 		/// <summary>
-		/// Notifies all trainers upon entering battle if an opponent has a [super-effective]{mechanic:super-effective} move, []{move:self-destruct}, []{move:explosion}, or a one-hit KO move.<para></para> When this Pokémon enters battle, if one of its opponents has a move that is [super effective]{mechanic:super-effective} against it, []{move:self-destruct}, []{move:explosion}, or a one-hit knockout move, all participating trainers are notified.
-		/// 
-		/// The move itself is not revealed; only that there is such a move.  Moves that inflict [typeless damage]{mechanic:typeless-damage}, such as []{move:future-sight}, and moves of variable type, such as []{move:hidden-power}, count as their listed types.  []{move:counter}, []{move:metal-burst}, []{move:mirror-coat}, and one-hit KO moves to which this Pokémon is immune do not trigger this ability.
+		/// Notifies all trainers upon entering battle if an opponent has a <see cref="TypeEffective.SuperEffective"/> move, <see cref="Moves.SELF_DESTRUCT"/>, <see cref="Moves.EXPLOSION"/>, or a one-hit KO move.<para></para> When this Pokémon enters battle, if one of its opponents has a move that is <see cref="TypeEffective.SuperEffective"/> against it, <see cref="Moves.SELF_DESTRUCT"/>, <see cref="Moves.EXPLOSION"/>, or a one-hit knockout move, all participating trainers are notified.
+		///
+		/// The move itself is not revealed; only that there is such a move. Moves that inflict [typeless damage]{mechanic:typeless_damage}, such as <see cref="Moves.FUTURE_SIGHT"/>, and moves of variable type, such as <see cref="Moves.HIDDEN_POWER"/>, count as their listed types.  <see cref="Moves.COUNTER"/>, <see cref="Moves.METAL_BURST"/>, <see cref="Moves.MIRROR_COAT"/>, and one-hit KO moves to which this Pokémon is immune do not trigger this ability.
 		/// </summary>
 		ANTICIPATION = 107,
 		/// <summary>
 		/// Reveals the opponents' strongest move upon entering battle.<para></para> When this Pokémon enters battle, it reveals the move with the highest base power known by any opposing Pokémon to all participating trainers.
-		/// 
+		///
 		/// In the event of a tie, one is chosen at random.
-		/// 
+		///
 		/// Moves without a listed base power are assigned one as follows:
-		/// 
+		///
 		/// Power | Moves
 		/// ----: | -----
-		///   160 | One-hit KO moves: []{move:fissure}, []{move:guillotine}, []{move:horn-drill}, and []{move:sheer-cold}
-		///   120 | Counter moves: []{move:counter}, []{move:metal-burst}, and []{move:mirror-coat}
-		///    80 | Variable power or set damage: []{move:crush-grip}, []{move:dragon-rage}, []{move:electro-ball}, []{move:endeavor}, []{move:final-gambit}, []{move:flail}, []{move:frustration}, []{move:grass-knot}, []{move:gyro-ball}, []{move:heat-crash}, []{move:heavy-slam}, []{move:hidden-power}, []{move:low-kick}, []{move:natural-gift}, []{move:night-shade}, []{move:psywave}, []{move:return}, []{move:reversal}, []{move:seismic-toss}, []{move:sonic-boom}, []{move:trump-card}, and []{move:wring-out}
+		///   160 | One-hit KO moves: <see cref="Moves.FISSURE"/>, <see cref="Moves.GUILLOTINE"/>, <see cref="Moves.HORN_DRILL"/>, and <see cref="Moves.SHEER_COLD"/>
+		///   120 | Counter moves: <see cref="Moves.COUNTER"/>, <see cref="Moves.METAL_BURST"/>, and <see cref="Moves.MIRROR_COAT"/>
+		///    80 | Variable power or set damage: <see cref="Moves.CRUSH_GRIP"/>, <see cref="Moves.DRAGON_RAGE"/>, <see cref="Moves.ELECTRO_BALL"/>, <see cref="Moves.ENDEAVOR"/>, <see cref="Moves.FINAL_GAMBIT"/>, <see cref="Moves.FLAIL"/>, <see cref="Moves.FRUSTRATION"/>, <see cref="Moves.GRASS_KNOT"/>, <see cref="Moves.GYRO_BALL"/>, <see cref="Moves.HEAT_CRASH"/>, <see cref="Moves.HEAVY_SLAM"/>, <see cref="Moves.HIDDEN_POWER"/>, <see cref="Moves.LOW_KICK"/>, <see cref="Moves.NATURAL_GIFT"/>, <see cref="Moves.NIGHT_SHADE"/>, <see cref="Moves.PSYWAVE"/>, <see cref="Moves.RETURN"/>, <see cref="Moves.REVERSAL"/>, <see cref="Moves.SEISMIC_TOSS"/>, <see cref="Moves.SONIC_BOOM"/>, <see cref="Moves.TRUMP_CARD"/>, and <see cref="Moves.WRING_OUT"/>
 		///     0 | Any such move not listed
 		/// </summary>
 		FOREWARN = 108,
 		/// <summary>
-		/// Ignores other Pokémon's stat modifiers for damage and accuracy calculation.<para></para> This Pokémon ignores other Pokémon's [stat modifiers]{mechanic:stat-modifiers} for the purposes of damage and accuracy calculation.
-		/// 
-		/// Effectively, this affects modifiers of every stat except [Speed]{mechanic:speed}.
-		/// 
-		/// The power of []{move:punishment} and []{move:stored-power} is calculated as usual.  When this Pokémon hurts itself in [confusion]{mechanic:confusion}, its stat modifiers affect damage as usual.
+		/// Ignores other Pokémon's stat modifiers for damage and accuracy calculation.<para></para> This Pokémon ignores other Pokémon's [stat modifiers]{mechanic:stat_modifiers} for the purposes of damage and accuracy calculation.
+		///
+		/// Effectively, this affects modifiers of every stat except <see cref="Stats.SPEED"/>.
+		///
+		/// The power of <see cref="Moves.PUNISHMENT"/> and <see cref="Moves.STORED_POWER"/> is calculated as usual. When this Pokémon hurts itself in <see cref="IEffectsBattler.Confusion"/>, its stat modifiers affect damage as usual.
 		/// </summary>
 		UNAWARE = 109,
 		/// <summary>
-		/// Doubles damage inflicted with [not-very-effective]{mechanic:not-very-effective} moves.<para></para> This Pokémon deals twice as much damage with moves that are [not very effective]{mechanic:not-very-effective} against the target.
+		/// Doubles damage inflicted with [not-very-effective]{mechanic:not_very_effective} moves.<para></para> This Pokémon deals twice as much damage with moves that are [not very effective]{mechanic:not_very_effective} against the target.
 		/// </summary>
 		TINTED_LENS = 110,
 		/// <summary>
-		/// Decreases damage taken from [super-effective]{mechanic:super-effective} moves by 1/4.<para></para> This Pokémon takes 0.75× as much damage from moves that are [super effective]{mechanic:super-effective} against it.
-		/// 
-		/// This ability functions identically to []{ability:solid-rock}.
+		/// Decreases damage taken from <see cref="TypeEffective.SuperEffective"/> moves by 1/4.<para></para> This Pokémon takes 0.75× as much damage from moves that are <see cref="TypeEffective.SuperEffective"/> against it.
+		///
+		/// This ability functions identically to <see cref="Abilities.SOLID_ROCK"/>.
 		/// </summary>
 		FILTER = 111,
 		/// <summary>
-		/// Halves [Attack]{mechanic:attack} and [Speed]{mechanic:speed} for five turns upon entering battle.<para></para> This Pokémon's [Attack]{mechanic:attack} and [Speed]{mechanic:speed} are halved for five turns upon entering battle.
-		/// 
-		/// This ability also takes effect when acquired during battle.  If this Pokémon loses its ability before the five turns are up, its Attack and Speed return to normal; if it then regains this ability without leaving battle, its Attack and Speed are halved again, but the counter keeps counting from where it was.
+		/// Halves <see cref="Stats.ATTACK"/> and <see cref="Stats.SPEED"/> for five turns upon entering battle.<para></para> This Pokémon's <see cref="Stats.ATTACK"/> and <see cref="Stats.SPEED"/> are halved for five turns upon entering battle.
+		///
+		/// This ability also takes effect when acquired during battle. If this Pokémon loses its ability before the five turns are up, its Attack and Speed return to normal; if it then regains this ability without leaving battle, its Attack and Speed are halved again, but the counter keeps counting from where it was.
 		/// </summary>
 		SLOW_START = 112,
 		/// <summary>
-		/// Lets the Pokémon's []{type:normal} and []{type:fighting} moves hit []{type:ghost} Pokémon.<para></para> This Pokémon ignores []{type:ghost}-type Pokémon's immunity to []{type:normal}- and []{type:fighting}-type moves.
-		/// 
+		/// Lets the Pokémon's <see cref="Types.NORMAL"/> and <see cref="Types.FIGHTING"/> moves hit <see cref="Types.GHOST"/> Pokémon.<para></para> This Pokémon ignores <see cref="Types.GHOST"/>-type Pokémon's immunity to <see cref="Types.NORMAL"/>- and <see cref="Types.FIGHTING"/>-type moves.
+		///
 		/// Ghost Pokémon's other types affect damage as usual.
 		/// </summary>
 		SCRAPPY = 113,
 		/// <summary>
-		/// Redirects single-target []{type:water} moves to this Pokémon where possible.  Absorbs Water moves, raising [Special Attack]{mechanic:special-attack} one [stage]{mechanic:stat-modifier}.<para></para> All other Pokémon's single-target []{type:water}-type moves are redirected to this Pokémon, if it is an eligible target.  Other Pokémon's Water moves raise this Pokémon's [Special Attack]{mechanic:special-attack} one [stage]{mechanic:stat-modifier}, negating any other effect on it, and cannot miss it.
-		/// 
-		/// If the move's intended target also has this ability, the move is not redirected.  When multiple Pokémon with this ability are possible targets for redirection, the move is redirected to the one with the highest [Speed]{mechanic:speed} stat, or, in the case of a tie, to a random tied Pokémon.  []{move:follow-me} takes precedence over this ability.
+		/// Redirects single-target <see cref="Types.WATER"/> moves to this Pokémon where possible. Absorbs Water moves, raising <see cref="Stats.SPATK"/> one [stage]{mechanic:stat_modifier}.<para></para> All other Pokémon's single-target <see cref="Types.WATER"/>-type moves are redirected to this Pokémon, if it is an eligible target. Other Pokémon's Water moves raise this Pokémon's <see cref="Stats.SPATK"/> one [stage]{mechanic:stat_modifier}, negating any other effect on it, and cannot miss it.
+		///
+		/// If the move's intended target also has this ability, the move is not redirected. When multiple Pokémon with this ability are possible targets for redirection, the move is redirected to the one with the highest <see cref="Stats.SPEED"/> stat, or, in the case of a tie, to a random tied Pokémon.  <see cref="Moves.FOLLOW_ME"/> takes precedence over this ability.
 		/// </summary>
 		STORM_DRAIN = 114,
 		/// <summary>
-		/// Heals for 1/16 max [HP]{mechanic:hp} after each turn during hail.  Protects against hail damage.<para></para> This Pokémon heals for 1/16 of its maximum [HP]{mechanic:hp} after each turn during [hail]{mechanic:hail}, and it does not take hail damage regardless of type.
+		/// Heals for 1/16 max <see cref="Stats.HP"/> after each turn during hail. Protects against hail damage.<para></para> This Pokémon heals for 1/16 of its maximum <see cref="Stats.HP"/> after each turn during <see cref="Weather.HAIL"/>, and it does not take hail damage regardless of type.
 		/// </summary>
 		ICE_BODY = 115,
 		/// <summary>
-		/// Decreases damage taken from [super-effective]{mechanic:super-effective} moves by 1/4.<para></para> This Pokémon takes 0.75× as much damage from moves that are [super effective]{mechanic:super-effective} against it.
-		/// 
-		/// This ability functions identically to []{ability:filter}.
+		/// Decreases damage taken from <see cref="TypeEffective.SuperEffective"/> moves by 1/4.<para></para> This Pokémon takes 0.75× as much damage from moves that are <see cref="TypeEffective.SuperEffective"/> against it.
+		///
+		/// This ability functions identically to <see cref="Abilities.FILTER"/>.
 		/// </summary>
 		SOLID_ROCK = 116,
 		/// <summary>
-		/// Summons [hail]{mechanic:hail} that lasts indefinitely upon entering battle.<para></para> The [weather]{mechanic:weather} changes to [hail]{mechanic:hail} when this Pokémon enters battle and does not end unless cancelled by another weather condition.
-		/// 
-		/// If multiple Pokémon with this ability, []{ability:drizzle}, []{ability:drought}, or []{ability:sand-stream} are sent out at the same time, the abilities will activate in order of [Speed]{mechanic:speed}, respecting []{move:trick-room}.  Each ability's weather will cancel the previous weather, and only the weather summoned by the slowest of the Pokémon will stay.
+		/// Summons <see cref="Weather.HAIL"/> that lasts indefinitely upon entering battle.<para></para> The [weather]{mechanic:weather} changes to <see cref="Weather.HAIL"/> when this Pokémon enters battle and does not end unless cancelled by another weather condition.
+		///
+		/// If multiple Pokémon with this ability, <see cref="Abilities.DRIZZLE"/>, <see cref="Abilities.DROUGHT"/>, or <see cref="Abilities.SAND_STREAM"/> are sent out at the same time, the abilities will activate in order of <see cref="Stats.SPEED"/>, respecting <see cref="Moves.TRICK_ROOM"/>. Each ability's weather will cancel the previous weather, and only the weather summoned by the slowest of the Pokémon will stay.
 		/// </summary>
 		SNOW_WARNING = 117,
 		/// <summary>
-		/// The Pokémon may pick up []{item:honey} after battle.<para></para> This Pokémon has a chance of picking up []{item:honey} after each battle.  This chance starts at 5% and rises another 5% after every tenth level: 5% from level 1–10, 10% from 11–20, and so on, up to 50% from 91–100.
-		/// 
+		/// The Pokémon may pick up <see cref="Items.HONEY"/> after battle.<para></para> This Pokémon has a chance of picking up <see cref="Items.HONEY"/> after each battle. This chance starts at 5% and rises another 5% after every tenth level: 5% from level 1–10, 10% from 11–20, and so on, up to 50% from 91–100.
+		///
 		/// This ability is checked after the battle ends, at which point any temporary ability changes have worn off.
 		/// </summary>
 		HONEY_GATHER = 118,
 		/// <summary>
 		/// Reveals an opponent's held item upon entering battle.<para></para> When this Pokémon enters battle, it reveals an opposing Pokémon's held item to all participating trainers.
-		/// 
+		///
 		/// In a double battle, if one opponent has an item, this Pokémon will Frisk that Pokémon; if both have an item, it will Frisk one at random.
 		/// </summary>
 		FRISK = 119,
 		/// <summary>
 		/// Strengthens recoil moves to 1.2× their power.<para></para> This Pokémon's recoil moves and crash moves have 1.2× their base power.
-		/// 
-		/// []{move:struggle} is unaffected.
-		/// 
-		/// The "crash moves" are the moves that damage the user upon missing: []{move:jump-kick} and []{move:high-jump-kick}.
+		///
+		/// <see cref="Moves.STRUGGLE"/> is unaffected.
+		///
+		/// The "crash moves" are the moves that damage the user upon missing: <see cref="Moves.JUMP_KICK"/> and <see cref="Moves.HIGH_JUMP_KICK"/>.
 		/// </summary>
 		RECKLESS = 120,
 		/// <summary>
-		/// Changes []{pokemon:arceus}'s type and form to match its held Plate.<para></para> If this Pokémon is holding an elemental Plate, its type and form change to match the Plate.
-		/// 
-		/// This Pokémon's held item, whether or not it is a Plate, cannot be taken by []{move:covet} or []{move:thief}, nor removed by []{move:knock-off}, nor traded by []{move:switcheroo} or []{move:trick}.  Covet, Thief, and Knock Off still inflict damage against this Pokémon.  Unlike with []{ability:sticky-hold}, this Pokémon cannot use []{move:fling}, Switcheroo, or Trick to lose its item itself, nor gain an item through Switcheroo or Trick if it does not have one.
-		/// 
-		/// This ability has no effect for any Pokémon other than []{pokemon:arceus}.  This ability cannot be traded with []{move:skill-swap}, nor copied with []{move:role-play} or []{ability:trace}, nor disabled with []{move:gastro-acid}, nor changed with []{move:worry-seed}.  This Pokémon cannot use Skill Swap or Role Play to lose its ability itself.  []{ability:mold-breaker} cannot ignore this ability.
-		/// 
-		/// If a Pokémon [Transforms]{move:transform} into an Arceus with this ability, it will Transform into Arceus's default, []{type:normal}-type form.  If the Transforming Pokémon is holding a Plate, this ability will then activate and change the Pokémon into the corresponding form.
+		/// Changes <see cref="Pokemons.ARCEUS"/>'s type and form to match its held Plate.<para></para> If this Pokémon is holding an elemental Plate, its type and form change to match the Plate.
+		///
+		/// This Pokémon's held item, whether or not it is a Plate, cannot be taken by <see cref="Moves.COVET"/> or <see cref="Moves.THIEF"/>, nor removed by <see cref="Moves.KNOCK_OFF"/>, nor traded by <see cref="Moves.SWITCHEROO"/> or <see cref="Moves.TRICK"/>. Covet, Thief, and Knock Off still inflict damage against this Pokémon. Unlike with <see cref="Abilities.STICKY_HOLD"/>, this Pokémon cannot use <see cref="Moves.FLING"/>, Switcheroo, or Trick to lose its item itself, nor gain an item through Switcheroo or Trick if it does not have one.
+		///
+		/// This ability has no effect for any Pokémon other than <see cref="Pokemons.ARCEUS"/>. This ability cannot be traded with <see cref="Moves.SKILL_SWAP"/>, nor copied with <see cref="Moves.ROLE_PLAY"/> or <see cref="Abilities.TRACE"/>, nor disabled with <see cref="Moves.GASTRO_ACID"/>, nor changed with <see cref="Moves.WORRY_SEED"/>. This Pokémon cannot use Skill Swap or Role Play to lose its ability itself.  <see cref="Abilities.MOLD_BREAKER"/> cannot ignore this ability.
+		///
+		/// If a Pokémon [Transforms]{move:transform} into an Arceus with this ability, it will Transform into Arceus's default, <see cref="Types.NORMAL"/>-type form. If the Transforming Pokémon is holding a Plate, this ability will then activate and change the Pokémon into the corresponding form.
 		/// </summary>
 		MULTITYPE = 121,
 		/// <summary>
-		/// Increases friendly Pokémon's [Attack]{mechanic:attack} and [Special Defense]{mechanic:special-defense} to 1.5× during [strong sunlight]{mechanic:strong-sunlight}.<para></para> Friendly Pokémon have 1.5× their [Attack]{mechanic:attack} and [Special Defense]{mechanic:special-defense} during [strong sunlight]{mechanic:strong-sunlight} if any friendly Pokémon has this ability.
-		/// 
-		/// Unlike []{ability:forecast}, []{ability:multitype}, and []{ability:zen-mode}, this ability is not tied to its Pokémon's form change; []{pokemon:cherrim} will switch between its forms even if it loses this ability.  As such, this ability also works if obtained by a Pokémon other than Cherrim.
+		/// Increases friendly Pokémon's <see cref="Stats.ATTACK"/> and <see cref="Stats.SPDEF"/> to 1.5× during [strong sunlight]{mechanic:strong_sunlight}.<para></para> Friendly Pokémon have 1.5× their <see cref="Stats.ATTACK"/> and <see cref="Stats.SPDEF"/> during [strong sunlight]{mechanic:strong_sunlight} if any friendly Pokémon has this ability.
+		///
+		/// Unlike <see cref="Abilities.FORECAST"/>, <see cref="Abilities.MULTITYPE"/>, and <see cref="Abilities.ZEN_MODE"/>, this ability is not tied to its Pokémon's form change; <see cref="Pokemons.CHERRIM"/> will switch between its forms even if it loses this ability. As such, this ability also works if obtained by a Pokémon other than Cherrim.
 		/// </summary>
 		FLOWER_GIFT = 122,
 		/// <summary>
-		/// Damages [sleeping]{mechanic:sleep} opponents for 1/8 their max [HP]{mechanic:hp} after each turn.<para></para> Opposing Pokémon take 1/8 of their maximum [HP]{mechanic:hp} in damage after each turn while they are [asleep]{mechanic:asleep}.
+		/// Damages <see cref="Status.SLEEP"/> opponents for 1/8 their max <see cref="Stats.HP"/> after each turn.<para></para> Opposing Pokémon take 1/8 of their maximum <see cref="Stats.HP"/> in damage after each turn while they are [asleep]{mechanic:asleep}.
 		/// </summary>
 		BAD_DREAMS = 123,
 		/// <summary>
 		/// Steals attacking Pokémon's held items on contact.<para></para> Whenever a move makes contact with this Pokémon, if it does not have a held item, it steals the attacker's held item.
-		/// 
-		/// This Pokémon cannot steal upon being knocked out.  It can steal if the attacker has a []{move:substitute}, but cannot steal when its own Substitute is hit.  If a move hits multiple times, only the last hit triggers this ability.  If this Pokémon is wild, it cannot steal from a trained Pokémon.
+		///
+		/// This Pokémon cannot steal upon being knocked out. It can steal if the attacker has a <see cref="Moves.SUBSTITUTE"/>, but cannot steal when its own Substitute is hit. If a move hits multiple times, only the last hit triggers this ability. If this Pokémon is wild, it cannot steal from a trained Pokémon.
 		/// </summary>
 		PICKPOCKET = 124,
 		/// <summary>
 		/// Strengthens moves with extra effects to 1.3× their power, but prevents their extra effects.<para></para> This Pokémon's moves with extra effects have 1.3× their power, but lose their extra effects.
-		/// 
-		/// An effect chance is a move's chance to inflict a status ailment, cause a stat change, or make the target flinch in addition to the move's main effect. For example, []{move:thunder-shock}'s paralysis is an extra effect, but []{move:thunder-wave}'s is not, nor are []{move:knock-off}'s item removal and []{move:air-cutter}'s increased [critical hit]{mechanic:critical-hit} rate.
-		/// 
+		///
+		/// An effect chance is a move's chance to inflict a status ailment, cause a stat change, or make the target flinch in addition to the move's main effect. For example, <see cref="Moves.THUNDER_SHOCK"/>'s paralysis is an extra effect, but <see cref="Moves.THUNDER_WAVE"/>'s is not, nor are <see cref="Moves.KNOCK_OFF"/>'s item removal and <see cref="Moves.AIR_CUTTER"/>'s increased [critical hit]{mechanic:critical_hit} rate.
+		///
 		/// Moves that lower the user's stats are unaffected.
 		/// </summary>
 		SHEER_FORCE = 125,
 		/// <summary>
-		/// Inverts [stat changes]{mechanic:stat-modifiers}.<para></para> Whenever this Pokémon's stats would be [raised]{mechanic:stat-modifiers}, they are instead lowered by the same amount, and vice versa.
+		/// Inverts [stat changes]{mechanic:stat_modifiers}.<para></para> Whenever this Pokémon's stats would be [raised]{mechanic:stat_modifiers}, they are instead lowered by the same amount, and vice versa.
 		/// </summary>
 		CONTRARY = 126,
 		/// <summary>
 		/// Prevents opposing Pokémon from eating held Berries.<para></para> Opposing Pokémon cannot eat held Berries while this Pokémon is in battle.
-		/// 
-		/// Affected Pokémon can still use []{move:bug-bite} or []{move:pluck} to eat a target's Berry.
+		///
+		/// Affected Pokémon can still use <see cref="Moves.BUG_BITE"/> or <see cref="Moves.PLUCK"/> to eat a target's Berry.
 		/// </summary>
 		UNNERVE = 127,
 		/// <summary>
-		/// Raises [Attack]{mechanic:attack} two [stages]{mechanic:stat-modifier} upon having any stat lowered.<para></para> When any of this Pokémon's stats are [lowered]{mechanic:stat-modifier}, its [Attack]{mechanic:attack} rises by two stages.
-		/// 
+		/// Raises <see cref="Stats.ATTACK"/> two [stages]{mechanic:stat_modifier} upon having any stat lowered.<para></para> When any of this Pokémon's stats are [lowered]{mechanic:stat_modifier}, its <see cref="Stats.ATTACK"/> rises by two stages.
+		///
 		/// If multiple stats are lowered at once, this ability takes effect with each stat lowered.
 		/// </summary>
 		DEFIANT = 128,
 		/// <summary>
-		/// Halves [Attack]{mechanic:attack} and [Special Attack]{mechanic:special-attack} at 50% max [HP]{mechanic:hp} or less.<para></para> This Pokémon's [Attack]{mechanic:attack} and [Special Attack]{mechanic:special-attack} are halved when it has half its [HP]{mechanic:hp} or less.
+		/// Halves <see cref="Stats.ATTACK"/> and <see cref="Stats.SPATK"/> at 50% max <see cref="Stats.HP"/> or less.<para></para> This Pokémon's <see cref="Stats.ATTACK"/> and <see cref="Stats.SPATK"/> are halved when it has half its <see cref="Stats.HP"/> or less.
 		/// </summary>
 		DEFEATIST = 129,
 		/// <summary>
@@ -967,18 +970,18 @@
 		/// </summary>
 		CURSED_BODY = 130,
 		/// <summary>
-		/// Has a 30% chance of curing each adjacent ally of any [major status ailment]{mechanic:major-status-ailment} after each turn.<para></para> Friendly Pokémon next to this Pokémon in double and triple battles each have a 30% chance of being cured of any [major status ailment]{mechanic:major-status-ailment} after each turn.
+		/// Has a 30% chance of curing each adjacent ally of any [major status ailment]{mechanic:major_status_ailment} after each turn.<para></para> Friendly Pokémon next to this Pokémon in double and triple battles each have a 30% chance of being cured of any [major status ailment]{mechanic:major_status_ailment} after each turn.
 		/// </summary>
 		HEALER = 131,
 		/// <summary>
 		/// Decreases all direct damage taken by friendly Pokémon to 0.75×.<para></para> All friendly Pokémon take 0.75× as much direct damage from moves while this Pokémon is in battle.
-		/// 
+		///
 		/// This effect stacks if multiple allied Pokémon have it.
 		/// </summary>
 		FRIEND_GUARD = 132,
 		/// <summary>
-		/// Raises [Speed]{mechanic:speed} and lowers [Defense]{mechanic:defense} by one stage each upon being hit by a physical move.<para></para> Whenever a physical move hits this Pokémon, its [Speed]{mechanic:speed} rises one stage and its [Defense]{mechanic:defense} falls one stage.
-		/// 
+		/// Raises <see cref="Stats.SPEED"/> and lowers <see cref="Stats.DEFENSE"/> by one stage each upon being hit by a physical move.<para></para> Whenever a physical move hits this Pokémon, its <see cref="Stats.SPEED"/> rises one stage and its <see cref="Stats.DEFENSE"/> falls one stage.
+		///
 		/// This ability triggers on every hit of a multiple-hit move.
 		/// </summary>
 		WEAK_ARMOR = 133,
@@ -991,19 +994,19 @@
 		/// </summary>
 		LIGHT_METAL = 135,
 		/// <summary>
-		/// Halves damage taken from full [HP]{mechanic:hp}.<para></para> This Pokémon takes half as much damage when it is hit having full [HP]{mechanic:hp}.
+		/// Halves damage taken from full <see cref="Stats.HP"/>.<para></para> This Pokémon takes half as much damage when it is hit having full <see cref="Stats.HP"/>.
 		/// </summary>
 		MULTISCALE = 136,
 		/// <summary>
-		/// Increases [Attack]{mechanic:attack} to 1.5× when [poisoned]{mechanic:poison}.<para></para> This Pokémon has 1.5× its [Attack]{mechanic:attack} when [poisoned]{mechanic:poison}.
+		/// Increases <see cref="Stats.ATTACK"/> to 1.5× when <see cref="Status.POISON"/>.<para></para> This Pokémon has 1.5× its <see cref="Stats.ATTACK"/> when <see cref="Status.POISON"/>.
 		/// </summary>
 		TOXIC_BOOST = 137,
 		/// <summary>
-		/// Increases [Special Attack]{mechanic:special-attack} to 1.5× when [burned]{mechanic:burn}.<para></para> This Pokémon has 1.5× its [Special Attack]{mechanic:special-attack} when [burned]{mechanic:burn}.
+		/// Increases <see cref="Stats.SPATK"/> to 1.5× when <see cref="Status.BURN"/>.<para></para> This Pokémon has 1.5× its <see cref="Stats.SPATK"/> when <see cref="Status.BURN"/>.
 		/// </summary>
 		FLARE_BOOST = 138,
 		/// <summary>
-		/// Has a 50% chance of restoring a used Berry after each turn if the Pokémon has held no items in the meantime.<para></para> After each turn, if the last item this Pokémon consumed was a Berry and it is not currently holding an item, it has a 50% chance of regaining that Berry, or a 100% chance during [strong sunlight]{mechanic:strong-sunlight}.
+		/// Has a 50% chance of restoring a used Berry after each turn if the Pokémon has held no items in the meantime.<para></para> After each turn, if the last item this Pokémon consumed was a Berry and it is not currently holding an item, it has a 50% chance of regaining that Berry, or a 100% chance during [strong sunlight]{mechanic:strong_sunlight}.
 		/// </summary>
 		HARVEST = 139,
 		/// <summary>
@@ -1011,8 +1014,8 @@
 		/// </summary>
 		TELEPATHY = 140,
 		/// <summary>
-		/// Raises a random stat two [stages]{mechanic:stat-modifier} and lowers another one stage after each turn.<para></para> After each turn, one of this Pokémon's stats at random rises two [stages]{mechanic:stat-modifier}, and another falls one stage.
-		/// 
+		/// Raises a random stat two [stages]{mechanic:stat_modifier} and lowers another one stage after each turn.<para></para> After each turn, one of this Pokémon's stats at random rises two [stages]{mechanic:stat_modifier}, and another falls one stage.
+		///
 		/// If a stat is already at 6 or -6 stages, it will not be chosen to be increased or decreased, respectively.
 		/// </summary>
 		MOODY = 141,
@@ -1021,87 +1024,87 @@
 		/// </summary>
 		OVERCOAT = 142,
 		/// <summary>
-		/// Has a 30% chance of [poisoning]{mechanic:poison} target Pokémon upon contact.<para></para> This Pokémon's contact moves have a 30% chance of [poisoning]{mechanic:poison} the target with each hit.
-		/// 
-		/// This counts as an extra effect for the purposes of []{ability:shield-dust}.  This ability takes effect before []{ability:mummy}.
+		/// Has a 30% chance of <see cref="Status.POISON"/> target Pokémon upon contact.<para></para> This Pokémon's contact moves have a 30% chance of <see cref="Status.POISON"/> the target with each hit.
+		///
+		/// This counts as an extra effect for the purposes of <see cref="Abilities.SHIELD_DUST"/>. This ability takes effect before <see cref="Abilities.MUMMY"/>.
 		/// </summary>
 		POISON_TOUCH = 143,
 		/// <summary>
-		/// Heals for 1/3 max [HP]{mechanic:hp} upon switching out.<para></para> This Pokémon regains 1/3 of its maximum [HP]{mechanic:hp} when it is switched out for another Pokémon under any circumstances other than having fainted.
-		/// 
+		/// Heals for 1/3 max <see cref="Stats.HP"/> upon switching out.<para></para> This Pokémon regains 1/3 of its maximum <see cref="Stats.HP"/> when it is switched out for another Pokémon under any circumstances other than having fainted.
+		///
 		/// This ability does not take effect when a battle ends.
 		/// </summary>
 		REGENERATOR = 144,
 		/// <summary>
-		/// Protects against [Defense]{mechanic:defense} drops.<para></para> This Pokémon's [Defense]{mechanic:defense} cannot be [lowered]{mechanic:stat-modifiers} by other Pokémon.
-		/// 
-		/// This Pokémon can still be passed negative Defense modifiers through []{move:heart-swap} or []{move:guard-swap}.
+		/// Protects against <see cref="Stats.DEFENSE"/> drops.<para></para> This Pokémon's <see cref="Stats.DEFENSE"/> cannot be [lowered]{mechanic:stat_modifiers} by other Pokémon.
+		///
+		/// This Pokémon can still be passed negative Defense modifiers through <see cref="Moves.HEART_SWAP"/> or <see cref="Moves.GUARD_SWAP"/>.
 		/// </summary>
 		BIG_PECKS = 145,
 		/// <summary>
-		/// Doubles [Speed]{mechanic:speed} during a [sandstorm]{mechanic:sandstorm}.  Protects against sandstorm damage.<para></para> This Pokémon's [Speed]{mechanic:speed} is doubled during a [sandstorm]{mechanic:sandstorm}, and it does not take sandstorm damage, regardless of type.
+		/// Doubles <see cref="Stats.SPEED"/> during a <see cref="Weather.SANDSTORM"/>. Protects against sandstorm damage.<para></para> This Pokémon's <see cref="Stats.SPEED"/> is doubled during a <see cref="Weather.SANDSTORM"/>, and it does not take sandstorm damage, regardless of type.
 		/// </summary>
 		SAND_RUSH = 146,
 		/// <summary>
-		/// Lowers incoming non-damaging moves' base [accuracy]{mechanic:accuracy} to exactly 50%.<para></para> Non-damaging moves have exactly 50% base [accuracy]{mechanic:accuracy} against this Pokémon.
+		/// Lowers incoming non-damaging moves' base <see cref="Stats.ACCURACY"/> to exactly 50%.<para></para> Non-damaging moves have exactly 50% base <see cref="Stats.ACCURACY"/> against this Pokémon.
 		/// </summary>
 		WONDER_SKIN = 147,
 		/// <summary>
 		/// Strengthens moves to 1.3× their power when moving last.<para></para> This Pokémon's moves have 1.3× their power when it moves last in a turn.
-		/// 
-		/// []{move:future-sight} and []{move:doom-desire} are unaffected.
+		///
+		/// <see cref="Moves.FUTURE_SIGHT"/> and <see cref="Moves.DOOM_DESIRE"/> are unaffected.
 		/// </summary>
 		ANALYTIC = 148,
 		/// <summary>
-		/// Takes the appearance of the last conscious party Pokémon upon being sent out until hit by a damaging move.<para></para> This Pokémon, upon being sent out, appears to have the species, nickname, and Poké Ball of the last Pokémon in the party that is able to battle.  This illusion breaks upon being hit by a damaging move.
-		/// 
-		/// Other damage, e.g. from [weather]{mechanic:weather} or []{move:spikes}, does not break the illusion, nor does damage done to a []{move:substitute}.
-		/// 
+		/// Takes the appearance of the last conscious party Pokémon upon being sent out until hit by a damaging move.<para></para> This Pokémon, upon being sent out, appears to have the species, nickname, and Poké Ball of the last Pokémon in the party that is able to battle. This illusion breaks upon being hit by a damaging move.
+		///
+		/// Other damage, e.g. from [weather]{mechanic:weather} or <see cref="Moves.SPIKES"/>, does not break the illusion, nor does damage done to a <see cref="Moves.SUBSTITUTE"/>.
+		///
 		/// If the party order becomes temporarily shuffled around as Pokémon are switched out in battle, this ability chooses the last Pokémon according to that shuffled order.
 		/// </summary>
 		ILLUSION = 149,
 		/// <summary>
-		/// [Transforms]{move:transform} upon entering battle.<para></para> This Pokémon transforms into a random opponent upon entering battle.  This effect is identical to the move []{move:transform}.
+		/// [Transforms]{move:transform} upon entering battle.<para></para> This Pokémon transforms into a random opponent upon entering battle. This effect is identical to the move <see cref="Moves.TRANSFORM"/>.
 		/// </summary>
 		IMPOSTER = 150,
 		/// <summary>
-		/// Bypasses []{move:light-screen}, []{move:reflect}, and []{move:safeguard}.<para></para> This Pokémon's moves ignore []{move:light-screen}, []{move:reflect}, and []{move:safeguard}.
+		/// Bypasses <see cref="Moves.LIGHT_SCREEN"/>, <see cref="Moves.REFLECT"/>, and <see cref="Moves.SAFEGUARD"/>.<para></para> This Pokémon's moves ignore <see cref="Moves.LIGHT_SCREEN"/>, <see cref="Moves.REFLECT"/>, and <see cref="Moves.SAFEGUARD"/>.
 		/// </summary>
 		INFILTRATOR = 151,
 		/// <summary>
 		/// Changes attacking Pokémon's abilities to Mummy on contact.<para></para> Whenever a contact move hits this Pokémon, the attacking Pokémon's ability changes to Mummy.
-		/// 
-		/// []{ability:multitype} is unaffected.  If a Pokémon with []{ability:moxie} knocks this Pokémon out, the former's ability will change without taking effect.
+		///
+		/// <see cref="Abilities.MULTITYPE"/> is unaffected. If a Pokémon with <see cref="Abilities.MOXIE"/> knocks this Pokémon out, the former's ability will change without taking effect.
 		/// </summary>
 		MUMMY = 152,
 		/// <summary>
-		/// Raises [Attack]{mechanic:attack} one stage upon KOing a Pokémon.<para></para> This Pokémon's [Attack]{mechanic:attack} rises one stage upon knocking out another Pokémon, even a friendly Pokémon.
-		/// 
-		/// This ability does not take effect when the Pokémon indirectly causes another Pokémon to faint, e.g. through [poison]{mechanic:poison} or []{move:spikes}.
-		/// 
-		/// If this Pokémon knocks out a Pokémon with []{ability:mummy}, the former's ability will change without taking effect.
+		/// Raises <see cref="Stats.ATTACK"/> one stage upon KOing a Pokémon.<para></para> This Pokémon's <see cref="Stats.ATTACK"/> rises one stage upon knocking out another Pokémon, even a friendly Pokémon.
+		///
+		/// This ability does not take effect when the Pokémon indirectly causes another Pokémon to faint, e.g. through <see cref="Status.POISON"/> or <see cref="Moves.SPIKES"/>.
+		///
+		/// If this Pokémon knocks out a Pokémon with <see cref="Abilities.MUMMY"/>, the former's ability will change without taking effect.
 		/// </summary>
 		MOXIE = 153,
 		/// <summary>
-		/// Raises [Attack]{mechanic:attack} one stage upon taking damage from a []{type:dark} move.<para></para> Whenever a []{type:dark}-type move hits this Pokémon, its [Attack]{mechanic:attack} rises one [stage]{mechanic:stat-modifier}.
-		/// 
+		/// Raises <see cref="Stats.ATTACK"/> one stage upon taking damage from a <see cref="Types.DARK"/> move.<para></para> Whenever a <see cref="Types.DARK"/>-type move hits this Pokémon, its <see cref="Stats.ATTACK"/> rises one [stage]{mechanic:stat_modifier}.
+		///
 		/// The move is not negated in any way.
 		/// </summary>
 		JUSTIFIED = 154,
 		/// <summary>
-		/// Raises [Speed]{mechanic:speed} one [stage]{mechanic:stat-modifier} upon being hit by a []{type:dark}, []{type:ghost}, or []{type:bug} move.<para></para> This Pokémon's [Speed]{mechanic:speed} rises one stage with each hit from a damaging []{type:dark}-, []{type:ghost}-, or []{type:bug}-type move.
+		/// Raises <see cref="Stats.SPEED"/> one [stage]{mechanic:stat_modifier} upon being hit by a <see cref="Types.DARK"/>, <see cref="Types.GHOST"/>, or <see cref="Types.BUG"/> move.<para></para> This Pokémon's <see cref="Stats.SPEED"/> rises one stage with each hit from a damaging <see cref="Types.DARK"/>-, <see cref="Types.GHOST"/>-, or <see cref="Types.BUG"/>-type move.
 		/// </summary>
 		RATTLED = 155,
 		/// <summary>
 		/// Reflects most non-damaging moves back at their user.<para></para> When this Pokémon is targeted by a move flagged as being reflectable, the move is redirected to its user.
-		/// 
+		///
 		/// All reflectable moves are non-damaging, and most non-damaging moves that target other Pokémon are reflectable.
-		/// 
-		/// A move reflected by this ability or []{move:magic-coat} cannot be reflected back.
+		///
+		/// A move reflected by this ability or <see cref="Moves.MAGIC_COAT"/> cannot be reflected back.
 		/// </summary>
 		MAGIC_BOUNCE = 156,
 		/// <summary>
-		/// Absorbs []{type:grass} moves, raising [Attack]{mechanic:attack} one [stage]{mechanic:stat-modifier}.<para></para> Whenever a []{type:grass}-type move hits this Pokémon, its [Attack]{mechanic:attack} rises one [stage]{mechanic:stat-modifier}, negating any other effect on it.
+		/// Absorbs <see cref="Types.GRASS"/> moves, raising <see cref="Stats.ATTACK"/> one [stage]{mechanic:stat_modifier}.<para></para> Whenever a <see cref="Types.GRASS"/>-type move hits this Pokémon, its <see cref="Stats.ATTACK"/> rises one [stage]{mechanic:stat_modifier}, negating any other effect on it.
 		/// </summary>
 		SAP_SIPPER = 157,
 		/// <summary>
@@ -1109,19 +1112,19 @@
 		/// </summary>
 		PRANKSTER = 158,
 		/// <summary>
-		/// Strengthens []{type:rock}, []{type:ground}, and []{type:steel} moves to 1.3× their power during a [sandstorm]{mechanic:sandstorm}.  Protects against sandstorm damage.<para></para> During a [sandstorm]{mechanic:sandstorm}, this Pokémon's []{type:rock}-, []{type:ground}-, and []{type:steel}-type moves have 1.3× their base power.  This Pokémon does not take sandstorm damage, regardless of type.
+		/// Strengthens <see cref="Types.ROCK"/>, <see cref="Types.GROUND"/>, and <see cref="Types.STEEL"/> moves to 1.3× their power during a <see cref="Weather.SANDSTORM"/>. Protects against sandstorm damage.<para></para> During a <see cref="Weather.SANDSTORM"/>, this Pokémon's <see cref="Types.ROCK"/>-, <see cref="Types.GROUND"/>-, and <see cref="Types.STEEL"/>-type moves have 1.3× their base power. This Pokémon does not take sandstorm damage, regardless of type.
 		/// </summary>
 		SAND_FORCE = 159,
 		/// <summary>
-		/// Damages attacking Pokémon for 1/8 their max [HP]{mechanic:hp} on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user takes 1/8 of its maximum [HP]{mechanic:hp} in damage.
-		/// 
-		/// This ability functions identically to []{ability:rough-skin}.
+		/// Damages attacking Pokémon for 1/8 their max <see cref="Stats.HP"/> on contact.<para></para> Whenever a move makes contact with this Pokémon, the move's user takes 1/8 of its maximum <see cref="Stats.HP"/> in damage.
+		///
+		/// This ability functions identically to <see cref="Abilities.ROUGH_SKIN"/>.
 		/// </summary>
 		IRON_BARBS = 160,
 		/// <summary>
-		/// Changes []{pokemon:darmanitan}'s form after each turn depending on its [HP]{mechanic:hp}: Zen Mode below 50% max HP, and Standard Mode otherwise.<para></para> This Pokémon switches between Standard Mode and Zen Mode after each turn depending on its [HP]{mechanic:hp}.  Below 50% of its maximum HP, it switches to Zen Mode, and at 50% or above, it switches to Standard Mode.
-		/// 
-		/// This Pokémon returns to Standard Mode upon leaving battle or losing this ability.  This ability has no effect if this Pokémon is not a []{pokemon:darmanitan}.
+		/// Changes <see cref="Pokemons.DARMANITAN"/>'s form after each turn depending on its <see cref="Stats.HP"/>: Zen Mode below 50% max HP, and Standard Mode otherwise.<para></para> This Pokémon switches between Standard Mode and Zen Mode after each turn depending on its <see cref="Stats.HP"/>. Below 50% of its maximum HP, it switches to Zen Mode, and at 50% or above, it switches to Standard Mode.
+		///
+		/// This Pokémon returns to Standard Mode upon leaving battle or losing this ability. This ability has no effect if this Pokémon is not a <see cref="Pokemons.DARMANITAN"/>.
 		/// </summary>
 		ZEN_MODE = 161,
 		/// <summary>
@@ -1130,30 +1133,30 @@
 		VICTORY_STAR = 162,
 		/// <summary>
 		/// Bypasses targets' abilities if they could hinder or prevent moves.<para></para> This Pokémon's moves completely ignore abilities that could hinder or prevent their effect on the target.
-		/// 
-		/// For example, this Pokémon's moves ignore abilities that would fully negate them, such as []{ability:water-absorb}; abilities that would prevent any of their effects, such as []{ability:clear-body}, []{ability:shell-armor}, or []{ability:sticky-hold}; and abilities that grant any general protective benefit, such as []{ability:simple}, []{ability:snow-cloak}, or []{ability:thick-fat}.  If an ability could either hinder or help this Pokémon's moves, e.g. []{ability:dry-skin} or []{ability:unaware}, the ability is ignored either way.
-		/// 
-		/// Abilities that do not fit this description, even if they could hinder moves in some other way, are not affected.  For example, []{ability:cursed-body} only affects potential future uses of the move, while []{ability:liquid-ooze} and []{ability:shadow-tag} can only hinder a move's effect on the user.  This ablity cannot ignore type or form changes granted by abilities, for example []{ability:color-change} or []{ability:forecast}; nor effects that were caused by abilities but are no longer tied to an ability, such as the rain from []{ability:drizzle}.  This ability cannot ignore []{ability:multitype} at all.
-		/// 
-		/// An ability ignored by this ability is only nullified while the move is being used.  For example, this Pokémon's moves can [paralyze]{mechanic:paralysis} a Pokémon with []{ability:limber}, but Limber will activate and heal the paralysis immediately thereafter, and this Pokémon's []{move:spikes} are not affected by this ability after they have been placed.
-		/// 
+		///
+		/// For example, this Pokémon's moves ignore abilities that would fully negate them, such as <see cref="Abilities.WATER_ABSORB"/>; abilities that would prevent any of their effects, such as <see cref="Abilities.CLEAR_BODY"/>, <see cref="Abilities.SHELL_ARMOR"/>, or <see cref="Abilities.STICKY_HOLD"/>; and abilities that grant any general protective benefit, such as <see cref="Abilities.SIMPLE"/>, <see cref="Abilities.SNOW_CLOAK"/>, or <see cref="Abilities.THICK_FAT"/>. If an ability could either hinder or help this Pokémon's moves, e.g. <see cref="Abilities.DRY_SKIN"/> or <see cref="Abilities.UNAWARE"/>, the ability is ignored either way.
+		///
+		/// Abilities that do not fit this description, even if they could hinder moves in some other way, are not affected. For example, <see cref="Abilities.CURSED_BODY"/> only affects potential future uses of the move, while <see cref="Abilities.LIQUID_OOZE"/> and <see cref="Abilities.SHADOW_TAG"/> can only hinder a move's effect on the user. This ablity cannot ignore type or form changes granted by abilities, for example <see cref="Abilities.COLOR_CHANGE"/> or <see cref="Abilities.FORECAST"/>; nor effects that were caused by abilities but are no longer tied to an ability, such as the rain from <see cref="Abilities.DRIZZLE"/>. This ability cannot ignore <see cref="Abilities.MULTITYPE"/> at all.
+		///
+		/// An ability ignored by this ability is only nullified while the move is being used. For example, this Pokémon's moves can <see cref="Status.PARALYSIS"/> a Pokémon with <see cref="Abilities.LIMBER"/>, but Limber will activate and heal the paralysis immediately thereafter, and this Pokémon's <see cref="Moves.SPIKES"/> are not affected by this ability after they have been placed.
+		///
 		/// When this Pokémon enters battle, all participating trainers are notified that it has this ability.
-		/// 
-		/// This ability functions identically to []{ability:mold-breaker} and []{ability:teravolt}.
+		///
+		/// This ability functions identically to <see cref="Abilities.MOLD_BREAKER"/> and <see cref="Abilities.TERAVOLT"/>.
 		/// </summary>
 		TURBOBLAZE = 163,
 		/// <summary>
 		/// Bypasses targets' abilities if they could hinder or prevent moves.<para></para> This Pokémon's moves completely ignore abilities that could hinder or prevent their effect on the target.
-		/// 
-		/// For example, this Pokémon's moves ignore abilities that would fully negate them, such as []{ability:water-absorb}; abilities that would prevent any of their effects, such as []{ability:clear-body}, []{ability:shell-armor}, or []{ability:sticky-hold}; and abilities that grant any general protective benefit, such as []{ability:simple}, []{ability:snow-cloak}, or []{ability:thick-fat}.  If an ability could either hinder or help this Pokémon's moves, e.g. []{ability:dry-skin} or []{ability:unaware}, the ability is ignored either way.
-		/// 
-		/// Abilities that do not fit this description, even if they could hinder moves in some other way, are not affected.  For example, []{ability:cursed-body} only affects potential future uses of the move, while []{ability:liquid-ooze} and []{ability:shadow-tag} can only hinder a move's effect on the user.  This ablity cannot ignore type or form changes granted by abilities, for example []{ability:color-change} or []{ability:forecast}; nor effects that were caused by abilities but are no longer tied to an ability, such as the rain from []{ability:drizzle}.  This ability cannot ignore []{ability:multitype} at all.
-		/// 
-		/// An ability ignored by this ability is only nullified while the move is being used.  For example, this Pokémon's moves can [paralyze]{mechanic:paralysis} a Pokémon with []{ability:limber}, but Limber will activate and heal the paralysis immediately thereafter, and this Pokémon's []{move:spikes} are not affected by this ability after they have been placed.
-		/// 
+		///
+		/// For example, this Pokémon's moves ignore abilities that would fully negate them, such as <see cref="Abilities.WATER_ABSORB"/>; abilities that would prevent any of their effects, such as <see cref="Abilities.CLEAR_BODY"/>, <see cref="Abilities.SHELL_ARMOR"/>, or <see cref="Abilities.STICKY_HOLD"/>; and abilities that grant any general protective benefit, such as <see cref="Abilities.SIMPLE"/>, <see cref="Abilities.SNOW_CLOAK"/>, or <see cref="Abilities.THICK_FAT"/>. If an ability could either hinder or help this Pokémon's moves, e.g. <see cref="Abilities.DRY_SKIN"/> or <see cref="Abilities.UNAWARE"/>, the ability is ignored either way.
+		///
+		/// Abilities that do not fit this description, even if they could hinder moves in some other way, are not affected. For example, <see cref="Abilities.CURSED_BODY"/> only affects potential future uses of the move, while <see cref="Abilities.LIQUID_OOZE"/> and <see cref="Abilities.SHADOW_TAG"/> can only hinder a move's effect on the user. This ablity cannot ignore type or form changes granted by abilities, for example <see cref="Abilities.COLOR_CHANGE"/> or <see cref="Abilities.FORECAST"/>; nor effects that were caused by abilities but are no longer tied to an ability, such as the rain from <see cref="Abilities.DRIZZLE"/>. This ability cannot ignore <see cref="Abilities.MULTITYPE"/> at all.
+		///
+		/// An ability ignored by this ability is only nullified while the move is being used. For example, this Pokémon's moves can <see cref="Status.PARALYSIS"/> a Pokémon with <see cref="Abilities.LIMBER"/>, but Limber will activate and heal the paralysis immediately thereafter, and this Pokémon's <see cref="Moves.SPIKES"/> are not affected by this ability after they have been placed.
+		///
 		/// When this Pokémon enters battle, all participating trainers are notified that it has this ability.
-		/// 
-		/// This ability functions identically to []{ability:mold-breaker} and []{ability:turboblaze}.
+		///
+		/// This ability functions identically to <see cref="Abilities.MOLD_BREAKER"/> and <see cref="Abilities.TURBOBLAZE"/>.
 		/// </summary>
 		TERAVOLT = 164,
 		/// <summary>
@@ -1161,7 +1164,7 @@
 		/// </summary>
 		AROMA_VEIL = 165,
 		/// <summary>
-		/// Protects friendly []{type:grass} Pokémon from having their stats lowered by other Pokémon.<para></para> Protects friendly []{type:grass} Pokémon from having their stats lowered by other Pokémon.
+		/// Protects friendly <see cref="Types.GRASS"/> Pokémon from having their stats lowered by other Pokémon.<para></para> Protects friendly <see cref="Types.GRASS"/> Pokémon from having their stats lowered by other Pokémon.
 		/// </summary>
 		FLOWER_VEIL = 166,
 		/// <summary>
@@ -1170,7 +1173,7 @@
 		CHEEK_POUCH = 167,
 		/// <summary>
 		/// Changes the bearer's type to match each move it uses.<para></para> Changes the bearer's type to match each move it uses.
-		/// 
+		///
 		/// The type change takes place just before the move is used.
 		/// </summary>
 		PROTEAN = 168,
@@ -1195,7 +1198,7 @@
 		/// </summary>
 		STRONG_JAW = 173,
 		/// <summary>
-		/// Turns the bearer's []{type:normal} moves into []{type:ice} moves and strengthens them to 1.3× their power.<para></para> Turns the bearer's []{type:normal}-type moves into []{type:ice}-type moves.  Moves changed by this ability have 1.3× their power.
+		/// Turns the bearer's <see cref="Types.NORMAL"/> moves into <see cref="Types.ICE"/> moves and strengthens them to 1.3× their power.<para></para> Turns the bearer's <see cref="Types.NORMAL"/>-type moves into <see cref="Types.ICE"/>-type moves. Moves changed by this ability have 1.3× their power.
 		/// </summary>
 		REFRIGERATE = 174,
 		/// <summary>
@@ -1203,11 +1206,11 @@
 		/// </summary>
 		SWEET_VEIL = 175,
 		/// <summary>
-		/// Changes []{pokemon:aegislash} to Blade Forme before using a damaging move, or Shield Forme before using []{move:kings-shield}.<para></para> Changes []{pokemon:aegislash} to Blade Forme before using a damaging move, or Shield Forme before using []{move:kings-shield}.
+		/// Changes <see cref="Pokemons.AEGISLASH"/> to Blade Forme before using a damaging move, or Shield Forme before using <see cref="Moves.KINGS_SHIELD"/>.<para></para> Changes <see cref="Pokemons.AEGISLASH"/> to Blade Forme before using a damaging move, or Shield Forme before using <see cref="Moves.KINGS_SHIELD"/>.
 		/// </summary>
 		STANCE_CHANGE = 176,
 		/// <summary>
-		/// Raises []{type:flying} moves' priority by one stage.<para></para> Raises []{type:flying} moves' priority by one stage.
+		/// Raises <see cref="Types.FLYING"/> moves' priority by one stage.<para></para> Raises <see cref="Types.FLYING"/> moves' priority by one stage.
 		/// </summary>
 		GALE_WINGS = 177,
 		/// <summary>
@@ -1215,7 +1218,7 @@
 		/// </summary>
 		MEGA_LAUNCHER = 178,
 		/// <summary>
-		/// Boosts Defense while []{move:grassy-terrain} is in effect.<para></para> Boosts Defense while []{move:grassy-terrain} is in effect.
+		/// Boosts Defense while <see cref="Moves.GRASSY_TERRAIN"/> is in effect.<para></para> Boosts Defense while <see cref="Moves.GRASSY_TERRAIN"/> is in effect.
 		/// </summary>
 		GRASS_PELT = 179,
 		/// <summary>
@@ -1227,7 +1230,7 @@
 		/// </summary>
 		TOUGH_CLAWS = 181,
 		/// <summary>
-		/// Turns the bearer's []{type:normal} moves into []{type:fairy} moves and strengthens them to 1.3× their power.<para></para> Turns the bearer's []{type:normal}-type moves into []{type:fairy} moves.  Moves changed by this ability have 1.3× their power.
+		/// Turns the bearer's <see cref="Types.NORMAL"/> moves into <see cref="Types.FAIRY"/> moves and strengthens them to 1.3× their power.<para></para> Turns the bearer's <see cref="Types.NORMAL"/>-type moves into <see cref="Types.FAIRY"/> moves. Moves changed by this ability have 1.3× their power.
 		/// </summary>
 		PIXILATE = 182,
 		/// <summary>
@@ -1235,47 +1238,47 @@
 		/// </summary>
 		GOOEY = 183,
 		/// <summary>
-		/// Turns the bearer's []{type:normal} moves into []{type:flying} moves and strengthens them to 1.3× their power.<para></para> Turns the bearer's []{type:normal}-type moves into []{type:flying}-type moves.  Moves changed by this ability have 1.3× their power.
+		/// Turns the bearer's <see cref="Types.NORMAL"/> moves into <see cref="Types.FLYING"/> moves and strengthens them to 1.3× their power.<para></para> Turns the bearer's <see cref="Types.NORMAL"/>-type moves into <see cref="Types.FLYING"/>-type moves. Moves changed by this ability have 1.3× their power.
 		/// </summary>
 		AERILATE = 184,
 		/// <summary>
-		/// Lets the bearer hit twice with damaging moves.  The second hit has half power.<para></para> Lets the bearer hit twice with damaging moves.  The second hit has half power.
+		/// Lets the bearer hit twice with damaging moves. The second hit has half power.<para></para> Lets the bearer hit twice with damaging moves. The second hit has half power.
 		/// </summary>
 		PARENTAL_BOND = 185,
 		/// <summary>
-		/// Strengthens []{type:dark} moves to 1.33× their power for all friendly and opposing Pokémon.<para></para> Strengthens []{type:dark} moves for all friendly and opposing Pokémon.
+		/// Strengthens <see cref="Types.DARK"/> moves to 1.33× their power for all friendly and opposing Pokémon.<para></para> Strengthens <see cref="Types.DARK"/> moves for all friendly and opposing Pokémon.
 		/// </summary>
 		DARK_AURA = 186,
 		/// <summary>
-		/// Strengthens []{type:fairy} moves to 1.33× their power for all friendly and opposing Pokémon.<para></para> Strengthens []{type:fairy} moves for all friendly and opposing Pokémon.
+		/// Strengthens <see cref="Types.FAIRY"/> moves to 1.33× their power for all friendly and opposing Pokémon.<para></para> Strengthens <see cref="Types.FAIRY"/> moves for all friendly and opposing Pokémon.
 		/// </summary>
 		FAIRY_AURA = 187,
 		/// <summary>
-		/// Makes []{ability:dark-aura} and []{ability:fairy-aura} weaken moves of their respective types.<para></para> While this Pokémon is on the field, []{ability:dark-aura} and []{ability:fairy-aura} weaken moves of their respective types to 2/3 their power, rather than strengthening them.
+		/// Makes <see cref="Abilities.DARK_AURA"/> and <see cref="Abilities.FAIRY_AURA"/> weaken moves of their respective types.<para></para> While this Pokémon is on the field, <see cref="Abilities.DARK_AURA"/> and <see cref="Abilities.FAIRY_AURA"/> weaken moves of their respective types to 2/3 their power, rather than strengthening them.
 		/// </summary>
 		AURA_BREAK = 188,
 		/// <summary>
-		/// Creates heavy rain, which has all the properties of Rain Dance, cannot be replaced, and causes damaging Fire moves to fail.<para></para> When this Pokémon enters battle or gains this ability, the weather becomes heavy rain.  Heavy rain has all the properties of []{move:rain-dance} and also causes damaging Fire moves to fail.
-		/// 
-		/// Heavy rain ends when this Pokémon leaves battle or loses this ability, or when this ability is nullified.  The weather cannot otherwise be changed except by the effects of []{ability:delta-stream} and []{ability:desolate-land}.
-		/// 
-		/// []{ability:air-lock} and []{ability:cloud-nine} will prevent the effects of heavy rain, including allowing Fire moves to work, but will not allow the weather to be changed.
+		/// Creates heavy rain, which has all the properties of Rain Dance, cannot be replaced, and causes damaging Fire moves to fail.<para></para> When this Pokémon enters battle or gains this ability, the weather becomes heavy rain. Heavy rain has all the properties of <see cref="Moves.RAIN_DANCE"/> and also causes damaging Fire moves to fail.
+		///
+		/// Heavy rain ends when this Pokémon leaves battle or loses this ability, or when this ability is nullified. The weather cannot otherwise be changed except by the effects of <see cref="Abilities.DELTA_STREAM"/> and <see cref="Abilities.DESOLATE_LAND"/>.
+		///
+		/// <see cref="Abilities.AIR_LOCK"/> and <see cref="Abilities.CLOUD_NINE"/> will prevent the effects of heavy rain, including allowing Fire moves to work, but will not allow the weather to be changed.
 		/// </summary>
 		PRIMORDIAL_SEA = 189,
 		/// <summary>
-		/// Creates extremely harsh sunlight, which has all the properties of Sunny Day, cannot be replaced, and causes damaging Water moves to fail.<para></para> When this Pokémon enters battle or gains this ability, the weather becomes extremely harsh sunlight.  Extremely harsh sunlight has all the properties of []{move:sunny-day} and also causes damaging Water moves to fail.
-		/// 
-		/// Extremely harsh sunlight ends when this Pokémon leaves battle or loses this ability, or when this ability is nullified.  The weather cannot otherwise be changed except by the effects of []{ability:delta-stream} and []{ability:primordial-sea}.
-		/// 
-		/// []{ability:air-lock} and []{ability:cloud-nine} will prevent the effects of extremely harsh sunlight, including allowing Water moves to work, but will not allow the weather to be changed.
+		/// Creates extremely harsh sunlight, which has all the properties of Sunny Day, cannot be replaced, and causes damaging Water moves to fail.<para></para> When this Pokémon enters battle or gains this ability, the weather becomes extremely harsh sunlight. Extremely harsh sunlight has all the properties of <see cref="Moves.SUNNY_DAY"/> and also causes damaging Water moves to fail.
+		///
+		/// Extremely harsh sunlight ends when this Pokémon leaves battle or loses this ability, or when this ability is nullified. The weather cannot otherwise be changed except by the effects of <see cref="Abilities.DELTA_STREAM"/> and <see cref="Abilities.PRIMORDIAL_SEA"/>.
+		///
+		/// <see cref="Abilities.AIR_LOCK"/> and <see cref="Abilities.CLOUD_NINE"/> will prevent the effects of extremely harsh sunlight, including allowing Water moves to work, but will not allow the weather to be changed.
 		/// </summary>
 		DESOLATE_LAND = 190,
 		/// <summary>
-		/// Creates a mysterious air current, which cannot be replaced and causes moves to never be super effective against Flying Pokémon.<para></para> When this Pokémon enters battle or gains this ability, the weather becomes a mysterious air current.  A mysterious air current causes moves to not be super effective against Flying; they do neutral damage instead.  []{ability:anticipation} and []{move:stealth-rock} are not affected.
-		/// 
-		/// The mysterious air current ends when this Pokémon leaves battle or loses this ability, or when this ability is nullified.  The weather cannot otherwise be changed except by the effects of []{ability:desolate-land} and []{ability:primordial-sea}.
-		/// 
-		/// []{ability:air-lock} and []{ability:cloud-nine} will prevent the effect of a mysterious air current, but will not allow the weather to be changed.
+		/// Creates a mysterious air current, which cannot be replaced and causes moves to never be super effective against Flying Pokémon.<para></para> When this Pokémon enters battle or gains this ability, the weather becomes a mysterious air current. A mysterious air current causes moves to not be super effective against Flying; they do neutral damage instead.  <see cref="Abilities.ANTICIPATION"/> and <see cref="Moves.STEALTH_ROCK"/> are not affected.
+		///
+		/// The mysterious air current ends when this Pokémon leaves battle or loses this ability, or when this ability is nullified. The weather cannot otherwise be changed except by the effects of <see cref="Abilities.DESOLATE_LAND"/> and <see cref="Abilities.PRIMORDIAL_SEA"/>.
+		///
+		/// <see cref="Abilities.AIR_LOCK"/> and <see cref="Abilities.CLOUD_NINE"/> will prevent the effect of a mysterious air current, but will not allow the weather to be changed.
 		/// </summary>
 		DELTA_STREAM = 191,
 		/// <summary>
@@ -1299,9 +1302,9 @@
 		/// </summary>
 		MERCILESS = 196,
 		/// <summary>
-		/// Transforms this Minior between Core Form and Meteor Form.  Prevents major status ailments and drowsiness while in Meteor Form.<para></para> When this Pokémon enters battle and at the end of each turn, if its HP is 50% or above, it changes into Meteor Form; otherwise, it changes into Core Form.  In Meteor Form, it cannot be given a major status ailment (though existing ones are not cured), cannot become drowsy from []{move:yawn}, and cannot use []{move:rest} (which will simply fail).
-		/// 
-		/// This ability cannot be copied, replaced, or nullified.  This ability only takes effect for Minior.
+		/// Transforms this Minior between Core Form and Meteor Form. Prevents major status ailments and drowsiness while in Meteor Form.<para></para> When this Pokémon enters battle and at the end of each turn, if its HP is 50% or above, it changes into Meteor Form; otherwise, it changes into Core Form. In Meteor Form, it cannot be given a major status ailment (though existing ones are not cured), cannot become drowsy from <see cref="Moves.YAWN"/>, and cannot use <see cref="Moves.REST"/> (which will simply fail).
+		///
+		/// This ability cannot be copied, replaced, or nullified. This ability only takes effect for <see cref="Pokemons.MINIOR_RED_METEOR"/>.
 		/// </summary>
 		SHIELDS_DOWN = 197,
 		/// <summary>
@@ -1309,7 +1312,7 @@
 		/// </summary>
 		STAKEOUT = 198,
 		/// <summary>
-		/// Halves damage from Fire moves, doubles damage of Water moves, and prevents burns.<para></para> When this Pokémon is hit by a Fire move, the damage is halved.  When this Pokémon uses a Water move, the power is doubled.  This Pokémon cannot be burned, and if it becomes burned, the  burn is immediately ured.
+		/// Halves damage from Fire moves, doubles damage of Water moves, and prevents burns.<para></para> When this Pokémon is hit by a Fire move, the damage is halved. When this Pokémon uses a Water move, the power is doubled. This Pokémon cannot be burned, and if it becomes burned, the burn is immediately ured.
 		/// </summary>
 		WATER_BUBBLE = 199,
 		/// <summary>
@@ -1345,27 +1348,27 @@
 		/// </summary>
 		SURGE_SURFER = 207,
 		/// <summary>
-		/// Wishiwashi becomes Schooling Form when its HP is 25% or higher.<para></para> If this Pokémon is a []{pokemon:wishiwashi} and level 20 or above, then when it enters battle and at the start of each turn, it becomes Schooling Form if its HP is 25% or higher and Solo Form otherwise.
-		/// 
+		/// Wishiwashi becomes Schooling Form when its HP is 25% or higher.<para></para> If this Pokémon is a <see cref="Pokemons.WISHIWASHI_SOLO"/> and level 20 or above, then when it enters battle and at the start of each turn, it becomes Schooling Form if its HP is 25% or higher and Solo Form otherwise.
+		///
 		/// This ability cannot be replaced, copied, or nullified.
 		/// </summary>
 		SCHOOLING = 208,
 		/// <summary>
-		/// Prevents the first instance of battle damage.<para></para> If this Pokémon is in its Disguised Form and takes damage from a move, it switches to its Busted Form and the damage is prevented.  Other effects are not prevented.
-		/// 
-		/// This ability cannot be copied or replaced.  This ability only takes effect for Mimikyu.
+		/// Prevents the first instance of battle damage.<para></para> If this Pokémon is in its Disguised Form and takes damage from a move, it switches to its Busted Form and the damage is prevented. Other effects are not prevented.
+		///
+		/// This ability cannot be copied or replaced. This ability only takes effect for <see cref="Pokemons.MIMIKYU_DISGUISED"/>.
 		/// </summary>
 		DISGUISE = 209,
 		/// <summary>
-		/// Transforms this Pokémon into Ash-Greninja after fainting an opponent.  Water Shuriken's power is 20 and always hits three times.<para></para> Transforms this Pokémon into Ash-Greninja after fainting an opponent.  Water Shuriken's power is 20 and always hits three times.
-		/// 
-		/// This ability cannot be copied or replaced.  This ability only takes effect for Greninja.
+		/// Transforms this Pokémon into Ash-Greninja after fainting an opponent. Water Shuriken's power is 20 and always hits three times.<para></para> Transforms this Pokémon into Ash-Greninja after fainting an opponent. Water Shuriken's power is 20 and always hits three times.
+		///
+		/// This ability cannot be copied or replaced. This ability only takes effect for <see cref="Pokemons.GRENINJA"/>.
 		/// </summary>
 		BATTLE_BOND = 210,
 		/// <summary>
 		/// Transforms 10% or 50% Zygarde into Complete Forme when its HP is below 50%.<para></para> Transforms 10% or 50% Zygarde into Complete Forme when its HP is below 50%.
-		/// 
-		/// This ability cannot be copied or replaced.  This ability only takes effect for Zygarde.
+		///
+		/// This ability cannot be copied or replaced. This ability only takes effect for <see cref="Pokemons.ZYGARDE"/>.
 		/// </summary>
 		POWER_CONSTRUCT = 211,
 		/// <summary>
@@ -1373,7 +1376,7 @@
 		/// </summary>
 		CORROSION = 212,
 		/// <summary>
-		/// This Pokémon always  acts as though it were Asleep.<para></para> This Pokémon always acts as though it were Asleep.  It cannot be given another status ailment; it's unaffected by []{move:yawn}; it can use []{move:sleep-talk}; and so on.
+		/// This Pokémon always acts as though it were Asleep.<para></para> This Pokémon always acts as though it were Asleep. It cannot be given another status ailment; it's unaffected by <see cref="Moves.YAWN"/>; it can use <see cref="Moves.SLEEP_TALK"/>; and so on.
 		/// </summary>
 		COMATOSE = 213,
 		/// <summary>
@@ -1393,7 +1396,7 @@
 		/// </summary>
 		BATTERY = 217,
 		/// <summary>
-		/// Damage from contact moves is halved.  Damage from Fire moves is doubled.<para></para> Damage from contact moves is halved.  Damage from Fire moves is doubled.
+		/// Damage from contact moves is halved. Damage from Fire moves is doubled.<para></para> Damage from contact moves is halved. Damage from Fire moves is doubled.
 		/// </summary>
 		FLUFFY = 218,
 		/// <summary>
@@ -1422,42 +1425,42 @@
 		BEAST_BOOST = 224,
 		/// <summary>
 		/// Changes this Pokémon's type to match its held Memory.<para></para> Changes this Pokémon's type to match its held Memory.
-		/// 
-		/// This ability cannot be copied, replaced, or nullified.  This ability only takes effect for Silvally.
+		///
+		/// This ability cannot be copied, replaced, or nullified. This ability only takes effect for <see cref="Pokemons.SILVALLY"/>.
 		/// </summary>
 		RKS_SYSTEM = 225,
 		/// <summary>
-		/// When this Pokémon enters battle, it changes the terrain to Electric Terrain.<para></para> When this Pokémon enters battle, it changes the terrain to []{move:electric-terrain}.
+		/// When this Pokémon enters battle, it changes the terrain to Electric Terrain.<para></para> When this Pokémon enters battle, it changes the terrain to <see cref="Moves.ELECTRIC_TERRAIN"/>.
 		/// </summary>
 		ELECTRIC_SURGE = 226,
 		/// <summary>
-		/// When this Pokémon enters battle, it changes the terrain to Psychic Terrain.<para></para> When this Pokémon enters battle, it changes the terrain to []{move:psychic-terrain}.
+		/// When this Pokémon enters battle, it changes the terrain to Psychic Terrain.<para></para> When this Pokémon enters battle, it changes the terrain to <see cref="Moves.PSYCHIC_TERRAIN"/>.
 		/// </summary>
 		PSYCHIC_SURGE = 227,
 		/// <summary>
-		/// When this Pokémon enters battle, it changes the terrain to Misty Terrain.<para></para> When this Pokémon enters battle, it changes the terrain to []{move:misty-terrain}.
+		/// When this Pokémon enters battle, it changes the terrain to Misty Terrain.<para></para> When this Pokémon enters battle, it changes the terrain to <see cref="Moves.MISTY_TERRAIN"/>.
 		/// </summary>
 		MISTY_SURGE = 228,
 		/// <summary>
-		/// When this Pokémon enters battle, it changes the terrain to Grassy Terrain.<para></para> When this Pokémon enters battle, it changes the terrain to []{move:grassy-terrain}.
+		/// When this Pokémon enters battle, it changes the terrain to Grassy Terrain.<para></para> When this Pokémon enters battle, it changes the terrain to <see cref="Moves.GRASSY_TERRAIN"/>.
 		/// </summary>
 		GRASSY_SURGE = 229,
 		/// <summary>
-		/// Other Pokémon cannot lower this Pokémon's stats.<para></para> This Pokémon's stats cannot be lowered by other Pokémon's moves or abilities.  This effect only applies to normal stat modifications and not more exotic effects such as []{move:topsy-turvy} or []{move:power-swap}.
-		/// 
-		/// This Ability is not bypassed by []{ability:mold-breaker}, []{ability:teravolt}, or []{ability:turboblaze}.
+		/// Other Pokémon cannot lower this Pokémon's stats.<para></para> This Pokémon's stats cannot be lowered by other Pokémon's moves or abilities. This effect only applies to normal stat modifications and not more exotic effects such as <see cref="Moves.TOPSY_TURVY"/> or <see cref="Moves.POWER_SWAP"/>.
+		///
+		/// This Ability is not bypassed by <see cref="Abilities.MOLD_BREAKER"/>, <see cref="Abilities.TERAVOLT"/>, or <see cref="Abilities.TURBOBLAZE"/>.
 		/// </summary>
 		FULL_METAL_BODY = 230,
 		/// <summary>
 		/// When this Pokémon has full HP, regular damage from moves is halved.<para></para> When this Pokémon has full HP, regular damage (not fixed damage!) from moves is halved.
-		/// 
+		///
 		/// This ability cannot be nullified.
 		/// </summary>
 		SHADOW_SHIELD = 231,
 		/// <summary>
 		/// Reduces super-effective damage to 0.75×.<para></para> Super-effective damage this Pokémon takes is reduced to 0.75×.
-		/// 
-		/// This Ability is not bypassed by []{ability:mold-breaker}, []{ability:teravolt}, or []{ability:turboblaze}.
+		///
+		/// This Ability is not bypassed by <see cref="Abilities.MOLD_BREAKER"/>, <see cref="Abilities.TERAVOLT"/>, or <see cref="Abilities.TURBOBLAZE"/>.
 		/// </summary>
 		PRISM_ARMOR = 232,
 		/// <summary>
@@ -1466,7 +1469,7 @@
 		NEUROFORCE = 233
 	}
 	#endregion
-	#region 
+	#region
 	public enum Ribbons
 	{
 		NONE = 0,
@@ -1665,23 +1668,20 @@
 	/// <summary>
 	/// Still need to sort out Language Enums
 	/// </summary>
-	public enum Languages //: Languages<Translations.Languages>//Translator.Languages//
+	public enum Languages
 	{
 		/// <summary>
 		/// US English
 		/// </summary>
 		English = 9
 	}
-	/*public class Languagess : ILanguage<Translations.Languages>
-	{
-		public enum Translations.Languages { get; set; } 
-	}*/
 	/// <summary>
 	/// Scripted Text stored and available for Locale translations
 	/// </summary>
 	public enum TextScripts
 	{
 		Name,
+		NamePlural,
 		Description
 	}
 	/// <summary>
@@ -1720,85 +1720,41 @@
 		RedBlueYellow = 1,
 		GoldSilverCrystal = 2,
 		RubySapphireEmerald = 3,
-		//FireRedLeafGreen, 
+		//FireRedLeafGreen,
 		DiamondPearlPlatinum = 4,
-		//HeartgoldSoulsilver, 
+		//HeartgoldSoulsilver,
 		BlackWhite = 5,
-		//BlackWhite2, 
+		//BlackWhite2,
 		XY = 6,
 		//OmegaRubyAlphaSapphire,
 		SunMoon = 7,
 		//UltraSunUltraMoon
 		Custom = -1
 	}
-	//ToDo: Remove or Merge Version/Versions
-	public enum Version
-	{
-		//(id, version_group_id, identifier) VALUES 
-		//(0, 0, poke-unity'),
-		PokeUnity = 0,
-		//(1, 1, red'),
-		//(2, 1, blue'),
-		RedBlue = 1,
-		//(3, 2, yellow'),
-		Yellow = 2,
-		//(4, 3, gold'),
-		//(5, 3, silver'),
-		GoldSilver = 3,
-		//(6, 4, crystal'),
-		Crystal = 4,
-		//(7, 5, ruby'),
-		//(8, 5, sapphire'),
-		RubySapphire = 5,
-		//(9, 6, emerald'),
-		Emerald = 6,
-		//(10,7, firered'),
-		//(11,7, leafgreen'),
-		LGFR = 7,
-		//(12,8, diamond'),
-		//(13,8, pearl'),
-		DiamondPearl = 8,
-		//(14,9, platinum'),
-		Platinum = 9,
-		//(15,10,heartgold'),
-		//(16,10,soulsilver'),
-		HGSS = 10,
-		//(17,11,black'),
-		//(18,11,white'),
-		BW = 11,
-		//(19,12,colosseum'),
-		//(20,13,xd'),
-		//(21,14,black-2'),
-		//(22,14,white-2'),
-		BW2 = 14,
-		//(23,15,x'),
-		//(24,15,y'),
-		XY = 15,
-		//(25,16,omega-ruby'),
-		//(26,16,alpha-sapphire')
-		ORAS = 16
-	}
+	/// <summary>
+	/// </summary>
+	/// Use value here to represent `version_group_id` in Veekun's DB
 	public enum Versions
 	{
 		PKUE = 0
-		, RED_BLUE
-		, YELLOW
-		, GOLD_SILVER
-		, CRYSTAL
-		, RUBY_SAPPHIRE
-		, EMERALD
-		, FIRERED_LEAFGREEN
-		, DIAMOND_PEARL
-		, PLATINUM
-		, HEARTGOLD_SOULSILVER
-		, BLACK_WHITE
-		, COLOSSEUM
-		, XD
-		, BLACK_2_WHITE_2
-		, X_Y
-		, OMEGA_RUBY_ALPHA_SAPPHIRE
-		, SUN_MOON
-		, ULTRA_SUN_ULTRA_MOON
+		, RED_BLUE					= 1
+		, YELLOW					= 2
+		, GOLD_SILVER				= 3
+		, CRYSTAL					= 4
+		, RUBY_SAPPHIRE				= 5
+		, EMERALD					= 6
+		, FIRERED_LEAFGREEN			= 7
+		, DIAMOND_PEARL				= 8
+		, PLATINUM					= 9
+		, HEARTGOLD_SOULSILVER		= 10
+		, BLACK_WHITE				= 11
+		, COLOSSEUM					= 12
+		, XD						= 13
+		, BLACK_2_WHITE_2			= 14
+		, X_Y						= 15
+		, OMEGA_RUBY_ALPHA_SAPPHIRE	= 16
+		, SUN_MOON					//=
+		, ULTRA_SUN_ULTRA_MOON		//=
 	}
 	#endregion
 	#region Move

@@ -12,13 +12,13 @@ namespace PokemonEssentials.Interface
 		bool ResizeFactorSet	{ get; set; }
 		bool HaveResizeBorder	{ get; set; }
 
-		void pbSetResizeFactor(float factor = 1, bool norecalc = false);
+		void SetResizeFactor(float factor = 1, bool norecalc = false);
 
-		void pbSetResizeFactor2(float factor, bool force = false);
+		void SetResizeFactor2(float factor, bool force = false);
 
-		void pbConfigureFullScreen();
+		void ConfigureFullScreen();
 
-		void pbConfigureWindowedScreen(float value);
+		void ConfigureWindowedScreen(float value);
 
 		void setScreenBorderName(string border);
 	}
@@ -28,7 +28,7 @@ namespace PokemonEssentials.Interface
 		// Nominal screen size
 		//int @width { get; }
 		//int @height { get; }
-		
+
 		//int brightness { get; set; }
 
 		void fadein(int frames);
@@ -116,9 +116,9 @@ namespace PokemonEssentials.Interface
 		IViewport initialize(params object[] arg);
 
 		float ox { get; set; }
-		
+
 		float oy { get; set; }
-		
+
 		IRect rect { get; set; }
 	}
 

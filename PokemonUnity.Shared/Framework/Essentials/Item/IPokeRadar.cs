@@ -22,9 +22,9 @@ namespace PokemonEssentials.Interface.Item
 	/// Extension of <seealso cref="ITempMetadata"/>
 	/// </summary>
 	public interface ITempMetadataPokeRadar
-	{ 
+	{
 		// [species, level, chain count, grasses (x,y,ring,rarity)]
-		IPokeRadarMetaData pokeradar { get; }  
+		IPokeRadarMetaData pokeradar { get; }
 	}
 
 	public interface IPokeRadarMetaData
@@ -53,18 +53,18 @@ namespace PokemonEssentials.Interface.Item
 	/// </summary>
 	public interface IGamePokeRadar
 	{
-		bool pbCanUsePokeRadar();
+		bool CanUsePokeRadar();
 
-		bool pbUsePokeRadar();
+		bool UsePokeRadar();
 
-		void pbPokeRadarHighlightGrass(bool showmessage = true);
+		void PokeRadarHighlightGrass(bool showmessage = true);
 
-		void pbPokeRadarCancel();
+		void PokeRadarCancel();
 
-		int pbPokeRadarGetShakingGrass();
+		int PokeRadarGetShakingGrass();
 
-		bool pbPokeRadarOnShakingGrass();
+		bool PokeRadarOnShakingGrass();
 
-		Field.IEncounter pbPokeRadarGetEncounter(int rarity = 0);
+		Field.IEncounterPokemon PokeRadarGetEncounter(int rarity = 0);
 	}
 }

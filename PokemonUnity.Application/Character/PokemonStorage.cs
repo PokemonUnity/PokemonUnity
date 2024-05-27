@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using PokemonUnity;
 using PokemonUnity.Utility;
@@ -20,7 +22,7 @@ namespace PokemonUnity
 {
 	namespace Character
 	{
-		public partial class PokemonBox : PokemonEssentials.Interface.Screen.IPokemonBox {
+		public partial class PokemonBox : PokemonEssentials.Interface.Screen.IPokemonBox,  IList<PokemonEssentials.Interface.PokeBattle.IPokemon>, ICollection<PokemonEssentials.Interface.PokeBattle.IPokemon> {
 			public IList<PokemonEssentials.Interface.PokeBattle.IPokemon> pokemon				{ get; protected set; }
 			public string name						{ get; set; }
 			public string background				{ get; set; }
@@ -31,7 +33,7 @@ namespace PokemonUnity
 			}
 
 			public IPokemonBox initialize (string name,int maxPokemon=30) {
-				@pokemon=new List<PokemonEssentials.Interface.PokeBattle.IPokemon>();
+				@pokemon=new List<PokemonEssentials.Interface.PokeBattle.IPokemon>(capacity: maxPokemon);
 				this.name=name;
 				@background=null;
 				for (int i = 0; i < maxPokemon; i++) {
@@ -46,12 +48,16 @@ namespace PokemonUnity
 			} }
 
 			public int nitems { get { //item count
-				return @pokemon.Count;
+				return @pokemon.Count<IPokemon>(p=>p.IsNotNullOrNone());
 			} }
 
 			public int length { get { //capacity
 				return (@pokemon as List<Pokemon>).Capacity;
 			} }
+
+			int ICollection<IPokemon>.Count { get { return nitems; } }
+
+			bool ICollection<IPokemon>.IsReadOnly { get { return pokemon.IsReadOnly; } }
 
 			public IEnumerable<PokemonEssentials.Interface.PokeBattle.IPokemon> each() {
 				foreach (PokemonEssentials.Interface.PokeBattle.IPokemon item in @pokemon) { yield return item; }
@@ -65,15 +71,88 @@ namespace PokemonUnity
 					return @pokemon[i];
 			} }
 
+			#region Interface Methods
+			void ICollection<IPokemon>.Add(IPokemon item)
+			{
+				//if there is space add to box
+				if (!full)
+				{
+					if (!pokemon.Contains(item)
+							&& item.IsNotNullOrNone())
+						pokemon.Add(item);
+				}
+				//move to next box, if full? or send player message to remove?
+			}
+
+			void ICollection<IPokemon>.Clear()
+			{
+				string bg = background;
+				//pokemon.Clear();
+				initialize(name, pokemon.Count);
+				background = bg;
+			}
+
+			bool ICollection<IPokemon>.Contains(IPokemon item)
+			{
+				//should return false for both null and none
+				if (!item.IsNotNullOrNone()) return false;
+				return pokemon.Contains(item);
+			}
+
+			void ICollection<IPokemon>.CopyTo(IPokemon[] array, int arrayIndex)
+			{
+				pokemon.CopyTo(array, arrayIndex);
+			}
+
+			bool ICollection<IPokemon>.Remove(IPokemon item)
+			{
+				if (!item.IsNotNullOrNone()) return true;
+				//if object is removed, it will remove nulls and empty space
+				return pokemon.Remove(item);
+			}
+
+			IEnumerator<IPokemon> IEnumerable<IPokemon>.GetEnumerator()
+			{
+				return pokemon.GetEnumerator();
+			}
+
+			IEnumerator IEnumerable.GetEnumerator()
+			{
+				return pokemon.GetEnumerator();
+			}
+
+			int IList<IPokemon>.IndexOf(IPokemon item)
+			{
+				if (!item.IsNotNullOrNone()) return -1;
+				//return ((IList<PokemonEssentials.Interface.PokeBattle.IPokemon>)pokemon).IndexOf(item);
+				return pokemon.IndexOf(item);
+			}
+
+			void IList<IPokemon>.Insert(int index, IPokemon item)
+			{
+				if (!item.IsNotNullOrNone()) return;
+				//return ((IList<PokemonEssentials.Interface.PokeBattle.IPokemon>)pokemon).Insert(index, item);
+				pokemon.Insert(index, item);
+			}
+
+			void IList<IPokemon>.RemoveAt(int index)
+			{
+				//((IList<PokemonEssentials.Interface.PokeBattle.IPokemon>)pokemon).RemoveAt(index);
+				pokemon.RemoveAt(index);
+			}
+			#endregion
+
 			public static implicit operator PokemonBox (PokemonEssentials.Interface.PokeBattle.IPokemon[] party)
 			{
 				IPokemonBox box = new PokemonBox("party", (Game.GameData as Game).Features.LimitPokemonPartySize);
 				int i = 0;
 				foreach(PokemonEssentials.Interface.PokeBattle.IPokemon p in party)
 				{
-					if(p.IsNotNullOrNone())
-						box[i] = p;
-					i++;
+					if (p.IsNotNullOrNone() && i != box.length)
+					{
+						box[i] = p;	//Add
+						i++;		//Move to next slot
+					}
 				}
 				return (PokemonBox)box;
 			}
@@ -83,7 +162,7 @@ namespace PokemonUnity
 			//}
 		}
 
-		public partial class PokemonStorage : PokemonEssentials.Interface.Screen.IPokemonStorage {
+		public partial class PokemonStorage : PokemonEssentials.Interface.Screen.IPCPokemonStorage {
 			public IPokemonBox[] boxes				{ get; protected set; }
 			//public IPokemon party					{ get; }
 			public int currentBox					{ get; set; }
@@ -96,9 +175,10 @@ namespace PokemonUnity
 			public virtual PokemonEssentials.Interface.PokeBattle.IPokemon[] party{ get {
 					return Game.GameData.Trainer.party;
 				}
-				set {
+				protected set {
 					//throw new Exception("Not supported");
-					GameDebug.LogError("Not supported");
+					//GameDebug.LogError("Not supported");
+					Game.GameData.Trainer.party = value;
 			} }
 
 			/// <summary>
@@ -107,7 +187,7 @@ namespace PokemonUnity
 			public static string[] MARKINGCHARS=new string[] { "●", "▲", "■", "♥", "★", "♦︎" };
 
 			public PokemonStorage(int maxBoxes = Core.STORAGEBOXES, int maxPokemon = 30) { initialize(maxBoxes, maxPokemon); }
-			public PokemonEssentials.Interface.Screen.IPokemonStorage initialize (int maxBoxes=Core.STORAGEBOXES,int maxPokemon=30) {
+			public virtual PokemonEssentials.Interface.Screen.IPCPokemonStorage initialize (int maxBoxes=Core.STORAGEBOXES,int maxPokemon=30) {
 				@boxes=new PokemonBox[maxBoxes];
 				for (int i = 0; i < maxBoxes; i++) {
 					int ip1=i+1;
@@ -126,7 +206,7 @@ namespace PokemonUnity
 			}
 
 			public IPokemonBox this[int x] { get {
-					return (x==-1) ? (IPokemonBox)(PokemonBox)this.party : @boxes[x];
+					return (x==-1) ? (IPokemonBox)(IPokemonBox)(IList)this.party : @boxes[x];
 				}
 			}
 			public PokemonEssentials.Interface.PokeBattle.IPokemon this[int x,int y] { get {
@@ -134,7 +214,8 @@ namespace PokemonUnity
 					//	return (x==-1) ? (IList<IPokemon)this.party : (IList<IPokemon)@boxes[x];
 					//} else {
 					//	foreach (var i in @boxes) {
-					//		if (i is PokemonEssentials.Interface.PokeBattle.IPokemon) raise "Box is a Pokémon, not a box";
+					//		if (i is PokemonEssentials.Interface.PokeBattle.IPokemon) //throw new Exception ("Box is a Pokémon, not a box");
+					//			GameDebug.LogError("Box is a Pokémon, not a box");
 					//	}
 						return (x == -1) ? this.party[y] : @boxes[x][y];
 					//}
@@ -154,7 +235,7 @@ namespace PokemonUnity
 				return true;
 			} }
 
-			public int pbFirstFreePos(int box) {
+			public int FirstFreePos(int box) {
 				int ret = 0;
 				if (box==-1) {
 					//ret=this.party.nitems;
@@ -168,7 +249,7 @@ namespace PokemonUnity
 				}
 			}
 
-			public bool pbCopy(int boxDst,int indexDst,int boxSrc,int indexSrc) {
+			public bool Copy(int boxDst,int indexDst,int boxSrc,int indexSrc) {
 				if (indexDst<0 && boxDst<this.maxBoxes) {
 					bool found=false;
 					for (int i = 0; i < maxPokemon(boxDst); i++) {
@@ -181,7 +262,7 @@ namespace PokemonUnity
 					if (!found) return false;
 				}
 				if (boxDst==-1) {
-					if (((PokemonBox)this.party).nitems>=6) {
+					if (((IPokemonBox)(IList)this.party).nitems>=6) {
 						//if (this.party.GetCount()>=6) {
 						return false;
 					}
@@ -189,7 +270,7 @@ namespace PokemonUnity
 					this.party.PackParty();
 				} else {
 					if (!this[boxSrc,indexSrc].IsNotNullOrNone()) {
-						//throw new Exception("Trying to copy null to storage"); 
+						//throw new Exception("Trying to copy null to storage");
 						GameDebug.LogWarning("Trying to copy null to storage"); // not localized
 					}
 					this[boxSrc,indexSrc].Heal();
@@ -200,26 +281,26 @@ namespace PokemonUnity
 				return true;
 			}
 
-			public bool pbMove(int boxDst,int indexDst,int boxSrc,int indexSrc) {
-				if (!pbCopy(boxDst,indexDst,boxSrc,indexSrc)) return false;
-				pbDelete(boxSrc,indexSrc);
+			public bool Move(int boxDst,int indexDst,int boxSrc,int indexSrc) {
+				if (!Copy(boxDst,indexDst,boxSrc,indexSrc)) return false;
+				Delete(boxSrc,indexSrc);
 				return true;
 			}
 
-			public void pbMoveCaughtToParty(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn) {
-				if (((PokemonBox)this.party).nitems>=6) {
+			public void MoveCaughtToParty(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn) {
+				if (((IPokemonBox)(IList)this.party).nitems>=6) {
 				//if (this.party.GetCount()>=6) {
 					return;
 				}
 				this.party[this.party.Length]=pkmn;
 			}
 
-			public bool pbMoveCaughtToBox(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn,int box) {
+			public bool MoveCaughtToBox(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn,int box) {
 				for (int i = 0; i < maxPokemon(box); i++) {
 					if (this[box,i]==null) {
 						if (box>=0) {
 							pkmn.Heal();
-							if (pkmn is IPokemonMultipleForms p && //pkmn.respond_to("formTime") && 
+							if (pkmn is IPokemonMultipleForms p && //pkmn.respond_to("formTime") &&
 								p.formTime != null) p.formTime=null;
 						}
 						this[box,i]=pkmn;
@@ -229,7 +310,7 @@ namespace PokemonUnity
 				return false;
 			}
 
-			public int pbStoreCaught(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn) {
+			public int StoreCaught(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn) {
 				for (int i = 0; i < maxPokemon(@currentBox); i++) {
 					if (this[@currentBox,i]==null) {
 						this[@currentBox,i]=pkmn;
@@ -248,7 +329,7 @@ namespace PokemonUnity
 				return -1;
 			}
 
-			public void pbDelete(int box,int index) {
+			public void Delete(int box,int index) {
 				if (this[box,index].IsNotNullOrNone()) {
 					this[box,index]=null;
 					if (box==-1) {
@@ -259,20 +340,20 @@ namespace PokemonUnity
 		}
 
 		public partial class PokemonStorageWithParty : PokemonStorage, PokemonEssentials.Interface.Screen.IPokemonStorageWithParty {
-			public override PokemonEssentials.Interface.PokeBattle.IPokemon[] party { get {
-					return base.party;
-				}
-				set {
-					base.party=party;
-			} }
+			//public override PokemonEssentials.Interface.PokeBattle.IPokemon[] party { get {
+			//		return base.party;
+			//	}
+			//	protected set {
+			//		base.party=party;
+			//} }
 
-			public PokemonStorageWithParty(int maxBoxes = 24, int maxPokemon = 30, PokemonEssentials.Interface.PokeBattle.IPokemon[] party = null) //: base (maxBoxes,maxPokemon)
+			public PokemonStorageWithParty(int maxBoxes = 24, int maxPokemon = 30, PokemonEssentials.Interface.PokeBattle.IPokemon[] party = null) : base (maxBoxes,maxPokemon)
 			{ initialize(maxBoxes, maxPokemon, party); }
-			public IPokemonStorageWithParty initialize(int maxBoxes=24,int maxPokemon=30,PokemonEssentials.Interface.PokeBattle.IPokemon[] party=null) 
+			public IPokemonStorageWithParty initialize(int maxBoxes=24,int maxPokemon=30,PokemonEssentials.Interface.PokeBattle.IPokemon[] party=null)
 			{
-				base.initialize(maxBoxes,maxPokemon);
+				//base.initialize(maxBoxes,maxPokemon);
 				if (party != null) {
-					//ToDo: Feature not setup... 
+					//ToDo: Feature not setup...
 					this.party=party;
 				} else {
 					@party=new Pokemon[(Game.GameData as Game).Features.LimitPokemonPartySize];
@@ -281,28 +362,26 @@ namespace PokemonUnity
 			}
 		}
 
-		// ###############################################################################
-		// Regional Storage scripts
-		// ###############################################################################
+		#region Regional Storage scripts
 		public partial class RegionalStorage : IRegionalStorage {
-			protected IList<IPokemonStorage> storages { get; set; }
+			protected IList<IPCPokemonStorage> storages { get; set; }
 			protected int lastmap { get; set; }
 			protected int rgnmap { get; set; }
 
 			public IRegionalStorage initialize() {
-				@storages=new List<IPokemonStorage>();
+				@storages=new List<IPCPokemonStorage>();
 				@lastmap=-1;
 				@rgnmap=-1;
 				return this;
 			}
 
-			public IPokemonStorage getCurrentStorage { get {
+			public IPCPokemonStorage getCurrentStorage { get {
 				if (Game.GameData.GameMap == null) {
 					//throw Exception(Game._INTL("The player is not on a map, so the region could not be determined."));
 					GameDebug.LogError(Game._INTL("The player is not on a map, so the region could not be determined."));
 				}
 				if (@lastmap!=Game.GameData.GameMap.map_id) {
-					@rgnmap=Game.GameData is IGameUtility g ? g.pbGetCurrentRegion() : -1; // may access file IO, so caching result
+					@rgnmap=Game.GameData is IGameUtility g ? g.GetCurrentRegion() : -1; // may access file IO, so caching result
 					@lastmap=Game.GameData.GameMap.map_id;
 				}
 				if (@rgnmap<0) {
@@ -325,7 +404,7 @@ namespace PokemonUnity
 
 			public int currentBox { get {
 					return getCurrentStorage.currentBox;
-				} 
+				}
 				set {
 					getCurrentStorage.currentBox=value;
 			} }
@@ -352,35 +431,39 @@ namespace PokemonUnity
 				return getCurrentStorage.full;
 			} }
 
-			public void pbFirstFreePos(int box) {
-				getCurrentStorage.pbFirstFreePos(box);
+			public void FirstFreePos(int box) {
+				getCurrentStorage.FirstFreePos(box);
 			}
 
-			public void pbCopy(int boxDst,int indexDst,int boxSrc,int indexSrc) {
-				getCurrentStorage.pbCopy(boxDst,indexDst,boxSrc,indexSrc);
+			public void Copy(int boxDst,int indexDst,int boxSrc,int indexSrc) {
+				getCurrentStorage.Copy(boxDst,indexDst,boxSrc,indexSrc);
 			}
 
-			public void pbMove(int boxDst,int indexDst,int boxSrc,int indexSrc) {
-				getCurrentStorage.pbCopy(boxDst,indexDst,boxSrc,indexSrc);
+			public void Move(int boxDst,int indexDst,int boxSrc,int indexSrc) {
+				getCurrentStorage.Copy(boxDst,indexDst,boxSrc,indexSrc);
 			}
 
-			public void pbMoveCaughtToParty(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn) {
-				getCurrentStorage.pbMoveCaughtToParty(pkmn);
+			public void MoveCaughtToParty(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn) {
+				getCurrentStorage.MoveCaughtToParty(pkmn);
 			}
 
-			public void pbMoveCaughtToBox(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn,int box) {
-				getCurrentStorage.pbMoveCaughtToBox(pkmn,box);
+			public void MoveCaughtToBox(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn,int box) {
+				getCurrentStorage.MoveCaughtToBox(pkmn,box);
 			}
 
-			public void pbStoreCaught(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn) {
-				getCurrentStorage.pbStoreCaught(pkmn);
+			public void StoreCaught(PokemonEssentials.Interface.PokeBattle.IPokemon pkmn) {
+				getCurrentStorage.StoreCaught(pkmn);
 			}
 
-			public void pbDelete(int box,int index) {
-				getCurrentStorage.pbDelete(box, index);
+			public void Delete(int box,int index) {
+				getCurrentStorage.Delete(box, index);
 			}
 		}
+		#endregion
 
+		/// <summary>
+		/// Use this to access the player's <see cref="Items"/> inventory and mailbox from PC
+		/// </summary>
 		public partial class TrainerPC : IPCMenuUser {
 			public bool shouldShow { get {
 				return true;
@@ -391,11 +474,14 @@ namespace PokemonUnity
 			} }
 
 			public void access() {
-				if (Game.GameData is IGameMessage m) m.pbMessage(Game._INTL("\\se[accesspc]Accessed {1}'s PC.",Game.GameData.Trainer.name));
-				if (Game.GameData is IGamePCStorage s) s.pbTrainerPCMenu();
+				if (Game.GameData is IGameMessage m) m.Message(Game._INTL("\\se[accesspc]Accessed {1}'s PC.",Game.GameData.Trainer.name));
+				if (Game.GameData is IGamePCStorage s) s.TrainerPCMenu();
 			}
 		}
 
+		/// <summary>
+		/// Use this to access the player's <see cref="IPokemon"/> storage system from PC
+		/// </summary>
 		public partial class StorageSystemPC : IPCMenuUser {
 			public bool shouldShow { get {
 				return true;
@@ -403,16 +489,16 @@ namespace PokemonUnity
 
 			public string name { get {
 				if (Game.GameData.Global.seenStorageCreator && Game.GameData is IGamePCStorage s) {
-					return Game._INTL("{1}'s PC",s.pbGetStorageCreator());
+					return Game._INTL("{1}'s PC",s.GetStorageCreator());
 				} else {
 					return Game._INTL("Someone's PC");
 				}
 			} }
 
 			public void access() {
-				if (Game.GameData is IGameMessage m) m.pbMessage(Game._INTL("\\se[accesspc]The Pokémon Storage System was opened."));
+				if (Game.GameData is IGameMessage m) m.Message(Game._INTL("\\se[accesspc]The Pokémon Storage System was opened."));
 				do { //;loop
-					int command=Game.GameData is IGameMessage m0 ? m0.pbShowCommandsWithHelp(null,
+					int command=Game.GameData is IGameMessage m0 ? m0.ShowCommandsWithHelp(null,
 						new string[] {Game._INTL("Withdraw Pokémon"),
 							Game._INTL("Deposit Pokémon"),
 							Game._INTL("Move Pokémon"),
@@ -424,7 +510,7 @@ namespace PokemonUnity
 					) : -1;
 					if (command>=0 && command<3) {
 						if (command==0 && Game.GameData.PokemonStorage.party.Length>=6) {
-							if (Game.GameData is IGameMessage m1) m1.pbMessage(Game._INTL("Your party is full!"));
+							if (Game.GameData is IGameMessage m1) m1.Message(Game._INTL("Your party is full!"));
 							continue;
 						}
 						int count=0;
@@ -432,13 +518,13 @@ namespace PokemonUnity
 							if (p.IsNotNullOrNone() && !p.isEgg && p.HP>0) count+=1;
 						}
 						if (command==1 && count<=1) {
-							if (Game.GameData is IGameMessage m1) m1.pbMessage(Game._INTL("Can't deposit the last Pokémon!"));
+							if (Game.GameData is IGameMessage m1) m1.Message(Game._INTL("Can't deposit the last Pokémon!"));
 							continue;
 						}
-						if (Game.GameData is IGameSpriteWindow g) g.pbFadeOutIn(99999, block: () => {
+						if (Game.GameData is IGameSpriteWindow g) g.FadeOutIn(99999, block: () => {
 							IPokemonStorageScene scene=(Game.GameData as Game).Scenes.PokemonStorageScene; //new PokemonStorageScene();
 							IPokemonStorageScreen screen=(Game.GameData as Game).Screens.PokemonStorageScreen.initialize(scene,Game.GameData.PokemonStorage); //new PokemonStorageScreen(scene,Game.GameData.PokemonStorage);
-							screen.pbStartScreen(command);
+							screen.StartScreen(command);
 						});
 					} else {
 						break;
@@ -447,7 +533,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public static class PokemonPCList //: IPokemonPCList 
+		public static class PokemonPCList //: IPokemonPCList
 		{
 			//PokemonPCList.registerPC(new StorageSystemPC());
 			//PokemonPCList.registerPC(new TrainerPC());
@@ -487,21 +573,19 @@ namespace PokemonUnity
 		}
 	}
 
-	public partial class Game : PokemonEssentials.Interface.Screen.IGamePCStorage { 
-		// ###############################################################################
-		// PC menus
-		// ###############################################################################
-		public string pbGetStorageCreator() {
-			string creator=null;//pbStorageCreator();
+	public partial class Game : PokemonEssentials.Interface.Screen.IGamePCStorage {
+		#region PC menus
+		public string GetStorageCreator() {
+			string creator=null;//StorageCreator();
 			//if (creator == null || creator=="") creator=Game._INTL("Bill");
 			if (string.IsNullOrEmpty(creator)) creator=Game._INTL("Bill");
 			return creator;
 		}
-		
-		public virtual void pbPCItemStorage() {
+
+		public virtual void PCItemStorage() {
 			//Items ret = Items.NONE;
 			do { //;loop
-				int command=(this as IGameMessage).pbShowCommandsWithHelp(null,
+				int command=(this as IGameMessage).ShowCommandsWithHelp(null,
 					new string[] { Game._INTL("Withdraw Item"),
 						Game._INTL("Deposit Item"),
 						Game._INTL("Toss Item"),
@@ -516,31 +600,31 @@ namespace PokemonUnity
 						Global.pcItemStorage=new PCItemStorage();
 					}
 					if (Global.pcItemStorage.empty()) {
-						(this as IGameMessage).pbMessage(Game._INTL("There are no items."));
+						(this as IGameMessage).Message(Game._INTL("There are no items."));
 					} else {
-						pbFadeOutIn(99999, block: () => {
+						FadeOutIn(99999, block: () => {
 							IWithdrawItemScene scene = Scenes.Bag_ItemWithdraw;//new WithdrawItemScene();
 							IBagScreen screen = Screens.Bag.initialize((IBagScene)scene,Bag);//new PokemonBagScreen(scene,Bag);
-							screen.pbWithdrawItemScreen();//ret=
+							screen.WithdrawItemScreen();//ret=
 						});
 					}
 				} else if (command==1) {		// Deposit Item
-					pbFadeOutIn(99999, block: () => {
+					FadeOutIn(99999, block: () => {
 						IBagScene scene = Scenes.Bag;//new PokemonBag_Scene();
 						IBagScreen screen = Screens.Bag.initialize(scene,Bag);//new PokemonBagScreen(scene,Bag);
-						screen.pbDepositItemScreen();//ret=
+						screen.DepositItemScreen();//ret=
 					});
 				} else if (command==2) {		// Toss Item
 					if (Global.pcItemStorage == null) {
 						Global.pcItemStorage=new PCItemStorage();
 					}
 					if (Global.pcItemStorage.empty()) {
-						(this as IGameMessage).pbMessage(Game._INTL("There are no items."));
+						(this as IGameMessage).Message(Game._INTL("There are no items."));
 					} else {
-						pbFadeOutIn(99999, block: () => {
+						FadeOutIn(99999, block: () => {
 							ITossItemScene scene = Scenes.Bag_ItemToss;//new TossItemScene();
 							IBagScreen screen = Screens.Bag.initialize((IBagScene)scene,Bag);//new PokemonBagScreen(scene,Bag);
-							screen.pbTossItemScreen();//ret=
+							screen.TossItemScreen();//ret=
 						});
 					}
 				} else {
@@ -549,9 +633,9 @@ namespace PokemonUnity
 			} while (true);
 		}
 
-		public virtual void pbPCMailbox() {
+		public virtual void PCMailbox() {
 			if (Global.mailbox == null || Global.mailbox.Count==0) {
-				(this as IGameMessage).pbMessage(Game._INTL("There's no Mail here."));
+				(this as IGameMessage).Message(Game._INTL("There's no Mail here."));
 			} else {
 				do { //;loop
 					List<string> commands=new List<string>();
@@ -559,10 +643,10 @@ namespace PokemonUnity
 						commands.Add(mail.sender);
 					}
 					commands.Add(Game._INTL("Cancel"));
-					int command=(this as IGameMessage).pbShowCommands(null,commands.ToArray(),-1);
+					int command=(this as IGameMessage).ShowCommands(null,commands.ToArray(),-1);
 					if (command>=0 && command<Global.mailbox.Count) {
 						int mailIndex=command;
-						command=(this as IGameMessage).pbMessage(Game._INTL("What do you want to do with {1}'s Mail?",
+						command=(this as IGameMessage).Message(Game._INTL("What do you want to do with {1}'s Mail?",
 							Global.mailbox[mailIndex].sender),new string[] {
 								_INTL("Read"),
 								_INTL("Move to Bag"),
@@ -570,24 +654,24 @@ namespace PokemonUnity
 								_INTL("Cancel")
 							},-1);
 						if (command==0) {		// Read
-							pbFadeOutIn(99999, block: () => {
-								if(this is IGameMail m) m.pbDisplayMail(Global.mailbox[mailIndex]);
+							FadeOutIn(99999, block: () => {
+								if(this is IGameMail m) m.DisplayMail(Global.mailbox[mailIndex]);
 							});
 						} else if (command==1) {		// Move to Bag
-							if ((this as IGameMessage).pbConfirmMessage(_INTL("The message will be lost. Is that OK?"))) {
-								if (Bag.pbStoreItem(Global.mailbox[mailIndex].item)) {
-									(this as IGameMessage).pbMessage(_INTL("The Mail was returned to the Bag with its message erased."));
+							if ((this as IGameMessage).ConfirmMessage(_INTL("The message will be lost. Is that OK?"))) {
+								if (Bag.StoreItem(Global.mailbox[mailIndex].item)) {
+									(this as IGameMessage).Message(_INTL("The Mail was returned to the Bag with its message erased."));
 									//Global.mailbox.delete_at(mailIndex);
 									Global.mailbox.RemoveAt(mailIndex);
 								} else {
-									(this as IGameMessage).pbMessage(_INTL("The Bag is full."));
+									(this as IGameMessage).Message(_INTL("The Bag is full."));
 								}
 							}
 						} else if (command==2) {		// Give
-							pbFadeOutIn(99999, block: () => {
+							FadeOutIn(99999, block: () => {
 								IPartyDisplayScene sscene=Scenes.Party; //new PokemonScreen_Scene();
 								IPartyDisplayScreen sscreen=Screens.Party.initialize(sscene,Trainer.party); //new PokemonScreen(sscene,Trainer.party);
-								sscreen.pbPokemonGiveMailScreen(mailIndex);
+								sscreen.PokemonGiveMailScreen(mailIndex);
 							});
 						}
 					} else {
@@ -597,40 +681,41 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbTrainerPCMenu() {
+		public void TrainerPCMenu() {
 			do { //;loop
-				int command=(this as IGameMessage).pbMessage(Game._INTL("What do you want to do?"),new string[] {
+				int command=(this as IGameMessage).Message(Game._INTL("What do you want to do?"),new string[] {
 					Game._INTL("Item Storage"),
 					Game._INTL("Mailbox"),
 					Game._INTL("Turn Off")
 				},-1);
 				if (command==0) {
-					pbPCItemStorage();
+					PCItemStorage();
 				} else if (command==1) {
-					pbPCMailbox();
+					PCMailbox();
 				} else {
 					break;
 				}
 			} while (true);
 		}
 
-		public void pbTrainerPC() {
-			(this as IGameMessage).pbMessage(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
-			pbTrainerPCMenu();
-			(this as IGameAudioPlay).pbSEPlay("computerclose");
+		public void TrainerPC() {
+			(this as IGameMessage).Message(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
+			TrainerPCMenu();
+			(this as IGameAudioPlay).SEPlay("computerclose");
 		}
 
-		public void pbPokeCenterPC() {
-			(this as IGameMessage).pbMessage(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
+		public void PokeCenterPC() {
+			(this as IGameMessage).Message(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
 			do { //;loop
 				string[] commands=PokemonPCList.getCommandList();
-				int command=(this as IGameMessage).pbMessage(Game._INTL("Which PC should be accessed?"),
+				int command=(this as IGameMessage).Message(Game._INTL("Which PC should be accessed?"),
 					commands,commands.Length);
 				if (!PokemonPCList.callCommand(command)) {
 					break;
 				}
 			} while (true);
-			(this as IGameAudioPlay).pbSEPlay("computerclose");
+			(this as IGameAudioPlay).SEPlay("computerclose");
 		}
+		#endregion
 	}
 }

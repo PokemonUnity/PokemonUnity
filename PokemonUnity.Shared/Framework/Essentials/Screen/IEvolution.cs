@@ -19,12 +19,12 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IPokemonEvolutionScene : IScene
 	{
-		void pbEndScreen();
-		void pbEvolution(bool cancancel = true);
-		void pbFlashInOut(bool canceled,string oldstate,string oldstate2);
-		void pbStartScreen(IPokemon pokemon, Pokemons newspecies);
-		void pbUpdate(bool animating = false);
-		void pbUpdateExpandScreen();
-		void pbUpdateNarrowScreen();
+		void EndScreen();
+		void Evolution(bool cancancel = true);
+		void FlashInOut(bool canceled,string oldstate,string oldstate2);
+		void StartScreen(IPokemon pokemon, Pokemons newspecies);
+		void Update(bool animating = false);
+		void UpdateExpandScreen();
+		void UpdateNarrowScreen();
 	}
 }

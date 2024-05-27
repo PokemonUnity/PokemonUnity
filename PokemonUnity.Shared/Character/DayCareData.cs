@@ -23,7 +23,7 @@ namespace PokemonUnity.Character
 		/// </summary>
 		public SeriPokemon? Pokemon	{ get; private set; }
 		/// <summary>
-		/// Steps Taken Since Depositing 
+		/// Steps Taken Since Depositing
 		/// </summary>
 		public int Steps			{ get; private set; }
 		#endregion
@@ -46,7 +46,7 @@ namespace PokemonUnity.Character
 		/// </summary>
 		public DayCareSlotData[] Slot	{ get; private set; }
 		/// <summary>
-		/// Flag (egg available) 
+		/// Flag (egg available)
 		/// </summary>
 		public bool HasEgg				{ get; private set; }
 		/// <summary>

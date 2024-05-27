@@ -18,15 +18,14 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
-	// ===============================================================================
-	// - Scene_Pokegear
-	// -------------------------------------------------------------------------------
-	// Modified By Harshboy
-	// Modified by Peter O.
-	// Also Modified By OblivionMew
-	// Overhauled by Maruno
-	// ===============================================================================
-	public interface IPokegearScene : IScene {
+    /// <summary>
+    /// PokéGear Scene
+    /// </summary>
+    /// Modified By Harshboy
+    /// Modified by Peter O.
+    /// Also Modified By OblivionMew
+    /// Overhauled by Maruno
+    public interface IPokegearScene : IScene {
 		// -----------------------------------------------------------------------------
 		//  initialize
 		// -----------------------------------------------------------------------------
@@ -35,13 +34,13 @@ namespace PokemonEssentials.Interface.Screen
 		//  main
 		// -----------------------------------------------------------------------------
 		void main();
-		// -----------------------------------------------------------------------------
-		//  update the scene
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// update the scene
+		/// </summary>
 		void update();
-		// -----------------------------------------------------------------------------
-		//  update the command window
-		// -----------------------------------------------------------------------------
+		/// <summary>
+		/// update the command window
+		/// </summary>
 		void update_command();
 	}
 

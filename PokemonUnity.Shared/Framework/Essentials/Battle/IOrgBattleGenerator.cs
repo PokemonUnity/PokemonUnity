@@ -42,14 +42,14 @@ namespace PokemonEssentials.Interface.Battle
 
 	public interface IInverseRestriction : IBattleRestriction
 	{
-		//void initialize(r);
+		IBattleRestriction initialize(IBattleRestriction r);
 
 		//bool isValid (pkmn);
 	}
 
 	public interface ISingleMatch {
-		int opponentRating				{ get; }
-		int opponentDeviation				{ get; }
+		float  opponentRating				{ get; }
+		float  opponentDeviation				{ get; }
 		int score				{ get; }
 		int kValue				{ get; }
 
@@ -66,27 +66,27 @@ namespace PokemonEssentials.Interface.Battle
 
 		ISingleMatch this[int i] { get; }
 
-		//IMatchHistory initialize(thisPlayer);
+		IMatchHistory initialize(IPlayerRating thisPlayer);
 
 		//  1=I won; 0=Other player won; -1: Draw
-		//void addMatch(otherPlayer, int result);
+		void addMatch(IPlayerRating otherPlayer, int result);
 
 		void updateAndClear();
 	}
 
-	public interface IPlayerRatingElo {
-		float rating				{ get; }
+	public interface IPlayerRatingElo : IPlayerRating {
+		//float rating				{ get; }
 		//K_VALUE = 16;
 
-		IPlayerRatingElo initialize();
+		new IPlayerRatingElo initialize();
 
-		float winChancePercent { get; }
+		//float winChancePercent { get; }
 
-		void update(ISingleMatch[] matches);
+		void update(IList<ISingleMatch> matches);
 	}
 
 	public interface IPlayerRating {
-		//float volatility				{ get; }
+		float volatility				{ get; }
 		float deviation				{ get; }
 		float rating				    { get; }
 
@@ -94,7 +94,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		float winChancePercent { get; }
 
-		void update(ISingleMatch[] matches, float system = 1.2f);
+		void update(IList<ISingleMatch> matches, float system = 1.2f);
 
 		//  private int volatility				{ get; }
 
@@ -121,21 +121,21 @@ namespace PokemonEssentials.Interface.Battle
 
 		//  alias volatility2 volatility;
 
-		//  private void setVolatility2(value) {
+		//  private void setVolatility2(float value) {
 		//    @volatility=value;
 		//  }
 
-		//  private void setRating2(value) {
+		//  private void setRating2(float value) {
 		//    @estimatedRating=null;
 		//    @rating=(value*173.7178)+1500.0;
 		//  }
 
-		//  private void setDeviation2(value) {
+		//  private void setDeviation2(float value) {
 		//    @estimatedRating=null;
 		//    @deviation=(value*173.7178);
 		//  }
 
-		//  private void getUpdatedVolatility(volatility, deviation, variance,improvementSum, system) {
+		//  private void getUpdatedVolatility(float volatility, float deviation, float variance, float improvementSum, float system) {
 		//    improvement = improvementSum * variance;
 		//    a = Math.log(volatility * volatility);
 		//    squSystem = system * system;
@@ -162,11 +162,12 @@ namespace PokemonEssentials.Interface.Battle
 	}
 
 	public interface IRuledTeam {
-		IPlayerRating rating { get; }
+		//IPlayerRating rating { get; }
+		float rating { get; }
 
 		float[] ratingRaw { get; }
 
-		double ratingData { get; }
+		IPlayerRating ratingData { get; }
 
 		int totalGames { get; }
 
@@ -175,14 +176,14 @@ namespace PokemonEssentials.Interface.Battle
 		//void compare(IRuledTeam other);
 		bool compare(IRuledTeam other);
 
+		//void addMatch(IRuledTeam other, bool? score);
 		void addMatch(IRuledTeam other, int score);
-		void addMatch(IRuledTeam other, bool? score);
 
 		int games { get; }
 
-		int team				{ get; }
+		IList<IPokemon> team				{ get; }
 
-		IRuledTeam initialize(List<IPokemon> party, IPokemonChallengeRules rule);
+		IRuledTeam initialize(IList<IPokemon> party, IPokemonChallengeRules rule);
 
 		IPokemon this[int i] { get; }
 
@@ -191,7 +192,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		int length { get; }
 
-		IPokemon[] load(IPokemon[] party);
+		IList<IPokemon> load(IList<IPokemon> party);
 	}
 
 	public interface IGameOrgBattleGenerator
@@ -206,13 +207,13 @@ namespace PokemonEssentials.Interface.Battle
 		//$evolutions      = [];
 		//$tmMoves         = null;
 
-		Moves pbRandomMove();
+		Moves RandomMove();
 
-		void addMove(ref List<Moves> moves, Moves move, int @base);
+		void addMove(List<Moves> moves, Moves move, int @base);
 
-		List<Moves> pbGetLegalMoves2(Pokemons species, int maxlevel);
+		List<Moves> GetLegalMoves2(Pokemons species, int maxlevel);
 
-		int baseStatTotal(Moves move);
+		int baseStatTotal(Pokemons move);
 
 		Pokemons babySpecies(Moves move);
 
@@ -220,7 +221,7 @@ namespace PokemonEssentials.Interface.Battle
 
 		//void evolutions(Moves move) {
 		//  if (!$evolutions[move]) {
-		//    $evolutions[move]=pbGetEvolvedFormData(move);
+		//    $evolutions[move]=GetEvolvedFormData(move);
 		//  }
 		//  return $evolutions[move] ;
 		//}
@@ -231,28 +232,28 @@ namespace PokemonEssentials.Interface.Battle
 		IPokemonChallengeRules withRestr(IPokemonChallengeRules rule, int minbs, int maxbs, int legendary);
 
 		// The Pokemon list is already roughly arranged by rank from weakest to strongest
-		IBagScreen[] pbArrangeByTier(IPokemon[] pokemonlist, IPokemonChallengeRules rule);
+		IBagScreen[] ArrangeByTier(IPokemon[] pokemonlist, IPokemonChallengeRules rule);
 
 		bool hasMorePowerfulMove(Moves[] moves, Moves thismove);
 
-		IPokemon pbRandomPokemonFromRule(IPokemonChallengeRules rule, ITrainer trainer);
+		IPokemon RandomPokemonFromRule(IPokemonChallengeRules rule, ITrainer trainer);
 
 
 
-		int pbDecideWinnerEffectiveness(Moves move, Types otype1, Types otype2, Abilities ability, int[] scores);
+		int DecideWinnerEffectiveness(Moves move, Types otype1, Types otype2, Abilities ability, int[] scores);
 
-		float pbDecideWinnerScore(IPokemon[] party0, IPokemon[] party1, double rating);
+		float DecideWinnerScore(IPokemon[] party0, IPokemon[] party1, double rating);
 
-		int pbDecideWinner(IPokemon[] party0, IPokemon[] party1, double rating0, double rating1);
+		int DecideWinner(IPokemon[] party0, IPokemon[] party1, double rating0, double rating1);
 
-		BattleResults pbRuledBattle(IRuledTeam team1, IRuledTeam team2, IPokemonChallengeRules rule);
+		BattleResults RuledBattle(IRuledTeam team1, IRuledTeam team2, IPokemonChallengeRules rule);
 
 		Types[] getTypes(Pokemons species);
 
-		void pbTrainerInfo(IPokemon[] pokemonlist, string trfile, IPokemonChallengeRules rules);
+		void TrainerInfo(IPokemon[] pokemonlist, string trfile, IPokemonChallengeRules rules);
 
-		//#if FAKERGSS 
-		//public void Kernel.pbMessageDisplay(mw,txt,lbl) {
+		//#if FAKERGSS
+		//public void Kernel.MessageDisplay(mw,txt,lbl) {
 		//  puts txt;
 		//}
 
@@ -267,13 +268,13 @@ namespace PokemonEssentials.Interface.Battle
 
 		bool isBattlePokemonDuplicate(IPokemon pk, IPokemon pk2);
 
-		//List<IPokemon> pbRemoveDuplicates(List<IPokemon> party);
-		IPokemon[] pbRemoveDuplicates(IPokemon[] party);
+		//List<IPokemon> RemoveDuplicates(List<IPokemon> party);
+		IPokemon[] RemoveDuplicates(IPokemon[] party);
 
-		void pbReplenishBattlePokemon(ref List<IPokemon> party, IPokemonChallengeRules rule);
+		void ReplenishBattlePokemon(List<IPokemon> party, IPokemonChallengeRules rule);
 
-		IEnumerator<string> pbGenerateChallenge(IPokemonChallengeRules rule, string tag);
+		IEnumerator<string> GenerateChallenge(IPokemonChallengeRules rule, string tag);
 
-		void pbWriteCup(int id, IPokemonChallengeRules rules);
+		void WriteCup(int id, IPokemonChallengeRules rules);
 	}
 }

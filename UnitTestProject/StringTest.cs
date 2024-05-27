@@ -5,6 +5,13 @@ using PokemonUnity.Monster;
 using PokemonUnity.Attack;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace Tests
 {
@@ -15,7 +22,7 @@ namespace Tests
 		public void Pokemon_DefaultName_Test()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, false);
-			Assert.AreEqual("BULBASAUR", pokemon.Name); 
+			Assert.AreEqual("BULBASAUR", pokemon.Name);
 		}
         #region Nicknames
 		[TestMethod]
@@ -31,50 +38,49 @@ namespace Tests
 		public void Trainer_SetPokemon_Nickname()
 		{
 			//Assert.Inconclusive("Not implemented yet");
-			//Trainer trainer = new Trainer(TrainerTypes.PLAYER);// { Party = new Pokemon[] { } };
-			Player trainer = new Player();
+			ITrainer trainer = new Trainer("Player",TrainerTypes.PLAYER);// { Party = new Pokemon[] { } };
 			//make sure pokemon is not egg, as eggs cannot be named
 			Pokemon pokemon = new Pokemon(Pokemons.ABRA, false);
 			if (pokemon.IsNicknamed) Assert.Fail("Already named");
 			string nick = "testname";
 			//Name pokemon and add to trainer party...
 			pokemon.SetNickname(nick);
-			trainer.addPokemon(pokemon);
+			//trainer.addPokemon(pokemon);
 			//trainer.Party[0].Name
-			Assert.AreEqual(nick, trainer.Party[0].Name);
+			Assert.AreEqual(nick, trainer.party[0].Name);
 		}
         #endregion
-		//[TestMethod]
+		[TestMethod]
 		public void Pokemon_Name_Test()
 		{
-			Assert.AreEqual("Bulbasaur", Pokemons.BULBASAUR.ToString(TextScripts.Name)); 
+			Assert.AreEqual("Bulbasaur", Pokemons.BULBASAUR.ToString(TextScripts.Name));
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void Pokemon_FlavorText_Test()
 		{
 			Assert.AreEqual("Bulbasaur", Pokemons.BULBASAUR.ToString(TextScripts.Description));
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void Move_Name_Test()
 		{
 			Assert.AreEqual("Absorb", Moves.ABSORB.ToString(TextScripts.Name));
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void Move_FlavorText_Test()
 		{
 			Assert.AreEqual("Absorb", Moves.ABSORB.ToString(TextScripts.Description));
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void Item_Name_Test()
 		{
 			Assert.AreEqual("Masterball", Items.MASTER_BALL.ToString(TextScripts.Name));
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void Item_FlavorText_Test()
 		{
 			Assert.AreEqual("Masterball", Items.MASTER_BALL.ToString(TextScripts.Description));
 		}
-		//[TestMethod]
+		[TestMethod]
 		public void NPC_Name_Test()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
@@ -96,7 +102,7 @@ namespace Tests
 			Assert.Inconclusive("Not implemented yet");
 		}
 		//[TestMethod]
-		public void Dialog_Script_Insert_And_Replace_Test() 
+		public void Dialog_Script_Insert_And_Replace_Test()
 		{
 			//Replace placeholder text with correct variable in string
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);

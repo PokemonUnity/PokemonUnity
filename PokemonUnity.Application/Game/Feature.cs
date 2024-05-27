@@ -14,12 +14,15 @@ using PokemonUnity.Overworld;
 
 namespace PokemonUnity.Application
 {
+	/// <summary>
+	/// </summary>
+	///ToDo: Move and merge this to <see cref="PokemonEssentials.Interface.IGameSwitches"/>
 	public struct Feature : IEquatable<Feature>, IEqualityComparer<Feature>
 	{
 		/// <summary>
-		/// Shift: after you kill the enemy's pokemon, 
+		/// Shift: after you kill the enemy's pokemon,
 		/// the game will tell you what pokemon will be switched in and then allow you to freely switch your pokemon with another. <para></para>
-		/// Set: you can't do the above (link battles can only be set btw)
+		/// Set: you can't do the above (link battles can only be set by the way)
 		/// </summary>
 		public bool BattleShiftStyle { get; private set; }
 		public bool ForceBattleStyle { get; private set; }
@@ -211,7 +214,7 @@ namespace PokemonUnity.Application
 		public const int STORAGEBOXES = 24;
 		#endregion
 
-		#region Pokedex
+		#region Pokédex
 		/// <summary>
 		/// Whether the Pokédex list shown is the one for the player's current region
 		///    (true), or whether a menu pops up for the player to manually choose which
@@ -300,7 +303,7 @@ namespace PokemonUnity.Application
 		/// Basically, you use the Dexnav to find pokemon in the area, they appear as shadows in the grass, and you need to sneak up on them
 		/// these pokemon can have egg moves, or even their HiddenAbility
 		/// </summary>
-		/// Apparently you can use the Sneaking feature to helps with this. 
+		/// Apparently you can use the Sneaking feature to helps with this.
 		/// ToDo: OnlyAllowEggMovesWhenUsingDexNav or DexNavAllowsEggMoves
 		public bool CatchPokemonsWithEggMoves { get; private set; }
 		public bool ForcePokemonNaming { get; private set; }
@@ -318,13 +321,13 @@ namespace PokemonUnity.Application
 		/// </summary>
 		public bool OverflowPokemonsIntoNextBox { get; private set; }
 		/// <summary>
-		/// Only allowed to capture the first encounter of any pokemon per map id/zone/route 
+		/// Only allowed to capture the first encounter of any pokemon per map id/zone/route
 		/// (whether it's successful or not)
 		/// </summary>
 		public bool CanOnlyCaptureFirstWildEncounter { get; private set; }
 		public bool CanOnlySaveAtPokemonCenter { get; private set; }
 		/// <summary>
-		/// Dark Souls-esque; when you heal at a center, 
+		/// Dark Souls-esque; when you heal at a center,
 		/// overworld NPCs you've already defeated will want to battle,
 		/// if you encounter them (they'll stop you to battle if you cross line of sights)
 		/// </summary>
@@ -332,14 +335,14 @@ namespace PokemonUnity.Application
 		public bool RandomStarters { get; private set; }
 		public bool RandomWildEncounters { get; private set; }
 		/// <summary>
-		/// like <see cref="RandomWildEncounters"/>, 
+		/// like <see cref="RandomWildEncounters"/>,
 		/// except normal map encounter sprinkled in with high difficulty spawns
 		/// </summary>
 		/// <remarks>
-		/// Maybe higher IV count, increase rarity or spawn level, 
+		/// Maybe higher IV count, increase rarity or spawn level,
 		/// or even S.O.S. battles and swarms
 		/// </remarks>
-		public bool RandomBossEncounters { get; private set; } 
+		public bool RandomBossEncounters { get; private set; }
 		public bool NoCapturesAllowed { get; private set; }
 		public bool NuzlockeSkipDuplicates { get; private set; }
 		public bool ReleasedPokemonsRoamNearbyAreas { get; private set; }
@@ -348,7 +351,7 @@ namespace PokemonUnity.Application
 		/// <summary>
 		/// </summary>
 		/// (from 6 to 3?...)
-		public byte LimitPokemonPartySize { get; private set; } 
+		public byte LimitPokemonPartySize { get; private set; }
 		public bool NoStoreBoughtMedicine { get; private set; }
 		public bool PcDoesNotHealPokemons { get; private set; }
 		public bool NoHealingNPCs { get; private set; }
@@ -357,21 +360,21 @@ namespace PokemonUnity.Application
 		public bool LimitOneCapturePerEncounterArea { get; private set; }
 		public bool OnlinePlayEnabled { get; private set; }
 		/// <summary>
-		/// load and save profile over internet?... 
+		/// load and save profile over internet?...
 		/// or maybe sql vs xml?
 		/// </summary>
 		public bool EnableCloudStorage { get; private set; }
 		/// <summary>
-		/// If playing a challenge where it's possible to get a game over, 
+		/// If playing a challenge where it's possible to get a game over,
 		/// then your save profile is deleted and there is no do-over.
 		/// </summary>
 		public bool FailChallengeWipesData { get; private set; }
 		/// <summary>
 		/// Immediately after reaching win goal for challenge criteria,
-		/// disables all features related to challenge 
-		/// (returns game to "normmal"/classic at the end of challenge)
+		/// disables all features related to challenge
+		/// (returns game to "normal"/classic at the end of challenge)
 		/// </summary>
-		//ToDo: Left Open-ended for different win-criterias
+		//ToDo: Left Open-ended for different win-criteria
 		public bool ChallengeEndsAfter { get; private set; }
 		/// <summary>
 		/// Cannot use or access PC, of any sort (cant access stored pokemons or items)
@@ -410,7 +413,7 @@ namespace PokemonUnity.Application
 		/// </summary>
 		public bool LosingTwiceInRowResetsMoney { get; private set; }
 		/// <summary>
-		/// Will TMs stay in bag inventory after consumed by pokmeon
+		/// Will TMs stay in bag inventory after consumed by pokemon
 		/// </summary>
 		public bool MachineIsInfiniteUse { get; private set; }
 		#endregion
@@ -440,7 +443,7 @@ namespace PokemonUnity.Application
 		/// </summary>
 		public bool FatefulEncounters { get; private set; }
 		/// <summary>
-		/// While this Switch is ON, the player will not lose any money if they lose a wild battle or a trainer battle. 
+		/// While this Switch is ON, the player will not lose any money if they lose a wild battle or a trainer battle.
 		/// They can still gain money from battles, though.
 		/// </summary>
 		public bool NoMoneyLostInBattle { get; private set; }
@@ -556,10 +559,10 @@ namespace PokemonUnity.Application
 		}
 		#endregion
 
-
 		#region Methods
 		public string GetGuid()
 		{
+			//ToDo: Use Bitwise Operators to represent value as a binary integer
 			return string.Format(""
 				+ (BattleShiftStyle ? "1" : "0"							)
 				+ (CanOnlyCaptureFirstWildEncounter ? "1" : "0"			)
@@ -645,8 +648,8 @@ namespace PokemonUnity.Application
 	#region Custom Game Mode
 	// Challenge is different from Game Mode because...
 	// Challenge affects your experience playing thru the open-world adventure
-	// While Survival, Battle-Mode, Statium, Elite Four, Battle Frontier, [Misc] Contents...
-	// can all be labeled as a Mode of gamplay, and be a stand-alone expierence without `World`-element
+	// While Survival, Battle-Mode, Stadium, Elite Four, Battle Frontier, [Misc] Contents...
+	// can all be labeled as a Mode of gameplay, and be a stand-alone experience without `World`-element
 	public enum Challenges
 	{
 		/// <summary>
@@ -673,7 +676,7 @@ namespace PokemonUnity.Application
 		/// </summary>
 		,RolePlay
 		/// <summary>
-		/// Montoype Challenge => Like Gym Leader, theme entire collection of pokemon around a single type (or concept)
+		/// Monotype Challenge => Like Gym Leader, theme entire collection of pokemon around a single type (or concept)
 		/// </summary>
 		,Monotype
 		/// <summary>
@@ -693,7 +696,7 @@ namespace PokemonUnity.Application
 		/// </summary>
 		,Alphabet
 		/// <summary>
-		/// No-Hit Challenge => Any damage taken even self inflicted suicide (not including status) causes challenge to be failed 
+		/// No-Hit Challenge => Any damage taken even self inflicted suicide (not including status) causes challenge to be failed
 		/// </summary>
 		,NoHit
 		,ItemOnly

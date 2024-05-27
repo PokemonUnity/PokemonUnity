@@ -19,13 +19,13 @@ namespace PokemonUnity
 		/// <param name="message"></param>
 		void Log(string message, params object[] param);
 		/// <summary>
-		/// Displays to user, but doesnt pause or interrupt game. 
+		/// Displays to user, but doesnt pause or interrupt game.
 		/// Typically flashes on screen and goes away.
 		/// </summary>
 		/// <param name="message"></param>
 		void LogWarning(string message);
 		/// <summary>
-		/// Pauses and interrupts game to be displayed to user. 
+		/// Pauses and interrupts game to be displayed to user.
 		/// Typically responses to user commands.
 		/// </summary>
 		/// <param name="message"></param>
@@ -42,8 +42,9 @@ namespace PokemonUnity
 
 		public int Id { get { return EventId; } }
 		/// <summary>
-		/// If true, pause/stop game to display error message on screen.
-		/// If null, silently log message in background.
+		/// If true (error), pause/stop game to display error message on screen.
+		/// If false (warning), display message on screen without pausing game.
+		/// If null (debug), silently log message in background.
 		/// </summary>
 		public bool? Error { get; set; }
 		public string Message { get; set; }
