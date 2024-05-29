@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Pokemon Unity/Assets/Samples/Cinemachine/2.7.5/Cinemachine Example Scenes/Shared/Models.meta
 guid: 6ac76abd721974363a26b46f589b1983
 folderAsset: yes
 timeCreated: 1508790021
+========
+guid: 6540294993c2d4f06ab50d2083485d87
+folderAsset: yes
+timeCreated: 1508790945
+>>>>>>>> alpha:Pokemon Unity/Assets/Samples/Cinemachine/2.7.5/Cinemachine Example Scenes/Shared/Blends.meta
 licenseType: Free
 DefaultImporter:
   externalObjects: {}

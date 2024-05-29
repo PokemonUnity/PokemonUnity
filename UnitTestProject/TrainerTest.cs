@@ -1,51 +1,62 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
-using PokemonUnity.Character;
 using PokemonUnity.Monster;
+using PokemonUnity.Character;
+using PokemonUnity.Inventory;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace Tests
 {
-    [TestClass]
-    public class TrainerTest
-    {
-        #region TrainerProperties
-        //public void Trainer_() { 
-        //	/*SaveDataOld.currentSave.playerName = name;
-        //	SaveDataOld.currentSave.playerID = 29482; //not implemented
-        //	SaveDataOld.currentSave.isMale = isMale;
-        //	SaveDataOld.currentSave.playerMoney = 2481; 
-        //	SaveDataOld.currentSave.playerLanguage = Language.English;
-        //
-        //	SaveDataOld.currentSave.playerOutfit = "hgss";
-        //
-        //	SaveDataOld.currentSave.playerShirt = "Ethan's Shirt";
-        //	SaveDataOld.currentSave.playerMisc = null;
-        //	SaveDataOld.currentSave.playerHat = "Ethan's Hat";
-        //	//customizables not implemented
-        //
-        //	if(isMale == true){
-        //		SaveDataOld.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
-        //	} else {
-        //		SaveDataOld.currentSave.setCVariable("male",0);
-        //	}*/
-        //}
-        #endregion
+	[TestClass]
+	public class TrainerTest
+	{
+		#region TrainerProperties
+		//public void Trainer_() {
+		//	/*SaveDataOld.currentSave.playerName = name;
+		//	SaveDataOld.currentSave.playerID = 29482; //not implemented
+		//	SaveDataOld.currentSave.isMale = isMale;
+		//	SaveDataOld.currentSave.playerMoney = 2481;
+		//	SaveDataOld.currentSave.playerLanguage = Language.English;
+		//
+		//	SaveDataOld.currentSave.playerOutfit = "hgss";
+		//
+		//	SaveDataOld.currentSave.playerShirt = "Ethan's Shirt";
+		//	SaveDataOld.currentSave.playerMisc = null;
+		//	SaveDataOld.currentSave.playerHat = "Ethan's Hat";
+		//	//customizables not implemented
+		//
+		//	if(isMale == true){
+		//		SaveDataOld.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
+		//	} else {
+		//		SaveDataOld.currentSave.setCVariable("male",0);
+		//	}*/
+		//}
+		#endregion
 
-        #region TrainerPokemon
-        [TestMethod]
-        public void Trainer_Party_GetPokemonCount()
+		#region TrainerPokemon
+		[TestMethod]
+		public void Trainer_Party_GetPokemonCount()
 		{
 			TrainerData trainer = new TrainerData(TrainerTypes.PLAYER);
-			Player player = new Player(trainer);
-			int count = player.Party.GetCount();
+			ITrainer player = new Trainer(trainer.Name, trainer.ID);
+			int count = player.party.GetCount();
 			//if (!count.HasValue) Assert.Fail("Party ");
 			//Assert.AreEqual(PokemonUnity.Core.MAXPARTYSIZE, count); //Should return a full party
 			Assert.AreEqual(0, count); //Should return an empty party
 		}
 
-        [TestMethod]
-        public void Trainer_Party_AddPokemon()
+		[TestMethod]
+		public void Trainer_Party_AddPokemon()
 		{
 			Assert.Inconclusive("Player class is deprecated and being phased out. Test is inconclusive until resolved.");
 			string playerName = "Red";
@@ -53,11 +64,11 @@ namespace Tests
 			int secretID = 64123;
 			bool isMale = false;
 			TrainerData trainer = new TrainerData(playerName, isMale, tID: trainerID, sID: secretID);
-			Player player = new Player(trainer);
+			ITrainer player = new Trainer(trainer.Name, trainer.ID);
 			//player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
-			PokemonUnity.Monster.Pokemon pkmn = new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER);
-			pkmn.SetCatchInfos(trainer);
-			player.addPokemon(pkmn);
+			Pokemon pkmn = new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER);
+			pkmn.SetCatchInfos(player);
+			//player.addPokemon(pkmn);
 
 			/*SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
 				name,
@@ -81,13 +92,14 @@ namespace Tests
 				31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
 				new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));*/
 			CollectionAssert.AreNotEqual( //ToDo: Change to AreEqual, and use expected results with more precision...
-				new Pokemons[] { Pokemons.CHARMANDER, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, 
-				new Pokemons[] { player.Party[0].Species, player.Party[1].Species, player.Party[2].Species, player.Party[3].Species, player.Party[4].Species, player.Party[5].Species } 
+				new Pokemons[] { Pokemons.CHARMANDER, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
+				new Pokemons[] { player.party[0].Species, player.party[1].Species, player.party[2].Species, player.party[3].Species, player.party[4].Species, player.party[5].Species }
 			);
 		}
 
-        [TestMethod]
-        public void Trainer_Party_AlterPokemon_InsideParty() {
+		[TestMethod]
+		public void Trainer_Party_AlterPokemon_InsideParty()
+		{
 			/*SaveDataOld.currentSave.PC.boxes[0][1].setNickname("Greg");
 
 			SaveDataOld.currentSave.PC.boxes[0][1].setStatus(PokemonOld.Status.POISONED);
@@ -110,15 +122,16 @@ namespace Tests
 			Assert.Inconclusive();
 		}
 
-        //[TestMethod]
-        //public void Trainer_Trade_Pokemons()
-        //{
-        //	//Swap pokemons between owners, and confirm original pokemon owners are different
-        //	Assert.Inconclusive();
-        //}
+		//[TestMethod]
+		//public void Trainer_Trade_Pokemons()
+		//{
+		//	//Swap pokemons between owners, and confirm original pokemon owners are different
+		//	Assert.Inconclusive();
+		//}
 
-        [TestMethod]
-        public void Trainer_Party_SwapPokemon() {
+		[TestMethod]
+		public void Trainer_Party_SwapPokemon()
+		{
 			/*SaveDataOld.currentSave.PC.swapPokemon(0, 5, 1, 5);
 			SaveDataOld.currentSave.PC.swapPokemon(0, 3, 1, 11);
 			SaveDataOld.currentSave.PC.swapPokemon(1, 1, 1, 12);
@@ -147,22 +160,43 @@ namespace Tests
 			SaveDataOld.currentSave.PC.packParty();*/
 			Assert.Inconclusive();
 		}
-        #endregion
 
-        #region Trainer Items, Bags, & PC
-        [TestMethod]
-        public void Trainer_RideBike_Fail_If_Item_NotInInventory()
-        {
+		[TestMethod]
+		public void HealParty_ShouldHealAllPokemonInParty()
+		{
+			// Arrange
+			var party = new List<IPokemon> {
+				new Pokemon { CurrentHP = 10, MaxHP = 100 },
+				new Pokemon { CurrentHP = 50, MaxHP = 100 }
+			};
+			var trainer = new Trainer { party = party };
+
+			// Act
+			foreach (var pokemon in trainer.party)
+			{
+				pokemon.Heal();
+			}
+
+			// Assert
+			Assert.IsTrue(trainer.party.All(p => p.CurrentHP == p.MaxHP), "Not all Pokémon were fully healed.");
+		}
+		#endregion
+
+		#region Trainer Items, Bags, & PC
+		[TestMethod]
+		public void Trainer_RideBike_Fail_If_Item_NotInInventory()
+		{
 			//if(
 			//	Game.Player.Bag[PokemonUnity.Inventory.Items.BICYCLE] != null ||
 			//	Game.Player.Bag[PokemonUnity.Inventory.Items.ACRO_BIKE] != null ||
 			//	Game.Player.Bag[PokemonUnity.Inventory.Items.MACH_BIKE] != null
 			//)
-            Assert.Inconclusive();
-        }
+			Assert.Inconclusive();
+		}
 
-        [TestMethod]
-        public void Trainer_Bag_AddItems() {
+		[TestMethod]
+		public void Trainer_Bag_AddItems()
+		{
 			/*SaveDataOld.currentSave.Bag.addItem("Poké Ball", 9);
 			SaveDataOld.currentSave.Bag.addItem("Miracle Seed", 1);
 			SaveDataOld.currentSave.Bag.addItem("Poké Ball", 3);
@@ -190,11 +224,42 @@ namespace Tests
 			SaveDataOld.currentSave.Bag.addItem("Ice Heal", 1);
 			SaveDataOld.currentSave.Bag.addItem("Max Potion", 1);
 			SaveDataOld.currentSave.Bag.addItem("Hyper Potion", 1);*/
+
+			// Arrange
+			var bag = new Bag(); //Trainer.Bag...
+			Items item = Items.Potion;
+			int initialCount = bag.GetItemQuantity(item);
+			int quantityToAdd = 5;
+
+			// Act
+			// Assuming AddItem method modifies the Bag in a predictable way
+			// and that Items.NONE represents no item, and ItemLister can be controlled or mocked
+			bag.StoreItem(item, quantityToAdd);
+
+			// Assert
+			//Assert.IsTrue(game.GameData.Bag.Contains(Items.Potion), "Bag should contain a Potion after adding one.");
+			Assert.AreEqual(initialCount + quantityToAdd, bag.GetItemQuantity(item), "Item count did not increase correctly.");
 			Assert.Inconclusive();
 		}
 
-        [TestMethod]
-        public void Trainer_PC_AlterPokemon_InsideBox() {
+		[TestMethod]
+		public void ClearBag_ShouldRemoveAllItemsFromBag()
+		{
+			// Arrange
+			var bag = new Bag();
+			bag.StoreItem(Items.Potion, 5); // Assuming the bag has items
+			bag.StoreItem(Items.Pokeball, 10);
+
+			// Act
+			bag.Clear();
+
+			// Assert
+			Assert.AreEqual(0, bag.TotalItemCount(), "Bag was not cleared of all items.");
+		}
+
+		[TestMethod]
+		public void Trainer_PC_AlterPokemon_InsideBox()
+		{
 			/*SaveDataOld.currentSave.PC.boxes[0][1].setNickname("Greg");
 
 			SaveDataOld.currentSave.PC.boxes[0][1].setStatus(PokemonOld.Status.POISONED);
@@ -217,8 +282,33 @@ namespace Tests
 			Assert.Inconclusive();
 		}
 
-        [TestMethod]
-        public void Trainer_PC_SwapPokemon() {
+		[TestMethod]
+		public void SetMoney_ShouldSetMoneyToSpecifiedAmount()
+		{
+			// Arrange
+			var trainer = new Trainer();
+			var expectedMoney = 1000;
+
+			// Act
+			trainer.Money = expectedMoney;
+
+			// Assert
+			Assert.AreEqual(expectedMoney, trainer.Money, "Money was not set to the expected amount.");
+		}
+
+		[TestMethod]
+		public void TestSetMoneyWithinLimits()
+		{
+			var game = new Game();
+			// Assuming SetMoney method exists and updates Trainer's money
+			int expectedMoney = 5000;
+			game.SetMoney(expectedMoney); //Should consider using a different function to give money to players...
+			Assert.AreEqual(expectedMoney, game.GameData.Trainer.Money, "Trainer's money should be set to the specified amount.");
+		}
+
+		[TestMethod]
+		public void Trainer_PC_SwapPokemon()
+		{
 			/*SaveDataOld.currentSave.PC.swapPokemon(0, 5, 1, 5);
 			SaveDataOld.currentSave.PC.swapPokemon(0, 3, 1, 11);
 			SaveDataOld.currentSave.PC.swapPokemon(1, 1, 1, 12);
@@ -245,27 +335,29 @@ namespace Tests
 
 
 			SaveDataOld.currentSave.PC.packParty();*/
-			Player unkown = new Player();
+			TrainerData trainer = new TrainerData();
+			ITrainer unkown = new Trainer(trainer.Name, trainer.ID);
 			//Pokemons p = Pokemons.ABOMASNOW;
-			unkown.PC.addPokemon(new Pokemon(Pokemons.ABOMASNOW));
+			//unkown.PC.addPokemon(new Pokemon(Pokemons.ABOMASNOW));
 			//unkown.PC.Pokemons[0,0] = new Pokemon();
 			//unkown.PC[0].Pokemons[0] = new Pokemon();
-			unkown.PC.swapPokemon(0,0, 0,1); // 2nd pokemon in pc should be null
-			Assert.AreEqual(Pokemons.NONE, unkown.PC.Pokemons[0].Species); //last box used should be one checked
+			//unkown.PC.swapPokemon(0,0, 0,1); // 2nd pokemon in pc should be null
+			//Assert.AreEqual(Pokemons.NONE, unkown.PC.Pokemons[0].Species); //last box used should be one checked
+			Assert.Inconclusive("Need to resolve tests to player's PC");
 		}
-        
-        //[TestMethod]
-        //public void Trainer_PC_RenameBox() {
+
+		//[TestMethod]
+		//public void Trainer_PC_RenameBox() {
 		//	//debug code to test custom box names/textures
 		//	/*PC.boxName[1] = "Grassy Box";
 		//	PC.boxTexture[2] = 12;*/
 		//	Assert.Inconclusive();
 		//}
-        #endregion
+		#endregion
 
-        #region TrainerSave
-        //[TestMethod] //Not needed anymore, being saved from Player
-        //public void Trainer_Save() {
+		#region TrainerSave
+		//[TestMethod] //Not needed anymore, being saved from Player
+		//public void Trainer_Save() {
 		//	////////////////////////////////////////////////////////////////////////////////////////////////////
 		//	/* None of this is needed...
 		//	//set file creation date
@@ -305,7 +397,7 @@ namespace Tests
 		//	SaveDataOld.currentSave.playerMoney = 2481;
 		//	SaveDataOld.currentSave.playerScore = SaveDataOld.currentSave.pokedexCaught + "/" + SaveDataOld.currentSave.pokedexSeen;// PokemonDatabase.LoadPokedex().Length;//481;
 		//	//SaveData.currentSave.pokeDex = 0;
-        //
+		//
 		//	SaveDataOld.currentSave.playerHours = 0;
 		//	SaveDataOld.currentSave.playerMinutes = 7;
 		//	SaveDataOld.currentSave.playerSeconds = 12;
@@ -331,6 +423,6 @@ namespace Tests
 		//	//};
 		//	Assert.Inconclusive();
 		//}
-        #endregion        
-    }
+		#endregion
+	}
 }

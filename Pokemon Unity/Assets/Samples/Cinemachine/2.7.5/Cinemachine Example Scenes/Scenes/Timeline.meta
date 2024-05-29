@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Pokemon Unity/Assets/Samples/Cinemachine/2.7.5/Cinemachine Example Scenes/Scenes/Timeline.meta
 guid: 8dfa7e087db2240d58eac66f8886a53e
 folderAsset: yes
 timeCreated: 1486151799
+========
+guid: 805fceefb53f1024892e54dfaa3e8d6f
+folderAsset: yes
+timeCreated: 1489425219
+>>>>>>>> alpha:Pokemon Unity/Assets/Samples/Cinemachine/2.7.5/Cinemachine Example Scenes/Scenes/Scripting.meta
 licenseType: Pro
 DefaultImporter:
   userData: 

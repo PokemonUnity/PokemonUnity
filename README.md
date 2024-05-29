@@ -16,11 +16,11 @@
 
 ## Overview 
 
-**Pokémon Framework** forms the backbone of this project. Crafted in C#, this robust framework provides a solid foundation for any Pokémon-style remake or emulator. Its abstract design, completely independent of any frontend component, offers versatility, allowing migration between any C# compatible engine or platform (e.g., Unity3D, ASP.NET Websites, or even a text-based Pokémon battle simulator in a command-line console).
+**Pokémon Framework** forms the backbone of this project. Crafted in C#, this robust framework provides a solid foundation for any Pokémon-style remake or emulator. Its abstract design, completely independent of any front-end component, offers versatility, allowing migration between any C# compatible engine or platform (e.g., Unity3D, ASP.NET Websites, or even a text-based Pokémon battle simulator in a command-line console).
 
 This project also includes a C# adaptation of [Pokémon Essentials](https://github.com/griest024/essentials-sample-project), designed to function identically, with only minor variances. To ensure an expansive and updated database, we've substituted the data from **Pokémon Essentials** with [Veekun's Database](https://github.com/veekun/pokedex), which is designed for database queries and is kept up-to-date regularly.
 
-Fundamentally, the project reengineers the **Pokémon Essentials** logic to implement Pokémon mechanics. It leverages Veekun's Pokédex data (extracted straight from Nintendo's Pokémon games) to enrich the **Pokémon Framework**. Crowd-sourced local translations have been set up on a private webserver, which can be downloaded and used as localized scripts. The final render and output are integrated with the [GameFramework for Unity](https://github.com/EllanJiang/GameFramework), overwriting its template data to operate like a Pokémon game.
+Fundamentally, the project re-engineers the **Pokémon Essentials** logic to implement Pokémon mechanics. It leverages Veekun's Pokédex data (extracted straight from Nintendo's Pokémon games) to enrich the **Pokémon Framework**. Crowd-sourced local translations have been set up on a private web server, which can be downloaded and used as localized scripts. The final render and output are integrated with the [GameFramework for Unity](https://github.com/EllanJiang/GameFramework), overwriting its template data to operate like a Pokémon game.
 
 If you're familiar with Pokémon Essentials, have a preference for Unity or C#, and are willing to put in the effort, this project is a perfect match for you. However, it's important to note that this is not a ready-made game. It's a **FRAMEWORK**, a basis for you to build your own unique game upon. Hence, you will find source codes and DLL files rather than a game executable.
 
@@ -30,7 +30,7 @@ The project's code is designed to mimic and emulate the [Pokémon Essentials](ht
 
 ## Current Project Status
 
-The project builds upon IIcolour Spectrum's original Pokémon Unity, combining it with Herbertmilhomme's framework. While the project is currently playable, it's in an evolutionary phase with some features temporarily disabled and minor issues present. 
+The project builds upon IIcolour Spectrum's original Pokémon Unity, combining it with HerbertMilhomme's framework. While the project is currently playable, it's in an evolutionary phase with some features temporarily disabled and minor issues present. 
 
 For now, we advise against using this project as a foundation for building a game. However, we're making strides towards future improvements and eliminating the need for wrapper functions.
 
@@ -49,7 +49,7 @@ For now, we advise against using this project as a foundation for building a gam
 
 **To download the project and play it without using unity** 
 
-There are also demos for Windows, Linux, and Mac zipped in [2016 Release](https://github.com/PokemonUnity/PokemonUnity/releases)
+There are also demos for Windows, Linux, and Mac zipped in [2016 Release](https://github.com/PokemonUnity/PokemonUnity/releases) (This is the version used in the YouTube video, if you're just looking to play it.)
 
 Stay tuned for updates and exciting changes as we continue to develop the Pokémon Unity Project!
 
@@ -66,7 +66,8 @@ Stay tuned for updates and exciting changes as we continue to develop the Pokém
 * Discord server: https://discord.gg/AzW8Ds7MdE
 * Project Board: [Not Frequently Used or Updated](https://github.com/herbertmilhomme/PokemonUnity/projects/1)
 * Documentation: [Pokémon Essentials Wiki](https://pokemon-essentials.fandom.com/wiki/Pokemon_Essentials_Wiki) (or [My poorly written Github Wiki 1](https://herbertmilhomme.github.io/PokemonUnity/) and [My poorly written Github Wiki 2](https://github.com/herbertmilhomme/PokemonUnity/tree/gh-pages))
-* Documentation-Repo: [Pokémon Framework Library Wiki](https://github.com/PokemonUnity/pklibrary/tree/dev_feature_web-docs) (Web Resources TBD)
+* Documentation-Repository: [Pokémon Framework Library Wiki](https://github.com/PokemonUnity/pklibrary/tree/dev_feature_web-docs) (Web Resources TBD)
+* Database: [Veekun's Pokédex Github](https://github.com/veekun/pokedex)
 * Unity Framework: [GameFramework UnityEngine C# Assets](https://github.com/EllanJiang/UnityGameFramework)
 * Unity Framework: [GameFramework Vanilla C# Library](https://github.com/EllanJiang/GameFramework)
 * Web-Server: TBD 

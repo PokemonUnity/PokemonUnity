@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Pokemon Unity/Assets/Game.meta
 guid: 3adc2fc7e8be368478d5456cd26c486c
+========
+guid: fa467cb96ea92764d98ebd45a592ad3d
+>>>>>>>> alpha:Pokemon Unity/Assets/Game/Images/Application.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

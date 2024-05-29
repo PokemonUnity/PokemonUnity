@@ -1413,7 +1413,7 @@ COMMIT;
 BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS "game_player" (
 	"id"	INTEGER NOT NULL, --Game Slot
-	"ChallengeId"	INTEGER NOT NULL, 
+	"ChallengeId"	INTEGER NOT NULL,
 	"PlayerMoney"	INTEGER NOT NULL,
 	"PlayerCoins"	INTEGER NOT NULL,
 	"PlayerSavings"	INTEGER NOT NULL,
@@ -1436,7 +1436,7 @@ CREATE TABLE IF NOT EXISTS "game_player_pokedex" (
 	--"TrainerSecretId"	INTEGER NOT NULL,
 	"pokemon_species_id"	INTEGER NOT NULL, --"Species"
 	"pokemon_form_id"	INTEGER NOT NULL, --"Form"
-	"HasCaptured"	BIT NOT NULL, 
+	"HasCaptured"	BIT NOT NULL,
 	--PRIMARY KEY("TrainerSecretId","TrainerPublicId","pokemon_species_id","pokemon_form_id"),
 	PRIMARY KEY("game_id","pokemon_species_id","pokemon_form_id"),
 	FOREIGN KEY("pokemon_species_id") REFERENCES "pokemon_species"("id"),
@@ -1450,7 +1450,7 @@ CREATE TABLE IF NOT EXISTS "game_player_pokemon_storage" (
 	"slot_id"	INTEGER NOT NULL, --box
 	"slot_background_id"	INTEGER NOT NULL, --theme/texture
 	"slot_name"	NVARCHAR(18) NOT NULL, --label
-	"unlocked"	BIT NOT NULL, 
+	"unlocked"	BIT NOT NULL,
 	PRIMARY KEY("game_id","slot_id"),
 	FOREIGN KEY("game_id") REFERENCES "game_player"("id")
 );
@@ -1476,7 +1476,7 @@ CREATE TABLE IF NOT EXISTS "game_player_item_storage" (
 );*/
 CREATE TABLE IF NOT EXISTS "game_player_pokemon" (
 	"id"	INTEGER NOT NULL, --"PersonalID" no duplicates
-	"NickName"	nvarchar(14) NULL, 
+	"NickName"	nvarchar(14) NULL,
 	"pokemon_form_id"	INTEGER NOT NULL, --"Form"
 	"pokemon_species_id"	INTEGER NOT NULL, --"Species"
 	"ability_id"	INTEGER NOT NULL, --"Ability"
@@ -1517,7 +1517,7 @@ CREATE TABLE IF NOT EXISTS "game_player_pokemon" (
 	"Markings4"	BIT NOT NULL,
 	"Markings5"	BIT NOT NULL,
 	"Markings6"	BIT NOT NULL,
-	PRIMARY KEY("id"), 
+	PRIMARY KEY("id"),
 	--FOREIGN KEY("pokemon_id") REFERENCES "pokemon"("id"),
 	--FOREIGN KEY("pokemon_species_id") REFERENCES "pokemon_species"("id"),
 	--should FK pokedex, to keep hack tampering low
@@ -1531,7 +1531,7 @@ CREATE TABLE IF NOT EXISTS "game_player_pokemon" (
 CREATE TABLE IF NOT EXISTS "game_player_pokemon_location" (
 	"pokemon_personal_id"	INTEGER NOT NULL UNIQUE ON CONFLICT REPLACE, --no duplicates
 	"pokemon_game_id"	INTEGER NOT NULL, --game state
-	"pokemon_location_id"	BIT NULL, --party / pc, or wild... make int and add `game modes` (stadium saved party)?
+	"pokemon_location_id"	BIT NULL, --party / PC, or wild... make int and add `game modes` (stadium saved party)?
 	"pokemon_slot_position"	INTEGER NOT NULL, --where
 	PRIMARY KEY("pokemon_game_id", "pokemon_location_id","pokemon_slot_position"), --one slot per pokemon
 	FOREIGN KEY("pokemon_personal_id") REFERENCES "game_player_pokemon"("id")
@@ -1540,18 +1540,18 @@ CREATE TABLE IF NOT EXISTS "game_player_pokemon_move_archive" (
 	"pokemon_game_id"	INTEGER NOT NULL, --just in case pokemon is duplicate across games?
 	"pokemon_personal_id"	INTEGER NOT NULL,
 	"move_id"	INTEGER NOT NULL,
-	PRIMARY KEY("pokemon_game_id","pokemon_personal_id","move_id"), 
+	PRIMARY KEY("pokemon_game_id","pokemon_personal_id","move_id"),
 	FOREIGN KEY("pokemon_personal_id") REFERENCES "game_player_pokemon"("id"),
 	FOREIGN KEY("move_id") REFERENCES "moves"("id")
 );
 CREATE TABLE IF NOT EXISTS "game_player_pokemon_moves" (
 	"pokemon_game_id"	INTEGER NOT NULL, --just in case pokemon is duplicate across games?
-	"pokemon_personal_id"	INTEGER NOT NULL, 
+	"pokemon_personal_id"	INTEGER NOT NULL,
 	"move_slot_position"	INTEGER NOT NULL,
 	"move_id"	INTEGER NOT NULL,
 	"PP"	INTEGER NOT NULL,
 	"PPups"	INTEGER NOT NULL,
-	PRIMARY KEY("pokemon_game_id","pokemon_personal_id","move_id"), 
+	PRIMARY KEY("pokemon_game_id","pokemon_personal_id","move_id"),
 	FOREIGN KEY("pokemon_personal_id") REFERENCES "game_player_pokemon"("id"),
 	FOREIGN KEY("move_id") REFERENCES "game_player_pokemon_move_archive"("move_id") --Adds more security to ensure no cheating
 );
@@ -1569,7 +1569,7 @@ CREATE TABLE IF NOT EXISTS "pokemon_ui_sprite" (
 	"pokemon_form_id"	INTEGER NOT NULL, --"Form"
 	"IsShiny"	BIT NOT NULL,
 	"Gender"	BIT NULL, --gender this sprite is specific to, null if both use same sprite
-	PRIMARY KEY("id"), 
+	PRIMARY KEY("id"),
 	--FOREIGN KEY("pokemon_id") REFERENCES "pokemon"("id"),
 	FOREIGN KEY("pokemon_species_id") REFERENCES "pokemon_species"("id"),
 	FOREIGN KEY("pokemon_form_id") REFERENCES "pokemon_forms"("id")
@@ -1581,26 +1581,26 @@ CREATE TABLE IF NOT EXISTS "item_ui_sprite" (
 	"IsCopy"	BIT NOT NULL, --duplicate of same item used somewhere else
 	"notes"		NVARCHAR(75) NOT NULL, --name with folder structure
 	"reuse_item_id"	NVARCHAR(75) NOT NULL, --the id of item that uses this exact sprite, to prevent duplicates
-	PRIMARY KEY("id"), 
+	PRIMARY KEY("id"),
 	FOREIGN KEY("item_id") REFERENCES "items"("id")
 );
 COMMIT;
 --
 BEGIN TRANSACTION;
 CREATE VIEW pokemon_abilities_view as
-select 
+select
 	p.id as pokemon_id,
 	CAST(AVG(CASE WHEN a.slot = 1 THEN a.ability_id
 	END) as int) as ability1
-	,CAST(AVG(CASE WHEN a.slot = 2 THEN a.ability_id 
+	,CAST(AVG(CASE WHEN a.slot = 2 THEN a.ability_id
 	END) as int) as ability2
-	,CAST(AVG(CASE WHEN a.slot = 3 THEN a.ability_id 
+	,CAST(AVG(CASE WHEN a.slot = 3 THEN a.ability_id
 	END) as int) as ability3
 	from "pokemon" as p
 	left join "pokemon_abilities" as a on p.id = a.pokemon_id
 	group by p.id;
 CREATE VIEW pokemon_stats_view as
-select 
+select
 	p.id as pokemon_id
 	,CAST(AVG(CASE WHEN i.stat_id = 1 THEN i.base_stat
 	END) as int) as bhp
@@ -1630,25 +1630,25 @@ select
 	left join "pokemon_stats" as i on p.id = i.pokemon_id
 	group by p.id;
 CREATE VIEW pokemon_egg_groups_view as
-select 
+select
 	p.id as pokemon_id,
 	MIN(e.egg_group_id) as egg_group1
-	,CASE WHEN COUNT(e.species_id) = 2 THEN MAX(e.egg_group_id) --ELSE 0   
+	,CASE WHEN COUNT(e.species_id) = 2 THEN MAX(e.egg_group_id) --ELSE 0
 	END as egg_group2
 	from "pokemon" as p
 	left join "pokemon_egg_groups" as e on p.species_id = e.species_id
 	group by p.id;
 CREATE VIEW pokemon_types_view as
-select 
+select
 	p.id as pokemon_id,
-	CAST(AVG(CASE WHEN t.slot = 1 THEN t.type_id  
+	CAST(AVG(CASE WHEN t.slot = 1 THEN t.type_id
 	END) as int) as type1
 	,CAST(AVG(CASE WHEN t.slot = 2 THEN t.type_id --ELSE 0
 	END) as int) as type2
 	from "pokemon" as p
 	left join "pokemon_types" as t on p.id = t.pokemon_id
 	group by p.id;
-/* Forms -> Pokemon -> Species Relationship  
+/* Forms -> Pokemon -> Species Relationship
 CREATE VIEW pokemon_forms_view as
 --select REPLACE('case Forms.' || UPPER(pokemon_forms.identifier) || ':
 --	return Pokemons.' || UPPER (pokemon.identifier) || ';', '-', '_') as Switch,
@@ -1659,17 +1659,17 @@ pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_
 from pokemon
 left join pokemon_forms on pokemon_forms.pokemon_id = pokemon.id
 left join pokemon_form_names on pokemon_form_names.pokemon_form_id = pokemon_forms.id AND pokemon_form_names.local_language_id=9
-left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id 
+left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id
 left join pokemon_species on pokemon_species.id = pokemon.species_id
 left join pokemon_species_names on pokemon_species_names.pokemon_species_id = pokemon.species_id AND pokemon_species_names.local_language_id=9
 where pokemon_species.id != pokemon.id AND
---pokemon_forms.identifier != pokemon.identifier 
+--pokemon_forms.identifier != pokemon.identifier
 pokemon_forms.id != pokemon.id
 --pokemon_forms.id != pokemon_species.id
 order by pokemon.species_id, pokemon_forms.id ASC;*/
-CREATE VIEW pokemon_views as 
+CREATE VIEW pokemon_views as
 select pokemon.id, pokemon.species_id, pokemon.identifier, pokemon.height, pokemon.weight, pokemon.base_experience, --pokemon."order"
-pokemon_abilities_view.ability1, pokemon_abilities_view.ability2, pokemon_abilities_view.ability3, 
+pokemon_abilities_view.ability1, pokemon_abilities_view.ability2, pokemon_abilities_view.ability3,
 pokemon_egg_groups_view.egg_group1, pokemon_egg_groups_view.egg_group2,
 pokemon_stats_view.bhp, pokemon_stats_view.batk, pokemon_stats_view.bdef, pokemon_stats_view.bspa, pokemon_stats_view.bspd, pokemon_stats_view.bspe, pokemon_stats_view.ehp, pokemon_stats_view.eatk, pokemon_stats_view.edef, pokemon_stats_view.espa, pokemon_stats_view.espd, pokemon_stats_view.espe,
 pokemon_types_view.type1, pokemon_types_view.type2,
@@ -1679,10 +1679,10 @@ evolution_chains.baby_trigger_item_id as incense,
 ifnull(pokemon_form_names.pokemon_name, pokemon_species_names.name) as name,pokemon_species_names.genus,
 pokemon_species_flavor_text.flavor_text
 from pokemon
-left join pokemon_abilities_view on pokemon.id = pokemon_abilities_view.pokemon_id 
-left join pokemon_egg_groups_view on pokemon_egg_groups_view.pokemon_id = pokemon.id 
-left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id 
-left join pokemon_types_view on pokemon_types_view.pokemon_id = pokemon.id 
+left join pokemon_abilities_view on pokemon.id = pokemon_abilities_view.pokemon_id
+left join pokemon_egg_groups_view on pokemon_egg_groups_view.pokemon_id = pokemon.id
+left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id
+left join pokemon_types_view on pokemon_types_view.pokemon_id = pokemon.id
 left join pokemon_species on pokemon_species.id = pokemon.species_id
 --left join pokemon_evolution on pokemon_evolution.species_id = pokemon_species.id
 left join evolution_chains on evolution_chains.id = pokemon_species.evolution_chain_id
@@ -1693,7 +1693,7 @@ left join pokemon_form_names on pokemon_form_names.pokemon_form_id = pokemon_for
 left join pokemon_species_names on pokemon_species_names.pokemon_species_id = pokemon.species_id AND pokemon_species_names.local_language_id=9
 left join pokemon_species_flavor_text on pokemon_species_flavor_text.species_id = pokemon.species_id AND pokemon_species_flavor_text.version_id=26 AND pokemon_species_flavor_text.language_id=9
 order by pokemon.id ASC;
-CREATE VIEW pokemon_evolution_view as 
+CREATE VIEW pokemon_evolution_view as
 select pokemon_species.id, pokemon_species.identifier, pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species."order",
 pokemon_evolution.evolved_species_id, pokemon_evolution.evolution_trigger_id, pokemon_evolution.trigger_item_id, pokemon_evolution.minimum_level, pokemon_evolution.gender_id, pokemon_evolution.location_id, pokemon_evolution.held_item_id, pokemon_evolution.time_of_day, pokemon_evolution.known_move_id, pokemon_evolution.known_move_type_id, pokemon_evolution.minimum_happiness, pokemon_evolution.minimum_beauty, pokemon_evolution.minimum_affection, pokemon_evolution.relative_physical_stats, pokemon_evolution.party_species_id, pokemon_evolution.party_type_id, pokemon_evolution.trade_species_id, pokemon_evolution.needs_overworld_rain, pokemon_evolution.turn_upside_down
 from pokemon_evolution
@@ -1701,16 +1701,16 @@ left join pokemon_species on pokemon_evolution.evolved_species_id = pokemon_spec
 --group by pokemon_species."order" --pokemon_species.id --pokemon_species.evolution_chain_id
 order by pokemon_species.evolution_chain_id, pokemon_species.id; --ToDo: Foreign/Index key "pokemon_species.evolves_from_species_id"
 --pokemon_species.evolves_from_species_id, --number order is bad, went 1, 10, 100, instead of 1,2,3
-pokemon_species."order"; 
-CREATE VIEW item_game_indices_view as 
+pokemon_species."order";
+CREATE VIEW item_game_indices_view as
 select item_id, group_concat(DISTINCT generation_id) as generation_group, group_concat(DISTINCT game_index) as game_index_group
-from item_game_indices 
+from item_game_indices
 group by item_id;
-CREATE VIEW item_flag_map_view as 
+CREATE VIEW item_flag_map_view as
 select item_id, group_concat(DISTINCT item_flag_id) as item_flag_group
-from item_flag_map 
+from item_flag_map
 group by item_id;
-CREATE VIEW item_views as 
+CREATE VIEW item_views as
 select items.id, items.identifier, items.category_id, items.cost, items.fling_power, items.fling_effect_id,
 item_flag_map_view.item_flag_group,
 item_game_indices_view.generation_group, item_game_indices_view.game_index_group,
@@ -1722,12 +1722,12 @@ item_flavor_text.flavor_text
 from items
 left join (
 	select item_id, group_concat(DISTINCT item_flag_id) as item_flag_group
-	from item_flag_map 
+	from item_flag_map
 	group by item_id
-	) as item_flag_map_view on item_flag_map_view.item_id = items.id 
+	) as item_flag_map_view on item_flag_map_view.item_id = items.id
 left join (
 	select item_id, group_concat(DISTINCT generation_id) as generation_group, group_concat(DISTINCT game_index) as game_index_group
-	from item_game_indices 
+	from item_game_indices
 	group by item_id
 	) as item_game_indices_view on item_game_indices_view.item_id = items.id
 left join item_categories on item_categories.id = items.category_id
@@ -1737,11 +1737,11 @@ left join item_fling_effect_prose on item_fling_effect_prose.item_fling_effect_i
 left join item_names on item_names.item_id = items.id AND item_names.local_language_id=9
 left join item_flavor_text on item_flavor_text.item_id = items.id AND item_flavor_text.version_group_id=18 AND item_flavor_text.language_id=9
 order by items.id ASC;
-CREATE VIEW move_flag_map_view as 
+CREATE VIEW move_flag_map_view as
 select move_id, group_concat(DISTINCT move_flag_id) as move_flag_group
-from move_flag_map 
+from move_flag_map
 group by move_id;
-CREATE VIEW move_views as 
+CREATE VIEW move_views as
 select moves.id, moves.identifier, moves.generation_id, moves.type_id, moves.power, moves.pp, moves.accuracy, moves.priority, moves.target_id, moves.damage_class_id, moves.effect_id, moves.effect_chance, moves.contest_type_id, moves.contest_effect_id, moves.contest_type_id, moves.contest_effect_id, moves.super_contest_effect_id,
 contest_effects.appeal, contest_effects.jam, super_contest_effects.appeal as super_appeal,
 move_meta.meta_category_id, move_meta.meta_ailment_id, move_meta.min_hits, move_meta.max_hits, move_meta.min_turns, move_meta.max_turns, move_meta.drain, move_meta.healing, move_meta.crit_rate, move_meta.ailment_chance, move_meta.flinch_chance, move_meta.stat_chance,
@@ -1754,8 +1754,8 @@ move_target_prose.name as target_name, move_target_prose.description as target_d
 move_names.name,
 move_flavor_text.flavor_text
 from moves
-left join move_flag_map_view on move_flag_map_view.move_id = moves.id 
---left join move_flags on move_flags.id = moves.id 
+left join move_flag_map_view on move_flag_map_view.move_id = moves.id
+--left join move_flags on move_flags.id = moves.id
 left join move_meta on move_meta.move_id = moves.id
 left join contest_effects on moves.contest_effect_id = contest_effects.id
 left join super_contest_effects on super_contest_effects.id = moves.super_contest_effect_id
@@ -1766,7 +1766,7 @@ left join move_names on move_names.move_id = moves.id AND move_names.local_langu
 left join move_flavor_text on move_flavor_text.move_id = moves.id AND move_flavor_text.version_group_id=18 AND move_flavor_text.language_id=9
 order by moves.id ASC;
 CREATE VIEW berry_flavors_view as
-select 
+select
 	b.id as berry_id
 	,CAST(AVG(CASE WHEN i.contest_type_id = 1 THEN i.flavor
 	END) as int) as cool
@@ -1782,35 +1782,35 @@ select
 	left join "berry_flavors" as i on b.id = i.berry_id
 	group by b.id;
 CREATE VIEW berry_views as
-select 
+select
 	b.id, b.item_id, b.firmness_id, b.natural_gift_power, b.natural_gift_type_id, b.size, b.max_harvest, b.growth_time, b.soil_dryness, b.smoothness
 	,i.cool, i.beauty, i.cute, i.smart, i.tough
 	from "berries" as b
 	left join berry_flavors_view as i on b.id = i.berry_id;
-CREATE VIEW contest_combos_view as 
+CREATE VIEW contest_combos_view as
 select first_move_id, group_concat(DISTINCT second_move_id) as second_move_group
-	from contest_combos 
+	from contest_combos
 	group by first_move_id;
 CREATE VIEW encounter_condition_value_map_view as
 select encounter_id, group_concat(DISTINCT encounter_condition_value_id) as encounter_condition_value_group
-from encounter_condition_value_map 
+from encounter_condition_value_map
 group by encounter_id;
 CREATE VIEW location_area_encounter_rates_view as
 select location_area_id, group_concat(DISTINCT version_id) as version_group, encounter_method_id, rate
-	from location_area_encounter_rates 
+	from location_area_encounter_rates
 	group by location_area_id, encounter_method_id, rate;
 CREATE VIEW location_areas_view as
-select 
+select
 	l.id, l.location_id, l.identifier,
 	location_area_encounter_rates_view.location_area_id, location_area_encounter_rates_view.version_group, location_area_encounter_rates_view.encounter_method_id, location_area_encounter_rates_view.rate
 	from "location_areas" as l
 	left join (
 		select location_area_id, group_concat(DISTINCT version_id) as version_group, encounter_method_id, rate
-		from location_area_encounter_rates 
+		from location_area_encounter_rates
 		group by location_area_id, encounter_method_id, rate
 	) location_area_encounter_rates_view on l.id = location_area_encounter_rates_view.location_area_id;
 CREATE VIEW location_views as
-select 
+select
 	l.id, l.region_id, l.identifier,
 	g.generation_id,
 	n.name, n.subtitle
@@ -1818,7 +1818,7 @@ select
 	left join location_game_indices as g on l.id = g.location_id
 	left join location_names as n on l.id = n.location_id AND n.local_language_id=9;
 CREATE VIEW encounter_views as
-select 
+select
 	--e.id, e.version_id, e.location_area_id, e.encounter_slot_id, e.pokemon_id, e.min_level, e.max_level,
 	e.location_area_id, group_concat(DISTINCT e.pokemon_id) as pokemon_group, MIN(e.min_level) as min_level, MAX(e.max_level) as max_level, group_concat(DISTINCT e.encounter_slot_id) as encounter_slot_group, group_concat(DISTINCT e.version_id) as version_group,
 	s.encounter_method_id, s.slot, s.rarity, --group_concat(DISTINCT s.version_group_id) as encounter_slot_version_group,
@@ -1834,13 +1834,13 @@ select
 	--left join encounter_condition_value_map_view as i on e.id = i.encounter_id;
 	--left join (
 	--	select encounter_id, group_concat(DISTINCT encounter_condition_value_id) as encounter_condition_value_group
-	--	from encounter_condition_value_map 
+	--	from encounter_condition_value_map
 	--	group by encounter_id
 	--) as i on e.id = i.encounter_id
 	left join encounter_condition_value_map as i on e.id = i.encounter_id
 	--left join (
 	--	select location_area_id, group_concat(DISTINCT version_id) as version_group, encounter_method_id, rate
-	--	from location_area_encounter_rates 
+	--	from location_area_encounter_rates
 	--	group by location_area_id, encounter_method_id, rate
 	--) as r on e.location_area_id = r.location_area_id
 	left join location_areas as a on a.id=e.location_area_id
@@ -1851,8 +1851,8 @@ select
 	--where i.encounter_condition_value_id IS NOT NULL
 	group by e.location_area_id, s.encounter_method_id, s.slot, e.pokemon_id;
 /* IGNORE THIS; JUST TESTING QUERY RESULTS
-CREATE VIEW encounter_slot_views as 
-select 
+CREATE VIEW encounter_slot_views as
+select
 	--e.id, e.version_id, e.location_area_id, e.encounter_slot_id, e.pokemon_id, e.min_level, e.max_level,
 	e.location_area_id, group_concat(DISTINCT e.pokemon_id) as pokemon_group, MIN(e.min_level) as min_level, MAX(e.max_level) as max_level, --group_concat(DISTINCT e.encounter_slot_id) as encounter_slot_group, group_concat(DISTINCT e.version_id) as version_group,
 	s.encounter_method_id, s.slot, s.rarity, group_concat(DISTINCT s.version_group_id) as encounter_slot_version_group,
@@ -1868,13 +1868,13 @@ select
 	--left join encounter_condition_value_map_view as i on e.id = i.encounter_id;
 	--left join (
 	--	select encounter_id, group_concat(DISTINCT encounter_condition_value_id) as encounter_condition_value_group
-	--	from encounter_condition_value_map 
+	--	from encounter_condition_value_map
 	--	group by encounter_id
 	--) as i on e.id = i.encounter_id
 	left join encounter_condition_value_map as i on e.id = i.encounter_id
 	--left join (
 	--	select location_area_id, group_concat(DISTINCT version_id) as version_group, encounter_method_id, rate
-	--	from location_area_encounter_rates 
+	--	from location_area_encounter_rates
 	--	group by location_area_id, encounter_method_id, rate
 	--) as r on e.location_area_id = r.location_area_id
 	left join location_areas as a on a.id=e.location_area_id
@@ -1884,7 +1884,7 @@ select
 	--where i.encounter_condition_value_group IS NOT NULL
 	--where i.encounter_condition_value_id IS NOT NULL
 	group by e.location_area_id, s.encounter_method_id, s.slot, s.rarity;--e.pokemon_id;*/
---CREATE VIEW encounter_slot_views as 
+--CREATE VIEW encounter_slot_views as
 select encounter_method_group, slot_group, rarity_group, group_concat(DISTINCT encounter_slot_version_group) as version_group, group_concat(id_group) as id_group FROM (SELECT
 	--s.id, s.encounter_method_id, s.slot, s.rarity, group_concat(DISTINCT s.version_group_id) as encounter_slot_version_group
 	group_concat(s.id) as id_group, s.encounter_method_id as encounter_method_group, group_concat(DISTINCT s.slot) as slot_group, group_concat(s.rarity) as rarity_group, group_concat(DISTINCT s.version_group_id) as encounter_slot_version_group
@@ -1894,6 +1894,6 @@ select encounter_method_group, slot_group, rarity_group, group_concat(DISTINCT e
 		from encounter_slots
 	) as s group by s.version_group_id, s.encounter_method_id--s.slot, rarity
 	--order by s.encounter_method_id, s.id
-) group by encounter_method_group, slot_group, rarity_group 
+) group by encounter_method_group, slot_group, rarity_group
 order by encounter_method_group
 COMMIT;

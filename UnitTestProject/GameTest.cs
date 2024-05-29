@@ -4,11 +4,18 @@ using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Attack;
 using PokemonUnity.Inventory;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace Tests
 {
-    [TestClass]
-    public class GameTest
+	[TestClass]
+	public class GameTest
 	{
 		//Test if Core.Rand Seed returns new value on each use
 		//Test if Core.Rand keeps the same seed value when bool is true
@@ -67,78 +74,78 @@ namespace Tests
 		[TestMethod]
 		public void Initialize_Natures_Test()
 		{
-			Assert.IsTrue(Game.InitNatures(), string.Format("NatureData: {0}",Game.NatureData.Count.ToString()));
+			Assert.IsTrue(Game.InitNatures(), string.Format("NatureData: {0}", Kernal.NatureData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Natures_Data_IsLoaded()
 		{
-			Assert.IsTrue(Kernal.NatureData.Count > 1, string.Format("NatureData: {0}",Kernal.NatureData.Count.ToString()));
+			Assert.IsTrue(Kernal.NatureData.Count > 1, string.Format("NatureData: {0}", Kernal.NatureData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Moves_Test()
 		{
-			Assert.IsTrue(Game.InitMoves(), string.Format("MoveData: {0} | MoveMetaData: {1}",Game.MoveData.Count.ToString(), Game.MoveMetaData.Count.ToString()));
+			Assert.IsTrue(Game.InitMoves(), string.Format("MoveData: {0} | MoveMetaData: {1}", Kernal.MoveData.Count.ToString(), Kernal.MoveMetaData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Moves_Data_IsLoaded()
 		{
-			Assert.IsTrue(Kernal.MoveData.Count > 1, string.Format("MoveData: {0} | MoveMetaData: {1}",Kernal.MoveData.Count.ToString(), Kernal.MoveMetaData.Count.ToString()));
+			Assert.IsTrue(Kernal.MoveData.Count > 1, string.Format("MoveData: {0} | MoveMetaData: {1}", Kernal.MoveData.Count.ToString(), Kernal.MoveMetaData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Items_Test()
 		{
-			Assert.IsTrue(Game.InitItems(), string.Format("ItemData: {0}",Game.ItemData.Count.ToString()));
+			Assert.IsTrue(Game.InitItems(), string.Format("ItemData: {0}", Kernal.ItemData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Items_Data_IsLoaded()
 		{
-			Assert.IsTrue(Kernal.ItemData.Count > 1, string.Format("ItemData: {0}",Kernal.ItemData.Count.ToString()));
+			Assert.IsTrue(Kernal.ItemData.Count > 1, string.Format("ItemData: {0}", Kernal.ItemData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Berries_Test()
 		{
-			Assert.IsTrue(Game.InitBerries(), string.Format("BerryData: {0}",Game.BerryData.Count.ToString()));
+			Assert.IsTrue(Game.InitBerries(), string.Format("BerryData: {0}", Kernal.BerryData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Berries_Data_IsLoaded()
 		{
-			Assert.IsTrue(Kernal.BerryData.Count > 1, string.Format("BerryData: {0}",Kernal.BerryData.Count.ToString()));
+			Assert.IsTrue(Kernal.BerryData.Count > 1, string.Format("BerryData: {0}", Kernal.BerryData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Regions_Test()
 		{
-			Assert.IsTrue(Game.InitRegions(), string.Format("RegionData: {0}",Game.RegionData.Count.ToString()));
+			Assert.IsTrue(Game.InitRegions(), string.Format("RegionData: {0}", Kernal.RegionData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Regions_Data_IsLoaded()
 		{
-			Assert.IsTrue(Kernal.RegionData.Count > 1, string.Format("RegionData: {0}",Kernal.RegionData.Count.ToString()));
+			Assert.IsTrue(Kernal.RegionData.Count > 1, string.Format("RegionData: {0}", Kernal.RegionData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Types_Test()
 		{
-			Assert.IsTrue(Game.InitTypes(), string.Format("TypeData: {0}",Game.TypeData.Count.ToString()));
+			Assert.IsTrue(Game.InitTypes(), string.Format("TypeData: {0}", Kernal.TypeData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Types_Data_IsLoaded()
 		{
-			Assert.IsTrue(Kernal.TypeData.Count > 1, string.Format("TypeData: {0}",Kernal.TypeData.Count.ToString()));
+			Assert.IsTrue(Kernal.TypeData.Count > 1, string.Format("TypeData: {0}", Kernal.TypeData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Locations_Test()
 		{
-			Assert.IsTrue(Game.InitLocations(), string.Format("LocationData: {0} | AreaData: {1}",Game.LocationData.Count.ToString(), Game.AreaData.Count.ToString()));
+			Assert.IsTrue(Game.InitLocations(), string.Format("LocationData: {0} | AreaData: {1}", Kernal.LocationData.Count.ToString(), Kernal.AreaData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Locations_Data_IsLoaded()
 		{
-			Assert.IsTrue(Kernal.LocationData.Count > 1, string.Format("LocationData: {0} | AreaData: {1}",Kernal.LocationData.Count.ToString(), Kernal.AreaData.Count.ToString()));
+			Assert.IsTrue(Kernal.LocationData.Count > 1, string.Format("LocationData: {0} | AreaData: {1}", Kernal.LocationData.Count.ToString(), Kernal.AreaData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Initialize_Encounters_Test()
 		{
 			//Set Area Id THEN Test if Encounters loaded
-			Assert.IsTrue(Game.InitEncounters(), string.Format("EncounterData: {0} | MethodData: {1}",Game.EncounterData.Count.ToString(), Game.MethodData.Count.ToString()));
+			Assert.IsTrue(Game.InitEncounters(), string.Format("EncounterData: {0} | MethodData: {1}", Kernal.EncounterData.Count.ToString(), Kernal.MethodData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Encounters_Data_IsLoaded()
@@ -150,12 +157,12 @@ namespace Tests
 		[TestMethod]
 		public void Initialize_Trainers_Test()
 		{
-			Assert.IsTrue(Game.InitTrainers(), string.Format("TrainerMetaData: {0}",Game.TrainerMetaData.Count.ToString()));
+			Assert.IsTrue(Game.InitTrainers(), string.Format("TrainerMetaData: {0}", Kernal.TrainerMetaData.Count.ToString()));
 		}
 		[TestMethod]
 		public void Trainers_Data_IsLoaded()
 		{
-			Assert.IsTrue(Kernal.TrainerMetaData.Count > 1, string.Format("TrainerMetaData: {0}",Kernal.TrainerMetaData.Count.ToString()));
+			Assert.IsTrue(Kernal.TrainerMetaData.Count > 1, string.Format("TrainerMetaData: {0}", Kernal.TrainerMetaData.Count.ToString()));
 		}
 		#endregion
 
@@ -170,6 +177,15 @@ namespace Tests
 		//{
 		//	Assert.Inconclusive();
 		//}
+		[TestMethod]
+		public void TestWarpToValidMap()
+		{
+			IGame game = new Game();
+			// Assuming MapLister and DefaultMap are mockable or have predictable behavior
+			// and that WarpToMap returns a non-null ITilePosition when successful
+			ITilePosition result = game.WarpToMap();
+			Assert.IsNotNull(result, "Warping to a valid map should return a non-null ITilePosition.");
+		}
 		#endregion
 
 		#region SaveData

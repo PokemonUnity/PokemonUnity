@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Pokemon Unity/Assets/Samples/Cinemachine/2.7.5/Cinemachine Example Scenes/Shared/Blends.meta
 guid: 6540294993c2d4f06ab50d2083485d87
 folderAsset: yes
 timeCreated: 1508790945
+========
+guid: 36d7369ff41364a7998809760ae4a357
+folderAsset: yes
+timeCreated: 1510677837
+>>>>>>>> alpha:Pokemon Unity/Assets/Samples/Cinemachine/2.7.5/Cinemachine Example Scenes/Scenes/ClearShot.meta
 licenseType: Free
 DefaultImporter:
   externalObjects: {}

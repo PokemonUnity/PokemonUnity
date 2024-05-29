@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Pokemon Unity/Assets/Samples/Cinemachine/2.7.5/Cinemachine Example Scenes/Scenes.meta
 guid: 2fc3b640bf45545a3a0f72732b6c6f45
 folderAsset: yes
 timeCreated: 1486147583
+========
+guid: 644c0eba53d4422429843916a55678ef
+folderAsset: yes
+timeCreated: 1498584710
+>>>>>>>> alpha:Pokemon Unity/Assets/Samples/Cinemachine/2.7.5/Cinemachine Example Scenes/Scenes/Tracked Dolly.meta
 licenseType: Pro
 DefaultImporter:
   userData: 

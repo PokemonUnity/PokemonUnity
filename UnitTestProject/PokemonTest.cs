@@ -6,6 +6,13 @@ using PokemonUnity.Monster;
 using PokemonUnity.Monster.Data;
 using PokemonUnity.Attack;
 using PokemonUnity.Inventory;
+using PokemonEssentials.Interface;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace Tests
 {
@@ -67,6 +74,17 @@ namespace Tests
 			pokemon.HP = 0;
 			pokemon.HealHP();
 			Assert.AreEqual(pokemon.TotalHP, pokemon.HP);
+			Assert.AreEqual(Status.NONE, pokemon.Status);
+		}
+
+		[TestMethod]
+		public void Pokemon_HealHP_FullHealth_NoChange()
+		{
+			Pokemon pokemon = new Pokemon();
+			pokemon.HealHP();
+			int initialHP = pokemon.HP;
+			pokemon.HealHP();
+			Assert.AreEqual(initialHP, pokemon.HP);
 		}
 
 		[TestMethod]
@@ -238,7 +256,7 @@ namespace Tests
 			}
 			Assert.AreEqual(false,pokemon.isEgg);
 		}
-		
+
 		[TestMethod]
 		public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
 		{
@@ -297,7 +315,7 @@ namespace Tests
 		{
 			Assert.Inconclusive("Not implemented yet");
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			System.Collections.Generic.List<Pokemons> pkmns = 
+			System.Collections.Generic.List<Pokemons> pkmns =
 				//new System.Collections.Generic.List<Pokemons>((Pokemons[])Enum.GetValues(typeof(Pokemons)));
 				new System.Collections.Generic.List<Pokemons>(Kernal.PokemonData.Keys);
 			int x = 3;
@@ -323,7 +341,7 @@ namespace Tests
 		{
 			//All EV points when added together cannot be greater than a sum of MaxEVLimit
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			System.Collections.Generic.List<Pokemons> pkmns = 
+			System.Collections.Generic.List<Pokemons> pkmns =
 				//new System.Collections.Generic.List<Pokemons>((Pokemons[])Enum.GetValues(typeof(Pokemons)));
 				new System.Collections.Generic.List<Pokemons>(Kernal.PokemonData.Keys);
 			int x = 0;
@@ -365,7 +383,7 @@ namespace Tests
 			Assert.AreNotSame(before,new Moves[] { pokemon.moves[0].id, pokemon.moves[1].id, pokemon.moves[2].id, pokemon.moves[3].id });
 		}
 		[TestMethod]
-		public void Pokemon_RNG_Moves_IsDifferent_For_HatchingEgg() 
+		public void Pokemon_RNG_Moves_IsDifferent_For_HatchingEgg()
 		{
 			Pokemons pkmn = Pokemons.SQUIRTLE;
 			System.Collections.Generic.List<Moves> egg = new System.Collections.Generic.List<Moves>(); //ml.AddRange(pokemon.getMoveList(LearnMethod.egg));
@@ -386,7 +404,7 @@ namespace Tests
 				foreach (Move move in pokemon.moves)
 				{
 					//Pass test if pokemon has moves learned from Egg-state.
-					if (move.id != Moves.NONE 
+					if (move.id != Moves.NONE
 						&& egg.Contains(move.id)
 					)
 					{
@@ -566,13 +584,13 @@ namespace Tests
 		//{
 		//    //list of moves a pokemon can learn for a given technique
 		//    //attempt to teach move
-		//    //confirm moves are unchanged 
+		//    //confirm moves are unchanged
 		//    Assert.Inconclusive();
 		//}
 		#endregion
 
 		#region Evolving/evolution
-		/*The various triggers for a Pokémon's evolution are almost as varied as the Pokémon themselves, and some Pokémon have a unique evolution method. 
+		/*The various triggers for a Pokémon's evolution are almost as varied as the Pokémon themselves, and some Pokémon have a unique evolution method.
 			* The most common of them is Evolution by leveling up at or above a certain level. Other methods include the following:
 
 			* leveling up
@@ -587,8 +605,8 @@ namespace Tests
 				* being traded while holding a specific item
 				* being traded for a specific Pokémon
 			* using an evolutionary stone
-		Some evolutions are dependent on the Pokémon's gender. For example, only female Combee can evolve into Vespiquen—male Combee cannot evolve at all. 
-		Similarly, all Snorunt can evolve into Glalie, but only female Snorunt can evolve into Froslass. On the other hand, 
+		Some evolutions are dependent on the Pokémon's gender. For example, only female Combee can evolve into Vespiquen—male Combee cannot evolve at all.
+		Similarly, all Snorunt can evolve into Glalie, but only female Snorunt can evolve into Froslass. On the other hand,
 		male Burmy can only evolve into Mothim, while female Burmy can only evolve into Wormadam.*/
 		//Use eevee to test different evolve code, as it's a perfect practice test
 		[TestMethod]
@@ -600,10 +618,10 @@ namespace Tests
 				Assert.Fail("Unable to test if pokemon can evolve, as it does not have an evolution through leveling-up");
 			//Add exp
 			pokemon.Experience.AddExperience(105000);
-			if (pokemon.CanEvolveAfter(EvolutionMethod.Level, pokemon.Level).Length > 0) 
+			if (pokemon.CanEvolveAfter(EvolutionMethod.Level, pokemon.Level).Length > 0)
 				Assert.Fail("Test cannot be concluded, as results will remain unchanged.");
 			pokemon.Experience.AddExperience(25000);
-			if (pokemon.CanEvolveAfter(EvolutionMethod.Level, pokemon.Level).Length == 0) 
+			if (pokemon.CanEvolveAfter(EvolutionMethod.Level, pokemon.Level).Length == 0)
 				Assert.Fail("Test failed; pokemon cannot evolve due to level too tow. Lv: {0}",pokemon.Level);
 			//Assert is true
 			Assert.AreEqual(Pokemons.IVYSAUR, pokemon.CanEvolveAfter(EvolutionMethod.Level, pokemon.Level)[0]);
@@ -617,7 +635,7 @@ namespace Tests
 			if (!pokemon.hasEvolveMethod(EvolutionMethod.Item))
 				Assert.Fail("Unable to test if pokemon can evolve, as it does not have an evolution through using an Item", pokemon.GetEvolutionMethods().ToString());
 			//Check if Pokemon condition method for evolution has been met
-			if (pokemon.CanEvolveAfter(EvolutionMethod.Item, evolveStone).Length == 0) 
+			if (pokemon.CanEvolveAfter(EvolutionMethod.Item, evolveStone).Length == 0)
 				Assert.Fail("Test failed; pokemon cannot evolve due to level too tow. Lv: {0}",pokemon.Level);
 			//pokemon.EvolveConditionsMet(EvolutionMethod);
 			//Use item on Pokemon (Evolve Pokemon)
@@ -662,22 +680,22 @@ namespace Tests
 		#endregion
 
 		#region Shiny
-		/*The table below summarizes the rates at which Shiny Pokémon can be found by the methods that will be detailed below. 
+		/*The table below summarizes the rates at which Shiny Pokémon can be found by the methods that will be detailed below.
 			* The Shiny Charm can directly add to the odds for most methods, with hidden Pokémon being affected uniquely.
 							|Gen.II	|Gen.III	|Gen.IV	|Gen.V	|Gen.VI				|Gen.VII
 							------------------------------------------------------------------
-Base rate					|1/8192						|1/4096	
+Base rate					|1/8192						|1/4096
 							------------------------------------------------------------------
 Breeding a Shiny Pokémon	|		|			|		|		|					|
 (if the offspring is the 	|1/64	|—			|—		|—		|—					|—
 opposite gender)			|		|			|		|		|					|
 							------------------------------------------------------------------
-Masuda method				|—		|—			|5/8192	|6/8192	|6/4096				
+Masuda method				|—		|—			|5/8192	|6/8192	|6/4096
 							------------------------------------------------------------------
 Poké Radar chaining 		|		|			|		|		|					|
 (single patch): ≥40			|—		|—			|41/8192|—		|?					|—
 							------------------------------------------------------------------
-Shiny Charm					|—		|—			|—		|+2/8192|+2/4096			
+Shiny Charm					|—		|—			|—		|+2/8192|+2/4096
 							------------------------------------------------------------------
 Friend Safari				|—		|—			|—		|—		|5/4096				|—
 							------------------------------------------------------------------
@@ -729,7 +747,7 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 					Pokemon pokemon = new Pokemon(pkmn);
 					if (pokemon.Gender.HasValue && !pokemon.Gender.Value) females++;
 				}
-				Assert.IsTrue(100 - females > 100 - 18); //12.5 is 1/8th 
+				Assert.IsTrue(100 - females > 100 - 18); //12.5 is 1/8th
 			}
 			else
 				Assert.Fail("Testing for gender ratio of {0}; but pokemon gender chances are {1}", "One-Eighth Percent Females", genders.ToString());
@@ -744,8 +762,8 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			* Form change based on gender
 			* Evolutions.. (some evolve into form based on specific criteria)
 			* Some forms are fusions...
-			* Some forms are purely cosmetic and change based on frontend/ui 
-			* Some forms are battle only forms, and battle mechanic is going to be frontend only 
+			* Some forms are purely cosmetic and change based on frontend/ui
+			* Some forms are battle only forms, and battle mechanic is going to be frontend only
 			* Pokemon Vivillion form is based on player's physical GPS location (pc IP Address)
 			*/
 		///	<see cref="Pokemons.UNOWN"/> = letter of the alphabet.
@@ -766,13 +784,13 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		///	<see cref="Pokemons.VIVILLON"/> = different Patterns.
 		///	<see cref="Pokemons.FLABEBE"/>/<see cref="Pokemons.FLOETTE"/>/<see cref="Pokemons.FLORGES"/> = Flower colour.
 		///	<see cref="Pokemons.FURFROU"/> = haircut.
-		///	<see cref="Pokemons.PUMPKABOO"/>/<see cref="Pokemons.GOURGEIST"/> = small/average/large/super sizes. 
+		///	<see cref="Pokemons.PUMPKABOO"/>/<see cref="Pokemons.GOURGEIST"/> = small/average/large/super sizes.
 		///	<see cref="Pokemons.HOOPA"/> = Confined/Unbound forms.
 		///	<see cref="Pokemons.CASTFORM"/>? = different weather forms
 		///	<see cref="Pokemons.PIKACHU"/>
 		//Test game doesnt crash if no form
-		//Test pokedex to record/show (only) first form seen 
-		//Test pokedex to record/show (different?) form captured 
+		//Test pokedex to record/show (only) first form seen
+		//Test pokedex to record/show (different?) form captured
 		//Test pokemon has mega form
 		//Moves learned changes with form
 		[TestMethod]
@@ -783,7 +801,7 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			pokemon.SetForm(Forms.UNOWN_B);
 			CollectionAssert //Assert
 				.AreEqual( //.AreEqual(
-					new object[] { Pokemons.UNOWN, Forms.UNOWN_B }, 
+					new object[] { Pokemons.UNOWN, Forms.UNOWN_B },
 					//new object[] { pokemon.Species, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id },
 					//string.Format("Form: {0}, Id: {1}", pokemon.FormId, Game.PokemonFormsData[pokemon.Species][pokemon.FormId].Id)
 					new object[] { pokemon.Species, pokemon.Form.Id },
@@ -847,7 +865,8 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		[TestMethod]
 		public void Pokemon_WildPokemon_With_Item()
 		{
-			Pokemon pkmn = new Pokemon(Pokemons.RATICATE);//Pokemons.BUTTERFREE
+			//Pokemon pkmn = new Pokemon(Pokemons.RATICATE);//Pokemons.BUTTERFREE
+			IPokemon pkmn = (Game.GameData as IGameField).GenerateWildPokemon(Pokemons.RATICATE,5);//Pokemons.BUTTERFREE
 			if (Kernal.PokemonItemsData[pkmn.Species].Length == 0)
 				Assert.Fail("Pokemon does not contain any held items in wild");
 
@@ -855,7 +874,9 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 			for (int i = 0; i < 100; i++)
 			{
 				//check to see if wild pokemon is created with held item
-				pkmn.SwapItem(PokemonWildItems.GetWildHoldItem(pkmn.Species));
+				//pkmn.SwapItem(PokemonWildItems.GetWildHoldItem(pkmn.Species));
+				//pkmn.SetWildHoldItem();
+				pkmn = (Game.GameData as IGameField).GenerateWildPokemon(Pokemons.RATICATE, 5);
 				//pass if held item is true
 				if (pkmn.Item != Items.NONE)
 					//Assert.AreNotEqual()
