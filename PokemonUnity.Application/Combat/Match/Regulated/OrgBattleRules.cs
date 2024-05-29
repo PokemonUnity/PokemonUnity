@@ -20,12 +20,12 @@ namespace PokemonUnity
 			//dexdata=OpenDexData();
 			//DexDataOffset(dexdata,species,10);
 			//int bst=dexdata.fgetb;
-			int bst = Kernal.PokemonData[species].BaseStatsHP; //dexdata.fgetb;
-			bst += Kernal.PokemonData[species].BaseStatsATK; //dexdata.fgetb;
-			bst += Kernal.PokemonData[species].BaseStatsDEF; //dexdata.fgetb;
-			bst += Kernal.PokemonData[species].BaseStatsSPE; //dexdata.fgetb;
-			bst += Kernal.PokemonData[species].BaseStatsSPA; //dexdata.fgetb;
-			bst += Kernal.PokemonData[species].BaseStatsSPD; //dexdata.fgetb;
+			int bst = Kernal.PokemonData[species].BaseStatsHP;	//dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsATK;	//dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsDEF;	//dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsSPE;	//dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsSPA;	//dexdata.fgetb;
+			bst += Kernal.PokemonData[species].BaseStatsSPD;	//dexdata.fgetb;
 			//dexdata.close();
 			return bst;
 		}
@@ -212,149 +212,248 @@ namespace PokemonUnity
 		#endregion
 
 		#region Other Interesting Rulesets
-		/*/ ##########################################
+		// ##########################################
 		// Other Interesting Rulesets
 		// ##########################################
-
-		// Official Species Restriction
-		new PokemonChallengeRules()
-		.addPokemonRule(new BannedSpeciesRestriction(
-		   Pokemons.MEWTWO,Pokemons.MEW,
-		   Pokemons.LUGIA,Pokemons.HOOH,Pokemons.CELEBI,
-		   Pokemons.KYOGRE,Pokemons.GROUDON,Pokemons.RAYQUAZA,Pokemons.JIRACHI,Pokemons.DEOXYS,
-		   Pokemons.DIALGA,Pokemons.PALKIA,Pokemons.GIRATINA,Pokemons.MANAPHY,Pokemons.PHIONE,
-		   Pokemons.DARKRAI,Pokemons.SHAYMIN,Pokemons.ARCEUS))
-		.addBattleRule(new SoulDewBattleClause());
-
-
-
-		// New Official Species Restriction
-		new PokemonChallengeRules()
-		.addPokemonRule(new BannedSpeciesRestriction(
-		   Pokemons.MEW,
-		   Pokemons.CELEBI,
-		   Pokemons.JIRACHI,Pokemons.DEOXYS,
-		   Pokemons.MANAPHY,Pokemons.PHIONE,Pokemons.DARKRAI,Pokemons.SHAYMIN,Pokemons.ARCEUS))
-		.addBattleRule(new SoulDewBattleClause());
+		/// <summary>
+		/// Official Species Restriction
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddOfficialSpeciesRules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addPokemonRule(new BannedSpeciesRestriction(
+					Pokemons.MEWTWO, Pokemons.MEW,
+					Pokemons.LUGIA, Pokemons.HO_OH, Pokemons.CELEBI,
+					Pokemons.KYOGRE, Pokemons.GROUDON, Pokemons.RAYQUAZA, Pokemons.JIRACHI, Pokemons.DEOXYS,
+					Pokemons.DIALGA, Pokemons.PALKIA, Pokemons.GIRATINA, Pokemons.MANAPHY, Pokemons.PHIONE,
+					Pokemons.DARKRAI, Pokemons.SHAYMIN, Pokemons.ARCEUS))
+				.addBattleRule(new SoulDewBattleClause());
+			return rules;
+		}
 
 
 
-		// Pocket Monsters Stadium
-		new PokemonChallengeRules()
-		.addPokemonRule(new SpeciesRestriction(
-		   Pokemons.VENUSAUR,Pokemons.CHARIZARD,Pokemons.BLASTOISE,Pokemons.BEEDRILL,Pokemons.FEAROW,
-		   Pokemons.PIKACHU,Pokemons.NIDOQUEEN,Pokemons.NIDOKING,Pokemons.DUGTRIO,Pokemons.PRIMEAPE,
-		   Pokemons.ARCANINE,Pokemons.ALAKAZAM,Pokemons.MACHAMP,Pokemons.GOLEM,Pokemons.MAGNETON,
-		   Pokemons.CLOYSTER,Pokemons.GENGAR,Pokemons.ONIX,Pokemons.HYPNO,Pokemons.ELECTRODE,
-		   Pokemons.EXEGGUTOR,Pokemons.CHANSEY,Pokemons.KANGASKHAN,Pokemons.STARMIE,Pokemons.SCYTHER,
-		   Pokemons.JYNX,Pokemons.PINSIR,Pokemons.TAUROS,Pokemons.GYARADOS,Pokemons.LAPRAS,
-		   Pokemons.DITTO,Pokemons.VAPOREON,Pokemons.JOLTEON,Pokemons.FLAREON,Pokemons.AERODACTYL,
-		   Pokemons.SNORLAX,Pokemons.ARTICUNO,Pokemons.ZAPDOS,Pokemons.MOLTRES,Pokemons.DRAGONITE
-		));
+		/// <summary>
+		/// New Official Species Restriction
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddNewOfficialSpeciesRules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addPokemonRule(new BannedSpeciesRestriction(
+					Pokemons.MEW,
+					Pokemons.CELEBI,
+					Pokemons.JIRACHI, Pokemons.DEOXYS,
+					Pokemons.MANAPHY, Pokemons.PHIONE, Pokemons.DARKRAI, Pokemons.SHAYMIN, Pokemons.ARCEUS))
+				.addBattleRule(new SoulDewBattleClause());
+			return rules;
+		}
 
 
 
-		// 1999 Tournament Rules
-		new PokemonChallengeRules()
-		.addTeamRule(new SpeciesClause())
-		.addPokemonRule(new ItemsDisallowedClause())
-		.addBattleRule(new SleepClause())
-		.addBattleRule(new FreezeClause())
-		.addBattleRule(new SelfdestructClause())
-		.setDoubleBattle(false)
-		.setLevelRule(1,50,150)
-		.addPokemonRule(new BannedSpeciesRestriction(
-		   Pokemons.VENUSAUR,Pokemons.DUGTRIO,Pokemons.ALAKAZAM,Pokemons.GOLEM,Pokemons.MAGNETON,
-		   Pokemons.GENGAR,Pokemons.HYPNO,Pokemons.ELECTRODE,Pokemons.EXEGGUTOR,Pokemons.CHANSEY,
-		   Pokemons.KANGASKHAN,Pokemons.STARMIE,Pokemons.JYNX,Pokemons.TAUROS,Pokemons.GYARADOS,
-		   Pokemons.LAPRAS,Pokemons.DITTO,Pokemons.VAPOREON,Pokemons.JOLTEON,Pokemons.SNORLAX,
-		   Pokemons.ARTICUNO,Pokemons.ZAPDOS,Pokemons.DRAGONITE,Pokemons.MEWTWO,Pokemons.MEW));
+		/// <summary>
+		/// Pocket Monsters Stadium
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddPocketMonstersStadiumRules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addPokemonRule(new SpeciesRestriction(
+					Pokemons.VENUSAUR, Pokemons.CHARIZARD, Pokemons.BLASTOISE, Pokemons.BEEDRILL, Pokemons.FEAROW,
+					Pokemons.PIKACHU, Pokemons.NIDOQUEEN, Pokemons.NIDOKING, Pokemons.DUGTRIO, Pokemons.PRIMEAPE,
+					Pokemons.ARCANINE, Pokemons.ALAKAZAM, Pokemons.MACHAMP, Pokemons.GOLEM, Pokemons.MAGNETON,
+					Pokemons.CLOYSTER, Pokemons.GENGAR, Pokemons.ONIX, Pokemons.HYPNO, Pokemons.ELECTRODE,
+					Pokemons.EXEGGUTOR, Pokemons.CHANSEY, Pokemons.KANGASKHAN, Pokemons.STARMIE, Pokemons.SCYTHER,
+					Pokemons.JYNX, Pokemons.PINSIR, Pokemons.TAUROS, Pokemons.GYARADOS, Pokemons.LAPRAS,
+					Pokemons.DITTO, Pokemons.VAPOREON, Pokemons.JOLTEON, Pokemons.FLAREON, Pokemons.AERODACTYL,
+					Pokemons.SNORLAX, Pokemons.ARTICUNO, Pokemons.ZAPDOS, Pokemons.MOLTRES, Pokemons.DRAGONITE
+				));
+			return rules;
+		}
 
 
 
-		// 2005 Tournament Rules
-		new PokemonChallengeRules()
-		.addPokemonRule(new BannedSpeciesRestriction(
-		   Pokemons.DRAGONITE,Pokemons.MEW,Pokemons.MEWTWO,
-		   Pokemons.TYRANITAR,Pokemons.LUGIA,Pokemons.CELEBI,Pokemons.HOOH,Pokemons.GROUDON,Pokemons.KYOGRE,Pokemons.RAYQUAZA,
-		   Pokemons.JIRACHI,Pokemons.DEOXYS))
-		.setDoubleBattle(true)
-		.addLevelRule(1,50,200)
-		.addTeamRule(new ItemClause())
-		.addPokemonRule(new BannedItemRestriction(Items.SOULDEW,Items.ENIGMA_BERRY))
-		.addBattleRule(new SleepClause())
-		.addBattleRule(new FreezeClause())
-		.addBattleRule(new SelfdestructClause())
-		.addBattleRule(new PerishSongClause());
+		/// <summary>
+		/// 1999 Tournament Rules
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddTournament1999Rules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addTeamRule(new SpeciesClause())
+				.addPokemonRule(new ItemsDisallowedClause())
+				.addBattleRule(new SleepClause())
+				.addBattleRule(new FreezeClause())
+				.addBattleRule(new SelfdestructClause())
+				.setDoubleBattle(false)
+				.addLevelRule(1,50,150)
+				.addPokemonRule(new BannedSpeciesRestriction(
+					Pokemons.VENUSAUR, Pokemons.DUGTRIO, Pokemons.ALAKAZAM, Pokemons.GOLEM, Pokemons.MAGNETON,
+					Pokemons.GENGAR, Pokemons.HYPNO, Pokemons.ELECTRODE, Pokemons.EXEGGUTOR, Pokemons.CHANSEY,
+					Pokemons.KANGASKHAN, Pokemons.STARMIE, Pokemons.JYNX, Pokemons.TAUROS, Pokemons.GYARADOS,
+					Pokemons.LAPRAS, Pokemons.DITTO, Pokemons.VAPOREON, Pokemons.JOLTEON, Pokemons.SNORLAX,
+					Pokemons.ARTICUNO, Pokemons.ZAPDOS, Pokemons.DRAGONITE, Pokemons.MEWTWO, Pokemons.MEW));
+			return rules;
+		}
 
 
 
-		// 2008 Tournament Rules
-		new PokemonChallengeRules()
-		.addPokemonRule(new BannedSpeciesRestriction(
-		   Pokemons.MEWTWO,Pokemons.MEW,Pokemons.TYRANITAR,Pokemons.LUGIA,Pokemons.HOOH,Pokemons.CELEBI,
-		   Pokemons.GROUDON,Pokemons.KYOGRE,Pokemons.RAYQUAZA,Pokemons.JIRACHI,Pokemons.DEOXYS,
-		   Pokemons.PALKIA,Pokemons.DIALGA,Pokemons.PHIONE,Pokemons.MANAPHY,Pokemons.ROTOM,Pokemons.SHAYMIN,Pokemons.DARKRAI
-		.setDoubleBattle(true)
-		.addLevelRule(1,50,200)
-		.addTeamRule(new NicknameClause())
-		.addTeamRule(new ItemClause())
-		.addBattleRule(new SoulDewBattleClause());
+		/// <summary>
+		/// 2005 Tournament Rules
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddTournament2005Rules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addPokemonRule(new BannedSpeciesRestriction(
+					Pokemons.DRAGONITE, Pokemons.MEW, Pokemons.MEWTWO,
+					Pokemons.TYRANITAR, Pokemons.LUGIA, Pokemons.CELEBI, Pokemons.HO_OH, Pokemons.GROUDON, Pokemons.KYOGRE, Pokemons.RAYQUAZA,
+					Pokemons.JIRACHI, Pokemons.DEOXYS))
+				.setDoubleBattle(true)
+				.addLevelRule(1,50,200)
+				.addTeamRule(new ItemClause())
+				.addPokemonRule(new BannedItemRestriction(Items.SOUL_DEW, Items.ENIGMA_BERRY))
+				.addBattleRule(new SleepClause())
+				.addBattleRule(new FreezeClause())
+				.addBattleRule(new SelfdestructClause())
+				.addBattleRule(new PerishSongClause());
+			return rules;
+		}
 
 
 
-		// 2010 Tournament Rules
-		new PokemonChallengeRules()
-		.addPokemonRule(new BannedSpeciesRestriction(
-		   Pokemons.MEW,Pokemons.CELEBI,Pokemons.JIRACHI,Pokemons.DEOXYS,
-		   Pokemons.PHIONE,Pokemons.MANAPHY,Pokemons.SHAYMIN,Pokemons.DARKRAI,Pokemons.ARCEUS));
-		.addSubsetRule(new RestrictedSpeciesSubsetRestriction(
-		   Pokemons.MEWTWO,Pokemons.LUGIA,Pokemons.HOOH,
-		   Pokemons.GROUDON,Pokemons.KYOGRE,Pokemons.RAYQUAZA,
-		   Pokemons.PALKIA,Pokemons.DIALGA,Pokemons.GIRATINA))
-		.setDoubleBattle(true)
-		.addLevelRule(1,100,600)
-		.setLevelAdjustment(new CappedLevelAdjustment(50))
-		.addTeamRule(new NicknameClause())
-		.addTeamRule(new ItemClause())
-		.addPokemonRule(new SoulDewClause());
+		/// <summary>
+		/// 2008 Tournament Rules
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddTournament2008Rules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addPokemonRule(new BannedSpeciesRestriction(
+					Pokemons.MEWTWO, Pokemons.MEW, Pokemons.TYRANITAR, Pokemons.LUGIA, Pokemons.HO_OH, Pokemons.CELEBI,
+					Pokemons.GROUDON, Pokemons.KYOGRE, Pokemons.RAYQUAZA, Pokemons.JIRACHI, Pokemons.DEOXYS,
+					Pokemons.PALKIA, Pokemons.DIALGA, Pokemons.PHIONE, Pokemons.MANAPHY, Pokemons.ROTOM, Pokemons.SHAYMIN, Pokemons.DARKRAI))
+				.setDoubleBattle(true)
+				.addLevelRule(1,50,200)
+				.addTeamRule(new NicknameClause())
+				.addTeamRule(new ItemClause())
+				.addBattleRule(new SoulDewBattleClause());
+			return rules;
+		}
 
 
 
-		// Pokemon Colosseum -- Anything Goes
-		new PokemonChallengeRules()
-		.addLevelRule(1,100,600)
-		.addBattleRule(new SleepClause())
-		.addBattleRule(new FreezeClause())
-		.addBattleRule(new SelfdestructClause())
-		.addBattleRule(new PerishSongClause());
+		/// <summary>
+		/// 2010 Tournament Rules
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddTournament2010Rules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addPokemonRule(new BannedSpeciesRestriction(
+					Pokemons.MEW, Pokemons.CELEBI, Pokemons.JIRACHI, Pokemons.DEOXYS,
+					Pokemons.PHIONE, Pokemons.MANAPHY, Pokemons.SHAYMIN, Pokemons.DARKRAI, Pokemons.ARCEUS))
+				.addSubsetRule(new RestrictedSpeciesSubsetRestriction(
+					Pokemons.MEWTWO, Pokemons.LUGIA, Pokemons.HO_OH,
+					Pokemons.GROUDON, Pokemons.KYOGRE, Pokemons.RAYQUAZA,
+					Pokemons.PALKIA, Pokemons.DIALGA, Pokemons.GIRATINA))
+				.setDoubleBattle(true)
+				.addLevelRule(1,100,600)
+				.setLevelAdjustment(new CappedLevelAdjustment(50))
+				.addTeamRule(new NicknameClause())
+				.addTeamRule(new ItemClause())
+				.addPokemonRule(new SoulDewClause());
+			return rules;
+		}
 
 
 
-		// Pokemon Colosseum -- Max Lv. 50
-		new PokemonChallengeRules()
-		.addLevelRule(1,50,300)
-		.addTeamRule(new SpeciesClause())
-		.addTeamRule(new ItemClause())
-		.addBattleRule(new SleepClause())
-		.addBattleRule(new FreezeClause())
-		.addBattleRule(new SelfdestructClause())
-		.addBattleRule(new PerishSongClause());
+		/// <summary>
+		/// Pokemon Colosseum -- Anything Goes
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddPokemonColosseumRules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addLevelRule(1,100,600)
+				.addBattleRule(new SleepClause())
+				.addBattleRule(new FreezeClause())
+				.addBattleRule(new SelfdestructClause())
+				.addBattleRule(new PerishSongClause());
+			return rules;
+		}
 
 
 
-		// Pokemon Colosseum -- Max Lv. 100
-		new PokemonChallengeRules()
-		.addLevelRule(1,100,600)
-		.addTeamRule(new SpeciesClause())
-		.addTeamRule(new ItemClause())
-		.addBattleRule(new SleepClause())
-		.addBattleRule(new FreezeClause())
-		.addBattleRule(new SelfdestructClause())
-		.addBattleRule(new PerishSongClause());
+		/// <summary>
+		/// Pokemon Colosseum -- Max Lv. 50
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddPokemonColosseumLv50Rules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addLevelRule(1,50,300)
+				.addTeamRule(new SpeciesClause())
+				.addTeamRule(new ItemClause())
+				.addBattleRule(new SleepClause())
+				.addBattleRule(new FreezeClause())
+				.addBattleRule(new SelfdestructClause())
+				.addBattleRule(new PerishSongClause());
+			return rules;
+		}
 
 
 
+		/// <summary>
+		/// Pokemon Colosseum -- Max Lv. 100
+		/// </summary>
+		/// <param name="rules"></param>
+		/// <returns></returns>
+		public static IPokemonChallengeRules AddPokemonColosseumLv100Rules(IPokemonChallengeRules rules)
+		{
+			if (rules == null)
+				rules = new PokemonChallengeRules();
+			rules
+				.addLevelRule(1,100,600)
+				.addTeamRule(new SpeciesClause())
+				.addTeamRule(new ItemClause())
+				.addBattleRule(new SleepClause())
+				.addBattleRule(new FreezeClause())
+				.addBattleRule(new SelfdestructClause())
+				.addBattleRule(new PerishSongClause());
+			return rules;
+		}
+		#endregion
+
+		/*
 		// Battle Time (includes animations)
 		If the time runs out, the team with the most Pokemon left wins. If both teams have
 		the same number of Pokémon left, total HP remaining breaks the tie. If both HP
@@ -364,7 +463,6 @@ namespace PokemonUnity
 		If the player is in the process of switching Pokémon when the time runs out, the
 		one that can still battle that's closest to the top of the roster is chosen.
 		Otherwise, the attack on top of the list is chosen.*/
-		#endregion
 	}
 
 	#region Rules Class for Inheriting
