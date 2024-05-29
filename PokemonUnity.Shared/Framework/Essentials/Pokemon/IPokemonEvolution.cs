@@ -90,8 +90,10 @@ namespace PokemonEssentials.Interface
 		// ===============================================================================
 		PokemonUnity.Monster.Data.PokemonEvolution[] GetEvolvedFormData(Pokemons species);
 
-		//Loops through each pokemon in db with evolution,
-		//every 5 pokemons, log in debug output pokemon evolution
+		/// <summary>
+		/// Loops through each pokemon in db with evolution,
+		/// every 5 pokemons, log in debug output pokemon evolution
+		/// </summary>
 		void EvoDebug();
 
 		Pokemons GetPreviousForm(Pokemons species);

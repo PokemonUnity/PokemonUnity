@@ -227,7 +227,8 @@ namespace PokemonUnity.Inventory
 						LearnMove(pokemon,i.Key,true);
 					}
 				}
-				Pokemons newspecies=EvolutionHelper.CheckEvolution(pokemon)[0];
+				Pokemons newspecies=Pokemons.NONE;
+				if (Game.GameData is IGamePokemonEvolution gpe) newspecies=gpe.CheckEvolution(pokemon)[0];
 				if (newspecies>0 && Game.GameData is IGameUtility u) {
 					u.FadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo=(Game.GameData as Game).Scenes.EvolvingScene; //new PokemonEvolutionScene();

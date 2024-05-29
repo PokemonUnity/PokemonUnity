@@ -6,6 +6,21 @@ namespace PokemonUnity
 	{
 		/// <summary>
 		/// </summary>
+		/// <param name="nature"></param>
+		/// <param name="text"></param>
+		/// <returns>Returns the lookup identifier for localization dictionary</returns>
+		/// <remarks>Requires <seealso cref="Game._INTL(string, object[])"/> to retrieve actual value</remarks>
+		public static string ToString(this PokemonUnity.Monster.Natures nature, TextScripts text)
+		{
+			if (text == TextScripts.Name)
+				return string.Format("NATURE_NAME_{0}", (int)nature);
+			if (text == TextScripts.Description)
+				return string.Format("NATURE_DESC_{0}", (int)nature);
+			//create a switch, and return Locale Name, or Description
+			return nature.ToString();
+		}
+		/// <summary>
+		/// </summary>
 		/// <param name="stat"></param>
 		/// <param name="text"></param>
 		/// <returns>Returns the lookup identifier for localization dictionary</returns>

@@ -43,7 +43,7 @@ namespace PokemonUnity.Monster.Data
 		{
 			if (target == Types.NONE)
 				return 2;//return 1?
-			return Kernal.TypeData[atk][target];
+			return Kernal.TypeData[atk][target]; //ToDo: Change from float to int
 		}
 		public static float GetCombinedEffectivenessModifier(PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
 		{

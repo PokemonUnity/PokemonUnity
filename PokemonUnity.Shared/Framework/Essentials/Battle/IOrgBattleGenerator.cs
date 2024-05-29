@@ -209,22 +209,17 @@ namespace PokemonEssentials.Interface.Battle
 
 		Moves RandomMove();
 
-		void addMove(List<Moves> moves, Moves move, int @base);
+		void addMove(IList<Moves> moves, Moves move, int @base);
 
-		List<Moves> GetLegalMoves2(Pokemons species, int maxlevel);
+		IList<Moves> GetLegalMoves2(Pokemons species, int maxlevel);
 
-		int baseStatTotal(Pokemons move);
+		int baseStatTotal(Pokemons species);
 
-		Pokemons babySpecies(Moves move);
+		Pokemons babySpecies(Pokemons species);
 
-		int minimumLevel(Moves move);
+		int minimumLevel(Pokemons species);
 
-		//void evolutions(Moves move) {
-		//  if (!$evolutions[move]) {
-		//    $evolutions[move]=GetEvolvedFormData(move);
-		//  }
-		//  return $evolutions[move] ;
-		//}
+		IList<Pokemons> evolutions(Pokemons pkmn);
 
 		PokemonUnity.Attack.Data.MoveData moveData(Moves move);
 
@@ -232,9 +227,9 @@ namespace PokemonEssentials.Interface.Battle
 		IPokemonChallengeRules withRestr(IPokemonChallengeRules rule, int minbs, int maxbs, int legendary);
 
 		// The Pokemon list is already roughly arranged by rank from weakest to strongest
-		IBagScreen[] ArrangeByTier(IPokemon[] pokemonlist, IPokemonChallengeRules rule);
+		IList<IPokemon> ArrangeByTier(IList<IPokemon> pokemonlist, IPokemonChallengeRules rule);
 
-		bool hasMorePowerfulMove(Moves[] moves, Moves thismove);
+		bool hasMorePowerfulMove(IList<Moves> moves, Moves thismove);
 
 		IPokemon RandomPokemonFromRule(IPokemonChallengeRules rule, ITrainer trainer);
 
@@ -242,15 +237,16 @@ namespace PokemonEssentials.Interface.Battle
 
 		int DecideWinnerEffectiveness(Moves move, Types otype1, Types otype2, Abilities ability, int[] scores);
 
-		float DecideWinnerScore(IPokemon[] party0, IPokemon[] party1, double rating);
+		double DecideWinnerScore(IList<IPokemon> party0, IList<IPokemon> party1, double rating);
 
-		int DecideWinner(IPokemon[] party0, IPokemon[] party1, double rating0, double rating1);
+		int DecideWinner(IList<IPokemon> party0, IList<IPokemon> party1, double rating0, double rating1);
 
-		BattleResults RuledBattle(IRuledTeam team1, IRuledTeam team2, IPokemonChallengeRules rule);
+		void RuledBattle(IRuledTeam team1, IRuledTeam team2, IPokemonChallengeRules rule);
 
 		Types[] getTypes(Pokemons species);
 
-		void TrainerInfo(IPokemon[] pokemonlist, string trfile, IPokemonChallengeRules rules);
+		//void TrainerInfo(IList<IPokemonSerialized> pokemonlist, string trfile, IPokemonChallengeRules rules);
+		IEnumerator TrainerInfo(IList<IPokemonSerialized> pokemonlist, int trfile, IPokemonChallengeRules rules, Action block_given = null);
 
 		//#if FAKERGSS
 		//public void Kernel.MessageDisplay(mw,txt,lbl) {
@@ -268,12 +264,12 @@ namespace PokemonEssentials.Interface.Battle
 
 		bool isBattlePokemonDuplicate(IPokemon pk, IPokemon pk2);
 
-		//List<IPokemon> RemoveDuplicates(List<IPokemon> party);
-		IPokemon[] RemoveDuplicates(IPokemon[] party);
+		IList<IPokemon> RemoveDuplicates(IList<IPokemon> party);
+		//IPokemon[] RemoveDuplicates(IPokemon[] party);
 
-		void ReplenishBattlePokemon(List<IPokemon> party, IPokemonChallengeRules rule);
+		void ReplenishBattlePokemon(IList<IPokemon> party, IPokemonChallengeRules rule);
 
-		IEnumerator<string> GenerateChallenge(IPokemonChallengeRules rule, string tag);
+		IEnumerator<string> GenerateChallenge(IPokemonChallengeRules rule, int tag);
 
 		void WriteCup(int id, IPokemonChallengeRules rules);
 	}

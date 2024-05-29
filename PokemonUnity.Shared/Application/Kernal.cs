@@ -175,6 +175,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region Write to and Read from Methods
+		public static void load_data(string filepath = null) { }
 		public static void load_data(out IDictionary<int, PokemonEssentials.Interface.Field.IEncounters> encdata, string filepath = null)
 		{
 			encdata = new Dictionary<int, PokemonEssentials.Interface.Field.IEncounters>();
@@ -320,9 +321,10 @@ namespace PokemonUnity
 			}*/
 			#endregion
 		}
-		public static void save_data(IDictionary<int, PokemonEssentials.Interface.Field.IEncounters> encdata, string filepath = null)
+		//public static void save_data(IDictionary<int, PokemonEssentials.Interface.Field.IEncounters> encdata, string filepath = null)
+		public static void save_data(object encdata, string filepath = null)
 		{
-			if (encdata == null) return; //maybe save an empty file, or clear database?
+			if (encdata == null || encdata is null) return; //maybe save an empty file, or clear database?
 			if (!string.IsNullOrEmpty(filepath))
 			{
 //				BinaryFormatter bf = new BinaryFormatter();

@@ -225,7 +225,7 @@ namespace PokemonUnity.Character
 				mother=pokemon1;
 				father=pokemon0;
 			}
-			babyspecies= EvolutionHelper.GetBabySpecies(babyspecies,mother.Item,father.Item);
+			if (Game.GameData is IGamePokemonEvolution gpe)babyspecies=gpe.GetBabySpecies(babyspecies,mother.Item,father.Item);
 			if (babyspecies == Pokemons.MANAPHY) {				//&& hasConst?(Species,:PHIONE)
 				babyspecies=Pokemons.PHIONE;
 			} else if ((babyspecies == Pokemons.NIDORAN_F) ||	//&& hasConst?(Species,:NIDORANmA)

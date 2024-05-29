@@ -62,8 +62,7 @@ namespace PokemonEssentials.Interface.Battle
 
 
 
-
-
+		//IPokemon[] BattleFactoryPokemon(int rule, int numwins, int numswaps, IPokemon[] rentals);
 		IPokemon[] BattleFactoryPokemon(IPokemonChallengeRules rule, int numwins, int numswaps, IPokemon[] rentals);
 
 		ITrainer GenerateBattleTrainer(int trainerid, IPokemonChallengeRules rule);
@@ -77,14 +76,14 @@ namespace PokemonEssentials.Interface.Battle
 
 	public interface IPokemonSerialized
 	{
-		Pokemons species { get; set; }
-		Items item { get; set; }
-		Natures nature { get; set; }
-		Moves move1 { get; set; }
-		Moves move2 { get; set; }
-		Moves move3 { get; set; }
-		Moves move4 { get; set; }
-		int[] ev { get; set; }
+		Pokemons species	{ get; }
+		Items item			{ get; }
+		Natures nature		{ get; }
+		Moves move1			{ get; }
+		Moves move2			{ get; }
+		Moves move3			{ get; }
+		Moves move4			{ get; }
+		int ev				{ get; }
 
 		//IPokemonSerialized(species, item, nature, move1, move2, move3, move4, ev);
 
@@ -111,11 +110,11 @@ namespace PokemonEssentials.Interface.Battle
 
 		string tocompact();
 
-		int constFromStr(int[] mod, string str);
+		//int constFromStr(int[] mod, string str);
+
+		//IPokemonSerialized fromstring(string str);
 
 		IPokemonSerialized fromString(string str);
-
-		IPokemonSerialized fromstring(string str);
 
 		Moves convertMove(Moves move);
 

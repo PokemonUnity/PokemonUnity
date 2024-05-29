@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using PokemonUnity;
 using PokemonUnity.Combat;
 using PokemonUnity.Monster;
@@ -280,37 +281,39 @@ namespace PokemonUnity
 			ITrainer opponent=new Trainer(//PokeBattle_Trainer
 				trainerdata.ID.ToString(),//GetMessageFromHash(MessageTypes.TrainerNames,trainerdata[1]),
 				trainerdata.ID);//[0]
-			//IPokemonSerialized[] btpokemon=GetBTPokemon(BattleChallenge.currentChallenge);
-			////  Individual Values
-			//int indvalues=31;
-			//if (trainerid<220) indvalues=21;
-			//if (trainerid<200) indvalues=18;
-			//if (trainerid<180) indvalues=15;
-			//if (trainerid<160) indvalues=12;
-			//if (trainerid<140) indvalues=9;
-			//if (trainerid<120) indvalues=6;
-			//if (trainerid<100) indvalues=3;
-			//int[] pokemonnumbers=trainerdata[5];
-			//// p trainerdata
+			IPokemonSerialized[] btpokemon=GetBTPokemon(BattleChallenge.currentChallenge);
+			//  Individual Values
+			int indvalues=31;
+			if (trainerid<220) indvalues=21;
+			if (trainerid<200) indvalues=18;
+			if (trainerid<180) indvalues=15;
+			if (trainerid<160) indvalues=12;
+			if (trainerid<140) indvalues=9;
+			if (trainerid<120) indvalues=6;
+			if (trainerid<100) indvalues=3;
+			//int[] pokemonnumbers=trainerdata[5]; //party size
+			int[] pokemonnumbers=new int[btpokemon.Length].Select(a=>Core.Rand.Next(a)).ToArray(); //list of random numbers matching the number of pokemon in the trainer's party
+			// p trainerdata
 			//if (pokemonnumbers.Length<rule.ruleset.suggestedNumber) {
-			//	foreach (int n in pokemonnumbers) {
+			//	//foreach (int n in pokemonnumbers) {
+			//	for (int n = 0; n < pokemonnumbers.Length; n++) {
 			//		IPokemonSerialized rndpoke=btpokemon[n];
 			//		IPokemon pkmn=rndpoke.createPokemon(
 			//			rule.ruleset.suggestedLevel,indvalues,opponent);
-			//		opponent.party.Add(pkmn);
+			//		((IList<IPokemon>)opponent.party).Add(pkmn);
 			//	}
 			//	return opponent;
 			//}
-			//do { //begin;
-			//	opponent.party.Clear();
-			//	while (opponent.party.Length<rule.ruleset.suggestedNumber) {
-			//		int rnd=pokemonnumbers[Core.Rand.Next(pokemonnumbers.Length)];
-			//		IPokemonSerialized rndpoke=btpokemon[rnd];
-			//		IPokemon pkmn=rndpoke.createPokemon(
-			//			rule.ruleset.suggestedLevel,indvalues,opponent);
-			//		opponent.party.Add(pkmn);
-			//	}
-			//} while (!rule.ruleset.isValid(opponent.party)); //end until rule.ruleset.isValid(opponent.party);
+			do { //begin;
+				((IList<IPokemon>)opponent.party).Clear();
+				while (opponent.party.Length<rule.ruleset.suggestedNumber) {
+					int rnd=pokemonnumbers[Core.Rand.Next(pokemonnumbers.Length)];
+					IPokemonSerialized rndpoke=btpokemon[rnd];
+					IPokemon pkmn=rndpoke.createPokemon(
+						rule.ruleset.suggestedLevel,indvalues,opponent);
+					((IList<IPokemon>)opponent.party).Add(pkmn);
+				}
+			} while (!rule.ruleset.isValid(opponent.party)); //end until rule.ruleset.isValid(opponent.party);
 			return opponent;
 		}
 
@@ -369,35 +372,34 @@ namespace PokemonUnity
 		}
 	}
 
-	// ===============================================================================
-	// General purpose utilities
-	// ===============================================================================
-	//public partial class Array {
-	//	public void shuffle() {
-	//		dup.shuffle!;
-	//		unless(method_defined ? : shuffle)
-	//	}
-	//
-	//	public void ^(other) { // xor of two arrays
-	//		return (self|other)-(self&other);
-	//	}
-	//
-	//	//public void shuffle!() {
-	//	public IList<T> shuffle(this IList<T> array) {
-	//		int size = array.Count;
-	//		IPokemon[] tempa = new IPokemon[size];
-	//		int i = size; do { //|i|
-	//			int r = Kernel.Core.Rand.Next(i); //size
-	//			//array[i], array[r] = array[r], array[i];
-	//			T temp = array[i];
-	//			array[i] = array[r];
-	//			array[r] = temp;
-	//			i--;
-	//		} while (i > 0); //size.times
-	//		return this;
-	//		//unless (method_defined? :shuffle!)
-	//	}
-	//}
+	#region General purpose utilities
+	public static class ArrayHelper
+	{
+		//public void shuffle() {
+		//	dup.shuffle!;
+		//	unless(method_defined ? : shuffle)
+		//}
+		//
+		//public void ^(other) { // xor of two arrays
+		//	return (self|other)-(self&other);
+		//}
+
+		//public void shuffle!() {
+		public static IList<T> shuffle<T>(this IList<T> array) {
+			int size = array.Count;
+			IPokemon[] tempa = new IPokemon[size];
+			int i = size; do { //|i|
+				int r = Core.Rand.Next(i); //size
+				//array[i], array[r] = array[r], array[i];
+				T temp = array[i];
+				array[i] = array[r];
+				array[r] = temp;
+				i--;
+			} while (i > 0); //size.times
+			return array; //return this;
+			//unless (method_defined? :shuffle!)
+		}
+	}
 
 	//public static partial class Enumerable {
 	//	public void transform() {
@@ -406,28 +408,30 @@ namespace PokemonUnity
 	//		return ret;
 	//	}
 	//}
+	#endregion
 
-	public partial class PBPokemon //: IPokemonSerialized
+	[System.Serializable]
+	public partial class PBPokemon : IPokemonSerialized, ISerializable
 	{
-		public int species				{ get; protected set; }
-		public int item					{ get; protected set; }
-		public int nature				{ get; protected set; }
-		public int move1				{ get; protected set; }
-		public int move2				{ get; protected set; }
-		public int move3				{ get; protected set; }
-		public int move4				{ get; protected set; }
+		public Pokemons species			{ get; protected set; }
+		public Items item				{ get; protected set; }
+		public Natures nature			{ get; protected set; }
+		public Moves move1				{ get; protected set; }
+		public Moves move2				{ get; protected set; }
+		public Moves move3				{ get; protected set; }
+		public Moves move4				{ get; protected set; }
 		public int ev					{ get; protected set; }
 
-		//public Pokemon(species,item,nature,move1,move2,move3,move4,ev) {
-		//	@species=species;
-		//	@item=item ? item : 0;
-		//	@nature=nature;
-		//	@move1=move1 ? move1 : 0;
-		//	@move2=move2 ? move2 : 0;
-		//	@move3=move3 ? move3 : 0;
-		//	@move4=move4 ? move4 : 0;
-		//	@ev=ev;
-		//}
+		public PBPokemon(Pokemons species,Items? item,Natures nature,Moves? move1,Moves? move2,Moves? move3,Moves? move4,int ev) {
+			this.species=species;
+			this.item=item.HasValue ? item.Value : 0;
+			this.nature=nature;
+			this.move1=move1.HasValue ? move1.Value : 0;
+			this.move2=move2.HasValue ? move2.Value : 0;
+			this.move3=move3.HasValue ? move3.Value : 0;
+			this.move4=move4.HasValue ? move4.Value : 0;
+			this.ev=ev;
+		}
 
 		/*=begin;
 		public void _dump(depth) {
@@ -444,79 +448,79 @@ namespace PokemonUnity
 		}
 		=end;*/
 
-		//public static void fromInspected(str) {
-		//	insp=str.gsub(/^\s+/,"").gsub(/\s+$/,"");
-		//	pieces=insp.split(/\s*;\s*/);
-		//	species=1;
-		//	if ((Species.const_defined(pieces[0]) rescue false)) {
-		//		species=Species.const_get(pieces[0]);
-		//	}
-		//	item=0;
-		//	if ((Items.const_defined(pieces[1]) rescue false)) {
-		//		item=Items.const_get(pieces[1]);
-		//	}
-		//	nature=Natures.const_get(pieces[2]);
-		//	ev=pieces[3].split(/\s*,\s*/);
-		//	evvalue=0;
-		//	for (int i = 0; i < 6; i++) {
-		//		if (!ev[i]||ev[i]=="") continue;
-		//		evupcase=ev[i].upcase;
-		//		if (evupcase=="HP") evvalue|=0x01;
-		//		if (evupcase=="ATK") evvalue|=0x02;
-		//		if (evupcase=="DEF") evvalue|=0x04;
-		//		if (evupcase=="SPD") evvalue|=0x08;
-		//		if (evupcase=="SA") evvalue|=0x10;
-		//		if (evupcase=="SD") evvalue|=0x20;
-		//	}
-		//	moves=pieces[4].split(/\s*,\s*/);
-		//	moveid=[];
-		//	for (int i = 0; i < 4; i++) {
-		//		if ((Moves.const_defined(moves[i]) rescue false)) {
-		//		moveid.Add(Moves.const_get(moves[i]));
-		//		}
-		//	}
-		//	if (moveid.Length==0) moveid= new []{ 1 };
-		//	return new this(species,item,nature,
-		//		moveid[0],(moveid[1]||0),(moveid[2]||0),(moveid[3]||0),evvalue);
-		//}
-		//
-		//public static void fromPokemon(pokemon) {
-		//	evvalue=0;
-		//	if (pokemon.ev[0]>60) evvalue|=0x01;
-		//	if (pokemon.ev[1]>60) evvalue|=0x02;
-		//	if (pokemon.ev[2]>60) evvalue|=0x04;
-		//	if (pokemon.ev[3]>60) evvalue|=0x08;
-		//	if (pokemon.ev[4]>60) evvalue|=0x10;
-		//	if (pokemon.ev[5]>60) evvalue|=0x20;
-		//	return new this(pokemon.Species,pokemon.Item,pokemon.nature,
-		//		pokemon.moves[0].id,pokemon.moves[1].id,pokemon.moves[2].id,
-		//		pokemon.moves[3].id,evvalue);
-		//}
-		//
-		//public void inspect() {
-		//	c1=getConstantName(Species,@species);
-		//	c2=(@item==0) ? "" : getConstantName(Items,@item);
-		//	c3=getConstantName(Natures,@nature);
-		//	evlist="";
-		//	for (int i = 0; i < @ev; i++) {
-		//		if (((@ev&(1<<i))!=0)) {
-		//		if (evlist.Length>0) evlist+=",";
-		//		evlist+= new []{ "HP","ATK","DEF","SPD","SA","SD" }[i];
-		//		}
-		//	}
-		//	c4=(@move1==0) ? "" : getConstantName(Moves,@move1);
-		//	c5=(@move2==0) ? "" : getConstantName(Moves,@move2);
-		//	c6=(@move3==0) ? "" : getConstantName(Moves,@move3);
-		//	c7=(@move4==0) ? "" : getConstantName(Moves,@move4);
-		//	return "#{c1};#{c2};#{c3};#{evlist};#{c4},#{c5},#{c6},#{c7}";
-		//}
-		//
-		//public void tocompact() {
-		//	return "#{species},#{item},#{nature},#{move1},#{move2},#{move3},#{move4},#{ev}";
-		//}
-		//
+		public IPokemonSerialized fromInspected(string str) {
+			string insp = str;//.gsub(/^\s+/,"").gsub(/\s+$/,"");
+			string[] pieces = insp.Split(';').Select(text => text.Trim()).ToArray(); //(/\s*;\s*/);
+			Pokemons species = 0;//1;
+			//if ((Species.const_defined(pieces[0]))) { //rescue false
+			//	species=Species.const_get(pieces[0]);
+			//}
+			Items item=0;
+			//if ((Items.const_defined(pieces[1]))) { //rescue false
+			//	item=Items.const_get(pieces[1]);
+			//}
+			Natures nature=(Natures)int.Parse(pieces[2]);//.const_get
+			string[] ev = pieces[3].Split(',');//.Select(num => int.Parse(num)).ToArray(); //(/\s*,\s*/);
+			int evvalue=0;
+			for (int i = 0; i < 6; i++) {
+				if (string.IsNullOrEmpty(ev[i].Trim())) continue; //if (ev[i]==null||ev[i]=="")
+				string evupcase=ev[i].Trim().ToUpper();
+				if (evupcase=="HP") evvalue|=0x01;
+				if (evupcase=="ATK") evvalue|=0x02;
+				if (evupcase=="DEF") evvalue|=0x04;
+				if (evupcase=="SPD") evvalue|=0x08;
+				if (evupcase=="SA") evvalue|=0x10;
+				if (evupcase=="SD") evvalue|=0x20;
+			}
+			int[] moves=pieces[4].Split(',').Select(num => int.Parse(num)).ToArray(); //(/\s*,\s*/);
+			IList<Moves?> moveid=new List<Moves?>();
+			for (int i = 0; i < 4; i++) {
+				//if ((Moves.const_defined(moves[i]))) { //rescue false
+				//	moveid.Add(Moves.const_get(moves[i]));
+				//}
+			}
+			if (moveid.Count==0) moveid=new Moves?[] { (Moves)1 };
+			return new PBPokemon(species,item,nature,
+				moveid[0],(moveid[1]??0),(moveid[2]??0),(moveid[3]??0),evvalue);
+		}
+
+		public IPokemonSerialized fromPokemon(IPokemon pokemon) {
+			int evvalue=0;
+			if (pokemon.EV[0]>60) evvalue|=0x01;
+			if (pokemon.EV[1]>60) evvalue|=0x02;
+			if (pokemon.EV[2]>60) evvalue|=0x04;
+			if (pokemon.EV[3]>60) evvalue|=0x08;
+			if (pokemon.EV[4]>60) evvalue|=0x10;
+			if (pokemon.EV[5]>60) evvalue|=0x20;
+			return new PBPokemon(pokemon.Species,pokemon.Item,pokemon.Nature,
+				pokemon.moves[0].id,pokemon.moves[1].id,pokemon.moves[2].id,
+				pokemon.moves[3].id,evvalue);
+		}
+
+		public string inspect() {
+			string c1=species.ToString(TextScripts.Name);//getConstantName(Species,@species);
+			string c2=(@item==0) ? "" : item.ToString(TextScripts.Name);//getConstantName(Items,@item)
+			string c3=nature.ToString(TextScripts.Name); //getConstantName(Natures,@nature);
+			string evlist="";
+			for (int i = 0; i < @ev; i++) {
+				if (((@ev&(1<<i))!=0)) {
+				if (evlist.Length>0) evlist+=",";
+					evlist+= new []{ "HP","ATK","DEF","SPD","SA","SD" }[i];
+				}
+			}
+			string c4=(@move1==0) ? "" : move1.ToString(TextScripts.Name); //getConstantName(Moves,@move1)
+			string c5=(@move2==0) ? "" : move2.ToString(TextScripts.Name); //getConstantName(Moves,@move2)
+			string c6=(@move3==0) ? "" : move3.ToString(TextScripts.Name); //getConstantName(Moves,@move3)
+			string c7=(@move4==0) ? "" : move4.ToString(TextScripts.Name); //getConstantName(Moves,@move4)
+			return $"#{c1};#{c2};#{c3};#{evlist};#{c4},#{c5},#{c6},#{c7}";
+		}
+
+		public string tocompact() {
+			return $"#{species},#{item},#{nature},#{move1},#{move2},#{move3},#{move4},#{ev}";
+		}
+
 		//public static void constFromStr(mod,str) {
-		//	maxconst=0;
+		//	int maxconst=0;
 		//	foreach (var constant in mod.constants) {
 		//		maxconst=[maxconst,mod.const_get(constant.to_sym)].max;
 		//	}
@@ -531,59 +535,72 @@ namespace PokemonUnity
 		//public static void fromString(str) {
 		//	return this.fromstring(str);
 		//}
-		//
-		//public static void fromstring(str) {
-		//	s=str.split(/\s*,\s*/);
-		//	species=this.constFromStr(Species,s[1]);
-		//	item=this.constFromStr(Items,s[2]);
-		//	nature=this.constFromStr(Natures,s[3]);
-		//	move1=this.constFromStr(Moves,s[4]);
-		//	move2=(s.Length>=12) ? this.constFromStr(Moves,s[5]) : 0;
-		//	move3=(s.Length>=13) ? this.constFromStr(Moves,s[6]) : 0;
-		//	move4=(s.Length>=14) ? this.constFromStr(Moves,s[7]) : 0;
-		//	ev=0;
-		//	slen=s.Length-6;
-		//	if (s[slen].to_i>0) ev|=0x01;
-		//	if (s[slen+1].to_i>0) ev|=0x02;
-		//	if (s[slen+2].to_i>0) ev|=0x04;
-		//	if (s[slen+3].to_i>0) ev|=0x08;
-		//	if (s[slen+4].to_i>0) ev|=0x10;
-		//	if (s[slen+5].to_i>0) ev|=0x20;
-		//	return new this(species,item,nature,move1,move2,move3,move4,ev);
-		//}
-		//
-		//public void convertMove(move) {
-		//	if (move == Moves.RETURN && hasConst(Moves,:FRUSTRATION)) {
-		//		move=Moves.FRUSTRATION;
-		//	}
-		//	return move;
-		//}
-		//
-		//public void createPokemon(level,iv,trainer) {
-		//	pokemon=new PokeBattle_Pokemon(@species,level,trainer,false);
-		//	pokemon.setItem(@item);
-		//	pokemon.personalID=Core.Rand.Next(65536);
-		//	pokemon.personalID|=Core.Rand.Next(65536)<<8;
-		//	pokemon.personalID-=pokemon.personalID%25;
-		//	pokemon.personalID+=nature;
-		//	pokemon.personalID&=0xFFFFFFFF;
-		//	pokemon.happiness=0;
-		//	pokemon.moves[0]=new Move(this.convertMove(@move1));
-		//	pokemon.moves[1]=new Move(this.convertMove(@move2));
-		//	pokemon.moves[2]=new Move(this.convertMove(@move3));
-		//	pokemon.moves[3]=new Move(this.convertMove(@move4));
-		//	evcount=0;
-		//	for (int i = 0; i < 6; i++) {
-		//		if (((@ev&(1<<i))!=0)) evcount+=1;
-		//	}
-		//	evperstat=(evcount==0) ? 0 : PokeBattle_Pokemon.EVLIMIT/evcount;
-		//	for (int i = 0; i < 6; i++) {
-		//		pokemon.iv[i]=iv;
-		//		pokemon.ev[i]=((@ev&(1<<i))!=0) ? evperstat : 0;
-		//	}
-		//	pokemon.calcStats;
-		//	return pokemon;
-		//}
+
+		public IPokemonSerialized fromString(string str) {
+			string[] s=str.Split(','); //(/\s*,\s*/);
+			Pokemons species=				(Pokemons)	int.Parse(s[1]);		//this.constFromStr(Species,s[1]);
+			Items item=						(Items)		int.Parse(s[2]);		//this.constFromStr(Items,s[2]);
+			Natures nature=					(Natures)	int.Parse(s[3]);		//this.constFromStr(Natures,s[3]);
+			Moves move1=					(Moves)		int.Parse(s[4]);		//this.constFromStr(Moves,s[4]);
+			Moves move2=(s.Length>=12) ?	(Moves)		int.Parse(s[5]) : 0;	//this.constFromStr(Moves,s[5])
+			Moves move3=(s.Length>=13) ?	(Moves)		int.Parse(s[6]) : 0;	//this.constFromStr(Moves,s[6])
+			Moves move4=(s.Length>=14) ?	(Moves)		int.Parse(s[7]) : 0;	//this.constFromStr(Moves,s[7])
+			int ev=0;
+			int slen=s.Length-6;
+			if (int.Parse(s[slen]	)>0) ev|=0x01;
+			if (int.Parse(s[slen+1]	)>0) ev|=0x02;
+			if (int.Parse(s[slen+2]	)>0) ev|=0x04;
+			if (int.Parse(s[slen+3]	)>0) ev|=0x08;
+			if (int.Parse(s[slen+4]	)>0) ev|=0x10;
+			if (int.Parse(s[slen+5]	)>0) ev|=0x20;
+			return new PBPokemon(species,item,nature,move1,move2,move3,move4,ev);
+		}
+
+		public Moves convertMove(Moves move) {
+			if (move == Moves.RETURN) {// && hasConst(Moves,:FRUSTRATION)
+				move=Moves.FRUSTRATION;
+			}
+			return move;
+		}
+
+		public IPokemon createPokemon(int level,int iv,ITrainer trainer) {
+			//IPokemon pokemon=new Monster.Pokemon(@species,level,player:trainer,withMoves:false); //PokeBattle_Pokemon
+			IPokemon pokemon=new Monster.Pokemon(@species,level:(byte)level,original:trainer); //PokeBattle_Pokemon
+			pokemon.setItem(@item);
+			//pokemon.PersonalId=Core.Rand.Next(65536);
+			//pokemon.PersonalId|=Core.Rand.Next(65536)<<8;
+			//pokemon.PersonalId-=pokemon.PersonalId%25;
+			//pokemon.PersonalId+=nature;
+			//pokemon.PersonalId&=0xFFFFFFFF;
+			//pokemon.Happiness=0;
+			pokemon.moves[0]=new Attack.Move(this.convertMove(@move1));
+			pokemon.moves[1]=new Attack.Move(this.convertMove(@move2));
+			pokemon.moves[2]=new Attack.Move(this.convertMove(@move3));
+			pokemon.moves[3]=new Attack.Move(this.convertMove(@move4));
+			int evcount=0;
+			for (int i = 0; i < 6; i++) {
+				if (((@ev&(1<<i))!=0)) evcount+=1;
+			}
+			int evperstat=(evcount==0) ? 0 : Monster.Pokemon.EVLIMIT/evcount; //PokeBattle_Pokemon
+			for (int i = 0; i < 6; i++) {
+				pokemon.IV[i]=iv;
+				pokemon.EV[i]=((@ev&(1<<i))!=0) ? (byte)evperstat : (byte)0;
+			}
+			pokemon.calcStats();
+			return pokemon;
+		}
+
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("species",	species);
+			info.AddValue("item",		item);
+			info.AddValue("nature",		nature);
+			info.AddValue("move1",		move1);
+			info.AddValue("move2",		move2);
+			info.AddValue("move3",		move3);
+			info.AddValue("move4",		move4);
+			info.AddValue("ev",			ev);
+		}
 	}
 
 	public partial class Game_Map : PokemonEssentials.Interface.Battle.IGameMapOrgBattle {
@@ -1028,7 +1045,7 @@ namespace PokemonUnity
 		}
 
 		public void PrepareRentals() {
-			//if (Game.GameData is IGameOrgBattle gob) @rentals=gob.BattleFactoryPokemon(1,@bcdata.wins,@bcdata.swaps,new IPokemon[0]); //ToDo: Uncomment
+			if (Game.GameData is IGameOrgBattle gob) @rentals=gob.BattleFactoryPokemon(null,@bcdata.wins,@bcdata.swaps,new IPokemon[0]);
 			@trainerid=@bcdata.nextTrainer;
 			Character.TrainerMetaData[] bttrainers=null;//GetBTTrainers(@bcdata.currentChallenge); //bcdata == IBattleChallenge
 			//if (Game.GameData is IGameOrgBattle gob2) bttrainers=gob2.GetBTTrainers(@bcdata.currentChallenge); //ToDo: Uncomment
@@ -1037,9 +1054,8 @@ namespace PokemonUnity
 				trainerdata.ID.ToString(),	//GetMessageFromHash(MessageTypes.TrainerNames,trainerdata[1]),
 				trainerdata.ID);			//trainerdata[0]);
 			IPokemon[] opponentPkmn=null;//BattleFactoryPokemon(1,@bcdata.wins,@bcdata.swaps,@rentals);
-			//if (Game.GameData is IGameOrgBattle gob3) opponentPkmn=gob3.BattleFactoryPokemon(1,@bcdata.wins,@bcdata.swaps,@rentals); //ToDo: Uncomment
-			//ToDo: Uncomment and randomize the positions in the slots
-			@opponent.party=opponentPkmn;//.Shuffle(0,3);//.shuffle[0,3];
+			if (Game.GameData is IGameOrgBattle gob3) opponentPkmn=gob3.BattleFactoryPokemon(null,@bcdata.wins,@bcdata.swaps,@rentals);
+			@opponent.party=opponentPkmn.shuffle<IPokemon>().ToArray();//.Shuffle(0,3);//.shuffle[0,3];
 		}
 
 		public void ChooseRentals() {

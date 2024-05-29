@@ -1479,7 +1479,7 @@ namespace PokemonUnity
 							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_135());
 							break;
 						case Effects.x17D:
-							//Disarming voice, inflices extra effects
+							//Disarming voice, inflicts extra effects
 							Kernal.MoveEffectData.Add(effect, new Combat.PokeBattle_Move_0A5());
 							break;
 						case Effects.x17E:

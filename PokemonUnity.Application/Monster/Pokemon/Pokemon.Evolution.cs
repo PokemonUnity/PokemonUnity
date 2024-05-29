@@ -1,43 +1,18 @@
 ﻿using System;
 using System.Linq;
 using PokemonUnity;
+using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonUnity.Inventory.Plants;
 using PokemonUnity.Overworld;
 
-namespace PokemonUnity.Monster
+namespace PokemonUnity
 {
-	public static class EvolutionHelper
+	public partial class Game : PokemonEssentials.Interface.IGamePokemonEvolution
 	{
-		public static string[] EVONAMES=new string[] {"Unknown",
-			"Happiness","HappinessDay","HappinessNight","Level","Trade",
-			"TradeItem","Item","AttackGreater","AtkDefEqual","DefenseGreater",
-			"Silcoon","Cascoon","Ninjask","Shedinja","Beauty",
-			"ItemMale","ItemFemale","DayHoldItem","NightHoldItem","HasMove",
-			"HasInParty","LevelMale","LevelFemale","Location","TradeSpecies",
-			"LevelDay","LevelNight","LevelDarkInParty","LevelRain","HappinessMoveType",
-			"Custom1","Custom2","Custom3","Custom4","Custom5"
-		};
-
-		//  0 = no parameter
-		//  1 = Positive integer
-		//  2 = Item internal name
-		//  3 = Move internal name
-		//  4 = Species internal name
-		//  5 = Type internal name
-		public static int[] EVOPARAM=new int[] {0,    // Unknown (do not use)
-			0,0,0,1,0,   // Happiness, HappinessDay, HappinessNight, Level, Trade
-			2,2,1,1,1,   // TradeItem, Item, AttackGreater, AtkDefEqual, DefenseGreater
-			1,1,1,1,1,   // Silcoon, Cascoon, Ninjask, Shedinja, Beauty
-			2,2,2,2,3,   // ItemMale, ItemFemale, DayHoldItem, NightHoldItem, HasMove
-			4,1,1,1,4,   // HasInParty, LevelMale, LevelFemale, Location, TradeSpecies
-			1,1,1,1,5,   // LevelDay, LevelNight, LevelDarkInParty, LevelRain, HappinessMoveType
-			1,1,1,1,1    // Custom 1-5
-		};
-
 		#region Evolution helper functions
-		public static Data.PokemonEvolution[] GetEvolvedFormData(Pokemons species) {
-			System.Collections.Generic.List<Data.PokemonEvolution> ret=new System.Collections.Generic.List<Data.PokemonEvolution>();
+		public Monster.Data.PokemonEvolution[] GetEvolvedFormData(Pokemons species) {
+			System.Collections.Generic.IList<Monster.Data.PokemonEvolution> ret=new System.Collections.Generic.List<Monster.Data.PokemonEvolution>();
 			//int _EVOTYPEMASK=0x3F;
 			//int _EVODATAMASK=0xC0;
 			//int _EVONEXTFORM=0x00;
@@ -48,13 +23,13 @@ namespace PokemonUnity.Monster
 				if (length>0) {
 					//f.pos=offset;
 					int i=0; do { //unless (i<length) break; //loop
-						Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb();
+						Monster.Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb();
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw();
 						Pokemons poke=evo.Species; //f.fgetw();
 						//if ((evo&_EVODATAMASK)==_EVONEXTFORM) {
-						//ret.Add([evonib,level,poke]);
-						ret.Add(evo);
+						//	ret.Add([evonib,level,poke]);
+							ret.Add(evo);
 						//}
 						i++; //+=5;
 					} while (i >= length);
@@ -63,38 +38,43 @@ namespace PokemonUnity.Monster
 			return ret.ToArray();
 		}
 
-		//Loops through each pokemon in db with evolution, 
-		//every 5 pokemons, log in debug output pokemon evolution
-		//public static void EvoDebug() {
-		//  int _EVOTYPEMASK=0x3F;
-		//  int _EVODATAMASK=0xC0;
-		//  {  //RgssOpen("Data/evolutions.dat","rb"){|f|
-		//     for (int species = 1; species < Species.maxValue; species++) {
-		//       //f.pos=(species-1)*8;
-		//       //offset=f.fgetdw;
-		//       int length=f.fgetdw;
-		//       GameDebug.Log(Game._INTL(species.ToString(TextScripts.Name)));
-		//       if (length>0) {
-		//         //f.pos=offset;
-		//         int i=0; do { //unless (i<length) break; //loop
-		//           //Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb;
-		//           EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
-		//           int level=(int)evo.EvolveValue; //f.fgetw;
-		//           Pokemons poke=evo.Species; //f.fgetw;
-		//           GameDebug.Log(string.Format("type=%02X, data=%02X, name=%s, level=%d",
-		//              evonib,evo&_EVODATAMASK,Game._INTL(poke.ToString(TextScripts.Name)),level));
-		//           if (poke==0) {
-		//             //p f.eof?;
-		//             break;
-		//           }
-		//           i+=5;
-		//         } while (i >= length);
-		//       }
-		//     }
-		//  }
-		//}
+		/// <summary>
+		/// Loops through each pokemon in db with evolution,
+		/// every 5 pokemons, log in debug output pokemon evolution
+		/// </summary>
+		public void EvoDebug() {
+			int _EVOTYPEMASK=0x3F;
+			int _EVODATAMASK=0xC0;
+			{  //RgssOpen("Data/evolutions.dat","rb"){|f|
+				//for (int species = 1; species < Kernal.PokemonData.Count; species++) {
+				foreach (Pokemons species in Kernal.PokemonData.Keys) {
+					//f.pos=(species-1)*8;
+					//offset=f.fgetdw;
+					int length=(int)species;//f.fgetdw; //use pokemon id as length
+					GameDebug.Log(Game._INTL(species.ToString(TextScripts.Name)));
+					if (length>0) {
+						//f.pos=offset;
+						int i=0; do { //unless (i<length) break; //loop
+							Monster.Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb;
+							EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
+							int level=(int)evo.EvolveValue; //f.fgetw;
+							Pokemons poke=evo.Species; //f.fgetw;
+							//GameDebug.Log(string.Format("type=%02X, data=%02X, name=%s, level=%d",
+							//	evonib,evo&_EVODATAMASK,Game._INTL(poke.ToString(TextScripts.Name)),level));
+							GameDebug.Log(string.Format("type={0}, data={1}, name={2}, level={3}",
+								evonib,evo.EvolveValue,Game._INTL(poke.ToString(TextScripts.Name)),level));
+							if (poke==0) {
+								//p f.eof?;
+								break;
+							}
+							i+=5;
+						} while (i >= length);
+					}
+				}
+			}
+		}
 
-		public static Pokemons GetPreviousForm(Pokemons species) {
+		public Pokemons GetPreviousForm(Pokemons species) {
 			//int _EVOTYPEMASK=0x3F;
 			//int _EVODATAMASK=0xC0;
 			//int _EVOPREVFORM=0x40;
@@ -105,13 +85,13 @@ namespace PokemonUnity.Monster
 				if (length>0) {
 					//f.pos=offset;
 					int i=0; do { //unless (i<length) break; //loop
-						Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb;
+						Monster.Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb;
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw;
 						Pokemons poke=evo.Species; //f.fgetw;
 						//if ((evo&_EVODATAMASK)==_EVOPREVFORM) {
 						if (Kernal.PokemonData[poke].EvolveFrom != Pokemons.NONE) {
-						return poke;
+							return poke;
 						}
 						i++;//+=5;
 					} while (i >= length);
@@ -120,7 +100,7 @@ namespace PokemonUnity.Monster
 			return species;
 		}
 
-		public static int GetMinimumLevel(Pokemons species) {
+		public int GetMinimumLevel(Pokemons species) {
 			int ret=-1;
 			//int _EVOTYPEMASK=0x3F;
 			//int _EVODATAMASK=0xC0;
@@ -132,7 +112,7 @@ namespace PokemonUnity.Monster
 				if (length>0) {
 					//f.pos=offset;
 					int i=0; do { //unless (i<length) break; //loop
-						Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb();
+						Monster.Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb();
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw();
 						//Pokemons poke=evo.Species; //f.fgetw();
@@ -155,7 +135,7 @@ namespace PokemonUnity.Monster
 			return (ret==-1) ? 1 : ret;
 		}
 
-		public static Pokemons GetBabySpecies(Pokemons species,Items item1=Items.NONE,Items item2=Items.NONE) {
+		public Pokemons GetBabySpecies(Pokemons species,Items item1=Items.NONE,Items item2=Items.NONE) {
 			Pokemons ret=species;
 			//int _EVOTYPEMASK=0x3F;
 			//int _EVODATAMASK=0xC0;
@@ -167,12 +147,12 @@ namespace PokemonUnity.Monster
 				if (length>0) {
 					//f.pos=offset();
 					int i=0; do { //unless (i<length) break; //loop
-						Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb();
+						Monster.Data.PokemonEvolution evo=Kernal.PokemonEvolutionsData[species][i]; //f.fgetb();
 						EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 						int level=(int)evo.EvolveValue; //f.fgetw();
 						Pokemons poke=evo.Species; //f.fgetw();
 						//if (poke<=Species.maxValue && (evo&_EVODATAMASK)==_EVOPREVFORM) {		// evolved from
-						if (//poke<=Kernal.PokemonData.Keys.Count && 
+						if (//poke<=Kernal.PokemonData.Keys.Count &&
 							Kernal.PokemonData[poke].IsBaby) {		// evolved from
 							if (item1>=0 && item2>=0) {
 								//dexdata=OpenDexData();
@@ -197,7 +177,7 @@ namespace PokemonUnity.Monster
 		#endregion
 
 		#region Evolution methods
-		public static Pokemons MiniCheckEvolution(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,EvolutionMethod evonib,int level,Pokemons poke) {
+		public Pokemons MiniCheckEvolution(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,EvolutionMethod evonib,int level,Pokemons poke) {
 			switch (evonib) {
 				case EvolutionMethod.Happiness:
 					if (pokemon.Happiness>=220) return poke;
@@ -312,7 +292,7 @@ namespace PokemonUnity.Monster
 			return Pokemons.NONE; //-1;
 		}
 
-		public static Pokemons MiniCheckEvolutionItem(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,EvolutionMethod evonib,Items level,Pokemons poke,Items item) {
+		public Pokemons MiniCheckEvolutionItem(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,EvolutionMethod evonib,Items level,Pokemons poke,Items item) {
 			//  Checks for when an item is used on the Pokémon (e.g. an evolution stone)
 			switch (evonib) {
 				case EvolutionMethod.Item:
@@ -334,14 +314,14 @@ namespace PokemonUnity.Monster
 		/// Pokemon to check; evolution type; level or other parameter; ID of the new Pokemon species
 		/// </summary>
 		/// <param name="pokemon"></param>
-		public static Pokemons CheckEvolutionEx(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
+		public Pokemons CheckEvolutionEx(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
 			if (pokemon.Species<=0 || pokemon.isEgg) return 0;
 			if (pokemon.Species == Pokemons.PICHU && pokemon is PokemonEssentials.Interface.PokeBattle.IPokemonMultipleForms f && f.form==1) return 0;
 			if (pokemon.Item == Items.EVERSTONE &&
 				pokemon.Species != Pokemons.KADABRA) return 0;
 			Pokemons ret=0;
 			//foreach (var form in GetEvolvedFormData(pokemon.Species)) {
-			foreach (Data.PokemonEvolution form in Kernal.PokemonEvolutionsData[pokemon.Species]) {
+			foreach (Monster.Data.PokemonEvolution form in Kernal.PokemonEvolutionsData[pokemon.Species]) {
 				//ret=yield pokemon,form[0],form[1],form[2]; //EvolveMethod evonib,int level,poke
 				ret=form.Species;
 				if (ret>0) break;
@@ -355,7 +335,7 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="pokemon"></param>
 		/// <param name="item"></param>
-		public static Pokemons[] CheckEvolution(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,Items item=0) {
+		public Pokemons[] CheckEvolution(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon,Items item=0) {
 			if (pokemon.Species<=0 || pokemon.isEgg) return new Pokemons[0];
 			if (pokemon.Species == Pokemons.PICHU && pokemon is PokemonEssentials.Interface.PokeBattle.IPokemonMultipleForms f && f.form==1) return new Pokemons[0];
 			if (pokemon.Item == Items.EVERSTONE &&
@@ -377,5 +357,37 @@ namespace PokemonUnity.Monster
 			}
 		}
 		#endregion
+	}
+
+	namespace Monster
+	{
+		public static class EvolutionHelper //: PokemonEssentials.Interface.IGamePokemonEvolution
+		{
+			public static string[] EVONAMES=new string[] {"Unknown",
+				"Happiness","HappinessDay","HappinessNight","Level","Trade",
+				"TradeItem","Item","AttackGreater","AtkDefEqual","DefenseGreater",
+				"Silcoon","Cascoon","Ninjask","Shedinja","Beauty",
+				"ItemMale","ItemFemale","DayHoldItem","NightHoldItem","HasMove",
+				"HasInParty","LevelMale","LevelFemale","Location","TradeSpecies",
+				"LevelDay","LevelNight","LevelDarkInParty","LevelRain","HappinessMoveType",
+				"Custom1","Custom2","Custom3","Custom4","Custom5"
+			};
+
+			//  0 = no parameter
+			//  1 = Positive integer
+			//  2 = Item internal name
+			//  3 = Move internal name
+			//  4 = Species internal name
+			//  5 = Type internal name
+			public static int[] EVOPARAM=new int[] {0,    // Unknown (do not use)
+				0,0,0,1,0,   // Happiness, HappinessDay, HappinessNight, Level, Trade
+				2,2,1,1,1,   // TradeItem, Item, AttackGreater, AtkDefEqual, DefenseGreater
+				1,1,1,1,1,   // Silcoon, Cascoon, Ninjask, Shedinja, Beauty
+				2,2,2,2,3,   // ItemMale, ItemFemale, DayHoldItem, NightHoldItem, HasMove
+				4,1,1,1,4,   // HasInParty, LevelMale, LevelFemale, Location, TradeSpecies
+				1,1,1,1,5,   // LevelDay, LevelNight, LevelDarkInParty, LevelRain, HappinessMoveType
+				1,1,1,1,1    // Custom 1-5
+			};
+		}
 	}
 }

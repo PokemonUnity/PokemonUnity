@@ -633,7 +633,7 @@ namespace PokemonUnity
 			//	f.write(0xEF.chr);
 			//	f.write(0xBB.chr);
 			//	f.write(0xBF.chr);
-			//	f.write("\// "+Game._INTL("See the documentation on the wiki to learn how to edit this file."))
+			//	f.write("\# "+Game._INTL("See the documentation on the wiki to learn how to edit this file."))
 			//	f.write("\r\n");
 			//	//for (int i = 0; i < data.Length; i++) {
 			//	for (int i = 0; i < Kernal.TrainerMetaData.Count; i++) {
@@ -641,14 +641,14 @@ namespace PokemonUnity
 			//		TrainerMetaData record=Kernal.TrainerMetaData[i];
 			//		if (record) {
 			//			dataline=string.Format("%d,%s,%s,%d,%s,%s,%s,%s,%s,%s\r\n",
-			//			i,record[1],record[2], //type, name,
-			//			record[3], //moneyEarned
-			//			record[4] ? record[4] : "", //BattleBGM
-			//			record[5] ? record[5] : "", //VictoryBGM
-			//			record[6] ? record[6] : "", //IntroME
-			//			record[7] ? ["Male","Female","Mixed"][record[7]] : "Mixed",
-			//			(record[8]!=record[3]) ? record[8] : "", //skill
-			//			record[9] ? record[9] : ""; //skillCode
+			//			i,record[1],record[2],		//type, name,
+			//			record[3],					//moneyEarned
+			//			record[4] ? record[4] : "",	//BattleBGM
+			//			record[5] ? record[5] : "",	//VictoryBGM
+			//			record[6] ? record[6] : "",	//IntroME
+			//			record[7] ? ["Male","Female","Mixed"][record[7]] : "Mixed", //gender
+			//			(record[8]!=record[3]) ? record[8] : "",					//skill
+			//			record[9] ? record[9] : "";									//skillCode
 			//			);
 			//			f.write(dataline);
 			//		}
@@ -659,7 +659,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// </summary>
 		/// <remarks>
-		/// 0 => Trainer type, trainer's name[, version number]
+		/// 0 => [Trainer type, trainer's name, version number]
 		/// 1 => Items
 		/// 2 => Lose Text
 		/// 3 => Pokemon
@@ -674,11 +674,11 @@ namespace PokemonUnity
 			//	f.write("\// "+Game._INTL("See the documentation on the wiki to learn how to edit this file."))
 			//	f.write("\r\n");
 			//	foreach (var trainer in data) {
-			//		trname=getConstantName(Trainers,trainer[0]); //rescue GetTrainerConst(trainer[0]) rescue null
-			//		if (!trname) continue;
+			//		string trname=getConstantName(Trainers,trainer[0]); //rescue GetTrainerConst(trainer[0]) rescue null
+			//		if (trname==null) continue;
 			//		f.write("\#-------------------\r\n");
 			//		f.write(string.Format("%s\r\n",trname));
-			//		trainername=trainer[1] ? trainer[1].gsub(/,/,";") : "???";
+			//		string trainername=trainer[1] ? trainer[1].gsub(/,/,";") : "???";
 			//		if (trainer[4]==0) {
 			//			f.write(string.Format("%s\r\n",trainername));
 			//		} else {
@@ -693,18 +693,18 @@ namespace PokemonUnity
 			//		foreach (var poke in trainer[3]) {
 			//			maxindex=0;
 			//			towrite=[];
-			//			thistemp=getConstantName(Species,poke[TPSPECIES]); //rescue GetSpeciesConst(poke[TPSPECIES]) rescue ""
+			//			thistemp=getConstantName(Species,poke[TPSPECIES]);	//rescue GetSpeciesConst(poke[TPSPECIES]) rescue ""
 			//			towrite[TPSPECIES]=thistemp;
 			//			towrite[TPLEVEL]=poke[TPLEVEL].ToString();
 			//			thistemp=getConstantName(Items,poke[TPITEM]);		//rescue GetItemConst(poke[TPITEM]) rescue ""
-			//			towrite[TPITEM]=thistemp;							//
-			//			thistemp=getConstantName(Moves,poke[TPMOVE1]);	//rescue GetMoveConst(poke[TPMOVE1]) rescue ""
-			//			towrite[TPMOVE1]=thistemp;							//
-			//			thistemp=getConstantName(Moves,poke[TPMOVE2]);	//rescue GetMoveConst(poke[TPMOVE2]) rescue ""
-			//			towrite[TPMOVE2]=thistemp;							//
-			//			thistemp=getConstantName(Moves,poke[TPMOVE3]);	//rescue GetMoveConst(poke[TPMOVE3]) rescue ""
-			//			towrite[TPMOVE3]=thistemp;							//
-			//			thistemp=getConstantName(Moves,poke[TPMOVE4]);	//rescue GetMoveConst(poke[TPMOVE4]) rescue ""
+			//			towrite[TPITEM]=thistemp;
+			//			thistemp=getConstantName(Moves,poke[TPMOVE1]);		//rescue GetMoveConst(poke[TPMOVE1]) rescue ""
+			//			towrite[TPMOVE1]=thistemp;
+			//			thistemp=getConstantName(Moves,poke[TPMOVE2]);		//rescue GetMoveConst(poke[TPMOVE2]) rescue ""
+			//			towrite[TPMOVE2]=thistemp;
+			//			thistemp=getConstantName(Moves,poke[TPMOVE3]);		//rescue GetMoveConst(poke[TPMOVE3]) rescue ""
+			//			towrite[TPMOVE3]=thistemp;
+			//			thistemp=getConstantName(Moves,poke[TPMOVE4]);		//rescue GetMoveConst(poke[TPMOVE4]) rescue ""
 			//			towrite[TPMOVE4]=thistemp;
 			//			towrite[TPABILITY]=(poke[TPABILITY] ? poke[TPABILITY].ToString() : "");
 			//			towrite[TPGENDER]=(poke[TPGENDER] ? ["M","F"][poke[TPGENDER]] : "");
@@ -813,17 +813,17 @@ namespace PokemonUnity
 			//		}
 			//	}
 			//}
-			//save_data(conndata,"Data/connections.dat");
+			//Kernal.save_data(conndata,"Data/connections.dat");
 		}
 
 		public void SaveMetadata() {
-			//data=load_data("Data/metadata.dat") rescue null;
-			//if (!data) return;
+			//data=Kernal.load_data("Data/metadata.dat"); //rescue null
+			//if (data==null) return;
 			//SerializeMetadata(data,LoadRxData("Data/MapInfos"));
 		}
 
 		public void SerializeMetadata(object metadata,object mapinfos) {
-			//save_data(metadata,"Data/metadata.dat");
+			//Kernal.save_data(metadata,"Data/metadata.dat");
 			//File.open("PBS/metadata.txt","wb"){|f|
 			//	f.write(0xEF.chr);
 			//	f.write(0xBB.chr);
@@ -932,7 +932,7 @@ namespace PokemonUnity
 		}
 
 		public void SavePhoneData() {
-			//IList<IPhoneMessageData> data=load_data("Data/phone.dat") rescue null;
+			//IList<IPhoneMessageData> data=load_data("Data/phone.dat"); //rescue null
 			//if (data==null) return;
 			//File.open("PBS/phone.txt","wb"){|f|
 			//	f.write(0xEF.chr);
@@ -1010,8 +1010,8 @@ namespace PokemonUnity
 			//}
 		}
 
-		public void SaveBattlePokemon(IPokemon btpokemon,string filename) {
-			//if (!btpokemon || !filename) return;
+		public void SaveBattlePokemon(IList<IPokemon> btpokemon,string filename) {
+			//if (btpokemon==null || filename==null) return;
 			//species={0=>""}
 			//moves={0=>""}
 			//items={0=>""}
@@ -1019,7 +1019,7 @@ namespace PokemonUnity
 			//File.open(filename,"wb"){|f|
 			//	for (int i = 0; i < btpokemon.Length; i++) {
 			//		if (i%500==0) Graphics.update();
-			//		pkmn=btpokemon[i];
+			//		IPokemon pkmn=btpokemon[i];
 			//		f.write(FastInspect(pkmn,moves,species,items,natures));
 			//		f.write("\r\n");
 			//	}
@@ -1028,27 +1028,27 @@ namespace PokemonUnity
 
 		public string FastInspect(IPokemon pkmn,Moves[] moves,Pokemons species,Items items,Natures natures) {
 			//Pokemons c1=species[pkmn.Species] ? species[pkmn.Species] :
-			//	(species[pkmn.Species]=getConstantName(Species,pkmn.Species)); //rescue GetSpeciesConst(pkmn.Species)
+			//	(species[pkmn.Species]=pkmn.Species.ToString()); //getConstantName(Species,pkmn.Species) ?? GetSpeciesConst(pkmn.Species)
 			//Items c2=items[pkmn.Item] ? items[pkmn.Item] :
-			//	(items[pkmn.Item]=getConstantName(Items,pkmn.Item)); //rescue GetItemConst(pkmn.Item)
+			//	(items[pkmn.Item]=pkmn.Item.ToString()); //getConstantName(Items,pkmn.Item) ?? GetItemConst(pkmn.Item)
 			//Natures c3=natures[pkmn.nature] ? natures[pkmn.nature] :
-			//	(natures[pkmn.nature]=getConstantName(Natures,pkmn.nature));
+			//	(natures[pkmn.nature]=pkmn.nature.ToString()); //getConstantName(Natures,pkmn.nature)
 			//string evlist="";
 			//byte[] ev=pkmn.EV;
-			//string[] evs= new string[]{ "HP","ATK","DEF","SPD","SA","SD" };
+			//string[] evs=new string[]{ "HP","ATK","DEF","SPD","SA","SD" };
 			//for (int i = 0; i < ev.Length; i++) {
 			//	if (((ev&(1<<i))!=0)) {
 			//		if (evlist.Length>0) evlist+=",";
 			//		evlist+=evs[i];
 			//	}
 			//}
-			//c4=moves[pkmn.move1] ? moves[pkmn.move1] :
+			//string c4=moves[pkmn.move1] ? moves[pkmn.move1] :
 			//	(moves[pkmn.move1]=getConstantName(Moves,pkmn.move1)); //rescue GetMoveConst(pkmn.move1)
-			//c5=moves[pkmn.move2] ? moves[pkmn.move2] :
+			//string c5=moves[pkmn.move2] ? moves[pkmn.move2] :
 			//	(moves[pkmn.move2]=getConstantName(Moves,pkmn.move2)); //rescue GetMoveConst(pkmn.move2)
-			//c6=moves[pkmn.move3] ? moves[pkmn.move3] :
+			//string c6=moves[pkmn.move3] ? moves[pkmn.move3] :
 			//	(moves[pkmn.move3]=getConstantName(Moves,pkmn.move3)); //rescue GetMoveConst(pkmn.move3)
-			//c7=moves[pkmn.move4] ? moves[pkmn.move4] :
+			//string c7=moves[pkmn.move4] ? moves[pkmn.move4] :
 			//	(moves[pkmn.move4]=getConstantName(Moves,pkmn.move4)); //rescue GetMoveConst(pkmn.move4)
 			return "#{c1};#{c2};#{c3};#{evlist};#{c4},#{c5},#{c6},#{c7}";
 		}
@@ -1056,19 +1056,19 @@ namespace PokemonUnity
 		public void SaveAllData() {
 			SaveTypes();			//Graphics.update();
 			SaveAbilities();		//Graphics.update();
-			SaveMoveData();		//Graphics.update();
+			SaveMoveData();			//Graphics.update();
 			SaveConnectionData();	//Graphics.update();
-			SaveMetadata();		//Graphics.update();
+			SaveMetadata();			//Graphics.update();
 			SaveItems();			//Graphics.update();
-			SaveTrainerLists();	//Graphics.update();
-			SaveMachines();		//Graphics.update();
+			SaveTrainerLists();		//Graphics.update();
+			SaveMachines();			//Graphics.update();
 			SaveEncounterData();	//Graphics.update();
-			SaveTrainerTypes();	//Graphics.update();
+			SaveTrainerTypes();		//Graphics.update();
 			SaveTrainerBattles();	//Graphics.update();
-			SaveTownMap();		//Graphics.update();
+			SaveTownMap();			//Graphics.update();
 			SavePhoneData();		//Graphics.update();
-			SavePokemonData();	//Graphics.update();
-			SaveShadowMoves();	//Graphics.update();
+			SavePokemonData();		//Graphics.update();
+			SaveShadowMoves();		//Graphics.update();
 		}
 		#endregion
 
@@ -1398,8 +1398,8 @@ namespace PokemonUnity
 			IWindow_CommandPokemon list=ListWindow(new string[0],256);
 			list.viewport=viewport;
 			list.z=2;
-			//title=new Window_UnformattedTextPokemon(title);
-			//title.initialize(title);
+			//title=new Window_UnformattedTextPokemon(title); //ToDo: change title to string
+			title.initialize(title.text);
 			title.x=256;
 			title.y=0;
 			title.width=Graphics.width-256;
@@ -1441,7 +1441,7 @@ namespace PokemonUnity
 			return value;
 		}
 
-		public void ListScreenBlock(IWindow_UnformattedTextPokemon title, ILister lister, Action<int,TrainerMetaData?> action) {
+		public void ListScreenBlock(IWindow_UnformattedTextPokemon title, ILister lister, Action<int,TrainerMetaData?> action = null) {
 			//IViewport viewport=new Viewport(0,0,Graphics.width,Graphics.height);
 			IViewport viewport=Viewport.initialize(0,0,Graphics.width,Graphics.height);
 			viewport.initialize(0,0,Graphics.width,Graphics.height);
@@ -1449,8 +1449,8 @@ namespace PokemonUnity
 			IWindow_CommandPokemon list=ListWindow(new string[0],256);
 			list.viewport=viewport;
 			list.z=2;
-			//title=new Window_UnformattedTextPokemon(title);
-			//title.initialize(title);
+			//IWindow_UnformattedTextPokemon title=new Window_UnformattedTextPokemon(title);
+			title.initialize(title.text);
 			title.x=256;
 			title.y=0;
 			title.width=Graphics.width-256;
@@ -1479,7 +1479,7 @@ namespace PokemonUnity
 				}
 				if (Input.trigger(PokemonUnity.Input.A)) {
 					//yield (PokemonUnity.Input.t, lister.value(selectedmap));
-					action.Invoke(PokemonUnity.Input.A, (TrainerMetaData?)lister.value(selectedmap));
+					action?.Invoke(PokemonUnity.Input.A, (TrainerMetaData?)lister.value(selectedmap));
 					list.commands=lister.commands.ToArray();
 					if (list.index==list.commands.Length) {
 						list.index=list.commands.Length;
@@ -1487,7 +1487,7 @@ namespace PokemonUnity
 					lister.refresh(list.index);
 				} else if (Input.trigger(PokemonUnity.Input.C) || (list.doubleclick)) { //rescue false
 					//yield (PokemonUnity.Input.t, lister.value(selectedmap));
-					action.Invoke(PokemonUnity.Input.C, (TrainerMetaData?)lister.value(selectedmap));
+					action?.Invoke(PokemonUnity.Input.C, (TrainerMetaData?)lister.value(selectedmap));
 					list.commands=lister.commands.ToArray();
 					if (list.index==list.commands.Length) {
 						list.index=list.commands.Length;
@@ -1932,7 +1932,7 @@ namespace PokemonUnity
 			//	record[9]="";
 			//	Trainers.const_set(cname,record[0]);
 			//	data[record[0]]=record;
-			//	save_data(data,"Data/trainertypes.dat");
+			//	Kernal.save_data(data,"Data/trainertypes.dat");
 			//	ConvertTrainerData();
 			//	Game.GameData.GameMessage.Message(Game._INTL("The Trainer type was created (ID: {1}).",record[0]));
 			//	Game.GameData.GameMessage.Message(
@@ -1952,7 +1952,7 @@ namespace PokemonUnity
 			//setConstantName(Trainers,trainertype,ttdata[0]);
 			//IList<TrainerMetaData> data=load_data("Data/trainertypes.dat");
 			//data[record[0]]=record;
-			//data=save_data(data,"Data/trainertypes.dat");
+			//data=Kernal.save_data(data,"Data/trainertypes.dat");
 			//ConvertTrainerData();
 		}
 
@@ -1987,7 +1987,7 @@ namespace PokemonUnity
 			//					data=load_data("Data/trainertypes.dat");
 			//					removeConstantValue(Trainers,trtype[0]);
 			//					data[trtype[0]]=null;
-			//					save_data(data,"Data/trainertypes.dat");
+			//					Kernal.save_data(data,"Data/trainertypes.dat");
 			//					ConvertTrainerData();
 			//					Game.GameData.GameMessage.Message(Game._INTL("The Trainer type was deleted."));
 			//				}
@@ -2030,7 +2030,7 @@ namespace PokemonUnity
 			//	}
 			//}
 			//if (modified) {
-			//	save_data(trainers,"Data/trainers.dat");
+			//	Kernal.save_data(trainers,"Data/trainers.dat");
 			//	ConvertTrainerData();
 			//}
 			//ListScreenBlock(Game._INTL("Trainer Battles"),new TrainerBattleLister(selection,true), action: (button,trtype) => {
@@ -2043,7 +2043,7 @@ namespace PokemonUnity
 			//				if (Game.GameData.GameMessage.ConfirmMessageSerious("Delete this trainer battle?")) {
 			//					data=load_data("Data/trainers.dat");
 			//					data.delete_at(index);
-			//					save_data(data,"Data/trainers.dat");
+			//					Kernal.save_data(data,"Data/trainers.dat");
 			//					ConvertTrainerData();
 			//					Game.GameData.GameMessage.Message(Game._INTL("The Trainer battle was deleted."));
 			//				}
@@ -2121,7 +2121,7 @@ namespace PokemonUnity
 			//				if (save) {
 			//					data=load_data("Data/trainers.dat");
 			//					data[index]=trainerdata;
-			//					save_data(data,"Data/trainers.dat");
+			//					Kernal.save_data(data,"Data/trainers.dat");
 			//					ConvertTrainerData();
 			//				}
 			//			}
@@ -4400,7 +4400,7 @@ public static readonly GLOBALMETADATA=new string[] {
 				if (Game.GameData.GameMessage.ConfirmMessage(Game._INTL("Save changes?"))) {
 					serializeConnectionData;
 					serializeMetadata;
-					save_data(@encdata,"Data/encounters.dat");
+					Kernal.save_data(@encdata,"Data/encounters.dat");
 					SaveEncounterData();
 					ClearData;
 				}

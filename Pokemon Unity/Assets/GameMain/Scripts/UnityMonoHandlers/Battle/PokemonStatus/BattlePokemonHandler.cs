@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 {
 	//private Battle ActiveBattle { get { return StartupSceneHandler.PersistantPlayerData.; } }
-	#region Unity's MonoBehavior Variables	
+	#region Unity's MonoBehavior Variables
 	#region Pokemon HUD
 	public float Exp {
 		//get { return expSlider.value; }
@@ -139,9 +139,9 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 
 		//if (hpSlider.value <= (hpSlider.maxValue / 4)) { Fill.color = hpzone2; }
 		if (.3f > (hpSlider.normalizedValue)) { Fill.color = hpzone2; }
-		//else if (hpSlider.value < (hpSlider.normalizedValue.CompareTo(0.5f))) //  / 2)) 
-		else if (.75f > (hpSlider.normalizedValue)) //  / 2)) 
-		{ 
+		//else if (hpSlider.value < (hpSlider.normalizedValue.CompareTo(0.5f))) //  / 2))
+		else if (.75f > (hpSlider.normalizedValue)) //  / 2))
+		{
 			//Change color of hp bar
 			Fill.color = hpzone1;
 			//Change background image for health slider
@@ -152,7 +152,7 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 		//each time the silder's value is changed, write to text displaying the hp
 		currentHP.text = hpSlider.value.ToString(); //Set text under hp to match slider currentHealth
 	}
-	
+
 	System.Collections.IEnumerator AnimateSlider(int amount) //Slider as input?
 	{
 		Debug.Log(amount);
@@ -161,7 +161,7 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 			hpSlider.value = Mathf.Lerp(hpSlider.value + amount, hpSlider.value, 1f * Time.deltaTime);
 			yield return null;
 		}
-		//yield return 
+		//yield return
 		new WaitForSeconds(1f);
 		fadeSlider.value = Mathf.Lerp(hpSlider.value, fadeSlider.value, .5f * Time.deltaTime);
 		//yield return null;
@@ -179,7 +179,7 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 			hpSlider.value = Mathf.Lerp(hpSlider.value + amount, hpSlider.value, 1f * Time.deltaTime);
 			yield return null;
 		}
-		//yield return 
+		//yield return
 		new WaitForSeconds(1f);
 		fadeSlider.value = Mathf.Lerp(hpSlider.value, fadeSlider.value, .5f * Time.deltaTime);
 		//yield return null;
@@ -191,7 +191,7 @@ public class BattlePartyHandler : UnityEngine.MonoBehaviour
 {
 	public Selectable slot;
 
-	
+
 
 	#region Unity Engine Runtime Only
 	void Awake()
@@ -223,7 +223,7 @@ public class BattleMoveHandler : UnityEngine.MonoBehaviour
 	public Text MoveName, MovePP, MoveMaxPP;
 	public Image MoveType, MoveCover;
 	#endregion
-	
+
 
 	#region Unity Engine Runtime Only
 	void Awake()

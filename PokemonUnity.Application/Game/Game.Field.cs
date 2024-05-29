@@ -931,7 +931,7 @@ namespace PokemonUnity
 			for (int i = 0; i < currentlevels.Length; i++) {
 				IPokemon pokemon=Trainer.party[i];
 				if (pokemon.IsNotNullOrNone() && (currentlevels[i] == null || pokemon.Level!=currentlevels[i])) {
-					Pokemons newspecies=EvolutionHelper.CheckEvolution(pokemon)[0];
+					Pokemons newspecies=CheckEvolution(pokemon)[0];
 					if (newspecies>0) {
 						//  Start evolution scene
 						IPokemonEvolutionScene evo=Scenes.EvolvingScene; //new PokemonEvolutionScene();

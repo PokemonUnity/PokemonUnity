@@ -1832,9 +1832,9 @@ namespace PokemonUnity
 				compat1 == EggGroups.UNDISCOVERED ||
 				compat2 == EggGroups.DITTO ||
 				compat2 == EggGroups.UNDISCOVERED) return false;
-			Pokemons baby=EvolutionHelper.GetBabySpecies(species);
+			Pokemons baby=GetBabySpecies(species);
 			if (species==baby) return true;	// Is a basic species
-			baby=EvolutionHelper.GetBabySpecies(species,0,0);
+			baby=GetBabySpecies(species,0,0);
 			if (species==baby) return true;	// Is an egg species without incense
 			return false;
 		}

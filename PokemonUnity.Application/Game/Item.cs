@@ -230,7 +230,7 @@ namespace PokemonUnity//.Inventory
 						LearnMove(pokemon,i.Key,true);
 					}
 				}
-				Pokemons newspecies=EvolutionHelper.CheckEvolution(pokemon)[0];
+				Pokemons newspecies=CheckEvolution(pokemon)[0];
 				if (newspecies>0) {
 					FadeOutInWithMusic(99999, block: () => {
 						IPokemonEvolutionScene evo=Scenes.EvolvingScene; //new PokemonEvolutionScene();
@@ -589,7 +589,7 @@ namespace PokemonUnity//.Inventory
 				if (IsEvolutionStone(item)) {
 					annot=new List<string>();
 					foreach (var pkmn in Trainer.party) {
-						bool elig=EvolutionHelper.CheckEvolution(pkmn,item).Length>0;
+						bool elig=CheckEvolution(pkmn,item).Length>0;
 						annot.Add(elig ? Game._INTL("ABLE") : Game._INTL("NOT ABLE"));
 					}
 				}
