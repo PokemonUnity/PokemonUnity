@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Overworld;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.EventArg;
 using PokemonEssentials.Interface.Item;

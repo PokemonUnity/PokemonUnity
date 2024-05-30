@@ -1,6 +1,6 @@
 ﻿using PokemonUnity;
 using PokemonUnity.Overworld;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using System;
 using System.Collections;
 using System.Collections.Generic;

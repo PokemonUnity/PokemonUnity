@@ -2031,7 +2031,7 @@ namespace PokemonUnity.Combat
 				return -1;
 			}
 			if (@opponent.Length > 0) {
-				if (debug && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) {
+				if (debug && Input.press((int)PokemonUnity.Interface.InputKeys.DEBUG)) {
 					if (DisplayConfirm(Game._INTL("Treat this battle as a win?"))) {
 						@decision=BattleResults.WON;
 						return 1;
@@ -2051,7 +2051,7 @@ namespace PokemonUnity.Combat
 				}
 				return 0;
 			}
-			if (debug && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) {
+			if (debug && Input.press((int)PokemonUnity.Interface.InputKeys.DEBUG)) {
 				DisplayPaused(Game._INTL("Got away safely!"));
 				@decision=BattleResults.FORFEIT;
 				return 1;
@@ -2128,7 +2128,7 @@ namespace PokemonUnity.Combat
 			if (Core.NO_MEGA_EVOLUTION) return false;
 			if (!_battlers[index].hasMega) return false;
 			if (IsOpposing(index) && @opponent.Length == 0) return false;
-			if (debug && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) return true;
+			if (debug && Input.press((int)PokemonUnity.Interface.InputKeys.DEBUG)) return true;
 			if (!HasMegaRing(index)) return false;
 			int side=IsOpposing(index) ? 1 : 0;
 			int owner=GetOwnerIndex(index);

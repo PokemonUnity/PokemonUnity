@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IPokemonEntryScreen : IScreen
 	{
 		void initialize(IPokemonEntryScene scene);
-		string StartScreen(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.UX.TextEntryTypes mode = 0, IPokemon pokemon = null);
+		string StartScreen(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.Interface.TextEntryTypes mode = 0, IPokemon pokemon = null);
 	}
 
 	/// <summary>
@@ -28,7 +28,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPokemonEntryScene : IScene
 	{
-		void StartScene(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.UX.TextEntryTypes subject = 0, IPokemon pokemon = null);
+		void StartScene(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.Interface.TextEntryTypes subject = 0, IPokemon pokemon = null);
 		void EndScene();
 		string Entry();
 		//string Entry1();

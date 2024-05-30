@@ -8,7 +8,7 @@ using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
 	public partial class Battler : PokemonUnity.Combat.Pokemon, IBattlerShadowPokemonIE
 	{

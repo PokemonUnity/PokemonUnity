@@ -1,6 +1,6 @@
 ﻿using PokemonUnity;
 using PokemonUnity.Monster;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using System;
 
 namespace PokemonEssentials.Interface

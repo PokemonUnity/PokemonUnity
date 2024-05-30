@@ -7,7 +7,7 @@ using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 using PokemonUnity.Utility;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonEssentials.Interface.Item;
 using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Battle;

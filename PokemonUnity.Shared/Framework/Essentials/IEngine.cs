@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 //Interface for RPG Maker User Experience
-//namespace PokemonUnity.UX.RPGMaker
+//namespace PokemonUnity.Interface.RPGMaker
 namespace PokemonEssentials.Interface
 {
 	#region Audio
@@ -388,7 +388,7 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE.If not, returns FALSE.</returns>
-		//bool press(PokemonUnity.UX.InputKeys num);
+		//bool press(PokemonUnity.Interface.InputKeys num);
 		bool press(int num);
 		/// <summary>
 		/// Determines whether the button number is being pressed again.
@@ -396,7 +396,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>"Pressed again" is seen as time having passed between the button being not pressed and being pressed.</remarks>
-		//bool trigger(PokemonUnity.UX.InputKeys num);
+		//bool trigger(PokemonUnity.Interface.InputKeys num);
 		bool trigger(int num);
 		/// <summary>
 		/// Determines whether the button number is being pressed again.
@@ -404,7 +404,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
 		/// <remarks>Unlike <see cref="trigger"/>, takes into account the repeat input of a button being held down continuously.</remarks>
-		//bool repeat(PokemonUnity.UX.InputKeys num);
+		//bool repeat(PokemonUnity.Interface.InputKeys num);
 		bool repeat(int num);
 
 		//bool KeyPressed(int i_Key); //System.Windows.Forms.Keys

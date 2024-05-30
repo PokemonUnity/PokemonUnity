@@ -9,7 +9,7 @@ using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 using PokemonUnity;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 
 namespace PokemonEssentials.Interface
 {

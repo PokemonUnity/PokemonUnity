@@ -1,4 +1,4 @@
-﻿namespace PokemonUnity.UX
+﻿namespace PokemonUnity.Interface
 {
 	public enum TextEntryTypes
 	{

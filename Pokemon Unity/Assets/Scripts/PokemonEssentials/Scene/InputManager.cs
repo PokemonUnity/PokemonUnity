@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
+using PokemonUnity.Interface;
 using PokemonUnity.Character;
 using PokemonUnity.Monster;
 using PokemonEssentials.Interface;
@@ -17,9 +18,8 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using PokemonUnity.UX;
 
-namespace PokemonUnity
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// </summary>
@@ -111,17 +111,17 @@ namespace PokemonUnity
 			//}
 		}
 
-		bool IInput.press(InputKeys num)
+		bool IInput.press(PokemonUnity.Interface.InputKeys num)
 		{
 			return KeyPressed((int)num);
 		}
 
-		bool IInput.trigger(InputKeys num)
+		bool IInput.trigger(PokemonUnity.Interface.InputKeys num)
 		{
 			return KeyPressed((int)num);
 		}
 
-		bool IInput.repeat(InputKeys num)
+		bool IInput.repeat(PokemonUnity.Interface.InputKeys num)
 		{
 			return KeyPressed((int)num);
 		}

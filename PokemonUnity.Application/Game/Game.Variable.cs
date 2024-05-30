@@ -44,7 +44,7 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.IGameMessage GameMessage { get; set; }
 		public PokemonEssentials.Interface.IGameAudioPlay Audio { get; set; }
 
-		//public static PokemonUnity.UX.IFrontEnd UI { get; private set; }
+		//public static PokemonUnity.Interface.IFrontEnd UI { get; private set; }
 		public PokemonEssentials.Interface.IChooseNumberParams ChooseNumberParams { get; set; }
 		public PokemonEssentials.Interface.Field.IEncounters MapEncounterData { get; set; }
 

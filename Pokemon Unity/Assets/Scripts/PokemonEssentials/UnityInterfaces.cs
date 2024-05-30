@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
+using PokemonUnity.Combat;
 using PokemonUnity.Character;
 using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
@@ -18,9 +19,8 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 using UnityEngine;
 using UnityEngine.UI;
-using PokemonUnity.Combat;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
 	public interface IGameObject
 	{

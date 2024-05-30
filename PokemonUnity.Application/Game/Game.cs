@@ -97,7 +97,7 @@ namespace PokemonUnity
 
 		public Game SetScreens(params PokemonEssentials.Interface.Screen.IScreen[] screens)
 		{
-			Screens = new UX.Screen(screens);
+			Screens = new PokemonUnity.Interface.Screen(screens);
 			return this;
 		}
 

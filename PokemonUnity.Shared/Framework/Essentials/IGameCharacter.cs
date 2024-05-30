@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Inventory;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonEssentials.Interface.RPGMaker.Kernal;
 
 namespace PokemonEssentials.Interface

@@ -1,7 +1,7 @@
 ﻿using System;
 using PokemonEssentials.Interface;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
 	public partial class GameSystem : IGameSystem
 	{
@@ -219,7 +219,7 @@ namespace PokemonUnity.UX
 		/// <returns></returns>
 		public IAudioBGM getPlayingBGM()
 		{
-			return @playing_bgm != null ? @playing_bgm.clone() : null;
+			return @playing_bgm != null ? (IAudioBGM)@playing_bgm.Clone() : null;
 		}
 
 		public void setDefaultBGM(string bgm, float volume = 80, float pitch = 100)
@@ -251,7 +251,7 @@ namespace PokemonUnity.UX
 			{
 				@defaultBGM = null;
 				this.bgm_play(bgm);
-				@defaultBGM = bgm.clone();
+				@defaultBGM = (IAudioBGM)bgm.Clone();
 			}
 			else
 			{
@@ -332,7 +332,7 @@ namespace PokemonUnity.UX
 
 		public void bgs_play(IAudioBGS bgs)
 		{
-			@playing_bgs = bgs == null ? null : bgs.clone();
+			@playing_bgs = bgs == null ? null : (IAudioBGS)(IAudioBGM)bgs.Clone();
 			if (bgs != null && bgs.name != "")
 			{
 				if (FileTest.audio_exist("Audio/BGS/" + bgs.name))
@@ -410,7 +410,7 @@ namespace PokemonUnity.UX
 
 		public IAudioBGS getPlayingBGS()
 		{
-			return @playing_bgs != null ? @playing_bgs.clone() : null;
+			return @playing_bgs != null ? (IAudioBGS)@playing_bgs.Clone() : null;
 		}
 
 		// ###############################################################################

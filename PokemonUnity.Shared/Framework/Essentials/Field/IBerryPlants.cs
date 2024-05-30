@@ -5,7 +5,7 @@ using PokemonUnity;
 using PokemonUnity.Inventory;
 using PokemonUnity.Inventory.Plants;
 using PokemonUnity.Overworld;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Field

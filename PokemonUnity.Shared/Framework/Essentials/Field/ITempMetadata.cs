@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using PokemonUnity;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Field

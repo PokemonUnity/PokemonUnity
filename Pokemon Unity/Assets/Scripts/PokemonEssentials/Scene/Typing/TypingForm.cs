@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonUnity.Monster;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.PokeBattle;
@@ -48,7 +48,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// If the typing screen is for naming a Player, PC Box, or a Pokemon; 
 		/// Change the icon to match sprite that represents subject.
-		/// <see cref="PokemonUnity.UX.TextEntryTypes"/>
+		/// <see cref="PokemonUnity.Interface.TextEntryTypes"/>
 		/// </summary>
 		/// Instantiate using prefab...
 		/// Should include animation frames, and icon shadow

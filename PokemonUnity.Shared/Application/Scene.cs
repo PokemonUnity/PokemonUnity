@@ -8,7 +8,7 @@ using System.Text;
 using PokemonUnity.Monster;
 using PokemonEssentials.Interface.Screen;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface
 {
 	/// <summary>
 	/// List of all the scenes that utilized by frontend platform

@@ -1,4 +1,4 @@
-﻿using PokemonUnity.UX;
+﻿using PokemonUnity.Interface;
 using System.Collections;
 
 namespace PokemonEssentials.Interface

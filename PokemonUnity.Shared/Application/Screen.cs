@@ -1,4 +1,4 @@
-﻿namespace PokemonUnity.UX
+﻿namespace PokemonUnity.Interface
 {
 	/// <summary>
 	/// List of all the screens that utilized by frontend platform

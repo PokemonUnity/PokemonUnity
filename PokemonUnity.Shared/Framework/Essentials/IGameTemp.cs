@@ -1,5 +1,5 @@
 ﻿using PokemonEssentials.Interface.Field;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using System;
 
 namespace PokemonEssentials.Interface
