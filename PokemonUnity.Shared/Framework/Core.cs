@@ -95,7 +95,7 @@ namespace PokemonUnity
 		/// </summary>
 		public static Random Rand { get {
 				SetSeed();
-				Logger?.Log("Random Number Generated Seed: " + Seed);
+				Logger?.LogDebug("Random Number Generated Seed: " + Seed);
 				return new Random(Seed); } }
 		//public static System.Collections.Generic.KeyValuePair<UInt16, Random> Rand { get { Random r = new Random(Seed()); return new System.Collections.Generic.KeyValuePair<UInt16, Random>(seed.Value, r); } }
 		/// <summary>
