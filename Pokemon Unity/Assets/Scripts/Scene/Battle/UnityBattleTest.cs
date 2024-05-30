@@ -257,7 +257,7 @@ namespace PokemonUnity.UX
 		}
 		new public IBattleIE initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent, int maxBattlers = 4)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//if opponent (trainer battle) is not null but player array is empty, then player is null
 			//if (opponent != null && player.Length == 0)

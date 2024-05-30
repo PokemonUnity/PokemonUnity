@@ -15,7 +15,7 @@ namespace PokemonUnity.UX
 {
 	/// <summary>
 	/// </summary>
-	/// Same class can be used for both regular battles and safari battles, 
+	/// Same class can be used for both regular battles and safari battles,
 	/// but just need to call the initialize for the right one to load the correct attributes.
 	/// Otherwise, you might just need to make an abstract factory for the constructor
 	//ToDo: SafariDataBox has different Update/Refresh values when overriding...
@@ -84,7 +84,7 @@ namespace PokemonUnity.UX
 
 		public IPokemonDataBox initialize(IBattler battler, bool doublebattle, IViewport viewport = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			base.initialize(viewport);
 			this.battler = battler as IBattlerIE;
 			GameDebug.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
@@ -112,7 +112,7 @@ namespace PokemonUnity.UX
 				switch (@battler.Index)
 				{
 					case 0:
-						//if playing or watching an npc? 
+						//if playing or watching an npc?
 						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxD");
 						//@spriteX = PokeBattle_SceneConstants.PLAYERBOXD1_X;
 						//@spriteY = PokeBattle_SceneConstants.PLAYERBOXD1_Y;
@@ -174,7 +174,7 @@ namespace PokemonUnity.UX
 
 		public void refreshExpLevel()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			if (!@battler.pokemon.IsNotNullOrNone())
 			{
 				@explevel = 0;
@@ -198,7 +198,7 @@ namespace PokemonUnity.UX
 				}
 			}
 		}
-				
+
 		/// <summary>
 		/// Assigns variables to store new value changes that will take effect during next frame updates
 		/// </summary>
@@ -206,14 +206,14 @@ namespace PokemonUnity.UX
 		/// <param name="newhp"></param>
 		public void animateHP(int oldhp, int newhp)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			@starthp = oldhp;
 			@currenthp = newhp; //@endhp = newhp;
 			@animatingHP = true;
 			StopCoroutine("AnimateSliderHP"); //(AnimateSliderExp(@explevel));
 			StartCoroutine(AnimateSliderHP(HP)); //sliderExp.value = @explevel;
 		}
-				
+
 		/// <summary>
 		/// Assigns variables to store new value changes that will take effect during next frame updates
 		/// </summary>
@@ -221,20 +221,20 @@ namespace PokemonUnity.UX
 		/// <param name="newhp"></param>
 		public void animateEXP(int oldexp, int newexp)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			@currentexp = newexp;
 			@explevel = oldexp; //@endexp = newexp;
 			@animatingEXP = true;
 			StopCoroutine("AnimateSliderExp"); //(AnimateSliderExp(@explevel));
 			StartCoroutine(AnimateSliderExp(Exp)); //sliderExp.value = @explevel;
 		}
-		 
+
 		/// <summary>
 		/// Toggle active and animate sliding onto screen from side
 		/// </summary>
 		public override void appear()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			refreshExpLevel();
 			refresh();
 			this.visible = true;
@@ -250,11 +250,11 @@ namespace PokemonUnity.UX
 			this.y = @spriteY;
 			@appearing = true;
 		}
-				
+
 		public override void refresh()
 		{
 			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			
+
 			//this.bitmap.clear();
 			if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
 			//this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
@@ -342,7 +342,7 @@ namespace PokemonUnity.UX
 			}
 			else //if pokemon is on opponent side
 			{
-				if (@battler.owned) 
+				if (@battler.owned)
 				{
 					//imagepos.Add(new TextPosition("Graphics/Pictures/battleBoxOwned.png", @spritebaseX + 8, 36, 0, 0, -1, -1));
 					spriteCaught?.gameObject.SetActive(true); //gameObject.transform.Find("Caught").gameObject.SetActive(true);
@@ -418,11 +418,11 @@ namespace PokemonUnity.UX
 				//StartCoroutine(AnimateSliderExp(this.Exp)); //sliderExp.value = this.Exp;
 			}
 		}
-				
+
 		public override void update()
 		{
 			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			
+
 			base.update();
 			@frame += 1;
 			if (@animatingHP)
@@ -561,14 +561,14 @@ namespace PokemonUnity.UX
 		/// </summary>
 		private void ValueChangeCheck()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//if (sliderHP.value <= (sliderHP.maxValue / 4)) { Fill.color = hpzone2; }
-			if (.3f > sliderHP.normalizedValue) 
-			{ 
-				spriteFillHP.color = Color.red; //(SeriColor)PokeBattle_SceneConstants.HPCOLORRED; 
+			if (.3f > sliderHP.normalizedValue)
+			{
+				spriteFillHP.color = Color.red; //(SeriColor)PokeBattle_SceneConstants.HPCOLORRED;
 			}
-			//else if (sliderHP.value < (sliderHP.normalizedValue.CompareTo(0.5f))) //  / 2)) 
-			else if (.75f > (sliderHP.normalizedValue)) //  / 2)) 
+			//else if (sliderHP.value < (sliderHP.normalizedValue.CompareTo(0.5f))) //  / 2))
+			else if (.75f > (sliderHP.normalizedValue)) //  / 2))
 			{
 				//Change color of hp bar
 				spriteFillHP.color = Color.yellow; //(SeriColor)PokeBattle_SceneConstants.HPCOLORYELLOW;
@@ -584,7 +584,7 @@ namespace PokemonUnity.UX
 
 		private System.Collections.IEnumerator AnimateSliderHP(int amount) //Slider as input?
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//Debug.Log(amount);
 			//while (sliderHP.value != amount)
 			while (Math.Abs(sliderHP.value - amount) > 0.001f)
@@ -603,7 +603,7 @@ namespace PokemonUnity.UX
 		/// <returns></returns>
 		private System.Collections.IEnumerator AnimateSliderExp(int amount) //Slider as input?
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//Debug.Log(amount);
 			while (sliderExp.value != amount) //ToDo: While != this.Exp, lerp(value + amount)?
 			{
@@ -641,8 +641,8 @@ namespace PokemonUnity.UX
 
 		public ISafariDataBox initialize(IBattle battle, IViewport viewport = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+
 			base.initialize(viewport);
 			@selected = 0;
 			this.battle = battle;
@@ -659,14 +659,14 @@ namespace PokemonUnity.UX
 			refresh();
 			return this;
 		}
-		 
+
 		/// <summary>
 		/// Toggle active and animate sliding onto screen from side
 		/// </summary>
 		public override void appear()
 		{
 			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			
+
 			refresh();
 			this.visible = true;
 			this.opacity = 255;
@@ -674,11 +674,11 @@ namespace PokemonUnity.UX
 			this.y = @spriteY;
 			@appearing = true;
 		}
-				
+
 		public virtual void refresh()
 		{
 			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			
+
 			//this.bitmap.clear();
 			//this.bitmap.blt(0, 0, @databox.bitmap, new Rect(0, 0, @databox.width, @databox.height));
 			//SetSystemFont(this.bitmap);
@@ -689,11 +689,11 @@ namespace PokemonUnity.UX
 			textpos.Add(new TextPosition(Game._INTL("Left: {1}", (@battle as ISafariZone_Scene).ballCount), 30, 38, false, base_, shadow));
 			//DrawTextPositions(this.bitmap, textpos);
 		}
-				
+
 		public override void update()
 		{
 			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			
+
 			base.update();
 			if (@appearing)
 			{

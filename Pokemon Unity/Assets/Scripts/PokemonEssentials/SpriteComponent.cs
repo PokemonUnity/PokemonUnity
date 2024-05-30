@@ -57,7 +57,7 @@ namespace PokemonUnity
 		//
 		//}
 	}
-	
+
 	public class Sprite : RPGSprite, ISprite
 	{
 		/// <summary>
@@ -316,7 +316,7 @@ namespace PokemonUnity
 		/// </summary>
 		public void Dispose()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
 			Dispose(disposing: true);

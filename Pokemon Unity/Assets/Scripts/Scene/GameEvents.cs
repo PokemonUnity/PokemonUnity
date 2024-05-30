@@ -46,8 +46,9 @@ namespace PokemonUnity
 			current = this;
 			//UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject
 
-			GameDebug.OnLog += GameDebug_OnLog;
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Debugger.Instance.OnLog += GameDebug_OnLog;
+			GameDebug.Init("\\Logs", "GameLog"); //Path = "Logs\GameLog.txt"
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			try
 			{
 				//GameDebug.Log("0-" + System.IO.Path.GetFullPath("..\\veekun-pokedex.sqlite"));
@@ -84,7 +85,7 @@ namespace PokemonUnity
 						Game.InitPokemons();
 						Game.InitPokemonForms();
 						Game.InitPokemonMoves();
-						//Game.InitPokemonEvolutions();
+						Game.InitPokemonEvolutions();
 						Game.InitPokemonItems();
 						Game.InitMoves();
 						Game.InitItems();
@@ -120,7 +121,7 @@ namespace PokemonUnity
 		}
 		void Start()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
 			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
@@ -143,7 +144,7 @@ namespace PokemonUnity
 
 		private void ConfigureScenes()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			game.Scenes = gameObject.GetComponent<LevelLoader>() as IGameScenesUI;
 			//ToDo: Load all the different game scenes into an array, from unity inspector, and pass them as an input parameter below

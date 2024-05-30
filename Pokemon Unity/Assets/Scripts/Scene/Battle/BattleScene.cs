@@ -223,7 +223,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	private void Start()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		GameDebug.Log("######################################");
 		GameDebug.Log("# Hello - Welcome to Unity Battle! #");
 		GameDebug.Log("######################################");
@@ -271,7 +271,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IPokeBattle_SceneIE initialize()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		battle = null;
 		lastcmd = new MenuCommands[] { 0, 0, 0, 0 };
@@ -315,14 +315,14 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	IPokeBattle_Scene IPokeBattle_Scene.initialize()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		return (IPokeBattle_Scene)initialize();
 	}
 
 	public void Update()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		partyAnimationUpdate();
 		//if (sprites["battlebg"] is GameObject g) g.Update();
@@ -330,7 +330,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void GraphicsUpdate()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		partyAnimationUpdate();
 		//if (sprites["battlebg"] is GameObject g) g.Update();
@@ -339,7 +339,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void InputUpdate()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		PokemonUnity.Input.update();
 		//ToDo: Use GameFramework Input manager instead of Unity
@@ -356,7 +356,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <param name="windowtype"></param>
 	public void ShowWindow(int windowtype)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//ToDo: Uncomment below after debugging...
 		//@sprites["messagebox"].visible = (windowtype == MESSAGEBOX ||
@@ -370,7 +370,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void SetMessageMode(bool mode)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		/*
 		@messagemode = mode;
 		IWindow_AdvancedTextPokemon msgwindow = @sprites["messagewindow"] as IWindow_AdvancedTextPokemon;
@@ -399,7 +399,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator WaitMessage()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if (@briefmessage)
 		{
@@ -425,7 +425,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator Display(string msg, bool brief)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		return DisplayMessage(msg, brief);
 	}
@@ -436,7 +436,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator Display(string v)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		return Display(v, false);
 	}
@@ -448,9 +448,9 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator DisplayMessage(string msg, bool brief)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		GameDebug.Log("Display Message: \"{0}\"", msg);
+		GameDebug.Log(message: "Display Message: \"{0}\"", msg);
 		/*WaitMessage();
 		Refresh();
 		ShowWindow(MESSAGEBOX);
@@ -501,9 +501,9 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator DisplayPausedMessage(string msg)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		GameDebug.Log("Display Message: \"{0}\"", msg);
+		GameDebug.Log(message: "Display Message: \"{0}\"", msg);
 		/*WaitMessage();
 		Refresh();
 		ShowWindow(MESSAGEBOX);
@@ -547,7 +547,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator DisplayConfirmMessage(string msg, System.Action<bool> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int value = 0;
 		yield return ShowCommands(msg, new string[] { Game._INTL("Yes"), Game._INTL("No") }, 1, result: r => value = r);
@@ -579,9 +579,9 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator ShowCommands(string msg, string[] commands, int defaultValue, System.Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-		GameDebug.Log("Display Message: \"{0}\"", msg);
+		GameDebug.Log(message: "Display Message: \"{0}\"", msg);
 		WaitMessage();
 		Refresh();
 		ShowWindow(MESSAGEBOX);
@@ -679,7 +679,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	void IPokeBattle_DebugScene.FrameUpdate(IViewport cw)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if (cw != null) cw.update();
 		FrameUpdate();
@@ -728,7 +728,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <param name="viewport"></param>
 	public IIconSprite AddSprite(string id, float x, float y, string filename, IViewport viewport)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//IIconSprite sprite = new IconSprite(x, y, viewport);
 		IIconSprite sprite = null; //UnityEngine.GameObject.Instantiate<IIconSprite>().initialize((float)x, (float)y, viewport);
@@ -742,7 +742,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void AddPlane(string id, string filename, IViewport viewport)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//IAnimatedPlane sprite = new AnimatedPlane(viewport);
 		//if (!string.IsNullOrEmpty(filename))
@@ -755,14 +755,14 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void DisposeSprites()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//DisposeSpriteHash(@sprites); //Clears list of GameObjects in scene?...
 	}
 
 	public void BeginCommandPhase()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//  Called whenever a new round begins.
 		@battlestart = false;
@@ -774,7 +774,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <param name="index"></param>
 	public IEnumerator ShowOpponent(int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		/*
 		string trainerfile = string.Empty;
 		if (@battle.opponent != null)
@@ -818,7 +818,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// </summary>
 	public IEnumerator HideOpponent()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int i = 0;
 		do //20.times ;
@@ -836,7 +836,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void ShowHelp(string text)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).resizeToFit(text, (Game.GameData as Game).Graphics.width);
 		(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).y = 0;
@@ -847,14 +847,14 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void HideHelp()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).visible = false;
 	}
 
 	public void Backdrop()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		/*
 		PokemonUnity.Overworld.Environments environ = @battle.environment;
 		//  Choose backdrop
@@ -959,7 +959,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	///Can also be a void: while(true) { if frame == index, then move sprite to x/y position }?
 	public IEnumerator partyAnimationUpdate()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if (!inPartyAnimation) yield break;
 		/*int ballmovedist = 16; // How far a ball moves each frame
@@ -1070,7 +1070,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator StartBattle(IBattleIE battle)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		GameDebug.Log("Start of the battle");
 		GameDebug.Log("Play animation of pokemons coming to scene before player can control actions");
 
@@ -1450,7 +1450,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator EndBattle(BattleResults result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		GameDebug.Log($"End of the battle. Result: {result}");
 
 		@abortable = false;
@@ -1470,7 +1470,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <param name="battlerindex"></param>
 	public IEnumerator Recall(int battlerindex)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*@briefmessage = false;
 		float origin = 0;
@@ -1529,7 +1529,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator TrainerSendOut(int battlerindex, IPokemon pkmn)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		/*TODO show opponent's pokemon
 		IPokemon illusionpoke=@battle.battlers[battlerindex].effects.Illusion;
 		@briefmessage=false;
@@ -1590,7 +1590,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <param name="pkmn"></param>
 	public IEnumerator SendOut(int battlerindex, IPokemon pkmn)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//TODO show player's pokemon
 		/*while (inPartyAnimation){ } //ToDo: Uncomment, and ensure that logic has an exit
@@ -1683,7 +1683,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator TrainerWithdraw(IBattle battle, IBattlerIE pkmn)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//TODO hide opponent's pokemon
 		Refresh();
@@ -1696,7 +1696,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator Withdraw(IBattle battle, IBattlerIE pkmn)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//TODO hide player's pokemon
 		Refresh();
@@ -1710,7 +1710,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public string MoveString(IBattleMove move)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		string ret = Game._INTL("{1}", move.Name);
 		string typename = move.Type.ToString(TextScripts.Name);
@@ -1723,7 +1723,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator BeginAttackPhase()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		SelectBattler(-1, 0); //SelectBattler(-1);
 		GraphicsUpdate();
@@ -1734,7 +1734,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator SafariStart()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		@briefmessage = false;
 		//@sprites["battlebox0"] = new SafariDataBox(@battle, @viewport);
@@ -1756,7 +1756,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void ResetCommandIndices()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//reset the frontend command indices to 0;
 		@lastcmd = new MenuCommands[] { 0, 0, 0, 0 };
@@ -1764,7 +1764,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void ResetMoveIndex(int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//reset the frontend move index to 0;
 		@lastmove[index] = 0;
@@ -1772,7 +1772,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator SafariCommandMenu(int index, System.Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		yield return CommandMenuEx(index,new string[] {
 			Game._INTL("What will\n{1} throw?", @battle.Player().name),
@@ -1786,7 +1786,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	int IPokeBattle_Scene.SafariCommandMenu(int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		return CommandMenuEx(index,new string[] {
 			Game._INTL("What will\n{1} throw?", @battle.Player().name),
@@ -1804,7 +1804,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <returns>Return values: 0=Fight, 1=Bag, 2=Pokémon, 3=Run, 4=Call</returns>
 	public IEnumerator CommandMenu(int index, System.Action<MenuCommands> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		bool shadowTrainer = (@battle.opponent != null); //hasConst(Types,:SHADOW) &&
 		int ret = -1;
@@ -1823,7 +1823,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	int IPokeBattle_SceneNonInteractive.CommandMenu(int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		bool shadowTrainer = (@battle.opponent != null); //hasConst(Types,:SHADOW) &&
 		GameDebug.Log("Choose Action: [FIGHT=0] [BAG=1] [POKEMON=2] [RUN=3] [CALL=4]");
@@ -1841,7 +1841,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	int IPokeBattle_DebugSceneNoGraphics.CommandMenu(int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		bool shadowTrainer = (@battle.opponent != null); //hasConst(Types,:SHADOW) &&
 		int ret = CommandMenuEx(index,new string[] {
@@ -1869,7 +1869,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <returns></returns>
 	public IEnumerator CommandMenuEx(int index, string[] texts, int mode, System.Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		ShowWindow(COMMANDBOX);
 		ICommandMenuDisplay cw = @sprites["commandwindow"] as ICommandMenuDisplay;
 		cw.setTexts(texts);
@@ -1936,7 +1936,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <returns></returns>
 	private int CommandMenuEx(int index, string[] texts, int mode)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		ShowWindow(COMMANDBOX);
 		ICommandMenuDisplay cw = @sprites["commandwindow"] as ICommandMenuDisplay;
 		cw.setTexts(texts);
@@ -2055,7 +2055,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <returns></returns>
 	public IEnumerator FightMenu(int index, Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		ShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
@@ -2128,7 +2128,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public int FightMenu(int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		ShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
@@ -2206,7 +2206,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <returns>Callbacks an int</returns>
 	private IEnumerator FightMenuIE(int index, IFightMenuDisplay cw, System.Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//All of this below should be a coroutine that returns the value selected in UI
 		do //;loop
@@ -2280,7 +2280,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator ItemMenu(int index, System.Action<Items> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		Items ret = Items.NONE;
 		//int retindex = -1;
@@ -2369,7 +2369,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public Items ItemMenu(int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		Items ret = Items.NONE;
 		//int retindex = -1;
@@ -2456,7 +2456,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	private IEnumerator ItemMenuIE(int index, IBagScene itemscene, System.Action<Items,int,bool> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		Items ret = Items.NONE;
 		int retindex = -1;
@@ -2529,7 +2529,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator ForgetMove(IPokemon pokemon, Moves moveToLearn, System.Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int ret = -1;
 		if (Game.GameData is IGameSpriteWindow g) g.FadeOutIn(99999, block: () => {
@@ -2545,7 +2545,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public int ForgetMove(IPokemon pokemon, Moves moveToLearn)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int ret = -1;
 		if (Game.GameData is IGameSpriteWindow g) g.FadeOutIn(99999, block: () => {
@@ -2566,7 +2566,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <returns></returns>
 	public IEnumerator ChooseMove(IPokemon pokemon, string message, Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int ret = -1;
 		if (Game.GameData is IGameSpriteWindow g) g.FadeOutIn(99999, block: () => {
@@ -2582,7 +2582,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public int ChooseMove(IPokemon pokemon, string message)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int ret = -1;
 		if (Game.GameData is IGameSpriteWindow g) g.FadeOutIn(99999, block: () => {
@@ -2597,7 +2597,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator NameEntry(string helptext, IPokemon pokemon, System.Action<string> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//yield return EnterPokemonName(helptext, 0, 10, "", pokemon);
 		result?.Invoke(pokemon.Name);
@@ -2606,7 +2606,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public string NameEntry(string helptext, IPokemon pokemon)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//return EnterPokemonName(helptext, 0, 10, "", pokemon);
 		return pokemon.Name;
@@ -2614,7 +2614,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void SelectBattler(int index, int selectmode)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int numwindows = 1; //@battle.doublebattle ? 4 : 2;
 		for (int i = 0; i < numwindows; i++)
@@ -2628,7 +2628,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public int FirstTarget(int index, Targets targettype)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		switch (targettype)
 		{
@@ -2687,7 +2687,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void UpdateSelected(int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int numwindows = @battle.doublebattle ? 4 : 2;
 		for (int i = 0; i < numwindows; i++)
@@ -2709,7 +2709,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator ChooseTarget(int index, Targets targettype, System.Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		ShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
@@ -2825,7 +2825,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	int IPokeBattle_SceneNonInteractive.ChooseTarget(int index, Targets targettype)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		ShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
@@ -2941,7 +2941,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	int IPokeBattle_DebugSceneNoGraphics.ChooseTarget(int index, Targets targettype)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		ShowWindow(FIGHTBOX);
 		IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
@@ -3057,7 +3057,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	private IEnumerator ChooseTargetIE(int index, Targets targettype, int curwindow, System.Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*int newcurwindow = -1;
 		//All of this below should be a coroutine that returns the value selected in UI
@@ -3153,7 +3153,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public int Switch(int index, bool lax, bool cancancel)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int _coroutineValue = -1;
 		StopCoroutine("Switch");
@@ -3163,7 +3163,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator Switch(int index, bool lax, bool cancancel, System.Action<int> result)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		int ret = -1;
 		IPokemon[] party = @battle.Party(index);
@@ -3232,7 +3232,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator DamageAnimation(IBattlerIE pkmn, TypeEffective effectiveness)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		IPokemonBattlerSprite pkmnsprite = @sprites[$"pokemon{pkmn.Index}"] as IPokemonBattlerSprite;
 		IIconSprite shadowsprite = @sprites[$"shadow{pkmn.Index}"] as IIconSprite;
@@ -3292,7 +3292,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <param name="anim"></param>
 	public IEnumerator HPChanged(IBattlerIE pkmn, int oldhp, bool anim)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		@briefmessage = false;
 		int hpchange = pkmn.HP - oldhp;
@@ -3336,7 +3336,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <param name="pkmn"></param>
 	public IEnumerator Fainted(IBattlerIE pkmn)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*int frames = CryFrameLength(pkmn.pokemon);
 		PlayCry(pkmn.pokemon);
@@ -3401,7 +3401,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <param name="index"></param>
 	public void ChooseEnemyCommand(int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if(@battle is IBattleAI b) b.DefaultChooseEnemyCommand(index);
 	}
@@ -3415,7 +3415,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 	/// <returns></returns>
 	public int ChooseNewEnemy(int index, IPokemon[] party)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if (@battle is IBattleAI b) return b.DefaultChooseNewEnemy(index, party);
 		else GameDebug.LogError("Need to Configure Battle AI to Select Next Pokemon for Computer...");
@@ -3424,7 +3424,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator WildBattleSuccess()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//yield return (AudioHandler as IGameAudioPlay).BGMPlay(GetWildVictoryME());
 		yield break;
@@ -3434,7 +3434,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator TrainerBattleSuccess()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//yield retun (AudioHandler as IGameAudioPlay).BGMPlay(GetTrainerVictoryME(@battle.opponent));
 		yield break;
@@ -3444,7 +3444,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator EXPBar(IBattlerIE battler, IPokemon thispoke, int startexp, int endexp, int tempexp1, int tempexp2)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if (battler != null)
 		{
@@ -3474,7 +3474,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator ShowPokedex(Pokemons species, int form)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if (Game.GameData is IGameSpriteWindow g) g.FadeOutIn(99999, block: () => {
 			//IPokemonPokedexScene scene = new PokemonPokedexScene();
@@ -3535,7 +3535,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void ChangePokemon(IBattler attacker, IPokemon pokemon)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*IPokemonBattlerSprite pkmn = @sprites[$"pokemon{attacker.Index}"] as IPokemonBattlerSprite;
 		IIconSprite shadow = @sprites[$"shadow{attacker.Index}"] as IIconSprite;
@@ -3580,13 +3580,13 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void ChangePokemon()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 	}
 
 	//public void SaveShadows()
 	public void SaveShadows(Action action = null)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		IList<bool> shadows = new List<bool>();
 		IIconSprite s = null;
@@ -3606,7 +3606,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public KeyValuePair<string, bool>? FindAnimation(Moves moveid, int userIndex, int hitnum)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		/*
 		try //begin;
 		{
@@ -3685,7 +3685,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator CommonAnimation(string animname, IBattlerIE user, IBattlerIE target, int hitnum = 0)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*animations = load_data("Data/PkmnAnimations.rxdata");
 		for (int i = 0; i < animations.Length; i++)
@@ -3701,7 +3701,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void CommonAnimation(string animname, IBattler user, IBattler target, int hitnum)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*animations = load_data("Data/PkmnAnimations.rxdata");
 		for (int i = 0; i < animations.Length; i++)
@@ -3718,7 +3718,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator Animation(Moves moveid, IBattlerIE user, IBattlerIE target, int hitnum)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*KeyValuePair<string,bool>? animid = FindAnimation(moveid, user.Index, hitnum);
 		if (animid==null) yield break;
@@ -3745,7 +3745,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	void IPokeBattle_DebugSceneNoGraphics.Animation(Moves moveid, IBattler user, IBattler target, int hitnum)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		/*
 		int animid = FindAnimation(moveid, user.Index, hitnum);
 		if (!animid) return;
@@ -3771,7 +3771,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator AnimationCore(string animation, IBattlerIE user, IBattlerIE target, bool oppmove)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*if (!animation) yield break;
 		@briefmessage = false;
@@ -3831,7 +3831,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator LevelUp(IBattlerIE battler, IPokemon pokemon, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*TopRightWindow(Game._INTL("Max. HP<r>+{1}\r\nAttack<r>+{2}\r\nDefense<r>+{3}\r\nSp. Atk<r>+{4}\r\nSp. Def<r>+{5}\r\nSpeed<r>+{6}",
 		   pokemon.TotalHP - oldtotalhp,
@@ -3849,7 +3849,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator ThrowAndDeflect(Items ball, int targetBattler)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*@briefmessage = false;
 		balltype = GetBallType(ball);
@@ -3892,7 +3892,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator Throw(Items ball, int shakes, bool critical, int targetBattler, bool showplayer)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*@briefmessage = false;
 		int burst = -1;
@@ -3921,7 +3921,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator ThrowSuccess()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		//if wild pokemon...
 		if (@battle.opponent == null) {
@@ -3943,7 +3943,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator HideCaptureBall()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if (@sprites["capture"] != null)
 		{
@@ -3963,7 +3963,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator ThrowBait()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*@briefmessage = false;
 		string ball = string.Format("Graphics/Pictures/battleBait");
@@ -4051,7 +4051,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public IEnumerator ThrowRock()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		/*@briefmessage=false;
 		ball=string.Format("Graphics/Pictures/battleRock");
@@ -4149,7 +4149,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	public void Chatter(IBattler attacker, IBattler opponent) //ToDo: Make IEnumerator...
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		if (attacker.pokemon != null)
 		{
@@ -4173,70 +4173,70 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 	IPokeBattle_DebugSceneNoGraphics IPokeBattle_DebugSceneNoGraphics.initialize()
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
 	}
 
 	void IPokeBattle_DebugSceneNoGraphics.BattleArenaBattlers(IBattle b1, IBattle b2)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
 	}
 
 	void IPokeBattle_DebugSceneNoGraphics.BattleArenaJudgment(IBattle b1, IBattle b2, int[] r1, int[] r2)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
 	}
 
 	int IPokeBattle_DebugSceneNoGraphics.Blitz(int keys)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
 	}
 
 	public IEnumerator NextTarget(int cur, int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
 	}
 
 	void IPokeBattle_DebugScene.NextTarget(int cur, int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
 	}
 
 	void IPokeBattle_DebugScene.PokemonString(IPokemon pkmn)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
 	}
 
 	public IEnumerator PrevTarget(int cur, int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
 	}
 
 	void IPokeBattle_DebugScene.PrevTarget(int cur, int index)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		throw new System.NotImplementedException();
 	}
 
 	bool IHasDisplayMessage.DisplayConfirm(string v)
 	{
-		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+		GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		bool value = false;
 		//return DisplayConfirmMessage(v);
