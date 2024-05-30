@@ -41,7 +41,7 @@ namespace PokemonUnity.UX
 		public UnityEngine.UI.Slider sliderExp;
 		public UnityEngine.UI.Image spriteItem, spriteStatus, spriteCaught, spriteFillHP, spriteFillExp, gender, shiny, primal;
 		//public UnityEngine.UI.Text currentHP, slash, maxHP, Name, level, gender;
-		new public TMPro.TextMeshProUGUI name, HPValue, level;
+		public TMPro.TextMeshProUGUI Name, HPValue, level;
 		//private UnityEngine.Color colorFillExp;
 		//private UnityEngine.UI.Image panelbg;
 		//private UnityEngine.Sprite databox; //AnimatedBitmap
@@ -266,7 +266,7 @@ namespace PokemonUnity.UX
 			//	new TextPosition (pokename,@spritebaseX+8,6,false,base_,shadow)
 			//};
 			//Name.text = pokename;
-			name.SetText(pokename);
+			Name.SetText(pokename);
 			//Set gender toggle on/off; change color based on gender
 			//float genderX = this.bitmap.text_size(pokename).width;
 			//genderX += @spritebaseX + 14;
