@@ -1781,6 +1781,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 			Game._INTL("Rock"),
 			Game._INTL("Run")
 		},2,result); //result: value => result?.Invoke(value)
+		GameDebug.Log($"Action Selected: {result}");
 	}
 
 	int IPokeBattle_Scene.SafariCommandMenu(int index)
@@ -1807,6 +1808,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 
 		bool shadowTrainer = (@battle.opponent != null); //hasConst(Types,:SHADOW) &&
 		int ret = -1;
+		GameDebug.Log("Choose Action: [FIGHT=0] [BAG=1] [POKEMON=2] [RUN=3] [CALL=4]");
 		yield return CommandMenuEx(index,new string[] {
 			Game._INTL("What will\n{1} do?", @battle.battlers[index].Name),
 			Game._INTL("Fight"),//MenuCommands.FIGHT=0
@@ -1815,6 +1817,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 			shadowTrainer ? Game._INTL("Call") : Game._INTL("Run") //MenuCommands.CALL=4|MenuCommands.RUN=3
 		},shadowTrainer ? 1 : 0, result: value => ret = value);
 		if (ret == 3 && shadowTrainer) ret = 4; // Convert "Run" to "Call"
+		GameDebug.Log($"Action Selected: {ret}");
 		result?.Invoke((MenuCommands)ret);
 	}
 
@@ -1823,6 +1826,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 		GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		bool shadowTrainer = (@battle.opponent != null); //hasConst(Types,:SHADOW) &&
+		GameDebug.Log("Choose Action: [FIGHT=0] [BAG=1] [POKEMON=2] [RUN=3] [CALL=4]");
 		int ret = CommandMenuEx(index,new string[] {
 			Game._INTL("What will\n{1} do?", @battle.battlers[index].Name),
 			Game._INTL("Fight"),
@@ -1831,6 +1835,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 			shadowTrainer ? Game._INTL("Call") : Game._INTL("Run")
 		},shadowTrainer ? 1 : 0);
 		if (ret == 3 && shadowTrainer) ret = 4; // Convert "Run" to "Call"
+		GameDebug.Log($"Action Selected: {ret}");
 		return ret;
 	}
 
@@ -1847,6 +1852,7 @@ public partial class BattleScene : UnityEngine.MonoBehaviour, IPokeBattle_SceneI
 			shadowTrainer ? Game._INTL("Call") : Game._INTL("Run")
 		},shadowTrainer ? 1 : 0);
 		if (ret == 3 && shadowTrainer) ret = 4; // Convert "Run" to "Call"
+		GameDebug.Log($"Action Selected: {ret}");
 		return ret;
 	}
 
