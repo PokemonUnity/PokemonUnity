@@ -71,13 +71,13 @@ namespace PokemonUnity
 		private static readonly Debugger instance = new Debugger();
 
 		//private Serilog.ILogger serilogLogger;
-		private bool useSerilog = false;
-		private string logFilePath;
-		private StringBuilder logBuilder = new StringBuilder();
+		protected bool useSerilog = false;
+		protected string logFilePath;
+		protected StringBuilder logBuilder = new StringBuilder();
 
 		private Debugger() { Core.Logger = this; }
 
-		public void Init(string logFilePath, string logBaseName, bool useSerilog = false)
+		public virtual void Init(string logFilePath, string logBaseName, bool useSerilog = false)
 		{
 			this.logFilePath = System.IO.Path.Combine(logFilePath, logBaseName + ".log");
 			if (!System.IO.File.Exists(this.logFilePath))
@@ -89,10 +89,10 @@ namespace PokemonUnity
 				//	.WriteTo.File(this.logFilePath)
 				//	.CreateLogger();
 			}
-			Log(this, "Debugger initialized. Logging to " + this.logFilePath);
+			Log("Debugger initialized. Logging to " + this.logFilePath);
 		}
 
-		public void Shutdown()
+		public virtual void Shutdown()
 		{
 			if (useSerilog)
 			{
@@ -101,10 +101,10 @@ namespace PokemonUnity
 			logFilePath = null;
 		}
 
-		public void Log(object sender, string message, params object[] param)
+		public void Log(string message, params object[] param)
 		{
-			if (OnLog != null)
-				OnLog(sender, new OnDebugEventArgs { Message = message, Error = null });
+			//if (OnLog != null)
+			//	OnLog(sender, new OnDebugEventArgs { Message = message, Error = null });
 			//if (useSerilog && serilogLogger != null)
 			//{
 			//	serilogLogger.Information(message);
@@ -117,7 +117,7 @@ namespace PokemonUnity
 			}
 		}
 
-		public void LogDebug(object sender, string message, params object[] param)
+		public void LogDebug(string message, params object[] param)
 		{
 			//if (useSerilog && serilogLogger != null)
 			//{
@@ -133,10 +133,10 @@ namespace PokemonUnity
 			}
 		}
 
-		public void LogWarning(object sender, string message, params object[] param)
+		public void LogWarning(string message, params object[] param)
 		{
-			if (OnLog != null)
-				OnLog(sender, new OnDebugEventArgs { Message = message, Error = false });
+			//if (OnLog != null)
+			//	OnLog(sender, new OnDebugEventArgs { Message = message, Error = false });
 			//if (useSerilog && serilogLogger != null)
 			//{
 			//	serilogLogger.Warning(message);
@@ -149,10 +149,10 @@ namespace PokemonUnity
 			}
 		}
 
-		public void LogError(object sender, string message, params object[] param)
+		public void LogError(string message, params object[] param)
 		{
-			if (OnLog != null)
-				OnLog(sender, new OnDebugEventArgs { Message = message, Error = true });
+			//if (OnLog != null)
+			//	OnLog(sender, new OnDebugEventArgs { Message = message, Error = true });
 			//if (useSerilog && serilogLogger != null)
 			//{
 			//	serilogLogger.Error(message);
@@ -165,18 +165,21 @@ namespace PokemonUnity
 			}
 		}
 
-		private void LogMessageToFile()
+		protected virtual void LogMessageToFile()
 		{
 			using (System.IO.StreamWriter sw = System.IO.File.AppendText(logFilePath))
 			{
 				try
 				{
-					string timestampedMessage = $"{DateTime.Now:G}: {logBuilder.ToString()}";
-					sw.WriteLine(timestampedMessage);
+					//string timestampedMessage = $"{DateTime.Now:G}: {logBuilder.ToString()}";
+					//sw.WriteLine(timestampedMessage);
+					sw.WriteLine($"{DateTime.Now:G}: {logBuilder.ToString()}"); //no boxing for garbage collection?
 				}
 				catch (Exception ex)
 				{
-					LogError(this, "Failed to log to file: " + ex.Message);
+					//LogError("Failed to log to file: " + ex.Message);
+					OnDebugEventArgs errArg = new OnDebugEventArgs { Message = "Failed to log to file: " + ex.Message, Error = true };
+					OnLogMessageDelegate(this, errArg); // Curious to see what would happen...
 				}
 			}
 		}
@@ -204,34 +207,6 @@ namespace PokemonUnity
 		void IDebugger.Init(string logfilePath, string logBaseName)
 		{
 			Init(logfilePath, logBaseName);
-		}
-
-		void IDebugger.Log(string message, params object[] param)
-		{
-			Log(null, string.Format(message, param));
-		}
-
-		void IDebugger.LogDebug(string message, params object[] param)
-		{
-			logBuilder = new StringBuilder(); //logBuilder.Clear();
-			logBuilder.AppendFormat(message, param);
-			logBuilder.AppendLine("\nStack Trace:");
-			logBuilder.AppendLine(new StackTrace().ToString());
-			LogDebug(null, logBuilder.ToString());
-		}
-
-		void IDebugger.LogWarning(string message, params object[] param)
-		{
-			logBuilder = new StringBuilder(); //logBuilder.Clear();
-			logBuilder.AppendFormat(message, param);
-			LogWarning(null, message);
-		}
-
-		void IDebugger.LogError(string message, params object[] param)
-		{
-			logBuilder = new StringBuilder(); //logBuilder.Clear();
-			logBuilder.AppendFormat(message, param);
-			LogError(null, message);
 		}
 	}
 }
