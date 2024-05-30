@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonUnity.Combat;
 using PokemonUnity.Combat.Data;
 using PokemonUnity.Inventory;
@@ -15,7 +15,7 @@ using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// A Pokemon placeholder class to be used while in-battle,
@@ -2599,7 +2599,7 @@ namespace PokemonUnity.UX
 					if ((user.hasWorkingAbility(Abilities.SERENE_GRACE) ||
 						user.OwnSide.Rainbow>0) &&
 						thismove.Effect != Attack.Effects.x0C6) addleffect*=2; // Secret Power
-					if (Core.DEBUG && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) addleffect=100;
+					if (Core.DEBUG && Input.press((int)PokemonUnity.Interface.InputKeys.DEBUG)) addleffect=100;
 					if (@battle.Random(100)<addleffect) {
 						GameDebug.Log($"[Move effect triggered] #{Game._INTL(thismove.id.ToString(TextScripts.Name))}'s added effect");
 						thismove.AdditionalEffect(user,target);
