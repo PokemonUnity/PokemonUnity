@@ -11,8 +11,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -407,29 +406,17 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.36f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
-    <Reference Include="GameFramework">
-      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\GameFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="LitJson">
-      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\LitJson.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Plugins\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Application">
-      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Application.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Plugins\PokemonUnity.Application.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Offline">
-      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Offline.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Plugins\PokemonUnity.Offline.dll</HintPath>
     </Reference>
     <Reference Include="PokemonUnity.Shared">
-      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\PokemonUnity.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>..\Pokemon Unity\Assets\GameMain\Libraries\protobuf-net.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Plugins\PokemonUnity.Shared.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SQLite">
       <HintPath>..\Pokemon Unity\Assets\Plugins\System.Data.SQLite.dll</HintPath>
