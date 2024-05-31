@@ -46,14 +46,15 @@ namespace PokemonUnity
 		void Start()
 		{
 			initialize();
-			StartCoroutine(main()); //While Loop to run indefinitely...
+			//StartCoroutine(main()); //While Loop to run indefinitely...
 		}
 
 		// Update is called once per frame
 		void Update()
 		{
+			base.update();
 			//Every action will be executed once, and the script ends with `update()` which will pause and wait for brief moment.
-			//StartCoroutine(main()); //If Check to run once...
+			splashUpdate();
 		}
 
 		//public void initialize(pics, splash, viewport= null)
@@ -149,6 +150,7 @@ namespace PokemonUnity
 
 		public void splashUpdate()
 		{
+			#region Coroutine Tween Looping Animation
 			@Timer += 1;
 			if (@Timer >= 80) @Timer = 0;
 			if (@Timer >= 32)
@@ -161,6 +163,7 @@ namespace PokemonUnity
 				//@pic2.moveOpacity(0, 0, 255 - (8 * @Timer));
 				//Change opacity -- fade in?
 			}
+			#endregion
 			// Can be whatever combination of buttons you design in your game
 			if (PokemonUnity.Input.press(PokemonUnity.Input.DOWN) &&
 				PokemonUnity.Input.press(PokemonUnity.Input.A) &&
