@@ -1,17 +1,23 @@
 ﻿using UnityEngine;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
+	/// <summary>
+	/// Used to display the moves in the FIGHT menu
+	/// </summary>
+	/// <remarks>
+	/// See <see cref="FightMenuDisplay"/> for the menu class
+	/// </remarks>
 	public class FightMoveButton : MonoBehaviour
 	{
 		/// <summary>
 		/// Name of the move
 		/// </summary>
-		//public UnityEngine.UI.Text Move;
-		//public UnityEngine.UI.Text PP;
+		//public global::UnityEngine.UI.Text Move;
+		//public global::UnityEngine.UI.Text PP;
 		public TMPro.TextMeshProUGUI Move;
 		public TMPro.TextMeshProUGUI PP;
-		public UnityEngine.UI.Image Type;
-		public UnityEngine.UI.Image ButtonBG;
+		public global::UnityEngine.UI.Image Type;
+		public global::UnityEngine.UI.Image ButtonBG;
 	}
 }

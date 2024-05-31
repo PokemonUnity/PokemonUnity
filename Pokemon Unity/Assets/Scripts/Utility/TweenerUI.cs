@@ -11,6 +11,7 @@ using UnityEngine.UI;
 namespace PokemonUnity.Utility
 {
 	/// <summary>
+	/// Example script showcasing tweening UI elements with LeanTween in Unity
 	/// </summary>
 	/// https://www.youtube.com/watch?v=Ll3yujn9GVQ
 	public class TweenerUI : MonoBehaviour

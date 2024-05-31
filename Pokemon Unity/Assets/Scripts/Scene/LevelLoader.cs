@@ -18,7 +18,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-namespace PokemonUnity
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// </summary>
@@ -28,7 +28,7 @@ namespace PokemonUnity
 	{
 		#region Variables
 		public float transitionTime = .5f;
-		public UnityEngine.CanvasGroup canvasGroup;
+		public global::UnityEngine.CanvasGroup canvasGroup;
 		#endregion
 
 		#region Unity Monobehavior

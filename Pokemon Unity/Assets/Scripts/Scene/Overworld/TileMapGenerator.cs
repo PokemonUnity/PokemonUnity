@@ -23,7 +23,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 
-namespace PokemonUnity
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// </summary>
@@ -103,7 +103,7 @@ namespace PokemonUnity
 
 		private void LoadMapData()
 		{
-			string path = UnityEngine.Application.dataPath + "/StreamingAssets/MapJson/map001.json";
+			string path = global::UnityEngine.Application.dataPath + "/StreamingAssets/MapJson/map001.json";
 			bool canLoad = File.Exists(path);
 			if (!canLoad)
 			{

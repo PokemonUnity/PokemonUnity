@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using PokemonUnity.Utility;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Item;
@@ -9,50 +10,45 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 using UnityEngine;
-using PokemonUnity.Utility;
+using UnityEngine.UI;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
+	/// Represents the UI panel for the pokemons health and experience display
 	/// </summary>
-	/// Same class can be used for both regular battles and safari battles,
-	/// but just need to call the initialize for the right one to load the correct attributes.
-	/// Otherwise, you might just need to make an abstract factory for the constructor
-	//ToDo: SafariDataBox has different Update/Refresh values when overriding...
-	[RequireComponent(typeof(UnityEngine.UI.Image))]
+	/// <remarks>
+	/// Different layouts for whether the pokemon is friend, foe, and if double or single battle
+	/// </remarks>
+	[RequireComponent(typeof(global::UnityEngine.UI.Image))]
 	[ExecuteInEditMode]
 	public class PokemonDataBox : SafariDataBox, IPokemonDataBox, IGameObject
 	{
-		public IBattlerIE battler { get; private set; }
+		public IBattlerIE battler { get; protected set; }
 		IBattler IPokemonDataBox.battler { get; }
 		//public int selected { get; set; }
 		//public bool appearing { get; }
-		public bool animatingHP { get; private set; }
-		public bool animatingEXP { get; private set; }
+		public bool animatingHP { get; protected set; }
+		public bool animatingEXP { get; protected set; }
 		public int Exp { get { return @animatingEXP ? @currentexp : @explevel; } }
 		public int HP { get { return @animatingHP ? @currenthp : @battler.HP; } }
+
+		[Header("Battle Display")]
 		/// <summary>
 		/// Reference to the UI's health bar.
 		/// </summary>
-		public UnityEngine.UI.Slider sliderHP;
+		public global::UnityEngine.UI.Slider sliderHP;
 		/// <summary>
 		/// Reference to the UI's experience bar.
 		/// </summary>
-		public UnityEngine.UI.Slider sliderExp;
-		public UnityEngine.UI.Image spriteItem, spriteStatus, spriteCaught, spriteFillHP, spriteFillExp, gender, shiny, primal;
-		//public UnityEngine.UI.Text currentHP, slash, maxHP, Name, level, gender;
+		public global::UnityEngine.UI.Slider sliderExp;
+		public global::UnityEngine.UI.Image spriteItem, spriteStatus, spriteCaught, spriteFillHP, spriteFillExp, gender, shiny, primal, mega;
+		//public global::UnityEngine.UI.Text currentHP, slash, maxHP, Name, level, gender;
 		public TMPro.TextMeshProUGUI Name, HPValue, level;
-		//private UnityEngine.Color colorFillExp;
-		//private UnityEngine.UI.Image panelbg;
-		//private UnityEngine.Sprite databox; //AnimatedBitmap
-		//private UnityEngine.Sprite statuses;
-		public int explevel;
-		public int starthp;
-		public int currenthp;
-		public int currentexp;
-		public int endhp;
-		public int endexp;
-		public int expflash;
+		//protected UnityEngine.Color colorFillExp;
+		//protected UnityEngine.UI.Image panelbg;
+		//protected UnityEngine.Sprite databox; //AnimatedBitmap
+		//protected UnityEngine.Sprite statuses;
 		/// <summary>
 		/// Only show exp for player's pokemon (not ally, or enemy)
 		/// </summary>
@@ -61,14 +57,24 @@ namespace PokemonUnity.UX
 		/// Only show hp for player's pokemon (not ally, or enemy)
 		/// </summary>
 		public bool showhp;
-		private int frame;
-		private float spritebaseX;
-		//private float spriteX;
-		//private float spriteY;
+
+		[Header("Debug View")]
+		public int explevel;
+		public int starthp;
+		public int currenthp;
+		public int currentexp;
+		public int endhp;
+		public int endexp;
+		public int expflash;
+		protected int frame;
+		protected float spritebaseX;
+		//protected float spriteX;
+		//protected float spriteY;
 
 		private void Awake()
 		{
-			panelbg = GetComponent<UnityEngine.UI.Image>();
+			panelbg = GetComponent<global::UnityEngine.UI.Image>();
+			//databox = GetComponent<global::UnityEngine.Sprite>();
 
 			//colorFillExp = spriteFillExp.color;
 			sliderHP.minValue = sliderExp.minValue = 0;
@@ -107,63 +113,67 @@ namespace PokemonUnity.UX
 			//{
 			//	@spritebaseX = 16;
 			//}
+			// Sprite should already be preset inside unity engine, but can be assigned here.
 			if (doublebattle)
 			{
 				switch (@battler.Index)
 				{
 					case 0:
 						//if playing or watching an npc?
-						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxD");
+						//@databox = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxD");
 						//@spriteX = PokeBattle_SceneConstants.PLAYERBOXD1_X;
 						//@spriteY = PokeBattle_SceneConstants.PLAYERBOXD1_Y;
 						break;
 					case 1:
-						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxD");
+						//@databox = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxD");
 						//@spriteX = PokeBattle_SceneConstants.FOEBOXD1_X;
 						//@spriteY = PokeBattle_SceneConstants.FOEBOXD1_Y;
 						break;
 					case 2:
 						//if player or ally?...
-						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxD");
+						//@databox = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxD");
 						//@spriteX = PokeBattle_SceneConstants.PLAYERBOXD2_X;
 						//@spriteY = PokeBattle_SceneConstants.PLAYERBOXD2_Y;
 						break;
 					case 3:
-						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxD");
+						//@databox = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxD");
 						//@spriteX = PokeBattle_SceneConstants.FOEBOXD2_X;
 						//@spriteY = PokeBattle_SceneConstants.FOEBOXD2_Y;
 						break;
 				}
 			}
-			else
+			else //Single Battle
 			{
-				switch (@battler.Index)
+				//if player...
+				if (@battler.Index == 0) //switch(@battler.Index)
 				{
-					case 0:
-						//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxS");
+					//case 0:
+						//@databox = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePlayerBoxS");
 						//@spriteX = PokeBattle_SceneConstants.PLAYERBOX_X;
 						//@spriteY = PokeBattle_SceneConstants.PLAYERBOX_Y;
 						@showhp = true;
 						@showexp = true;
-						break;
-					case 1:
-						@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxS");
-						@spriteX = PokeBattle_SceneConstants.FOEBOX_X;
-						@spriteY = PokeBattle_SceneConstants.FOEBOX_Y;
-						break;
+						//break;
+				} else { //if (@battler.Index == 1) { //case 1:
+						//@databox = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battleFoeBoxS");
+						//@spriteX = PokeBattle_SceneConstants.FOEBOX_X;
+						//@spriteY = PokeBattle_SceneConstants.FOEBOX_Y;
+						//break;
 				}
 			}
 			//maxHP.gameObject.SetActive(@showhp);
 			//currentHP.gameObject.SetActive(@showhp);
 			HPValue.gameObject.SetActive(@showhp);
 			/*panelbg.sprite = databox;
-			//@statuses = Resources.Load<UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses")); //if image is localized, grab the current region
-			@spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses"));
+			//@statuses = Resources.Load<global::UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses")); //if image is localized, grab the current region
+			@spriteStatus.sprite = Resources.Load<global::UnityEngine.Sprite>(Game._INTL("Graphics/Pictures/battleStatuses"));
 			//@contents = new BitmapWrapper(@databox.width, @databox.height);
 			//this.bitmap = @contents;
 			this.visible = false;
 			this.z = 50;*/
-			//primal = Resources.Load<UnityEngine.Sprite>("null");
+			mega?.gameObject.SetActive(false); //it's one image, just toggle on/off
+			//primal.sprite = Resources.Load<global::UnityEngine.Sprite>("null");
+			primal?.gameObject.SetActive(false);
 			shiny?.gameObject.SetActive(battler.IsShiny);
 			spriteCaught?.gameObject.SetActive(false);
 			spriteItem?.gameObject.SetActive(false);
@@ -276,14 +286,16 @@ namespace PokemonUnity.UX
 				if (@battler.displayGender == 1) //	case 0: // Male
 				{
 					//textpos.Add(new TextPosition(Game._INTL("♂"), genderX, 6, false, new Color(48, 96, 216), shadow));
-					//break;
+					gender.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/genderMale.png");
 					//gender.sprite = BattleInterface.main.genderMale; // Male
+					//break;
 				}
 				else //	case 1: // Female
 				{
 					//textpos.Add(new TextPosition(Game._INTL("♀"), genderX, 6, false, new Color(248, 88, 40), shadow));
-					//break;
+					gender.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/genderFemale.png");
 					//gender.sprite = BattleInterface.main.genderFemale; // Female
+					//break;
 				}
 			}
 			else
@@ -301,12 +313,13 @@ namespace PokemonUnity.UX
 			GameDebug.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
 			if (@showhp)
 			{
+				HPValue?.gameObject.SetActive(true); //Should already be preset in unity engine
 				//string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
 				//textpos.Add(new TextPosition(hpstring, @spritebaseX + 188, 48, true, base_, shadow));
 				//maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
 				//currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
 				HPValue.SetText($"{this.HP}/{@battler.TotalHP}"); //($"{sliderHP.value}/{sliderHP.maxValue}");
-			}
+			} else HPValue?.gameObject.SetActive(false); //Just in case, if hp is not supposed to be seen, hide it
 			//DrawTextPositions(this.bitmap,textpos);
 			//IList<ITextPosition> imagepos = new List<ITextPosition>();
 			//ToDo: Uncomment below if UI is setup for generation features/gimmick
@@ -321,19 +334,19 @@ namespace PokemonUnity.UX
 			//{
 			//	imagepos.Add(new TextPosition("Graphics/Pictures/battleMegaEvoBox.png", @spritebaseX + 8, 34, 0, 0, -1, -1));
 			//}
-			//mega?.gameObject.SetActive(battler.isMega);
+			mega?.gameObject.SetActive(battler.isMega);
 			//else if (@battler.isPrimal)
 			//{
-			//	if (@battler.pokemon.Species == Pokemons.KYOGRE)
-			//	{
-			//		imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalKyogreBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
-			//		primal = Resources.Load<UnityEngine.Sprite>("null");
-			//	}
-			//	else if (@battler.pokemon.Species == Pokemons.GROUDON)
-			//	{
-			//		imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalGroudonBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
-			//		primal = Resources.Load<UnityEngine.Sprite>("null");
-			//	}
+				if (@battler.pokemon.Species == Pokemons.KYOGRE)
+				{
+					//imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalKyogreBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
+					primal.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePrimalKyogreBox.png");
+				}
+				else if (@battler.pokemon.Species == Pokemons.GROUDON)
+				{
+					//imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalGroudonBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
+					primal.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePrimalGroudonBox.png");
+				}
 			//}
 			primal?.gameObject.SetActive(battler.isPrimal);
 			if ((@battler.Index & 1) == 0) //if pokemon is on player side
@@ -368,9 +381,9 @@ namespace PokemonUnity.UX
 				//Enable the sprite that represents this status on the pokemon's HUD panel
 				//this.bitmap.blt(@spritebaseX + 24, 36, @statuses.bitmap,
 				//   new Rect(0, (@battler.Status - 1) * 16, 44, 16));
-				spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>(Game._INTL("PCSprites/status{0}", @battler.Status.ToString()));
+				spriteStatus.sprite = Resources.Load<global::UnityEngine.Sprite>(Game._INTL("PCSprites/status{0}", @battler.Status.ToString()));
 			}
-			else spriteStatus.sprite = Resources.Load<UnityEngine.Sprite>("null");
+			else spriteStatus.sprite = Resources.Load<global::UnityEngine.Sprite>("null");
 			//int hpGaugeSize = (int)PokeBattle_SceneConstants.HPGAUGESIZE;
 			//int hpgauge = @battler.TotalHP == 0 ? 0 : (this.HP * hpGaugeSize / @battler.TotalHP);
 			//if (hpgauge == 0 && this.HP > 0) hpgauge = 2;
@@ -404,6 +417,7 @@ namespace PokemonUnity.UX
 			//StartCoroutine(AnimateSliderHP(this.HP)); //sliderHP.value = this.HP;
 			if (@showexp)
 			{
+				sliderExp?.gameObject.SetActive(true); //Should already be preset in unity engine
 				//  fill with EXP color
 				//float expGaugeX = PokeBattle_SceneConstants.EXPGAUGE_X;
 				//float expGaugeY = PokeBattle_SceneConstants.EXPGAUGE_Y;
@@ -416,7 +430,7 @@ namespace PokemonUnity.UX
 				sliderExp.value = this.Exp;
 				//StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(this.Exp));
 				//StartCoroutine(AnimateSliderExp(this.Exp)); //sliderExp.value = this.Exp;
-			}
+			} else sliderExp?.gameObject.SetActive(false); //Just in case, if exp is not supposed to be seen, hide it
 		}
 
 		public override void update()
@@ -427,16 +441,18 @@ namespace PokemonUnity.UX
 			@frame += 1;
 			if (@animatingHP)
 			{
+				// Everything inside this if statement is for animating the hp bar
+				// Move to a coroutine to utilize Unity's built-in animation system or use a lerp...
 				if (@currenthp < @endhp)
 				{
 					//@currenthp +=(int)Math.Max(1, Math.Floor(@battler.TotalHP / PokeBattle_SceneConstants.HPGAUGESIZE));
-					@currenthp +=(int)Math.Max(1, Math.Floor(@battler.TotalHP / sliderHP.maxValue));
+					@currenthp += (int)Math.Max(1, Math.Floor(@battler.TotalHP / sliderHP.maxValue));
 					if (@currenthp > @endhp) @currenthp = @endhp;
 				}
 				else if (@currenthp > @endhp)
 				{
 					//@currenthp -=(int)Math.Max(1, Math.Floor(@battler.TotalHP / PokeBattle_SceneConstants.HPGAUGESIZE));
-					@currenthp -=(int)Math.Max(1, Math.Floor(@battler.TotalHP / sliderHP.maxValue));
+					@currenthp -= (int)Math.Max(1, Math.Floor(@battler.TotalHP / sliderHP.maxValue));
 					if (@currenthp < @endhp) @currenthp = @endhp;
 				}
 				if (@currenthp == @endhp) @animatingHP = false;
@@ -445,11 +461,13 @@ namespace PokemonUnity.UX
 			//ToDo: New coroutine to flash white and blue when leveling-up, chime at 100%, and begin again from 0.
 			if (@animatingEXP)
 			{
+				// Everything inside this if statement is for animating the exp bar
+				// Move to a coroutine to utilize Unity's built-in animation system or use a lerp...
 				if (!@showexp)
 				{
 					@currentexp = @endexp;
 				}
-				else if (@currentexp < @endexp)			// Gaining Exp
+				else if (@currentexp < @endexp)         // Gaining Exp
 				{
 					//if (@endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE ||
 					//   @endexp - @currentexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
@@ -464,11 +482,11 @@ namespace PokemonUnity.UX
 					}
 					if (@currentexp > @endexp) @currentexp = @endexp;
 				}
-				else if (@currentexp > @endexp)			// Losing Exp
+				else if (@currentexp > @endexp)         // Losing Exp
 				{
 					if (@endexp == 0 ||
-					   //@currentexp - @endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
-					   @currentexp - @endexp >= sliderExp.maxValue / 4)
+						//@currentexp - @endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
+						@currentexp - @endexp >= sliderExp.maxValue / 4)
 					{
 						@currentexp -= 4;
 					}
@@ -509,6 +527,8 @@ namespace PokemonUnity.UX
 			}
 			if (@appearing)
 			{
+				// Everything inside this if statement is for animating the slide-in for the databox
+				// Move to a coroutine to utilize Unity's built-in animation system or use a lerp...
 				if ((@battler.Index & 1) == 0)       // If player's Pokémon
 				{
 					this.x -= 12;
@@ -531,7 +551,7 @@ namespace PokemonUnity.UX
 			{
 				this.y = @spriteY + 2;
 			}
-			else if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 2)    // When targeted or damaged
+			else if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 2)	// When targeted or damaged
 			{
 				this.y = @spriteY + 2;
 			}
@@ -556,10 +576,11 @@ namespace PokemonUnity.UX
 			}
 		}
 
+		#region Unity Coroutine Animations
 		/// <summary>
 		/// Invoked when the value of the slider changes.
 		/// </summary>
-		private void ValueChangeCheck()
+		protected virtual void ValueChangeCheck()
 		{
 			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//if (sliderHP.value <= (sliderHP.maxValue / 4)) { Fill.color = hpzone2; }
@@ -579,10 +600,10 @@ namespace PokemonUnity.UX
 			//each time the slider's value is changed, write to text displaying the hp
 			//maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
 			//currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
-			HPValue.SetText($"{sliderHP.value}/{sliderHP.maxValue}");
+			//HPValue.SetText($"{sliderHP.value}/{sliderHP.maxValue}");
 		}
 
-		private System.Collections.IEnumerator AnimateSliderHP(int amount) //Slider as input?
+		protected System.Collections.IEnumerator AnimateSliderHP(int amount) //Slider as input?
 		{
 			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//Debug.Log(amount);
@@ -601,7 +622,7 @@ namespace PokemonUnity.UX
 		/// </summary>
 		/// <param name="amount"></param>
 		/// <returns></returns>
-		private System.Collections.IEnumerator AnimateSliderExp(int amount) //Slider as input?
+		protected System.Collections.IEnumerator AnimateSliderExp(int amount) //Slider as input?
 		{
 			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//Debug.Log(amount);
@@ -615,6 +636,7 @@ namespace PokemonUnity.UX
 			//fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
 			//yield return null;
 		}
+		#endregion
 	}
 
 	/// <summary>
@@ -623,20 +645,24 @@ namespace PokemonUnity.UX
 	{
 		public int selected { get; set; }
 		public bool appearing { get; protected set; }
-		public UnityEngine.UI.Image panelbg;
-		public UnityEngine.Sprite databox; //AnimatedBitmap
+		public global::UnityEngine.UI.Image panelbg;
+		public global::UnityEngine.Sprite databox; //AnimatedBitmap
 		private IBattle battle;
 		protected float spriteX;
 		protected float spriteY;
 
+		[Header("Safari Event Display")]
+		[SerializeField] private TMPro.TextMeshProUGUI safariBallsText;
+		[SerializeField] private TMPro.TextMeshProUGUI safariBallsCount;
+
 		private void Awake()
 		{
-			panelbg = GetComponent<UnityEngine.UI.Image>();
+			panelbg = GetComponent<global::UnityEngine.UI.Image>();
+			//databox = GetComponent<global::UnityEngine.Sprite>();
 		}
 
 		private void Start()
 		{
-
 		}
 
 		public ISafariDataBox initialize(IBattle battle, IViewport viewport = null)
@@ -646,8 +672,9 @@ namespace PokemonUnity.UX
 			base.initialize(viewport);
 			@selected = 0;
 			this.battle = battle;
+			// Let's assume below is already set inside unity, and dont need to be set with code
 			//@databox = new AnimatedBitmap("Graphics/Pictures/battlePlayerSafari");
-			//@databox = Resources.Load<UnityEngine.Sprite>("Graphics/Pictures/battlePlayerSafari");
+			//@databox = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePlayerSafari");
 			//panelbg.sprite = databox;
 			@spriteX = PokeBattle_SceneConstants.SAFARIBOX_X;
 			@spriteY = PokeBattle_SceneConstants.SAFARIBOX_Y;
@@ -682,11 +709,13 @@ namespace PokemonUnity.UX
 			//this.bitmap.clear();
 			//this.bitmap.blt(0, 0, @databox.bitmap, new Rect(0, 0, @databox.width, @databox.height));
 			//SetSystemFont(this.bitmap);
-			IList<ITextPosition> textpos = new List<ITextPosition>();
-			IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
-			IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
-			textpos.Add(new TextPosition(Game._INTL("Safari Balls"), 30, 8, false, base_, shadow));
-			textpos.Add(new TextPosition(Game._INTL("Left: {1}", (@battle as ISafariZone_Scene).ballCount), 30, 38, false, base_, shadow));
+			//IList<ITextPosition> textpos = new List<ITextPosition>();
+			//IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
+			//IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
+			//textpos.Add(new TextPosition(Game._INTL("Safari Balls"), 30, 8, false, base_, shadow));
+			//textpos.Add(new TextPosition(Game._INTL("Left: {1}", (@battle as ISafariZone_Scene).ballCount), 30, 38, false, base_, shadow));
+			safariBallsText.SetText("Safari Balls");
+			safariBallsCount.SetText($"Left: {(@battle as ISafariZone_Scene).ballCount}");
 			//DrawTextPositions(this.bitmap, textpos);
 		}
 
@@ -697,6 +726,7 @@ namespace PokemonUnity.UX
 			base.update();
 			if (@appearing)
 			{
+				//ToDo: Coroutine animation for sliding in from side to replace this?
 				this.x -= 12;
 				if (this.x < @spriteX) this.x = @spriteX;
 				if (this.x <= @spriteX) @appearing = false;

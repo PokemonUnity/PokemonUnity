@@ -11,7 +11,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 using UnityEngine;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// Fight menu (choose a move)

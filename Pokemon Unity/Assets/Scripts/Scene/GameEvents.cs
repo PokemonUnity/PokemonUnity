@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using PokemonUnity;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonUnity.Character;
 using PokemonUnity.Monster;
 using PokemonUnity.Localization;
@@ -18,7 +18,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonUnity
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// </summary>
@@ -159,13 +159,13 @@ namespace PokemonUnity
 			if (e != null || e != System.EventArgs.Empty)
 				if (e.Error == true)
 					//System.Console.WriteLine("[ERR]: " + e.Message);
-					UnityEngine.Debug.LogError("[ERR] " + UnityEngine.Time.frameCount + ": " + e.Message);
+					global::UnityEngine.Debug.LogError("[ERR] " + global::UnityEngine.Time.frameCount + ": " + e.Message);
 				else if (e.Error == false)
 					//System.Console.WriteLine("[WARN]: " + e.Message);
-					UnityEngine.Debug.LogWarning("[WARN] " + UnityEngine.Time.frameCount + ": " + e.Message);
+					global::UnityEngine.Debug.LogWarning("[WARN] " + global::UnityEngine.Time.frameCount + ": " + e.Message);
 				else
 					//System.Console.WriteLine("[LOG]: " + e.Message);
-					UnityEngine.Debug.Log("[LOG] " + UnityEngine.Time.frameCount + ": " + e.Message);
+					global::UnityEngine.Debug.Log("[LOG] " + global::UnityEngine.Time.frameCount + ": " + e.Message);
 		}
 	}
 }

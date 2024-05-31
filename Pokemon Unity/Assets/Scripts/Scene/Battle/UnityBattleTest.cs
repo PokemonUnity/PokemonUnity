@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using PokemonUnity;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonUnity.Attack;
 using PokemonUnity.Attack.Data;
 using PokemonUnity.Monster;
@@ -24,7 +24,7 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using UnityEngine;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
 	[Serializable]
 	public partial class UnityBattleTest : PokemonUnity.Combat.Battle, IBattleIE, IHasDisplayMessageIE, ISerializable
@@ -313,7 +313,7 @@ namespace PokemonUnity.UX
 
 			fullparty1 = false;
 			fullparty2 = false;
-			_battlers = new PokemonUnity.UX.Battler[maxBattlers];
+			_battlers = new PokemonUnity.Interface.UnityEngine.Battler[maxBattlers];
 			//items = new List<Items>(); //null;
 			items = new Items[this.opponent.Length][];
 			for (int t = 0; t < this.opponent.Length; t++) //List of Trainers
@@ -370,7 +370,7 @@ namespace PokemonUnity.UX
 			peer = PokemonUnity.Monster.PokeBattle_BattlePeer.create();
 			//peer = new PokeBattle_BattlePeer();
 
-			_priority = new PokemonUnity.UX.Battler[battlers.Length];
+			_priority = new PokemonUnity.Interface.UnityEngine.Battler[battlers.Length];
 
 			//usepriority = false; //False is already default value; redundant.
 
@@ -386,7 +386,7 @@ namespace PokemonUnity.UX
 			//struggle.PP = -1;
 
 			for (int i = 0; i < battlers.Length; i++) {
-				this._battlers[i] = new PokemonUnity.UX.Battler(this, (sbyte)i);
+				this._battlers[i] = new PokemonUnity.Interface.UnityEngine.Battler(this, (sbyte)i);
 			//} for (int i = 0; i < battlers.Length; i++) {
 			//	this._battlers[i].initialize(this, (sbyte)i);
 			}
@@ -1444,7 +1444,7 @@ namespace PokemonUnity.UX
 
 		new public IBattlerIE[] Priority(bool ignorequickclaw=false, bool log=false) {
 			if (@usepriority) return priority;	// use stored priority if round isn't over yet
-			_priority = new PokemonUnity.UX.Battler[battlers.Length]; //.Clear();
+			_priority = new PokemonUnity.Interface.UnityEngine.Battler[battlers.Length]; //.Clear();
 			int[] speeds=new int[battlers.Length];
 			int[] priorities=new int[battlers.Length];
 			bool[] quickclaw=new bool[battlers.Length]; bool[] lagging=new bool[battlers.Length];
@@ -2135,7 +2135,7 @@ namespace PokemonUnity.UX
 			}
 			bool confirm = false;
 			if (@opponent.Length > 0) {
-				if (debug && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) {
+				if (debug && Input.press((int)PokemonUnity.Interface.InputKeys.DEBUG)) {
 					yield return DisplayConfirm(Game._INTL("Treat this battle as a win?"),result:value=>confirm=value);
 					if (confirm) {
 						@decision=BattleResults.WON;
@@ -2163,7 +2163,7 @@ namespace PokemonUnity.UX
 				}
 				result?.Invoke(0); yield break;
 			}
-			if (debug && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) {
+			if (debug && Input.press((int)PokemonUnity.Interface.InputKeys.DEBUG)) {
 				yield return DisplayPaused(Game._INTL("Got away safely!"));
 				@decision=BattleResults.FORFEIT;
 				result?.Invoke(1); yield break;
@@ -3858,7 +3858,7 @@ namespace PokemonUnity.UX
 						if (!moveuser.IsNotNullOrNone()) {
 							IPokemon[] party=Party(i.effects.FutureSightUserPos);
 							if (party[i.effects.FutureSightUser].HP>0) {
-								moveuser=new PokemonUnity.UX.Battler(this,(sbyte)i.effects.FutureSightUserPos);
+								moveuser=new PokemonUnity.Interface.UnityEngine.Battler(this,(sbyte)i.effects.FutureSightUserPos);
 								moveuser.InitPokemon(party[i.effects.FutureSightUser],
 													(sbyte)i.effects.FutureSightUser);
 							}
