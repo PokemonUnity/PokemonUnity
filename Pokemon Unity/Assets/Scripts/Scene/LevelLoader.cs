@@ -68,6 +68,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			//load scene
 			SceneManager.LoadScene(level);
 
+			//ToDo: collect garbage while waiting for scene to load...
+			GC.Collect();
+
+			//ToDo: check start fade, and use matching ending or random fade...
+
 			//undo fade to black...
 			canvasGroup.interactable = false;
 			canvasGroup.blocksRaycasts = false;
@@ -76,28 +81,28 @@ namespace PokemonUnity.Interface.UnityEngine
 			LeanTween.alphaCanvas(canvasGroup, 0f, transitionTime);
 		}
 
-		IEnumerator LoadLevel(IScene level)
-		{
-			//begin fade to black...
-			canvasGroup.interactable = true;
-			canvasGroup.blocksRaycasts = true;
-			//play animation
-			//ToDo: use conditional to give different fade options...
-			LeanTween.alphaCanvas(canvasGroup, 1f, transitionTime);
-
-			// wait
-			yield return new WaitForSeconds(transitionTime);
-
-			//load scene
-			SceneManager.LoadScene(level.Id);
-
-			//undo fade to black...
-			canvasGroup.interactable = false;
-			canvasGroup.blocksRaycasts = false;
-			//play animation
-			//ToDo: check start fade, and use matching ending or random fade...
-			LeanTween.alphaCanvas(canvasGroup, 0f, transitionTime);
-		}
+		//IEnumerator LoadLevel(IScene level)
+		//{
+		//	//begin fade to black...
+		//	canvasGroup.interactable = true;
+		//	canvasGroup.blocksRaycasts = true;
+		//	//play animation
+		//	//ToDo: use conditional to give different fade options...
+		//	LeanTween.alphaCanvas(canvasGroup, 1f, transitionTime);
+		//
+		//	// wait
+		//	yield return new WaitForSeconds(transitionTime);
+		//
+		//	//load scene
+		//	SceneManager.LoadScene(level.Id);
+		//
+		//	//undo fade to black...
+		//	canvasGroup.interactable = false;
+		//	canvasGroup.blocksRaycasts = false;
+		//	//play animation
+		//	//ToDo: check start fade, and use matching ending or random fade...
+		//	LeanTween.alphaCanvas(canvasGroup, 0f, transitionTime);
+		//}
 
 		private void Scene_onLoadLevel(int level)
 		{
@@ -108,7 +113,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		private void Scene_onLoadLevel(IScene level)
 		{
 			//SceneManager.LoadScene(level);
-			StartCoroutine(LoadLevel(level));
+			StartCoroutine(LoadLevel(level.Id));
 		}
 
 		private void Scene_onLoadLevel(IOnLoadLevelEventArgs args)
