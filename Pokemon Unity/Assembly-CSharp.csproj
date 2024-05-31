@@ -160,11 +160,8 @@
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\AudioHandler.Refactor.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GameSystem.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\EventScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\InputManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Intro\IntroScene.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\LevelLoader.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\LevelLoader.SceneManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Typing\TypingForm.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\SpriteComponent.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\UnityInterfaces.cs" />

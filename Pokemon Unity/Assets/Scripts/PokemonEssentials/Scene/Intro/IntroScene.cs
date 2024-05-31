@@ -23,7 +23,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Active/Current Image being displayed in Scene
 		/// </summary>
-		public Image pic; 
+		public Image pic;
 		/// <summary>
 		/// flashing "Press Start" picture
 		/// </summary>
@@ -37,7 +37,7 @@ namespace PokemonUnity
 		/// </summary>
 		public int index;
 		/// <summary>
-		/// Timer for Picture display 
+		/// Timer for Picture display
 		/// </summary>
 		public int Timer;
 		private IAudioObject title_bgm;
@@ -140,7 +140,7 @@ namespace PokemonUnity
 			pictureWait();
 			//onUpdate.set(method(:splashUpdate));  // call splashUpdate every frame
 			//if (onUpdate) splashUpdate();
-			onUpdate += IntroScene_onUpdate_Spash;
+			onUpdate += IntroScene_onUpdate_Splash;
 			//onCTrigger.set(method(:closeSplash)); // call closeSplash when C key is pressed
 			//if (onATrigger) closeSplash();
 			onUpdate += IntroScene_onATrigger_Splash;
@@ -192,7 +192,7 @@ namespace PokemonUnity
 			//IPokemonLoad sscreen = new PokemonLoad(sscene);
 			ILoadScene sscene = GameEvents.game.Scenes.Load;
 			ILoadScreen sscreen = GameEvents.game.Screens.Load.initialize(sscene);
-			sscreen.pbStartLoadScreen();
+			sscreen.StartLoadScreen();
 			//transition to load/new game scene
 			//Havent finished translating best way to register data between scenes yet
 		}
@@ -222,7 +222,7 @@ namespace PokemonUnity
 			//IPokemonLoad sscreen = new PokemonLoad(sscene);
 			ILoadScene sscene = GameEvents.game.Scenes.Load;
 			ILoadScreen sscreen = GameEvents.game.Screens.Load.initialize(sscene);
-			sscreen.pbStartDeleteScreen();
+			sscreen.StartDeleteScreen();
 			//transition to delete save scene
 		}
 
@@ -241,7 +241,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected virtual void IntroScene_onUpdate_Spash(object sender, System.EventArgs e)
+		protected virtual void IntroScene_onUpdate_Splash(object sender, System.EventArgs e)
 		{
 			splashUpdate();
 		}
