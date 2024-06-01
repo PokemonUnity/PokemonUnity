@@ -22,7 +22,7 @@ namespace PokemonUnity
 		/// If pokemon battles are being done in an console for ai training, or visually for player experience
 		/// </summary>
 		public const bool INTERNAL = true;
-#if DEBUG
+#if (DEBUG || UNITY_EDITOR)
 		public const bool DEBUG = true;
 #else
 		public const bool DEBUG = false;

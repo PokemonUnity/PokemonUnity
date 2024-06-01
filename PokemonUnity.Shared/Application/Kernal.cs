@@ -328,7 +328,7 @@ namespace PokemonUnity
 			if (!string.IsNullOrEmpty(filepath))
 			{
 //				BinaryFormatter bf = new BinaryFormatter();
-//#if DEBUG
+//#if (DEBUG || UNITY_EDITOR)
 //				File.WriteAllText(playerSave, JsonConvert.SerializeObject(saveData, Formatting.Indented/*, new JsonSerializerSettings() { Formatting = Formatting.Indented }* /));
 //#else
 //				using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
