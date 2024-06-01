@@ -12,18 +12,20 @@ namespace PokemonUnity.Interface.UnityEngine
 		typeof(global::UnityEngine.UI.Image))]
 	public class CommandMenuButton : MonoBehaviour
 	{
-		public RectTransform Rect;
+		private RectTransform rect;
+		private global::UnityEngine.UI.Image background;
 		/// <summary>
 		/// Name of the move
 		/// </summary>
 		public TMPro.TextMeshProUGUI Text;
 		public global::UnityEngine.UI.Image Logo;
-		public global::UnityEngine.UI.Image Background;
+		public RectTransform Rect {  get { return rect; } }
+		public global::UnityEngine.UI.Image Background {  get { return background; } }
 
 		private void Awake()
 		{
-			Rect = GetComponent<RectTransform>();
-			Background = GetComponent<global::UnityEngine.UI.Image>();
+			rect = GetComponent<RectTransform>();
+			background = GetComponent<global::UnityEngine.UI.Image>();
 		}
 	}
 }
