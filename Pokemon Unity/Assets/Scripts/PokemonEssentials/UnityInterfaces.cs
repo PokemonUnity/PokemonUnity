@@ -17,8 +17,6 @@ using PokemonEssentials.Interface.EventArg;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace PokemonUnity.Interface.UnityEngine
 {

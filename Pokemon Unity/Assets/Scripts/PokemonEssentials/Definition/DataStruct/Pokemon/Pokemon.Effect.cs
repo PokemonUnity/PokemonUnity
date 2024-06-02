@@ -73,6 +73,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			result?.Invoke(true);
 		}
+		bool IBattlerEffect.CanSleep(IBattler attacker, bool showMessages, IBattleMove move, bool ignorestatus)
+		{
+			bool r = false;
+			(this as IBattlerEffectIE).CanSleep(attacker, showMessages, move, ignorestatus, result: value => r=value);
+			return r;
+		}
 
 		//bool IBattlerEffect.CanSleepYawn() {
 		//	if (status!=0) return false;
@@ -105,6 +111,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return @battle.Display(Game._INTL("{1} fell asleep!",ToString()));
 			GameDebug.Log($"[Status change] #{ToString()} fell asleep (#{this.StatusCount} turns)");
 		}
+		void IBattlerEffect.Sleep(string msg) { (this as IBattlerEffectIE).Sleep(msg); }
 
 		//public void SleepSelf(int duration=-1) {
 		//	Status=Status.SLEEP;
@@ -281,7 +288,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return @battle.Display(Game._INTL("{1}'s {2} had no effect on {3}!",
 					opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),ToString(true)));
 				result(false); yield break;
-			}   
+			}
 			if (hasWorkingAbility(Abilities.WATER_VEIL) ||
 				(hasWorkingAbility(Abilities.FLOWER_VEIL) && HasType(Types.GRASS)) ||
 				(hasWorkingAbility(Abilities.LEAF_GUARD) && (@battle.Weather==Weather.SUNNYDAY ||
@@ -491,7 +498,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			Status oldstatus=Status;
 			Status=0;
 			this.StatusCount=0;
-			if (showMessages)  
+			if (showMessages)
 				switch (oldstatus) {
 					case Status.SLEEP:
 						yield return @battle.Display(Game._INTL("{1} woke up!",ToString()));
@@ -543,7 +550,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (showMessages) yield return @battle.Display(Game._INTL("{1}'s {2} prevents confusion!",ToString(),Game._INTL(Ability.ToString(TextScripts.Name))));
 				result?.Invoke(false); yield break;
 			}
-			result?.Invoke(true); 
+			result?.Invoke(true);
 		}
 
 		//public void Confuse() {
@@ -649,7 +656,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
 					{ yield return CanReduceStatStage(stat,attacker,showMessages,moldbreaker:moldbreaker,ignoreContrary: true, result: value => result?.Invoke(value)); yield break; }
 			if (isFainted()) { result?.Invoke(false); yield break; }
-			if (TooHigh(stat)) { 
+			if (TooHigh(stat)) {
 				if (showMessages) yield return @battle.Display(Game._INTL("{1}'s {2} won't go any higher!",
 					ToString(),Game._INTL(stat.ToString(TextScripts.Name))));
 				result?.Invoke(false); yield break;
@@ -659,7 +666,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		//public int IncreaseStatBasic(Stats stat,int increment,IBattler attacker=null,bool moldbreaker=false,bool ignoreContrary=false) {
 		//	if (!moldbreaker)
-		//		if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker()) { 
+		//		if (!attacker.IsNotNullOrNone() || attacker.Index==this.Index || !attacker.hasMoldBreaker()) {
 		//			if (hasWorkingAbility(Abilities.CONTRARY) && !ignoreContrary)
 		//				return ReduceStatBasic(stat,increment,attacker,moldbreaker,true);
 		//			if (hasWorkingAbility(Abilities.SIMPLE)) increment*=2;
@@ -682,9 +689,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			bool canIncreaseStatStage = false;
 			yield return CanIncreaseStatStage(stat, attacker, showMessages, move, moldbreaker, ignoreContrary, result: value => canIncreaseStatStage = value);
 			if (canIncreaseStatStage) {
-			//if (CanIncreaseStatStage(stat, attacker, showMessages, move, moldbreaker, ignoreContrary)) { 
+			//if (CanIncreaseStatStage(stat, attacker, showMessages, move, moldbreaker, ignoreContrary)) {
 				increment=IncreaseStatBasic(stat,increment,attacker,moldbreaker,ignoreContrary);
-				if (increment > 0) { 
+				if (increment > 0) {
 					if (ignoreContrary)
 						if (upanim) yield return @battle.Display(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(Ability.ToString(TextScripts.Name))));
 					if (upanim) @battle.CommonAnimation("StatUp", this, null);
@@ -695,7 +702,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					result?.Invoke(true); yield break;
 				}
 			}
-			result?.Invoke(false); 
+			result?.Invoke(false);
 		}
 
 		public IEnumerator IncreaseStatWithCause(Stats stat,int increment,IBattler attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false,System.Action<bool> result=null) {
@@ -712,10 +719,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (canIncreaseStatStage) {
 			//if (CanIncreaseStatStage(stat,attacker,false,null,moldbreaker,ignoreContrary)) {
 				increment=IncreaseStatBasic(stat,increment,attacker,moldbreaker,ignoreContrary);
-				if (increment > 0) { 
+				if (increment > 0) {
 					//if (ignoreContrary) //ToDo: UpAnimation?
 					//  if (upanim) yield return @battle.Display(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(this.ability.ToString(TextScripts.Name))));
-					if (showanim) @battle.CommonAnimation("StatUp", this, null); 
+					if (showanim) @battle.CommonAnimation("StatUp", this, null);
 					string [] arrStatTexts = null;
 					if (attacker.Index==this.Index)
 						arrStatTexts=new string[] {Game._INTL("{1}'s {2} raised its {3}!",ToString(),cause,Game._INTL(stat.ToString(TextScripts.Name))),
@@ -725,7 +732,7 @@ namespace PokemonUnity.Interface.UnityEngine
 						arrStatTexts=new string[] {Game._INTL("{1}'s {2} raised {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name))),
 							Game._INTL("{1}'s {2} sharply raised {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name))),
 							Game._INTL("{1}'s {2} drastically raised {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name)))};
-					if (showmessage) yield return @battle.Display(arrStatTexts[Math.Min(increment-1,2)]); 
+					if (showmessage) yield return @battle.Display(arrStatTexts[Math.Min(increment-1,2)]);
 					result?.Invoke(true); yield break;
 				}
 			}
@@ -839,7 +846,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (increment > 0) {
 					if (ignoreContrary)
 						if (downanim) yield return @battle.Display(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(Ability.ToString(TextScripts.Name))));
-					if (downanim) @battle.CommonAnimation("StatDown", this, null); 
+					if (downanim) @battle.CommonAnimation("StatDown", this, null);
 					string[] arrStatTexts= new string[] {Game._INTL("{1}'s {2} fell!",ToString(),Game._INTL(stat.ToString(TextScripts.Name))),
 						Game._INTL("{1}'s {2} harshly fell!",ToString(),Game._INTL(stat.ToString(TextScripts.Name))),
 						Game._INTL("{1}'s {2} severely fell!",ToString(),Game._INTL(stat.ToString(TextScripts.Name)))};
@@ -872,8 +879,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				increment=ReduceStatBasic(stat,increment,attacker,moldbreaker,ignoreContrary);
 				if (increment > 0) {
 					if (ignoreContrary) //ToDo: DownAnimation? must be a typo for "ShowAnimation" -> showanim
-						//if (downanim) yield return @battle.Display(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(this.ability.ToString(TextScripts.Name)))); 
-						if (showanim) yield return @battle.Display(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(Ability.ToString(TextScripts.Name)))); 
+						//if (downanim) yield return @battle.Display(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(this.ability.ToString(TextScripts.Name))));
+						if (showanim) yield return @battle.Display(Game._INTL("{1}'s {2} activated!",ToString(),Game._INTL(Ability.ToString(TextScripts.Name))));
 					if (showanim) @battle.CommonAnimation("StatDown",this,null);
 					string[] arrStatTexts = null;
 					if (attacker.Index==this.Index)
@@ -884,7 +891,7 @@ namespace PokemonUnity.Interface.UnityEngine
 						arrStatTexts=new string[] {Game._INTL("{1}'s {2} lowered {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name))),
 							Game._INTL("{1}'s {2} harshly lowered {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name))),
 							Game._INTL("{1}'s {2} severely lowered {3}'s {4}!",attacker.ToString(),cause,ToString(true),Game._INTL(stat.ToString(TextScripts.Name)))};
-					if (showmessage) yield return @battle.Display(arrStatTexts[Math.Min(increment-1,2)]); 
+					if (showmessage) yield return @battle.Display(arrStatTexts[Math.Min(increment-1,2)]);
 					// Defiant
 					if (hasWorkingAbility(Abilities.DEFIANT) && (!attacker.IsNotNullOrNone() || attacker.IsOpposing(this.Index)))
 						yield return IncreaseStatWithCause(Stats.ATTACK,2,this,Game._INTL(Ability.ToString(TextScripts.Name)));

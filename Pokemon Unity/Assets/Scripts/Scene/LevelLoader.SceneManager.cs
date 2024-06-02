@@ -21,7 +21,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-namespace PokemonUnity
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// </summary>

@@ -22,7 +22,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		//	}
 		//	(this as IBattler).InitPokemon((IPokemon)pkmn, pkmnIndex); //this._InitPokemon(pkmn, pkmnIndex);
 		//	// Called into battle
-		//	if (isShadow()) { 
+		//	if (isShadow()) {
 		//		//if (hasConst(Types.SHADOW))
 		//			Type1=Types.SHADOW;
 		//			Type2=Types.SHADOW;
@@ -36,11 +36,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		IEnumerator IBattlerShadowPokemonIE.EndTurn(IBattleChoice choice) { //, params object[] placeholder
 			yield return (this as IBattlerIE).EndTurn(choice); //this._pbEndTurn(choice);
 			if (inHyperMode() && !this.battle.AllFainted(this.battle.party1) &&
-				!this.battle.AllFainted(this.battle.party2)) { 
+				!this.battle.AllFainted(this.battle.party2)) {
 				this.battle.Display(Game._INTL("Its hyper mode attack hurt {1}!",this.ToString(true)));
 				ConfusionDamage();
 			}
 		}
+		void IBattlerShadowPokemon.EndTurn(IBattleChoice choice) { (this as IBattlerShadowPokemon).EndTurn(choice); }
 
 		/*public bool isShadow() {
 			PokemonEssentials.Interface.PokeBattle.IPokemon pkmn=this.pokemon;
@@ -49,7 +50,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			return false;
 		}
 
-		public bool inHyperMode() { 
+		public bool inHyperMode() {
 			if (isFainted()) return false;
 			PokemonEssentials.Interface.PokeBattle.IPokemon pkmn=this.pokemon;
 			if (pkmn.IsNotNullOrNone() && pkmn is IPokemonShadowPokemon p && p.hypermode)
@@ -57,7 +58,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			return false;
 		}
 
-		public void HyperMode() { 
+		public void HyperMode() {
 			PokemonEssentials.Interface.PokeBattle.IPokemon pkmn=this.pokemon;
 			if (pkmn is IPokemonShadowPokemon p && isShadow() && !IsHyperMode)
 				if (@battle.Random(p.ShadowLevel.Value)<=Monster.Pokemon.HEARTGAUGESIZE/4) { //p.heartgauge
@@ -66,13 +67,13 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 		}
 
-		public bool HyperModeObedience(IBattleMove move) { 
+		public bool HyperModeObedience(IBattleMove move) {
 			if (!move.IsNotNullOrNone()) return true;
 			if (this.inHyperMode() && move.Type!=Types.SHADOW)
 				return @battle.Random(10)<8 ? false : true;
 			return true;
 		}
-		
+
 		//Events.onStartBattle+=delegate(object sender, EventArgs e) {
 		protected void Events_OnStartBattle(object sender, System.EventArgs e) {
 			if(Game.GameData.PokemonTemp is ITempMetadataPokemonShadow t)
@@ -92,7 +93,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			BattleResults decision=e.Decision; //[0];
 			bool canlose=e.CanLose; //[1];
 			if(Game.GameData.PokemonTemp is ITempMetadataPokemonShadow t)
-				for (int i = 0; i < t.heartgauges?.Length; i++) { 
+				for (int i = 0; i < t.heartgauges?.Length; i++) {
 					IPokemon pokemon = Game.GameData.Trainer.party[i];
 					if (pokemon is IPokemonShadowPokemon p && (t.heartgauges[i].HasValue &&
 						t.heartgauges[i]!=0 && p.heartgauge==0)) {
@@ -129,7 +130,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	//	/// <param name="scene"></param>
 	//	/// <returns></returns>
 	//	/// <remarks>Specifically for Shadow Pokemon Usage</remarks>
-	//	public IEnumerator UseItemOnPokemon(Items item, int pkmnIndex, IBattlerIE userPkmn, IHasDisplayMessageIE scene, System.Action<bool> result) 
+	//	public IEnumerator UseItemOnPokemon(Items item, int pkmnIndex, IBattlerIE userPkmn, IHasDisplayMessageIE scene, System.Action<bool> result)
 	//	{ return (this as IBattleShadowPokemonIE).UseItemOnPokemon(item, pkmnIndex, userPkmn, scene, result: value => result(value)); }
 	//	IEnumerator IBattleShadowPokemonIE.UseItemOnPokemon(Items item, int pkmnIndex, IBattlerIE userPkmn, IHasDisplayMessageIE scene, System.Action<bool> result)
 	//	{
@@ -157,7 +158,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		/// <remarks>Specifically for Shadow Pokemon Usage</remarks>
-		public IEnumerator UseItemOnPokemon(Items item, int pkmnIndex, IBattlerIE userPkmn, IHasDisplayMessageIE scene, System.Action<bool> result) 
+		public IEnumerator UseItemOnPokemon(Items item, int pkmnIndex, IBattlerIE userPkmn, IHasDisplayMessageIE scene, System.Action<bool> result)
 		{ return (this as IBattleShadowPokemonIE).UseItemOnPokemon(item, pkmnIndex, userPkmn, scene, result: value => result(value)); }
 		IEnumerator IBattleShadowPokemonIE.UseItemOnPokemon(Items item, int pkmnIndex, IBattlerIE userPkmn, IHasDisplayMessageIE scene, System.Action<bool> result)
 		{
@@ -171,6 +172,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			//return _pbUseItemOnPokemon(item,pkmnIndex,userPkmn,scene);
 			yield return (this as IBattleIE).UseItemOnPokemon(item, pkmnIndex, (IBattlerIE)userPkmn, scene, result: value => result(value));
+		}
+		bool IBattleShadowPokemon.UseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene)
+		{
+			bool r = false;
+			(this as IBattleShadowPokemonIE).UseItemOnPokemon(item, pkmnIndex, (IBattlerIE)userPkmn, (IHasDisplayMessageIE)scene, result: value => r=value);
+			return r;
 		}
 	}
 

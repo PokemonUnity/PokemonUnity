@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace PokemonUnity
+namespace PokemonUnity.Interface.UnityEngine
 {
 	public class TypingForm : IPokemonEntryScene, IPokemonEntryScene2
 	{
@@ -34,7 +34,7 @@ namespace PokemonUnity
 		//[SerializeField]
 		//private float m_ScrollSpeed = 1f;
 		//private float m_InitPosition = 0f;
-		
+
 		//private bool UseKeyboard;
 		private System.Text.StringBuilder typeSpaceText;
 		//public string typedString;
@@ -44,16 +44,16 @@ namespace PokemonUnity
 		public int typeSpaceIndex = 0;
 		public int charLimit      = 12;
 		public static bool qwerty  = true;
-		
+
 		/// <summary>
-		/// If the typing screen is for naming a Player, PC Box, or a Pokemon; 
+		/// If the typing screen is for naming a Player, PC Box, or a Pokemon;
 		/// Change the icon to match sprite that represents subject.
 		/// <see cref="PokemonUnity.Interface.TextEntryTypes"/>
 		/// </summary>
 		/// Instantiate using prefab...
 		/// Should include animation frames, and icon shadow
 		public UnityEngine.GameObject   icon;
-		//public  UnityEngine.GameObject[]   IconPrefabs; 
+		//public  UnityEngine.GameObject[]   IconPrefabs;
 		public  UnityEngine.Sprite[] PageBackground;
 		public  UnityEngine.UI.Image Page;
 		public  UnityEngine.UI.Text entry;
@@ -62,7 +62,7 @@ namespace PokemonUnity
 		//public  GameObject          CharKeyPrefab;
 		//public  GameObject          PagePrefab;
 		public  IDictionary<string,GameObject>          sprites;
-		
+
 		private bool refreshOverlay;
 		private int cursorpos;
 
@@ -109,8 +109,8 @@ namespace PokemonUnity
 		//{
 		//	GameEntry.UseKeyboard = !GameEntry.UseKeyboard;
 		//	//image.enabled = GameEntry.UseKeyboard;
-		//	
-		//	if(GameEntry.UseKeyboard) 
+		//
+		//	if(GameEntry.UseKeyboard)
 		//		TypeWithKeyboard();
 		//}
 
@@ -530,7 +530,7 @@ namespace PokemonUnity
 				@cursorpos-=1;
 				if (@cursorpos<MODE1) @cursorpos=OK;
 			  } else {
-				do { 
+				do {
 				  cursormod=wrapmod((cursormod-1),ROWS);
 				  @cursorpos=cursororigin+cursormod;
 				} while (pbColumnEmpty(cursormod));
@@ -902,7 +902,7 @@ namespace PokemonUnity
 			//set {
 			//  @sprite.color=value;
 			//} }
-			//		
+			//
 			//public bool disposed { get {
 			//  return @sprite.disposed;
 			//} }

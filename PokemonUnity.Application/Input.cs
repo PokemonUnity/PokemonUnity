@@ -128,6 +128,10 @@ namespace PokemonUnity
 			}
 		}
 
+		/// <summary>
+		/// Checks the status of all keys and records the input as key state
+		/// until the next update. So all key states are stored for the life of each update.
+		/// </summary>
 		public static void update() {
 			if (@keystate.Count > 0) { //!= null
 				for (int i = 0; i < 256; i++) {
@@ -171,7 +175,7 @@ namespace PokemonUnity
 				case Input.A:
 					return new int[] { 0x5A,0x10 }; // Z, Shift
 				case Input.B:
-					return new int[] { 0x58,0x1B }; // X, ESC 
+					return new int[] { 0x58,0x1B }; // X, ESC
 				case Input.C:
 					return new int[] { 0x43,0x0D,0x20 }; // C, ENTER, Space
 				case Input.X:

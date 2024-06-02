@@ -13,15 +13,38 @@ namespace PokemonUnity
 	/// </summary>
 	public static class Core
 	{
+		/// <summary>
+		/// The current version of the framework being used
+		/// </summary>
+		//public const string VERSION_POKEMON_FRAMEWORK = "";
+		public static string VERSION_POKEMON_FRAMEWORK { get
+			{
+				System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+				System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+				string version = fvi.FileVersion;
+				return version;
+			}
+		}
+		/// <summary>
+		/// The current version of the pokemon essentials project the framework is based off of
+		/// </summary>
+		/// <remarks>
+		/// <see cref="System.Reflection.AssemblyName.Version"/>
+		/// </remarks>
+		public const string VERSION_POKEMON_ESSENTIALS = "16.7";
 		#region Constant Values and Game Rules
 		//public static Translator.Languages UserLanguage { get; set; } //= Translator.Languages.English;
 		//public static bool TextLTR { get; private set; }
 		//Ping server for latest hash value?...
 		//public const string PKU_Server_Address = "";
 		/// <summary>
-		/// If pokemon battles are being done in an console for ai training, or visually for player experience
+		/// If pokemon battles are being done in an console for AI training, or visually for player experience
 		/// </summary>
+#if INTERNAL // if using a non-ui console application project to run training simulations
 		public const bool INTERNAL = true;
+#else
+		public const bool INTERNAL = false;
+#endif
 #if (DEBUG || UNITY_EDITOR)
 		public const bool DEBUG = true;
 #else

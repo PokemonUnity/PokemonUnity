@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using PokemonUnity;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonUnity.Character;
 using PokemonUnity.Monster;
 using PokemonUnity.Localization;
@@ -18,7 +18,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonUnity
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// </summary>
@@ -46,8 +46,9 @@ namespace PokemonUnity
 			current = this;
 			//UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject
 
-			GameDebug.OnLog += GameDebug_OnLog;
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Debugger.Instance.OnLog += GameDebug_OnLog;
+			GameDebug.Init("\\Logs", "GameLog"); //Path = "Logs\GameLog.txt"
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			try
 			{
 				//GameDebug.Log("0-" + System.IO.Path.GetFullPath("..\\veekun-pokedex.sqlite"));
@@ -84,7 +85,7 @@ namespace PokemonUnity
 						Game.InitPokemons();
 						Game.InitPokemonForms();
 						Game.InitPokemonMoves();
-						//Game.InitPokemonEvolutions();
+						Game.InitPokemonEvolutions();
 						Game.InitPokemonItems();
 						Game.InitMoves();
 						Game.InitItems();
@@ -120,7 +121,7 @@ namespace PokemonUnity
 		}
 		void Start()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
 			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
@@ -143,7 +144,7 @@ namespace PokemonUnity
 
 		private void ConfigureScenes()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			game.Scenes = gameObject.GetComponent<LevelLoader>() as IGameScenesUI;
 			//ToDo: Load all the different game scenes into an array, from unity inspector, and pass them as an input parameter below
@@ -158,13 +159,13 @@ namespace PokemonUnity
 			if (e != null || e != System.EventArgs.Empty)
 				if (e.Error == true)
 					//System.Console.WriteLine("[ERR]: " + e.Message);
-					UnityEngine.Debug.LogError("[ERR] " + UnityEngine.Time.frameCount + ": " + e.Message);
+					global::UnityEngine.Debug.LogError("[ERR] " + global::UnityEngine.Time.frameCount + ": " + e.Message);
 				else if (e.Error == false)
 					//System.Console.WriteLine("[WARN]: " + e.Message);
-					UnityEngine.Debug.LogWarning("[WARN] " + UnityEngine.Time.frameCount + ": " + e.Message);
+					global::UnityEngine.Debug.LogWarning("[WARN] " + global::UnityEngine.Time.frameCount + ": " + e.Message);
 				else
 					//System.Console.WriteLine("[LOG]: " + e.Message);
-					UnityEngine.Debug.Log("[LOG] " + UnityEngine.Time.frameCount + ": " + e.Message);
+					global::UnityEngine.Debug.Log("[LOG] " + global::UnityEngine.Time.frameCount + ": " + e.Message);
 		}
 	}
 }

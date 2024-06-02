@@ -155,8 +155,9 @@ namespace PokemonUnity
 			MoveEffectData = new Dictionary<Attack.Effects, PokemonEssentials.Interface.PokeBattle.IBattleMove>();
 			ItemData = new Dictionary<Items, ItemData>();
 			BerryData = new Dictionary<Items, BerryData>();
+			//Init in Region Method
+			PokedexData = new Dictionary<Regions, Pokedex>();
 			RegionData = new Dictionary<Regions, Locations[]>();
-			//PokedexData = new Dictionary<Regions, Pokedex>();
 			LocationData = new Dictionary<Locations, int[]>();
 			AreaData = new Dictionary<int, IArea>();
 			MethodData = new Dictionary<Method, int[]>();
@@ -167,10 +168,7 @@ namespace PokemonUnity
 			//TrainerData = new Dictionary<int, Encounter>();
 			BadgeData = new Dictionary<GymBadges, Character.BadgeData>();
 			HiddenMoveData = new Dictionary<HiddenMoves, HiddenMoveData>();
-			//Init in Region Method
-			PokedexData = new Dictionary<Regions, Pokedex>();
-		//	TrainerMetaData = new Dictionary<TrainerTypes, TrainerMetaData>();
-		//	//TrainerData = new Dictionary<int, Encounter>();
+			//TrainerData = new Dictionary<int, Encounter>();
 		}
 		#endregion
 

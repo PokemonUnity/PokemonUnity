@@ -1,4 +1,22 @@
-﻿using System.Reflection;
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#
+	string output = File.ReadAllText(this.Host.ResolvePath("AssemblyInfo.cs"));
+	Regex pattern = new Regex(@"AssemblyFileVersion\(""(?<major>\d+)\.(?<minor>\d+)\.(?<build>\d+)\.(?<revision>\d+)""\)");
+	MatchCollection matches = pattern.Matches(output);
+	if( matches.Count == 1 )
+	{
+		major = Convert.ToInt32(matches[0].Groups["major"].Value);
+		minor = Convert.ToInt32(matches[0].Groups["minor"].Value);
+		build = Convert.ToInt32(matches[0].Groups["build"].Value) + 1;
+		revision = Convert.ToInt32(matches[0].Groups["revision"].Value);
+		if( this.Host.ResolveParameterValue("-","-","BuildConfiguration") == "Release" )
+			revision++;
+	}
+#>
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Resources;
@@ -6,7 +24,7 @@ using System.Resources;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PokemonUnity.Application")]
+[assembly: AssemblyTitle("PokemonUnity.Shared")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
@@ -21,7 +39,7 @@ using System.Resources;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("37dd2ed4-81dc-4647-9652-d914f1a1607d")]
+[assembly: Guid("c4bd7ac0-1333-4d62-a6cd-881a1806ffad")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,5 +52,12 @@ using System.Resources;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")] => major.minor.build.revision
 [assembly: AssemblyVersion("16.7")] //Pokemon Essentials Version
-[assembly: AssemblyFileVersion("1.0.0.1")] //Pokemon Framework Version
+[assembly: AssemblyFileVersion("<#= this.major #>.<#= this.minor #>.<#= this.build #>.<#= this.revision #>")] //Pokemon Framework Version
 [assembly: AssemblyInformationalVersion("Alpha")] //Github Branch Source
+
+<#+
+	int major = 1;
+	int minor = 0;
+	int build = 0;
+	int revision = 0;
+#>

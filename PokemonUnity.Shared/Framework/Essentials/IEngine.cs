@@ -381,6 +381,10 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Updates input data. As a rule, this method is called once per frame.
 		/// </summary>
+		/// <remarks>
+		/// Checks the status of all keys and records the input as key state
+		/// until the next update. So all key states are stored for the life of each update.
+		/// </remarks>
 		/// <returns></returns>
 		void update();
 		/// <summary>

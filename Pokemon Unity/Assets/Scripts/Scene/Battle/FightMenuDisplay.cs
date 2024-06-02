@@ -11,7 +11,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 using UnityEngine;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// Fight menu (choose a move)
@@ -145,7 +145,7 @@ namespace PokemonUnity.UX
 			buttons = transform.GetComponent<FightMenuButtons>();
 		}
 
-		public IFightMenuDisplay initialize(IBattler battler, IViewport viewport= null)
+		public IFightMenuDisplay initialize(IBattler battler, IViewport viewport = null)
 		{
 			//@display = null;
 			/*if (PokeBattle_SceneConstants.USEFIGHTBOX)

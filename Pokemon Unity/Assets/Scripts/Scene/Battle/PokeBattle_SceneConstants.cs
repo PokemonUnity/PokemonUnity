@@ -11,7 +11,7 @@ using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 
-namespace PokemonUnity
+namespace PokemonUnity//.Interface.UnityEngine
 {
 	public static partial class PokeBattle_SceneConstants
 	{
@@ -36,16 +36,16 @@ namespace PokemonUnity
 		public static readonly IColor PPTEXTSHADOWCOLORORANGE	= new SeriColor(144,72,24);
 		public static readonly IColor PPTEXTBASECOLORRED		= new SeriColor(248,72,72);		// Zero PP
 		public static readonly IColor PPTEXTSHADOWCOLORRED		= new SeriColor(136,48,48);
-																
-		//  HP bar colors										
+
+		//  HP bar colors
 		public static readonly IColor HPCOLORGREEN				= new SeriColor(24,192,32);
 		public static readonly IColor HPCOLORGREENDARK			= new SeriColor(0,144,0);
 		public static readonly IColor HPCOLORYELLOW				= new SeriColor(248,176,0);
 		public static readonly IColor HPCOLORYELLOWDARK			= new SeriColor(176,104,8);
 		public static readonly IColor HPCOLORRED				= new SeriColor(248,88,40);
 		public static readonly IColor HPCOLORREDDARK			= new SeriColor(168,48,56);
-																
-		//  Exp bar colors										
+
+		//  Exp bar colors
 		public static readonly IColor EXPCOLORBASE				= new SeriColor(72,144,248);
 		public static readonly IColor EXPCOLORSHADOW			= new SeriColor(48,96,216);
 

@@ -4,7 +4,7 @@ using PokemonEssentials.Interface;
 using PokemonUnity;
 using UnityEngine;
 
-namespace PokemonUnity
+namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// UnityEngine AudioHandler Logic
@@ -161,7 +161,7 @@ namespace PokemonUnity
 
 	public class GameAudioPlay : PokemonEssentials.Interface.IGameAudioPlay
 	{
-		public IAudioObject pbStringToAudioFile(string name)
+		public IAudioObject StringToAudioFile(string name)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -187,22 +187,22 @@ namespace PokemonUnity
 			}
 		}
 
-		public IAudioObject pbResolveAudioFile(string name, int? volume = null, float? pitch = null)
+		public IAudioObject ResolveAudioFile(string name, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			if (name is string)
 			{
-				IAudioObject str = pbStringToAudioFile(name);
+				IAudioObject str = StringToAudioFile(name);
 				str.volume = 100;
 				if (volume != null) str.volume = volume.Value;
 				str.pitch = 100;
 				if (pitch != null) str.pitch = pitch.Value;
-				return pbResolveAudioFile(str, str.volume, str.pitch);
+				return ResolveAudioFile(str, str.volume, str.pitch);
 			}
 			return null; //str doesnt exist...
 		}
 
-		public IAudioObject pbResolveAudioFile(IAudioObject str, int? volume = null, float? pitch = null)
+		public IAudioObject ResolveAudioFile(IAudioObject str, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -224,13 +224,13 @@ namespace PokemonUnity
 		}
 
 		#region Background Music
-		public void pbBGMPlay(string name, int? volume = null, float? pitch = null)
+		public void BGMPlay(string name, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (string.IsNullOrEmpty(name)) return;
-			IAudioBGM param = pbResolveAudioFile(name, volume, pitch) as IAudioBGM;
-			pbBGMPlay(param, volume, pitch);
+			IAudioBGM param = ResolveAudioFile(name, volume, pitch) as IAudioBGM;
+			BGMPlay(param, volume, pitch);
 			//if (param.name != null && param.name != "")
 			//{
 			//	if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("bgm_play"))
@@ -249,7 +249,7 @@ namespace PokemonUnity
 			//}
 		}
 
-		public void pbBGMPlay(IAudioObject name, int? volume = null, float? pitch = null)
+		public void BGMPlay(IAudioObject name, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -273,30 +273,30 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbBGMFade(float x = 0)
+		public void BGMFade(float x = 0)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			pbBGMStop(x);
+			BGMStop(x);
 		}
 
-		public void pbBGMStop(float timeInSeconds = 0)
+		public void BGMStop(float timeInSeconds = 0)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			
-			if (Game.GameData.GameSystem != null && timeInSeconds>0.0) //&& Game.GameData.GameSystem.respond_to("bgm_fade")) 
+
+			if (Game.GameData.GameSystem != null && timeInSeconds>0.0) //&& Game.GameData.GameSystem.respond_to("bgm_fade"))
 			{
 				Game.GameData.GameSystem.bgm_fade(timeInSeconds);
 				return;
-			} else if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("bgm_stop")) 
+			} else if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("bgm_stop"))
 			{
 				Game.GameData.GameSystem.bgm_stop();
 				return;
-			} 
+			}
 			//else if (RPG.const_defined(:BGM)) { //rescue false
 			//	try{ //begin;
 			//		//(timeInSeconds > 0.0) ? RPG.BGM.fade((timeInSeconds * 1000).floor) : RPG.BGM.stop();
-			//		if (timeInSeconds > 0.0) 
+			//		if (timeInSeconds > 0.0)
 			//			RPG.BGM.fade((timeInSeconds * 1000).floor) : RPG.BGM.stop();
 			//		return;
 			//	} catch (Exception) { } //rescue;
@@ -310,13 +310,13 @@ namespace PokemonUnity
 		#endregion
 
 		#region Music Effects
-		public void pbMEPlay(string name, int? volume = null, float? pitch = null)
+		public void MEPlay(string name, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (string.IsNullOrEmpty(name)) return;
-			IAudioME param = pbResolveAudioFile(name, volume, pitch) as IAudioME;
-			pbMEPlay(param, volume, pitch);
+			IAudioME param = ResolveAudioFile(name, volume, pitch) as IAudioME;
+			MEPlay(param, volume, pitch);
 			//if (param.name != null && param.name != "")
 			//{
 			//	if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("me_play"))
@@ -335,7 +335,7 @@ namespace PokemonUnity
 			//}
 		}
 
-		public void pbMEPlay(IAudioObject name, int? volume = null, float? pitch = null)
+		public void MEPlay(IAudioObject name, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -359,14 +359,14 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbMEFade(float x = 0)
+		public void MEFade(float x = 0)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			pbMEStop(x);
+			MEStop(x);
 		}
 
-		public void pbMEStop(float timeInSeconds = 0)
+		public void MEStop(float timeInSeconds = 0)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -400,12 +400,12 @@ namespace PokemonUnity
 		#endregion
 
 		#region Background Sounds
-		public void pbBGSPlay(string name, int? volume = null, float? pitch = null)
+		public void BGSPlay(string name, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (string.IsNullOrEmpty(name)) return;
-			IAudioBGS param = pbResolveAudioFile(name, volume, pitch) as IAudioBGS;
+			IAudioBGS param = ResolveAudioFile(name, volume, pitch) as IAudioBGS;
 			if (param.name != null && param.name != "")
 			{
 				if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("bgs_play"))
@@ -424,19 +424,19 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbBGSPlay(IAudioObject param, int? volume = null, float? pitch = null)
+		public void BGSPlay(IAudioObject param, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
-		public void pbBGSFade(float x = 0)
+		public void BGSFade(float x = 0)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			pbBGSStop(x);
+			BGSStop(x);
 		}
 
-		public void pbBGSStop(float timeInSeconds = 0)
+		public void BGSStop(float timeInSeconds = 0)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -458,7 +458,7 @@ namespace PokemonUnity
 			//		else
 			//			RPG.BGS.stop();
 			//		return;
-			//	} catch (Exception) { 
+			//	} catch (Exception) {
 			//		//rescue;
 			//	}
 			//}
@@ -471,15 +471,15 @@ namespace PokemonUnity
 		#endregion
 
 		#region Sound Effects
-		public void pbSEPlay(string param, int? volume = null, float? pitch = null)
+		public void SEPlay(string param, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (string.IsNullOrEmpty(param)) return;
-			pbSEPlay(pbResolveAudioFile(param, volume, pitch), volume, pitch);
+			SEPlay(ResolveAudioFile(param, volume, pitch), volume, pitch);
 		}
 
-		public void pbSEPlay(IAudioObject param, int? volume = null, float? pitch = null)
+		public void SEPlay(IAudioObject param, int? volume = null, float? pitch = null)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -503,14 +503,14 @@ namespace PokemonUnity
 			}
 		}
 
-		public void pbSEFade(float x = 0)
+		public void SEFade(float x = 0)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			
-			pbSEStop(x);
+
+			SEStop(x);
 		}
 
-		public void pbSEStop(float timeInSeconds = 0)
+		public void SEStop(float timeInSeconds = 0)
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -529,83 +529,83 @@ namespace PokemonUnity
 		#endregion
 
 		#region Misc Game Sounds
-		public void pbPlayCursorSE()
+		public void PlayCursorSE()
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("cursor_se") &&
 			   Game.GameData.DataSystem.cursor_se != null && Game.GameData.DataSystem.cursor_se.name != "")
 			{
-				pbSEPlay(Game.GameData.DataSystem.cursor_se);
+				SEPlay(Game.GameData.DataSystem.cursor_se);
 			}
 			//else if (Game.GameData.DataSystem && Game.GameData.DataSystem.respond_to("sounds") &&
 			// Game.GameData.DataSystem.sounds && Game.GameData.DataSystem.sounds[0] && Game.GameData.DataSystem.sounds[0].name != "")
 			//{
-			//	pbSEPlay(Game.GameData.DataSystem.sounds[0]);
+			//	SEPlay(Game.GameData.DataSystem.sounds[0]);
 			//}
 			else if (FileTest.audio_exist("Audio/SE/Choose"))
 			{
-				pbSEPlay("Choose", 80);
+				SEPlay("Choose", 80);
 			}
 		}
 
-		public void pbPlayDecisionSE()
+		public void PlayDecisionSE()
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("decision_se") &&
 			   Game.GameData.DataSystem.decision_se != null && Game.GameData.DataSystem.decision_se.name != "")
 			{
-				pbSEPlay(Game.GameData.DataSystem.decision_se);
+				SEPlay(Game.GameData.DataSystem.decision_se);
 			}
 			//else if (Game.GameData.DataSystem && Game.GameData.DataSystem.respond_to("sounds") &&
 			// Game.GameData.DataSystem.sounds && Game.GameData.DataSystem.sounds[1] && Game.GameData.DataSystem.sounds[1].name != "")
 			//{
-			//	pbSEPlay(Game.GameData.DataSystem.sounds[1]);
+			//	SEPlay(Game.GameData.DataSystem.sounds[1]);
 			//}
 			else if (FileTest.audio_exist("Audio/SE/Choose"))
 			{
-				pbSEPlay("Choose", 80);
+				SEPlay("Choose", 80);
 			}
 		}
-		 
-		public void pbPlayCancelSE()
+
+		public void PlayCancelSE()
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("cancel_se") &&
 			   Game.GameData.DataSystem.cancel_se != null && Game.GameData.DataSystem.cancel_se.name != "")
 			{
-				pbSEPlay(Game.GameData.DataSystem.cancel_se);
+				SEPlay(Game.GameData.DataSystem.cancel_se);
 			}
 			//else if (Game.GameData.DataSystem != null && Game.GameData.DataSystem.respond_to("sounds") &&
 			// Game.GameData.DataSystem.sounds && Game.GameData.DataSystem.sounds[2] && Game.GameData.DataSystem.sounds[2].name != "")
 			//{
-			//	pbSEPlay(Game.GameData.DataSystem.sounds[2]);
+			//	SEPlay(Game.GameData.DataSystem.sounds[2]);
 			//}
 			else if (FileTest.audio_exist("Audio/SE/Choose"))
 			{
-				pbSEPlay("Choose", 80);
+				SEPlay("Choose", 80);
 			}
 		}
 
-		public void pbPlayBuzzerSE()
+		public void PlayBuzzerSE()
 		{
 			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("buzzer_se") &&
 			   Game.GameData.DataSystem.buzzer_se != null && Game.GameData.DataSystem.buzzer_se.name != "")
 			{
-				pbSEPlay(Game.GameData.DataSystem.buzzer_se);
+				SEPlay(Game.GameData.DataSystem.buzzer_se);
 			}
 			//else if (Game.GameData.DataSystem && Game.GameData.DataSystem.respond_to("sounds") &&
 			// Game.GameData.DataSystem.sounds && Game.GameData.DataSystem.sounds[3] && Game.GameData.DataSystem.sounds[3].name != "")
 			//{
-			//	pbSEPlay(Game.GameData.DataSystem.sounds[3]);
+			//	SEPlay(Game.GameData.DataSystem.sounds[3]);
 			//}
 			else if (FileTest.audio_exist("Audio/SE/buzzer"))
 			{
-				pbSEPlay("buzzer", 80);
+				SEPlay("buzzer", 80);
 			}
 		}
 		#endregion

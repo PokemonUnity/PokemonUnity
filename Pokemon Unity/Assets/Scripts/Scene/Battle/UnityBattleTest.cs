@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using PokemonUnity;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonUnity.Attack;
 using PokemonUnity.Attack.Data;
 using PokemonUnity.Monster;
@@ -22,9 +22,8 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
-//using UnityEngine;
 
-namespace PokemonUnity.UX
+namespace PokemonUnity.Interface.UnityEngine
 {
 	[Serializable]
 	public partial class UnityBattleTest : PokemonUnity.Combat.Battle, IBattleIE, IHasDisplayMessageIE, ISerializable
@@ -257,7 +256,7 @@ namespace PokemonUnity.UX
 		}
 		new public IBattleIE initialize(IScene scene, IPokemon[] p1, IPokemon[] p2, ITrainer[] player, ITrainer[] opponent, int maxBattlers = 4)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//if opponent (trainer battle) is not null but player array is empty, then player is null
 			//if (opponent != null && player.Length == 0)
@@ -313,7 +312,7 @@ namespace PokemonUnity.UX
 
 			fullparty1 = false;
 			fullparty2 = false;
-			_battlers = new PokemonUnity.UX.Battler[maxBattlers];
+			_battlers = new PokemonUnity.Interface.UnityEngine.Battler[maxBattlers];
 			//items = new List<Items>(); //null;
 			items = new Items[this.opponent.Length][];
 			for (int t = 0; t < this.opponent.Length; t++) //List of Trainers
@@ -370,7 +369,7 @@ namespace PokemonUnity.UX
 			peer = PokemonUnity.Monster.PokeBattle_BattlePeer.create();
 			//peer = new PokeBattle_BattlePeer();
 
-			_priority = new PokemonUnity.UX.Battler[battlers.Length];
+			_priority = new PokemonUnity.Interface.UnityEngine.Battler[battlers.Length];
 
 			//usepriority = false; //False is already default value; redundant.
 
@@ -386,7 +385,7 @@ namespace PokemonUnity.UX
 			//struggle.PP = -1;
 
 			for (int i = 0; i < battlers.Length; i++) {
-				this._battlers[i] = new PokemonUnity.UX.Battler(this, (sbyte)i);
+				this._battlers[i] = new PokemonUnity.Interface.UnityEngine.Battler(this, (sbyte)i);
 			//} for (int i = 0; i < battlers.Length; i++) {
 			//	this._battlers[i].initialize(this, (sbyte)i);
 			}
@@ -527,6 +526,8 @@ namespace PokemonUnity.UX
 				yield return DisplayPaused(Game._INTL("It was stored in box \"{1}\".", boxname));
 			}
 		}
+		void IBattleCommon.StorePokemon(IPokemon pokemon) { StorePokemon(pokemon); }
+
 		new public IEnumerator ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false)
 		{
 			string itemname = Game._INTL(ball.ToString(TextScripts.Name));
@@ -674,6 +675,7 @@ namespace PokemonUnity.UX
 				}
 			}
 		}
+		void IBattleCommon.ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false) { ThrowPokeball(idxPokemon, ball, rareness, showplayer); }
 		#endregion
 
 		#region Info about battle.
@@ -1081,6 +1083,7 @@ namespace PokemonUnity.UX
 			}
 			return battler;
 		}
+		IBattler IBattle.FindPlayerBattler(int pkmnIndex) { return FindPlayerBattler(pkmnIndex); }
 		//
 		//public bool IsOwner (int battlerIndex, int partyIndex) {
 		//	int secondParty=SecondPartyBegin(battlerIndex);
@@ -1444,7 +1447,7 @@ namespace PokemonUnity.UX
 
 		new public IBattlerIE[] Priority(bool ignorequickclaw=false, bool log=false) {
 			if (@usepriority) return priority;	// use stored priority if round isn't over yet
-			_priority = new PokemonUnity.UX.Battler[battlers.Length]; //.Clear();
+			_priority = new PokemonUnity.Interface.UnityEngine.Battler[battlers.Length]; //.Clear();
 			int[] speeds=new int[battlers.Length];
 			int[] priorities=new int[battlers.Length];
 			bool[] quickclaw=new bool[battlers.Length]; bool[] lagging=new bool[battlers.Length];
@@ -2135,7 +2138,7 @@ namespace PokemonUnity.UX
 			}
 			bool confirm = false;
 			if (@opponent.Length > 0) {
-				if (debug && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) {
+				if (debug && Input.press((int)PokemonUnity.Interface.InputKeys.DEBUG)) {
 					yield return DisplayConfirm(Game._INTL("Treat this battle as a win?"),result:value=>confirm=value);
 					if (confirm) {
 						@decision=BattleResults.WON;
@@ -2163,7 +2166,7 @@ namespace PokemonUnity.UX
 				}
 				result?.Invoke(0); yield break;
 			}
-			if (debug && Input.press((int)PokemonUnity.UX.InputKeys.DEBUG)) {
+			if (debug && Input.press((int)PokemonUnity.Interface.InputKeys.DEBUG)) {
 				yield return DisplayPaused(Game._INTL("Got away safely!"));
 				@decision=BattleResults.FORFEIT;
 				result?.Invoke(1); yield break;
@@ -3858,7 +3861,7 @@ namespace PokemonUnity.UX
 						if (!moveuser.IsNotNullOrNone()) {
 							IPokemon[] party=Party(i.effects.FutureSightUserPos);
 							if (party[i.effects.FutureSightUser].HP>0) {
-								moveuser=new PokemonUnity.UX.Battler(this,(sbyte)i.effects.FutureSightUserPos);
+								moveuser=new PokemonUnity.Interface.UnityEngine.Battler(this,(sbyte)i.effects.FutureSightUserPos);
 								moveuser.InitPokemon(party[i.effects.FutureSightUser],
 													(sbyte)i.effects.FutureSightUser);
 							}

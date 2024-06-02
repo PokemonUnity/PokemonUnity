@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity;
-using PokemonUnity.UX;
+using PokemonUnity.Interface;
 using PokemonUnity.Combat;
 using PokemonUnity.Character;
 using PokemonUnity.Inventory;
@@ -16,7 +16,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 using UnityEngine;
 
-namespace PokemonUnity
+namespace PokemonUnity.Interface.UnityEngine
 {
 	public class SpriteWrapper : Sprite, ISpriteWrapper
 	{
@@ -57,7 +57,7 @@ namespace PokemonUnity
 		//
 		//}
 	}
-	
+
 	public class Sprite : RPGSprite, ISprite
 	{
 		/// <summary>
@@ -278,7 +278,7 @@ namespace PokemonUnity
 		/// <param name="sprite"></param>
 		/// <param name="color"></param>
 		/// <param name="duration"></param>
-		public virtual void flash(UnityEngine.UI.Image sprite, IColor color, int duration)
+		public virtual void flash(global::UnityEngine.UI.Image sprite, IColor color, int duration)
 		{
 
 		}
@@ -316,7 +316,7 @@ namespace PokemonUnity
 		/// </summary>
 		public void Dispose()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
 			Dispose(disposing: true);

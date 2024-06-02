@@ -191,6 +191,7 @@
     <Compile Include="Assets\Scripts\Legacy\SceneHandlers\TypingHandler.cs" />
     <Compile Include="Assets\Scripts\Legacy\SceneTransition.cs" />
     <Compile Include="Assets\Scripts\Scene\Battle\BattleScene.cs" />
+    <Compile Include="Assets\Scripts\Scene\Battle\CommandMenuButton.cs" />
     <Compile Include="Assets\Scripts\Scene\Battle\CommandMenuButtons.cs" />
     <Compile Include="Assets\Scripts\Scene\Battle\CommandMenuDisplay.cs" />
     <Compile Include="Assets\Scripts\Scene\Battle\FightMenuButtons.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Assets\Scripts\Legacy\TextureTileAnimation.cs" />
     <Compile Include="Assets\Scripts\Legacy\TextureTileToScale.cs" />
     <Compile Include="Assets\Scripts\Legacy\Transition\DefaultTransition.cs" />
+    <Compile Include="Assets\Scripts\Scene\Overworld\TileMapGenerator.cs" />
     <Compile Include="Assets\Scripts\Utility\AutoRotate.cs" />
     <Compile Include="Assets\Scripts\Utility\SeriColor.cs" />
     <Compile Include="Assets\Scripts\Utility\SeriV2.cs" />
