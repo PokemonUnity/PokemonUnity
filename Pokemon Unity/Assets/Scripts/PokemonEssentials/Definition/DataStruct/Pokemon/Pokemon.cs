@@ -366,6 +366,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				tookDamage = true;
 			result?.Invoke(amt);
 		}
+		int IBattler.ReduceHP(int amt, bool animate = false, bool registerDamage = true)
+		{
+			int r = -1;
+			this.ReduceHP(amt, animate, registerDamage, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator RecoverHP(int amount, bool animate = false, System.Action<int> result = null)
 		{
@@ -389,6 +395,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (@battle.scene is IPokeBattle_SceneIE s0) yield return s0.HPChanged(this, oldhp, animate);
 			//ToDo: Fix return
 			result?.Invoke(amount);
+		}
+		int IBattler.RecoverHP(int amount, bool animate = false)
+		{
+			int r = -1;
+			this.RecoverHP(amount, animate, result: value=>r=value);
+			return r;
 		}
 
 		public IEnumerator Faint(bool showMessage = true, System.Action<bool> result = null)
@@ -432,6 +444,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return battle.Display(Game._INTL("{1} fainted!", ToString()));
 				//yield return battle.Display(LanguageExtension.Translate(Text.Errors, "Fainted", new string[] { ToString() }).Value);
 			result?.Invoke(true);
+		}
+		bool IBattler.Faint(bool showMessage = true)
+		{
+			bool r = false;
+			this.Faint(showMessage, result: value=>r=value);
+			return r;
 		}
 		#endregion
 
@@ -620,6 +638,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				GameDebug.Log(string.Format("[Form changed] {0} changed to form {1}", ToString(), Game._INTL(Form.Id.ToString(TextScripts.Name))));
 			}
 		}
+		void IBattler.CheckForm() { this.CheckForm(); }
 		/*public void ResetForm()
 		{
 			if (!effects.Transform){
@@ -978,6 +997,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (this.hasWorkingItem(Items.AIR_BALLOON) && onactive)
 				yield return @battle.Display(Game._INTL("{1} floats in the air with its {2}!",ToString(),Game._INTL(this.Item.ToString(TextScripts.Name))));
 		}
+		void IBattler.AbilitiesOnSwitchIn(bool onactive) { this.AbilitiesOnSwitchIn(onactive); }
+
 		public IEnumerator EffectsOnDealingDamage(IBattleMove move, IBattlerIE user,IBattlerIE target,int damage) {
 			Types movetype=move.GetType(move.Type,user,target);
 			if (damage>0 && move.Flags.Contact)
@@ -1247,6 +1268,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return user.AbilityCureCheck();
 			yield return target.AbilityCureCheck();
 		}
+		void IBattler.EffectsOnDealingDamage(IBattleMove move, IBattler user, IBattler target, int damage) { this.EffectsOnDealingDamage(move,(IBattlerIE)user,(IBattlerIE)target,damage); }
+
 		public IEnumerator EffectsAfterHit(IBattlerIE user,IBattlerIE target,IBattleMove thismove,IEffectsMove turneffects) {
 			if (turneffects.TotalDamage==0) yield break;
 			if (!(user.hasWorkingAbility(Abilities.SHEER_FORCE) && thismove.AddlEffect>0)) {
@@ -1350,6 +1373,8 @@ namespace PokemonUnity.Interface.UnityEngine
 					GameDebug.Log($"[Ability triggered] #{target.ToString()}'s Pickpocket stole #{user.ToString(true)}'s #{Game._INTL(target.Item.ToString(TextScripts.Name))}");
 				}
 			}
+		void IBattler.EffectsAfterHit(IBattler user,IBattler target,IBattleMove thismove,IEffectsMove turneffects) { this.EffectsAfterHit((IBattlerIE)user,(IBattlerIE)target,thismove,turneffects); }
+
 		new public IEnumerator AbilityCureCheck() {
 			if (this.isFainted()) yield break;
 			switch (Status) {
@@ -1405,6 +1430,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return @battle.Display(Game._INTL("{1}'s {2} made its taunt wear off!",ToString(),Game._INTL(Ability.ToString(TextScripts.Name))));
 			}
 		}
+		void IBattler.AbilityCureCheck() { this.AbilityCureCheck(); }
 		#endregion
 
 		#region Held Item effects
@@ -2103,6 +2129,13 @@ namespace PokemonUnity.Interface.UnityEngine
 				result(true);
 			}
 		}
+		bool IBattler.ObedienceCheck(IBattleChoice choice)
+		{
+			bool r = false;
+			this.ObedienceCheck(choice, result: value=>r=value);
+			return r;
+		}
+
 		public IEnumerator SuccessCheck(IBattleMove thismove,IBattlerIE user,IBattlerIE target,IEffectsMove turneffects,bool accuracy=true, System.Action<bool> result=null) {
 			if (user.effects.TwoTurnAttack > 0)
 			{
@@ -2331,6 +2364,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattler.SuccessCheck(IBattleMove thismove,IBattler user,IBattler target,IEffectsMove turneffects,bool accuracy=true)
+		{
+			bool r = false;
+			this.SuccessCheck(thismove, (IBattlerIE)user, (IBattlerIE)target, turneffects, accuracy, result: value=>r=value);
+			return r;
+		}
+
 		//public bool TryUseMove(IBattleChoice choice,IBattleMove thismove,IEffectsMove turneffects) {
 		public IEnumerator TryUseMove(IBattleChoice choice,IBattleMove thismove,IEffectsMove turneffects, System.Action<bool> result) {
 			if (turneffects.PassedTrying)
@@ -2510,6 +2550,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			turneffects.PassedTrying=true;
 			result(true);
 		}
+		bool IBattler.TryUseMove(IBattleChoice choice,IBattleMove thismove,IEffectsMove turneffects)
+		{
+			bool r = false;
+			this.TryUseMove(choice, thismove, turneffects, result: value=>r=value);
+			return r;
+		}
+
 		/*public void ConfusionDamage() {
 			this.damagestate.Reset();
 			//PokeBattle_Confusion confmove=new PokeBattle_Confusion(@battle,null);
@@ -2716,6 +2763,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return @battle.battlers[j].BerryCureCheck();
 			target.UpdateTargetedMove(thismove,user);
 		}
+		void IBattler.ProcessMoveAgainstTarget(IBattleMove thismove,IBattler user,IBattler target,int numhits,IEffectsMove turneffects,bool nocheck=false,int[] alltargets=null,bool showanimation=true) { this.ProcessMoveAgainstTarget(thismove,(IBattler)user,(IBattler)target,numhits,turneffects,nocheck,alltargets,showanimation); }
+
 		new public IEnumerator UseMoveSimple(Moves moveid,int index=-1,int target=-1) {
 			//IBattleChoice choice= new Choice();
 			//choice[0]=1;           // "Use move"
@@ -2733,6 +2782,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return UseMove(choice,true);
 			yield break;
 		}
+		void IBattler.UseMoveSimple(Moves moveid,int index=-1,int target=-1) { this.UseMoveSimple(moveid, index, target); }
+
 		new public IEnumerator UseMove(IBattleChoice choice,bool specialusage=false) {
 			// TODO: lastMoveUsed is not to be updated on nested calls
 			// Note: user.lastMoveUsedType IS to be updated on nested calls; is used for Conversion 2
@@ -3107,6 +3158,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			@battle.Judge();     //@battle.Switch();
 			yield break;
 		}
+		void IBattler.UseMove(IBattleChoice choice,bool specialusage=false) { this.UseMove(choice, specialusage); }
 		/*public void CancelMoves() {
 			// If failed TryUseMove or have already used Pursuit to chase a switching foe
 			// Cancel multi-turn attacks (note: Hyper Beam effect is not canceled here)
@@ -3145,6 +3197,8 @@ namespace PokemonUnity.Interface.UnityEngine
 						yield return @battle.Display(Game._INTL("{1} woke up in the uproar!",ToString()));
 					}
 		}
+		void IBattler.BeginTurn(IBattleChoice choice) { this.BeginTurn(choice); }
+
 		//private void _pbEndTurn(IBattleChoice choice) {
 		IEnumerator IBattlerIE.EndTurn(IBattleChoice choice) {
 			// True end(?)
@@ -3163,6 +3217,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			for (int i = 0; i < battle.battlers.Length; i++)
 				yield return @battle.battlers[i].CheckForm();
 		}
+
 		//public bool ProcessTurn(IBattleChoice choice) {
 		public IEnumerator ProcessTurn(IBattleChoice choice, System.Action<bool> result) {
 			// Can't use a move if fainted
@@ -3207,6 +3262,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			//   yield return @battle.DisplayPaused("After: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]");
 			result(true);
 		}
+		bool IBattler.ProcessTurn(IBattleChoice choice)
+		{
+			bool r = false;
+			this.ProcessTurn(choice, result: value=>r=value);
+			return r;
+		}
 		#endregion
 
 		#region Explicit Interface Implementation
@@ -3241,14 +3302,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			return (IBattlerIE)base.Initialize(pkmn, index, batonpass);
 		}
 
-		IBattlerIE IBattlerIE.Reset()
-		{
-			return (IBattlerIE)base.Reset();
-		}
+		new public IBattlerIE Reset() { return (IBattlerIE)base.Reset(); }
+		IBattler IBattler.Reset() { return this.Reset(); }
 		#endregion
 
 		#region
-		new public static IBattlerIE[] GetBattlers(PokemonEssentials.Interface.PokeBattle.IPokemon[] input, Battle btl)
+		new public static IBattlerIE[] GetBattlers(PokemonEssentials.Interface.PokeBattle.IPokemon[] input, IBattle btl)
 		{
 			IBattlerIE[] battlers = new IBattlerIE[input.Length];
 			for (int i = 0; i < input.Length; i++)

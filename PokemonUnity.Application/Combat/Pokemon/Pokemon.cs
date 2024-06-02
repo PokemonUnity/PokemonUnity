@@ -80,7 +80,7 @@ namespace PokemonUnity.Combat
 		public int SPA							{ get { return spatk; } set { spatk = value; } }
 		protected int spatk;
 		protected int speed;
-		public int SPE						    { get
+		public int SPE							{ get //ToDo: Revert to mirror pokemon essential source?
 			{
 				int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
 				int[] stagediv = new int[] { 40, 35, 30, 25, 20, 15, 10, 10, 10, 10, 10, 10, 10 };
@@ -3491,7 +3491,7 @@ namespace PokemonUnity.Combat
 		bool IBattler.isShadow { get { return isShadow(); } }
 		int IBattler.displayGender { get { if (Gender == true) return 1; else if (Gender == false) return 0; else return -1; } }
 		bool IBattler.owned { get { return IsOwned; } }
-		int IBattler.Speed { get { return SPE; } }
+		int IBattler.Speed { get { return SPE; } } //Should be referenced about 12 times throughout the project...
 
 		void IBattler.InitDummyPokemon(IPokemon pkmn, int pkmnIndex)
 		{
@@ -3569,7 +3569,7 @@ namespace PokemonUnity.Combat
 			return MemberwiseClone();
 		}
 
-		public static IBattler[] GetBattlers(PokemonEssentials.Interface.PokeBattle.IPokemon[] input, Battle btl)
+		public static IBattler[] GetBattlers(PokemonEssentials.Interface.PokeBattle.IPokemon[] input, IBattle btl)
 		{
 			IBattler[] battlers = new IBattler[input.Length];
 			for (int i = 0; i < input.Length; i++)
