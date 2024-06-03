@@ -352,7 +352,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
-				attacker.ReduceHP((int)Math.Round(attacker.TotalHP / 4.0f));
+				_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(attacker.TotalHP / 4.0f)));
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
 			}
 			yield break;
@@ -1496,7 +1496,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-				b.IncreaseStat(Stats.SPDEF, 1, attacker, false, this);
+				_host.StartCoroutine(b.IncreaseStat(Stats.SPDEF, 1, attacker, false, this));
 			}
 			result(0);
 			yield break;
@@ -1991,7 +1991,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.ATTACK, 2, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.ATTACK, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2020,7 +2020,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.DEFENSE, 2, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.DEFENSE, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2049,7 +2049,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.SPEED, 2, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPEED, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2077,7 +2077,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.SPEED, 2, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPEED, 2, attacker, false, this, result:value=>ret=value));
 			if (ret)
 			{
 				attacker.effects.WeightChange -= 1000;
@@ -2103,7 +2103,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.SPATK, 2, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPATK, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2132,7 +2132,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPDEF, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.SPDEF, 2, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPDEF, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2163,7 +2163,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.EVASION, 2, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.EVASION, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2334,7 +2334,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.DEFENSE, 3, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.DEFENSE, 3, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2363,7 +2363,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.SPATK, 3, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPATK, 3, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2397,7 +2397,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			attacker.ReduceHP((int)Math.Floor(attacker.TotalHP / 2f));
+			_host.StartCoroutine(attacker.ReduceHP((int)Math.Floor(attacker.TotalHP / 2f)));
 			if (attacker.hasWorkingAbility(Abilities.CONTRARY))
 			{
 				attacker.stages[(byte)Stats.ATTACK] = -6;
@@ -2498,7 +2498,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (attacker.Partner.IsNotNullOrNone() && !attacker.Partner.isFainted())
 				{
-					attacker.Partner.ReduceHP((int)Math.Floor(attacker.Partner.TotalHP / 16f), true);
+					_host.StartCoroutine(attacker.Partner.ReduceHP((int)Math.Floor(attacker.Partner.TotalHP / 16f), true));
 				}
 				bool showanim = true;
 				if (attacker is IBattlerEffectIE b0)
@@ -2694,7 +2694,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.DEFENSE, 1, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.DEFENSE, 1, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2724,7 +2724,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.SPEED, 1, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPEED, 1, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2764,7 +2764,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.SPATK, 1, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPATK, 1, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2794,7 +2794,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPDEF, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.SPDEF, 1, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPDEF, 1, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2824,7 +2824,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ACCURACY, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.ACCURACY, 1, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.ACCURACY, 1, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2855,7 +2855,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			byte increment = (Core.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.EVASION, increment, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.EVASION, increment, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -2868,7 +2868,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.EVASION, attacker, false, this, result: value => retb = value));
 				byte increment = (byte)1;
 				if (retb) increment = (Core.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
-				b.ReduceStat(Stats.EVASION, increment, attacker, false, this);
+				_host.StartCoroutine(b.ReduceStat(Stats.EVASION, increment, attacker, false, this));
 			}
 		}
 	}
@@ -2915,7 +2915,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (!opponent.damagestate.Substitute)
 				if (opponent is IBattlerEffect b && b.CanReduceStatStage(Stats.EVASION, attacker, false, this))
-					b.ReduceStat(Stats.EVASION, 1, attacker, false, this);
+					_host.StartCoroutine(b.ReduceStat(Stats.EVASION, 1, attacker, false, this));
 
 			opponent.OwnSide.Reflect = 0;
 			opponent.OwnSide.LightScreen = 0;
@@ -3027,7 +3027,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.ATTACK, 2, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.ATTACK, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -3057,7 +3057,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.DEFENSE, 2, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.DEFENSE, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -3089,7 +3089,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			byte increment = (id == Moves.STRING_SHOT && !Core.USENEWBATTLEMECHANICS) ? (byte)1 : (byte)2;
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.SPEED, increment, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPEED, increment, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -3102,7 +3102,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPEED, attacker, false, this, result: value => retb = value));
 				byte increment = (byte)1;
 				if (retb) increment = (id == Moves.STRING_SHOT && !Core.USENEWBATTLEMECHANICS) ? (byte)1 : (byte)2;
-				b.ReduceStat(Stats.SPEED, increment, attacker, false, this);
+				_host.StartCoroutine(b.ReduceStat(Stats.SPEED, increment, attacker, false, this));
 			}
 		}
 	}
@@ -3135,7 +3135,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.SPATK, 2, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPATK, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -3171,7 +3171,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPDEF, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.SPDEF, 2, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPDEF, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -4572,7 +4572,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (opponent.Partner.IsNotNullOrNone() && !opponent.Partner.isFainted() &&
 				   !opponent.Partner.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
-					opponent.Partner.ReduceHP((int)Math.Floor(opponent.Partner.TotalHP / 16f));
+					_host.StartCoroutine(opponent.Partner.ReduceHP((int)Math.Floor(opponent.Partner.TotalHP / 16f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("The bursting flame hit {1}!", opponent.Partner.ToString(true))));
 				}
 			}
@@ -5344,7 +5344,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 				int damage = CalcDamage(attacker, opponent); // Consumes Gems even if it will heal
 				_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation)); // Healing animation
-				opponent.RecoverHP((int)Math.Floor(opponent.TotalHP / 4f), true);
+				_host.StartCoroutine(opponent.RecoverHP((int)Math.Floor(opponent.TotalHP / 4f), true));
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} had its HP restored.", opponent.ToString())));
 				result(0);
 				yield break;
@@ -5969,20 +5969,20 @@ namespace PokemonUnity.Interface.UnityEngine
 				case Environments.Underwater:
 					if (obe?.CanReduceStatStage(Stats.ATTACK, attacker, false, this)??false)
 					{
-						obe.ReduceStat(Stats.ATTACK, 1, attacker, false, this);
+						_host.StartCoroutine(obe.ReduceStat(Stats.ATTACK, 1, attacker, false, this));
 					}
 					break;
 				case Environments.StillWater:
 				case Environments.Sky:
 					if (obe?.CanReduceStatStage(Stats.SPEED, attacker, false, this)??false)
 					{
-						obe.ReduceStat(Stats.SPEED, 1, attacker, false, this);
+						_host.StartCoroutine(obe.ReduceStat(Stats.SPEED, 1, attacker, false, this));
 					}
 					break;
 				case Environments.Sand:
 					if (obe?.CanReduceStatStage(Stats.ACCURACY, attacker, false, this)??false)
 					{
-						obe.ReduceStat(Stats.ACCURACY, 1, attacker, false, this);
+						_host.StartCoroutine(obe.ReduceStat(Stats.ACCURACY, 1, attacker, false, this));
 					}
 					break;
 				case Environments.Rock:
@@ -5990,7 +5990,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						if (obe?.CanReduceStatStage(Stats.ACCURACY, attacker, false, this)??false)
 						{
-							obe.ReduceStat(Stats.ACCURACY, 1, attacker, false, this);
+							_host.StartCoroutine(obe.ReduceStat(Stats.ACCURACY, 1, attacker, false, this));
 						}
 					}
 					else
@@ -8233,7 +8233,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
-			attacker.RecoverHP((int)Math.Floor((attacker.TotalHP + 1) / 2f), true);
+			_host.StartCoroutine(attacker.RecoverHP((int)Math.Floor((attacker.TotalHP + 1) / 2f), true));
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP was restored.", attacker.ToString())));
 			result(0);
 			yield break;
@@ -8264,7 +8264,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
-			attacker.RecoverHP((int)Math.Floor((attacker.TotalHP + 1) / 2f), true);
+			_host.StartCoroutine(attacker.RecoverHP((int)Math.Floor((attacker.TotalHP + 1) / 2f), true));
 			attacker.effects.Roost = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP was restored.", attacker.ToString())));
 			result(0);
@@ -8341,7 +8341,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				hpgain = (int)Math.Floor(attacker.TotalHP / 2f);
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
-			attacker.RecoverHP(hpgain, true);
+			_host.StartCoroutine(attacker.RecoverHP(hpgain, true));
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP was restored.", attacker.ToString())));
 			result(0);
@@ -8385,7 +8385,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			if (attacker is IBattlerEffectIE a) a.SleepSelf(3);
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} slept and became healthy!", attacker.ToString())));
-			int hp = -1; attacker.RecoverHP(attacker.TotalHP - attacker.HP, true, result:value=>hp=value);
+			int hp = -1; _host.StartCoroutine(attacker.RecoverHP(attacker.TotalHP - attacker.HP, true, result:value=>hp=value));
 			if (hp > 0) battle.Display(Game._INTL("{1}'s HP was restored.", attacker.ToString()));
 			result(0);
 			yield break;
@@ -8514,7 +8514,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				int hpgain = (int)Math.Round(opponent.damagestate.HPLost / 2f);
 				if (opponent.hasWorkingAbility(Abilities.LIQUID_OOZE))
 				{
-					attacker.ReduceHP(hpgain, true);
+					_host.StartCoroutine(attacker.ReduceHP(hpgain, true));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} sucked up the liquid ooze!", attacker.ToString())));
 				}
 				else if (attacker.effects.HealBlock == 0)
@@ -8522,7 +8522,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					if (attacker.hasWorkingItem(Items.BIG_ROOT)) hpgain = (int)Math.Floor(hpgain * 1.3f);
 
-					attacker.RecoverHP(hpgain, true);
+					_host.StartCoroutine(attacker.RecoverHP(hpgain, true));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} had its energy drained!", opponent.ToString())));
 				}
 			}
@@ -8553,7 +8553,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				int hpgain = (int)Math.Round(opponent.damagestate.HPLost / 2f);
 				if (opponent.hasWorkingAbility(Abilities.LIQUID_OOZE))
 				{
-					attacker.ReduceHP(hpgain, true);
+					_host.StartCoroutine(attacker.ReduceHP(hpgain, true));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} sucked up the liquid ooze!", attacker.ToString())));
 				}
 				else if (attacker.effects.HealBlock == 0)
@@ -8561,7 +8561,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					if (attacker.hasWorkingItem(Items.BIG_ROOT)) hpgain = (int)Math.Floor(hpgain * 1.3f);
 
-					attacker.RecoverHP(hpgain, true);
+					_host.StartCoroutine(attacker.RecoverHP(hpgain, true));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} had its energy drained!", opponent.ToString())));
 				}
 			}
@@ -8601,7 +8601,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			int hpgain = (int)Math.Floor((opponent.TotalHP + 1) / 2f);
 			if (attacker.hasWorkingAbility(Abilities.MEGA_LAUNCHER)) hpgain = (int)Math.Round(opponent.TotalHP * 3 / 4f);
-			opponent.RecoverHP(hpgain, true);
+			_host.StartCoroutine(opponent.RecoverHP(hpgain, true));
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP was restored.", opponent.ToString())));
 			result(0);
 			yield break;
@@ -8637,7 +8637,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			base.ShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 			if (!attacker.isFainted())
 			{
-				attacker.ReduceHP(attacker.HP);
+				_host.StartCoroutine(attacker.ReduceHP(attacker.HP));
 
 				if (attacker.isFainted()) attacker.Faint();
 			}
@@ -8673,7 +8673,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			base.ShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 			if (!attacker.isFainted())
 			{
-				attacker.ReduceHP(attacker.HP);
+				_host.StartCoroutine(attacker.ReduceHP(attacker.HP));
 
 				if (attacker.isFainted()) attacker.Faint();
 			}
@@ -8708,7 +8708,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				ret = 0; showanim = false;
 			}
-			attacker.ReduceHP(attacker.HP);
+			_host.StartCoroutine(attacker.ReduceHP(attacker.HP));
 			result(ret);
 			yield break;
 		}
@@ -8738,7 +8738,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
-			attacker.ReduceHP(attacker.HP);
+			_host.StartCoroutine(attacker.ReduceHP(attacker.HP));
 			attacker.effects.HealingWish = true;
 			result(0);
 			yield break;
@@ -8769,7 +8769,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
-			attacker.ReduceHP(attacker.HP);
+			_host.StartCoroutine(attacker.ReduceHP(attacker.HP));
 			attacker.effects.LunarDance = true;
 			result(0);
 			yield break;
@@ -9801,7 +9801,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
-					attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 4.0f));
+					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 4.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
 				}
 			}
@@ -9829,7 +9829,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
-					attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 3.0f));
+					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 3.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
 				}
 			}
@@ -9858,7 +9858,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
-					attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 2.0f));
+					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 2.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
 				}
 			}
@@ -9887,7 +9887,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
-					attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 3.0f));
+					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 3.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
 				}
 			}
@@ -9926,7 +9926,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
-					attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 3.0f));
+					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 3.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
 				}
 			}
@@ -10760,7 +10760,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				result(-1);
 				yield break;
 			}
-			attacker.ReduceHP(sublife, false, false);
+			_host.StartCoroutine(attacker.ReduceHP(sublife, false, false));
 
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
@@ -10801,14 +10801,14 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} cut its own HP and laid a curse on {2}!", attacker.ToString(), opponent.ToString(true))));
 					opponent.effects.Curse = true;
-					attacker.ReduceHP((int)Math.Floor(attacker.TotalHP / 2f));
+					_host.StartCoroutine(attacker.ReduceHP((int)Math.Floor(attacker.TotalHP / 2f)));
 				}
 			}
 			else
 			{
-				bool lowerspeed = attacker is IBattlerEffect b0 && b0.CanReduceStatStage(Stats.SPEED, attacker, false, this);
-				bool raiseatk = attacker is IBattlerEffect b1 && b1.CanIncreaseStatStage(Stats.ATTACK, attacker, false, this);
-				bool raisedef = attacker is IBattlerEffect b2 && b2.CanIncreaseStatStage(Stats.DEFENSE, attacker, false, this);
+				bool lowerspeed = false; if(attacker is IBattlerEffectIE b0) _host.StartCoroutine(b0.CanReduceStatStage(Stats.SPEED, attacker, false, this, result:value=>lowerspeed=value));
+				bool raiseatk = false; if(attacker is IBattlerEffectIE b1) _host.StartCoroutine(b1.CanIncreaseStatStage(Stats.ATTACK, attacker, false, this, result:value=>raiseatk=value));
+				bool raisedef = false; if(attacker is IBattlerEffectIE b2) _host.StartCoroutine(b2.CanIncreaseStatStage(Stats.DEFENSE, attacker, false, this, result:value=>raisedef=value));
 				if (!lowerspeed && !raiseatk && !raisedef)
 				{
 					failed = true;
@@ -11150,7 +11150,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
-			int ret = -1; attacker.RecoverHP(hpgain, true, result:value=>ret=value); if (ret > 0)
+			int ret = -1; _host.StartCoroutine(attacker.RecoverHP(hpgain, true, result:value=>ret=value)); if (ret > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP was restored.", attacker.ToString())));
 			}
@@ -11973,7 +11973,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = attacker is IBattlerEffect a && a.IncreaseStat(Stats.SPDEF, 1, attacker, false, this);
+			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPDEF, 1, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -11998,7 +11998,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.ATTACK, 1, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.ATTACK, 1, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -12119,7 +12119,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.SPATK, 1, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPATK, 1, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -12140,7 +12140,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
-			bool ret = opponent is IBattlerEffect o && o.ReduceStat(Stats.SPATK, 2, attacker, false, this);
+			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPATK, 2, attacker, false, this, result:value=>ret=value));
 			result(ret ? 0 : -1);
 			yield break;
 		}
@@ -12879,14 +12879,14 @@ namespace PokemonUnity.Interface.UnityEngine
 				int hpgain = (int)Math.Round(opponent.damagestate.HPLost * 3 / 4f);
 				if (opponent.hasWorkingAbility(Abilities.LIQUID_OOZE))
 				{
-					attacker.ReduceHP(hpgain, true);
+					_host.StartCoroutine(attacker.ReduceHP(hpgain, true));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} sucked up the liquid ooze!", attacker.ToString())));
 				}
 				else if (attacker.effects.HealBlock == 0)
 				{
 					if (attacker.hasWorkingItem(Items.BIG_ROOT)) hpgain = (int)Math.Floor(hpgain * 1.3f);
 
-					attacker.RecoverHP(hpgain, true);
+					_host.StartCoroutine(attacker.RecoverHP(hpgain, true));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} had its energy drained!", opponent.ToString())));
 				}
 			}
