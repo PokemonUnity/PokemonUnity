@@ -8,11 +8,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <summary>
 		/// map event interpreter
 		/// </summary>
-		//public InterpreterMixin map_interpreter { get; set; }
+		public IInterpreterFieldMixin map_interpreter { get; set; }
 		/// <summary>
 		/// battle event interpreter
 		/// </summary>
-		//public InterpreterMixin battle_interpreter { get; set; }
+		public IInterpreterFieldMixin battle_interpreter { get; set; }
 		/// <summary>
 		/// timer
 		/// </summary>
@@ -119,7 +119,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				@bgm_position = position;
 			}
-			@playing_bgm = bgm == null ? null : bgm.clone();
+			@playing_bgm = bgm == null ? null : (IAudioBGM)bgm.Clone();
 			if (bgm != null && bgm.name != "")
 			{
 				if (FileTest.audio_exist("Audio/BGM/" + bgm.name))
@@ -533,6 +533,27 @@ namespace PokemonUnity.Interface.UnityEngine
 			//	@map_interpreter.command_end();
 			//	@event.start();
 			//}
+		}
+
+		void IAudio.bgm_play(string filename, float volume, float pitch)
+		{
+
+			throw new NotImplementedException();
+		}
+
+		void IAudio.bgs_play(string filename, float volume, float pitch)
+		{
+			throw new NotImplementedException();
+		}
+
+		void IAudio.me_play(string filename, float volume, float pitch)
+		{
+			throw new NotImplementedException();
+		}
+
+		void IAudio.se_play(string filename, float volume, float pitch)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
