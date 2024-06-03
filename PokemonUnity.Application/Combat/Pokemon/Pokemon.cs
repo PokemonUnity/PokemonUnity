@@ -58,7 +58,7 @@ namespace PokemonUnity.Combat
 		public int? lastRoundMoved				{ get; set; }
 		public IList<Moves> movesUsed			{ get; set; }
 		public Moves currentMove				{ get; set; }
-		public IDamageState damagestate	        { get; set; }
+		public IDamageState damagestate			{ get; set; }
 		public bool captured					{ get; set; }
 		#endregion
 		#region Inherit Base Pokemon Data
@@ -67,7 +67,7 @@ namespace PokemonUnity.Combat
 		public int TotalHP						{ get; protected set; }
 		public int ATK							{ get { return effects.PowerTrick ? DEF : attack; } set { attack = value; } }
 		protected int attack;
-		public int DEF                          { get
+		public int DEF							{ get
 			{
 				if (effects.PowerTrick) return attack;
 				return battle.field.WonderRoom > 0 ? spdef : defense;
