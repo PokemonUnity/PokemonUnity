@@ -52,12 +52,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// </summary>
 		/// Instantiate using prefab...
 		/// Should include animation frames, and icon shadow
-		public UnityEngine.GameObject   icon;
-		//public  UnityEngine.GameObject[]   IconPrefabs;
-		public  UnityEngine.Sprite[] PageBackground;
-		public  UnityEngine.UI.Image Page;
-		public  UnityEngine.UI.Text entry;
-		public  UnityEngine.UI.Text gender;
+		public global::UnityEngine.GameObject   icon;
+		//public  global::UnityEngine.GameObject[]   IconPrefabs;
+		public  global::UnityEngine.Sprite[] PageBackground;
+		public  global::UnityEngine.UI.Image Page;
+		public  global::UnityEngine.UI.Text entry;
+		public  global::UnityEngine.UI.Text gender;
 		//public  CharKeyItem         CharKeyPrefab;
 		//public  GameObject          CharKeyPrefab;
 		//public  GameObject          PagePrefab;
@@ -418,32 +418,34 @@ namespace PokemonUnity.Interface.UnityEngine
 		}
 		#endregion
 
-		public void pbRefresh() { }
-		public void pbUpdate()
+		public void Refresh() { }
+
+		void IPokemonEntryScene2.Update() { this.update(); }
+		protected void update()
 		{
 			//for (int i = 0; i < 3; i++) {
-			//  @bitmaps[i].update();
+			//	@bitmaps[i].update();
 			//}
 			//if (@init) { //|| Graphics.frame_count%5==0
-			//  @init=false;
-			//  int cursorpos=@helper.cursor;
-			//  if (cursorpos>=Maxlength) cursorpos=Maxlength-1;
-			//  if (cursorpos<0) cursorpos=0;
-			//  //Maxlength.times {|i|
-			//  for (int i = 0; i < Maxlength; i++) {
-			//     if (i==cursorpos) {
-			//       @blanks[i]=1;
-			//     } else {
-			//       @blanks[i]=0;
-			//     }
-			//     @sprites[$"blank#{i}"].y= new int[]{ 78,82 }[@blanks[i]];
-			//  }
+			//	@init=false;
+			//	int cursorpos=@helper.cursor;
+			//	if (cursorpos>=Maxlength) cursorpos=Maxlength-1;
+			//	if (cursorpos<0) cursorpos=0;
+			//	//Maxlength.times {|i|
+			//	for (int i = 0; i < Maxlength; i++) {
+			//		if (i==cursorpos) {
+			//			@blanks[i]=1;
+			//		} else {
+			//			@blanks[i]=0;
+			//		}
+			//			@sprites[$"blank#{i}"].y= new int[]{ 78,82 }[@blanks[i]];
+			//	}
 			//}
-			//pbDoUpdateOverlay();
-			////pbUpdateSpriteHash(@sprites);
+			//DoUpdateOverlay();
+			////UpdateSpriteHash(@sprites);
 		}
 
-		public void pbChangeTab(int newtab = 0)
+		public void ChangeTab(int newtab = 0)
 		{
 			//@sprites["cursor"].visible=false;
 			//@sprites["toptab"].bitmap=@bitmaps[(newtab%3)+3];
@@ -452,7 +454,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//  @sprites["bottomtab"].y+=12;
 			//  Graphics.update();
 			//  Input.update();
-			//  pbUpdate();
+			//  Update();
 			//}
 			//float tempx=@sprites["toptab"].x;
 			//@sprites["toptab"].x=@sprites["bottomtab"].x;
@@ -465,17 +467,17 @@ namespace PokemonUnity.Interface.UnityEngine
 			//@sprites["bottomtab"].bitmap=tempbitmap;
 			//Graphics.update();
 			//Input.update();
-			//pbUpdate();
+			//Update();
 			//@mode=(newtab)%3;
 			//newtab=@bitmaps[((@mode+1)%3)+3];
 			//@sprites["cursor"].visible=true;
 			//@sprites["toptab"].bitmap=newtab;
 			//@sprites["toptab"].x=22-504;
 			//@sprites["toptab"].y=162;
-			//pbDoUpdateOverlay2();
+			//DoUpdateOverlay2();
 		}
 
-		public bool pbColumnEmpty(int m)
+		public bool ColumnEmpty(int m)
 		{
 			if (m>=ROWS-1) return false;
 			char[] chset=@Characters[@mode];//[0]; //key: char[]
@@ -487,18 +489,18 @@ namespace PokemonUnity.Interface.UnityEngine
 			);
 		}
 
-		public void pbUpdateOverlay()
+		public void UpdateOverlay()
 		{
 			@refreshOverlay=true;
 		}
 
-		public void pbDoUpdateOverlay()
+		public void DoUpdateOverlay()
 		{
 			if (!@refreshOverlay) return;
 			@refreshOverlay=false;
 			//bgoverlay=@sprites["bgoverlay"].bitmap;
 			//bgoverlay.clear();
-			//pbSetSystemFont(bgoverlay);
+			//SetSystemFont(bgoverlay);
 			//IList<ITextPosition> textPositions=new List<ITextPosition>() {
 			//    new TextPosition() { @helptext, 160, 12, false, new Color(16, 24, 32), new Color(168, 184, 184) }
 			//};
@@ -508,18 +510,18 @@ namespace PokemonUnity.Interface.UnityEngine
 			//  textPositions.Add(new object() { ch, x, 48, false, new Color(16, 24, 32), new Color(168, 184, 184) });
 			//  x+=24;
 			//}
-			//pbDrawTextPositions(bgoverlay,textPositions);
+			//DrawTextPositions(bgoverlay,textPositions);
 		}
 
-		public void pbDoUpdateOverlay2()
+		public void DoUpdateOverlay2()
 		{
 			//overlay=@sprites["overlay"].bitmap;
 			//overlay.clear();
 			//modeIcon=[["Graphics/Pictures/namingMode",48+@mode*64,120,@mode*60,0,60,44]];
-			//pbDrawImagePositions(overlay,modeIcon);
+			//DrawImagePositions(overlay,modeIcon);
 		}
 
-		public bool pbMoveCursor()
+		public bool MoveCursor()
 		{
 			int oldcursor=@cursorpos;
 			int cursordiv=@cursorpos/ROWS;
@@ -533,7 +535,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				do {
 				  cursormod=wrapmod((cursormod-1),ROWS);
 				  @cursorpos=cursororigin+cursormod;
-				} while (pbColumnEmpty(cursormod));
+				} while (ColumnEmpty(cursormod));
 			  }
 			} else if (Input.repeat(Input.RIGHT)) {
 			  if (@cursorpos<0) {		// Controls
@@ -543,7 +545,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				do {
 				  cursormod=wrapmod((cursormod+1),ROWS);
 				  @cursorpos=cursororigin+cursormod;
-				} while (pbColumnEmpty(cursormod));
+				} while (ColumnEmpty(cursormod));
 			  }
 			} else if (Input.repeat(Input.UP)) {
 			  if (@cursorpos<0) {		// Controls
@@ -630,7 +632,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}*/
 			if (@cursorpos!=oldcursor) {		// Cursor position changed
 			  //@sprites["cursor"].setCursorPos(@cursorpos);
-			  //pbPlayCursorSE();
+			  //PlayCursorSE();
 			  return true;
 			} else {
 			  return false;
@@ -644,7 +646,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			return result;
 		}
 
-		public void pbStartScene(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes subject = 0, IPokemon pokemon = null)
+		public void StartScene(string helptext, int minlength, int maxlength, string initialText, TextEntryTypes subject = 0, IPokemon pokemon = null)
 		{
 			//@sprites={}
 			//@viewport=new Viewport(0,0,Graphics.width,Graphics.height);
@@ -689,13 +691,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			//switch (subject) {
 			//	case 1:   // Player
 			//	  if (Game.GameData.Global != null) {
-			//	    meta=pbGetMetadata(0,MetadataPlayerA+Game.GameData.Global.playerID);
+			//	    meta=GetMetadata(0,MetadataPlayerA+Game.GameData.Global.playerID);
 			//	    if (meta != null) {
 			//	      @sprites["shadow"]=new IconSprite(0,0,@viewport);
 			//	      @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
 			//	      @sprites["shadow"].x=33*2;
 			//	      @sprites["shadow"].y=32*2;
-			//	      string filename=pbGetPlayerCharset(meta,1);
+			//	      string filename=GetPlayerCharset(meta,1);
 			//	      @sprites["subject"]=new TrainerWalkingCharSprite(filename,@viewport);
 			//	      int charwidth=@sprites["subject"].bitmap.width;
 			//	      int charheight=@sprites["subject"].bitmap.height;
@@ -717,14 +719,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			//	    @sprites["gender"].x=430;
 			//	    @sprites["gender"].y=54;
 			//	    @sprites["gender"].bitmap.clear;
-			//	    pbSetSystemFont(@sprites["gender"].bitmap);
+			//	    SetSystemFont(@sprites["gender"].bitmap);
 			//	    textpos=[];
 			//	    if (pokemon.isMale?) {
 			//	      textpos.Add([_INTL("♂"),0,0,false,new Color(0,128,248),new Color(168,184,184)]);
 			//	    } else if (pokemon.isFemale?) {
 			//	      textpos.Add([_INTL("♀"),0,0,false,new Color(248,24,24),new Color(168,184,184)]);
 			//	    }
-			//	    pbDrawTextPositions(@sprites["gender"].bitmap,textpos);
+			//	    DrawTextPositions(@sprites["gender"].bitmap,textpos);
 			//	  }
 			//	  break;
 			//	case 3:   // Storage box
@@ -745,26 +747,26 @@ namespace PokemonUnity.Interface.UnityEngine
 			//	  @sprites["subject"].y = 38*2 - charheight/4;
 			//	  break;
 			//}
-			//pbFadeInAndShow(@sprites);
+			//FadeInAndShow(@sprites);
 		}
 
-		public void pbEndScene()
+		public void EndScene()
 		{
-			//pbFadeOutAndHide(@sprites, () => { pbUpdate(); });
+			//FadeOutAndHide(@sprites, () => { Update(); });
 			//foreach (var bitmap in @bitmaps) {
 			//  if (bitmap) bitmap.dispose();
 			//}
 			//@bitmaps.clear();
-			//pbDisposeSpriteHash(@sprites);
+			//DisposeSpriteHash(@sprites);
 			//@viewport.dispose();
 		}
 
-		public string pbEntry()
+		public string Entry()
 		{
-			return ""; //GameEntry.UseKeyboard ? pbEntry1() : pbEntry2();
+			return ""; //GameEntry.UseKeyboard ? Entry1() : Entry2();
 		}
 
-		public string pbEntry1()
+		public string Entry1()
 		{
 			string ret="";
 			//do { //;loop
@@ -786,7 +788,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			return ret;
 		}
 
-		public string pbEntry2()
+		public string Entry2()
 		{
 			string ret="";
 			//do { //;loop
@@ -801,28 +803,28 @@ namespace PokemonUnity.Interface.UnityEngine
 				//if (index==-3) {		// Confirm text
 				//  ret=@sprites["entry"].text;
 				//  if (ret.Length<@minlength || ret.Length>Maxlength) {
-				//    //pbPlayBuzzerSE();
+				//    //PlayBuzzerSE();
 				//  } else {
-				//    //pbPlayDecisionSE();
+				//    //PlayDecisionSE();
 				//    //break;
 				//  }
 				//} else if (index==-1) {		// Insert a space
 				//  if (@sprites["entry"].insert(" ")) {
-				//    pbPlayDecisionSE();
+				//    PlayDecisionSE();
 				//  } else {
-				//    pbPlayBuzzerSE();
+				//    PlayBuzzerSE();
 				//  }
 				//} else if (index==-2) {		// Change character set
-				//  pbPlayDecisionSE();
+				//  PlayDecisionSE();
 				//  @symtype+=1;
 				//  if (@symtype>=@Characters.Length) @symtype=0;
 				//  @sprites["entry2"].setCharset(@Characters[@symtype][0]);
 				//  @sprites["entry2"].setOtherCharset(@Characters[@symtype][1]);
 				//} else { // Insert given character
 				//  if (@sprites["entry"].insert(@sprites["entry2"].character)) {
-				//    pbPlayDecisionSE() ;
+				//    PlayDecisionSE() ;
 				//  } else {
-				//    pbPlayBuzzerSE();
+				//    PlayBuzzerSE();
 				//  }
 				//}
 			//    continue;
@@ -832,26 +834,44 @@ namespace PokemonUnity.Interface.UnityEngine
 			return ret;
 		}
 
-		public void pbDisplay(string v)
+		public void Display(string v)
 		{
 			//Coroutine for displaying game text on screen, using a prompt window
 		}
 
-		public bool pbDisplayConfirm(string v)
+		public bool DisplayConfirm(string v)
 		{
 			//Coroutine for displaying game text on screen, using a prompt window
 			return true;
 		}
 
-		public partial class NameEntryCursor {
+		[RequireComponent(typeof(global::UnityEngine.Sprite))]
+		public partial class NameEntryCursor : MonoBehaviour {
 			private int cursortype;
 			public int @cursorPos;
+			private global::UnityEngine.Sprite @sprite;
+			public global::UnityEngine.UI.Image @cursor1;
+			public global::UnityEngine.UI.Image @cursor2;
+			public global::UnityEngine.UI.Image @cursor3;
+
+
+			#region UnityMonobehavior
+			private void Awake()
+			{
+				sprite = GetComponent<global::UnityEngine.Sprite>();
+			}
+
+			void Update()
+			{
+			}
+			#endregion
+
 			public void initialize(IViewport viewport) {
 				//@sprite=new SpriteWrapper(viewport);
-				//@cursortype=0;
 				//@cursor1=new AnimatedBitmap("Graphics/Pictures/NamingCursor1");
 				//@cursor2=new AnimatedBitmap("Graphics/Pictures/NamingCursor2");
 				//@cursor3=new AnimatedBitmap("Graphics/Pictures/NamingCursor3");
+				@cursortype=0;
 				@cursorPos=0;
 				updateInternal();
 			}
@@ -862,31 +882,31 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			public void updateCursorPos() {
 				int value=@cursorPos;
-				//if (value==PokemonEntryScene.MODE1) {		// Upper case
-				//  @sprite.x=48;
-				//  @sprite.y=120;
-				//  @cursortype=1;
-				//} else if (value==PokemonEntryScene.MODE2) {		// Lower case
-				//  @sprite.x=112;
-				//  @sprite.y=120;
-				//  @cursortype=1;
-				//} else if (value==PokemonEntryScene.MODE3) {		// Other symbols
-				//  @sprite.x=176;
-				//  @sprite.y=120;
-				//  @cursortype=1;
-				//} else if (value==PokemonEntryScene.BACK) {		// Back
-				//  @sprite.x=312;
-				//  @sprite.y=120;
-				//  @cursortype=2;
-				//} else if (value==PokemonEntryScene.OK) {		// OK
-				//  @sprite.x=392;
-				//  @sprite.y=120;
-				//  @cursortype=2;
-				//} else if (value>=0) {
-				//  @sprite.x=52+32*(value%PokemonEntryScene.ROWS);
-				//  @sprite.y=180+38*(value/PokemonEntryScene.ROWS);
-				//  @cursortype=0;
-				//}
+				if (value== TypingForm.MODE1) {				// Upper case
+					//@sprite.x=48;
+					//@sprite.y=120;
+					@cursortype=1;
+				} else if (value== TypingForm.MODE2) {		// Lower case
+					//@sprite.x=112;
+					//@sprite.y=120;
+					@cursortype=1;
+				} else if (value== TypingForm.MODE3) {		// Other symbols
+					//@sprite.x=176;
+					//@sprite.y=120;
+					@cursortype=1;
+				} else if (value== TypingForm.BACK) {		// Back
+					//@sprite.x=312;
+					//@sprite.y=120;
+					@cursortype=2;
+				} else if (value== TypingForm.OK) {			// OK
+					//@sprite.x=392;
+					//@sprite.y=120;
+					@cursortype=2;
+				} else if (value>=0) {
+					//@sprite.x=52+32*(value% TypingForm.ROWS);
+					//@sprite.y=180+38*(value/ TypingForm.ROWS);
+					@cursortype=0;
+				}
 			}
 
 			//public bool visible { get {
@@ -896,7 +916,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//  @sprite.visible=value;
 			//} }
 			//
-			//public UnityEngine.Color color { get {
+			//public global::UnityEngine.Color color { get {
 			//  return @sprite.color;
 			//}
 			//set {
@@ -929,7 +949,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				updateInternal();
 			}
 
-			public void dispose() {
+			public void Dispose() {
 				//@cursor1.dispose();
 				//@cursor2.dispose();
 				//@cursor3.dispose();
