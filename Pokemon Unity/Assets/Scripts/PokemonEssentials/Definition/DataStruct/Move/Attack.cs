@@ -110,7 +110,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			int r = -1;
 			r = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
-			result(r);
+			result?.Invoke(r);
 			yield break;
 		}
 
@@ -243,11 +243,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (IsDamaging()) {
-				int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti);
+				int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti);
 				yield break;
 			} else {
 				_host.StartCoroutine(battle.Display("But it failed!"));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 		}
@@ -265,7 +265,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			_host.StartCoroutine(battle.Display("But it failed!"));
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 	}
@@ -393,7 +393,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 			_host.StartCoroutine(battle.Display(Game._INTL("But nothing happened!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -417,17 +417,17 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
 			if (opponent is IBattlerClause b && b.CanSleep(attacker, true, this))
 			{
 				_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 				if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.Sleep());
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 
@@ -471,18 +471,18 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (opponent is IBattlerClause b && !b.CanSleep(attacker, true, this)) { result(-1); yield break; }
+			if (opponent is IBattlerClause b && !b.CanSleep(attacker, true, this)) { result?.Invoke(-1); yield break; }
 			if (opponent.effects.Yawn > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.Yawn = 2;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} made {2} drowsy!", attacker.ToString(), opponent.ToString(true))));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -497,12 +497,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanPoison(attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanPoison(attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.Poison(attacker));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 
@@ -529,12 +529,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanPoison(attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanPoison(attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.Poison(attacker, null, true));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 
@@ -563,12 +563,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (IsDamaging())
 			{
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0 && id == Moves.BOLT_STRIKE)
 				{
 					this.battle.field.FusionFlare = true;
 				}
-				result(ret);
+				result?.Invoke(ret);
 				yield break;
 			}
 			else
@@ -578,16 +578,16 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (TypeModifier(type, attacker, opponent) == 0)
 					{
 						_host.StartCoroutine(battle.Display(Game._INTL("It doesn't affect {1}...", opponent.ToString(true))));
-						result(-1);
+						result?.Invoke(-1);
 						yield break;
 					}
 				}
-				if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
-				if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanParalyze(attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+				if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
+				if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanParalyze(attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 				_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 				if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.Paralyze(attacker));
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
 			//return -1
@@ -677,22 +677,22 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (IsDamaging())
 			{
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0 && id == Moves.BLUE_FLARE)
 				{
 					this.battle.field.FusionBolt = true;
 				}
-				result(ret);
+				result?.Invoke(ret);
 				yield break;
 			}
 			else
 			{
-				if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
-				if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanBurn(attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+				if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
+				if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanBurn(attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 				_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 				if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.Burn(attacker));
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
 			//return -1;
@@ -745,12 +745,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerClause b && !b.CanFreeze(attacker, true, this)) { result(-1); yield break; }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerClause b && !b.CanFreeze(attacker, true, this)) { result?.Invoke(-1); yield break; }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.Freeze());
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 
@@ -774,12 +774,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerClause b && !b.CanFreeze(attacker, true, this)) { result(-1); yield break; }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerClause b && !b.CanFreeze(attacker, true, this)) { result?.Invoke(-1); yield break; }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.Freeze());
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 
@@ -917,7 +917,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
 			bool retb = false; if (opponent is IBattlerEffectIE b)
 			{
 				_host.StartCoroutine(b.CanConfuse(attacker, true, this, result:value=>retb=value)); if (retb)
@@ -926,11 +926,11 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					b.Confuse();
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} became confused!", opponent.ToString())));
-					result(0);
+					result?.Invoke(0);
 					yield break;
 				}
 			}
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 
@@ -992,7 +992,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
 			bool retb = false; if (opponent is IBattlerEffectIE b)
 			{
 				_host.StartCoroutine(b.CanConfuse(attacker, true, this, result:value=>retb=value)); if (retb)
@@ -1001,11 +1001,11 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					b.Confuse();
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} became confused!", opponent.ToString())));
-					result(0);
+					result?.Invoke(0);
 					yield break;
 				}
 			}
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 
@@ -1048,7 +1048,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			bool retb = false; if (opponent is IBattlerEffectIE b) _host.StartCoroutine(b.CanAttract(attacker, result:value=>retb=value)); if(!retb)
 			{
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker())
@@ -1057,7 +1057,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
@@ -1065,7 +1065,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.Partner.ToString(), Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1073,7 +1073,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.Attract(attacker));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1129,7 +1129,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   attacker.Status != Status.PARALYSIS)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			else
@@ -1150,7 +1150,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} cured its paralysis!", attacker.ToString())));
 				}
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
 		}
@@ -1234,7 +1234,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				party[i].Status = Status.NONE;
 				party[i].StatusCount = 0; //Done automatically
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1252,7 +1252,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OwnSide.Safeguard > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			attacker.OwnSide.Safeguard = 5;
@@ -1266,7 +1266,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("The opposing team became cloaked in a mystical veil!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1297,7 +1297,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				))
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			IBattlerEffectIE a = attacker is IBattlerEffectIE ? attacker as IBattlerEffectIE : null;
@@ -1343,7 +1343,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} was thawed out.", attacker.ToString())));
 					break;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1358,13 +1358,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int ret1 = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret1=value)); result(ret1); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int ret1 = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret1=value)); result?.Invoke(ret1); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; //attacker.IncreaseStat(Stats.ATTACK, 1, attacker, false, this);
 			if (attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.ATTACK, 1, attacker, false, this, result: value => ret = value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -1388,13 +1388,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; //attacker.IncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
 			if (attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.DEFENSE, 1, attacker, false, this, result: value => ret = value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -1420,12 +1420,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 
 			attacker.effects.DefenseCurl = true;
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; //attacker.IncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
 			if (attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.DEFENSE, 1, attacker, false, this, result: value => ret = value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 	}
@@ -1440,13 +1440,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; //attacker.IncreaseStat(Stats.SPEED, 1, attacker, false, this);
 			if (attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPEED, 1, attacker, false, this, result: value => ret = value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -1470,13 +1470,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; //attacker.IncreaseStat(Stats.SPATK, 1, attacker, false, this);
 			if (attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPATK, 1, attacker, false, this, result: value => ret = value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -1513,7 +1513,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(b.IncreaseStat(Stats.SPDEF, 1, attacker, false, this));
 				}
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1528,13 +1528,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.EVASION, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.EVASION, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; //attacker.IncreaseStat(Stats.EVASION, 1, attacker, false, this);
 			if (attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.EVASION, 1, attacker, false, this, result: value => ret = value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -1558,18 +1558,18 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
 			if (attacker.effects.FocusEnergy >= 2)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			attacker.effects.FocusEnergy = 2;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} is getting pumped!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 
@@ -1601,7 +1601,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1620,7 +1620,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b1.IncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1644,7 +1644,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb && !retc)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1669,7 +1669,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b2.IncreaseStat(Stats.ACCURACY, 1, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1692,7 +1692,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1711,7 +1711,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b1.IncreaseStat(Stats.SPEED, 1, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1734,7 +1734,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1753,7 +1753,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b1.IncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1777,7 +1777,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1803,7 +1803,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b1.IncreaseStat(Stats.SPATK, increment, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1826,7 +1826,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1845,7 +1845,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b1.IncreaseStat(Stats.ACCURACY, 1, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1868,7 +1868,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1887,7 +1887,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b1.IncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1911,7 +1911,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb && !retc)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1936,7 +1936,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b2.IncreaseStat(Stats.SPEED, 1, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -1959,7 +1959,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -1978,7 +1978,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b1.IncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -2038,12 +2038,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.ATTACK, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2067,12 +2067,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.DEFENSE, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2096,12 +2096,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPEED, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2125,7 +2125,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPEED, 2, attacker, false, this, result:value=>ret=value));
@@ -2135,7 +2135,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became nimble!", attacker.ToString())));
 			}
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 	}
@@ -2150,12 +2150,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPATK, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2179,12 +2179,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPDEF, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPDEF, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPDEF, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2208,14 +2208,14 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
 			attacker.effects.Minimize = true;
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.EVASION, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.EVASION, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.EVASION, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2251,7 +2251,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb && !retc)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -2289,7 +2289,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b4.IncreaseStat(Stats.SPEED, 2, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -2312,7 +2312,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -2331,7 +2331,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b1.IncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -2352,7 +2352,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				   opponent.OwnSide.CraftyShield)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -2366,7 +2366,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (array.Count == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", opponent.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			Stats stat = array[this.battle.Random(array.Count)];
@@ -2374,7 +2374,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.IncreaseStat(stat, 2, attacker, false, this)); //int ret =
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -2389,12 +2389,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.DEFENSE, 3, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2418,12 +2418,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (attacker is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanIncreaseStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPATK, 3, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2451,7 +2451,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.HP <= Math.Floor(attacker.TotalHP / 2f) || !retb)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -2469,7 +2469,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(this.battle.CommonAnimation("StatUp", attacker, null));
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} cut its own HP and maximized its Attack!", attacker.ToString())));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -2485,7 +2485,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				bool showanim = true;
@@ -2502,7 +2502,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					showanim = false;
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -2518,7 +2518,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				bool showanim = true;
@@ -2535,7 +2535,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					showanim = false;
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -2552,7 +2552,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result: value => ret = value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result: value => ret = value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				if (attacker.Partner.IsNotNullOrNone() && !attacker.Partner.isFainted())
@@ -2579,7 +2579,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					showanim = false;
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -2595,7 +2595,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result: value => ret = value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result: value => ret = value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				if (attacker is IBattlerEffectIE b)
@@ -2604,7 +2604,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (retb) _host.StartCoroutine(b.ReduceStat(Stats.SPEED, 1, attacker, false, this));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -2620,7 +2620,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result: value => ret = value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result: value => ret = value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				if (attacker is IBattlerEffectIE b)
@@ -2629,7 +2629,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (retb) _host.StartCoroutine(b.ReduceStat(Stats.SPATK, 2, attacker, false, this));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -2647,7 +2647,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s attack missed!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			int ret = -1;
@@ -2666,7 +2666,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became confused!", opponent.ToString())));
 				ret = 0;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -2684,7 +2684,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s attack missed!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			int ret = -1;
@@ -2703,7 +2703,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became confused!", opponent.ToString())));
 				ret = 0;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -2718,13 +2718,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; //opponent.ReduceStat(Stats.ATTACK, 1, attacker, false, this);
 			if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.ATTACK, 1, attacker, false, this, result: value => ret = value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2749,12 +2749,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.DEFENSE, 1, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2779,12 +2779,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPEED, 1, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2819,12 +2819,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPATK, 1, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2849,12 +2849,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPDEF, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPDEF, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPDEF, 1, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2879,12 +2879,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ACCURACY, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ACCURACY, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.ACCURACY, 1, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2909,13 +2909,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.EVASION, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.EVASION, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			byte increment = (Core.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.EVASION, increment, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -2943,7 +2943,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			if (opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.EVASION, 1, attacker, false, this));
@@ -2966,7 +2966,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				opponent.OpposingSide.StickyWeb = false;
 				opponent.OpposingSide.ToxicSpikes = 0;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 
@@ -3017,7 +3017,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s attack missed!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent is IBattlerEffectIE b &&
@@ -3025,13 +3025,13 @@ namespace PokemonUnity.Interface.UnityEngine
 				b.TooLow(Stats.DEFENSE))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any lower!", opponent.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.OwnSide.Mist > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} is protected by Mist!", opponent.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker())
@@ -3041,7 +3041,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} prevents stat loss!", opponent.ToString(),
 					   Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -3071,7 +3071,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(b3.ReduceStat(Stats.DEFENSE, 1, attacker, false, this, showanim, result:value=>retb=value)); if (retb) { ret = 0; showanim = false; }
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -3086,12 +3086,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.ATTACK, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -3116,12 +3116,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.DEFENSE, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.DEFENSE, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -3146,14 +3146,14 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPEED, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			byte increment = (id == Moves.STRING_SHOT && !Core.USENEWBATTLEMECHANICS) ? (byte)1 : (byte)2;
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPEED, increment, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -3181,25 +3181,25 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			if (!attacker.Gender.HasValue || !opponent.Gender.HasValue || attacker.Gender.Value == opponent.Gender.Value)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.OBLIVIOUS))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} prevents romance!", opponent.ToString(),
 				 Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPATK, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -3230,12 +3230,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPDEF, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPDEF, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPDEF, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -3261,7 +3261,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result: value => ret = value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result: value => ret = value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute)
 			{
 				opponent.stages[(byte)Stats.ATTACK] = 0;
@@ -3274,7 +3274,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stat changes were removed!", opponent.ToString())));
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -3302,7 +3302,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			_host.StartCoroutine(battle.Display(Game._INTL("All stat changes were eliminated!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3333,7 +3333,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			ostage[(byte)Stats.SPATK] = a; //astage[(byte)Stats.SPATK];
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} switched all changes to its Attack and Sp. Atk with the target!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3364,7 +3364,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			ostage[(byte)Stats.SPDEF] = a; //astage[(byte)Stats.SPDEF];
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} switched all changes to its Defense and Sp. Def with the target!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3392,7 +3392,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} switched stat changes with the target!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3410,7 +3410,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.OwnSide.CraftyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -3421,7 +3421,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} copied {2}'s stat changes!", attacker.ToString(), opponent.ToString(true))));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3439,7 +3439,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OwnSide.Mist > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -3453,7 +3453,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("The opposing team became shrouded in mist!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3478,7 +3478,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.PowerTrick = !attacker.effects.PowerTrick;
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} switched its Attack and Defense!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3497,7 +3497,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -3509,7 +3509,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.SPA = opponent.SPA = avspatk;
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} shared its power with the target!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3528,7 +3528,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -3540,7 +3540,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.SPD = opponent.SPD = avspdef;
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} shared its guard with the target!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3588,7 +3588,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OwnSide.Tailwind > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -3602,7 +3602,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("The tailwind blew from behind the opposing team!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3632,7 +3632,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			foreach (var i in attacker.moves)
@@ -3640,7 +3640,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (i.id == opponent.lastMoveUsed)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -3656,13 +3656,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					string movename = Game._INTL(opponent.lastMoveUsed.ToString(TextScripts.Name));
 
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} learned {2}!", attacker.ToString(), movename)));
-					result(0);
+					result?.Invoke(0);
 					yield break;
 				}
 			}
 
 			_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 	}
@@ -3689,7 +3689,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsedSketch].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			foreach (var i in attacker.moves)
@@ -3697,14 +3697,14 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (i.id == opponent.lastMoveUsedSketch)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
 			if (opponent.OwnSide.CraftyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -3724,13 +3724,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					string movename = Game._INTL(opponent.lastMoveUsedSketch.ToString(TextScripts.Name));
 
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} learned {2}!", attacker.ToString(), movename)));
-					result(0);
+					result?.Invoke(0);
 					yield break;
 				}
 			}
 
 			_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 	}
@@ -3749,7 +3749,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.Ability == Abilities.MULTITYPE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			List<Types> types = new List<Types>(); //[]
@@ -3768,7 +3768,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (types.Count == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -3782,7 +3782,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			string typename = Game._INTL(newtype.ToString(TextScripts.Name));
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} transformed into the {2} type!", attacker.ToString(), typename)));
-			result(0);
+			result?.Invoke(0);
 			yield break; //ToDo: Wasnt sure what to return, so put null/0
 		}
 	}
@@ -3801,7 +3801,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.Ability == Abilities.MULTITYPE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.lastMoveUsed <= 0
@@ -3809,13 +3809,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			   )
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.OwnSide.CraftyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			List<Types> types = new List<Types>();//[]
@@ -3825,7 +3825,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			for (int i = 0; i < Kernal.TypeData.Count; i++)
@@ -3837,7 +3837,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (types.Count == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -3851,7 +3851,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			string typename = Game._INTL(newtype.ToString(TextScripts.Name));
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} transformed into the {2} type!", attacker.ToString(), typename)));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3869,7 +3869,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.Ability == Abilities.MULTITYPE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			Types type = Types.NORMAL;
@@ -3907,7 +3907,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.HasType(type))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -3919,7 +3919,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			string typename = Game._INTL(type.ToString(TextScripts.Name));
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} transformed into the {2} type!", attacker.ToString(), typename)));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3937,14 +3937,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
+			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
 			if (opponent.Ability == Abilities.MULTITYPE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -3954,7 +3954,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   opponent.effects.Type3 == Types.WATER))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			opponent.Type1 = Types.WATER;
@@ -3964,7 +3964,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			opponent.effects.Type3 = Types.NONE; //-1;
 			string typename = Game._INTL(Types.WATER.ToString(TextScripts.Name));
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} transformed into the {2} type!", opponent.ToString(), typename)));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -3982,7 +3982,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.Ability == Abilities.MULTITYPE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (attacker.HasType(opponent.Type1) &&
@@ -3993,7 +3993,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   opponent.HasType(attacker.effects.Type3))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -4003,7 +4003,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.Type3 = Types.NONE; //-1;
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s type changed to match {2}'s!", attacker.ToString(), opponent.ToString(true))));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -4021,7 +4021,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.Ability == Abilities.MULTITYPE ||
@@ -4030,7 +4030,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   opponent.Ability == Abilities.TRUANT)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -4047,7 +4047,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name)))));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -4065,17 +4065,17 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
+			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
 			if (opponent.Ability == Abilities.MULTITYPE ||
 			   opponent.Ability == Abilities.INSOMNIA ||
 			   opponent.Ability == Abilities.STANCE_CHANGE ||
 			   opponent.Ability == Abilities.TRUANT)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -4092,7 +4092,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name)))));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -4110,7 +4110,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.OwnSide.CraftyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.Ability == 0 ||
@@ -4128,7 +4128,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   opponent.Ability == Abilities.ZEN_MODE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -4146,7 +4146,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} wore off!", attacker.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name)))));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -4164,13 +4164,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.OwnSide.CraftyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (attacker.Ability == 0 ||
@@ -4192,7 +4192,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   attacker.Ability == Abilities.ZEN_MODE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -4210,7 +4210,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name)))));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -4237,7 +4237,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   opponent.Ability == Abilities.WONDER_GUARD)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -4251,7 +4251,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   Game._INTL(attacker.Ability.ToString(TextScripts.Name)))));
 			attacker.AbilitiesOnSwitchIn(true);
 			opponent.AbilitiesOnSwitchIn(true);
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -4269,14 +4269,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.Ability == Abilities.MULTITYPE ||
 			   opponent.Ability == Abilities.STANCE_CHANGE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -4294,7 +4294,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} wore off!", opponent.ToString(), Game._INTL(oldabil.ToString(TextScripts.Name)))));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -4327,13 +4327,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.OwnSide.CraftyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -4372,7 +4372,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.DisableMove = 0;
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} transformed into {2}!", attacker.ToString(), opponent.ToString(true))));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -4387,7 +4387,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			result(EffectFixedDamage(20, attacker, opponent, hitnum, alltargets, showanimation));
+			result?.Invoke(EffectFixedDamage(20, attacker, opponent, hitnum, alltargets, showanimation));
 			yield break;
 		}
 	}
@@ -4402,7 +4402,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			result(EffectFixedDamage(40, attacker, opponent, hitnum, alltargets, showanimation));
+			result?.Invoke(EffectFixedDamage(40, attacker, opponent, hitnum, alltargets, showanimation));
 			yield break;
 		}
 	}
@@ -4417,7 +4417,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			result(EffectFixedDamage((int)Math.Max(Math.Floor(opponent.HP / 2f), 1), attacker, opponent, hitnum, alltargets, showanimation));
+			result?.Invoke(EffectFixedDamage((int)Math.Max(Math.Floor(opponent.HP / 2f), 1), attacker, opponent, hitnum, alltargets, showanimation));
 			yield break;
 		}
 	}
@@ -4432,7 +4432,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			result(EffectFixedDamage(attacker.Level, attacker, opponent, hitnum, alltargets, showanimation));
+			result?.Invoke(EffectFixedDamage(attacker.Level, attacker, opponent, hitnum, alltargets, showanimation));
 			yield break;
 		}
 	}
@@ -4450,10 +4450,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.HP >= opponent.HP)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			result(EffectFixedDamage(opponent.HP - attacker.HP, attacker, opponent, hitnum, alltargets, showanimation));
+			result?.Invoke(EffectFixedDamage(opponent.HP - attacker.HP, attacker, opponent, hitnum, alltargets, showanimation));
 			yield break;
 		}
 	}
@@ -4470,7 +4470,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 
 			int dmg = (int)Math.Max((attacker.Level * (int)Math.Floor(this.battle.Random(101) + 50f) / 100f), 1);
-			result(EffectFixedDamage(dmg, attacker, opponent, hitnum, alltargets, showanimation));
+			result?.Invoke(EffectFixedDamage(dmg, attacker, opponent, hitnum, alltargets, showanimation));
 			yield break;
 		}
 	}
@@ -4508,7 +4508,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("It's a one-hit KO!")));
 			}
-			result(damage);
+			result?.Invoke(damage);
 			yield break;
 		}
 	}
@@ -4538,11 +4538,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.Counter < 0 || opponent.Species == Pokemons.NONE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			int ret = EffectFixedDamage(Math.Max(attacker.effects.Counter * 2, 1), attacker, opponent, hitnum, alltargets, showanimation);
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -4572,11 +4572,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.MirrorCoat < 0 || opponent.Species == Pokemons.NONE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			int ret = EffectFixedDamage(Math.Max(attacker.effects.MirrorCoat * 2, 1), attacker, opponent, hitnum, alltargets, showanimation);
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -4610,11 +4610,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.lastHPLost == 0 || opponent.Species == Pokemons.NONE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			int ret = EffectFixedDamage((int)Math.Max(Math.Floor(attacker.lastHPLost * 1.5f), 1), attacker, opponent, hitnum, alltargets, showanimation);
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -4629,7 +4629,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				if (opponent.Partner.IsNotNullOrNone() && !opponent.Partner.isFainted() &&
@@ -4639,7 +4639,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(battle.Display(Game._INTL("The bursting flame hit {1}!", opponent.Partner.ToString(true))));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -4757,12 +4757,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			this.doubled = false;
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				this.battle.field.FusionFlare = true;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 
@@ -4799,12 +4799,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				this.battle.field.FusionBolt = true;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 
@@ -5010,7 +5010,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				attacker.OwnSide.Round += 1;
@@ -5027,7 +5027,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					}
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -5355,10 +5355,10 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 
-			int ret = -1; base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value); result(ret);
+			int ret = -1; base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value); result?.Invoke(ret);
 
 			if (ret > 0) attacker.effects.Rage = true;
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -5400,23 +5400,23 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (TypeModifier(GetType(this.type, attacker, opponent), attacker, opponent) == 0)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("It doesn't affect {1}...", opponent.ToString(true))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				if (opponent.HP == opponent.TotalHP)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				int damage = CalcDamage(attacker, opponent); // Consumes Gems even if it will heal
 				_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation)); // Healing animation
 				_host.StartCoroutine(opponent.RecoverHP((int)Math.Floor(opponent.TotalHP / 4f), true));
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} had its HP restored.", opponent.ToString())));
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -5712,14 +5712,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			   opponent.effects.HelpingHand)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.HelpingHand = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} is ready to help {2}!", attacker.ToString(), opponent.ToString(true))));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -5739,14 +5739,14 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (this.battle.field.MudSportField > 0)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 				this.battle.field.MudSportField = 5;
 				_host.StartCoroutine(battle.Display(Game._INTL("Electricity's power was weakened!")));
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
 			else
@@ -5756,7 +5756,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (attacker.battle.battlers[i].effects.MudSport)
 					{
 						_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-						result(-1);
+						result?.Invoke(-1);
 						yield break;
 					}
 				}
@@ -5765,10 +5765,10 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				attacker.effects.MudSport = true;
 				_host.StartCoroutine(battle.Display(Game._INTL("Electricity's power was weakened!")));
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 	}
@@ -5788,14 +5788,14 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (this.battle.field.WaterSportField > 0)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 				this.battle.field.WaterSportField = 5;
 				_host.StartCoroutine(battle.Display(Game._INTL("Fire's power was weakened!")));
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
 			else
@@ -5805,7 +5805,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (attacker.battle.battlers[i].effects.WaterSport)
 					{
 						_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-						result(-1);
+						result?.Invoke(-1);
 						yield break;
 					}
 				}
@@ -5814,7 +5814,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				attacker.effects.WaterSport = true;
 				_host.StartCoroutine(battle.Display(Game._INTL("Fire's power was weakened!")));
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
 		}
@@ -5902,7 +5902,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OwnSide.LuckyChant > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -5916,7 +5916,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("The Lucky Chant shielded the opposing team from critical hits!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -5934,7 +5934,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OwnSide.Reflect > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -5949,7 +5949,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("Reflect raised the opposing team's Defense!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -5967,7 +5967,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OwnSide.LightScreen > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -5982,7 +5982,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("Light Screen raised the opposing team's Special Defense!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6168,7 +6168,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -6176,7 +6176,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			opponent.effects.LockOn = 2;
 			opponent.effects.LockOnPos = attacker.Index;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} took aim at {2}!", attacker.ToString(), opponent.ToString(true))));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6195,14 +6195,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.OwnSide.CraftyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.Foresight = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} was identified!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6221,14 +6221,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.OwnSide.CraftyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.MiracleEye = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} was identified!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6282,7 +6282,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				attacker.effects.ProtectRate = 1;
 
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -6290,7 +6290,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.Protect = true;
 			attacker.effects.ProtectRate *= 2;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} protected itself!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6309,7 +6309,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OwnSide.QuickGuard)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			List<Attack.Effects> ratesharers = new List<Attack.Effects> {
@@ -6340,7 +6340,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				attacker.effects.ProtectRate = 1;
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -6355,7 +6355,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("Quick Guard protected the opposing team!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6374,7 +6374,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OwnSide.WideGuard)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			List<Attack.Effects> ratesharers = new List<Attack.Effects> {
@@ -6405,7 +6405,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				attacker.effects.ProtectRate = 1;
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -6420,7 +6420,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("Wide Guard protected the opposing team!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6436,13 +6436,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value); result(ret);
+			int ret = -1; base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value); result?.Invoke(ret);
 			if (ret > 0)
 			{
 				opponent.effects.ProtectNegation = true;
 				opponent.OwnSide.CraftyShield = false;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -6462,11 +6462,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			   ) // flag e: Copyable by Mirror Move
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("The mirror move failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			attacker.UseMoveSimple(opponent.lastMoveUsed, -1, opponent.Index);
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6528,11 +6528,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			   blacklist.Contains(Kernal.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			attacker.UseMoveSimple(this.battle.lastMoveUsed);
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6566,14 +6566,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			   blacklist.Contains(oppmove.Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			attacker.effects.MeFirst = true;
 
 			attacker.UseMoveSimple(oppmove.id);
 			attacker.effects.MeFirst = false;
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6593,7 +6593,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			attacker.effects.MagicCoat = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} shrouded itself with Magic Coat!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6612,7 +6612,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			attacker.effects.Snatch = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} waits for a target to make a move!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6671,7 +6671,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (move == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			string thismovename = Name;
@@ -6680,7 +6680,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} turned into {2}!", thismovename, movename)));
 			int target = (Core.USENEWBATTLEMECHANICS && opponent.IsNotNullOrNone()) ? opponent.Index : -1;
 			attacker.UseMoveSimple(move, -1, target);
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6847,14 +6847,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (moves.Count == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			Moves move = moves[this.battle.Random(moves.Count)];
 			attacker.UseMoveSimple(move);
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -6936,13 +6936,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 					attacker.UseMoveSimple(move);
-					result(0);
+					result?.Invoke(0);
 					yield break;
 				}
 				i += 1;
 			}
 			_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 	}
@@ -6960,7 +6960,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Torment)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker())
@@ -6969,7 +6969,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
@@ -6977,7 +6977,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -6986,7 +6986,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			opponent.effects.Torment = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} was subjected to torment!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -7004,14 +7004,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.Imprison)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			attacker.effects.Imprison = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} sealed the opponent's move(s)!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -7029,7 +7029,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Disable > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker())
@@ -7038,7 +7038,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
@@ -7046,7 +7046,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -7059,13 +7059,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					opponent.effects.Disable = 5;
 					opponent.effects.DisableMove = opponent.lastMoveUsed;
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} was disabled!", opponent.ToString(), Kernal.MoveData[(Moves)i.id].Name)));
-					result(0);
+					result?.Invoke(0);
 					yield break;
 				}
 			}
 
 			_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 	}
@@ -7085,7 +7085,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   !attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.OBLIVIOUS)))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker())
@@ -7094,7 +7094,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
@@ -7102,7 +7102,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -7111,7 +7111,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			opponent.effects.Taunt = 4;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} fell for the taunt!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -7129,7 +7129,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.HealBlock > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker())
@@ -7138,7 +7138,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
@@ -7146,7 +7146,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -7155,7 +7155,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			opponent.effects.HealBlock = 5;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} was prevented from healing!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -7181,14 +7181,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Encore > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.lastMoveUsed <= 0 ||
 			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker())
@@ -7197,7 +7197,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 				else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL))
@@ -7205,7 +7205,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
 					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -7221,13 +7221,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					opponent.effects.EncoreMove = opponent.moves[i].id;
 
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} received an encore!", opponent.ToString())));
-					result(0);
+					result?.Invoke(0);
 					yield break;
 				}
 			}
 
 			_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 	}
@@ -7407,13 +7407,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				attacker.effects.HyperBeam = 2;
 				attacker.currentMove = this.id;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -7451,8 +7451,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -7511,8 +7511,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -7551,8 +7551,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 
@@ -7601,8 +7601,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 
@@ -7651,8 +7651,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 
@@ -7702,8 +7702,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -7747,8 +7747,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -7787,8 +7787,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -7827,8 +7827,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -7873,8 +7873,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			yield break;
 		}
 
@@ -7925,14 +7925,14 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value); result?.Invoke(ret);
 			if (ret > 0)
 			{
 				opponent.effects.ProtectNegation = true;
 				opponent.OwnSide.CraftyShield = false;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -7978,11 +7978,11 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} took {2} into the sky!", attacker.ToString(), opponent.ToString(true))));
 				opponent.effects.SkyDrop = true;
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} was freed from the Sky Drop!", opponent.ToString())));
 			opponent.effects.SkyDrop = false;
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 
@@ -8007,7 +8007,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 && !opponent.isFainted() &&
 			   !opponent.damagestate.Substitute)
 			{
@@ -8056,7 +8056,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -8074,7 +8074,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 && !opponent.isFainted() &&
 			   !opponent.damagestate.Substitute)
 			{
@@ -8092,7 +8092,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} became trapped in the vortex!", opponent.ToString())));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 
@@ -8116,7 +8116,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				if (attacker.effects.Uproar == 0)
@@ -8127,7 +8127,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -8143,7 +8143,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 &&
 			   attacker.effects.Outrage == 0 &&
 			   attacker.Status != Status.SLEEP)
@@ -8169,7 +8169,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} became confused due to fatigue!", attacker.ToString())));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -8197,7 +8197,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.Rollout == 0) attacker.effects.Rollout = 5;
 			attacker.effects.Rollout -= 1;
 			attacker.currentMove = MoveId;
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage == 0 ||
 			   TypeModifier(this.type, attacker, opponent) == 0 ||
 			   attacker.Status == Status.SLEEP)
@@ -8205,7 +8205,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				// Cancel effect if attack is ineffective
 				attacker.effects.Rollout = 0;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -8267,7 +8267,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.BideDamage == 0 || opponent.Species == Pokemons.NONE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (Core.USENEWBATTLEMECHANICS)
@@ -8276,13 +8276,13 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (typemod == 0)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("It doesn't affect {1}...", opponent.ToString(true))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
 
 			int ret = EffectFixedDamage(attacker.effects.BideDamage * 2, attacker, opponent, hitnum, alltargets, showanimation);
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -8305,14 +8305,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.HP == attacker.TotalHP)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP is full!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			_host.StartCoroutine(attacker.RecoverHP((int)Math.Floor((attacker.TotalHP + 1) / 2f), true));
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP was restored.", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8336,7 +8336,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.HP == attacker.TotalHP)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP is full!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -8344,7 +8344,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(attacker.RecoverHP((int)Math.Floor((attacker.TotalHP + 1) / 2f), true));
 			attacker.effects.Roost = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP was restored.", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8368,7 +8368,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.Wish > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -8376,7 +8376,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.Wish = 2;
 			attacker.effects.WishAmount = (int)Math.Floor((attacker.TotalHP + 1) / 2f);
 			attacker.effects.WishMaker = attacker.pokemonIndex;
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8400,7 +8400,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.HP == attacker.TotalHP)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP is full!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			int hpgain = 0;
@@ -8421,7 +8421,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(attacker.RecoverHP(hpgain, true));
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP was restored.", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8443,19 +8443,19 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (attacker is IBattlerClause b && !b.CanSleep(attacker, true, this, true))
 			{
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (attacker.Status == Status.SLEEP)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (attacker.HP == attacker.TotalHP)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP is full!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -8464,7 +8464,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} slept and became healthy!", attacker.ToString())));
 			int hp = -1; _host.StartCoroutine(attacker.RecoverHP(attacker.TotalHP - attacker.HP, true, result:value=>hp=value));
 			if (hp > 0) battle.Display(Game._INTL("{1}'s HP was restored.", attacker.ToString()));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8488,14 +8488,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.AquaRing)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			attacker.effects.AquaRing = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} surrounded itself with a veil of water!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8519,14 +8519,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.Ingrain)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			attacker.effects.Ingrain = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} planted its roots!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8545,27 +8545,27 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
+			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
 			if (opponent.effects.LeechSeed >= 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} evaded the attack!", opponent.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.HasType(Types.GRASS))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("It doesn't affect {1}...", opponent.ToString(true))));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.LeechSeed = attacker.Index;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} was seeded!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8585,7 +8585,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				int hpgain = (int)Math.Round(opponent.damagestate.HPLost / 2f);
@@ -8603,7 +8603,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} had its energy drained!", opponent.ToString())));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -8624,7 +8624,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				int hpgain = (int)Math.Round(opponent.damagestate.HPLost / 2f);
@@ -8642,7 +8642,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} had its energy drained!", opponent.ToString())));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -8665,13 +8665,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.HP == opponent.TotalHP)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP is full!", opponent.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -8680,7 +8680,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.hasWorkingAbility(Abilities.MEGA_LAUNCHER)) hpgain = (int)Math.Round(opponent.TotalHP * 3 / 4f);
 			_host.StartCoroutine(opponent.RecoverHP(hpgain, true));
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s HP was restored.", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8737,11 +8737,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (typemod == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("It doesn't affect {1}...", opponent.ToString(true))));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			int ret = EffectFixedDamage(attacker.HP, attacker, opponent, hitnum, alltargets, showanimation);
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 
@@ -8773,7 +8773,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -8790,7 +8790,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) { ret = 0; showanim = false; }
 			}
 			_host.StartCoroutine(attacker.ReduceHP(attacker.HP));
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -8814,14 +8814,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!this.battle.CanChooseNonActive(attacker.Index))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			_host.StartCoroutine(attacker.ReduceHP(attacker.HP));
 			attacker.effects.HealingWish = true;
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8845,14 +8845,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!this.battle.CanChooseNonActive(attacker.Index))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			_host.StartCoroutine(attacker.ReduceHP(attacker.HP));
 			attacker.effects.LunarDance = true;
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8880,7 +8880,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (failed)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -8903,7 +8903,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					}
 				}
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8923,7 +8923,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			attacker.effects.Grudge = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} wants its target to bear a grudge!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8943,7 +8943,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			attacker.effects.DestinyBond = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} is trying to take its foe down with it!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -8986,7 +8986,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				attacker.effects.ProtectRate = 1;
 
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -8994,7 +8994,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.Endure = true;
 			attacker.effects.ProtectRate *= 2;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} braced itself!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -9023,14 +9023,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			   !this.battle.CanRun(attacker.Index))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} fled from battle!", attacker.ToString())));
 			this.battle.decision = (BattleResults)3;
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -9154,13 +9154,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!this.battle.CanChooseNonActive(attacker.Index))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			attacker.effects.BatonPass = true;
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -9177,14 +9177,14 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (!attacker.isFainted() && opponent.damagestate.CalcDamage > 0 &&
 			   this.battle.CanChooseNonActive(attacker.Index) &&
 			   !this.battle.AllFainted(this.battle.Party(opponent.Index)))
 			{
 				attacker.effects.Uturn = true;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -9202,7 +9202,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (IsDamaging())
 			{
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
 				   !opponent.isFainted())
 				{
@@ -9213,27 +9213,27 @@ namespace PokemonUnity.Interface.UnityEngine
 						_host.StartCoroutine(battle.Display(Game._INTL("{1} can no longer escape!", opponent.ToString())));
 					}
 				}
-				result(ret);
+				result?.Invoke(ret);
 				yield break;
 			}
 			if (opponent.effects.MeanLook >= 0 ||
 			   (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (Core.USENEWBATTLEMECHANICS && opponent.HasType(Types.GHOST))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("It doesn't affect {1}...", opponent.ToString(true))));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.MeanLook = attacker.Index;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} can no longer escape!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -9343,7 +9343,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   (this.battle.opponent.Length == 0 && this.battle.IsOpposing(attacker.Index)))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (this.battle.IsUnlosableItem(opponent, opponent.Item) ||
@@ -9352,14 +9352,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			   this.battle.IsUnlosableItem(attacker, attacker.Item))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
 			{
 				string abilityname = Game._INTL(opponent.Ability.ToString(TextScripts.Name));
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} made {3} ineffective!", opponent.ToString(), abilityname, Name)));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -9394,7 +9394,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.ChoiceBand = Moves.NONE;//-1;
 
 			opponent.effects.ChoiceBand = Moves.NONE;//-1;
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -9414,14 +9414,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			   attacker.Item == 0 || opponent.Item != 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (this.battle.IsUnlosableItem(attacker, attacker.Item) ||
 			   this.battle.IsUnlosableItem(opponent, attacker.Item))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -9441,7 +9441,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				attacker.pokemon.itemInitial = 0;
 			}
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} received {2} from {3}!", opponent.ToString(), itemname, attacker.ToString(true))));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -9507,7 +9507,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (!attacker.isFainted() && opponent.damagestate.CalcDamage > 0 &&
 			   !opponent.damagestate.Substitute &&
 			   (Game.GameData is IItemCheck i && i.IsBerry(opponent.Item) || (Core.USENEWBATTLEMECHANICS && i.IsGem(opponent.Item))))
@@ -9517,7 +9517,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} was incinerated!", opponent.ToString(), itemname)));
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -9535,7 +9535,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.Species == Pokemons.NONE || attacker.pokemon.itemRecycle == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -9555,7 +9555,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.PickupUse = 0;
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} found one {2}!", attacker.ToString(), itemname)));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -9694,13 +9694,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.Item == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
 			attacker.effects.Unburden = true;
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} flung its {2}!", attacker.ToString(), Kernal.ItemData[attacker.Item].Name)));
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
 			   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SHIELD_DUST)))
 			{
@@ -9803,7 +9803,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 			_host.StartCoroutine(attacker.ConsumeItem());
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -9822,14 +9822,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Embargo > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.Embargo = 5;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} can't use items anymore!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -9857,7 +9857,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				this.battle.field.MagicRoom = 5;
 				_host.StartCoroutine(battle.Display(Game._INTL("It created a bizarre area in which Pokémon's held items lose their effects!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -10039,22 +10039,22 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				case Weather.HEAVYRAIN:
 					_host.StartCoroutine(battle.Display(Game._INTL("There is no relief from this heavy rain!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.HARSHSUN:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("The extremely harsh sunlight was not lessened at all!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.STRONGWINDS:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("The mysterious air current blows on regardless!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.SUNNYDAY:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -10065,7 +10065,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			_host.StartCoroutine(this.battle.CommonAnimation("Sunny", null, null));
 			_host.StartCoroutine(battle.Display(Game._INTL("The sunlight turned harsh!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -10084,22 +10084,22 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				case Weather.HEAVYRAIN:
 					_host.StartCoroutine(battle.Display(Game._INTL("There is no relief from this heavy rain!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.HARSHSUN:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("The extremely harsh sunlight was not lessened at all!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.STRONGWINDS:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("The mysterious air current blows on regardless!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.RAINDANCE:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				default: break;
 			}
@@ -10111,7 +10111,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			_host.StartCoroutine(this.battle.CommonAnimation("Rain", null, null));
 			_host.StartCoroutine(battle.Display(Game._INTL("It started to rain!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -10130,22 +10130,22 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				case Weather.HEAVYRAIN:
 					_host.StartCoroutine(battle.Display(Game._INTL("There is no relief from this heavy rain!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.HARSHSUN:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("The extremely harsh sunlight was not lessened at all!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.STRONGWINDS:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("The mysterious air current blows on regardless!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.SANDSTORM:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				default: break;
 			}
@@ -10157,7 +10157,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			_host.StartCoroutine(this.battle.CommonAnimation("Sandstorm", null, null));
 			_host.StartCoroutine(battle.Display(Game._INTL("A sandstorm brewed!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -10176,22 +10176,22 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				case Weather.HEAVYRAIN:
 					_host.StartCoroutine(battle.Display(Game._INTL("There is no relief from this heavy rain!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.HARSHSUN:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("The extremely harsh sunlight was not lessened at all!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.STRONGWINDS:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("The mysterious air current blows on regardless!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case Weather.HAIL:
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				default: break;
 			}
@@ -10203,7 +10203,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			_host.StartCoroutine(this.battle.CommonAnimation("Hail", null, null));
 			_host.StartCoroutine(battle.Display(Game._INTL("It started to hail!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -10221,7 +10221,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OpposingSide.Spikes >= 3)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -10235,7 +10235,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("Spikes were scattered all around your team's feet!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -10254,7 +10254,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OpposingSide.ToxicSpikes >= 2)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -10268,7 +10268,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("Poison spikes were scattered all around your team's feet!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -10286,7 +10286,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OpposingSide.StealthRock)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -10300,7 +10300,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("Pointed stones float in the air around your team!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -10354,13 +10354,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!this.battle.doublebattle || attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
 			{
 				attacker.effects.FirstPledge = 0;
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				yield break;
 			}
 			// Combined move's effect
 			if (attacker.effects.FirstPledge == Attack.Effects.x146)	// Fire Pledge
 			{
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
 					attacker.OpposingSide.SeaOfFire = 4;
@@ -10377,12 +10377,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 
 				attacker.effects.FirstPledge = 0;
-				result(ret);
+				result?.Invoke(ret);
 				yield break;
 			}
 			else if (attacker.effects.FirstPledge == Attack.Effects.x145)// Water Pledge
 			{
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
 					attacker.OpposingSide.Swamp = 4;
@@ -10399,7 +10399,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 
 				attacker.effects.FirstPledge = 0;
-				result(ret);
+				result?.Invoke(ret);
 				yield break;
 			}
 			// Set up partner for a combined move
@@ -10423,12 +10423,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.Partner.ToString(true))));
 				attacker.Partner.effects.FirstPledge = this.Effect;//(Attack.Effect)
 				attacker.Partner.effects.MoveNext = true;
-				result(0);
+				result?.Invoke(0);
 				yield break;
 
 			}
 			// Use the move on its own
-			int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti);
+			int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti);
 			yield break;
 		}
 
@@ -10494,13 +10494,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!this.battle.doublebattle || attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
 			{
 				attacker.effects.FirstPledge = 0;
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				yield break;
 			}
 			// Combined move's effect
 			if (attacker.effects.FirstPledge == Attack.Effects.x147)	// Grass Pledge
 			{
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
 
@@ -10518,12 +10518,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 
 				attacker.effects.FirstPledge = 0;
-				result(ret);
+				result?.Invoke(ret);
 				yield break;
 			}
 			else if (attacker.effects.FirstPledge == Attack.Effects.x145)	// Water Pledge
 			{
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
 					attacker.OwnSide.Rainbow = 4;
@@ -10540,7 +10540,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 
 				attacker.effects.FirstPledge = 0;
-				result(ret);
+				result?.Invoke(ret);
 				yield break;
 			}
 			// Set up partner for a combined move
@@ -10564,12 +10564,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.Partner.ToString(true))));
 				attacker.Partner.effects.FirstPledge = this.Effect;//(Attack.Effect)
 				attacker.Partner.effects.MoveNext = true;
-				result(0);
+				result?.Invoke(0);
 				yield break;
 
 			}
 			// Use the move on its own
-			int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti);
+			int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti);
 			yield break;
 		}
 
@@ -10634,13 +10634,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!this.battle.doublebattle || attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
 			{
 				attacker.effects.FirstPledge = 0;
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				yield break;
 			}
 			// Combined move's effect
 			if (attacker.effects.FirstPledge == Attack.Effects.x147)	// Grass Pledge
 			{
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
 
@@ -10658,12 +10658,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 
 				attacker.effects.FirstPledge = 0;
-				result(ret);
+				result?.Invoke(ret);
 				yield break;
 			}
 			else if (attacker.effects.FirstPledge == Attack.Effects.x146)	// Fire Pledge
 			{
-				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
 					attacker.OwnSide.Rainbow = 4;
@@ -10680,7 +10680,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 
 				attacker.effects.FirstPledge = 0;
-				result(ret);
+				result?.Invoke(ret);
 				yield break;
 			}
 			// Set up partner for a combined move
@@ -10703,11 +10703,11 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} is waiting for {2}'s move...", attacker.ToString(), attacker.Partner.ToString(true))));
 				attacker.Partner.effects.FirstPledge = this.Effect;//(Attack.Effect)
 				attacker.Partner.effects.MoveNext = true;
-				result(0);
+				result?.Invoke(0);
 				yield break;
 			}
 			// Use the move on its own
-			int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti);
+			int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti);
 			yield break;
 		}
 
@@ -10733,7 +10733,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				if (this.battle.OwnedByPlayer(attacker.Index))
@@ -10744,7 +10744,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				_host.StartCoroutine(battle.Display(Game._INTL("Coins were scattered everywhere!")));
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -10765,7 +10765,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (attacker.OpposingSide.Reflect > 0)
 			{
 				attacker.OpposingSide.Reflect = 0;
@@ -10790,7 +10790,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(battle.Display(Game._INTL("Your team's Light Screen wore off!")));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 
@@ -10839,14 +10839,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.Substitute > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} already has a substitute!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			int sublife = (int)Math.Max(Math.Floor(attacker.TotalHP / 4f), 1);
 			if (attacker.HP <= sublife)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("It was too weak to make a substitute!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(attacker.ReduceHP(sublife, false, false));
@@ -10857,7 +10857,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.MultiTurnAttack = 0;
 			attacker.effects.Substitute = sublife;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} put in a substitute!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -10928,7 +10928,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 			}
-			result(failed ? -1 : 0);
+			result?.Invoke(failed ? -1 : 0);
 			yield break;
 		}
 	}
@@ -10953,13 +10953,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					opponent.SetPP(i, (byte)(i.PP - reduction));
 
 					_host.StartCoroutine(battle.Display(Game._INTL("It reduced the PP of {1}'s {2} by {3}!", opponent.ToString(true), Kernal.MoveData[i.id].Name, ((int)reduction).ToString())));
-					result(0);
+					result?.Invoke(0);
 					yield break;
 				}
 			}
 
 			_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-			result(-1);
+			result?.Invoke(-1);
 			yield break;
 		}
 	}
@@ -10978,14 +10978,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			   (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.Nightmare = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} began having a nightmare!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11064,13 +11064,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.FutureSight > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (this.battle.futuresight)
 			{
 				// Attack hits
-				int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti);
+				int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti);
 				yield break;
 
 			}
@@ -11091,7 +11091,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} chose Doom Desire as its destiny!", attacker.ToString())));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 
@@ -11121,7 +11121,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.Stockpile >= 3)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} can't stockpile any more!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -11144,7 +11144,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				attacker.effects.StockpileSpDef += 1;
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11228,7 +11228,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				case 0:
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed to swallow a thing!")));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				case 1:
 					hpgain = (int)Math.Floor(attacker.TotalHP / 4f); break;
@@ -11243,7 +11243,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   attacker.effects.StockpileSpDef == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -11281,7 +11281,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.StockpileDef = 0;
 			attacker.effects.StockpileSpDef = 0;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stockpiled effect wore off!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11336,7 +11336,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!this.battle.doublebattle)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -11347,7 +11347,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				attacker.effects.FollowMe = attacker.Partner.effects.FollowMe + 1;
 			}
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} became the center of attention!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11366,7 +11366,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (this.battle.field.Gravity > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -11397,7 +11397,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 
 			_host.StartCoroutine(battle.Display(Game._INTL("Gravity intensified!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11422,14 +11422,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			   attacker.effects.MagnetRise > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			attacker.effects.MagnetRise = 5;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} levitated with electromagnetism!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11454,14 +11454,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			   opponent.effects.Telekinesis > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.Telekinesis = 3;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} was hurled into the air!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11499,7 +11499,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 &&
 				!opponent.damagestate.Substitute &&
 				!opponent.effects.Roost)
@@ -11523,7 +11523,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 				if (showmsg) battle.Display(Game._INTL("{1} fell straight down!", opponent.ToString()));
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -11553,7 +11553,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			opponent.effects.MoveNext = true;
 			opponent.effects.Quash = false;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} took the kind offer!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11583,7 +11583,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			opponent.effects.Quash = true;
 			opponent.effects.MoveNext = false;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s move was postponed!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11611,7 +11611,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				this.battle.field.TrickRoom = 5;
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} twisted the dimensions!", attacker.ToString())));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11635,7 +11635,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   attacker.Partner.isFainted())
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -11837,7 +11837,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			opponent.Update(true);
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} and {2} switched places!", opponent.ToString(), attacker.ToString(true))));
-			result(0);
+			result?.Invoke(0);
 			yield break;//ToDo: Not sure what to return here, so i added null/0
 		}
 	}
@@ -11879,10 +11879,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			   !opponent.HasType(attacker.effects.Type3))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} was unaffected!", opponent.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti);
+			int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti);
 			yield break;
 		}
 	}
@@ -11910,7 +11910,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				this.battle.field.WonderRoom = 5;
 				_host.StartCoroutine(battle.Display(Game._INTL("It created a bizarre area in which the Defense and Sp. Def stats are swapped!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11955,11 +11955,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			   attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -11977,7 +11977,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			_host.StartCoroutine(battle.Display(Game._INTL("Congratulations, {1}!", this.battle.GetOwner(attacker.Index).name)));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12053,10 +12053,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!didsomething)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12075,13 +12075,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!this.battle.doublebattle || opponent.Species == Pokemons.NONE || !retb)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(attacker is IBattlerEffectIE a) _host.StartCoroutine(a.IncreaseStat(Stats.SPDEF, 1, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 	}
@@ -12102,11 +12102,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.ATTACK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.ATTACK, 1, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 	}
@@ -12126,7 +12126,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s attack missed!", attacker.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent is IBattlerEffectIE b &&
@@ -12134,13 +12134,13 @@ namespace PokemonUnity.Interface.UnityEngine
 				b.TooLow(Stats.SPATK))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any lower!", opponent.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.OwnSide.Mist > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} is protected by Mist!", opponent.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (!attacker.hasMoldBreaker())
@@ -12150,7 +12150,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} prevents stat loss!", opponent.ToString(),
 					   Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -12173,7 +12173,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(b1.ReduceStat(Stats.SPATK, 1, attacker, false, this, showanim, result:value=>retb=value));
 				if (retb) { ret = 0; showanim = false; }
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -12225,11 +12225,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPATK, 1, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 	}
@@ -12244,13 +12244,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result(reti); yield break; }
-			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
-			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result(-1); yield break; } }
+			if (IsDamaging()) { int reti = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>reti=value)); result?.Invoke(reti); yield break; }
+			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
+			if (opponent is IBattlerEffectIE b) { bool retb = false; _host.StartCoroutine(b.CanReduceStatStage(Stats.SPATK, attacker, true, this, result:value=>retb=value)); if (!retb) { result?.Invoke(-1); yield break; } }
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			bool ret = false; if(opponent is IBattlerEffectIE o) _host.StartCoroutine(o.ReduceStat(Stats.SPATK, 2, attacker, false, this, result:value=>ret=value));
-			result(ret ? 0 : -1);
+			result?.Invoke(ret ? 0 : -1);
 			yield break;
 		}
 
@@ -12309,10 +12309,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!didsomething)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12348,10 +12348,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!didsomething)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12406,10 +12406,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!didsomething)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12436,7 +12436,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!nonzero)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -12446,7 +12446,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				opponent.stages[(byte)i] *= -1;
 			}
 			_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats were reversed!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12466,7 +12466,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			   opponent.Ability == Abilities.MULTITYPE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -12475,7 +12475,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			string typename = Game._INTL(Types.GHOST.ToString(TextScripts.Name));
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} transformed into the {2} type!", opponent.ToString(), typename)));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12493,21 +12493,21 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
-			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
+			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
 			if (opponent.effects.LeechSeed >= 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} evaded the attack!", opponent.ToString())));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if (opponent.HasType(Types.GRASS) ||
 			   opponent.Ability == Abilities.MULTITYPE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
@@ -12516,7 +12516,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			string typename = Game._INTL(Types.GRASS.ToString(TextScripts.Name));
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} transformed into the {2} type!", opponent.ToString(), typename)));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12559,11 +12559,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result(-1); yield break; }
+			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
 			if (opponent.effects.Electrify)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			if ((int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move
@@ -12572,14 +12572,14 @@ namespace PokemonUnity.Interface.UnityEngine
 				opponent.hasMovedThisRound())
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
 			opponent.effects.Electrify = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} was electrified!", opponent.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12608,14 +12608,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!unmoved || this.battle.field.IonDeluge)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			this.battle.field.IonDeluge = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("The Ion Deluge started!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12649,14 +12649,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.effects.Powder)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			opponent.effects.Powder = true;
 
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} is covered in powder!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12680,7 +12680,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} intends to flip up a mat and block incoming attacks!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12698,7 +12698,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OwnSide.CraftyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			bool unmoved = false;
@@ -12714,7 +12714,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!unmoved)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -12728,7 +12728,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("Crafty Shield protected the opposing team!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12747,7 +12747,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.KingsShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			List<Attack.Effects> ratesharers = new List<Attack.Effects> {
@@ -12778,7 +12778,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				attacker.effects.ProtectRate = 1;
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -12786,7 +12786,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.KingsShield = true;
 			attacker.effects.ProtectRate *= 2;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} protected itself!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12805,7 +12805,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.SpikyShield)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			List<Attack.Effects> ratesharers = new List<Attack.Effects> {
@@ -12836,7 +12836,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				attacker.effects.ProtectRate = 1;
 
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -12844,7 +12844,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.effects.SpikyShield = true;
 			attacker.effects.ProtectRate *= 2;
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} protected itself!", attacker.ToString())));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12886,14 +12886,14 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (ret > 0)
 			{
 				opponent.effects.ProtectNegation = true;
 				opponent.OwnSide.CraftyShield = false;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 
@@ -12939,7 +12939,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} became fully charged due to its Power Herb!", attacker.ToString())));
 				_host.StartCoroutine(attacker.ConsumeItem());
 			}
-			if (attacker.effects.TwoTurnAttack > 0) { result(0); yield break; }
+			if (attacker.effects.TwoTurnAttack > 0) { result?.Invoke(0); yield break; }
 			if (attacker is IBattlerEffectIE b)
 			{
 				bool reta = false; bool retb = false; bool retc = false;
@@ -12949,7 +12949,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (!reta && !retb && !retc)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s stats won't go any higher!", attacker.ToString())));
-					result(-1);
+					result?.Invoke(-1);
 					yield break;
 				}
 			}
@@ -12974,7 +12974,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (retb) _host.StartCoroutine(b2.IncreaseStat(Stats.SPEED, 2, attacker, false, this, showanim));
 				showanim = false;
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -12994,7 +12994,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				int hpgain = (int)Math.Round(opponent.damagestate.HPLost * 3 / 4f);
@@ -13011,7 +13011,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} had its energy drained!", opponent.ToString())));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -13027,7 +13027,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 && opponent.isFainted())
 			{
 				if (attacker is IBattlerEffectIE b)
@@ -13036,7 +13036,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (retb) _host.StartCoroutine(b.IncreaseStat(Stats.ATTACK, 2, attacker, false, this));
 				}
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -13074,7 +13074,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				attacker.effects.Uturn = true; ret = 0;
 			}
-			result(ret);
+			result?.Invoke(ret);
 			yield break;
 		}
 	}
@@ -13093,14 +13093,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (this.battle.field.FairyLock > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			this.battle.field.FairyLock = 2;
 			_host.StartCoroutine(battle.Display(Game._INTL("No one will be able to run away during the next turn!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -13118,7 +13118,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.OpposingSide.StickyWeb)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -13132,7 +13132,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("A sticky web has been laid out beneath your team's feet!")));
 			}
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -13152,7 +13152,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (this.battle.field.ElectricTerrain > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -13161,7 +13161,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			this.battle.field.MistyTerrain = 0;
 			this.battle.field.ElectricTerrain = 5;
 			_host.StartCoroutine(battle.Display(Game._INTL("An electric current runs across the battlefield!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -13181,7 +13181,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (this.battle.field.GrassyTerrain > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -13190,7 +13190,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			this.battle.field.MistyTerrain = 0;
 			this.battle.field.GrassyTerrain = 5;
 			_host.StartCoroutine(battle.Display(Game._INTL("Grass grew to cover the battlefield!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -13210,7 +13210,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (this.battle.field.MistyTerrain > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
@@ -13219,7 +13219,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			this.battle.field.GrassyTerrain = 0;
 			this.battle.field.MistyTerrain = 5;
 			_host.StartCoroutine(battle.Display(Game._INTL("Mist swirled about the battlefield!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
@@ -13237,14 +13237,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (this.battle.IsOpposing(attacker.Index) || this.battle.doublemoney)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
-				result(-1);
+				result?.Invoke(-1);
 				yield break;
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation));
 
 			this.battle.doublemoney = true;
 			_host.StartCoroutine(battle.Display(Game._INTL("Everyone is caught up in the happy atmosphere!")));
-			result(0);
+			result?.Invoke(0);
 			yield break;
 		}
 	}
