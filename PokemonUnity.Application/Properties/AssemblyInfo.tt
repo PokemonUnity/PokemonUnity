@@ -14,7 +14,7 @@
 		revision = Convert.ToInt32(matches[0].Groups["revision"].Value);
 		if( this.Host.ResolveParameterValue("-","-","BuildConfiguration") == "Release" )
 			revision++;
-}
+	}
 #>
 using System.Reflection;
 using System.Runtime.CompilerServices;

@@ -635,12 +635,12 @@ namespace PokemonEssentials.Interface
 //}
 
 	public interface IFileTest {
-		string[] Image_ext { get; } //= ['.bmp', '.png', '.jpg', '.jpeg', '.gif'];
-		string[] Audio_ext { get; } //= ['.mp3', '.mid', '.midi', '.ogg', '.wav', '.wma'];
+		string[] Image_ext { get; } //= new string[] { '.bmp', '.png', '.jpg', '.jpeg', '.gif' };
+		string[] Audio_ext { get; } //= new string[] { '.mp3', '.mid', '.midi', '.ogg', '.wav', '.wma' };
 
 		bool audio_exist(string filename);
 
-		string image_exist(string filename);
+		bool image_exist(string filename);
 	}
 
 // ##########

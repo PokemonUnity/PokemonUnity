@@ -163,6 +163,7 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Pokemon\Pokemon.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Pokemon\Pokemon.Effect.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Pokemon\Pokemon.Shadow.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\FileTest.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GameSystem.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\InputManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Intro\IntroScene.cs" />
