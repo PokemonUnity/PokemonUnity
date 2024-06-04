@@ -1056,7 +1056,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
+						opponent.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -1064,7 +1064,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(), Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
+						opponent.Partner.ToString(), Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -1125,8 +1125,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (attacker.Status != Status.BURN &&
-			   attacker.Status != Status.POISON &&
-			   attacker.Status != Status.PARALYSIS)
+				attacker.Status != Status.POISON &&
+				attacker.Status != Status.PARALYSIS)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -1183,7 +1183,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				activepkmn.Add(i.pokemonIndex);
 
 				if (Core.USENEWBATTLEMECHANICS && i.Index != attacker.Index &&
-				   TypeImmunityByAbility(GetType(this.type, attacker, i), attacker, i)) continue; //next
+					TypeImmunityByAbility(GetType(this.type, attacker, i), attacker, i)) continue; //next
 				switch (i.Status)
 				{
 					case Status.PARALYSIS:
@@ -1786,7 +1786,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			bool showanim = true;
 			byte increment = 1;
 			if (this.battle.Weather == Weather.SUNNYDAY ||
-			   this.battle.Weather == Weather.HARSHSUN)
+				this.battle.Weather == Weather.HARSHSUN)
 			{
 				increment = 2;
 
@@ -2349,7 +2349,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.Index != opponent.Index)
 			{
 				if ((opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
-				   opponent.OwnSide.CraftyShield)
+					opponent.OwnSide.CraftyShield)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 					result?.Invoke(-1);
@@ -2359,7 +2359,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			List<Stats> array = new List<Stats>();
 			foreach (var i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
+					Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
 				bool retb = false; if (opponent is IBattlerEffectIE b) _host.StartCoroutine(b.CanIncreaseStatStage(i, attacker, false, this, result:value=>retb=value)); if(retb) array.Add(i);
 			}
@@ -2801,7 +2801,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public int ModifyDamage(int damagemult, IBattler attacker, IBattler opponent)
 		{
 			if (id == Moves.BULLDOZE &&
-			   this.battle.field.GrassyTerrain > 0)
+				this.battle.field.GrassyTerrain > 0)
 			{
 				return (int)Math.Round(damagemult / 2.0f);
 			}
@@ -3037,10 +3037,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!attacker.hasMoldBreaker())
 			{
 				if (opponent.hasWorkingAbility(Abilities.CLEAR_BODY) ||
-				   opponent.hasWorkingAbility(Abilities.WHITE_SMOKE))
+					opponent.hasWorkingAbility(Abilities.WHITE_SMOKE))
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} prevents stat loss!", opponent.ToString(),
-					   Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
+						Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -3192,7 +3192,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.OBLIVIOUS))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} prevents romance!", opponent.ToString(),
-				 Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
+					Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
 				result?.Invoke(-1);
 				yield break;
 			}
@@ -3382,7 +3382,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 			foreach (var i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
+					Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
 				//attacker.stages[(byte)i],opponent.stages[(byte)i] = opponent.stages[(byte)i],attacker.stages[(byte)i];
 				int a = attacker.stages[(byte)i];
@@ -3415,7 +3415,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 			foreach (var i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
+					Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
 				attacker.stages[(byte)i] = opponent.stages[(byte)i];
 			}
@@ -3627,9 +3627,9 @@ namespace PokemonUnity.Interface.UnityEngine
 				Attack.Effects.x054    // Metronome
 			};
 			if (attacker.effects.Transform ||
-			   opponent.lastMoveUsed <= 0 ||
-			   Kernal.MoveData[(Moves)opponent.lastMoveUsed].Type == Types.SHADOW ||
-			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Effect))
+				opponent.lastMoveUsed <= 0 ||
+				Kernal.MoveData[(Moves)opponent.lastMoveUsed].Type == Types.SHADOW ||
+				blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -3684,9 +3684,9 @@ namespace PokemonUnity.Interface.UnityEngine
 				Attack.Effects.x060    // Sketch
 			};
 			if (attacker.effects.Transform ||
-			   opponent.lastMoveUsedSketch <= 0 ||
-			   Kernal.MoveData[(Moves)opponent.lastMoveUsedSketch].Type == Types.SHADOW ||
-			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsedSketch].Effect))
+				opponent.lastMoveUsedSketch <= 0 ||
+				Kernal.MoveData[(Moves)opponent.lastMoveUsedSketch].Type == Types.SHADOW ||
+				blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsedSketch].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -3806,7 +3806,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			if (opponent.lastMoveUsed <= 0
 				//|| Types.isPseudoType(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Type)
-			   )
+				)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -3949,9 +3949,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 			if (opponent.Type1 == Types.WATER &&
-			   opponent.Type2 == Types.WATER &&
-			   (opponent.effects.Type3 < 0 ||
-			   opponent.effects.Type3 == Types.WATER))
+				opponent.Type2 == Types.WATER &&
+				(opponent.effects.Type3 < 0 ||
+				opponent.effects.Type3 == Types.WATER))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -3986,11 +3986,11 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield break;
 			}
 			if (attacker.HasType(opponent.Type1) &&
-			   attacker.HasType(opponent.Type2) &&
-			   attacker.HasType(opponent.effects.Type3) &&
-			   opponent.HasType(attacker.Type1) &&
-			   opponent.HasType(attacker.Type2) &&
-			   opponent.HasType(attacker.effects.Type3))
+				attacker.HasType(opponent.Type2) &&
+				attacker.HasType(opponent.effects.Type3) &&
+				opponent.HasType(attacker.Type1) &&
+				opponent.HasType(attacker.Type2) &&
+				opponent.HasType(attacker.effects.Type3))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -4025,9 +4025,9 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield break;
 			}
 			if (opponent.Ability == Abilities.MULTITYPE ||
-			   opponent.Ability == Abilities.SIMPLE ||
-			   opponent.Ability == Abilities.STANCE_CHANGE ||
-			   opponent.Ability == Abilities.TRUANT)
+				opponent.Ability == Abilities.SIMPLE ||
+				opponent.Ability == Abilities.STANCE_CHANGE ||
+				opponent.Ability == Abilities.TRUANT)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -4070,9 +4070,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			if (TypeImmunityByAbility(GetType(this.type, attacker, opponent), attacker, opponent)) { result?.Invoke(-1); yield break; }
 			if (opponent.Ability == Abilities.MULTITYPE ||
-			   opponent.Ability == Abilities.INSOMNIA ||
-			   opponent.Ability == Abilities.STANCE_CHANGE ||
-			   opponent.Ability == Abilities.TRUANT)
+				opponent.Ability == Abilities.INSOMNIA ||
+				opponent.Ability == Abilities.STANCE_CHANGE ||
+				opponent.Ability == Abilities.TRUANT)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -4114,18 +4114,18 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield break;
 			}
 			if (opponent.Ability == 0 ||
-			   attacker.Ability == opponent.Ability ||
-			   attacker.Ability == Abilities.MULTITYPE ||
-			   attacker.Ability == Abilities.STANCE_CHANGE ||
-			   opponent.Ability == Abilities.FLOWER_GIFT ||
-			   opponent.Ability == Abilities.FORECAST ||
-			   opponent.Ability == Abilities.ILLUSION ||
-			   opponent.Ability == Abilities.IMPOSTER ||
-			   opponent.Ability == Abilities.MULTITYPE ||
-			   opponent.Ability == Abilities.STANCE_CHANGE ||
-			   opponent.Ability == Abilities.TRACE ||
-			   opponent.Ability == Abilities.WONDER_GUARD ||
-			   opponent.Ability == Abilities.ZEN_MODE)
+				attacker.Ability == opponent.Ability ||
+				attacker.Ability == Abilities.MULTITYPE ||
+				attacker.Ability == Abilities.STANCE_CHANGE ||
+				opponent.Ability == Abilities.FLOWER_GIFT ||
+				opponent.Ability == Abilities.FORECAST ||
+				opponent.Ability == Abilities.ILLUSION ||
+				opponent.Ability == Abilities.IMPOSTER ||
+				opponent.Ability == Abilities.MULTITYPE ||
+				opponent.Ability == Abilities.STANCE_CHANGE ||
+				opponent.Ability == Abilities.TRACE ||
+				opponent.Ability == Abilities.WONDER_GUARD ||
+				opponent.Ability == Abilities.ZEN_MODE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -4174,22 +4174,22 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield break;
 			}
 			if (attacker.Ability == 0 ||
-			   attacker.Ability == opponent.Ability ||
-			   opponent.Ability == Abilities.FLOWER_GIFT ||
-			   opponent.Ability == Abilities.IMPOSTER ||
-			   opponent.Ability == Abilities.MULTITYPE ||
-			   opponent.Ability == Abilities.STANCE_CHANGE ||
-			   opponent.Ability == Abilities.TRACE ||
-			   opponent.Ability == Abilities.TRUANT ||
-			   opponent.Ability == Abilities.ZEN_MODE ||
-			   attacker.Ability == Abilities.FLOWER_GIFT ||
-			   attacker.Ability == Abilities.FORECAST ||
-			   attacker.Ability == Abilities.ILLUSION ||
-			   attacker.Ability == Abilities.IMPOSTER ||
-			   attacker.Ability == Abilities.MULTITYPE ||
-			   attacker.Ability == Abilities.STANCE_CHANGE ||
-			   attacker.Ability == Abilities.TRACE ||
-			   attacker.Ability == Abilities.ZEN_MODE)
+				attacker.Ability == opponent.Ability ||
+				opponent.Ability == Abilities.FLOWER_GIFT ||
+				opponent.Ability == Abilities.IMPOSTER ||
+				opponent.Ability == Abilities.MULTITYPE ||
+				opponent.Ability == Abilities.STANCE_CHANGE ||
+				opponent.Ability == Abilities.TRACE ||
+				opponent.Ability == Abilities.TRUANT ||
+				opponent.Ability == Abilities.ZEN_MODE ||
+				attacker.Ability == Abilities.FLOWER_GIFT ||
+				attacker.Ability == Abilities.FORECAST ||
+				attacker.Ability == Abilities.ILLUSION ||
+				attacker.Ability == Abilities.IMPOSTER ||
+				attacker.Ability == Abilities.MULTITYPE ||
+				attacker.Ability == Abilities.STANCE_CHANGE ||
+				attacker.Ability == Abilities.TRACE ||
+				attacker.Ability == Abilities.ZEN_MODE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -4226,15 +4226,15 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if ((attacker.Ability == 0 && opponent.Ability == 0) ||
-			   (attacker.Ability == opponent.Ability && !Core.USENEWBATTLEMECHANICS) ||
-			   attacker.Ability == Abilities.ILLUSION ||
-			   opponent.Ability == Abilities.ILLUSION ||
-			   attacker.Ability == Abilities.MULTITYPE ||
-			   opponent.Ability == Abilities.MULTITYPE ||
-			   attacker.Ability == Abilities.STANCE_CHANGE ||
-			   opponent.Ability == Abilities.STANCE_CHANGE ||
-			   attacker.Ability == Abilities.WONDER_GUARD ||
-			   opponent.Ability == Abilities.WONDER_GUARD)
+				(attacker.Ability == opponent.Ability && !Core.USENEWBATTLEMECHANICS) ||
+				attacker.Ability == Abilities.ILLUSION ||
+				opponent.Ability == Abilities.ILLUSION ||
+				attacker.Ability == Abilities.MULTITYPE ||
+				opponent.Ability == Abilities.MULTITYPE ||
+				attacker.Ability == Abilities.STANCE_CHANGE ||
+				opponent.Ability == Abilities.STANCE_CHANGE ||
+				attacker.Ability == Abilities.WONDER_GUARD ||
+				opponent.Ability == Abilities.WONDER_GUARD)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -4247,8 +4247,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			opponent.Ability = tmp;
 
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} swapped its {2} Ability with its target's {3} Ability!",
-			   attacker.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name)),
-			   Game._INTL(attacker.Ability.ToString(TextScripts.Name)))));
+				attacker.ToString(), Game._INTL(opponent.Ability.ToString(TextScripts.Name)),
+				Game._INTL(attacker.Ability.ToString(TextScripts.Name)))));
 			attacker.AbilitiesOnSwitchIn(true);
 			opponent.AbilitiesOnSwitchIn(true);
 			result?.Invoke(0);
@@ -4273,7 +4273,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield break;
 			}
 			if (opponent.Ability == Abilities.MULTITYPE ||
-			   opponent.Ability == Abilities.STANCE_CHANGE)
+				opponent.Ability == Abilities.STANCE_CHANGE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -4311,20 +4311,20 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 
 			List<Attack.Effects> blacklist = new List<Attack.Effects>{
-			   Attack.Effects.x09C,   // Fly
-			   Attack.Effects.x101,   // Dig
-			   Attack.Effects.x100,   // Dive
-			   Attack.Effects.x108,   // Bounce
-			   //Attack.Effects.x111, // Shadow Force
-			   Attack.Effects.x138,   // Sky Drop
-			   Attack.Effects.x111    // Phantom Force
+				Attack.Effects.x09C,   // Fly
+				Attack.Effects.x101,   // Dig
+				Attack.Effects.x100,   // Dive
+				Attack.Effects.x108,   // Bounce
+				//Attack.Effects.x111, // Shadow Force
+				Attack.Effects.x138,   // Sky Drop
+				Attack.Effects.x111    // Phantom Force
 			};
 			if (attacker.effects.Transform ||
-			   opponent.effects.Transform ||
-			   opponent.effects.Illusion.Species != Pokemons.NONE ||
-			   (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
-			   opponent.effects.SkyDrop ||
-			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect))
+				opponent.effects.Transform ||
+				opponent.effects.Illusion.Species != Pokemons.NONE ||
+				(opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
+				opponent.effects.SkyDrop ||
+				blacklist.Contains(Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -4355,7 +4355,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			attacker.SPD = opponent.SPD;
 			foreach (var i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
+					Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
 				attacker.stages[(byte)i] = opponent.stages[(byte)i];
 			}
@@ -4523,7 +4523,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override void AddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.effects.CounterTarget >= 0 &&
-			   attacker.IsOpposing(attacker.effects.CounterTarget))
+				attacker.IsOpposing(attacker.effects.CounterTarget))
 			{
 				if (!attacker.AddTarget(targets, this.battle.battlers[attacker.effects.CounterTarget]))
 				{
@@ -4557,7 +4557,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override void AddTarget(IList<IBattler> targets, IBattler attacker)
 		{
 			if (attacker.effects.MirrorCoatTarget >= 0 &&
-			   attacker.IsOpposing(attacker.effects.MirrorCoatTarget))
+				attacker.IsOpposing(attacker.effects.MirrorCoatTarget))
 			{
 				if (!attacker.AddTarget(targets, this.battle.battlers[attacker.effects.MirrorCoatTarget]))
 				{
@@ -4633,7 +4633,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (opponent.damagestate.CalcDamage > 0)
 			{
 				if (opponent.Partner.IsNotNullOrNone() && !opponent.Partner.isFainted() &&
-				   !opponent.Partner.hasWorkingAbility(Abilities.MAGIC_GUARD))
+					!opponent.Partner.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
 					_host.StartCoroutine(opponent.Partner.ReduceHP((int)Math.Floor(opponent.Partner.TotalHP / 16f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("The bursting flame hit {1}!", opponent.Partner.ToString(true))));
@@ -4699,7 +4699,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x09C || // Fly
 				Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x108 || // Bounce
 				Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x138 || // Sky Drop
-			   opponent.effects.SkyDrop)
+				opponent.effects.SkyDrop)
 			{
 				return basedmg * 2;
 			}
@@ -4721,7 +4721,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x09C || // Fly
 				Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x108 || // Bounce
 				Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x138 || // Sky Drop
-			   opponent.effects.SkyDrop)
+				opponent.effects.SkyDrop)
 			{
 				return basedmg * 2;
 			}
@@ -4830,7 +4830,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int BaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
 			if (opponent.Status == Status.POISON &&
-			   (opponent.effects.Substitute == 0 || ignoresSubstitute(attacker)))
+				(opponent.effects.Substitute == 0 || ignoresSubstitute(attacker)))
 			{
 				return basedmg * 2;
 			}
@@ -4849,7 +4849,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int BaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
 			if (opponent.Status == Status.PARALYSIS &&
-			   (opponent.effects.Substitute == 0 || ignoresSubstitute(attacker)))
+				(opponent.effects.Substitute == 0 || ignoresSubstitute(attacker)))
 			{
 				return basedmg * 2;
 			}
@@ -4860,7 +4860,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator EffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
 		{
 			if (!opponent.isFainted() && opponent.damagestate.CalcDamage > 0 &&
-			   !opponent.damagestate.Substitute && opponent.Status == Status.PARALYSIS && opponent is IBattlerEffectIE b)
+				!opponent.damagestate.Substitute && opponent.Status == Status.PARALYSIS && opponent is IBattlerEffectIE b)
 			{
 				_host.StartCoroutine(b.CureStatus());
 			}
@@ -4878,7 +4878,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int BaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
 			if (opponent.Status == Status.SLEEP &&
-			   (opponent.effects.Substitute == 0 || ignoresSubstitute(attacker)))
+				(opponent.effects.Substitute == 0 || ignoresSubstitute(attacker)))
 			{
 				return basedmg * 2;
 			}
@@ -4889,7 +4889,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator EffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
 		{
 			if (!opponent.isFainted() && opponent.damagestate.CalcDamage > 0 &&
-			   !opponent.damagestate.Substitute && opponent.Status == Status.SLEEP && opponent is IBattlerEffectIE b)
+				!opponent.damagestate.Substitute && opponent.Status == Status.SLEEP && opponent is IBattlerEffectIE b)
 			{
 				_host.StartCoroutine(b.CureStatus());
 			}
@@ -4907,8 +4907,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int BaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
 			if (attacker.Status == Status.POISON ||
-			   attacker.Status == Status.BURN ||
-			   attacker.Status == Status.PARALYSIS)
+				attacker.Status == Status.BURN ||
+				attacker.Status == Status.PARALYSIS)
 			{
 				return basedmg * 2;
 			}
@@ -4926,7 +4926,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int BaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
 			if (opponent.Status > 0 &&
-			   (opponent.effects.Substitute == 0 || ignoresSubstitute(attacker)))
+				(opponent.effects.Substitute == 0 || ignoresSubstitute(attacker)))
 			{
 				return basedmg * 2;
 			}
@@ -5042,7 +5042,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int BaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
 			if ((int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move
-			   opponent.hasMovedThisRound())	// Used a move already
+				opponent.hasMovedThisRound())	// Used a move already
 			{
 				return basedmg * 2;
 			}
@@ -5060,7 +5060,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override int BaseDamage(int basedmg, IBattler attacker, IBattler opponent)
 		{
 			if (attacker.OwnSide.LastRoundFainted >= 0 &&
-			   attacker.OwnSide.LastRoundFainted == this.battle.turncount - 1)
+				attacker.OwnSide.LastRoundFainted == this.battle.turncount - 1)
 			{
 				return basedmg * 2;
 			}
@@ -5230,7 +5230,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			int mult = 1;
 			foreach (Stats i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
+					Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
 				if (attacker.stages[(byte)i] > 0) mult += attacker.stages[(byte)i];
 			}
@@ -5250,7 +5250,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			int mult = 3;
 			foreach (var i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-					  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
+						Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
 				if (opponent.stages[(byte)i] > 0) mult += opponent.stages[(byte)i];
 			}
@@ -5434,13 +5434,13 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			byte[] basedmg = new byte[] { 10, 30, 50, 70, 90, 110, 150 };
 			byte[] magnitudes = new byte[] {
-			   4,
-			   5,5,
-			   6,6,6,6,
-			   7,7,7,7,7,7,
-			   8,8,8,8,
-			   9,9,
-			   10
+				4,
+				5,5,
+				6,6,6,6,
+				7,7,7,7,7,7,
+				8,8,8,8,
+				9,9,
+				10
 			};
 			byte magni = magnitudes[this.battle.Random(magnitudes.Length)];
 			this.calcbasedmg = basedmg[magni - 4];
@@ -5476,11 +5476,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override bool OnStartUse(IBattler attacker)
 		{
 			if (Game.GameData is IItemCheck i && !i.IsBerry(attacker.Item) ||
-			   attacker.effects.Embargo > 0 ||
-			   this.battle.field.MagicRoom > 0 ||
-			   attacker.hasWorkingAbility(Abilities.KLUTZ) ||
-			   attacker.Opposing1.hasWorkingAbility(Abilities.UNNERVE) ||
-			   attacker.Opposing2.hasWorkingAbility(Abilities.UNNERVE))
+				attacker.effects.Embargo > 0 ||
+				this.battle.field.MagicRoom > 0 ||
+				attacker.hasWorkingAbility(Abilities.KLUTZ) ||
+				attacker.Opposing1.hasWorkingAbility(Abilities.UNNERVE) ||
+				attacker.Opposing2.hasWorkingAbility(Abilities.UNNERVE))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				return false;
@@ -5535,41 +5535,41 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			type = Types.NORMAL;
 			Dictionary<Items, Types> typearray = new Dictionary<Items, Types> {
-			   //:NORMAL =>
+				//:NORMAL =>
 							{ Items.CHILAN_BERRY, Types.NORMAL },
-			   //:FIRE	 =>
+				//:FIRE	 =>
 							{ Items.CHERI_BERRY, Types.FIRE },		{ Items.BLUK_BERRY, Types.FIRE },		{ Items.WATMEL_BERRY, Types.FIRE },		{ Items.OCCA_BERRY, Types.FIRE },
-			   //:WATER	 =>
+				//:WATER	 =>
 							{ Items.CHESTO_BERRY, Types.WATER },	{ Items.NANAB_BERRY, Types.WATER },		{ Items.DURIN_BERRY, Types.WATER },		{ Items.PASSHO_BERRY, Types.WATER },
-			   //:ELECTRIC =>
+				//:ELECTRIC =>
 							{ Items.PECHA_BERRY, Types.ELECTRIC },	{ Items.WEPEAR_BERRY, Types.ELECTRIC },	{ Items.BELUE_BERRY, Types.ELECTRIC },	{ Items.WACAN_BERRY, Types.ELECTRIC },
-			   //:GRASS	 =>
+				//:GRASS	 =>
 							{ Items.RAWST_BERRY, Types.GRASS },		{ Items.PINAP_BERRY, Types.GRASS },		{ Items.RINDO_BERRY, Types.GRASS },		{ Items.LIECHI_BERRY, Types.GRASS },
-			   //:ICE	 =>
+				//:ICE	 =>
 							{ Items.ASPEAR_BERRY, Types.ICE },		{ Items.POMEG_BERRY, Types.ICE },		{ Items.YACHE_BERRY, Types.ICE },		{ Items.GANLON_BERRY, Types.ICE },
-			   //:FIGHTING =>
+				//:FIGHTING =>
 							{ Items.LEPPA_BERRY, Types.FIGHTING },	{ Items.KELPSY_BERRY, Types.FIGHTING },	{ Items.CHOPLE_BERRY, Types.FIGHTING },	{ Items.SALAC_BERRY, Types.FIGHTING },
-			   //:POISON =>
+				//:POISON =>
 							{ Items.ORAN_BERRY, Types.POISON },		{ Items.QUALOT_BERRY, Types.POISON },	{ Items.KEBIA_BERRY, Types.POISON },	{ Items.PETAYA_BERRY, Types.POISON },
-			   //:GROUND =>
+				//:GROUND =>
 							{ Items.PERSIM_BERRY, Types.GROUND },	{ Items.HONDEW_BERRY, Types.GROUND },	{ Items.SHUCA_BERRY, Types.GROUND },	{ Items.APICOT_BERRY, Types.GROUND },
-			   //:FLYING =>
+				//:FLYING =>
 							{ Items.LUM_BERRY, Types.FLYING },		{ Items.GREPA_BERRY, Types.FLYING },	{ Items.COBA_BERRY, Types.FLYING },		{ Items.LANSAT_BERRY, Types.FLYING },
-			   //:PSYCHIC=>
+				//:PSYCHIC=>
 							{ Items.SITRUS_BERRY, Types.PSYCHIC },	{ Items.TAMATO_BERRY, Types.PSYCHIC },	{ Items.PAYAPA_BERRY, Types.PSYCHIC },	{ Items.STARF_BERRY, Types.PSYCHIC },
-			   //:BUG	 =>
+				//:BUG	 =>
 							{ Items.FIGY_BERRY, Types.BUG },		{ Items.CORNN_BERRY, Types.BUG },		{ Items.TANGA_BERRY, Types.BUG },		{ Items.ENIGMA_BERRY, Types.BUG },
-			   //:ROCK	 =>
+				//:ROCK	 =>
 							{ Items.WIKI_BERRY, Types.ROCK },		{ Items.MAGOST_BERRY, Types.ROCK },		{ Items.CHARTI_BERRY, Types.ROCK },		{ Items.MICLE_BERRY, Types.ROCK },
-			   //:GHOST	 =>
+				//:GHOST	 =>
 							{ Items.MAGO_BERRY, Types.GHOST },		{ Items.RABUTA_BERRY, Types.GHOST },	{ Items.KASIB_BERRY, Types.GHOST },		{ Items.CUSTAP_BERRY, Types.GHOST },
-			   //:DRAGON =>
+				//:DRAGON =>
 							{ Items.AGUAV_BERRY, Types.DRAGON },	{ Items.NOMEL_BERRY, Types.DRAGON },	{ Items.HABAN_BERRY, Types.DRAGON },	{ Items.JABOCA_BERRY, Types.DRAGON },
-			   //:DARK	 =>
+				//:DARK	 =>
 							{ Items.IAPAPA_BERRY, Types.DARK },		{ Items.SPELON_BERRY, Types.DARK },		{ Items.COLBUR_BERRY, Types.DARK },		{ Items.ROWAP_BERRY, Types.DARK },		{ Items.MARANGA_BERRY, Types.DARK },
-			   //:STEEL	 =>
+				//:STEEL	 =>
 							{ Items.RAZZ_BERRY, Types.STEEL },		{ Items.PAMTRE_BERRY, Types.STEEL },	{ Items.BABIRI_BERRY, Types.STEEL },
-			   //:FAIRY	 =>
+				//:FAIRY	 =>
 							{ Items.ROSELI_BERRY, Types.FAIRY },	{ Items.KEE_BERRY, Types.FAIRY }
 			};
 			foreach (Items i in typearray.Keys)
@@ -5707,9 +5707,9 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (!this.battle.doublebattle || opponent.isFainted() ||
-			   (int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move;
-			   opponent.hasMovedThisRound() ||
-			   opponent.effects.HelpingHand)
+				(int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move;
+				opponent.hasMovedThisRound() ||
+				opponent.effects.HelpingHand)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -6271,13 +6271,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (poke.Index == attacker.Index) continue; //next
 				if ((int)this.battle.choices[poke.Index].Action == 1 && // Chose a move
-				   !poke.hasMovedThisRound())
+					!poke.hasMovedThisRound())
 				{
 					unmoved = true; break;
 				}
 			}
 			if (!unmoved ||
-			   this.battle.Random(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate))
+				this.battle.Random(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate))
 			{
 				attacker.effects.ProtectRate = 1;
 
@@ -6329,14 +6329,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (poke.Index == attacker.Index) continue; //next
 				if ((int)this.battle.choices[poke.Index].Action == 1 && // Chose a move
-				   !poke.hasMovedThisRound())
+					!poke.hasMovedThisRound())
 				{
 					unmoved = true; break;
 				}
 			}
 			if (!unmoved ||
-			   (!Core.USENEWBATTLEMECHANICS &&
-			   this.battle.Random(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate)))
+				(!Core.USENEWBATTLEMECHANICS &&
+				this.battle.Random(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate)))
 			{
 				attacker.effects.ProtectRate = 1;
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
@@ -6394,14 +6394,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (poke.Index == attacker.Index) continue; //next
 				if ((int)this.battle.choices[poke.Index].Action == 1 && // Chose a move
-				   !poke.hasMovedThisRound())
+					!poke.hasMovedThisRound())
 				{
 					unmoved = true; break;
 				}
 			}
 			if (!unmoved ||
-			   (!Core.USENEWBATTLEMECHANICS &&
-			   this.battle.Random(65536) >= (int)Math.Floor(65536f / attacker.effects.ProtectRate)))
+				(!Core.USENEWBATTLEMECHANICS &&
+				this.battle.Random(65536) >= (int)Math.Floor(65536f / attacker.effects.ProtectRate)))
 			{
 				attacker.effects.ProtectRate = 1;
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
@@ -6458,8 +6458,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (opponent.lastMoveUsed <= 0 || //(
-			   !Kernal.MoveData[(Moves)attacker.lastMoveUsed].Flags.Mirror //& 0x10)==0
-			   ) // flag e: Copyable by Mirror Move
+				!Kernal.MoveData[(Moves)attacker.lastMoveUsed].Flags.Mirror //& 0x10)==0
+				) // flag e: Copyable by Mirror Move
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("The mirror move failed!")));
 				result?.Invoke(-1);
@@ -6482,32 +6482,32 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			List<Attack.Effects> blacklist = new List<Attack.Effects> {
-				Attack.Effects.x0FF,    // Struggle
-				Attack.Effects.x03A,    // Transform
-				Attack.Effects.x05A,    // Counter
-				Attack.Effects.x091,    // Mirror Coat
-				Attack.Effects.x0E4,    // Metal Burst
-				Attack.Effects.x0B1,    // Helping Hand
-				Attack.Effects.x070,    // Detect, Protect
-				Attack.Effects.x0E0,    // Feint
-				Attack.Effects.x00A,    // Mirror Move
-				Attack.Effects.x0F3,    // Copycat
-				Attack.Effects.x0C4,    // Snatch
-				Attack.Effects.x063,    // Destiny Bond
-				Attack.Effects.x075,    // Endure
-				Attack.Effects.x13A,    // Circle Throw, Dragon Tail
-				Attack.Effects.x06A,    // Covet, Thief
-				Attack.Effects.x0B2,    // Switcheroo, Trick
-				Attack.Effects.x144,    // Bestow
-				Attack.Effects.x0AB,    // Focus Punch
-				Attack.Effects.x0AD,    // Follow Me, Rage Powder
-				Attack.Effects.x153     // Belch
+				Attack.Effects.x0FF,	// Struggle
+				Attack.Effects.x03A,	// Transform
+				Attack.Effects.x05A,	// Counter
+				Attack.Effects.x091,	// Mirror Coat
+				Attack.Effects.x0E4,	// Metal Burst
+				Attack.Effects.x0B1,	// Helping Hand
+				Attack.Effects.x070,	// Detect, Protect
+				Attack.Effects.x0E0,	// Feint
+				Attack.Effects.x00A,	// Mirror Move
+				Attack.Effects.x0F3,	// Copycat
+				Attack.Effects.x0C4,	// Snatch
+				Attack.Effects.x063,	// Destiny Bond
+				Attack.Effects.x075,	// Endure
+				Attack.Effects.x13A,	// Circle Throw, Dragon Tail
+				Attack.Effects.x06A,	// Covet, Thief
+				Attack.Effects.x0B2,	// Switcheroo, Trick
+				Attack.Effects.x144,	// Bestow
+				Attack.Effects.x0AB,	// Focus Punch
+				Attack.Effects.x0AD,	// Follow Me, Rage Powder
+				Attack.Effects.x153		// Belch
 			};
 			if (Core.USENEWBATTLEMECHANICS)
 			{
 				blacklist.AddRange(new List<Attack.Effects> {
 					Attack.Effects.x01D,		// Roar, Whirlwind
-													// Two-turn attacks
+												// Two-turn attacks
 					Attack.Effects.x028,		// Razor Wind
 					Attack.Effects.x098,		// SolarBeam
 					Attack.Effects.x14C,		// Freeze Shock
@@ -6521,11 +6521,11 @@ namespace PokemonUnity.Interface.UnityEngine
 					//Attack.Effects.x111,		// Shadow Force
 					Attack.Effects.x138,		// Sky Drop
 					Attack.Effects.x111,		// Phantom Force
-					Attack.Effects.x16E		// Geomancy
+					Attack.Effects.x16E			// Geomancy
 				});
 			}
 			if (this.battle.lastMoveUsed <= 0 ||
-			   blacklist.Contains(Kernal.MoveData[(Moves)attacker.lastMoveUsed].Effect))
+				blacklist.Contains(Kernal.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -6548,22 +6548,22 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			List<Attack.Effects> blacklist = new List<Attack.Effects> {
-				Attack.Effects.x0FF,    // Struggle
-				Attack.Effects.x10C,    // Chatter
-				Attack.Effects.x05A,    // Counter
-				Attack.Effects.x091,    // Mirror Coat
-				Attack.Effects.x0E4,    // Metal Burst
-				Attack.Effects.x0F2,    // Me First
-				Attack.Effects.x06A,    // Covet, Thief
-				Attack.Effects.x0AB,    // Focus Punch
-				Attack.Effects.x153     // Belch
+				Attack.Effects.x0FF,	// Struggle
+				Attack.Effects.x10C,	// Chatter
+				Attack.Effects.x05A,	// Counter
+				Attack.Effects.x091,	// Mirror Coat
+				Attack.Effects.x0E4,	// Metal Burst
+				Attack.Effects.x0F2,	// Me First
+				Attack.Effects.x06A,	// Covet, Thief
+				Attack.Effects.x0AB,	// Focus Punch
+				Attack.Effects.x153		// Belch
 			};
 			IBattleMove oppmove = this.battle.choices[opponent.Index].Move;
 			if ((int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move
-			   opponent.hasMovedThisRound() ||
-			   oppmove.id == Moves.NONE || oppmove.id <= 0 ||
-			   oppmove.IsStatus ||
-			   blacklist.Contains(oppmove.Effect))
+				opponent.hasMovedThisRound() ||
+				oppmove.id == Moves.NONE || oppmove.id <= 0 ||
+				oppmove.IsStatus ||
+				blacklist.Contains(oppmove.Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -6968,7 +6968,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
+						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -6976,7 +6976,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
+						opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -7037,7 +7037,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
+						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -7045,7 +7045,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
+						opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -7081,8 +7081,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (opponent.effects.Taunt > 0 ||
-			   (Core.USENEWBATTLEMECHANICS &&
-			   !attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.OBLIVIOUS)))
+				(Core.USENEWBATTLEMECHANICS &&
+				!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.OBLIVIOUS)))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -7093,7 +7093,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
+						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -7101,7 +7101,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
+						opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -7137,7 +7137,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
+						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -7145,7 +7145,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
+						opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -7171,12 +7171,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			List<Attack.Effects> blacklist = new List<Attack.Effects> {
-				Attack.Effects.x0FF,    // Struggle
-				Attack.Effects.x053,    // Mimic
-				Attack.Effects.x060,    // Sketch
-				Attack.Effects.x03A,    // Transform
-				Attack.Effects.x00A,    // Mirror Move
-				Attack.Effects.x05B     // Encore
+				Attack.Effects.x0FF,	// Struggle
+				Attack.Effects.x053,	// Mimic
+				Attack.Effects.x060,	// Sketch
+				Attack.Effects.x03A,	// Transform
+				Attack.Effects.x00A,	// Mirror Move
+				Attack.Effects.x05B		// Encore
 			};
 			if (opponent.effects.Encore > 0)
 			{
@@ -7185,7 +7185,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield break;
 			}
 			if (opponent.lastMoveUsed <= 0 ||
-			   blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Effect))
+				blacklist.Contains(Kernal.MoveData[(Moves)opponent.lastMoveUsed].Effect))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -7196,7 +7196,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL))
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
+						opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -7204,7 +7204,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 
 					_host.StartCoroutine(battle.Display(Game._INTL("But it failed because of {1}'s {2}!",
-					   opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
+						opponent.Partner.ToString(),Game._INTL(opponent.Partner.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -7212,7 +7212,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			for (int i = 0; i < 4; i++)
 			{
 				if (opponent.lastMoveUsed == opponent.moves[i].id &&
-				   (opponent.moves[i].PP > 0 || opponent.moves[i].TotalPP == 0))
+					(opponent.moves[i].PP > 0 || opponent.moves[i].TotalPP == 0))
 				{
 					_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 
@@ -7472,7 +7472,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.effects.TwoTurnAttack == 0)
 			{
 				if (this.battle.Weather == Weather.SUNNYDAY ||
-				   this.battle.Weather == Weather.HARSHSUN)
+					this.battle.Weather == Weather.HARSHSUN)
 				{
 					this.immediate = true; this.sunny = true;
 				}
@@ -7488,8 +7488,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public int BaseDamageMultiplier(int damagemult, IBattler attacker, IBattler opponent)
 		{
 			if (this.battle.Weather != 0 &&
-			   this.battle.Weather != Weather.SUNNYDAY &&
-			   this.battle.Weather != Weather.HARSHSUN)
+				this.battle.Weather != Weather.SUNNYDAY &&
+				this.battle.Weather != Weather.HARSHSUN)
 			{
 				return (int)Math.Round(damagemult * 0.5f);
 			}
@@ -7990,8 +7990,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (opponent.HasType(Types.FLYING)) return 0;
 			if (!attacker.hasMoldBreaker() &&
-			   opponent.hasWorkingAbility(Abilities.LEVITATE) &&
-			   !opponent.effects.SmackDown) return 0;
+				opponent.hasWorkingAbility(Abilities.LEVITATE) &&
+				!opponent.effects.SmackDown) return 0;
 			return base.TypeModifier(type, attacker, opponent);
 		}
 	}
@@ -8009,7 +8009,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 && !opponent.isFainted() &&
-			   !opponent.damagestate.Substitute)
+				!opponent.damagestate.Substitute)
 			{
 				if (opponent.effects.MultiTurn == 0)
 				{
@@ -8076,7 +8076,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 && !opponent.isFainted() &&
-			   !opponent.damagestate.Substitute)
+				!opponent.damagestate.Substitute)
 			{
 				if (opponent.effects.MultiTurn == 0)
 				{
@@ -8145,8 +8145,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 &&
-			   attacker.effects.Outrage == 0 &&
-			   attacker.Status != Status.SLEEP)
+				attacker.effects.Outrage == 0 &&
+				attacker.Status != Status.SLEEP)
 			{
 				attacker.effects.Outrage = 2 + this.battle.Random(2);
 
@@ -8199,8 +8199,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.currentMove = MoveId;
 			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage == 0 ||
-			   TypeModifier(this.type, attacker, opponent) == 0 ||
-			   attacker.Status == Status.SLEEP)
+				TypeModifier(this.type, attacker, opponent) == 0 ||
+				attacker.Status == Status.SLEEP)
 			{
 				// Cancel effect if attack is ineffective
 				attacker.effects.Rollout = 0;
@@ -8405,7 +8405,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			int hpgain = 0;
 			if (this.battle.Weather == Weather.SUNNYDAY ||
-			   this.battle.Weather == Weather.HARSHSUN)
+				this.battle.Weather == Weather.HARSHSUN)
 			{
 				hpgain = (int)Math.Floor(attacker.TotalHP * 2 / 3f);
 			}
@@ -8701,7 +8701,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (bearer != null)
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} prevents {3} from using {4}!",
-					   bearer.ToString(), Game._INTL(bearer.Ability.ToString(TextScripts.Name)), attacker.ToString(true), Name)));
+						bearer.ToString(), Game._INTL(bearer.Ability.ToString(TextScripts.Name)), attacker.ToString(true), Name)));
 					return false;
 				}
 			}
@@ -8871,8 +8871,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			for (int i = 0; i < 4; i++)
 			{
 				if (this.battle.battlers[i].effects.PerishSong == 0 &&
-				   (attacker.hasMoldBreaker() ||
-				   !this.battle.battlers[i].hasWorkingAbility(Abilities.SOUNDPROOF)))
+					(attacker.hasMoldBreaker() ||
+					!this.battle.battlers[i].hasWorkingAbility(Abilities.SOUNDPROOF)))
 				{
 					failed = false; break;
 				}
@@ -8893,8 +8893,8 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (!attacker.hasMoldBreaker() && this.battle.battlers[i].hasWorkingAbility(Abilities.SOUNDPROOF))
 					{
 						_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} blocks {3}!", this.battle.battlers[i].ToString(),
-							 //Abilities.getName(this.battle.battlers[i].Ability), Name)));
-							 Game._INTL(this.battle.battlers[i].Ability.ToString(TextScripts.Name)), Name)));
+								//Abilities.getName(this.battle.battlers[i].Ability), Name)));
+								Game._INTL(this.battle.battlers[i].Ability.ToString(TextScripts.Name)), Name)));
 					}
 					else
 					{
@@ -8964,7 +8964,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				Attack.Effects.x117,	// Wide Guard
 				Attack.Effects.x075,	// Endure
 				Attack.Effects.x164,	// King's Shield
-				Attack.Effects.x16A	// Spiky Shield
+				Attack.Effects.x16A		// Spiky Shield
 			};
 			if (!ratesharers.Contains(Kernal.MoveData[(Moves)attacker.lastMoveUsed].Effect))
 			{
@@ -8975,13 +8975,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (poke.Index == attacker.Index) continue; //next
 				if ((int)this.battle.choices[poke.Index].Action == 1 && // Chose a move
-				   !poke.hasMovedThisRound())
+					!poke.hasMovedThisRound())
 				{
 					unmoved = true; break;
 				}
 			}
 			if (!unmoved ||
-			   this.battle.Random(65536) > Math.Floor(65536f / attacker.effects.ProtectRate))
+				this.battle.Random(65536) > Math.Floor(65536f / attacker.effects.ProtectRate))
 			{
 				attacker.effects.ProtectRate = 1;
 
@@ -9020,7 +9020,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (this.battle.opponent.Length == 0 ||
-			   !this.battle.CanRun(attacker.Index))
+				!this.battle.CanRun(attacker.Index))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -9109,9 +9109,9 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator EffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() &&
-			   opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
-			   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SUCTION_CUPS)) &&
-			   !opponent.effects.Ingrain)
+				opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
+				(attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SUCTION_CUPS)) &&
+				!opponent.effects.Ingrain)
 			{
 				if (this.battle.opponent.Length == 0)//Wild Pokemon Battle
 				{
@@ -9179,8 +9179,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (!attacker.isFainted() && opponent.damagestate.CalcDamage > 0 &&
-			   this.battle.CanChooseNonActive(attacker.Index) &&
-			   !this.battle.AllFainted(this.battle.Party(opponent.Index)))
+				this.battle.CanChooseNonActive(attacker.Index) &&
+				!this.battle.AllFainted(this.battle.Party(opponent.Index)))
 			{
 				attacker.effects.Uturn = true;
 			}
@@ -9204,10 +9204,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 				if (opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
-				   !opponent.isFainted())
+					!opponent.isFainted())
 				{
 					if (opponent.effects.MeanLook < 0 &&
-					   (!Core.USENEWBATTLEMECHANICS || !opponent.HasType(Types.GHOST)))
+						(!Core.USENEWBATTLEMECHANICS || !opponent.HasType(Types.GHOST)))
 					{
 						opponent.effects.MeanLook = attacker.Index;
 						_host.StartCoroutine(battle.Display(Game._INTL("{1} can no longer escape!", opponent.ToString())));
@@ -9217,7 +9217,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield break;
 			}
 			if (opponent.effects.MeanLook >= 0 ||
-			   (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)))
+				(opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -9273,7 +9273,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public int ModifyDamage(int damagemult, IBattler attacker, IBattler opponent)
 		{
 			if (Core.USENEWBATTLEMECHANICS &&
-			   !this.battle.IsUnlosableItem(opponent, opponent.Item))
+				!this.battle.IsUnlosableItem(opponent, opponent.Item))
 			{
 				// Still boosts damage even if opponent has Sticky Hold
 				return (int)Math.Round(damagemult * 1.5f);
@@ -9294,7 +9294,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator EffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item != 0 &&
-			   opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute)
+				opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute)
 			{
 				if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
 				{
@@ -9314,8 +9314,8 @@ namespace PokemonUnity.Interface.UnityEngine
 
 					opponent.effects.Unburden = true;
 					if (this.battle.opponent.Length == 0 && // In a wild battle
-					   attacker.pokemon.itemInitial == 0 &&
-					   opponent.pokemon.itemInitial == attacker.Item)
+						attacker.pokemon.itemInitial == 0 &&
+						opponent.pokemon.itemInitial == attacker.Item)
 					{
 						attacker.pokemon.itemInitial = attacker.Item;
 						opponent.pokemon.itemInitial = 0;
@@ -9339,17 +9339,17 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if ((opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
-			   (attacker.Item == 0 && opponent.Item == 0) ||
-			   (this.battle.opponent.Length == 0 && this.battle.IsOpposing(attacker.Index)))
+				(attacker.Item == 0 && opponent.Item == 0) ||
+				(this.battle.opponent.Length == 0 && this.battle.IsOpposing(attacker.Index)))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
 				yield break;
 			}
 			if (this.battle.IsUnlosableItem(opponent, opponent.Item) ||
-			   this.battle.IsUnlosableItem(attacker, opponent.Item) ||
-			   this.battle.IsUnlosableItem(opponent, attacker.Item) ||
-			   this.battle.IsUnlosableItem(attacker, attacker.Item))
+				this.battle.IsUnlosableItem(attacker, opponent.Item) ||
+				this.battle.IsUnlosableItem(opponent, attacker.Item) ||
+				this.battle.IsUnlosableItem(attacker, attacker.Item))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -9374,8 +9374,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			attacker.Item = opponent.Item;
 			opponent.Item = tmpitem;
 			if (this.battle.opponent.Length == 0 && // In a wild battle
-			   attacker.pokemon.itemInitial == oldattitem &&
-			   opponent.pokemon.itemInitial == oldoppitem)
+				attacker.pokemon.itemInitial == oldattitem &&
+				opponent.pokemon.itemInitial == oldoppitem)
 			{
 				attacker.pokemon.itemInitial = oldoppitem;
 				opponent.pokemon.itemInitial = oldattitem;
@@ -9411,14 +9411,14 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if ((opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
-			   attacker.Item == 0 || opponent.Item != 0)
+				attacker.Item == 0 || opponent.Item != 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
 				yield break;
 			}
 			if (this.battle.IsUnlosableItem(attacker, attacker.Item) ||
-			   this.battle.IsUnlosableItem(opponent, attacker.Item))
+				this.battle.IsUnlosableItem(opponent, attacker.Item))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -9434,8 +9434,8 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			attacker.effects.Unburden = true;
 			if (this.battle.opponent.Length == 0 && // In a wild battle
-			   opponent.pokemon.itemInitial == 0 &&
-			   attacker.pokemon.itemInitial == opponent.Item)
+				opponent.pokemon.itemInitial == 0 &&
+				attacker.pokemon.itemInitial == opponent.Item)
 			{
 				opponent.pokemon.itemInitial = opponent.Item;
 				attacker.pokemon.itemInitial = 0;
@@ -9457,7 +9457,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator EffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
 		{
 			if (!attacker.isFainted() && !opponent.isFainted() && Game.GameData is IItemCheck i && i.IsBerry(opponent.Item) &&
-			   opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute)
+				opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute)
 			{
 				if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.STICKY_HOLD))
 				{
@@ -9467,22 +9467,22 @@ namespace PokemonUnity.Interface.UnityEngine
 					_host.StartCoroutine(opponent.ConsumeItem(false, false));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} stole and ate its target's {2}!", attacker.ToString(), itemname)));
 					if (!attacker.hasWorkingAbility(Abilities.KLUTZ) &&
-					   attacker.effects.Embargo == 0)
+						attacker.effects.Embargo == 0)
 					{
 						attacker.ActivateBerryEffect(item, false);
 					}
 					// Symbiosis
 					if (attacker.Item == 0 &&
-					   attacker.Partner.IsNotNullOrNone() && attacker.Partner.hasWorkingAbility(Abilities.SYMBIOSIS))
+						attacker.Partner.IsNotNullOrNone() && attacker.Partner.hasWorkingAbility(Abilities.SYMBIOSIS))
 					{
 						IBattler partner = attacker.Partner;
 						if (partner.Item > 0 &&
-						   !this.battle.IsUnlosableItem(partner, partner.Item) &&
-						   !this.battle.IsUnlosableItem(attacker, partner.Item))
+							!this.battle.IsUnlosableItem(partner, partner.Item) &&
+							!this.battle.IsUnlosableItem(attacker, partner.Item))
 						{
 							_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} let it share its {3} with {4}!",
-							   partner.ToString(), Game._INTL(partner.Ability.ToString(TextScripts.Name)),
-							   Kernal.ItemData[partner.Item].Name, attacker.ToString(true))));
+								partner.ToString(), Game._INTL(partner.Ability.ToString(TextScripts.Name)),
+								Kernal.ItemData[partner.Item].Name, attacker.ToString(true))));
 							attacker.Item = partner.Item;
 							partner.Item = 0;
 							partner.effects.Unburden = true;
@@ -9509,8 +9509,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (!attacker.isFainted() && opponent.damagestate.CalcDamage > 0 &&
-			   !opponent.damagestate.Substitute &&
-			   (Game.GameData is IItemCheck i && i.IsBerry(opponent.Item) || (Core.USENEWBATTLEMECHANICS && i.IsGem(opponent.Item))))
+				!opponent.damagestate.Substitute &&
+				(Game.GameData is IItemCheck i && i.IsBerry(opponent.Item) || (Core.USENEWBATTLEMECHANICS && i.IsGem(opponent.Item))))
 			{
 				string itemname = Kernal.ItemData[opponent.Item].Name;
 				_host.StartCoroutine(opponent.ConsumeItem(false, false));
@@ -9572,9 +9572,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			get
 			{
 				return new Dictionary<Items, byte> {
-		   //130 =>
+			//130 =>
 					{ Items.IRON_BALL, 130 },
-		   //100 =>
+			//100 =>
 					{ Items.ARMOR_FOSSIL, 100 },    { Items.CLAW_FOSSIL, 100 }, { Items.COVER_FOSSIL, 100 },    { Items.DOME_FOSSIL, 100 }, { Items.HARD_STONE, 100 },
 					{ Items.HELIX_FOSSIL, 100 },    { Items.JAW_FOSSIL, 100 },  { Items.OLD_AMBER, 100 },   { Items.PLUME_FOSSIL, 100 },    { Items.RARE_BONE, 100 },
 					{ Items.ROOT_FOSSIL, 100 }, { Items.SAIL_FOSSIL, 100 }, { Items.SKULL_FOSSIL, 100 },
@@ -9702,7 +9702,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_host.StartCoroutine(battle.Display(Game._INTL("{1} flung its {2}!", attacker.ToString(), Kernal.ItemData[attacker.Item].Name)));
 			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result?.Invoke(ret);
 			if (opponent.damagestate.CalcDamage > 0 && !opponent.damagestate.Substitute &&
-			   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SHIELD_DUST)))
+				(attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SHIELD_DUST)))
 			{
 				if ((attacker as Combat.Pokemon).hasWorkingBerry())
 				{
@@ -9718,7 +9718,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					}
 				}
 				else if (attacker.hasWorkingItem(Items.KINGS_ROCK) ||
-					 attacker.hasWorkingItem(Items.RAZOR_FANG))
+						attacker.hasWorkingItem(Items.RAZOR_FANG))
 				{
 					if (opponent is IBattlerEffectIE o) o.Flinch(attacker);
 				}
@@ -9880,7 +9880,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
-				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
+					!attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
 					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 4.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
@@ -9908,7 +9908,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
-				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
+					!attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
 					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 3.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
@@ -9937,7 +9937,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
-				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
+					!attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
 					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 2.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
@@ -9966,7 +9966,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
-				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
+					!attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
 					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 3.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
@@ -10005,7 +10005,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
 				if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
-				   !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
+					!attacker.hasWorkingAbility(Abilities.MAGIC_GUARD))
 				{
 					_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage / 3.0f)));
 					_host.StartCoroutine(battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
@@ -10798,7 +10798,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator ShowAnimation(Moves id, IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OpposingSide.Reflect > 0 ||
-			   attacker.OpposingSide.LightScreen > 0)
+				attacker.OpposingSide.LightScreen > 0)
 			{
 				_host.StartCoroutine(base.ShowAnimation(id, attacker, opponent, 1, alltargets, showanimation)); // Wall-breaking anim
 			}
@@ -10880,7 +10880,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (attacker.HasType(Types.GHOST))
 			{
 				if (opponent.effects.Curse ||
-				   opponent.OwnSide.CraftyShield)
+					opponent.OwnSide.CraftyShield)
 				{
 					failed = true;
 				}
@@ -10975,7 +10975,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (opponent.Status != Status.SLEEP || opponent.effects.Nightmare ||
-			   (opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)))
+				(opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -11239,8 +11239,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				default: break;
 			}
 			if (attacker.HP == attacker.TotalHP &&
-			   attacker.effects.StockpileDef == 0 &&
-			   attacker.effects.StockpileSpDef == 0)
+				attacker.effects.StockpileDef == 0 &&
+				attacker.effects.StockpileSpDef == 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -11418,8 +11418,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (attacker.effects.Ingrain ||
-			   attacker.effects.SmackDown ||
-			   attacker.effects.MagnetRise > 0)
+				attacker.effects.SmackDown ||
+				attacker.effects.MagnetRise > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -11450,8 +11450,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (opponent.effects.Ingrain ||
-			   opponent.effects.SmackDown ||
-			   opponent.effects.Telekinesis > 0)
+				opponent.effects.SmackDown ||
+				opponent.effects.Telekinesis > 0)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -11489,7 +11489,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x09C ||// Fly
 				Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x108 || // Bounce
 				Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x138 || // Sky Drop
-			   opponent.effects.SkyDrop)
+				opponent.effects.SkyDrop)
 			{
 				return basedmg * 2;
 			}
@@ -11507,7 +11507,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				opponent.effects.SmackDown = true;
 
 				bool showmsg = opponent.HasType(Types.FLYING) ||
-						 opponent.hasWorkingAbility(Abilities.LEVITATE);
+							opponent.hasWorkingAbility(Abilities.LEVITATE);
 				if (Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x09C ||// Fly
 					Kernal.MoveData[(Moves)opponent.effects.TwoTurnAttack].Effect == Attack.Effects.x108)	// Bounce
 				{
@@ -11631,8 +11631,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (!this.battle.doublebattle ||
-			   attacker.Partner.Species == Pokemons.NONE ||
-			   attacker.Partner.isFainted())
+				attacker.Partner.Species == Pokemons.NONE ||
+				attacker.Partner.isFainted())
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -11875,8 +11875,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (!opponent.HasType(attacker.Type1) &&
-			   !opponent.HasType(attacker.Type2) &&
-			   !opponent.HasType(attacker.effects.Type3))
+				!opponent.HasType(attacker.Type2) &&
+				!opponent.HasType(attacker.effects.Type3))
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("{1} was unaffected!", opponent.ToString())));
 				result?.Invoke(-1);
@@ -11952,7 +11952,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if (!this.battle.doublebattle ||
-			   attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
+				attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted())
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -12146,10 +12146,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!attacker.hasMoldBreaker())
 			{
 				if (opponent.hasWorkingAbility(Abilities.CLEAR_BODY) ||
-				   opponent.hasWorkingAbility(Abilities.WHITE_SMOKE))
+					opponent.hasWorkingAbility(Abilities.WHITE_SMOKE))
 				{
 					_host.StartCoroutine(battle.Display(Game._INTL("{1}'s {2} prevents stat loss!", opponent.ToString(),
-					   Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
+						Game._INTL(opponent.Ability.ToString(TextScripts.Name)))));
 					result?.Invoke(-1);
 					yield break;
 				}
@@ -12426,7 +12426,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			bool nonzero = false;
 			foreach (var i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
+					Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
 				if (opponent.stages[(byte)i] != 0)
 				{
@@ -12441,7 +12441,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			_host.StartCoroutine(ShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation));
 			foreach (var i in new[] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
+					Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION })
 			{
 				opponent.stages[(byte)i] *= -1;
 			}
@@ -12462,8 +12462,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if ((opponent.effects.Substitute > 0 && !ignoresSubstitute(attacker)) ||
-			   opponent.HasType(Types.GHOST) ||
-			   opponent.Ability == Abilities.MULTITYPE)
+				opponent.HasType(Types.GHOST) ||
+				opponent.Ability == Abilities.MULTITYPE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -12504,7 +12504,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield break;
 			}
 			if (opponent.HasType(Types.GRASS) ||
-			   opponent.Ability == Abilities.MULTITYPE)
+				opponent.Ability == Abilities.MULTITYPE)
 			{
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
 				result?.Invoke(-1);
@@ -12535,7 +12535,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (type >= 0)
 			{
 				float mult = type.GetCombinedEffectivenessModifier(
-				   opponent.Type1, opponent.Type2, opponent.effects.Type3);
+					opponent.Type1, opponent.Type2, opponent.effects.Type3);
 				return (int)Math.Round((damagemult * mult) / 8f);
 			}
 			return damagemult;
@@ -12600,7 +12600,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (poke.Index == attacker.Index) continue; //next
 				if ((int)this.battle.choices[poke.Index].Action == 1 && // Chose a move
-				   !poke.hasMovedThisRound())
+					!poke.hasMovedThisRound())
 				{
 					unmoved = true; break;
 				}
@@ -12706,7 +12706,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (poke.Index == attacker.Index) continue; //next
 				if ((int)this.battle.choices[poke.Index].Action == 1 && // Chose a move
-				   !poke.hasMovedThisRound())
+					!poke.hasMovedThisRound())
 				{
 					unmoved = true; break;
 				}
@@ -12767,14 +12767,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (poke.Index == attacker.Index) continue; //next
 				if ((int)this.battle.choices[poke.Index].Action == 1 && // Chose a move
-				   !poke.hasMovedThisRound())
+					!poke.hasMovedThisRound())
 				{
 					unmoved = true; break;
 				}
 			}
 			if (!unmoved ||
-			   (!Core.USENEWBATTLEMECHANICS &&
-			   this.battle.Random(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate)))
+				(!Core.USENEWBATTLEMECHANICS &&
+				this.battle.Random(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate)))
 			{
 				attacker.effects.ProtectRate = 1;
 				_host.StartCoroutine(battle.Display(Game._INTL("But it failed!")));
@@ -12825,13 +12825,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (poke.Index == attacker.Index) continue; //next
 				if (this.battle.choices[poke.Index].Action == ChoiceAction.UseMove && // Chose a move
-				   !poke.hasMovedThisRound())
+					!poke.hasMovedThisRound())
 				{
 					unmoved = true; break;
 				}
 			}
 			if (!unmoved ||
-			   this.battle.Random(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate))
+				this.battle.Random(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate))
 			{
 				attacker.effects.ProtectRate = 1;
 
