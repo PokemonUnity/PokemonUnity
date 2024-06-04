@@ -140,6 +140,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(DevEnvDir)TextTransform.exe" -a !!BuildConfiguration!$(Configuration) "$(ProjectDir)Properties\AssemblyInfo.tt"</PreBuildEvent>
+    <PreBuildEvent>git.exe -C "$(ProjectDir.TrimEnd('\'))" branch --show-current &gt;&gt; "$(ProjectDir)\Properties\AssemblyInfo.cs"
+git.exe -C "$(ProjectDir.TrimEnd('\'))"  describe --long --always --exclude=* --abbrev=8 &gt;&gt; "$(ProjectDir)\Properties\AssemblyInfo.cs"
+"$(DevEnvDir)TextTransform.exe" -a !!BuildConfiguration!$(Configuration) "$(ProjectDir)Properties\AssemblyInfo.tt"</PreBuildEvent>
   </PropertyGroup>
 </Project>

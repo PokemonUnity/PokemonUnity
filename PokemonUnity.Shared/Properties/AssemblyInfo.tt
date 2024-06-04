@@ -4,17 +4,27 @@
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#
 	string output = File.ReadAllText(this.Host.ResolvePath("AssemblyInfo.cs"));
-	Regex pattern = new Regex(@"AssemblyFileVersion\(""(?<major>\d+)\.(?<minor>\d+)\.(?<build>\d+)\.(?<revision>\d+)""\)");
-	MatchCollection matches = pattern.Matches(output);
-	if( matches.Count == 1 )
-	{
-		major = Convert.ToInt32(matches[0].Groups["major"].Value);
-		minor = Convert.ToInt32(matches[0].Groups["minor"].Value);
-		build = Convert.ToInt32(matches[0].Groups["build"].Value) + 1;
-		revision = Convert.ToInt32(matches[0].Groups["revision"].Value);
-		if( this.Host.ResolveParameterValue("-","-","BuildConfiguration") == "Release" )
-			revision++;
-	}
+	//Regex pattern = new Regex(@"AssemblyFileVersion\(""(?<major>\d+)\.(?<minor>\d+)\.(?<build>\d+)\.(?<revision>\d+)""\)");
+	//MatchCollection matches = pattern.Matches(output);
+	//if (matches.Count == 1)
+	//{
+		string[] date = DateTime.Now.ToString("yy-MM-dd-HHmm").Split('-');
+		major		= date[0];	//Convert.ToInt32(matches[0].Groups["major"].Value);		// Year		(20YY)
+		minor		= date[1];	//Convert.ToInt32(matches[0].Groups["minor"].Value);		// Month	(MM)
+		build		= date[2];	//Convert.ToInt32(matches[0].Groups["build"].Value) + 1;	// Day		(DD)
+		revision	= date[3];	//Convert.ToInt32(matches[0].Groups["revision"].Value);		// Time		(HHMM)
+		//if( this.Host.ResolveParameterValue("-","-","BuildConfiguration") == "Release" )
+		//	revision++;
+	//}
+	string[] text = output.Split('\n');
+	string _branch = text[text.Length - 3]; //File.ReadAllText(this.Host.ResolvePath("AssemblyInfo.cs"));
+	string _hash = text[text.Length - 2]; //File.ReadAllText(this.Host.ResolvePath("AssemblyInfo.cs"));
+	//pattern = new Regex(@"AssemblyInformationalVersion\("".+""\)");
+	//matches = pattern.Matches(output);
+	//if (matches.Count == 1){
+		branch = _branch.Trim();
+		hash = _hash.Trim();
+	//}
 #>
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -43,21 +53,22 @@ using System.Resources;
 
 // Version information for an assembly consists of the following four values:
 //
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
+//		Major Version
+//		Minor Version
+//		Build Number
+//		Revision
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")] => major.minor.build.revision
 [assembly: AssemblyVersion("16.7")] //Pokemon Essentials Version
 [assembly: AssemblyFileVersion("<#= this.major #>.<#= this.minor #>.<#= this.build #>.<#= this.revision #>")] //Pokemon Framework Version
-[assembly: AssemblyInformationalVersion("Alpha")] //Github Branch Source
-
+[assembly: AssemblyInformationalVersion("<#= this.major #>.<#= this.minor #>.<#= this.build #>.<#= this.revision #>.<#= this.hash #>-<#= this.branch #>")] //Github Branch Source
 <#+
-	int major = 1;
-	int minor = 0;
-	int build = 0;
-	int revision = 0;
+	string major	= "1";
+	string minor	= "0";
+	string build	= "0";
+	string revision = "0";
+	string branch	= "Alpha";
+	string hash		= "00000";
 #>

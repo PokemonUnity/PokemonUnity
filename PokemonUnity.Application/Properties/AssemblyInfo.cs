@@ -25,15 +25,14 @@ using System.Resources;
 
 // Version information for an assembly consists of the following four values:
 //
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
+//		Major Version
+//		Minor Version
+//		Build Number
+//		Revision
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")] => major.minor.build.revision
 [assembly: AssemblyVersion("16.7")] //Pokemon Essentials Version
-[assembly: AssemblyFileVersion("1.0.1.1")] //Pokemon Framework Version
-[assembly: AssemblyInformationalVersion("Alpha")] //Github Branch Source
-
+[assembly: AssemblyFileVersion("24.06.04.1035")] //Pokemon Framework Version
+[assembly: AssemblyInformationalVersion("24.06.04.1035.ee6db4fb-alpha")] //Github Branch Source
