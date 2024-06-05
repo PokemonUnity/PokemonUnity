@@ -174,7 +174,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			this.visible = false;
 			this.z = 50;*/
 			mega?.gameObject.SetActive(false); //it's one image, just toggle on/off
-											   //primal.sprite = Resources.Load<global::UnityEngine.Sprite>("null");
+			//primal.sprite = Resources.Load<global::UnityEngine.Sprite>("null");
 			primal?.gameObject.SetActive(false);
 			shiny?.gameObject.SetActive(battler.IsShiny);
 			spriteCaught?.gameObject.SetActive(false);
@@ -251,7 +251,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			refresh();
 			this.visible = true;
 			this.opacity = 255;
-			if ((@battler.Index & 1) == 0)       // If player's Pokémon
+			if ((@battler.Index & 1) == 0)		// If player's Pokémon
 			{
 				this.x = @spriteX + 320;
 			}
@@ -269,9 +269,9 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			//this.bitmap.clear();
 			if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
-																	 //this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
-																	 //IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
-																	 //IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
+			//this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
+			//IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
+			//IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
 			string pokename = @battler.Name;
 			//SetSystemFont(this.bitmap);
 			//IList<ITextPosition> textpos = new List<ITextPosition>() {
@@ -316,22 +316,22 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (@showhp)
 			{
 				HPValue?.gameObject.SetActive(true); //Should already be preset in unity engine
-													 //string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
-													 //textpos.Add(new TextPosition(hpstring, @spritebaseX + 188, 48, true, base_, shadow));
-													 //maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
-													 //currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
+				//string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
+				//textpos.Add(new TextPosition(hpstring, @spritebaseX + 188, 48, true, base_, shadow));
+				//maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
+				//currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
 				HPValue.SetText($"{this.HP}/{@battler.TotalHP}"); //($"{sliderHP.value}/{sliderHP.maxValue}");
 			}
 			else HPValue?.gameObject.SetActive(false); //Just in case, if hp is not supposed to be seen, hide it
-													   //DrawTextPositions(this.bitmap,textpos);
-													   //IList<ITextPosition> imagepos = new List<ITextPosition>();
-													   //ToDo: Uncomment below if UI is setup for generation features/gimmick
-													   //if (@battler.IsShiny)
-													   //{
-													   //	//float shinyX = 206;
-													   //	//if ((@battler.Index & 1) == 0) shinyX = -6; // If player's Pokémon
-													   //	//imagepos.Add(new TextPosition("Graphics/Pictures/shiny.png", @spritebaseX + shinyX, 36, 0, 0, -1, -1));
-													   //}
+			//DrawTextPositions(this.bitmap,textpos);
+			//IList<ITextPosition> imagepos = new List<ITextPosition>();
+			//ToDo: Uncomment below if UI is setup for generation features/gimmick
+			//if (@battler.IsShiny)
+			//{
+			//	//float shinyX = 206;
+			//	//if ((@battler.Index & 1) == 0) shinyX = -6; // If player's Pokémon
+			//	//imagepos.Add(new TextPosition("Graphics/Pictures/shiny.png", @spritebaseX + shinyX, 36, 0, 0, -1, -1));
+			//}
 			shiny?.gameObject.SetActive(battler.IsShiny);
 			//if (@battler.isMega)
 			//{
@@ -421,20 +421,19 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (@showexp)
 			{
 				sliderExp?.gameObject.SetActive(true); //Should already be preset in unity engine
-													   //  fill with EXP color
-													   //float expGaugeX = PokeBattle_SceneConstants.EXPGAUGE_X;
-													   //float expGaugeY = PokeBattle_SceneConstants.EXPGAUGE_Y;
-													   //this.bitmap.fill_rect(@spritebaseX + expGaugeX, expGaugeY, this.Exp, 2,
-													   //   PokeBattle_SceneConstants.EXPCOLORSHADOW);
-													   //this.bitmap.fill_rect(@spritebaseX + expGaugeX, expGaugeY + 2, this.Exp, 2,
-													   //   PokeBattle_SceneConstants.EXPCOLORBASE); //Same X value, just 2 Y values lower
+				//  fill with EXP color
+				//float expGaugeX = PokeBattle_SceneConstants.EXPGAUGE_X;
+				//float expGaugeY = PokeBattle_SceneConstants.EXPGAUGE_Y;
+				//this.bitmap.fill_rect(@spritebaseX + expGaugeX, expGaugeY, this.Exp, 2,
+				//   PokeBattle_SceneConstants.EXPCOLORSHADOW);
+				//this.bitmap.fill_rect(@spritebaseX + expGaugeX, expGaugeY + 2, this.Exp, 2,
+				//   PokeBattle_SceneConstants.EXPCOLORBASE); //Same X value, just 2 Y values lower
 				sliderExp.minValue = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.ExperienceNeeded(battler.Level);
 				sliderExp.maxValue = (@battler.pokemon as PokemonUnity.Monster.Pokemon).Experience.NextLevel;
 				sliderExp.value = this.Exp;
 				//StopCoroutine("AnimateSliderExp"); //(AnimateSliderHP(this.Exp));
 				//StartCoroutine(AnimateSliderExp(this.Exp)); //sliderExp.value = this.Exp;
-			}
-			else sliderExp?.gameObject.SetActive(false); //Just in case, if exp is not supposed to be seen, hide it
+			} else sliderExp?.gameObject.SetActive(false); //Just in case, if exp is not supposed to be seen, hide it
 		}
 
 		public override void update()
@@ -471,7 +470,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					@currentexp = @endexp;
 				}
-				else if (@currentexp < @endexp)         // Gaining Exp
+				else if (@currentexp < @endexp)			// Gaining Exp
 				{
 					//if (@endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE ||
 					//   @endexp - @currentexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
@@ -486,7 +485,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					}
 					if (@currentexp > @endexp) @currentexp = @endexp;
 				}
-				else if (@currentexp > @endexp)         // Losing Exp
+				else if (@currentexp > @endexp)			// Losing Exp
 				{
 					if (@endexp == 0 ||
 						//@currentexp - @endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
@@ -510,7 +509,7 @@ namespace PokemonUnity.Interface.UnityEngine
 						{
 							//(AudioHandler as IGameAudioPlay).SEPlay("expfull");
 							this.flash(spriteFillExp, new SeriColor(64, 200, 248), 8); //this.flash(new SeriColor(64, 200, 248), 8);
-																					   //spriteFillExp.color = new Color(64, 200, 248);
+							//spriteFillExp.color = new Color(64, 200, 248);
 							@expflash = 8;
 						}
 						else
@@ -533,7 +532,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				// Everything inside this if statement is for animating the slide-in for the databox
 				// Move to a coroutine to utilize Unity's built-in animation system or use a lerp...
-				if ((@battler.Index & 1) == 0)       // If player's Pokémon
+				if ((@battler.Index & 1) == 0)		// If player's Pokémon
 				{
 					this.x -= 12;
 					if (this.x < @spriteX) this.x = @spriteX;
@@ -551,11 +550,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			this.x = @spriteX;
 			this.y = @spriteY;
 			//  Data box bobbing while Pokémon is selected
-			if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 1)         // Choosing commands for this Pokémon
+			if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 1)			// Choosing commands for this Pokémon
 			{
 				this.y = @spriteY + 2;
 			}
-			else if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 2)    // When targeted or damaged
+			else if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 2)	// When targeted or damaged
 			{
 				this.y = @spriteY + 2;
 			}
@@ -597,14 +596,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				//Change color of hp bar
 				spriteFillHP.color = Color.yellow; //(SeriColor)PokeBattle_SceneConstants.HPCOLORYELLOW;
-												   //Change background image for health slider
+				//Change background image for health slider
 			}
 			else
 				spriteFillHP.color = Color.green; //(SeriColor)PokeBattle_SceneConstants.HPCOLORGREEN;
-												  //each time the slider's value is changed, write to text displaying the hp
-												  //maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
-												  //currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
-												  //HPValue.SetText($"{sliderHP.value}/{sliderHP.maxValue}");
+				//each time the slider's value is changed, write to text displaying the hp
+				//maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
+				//currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
+				//HPValue.SetText($"{sliderHP.value}/{sliderHP.maxValue}");
 		}
 
 		protected System.Collections.IEnumerator AnimateSliderHP(int amount) //Slider as input?
@@ -618,9 +617,9 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return null;
 			}
 			animatingHP = false; //should disable after the values stop moving the slider...
-								 //new WaitForSeconds(1f);
-								 //fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
-								 //yield return null;
+			//new WaitForSeconds(1f);
+			//fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
+			//yield return null;
 		}
 		/// <summary>
 		/// </summary>
@@ -636,9 +635,9 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return null; //each frame tick will/should call the update function, and perform flash animation if necessary.
 			}
 			animatingEXP = false; //should disable after the values stop moving the slider...
-								  //new WaitForSeconds(1f);
-								  //fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
-								  //yield return null;
+			//new WaitForSeconds(1f);
+			//fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
+			//yield return null;
 		}
 		#endregion
 	}
@@ -972,7 +971,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				refresh();
 				this.visible = true;
 				this.opacity = 255;
-				if ((@battler.Index & 1) == 0)       // If player's Pokémon
+				if ((@battler.Index & 1) == 0)		// If player's Pokémon
 				{
 					this.x = @spriteX + 320;
 				}
@@ -1182,7 +1181,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						@currentexp = @endexp;
 					}
-					else if (@currentexp < @endexp)         // Gaining Exp
+					else if (@currentexp < @endexp)			// Gaining Exp
 					{
 						//if (@endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE ||
 						//   @endexp - @currentexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
@@ -1197,7 +1196,7 @@ namespace PokemonUnity.Interface.UnityEngine
 						}
 						if (@currentexp > @endexp) @currentexp = @endexp;
 					}
-					else if (@currentexp > @endexp)         // Losing Exp
+					else if (@currentexp > @endexp)			// Losing Exp
 					{
 						if (@endexp == 0 ||
 						   //@currentexp - @endexp >= PokeBattle_SceneConstants.EXPGAUGESIZE / 4)
@@ -1221,7 +1220,7 @@ namespace PokemonUnity.Interface.UnityEngine
 							{
 								//(AudioHandler as IGameAudioPlay).SEPlay("expfull");
 								this.flash(spriteFillExp, new SeriColor(64, 200, 248), 8); //this.flash(new SeriColor(64, 200, 248), 8);
-																						   //spriteFillExp.color = new Color(64, 200, 248);
+								//spriteFillExp.color = new Color(64, 200, 248);
 								@expflash = 8;
 							}
 							else
@@ -1242,7 +1241,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 				if (@appearing)
 				{
-					if ((@battler.Index & 1) == 0)       // If player's Pokémon
+					if ((@battler.Index & 1) == 0)		// If player's Pokémon
 					{
 						this.x -= 12;
 						if (this.x < @spriteX) this.x = @spriteX;
@@ -1260,11 +1259,11 @@ namespace PokemonUnity.Interface.UnityEngine
 				this.x = @spriteX;
 				this.y = @spriteY;
 				//  Data box bobbing while Pokémon is selected
-				if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 1)         // Choosing commands for this Pokémon
+				if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 1)			// Choosing commands for this Pokémon
 				{
 					this.y = @spriteY + 2;
 				}
-				else if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 2)    // When targeted or damaged
+				else if (((int)Math.Floor(@frame / 10f) & 1) == 1 && @selected == 2)	// When targeted or damaged
 				{
 					this.y = @spriteY + 2;
 				}
@@ -1305,14 +1304,14 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					//Change color of hp bar
 					spriteFillHP.color = Color.yellow; //(SeriColor)PokeBattle_SceneConstants.HPCOLORYELLOW;
-													   //Change background image for health slider
+					//Change background image for health slider
 				}
 				else
 					spriteFillHP.color = Color.green; //(SeriColor)PokeBattle_SceneConstants.HPCOLORGREEN;
-													  //each time the slider's value is changed, write to text displaying the hp
-													  //maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
-													  //currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
-													  //HPValue.SetText($"{sliderHP.value}/{sliderHP.maxValue}");
+					//each time the slider's value is changed, write to text displaying the hp
+					//maxHP.text = sliderHP.maxValue.ToString(); //Set text under hp to match slider maxHealth
+					//currentHP.text = sliderHP.value.ToString(); //Set text under hp to match slider currentHealth
+					//HPValue.SetText($"{sliderHP.value}/{sliderHP.maxValue}");
 			}
 
 			protected System.Collections.IEnumerator AnimateSliderHP(int amount) //Slider as input?
@@ -1326,9 +1325,9 @@ namespace PokemonUnity.Interface.UnityEngine
 					yield return null;
 				}
 				animatingHP = false; //should disable after the values stop moving the slider...
-									 //new WaitForSeconds(1f);
-									 //fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
-									 //yield return null;
+				//new WaitForSeconds(1f);
+				//fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
+				//yield return null;
 			}
 			/// <summary>
 			/// </summary>
@@ -1344,9 +1343,9 @@ namespace PokemonUnity.Interface.UnityEngine
 					yield return null; //each frame tick will/should call the update function, and perform flash animation if necessary.
 				}
 				animatingEXP = false; //should disable after the values stop moving the slider...
-									  //new WaitForSeconds(1f);
-									  //fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
-									  //yield return null;
+				//new WaitForSeconds(1f);
+				//fadeSlider.value = Mathf.Lerp(sliderHP.value, fadeSlider.value, .5f * Time.deltaTime);
+				//yield return null;
 			}
 		}
 
@@ -1451,9 +1450,9 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				//this.bitmap.clear();
 				if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
-																		 //this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
-																		 //IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
-																		 //IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
+				//this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
+				//IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
+				//IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
 				string pokename = @battler.Name;
 				//SetSystemFont(this.bitmap);
 				//IList<ITextPosition> textpos = new List<ITextPosition>() {
@@ -1724,9 +1723,9 @@ namespace PokemonUnity.Interface.UnityEngine
 
 				//this.bitmap.clear();
 				if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
-																		 //this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
-																		 //IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
-																		 //IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
+				//this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
+				//IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
+				//IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
 				string pokename = @battler.Name;
 				//SetSystemFont(this.bitmap);
 				//IList<ITextPosition> textpos = new List<ITextPosition>() {
@@ -1743,13 +1742,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						//textpos.Add(new TextPosition(Game._INTL("♂"), genderX, 6, false, new Color(48, 96, 216), shadow));
 						gender.sprite = genderMale; // Male
-													//break;
+						//break;
 					}
 					else //	case 1: // Female
 					{
 						//textpos.Add(new TextPosition(Game._INTL("♀"), genderX, 6, false, new Color(248, 88, 40), shadow));
 						gender.sprite = genderFemale; // Female
-													  //break;
+						//break;
 					}
 				}
 				else
