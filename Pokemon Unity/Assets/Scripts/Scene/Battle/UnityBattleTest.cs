@@ -22,7 +22,6 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
-//using UnityEngine;
 
 namespace PokemonUnity.Interface.UnityEngine
 {
@@ -527,6 +526,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return DisplayPaused(Game._INTL("It was stored in box \"{1}\".", boxname));
 			}
 		}
+		void IBattleCommon.StorePokemon(IPokemon pokemon) { this.StorePokemon(pokemon); }
+
 		new public IEnumerator ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false)
 		{
 			string itemname = Game._INTL(ball.ToString(TextScripts.Name));
@@ -674,6 +675,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 		}
+		void IBattleCommon.ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false) { this.ThrowPokeball(idxPokemon, ball, rareness, showplayer); }
 		#endregion
 
 		#region Info about battle.
@@ -1081,6 +1083,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			return battler;
 		}
+		IBattler IBattle.FindPlayerBattler(int pkmnIndex) { return FindPlayerBattler(pkmnIndex); }
 		//
 		//public bool IsOwner (int battlerIndex, int partyIndex) {
 		//	int secondParty=SecondPartyBegin(battlerIndex);
@@ -1271,6 +1274,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (thispkmn.effects.Encore > 0) { result?.Invoke(false); yield break; }
 			result?.Invoke(true);
 		}
+		bool IBattle.CanShowFightMenu(int idxPokemon)
+		{
+			bool r = false;
+			this.CanShowFightMenu(idxPokemon, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false, Action<bool> result = null)
 		{
@@ -1355,6 +1364,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattle.CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
+		{
+			bool r = false;
+			this.CanChooseMove(idxPokemon, idxMove, showMessages, sleeptalk, result: value=>r=value);
+			return r;
+		}
 
 		new public IEnumerator AutoChooseMove(int idxPokemon, bool showMessages=true) {
 			IBattlerIE thispkmn=@battlers[idxPokemon];
@@ -1401,6 +1416,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				@choices[idxPokemon]=new Choice(ChoiceAction.UseMove, -1, @struggle);
 			}
 		}
+		void IBattle.AutoChooseMove(int idxPokemon, bool showMessages=true) { this.AutoChooseMove(idxPokemon, showMessages); }
 
 		public IEnumerator RegisterMove(int idxPokemon, int idxMove, bool showMessages=true, Action<bool> result = null) {
 			IBattlerIE thispkmn=@battlers[idxPokemon];
@@ -1414,6 +1430,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			//@choices[idxPokemon][3]=-1;        // No target chosen yet
 			@choices[idxPokemon]=new Choice(ChoiceAction.UseMove, idxMove, thismove);
 			result?.Invoke(true);
+		}
+		bool IBattle.RegisterMove(int idxPokemon, int idxMove, bool showMessages=true)
+		{
+			bool r = false;
+			this.RegisterMove(idxPokemon, idxMove, result: value=>r=value);
+			return r;
 		}
 
 		//public bool ChoseMove (int i, Moves move) {
@@ -1593,6 +1615,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			@usepriority=true;
 			return priority;
 		}
+		IBattler[] IBattle.Priority(bool ignorequickclaw=false, bool log=false) { return this.Priority(ignorequickclaw, log); }
 		#endregion
 
 		#region Switching Pokemon
@@ -1625,6 +1648,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 			result?.Invoke(true);
+		}
+		bool IBattle.CanSwitchLax(int idxPokemon,int pkmnidxTo,bool showMessages)
+		{
+			bool r = false;
+			this.CanSwitchLax(idxPokemon, pkmnidxTo, showMessages, result: value=>r=value);
+			return r;
 		}
 
 		public IEnumerator CanSwitch (int idxPokemon, int pkmnidxTo, bool showMessages, bool ignoremeanlook=false,System.Action<bool> result=null) {
@@ -1685,6 +1714,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattle.CanSwitch(int idxPokemon, int pkmnidxTo, bool showMessages, bool ignoremeanlook=false)
+		{
+			bool r = false;
+			this.CanSwitch(idxPokemon, pkmnidxTo, showMessages, ignoremeanlook, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator RegisterSwitch(int idxPokemon,int idxOther,System.Action<bool> result=null) {
 			bool canSwitch = false;
@@ -1700,6 +1735,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				@megaEvolution[side][owner]=-1;
 			}
 			result?.Invoke(true);
+		}
+		bool IBattle.RegisterSwitch(int idxPokemon,int idxOther)
+		{
+			bool r = false;
+			this.RegisterSwitch(idxPokemon, idxOther, result: value=>r=value);
+			return r;
 		}
 
 		//public bool CanChooseNonActive (int index) {
@@ -1793,6 +1834,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 		}
+		void IBattle.Switch(bool favorDraws=false) { this.Switch(favorDraws); }
 
 		new public IEnumerator SendOut(int index,IPokemon pokemon) {
 			SetSeen(pokemon);
@@ -1805,6 +1847,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			if (@scene is IPokeBattle_SceneIE s1) s1.ResetMoveIndex(index);
 		}
+		void IBattle.SendOut(int index,IPokemon pokemon) { this.SendOut(index, pokemon); }
 
 		new public IEnumerator Replace(int index,int newpoke,bool batonpass=false) {
 			IPokemon[] party=Party(index);
@@ -1823,6 +1866,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return SendOut(index,party[newpoke]);
 			SetSeen(party[newpoke]);
 		}
+		void IBattle.Replace(int index,int newpoke,bool batonpass=false) { this.Replace(index, newpoke, batonpass); }
 
 		public IEnumerator RecallAndReplace(int index,int newpoke,int newpokename=-1,bool batonpass=false,bool moldbreaker=false, System.Action<bool> result = null) {
 			(_battlers[index] as IBattlerIE).ResetForm();
@@ -1833,6 +1877,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return Replace(index,newpoke,batonpass);
 			//result?.Invoke(OnActiveOne(@battlers[index],false,moldbreaker));
 			yield return OnActiveOne(@battlers[index],false,moldbreaker,result);
+		}
+		bool IBattle.RecallAndReplace(int index,int newpoke,int newpokename=-1,bool batonpass=false,bool moldbreaker=false)
+		{
+			bool r = false;
+			this.RecallAndReplace(index, newpoke, newpokename, batonpass, moldbreaker, result: value=>r=value);
+			return r;
 		}
 
 		new public IEnumerator MessagesOnReplace(int index,int newpoke,int newpokename=-1) {
@@ -1878,6 +1928,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				GameDebug.Log($"[Send out Pokémon] Opponent sent out #{party[newpokename].Name} in position #{index}");
 			}
 		}
+		void IBattle.MessagesOnReplace(int index,int newpoke,int newpokename=-1) { this.MessagesOnReplace(index, newpoke, newpokename); }
 
 		public IEnumerator SwitchInBetween(int index, bool lax, bool cancancel, System.Action<int> result = null) {
 			if (!OwnedByPlayer(index)) {
@@ -1888,6 +1939,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return SwitchPlayer(index,lax,cancancel,result);
 			//}
 		}
+		int IBattle.SwitchInBetween(int index, bool lax, bool cancancel)
+		{
+			int r = -1;
+			this.SwitchInBetween(index, lax, cancancel, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator SwitchPlayer(int index,bool lax, bool cancancel, System.Action<int> result = null) {
 			if (@debug) {
@@ -1897,6 +1954,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			//else {
 				yield return (@scene as IPokeBattle_SceneIE).Switch(index,lax,cancancel,result);
 			//}
+		}
+		int IBattle.SwitchPlayer(int index,bool lax, bool cancancel)
+		{
+			int r = -1;
+			this.SwitchPlayer(index, lax, cancancel, result: value=>r=value);
+			return r;
 		}
 		#endregion
 
@@ -1940,6 +2003,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(ret);
 		}
+		bool IBattle.UseItemOnPokemon(Items item,int pkmnIndex,IBattler userPkmn,IHasDisplayMessage scene)
+		{
+			bool r = false;
+			this.UseItemOnPokemon(item,pkmnIndex,(IBattlerIE)userPkmn,(IHasDisplayMessageIE)scene, result: value=>r=value);
+			return r;
+		}
 
 		/// <summary>
 		/// Uses an item on an active Pokémon.
@@ -1963,6 +2032,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			return ret;
 		}
+		bool IBattle.UseItemOnBattler(Items item,int index,IBattler userPkmn,IHasDisplayMessage scene) { return this.UseItemOnBattler(item, index, (IBattlerIE)userPkmn, (IHasDisplayMessageIE)scene); }
 
 		public IEnumerator RegisterItem(int idxPokemon,Items idxItem,int? idxTarget=null, System.Action<bool> result = null) {
 			if (idxTarget!=null && idxTarget.Value>=0) {
@@ -2021,6 +2091,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				@megaEvolution[side][owner]=-1;
 			}
 			result?.Invoke(true);
+		}
+		bool IBattle.RegisterItem(int idxPokemon,Items idxItem,int? idxTarget=null)
+		{
+			bool r = false;
+			this.RegisterItem(idxPokemon, idxItem, idxTarget, result: value=>r=value);
+			return r;
 		}
 
 		public IEnumerator EnemyUseItem(Items item, IBattlerIE battler) {
@@ -2109,6 +2185,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 		}
+		void IBattle.EnemyUseItem(Items item, IBattler battler) { this.EnemyUseItem(item, battler); }
 		#endregion
 
 		#region Fleeing from Battle
@@ -2235,6 +2312,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (!duringBattle) @runCommand+=1;
 			result?.Invoke(ret);
 		}
+		int IBattle.Run(int idxPokemon,bool duringBattle=false)
+		{
+			int r = -1;
+			this.Run(idxPokemon, duringBattle, result: value=>r=value);
+			return r;
+		}
 		#endregion
 
 		#region Mega Evolve Battler
@@ -2289,6 +2372,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			int owner=GetOwnerIndex(index);
 			@megaEvolution[side][owner]=-2;
 		}
+		void IBattle.MegaEvolve(int index) { this.MegaEvolve(index); }
 		#endregion
 
 		#region Primal Revert Battler
@@ -2317,6 +2401,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return Display(Game._INTL("{1}'s Primal Reversion!\nIt reverted to its primal form!",@battlers[index].ToString()));
 			GameDebug.Log($"[Primal Reversion] #{@battlers[index].ToString()} Primal Reverted");
 		}
+		void IBattle.PrimalReversion(int index) { this.PrimalReversion(index); }
 		#endregion
 
 		#region Call Battler
@@ -2348,6 +2433,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return Display(Game._INTL("But nothing happened!"));
 			}
 		}
+		void IBattle.Call(int index) { this.Call(index); }
 		#endregion
 
 		#region Gaining Experience
@@ -2411,6 +2497,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 		}
+		void IBattle.GainEXP() { this.GainEXP(); }
 
 		public IEnumerator GainExpOne(int index,IBattlerIE defeated,int partic,int expshare,bool haveexpall,bool showmessages=true) {
 			IPokemon thispoke=@party1[index];
@@ -2610,6 +2697,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 		}
+		void IBattle.GainExpOne(int index,IBattler defeated,int partic,int expshare,bool haveexpall,bool showmessages=true) { this.GainExpOne(index, (IBattlerIE)defeated, partic, expshare, haveexpall, showmessages); }
 		#endregion
 
 		#region Learning a move.
@@ -2669,6 +2757,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			} while(true);
 		}
+		void IBattle.LearnMove(int pkmnIndex,Moves move) { this.LearnMove(pkmnIndex, move); }
 		#endregion
 
 		#region Abilities.
@@ -2699,6 +2788,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return (_battlers[i] as IBattlerIE).CheckForm();
 			}
 		}
+		void IBattle.OnActiveAll() { this.OnActiveAll(); }
 
 		public IEnumerator OnActiveOne(IBattlerIE pkmn,bool onlyabilities=false,bool moldbreaker=false,System.Action<bool> result=null) {
 			if (pkmn.isFainted()) { result?.Invoke(false); yield break; }
@@ -2804,6 +2894,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattle.OnActiveOne(IBattler pkmn,bool onlyabilities=false,bool moldbreaker=false)
+		{
+			bool r = false;
+			this.OnActiveOne((IBattlerIE)pkmn, onlyabilities, moldbreaker, result: value=>r=value);
+			return r;
+		}
 
 		new public IEnumerator PrimordialWeather() {
 			// End Primordial Sea, Desolate Land, Delta Stream
@@ -2847,6 +2943,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					break;
 			}
 		}
+		void IBattle.PrimordialWeather() { this.PrimordialWeather(); }
 		#endregion
 
 		#region Judging
@@ -2938,10 +3035,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		new public IEnumerator Display(string msg) {
 			yield return (@scene as IPokeBattle_SceneIE).DisplayMessage(msg);
 		}
+		void IBattle.Display(string msg) { this.Display(msg); }
 
 		new public IEnumerator DisplayPaused(string msg) {
 			yield return (@scene as IPokeBattle_SceneIE).DisplayPausedMessage(msg);
 		}
+		void IBattle.DisplayPaused(string msg) { this.DisplayPaused(msg); }
 
 		/// <summary>
 		/// Displays a message on screen,
@@ -2951,30 +3050,41 @@ namespace PokemonUnity.Interface.UnityEngine
 		new public IEnumerator DisplayBrief(string msg) {
 			yield return (@scene as IPokeBattle_SceneIE).DisplayMessage(msg,true);
 		}
+		void IBattle.DisplayBrief(string msg) { this.DisplayBrief(msg); }
 
 		public IEnumerator DisplayConfirm(string msg,System.Action<bool> result) {
 			yield return (@scene as IPokeBattle_SceneIE).DisplayConfirmMessage(msg,result);
+		}
+		bool IBattle.DisplayConfirm(string msg)
+		{
+			bool r = false;
+			this.DisplayConfirm(msg, result: value=>r=value);
+			return r;
 		}
 
 		new public IEnumerator ShowCommands(string msg,string[] commands,bool cancancel=true) {
 			yield return (@scene as IPokeBattle_SceneIE).ShowCommands(msg,commands,cancancel);
 		}
+		void IBattle.ShowCommands(string msg,string[] commands,bool cancancel) { this.ShowCommands(msg, commands, cancancel); }
 
 		new public IEnumerator ShowCommands(string msg,string[] commands,int cancancel) {
 			yield return (@scene as IPokeBattle_SceneIE).ShowCommands(msg,commands,cancancel);
 		}
+		//void IBattle.ShowCommands(string msg,string[] commands,int cancancel) { this.ShowCommands(msg, commands, cancancel); }
 
 		public IEnumerator Animation(Moves move,IBattlerIE attacker,IBattlerIE opponent,int hitnum=0) {
 			if (@battlescene) {
 				if (@scene is IPokeBattle_SceneIE s0) yield return s0.Animation(move,attacker,opponent,hitnum);
 			}
 		}
+		void IBattle.Animation(Moves move,IBattler attacker,IBattler opponent,int hitnum=0) { this.Animation(move, attacker, opponent, hitnum); }
 
 		public IEnumerator CommonAnimation(string name,IBattlerIE attacker,IBattlerIE opponent,int hitnum=0) {
 			if (@battlescene) {
 				if (@scene is IPokeBattle_SceneIE s0) yield return s0.CommonAnimation(name,attacker,opponent,hitnum);
 			}
 		}
+		void IBattle.CommonAnimation(string name,IBattler attacker,IBattler opponent,int hitnum=0) { this.CommonAnimation(name, attacker, opponent, hitnum); }
 		#endregion
 
 		#region Battle Core.
@@ -2996,6 +3106,12 @@ namespace PokemonUnity.Interface.UnityEngine
 					GameEvents.current.StartCoroutine(s0.EndBattle(@decision));
 			}
 			return @decision; //result?.Invoke(@decision);
+		}
+		BattleResults IBattle.StartBattle(bool canlose=false)
+		{
+			BattleResults r = BattleResults.InProgress;
+			this.StartBattle(canlose);
+			return r;
 		}
 
 		new public IEnumerator StartBattleCore(bool canlose) {
@@ -3250,17 +3366,30 @@ namespace PokemonUnity.Interface.UnityEngine
 			#endregion
 			yield return EndOfBattle(canlose);
 		}
+		void IBattle.StartBattleCore(bool canlose) { this.StartBattleCore(canlose); }
 		#endregion
 
 		#region Command phase.
 		public IEnumerator CommandMenu(int i, System.Action<MenuCommands> result) {
 			yield return (@scene as IPokeBattle_SceneIE).CommandMenu(i, result);//result:value=>selected=value
 		}
+		MenuCommands IBattle.CommandMenu(int i)
+		{
+			MenuCommands r = MenuCommands.CANCEL;
+			this.CommandMenu(i, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator ItemMenu(int i, System.Action<KeyValuePair<Items, int?>> result) {
 			//return (@scene as IPokeBattle_SceneNonInteractive).ItemMenu(i);
 			//Returns from UI the Selected item, and the target for the item's usage
 			yield return (@scene as IPokeBattle_SceneIE).ItemMenu(i, result:value=>result?.Invoke(new KeyValuePair<Items,int?>(value, null)));
+		}
+		KeyValuePair<Items, int?> IBattle.ItemMenu(int i)
+		{
+			KeyValuePair<Items, int?> r = new KeyValuePair<Items, int?>();
+			this.ItemMenu(i, result: value=>r=value);
+			return r;
 		}
 
 		//public bool AutoFightMenu(int i) {
@@ -3430,6 +3559,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 		}
+		void IBattle.CommandPhase() { this.CommandPhase(); }
 		#endregion
 
 		#region Attack phase.
@@ -3604,6 +3734,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			} while (n < 10);
 			if (Game.GameData is IGameField f) f.Wait(20);
 		}
+		void IBattle.AttackPhase() { this.AttackPhase(); }
 		#endregion
 
 		#region End of round.
@@ -4738,6 +4869,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			@usepriority=false;
 			(this as IBattleClause).EndOfRoundPhase();
 		}
+		void IBattle.EndOfRoundPhase() { this.EndOfRoundPhase(); }
 		#endregion
 
 		#region End of battle.
@@ -4896,6 +5028,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				i.belch=false;
 			}
 			result?.Invoke(@decision);
+		}
+		BattleResults IBattle.EndOfBattle(bool canlose)
+		{
+			BattleResults r = BattleResults.InProgress;
+			this.EndOfBattle(canlose, result: value=>r=value);
+			return r;
 		}
 		#endregion
 

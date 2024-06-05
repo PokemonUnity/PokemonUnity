@@ -145,7 +145,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			buttons = transform.GetComponent<FightMenuButtons>();
 		}
 
-		public IFightMenuDisplay initialize(IBattler battler, IViewport viewport= null)
+		public IFightMenuDisplay initialize(IBattler battler, IViewport viewport = null)
 		{
 			//@display = null;
 			/*if (PokeBattle_SceneConstants.USEFIGHTBOX)

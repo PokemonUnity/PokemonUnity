@@ -21,6 +21,7 @@ using UnityEngine.SceneManagement;
 namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
+	/// This class acts as Unity's scene manager and is used to load scenes in the game engine.
 	/// </summary>
 	/// https://www.youtube.com/watch?v=CE9VOZivb3I
 	[ExecuteInEditMode]
@@ -29,6 +30,19 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Variables
 		public float transitionTime = .5f;
 		public global::UnityEngine.CanvasGroup canvasGroup;
+		private IDictionary<Type, Scenes> sceneLevels = new Dictionary<Type, Scenes>(); //ToDo: Rename to `sceneMapping`?
+		//{
+		//	{ typeof(PokemonEssentials.Interface.Screen.IIntroEventScene), Scenes.Intro }, //"Intro"
+		//	//{  }, // "MainMenu"
+		//	//{  }, // "Gameplay"
+		//	//{  }, // "Battle"
+		//	//{  }, // "Pokedex"
+		//	//{  }, // "Bag"
+		//	//{  }, // "Options"
+		//	//{  }, // "Save"
+		//	//{  }, // "Load"
+		//	//{  }, // "Exit"
+		//};
 		#endregion
 
 		#region Unity Monobehavior
@@ -113,13 +127,28 @@ namespace PokemonUnity.Interface.UnityEngine
 		private void Scene_onLoadLevel(IScene level)
 		{
 			//SceneManager.LoadScene(level);
-			StartCoroutine(LoadLevel(level.Id));
+			//StartCoroutine(LoadLevel(level.Id));
+			StartCoroutine(LoadLevel((int)GetSceneType(level)));
 		}
 
 		private void Scene_onLoadLevel(IOnLoadLevelEventArgs args)
 		{
 			//SceneManager.LoadScene(level);
-			StartCoroutine(LoadLevel(args.Scene.Id));
+			//StartCoroutine(LoadLevel(args.Scene.Id));
+			Scene_onLoadLevel(args.Scene);
+		}
+
+		private Scenes GetSceneType(IScene scene)
+		{
+			Type type = scene.GetType();
+			foreach (var entry in sceneLevels)
+			{
+				if (entry.Key.IsAssignableFrom(type))
+				{
+					return entry.Value;
+				}
+			}
+			return Scenes.None; //throw new ArgumentException("No unity scene found for the given interface type");
 		}
 		#endregion
 	}

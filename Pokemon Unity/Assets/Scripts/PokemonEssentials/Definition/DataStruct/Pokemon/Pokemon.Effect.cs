@@ -19,7 +19,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	public partial class Battler : IBattlerEffectIE
 	{
 		#region Sleep
-		IEnumerator IBattlerEffectIE.CanSleep(IBattler attacker, bool showMessages, IBattleMove move, bool ignorestatus, System.Action<bool> result) {
+		public IEnumerator CanSleep(IBattler attacker, bool showMessages, IBattleMove move, bool ignorestatus, System.Action<bool> result) {
 			if (isFainted()) { result?.Invoke(false); yield break; }
 			bool selfsleep=(attacker.IsNotNullOrNone() && attacker.Index==this.Index);
 			if (!ignorestatus && Status==Status.SLEEP) {
@@ -73,6 +73,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			result?.Invoke(true);
 		}
+		bool IBattlerEffect.CanSleep(IBattler attacker, bool showMessages, IBattleMove move, bool ignorestatus)
+		{
+			bool r = false;
+			this.CanSleep(attacker, showMessages, move, ignorestatus, result: value => r=value);
+			return r;
+		}
 
 		//bool IBattlerEffect.CanSleepYawn() {
 		//	if (status!=0) return false;
@@ -105,6 +111,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return @battle.Display(Game._INTL("{1} fell asleep!",ToString()));
 			GameDebug.Log($"[Status change] #{ToString()} fell asleep (#{this.StatusCount} turns)");
 		}
+		void IBattlerEffect.Sleep(string msg) { this.Sleep(msg); }
 
 		//public void SleepSelf(int duration=-1) {
 		//	Status=Status.SLEEP;
@@ -161,6 +168,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattlerEffect.CanPoison(IBattler attacker,bool showMessages,IBattleMove move=null)
+		{
+			bool r = false;
+			this.CanPoison(attacker, showMessages, move, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator CanPoisonSynchronize(IBattler opponent, System.Action<bool> result) {
 			if (isFainted()) { result(false); yield break; }
@@ -186,6 +199,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				result(false); yield break;
 			}
 			result(true);
+		}
+		bool IBattlerEffect.CanPoisonSynchronize(IBattler opponent)
+		{
+			bool r = false;
+			this.CanPoisonSynchronize(opponent, result: value=>r=value);
+			return r;
 		}
 
 		//public bool CanPoisonSpikes(bool moldbreaker=false) {
@@ -229,6 +248,7 @@ namespace PokemonUnity.Interface.UnityEngine
 						Game._INTL(Ability.ToString(TextScripts.Name)),attacker.ToString(true)),toxic);
 				}
 		}
+		void IBattlerEffect.Poison(IBattler attacker,string msg=null, bool toxic=false) { this.Poison(attacker, msg, toxic); }
 		#endregion
 
 		#region Burn
@@ -273,6 +293,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattlerEffect.CanBurn(IBattler attacker,bool showMessages,IBattleMove move=null)
+		{
+			bool r = false;
+			this.CanBurn(attacker, showMessages, move, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator CanBurnSynchronize(IBattler opponent, System.Action<bool> result) {
 			if (isFainted()) { result(false); yield break; }
@@ -299,6 +325,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result(true);
 		}
+		bool IBattlerEffect.CanBurnSynchronize(IBattler opponent)
+		{
+			bool r = false;
+			this.CanBurnSynchronize(opponent, result: value=>r=value);
+			return r;
+		}
 
 		new public IEnumerator Burn(IBattler attacker,string msg=null) {
 			Status=Status.BURN;
@@ -317,6 +349,7 @@ namespace PokemonUnity.Interface.UnityEngine
 						Game._INTL(Ability.ToString(TextScripts.Name)),attacker.ToString(true)));
 				}
 		}
+		void IBattlerEffect.Burn(IBattler attacker,string msg=null) { this.Burn(attacker, msg); }
 		#endregion
 
 		#region Paralyze
@@ -361,6 +394,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattlerEffect.CanParalyze(IBattler attacker,bool showMessages,IBattleMove move=null)
+		{
+			bool r = false;
+			this.CanParalyze(attacker, showMessages, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator CanParalyzeSynchronize(IBattler opponent, System.Action<bool> result) {
 			if (Status != 0) { result(false); yield break; }
@@ -383,6 +422,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result(true);
 		}
+		bool IBattlerEffect.CanParalyzeSynchronize(IBattler opponent)
+		{
+			bool r = false;
+			this.CanParalyzeSynchronize(opponent, result: value=>r=value);
+			return r;
+		}
 
 		new public IEnumerator Paralyze(IBattler attacker,string msg=null) {
 			Status=Status.PARALYSIS;
@@ -401,10 +446,11 @@ namespace PokemonUnity.Interface.UnityEngine
 						this.ToString(),Game._INTL(Ability.ToString(TextScripts.Name)),attacker.ToString(true)));
 				}
 		}
+		void IBattlerEffect.Paralyze(IBattler attacker,string msg=null) { this.Paralyze(attacker, msg); }
 		#endregion
 
 		#region Freeze
-		IEnumerator IBattlerEffectIE.CanFreeze(IBattler attacker,bool showMessages,IBattleMove move, System.Action<bool> result) {
+		public IEnumerator CanFreeze(IBattler attacker,bool showMessages,IBattleMove move, System.Action<bool> result) {
 			if (isFainted()) { result(false); yield break; }
 			if (Status==Status.FROZEN) {
 				if (showMessages) yield return @battle.Display(Game._INTL("{1} is already frozen solid!",ToString()));
@@ -447,6 +493,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result(true);
 		}
+		bool IBattlerEffect.CanFreeze(IBattler attacker,bool showMessages,IBattleMove move)
+		{
+			bool r = false;
+			this.CanFreeze(attacker, showMessages, move, result: value=>r=value);
+			return r;
+		}
 
 		new public IEnumerator Freeze(string msg=null) {
 			Status=Status.FROZEN;
@@ -459,6 +511,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				yield return @battle.Display(Game._INTL("{1} was frozen solid!",ToString()));
 			GameDebug.Log($"[Status change] #{ToString()} was frozen");
 		}
+		void IBattlerEffect.Freeze(string msg=null) { this.Freeze(msg); }
 		#endregion
 
 		#region Generalized status displays
@@ -486,6 +539,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					break;
 			}
 		}
+		void IBattlerEffect.ContinueStatus(bool showAnim=true) { this.ContinueStatus(showAnim); }
 
 		new public IEnumerator CureStatus(bool showMessages=true) {
 			Status oldstatus=Status;
@@ -507,6 +561,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			GameDebug.Log($"[Status change] #{ToString()}'s status was cured");
 		}
+		void IBattlerEffect.CureStatus(bool showMessages=true) { this.CureStatus(showMessages); }
 		#endregion
 
 		#region Confuse
@@ -532,6 +587,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattlerEffect.CanConfuse(IBattler attacker=null,bool showMessages=true,IBattleMove move=null)
+		{
+			bool r = false;
+			this.CanConfuse(attacker, showMessages, move, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator CanConfuseSelf(bool showMessages,System.Action<bool> result=null) {
 			if (isFainted()) { result?.Invoke(false); yield break; }
@@ -544,6 +605,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				result?.Invoke(false); yield break;
 			}
 			result?.Invoke(true);
+		}
+		bool IBattlerEffect.CanConfuseSelf(bool showMessages)
+		{
+			bool r = false;
+			this.CanConfuseSelf(showMessages, result: value=>r=value);
+			return r;
 		}
 
 		//public void Confuse() {
@@ -563,17 +630,20 @@ namespace PokemonUnity.Interface.UnityEngine
 				GameDebug.Log($"[Lingering effect triggered] #{ToString()} became confused (#{effects.Confusion} turns)");
 			}
 		}
+		void IBattlerEffect.ConfuseSelf() { this.ConfuseSelf(); }
 
 		new public IEnumerator ContinueConfusion() {
 			@battle.CommonAnimation("Confusion",this,null);
 			yield return @battle.DisplayBrief(Game._INTL("{1} is confused!",ToString()));
 		}
+		void IBattlerEffect.ContinueConfusion() { this.ContinueConfusion(); }
 
 		new public IEnumerator CureConfusion(bool showMessages=true) {
 			effects.Confusion=0;
 			if (showMessages) yield return @battle.Display(Game._INTL("{1} snapped out of confusion!",ToString()));
 			GameDebug.Log($"[End of effect] #{ToString()} was cured of confusion");
 		}
+		void IBattlerEffect.CureConfusion(bool showMessages=true) { this.CureConfusion(showMessages); }
 		#endregion
 
 		#region Attraction
@@ -597,6 +667,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattlerEffect.CanAttract(IBattler attacker,bool showMessages=true)
+		{
+			bool r = false;
+			this.CanAttract(attacker, showMessages, result: value=>r=value);
+			return r;
+		}
 
 		new public IEnumerator Attract(IBattler attacker,string msg=null) {
 			effects.Attract=attacker.Index;
@@ -613,16 +689,19 @@ namespace PokemonUnity.Interface.UnityEngine
 					Game._INTL(this.Item.ToString(TextScripts.Name)),attacker.ToString(true)));
 			}
 		}
+		void IBattlerEffect.Attract(IBattler attacker,string msg=null) { this.Attract(attacker, msg); }
 
 		new public IEnumerator AnnounceAttract(IBattler seducer) {
 			@battle.CommonAnimation("Attract",this,null);
 			yield return @battle.DisplayBrief(Game._INTL("{1} is in love with {2}!",
 				ToString(),seducer.ToString(true)));
 		}
+		void IBattlerEffect.AnnounceAttract(IBattler seducer) { this.AnnounceAttract(seducer); }
 
 		new public IEnumerator ContinueAttract() {
 			yield return @battle.Display(Game._INTL("{1} is immobilized by love!",ToString()));
 		}
+		void IBattlerEffect.ContinueAttract() { this.ContinueAttract(); }
 
 		//public void CureAttract() {
 		//	effects.Attract=-1;
@@ -655,6 +734,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				result?.Invoke(false); yield break;
 			}
 			result?.Invoke(true);
+		}
+		bool IBattlerEffect.CanIncreaseStatStage(Stats stat,IBattler attacker=null,bool showMessages=false,IBattleMove move=null,bool moldbreaker=false,bool ignoreContrary=false)
+		{
+			bool r = false;
+			this.CanIncreaseStatStage(stat, attacker, showMessages, move, moldbreaker, ignoreContrary, result: value=>r=value);
+			return r;
 		}
 
 		//public int IncreaseStatBasic(Stats stat,int increment,IBattler attacker=null,bool moldbreaker=false,bool ignoreContrary=false) {
@@ -697,6 +782,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(false);
 		}
+		bool IBattlerEffect.IncreaseStat(Stats stat,int increment,IBattler attacker,bool showMessages,IBattleMove move=null,bool upanim=true,bool moldbreaker=false,bool ignoreContrary=false)
+		{
+			bool r = false;
+			this.IncreaseStat(stat, increment, attacker, showMessages, move, upanim, moldbreaker, ignoreContrary, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator IncreaseStatWithCause(Stats stat,int increment,IBattler attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false,System.Action<bool> result=null) {
 			if (!moldbreaker)
@@ -730,6 +821,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 			result?.Invoke(false);
+		}
+		bool IBattlerEffect.IncreaseStatWithCause(Stats stat,int increment,IBattler attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false)
+		{
+			bool r = false;
+			this.IncreaseStatWithCause(stat, increment, attacker, cause, showanim, showmessage, moldbreaker, ignoreContrary, result: value=>r=value);
+			return r;
 		}
 		#endregion
 
@@ -808,6 +905,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(true);
 		}
+		bool IBattlerEffect.CanReduceStatStage(Stats stat,IBattler attacker=null,bool showMessages=false,IBattleMove move=null,bool moldbreaker=false,bool ignoreContrary=false)
+		{
+			bool r = false;
+			this.CanReduceStatStage(stat, attacker, showMessages, move, moldbreaker, ignoreContrary, result: value=>r=value);
+			return r;
+		}
 
 		//public int ReduceStatBasic(Stats stat,int increment,IBattler attacker=null,bool moldbreaker=false,bool ignoreContrary=false) {
 		//	if (!moldbreaker) // moldbreaker is true only when Roar forces out a Pokémon into Sticky Web
@@ -855,6 +958,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(false);
 		}
+		bool IBattlerEffect.ReduceStat(Stats stat,int increment,IBattler attacker,bool showMessages,IBattleMove move=null,bool downanim=true,bool moldbreaker=false,bool ignoreContrary=false)
+		{
+			bool r = false;
+			this.ReduceStat(stat, increment, attacker, showMessages, move, downanim, moldbreaker, ignoreContrary, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator ReduceStatWithCause(Stats stat,int increment,IBattler attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false,System.Action<bool> result=null) {
 			if (!moldbreaker)
@@ -896,6 +1005,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			result?.Invoke(false);
 		}
+		bool IBattlerEffect.ReduceStatWithCause(Stats stat,int increment,IBattler attacker,string cause,bool showanim=true,bool showmessage=true,bool moldbreaker=false,bool ignoreContrary=false)
+		{
+			bool r = false;
+			this.ReduceStatWithCause(stat, increment, attacker, cause, showanim, showmessage, moldbreaker, ignoreContrary, result: value=>r=value);
+			return r;
+		}
 
 		public IEnumerator ReduceAttackStatIntimidate(IBattler opponent, System.Action<bool> result) {
 			if (isFainted()) { result(false); yield break; }
@@ -928,6 +1043,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 			yield return ReduceStatWithCause(Stats.ATTACK,1,opponent,Game._INTL(opponent.Ability.ToString(TextScripts.Name)), result: value => result(value));
+		}
+		bool IBattlerEffect.ReduceAttackStatIntimidate(IBattler opponent)
+		{
+			bool r = false;
+			this.ReduceAttackStatIntimidate(opponent, result: value=>r=value);
+			return r;
 		}
 		#endregion
 	}

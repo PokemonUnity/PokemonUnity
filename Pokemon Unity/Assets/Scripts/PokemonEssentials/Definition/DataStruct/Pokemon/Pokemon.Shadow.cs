@@ -41,6 +41,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				ConfusionDamage();
 			}
 		}
+		void IBattlerShadowPokemon.EndTurn(IBattleChoice choice) { this.EndTurn(choice); }
 
 		/*public bool isShadow() {
 			PokemonEssentials.Interface.PokeBattle.IPokemon pkmn=this.pokemon;
@@ -171,6 +172,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			//return _pbUseItemOnPokemon(item,pkmnIndex,userPkmn,scene);
 			yield return (this as IBattleIE).UseItemOnPokemon(item, pkmnIndex, (IBattlerIE)userPkmn, scene, result: value => result(value));
+		}
+		bool IBattleShadowPokemon.UseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene)
+		{
+			bool r = false;
+			this.UseItemOnPokemon(item, pkmnIndex, (IBattlerIE)userPkmn, (IHasDisplayMessageIE)scene, result: value => r=value);
+			return r;
 		}
 	}
 

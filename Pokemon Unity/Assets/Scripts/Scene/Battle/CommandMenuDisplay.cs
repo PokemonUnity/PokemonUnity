@@ -141,29 +141,32 @@ namespace PokemonUnity.Interface.UnityEngine
 		IRect IViewport.rect { get { return null; } set { return; } } //ToDo: Implement IRect
 		#endregion
 
-		public ICommandMenuDisplay initialize(IViewport viewport= null)
+		public ICommandMenuDisplay initialize(IViewport viewport = null)
 		{
 			//@display = null; //set display to false
 			if (PokeBattle_SceneConstants.USECOMMANDBOX)
 			{
 				//set display to true
 				//@display = new IconSprite(0, (Game.GameData as Game).Graphics.height - 96, viewport);
-				if (@window != null) {
+				if (@window != null)
+				{
 					@display.initialize(0, (Game.GameData as Game).Graphics.height - 96, viewport);
 					@display.setBitmap("Graphics/Pictures/battleCommand");
 				}
 			}
 			//@window = new Window_CommandPokemon().WithSize([],
 			//	(Game.GameData as Game).Graphics.width - 240,(Game.GameData as Game).Graphics.height - 96,240,96,viewport);
-			if (@window != null) {
-				@window.WithSize(new string[0], (Game.GameData as Game).Graphics.width - 240,(Game.GameData as Game).Graphics.height - 96,240,96,viewport);
+			if (@window != null)
+			{
+				@window.WithSize(new string[0], (Game.GameData as Game).Graphics.width - 240, (Game.GameData as Game).Graphics.height - 96, 240, 96, viewport);
 				@window.columns = 2;
 				@window.columnSpacing = 4;
 				@window.ignore_input = true;
 			}
 			//@msgbox = new Window_UnformattedTextPokemon()WithSize(
 			//	 "", 16, (Game.GameData as Game).Graphics.height - 96 + 2, 220, 96, viewport);
-			if (@msgbox != null) {
+			if (@msgbox != null)
+			{
 				@msgbox.WithSize("", 16, (Game.GameData as Game).Graphics.height - 96 + 2, 220, 96, viewport);
 				@msgbox.baseColor = PokeBattle_SceneConstants.MESSAGEBASECOLOR;
 				@msgbox.shadowColor = PokeBattle_SceneConstants.MESSAGESHADOWCOLOR;

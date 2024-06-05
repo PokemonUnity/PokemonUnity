@@ -112,43 +112,90 @@ namespace PokemonUnity.Interface.UnityEngine
 		public PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics BattleSceneDebugWithoutGfx	{ get { return battleSceneDebugWithoutGfx; } set { battleSceneDebugWithoutGfx = value; } }
 		#endregion
 
-
 		public IGameScenesUI initialize (params PokemonEssentials.Interface.Screen.IScene[] scenes)
 		{
 			foreach (PokemonEssentials.Interface.Screen.IScene scene in scenes)
 			{
-				if (scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) TextEntryScene = s0;
-				else if (scene is PokemonEssentials.Interface.Screen.IIntroEventScene s1) IntroScene = s1;
-				else if (scene is PokemonEssentials.Interface.Screen.ILoadScene s2) Load = s2;
-				else if (scene is PokemonEssentials.Interface.Screen.ISaveScene s3) Save = s3;
-				else if (scene is PokemonEssentials.Interface.Screen.IOptionScene s4) OptionScene = s4;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonMenuScene s5) PauseMenuScene = s5;
-				else if (scene is PokemonEssentials.Interface.Screen.IPartyDisplayScene s6) Party = s6;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonSummaryScene s7) Summary = s7;
-				else if (scene is PokemonEssentials.Interface.Screen.IBagScene s8) Bag = s8;
-				else if (scene is PokemonEssentials.Interface.Screen.IItemStorageScene s9) Bag_ItemStore = s9;
-				else if (scene is PokemonEssentials.Interface.Screen.IWithdrawItemScene s10) Bag_ItemWithdraw = s10;
-				else if (scene is PokemonEssentials.Interface.Screen.ITossItemScene s11) Bag_ItemToss = s11;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokegearScene s12) PokeGear = s12;
-				else if (scene is PokemonEssentials.Interface.Screen.ITrainerCardScene s13) TrainerCard = s13;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonStorageScene s14) PokemonStorageScene = s14;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonPokedexScene s15) PokedexScene = s15;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonNestMapScene s16) PokedexNestScene = s16;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonFormScene s17) PokedexFormScene = s17;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonEvolutionScene s18) EvolvingScene = s18;
-				else if (scene is PokemonEssentials.Interface.Screen.IMartScene s19) Mart = s19;
-				else if (scene is PokemonEssentials.Interface.Screen.IRelicStoneScene s20) RelicStone = s20;
-				else if (scene is PokemonEssentials.Interface.Screen.IPurifyChamberScene s21) PurityChamber = s21;
-				//else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s22) battleScene = s22;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene s23) BattleArenaScene = s23;
-				else if (scene is PokemonEssentials.Interface.Screen.IBattleSwapScene s24) BattleSwapScene = s24;
-				else if (scene is PokemonEssentials.Interface.Screen.ISafariZone_Scene s25) BattleSafari = s25;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene s26) BattleSceneDebug = s26;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive s27) BattleSceneDebugNoUI = s27;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging s28) BattleSceneDebugWithoutLog = s28;
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics s29) BattleSceneDebugWithoutGfx = s29;
+				if (scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) { TextEntryScene = s0; sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEntryScene), Scenes.TextEntry); }
+				else if (scene is PokemonEssentials.Interface.Screen.IIntroEventScene s1) { IntroScene = s1; sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IIntroEventScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.ILoadScene s2) { Load = s2; sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.ILoadScene), Scenes.Load); }
+				else if (scene is PokemonEssentials.Interface.Screen.ISaveScene s3) { Save = s3; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.ISaveScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IOptionScene s4) { OptionScene = s4; sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IOptionScene), Scenes.Option); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokemonMenuScene s5) { PauseMenuScene = s5; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonMenuScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPartyDisplayScene s6) { Party = s6; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPartyDisplayScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokemonSummaryScene s7) { Summary = s7; sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonSummaryScene), Scenes.Summary); }
+				else if (scene is PokemonEssentials.Interface.Screen.IBagScene s8) { Bag = s8; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IBagScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IItemStorageScene s9) { Bag_ItemStore = s9; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IItemStorageScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IWithdrawItemScene s10) { Bag_ItemWithdraw = s10; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IWithdrawItemScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.ITossItemScene s11) { Bag_ItemToss = s11; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.ITossItemScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokegearScene s12) { PokeGear = s12; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokegearScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.ITrainerCardScene s13) { TrainerCard = s13; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.ITrainerCardScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokemonStorageScene s14) { PokemonStorageScene = s14; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonStorageScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokemonPokedexScene s15) { PokedexScene = s15; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonPokedexScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokemonNestMapScene s16) { PokedexNestScene = s16; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonNestMapScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokemonFormScene s17) { PokedexFormScene = s17; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonFormScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokemonEvolutionScene s18) { EvolvingScene = s18; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEvolutionScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IMartScene s19) { Mart = s19; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IMartScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IRelicStoneScene s20) { RelicStone = s20; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IRelicStoneScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPurifyChamberScene s21) { PurityChamber = s21; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPurifyChamberScene), Scenes.Intro); }
+				//else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s22) { battleScene = s22; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_Scene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene s23) { BattleArenaScene = s23; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IBattleSwapScene s24) { BattleSwapScene = s24; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IBattleSwapScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.ISafariZone_Scene s25) { BattleSafari = s25; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.ISafariZone_Scene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene s26) { BattleSceneDebug = s26; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive s27) { BattleSceneDebugNoUI = s27; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging s28) { BattleSceneDebugWithoutLog = s28; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics s29) { BattleSceneDebugWithoutGfx = s29; } //sceneLevels.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics), Scenes.Intro); }
 			}
 			return this;
 		}
+	}
+
+	/// <summary>
+	/// Used to load scenes in the game. Assign once here, and use to match Unity's scene manager.
+	/// </summary>
+	/// <remarks>
+	/// One display screen for every game scene in the pokemon framework.
+	/// </remarks>
+	public enum Scenes
+	{
+		None = -1,
+		/// <summary>
+		/// First scene to load when game boots up.
+		/// Displays logos and intro credits/sponsors
+		/// </summary>
+		/// <remarks>
+		/// <see cref="PokemonEssentials.Interface.Screen.IIntroEventScreen"/>
+		/// </remarks>
+		Intro = 0, //Only need to assign the first scene, the rest will be in order of the enum
+		/// <summary>
+		/// Scene after title card that displays that displays the main menu,
+		/// and contains a list of save files and allows the player to choose one to load.
+		/// </summary>
+		/// <remarks>
+		/// <see cref="PokemonEssentials.Interface.Screen.ILoadScreen"/>
+		/// </remarks>
+		Load,
+		/// <summary>
+		/// Scene to change game settings.
+		/// </summary>
+		/// <remarks>
+		/// <see cref="PokemonEssentials.Interface.Screen.IOptionScreen"/>
+		/// </remarks>
+		Option,
+		/// <summary>
+		/// Used to display the summary scene, and overview stats for a Pokémon.
+		/// </summary>
+		/// <remarks>
+		/// <see cref="PokemonEssentials.Interface.Screen.IPokemonSummaryScreen"/>
+		/// </remarks>
+		Summary,
+		/// <summary>
+		/// Scene used for entering text, such as naming a Pokémon or a box.
+		/// </summary>
+		/// <remarks>
+		/// <see cref="PokemonEssentials.Interface.Screen.IPokemonEntryScreen"/>
+		/// </remarks>
+		TextEntry,
 	}
 }

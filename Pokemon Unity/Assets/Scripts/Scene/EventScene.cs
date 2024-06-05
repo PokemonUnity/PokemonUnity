@@ -14,18 +14,24 @@ using UnityEngine.UI;
 
 namespace PokemonUnity.Interface.UnityEngine
 {
-	public class EventScene : MonoBehaviour, IEventScene
+	public abstract class EventScene : MonoBehaviour, IEventScene
 	{
-		public event EventHandler onATrigger;
-		public event EventHandler onBTrigger;
-		public event EventHandler onUpdate;
-		public event EventHandler Graphics;
-		public event EventHandler Input;
+		public event EventHandler OnATriggerEvent;
+		public event EventHandler OnBTriggerEvent;
+		public event EventHandler OnUpdateEvent;
+		public bool OnATrigger { get { return onATrigger; } }
+		public bool OnBTrigger { get { return onBTrigger; } }
+		public bool OnUpdate {  get { return onUpdate; } }
+		protected IList<ISpriteWrapper> picturesprites;
+		protected IList<ISpriteWrapper> usersprites;
 		private IViewport Viewport;
-		private ISpriteWrapper[] picturesprites;
-		private ISpriteWrapper[] usersprites;
-		public bool disposed { get; private set; }
+		protected bool disposed;
+		private bool onATrigger;
+		private bool onBTrigger;
+		private bool onUpdate;
+		private long framecount;
 
+		#region Methods
 		//public void initialize(viewport= null)
 		public virtual IEventScene initialize(IViewport viewport= null)
 		{
@@ -33,9 +39,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			//@onCTrigger = new Event();
 			//@onBTrigger = new Event();
 			//@onUpdate = new Event();
-			@onATrigger = null;
-			@onBTrigger = null;
-			@onUpdate = null;
+			@OnATriggerEvent = null;
+			@OnBTriggerEvent = null;
+			@OnUpdateEvent = null;
 			//@pictures =[];
 			//@picturesprites =[];
 			//@usersprites =[];
@@ -70,7 +76,6 @@ namespace PokemonUnity.Interface.UnityEngine
 			//ToDo: Load images into an array/dictionary and use input parameter to access
 			//Change and cycle image used in scene based on input parameter
 		}
-
 
 		public void pictureWait(int extraframes = 0)
 		{
@@ -119,18 +124,18 @@ namespace PokemonUnity.Interface.UnityEngine
 			//	}
 			//}
 			//@onUpdate.trigger(this);
-			@onUpdate?.Invoke(this, EventArgs.Empty);
+			@OnUpdateEvent?.Invoke(this, EventArgs.Empty);
 			//ToDo: I have some pending updates that will include these in future...
 			//for now, you can use unity and bypass this.
 			if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))
 			{
 				//@onCTrigger.trigger(this);
-				@onATrigger?.Invoke(this, EventArgs.Empty);
+				@OnATriggerEvent?.Invoke(this, EventArgs.Empty);
 			}
 			if (PokemonUnity.Input.trigger(PokemonUnity.Input.B))
 			{
 				//@onBTrigger.trigger(this);
-				@onBTrigger?.Invoke(this, EventArgs.Empty);
+				@OnBTriggerEvent?.Invoke(this, EventArgs.Empty);
 			}
 			// each update one tick... but it wont be reflected in unity, unless you create an artificial pause
 			//Use fixed update as it represents how quickly your frames tick
@@ -140,24 +145,49 @@ namespace PokemonUnity.Interface.UnityEngine
 		public void wait(int frames)
 		{
 			//frames.times { update };
-			for(int i = 0; i < frames; i++) { update(); };
+			//for(int i = 0; i < frames; i++) { update(); };
+			framecount = frames;
 		}
 
 		/// <summary>
-		/// Clears all the event listeners subscribed to <see cref="onATrigger"/> handler.
+		/// Resets any events triggered by listener for <see cref="OnATriggerEvent"/> handler.
 		/// </summary>
+		/// Clears all the event listeners subscribed to <see cref="OnATriggerEvent"/> handler.
 		protected void ClearOnTriggerA()
 		{
-			@onATrigger = null;
+			@OnATriggerEvent = null;
+			onATrigger = false;
 		}
 
 		/// <summary>
-		/// Clears all the event listeners subscribed to <see cref="onUpdate"/> handler.
+		/// Resets any events triggered by listener for <see cref="OnBTriggerEvent"/> handler.
 		/// </summary>
+		/// Clears all the event listeners subscribed to <see cref="OnBTriggerEvent"/> handler.
+		protected void ClearOnTriggerB()
+		{
+			@OnBTriggerEvent = null;
+			onBTrigger = false;
+		}
+
+		/// <summary>
+		/// Resets any events triggered by listener for <see cref="OnUpdateEvent"/> handler.
+		/// </summary>
+		/// Clears all the event listeners subscribed to <see cref="OnUpdateEvent"/> handler.
 		protected void ClearOnUpdate()
 		{
-			@onUpdate = null;
+			@OnUpdateEvent = null;
+			@onUpdate = false;
 		}
+		#endregion
+
+		#region Scene Inheritence
+		public abstract int Id { get; }
+		bool IEventScene.disposed { get { return disposed; } }
+
+		public abstract void Refresh();
+		public abstract void Display(string v);
+		public abstract bool DisplayConfirm(string v);
+		#endregion
 
 		protected virtual void Dispose(bool disposing)
 		{
@@ -165,7 +195,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (disposing)
 			{
 				// TODO: dispose managed state (managed objects)
-				//Destroy all go created by scene
+				//Destroy all gameobjects created by scene
 				foreach (var sprite in @picturesprites)
 				{
 					sprite.Dispose();
@@ -177,9 +207,9 @@ namespace PokemonUnity.Interface.UnityEngine
 				//@onCTrigger.clear;
 				//@onBTrigger.clear;
 				//@onUpdate.clear;
-				@onATrigger = null;
-				@onBTrigger = null;
-				@onUpdate = null;
+				@OnATriggerEvent = null;
+				@OnBTriggerEvent = null;
+				@OnUpdateEvent = null;
 				//@pictures.clear;
 				//@picturesprites.clear;
 				//@usersprites.clear;
@@ -207,27 +237,39 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Unity Monobehavior
 		private void Awake()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 		private void OnEnable()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 		private void Start()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 		private void Update()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			if (framecount > 0)
+				framecount--;
+			if (framecount == 0)
+				update();
 		}
 		private void FixedUpdate()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 		private void LateUpdate()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+		}
+		private void OnDisable()
+		{
+			//GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+		}
+		private void OnDestroy()
+		{
+			//GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 		#endregion
 	}

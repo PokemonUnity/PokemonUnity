@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PokemonUnity.Combat;
 using PokemonEssentials.Interface;
@@ -25,11 +26,13 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_126() : base() { }
 		//public PokeBattle_Move_126(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
 			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret;
+			result(ret);
+			yield break;
 		}
 	}
 
@@ -40,11 +43,13 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_127() : base() { }
 		//public PokeBattle_Move_127(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
 			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret;
+			result(ret);
+			yield break;
 		}
 	}
 
@@ -55,11 +60,13 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_128() : base() { }
 		//public PokeBattle_Move_128(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
 			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret;
+			result(ret);
+			yield break;
 		}
 	}
 
@@ -70,11 +77,13 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_129() : base() { }
 		//public PokeBattle_Move_129(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
 			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret;
+			result(ret);
+			yield break;
 		}
 	}
 
@@ -85,11 +94,13 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_12A() : base() { }
 		//public PokeBattle_Move_12A(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
 			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret;
+			result(ret);
+			yield break;
 		}
 	}
 
@@ -100,11 +111,13 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_12B() : base() { }
 		//public PokeBattle_Move_12B(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
 			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret;
+			result(ret);
+			yield break;
 		}
 	}
 
@@ -115,13 +128,15 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_12C() : base() { }
 		//public PokeBattle_Move_12C(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			if (opponent is IBattlerEffect b && !b.CanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
-			ShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
-			bool ret = opponent is IBattlerEffect b0 && b0.ReduceStat(Stats.EVASION, increment: 2, attacker: attacker, showMessages: false);
+			bool ret = false;  if (opponent is IBattlerEffectIE b) b.CanReduceStatStage(Stats.EVASION, attacker, true, this, result:value=>ret=value); if(!ret) { result(-1); yield break; }
+			_host.StartCoroutine(ShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation));
+			ret = false; if (opponent is IBattlerEffectIE b0) b0.ReduceStat(Stats.EVASION, increment: 2, attacker: attacker, showMessages: false, result: value=>ret=value);
 			if (ret && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret ? 0 : -1;
+			result(ret ? 0 : -1);
+			yield break;
 		}
 	}
 
@@ -132,11 +147,13 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_12D() : base() { }
 		//public PokeBattle_Move_12D(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
 			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret;
+			result(ret);
+			yield break;
 		}
 	}
 
@@ -148,27 +165,30 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_12E() : base() { }
 		//public PokeBattle_Move_12E(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			List<int> affected = new List<int>();
+			IList<int> affected = new List<int>();
 			for (int i = 0; i < 4; i++)
 			{
 				if (this.battle.battlers[i].HP > 1) affected.Add(i);
 			}
 			if (affected.Count == 0)
 			{
-				this.battle.Display(Game._INTL("But it failed!"));
-				return -1;
+				_host.StartCoroutine(this.battle.Display(Game._INTL("But it failed!")));
+				result(-1);
+				yield break;
 			}
-			ShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
+			_host.StartCoroutine(ShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation));
 			for (int i = 0; i < affected.Count; i++)
 			{
 				this.battle.battlers[i].ReduceHP((int)Math.Floor(this.battle.battlers[i].HP / 2d));
 			}
-			this.battle.Display(Game._INTL("Each Pokemon's HP was halved!"));
+			_host.StartCoroutine(this.battle.Display(Game._INTL("Each Pokemon's HP was halved!")));
 			attacker.effects.HyperBeam = 2;
 			attacker.currentMove = MoveId;
-			return 0;
+			result(0);
+			yield break;
 		}
 	}
 
@@ -180,11 +200,13 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_12F() : base() { }
 		//public PokeBattle_Move_12F(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
 			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret;
+			result(ret);
+			yield break;
 		}
 	}
 
@@ -195,20 +217,24 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_130() : base() { }
 		//public PokeBattle_Move_130(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
-			int ret = base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation);
+			int ret = -1; _host.StartCoroutine(base.GetEffect(attacker, opponent, hitnum, alltargets, showanimation, result:value=>ret=value)); result(ret);
 			if (ret >= 0 && attacker is IBattlerShadowPokemon a) a.HyperMode();
-			return ret;
+			result(ret);
+			yield break;
 		}
 
-		public override void EffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects)
+		public override void EffectAfterHit(IBattler attacker, IBattler opponent, IEffectsMove turneffects) { this.EffectAfterHit((IBattlerIE)attacker, (IBattlerIE)opponent, turneffects); }
+		public override IEnumerator EffectAfterHit(IBattlerIE attacker, IBattlerIE opponent, IEffectsMove turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage > 0)
 			{
-				attacker.ReduceHP((int)Math.Round(attacker.HP / 2.0));
-				this.battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString()));
+				_host.StartCoroutine(attacker.ReduceHP((int)Math.Round(attacker.HP / 2.0)));
+				_host.StartCoroutine(this.battle.Display(Game._INTL("{1} is damaged by recoil!", attacker.ToString())));
 			}
+			yield break;
 		}
 	}
 
@@ -219,26 +245,31 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_131() : base() { }
 		//public PokeBattle_Move_131(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			switch (this.battle.weather)
 			{
 				case Weather.HEAVYRAIN:
-					this.battle.Display(Game._INTL("There is no relief from this heavy rain!"));
-					return -1;
+					_host.StartCoroutine(this.battle.Display(Game._INTL("There is no relief from this heavy rain!")));
+					result(-1);
+					yield break;
 				case Weather.HARSHSUN:
-					this.battle.Display(Game._INTL("The extremely harsh sunlight was not lessened at all!"));
-					return -1;
+					_host.StartCoroutine(this.battle.Display(Game._INTL("The extremely harsh sunlight was not lessened at all!")));
+					result(-1);
+					yield break;
 				case Weather.SHADOWSKY:
-					this.battle.Display(Game._INTL("But it failed!"));
-					return -1;
+					_host.StartCoroutine(this.battle.Display(Game._INTL("But it failed!")));
+					result(-1);
+					yield break;
 			}
-			ShowAnimation(MoveId, attacker, null, hitnum, alltargets, showanimation);
+			_host.StartCoroutine(ShowAnimation(MoveId, attacker, null, hitnum, alltargets, showanimation));
 			this.battle.weather = Weather.SHADOWSKY;
 			this.battle.weatherduration = 5;
-			this.battle.CommonAnimation("ShadowSky", null, null);
-			this.battle.Display(Game._INTL("A shadow sky appeared!"));
-			return 0;
+			_host.StartCoroutine(this.battle.CommonAnimation("ShadowSky", null, null));
+			_host.StartCoroutine(this.battle.Display(Game._INTL("A shadow sky appeared!")));
+			result(0);
+			yield break;
 		}
 	}
 
@@ -250,7 +281,8 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public PokeBattle_Move_132() : base() { }
 		//public PokeBattle_Move_132(Battle battle, Attack.Move move) : base(battle, move) { }
-		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true)
+		public override int GetEffect(IBattler attacker, IBattler opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true) { int r = -1; this.GetEffect(attacker, opponent, hitnum, alltargets, showanimation); return r; }
+		public override IEnumerator GetEffect(IBattlerIE attacker, IBattlerIE opponent, int hitnum = 0, int[] alltargets = null, bool showanimation = true, System.Action<int> result=null)
 		{
 			if ((this.battle.sides[0].Reflect > 0 ||
 			   this.battle.sides[1].Reflect > 0 ||
@@ -259,21 +291,23 @@ namespace PokemonUnity.Interface.UnityEngine
 			   this.battle.sides[0].Safeguard > 0 ||
 			   this.battle.sides[1].Safeguard > 0) && attacker is IBattlerShadowPokemon a)
 			{
-				ShowAnimation(MoveId, attacker, null, hitnum, alltargets, showanimation);
+				_host.StartCoroutine(ShowAnimation(MoveId, attacker, null, hitnum, alltargets, showanimation));
 				this.battle.sides[0].Reflect = 0;
 				this.battle.sides[1].Reflect = 0;
 				this.battle.sides[0].LightScreen = 0;
 				this.battle.sides[1].LightScreen = 0;
 				this.battle.sides[0].Safeguard = 0;
 				this.battle.sides[1].Safeguard = 0;
-				this.battle.Display(Game._INTL("It broke all barriers!"));
+				_host.StartCoroutine(this.battle.Display(Game._INTL("It broke all barriers!")));
 				a.HyperMode();
-				return 0;
+				result(0);
+				yield break;
 			}
 			else
 			{
-				this.battle.Display(Game._INTL("But it failed!"));
-				return -1;
+				_host.StartCoroutine(this.battle.Display(Game._INTL("But it failed!")));
+				result(-1);
+				yield break;
 			}
 		}
 	}
