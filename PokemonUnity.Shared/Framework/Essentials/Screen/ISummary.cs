@@ -18,6 +18,9 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
+	/// <summary>
+	/// Used to display the summary scene, and overview stats for a Pokémon.
+	/// </summary>
 	public interface IPokemonSummaryScene : IScene
 	{
 		IPokemonSummaryScene initialize();
@@ -55,7 +58,7 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IMoveSelectionSprite : ISpriteWrapper, IDisposable
 	{
 		int preselected				{ get; set; }
-		int index				    { get; set; }
+		int index					{ get; set; }
 		//bool visible				{ set; }
 
 		IMoveSelectionSprite initialize(IViewport viewport = null, bool fifthmove = false);

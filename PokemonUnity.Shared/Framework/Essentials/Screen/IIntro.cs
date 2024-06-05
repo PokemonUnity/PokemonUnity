@@ -17,23 +17,23 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
-	public interface IEventScene : IDisposable
+	public interface IEventScene : IDisposable, IScene
 	{
 		/// <summary>
 		/// Action Button Pressed...
 		/// </summary>
-		//bool onATrigger { get; set; }
-		event EventHandler onATrigger;
+		bool OnATrigger { get; }
+		event EventHandler OnATriggerEvent;
 		/// <summary>
 		/// Back/Cancel Button Pressed...
 		/// </summary>
-		//bool onBTrigger { get; set; }
-		event EventHandler onBTrigger;
+		bool OnBTrigger { get; }
+		event EventHandler OnBTriggerEvent;
 		/// <summary>
 		/// Update has been triggered, and a new frame is called
 		/// </summary>
-		//bool onUpdate { get; set; }
-		event EventHandler onUpdate;
+		bool OnUpdate { get; }
+		event EventHandler OnUpdateEvent;
 		/// <summary>
 		/// Beginning starting point that runs and operates the entire game application
 		/// </summary>

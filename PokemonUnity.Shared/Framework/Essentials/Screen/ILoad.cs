@@ -18,6 +18,10 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
+	/// <summary>
+	/// Scene after title card that displays that displays the main menu,
+	/// and contains a list of save files and allows the player to choose one to load.
+	/// </summary>
 	public interface ILoadScene : IScene {
 		IEnumerator Update();
 

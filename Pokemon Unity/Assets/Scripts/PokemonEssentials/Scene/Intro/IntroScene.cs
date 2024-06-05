@@ -16,22 +16,27 @@ namespace PokemonUnity.Interface.UnityEngine
 {
 	public class IntroScene : EventScene, IIntroEventScene
 	{
+		public override int Id { get { return (int)Scenes.TextEntry; } }
 		/// <summary>
 		/// Array of images to display before Title/Splash Card
 		/// </summary>
-		public Image[] pics;
+		public global::UnityEngine.Sprite[] pics;
 		/// <summary>
 		/// Active/Current Image being displayed in Scene
 		/// </summary>
-		public Image pic;
+		public global::UnityEngine.UI.Image pic;
 		/// <summary>
 		/// flashing "Press Start" picture
 		/// </summary>
-		public Image pic2;
+		public global::UnityEngine.UI.Image pic2;
 		/// <summary>
-		/// Background Image used for "Press Start" display. (Title Card)
+		/// Background Image used to compliment "Press Start" display. (Title Card)
 		/// </summary>
-		public Image splash;
+		public global::UnityEngine.Sprite splash;
+		/// <summary>
+		/// Image used for "Press Start" display.
+		/// </summary>
+		public global::UnityEngine.Sprite start;
 		/// <summary>
 		/// Id used for Pics array
 		/// </summary>
@@ -41,6 +46,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// </summary>
 		public int Timer;
 		private IAudioObject title_bgm;
+		private LTDescr _tweenObject;
 
 		// Start is called before the first frame update
 		void Start()
@@ -66,12 +72,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			//@splash = splash;
 			//@pic = addImage(0, 0, "");
 			//@pic.moveOpacity(0, 0, 0); // fade to opacity 0 in 0 frames after waiting 0 frames
+			_tweenObject = LeanTween.alphaCanvas(pic.GetComponent<CanvasGroup>(), 0, 0);
 			//@pic2 = addImage(0, 322, ""); // flashing "Press Enter" picture
 			//@pic2.moveOpacity(0, 0, 0);
 			@index = 0;
-			//data_system = pbLoadRxData("Data/System");
-			//pbBGMPlay(data_system.title_bgm);
-			//pbBGMPlay(title_bgm);
+			//data_system = LoadRxData("Data/System");
+			//BGMPlay(data_system.title_bgm);
+			//BGMPlay(title_bgm);
 			openPic();
 			return this;
 		}
@@ -81,17 +88,17 @@ namespace PokemonUnity.Interface.UnityEngine
 			//onCTrigger.clear();
 			ClearOnTriggerA();
 			//@pic.name = "Graphics/Titles/" + @pics[@index];
-			@pic = @pics[@index];
+			@pic.sprite = @pics[@index];
 			//@pic.moveOpacity(15, 0, 255); // fade to opacity 255 in 15 frames after waiting 0 frames
-			//we'll handle fading image in co-routine...
+			_tweenObject = LeanTween.alphaCanvas(pic.GetComponent<CanvasGroup>(), 255, 15);
 			pictureWait();
 			Timer = 0; // reset the timer
 			//onUpdate.set(method(:timer)); // call timer every frame
-			//if (onUpdate) timer();
-			onUpdate += IntroScene_onUpdate_Timer;
+			//if (OnUpdate) timer();
+			OnUpdateEvent += IntroScene_onUpdate_Timer;
 			//onCTrigger.set(method(:closePic)); // call closePic when C key is pressed
-			//if (onATrigger) closePic();
-			onATrigger += IntroScene_onATrigger_Pic;
+			//if (OnATrigger) closePic();
+			OnATriggerEvent += IntroScene_onATrigger_Pic;
 		}
 
 		public void timer()
@@ -111,6 +118,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//onUpdate.clear();
 			ClearOnUpdate();
 			//@pic.moveOpacity(15, 0, 0);
+			_tweenObject = LeanTween.alphaCanvas(pic.GetComponent<CanvasGroup>(), 0, 15);
 			//set image alpha to 0
 			pictureWait();
 			@index += 1; // Move to the next picture
@@ -133,19 +141,20 @@ namespace PokemonUnity.Interface.UnityEngine
 			//onUpdate.clear();
 			ClearOnUpdate();
 			//@pic.name = "Graphics/Titles/" + @splash;
-			@pic= @splash;
-			//@pic.moveOpacity(15, 0, 255);
+			@pic.sprite = @splash;
+			//@pic.moveOpacity(15, 0, 255); // fade to opacity 255 in 15 frames after waiting 0 frames
+			_tweenObject = LeanTween.alphaCanvas(pic.GetComponent<CanvasGroup>(), 255, 15);
 			//@pic2.name = "Graphics/Titles/start";
-			//@pic2.moveOpacity(15, 0, 255);
-			//pic2 is set in inspector, just change opacity
+			@pic2.sprite = @start;
+			//@pic2.moveOpacity(15, 0, 255); // fade to opacity 255 in 15 frames after waiting 0 frames
+			_tweenObject = LeanTween.alphaCanvas(pic2.GetComponent<CanvasGroup>(), 255, 15);
 			pictureWait();
 			//onUpdate.set(method(:splashUpdate));  // call splashUpdate every frame
 			//if (onUpdate) splashUpdate();
-			onUpdate += IntroScene_onUpdate_Splash;
+			OnUpdateEvent += IntroScene_onUpdate_Splash;
 			//onCTrigger.set(method(:closeSplash)); // call closeSplash when C key is pressed
 			//if (onATrigger) closeSplash();
-			onUpdate += IntroScene_onATrigger_Splash;
-			//this is should be moved up `update()` add an if (splash) check
+			OnUpdateEvent += IntroScene_onATrigger_Splash;
 		}
 
 		public void splashUpdate()
@@ -153,23 +162,23 @@ namespace PokemonUnity.Interface.UnityEngine
 			#region Coroutine Tween Looping Animation
 			@Timer += 1;
 			if (@Timer >= 80) @Timer = 0;
-			if (@Timer >= 32)
-			{
-				//@pic2.moveOpacity(0, 0, 8 * (@Timer - 32));
-				//Change opacity -- fade out?
-			}
-			else
-			{
-				//@pic2.moveOpacity(0, 0, 255 - (8 * @Timer));
-				//Change opacity -- fade in?
-			}
+			//if (@Timer >= 32)
+			//{
+			//	//@pic2.moveOpacity(0, 0, 8 * (@Timer - 32)); //fade out
+				_tweenObject = LeanTween.alphaCanvas(pic2.GetComponent<CanvasGroup>(), 255, 80);
+			//}
+			//else
+			//{
+			//	//@pic2.moveOpacity(0, 0, 255 - (8 * @Timer)); //fade in
+				_tweenObject = LeanTween.alphaCanvas(pic2.GetComponent<CanvasGroup>(), 0, 80);
+			//}
 			#endregion
 			// Can be whatever combination of buttons you design in your game
 			if (PokemonUnity.Input.press(PokemonUnity.Input.DOWN) &&
 				PokemonUnity.Input.press(PokemonUnity.Input.A) &&
 				PokemonUnity.Input.press(PokemonUnity.Input.CTRL))
 			{
-			    closeSplashDelete();
+				closeSplashDelete();
 			}
 		}
 
@@ -180,13 +189,15 @@ namespace PokemonUnity.Interface.UnityEngine
 			//onUpdate.clear();
 			ClearOnUpdate();
 			//  Play random cry
-			//IAudioObject cry = pbCryFile(1 + Core.Rand.Next(PBSpecies.maxValue));
-			//if (cry != null) pbSEPlay(cry, 80, 100);
+			//IAudioObject cry = CryFile(1 + Core.Rand.Next(Species.maxValue));
+			//if (cry != null) SEPlay(cry, 80, 100);
 			//Unity Custom Sound Script...
 			//  Fade out
 			//@pic.moveOpacity(15, 0, 0);
+			_tweenObject = LeanTween.alphaCanvas(pic2.GetComponent<CanvasGroup>(), 0, 15);
 			//@pic2.moveOpacity(15, 0, 0);
-			//pbBGMStop(1.0);
+			_tweenObject = LeanTween.alphaCanvas(pic.GetComponent<CanvasGroup>(), 0, 15);
+			//BGMStop(1.0);
 			pictureWait();
 			//scene.dispose(); // Close the scene
 			(this as IDisposable).Dispose(); // Close the scene
@@ -196,8 +207,6 @@ namespace PokemonUnity.Interface.UnityEngine
 			ILoadScene sscene = GameEvents.game.Scenes.Load;
 			ILoadScreen sscreen = GameEvents.game.Screens.Load.initialize(sscene);
 			sscreen.StartLoadScreen();
-			//transition to load/new game scene
-			//Havent finished translating best way to register data between scenes yet
 		}
 
 		/// <summary>
@@ -209,14 +218,17 @@ namespace PokemonUnity.Interface.UnityEngine
 			ClearOnTriggerA();
 			//onUpdate.clear();
 			ClearOnUpdate();
+			IAudioObject cry = null;
 			//  Play random cry
-			//cry = pbCryFile(1 + Core.Rand.Next(PBSpecies.maxValue));
-			//IAudioObject cry = pbCryFile(1 + Core.Rand.Next(Kernal.PokemonData.Count));
-			//if (cry != null) pbSEPlay(cry, 80, 100);
+			//IAudioObject cry = CryFile(1 + Core.Rand.Next(Species.maxValue));
+			if (Game.GameData is IGameUtility gu) gu.CryFile((Pokemons)(1 + Core.Rand.Next(Kernal.PokemonData.Count)));
+			if (cry != null && Game.GameData is IGameAudioPlay gap) gap.SEPlay(cry, 80, 100);
 			//  Fade out
 			//@pic.moveOpacity(15, 0, 0);
+			_tweenObject = LeanTween.alphaCanvas(pic.GetComponent<CanvasGroup>(), 0, 15);
 			//@pic2.moveOpacity(15, 0, 0);
-			//pbBGMStop(1.0);
+			_tweenObject = LeanTween.alphaCanvas(pic2.GetComponent<CanvasGroup>(), 0, 15);
+			//BGMStop(1.0);
 			pictureWait();
 			//scene.dispose(); // Close the scene
 			(this as IDisposable).Dispose(); // Close the scene
@@ -226,7 +238,6 @@ namespace PokemonUnity.Interface.UnityEngine
 			ILoadScene sscene = GameEvents.game.Scenes.Load;
 			ILoadScreen sscreen = GameEvents.game.Screens.Load.initialize(sscene);
 			sscreen.StartDeleteScreen();
-			//transition to delete save scene
 		}
 
 		/// <summary>
@@ -267,6 +278,22 @@ namespace PokemonUnity.Interface.UnityEngine
 		protected virtual void IntroScene_onATrigger_Splash(object sender, System.EventArgs e)
 		{
 			closePic();
+		}
+
+		public override void Refresh()
+		{
+			//Not used in this scene...
+		}
+
+		public override void Display(string v)
+		{
+			//Not used in this scene...
+		}
+
+		public override bool DisplayConfirm(string v)
+		{
+			//Not used in this scene...
+			return false;
 		}
 	}
 }

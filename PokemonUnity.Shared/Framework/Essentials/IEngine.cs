@@ -390,6 +390,11 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Determines whether the button number is currently being pressed.
 		/// </summary>
+		/// <remarks>
+		/// The method checks if a specific button (identified by the <paramref name="num"/>) is currently being pressed down at the moment the method is called.
+		/// It doesn't consider whether the key was pressed before; it only checks the current state.
+		/// This is typically used for actions that should occur continuously while a key is held down.
+		/// </remarks>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE.If not, returns FALSE.</returns>
 		//bool press(PokemonUnity.Interface.InputKeys num);
@@ -399,7 +404,11 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
-		/// <remarks>"Pressed again" is seen as time having passed between the button being not pressed and being pressed.</remarks>
+		/// <remarks>
+		/// The method checks if a specific button has been pressed down in the current frame/update but wasn't pressed in the previous frame.
+		/// This is useful for actions that should only happen once when a button is initially pressed.
+		/// </remarks>
+		/// "Pressed again" is seen as time having passed between the button being not pressed and being pressed.
 		//bool trigger(PokemonUnity.Interface.InputKeys num);
 		bool trigger(int num);
 		/// <summary>
@@ -407,7 +416,11 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="num"></param>
 		/// <returns>If the button is being pressed, returns TRUE. If not, returns FALSE.</returns>
-		/// <remarks>Unlike <see cref="trigger"/>, takes into account the repeat input of a button being held down continuously.</remarks>
+		/// <remarks>
+		/// The function is similar to <seealso cref="trigger(int)"/> but with additional logic to allow for repeated action after the button is held down for a certain duration.
+		/// This often involves checking the button state over several frames and implementing a delay or timer to allow for initial press and subsequent repeated actions if the button remains pressed.
+		/// </remarks>
+		/// Unlike <see cref="trigger"/>, takes into account the repeat input of a button being held down continuously.
 		//bool repeat(PokemonUnity.Interface.InputKeys num);
 		bool repeat(int num);
 

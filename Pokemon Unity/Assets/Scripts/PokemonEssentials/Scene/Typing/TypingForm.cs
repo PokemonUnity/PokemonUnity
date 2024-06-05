@@ -13,7 +13,8 @@ namespace PokemonUnity.Interface.UnityEngine
 {
 	public class TypingForm : IPokemonEntryScene, IPokemonEntryScene2
 	{
-		public int Id { get { return 0;} }
+		#region Variables
+		public int Id { get { return (int)Scenes.TextEntry;} }
 		public string helptext;
 		public int Minlength;
 		public int Maxlength;
@@ -39,29 +40,28 @@ namespace PokemonUnity.Interface.UnityEngine
 		private System.Text.StringBuilder typeSpaceText;
 		//public string typedString;
 
-		public int selectorIndex  = 0;
-		public int pageIndex      = 0;
-		public int typeSpaceIndex = 0;
-		public int charLimit      = 12;
-		public static bool qwerty  = true;
+		public int selectorIndex	= 0;
+		public int pageIndex		= 0;
+		public int typeSpaceIndex	= 0;
+		public int charLimit		= 12;
+		public static bool qwerty	= true;
 
 		/// <summary>
 		/// If the typing screen is for naming a Player, PC Box, or a Pokemon;
 		/// Change the icon to match sprite that represents subject.
 		/// <see cref="PokemonUnity.Interface.TextEntryTypes"/>
 		/// </summary>
-		/// Instantiate using prefab...
 		/// Should include animation frames, and icon shadow
-		public global::UnityEngine.GameObject   icon;
-		//public  global::UnityEngine.GameObject[]   IconPrefabs;
+		public global::UnityEngine.GameObject	icon;
 		public  global::UnityEngine.Sprite[] PageBackground;
 		public  global::UnityEngine.UI.Image Page;
 		public  global::UnityEngine.UI.Text entry;
 		public  global::UnityEngine.UI.Text gender;
-		//public  CharKeyItem         CharKeyPrefab;
-		//public  GameObject          CharKeyPrefab;
-		//public  GameObject          PagePrefab;
-		public  IDictionary<string,GameObject>          sprites;
+		//public  global::UnityEngine.GameObject[]	IconPrefabs;
+		//public  CharKeyItem						CharKeyPrefab;
+		//public  global::UnityEngine.GameObject	CharKeyPrefab;
+		//public  global::UnityEngine.GameObject	PagePrefab;
+		public  IDictionary<string,GameObject>		sprites;
 
 		private bool refreshOverlay;
 		private int cursorpos;
@@ -99,6 +99,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public const int MODE3=-3;
 		public const int BACK=-2;
 		public const int OK=-1;
+		#endregion
 
 		#region UnityMonobehavior
 		void Update()
@@ -423,26 +424,26 @@ namespace PokemonUnity.Interface.UnityEngine
 		void IPokemonEntryScene2.Update() { this.update(); }
 		protected void update()
 		{
-			//for (int i = 0; i < 3; i++) {
-			//	@bitmaps[i].update();
-			//}
-			//if (@init) { //|| Graphics.frame_count%5==0
-			//	@init=false;
-			//	int cursorpos=@helper.cursor;
-			//	if (cursorpos>=Maxlength) cursorpos=Maxlength-1;
-			//	if (cursorpos<0) cursorpos=0;
-			//	//Maxlength.times {|i|
-			//	for (int i = 0; i < Maxlength; i++) {
-			//		if (i==cursorpos) {
-			//			@blanks[i]=1;
-			//		} else {
-			//			@blanks[i]=0;
-			//		}
-			//			@sprites[$"blank#{i}"].y= new int[]{ 78,82 }[@blanks[i]];
-			//	}
-			//}
-			//DoUpdateOverlay();
-			////UpdateSpriteHash(@sprites);
+			for (int i = 0; i < 3; i++) {
+				@bitmaps[i].update();
+			}
+			if (@init) { //|| Graphics.frame_count%5==0
+				@init=false;
+				int cursorpos=@helper.cursor;
+				if (cursorpos>=Maxlength) cursorpos=Maxlength-1;
+				if (cursorpos<0) cursorpos=0;
+				//Maxlength.times {|i|
+				for (int i = 0; i < Maxlength; i++) {
+					if (i==cursorpos) {
+						@blanks[i]=1;
+					} else {
+						@blanks[i]=0;
+					}
+						@sprites[$"blank#{i}"].y= new int[]{ 78,82 }[@blanks[i]];
+				}
+			}
+			DoUpdateOverlay();
+			//UpdateSpriteHash(@sprites);
 		}
 
 		public void ChangeTab(int newtab = 0)

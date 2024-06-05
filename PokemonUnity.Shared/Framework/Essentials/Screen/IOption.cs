@@ -98,9 +98,9 @@ namespace PokemonEssentials.Interface.Screen
 	public interface IGameOption
 	{
 
-		//string[] SpeechFrames;
-		//string[] TextFrames;
-		//string[][] VersionStyles;
+		//string[] SpeechFrames { get; }
+		//string[] TextFrames { get; }
+		//string[][] VersionStyles { get; }
 
 		int SettingToTextSpeed(int speed);
 	}
@@ -117,6 +117,9 @@ namespace PokemonEssentials.Interface.Screen
 	//	public int GetSystemTextSpeed();
 	//}
 
+	/// <summary>
+	/// Stores game options
+	/// </summary>
 	public interface IPokemonSystemOption {
 		int textspeed				{ get; set; }
 		int battlescene			    { get; set; }
@@ -131,11 +134,14 @@ namespace PokemonEssentials.Interface.Screen
 		int bgmvolume				{ get; }
 		int sevolume				{ get; }
 
-		int tilemap                 { get; }
+		int tilemap					{ get; }
 
 		IPokemonSystemOption initialize();
 	}
 
+	/// <summary>
+	/// Scene to change game settings.
+	/// </summary>
 	public interface IOptionScene : IScene {
 		void Update();
 		void StartScene(bool inloadscreen = false);

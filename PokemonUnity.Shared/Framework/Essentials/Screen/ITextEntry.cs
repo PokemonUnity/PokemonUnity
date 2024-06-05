@@ -24,8 +24,11 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	/// <summary>
-	/// Text entry screen - free typing.
+	/// Scene used for entering text, such as naming a Pokémon or a box.
 	/// </summary>
+	/// <remarks>
+	/// Text entry screen - free typing.
+	/// </remarks>
 	public interface IPokemonEntryScene : IScene
 	{
 		void StartScene(string helptext, int minlength, int maxlength, string initialText, PokemonUnity.Interface.TextEntryTypes subject = 0, IPokemon pokemon = null);
@@ -36,8 +39,11 @@ namespace PokemonEssentials.Interface.Screen
 	}
 
 	/// <summary>
-	/// Text entry screen - arrows to select letter.
+	/// Scene used for entering text, such as naming a Pokémon or a box.
 	/// </summary>
+	/// <remarks>
+	/// Text entry screen - arrows to select letter.
+	/// </remarks>
 	public interface IPokemonEntryScene2 : IScene, IPokemonEntryScene
 	{
 		//void StartScene(string helptext, int minlength, int maxlength, string initialText, int subject = 0, Pokemon pokemon = null);
