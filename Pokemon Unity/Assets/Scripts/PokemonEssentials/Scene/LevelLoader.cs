@@ -30,18 +30,9 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Variables
 		public float transitionTime = .5f;
 		public global::UnityEngine.CanvasGroup canvasGroup;
-		private IDictionary<Type, Scenes> sceneLevels = new Dictionary<Type, Scenes>(); //ToDo: Rename to `sceneMapping`?
+		private IDictionary<Type, Scenes> sceneMapping = new Dictionary<Type, Scenes>();
 		//{
 		//	{ typeof(PokemonEssentials.Interface.Screen.IIntroEventScene), Scenes.Intro }, //"Intro"
-		//	//{  }, // "MainMenu"
-		//	//{  }, // "Gameplay"
-		//	//{  }, // "Battle"
-		//	//{  }, // "Pokedex"
-		//	//{  }, // "Bag"
-		//	//{  }, // "Options"
-		//	//{  }, // "Save"
-		//	//{  }, // "Load"
-		//	//{  }, // "Exit"
 		//};
 		#endregion
 
@@ -141,7 +132,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		private Scenes GetSceneType(IScene scene)
 		{
 			Type type = scene.GetType();
-			foreach (var entry in sceneLevels)
+			foreach (var entry in sceneMapping)
 			{
 				if (entry.Key.IsAssignableFrom(type))
 				{

@@ -1508,7 +1508,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//Tween animation types for values below...
 			picturePoke.moveTone(10, 1, new Tone(248, 248, 248, 248));
 			int delay = picturePoke.totalDuration;
-			picturePoke.moveSE(delay, "Audio/SE/recall");
+			picturePoke.moveSE(delay, "AudioManager/SE/recall");
 			picturePoke.moveZoom(15, delay, 0);
 			picturePoke.moveXY(15, delay, center[0], origin);
 			picturePoke.moveVisible(picturePoke.totalDuration, false);
@@ -3869,12 +3869,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			pictureBall.moveOrigin(1, PictureOrigin.nenter);
 			pictureBall.moveXY(0, 1, 10, 180);
 			//  directives
-			pictureBall.moveSE(1, "Audio/SE/throw");
+			pictureBall.moveSE(1, "AudioManager/SE/throw");
 			pictureBall.moveCurve(30, 1, 150, 70, 30 + (Game.GameData as Game).Graphics.width / 2, 10, center[0], center[1]);
 			pictureBall.moveAngle(30, 1, -1080);
 			pictureBall.moveAngle(0, pictureBall.totalDuration, 0);
 			delay = pictureBall.totalDuration;
-			pictureBall.moveSE(delay, "Audio/SE/balldrop");
+			pictureBall.moveSE(delay, "AudioManager/SE/balldrop");
 			pictureBall.moveXY(20, delay, 0, (Game.GameData as Game).Graphics.height);
 			do //;loop
 			{
@@ -4001,7 +4001,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			picturePlayer.moveOrigin(1, PictureOrigin.TopLeft);
 			picturePlayer.moveXY(0, 1, playerpos[0], playerpos[1]);
 			//  directives
-			picturePoke.moveSE(1, "Audio/SE/throw");
+			picturePoke.moveSE(1, "AudioManager/SE/throw");
 			pictureBall.moveCurve(30, 1, 64, 256, (Game.GameData as Game).Graphics.width / 2, 48,
 								  PokeBattle_SceneConstants.FOEBATTLER_X - 48,
 								  PokeBattle_SceneConstants.FOEBATTLER_Y);
@@ -4021,11 +4021,11 @@ namespace PokemonUnity.Interface.UnityEngine
 				picturePlayer.moveXY(0, 40, playerpos[0], playerpos[1]);
 			}
 			//  Show Pokémon jumping before eating the bait
-			picturePoke.moveSE(50, "Audio/SE/jump");
+			picturePoke.moveSE(50, "AudioManager/SE/jump");
 			picturePoke.moveXY(8, 50, pokecenter[0], pokecenter[1] - 8);
 			picturePoke.moveXY(8, 58, pokecenter[0], pokecenter[1]);
 			pictureBall.moveVisible(66, false);
-			picturePoke.moveSE(66, "Audio/SE/jump");
+			picturePoke.moveSE(66, "AudioManager/SE/jump");
 			picturePoke.moveXY(8, 66, pokecenter[0], pokecenter[1] - 8);
 			picturePoke.moveXY(8, 74, pokecenter[0], pokecenter[1]);
 			//  TODO: Show Pokémon eating the bait (pivots at the bottom right corner)
@@ -4097,11 +4097,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			pictureAnger.moveOrigin(1,PictureOrigin.nenter);
 			pictureAnger.moveZoom(0,1,100);
 			//  directives
-			picturePoke.moveSE(1,"Audio/SE/throw");
+			picturePoke.moveSE(1,"AudioManager/SE/throw");
 			pictureBall.moveCurve(30,1,64,256,(Game.GameData as Game).Graphics.width/2,48,pokecenter[0],pokecenter[1]);
 			pictureBall.moveAngle(30,1,-720);
 			pictureBall.moveAngle(0,pictureBall.totalDuration,0);
-			pictureBall.moveSE(30,"Audio/SE/notverydamage");
+			pictureBall.moveSE(30,"AudioManager/SE/notverydamage");
 			if (armanim) {
 				picturePlayer.moveSrc(1,@sprites["player"].bitmap.height,0);
 				picturePlayer.moveXY(0,1,playerpos[0]-14,playerpos[1]);
@@ -4116,12 +4116,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			pictureBall.moveVisible(40,false);
 			//  Show Pokémon being angry
-			pictureAnger.moveSE(48,"Audio/SE/jump");
+			pictureAnger.moveSE(48,"AudioManager/SE/jump");
 			pictureAnger.moveVisible(48,true);
 			pictureAnger.moveZoom(8,48,130);
 			pictureAnger.moveZoom(8,56,100);
 			pictureAnger.moveXY(0,64,pokecenter[0]+56,pokecenter[1]-64);
-			pictureAnger.moveSE(64,"Audio/SE/jump");
+			pictureAnger.moveSE(64,"AudioManager/SE/jump");
 			pictureAnger.moveZoom(8,64,130);
 			pictureAnger.moveZoom(8,72,100);
 			pictureAnger.moveVisible(80,false);
