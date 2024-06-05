@@ -255,4 +255,7 @@
 git.exe -C "$(ProjectDir.TrimEnd('\'))"  describe --long --always --exclude=* --abbrev=8 &gt;&gt; "$(ProjectDir)\Properties\AssemblyInfo.cs"
 "$(DevEnvDir)TextTransform.exe" -a !!BuildConfiguration!$(Configuration) "$(ProjectDir)Properties\AssemblyInfo.tt"</PreBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetDir)*$(TargetExt)" "$(ProjectDir)..\Project DLLs\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
