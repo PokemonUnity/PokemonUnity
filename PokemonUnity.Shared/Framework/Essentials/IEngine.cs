@@ -158,12 +158,14 @@ namespace PokemonEssentials.Interface
 	public interface IWaveData
 	{
 		/// <summary>
+		/// Average loudness or power of the sound data.
 		/// </summary>
-		byte intensity();
+		byte intensity { get; }
 		/// <summary>
 		/// </summary>
-		int time();
+		int time { get; }
 		/// <summary>
+		/// Play the recorded audio
 		/// </summary>
 		void play();
 	}

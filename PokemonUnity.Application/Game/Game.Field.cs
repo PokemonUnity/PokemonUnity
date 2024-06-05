@@ -2022,7 +2022,7 @@ namespace PokemonUnity
 						Input.update();
 						textwindow.update();
 						msgwindow.update();
-					} while(i < (Graphics.frame_rate*wave.time()));
+					} while(i < (Graphics.frame_rate*wave.time));
 				}
 			}
 			if (this is IGameAudio a3) a3.Audio_bgm_set_volume(oldvolume);

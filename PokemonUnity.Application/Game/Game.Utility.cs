@@ -1067,7 +1067,7 @@ namespace PokemonUnity
 			//} else
 			if (!pokemon.isEgg) {
 				if (pokemon is IPokemonChatter p && p.chatter != null) { //pokemon.respond_to("chatter")
-					playtime=p.chatter.time();
+					playtime=p.chatter.time;
 					pitch=1.0f;
 				} else {
 					string pkmnwav=ResolveAudioSE(CryFile(pokemon));
