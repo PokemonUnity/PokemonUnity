@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using PokemonEssentials.Interface;
 using PokemonUnity;
 using UnityEngine;
@@ -17,146 +18,117 @@ namespace PokemonUnity.Interface.UnityEngine
 			get
 			{
 				int ret = 0; //Kernel.Audio_bgm_get_position;
-				//int ret = source.timeSamples; //unity using timeSamples to return position data of audio stream
+				//ret = bgmSource.timeSamples; //unity using timeSamples to return position data of audio stream
+				ret = (int)(bgmSource.time * 1000);
 				return ret;
 			}
+			set { bgmSource.time = value / 1000f; }
 		}
 		public int volume { get; set; }
 		public float pitch { get; set; }
+		private AudioSource bgmSource;
+		private AudioSource bgsSource;
+		private AudioSource meSource;
+		private List<AudioSource> seSources = new List<AudioSource>();
+
+		private void Awake()
+		{
+			// Create different AudioSource components for different types of audio
+			bgmSource = gameObject.AddComponent<AudioSource>();
+			bgsSource = gameObject.AddComponent<AudioSource>();
+			meSource = gameObject.AddComponent<AudioSource>();
+		}
 
 		public void bgm_play(string filename, float volume, float pitch)
 		{
-			bgm_play(name, volume, pitch, null);
+			PlayAudio(bgmSource, filename, volume, pitch, true);
 		}
-		public void bgm_play(string name, float volume= 80, float pitch= 100, int? position= null)
-		{
 
-		}
-		public void bgm_fade(int ms)
-		{
-
-		}
 		public void bgm_stop()
 		{
-
+			bgmSource.Stop();
 		}
-		public void me_play(string name, float volume= 80, float pitch= 100)
+
+		public void bgm_fade(float time)
 		{
-
+			StartCoroutine(FadeOut(bgmSource, time));
 		}
-		public void me_fade(int ms)
+
+		public void bgs_play(string filename, float volume, float pitch)
 		{
-
+			PlayAudio(bgsSource, filename, volume, pitch, true);
 		}
-		public void me_stop()
-		{
 
-		}
-		public void bgs_play(string name, float volume= 80, float pitch= 100)
-		{
-
-		}
-		public void bgs_fade(int ms)
-		{
-
-		}
 		public void bgs_stop()
 		{
-
+			bgsSource.Stop();
 		}
-		public void se_play(string name, float volume= 80, float pitch= 100)
+
+		public void bgs_fade(float time)
 		{
-
+			StartCoroutine(FadeOut(bgsSource, time));
 		}
-		public void se_fade(int ms)
+
+		public void me_play(string filename, float volume, float pitch)
 		{
-
+			PlayAudio(meSource, filename, volume, pitch, false);
 		}
+
+		public void me_stop()
+		{
+			meSource.Stop();
+		}
+
+		public void me_fade(float time)
+		{
+			StartCoroutine(FadeOut(meSource, time));
+		}
+
+		public void se_play(string filename, float volume, float pitch)
+		{
+			AudioSource seSource = new AudioSource();
+			seSources.Add(seSource);
+			PlayAudio(seSource, filename, volume, pitch, false);
+		}
+
 		public void se_stop()
 		{
-
+			foreach (var source in seSources)
+			{
+				source.Stop();
+			}
+			seSources.Clear();
 		}
 
-		//private void FadeSource(AudioSource source, float time)
-		//{
-		//	sfxHandler.StartCoroutine(sfxHandler.FadeIE(source, time));
-		//}
-		//
-		//private IEnumerator FadeIE(AudioSource source, float time)
-		//{
-		//	float initialVolume = source.volume;
-		//	float increment = 0f;
-		//	while (increment < 1)
-		//	{
-		//		increment += (1 / time) * Time.deltaTime;
-		//		if (increment > 1)
-		//		{
-		//			increment = 1f;
-		//		}
-		//
-		//		if (!source.isPlaying)
-		//		{
-		//			increment = 1f;
-		//			Debug.Log("early end");
-		//		}
-		//
-		//		source.volume = initialVolume * (1 - increment);
-		//		if (source.isPlaying)
-		//		{
-		//			yield return null;
-		//		}
-		//	}
-		//	source.volume = initialVolume;
-		//	source.Stop();
-		//}
-		//
-		//private AudioSource Play(AudioClip clip, float volume = -1f, float pitch = 1f)
-		//{
-		//	AudioSource source = null;
-		//	for (int i = 0; i < sfxHandler.sources.Length; i++)
-		//	{
-		//		if (!sfxHandler.sources[i].isPlaying)
-		//		{
-		//			source = sfxHandler.sources[i];
-		//			i = sfxHandler.sources.Length;
-		//		}
-		//	}
-		//	if (source == null)
-		//	{
-		//		float mostFinished = 0;
-		//		int mostFinishedIndex = 0;
-		//		//Find the source closest to finishing playing it's clip
-		//		for (int i = 0; i < sfxHandler.sources.Length; i++)
-		//		{
-		//			if (sfxHandler.sources[i].clip != null)
-		//			{
-		//				if (sfxHandler.sources[i].clip.length != 0)
-		//				{
-		//					if ((sfxHandler.sources[i].timeSamples / sfxHandler.sources[i].clip.length) > mostFinished)
-		//					{
-		//						mostFinished = sfxHandler.sources[i].timeSamples / sfxHandler.sources[i].clip.length;
-		//						mostFinishedIndex = i;
-		//					}
-		//				}
-		//			}
-		//		}
-		//		//play the new clip on the source with the highest played percentage
-		//		source = sfxHandler.sources[mostFinishedIndex];
-		//	}
-		//	source.clip = clip;
-		//	if (volume < 0)
-		//	{
-		//		source.volume = PlayerPrefs.GetFloat("sfxVolume");
-		//	}
-		//	else
-		//	{
-		//		source.volume = volume * PlayerPrefs.GetFloat("sfxVolume");
-		//	}
-		//	source.pitch = pitch;
-		//	source.Play();
-		//
-		//	return source;
-		//}
+		private void PlayAudio(AudioSource source, string filename, float volume, float pitch, bool loop)
+		{
+			AudioClip clip = Resources.Load<AudioClip>(filename);
+			if (clip == null)
+			{
+				GameDebug.LogError("Audio file not found: " + filename);
+				return;
+			}
+
+			source.clip = clip;
+			source.volume = volume;
+			source.pitch = pitch;
+			source.loop = loop;
+			source.Play();
+		}
+
+		private IEnumerator FadeOut(AudioSource source, float fadeTime)
+		{
+			float startVolume = source.volume;
+
+			while (source.volume > 0)
+			{
+				source.volume -= startVolume * Time.deltaTime / fadeTime;
+				yield return null;
+			}
+
+			source.Stop();
+			source.volume = startVolume;
+		}
 	}
 
 	public class GameAudioPlay : PokemonEssentials.Interface.IGameAudioPlay
