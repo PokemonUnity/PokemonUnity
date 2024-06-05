@@ -16,6 +16,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 
 namespace PokemonUnity.Interface.UnityEngine
 {
+	//ToDo: Add Coroutine Expression for Handling IEnumerator Functions...
 	public partial class Battler : IBattlerEffectIE
 	{
 		#region Sleep
