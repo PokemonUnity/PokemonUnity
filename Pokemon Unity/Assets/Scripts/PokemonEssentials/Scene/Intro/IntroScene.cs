@@ -74,11 +74,16 @@ namespace PokemonUnity.Interface.UnityEngine
 			//@pic.moveOpacity(0, 0, 0); // fade to opacity 0 in 0 frames after waiting 0 frames
 			_tweenObject = LeanTween.alphaCanvas(pic.GetComponent<CanvasGroup>(), 0, 0);
 			//@pic2 = addImage(0, 322, ""); // flashing "Press Enter" picture
+			_tweenObject = LeanTween.alphaCanvas(pic2.GetComponent<CanvasGroup>(), 0, 0);
 			//@pic2.moveOpacity(0, 0, 0);
 			@index = 0;
 			//data_system = LoadRxData("Data/System");
-			//BGMPlay(data_system.title_bgm);
-			//BGMPlay(title_bgm);
+			if (Game.GameData is IGameAudioPlay gap)
+			{
+				//gap.BGMPlay(data_system.title_bgm);
+				gap.BGMPlay(Game.GameData.DataSystem.title_bgm);
+				gap.BGMPlay(title_bgm);
+			}
 			openPic();
 			return this;
 		}
@@ -87,6 +92,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			//onCTrigger.clear();
 			ClearOnTriggerA();
+			//onUpdate.clear();
+			ClearOnUpdate();
 			//@pic.name = "Graphics/Titles/" + @pics[@index];
 			@pic.sprite = @pics[@index];
 			//@pic.moveOpacity(15, 0, 255); // fade to opacity 255 in 15 frames after waiting 0 frames
@@ -189,15 +196,16 @@ namespace PokemonUnity.Interface.UnityEngine
 			//onUpdate.clear();
 			ClearOnUpdate();
 			//  Play random cry
+			IAudioObject cry = null;
 			//IAudioObject cry = CryFile(1 + Core.Rand.Next(Species.maxValue));
-			//if (cry != null) SEPlay(cry, 80, 100);
-			//Unity Custom Sound Script...
+			if (Game.GameData is IGameUtility gu) gu.CryFile((Pokemons)(1 + Core.Rand.Next(Kernal.PokemonData.Count)));
+			if (cry != null && Game.GameData is IGameAudioPlay gap) gap.SEPlay(cry, 80, 100);
 			//  Fade out
 			//@pic.moveOpacity(15, 0, 0);
 			_tweenObject = LeanTween.alphaCanvas(pic2.GetComponent<CanvasGroup>(), 0, 15);
 			//@pic2.moveOpacity(15, 0, 0);
 			_tweenObject = LeanTween.alphaCanvas(pic.GetComponent<CanvasGroup>(), 0, 15);
-			//BGMStop(1.0);
+			if (Game.GameData is IGameAudioPlay gap1) gap1.BGMStop(1.0f);
 			pictureWait();
 			//scene.dispose(); // Close the scene
 			(this as IDisposable).Dispose(); // Close the scene
@@ -228,7 +236,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			_tweenObject = LeanTween.alphaCanvas(pic.GetComponent<CanvasGroup>(), 0, 15);
 			//@pic2.moveOpacity(15, 0, 0);
 			_tweenObject = LeanTween.alphaCanvas(pic2.GetComponent<CanvasGroup>(), 0, 15);
-			//BGMStop(1.0);
+			if (Game.GameData is IGameAudioPlay gap1) gap1.BGMStop(1.0f);
 			pictureWait();
 			//scene.dispose(); // Close the scene
 			(this as IDisposable).Dispose(); // Close the scene
