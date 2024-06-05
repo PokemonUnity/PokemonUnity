@@ -15,16 +15,12 @@ using PokemonEssentials.Interface.EventArg;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
 	/// This class acts as a bridge between the Unity Input class and the PokemonUnity Input class.
 	/// </summary>
-	[ExecuteInEditMode]
 	public class InputManager : PokemonUnity.Input, IInput
 	{
 		#region Variables
@@ -35,26 +31,26 @@ namespace PokemonUnity.Interface.UnityEngine
 		//public event EventHandler UpdateInput;
 		//
 		//private readonly Hashtable m_KeyTable = new Hashtable();
-		private IList<UserInputController> userInputControllers = new List<UserInputController>();
+		[global::UnityEngine.SerializeField] private IList<UserInputController> userInputControllers = new List<UserInputController>();
 		#endregion
 
 		#region Unity Monobehavior
-		void Awake()
-		{
-			//OnKeyPress += OnButtonStateChange;
-		}
-		void Update()
-		{
-			//UnityEngine.Input.
-		}
-		void FixedUpdate()
-		{
-			//https://www.youtube.com/watch?v=MfIsp28TYAQ
-		}
-		void OnDestroy()
-		{
-			//OnKeyPress -= OnButtonStateChange;
-		}
+		//void Awake()
+		//{
+		//	//OnKeyPress += OnButtonStateChange;
+		//}
+		//void Update()
+		//{
+		//	//UnityEngine.Input.
+		//}
+		//void FixedUpdate()
+		//{
+		//	//https://www.youtube.com/watch?v=MfIsp28TYAQ
+		//}
+		//void OnDestroy()
+		//{
+		//	//OnKeyPress -= OnButtonStateChange;
+		//}
 		#endregion
 
 		#region Methods
@@ -78,6 +74,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		//	//keyIsDown[e.Button] = e.IsDown;
 		//	ChangeState(e.Button, e.IsDown);
 		//}
+
+		public void Update()
+		{
+			foreach (UserInputController controller in userInputControllers)
+				controller.update();
+		}
 
 		void IInput.update()
 		{
@@ -109,24 +111,60 @@ namespace PokemonUnity.Interface.UnityEngine
 			//		@releasestate.Add(i,false);
 			//	}
 			//}
+			this.Update();
+		}
+
+		public bool press(int num, int player = 1)
+		{
+			if (userInputControllers.Count < player)
+				return false;
+			player--; //Index is 0 based
+			//return userInputControllers.Any(controller => controller.press(num));
+			return userInputControllers[player].press(num);
+		}
+
+		public bool trigger(int num, int player = 1)
+		{
+			if (userInputControllers.Count < player)
+				return false;
+			player--; //Index is 0 based
+			//return userInputControllers.Any(controller => controller.trigger(num));
+			return userInputControllers[player].trigger(num);
+		}
+
+		public bool repeat(int num, int player = 1)
+		{
+			if (userInputControllers.Count < player)
+				return false;
+			player--; //Index is 0 based
+			//return userInputControllers.Any(controller => controller.repeat(num));
+			return userInputControllers[player].repeat(num);
+		}
+
+		public void AddController(UserInputController controller)
+		{
+			userInputControllers.Add(controller);
 		}
 
 		//bool IInput.press(PokemonUnity.Interface.InputKeys num)
 		bool IInput.press(int num)
 		{
-			return KeyPressed((int)num);
+			//return KeyPressed((int)num);
+			return this.press((int)num, 1);
 		}
 
 		//bool IInput.trigger(PokemonUnity.Interface.InputKeys num)
 		bool IInput.trigger(int num)
 		{
-			return KeyPressed((int)num);
+			//return KeyPressed((int)num);
+			return this.trigger((int)num, 1);
 		}
 
 		//bool IInput.repeat(PokemonUnity.Interface.InputKeys num)
 		bool IInput.repeat(int num)
 		{
-			return KeyPressed((int)num);
+			//return KeyPressed((int)num);
+			return this.repeat((int)num, 1);
 		}
 		#endregion
 	}
@@ -137,7 +175,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	/// </summary>
 	/// This could easily be a ScriptableObject that's assigned to a Player's controller (for multi-player game)
 	/// https://sites.google.com/a/unity3d.com/unity-input-advisory-board/design-overview
-	public class UserInputController : MonoBehaviour, IInput
+	public class UserInputController : global::UnityEngine.MonoBehaviour, IInput
 	{
 		//ToDo: Add a table map for runtime custom key binding
 		private Dictionary<int, bool>	currentKeyState;
@@ -175,14 +213,20 @@ namespace PokemonUnity.Interface.UnityEngine
 				//default:
 					int num = (int)key;
 					bool isPressed = global::UnityEngine.Input.GetKey(key.ToString());
-					previousKeyState[num] = currentKeyState.ContainsKey(num) ? currentKeyState[num] : false;
+					//previousKeyState[num] = currentKeyState.ContainsKey(num) ? currentKeyState[num] : false;
+					if (currentKeyState.ContainsKey(num))
+						previousKeyState[num] = currentKeyState[num];
+					else {
+						currentKeyState.Add(num, false);
+						previousKeyState.Add(num, false);
+					}
 					currentKeyState[num] = isPressed;
 
 					if (!keyHoldTime.ContainsKey(num))
-						keyHoldTime[num] = 0;
+						keyHoldTime.Add(num, 0); //keyHoldTime[num] = 0;
 
 					if (isPressed)
-						keyHoldTime[num] += Time.deltaTime;
+						keyHoldTime[num] += global::UnityEngine.Time.deltaTime;
 					else
 						keyHoldTime[num] = 0;
 					//break;
@@ -207,7 +251,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			// Repeat action every 0.5 seconds after holding down for 1 second
 			if (keyHoldTime[num] > 1.0f)
-				return (keyHoldTime[num] % 0.5f) < Time.deltaTime;
+				return (keyHoldTime[num] % 0.5f) < global::UnityEngine.Time.deltaTime;
 
 			return false;
 		}
