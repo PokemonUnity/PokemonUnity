@@ -41,10 +41,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			meSource = gameObject.AddComponent<AudioSource>();
 		}
 
-		public void bgm_play(string filename, float volume, float pitch)
+		void IAudio.bgm_play(string filename, float volume, float pitch) { bgm_play(filename, volume, pitch); }
+		public void bgm_play(string filename, float volume, float pitch, int position = 0)
 		{
-			//isLooping = true;
-			PlayAudio(bgmSource, filename, volume, pitch, true);
+			PlayAudio(bgmSource, filename, volume, pitch, true, position);
 		}
 
 		public void bgm_stop()
@@ -103,7 +103,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			seSources.Clear();
 		}
 
-		private void PlayAudio(AudioSource source, string filename, float volume, float pitch, bool loop)
+		private void PlayAudio(AudioSource source, string filename, float volume, float pitch, bool loop, int position = 0)
 		{
 			AudioClip clip = Resources.Load<AudioClip>(filename);
 			if (clip == null)
@@ -116,6 +116,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			source.volume = volume;
 			source.pitch = pitch;
 			source.loop = loop;
+			source.timeSamples = position;
+			//isLooping = loop;
 			source.Play();
 			StopCoroutine("CheckAudioLoop");
 			StartCoroutine(CheckAudioLoop());
