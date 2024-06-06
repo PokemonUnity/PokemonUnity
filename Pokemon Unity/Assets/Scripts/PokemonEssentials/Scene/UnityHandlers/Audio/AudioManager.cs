@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PokemonEssentials.Interface;
 using PokemonUnity;
@@ -9,7 +10,11 @@ namespace PokemonUnity.Interface.UnityEngine
 	/// <summary>
 	/// UnityEngine AudioHandler Logic
 	/// </summary>
-	public class AudioManager : MonoBehaviour, IAudio
+	public class AudioManager : MonoBehaviour, IAudio,
+		PokemonEssentials.Interface.IAudioBGM,
+		PokemonEssentials.Interface.IAudioBGS,
+		PokemonEssentials.Interface.IAudioSE,
+		PokemonEssentials.Interface.IAudioME
 	{
 		public static IAudio AudioHandler;
 		public int bgm_position
@@ -25,26 +30,39 @@ namespace PokemonUnity.Interface.UnityEngine
 		}
 		public int volume { get; set; }
 		public float pitch { get; set; }
-		private AudioSource bgmSource;
-		private AudioSource bgsSource;
-		private AudioSource meSource;
 		private int loopStartSamples;
 		private int loopEndSamples;
 		private bool isLooping = false;
-		private List<AudioSource> seSources = new List<AudioSource>();
+		public AudioSource bgmSource;
+		public AudioSource bgsSource;
+		public AudioSource meSource;
+		public List<AudioSource> seSources = new List<AudioSource>();
 
 		private void Awake()
 		{
+			AudioHandler = this;
 			// Create different AudioSource components for different types of audio
 			bgmSource = gameObject.AddComponent<AudioSource>();
 			bgsSource = gameObject.AddComponent<AudioSource>();
 			meSource = gameObject.AddComponent<AudioSource>();
 		}
 
-		public void bgm_play(string filename, float volume, float pitch)
+		private void LateUpdate()
 		{
-			//isLooping = true;
-			PlayAudio(bgmSource, filename, volume, pitch, true);
+			foreach (AudioSource source in seSources)
+				if (!source.isPlaying)
+					seSources.Remove(source);
+		}
+
+		void IAudio.bgm_play(string filename, float volume, float pitch) { bgm_play(filename, volume, pitch); }
+		public void bgm_play(string filename, float volume, float pitch, int position = 0)
+		{
+			//IAudioObject audio = new AudioTrack(clip).initialize(filename, volume, pitch);
+			PlayAudio(bgmSource, filename, volume, pitch, true, position);
+		}
+		public void bgm_play(IAudioObject audio, int position = 0)
+		{
+			PlayAudio(bgmSource, audio, true, position);
 		}
 
 		public void bgm_stop()
@@ -61,6 +79,10 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			PlayAudio(bgsSource, filename, volume, pitch, true);
 		}
+		public void bgs_play(IAudioObject audio)
+		{
+			PlayAudio(bgsSource, audio, true);
+		}
 
 		public void bgs_stop()
 		{
@@ -75,6 +97,10 @@ namespace PokemonUnity.Interface.UnityEngine
 		public void me_play(string filename, float volume, float pitch)
 		{
 			PlayAudio(meSource, filename, volume, pitch, false);
+		}
+		public void me_play(IAudioObject audio)
+		{
+			PlayAudio(meSource, audio, false);
 		}
 
 		public void me_stop()
@@ -93,6 +119,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			seSources.Add(seSource);
 			PlayAudio(seSource, filename, volume, pitch, false);
 		}
+		public void se_play(IAudioObject audio)
+		{
+			AudioSource seSource = new AudioSource();
+			seSources.Add(seSource);
+			PlayAudio(seSource, audio.name, audio.volume, audio.pitch, false);
+		}
 
 		public void se_stop()
 		{
@@ -103,7 +135,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			seSources.Clear();
 		}
 
-		private void PlayAudio(AudioSource source, string filename, float volume, float pitch, bool loop)
+		private void PlayAudio(AudioSource source, string filename, float volume, float pitch, bool loop, int position = 0)
 		{
 			AudioClip clip = Resources.Load<AudioClip>(filename);
 			if (clip == null)
@@ -112,13 +144,23 @@ namespace PokemonUnity.Interface.UnityEngine
 				return;
 			}
 
+			IAudioObject audio = new AudioTrack(clip).initialize(filename, volume, pitch);
+			PlayAudio(source, audio, loop, position);
+		}
+
+		private void PlayAudio(AudioSource source, IAudioObject audio, bool loop, int position = 0)
+		{
+			AudioClip clip = (audio as AudioTrack).clip;
+
 			source.clip = clip;
-			source.volume = volume;
-			source.pitch = pitch;
+			source.volume = audio.volume;
+			source.pitch = audio.pitch;
 			source.loop = loop;
+			source.timeSamples = position;
+			//isLooping = loop;
 			source.Play();
-			StopCoroutine("CheckAudioLoop");
-			StartCoroutine(CheckAudioLoop());
+			StopCoroutine("CheckMusicLoop");
+			StartCoroutine(CheckMusicLoop());
 		}
 
 		private IEnumerator FadeOut(AudioSource source, float fadeTime)
@@ -130,27 +172,131 @@ namespace PokemonUnity.Interface.UnityEngine
 				source.volume -= startVolume * Time.deltaTime / fadeTime;
 				yield return null;
 			}
+			//LeanTween.easeOutElastic(startVolume, 0, source.volume, period: fadeTime);
 
 			source.Stop();
 			source.volume = startVolume;
 		}
 
-		private IEnumerator CheckAudioLoop()
+		/// <summary>
+		/// <returns></resummaryturns>
+		/// <remarks>
+		/// All music tracks are looped by default
+		/// Use volume or <see cref="bgm_stop"/> to turn off the music
+		/// </remarks>
+		private IEnumerator CheckMusicLoop()
 		{
 			while (bgmSource.isPlaying)
 			{
-				if (!isLooping && bgmSource.timeSamples >= loopEndSamples)
+				if(loopEndSamples == 0)
 				{
-					bgmSource.timeSamples = loopStartSamples;
-					isLooping = true; // Begin looping
+					//loopStartSamples = 0;
+					loopEndSamples = bgmSource.clip.samples;
 				}
-				else if (isLooping && bgmSource.timeSamples < loopStartSamples)
+				if(loopStartSamples >= loopEndSamples && loopEndSamples != 0)
 				{
-					// If the audio source somehow goes before the loop start, reset to loop start
-					bgmSource.timeSamples = loopStartSamples;
+					loopStartSamples = 0;
+				}
+				if(loopEndSamples > 0)
+				{
+					//if (!isLooping && bgmSource.timeSamples >= loopEndSamples)
+					if (!bgmSource.loop && bgmSource.timeSamples >= loopEndSamples)
+					{
+						bgmSource.timeSamples = loopStartSamples;
+						//isLooping = true; // Begin looping
+						bgmSource.loop = true; // Begin looping
+					}
+					//else if (isLooping && bgmSource.timeSamples < loopStartSamples)
+					else if (bgmSource.loop && bgmSource.timeSamples < loopStartSamples)
+					{
+						// If the audio source somehow goes before the loop start, reset to loop start
+						bgmSource.timeSamples = loopStartSamples;
+					}
 				}
 				yield return null;
 			}
 		}
+
+		#region Explicit Interface
+		IAudioBGM IAudioBGM.last()
+		{
+			if (bgmSource.isPlaying)
+			{
+				IAudioObject audio = new AudioTrack(bgmSource.clip).initialize(bgmSource.clip.name, bgmSource.volume, bgmSource.pitch);
+				return audio as IAudioBGM;
+			}
+			return null;
+		}
+
+		void IAudioBGM.stop()
+		{
+			bgm_stop();
+		}
+
+		void IAudioBGM.fade(int time)
+		{
+			bgm_fade(time);
+		}
+
+		void IAudioBGM.play()
+		{
+			if (bgmSource.clip != null)
+				bgmSource.Play();
+		}
+
+		IAudioBGS IAudioBGS.last()
+		{
+			if (bgsSource.isPlaying)
+			{
+				IAudioObject audio = new AudioTrack(bgsSource.clip).initialize(bgsSource.clip.name, bgsSource.volume, bgsSource.pitch);
+				return audio as IAudioBGS;
+			}
+			return null;
+		}
+
+		void IAudioBGS.stop()
+		{
+			bgs_stop();
+		}
+
+		void IAudioBGS.fade(int time)
+		{
+			bgs_fade(time);
+		}
+
+		void IAudioBGS.play()
+		{
+			if (bgsSource.clip != null)
+				bgsSource.Play();
+		}
+
+		void IAudioSE.stop()
+		{
+			se_stop();
+		}
+
+		void IAudioSE.play()
+		{
+		}
+
+		void IAudioME.stop()
+		{
+			me_stop();
+		}
+
+		void IAudioME.fade(int time)
+		{
+			me_fade(time);
+		}
+
+		void IAudioME.play()
+		{
+		}
+
+		object ICloneable.Clone()
+		{
+			return this.MemberwiseClone();
+		}
+		#endregion
 	}
 }

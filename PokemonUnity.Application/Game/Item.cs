@@ -602,8 +602,8 @@ namespace PokemonUnity//.Inventory
 						int chosen=screen.ChoosePokemon();
 						if (chosen>=0) {
 							IPokemon pokemon=Trainer.party[chosen];
-							if (!CheckUseOnPokemon(item,pokemon,screen)) {
-								(this as IGameAudioPlay).PlayBuzzerSE();
+							if (!CheckUseOnPokemon(item,pokemon,screen) && this is IGameAudioPlay gap) {
+								gap.PlayBuzzerSE();
 							} else {
 								ret=ItemHandlers.triggerUseOnPokemon(item,pokemon,(IHasDisplayMessage)screen);
 								if (ret && Kernal.ItemData[item].Flags.Consumable) {		//[ITEMUSE]==1 Usable on Pokémon, consumed
@@ -701,7 +701,7 @@ namespace PokemonUnity//.Inventory
 			window.width=198;
 			window.y=0;
 			window.x=Graphics.width-window.width;
-			(this as IGameAudioPlay).PlayDecisionSE();
+			if (this is IGameAudioPlay gap) gap.PlayDecisionSE();
 			do { //;loop
 				Graphics?.update();
 				Input.update();

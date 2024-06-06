@@ -1,23 +1,29 @@
 ﻿using System;
+using System.Linq;
 using PokemonEssentials.Interface;
 using UnityEngine;
 
 namespace PokemonUnity.Interface.UnityEngine
 {
-    public class FileTest : MonoBehaviour, IFileTest
+	public class FileTest : MonoBehaviour, IFileTest
 	{
+		private static AudioData _audioData;
 		private global::UnityEngine.UI.Image[] images;
-		private global::UnityEngine.AudioClip[] audio;
 		public string[] Image_ext { get; }
 		public string[] Audio_ext { get; }
 
 		#region Audio
 		[Header("Audio")]
+		private AudioData audioData;
+		public global::UnityEngine.AudioClip SoundEffectChoose;
+		public global::UnityEngine.AudioClip SoundEffectBuzzer;
+		public global::UnityEngine.AudioClip SoundEffectExpFull;
 		public global::UnityEngine.AudioClip SoundEffectThrow;
 		public global::UnityEngine.AudioClip SoundEffectRecall;
 		public global::UnityEngine.AudioClip SoundEffectBallShake;
 		public global::UnityEngine.AudioClip SoundEffectBallDrop;
 		public global::UnityEngine.AudioClip SoundEffectJumpToBall;
+		public global::UnityEngine.AudioClip SoundEffectJump;
 		#endregion
 
 		#region Images
@@ -50,14 +56,39 @@ namespace PokemonUnity.Interface.UnityEngine
 		public global::UnityEngine.UI.Image battleFoeBoxD;
 		#endregion
 
+		#region Unity Monobehavior
+		private void Awake()
+		{
+			_audioData = audioData;
+		}
+		#endregion
+
 		public static bool audio_exist(string filename)
 		{
-			throw new NotImplementedException();
+			if (filename == null || filename == "")
+				return false;
+			string[] folders = filename.Split('/');
+			if(folders.Length > 0)
+			{
+				//if (folders[1] == "BGM")
+				if (filename.StartsWith("Audio/BGM/"))
+					return _audioData.BackgroundMusic.Any(clip => clip.name.Contains(folders[2]));
+				//if (folders[1] == "BGS")
+				if (filename.StartsWith("Audio/BGS/"))
+					return _audioData.BackgroundSound.Any(clip => clip.name.Contains(folders[2]));
+				//if (folders[1] == "ME")
+				if (filename.StartsWith("Audio/ME/"))
+					return _audioData.MusicEffect.Any(clip => clip.name.Contains(folders[2]));
+				//if (folders[1] == "SE")
+				if (filename.StartsWith("Audio/SE/"))
+					return _audioData.SoundEffect.Any(clip => clip.name.Contains(folders[2]));
+			};
+			return false;
 		}
 
 		public static bool image_exist(string filename)
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		bool IFileTest.audio_exist(string filename)
@@ -69,5 +100,25 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			return image_exist(filename);
 		}
+	}
+
+	[CreateAssetMenu(fileName = "AudioData", menuName = "Audio/Manager")]
+	public class AudioData : ScriptableObject
+	{
+		//public const string BGM = "Audio/BGM/";
+		//public const string BGM = "Audio/SE/Choose";
+		//public const string BGM = "Audio/SE/buzzer";
+		//public const string BGM = "Audio/SE/expfull";
+		//public const string BGM = "Audio/SE/throw";
+		//public const string BGM = "Audio/SE/recall";
+		//public const string BGM = "Audio/SE/jumptoball";
+		//public const string BGM = "Audio/SE/ballshake";
+		//public const string BGM = "Audio/SE/balldrop";
+		//public const string BGM = "Audio/SE/jump";
+
+		public global::UnityEngine.AudioClip[] BackgroundMusic;
+		public global::UnityEngine.AudioClip[] BackgroundSound;
+		public global::UnityEngine.AudioClip[] MusicEffect;
+		public global::UnityEngine.AudioClip[] SoundEffect;
 	}
 }

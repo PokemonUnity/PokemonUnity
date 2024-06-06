@@ -2008,8 +2008,8 @@ namespace PokemonUnity
 					}
 				} while(i < frames);
 				string tmpFile="\\record.wav";//ENV["TEMP"]+
-				//endRecord(tmpFile); //ToDo: Stops recording and saves the recording to a file.
-				wave =getWaveDataUI(tmpFile,true);
+				endRecord(tmpFile); //ToDo: Stops recording and saves the recording to a file.
+				wave=getWaveDataUI(tmpFile,true);
 				if (wave != null) {
 					(this as IGameMessage).MessageDisplay(msgwindow,Game._INTL("PLAYING BACK..."),false);
 					textwindow.update();

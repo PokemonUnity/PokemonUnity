@@ -517,6 +517,63 @@ namespace PokemonUnity
 			}
 		}
 
+		#region Microphone Recording Utilities
+		// These scripts below are supposed to live closer to the operating system or game engine, in a different class
+		/// <summary>
+		/// Starts recording.  Returns 0 if successful.
+		/// </summary>
+		/// <returns></returns>
+		protected virtual int beginRecord() {
+			//if (mic == null || mic == "") //if unable to access microphone
+				return 256+72;
+			GameDebug.LogDebug(Game._INTL("open new type waveaudio alias RECORDER buffer 4"));
+			GameDebug.LogDebug(Game._INTL("set RECORDER channels 1"));
+			int retval = 0;
+			GameDebug.LogDebug(Game._INTL("record RECORDER")); //retval = Win32API.call("mciSendString","record RECORDER",0,0);
+			if (retval!=0)
+				GameDebug.LogDebug(Game._INTL("close RECORDER"));
+			return retval;
+		}
+
+		/// <summary>
+		/// Gets a single sample from the microphone.
+		/// </summary>
+		/// <returns></returns>
+		/// The beginRecord or beginRecordUI function must have been called beforehand.
+		protected virtual int getRecorderSample() {
+			//if (mic == null || mic == "") //if unable to access microphone
+			//	return 0x8000;
+			string buffer = "0"; //0 x256 times
+			int ret = 0;
+			GameDebug.LogDebug(Game._INTL("stop RECORDER"));
+			GameDebug.LogDebug(Game._INTL("status RECORDER bitspersample")); //Win32API.call("mciSendString","status RECORDER bitspersample",buffer,buffer.Length);
+			int bitspersample = 16;
+			GameDebug.LogDebug(Game._INTL("status RECORDER level"));
+			GameDebug.LogDebug(Game._INTL("record RECORDER"));
+			if (bitspersample == 8)
+				ret = int.Parse(buffer) << 8;	// max 128
+			else
+				ret = int.Parse(buffer);		// max 0x8000
+			return ret;
+		}
+
+		protected virtual void stopRecord() {
+			//if (mic == null || mic == "") //if unable to access microphone
+			//	return;
+			GameDebug.LogDebug(Game._INTL("stop RECORDER"));
+			GameDebug.LogDebug(Game._INTL("close RECORDER"));
+		}
+
+		protected virtual void endRecord(string file) {
+			//if (mic == null || mic == "") //if unable to access microphone
+			//	return;
+			GameDebug.LogDebug(Game._INTL("stop RECORDER"));
+			if (file!=null || file!="")
+				GameDebug.LogDebug(Game._INTL("save RECORDER #{1}", file));
+			GameDebug.LogDebug(Game._INTL("close RECORDER"));
+		}
+		#endregion
+
 		public virtual IList<object> HideVisibleObjects()
 		{
 			IList<object> visibleObjects= new List<object>(); //ToDo: ISpriteWindow?
@@ -1024,8 +1081,9 @@ namespace PokemonUnity
 		#endregion
 
 		#region Loads music and sound effects
-		public string ResolveAudioSE(string file) {
+		public virtual string ResolveAudioSE(string file) {
 			if (file == null) return null;
+			//for each file extension, check if the file is found and return that path
 			//if (RTP.exists("Audio/SE/"+file,new string[] { "", ".wav", ".mp3", ".ogg" })) {
 			//	return RTP.getPath("Audio/SE/"+file,new string[] { "", ".wav", ".mp3", ".ogg" });
 			//}
@@ -1086,9 +1144,10 @@ namespace PokemonUnity
 					p.chatter.play();
 				} else {
 					string pkmnwav=CryFile(pokemon);
-					if (pkmnwav != null) {
-						//SEPlay(new AudioTrack().initialize(pkmnwav,volume,
-						//	pitch != null ? pitch : (pokemon.HP*25/pokemon.TotalHP)+75)); //rescue null
+					if (pkmnwav != null && this is IGameAudioPlay gap) {
+						//gap.SEPlay(new AudioTrack().initialize(pkmnwav,volume,
+						gap.SEPlay(gap.ResolveAudioFile(pkmnwav,volume,
+							pitch != null ? pitch : (pokemon.HP*25/pokemon.TotalHP)+75)); //rescue null
 					}
 				}
 			}
@@ -1098,13 +1157,14 @@ namespace PokemonUnity
 			if (pokemon == Pokemons.NONE) return;
 			//if (pokemon is Numeric) {
 				string pkmnwav=CryFile(pokemon);
-				if (pkmnwav != null) {
-					//SEPlay(new AudioTrack().initialize(pkmnwav,volume,pitch != null ? pitch : 100)); //rescue null
+				if (pkmnwav != null && this is IGameAudioPlay gap) {
+					//gap.SEPlay(new AudioTrack().initialize(pkmnwav,volume,pitch != null ? pitch : 100)); //rescue null
+					gap.SEPlay(gap.ResolveAudioFile(pkmnwav,volume,pitch != null ? pitch : 100)); //rescue null
 				}
 			//}
 		}
 
-		public string CryFile(Pokemons pokemon) {
+		public virtual string CryFile(Pokemons pokemon) {
 			if (pokemon == Pokemons.NONE) return null;
 			//if (pokemon is Numeric) {
 				string filename=string.Format("Cries/{0}Cry",pokemon.ToString()); //rescue null
@@ -1114,7 +1174,7 @@ namespace PokemonUnity
 			return null;
 		}
 
-		public string CryFile(IPokemon pokemon) {
+		public virtual string CryFile(IPokemon pokemon) {
 			if (pokemon == null) return null;
 			if (!pokemon.isEgg) {
 				string filename=string.Format("Cries/{0}Cry_{1}",pokemon.Species.ToString(),pokemon is IPokemonMultipleForms f0 ? f0.form : 0); //rescue 0 rescue null
@@ -1124,6 +1184,7 @@ namespace PokemonUnity
 				}
 				if (ResolveAudioSE(filename) == null) filename=string.Format("Cries/{0}Cry",pokemon.Species);
 				if (ResolveAudioSE(filename) != null) return filename;
+				CryFile(pokemon.Species);
 			}
 			return null;
 		}
@@ -1137,16 +1198,16 @@ namespace PokemonUnity
 				//  Check map-specific metadata
 				//IPokemonMetadata music=GetMetadata(GameMap.map_id,MetadataMapWildBattleBGM);
 				string music=GetMetadata(GameMap.map_id).Map.WildBattleBGM;
-				if (music != null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music != null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioBGM)gap.StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
 				//IPokemonMetadata music=GetMetadata(0,MetadataWildBattleBGM);
 				string music=GetMetadata(0).Map.WildBattleBGM;
-				if (music != null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music != null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioBGM)gap.StringToAudioFile(music);
 				}
 			}
 			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("002-Battle02");
@@ -1162,19 +1223,19 @@ namespace PokemonUnity
 				//  Check map-specific metadata
 				//string music=GetMetadata(GameMap.map_id,MetadataMapWildVictoryME);
 				string music=GetMetadata(GameMap.map_id).Map.WildVictoryME;
-				if (music != null && music!="") {
-					ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music != null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioME)gap.StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
 				//string music=GetMetadata(0,MetadataWildVictoryME);
 				string music=GetMetadata(GameMap.map_id).Map.WildVictoryME;
-				if (music != null && music!="") {
-					ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music != null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioME)gap.StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile("001-Victory01");
+			if (ret == null && this is IGameAudioPlay gap1) ret=(IAudioME)gap1.StringToAudioFile("001-Victory01");
 			ret.name="../../Audio/ME/"+ret.name;
 			return ret;
 		}
@@ -1184,9 +1245,9 @@ namespace PokemonUnity
 			//	trainertypes=Marshal.load(f);
 				if (Kernal.TrainerMetaData.ContainsKey(trainertype)) { //Kernal.TrainerMetaData[trainertype] != null
 					string bgm=Kernal.TrainerMetaData[trainertype].IntroME; //trainertypes[trainertype][6];
-					if (!string.IsNullOrEmpty(bgm)) { //!=null && bgm!=""
-						IAudioME bgm_=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(bgm);
-						(this as IGameAudioPlay).MEPlay(bgm_);
+					if (!string.IsNullOrEmpty(bgm) && this is IGameAudioPlay gap) { //!=null && bgm!=""
+						IAudioME bgm_=(IAudioME)gap.StringToAudioFile(bgm);
+						gap.MEPlay(bgm_);
 						return;
 					}
 				}
@@ -1215,26 +1276,26 @@ namespace PokemonUnity
 				}
 			//}
 			IAudioBGM ret=null;
-			if (music != null && music!="") {
-				ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
+			if (music != null && music!="" && this is IGameAudioPlay gap1) {
+				ret=(IAudioBGM)gap1.StringToAudioFile(music);
 			}
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
 				//music=GetMetadata(GameMap.map_id,MetadataMapTrainerBattleBGM);
 				music=GetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
-				if (music!=null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music!=null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioBGM)gap.StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
 				//music=GetMetadata(0,MetadataTrainerBattleBGM);
 				music=GetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
-				if (music!=null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music!=null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioBGM)gap.StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("005-Boss01");
+			if (ret == null && this is IGameAudioPlay gap2) ret=(IAudioBGM)gap2.StringToAudioFile("005-Boss01");
 			return ret;
 		}
 
@@ -1250,26 +1311,26 @@ namespace PokemonUnity
 				}
 			//}
 			IAudioBGM ret=null;
-			if (music!=null && music!="") {
-				ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
+			if (music!=null && music!="" && this is IGameAudioPlay gap2) {
+				ret=(IAudioBGM)gap2.StringToAudioFile(music);
 			}
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
 				//music=GetMetadata(GameMap.map_id,MetadataMapTrainerBattleBGM);
 				music=GetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
-				if (music!=null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music!=null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioBGM)gap.StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
 				//music=GetMetadata(0,MetadataTrainerBattleBGM);
 				music=GetMetadata(GameMap.map_id).Map.TrainerBattleBGM;
-				if (music!=null && music!="") {
-					ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music!=null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioBGM)gap.StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("005-Boss01");
+			if (ret == null && this is IGameAudioPlay gap1) ret=(IAudioBGM)gap1.StringToAudioFile("005-Boss01");
 			return ret;
 		}
 
@@ -1294,26 +1355,26 @@ namespace PokemonUnity
 				}
 			//}
 			IAudioME ret=null;
-			if (music!=null && music!="") {
-				ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
+			if (music!=null && music!="" && this is IGameAudioPlay gap1) {
+				ret=(IAudioME)gap1.StringToAudioFile(music);
 			}
 			if (ret == null && GameMap != null) {
 				//  Check map-specific metadata
 				//music=GetMetadata(GameMap.map_id,MetadataMapTrainerVictoryME);
 				music=GetMetadata(GameMap.map_id).Map.TrainerVictoryME;
-				if (music!=null && music!="") {
-					ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music!=null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioME)gap.StringToAudioFile(music);
 				}
 			}
 			if (ret == null) {
 				//  Check global metadata
 				//music=GetMetadata(0,MetadataTrainerVictoryME);
 				music=GetMetadata(GameMap.map_id).Map.TrainerVictoryME;
-				if (music!=null && music!="") {
-					ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile(music);
+				if (music!=null && music!="" && this is IGameAudioPlay gap) {
+					ret=(IAudioME)gap.StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioME)(this as IGameAudioPlay).StringToAudioFile("001-Victory01");
+			if (ret == null && this is IGameAudioPlay gap2) ret=(IAudioME)gap2.StringToAudioFile("001-Victory01");
 			ret.name="../../Audio/ME/"+ret.name;
 			return ret;
 		}
