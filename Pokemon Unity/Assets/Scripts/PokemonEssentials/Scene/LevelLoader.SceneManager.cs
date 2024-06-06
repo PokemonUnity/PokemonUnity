@@ -121,8 +121,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			foreach (PokemonEssentials.Interface.Screen.IScene scene in scenes)
 			{
-				if (scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) { TextEntryScene = s0; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEntryScene), Scenes.TextEntry); }
-				else if (scene is PokemonEssentials.Interface.Screen.IIntroEventScene s1) { IntroScene = s1; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IIntroEventScene), Scenes.Intro); }
+				if (scene is PokemonEssentials.Interface.Screen.IIntroEventScene s1) { IntroScene = s1; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IIntroEventScene), Scenes.Intro); }
+				//else if (scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) { TextEntryScene = s0; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEntryScene), Scenes.TextEntry); }
 				else if (scene is PokemonEssentials.Interface.Screen.ILoadScene s2) { Load = s2; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ILoadScene), Scenes.Load); }
 				else if (scene is PokemonEssentials.Interface.Screen.ISaveScene s3) { Save = s3; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ISaveScene), Scenes.Intro); }
 				else if (scene is PokemonEssentials.Interface.Screen.IOptionScene s4) { OptionScene = s4; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IOptionScene), Scenes.Option); }

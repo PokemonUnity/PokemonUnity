@@ -232,7 +232,8 @@ namespace PokemonUnity
 			PokemonTemp.begunNewGame=true; //new game because you changed your name?
 		}
 
-		public string SuggestTrainerName(int gender) {
+		string IGameUtility.SuggestTrainerName(int gender) { return this.SuggestTrainerName(gender); }
+		public virtual string SuggestTrainerName(int gender, string name = null) {
 			string userName=GetUserName();
 			//userName=userName.gsub(/\s+.*$/,""); // trim space
 			if (userName.Length>0 && userName.Length<7) {
@@ -253,7 +254,7 @@ namespace PokemonUnity
 			//string owner=MiniRegistry.get(MiniRegistry::HKEY_LOCAL_MACHINE,
 			//	"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
 			//	"RegisteredOwner","");
-			string owner = "";
+			string owner = name ?? "";
 			owner=owner.Trim();//.gsub(/\s+.*$/,""); //trim spaces
 			if (owner.Length>0 && owner.Length<7) {
 				//owner[0,1]=owner[0,1].upcase; //make first two characters cap
@@ -497,7 +498,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <returns>Returns true if successful, false otherwise</returns>
 		/// Requires the script AudioUtilities
-		/// Requires the script "PokemonMessages"
+		/// Requires the script <see cref="IGameMessage"/>
 		public bool beginRecordUI() {
 			int code = 0; //beginRecord();
 			switch (code) {
@@ -695,8 +696,8 @@ namespace PokemonUnity
 						done.Add(i.id);
 					}
 				}
-			//} else {
-			//	sprite=((ISpritesetMapAnimation)Scene.spriteset()).addUserAnimation(id,@event.x,@event.y,tinting);
+			} else {
+				sprite = ((ISpritesetMapAnimation)Scene.spriteset).addUserAnimation(id, @event[0].x,@event[0].y,tinting);
 			}
 			while (!sprite.disposed) {
 				Graphics?.update();
@@ -800,20 +801,20 @@ namespace PokemonUnity
 		}
 
 		public virtual string CheckPokemonBitmapFiles(params object[] args) {
-			//Pokemons species=params[0];
-			//bool back=params[1];
-			//List<> factors=[];
-			//if (params[5] && params[5]!=false    ) factors.Add([5,params[5],false]);	// shadow
-			//if (params[2] && params[2]!=false    ) factors.Add([2,params[2],false]);	// gender
-			//if (params[3] && params[3]!=false    ) factors.Add([3,params[3],false]);	// shiny
-			//if (params[4] && params[4].ToString()!="" &&
-			//	params[4].ToString()!="0") factors.Add([4,params[4].ToString(),""]); // form
+			//Pokemons species=args[0];
+			//bool back=args[1];
+			//List<> factors=new List<>();
+			//if (args[4]!=null && args[4].ToString()!="" &&
+			//	args[4].ToString()!="0")				factors.Add([4,args[4].ToString(),""]);	// form
+			//if (args[5]!=null && args[5]!=false	)	factors.Add([5,args[5],false]);			// shadow
+			//if (args[2]!=null && args[2]!=false	)	factors.Add([2,args[2],false]);			// gender
+			//if (args[3]!=null && args[3]!=false	)	factors.Add([3,args[3],false]);			// shiny
 			//bool tshadow=false;
 			//bool tgender=false;
 			//bool tshiny=false;
 			//string tform="";
-			//for (int i = 0; i < 2**factors.Length; i++) {
-			//	for (int j = 0; j < factors.Length; j++) {
+			//for (int i = 0; i < 2**factors.Count; i++) {
+			//	for (int j = 0; j < factors.Count; j++) {
 			//		switch (factors[j][0]) {
 			//			case 2:   // gender
 			//				tgender=((i/(2**j))%2==0) ? factors[j][1] : factors[j][2];
@@ -830,16 +831,16 @@ namespace PokemonUnity
 			//		}
 			//	}
 			//	string bitmapFileName=string.Format("Graphics/Battlers/%s%s%s%s%s%s",
-			//		getConstantName(Species,species),
+			//		species.ToString(), //getConstantName(Species,species),
 			//		tgender ? "f" : "",
 			//		tshiny ? "s" : "",
 			//		back ? "b" : "",
 			//		(tform!="" ? "_"+tform : ""),
 			//		tshadow ? "_shadow" : ""); //rescue null
 			//	string ret=ResolveBitmap(bitmapFileName);
-			//	if (ret) return ret;
+			//	if (ret!=null) return ret;
 			//	bitmapFileName=string.Format("Graphics/Battlers/%03d%s%s%s%s%s",
-			//		species,
+			//		(int)species,
 			//		tgender ? "f" : "",
 			//		tshiny ? "s" : "",
 			//		back ? "b" : "",
@@ -860,36 +861,35 @@ namespace PokemonUnity
 			//bitmapFileName=CheckPokemonIconFiles([pokemon.Species,
 			//										(pokemon.isFemale?),
 			//										pokemon.isShiny?,
-			//										(pokemon.form rescue 0),
-			//										(pokemon.isShadow? rescue false)],
+			//										(pokemon.form),			//rescue 0
+			//										(pokemon.isShadow?)],	//rescue false
 			//										pokemon.isEgg?);
 			return bitmapFileName;
 		}
 
-		public virtual string CheckPokemonIconFiles(object[] param,bool egg=false) {
-			//Pokemons species=params[0];
-			//if (egg) {
-			//	bitmapFileName=string.Format("Graphics/Icons/icon%segg",getConstantName(Species,species)); //rescue null
-			//	if (!ResolveBitmap(bitmapFileName)) {
-			//		bitmapFileName=string.Format("Graphics/Icons/icon%03degg",species) ;
-			//		if (!ResolveBitmap(bitmapFileName)) {
-			//			bitmapFileName=string.Format("Graphics/Icons/iconEgg");
-			//		}
-			//	}
-			//	return ResolveBitmap(bitmapFileName);
+		public virtual string CheckPokemonIconFiles(PokemonBattleSprite param,bool egg=false) {
+			Pokemons species=param.Species;
+			if (egg) {
+				string bitmapFileName=string.Format("Graphics/Icons/icon{0}egg",species.ToString()); //getConstantName(Species,species)
+				if (ResolveBitmap(bitmapFileName)==null) {
+					bitmapFileName=string.Format("Graphics/Icons/icon{1:03}degg",(int)species) ;
+					if (ResolveBitmap(bitmapFileName)==null) {
+						bitmapFileName=string.Format("Graphics/Icons/iconEgg");
+					}
+				}
+				return ResolveBitmap(bitmapFileName);
 			//} else {
-			//	List<> factors=[];
-			//	if (params[4] && params[4]!=false    ) factors.Add([4,params[4],false]);	// shadow
-			//	if (params[1] && params[1]!=false    ) factors.Add([1,params[1],false]);	// gender
-			//	if (params[2] && params[2]!=false    ) factors.Add([2,params[2],false]);	// shiny
-			//	if (params[3] && params[3].ToString()!="" &&
-			//		params[3].ToString()!="0") factors.Add([3,params[3].ToString(),""]);	// form
+			//	List<> factors=new List<T>();
+			//	if (param.Form != null && param.Form!=0				)	factors.Add([3,param.Form.ToString(),""]);	// form
+			//	if (param.IsShadow != null && param.IsShadow!=false	)	factors.Add([4,param.IsShadow,false]);		// shadow
+			//	if (param.IsFemale != null && param.IsFemale!=false	)	factors.Add([1,param.IsFemale,false]);		// gender
+			//	if (param.IsShiny != null && param.IsShiny!=false	)	factors.Add([2,param.IsShiny,false]);		// shiny
 			//	bool tshadow=false;
 			//	bool tgender=false;
 			//	bool tshiny=false;
 			//	string tform="";
-			//	for (int i = 0; i < 2**factors.Length; i++) {
-			//		for (int j = 0; j < factors.Length; j++) {
+			//	for (int i = 0; i < 2**factors.Count; i++) {
+			//		for (int j = 0; j < factors.Count; j++) {
 			//			switch (factors[j][0]) {
 			//				case 1:   // gender
 			//					tgender=((i/(2**j))%2==0) ? factors[j][1] : factors[j][2];
@@ -905,16 +905,16 @@ namespace PokemonUnity
 			//					break;
 			//			}
 			//		}
-			//		bitmapFileName=string.Format("Graphics/Icons/icon%s%s%s%s%s",
-			//			getConstantName(Species,species),
+			//		string bitmapFileName=string.Format("Graphics/Icons/icon%s%s%s%s%s",
+			//			species.ToString(),//getConstantName(Species,species),
 			//			tgender ? "f" : "",
 			//			tshiny ? "s" : "",
 			//			(tform!="" ? "_"+tform : ""),
-			//			tshadow ? "_shadow" : "") rescue null;
+			//			tshadow ? "_shadow" : ""); //rescue null
 			//		string ret=ResolveBitmap(bitmapFileName);
 			//		if (ret != null) return ret;
 			//		bitmapFileName=string.Format("Graphics/Icons/icon%03d%s%s%s%s",
-			//			species,
+			//			(int)species,
 			//			tgender ? "f" : "",
 			//			tshiny ? "s" : "",
 			//			(tform!="" ? "_"+tform : ""),
@@ -922,7 +922,7 @@ namespace PokemonUnity
 			//		ret=ResolveBitmap(bitmapFileName);
 			//		if (ret != null) return ret;
 			//	}
-			//}
+			}
 			return null;
 		}
 
@@ -1210,7 +1210,7 @@ namespace PokemonUnity
 					ret=(IAudioBGM)gap.StringToAudioFile(music);
 				}
 			}
-			if (ret == null) ret=(IAudioBGM)(this as IGameAudioPlay).StringToAudioFile("002-Battle02");
+			if (ret == null && this is IGameAudioPlay gap1) ret=(IAudioBGM)gap1.StringToAudioFile("002-Battle02");
 			return ret;
 		}
 
@@ -1408,8 +1408,9 @@ namespace PokemonUnity
 			}
 			pokemon.RecordFirstMoves();
 			if (Trainer.party.Length < Features.LimitPokemonPartySize) {
-				//ToDo: Change to `.Add(Pokemon)`?
-				Trainer.party[Trainer.party.Length]=pokemon;
+				//Changed to `.Add(Pokemon)`...
+				//Trainer.party[Trainer.party.Length]=pokemon;
+				((IList)Trainer.party).Add(pokemon);
 			} else {
 				int oldcurbox=PokemonStorage.currentBox;
 				int storedbox=PokemonStorage.StoreCaught(pokemon);

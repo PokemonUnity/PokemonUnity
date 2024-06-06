@@ -179,7 +179,7 @@ namespace PokemonEssentials.Interface
 
 		string PokemonIconFile(IPokemon pokemon);
 
-		string CheckPokemonIconFiles(object[] param, bool egg = false);
+		string CheckPokemonIconFiles(PokemonBattleSprite param, bool egg = false);
 
 		// Used by the Pokédex
 		string PokemonFootprintFile(Pokemons pokemon);
@@ -443,5 +443,22 @@ namespace PokemonEssentials.Interface
 
 		void ChooseMove(IPokemon pokemon, int variableNumber, int nameVarNumber);
 		#endregion
+	}
+
+	public struct PokemonBattleSprite
+	{
+		public Pokemons Species;
+		public bool IsFemale;
+		public bool IsShiny;
+		public int? Form;
+		public bool IsShadow;
+		PokemonBattleSprite(Pokemons species, bool female, bool shiny, int? form, bool shadow)
+		{
+			Species = species;
+			IsFemale = female;
+			IsShiny = shiny;
+			Form = form;
+			IsShadow = shadow;
+		}
 	}
 }

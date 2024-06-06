@@ -424,12 +424,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		void IPokemonEntryScene2.Update() { this.update(); }
 		protected void update()
 		{
-			for (int i = 0; i < 3; i++) {
-				@bitmaps[i].update();
-			}
+			//for (int i = 0; i < 3; i++) {
+			//	@bitmaps[i].update();
+			//}
 			if (@init) { //|| Graphics.frame_count%5==0
 				@init=false;
-				int cursorpos=@helper.cursor;
+				int cursorpos=0;//@helper.cursor;
 				if (cursorpos>=Maxlength) cursorpos=Maxlength-1;
 				if (cursorpos<0) cursorpos=0;
 				//Maxlength.times {|i|
@@ -439,7 +439,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					} else {
 						@blanks[i]=0;
 					}
-						@sprites[$"blank#{i}"].y= new int[]{ 78,82 }[@blanks[i]];
+					//@sprites[$"blank#{i}"].y= new int[]{ 78,82 }[@blanks[i]];
 				}
 			}
 			DoUpdateOverlay();

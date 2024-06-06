@@ -423,7 +423,7 @@ namespace PokemonUnity//.Inventory
 
 		public bool SpeciesCompatible (Pokemons species,Moves move) {
 			//bool ret=false;
-			//if (species<=0) return false;
+			if (species<=0) return false;
 			//data=load_data("Data/tm.dat");
 			//if (!data[move]) return false;
 			//return data[move].Any(item => item==species);

@@ -21,6 +21,10 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Uses current battle and manipulates the data then return the current battle with updated values.
 	/// </summary>
+	/// <remarks>
+	/// During battle, the moves used are modified by these classes before calculations are applied
+	/// </remarks>
+	/// https://essentialsdocs.fandom.com/wiki/Function_codes
 	public abstract class PokeBattle_Move : Move, IBattleMove, ICloneable
 	{
 		protected int[] astage { get; set; }
@@ -155,12 +159,7 @@ namespace PokemonUnity.Combat
 		#endregion
 	}
 
-	// <summary>
-	// During battle, the moves used are modified by these classes before calculations are applied
-	// </summary>
 #pragma warning disable 0162 //Warning CS0162  Unreachable code detected
-	// ToDo: Rename from PokemonEssential's Function to Veekun's Attack.Effects
-	// https://essentialsdocs.fandom.com/wiki/Function_codes
 	#region Battle Class Functions
 	/// <summary>
 	/// Superclass that handles moves using a non-existent function code.
@@ -836,9 +835,11 @@ namespace PokemonUnity.Combat
 	/// <summary>
 	/// Confuses the target. Chance of causing confusion depends on the cry's volume.
 	/// Confusion chance is 0% if user doesn't have a recorded cry. (Chatter)
-	/// TODO: Play the actual chatter cry as part of the move animation
-	///       this.battle.scene.Chatter(attacker,opponent) // Just plays cry
 	/// <summary>
+	/// <remarks>
+	/// TODO: Play the actual chatter cry as part of the move animation
+	/// <see cref="IPokeBattle_SceneChatter.Chatter(IBattler, IBattler)"/> // Just plays cry
+	/// </remarks>
 	public partial class PokeBattle_Move_014 : PokeBattle_Move
 	{
 		public PokeBattle_Move_014() : base() { }
