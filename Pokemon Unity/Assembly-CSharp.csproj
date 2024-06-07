@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\Legacy\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\Legacy\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\Legacy\AudioHandler.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\GameManager\GameManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\Audio\AudioTrack.cs" />
     <Compile Include="Assets\Scripts\Legacy\BattleCameraHandler.cs" />
     <Compile Include="Assets\Scripts\Legacy\BattleDebug.cs" />
@@ -161,14 +162,14 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\Audio\MicrophoneRecorder.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\Input\UserInputController.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\GameManager\GameAudioPlay.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\GameManager\Game\GameAudioPlay.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Move\Attack.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Move\Attack.Shadow.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Pokemon\Pokemon.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Pokemon\Pokemon.Effect.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Definition\DataStruct\Pokemon\Pokemon.Shadow.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\FileTest.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\GameManager\GameSystem.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\GameManager\Game\GameSystem.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Intro\IntroScene.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Typing\TypingForm.cs" />
@@ -206,9 +207,9 @@
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\PokemonDataBox.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\UnityBattleTest.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\EventScene.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\GameManager\GameEvents.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\GameManager\Game\GameEvents.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\LevelLoader.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\LevelLoader.SceneManager.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\GameManager\Game\GameScenes.cs" />
     <Compile Include="Assets\Scripts\Legacy\ScreenFade.cs" />
     <Compile Include="Assets\Scripts\Legacy\SetMatTint.cs" />
     <Compile Include="Assets\Scripts\Legacy\SetSortingOrder.cs" />
