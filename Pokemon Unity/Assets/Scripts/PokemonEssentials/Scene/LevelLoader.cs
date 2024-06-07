@@ -40,6 +40,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		void Awake()
 		{
 			GameEvents.current.onLoadLevel += Scene_onLoadLevel;
+			SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 		}
 
 		/// <summary>
@@ -64,6 +65,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		void OnDestroy()
 		{
 			GameEvents.current.onLoadLevel -= Scene_onLoadLevel;
+			SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
 		}
 		#endregion
 
@@ -90,7 +92,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return new WaitForSeconds(transitionTime);
 
 			//load scene
-			SceneManager.LoadScene(level);
+			SceneManager.LoadScene(level, LoadSceneMode.Single);
 
 			//ToDo: collect garbage while waiting for scene to load...
 			GC.Collect();
@@ -115,7 +117,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// </remarks>
 		/// <param name="scene">UI Scene</param>
 		/// <returns></returns>
-		IEnumerator LoadScene(int scene)
+		IEnumerator LoadScene(IScene scene)
 		{
 			//begin fade to black...
 			canvasGroup.interactable = true;
@@ -127,8 +129,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return new WaitForSeconds(transitionTime);
 
 			//load scene
-			//SceneManager.LoadScene(scene);
-			SceneManager.LoadScene(scene);
+			//SceneManager.LoadScene(scene, LoadSceneMode.Additive);
+			((object)scene as GameObject).gameObject.SetActive(true); //We can assume the scene is attached to a monobehavior class
 
 			//ToDo: collect garbage while waiting for scene to load...
 			GC.Collect();
@@ -168,8 +170,8 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		private void Scene_onLoadLevel(int level)
 		{
-			//StartCoroutine(LoadLevel(level));
-			StartCoroutine(LoadScene(level));
+			StartCoroutine(LoadLevel(level));
+			//StartCoroutine(LoadScene(level));
 		}
 
 		private void Scene_onLoadLevel(IScene level)
@@ -189,6 +191,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			//SceneManager.LoadScene(level);
 			//StartCoroutine(LoadLevel(args.Scene.Id));
 			Scene_onLoadLevel(args.Scene);
+		}
+
+		private void SceneManager_sceneLoaded(global::UnityEngine.SceneManagement.Scene arg0, LoadSceneMode arg1)
+		{
+			//ToDo: Can extend the duration of transition fade or loading screen using loaded boolean...
+			//ToDo: check if scene is loaded, and if so, remove from list of scenes to load...
 		}
 
 		private Scenes GetSceneType(IScene scene)
