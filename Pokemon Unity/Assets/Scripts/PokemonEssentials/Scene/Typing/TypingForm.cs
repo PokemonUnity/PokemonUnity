@@ -9,9 +9,11 @@ using PokemonEssentials.Interface.Field;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 namespace PokemonUnity.Interface.UnityEngine
 {
+	[Obsolete("Rename to TextEntry")]
 	public class TypingForm : IPokemonEntryScene, IPokemonEntryScene2
 	{
 		#region Variables
