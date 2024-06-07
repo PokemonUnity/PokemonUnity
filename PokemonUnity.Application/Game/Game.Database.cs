@@ -133,7 +133,7 @@ namespace PokemonUnity
 				// specified part of the file is locked.
 				//catch (IOException e)
 				//{
-				//	Console.WriteLine("{0}: The read " +
+				//	GameDebug.LogError("{0}: The read " +
 				//		"operation could not be performed " +
 				//		"because the specified part of the " +
 				//		"file is locked.",
@@ -2122,16 +2122,16 @@ namespace PokemonUnity
 		#region From SQL
 		static bool GetPokemonsFromSQL(IDbConnection con)
 		{
-			OnLoadEventArgs onLoad = new OnLoadEventArgs { Check = 0 };
+			OnLoadEventArgs onLoad = new OnLoadEventArgs { Check = 0 }; int count = 0; //ToDo: Should Implement `OnLoad` event to count/track DB progress?
 			try
 			{
 				//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
 				//{
 					//Step 3: Running a Command
-					IDbCommand stmt = con.CreateCommand();
+					IDbCommand stmt = con.CreateCommand(); PokemonUnity.Monster.Data.PokemonData data;
 
 					#region DataReader
-					stmt.CommandText = "select COUNT(*) from pokemon_views;select * from pokemon_views --order by id ASC";
+					stmt.CommandText = "select COUNT(*) from pokemon_views;select * from pokemon_views --order by id ASC"; //ToDo: Use `Core.PokemonGeneration` as a where clause?
 					//	@"select pokemon.id, pokemon.species_id, pokemon.identifier, pokemon.height, pokemon.weight, pokemon.base_experience, --pokemon.""order""
 					//pokemon_abilities_view.ability1, pokemon_abilities_view.ability2, pokemon_abilities_view.ability3,
 					//pokemon_egg_groups_view.egg_group1, pokemon_egg_groups_view.egg_group2,
@@ -2160,12 +2160,11 @@ namespace PokemonUnity
 					using(reader)
 					{
 						if (OnLoad != null) { onLoad.TotalPieces = (int)reader[0]; OnLoad.Invoke(Game.GameData, onLoad); } reader.NextResult();
-						Kernal.PokemonData.Add(Pokemons.NONE, new Monster.Data.PokemonData(Id:Pokemons.NONE, hatchTime: 1000));
+						Kernal.PokemonData.Add(Pokemons.NONE, new Monster.Data.PokemonData(Id:Pokemons.NONE, hatchTime: 1000)); GameDebug.LogDebug("Records affected: " + reader.RecordsAffected);
 						while(reader.Read()) //if(reader.Read())
 						{
-							//if (OnLoad != null) { onLoad.Piece = reader.StepCount; OnLoad.Invoke(Game.GameData, onLoad); }
-							Kernal.PokemonData.Add((Pokemons)int.Parse((string)reader["id"].ToString()),
-								new PokemonUnity.Monster.Data.PokemonData(
+							if (OnLoad != null) { onLoad.Piece = count; OnLoad.Invoke(Game.GameData, onLoad); count++; } //onLoad.Piece = reader.StepCount;
+								data = new PokemonUnity.Monster.Data.PokemonData(
 									Id: (Pokemons)int.Parse((string)reader["id"].ToString())
 									,baseForm: (Forms)int.Parse((string)reader["species_id"].ToString())
 									//,regionalDex: new int[] { int.Parse((string)reader["ReDex"].ToString()) }
@@ -2220,8 +2219,9 @@ namespace PokemonUnity
 									,habitatId: (PokemonUnity.Monster.Habitat)int.Parse(string.IsNullOrEmpty((string)reader["habitat_id"].ToString()) ? "0" : (string)reader["habitat_id"].ToString())
 									,shapeId: (PokemonUnity.Monster.Shape)int.Parse(string.IsNullOrEmpty((string)reader["shape_id"].ToString()) ? "0" : (string)reader["shape_id"].ToString())
 									//,heldItem: Data.heldItem
-								)
-							);
+								);
+							if (data.GenerationId <= Core.PokemonGeneration)
+								Kernal.PokemonData.Add((Pokemons)int.Parse((string)reader["id"].ToString()), data);
 							//foreach(var gen in new int[] { int.Parse((string)reader["ReDex"].ToString()) }) { PokedexData.Add(); }
 						}
 					//}
@@ -2302,7 +2302,7 @@ namespace PokemonUnity
 			try
 			{
 				Dictionary<Pokemons, List<Monster.Data.Form>> p = new Dictionary<Pokemons, List<Monster.Data.Form>>();
-				foreach (Pokemons x in Kernal.PokemonData.Keys)//for(int n = 1; n <= PokemonData.Keys.Length; n++)
+				foreach (Pokemons x in Kernal.PokemonData.Keys)//for(int n = 1; n <= Core.PokemonIndexLimit; n++)
 				{
 					p.Add(x, new List<Monster.Data.Form>());
 				}
@@ -2322,7 +2322,7 @@ namespace PokemonUnity
 				--pokemon_forms.identifier != pokemon.identifier OR
 				--pokemon_forms.id != pokemon.id
 				--pokemon_forms.id != pokemon_species.id
-				order by pokemon.species_id, pokemon_forms.form_order ASC;";
+				order by pokemon.species_id, pokemon_forms.form_order ASC;"; //ToDo: Use `Core.PokemonGeneration` as a where clause?
 				//	@"select pokemon_forms.id, pokemon_forms.identifier,
 				//pokemon.id, pokemon.species_id, pokemon.identifier, pokemon.height, pokemon.weight, pokemon.base_experience, --pokemon."order"
 				//pokemon_stats_view.bhp, pokemon_stats_view.batk, pokemon_stats_view.bdef, pokemon_stats_view.bspa, pokemon_stats_view.bspd, pokemon_stats_view.bspe, pokemon_stats_view.ehp, pokemon_stats_view.eatk, pokemon_stats_view.edef, pokemon_stats_view.espa, pokemon_stats_view.espd, pokemon_stats_view.espe,

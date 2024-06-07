@@ -138,7 +138,7 @@ namespace PokemonUnity
 			//pokedata.write(0xBB.chr);
 			//pokedata.write(0xBF.chr);
 			//foreach (var i in 1..(Species.maxValue ?? Species.getCount-1 ?? messages.getCount(MessageTypes.species)-1)) {
-			for (int i = 0; i < Kernal.PokemonData.Count; i++) {
+			for (int i = 0; i < Core.PokemonIndexLimit; i++) {
 				string cname=getConstantName(Species,i); //rescue continue;
 				string speciesname=messages.get(MessageTypes.species,i);
 				string kind=messages.get(MessageTypes.kinds,i);

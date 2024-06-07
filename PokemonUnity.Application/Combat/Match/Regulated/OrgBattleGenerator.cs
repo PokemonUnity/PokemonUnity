@@ -336,7 +336,7 @@ namespace PokemonUnity
 				do { //;loop
 					species = 0;
 					do { //;loop
-						species = (Pokemons)Core.Rand.Next(Kernal.PokemonData.Count) + 1; //Species.maxValue
+						species = (Pokemons)Core.Rand.Next(Core.PokemonIndexLimit) + 1; //Species.maxValue
 						string cname = species.ToString(TextScripts.Name);//getConstantName(Species, species); //rescue null;
 						if (string.IsNullOrEmpty(cname)) break;
 					} while (true);

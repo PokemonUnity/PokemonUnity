@@ -2040,7 +2040,7 @@ namespace PokemonUnity
 		// Regional Dex.  The parameter "region" is zero-based.  For example, if two
 		// regions are defined, they would each be specified as 0 and 1.
 		public int GetRegionalNumber(int region,Pokemons nationalSpecies) {
-			if (nationalSpecies<=0 || (int)nationalSpecies>Kernal.PokemonData.Count) {
+			if (nationalSpecies<=0 || (int)nationalSpecies>Core.PokemonIndexLimit) {
 				//  Return 0 if national species is outside range
 				return 0;
 			}

@@ -57,10 +57,10 @@ namespace PokemonUnity
 		/// </summary>
 		public const float framesPerSecond = 30f;
 
-		public const sbyte pokemonGeneration = (sbyte)Generation.All;
+		public static sbyte PokemonGeneration { get { return pokemonGeneration; } set { pokemonGeneration = value; } }
+		private static sbyte pokemonGeneration = (sbyte)Generation.All;
 
-#pragma warning disable 0162 //Warning CS0162  Unreachable code detected
-		public static int pokemonGenerationCount {
+		public static int PokemonIndexLimit {
 			get {
 				int MaxPoke = 0;
 				int Gen1 = 151;
@@ -102,7 +102,6 @@ namespace PokemonUnity
 				#endregion
 				return MaxPoke; }
 		}
-#pragma warning restore 0162 //Warning CS0162  Unreachable code detected
 		#endregion
 
 		#region Logging

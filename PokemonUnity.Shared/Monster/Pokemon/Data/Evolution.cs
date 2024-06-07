@@ -21,6 +21,10 @@ namespace PokemonUnity.Monster.Data
 		/// <summary>
 		/// Time of Day
 		/// </summary>
+		/// <remarks>
+		/// 0 => night; 1 => day
+		/// </remarks>
+		/// 2? => morning
 		public int? Time { get; private set; }
 		public Moves KnownMove { get; private set; }
 		public Types KnownType { get; private set; }
