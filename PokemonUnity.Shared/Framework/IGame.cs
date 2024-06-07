@@ -52,6 +52,7 @@ namespace PokemonEssentials.Interface
 		//PokemonEssentials.Interface.IAudio Audio							{ get; set; }
 		PokemonEssentials.Interface.IGameAudioPlay Audio					{ get; set; }
 		PokemonEssentials.Interface.IGraphics Graphics						{ get; set; }
+		PokemonEssentials.Interface.IInput Input							{ get; set; }
 		PokemonEssentials.Interface.IInterpreter Interpreter				{ get; set; }
 		PokemonEssentials.Interface.Screen.IGameScenesUI Scenes				{ get; set; }
 		PokemonEssentials.Interface.Screen.IGameScreensUI Screens			{ get; set; }

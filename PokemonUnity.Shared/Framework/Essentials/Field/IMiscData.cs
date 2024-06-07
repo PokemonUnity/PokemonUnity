@@ -448,6 +448,9 @@ namespace PokemonEssentials.Interface.Field
 		#endregion
 	}
 
+	/// <summary>
+	/// Extension of <see cref="IGame"/>
+	/// </summary>
 	public interface IGameMetadataMisc {
 		#region Manipulation methods for metadata, phone data and Pokémon species data
 		IDictionary<int, IPokemonMetadata> LoadMetadata();

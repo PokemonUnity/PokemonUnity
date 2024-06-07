@@ -5,6 +5,7 @@ using PokemonUnity.Monster;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.Screen;
+using PokemonEssentials.Interface.Field;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -21,7 +22,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public bool init;
 		public int[] blanks; //Array of char slots, if active 1, else 0
 		//public string InitialText;
-		public TextEntryTypes subject = 0;
+		//public TextEntryTypes subject = 0;
 		public IPokemon pokemon = null;
 		public static readonly char[][] Characters=new char[][] {
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToCharArray(),	// "[*]"
@@ -46,6 +47,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public int charLimit		= 12;
 		public static bool qwerty	= true;
 
+		[Header("Sprites and Scene Elements")]
 		/// <summary>
 		/// If the typing screen is for naming a Player, PC Box, or a Pokemon;
 		/// Change the icon to match sprite that represents subject.
@@ -54,14 +56,28 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// Should include animation frames, and icon shadow
 		public global::UnityEngine.GameObject	icon;
 		public  global::UnityEngine.Sprite[] PageBackground;
+		public  global::UnityEngine.Sprite[] bitmaps;
 		public  global::UnityEngine.UI.Image Page;
-		public  global::UnityEngine.UI.Text entry;
+		public  global::UnityEngine.UI.Image bgoverlay;
+		public  global::UnityEngine.UI.Image toptab;
+		public  global::UnityEngine.UI.Image bottomtab;
+		/// <summary>
+		/// Shadow displayed under <see cref="subject"/> Icon
+		/// </summary>
+		public  global::UnityEngine.UI.Image shadow;
+		public  global::UnityEngine.UI.Image subject;
+		public  global::UnityEngine.UI.Text helpwindow;
 		public  global::UnityEngine.UI.Text gender;
+		public  global::UnityEngine.UI.Text genderText;
+		public IWindow_TextEntry_Keyboard entry;
+		public ICharacterEntryHelper helper;
+		public NameEntryCursor cursor;
+		public IViewport viewport;
 		//public  global::UnityEngine.GameObject[]	IconPrefabs;
 		//public  CharKeyItem						CharKeyPrefab;
 		//public  global::UnityEngine.GameObject	CharKeyPrefab;
 		//public  global::UnityEngine.GameObject	PagePrefab;
-		public  IDictionary<string,GameObject>		sprites;
+		public  IDictionary<string,IGameObject>		sprites;
 
 		private bool refreshOverlay;
 		private int cursorpos;
@@ -89,7 +105,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			",.:;!?   ♂♀  " +
 			"\"'()<>[] +-= " +	//"“”‘’()       " +
 			"~@#%*&$^_/\\| "  +	//"…·~@#%+-*/=  " +
-			"◎○□△◇♠♥♦♣★♪  " +//"+-=^_/\\|     "
+			"◎○□△◇♠♥♦♣★♪  " +	//"+-=^_/\\|     "
 			"☀☁☂☃     ⤴⤵  "
 		};
 		public const int ROWS=13;
@@ -171,6 +187,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					//Backspace removes char infront, by replacing it with any character that follows after
 					//typeSpaceText[a].text = typeSpaceText[a + 1].text;
+					typeSpaceText.Remove(typeSpaceIndex-1, 1);
 					//typeSpaceTextShadow[a].text = typeSpaceText[a].text;
 					typeSpaceText[a] = typeSpaceText[a + 1];
 				}
@@ -178,7 +195,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				//typeSpaceText[charLimit].text = ' ';
 				//typeSpaceTextShadow[charLimit].text = typeSpaceText[charLimit].text;
 				typeSpaceText[charLimit] = ' ';
-				//typeSpaceIndex -= 1;
+				typeSpaceIndex -= 1;
 				SelectDown();
 				//panelButton[4].enabled = true;
 				//yield return new WaitForSeconds(0.1f);
@@ -186,20 +203,21 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 		}
 
-		/*// Remove forward facing character
+		// Remove forward facing character
 		private IEnumerator Delete()
 		{
 			if (typeSpaceIndex > 0)
 			{
-				typeSpaceText[typeSpaceIndex - 1].text = ' ';
-				typeSpaceTextShadow[typeSpaceIndex - 1].text = typeSpaceText[typeSpaceIndex - 1].text;
-				//typeSpaceIndex -= 1;
+				//typeSpaceText[typeSpaceIndex - 1].text = " ";
+				typeSpaceText.Remove(typeSpaceIndex, 1);
+				//typeSpaceTextShadow[typeSpaceIndex - 1].text = typeSpaceText[typeSpaceIndex - 1].text;
+				typeSpaceIndex -= 1;
 				SelectDown();
 				//panelButton[4].enabled = true;
 				yield return new WaitForSeconds(0.1f);
 				//panelButton[4].enabled = false;
 			}
-		}*/
+		}
 
 		private void TypeWithKeyboard()
 		{
@@ -448,31 +466,32 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void ChangeTab(int newtab = 0)
 		{
-			//@sprites["cursor"].visible=false;
+			cursor.visible=false; //@sprites["cursor"].visible=false;
 			//@sprites["toptab"].bitmap=@bitmaps[(newtab%3)+3];
-			//21.times do;
-			//  @sprites["toptab"].x+=24;
-			//  @sprites["bottomtab"].y+=12;
-			//  Graphics.update();
-			//  Input.update();
-			//  Update();
-			//}
-			//float tempx=@sprites["toptab"].x;
-			//@sprites["toptab"].x=@sprites["bottomtab"].x;
-			//@sprites["bottomtab"].x=tempx;
-			//float tempy=@sprites["toptab"].y;
-			//@sprites["toptab"].y=@sprites["bottomtab"].y;
-			//@sprites["bottomtab"].y=tempy;
-			//tempbitmap=@sprites["toptab"].bitmap;
+			toptab.sprite=@bitmaps[(newtab%3)+3];
+			for (int i = 0; i < 21; i++) { //21.times do; // animate tabs switching over 21 frames
+				@sprites["toptab"].x+=24;
+				@sprites["bottomtab"].y+=12;
+				GameManager.current.game.Graphics?.update();
+				GameManager.current.game.Input?.update();
+				update();
+			}
+			float tempx=@sprites["toptab"].x;
+			@sprites["toptab"].x=@sprites["bottomtab"].x;
+			@sprites["bottomtab"].x=tempx;
+			float tempy=@sprites["toptab"].y;
+			@sprites["toptab"].y=@sprites["bottomtab"].y;
+			@sprites["bottomtab"].y=tempy;
+			//global::UnityEngine.Sprite tempbitmap=@sprites["toptab"].bitmap;
 			//@sprites["toptab"].bitmap=@sprites["bottomtab"].bitmap;
 			//@sprites["bottomtab"].bitmap=tempbitmap;
-			//Graphics.update();
-			//Input.update();
-			//Update();
-			//@mode=(newtab)%3;
-			//newtab=@bitmaps[((@mode+1)%3)+3];
-			//@sprites["cursor"].visible=true;
-			//@sprites["toptab"].bitmap=newtab;
+			GameManager.current.game.Graphics?.update();
+			GameManager.current.game.Input?.update();
+			update();
+			@mode=(newtab)%3;
+			global::UnityEngine.Sprite _newtab=@bitmaps[((@mode+1)%3)+3];
+			@sprites["cursor"].visible=true;
+			toptab.sprite=_newtab; //@sprites["toptab"].bitmap=newtab;
 			//@sprites["toptab"].x=22-504;
 			//@sprites["toptab"].y=162;
 			//DoUpdateOverlay2();
@@ -483,10 +502,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (m>=ROWS-1) return false;
 			char[] chset=@Characters[@mode];//[0]; //key: char[]
 			return (
-			   chset[m]==' ' &&
-			   chset[m+((ROWS-1))]==' ' &&
-			   chset[m+((ROWS-1)*2)]==' ' &&
-			   chset[m+((ROWS-1)*3)]==' '
+				chset[m]==' ' &&
+				chset[m+((ROWS-1))]==' ' &&
+				chset[m+((ROWS-1)*2)]==' ' &&
+				chset[m+((ROWS-1)*3)]==' '
 			);
 		}
 
@@ -499,27 +518,27 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (!@refreshOverlay) return;
 			@refreshOverlay=false;
-			//bgoverlay=@sprites["bgoverlay"].bitmap;
-			//bgoverlay.clear();
+			//global::UnityEngine.UI.Image _bgoverlay=@sprites["bgoverlay"].bitmap;
+			//_bgoverlay.clear();
 			//SetSystemFont(bgoverlay);
-			//IList<ITextPosition> textPositions=new List<ITextPosition>() {
-			//    new TextPosition() { @helptext, 160, 12, false, new Color(16, 24, 32), new Color(168, 184, 184) }
-			//};
-			//char[] chars=@helper.textChars;
-			//int x=166;
-			//foreach (char ch in chars) {
-			//  textPositions.Add(new object() { ch, x, 48, false, new Color(16, 24, 32), new Color(168, 184, 184) });
-			//  x+=24;
-			//}
-			//DrawTextPositions(bgoverlay,textPositions);
+			IList<ITextPosition> textPositions=new List<ITextPosition>() {
+				//new TextPosition(@helptext, 160, 12, false, new Color(16, 24, 32), new Color(168, 184, 184))
+			};
+			char[] chars=@helper.textChars();
+			int x=166;
+			foreach (char ch in chars) { //ToDo: Maybe instantiate gameobject or submit keystrokes to an existing text box.
+				//textPositions.Add(new TextPosition(ch, x, 48, false, new Color(16, 24, 32), new Color(168, 184, 184)));
+				//x+=24;
+			}
+			//DrawTextPositions(_bgoverlay,textPositions);
 		}
 
 		public void DoUpdateOverlay2()
 		{
-			//overlay=@sprites["overlay"].bitmap;
-			//overlay.clear();
+			//_overlay=@sprites["overlay"].bitmap;
+			//_overlay.clear();
 			//modeIcon=[["Graphics/Pictures/namingMode",48+@mode*64,120,@mode*60,0,60,44]];
-			//DrawImagePositions(overlay,modeIcon);
+			//DrawImagePositions(_overlay,modeIcon);
 		}
 
 		public bool MoveCursor()
@@ -528,115 +547,115 @@ namespace PokemonUnity.Interface.UnityEngine
 			int cursordiv=@cursorpos/ROWS;
 			int cursormod=@cursorpos%ROWS;
 			int cursororigin=@cursorpos-cursormod;
-			/*if (Input.repeat(Input.LEFT)) {
-			  if (@cursorpos<0) {		// Controls
-				@cursorpos-=1;
-				if (@cursorpos<MODE1) @cursorpos=OK;
-			  } else {
-				do {
-				  cursormod=wrapmod((cursormod-1),ROWS);
-				  @cursorpos=cursororigin+cursormod;
-				} while (ColumnEmpty(cursormod));
-			  }
+			if (Input.repeat(Input.LEFT)) {
+				if (@cursorpos<0) {		// Controls
+					@cursorpos-=1;
+					if (@cursorpos<MODE1) @cursorpos=OK;
+				} else {
+					do {
+						cursormod=wrapmod((cursormod-1),ROWS);
+						@cursorpos=cursororigin+cursormod;
+					} while (ColumnEmpty(cursormod));
+				}
 			} else if (Input.repeat(Input.RIGHT)) {
-			  if (@cursorpos<0) {		// Controls
-				@cursorpos+=1;
-				if (@cursorpos>OK) @cursorpos=MODE1;
-			  } else {
-				do {
-				  cursormod=wrapmod((cursormod+1),ROWS);
-				  @cursorpos=cursororigin+cursormod;
-				} while (ColumnEmpty(cursormod));
-			  }
+				if (@cursorpos<0) {		// Controls
+						@cursorpos+=1;
+						if (@cursorpos>OK) @cursorpos=MODE1;
+				} else {
+					do {
+						cursormod=wrapmod((cursormod+1),ROWS);
+						@cursorpos=cursororigin+cursormod;
+					} while (ColumnEmpty(cursormod));
+				}
 			} else if (Input.repeat(Input.UP)) {
-			  if (@cursorpos<0) {		// Controls
-				switch (@cursorpos) {
-					case MODE1:
-					  @cursorpos=ROWS*(COLUMNS-1);
-					  break;
-					case MODE2:
-					  @cursorpos=ROWS*(COLUMNS-1)+2;
-					  break;
-					case MODE3:
-					  @cursorpos=ROWS*(COLUMNS-1)+4;
-					  break;
-					case BACK:
-					  @cursorpos=ROWS*(COLUMNS-1)+8;
-					  break;
-					case OK:
-					  @cursorpos=ROWS*(COLUMNS-1)+11;
-					  break;
-				}
-			  } else if (@cursorpos<ROWS) {		// Top row of letters
-				switch (@cursorpos) {
-					case 0: case 1:
-					  @cursorpos=MODE1;
-					  break;
-					case 2: case 3:
-					  @cursorpos=MODE2;
-					  break;
-					case 4: case 5: case 6:
-					  @cursorpos=MODE3;
-					  break;
-					case 7: case 8: case 9: case 10:
-					  @cursorpos=BACK;
-					  break;
-					case 11: case 12:
-					  @cursorpos=OK;
-					  break;
-				}
+				if (@cursorpos<0) {		// Controls
+					switch (@cursorpos) {
+						case MODE1:
+							@cursorpos=ROWS*(COLUMNS-1);
+							break;
+						case MODE2:
+							@cursorpos=ROWS*(COLUMNS-1)+2;
+							break;
+						case MODE3:
+							@cursorpos=ROWS*(COLUMNS-1)+4;
+							break;
+						case BACK:
+							@cursorpos=ROWS*(COLUMNS-1)+8;
+							break;
+						case OK:
+							@cursorpos=ROWS*(COLUMNS-1)+11;
+							break;
+					}
+				} else if (@cursorpos<ROWS) {		// Top row of letters
+					switch (@cursorpos) {
+						case 0: case 1:
+							@cursorpos=MODE1;
+							break;
+						case 2: case 3:
+							@cursorpos=MODE2;
+							break;
+						case 4: case 5: case 6:
+							@cursorpos=MODE3;
+							break;
+						case 7: case 8: case 9: case 10:
+							@cursorpos=BACK;
+							break;
+						case 11: case 12:
+							@cursorpos=OK;
+							break;
+					}
 			  } else {
-				cursordiv=wrapmod((cursordiv-1),COLUMNS);
-				@cursorpos=(cursordiv*ROWS)+cursormod;
-			  }
+					cursordiv=wrapmod((cursordiv-1),COLUMNS);
+					@cursorpos=(cursordiv*ROWS)+cursormod;
+				}
 			} else if (Input.repeat(Input.DOWN)) {
-			  if (@cursorpos<0) {		// Controls
-				switch (@cursorpos) {
-					case MODE1:
-					  @cursorpos=0;
-					  break;
-					case MODE2:
-					  @cursorpos=2;
-					  break;
-					case MODE3:
-					  @cursorpos=4;
-					  break;
-					case BACK:
-					  @cursorpos=8;
-					  break;
-					case OK:
-					  @cursorpos=11;
-					  break;
+				if (@cursorpos<0) {		// Controls
+					switch (@cursorpos) {
+						case MODE1:
+							@cursorpos=0;
+							break;
+						case MODE2:
+							@cursorpos=2;
+							break;
+						case MODE3:
+							@cursorpos=4;
+							break;
+						case BACK:
+							@cursorpos=8;
+							break;
+						case OK:
+							@cursorpos=11;
+							break;
+					}
+				} else if (@cursorpos>=ROWS*(COLUMNS-1)) {		// Bottom row of letters
+					switch (@cursorpos) {
+						case ROWS*(COLUMNS-1): case ROWS*(COLUMNS-1)+1:
+							@cursorpos=MODE1;
+							break;
+						case ROWS*(COLUMNS-1)+2: case ROWS*(COLUMNS-1)+3:
+							@cursorpos=MODE2;
+							break;
+						case ROWS*(COLUMNS-1)+4: case ROWS*(COLUMNS-1)+5: case ROWS*(COLUMNS-1)+6:
+							@cursorpos=MODE3;
+							break;
+						case ROWS*(COLUMNS-1)+7: case ROWS*(COLUMNS-1)+8: case ROWS*(COLUMNS-1)+9: case ROWS*(COLUMNS-1)+10:
+							@cursorpos=BACK;
+							break;
+						case ROWS*(COLUMNS-1)+11: case ROWS*(COLUMNS-1)+12:
+							@cursorpos=OK;
+							break;
+					}
+				} else {
+					cursordiv=wrapmod((cursordiv+1),COLUMNS);
+					@cursorpos=(cursordiv*ROWS)+cursormod;
 				}
-			  } else if (@cursorpos>=ROWS*(COLUMNS-1)) {		// Bottom row of letters
-				switch (@cursorpos) {
-					case ROWS*(COLUMNS-1): case ROWS*(COLUMNS-1)+1:
-					  @cursorpos=MODE1;
-					  break;
-					case ROWS*(COLUMNS-1)+2: case ROWS*(COLUMNS-1)+3:
-					  @cursorpos=MODE2;
-					  break;
-					case ROWS*(COLUMNS-1)+4: case ROWS*(COLUMNS-1)+5: case ROWS*(COLUMNS-1)+6:
-					  @cursorpos=MODE3;
-					  break;
-					case ROWS*(COLUMNS-1)+7: case ROWS*(COLUMNS-1)+8: case ROWS*(COLUMNS-1)+9: case ROWS*(COLUMNS-1)+10:
-					  @cursorpos=BACK;
-					  break;
-					case ROWS*(COLUMNS-1)+11: case ROWS*(COLUMNS-1)+12:
-					  @cursorpos=OK;
-					  break;
-				}
-			  } else {
-				cursordiv=wrapmod((cursordiv+1),COLUMNS);
-				@cursorpos=(cursordiv*ROWS)+cursormod;
-			  }
-			}*/
-			if (@cursorpos!=oldcursor) {		// Cursor position changed
-			  //@sprites["cursor"].setCursorPos(@cursorpos);
-			  //PlayCursorSE();
-			  return true;
+			}
+			if (@cursorpos!=oldcursor) {			// Cursor position changed
+				cursor.setCursorPos(@cursorpos);	//@sprites["cursor"]
+				Game.GameData.Audio.PlayCursorSE();
+				return true;
 			} else {
-			  return false;
+				return false;
 			}
 		}
 
@@ -651,102 +670,113 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			//@sprites={}
 			//@viewport=new Viewport(0,0,Graphics.width,Graphics.height);
+			//@viewport.initialize(0,0,Graphics.width,Graphics.height);
 			//@viewport.z=99999;
-			//if (GameEntry.UseKeyboard) {
-			//  @sprites["entry"]=new Window_TextEntry_Keyboard(initialText,0,0,400-112,96,helptext,true);
-			//} else {
-			//  @sprites["entry"]=new Window_TextEntry(initialText,0,0,400,96,helptext,true);
-			//}
-			entry.text = initialText;
-			//@sprites["entry"].x=(Graphics.width/2)-(@sprites["entry"].width/2)+32;
-			//@sprites["entry"].viewport=@viewport;
-			//@sprites["entry"].visible=true;
+			if (TypingForm.UseKeyboard) {
+				//@sprites["entry"]=new Window_TextEntry_Keyboard(initialText,0,0,400-112,96,helptext,true);
+				if (@sprites["entry"] is IWindow_TextEntry_Keyboard wtk)
+					wtk.initialize(initialText,0,0,400-112,96,helptext,true);
+			} else {
+				//@sprites["entry"]=new IWindow_TextEntry(initialText,0,0,400,96,helptext,true);
+				if (@sprites["entry"] is IWindow_TextEntry wt)
+					wt.initialize(initialText,0,0,400,96,helptext,true);
+			}
+			//entry.text = initialText;
+			//(@sprites["entry"] as IWindow_TextEntry_Keyboard).x=(Graphics.width/2)-((@sprites["entry"] as IWindow_TextEntry_Keyboard).width/2)+32;
+			(@sprites["entry"] as IWindow_TextEntry_Keyboard).viewport=@viewport;
+			(@sprites["entry"] as IWindow_TextEntry_Keyboard).visible=true;
+			(@sprites["entry"] as IWindow_TextEntry_Keyboard).maxlength=maxlength;
 			Minlength=minlength;
 			Maxlength=maxlength;
 			@symtype=0;
-			//@sprites["entry"].maxlength=maxlength;
-			//if (!GameEntry.UseKeyboard) {
-			//  @sprites["entry2"]=new Window_CharacterEntry(@Characters[@symtype][0]); //Key: Char Array
-			//  @sprites["entry2"].setOtherCharset(@Characters[@symtype][1]); //Value: Id
-			//  @sprites["entry2"].viewport=@viewport;
-			//  @sprites["entry2"].visible=true;
-			//  @sprites["entry2"].x=(Graphics.width/2)-(@sprites["entry2"].width/2);
-			//}
-			//if (minlength==0) {
-			//  @sprites["helpwindow"]=new Window_UnformattedTextPokemon().WithSize(
-			//     Game._INTL("Enter text using the keyboard. Press\nESC to cancel, or ENTER to confirm."),
-			//     32,Graphics.height-96,Graphics.width-64,96,@viewport;
-			//  );
-			//} else {
-			//  @sprites["helpwindow"]=new Window_UnformattedTextPokemon().WithSize(
-			//     Game._INTL("Enter text using the keyboard.\nPress ENTER to confirm."),
-			//     32,Graphics.height-96,Graphics.width-64,96,@viewport;
-			//  );
-			//}
-			//@sprites["helpwindow"].letterbyletter=false;
-			//@sprites["helpwindow"].viewport=@viewport;
-			//@sprites["helpwindow"].visible=GameEntry.UseKeyboard;
-			//@sprites["helpwindow"].baseColor=new Color(16,24,32);
-			//@sprites["helpwindow"].shadowColor=new Color(168,184,184);
+			if (!TypingForm.UseKeyboard) {
+				//(@sprites["entry2"] as IWindow_CharacterEntry)=new Window_CharacterEntry(@Characters[@symtype][0]); //Key: Char Array
+				(@sprites["entry2"] as IWindow_CharacterEntry).initialize("[*]"); //Key: Char Array | @Characters[@symtype][0]
+				(@sprites["entry2"] as IWindow_CharacterEntry).setOtherCharset("[A]"); //Value: Id | @Characters[@symtype][1]
+				(@sprites["entry2"] as IWindow_CharacterEntry).viewport=@viewport;
+				(@sprites["entry2"] as IWindow_CharacterEntry).visible=true;
+				//(@sprites["entry2"] as IWindow_CharacterEntry).x=(Graphics.width/2)-((@sprites["entry2"] as IWindow_CharacterEntry).width/2);
+			}
+			if (minlength==0) {
+				//@sprites["helpwindow"]=new Window_UnformattedTextPokemon().WithSize(
+				//(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).initialize().WithSize(
+				//	Game._INTL("Enter text using the keyboard. Press\nESC to cancel, or ENTER to confirm."),
+				//	32,Graphics.height-96,Graphics.width-64,96,@viewport
+				//);
+				//helpwindow.text = Game._INTL("Enter text using the keyboard. Press\nESC to cancel, or ENTER to confirm.");
+			} else {
+				//@sprites["helpwindow"]=new Window_UnformattedTextPokemon().WithSize(
+				//	Game._INTL("Enter text using the keyboard.\nPress ENTER to confirm."),
+				//	32,Graphics.height-96,Graphics.width-64,96,@viewport
+				//);
+				helpwindow.text = Game._INTL("Enter text using the keyboard.\nPress ENTER to confirm.");
+			}
+			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).letterbyletter=false;
+			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).viewport=@viewport;
+			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).visible=TypingForm.UseKeyboard;
+			//(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).baseColor=new Color(16,24,32);
+			//(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).shadowColor=new Color(168,184,184);
 			//addBackgroundPlane(@sprites,"background","naming2bg",@viewport);
-			//switch (subject) {
+			//switch (subject) { //5 or more use a switch, otherwise just use IF-statements
 			//	case 1:   // Player
-			//	  if (Game.GameData.Global != null) {
-			//	    meta=GetMetadata(0,MetadataPlayerA+Game.GameData.Global.playerID);
-			//	    if (meta != null) {
-			//	      @sprites["shadow"]=new IconSprite(0,0,@viewport);
-			//	      @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
-			//	      @sprites["shadow"].x=33*2;
-			//	      @sprites["shadow"].y=32*2;
-			//	      string filename=GetPlayerCharset(meta,1);
-			//	      @sprites["subject"]=new TrainerWalkingCharSprite(filename,@viewport);
-			//	      int charwidth=@sprites["subject"].bitmap.width;
-			//	      int charheight=@sprites["subject"].bitmap.height;
-			//	      @sprites["subject"].x = 44*2 - charwidth/8;
-			//	      @sprites["subject"].y = 38*2 - charheight/4;
-			//	    }
-			//	  }
-			//	  break;
+			//		if (Game.GameData.Global != null && Game.GameData is IGameMetadataMisc gmm) {
+			//			//meta=GetMetadata(0,MetadataPlayerA+Game.GameData.Global.playerID);
+			//			MetadataPlayer? meta=gmm.GetMetadata(0).Global.Players[Game.GameData.Global.playerID];
+			//			if (meta != null) {
+			//				@sprites["shadow"]=new IconSprite(0,0,@viewport);
+			//				@sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
+			//				@sprites["shadow"].x=33*2;
+			//				@sprites["shadow"].y=32*2;
+			//				string filename=GetPlayerCharset(meta,1);
+			//				@sprites["subject"]=new TrainerWalkingCharSprite(filename,@viewport);
+			//				int charwidth=@sprites["subject"].bitmap.width;
+			//				int charheight=@sprites["subject"].bitmap.height;
+			//				@sprites["subject"].x = 44*2 - charwidth/8;
+			//				@sprites["subject"].y = 38*2 - charheight/4;
+			//			}
+			//		}
+			//		break;
 			//	case 2:   // Pokémon
-			//	  if (pokemon.IsNotNullOrNone()) {
-			//	    @sprites["shadow"]=new IconSprite(0,0,@viewport);
-			//	    @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
-			//	    @sprites["shadow"].x=33*2;
-			//	    @sprites["shadow"].y=32*2;
-			//	    @sprites["subject"]=new PokemonIconSprite(pokemon,@viewport);
-			//	    @sprites["subject"].x=56;
-			//	    @sprites["subject"].y=14;
-			//	    @sprites["gender"]=new BitmapSprite(32,32,@viewport);
-			//	    @sprites["gender"].x=430;
-			//	    @sprites["gender"].y=54;
-			//	    @sprites["gender"].bitmap.clear;
-			//	    SetSystemFont(@sprites["gender"].bitmap);
-			//	    textpos=[];
-			//	    if (pokemon.isMale?) {
-			//	      textpos.Add([_INTL("♂"),0,0,false,new Color(0,128,248),new Color(168,184,184)]);
-			//	    } else if (pokemon.isFemale?) {
-			//	      textpos.Add([_INTL("♀"),0,0,false,new Color(248,24,24),new Color(168,184,184)]);
-			//	    }
-			//	    DrawTextPositions(@sprites["gender"].bitmap,textpos);
-			//	  }
-			//	  break;
+			//		if (pokemon.IsNotNullOrNone()) {
+			//			@sprites["shadow"]=new IconSprite(0,0,@viewport);
+			//			@sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
+			//			@sprites["shadow"].x=33*2;
+			//			@sprites["shadow"].y=32*2;
+			//			@sprites["subject"]=new PokemonIconSprite(pokemon,@viewport);
+			//			@sprites["subject"].x=56;
+			//			@sprites["subject"].y=14;
+			//			@sprites["gender"]=new BitmapSprite(32,32,@viewport);
+			//			@sprites["gender"].x=430;
+			//			@sprites["gender"].y=54;
+			//			@sprites["gender"].bitmap.clear;
+			//			SetSystemFont(@sprites["gender"].bitmap);
+			//			IList<ITextPosition> textpos=new List<ITextPosition>();
+			//			if (pokemon.IsMale) {
+			//				//textpos.Add([Game._INTL("♂"),0,0,false,new Color(0,128,248),new Color(168,184,184)]); //Type Text and Change Color
+			//				genderText.text=Game._INTL("♂");
+			//			} else if (pokemon.IsFemale) {
+			//				textpos.Add([Game._INTL("♀"),0,0,false,new Color(248,24,24),new Color(168,184,184)]);
+			//			}
+			//			DrawTextPositions(@sprites["gender"].bitmap,textpos);
+			//		}
+			//		break;
 			//	case 3:   // Storage box
-			//	  @sprites["subject"]=new IconSprite(0,0,@viewport);
-			//	  @sprites["subject"].setBitmap("Graphics/Pictures/namingStorage");
-			//	  @sprites["subject"].x=68;
-			//	  @sprites["subject"].y=32;
-			//	  break;
+			//		@sprites["subject"]=new IconSprite(0,0,@viewport);
+			//		@sprites["subject"].setBitmap("Graphics/Pictures/namingStorage");
+			//		@sprites["subject"].x=68;
+			//		@sprites["subject"].y=32;
+			//		break;
 			//	case 4:   // NPC
-			//	  @sprites["shadow"]=new IconSprite(0,0,@viewport);
-			//	  @sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
-			//	  @sprites["shadow"].x=33*2;
-			//	  @sprites["shadow"].y=32*2;
-			//	  @sprites["subject"]=new TrainerWalkingCharSprite(pokemon.ToString(),@viewport);
-			//	  charwidth=@sprites["subject"].bitmap.width;
-			//	  charheight=@sprites["subject"].bitmap.height;
-			//	  @sprites["subject"].x = 44*2 - charwidth/8;
-			//	  @sprites["subject"].y = 38*2 - charheight/4;
-			//	  break;
+			//		@sprites["shadow"]=new IconSprite(0,0,@viewport);
+			//		@sprites["shadow"].setBitmap("Graphics/Pictures/namingShadow");
+			//		@sprites["shadow"].x=33*2;
+			//		@sprites["shadow"].y=32*2;
+			//		@sprites["subject"]=new TrainerWalkingCharSprite(pokemon.ToString(),@viewport);
+			//		charwidth=@sprites["subject"].bitmap.width;
+			//		charheight=@sprites["subject"].bitmap.height;
+			//		@sprites["subject"].x = 44*2 - charwidth/8;
+			//		@sprites["subject"].y = 38*2 - charheight/4;
+			//		break;
 			//}
 			//FadeInAndShow(@sprites);
 		}
@@ -764,74 +794,75 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public string Entry()
 		{
-			return ""; //GameEntry.UseKeyboard ? Entry1() : Entry2();
+			return TypingForm.UseKeyboard ? Entry1() : Entry2();
 		}
 
 		public string Entry1()
 		{
 			string ret="";
-			//do { //;loop
-			//  Graphics.update();
-			//  Input.update();
-			//  if (Input.triggerex(0x1B) && @minlength==0) {
-			//    ret="";
-			//    break;
-			//  }
-			//  if (Input.triggerex(13) && @sprites["entry"].text.Length>=@minlength) {
-			//    ret=@sprites["entry"].text;
-			//    break;
-			//  }
-			//  @sprites["helpwindow"].update();
-			//  @sprites["entry"].update();
-			//  if (@sprites["subject"]) @sprites["subject"].update();
-			//}
-			//Input.update();
+			do { //;loop
+				GameManager.current.game.Graphics?.update();
+				GameManager.current.game.Input?.update();
+				//if (Input.triggerex(0x1B) && @Minlength==0) { //ESC
+				if (Input.triggerex(PokemonUnity.Input.ESC) && @Minlength==0) { //ESC
+					ret="";
+					break;
+				}
+				if (Input.triggerex(13) && (@sprites["entry"] as IWindow_TextEntry_Keyboard).text.Length>=@Minlength) { //if `C` is pressed
+					ret=(@sprites["entry"] as IWindow_TextEntry_Keyboard).text;
+					break;
+				}
+				@sprites["helpwindow"].update();
+				(@sprites["entry"] as IWindow_TextEntry_Keyboard).update();
+				if (@sprites["subject"] != null) @sprites["subject"].update();
+			} while (true);
+			GameManager.current.game.Input.update();
 			return ret;
 		}
 
 		public string Entry2()
 		{
 			string ret="";
-			//do { //;loop
-			//  Graphics.update();
-			//  Input.update();
-			//  @sprites["helpwindow"].update();
-			//  @sprites["entry"].update();
-			//  @sprites["entry2"].update();
-			//  if (@sprites["subject"]) @sprites["subject"].update();
-			//  if (Input.trigger(Input.t)) {
-				//int index=@sprites["entry2"].command;
-				//if (index==-3) {		// Confirm text
-				//  ret=@sprites["entry"].text;
-				//  if (ret.Length<@minlength || ret.Length>Maxlength) {
-				//    //PlayBuzzerSE();
-				//  } else {
-				//    //PlayDecisionSE();
-				//    //break;
-				//  }
-				//} else if (index==-1) {		// Insert a space
-				//  if (@sprites["entry"].insert(" ")) {
-				//    PlayDecisionSE();
-				//  } else {
-				//    PlayBuzzerSE();
-				//  }
-				//} else if (index==-2) {		// Change character set
-				//  PlayDecisionSE();
-				//  @symtype+=1;
-				//  if (@symtype>=@Characters.Length) @symtype=0;
-				//  @sprites["entry2"].setCharset(@Characters[@symtype][0]);
-				//  @sprites["entry2"].setOtherCharset(@Characters[@symtype][1]);
-				//} else { // Insert given character
-				//  if (@sprites["entry"].insert(@sprites["entry2"].character)) {
-				//    PlayDecisionSE() ;
-				//  } else {
-				//    PlayBuzzerSE();
-				//  }
-				//}
-			//    continue;
-			//  }
-			//} while (true);
-			//Input.update();
+			do { //;loop
+				GameManager.current.game.Graphics?.update();
+				GameManager.current.game.Input?.update();
+				@sprites["helpwindow"].update();
+				(@sprites["entry"] as IWindow_TextEntry_Keyboard).update();
+				(@sprites["entry2"] as IWindow_CharacterEntry).update();
+				if (@sprites["subject"] != null) @sprites["subject"].update();
+				if (Input.trigger(Input.A)) {
+					int index=(@sprites["entry2"] as IWindow_CharacterEntry).command();
+					if (index==-3) {		// Confirm text
+						ret=(@sprites["entry"] as IWindow_TextEntry_Keyboard).text;
+						if (ret.Length<@Minlength || ret.Length>Maxlength) {
+							//PlayBuzzerSE();
+						} else {
+							//PlayDecisionSE();
+							break;
+						}
+					} else if (index==-1) {		// Insert a space
+						if ((@sprites["entry"] as IWindow_TextEntry_Keyboard).insert(" ")) {
+							//PlayDecisionSE();
+						} else {
+							//PlayBuzzerSE();
+						}
+					} else if (index==-2) {		// Change character set
+						//PlayDecisionSE();
+						@symtype+=1;
+						if (@symtype>=@Characters.Length) @symtype=0;
+						(@sprites["entry2"] as IWindow_CharacterEntry).setCharset("[*]");		//@Characters[@symtype][0]
+						(@sprites["entry2"] as IWindow_CharacterEntry).setOtherCharset("[A]");	//@Characters[@symtype][1]
+					} else { // Insert given character
+						if ((@sprites["entry"] as IWindow_TextEntry_Keyboard).insert((@sprites["entry2"] as IWindow_CharacterEntry).character())) {
+							//PlayDecisionSE();
+						} else {
+							///PlayBuzzerSE();
+						}
+					}
+					continue;
+				}
+			} while (true);
+			GameManager.current.game.Input?.update();
 			return ret;
 		}
 
@@ -846,20 +877,71 @@ namespace PokemonUnity.Interface.UnityEngine
 			return true;
 		}
 
-		[RequireComponent(typeof(global::UnityEngine.Sprite))]
-		public partial class NameEntryCursor : MonoBehaviour {
-			private int cursortype;
+		[RequireComponent(typeof(global::UnityEngine.Rect), typeof(global::UnityEngine.UI.Image))]
+		public partial class NameEntryCursor : MonoBehaviour, IGameObject {
 			public int @cursorPos;
-			private global::UnityEngine.Sprite @sprite;
+			private int cursortype;
+			private global::UnityEngine.Rect rect;
+			private global::UnityEngine.UI.Image @sprite;
 			public global::UnityEngine.UI.Image @cursor1;
 			public global::UnityEngine.UI.Image @cursor2;
 			public global::UnityEngine.UI.Image @cursor3;
+
+			public float x
+			{
+				get { return rect.x; }
+				set
+				{
+					rect.x = value;
+				}
+			}
+
+			public float y
+			{
+				get { return rect.y; }
+				set
+				{
+					rect.y = value;
+				}
+			}
+
+			public float z { get; set; } //Dont need to implement this
+			//{
+			//	get { return rect.z; }
+			//	set
+			//	{
+			//		rect.z = value;
+			//	}
+			//}
+
+			public bool visible
+			{
+				get { return @sprite.isActiveAndEnabled; }
+				set
+				{
+					//@sprite.visible=value;
+					@sprite.enabled=value;
+					gameObject.SetActive(value); //set this unity go IsActive status to value
+				}
+			}
+
+			//public global::UnityEngine.Color color { get {
+			//  return @sprite.color;
+			//}
+			//set {
+			//  @sprite.color=value;
+			//} }
+			//
+			//public bool disposed { get {
+			//  return @sprite.disposed;
+			//} }
 
 
 			#region UnityMonobehavior
 			private void Awake()
 			{
-				sprite = GetComponent<global::UnityEngine.Sprite>();
+				rect = GetComponent<global::UnityEngine.Rect>();
+				sprite = GetComponent<global::UnityEngine.UI.Image>();
 			}
 
 			void Update()
@@ -910,40 +992,25 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 
-			//public bool visible { get {
-			//  return @sprite.visible;
-			//}
-			//set {
-			//  @sprite.visible=value;
-			//} }
-			//
-			//public global::UnityEngine.Color color { get {
-			//  return @sprite.color;
-			//}
-			//set {
-			//  @sprite.color=value;
-			//} }
-			//
-			//public bool disposed { get {
-			//  return @sprite.disposed;
-			//} }
-
 			public void updateInternal() {
 				//@cursor1.update();
 				//@cursor2.update();
 				//@cursor3.update();
-				//updateCursorPos();
-				//switch (@cursortype) {
-				//	case 0:
-				//		@sprite.bitmap=@cursor1.bitmap;
-				//		break;
-				//	case 1:
-				//		@sprite.bitmap=@cursor2.bitmap;
-				//		break;
-				//	case 2:
-				//		@sprite.bitmap=@cursor3.bitmap;
-				//		break;
-				//}
+				updateCursorPos();
+				switch (@cursortype) {
+					case 0:
+						//@sprite.bitmap=@cursor1.bitmap;
+						@sprite.sprite=@cursor1.sprite;
+						break;
+					case 1:
+						//@sprite.bitmap=@cursor2.bitmap;
+						@sprite.sprite=@cursor2.sprite;
+						break;
+					case 2:
+						//@sprite.bitmap=@cursor3.bitmap;
+						@sprite.sprite=@cursor3.sprite;
+						break;
+				}
 			}
 
 			public void update() {

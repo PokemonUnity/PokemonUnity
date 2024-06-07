@@ -74,4 +74,102 @@ namespace PokemonEssentials.Interface.Screen
 
 		string EnterNPCName(string helptext, int minlength, int maxlength, string initialText = "", int id = 0, bool nofadeout = false);
 	}
+
+	public interface ICharacterEntryHelper {
+		string text { get; set; }
+		int maxlength { get; set; }
+		char? passwordChar  { get; set; }
+		int cursor { get; }
+
+		char[] textChars();
+
+		ICharacterEntryHelper initialize(string text);
+
+		int length();
+
+		bool canInsert();
+
+		bool insert(string ch);
+
+		bool canDelete();
+
+		bool delete();
+
+		//private
+		//void ensure;
+	}
+
+	public interface IWindow_TextEntry : ISpriteWindow_Base {
+		string text { get; set; }
+		int maxlength { get; set; }
+		char? passwordChar  { get; set; }
+
+		IWindow_TextEntry initialize(string text,int x,int y,int width,int height,string heading=null,bool usedarkercolor=false);
+
+		bool insert(char? ch);
+		bool insert(string ch);
+
+		void delete();
+
+		//void update();
+
+		void refresh();
+	}
+
+	public interface IWindow_TextEntry_Keyboard : IWindow_TextEntry {
+		new void update();
+	}
+
+	public interface IWindow_CharacterEntry : IWindow_DrawableCommand {
+		//XSIZE=13
+		//YSIZE=4
+
+		IWindow_CharacterEntry initialize(string charset,IViewport viewport=null);
+
+		void setOtherCharset(string value);
+
+		void setCharset(string value);
+
+		char? character();
+
+		int command();
+
+		//int itemCount();
+
+		//void drawItem(int index,int count,IRect rect);
+	}
+
+	public interface IWindow_MultilineTextEntry : ISpriteWindow_Base {
+		string text { get; set; }
+		int maxlength { get; set; }
+		char? passwordChar  { get; set; }
+		IColor baseColor { get; set; }
+		IColor shadowColor { get; set; }
+
+		IWindow_MultilineTextEntry initialize(string text,float x,float y,int width,int height);
+
+		bool insert(string ch);
+
+		bool delete();
+
+		string getTextChars();
+
+		int getTotalLines();
+
+		int getLineY(int line);
+
+		int getColumnsInLine(int line);
+
+		int getPosFromLineAndColumn(int line,int column);
+
+		int getLastVisibleLine();
+
+		void updateCursorPos(bool doRefresh);
+
+		void moveCursor(int lineOffset,int columnOffset);
+
+		//void update();
+
+		void refresh();
+	}
 }
