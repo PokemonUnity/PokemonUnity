@@ -24,6 +24,9 @@ namespace PokemonUnity.Interface.UnityEngine
 		public global::UnityEngine.AudioClip SoundEffectBallDrop;
 		public global::UnityEngine.AudioClip SoundEffectJumpToBall;
 		public global::UnityEngine.AudioClip SoundEffectJump;
+
+		//public global::UnityEngine.AudioClip[] BackgroundMusic;
+		//public global::UnityEngine.AudioClip[] BackgroundSound;
 		#endregion
 
 		#region Images
