@@ -13,7 +13,7 @@ using System;
 
 namespace PokemonUnity.Interface.UnityEngine
 {
-	[Obsolete("Rename to TextEntry")]
+	//ToDo: Rename to TextEntry
 	public class TypingForm : IPokemonEntryScene, IPokemonEntryScene2
 	{
 		#region Variables
