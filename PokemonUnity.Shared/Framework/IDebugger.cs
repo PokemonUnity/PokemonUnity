@@ -82,8 +82,8 @@ namespace PokemonUnity
 
 	public class LogManager : IDebugger
 	{
-		//private static readonly LogManager instance = new LogManager();
-		//public static LogManager Instance { get { return instance; } }
+		private static readonly LogManager instance = new LogManager();
+		public static LogManager Logger { get { return instance; } }
 
 		//private event Action<string, object[]> OnLog;
 		public event EventHandler<OnDebugEventArgs> OnLog;
@@ -155,22 +155,22 @@ namespace PokemonUnity
 
 		void IDebugger.Log(string message, params object[] param)
 		{
-			Log(this, new OnDebugEventArgs { Message = message, MessageParameters = param });
+			Log(null, new OnDebugEventArgs { Message = message, MessageParameters = param });
 		}
 
 		void IDebugger.LogDebug(string message, params object[] param)
 		{
-			Log(this, new OnDebugEventArgs { Debug = true, Message = message, MessageParameters = param });
+			Log(null, new OnDebugEventArgs { Debug = true, Message = message, MessageParameters = param });
 		}
 
 		void IDebugger.LogWarning(string message, params object[] param)
 		{
-			Log(this, new OnDebugEventArgs { Error = false, Message = message, MessageParameters = param });
+			Log(null, new OnDebugEventArgs { Error = false, Message = message, MessageParameters = param });
 		}
 
 		void IDebugger.LogError(string message, params object[] param)
 		{
-			Log(this, new OnDebugEventArgs { Error = true, Message = message, MessageParameters = param });
+			Log(null, new OnDebugEventArgs { Error = true, Message = message, MessageParameters = param });
 		}
 
 		void IDebugger.Shutdown()
