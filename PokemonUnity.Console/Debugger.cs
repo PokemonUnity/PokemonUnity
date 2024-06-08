@@ -23,7 +23,6 @@ using Serilog;
 
 namespace PokemonUnity.ConsoleApp
 {
-
 	/// <summary>
 	/// Logging of messages
 	/// <para>
@@ -34,7 +33,7 @@ namespace PokemonUnity.ConsoleApp
 	///    </para><para>
 	/// GameDebug.Log/Warn/Error coming from game =>
 	///    These gets sent onto the console and into our log file.
-	///    *IF* we are in editor, they are also sent to Debug.* so they show up in editor Console window
+	///    *IF* we are in editor, they are also sent to Debug. So they show up in editor Console window
 	///    </para><para>
 	/// Console.Write =>
 	///    Only used for things that should not be logged. Typically responses to user commands. Only shown on Console.
@@ -51,17 +50,21 @@ namespace PokemonUnity.ConsoleApp
 		//protected string logFilePath;
 		//protected StringBuilder logBuilder = new StringBuilder();
 
-		protected Debugger() : base() { Core.Logger = this; } //LogManager.Instance.OnLog += OnLogMessageDelegate;
 
-		public virtual void Init(string logFilePath, string logBaseName, bool useSerilog = false)
+		//static Debugger() { Core.Logger = new Debugger(); }
+
+		public Debugger() : base() { LogManager.Logger.OnLog += OnLogMessageDelegate; } //Game.OnLoad += OnLoadMessageDelegate;
+
+		public virtual void Init(string logFilePath, string logBaseName, bool useSerilog = true)
 		{
 			this.logFilePath = System.IO.Path.Combine(logFilePath, logBaseName + ".log");
-			if (!System.IO.File.Exists(this.logFilePath))
-				System.IO.File.Create(this.logFilePath);
+			//if (!System.IO.File.Exists(this.logFilePath))
+			//	System.IO.File.Create(this.logFilePath);
 			this.useSerilog = useSerilog;
 			if (useSerilog)
 			{
 				serilogLogger = new LoggerConfiguration()
+					.MinimumLevel.Verbose()
 					.WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information,
 						outputTemplate: "{Timestamp:HH:mm:ss} [{Level:u4}] {Message:lj}{NewLine}{Exception}")
 					.WriteTo.File(this.logFilePath,
@@ -69,7 +72,7 @@ namespace PokemonUnity.ConsoleApp
 						outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
 					.CreateLogger();
 			}
-			Log("Debugger initialized. Logging to " + this.logFilePath);
+			Log("Debugger initialized. Logging to `{0}`", System.IO.Path.GetFullPath(this.logFilePath));
 		}
 
 		public override void Shutdown()
@@ -91,6 +94,7 @@ namespace PokemonUnity.ConsoleApp
 			{
 				logBuilder = new StringBuilder(); //logBuilder.Clear();
 				logBuilder.AppendFormat("[LOG] " + message, param);
+				System.Console.WriteLine(logBuilder.ToString());
 				LogMessageToFile();
 			}
 		}
@@ -123,6 +127,7 @@ namespace PokemonUnity.ConsoleApp
 			{
 				logBuilder = new StringBuilder(); //logBuilder.Clear();
 				logBuilder.AppendFormat("[WRN] " + message, param);
+				System.Console.WriteLine(logBuilder.ToString());
 				LogMessageToFile();
 			}
 		}
@@ -137,6 +142,7 @@ namespace PokemonUnity.ConsoleApp
 			{
 				logBuilder = new StringBuilder(); //logBuilder.Clear();
 				logBuilder.AppendFormat("[ERR] " + message, param);
+				System.Console.WriteLine(logBuilder.ToString());
 				LogMessageToFile();
 			}
 		}
@@ -166,13 +172,21 @@ namespace PokemonUnity.ConsoleApp
 				if (useSerilog && serilogLogger != null)
 				{
 					if (sender != null)
+					{
 						serilogLogger.Debug("Run: {sender} => {method}", sender.GetType().Name, args.Method?.Name);
-					if (Core.DEBUG || args.Debug)
-						serilogLogger.Verbose("Entity: {inspect}", sender.ToString());
+						if (Core.DEBUG || args.Debug)
+							serilogLogger.Verbose("Entity: {inspect}", sender.ToString());
+					}
 					if (args.Error == true)
 						serilogLogger.Error(args.Message, args.MessageParameters);
 					else if (args.Error == false)
 						serilogLogger.Warning(args.Message, args.MessageParameters);
+					else if (args.Debug)
+					{
+						serilogLogger.Debug(args.Message, args.MessageParameters);
+						if (Core.DEBUG)
+							serilogLogger.Verbose("Stack Trace: => {method}\n" + new StackTrace().ToString(), args.Method?.Name);
+					}
 					else
 						serilogLogger.Information(args.Message, args.MessageParameters);
 				}
@@ -190,8 +204,25 @@ namespace PokemonUnity.ConsoleApp
 					if (Core.DEBUG || args.Debug)
 						logBuilder.AppendLine(sender.ToString());
 					logBuilder.Append(args.Message);
+					if (Core.DEBUG)
+						logBuilder.AppendLine("[DMP] Stack Trace:\n" + new StackTrace().ToString());
 					LogMessageToFile();
 				}
+			}
+		}
+
+		protected virtual void OnLoadMessageDelegate(object sender, OnLoadEventArgs args)
+		{
+			if (args != null || args != System.EventArgs.Empty)
+			{
+				OnDebugEventArgs debug = new OnDebugEventArgs()
+				{
+					Debug = true,
+					//Message = "Total: {total}; Total Pieces: {totalPieces}; Check {check}; Piece {piece}",
+					Message = "Total: {0}; Total Pieces: {1}; Check {2}; Piece {3}",
+					MessageParameters = new object[] { args.Total, args.TotalPieces, args.Check, args.Piece }
+				};
+				OnLogMessageDelegate(sender, debug);
 			}
 		}
 

@@ -31,12 +31,12 @@ namespace PokemonUnity.ConsoleApp
 
 		static void Main(string[] args)
 		{
-			System.Console.OutputEncoding = System.Text.Encoding.UTF8;
-			Debugger.Instance.OnLog += GameDebug_OnLog;
-			GameDebug.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
-			System.Console.WriteLine("######################################");
-			System.Console.WriteLine("# Hello - Welcome to Console Battle! #");
-			System.Console.WriteLine("######################################");
+			new PokemonUnity.ConsoleApp.Debugger().Init("..\\..\\..\\Logs", "ConsoleBattle");
+			//PokemonUnity.ConsoleApp.Debugger.Instance.OnLog += GameDebug_OnLog;
+			GameDebug.LogDebug(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			GameDebug.Log("######################################");
+			GameDebug.Log("# Hello - Welcome to Console Battle! #");
+			GameDebug.Log("######################################");
 
 			string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
 			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);

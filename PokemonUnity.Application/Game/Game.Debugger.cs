@@ -12,38 +12,44 @@ namespace PokemonUnity
 	/// </remarks>
 	public static class GameDebug //: IDebugger
 	{
-		private static IDebugger debugger = Debugger.Instance;
+		//private static IDebugger debugger = Debugger.Instance;
 
 		public static void Init(string logfilePath, string logBaseName, IDebugger debugger = null)
 		{
 			if (debugger != null)
-				GameDebug.debugger = debugger;
+				//GameDebug.debugger = debugger;
+				Core.Logger = debugger;
 			debugger.Init(logfilePath, logBaseName);
 		}
 
 		public static void Shutdown()
 		{
-			debugger.Shutdown();
+			//debugger.Shutdown();
+			Core.Logger.Shutdown();
 		}
 
 		public static void Log(string message, params object[] param)
 		{
-			debugger.Log(message, param);
+			//debugger.Log(message, param);
+			Core.Logger.Log(message, param);
 		}
 
 		public static void LogDebug(string message, params object[] param)
 		{
-			debugger.LogDebug(message, param);
+			//debugger.LogDebug(message, param);
+			Core.Logger.LogDebug(message, param);
 		}
 
 		public static void LogWarning(string message, params object[] param)
 		{
-			debugger.LogWarning(message, param);
+			//debugger.LogWarning(message, param);
+			Core.Logger.LogWarning(message, param);
 		}
 
 		public static void LogError(string message, params object[] param)
 		{
-			debugger.LogError(message, param);
+			//debugger.LogError(message, param);
+			Core.Logger.LogError(message, param);
 		}
 	}
 
@@ -57,7 +63,7 @@ namespace PokemonUnity
 	///    </para><para>
 	/// GameDebug.Log/Warn/Error coming from game =>
 	///    These gets sent onto the console and into our log file.
-	///    *IF* we are in editor, they are also sent to Debug.* so they show up in editor Console window
+	///    *IF* we are in editor, they are also sent to Debug. So they show up in editor Console window
 	///    </para><para>
 	/// Console.Write =>
 	///    Only used for things that should not be logged. Typically responses to user commands. Only shown on Console.

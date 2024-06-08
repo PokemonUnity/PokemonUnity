@@ -151,6 +151,7 @@ namespace PokemonUnity
 		void IDebugger.Init(string logfilePath, string logBaseName)
 		{
 			// Implementation for initializing log file not needed, leave up to subscriber.
+			Log(null, new OnDebugEventArgs { Message = "Log initialized called with parameters: `{0}` and `{1}`", MessageParameters = new[] { logfilePath, logBaseName } });
 		}
 
 		void IDebugger.Log(string message, params object[] param)
