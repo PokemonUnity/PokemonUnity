@@ -758,7 +758,7 @@ namespace PokemonUnity
 			return dexdata.Type;
 		}
 
-		public IEnumerator TrainerInfo(IList<IPokemonSerialized> pokemonlist, int trfile, IPokemonChallengeRules rules, Action block_given = null) {
+		public virtual IEnumerator TrainerInfo(IList<IPokemonSerialized> pokemonlist, int trfile, IPokemonChallengeRules rules, Action block_given = null) {
 			//IList<PokemonUnity.Character.TrainerMetaData> bttrainers=GetBTTrainers(trfile);
 			//IPokemonSerialized[] btpokemon=GetBTPokemon(trfile);
 			////trainertypes=load_data("Data/trainertypes.dat");
@@ -804,10 +804,10 @@ namespace PokemonUnity
 			//	pkmntypes.Add(getTypes(pkmn.Species));
 			//	validities.Add(rules.ruleset.isPokemonValid(pkmn));
 			//}
-			//IList<> newbttrainers=new List<>();
+			//IList<IPokemonSerialized> newbttrainers=new List<IPokemonSerialized>();
 			//for (int btt = 0; btt < bttrainers.Count; btt++) {
 			//	if (block_given != null && btt%50==0) yield return null;
-			//	IList<> trainerdata=bttrainers[btt];
+			//	Character.TrainerMetaData trainerdata=bttrainers[btt];
 			//	IList<> pokemonnumbers=trainerdata[5] ?? new List<IPokemon>();
 			//	IList<Pokemons> species=new List<Pokemons>();
 			//	IDictionary<Types,int> types=new Dictionary<Types,int>();
@@ -844,14 +844,14 @@ namespace PokemonUnity
 			//	}
 			//	IList<int> numbers=new List<int>();
 			//	if (pokemonlist!=null) {
-			//		IList<IPokemon> numbersPokemon=new List<IPokemon>();
+			//		IList<IPokemonSerialized> numbersPokemon=new List<IPokemonSerialized>();
 			//		//  p species
 			//		for (int index = 0; index < pokemonlist.Count; index++) {
-			//			IPokemon pkmn=pokemonlist[index];
+			//			IPokemonSerialized pkmn=pokemonlist[index];
 			//			if (!validities[index]) continue;
 			//			int absDiff=Math.Abs((index*8/pokemonlist.Count)-(btt*8/bttrainers.Count));
 			//			bool sameDiff=(absDiff==0);
-			//			if (species.Contains(pkmn.Species)) {
+			//			if (species.Contains(pkmn.species)) {
 			//				int weight= new []{ 32,12,5,2,1,0,0,0 }[Math.Min(absDiff,7)];
 			//				if (Core.Rand.Next(40)<weight) {
 			//					numbers.Add(index);
@@ -873,9 +873,9 @@ namespace PokemonUnity
 			//		if ((numbers.Count<6 ||
 			//			!rulesetTeam.hasValidTeam(numbersPokemon))) {
 			//			for (int index = 0; index < pokemonlist.Count; index++) {
-			//				IPokemon pkmn=pokemonlist[index];
+			//				IPokemonSerialized pkmn =pokemonlist[index];
 			//				if (!validities[index]) continue;
-			//				if (species.Contains(pkmn.Species)) {
+			//				if (species.Contains(pkmn.species)) {
 			//					numbers.Add(index);
 			//					numbersPokemon.Add(pokemonlist[index]);
 			//				} else {
@@ -903,8 +903,10 @@ namespace PokemonUnity
 			//		}
 			//		numbers.OrderBy(a=>a);//.sort!;
 			//	}
-			//	newbttrainers.Add([trainerdata[0],trainerdata[1],trainerdata[2],
-			//						trainerdata[3],trainerdata[4],numbers]);
+			//	//newbttrainers.Add([trainerdata[0],trainerdata[1],trainerdata[2],
+			//	//					trainerdata[3],trainerdata[4],numbers]);
+			//	newbttrainers.Add(new PBPokemon(trainerdata[0],trainerdata[1],trainerdata[2],
+			//						trainerdata[3],trainerdata[4],numbers));
 			//}
 			//if (block_given!=null) yield return null;
 			//pokemonlist=[];
@@ -927,7 +929,7 @@ namespace PokemonUnity
 			//}
 			//if (block_given!=null) yield return null;
 			//if (trIndex<0) {
-			//	info=new string[] { newbttrainers,pokemonlist,[trfile],
+			//	info=new string[] { newbttrainers,pokemonlist,new[] { trfile },
 			//			trfile+"tr.txt",trfile+"pm.txt",!hasDefault };
 			//	trlists.Add(info);
 			//}
@@ -1219,6 +1221,12 @@ namespace PokemonUnity
 		public bool isValid (IPokemon pkmn) {
 			int bst=0;//baseStatTotal(pkmn.Species);
 			if (Game.GameData is IGameOrgBattleGenerator gobg) bst=gobg.baseStatTotal(pkmn.Species);
+			return bst>=@mn && bst<=@mx;
+		}
+
+		public bool isValid (IPokemonSerialized pkmn) {
+			int bst=0;//baseStatTotal(pkmn.Species);
+			if (Game.GameData is IGameOrgBattleGenerator gobg) bst=gobg.baseStatTotal(pkmn.species);
 			return bst>=@mn && bst<=@mx;
 		}
 	}

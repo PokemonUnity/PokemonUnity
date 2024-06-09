@@ -1484,7 +1484,7 @@ namespace PokemonUnity
 		public bool isPokemonValid(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon)
 		{
 			if (!pokemon.IsNotNullOrNone()) return false;
-			foreach (var rule in @pokemonRules)
+			foreach (IBattleRestriction rule in @pokemonRules)
 			{
 				if (!rule.isValid(pokemon))
 				{
@@ -1493,6 +1493,19 @@ namespace PokemonUnity
 			}
 			return true;
 		}
+
+		//public bool isPokemonValid(PokemonEssentials.Interface.Battle.IPokemonSerialized pokemon)
+		//{
+		//	if (!pokemon.IsNotNullOrNone()) return false;
+		//	foreach (IBattleRestriction rule in @pokemonRules)
+		//	{
+		//		if (!rule.isValid(pokemon))
+		//		{
+		//			return false;
+		//		}
+		//	}
+		//	return true;
+		//}
 
 		public bool hasRegistrableTeam(IList<PokemonEssentials.Interface.PokeBattle.IPokemon> list)
 		{
@@ -1595,6 +1608,45 @@ namespace PokemonUnity
 			}
 			return true;
 		}
+
+		/// <summary>
+		///  Returns true if the team's length is greater or equal to the suggested number
+		///  and at least one subset of the team meets the requirements of any team rules
+		///  and subset rules. Not all Pokemon in the team have to be valid.
+		/// </summary>
+		/// <param name="team"></param>
+		/// <returns></returns>
+		//public bool hasValidTeam(IList<PokemonEssentials.Interface.Battle.IPokemonSerialized> team)
+		//{
+		//	if (team == null || team.Count < this.minTeamLength)
+		//	{
+		//		return false;
+		//	}
+		//	int teamNumber = Math.Min(this.maxLength, team.Count);
+		//	IList<PokemonEssentials.Interface.Battle.IPokemonSerialized> validPokemon = new List<PokemonEssentials.Interface.Battle.IPokemonSerialized>();
+		//	foreach (var pokemon in team)
+		//	{
+		//		if (isPokemonValid(pokemon))
+		//		{
+		//			validPokemon.Add(pokemon);
+		//		}
+		//	}
+		//	if (validPokemon.Count < teamNumber)
+		//	{
+		//		return false;
+		//	}
+		//	if (@teamRules.Count > 0)
+		//	{
+		//		//EachCombination(team,teamNumber,comb=>{
+		//		foreach (PokemonEssentials.Interface.PokeBattle.IPokemon[] comb in (Game.GameData as IGameUtility).EachCombination(team, teamNumber)) {
+		//			if (isValid(comb)) {
+		//				return true;
+		//			}
+		//		};
+		//		return false;
+		//	}
+		//	return true;
+		//}
 
 		/// <summary>
 		///  Returns true if the team's length meets the subset length range requirements

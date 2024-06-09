@@ -17,7 +17,7 @@ using PokemonEssentials.Interface.Item;
 
 namespace PokemonUnity.Monster
 {
-	public partial class Pokemon : IPokemon, IEquatable<IPokemon>, IEqualityComparer<IPokemon>, IEquatable<Pokemon>, IEqualityComparer<Pokemon>, ICloneable
+	public partial class Pokemon : IPokemon, IEquatable<IPokemon>, IEquatable<Pokemon>, ICloneable//ToDo: Migrate to separate class => IEqualityComparer<IPokemon>, IEqualityComparer<Pokemon>
 	{
 		#region Variables
 		private Pokemons pokemons;
@@ -2975,8 +2975,8 @@ namespace PokemonUnity.Monster
 		int IPokemon.tough	{ get { return Tough; }		set { Tough = value; } }
 		int IPokemon.sheen	{ get { return Sheen; }		set { Sheen = value; } }
 		int IPokemon.publicID	{ get { return PersonalId; } }
-		DateTime? IPokemon.timeReceived	{ get { return TimeReceived.UtcDateTime; } set { obtainWhen = (DateTimeOffset)DateTime.SpecifyKind(value.Value, DateTimeKind.Utc); } }
-		DateTime? IPokemon.timeEggHatched	{ get { return TimeEggHatched?.UtcDateTime; } set { hatchedWhen = value != null ? (DateTimeOffset)DateTime.SpecifyKind(value.Value, DateTimeKind.Utc) : (DateTimeOffset?)null; } }
+		DateTime? IPokemon.timeReceived	{ get { return TimeReceived.UtcDateTime; } set { obtainWhen = value == null ?  DateTimeOffset.Now : (DateTimeOffset)DateTime.SpecifyKind(value.Value, DateTimeKind.Utc); } }
+		DateTime? IPokemon.timeEggHatched	{ get { return TimeEggHatched?.UtcDateTime; } set { hatchedWhen = value == null ? (DateTimeOffset?)null : (DateTimeOffset)DateTime.SpecifyKind(value.Value, DateTimeKind.Utc); } }
 		bool IPokemon.isSingleGendered	{ get { return IsSingleGendered; } }
 		char IPokemon.unownShape	{ get { return UnownShape; } }
 		float IPokemon.height	{ get { return _base.Height; } }
@@ -2988,12 +2988,13 @@ namespace PokemonUnity.Monster
 		bool IPokemon.isFemale(int b, int genderRate)
 		{
 			if (genderRate == 254) return true;		// AlwaysFemale
-			if (genderRate == 255) return false;    // Genderless
+			if (genderRate == 255) return false;	// Genderless
 			return b <= genderRate;
 		}
 
 		void IPokemon.setGender(int value)
 		{
+			//if (value > 1) setGender(null); //2 means unknown...
 			setGender(value == 0);
 		}
 
@@ -3005,21 +3006,6 @@ namespace PokemonUnity.Monster
 		void IPokemon.lowerPokerusCount()
 		{
 			LowerPokerusCount();
-		}
-
-		void IPokemon.DeleteMove(Moves move)
-		{
-			DeleteMove(move);
-		}
-
-		void IPokemon.DeleteMoveAtIndex(int index)
-		{
-			DeleteMoveAtIndex(index);
-		}
-
-		void IPokemon.DeleteAllMoves()
-		{
-			DeleteAllMoves();
 		}
 
 		int IPokemon.upgradeRibbon(params Ribbons[] arg)
@@ -3077,22 +3063,23 @@ namespace PokemonUnity.Monster
 		{
 			return Equals(obj: (object)other);
 		}
-		bool IEqualityComparer<IPokemon>.Equals(IPokemon x, IPokemon y)
-		{
-			return x == y;
-		}
-		bool IEqualityComparer<Pokemon>.Equals(Pokemon x, Pokemon y)
-		{
-			return x == y;
-		}
-		int IEqualityComparer<IPokemon>.GetHashCode(IPokemon obj)
-		{
-			return obj.GetHashCode();
-		}
-		int IEqualityComparer<Pokemon>.GetHashCode(Pokemon obj)
-		{
-			return obj.GetHashCode();
-		}
+		//ToDo: Migrate below...
+		//bool IEqualityComparer<IPokemon>.Equals(IPokemon x, IPokemon y)
+		//{
+		//	return x == y;
+		//}
+		//bool IEqualityComparer<Pokemon>.Equals(Pokemon x, Pokemon y)
+		//{
+		//	return x == y;
+		//}
+		//int IEqualityComparer<IPokemon>.GetHashCode(IPokemon obj)
+		//{
+		//	return obj.GetHashCode();
+		//}
+		//int IEqualityComparer<Pokemon>.GetHashCode(Pokemon obj)
+		//{
+		//	return obj.GetHashCode();
+		//}
 		object ICloneable.Clone()
 		{
 			return MemberwiseClone();

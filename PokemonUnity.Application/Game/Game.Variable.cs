@@ -16,7 +16,7 @@ using PokemonUnity.Overworld;
 
 namespace PokemonUnity
 {
-	public partial class Game : PokemonEssentials.Interface.IGame
+	public partial class Game : PokemonEssentials.Interface.IGame//, PokemonEssentials.Interface.IEvents
 	{
 		public PokemonEssentials.Interface.IGlobalMetadata Global { get; private set; }
 		public PokemonEssentials.Interface.Field.IMapFactory MapFactory { get; private set; }
@@ -86,6 +86,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region Events used by Game Interface
+		//public PokemonEssentials.Interface.IEvents Events { get; private set; }
 		/// <summary>
 		/// Fires whenever the player moves to a new map. Event handler receives the old
 		/// map ID or 0 if none.  Also fires when the first map of the game is loaded

@@ -60,7 +60,7 @@ namespace PokemonUnity
 		public static sbyte PokemonGeneration { get { return pokemonGeneration; } set { pokemonGeneration = value; } }
 		private static sbyte pokemonGeneration = (sbyte)Generation.All;
 
-		public static int PokemonIndexLimit {
+		public static int PokemonIndexLimit { //ToDo: Rename to PokedexLimit
 			get {
 				int MaxPoke = 0;
 				int Gen1 = 151;

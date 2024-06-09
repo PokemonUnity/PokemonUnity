@@ -74,13 +74,13 @@ namespace PokemonUnity
 		/// Define the ButtonUp event property.
 		/// </summary>
 		public static event ButtonEventHandler ButtonUp;
-        public abstract event Action<object, IButtonEventArgs> OnKeyPress;
+		public abstract event Action<object, IButtonEventArgs> OnKeyPress;
 
-        /// <summary>
-        /// Raise the event with the delegate specified by keyDownEventKey
-        /// </summary>
-        /// <param name="e"></param>
-        private static void OnButtonDown(PokemonEssentials.Interface.EventArg.IButtonEventArgs e)
+		/// <summary>
+		/// Raise the event with the delegate specified by keyDownEventKey
+		/// </summary>
+		/// <param name="e"></param>
+		private static void OnButtonDown(PokemonEssentials.Interface.EventArg.IButtonEventArgs e)
 		{
 			//ButtonEventHandler buttonEventDelegate =
 			//    (ButtonEventHandler)listEventDelegates[buttonDownEventKey];
@@ -358,13 +358,13 @@ namespace PokemonUnity
 			m_KeyTable[key] = state;
 		}
 
-        void IInput.update() { update(); }
-        bool IInput.press(int num) { return press(num); }
-        bool IInput.trigger(int num) { return trigger(num); }
-        bool IInput.repeat(int num) { return repeat(num); }
-        #endregion
+		void IInput.update() { update(); }
+		bool IInput.press(int num) { return press(num); }
+		bool IInput.trigger(int num) { return trigger(num); }
+		bool IInput.repeat(int num) { return repeat(num); }
+		#endregion
 
-        public class ButtonEventArgs : EventArgs, PokemonEssentials.Interface.EventArg.IButtonEventArgs
+		public class ButtonEventArgs : EventArgs, PokemonEssentials.Interface.EventArg.IButtonEventArgs
 		{
 			public static readonly int EventId = typeof(ButtonEventArgs).GetHashCode();
 

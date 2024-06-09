@@ -3,6 +3,7 @@ using PokemonUnity;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.Battle;
 
 namespace PokemonUnity
 {
@@ -11,6 +12,10 @@ namespace PokemonUnity
 		public static bool IsNotNullOrNone(this IEncounterPokemon pokemon)
 		{
 			return pokemon != null && pokemon.Pokemon != Pokemons.NONE;
+		}
+		public static bool IsNotNullOrNone(this IPokemonSerialized pokemon)
+		{
+			return pokemon != null && pokemon.species != Pokemons.NONE;
 		}
 		public static bool IsNotNullOrNone(this IPokemon pokemon)
 		{

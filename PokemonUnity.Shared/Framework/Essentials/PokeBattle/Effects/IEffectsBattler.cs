@@ -84,6 +84,7 @@ namespace PokemonEssentials.Interface.PokeBattle.Effects
 		bool Nightmare			{ get; set; }
 		int Outrage				{ get; set; }
 		int ParentalBond		{ get; set; }
+		//bool ParentalBondApplied{ get; set; }
 		int PerishSong			{ get; set; }
 		int PerishSongUser		{ get; set; }
 		Items PickupItem		{ get; set; }

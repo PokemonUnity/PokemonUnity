@@ -15,7 +15,7 @@ using PokemonEssentials.Interface.Item;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
-	public interface IPokemon : ICloneable, IEquatable<IPokemon>, IEqualityComparer<IPokemon>
+	public interface IPokemon : ICloneable, IEquatable<IPokemon>//, IEqualityComparer<IPokemon>
 	{
 		/// <summary>
 		/// Current Total HP
@@ -614,16 +614,23 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Heals all HP of this Pokémon.
 		/// </summary>
+		/// <remarks>
+		/// Returns <see cref="HP"/> to amount equal to <see cref="TotalHP"/>
+		/// </remarks>
 		bool HealHP();
 
 		/// <summary>
-		/// Heals the status problem of this Pokémon.
+		/// Heals the <see cref="Status"/> problem of this Pokémon.
 		/// </summary>
 		bool HealStatus();
 
 		/// <summary>
 		/// Heals all PP of this Pokémon.
 		/// </summary>
+		/// <remarks>
+		/// Returns <see cref="IMove.PP"/> to amount equal to <see cref="IMove.TotalPP"/>
+		/// within <see cref="moves"/> matching given <paramref name="index"/> in collection.
+		/// </remarks>
 		/// <param name="index"></param>
 		bool HealPP(int index = -1);
 
@@ -639,7 +646,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 		// Stat calculations, Pokémon creation
 		// ###############################################################################
 		/// <summary>
-		/// Returns this Pokémon's base stats.  An array of six values.
+		/// Returns this Pokémon's base <see cref="Stats"/>. An array of six values.
 		/// </summary>
 		/// <returns></returns>
 		int[] baseStats { get; }
@@ -647,6 +654,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns the maximum HP of this Pokémon.
 		/// </summary>
+		/// <remarks>
+		/// Used to calculate <see cref="TotalHP"/>
+		/// </remarks>
 		/// <param name="_base"></param>
 		/// <param name="level"></param>
 		/// <param name="iv"></param>
@@ -657,6 +667,9 @@ namespace PokemonEssentials.Interface.PokeBattle
 		/// <summary>
 		/// Returns the specified stat of this Pokémon (not used for total HP).
 		/// </summary>
+		/// <remarks>
+		/// Used to calculate <see cref="Stats"/>
+		/// </remarks>
 		/// <param name="_base"></param>
 		/// <param name="level"></param>
 		/// <param name="iv"></param>

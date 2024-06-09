@@ -410,7 +410,7 @@ namespace PokemonUnity
 	//}
 	#endregion
 
-	[System.Serializable]
+	[System.Serializable]  // ToDo: Make Static?
 	public partial class PBPokemon : IPokemonSerialized, ISerializable
 	{
 		public Pokemons species			{ get; protected set; }
