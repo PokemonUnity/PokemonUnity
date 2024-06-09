@@ -227,7 +227,7 @@ namespace PokemonUnity.Combat
 						Attack.Effects.x0BE,	// Endeavor
 						Attack.Effects.x008,	// Selfdestruct/Explosion
 						Attack.Effects.x141,	// Final Gambit
-						Attack.Effects.x0EA	// Fling
+						Attack.Effects.x0EA		// Fling
 					};
 					if (!exceptions.Contains(Effect)){
 						attacker.effects.ParentalBond= 3;
@@ -235,15 +235,21 @@ namespace PokemonUnity.Combat
 					}
 				}
 			if (IsMultiHit())
-				return Core.Rand.Next(Kernal.MoveMetaData[MoveId].MinHits.Value, Kernal.MoveMetaData[MoveId].MaxHits.Value);
+				if (Kernal.MoveMetaData[MoveId].MaxHits.HasValue)
+					return Core.Rand.Next(Kernal.MoveMetaData[MoveId].MinHits??0, Kernal.MoveMetaData[MoveId].MaxHits.Value);
+				else
+					return Kernal.MoveMetaData[MoveId].MinHits.Value;
 				//ToDo: Need to record that Parental Bond applies, to weaken the second attack
 				//attacker.effects.ParentalBondApplied = true;
 			return 1;
 		}
 
 		/// <summary>
-		/// not the same as NumHits>1
+		/// If attack move is capable of performing multiple instances of damage per a single turn
 		/// </summary>
+		/// <remarks>
+		/// not the same as NumHits>1
+		/// </remarks>
 		public virtual bool IsMultiHit() { //get {
 			return (Kernal.MoveMetaData[MoveId].MinHits.HasValue ||
 					Kernal.MoveMetaData[MoveId].MaxHits.HasValue);//}

@@ -227,7 +227,7 @@ namespace PokemonUnity.Combat
 		public bool belch { get; set; }
 		#endregion
 		protected bool fainted;	//ToDo: Remove because redundancy of `this.Status == Status.FAINT`?
-		public bool isFainted() { return HP == 0 || Status == Status.FAINT || fainted; }
+		public bool isFainted() { return hp <= 0 || Status == Status.FAINT; } //|| fainted
 		public bool isEgg { get { return pokemon?.isEgg??true; } }
 		/// <summary>
 		/// Returns the position of this pkmn in party lineup
@@ -861,7 +861,7 @@ namespace PokemonUnity.Combat
 				GameDebug.LogWarning("Can't faint with HP greater than 0");
 				return true;
 			}
-			if(isFainted())
+			if(fainted)
 			{
 				GameDebug.LogWarning("Can't faint if already fainted");
 				return true;
@@ -891,7 +891,6 @@ namespace PokemonUnity.Combat
 			OwnSide.LastRoundFainted = battle.turncount;
 			if (showMessage)
 				battle.Display(Game._INTL("{1} fainted!", ToString()));
-				//battle.Display(LanguageExtension.Translate(Text.Errors, "Fainted", new string[] { ToString() }).Value);
 			return true;
 		}
 		#endregion
@@ -2868,7 +2867,7 @@ namespace PokemonUnity.Combat
 				// This hit will happen; count it
 				realnumhits+=1;
 				// Damage calculation and/or main effect
-				int damage=thismove.GetEffect(user,target,(byte)i,alltargets,showanimation); // Recoil/drain, etc. are applied here
+				int damage=thismove.GetEffect(user,target,(byte)i+1,alltargets,showanimation); // Recoil/drain, etc. are applied here
 				if (damage>0) totaldamage+=damage;
 				// Message and consume for type-weakening berries
 				if (target.damagestate.BerryWeakened) {
@@ -2885,8 +2884,7 @@ namespace PokemonUnity.Combat
 					@battle.Display(Game._INTL("{1}'s {2} wore off!",target.ToString(),
 						Game._INTL(target.Ability.ToString(TextScripts.Name))));
 				}
-				if (user.isFainted())
-				user.Faint(); // no return
+				if (user.isFainted()) user.Faint(); // no return
 				if (numhits>1 && target.damagestate.CalcDamage<=0) return;
 				@battle.JudgeCheckpoint(user,thismove);
 				// Additional effect

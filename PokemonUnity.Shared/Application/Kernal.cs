@@ -53,7 +53,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// List of <see cref="Player.Area"/> that triggers <seealso cref="Overworld.IMapEncounterMetadata"/>
 		/// <para></para>
-		/// Key: <seealso cref="Overworld.IArea.Id"/> | Value: <seealso cref="Player.Area"/>
+		/// Key: <seealso cref="Overworld.IArea.Id"/> | Value: <seealso cref="PokemonEssentials.Interface.IGameCharacter.map"/> (Player.Area)
 		/// </summary>
 		public static IDictionary<int,IArea> AreaData { get; private set; }
 		/// <summary>
@@ -67,6 +67,7 @@ namespace PokemonUnity
 		//public static IDictionary<Method,IMapEncounterMetadata> EncounterMethodData { get; private set; }
 		//public static IDictionary<int,PokemonEssentials.Interface.Field.IEncounters> MapEncounterData { get; private set; }
 		public static IDictionary<TrainerTypes,TrainerMetaData> TrainerMetaData { get; private set; }
+		public static IDictionary<int,TrainerMetaData> TrainerPartyData { get; private set; }
 		public static IDictionary<GymBadges,Character.BadgeData> BadgeData { get; private set; }
 		public static IDictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; private set; }
 		public static IDictionary<int,MachineData> MachineData { get; private set; }
@@ -164,11 +165,11 @@ namespace PokemonUnity
 			EncounterData = new Dictionary<int, IMapEncounterMetadata>();
 			//EncounterData = new Dictionary<int, Encounter>();
 			//MapEncounterData = new Dictionary<int, PokemonEssentials.Interface.Field.IEncounters>();
-			TrainerMetaData = new Dictionary<TrainerTypes, TrainerMetaData>();
 			//TrainerData = new Dictionary<int, Encounter>();
+			TrainerMetaData = new Dictionary<TrainerTypes, TrainerMetaData>();
 			BadgeData = new Dictionary<GymBadges, Character.BadgeData>();
 			HiddenMoveData = new Dictionary<HiddenMoves, HiddenMoveData>();
-			//TrainerData = new Dictionary<int, Encounter>();
+			MachineData = new Dictionary<int, MachineData>();
 		}
 		#endregion
 

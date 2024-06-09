@@ -39,7 +39,7 @@ namespace PokemonUnity.ConsoleApp
 			GameDebug.Log("######################################");
 
 			string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
-			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
+			//GameDebug.Log(System.IO.Directory.GetParent(englishLocalization).FullName);
 			Game.LocalizationDictionary = new XmlStringRes(null); //new Debugger());
 			Game.LocalizationDictionary.Initialize(englishLocalization, (int)Languages.English);
 
@@ -86,17 +86,6 @@ namespace PokemonUnity.ConsoleApp
 
 			battle.StartBattle(true);
 		}
-
-		private static void GameDebug_OnLog(object sender, OnDebugEventArgs e)
-		{
-			if (e != null || e != System.EventArgs.Empty)
-				if (e.Error == true)
-					System.Console.WriteLine("[ERR]: " + e.Message);
-				else if (e.Error == false)
-					System.Console.WriteLine("[WARN]: " + e.Message);
-				else
-					System.Console.WriteLine("[LOG]: " + e.Message);
-		}
 	}
 
 	public class PokeBattleScene : IPokeBattle_DebugSceneNoGraphics, IPokeBattle_SceneNonInteractive //IPokeBattle_Scene,
@@ -136,7 +125,7 @@ namespace PokemonUnity.ConsoleApp
 			GameDebug.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//GameDebug.Log(v);
-			System.Console.WriteLine(v);
+			GameDebug.Log(v);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.DisplayMessage(string msg, bool brief)
@@ -162,7 +151,7 @@ namespace PokemonUnity.ConsoleApp
 			Display(msg);
 			@messageCount += 1;
 
-			System.Console.WriteLine("Y/N?");
+			GameDebug.Log("Y/N?");
 			bool appearing = true;
 			bool result = false;
 			do
@@ -251,8 +240,8 @@ namespace PokemonUnity.ConsoleApp
 			if (battle.player?.Length > 0 && battle.opponent?.Length > 0 && !battle.doublebattle)
 			{
 				GameDebug.Log("Single Battle");
-				System.Console.WriteLine("Player: {0} has {1} in their party", battle.player[0].name, battle.party1.Length);
-				System.Console.WriteLine("Opponent: {0} has {1} in their party", battle.opponent?[0].name, battle.party2.Length);
+				GameDebug.Log("Player: {0} has {1} in their party", battle.player[0].name, battle.party1.Length);
+				GameDebug.Log("Opponent: {0} has {1} in their party", battle.opponent?[0].name, battle.party2.Length);
 			}
 		}
 
@@ -340,15 +329,15 @@ namespace PokemonUnity.ConsoleApp
 				//@battle.opponent != null;
 				battle.battlers[index] is IPokemonShadowPokemon p && p.hypermode;
 
-			System.Console.WriteLine("Enemy: {0} HP: {1}/{2}", battle.battlers[index].Opposing1.Name, battle.battlers[index].Opposing1.HP, battle.battlers[index].Opposing1.TotalHP);
+			GameDebug.Log("Enemy: {0} HP: {1}/{2}", battle.battlers[index].Opposing1.Name, battle.battlers[index].Opposing1.HP, battle.battlers[index].Opposing1.TotalHP);
 			if (battle.battlers[index].Opposing2.IsNotNullOrNone())
-				System.Console.WriteLine("Enemy: {0} HP: {1}/{2}", battle.battlers[index].Opposing2.Name, battle.battlers[index].Opposing2.HP, battle.battlers[index].Opposing2.TotalHP);
+				GameDebug.Log("Enemy: {0} HP: {1}/{2}", battle.battlers[index].Opposing2.Name, battle.battlers[index].Opposing2.HP, battle.battlers[index].Opposing2.TotalHP);
 
-			System.Console.WriteLine("What will {0} do?", battle.battlers[index].Name);
 			System.Console.WriteLine("Fight - 0");
 			System.Console.WriteLine("Bag - 1");
 			System.Console.WriteLine("Pokémon - 2");
 			System.Console.WriteLine(shadowTrainer ? "Call - 3" : "Run - 3");
+			GameDebug.Log("What will {0} do?", battle.battlers[index].Name);
 
 			bool appearing = true;
 			int result = -1;
@@ -403,7 +392,7 @@ namespace PokemonUnity.ConsoleApp
 			{
 				System.Console.WriteLine(commands[i]);
 			}
-			System.Console.WriteLine("Press Q to return back to Command Menu");
+			GameDebug.Log("Press Q to return back to Command Menu");
 			bool appearing = true;
 			int result = -2;
 			do
@@ -452,7 +441,7 @@ namespace PokemonUnity.ConsoleApp
 		{
 			GameDebug.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//System.Console.WriteLine("Need to implement item system in textbased-line");
+			//GameDebug.Log("Need to implement item system in textbased-line");
 			return Items.NONE;
 		}
 
@@ -486,7 +475,7 @@ namespace PokemonUnity.ConsoleApp
 
 			for (int i = 0; i < targets.Count; i++)
 			{
-				System.Console.WriteLine("Target {0}: {1} HP: {2}/{3} => {4}", targets[i] % 2 == 1 ? "Enemy" : "Ally", battle.battlers[targets[i]].Name, battle.battlers[targets[i]].HP, battle.battlers[targets[i]].TotalHP, i);
+				GameDebug.Log("Target {0}: {1} HP: {2}/{3} => {4}", targets[i] % 2 == 1 ? "Enemy" : "Ally", battle.battlers[targets[i]].Name, battle.battlers[targets[i]].HP, battle.battlers[targets[i]].TotalHP, i);
 			}
 			bool appearing = true;
 			int result = 0;
@@ -558,14 +547,14 @@ namespace PokemonUnity.ConsoleApp
 				{
 					//commands[commands.Count] = PokemonString(party[i]);
 					commands.Add(PokemonString(party[i]));
-					//System.Console.WriteLine(PokemonString(party[i]));
+					//GameDebug.Log(PokemonString(party[i]));
 					//partypos[partypos.Count] = i;
 					partypos.Add(i);
 				}
 			}
 			for (int i = 0; i < commands.Count; i++)
 			{
-				System.Console.WriteLine("Press {0} => {1}",i+1,commands[i]);
+				GameDebug.Log("Press {0} => {1}",i+1,commands[i]);
 			}
 			System.Console.WriteLine("Press Q to return back to Command Menu");
 			bool appearing = true;
@@ -665,16 +654,16 @@ namespace PokemonUnity.ConsoleApp
 			if (hpchange < 0)
 			{
 				hpchange = -hpchange;
-				GameDebug.Log($"[HP change] #{pkmn.ToString()} lost #{hpchange} HP (#{oldhp}=>#{pkmn.HP})");
+				GameDebug.Log($"[HP change] #{pkmn.Name} lost #{hpchange} HP (#{oldhp}=>#{pkmn.HP})");
 			}
 			else
 			{
-				GameDebug.Log($"[HP change] #{pkmn.ToString()} gained #{hpchange} HP (#{oldhp}=>#{pkmn.HP})");
+				GameDebug.Log($"[HP change] #{pkmn.Name} gained #{hpchange} HP (#{oldhp}=>#{pkmn.HP})");
 			}
 			Refresh();
 
-			//System.Console.WriteLine("[HP Changed] {0}: oldhp: {1} and animate: {2}", pkmn.Name, oldhp, animate.ToString());
-			//System.Console.WriteLine("[HP Changed] {0}: CurrentHP: {1}", pkmn.Name, pkmn.HP);
+			GameDebug.LogDebug("[HP Changed] {0}: oldhp: {1} and animate: {2}", pkmn.Name, oldhp, anim.ToString());
+			GameDebug.LogDebug("[HP Changed] {0}: CurrentHP: {1}", pkmn.Name, pkmn.HP);
 
 			//yield return null;
 		}
@@ -783,11 +772,11 @@ namespace PokemonUnity.ConsoleApp
 			{
 				if (opponent.IsNotNullOrNone())
 				{
-					GameDebug.Log($"[CommonAnimation] #{moveid}, #{attacker.ToString()}, #{opponent.ToString()}");
+					GameDebug.Log($"[CommonAnimation] #{moveid}, #{attacker.Name}, #{opponent.Name}");
 				}
 				else
 				{
-					GameDebug.Log($"[CommonAnimation] #{moveid}, #{attacker.ToString()}");
+					GameDebug.Log($"[CommonAnimation] #{moveid}, #{attacker.Name}");
 				}
 			}
 			else
@@ -800,17 +789,17 @@ namespace PokemonUnity.ConsoleApp
 		{
 			GameDebug.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			System.Console.WriteLine("{0} attack {1} With {2} for {3} hit times", user.Name, target.Name, moveid.ToString(), hitnum);
+			GameDebug.Log("{0} attack {1} With {2} for {3} hit times", user.Name, target.Name, moveid.ToString(), hitnum);
 
 			if (user.IsNotNullOrNone())
 			{
 				if (target.IsNotNullOrNone())
 				{
-					GameDebug.Log($"[Animation] #{user.ToString()}, #{target.ToString()}");
+					GameDebug.Log($"[Animation] #{user.Name}, #{target.Name}");
 				}
 				else
 				{
-					GameDebug.Log($"[Animation] #{user.ToString()}");
+					GameDebug.Log($"[Animation] #{user.Name}");
 				}
 			}
 			else
@@ -976,7 +965,9 @@ namespace PokemonUnity.ConsoleApp
 			if (move.id > 0)
 			{
 				ret += string.Format(" ({0}) PP: {1}/{2}", typename, move.PP, move.TotalPP);
+				GameDebug.LogDebug("{0} - Press {1} ({2}) PP: {3}/{4}", move.id.ToString(), index, typename, move.PP, move.TotalPP);
 			}
+			else GameDebug.LogDebug("{0} - Press {1}", move.id.ToString(), index);
 			return ret;
 		}
 	}
