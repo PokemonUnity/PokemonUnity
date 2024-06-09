@@ -55,8 +55,10 @@
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # **/[Aa]ssets/AssetStoreTools*
-**/[Aa]ssets/**/[Ee]ditor/ # Dont feel these are necessary to be shared, may change mind later
+# Dont feel these are necessary to be shared, may change mind later
 !**/[Aa]ssets/**/[Ee]ditor/**/[Tt]est
+**/[Aa]ssets/**/[Ee]ditor/
+**/[Aa]ssets/[Ee]ditor/
 
 # Packed Addressables
 **/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
@@ -132,7 +134,8 @@ git-journal.fish
 # */Pokemon Unity.sln
 /Pokemon Unity/*.sln
 /Pokemon Unity/*.csproj
-/PokemonUnity.Offline #Work in Progress, may not make it into the master branch
+/PokemonUnity.Offline # Work in Progress, may not make it into the master branch
+#/Pokemon Unity/Assets/Editor/GitExtension # Some reason wont work unless it's exact...
 /Pokemon Unity/Assets/Libraries/*
 /Pokemon Unity/Assets/GameFramework
 /Pokemon Unity/Assets/GameFramework/*
