@@ -411,7 +411,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				result?.Invoke(true);
 				yield break;
 			}
-			if(isFainted())
+			if(fainted)
 			{
 				GameDebug.LogWarning("Can't faint if already fainted");
 				result?.Invoke(true);
@@ -1307,7 +1307,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (hploss>0)
 						yield return @battle.Display(Game._INTL("{1} lost some of its HP!",user.ToString()));
 				}
-				if (user.isFainted()) user.Faint(); // no return
+				if (user.isFainted()) yield return user.Faint(); // no return
 				// Color Change
 				Types movetype=thismove.GetType(thismove.Type,user,target);
 				if (target.hasWorkingAbility(Abilities.COLOR_CHANGE) &&
@@ -2617,7 +2617,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				// This hit will happen; count it
 				realnumhits+=1;
 				// Damage calculation and/or main effect
-				int damage=thismove.GetEffect(user,target,(byte)i,alltargets,showanimation); // Recoil/drain, etc. are applied here
+				int damage=thismove.GetEffect(user,target,(byte)i+1,alltargets,showanimation); // Recoil/drain, etc. are applied here
 				if (damage>0) totaldamage+=damage;
 				// Message and consume for type-weakening berries
 				if (target.damagestate.BerryWeakened) {
@@ -2985,7 +2985,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 				@battle.lastMoveUsed=thismove.id;
 				@battle.lastMoveUser=user.Index;
-				if (user.isFainted()) user.Faint();
+				if (user.isFainted()) yield return user.Faint();
 				yield return EndTurn(choice);
 				yield break;
 			}
