@@ -43,11 +43,11 @@ namespace PokemonUnity.Localization
 			//var fileNames = System.IO.Directory.GetFiles(_directoryPath, "*.xml", SearchOption.TopDirectoryOnly);
 			if (!System.IO.File.Exists(fileName)) return false;
 
-			Core.Logger?.Log("Load XML to memory : {0} ({1}:{2})", System.IO.Path.GetFullPath(fileName), languageId, ((Languages)languageId).ToString());
+			Core.Logger.Log("Load XML to memory : {0} ({1}:{2})", System.IO.Path.GetFullPath(fileName), languageId, ((Languages)languageId).ToString());
 			string xmlString = System.IO.File.ReadAllText(fileName);
 			XmlDocument xmlDocument = new XmlDocument();
 			xmlDocument.LoadXml(xmlString);
-			Core.Logger?.Log("Localization text was successfully found and contents scanned.");
+			Core.Logger.Log("Localization text was successfully found and contents scanned.");
 
 			var dublicateNames = new List<string>();
 
@@ -57,10 +57,10 @@ namespace PokemonUnity.Localization
 			//XmlNodeList textNodes = xmlDocument.GetElementsByTagName(nodeElement);
 			if (textNodes != null)
 			{
-				Core.Logger?.Log("Localization file contains text strings...");
+				Core.Logger.Log("Localization file contains text strings...");
 				foreach (XmlNode nodes in textNodes)
 				{
-					Core.Logger?.Log("Localization file text contains header: `{0}` ", nodes.LocalName);
+					Core.Logger.Log("Localization file text contains header: `{0}` ", nodes.LocalName);
 					if (nodes.HasChildNodes)
 					{
 						//if (!nodeType.ContainsKey(nodes.Name.ToUpperInvariant())) nodeType.Add(nodes.Name.ToUpperInvariant(), new List<string>());
@@ -135,7 +135,7 @@ namespace PokemonUnity.Localization
 		{
 			if (stringMap.ContainsKey(code))
 				return stringMap[code];
-			Core.Logger?.LogDebug("Identifier `{0}` was not found in Localization dictionary", code); //Log as Warning?
+			Core.Logger.LogDebug("Identifier `{0}` was not found in Localization dictionary", code); //Log as Warning?
 			return code;
 		}
 	}

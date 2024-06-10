@@ -7,7 +7,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		public IAudioObject StringToAudioFile(string name)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			string pat1 = @"^(.*)\:\s*(\d+)\s*\:\s*(\d+)\s*$";
 			string pat2 = @"^(.*)\:\s*(\d+)\s*$";
@@ -33,7 +33,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public IAudioObject ResolveAudioFile(string name, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			if (name is string)
 			{
 				IAudioObject str = StringToAudioFile(name);
@@ -48,7 +48,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public IAudioObject ResolveAudioFile(IAudioObject str, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (str is IAudioObject) //str.is_a(AudioFile)
 			{
@@ -70,7 +70,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Background Music
 		public void BGMPlay(string name, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (string.IsNullOrEmpty(name)) return;
 			IAudioBGM param = ResolveAudioFile(name, volume, pitch) as IAudioBGM;
@@ -95,7 +95,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void BGMPlay(IAudioObject name, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (name == null) return;
 			IAudioBGM param = name as IAudioBGM;
@@ -119,14 +119,14 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void BGMFade(float x = 0)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			BGMStop(x);
 		}
 
 		public void BGMStop(float timeInSeconds = 0)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.GameSystem != null && timeInSeconds>0.0) //&& Game.GameData.GameSystem.respond_to("bgm_fade"))
 			{
@@ -156,7 +156,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Music Effects
 		public void MEPlay(string name, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (string.IsNullOrEmpty(name)) return;
 			IAudioME param = ResolveAudioFile(name, volume, pitch) as IAudioME;
@@ -181,7 +181,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void MEPlay(IAudioObject name, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (name == null) return;
 			IAudioME param = name as IAudioME;
@@ -205,14 +205,14 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void MEFade(float x = 0)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			MEStop(x);
 		}
 
 		public void MEStop(float timeInSeconds = 0)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.GameSystem != null && timeInSeconds > 0.0) //&& Game.GameData.GameSystem.respond_to("me_fade"))
 			{
@@ -246,7 +246,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Background Sounds
 		public void BGSPlay(string name, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (string.IsNullOrEmpty(name)) return;
 			IAudioBGS param = ResolveAudioFile(name, volume, pitch) as IAudioBGS;
@@ -270,19 +270,19 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void BGSPlay(IAudioObject param, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		public void BGSFade(float x = 0)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			BGSStop(x);
 		}
 
 		public void BGSStop(float timeInSeconds = 0)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.GameSystem != null && timeInSeconds > 0.0) //&& Game.GameData.GameSystem.respond_to("bgs_fade"))
 			{
@@ -317,7 +317,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Sound Effects
 		public void SEPlay(string param, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (string.IsNullOrEmpty(param)) return;
 			SEPlay(ResolveAudioFile(param, volume, pitch), volume, pitch);
@@ -325,7 +325,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void SEPlay(IAudioObject param, int? volume = null, float? pitch = null)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (param.name != null && param.name != "")
 			{
@@ -349,14 +349,14 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void SEFade(float x = 0)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			SEStop(x);
 		}
 
 		public void SEStop(float timeInSeconds = 0)
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.GameSystem != null)
 			{
@@ -375,7 +375,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Misc Game Sounds
 		public void PlayCursorSE()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("cursor_se") &&
 			   Game.GameData.DataSystem.cursor_se != null && Game.GameData.DataSystem.cursor_se.name != "")
@@ -395,7 +395,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void PlayDecisionSE()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("decision_se") &&
 			   Game.GameData.DataSystem.decision_se != null && Game.GameData.DataSystem.decision_se.name != "")
@@ -415,7 +415,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void PlayCancelSE()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("cancel_se") &&
 			   Game.GameData.DataSystem.cancel_se != null && Game.GameData.DataSystem.cancel_se.name != "")
@@ -435,7 +435,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void PlayBuzzerSE()
 		{
-			GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("buzzer_se") &&
 			   Game.GameData.DataSystem.buzzer_se != null && Game.GameData.DataSystem.buzzer_se.name != "")

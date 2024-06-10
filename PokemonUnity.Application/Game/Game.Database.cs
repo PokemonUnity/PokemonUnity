@@ -72,7 +72,7 @@ namespace PokemonUnity
 				string s4 = System.IO.Directory.GetParent("..\\..\\..\\..\\veekun - pokedex.sqlite").FullName;
 				string s5 = System.IO.Directory.GetParent("..\\..\\..\\..\\..\\veekun - pokedex.sqlite").FullName;
 				//throw new Exception("The Database could not found!");
-				GameDebug.LogError("The Database could not found!");
+				Core.Logger.LogError("The Database could not found!");
 				return;
 			}
 
@@ -85,80 +85,80 @@ namespace PokemonUnity
 			con.Open();
 
 			int count = 0;
-			GameDebug.Log("Using Generation [{0}] with a Pokedex index count of [{1}] for Pokemon DB...", Core.PokemonGeneration, Core.PokemonIndexLimit);
-			GameDebug.Log("Begin Initializing Types...");
+			Core.Logger.Log("Using Generation [{0}] with a Pokedex index count of [{1}] for Pokemon DB...", Core.PokemonGeneration, Core.PokemonIndexLimit);
+			Core.Logger.Log("Begin Initializing Types...");
 			InitTypes();
 			count = Kernal.TypeData.Count;
-			GameDebug.Log(string.Format("Is Type DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Natures...");
+			Core.Logger.Log(string.Format("Is Type DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Natures...");
 			InitNatures();
 			count = Kernal.NatureData.Count;
-			GameDebug.Log(string.Format("Is Nature DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Pokemons...");
+			Core.Logger.Log(string.Format("Is Nature DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Pokemons...");
 			InitPokemons();
 			count = Kernal.PokemonData.Count;
-			GameDebug.Log(string.Format("Is Pokemon DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Pokemon Forms...");
+			Core.Logger.Log(string.Format("Is Pokemon DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Pokemon Forms...");
 			InitPokemonForms();
 			count = Kernal.PokemonFormsData.Count;
-			GameDebug.Log(string.Format("Is Pokemon Form DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Pokemon Moves...");
+			Core.Logger.Log(string.Format("Is Pokemon Form DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Pokemon Moves...");
 			InitPokemonMoves();
 			count = Kernal.PokemonMovesData.Count;
-			GameDebug.Log(string.Format("Is Pokemon Move DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Pokemon Evolutions...");
+			Core.Logger.Log(string.Format("Is Pokemon Move DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Pokemon Evolutions...");
 			InitPokemonEvolutions();
 			count = Kernal.PokemonEvolutionsData.Count;
-			GameDebug.Log(string.Format("Is Pokemon Evolution DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Pokemon Held Items...");
+			Core.Logger.Log(string.Format("Is Pokemon Evolution DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Pokemon Held Items...");
 			InitPokemonItems();
 			count = Kernal.PokemonItemsData.Count;
-			GameDebug.Log(string.Format("Is Pokemon Held Item DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Moves...");
+			Core.Logger.Log(string.Format("Is Pokemon Held Item DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Moves...");
 			InitMoves();
 			count = Kernal.MoveData.Count;
-			GameDebug.Log(string.Format("Is Move DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Move DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 			count = Kernal.MoveMetaData.Count;
-			GameDebug.Log(string.Format("Is Move Calculation DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Move Calculation DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 			count = Kernal.MoveEffectData.Count;
-			GameDebug.Log(string.Format("Is Move Logic DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Move Logic DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 			count = Kernal.HiddenMoveData.Count;
-			GameDebug.Log(string.Format("Is Move HMs DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Items...");
+			Core.Logger.Log(string.Format("Is Move HMs DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Items...");
 			InitItems();
 			count = Kernal.ItemData.Count;
-			GameDebug.Log(string.Format("Is Item DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Item DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 			count = Kernal.MachineData.Count;
-			GameDebug.Log(string.Format("Is Item TMs DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Berries...");
+			Core.Logger.Log(string.Format("Is Item TMs DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Berries...");
 			InitBerries();
 			count = Kernal.BerryData.Count;
-			GameDebug.Log(string.Format("Is Berry DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Trainers...");
+			Core.Logger.Log(string.Format("Is Berry DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Trainers...");
 			InitTrainers();
 			count = Kernal.TrainerMetaData.Count;
-			GameDebug.Log(string.Format("Is Trainer DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Regions...");
+			Core.Logger.Log(string.Format("Is Trainer DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Regions...");
 			InitRegions();
 			count = Kernal.RegionData.Count;
-			GameDebug.Log(string.Format("Is Region DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Region DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 			count = Kernal.PokedexData.Count;
-			GameDebug.Log(string.Format("Is Region Pokedex DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Region Pokedex DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 			count = Kernal.BadgeData.Count;
-			GameDebug.Log(string.Format("Is Badge DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
-			GameDebug.Log("Begin Initializing Locations...");
+			Core.Logger.Log(string.Format("Is Badge DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log("Begin Initializing Locations...");
 			InitLocations();
 			count = Kernal.LocationData.Count;
-			GameDebug.Log(string.Format("Is Location DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Location DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 			count = Kernal.AreaData.Count;
-			GameDebug.Log(string.Format("Is Location Area DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Location Area DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 			//ToDo: Encounters
-			GameDebug.Log("Begin Initializing Encounters...");
-			GameDebug.LogWarning("No Encounters to Initialize...");
+			Core.Logger.Log("Begin Initializing Encounters...");
+			Core.Logger.LogWarning("No Encounters to Initialize...");
 			count = Kernal.EncounterData.Count;
-			GameDebug.Log(string.Format("Is Encounter DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Encounter DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 			count = Kernal.MethodData.Count;
-			GameDebug.Log(string.Format("Is Location Encounter Methods DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
+			Core.Logger.Log(string.Format("Is Location Encounter Methods DB Greater Than 0? {0} : {1}", (count > 0).ToString(), count));
 		}
 
 		public static string LockFileStream (string filepath)
@@ -196,7 +196,7 @@ namespace PokemonUnity
 				// specified part of the file is locked.
 				//catch (IOException e)
 				//{
-				//	GameDebug.LogError("{0}: The read " +
+				//	Core.Logger.LogError("{0}: The read " +
 				//		"operation could not be performed " +
 				//		"because the specified part of the " +
 				//		"file is locked.",
@@ -366,7 +366,7 @@ namespace PokemonUnity
 			if (pokemons == null || pokemons.Count <= 0)
 			{
 				//throw new Exception("Xml must include "Pokemons" as root node.");
-				GameDebug.LogError("Xml must include \"Pokemons\" as root node.");
+				Core.Logger.LogError("Xml must include \"Pokemons\" as root node.");
 				return false;
 			}
 
@@ -443,7 +443,7 @@ namespace PokemonUnity
 			//if (dublicateNames.Count > 0)
 			//{
 			//	//throw new Exception("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
-			//	GameDebug.LogError("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
+			//	Core.Logger.LogError("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
 			//}
 
 			return true; //dictionary;
@@ -1649,7 +1649,7 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (Exception) {
-				GameDebug.LogError("Exception Error Thrown on...");
+				Core.Logger.LogError("Exception Error Thrown on...");
 				return false;
 			}
 		}
@@ -1933,7 +1933,7 @@ namespace PokemonUnity
 				return true;
 			} catch (Exception)
 			{
-				GameDebug.LogError("Exception Error Thrown on...");
+				Core.Logger.LogError("Exception Error Thrown on...");
 				return false;
 			}
 		}
@@ -1948,7 +1948,7 @@ namespace PokemonUnity
 				if (pokemons == null || pokemons.Count <= 0)
 				{
 					//throw new Exception("Xml must include "Pokemons" as root node.");
-					GameDebug.LogError("Xml must include \"Pokemons\" as root node.");
+					Core.Logger.LogError("Xml must include \"Pokemons\" as root node.");
 					return false;
 				}
 
@@ -2176,7 +2176,7 @@ namespace PokemonUnity
 				return true;
 			} catch (Exception)
 			{
-				GameDebug.LogError("Exception Error Thrown on...");
+				Core.Logger.LogError("Exception Error Thrown on...");
 				return false;
 			}
 		}*/
@@ -2223,7 +2223,7 @@ namespace PokemonUnity
 					using(reader)
 					{
 						if (OnLoad != null && reader.Read()) { onLoad.TotalPieces = (int)reader.GetInt32(0); OnLoad.Invoke(Game.GameData, onLoad); } reader.NextResult();
-						Kernal.PokemonData.Add(Pokemons.NONE, new Monster.Data.PokemonData(Id:Pokemons.NONE, hatchTime: 1000)); //GameDebug.LogDebug("Records affected: " + reader.RecordsAffected);
+						Kernal.PokemonData.Add(Pokemons.NONE, new Monster.Data.PokemonData(Id:Pokemons.NONE, hatchTime: 1000)); //Core.Logger.LogDebug("Records affected: " + reader.RecordsAffected);
 						while(reader.Read()) //if(reader.Read())
 						{
 							if (OnLoad != null) { onLoad.Piece = count; OnLoad.Invoke(Game.GameData, onLoad); count++; } //onLoad.Piece = reader.StepCount;
@@ -2295,10 +2295,10 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				//GameDebug.LogError("SQL Exception Message:" + e.Message);
-				//GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				//GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
-				GameDebug.LogError($"Failed to Load ID #{onLoad.Piece} from DB\nSQL Exception Message:" + e.Message);
+				//Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				//Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError($"Failed to Load ID #{onLoad.Piece} from DB\nSQL Exception Message:" + e.Message);
 				return false;
 			}
 		}
@@ -2354,9 +2354,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -2472,9 +2472,9 @@ namespace PokemonUnity
 				return true;
 			} catch (DbException e) { // Catch any database-related exceptions.
 				// Log the error details.
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				// Return false to indicate failure.
 				return false;
 			}
@@ -2777,9 +2777,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -2832,9 +2832,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -2873,9 +2873,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -2944,9 +2944,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -3131,9 +3131,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -3210,9 +3210,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -3278,9 +3278,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -3339,9 +3339,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -3419,9 +3419,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -3530,9 +3530,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -3594,9 +3594,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (DbException e) {
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -3655,9 +3655,9 @@ namespace PokemonUnity
 			}
 			catch (DbException e)
 			{
-				GameDebug.LogError("SQL Exception Message:" + e.Message);
-				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
-				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
+				Core.Logger.LogError("SQL Exception Message:" + e.Message);
+				Core.Logger.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				Core.Logger.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}

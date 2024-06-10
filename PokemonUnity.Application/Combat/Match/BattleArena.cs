@@ -165,7 +165,7 @@ namespace PokemonUnity.Combat
 			for (int i = 0; i < 2; i++) {
 				@skill[i]+=this.successStates[i].Skill;
 			}
-			GameDebug.Log($"[Mind: #{@mind.ToString()}, Skill: #{@skill.ToString()}]");
+			Core.Logger.Log($"[Mind: #{@mind.ToString()}, Skill: #{@skill.ToString()}]");
 			if (@count==3) {
 				int[] points=new int[] { 0, 0 };
 				@battlers[0].CancelMoves();

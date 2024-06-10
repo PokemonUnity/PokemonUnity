@@ -315,7 +315,7 @@ namespace PokemonUnity.Combat
 			if (attacker.Index==opponent.Index)return false;
 			if (attacker.hasMoldBreaker())return false;
 			if (opponent.hasWorkingAbility(Abilities.SAP_SIPPER) && type == Types.GRASS){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sap Sipper (made #{Kernal.MoveData[MoveId].Name} ineffective)");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Sap Sipper (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.CanIncreaseStatStage(Stats.ATTACK, opponent))
 					b.IncreaseStatWithCause(Stats.ATTACK,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
@@ -325,7 +325,7 @@ namespace PokemonUnity.Combat
 			}
 			if ((opponent.hasWorkingAbility(Abilities.STORM_DRAIN) && type == Types.WATER) ||
 				(opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD) && type == Types.ELECTRIC)){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{Kernal.MoveData[MoveId].Name} ineffective)");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.CanIncreaseStatStage(Stats.SPATK, opponent))
 					b.IncreaseStatWithCause(Stats.SPATK,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
@@ -334,7 +334,7 @@ namespace PokemonUnity.Combat
 				return true;
 			}
 			if (opponent.hasWorkingAbility(Abilities.MOTOR_DRIVE) && type == Types.ELECTRIC){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Motor Drive (made #{Kernal.MoveData[MoveId].Name} ineffective)");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Motor Drive (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.CanIncreaseStatStage (Stats.SPEED, opponent))
 					b.IncreaseStatWithCause(Stats.SPEED,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
@@ -345,7 +345,7 @@ namespace PokemonUnity.Combat
 			if ((opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.WATER) ||
 				(opponent.hasWorkingAbility(Abilities.VOLT_ABSORB) && type == Types.ELECTRIC) ||
 				(opponent.hasWorkingAbility(Abilities.WATER_ABSORB) && type == Types.WATER)){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{@Name} ineffective)");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{@Name} ineffective)");
 				if (opponent.effects.HealBlock==0){
 					if (opponent.RecoverHP((int)Math.Floor(opponent.TotalHP/4d),true)>0)
 						battle.Display(Game._INTL("{1}'s {2} restored its HP!",
@@ -357,7 +357,7 @@ namespace PokemonUnity.Combat
 				}
 			}
 			if (opponent.hasWorkingAbility(Abilities.FLASH_FIRE) && type == Types.FIRE){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Flash Fire (made #{@Name} ineffective)");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Flash Fire (made #{@Name} ineffective)");
 				if (!opponent.effects.FlashFire) {
 					opponent.effects.FlashFire= true;
 					battle.Display(Game._INTL("{1}'s {2} raised its Fire power!",
@@ -369,12 +369,12 @@ namespace PokemonUnity.Combat
 			}
 			if (opponent.hasWorkingAbility(Abilities.TELEPATHY) && IsDamaging() &&
 				!opponent.IsOpposing(attacker.Index)){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Telepathy (made #{@Name} ineffective)");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Telepathy (made #{@Name} ineffective)");
 				battle.Display(Game._INTL("{1} avoids attacks by its ally Pokémon!",opponent.ToString()));
 				return true;
 			}
 			if (opponent.hasWorkingAbility(Abilities.BULLETPROOF) && Flags.Ballistics){
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Bulletproof (made #{@Name} ineffective)");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Bulletproof (made #{@Name} ineffective)");
 				battle.Display(Game._INTL("{1}'s {2} made {3} ineffective!",
 					opponent.ToString(),Game._INTL(opponent.Ability.ToString(TextScripts.Name)),Kernal.MoveData[MoveId].Name));
 				return true;
@@ -1064,7 +1064,7 @@ namespace PokemonUnity.Combat
 			finaldamagemult = ModifyDamage(finaldamagemult, attacker, opponent);
 			damage= (int)Math.Round(damage* finaldamagemult*1.0/0x1000);
 				opponent.damagestate.CalcDamage=damage;
-				GameDebug.Log($"Move's damage calculated to be #{damage}");
+				Core.Logger.Log($"Move's damage calculated to be #{damage}");
 			return damage;
 		}
 
@@ -1072,7 +1072,7 @@ namespace PokemonUnity.Combat
 			//bool endure=false;
 			if (opponent.effects.Substitute>0 && !ignoresSubstitute(attacker) &&
 				(attacker.Species == Pokemons.NONE || attacker.Index!=opponent.Index)){
-				GameDebug.Log($"[Lingering effect triggered] #{opponent.ToString()}'s Substitute took the damage");
+				Core.Logger.Log($"[Lingering effect triggered] #{opponent.ToString()}'s Substitute took the damage");
 				if (damage>opponent.effects.Substitute)damage=opponent.effects.Substitute;
 				opponent.effects.Substitute-=damage;
 				opponent.damagestate.Substitute= true;
@@ -1081,7 +1081,7 @@ namespace PokemonUnity.Combat
 				if (opponent.effects.Substitute<=0){
 				opponent.effects.Substitute=0;
 				battle.DisplayPaused(Game._INTL("{1}'s substitute faded!",opponent.Name));
-				GameDebug.Log($"[End of effect] #{opponent.ToString()}'s Substitute faded");
+				Core.Logger.Log($"[End of effect] #{opponent.ToString()}'s Substitute faded");
 				}
 				opponent.damagestate.HPLost=damage;
 				damage = 0;
@@ -1094,20 +1094,20 @@ namespace PokemonUnity.Combat
 					else if (opponent.effects.Endure){
 						damage = damage - 1;
 						opponent.damagestate.Endured= true;
-						GameDebug.Log($"[Lingering effect triggered] #{opponent.ToString()}'s Endure"); }
+						Core.Logger.Log($"[Lingering effect triggered] #{opponent.ToString()}'s Endure"); }
 					else if (damage==opponent.TotalHP){
 						if (opponent.hasWorkingAbility(Abilities.STURDY) && !attacker.hasMoldBreaker()){
 							opponent.damagestate.Sturdy=true;
 							damage= damage - 1;
-							GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sturdy"); }
+							Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Sturdy"); }
 						else if (opponent.hasWorkingItem(Items.FOCUS_SASH) && opponent.HP==opponent.TotalHP){
 							opponent.damagestate.FocusSash=true;
 							damage= damage - 1;
-							GameDebug.Log($"[Item triggered] #{opponent.ToString()}'s Focus Sash"); }
+							Core.Logger.Log($"[Item triggered] #{opponent.ToString()}'s Focus Sash"); }
 						else if (opponent.hasWorkingItem(Items.FOCUS_BAND) && battle.Random(10)==0){
 							opponent.damagestate.FocusBand=true;
 							damage=damage-1;
-							GameDebug.Log($"[Item triggered] #{opponent.ToString()}'s Focus Band");
+							Core.Logger.Log($"[Item triggered] #{opponent.ToString()}'s Focus Band");
 						}
 					}
 					if (damage<0)damage=0;

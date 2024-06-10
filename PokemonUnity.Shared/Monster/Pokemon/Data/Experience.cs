@@ -321,7 +321,7 @@ namespace PokemonUnity.Monster.Data
 		{
 			//if (growth >= 6 || growth < 0)
 			//{
-			//	return GameDebug.LogError("The growth rate is invalid.");
+			//	return Core.Logger.LogError("The growth rate is invalid.");
 			//}
 			int exp = currexp + expgain;
 			//int maxexp = GetExpInternal(Core.MAXIMUMLEVEL, growth);

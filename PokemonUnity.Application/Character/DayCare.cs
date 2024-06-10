@@ -69,7 +69,7 @@ namespace PokemonUnity.Character
 			}
 			//raise Game._INTL("No room to deposit a Pokémon");
 			//throw new Exception(Game._INTL("No room to deposit a Pokémon"));
-			GameDebug.LogError(Game._INTL("No room to deposit a Pokémon"));
+			Core.Logger.LogError(Game._INTL("No room to deposit a Pokémon"));
 		}
 
 		public bool DayCareGetLevelGain(int index,int nameVariable,int levelVariable) {
@@ -93,7 +93,7 @@ namespace PokemonUnity.Character
 			}
 			//raise Game._INTL("Can't find deposited Pokémon");
 			//throw new Exception(Game._INTL("Can't find deposited Pokémon"));
-			GameDebug.LogError(Game._INTL("Can't find deposited Pokémon"));
+			Core.Logger.LogError(Game._INTL("Can't find deposited Pokémon"));
 		}
 
 		public bool IsDitto (IPokemon pokemon) {
@@ -162,11 +162,11 @@ namespace PokemonUnity.Character
 			if (!this[index].IsNotNullOrNone()) {//[0]
 				//raise Game._INTL("There's no Pokémon here...");
 				//throw new Exception(Game._INTL("There's no Pokémon here..."));
-				GameDebug.LogError(Game._INTL("There's no Pokémon here..."));
+				Core.Logger.LogError(Game._INTL("There's no Pokémon here..."));
 			} else if (Game.GameData.Trainer.party.Length>=6) {
 				//raise Game._INTL("Can't store the Pokémon...");
 				//throw new Exception(Game._INTL("Can't store the Pokémon..."));
-				GameDebug.LogError(Game._INTL("Can't store the Pokémon..."));
+				Core.Logger.LogError(Game._INTL("Can't store the Pokémon..."));
 			} else {
 				Game.GameData.Trainer.party[Game.GameData.Trainer.party.Length]=this[index];//[0];
 				this[index]=null;//[0]
@@ -180,7 +180,7 @@ namespace PokemonUnity.Character
 			if (count==0) {
 				//raise Game._INTL("There's no Pokémon here...");
 				//throw new Exception(Game._INTL("There's no Pokémon here..."));
-				GameDebug.LogError(Game._INTL("There's no Pokémon here..."));
+				Core.Logger.LogError(Game._INTL("There's no Pokémon here..."));
 			} else if (count==1) {
 				Game.GameData.GameVariables[variable]=this[0].IsNotNullOrNone() ? 0 : 1;//[0]
 			} else {
@@ -207,7 +207,7 @@ namespace PokemonUnity.Character
 			} else if (Game.GameData.Trainer.party.Length>=6) {
 				//raise Game._INTL("Can't store the egg");
 				//throw new Exception(Game._INTL("Can't store the egg"));
-				GameDebug.LogError(Game._INTL("Can't store the egg"));
+				Core.Logger.LogError(Game._INTL("Can't store the egg"));
 			}
 			IPokemon pokemon0=this[0];//[0]
 			IPokemon pokemon1=this[1];//[0]

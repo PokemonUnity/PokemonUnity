@@ -454,7 +454,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					attacker.Update(true);
 					if (this.battle.scene is IPokeBattle_Scene s0) s0.ChangePokemon(attacker, attacker.pokemon);
 					yield return _host.StartCoroutine(battle.Display(Game._INTL("{1} transformed!", attacker.ToString())));
-					GameDebug.Log($"[Form changed] #{attacker.ToString()} changed to form #{Game._INTL((attacker as Pokemon).Form.Pokemon.ToString(TextScripts.Name))}");
+					Core.Logger.Log($"[Form changed] #{attacker.ToString()} changed to form #{Game._INTL((attacker as Pokemon).Form.Pokemon.ToString(TextScripts.Name))}");
 				}
 			}
 			yield break;
@@ -4041,7 +4041,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return _host.StartCoroutine(battle.Display(Game._INTL("{1} acquired {2}!", opponent.ToString(), abilityname)));
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
 				if (this.battle.scene is IPokeBattle_Scene s0) s0.ChangePokemon(opponent, opponent.pokemon);
 
@@ -4086,7 +4086,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return _host.StartCoroutine(battle.Display(Game._INTL("{1} acquired {2}!", opponent.ToString(), abilityname)));
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
 				if (this.battle.scene is IPokeBattle_Scene s0) s0.ChangePokemon(opponent, opponent.pokemon);
 
@@ -4140,7 +4140,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return _host.StartCoroutine(battle.Display(Game._INTL("{1} copied {2}'s {3}!", attacker.ToString(), opponent.ToString(true), abilityname)));
 			if (attacker.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				GameDebug.Log($"[Ability triggered] #{attacker.ToString()}'s Illusion ended");
+				Core.Logger.Log($"[Ability triggered] #{attacker.ToString()}'s Illusion ended");
 				attacker.effects.Illusion = null;
 				if (this.battle.scene is IPokeBattle_Scene s0) s0.ChangePokemon(attacker, attacker.pokemon);
 
@@ -4204,7 +4204,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return _host.StartCoroutine(battle.Display(Game._INTL("{1} acquired {2}!", opponent.ToString(), abilityname)));
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
 				if (this.battle.scene is IPokeBattle_Scene s0) s0.ChangePokemon(opponent, opponent.pokemon);
 
@@ -4288,7 +4288,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return _host.StartCoroutine(battle.Display(Game._INTL("{1}'s Ability was suppressed!", opponent.ToString())));
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
 				if (this.battle.scene is IPokeBattle_Scene s0) s0.ChangePokemon(opponent, opponent.pokemon);
 

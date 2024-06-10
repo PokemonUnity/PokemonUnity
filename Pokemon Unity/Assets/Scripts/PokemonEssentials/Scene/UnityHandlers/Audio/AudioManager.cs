@@ -140,7 +140,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			AudioClip clip = Resources.Load<AudioClip>(filename);
 			if (clip == null)
 			{
-				GameDebug.LogError("Audio file not found: " + filename);
+				Core.Logger?.LogError("Audio file not found: " + filename);
 				return;
 			}
 

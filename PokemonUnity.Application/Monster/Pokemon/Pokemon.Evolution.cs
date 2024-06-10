@@ -51,7 +51,7 @@ namespace PokemonUnity
 					//f.pos=(species-1)*8;
 					//offset=f.fgetdw;
 					int length=(int)species;//f.fgetdw; //use pokemon id as length
-					GameDebug.Log(Game._INTL(species.ToString(TextScripts.Name)));
+					Core.Logger?.Log(Game._INTL(species.ToString(TextScripts.Name)));
 					if (length>0) {
 						//f.pos=offset;
 						int i=0; do { //unless (i<length) break; //loop
@@ -59,9 +59,9 @@ namespace PokemonUnity
 							EvolutionMethod evonib=evo.EvolveMethod; //evo&_EVOTYPEMASK;
 							int level=(int)evo.EvolveValue; //f.fgetw;
 							Pokemons poke=evo.Species; //f.fgetw;
-							//GameDebug.Log(string.Format("type=%02X, data=%02X, name=%s, level=%d",
+							//Core.Logger?.Log(string.Format("type=%02X, data=%02X, name=%s, level=%d",
 							//	evonib,evo&_EVODATAMASK,Game._INTL(poke.ToString(TextScripts.Name)),level));
-							GameDebug.Log(string.Format("type={0}, data={1}, name={2}, level={3}",
+							Core.Logger?.Log(string.Format("type={0}, data={1}, name={2}, level={3}",
 								evonib,evo.EvolveValue,Game._INTL(poke.ToString(TextScripts.Name)),level));
 							if (poke==0) {
 								//p f.eof?;

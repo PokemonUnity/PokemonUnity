@@ -3378,7 +3378,7 @@ namespace PokemonUnity.Combat
 					score=(int)Math.Round(score);
 					float oldscore=score;
 					score+=basedamage;
-					GameDebug.Log($"[AI] #{Game._INTL(move.id.ToString(TextScripts.Name))} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
+					Core.Logger.Log($"[AI] #{Game._INTL(move.id.ToString(TextScripts.Name))} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
 				}
 			}
 			else {
@@ -4542,7 +4542,7 @@ namespace PokemonUnity.Combat
 						j+=1;
 					}
 				}
-				GameDebug.Log(x);
+				Core.Logger.Log(x);
 			}
 			if (!wildbattle && maxscore>100) {
 				int stdev=StdDev(scores);
@@ -4558,7 +4558,7 @@ namespace PokemonUnity.Combat
 					}
 					if (preferredMoves.Count>0) {
 						int i=preferredMoves[Core.Rand.Next(preferredMoves.Count)];
-						GameDebug.Log($"[AI] Prefer #{Game._INTL(attacker.moves[i].id.ToString(TextScripts.Name))}");
+						Core.Logger.Log($"[AI] Prefer #{Game._INTL(attacker.moves[i].id.ToString(TextScripts.Name))}");
 						RegisterMove(index,i,false);
 						if (targets != null) target=targets[i];
 						if (@doublebattle && target>=0) {
@@ -4591,9 +4591,9 @@ namespace PokemonUnity.Combat
 					// Attacker has terrible moves, try switching instead
 					if (EnemyShouldWithdrawEx(index,true)) {
 						if (Core.INTERNAL) {
-						GameDebug.Log($"[AI] Switching due to terrible moves");
-						//GameDebug.Log($@"{index},{@choices[index][0]},{@choices[index][1]},
-						GameDebug.Log($@"{index},{@choices[index].Action},{@choices[index].Index},
+						Core.Logger.Log($"[AI] Switching due to terrible moves");
+						//Core.Logger.Log($@"{index},{@choices[index][0]},{@choices[index][1]},
+						Core.Logger.Log($@"{index},{@choices[index].Action},{@choices[index].Index},
 							{CanChooseNonActive(index)},
 							{_battlers[index].NonActivePokemonCount}");
 						}
@@ -4624,8 +4624,8 @@ namespace PokemonUnity.Combat
 					}
 				}
 			}
-			//if (@choices[index][2]) GameDebug.Log($"[AI] Will use #{@choices[index][2].Name}");
-			if (@choices[index].Move.IsNotNullOrNone()) GameDebug.Log($"[AI] Will use #{@choices[index].Move.Name}");
+			//if (@choices[index][2]) Core.Logger.Log($"[AI] Will use #{@choices[index][2].Name}");
+			if (@choices[index].Move.IsNotNullOrNone()) Core.Logger.Log($"[AI] Will use #{@choices[index].Move.Name}");
 			if (@doublebattle && target>=0) {
 				RegisterTarget(index,target);
 			}

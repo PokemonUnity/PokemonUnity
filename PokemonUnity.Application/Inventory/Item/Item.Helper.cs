@@ -62,7 +62,7 @@ namespace PokemonUnity.Inventory
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
-				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				Core.Logger.LogWarning($"Invalid value for qty: #{qty}");
 				qty = 0; return false;
 			}
 			if (qty==0) return true;
@@ -94,7 +94,7 @@ namespace PokemonUnity.Inventory
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
-				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				Core.Logger.LogWarning($"Invalid value for qty: #{qty}");
 				qty = 0; return false;
 			}
 			if (qty==0) return true;
@@ -122,7 +122,7 @@ namespace PokemonUnity.Inventory
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
-				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				Core.Logger.LogWarning($"Invalid value for qty: #{qty}");
 				qty = 0; return false;
 			}
 			if (qty==0) return true;
@@ -143,7 +143,7 @@ namespace PokemonUnity.Inventory
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
-				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				Core.Logger.LogWarning($"Invalid value for qty: #{qty}");
 				qty = 0; return false;
 			}
 			if (qty==0) return true;
@@ -167,7 +167,7 @@ namespace PokemonUnity.Inventory
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
-				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				Core.Logger.LogWarning($"Invalid value for qty: #{qty}");
 				qty = 0; return false;
 			}
 			if (qty==0) return true;
@@ -199,7 +199,7 @@ namespace PokemonUnity.Inventory
 			if (qty < 0)
 			{
 				//throw new Exception($"Invalid value for qty: #{qty}");
-				GameDebug.LogWarning($"Invalid value for qty: #{qty}");
+				Core.Logger.LogWarning($"Invalid value for qty: #{qty}");
 				qty = 0; return false;
 			}
 			if (qty==0) return true;

@@ -447,7 +447,7 @@ namespace PokemonUnity.Character
 		public int getChoice(ItemPockets pocket) {
 			if (pocket<0 || (int)pocket>numPockets) {
 				//throw new Exception(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
-				GameDebug.LogError(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
+				Core.Logger.LogError(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
 			}
 			rearrange();
 			return Math.Min(@choices[pocket],@pockets[(int)pocket].Length); //|| 0
@@ -473,7 +473,7 @@ namespace PokemonUnity.Character
 		public void setChoice(ItemPockets pocket,int value) {
 			if (pocket<=0 || (int)pocket>numPockets) {
 				//throw new Exception(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
-				GameDebug.LogError(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
+				Core.Logger.LogError(Game._INTL("Invalid pocket: {1}",pocket.ToString()));
 			}
 			rearrange();
 			if (value<=@pockets[(int)pocket].Length) @choices[pocket]=value;

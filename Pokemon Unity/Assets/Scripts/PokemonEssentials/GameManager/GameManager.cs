@@ -51,34 +51,34 @@ namespace PokemonUnity.Interface.UnityEngine
 			current = this;
 			//UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject
 
-			GameDebug.Init("\\Logs", "GameLog"); //Path = "Logs\GameLog.txt"
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.Init("\\Logs", "GameLog"); //Path = "Logs\GameLog.txt"
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			try
 			{
-				//GameDebug.Log("0-" + System.IO.Path.GetFullPath("..\\veekun-pokedex.sqlite"));
-				//GameDebug.Log("1-" + System.IO.Path.GetFullPath("..\\..\\veekun-pokedex.sqlite"));
-				//GameDebug.Log("2-" + System.IO.Path.GetFullPath("..\\..\\..\\veekun-pokedex.sqlite"));
-				//GameDebug.Log("3-" + System.IO.Path.GetFullPath("..\\..\\..\\..\\veekun-pokedex.sqlite"));
+				//Core.Logger?.Log("0-" + System.IO.Path.GetFullPath("..\\veekun-pokedex.sqlite"));
+				//Core.Logger?.Log("1-" + System.IO.Path.GetFullPath("..\\..\\veekun-pokedex.sqlite"));
+				//Core.Logger?.Log("2-" + System.IO.Path.GetFullPath("..\\..\\..\\veekun-pokedex.sqlite"));
+				//Core.Logger?.Log("3-" + System.IO.Path.GetFullPath("..\\..\\..\\..\\veekun-pokedex.sqlite"));
 				Game.DatabasePath = "Data Source=..\\veekun-pokedex.sqlite";
 				//Game.DatabasePath = "Data Source =" + UnityEngine.Application.dataPath + "/Data/veekun-pokedex.sqlite";
-				GameDebug.Log("ConnectionString Database Path: " + Game.DatabasePath);
+				Core.Logger?.Log("ConnectionString Database Path: " + Game.DatabasePath);
 				//Game.DatabasePath = "Data Source =" + UnityEngine.Application.dataPath + "/Data/veekun-pokedex.sqlite";
 				//Game.con = (System.Data.IDbConnection)new System.Data.SQLite.SQLiteConnection(Game.DatabasePath);
 				Game.con = (System.Data.IDbConnection)new Mono.Data.Sqlite.SqliteConnection(Game.DatabasePath);
 				Game.ResetSqlConnection(Game.DatabasePath);//@"Data\veekun-pokedex.sqlite"
-				GameDebug.Log("Framework Connected to Database...");
-				//GameDebug.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
-				GameDebug.Log("Path to DB: " + ((Mono.Data.Sqlite.SqliteConnection)Game.con).DataSource);
+				Core.Logger?.Log("Framework Connected to Database...");
+				//Core.Logger?.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
+				Core.Logger?.Log("Path to DB: " + ((Mono.Data.Sqlite.SqliteConnection)Game.con).DataSource);
 				game = new Game();
-				GameDebug.Log("New Game Entity Successfully Instantiated!~");
+				Core.Logger?.Log("New Game Entity Successfully Instantiated!~");
 			}
-			catch (InvalidOperationException) { GameDebug.LogError("Problem executing SQL with connected database"); }
-			catch (Exception e) { GameDebug.LogError(e.ToString()); }
+			catch (InvalidOperationException) { Core.Logger?.LogError("Problem executing SQL with connected database"); }
+			catch (Exception e) { Core.Logger?.LogError(e.ToString()); }
 			finally
 			{
 				//Game.con.Open();
 
-				GameDebug.Log("Is Pokemon DB Null? " + (Kernal.PokemonData == null).ToString());
+				Core.Logger?.Log("Is Pokemon DB Null? " + (Kernal.PokemonData == null).ToString());
 				if (Kernal.PokemonData == null)
 				{
 					//Game.InitPokemons();
@@ -98,34 +98,34 @@ namespace PokemonUnity.Interface.UnityEngine
 						//Game.InitRegions();
 						//Game.InitLocations();
 					}
-					catch (Exception) { GameDebug.LogError("there were some problems running sql..."); } //ignore...
+					catch (Exception) { Core.Logger?.LogError("there were some problems running sql..."); } //ignore...
 				}
-				GameDebug.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
+				Core.Logger?.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
 					(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
 				if (Kernal.PokemonData.Count == 0)
 				{
-					GameDebug.Log("Was Pokemon DB Successfully Created? " + Game.InitPokemons());
-					GameDebug.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
+					Core.Logger?.Log("Was Pokemon DB Successfully Created? " + Game.InitPokemons());
+					Core.Logger?.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
 						(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
 				}
 			}
 
-			GameDebug.Log("Is Game Null? " + (Game.GameData == null).ToString());
-			GameDebug.Log("Is Player Null? " + (Game.GameData.Player == null).ToString());
+			Core.Logger?.Log("Is Game Null? " + (Game.GameData == null).ToString());
+			Core.Logger?.Log("Is Player Null? " + (Game.GameData.Player == null).ToString());
 			//if (Game.GameData.Player == null)
 			//{
-			//	GameDebug.Log("Create Player Object");
+			//	Core.Logger?.Log("Create Player Object");
 			//	//IGamePlayer p = new Player();
-			//	GameDebug.Log("Saving Player Object to Global Singleton");
+			//	Core.Logger?.Log("Saving Player Object to Global Singleton");
 			//	//Game.GameData.Player = p;
 			//}
-			GameDebug.Log("Is Trainer Null? " + (Game.GameData.Trainer == null).ToString());
+			Core.Logger?.Log("Is Trainer Null? " + (Game.GameData.Trainer == null).ToString());
 
 			//ConfigureScenes();
 		}
 		void Start()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
 			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
@@ -148,7 +148,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		private void ConfigureScenes()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			game.Scenes = gameObject.GetComponent<LevelLoader>() as IGameScenesUI;
 			//ToDo: Load all the different game scenes into an array, from unity inspector, and pass them as an input parameter below

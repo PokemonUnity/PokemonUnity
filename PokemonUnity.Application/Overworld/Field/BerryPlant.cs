@@ -399,7 +399,7 @@ namespace PokemonUnity//.Inventory.Plants
 	  break;
 	}
 	@oldstage=berryData[0];
-	if (Input.trigger(Input.CTRL)) GameDebug.Log(string.Format("here: {0},{1}",berryData.ToString(),@oldstage)); //p
+	if (Input.trigger(Input.CTRL)) Core.Logger?.Log(string.Format("here: {0},{1}",berryData.ToString(),@oldstage)); //p
   }
 }*/
 
@@ -410,7 +410,7 @@ namespace PokemonUnity//.Inventory.Plants
 			if (Game.GameData is IGameMessage gm) interp=(IInterpreterFieldMixin)gm.MapInterpreter();
 			IGameCharacter thisEvent=((IInterpreter)interp).get_character(0);
 			PlantBerryEntryData berryData=(PlantBerryEntryData)interp.getVariable();
-			if (Input.trigger(PokemonUnity.Input.CTRL)) GameDebug.Log(berryData.ToString()); //p berryData;
+			if (Input.trigger(PokemonUnity.Input.CTRL)) Core.Logger?.Log(berryData.ToString()); //p berryData;
 			//if (berryData == null) {
 			//	if (Core.NEWBERRYPLANTS) {
 			//		berryData=[0,0,0,0,0,0,0,0];

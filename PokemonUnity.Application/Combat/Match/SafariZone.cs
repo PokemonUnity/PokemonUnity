@@ -76,7 +76,7 @@ namespace PokemonUnity.Combat
 
 		//public override void Abort() {
 		//	//throw new BattleAbortedException("Battle aborted");
-		//	GameDebug.LogError("Battle aborted");
+		//	Core.Logger.LogError("Battle aborted");
 		//}
 
 		public int EscapeRate(int rareness) {
@@ -183,7 +183,7 @@ namespace PokemonUnity.Combat
 		public override void DisplayPaused(string msg) {
 			if (@debug) {
 				DebugUpdate();
-				GameDebug.Log(msg);
+				Core.Logger.Log(msg);
 			}
 			else {
 				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).DisplayPausedMessage(msg);
@@ -193,7 +193,7 @@ namespace PokemonUnity.Combat
 		public override void Display(string msg) {
 			if (@debug) {
 				DebugUpdate();
-				GameDebug.Log(msg);
+				Core.Logger.Log(msg);
 			}
 			else {
 				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).DisplayMessage(msg);
@@ -203,7 +203,7 @@ namespace PokemonUnity.Combat
 		public override void DisplayBrief(string msg) {
 			if (@debug) {
 				DebugUpdate();
-				GameDebug.Log(msg);
+				Core.Logger.Log(msg);
 			}
 			else {
 				(@scene as PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics).DisplayMessage(msg,true);
@@ -213,7 +213,7 @@ namespace PokemonUnity.Combat
 		public override bool DisplayConfirm(string msg) {
 			if (@debug) {
 				DebugUpdate();
-				GameDebug.Log(msg);
+				Core.Logger.Log(msg);
 				return true;
 			}
 			else {

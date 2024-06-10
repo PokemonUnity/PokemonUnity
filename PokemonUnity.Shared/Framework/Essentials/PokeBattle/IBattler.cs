@@ -245,6 +245,11 @@ namespace PokemonEssentials.Interface.PokeBattle
 
 		void ProcessMoveAgainstTarget(IBattleMove thismove, IBattler user, IBattler target, int numhits, IEffectsMove turneffects, bool nocheck = false, int[] alltargets = null, bool showanimation = true);
 
+		/// <summary>
+		/// </summary>
+		/// <param name="moveid">"Use move"</param>
+		/// <param name="index">Index of move to be used in user's moveset</param>
+		/// <param name="target">Target (-1 means no target yet)</p
 		void UseMoveSimple(Moves moveid, int index = -1, int target = -1);
 
 		void UseMove(IBattleChoice choice, bool specialusage = false);

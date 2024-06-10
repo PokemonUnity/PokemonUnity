@@ -700,7 +700,7 @@ namespace PokemonUnity.Monster
 				}
 				else
 					//throw new Exception("Trainer did not acquire Pokemon as an egg.");
-					GameDebug.LogError("Trainer did not acquire Pokemon as an egg.");
+					Core.Logger.LogError("Trainer did not acquire Pokemon as an egg.");
 					return null;
 			}
 			//set { this.hatchedWhen = value; }
@@ -754,7 +754,7 @@ namespace PokemonUnity.Monster
 			set
 			{
 				if (value < 0) //|| value > this.Experience.GetMaxExperience(this.GrowthRate)
-					GameDebug.LogError(string.Format("The experience number {0} is invalid", value));
+					Core.Logger.LogError(string.Format("The experience number {0} is invalid", value));
 				else //(value < this.Experience.GetMaxExperience(this.GrowthRate))
 					//this.Experience.AddExperience(value - this.Experience.Current);
 					Experience = new Experience(this.GrowthRate, value);
@@ -773,15 +773,15 @@ namespace PokemonUnity.Monster
 			private set
 			{
 				if (value < 1 || value > Core.MAXIMUMLEVEL)
-					GameDebug.LogError(string.Format("The level number {0} is invalid", value));
+					Core.Logger.LogError(string.Format("The level number {0} is invalid", value));
 				if (value > this.Level) {
-					GameDebug.Log(string.Format("Pokemon level manually changed to {0}", value));
+					Core.Logger.Log(string.Format("Pokemon level manually changed to {0}", value));
 					//this.Experience.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Experience.Total);
 					Exp = Experience.GetStartExperience(this.GrowthRate, value);
 				}
 				else
 				{
-					GameDebug.LogWarning(string.Format("The level number has gone backwards and experience points is reset"));
+					Core.Logger.LogWarning(string.Format("The level number has gone backwards and experience points is reset"));
 					Exp = Experience.GetStartExperience(this.GrowthRate, value);
 				}
 			}
@@ -1710,7 +1710,7 @@ namespace PokemonUnity.Monster
 			if ((int)move <= 0) return;
 			if (!getMoveList().Contains(move))
 			{
-				GameDebug.Log("Move is not compatible");
+				Core.Logger.Log("Move is not compatible");
 				return;
 			}
 			//for (int i = 0; i < 4; i++) {
@@ -1728,7 +1728,7 @@ namespace PokemonUnity.Monster
 			//}
 			if (hasMove(move))
 			{
-				GameDebug.Log("Already knows move...");
+				Core.Logger.Log("Already knows move...");
 				return;
 			}
 			for (int i = 0; i < 4; i++)
@@ -1742,7 +1742,7 @@ namespace PokemonUnity.Monster
 			}
 			if (!silently)
 			{
-				GameDebug.LogWarning("Cannot learn move, pokmeon moveset is full");
+				Core.Logger.LogWarning("Cannot learn move, pokmeon moveset is full");
 			}
 			else
 			{
@@ -2158,7 +2158,7 @@ namespace PokemonUnity.Monster
 		public void StoreMail(string message, TrainerId sender)//pkmn, item, message, poke1= nil, poke2= nil, poke3= nil)
 		{
 			//raise Game._INTL("Pokémon already has mail") if pkmn.mail
-			if (Mail == null) GameDebug.LogError("Pokémon already has mail");
+			if (Mail == null) Core.Logger.LogError("Pokémon already has mail");
 			//Mail = new PokemonMail(item, message, Trainer.name, poke1, poke2, poke3)
 			mail = new Mail(Item, message, sender);
 		}
@@ -2233,7 +2233,7 @@ namespace PokemonUnity.Monster
 						if (!Game.GameData.Player.Bag.StoreItem(item)) // Compensate
 						{
 							//raise Game._INTL("Can't re-store deleted item in bag");
-							GameDebug.LogError(Game._INTL("Can't re-store deleted item in bag"));
+							Core.Logger.LogError(Game._INTL("Can't re-store deleted item in bag"));
 						}
 
 						Display(Game._INTL("The Bag is full.  The Pokémon's item could not be removed."));
@@ -2255,7 +2255,7 @@ namespace PokemonUnity.Monster
 							{
 								if (!Game.GameData.Player.Bag.StoreItem(item)) { // Compensate
 									//raise Game._INTL("Can't re-store deleted item in bag");
-									GameDebug.LogError(Game._INTL("Can't re-store deleted item in bag"));
+									Core.Logger.LogError(Game._INTL("Can't re-store deleted item in bag"));
 								}
 							}
 						}
@@ -2658,7 +2658,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.HP] += (byte)gainEVHP;
 				totalEVgain += gainEVHP;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.HP.ToString()}  EV gain: #{gainEVHP}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.HP.ToString()}  EV gain: #{gainEVHP}  EVs: #{EV.ToString()}");
 
 			// Attack gain
 			if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2671,7 +2671,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
 				totalEVgain += gainEVAttack;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.ATTACK.ToString()}  EV gain: #{gainEVAttack}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.ATTACK.ToString()}  EV gain: #{gainEVAttack}  EVs: #{EV.ToString()}");
 
 			// Defense gain
 			if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2684,7 +2684,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
 				totalEVgain += gainEVDefense;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.DEFENSE.ToString()}  EV gain: #{gainEVDefense}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.DEFENSE.ToString()}  EV gain: #{gainEVDefense}  EVs: #{EV.ToString()}");
 
 			// SpAttack gain
 			if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2697,7 +2697,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
 				totalEVgain += gainEVSpAttack;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPATK.ToString()}  EV gain: #{gainEVSpAttack}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPATK.ToString()}  EV gain: #{gainEVSpAttack}  EVs: #{EV.ToString()}");
 
 			// SpDefense gain
 			if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2710,7 +2710,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
 				totalEVgain += gainEVSpDefense;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPDEF.ToString()}  EV gain: #{gainEVSpDefense}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPDEF.ToString()}  EV gain: #{gainEVSpDefense}  EVs: #{EV.ToString()}");
 
 			// Speed gain
 			if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2723,7 +2723,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
 				totalEVgain += gainEVSpeed;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPEED.ToString()}  EV gain: #{gainEVSpeed}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPEED.ToString()}  EV gain: #{gainEVSpeed}  EVs: #{EV.ToString()}");
 		}
 
 		/// <summary>
@@ -2736,7 +2736,7 @@ namespace PokemonUnity.Monster
 			int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
 			if (allEV >= EVLIMIT)
 			{
-				GameDebug.LogWarning($"EV limit #{Monster.Pokemon.EVLIMIT} exceeded.\r\nTotal EVs: #{allEV} EV gain: 0  EVs: #{EV.ToString()}");
+				Core.Logger.LogWarning($"EV limit #{Monster.Pokemon.EVLIMIT} exceeded.\r\nTotal EVs: #{allEV} EV gain: 0  EVs: #{EV.ToString()}");
 				return;
 			}
 
@@ -2872,7 +2872,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.HP] += (byte)gainEVHP;
 				totalEVgain += gainEVHP;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.HP.ToString()}  EV gain: #{gainEVHP}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.HP.ToString()}  EV gain: #{gainEVHP}  EVs: #{EV.ToString()}");
 
 			// Attack gain
 			if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2887,7 +2887,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
 				totalEVgain += gainEVAttack;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.ATTACK.ToString()}  EV gain: #{gainEVAttack}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.ATTACK.ToString()}  EV gain: #{gainEVAttack}  EVs: #{EV.ToString()}");
 
 			// Defense gain
 			if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2902,7 +2902,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
 				totalEVgain += gainEVDefense;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.DEFENSE.ToString()}  EV gain: #{gainEVDefense}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.DEFENSE.ToString()}  EV gain: #{gainEVDefense}  EVs: #{EV.ToString()}");
 
 			// SpAttack gain
 			if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2917,7 +2917,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
 				totalEVgain += gainEVSpAttack;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPATK.ToString()}  EV gain: #{gainEVSpAttack}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPATK.ToString()}  EV gain: #{gainEVSpAttack}  EVs: #{EV.ToString()}");
 
 			// SpDefense gain
 			if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2932,7 +2932,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
 				totalEVgain += gainEVSpDefense;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPDEF.ToString()}  EV gain: #{gainEVSpDefense}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPDEF.ToString()}  EV gain: #{gainEVSpDefense}  EVs: #{EV.ToString()}");
 
 			// Speed gain
 			if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
@@ -2947,7 +2947,7 @@ namespace PokemonUnity.Monster
 				EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
 				totalEVgain += gainEVSpeed;
 			}
-			else GameDebug.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPEED.ToString()}  EV gain: #{gainEVSpeed}  EVs: #{EV.ToString()}");
+			else Core.Logger.LogWarning($"Single-stat EV limit #{EVSTATLIMIT} exceeded.\r\nStat: #{Stats.SPEED.ToString()}  EV gain: #{gainEVSpeed}  EVs: #{EV.ToString()}");
 		}
 		#endregion
 #pragma warning restore 0162 //Warning CS0162  Unreachable code detected

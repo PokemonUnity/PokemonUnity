@@ -177,7 +177,7 @@ namespace PokemonUnity
 				}
 				protected set {
 					//throw new Exception("Not supported");
-					//GameDebug.LogError("Not supported");
+					//Core.Logger.LogError("Not supported");
 					Game.GameData.Trainer.party = value;
 			} }
 
@@ -215,7 +215,7 @@ namespace PokemonUnity
 					//} else {
 					//	foreach (var i in @boxes) {
 					//		if (i is PokemonEssentials.Interface.PokeBattle.IPokemon) //throw new Exception ("Box is a Pokémon, not a box");
-					//			GameDebug.LogError("Box is a Pokémon, not a box");
+					//			Core.Logger.LogError("Box is a Pokémon, not a box");
 					//	}
 						return (x == -1) ? this.party[y] : @boxes[x][y];
 					//}
@@ -271,7 +271,7 @@ namespace PokemonUnity
 				} else {
 					if (!this[boxSrc,indexSrc].IsNotNullOrNone()) {
 						//throw new Exception("Trying to copy null to storage");
-						GameDebug.LogWarning("Trying to copy null to storage"); // not localized
+						Core.Logger.LogWarning("Trying to copy null to storage"); // not localized
 					}
 					this[boxSrc,indexSrc].Heal();
 					if (this[boxSrc,indexSrc] is IPokemonMultipleForms f && //this[boxSrc,indexSrc].respond_to("formTime") &&
@@ -378,7 +378,7 @@ namespace PokemonUnity
 			public IPCPokemonStorage getCurrentStorage { get {
 				if (Game.GameData.GameMap == null) {
 					//throw Exception(Game._INTL("The player is not on a map, so the region could not be determined."));
-					GameDebug.LogError(Game._INTL("The player is not on a map, so the region could not be determined."));
+					Core.Logger.LogError(Game._INTL("The player is not on a map, so the region could not be determined."));
 				}
 				if (@lastmap!=Game.GameData.GameMap.map_id) {
 					@rgnmap=Game.GameData is IGameUtility g ? g.GetCurrentRegion() : -1; // may access file IO, so caching result
@@ -386,7 +386,7 @@ namespace PokemonUnity
 				}
 				if (@rgnmap<0) {
 					//throw Exception(Game._INTL("The current map has no region set. Please set the MapPosition metadata setting for this map."));
-					GameDebug.LogError(Game._INTL("The current map has no region set. Please set the MapPosition metadata setting for this map."));
+					Core.Logger.LogError(Game._INTL("The current map has no region set. Please set the MapPosition metadata setting for this map."));
 				}
 				if (@storages[@rgnmap] == null) {
 					@storages[@rgnmap]=new PokemonStorage();

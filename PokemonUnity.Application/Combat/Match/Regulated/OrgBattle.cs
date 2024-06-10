@@ -751,7 +751,7 @@ namespace PokemonUnity
 			@battleNumber=1;
 			@trainers=new List<int>();
 			//if (numRounds<=0) throw new Exception (Game._INTL("Number of rounds is 0 or less."));
-			if (numRounds<=0) { GameDebug.LogError(Game._INTL("Number of rounds is 0 or less.")); numRounds = 1; }
+			if (numRounds<=0) { Core.Logger.LogError(Game._INTL("Number of rounds is 0 or less.")); numRounds = 1; }
 			this.numRounds=numRounds;
 			Character.TrainerMetaData[] btTrainers=new Character.TrainerMetaData[0];//GetBTTrainers(BattleChallenge.currentChallenge);
 			if (Game.GameData is IGameOrgBattle gob) btTrainers=gob.GetBTTrainers(gob.BattleChallenge.currentChallenge);

@@ -31,7 +31,7 @@ namespace PokemonUnity.ConsoleApp
 	/// Debug.Log/Warn/Error coming from unity (or code, e.g. packages, not using GameDebug) =>
 	///    These get caught here and sent onto the console and into our log file
 	///    </para><para>
-	/// GameDebug.Log/Warn/Error coming from game =>
+	/// Core.Logger?.Log/Warn/Error coming from game =>
 	///    These gets sent onto the console and into our log file.
 	///    *IF* we are in editor, they are also sent to Debug. So they show up in editor Console window
 	///    </para><para>

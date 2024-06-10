@@ -41,7 +41,7 @@ namespace PokemonUnity
 			if(LocalizationDictionary != null)
 			{
 				msg = LocalizationDictionary.GetStr(message);
-				//if (msg == message) GameDebug.Log("Couldn't map localization string for: `{0}`", message);
+				//if (msg == message) Core.Logger.Log("Couldn't map localization string for: `{0}`", message);
 				//ToDo: Setup two localization dictionaries, if fail to parse in 1st language, default to second (English), else return failed string.
 			}
 			if(!msg.Contains("{0}") && param?.Length > 0) //only loop if params start at 1+
@@ -528,12 +528,12 @@ namespace PokemonUnity
 		protected virtual int beginRecord() {
 			//if (mic == null || mic == "") //if unable to access microphone
 				return 256+72;
-			GameDebug.LogDebug(Game._INTL("open new type waveaudio alias RECORDER buffer 4"));
-			GameDebug.LogDebug(Game._INTL("set RECORDER channels 1"));
+			Core.Logger.LogDebug(Game._INTL("open new type waveaudio alias RECORDER buffer 4"));
+			Core.Logger.LogDebug(Game._INTL("set RECORDER channels 1"));
 			int retval = 0;
-			GameDebug.LogDebug(Game._INTL("record RECORDER")); //retval = Win32API.call("mciSendString","record RECORDER",0,0);
+			Core.Logger.LogDebug(Game._INTL("record RECORDER")); //retval = Win32API.call("mciSendString","record RECORDER",0,0);
 			if (retval!=0)
-				GameDebug.LogDebug(Game._INTL("close RECORDER"));
+				Core.Logger.LogDebug(Game._INTL("close RECORDER"));
 			return retval;
 		}
 
@@ -547,11 +547,11 @@ namespace PokemonUnity
 			//	return 0x8000;
 			string buffer = "0"; //0 x256 times
 			int ret = 0;
-			GameDebug.LogDebug(Game._INTL("stop RECORDER"));
-			GameDebug.LogDebug(Game._INTL("status RECORDER bitspersample")); //Win32API.call("mciSendString","status RECORDER bitspersample",buffer,buffer.Length);
+			Core.Logger.LogDebug(Game._INTL("stop RECORDER"));
+			Core.Logger.LogDebug(Game._INTL("status RECORDER bitspersample")); //Win32API.call("mciSendString","status RECORDER bitspersample",buffer,buffer.Length);
 			int bitspersample = 16;
-			GameDebug.LogDebug(Game._INTL("status RECORDER level"));
-			GameDebug.LogDebug(Game._INTL("record RECORDER"));
+			Core.Logger.LogDebug(Game._INTL("status RECORDER level"));
+			Core.Logger.LogDebug(Game._INTL("record RECORDER"));
 			if (bitspersample == 8)
 				ret = int.Parse(buffer) << 8;	// max 128
 			else
@@ -562,17 +562,17 @@ namespace PokemonUnity
 		protected virtual void stopRecord() {
 			//if (mic == null || mic == "") //if unable to access microphone
 			//	return;
-			GameDebug.LogDebug(Game._INTL("stop RECORDER"));
-			GameDebug.LogDebug(Game._INTL("close RECORDER"));
+			Core.Logger.LogDebug(Game._INTL("stop RECORDER"));
+			Core.Logger.LogDebug(Game._INTL("close RECORDER"));
 		}
 
 		protected virtual void endRecord(string file) {
 			//if (mic == null || mic == "") //if unable to access microphone
 			//	return;
-			GameDebug.LogDebug(Game._INTL("stop RECORDER"));
+			Core.Logger.LogDebug(Game._INTL("stop RECORDER"));
 			if (file!=null || file!="")
-				GameDebug.LogDebug(Game._INTL("save RECORDER #{1}", file));
-			GameDebug.LogDebug(Game._INTL("close RECORDER"));
+				Core.Logger.LogDebug(Game._INTL("save RECORDER #{1}", file));
+			Core.Logger.LogDebug(Game._INTL("close RECORDER"));
 		}
 		#endregion
 

@@ -655,8 +655,8 @@ namespace PokemonUnity.Legacy
 
 		void Awake()
 		{
-			//GameDebug.OnLog += GameDebug_OnLog;
-			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//Core.Logger.OnLog += GameDebug_OnLog;
+			//Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			string englishLocalization = "..\\..\\..\\LocalizationStrings.xml";
 			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
 			Game.LocalizationDictionary = new PokemonUnity.Localization.XmlStringRes(null); //new Debugger());

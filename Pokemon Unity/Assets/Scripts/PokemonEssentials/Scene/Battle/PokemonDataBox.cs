@@ -90,10 +90,10 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public IPokemonDataBox initialize(IBattler battler, bool doublebattle, IViewport viewport = null)
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			base.initialize(viewport);
 			this.battler = battler as IBattlerIE;
-			GameDebug.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
+			Core.Logger?.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
 			@explevel = 0;
 			@selected = 0;
 			@frame = 0;
@@ -186,7 +186,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void refreshExpLevel()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			if (!@battler.pokemon.IsNotNullOrNone())
 			{
 				@explevel = 0;
@@ -218,7 +218,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <param name="newhp"></param>
 		public void animateHP(int oldhp, int newhp)
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			@starthp = oldhp;
 			@currenthp = newhp; //@endhp = newhp;
 			@animatingHP = true;
@@ -233,7 +233,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <param name="newhp"></param>
 		public void animateEXP(int oldexp, int newexp)
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			@currentexp = newexp;
 			@explevel = oldexp; //@endexp = newexp;
 			@animatingEXP = true;
@@ -246,7 +246,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// </summary>
 		public override void appear()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			refreshExpLevel();
 			refresh();
 			this.visible = true;
@@ -265,7 +265,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public override void refresh()
 		{
-			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//this.bitmap.clear();
 			if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
@@ -312,7 +312,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//};
 			//level.text = Game._INTL("{0}", @battler.Level);
 			level.SetText($"Lv. {@battler.Level}");
-			GameDebug.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
+			Core.Logger?.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
 			if (@showhp)
 			{
 				HPValue?.gameObject.SetActive(true); //Should already be preset in unity engine
@@ -438,7 +438,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public override void update()
 		{
-			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			base.update();
 			@frame += 1;
@@ -585,7 +585,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// </summary>
 		protected virtual void ValueChangeCheck()
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//if (sliderHP.value <= (sliderHP.maxValue / 4)) { Fill.color = hpzone2; }
 			if (.3f > sliderHP.normalizedValue)
 			{
@@ -608,7 +608,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		protected System.Collections.IEnumerator AnimateSliderHP(int amount) //Slider as input?
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//Debug.Log(amount);
 			//while (sliderHP.value != amount)
 			while (Math.Abs(sliderHP.value - amount) > 0.001f)
@@ -627,7 +627,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <returns></returns>
 		protected System.Collections.IEnumerator AnimateSliderExp(int amount) //Slider as input?
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//Debug.Log(amount);
 			while (sliderExp.value != amount) //ToDo: While != this.Exp, lerp(value + amount)?
 			{
@@ -670,7 +670,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public ISafariDataBox initialize(IBattle battle, IViewport viewport = null)
 		{
-			GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			base.initialize(viewport);
 			@selected = 0;
@@ -695,7 +695,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// </summary>
 		public override void appear()
 		{
-			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			refresh();
 			this.visible = true;
@@ -707,7 +707,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public virtual void refresh()
 		{
-			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//this.bitmap.clear();
 			//this.bitmap.blt(0, 0, @databox.bitmap, new Rect(0, 0, @databox.width, @databox.height));
@@ -724,7 +724,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public override void update()
 		{
-			//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			base.update();
 			if (@appearing)
@@ -816,10 +816,10 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			public abstract IPokemonDataBox initialize(IBattler battler, bool doublebattle, IViewport viewport = null);
 			//{
-			//	GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//	Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//	base.initialize(viewport);
 			//	this.battler = battler as IBattlerIE;
-			//	GameDebug.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
+			//	Core.Logger?.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
 			//	@explevel = 0;
 			//	@selected = 0;
 			//	@frame = 0;
@@ -906,7 +906,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			public void refreshExpLevel()
 			{
-				GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+				Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 				if (!@battler.pokemon.IsNotNullOrNone())
 				{
 					@explevel = 0;
@@ -938,7 +938,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			/// <param name="newhp"></param>
 			public void animateHP(int oldhp, int newhp)
 			{
-				GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+				Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 				@starthp = oldhp;
 				@currenthp = newhp; //@endhp = newhp;
 				@animatingHP = true;
@@ -953,7 +953,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			/// <param name="newhp"></param>
 			public void animateEXP(int oldexp, int newexp)
 			{
-				GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+				Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 				@currentexp = newexp;
 				@explevel = oldexp; //@endexp = newexp;
 				@animatingEXP = true;
@@ -966,7 +966,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			/// </summary>
 			public override void appear()
 			{
-				GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+				Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 				refreshExpLevel();
 				refresh();
 				this.visible = true;
@@ -985,7 +985,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			public abstract override void refresh();
 			//{
-			//	//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			//	//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 			//
 			//	//this.bitmap.clear();
 			//	if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
@@ -1030,7 +1030,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//	//};
 			//	//level.text = Game._INTL("{0}", @battler.Level);
 			//	level.SetText($"Lv. {@battler.Level}");
-			//	GameDebug.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
+			//	Core.Logger?.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
 			//	if (@showhp)
 			//	{
 			//		//string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
@@ -1153,7 +1153,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			public override void update()
 			{
-				//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+				//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 				base.update();
 				@frame += 1;
@@ -1293,7 +1293,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			/// </summary>
 			protected virtual void ValueChangeCheck()
 			{
-				GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+				Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 				//if (sliderHP.value <= (sliderHP.maxValue / 4)) { Fill.color = hpzone2; }
 				if (.3f > sliderHP.normalizedValue)
 				{
@@ -1316,7 +1316,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			protected System.Collections.IEnumerator AnimateSliderHP(int amount) //Slider as input?
 			{
-				GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+				Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 				//Debug.Log(amount);
 				//while (sliderHP.value != amount)
 				while (Math.Abs(sliderHP.value - amount) > 0.001f)
@@ -1335,7 +1335,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			/// <returns></returns>
 			protected System.Collections.IEnumerator AnimateSliderExp(int amount) //Slider as input?
 			{
-				GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+				Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 				//Debug.Log(amount);
 				while (sliderExp.value != amount) //ToDo: While != this.Exp, lerp(value + amount)?
 				{
@@ -1357,10 +1357,10 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			public override IPokemonDataBox initialize(IBattler battler, bool doublebattle, IViewport viewport = null)
 			{
-				GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+				Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 				base.initialize(viewport);
 				this.battler = battler as IBattlerIE;
-				GameDebug.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
+				Core.Logger?.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
 				@explevel = 0;
 				@selected = 0;
 				@frame = 0;
@@ -1446,7 +1446,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			public override void refresh()
 			{
-				//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+				//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 				//this.bitmap.clear();
 				if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
@@ -1487,7 +1487,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				//	new TextPosition (Game._INTL("Lv{1}",@battler.Level),@spritebaseX+202,8,true,base_,shadow)
 				//};
 				level.text = Game._INTL("{0}", @battler.Level);
-				GameDebug.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
+				Core.Logger?.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
 				if (@showhp)
 				{
 					//string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);
@@ -1629,10 +1629,10 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			public override IPokemonDataBox initialize(IBattler battler, bool doublebattle, IViewport viewport = null)
 			{
-				GameDebug.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+				Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 				base.initialize(viewport);
 				this.battler = battler as IBattlerIE;
-				GameDebug.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
+				Core.Logger?.Log($"[PokemonDataBox] battler : #{battler.Index} - {battler.Name}");
 				@explevel = 0;
 				@selected = 0;
 				@frame = 0;
@@ -1719,7 +1719,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			public override void refresh()
 			{
-				//GameDebug.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+				//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 				//this.bitmap.clear();
 				if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
@@ -1762,7 +1762,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				//	new TextPosition (Game._INTL("Lv{1}",@battler.Level),@spritebaseX+202,8,true,base_,shadow)
 				//};
 				level.SetText($"Lv. {@battler.Level}");
-				GameDebug.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
+				Core.Logger?.Log(string.Format("Pokemon #{0} HP: `{1}/{2}`", battler.Index, this.HP, @battler.TotalHP));
 				if (@showhp)
 				{
 					//string hpstring = string.Format("{1: 2d}/{2: 2d}", this.HP, @battler.TotalHP);

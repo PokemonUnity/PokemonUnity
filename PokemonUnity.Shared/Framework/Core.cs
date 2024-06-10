@@ -106,7 +106,7 @@ namespace PokemonUnity
 
 		#region Logging
 		private static IDebugger _logger;
-		public static IDebugger Logger { get { return _logger; } set { _logger = value; } }
+		public static IDebugger Logger { get { return _logger; } set { if (value is null) _logger = LogManager.Logger; else _logger = value; } }
 		//private static readonly LogManager _logger = new LogManager();
 		//private static LogManager _logger;
 		//public static LogManager Logger { get { return _logger; } set { _logger = value; } }

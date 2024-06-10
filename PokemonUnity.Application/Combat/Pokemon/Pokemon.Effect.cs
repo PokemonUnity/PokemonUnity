@@ -102,7 +102,7 @@ namespace PokemonUnity.Combat
 				@battle.Display(msg);
 			else
 				@battle.Display(Game._INTL("{1} fell asleep!",ToString()));
-			GameDebug.Log($"[Status change] #{ToString()} fell asleep (#{this.StatusCount} turns)");
+			Core.Logger.Log($"[Status change] #{ToString()} fell asleep (#{this.StatusCount} turns)");
 		}
 
 		public void SleepSelf(int duration=-1) {
@@ -114,7 +114,7 @@ namespace PokemonUnity.Combat
 			if (this.hasWorkingAbility(Abilities.EARLY_BIRD)) this.StatusCount=(int)Math.Floor(this.StatusCount/2d);
 			CancelMoves();
 			@battle.CommonAnimation("Sleep",this,null);
-			GameDebug.Log($"[Status change] #{ToString()} made itself fall asleep (#{this.StatusCount} turns)");
+			Core.Logger.Log($"[Status change] #{ToString()} made itself fall asleep (#{this.StatusCount} turns)");
 		}
 		#endregion
 
@@ -217,13 +217,13 @@ namespace PokemonUnity.Combat
 					@battle.Display(Game._INTL("{1} was poisoned!",ToString()));
 			}
 			if (toxic)
-				GameDebug.Log($"[Status change] #{ToString()} was badly poisoned]");
+				Core.Logger.Log($"[Status change] #{ToString()} was badly poisoned]");
 			else
-				GameDebug.Log($"[Status change] #{ToString()} was poisoned");
+				Core.Logger.Log($"[Status change] #{ToString()} was poisoned");
 			if (attacker.IsNotNullOrNone() && this.Index!=attacker.Index &&
 				this.hasWorkingAbility(Abilities.SYNCHRONIZE))
 				if (attacker is IBattlerEffect a && a.CanPoisonSynchronize(this)) {
-					GameDebug.Log($"[Ability triggered] #{this.ToString()}'s Synchronize");
+					Core.Logger.Log($"[Ability triggered] #{this.ToString()}'s Synchronize");
 					a.Poison(null,Game._INTL("{1}'s {2} poisoned {3}!",this.ToString(),
 						Game._INTL(this.ability.ToString(TextScripts.Name)),attacker.ToString(true)),toxic);
 				}
@@ -307,11 +307,11 @@ namespace PokemonUnity.Combat
 				@battle.Display(msg);
 			else
 				@battle.Display(Game._INTL("{1} was burned!",ToString()));
-			GameDebug.Log($"[Status change] #{ToString()} was burned");
+			Core.Logger.Log($"[Status change] #{ToString()} was burned");
 			if (attacker.IsNotNullOrNone() && this.Index!=attacker.Index &&
 				this.hasWorkingAbility(Abilities.SYNCHRONIZE))
 				if (attacker is IBattlerEffect a && a.CanBurnSynchronize(this)) {
-					GameDebug.Log($"[Ability triggered] #{this.ToString()}'s Synchronize");
+					Core.Logger.Log($"[Ability triggered] #{this.ToString()}'s Synchronize");
 					a.Burn(null,Game._INTL("{1}'s {2} burned {3}!",this.ToString(),
 						Game._INTL(this.ability.ToString(TextScripts.Name)),attacker.ToString(true)));
 				}
@@ -391,11 +391,11 @@ namespace PokemonUnity.Combat
 				@battle.Display(msg);
 			else
 				@battle.Display(Game._INTL("{1} is paralyzed! It may be unable to move!",ToString()));
-			GameDebug.Log($"[Status change] #{ToString()} was paralyzed");
+			Core.Logger.Log($"[Status change] #{ToString()} was paralyzed");
 			if (attacker.IsNotNullOrNone() && this.Index!=attacker.Index &&
 				this.hasWorkingAbility(Abilities.SYNCHRONIZE))
 				if (attacker is IBattlerEffect a && a.CanParalyzeSynchronize(this)) {
-					GameDebug.Log($"[Ability triggered] #{this.ToString()}'s Synchronize");
+					Core.Logger.Log($"[Ability triggered] #{this.ToString()}'s Synchronize");
 					a.Paralyze(null,Game._INTL("{1}'s {2} paralyzed {3}! It may be unable to move!",
 						this.ToString(),Game._INTL(this.ability.ToString(TextScripts.Name)),attacker.ToString(true)));
 				}
@@ -456,7 +456,7 @@ namespace PokemonUnity.Combat
 				@battle.Display(msg);
 			else
 				@battle.Display(Game._INTL("{1} was frozen solid!",ToString()));
-			GameDebug.Log($"[Status change] #{ToString()} was frozen");
+			Core.Logger.Log($"[Status change] #{ToString()} was frozen");
 		}
 		#endregion
 
@@ -504,7 +504,7 @@ namespace PokemonUnity.Combat
 						@battle.Display(Game._INTL("{1} thawed out!",ToString()));
 						break;
 				}
-			GameDebug.Log($"[Status change] #{ToString()}'s status was cured");
+			Core.Logger.Log($"[Status change] #{ToString()}'s status was cured");
 		}
 		#endregion
 
@@ -548,7 +548,7 @@ namespace PokemonUnity.Combat
 		public void Confuse() {
 			effects.Confusion=2+@battle.Random(4);
 			@battle.CommonAnimation("Confusion",this,null);
-			GameDebug.Log($"[Lingering effect triggered] #{ToString()} became confused (#{effects.Confusion} turns)");
+			Core.Logger.Log($"[Lingering effect triggered] #{ToString()} became confused (#{effects.Confusion} turns)");
 		}
 
 		public void ConfuseSelf() {
@@ -556,7 +556,7 @@ namespace PokemonUnity.Combat
 				effects.Confusion=2+@battle.Random(4);
 				@battle.CommonAnimation("Confusion",this,null);
 				@battle.Display(Game._INTL("{1} became confused!",ToString()));
-				GameDebug.Log($"[Lingering effect triggered] #{ToString()} became confused (#{effects.Confusion} turns)");
+				Core.Logger.Log($"[Lingering effect triggered] #{ToString()} became confused (#{effects.Confusion} turns)");
 			}
 		}
 
@@ -568,7 +568,7 @@ namespace PokemonUnity.Combat
 		public void CureConfusion(bool showMessages=true) {
 			effects.Confusion=0;
 			if (showMessages) @battle.Display(Game._INTL("{1} snapped out of confusion!",ToString()));
-			GameDebug.Log($"[End of effect] #{ToString()} was cured of confusion");
+			Core.Logger.Log($"[End of effect] #{ToString()} was cured of confusion");
 		}
 		#endregion
 
@@ -601,10 +601,10 @@ namespace PokemonUnity.Combat
 				@battle.Display(msg);
 			else
 				@battle.Display(Game._INTL("{1} fell in love!",ToString()));
-			GameDebug.Log($"[Lingering effect triggered] #{ToString()} became infatuated (with #{attacker.ToString(true)})");
+			Core.Logger.Log($"[Lingering effect triggered] #{ToString()} became infatuated (with #{attacker.ToString(true)})");
 			if (this.hasWorkingItem(Items.DESTINY_KNOT) &&
 				attacker is IBattlerEffect a && a.CanAttract(this,false)) {
-				GameDebug.Log($"[Item triggered] #{ToString()}'s Destiny Knot");
+				Core.Logger.Log($"[Item triggered] #{ToString()}'s Destiny Knot");
 				a.Attract(this,Game._INTL("{1}'s {2} made {3} fall in love!",ToString(),
 					Game._INTL(this.Item.ToString(TextScripts.Name)),attacker.ToString(true)));
 			}
@@ -622,7 +622,7 @@ namespace PokemonUnity.Combat
 
 		public void CureAttract() {
 			effects.Attract=-1;
-			GameDebug.Log($"[End of effect] #{ToString()} was cured of infatuation");
+			Core.Logger.Log($"[End of effect] #{ToString()} was cured of infatuation");
 		}
 		#endregion
 
@@ -661,7 +661,7 @@ namespace PokemonUnity.Combat
 					if (hasWorkingAbility(Abilities.SIMPLE)) increment*=2;
 				}
 			increment=Math.Min(increment,6-@stages[(int)stat]);
-			GameDebug.Log($"[Stat change] #{ToString()}'s #{Game._INTL(stat.ToString(TextScripts.Name))} rose by #{increment} stage(s) (was #{@stages[(int)stat]}, now #{@stages[(int)stat]+increment})");
+			Core.Logger.Log($"[Stat change] #{ToString()}'s #{Game._INTL(stat.ToString(TextScripts.Name))} rose by #{increment} stage(s) (was #{@stages[(int)stat]}, now #{@stages[(int)stat]+increment})");
 			@stages[(int)stat]+=increment;
 			return increment;
 		}
@@ -806,7 +806,7 @@ namespace PokemonUnity.Combat
 					if (hasWorkingAbility(Abilities.SIMPLE)) increment*=2;
 				}
 			increment=Math.Min(increment,6+@stages[(int)stat]);
-			GameDebug.Log($"[Stat change] #{ToString()}'s #{Game._INTL(stat.ToString(TextScripts.Name))} fell by #{increment} stage(s) (was #{@stages[(int)stat]}, now #{@stages[(int)stat]-increment})");
+			Core.Logger.Log($"[Stat change] #{ToString()}'s #{Game._INTL(stat.ToString(TextScripts.Name))} fell by #{increment} stage(s) (was #{@stages[(int)stat]}, now #{@stages[(int)stat]-increment})");
 			@stages[(int)stat]-=increment;
 			return increment;
 		}

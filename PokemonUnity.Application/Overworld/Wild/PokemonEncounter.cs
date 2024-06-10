@@ -233,7 +233,7 @@ namespace PokemonUnity.Overworld
 			if (enctype<0 || (int)enctype>EnctypeChances.Count) {
 				//raise new ArgumentError(Game._INTL("Encounter type out of range"));
 				//throw new Exception(Game._INTL("Encounter type out of range"));
-				GameDebug.LogError(Game._INTL("Encounter type out of range"));
+				Core.Logger.LogError(Game._INTL("Encounter type out of range"));
 				return null;
 			}
 			IDictionary<int, IEncounters> data = null;//load_data("Data/encounters.dat");
@@ -269,7 +269,7 @@ namespace PokemonUnity.Overworld
 			if (enctype<0 || (int)enctype>EnctypeChances.Count) {
 				//raise new ArgumentError(Game._INTL("Encounter type out of range"));
 				//throw new Exception(Game._INTL("Encounter type out of range"));
-				GameDebug.LogError(Game._INTL("Encounter type out of range"));
+				Core.Logger.LogError(Game._INTL("Encounter type out of range"));
 				return null;
 			}
 			if (@enctypes[enctype]==null) return null;
