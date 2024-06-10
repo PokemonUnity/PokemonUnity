@@ -17,7 +17,8 @@ namespace PokemonUnity.Application
 	/// <summary>
 	/// </summary>
 	///ToDo: Move and merge this to <see cref="PokemonEssentials.Interface.IGameSwitches"/>
-	public struct Feature : IEquatable<Feature>, IEqualityComparer<Feature>
+	///ToDo: Implement in <see cref="PokemonEssentials.Interface.PokeBattle.IBattleMove.CalcDamage(PokemonEssentials.Interface.PokeBattle.IBattler, PokemonEssentials.Interface.PokeBattle.IBattler, byte[])"/>
+	public struct Feature : IEquatable<Feature>//, IEqualityComparer<Feature>
 	{
 		/// <summary>
 		/// Shift: after you kill the enemy's pokemon,
@@ -548,15 +549,15 @@ namespace PokemonUnity.Application
 			return GetGuid().GetHashCode();
 		}
 
-		bool IEqualityComparer<Feature>.Equals(Feature x, Feature y)
-		{
-			return x == y;
-		}
+		//bool IEqualityComparer<Feature>.Equals(Feature x, Feature y)
+		//{
+		//	return x == y;
+		//}
 
-		int IEqualityComparer<Feature>.GetHashCode(Feature obj)
-		{
-			return obj.GetHashCode();
-		}
+		//int IEqualityComparer<Feature>.GetHashCode(Feature obj)
+		//{
+		//	return obj.GetHashCode();
+		//}
 		#endregion
 
 		#region Methods
