@@ -392,7 +392,7 @@ namespace PokemonUnity.ConsoleApp
 			{
 				System.Console.WriteLine(commands[i]);
 			}
-			GameDebug.Log("Press Q to return back to Command Menu");
+			System.Console.WriteLine("Press Q to return back to Command Menu");
 			bool appearing = true;
 			int result = -2;
 			do
