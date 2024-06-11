@@ -2985,7 +2985,7 @@ namespace PokemonUnity.Combat
 				else
 					@battle.Display(Game._INTL("Hit {1} times!",realnumhits.ToString()));
 			}
-			Core.Logger.Log($"Move did #{numhits} hit(s), total damage=#{turneffects.TotalDamage}");
+			Core.Logger.Log("Move did #{0} hit(s), total damage=#{1}",numhits,turneffects.TotalDamage);
 			// Faint if 0 HP
 			if (target.isFainted()) target.Faint();	// no return
 			if (user.isFainted()) user.Faint();		// no return
@@ -3027,7 +3027,7 @@ namespace PokemonUnity.Combat
 				//@battle.choices[@Index].Index=index;
 				@battle.choices[@Index]=new Choice(action: @battle.choices[@Index].Action, moveIndex: index, move: @battle.choices[@Index].Move, target: @battle.choices[@Index].Target);
 			//Core.Logger.Log($"#{ToString()} used simple move #{Game._INTL(choice.Move.id.ToString(TextScripts.Name))}");
-			Core.Logger.Log($"#{0} used simple move #{1}",ToString(),choice.Move.id.ToString());
+			Core.Logger.Log("#{0} used simple move #{1}",ToString(),choice.Move.id.ToString());
 			UseMove(choice,true);
 			return;
 		}
@@ -3392,7 +3392,7 @@ namespace PokemonUnity.Combat
 				@battle.successStates[i].UpdateSkill();
 			// End of move usage
 			EndTurn(choice);
-			@battle.Judge();     //@battle.Switch();
+			@battle.Judge();		//@battle.Switch();
 			return;
 		}
 		public void CancelMoves() {
@@ -3406,7 +3406,7 @@ namespace PokemonUnity.Combat
 			@currentMove=0;
 			// Reset counters for moves which increase them when used in succession
 			@effects.FuryCutter=0;
-			Core.Logger.Log($"Cancelled using the move");
+			Core.Logger.Log("Cancelled using the move");
 		}
 		#endregion
 
@@ -3420,7 +3420,7 @@ namespace PokemonUnity.Combat
 			// Encore's effect ends if the encored move is no longer available
 			if (@effects.Encore>0 &&
 				@moves[@effects.EncoreIndex].id!=@effects.EncoreMove) {
-				Core.Logger.Log($"Resetting Encore effect");
+				Core.Logger.Log("Resetting Encore effect");
 				@effects.Encore=0;
 				@effects.EncoreIndex=0;
 				@effects.EncoreMove=0;
@@ -3476,12 +3476,12 @@ namespace PokemonUnity.Combat
 				@effects.Pursuit=false;
 				CancelMoves();
 				EndTurn(choice);
-				@battle.Judge();       //@battle.Switch
+				@battle.Judge();		//@battle.Switch
 				return false;
 			}
 			// Use the move
 			//   @battle.DisplayPaused("Before: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]"); //Log instead?
-			Core.Logger.Log($"#{ToString()} used #{Game._INTL(choice.Move.id.ToString(TextScripts.Name))}");
+			Core.Logger.Log("#{0} used #{1}",ToString(),choice.Move.id.ToString());
 			//try{ UseMove(choice, choice.Move == @battle.struggle); } catch (Exception e) { Core.Logger.Log(e.Message); } //Core.Logger.Log(e.StackTrace);
 			UseMove(choice, choice.Move == @battle.struggle);
 			//   @battle.DisplayPaused("After: [#{@lastMoveUsedSketch},#{@lastMoveUsed}]");

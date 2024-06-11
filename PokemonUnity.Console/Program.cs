@@ -203,7 +203,7 @@ namespace PokemonUnity.ConsoleApp
 
 			if (@messageCount > 0)
 			{
-				Core.Logger.Log($"[message count: #{0}]", @messageCount);
+				Core.Logger.Log("[message count: #{0}]", @messageCount);
 			}
 			@messageCount = 0;
 		}
@@ -333,10 +333,10 @@ namespace PokemonUnity.ConsoleApp
 			if (battle.battlers[index].Opposing2.IsNotNullOrNone())
 				Core.Logger.Log("Enemy: {0} HP: {1}/{2}", battle.battlers[index].Opposing2.Name, battle.battlers[index].Opposing2.HP, battle.battlers[index].Opposing2.TotalHP);
 
-			System.Console.WriteLine("Fight - 0");
-			System.Console.WriteLine("Bag - 1");
-			System.Console.WriteLine("Pokémon - 2");
-			System.Console.WriteLine(shadowTrainer ? "Call - 3" : "Run - 3");
+			System.Console.WriteLine("Fight - 1");
+			System.Console.WriteLine("Bag - 2");
+			System.Console.WriteLine("Pokémon - 3");
+			System.Console.WriteLine(shadowTrainer ? "Call - 4" : "Run - 4");
 			Core.Logger.Log("What will {0} do?", battle.battlers[index].Name);
 
 			bool appearing = true;
@@ -344,22 +344,22 @@ namespace PokemonUnity.ConsoleApp
 			do
 			{
 				ConsoleKeyInfo fs = System.Console.ReadKey(true);
-				if (fs.Key == ConsoleKey.D0)
+				if (fs.Key == ConsoleKey.D1)
 				{
 					result = 0;
 					appearing = false;
 				}
-				else if (fs.Key == ConsoleKey.D1)
+				else if (fs.Key == ConsoleKey.D2)
 				{
 					result = 1;
 					appearing = false;
 				}
-				else if (fs.Key == ConsoleKey.D2)
+				else if (fs.Key == ConsoleKey.D3)
 				{
 					result = 2;
 					appearing = false;
 				}
-				else if (fs.Key == ConsoleKey.D3)
+				else if (fs.Key == ConsoleKey.D4)
 				{
 					if (shadowTrainer)
 						result = 4;
@@ -404,7 +404,7 @@ namespace PokemonUnity.ConsoleApp
 					appearing = false;
 					result = 0;
 					//Core.Logger.Log($"int=#{result}, pp=#{moves[result].PP}");
-					Core.Logger.Log($"int=#{0}, pp=#{1}", result, moves[result].PP);
+					Core.Logger.Log("int=#{0}, pp=#{1}", result, moves[result].PP);
 				}
 				else if (fs.Key == ConsoleKey.D2)
 				{
@@ -412,7 +412,7 @@ namespace PokemonUnity.ConsoleApp
 					appearing = false;
 					result = 1;
 					//Core.Logger.Log($"int=#{result}, pp=#{moves[result].PP}");
-					Core.Logger.Log($"int=#{0}, pp=#{1}", result, moves[result].PP);
+					Core.Logger.Log("int=#{0}, pp=#{1}", result, moves[result].PP);
 				}
 				else if (fs.Key == ConsoleKey.D3)
 				{
@@ -420,7 +420,7 @@ namespace PokemonUnity.ConsoleApp
 					appearing = false;
 					result = 2;
 					//Core.Logger.Log($"int=#{result}, pp=#{moves[result].PP}");
-					Core.Logger.Log($"int=#{0}, pp=#{1}", result, moves[result].PP);
+					Core.Logger.Log("int=#{0}, pp=#{1}", result, moves[result].PP);
 				}
 				else if (fs.Key == ConsoleKey.D4)
 				{
@@ -428,7 +428,7 @@ namespace PokemonUnity.ConsoleApp
 					appearing = false;
 					result = 3;
 					//Core.Logger.Log($"int=#{result}, pp=#{moves[result].PP}");
-					Core.Logger.Log($"int=#{0}, pp=#{1}", result, moves[result].PP);
+					Core.Logger.Log("int=#{0}, pp=#{1}", result, moves[result].PP);
 				}
 				else if (fs.Key == ConsoleKey.Q)
 				{
@@ -658,12 +658,12 @@ namespace PokemonUnity.ConsoleApp
 			{
 				hpchange = -hpchange;
 				//Core.Logger.Log($"[HP change] #{pkmn.Name} lost #{hpchange} HP (#{oldhp}=>#{pkmn.HP})");
-				Core.Logger.Log($"[HP change] #{0} lost #{1} HP (#{2}=>#{3})", pkmn.Name, hpchange, oldhp, pkmn.HP);
+				Core.Logger.Log("[HP change] #{0} lost #{1} HP (#{2}=>#{3})", pkmn.Name, hpchange, oldhp, pkmn.HP);
 			}
 			else
 			{
 				//Core.Logger.Log($"[HP change] #{pkmn.Name} gained #{hpchange} HP (#{oldhp}=>#{pkmn.HP})");
-				Core.Logger.Log($"[HP change] #{0} gained #{1} HP (#{2}=>#{3})", pkmn.Name, hpchange, oldhp, pkmn.HP);
+				Core.Logger.Log("[HP change] #{0} gained #{1} HP (#{2}=>#{3})", pkmn.Name, hpchange, oldhp, pkmn.HP);
 			}
 			Refresh();
 
@@ -778,18 +778,18 @@ namespace PokemonUnity.ConsoleApp
 				if (opponent.IsNotNullOrNone())
 				{
 					//Core.Logger.Log($"[CommonAnimation] #{moveid}, #{attacker.Name}, #{opponent.Name}");
-					Core.Logger.Log($"[CommonAnimation] #{0}, #{1}, #{2}",moveid.ToString(), attacker.Name, opponent.Name);
+					Core.Logger.Log("[CommonAnimation] #{0}, #{1}, #{2}",moveid.ToString(), attacker.Name, opponent.Name);
 				}
 				else
 				{
 					//Core.Logger.Log($"[CommonAnimation] #{moveid}, #{attacker.Name}");
-					Core.Logger.Log($"[CommonAnimation] #{0}, #{1}",moveid.ToString(), attacker.Name);
+					Core.Logger.Log("[CommonAnimation] #{0}, #{1}",moveid.ToString(), attacker.Name);
 				}
 			}
 			else
 			{
 				//Core.Logger.Log($"[CommonAnimation] #{moveid}");
-				Core.Logger.Log($"[CommonAnimation] #{0}",moveid.ToString());
+				Core.Logger.Log("[CommonAnimation] #{0}",moveid.ToString());
 			}
 		}
 
@@ -804,17 +804,17 @@ namespace PokemonUnity.ConsoleApp
 				if (target.IsNotNullOrNone())
 				{
 					//Core.Logger.Log($"[Animation] #{user.Name}, #{target.Name}");
-					Core.Logger.Log($"[Animation] #{0}, #{1}", user.Name.ToString(), target.Name);
+					Core.Logger.Log("[Animation] #{0}, #{1}", user.Name.ToString(), target.Name);
 				}
 				else
 				{
 					//Core.Logger.Log($"[Animation] #{user.Name}");
-					Core.Logger.Log($"[Animation] #{0}", user.Name);
+					Core.Logger.Log("[Animation] #{0}", user.Name);
 				}
 			}
 			else
 			{
-				Core.Logger.Log($"[Animation]");
+				Core.Logger.Log("[Animation]");
 			}
 		}
 
@@ -841,7 +841,7 @@ namespace PokemonUnity.ConsoleApp
 			do {
 				i = Core.Rand.Next(4);
 			} while (battler.moves[i].id==0);
-			Core.Logger.Log($"i=#{0}, pp=#{1}",i,battler.moves[i].PP);
+			Core.Logger.Log("i=#{0}, pp=#{1}",i,battler.moves[i].PP);
 			//Debug.flush;
 			return i;
 #else
