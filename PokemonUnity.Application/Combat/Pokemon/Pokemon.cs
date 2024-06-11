@@ -1517,7 +1517,7 @@ namespace PokemonUnity.Combat
 					if ((target.hasWorkingAbility(Abilities.ROUGH_SKIN,true) ||
 						target.hasWorkingAbility(Abilities.IRON_BARBS,true)) && !user.isFainted())
 						if (!user.hasWorkingAbility(Abilities.MAGIC_GUARD)) {
-							Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s #{Game._INTL(target.Ability.ToString(TextScripts.Name))}");
+							Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s #{target.Ability.ToString()}");
 							if (@battle.scene is IPokeBattle_DebugSceneNoGraphics s0) s0.DamageAnimation(user,0);
 							user.ReduceHP((int)Math.Floor(user.TotalHP/8d));
 							@battle.Display(Game._INTL("{1}'s {2} hurt {3}!",target.ToString(),
@@ -1570,22 +1570,22 @@ namespace PokemonUnity.Combat
 						target.ConsumeItem(true,false);
 					} else if (target.hasWorkingItem(Items.ABSORB_BULB) && movetype == Types.WATER)
 						if (target is IBattlerEffect t0 && t0.IncreaseStatWithCause(Stats.SPATK,1,target,Game._INTL(target.Item.ToString(TextScripts.Name)))) {
-							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{Game._INTL(target.Item.ToString(TextScripts.Name))}");
+							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{target.Item.ToString()}");
 							target.ConsumeItem();
 						}
 					else if (target.hasWorkingItem(Items.LUMINOUS_MOSS) && movetype == Types.WATER)
 						if (target is IBattlerEffect t1 && t1.IncreaseStatWithCause(Stats.SPDEF,1,target,Game._INTL(target.Item.ToString(TextScripts.Name)))) {
-							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{Game._INTL(target.Item.ToString(TextScripts.Name))}");
+							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{target.Item.ToString()}");
 							target.ConsumeItem();
 						}
 					else if (target.hasWorkingItem(Items.CELL_BATTERY) && movetype == Types.ELECTRIC)
 						if (target is IBattlerEffect t2 && t2.IncreaseStatWithCause(Stats.ATTACK,1,target,Game._INTL(target.Item.ToString(TextScripts.Name)))) {
-							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{Game._INTL(target.Item.ToString(TextScripts.Name))}");
+							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{target.Item.ToString()}");
 							target.ConsumeItem();
 						}
 					else if (target.hasWorkingItem(Items.SNOWBALL) && movetype == Types.ICE)
 						if (target is IBattlerEffect t3 && t3.IncreaseStatWithCause(Stats.ATTACK,1,target,Game._INTL(target.Item.ToString(TextScripts.Name)))) {
-							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{Game._INTL(target.Item.ToString(TextScripts.Name))}");
+							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{target.Item.ToString()}");
 							target.ConsumeItem();
 						}
 					else if (target.hasWorkingItem(Items.WEAKNESS_POLICY) && target.damagestate.TypeMod>8) {
@@ -1604,7 +1604,7 @@ namespace PokemonUnity.Combat
 					else if ((target.hasWorkingItem(Items.JABOCA_BERRY) && move.IsPhysical(movetype)) ||
 							(target.hasWorkingItem(Items.ROWAP_BERRY) && move.IsSpecial(movetype)))
 						if (!user.hasWorkingAbility(Abilities.MAGIC_GUARD) && !user.isFainted()) {
-							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{Game._INTL(target.Item.ToString(TextScripts.Name))}");
+							Core.Logger.Log($"[Item triggered] #{target.ToString()}'s #{target.Item.ToString()}");
 							if (@battle.scene is IPokeBattle_DebugSceneNoGraphics s0) s0.DamageAnimation(user,0);
 							user.ReduceHP((int)Math.Floor(user.TotalHP/8d));
 							@battle.Display(Game._INTL("{1} consumed its {2} and hurt {3}!",target.ToString(),
@@ -1667,7 +1667,7 @@ namespace PokemonUnity.Combat
 				Types movetype=thismove.GetType(thismove.Type,user,target);
 				if (target.hasWorkingAbility(Abilities.COLOR_CHANGE) &&
 					!target.HasType(movetype)) {//!Types.isPseudoType(movetype) &&
-					Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s Color Change made it #{Game._INTL(movetype.ToString(TextScripts.Name))}-type");
+					Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s Color Change made it #{movetype.ToString()}-type");
 					target.Type1=movetype;
 					target.Type2=movetype;
 					target.effects.Type3=Types.NONE;
@@ -1699,7 +1699,7 @@ namespace PokemonUnity.Combat
 					}
 					@battle.Display(Game._INTL("{1} stole {2}'s {3} with {4}!",user.ToString(),
 						target.ToString(true),Game._INTL(user.Item.ToString(TextScripts.Name)),Game._INTL(user.Ability.ToString(TextScripts.Name))));
-					Core.Logger.Log($"[Ability triggered] #{user.ToString()}'s Magician stole #{target.ToString(true)}'s #{Game._INTL(user.Item.ToString(TextScripts.Name))}");
+					Core.Logger.Log($"[Ability triggered] #{user.ToString()}'s Magician stole #{target.ToString(true)}'s #{user.Item.ToString()}");
 				}
 			// Pickpocket
 			if (target.hasWorkingAbility(Abilities.PICKPOCKET))
@@ -1721,7 +1721,7 @@ namespace PokemonUnity.Combat
 					}
 					@battle.Display(Game._INTL("{1} pickpocketed {2}'s {3}!",target.ToString(),
 						user.ToString(true),Game._INTL(target.Item.ToString(TextScripts.Name))));
-					Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s Pickpocket stole #{user.ToString(true)}'s #{Game._INTL(target.Item.ToString(TextScripts.Name))}");
+					Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s Pickpocket stole #{user.ToString(true)}'s #{target.Item.ToString()}");
 				}
 			}
 		public void AbilityCureCheck() {
@@ -2196,7 +2196,7 @@ namespace PokemonUnity.Combat
 				foreach (var i in priority)
 					if (i.effects.Snatch) {
 						@battle.Display(Game._INTL("{1} snatched {2}'s move!",i.ToString(),user.ToString(true)));
-						Core.Logger.Log($"[Lingering effect triggered] #{i.ToString()}'s Snatch made it use #{user.ToString(true)}'s #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
+						Core.Logger.Log($"[Lingering effect triggered] #{i.ToString()}'s Snatch made it use #{user.ToString(true)}'s #{thismove.id.ToString()}");
 						i.effects.Snatch=false;
 						IBattler target=user;
 						user=i;
@@ -2294,7 +2294,7 @@ namespace PokemonUnity.Combat
 				foreach (var i in priority)
 					if (i.effects.Snatch) {
 						@battle.Display(Game._INTL("{1} Snatched {2}'s move!",i.ToString(),user.ToString(true)));
-						Core.Logger.Log($"[Lingering effect triggered] #{i.ToString()}'s Snatch made it use #{user.ToString(true)}'s #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
+						Core.Logger.Log($"[Lingering effect triggered] #{i.ToString()}'s Snatch made it use #{user.ToString(true)}'s #{thismove.id.ToString()}");
 						i.effects.Snatch=false;
 						target=user;
 						user=i;
@@ -2309,7 +2309,7 @@ namespace PokemonUnity.Combat
 			if (thismove.Flags.Reflectable)//canMagicCoat()
 				if (target.effects.MagicCoat) {
 					// switch user and target
-					Core.Logger.Log($"[Lingering effect triggered] #{target.ToString()}'s Magic Coat made it use #{user.ToString(true)}'s #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
+					Core.Logger.Log($"[Lingering effect triggered] #{target.ToString()}'s Magic Coat made it use #{user.ToString(true)}'s #{thismove.id.ToString()}");
 					changeeffect=3;
 					IBattler tmp=user;
 					user=target;
@@ -2323,7 +2323,7 @@ namespace PokemonUnity.Combat
 					}
 				} else if (!user.hasMoldBreaker() && target.hasWorkingAbility(Abilities.MAGIC_BOUNCE)) {
 					// switch user and target
-					Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s Magic Bounce made it use #{user.ToString(true)}'s #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
+					Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s Magic Bounce made it use #{user.ToString(true)}'s #{thismove.id.ToString()}");
 					changeeffect=3;
 					IBattler tmp=user;
 					user=target;
@@ -2339,7 +2339,7 @@ namespace PokemonUnity.Combat
 				thismove.Flags.SoundBased && //isSoundBased()
 				thismove.Effect != Attack.Effects.x073 &&	// Perish Song handled elsewhere
 				thismove.Effect != Attack.Effects.x15B) {	// Parting Shot handled elsewhere
-				Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s Soundproof blocked #{user.ToString(true)}'s #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
+				Core.Logger.Log($"[Ability triggered] #{target.ToString()}'s Soundproof blocked #{user.ToString(true)}'s #{thismove.id.ToString()}");
 				@battle.Display(Game._INTL("{1}'s {2} blocks {3}!",target.ToString(),
 					Game._INTL(target.Ability.ToString(TextScripts.Name)),Game._INTL(thismove.id.ToString(TextScripts.Name))));
 				return false;
@@ -2672,28 +2672,28 @@ namespace PokemonUnity.Combat
 			//if (!turneffects.SkipAccuracyCheck)
 			//  if (!ObedienceCheck(choice)) return false;
 			if (@effects.SkyDrop) { // Intentionally no message here
-				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{Game._INTL(thismove.id.ToString(TextScripts.Name))} because of being Sky Dropped");
+				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{thismove.id.ToString()} because of being Sky Dropped");
 				return false;
 			}
 			if (@battle.field.Gravity>0 && thismove.Flags.Gravity) {
 				@battle.Display(Game._INTL("{1} can't use {2} because of gravity!",ToString(),Game._INTL(thismove.id.ToString(TextScripts.Name))));
-				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{Game._INTL(thismove.id.ToString(TextScripts.Name))} because of Gravity");
+				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{thismove.id.ToString()} because of Gravity");
 				return false;
 			}
 			if (@effects.Taunt>0 && thismove.basedamage==0) {
 				@battle.Display(Game._INTL("{1} can't use {2} after the taunt!",ToString(),Game._INTL(thismove.id.ToString(TextScripts.Name))));
-				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{Game._INTL(thismove.id.ToString(TextScripts.Name))} because of Taunt");
+				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{thismove.id.ToString()} because of Taunt");
 				return false;
 			}
 			if (@effects.HealBlock>0 && thismove.isHealingMove()) {
 				@battle.Display(Game._INTL("{1} can't use {2} because of Heal Block!",ToString(),Game._INTL(thismove.id.ToString(TextScripts.Name))));
-				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{Game._INTL(thismove.id.ToString(TextScripts.Name))} because of Heal Block");
+				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{thismove.id.ToString()} because of Heal Block");
 				return false;
 			}
 			if (@effects.Torment && thismove.id==@lastMoveUsed &&
 				thismove.id!=@battle.struggle.id && @effects.TwoTurnAttack==0) {
 				@battle.DisplayPaused(Game._INTL("{1} can't use the same move in a row due to the torment!",ToString()));
-				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{Game._INTL(thismove.id.ToString(TextScripts.Name))} because of Torment");
+				Core.Logger.Log($"[Move failed] #{ToString()} can't use #{thismove.id.ToString()} because of Torment");
 				return false;
 			}
 			if (Opposing1.effects.Imprison && !Opposing1.isFainted())
@@ -2702,7 +2702,7 @@ namespace PokemonUnity.Combat
 					thismove.id==Opposing1.moves[2].id ||
 					thismove.id==Opposing1.moves[3].id) {
 					@battle.Display(Game._INTL("{1} can't use the sealed {2}!",ToString(),Game._INTL(thismove.id.ToString(TextScripts.Name))));
-					Core.Logger.Log($"[Move failed] #{Game._INTL(thismove.id.ToString(TextScripts.Name))} can't use #{Game._INTL(thismove.id.ToString(TextScripts.Name))} because of #{Opposing1.ToString(true)}'s Imprison");
+					Core.Logger.Log($"[Move failed] #{thismove.id.ToString()} can't use #{thismove.id.ToString()} because of #{Opposing1.ToString(true)}'s Imprison");
 					return false;
 				}
 			if (battle.doublebattle && Opposing2.effects.Imprison && !Opposing2.isFainted())
@@ -2711,13 +2711,13 @@ namespace PokemonUnity.Combat
 					thismove.id==Opposing2.moves[2].id ||
 					thismove.id==Opposing2.moves[3].id) {
 					@battle.Display(Game._INTL("{1} can't use the sealed {2}!",ToString(),Game._INTL(thismove.id.ToString(TextScripts.Name))));
-					Core.Logger.Log($"[Move failed] #{Game._INTL(thismove.id.ToString(TextScripts.Name))} can't use #{Game._INTL(thismove.id.ToString(TextScripts.Name))} because of #{Opposing2.ToString(true)}'s Imprison");
+					Core.Logger.Log($"[Move failed] #{thismove.id.ToString()} can't use #{thismove.id.ToString()} because of #{Opposing2.ToString(true)}'s Imprison");
 					return false;
 				}
 			if (@effects.Disable>0 && thismove.id==@effects.DisableMove &&
 				!@battle.switching) { // Pursuit ignores if it's disabled
 				@battle.DisplayPaused(Game._INTL("{1}'s {2} is disabled!",ToString(),Game._INTL(thismove.id.ToString(TextScripts.Name))));
-				Core.Logger.Log($"[Move failed] #{ToString()}'s #{Game._INTL(thismove.id.ToString(TextScripts.Name))} is disabled");
+				Core.Logger.Log($"[Move failed] #{ToString()}'s #{thismove.id.ToString()} is disabled");
 				return false;
 			}
 			if (choice.Index==-2) { // Battle Palace
@@ -2744,14 +2744,14 @@ namespace PokemonUnity.Combat
 						this.ContinueStatus();
 						Core.Logger.Log($"[Status] #{ToString()} remained asleep (count: #{this.StatusCount.ToString()})");
 						if (!thismove.CanUseWhileAsleep()) { // Snore/Sleep Talk/Outrage
-							Core.Logger.Log($"[Move failed] #{ToString()} couldn't use #{Game._INTL(thismove.id.ToString(TextScripts.Name))} while asleep");
+							Core.Logger.Log($"[Move failed] #{ToString()} couldn't use #{thismove.id.ToString()} while asleep");
 							return false;
 						}
 					}
 				}
 			if (this.status==Status.FROZEN) {
 				if (thismove.Flags.Defrost) {
-					Core.Logger.Log($"[Move effect triggered] #{ToString()} was defrosted by using #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
+					Core.Logger.Log($"[Move effect triggered] #{ToString()} was defrosted by using #{thismove.id.ToString()}");
 					this.CureStatus(false);
 					@battle.Display(Game._INTL("{1} melted the ice!",ToString()));
 					CheckForm();
@@ -2897,7 +2897,7 @@ namespace PokemonUnity.Combat
 						thismove.Effect != Attack.Effects.x0C6) addleffect*=2; // Secret Power
 					if (Core.DEBUG && Input.press((int)PokemonUnity.Interface.InputKeys.DEBUG)) addleffect=100;
 					if (@battle.Random(100)<addleffect) {
-						Core.Logger.Log($"[Move effect triggered] #{Game._INTL(thismove.id.ToString(TextScripts.Name))}'s added effect");
+						Core.Logger.Log($"[Move effect triggered] #{thismove.id.ToString()}'s added effect");
 						thismove.AdditionalEffect(user,target);
 					}
 				}
@@ -2909,7 +2909,7 @@ namespace PokemonUnity.Combat
 					thismove.PP=0;
 					@battle.Display(Game._INTL("{1}'s {2} lost all its PP due to the grudge!",
 						user.ToString(),Game._INTL(thismove.id.ToString(TextScripts.Name))));
-					Core.Logger.Log($"[Lingering effect triggered] #{target.ToString()}'s Grudge made #{Game._INTL(thismove.id.ToString(TextScripts.Name))} lose all its PP");
+					Core.Logger.Log($"[Lingering effect triggered] #{target.ToString()}'s Grudge made #{thismove.id.ToString()} lose all its PP");
 				}
 				if (target.isFainted())
 				destinybond=destinybond || target.effects.DestinyBond;
@@ -3026,7 +3026,7 @@ namespace PokemonUnity.Combat
 			if (index>=0)
 				//@battle.choices[@Index].Index=index;
 				@battle.choices[@Index]=new Choice(action: @battle.choices[@Index].Action, moveIndex: index, move: @battle.choices[@Index].Move, target: @battle.choices[@Index].Target);
-			//Core.Logger.Log($"#{ToString()} used simple move #{Game._INTL(choice.Move.id.ToString(TextScripts.Name))}");
+			//Core.Logger.Log($"#{ToString()} used simple move #{choice.Move.id.ToString()}");
 			Core.Logger.Log("#{0} used simple move #{1}",ToString(),choice.Move.id.ToString());
 			UseMove(choice,true);
 			return;
@@ -3052,7 +3052,7 @@ namespace PokemonUnity.Combat
 				//choice.Move=Combat.Move.FromMove(@battle,new Attack.Move(@currentMove));
 				choice=new Choice(action: choice.Action, moveIndex: choice.Index, move: Combat.Move.FromMove(@battle, new Attack.Move(@currentMove)));
 				turneffects.SpecialUsage=true;
-				Core.Logger.Log($"Continuing multi-turn move #{Game._INTL(choice.Move.id.ToString(TextScripts.Name))}");
+				Core.Logger.Log($"Continuing multi-turn move #{choice.Move.id.ToString()}");
 			}
 			else if (@effects.Encore>0) {
 				if (@battle.CanShowCommands(@Index) &&
@@ -3063,7 +3063,7 @@ namespace PokemonUnity.Combat
 						//choice.Target=-1; // No target chosen
 						choice = new Choice(action: ChoiceAction.UseMove, moveIndex: @effects.EncoreIndex, move: @moves[@effects.EncoreIndex]);
 					}
-					Core.Logger.Log($"Using Encored move #{Game._INTL(choice.Move.id.ToString(TextScripts.Name))}");
+					Core.Logger.Log($"Using Encored move #{choice.Move.id.ToString()}");
 				}
 			}
 			IBattleMove thismove=choice.Move;
@@ -3114,7 +3114,7 @@ namespace PokemonUnity.Combat
 					this.lastRegularMoveUsed=Moves.NONE;
 					EndTurn(choice);
 					@battle.Judge();         //@battle.Switch
-					Core.Logger.Log($"[Move failed] #{Game._INTL(thismove.id.ToString(TextScripts.Name))} has no PP left");
+					Core.Logger.Log($"[Move failed] #{thismove.id.ToString()} has no PP left");
 					return;
 				}
 			// Remember that user chose a two-turn move
@@ -3185,7 +3185,7 @@ namespace PokemonUnity.Combat
 				switch (@battle.Weather) { //ToDo: Make this an if-statement?
 					case Weather.HEAVYRAIN:
 						if (thismove.GetType(thismove.Type,user,null) == Types.FIRE) {
-							Core.Logger.Log($"[Move failed] Primordial Sea's rain cancelled the Fire-type #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
+							Core.Logger.Log($"[Move failed] Primordial Sea's rain cancelled the Fire-type #{thismove.id.ToString()}");
 							@battle.Display(Game._INTL("The Fire-type attack fizzled out in the heavy rain!"));
 							user.lastMoveUsed=thismove.id;
 							//user.lastMoveUsedType=thismove.Type(thismove.Type,user,null);
@@ -3200,7 +3200,7 @@ namespace PokemonUnity.Combat
 						break;
 					case Weather.HARSHSUN:
 						if (thismove.GetType(thismove.Type,user,null) == Types.WATER) {
-							Core.Logger.Log($"[Move failed] Desolate Land's sun cancelled the Water-type #{Game._INTL(thismove.id.ToString(TextScripts.Name))}");
+							Core.Logger.Log($"[Move failed] Desolate Land's sun cancelled the Water-type #{thismove.id.ToString()}");
 							@battle.Display(Game._INTL("The Water-type attack evaporated in the harsh sunlight!"));
 							user.lastMoveUsed=thismove.id;
 							//user.lastMoveUsedType=thismove.Type(thismove.Type,user,null);

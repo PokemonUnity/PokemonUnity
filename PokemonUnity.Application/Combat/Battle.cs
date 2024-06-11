@@ -1820,7 +1820,7 @@ namespace PokemonUnity.Combat
 			string name=GetOwner(userPkmn.Index).name;
 			if (BelongsToPlayer(userPkmn.Index)) name=GetOwner(userPkmn.Index).name;
 			DisplayBrief(Game._INTL("{1} used the\r\n{2}.",name,Game._INTL(item.ToString(TextScripts.Name))));
-			Core.Logger.Log($"[Use item] Player used #{Game._INTL(item.ToString(TextScripts.Name))} on #{pokemon.Name}");
+			Core.Logger.Log($"[Use item] Player used #{item.ToString()} on #{pokemon.Name}");
 			bool ret=false;
 			if (pokemon.isEgg) {
 				Display(Game._INTL("But it had no effect!"));
@@ -1854,7 +1854,7 @@ namespace PokemonUnity.Combat
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		public bool UseItemOnBattler(Items item,int index,IBattler userPkmn,IHasDisplayMessage scene) {
-			Core.Logger.Log($"[Use item] Player used #{Game._INTL(item.ToString(TextScripts.Name))} on #{_battlers[index].ToString(true)}");
+			Core.Logger.Log($"[Use item] Player used #{item.ToString()} on #{_battlers[index].ToString(true)}");
 			bool ret=ItemHandlers.triggerBattleUseOnBattler(item,_battlers[index],scene);
 			if (!ret && BelongsToPlayer(userPkmn.Index)) {
 				if (Game.GameData.Bag.CanStore(item)) {
@@ -3694,7 +3694,7 @@ namespace PokemonUnity.Combat
 					i.effects.FutureSight-=1;
 					if (i.effects.FutureSight==0) {
 						Moves move=i.effects.FutureSightMove;
-						Core.Logger.Log($"[Lingering effect triggered] #{Game._INTL(move.ToString(TextScripts.Name))} struck #{i.ToString(true)}");
+						Core.Logger.Log($"[Lingering effect triggered] #{move.ToString()} struck #{i.ToString(true)}");
 						Display(Game._INTL("{1} took the {2} attack!",i.ToString(),Game._INTL(move.ToString(TextScripts.Name))));
 						IBattler moveuser=null;
 						foreach (var j in battlers) {
@@ -3807,7 +3807,7 @@ namespace PokemonUnity.Combat
 					(i.hasWorkingAbility(Abilities.HYDRATION) && (Weather==Weather.RAINDANCE ||
 					Weather==Weather.HEAVYRAIN))) {
 					if (i.Status>0) {
-						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{Game._INTL(i.Ability.ToString(TextScripts.Name))}");
+						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString()}");
 						Status s=i.Status;
 						if (i is IBattlerEffect b) b.CureStatus(false);
 						switch (s) {
@@ -3833,7 +3833,7 @@ namespace PokemonUnity.Combat
 				if (i.hasWorkingAbility(Abilities.HEALER) && Random(10)<3) {
 					IBattler partner=i.Partner;
 					if (partner.IsNotNullOrNone() && partner.Status>0) {
-						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{Game._INTL(i.Ability.ToString(TextScripts.Name))}");
+						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString()}");
 						Status s=partner.Status;
 						if (partner is IBattlerEffect b) b.CureStatus(false);
 						switch (s) {
@@ -4372,7 +4372,7 @@ namespace PokemonUnity.Combat
 				// A Pokémon's turncount is 0 if it became active after the beginning of a round
 				if (i.turncount>0 && i.hasWorkingAbility(Abilities.SPEED_BOOST)) {
 					if (i is IBattlerEffect b && b.IncreaseStatWithCause(Stats.SPEED,1,i,Game._INTL(i.Ability.ToString(TextScripts.Name)))) {
-						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{Game._INTL(i.Ability.ToString(TextScripts.Name))}");
+						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString()}");
 					}
 				}
 				// Bad Dreams

@@ -3378,7 +3378,7 @@ namespace PokemonUnity.Combat
 					score=(int)Math.Round(score);
 					float oldscore=score;
 					score+=basedamage;
-					Core.Logger.Log($"[AI] #{Game._INTL(move.id.ToString(TextScripts.Name))} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
+					Core.Logger.Log($"[AI] #{move.id.ToString()} damage calculated (#{realDamage}=>#{basedamage}% of target's #{opponent.HP} HP), score change #{oldscore}=>#{score}");
 				}
 			}
 			else {

@@ -325,7 +325,7 @@ namespace PokemonUnity.Combat
 			}
 			if ((opponent.hasWorkingAbility(Abilities.STORM_DRAIN) && type == Types.WATER) ||
 				(opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD) && type == Types.ELECTRIC)){
-				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{Kernal.MoveData[MoveId].Name} ineffective)");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString()} (made #{Kernal.MoveData[MoveId].Name} ineffective)");
 				if (opponent is IBattlerEffect b && b.CanIncreaseStatStage(Stats.SPATK, opponent))
 					b.IncreaseStatWithCause(Stats.SPATK,1, opponent, Game._INTL(opponent.Ability.ToString(TextScripts.Name)));
 				else
@@ -345,7 +345,7 @@ namespace PokemonUnity.Combat
 			if ((opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.WATER) ||
 				(opponent.hasWorkingAbility(Abilities.VOLT_ABSORB) && type == Types.ELECTRIC) ||
 				(opponent.hasWorkingAbility(Abilities.WATER_ABSORB) && type == Types.WATER)){
-				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s #{Game._INTL(opponent.Ability.ToString(TextScripts.Name))} (made #{@Name} ineffective)");
+				Core.Logger.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString()} (made #{@Name} ineffective)");
 				if (opponent.effects.HealBlock==0){
 					if (opponent.RecoverHP((int)Math.Floor(opponent.TotalHP/4d),true)>0)
 						battle.Display(Game._INTL("{1}'s {2} restored its HP!",

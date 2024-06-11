@@ -661,7 +661,7 @@ namespace PokemonUnity.Combat
 					if (hasWorkingAbility(Abilities.SIMPLE)) increment*=2;
 				}
 			increment=Math.Min(increment,6-@stages[(int)stat]);
-			Core.Logger.Log($"[Stat change] #{ToString()}'s #{Game._INTL(stat.ToString(TextScripts.Name))} rose by #{increment} stage(s) (was #{@stages[(int)stat]}, now #{@stages[(int)stat]+increment})");
+			Core.Logger.Log($"[Stat change] #{ToString()}'s #{stat.ToString()} rose by #{increment} stage(s) (was #{@stages[(int)stat]}, now #{@stages[(int)stat]+increment})");
 			@stages[(int)stat]+=increment;
 			return increment;
 		}
@@ -806,7 +806,7 @@ namespace PokemonUnity.Combat
 					if (hasWorkingAbility(Abilities.SIMPLE)) increment*=2;
 				}
 			increment=Math.Min(increment,6+@stages[(int)stat]);
-			Core.Logger.Log($"[Stat change] #{ToString()}'s #{Game._INTL(stat.ToString(TextScripts.Name))} fell by #{increment} stage(s) (was #{@stages[(int)stat]}, now #{@stages[(int)stat]-increment})");
+			Core.Logger.Log($"[Stat change] #{ToString()}'s #{stat.ToString()} fell by #{increment} stage(s) (was #{@stages[(int)stat]}, now #{@stages[(int)stat]-increment})");
 			@stages[(int)stat]-=increment;
 			return increment;
 		}

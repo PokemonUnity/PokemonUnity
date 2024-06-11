@@ -1980,7 +1980,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			string name=GetOwner(userPkmn.Index).name;
 			if (BelongsToPlayer(userPkmn.Index)) name=GetOwner(userPkmn.Index).name;
 			yield return DisplayBrief(Game._INTL("{1} used the\r\n{2}.",name,Game._INTL(item.ToString(TextScripts.Name))));
-			Core.Logger.Log($"[Use item] Player used #{Game._INTL(item.ToString(TextScripts.Name))} on #{pokemon.Name}");
+			Core.Logger.Log($"[Use item] Player used #{item.ToString()} on #{pokemon.Name}");
 			bool ret=false;
 			if (pokemon.isEgg) {
 				yield return Display(Game._INTL("But it had no effect!"));
@@ -2020,7 +2020,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		public bool UseItemOnBattler(Items item,int index,IBattlerIE userPkmn,IHasDisplayMessageIE scene) {
-			Core.Logger.Log($"[Use item] Player used #{Game._INTL(item.ToString(TextScripts.Name))} on #{@battlers[index].ToString(true)}");
+			Core.Logger.Log($"[Use item] Player used #{item.ToString()} on #{@battlers[index].ToString(true)}");
 			bool ret=ItemHandlers.triggerBattleUseOnBattler(item,@battlers[index],(IHasDisplayMessage)scene);
 			if (!ret && BelongsToPlayer(userPkmn.Index)) {
 				if (Game.GameData.Bag.CanStore(item)) {
@@ -3978,7 +3978,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					i.effects.FutureSight-=1;
 					if (i.effects.FutureSight==0) {
 						Moves move=i.effects.FutureSightMove;
-						Core.Logger.Log($"[Lingering effect triggered] #{Game._INTL(move.ToString(TextScripts.Name))} struck #{i.ToString(true)}");
+						Core.Logger.Log($"[Lingering effect triggered] #{move.ToString()} struck #{i.ToString(true)}");
 						yield return Display(Game._INTL("{1} took the {2} attack!",i.ToString(),Game._INTL(move.ToString(TextScripts.Name))));
 						IBattlerIE moveuser=null;
 						foreach (var j in battlers) {
@@ -4103,7 +4103,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					(i.hasWorkingAbility(Abilities.HYDRATION) && (Weather==Weather.RAINDANCE ||
 					Weather==Weather.HEAVYRAIN))) {
 					if (i.Status>0) {
-						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{Game._INTL(i.Ability.ToString(TextScripts.Name))}");
+						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString()}");
 						Status s=i.Status;
 						if (i is IBattlerEffectIE b) yield return b.CureStatus(false);
 						switch (s) {
@@ -4129,7 +4129,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (i.hasWorkingAbility(Abilities.HEALER) && Random(10)<3) {
 					IBattlerIE partner=i.Partner;
 					if (partner.IsNotNullOrNone() && partner.Status>0) {
-						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{Game._INTL(i.Ability.ToString(TextScripts.Name))}");
+						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString()}");
 						Status s=partner.Status;
 						if (partner is IBattlerEffectIE b) yield return b.CureStatus(false);
 						switch (s) {
@@ -4688,7 +4688,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					bool increaseStatWithCause = false;
 					yield return b.IncreaseStatWithCause(PokemonUnity.Combat.Stats.SPEED,1,i,Game._INTL(i.Ability.ToString(TextScripts.Name)),result:value=>increaseStatWithCause=value);
 					if (increaseStatWithCause) {
-						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{Game._INTL(i.Ability.ToString(TextScripts.Name))}");
+						Core.Logger.Log($"[Ability triggered] #{i.ToString()}'s #{i.Ability.ToString()}");
 					}
 				}
 				// Bad Dreams
