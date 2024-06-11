@@ -453,68 +453,68 @@ namespace PokemonUnity//.Inventory.Plants
 											Game._INTL("Fertilize"),
 											Game._INTL("Plant Berry"),
 											Game._INTL("Exit") },-1);
-						if (cmd==0) {		// Fertilize
-							Items ret=0;
-							FadeOutIn(99999, block:() => {
-								IBagScene scene=Game.GameData.Scenes.Bag.initialize();//new PokemonBag_Scene();
-								IBagScreen screen=Game.GameData.Screens.Bag.initialize(scene,Game.GameData.Bag);//new PokemonBagScreen(scene,Game.GameData.Bag);
-								berry=screen.ChooseBerryScreen();
-							});
-							if (ret>0) {
-								if (Item.IsMulch(ret)) {
-									//berryData.Mulch=ret;
-									gm6.Message(Game._INTL("The {1} was scattered on the soil.",ret.ToString(TextScripts.Name)));
-									if (gm6.ConfirmMessage(Game._INTL("Want to plant a Berry?"))) {
-										FadeOutIn(99999, block: () => {
-										   IBagScene scene=Game.GameData.Scenes.Bag.initialize();//new PokemonBag_Scene();
-										   IBagScreen screen=Game.GameData.Screens.Bag.initialize(scene,Game.GameData.Bag);//new PokemonBagScreen(scene,Game.GameData.Bag);
-										   berry=screen.ChooseBerryScreen();
-										});
-										if (berry>0) {
-											DateTime timenow=Game.GetTimeNow;
-											berryData = new PlantBerryEntryData(
-												berry,				//[1] item ID of planted berry
-												1,					//[0] growth stage (1-5)
-												0,					//[2] seconds alive
-												timenow,			//[3] time of last checkup (now)
-												100,				//[4] dampness value
-												0,					//[5] number of replants
-												0);					//[6] yield penalty
-											Game.GameData.Bag.DeleteItem(berry,1);
-											gm6.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
-												berry.ToString(TextScripts.Name)));
+							if (cmd==0) {		// Fertilize
+								Items ret=0;
+								FadeOutIn(99999, block:() => {
+									IBagScene scene=Game.GameData.Scenes.Bag.initialize();//new PokemonBag_Scene();
+									IBagScreen screen=Game.GameData.Screens.Bag.initialize(scene,Game.GameData.Bag);//new PokemonBagScreen(scene,Game.GameData.Bag);
+									berry=screen.ChooseBerryScreen();
+								});
+								if (ret>0) {
+									if (Item.IsMulch(ret)) { //this is IGameItem gi && gi
+										//berryData.Mulch=ret;
+										gm6.Message(Game._INTL("The {1} was scattered on the soil.",ret.ToString(TextScripts.Name)));
+										if (gm6.ConfirmMessage(Game._INTL("Want to plant a Berry?"))) {
+											FadeOutIn(99999, block: () => {
+											   IBagScene scene=Game.GameData.Scenes.Bag.initialize();//new PokemonBag_Scene();
+											   IBagScreen screen=Game.GameData.Screens.Bag.initialize(scene,Game.GameData.Bag);//new PokemonBagScreen(scene,Game.GameData.Bag);
+											   berry=screen.ChooseBerryScreen();
+											});
+											if (berry>0) {
+												DateTime timenow=Game.GetTimeNow;
+												berryData = new PlantBerryEntryData(
+													berry,				//[1] item ID of planted berry
+													1,					//[0] growth stage (1-5)
+													0,					//[2] seconds alive
+													timenow,			//[3] time of last checkup (now)
+													100,				//[4] dampness value
+													0,					//[5] number of replants
+													0);					//[6] yield penalty
+												Game.GameData.Bag.DeleteItem(berry,1);
+												gm6.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
+													berry.ToString(TextScripts.Name)));
+											}
 										}
+										interp.setVariable(berryData);
 									}
-									interp.setVariable(berryData);
+									else {
+										gm6.Message(Game._INTL("That won't fertilize the soil!"));
+									}
+									return;
 								}
-								else {
-									gm6.Message(Game._INTL("That won't fertilize the soil!"));
+							} else if (cmd==1) {		// Plant Berry
+								FadeOutIn(99999, block: () => {
+									IBagScene scene=Game.GameData.Scenes.Bag.initialize();//new PokemonBag_Scene();
+									IBagScreen screen=Game.GameData.Screens.Bag.initialize(scene,Game.GameData.Bag);//new PokemonBagScreen(scene,Game.GameData.Bag);
+									berry=screen.ChooseBerryScreen();
+								});
+								if (berry>0) {
+									DateTime timenow=Game.GetTimeNow;
+									berryData = new PlantBerryEntryData(
+										berry,			//[1] item ID of planted berry
+										1,				//[0] growth stage (1-5)
+										0,				//[2] seconds alive
+										timenow,		//[3] time of last checkup (now)
+										100,			//[4] dampness value
+										0,				//[5] number of replants
+										0);				//[6] yield penalty
+									Game.GameData.Bag.DeleteItem(berry,1);
+									gm6.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
+										berry.ToString(TextScripts.Name)));
+									interp.setVariable(berryData);
 								}
 								return;
 							}
-						} else if (cmd==1) {		// Plant Berry
-							FadeOutIn(99999, block: () => {
-								IBagScene scene=Game.GameData.Scenes.Bag.initialize();//new PokemonBag_Scene();
-								IBagScreen screen=Game.GameData.Screens.Bag.initialize(scene,Game.GameData.Bag);//new PokemonBagScreen(scene,Game.GameData.Bag);
-								berry=screen.ChooseBerryScreen();
-							});
-							if (berry>0) {
-								DateTime timenow=Game.GetTimeNow;
-								berryData = new PlantBerryEntryData(
-									berry,			//[1] item ID of planted berry
-									1,				//[0] growth stage (1-5)
-									0,				//[2] seconds alive
-									timenow,		//[3] time of last checkup (now)
-									100,			//[4] dampness value
-									0,				//[5] number of replants
-									0);				//[6] yield penalty
-								Game.GameData.Bag.DeleteItem(berry,1);
-								gm6.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
-									berry.ToString(TextScripts.Name)));
-								interp.setVariable(berryData);
-							}
-							return;
-						}
 						}
 						else {
 							gm6.Message(Game._INTL("{1} has been laid down.",berryData.Mulch.ToString(TextScripts.Name))); //[7]
@@ -625,9 +625,9 @@ namespace PokemonUnity//.Inventory.Plants
 							int randomno=Core.Rand.Next(1+berryvalues.maxBerries-berrycount);
 							berrycount=(int)Math.Floor(((berryvalues.maxBerries-berrycount)*(berryData.Dampness-1f)+randomno)/4f)+berrycount;
 						}
-						//else {
-						//	berrycount=berrycount; //berryvalues[2]
-						//}
+						else {
+							berrycount=berryvalues.maxBerries; //berryvalues[2]
+						}
 					}
 					string itemname=(berrycount>1) ? berry.ToString(TextScripts.NamePlural) : berry.ToString(TextScripts.Name);
 					string message = string.Empty;
