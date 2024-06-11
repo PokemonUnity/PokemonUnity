@@ -3035,7 +3035,7 @@ namespace PokemonUnity.Combat
 		public void UseMove(IBattleChoice choice,bool specialusage=false) {
 			// TODO: lastMoveUsed is not to be updated on nested calls
 			// Note: user.lastMoveUsedType IS to be updated on nested calls; is used for Conversion 2
-			IEffectsMove turneffects= new Effects.Move();
+			IEffectsMove turneffects= new Effects.Move(); //ToDo: ParentalBond is supposed to deal less damage on subsequent hits, use variable for implementation
 			turneffects.SpecialUsage=specialusage;
 			turneffects.SkipAccuracyCheck=specialusage;
 			turneffects.PassedTrying=false;
@@ -3170,7 +3170,8 @@ namespace PokemonUnity.Combat
 			@battle.successStates[user.Index].TypeMod=8;
 			// Check whether Selfdestruct works
 			if (!thismove.OnStartUse(user)) { // Selfdestruct, Natural Gift, Beat Up can return false here
-				Core.Logger.Log(string.Format("[Move failed] Failed OnStartUse (function code %02X)",thismove.Effect));
+				//Core.Logger.Log(string.Format("[Move failed] Failed OnStartUse (function code %02X)",thismove.Effect));
+				Core.Logger.Log(string.Format("[Move failed] Failed `OnStartUse` (Move Effect Code: {0})",thismove.Effect.ToString()));
 				user.lastMoveUsed=thismove.id;
 				//user.lastMoveUsedType=thismove.Type(thismove.Type,user,null);
 				if (!turneffects.SpecialUsage) {
@@ -3273,7 +3274,7 @@ namespace PokemonUnity.Combat
 				bool showanimation=true;
 				IList<int> alltargets= new List<int>();
 				for (int x = 0; x < targets.Count; x++)
-				if (!targets.Contains(targets[x])) alltargets.Add(targets[x].Index);
+					if (!targets.Contains(targets[x])) alltargets.Add(targets[x].Index);
 				// For each target in turn
 				int i=0;
 				do {

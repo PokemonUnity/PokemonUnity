@@ -1062,9 +1062,9 @@ namespace PokemonUnity.Combat
 			}
 			#endregion
 			finaldamagemult = ModifyDamage(finaldamagemult, attacker, opponent);
-			damage= (int)Math.Round(damage* finaldamagemult*1.0/0x1000);
-				opponent.damagestate.CalcDamage=damage;
-				Core.Logger.Log($"Move's damage calculated to be #{damage}");
+			damage=(int)Math.Round(damage* finaldamagemult*1.0/0x1000);
+			opponent.damagestate.CalcDamage=damage;
+			Core.Logger.Log($"Move's damage calculated to be #{0}", damage);
 			return damage;
 		}
 

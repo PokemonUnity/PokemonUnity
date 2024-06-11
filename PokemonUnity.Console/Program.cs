@@ -122,7 +122,7 @@ namespace PokemonUnity.ConsoleApp
 		public void Display(string v)
 		//void IHasDisplayMessage.Display(string v)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//Core.Logger.Log(v);
 			Core.Logger.Log(v);
@@ -130,7 +130,7 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.DisplayMessage(string msg, bool brief)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			Display(msg);
 			@messageCount += 1;
@@ -138,7 +138,7 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.DisplayPausedMessage(string msg)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			Display(msg);
 			@messageCount += 1;
@@ -146,7 +146,7 @@ namespace PokemonUnity.ConsoleApp
 
 		bool IPokeBattle_DebugSceneNoGraphics.DisplayConfirmMessage(string msg)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			Display(msg);
 			@messageCount += 1;
@@ -174,14 +174,14 @@ namespace PokemonUnity.ConsoleApp
 
 		bool IHasDisplayMessage.DisplayConfirm(string v)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			return (this as IPokeBattle_DebugSceneNoGraphics).DisplayConfirmMessage(v);
 		}
 
 		bool IPokeBattle_DebugSceneNoGraphics.ShowCommands(string msg, string[] commands, bool defaultValue)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			Core.Logger.Log(msg);
 			@messageCount += 1;
@@ -190,7 +190,7 @@ namespace PokemonUnity.ConsoleApp
 
 		int IPokeBattle_DebugSceneNoGraphics.ShowCommands(string msg, string[] commands, int defaultValue)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			Core.Logger.Log(msg);
 			@messageCount += 1;
@@ -199,7 +199,7 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.BeginCommandPhase()
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (@messageCount > 0)
 			{
@@ -210,7 +210,7 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.StartBattle(PokemonEssentials.Interface.PokeBattle.IBattle battle)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			this.battle = battle;
 			lastcmd = new MenuCommands[] { 0, 0, 0, 0 };
@@ -247,7 +247,7 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.EndBattle(BattleResults result)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		//void IPokeBattle_DebugSceneNoGraphics.TrainerSendOut(IBattle battle, IPokemon pkmn)
@@ -257,17 +257,17 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.TrainerWithdraw(IBattle battle, IBattler pkmn)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.Withdraw(IBattle battle, IBattler pkmn)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		int IPokeBattle_DebugSceneNoGraphics.ForgetMove(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon, Moves moveToLearn)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			IMove[] moves = pokemon.moves;
 			string[] commands = new string[4] {
@@ -317,13 +317,13 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.BeginAttackPhase()
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 		}
 
 		int IPokeBattle_DebugSceneNoGraphics.CommandMenu(int index)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			bool shadowTrainer = //(hasConst(Types,:SHADOW) && //Game has shadow pokemons
 				//@battle.opponent != null;
@@ -372,14 +372,13 @@ namespace PokemonUnity.ConsoleApp
 
 			//Core.Logger.LogError("Invalid Input!");
 
+			if (result == 3 && shadowTrainer) result = 4; // Convert "Run" to "Call"
 			return result;
-			//if (ret == 3 && shadowTrainer) ret = 4; // Convert "Run" to "Call"
-			//return ret;
 		}
 
 		int IPokeBattle_DebugSceneNoGraphics.FightMenu(int index)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			IBattleMove[] moves = @battle.battlers[index].moves;
 			string[] commands = new string[4] {
@@ -443,7 +442,7 @@ namespace PokemonUnity.ConsoleApp
 
 		Items IPokeBattle_DebugSceneNoGraphics.ItemMenu(int index)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//Core.Logger.Log("Need to implement item system in textbased-line");
 			return Items.NONE;
@@ -451,7 +450,7 @@ namespace PokemonUnity.ConsoleApp
 
 		int IPokeBattle_DebugSceneNoGraphics.ChooseTarget(int index, PokemonUnity.Attack.Targets targettype)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//Doesnt include multiple targets at once...
 			List<int> targets = new List<int>();
@@ -514,13 +513,13 @@ namespace PokemonUnity.ConsoleApp
 
 		public void Refresh()
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		//int IPokeBattle_DebugSceneNoGraphics.Switch(int index, bool lax, bool cancancel)
 		int IPokeBattle_SceneNonInteractive.Switch(int index, bool lax, bool cancancel)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			IPokemon[] party = @battle.Party(index);
 			IList<string> commands = new List<string>();
@@ -652,7 +651,7 @@ namespace PokemonUnity.ConsoleApp
 		//public IEnumerator HPChanged(PokemonEssentials.Interface.PokeBattle.IBattler pkmn, int oldhp, bool animate)
 		void IPokeBattle_DebugSceneNoGraphics.HPChanged(IBattler pkmn, int oldhp, bool anim)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			int hpchange = pkmn.HP - oldhp;
 			if (hpchange < 0)
@@ -669,20 +668,20 @@ namespace PokemonUnity.ConsoleApp
 			Refresh();
 
 			Core.Logger.LogDebug("[HP Changed] {0}: oldhp: {1} and animate: {2}", pkmn.Name, oldhp, anim.ToString());
-			Core.Logger.LogDebug("[HP Changed] {0}: CurrentHP: {1}", pkmn.Name, pkmn.HP);
+			//Core.Logger.LogDebug("[HP Changed] {0}: CurrentHP: {1}", pkmn.Name, pkmn.HP);
 
 			//yield return null;
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.Fainted(IBattler pkmn)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		//void IPokeBattle_DebugSceneNoGraphics.ChooseEnemyCommand(int index)
 		void IPokeBattle_SceneNonInteractive.ChooseEnemyCommand(int index)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (battle is IBattleAI b) b.DefaultChooseEnemyCommand(index);
 		}
@@ -690,7 +689,7 @@ namespace PokemonUnity.ConsoleApp
 		//void IPokeBattle_DebugSceneNoGraphics.ChooseNewEnemy(int index, IPokemon[] party)
 		int IPokeBattle_SceneNonInteractive.ChooseNewEnemy(int index, IPokemon[] party)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (battle is IBattleAI b) return b.DefaultChooseNewEnemy(index, party);
 			return -1;
@@ -698,34 +697,34 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.WildBattleSuccess()
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.TrainerBattleSuccess()
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.EXPBar(IBattler battler, IPokemon thispoke, int startexp, int endexp, int tempexp1, int tempexp2)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.LevelUp(IBattler battler, IPokemon thispoke, int oldtotalhp, int oldattack, int olddefense, int oldspeed, int oldspatk, int oldspdef)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		int IPokeBattle_DebugSceneNoGraphics.Blitz(int keys)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			return battle.Random(30);
 		}
 
 		void ISceneHasChatter.Chatter(PokemonEssentials.Interface.PokeBattle.IBattler attacker, PokemonEssentials.Interface.PokeBattle.IBattler opponent)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		//void IPokeBattle_DebugSceneNoGraphics.Chatter(IBattler attacker, IBattler opponent)
@@ -737,27 +736,27 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.ShowOpponent(int opp)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.HideOpponent()
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.Recall(int battlerindex)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.DamageAnimation(IBattler pkmn, TypeEffective effectiveness)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.BattleArenaJudgment(IBattle b1, IBattle b2, int[] r1, int[] r2)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//Core.Logger.Log($"[Judgment] #{b1.ToString()}:#{r1.Inspect()}, #{b2.ToString()}:#{r2.Inspect()}");
 			Core.Logger.Log($"[Judgment] #{b1.ToString()}:#[{r1.JoinAsString(", ")}], #{b2.ToString()}:#[{r2.JoinAsString(", ")}]");
@@ -765,14 +764,14 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.BattleArenaBattlers(IBattle b1, IBattle b2)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			Core.Logger.Log($"[#{b1.ToString()} VS #{b2.ToString()}]");
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.CommonAnimation(Moves moveid, IBattler attacker, IBattler opponent, int hitnum)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			if (attacker.IsNotNullOrNone())
 			{
@@ -796,7 +795,7 @@ namespace PokemonUnity.ConsoleApp
 
 		void IPokeBattle_DebugSceneNoGraphics.Animation(Moves moveid, PokemonEssentials.Interface.PokeBattle.IBattler user, PokemonEssentials.Interface.PokeBattle.IBattler target, int hitnum)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			Core.Logger.Log("{0} attack {1} With {2} for {3} hit times", user.Name, target.Name, moveid.ToString(), hitnum);
 
@@ -822,52 +821,64 @@ namespace PokemonUnity.ConsoleApp
 		#region Non Interactive Battle Scene
 		int IPokeBattle_SceneNonInteractive.CommandMenu(int index)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//if (battle.Random(15) == 0) return 1;
-			//return 0;
+#if INTERNAL
+			if (battle.Random(15) == 0) return 1;
+			return 0;
+#else
 			return (this as IPokeBattle_DebugSceneNoGraphics).CommandMenu(index);
+#endif
 		}
 
 		int IPokeBattle_SceneNonInteractive.FightMenu(int index)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//IBattler battler = @battle.battlers[index];
-			//int i = 0;
-			//do {
-			//	i = Core.Rand.Next(4);
-			//} while (battler.moves[i].id==0);
-			//Core.Logger.Log($"i=#{i}, pp=#{battler.moves[i].PP}");
-			////Debug.flush;
-			//return i;
+#if INTERNAL
+			IBattler battler = @battle.battlers[index];
+			int i = 0;
+			do {
+				i = Core.Rand.Next(4);
+			} while (battler.moves[i].id==0);
+			Core.Logger.Log($"i=#{0}, pp=#{1}",i,battler.moves[i].PP);
+			//Debug.flush;
+			return i;
+#else
 			return (this as IPokeBattle_DebugSceneNoGraphics).FightMenu(index);
+#endif
 		}
 
 		Items IPokeBattle_SceneNonInteractive.ItemMenu(int index)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//return -1;
+#if INTERNAL
+			return -1;
+#else
 			return (this as IPokeBattle_DebugSceneNoGraphics).ItemMenu(index);
+#endif
 		}
 
 		int IPokeBattle_SceneNonInteractive.ChooseTarget(int index, PokemonUnity.Attack.Targets targettype)
 		{
-			Core.Logger.Log(message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
+			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//List<int> targets = new List<int>();
-			//for (int i = 0; i < 4; i++)
-			//{
-			//	if (@battle.battlers[index].IsOpposing(i) &&
-			//	   !@battle.battlers[i].isFainted())
-			//	{
-			//		targets.Add(i);
-			//	}
-			//}
-			//if (targets.Count == 0) return -1;
-			//return targets[Core.Rand.Next(targets.Count)];
+#if INTERNAL
+			List<int> targets = new List<int>();
+			for (int i = 0; i < 4; i++)
+			{
+				if (@battle.battlers[index].IsOpposing(i) &&
+				   !@battle.battlers[i].isFainted())
+				{
+					targets.Add(i);
+				}
+			}
+			if (targets.Count == 0) return -1;
+			return targets[Core.Rand.Next(targets.Count)];
+#else
 			return (this as IPokeBattle_DebugSceneNoGraphics).ChooseTarget(index, targettype);
+#endif
 		}
 
 		/*int IPokeBattle_SceneNonInteractive.Switch(int index, bool lax, bool cancancel)

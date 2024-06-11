@@ -143,7 +143,7 @@ namespace PokemonUnity
 			Log(sender, eventArgs);
 		}
 
-		private void Log(object sender, OnDebugEventArgs eventArgs)
+		public void Log(object sender, OnDebugEventArgs eventArgs)
 		{
 			OnLog?.Invoke(sender, eventArgs);
 		}

@@ -58,8 +58,9 @@ namespace PokemonUnity.ConsoleApp
 		public virtual void Init(string logFilePath, string logBaseName, bool useSerilog = true)
 		{
 			this.logFilePath = System.IO.Path.Combine(logFilePath, logBaseName + ".log");
-			//if (!System.IO.File.Exists(this.logFilePath))
-			//	System.IO.File.Create(this.logFilePath);
+			if (System.IO.File.Exists(this.logFilePath))
+				//System.IO.File.Create(this.logFilePath);
+				System.IO.File.Delete(this.logFilePath); //Clear log file
 			this.useSerilog = useSerilog;
 			if (useSerilog)
 			{
@@ -68,8 +69,10 @@ namespace PokemonUnity.ConsoleApp
 					.WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information,
 						outputTemplate: "{Timestamp:HH:mm:ss} [{Level:u4}] {Message:lj}{NewLine}{Exception}")
 					.WriteTo.File(this.logFilePath,
-						restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose,
-						outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+						restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug,
+						outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+						//rollingInterval: RollingInterval.Hour,
+						retainedFileTimeLimit: TimeSpan.FromHours(0))
 					.CreateLogger();
 			}
 			Log("Debugger initialized. Logging to `{0}`", System.IO.Path.GetFullPath(this.logFilePath));
