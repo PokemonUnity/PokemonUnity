@@ -15,6 +15,7 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
+using PokemonUnity.EventArg;
 
 
 namespace PokemonUnity//.Inventory.Plants
@@ -301,68 +302,68 @@ namespace PokemonUnity//.Inventory.Plants
 	  }
 	}
 	else {
-	  // Gen 3 growth mechanics
-	  do { //loop;
-		if (berryData[0]>0 && berryData[0]<5) {
-		  int levels=0;
-		  // Advance time
-		  int timeDiff=(timenow.to_i-berryData[3]); // in seconds
-		  if (timeDiff>=timeperstage) {
-			levels+=1;
-			if (timeDiff>=timeperstage*2) {
-			  levels+=1;
-			  if (timeDiff>=timeperstage*3) {
-				levels+=1;
-				if (timeDiff>=timeperstage*4) {
-				  levels+=1;
+		// Gen 3 growth mechanics
+		do { //loop;
+			if (berryData[0]>0 && berryData[0]<5) {
+				int levels=0;
+				// Advance time
+				int timeDiff=(timenow.to_i-berryData[3]); // in seconds
+				if (timeDiff>=timeperstage) {
+					levels+=1;
+					if (timeDiff>=timeperstage*2) {
+						levels+=1;
+						if (timeDiff>=timeperstage*3) {
+							levels+=1;
+							if (timeDiff>=timeperstage*4) {
+								levels+=1;
+							}
+						}
+					}
 				}
-			  }
+				if (levels>5-berryData[0]) levels=5-berryData[0];
+				if (levels==0) break;
+				berryData[2]=false;						// not watered this stage
+				berryData[3]+=levels*timeperstage;		// add to time existed
+				berryData[0]+=levels;					// increase growth stage
+				if (berryData[0]>5) berryData[0]=5;
 			}
-		  }
-		  if (levels>5-berryData[0]) levels=5-berryData[0];
-		  if (levels==0) break;
-		  berryData[2]=false;                  // not watered this stage
-		  berryData[3]+=levels*timeperstage;   // add to time existed
-		  berryData[0]+=levels;                // increase growth stage
-		  if (berryData[0]>5) berryData[0]=5;
-		}
-		if (berryData[0]>=5) {
-		  // Advance time
-		  int timeDiff=(timenow.to_i-berryData[3]);   // in seconds
-		  if (timeDiff>=timeperstage*4) {		// ripe for 4 times as long as a stage
-			// Replant
-			berryData[0]=2;                      // replants start at stage 2
-			berryData[2]=false;                  // not watered this stage
-			berryData[3]+=timeperstage*4;        // add to time existed
-			berryData[4]=0;                      // reset total waterings count
-			berryData[5]+=1;                     // add to replanted count
-			if (berryData[5]>REPLANTS) {		// Too many replants
-			  berryData=[0,0,false,0,0,0];
-			  break;
+			if (berryData[0]>=5) {
+				// Advance time
+				int timeDiff=(timenow.to_i-berryData[3]);	// in seconds
+				if (timeDiff>=timeperstage*4) {				// ripe for 4 times as long as a stage
+					// Replant
+					berryData[0]=2;							// replants start at stage 2
+					berryData[2]=false;						// not watered this stage
+					berryData[3]+=timeperstage*4;			// add to time existed
+					berryData[4]=0;							// reset total waterings count
+					berryData[5]+=1;						// add to replanted count
+					if (berryData[5]>REPLANTS) {			// Too many replants
+						berryData=[0,0,false,0,0,0];
+						break;
+					}
+				}
+				else {
+					break;
+				}
 			}
-		  }
-		  else {
-			break;
-		  }
+		} while (true);
+		// Check auto-watering
+		if (berryData[0]>0 && berryData[0]<5) {
+			// Reset watering
+			if (Game.GameData.GameScreen != null &&
+				(Game.GameData.GameScreen.weather_type==FieldWeathers.Rain ||
+				Game.GameData.GameScreen.weather_type==FieldWeathers.HeavyRain ||
+				Game.GameData.GameScreen.weather_type==FieldWeathers.Storm)) {
+				// If raining, plant is already watered
+				if (berryData[2]==false) {
+					berryData[2]=true;
+					berryData[4]+=1;
+				}
+			}
 		}
-	  } while (true);
-	  // Check auto-watering
-	  if (berryData[0]>0 && berryData[0]<5) {
-		// Reset watering
-		if (Game.GameData.GameScreen != null &&
-		   (Game.GameData.GameScreen.weather_type==FieldWeathers.Rain ||
-		   Game.GameData.GameScreen.weather_type==FieldWeathers.HeavyRain ||
-		   Game.GameData.GameScreen.weather_type==FieldWeathers.Storm)) {
-		  // If raining, plant is already watered
-		  if (berryData[2]==false) {
-			berryData[2]=true;
-			berryData[4]+=1;
-		  }
-		}
-	  }
 	}
 	return berryData;
-  }
+}
 
   public void setGraphic(berryData,bool fullcheck=false) {
 	if (berryData == null || (@oldstage==berryData[0] && !fullcheck)) return;
@@ -371,7 +372,7 @@ namespace PokemonUnity//.Inventory.Plants
 	  @event.character_name="";
 	  break;
 	case 1:
-	  @event.character_name="berrytreeplanted";   // Common to all berries
+	  @event.character_name="berrytreeplanted";		// Common to all berries
 	  @event.turn_down(); //face camera?
 	  break;
 	default:
@@ -380,13 +381,13 @@ namespace PokemonUnity//.Inventory.Plants
 	  if (ResolveBitmap("Graphics/Characters/"+filename)) {
 		@event.character_name=filename;
 		switch (berryData[0]) {
-		case 2: @event.turn_down();    // X sprouted
+		case 2: @event.turn_down();		// X sprouted
 		  break;
-		case 3: @event.turn_left();    // X taller
+		case 3: @event.turn_left();		// X taller
 		  break;
-		case 4: @event.turn_right();   // X flowering
+		case 4: @event.turn_right();	// X flowering
 		  break;
-		case 5: @event.turn_up();      // X berries
+		case 5: @event.turn_up();		// X berries
 		  break;
 		}
 	  }
@@ -405,9 +406,12 @@ namespace PokemonUnity//.Inventory.Plants
 
 	public partial class Game : IGameBerryPlants {
 		event Action<object, PokemonEssentials.Interface.EventArg.IOnSpritesetCreateEventArgs> IGameBerryPlants.OnSpritesetCreate { add { OnSpritesetCreateEvent += value; } remove { OnSpritesetCreateEvent -= value; } }
+		public IBerryPlantMoistureSprite BerryPlantMoistureSprite { get; set; }
+		public IBerryPlantSprite BerryPlantSprite { get; set; }
+
 		public void BerryPlant() {
 			IInterpreterFieldMixin interp=null;
-			if (Game.GameData is IGameMessage gm) interp=(IInterpreterFieldMixin)gm.MapInterpreter();
+			if (this is IGameMessage gm) interp=(IInterpreterFieldMixin)gm.MapInterpreter();
 			IGameCharacter thisEvent=((IInterpreter)interp).get_character(0);
 			PlantBerryEntryData berryData=(PlantBerryEntryData)interp.getVariable();
 			if (Input.trigger(PokemonUnity.Input.CTRL)) Core.Logger?.Log(berryData.ToString()); //p berryData;
@@ -442,10 +446,10 @@ namespace PokemonUnity//.Inventory.Plants
 			switch (berryData.GrowthStage) {		//[0]
 				case 0:  // empty
 					int cmd = 0;
-					if (Core.NEWBERRYPLANTS) {
+					if (Core.NEWBERRYPLANTS && this is IGameMessage gm6) { //if no message output then just skip entirely...
 						// Gen 4 planting mechanics
 						if (berryData.Mulch==0) {		//[7] No mulch used yet | berryData.Mulch==null ||
-							cmd=Game.GameData.GameMessage.Message(Game._INTL("It's soft, earthy soil."),new string[] {
+							cmd=gm6.Message(Game._INTL("It's soft, earthy soil."),new string[] {
 											Game._INTL("Fertilize"),
 											Game._INTL("Plant Berry"),
 											Game._INTL("Exit") },-1);
@@ -459,8 +463,8 @@ namespace PokemonUnity//.Inventory.Plants
 							if (ret>0) {
 								if (Item.IsMulch(ret)) {
 									//berryData.Mulch=ret;
-									Game.GameData.GameMessage.Message(Game._INTL("The {1} was scattered on the soil.",ret.ToString(TextScripts.Name)));
-									if (Game.GameData.GameMessage.ConfirmMessage(Game._INTL("Want to plant a Berry?"))) {
+									gm6.Message(Game._INTL("The {1} was scattered on the soil.",ret.ToString(TextScripts.Name)));
+									if (gm6.ConfirmMessage(Game._INTL("Want to plant a Berry?"))) {
 										FadeOutIn(99999, block: () => {
 										   IBagScene scene=Game.GameData.Scenes.Bag.initialize();//new PokemonBag_Scene();
 										   IBagScreen screen=Game.GameData.Screens.Bag.initialize(scene,Game.GameData.Bag);//new PokemonBagScreen(scene,Game.GameData.Bag);
@@ -477,14 +481,14 @@ namespace PokemonUnity//.Inventory.Plants
 												0,					//[5] number of replants
 												0);					//[6] yield penalty
 											Game.GameData.Bag.DeleteItem(berry,1);
-											Game.GameData.GameMessage.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
+											gm6.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
 												berry.ToString(TextScripts.Name)));
 										}
 									}
 									interp.setVariable(berryData);
 								}
 								else {
-									Game.GameData.GameMessage.Message(Game._INTL("That won't fertilize the soil!"));
+									gm6.Message(Game._INTL("That won't fertilize the soil!"));
 								}
 								return;
 							}
@@ -505,7 +509,7 @@ namespace PokemonUnity//.Inventory.Plants
 									0,				//[5] number of replants
 									0);				//[6] yield penalty
 								Game.GameData.Bag.DeleteItem(berry,1);
-								Game.GameData.GameMessage.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
+								gm6.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
 									berry.ToString(TextScripts.Name)));
 								interp.setVariable(berryData);
 							}
@@ -513,8 +517,8 @@ namespace PokemonUnity//.Inventory.Plants
 						}
 						}
 						else {
-							Game.GameData.GameMessage.Message(Game._INTL("{1} has been laid down.",berryData.Mulch.ToString(TextScripts.Name))); //[7]
-							if (Game.GameData.GameMessage.ConfirmMessage(Game._INTL("Want to plant a Berry?"))) {
+							gm6.Message(Game._INTL("{1} has been laid down.",berryData.Mulch.ToString(TextScripts.Name))); //[7]
+							if (gm6.ConfirmMessage(Game._INTL("Want to plant a Berry?"))) {
 								FadeOutIn(99999, block: () => {
 									IBagScene scene=Game.GameData.Scenes.Bag.initialize();//new PokemonBag_Scene();
 									IBagScreen screen=Game.GameData.Screens.Bag.initialize(scene,Game.GameData.Bag);//new PokemonBagScreen(scene,Game.GameData.Bag);
@@ -531,7 +535,7 @@ namespace PokemonUnity//.Inventory.Plants
 										0,				//[5] number of replants
 										0);				//[6] yield penalty
 									Game.GameData.Bag.DeleteItem(berry,1);
-									Game.GameData.GameMessage.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
+									gm6.Message(Game._INTL("The {1} was planted in the soft, earthy soil.",
 										berry.ToString(TextScripts.Name)));
 									interp.setVariable(berryData);
 								}
@@ -541,7 +545,7 @@ namespace PokemonUnity//.Inventory.Plants
 					}
 					else {
 						// Gen 3 planting mechanics
-						if (Game.GameData.GameMessage.ConfirmMessage(Game._INTL("It's soft, loamy soil.\nPlant a berry?"))) {
+						if (this is IGameMessage gm2 && gm2.ConfirmMessage(Game._INTL("It's soft, loamy soil.\nPlant a berry?"))) {
 							FadeOutIn(99999, block: () => {
 								IBagScene scene=Game.GameData.Scenes.Bag.initialize();//new PokemonBag_Scene();
 								IBagScreen screen=Game.GameData.Screens.Bag.initialize(scene,Game.GameData.Bag);//new PokemonBagScreen(scene,Game.GameData.Bag);
@@ -560,7 +564,7 @@ namespace PokemonUnity//.Inventory.Plants
 									null);			//[7] No mulch used yet
 								//berryData.compact(); // for compatibility
 								Game.GameData.Bag.DeleteItem(berry,1);
-								Game.GameData.GameMessage.Message(Game._INTL("{1} planted a {2} in the soft loamy soil.",
+								gm2.Message(Game._INTL("{1} planted a {2} in the soft loamy soil.",
 									Game.GameData.Trainer.name,berry.ToString(TextScripts.Name)));
 								interp.setVariable(berryData);
 							}
@@ -569,35 +573,37 @@ namespace PokemonUnity//.Inventory.Plants
 					}
 					break;
 				case 1: // X planted
-					Game.GameData.GameMessage.Message(Game._INTL("A {1} was planted here.",berry.ToString(TextScripts.Name)));
+					if (this is IGameMessage gm3) gm3.Message(Game._INTL("A {1} was planted here.",berry.ToString(TextScripts.Name)));
 					break;
 				case 2:  // X sprouted
-					Game.GameData.GameMessage.Message(Game._INTL("The {1} has sprouted.",berry.ToString(TextScripts.Name)));
+					if (this is IGameMessage gm4) gm4.Message(Game._INTL("The {1} has sprouted.",berry.ToString(TextScripts.Name)));
 					break;
 				case 3:  // X taller
-					Game.GameData.GameMessage.Message(Game._INTL("The {1} plant is growing bigger.",berry.ToString(TextScripts.Name)));
+					if (this is IGameMessage gm5) gm5.Message(Game._INTL("The {1} plant is growing bigger.",berry.ToString(TextScripts.Name)));
 					break;
 				case 4:  // X flowering
 					if (Core.NEWBERRYPLANTS) {
-						Game.GameData.GameMessage.Message(Game._INTL("This {1} plant is in bloom!",berry.ToString(TextScripts.Name)));
+						if (this is IGameMessage gm2) gm2.Message(Game._INTL("This {1} plant is in bloom!",berry.ToString(TextScripts.Name)));
 					}
 					else {
-						switch (berryData.Dampness) { //berryData[4]
-							case 4:
-								Game.GameData.GameMessage.Message(Game._INTL("This {1} plant is in fabulous bloom!",berry.ToString(TextScripts.Name)));
-								break;
-							case 3:
-								Game.GameData.GameMessage.Message(Game._INTL("This {1} plant is blooming very beautifully!",berry.ToString(TextScripts.Name)));
-								break;
-							case 2:
-								Game.GameData.GameMessage.Message(Game._INTL("This {1} plant is blooming prettily!",berry.ToString(TextScripts.Name)));
-								break;
-							case 1:
-								Game.GameData.GameMessage.Message(Game._INTL("This {1} plant is blooming cutely!",berry.ToString(TextScripts.Name)));
-								break;
-							default:
-								Game.GameData.GameMessage.Message(Game._INTL("This {1} plant is in bloom!",berry.ToString(TextScripts.Name)));
-								break;
+						if (this is IGameMessage gm2) {
+							switch (berryData.Dampness) { //berryData[4]
+								case 4:
+									gm2.Message(Game._INTL("This {1} plant is in fabulous bloom!",berry.ToString(TextScripts.Name)));
+									break;
+								case 3:
+									gm2.Message(Game._INTL("This {1} plant is blooming very beautifully!",berry.ToString(TextScripts.Name)));
+									break;
+								case 2:
+									gm2.Message(Game._INTL("This {1} plant is blooming prettily!",berry.ToString(TextScripts.Name)));
+									break;
+								case 1:
+									gm2.Message(Game._INTL("This {1} plant is blooming cutely!",berry.ToString(TextScripts.Name)));
+									break;
+								default:
+									gm2.Message(Game._INTL("This {1} plant is in bloom!",berry.ToString(TextScripts.Name)));
+									break;
+							}
 						}
 					}
 					break;
@@ -631,27 +637,27 @@ namespace PokemonUnity//.Inventory.Plants
 					else {
 						message=Game._INTL("There is 1 {1}!\nWant to pick it?",itemname);
 					}
-					if (Game.GameData.GameMessage.ConfirmMessage(message)) {
+					if (this is IGameMessage gm1 && gm1.ConfirmMessage(message)) {
 						if (!Game.GameData.Bag.CanStore(berry,berrycount)) {
-							Game.GameData.GameMessage.Message(Game._INTL("Too bad...\nThe bag is full."));
+							gm1.Message(Game._INTL("Too bad...\nThe bag is full."));
 							return;
 						}
 						Game.GameData.Bag.StoreItem(berry,berrycount);
 						if (berrycount>1) {
-							Game.GameData.GameMessage.Message(Game._INTL("You picked the {1} {2}.\\wtnp[30]",berrycount,itemname));
+							gm1.Message(Game._INTL("You picked the {1} {2}.\\wtnp[30]",berrycount,itemname));
 						}
 						else {
-							Game.GameData.GameMessage.Message(Game._INTL("You picked the {1}.\\wtnp[30]",itemname));
+							gm1.Message(Game._INTL("You picked the {1}.\\wtnp[30]",itemname));
 						}
-						Game.GameData.GameMessage.Message(Game._INTL("{1} put away the {2} in the <icon=bagPocket#{BERRYPOCKET}>\\c[1]Berries\\c[0] Pocket.\\1",
+						gm1.Message(Game._INTL("{1} put away the {2} in the <icon=bagPocket#{BERRYPOCKET}>\\c[1]Berries\\c[0] Pocket.\\1",
 							Game.GameData.Trainer.name,itemname));
 						if (Core.NEWBERRYPLANTS) {
-							Game.GameData.GameMessage.Message(Game._INTL("The soil returned to its soft and earthy state.\\1"));
+							gm1.Message(Game._INTL("The soil returned to its soft and earthy state.\\1"));
 							//berryData=new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
 							berryData=new PlantBerryEntryData();
 						}
 						else {
-							Game.GameData.GameMessage.Message(Game._INTL("The soil returned to its soft and loamy state.\\1"));
+							gm1.Message(Game._INTL("The soil returned to its soft and loamy state.\\1"));
 							//berryData=new int[] { 0, 0, false, 0, 0, 0 };
 							berryData=new PlantBerryEntryData();
 						}
@@ -663,7 +669,7 @@ namespace PokemonUnity//.Inventory.Plants
 				case 1: case 2: case 3: case 4:
 					foreach (Items i in watering) {
 						if (i!=0 && Game.GameData.Bag.Quantity(i)>0) { //GetItemAmount
-							if (Game.GameData.GameMessage.ConfirmMessage(Game._INTL("Want to sprinkle some water with the {1}?",i.ToString(TextScripts.Name)))) {
+							if (this is IGameMessage gm1 && gm1.ConfirmMessage(Game._INTL("Want to sprinkle some water with the {1}?",i.ToString(TextScripts.Name)))) {
 								if (Core.NEWBERRYPLANTS) { //berryData.Length>6
 									// Gen 4 berry watering mechanics
 									//berryData[4]=100;
@@ -693,12 +699,12 @@ namespace PokemonUnity//.Inventory.Plants
 									}
 								}
 								//interp.setVariable(berryData);
-								Game.GameData.GameMessage.Message(Game._INTL("{1} watered the plant.\\wtnp[40]",Game.GameData.Trainer.name));
+								gm1.Message(Game._INTL("{1} watered the plant.\\wtnp[40]",Game.GameData.Trainer.name));
 								if (Core.NEWBERRYPLANTS) {
-									Game.GameData.GameMessage.Message(Game._INTL("There! All happy!"));
+									gm1.Message(Game._INTL("There! All happy!"));
 								}
 								else {
-									Game.GameData.GameMessage.Message(Game._INTL("The plant seemed to be delighted."));
+									gm1.Message(Game._INTL("The plant seemed to be delighted."));
 								}
 							}
 							break;
@@ -710,7 +716,7 @@ namespace PokemonUnity//.Inventory.Plants
 
 		public void PickBerry(Items berry,int qty=1) {
 			IInterpreterFieldMixin interp=null;
-			if (Game.GameData is IGameMessage gm) interp=(IInterpreterFieldMixin) gm.MapInterpreter();
+			if (this is IGameMessage gm) interp=(IInterpreterFieldMixin) gm.MapInterpreter();
 			IGameCharacter thisEvent=((IInterpreter)interp).get_character(0);
 			PlantBerryEntryData berryData=(PlantBerryEntryData)interp.getVariable();
 			//if (berry.is_a(String) || berry.is_a(Symbol)) {
@@ -724,34 +730,48 @@ namespace PokemonUnity//.Inventory.Plants
 			else {
 				message=Game._INTL("There is 1 {1}!\nWant to pick it?",itemname);
 			}
-			if (Game.GameData.GameMessage.ConfirmMessage(message)) {
+			if (this is IGameMessage gm1 && gm1.ConfirmMessage(message)) {
 				if (!Game.GameData.Bag.CanStore(berry,qty)) {
-					Game.GameData.GameMessage.Message(Game._INTL("Too bad...\nThe bag is full."));
+					gm1.Message(Game._INTL("Too bad...\nThe bag is full."));
 					return;
 				}
 				Game.GameData.Bag.StoreItem(berry,qty);
 				//Game.GameData.Player.Bag.AddItem(berry,qty);
 				ItemPockets pocket=Kernal.ItemData[berry].Pocket??ItemPockets.BERRY;
 				if (qty>1) {
-					Game.GameData.GameMessage.Message(Game._INTL("You picked the {1} {2}.\\wtnp[30]",qty,itemname));
+					gm1.Message(Game._INTL("You picked the {1} {2}.\\wtnp[30]",qty,itemname));
 				}
 				else {
-					Game.GameData.GameMessage.Message(Game._INTL("You picked the {1}.\\wtnp[30]",itemname));
+					gm1.Message(Game._INTL("You picked the {1}.\\wtnp[30]",itemname));
 				}
-				Game.GameData.GameMessage.Message(Game._INTL($"{{1}} put away the {{2}} in the <icon=bagPocket#{pocket}>\\c[1]Berries\\c[0] Pocket.\\1",
+				gm1.Message(Game._INTL($"{{1}} put away the {{2}} in the <icon=bagPocket#{pocket}>\\c[1]Berries\\c[0] Pocket.\\1",
 					Game.GameData.Trainer.name,itemname));
 				if (Core.NEWBERRYPLANTS) {
-					Game.GameData.GameMessage.Message(Game._INTL("The soil returned to its soft and earthy state.\\1"));
+					gm1.Message(Game._INTL("The soil returned to its soft and earthy state.\\1"));
 					//berryData=[0,0,0,0,0,0,0,0];
 					berryData = new PlantBerryEntryData();
 				}
 				else {
-					Game.GameData.GameMessage.Message(Game._INTL("The soil returned to its soft and loamy state.\\1"));
+					gm1.Message(Game._INTL("The soil returned to its soft and loamy state.\\1"));
 					//berryData=[0,0,false,0,0,0];
 					berryData = new PlantBerryEntryData();
 				}
 				interp.setVariable(berryData);
 				if (((Game)Game.GameData).Interpreter is IInterpreterMixinMessage im) im.SetSelfSwitch(thisEvent.id,"A",true);
+			}
+		}
+
+		protected virtual void OnSpritesetCreate(object sender, OnSpritesetCreateEventArgs e) {
+			ISpritesetMap spriteset = e.SpritesetId;//e[0];
+			IViewport viewport = e.Viewport; //e[1];
+			IGameMap map=spriteset.map;
+			foreach (int i in map.events.Keys) {
+				if (map.events[i].name=="BerryPlant") {
+					//spriteset.addUserSprite(new BerryPlantMoistureSprite(map.events[i],map,viewport));
+					//spriteset.addUserSprite(new BerryPlantSprite(map.events[i],map,viewport));
+					spriteset.addUserSprite(BerryPlantMoistureSprite.initialize(map.events[i],map,viewport));
+					spriteset.addUserSprite(BerryPlantSprite.initialize(map.events[i],map,viewport));
+				}
 			}
 		}
 	}

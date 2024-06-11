@@ -52,7 +52,6 @@ namespace PokemonEssentials.Interface
 
 	public interface ISpriteAnimation : IDisposable
 	{
-		
 		/// <summary>
 		/// The sprite's X-coordinate.
 		/// </summary>
