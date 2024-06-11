@@ -3162,8 +3162,6 @@ namespace PokemonUnity.Combat
 			}
 			// Find the user and target(s)
 			IList<IBattler> targets= new List<IBattler>();
-			//targets.Add(null); // Empty for slot 0
-			//targets.Add(Opposing1); // <- this has been causing issues
 			IBattler user=FindUser(choice,targets);
 			// Battle Arena only - assume failure
 			@battle.successStates[user.Index].UseState=true;
