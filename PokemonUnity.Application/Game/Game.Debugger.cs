@@ -196,7 +196,7 @@ namespace PokemonUnity
 				logBuilder = new StringBuilder(); //logBuilder.Clear();
 				if (sender != null)
 				{
-					logBuilder.AppendFormat("Run: {0} => {1}", sender.GetType().Name, args.Method?.Name); // + System.Reflection.MethodBase.GetCurrentMethod().Name
+					logBuilder.AppendFormat("Run: {0} => {1}", sender.GetType().Name, args.Method?.Name ?? string.Empty); // + System.Reflection.MethodBase.GetCurrentMethod().Name
 					if (Core.DEBUG)
 						logBuilder.AppendFormat("Entity: {0}", sender.ToString());
 				}
